@@ -1,0 +1,89 @@
+## HEAD
+8f2b29e8b3a8b4d8c5fe9a6c3d49cbda6af25363
+## main...origin/main
+
+## SeriesArticleLayout alt=""
+118:    <img src={coverImg(data.slug)} alt="" width="600" height="315" />
+152:              <span class="gbs2-thumb"><img src={coverImg(part.data.slug)} alt="" width="600" height="315" loading="lazy" decoding="async" /></span>
+289:              <img src={coverImg(part.data.slug)} alt="" width="600" height="315" />
+
+## hard-text GBS rail/runtime controls counts
+--- src/components/article-pilots/rimlyanam7/Rimlyanam7Body.astro
+id="gbs2Toc"             1
+id="gbs2Ring"            1
+id="gbs2Pct"             1
+id="gbs2Count"           1
+id="gbs2Curbar"          1
+class="gbs2-rail"        1
+id="gbs2Bbar"            1
+id="gbs2Sheet"           1
+data-gbs2-theme          2
+data-gbs2-font           2
+data-gbs2-share          1
+enhancements.js          1
+--- src/components/article-pilots/krajne/KrajneBody.astro
+id="gbs2Toc"             1
+id="gbs2Ring"            1
+id="gbs2Pct"             1
+id="gbs2Count"           1
+id="gbs2Curbar"          1
+class="gbs2-rail"        1
+id="gbs2Bbar"            1
+id="gbs2Sheet"           1
+data-gbs2-theme          2
+data-gbs2-font           2
+data-gbs2-share          1
+enhancements.js          1
+
+## sitemap missing standard tags
+https://gospod-bog.ru/karty/ MISSING lastmod,changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-1/ MISSING changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-2/ MISSING changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-3/ MISSING changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-4/ MISSING changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-5/ MISSING changefreq,priority
+
+## update-meta sitemap code slice
+   302	function updateSitemap(changes, nagornayaChanges = {}) {
+   303	  let xml = normalizeSitemapLastmods(fs.readFileSync(SITEMAP, 'utf8'));
+   304
+   305	  // Обновить lastmod существующих
+   306	  for (const [slug, { modISO }] of Object.entries(changes)) {
+   307	    const url = `${BASE_URL}/articles/${slug}/`;
+   308	    xml = xml.replace(
+   309	      new RegExp(`(<loc>${reEsc(url)}<\\/loc>\\s*<lastmod>)[^<]*(<\\/lastmod>)`, 'g'),
+   310	      `$1${toSitemapLastmod(modISO)}$2`);
+   311	  }
+   312
+   313	  // Обновить lastmod существующих страниц nagornaya/*
+   314	  for (const [slug, { modISO }] of Object.entries(nagornayaChanges)) {
+   315	    const url = `${BASE_URL}/nagornaya/${slug}/`;
+   316	    xml = xml.replace(
+   317	      new RegExp(`(<loc>${reEsc(url)}<\\/loc>\\s*<lastmod>)[^<]*(<\\/lastmod>)`, 'g'),
+   318	      `$1${toSitemapLastmod(modISO)}$2`);
+   319	  }
+   444	  // ── Нагорная проповедь ──────────────────────────────────────────
+   445	  const nSlugs = FORCE_ALL ? getAllNagornayaSlugs() : getChangedNagornayaSlugs();
+   446	  if (nSlugs.length) {
+   447	    console.log(`\n  Нагорная: ${nSlugs.join(', ')}\n`);
+   448	    for (const slug of nSlugs) {
+   449	      const file = path.join(NAGORNAYA, slug, 'index.html');
+   450	      if (!fs.existsSync(file)) { console.warn(`  ⚠  nagornaya/${slug}: нет index.html`); continue; }
+   451
+   452	      const modISO = gitDate(file, 'last');
+   453	      if (!modISO) { console.warn(`  ⚠  nagornaya/${slug}: нет даты из git`); continue; }
+   454
+   455	      const html     = fs.readFileSync(file, 'utf8');
+   456	      const words    = countWords(html);
+   457	      const readTime = Math.max(1, Math.round(words / WPM));
+   458
+   459	      console.log(`\n  📄  nagornaya/${slug}`);
+   460	      console.log(`      mod: ${modISO.slice(0,10)}  ${words} сл. → ${readTime} мин`);
+   461	      nagornayaChanges[slug] = { modISO };
+   462	      updateNagornayaHTML(slug, { modISO, words, readTime });
+   463	    }
+   464	  }
+   465
+   466	  if (Object.keys(changes).length || nSlugs.length) {
+   467	    console.log('\n  🗺  sitemap.xml');
+   468	    updateSitemap(changes, nagornayaChanges);
