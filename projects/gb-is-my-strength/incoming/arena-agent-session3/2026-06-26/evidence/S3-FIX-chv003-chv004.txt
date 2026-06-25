@@ -1,0 +1,28 @@
+# S3-FIX — CHV-003 + CHV-004 REPAIRED on lane/content-text-corruption-2026-06-26
+# Source repo branch pushed: lane/content-text-corruption-2026-06-26 (off HEAD 106f98d)
+# Commits: 213678a (fix), f5f845c (lane report)
+
+## CHV-003 (Antisovetov U+FFFD + lost note-box) — FIXED
+File: src/components/article-pilots/antisovetov/AntisovetovBody.astro
+- Restored from clean legacy copy: "...не просит сохранить трон.</p>" + note-box
+  «Как это выглядит на практике» + «Ритуальное извинение:» opener.
+- U+FFFD count after fix: 0 (was 1)
+- Extra </div> removed; div balance 260/260.
+
+## CHV-004 (Hermenevtika Scripture corruption) — FIXED
+Files: HermenevtikaBody.astro (source) + legacy index.html (both were corrupted)
+- 1 Кор 15:12: «кик говорят» -> «как говорят»
+- Евр 9:3: «называемая , .Святое Святых"» -> «называемая "Святое Святых"»
+
+## Verification (multi-witness: source + build + dist)
+- astro:check: 0 errors, 0 warnings
+- data:consistency / content:parity / seo-audit / mdx:structure:audit: all PASS
+- astro:build: 52 pages built
+- dist/articles/20-antisovetov-pastoru/index.html: U+FFFD=0, has «не просит сохранить трон» + «Ритуальное извинение»
+- dist/articles/hermenevticheskaya-.../index.html: «кик говорят»=0, has «как говорят некоторые», broken-quote=0
+- repo-wide sweep: U+FFFD=0, «кик говорят»=0, «называемая , .Святое»=0
+
+## Recommended status
+CHV-003 -> fixed-current (P0 closed)
+CHV-004 -> fixed-current (P1 closed)
+Pending: owner/CI merge of lane/content-text-corruption-2026-06-26 + full validate:static-publication on CI.

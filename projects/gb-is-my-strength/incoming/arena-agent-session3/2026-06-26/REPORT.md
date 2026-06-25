@@ -238,6 +238,27 @@ Given the goal stated by the owner ("единый монолит, не 100 ли�
 
 ---
 
+# ROUND 5 ADDENDUM — IMPLEMENTATION: CHV-003 + CHV-004 FIXED (lane pushed)
+
+> I moved from audit to repair for the content-corruption bucket (B1). Pushed branch
+> `lane/content-text-corruption-2026-06-26` to the source repo (off HEAD `106f98d`).
+> Evidence: `evidence/S3-FIX-chv003-chv004.txt`.
+
+| Bug | Action | Result |
+|---|---|---|
+| **CHV-003** Antisovetov U+FFFD + lost note-box | Restored merged paragraph + dropped note-box («Как это выглядит на практике» / «Ритуальное извинение:») from clean legacy copy; removed stray `</div>` | **fixed-current (P0 closed)** |
+| **CHV-004** Hermenevtika Scripture | `кик говорят`→`как говорят` (1 Кор 15:12); `называемая , .Святое Святых"`→`называемая "Святое Святых"` (Евр 9:3); fixed in both Astro source + legacy HTML | **fixed-current (P1 closed)** |
+
+**Multi-witness verification (source + build + dist):**
+- `astro:check` 0 errors/0 warnings; `data:consistency`, `content:parity`, `seo-audit`, `mdx:structure:audit` all PASS
+- `astro:build` 52 pages built; **dist output confirmed clean** for both pages (U+FFFD=0, restored text present, broken quote gone)
+- repo-wide sweep: U+FFFD=0, `кик говорят`=0, `называемая , .Святое`=0
+
+**Commits:** `213678a` (fix, 3 files content-only) + `f5f845c` (lane report `docs/refactor-2026/lanes/content-text-corruption-2026-06-26.md`).
+**Pending:** owner/CI merge + full `validate:static-publication` on CI (not run fully in sandbox per resource limits).
+
+---
+
 # ROUND 4 ADDENDUM — reverify on NEW source HEAD `106f98d` (was `02e1a0f`)
 
 > Source repo advanced: `a4d045e` (fix release gates) + `106f98d` (auto cache-bust [skip ci]).
