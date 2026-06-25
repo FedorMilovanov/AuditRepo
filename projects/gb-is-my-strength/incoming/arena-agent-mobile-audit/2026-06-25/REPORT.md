@@ -202,23 +202,53 @@
 
 ---
 
+
 ## 8. Notes for Verifier
 
-### Systemic touch target issue:
-The project has a systemic touch target sizing problem. Multiple button classes are below the WCAG 2.2 minimum of 44px:
-- `.gbs-rail-foot__btn` = 32px (Gill rail)
-- `.gbs2-ctl` = 35px (GBS2 desktop)
-- `.gbs2-mctl` = 38px (GBS2 mobile)
-- `.gb-series-controls .gb-icon` = 34px (SeriesLiteCluster mobile)
-- `.gb-icon` / `.gb-save` / `.gb-ember` = 40px (SingleArticleCluster desktop)
+### Systemic touch target analysis (COMPREHENSIVE):
 
-None of these have `@media (pointer:coarse)` overrides, except `.gb-fc-btn` in site-layered.css. The v16 design probe shows intentional small buttons (32px) for rail-foot, suggesting this may be a design decision rather than an oversight.
+**COVERED by `@media (pointer:coarse)` → 44px:**
+- `.bar-icon-btn`, `.btoc-close`, `.btoc-fontsize-btn`, `.btoc-share-btn` (bottom bar / TOC)
+- `.gb-floating-controls .gb-fc-btn` (floating cluster — but NOT .gb-icon/.gb-save/.gb-ember!)
+- `.gb-nav-search-icon`, `.h-cp-btn`, `.h-mobile-menu-btn`, `.mobile-controls .theme-toggle` (header)
+- `.cp-clear`, `.cp-item`, `.cp-scope-chip` (command palette)
+- `.bookmark-toast-close`, `.bookmark-btn`, `.img-viewer__close`
+- `.gtip-expand-btn` (glossary tooltips)
+- `.gbs2-sheet-close`, `.gbs2-sheet-tab` (GBS2 sheet overlay)
+
+**NOT COVERED — below 44px WCAG minimum:**
+| Element | Size | Location | Impact |
+|---------|------|----------|--------|
+| `.gbs-rail-foot__btn` | 32×32px | GillRailControls.astro | Gill Part 1, 3, Context rail |
+| `.gbs2-ctl` | 35×35px | site.css | GBS2 desktop controls |
+| `.gbs2-mctl` | 38×38px | site.css | GBS2 mobile header controls |
+| `.gb-series-controls .gb-icon` | 34×34px | SeriesLiteCluster.astro | Series lite mobile pill |
+| `.gb-series-controls .gb-ember` | 34×34px | SeriesLiteCluster.astro | Series lite mobile pill |
+| `.gb-series-controls .gb-save` | 34×34px | SeriesLiteCluster.astro | Series lite mobile pill |
+| `.gb-icon` (base) | 40×40px | SingleArticleCluster.astro | Floating cluster desktop |
+| `.gb-save` (base) | 40×40px | SingleArticleCluster.astro | Floating cluster desktop |
+| `.gb-ember` | varies | PlayEmber.astro | Play button all pages |
+
+**Pattern analysis:** The `pointer:coarse` rules were added incrementally to older components (bottom-bar, btoc, command-palette) but were NEVER added to newer component families:
+1. Floating Cluster (gb-icon, gb-save, gb-ember) — v14+
+2. GBS2 series controls (gbs2-ctl, gbs2-mctl) — v2 pilot
+3. Gill rail-foot (gbs-rail-foot__btn) — v15+
+4. SeriesLiteCluster (34px mobile pill) — v16
+
+**The `gb-fc-btn` class exists in site-layered.css but is NOT used** — the actual cluster buttons use `.gb-icon`, `.gb-save`, `.gb-ember` classes instead. This means the only `pointer:coarse` rule for floating cluster targets a ghost class.
+
+### v16 design probe insights:
+- The HTML probe (`gb-floating-cluster-probe-v16.html`) shows **intentional 32px buttons** for rail-foot
+- Design shows mobile bottom-bar with TOC + section + progress + theme + search + play — all at 30-34px
+- The probe includes `@media (max-width: 500px)` and `@media (max-width: 640px)` rules but NO `@media (pointer:coarse)` rules
+- **Conclusion:** The design itself may be WCAG-non-compliant, not just the implementation
 
 ### Header navigation inconsistency:
-Mobile burger menu exists in PageChrome components but NOT in Header.astro. This creates an inconsistent mobile experience: some pages have proper mobile navigation, others don't.
+- Mobile burger menu EXISTS in 5+ PageChrome components
+- Mobile burger menu MISSING from Header.astro (used by Gill, about, karty, konfessii, rodosloviye)
+- This creates inconsistent mobile UX: ~50% of pages have proper mobile nav, ~50% don't
 
-### Design vs implementation gap:
-The v16 probe shows a clean mobile bottom-bar design with proper spacing. The current implementation achieves similar layout but with undersized touch targets. The gap is in the `pointer:coarse` media query coverage.
-
-### M-01 (TTS overlay) extends arena-agent-2's finding:
-The original finding was about TTS blocking theme buttons. This audit extends it to show TTS blocks the ENTIRE bottom bar on mobile (series navigation, progress indicator, all controls).
+### M-01 (TTS z-index) extends arena-agent-2's finding:
+- Original: TTS blocks theme buttons on baptisty pages
+- Extended: TTS blocks ENTIRE `.gbs2-bbar` bottom bar (z-index 2000 vs 9800)
+- Affected: All baptisty-rossii/* pages on mobile when TTS is visible
