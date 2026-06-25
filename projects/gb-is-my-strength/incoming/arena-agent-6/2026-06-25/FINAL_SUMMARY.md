@@ -75,3 +75,31 @@ If verifier accepts my challenges:
 2. `3a473b4` — comment-on-P0-NEW.md + proposal-NEW-01-P0.md
 3. `240933b` — comment-on-P1-13-P1-14.md (FALSE POSITIVE challenge)
 4. `11f6b20` — (this summary)
+
+---
+
+## ADDENDUM — Complete Audit Coverage
+
+### Total commits in AuditRepo: 8
+### Total analysis hours: comprehensive (source + production + git history + docs)
+
+### Final Bug Count Impact (if all findings accepted):
+
+| Category | Count | Details |
+|---|---|---|
+| New bugs found | 7 | NEW-01 through NEW-07 |
+| Existing bugs confirmed | 15 | PS-01, P0-10, V2-1, V2-2, V2-4, P0-6, P1-2, P1-7, P1-9, P1-17, P2-6, P2-14, P2-17, P3-8, P2-18 |
+| Bugs challenged (FP/policy) | 4 | P0-NEW, P0-3, P1-13, P1-14 |
+| Downgrades | 1 | P1-17 → P3 |
+
+### Key Root Causes Found:
+1. **V2-4 root cause:** old toRFC() computed weekday in UTC, not Moscow. Fix exists but feed.xml not regenerated.
+2. **NEW-01 root cause:** sw.js minifier introduced syntax error. Production uses different build.
+3. **Regression root cause:** auto-cache-bust overwrites manual fixes (15+ times in git history).
+
+### Dead Code Inventory:
+- site-layered.css: 283KB not loaded by any page
+- 10 orphaned scripts referencing deleted _legacy/
+- 12 root HTML files (all routes are astro-owned)
+- loadLegacyFullDocument.ts: unused utility
+- gill-v16.css: deleted but was the only Gill-specific CSS
