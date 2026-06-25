@@ -143,10 +143,10 @@ Important nuance: several failures are **tooling/audit drift** after cleanup lan
   src/components/article-pilots/antisovetov/AntisovetovBody.astro:695:<p ...>... Настоящая сломленность не прос�тематическом искажении фактов перед общиной. ...</p>
   ```
 - Confidence: high
-- Verification level: `verified-source` / `reproduced-by-agent`
+- Verification level: `verified-source` + `verified-production-like-dist` / `reproduced-by-agent`
 - Suggested repair lane: `lane/content-public-text-corruption-2026-06-26`
 - Do not mix with: large editorial rewrite of Antisovetov.
-- Comments: This matches prior source-repo audit branch finding `BUG-B1`; this intake confirms it on current `main`.
+- Comments: This matches prior source-repo audit branch finding `BUG-B1`; this intake confirms it on current `main` **and in production-like `dist`**.
 
 ---
 
@@ -179,10 +179,10 @@ Important nuance: several failures are **tooling/audit drift** after cleanup lan
   ```
   Same patterns also found in legacy article HTML.
 - Confidence: high
-- Verification level: `verified-source` / `reproduced-by-agent`
+- Verification level: `verified-source` + `verified-production-like-dist` / `reproduced-by-agent`
 - Suggested repair lane: `lane/content-public-text-corruption-2026-06-26`
 - Do not mix with: full Hermeneutics editorial rewrite.
-- Comments: This is a targeted textual repair, not a theological/source-policy change.
+- Comments: This is a targeted textual repair, not a theological/source-policy change. Production-like `dist` grep also confirms both strings after build.
 
 ---
 
