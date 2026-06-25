@@ -259,3 +259,47 @@ The 404 framing is wrong, but adjacent findings stand:
 
 ### Action for the final verifier
 Drop P0-NEW. The confirmed count stays at 63 (9 P0). P0-7/P0-8 stay (cache-bust drift).
+
+## C-09 — P0-3 (robots.txt) is a POLICY DECISION, not a bug (round5 mis-confirmed)
+
+**Raised by:** `arena-agent-2`
+**Conflict:** round5 `VERIFICATION_AUDIT_ROUND5` "confirmed P0-3" (robots.txt blocks
+SEO crawlers) — contradicting `verified/FALSE_POSITIVES_REGISTRY` FP-03, which had
+CLOSED it as a deliberate policy decision.
+
+### round5's claim has two factual problems
+
+1. **Wrong mechanism.** round5 says AhrefsBot/SemrushBot/MJ12bot are "caught by the
+   blanket `Disallow: /*?*` rule". This is not how robots.txt works (RFC 9309 / Google
+   spec): a crawler uses the **most specific** matching user-agent group and ignores
+   `*`. Each of these bots has its **own** explicit group with `Disallow: /`:
+   - `robots.txt:78` `User-agent: AhrefsBot` → `Disallow: /`
+   - `robots.txt:81` `User-agent: SemrushBot` → `Disallow: /`
+   - `robots.txt:84` `User-agent: MJ12bot` → `Disallow: /`
+   They are blocked by their **own** groups, not by the `* /*?*` rule. The `*` group
+   (lines 6–12) applies only to crawlers with no specific group (e.g. Googlebot).
+
+2. **Ignores intent.** Lines 77–84 carry the comment
+   `# --- AUDIT V2 (2026-05): SEO-краулеры и доп. AI-training agents ---`. Blocking
+   Ahrefs/Semrush/MJ12 (bulk link-scrapers) is **deliberate editorial policy**, and
+   Yandex + Google remain allowed. That is exactly FP-03's finding.
+
+### The `Disallow: /*?*` itself is also intentional, not a bug
+
+`robots.txt` lines 7–11 carve out explicit `Allow:` exceptions for the query-stringed
+assets the site actually uses (`/css/*.css?*`, `/js/*.js?*`, `/nagornaya/*.css?*`,
+`/data/*.json?*`), then `Allow: /` (all clean URLs), then `Disallow: /*?*` (only
+query-string URLs). This is a standard, deliberate cache-bust-friendly rule: clean
+URLs crawlable, `?v=` URLs not. Working as designed.
+
+### Resolution
+
+- **P0-3 → CLOSE (agree with FP-03).** round5's confirmation was based on a robots.txt
+  semantics error and ignored the documented intent. Not a bug; not even P3.
+- This does NOT touch the genuine `robots.txt` issues elsewhere: NEW-7 (misplaced
+  `Allow: /llms.txt` scoped to ImagesiftBot group) and P2-6-class concerns are separate
+  and remain valid.
+
+### Action for the final verifier
+Remove P0-3 from the P0 set (align with FP-03). The P0 count should reflect this closure
+alongside the P0-NEW closure in C-08.
