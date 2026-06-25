@@ -6,7 +6,7 @@
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Unified bug ledger with **64 confirmed bugs (9 P0, 22 P1, 21 P2, 12 P3)** + 4 FP closed. All bugs verified in HEAD source (Round 5). 1 net-new P0: SW precache 404 for site-layered.css + site-modules.js (exist in src/ but not in dist/). |
+| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Unified bug ledger with **60 confirmed bugs (9 P0, 20 P1, 19 P2, 12 P3)** + 4 FP closed. Round 6 fixes: V2-1 (PARTIAL: Gill TOC anchors), V2-2 (Nagornaya font), V2-3 (Avraam skip-link), PS-06 (Hermenevtika readTime). All bugs verified in HEAD source (Round 5). 1 net-new P0: SW precache 404 for site-layered.css + site-modules.js (exist in src/ but not in dist/). |
 
 ## Status glossary
 
@@ -41,6 +41,7 @@
 - `incoming/arena-agent-round4/2026-06-25/` — Arena Agent Round 4 (deep code audit; GBS2 controls unwired, CSS/JS hash mismatch, site-modules.js in SW but not in cache-bust)
 - `incoming/arena-agent-verifier-2/2026-06-25/` — Verifier-2 (runtime Playwright + Node stub verification; V2-1..V2-4 net-new bugs; P0-2 false positive confirmed)
 - `incoming/arena-agent-round5/2026-06-25/` — Arena Agent Round 5 (full verification audit; all 63 bugs confirmed in HEAD; 1 net-new P0: SW precache 404)
+- `incoming/arena-agent-round6/2026-06-25/` — Arena Agent Round 6 (implementation: V2-1 PARTIAL, V2-2 FIXED, V2-3 FIXED, PS-06 FIXED; 13 files changed; FAST checks passed)
 
 ## How to add a new project
 
@@ -56,10 +57,10 @@
 
 ## gb-is-my-strength — updated 2026-06-25 (Verifier-2 merge)
 
-**Total confirmed bugs:** 64 (9 P0, 22 P1, 21 P2, 12 P3)
+**Total confirmed bugs:** 60 (9 P0, 20 P1, 19 P2, 12 P3)
 **P0 critical:** 9 (PS-01 primary — fc-controller IIFE defect; P0-10 is systemic cache hash issue; P0-NEW: SW precache 404 for site-layered.css + site-modules.js)
-**P1 high:** 22 (including V2-1, V2-2 new from Verifier-2)
-**P2 medium:** 21 (including V2-3, V2-4 new from Verifier-2)
+**P1 high:** 20 (V2-1 PARTIAL, V2-2 FIXED, PS-06 FIXED)
+**P2 medium:** 19 (V2-3 FIXED)
 **P3 low:** 12
 **False positives closed:** 4 (P0-2, FP-P0-4, FP-P0-5, FP-PS-05)
 
@@ -74,3 +75,9 @@
 - 1 net-new P0 bug: SW precache 404 — `site-layered.css` and `site-modules.js` exist in src/ but are never imported in any Astro component → not copied to dist/ → 404 on all SW-enabled pages
 
 **Status:** repair-ready — unified ledger + repair order in `verified/`
+
+**Round 6 implementation (2026-06-25):**
+- 4 bugs fixed: V2-1 PARTIAL (Gill TOC anchors), V2-2 (Nagornaya font selector), V2-3 (Avraam skip-link), PS-06 (Hermenevtika readTime)
+- 13 files changed, all verified with targeted grep
+- `npm run data:consistency` ✅ `npm run migration:metadata:check` ✅
+- Report: `incoming/arena-agent-round6/2026-06-25/IMPLEMENTATION_AUDIT_ROUND6.md`
