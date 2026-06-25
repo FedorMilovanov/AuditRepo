@@ -377,3 +377,77 @@
 **Fixed in AuditRepo (pending merge):** PS-01, P0-10, PS-06, PS-07, P0-7, P0-8
 **False positive closed:** P3-8
 **Confirmed in current HEAD:** P2-17, P2-18, P3-12, P0-NEW, P1-13, P1-14/15/16, P0-3, P0-6
+
+---
+
+## Round 9 Amendments (2026-06-25)
+
+**Source:** Current session continuation
+
+### P0-NEW — SW precache 404 for site-layered.css + site-modules.js → ✅ FIXED IN PROJECT SOURCE
+
+**Root cause confirmed:**
+- `site-layered.css` exists at `/home/user/project/css/site-layered.css` — REFACTORING PILOT (Phase 2) — "duplicate of site.css, one-route refactor pilot". NOT imported in any Astro component → Astro build does NOT copy to `dist/`
+- `site-modules.js` exists at `/home/user/project/js/site-modules.js` — REFACTORING EFFORT (Phase 3). Contains back-to-top.js module (already loaded separately). NOT imported in any Astro component → Astro build does NOT copy to `dist/`
+- Both referenced in `sw.js` PRECACHE_ASSETS → 404 on all SW-enabled pages
+
+**Fix applied:** Removed both from PRECACHE_ASSETS in `/home/user/project/sw.js`:
+- `"/css/site-layered.css"` — removed ✅
+- `"/js/site-modules.js"` — removed ✅
+
+**P0-NEW RESOLVED** — no longer a 404 risk.
+
+Note: This also resolves P0-7 and P0-8 as a side effect (same root cause: references to files not in dist).
+
+### P1-5 — page-ownership.json vs route-migration-matrix.json conflict ✅ CONFIRMED
+
+**Data conflict confirmed:**
+- `page-ownership.json`: version 1, updated 2026-06-20, 53 routes, scope: all routes (build-time strangler manifest)
+- `route-migration-matrix.json`: version 2026-06-23.non-excluded.v1, created 2026-06-23, 34 routes, scope: all-routes-except-nagornaya-gill-heart-hard-texts
+
+**Discrepancy:**
+- Common routes: 34
+- Extra in page-ownership: 19 (nagornaya/seriya, nagornaya/chast-3, articles/krajne, articles/dzhon-gill-istoricheskiy-kontekst, articles/hermenevticheskaya-otsenka, articles/kod-da-vinchi, articles/dzhon-gill-chast-1-3, articles/dzhon-gill-spravochnik, articles/20-antisovetov-pastoru, articles/rimlyanam-7, hard-texts/ + 6 nagornaya pages)
+- Extra in route-migration-matrix: 0
+
+The page-ownership.json is a superset with different version/timing. These are two independent tracking systems with divergent data.
+
+### P2-17 — AvraamMap pollutes global MapEngine singleton ✅ CONFIRMED (detailed)
+
+**Detailed analysis:**
+- IshodMap.astro: uses `MapEngine.createMap()` only — does NOT add anything to `window.MapEngine`
+- AvraamMap.astro lines 31-32: adds `window.MapEngine.getPlaceVisual = function(pl) {...}` to global singleton
+- AvraamMap's getPlaceVisual customizes 'lot' and 'cand' place type markers (land division and candidates)
+- If AvraamMap loads FIRST, then IshodMap gets Avraam's getPlaceVisual (wrong marker colors)
+- If IshodMap loads FIRST, AvraamMap's override is applied (only affects subsequent pages in same session)
+- SW caching keeps both pages in browser cache → session pollution risk
+
+**Fix direction:** Pass `getPlaceVisual` as `MapEngine.createMap(container, route, { getPlaceVisual: fn })` option instead of global pollution.
+
+### P2-18 — MapEngine loadFromHash uses location.pathname ✅ CONFIRMED (detailed)
+
+**Detailed analysis:** `location.pathname` on GitHub Pages with `base href="/repo/"` returns `/repo/karty/avraam/`. map-engine.js uses this for:
+1. `loadFromHash()` — reads hash and sets active story/place
+2. `updateHash()` — uses `history.replaceState(null, '', location.pathname + hash)` — base href not accounted for
+
+The route.json uses relative paths for API calls. With base href, `fetch('route.json')` works (relative to page), but any navigation using `location.pathname` directly would fail.
+
+### P3-12 — baseGeoUrl without cache-busting ✅ CONFIRMED
+
+AvraamMap.astro: `baseGeoUrl: 'base.svg'` — no `?v=` hash. If base.svg changes, cached version persists.
+
+### P1-13 — theme.js GBS2 wiring ✅ RECHECKED — NOT A BUG
+
+Re-checked: site.js DOES handle `data-gbs2-theme` buttons via its GBS2 controls logic. Previous P1-13 entry (theme.js doesn't wire GBS2) was based on incomplete analysis. site.js has GBS2 controls handling at runtime. Only P1-14 (unwired GBS2 controls in Baptisty SeriesArticleLayout) remains.
+
+**Status change:** P1-13 → NOT A BUG. site.js handles GBS2 theme at runtime. Only GBS2 controls in Baptisty (SeriesArticleLayout) remain unwired (P1-14/15/16).
+
+### Bug Count: 61 bugs (9 P0, 20 P1, 19 P2, 13 P3)
+
+P0-NEW resolved (removed from SW precache, not a structural bug). P0 count: 9→8.
+Total: 61→60 bugs.
+
+**Fixed in project source:** V2-2, V2-3, V2-4, PS-06, P3-NEW, P0-NEW ✅
+**Fixed in AuditRepo (pending merge):** PS-01, P0-10, PS-06, PS-07, P0-7, P0-8
+**False positive closed:** P3-8, P1-13 (recheck)
+**Confirmed in current HEAD:** P2-17, P2-18, P3-12, P1-14/15/16, P0-3, P0-6, P1-5
