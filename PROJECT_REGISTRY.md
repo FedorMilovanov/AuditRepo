@@ -4,7 +4,7 @@
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Unified bug ledger with 40 confirmed bugs (9 P0, 13 P1, 15 P2, 5 P3). Cross-reference synthesis done. Repair order ready. |
+| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Unified bug ledger with 51 confirmed bugs (9 P0, 18 P1, 16 P2, 8 P3) + 2 FP closed. Cross-reference synthesis done. Repair order ready. |
 
 ## Status glossary
 
