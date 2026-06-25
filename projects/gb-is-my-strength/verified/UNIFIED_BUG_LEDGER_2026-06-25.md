@@ -257,3 +257,16 @@
 ### Playwright test environment:
 - Node.js v22.23.1, Playwright Chromium, static HTTP server
 - Tested root HTML (legacy), not Astro dist
+
+
+---
+
+## ROUND 3 PLAYWRIGHT FIXES — commit 30b2031
+
+| Bug | Status | Playwright evidence |
+|---|---|---|
+| P1-13 gbs2-theme wiring | ✅ FIXED | GillPart1 theme_works=true |
+| V2-1 Gill TOC anchors | ✅ FIXED | 7 broken anchors corrected |
+| V2-4 feed weekdays | ✅ FIXED | 9 pubDates corrected |
+| P1-2 sitemap incomplete | ❌ FALSE POSITIVE | All missing = noindex/protected |
+| P1-8 double initGillRail | ❌ FALSE POSITIVE | Only 1 call in ready() |
