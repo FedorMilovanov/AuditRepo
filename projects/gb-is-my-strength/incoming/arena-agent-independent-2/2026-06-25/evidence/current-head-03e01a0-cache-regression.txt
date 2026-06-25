@@ -1,0 +1,73 @@
+## HEAD
+03e01a0008de34d654175ea600cdf9f22b2351b4
+## main...origin/main
+
+## md5short actual asset hashes
+js/sw-register.js 318502c5
+js/floating-cluster-controller.js 58c2ea90
+
+## stale sw-register Astro refs (files)
+- src/components/about/AboutPageChrome.astro
+- src/components/article-pilots/krajne/KrajneBody.astro
+- src/components/article-pilots/rimlyanam7/Rimlyanam7Body.astro
+- src/components/articles/ArticlesPageFooter.astro
+- src/components/baptisty-rossii/BaptistyRossiiBody.astro
+- src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro
+- src/components/baptisty-rossii/BaptistyRossiiGoneniyaISovestBody.astro
+- src/components/baptisty-rossii/BaptistyRossiiIniciativnayaGruppaBody.astro
+- src/components/baptisty-rossii/BaptistyRossiiNochNaKureBody.astro
+- src/components/baptisty-rossii/BaptistyRossiiPeterburgskayaLiniyaBody.astro
+- src/components/baptisty-rossii/BaptistyRossiiPodpolnayaPechatBody.astro
+- src/components/baptisty-rossii/BaptistyRossiiSovetskayaNochBody.astro
+- src/components/baptisty-rossii/BaptistyRossiiSpravochnikBody.astro
+- src/components/baptisty-rossii/BaptistyRossiiVsehib1944Body.astro
+- src/components/baptisty-rossii/BaptistyRossiiYuzhnayaShtundaBody.astro
+- src/components/biografii/BiografiiPageFooter.astro
+- src/components/home/HomePageChrome.astro
+- src/components/nagornaya/index/NagornayaIndexPageFooter.astro
+- src/components/nagornaya/istochniki/NagornayaIstochnikiPageFooter.astro
+- src/components/nagornaya/nakhodki/NagornayaNakhodkiPageFooter.astro
+- src/components/nagornaya/seriya/NagornayaSeriyaBody.astro
+- src/components/nagornaya/seriya/NagornayaSeriyaPageFooter.astro
+- src/components/pastor-series/PastorSeriesPageChrome.astro
+- src/components/rodosloviye/RodosloviyeBody.astro
+
+## stale floating-cluster-controller Astro refs (files)
+- src/components/article-pilots/antisovetov/AntisovetovBody.astro
+- src/components/article-pilots/gill-context/GillContextPageChrome.astro
+- src/components/article-pilots/gill-part2/GillPart2PageChrome.astro
+- src/components/article-pilots/gill-part3/GillPart3PageChrome.astro
+- src/components/article-pilots/gill-spravochnik/GillSpravochnikPageChrome.astro
+- src/components/article-pilots/hermenevtika/HermenevtikaBody.astro
+- src/components/article-pilots/kod-da-vinchi/KodDaVinchiPageFooter.astro
+- src/components/article-pilots/krajne/KrajneBody.astro
+- src/components/article-pilots/rimlyanam7/Rimlyanam7Body.astro
+- src/components/nagornaya/chast-1/NagornayaChast1PageFooter.astro
+- src/components/nagornaya/chast-2/NagornayaChast2PageFooter.astro
+- src/components/nagornaya/chast-3/NagornayaChast3PageFooter.astro
+- src/components/nagornaya/chast-4/NagornayaChast4PageFooter.astro
+- src/components/nagornaya/chast-5/NagornayaChast5PageFooter.astro
+
+## cache-bust skip dirs
+    67	  const SKIP_DIRS = new Set([
+    68	    'node_modules', 'dist', 'out', 'build', 'coverage', 'reports', 'audit',
+    69	    '_build-tools', 'src', 'scripts', 'docs', 'migration'
+    70	  ]);
+
+## root/public HTML check (root updated, src not updated)
+public sw-register old count: 0
+src sw-register old count: 24
+src fc-controller old count: 14
+
+## current NEW-1/NEW-2 still present after pull
+SeriesArticleLayout alt="" count:
+118:    <img src={coverImg(data.slug)} alt="" width="600" height="315" />
+152:              <span class="gbs2-thumb"><img src={coverImg(part.data.slug)} alt="" width="600" height="315" loading="lazy" decoding="async" /></span>
+289:              <img src={coverImg(part.data.slug)} alt="" width="600" height="315" />
+Sitemap missing tags:
+https://gospod-bog.ru/karty/ MISSING lastmod,changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-1/ MISSING changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-2/ MISSING changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-3/ MISSING changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-4/ MISSING changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-5/ MISSING changefreq,priority
