@@ -1,0 +1,34 @@
+## HEAD
+03e01a0008de34d654175ea600cdf9f22b2351b4
+
+## feed.xml weekday/timezone check
+wrong weekday count 0 []
+timezone suffix counts {'+0000': 17, '+0300': 1}
+first pubDates ['<pubDate>Tue, 02 Jun 2026 00:00:00 +0000</pubDate>', '<pubDate>Mon, 01 Jun 2026 10:00:00 +0000</pubDate>', '<pubDate>Mon, 01 Jun 2026 09:00:00 +0000</pubDate>']
+
+## karty holding sitemap/search/noindex
+/karty/early-church/ sitemap False search False noindex True ignore True
+/karty/maccabim/ sitemap False search False noindex True ignore True
+/karty/melachim/ sitemap False search False noindex True ignore True
+/karty/pavel/ sitemap False search False noindex True ignore True
+/karty/revelation/ sitemap False search False noindex True ignore True
+/karty/shoftim/ sitemap False search False noindex True ignore True
+/karty/shvatim/ sitemap False search False noindex True ignore True
+/karty/yeshua/ sitemap False search False noindex True ignore True
+
+## package script usage for scripts called dead/orphaned
+about-visual-parity-audit about:visual-parity:audit
+article-mdx-pilot-audit astro:audit:article-mdx, astro:audit:article-mdx:no-build, astro:audit:article-mdx:strict
+articles-visual-parity-audit articles:visual-parity:audit
+baptisty-rossii-visual-parity-audit baptisty-rossii:visual-parity:audit
+baptisty-series-shadow-audit astro:audit:baptisty-series, astro:audit:baptisty-series:no-build
+catalogs-visual-parity-audit catalogs:visual-parity:audit
+check-route-migration-matrix migration:matrix:check
+extract-native-pilot NO package script
+extract-url-contract contract:extract, contract:extract:root, contract:extract:dist
+legacy-shadow-wrapper-audit astro:audit:legacy-wrappers, astro:audit:legacy-wrappers:no-build
+
+## site-layered load/precache
+dist html links site-layered: 0
+sw precache site-layered root+dist: 2
+-rw-r--r-- 1 user user 282846 Jun 25 19:11 dist/css/site-layered.css
