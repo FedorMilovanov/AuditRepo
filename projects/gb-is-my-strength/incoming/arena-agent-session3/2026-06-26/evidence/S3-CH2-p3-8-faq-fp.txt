@@ -1,0 +1,13 @@
+# S3-CH2 — P3-8 FALSE POSITIVE: FAQ accordion wired via enhancements.js (loaded on page)
+# SHA 02e1a0f | Thu Jun 25 23:10:51 UTC 2026
+
+$ grep -oE '<script[^>]*enhancements\.js[^>]*>' articles/20-antisovetov-pastoru/index.html
+<script src="../../js/enhancements.js?v=b3b77aa6" defer>
+
+$ grep -c 'faq-accordion__q").forEach' js/enhancements.js  (delegated click wiring present)
+1
+
+$ site-modules.js loaded on antisovetov? -> 0 (not needed; enhancements.js owns FAQ)
+
+Conclusion: repair-order #2 premise (FAQ dead without site-modules.js) is incorrect.
+enhancements.js opens/closes .faq-accordion__item via max-height transition + resize handler.

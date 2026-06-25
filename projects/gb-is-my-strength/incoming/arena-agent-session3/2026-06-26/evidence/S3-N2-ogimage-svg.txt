@@ -1,0 +1,17 @@
+# S3-N2 — baptisty og:image is SVG (image/svg+xml); no raster covers exist
+# SHA 02e1a0f | Thu Jun 25 23:10:33 UTC 2026
+
+$ grep -o 'og:image:type" content="[^"]*"' baptisty-rossii/*/index.html | sort | uniq -c
+     10 content="image/svg+xml"
+
+$ grep -oE 'og:image" content="[^"]*"' baptisty-rossii/noch-na-kure/index.html | head -1
+og:image" content="https://gospod-bog.ru/images/baptisty-rossii/cover-01-kura.svg"
+
+$ ls images/baptisty-rossii/cover-*.svg | wc -l  ;  ls images/baptisty-rossii/*.webp 2>/dev/null | wc -l
+svg covers: 11 | webp covers: 0
+
+$ ls -la images/baptisty-rossii/cover-01-kura.svg  (tiny placeholder, ~1.4KB)
+-rw-r--r-- 1 user user 1459 Jun 25 22:52 images/baptisty-rossii/cover-01-kura.svg
+
+$ grep -c 'image/svg' src/components/baptisty-rossii/BaptistyRossiiNochNaKurePageHead.astro  (source of truth)
+1

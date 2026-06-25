@@ -1,0 +1,52 @@
+# S3-CH1 — P1-9 STALE: cache-bust.js and audit-pro.js asset lists are IDENTICAL on HEAD
+# SHA 02e1a0f | Thu Jun 25 23:10:51 UTC 2026
+
+## cache-bust.js ASSETS:
+css/command-palette.css
+css/floating-cluster.css
+css/home.css
+css/mobile-hotfix.css
+css/nagornaya-mobile-toc.css
+css/site-layered.css
+css/site.css
+fonts/fonts.css
+js/bookmark-engine.js
+js/enhancements.js
+js/floating-cluster-controller.js
+js/glossary.js
+js/highlights.js
+js/nagornaya-mobile-toc.js
+js/scroll-perf.js
+js/search.js
+js/site-modules.js
+js/site-utils.js
+js/site.js
+js/sw-register.js
+nagornaya/tw.min.css
+
+## audit-pro.js CACHE_BUST_ASSETS:
+css/command-palette.css
+css/floating-cluster.css
+css/home.css
+css/mobile-hotfix.css
+css/nagornaya-mobile-toc.css
+css/site-layered.css
+css/site.css
+fonts/fonts.css
+js/bookmark-engine.js
+js/enhancements.js
+js/floating-cluster-controller.js
+js/glossary.js
+js/highlights.js
+js/nagornaya-mobile-toc.js
+js/scroll-perf.js
+js/search.js
+js/site-modules.js
+js/site-utils.js
+js/site.js
+js/sw-register.js
+nagornaya/tw.min.css
+
+## diff (cache-bust only):
+## diff (audit-pro only):
+## (empty diffs = identical lists)

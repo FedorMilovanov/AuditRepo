@@ -1,0 +1,19 @@
+# S3-N3 — series-cards.js half-removed (gone from cache-bust/sw, still in audit-pro)
+# SHA 02e1a0f | Thu Jun 25 23:10:33 UTC 2026
+
+$ grep -c series-cards scripts/cache-bust.js  -> 0
+$ grep -c series-cards sw.js                  -> 0
+$ grep -c series-cards scripts/audit-pro.js   -> 5
+
+$ grep -n series-cards scripts/audit-pro.js
+59:  'js/series-cards.js',
+4143:  const seriesJs = fs.readFileSync(path.join(ROOT, 'js/series-cards.js'), 'utf8');
+4145:    offenders.push('js/series-cards.js: gb-strip__toggle template contains <a>');
+4249:    // dead script: series-cards.js is catalog-only since r99
+4250:    if (/js\/series-cards\.js/.test(html)) probs.push('series-cards.js linked on a gbs-world page (dead weight)');
+
+$ ls -la js/series-cards.js  (still on disk)
+-rw-r--r-- 1 user user 2642 Jun 25 22:52 js/series-cards.js
+
+$ grep -rl 'series-cards.js' --include='*.html' --include='*.astro' .  (loaded by which pages?)
+(none — orphaned)

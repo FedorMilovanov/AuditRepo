@@ -1,0 +1,25 @@
+# S3-CH3 — BUG-001 (fc class mismatch) FIXED: SingleArticleCluster carries BOTH selectors
+# SHA 02e1a0f | Thu Jun 25 23:10:51 UTC 2026
+
+$ grep -nE 'fc-single-active|gb-cluster-single-active' src/components/ui/floating-cluster/SingleArticleCluster.astro
+484:    body.fc-single-active .article-main {
+492:     (BUG-001: контроллер ставит `gb-cluster-single-active`, а CSS
+493:     исторически смотрит на `fc-single-active` — двойной префикс
+495:  body.fc-single-active #reading-progress,
+496:  body.fc-single-active #section-label,
+497:  body.fc-single-active #back-to-top,
+498:  body.fc-single-active #themeToggle,
+499:  body.fc-single-active #tocSidebar,
+500:  body.fc-single-active #bottomBar,
+501:  body.fc-single-active #btocOverlay,
+502:  body.gb-cluster-single-active #reading-progress,
+503:  body.gb-cluster-single-active #section-label,
+504:  body.gb-cluster-single-active #back-to-top,
+505:  body.gb-cluster-single-active #themeToggle,
+506:  body.gb-cluster-single-active #tocSidebar,
+507:  body.gb-cluster-single-active #bottomBar,
+508:  body.gb-cluster-single-active #btocOverlay {
+
+$ controller class added:
+gb-cluster-single-active
+(CSS now matches controller's gb-cluster-single-active)

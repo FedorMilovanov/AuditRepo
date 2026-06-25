@@ -1,0 +1,25 @@
+# S3-N1 — baptisty BreadcrumbList missing in JSON-LD
+# SHA 02e1a0f | Thu Jun 25 23:10:20 UTC 2026
+
+$ for d in baptisty-rossii/*/; do grep -c BreadcrumbList $d/index.html; done
+baptisty-rossii/dva-sezda-1884/ BreadcrumbList=0
+baptisty-rossii/goneniya-i-sovest/ BreadcrumbList=0
+baptisty-rossii/iniciativnaya-gruppa/ BreadcrumbList=0
+baptisty-rossii/noch-na-kure/ BreadcrumbList=0
+baptisty-rossii/peterburgskaya-liniya/ BreadcrumbList=0
+baptisty-rossii/podpolnaya-pechat/ BreadcrumbList=0
+baptisty-rossii/sovetskaya-noch/ BreadcrumbList=0
+baptisty-rossii/spravochnik/ BreadcrumbList=0
+baptisty-rossii/vsehib-1944/ BreadcrumbList=0
+baptisty-rossii/yuzhnaya-shtunda/ BreadcrumbList=0
+
+$ python3 parse JSON-LD types in noch-na-kure:
+block 0: ['Article', 'Person', 'Organization']
+block 1: ['WebSite', 'SearchAction', 'EntryPoint']
+block 2: ['SpeakableSpecification']
+
+$ grep -c 'class="breadcrumb' baptisty-rossii/noch-na-kure/index.html  (DOM breadcrumb present)
+1
+
+$ grep -c BreadcrumbList src/components/baptisty-rossii/BaptistyRossiiNochNaKurePageHead.astro  (source of truth)
+0

@@ -1,0 +1,184 @@
+# Agent Audit Report
+
+## Meta
+- Project: gb-is-my-strength
+- Source repo: https://github.com/FedorMilovanov/gb-is-my-strength
+- Agent: arena-agent-session3
+- Date: 2026-06-26
+- Audited branch: main
+- Audited SHA: `02e1a0ff834dd8445ea533ccb12e632a01424447`
+- Current HEAD at start: `02e1a0f`
+- Current HEAD at end: `02e1a0f` (no source changes made — audit only)
+- Environment: Arena.ai Agent Mode / E2B microVM, shallow clone
+- Build mode: **source / legacy-root artifact** (no dist build performed)
+- Browser / device if used: none (static + JSON-LD parse witnesses only)
+
+> **Headline:** The canonical ledger is in very good shape on HEAD `02e1a0f`. Most P0/P1 items
+> are fixed or correctly closed. I confirm **2 still-live SEO bugs on baptisty-rossii** with
+> source+artifact witnesses, **downgrade/close several open repair-order items as stale/fixed**,
+> and flag **1 tooling inconsistency** (series-cards still half-referenced in audit-pro.js).
+
+---
+
+## 1. New Findings
+
+### Finding S3-N1
+- Title: **All 11 baptisty-rossii pages missing `BreadcrumbList` in JSON-LD (DOM breadcrumb exists, structured-data does not)**
+- Severity: **P2** (SEO — rich-result navigation; not user-facing breakage)
+- Route(s): `/baptisty-rossii/` hub + 10 articles (`noch-na-kure`, `yuzhnaya-shtunda`, `dva-sezda-1884`, `peterburgskaya-liniya`, `goneniya-i-sovest`, `sovetskaya-noch`, `vsehib-1944`, `iniciativnaya-gruppa`, `podpolnaya-pechat`, `spravochnik`)
+- Source file(s): `src/components/baptisty-rossii/BaptistyRossii*PageHead.astro` (11 components — source of truth); manifested in legacy `baptisty-rossii/*/index.html`
+- Observed on SHA: `02e1a0f`
+- Repro steps: `grep -c BreadcrumbList baptisty-rossii/noch-na-kure/index.html` → 0; parse all `application/ld+json` blocks → types present are `Article/Person/Organization`, `WebSite/SearchAction/EntryPoint`, `SpeakableSpecification`. No `BreadcrumbList`.
+- Expected: Each article emits a 3-level `BreadcrumbList` (Home → Серия «Баптисты России» → статья), matching the visible DOM `.breadcrumb` and consistent with `articles/` + `nagornaya/` which DO carry breadcrumb JSON-LD.
+- Actual: DOM breadcrumb present (`grep -c 'class="breadcrumb' …` → 1) but **no `BreadcrumbList` structured data** on any of the 11 pages.
+- Evidence: see `evidence/S3-N1-breadcrumb.txt`
+- Confidence: high
+- Verification level: **L2** (direct source witness in Astro component + artifact witness in legacy HTML; single agent but two independent angles)
+- Suggested repair lane: `seo` (or fold into a baptisty-seo lane with S3-N2)
+- Do not mix with: floating-cluster / cache-bust lanes
+
+### Finding S3-N2
+- Title: **All 11 baptisty-rossii pages use SVG `og:image` (`image/svg+xml`) — social previews will be blank**
+- Severity: **P2** (SEO/social sharing; no functional breakage)
+- Route(s): `/baptisty-rossii/` hub + 10 articles
+- Source file(s): `src/components/baptisty-rossii/BaptistyRossii*PageHead.astro` (`og:image:type` = `image/svg+xml`); images at `images/baptisty-rossii/cover-*.svg`
+- Observed on SHA: `02e1a0f`
+- Repro steps: `grep -o 'og:image:type" content="[^"]*"' baptisty-rossii/*/index.html` → all `image/svg+xml`; `grep og:image …/noch-na-kure/index.html` → `…/cover-01-kura.svg`. `ls images/baptisty-rossii/*.webp` → none (only 10 SVGs, 1.4–1.5 KB each).
+- Expected: 1200×630 raster (WebP/JPG/PNG) og:image. Facebook, Twitter/X, Telegram, VK, WhatsApp do **not** render SVG in link previews → preview shows no image.
+- Actual: SVG-only covers; no raster variant exists in repo.
+- Evidence: see `evidence/S3-N2-ogimage-svg.txt`
+- Confidence: high
+- Verification level: **L2** (source witness Astro component + artifact witness HTML + filesystem witness: no webp/jpg exists)
+- Suggested repair lane: `seo` + needs an asset-generation step (owner/design input: generate 11 raster covers 1200×630)
+- Do not mix with: code lanes — this needs binary asset creation, not just markup
+
+### Finding S3-N3
+- Title: **`series-cards.js` half-removed: gone from `cache-bust.js`/`sw.js` but still referenced 5× in `audit-pro.js` (incl. live `fs.readFileSync` + a dead-weight check), while the file is loaded by 0 pages**
+- Severity: **P3** (tooling inconsistency / dead code; risk = audit-pro reads a file the rest of the pipeline treats as removed)
+- Route(s): n/a (build tooling)
+- Source file(s): `scripts/audit-pro.js` (lines 59, 4143-4145, 4249-4250), `js/series-cards.js` (still on disk, 2642 bytes)
+- Observed on SHA: `02e1a0f`
+- Repro steps:
+  - `grep -c series-cards scripts/cache-bust.js` → 0
+  - `grep -c series-cards sw.js` → 0
+  - `grep -n series-cards scripts/audit-pro.js` → lines 59 (ALLOWED_JS), 4143 `fs.readFileSync('js/series-cards.js')`, 4145 offender push, 4249-4250 dead-script check
+  - `grep -rl 'series-cards.js' --include='*.html' --include='*.astro' .` → (none)
+- Expected: A single source of truth for the asset list (the verifier's own `repair-order-2026-06-26-top-verifier.md` recommends a shared `scripts/asset-list.js`). After session2/round12 removed it from cache-bust/sw, audit-pro should be consistent — either fully drop series-cards or keep the file intentionally with a documented reason.
+- Actual: `series-cards.js` is orphaned (loaded nowhere) yet `audit-pro.js` still hard-reads it; if the file is ever deleted, `audit-pro.js` line 4143 `readFileSync` will throw.
+- Evidence: see `evidence/S3-N3-series-cards.txt`
+- Confidence: high
+- Verification level: **L2** (source witness across 3 scripts)
+- Suggested repair lane: `cleanup` — same lane as canonical **P2-14**; effectively the unfinished tail of P2-14.
+- Do not mix with: SEO findings
+
+---
+
+## 2. Confirmations of Existing Findings
+
+### Confirm P1-14 / P1-15 / P1-16 (GBS2 baptisty controls) — but note partial regression risk
+- Target report: `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` (R11/R12 marked FIXED via `js/gbs2-baptist-controls.js`)
+- My evidence: not re-deep-verified at runtime this session. Source still shows fc-controller now wired on baptisty bodies (per HEAD lane `fix-p0-p1-batch-2026-06-26`, P1-14 batch). **Recommend a browser witness** before final archive — these were fixed across multiple rounds with overlapping mechanisms (gbs2-baptist-controls.js AND fc-controller P1-14), which is a confusion risk.
+- Same bug / related / stronger root cause: related
+- Recommended status: keep `fixed-current` but add note "needs one browser witness to close"
+
+### Confirm P0-7 / P0-8 / P0-NEW (SW precache 404 for site-layered.css + site-modules.js) — FIXED on HEAD
+- Target finding: `site-layered.css` + `site-modules.js` in `sw.js` PRECACHE_ASSETS but not in dist
+- My evidence: `grep -c site-layered sw.js` → **0**; `grep -c site-modules sw.js` → 0 (verified-source on HEAD). Also `site-modules.js` is back in `cache-bust.js` ASSETS (used by pages that load it). No phantom precache.
+- Recommended status: `fixed-current` confirmed on `02e1a0f` (matches ledger; reconfirmed).
+
+---
+
+## 3. Challenges / Disputes
+
+### Challenge: repair-order-2026-06-26-top-verifier.md item #1 — "P1-9 audit-pro vs cache-bust divergence"
+- Target report: `verified/repair-order-2026-06-26-top-verifier.md` (lists P1-9 as `confirmed-current` / repair-ready)
+- Target finding: `cache-bust.js` has `nagornaya-mobile-toc.css, glossary.js, series-cards.js, site-modules.js` but `audit-pro.js` does not.
+- Reason for challenge: **Stale on current HEAD.** The two **cache-bust asset lists are now identical** (21 entries each). The repair-order's claimed divergence list is wrong on `02e1a0f`:
+  - `cache-bust.js ASSETS` and `audit-pro.js CACHE_BUST_ASSETS` both contain `css/nagornaya-mobile-toc.css`, `js/glossary.js`, `js/site-modules.js`.
+  - Neither cache-bust list contains `series-cards.js` anymore (it lives only in audit-pro's *separate* `ALLOWED_JS` set + dead-weight check — that's a different list, see S3-N3, downgrade to P3).
+- Current HEAD evidence: `comm -23/-13` of both extracted arrays → only diff is `fonts/fonts.css` present in cache-bust list comment-ordering; net asset diff = none meaningful. See `evidence/S3-CH1-p1-9-stale.txt`.
+- Recommended status: **P1-9 → `fixed-current` / stale-on-current-head.** The remaining *real* residue is the series-cards inconsistency = S3-N3 (P3), not a P1/P2 divergence.
+
+### Challenge: repair-order item #2 — "P3-8 faq-accordion.js not loaded → FAQ dead"
+- Target finding: `articles/20-antisovetov-pastoru/index.html` has 51 FAQ markup matches but no `faq-accordion.js` / `site-modules.js` → accordion dead.
+- Reason for challenge: **False-positive on current HEAD.** FAQ is wired by `js/enhancements.js`, which **is** loaded on the page and **does** delegate clicks on `.faq-accordion__q`.
+- Current HEAD evidence:
+  - `grep -oE '<script[^>]*enhancements\.js[^>]*>' articles/20-antisovetov-pastoru/index.html` → `<script src="../../js/enhancements.js?v=b3b77aa6" defer>`
+  - `js/enhancements.js` contains `document.querySelectorAll(".faq-accordion__q").forEach(function(e){e.addEventListener("click", … toggles .is-open / max-height …)})` — full accordion open/close + resize handler.
+  - So the premise "FAQ accordion only works via site-modules.js bundle" is incorrect; enhancements.js owns it. See `evidence/S3-CH2-p3-8-faq-fp.txt`.
+- Recommended status: **P3-8 → `false-positive`** (FAQ functions via enhancements.js). Aligns with Round 14's own note that `faq-accordion.js` is dead code — but the repair-order #2 wrongly concluded the *feature* is broken. Confirm with one browser click witness if possible.
+
+### Challenge: legacy BUGS_FOUND_2026-06-25 "BUG-001" (fc-single-active vs gb-cluster-single-active) — already fixed
+- Target finding (source-repo doc, not AuditRepo ledger): CSS uses `body.fc-single-active`, controller adds `gb-cluster-single-active` → no intersection → duplicate controls not hidden.
+- Reason for challenge: **Fixed on HEAD.** `SingleArticleCluster.astro` now carries BOTH selector families (lines 495-501 `fc-single-active` AND lines 502-508 `gb-cluster-single-active`) for the same hide rules. The controller class therefore matches.
+- Current HEAD evidence: `grep -nE 'fc-single-active|gb-cluster-single-active' src/components/ui/floating-cluster/SingleArticleCluster.astro` shows dual selectors + an inline comment acknowledging BUG-001. See `evidence/S3-CH3-bug001-fixed.txt`.
+- Recommended status: if this finding ever enters the ledger → open as `fixed-current` immediately. (Listed here so the verifier doesn't re-import it from the source-repo doc.)
+
+---
+
+## 4. Duplicate / Merge Proposals
+
+### Merge proposal
+- Finding A: **S3-N3** (series-cards.js residue in audit-pro.js)
+- Finding B: canonical **P2-14** (series-cards.js dead code)
+- Why same root cause: identical asset (`js/series-cards.js`) orphaned after r96-r99 series-UI removal. P2-14 was marked fixed when removed from cache-bust/sw, but the cleanup is **incomplete** — audit-pro.js still references it (incl. a live `readFileSync`). S3-N3 is the unfinished tail of P2-14, not a new root cause.
+- Canonical ID suggestion: reopen **P2-14** as `partially-fixed` and absorb S3-N3, OR keep S3-N3 as the closing sub-task of P2-14.
+
+---
+
+## 5. Severity Proposals
+
+- Target bug: **P1-9** (audit-pro vs cache-bust divergence)
+- Current severity: P1 (P2 in top-verifier repair-order)
+- Proposed severity: **close as fixed-current** (asset lists identical on HEAD). Residual = S3-N3 at **P3**.
+- Evidence: `evidence/S3-CH1-p1-9-stale.txt`
+
+- Target bug: **S3-N1 / S3-N2** (baptisty SEO)
+- Current severity: n/a (new)
+- Proposed severity: **P2** each (SEO completeness, no functional breakage; S3-N2 has higher real-world social-sharing impact and an asset-generation cost, so could be argued P1 for marketing).
+- Evidence: `evidence/S3-N1-breadcrumb.txt`, `evidence/S3-N2-ogimage-svg.txt`
+
+---
+
+## 6. Repair Lane Suggestions
+
+- Bug IDs: **S3-N1, S3-N2** → lane `seo-baptisty`
+  - Why together: same 11 components (`BaptistyRossii*PageHead.astro`), same review surface (structured data + OG).
+  - What must NOT be mixed: no JS/runtime changes; S3-N2 additionally needs a binary-asset step (11× 1200×630 raster) — keep asset generation as an explicit sub-task with owner sign-off on imagery.
+- Bug ID: **S3-N3 (= P2-14 tail)** → lane `cleanup`
+  - Why together with the verifier's existing cleanup lane: dead-code asset-list hygiene.
+  - What must NOT be mixed: don't bundle with SEO; don't delete `js/series-cards.js` without also removing audit-pro line 4143 `readFileSync` or it throws.
+
+---
+
+## 7. Reverify Notes
+
+| Bug | Current HEAD | Result | Evidence |
+|---|---|---|---|
+| P0-7 / P0-8 / P0-NEW (SW precache phantoms) | `02e1a0f` | **fixed-current** | `grep site-layered sw.js`→0; `grep site-modules sw.js`→0 |
+| P1-9 (audit-pro↔cache-bust divergence) | `02e1a0f` | **fixed-current / stale** | both arrays identical (21 entries) — `evidence/S3-CH1` |
+| P3-8 (FAQ dead) | `02e1a0f` | **false-positive** | enhancements.js loaded + wires `.faq-accordion__q` — `evidence/S3-CH2` |
+| P2-14 (series-cards dead) | `02e1a0f` | **partially-fixed** | removed from cache-bust/sw, still in audit-pro — `evidence/S3-N3` |
+| BUG-001 (fc class mismatch, src-repo doc) | `02e1a0f` | **fixed-current** | dual selectors in SingleArticleCluster.astro — `evidence/S3-CH3` |
+| Old SEO P0: `{jsonLd}` literal on /hard-texts/ | `02e1a0f` | **fixed-current** | full JSON-LD scan: 0 parse problems / 0 placeholders across all index.html |
+| Old SEO P0: `/karty/ishod/` `]}}` syntax error | `02e1a0f` | **fixed-current** | `grep -c ']}}' karty/ishod/index.html`→0; JSON-LD parses clean |
+| Old SEO P1: baptisty Article missing datePublished/publisher | `02e1a0f` | **fixed-current** | Article JSON-LD now has author, publisher, datePublished, dateModified, image (all 10) |
+| Old SEO P1: nagornaya/chast-* missing priority/changefreq in sitemap | `02e1a0f` | **fixed-current** | all 5 chast entries have `<priority>` + `<changefreq>` |
+
+---
+
+## 8. Notes for Verifier
+
+1. **State of the project is healthy.** On HEAD `02e1a0f` the high-severity ledger items (P0 cache/SW, JSON-LD validity, premium controls) are fixed or correctly closed. My pass found **no new P0/P1 functional breakage**.
+2. **The canonical `repair-order-2026-06-26-top-verifier.md` is now partly stale** — its 3 "repair-ready" items resolve as: P1-9 = fixed-current, P3-8 = false-positive, P2-14 = partially-fixed (tail = S3-N3). Recommend regenerating that repair-order or marking it superseded.
+3. **Net-new actionable work** is just 2 SEO gaps on baptisty (S3-N1 breadcrumb JSON-LD, S3-N2 SVG og:image) + 1 cleanup tail (S3-N3). All P2/P3.
+4. **Witness gaps I could not close** (sandbox: shallow clone, no dist build, no browser): runtime confirmation of P1-14/15/16 baptisty controls and P3-8 FAQ click. These are source/false-positive-confirmed but a browser witness would let you archive them cleanly per the multi-witness retirement rule.
+5. Build mode caveat per `SANDBOX-ENV` §"Build-mode trap": I audited **source + legacy-root artifacts**, not production-like dist. SEO findings S3-N1/N2 live in the Astro source-of-truth components (`*PageHead.astro`), so they will appear in dist regardless of strangler copy — low risk of build-mode false positive. S3-N3 is pure tooling (build-mode independent).
+
+---
+
+## Proposal statuses
+proposal-open → proposal-supported → proposal-accepted (bug moves)
+proposal-open → proposal-conflicted → resolved in conflicts/
+proposal-open → proposal-rejected
+proposal-open → proposal-superseded
