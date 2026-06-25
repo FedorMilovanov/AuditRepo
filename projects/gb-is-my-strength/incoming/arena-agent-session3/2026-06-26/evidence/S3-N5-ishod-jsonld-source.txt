@@ -1,0 +1,22 @@
+# S3-N5 / CORRECTION — /karty/ishod/ JSON-LD extra '}' lives in ASTRO SOURCE (dist), only fixed in legacy root
+# SHA 02e1a0f | Thu Jun 25 23:19:57 UTC 2026
+
+## SELF-CORRECTION of my Round-1 reverify
+In REPORT.md section 7 I marked 'old SEO P0 /karty/ishod/ ]}} syntax error -> fixed-current'
+based on the LEGACY ROOT artifact (grep ']}}' karty/ishod/index.html -> 0). That was the build-mode trap:
+legacy root is patched, but production dist is regenerated from the Astro source, which is STILL broken.
+
+## Source witness (corroborates dist-contract-verifier N-2026-06-26-04)
+File: src/components/karty/ishod/IshodPageHead.astro, line 39
+Defect: Organization node closes twice -> ..."sameAs":[...]}},{"@type":"WebSite"  (extra } before WebSite)
+
+$ grep -c ']}}' src/components/karty/ishod/IshodPageHead.astro -> 1
+$ grep -c ']}}' karty/ishod/index.html (legacy root) -> 0
+
+## JSON.parse of the Astro inline block:
+  PARSE ERROR: Expecting ',' delimiter: line 1 column 345 (char 344)
+
+## Conclusion
+Old P0-02 must be REOPENED: status = confirmed-current in Astro source (dist), fixed only in legacy root.
+Fix location = src/components/karty/ishod/IshodPageHead.astro (source of truth), NOT karty/ishod/index.html.
+Same dual-representation trap likely affects other karty/*PageHead.astro — recommend full sweep of src/components/karty/*/.

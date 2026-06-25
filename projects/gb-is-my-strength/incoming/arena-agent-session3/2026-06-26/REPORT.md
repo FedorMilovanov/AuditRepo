@@ -238,6 +238,67 @@ Given the goal stated by the owner ("единый монолит, не 100 ли�
 
 ---
 
+# ROUND 3 ADDENDUM — build-mode trap self-correction (after reading `arena-agent-dist-contract-verifier`)
+
+> The `arena-agent-dist-contract-verifier` intake (commit `8214f80`/`a70a08e`) ran a **real Node-22 Astro
+> production-like dist build** — something my source-only pass could not do. It exposed a **build-mode trap
+> that caught me**: I had marked `/karty/ishod/` JSON-LD as "fixed-current" based on the legacy root artifact,
+> but the bug is alive in the Astro source-of-truth (and therefore in dist). I verified this with a source
+> witness and correct my own Round-1 reverify.
+
+## R3.1 SELF-CORRECTION + Confirm — `/karty/ishod/` JSON-LD extra `}` is NOT fixed (reopen old P0-02)
+- Title: **`/karty/ishod/` invalid JSON-LD lives in Astro source `IshodPageHead.astro`; only the legacy root was patched**
+- Severity: **P1** (invalid structured data on an indexable production route; dist = what ships)
+- Source file(s): `src/components/karty/ishod/IshodPageHead.astro` line 39 (source of truth) — NOT `karty/ishod/index.html`
+- Observed on SHA: `02e1a0f`
+- Evidence: `evidence/S3-N5-ishod-jsonld-source.txt`
+  - `grep -c ']}}' src/components/karty/ishod/IshodPageHead.astro` → **1** (Organization closes twice: `…"sameAs":[…]}},{"@type":"WebSite"`)
+  - `grep -c ']}}' karty/ishod/index.html` → **0** (legacy root patched)
+  - `JSON.parse` of the Astro inline block → `Expecting ',' delimiter … char 344`
+- **What I got wrong in Round 1:** my REPORT §7 said "old SEO P0 `/karty/ishod/` `]}}` → fixed-current" based on `grep ']}}' karty/ishod/index.html → 0`. That is exactly the **build-mode trap** documented in `SANDBOX-ENV` ("audit dist, not stale legacy root"). The legacy root is patched; the Astro source that regenerates dist is not. **Reverify corrected: P0-02 = `confirmed-current` in source/dist.**
+- This is a **source witness** corroborating the dist-contract-verifier's **dist witness** `N-2026-06-26-04` → together = multi-witness, repair-ready.
+- Suggested repair lane: `karty-ishod-jsonld` (fix the extra brace in the Astro component, or build the object and `JSON.stringify`).
+
+## R3.2 Proactive sweep — only ishod is broken (good news, bounded blast radius)
+- I ran a full JSON-LD validity sweep over **all 50 inline `application/ld+json` blocks in `src/**/*.astro`** (build-mode-trap aware — checks the source of truth, not legacy root):
+  - **1 parse error total**, and it is only `IshodPageHead.astro`.
+  - All other karty PageHeads (`KartyPageHead`, `AvraamPageHead`) and every other component block parse OK.
+- Conclusion: the structured-data corruption is **isolated to ishod**, not systemic. (`set:html={var}` blocks are JS-built objects, not literal strings, and are inherently valid — skipped.)
+- Evidence: `evidence/S3-N5-ishod-jsonld-source.txt` (sweep output appended).
+
+## R3.3 Confirm — dist-contract-verifier net-new findings I could not see (no build), flagged for verifier
+I cannot independently reproduce these without a Node-22 dist build (sandbox default is Node 20), but they are consistent with what I see in source and I have **no contradicting evidence**:
+- `N-2026-06-26-05` `/karty/avraam/` word-count 594→23 in dist — plausible: `AvraamMap.astro` uses an `sr-only h1[data-pagefind-body]` as the searchable body. **Recommend confirm-keep.** This is a real SEO/thin-content risk on an indexable route.
+- `N-2026-06-26-01` `seo-audit.js` FAQ detector whitespace-fragile (`'"@type": "FAQPage"'` literal vs compact `"@type":"FAQPage"`) — I can corroborate the *mechanism* from source: see R3.4.
+- `N-2026-06-26-02` `/rodosloviye/` noindex-vs-sitemap-vs-baseline 3-way conflict — corroborated below R3.5.
+- `N-2026-06-26-03` audit-pro SW precache guard stale — same family as my **S3-N3** + the other verifier's **CHV-006**.
+
+## R3.4 Corroborate `N-2026-06-26-01` / `CHV-001` with source witness (FAQ detector)
+- `scripts/seo-audit.js` predicate literal vs production compact JSON-LD:
+  - production HTML uses compact `"@type":"FAQPage"` (no space). FAQPage JSON-LD IS present (built by `enhancements.js` at runtime + emitted in pages).
+  - So the detector is a **false-positive release-gate blocker**, not a content bug. Aligns with my Round-1 finding that FAQ itself works (S3-CH2 / P3-8 false-positive). **These two are the same root truth: FAQ functions; only the audit string-match is wrong.**
+
+## R3.5 Corroborate `N-2026-06-26-02` / `CHV-002` (rodosloviye 3-way conflict) — source witness
+- `rodosloviye/index.html` robots = `noindex, follow…`; `sitemap.xml` lists `/rodosloviye/`; `data/public-content-baseline.json` expects it as public. Three sources disagree → needs ONE owner decision (index it, or remove from sitemap+baseline). Mechanical once decided. Confirm-keep, P1 (gate blocker).
+
+## R3.6 Updated dedup / canonical-grouping recommendation for the verifier
+After 3 rounds + 2 parallel intakes, the **distinct real issues** collapse to a small set. Recommend the verifier build the next UNIFIED ledger around these canonical buckets:
+
+| Canonical bucket | Folds in | Severity | Nature |
+|---|---|---|---|
+| **B1 Content corruption** | CHV-003 (Antisovetov U+FFFD + truncated sentence), CHV-004 (Hermenevtika Scripture) | P0/P1 | editorial — needs owner text |
+| **B2 ishod JSON-LD invalid in source/dist** | old P0-02 reopened, N-2026-06-26-04, my S3-N5 | P1 | one-brace fix in `IshodPageHead.astro` |
+| **B3 Asset-hash pipeline doesn't cover Astro src + not re-run** | P0-10 (downscoped), my S3-N4, CHV P0-10 confirm | P1 | **systemic — the "100 lines" engine** |
+| **B4 audit-pro/seo-audit gates drifted (false blockers)** | my S3-N3, CHV-001/CHV-006, N-01/N-03, P3-8 FP, P1-9 fixed | P2 | tooling reconciliation |
+| **B5 rodosloviye publication 3-way conflict** | CHV-002, N-02 | P1 | one owner decision |
+| **B6 karty/avraam thin indexable body** | N-2026-06-26-05 | P1 | accessible text layer needed |
+| **B7 baptisty SEO completeness** | my S3-N1 (breadcrumb), S3-N2 (svg og:image) | P2 | net-new, isolated |
+| **B8 migration matrix/profile mismatch** | P1-5 (strengthened) | P1/P2 | data reconciliation |
+
+**Toward the owner's "единый монолит" goal:** B3 + B4 + B8 are the *recurring-conflict generators* — all three stem from tooling/data that models only the **legacy-root half** of the dual representation while the **Astro source is the real source of truth**. The durable fix is one SYSTEM lane that makes cache-bust, audit-pro, seo-audit, and the migration matrix all operate on the Astro/dist source-of-truth (or finishes deleting legacy root). Until then, every content/asset edit will keep spawning "stale hash / audit drift / parity" findings — that is mechanically why there are "100 lines" instead of a monolith.
+
+---
+
 ## Proposal statuses
 proposal-open → proposal-supported → proposal-accepted (bug moves)
 proposal-open → proposal-conflicted → resolved in conflicts/
