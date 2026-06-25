@@ -1,0 +1,23 @@
+# Commands run by arena-agent-final-polish-verifier — 2026-06-25
+
+# AuditRepo structure
+python3 scripts/validate_audit_repo.py
+python3 scripts/check_auditrepo_structure.py
+
+# Source repo final-polish candidate (gb-is-my-strength)
+node -v                                      # v22.12.0
+npm ci
+npm run cache-bust
+npm run astro:build
+node scripts/copy-legacy-to-dist.js --omit-build-only
+npx playwright install chromium
+sudo npx playwright install-deps chromium
+# custom Playwright smoke for Hermeneutics + Gill context premium controls
+node --check js/floating-cluster-controller.js
+git diff --check
+npm run astro:audit:article-mdx:strict
+npm run gill:context:visual-parity:audit
+npm run gill:spravochnik:visual-parity:audit
+npm run data:consistency
+npm run native:runtime:audit:strict
+npm run validate:static-publication
