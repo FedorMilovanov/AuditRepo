@@ -1,0 +1,202 @@
+## HEAD
+03e01a0008de34d654175ea600cdf9f22b2351b4
+
+## Baptisty article GBS2 browser check
+{
+  "clicked": {
+    "cTheme": {
+      "ok": true
+    },
+    "cFont": {
+      "ok": true
+    },
+    "cShare": {
+      "ok": true
+    },
+    "cSearch": {
+      "ok": true
+    },
+    "cBbar": {
+      "ok": true
+    }
+  },
+  "initial": {
+    "hasEnh": true,
+    "hasToc": true,
+    "tocItems": 8,
+    "sheetTocText": "01Молоканский поиск до баптистского имени02Кальвейт, Деляков и фраза о трёх народах03Что говорит первичный источник 1869 года04Что здесь нельзя превращать в миф",
+    "htmlDark": false,
+    "bodyFont": "18px",
+    "sheetHidden": "true",
+    "cpOpen": false,
+    "activeEl": "gbs-world gb-fc-active"
+  },
+  "afterTheme": {
+    "hasEnh": true,
+    "hasToc": true,
+    "tocItems": 8,
+    "sheetTocText": "01Молоканский поиск до баптистского имени02Кальвейт, Деляков и фраза о трёх народах03Что говорит первичный источник 1869 года04Что здесь нельзя превращать в миф",
+    "htmlDark": true,
+    "bodyFont": "18px",
+    "sheetHidden": "true",
+    "cpOpen": false,
+    "activeEl": "gbs2-ctl"
+  },
+  "afterFont": {
+    "hasEnh": true,
+    "hasToc": true,
+    "tocItems": 8,
+    "sheetTocText": "01Молоканский поиск до баптистского имени02Кальвейт, Деляков и фраза о трёх народах03Что говорит первичный источник 1869 года04Что здесь нельзя превращать в миф",
+    "htmlDark": true,
+    "bodyFont": "18.72px",
+    "sheetHidden": "true",
+    "cpOpen": false,
+    "activeEl": "gbs2-ctl"
+  },
+  "afterShare": {
+    "dialogs": [
+      {
+        "cls": "gbs2-sheet-panel",
+        "id": "",
+        "hidden": false,
+        "aria": null,
+        "text": "СерияБаптисты России×ЧастиОглавление1. Воронин и ночь на Куре18 мин2. Южная штунда20 мин3. 1884: два"
+      },
+      {
+        "cls": "",
+        "id": "share-dialog",
+        "hidden": false,
+        "aria": null,
+        "text": "ПоделитьсяTelegramWhatsAppВКонтактеFacebookМАКСОдноклассникиСкопироватьhttps://gospod-bog.ru/baptist"
+      },
+      {
+        "cls": "cp-backdrop",
+        "id": "",
+        "hidden": false,
+        "aria": null,
+        "text": "ВсеСтатьиПисаниеАвторы8 рез.Рекомендуемое5Господь Бог — Сила МояМатериалы для изучения Писания на ру"
+      },
+      {
+        "cls": "",
+        "id": "gb-hl-backdrop",
+        "hidden": false,
+        "aria": null,
+        "text": "Мои цитаты\n        0\n        ↓ Markdown\n        \n      \n      \n        Пока пусто\n        Выделите т"
+      }
+    ]
+  },
+  "afterSearch": {
+    "hasEnh": true,
+    "hasToc": true,
+    "tocItems": 8,
+    "sheetTocText": "01Молоканский поиск до баптистского имени02Кальвейт, Деляков и фраза о трёх народах03Что говорит первичный источник 1869 года04Что здесь нельзя превращать в миф",
+    "htmlDark": true,
+    "bodyFont": "18.72px",
+    "sheetHidden": "true",
+    "cpOpen": false,
+    "activeEl": "gbs-world gb-fc-active"
+  },
+  "afterSheet": {
+    "sheetHidden": "true",
+    "sheetClass": "gbs2-sheet",
+    "activePane": [
+      {
+        "pane": "parts",
+        "cls": "gbs2-sheet-pane gbs2-on",
+        "text": "1. Воронин и ночь на Куре18 мин2. Южная штунда20 мин3. 1884: два съезда17 мин4. "
+      },
+      {
+        "pane": "toc",
+        "cls": "gbs2-sheet-pane",
+        "text": "01Молоканский поиск до баптистского имени02Кальвейт, Деляков и фраза о трёх наро"
+      }
+    ]
+  }
+}
+
+## Baptisty mobile sheet fresh check
+{
+  "before": {
+    "hidden": "true",
+    "cls": "gbs2-sheet",
+    "bbar": "flex",
+    "tocText": "01Молоканский поиск до баптистского имени02Кальвейт, Деляков и фраза о трёх народах03Что говорит первичный источник 1869"
+  },
+  "after": {
+    "hidden": "false",
+    "cls": "gbs2-sheet gbs2-open",
+    "htmlLock": "1",
+    "paneText": "1. Воронин и ночь на Куре18 мин2. Южная штунда20 мин3. 1884: два съезда17 мин4. "
+  }
+}
+
+## Baptisty hub GBS2 browser check
+{
+  "initial": {
+    "hasEnh": true,
+    "tocItems": 4,
+    "pct": "0%",
+    "count": "1 / 2",
+    "sheetTocText": "01Части серии02Исследовательская база",
+    "htmlDark": false,
+    "bodyFont": "18px"
+  },
+  "afterTheme": true,
+  "afterFont": "18.72px",
+  "afterSheet": {
+    "hidden": "false",
+    "cls": "gbs2-sheet gbs2-open",
+    "panes": [
+      {
+        "pane": "parts",
+        "text": "1. Ночь на Куре18 мин2. Южная штунда20 мин3. 1884: два съезда17 мин4. Петербургс"
+      },
+      {
+        "pane": "toc",
+        "text": "01Части серии02Исследовательская база"
+      }
+    ]
+  }
+}
+
+## P1-9 current divergence
+scripts/cache-bust.js ASSETS 22
+scripts/audit-pro.js CACHE_BUST_ASSETS 24
+in cache-bust but not audit-pro: ['js/glossary.js', 'js/series-cards.js']
+in audit-pro but not cache-bust: ['js/modules/back-to-top.js', 'js/modules/faq-accordion.js', 'js/modules/img-loaded.js', 'js/modules/theme.js']
+
+## P2-14 series-cards dead/precache
+series-cards in dist html count: 0
+data-series-cards in dist/source count: 0
+sw precache occurrences root+dist: 2
+2642 js/series-cards.js
+
+## Baptisty search isolated check
+{
+  "before": [
+    {
+      "tag": "DIV",
+      "id": "",
+      "cls": "cp-backdrop",
+      "hidden": false,
+      "aria": null,
+      "display": "none",
+      "opacity": "1",
+      "active": false,
+      "text": "ВсеСтатьиПисаниеАвторы8 рез.Ре"
+    }
+  ],
+  "after": [
+    {
+      "tag": "DIV",
+      "id": "",
+      "cls": "cp-backdrop is-open",
+      "hidden": false,
+      "aria": null,
+      "display": "flex",
+      "opacity": "1",
+      "active": false,
+      "text": "ВсеСтатьиПисаниеАвторы8 рез.Ре"
+    }
+  ]
+}
