@@ -24,6 +24,8 @@
 - `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` — complete bug matrix
 - `verified/repair-order-unified-2026-06-25.md` — prioritized fix plan
 - `verification/cross-reference/cross-reference-synthesis-2026-06-25.md` — cross-agent findings merge
+- `verification/CONFLICT_REGISTRY_2026-06-25.md` — disagreements between evidence layers / agents
+- `verification/RECHECK_PROTOCOL_2026-06-25.md` — how to re-run disputed findings correctly
 
 **Incoming sources:**
 - `incoming/arena-agent/2026-06-25/` — Arena Agent (premium surface, runtime, interactive audit)

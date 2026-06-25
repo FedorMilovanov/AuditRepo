@@ -32,6 +32,8 @@
 | `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` | Complete bug matrix (all agents) |
 | `verified/repair-order-unified-2026-06-25.md` | Prioritized fix plan |
 | `verification/cross-reference/cross-reference-synthesis-2026-06-25.md` | Cross-agent findings merge |
+| `verification/CONFLICT_REGISTRY_2026-06-25.md` | Conflicting claims between agents / evidence layers |
+| `verification/RECHECK_PROTOCOL_2026-06-25.md` | How to re-run disputed findings correctly |
 
 ## Folder structure
 
