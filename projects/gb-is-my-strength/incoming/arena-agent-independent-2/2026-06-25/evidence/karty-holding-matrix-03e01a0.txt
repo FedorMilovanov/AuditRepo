@@ -1,0 +1,98 @@
+## HEAD
+03e01a0008de34d654175ea600cdf9f22b2351b4
+
+## Matrix entries
+/karty/early-church/ mode= strict-native-app requiredMarkers= ['data-pagefind-body']
+/karty/maccabim/ mode= strict-native-app requiredMarkers= ['data-pagefind-body']
+/karty/melachim/ mode= strict-native-app requiredMarkers= ['data-pagefind-body']
+/karty/pavel/ mode= strict-native-app requiredMarkers= ['data-pagefind-body']
+/karty/revelation/ mode= strict-native-app requiredMarkers= ['data-pagefind-body']
+/karty/shoftim/ mode= strict-native-app requiredMarkers= ['data-pagefind-body']
+/karty/shvatim/ mode= strict-native-app requiredMarkers= ['data-pagefind-body']
+/karty/yeshua/ mode= strict-native-app requiredMarkers= ['data-pagefind-body']
+
+## Holding component contract
+     1	---
+     2	/**
+     3	 * KartyHoldingPage — shared native template for map routes on visual audit.
+     4	 *
+     5	 * Рефакторинг 6.0: all 8 holding/audit-pending map routes use this single
+     6	 * native Astro component instead of 8 identical shadow-wrapped legacy files.
+     7	 * Each route passes its slug/title/h1 as Astro props.
+     8	 *
+     9	 * Design: dark premium placeholder, self-contained inline styles (does NOT
+    10	 * use site.css — intentional standalone aesthetic). noindex until the map
+    11	 * passes visual audit. data-pagefind-ignore — not indexed by search.
+    12	 */
+    13	export interface Props {
+    14	  slug: string;
+    15	  title: string;
+    16	  h1: string;
+    17	  canonical: string;
+    18	  ogTitle?: string;
+    19	  description?: string;
+    20	  ogDescription?: string;
+    21	  twitterDescription?: string;
+    22	}
+    23
+    24	const {
+    25	  slug,
+    78	.eyebrow{margin:0 0 12px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:800}h1{margin:0;font-size:clamp(34px,6vw,62px);line-height:1.02;letter-spacing:-.04em}p{font-size:18px;line-height:1.75;color:var(--muted);max-width:62ch}.note{border-top:1px solid rgba(214,178,94,.22);margin-top:28px;padding-top:24px}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}a{color:var(--ink)}.btn{display:inline-flex;min-height:46px;align-items:center;justify-content:center;padding:0 18px;border-radius:999px;border:1px solid rgba(214,178,94,.32);background:rgba(214,178,94,.12);font-family:Arial,sans-serif;font-weight:800;text-decoration:none}.btn--ghost{background:transparent;color:var(--muted)}
+    79	</style>
+    80	</head>
+    81	<body>
+    82	<main data-pagefind-ignore data-content-status="temporary-placeholder">
+    83	  <p class="eyebrow">Визуальный аудит карт</p>
+    84	  <h1>{h1}</h1>
+
+## Source prop vs dist artifact markers
+early-church    sourceProp=1 dist_pagefind_body=0 dist_pagefind_ignore=1 robots_noindex=1
+maccabim        sourceProp=1 dist_pagefind_body=0 dist_pagefind_ignore=1 robots_noindex=1
+melachim        sourceProp=1 dist_pagefind_body=0 dist_pagefind_ignore=1 robots_noindex=1
+pavel           sourceProp=1 dist_pagefind_body=0 dist_pagefind_ignore=1 robots_noindex=1
+revelation      sourceProp=1 dist_pagefind_body=0 dist_pagefind_ignore=1 robots_noindex=1
+shoftim         sourceProp=1 dist_pagefind_body=0 dist_pagefind_ignore=1 robots_noindex=1
+shvatim         sourceProp=1 dist_pagefind_body=0 dist_pagefind_ignore=1 robots_noindex=1
+yeshua          sourceProp=1 dist_pagefind_body=0 dist_pagefind_ignore=1 robots_noindex=1
+
+## Fast gate result
+
+> gb-is-my-strength@1.6.3 migration:metadata:check
+> npm run route:profiles:check && npm run migration:matrix:check && npm run content:sources:check
+
+
+> gb-is-my-strength@1.6.3 route:profiles:check
+> node scripts/check-route-profiles.js
+
+=== Route Profiles Check ===
+Mode: WARN
+
+Routes checked: 51
+Profiles found: 51
+
+✅ Route profiles coherent with page ownership
+
+> gb-is-my-strength@1.6.3 migration:matrix:check
+> node scripts/check-route-migration-matrix.js
+
+=== Route Migration Matrix Check ===
+Mode: WARN
+
+Routes checked against matrix: 34
+Matrix entries: 34
+
+✅ Route migration modes are coherent with matrix
+
+> gb-is-my-strength@1.6.3 content:sources:check
+> node scripts/check-content-source-coverage.js
+
+=== Content Source Coverage Check ===
+Mode: WARN
+
+Series parts checked: 23
+Routes checked: 51
+MDX files: 20
+Profiles: 53
+Search items: 44
+
+✅ Content source coverage is coherent
