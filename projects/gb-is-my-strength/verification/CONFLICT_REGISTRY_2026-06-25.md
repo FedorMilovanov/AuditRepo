@@ -186,3 +186,76 @@ cache-bust hashes as a factor.
 ### Action for the final verifier
 Correct the FALSE_POSITIVES_REGISTRY NOTES so an implementation agent does not skip the
 controller edit under the false belief that fixing cache-bust hashes will revive the cluster.
+
+## C-08 — FALSE POSITIVE: "P0-NEW — SW precache 404 for site-layered.css / site-modules.js"
+
+**Raised by:** `arena-agent-2` (verification pass 3)
+**Source claim:** `incoming/arena-agent-round5/2026-06-25/VERIFICATION_AUDIT_ROUND5.md`
+escalated a **P0** "SW precaches non-existent `site-layered.css` and `site-modules.js`
+→ 404 on all SW-enabled pages", raising the total to 64.
+
+### Why the claim is wrong
+
+The agent reasoned: *"files exist in src/ root but are never imported in any Astro
+component → Astro build does NOT copy them to `dist/` → SW tries to precache 404."*
+
+This reasoning is **valid for a pure Astro project** but **wrong for THIS project**.
+`gospod-bog.ru` is a **strangler** project: production `dist/` is produced by
+`npm run strangler:build:production-like`, which runs `scripts/copy-legacy-to-dist.js`
+AFTER `astro build`. That script wholesale-copies the legacy root asset directories.
+
+### Deterministic proof (arena-agent-2)
+
+`scripts/copy-legacy-to-dist.js`:
+- `PUBLIC_DIRS` (lines 56, 63) includes **both `'css'` and `'js'`**.
+- line 274: `for (const dir of PUBLIC_DIRS) copyDir(path.join(ROOT, dir), path.join(DIST, dir), …)`.
+- `copyDir` (line 172) recursively copies every file; the ONLY skip is
+  `shouldSkipLegacyFile(src)` = `astroRoutes.has(routeForFile(src))`.
+
+`astroRoutes` is built from `migration/page-ownership.json` `.routes` filtered to
+`owner` starting with `astro` — these are **HTML page routes only** (52 of them, e.g.
+`/about/`, `/articles/`). Neither `/css/site-layered.css` nor `/js/site-modules.js` is
+in that set.
+
+Simulation against the real ownership file:
+```
+astroRoutes contains 52 astro-owned ROUTES (HTML pages)
+  contains /css/site-layered.css? false
+  contains /js/site-modules.js?  false
+PUBLIC_DIRS contains css? true | js? true
+[css/site-layered.css]  shouldSkipLegacyFile:false  => БУДЕТ СКОПИРОВАН В dist/css/site-layered.css? ✅ ДА
+[js/site-modules.js]    shouldSkipLegacyFile:false  => => БУДЕТ СКОПИРОВАН В dist/js/site-modules.js?   ✅ ДА
+```
+
+So in the **production strangler dist**, both files exist and the SW precache does
+**not** 404.
+
+### Why round5's `ls dist/...css` showed "No such file"
+
+The agent almost certainly inspected a **plain `astro build` dist** (Astro only copies
+imported assets) rather than the production `strangler:build:production-like` dist.
+This is precisely the source-vs-build-vs-production-dist split that
+`verification/RECHECK_PROTOCOL_2026-06-25.md` warns about (trust order #1 =
+production-like dist).
+
+### What remains VALID (do NOT discard these)
+
+The 404 framing is wrong, but adjacent findings stand:
+
+- **P0-7 / P0-8 (cache-bust drift):** `css/site-layered.css` and `js/site-modules.js`
+  are in `sw.js` `PRECACHE_ASSETS` but missing from `cache-bust.js` `ASSETS`. This is a
+  real cache-invalidation gap (their `?v=` never updates), independent of existence.
+  Still P0.
+- **NEW-8 (P2, wasteful precache):** these files (plus `series-cards.js`) are precached
+  but never `<link>`ed from any page → precache is wasted. Reasonable cleanup, P2.
+
+### Resolution
+
+- **P0-NEW → CLOSE as false positive.** Revert the ledger total 64 → 63.
+- Keep the 404 reasoning out of the implementation path; do NOT remove the entries from
+  `sw.js` on the (false) premise that they 404.
+- If a cleanup of unused precache entries is desired (NEW-8), that is a separate P2
+  decision, not a P0 404 fix.
+
+### Action for the final verifier
+Drop P0-NEW. The confirmed count stays at 63 (9 P0). P0-7/P0-8 stay (cache-bust drift).
