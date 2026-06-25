@@ -146,3 +146,48 @@ proposal-open → proposal-superseded
 - Gill Part2 TOC anchors all correct
 - No duplicate Yandex.Metrika found on checked pages
 - cache-bust.js regex correctly handles hash replacement without doubling
+
+---
+
+## ADDENDUM — Production Verification (Round 3)
+
+### Source-Production Drift — MAJOR PATTERN
+Multiple findings are SOURCE-REPO-ONLY bugs that don't affect production:
+
+| Bug | Source Repo | Production | Impact |
+|-----|------------|------------|--------|
+| NEW-01 (sw.js syntax) | ❌ BROKEN | ✅ OK | Source only |
+| V2-2 (Nagornaya fonts) | ❌ No data-fontsize | ✅ Has data-fontsize | Source only |
+| P1-17 (CSS no hash) | ❌ No ?v= in BaseLayout | ✅ Has ?v= (cache-bust.js) | Source only |
+
+**Root cause:** Production uses strangler build (copy-legacy-to-dist.js) which:
+1. Generates its own sw.js (correct version)
+2. Adds data-fontsize attributes to Nagornaya buttons
+3. cache-bust.js adds CSS hashes to root HTML
+
+**Implication:** These bugs only matter if someone builds from source (npm run build). Production is currently protected by the strangler pipeline.
+
+### P1-17 DOWNGRADED to P3
+- About/ and all article pages use legacy root HTML (shadow-wrap), not Astro BaseLayout
+- cache-bust.js correctly adds CSS hashes to root HTML
+- Only /karty/ uses Astro directly — P1-17 would only affect karty pages
+- If more pages migrate to native Astro, P1-17 becomes relevant again
+
+### Production Health Check
+All production routes return HTTP 200:
+- Homepage: 200 (62KB)
+- Gill Part1: 200 (146KB)
+- Baptisty: 200 (27KB)
+- Nagornaya: 200 (41KB)
+- Avraam: 200 (7KB)
+- 404 page: 404 (8KB) ✅
+- sitemap.xml: 200 (15KB)
+- feed.xml: 200 (17KB)
+- robots.txt: 200 (2KB)
+- manifest.json: 200 (1.4KB)
+
+### Production CSS/JS Cache-Bust
+All production CSS and JS files have correct ?v=HASH:
+- css/site.css?v=b880b524 ✅
+- js/site.js?v=133dfac1 ✅
+- js/floating-cluster-controller.js?v=58c2ea90 (production-computed hash, different from source)
