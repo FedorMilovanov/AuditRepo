@@ -96,7 +96,7 @@
 
 ---
 
-## P3 — LOW (12 bugs)
+## P3 — LOW (13 bugs)
 
 | ID | Category | Title | Notes |
 |----|----------|-------|-------|
@@ -107,14 +107,14 @@
 | P3-5 | Audit | `interactive-audit` hardcoded URL lists drift | Maintenance |
 | P3-6 | Cache | `floating-cluster-controller.js` stale hash in 10 refs | Maintenance |
 | **P3-7** | **Visual** | **BaptistyRossiiBody empty decorative elements** | Empty `<i>`, empty divs |
-| **P3-8** | **JS Module** | ~~Antisovetov FAQ accordion~~ → ⚠️ **EXPANDED** | 5 pages: Antisovetov, Hermenevtika, KodDaVinchi, Krajne, Rimlyanam7 — .faq-accordion HTML present but faq-accordion.js never loaded. |
+| ~~P3-8~~ | ~~JS Module~~ | ~~Antisovetov FAQ accordion~~ → ❌ **FALSE POSITIVE** | Playwright (arena-agent-2, SHA 03e01a0): accordion works via js/enhancements.js. faq-accordion.js is dead code. Cleanup: remove unused js/modules/faq-accordion.js. |
 | **P3-9** | **Analytics** | **BaseLayout bodyEndHtml accumulation may create duplicate Yandex.Metrika** | Fragile dedup |
-| **P3-NEW** | **UX / JS Module** | `back-to-top.js` module NEVER loaded on any page | Gill Part1-3 (32/39/54 min), Krajne, Rimlyanam7. Button HTML present but: (1) scroll-based visibility never triggers, (2) click-to-scroll non-functional. Module at js/modules/back-to-top.js exists but is NEVER loaded on any page. |
 | P3-10 | A11y | Nagornaya article TOC scroll target issues | V2-2 related |
 | P3-11 | Cache | site-modules.js cache-bust drift (related to P1-18) | |
 | P3-12 | Route | AvraamMap baseGeoUrl without cache-busting (related to P2-18) | |
+| **P3-NEW** | **UX / JS Module** | `back-to-top.js` NEVER loaded on any page | Gill Part1-3 (32/39/54 min), Krajne, Rimlyanam7. Button visible but scroll-visibility (600px) and click-to-top broken. enhancements.js does not handle this. |
 
----
+
 
 ## FALSE POSITIVES / CLOSED (4)
 
@@ -123,6 +123,8 @@
 | **FP-P0-2** | `floating-cluster.css` — EMPTY file | **CONFIRMED NOT EMPTY.** File = 1869 lines, 68KB CSS. Contains v16 floating cluster styles (gb-icon, gb-ember, gb-save, gb-floater). Was marked empty in Round 1 — incorrect. **REMOVE from P0 list.** | Verifier-2 + Round 4 correction |
 | FP-P0-4 | feed.xml contains `raw.githubusercontent.com` dead link | grep=0, no such link in current HEAD | Round 1 correction |
 | FP-P0-5 | cache-bust.js regex `/\./g` broken | Global flag confirmed, all paths tested OK | Round 1 correction |
+| **FP-P3-8** | FAQ accordion module never loaded | **CONFIRMED NOT A BUG.** Playwright verified (arena-agent-2, SHA 03e01a0): accordion WORKS via js/enhancements.js. faq-accordion.js is duplicate/dead module. Only cleanup: remove unused js/modules/faq-accordion.js. |
+
 | **FP-PS-05** | Hermeneutics stray `76e7365` in body | **NOT in current HEAD source.** Was dist artifact from commit `564d6cc8`. Resolved in current HEAD. | VERIFIER_SYNTHESIS + Round 4 |
 
 ---
@@ -290,3 +292,88 @@
 | V2-4 feed weekdays | ✅ FIXED | 9 pubDates corrected |
 | P1-2 sitemap incomplete | ❌ FALSE POSITIVE | All missing = noindex/protected |
 | P1-8 double initGillRail | ❌ FALSE POSITIVE | Only 1 call in ready() |
+
+---
+
+## Round 8 Amendments (2026-06-25)
+
+**Source:** `incoming/arena-agent-round8/2026-06-25/REPORT.md`
+
+### P3-NEW — back-to-top.js NEVER loaded → ✅ FIXED IN PROJECT SOURCE
+
+**Bug:** `back-to-top.js` module never loaded on any page. Button HTML present on 7 pages but:
+- Scroll-based visibility (600px threshold) never triggers
+- Click-to-scroll-to-top non-functional
+- enhancements.js does NOT handle back-to-top
+
+**Pages affected (expanded from 5 → 7):**
+- GillPart1PageChrome.astro (line 89: script added)
+- GillPart2PageChrome.astro (line 89: script added)
+- GillPart3PageChrome.astro (line 90: script added)
+- AntisovetovBody.astro (line 1699: script added) ← expanded from Round 7
+- KodDaVinchiPageFooter.astro (line 147: script added) ← expanded from Round 7
+- KrajneBody.astro (line 592: script added)
+- Rimlyanam7Body.astro (line 197: script added)
+
+**Fix:** Added `<script is:inline defer src="../../js/modules/back-to-top.js"></script>` after last JS script tag on each page.
+
+**Verification:** Module correctly adds `.visible` class at 600px scroll and implements smooth scroll-to-top on click.
+
+### V2-4 — feed.xml pubDates ✅ VERIFIED FIXED IN PROJECT SOURCE
+
+- All 17 pubDate entries use correct +0300 Moscow timezone
+- All weekday names correct (Python verified)
+- toLocaleString('en-US', { timeZone: 'Europe/Moscow' }) in update-meta.js — no double-conversion
+
+### P2-17 — AvraamMap pollutes global MapEngine singleton ✅ CONFIRMED
+
+**Location:** `src/components/karty/avraam/AvraamMap.astro` lines 31-32
+**Code:** `window.MapEngine.getPlaceVisual = function(pl) {...}` — adds to global singleton
+**Issue:** AvraamMap overrides IshodMap's getPlaceVisual when both loaded on same page
+**Fix direction:** Isolate to local scope or pass as MapEngine option parameter
+
+### P2-18 — MapEngine loadFromHash uses location.pathname ✅ CONFIRMED
+
+**Location:** `karty/_engine/map-engine.js` lines 2462-2481
+**Code:** `loadFromHash()` reads `location.hash`; `updateHash()` uses `location.pathname`
+**Issue:** On GitHub Pages with base href, pathname includes prefix → fetch(route.json) fails
+**Fix direction:** Replace `location.pathname` with base-href-aware path construction
+
+### P3-12 — baseGeoUrl without cache-busting ✅ CONFIRMED
+
+**Location:** AvraamMap.astro line 50: `baseGeoUrl: 'base.svg'` (no ?v=)
+**Related to:** P2-18
+
+### Module Parity Audit Results
+
+| Module | Status | Verdict |
+|--------|--------|---------|
+| `modules/back-to-top.js` | ✅ NOW LOADED (7 pages) | Fixed — was dead, now alive |
+| `modules/faq-accordion.js` | ❌ Dead code | P3-8 FALSE POSITIVE confirmed — FAQ works via enhancements.js inline |
+| `modules/theme.js` | ✅ Not an issue | Extracted from site.js; site.js handles inline |
+| `modules/img-loaded.js` | ✅ Not an issue | Extracted from site.js; site.js handles inline |
+
+**Dead code:** faq-accordion.js removal is non-blocking cleanup. Only recommendation: remove it to avoid confusion.
+
+### SEO Meta Audit
+
+- canonical: unique per route — no duplicates
+- og:url: correct on all checked pages
+- pagefind-meta: present on all major content pages (About, Antisovetov, Hermenevtika, KodDaVinchi, Krajne, Rimlyanam7, Nagornaya 1-5, ArticleLayout, SeriesArticleLayout)
+- Gill pages (Part1-3, Context, Spravochnik): no pagefind-meta — intentional (GBS2 has own search/nav)
+- Baptisty: uses SeriesArticleLayout with pagefind-meta ✅
+
+### Gill Duplicate IDs (PS-07 Related)
+
+- GillPart1/2/3/Spravochnik render 2× GillRailControls (mobile + rail)
+- GillRailControls.astro: `id="gbsTheme"` (line 43), `id="gbsSearch"` (line 66) → duplicate on same page
+- **This IS PS-07** (pending fix in AuditRepo lane/fix-ps01-iife-scope, commit c1bd605) — not a new bug
+- gbs2Ring, gbs2Pct, gbs2Meta use CLASS not ID → no HTML validity issue
+- gbs2Toc, gbs2Sheet, gbs2Bbar, gbs2Curbar, gbs2MobSec, gbs2MobPct — used as class-based selectors
+
+### Bug Count: 61 bugs (9 P0, 20 P1, 19 P2, 13 P3)
+
+**Fixed in project source:** V2-2, V2-3, V2-4, PS-06, P3-NEW ✅
+**Fixed in AuditRepo (pending merge):** PS-01, P0-10, PS-06, PS-07, P0-7, P0-8
+**False positive closed:** P3-8
+**Confirmed in current HEAD:** P2-17, P2-18, P3-12, P0-NEW, P1-13, P1-14/15/16, P0-3, P0-6
