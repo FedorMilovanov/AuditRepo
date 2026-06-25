@@ -1,0 +1,39 @@
+## HEAD
+03e01a0008de34d654175ea600cdf9f22b2351b4
+
+## Source handler
+   414	;!function(){"use strict";
+   415	/* §2.5 — Save series offline button (.gbs2-offline-btn) */
+   416	var btn=document.querySelector("[data-gbs2-offline]");
+   417	if(!btn||!("serviceWorker" in navigator)||!("caches" in window))return;
+   418	var CACHE="gb-offline-series",seriesKey=document.body.getAttribute("data-gbs2-series")||"";
+   419	if(!seriesKey)return;
+   420
+   421	function checkCached(){
+   422	caches.open(CACHE).then(function(c){return c.keys()}).then(function(keys){
+   423	var cached=keys.length>3;
+   424	btn.classList.toggle("gbs2-offline--done",cached);
+   425	btn.textContent=cached?"✓ Офлайн":"↓ Сохранить";
+   426	btn.setAttribute("aria-label",cached?"Серия доступна офлайн":"Сохранить серию для чтения без интернета");
+   427	})}
+   428	checkCached();
+   429
+   430	btn.addEventListener("click",function(){
+   431	if(btn.classList.contains("gbs2-offline--done"))return;
+   432	btn.textContent="⏳…";btn.disabled=true;
+   433	fetch("/data/series.json").then(function(r){return r.json()}).then(function(data){
+   434	var s=data[seriesKey];if(!s||!s.parts)throw new Error("no series");
+   435	var urls=[];var base=s.baseUrl||"/articles/";
+   436	s.parts.forEach(function(p){if(p.status==="published")urls.push(base+p.slug+"/")});
+   437	return caches.open(CACHE).then(function(c){return Promise.all(urls.map(function(u){return c.add(u).catch(function(){})}))})
+   438	}).then(function(){checkCached();btn.disabled=false}).catch(function(){btn.textContent="Ошибка";btn.disabled=false;setTimeout(checkCached,2000)})
+   439	});
+
+## Dist pages with data-gbs2-offline
+- dist/articles/krajne-li-isporcheno-serdce/index.html
+- dist/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/index.html
+
+## Browser click evidence
+/articles/krajne-li-isporcheno-serdce/ {"has":true,"before":{"text":"↓ Сохранить","disabled":false,"label":"Сохранить серию для чтения без интернета"},"hasCaches":true,"hasSW":true,"siteJsHasHandler":true}
+/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/ {"has":true,"before":{"text":"↓ Сохранить","disabled":false,"label":"Сохранить серию для чтения без интернета"},"hasCaches":true,"hasSW":true,"siteJsHasHandler":true}
+CLICK {"text":"↓ Сохранить","disabled":false,"cls":"gbs2-ctl","keys":["/articles/krajne-li-isporcheno-serdce/","/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/"]}
