@@ -364,3 +364,44 @@ Source HEAD advanced `fb8e4922` → **`d19baf0`**. First reverify against the AC
 **⚠ Important:** `working/PS-01-FIX-VALIDATED` confirms PS-01 patch — and it IS now merged (good). But `working/NEW3-NEW5-FIX-DIRECTIONS` for NEW-3/NEW-5 are **documented only, NOT applied** — both still reproduce at HEAD. Implementation lane must apply them, not just document.
 
 Recommend: move PS-01/PS-07/PS-10 to `archive/fixed/` (`fixed-current @ d19baf0`); keep the 6 open items in verified.
+
+## C-11 — V2-2/NEW-3 (nagornaya font) marked FIXED in ledger but NOT fixed in source
+
+**Raised by:** `arena-agent-2` (reverify @ `03e01a0`)
+**Full evidence:** `reverify/CURRENT_HEAD_REVERIFY_2026-06-25_03e01a0.md`
+
+### The contradiction
+
+`verified/UNIFIED_BUG_LEDGER_2026-06-25.md` states:
+> ✅ FIXED — data-fontsize="down/up" added to all 6 Nagornaya pages (chast-1..5 + index).
+> JS selector [data-fontsize="down/up"] now matches.
+
+### Actual state on current HEAD (`03e01a0`)
+
+```
+nagornaya/chast-1..5: data-fontsize=0 | nagFontDec/Inc=2   (ALL 5 pages, OLD markup)
+nagornaya/index:      data-fontsize=0 | nagFontDec/Inc=0
+```
+
+The fix was **never present in the merged source** — every nagornaya article still uses
+`id="nagFontDec"`/`id="nagFontInc"` + `.nag-fontsize-btn`, with **zero** `data-fontsize`
+attributes. The JS still listens for `[data-fontsize="down/up"], .nag-fontsize-down/up`.
+→ selector mismatch persists → **A−/A+ font buttons remain dead on all 5 nagornaya pages.**
+
+### Likely cause
+
+The fix landed in commit `8f2b29e` but was lost or never merged for the nagornaya
+markup: the subsequent rebase `30b2031 [rebase] fix: P1-13 gbs2-theme + V2-1 TOC + V2-4
+feed [conflict resolved]` lists V2-2 nowhere — a strong signal it was dropped during
+conflict resolution.
+
+### Resolution
+
+- **Reopen V2-2/NEW-3 → `confirmed-current` (P1).** It is NOT fixed.
+- The 2-line JS-side fix (add `#nagFontDec`/`#nagFontInc` to the selector in
+  `nagornaya-mobile-toc.js`) is documented and still valid
+  (`working/NEW3-NEW5-FIX-DIRECTIONS-2026-06-25.md`).
+- **Process lesson:** an implementation agent logged V2-2 FIXED without source
+  verification. Going forward, no "FIXED" entry should be trusted until a verifier
+  confirms it against source on the merge HEAD (this is exactly the SHA-first /
+  reverify-before-done principle).
