@@ -493,3 +493,23 @@ Total: 61→60 bugs.
 ### Updated counts:
 - Fixed in project source (R9-R11): P0-NEW, P3-NEW, P2-17, P3-12, P2-18, P1-14, P1-15, P1-16 (8 bugs)
 - Remaining active bugs: ~45
+
+---
+
+## Amendments — Arena Agent Round 12 (2026-06-25)
+
+**Source:** `incoming/arena-agent-round12/2026-06-25/REPORT.md`
+
+### Round 12 fixes (project source):
+- **P1-5 ✅ FIXED** — route-migration-matrix.json reconciled with page-ownership.json. Added 17 missing routes (34→51). Version updated to `2026-06-25.reconciled.v1`.
+- **P1-9 ✅ FIXED** — audit-pro.js CACHE_BUST_ASSETS cleaned: removed 6 non-dist assets (site-layered.css, site-modules.js, 4 js/modules/*), added `js/glossary.js`. Now matches cache-bust.js.
+- **P2-14 ✅ FIXED** — series-cards.js commented out of cache-bust.js ASSETS (not imported in any Astro component).
+
+### Key findings:
+- All `js/modules/*` files (back-to-top, faq-accordion, img-loaded, theme) are in src/ but NOT in dist/ — never imported by Astro components
+- `series-cards.js` similarly unused in Astro pipeline
+- `glossary.js` IS used (on 10 Baptisty pages) but was missing from audit-pro.js ASSETS
+
+### Updated counts:
+- Fixed in project source (R9-R12): P0-NEW, P3-NEW, P2-17, P3-12, P2-18, P1-14, P1-15, P1-16, P1-5, P1-9, P2-14 (11 bugs)
+- Remaining active bugs: ~43
