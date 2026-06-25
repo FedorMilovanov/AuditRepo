@@ -72,3 +72,12 @@ projects/
 - `projects/gb-is-my-strength/` — gospod-bog.ru
 
 Позже можно добавлять другие проекты тем же способом.
+
+## Быстрый старт для новых агентов
+
+1. Найди проект в `PROJECT_REGISTRY.md`
+2. Создай intake-папку через:
+   - `python3 scripts/scaffold_intake.py <project> <agent> <YYYY-MM-DD>`
+3. Положи сырые отчёты в `incoming/`
+4. Не пиши сразу в `verified/`
+5. Верификатор собирает сводку в `working/`, затем переносит подтверждённое в `verified/`

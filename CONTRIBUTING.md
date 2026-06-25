@@ -16,6 +16,14 @@ verified = confirmed final truth
 
 ## Folder contract
 
+Для ускорения можно использовать встроенные скрипты:
+
+```bash
+python3 scripts/scaffold_project.py <project-folder> --source-repo <owner/repo> [--production-url <url>]
+python3 scripts/scaffold_intake.py <project-folder> <agent-name> <YYYY-MM-DD>
+python3 scripts/check_auditrepo_structure.py
+```
+
 ### Raw intake
 
 ```text
