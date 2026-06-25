@@ -1,0 +1,33 @@
+# S3-REVERIFY — re-check of all session3 findings on NEW source HEAD 106f98d
+# (was 02e1a0f; source advanced: a4d045e 'fix release gates' + 106f98d 'auto cache-bust')
+# Thu Jun 25 23:37:28 UTC 2026
+
+## S3-N4 fc-controller drift — PARTIALLY FIXED, ROOT CAUSE CONFIRMED LIVE
+actual md5 = ba4a4019
+root HTML: 25x ?v=ba4a4019  -> NOW CORRECT (auto cache-bust fixed root)
+astro src: 14x ?v=efd81d3a + 1x ?v=58c2ea90  -> STILL STALE
+=> This is exact PROOF of my root cause #1: cache-bust rewrites .html only, never src/*.astro.
+   The auto cache-bust commit fixed root but the 15 Astro components remain wrong forever.
+   Corroborated independently by arena-agent-premiumcontrols-verifier exec summary
+   ('source-level hardcoded hashes still have multiple versions even after root cache-bust is green').
+   Status: confirmed-current (P1, narrowed to Astro-side).
+
+## S3-N5 / P0-02 ishod JSON-LD — STILL BROKEN in Astro source
+']}}' in src/components/karty/ishod/IshodPageHead.astro: 1  -> still 1
+JSON.parse: STILL FAILS. Corroborated by postfix-deep-verifier PFV-002 (dist still invalid on 106f98d).
+
+## S3-N1/N2 baptisty SEO — STILL OPEN
+BreadcrumbList in noch-na-kure: 0  -> still 0
+baptisty pages with SVG og:image: 10/10  -> still SVG
+Corroborated by postfix-deep-verifier PFV-004.
+
+## CHV-003/004 content corruption (I confirmed in R2) — STILL OPEN
+U+FFFD in Antisovetov: 1  -> still 1
+'кик говорят' hermenevtika: 1  -> still 1
+Corroborated by postfix-deep-verifier PFV-003.
+
+## S3-N3 series-cards in audit-pro — recheck
+series-cards refs in audit-pro.js: 5
+
+## NET: release-gate is now GREEN (a4d045e), but all my user-facing/SEO findings persist on 106f98d.
+## The green static gate hides them — exactly the 'gate blind spot' pattern (B4 bucket).

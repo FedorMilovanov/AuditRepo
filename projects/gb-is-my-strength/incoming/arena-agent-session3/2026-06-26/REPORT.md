@@ -238,6 +238,24 @@ Given the goal stated by the owner ("единый монолит, не 100 ли�
 
 ---
 
+# ROUND 4 ADDENDUM — reverify on NEW source HEAD `106f98d` (was `02e1a0f`)
+
+> Source repo advanced: `a4d045e` (fix release gates) + `106f98d` (auto cache-bust [skip ci]).
+> I re-checked every session3 finding on `106f98d`. Evidence: `evidence/S3-REVERIFY-on-106f98d.txt`.
+> The release-gate is now GREEN, but **all my user-facing/SEO findings persist** — and one got a perfect proof.
+
+| Finding | Status on 106f98d | Note |
+|---|---|---|
+| **S3-N4** fc-controller drift | **partially fixed → root cause PROVEN** | auto cache-bust fixed the 25 **root** HTML (now `ba4a4019` ✅) but the **15 Astro components stay stale** (`efd81d3a`×14, `58c2ea90`×1). This is exact proof of root cause #1: cache-bust rewrites `.html` only, never `src/*.astro`. Independently corroborated by `arena-agent-premiumcontrols-verifier` ("source-level hardcoded hashes still have multiple versions even after root cache-bust is green"). Stays **P1**, narrowed to Astro-side. |
+| **S3-N5 / P0-02** ishod JSON-LD | **still broken** | `]}}` still in `IshodPageHead.astro`; `JSON.parse` still fails. Corroborated by `postfix-deep-verifier` PFV-002 (dist still invalid on 106f98d). |
+| **S3-N1/N2** baptisty SEO | **still open** | BreadcrumbList=0, 10/10 SVG og:image. Corroborated by PFV-004. |
+| **CHV-003/004** content corruption (I confirmed R2) | **still open** | Antisovetov U+FFFD ×1, Hermenevtika `кик говорят` ×1. Corroborated by PFV-003. |
+| **S3-N3** series-cards in audit-pro | **still open** | 5 refs remain in audit-pro.js. |
+
+**Key takeaway for the verifier/owner:** `a4d045e` made the static release-gate green, but that green is a **blind spot** — every one of my reader-facing and SEO findings survives on `106f98d`. The green gate validates the legacy-root half (which auto cache-bust fixes), not the Astro source-of-truth half (where the bugs live). This is precisely the B3/B4 "tooling models only legacy-root" engine I described. Until the gates + cache-bust operate on Astro source/dist, green ≠ correct.
+
+---
+
 # ROUND 3 ADDENDUM — build-mode trap self-correction (after reading `arena-agent-dist-contract-verifier`)
 
 > The `arena-agent-dist-contract-verifier` intake (commit `8214f80`/`a70a08e`) ran a **real Node-22 Astro
