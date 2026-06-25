@@ -1,0 +1,31 @@
+# S3-N4 — fc-controller.js cache-bust drift: ALL 51 refs stale, actual hash matched by NONE
+# SHA 02e1a0f | Thu Jun 25 23:17:10 UTC 2026
+
+## Actual file hash
+md5(js/floating-cluster-controller.js)[:8] = ba4a4019
+
+## Reference census
+ROOT HTML (cache-bust target):
+     25 floating-cluster-controller.js?v=5c91b618
+ASTRO src/ (hardcoded):
+      1 floating-cluster-controller.js?v=58c2ea90
+     14 floating-cluster-controller.js?v=efd81d3a
+refs matching actual ba4a4019: 0
+
+## Full-asset drift census (only fc-controller is stale; 10 others OK)
+  css/site.css actual=b880b524 refs=[b880b524 ] -> ok
+  css/command-palette.css actual=afe33045 refs=[afe33045 ] -> ok
+  css/mobile-hotfix.css actual=c1f7664e refs=[c1f7664e ] -> ok
+  css/floating-cluster.css actual=f4bddc5b refs=[f4bddc5b ] -> ok
+  css/nagornaya-mobile-toc.css actual=c4a4a7fd refs=[c4a4a7fd ] -> ok
+  js/site.js actual=f8f0c38c refs=[f8f0c38c ] -> ok
+  js/floating-cluster-controller.js actual=ba4a4019 refs=[5c91b618 ] -> STALE
+  js/nagornaya-mobile-toc.js actual=866d4238 refs=[866d4238 ] -> ok
+  js/search.js actual=c9d65577 refs=[c9d65577 ] -> ok
+  js/enhancements.js actual=b3b77aa6 refs=[b3b77aa6 ] -> ok
+  js/glossary.js actual=2100cf4f refs=[2100cf4f ] -> ok
+
+## Root cause
+1. cache-bust.js line 74 only collects '.html' files (walk), never src/*.astro → 26 Astro components' hardcoded hashes never updated.
+2. fc-controller.js was edited in last commit 02e1a0f → new md5 ba4a4019, but cache-bust was NOT re-run → 25 root HTML still 5c91b618.
+Result: 51 refs total (25 root + 26 astro), 3 distinct wrong versions (5c91b618, efd81d3a, 58c2ea90), 0 correct.

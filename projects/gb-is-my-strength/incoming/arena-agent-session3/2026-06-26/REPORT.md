@@ -177,6 +177,67 @@
 
 ---
 
+---
+
+# ROUND 2 ADDENDUM (same session, after reading `arena-agent-current-head-verifier`)
+
+> After my first pass I read the parallel intake `incoming/arena-agent-current-head-verifier/2026-06-26/`
+> (commit `6895b5b`), which ran the actual project gates. It surfaced higher-severity items than mine
+> (content corruption + live hash drift). I independently re-verified its critical findings and add one
+> **stronger, better-scoped** finding (S3-N4) plus confirmations.
+
+## R2.1 New Finding — S3-N4 (stronger restatement of P0-10 / CHV "hash drift")
+- Title: **`floating-cluster-controller.js` cache-bust drift — ALL 51 references stale; actual hash matched by ZERO refs**
+- Severity: **P1** (premium controls load a non-existent/old asset URL → 404 or stale JS on 25 user-facing routes; on GitHub Pages the `?v=` query just serves stale-from-SW or 404 depending on precache)
+- Route(s): 25 root HTML pages + 26 Astro components (Gill ×5, Nagornaya ×5, Hermenevtika, KodDaVinchi, Antisovetov, Krajne, Rimlyanam7, baptisty bodies, etc.)
+- Source file(s): `scripts/cache-bust.js` (line 74 walks only `.html`), all `src/components/**/*PageChrome|*Body|*PageFooter.astro` with hardcoded `?v=`
+- Observed on SHA: `02e1a0f`
+- Evidence: `evidence/S3-N4-fc-controller-drift.txt`
+- Key numbers:
+  - actual `md5(js/floating-cluster-controller.js)[:8]` = **`ba4a4019`**
+  - root HTML: 25× `?v=5c91b618` (stale — file edited in `02e1a0f` but cache-bust not re-run)
+  - Astro src: 14× `?v=efd81d3a` + 1× `?v=58c2ea90` (hardcoded, never touched by cache-bust)
+  - refs matching actual `ba4a4019`: **0**
+- **Root cause (two compounding bugs):**
+  1. `cache-bust.js` only collects `.html` files (line 74 `entry.name.endsWith('.html')`) → it **never rewrites `src/*.astro`**, so Astro hardcoded hashes drift forever. This is the systemic P0-10 mechanism, now narrowed to its single remaining victim.
+  2. The last commit `02e1a0f` changed `fc-controller.js` (new md5) but did **not** re-run cache-bust → even the root HTML it *can* fix is stale.
+- **Why this is the better witness:** the canonical ledger's P0-10 claims "36+ components stale (site.css `202876c3` etc.)". My full census proves **10 of 11 audited assets are now correctly hashed** (site.css `b880b524`, command-palette `afe33045`, etc.) — only `fc-controller.js` remains stale. So P0-10 should be **downscoped from "systemic, 36+ components" to "one asset + one structural cache-bust gap"**. Much smaller blast radius than documented = good news, but still a real P1.
+- Suggested repair lane: `system-cache-bust` — (a) re-run cache-bust on HEAD; (b) make cache-bust also rewrite `src/**/*.astro` OR move fc-controller hash to a single computed import so Astro never hardcodes it.
+- Verification level: **L2** (source + filesystem hash witness). Corroborates `arena-agent-current-head-verifier` P0-10 confirm (they found the 25 root refs @ `5c91b618`; I add the 26 Astro refs + the "zero correct" proof + root cause #1).
+
+## R2.2 Confirm — CHV-003 (Antisovetov U+FFFD corruption) → escalate note
+- Target: `incoming/arena-agent-current-head-verifier/2026-06-26/REPORT.md` CHV-003
+- My evidence (`evidence/S3-CONFIRM-chv003-chv004.txt`): exactly **1** U+FFFD in `AntisovetovBody.astro` line 695, in published reader text.
+- **Stronger root-cause note:** it's not just a stray replacement char — the surrounding sentence is **truncated/merged**: *"Настоящая сломленность не прос�тематическом искажении фактов…"* glues the tail of one sentence onto another. Fix needs the **original sentence restored** (editorial/source lookup), not a single-character substitution. Recommend the verifier flag this as needing owner/source text, P0 content.
+- Recommended status: `confirmed-current`, P0.
+
+## R2.3 Confirm — CHV-004 (Hermenevtika biblical-verse corruption)
+- Target: CHV-004
+- My evidence: confirmed in **both** Astro source AND legacy HTML artifact (two witnesses):
+  - `кик говорят` → should be `как говорят` (1 Кор 15:12)
+  - `называемая , .Святое Святых"` → broken punctuation (Евр 9:3)
+- These are **quoted Scripture** rendered to readers — higher reputational sensitivity for this site. Recommend grouping CHV-003 + CHV-004 into one `content-text-corruption` repair lane with owner sign-off on exact wording.
+- Recommended status: `confirmed-current`, P1 (arguably P0 given it's Scripture quotation).
+
+## R2.4 Note on overlap / dedup for verifier
+- My **S3-N4** and the other agent's **P0-10 confirm** + **CHV-006** are the same asset-contract family. Suggest the verifier create one canonical entry: *"cache-bust does not cover src/*.astro and was not re-run for fc-controller"* and fold both witnesses under it.
+- My **S3-N3** (series-cards in audit-pro) and their **CHV-006** (audit-pro SW precache guard stale) are both "audit-pro.js drifted after cleanup lanes" — recommend a single `audit-pro-reconciliation` cleanup lane covering: series-cards refs, SW precache completeness guard, shared asset-list.
+
+## R2.5 Updated "Notes for Verifier" priority stack (after Round 2)
+Given the goal stated by the owner ("единый монолит, не 100 линий"), the highest-leverage fixes are **structural**, not cosmetic:
+
+| Priority | Item | Why it ends recurring conflicts |
+|---|---|---|
+| 1 (P0) | CHV-003 + CHV-004 content corruption | published text/Scripture is wrong — must fix regardless of architecture |
+| 2 (P1) | **S3-N4 root cause #1**: cache-bust ignores `src/*.astro` | this is the engine behind the *entire* P0-10 saga; fixing it once stops the hash-drift conflicts permanently |
+| 3 (P2) | audit-pro reconciliation (S3-N3 + CHV-006) | stale guards generate false release-blockers → agents keep "fixing" non-bugs |
+| 4 (P2) | baptisty SEO (S3-N1 breadcrumb, S3-N2 og:image) | net-new completeness, isolated, safe |
+| 5 (P2) | CHV-002 rodosloviye noindex/sitemap/baseline 3-way conflict | needs ONE owner decision (index or not), then mechanical |
+
+**Meta-observation for the "monolith" goal:** the recurring conflicts on this site are dominated by **two systemic engines** — (1) the legacy-root ↔ Astro-src dual representation, and (2) cache-bust/audit-pro only understanding the legacy-root half. Until cache-bust + audit-pro operate on the Astro source-of-truth (or the legacy root is deleted), every asset change will keep producing "stale hash" and "audit drift" findings. Recommend a dedicated SYSTEM lane to unify the asset-hashing pipeline across both halves *before* more route-level fixes.
+
+---
+
 ## Proposal statuses
 proposal-open → proposal-supported → proposal-accepted (bug moves)
 proposal-open → proposal-conflicted → resolved in conflicts/

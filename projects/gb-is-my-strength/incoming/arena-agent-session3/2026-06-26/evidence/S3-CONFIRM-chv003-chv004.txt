@@ -1,0 +1,15 @@
+# S3-CONFIRM — independent witness for current-head-verifier CHV-003 & CHV-004
+# SHA 02e1a0f | Thu Jun 25 23:17:10 UTC 2026
+
+## CHV-003: U+FFFD in Antisovetov (confirmed, exactly 1 occurrence)
+U+FFFD count in AntisovetovBody.astro: 1
+context (line 695): ...Настоящая сломленность не прос[U+FFFD]тематическом искажении фактов...
+NOTE: also corrupts the SENTENCE — 'не прос�тематическом' is a broken merge of two sentences; needs editorial restore, not just char fix.
+
+## CHV-004: Hermenevtika verse corruption (confirmed in BOTH src + legacy html)
+'кик говорят' (should be 'как говорят') 1 Кор 15:12 —
+src/components/article-pilots/hermenevtika/HermenevtikaBody.astro
+articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/index.html
+'называемая , .Святое Святых' (broken punctuation) Евр 9:3 —
+src/components/article-pilots/hermenevtika/HermenevtikaBody.astro
+articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/index.html
