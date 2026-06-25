@@ -121,3 +121,26 @@
 ---
 
 ## Repair-ready — see `repair-order-unified-2026-06-25.md`
+
+---
+
+## Amendments — arena-agent-verifier-2 (2026-06-25)
+
+> Additive only; existing rows untouched. Full evidence: `incoming/arena-agent-verifier-2/2026-06-25/NET-NEW-bugs-not-in-unified-ledger-2026-06-25.md`. Conflicts/resolutions: `verification/CONFLICT_REGISTRY_2026-06-25.md` C-04…C-06.
+
+### Net-new bugs (not previously in ledger)
+
+| ID | Sev | File(s) | Bug | Note |
+|----|-----|---------|-----|------|
+| V2-1 | P1 | `GillPart1PageChrome.astro`, gill-part3 chrome | TOC↔body anchor mismatch: part1 `#sec-early-years`(→`#part-calling`),`#sec-gill-spirituality`(missing); part3 5 broken (`#sec-legacy-main`,`#sec-rome-proverbs`,`#sec-wesley`,`#sec-coffee-house-polity`,`#sec-evaluations-map`) | NOT masked by PS-01 (pure markup); broken in-page nav |
+| V2-2 | P1 | `js/nagornaya-mobile-toc.js` + 5 `Nagornaya*PageChrome.astro` | Font A−/A+ dead: markup `#nagFontDec`/`.nag-fontsize-btn`, JS listens `[data-fontsize]`/`.nag-fontsize-down/up` (no such elements) | NOT masked by PS-01 |
+| V2-3 | P1 | `karty/avraam/index.html` | Skip-link `href="#svg-map"` → no such id (real: `#svg`/`#mapFrame`/`#stage`); a11y skip dead | only map with a skip-link |
+| V2-4 | P2 | `feed.xml` | RFC-822 weekday names wrong: `Sat,31 May`→Sunday ×3, `Thu,01 May`→Friday ×6 | distinct from P2-6 (timezone); both real |
+
+### Status corrections to existing rows (see arena-agent-2 corrections + my independent confirm)
+- **P0-2** (`floating-cluster.css` empty) → **CLOSE / false positive** (verified 1869 lines / 68KB by two agents). C-05.
+- **PS-01** root cause = lexical IIFE-scope defect (not load-order); triple-confirmed (Playwright + Node stub + jsdom); blast radius **23** pages. C-04.
+- **P0-1** (Gill SAVE "data-action") → fold into PS-01 (attribute `data-fc-action` is correct; dead only because init aborts). 
+
+### Headline count impact
+Net-new +4 (V2-1..V2-4). P0-2 false-positive −1 (P0 9→8). Final verifier should re-tally.

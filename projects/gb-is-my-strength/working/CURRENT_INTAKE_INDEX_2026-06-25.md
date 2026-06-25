@@ -39,3 +39,15 @@ Imported files:
    B-09 (stray hash) / B-10 (duplicate IDs) reproduce **only in dist** → run a fresh
    `strangler:build:production-like` to resolve their status before escalating.
 4. Move only confirmed cross-layer items into `verified/`.
+
+---
+
+## Update — arena-agent-verifier-2 round (2026-06-25)
+
+Added:
+- `incoming/arena-agent-verifier-2/2026-06-25/` (independent verification + NET-NEW bugs + README)
+- `verification/CONFLICT_REGISTRY_2026-06-25.md` → appended C-04 (PS-01 triple-confirmed), C-05 (P0-2 false positive 2nd confirm), C-06 (feed has 2 distinct date bugs)
+- `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` → appended "Amendments" section: V2-1..V2-4 net-new + P0-2/PS-01/P0-1 status corrections
+- `working/AGENT_STATUS_BOARD_2026-06-25.md` → registered all known agents
+
+Net-new bugs introduced this round: **V2-1** (Gill TOC anchors, P1), **V2-2** (Nagornaya font buttons dead, P1), **V2-3** (Avraam skip-link, P1), **V2-4** (feed weekday names, P2). None previously present in any doc.
