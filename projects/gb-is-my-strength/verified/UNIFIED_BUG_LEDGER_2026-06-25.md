@@ -451,3 +451,25 @@ Total: 61→60 bugs.
 **Fixed in AuditRepo (pending merge):** PS-01, P0-10, PS-06, PS-07, P0-7, P0-8
 **False positive closed:** P3-8, P1-13 (recheck)
 **Confirmed in current HEAD:** P2-17, P2-18, P3-12, P1-14/15/16, P0-3, P0-6, P1-5
+
+---
+
+## Amendments — Arena Agent Round 10 (2026-06-25)
+
+**Source:** `incoming/arena-agent-round10/2026-06-25/REPORT.md`
+
+### Round 10 fixes (project source):
+- **P0-NEW ✅ FIXED** — `sw.js`: removed `site-layered.css` + `site-modules.js` from PRECACHE_ASSETS
+- **P3-NEW ✅ FIXED** — back-to-top.js loaded on 7 pages (GillPart1/2/3, Antisovetov, KodDaVinchi, Krajne, Rimlyanam7)
+- **P2-17 ✅ FIXED** — MapEngine getPlaceVisual moved from global pollution to isolated option
+- **P3-12 ✅ FIXED** — AvraamMap baseGeoUrl now has cache-busting `?v=2.0`
+
+### Round 10 verifications:
+- **P1-13 → FALSE POSITIVE confirmed** — site.js dark mode bridge works on ALL pages via `document.documentElement.classList.toggle('dark', dark)`
+- **P1-14/15/16 → CONFIRMED REAL BUGS** — Baptisty pages use BaptistyRossiiBody.astro (own components), NOT SeriesArticleLayout. site.js lacks GBS2 control handlers for: `data-gbs2-theme`, `data-gbs2-font-up/down`, `data-gbs2-share`, `data-gbs2-search`, `gbs2Bbar`, `gbs2Curbar`, `gbs2MobPct`, `gbs2Sheet`
+- **P2-18 → CONFIRMED** — MapEngine loadFromHash uses `location.pathname` which includes GitHub Pages base href prefix → 404 on GitHub Pages
+
+### Updated counts:
+- Fixed in project source (this session): P0-NEW, P3-NEW, P2-17, P3-12
+- FALSE POSITIVE (confirmed): P1-13 added to list
+- Remaining active bugs: ~52
