@@ -1,31 +1,30 @@
 # Project Registry
 
-Список проектов, которые проходят мультиагентные аудиты в этом репозитории.
-
 ## Active projects
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | active | Стартовый intake загружен, есть route map и первая bug matrix. |
+| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Unified bug ledger with 40 confirmed bugs (9 P0, 13 P1, 15 P2, 5 P3). Cross-reference synthesis done. Repair order ready. |
 
 ## Status glossary
 
-- `active` — проект в работе, агенты продолжают складывать отчёты
-- `intake-only` — папка создана, но есть только сырые отчёты
+- `active` — проект в работе
+- `intake-only` — сырые отчёты есть
 - `verifying` — идёт сводка и дедупликация
-- `repair-ready` — verified matrix и repair order готовы для implementation-агента
-- `archived` — проект завершён и заморожен
+- **→ `repair-ready`** — unified ledger and repair order in `verified/` — implementation agent can proceed
+- `archived` — проект завершён
 
-## How to add a new project
+## gb-is-my-strength summary
 
-1. Создать папку:
-   - `projects/<project-name>/`
-2. Создать подпапки:
-   - `incoming/`
-   - `working/`
-   - `verified/`
-3. Добавить `README.md` проекта
-4. Внести запись в этот registry
-5. При первом intake создать:
-   - `incoming/<agent>/<YYYY-MM-DD>/README.md`
-   - `working/CURRENT_INTAKE_INDEX_<YYYY-MM-DD>.md`
+**Total confirmed bugs:** 40  
+**P0 critical:** 9 (fix immediately)  
+**Key finding:** P0-10 — All 36+ Astro components have stale hardcoded asset hashes (cache-busting completely broken for Astro-owned pages)
+
+**Unified documents:**
+- `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` — complete bug matrix
+- `verified/repair-order-unified-2026-06-25.md` — prioritized fix plan
+- `verification/cross-reference/cross-reference-synthesis-2026-06-25.md` — cross-agent findings merge
+
+**Incoming sources:**
+- `incoming/arena-agent/2026-06-25/` — Arena Agent (premium surface, runtime, interactive audit)
+- `incoming/arena-agent-round3/2026-06-25/` — Arena Agent Round 3 (system tooling, CI, Astro source-layer)
