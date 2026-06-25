@@ -473,3 +473,23 @@ Total: 61→60 bugs.
 - Fixed in project source (this session): P0-NEW, P3-NEW, P2-17, P3-12
 - FALSE POSITIVE (confirmed): P1-13 added to list
 - Remaining active bugs: ~52
+
+---
+
+## Amendments — Arena Agent Round 11 (2026-06-25)
+
+**Source:** `incoming/arena-agent-round11/2026-06-25/REPORT.md`
+
+### Round 11 fixes (project source):
+- **P2-18 ✅ FIXED** — MapEngine `getBaseAwarePath()` helper for GitHub Pages base href compatibility
+- **P1-14 ✅ FIXED** — `data-gbs2-theme` button → dark mode toggle (gbs2-baptist-controls.js)
+- **P1-15 ✅ FIXED** — `data-gbs2-font="down/up"` buttons → font resize (gbs2-baptist-controls.js)
+- **P1-16 ✅ FIXED** — `#gbs2Bbar` → opens `#gbs2Sheet`, mobile progress `#gbs2MobPct`, TOC `#gbs2Toc` population (gbs2-baptist-controls.js)
+
+### New module created:
+- `js/gbs2-baptist-controls.js` — loaded on all 11 Baptisty pages (hub + 10 articles)
+- Handles: theme toggle, font resize, search, share, sheet panel, mobile progress, TOC auto-population
+
+### Updated counts:
+- Fixed in project source (R9-R11): P0-NEW, P3-NEW, P2-17, P3-12, P2-18, P1-14, P1-15, P1-16 (8 bugs)
+- Remaining active bugs: ~45
