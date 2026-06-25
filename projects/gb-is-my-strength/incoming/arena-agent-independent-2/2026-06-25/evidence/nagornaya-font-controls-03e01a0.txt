@@ -1,0 +1,25 @@
+## HEAD
+03e01a0008de34d654175ea600cdf9f22b2351b4
+
+## Source and dist counts
+nagornaya/chast-1/index.html                                                          data-fontsize=0 nagFontDec=1 nagFontInc=1
+nagornaya/chast-2/index.html                                                          data-fontsize=0 nagFontDec=1 nagFontInc=1
+nagornaya/chast-3/index.html                                                          data-fontsize=0 nagFontDec=1 nagFontInc=1
+nagornaya/chast-4/index.html                                                          data-fontsize=0 nagFontDec=1 nagFontInc=1
+nagornaya/chast-5/index.html                                                          data-fontsize=0 nagFontDec=1 nagFontInc=1
+nagornaya/index.html                                                                  data-fontsize=0 nagFontDec=1 nagFontInc=1
+src/components/nagornaya/chast-1/NagornayaChast1PageChrome.astro                      data-fontsize=2 nagFontDec=1 nagFontInc=1
+src/components/nagornaya/chast-2/NagornayaChast2PageChrome.astro                      data-fontsize=2 nagFontDec=1 nagFontInc=1
+src/components/nagornaya/chast-3/NagornayaChast3PageChrome.astro                      data-fontsize=2 nagFontDec=1 nagFontInc=1
+src/components/nagornaya/chast-4/NagornayaChast4PageChrome.astro                      data-fontsize=2 nagFontDec=1 nagFontInc=1
+src/components/nagornaya/chast-5/NagornayaChast5PageChrome.astro                      data-fontsize=2 nagFontDec=1 nagFontInc=1
+src/components/nagornaya/index/NagornayaIndexPageChrome.astro                         data-fontsize=0 nagFontDec=1 nagFontInc=1
+dist/nagornaya/chast-1/index.html                                                     data-fontsize=2 nagFontDec=1 nagFontInc=1
+dist/nagornaya/chast-2/index.html                                                     data-fontsize=2 nagFontDec=1 nagFontInc=1
+dist/nagornaya/chast-3/index.html                                                     data-fontsize=2 nagFontDec=1 nagFontInc=1
+dist/nagornaya/chast-4/index.html                                                     data-fontsize=2 nagFontDec=1 nagFontInc=1
+dist/nagornaya/chast-5/index.html                                                     data-fontsize=2 nagFontDec=1 nagFontInc=1
+dist/nagornaya/index.html                                                             data-fontsize=0 nagFontDec=1 nagFontInc=1
+
+## JS selector (minified line excerpt)
+document.querySelector('[data-fontsize="down"], .nag-fontsize-down'),r=document.querySelector('[data-fontsize="up"],   .nag-fontsize-up')
