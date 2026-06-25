@@ -1,0 +1,23 @@
+=== P1-17: BaseLayout CSS without cache-bust ===
+
+CSS lines in BaseLayout.astro (NO ?v= hash):
+207:    <link rel="stylesheet" href="/fonts/fonts.css" />
+208:    <link rel="stylesheet" href="/css/site.css" />
+209:    <link rel="stylesheet" href="/css/command-palette.css" />
+210:    <link rel="stylesheet" href="/css/mobile-hotfix.css" />
+
+JS lines in BaseLayout.astro (WITH ?v= hash via scriptTag()):
+133:function scriptTag(rel: string, attrs = 'defer') {
+166:    scriptTag('js/site-utils.js', ''),
+167:    scriptTag('js/scroll-perf.js', ''),
+168:    scriptTag('js/site.js'),
+169:    scriptTag('js/sw-register.js'),
+170:    scriptTag('js/search.js'),
+
+scriptTag function uses md5short() to add ?v=HASH:
+function scriptTag(rel: string, attrs = 'defer') {
+  const hash = md5short(rel);
+  const src = `/${rel}${hash ? `?v=${hash}` : ''}`;
+  return `<script ${attrs} src="${src}"></script>`;
+
+CONCLUSION: JS gets cache-busting, CSS does NOT
