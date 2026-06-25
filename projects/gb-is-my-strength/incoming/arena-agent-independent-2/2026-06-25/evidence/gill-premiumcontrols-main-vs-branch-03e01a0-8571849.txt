@@ -1,0 +1,68 @@
+## Main HEAD
+03e01a0008de34d654175ea600cdf9f22b2351b4
+
+## Source diff main..branch
+diff --git a/js/floating-cluster-controller.js b/js/floating-cluster-controller.js
+index 0d7b6bc..6f3709b 100644
+--- a/js/floating-cluster-controller.js
++++ b/js/floating-cluster-controller.js
+@@ -318,8 +318,15 @@
+      Инициализирует floating-cluster controls в gbs2-rail
+      ===================================================== */
+   function initGillRail() {
+-    var railControls = qs('[data-fc-controls="gill-rail"]');
+-    if (!railControls) return;
++    // FIX (PremiumControls clickability): Gill pages render TWO
++    // [data-fc-controls="gill-rail"] containers (desktop rail + mobile bottom
++    // bar). Previous qs() grabbed only the first (the hidden one), so the
++    // VISIBLE desktop rail theme/search buttons stayed unwired and did not
++    // respond to clicks. Per rollout-plan runtime contract #1 ("init every
++    // root"), iterate ALL gill-rail containers.
++    var railControlsAll = qsa('[data-fc-controls="gill-rail"]');
++    if (!railControlsAll.length) return;
++    railControlsAll.forEach(function (rail) { initCluster(rail); });
+     // Wire gbs2 theme/search buttons that exist outside fc-controls scope
+     var gbs2ThemeBtns = qsa('[data-gbs2-theme]');
+     gbs2ThemeBtns.forEach(function(btn) {
+@@ -329,7 +336,6 @@
+     gbs2SearchBtns.forEach(function(btn) {
+       btn.addEventListener('click', function() { openSearch(btn); });
+     });
+-    initCluster(railControls);
+     // Expose public API for pages that use gill-rail without data-fc-root
+     if (!window.__gbCluster) {
+       window.__gbCluster = {
+
+## Main production-like dist Playwright (before fix; built from 03e01a0)
+/articles/dzhon-gill-chast-1-chelovek/ {"before":{"dark":false,"controls":[{"rect":{"x":0,"y":0,"w":0,"h":0},"disp":"flex","vis":"visible","btns":1},{"rect":{"x":0,"y":821,"w":303,"h":79},"disp":"flex","vis":"visible","btns":1}]},"clicked":true,"err":null,"after":{"dark":false,"active":"gbs-rail-foot__btn gb-theme-toggle"}}
+/articles/dzhon-gill-chast-2-uchenyi/ {"before":{"dark":false,"controls":[{"rect":{"x":0,"y":0,"w":0,"h":0},"disp":"flex","vis":"visible","btns":1},{"rect":{"x":0,"y":821,"w":303,"h":79},"disp":"flex","vis":"visible","btns":1}]},"clicked":true,"err":null,"after":{"dark":false,"active":"gbs-rail-foot__btn gb-theme-toggle"}}
+/articles/dzhon-gill-chast-3-nasledie/ {"before":{"dark":false,"controls":[{"rect":{"x":0,"y":0,"w":0,"h":0},"disp":"flex","vis":"visible","btns":1},{"rect":{"x":0,"y":821,"w":303,"h":79},"disp":"flex","vis":"visible","btns":1}]},"clicked":true,"err":null,"after":{"dark":false,"active":"gbs-rail-foot__btn gb-theme-toggle"}}
+/articles/dzhon-gill-spravochnik/ {"before":{"dark":false,"controls":[{"rect":{"x":0,"y":0,"w":0,"h":0},"disp":"flex","vis":"visible","btns":1},{"rect":{"x":0,"y":821,"w":303,"h":79},"disp":"flex","vis":"visible","btns":1}]},"clicked":true,"err":null,"after":{"dark":false,"active":"gbs-rail-foot__btn gb-theme-toggle"}}
+
+## Branch production-like dist Playwright (after fix; built from 8571849)
+/articles/dzhon-gill-chast-1-chelovek/ {"before":false,"after":true,"works":true}
+/articles/dzhon-gill-chast-2-uchenyi/ {"before":false,"after":true,"works":true}
+/articles/dzhon-gill-chast-3-nasledie/ {"before":false,"after":true,"works":true}
+/articles/dzhon-gill-spravochnik/ {"before":false,"after":true,"works":true}
+
+## Branch build tail
+19:46:34   ├─ /index.html (+4ms)
+19:46:34 ✓ Completed in 374ms.
+
+19:46:34 [build] ✓ Completed in 7.73s.
+19:46:34 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+19:46:34 [build] 52 page(s) built in 8.48s
+19:46:34 [build] Complete!
+   Copy operation manifest: reports/dist-copy-manifest.json
+✅ copy-legacy-to-dist: copied 578 files (46480 KB)
+   Astro-owned legacy pages skipped: /articles/20-antisovetov-pastoru/, /articles/dzhon-gill-chast-1-chelovek/, /articles/dzhon-gill-chast-2-uchenyi/, /articles/dzhon-gill-chast-3-nasledie/, /articles/dzhon-gill-istoricheskiy-kontekst/, /articles/dzhon-gill-spravochnik/, /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/, /articles/, /articles/kod-da-vinchi/, /articles/krajne-li-isporcheno-serdce/, /articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/, /about/, /baptisty-rossii/dva-sezda-1884/, /baptisty-rossii/goneniya-i-sovest/, /baptisty-rossii/, /baptisty-rossii/iniciativnaya-gruppa/, /baptisty-rossii/noch-na-kure/, /baptisty-rossii/peterburgskaya-liniya/, /baptisty-rossii/podpolnaya-pechat/, /baptisty-rossii/sovetskaya-noch/, /baptisty-rossii/spravochnik/, /baptisty-rossii/vsehib-1944/, /baptisty-rossii/yuzhnaya-shtunda/, /biografii/, /hard-texts/, /karty/avraam/, /karty/early-church/, /karty/, /karty/ishod/, /karty/maccabim/, /karty/melachim/, /karty/pavel/, /karty/revelation/, /karty/shoftim/, /karty/shvatim/, /karty/yeshua/, /konfessii/, /konfessii/russkij-baptizm/, /map/, /nagornaya/chast-1/, /nagornaya/chast-2/, /nagornaya/chast-3/, /nagornaya/chast-4/, /nagornaya/chast-5/, /nagornaya/, /nagornaya/istochniki/, /nagornaya/nakhodki/, /nagornaya/seriya/, /pastor-series/
+   Build-only Astro routes omitted: /dev/astro-test/
+   Partial Astro sitemap files removed: sitemap-0.xml, sitemap-index.xml
+
+⚡  astro-cache-bust-postbuild.js
+
+  HTML files scanned: 56
+  Files touched:      36
+  Hash replacements:  527
+
+✅  dist/ hash drift → 0 (next cache-bust legacy pass will converge)
