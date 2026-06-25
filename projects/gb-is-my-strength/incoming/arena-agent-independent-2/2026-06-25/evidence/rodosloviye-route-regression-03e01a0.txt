@@ -1,0 +1,134 @@
+## HEAD
+03e01a0008de34d654175ea600cdf9f22b2351b4
+
+## Route contract snippets
+{
+  "route": "/rodosloviye/",
+  "profiledAt": "2026-06-22",
+  "migrationLane": "special",
+  "routeType": "genealogy",
+  "section": "rodosloviye",
+  "slug": null,
+  "currentStatus": "production-dist",
+  "source": "src/pages/rodosloviye/index.astro",
+  "risk": 2,
+  "hasMDX": false,
+  "mdxPath": null,
+  "legacyPath": "rodosloviye/index.html",
+  "visualParity": {
+    "desktop": 0,
+    "mobile": 0
+  },
+  "cssPilot": null,
+  "migrationMode": "legacy-shadow-app"
+}
+
+## Source page imports
+---
+/**
+ * /rodosloviye/ — strict-native route (Protected App Routes Native Astro Phase).
+ *
+ * Interactive React family tree.
+ * Native RodosloviyePageHead (SEO/JSON-LD/meta) + Native RodosloviyeBody.
+ * Uses site.css + React island internally without shadow legacy wrapping.
+ */
+import RodosloviyePageHead from '@/components/rodosloviye/RodosloviyePageHead.astro';
+import RodosloviyeStyles from '@/components/rodosloviye/RodosloviyeStyles.astro';
+import RodosloviyeBody from '@/components/rodosloviye/RodosloviyeBody.astro';
+---
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+  <head>
+    <RodosloviyePageHead />
+    <RodosloviyeStyles />
+  </head>
+  <body class="site-page">
+    <RodosloviyeBody />
+  </body>
+</html>
+
+## Rodosloviye styles
+---
+---
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/command-palette.css">
+  <link rel="stylesheet" href="/css/mobile-hotfix.css">
+
+## Rodosloviye body script/link snippets
+25:      <p><a class="btn btn-primary" href="/rodosloviye/">Открыть родословие</a> <a class="btn" href="/karty/">К разделу карт и инструментов</a></p>
+30:    version: 1,
+36:  <script src="/js/site.js?v=133dfac1" defer></script>
+37:  <script src="/js/search.js?v=c9d65577" defer></script>
+38:  <script src="/js/sw-register.js?v=8a077d35" defer></script>
+
+## Genealogy component exists but is not referenced by rodosloviye route
+src/components/genealogy/DetailPanel.tsx
+src/components/genealogy/GenealogyTree.tsx
+src/components/genealogy/PersonNode.tsx
+src/components/genealogy/SplitView.tsx
+src/components/genealogy/TimelineAxis.tsx
+src/components/genealogy/layout.ts
+src/components/genealogy/theme.ts
+src/components/genealogy/types.ts
+src/components/genealogy/GenealogyTree.tsx:23:export default function GenealogyTree({ persons, eras }: { persons: Person[]; eras?: Era[] }) {
+
+## Dist unversioned stylesheets
+[('/fonts/fonts.css', ''), ('/css/site.css', ''), ('/css/command-palette.css', ''), ('/css/mobile-hotfix.css', '')]
+core css hrefs: ['/fonts/fonts.css', '/css/site.css', '/css/command-palette.css', '/css/mobile-hotfix.css']
+
+## Browser route observation
+{
+  "title": "Родословие от Адама до Христа | Господь Бог — Сила Моя",
+  "h1": "Родословие от Адама до Христа",
+  "links": [
+    {
+      "text": "Перейти к содержанию",
+      "href": "#main-content"
+    },
+    {
+      "text": "Главная",
+      "href": "/"
+    },
+    {
+      "text": "Открыть родословие",
+      "href": "/rodosloviye/"
+    },
+    {
+      "text": "К разделу карт и инструментов",
+      "href": "/karty/"
+    },
+    {
+      "text": "",
+      "href": null
+    },
+    {
+      "text": "",
+      "href": null
+    },
+    {
+      "text": "",
+      "href": null
+    },
+    {
+      "text": "Читать",
+      "href": "/"
+    }
+  ],
+  "scriptSrcs": [
+    "/js/glossary.js?v=1",
+    "/js/site.js?v=133dfac1",
+    "/js/search.js?v=c9d65577",
+    "/js/sw-register.js?v=318502c5"
+  ],
+  "stylesheetHrefs": [
+    "/fonts/fonts.css",
+    "/css/site.css",
+    "/css/command-palette.css",
+    "/css/mobile-hotfix.css"
+  ],
+  "reactMarkers": 39,
+  "canvas": 0,
+  "svg": 39,
+  "appMountCandidates": []
+}
