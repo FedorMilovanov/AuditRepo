@@ -1,10 +1,16 @@
 # Master verifier dashboard — gb-is-my-strength — 2026-06-25
 
 ## Current project status
-- **Project status:** `repair-ready`, but with live disputes that still need SHA-aware recheck
+- **Project status:** `repair-in-progress` — SHA-aware recheck done at source HEAD `d19baf0`
 - **Source repo:** `FedorMilovanov/gb-is-my-strength`
+- **Latest SHA-aware reverify:** `../reverify/CURRENT_HEAD_REVERIFY_2026-06-25_d19baf0.md` (arena-agent-verifier-2) — see conflict registry **C-11**
 - **Canonical verified handoff:** `../verified/UNIFIED_BUG_LEDGER_2026-06-25.md`
 - **Canonical repair order:** `../verified/repair-order-unified-2026-06-25.md`
+
+### Reverify snapshot @ d19baf0 (2026-06-25)
+- ✅ FIXED in source & re-confirmed: PS-01 (+PS-02/PS-03/P0-1), PS-07, PS-10 → candidates for `archive/fixed/`
+- ❌ STILL OPEN: V2-1 (Gill TOC anchors), V2-2/NEW-3 (Nagornaya font btns), V2-3/NEW-4 (Avraam skip-link), V2-4/NEW-5 (feed weekdays), PS-06 (readTime 35), R-06/NEW-2 (ember CSS on 15 pages)
+- ⚠️ NEW-3 & NEW-5 fixes are DOCUMENTED but NOT APPLIED to source — implementation lane must apply.
 
 ## Current evidence layers
 

@@ -350,3 +350,17 @@ sitemap/search is correct SEO practice, not a bug.
 ### Action for the final verifier
 Drop P1-2 and P1-3 from the bug set. (Pair this with the P0-NEW and P0-3 closures in
 C-08/C-09 when recomputing the final count.)
+
+---
+
+## C-11 — SHA-aware reverify @ source HEAD d19baf0: 4 fixes landed, 6 bugs still open
+
+Source HEAD advanced `fb8e4922` → **`d19baf0`**. First reverify against the ACTUAL current source (prior fix docs were validated against an earlier SHA). Full evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-06-25_d19baf0.md`.
+
+**FIXED & re-confirmed (source + jsdom witnesses):** PS-01 (`})();` moved to EOF line 567 → controller no longer crashes; jsdom: theme works, `__gbCluster` created) → drags PS-02/PS-03/P0-1 fixed; PS-07 (ids removed); PS-10 (`?v=efd81d3a` consistent).
+
+**STILL OPEN at d19baf0 (do NOT retire):** V2-1 (Gill TOC anchors part1×2/part3×5), V2-2/NEW-3 (Nagornaya font buttons), V2-3/NEW-4 (Avraam skip-link), V2-4/NEW-5 (feed weekdays ×9), PS-06 (readTime 35), R-06/NEW-2 (ember CSS+wiring on 10 baptisty + 5 nagornaya).
+
+**⚠ Important:** `working/PS-01-FIX-VALIDATED` confirms PS-01 patch — and it IS now merged (good). But `working/NEW3-NEW5-FIX-DIRECTIONS` for NEW-3/NEW-5 are **documented only, NOT applied** — both still reproduce at HEAD. Implementation lane must apply them, not just document.
+
+Recommend: move PS-01/PS-07/PS-10 to `archive/fixed/` (`fixed-current @ d19baf0`); keep the 6 open items in verified.
