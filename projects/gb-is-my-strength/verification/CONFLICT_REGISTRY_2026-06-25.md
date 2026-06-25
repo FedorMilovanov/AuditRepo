@@ -260,6 +260,8 @@ The 404 framing is wrong, but adjacent findings stand:
 ### Action for the final verifier
 Drop P0-NEW. The confirmed count stays at 63 (9 P0). P0-7/P0-8 stay (cache-bust drift).
 
+**Production-build corroboration (deploy pipeline):** `.github/workflows/deploy.yml:98` runs `npm run strangler:build:production-like`, which executes `astro build` + `scripts/copy-legacy-to-dist.js` (PUBLIC_DIRS incl. `css`/`js`) before `upload-pages-artifact`. Therefore the deployed `dist/` always contains `dist/css/site-layered.css` and `dist/js/site-modules.js`. The SW precache never 404s on these in production.
+
 ## C-09 — P0-3 (robots.txt) is a POLICY DECISION, not a bug (round5 mis-confirmed)
 
 **Raised by:** `arena-agent-2`
