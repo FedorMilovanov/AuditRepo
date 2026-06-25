@@ -513,3 +513,17 @@ Total: 61→60 bugs.
 ### Updated counts:
 - Fixed in project source (R9-R12): P0-NEW, P3-NEW, P2-17, P3-12, P2-18, P1-14, P1-15, P1-16, P1-5, P1-9, P2-14 (11 bugs)
 - Remaining active bugs: ~43
+
+---
+
+## Amendments — Arena Agent Round 13 (2026-06-25)
+
+**Source:** `incoming/arena-agent-round13/2026-06-25/REPORT.md`
+
+### Round 13 fixes (project source):
+- **P2-5 ✅ FIXED** — notify-on-failure.yml: Python3 parser now outputs `name:id` (colon-joined) instead of two separate values per artifact. Shell loop correctly iterates over 2 tokens per artifact.
+- **P2-12 ✅ FIXED** — check-data-consistency.js: `textOfFirstH1()` now uses DOMParser for robust H1 extraction, with regex fallback.
+
+### Updated counts:
+- Fixed in project source (R9-R13): P0-NEW, P3-NEW, P2-17, P3-12, P2-18, P1-14, P1-15, P1-16, P1-5, P1-9, P2-14, P2-5, P2-12 (13 bugs)
+- Remaining active bugs: ~40
