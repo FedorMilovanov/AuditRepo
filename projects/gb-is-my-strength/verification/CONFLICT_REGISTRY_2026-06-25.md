@@ -365,7 +365,7 @@ Source HEAD advanced `fb8e4922` → **`d19baf0`**. First reverify against the AC
 
 Recommend: move PS-01/PS-07/PS-10 to `archive/fixed/` (`fixed-current @ d19baf0`); keep the 6 open items in verified.
 
-## C-11 — V2-2/NEW-3 (nagornaya font) marked FIXED in ledger but NOT fixed in source
+## C-12 — V2-2/NEW-3 (nagornaya font) marked FIXED in ledger but NOT fixed in source
 
 **Raised by:** `arena-agent-2` (reverify @ `03e01a0`)
 **Full evidence:** `reverify/CURRENT_HEAD_REVERIFY_2026-06-25_03e01a0.md`

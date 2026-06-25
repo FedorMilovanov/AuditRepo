@@ -37,4 +37,4 @@
 - **C-09 (arena-agent-2):** round5 P0-3 (robots.txt) mis-confirmed — specific UA groups override `*`; blocking Ahrefs/Semrush is deliberate (AUDIT V2 comment). = FP-03.
 - **C-10 (arena-agent-2):** P1-2/P1-3 (sitemap/search-manifest "incomplete") FALSE POSITIVE — 43/44 is intended (8 karty/* are `noindex` placeholders; all baptisty in sitemap; README §1.1 documents 43).
 - premium-controls audit findings vs audit-selector drift (PS-08/PS-09) — confirmed tooling drift, not route bugs.
-- **C-11 (arena-agent-2 @ 03e01a0):** V2-2/NEW-3 (nagornaya font) marked FIXED in ledger but NOT fixed in source — all 5 pages still old markup (data-fontsize=0). Reopen. Likely lost in the 30b2031 rebase. See reverify/CURRENT_HEAD_REVERIFY_2026-06-25_03e01a0.md (9 bugs FIXED, +1 reopen, P0-10→P1 residual).
+- **C-12 (arena-agent-2 @ 03e01a0):** V2-2/NEW-3 (nagornaya font) marked FIXED in ledger but NOT fixed in source — all 5 pages still old markup (data-fontsize=0). Reopen. Likely lost in the 30b2031 rebase. See reverify/CURRENT_HEAD_REVERIFY_2026-06-25_03e01a0.md (9 bugs FIXED, +1 reopen, P0-10→P1 residual).
