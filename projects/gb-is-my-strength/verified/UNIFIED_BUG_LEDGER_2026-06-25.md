@@ -527,3 +527,45 @@ Total: 61→60 bugs.
 ### Updated counts:
 - Fixed in project source (R9-R13): P0-NEW, P3-NEW, P2-17, P3-12, P2-18, P1-14, P1-15, P1-16, P1-5, P1-9, P2-14, P2-5, P2-12 (13 bugs)
 - Remaining active bugs: ~40
+
+---
+
+## Amendments — Arena Agent Round 14 (2026-06-25)
+
+**Source:** `incoming/arena-agent-round14/2026-06-25/REPORT.md`
+
+### Round 14: COMPLETE AUDIT SUMMARY
+
+**13 bugs fixed in project source** across Rounds 9-14.
+
+### Complete Fix Log:
+1. P0-NEW (R9) — SW precache 404: site-layered.css + site-modules.js removed
+2. P3-NEW (R9) — back-to-top.js loaded on 7 pages
+3. P2-17 (R10) — MapEngine getPlaceVisual isolated option
+4. P3-12 (R10) — baseGeoUrl cache-busting ?v=2.0
+5. P1-14 (R11) — GBS2 theme toggle (data-gbs2-theme)
+6. P1-15 (R11) — GBS2 font resize (data-gbs2-font="up/down")
+7. P1-16 (R11) — GBS2 bottom bar, mobile progress, TOC population
+8. P2-18 (R11) — MapEngine getBaseAwarePath() base-href-aware
+9. P1-5 (R12) — route-migration-matrix.json reconciled (34→51 routes)
+10. P1-9 (R12) — audit-pro.js CACHE_BUST_ASSETS cleaned (24→20)
+11. P2-14 (R12) — series-cards.js commented out (not in Astro)
+12. P2-5 (R13) — notify-on-failure.yml Python3 parser: name:id format
+13. P2-12 (R13) — check-data-consistency.js H1 extraction via DOMParser
+
+### Key findings this session:
+- All js/modules/* files (back-to-top, faq-accordion, img-loaded, theme) exist in src/ but NEVER in dist/ — not imported in any Astro component
+- series-cards.js similarly unused in Astro pipeline
+- glossary.js IS used (10 Baptisty pages) but was missing from audit-pro.js ASSETS
+- P0-NEW root cause: site-layered.css + site-modules.js were in sw.js PRECACHE_ASSETS but never imported in Astro → never in dist/ → 404
+- GBS2 Baptisty controls were completely unwired (P1-14/15/16) — fixed via gbs2-baptist-controls.js module
+
+### False Positives confirmed:
+- P1-13: site.js dark mode bridge works on ALL pages (html.classList.toggle('dark'))
+- P3-8: FAQ accordion works via enhancements.js; faq-accordion.js is dead code
+
+### Final counts:
+- Fixed in project source: 13 bugs (V2-2, V2-3, V2-4, PS-06, P0-NEW, P3-NEW, P2-17, P3-12, P2-18, P1-14, P1-15, P1-16, P1-5, P1-9, P2-14, P2-5, P2-12 — some overlap with earlier fixes)
+- Fixed in AuditRepo (pending): 6 (PS-01, P0-10, PS-06, PS-07, P0-7, P0-8)
+- FALSE POSITIVE: 2 (P3-8, P1-13)
+- **Active remaining: ~40 bugs**
