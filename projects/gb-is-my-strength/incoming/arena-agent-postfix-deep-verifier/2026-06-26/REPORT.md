@@ -42,6 +42,7 @@ However, deeper production-like and runtime probes still show **hidden red areas
 | `PFV-005` | P1 | new confirmed-current | Runtime glossary hydration creates duplicate `id="gtip-luxury-N"` after JS, breaking `aria-describedby` uniqueness. Static duplicate-id audit misses it. |
 | `PFV-006` | P2 | confirmed-current | MDX concatenation debt remains in article content source. |
 | `PFV-007` | P1 | confirmed-current / guard blind spot | `migration:metadata:check:strict` is green but independent probe still finds 13 undefined route modes and 15 profile/matrix mismatches. |
+| `PFV-008` | P1 | confirmed-current / deploy gate blind spot | `deploy.yml`, `workflows:check`, and `dist-publication-audit` can stay green while dist contract and dist JSON-LD are red. |
 
 ---
 
@@ -270,6 +271,41 @@ However, deeper production-like and runtime probes still show **hidden red areas
 
 ---
 
+### Finding `PFV-008`
+
+- Title: Production deploy/readiness gates can be green while production-like dist contract and dist JSON-LD are red
+- Severity: **P1** — CI/deploy gate blind spot
+- Route(s): global deploy pipeline; currently manifests as `/karty/avraam/` and `/karty/ishod/`
+- Source file(s):
+  - `.github/workflows/deploy.yml`
+  - `scripts/dist-publication-audit.js`
+  - `scripts/check-workflows.js`
+  - `package.json`
+- Observed on SHA: `106f98d`
+- Repro steps:
+  1. Use existing production-like dist from this pass where `contract:compare:dist` and JSON-LD parse fail.
+  2. Run `node scripts/dist-publication-audit.js --require-pagefind --forbid-dev`.
+  3. Run `npm run workflows:check`.
+  4. Inspect `deploy.yml` for missing `contract:compare:dist` and missing dist JSON-LD parse step.
+- Expected: production deploy gate should block if the artifact violates public URL contract or has invalid JSON-LD.
+- Actual:
+  - `dist-publication-audit` passes on the same artifact where:
+    - `contract:compare:dist` fails (`/karty/avraam/` 594 → 23);
+    - dist JSON-LD parse fails (`/karty/ishod/` invalid JSON).
+  - `workflows:check` passes.
+  - `deploy.yml` runs `dist-publication-audit`, `visual:parity:production`, `sw:dist:audit:deploy-switch`, but does not run `contract:compare:dist` and does not parse dist JSON-LD.
+- Evidence: `evidence/09-deploy-dist-gate-blindspot-106f98d.log`
+- Confidence: high
+- Verification level: L2 source + command evidence
+- Suggested repair lane: `lane/deploy-dist-contract-jsonld-gates-2026-06-26`
+- Do not mix with: route content fixes; this is pipeline hardening.
+- Suggested fix:
+  1. Add a dist JSON-LD parse audit script or extend `dist-publication-audit.js`.
+  2. Run `npm run contract:extract:dist && npm run contract:compare:dist` in deploy or in `dist-publication-audit` / `strangler:audit:production-like` equivalent used by deploy.
+  3. Extend `scripts/check-workflows.js` so future workflow edits cannot drop these gates.
+
+---
+
 ## 2. Confirmations of Existing Findings
 
 ### Fixed-current / improved after `a4d045e` + `106f98d`
@@ -321,13 +357,14 @@ However, deeper production-like and runtime probes still show **hidden red areas
 
 ### Lane A — `dist-contract-and-jsonld-hardening`
 
-- Bug IDs: `PFV-001`, `PFV-002`
-- Why together: production-like dist artifact issues missed by static source gate.
+- Bug IDs: `PFV-001`, `PFV-002`, `PFV-008`
+- Why together: production-like dist artifact issues missed by static source/deploy gates.
 - Must not mix with: visual redesigns.
 - Done criteria:
   - `contract:compare:dist` green or Avraam exception explicit;
   - dist JSON-LD parse green;
-  - dist JSON-LD parse added to CI/deploy readiness.
+  - dist JSON-LD parse and dist contract compare added to CI/deploy readiness;
+  - `workflows:check` protects those gates.
 
 ### Lane B — `public-content-corruption-surgical`
 
