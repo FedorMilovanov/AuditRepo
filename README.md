@@ -81,3 +81,22 @@ projects/
 3. Положи сырые отчёты в `incoming/`
 4. Не пиши сразу в `verified/`
 5. Верификатор собирает сводку в `working/`, затем переносит подтверждённое в `verified/`
+
+## Жёсткое правило
+
+```text
+If a report is not inside projects/<project>/incoming/<agent>/<YYYY-MM-DD>/,
+it is not an official audit input.
+```
+
+То есть отчёты вне project-scoped intake-папки должны считаться неофициальными и игнорироваться до нормального intake.
+
+## SHA-first principle
+
+```text
+A bug without SHA is not repair-ready.
+A bug without evidence is not confirmed.
+A bug confirmed on old SHA must be reverified before implementation.
+```
+
+AuditRepo — это не source repo. Это слой координации и доказательств.

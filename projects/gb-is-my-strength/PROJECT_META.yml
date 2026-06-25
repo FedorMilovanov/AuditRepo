@@ -1,0 +1,35 @@
+project_id: gb-is-my-strength
+display_name: gb-is-my-strength / gospod-bog.ru
+source_repo: FedorMilovanov/gb-is-my-strength
+default_branch: main
+production_url: https://gospod-bog.ru
+audit_repo_project_path: projects/gb-is-my-strength
+
+rules:
+  raw_reports_path: incoming/<agent>/<date>/
+  working_path: working/
+  verification_path: verification/
+  verified_path: verified/
+  repairs_path: repairs/
+  reverify_path: reverify/
+
+required_for_intake:
+  - project
+  - source_repo
+  - audited_sha
+  - branch
+  - agent
+  - date
+  - environment
+  - report_type
+
+allowed_report_types:
+  - source-audit
+  - dist-audit
+  - production-like-dist-audit
+  - browser-audit
+  - visual-audit
+  - ci-audit
+  - verifier-synthesis
+  - reverify
+  - repair-plan

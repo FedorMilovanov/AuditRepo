@@ -4,17 +4,12 @@
 
 | Agent | Date | Intake folder | Status | Notes |
 |---|---|---|---|---|
-| `arena-agent` | `2026-06-25` | `incoming/arena-agent/2026-06-25/` | imported | стартовый пакет (premium-surface, Playwright/dist) |
-| `arena-agent-2` | `2026-06-25` | `incoming/arena-agent-2/2026-06-25/` | imported | runtime Node-stub pass; PS-01 repro + corrections |
-| `arena-agent-round3` | `2026-06-25` | `incoming/arena-agent-round3/2026-06-25/` | imported | system tooling / CI / hashes |
-| `arena-agent-round4` | `2026-06-25` | `incoming/arena-agent-round4/2026-06-25/` | imported | gbs2 wiring deep dive (51-bug ledger) |
-| `arena-agent-toc` | `2026-06-25` | `incoming/arena-agent-toc/2026-06-25/` | imported | static source + git history |
-| `arena-agent-verifier-2` | `2026-06-25` | `incoming/arena-agent-verifier-2/2026-06-25/` | imported | round-2 verify (jsdom 3rd-method PS-01) + 4 net-new bugs V2-1..V2-4 |
-| `agent-08` | `YYYY-MM-DD` | `incoming/agent-08/YYYY-MM-DD/` | waiting | |
-| `agent-03` | `YYYY-MM-DD` | `incoming/agent-03/YYYY-MM-DD/` | waiting | |
-| `agent-04` | `YYYY-MM-DD` | `incoming/agent-04/YYYY-MM-DD/` | waiting | |
-| `agent-05` | `YYYY-MM-DD` | `incoming/agent-05/YYYY-MM-DD/` | waiting | |
-| `agent-06` | `YYYY-MM-DD` | `incoming/agent-06/YYYY-MM-DD/` | waiting | |
+| `arena-agent` | `2026-06-25` | `incoming/arena-agent/2026-06-25/` | imported | стартовый пакет (premium surface, Playwright/dist, route map, bug matrix) |
+| `arena-agent-2` | `2026-06-25` | `incoming/arena-agent-2/2026-06-25/` | imported | runtime Node DOM-stub pass; PS-01 repro + corrections |
+| `arena-agent-round3` | `2026-06-25` | `incoming/arena-agent-round3/2026-06-25/` | imported | system tooling / CI / Astro source-layer |
+| `arena-agent-round4` | `2026-06-25` | `incoming/arena-agent-round4/2026-06-25/` | imported | GBS2 / premium wiring deep dive |
+| `arena-agent-toc` | `2026-06-25` | `incoming/arena-agent-toc/2026-06-25/` | imported | static source scan + verification of PS bugs |
+| `arena-agent-verifier-2` | `2026-06-25` | `incoming/arena-agent-verifier-2/2026-06-25/` | imported | independent verification + net-new bugs |
 | `agent-07` | `YYYY-MM-DD` | `incoming/agent-07/YYYY-MM-DD/` | waiting | |
 | `agent-08` | `YYYY-MM-DD` | `incoming/agent-08/YYYY-MM-DD/` | waiting | |
 | `agent-09` | `YYYY-MM-DD` | `incoming/agent-09/YYYY-MM-DD/` | waiting | |
@@ -24,28 +19,17 @@
 
 | Role | Status | Notes |
 |---|---|---|
-| Primary verifier | pending | ждёт intake от нескольких агентов |
-| Final repair-order editor | pending | заполняет verified/ после дедупликации |
+| Primary verifier | active | multiple intake streams already exist; cross-reference layer is live |
+| Final repair-order editor | active | verified docs exist, but conflict registry and recheck protocol still matter |
 
-## Updated 2026-06-25 (after Arena Agent TOC round 2)
+## Current coordination notes
 
-| Agent | Status | Reports |
-|---|---|---|
-| arena-agent | ✅ complete | premium-surface + deep verification (4 rounds) |
-| arena-agent-round3 | ✅ complete | system tooling + hash bomb (3 rounds) |
-| arena-agent-round4 | ✅ complete | GBS2 wiring deep dive |
-| arena-agent-2 | ✅ complete | runtime JS bugs + cross-validation |
-| arena-agent-toc | ✅ complete | static verification + false positive registry |
+- `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` exists and should be treated as the main verified handoff, unless superseded by a newer reverify pass.
+- `verification/CONFLICT_REGISTRY_2026-06-25.md` should be checked before implementation when two agents disagree.
+- `verification/arena-agent-2-corrections-2026-06-25.md` contains corrections and amendments that may change interpretation of older findings.
 
-## Key false positives closed (by arena-agent-toc)
+## Known dispute hotspots
 
-| ID | Status | Note |
-|---|---|---|
-| P0-1 (Gill save NOP) | ❌ CLOSED | save handled via data-fc-action in initCluster |
-| P0-2 (floating-cluster.css empty) | ❌ CLOSED | 68KB real CSS |
-| P0-3 (robots.txt SEO blocks) | ❌ CLOSED | intentional policy |
-
-## Root cause clarified
-
-P0-10 → PS-01 → PS-02, PS-03, PS-05 (cascade)
-Fix P0-10 first, then re-verify downstream bugs.
+- `PS-01` (`qs is not defined`) — browser-verified by some agents, questioned by source-only verification from others
+- `PS-05` (Hermeneutics stray `76e7365`) — artifact-level vs HEAD/source disagreement
+- premium-controls audit findings vs audit-selector drift

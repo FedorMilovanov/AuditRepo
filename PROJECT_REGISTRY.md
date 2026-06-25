@@ -13,6 +13,8 @@
 - `active` — проект в работе
 - `intake-only` — сырые отчёты есть
 - `verifying` — идёт сводка и дедупликация
+- `repair-in-progress` — implementation идёт, но reverify ещё не закрыло цикл
+- `reverify-needed` — source repo ушёл вперёд, нужен новый HEAD-pass
 - **→ `repair-ready`** — unified ledger and repair order in `verified/` — implementation agent can proceed
 - `archived` — проект завершён
 

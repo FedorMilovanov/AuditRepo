@@ -1,12 +1,11 @@
 # Current intake index — 2026-06-25
 
-## Imported incoming set
+## Imported incoming sets
 
-### arena-agent (method: Playwright + production-like `dist`)
-Source intake folder:
-- `projects/gb-is-my-strength/incoming/arena-agent/2026-06-25/`
+### `incoming/arena-agent/2026-06-25/`
+Primary intake focused on premium surface / runtime / browser verification.
 
-Imported files:
+Files:
 - `premium-svg-pages-bug-investigation-2026-06-25.md`
 - `safe-docs-and-contract-scan-2026-06-25.md`
 - `deep-safe-bug-verification-2026-06-25-round2.md`
@@ -15,39 +14,69 @@ Imported files:
 - `premium-surface-bug-matrix-2026-06-25.md`
 - `PREMIUM_CONTROLS_ROUTE_MAP_2026-06-25.md`
 
-### arena-agent-2 (method: runtime Node DOM-stub + root-source grep)
-Source intake folder:
-- `projects/gb-is-my-strength/incoming/arena-agent-2/2026-06-25/`
+### `incoming/arena-agent-2/2026-06-25/`
+Cross-validation / runtime JS pass.
 
-Imported files:
+Files:
 - `cross-validation-runtime-2026-06-25.md`
 - `runtime-js-bugs-2026-06-25.md`
 
-## Working docs copied for verifier convenience
+### `incoming/arena-agent-round3/2026-06-25/`
+System tooling / CI / Astro source-layer intake.
 
-- `working/premium-surface-bug-matrix-2026-06-25.md` (arena-agent original matrix)
+Files:
+- `round1-system-bugs-2026-06-25.md`
+- `round2-ci-audit-fix-2026-06-25.md`
+- `round3-astro-hash-bomb-2026-06-25.md`
+
+### `incoming/arena-agent-round4/2026-06-25/`
+Deep-dive on incomplete premium controls wiring / GBS2 integration.
+
+Files:
+- `round4-gbs2-wiring-and-deep-dive-2026-06-25.md`
+
+### `incoming/arena-agent-toc/2026-06-25/`
+Static source scan + PS bug verification intake.
+
+Files:
+- `verification-of-ps-bugs-2026-06-25.md`
+- `full-bug-audit-rounds-1-3-2026-06-25.md`
+- `verification-unified-bug-ledger-2026-06-25.md`
+
+### `incoming/arena-agent-verifier-2/2026-06-25/`
+Independent verification + net-new bug additions.
+
+Files:
+- `independent-verification-and-new-bugs-2026-06-25.md`
+- `NET-NEW-bugs-not-in-unified-ledger-2026-06-25.md`
+
+## Main synthesis / coordination docs
+
+### Working
+- `working/premium-surface-bug-matrix-2026-06-25.md`
 - `working/PREMIUM_CONTROLS_ROUTE_MAP_2026-06-25.md`
-- `working/cross-validated-bug-matrix-2026-06-25.md` (arena-agent-2 synthesis,
-  dedupes both intakes into a single B-01..B-10 matrix)
+- `working/VERIFIER_SYNTHESIS_2026-06-25.md`
+- `working/REPAIR_ORDER_DRAFT_2026-06-25.md`
+- `working/CANONICAL_DOC_STATUS_2026-06-25.md`
+- `working/START_HERE_2026-06-25.md`
 
-## Suggested next step for verifier
+### Verification
+- `verification/cross-reference/cross-reference-synthesis-2026-06-25.md`
+- `verification/CONFLICT_REGISTRY_2026-06-25.md`
+- `verification/RECHECK_PROTOCOL_2026-06-25.md`
+- `verification/VERIFICATION_LEVELS.md`
+- `verification/arena-agent-2-corrections-2026-06-25.md`
 
-1. Read all `incoming/arena-agent/**` and `incoming/arena-agent-2/**`.
-2. Start from `working/cross-validated-bug-matrix-2026-06-25.md` — it already
-   dedupes both agents.
-3. Note the **source-vs-artifact split**: B-01..B-06 reproduce in source (and dist);
-   B-09 (stray hash) / B-10 (duplicate IDs) reproduce **only in dist** → run a fresh
-   `strangler:build:production-like` to resolve their status before escalating.
-4. Move only confirmed cross-layer items into `verified/`.
+### Verified
+- `verified/UNIFIED_BUG_LEDGER_2026-06-25.md`
+- `verified/repair-order-unified-2026-06-25.md`
+- `verified/BUG_LEDGER_2026-06-25.md` (supporting / older verified ledger)
+- `verified/START_HERE_2026-06-25.md`
 
----
+## Suggested next step for strong verifier
 
-## Update — arena-agent-verifier-2 round (2026-06-25)
-
-Added:
-- `incoming/arena-agent-verifier-2/2026-06-25/` (independent verification + NET-NEW bugs + README)
-- `verification/CONFLICT_REGISTRY_2026-06-25.md` → appended C-04 (PS-01 triple-confirmed), C-05 (P0-2 false positive 2nd confirm), C-06 (feed has 2 distinct date bugs)
-- `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` → appended "Amendments" section: V2-1..V2-4 net-new + P0-2/PS-01/P0-1 status corrections
-- `working/AGENT_STATUS_BOARD_2026-06-25.md` → registered all known agents
-
-Net-new bugs introduced this round: **V2-1** (Gill TOC anchors, P1), **V2-2** (Nagornaya font buttons dead, P1), **V2-3** (Avraam skip-link, P1), **V2-4** (feed weekday names, P2). None previously present in any doc.
+1. Read `working/START_HERE_2026-06-25.md`
+2. Then read `verification/START_HERE_2026-06-25.md`
+3. Check `verification/CONFLICT_REGISTRY_2026-06-25.md` before trusting any disputed claim
+4. Use `verification/RECHECK_PROTOCOL_2026-06-25.md` for any new HEAD-based rerun
+5. Refresh `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` only after SHA-aware recheck if source repo changed

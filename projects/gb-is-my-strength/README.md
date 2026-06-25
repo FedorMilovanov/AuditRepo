@@ -34,6 +34,7 @@
 | `verification/cross-reference/cross-reference-synthesis-2026-06-25.md` | Cross-agent findings merge |
 | `verification/CONFLICT_REGISTRY_2026-06-25.md` | Conflicting claims between agents / evidence layers |
 | `verification/RECHECK_PROTOCOL_2026-06-25.md` | How to re-run disputed findings correctly |
+| `verification/VERIFICATION_LEVELS.md` | Source/build/browser/prod-like evidence labels |
 
 ## Folder structure
 
@@ -42,19 +43,27 @@ incoming/
   arena-agent/          ← premium surface + runtime + interactive audit
   arena-agent-round3/   ← system tooling + CI/CD + Astro source-layer
 working/
-  (legacy from first agent)
+  ... synthesis in progress ...
+verification/
+  cross-reference/      ← unified synthesis
+  ... conflict / recheck / evidence-level docs ...
 verified/
   UNIFIED_BUG_LEDGER_2026-06-25.md
   repair-order-unified-2026-06-25.md
-verification/
-  cross-reference/      ← unified synthesis
+repairs/
+  ... implementation-agent planning and patch tracking ...
+reverify/
+  ... current HEAD truth after source repo moves ...
+archive/
+  ... stale / fixed / historical bundles ...
 ```
 
-## Baptisty-rossii note
+## Intake rule
 
 - `incoming/` не переписывать задним числом;
 - каждый агент пишет в свою подпапку;
-- сводка идёт только в `working/` или `verified/`.
+- сводка идёт только в `working/`, `verification/` или `verified/`.
+- баг без `audited SHA` не должен считаться `repair-ready`.
 
 ## Агенты, внёсшие отчёты
 

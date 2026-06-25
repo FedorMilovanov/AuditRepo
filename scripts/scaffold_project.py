@@ -16,32 +16,32 @@ README_TEMPLATE = """# {project}
 
 - `incoming/` — raw agent reports
 - `working/` — synthesis in progress
+- `verification/` — cross-reference between multiple intake flows
 - `verified/` — final confirmed docs
-
-## Project-specific notes
-
-- build command:
-- production-like build command:
-- browser audit command:
-- known shared runtime areas:
-- known route families:
+- `repairs/` — implementation tracking
+- `reverify/` — current HEAD truth after source repo moves
+- `archive/` — historical / stale / fixed snapshots
 """
 
-WORKING_README = """# Working
+PROJECT_META_TEMPLATE = """project_id: {project}
+display_name: {project}
+source_repo: {source_repo}
+default_branch: main
+production_url: {production_url}
+audit_repo_project_path: projects/{project}
 
-Сюда складываются:
-- route maps
-- промежуточные matrices
-- triage notes
-- synthesis in progress
+rules:
+  raw_reports_path: incoming/<agent>/<date>/
+  working_path: working/
+  verification_path: verification/
+  verified_path: verified/
+  repairs_path: repairs/
+  reverify_path: reverify/
 """
 
-VERIFIED_README = """# Verified
+GENERIC_README = """# {name}
 
-Сюда кладутся:
-- final bug matrices
-- approved repair orders
-- confirmed false-positive registries
+Эта папка создана для `{name}`.
 """
 
 PLACEHOLDER = """# Placeholder
@@ -57,11 +57,21 @@ def main():
     args = ap.parse_args()
 
     project_dir = PROJECTS / args.project
-    incoming = project_dir / 'incoming'
-    working = project_dir / 'working'
-    verified = project_dir / 'verified'
+    folders = {
+        'incoming': project_dir / 'incoming',
+        'working': project_dir / 'working',
+        'verification': project_dir / 'verification',
+        'verified': project_dir / 'verified',
+        'repairs': project_dir / 'repairs',
+        'reverify': project_dir / 'reverify',
+        'archive': project_dir / 'archive',
+        'archive-fixed': project_dir / 'archive' / 'fixed',
+        'archive-stale': project_dir / 'archive' / 'stale',
+        'archive-false-positive': project_dir / 'archive' / 'false-positive',
+    }
 
-    for d in [project_dir, incoming, working, verified]:
+    project_dir.mkdir(parents=True, exist_ok=True)
+    for d in folders.values():
         d.mkdir(parents=True, exist_ok=True)
 
     (project_dir / 'README.md').write_text(
@@ -72,9 +82,22 @@ def main():
         ),
         encoding='utf-8'
     )
-    (working / 'README.md').write_text(WORKING_README, encoding='utf-8')
-    (verified / 'README.md').write_text(VERIFIED_README, encoding='utf-8')
-    (verified / 'PLACEHOLDER.md').write_text(PLACEHOLDER, encoding='utf-8')
+    (project_dir / 'PROJECT_META.yml').write_text(
+        PROJECT_META_TEMPLATE.format(
+            project=args.project,
+            source_repo=args.source_repo,
+            production_url=args.production_url,
+        ),
+        encoding='utf-8'
+    )
+
+    for name, folder in folders.items():
+        if name == 'verified':
+            (folder / 'README.md').write_text(GENERIC_README.format(name=name), encoding='utf-8')
+            (folder / 'PLACEHOLDER.md').write_text(PLACEHOLDER, encoding='utf-8')
+        else:
+            (folder / 'README.md').write_text(GENERIC_README.format(name=name), encoding='utf-8')
+
     print(f'Created project scaffold: {project_dir}')
 
 if __name__ == '__main__':

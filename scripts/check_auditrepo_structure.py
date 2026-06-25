@@ -16,7 +16,7 @@ if not PROJECTS.exists():
 for p in PROJECTS.iterdir() if PROJECTS.exists() else []:
     if not p.is_dir() or p.name.startswith('_'):
         continue
-    for rel in ['README.md', 'incoming', 'working', 'verified']:
+    for rel in ['README.md', 'PROJECT_META.yml', 'incoming', 'working', 'verification', 'verified', 'repairs', 'reverify', 'archive']:
         if not (p / rel).exists():
             errors.append(f'{p}: missing {rel}')
 

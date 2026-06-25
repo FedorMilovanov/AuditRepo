@@ -5,23 +5,40 @@
 - Source repo:
 - Agent:
 - Date:
-- Commit / branch audited:
+- Audited branch:
+- Audited SHA:
+- Current HEAD at start:
+- Current HEAD at end:
 - Environment:
 - Build mode: source / dist / production-like dist
+- Browser / device if used:
 
 ## Scope
 - Routes checked:
+- Systems checked:
+- Files checked:
 - Checks run:
+- Out of scope:
 
-## Confirmed bugs
-- ID:
-- Severity:
+## Findings
+
+### Finding `<temporary-id>`
+- Title:
+- Initial severity:
+- Category:
 - Route(s):
-- Repro:
+- Source file(s):
+- Observed on SHA:
+- Repro steps:
+- Expected:
+- Actual:
 - Evidence:
-- Notes:
+- Confidence:
+- Needs verifier:
+- Suggested repair lane:
+- Do not mix with:
 
-## Suspected bugs
+## Suspected / needs verification
 - ID:
 - Why suspected:
 - What still needs verification:
@@ -35,3 +52,6 @@
 - Files attached:
 - Screenshots:
 - Logs:
+- commands.log updated?:
+
+## Notes for verifier

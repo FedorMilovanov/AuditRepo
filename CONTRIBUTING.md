@@ -12,6 +12,16 @@ verified = confirmed final truth
 
 Нельзя перескакивать сразу в `verified/` без сверки.
 
+## Official input rule
+
+```text
+Reports outside projects/<project>/incoming/<agent>/<YYYY-MM-DD>/ are ignored.
+```
+
+Если агент положил отчёт в корень репо, в чужую project-папку или сразу в `verified/`,
+такой отчёт не должен считаться официальным входом в аудит, пока не будет переложен в
+правильную intake-структуру.
+
 ---
 
 ## Folder contract
