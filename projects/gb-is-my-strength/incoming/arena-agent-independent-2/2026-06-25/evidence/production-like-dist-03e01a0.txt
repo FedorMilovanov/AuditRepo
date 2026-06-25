@@ -1,0 +1,100 @@
+## Source HEAD
+03e01a0008de34d654175ea600cdf9f22b2351b4
+
+## Build command
+PATH=/tmp/node-v22.12.0-linux-x64/bin:$PATH npm run strangler:build:production-like
+
+## Build summary tail
+19:11:27   ├─ /karty/index.html (+3ms)
+19:11:27   ├─ /konfessii/russkij-baptizm/index.html (+6ms)
+19:11:27   ├─ /konfessii/index.html (+4ms)
+19:11:27   ├─ /map/index.html (+4ms)
+19:11:27   ├─ /nagornaya/chast-1/index.html (+6ms)
+19:11:27   ├─ /nagornaya/chast-2/index.html (+7ms)
+19:11:27   ├─ /nagornaya/chast-3/index.html (+7ms)
+19:11:27   ├─ /nagornaya/chast-4/index.html (+6ms)
+19:11:27   ├─ /nagornaya/chast-5/index.html (+7ms)
+19:11:27   ├─ /nagornaya/istochniki/index.html (+5ms)
+19:11:27   ├─ /nagornaya/nakhodki/index.html (+5ms)
+19:11:27   ├─ /nagornaya/seriya/index.html (+4ms)
+19:11:27   ├─ /nagornaya/index.html (+4ms)
+19:11:27   ├─ /pastor-series/index.html (+4ms)
+19:11:27   ├─ /rodosloviye/index.html (+3ms)
+19:11:27   ├─ /index.html (+5ms)
+19:11:27 ✓ Completed in 390ms.
+
+19:11:27 [build] ✓ Completed in 8.24s.
+19:11:27 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+19:11:27 [build] 52 page(s) built in 9.05s
+19:11:27 [build] Complete!
+   Copy operation manifest: reports/dist-copy-manifest.json
+✅ copy-legacy-to-dist: copied 578 files (46479 KB)
+   Astro-owned legacy pages skipped: /articles/20-antisovetov-pastoru/, /articles/dzhon-gill-chast-1-chelovek/, /articles/dzhon-gill-chast-2-uchenyi/, /articles/dzhon-gill-chast-3-nasledie/, /articles/dzhon-gill-istoricheskiy-kontekst/, /articles/dzhon-gill-spravochnik/, /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/, /articles/, /articles/kod-da-vinchi/, /articles/krajne-li-isporcheno-serdce/, /articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/, /about/, /baptisty-rossii/dva-sezda-1884/, /baptisty-rossii/goneniya-i-sovest/, /baptisty-rossii/, /baptisty-rossii/iniciativnaya-gruppa/, /baptisty-rossii/noch-na-kure/, /baptisty-rossii/peterburgskaya-liniya/, /baptisty-rossii/podpolnaya-pechat/, /baptisty-rossii/sovetskaya-noch/, /baptisty-rossii/spravochnik/, /baptisty-rossii/vsehib-1944/, /baptisty-rossii/yuzhnaya-shtunda/, /biografii/, /hard-texts/, /karty/avraam/, /karty/early-church/, /karty/, /karty/ishod/, /karty/maccabim/, /karty/melachim/, /karty/pavel/, /karty/revelation/, /karty/shoftim/, /karty/shvatim/, /karty/yeshua/, /konfessii/, /konfessii/russkij-baptizm/, /map/, /nagornaya/chast-1/, /nagornaya/chast-2/, /nagornaya/chast-3/, /nagornaya/chast-4/, /nagornaya/chast-5/, /nagornaya/, /nagornaya/istochniki/, /nagornaya/nakhodki/, /nagornaya/seriya/, /pastor-series/
+   Build-only Astro routes omitted: /dev/astro-test/
+   Partial Astro sitemap files removed: sitemap-0.xml, sitemap-index.xml
+
+⚡  astro-cache-bust-postbuild.js
+
+  HTML files scanned: 56
+  Files touched:      35
+  Hash replacements:  512
+
+✅  dist/ hash drift → 0 (next cache-bust legacy pass will converge)
+
+## Dist hash counts
+sw-register.js?v=8a077d35                          0
+sw-register.js?v=318502c5                          38
+floating-cluster-controller.js?v=efd81d3a          0
+floating-cluster-controller.js?v=58c2ea90          15
+
+## Dist files referenced by SW precache
+-rw-r--r-- 1 user user 282846 Jun 25 19:11 dist/css/site-layered.css
+-rw-r--r-- 1 user user   8707 Jun 25 19:11 dist/js/site-modules.js
+
+## SW precache entries
+      1 /css/site-layered.css
+      1 /js/site-modules.js
+
+## Dist sitemap missing standard tags
+https://gospod-bog.ru/karty/ MISSING lastmod,changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-1/ MISSING changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-2/ MISSING changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-3/ MISSING changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-4/ MISSING changefreq,priority
+https://gospod-bog.ru/nagornaya/chast-5/ MISSING changefreq,priority
+
+## Dist baptisty alt empty count
+11
+
+## Pagefind + SW dist audit
+$ npm run pagefind:build:dist && npm run sw:dist:audit:deploy-switch
+
+> gb-is-my-strength@1.6.3 sw:dist:audit:deploy-switch
+> node scripts/sw-dist-readiness-audit.js --require-pagefind --require-cache-bump
+
+SW DIST READINESS AUDIT (pagefind required, cache bump required)
+✅ dist/sw.js exists
+✅ dist/js/sw-register.js exists
+✅ dist/sw.js is copied byte-for-byte from root sw.js
+✅ sw.js CACHE_VERSION parsed: gb-v176-floating-cluster-gill-all-20260625
+✅ CACHE_VERSION differs from recorded pre-switch baseline (gb-v171-r62-maps-archaeology-20260612)
+ℹ️ CACHE_VERSION differs from recorded current dist-production value (gb-v173-r64-astro-runtime-hub-20260618); verify this was an intentional cache bump
+✅ PRECACHE_ASSETS parsed (29)
+✅ PRECACHE_ASSETS has no duplicates
+✅ PRECACHE_ASSETS entries resolve in dist (pagefind required)
+✅ PRECACHE_ASSETS does not freeze content HTML pages (only /404.html is allowed)
+✅ Pagefind bootstrap is included in PRECACHE_ASSETS
+✅ sw.js install: skipWaiting()
+✅ sw.js activate: clients.claim()
+✅ sw.js activate: caches.keys() cleanup
+✅ sw.js activate: old cache deletion
+✅ sw.js HTML strategy: HTML requests use stale-while-revalidate
+✅ sw.js static strategy: static assets use cache-first
+✅ sw.js image strategy: images use the image cache
+✅ sw.js Pagefind data strategy: Pagefind index/fragment data uses network-first cache
+✅ sw.js Pagefind static strategy: Pagefind static assets use the Pagefind cache
+✅ sw-register.js: registers /sw.js with root scope
+✅ sw-register.js: uses root /sw.js URL
+
+✅ SW dist readiness audit passed
+ℹ️ Advisory notes are expected until the explicit deploy-switch commit.
