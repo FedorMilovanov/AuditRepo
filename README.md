@@ -42,22 +42,33 @@ projects/
 
 ### Агент-аудитор
 - запускает проверки;
-- пишет отчёт;
-- фиксирует команды, артефакт, route, severity, evidence.
+- пишет отчёт по шаблону `_templates/AGENT_REPORT_TEMPLATE.md`;
+- фиксирует команды, артефакт, route, severity, evidence;
+- кладёт в `incoming/<agent>/<date>/`;
 
 ### Агент-верификатор
-- читает все `incoming`;
-- убирает дубли;
-- разделяет route bugs / shared runtime bugs / tooling drift / false positives;
-- собирает bug matrix и repair order.
+- читает все `incoming/`;
+- кросс-сверяет находки двух+ агентов;
+- убирает дубли и false positives;
+- разделяет: route bugs / shared runtime bugs / tooling drift / false positives;
+- собирает `working/VERIFIER_SYNTHESIS_*.md` и `verified/BUG_LEDGER_*.md`;
+- использует шаблон `_templates/VERIFIER_SYNTHESIS_TEMPLATE.md`.
 
 ### Агент-исправитель
-- берёт только `verified/` и подтверждённые пункты;
-- не тратит время на ложные срабатывания и несверенные догадки.
+- берёт **только** `verified/BUG_LEDGER_*.md` и подтверждённые пункты;
+- не тратит время на ложные срабатывания и несверенные догадки;
+- после правки обновляет статус в ledger.
+
+## Важные принципы
+
+- **Метод верификации важен:** указывай, как проверял (Playwright / static / git history).
+- **Версия имеет значение:** PS-01 воспроизводился на СТАРОМ dist, в HEAD может быть fixed.
+- **Мусор ≠ баг:** dead code не ломает функциональность, но документируется отдельно.
+- **Cross-verification:** баг считается confirmed только если подтверждён 2+ агентами или прямым кодом.
 
 ## Проекты
 
 Сейчас инициализирован:
-- `projects/gb-is-my-strength/`
+- `projects/gb-is-my-strength/` — gospod-bog.ru
 
 Позже можно добавлять другие проекты тем же способом.

@@ -50,4 +50,47 @@ verification/
 
 ## Baptisty-rossii note
 
-Content in baptisty-rossii/ is known placeholder — not a bug, will be filled later.
+- `incoming/` не переписывать задним числом;
+- каждый агент пишет в свою подпапку;
+- сводка идёт только в `working/` или `verified/`.
+
+## Агенты, внёсшие отчёты
+
+| Агент | Папка | Дата | Метод |
+|---|---|---|---|
+| Arena Agent | `incoming/arena-agent/2026-06-25/` | 2026-06-25 | Playwright + production-like dist |
+| Arena Agent TOC | `incoming/arena-agent-toc/2026-06-25/` | 2026-06-25 | Static source scan + git history |
+
+## Текущий статус (2026-06-25)
+
+**Финальный Bug Ledger:** `verified/BUG_LEDGER_2026-06-25.md`  
+**Верификатор-синтез:** `working/VERIFIER_SYNTHESIS_2026-06-25.md`  
+**Repair order:** `working/REPAIR_ORDER_DRAFT_2026-06-25.md`
+
+### Подтверждённых багов: 12
+- P0: 4 (body class mismatch, heart sans controller, Gill duplicate IDs, gill-context no Play)
+- P1: 5 (cache-bust drift, readTime drift, baptisty BreadcrumbList, baptisty SVG og, sw precache)
+- P2: 3 (tooling audit selectors)
+
+### Needs-reverification: 1
+- PS-01 (`qs is not defined`) — статически не воспроизводится, нужен Playwright на HEAD
+
+### False positives: 1
+- PS-05 (stray "76e7365") — не существует в HEAD
+
+## Следующий шаг
+
+Агент-исправитель берёт `verified/BUG_LEDGER_2026-06-25.md` и чинит в порядке фаз A→F из синтеза.
+
+## Arena Agent TOC additions (2026-06-25)
+
+**Верификация PS-* багов из incoming/arena-agent:**
+- PS-01 (qs crash): needs-reverification — статически не воспроизводится в HEAD
+- PS-04 (heart без контроллера): **CONFIRMED**
+- PS-05 (stray 76e7365): **FALSE POSITIVE** в HEAD
+- PS-06 (readTime 35 vs 50): **CONFIRMED**
+- PS-07 (duplicate IDs Gill): **CONFIRMED**
+- PS-10 (cache-bust drift): **CONFIRMED**
+
+**Финальный Bug Ledger:** `verified/BUG_LEDGER_2026-06-25.md`  
+**Верификатор-синтез:** `working/VERIFIER_SYNTHESIS_2026-06-25.md`
