@@ -1,0 +1,23 @@
+$ node scripts/source-link-audit.js --root dist
+
+GB SOURCE LINK AUDIT
+Audit root: dist
+Checked external links: 158
+⚠️ Warnings (16) — bot blocks/rate limits/timeouts, review if persistent:
+- HTTP 418: https://vk.com/the_lord_god_is_my_strength (dist/about/index.html)
+- HTTP 418: https://vk.com/curtmf (dist/about/index.html)
+- HTTP 403: https://onlinelibrary.wiley.com/doi/abs/10.1111/ijst.12668 (dist/articles/dzhon-gill-spravochnik/index.html)
+- HTTP 405: https://brill.com/edcollbook/title/2248 (dist/articles/dzhon-gill-spravochnik/index.html)
+- HTTP 403: https://repository.sbts.edu/handle/10392/4962 (dist/articles/dzhon-gill-spravochnik/index.html)
+- HTTP 403: https://transcripts.cnn.com/show/sm/date/2003-05-25/segment/21 (dist/articles/kod-da-vinchi/index.html)
+- HTTP 403: https://www.desiringgod.org/interviews/is-the-believers-heart-desperately-sick (dist/articles/krajne-li-isporcheno-serdce/index.html)
+- HTTP 403: https://www.desiringgod.org/interviews/is-the-christians-heart-deceitfully-wicked (dist/articles/krajne-li-isporcheno-serdce/index.html)
+- HTTP 403: https://www.monergism.com/thethreshold/sdg/owen_remainderssin.html (dist/articles/krajne-li-isporcheno-serdce/index.html)
+- HTTP 403: https://www.monergism.com/keeping-heart-ebook (dist/articles/krajne-li-isporcheno-serdce/index.html)
+- HTTP 403: https://www.monergism.com/heart-christ-heaven-towards-sinners-earth-ebook (dist/articles/krajne-li-isporcheno-serdce/index.html)
+- HTTP 403: https://www.monergism.com/precious-remedies-against-satans-devices-ebook (dist/articles/krajne-li-isporcheno-serdce/index.html)
+- HTTP 403: https://archiveshub.jisc.ac.uk/search/archives/db009a6c-eda8-3e95-a178-d0d01cd7ebd5 (dist/baptisty-rossii/peterburgskaya-liniya/index.html, dist/baptisty-rossii/spravochnik/index.html)
+- HTTP 403: https://www.monergism.com/summary-christian-doctrine-ebook (dist/nagornaya/chast-5/index.html)
+- TIMEOUT: https://dissacad.english.qmul.ac.uk/index.php?chapt=academies (dist/articles/dzhon-gill-istoricheskiy-kontekst/index.html)
+- TIMEOUT: https://www.roger-pearse.com/weblog/2020/10/12/a-homily-of-gregory-the-great-and-mary-magdalene/ (dist/articles/kod-da-vinchi/index.html)
+✅ Source links hard-check passed

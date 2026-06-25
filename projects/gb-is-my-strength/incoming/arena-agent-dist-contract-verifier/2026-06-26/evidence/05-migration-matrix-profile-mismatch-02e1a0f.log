@@ -1,0 +1,73 @@
+$ npm run migration:metadata:check:strict
+
+> gb-is-my-strength@1.6.3 migration:metadata:check:strict
+> npm run route:profiles:check -- --strict && npm run migration:matrix:check -- --strict && npm run content:sources:check -- --strict
+
+
+> gb-is-my-strength@1.6.3 route:profiles:check
+> node scripts/check-route-profiles.js --strict
+
+=== Route Profiles Check ===
+Mode: STRICT
+
+Routes checked: 51
+Profiles found: 51
+
+✅ Route profiles coherent with page ownership
+
+> gb-is-my-strength@1.6.3 migration:matrix:check
+> node scripts/check-route-migration-matrix.js --strict
+
+=== Route Migration Matrix Check ===
+Mode: STRICT
+
+Routes checked against matrix: 34
+Matrix entries: 34
+
+✅ Route migration modes are coherent with matrix
+
+> gb-is-my-strength@1.6.3 content:sources:check
+> node scripts/check-content-source-coverage.js --strict
+
+=== Content Source Coverage Check ===
+Mode: STRICT
+
+Series parts checked: 23
+Routes checked: 51
+MDX files: 20
+Profiles: 53
+Search items: 44
+
+✅ Content source coverage is coherent
+
+$ independent matrix/profile consistency probe
+Invalid route modes: 13
+ - /karty/avraam/: strict-native-app
+ - /karty/early-church/: strict-native-app
+ - /karty/ishod/: strict-native-app
+ - /karty/maccabim/: strict-native-app
+ - /karty/melachim/: strict-native-app
+ - /karty/pavel/: strict-native-app
+ - /karty/revelation/: strict-native-app
+ - /karty/shoftim/: strict-native-app
+ - /karty/shvatim/: strict-native-app
+ - /karty/yeshua/: strict-native-app
+ - /konfessii/russkij-baptizm/: strict-native-app
+ - /map/: strict-native-app
+ - /rodosloviye/: strict-native-app
+Profile/matrix mismatches: 15
+ - /articles/: profile=native-main-with-legacy-chrome, matrix=strict-native
+ - /biografii/: profile=native-main-with-legacy-chrome, matrix=strict-native
+ - /karty/avraam/: profile=legacy-shadow-app, matrix=strict-native-app
+ - /karty/early-church/: profile=legacy-shadow-app, matrix=strict-native-app
+ - /karty/ishod/: profile=legacy-shadow-app, matrix=strict-native-app
+ - /karty/maccabim/: profile=legacy-shadow-app, matrix=strict-native-app
+ - /karty/melachim/: profile=legacy-shadow-app, matrix=strict-native-app
+ - /karty/pavel/: profile=legacy-shadow-app, matrix=strict-native-app
+ - /karty/revelation/: profile=legacy-shadow-app, matrix=strict-native-app
+ - /karty/shoftim/: profile=legacy-shadow-app, matrix=strict-native-app
+ - /karty/shvatim/: profile=legacy-shadow-app, matrix=strict-native-app
+ - /karty/yeshua/: profile=legacy-shadow-app, matrix=strict-native-app
+ - /konfessii/russkij-baptizm/: profile=legacy-shadow-app, matrix=strict-native-app
+ - /map/: profile=legacy-shadow-app, matrix=strict-native-app
+ - /rodosloviye/: profile=legacy-shadow-app, matrix=strict-native-app
