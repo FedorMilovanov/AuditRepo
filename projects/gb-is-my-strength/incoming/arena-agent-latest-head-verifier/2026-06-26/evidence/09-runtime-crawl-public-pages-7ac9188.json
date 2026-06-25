@@ -1,0 +1,2395 @@
+[
+  {
+    "route": "/about/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Об авторе — Фёдор Милованов | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "gb-fc-active"
+      ],
+      "pagefindWords": 575,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "← Господь Бог — Сила Моя",
+          "w": 152,
+          "h": 23
+        }
+      ]
+    }
+  },
+  {
+    "route": "/articles/20-antisovetov-pastoru/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "20 антисоветов пастору: как разрушить служение | Господь Бог",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": true,
+      "fcControls": false,
+      "ember": 1,
+      "save": 1,
+      "bodyClasses": [
+        "gbs-paper",
+        "gb-cluster-series-active"
+      ],
+      "pagefindWords": 15210,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "0.75×",
+          "w": 50,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn is-active",
+          "text": "1×",
+          "w": 31,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.25×",
+          "w": 50,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.5×",
+          "w": 42,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.75×",
+          "w": 50,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "2×",
+          "w": 31,
+          "h": 21
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе →",
+          "w": 87,
+          "h": 18
+        }
+      ]
+    }
+  },
+  {
+    "route": "/articles/dzhon-gill-chast-1-chelovek/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Джон Гилл (1697–1771). Часть I: Человек — детство, призвание, семья",
+      "dupIds": [
+        "gtip-luxury-0",
+        "gtip-luxury-1",
+        "gtip-luxury-3",
+        "gtip-luxury-4",
+        "gtip-luxury-5",
+        "gtip-luxury-6",
+        "gtip-luxury-7"
+      ],
+      "dupCount": 7,
+      "gtipDup": [
+        "gtip-luxury-0",
+        "gtip-luxury-1",
+        "gtip-luxury-3",
+        "gtip-luxury-4",
+        "gtip-luxury-5",
+        "gtip-luxury-6",
+        "gtip-luxury-7"
+      ],
+      "dupAriaDescribedByRefs": 11,
+      "fcRoot": false,
+      "fcControls": true,
+      "ember": 2,
+      "save": 2,
+      "bodyClasses": [
+        "gbs-world",
+        "gb-fc-active"
+      ],
+      "pagefindWords": 6269,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "0.75×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn is-active",
+          "text": "1×",
+          "w": 34,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.25×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.5×",
+          "w": 43,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.75×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "2×",
+          "w": 34,
+          "h": 27
+        },
+        {
+          "tag": "A",
+          "cls": "gill-card__cta",
+          "text": "Читать Часть II →",
+          "w": 216,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "cls": "gill-card__cta",
+          "text": "Читать Часть III →",
+          "w": 216,
+          "h": 20
+        }
+      ]
+    }
+  },
+  {
+    "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Джон Гилл (1697–1771). Часть II: Учёный — экзегеза, система, иврит",
+      "dupIds": [
+        "gtip-luxury-0"
+      ],
+      "dupCount": 1,
+      "gtipDup": [
+        "gtip-luxury-0"
+      ],
+      "dupAriaDescribedByRefs": 2,
+      "fcRoot": false,
+      "fcControls": true,
+      "ember": 2,
+      "save": 2,
+      "bodyClasses": [
+        "gbs-world",
+        "gb-fc-active"
+      ],
+      "pagefindWords": 7797,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "0.75×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn is-active",
+          "text": "1×",
+          "w": 34,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.25×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.5×",
+          "w": 43,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.75×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "2×",
+          "w": 34,
+          "h": 27
+        },
+        {
+          "tag": "A",
+          "cls": "gill-card__cta",
+          "text": "Читать Часть I →",
+          "w": 216,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "cls": "gill-card__cta",
+          "text": "Читать Часть III →",
+          "w": 216,
+          "h": 20
+        }
+      ]
+    }
+  },
+  {
+    "route": "/articles/dzhon-gill-chast-3-nasledie/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Джон Гилл (1697–1771). Часть III: Наследие — полемика, память, наука",
+      "dupIds": [
+        "gtip-luxury-0",
+        "gtip-luxury-1"
+      ],
+      "dupCount": 2,
+      "gtipDup": [
+        "gtip-luxury-0",
+        "gtip-luxury-1"
+      ],
+      "dupAriaDescribedByRefs": 4,
+      "fcRoot": false,
+      "fcControls": true,
+      "ember": 2,
+      "save": 2,
+      "bodyClasses": [
+        "gbs-world",
+        "gb-fc-active"
+      ],
+      "pagefindWords": 10631,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "0.75×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn is-active",
+          "text": "1×",
+          "w": 34,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.25×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.5×",
+          "w": 43,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.75×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "2×",
+          "w": 34,
+          "h": 27
+        },
+        {
+          "tag": "A",
+          "cls": "gill-card__cta",
+          "text": "Читать Часть I →",
+          "w": 216,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "cls": "gill-card__cta",
+          "text": "Читать Часть II →",
+          "w": 216,
+          "h": 20
+        }
+      ]
+    }
+  },
+  {
+    "route": "/articles/dzhon-gill-istoricheskiy-kontekst/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Джон Гилл: исторический контекст — мир пуритан и баптистов XVIII века",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": true,
+      "fcControls": false,
+      "ember": 2,
+      "save": 2,
+      "bodyClasses": [
+        "gbs-world",
+        "gb-cluster-single-active"
+      ],
+      "pagefindWords": 3318,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "0.75×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn is-active",
+          "text": "1×",
+          "w": 34,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.25×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.5×",
+          "w": 43,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.75×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "2×",
+          "w": 34,
+          "h": 27
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Act of Uniformity 1662",
+          "w": 150,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Corporation Act 1661",
+          "w": 138,
+          "h": 18
+        }
+      ]
+    }
+  },
+  {
+    "route": "/articles/dzhon-gill-spravochnik/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Джон Гилл: справочник — хронология, труды, источники",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": true,
+      "ember": 2,
+      "save": 2,
+      "bodyClasses": [
+        "gbs-world",
+        "gb-fc-active"
+      ],
+      "pagefindWords": 1858,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "0.75×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn is-active",
+          "text": "1×",
+          "w": 34,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.25×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.5×",
+          "w": 43,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.75×",
+          "w": 50,
+          "h": 27
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "2×",
+          "w": 34,
+          "h": 27
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "archive.org",
+          "w": 75,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "prdl.org",
+          "w": 53,
+          "h": 18
+        }
+      ]
+    }
+  },
+  {
+    "route": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Оценка христоцентричной герменевтики | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": true,
+      "fcControls": false,
+      "ember": 1,
+      "save": 1,
+      "bodyClasses": [
+        "gbs-paper",
+        "gb-cluster-single-active"
+      ],
+      "pagefindWords": 22724,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "0.75×",
+          "w": 50,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn is-active",
+          "text": "1×",
+          "w": 31,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.25×",
+          "w": 50,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.5×",
+          "w": 42,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.75×",
+          "w": 50,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "2×",
+          "w": 31,
+          "h": 21
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "fedormilovanov@yandex.ru",
+          "w": 167,
+          "h": 20
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "bref",
+          "text": "2 Тим. 4:1–2Заклинаю тебя пред Богом и Х",
+          "w": 88,
+          "h": 28
+        }
+      ]
+    }
+  },
+  {
+    "route": "/articles/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Статьи — Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "articles-index-page"
+      ],
+      "pagefindWords": 23,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "h-nav-logo",
+          "text": "Господь Бог  —  Сила Моя",
+          "w": 229,
+          "h": 32
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе",
+          "w": 59,
+          "h": 23
+        }
+      ]
+    }
+  },
+  {
+    "route": "/articles/kod-da-vinchi/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "«Код да Винчи»: мифы о Марии Магдалине и Никее | Господь Бог",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": true,
+      "fcControls": false,
+      "ember": 1,
+      "save": 1,
+      "bodyClasses": [
+        "gbs-paper",
+        "gb-cluster-single-active"
+      ],
+      "pagefindWords": 9,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "0.75×",
+          "w": 50,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn is-active",
+          "text": "1×",
+          "w": 31,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.25×",
+          "w": 50,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.5×",
+          "w": 42,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "1.75×",
+          "w": 50,
+          "h": 21
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-ember-expand__btn",
+          "text": "2×",
+          "w": 31,
+          "h": 21
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Wikimedia Commons",
+          "w": 108,
+          "h": 17
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Wikimedia Commons",
+          "w": 108,
+          "h": 17
+        }
+      ]
+    }
+  },
+  {
+    "route": "/articles/krajne-li-isporcheno-serdce/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Крайне ли испорчено сердце верующего? | Господь Бог — Сила Моя",
+      "dupIds": [
+        "gtip-luxury-0",
+        "gtip-luxury-2",
+        "gtip-luxury-4",
+        "gtip-luxury-5",
+        "gtip-luxury-6",
+        "gtip-luxury-7",
+        "gtip-luxury-8",
+        "gtip-luxury-9",
+        "gtip-luxury-10",
+        "gtip-luxury-12",
+        "gtip-luxury-13"
+      ],
+      "dupCount": 11,
+      "gtipDup": [
+        "gtip-luxury-0",
+        "gtip-luxury-2",
+        "gtip-luxury-4",
+        "gtip-luxury-5",
+        "gtip-luxury-6",
+        "gtip-luxury-7",
+        "gtip-luxury-8",
+        "gtip-luxury-9",
+        "gtip-luxury-10",
+        "gtip-luxury-12",
+        "gtip-luxury-13"
+      ],
+      "dupAriaDescribedByRefs": 21,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 1,
+      "save": 1,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 8670,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Of Indwelling Sin in Believers",
+          "w": 195,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Keeping the Heart",
+          "w": 117,
+          "h": 18
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "bref",
+          "text": "Иез. 36:26Библейская ссылка: Иезекииль 3",
+          "w": 73,
+          "h": 24
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "bref",
+          "text": "Иер. 17:5–10Библейская ссылка: Иеремия 1",
+          "w": 90,
+          "h": 24
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "bref",
+          "text": "1 Кор. 4:4Библейская ссылка: 1 Коринфяна",
+          "w": 70,
+          "h": 24
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе →",
+          "w": 87,
+          "h": 18
+        }
+      ]
+    }
+  },
+  {
+    "route": "/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Римлянам 7: верующий или неверующий? | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 1,
+      "save": 1,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 2812,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе →",
+          "w": 87,
+          "h": 18
+        }
+      ]
+    }
+  },
+  {
+    "route": "/baptisty-rossii/dva-sezda-1884/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Петербург и Ново-Васильевка: две развилки 1884 года — Баптисты России",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 7,
+      "tiny": []
+    }
+  },
+  {
+    "route": "/baptisty-rossii/goneniya-i-sovest/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Свобода совести и военный вопрос — Баптисты России",
+      "dupIds": [
+        "gtip-luxury-0",
+        "gtip-luxury-6"
+      ],
+      "dupCount": 2,
+      "gtipDup": [
+        "gtip-luxury-0",
+        "gtip-luxury-6"
+      ],
+      "dupAriaDescribedByRefs": 4,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 7,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Декрет СНК от 4 января 1919",
+          "w": 196,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Братский Вестник №1, 1945",
+          "w": 187,
+          "h": 18
+        }
+      ]
+    }
+  },
+  {
+    "route": "/baptisty-rossii/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Баптисты России — серия исследований по истории русского баптизма",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 30,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "исследовательской папке серии",
+          "w": 253,
+          "h": 20
+        }
+      ]
+    }
+  },
+  {
+    "route": "/baptisty-rossii/iniciativnaya-gruppa/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Инициативная группа: путь к Совету Церквей — Баптисты России",
+      "dupIds": [
+        "gtip-luxury-0",
+        "gtip-luxury-2"
+      ],
+      "dupCount": 2,
+      "gtipDup": [
+        "gtip-luxury-0",
+        "gtip-luxury-2"
+      ],
+      "dupAriaDescribedByRefs": 4,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 6,
+      "tiny": []
+    }
+  },
+  {
+    "route": "/baptisty-rossii/noch-na-kure/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Воронин и ночь на Куре — Баптисты России",
+      "dupIds": [
+        "gtip-luxury-0"
+      ],
+      "dupCount": 1,
+      "gtipDup": [
+        "gtip-luxury-0"
+      ],
+      "dupAriaDescribedByRefs": 2,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 7,
+      "tiny": []
+    }
+  },
+  {
+    "route": "/baptisty-rossii/peterburgskaya-liniya/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Петербургское пробуждение: Редсток, Пашков и Проханов — Баптисты России",
+      "dupIds": [
+        "gtip-luxury-0"
+      ],
+      "dupCount": 1,
+      "gtipDup": [
+        "gtip-luxury-0"
+      ],
+      "dupAriaDescribedByRefs": 2,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 6,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "The Pashkov Papers",
+          "w": 149,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "The Pashkov Papers",
+          "w": 128,
+          "h": 18
+        }
+      ]
+    }
+  },
+  {
+    "route": "/baptisty-rossii/podpolnaya-pechat/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Подпольная печать: Вестники, «Христианин» и память узников — Баптисты России",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 6,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Бюллетень №44, 1977",
+          "w": 144,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Бюллетень №84, 1980",
+          "w": 149,
+          "h": 18
+        }
+      ]
+    }
+  },
+  {
+    "route": "/baptisty-rossii/sovetskaya-noch/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Советская ночь: закон 1929 года и репрессии — Баптисты России",
+      "dupIds": [
+        "gtip-luxury-0"
+      ],
+      "dupCount": 1,
+      "gtipDup": [
+        "gtip-luxury-0"
+      ],
+      "dupAriaDescribedByRefs": 2,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 6,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Приказ НКВД №00447 от 30 июля 1937",
+          "w": 263,
+          "h": 18
+        }
+      ]
+    }
+  },
+  {
+    "route": "/baptisty-rossii/spravochnik/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Справочник источников — Баптисты России",
+      "dupIds": [
+        "gtip-luxury-0"
+      ],
+      "dupCount": 1,
+      "gtipDup": [
+        "gtip-luxury-0"
+      ],
+      "dupAriaDescribedByRefs": 2,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 5,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Э. Хейер, «Редстокизм и пашковщина»",
+          "w": 265,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Pashkov Papers, Archives Hub, GB 150 VP",
+          "w": 267,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "И. С. Проханов, «В котле России»",
+          "w": 226,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Приказ НКВД №00447",
+          "w": 152,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "«Братский Вестник» №1, 1945",
+          "w": 201,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "«Братский Вестник» №3, 1945",
+          "w": 204,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Положение о ВСЕХБ 1960 года",
+          "w": 209,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Ответ ВСЕХБ церквам, 1962",
+          "w": 188,
+          "h": 18
+        }
+      ]
+    }
+  },
+  {
+    "route": "/baptisty-rossii/vsehib-1944/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "ВСЕХБ 1944: один союз под надзором — Баптисты России",
+      "dupIds": [
+        "gtip-luxury-0",
+        "gtip-luxury-1"
+      ],
+      "dupCount": 2,
+      "gtipDup": [
+        "gtip-luxury-0",
+        "gtip-luxury-1"
+      ],
+      "dupAriaDescribedByRefs": 4,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 7,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Братский Вестник №1, 1945",
+          "w": 187,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Братский Вестник №3, 1945",
+          "w": 190,
+          "h": 18
+        }
+      ]
+    }
+  },
+  {
+    "route": "/baptisty-rossii/yuzhnaya-shtunda/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Южная штунда и первые крещения — Баптисты России",
+      "dupIds": [
+        "gtip-luxury-0"
+      ],
+      "dupCount": 1,
+      "gtipDup": [
+        "gtip-luxury-0"
+      ],
+      "dupAriaDescribedByRefs": 2,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "gbs-world"
+      ],
+      "pagefindWords": 6,
+      "tiny": []
+    }
+  },
+  {
+    "route": "/biografii/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Биографии служителей — христианское наследие | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [],
+      "pagefindWords": 52,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "h-nav-logo",
+          "text": "Господь Бог  —  Сила Моя",
+          "w": 229,
+          "h": 32
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gb-nav-search-icon",
+          "text": "Поиск (⌘K)",
+          "w": 21,
+          "h": 21
+        },
+        {
+          "tag": "A",
+          "cls": "gb-text-link",
+          "text": "Главная",
+          "w": 51,
+          "h": 17
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе",
+          "w": 59,
+          "h": 23
+        }
+      ]
+    }
+  },
+  {
+    "route": "/hard-texts/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Тайны человеческого сердца — Серия материалов | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [],
+      "pagefindWords": 106,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "h-nav-logo",
+          "text": "Господь Бог  —  Сила Моя",
+          "w": 229,
+          "h": 32
+        },
+        {
+          "tag": "A",
+          "cls": "gb-text-link",
+          "text": "Главная",
+          "w": 51,
+          "h": 17
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе",
+          "w": 59,
+          "h": 23
+        }
+      ]
+    }
+  },
+  {
+    "route": "/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Господь Бог — Сила Моя — Материалы для изучения Писания",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "home-page"
+      ],
+      "pagefindWords": 865,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "h-nav-logo",
+          "text": "Господь Бог  —  Сила Моя",
+          "w": 229,
+          "h": 32
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе",
+          "w": 59,
+          "h": 23
+        }
+      ]
+    }
+  },
+  {
+    "route": "/karty/avraam/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Путь Авраама: интерактивная карта Бытия 11–25 | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [],
+      "pagefindWords": 25,
+      "tiny": []
+    }
+  },
+  {
+    "route": "/karty/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Библейские карты | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [],
+      "pagefindWords": 180,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "back-link",
+          "text": "← Главная",
+          "w": 95,
+          "h": 23
+        }
+      ]
+    }
+  },
+  {
+    "route": "/karty/ishod/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Исход из Египта — интерактивная карта Числа 33 | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [],
+      "pagefindWords": 24,
+      "tiny": []
+    }
+  },
+  {
+    "route": "/konfessii/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Конфессии и Деноминации | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [],
+      "pagefindWords": 16,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "back",
+          "text": "На главную",
+          "w": 84,
+          "h": 30
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "gospod-bog.ru",
+          "w": 91,
+          "h": 13
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Карты",
+          "w": 41,
+          "h": 13
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Все статьи",
+          "w": 72,
+          "h": 13
+        }
+      ]
+    }
+  },
+  {
+    "route": "/konfessii/russkij-baptizm/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Карта Русского Баптизма — интерактивная 3D-история | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [],
+      "pagefindWords": 21,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "back",
+          "text": "Конфессии и Деноминации",
+          "w": 222,
+          "h": 15
+        }
+      ]
+    }
+  },
+  {
+    "route": "/map/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Карта связей | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [],
+      "pagefindWords": 0,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "back",
+          "text": "На главную",
+          "w": 105,
+          "h": 15
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "lg",
+          "text": "Джон Гилл 7",
+          "w": 171,
+          "h": 30
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "lg",
+          "text": "Трудные тексты 3",
+          "w": 171,
+          "h": 30
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "lg",
+          "text": "Нагорная проповедь 8",
+          "w": 171,
+          "h": 30
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "lg",
+          "text": "Баптисты России 11",
+          "w": 171,
+          "h": 30
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "lg",
+          "text": "Библейские карты 3",
+          "w": 171,
+          "h": 30
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "lg",
+          "text": "Лендинги 5",
+          "w": 171,
+          "h": 30
+        }
+      ]
+    }
+  },
+  {
+    "route": "/nagornaya/chast-1/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Два текста, один Иисус — Нагорная проповедь I | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": true,
+      "fcControls": false,
+      "ember": 1,
+      "save": 1,
+      "bodyClasses": [
+        "nagornaya-page",
+        "bg-stone-100",
+        "text-stone-900",
+        "antialiased",
+        "has-bottom-bar"
+      ],
+      "pagefindWords": 3630,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-search-btn",
+          "text": "Поиск (⌘K)",
+          "w": 35,
+          "h": 31
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "p-2 rounded-lg bg-stone-800 hover:bg-stone-700 transition-colors",
+          "text": "",
+          "w": 36,
+          "h": 30
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Статьи",
+          "w": 40,
+          "h": 16
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Нагорная проповедь",
+          "w": 118,
+          "h": 16
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tooltip-trigger gterm",
+          "text": "разрушении ЗаконаОтмена или нарушение Бо",
+          "w": 137,
+          "h": 20
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tooltip-trigger gterm",
+          "text": "πληρόωГреч. pleroo — 'наполнить до краев",
+          "w": 54,
+          "h": 17
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tooltip-trigger gterm",
+          "text": "Дж. К. РайлаДжон Чарльз Райл (1816–1900)",
+          "w": 90,
+          "h": 20
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tooltip-trigger gterm",
+          "text": "Роберт ГандриRobert Gundry предлагает те",
+          "w": 105,
+          "h": 20
+        }
+      ]
+    }
+  },
+  {
+    "route": "/nagornaya/chast-2/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Синоптическая проблема — Нагорная проповедь II | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": true,
+      "fcControls": false,
+      "ember": 1,
+      "save": 1,
+      "bodyClasses": [
+        "nagornaya-page",
+        "bg-stone-100",
+        "text-stone-900",
+        "antialiased",
+        "has-bottom-bar"
+      ],
+      "pagefindWords": 2521,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-search-btn",
+          "text": "Поиск (⌘K)",
+          "w": 35,
+          "h": 31
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "p-2 rounded-lg bg-stone-800 hover:bg-stone-700 transition-colors",
+          "text": "",
+          "w": 36,
+          "h": 30
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Статьи",
+          "w": 40,
+          "h": 16
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Нагорная проповедь",
+          "w": 118,
+          "h": 16
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tooltip-trigger gterm",
+          "text": "свидетельствах очевидцевГреческое слово ",
+          "w": 207,
+          "h": 22
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tooltip-trigger gterm",
+          "text": "Ipsissima verbaЛат. 'самые слова' — досл",
+          "w": 106,
+          "h": 20
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tooltip-trigger gterm",
+          "text": "Ipsissima voxЛат. 'сам голос' — точная п",
+          "w": 92,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе →",
+          "w": 87,
+          "h": 18
+        }
+      ]
+    }
+  },
+  {
+    "route": "/nagornaya/chast-3/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Кому адресована Нагорная проповедь? Часть III | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": true,
+      "fcControls": false,
+      "ember": 1,
+      "save": 1,
+      "bodyClasses": [
+        "nagornaya-page",
+        "bg-stone-100",
+        "text-stone-900",
+        "antialiased",
+        "has-bottom-bar"
+      ],
+      "pagefindWords": 2763,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-search-btn",
+          "text": "Поиск (⌘K)",
+          "w": 35,
+          "h": 31
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "p-2 rounded-lg bg-stone-800 hover:bg-stone-700 transition-colors",
+          "text": "",
+          "w": 36,
+          "h": 30
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Статьи",
+          "w": 40,
+          "h": 16
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Нагорная проповедь",
+          "w": 118,
+          "h": 16
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tooltip-trigger gterm",
+          "text": "«протекающим диспенсационалистом»Тот, кт",
+          "w": 354,
+          "h": 22
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе →",
+          "w": 87,
+          "h": 18
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "bar-section-btn",
+          "text": "Сейчас читаетеКоротко",
+          "w": 22,
+          "h": 44
+        }
+      ]
+    }
+  },
+  {
+    "route": "/nagornaya/chast-4/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Можно ли доверять Евангелиям? Часть IV | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": true,
+      "fcControls": false,
+      "ember": 1,
+      "save": 1,
+      "bodyClasses": [
+        "nagornaya-page",
+        "bg-stone-100",
+        "text-stone-900",
+        "antialiased",
+        "has-bottom-bar"
+      ],
+      "pagefindWords": 5548,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-search-btn",
+          "text": "Поиск (⌘K)",
+          "w": 35,
+          "h": 31
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "p-2 rounded-lg bg-stone-800 hover:bg-stone-700 transition-colors",
+          "text": "",
+          "w": 36,
+          "h": 30
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Статьи",
+          "w": 40,
+          "h": 16
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Нагорная проповедь",
+          "w": 118,
+          "h": 16
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tooltip-trigger gterm",
+          "text": "The Master's SeminaryThe Master's Semina",
+          "w": 193,
+          "h": 22
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tooltip-trigger gterm",
+          "text": "TMSJThe Master's Seminary Journal (TMSJ)",
+          "w": 42,
+          "h": 22
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tooltip-trigger gterm",
+          "text": "GTYGTY (Grace to You) — служение Джона М",
+          "w": 34,
+          "h": 22
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tooltip-trigger gterm",
+          "text": "GTY #2222GTY (Grace to You) — служение Д",
+          "w": 96,
+          "h": 22
+        }
+      ]
+    }
+  },
+  {
+    "route": "/nagornaya/chast-5/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Закон и Евангелие — Нагорная проповедь V | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": true,
+      "fcControls": false,
+      "ember": 1,
+      "save": 1,
+      "bodyClasses": [
+        "nagornaya-page",
+        "bg-stone-100",
+        "text-stone-900",
+        "antialiased",
+        "has-bottom-bar"
+      ],
+      "pagefindWords": 5619,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-search-btn",
+          "text": "Поиск (⌘K)",
+          "w": 35,
+          "h": 31
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "p-2 rounded-lg bg-stone-800 hover:bg-stone-700 transition-colors",
+          "text": "",
+          "w": 36,
+          "h": 30
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Статьи",
+          "w": 40,
+          "h": 16
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Нагорная проповедь",
+          "w": 118,
+          "h": 16
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "The Spiritual Credibility Gap (Matthew 5",
+          "w": 238,
+          "h": 30
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "«An Eye for an Eye, Part 2» (Matthew 5:3",
+          "w": 259,
+          "h": 30
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "The Beatitudes: An Exposition of Matthew",
+          "w": 281,
+          "h": 30
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "«The Ultimate Religious Decision» (Luke ",
+          "w": 245,
+          "h": 30
+        }
+      ]
+    }
+  },
+  {
+    "route": "/nagornaya/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [
+      "csp https://gospod-bog.ru/images/og-nagornaya-propoved.webp"
+    ],
+    "data": {
+      "title": "Нагорная проповедь — серия из 5 статей | Господь Бог",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "nagornaya-page",
+        "bg-stone-100",
+        "text-stone-900",
+        "antialiased",
+        "has-bottom-bar"
+      ],
+      "pagefindWords": 374,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-search-btn",
+          "text": "Поиск (⌘K)",
+          "w": 35,
+          "h": 31
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "p-2 rounded-lg bg-stone-800 hover:bg-stone-700 transition-colors",
+          "text": "",
+          "w": 36,
+          "h": 30
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Статьи",
+          "w": 40,
+          "h": 16
+        }
+      ]
+    }
+  },
+  {
+    "route": "/nagornaya/istochniki/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Источники Нагорной проповеди | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "nagornaya-page",
+        "bg-stone-100",
+        "text-stone-900",
+        "antialiased",
+        "has-bottom-bar"
+      ],
+      "pagefindWords": 1497,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-search-btn",
+          "text": "Поиск (⌘K)",
+          "w": 35,
+          "h": 31
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "p-2 rounded-lg bg-stone-800 hover:bg-stone-700 transition-colors",
+          "text": "",
+          "w": 36,
+          "h": 30
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Нагорная проповедь",
+          "w": 118,
+          "h": 16
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Evangelicals and Ipsissima Vox",
+          "w": 265,
+          "h": 31
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "How Views of Inspiration Have Impacted S",
+          "w": 285,
+          "h": 31
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "The Beatitudes",
+          "w": 84,
+          "h": 15
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "GTY Sermon #2222: Matthew 5:33–37",
+          "w": 278,
+          "h": 31
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "GTY Sermon 42-84: Luke 6:20–23",
+          "w": 288,
+          "h": 31
+        }
+      ]
+    }
+  },
+  {
+    "route": "/nagornaya/nakhodki/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Находки Нагорной проповеди | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "nagornaya-page",
+        "bg-stone-100",
+        "text-stone-900",
+        "antialiased",
+        "has-bottom-bar"
+      ],
+      "pagefindWords": 889,
+      "tiny": [
+        {
+          "tag": "BUTTON",
+          "cls": "gb-search-btn",
+          "text": "Поиск (⌘K)",
+          "w": 35,
+          "h": 31
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "p-2 rounded-lg bg-stone-800 hover:bg-stone-700 transition-colors",
+          "text": "",
+          "w": 36,
+          "h": 30
+        },
+        {
+          "tag": "A",
+          "cls": "text-stone-500 hover:text-amber-600 transition-colors",
+          "text": "Нагорная проповедь",
+          "w": 118,
+          "h": 16
+        },
+        {
+          "tag": "A",
+          "cls": "flex items-center gap-2 text-sm font-semibold text-stone-600 hover:text-amber-60",
+          "text": "← К архиву серии",
+          "w": 129,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "cls": "flex items-center gap-2 text-sm font-semibold text-stone-600 hover:text-amber-60",
+          "text": "Источники 120+ →",
+          "w": 130,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе →",
+          "w": 87,
+          "h": 18
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gbx-tts-speed",
+          "text": "1×",
+          "w": 20,
+          "h": 23
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "gbx-tts-close",
+          "text": "Закрыть",
+          "w": 28,
+          "h": 28
+        }
+      ]
+    }
+  },
+  {
+    "route": "/nagornaya/seriya/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Нагорная проповедь: серия в 5 частях | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "nagornaya-page",
+        "nagornaya-series-page"
+      ],
+      "pagefindWords": 99,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "h-nav-logo",
+          "text": "Господь Бог  —  Сила Моя",
+          "w": 229,
+          "h": 32
+        },
+        {
+          "tag": "A",
+          "cls": "gb-text-link",
+          "text": "← Главная",
+          "w": 67,
+          "h": 17
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе →",
+          "w": 87,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе",
+          "w": 59,
+          "h": 23
+        }
+      ]
+    }
+  },
+  {
+    "route": "/pastor-series/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Тёмная сторона кафедры — Серия материалов | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [],
+      "pagefindWords": 106,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "h-nav-logo",
+          "text": "Господь Бог  —  Сила Моя",
+          "w": 229,
+          "h": 32
+        },
+        {
+          "tag": "A",
+          "cls": "gb-text-link",
+          "text": "Главная",
+          "w": 51,
+          "h": 17
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Об авторе",
+          "w": 59,
+          "h": 23
+        }
+      ]
+    }
+  },
+  {
+    "route": "/rodosloviye/",
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "data": {
+      "title": "Родословие от Адама до Христа | Господь Бог — Сила Моя",
+      "dupIds": [],
+      "dupCount": 0,
+      "gtipDup": [],
+      "dupAriaDescribedByRefs": 0,
+      "fcRoot": false,
+      "fcControls": false,
+      "ember": 0,
+      "save": 0,
+      "bodyClasses": [
+        "site-page",
+        "gb-fc-active"
+      ],
+      "pagefindWords": 85,
+      "tiny": [
+        {
+          "tag": "A",
+          "cls": "btn btn-primary",
+          "text": "Открыть родословие",
+          "w": 163,
+          "h": 20
+        }
+      ]
+    }
+  }
+]

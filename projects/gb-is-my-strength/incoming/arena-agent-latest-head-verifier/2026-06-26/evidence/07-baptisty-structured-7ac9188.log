@@ -1,0 +1,18 @@
+$ Baptisty dist structured data / OG probe
+{"rel":"baptisty-rossii/dva-sezda-1884/index.html","robots":"index, follow, max-snippet:-1, max-image-preview:large","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/goneniya-i-sovest/index.html","robots":"index, follow","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/index.html","hub":true,"robots":"index, follow, max-snippet:-1, max-image-preview:large","ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/iniciativnaya-gruppa/index.html","robots":"index, follow, max-snippet:-1, max-image-preview:large","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/noch-na-kure/index.html","robots":"index, follow, max-snippet:-1, max-image-preview:large","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/peterburgskaya-liniya/index.html","robots":"index, follow","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/podpolnaya-pechat/index.html","robots":"index, follow, max-snippet:-1, max-image-preview:large","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/sovetskaya-noch/index.html","robots":"index, follow","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/spravochnik/index.html","robots":"index, follow, max-snippet:-1, max-image-preview:large","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/vsehib-1944/index.html","robots":"index, follow, max-snippet:-1, max-image-preview:large","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/yuzhnaya-shtunda/index.html","robots":"index, follow, max-snippet:-1, max-image-preview:large","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+TOTAL {
+  articlePages: 10,
+  missingDates: 10,
+  missingBreadcrumbList: 10,
+  svgOg: 11
+}

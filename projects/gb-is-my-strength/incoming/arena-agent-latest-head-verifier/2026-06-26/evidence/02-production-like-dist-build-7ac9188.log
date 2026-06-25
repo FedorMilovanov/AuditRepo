@@ -1,0 +1,223 @@
+$ rebuild production-like dist for 7ac9188
+23:44:55 [content] Syncing content
+23:44:55 [content] Synced content
+23:44:55 [types] Generated 670ms
+23:44:55 [check] Getting diagnostics for Astro files in /home/user/gb-is-my-strength...
+[96msrc/components/home/HomePageChrome.astro[0m:[93m146[0m:[93m9[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m146[0m <script src="./js/search.js?v=c9d65577" defer></script>
+[7m   [0m [93m        ~~~[0m
+[96msrc/components/home/HomePageChrome.astro[0m:[93m145[0m:[93m9[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m145[0m <script src="./js/sw-register.js?v=8a077d35" defer></script>
+[7m   [0m [93m        ~~~[0m
+[96msrc/components/home/HomePageChrome.astro[0m:[93m132[0m:[93m9[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m132[0m <script src="js/enhancements.js?v=b3b77aa6" defer></script>
+[7m   [0m [93m        ~~~[0m
+[96msrc/components/home/HomePageChrome.astro[0m:[93m131[0m:[93m9[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m131[0m <script src="js/site.js?v=133dfac1" defer></script>
+[7m   [0m [93m        ~~~[0m
+[96msrc/components/home/HomePageChrome.astro[0m:[93m130[0m:[93m9[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m130[0m <script src="js/scroll-perf.js?v=454d6f7b" defer></script>
+[7m   [0m [93m        ~~~[0m
+[96msrc/components/home/HomePageChrome.astro[0m:[93m129[0m:[93m9[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m129[0m <script src="js/site-utils.js?v=897afa55" defer></script>
+[7m   [0m [93m        ~~~[0m
+
+[96msrc/components/karty/KartyHoldingPage.astro[0m:[93m25[0m:[93m3[0m - [93mwarning[0m[90m ts(6133): [0m'slug' is declared but its value is never read.
+
+[7m25[0m   slug,
+[7m  [0m [93m  ~~~~[0m
+
+[96msrc/components/konfessii/russkij-baptizm/Baptizm3DBody.astro[0m:[93m56[0m:[93m9[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m56[0m <script type="text/javascript">
+[7m  [0m [93m        ~~~~[0m
+
+[96msrc/components/rodosloviye/RodosloviyeBody.astro[0m:[93m38[0m:[93m11[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m38[0m   <script src="/js/sw-register.js?v=8a077d35" defer></script>
+[7m  [0m [93m          ~~~[0m
+[96msrc/components/rodosloviye/RodosloviyeBody.astro[0m:[93m37[0m:[93m11[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m37[0m   <script src="/js/search.js?v=c9d65577" defer></script>
+[7m  [0m [93m          ~~~[0m
+[96msrc/components/rodosloviye/RodosloviyeBody.astro[0m:[93m36[0m:[93m11[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m36[0m   <script src="/js/site.js?v=133dfac1" defer></script>
+[7m  [0m [93m          ~~~[0m
+
+[96msrc/components/ui/floating-cluster/GillRailControls.astro[0m:[93m33[0m:[93m3[0m - [93mwarning[0m[90m ts(6133): [0m'homeHref' is declared but its value is never read.
+
+[7m33[0m   homeHref,
+[7m  [0m [93m  ~~~~~~~~[0m
+[96msrc/components/ui/floating-cluster/GillRailControls.astro[0m:[93m32[0m:[93m3[0m - [93mwarning[0m[90m ts(6133): [0m'context' is declared but its value is never read.
+
+[7m32[0m   context = 'rail',
+[7m  [0m [93m  ~~~~~~~[0m
+
+Result (408 files): 
+- 0 errors
+- 0 warnings
+- 13 hints
+
+23:47:06 [content] Syncing content
+23:47:06 [content] Synced content
+23:47:06 [types] Generated 678ms
+23:47:06 [build] output: "static"
+23:47:06 [build] mode: "static"
+23:47:06 [build] directory: /home/user/gb-is-my-strength/dist/
+23:47:06 [build] Collecting build info...
+23:47:06 [build] ✓ Completed in 736ms.
+23:47:06 [build] Building static entrypoints...
+23:47:11 [WARN] [vite] 
+../images/og-karty-1200x630.webp referenced in ../images/og-karty-1200x630.webp didn't resolve at build time, it will remain unchanged to be resolved at runtime
+23:47:13 [vite] ✓ built in 6.87s
+23:47:14 [vite] ✓ built in 992ms
+23:47:14 [build] Rearranging server assets...
+
+ generating static routes 
+23:47:14   ├─ /about/index.html (+16ms) 
+23:47:14   ├─ /articles/20-antisovetov-pastoru/index.html (+20ms) 
+23:47:14   ├─ /articles/dzhon-gill-chast-1-chelovek/index.html (+10ms) 
+23:47:14   ├─ /articles/dzhon-gill-chast-2-uchenyi/index.html (+8ms) 
+23:47:14   ├─ /articles/dzhon-gill-chast-3-nasledie/index.html (+9ms) 
+23:47:14   ├─ /articles/dzhon-gill-istoricheskiy-kontekst/index.html (+6ms) 
+23:47:14   ├─ /articles/dzhon-gill-spravochnik/index.html (+8ms) 
+23:47:14   ├─ /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/index.html (+20ms) 
+23:47:14   ├─ /articles/kod-da-vinchi/index.html (+12ms) 
+23:47:14   ├─ /articles/krajne-li-isporcheno-serdce/index.html (+9ms) 
+23:47:14   ├─ /articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/index.html (+4ms) 
+23:47:14   ├─ /articles/index.html (+3ms) 
+23:47:14   ├─ /baptisty-rossii/dva-sezda-1884/index.html (+3ms) 
+23:47:14   ├─ /baptisty-rossii/goneniya-i-sovest/index.html (+4ms) 
+23:47:14   ├─ /baptisty-rossii/iniciativnaya-gruppa/index.html (+4ms) 
+23:47:14   ├─ /baptisty-rossii/noch-na-kure/index.html (+2ms) 
+23:47:14   ├─ /baptisty-rossii/peterburgskaya-liniya/index.html (+3ms) 
+23:47:14   ├─ /baptisty-rossii/podpolnaya-pechat/index.html (+3ms) 
+23:47:14   ├─ /baptisty-rossii/sovetskaya-noch/index.html (+3ms) 
+23:47:14   ├─ /baptisty-rossii/spravochnik/index.html (+4ms) 
+23:47:14   ├─ /baptisty-rossii/vsehib-1944/index.html (+6ms) 
+23:47:14   ├─ /baptisty-rossii/yuzhnaya-shtunda/index.html (+4ms) 
+23:47:14   ├─ /baptisty-rossii/index.html (+3ms) 
+23:47:14   ├─ /biografii/index.html (+4ms) 
+23:47:14   ├─ /dev/astro-test/index.html (+9ms) 
+23:47:15   ├─ /hard-texts/index.html (+21ms) 
+23:47:15   ├─ /karty/avraam/index.html (+3ms) 
+23:47:15   ├─ /karty/early-church/index.html (+3ms) 
+23:47:15   ├─ /karty/ishod/index.html (+2ms) 
+23:47:15   ├─ /karty/maccabim/index.html (+2ms) 
+23:47:15   ├─ /karty/melachim/index.html (+1ms) 
+23:47:15   ├─ /karty/pavel/index.html (+2ms) 
+23:47:15   ├─ /karty/revelation/index.html (+2ms) 
+23:47:15   ├─ /karty/shoftim/index.html (+1ms) 
+23:47:15   ├─ /karty/shvatim/index.html (+2ms) 
+23:47:15   ├─ /karty/yeshua/index.html (+1ms) 
+23:47:15   ├─ /karty/index.html (+3ms) 
+23:47:15   ├─ /konfessii/russkij-baptizm/index.html (+5ms) 
+23:47:15   ├─ /konfessii/index.html (+3ms) 
+23:47:15   ├─ /map/index.html (+3ms) 
+23:47:15   ├─ /nagornaya/chast-1/index.html (+5ms) 
+23:47:15   ├─ /nagornaya/chast-2/index.html (+5ms) 
+23:47:15   ├─ /nagornaya/chast-3/index.html (+5ms) 
+23:47:15   ├─ /nagornaya/chast-4/index.html (+6ms) 
+23:47:15   ├─ /nagornaya/chast-5/index.html (+6ms) 
+23:47:15   ├─ /nagornaya/istochniki/index.html (+4ms) 
+23:47:15   ├─ /nagornaya/nakhodki/index.html (+3ms) 
+23:47:15   ├─ /nagornaya/seriya/index.html (+3ms) 
+23:47:15   ├─ /nagornaya/index.html (+3ms) 
+23:47:15   ├─ /pastor-series/index.html (+3ms) 
+23:47:15   ├─ /rodosloviye/index.html (+2ms) 
+23:47:15   ├─ /index.html (+4ms) 
+23:47:15 ✓ Completed in 323ms.
+
+23:47:15 [build] ✓ Completed in 8.26s.
+23:47:15 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+23:47:15 [build] 52 page(s) built in 9.04s
+23:47:15 [build] Complete!
+   Copy operation manifest: reports/dist-copy-manifest.json
+✅ copy-legacy-to-dist: copied 578 files (46491 KB)
+   Astro-owned legacy pages skipped: /articles/20-antisovetov-pastoru/, /articles/dzhon-gill-chast-1-chelovek/, /articles/dzhon-gill-chast-2-uchenyi/, /articles/dzhon-gill-chast-3-nasledie/, /articles/dzhon-gill-istoricheskiy-kontekst/, /articles/dzhon-gill-spravochnik/, /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/, /articles/, /articles/kod-da-vinchi/, /articles/krajne-li-isporcheno-serdce/, /articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/, /about/, /baptisty-rossii/dva-sezda-1884/, /baptisty-rossii/goneniya-i-sovest/, /baptisty-rossii/, /baptisty-rossii/iniciativnaya-gruppa/, /baptisty-rossii/noch-na-kure/, /baptisty-rossii/peterburgskaya-liniya/, /baptisty-rossii/podpolnaya-pechat/, /baptisty-rossii/sovetskaya-noch/, /baptisty-rossii/spravochnik/, /baptisty-rossii/vsehib-1944/, /baptisty-rossii/yuzhnaya-shtunda/, /biografii/, /hard-texts/, /karty/avraam/, /karty/early-church/, /karty/, /karty/ishod/, /karty/maccabim/, /karty/melachim/, /karty/pavel/, /karty/revelation/, /karty/shoftim/, /karty/shvatim/, /karty/yeshua/, /konfessii/, /konfessii/russkij-baptizm/, /map/, /nagornaya/chast-1/, /nagornaya/chast-2/, /nagornaya/chast-3/, /nagornaya/chast-4/, /nagornaya/chast-5/, /nagornaya/, /nagornaya/istochniki/, /nagornaya/nakhodki/, /nagornaya/seriya/, /pastor-series/
+   Build-only Astro routes omitted: /dev/astro-test/
+   Partial Astro sitemap files removed: sitemap-0.xml, sitemap-index.xml
+
+⚡  astro-cache-bust-postbuild.js
+
+  HTML files scanned: 56
+  Files touched:      36
+  Hash replacements:  527
+
+✅  dist/ hash drift → 0 (next cache-bust legacy pass will converge)
+
+Running Pagefind v1.5.2 (Extended)
+Running from: "/home/user/gb-is-my-strength"
+Source:       "dist"
+Output:       "dist/pagefind"
+
+[Walking source directory]
+Found 56 files matching **/*.{html}
+
+[Parsing files]
+Found a data-pagefind-body element on the site.
+↳ Ignoring pages without this tag.
+1 page found without an <html> element. 
+Pages without an outer <html> element will not be processed by default. 
+If adding this element is not possible, use the root selector config to target a different root element.
+  * "/google7e02f9855e02b89a.html" has no <html> element
+
+[Reading languages]
+Discovered 1 language: ru
+
+[Building search indexes]
+Total: 
+  Indexed 1 language
+  Indexed 42 pages
+  Indexed 14585 words
+  Indexed 0 filters
+  Indexed 0 sorts
+
+Finished in 0.561 seconds
