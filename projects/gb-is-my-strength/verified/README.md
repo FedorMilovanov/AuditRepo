@@ -1,8 +1,11 @@
 # Verified
 
-Сюда попадают только:
-- подтверждённые bug ledgers
-- итоговые matrices
-- verifier-approved repair order
+Сюда попадают только финальные подтверждённые документы.
 
-Если баг не подтверждён — он не должен жить здесь как финальный факт.
+Минимальный набор для handoff implementation-агенту:
+- final bug ledger
+- final bug matrix
+- repair order
+- false-positive / audit-drift registry (если подтверждён)
+
+Пока папка содержит только placeholders, потому что intake ещё не прошёл полную мультиагентную сверку.
