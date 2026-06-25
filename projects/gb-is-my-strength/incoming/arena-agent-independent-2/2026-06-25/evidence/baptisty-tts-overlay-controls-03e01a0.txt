@@ -1,0 +1,179 @@
+## HEAD
+03e01a0008de34d654175ea600cdf9f22b2351b4
+
+## Mobile/top vs desktop/bottom controls after TTS visible
+{"viewport":{"w":390,"h":844},"buttons":[{"i":0,"rect":{"x":279,"y":9,"w":38,"h":38},"point":{"x":298,"y":28},"over":{"tag":"BUTTON","cls":"gbs2-mctl","gbs2":true}},{"i":1,"rect":{"x":0,"y":0,"w":0,"h":0},"point":{"x":0,"y":0},"over":{"tag":"DIV","cls":"gbs2-mobile-head","gbs2":false}}],"tts":{"cls":"gbx-tts gbx-tts--visible","rect":{"x":12,"y":774,"w":366,"h":54},"display":"flex","pe":"auto","opacity":"1"}}
+{"viewport":{"w":1280,"h":900},"buttons":[{"i":0,"rect":{"x":0,"y":0,"w":0,"h":0},"point":{"x":0,"y":0},"over":{"tag":"DIV","cls":"gbs2-rhead","gbs2":false}},{"i":1,"rect":{"x":12,"y":855,"w":35,"h":35},"point":{"x":30,"y":873},"over":{"tag":"BUTTON","cls":"gbs2-ctl","gbs2":true}}],"tts":{"cls":"gbx-tts gbx-tts--visible","rect":{"x":24,"y":822,"w":334.875,"h":54},"display":"flex","pe":"auto","opacity":"1"}}
+
+## Desktop all GBS2 controls elementFromPoint + click tests
+[
+  {
+    "kind": "theme",
+    "els": [
+      {
+        "i": 0,
+        "text": "◐",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "point": {
+          "x": 0,
+          "y": 0
+        },
+        "over": {
+          "tag": "DIV",
+          "cls": "gbs2-rhead",
+          "same": false,
+          "closest": false
+        }
+      },
+      {
+        "i": 1,
+        "text": "◐",
+        "rect": {
+          "x": 12,
+          "y": 855,
+          "w": 35,
+          "h": 35
+        },
+        "point": {
+          "x": 30,
+          "y": 873
+        },
+        "over": {
+          "tag": "BUTTON",
+          "cls": "gbs2-ctl",
+          "same": true,
+          "closest": true
+        }
+      }
+    ]
+  },
+  {
+    "kind": "font=down",
+    "els": [
+      {
+        "i": 0,
+        "text": "A−",
+        "rect": {
+          "x": 55,
+          "y": 855,
+          "w": 35,
+          "h": 35
+        },
+        "point": {
+          "x": 73,
+          "y": 873
+        },
+        "over": {
+          "tag": "DIV",
+          "cls": "gbx-tts gbx-tts--visible",
+          "same": false,
+          "closest": false
+        }
+      }
+    ]
+  },
+  {
+    "kind": "font=up",
+    "els": [
+      {
+        "i": 0,
+        "text": "A+",
+        "rect": {
+          "x": 98,
+          "y": 855,
+          "w": 35,
+          "h": 35
+        },
+        "point": {
+          "x": 116,
+          "y": 873
+        },
+        "over": {
+          "tag": "DIV",
+          "cls": "gbx-tts gbx-tts--visible",
+          "same": false,
+          "closest": false
+        }
+      }
+    ]
+  },
+  {
+    "kind": "share",
+    "els": [
+      {
+        "i": 0,
+        "text": "↗",
+        "rect": {
+          "x": 141,
+          "y": 855,
+          "w": 35,
+          "h": 35
+        },
+        "point": {
+          "x": 159,
+          "y": 873
+        },
+        "over": {
+          "tag": "DIV",
+          "cls": "gbx-tts gbx-tts--visible",
+          "same": false,
+          "closest": false
+        }
+      }
+    ]
+  },
+  {
+    "kind": "search",
+    "els": [
+      {
+        "i": 0,
+        "text": "⌕",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "point": {
+          "x": 0,
+          "y": 0
+        },
+        "over": {
+          "tag": "DIV",
+          "cls": "gbs2-rhead",
+          "same": false,
+          "closest": false
+        }
+      },
+      {
+        "i": 1,
+        "text": "⌕",
+        "rect": {
+          "x": 184,
+          "y": 855,
+          "w": 35,
+          "h": 35
+        },
+        "point": {
+          "x": 202,
+          "y": 873
+        },
+        "over": {
+          "tag": "DIV",
+          "cls": "gbx-tts gbx-tts--visible",
+          "same": false,
+          "closest": false
+        }
+      }
+    ]
+  }
+]
+CLICKTEST theme clicked {"dark":true,"font":"18px","cp":"cp-backdrop:none","share":true}
+CLICKTEST fontUp ERR locator.click: Timeout 1800ms exceeded. {"dark":true,"font":"18px","cp":"cp-backdrop:none","share":true}
+CLICKTEST share ERR locator.click: Timeout 1800ms exceeded. {"dark":true,"font":"18px","cp":"cp-backdrop:none","share":true}
+CLICKTEST search ERR locator.click: Timeout 1800ms exceeded. {"dark":true,"font":"18px","cp":"cp-backdrop:none","share":true}
