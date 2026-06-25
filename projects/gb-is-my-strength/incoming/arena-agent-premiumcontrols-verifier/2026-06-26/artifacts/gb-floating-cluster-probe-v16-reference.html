@@ -1,0 +1,1880 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GB Cluster v16 — Mobile TOC & Progress Redesign</title>
+<style>
+/* ============================================================
+   v16 — Mobile TOC & Progress Redesign (owner approved):
+   1. TOC Progress Style: Thin elegant gold line (1.5px) in gold/amber tones.
+   2. Mobile TOC Popup Layout: Repacked bottom action bar for 320-390px screens.
+   3. Mobile Bottom Bar: Optimized spacing & compact typography for narrow screens.
+   4. Popup Overlays: Zero padding on mobile screens, full-width attachment.
+   ============================================================ */
+:root{
+  --gb-ease-out: cubic-bezier(.2, .7, .2, 1);
+  --gb-ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --gb-ease-precise: cubic-bezier(.4, 0, .2, 1);
+  --gb-ease-smooth: cubic-bezier(.32, .72, 0, 1);
+  --gb-ease-overshoot: cubic-bezier(.16, 1.08, .42, 1.06);
+  --gb-ease-soft: cubic-bezier(.25, .46, .45, .94);
+
+  --gb-canvas:#fdfcf9;
+  --gb-surface:#ffffff;
+  --gb-surface-muted:#f4f2ed;
+  --gb-text:#1a1a1a;
+  --gb-text-muted:#6a6a6a;
+  --gb-text-faint:#888888;
+  --gb-text-warm:#2b2317;
+  --gb-border:#e5e2dc;
+  --gb-border-strong:#cfc9bd;
+  --gb-accent:#7a2e2e;
+  --gb-accent-soft:#f6ece8;
+  --gb-accent-strong:#5f2323;
+  --gb-accent-gold:#b8936a;
+  --gb-accent-gold-bright:#d8aa6d;
+  --gb-accent-gold-deep:#9e6d34;
+  --gb-link:#1f4ea3;
+
+  --gb-font-serif: Georgia, "Times New Roman", serif;
+  --gb-font-serif-display: 'Playfair Display', Georgia, "Times New Roman", serif;
+  --gb-font-sans: 'Source Sans 3', system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --z-toast:9800;
+  --z-bottom-bar:2000;
+  --z-sheet:11000;
+  --z-toast-notif:13000;
+  --z-help:14000;
+}
+html.dark{
+  --gb-canvas:#0e1116;
+  --gb-surface:#161a21;
+  --gb-surface-muted:#161a21;
+  --gb-text:#e6e1d7;
+  --gb-text-muted:#9ca3af;
+  --gb-text-faint:#6b7280;
+  --gb-text-warm:#e8e3d5;
+  --gb-border:#232830;
+  --gb-border-strong:#2f3540;
+  --gb-accent:#d4a574;
+  --gb-accent-soft:#1f1a13;
+  --gb-accent-strong:#e8b878;
+  --gb-accent-gold:#e8b878;
+  --gb-accent-gold-bright:#f0c896;
+  --gb-accent-gold-deep:#d8aa6d;
+  --gb-link:#d4a574;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--gb-canvas);color:var(--gb-text);font-family:var(--gb-font-serif);font-size:17px;line-height:1.7;transition:background .3s ease, color .3s ease}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:transparent;padding:0;-webkit-tap-highlight-color:transparent}
+a{color:var(--gb-link);text-decoration:none}
+
+.probe{max-width:980px;margin:0 auto;padding:36px 22px 180px}
+.eyebrow{font-family:var(--gb-font-sans);font-size:11px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--gb-accent);margin:0 0 10px}
+h1{font-family:var(--gb-font-serif);font-size:clamp(26px,4.2vw,40px);line-height:1.1;letter-spacing:-.02em;margin:0 0 12px;color:var(--gb-text)}
+.lead{font-family:var(--gb-font-sans);font-size:14.5px;color:var(--gb-text-muted);margin:0 0 28px;max-width:64ch;line-height:1.55}
+.divider{height:1px;background:var(--gb-border);margin:30px 0}
+.section{margin:36px 0}
+.section-title{font-family:var(--gb-font-sans);font-size:11px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--gb-accent);margin:0 0 8px}
+.section-sub{font-family:var(--gb-font-sans);font-size:14px;color:var(--gb-text-muted);margin:0 0 20px;max-width:64ch;line-height:1.55}
+.callout{
+  margin:14px 0;padding:12px 16px;
+  background:color-mix(in srgb,var(--gb-accent) 6%,transparent);
+  border:1px solid color-mix(in srgb,var(--gb-accent) 22%,transparent);
+  border-radius:10px;
+  font-family:var(--gb-font-sans);font-size:13px;line-height:1.55;color:var(--gb-text);
+}
+.callout b{color:var(--gb-accent);font-weight:700}
+
+footer.foot{margin-top:30px;font-family:var(--gb-font-sans);font-size:12px;color:var(--gb-text-faint);text-align:center}
+
+.panel{margin:24px 0;padding:18px 22px;background:var(--gb-surface-muted);border:1px solid var(--gb-border);border-radius:14px;font-family:var(--gb-font-sans)}
+.panel-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.panel-row + .panel-row{margin-top:10px}
+.panel-label{font-size:12px;color:var(--gb-text-muted);min-width:84px}
+.panel-btn{font-size:12px;font-weight:800;padding:7px 13px;border-radius:999px;border:1px solid var(--gb-border);background:var(--gb-surface);color:var(--gb-text-muted);transition:all .18s var(--gb-ease-out)}
+.panel-btn:hover{color:var(--gb-text);border-color:var(--gb-accent)}
+.panel-btn.is-on{background:var(--gb-accent);color:#fff;border-color:var(--gb-accent)}
+
+.state-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:680px){.state-grid{grid-template-columns:repeat(2,1fr)}}
+.state-card{border:1px solid var(--gb-border);border-radius:14px;padding:14px;background:var(--gb-surface);display:flex;flex-direction:column;align-items:center;gap:10px;min-height:140px;justify-content:center}
+.state-card .title{font-family:var(--gb-font-sans);font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--gb-text-muted);margin-top:4px}
+.state-card .note{font-family:var(--gb-font-sans);font-size:11px;color:var(--gb-text-faint);text-align:center;margin:0;line-height:1.4}
+
+/* ============================================================
+   BARE SVG ICON — touch-aware + precision outline (v14)
+   ============================================================ */
+.gb-icon{
+  --icon-stroke: 1.7;
+  width:40px;height:40px;
+  display:grid;place-items:center;
+  position:relative;
+  color:var(--gb-text);
+  background:transparent;border:0;
+  border-radius:50%;
+  transition:
+    color .28s var(--gb-ease-out),
+    transform .32s var(--gb-ease-spring);
+  cursor:pointer;
+  flex-shrink:0;
+  transform-origin:center;
+}
+.gb-icon::before{
+  content:'';
+  position:absolute;inset:6px;
+  border-radius:50%;
+  border:1px solid var(--gb-accent);
+  opacity:0;
+  transform:scale(.7);
+  transition:
+    opacity .28s var(--gb-ease-out),
+    transform .32s var(--gb-ease-spring);
+  pointer-events:none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .gb-icon:hover{color:var(--gb-accent);transform:scale(1.12)}
+  .gb-icon:hover::before{opacity:0.35;transform:scale(1)}
+  html.dark .gb-icon:hover{color:var(--gb-accent-strong)}
+}
+.gb-icon:active{transform:scale(.88);transition:transform .12s var(--gb-ease-precise)}
+.gb-icon:active::before{opacity:0.5;transform:scale(1)}
+.gb-icon:focus-visible{outline:2px solid var(--gb-accent);outline-offset:4px;border-radius:50%}
+.gb-icon:focus-visible::before{opacity:0.5;transform:scale(1)}
+.gb-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:var(--icon-stroke);stroke-linecap:round;stroke-linejoin:round;transition:transform .32s var(--gb-ease-spring),stroke-width .28s var(--gb-ease-out)}
+@media (hover: hover) and (pointer: fine) {
+  .gb-icon:hover svg{transform:scale(1.08);--icon-stroke:1.85}
+}
+.gb-icon:active svg{transform:scale(.95)}
+
+.gb-icon[data-tip]{position:relative}
+.gb-icon[data-tip]::after{
+  content:attr(data-tip);
+  position:absolute;
+  top:calc(100% + 10px);left:50%;
+  transform:translateX(-50%) translateY(-6px) scale(.94);
+  padding:5px 11px;border-radius:6px;
+  background:var(--gb-tooltip-bg,#1a1a1a);color:var(--gb-tooltip-text,#fff);
+  font-family:var(--gb-font-sans);
+  font-size:11px;font-weight:600;letter-spacing:.02em;
+  white-space:nowrap;opacity:0;pointer-events:none;
+  transition:
+    opacity .22s var(--gb-ease-out),
+    transform .28s var(--gb-ease-spring);
+  z-index:10;
+}
+@media (hover: hover) and (pointer: fine) {
+  .gb-icon[data-tip]:hover::after,
+  .gb-icon[data-tip]:focus-visible::after{
+    opacity:1;
+    transform:translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+/* ============================================================
+   v15: SAVE button — NO ::before halo (different from gb-icon)
+   Just gold fill on click + bounce. NO outline ring.
+   ============================================================ */
+.gb-save{
+  width:40px;height:40px;
+  display:grid;place-items:center;
+  position:relative;
+  color:var(--gb-text);
+  background:transparent;border:0;
+  border-radius:50%;
+  transition:
+    color .28s var(--gb-ease-out),
+    transform .32s var(--gb-ease-spring);
+  cursor:pointer;
+  flex-shrink:0;
+  transform-origin:center;
+}
+/* NOTE: no ::before outline! Save is purely visual feedback */
+@media (hover: hover) and (pointer: fine) {
+  .gb-save:hover{color:var(--gb-accent-gold);transform:scale(1.10)}
+}
+.gb-save:active{transform:scale(.88);transition:transform .12s var(--gb-ease-precise)}
+.gb-save:focus-visible{outline:2px solid var(--gb-accent);outline-offset:4px;border-radius:50%}
+/* When saved: gold fill + bounce. NO halo. */
+.gb-save.is-saved{color:var(--gb-accent-gold-bright)}
+.gb-save.is-saved svg{
+  fill:var(--gb-accent-gold);
+  stroke:var(--gb-accent-gold);
+  animation:save-bounce .5s var(--gb-ease-spring);
+}
+@keyframes save-bounce{
+  0%{transform:scale(1)}
+  40%{transform:scale(1.30)}
+  70%{transform:scale(.92)}
+  100%{transform:scale(1)}
+}
+.gb-save svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .32s var(--gb-ease-spring),fill .28s var(--gb-ease-out),stroke .28s var(--gb-ease-out)}
+
+/* ============================================================
+   THEME TOGGLE — 180° rotation morph (v14)
+   ============================================================ */
+.gb-theme-toggle{
+  width:40px;height:40px;
+  display:grid;place-items:center;
+  position:relative;
+  color:var(--gb-text);
+  background:transparent;border:0;
+  border-radius:50%;
+  transition:
+    color .28s var(--gb-ease-out),
+    transform .32s var(--gb-ease-spring);
+  cursor:pointer;
+  flex-shrink:0;
+  transform-origin:center;
+  overflow:hidden;
+}
+.gb-theme-toggle .theme-icon-sun,
+.gb-theme-toggle .theme-icon-moon{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  transition:
+    opacity .32s var(--gb-ease-out),
+    transform .42s var(--gb-ease-spring);
+}
+.gb-theme-toggle .theme-icon-sun{opacity:1;transform:rotate(0) scale(1)}
+.gb-theme-toggle .theme-icon-moon{opacity:0;transform:rotate(-90deg) scale(.5)}
+html.dark .gb-theme-toggle .theme-icon-sun{opacity:0;transform:rotate(90deg) scale(.5)}
+html.dark .gb-theme-toggle .theme-icon-moon{opacity:1;transform:rotate(0) scale(1)}
+.gb-theme-toggle svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;width:20px;height:20px}
+@media (hover: hover) and (pointer: fine) {
+  .gb-theme-toggle:hover{color:var(--gb-accent);transform:scale(1.10)}
+}
+.gb-theme-toggle:active{transform:scale(.92);transition:transform .12s}
+.gb-theme-toggle:focus-visible{outline:2px solid var(--gb-accent);outline-offset:4px}
+
+/* ============================================================
+   PLAY EMBER (v14, fixed loading state in v15)
+   ============================================================ */
+.gb-ember{
+  --p:0;
+  --ember-size:36px;
+  --ring-color:var(--gb-accent);
+  appearance:none;border:0;
+  position:relative;
+  display:grid;place-items:center;
+  isolation:isolate;
+  cursor:pointer;
+  color:var(--gb-text);
+  width:var(--ember-size);height:var(--ember-size);
+  border-radius:50%;
+  background:transparent;
+  transition:
+    transform .32s var(--gb-ease-spring),
+    color .28s var(--gb-ease-out);
+  flex-shrink:0;
+  transform-origin:center;
+}
+.gb-ember::before{
+  content:'';
+  position:absolute;inset:6px;
+  border-radius:50%;
+  border:1px solid var(--ring-color);
+  opacity:0;
+  transform:scale(.7);
+  transition:
+    opacity .28s var(--gb-ease-out),
+    transform .32s var(--gb-ease-spring);
+  pointer-events:none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .gb-ember:hover{transform:scale(1.12)}
+  .gb-ember:hover::before{opacity:0.4;transform:scale(1)}
+}
+.gb-ember:active{transform:scale(.88);transition:transform .12s var(--gb-ease-precise)}
+.gb-ember:active::before{opacity:0.55;transform:scale(1)}
+.gb-ember:focus-visible{outline:2px solid var(--gb-accent);outline-offset:4px;border-radius:50%}
+.gb-ember:focus-visible::before{opacity:0.55;transform:scale(1)}
+
+.gb-ember__ring-svg{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;overflow:visible;
+  opacity:0;
+  transform:rotate(-90deg);
+  transform-origin:center;
+  transition:opacity .28s var(--gb-ease-out);
+}
+.gb-ember[data-state="playing"] .gb-ember__ring-svg,
+.gb-ember[data-state="paused"] .gb-ember__ring-svg,
+.gb-ember[data-state="complete"] .gb-ember__ring-svg{opacity:1}
+.gb-ember__ring-track{fill:none;stroke:var(--gb-border);stroke-width:1.5;opacity:0.4}
+.gb-ember__ring-progress{
+  fill:none;stroke:var(--ring-color);stroke-width:1.5;
+  stroke-linecap:round;
+  stroke-dasharray:283;
+  stroke-dashoffset:calc(283 - 283 * var(--p) / 100);
+  transition:stroke-dashoffset .42s var(--gb-ease-precise);
+}
+.gb-ember__glyph{position:relative;z-index:2;width:14px;height:14px;fill:currentColor;transform:translateX(1px)}
+.gb-ember__pause{position:relative;z-index:2;width:14px;height:14px;display:none;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+.gb-ember__check{display:none;position:relative;z-index:2;width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.gb-ember[data-state="playing"] .gb-ember__glyph,
+.gb-ember[data-state="paused"] .gb-ember__glyph,
+.gb-ember[data-state="complete"] .gb-ember__glyph{display:none}
+.gb-ember[data-state="playing"] .gb-ember__pause,
+.gb-ember[data-state="paused"] .gb-ember__pause{display:block}
+.gb-ember[data-state="complete"] .gb-ember__check{display:block}
+.gb-ember[data-state="playing"]{color:var(--ring-color)}
+.gb-ember[data-state="paused"]{color:var(--ring-color)}
+.gb-ember[data-state="complete"]{color:var(--gb-accent-gold-bright)}
+
+/* v15: Loading pulse (fixed — only on ::before) */
+.gb-ember.is-loading::before{
+  animation:loading-pulse 1.4s ease-in-out infinite;
+}
+@keyframes loading-pulse{
+  0%,100%{opacity:0}
+  50%{opacity:0.5}
+}
+
+.gb-floater{
+  position:fixed;
+  top:max(20px, env(safe-area-inset-top, 20px));
+  right:max(20px, env(safe-area-inset-right, 20px));
+  z-index:var(--z-toast);
+  display:flex;flex-direction:column;align-items:center;
+  gap:6px;
+}
+
+/* GBS RAIL */
+.gbs-rail-demo{
+  display:grid;grid-template-columns:auto 1fr;gap:18px;
+  background:linear-gradient(180deg,#1f1512 0%,#120e0d 100%);
+  border-radius:18px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:0 12px 32px rgba(16, 18, 22, .14);
+  position:relative;
+  min-height:600px;
+  color:#eadfd1;
+}
+.gbs-rail{
+  width:240px;display:flex;flex-direction:column;gap:10px;
+  padding:14px 12px 12px;border-radius:14px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.08);
+  position:relative;
+}
+.gbs-rail-back{
+  position:absolute;top:10px;left:10px;
+  width:36px;height:36px;
+  display:grid;place-items:center;
+  color:#eadac7;background:transparent;border:0;
+  transition:color .22s var(--gb-ease-out),transform .32s var(--gb-ease-spring);
+  cursor:pointer;transform-origin:center;
+}
+@media (hover: hover) and (pointer: fine) {
+  .gbs-rail-back:hover{color:#f4e8d9;transform:translateX(-2px) scale(1.10)}
+}
+.gbs-rail-back:active{transform:translateX(-2px) scale(.92);transition:transform .12s}
+.gbs-rail-back:focus-visible{outline:2px solid var(--gb-accent);outline-offset:2px;border-radius:50%}
+.gbs-rail-back svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+.gbs-rail-list{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.gbs-rail-card{
+  display:grid;
+  grid-template-columns:36px 1fr auto auto;
+  gap:10px;
+  align-items:center;
+  padding:8px 10px;
+  border-radius:10px;
+  background:transparent;
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:
+    background .28s var(--gb-ease-out),
+    border-color .28s var(--gb-ease-out),
+    transform .32s var(--gb-ease-spring);
+  position:relative;
+  transform-origin:left center;
+}
+@media (hover: hover) and (pointer: fine) {
+  .gbs-rail-card:hover{
+    background:rgba(255,255,255,.04);
+    border-color:rgba(255,255,255,.10);
+    transform:translateX(2px);
+  }
+}
+.gbs-rail-card:active{transform:translateX(2px) scale(.99)}
+.gbs-rail-card.is-current{
+  background:rgba(216,170,109,.08);
+  border-color:rgba(216,170,109,.30);
+}
+.gbs-rail-card__num{
+  font-family:var(--gb-font-serif-display);
+  font-size:18px;font-weight:600;font-style:italic;letter-spacing:.02em;
+  color:var(--gb-accent-gold);text-align:center;line-height:1;
+  font-feature-settings:"liga","kern";
+  transition:color .22s var(--gb-ease-out),transform .32s var(--gb-ease-spring);
+  flex-shrink:0;width:36px;height:28px;display:grid;place-items:center;
+  transform-origin:center;
+}
+@media (hover: hover) and (pointer: fine) {
+  .gbs-rail-card:hover .gbs-rail-card__num{
+    color:var(--gb-accent-gold-bright);
+    transform:scale(1.15);
+  }
+}
+.gbs-rail-card.is-current .gbs-rail-card__num{
+  color:var(--gb-accent-gold-bright);
+  text-shadow:0 0 12px rgba(216,170,109,.35);
+}
+.gbs-rail-card__info{min-width:0;display:flex;flex-direction:column;gap:1px}
+.gbs-rail-card__info b{
+  font-family:var(--gb-font-serif);font-size:13px;line-height:1.2;color:#eadfd1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;
+  transition:color .22s var(--gb-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .gbs-rail-card:hover .gbs-rail-card__info b{color:#f4e8d9}
+}
+.gbs-rail-card__info small{
+  font-family:var(--gb-font-sans);font-size:10px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#bd6858;
+}
+.gbs-rail-card__check{
+  width:18px;height:18px;border-radius:50%;
+  background:rgba(169,72,71,.85);color:#fff;
+  display:grid;place-items:center;
+  font-size:10px;font-weight:900;flex-shrink:0;
+  transition:transform .32s var(--gb-ease-spring);
+}
+.gbs-rail-card.is-current .gbs-rail-card__check{transform:scale(1.10)}
+.gbs-rail-card:not(.is-current) .gbs-rail-card__check{opacity:.4;background:rgba(255,255,255,.08);color:rgba(255,255,255,.4)}
+.gbs-rail-card__chevron{
+  width:14px;height:14px;
+  color:var(--gb-accent-gold);
+  opacity:0;
+  transform:translateX(-4px);
+  transition:opacity .22s var(--gb-ease-out),transform .32s var(--gb-ease-spring);
+  flex-shrink:0;
+}
+.gbs-rail-card__chevron svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+@media (hover: hover) and (pointer: fine) {
+  .gbs-rail-card:hover .gbs-rail-card__chevron{
+    opacity:0.7;
+    transform:translateX(0);
+  }
+}
+
+.gbs-rail-now{position:relative;padding:10px 8px;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(255,255,255,.04)}
+.gbs-rail-now .lab{color:#e17c5e;font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+.gbs-rail-now h2{font-family:var(--gb-font-serif);margin:4px 0 8px;font-size:15px;line-height:1.18;color:#eadfd1}
+.gbs-rail-now .bar{height:3px;background:rgba(255,255,255,.13);border-radius:99px;overflow:hidden}
+.gbs-rail-now .bar i{display:block;height:100%;width:58%;background:linear-gradient(90deg,#a94847,#dd7c5d);border-radius:99px}
+
+.gbs-rail-foot{
+  margin-top:auto;
+  display:flex;flex-direction:row;align-items:center;
+  justify-content:space-between;
+  gap:0;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.08);
+  width:100%;
+}
+.gbs-rail-foot__btn{
+  width:32px;height:32px;
+  display:grid;place-items:center;
+  color:#a8957f;background:transparent;border:0;border-radius:50%;
+  transition:
+    color .28s var(--gb-ease-out),
+    transform .32s var(--gb-ease-spring);
+  cursor:pointer;position:relative;flex-shrink:0;
+  transform-origin:center;
+}
+@media (hover: hover) and (pointer: fine) {
+  .gbs-rail-foot__btn:hover{color:#f4e8d9;transform:scale(1.18)}
+}
+.gbs-rail-foot__btn:active{transform:scale(.88);transition:transform .12s}
+.gbs-rail-foot__btn:focus-visible{outline:2px solid var(--gb-accent);outline-offset:3px;border-radius:50%}
+.gbs-rail-foot__btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .32s var(--gb-ease-spring)}
+@media (hover: hover) and (pointer: fine) {
+  .gbs-rail-foot__btn:hover svg{transform:scale(1.10)}
+}
+.gbs-rail-foot__btn--text{font-family:var(--gb-font-serif);font-size:13px;font-weight:700;line-height:1;letter-spacing:-.02em}
+.gbs-rail-foot .gb-ember{--ember-size:32px;--ring-color:var(--gb-accent-gold-bright)}
+.gbs-rail-foot .gb-ember__ring-track{stroke:rgba(232,184,120,.22)}
+.gbs-rail-foot .gb-ember__ring-progress{stroke-width:1.5}
+
+.gbs-rail-foot__btn[data-tip]::after,.gbs-rail-foot .gb-ember[data-tip]::after{
+  content:attr(data-tip);
+  position:absolute;bottom:calc(100% + 10px);left:50%;
+  transform:translateX(-50%) translateY(6px) scale(.94);
+  padding:5px 10px;border-radius:6px;
+  background:var(--gb-tooltip-bg,#1a1a1a);color:var(--gb-tooltip-text,#fff);
+  font-family:var(--gb-font-sans);font-size:11px;font-weight:600;
+  white-space:nowrap;opacity:0;pointer-events:none;
+  transition:
+    opacity .22s var(--gb-ease-out),
+    transform .28s var(--gb-ease-spring);
+  z-index:10;
+}
+@media (hover: hover) and (pointer: fine) {
+  .gbs-rail-foot__btn[data-tip]:hover::after,.gbs-rail-foot__btn[data-tip]:focus-visible::after,
+  .gbs-rail-foot .gb-ember[data-tip]:hover::after,.gbs-rail-foot .gb-ember[data-tip]:focus-visible::after{
+    opacity:1;transform:translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.gbs-rail-main{
+  padding:16px 22px;background:rgba(255,255,255,.03);
+  border-radius:14px;border:1px solid rgba(255,255,255,.06);
+  font-family:Georgia,serif;color:#eadfd1;
+}
+.gbs-rail-main h4{font-family:Georgia,serif;font-size:18px;margin:0 0 8px;color:#f4e8d9}
+.gbs-rail-main p{font-size:13px;line-height:1.6;color:#b8a995;margin:0 0 10px}
+.gbs-rail-main .meta{font-family:'Source Sans 3',system-ui,sans-serif;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#bd6858;margin-bottom:6px}
+
+/* ============================================================
+   v15: MOBILE PREVIEW — Save REMOVED from bottom-bar
+   Bottom-bar now has: TOC + section + dots + % + theme + search + play
+   ============================================================ */
+.mobile-stage{display:flex;flex-direction:column;align-items:center;gap:18px}
+.mobile-device-wrap{display:flex;justify-content:center}
+.mobile-device{
+  max-width:340px;width:100%;
+  border-radius:34px;border:8px solid var(--gb-text-warm);
+  background:var(--gb-canvas);
+  padding:20px 18px 96px;
+  box-shadow:0 12px 32px rgba(16, 18, 22, .14);
+  position:relative;min-height:380px;
+}
+.mobile-device::before{
+  content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);
+  width:60px;height:14px;background:var(--gb-text-warm);border-radius:0 0 12px 12px;
+}
+.mobile-content{padding-top:30px}
+.mobile-content p{font-size:14px;margin:0 0 10px;color:var(--gb-text)}
+
+/* v15: bottom-bar WITHOUT Save (now in TOC popup) */
+.mobile-bottom-bar{
+  position:absolute;left:6px;right:6px;bottom:6px;
+  display:flex;align-items:center;justify-content:space-between;gap:4px;
+  padding:6px 8px;border-radius:20px;
+  background:rgba(253,252,249,.96);
+  border:1px solid var(--gb-border);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  backdrop-filter:blur(14px) saturate(160%);
+  box-shadow:0 8px 24px rgba(0,0,0,.10);
+  font-family:var(--gb-font-sans);font-size:11.5px;
+  z-index:var(--z-bottom-bar);
+  box-sizing:border-box;
+}
+html.dark .mobile-bottom-bar{background:rgba(22,26,33,.96);border-color:rgba(255,255,255,.08)}
+
+.mobile-toc-btn{
+  width:32px;height:32px;display:grid;place-items:center;
+  color:var(--gb-text);background:transparent;border:0;border-radius:50%;
+  transition:color .22s var(--gb-ease-out),transform .32s var(--gb-ease-spring);
+  cursor:pointer;flex-shrink:0;transform-origin:center;
+}
+.mobile-toc-btn:active{transform:scale(.92)}
+.mobile-toc-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+.mobile-btoc-section{
+  font-size:11px;color:var(--gb-text-muted);min-width:28px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-weight:700;flex-shrink:0;
+}
+
+/* v16: Elegant gold line progress bar instead of dots */
+.mobile-btoc-progress-track{
+  flex:1 1 auto;max-width:80px;height:2.5px;border-radius:99px;background:color-mix(in srgb,var(--gb-accent-gold) 22%,transparent);overflow:hidden;position:relative;margin:0 4px;
+}
+.mobile-btoc-progress-fill{
+  height:100%;background:linear-gradient(90deg,var(--gb-accent-gold-bright),var(--gb-accent-gold));border-radius:99px;box-shadow:0 0 6px rgba(216,170,109,.55);
+}
+.mobile-btoc-pct{
+  font-weight:900;color:var(--gb-accent);
+  min-width:26px;text-align:right;font-size:11px;flex-shrink:0;
+}
+
+.mobile-icon-row{
+  display:flex;align-items:center;gap:3px;
+  margin-left:auto;flex-shrink:0;
+}
+.mobile-icon-row .gb-ember{--ember-size:34px}
+.mobile-icon-row .gb-ember__glyph{width:14px;height:14px}
+.mobile-icon-row .gb-ember__pause{width:14px;height:14px}
+.mobile-icon-row .gb-ember__check{width:14px;height:14px}
+.mobile-icon-row .gb-icon{--icon-size:30px;--icon-radius:50%}
+.mobile-icon-row .gb-icon svg{width:15px;height:15px}
+
+/* ============================================================
+   TOC POPUPS — Series + Part (with Save action in Part TOC)
+   ============================================================ */
+.toc-overlay{
+  position:fixed;inset:0;z-index:var(--z-sheet);
+  background:rgba(0,0,0,.45);
+  -webkit-backdrop-filter:blur(2px);
+  backdrop-filter:blur(2px);
+  display:none;
+  align-items:flex-end;justify-content:center;
+  padding:20px;
+  opacity:0;transition:opacity .28s var(--gb-ease-out);
+}
+.toc-overlay.is-open{display:flex;opacity:1}
+.toc-sheet{
+  width:min(480px,100%);
+  max-height:80vh;
+  background:var(--gb-surface);
+  border-radius:22px 22px 14px 14px;
+  border:1px solid var(--gb-border);
+  box-shadow:0 -16px 48px rgba(0,0,0,.25);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  transform:translateY(40px) scale(.96);
+  transition:transform .42s var(--gb-ease-overshoot);
+}
+html.dark .toc-sheet{background:var(--gb-surface);border-color:var(--gb-border)}
+.toc-overlay.is-open .toc-sheet{transform:translateY(0) scale(1)}
+
+.toc-sheet__handle{width:40px;height:4px;border-radius:99px;background:var(--gb-border-strong);margin:8px auto 4px;opacity:.5}
+.toc-sheet__head{padding:14px 22px 12px;border-bottom:1px solid var(--gb-border);position:relative}
+.toc-sheet__head .lab{font-family:var(--gb-font-sans);font-size:11px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--gb-accent);margin-bottom:4px}
+.toc-sheet__head h3{font-family:var(--gb-font-serif);font-size:18px;margin:0;line-height:1.25;color:var(--gb-text);font-weight:600}
+.toc-sheet__head .back{
+  position:absolute;left:14px;top:14px;
+  width:28px;height:28px;border-radius:8px;
+  display:grid;place-items:center;
+  color:var(--gb-text-muted);
+  background:transparent;border:0;
+  transition:background .18s,color .18s,transform .18s;
+  cursor:pointer;
+}
+.toc-sheet__head .back:hover{background:var(--gb-surface-muted);color:var(--gb-text)}
+.toc-sheet__head .back:active{transform:scale(.92)}
+.toc-sheet__head .back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+.toc-sheet__scroll-bar{
+  position:relative;
+  height:2px;background:var(--gb-border);
+  flex-shrink:0;
+}
+.toc-sheet__scroll-bar i{
+  position:absolute;left:0;top:0;bottom:0;
+  background:linear-gradient(90deg,var(--gb-accent),var(--gb-accent-strong));
+  width:var(--scroll-pct, 80%);
+  border-radius:0 2px 2px 0;
+  transition:width .42s var(--gb-ease-precise);
+}
+
+.toc-sheet__list{flex:1;overflow-y:auto;padding:8px 0 12px}
+.toc-sheet__list::-webkit-scrollbar{width:6px}
+.toc-sheet__list::-webkit-scrollbar-thumb{background:var(--gb-border-strong);border-radius:99px}
+
+.toc-item{
+  display:grid;
+  grid-template-columns:48px 1fr auto;
+  gap:14px;
+  align-items:center;
+  padding:14px 22px;
+  cursor:pointer;
+  border-left:3px solid transparent;
+  transition:
+    background .22s var(--gb-ease-out),
+    border-color .22s var(--gb-ease-out),
+    transform .28s var(--gb-ease-spring);
+  transform-origin:left center;
+}
+@media (hover: hover) and (pointer: fine) {
+  .toc-item:hover{
+    background:color-mix(in srgb,var(--gb-accent) 5%,transparent);
+    border-left-color:var(--gb-accent);
+  }
+}
+.toc-item:active{transform:scale(.99)}
+.toc-item.is-current{
+  background:color-mix(in srgb,var(--gb-accent) 7%,transparent);
+  border-left-color:var(--gb-accent);
+}
+.toc-item__num{
+  font-family:var(--gb-font-serif-display);
+  font-size:24px;font-weight:600;font-style:italic;letter-spacing:.02em;
+  color:var(--gb-accent-gold);text-align:center;line-height:1;
+  font-feature-settings:"liga","kern";
+  transition:color .22s var(--gb-ease-out),transform .32s var(--gb-ease-spring);
+}
+@media (hover: hover) and (pointer: fine) {
+  .toc-item:hover .toc-item__num{color:var(--gb-accent-gold-bright);transform:scale(1.15)}
+}
+.toc-item.is-current .toc-item__num{
+  color:var(--gb-accent-gold-bright);
+  text-shadow:0 0 14px rgba(216,170,109,.40);
+}
+.toc-item__info{min-width:0;display:flex;flex-direction:column;gap:2px}
+.toc-item__info b{
+  font-family:var(--gb-font-serif);font-size:14px;font-weight:600;
+  color:var(--gb-text);line-height:1.3;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.toc-item__info small{
+  font-family:var(--gb-font-sans);font-size:11px;color:var(--gb-text-muted);letter-spacing:.02em;
+}
+.toc-item__chevron{
+  color:var(--gb-text-faint);
+  transition:transform .28s var(--gb-ease-spring),color .22s var(--gb-ease-out);
+}
+.toc-item__chevron svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.toc-item.is-current .toc-item__chevron{color:var(--gb-accent)}
+@media (hover: hover) and (pointer: fine) {
+  .toc-item:hover .toc-item__chevron{transform:translateX(2px);color:var(--gb-accent)}
+}
+
+/* PART TOC items */
+.toc-part-item{
+  display:grid;
+  grid-template-columns:36px 1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:11px 22px;
+  cursor:pointer;
+  border-left:3px solid transparent;
+  transition:
+    background .22s var(--gb-ease-out),
+    border-color .22s var(--gb-ease-out),
+    transform .28s var(--gb-ease-spring);
+  transform-origin:left center;
+  position:relative;
+}
+@media (hover: hover) and (pointer: fine) {
+  .toc-part-item:hover{
+    background:color-mix(in srgb,var(--gb-accent) 4%,transparent);
+    border-left-color:var(--gb-accent);
+  }
+}
+.toc-part-item:active{transform:scale(.99)}
+.toc-part-item.is-current{
+  background:color-mix(in srgb,var(--gb-accent) 6%,transparent);
+  border-left-color:var(--gb-accent);
+}
+.toc-part-item__num{
+  font-family:var(--gb-font-serif-display);
+  font-size:14px;font-weight:600;font-style:italic;letter-spacing:.04em;
+  color:var(--gb-accent-gold);text-align:center;line-height:1;
+  font-feature-settings:"liga","kern";
+  transition:color .22s var(--gb-ease-out);
+}
+.toc-part-item.is-current .toc-part-item__num{
+  color:var(--gb-accent-gold-bright);
+  text-shadow:0 0 10px rgba(216,170,109,.35);
+}
+.toc-part-item__info{min-width:0;display:flex;flex-direction:column;gap:1px}
+.toc-part-item__info b{
+  font-family:var(--gb-font-serif);font-size:13.5px;font-weight:600;
+  color:var(--gb-text);line-height:1.3;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.toc-part-item__info small{
+  font-family:var(--gb-font-sans);font-size:11px;color:var(--gb-text-muted);
+}
+.toc-part-item__progress{
+  width:44px;height:1.75px;border-radius:99px;background:color-mix(in srgb,var(--gb-accent-gold) 20%,transparent);overflow:hidden;
+}
+.toc-part-item__progress i{
+  display:block;height:100%;background:linear-gradient(90deg,var(--gb-accent-gold-bright),var(--gb-accent-gold));
+  border-radius:99px;
+  transition:width .42s var(--gb-ease-precise);
+}
+.toc-part-item.is-current .toc-part-item__progress i{
+  background:linear-gradient(90deg,#ffd18b,var(--gb-accent-gold-bright));
+  box-shadow:0 0 6px rgba(216,170,109,.65);
+}
+
+/* v15: ACTION BAR at bottom of Part TOC — Save button fits here */
+.toc-sheet__actions{
+  display:flex;align-items:center;gap:8px;
+  padding:14px 22px;
+  border-top:1px solid var(--gb-border);
+  background:color-mix(in srgb,var(--gb-surface) 92%,var(--gb-surface-muted));
+}
+html.dark .toc-sheet__actions{background:color-mix(in srgb,var(--gb-surface) 92%,var(--gb-surface-muted))}
+.toc-action-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 14px;
+  border:1px solid var(--gb-border);
+  border-radius:10px;
+  background:var(--gb-surface);
+  font-family:var(--gb-font-sans);
+  font-size:13px;font-weight:600;color:var(--gb-text);
+  cursor:pointer;
+  transition:
+    border-color .22s var(--gb-ease-out),
+    color .22s var(--gb-ease-out),
+    background .22s var(--gb-ease-out),
+    transform .18s var(--gb-ease-precise);
+}
+.toc-action-btn:hover{
+  border-color:var(--gb-accent);
+  color:var(--gb-accent);
+}
+.toc-action-btn:active{transform:scale(.96)}
+.toc-action-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:fill .22s,stroke .22s}
+.toc-action-btn.is-saved{
+  background:color-mix(in srgb,var(--gb-accent-gold) 8%,transparent);
+  border-color:var(--gb-accent-gold);
+  color:var(--gb-accent-gold-deep);
+}
+.toc-action-btn.is-saved svg{
+  fill:var(--gb-accent-gold);
+  stroke:var(--gb-accent-gold);
+}
+.toc-action-btn--ghost{
+  background:transparent;
+  border-color:transparent;
+  color:var(--gb-text-muted);
+}
+.toc-action-btn--ghost:hover{
+  background:var(--gb-surface-muted);
+  border-color:var(--gb-border);
+  color:var(--gb-text);
+}
+
+/* TOAST */
+.gb-toast{
+  position:fixed;left:50%;
+  bottom:max(28px, env(safe-area-inset-bottom, 28px));
+  transform:translateX(-50%) translateY(40px) scale(.94);
+  padding:10px 18px;border-radius:12px;
+  background:rgba(20,24,31,.94);color:#fff;
+  font-family:var(--gb-font-sans);
+  font-size:13px;font-weight:600;letter-spacing:.02em;
+  display:flex;align-items:center;gap:8px;
+  box-shadow:0 12px 32px rgba(0,0,0,.30);
+  opacity:0;pointer-events:none;
+  z-index:var(--z-toast-notif);
+  transition:
+    opacity .28s var(--gb-ease-out),
+    transform .38s var(--gb-ease-spring);
+}
+.gb-toast.is-open{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+.gb-toast svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;color:var(--gb-accent-gold-bright)}
+
+/* KEYBOARD HELP */
+.kbd-help{
+  position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(.94);
+  width:min(420px,92vw);
+  background:var(--gb-surface);
+  border:1px solid var(--gb-border);
+  border-radius:16px;
+  box-shadow:0 24px 60px rgba(0,0,0,.25);
+  padding:20px 24px;
+  z-index:var(--z-help);
+  opacity:0;pointer-events:none;
+  transition:
+    opacity .28s var(--gb-ease-out),
+    transform .38s var(--gb-ease-spring);
+}
+.kbd-help.is-open{
+  opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto;
+}
+.kbd-help__title{
+  font-family:var(--gb-font-sans);
+  font-size:11px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gb-accent);margin-bottom:12px;
+}
+.kbd-help__list{display:flex;flex-direction:column;gap:8px}
+.kbd-help__row{display:flex;align-items:center;gap:12px;font-family:var(--gb-font-sans);font-size:13px;color:var(--gb-text)}
+.kbd-help__row kbd{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:38px;height:24px;padding:0 7px;
+  border:1px solid var(--gb-border);
+  border-bottom-width:2px;border-radius:6px;
+  background:var(--gb-surface-muted);
+  font-family:'SFMono-Regular',Consolas,monospace;
+  font-size:11px;font-weight:700;color:var(--gb-text);
+  flex-shrink:0;
+}
+.kbd-help__row span{flex:1;color:var(--gb-text-muted)}
+.kbd-help__close{
+  position:absolute;top:10px;right:10px;
+  width:28px;height:28px;border-radius:8px;
+  display:grid;place-items:center;
+  color:var(--gb-text-muted);
+  background:transparent;border:0;cursor:pointer;
+  transition:background .18s,color .18s;
+}
+.kbd-help__close:hover{background:var(--gb-surface-muted);color:var(--gb-text)}
+.kbd-help__close svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round}
+
+.kbd-help-overlay{
+  position:fixed;inset:0;z-index:13999;
+  background:rgba(0,0,0,.35);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  opacity:0;pointer-events:none;
+  transition:opacity .28s var(--gb-ease-out);
+}
+.kbd-help-overlay.is-open{opacity:1;pointer-events:auto}
+
+.roman-grid{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:8px;
+}
+@media(max-width:680px){.roman-grid{grid-template-columns:repeat(4,1fr)}}
+.roman-cell{
+  border:1px solid var(--gb-border);
+  border-radius:10px;
+  background:linear-gradient(180deg,#1f1512 0%,#120e0d 100%);
+  padding:18px 8px 10px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;
+  transition:
+    background .28s var(--gb-ease-out),
+    border-color .28s var(--gb-ease-out),
+    transform .32s var(--gb-ease-spring);
+  transform-origin:center;
+  position:relative;
+}
+@media (hover: hover) and (pointer: fine) {
+  .roman-cell:hover{
+    background:linear-gradient(180deg,#2a1c17 0%,#1a1311 100%);
+    border-color:rgba(216,170,109,.30);
+    transform:translateY(-2px);
+  }
+}
+.roman-cell:active{transform:translateY(0) scale(.98)}
+.roman-cell.is-current{
+  background:rgba(216,170,109,.10);
+  border-color:rgba(216,170,109,.40);
+}
+.roman-cell__num{
+  font-family:var(--gb-font-serif-display);
+  font-size:22px;font-weight:600;font-style:italic;letter-spacing:.02em;
+  color:var(--gb-accent-gold);line-height:1;
+  transition:color .22s var(--gb-ease-out),transform .32s var(--gb-ease-spring);
+}
+@media (hover: hover) and (pointer: fine) {
+  .roman-cell:hover .roman-cell__num{color:var(--gb-accent-gold-bright);transform:scale(1.15)}
+}
+.roman-cell.is-current .roman-cell__num{
+  color:var(--gb-accent-gold-bright);
+  text-shadow:0 0 12px rgba(216,170,109,.35);
+}
+.roman-cell__time{
+  font-family:var(--gb-font-sans);
+  font-size:9px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);
+}
+.roman-cell.is-current .roman-cell__time{color:#e17c5e}
+
+@media (prefers-reduced-motion: reduce){
+  .gb-icon,.gb-ember,.gb-save,.gbs-rail-back,.gbs-rail-foot__btn,.mobile-toc-btn,.gbs-rail-card,.roman-cell,.toc-sheet,.toc-item,.toc-part-item,.toc-action-btn,.gb-toast,.panel-btn,.gb-theme-toggle svg{transition:none !important;animation:none !important}
+}
+
+/* ============================================================
+   v16 POPUP & BAR RESPONSIVE BEHAVIOR (for Arena demo & Real Devices)
+   ============================================================ */
+@media (max-width: 960px) {
+  .toc-overlay {
+    padding: 0 !important;
+    align-items: flex-end !important;
+  }
+  .toc-sheet {
+    width: 100% !important;
+    max-height: 85vh;
+    border-radius: 24px 24px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .toc-sheet__head {
+    padding: 16px 18px 12px;
+  }
+  .toc-sheet__head .back {
+    left: 12px; top: 16px;
+  }
+  .toc-part-item {
+    padding: 11px 18px;
+    gap: 10px;
+    grid-template-columns: 28px 1fr auto;
+  }
+  .toc-part-item__num {
+    font-size: 13.5px;
+  }
+  .toc-sheet__actions {
+    padding: 12px 16px max(14px, env(safe-area-inset-bottom, 14px));
+    gap: 8px;
+  }
+  .toc-action-btn {
+    padding: 9px 12px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+  .toc-action-btn.gb-save {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+@media (max-width: 500px) {
+  .toc-sheet__actions .toc-action-btn--ghost .btn-lbl {
+    display: none;
+  }
+  .toc-sheet__actions .toc-action-btn--ghost {
+    padding: 9px;
+    width: 38px;
+    min-width: 38px;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   v16 OWNER FEEDBACK FIXES (Dark Theme Glow + Grid TOC Head & Actions)
+   ============================================================ */
+html.dark .gb-ember {
+  --ring-color: #eed093 !important;
+  color: #eed093 !important;
+  box-shadow: 0 0 16px rgba(245, 197, 66, 0.35), inset 0 0 12px rgba(245, 197, 66, 0.15) !important;
+}
+html.dark .gb-ember::after {
+  filter: drop-shadow(0 0 4px #f5c542);
+}
+html.dark .mobile-btoc-progress-track {
+  background: rgba(216, 176, 104, 0.16) !important;
+}
+html.dark .mobile-btoc-progress-fill {
+  background: linear-gradient(90deg, #eed093, #c59b58) !important;
+  box-shadow: 0 0 8px rgba(216, 176, 104, 0.35) !important;
+}
+html.dark .toc-part-item.is-current .toc-part-item__progress i {
+  background: linear-gradient(90deg, #eed093, #c59b58) !important;
+  box-shadow: 0 0 8px rgba(216, 176, 104, 0.38) !important;
+}
+html.dark .toc-part-item__num {
+  color: #eed093 !important;
+}
+html.dark .toc-part-item.is-current .toc-part-item__num {
+  color: #ffd18b !important;
+  text-shadow: 0 0 12px rgba(216, 176, 104, 0.45) !important;
+}
+
+.toc-sheet__head--grid {
+  display: grid !important;
+  grid-template-columns: 36px 1fr !important;
+  gap: 14px !important;
+  align-items: center !important;
+  padding: 16px 22px 14px !important;
+}
+.toc-sheet__head--grid .back {
+  position: static !important;
+  width: 36px !important; height: 36px !important;
+  border-radius: 10px !important;
+  display: grid !important; place-items: center !important;
+  background: var(--gb-surface-muted) !important;
+  color: var(--gb-text) !important;
+  padding: 0 !important; margin: 0 !important;
+}
+.toc-sheet__head--grid .toc-head-txt { min-width: 0 !important; }
+.toc-sheet__head--grid .toc-head-txt .lab { margin-bottom: 3px !important; }
+.toc-sheet__head--grid .toc-head-txt h3 { white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+
+.toc-sheet__actions--grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 8px !important;
+  padding: 12px 16px max(16px, env(safe-area-inset-bottom, 16px)) !important;
+  border-top: 1px solid var(--gb-border) !important;
+  background: color-mix(in srgb, var(--gb-surface) 96%, var(--gb-surface-muted)) !important;
+}
+.toc-sheet__actions--grid .toc-action-btn {
+  display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important;
+  padding: 11px 4px !important;
+  border: none !important;
+  border-radius: 12px !important;
+  background: transparent !important;
+  font-family: var(--gb-font-sans) !important;
+  font-size: 13px !important; font-weight: 600 !important;
+  color: var(--gb-text-muted) !important;
+  transition: all .2s ease !important;
+  width: 100% !important; min-width: 0 !important;
+  cursor: pointer !important;
+}
+.toc-sheet__actions--grid .toc-action-btn:hover {
+  background: var(--gb-surface-muted) !important;
+  color: var(--gb-text) !important;
+}
+.toc-sheet__actions--grid .toc-action-btn.gb-save {
+  color: var(--gb-accent-gold-deep) !important;
+  background: color-mix(in srgb, var(--gb-accent-gold) 12%, transparent) !important;
+}
+html.dark .toc-sheet__actions--grid .toc-action-btn.gb-save {
+  color: #eed093 !important;
+  background: rgba(245, 197, 66, 0.12) !important;
+}
+.toc-sheet__actions--grid .toc-action-btn.gb-save.is-saved {
+  background: var(--gb-accent-gold) !important;
+  color: #fff !important;
+}
+html.dark .toc-sheet__actions--grid .toc-action-btn.gb-save.is-saved {
+  background: #f5c542 !important;
+  color: #1a1a1a !important;
+}
+.toc-sheet__actions--grid .toc-action-btn svg {
+  width: 16px !important; height: 16px !important; stroke: currentColor !important; fill: none !important; stroke-width: 1.8 !important; flex-shrink: 0 !important;
+}
+
+/* ============================================================
+   v16 FINAL LUXURY POLISH (Deep Card Shadows, Classic Roman Numeral Relief & Smooth Bounce)
+   ============================================================ */
+.toc-sheet__list {
+  padding: 8px 10px !important;
+}
+.toc-item, .toc-part-item {
+  border-radius: 16px !important;
+  margin: 4px 6px !important;
+  border-left: none !important;
+  border: 1px solid transparent !important;
+  transition: all .28s var(--gb-ease-out), transform .35s var(--gb-ease-spring) !important;
+}
+.toc-item:hover, .toc-part-item:hover {
+  background: var(--gb-surface) !important;
+  border-color: var(--gb-border) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06), 0 2px 6px rgba(184,147,106,.12) !important;
+  transform: none !important;
+}
+html.dark .toc-item:hover, html.dark .toc-part-item:hover {
+  background: rgba(255,255,255,.05) !important;
+  border-color: rgba(255,255,255,.1) !important;
+  box-shadow: 0 12px 34px rgba(0,0,0,.5), 0 0 18px rgba(245,197,66,.2) !important;
+}
+.toc-item.is-current, .toc-part-item.is-current {
+  background: color-mix(in srgb, var(--gb-accent-gold) 12%, var(--gb-surface)) !important;
+  border-color: color-mix(in srgb, var(--gb-accent-gold) 40%, transparent) !important;
+  box-shadow: 0 6px 20px rgba(184,147,106,.18) !important;
+}
+html.dark .toc-item.is-current, html.dark .toc-part-item.is-current {
+  background: rgba(245,197,66,.12) !important;
+  border-color: rgba(245,197,66,.35) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.6), 0 0 22px rgba(245,197,66,.25) !important;
+}
+
+.toc-item__num, .toc-part-item__num {
+  font-family: var(--gb-font-serif-display) !important;
+  font-style: normal !important;
+  font-weight: 800 !important;
+  color: var(--gb-accent-gold) !important;
+  text-shadow: 0 1px 1px rgba(255,255,255,.9), 0 2px 5px rgba(0,0,0,.18) !important;
+  transition: all .32s var(--gb-ease-spring) !important;
+}
+html.dark .toc-item__num, html.dark .toc-part-item__num {
+  color: #eed093 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 0 14px rgba(245,197,66,.45) !important;
+}
+.toc-item:hover .toc-item__num, .toc-part-item:hover .toc-part-item__num {
+  transform: scale(1.18) !important;
+  color: var(--gb-accent-gold-bright) !important;
+}
+html.dark .toc-item:hover .toc-item__num, html.dark .toc-part-item:hover .toc-part-item__num {
+  color: #ffd18b !important;
+  text-shadow: 0 0 18px rgba(245,197,66,.85) !important;
+}
+
+/* ============================================================
+   v16 OWNER DESIGN SURGICAL FIXES (Closing All Bugs In Good Design)
+   ============================================================ */
+
+/* 1. Сетка шапки попапа без наложения стрелки ← */
+.toc-sheet__head:has(.back) {
+  display: grid !important;
+  grid-template-columns: 34px 1fr !important;
+  gap: 12px !important;
+  align-items: center !important;
+  padding: 14px 22px 12px !important;
+}
+.toc-sheet__head .back {
+  position: static !important;
+  width: 34px !important; height: 34px !important;
+  border-radius: 8px !important;
+  display: grid !important; place-items: center !important;
+  margin: 0 !important; padding: 0 !important;
+}
+
+/* 2. Устранение дрожания карточек (Jitter) */
+.toc-item, .toc-part-item {
+  transform: none !important;
+}
+.toc-item:hover, .toc-part-item:hover {
+  transform: none !important;
+}
+
+/* 3. Надёжный типографский цвет цифр без коричневых «кирпичей» */
+.toc-item__num, .toc-part-item__num {
+  background: transparent !important;
+  color: #8a6538 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,1), 0 2px 4px rgba(0,0,0,.14) !important;
+}
+.toc-item.is-current .toc-item__num, .toc-part-item.is-current .toc-part-item__num {
+  color: #6a4720 !important;
+}
+html.dark .toc-item__num, html.dark .toc-part-item__num {
+  color: #e8b878 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 0 12px rgba(232,184,120,.45) !important;
+}
+html.dark .toc-item.is-current .toc-item__num, html.dark .toc-part-item.is-current .toc-part-item__num {
+  color: #eed093 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 0 14px rgba(216,176,104,.45) !important;
+}
+
+/* 4. Яркий сияющий PLAY и треки в ночной теме */
+html.dark .gb-ember {
+  --ring-color: #eed093 !important;
+  color: #eed093 !important;
+  box-shadow: 0 0 14px rgba(216, 176, 104, 0.22) !important;
+}
+
+/* 5. Усмирённый масштаб Лупы в кластере */
+.gb-icon:hover svg {
+  transform: scale(1.02) !important;
+}
+
+/* 6. Оверлей на мобилках занимает всю ширину без слипания кнопок */
+@media (max-width: 640px) {
+  .toc-overlay {
+    padding: 0 !important;
+    align-items: flex-end !important;
+  }
+  .toc-sheet {
+    width: 100% !important;
+    max-height: 85vh;
+    border-radius: 22px 22px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .toc-sheet__actions {
+    padding: 12px 16px max(14px, env(safe-area-inset-bottom, 14px)) !important;
+    gap: 6px !important;
+  }
+  .toc-action-btn {
+    padding: 9px 12px !important; font-size: 13px !important;
+  }
+  .toc-action-btn.gb-save {
+    flex: 1 1 auto !important; justify-content: center !important;
+  }
+}
+@media (max-width: 420px) {
+  .toc-sheet__actions .toc-action-btn--ghost .btn-lbl {
+    display: none !important;
+  }
+  .toc-sheet__actions .toc-action-btn--ghost {
+    padding: 9px !important; width: 38px !important; min-width: 38px !important; justify-content: center !important;
+  }
+}
+
+.toc-item.is-done { opacity: .82; }
+.toc-item.is-done .toc-item__num { color: var(--gb-text-muted) !important; text-shadow: none !important; }
+html.dark .toc-item.is-done .toc-item__num { color: #8b949e !important; text-shadow: none !important; }
+
+
+/* ============================================================
+   v16 PURITAN ANTIQUE BRASS LUXURY & NO TEXT TIPS
+   ============================================================ */
+
+/* 1. Отключение текстовых тултипов при наведении */
+[data-tip]::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* 2. Монументальные карточки оглавления с античным матовым свечением (БЕЗ неоновой желтизны и дрожания) */
+.toc-item, .toc-part-item {
+  border-radius: 16px !important;
+  transition: all .25s var(--gb-ease-out) !important;
+  border: 1px solid transparent !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transform: none !important;
+}
+.toc-item::before, .toc-part-item::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important; left: 12% !important; right: 12% !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent) !important;
+  opacity: .6 !important;
+  pointer-events: none !important;
+}
+html.dark .toc-item::before, html.dark .toc-part-item::before {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.09), transparent) !important;
+  opacity: 1 !important;
+}
+
+.toc-item:hover, .toc-part-item:hover {
+  transform: none !important;
+  background: var(--gb-surface) !important;
+  border-color: var(--gb-border) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.05), 0 2px 6px rgba(184,147,106,.08) !important;
+}
+html.dark .toc-item:hover, html.dark .toc-part-item:hover {
+  background: rgba(255,255,255,.035) !important;
+  border-color: rgba(255,255,255,.07) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.5), 0 0 16px rgba(216,176,104,.1) !important;
+}
+
+.toc-item.is-current, .toc-part-item.is-current {
+  background: rgba(246, 241, 233, 0.98) !important;
+  border-color: rgba(184, 147, 106, 0.38) !important;
+  box-shadow: 0 6px 18px rgba(138,101,56,.1) !important;
+}
+html.dark .toc-item.is-current, html.dark .toc-part-item.is-current {
+  background: rgba(216, 176, 104, 0.075) !important; /* Благородная матовая латунь изнутри */
+  border-color: rgba(216, 176, 104, 0.28) !important; /* Тонкий спокойный кант */
+  box-shadow: 0 8px 24px rgba(0,0,0,.65), 0 0 18px rgba(216, 176, 104, 0.12) !important; /* Мягкий благородный свет без неоновой кислоты */
+}
+
+/* 3. Античная типографика римских цифр */
+.toc-item__num, .toc-part-item__num {
+  transition: transform .32s var(--gb-ease-spring), color .25s ease !important;
+  color: #8a6538 !important;
+}
+html.dark .toc-item__num, html.dark .toc-part-item__num {
+  color: #d8b068 !important; /* Матовое античное золото */
+  text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 0 10px rgba(216, 176, 104, 0.28) !important;
+}
+html.dark .toc-item.is-current .toc-item__num, html.dark .toc-part-item.is-current .toc-part-item__num {
+  color: #eed093 !important; /* Тёплый светлый пергаментный блеск */
+  text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 0 14px rgba(216, 176, 104, 0.45) !important;
+}
+
+.toc-item:hover .toc-item__num, .toc-part-item:hover .toc-part-item__num {
+  transform: scale(1.15) !important;
+  color: #a87e4b !important;
+}
+html.dark .toc-item:hover .toc-item__num, html.dark .toc-part-item:hover .toc-part-item__num {
+  color: #f5dcaa !important;
+  text-shadow: 0 0 16px rgba(216, 176, 104, 0.6) !important;
+}
+
+.toc-item__chevron {
+  transition: transform .25s var(--gb-ease-spring), color .2s ease !important;
+}
+.toc-item:hover .toc-item__chevron {
+  transform: translateX(3px) !important;
+  color: var(--gb-accent) !important;
+}
+
+/* ============================================================
+   v16 FINAL SILKY APPLE SMOOTHNESS & NOURISHED NIGHT PROGRESS
+   ============================================================ */
+
+/* 1. Ночные полоски прогресса без кислотной желтизны */
+html.dark .mobile-btoc-progress-fill,
+html.dark .toc-part-item__progress i,
+html.dark .toc-part-item.is-current .toc-part-item__progress i {
+  background: linear-gradient(90deg, #eed093, #c59b58) !important; /* Тёплый светлый пергамент → античная английская латунь */
+  box-shadow: 0 0 8px rgba(216, 176, 104, 0.35) !important;
+}
+html.dark .mobile-btoc-progress-track,
+html.dark .toc-part-item__progress {
+  background: rgba(216, 176, 104, 0.15) !important;
+}
+
+/* 2. Плавнейшие анимации вместо резких скачков */
+.toc-sheet {
+  transition: transform .38s cubic-bezier(.16, 1, .3, 1), background-color .3s ease !important;
+}
+.toc-overlay {
+  transition: opacity .32s cubic-bezier(.2, .7, .2, 1) !important;
+}
+.toc-item, .toc-part-item, .toc-action-btn, .gb-icon, .gb-ember, .gb-save {
+  transition: all .3s cubic-bezier(.2, .7, .2, 1) !important;
+}
+</style>
+</head>
+<body>
+
+<div class="probe">
+
+  <p class="eyebrow">GB · Cluster v15 · bug fixes from v14</p>
+  <h1>Save: no halo · Mobile: Save в Part TOC · Золотой прогресс-бар</h1>
+  <p class="lead">
+    Фиксы багов v14:
+    <br><b>1. Save без halo</b> — свой класс <code>.gb-save</code> БЕЗ <code>::before</code> outline. При filled только gold fill + bounce, никакого кружка.
+    <br><b>2. Mobile без Save</b> — убран из bottom-bar (там места нет). Теперь Save внутри <b>Part TOC popup</b> внизу, рядом с «Поделиться» / «Скопировать».
+    <br><b>3. Золотой прогресс-бар</b> — вместо точек в нижнем баре теперь тонкая книжная линия прогресса.
+    <br><b>4. Loading state fixed</b> — больше нет moon SVG внутри ember (баг был).
+  </p>
+
+  <div class="callout">
+    <b>Исправленные баги:</b>
+    <br>• <b>Save icon halo</b> — убран. Только gold fill на клике.
+    <br>• <b>Mobile bottom-bar cramped</b> — убран Save, место освободилось.
+    <br>• <b>Loading state moon</b> — теперь корректный play/pause SVG.
+    <br>• <b>Прогресс точками</b> — заменён на утончённую золотую линию.
+  </div>
+
+  <!-- PANEL -->
+  <div class="panel" id="controlPanel">
+    <div class="panel-row">
+      <span class="panel-label">Audio state</span>
+      <button class="panel-btn" data-act="state" data-val="idle">Idle</button>
+      <button class="panel-btn" data-act="state" data-val="playing">Playing</button>
+      <button class="panel-btn" data-act="state" data-val="paused">Paused</button>
+      <button class="panel-btn" data-act="state" data-val="complete">Complete</button>
+    </div>
+    <div class="panel-row">
+      <span class="panel-label">Demo</span>
+      <button class="panel-btn" data-act="save-demo">Сохранение</button>
+      <button class="panel-btn" data-act="theme-demo">Toggle тема</button>
+      <button class="panel-btn" data-act="help-demo">`?` Help</button>
+      <button class="panel-btn" data-act="part-toc">Part IV TOC</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================
+       STANDALONE state grid — fixed (no moon in ember)
+       ============================================================ -->
+  <section class="section">
+    <p class="section-title">Standalone · 4 состояния · v15 fixes</p>
+    <div class="state-grid">
+      <div class="state-card">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <button class="gb-icon gb-theme-toggle" data-tip="День / ночь"><span class="theme-icon-sun"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span><span class="theme-icon-moon"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+          <button class="gb-icon" data-tip="Поиск"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+          <button class="gb-ember" data-state="idle" style="--p:0" data-tip="Аудио"></button>
+          <button class="gb-save" data-tip="Сохранить"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+        <p class="title">All 4</p>
+        <p class="note">Theme + Search + Play + Save</p>
+      </div>
+      <div class="state-card">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <button class="gb-icon gb-theme-toggle"><span class="theme-icon-sun"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span><span class="theme-icon-moon"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+          <button class="gb-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+          <button class="gb-ember" data-state="playing" style="--p:62"></button>
+          <button class="gb-save-demo is-saved" style="color:var(--gb-accent-gold-bright)"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+        <p class="title">Save filled</p>
+        <p class="note">gold fill · NO halo</p>
+      </div>
+      <div class="state-card">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <button class="gb-icon gb-theme-toggle"><span class="theme-icon-sun"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span><span class="theme-icon-moon"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+          <button class="gb-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+          <button class="gb-ember is-loading" data-state="idle" style="--p:0"></button>
+          <button class="gb-save"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+        <p class="title">Loading</p>
+        <p class="note">pulse outline</p>
+      </div>
+      <div class="state-card">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <button class="gb-icon gb-theme-toggle"><span class="theme-icon-sun"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span><span class="theme-icon-moon"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+          <button class="gb-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+          <button class="gb-ember" data-state="complete" style="--p:100"></button>
+          <button class="gb-save"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+        <p class="title">Complete</p>
+        <p class="note">100% + ✓</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================
+       GBS RAIL
+       ============================================================ -->
+  <section class="section">
+    <p class="section-title">GBS rail · v15: Save без halo (как и в standalone)</p>
+    <p class="section-sub">Rail-foot: 6 кнопок одинакового размера. Save (последняя) — собственный класс <code>.gb-save</code>, без <code>::before</code> halo. Только gold fill при тапе.</p>
+
+    <div class="gbs-rail-demo">
+      <aside class="gbs-rail">
+        <button class="gbs-rail-back" id="gbsBack" aria-label="Назад" data-tip="Назад">
+          <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div style="margin-top:50px">
+          <div class="gbs-rail-now">
+            <div class="lab">Сейчас читаете</div>
+            <h2>Справочник по Гиллу</h2>
+            <div class="bar"><i></i></div>
+          </div>
+          <div class="gbs-rail-list">
+            <div class="gbs-rail-card is-current" data-part="1"><div class="gbs-rail-card__num">I</div><div class="gbs-rail-card__info"><small>42 мин</small><b>Контекст. XVII век</b></div><div class="gbs-rail-card__check">✓</div><div class="gbs-rail-card__chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div></div>
+            <div class="gbs-rail-card is-current" data-part="2"><div class="gbs-rail-card__num">II</div><div class="gbs-rail-card__info"><small>54 мин</small><b>Человек. Рождение</b></div><div class="gbs-rail-card__check">✓</div><div class="gbs-rail-card__chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div></div>
+            <div class="gbs-rail-card is-current" data-part="3"><div class="gbs-rail-card__num">III</div><div class="gbs-rail-card__info"><small>61 мин</small><b>Учёный. Труды</b></div><div class="gbs-rail-card__check">✓</div><div class="gbs-rail-card__chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div></div>
+            <div class="gbs-rail-card" data-part="4"><div class="gbs-rail-card__num">IV</div><div class="gbs-rail-card__info"><small>54 мин</small><b>Наследие. Сперджен</b></div><div class="gbs-rail-card__check">4</div><div class="gbs-rail-card__chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div></div>
+            <div class="gbs-rail-card" data-part="5"><div class="gbs-rail-card__num">V</div><div class="gbs-rail-card__info"><small>48 мин</small><b>Спорные темы</b></div><div class="gbs-rail-card__check">5</div><div class="gbs-rail-card__chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div></div>
+          </div>
+        </div>
+        <div class="gbs-rail-spacer"></div>
+        <div class="gbs-rail-foot">
+          <button class="gbs-rail-foot__btn gb-theme-toggle" id="gbsTheme" data-tip="Тема"><span class="theme-icon-sun"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span><span class="theme-icon-moon"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+          <button class="gbs-rail-foot__btn" id="gbsSearch" data-tip="Поиск"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+          <button class="gbs-rail-foot__btn gbs-rail-foot__btn--text" data-tip="Меньше">A−</button>
+          <button class="gbs-rail-foot__btn gbs-rail-foot__btn--text" data-tip="Больше">A+</button>
+          <button class="gb-ember" id="gbsEmber" data-state="playing" style="--p:62" data-tip="Прослушать"></button>
+          <button class="gbs-rail-foot__btn gb-save" id="gbsSave" data-tip="Сохранить"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </aside>
+      <main class="gbs-rail-main">
+        <div class="meta">Часть IV · Глава 7</div>
+        <h4>Сперджен и кафедра</h4>
+        <p>Гилл передал кафедру Маквею, а тот — Сперджену.</p>
+        <p style="color:#b8a995;font-size:13px;line-height:1.6;margin:0">→ Tap на Save (последняя кнопка в rail-foot) → gold fill + bounce, БЕЗ halo.</p>
+      </main>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================
+       MOBILE — Save УБРАН из bottom-bar, перенесён в Part TOC
+       ============================================================ -->
+  <section class="section">
+    <p class="section-title">Mobile · v16: Тонкая золотая линия прогресса</p>
+    <p class="section-sub">В bottom-bar теперь: TOC + глава + золотая линия прогресса + % + theme + search + play. Никакого Save — он перенесён в <b>Part TOC popup</b> внизу.</p>
+
+    <div class="mobile-stage">
+      <div class="mobile-device-wrap">
+        <div class="mobile-device">
+          <div class="mobile-content">
+            <p style="font-family:var(--gb-font-sans);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--gb-accent);margin:0 0 6px">Часть IV · Глава 7</p>
+            <h2 style="font-family:var(--gb-font-serif);font-size:18px;margin:0 0 8px">Сперджен и кафедра</h2>
+            <p>Гилл передал кафедру Маквею, а тот — Сперджену.</p>
+            <p style="font-size:13px;color:var(--gb-text-muted);margin-top:12px">→ Кнопки в bottom-bar: TOC + глава + золотая линия прогресса + % + ☀ + 🔍 + ▶. Нет Save — он внутри Part TOC (открой ниже).</p>
+          </div>
+          <div class="mobile-bottom-bar">
+            <button class="mobile-toc-btn" id="mobTocBtn" aria-label="Содержание">
+              <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            </button>
+            <div class="mobile-btoc-section">Гл. 7</div>
+            <!-- v16: Elegant gold line progress bar -->
+            <div class="mobile-btoc-progress-track">
+              <div class="mobile-btoc-progress-fill" style="width:62%"></div>
+            </div>
+            <div class="mobile-btoc-pct">62%</div>
+            <div class="mobile-icon-row">
+              <button class="gb-icon gb-theme-toggle" id="mobTheme" aria-label="Тема">
+                <span class="theme-icon-sun"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>
+                <span class="theme-icon-moon"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span>
+              </button>
+              <button class="gb-icon" id="mobSearch" aria-label="Поиск"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+              <button class="gb-ember" id="mobEmber" data-state="playing" style="--p:62" aria-label="Пауза"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <button class="panel-btn" data-act="open-series">Открыть Series TOC</button>
+        <button class="panel-btn" data-act="open-part">Открыть Part IV TOC (Save внутри)</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">v15 · bug fixes · Save: no halo · Mobile: no Save in bar · all working features preserved</footer>
+
+</div>
+
+<!-- LIVE STANDALONE — 4 buttons now (Theme + Search + Play + Save) -->
+<div class="gb-floater" id="floater" role="group" aria-label="Действия">
+  <button class="gb-icon gb-theme-toggle" id="themeBtn" data-tip="День / ночь" aria-label="Тема"><span class="theme-icon-sun"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span><span class="theme-icon-moon"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+  <button class="gb-icon" id="searchBtn" data-tip="Поиск" aria-label="Поиск"></button>
+  <button class="gb-ember" id="emberBtn" data-state="playing" style="--p:62" data-tip="Аудио" aria-label="Пауза"></button>
+  <button class="gb-save" id="saveBtn" data-tip="Сохранить" aria-label="Сохранить"></button>
+</div>
+
+<!-- TOC POPUPS -->
+<div class="toc-overlay" id="seriesTocOverlay">
+  <div class="toc-sheet" role="dialog" aria-label="Содержание серии">
+    <div class="toc-sheet__handle"></div>
+    <div class="toc-sheet__head">
+      <div class="lab">Содержание серии</div>
+      <h3>Джон Гилл — полное собрание</h3>
+    </div>
+    <div class="toc-sheet__list">
+      <div class="toc-item is-done" data-part="1"><div class="toc-item__num">I</div><div class="toc-item__info"><b>Контекст. XVII век</b><small>✓ Прочитано · 42 мин</small></div><div class="toc-item__chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div></div>
+      <div class="toc-item is-done" data-part="2"><div class="toc-item__num">II</div><div class="toc-item__info"><b>Человек. Рождение</b><small>✓ Прочитано · 54 мин</small></div><div class="toc-item__chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div></div>
+      <div class="toc-item is-done" data-part="3"><div class="toc-item__num">III</div><div class="toc-item__info"><b>Учёный. Труды</b><small>✓ Прочитано · 61 мин</small></div><div class="toc-item__chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div></div>
+      <div class="toc-item is-current" data-part="4"><div class="toc-item__num">IV</div><div class="toc-item__info"><b>Наследие. Сперджен</b><small style="color:var(--gb-accent)">● Читаете сейчас · 10 глав</small></div><div class="toc-item__chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div></div>
+      <div class="toc-item" data-part="5"><div class="toc-item__num">V</div><div class="toc-item__info"><b>Спорные темы</b><small>48 мин · 5 глав</small></div><div class="toc-item__chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PART TOC popup — v15: Save action bar at bottom -->
+<div class="toc-overlay" id="partTocOverlay">
+  <div class="toc-sheet" role="dialog" aria-label="Часть IV">
+    <div class="toc-sheet__handle"></div>
+    <div class="toc-sheet__head toc-sheet__head--grid">
+      <button class="back" id="backToSeries" aria-label="Назад к серии">
+        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="toc-head-txt">
+        <div class="lab">Часть IV · Содержание</div>
+        <h3>Наследие. Сперджен</h3>
+      </div>
+    </div>
+    <div class="toc-sheet__scroll-bar"><i style="--scroll-pct:80%"></i></div>
+    <div class="toc-sheet__list">
+      <div class="toc-part-item is-done"><div class="toc-part-item__num">I</div><div class="toc-part-item__info"><b>Маквей — преемник</b><small>✓ Глава 1</small></div><div class="toc-part-item__progress"><i style="width:100%"></i></div></div>
+      <div class="toc-part-item is-done"><div class="toc-part-item__num">II</div><div class="toc-part-item__info"><b>Передача кафедры</b><small>✓ Глава 2</small></div><div class="toc-part-item__progress"><i style="width:100%"></i></div></div>
+      <div class="toc-part-item is-done"><div class="toc-part-item__num">III</div><div class="toc-part-item__info"><b>Сперджен — ученик</b><small>✓ Глава 3</small></div><div class="toc-part-item__progress"><i style="width:100%"></i></div></div>
+      <div class="toc-part-item is-done"><div class="toc-part-item__num">IV</div><div class="toc-part-item__info"><b>Новое служение</b><small>✓ Глава 4</small></div><div class="toc-part-item__progress"><i style="width:100%"></i></div></div>
+      <div class="toc-part-item is-done"><div class="toc-part-item__num">V</div><div class="toc-part-item__info"><b>Первые проповеди</b><small>✓ Глава 5</small></div><div class="toc-part-item__progress"><i style="width:100%"></i></div></div>
+      <div class="toc-part-item is-done"><div class="toc-part-item__num">VI</div><div class="toc-part-item__info"><b>Полемика с баптистами</b><small>✓ Глава 6</small></div><div class="toc-part-item__progress"><i style="width:100%"></i></div></div>
+      <div class="toc-part-item is-current"><div class="toc-part-item__num">VII</div><div class="toc-part-item__info"><b>Сперджен и кафедра</b><small style="color:var(--gb-accent)">● Глава 7 · текущая</small></div><div class="toc-part-item__progress"><i style="width:62%"></i></div></div>
+      <div class="toc-part-item"><div class="toc-part-item__num">VIII</div><div class="toc-part-item__info"><b>Наследие Гилла</b><small>Глава 8</small></div><div class="toc-part-item__progress"><i></i></div></div>
+      <div class="toc-part-item"><div class="toc-part-item__num">IX</div><div class="toc-part-item__info"><b>Архивные материалы</b><small>Глава 9</small></div><div class="toc-part-item__progress"><i></i></div></div>
+      <div class="toc-part-item"><div class="toc-part-item__num">X</div><div class="toc-part-item__info"><b>Избранные цитаты</b><small>Глава 10</small></div><div class="toc-part-item__progress"><i></i></div></div>
+    </div>
+    <!-- v16: CLEAN ACTIONS BAR at bottom of Part TOC -->
+    <div class="toc-sheet__actions toc-sheet__actions--grid">
+      <button class="toc-action-btn gb-save" id="partSaveBtn">
+        <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        <span>Сохранить</span>
+      </button>
+      <button class="toc-action-btn">
+        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <span>Поделиться</span>
+      </button>
+      <button class="toc-action-btn">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        <span>PDF</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- KEYBOARD HELP -->
+<div class="kbd-help-overlay" id="kbdHelpOverlay"></div>
+<div class="kbd-help" id="kbdHelp" role="dialog" aria-label="Горячие клавиши">
+  <button class="kbd-help__close" id="kbdHelpClose" aria-label="Закрыть">
+    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="kbd-help__title">Горячие клавиши</div>
+  <div class="kbd-help__list">
+    <div class="kbd-help__row"><kbd>/</kbd><span>Поиск по сайту</span></div>
+    <div class="kbd-help__row"><kbd>D</kbd><span>День / ночь</span></div>
+    <div class="kbd-help__row"><kbd>P</kbd><span>Оглавление</span></div>
+    <div class="kbd-help__row"><kbd>T</kbd><span>Прослушать</span></div>
+    <div class="kbd-help__row"><kbd>S</kbd><span>Сохранить</span></div>
+    <div class="kbd-help__row"><kbd>B</kbd><span>Наверх</span></div>
+    <div class="kbd-help__row"><kbd>?</kbd><span>Эта справка</span></div>
+    <div class="kbd-help__row"><kbd>Esc</kbd><span>Закрыть popup</span></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="gb-toast" id="gbToast"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Сохранено</span></div>
+
+<script>
+(function(){
+  'use strict';
+
+  var EMBER_TPL =
+    '<svg class="gb-ember__ring-svg" viewBox="0 0 100 100" aria-hidden="true">' +
+      '<circle class="gb-ember__ring-track" cx="50" cy="50" r="45"/>' +
+      '<circle class="gb-ember__ring-progress" cx="50" cy="50" r="45"/>' +
+    '</svg>' +
+    '<svg class="gb-ember__glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.8v14.4L18.5 12 7 4.8z"/></svg>' +
+    '<svg class="gb-ember__pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>' +
+    '<svg class="gb-ember__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.1L19 7"/></svg>';
+
+  var SUN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
+  var MOON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+  var SEARCH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>';
+  var SAVE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
+  var BACK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>';
+
+  function injectEmber(node){
+    if (node.querySelector('.gb-ember__ring-svg')) return;
+    node.insertAdjacentHTML('beforeend', EMBER_TPL);
+  }
+  document.querySelectorAll('.gb-ember').forEach(injectEmber);
+
+  // Fill icons
+  function fillSvg(sel, svg){
+    document.querySelectorAll(sel).forEach(function(b){
+      if (!b.querySelector('svg')) b.innerHTML = svg;
+    });
+  }
+  fillSvg('.gb-icon[data-act="search"], #searchBtn', SEARCH_SVG);
+  fillSvg('.gb-save, #saveBtn, #partSaveBtn, #gbsSave', SAVE_SVG);
+  fillSvg('#gbsBack', BACK_SVG);
+  document.querySelectorAll('.gb-theme-toggle').forEach(function(b){
+    if (!b.querySelector('.theme-icon-sun')){
+      b.innerHTML = '<span class="theme-icon-sun">'+SUN_SVG+'</span><span class="theme-icon-moon">'+MOON_SVG+'</span>';
+    }
+  });
+
+  function setEmberState(state){
+    document.querySelectorAll('.gb-ember').forEach(function(b){ b.dataset.state = state; });
+    document.querySelectorAll('[data-act="state"]').forEach(function(b){
+      b.classList.toggle('is-on', b.dataset.val === state);
+    });
+  }
+  function toggleTheme(){
+    document.documentElement.classList.toggle('dark');
+  }
+  function toggleEmber(){
+    var ember = document.querySelector('.gb-ember');
+    var cur = ember ? ember.dataset.state : 'paused';
+    var next = (cur === 'playing') ? 'paused' : 'playing';
+    setEmberState(next);
+    showToast(next === 'playing' ? '▶ Фоновое аудиопрочтение главы...' : '|| Аудио на паузе');
+  }
+
+  // Save — gold fill, NO halo. Click toggles is-saved
+  var saveTimer = null;
+  function triggerSave(btn){
+    var tNode = (btn && btn.nodeType) ? btn : null;
+    if (!tNode && window.event && window.event.currentTarget) tNode = window.event.currentTarget;
+    if (!tNode) tNode = document.getElementById("saveBtn") || document.querySelector(".gb-save");
+    var willSave = tNode ? !tNode.classList.contains("is-saved") : true;
+    document.querySelectorAll(".gb-save").forEach(function(b){
+      if (willSave) {
+        b.classList.add("is-saved");
+        b.setAttribute("aria-pressed", "true");
+      } else {
+        b.classList.remove("is-saved");
+        b.setAttribute("aria-pressed", "false");
+      }
+    });
+    showToast(willSave ? "Сохранено" : "Сохранение отменено");
+  }
+
+  var toast = document.getElementById('gbToast');
+  var toastTimer = null;
+  function showToast(text){
+    if (text) toast.querySelector('span').textContent = text;
+    toast.classList.add('is-open');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('is-open'); }, 2200);
+  }
+
+  // FOCUS
+  var lastFocused = null;
+  function trapFocus(modalEl){
+    lastFocused = document.activeElement;
+    var focusable = modalEl.querySelectorAll('button, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length) focusable[0].focus();
+  }
+  function releaseFocus(){
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  // CONTROL PANEL
+  var panel = document.getElementById('controlPanel');
+  panel.addEventListener('click', function(e){
+    var b = e.target.closest('[data-act]');
+    if (!b) return;
+    var act = b.dataset.act, val = b.dataset.val;
+    if (act === 'state') setEmberState(val);
+    else if (act === 'save-demo') triggerSave();
+    else if (act === 'theme-demo') toggleTheme();
+    else if (act === 'help-demo') openHelp();
+    else if (act === 'part-toc') openPartToc();
+    else if (act === 'open-series') openSeriesToc();
+    else if (act === 'open-part') openPartToc();
+  });
+
+  // KEYBOARD
+  var kbdHelp = document.getElementById('kbdHelp');
+  var kbdHelpOverlay = document.getElementById('kbdHelpOverlay');
+  function openHelp(){ trapFocus(kbdHelp); kbdHelpOverlay.classList.add('is-open'); kbdHelp.classList.add('is-open'); }
+  function closeHelp(){ kbdHelp.classList.remove('is-open'); kbdHelpOverlay.classList.remove('is-open'); releaseFocus(); }
+  document.getElementById('kbdHelpClose').addEventListener('click', closeHelp);
+  kbdHelpOverlay.addEventListener('click', closeHelp);
+
+  document.addEventListener('keydown', function(e){
+    var isInput = e.target.matches('input, textarea, [contenteditable]');
+    if (e.key === '?' && !isInput){ e.preventDefault(); openHelp(); }
+    if (e.key === 'Escape'){ closeHelp(); closeSeriesToc(); closePartToc(); }
+    if (e.key === 'd' && !isInput){ e.preventDefault(); toggleTheme(); }
+    if (e.key === 's' && !isInput){ e.preventDefault(); triggerSave(); }
+    if (e.key === 'p' && !isInput){ e.preventDefault(); openSeriesToc(); }
+    if (e.key === 't' && !isInput){ e.preventDefault(); toggleEmber(); }
+  });
+
+  // STANDALONE
+  document.getElementById('themeBtn').addEventListener('click', toggleTheme);
+  document.getElementById('searchBtn').innerHTML = SEARCH_SVG;
+  document.getElementById('searchBtn').addEventListener('click', function(){ alert('Search palette'); });
+  document.getElementById('emberBtn').addEventListener('click', toggleEmber);
+  document.getElementById('saveBtn').innerHTML = SAVE_SVG;
+  document.getElementById('saveBtn').addEventListener('click', triggerSave);
+
+  // GBS RAIL
+  document.getElementById('gbsTheme').addEventListener('click', toggleTheme);
+  document.getElementById('gbsSearch').addEventListener('click', function(){ alert('Search'); });
+  document.getElementById('gbsEmber').addEventListener('click', toggleEmber);
+  document.getElementById('gbsSave').addEventListener('click', triggerSave);
+  document.getElementById('gbsBack').innerHTML = BACK_SVG;
+  document.getElementById('gbsBack').addEventListener('click', function(){ alert('Назад'); });
+
+  // MOBILE
+  document.getElementById('mobTheme').addEventListener('click', toggleTheme);
+  document.getElementById('mobSearch').innerHTML = SEARCH_SVG;
+  document.getElementById('mobSearch').addEventListener('click', function(){ alert('Search'); });
+  document.getElementById('mobEmber').addEventListener('click', toggleEmber);
+  document.getElementById('mobTocBtn').addEventListener('click', openSeriesToc);
+
+  // Roman cells
+  document.querySelectorAll('.roman-cell').forEach(function(cell){
+    cell.addEventListener('click', function(){
+      document.querySelectorAll('.roman-cell').forEach(function(c){ c.classList.remove('is-current'); });
+      cell.classList.add('is-current');
+      showToast('Часть ' + toRoman(cell.dataset.part) + ' → переход');
+    });
+  });
+
+  // GBS rail cards
+  document.querySelectorAll('.gbs-rail-card').forEach(function(card){
+    card.addEventListener('click', function(){
+      showToast('Часть ' + toRoman(card.dataset.part) + ' → переход');
+    });
+  });
+
+  function toRoman(num){
+    var n = parseInt(num, 10);
+    if (!n) return '';
+    var map = [['M',1000],['CM',900],['D',500],['CD',400],['C',100],['XC',90],['L',50],['XL',40],['X',10],['IX',9],['V',5],['IV',4],['I',1]];
+    var s = '';
+    for (var i=0;i<map.length;i++){
+      while (n >= map[i][1]){ s += map[i][0]; n -= map[i][1]; }
+    }
+    return s;
+  }
+
+  // TOC POPUPS
+  var seriesOverlay = document.getElementById('seriesTocOverlay');
+  var partOverlay = document.getElementById('partTocOverlay');
+  function openSeriesToc(){ trapFocus(seriesOverlay); seriesOverlay.classList.add('is-open'); }
+  function closeSeriesToc(){ seriesOverlay.classList.remove('is-open'); releaseFocus(); }
+  function openPartToc(){ trapFocus(partOverlay); partOverlay.classList.add('is-open'); }
+  function closePartToc(){ partOverlay.classList.remove('is-open'); releaseFocus(); }
+
+  seriesOverlay.addEventListener('click', function(e){
+    if (e.target === seriesOverlay) closeSeriesToc();
+  });
+  partOverlay.addEventListener('click', function(e){
+    if (e.target === partOverlay) closePartToc();
+  });
+  document.querySelectorAll('#seriesTocOverlay .toc-item').forEach(function(item){
+    item.addEventListener('click', function(){
+      closeSeriesToc();
+      setTimeout(openPartToc, 200);
+    });
+  });
+  document.getElementById('backToSeries').addEventListener('click', function(){
+    closePartToc();
+    setTimeout(openSeriesToc, 200);
+  });
+
+  // Part TOC Save button (also has .gb-save class — inherits save behavior)
+  var partSaveBtn = document.getElementById('partSaveBtn');
+  if (partSaveBtn){
+    partSaveBtn.addEventListener('click', function(){ triggerSave(partSaveBtn); });
+  }
+
+  setEmberState('playing');
+
+  window.__gbProbe = { setState:setEmberState, toggleTheme:toggleTheme, triggerSave:triggerSave, openSeriesToc:openSeriesToc, openPartToc:openPartToc, openHelp:openHelp, showToast:showToast };
+})();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a10ddd4d0eb8d2bf',t:'MTc4MjMyNjQ2Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,777 @@
+Полный план внедрения PremiumControls по
+всему проекту
+Executive summary
+Репозиторий уже живёт в дисциплине Astro/strangler с жёсткими правилами для агентов: сначала
+обязательное чтение WORK_MODES.md, AGENTS.md, LANE_LOCK_POLICY, затем сверка с 
+route-migration-matrix.json; для production-impact работ обязательны финальные прогоны
+npm run validate:static-publication и npm run guard:shared-files. В 
+package.json закреплён Node >=22.12.0, а основной статический барьер уже включает
+большой набор parity-, content-, readability-, MDX- и ownership-аудитов. Это значит, что rollout
+PremiumControls нельзя делать как “ещё один виджет”, его нужно встраивать как маршрутно-
+типизированную систему, которая уважает migration-mode каждого route и уже существующую CI-
+архитектуру. 
+Ключевая инженерная ошибка прошлых попыток предсказуема: смешение двух разных задач — 
+что рисуем и где это стоит. Новый PremiumControls не должен сам решать геометрию через 
+position: fixed; геометрию должен решать отдельный anchor-слой. MDN прямо различает 
+absolute и fixed: absolute позиционируется от ближайшего positioned ancestor , а fixed
+— от viewport. Поэтому для standalone-статей задача не “приклеить новый cluster справа”, а 
+заменить старый control новым внутри старого layout slot, сохранив визуальный якорь у
+хлебных крошек. 
+Архитектурно rollout должен завершиться тремя стабильными примитивами: 
+PremiumControlAnchor отвечает за размещение, PremiumControls — за SVG/UI-вариант, 
+premium-controls-controller.js — за поведение. CSS должен стать единым canonical source;
+Astro допускает и scoped styles, и <style is:global>, но ?raw/ ?url описаны как advanced/
+not recommended, а статические <link> в Astro корректно работают только с абсолютными
+путями из /public или внешними URL. Поэтому правильная цель — не держать две ручные
+копии CSS, а иметь один source и один детерминированный способ доставки в native Astro и при
+необходимости в публичный CSS-asset. 
+По маршрутам проект уже явно делится на несколько archetype-групп. Матрица маршрутов
+показывает, что /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-
+germenevtiki/ уже находится в strict-native с target mode mdx-native-article, а Gill-
+статьи пока вообще исключены из общего non-excluded migration scope через articles/dzhon-
+gill-*. Одновременно legacy-shadow-app маршруты вроде /karty/*, /map/, /konfessii/
+russkij-baptizm/ требуют другого обращения и не должны получить article controls по
+умолчанию. Это и задаёт rollout-логику: сначала два пилота, потом — раскатка по archetype-
+типам, а не по произвольным страницам вручную. 
+Минимальный итоговый критерий очень простой. После rollout на standalone-статьях day/night
+control должен стоять у breadcrumbs-level, а не у viewport-right; PlayEmber должен открывать
+speed-panel и сохранять скорость; не должно быть duplicate-controls; все [data-fc-action]
+должны кликаться; CI должен оставаться зелёным на текущем пакете gates; readTime 35 vs 50
+1
+2
+3
+4
+1
+
+фиксируется как LOW metadata lane, а не как blocker для внедрения controls. Проверки нужно
+добавлять только как финальный барьер: сначала валидный HTML, потом html-validate,
+после HTML-фикса — браузерный axe-core. html-validate поддерживает файлы/
+директории/globs, formatter-ы json, stylish, checkstyle и non-zero exit при --max-
+warnings 0; axe-core предназначен для автоматизированного accessibility testing в
+существующих test environments. 
+Цели и жёсткие ограничения
+Цель rollout — полностью заменить разрозненные legacy theme/play/save/search controls единой
+системой PremiumControls, но не ломая migration contract проекта. Это значит: для каждого route-
+type нужно заранее определить, есть ли у него вообще право на article controls, какой вариант
+controls нужен и какой anchor управляет положением. У standalone strict-native статей цель —
+заменить старый article control slot премиальным SVG-кластером без потери геометрии. У Gill-
+подобных series pages цель — специализированный rail/mobile-bar вариант. У app/routes и
+landing/catalog routes цель обратная — ничего не внедрять, кроме явно разрешённых future
+exceptions. Такой подход прямо следует из того, что route matrix уже отличает strict-native, 
+mdx-native-article, native-main-with-legacy-chrome и legacy-shadow-app, а AGENTS/
+WORK_MODES требуют учитывать route mode до начала работы. 
+Есть четыре жёстких constraint-а, которые нельзя нарушать. Во-первых, rollout должен работать в
+существующей CI-дисциплине: Node >=22.12.0, astro:build, 
+strangler:build:production-like, validate:static-publication, page-ownership, 
+pagefind, visual:parity:production, sw:dist:audit:deploy-switch. Во-вторых, CSS не
+может оставаться в состоянии “компонентная копия + отдельная ручная копия”, иначе drift
+неизбежен. В-третьих, нельзя оставлять смешанную семантику у PlayEmber: если control
+интерактивен, он не должен одновременно изображать disabled purely via aria-disabled; MDN
+подчёркивает, что aria-disabled="true" только сообщает состояние, а подавление
+функциональности разработчик обязан обеспечивать сам. В-четвёртых, rollout нельзя строить на
+голом fixed там, где важен старый anchor . 
+Acceptance criteria должны быть формализованы до кодинга, иначе слабый агент опять уйдёт в
+“CI green, но визуально криво”. Для standalone article acceptance — это сохранение визуального
+слота старого control, а не просто наличие нового DOM-узла. Для Gill acceptance — rail и mobile-
+bar должны быть частью route chrome, а не отдельным плавающим FAB. Для site-wide acceptance
+— контрольный список должен измерять поведение, а не только наличие классов: alignment,
+clickability, persistence, отсутствие дублей и зелёная сборка. Так как Astro scoped styles всегда
+приходят поздно в каскаде относительно импортов той же specificity, а is:global отключает
+scoping, rollout обязан осознанно управлять CSS order и тем, какой способ доставки стилей
+выбран для PremiumControls. 
+Карта route archetypes и варианты controls
+Архитектурно проекту нужен не “one-size-fits-all cluster”, а небольшая матрица вариантов. Ниже —
+рекомендуемая целевая карта rollout по archetypes. Она опирается на текущую migration matrix и
+на уже существующие пилоты Hermeneutics/Gill. Для точных file paths, если в ветке они уже
+переехали, нужно трактовать их как current if unchanged / otherwise unspecified и искать по
+именам компонентов. 
+5
+6
+7
+8
+4
+2
+
+Archetype Тип
+маршрутовТекущие/опорные файлы Вариант controls Что делать
+article-
+breadcrumb
+strict-
+native /
+target 
+mdx-
+native-
+article
+standalone
+articles
+src/pages/articles/
+hermenevticheskaya-otsenka-
+hristotsentrichnoy-
+germenevtiki/index.astro, 
+src/components/article-
+pilots/hermenevtika/
+HermenevtikaBody.astro, 
+src/components/article-
+pilots/hermenevtika/
+HermenevtikaPageHead.astro,
+далее аналогично для kod-da-
+vinchi, 20-antisovetov-* if
+unchanged
+PremiumControls 
+single-anchor
+Заменить
+старый article-
+control slot
+новым
+anchor+cluster ,
+не
+использовать
+viewport-fixed
+геометрию
+series-
+lite-
+breadcrumb
+strict-native
+or series-
+article
+routes
+without Gill
+rail
+baptisty-rossii article subroutes and
+similar , exact file set route-specific /
+partially unspecified
+PremiumControls 
+series-lite
+Вариант
+ближе к
+article-
+breadcrumb,
+но с series
+affordances и
+возможным
+next/part
+context
+gill-rail
+Gill routes,
+currently
+excluded in
+matrix via 
+articles/
+dzhon-
+gill-*
+src/pages/articles/dzhon-
+gill-istoricheskiy-kontekst/
+index.astro, 
+src/components/article-
+pilots/gill-context/
+GillContextPageChrome.astro,
+related Gill shell/body components
+if unchanged
+PremiumControls 
+rail + mobile-
+bottom
+Оставить как
+route-chrome
+pattern:
+desktop rail
+control strip +
+mobile bottom
+strip
+landing-
+none
+native-
+main-with-
+legacy-
+chrome
+catalogs/
+landings
+/, /about/, /articles/, /
+biografii/, /karty/, /
+konfessii/, /pastor-series/
+none
+Не ставить
+article
+controls, если
+нет
+отдельного
+owner decision
+3
+
+Archetype Тип
+маршрутовТекущие/опорные файлы Вариант controls Что делать
+app-
+disabled
+legacy-
+shadow-
+app /
+interactive
+maps /
+iframe apps
+/karty/*, /map/, /
+konfessii/russkij-
+baptizm/, /rodosloviye/
+disabled
+Article controls
+по
+умолчанию
+запрещены;
+если когда-
+нибудь
+нужны,
+только
+отдельным
+app wrapper
+contract
+Практически это означает следующее. Hermeneutics — не “особый случай”, а первый canonical
+exemplar для article-breadcrumb. Gill-context — не “пример статьи”, а exemplar для gill-
+rail. Только после идеального закрытия этих двух archetype-образцов имеет смысл переносить
+систему дальше: сначала на другие standalone articles, потом на series-lite, и только потом решать,
+нужен ли отдельный cross-site mobile variant. Такое фазирование важно ещё и потому, что Gill-
+семейство сейчас исключено из общего migration scope матрицы, то есть rollout должен сначала
+зафиксировать Gill как отдельный archetype, а затем явно обновить matrix/audits, вместо
+неформального “временного” поведения. 
+Целевая архитектура внедрения
+Правильная система должна делиться на три слоя.
+PremiumControlAnchor — чисто layout-компонент. Его единственная работа — занять старый
+visual slot и отдать внутри него место для controls. У standalone articles этот anchor должен жить в
+том же DOM-slot, где раньше стоял #themeToggle или тематически эквивалентный legacy
+control. У Gill этот anchor отдельный: rail-foot на desktop и mobile-bottom-bar на mobile. Anchor не
+знает про Play panel, bookmark logic или hotkeys. Он знает только geometry, z-index, safe-area и
+responsive breakpoints.
+PremiumControls — presentation/UI-layer . Он рендерит theme/search/font/play/save SVG controls,
+но не решает абсолютное местоположение страницы. Внутри него допустимы variant-ы single, 
+series-lite, gill-rail, gill-mobile. Именно здесь должны жить визуальные токены
+вроде --ember-size, gap, radius, control-size, glow, pulse, dark-mode variants.
+premium-controls-controller.js — runtime-layer . Он инициализирует все roots, реализует
+click delegation, speed panel, persistence, keyboard shortcuts, close-on-outside/Escape,
+синхронизацию active state и optional legacy-bridge hooks.
+Такой split обязателен не только ради чистоты. Он напрямую решает ключевую ошибку
+прошлого: если control layer сам включает position: fixed, он немедленно отрывается от
+старой выверенной геометрии. MDN прямо говорит, что fixed ориентируется на viewport, а 
+absolute — на ближайший positioned ancestor . Следовательно, anchor должен наследовать
+старую absolute geometry, а control surface внутри anchor должен быть position: static или 
+relative. 
+9
+2
+4
+
+Ниже — рекомендуемый flow migration для каждого standalone route.
+Для Hermeneutics и других article-breadcrumb-маршрутов DOM-шаги должны быть почти
+хирургическими.
+Сначала агент находит старый visual slot: как минимум #themeToggle, а если layout уже
+частично мигрирован — ближайший блок у breadcrumb/right-edge, historically responsible for
+positioning. Затем в этот же slot вставляется PremiumControlAnchor. Ключевая операция: 
+внутренний .gb-floater более не имеет права быть viewport-fixed на этих страницах. Для
+anchor-режима он обязан стать position: static или relative, inset: auto, right: 
+auto, top: auto; старые top/right values переносятся на сам anchor . Смысл в том, чтобы 
+getBoundingClientRect().top/right у нового блока воспроизводили старый anchor , а не
+заводские floating offsets. Для desktop это обычно old top/right; для mobile — old right плюс 
+env(safe-area-inset-right) и bottom-safe-area там, где mobile pill действительно должна
+жить внизу. 
+Минимальный DOM-пример для standalone article должен выглядеть так:
+<!-- старый article slot -->
+<div class="premium-control-anchor premium-control-anchor--article" data-pc-
+anchor="article-breadcrumb">
+  <PremiumControls
+    variant="single"
+    data-fc-root
+    data-fc-mode="single"
+Найти
+старый
+control
+anchor
+Снять
+геометрию
+old
+top/right
+Создать
+PremiumControlAnchor
+в
+том
+же
+slot
+Вставить
+внутрь
+PremiumControls
+Убрать
+viewport-fixed
+у
+внутреннего
+floater
+Перенести
+старую
+absolute
+geometry
+на
+anchor
+Подключить
+controller
+ко
+всем
+data-fc-root
+Скрыть
+или
+удалить
+видимые
+legacy-controls
+Прогнать
+geometry
+and
+click
+acceptance
+10
+5
+
+    data-fc-variant="article"
+  />
+</div>
+А CSS на уровне anchor должен быть принципиально таким:
+.premium-control-anchor--article{
+position: absolute;
+top: var(--pc-anchor-top);
+right: var(--pc-anchor-right);
+z-index: var(--pc-z-anchor, 32);
+}
+.premium-control-anchor--article.gb-floater{
+position: static;
+inset: auto;
+margin: 0;
+z-index: auto;
+}
+Смысл двух custom properties здесь в том, что для пилота агент может буквально перенести
+старые values старого .theme-toggle, а после стабилизации — собрать их в route tokens. Это
+безопаснее, чем заново “на глаз” вычислять layout.
+Для Gill-маршрутов migration другая. Там не нужен article anchor в районе breadcrumbs. Нужен
+осознанный gill-rail contract: desktop route chrome с rail-foot root и отдельный mobile-bottom
+root. У Gill нельзя дефолтить data-fc-mode в single; у каждого root mode должен быть явно
+задан, например data-fc-mode="gill", иначе controller начнёт навешивать single-
+специфичное поведение и классы не на тот archetype. Это особенно важно потому, что Gill сейчас
+формально excluded group в route matrix и должен получить собственный стабильный variant
+contract, а не случайный default branch. 
+CSS-архитектура и runtime contract
+Главное правило rollout: один canonical CSS source. Не два ручных файла, не “временный Astro
+style + копия в /css”, а один источник. Astro подчёркивает, что scoped styles и <style 
+is:global> — разные механики, а ?raw/ ?url CSS imports — advanced и “not recommended for
+most users”; для статических <link> требуются absolute paths из /public или внешние URL.
+Значит, правильная архитектура — хранить PremiumControls CSS в одном source внутри Astro
+source tree и либо импортировать его как основной source для native routes, либо build-step-ом
+эмитить derived public CSS для тех редких legacy/static contexts, где нужен именно 
+<link href="/css/...">. Ручное дублирование нужно прекратить. 
+Рекомендуемая структура такая:
+src/styles/premium-controls.css           # canonical source
+src/components/premium-controls/*.astro   # components import canonical CSS
+public/css/premium-controls.css           # generated artifact only if really 
+11
+12
+6
+
+needed
+js/premium-controls-controller.js         # canonical controller
+Если legacy/static HTML действительно нуждается в публичном CSS-файле, он не должен
+редактироваться руками. Он должен генерироваться на build/deploy этапе из canonical source. Тем
+самым исчезает класс проблем “в компоненте одно имя класса, в public CSS — другое”.
+Отдельный обязательный слой — проверка @layer. MDN прямо сообщает, что normal
+declarations вне слоя всегда имеют больший приоритет, чем normal declarations внутри named
+layers. Если PremiumControls CSS живёт внутри @layer components, а старые unlayered selectors
+в site.css или mobile-hotfix.css продолжают касаться .gb-*, .gb-save, .gb-
+ember, .gb-theme-toggle или legacy equivalents, то даже при корректном import order controls
+могут внезапно проиграть. Поэтому rollout должен сделать две вещи одновременно: либо
+держать PremiumControls вне layers, если это системный layer-top CSS; либо ввести явный audit на
+unlayered overlap по ключевым selectors. 
+CSS contract для PremiumControls должен быть токенизирован. Минимальный набор:
+:root{
+--pc-control-size: 42px;
+--pc-gap: 8px;
+--pc-radius: 18px;
+--pc-z-anchor: 32;
+--pc-z-panel: 36;
+--pc-safe-top: env(safe-area-inset-top, 0px);
+--pc-safe-right: env(safe-area-inset-right, 0px);
+--pc-safe-bottom: env(safe-area-inset-bottom, 0px);
+--ember-size: 34px;
+}
+[data-pc-variant="gill-rail"] {
+--pc-control-size: 32px;
+--ember-size: 32px;
+}
+Главная идея: размеры не захардкожены внутри SVG-компонентов. --ember-size и shape
+tokens управляются variant-ом. Это снимает класс проблем “в Gill ember не виден / слишком
+большой / разъехались controls”.
+На runtime-layer обязательны пять контрактов.
+Первый — инициализация всех roots, а не первого. Если на странице есть desktop root и mobile
+root, controller обязан делать document.querySelectorAll('[data-fc-
+root]').forEach(initRoot). Это уже не optional refinement, а базовое требование
+архитектуры, потому что Gill archetype по определению multi-root. 
+Второй — data-fc-mode обязателен. Нельзя по умолчанию считать root single.
+Минимальный enum: single, series-lite, gill, disabled. Это избавляет от ложных body
+classes и route-specific side effects.
+13
+7
+
+Третий — aria-disabled contract. MDN подчёркивает, что aria-disabled="true" не
+отключает поведение само по себе; разработчик обязан вручную его подавить. Поэтому нельзя
+одновременно держать PlayEmber семантически disabled и открывать по клику speed panel. Для
+rollout есть только два честных варианта: либо PlayEmber реально disabled и не кликается, либо
+он интерактивен и тогда должен иметь интерактивную семантику, например aria-
+haspopup="menu"/ dialog, aria-expanded, aria-controls. Для текущего
+пользовательского требования рациональнее второй вариант: на маршрутах без аудио
+PlayEmber работает как control “настройки скорости/будущей озвучки”, а не как disabled button. 
+Четвёртый — pointer-events. Если внешний decorative shell использует pointer-events: none
+для пропуска кликов сквозь фон, то интерактивные потомки и speed panel обязаны получать 
+pointer-events: auto. MDN отдельно предупреждает, что pointer-events: none
+исключает сам элемент как target, а дочерний subtree targetable только при явном override. Это
+критично для speed panel и маленьких SVG-кнопок. 
+Пятый — localStorage. Для site-wide rollout нужен один canonical key-space и backward-compatible
+aliasing. Рекомендуемый contract:
+gb:theme              # текущая тема или явный alias к существующему site key
+gb:bookmark:v1        # сохранённые статьи / alias bridge к текущей bookmark 
+системе
+gb:audio:rate         # скорость прослушки
+gb:controls:variant   # optional debug/feature-flag state
+Если в репозитории уже есть другие ключи, controller должен читать и старые, и новые, но
+писать уже в canonical namespace. Это избавляет от “pilot drift”, когда один route хранит скорость
+под одним ключом, а другой — под другим.
+Event flow для PlayEmber должен быть формализован:
+click ember
+→ stop propagation from generic action if panel-open flow handles it
+→ open panel adjacent to same root
+→ set aria-expanded=true
+→ highlight current rate from localStorage
+→ on rate click: persist value, add pulse/glow, optionally emit custom event
+→ wait 280–380ms for feedback animation
+→ close panel and restore aria-expanded=false
+→ also close on Escape, outside click, route change, root unmount
+Если route действительно поддерживает аудио позже, этот же flow расширяется start/pause
+actions; если route аудио не поддерживает, speed preference всё равно честно живёт как
+preference UI, а не как faux-disabled action.
+14
+15
+8
+
+Тестирование, acceptance и CI
+Проверки должны быть минимальны, но хирургически точны. Уже существующий gate велик, и
+это хорошо: его не нужно ломать, его нужно дополнить. package.json уже фиксирует основной
+стек: validate:static-publication, astro:build, strangler:build:production-like, 
+page-ownership, visual:parity:production, pagefind, sw:dist:audit. Значит,
+внедрение PremiumControls должно входить в существующую дисциплину как дополнительный
+contract layer , а не как отдельный “ручной прогон если вспомним”. 
+Первый барьер — HTML. Сначала нужно убрать битые хвосты/атрибуты, затем подключить 
+html-validate. Его CLI принимает files/directories/globs, умеет formatter-ы json, stylish, 
+checkstyle, а с --max-warnings 0 даёт non-zero exit на предупреждениях. Это идеальный
+следующий слой после простых grep/regex-детекторов мусора. 
+Второй барьер — accessibility smoke. После того как HTML стал валиден, axe-core можно
+встроить в Playwright/browser smoke. Сам axe-core позиционируется как engine для automated
+Web UI testing и интеграции в существующие functional/integration/browser tests. Следовательно,
+его стоит включать не до HTML validation, а после неё, на двух-трёх критических маршрутах
+пилота. 
+Минимальный Playwright contract для article-breadcrumb должен быть таким:
+test('premium controls align to breadcrumb anchor', async({page})=>{
+awaitpage.goto('/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-
+germenevtiki/');
+constbreadcrumb= page.locator('.breadcrumb');
+constthemeBtn= page.locator('[data-fc-root] [data-fc-
+action="theme"]').first();
+constb = awaitbreadcrumb.boundingBox();
+constt = awaitthemeBtn.boundingBox();
+expect(Math.abs((t?.y ??0) - (b?.y ??0))).toBeLessThanOrEqual(8);
+});
+test('all premium actions are clickable', async({page})=>{
+awaitpage.goto('/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-
+germenevtiki/');
+constactions= page.locator('[data-fc-root] [data-fc-action]');
+constcount= awaitactions.count();
+for(leti = 0; i < count; i++) {
+awaitexpect(actions.nth(i)).toBeVisible();
+awaitexpect(actions.nth(i)).toBeEnabled();
+}
+});
+test('speed selection persists', async({page})=>{
+awaitpage.goto('/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-
+germenevtiki/');
+16
+17
+18
+9
+
+awaitpage.locator('[data-fc-action="play"]').click();
+awaitpage.locator('[data-fc-speed="1.5"]').click();
+awaitpage.reload();
+awaitpage.locator('[data-fc-action="play"]').click();
+awaitexpect(page.locator('[data-fc-speed="1.5"]')).toHaveAttribute('aria-
+pressed', 'true');
+});
+Для Gill archetype browser smoke чуть другой: нужно проверять оба roots, desktop rail и mobile bar ,
+а также отсутствие legacy article controls на route chrome. Для gill-rail acceptance важнее не
+геометрия breadcrumbs, а компактность strip, видимость ember , кликабельность всех controls и
+корректное существование двух независимых roots.
+Ниже — минимальные финальные acceptance metrics, которые уже достаточно жёсткие для
+merge.
+Метрика Цель
+Visual
+alignment top delta <= 8px относительно breadcrumb-level у standalone articles
+Right-edge
+fidelity
+новый anchor визуально совпадает со старым article slot, а не с viewport-
+fixed right
+Clickability 100% [data-fc-action] visible + clickable на пилотных routes
+Speed
+persistence выбранная скорость сохраняется и восстанавливается после reload
+Duplicate
+controls
+на pilot article routes нет второго видимого theme toggle / back-to-top /
+bottom bar поверх PremiumControls
+CI npm run validate:static-publication зелёный; production-like dist
+build зелёный
+Metadata lane readTime 35 vs 50 отмечен LOW и либо исправлен отдельно, либо явно
+оставлен в отдельном PR
+Нужно также обновить audits, которые исторически ожидали legacy markers. На этапе coexistence
+route-specific validators должны принимать dual markers. После полной миграции конкретного
+archetype старые markers надо убирать из ожиданий. Практически это означает: article/Gill audits,
+dist-publication guards и visual-parity contracts должны смотреть не на hardcoded legacy-shaped
+markers, а на “allowed new marker OR explicit legacy fallback until route phase complete”. Иначе
+rollout либо будет ложно красным, либо вынудит слабого агента временно ломать audits руками.
+Фазы rollout, file sets и rollback
+Ниже — рекомендованный phased rollout. Он intentionally маленькими PR-ами, потому что слабые
+агенты чаще ломают shared/system layers на длинных ветках. Размер PR — не более одного
+archetype-шага за раз. Для production-impact phase лучше держать лимит примерно до 6–10
+файлов приложения и до ~350–500 строк осмысленных diff-ов, не считая generated cache-bust
+changes.
+10
+
+Фаза Deliverable Файлы Лимит PR Критерий выхода
+pilot-
+hardening
+Идеально закрыть
+Hermeneutics и Gill pilots
+current pilot
+page/
+components +
+controller +
+canonical CSS +
+route audits
+маленький
+оба пилота
+визуально
+корректны, CI
+зелёный
+primitives-
+extract
+Вынести 
+PremiumControlAnchor,
+PremiumControls,
+canonical CSS, controller
+contract
+src/
+components/
+premium-
+controls/**, 
+src/styles/
+premium-
+controls.css, 
+js/premium-
+controls-
+controller.js
+средний
+примитивы
+переиспользуемы,
+пилоты не
+регресснули
+article-
+archetype
+Перенести standalone
+strict-native articles на 
+article-breadcrumb
+Hermeneutics,
+Kod, 20-
+antisovetov and
+peers if
+unchanged
+маленький
+сериями
+каждый route
+проходит parity +
+no duplicate
+controls
+series-liteВвести единый series-
+lite variant
+подходящие
+series article
+routes, exact file
+set partly
+unspecified
+средний
+routes сохраняют
+series context и
+новый anchor
+gill-
+formalize
+Перевести Gill from ad-hoc
+pilot to formal archetype in
+matrix/audits
+Gill routes +
+matrix + audits маленький
+Gill больше не
+“исключение без
+контракта”
+legacy-
+exclusion
+Закрепить disabled-mode
+для app/routes
+route matrix +
+audits only маленький
+app/routes
+защищены от
+случайного
+controls rollout
+cleanup
+Удалить старые dormant
+duplicates и aliases,
+которые больше не
+нужны
+only after all
+archetypes greenмаленький
+нет dead CSS/JS
+branches и marker
+debt
+11
+
+Rollback strategy должен быть build-safe и route-local. Лучший вариант — route allowlist flag. Пока
+archetype не зелёный, route может держать premiumControls: false или equivalent build-time
+feature flag, а legacy controls остаются каноническими. Для каждого pilot/phase сохраняется
+возможность быстро вернуться к старому DOM output без касания shared CSS/JS на всем сайте.
+Rollback не должен означать “откатить весь canonical controller”; он должен означать “выключить
+new controls на конкретном archetype route”.
+На уровне audit migration rollback особенно важен. Если validator раньше ожидал old marker , а
+route уже переведён, audit должен временно принимать оба варианта, пока rollout phase не
+закрыта. Только после зелёного archetype-phase allowed set сужается до нового exact marker
+contract. Это убирает соблазн слабому агенту временно “починить CI” возвратом к старому
+marker-name вместо реального исправления rollout.
+Рабочая инструкция для слабого агента
+Слабому агенту нельзя стартовать с хаотичного “поправлю CSS”. Он должен сделать очень
+конкретную последовательность.
+Сначала среда. node --version должен быть не ниже 22.12.0, потому что это
+зафиксировано в package.json. Затем npm ci. Для локальной сборки нужен npm run 
+astro:build; для production-like dist — npm run strangler:build:production-like.
+Финальный release barrier — npm run validate:static-publication, а после production-like
+build — npm run page-ownership:dist:production-like, npm run pagefind:build:dist, 
+npm run visual:parity:production, при необходимости npm run sw:dist:audit:deploy-
+switch. Всё это уже формализовано в package.json и AGENTS discipline. 
+Потом — поиск мест вмешательства. Если exact pilot paths не изменились, агент работает с:
+current if unchanged:
+src/pages/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-
+germenevtiki/index.astro
+src/components/article-pilots/hermenevtika/HermenevtikaBody.astro
+src/components/article-pilots/hermenevtika/HermenevtikaPageHead.astro
+src/pages/articles/dzhon-gill-istoricheskiy-kontekst/index.astro
+src/components/article-pilots/gill-context/GillContextPageChrome.astro
+related Gill shell/body components
+src/components/floating-cluster/* or future src/components/premium-controls/*
+Пилоты
+Hermeneutics
+hardening
+anchor
+replacement, play
+panel, duplicate
+suppression
+Gill hardening
+rail/mobile roots,
+compact strip,
+marker-safe audits
+Примитивы
+Extract core
+PremiumControlAnchor,
+PremiumControls,
+controller
+Canonical CSS
+single source,
+generated public
+artifact if needed
+Архетипы
+Standalone articles
+article-breadcrumb
+rollout
+Series articles
+series-lite rollout
+Gill formalization
+matrix and audits
+updated
+Завершение
+Legacy exclusions
+app routes locked
+out
+Cleanup
+remove dead
+duplicate branches
+RolloutPremiumControls
+19
+12
+
+js/floating-cluster-controller.js or future canonical controller
+css/floating-cluster.css or future canonical CSS source
+Если paths уже переехали, агент не гадает, а находит по символам:
+rg-n"themeToggle|data-fc-root|data-fc-action|PlayEmber|FloatingCluster|
+GillContextPageChrome|gbs-rail|mobile-bottom-bar"srcjscss
+rg-n"fc-single-active|gb-cluster-single-active|fc-series-active|gb-cluster-
+series-active"srcjscss
+rg-n"readTime"srcdataarticles
+rg-n"gbs2-rail|gbs-rail|visual-parity|article-mdx-pilot-audit|dist-
+publication-audit|visual-parity-contract"scripts
+Дальше — только ручная реализация по archetype.
+Для standalone article route агент делает следующее. Находит старый visual slot, снимает в
+браузере или в test snapshot старые getBoundingClientRect().top/right, вставляет 
+PremiumControlAnchor в тот же slot, переносит старые top/right на anchor , а внутренний
+.gb-floater переводит в non-fixed режим. После этого удаляет или гарантированно скрывает
+видимые legacy duplicates. Лишь потом включает premium Play panel и polishing.
+Для Gill route агент не копирует standalone behavior . Он явно задаёт data-fc-mode="gill" на
+rail/mobile roots, убеждается, что controller инициализирует оба root-а, а rail strip остаётся
+compact/visible, без растягивания controls по всей ширине.
+Наконец, agent обязан прогнать минимальный smoke. Открыть Hermeneutics и Gill локально,
+убедиться, что day/night и Play видны, speed panel открывается и закрывается, controls не
+съезжают, дублей нет, а production-like build зелёный. Только после этого допустим финальный
+full gate.
+Итоговый contract внедрения
+Если свести весь план к одной фразе, она такая: PremiumControls должны стать route-aware
+control system, а не ещё одной плавающей штукой. На article-breadcrumb routes система
+обязана уважать старый visual anchor и заменить старый control slot новым SVG block без потери
+геометрии. На gill-rail routes она обязана быть частью route chrome. На app/routes и
+landings она обязана уметь не появляться вовсе. Именно такой rollout соответствует и migration
+matrix проекта, и Astro CSS-модели, и существующей CI discipline. 
+Если агент не может объяснить, какой archetype он сейчас меняет, какой anchor он сохранил, 
+какой exact mode стоит у root, и как новый CSS избегает drift между Astro и public asset
+delivery, он ещё не готов делать rollout. Если он говорит только “CI green”, но не может показать
+alignment у breadcrumbs-level, отсутствие duplicate-controls, сохранение speed selection и route-
+correct variant choice, значит задача не закрыта.
+gb-is-my-strength/AGENTS.md at main · FedorMilovanov/gb-is-my-strength · GitHub
+https://github.com/FedorMilovanov/gb-is-my-strength/blob/main/AGENTS.md
+20
+1 6
+13
+
+position CSS property - CSS | MDN
+https://developer .mozilla.org/en-US/docs/Web/CSS/position
+Styles and CSS | Docs
+https://docs.astro.build/en/guides/styling/
+raw.githubusercontent.com
+https://raw.githubusercontent.com/FedorMilovanov/gb-is-my-strength/main/migration/route-migration-matrix.json
+HTML-validate - Using CLI
+https://html-validate.org/usage/cli.html
+gb-is-my-strength/package.json at main · FedorMilovanov/gb-is-my-strength · GitHub
+https://github.com/FedorMilovanov/gb-is-my-strength/blob/main/package.json
+@layer CSS at-rule - CSS | MDN
+https://developer .mozilla.org/en-US/docs/Web/CSS/%40layer
+ARIA: aria-disabled attribute - ARIA | MDN
+https://developer .mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-disabled
+pointer-events CSS property - CSS | MDN
+https://developer .mozilla.org/en-US/docs/Web/CSS/pointer-events
+GitHub - dequelabs/axe-core: Accessibility engine for automated Web UI testing · GitHub
+https://github.com/dequelabs/axe-core
+2 10
+3 8 12
+4 9 11 20
+5 17
+7 16 19
+13
+14
+15
+18
+14
