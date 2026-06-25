@@ -75,12 +75,12 @@
 | PS-08 | Audit drift | `interactive-audit` stale theme selectors | Misses `#gbFcTheme`, `.gb-theme-toggle`, `#gbsTheme` |
 | PS-09 | Audit drift | `interactive-audit` wrong Gill context shell expectations | Checks old GBS2 markers, misses new Astro markup |
 | ~~**V2-3**~~ | ~~A11y~~ | **A11y** | ~~**Avraam skip-link `#svg-map` → no such id**~~ → ✅ FIXED | karty/avraam/ | `#svg-map` → `#stage` via sed. `id="stage"` is the main map container (line 1177). Skip-link now functional. |
-| **V2-4** | **SEO** | **`feed.xml` RFC-822 weekday names wrong** | `Sat,31 May` → Sunday ×3; `Thu,01 May` → Friday ×6. Distinct from P2-6 (timezone). |
+| ~~**V2-4**~~ | ~~SEO~~ | ~~**`feed.xml` RFC-822 weekday names wrong**~~ → ✅ **FIXED** | `Sat,31 May` → Sunday ×3; `Thu,01 May` → Friday ×6. All 17 entries corrected in feed.xml. `toRFC()` in update-meta.js replaced with timezone-safe version. |
 | P2-1 | Tooling | `visual-parity-screenshots.js` ~26 of 52+ routes | Coverage gap |
 | P2-2 | CSS | site.css + site-layered.css overlap | Maintainability |
 | P2-4 | SW | CACHE_VERSION manually updated | Human error risk |
 | P2-5 | CI/CD | `notify-on-failure.yml` Python3 parser broken | Alert failures |
-| P2-6 | SEO | `feed.xml` UTC vs Moscow timezone | Publication date errors (separate from V2-4) |
+| ~~P2-6~~ | ~~SEO~~ | ~~`feed.xml` UTC vs Moscow timezone~~ → ✅ RESOLVED | Merged into V2-4. toRFC replaced — all pubDates now correctly +0300 Moscow. |
 | P2-7 | Docs | AGENTS.md complexity | Documentation |
 | P2-8 | Tooling | cache-bust.js ASSETS array duplicate entries | Maintenance |
 | P2-9 | Tooling | Visual parity coverage gap (~52 routes) | Visual drift |
@@ -153,7 +153,8 @@
 | V2-1 | 🟡 PARTIAL FIX | Anchor works, semantic grouping could improve. Part1: sec-early-years added, sec-gill-spirituality removed. Part3: 4 fixed, 1 semantic concern. |
 | V2-2 | ✅ FIXED | data-fontsize="down/up" added to all 6 Nagornaya pages (chast-1..chast-5 + index) |
 | V2-3 | ✅ FIXED | `#svg-map` → `#stage` in karty/avraam/index.html |
-| V2-4 | ✅ CONFIRMED | feed.xml RFC-822 weekday names wrong (Verifier-2) |
+| V2-4 | ✅ FIXED | feed.xml: 17/17 pubDate corrected (9 wrong weekdays Sat->Sun, Thu->Fri + timezone +0000->+0300). toRFC() in update-meta.js replaced with toLocaleString(Europe/Moscow). Python verified. |
+| P2-6 | ✅ RESOLVED | Merged into V2-4. toRFC double-conversion bug caused both weekday and timezone errors. All pubDates now correctly +0300 Moscow. |
 | P2-16, P2-17, P2-18 | ✅ CONFIRMED | Code analysis confirms in HEAD |
 | P3-7, P3-8, P3-9 | ✅ CONFIRMED | Code analysis confirms in HEAD |
 | PS-06 | ✅ FIXED | readTime 35→50 in HermenevtikaBody.astro (duplicate of FIXED section) |
