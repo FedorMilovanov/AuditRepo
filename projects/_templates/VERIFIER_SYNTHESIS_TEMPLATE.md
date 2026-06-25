@@ -1,46 +1,106 @@
-# Verifier Synthesis Template
+# Verifier Synthesis
+
+## Meta
+- Date:
+- Verifier:
+- Project:
+- Source repo:
+- Current HEAD:
 
 ## Inputs reviewed
 
-| Agent | Path | Audited SHA | Scope |
-|---|---|---|---|
+| Agent | Path | Audited SHA | Scope | Findings | Confirmations | Challenges | Proposals |
+|-------|------|-------------|-------|----------|---------------|------------|-----------|
+| ... | incoming/... | ... | ... | N | N | N | N |
 
-## Current source repo state
-- Source repo:
-- Current HEAD:
-- Date checked:
+---
 
-## Deduplicated findings
-- shared runtime bugs
-- route bugs
-- metadata/content bugs
-- audit false positives
-- source-layer drift
+## Bug Canonicalization
 
-## Confirmed-current
+### New findings → canonical IDs
+| Temp ID | Canonical ID | Title | Severity | Verification level |
+|---------|--------------|-------|----------|-------------------|
+
+### Confirmations incorporated
+| Finding | Confirmed by | Evidence | Status |
+|---------|-------------|---------|--------|
+
+---
+
+## Evidence Merge
+
+- Weak + strong evidence combined:
+- Cross-agent corroboration:
+
+---
+
+## Challenge Resolution
+
+### Resolved (confirmed / false-positive / stale)
+| Challenge | Resolution | Evidence |
+|-----------|-----------|---------|
+
+### Unresolved → Conflict registry entry
+| Challenge | Agent A | Agent B | Conflict ID |
+|-----------|---------|---------|-------------|
+
+---
+
+## Duplicate / Merge Decisions
+
+| Finding A | Finding B | Decision | Canonical |
+|-----------|-----------|---------|-----------|
+
+---
+
+## Severity Changes
+
+| Bug | Old | New | Evidence |
+|-----|-----|-----|----------|
+
+---
+
+## Verification Ladder Status
+
+### L0 — Raw / Suspected (needs more work)
 - ...
 
-## Confirmed on old SHA but needs reverify
+### L1 — Peer-reviewed (one agent confirmed/challenged)
 - ...
 
-## Fixed since observation
+### L2 — Confirmed on SHA (2 agents or direct evidence)
 - ...
 
-## Not confirmed
+### L3 — Confirmed Current (reverified on HEAD)
 - ...
 
-## Likely false positives
+### L4 — Repair Ready (confirmed + evidence + lane)
 - ...
 
-## Duplicates merged
+### Stale / Fixed on current HEAD
 - ...
 
-## Recommended repair lanes
-1.
-2.
-3.
+### False Positives
+- ...
 
-## Repair order
-1.
-2.
-3.
+---
+
+## Repair Lane Grouping
+
+| Lane | Bug IDs | Count | Why together |
+|------|---------|-------|-------------|
+| lane/system-p0-fix | PS-01, P0-6 | 2 | Shared fc-controller IIFE + CI cascade |
+| lane/cache-busting | P0-10, P0-7, P0-8, P1-12 | 4 | Cache-busting asymmetry |
+| ... | ... | ... | ... |
+
+---
+
+## Repair Order
+
+1. ...
+2. ...
+3. ...
+
+---
+
+## Notes for Implementation Agent
