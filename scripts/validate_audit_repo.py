@@ -11,6 +11,9 @@ ALLOWED_ROOT_MD = {
     'CONTRIBUTING.md',
     'CLEANUP_RETENTION_POLICY.md',
     'MULTI_WITNESS_VERIFICATION_PROTOCOL.md',
+    # Arena environment passport is intentionally linked from README.md
+    # and required for gb-is-my-strength audit agents (Node 22 / strangler build traps).
+    'SANDBOX-ENV-2026-06-21.md',
 }
 
 def fail(msg, errors):
