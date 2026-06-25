@@ -1,0 +1,17 @@
+## HEAD
+03e01a0008de34d654175ea600cdf9f22b2351b4
+
+## Static grep
+site.js / enhancements.js contain faq handlers:
+      2 js/enhancements.js:faq-accordion__q
+      1 js/site-modules.js:faq-accordion__q
+      1 js/site.js:faq-accordion__q
+
+## Browser click test against production-like dist
+/articles/20-antisovetov-pastoru/ {"hasQ":true,"before":{"expanded":"false","open":false,"bodyDisplay":"grid"},"after":{"expanded":"true","open":true,"bodyDisplay":"grid"},"loadedFaq":false,"loadedModules":false}
+/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/ {"hasQ":true,"before":{"expanded":"false","open":false,"bodyDisplay":"grid"},"after":{"expanded":"true","open":true,"bodyDisplay":"grid"},"loadedFaq":false,"loadedModules":false}
+/articles/kod-da-vinchi/ {"hasQ":true,"before":{"expanded":"false","open":false,"bodyDisplay":"grid"},"after":{"expanded":"true","open":true,"bodyDisplay":"grid"},"loadedFaq":false,"loadedModules":false}
+/articles/krajne-li-isporcheno-serdce/ {"hasQ":true,"before":{"expanded":"false","open":false,"bodyDisplay":"grid"},"after":{"expanded":"true","open":true,"bodyDisplay":"grid"},"loadedFaq":false,"loadedModules":false}
+
+## Interpretation
+aria-expanded false→true and item open false→true after click on all tested routes; window.__gbFaqAccordion is false because standalone module is not loaded, but FAQ is handled by site.js/enhancements.js.
