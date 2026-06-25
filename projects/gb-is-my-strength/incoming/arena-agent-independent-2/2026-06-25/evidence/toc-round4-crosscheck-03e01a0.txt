@@ -1,0 +1,39 @@
+## HEAD
+03e01a0008de34d654175ea600cdf9f22b2351b4
+
+## SW production-like dist status
+dist files:
+-rw-r--r-- 1 user user 282846 Jun 25 19:11 dist/css/site-layered.css
+-rw-r--r-- 1 user user   8707 Jun 25 19:11 dist/js/site-modules.js
+-rw-r--r-- 1 user user  45555 Jun 25 19:12 dist/pagefind/pagefind.js
+sw dist audit tail:
+✅ sw.js image strategy: images use the image cache
+✅ sw.js Pagefind data strategy: Pagefind index/fragment data uses network-first cache
+✅ sw.js Pagefind static strategy: Pagefind static assets use the Pagefind cache
+✅ sw-register.js: registers /sw.js with root scope
+✅ sw-register.js: uses root /sw.js URL
+
+✅ SW dist readiness audit passed
+ℹ️ Advisory notes are expected until the explicit deploy-switch commit.
+
+## P0-10/dist stale controller check
+floating-cluster-controller.js?v=efd81d3a        0
+floating-cluster-controller.js?v=58c2ea90        15
+
+## Gill Part1 duplicate href / id counts
+--- src/components/article-pilots/gill-part1/GillPart1PageChrome.astro
+href #sec-personal-credo: 2
+id sec-personal-credo: 0
+--- dist/articles/dzhon-gill-chast-1-chelovek/index.html
+href #sec-personal-credo: 2
+id sec-personal-credo: 1
+
+## Gill Part3 sec-wesley / broken JSON href
+href="#sec-wesley" html count 0
+id="sec-wesley" count 0
+json href refs missing ids ['sec-wesley']
+
+## series.json/search data
+nagornaya readTimes: [16, 11, 12, 25, 25]
+russian-baptism spravochnik series readTime: [27]
+search spravochnik readTime: None keys: ['description', 'editor', 'featured', 'id', 'image', 'modifiedTime', 'priority', 'publishedTime', 'section', 'tags', 'title', 'type', 'url']
