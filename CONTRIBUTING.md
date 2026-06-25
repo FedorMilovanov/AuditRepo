@@ -121,8 +121,16 @@ gemini-scan-02
    - metadata/content bugs
    - audit false positives
    - source-layer drift
-4. Сформировать bug matrix в `working/`
-5. Только после подтверждения перенести итог в `verified/`
+4. Собрать **2–3 witness view** где возможно:
+   - source witness
+   - artifact witness
+   - browser witness
+   - optional history witness
+5. Сформировать bug matrix в `working/`
+6. Только после подтверждения перенести итог в `verified/`
+
+Если баг начал выглядеть устаревшим или ложным, его нельзя сразу удалять.
+Сначала открыть retirement / stale review и только после перепроверки по нескольким witness-углам переводить в `false-positive` / `fixed-current` / `stale-on-current-head`.
 
 ---
 

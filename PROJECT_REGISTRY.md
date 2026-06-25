@@ -44,17 +44,15 @@
 
 ## How to add a new project
 
-1. Создать папку:
-   - `projects/<project-name>/`
-2. Создать подпапки:
-   - `incoming/`
-   - `working/`
-   - `verified/`
-3. Добавить `README.md` проекта
-4. Внести запись в этот registry
-5. При первом intake создать:
-   - `incoming/<agent>/<YYYY-MM-DD>/README.md`
-   - `working/CURRENT_INTAKE_INDEX_<YYYY-MM-DD>.md`
+1. Создать папку через scaffold:
+   - `python3 scripts/scaffold_project.py <project-folder> --source-repo <owner/repo> [--production-url <url>]`
+2. Убедиться, что создан `PROJECT_META.yml`
+3. Внести запись в этот registry
+4. При первом intake создать:
+   - `python3 scripts/scaffold_intake.py <project> <agent> <YYYY-MM-DD>`
+5. После первой verified-волны добавить:
+   - `verification/START_HERE_<date>.md`
+   - `verified/START_HERE_<date>.md`
 
 ## gb-is-my-strength — updated 2026-06-25 (Verifier-2 merge)
 

@@ -100,3 +100,15 @@ A bug confirmed on old SHA must be reverified before implementation.
 ```
 
 AuditRepo — это не source repo. Это слой координации и доказательств.
+
+## Multi-witness principle
+
+A strong bug should ideally have 2–3 witnesses from different angles:
+- source witness
+- artifact witness
+- browser witness
+- optional history/regression witness
+
+See:
+- `MULTI_WITNESS_VERIFICATION_PROTOCOL.md`
+- `CLEANUP_RETENTION_POLICY.md`

@@ -33,3 +33,18 @@ allowed_report_types:
   - verifier-synthesis
   - reverify
   - repair-plan
+  - retirement-review
+  - witness-matrix
+
+verification:
+  minimum_witnesses_for_confirmed_current: 2
+  preferred_witnesses_for_repair_ready: 3
+  trust_order:
+    - verified-production-like-dist
+    - verified-browser
+    - verified-build
+    - verified-source
+  retirement_flow:
+    - suspected-stale
+    - rechecked
+    - fixed-current_or_false-positive_or_stale-on-current-head

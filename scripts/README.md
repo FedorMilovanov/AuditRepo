@@ -40,3 +40,17 @@ python3 scripts/check_auditrepo_structure.py
 ```bash
 python3 scripts/validate_audit_repo.py
 ```
+
+### `scaffold_reverify.py`
+Создаёт новый reverify-файл под конкретный HEAD SHA:
+
+```bash
+python3 scripts/scaffold_reverify.py <project> <YYYY-MM-DD> <sha>
+```
+
+### `scaffold_retirement_review.py`
+Создаёт review-файл для подозрения на stale / false positive:
+
+```bash
+python3 scripts/scaffold_retirement_review.py <project> <BUG-ID> <YYYY-MM-DD>
+```

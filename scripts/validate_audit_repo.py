@@ -5,7 +5,13 @@ import re
 
 ROOT = Path(__file__).resolve().parent.parent
 PROJECTS = ROOT / 'projects'
-ALLOWED_ROOT_MD = {'README.md', 'PROJECT_REGISTRY.md', 'CONTRIBUTING.md'}
+ALLOWED_ROOT_MD = {
+    'README.md',
+    'PROJECT_REGISTRY.md',
+    'CONTRIBUTING.md',
+    'CLEANUP_RETENTION_POLICY.md',
+    'MULTI_WITNESS_VERIFICATION_PROTOCOL.md',
+}
 
 def fail(msg, errors):
     errors.append(msg)
