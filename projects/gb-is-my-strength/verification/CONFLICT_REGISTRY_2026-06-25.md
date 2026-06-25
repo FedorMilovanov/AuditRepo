@@ -118,3 +118,71 @@ Implication for V2/NEW bug "premium play-ember broken on baptisty/nagornaya": th
 - V2-4 (new, arena-agent-verifier-2): weekday names disagree with the date (`Sat, 31 May 2026`→actually Sunday ×3; `Thu, 01 May 2026`→actually Friday ×6) per RFC-822.
 
 These are different defects in the same file and should both be fixed.
+
+## C-07 — DANGEROUS MISATTRIBUTION: "P0-10 is the root cause of PS-01/PS-02/PS-03"
+
+**Raised by:** `arena-agent-2` (verification pass 2)
+**Severity of the misattribution:** HIGH — if an implementation agent follows the note,
+they will fix cache-busting and believe PS-01 is resolved; the controller will STILL crash.
+
+### The contradiction
+
+`verified/FALSE_POSITIVES_REGISTRY_2026-06-25.md` (NOTES, lines 50–51) states:
+
+> 2. Сосредоточиться на P0-10 (hash bomb) как **корневой причине** PS-01, PS-02, PS-03, PS-05.
+> 3. После исправления P0-10: re-run Playwright для верификации PS-01/05.
+
+But `verification/CONFLICT_REGISTRY` C-04 (this file) already states the *correct*
+root cause of PS-01:
+
+> `initTocPopups`/`initActionHandlers`/`initPlayExpand` are declared AFTER the IIFE
+> close (`})();` line 389) but call `qs`/`qsa` which are local to the IIFE; under
+> `<script defer>` the `ready()` callback runs synchronously and throws before
+> `roots.forEach(initCluster)`.
+
+These two statements are **in direct conflict** about what causes PS-01.
+
+### Why the P0-10→PS-01 link is wrong (deterministic proof)
+
+The two bugs are completely independent:
+
+- **P0-10** = stale `?v=HASH` strings hardcoded in Astro components (cache-busting drift).
+- **PS-01** = a **lexical-scope** defect in the controller's source: three functions
+  declared outside the IIFE reference `qs`/`qsa` declared inside it.
+
+The `?v=` query param is a **cache-buster** — it changes which cached copy a browser
+uses, but GitHub Pages serves the **same file bytes** regardless of the param. The crash
+is in the file's *code structure*, not in how the file is referenced.
+
+**Proof (arena-agent-2):** executing the **current committed file content** directly
+(`js/floating-cluster-controller.js`, the version correctly hashed at `35a91710`) in a
+Node DOM-stub with `readyState:'complete'` still throws
+`ReferenceError: qs is not defined`. If P0-10 caused PS-01, a file with the *correct*
+hash would not crash. It does. Therefore P0-10 ≠ cause of PS-01.
+
+This is corroborated by `arena-agent-verifier-2`, who reproduced the crash in jsdom on
+the shipped `?v=35a91710` file and traced it to the IIFE-scope defect — never mentioning
+cache-bust hashes as a factor.
+
+### Corrected causality
+
+| Bug | Real cause | Independent of P0-10? |
+|---|---|---|
+| **PS-01** `qs is not defined` | IIFE lexical-scope defect (functions after `})();`) | **YES — independent** |
+| **PS-02** dead theme controls | symptom of PS-01 (init aborts before `initCluster`) | YES — independent |
+| **PS-03** dead save controls | symptom of PS-01 | YES — independent |
+| **PS-05** stray `76e7365` | plausibly downstream of P0-10 (build/serializer artifact) | **possibly linked** (needs build proof) |
+
+### Resolution
+
+- **PS-01/PS-02/PS-03 must be fixed by editing `js/floating-cluster-controller.js`**
+  (move the three functions inside the IIFE). Fixing P0-10 will NOT touch them.
+- The FALSE_POSITIVES_REGISTRY note (lines 50–51) should be **corrected**: remove
+  PS-01/PS-02/PS-03 from the "P0-10 is root cause" list. Only PS-05 may plausibly
+  remain linked to P0-10, and even that needs a fresh dist build to confirm.
+- **Implementation order:** PS-01 fix and P0-10 fix are independent and can proceed in
+  parallel, but NEITHER closes the other.
+
+### Action for the final verifier
+Correct the FALSE_POSITIVES_REGISTRY NOTES so an implementation agent does not skip the
+controller edit under the false belief that fixing cache-bust hashes will revive the cluster.
