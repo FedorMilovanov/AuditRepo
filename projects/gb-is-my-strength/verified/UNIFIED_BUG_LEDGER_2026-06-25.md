@@ -2,7 +2,7 @@
 **Status:** repair-ready  
 **Sources:** Arena Agent (Playwright + dist, 7 reports) + Arena Agent TOC (static scan) + Arena Agent Round 3 (code audit) + Arena Agent Round 4 (code deep-dive) + Arena Agent Verifier-2 (runtime + cross-validation)  
 **Verified by:** Cross-reference synthesis + Round 4 code verification + Verifier-2 runtime pass  
-**Total: 63 bugs** (8 P0, 22 P1, 21 P2, 12 P3) | 4 false positives / status corrections closed
+**Total: 64 bugs** (9 P0, 22 P1, 21 P2, 12 P3) | 5 false positives / status corrections closed
 
 ---
 
@@ -18,6 +18,7 @@
 | **P0-3** | **P0** | **SEO** | **`robots.txt` blocks AhrefsBot, SemrushBot, MJ12bot** | SEO/marketing | `Disallow: /*?*` for `User-agent: *` + explicit `Disallow: /` for SEO bots | Confirmed in HEAD |
 | **PS-04** | **P0** | **Ownership conflict** | **Heart routes: `.gb-ember` suppresses legacy TTS but no controller loaded** | `krajne-li-isporcheno-serdce/`, `rimlyanam-7/` | `.gb-ember` rendered in Astro source but `floating-cluster-controller.js` NOT loaded | Confirmed by code analysis (Verifier-2 + Round 4 independently): KrajneBody/Rimlyanam7Body load NO fc-controller |
 | **PS-07** | **P0** | **HTML validity** | **Duplicate IDs `gbsTheme`/`gbsSearch` on Gill pages** | Gill Part1-3 + Context + Spravochnik | `GillRailControls.astro` hardcoded `id="gbsTheme"` + `id="gbsSearch"` used twice per page (mobile + rail instances) | Confirmed in HEAD Astro source (Verifier-2): hardcoded IDs exist in component at lines 43, 66. 4+ Gill pages each render two instances. |
+| **P0-NEW** | **P0** | **Service Worker** | **SW precache 404 for `site-layered.css` + `site-modules.js`** | All SW-enabled pages | Files exist in `src/` but are NEVER imported in any Astro component → Astro build does NOT copy them to `dist/` → SW precache gets 404 | Confirmed: `grep site-layered site-modules src/ --include="*.astro"` → 0 results; `ls dist/css/site-layered.css` → No such file. Deeper root of P0-7/P0-8: these bugs aren't just cache-bust asymmetry — the assets don't exist in dist at all. |
 
 ### P0-10 Detail (THE BIGGEST FINDING)
 
@@ -135,6 +136,7 @@
 | Cache-busting asymmetry | P0-7, P0-8, P1-17, P1-18 | 4 |
 | Migration data conflict | P1-5 | 1 |
 | Gill TOC structure issues | V2-1 | 1 |
+| **P0-NEW: SW precache missing assets** | **P0-NEW** (standalone: assets don't exist in dist/) | 1 |
 
 ---
 
@@ -157,6 +159,7 @@
 | PS-06 | ⚠️ NEEDS VERIFICATION | readTime drift needs runtime check on HEAD |
 | PS-08, PS-09 | ⚠️ LIKELY AUDIT DRIFT | Tooling assumptions don't match new Astro markup |
 | P0-2 | ❌ FALSE POSITIVE | File = 1869 lines, 68KB CSS; not empty |
+| **P0-NEW** | ✅ CONFIRMED | `find . -name site-layered.css` → exists in src/, NOT in dist/; grep `site-layered` src/ → 0 Astro imports |
 
 ---
 
@@ -210,3 +213,10 @@
 - PS-02 (dead theme) — cascade of PS-01 → should auto-fix
 - PS-03 (dead save) — cascade of PS-01 → should auto-fix
 - PS-05 (stray hash) — cascade of P0-10 → should auto-fix
+
+### Round 5 amendments (2026-06-25):
+**Source:** `incoming/arena-agent-round5/2026-06-25/VERIFICATION_AUDIT_ROUND5.md`
+**Changes:** All 63 existing bugs verified in HEAD 3b105dc8 of FedorMilovanov/gb-is-my-strength. **1 net-new P0 bug discovered** (P0-NEW).
+**P0-NEW detail:** `site-layered.css` and `site-modules.js` referenced in `sw.js` PRECACHE_ASSETS but NOT imported in any Astro component → NOT copied to `dist/` → 404 on all SW-enabled pages. Deeper root of P0-7/P0-8: these files don't even exist in dist/.
+**Note:** The FIXED section above documents implementation progress in AuditRepo's lane/ branch. Actual project repo (FedorMilovanov/gb-is-my-strength, HEAD 3b105dc8) still has bugs unfixed until those commits are merged into the project. Verification target is the project repo.
+**Count impact:** P0 8→9 (P0-NEW). Final: **64 bugs (9 P0, 22 P1, 21 P2, 12 P3)** in project repo.
