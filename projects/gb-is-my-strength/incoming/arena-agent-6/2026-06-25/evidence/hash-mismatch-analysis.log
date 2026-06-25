@@ -1,0 +1,39 @@
+=== Hash comparison: current files vs Astro components ===
+
+Current file hashes:
+  css/site.css → b880b524
+  css/command-palette.css → afe33045
+  css/mobile-hotfix.css → c1f7664e
+  css/floating-cluster.css → ccc70580
+  js/site.js → 133dfac1
+  js/site-utils.js → 897afa55
+  js/sw-register.js → 318502c5
+  js/search.js → c9d65577
+  js/floating-cluster-controller.js → 5200bc9b
+  fonts/fonts.css → 4504f3cb
+
+Hashes in Astro components (unique):
+     57 v=4504f3cb
+     47 v=133dfac1
+     37 v=c9d65577
+     36 v=b880b524
+     36 v=897afa55
+     36 v=454d6f7b
+     35 v=afe33045
+     34 v=c1f7664e
+     33 v=b3b77aa6
+     32 v=ffd00d98
+     32 v=a1706b06
+     28 v=2100cf4f
+     24 v=8a077d35
+     20 v=c5e0bf10
+     15 v=efd81d3a
+     13 v=318502c5
+      9 v=c4a4a7fd
+      8 v=2670414e
+      5 v=f5b561ee
+      1 v=ccc70580
+
+=== MISMATCHES ===
+fc-controller: file=5200bc9b, astro=efd81d3a (15 components)
+floating-cluster.css: file=ccc70580, missing ?v= in 3 components
