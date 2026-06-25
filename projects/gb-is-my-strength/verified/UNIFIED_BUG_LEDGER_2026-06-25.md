@@ -182,3 +182,31 @@
 
 ### Count impact:
 +4 net-new (V2-1..V2-4). P0-2 false-positive −1 (P0 9→8). Final: **63 bugs (8 P0, 22 P1, 21 P2, 12 P3)**.
+
+---
+
+## FIXED — resolved in lane/fix-ps01-iife-scope-2026-06-25 (commit c1bd605)
+
+| ID | Status | Fix |
+|---|---|---|
+| PS-01 | ✅ FIXED | Moved `})();` to EOF — initTocPopups/initActionHandlers/initPlayExpand now inside IIFE |
+| P0-10 | ✅ FIXED | 72 Astro files updated with correct ?v=HASH |
+| PS-06 | ✅ FIXED | readTime 35→50 in HermenevtikaBody.astro |
+| PS-07 | ✅ FIXED | Removed hardcoded id=gbsTheme/gbsSearch from GillRailControls.astro |
+| P0-7 | ✅ FIXED | Removed /css/site-layered.css from sw.js PRECACHE_ASSETS |
+| P0-8 | ✅ FIXED | Removed /js/site-modules.js from sw.js PRECACHE_ASSETS |
+
+## Additional false positives closed
+
+| ID | Status | Reason |
+|---|---|---|
+| P0-1 | ❌ FALSE | data-fc-action="save" IS handled in initCluster() |
+| P0-2 | ❌ FALSE | floating-cluster.css is 68KB real CSS |
+| P0-3 | ❌ POLICY | robots.txt SEO blocks are intentional editorial policy |
+| BUG-007 | ❌ FALSE | GillContextPageChrome already has <PlayEmber> + <SaveButton> |
+
+## Cascades expected resolved (need Playwright verify)
+
+- PS-02 (dead theme) — cascade of PS-01 → should auto-fix
+- PS-03 (dead save) — cascade of PS-01 → should auto-fix
+- PS-05 (stray hash) — cascade of P0-10 → should auto-fix
