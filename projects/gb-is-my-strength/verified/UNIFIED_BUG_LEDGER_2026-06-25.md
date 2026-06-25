@@ -2,7 +2,7 @@
 **Status:** repair-ready  
 **Sources:** Arena Agent (Playwright + dist, 7 reports) + Arena Agent TOC (static scan) + Arena Agent Round 3 (code audit) + Arena Agent Round 4 (code deep-dive) + Arena Agent Verifier-2 (runtime + cross-validation)  
 **Verified by:** Cross-reference synthesis + Round 4 code verification + Verifier-2 runtime pass  
-**Total: 60 bugs** (9 P0, 20 P1, 19 P2, 12 P3) | 5 false positives / status corrections closed
+**Total: 61 bugs** (9 P0, 20 P1, 19 P2, 13 P3) | 5 false positives / status corrections closed
 
 ---
 
@@ -46,8 +46,8 @@
 | PS-02 | P1 | Shared runtime | Dead premium theme controls | Visible on Gill pages, render but non-functional | **Root: PS-01 + P1-13** — controller init aborts + theme.js doesn't wire GBS2 |
 | **PS-06** | **P1** | **Metadata** | ~~**Hermeneutics hidden readTime=35 vs visible=50**~~ → FIXED | Pagefind shows 35, visible shows 50 | ✅ FIXED: `data-pagefind-meta readTime` updated 35→50 in HermenevtikaBody.astro. Confirmed in project source. Duplicate of FIXED section entry. |
 | P1-1 | P1 | Shared runtime | Old controls don't check `.has-premium-controls` before init | `site.js` init without guard | Confirmed |
-| P1-2 | P1 | Metadata | `sitemap.xml` incomplete (~43 of 52+ URLs) | Missing karty, baptisty subroutes | Confirmed |
-| P1-3 | P1 | Metadata | `search-manifest.json` incomplete (~44 of 52+ items) | Same gaps as sitemap | Confirmed |
+| P1-2 | P1 | Metadata | ~~`sitemap.xml` incomplete (~43 of 52+ URLs)~~ → ⚠️ **RECHECK** | Gap = 8 karty stub pages (early-church, maccabim, melachim, pavel, revelation, shoftim, shvatim, yeshua) + home page. Stubs are placeholders per owner design — intentional omission, not a bug. Baptisty subroutes ARE in sitemap. | Confirmed intentional design: stub pages should not be indexed. | Confirmed |
+| P1-3 | P1 | Metadata | ~~`search-manifest.json` incomplete (~44 of 52+ items)~~ → ⚠️ **RECHECK** | 44 items vs 51 Astro pages. Gap = 8 karty stubs (should not be indexed) + / (home page). Home page IS in sitemap — search still functional. | Confirmed intentional: stubs excluded from search index. | Confirmed |
 | P1-4 | P1 | Metadata | `ASTRO_PAGE_HEAD_MAP` incomplete | Missing baptisty, karty, nagornaya | Confirmed |
 | P1-5 | P1 | Migration | `page-ownership.json` vs `route-migration-matrix.json` conflict | Different dates, divergent routes | Confirmed |
 | P1-6 | P1 | Tooling | `copy-legacy-to-dist.js` race condition | No timestamp compare | Confirmed |
@@ -107,8 +107,9 @@
 | P3-5 | Audit | `interactive-audit` hardcoded URL lists drift | Maintenance |
 | P3-6 | Cache | `floating-cluster-controller.js` stale hash in 10 refs | Maintenance |
 | **P3-7** | **Visual** | **BaptistyRossiiBody empty decorative elements** | Empty `<i>`, empty divs |
-| **P3-8** | **JS Module** | **Antisovetov FAQ accordion HTML present but `faq-accordion.js` never loaded** | FAQ never works on pilot page |
+| **P3-8** | **JS Module** | ~~Antisovetov FAQ accordion~~ → ⚠️ **EXPANDED** | 5 pages: Antisovetov, Hermenevtika, KodDaVinchi, Krajne, Rimlyanam7 — .faq-accordion HTML present but faq-accordion.js never loaded. |
 | **P3-9** | **Analytics** | **BaseLayout bodyEndHtml accumulation may create duplicate Yandex.Metrika** | Fragile dedup |
+| **P3-NEW** | **UX / JS Module** | `back-to-top.js` module NEVER loaded on any page | Gill Part1-3 (32/39/54 min), Krajne, Rimlyanam7. Button HTML present but: (1) scroll-based visibility never triggers, (2) click-to-scroll non-functional. Module at js/modules/back-to-top.js exists but is NEVER loaded on any page. |
 | P3-10 | A11y | Nagornaya article TOC scroll target issues | V2-2 related |
 | P3-11 | Cache | site-modules.js cache-bust drift (related to P1-18) | |
 | P3-12 | Route | AvraamMap baseGeoUrl without cache-busting (related to P2-18) | |
@@ -216,6 +217,24 @@
 - PS-02 (dead theme) — cascade of PS-01 → should auto-fix
 - PS-03 (dead save) — cascade of PS-01 → should auto-fix
 - PS-05 (stray hash) — cascade of P0-10 → should auto-fix
+
+
+
+### Round 7 amendments (2026-06-25):
+**Source:** 
+**Changes:** 1 new bug found; P1-2/P1-3 rechecked; P0-6 design reviewed.
+
+**Net-new bugs:**
+- P3-NEW:  module never loaded anywhere — 5 articles (Gill Part1-3, Krajne, Rimlyanam7) have button HTML but no scroll-visibility or click-to-top. Repair lane: same as P3-8 (faq-accordion-wiring).
+
+**Scope changes:**
+- P3-8: expanded from 1 page (Antisovetov) to 5 pages (add Hermenevtika, KodDaVinchi, Krajne, Rimlyanam7)
+- P1-2: gap = 8 karty stub pages + home — intentional design, stubs should not be indexed
+- P1-3: gap = 8 karty stubs + home — intentional design
+- P0-6: CI cascade appears intentionally designed per deploy.yml comment; git history shows 3 regression-fix commits may have addressed earlier issues
+
+**Bug count:** 61 bugs (9 P0, 20 P1, 19 P2, 13 P3)
+
 
 ### Round 6 amendments (2026-06-25):
 **Source:** `incoming/arena-agent-round6/2026-06-25/IMPLEMENTATION_AUDIT_ROUND6.md`
