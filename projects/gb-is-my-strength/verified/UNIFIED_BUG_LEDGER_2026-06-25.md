@@ -220,3 +220,27 @@
 **P0-NEW detail:** `site-layered.css` and `site-modules.js` referenced in `sw.js` PRECACHE_ASSETS but NOT imported in any Astro component → NOT copied to `dist/` → 404 on all SW-enabled pages. Deeper root of P0-7/P0-8: these files don't even exist in dist/.
 **Note:** The FIXED section above documents implementation progress in AuditRepo's lane/ branch. Actual project repo (FedorMilovanov/gb-is-my-strength, HEAD 3b105dc8) still has bugs unfixed until those commits are merged into the project. Verification target is the project repo.
 **Count impact:** P0 8→9 (P0-NEW). Final: **64 bugs (9 P0, 22 P1, 21 P2, 12 P3)** in project repo.
+
+
+---
+
+## PLAYWRIGHT-VERIFIED — 2026-06-25 (second round, commit 2f2e2bb)
+
+### Дополнительно исправлено и верифицировано Playwright:
+
+| Bug | Status | Evidence |
+|---|---|---|
+| PS-04 heart series без контроллера | ✅ FIXED+VERIFIED | Playwright: krajne cluster=✅ save_works=✅ |
+| Controller early-return bug | ✅ FIXED | initGillRail() moved before `if (!roots.length) return` |
+| Nagornaya data-fc-root missing | ✅ FIXED | Root HTML: data-fc-root + data-fc-mode=nagornaya |
+| PS-02 theme на Hermeneutics | ✅ VERIFIED working | Playwright: theme_works=true |
+| PS-03 save на Krajne | ✅ VERIFIED working | Playwright: save_works=true |
+| PS-05 stray hash | ✅ VERIFIED not present | Playwright: body_stray=false all routes |
+| PS-07 duplicate IDs | ✅ VERIFIED clean | Playwright: dup_ids=none all Gill routes |
+
+### Установлено:
+- GillPart1 theme_btn=false в тесте — НЕ баг: root HTML использует data-gbs2-theme (обрабатывается site.js, не fc-controller)
+
+### Playwright test environment:
+- Node.js v22.23.1, Playwright Chromium, static HTTP server
+- Tested root HTML (legacy), not Astro dist
