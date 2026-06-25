@@ -303,3 +303,48 @@ URLs crawlable, `?v=` URLs not. Working as designed.
 ### Action for the final verifier
 Remove P0-3 from the P0 set (align with FP-03). The P0 count should reflect this closure
 alongside the P0-NEW closure in C-08.
+
+## C-10 — P1-2 + P1-3 (sitemap / search-manifest "incomplete") are FALSE POSITIVES
+
+**Raised by:** `arena-agent-2`
+**Claims (round4/round5):** `sitemap.xml` ~43 of 52+ URLs and `search-manifest.json`
+~44 of 52+ are "incomplete — Missing karty, baptisty subroutes" (P1-2, P1-3).
+**Verdict:** FALSE POSITIVE. The 43/44 counts are correct and deliberate.
+
+### Proof (arena-agent-2)
+
+Compared every public `index.html` against `sitemap.xml`:
+
+- **All 10 `baptisty-rossii/*` pages ARE in sitemap** (noindex=False). The "baptisty
+  subroutes missing" half of the claim is simply wrong.
+- **0 `articles/*` and 0 `nagornaya/*` pages missing.**
+- The only pages outside sitemap are **8 `karty/*` map pages** + 1 dev `_app`.
+
+The 8 `karty/*` pages are **intentionally excluded** — they carry
+`<meta name="robots" content="noindex, follow">` and a title stating
+«временно на визуальном аудите» (temporary placeholders under visual audit). Example:
+`/karty/pavel/`, `/karty/yeshua/`. The `avraam` map (the one that IS in sitemap) is the
+only finished one (`index, follow`).
+
+`search-manifest.json` = 44 entries and likewise correctly **excludes** the noindex
+`karty/*` pages.
+
+### This matches the documented contract
+
+`README.md` §1.1 states explicitly:
+> 43 indexable public baseline pages after removing temporary map placeholders from
+> public search/indexing surfaces.
+
+So 43/44 is the **intended** count, not a gap. Excluding `noindex` placeholders from
+sitemap/search is correct SEO practice, not a bug.
+
+### Resolution
+- **P1-2 → CLOSE (false positive).** Sitemap is complete for all indexable content.
+- **P1-3 → CLOSE (false positive).** search-manifest likewise.
+- When the remaining `karty/*` maps finish visual audit and flip to `index, follow`,
+  they should be added to sitemap + manifest at that time — that is a content-rollout
+  task, not a current bug.
+
+### Action for the final verifier
+Drop P1-2 and P1-3 from the bug set. (Pair this with the P0-NEW and P0-3 closures in
+C-08/C-09 when recomputing the final count.)
