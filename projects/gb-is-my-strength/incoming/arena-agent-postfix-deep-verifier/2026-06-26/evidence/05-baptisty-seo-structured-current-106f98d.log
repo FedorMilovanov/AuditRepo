@@ -1,0 +1,18 @@
+$ Baptisty dist structured data / OG probe
+{"rel":"baptisty-rossii/dva-sezda-1884/index.html","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/goneniya-i-sovest/index.html","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/index.html","hub":true,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/iniciativnaya-gruppa/index.html","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/noch-na-kure/index.html","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/peterburgskaya-liniya/index.html","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/podpolnaya-pechat/index.html","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/sovetskaya-noch/index.html","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/spravochnik/index.html","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/vsehib-1944/index.html","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+{"rel":"baptisty-rossii/yuzhnaya-shtunda/index.html","articles":1,"articleMissingDate":true,"hasBreadcrumbList":false,"ogType":"image/svg+xml"}
+TOTAL {
+  articlePages: 10,
+  missingDates: 10,
+  missingBreadcrumbList: 10,
+  svgOg: 11
+}
