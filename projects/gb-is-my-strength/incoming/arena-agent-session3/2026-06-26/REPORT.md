@@ -238,6 +238,34 @@ Given the goal stated by the owner ("единый монолит, не 100 ли�
 
 ---
 
+# ROUND 7 ADDENDUM — IMPLEMENTATION BATCH: 4 more lanes pushed (systemic + SEO)
+
+> Continued "close everything topово". Pushed 4 more lanes to source repo (base `106f98d`).
+> Evidence: `evidence/S3-FIXES-batch-2026-06-26.txt` + `S3-N5-...`, `S3-PC002-...`.
+
+| Lane | Bug(s) | Result | Witness |
+|---|---|---|---|
+| `system-cache-bust-astro-source` | **S3-N4 / PC-003 / P0-10** (root cause) | cache-bust now rewrites `src/*.astro`; postbuild drift 527→**0**; source is now truth | source + build + audit-pro PASS |
+| `karty-ishod-jsonld` | **S3-N5 / P0-02 / PFV-002** | extra `}` removed in `IshodPageHead.astro`; dist JSON-LD 0 errors site-wide | source + dist parse |
+| `baptisty-seo-breadcrumb-ogimage` | **S3-N1 + S3-N2 / PFV-004** | BreadcrumbList added to 11 heads; 11 WebP og:images generated (verified visually) | source + build + dist |
+| `premiumcontrols-heart-series-wiring` | **PC-002** | `data-fc-root` on heart `.gbs2-rfoot` | Playwright browser |
+
+**The big one — S3-N4/P0-10 root cause closed:** `cache-bust.js` was the engine behind every recurring "stale hash" finding because it only touched legacy HTML, never `src/*.astro`. Now it busts both; the postbuild rescue went from 527 replacements to **0** → the Astro source of truth stays correct on its own. This directly serves the owner's "монолит, не 100 линий" goal.
+
+**Cumulative this session — recommend verifier promote to `fixed-current`:**
+CHV-003, CHV-004, PC-002, S3-N1, S3-N2, S3-N4/PC-003/P0-10, S3-N5/P0-02.
+
+**Still open (need owner decision or larger feature lanes):**
+- PC-001 (PremiumControlAnchor architecture)
+- PC-004 (canonical CSS source — owner wants feature-first, then CSS cleanup)
+- PC-005 (PlayEmber semantics + storage key `gbx-tts-rate`→`gb:audio:rate`)
+- PC-006 (route-archetype rollout audit)
+- N-2026-06-26-05 (`/karty/avraam/` thin indexable body — needs accessible text layer or contract exception)
+- CHV-002 / N-2026-06-26-02 (`/rodosloviye/` noindex-vs-sitemap-vs-baseline 3-way — one owner decision)
+- P1-5 (migration matrix undefined modes / profile mismatches)
+
+---
+
 # ROUND 6 ADDENDUM — IMPLEMENTATION: PremiumControls PC-002 FIXED (browser-verified)
 
 > Reviewed the `arena-agent-premiumcontrols-verifier` intake in full (REPORT, plan PDF,

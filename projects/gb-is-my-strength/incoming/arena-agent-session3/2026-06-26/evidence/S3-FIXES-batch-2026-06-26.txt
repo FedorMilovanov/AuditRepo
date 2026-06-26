@@ -1,0 +1,33 @@
+# S3-FIXES — batch implementation 2026-06-26 (4 lanes pushed to source repo, base 106f98d)
+
+## 1. lane/system-cache-bust-astro-source-2026-06-26  (S3-N4 / PC-003 / P0-10 ROOT CAUSE)
+cache-bust.js now also rewrites src/**/*.astro (collectAstro + bustAstroFile, strict
+?v=<8hex>-only regex). Result:
+- all 18 shared assets in src now correct (fc-controller was 3 wrong versions, 0 correct -> now ba4a4019)
+- 38 components synced; script idempotent (re-run = 0 changes)
+- astro-cache-bust-postbuild now reports 0 touched / 0 replacements (was 527) => SOURCE is now truth
+- audit-pro PASSED; data:consistency PASSED; guard:shared-files PASSED
+=> The systemic "stale hash" engine behind recurring P0-10 is closed at the source.
+
+## 2. lane/karty-ishod-jsonld-2026-06-26  (S3-N5 / P0-02 / N-2026-06-26-04 / PFV-002)
+IshodPageHead.astro: removed extra '}' (Organization closed twice). 1 line.
+- JSON.parse OK; strangler:build 52 pages; dist/karty/ishod JSON-LD 0 errors;
+  full dist/**/*.html JSON-LD sweep 0 errors.
+
+## 3. lane/baptisty-seo-breadcrumb-ogimage-2026-06-26  (S3-N1 + S3-N2 / PFV-004)
+- BreadcrumbList JSON-LD added to all 11 baptisty PageHeads (3-level articles, 2-level hub).
+- og:image SVG -> WebP: generated 11x 1200x630 webp via sharp from existing SVG designs
+  (verified visually, text crisp). og:image + og:image:type=image/webp + JSON-LD image updated.
+- dist: 11 webp present; og:image=webp; BreadcrumbList present; baptisty JSON-LD 0 errors.
+- data:consistency + seo-audit(0/0) + content:parity green.
+
+## 4. lane/premiumcontrols-heart-series-wiring-2026-06-26  (PC-002) [pushed earlier this session]
+- data-fc-root on .gbs2-rfoot in Krajne+Rimlyanam7; browser-verified Save toggles + Play panel opens.
+
+## Also earlier: lane/content-text-corruption-2026-06-26 (CHV-003 + CHV-004).
+
+## STATUS SUMMARY (recommend verifier promote to fixed-current):
+CHV-003, CHV-004, PC-002, S3-N1, S3-N2, S3-N4/PC-003/P0-10, S3-N5/P0-02  -> fixed-current (lanes pushed)
+Remaining open: PC-001 (anchor), PC-004 (canonical CSS), PC-005 (PlayEmber semantics),
+PC-006 (archetype audit), N-2026-06-26-05 (avraam thin body), CHV-002/N-02 (rodosloviye 3-way),
+P1-5/migration matrix modes. All require either owner decision or larger feature lanes.
