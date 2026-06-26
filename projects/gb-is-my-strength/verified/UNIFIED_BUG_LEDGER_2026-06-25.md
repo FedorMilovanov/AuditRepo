@@ -569,3 +569,22 @@ Total: 61→60 bugs.
 - Fixed in AuditRepo (pending): 6 (PS-01, P0-10, PS-06, PS-07, P0-7, P0-8)
 - FALSE POSITIVE: 2 (P3-8, P1-13)
 - **Active remaining: ~40 bugs**
+
+---
+
+## Amendments — Arena Agent Round 15 (2026-06-25)
+
+**Source:** `incoming/arena-agent-round15/2026-06-25/REPORT.md`
+
+### Round 15 fixes (project source):
+- **P2-14 ✅ FIXED (secondary)** — `sw.js`: removed `"/js/series-cards.js"` from PRECACHE_ASSETS. Was missed in R12 cache-bust.js fix. sw.js has its own PRECACHE_ASSETS array separate from cache-bust.js ASSETS.
+- **P3-6 ✅ FIXED** — floating-cluster-controller.js hash updated from `v=c78a4236` to `v=35a91710` in 13 Astro components (actual file hash = 35a91710). Components: AntisovetovBody, GillContextPageChrome, GillPart1/2/3PageChrome, GillSpravochnikPageChrome, HermenevtikaBody, KodDaVinchiPageFooter, NagornayaChast1-5PageFooter.
+
+### Key discovery:
+- All `js/modules/*` files (back-to-top, faq-accordion, img-loaded, theme) exist in src/ but NEVER in dist/ — not imported in Astro build
+- `css/site-layered.css` and `js/series-cards.js` similarly never in dist/
+- These are reference/utility files, not active project code
+
+### Updated counts:
+- Fixed in project source (R9-R15): P0-NEW, P3-NEW, P2-17, P3-12, P2-18, P1-14, P1-15, P1-16, P1-5, P1-9, P2-14(x2), P2-5, P2-12, P3-6 (15 fixes)
+- Remaining active bugs: ~38
