@@ -88,6 +88,28 @@
 - Source file(s): `.github/workflows/notify-on-failure.yml`
 - Actual: Скрипт уведомлений слушает только 5 пайплайнов. Ещё 6 пайплайнов (`visual-parity.yml`, `weekly-deep-seo.yml`, `test-genealogy.yml`, `mdx-parity.yml`, `map-qa.yml`) при падении не открывают GitHub Issue с алертом.
 
+### Finding RD-08
+- Title: Замороженный дефект профилей карт — 8 holding-страниц помечены как `legacy-shadow-app` с 0% parity
+- Severity: P2
+- Route(s): `/karty/pavel/`, `/karty/yeshua/`, `/karty/early-church/`, `/karty/revelation/`, `/karty/shoftim/`, `/karty/melachim/`, `/karty/shvatim/`, `/karty/maccabim/`
+- Source file(s): `data/route-profiles/karty-*.json`
+- Observed on SHA: `09c2d34a`
+- Expected: Профили отражают реальный статус временных холдинг-страниц (`strict-native-holding-page` / `temporary-placeholder`).
+- Actual: Во всех 8 профилях зафиксировано `"migrationMode": "legacy-shadow-app"` и `"visualParity": {"desktop": 0, "mobile": 0}`.
+- Evidence: `cat data/route-profiles/karty-pavel.json | grep migrationMode`.
+- Confidence: high
+- Verification level: L4 repair-ready (W1 source witness)
+
+### Finding RD-09
+- Title: Пропуск метаданных времени чтения для 3-й статьи серии «Тайны человеческого сердца»
+- Severity: P2
+- Source file(s): `data/series.json` (`hard-texts.parts[2]`)
+- Expected: Все элементы массива серий несут свойство `readTime` / `readingTime`.
+- Actual: Запланированная статья `zakon-duha-zhizni-rimlyanam-8` лишена свойства времени чтения, генерируя потенциальный дрифт карточки на главной.
+- Evidence: `jq '.["hard-texts"].parts[2]' data/series.json`.
+- Confidence: high
+- Verification level: L4 repair-ready
+
 ---
 
 ## 2. Synthesis of 40+ Bash Validation Scripts (Инвентаризация скриптов)
