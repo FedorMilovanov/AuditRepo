@@ -1,6 +1,6 @@
 # gb-is-my-strength / gospod-bog.ru
 
-**Status: repair-ready** (2026-06-25)
+**Status: current-head re-verified / priority-reset in progress** (2026-06-27)
 
 ## Quick facts
 - Source: `FedorMilovanov/gb-is-my-strength`
@@ -8,29 +8,34 @@
 - Tech: Astro 5 + strangler pattern (root HTML + Astro dist)
 - Premium controls: v16 SVG floating cluster (gb-icon, gb-ember, gb-save)
 
-## Bug counts (confirmed)
+## Current-head note (2026-06-27)
 
-| Severity | Count |
-|----------|-------|
-| P0 critical | 9 |
-| P1 high | 13 |
-| P2 medium | 15 |
-| P3 low | 5 |
-| **Total** | **42** (2 false positives closed) |
+⚠️ **Do not treat older aggregate bug counts in this folder as current operational truth.**
 
-## Key findings
+The project moved substantially after the 2026-06-25 synthesis wave. Current verifier position:
+- use `verified/CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md` as the primary current-head truth;
+- use `verification/CANONICAL_VERIFIER_NOTE_2026-06-27_current-head-status-flips-and-second-order-defects.md` for status flips and second-order defects;
+- treat `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` as an important historical baseline, **not** as a pure present-state ledger.
 
-1. **P0-10:** All 36+ Astro components have stale hardcoded asset hashes — cache-busting broken for Astro-owned pages
-2. **PS-01:** `qs is not defined` controller crash on 13 premium routes
-3. **P0-6:** CI cascade race condition (indexnow.yml git push)
-4. **P0-7 + P0-8:** site-layered.css + site-modules.js in SW precache but not in cache-bust
+## Current live themes (current HEAD)
+
+1. **Workflow-policy mismatch:** `npm run workflows:check` is red while the broader publication gate is green.
+2. **Partial route integration:** `/izbrannoe/` exists in source/UI but is not fully reconciled across migration/search/reference contracts.
+3. **Gill convergence debt:** Gill pages still span more than one UI family / premium-control structure.
+4. **Source-vs-built publication risk:** source-side fixes cannot automatically be treated as publication truth in this hybrid repo.
+5. **Ledger / guard drift:** some canonical-looking docs and some guards now lag current architecture or current HEAD reality.
 
 ## Working documents
 
 | File | Purpose |
 |------|---------|
-| `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` | Complete bug matrix (all agents) |
-| `verified/repair-order-unified-2026-06-25.md` | Prioritized fix plan |
+| `verified/CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md` | **Primary current-head operational truth** |
+| `verification/CANONICAL_VERIFIER_NOTE_2026-06-27_current-head-status-flips-and-second-order-defects.md` | Status flips, stale-vs-live reset, second-order defects |
+| `verified/REPAIR_ORDER_DELTA_2026-06-27_current-head-priority-reset.md` | Priority reset vs stale 2026-06-25 repair instincts |
+| `working/STATUS_MATRIX_2026-06-27_current-head-verifier-grade.md` | Quick verifier-grade classification matrix |
+| `working/ARENA_DEEP_REVERIFY_2026-06-27_systemic-desync-and-unfinished-implementation.md` | Deep analysis: desync, unfinished implementations, control-plane defects |
+| `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` | Historical baseline ledger from the 2026-06-25 synthesis wave |
+| `verified/repair-order-unified-2026-06-25.md` | Historical prioritized fix plan from earlier wave |
 | `verification/cross-reference/cross-reference-synthesis-2026-06-25.md` | Cross-agent findings merge |
 | `verification/CONFLICT_REGISTRY_2026-06-25.md` | Conflicting claims between agents / evidence layers |
 | `verification/RECHECK_PROTOCOL_2026-06-25.md` | How to re-run disputed findings correctly |
@@ -72,36 +77,19 @@ archive/
 | Arena Agent | `incoming/arena-agent/2026-06-25/` | 2026-06-25 | Playwright + production-like dist |
 | Arena Agent TOC | `incoming/arena-agent-toc/2026-06-25/` | 2026-06-25 | Static source scan + git history |
 
-## Текущий статус (2026-06-25)
+## Current verifier status (2026-06-27)
 
-**Финальный Bug Ledger:** `verified/BUG_LEDGER_2026-06-25.md`  
-**Верификатор-синтез:** `working/VERIFIER_SYNTHESIS_2026-06-25.md`  
-**Repair order:** `working/REPAIR_ORDER_DRAFT_2026-06-25.md`
+**Primary current ledger:** `verified/CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md`  
+**Canonical verifier note:** `verification/CANONICAL_VERIFIER_NOTE_2026-06-27_current-head-status-flips-and-second-order-defects.md`  
+**Priority reset:** `verified/REPAIR_ORDER_DELTA_2026-06-27_current-head-priority-reset.md`
 
-### Подтверждённых багов: 12
-- P0: 4 (body class mismatch, heart sans controller, Gill duplicate IDs, gill-context no Play)
-- P1: 5 (cache-bust drift, readTime drift, baptisty BreadcrumbList, baptisty SVG og, sw precache)
-- P2: 3 (tooling audit selectors)
+### Main live issues on current HEAD
+- workflow-policy mismatch (`workflows:check` red while full publication gate is green)
+- incomplete `/izbrannoe/` route integration across contracts
+- Gill split-family convergence debt
+- source-vs-built publication risk as an active repo class
+- ledger/guard drift across documents and anti-regression logic
 
-### Needs-reverification: 1
-- PS-01 (`qs is not defined`) — статически не воспроизводится, нужен Playwright на HEAD
+## Next step
 
-### False positives: 1
-- PS-05 (stray "76e7365") — не существует в HEAD
-
-## Следующий шаг
-
-Агент-исправитель берёт `verified/BUG_LEDGER_2026-06-25.md` и чинит в порядке фаз A→F из синтеза.
-
-## Arena Agent TOC additions (2026-06-25)
-
-**Верификация PS-* багов из incoming/arena-agent:**
-- PS-01 (qs crash): needs-reverification — статически не воспроизводится в HEAD
-- PS-04 (heart без контроллера): **CONFIRMED**
-- PS-05 (stray 76e7365): **FALSE POSITIVE** в HEAD
-- PS-06 (readTime 35 vs 50): **CONFIRMED**
-- PS-07 (duplicate IDs Gill): **CONFIRMED**
-- PS-10 (cache-bust drift): **CONFIRMED**
-
-**Финальный Bug Ledger:** `verified/BUG_LEDGER_2026-06-25.md`  
-**Верификатор-синтез:** `working/VERIFIER_SYNTHESIS_2026-06-25.md`
+Implementation and verifier agents should work from the **2026-06-27 current-head documents first**, and consult the 2026-06-25 ledgers only as historical baseline / context.

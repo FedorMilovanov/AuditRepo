@@ -4,11 +4,22 @@
 
 ## Primary canonical docs
 
-1. `UNIFIED_BUG_LEDGER_2026-06-25.md`
-   - основной сводный verified bug ledger
+1. `CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md`
+   - основной current-head operational ledger; использовать первым для работы по состоянию на 2026-06-27
 
-2. `repair-order-unified-2026-06-25.md`
-   - согласованный порядок исправления
+2. `../verification/CANONICAL_VERIFIER_NOTE_2026-06-27_current-head-status-flips-and-second-order-defects.md`
+   - current-head status flips, stale/live correction, second-order defects
+
+3. `REPAIR_ORDER_DELTA_2026-06-27_current-head-priority-reset.md`
+   - приоритеты исправления после current-head reset
+
+## Historical baseline docs
+
+4. `UNIFIED_BUG_LEDGER_2026-06-25.md`
+   - основной сводный verified bug ledger предыдущей волны; важен как baseline, но не как чистая текущая истина
+
+5. `repair-order-unified-2026-06-25.md`
+   - согласованный порядок исправления предыдущей волны
 
 ## Secondary verified docs
 
@@ -26,6 +37,7 @@
 ## Rule
 
 Если найдено противоречие между несколькими verified-файлами:
-- сначала смотреть `UNIFIED_BUG_LEDGER_2026-06-25.md`
-- затем `repair-order-unified-2026-06-25.md`
-- затем cross-reference документы в `verification/`
+- сначала смотреть `CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md`
+- затем `../verification/CANONICAL_VERIFIER_NOTE_2026-06-27_current-head-status-flips-and-second-order-defects.md`
+- затем `REPAIR_ORDER_DELTA_2026-06-27_current-head-priority-reset.md`
+- и только потом `UNIFIED_BUG_LEDGER_2026-06-25.md` как historical baseline
