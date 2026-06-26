@@ -1,0 +1,34 @@
+# S3-PC002 — PremiumControls heart-series Play/Save: VERIFIED DEAD, then FIXED
+# Source repo branch pushed: lane/premiumcontrols-heart-series-wiring-2026-06-26 (off 106f98d)
+# Confirms premiumcontrols-verifier PC-002.
+
+## Confirmed dead (source witness)
+KrajneBody.astro / Rimlyanam7Body.astro: gb-ember=1, gb-save=1, data-fc-root=0, data-fc-controls=0
+Controller guard: initPlayExpand() -> if(!ember.closest('[data-fc-root],[data-fc-controls]')) return;
+Main init: roots=qsa('[data-fc-root]'); only those get initCluster(). => Play/Save dead.
+
+## Fix
+Added to .gbs2-rfoot in both files:
+  data-fc-root data-fc-mode="series-rich" data-fc-variant="heart"
+Mirrors working Nagornaya nag-sidebar-controls (data-fc-root + series-rich + nagornaya).
+
+## BROWSER WITNESS (Playwright Chromium, production-like dist via strangler:build:production-like)
+Both /articles/krajne-li-isporcheno-serdce/ and /articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/:
+  root._gbClusterInit: true   (was false)
+  window.__gbCluster: object
+  Save aria-pressed: false -> true on click  ✅
+  Play: speed panel (.gb-ember-expand) opens on click  ✅
+  console errors: 0
+
+## IMPORTANT cross-finding (confirms S3-N4 / PC-003)
+First attempt with plain `astro:build` (no copy-legacy) => 18x 404 (all JS/CSS/fonts) =>
+controller never loaded. Root cause = build-mode trap (must use strangler:build:production-like)
+AND stale hardcoded ?v=efd81d3a in src/*.astro. The production postbuild
+(astro-cache-bust-postbuild.js) converged dist hash drift to 0 (527 replacements) and
+fc-controller served as ?v=ba4a4019. So:
+- PC-002 fix is correct and works on production-like dist.
+- S3-N4/PC-003 (cache-bust ignores src/*.astro) remains a real systemic issue: source still
+  hardcodes efd81d3a; only postbuild rescues dist. Recommend the cache-bust system lane.
+
+## Status
+PC-002 -> fixed-current (browser-verified). Pending owner/CI merge + full validate:static-publication.
