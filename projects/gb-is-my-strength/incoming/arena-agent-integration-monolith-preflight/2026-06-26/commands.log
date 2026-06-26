@@ -1,0 +1,29 @@
+# integration monolith preflight commands
+lane/integration-monolith-preflight-2026-06-26-arena
+8b69a633
+8b69a633 (HEAD -> lane/integration-monolith-preflight-2026-06-26-arena) [LANE lane/integration-monolith-preflight-2026-06-26-arena] converge astro cache-bust after branch integration
+0696f95b Merge remote-tracking branch 'origin/lane/system-migration-metadata-hardening-2026-06-26-arena' into integration/monolith-preflight-2026-06-26-arena
+8fc8ef62 Merge remote-tracking branch 'origin/lane/system-dist-content-hardening-2026-06-26-arena' into integration/monolith-preflight-2026-06-26-arena
+171ced0c Merge remote-tracking branch 'origin/lane/premiumcontrols-heart-series-wiring-2026-06-26' into integration/monolith-preflight-2026-06-26-arena
+8cece53e Merge remote-tracking branch 'origin/lane/baptisty-seo-breadcrumb-ogimage-2026-06-26' into integration/monolith-preflight-2026-06-26-arena
+d21175b0 Merge remote-tracking branch 'origin/lane/content-text-corruption-2026-06-26' into integration/monolith-preflight-2026-06-26-arena
+f003540e Merge remote-tracking branch 'origin/lane/karty-ishod-jsonld-2026-06-26' into integration/monolith-preflight-2026-06-26-arena
+f3332ee2 Merge remote-tracking branch 'origin/lane/system-cache-bust-astro-source-2026-06-26' into integration/monolith-preflight-2026-06-26-arena
+ff9e33a3 (origin/lane/baptisty-seo-breadcrumb-ogimage-2026-06-26) feat(seo): baptisty BreadcrumbList JSON-LD + WebP og:image (S3-N1, S3-N2)
+eb6be96a (origin/lane/karty-ishod-jsonld-2026-06-26) fix(seo): repair invalid JSON-LD on /karty/ishod/ (S3-N5 / P0-02)
+22de2668 (origin/lane/system-migration-metadata-hardening-2026-06-26-arena, lane/system-migration-metadata-hardening-2026-06-26-arena) [LANE lane/system-migration-metadata-hardening-2026-06-26-arena] harden migration metadata contracts
+e7724a73 (origin/lane/system-cache-bust-astro-source-2026-06-26) [LANE lane/system-cache-bust-astro-source-2026-06-26] fix(cache-bust): rewrite src/*.astro too — kill systemic hash drift (S3-N4/PC-003/P0-10)
+3ecc3ddd (origin/lane/system-dist-content-hardening-2026-06-26-arena, lane/system-dist-content-hardening-2026-06-26-arena) [LANE lane/system-dist-content-hardening-2026-06-26-arena] harden dist contract jsonld and content
+099afce4 (origin/lane/premiumcontrols-heart-series-wiring-2026-06-26) fix(premiumcontrols): wire dead Play/Save on heart-series articles (PC-002)
+merged branches:
+0696f95b Merge remote-tracking branch 'origin/lane/system-migration-metadata-hardening-2026-06-26-arena' into integration/monolith-preflight-2026-06-26-arena
+8fc8ef62 Merge remote-tracking branch 'origin/lane/system-dist-content-hardening-2026-06-26-arena' into integration/monolith-preflight-2026-06-26-arena
+171ced0c Merge remote-tracking branch 'origin/lane/premiumcontrols-heart-series-wiring-2026-06-26' into integration/monolith-preflight-2026-06-26-arena
+8cece53e Merge remote-tracking branch 'origin/lane/baptisty-seo-breadcrumb-ogimage-2026-06-26' into integration/monolith-preflight-2026-06-26-arena
+d21175b0 Merge remote-tracking branch 'origin/lane/content-text-corruption-2026-06-26' into integration/monolith-preflight-2026-06-26-arena
+f003540e Merge remote-tracking branch 'origin/lane/karty-ishod-jsonld-2026-06-26' into integration/monolith-preflight-2026-06-26-arena
+f3332ee2 Merge remote-tracking branch 'origin/lane/system-cache-bust-astro-source-2026-06-26' into integration/monolith-preflight-2026-06-26-arena
+node:
+v20.20.2
+10.8.2
+v22.23.1

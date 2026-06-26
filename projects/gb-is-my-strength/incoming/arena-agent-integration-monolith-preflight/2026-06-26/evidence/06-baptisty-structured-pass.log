@@ -1,0 +1,13 @@
+$ baptisty structured data probe
+{"rel":"baptisty-rossii/dva-sezda-1884/index.html","articles":1,"missingDate":true,"hasBL":true,"ogType":"image/webp","ogImg":"https://gospod-bog.ru/images/baptisty-rossii/cover-03-1884.webp"}
+{"rel":"baptisty-rossii/goneniya-i-sovest/index.html","articles":1,"missingDate":true,"hasBL":true,"ogType":"image/webp","ogImg":"https://gospod-bog.ru/images/baptisty-rossii/cover-05-conscience.webp"}
+{"rel":"baptisty-rossii/index.html","articles":0,"missingDate":false,"hasBL":true,"ogType":"image/webp","ogImg":"https://gospod-bog.ru/images/baptisty-rossii/cover-landing.webp"}
+{"rel":"baptisty-rossii/iniciativnaya-gruppa/index.html","articles":1,"missingDate":true,"hasBL":true,"ogType":"image/webp","ogImg":"https://gospod-bog.ru/images/baptisty-rossii/cover-08-initiative.webp"}
+{"rel":"baptisty-rossii/noch-na-kure/index.html","articles":1,"missingDate":true,"hasBL":true,"ogType":"image/webp","ogImg":"https://gospod-bog.ru/images/baptisty-rossii/cover-01-kura.webp"}
+{"rel":"baptisty-rossii/peterburgskaya-liniya/index.html","articles":1,"missingDate":true,"hasBL":true,"ogType":"image/webp","ogImg":"https://gospod-bog.ru/images/baptisty-rossii/cover-04-peterburg.webp"}
+{"rel":"baptisty-rossii/podpolnaya-pechat/index.html","articles":1,"missingDate":true,"hasBL":true,"ogType":"image/webp","ogImg":"https://gospod-bog.ru/images/baptisty-rossii/cover-09-samizdat.webp"}
+{"rel":"baptisty-rossii/sovetskaya-noch/index.html","articles":1,"missingDate":true,"hasBL":true,"ogType":"image/webp","ogImg":"https://gospod-bog.ru/images/baptisty-rossii/cover-06-soviet-night.webp"}
+{"rel":"baptisty-rossii/spravochnik/index.html","articles":1,"missingDate":true,"hasBL":true,"ogType":"image/webp","ogImg":"https://gospod-bog.ru/images/baptisty-rossii/cover-10-reference.webp"}
+{"rel":"baptisty-rossii/vsehib-1944/index.html","articles":1,"missingDate":true,"hasBL":true,"ogType":"image/webp","ogImg":"https://gospod-bog.ru/images/baptisty-rossii/cover-07-vsehib.webp"}
+{"rel":"baptisty-rossii/yuzhnaya-shtunda/index.html","articles":1,"missingDate":true,"hasBL":true,"ogType":"image/webp","ogImg":"https://gospod-bog.ru/images/baptisty-rossii/cover-02-shtunda.webp"}
+TOTAL { missingDates: 10, missingBL: 0, svg: 0, nonWebp: 0, jsonErrors: 0 }

@@ -1,0 +1,14 @@
+$ npm run guard:shared-files
+
+> gb-is-my-strength@1.6.3 guard:shared-files
+> node scripts/guard-shared-files.js
+
+
+=== SHARED FILES GUARD v3.0 ===
+Branch: lane/integration-monolith-preflight-2026-06-26-arena
+Lane: true | System lane: false | Shared lane: false
+[LANE] tag: true
+Files checked: 0
+Shared/system files touched: 0
+
+✅ Shared files guard PASSED
