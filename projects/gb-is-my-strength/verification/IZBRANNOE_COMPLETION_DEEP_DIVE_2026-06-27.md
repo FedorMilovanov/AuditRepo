@@ -309,3 +309,40 @@ It is proof of a checker assumption, not of a broken deployed link.
 # One-paragraph verifier conclusion
 
 `/izbrannoe/` should not be framed as a broken feature. It is a valid personal noindex favorites page whose intended exclusion from search/sitemap is already described in its route profile. The true live defect is that its migration-matrix registration is unfinished, while two repo guards (`check-content-source-coverage.js` and `audit-pro`) still interpret it through assumptions suited to normal public searchable or root-legacy routes, producing warning noise that is better classified as guard drift than as feature failure.
+
+
+---
+
+## Current verification status in this pass
+
+Re-checked directly against current source HEAD:
+- `data/route-profiles/izbrannoe.json` exists and explicitly marks the route as personal / `noindex` / excluded from Pagefind+sitemap
+- `migration/page-ownership.json` contains `/izbrannoe/`
+- `migration/route-migration-matrix.json` still has no `/izbrannoe/` entry
+- `data/search-manifest.json` still has no `/izbrannoe/` item
+- root `index.html` still links to `/izbrannoe/`, which explains why `audit-pro` emits the legacy-root reference warning
+
+Current interpretation remains unchanged:
+- missing matrix entry = real contract debt
+- missing search-manifest item = probably intentional policy, but checker is not route-profile-aware
+- missing local reference warning = checker blind spot for Astro-owned routes linked from legacy root HTML
+
+
+## Minimal repair recommendation (current position)
+
+### Do now
+1. Add `/izbrannoe/` to `migration/route-migration-matrix.json` as a native route contract entry.
+2. Keep it **out** of `data/search-manifest.json` unless owner policy explicitly changes.
+3. Treat the `audit-pro` local-reference warning as a checker-improvement task, not as proof of broken navigation.
+
+### Best-fit matrix mode
+Current evidence suggests `/izbrannoe/` should be declared as `strict-native`:
+- it is Astro-owned
+- it is intentionally personal/noindex
+- it is not a legacy-shadow wrapper
+- it is not an interactive app route
+
+### Do not do reflexively
+- do not add `/izbrannoe/` to search-manifest just to silence the warning
+- do not force a fake legacy root file just to satisfy `audit-pro`
+- do not reclassify it as searchable production content without explicit owner intent

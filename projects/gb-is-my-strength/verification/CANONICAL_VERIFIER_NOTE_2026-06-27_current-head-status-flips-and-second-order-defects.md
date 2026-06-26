@@ -98,6 +98,7 @@ The active issue is **not** “CI is dead”. The active issue is:
 - `npm run workflows:check` is red on current HEAD
 - while `validate:static-publication` is green
 
+Re-check across later pushes confirms the mismatch still exists even after the deploy-unblock/workflow-repair wave.
 This is a **workflow-policy drift** issue, not a platform-collapse issue.
 
 ### Evidence
@@ -123,6 +124,8 @@ Warnings from current strict checks:
 - `/izbrannoe/: no entry in route-migration-matrix.json`
 - `route /izbrannoe/: production-dist route without search-manifest entry`
 - `Missing local reference: index.html → /izbrannoe/`
+
+Re-check across later pushes confirms `/izbrannoe/` is already in `page-ownership.json` and has a route profile, so the matrix gap remains the main real contract omission.
 
 ### Canonical wording
 **Feature rollout reached source/UI before contract reconciliation completed.**

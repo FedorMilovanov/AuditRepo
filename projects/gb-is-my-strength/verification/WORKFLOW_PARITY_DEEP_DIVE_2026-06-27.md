@@ -132,6 +132,13 @@ to:
 "dist:jsonld:audit": "node scripts/dist-jsonld-audit.js --root dist"
 ```
 
+### Current verification status in this pass
+Verified directly against current source HEAD:
+- `package.json` still has the looser form: `node scripts/dist-jsonld-audit.js`
+- `scripts/check-workflows.js` still requires the explicit form: `--root dist`
+- `npm run workflows:check` is still red for exactly this reason
+- `validate:static-publication` and `ci:check` therefore represent different barrier strictness levels
+
 ### Why this is best
 - zero functional ambiguity
 - satisfies `workflows:check`
@@ -209,3 +216,20 @@ If asked to fix this, do **only** the minimal parity change first:
 5. do **not** deduplicate deploy.yml JSON-LD steps in the same patch unless explicitly asked
 
 That keeps the repair surgical and low-risk.
+
+
+## Minimal repair recommendation (current position)
+
+### Do now
+1. Change `package.json` script:
+   - from: `node scripts/dist-jsonld-audit.js`
+   - to: `node scripts/dist-jsonld-audit.js --root dist`
+2. Re-run `npm run workflows:check`
+3. Only after parity is green, decide whether `workflows:check` should also join the strongest publication barrier
+
+### Do not do in the same first patch
+- do not rewrite deploy workflow structure
+- do not deduplicate the second JSON-LD parse path in `deploy.yml` yet
+- do not mix this parity fix with broader CI philosophy changes
+
+This keeps the first repair strictly surgical and easily reversible.

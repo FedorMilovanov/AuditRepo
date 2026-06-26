@@ -52,6 +52,8 @@ Current warning surfaces include:
 - no search-manifest entry warning
 - local reference warning from `audit-pro`
 
+Interpretation on current HEAD: the matrix gap is real contract debt; the search-manifest and local-reference warnings are more likely guard/checker drift than proof of a broken user-facing page.
+
 ---
 
 ### B4. Gill split-family architecture remains live
@@ -74,9 +76,16 @@ Because the repo mixes source components and committed built/static HTML, source
 **Severity:** P2  
 **Type:** ledger-drift / verifier-truth defect
 
-Current-head truth is fragmented across old ledgers, README summaries, reverify notes, and working docs. Weak-agent misuse risk is real.
+Current-head truth is fragmented across old ledgers, README summaries, reverify notes, working docs, and phase-roadmap files that still describe already-landed PremiumControls work as open. Weak-agent misuse risk is real.
 
 ---
+
+
+### B7. PremiumControls roadmap/documentation lag
+**Severity:** P2  
+**Type:** documentation drift / planning defect
+
+`AuditRepo/projects/gb-is-my-strength/PremiumControls/ROADMAP.md` and `patches/APPLIED-2026-06-26.md` were written against the PR #19 baseline and now lag current source HEAD. Multiple items formerly listed as open are source-landed now (anchor, heart-series wiring, rollout audit script, controller semantics progress), but the docs had not been updated accordingly.
 
 ## C. HALF-FIXED — recovery landed, but not fully closed
 

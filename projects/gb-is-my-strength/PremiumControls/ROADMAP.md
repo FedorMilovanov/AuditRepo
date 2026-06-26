@@ -5,12 +5,12 @@
 
 | ID | Severity | Title | Status |
 |---|---|---|---|
-| PC-001 | P1 | `PremiumControlAnchor` missing; controls = `position:fixed` | ⬜ OPEN |
-| PC-002 | P0 | Heart-series `Krajne` / `Rimlyanam7`: `gb-ember`+`gb-save` without `[data-fc-root]` | ⬜ OPEN |
-| PC-003 | P1 | Source hash drift: `ba4a4019` / `efd81d3a` / `58c2ea90` | ⬜ OPEN |
-| PC-004 | P1 | CSS duplicate: 3× Astro `<style is:global>` + `css/floating-cluster.css` | ⬜ OPEN |
-| PC-005 | P2 | PlayEmber semantics: key `gbx-tts-rate` ≠ `gb:audio:rate` | 🟨 PARTIAL (TTS real, key old) |
-| PC-006 | P2 | No route-archetype audit | ⬜ OPEN |
+| PC-001 | P1 | `PremiumControlAnchor` extraction / adoption | ✅ SOURCE-LANDED / verify rollout completeness |
+| PC-002 | P0 | Heart-series `Krajne` / `Rimlyanam7`: `gb-ember`+`gb-save` wiring | ✅ FIXED on current HEAD |
+| PC-003 | P1 | Source hash drift / asset-version parity | 🟨 MOSTLY FIXED, keep parity watch |
+| PC-004 | P1 | CSS duplicate cleanup / canonical CSS source | ✅ SOURCE-LANDED / verify cross-route parity |
+| PC-005 | P2 | PlayEmber semantics: canonical key/event/ARIA/reference UI | 🟨 ADVANCED — major fixes landed, residual parity/review remains |
+| PC-006 | P2 | Route-archetype / rollout audit | ✅ SCRIPT EXISTS; integrate into canonical barrier if desired |
 
 ---
 
@@ -102,3 +102,26 @@ css/floating-cluster.css actual: f4bddc5b
 ---
 
 Mark done with ✅ when merged to main.
+
+
+---
+
+## Current-head reverify note (2026-06-27)
+
+This roadmap was originally written against the PR #19 / Phase 1+2 baseline.
+Current source HEAD moved substantially beyond that baseline.
+
+Verified on current source HEAD during this pass:
+- `src/components/ui/premium-controls/PremiumControlAnchor.astro` exists
+- `scripts/premium-controls-rollout-audit.js` exists
+- `KrajneBody.astro` and `Rimlyanam7Body.astro` now contain `data-fc-root data-fc-mode="series-lite"`
+- `js/floating-cluster-controller.js` now reads canonical `gb:audio:rate` first, keeps legacy `gbx-tts-rate` fallback, and exposes `aria-controls` / `aria-expanded` wiring
+- old toast wording "Озвучка ещё не подключена" is no longer current-head runtime truth for the PlayEmber path
+
+Interpretation:
+- PC-001 / PC-002 / PC-004 / PC-006 are no longer safe to describe as simply OPEN.
+- Remaining real concerns are now mostly current-head parity / rollout / barrier-integration / naming-cleanup questions, not first-order absence.
+- Runtime naming is still transitional (`floating-cluster-controller.js` remains the active file), so architectural canonicalization is not fully complete.
+
+
+Additional source-history note: commit `99a7acfd` explicitly records the v2.1 merge/release point that claimed closure of PC-001..PC-006, followed by later stabilization commits (`6c5b83a3`, `2be8c0ed`, `9e06173b`, `8f42c9f8`, `f372505f`, `3e477231`). Treat roadmap status through those later pushes, not only the PR #19 snapshot.

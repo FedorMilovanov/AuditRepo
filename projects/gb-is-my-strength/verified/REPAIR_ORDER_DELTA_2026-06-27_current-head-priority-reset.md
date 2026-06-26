@@ -54,6 +54,7 @@ A red policy guard outside the canonical barrier is how future regressions sneak
 
 ### Scope
 1. fix `dist:jsonld:audit` script to satisfy policy expectation
+   - minimal patch: `node scripts/dist-jsonld-audit.js --root dist`
 2. decide whether `workflows:check` must join `validate:static-publication`
 3. document the decision explicitly if not integrated
 
@@ -72,8 +73,10 @@ This is fresh debt, small enough to close quickly, and a good example of source/
 
 ### Scope
 1. add route to `route-migration-matrix.json` if intended production route
+   - current best-fit mode: `strict-native`
 2. decide whether route belongs in `search-manifest.json`
-3. clear `audit-pro` local-reference warning
+   - current verifier position: likely **no**, because route profile already marks it personal / noindex / excluded from Pagefind+sitemap
+3. clear or formally reclassify `audit-pro` local-reference warning
 4. if intentional exclusions remain, encode them as policy, not accidental warning residue
 
 ### Success condition

@@ -20,11 +20,13 @@ The project moved substantially after the 2026-06-25 synthesis wave. Current ver
 
 ## Current live themes (current HEAD)
 
-1. **Workflow-policy mismatch:** `npm run workflows:check` is red while the broader publication gate is green.
-2. **Partial route integration:** `/izbrannoe/` exists in source/UI but is not fully reconciled across migration/search/reference contracts.
+- **Push volume warning:** the project changed materially through multiple same-day follow-up pushes after PR #19 (`99a7acfd` → `1a288da5` range). Always verify current HEAD instead of trusting a single merge summary.
+1. **Workflow-policy mismatch:** `npm run workflows:check` is red while the broader publication gate is green; current evidence points to a narrow `dist:jsonld:audit` script-contract mismatch, not broad CI collapse.
+2. **Partial route integration:** `/izbrannoe/` exists in source/UI but is not fully reconciled across migration/search/reference contracts; current evidence suggests only the migration-matrix gap is definitely real debt, while other warnings are checker/policy drift.
 3. **Gill convergence debt:** Gill pages still span more than one UI family / premium-control structure.
 4. **Source-vs-built publication risk:** source-side fixes cannot automatically be treated as publication truth in this hybrid repo.
 5. **Ledger / guard drift:** some canonical-looking docs and some guards now lag current architecture or current HEAD reality.
+6. **PremiumControls roadmap lag:** the PremiumControls phase roadmap/patch notes were written at PR #19 time and must be read through the 2026-06-27 current-head reverify lens.
 
 ## Primary current documents
 

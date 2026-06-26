@@ -32,8 +32,8 @@ Legend:
 |---|---|---|
 | `/izbrannoe/` route existence | **FIXED** | route exists in source and is linked in UI |
 | `/izbrannoe/` metadata contract completion | **HALF-FIXED** | missing entry in `route-migration-matrix.json`; missing search-manifest integration warning |
-| `/izbrannoe/` search/discoverability truth | **HALF-FIXED** | route is production-visible, but current strict content-source checks still warn |
-| Root/home/local reference completeness for `/izbrannoe/` | **HALF-FIXED** | `audit-pro` still warns `Missing local reference: index.html → /izbrannoe/` |
+| `/izbrannoe/` search/discoverability truth | **HALF-FIXED / GUARD-DRIFT** | route is production-visible, but the route profile explicitly says personal/noindex/excluded; current strict content-source checks still warn because the checker is not route-profile-aware |
+| Root/home/local reference completeness for `/izbrannoe/` | **GUARD-DRIFT** | `audit-pro` still warns `Missing local reference: index.html → /izbrannoe/`, but this is a legacy-root checker blind spot for an Astro-owned route |
 
 ---
 
