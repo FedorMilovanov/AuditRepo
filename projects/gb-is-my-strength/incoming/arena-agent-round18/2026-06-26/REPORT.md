@@ -241,3 +241,52 @@
 3. **ARCH-R18-01 is the systemic root cause.** Until `cache-bust.js` is extended to update Astro components, every JS/CSS change will cause hash drift in Astro pages.
 4. **All hash evidence is deterministic.** `node -e "crypto.createHash('md5')..."` on a fresh clone at HEAD `09c2d34a`.
 5. **V2-2 residual is a trivial 2-line fix.** The index page was simply missed in the original fix.
+
+---
+
+## 9. Additional Finding: Hermenevtika Quiz Data Corruption
+
+### R18-11: HermenevtikaBody.astro quiz data contains text corruption (P2)
+- **Severity:** P2
+- **Route(s):** `/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/`
+- **Root cause:** Quiz reference data (SITE_CONFIG) in `HermenevtikaBody.astro` contains corrupted text:
+  - Line 309 (Евреям 9:1-13): `"называемая , .Святое Святых"` — should be `"называемая \"Святое Святых\""`
+  - Line 360 (1 Кор. 15:12-14): `"кик говорят"` — should be `"как говорят"` (this is the Synodal translation quote)
+- **Impact:** These corruptions appear in quiz reference popups. Users see garbled Bible quotes.
+- **Evidence:** MDX source file does NOT contain quiz data (quiz is only in Astro body). Legacy HTML has the SAME corruption → original source data was corrupted and copied to both files.
+- **Confidence:** high
+- **Repair lane:** `lane/fix-hermenevtika-quiz-corruption-2026-06-26`
+
+## 10. Complete Asset Hash Audit Table
+
+| Asset | Real Hash | Astro Refs | Correct | Stale | Stale % |
+|---|---|---|---|---|---|
+| js/site.js | f8f0c38c | 47 | 0 | 47 | **100%** |
+| js/nagornaya-mobile-toc.js | 866d4238 | 11 | 0 | 11 | **100%** |
+| js/floating-cluster-controller.js | ba4a4019 | 15 | 0 | 15 | **100%** |
+| js/search.js | c9d65577 | 37 | 37 | 0 | 0% ✅ |
+| js/site-utils.js | 897afa55 | 38 | 38 | 0 | 0% ✅ |
+| js/scroll-perf.js | 454d6f7b | 37 | 37 | 0 | 0% ✅ |
+| js/enhancements.js | b3b77aa6 | 34 | 33 | 1 | 3% |
+| js/highlights.js | a1706b06 | 34 | 33 | 1 | 3% |
+| js/sw-register.js | 318502c5 | 36 | 36 | 0 | 0% ✅ |
+| js/glossary.js | 2100cf4f | 34 | 34 | 0 | 0% ✅ |
+| css/site.css | b880b524 | 37 | 36 | 1 | 3% |
+| css/home.css | f5b561ee | 6 | 5 | 1 | 17% |
+| css/command-palette.css | afe33045 | 36 | 35 | 1 | 3% |
+| css/mobile-hotfix.css | c1f7664e | 35 | 34 | 1 | 3% |
+
+**Summary:** 3 critical assets (site.js, nagornaya-toc.js, fc-controller.js) have 100% stale hashes across all Astro components. This confirms that P0-10 was NOT fixed — it was merely narrowed. The systemic root cause (cache-bust.js doesn't update Astro components) remains unaddressed.
+
+---
+
+## 11. Final Bug Count
+
+| Category | Count |
+|---|---|
+| **Net-new P0** | 1 (R18-01: site.js 0/47 correct) |
+| **Net-new P1** | 3 (R18-02, R18-03, R18-05) |
+| **Net-new P2** | 2 (R18-11 quiz corruption, R18-06/07 confirms) |
+| **Residual confirmations** | 2 (R18-04, P2-14) |
+| **Structural concerns** | 5 (ARCH-R18-01 through ARCH-R18-05) |
+| **Total actionable findings** | **13** |
