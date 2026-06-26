@@ -588,3 +588,39 @@ Total: 61→60 bugs.
 ### Updated counts:
 - Fixed in project source (R9-R15): P0-NEW, P3-NEW, P2-17, P3-12, P2-18, P1-14, P1-15, P1-16, P1-5, P1-9, P2-14(x2), P2-5, P2-12, P3-6 (15 fixes)
 - Remaining active bugs: ~38
+
+---
+
+## Amendments — Arena Agent Round 16 (2026-06-25)
+
+**Source:** `incoming/arena-agent-round16/2026-06-25/REPORT.md`
+
+### Round 16: Final Summary + Bug Fix
+- P2-12 syntax error fix: removed orphaned `.replace()` and `.trim()` lines in check-data-consistency.js that were left after DOMParser replacement
+
+### Complete Audit Session Summary (Rounds 9-16)
+
+**15 bugs fixed in project source:**
+1. P0-NEW — SW precache: site-layered.css + site-modules.js removed from sw.js
+2. P3-NEW — back-to-top.js loaded on 7 pages
+3. P2-17 — MapEngine: getPlaceVisual as isolated option (no global pollution)
+4. P3-12 — AvraamMap: baseGeoUrl cache-busting ?v=2.0
+5. P2-18 — MapEngine: getBaseAwarePath() for GitHub Pages base href
+6. P1-14 — GBS2: theme toggle (data-gbs2-theme) via gbs2-baptist-controls.js
+7. P1-15 — GBS2: font resize (data-gbs2-font="up/down") via gbs2-baptist-controls.js
+8. P1-16 — GBS2: bottom bar, mobile progress, TOC auto-population via gbs2-baptist-controls.js
+9. P1-5 — migration matrix reconciled: 34→51 routes, version 2026-06-25.reconciled.v1
+10. P1-9 — audit-pro.js CACHE_BUST_ASSETS: 24→20 items (removed dead code, added glossary.js)
+11. P2-14 — series-cards.js removed from cache-bust.js ASSETS + sw.js PRECACHE_ASSETS
+12. P2-5 — notify-on-failure.yml: Python3 parser outputs name:id (colon-joined)
+13. P2-12 — check-data-consistency.js: H1 extraction via DOMParser (robust)
+14. P3-6 — floating-cluster-controller.js hash: c78a4236→35a91710 in 13 Astro components
+15. P2-12 (syntax) — removed orphaned lines in textOfFirstH1() fallback block
+
+**2 FALSE POSITIVES confirmed:** P3-8 (FAQ works via enhancements.js), P1-13 (site.js dark mode bridge works)
+
+**New module created:** js/gbs2-baptist-controls.js (169 lines) — loaded on 11 Baptisty pages
+
+**Key discovery:** All js/modules/* files (back-to-top, faq-accordion, img-loaded, theme) are dead code — exist in src/ but never in dist/
+
+**Validation:** All gates passed ✅
