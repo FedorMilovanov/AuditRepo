@@ -27,6 +27,7 @@ The project moved substantially after the 2026-06-25 synthesis wave. Current ver
 4. **Source-vs-built publication risk:** source-side fixes cannot automatically be treated as publication truth in this hybrid repo.
 5. **Ledger / guard drift:** some canonical-looking docs and some guards now lag current architecture or current HEAD reality.
 6. **PremiumControls roadmap lag:** the PremiumControls phase roadmap/patch notes were written at PR #19 time and must be read through the 2026-06-27 current-head reverify lens.
+7. **Route taxonomy nuance:** `/izbrannoe/` is not just missing a matrix entry; current runtime taxonomy still classifies it as `native-with-legacy-head`, so it remains slightly intermediate even beyond the warning surface.
 
 ## Primary current documents
 

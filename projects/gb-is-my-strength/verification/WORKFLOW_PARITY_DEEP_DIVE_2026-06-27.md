@@ -233,3 +233,8 @@ That keeps the repair surgical and low-risk.
 - do not mix this parity fix with broader CI philosophy changes
 
 This keeps the first repair strictly surgical and easily reversible.
+
+
+## Additional current-head nuance
+
+A fresh read of `.github/workflows/deploy.yml` shows the repo currently has **two** dist JSON-LD parse audit steps and **two** dist contract-compare surfaces in the deploy workflow. This duplication is not the primary failing defect today, but it confirms that the workflow layer was hardened incrementally and still carries normalization debt even after the deploy-unblock push.

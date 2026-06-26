@@ -87,6 +87,13 @@ Current-head truth is fragmented across old ledgers, README summaries, reverify 
 
 `AuditRepo/projects/gb-is-my-strength/PremiumControls/ROADMAP.md` and `patches/APPLIED-2026-06-26.md` were written against the PR #19 baseline and now lag current source HEAD. Multiple items formerly listed as open are source-landed now (anchor, heart-series wiring, rollout audit script, controller semantics progress), but the docs had not been updated accordingly.
 
+
+### B8. `/izbrannoe/` native taxonomy mismatch
+**Severity:** P2  
+**Type:** contract-model drift
+
+`native:runtime:audit:strict` currently classifies `/izbrannoe/` as `native-with-legacy-head`, while the route is otherwise treated operationally as an Astro-owned personal/noindex production page. This is not currently a release blocker, but it means `/izbrannoe/` still sits in an intermediate contract state even beyond the missing migration-matrix entry.
+
 ## C. HALF-FIXED — recovery landed, but not fully closed
 
 ### C1. Release hardening overall

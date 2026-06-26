@@ -346,3 +346,14 @@ Current evidence suggests `/izbrannoe/` should be declared as `strict-native`:
 - do not add `/izbrannoe/` to search-manifest just to silence the warning
 - do not force a fake legacy root file just to satisfy `audit-pro`
 - do not reclassify it as searchable production content without explicit owner intent
+
+
+## Additional nuance from current runtime taxonomy
+
+A fresh `native:runtime:audit:strict` pass classifies `/izbrannoe/` as `native-with-legacy-head`, not fully `strict-native`.
+That does not overturn the main conclusion of this note, but it means `/izbrannoe/` is not only missing a migration-matrix entry — it also still occupies an intermediate runtime-contract class.
+
+Practical implication:
+- best-fit long-term target still looks like `strict-native`
+- current source reality is slightly less complete than a pure `strict-native` story would suggest
+- this strengthens the case for adding the matrix entry deliberately rather than auto-silencing warnings
