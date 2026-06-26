@@ -1,93 +1,73 @@
-# Verifier Synthesis — Deep Verifier Editor — 2026-06-26 (FINAL)
+# Verifier Synthesis — Deep Verifier Editor — 2026-06-26 (FINAL v2)
 
 **Agent:** arena-agent-deep-verifier-editor  
-**Date:** 2026-06-26  
-**Source HEAD:** `5d53913d` (post v2.1 + izbrannoe + CI fixes)  
-**Rounds:** R1 (pre-merge), R2 (post-merge), R3 (speed-pill visual parity)
+**Source HEAD:** `5d53913d`  
+**Rounds:** R1 (pre-merge), R2 (post-merge), R3 (speed-pill parity), R3b (controller deep audit)
 
 ---
 
-## Current state: v2.1 merged + 3 post-merge commits
+## 🔴 P0 — SHOW-STOPPER
 
-PremiumControls v2.1 released. Content corruption fixed. Baptisty SEO fixed. TTS implemented. Speed-pill morphing CSS implemented with 93% visual match to owner reference. 14 of 18 branches deleted.
+### BUG-R3-14: TTS cannot be started via mouse click
+
+Speed panel opens on click, speed selection stores rate, but **`handlePlayClick()` / `startTts()` is never called**. `e.stopPropagation()` in the speed-panel click handler prevents the event from reaching `initCluster`'s delegation where `handlePlayClick()` lives.
+
+**Impact:** Feature visually beautiful but functionally dead for 100% of mouse users on all premium routes.
+
+**Fix:** 3 lines — after speed select, if idle, call `handlePlayClick()` with delay.
 
 ---
 
-## ALL active findings (comprehensive, deduplicated)
+## 🟠 P1 — FUNCTIONAL (3)
 
-### P1 — FUNCTIONAL (2)
-
-| ID | Title | Fix LOC |
+| ID | Title | Fix |
 |---|---|---|
-| **BUG-R3-01** | `data-fc-mode="series-rich"` (12 routes) not in controller enum → pilot activation skipped | **1 line** |
-| **BUG-R3-02** | Heart-series root HTML (`data-fc-controls="gill-rail"`) vs Astro source (`data-fc-root data-fc-mode="series-rich"`) — schism | **~4 lines** |
+| BUG-R3-01 | `series-rich` (12 routes) not in controller enum → pilot activation skipped | 1 line |
+| BUG-R3-02 | Root HTML vs Astro source wiring schism on heart-series | ~4 lines |
+| BUG-R3-15 | Early return at line 582 skips `syncSaveState()` + `initKeyboard()` on Krajne/Rimlyanam7 root HTML | Move 3 calls above the guard |
 
-### P2 — UX / ACCESSIBILITY / CONSISTENCY (5)
+---
 
-| ID | Title | Fix LOC |
-|---|---|---|
-| **BUG-R3-03** | Toast text "Озвучка ещё не подключена" should be "Браузер не поддерживает озвучку" | **1 line** |
-| **BUG-R3-04** | `getStoredRate()` reads `gbx-tts-rate` first, should read `gb:audio:rate` first | **1 line** |
-| **BUG-R3-05** | No keyboard ←/→ navigation in speed panel (spec requires it) | **~15 lines** |
-| **BUG-R3-06** | No tab trap in speed panel when open (spec requires it) | **~10 lines** |
-| **BUG-R3-07** | Rollout audit doesn't enforce mode enum (`series-rich` passes silently) | **5 lines** |
-
-### P3 — DEBT / STYLING (6)
+## 🟡 P2 — UX / ACCESSIBILITY (6)
 
 | ID | Title |
 |---|---|
-| BUG-R3-08 | `premium-controls.css` loaded by 0 pages (dead file) |
-| BUG-R3-09 | `PremiumControlAnchor.astro` imported by 0 components (dead code) |
-| BUG-R3-10 | `asset-version.js` has placeholder `pc-v21` |
-| BUG-R3-11 | `SeriesLiteCluster.astro` still has 199-line `<style is:global>` |
-| BUG-R3-12 | Speed-pill animation 380ms vs spec 260ms |
-| BUG-R3-13 | Pill padding `5px 48px 5px 8px` vs spec `10px 56px 10px 14px` |
+| BUG-R3-03 | Toast "Озвучка ещё не подключена" → "Браузер не поддерживает озвучку" |
+| BUG-R3-04 | `getStoredRate()` reads `gbx-tts-rate` first, should read `gb:audio:rate` first |
+| BUG-R3-05 | No keyboard ←/→ in speed panel |
+| BUG-R3-06 | No tab trap in speed panel |
+| BUG-R3-07 | Rollout audit doesn't enforce mode enum |
+| BUG-R3-16 | Comment says "localStorage.gbx-tts-rate" but should reference gb:audio:rate |
 
 ---
 
-## Speed-pill visual parity
+## 🟢 P3 — DEBT (6)
 
-**Score: ~93%** (20/27 exact + 5/27 close).
-
-The implementation **matches the owner's reference screenshots** on all major aspects:
-- ✅ Gold pill with blur, expanding LEFT from Play circle
-- ✅ Active speed = gold gradient fill
-- ✅ Staggered cascade animation
-- ✅ Mobile: UP morph with viewport guard
-- ✅ GBS rail: UP morph  
-- ✅ Dark mode variant
-- ✅ ARIA attributes
-- ✅ TTS with progress ring
-
-Missing for 100%: keyboard ←/→, tab trap, exact animation timing.
+| ID | Title |
+|---|---|
+| BUG-R3-08 | `premium-controls.css` loaded by 0 pages |
+| BUG-R3-09 | `PremiumControlAnchor.astro` imported by 0 components |
+| BUG-R3-10 | `asset-version.js` placeholder hash `pc-v21` |
+| BUG-R3-11 | SeriesLiteCluster 199-line `<style is:global>` duplication |
+| BUG-R3-12 | Animation 380ms vs spec 260ms |
+| BUG-R3-13 | Pill padding tighter than spec |
 
 ---
 
-## Reference screenshots
+## Total: 1 P0 + 3 P1 + 6 P2 + 6 P3 = **16 findings**
 
-Now stored in AuditRepo:
-- `PremiumControls/screenshots/speed-pill-desktop.png` — owner reference (desktop pill close-up)
-- `PremiumControls/screenshots/speed-pill-full-cluster.png` — owner reference (full cluster: theme, search, speed-pill, bookmark)
+## Speed-pill visual parity: **93%** (excellent CSS, broken JS)
 
----
-
-## Quick-fix lane proposal: `lane/premiumcontrols-v21-polish-2026-06-27`
-
-**~23 lines of code, closes all P1 + most P2:**
+## Priority fix: **~10 lines close P0 + all P1**
 
 ```javascript
-// 1. BUG-R3-01: Add series-rich to controller (line 588)
+// P0: After speed select, start TTS if idle
+if (cs.state === 'idle' || !cs.state) setTimeout(handlePlayClick, 280);
+
+// P1: Add series-rich to enum
 if (mode === 'series-rich') activateSeriesPilot();
 
-// 2. BUG-R3-03: Fix toast text (line 379)
-showToast('Браузер не поддерживает озвучку', false);
-
-// 3. BUG-R3-04: Fix getStoredRate key order (line 268)
-r = parseFloat(localStorage.getItem('gb:audio:rate') || localStorage.getItem('gbx-tts-rate')) || 1;
-
-// 4. BUG-R3-07: Add mode enum to rollout audit
-const ALLOWED_MODES = new Set(['single','series-lite','series-rich','nagornaya','gill','disabled','']);
-// ... check each route's data-fc-mode against this set
+// P1: Move sync calls before early return
+syncThemeButtons(); syncSaveState(); initKeyboard();
+// ... then if (!roots.length) return;
 ```
-
-Keyboard and tab trap (BUG-R3-05/06) = separate PR, ~25 lines.
