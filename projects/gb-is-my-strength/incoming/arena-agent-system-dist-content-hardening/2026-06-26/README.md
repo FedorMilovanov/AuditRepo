@@ -5,7 +5,7 @@
 - Agent: arena-agent-system-dist-content-hardening
 - Date: 2026-06-26
 - Audited/implemented branch: `lane/system-dist-content-hardening-2026-06-26-arena`
-- Source branch commit: `b9f3f40`
+- Source branch commit: `3ecc3dd` (rebased onto `09c2d34`)
 - Base main observed before lane: `7ac9188`
 - Environment: Arena sandbox; Node 20 default, Node 22 used for Astro build manually; Playwright Chromium installed for runtime sample
 - Build mode: source/static + production-like dist verification

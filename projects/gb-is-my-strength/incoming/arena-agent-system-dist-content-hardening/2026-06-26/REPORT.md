@@ -6,7 +6,7 @@
 - Agent: `arena-agent-system-dist-content-hardening`
 - Date: 2026-06-26
 - Branch: `lane/system-dist-content-hardening-2026-06-26-arena`
-- Commit: `b9f3f40`
+- Commit: `3ecc3dd` (force-updated after rebase onto `09c2d34`)
 - Base/main observed before work: `7ac9188`
 - Build mode: source/static + production-like dist
 - Browser/device: Playwright Chromium mobile sample after hydration
@@ -161,7 +161,7 @@ origin/lane/system-dist-content-hardening-2026-06-26-arena
 Commit:
 
 ```text
-b9f3f40 [LANE lane/system-dist-content-hardening-2026-06-26-arena] harden dist contract jsonld and content
+3ecc3dd [LANE lane/system-dist-content-hardening-2026-06-26-arena] harden dist contract jsonld and content
 ```
 
 ---
