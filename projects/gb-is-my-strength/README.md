@@ -10,12 +10,13 @@
 
 ## Current-head note (2026-06-27)
 
-⚠️ **Do not treat older aggregate bug counts in this folder as current operational truth.**
+⚠️ **Do not treat older aggregate bug counts in this project as current operational truth.**
 
 The project moved substantially after the 2026-06-25 synthesis wave. Current verifier position:
 - use `verified/CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md` as the primary current-head truth;
 - use `verification/CANONICAL_VERIFIER_NOTE_2026-06-27_current-head-status-flips-and-second-order-defects.md` for status flips and second-order defects;
-- treat `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` as an important historical baseline, **not** as a pure present-state ledger.
+- use `verified/REPAIR_ORDER_DELTA_2026-06-27_current-head-priority-reset.md` for current repair ordering;
+- treat older 2026-06-25 ledgers as historical baseline only.
 
 ## Current live themes (current HEAD)
 
@@ -25,57 +26,42 @@ The project moved substantially after the 2026-06-25 synthesis wave. Current ver
 4. **Source-vs-built publication risk:** source-side fixes cannot automatically be treated as publication truth in this hybrid repo.
 5. **Ledger / guard drift:** some canonical-looking docs and some guards now lag current architecture or current HEAD reality.
 
-## Working documents
+## Primary current documents
 
 | File | Purpose |
 |------|---------|
 | `verified/CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md` | **Primary current-head operational truth** |
 | `verification/CANONICAL_VERIFIER_NOTE_2026-06-27_current-head-status-flips-and-second-order-defects.md` | Status flips, stale-vs-live reset, second-order defects |
-| `verified/REPAIR_ORDER_DELTA_2026-06-27_current-head-priority-reset.md` | Priority reset vs stale 2026-06-25 repair instincts |
+| `verified/REPAIR_ORDER_DELTA_2026-06-27_current-head-priority-reset.md` | Current repair-order reset |
+| `verification/WORKFLOW_PARITY_DEEP_DIVE_2026-06-27.md` | Exact workflow guard-drift root cause + minimal repair path |
+| `verification/IZBRANNOE_COMPLETION_DEEP_DIVE_2026-06-27.md` | `/izbrannoe/` contract-gap analysis |
+| `verification/GILL_GUARD_ARCHITECTURE_PREFLIGHT_2026-06-27.md` | Gill guard/architecture collision map |
 | `working/STATUS_MATRIX_2026-06-27_current-head-verifier-grade.md` | Quick verifier-grade classification matrix |
-| `working/ARENA_DEEP_REVERIFY_2026-06-27_systemic-desync-and-unfinished-implementation.md` | Deep analysis: desync, unfinished implementations, control-plane defects |
-| `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` | Historical baseline ledger from the 2026-06-25 synthesis wave |
-| `verified/repair-order-unified-2026-06-25.md` | Historical prioritized fix plan from earlier wave |
-| `verification/cross-reference/cross-reference-synthesis-2026-06-25.md` | Cross-agent findings merge |
-| `verification/CONFLICT_REGISTRY_2026-06-25.md` | Conflicting claims between agents / evidence layers |
-| `verification/RECHECK_PROTOCOL_2026-06-25.md` | How to re-run disputed findings correctly |
-| `verification/VERIFICATION_LEVELS.md` | Source/build/browser/prod-like evidence labels |
+| `working/ARENA_DEEP_REVERIFY_2026-06-27_systemic-desync-and-unfinished-implementation.md` | Deep current-head analysis |
 
-## Folder structure
+## Folder structure (cleaned 2026-06-27)
 
-```
+```text
 incoming/
-  arena-agent/          ← premium surface + runtime + interactive audit
-  arena-agent-round3/   ← system tooling + CI/CD + Astro source-layer
+  raw reports from many agents — preserved, not rewritten
 working/
-  ... synthesis in progress ...
+  only active current-head working docs
 verification/
-  cross-reference/      ← unified synthesis
-  ... conflict / recheck / evidence-level docs ...
+  active verifier doctrine + current-head deep dives
 verified/
-  UNIFIED_BUG_LEDGER_2026-06-25.md
-  repair-order-unified-2026-06-25.md
-repairs/
-  ... implementation-agent planning and patch tracking ...
+  current canonical truth + current repair-order truth
 reverify/
-  ... current HEAD truth after source repo moves ...
+  only latest reverify snapshots still useful
 archive/
-  ... stale / fixed / historical bundles ...
+  historical baselines, superseded syntheses, templates, old snapshots
 ```
 
 ## Intake rule
 
 - `incoming/` не переписывать задним числом;
 - каждый агент пишет в свою подпапку;
-- сводка идёт только в `working/`, `verification/` или `verified/`.
-- баг без `audited SHA` не должен считаться `repair-ready`.
-
-## Агенты, внёсшие отчёты
-
-| Агент | Папка | Дата | Метод |
-|---|---|---|---|
-| Arena Agent | `incoming/arena-agent/2026-06-25/` | 2026-06-25 | Playwright + production-like dist |
-| Arena Agent TOC | `incoming/arena-agent-toc/2026-06-25/` | 2026-06-25 | Static source scan + git history |
+- current operational truth не размазывать по 20 старым документам;
+- исторические сводки и superseded syntheses переносить в `archive/`, а не держать в корне актуальных папок.
 
 ## Current verifier status (2026-06-27)
 
@@ -90,6 +76,14 @@ archive/
 - source-vs-built publication risk as an active repo class
 - ledger/guard drift across documents and anti-regression logic
 
+## Archived historical material
+
+Historical 2026-06-25/2026-06-26 syntheses, older verified ledgers, and superseded reverify snapshots were cleaned out of the active roots and moved under:
+- `archive/2026-06-27-working/`
+- `archive/2026-06-27-verified/`
+- `archive/2026-06-27-verification/`
+- `archive/2026-06-27-reverify/`
+
 ## Next step
 
-Implementation and verifier agents should work from the **2026-06-27 current-head documents first**, and consult the 2026-06-25 ledgers only as historical baseline / context.
+Implementation and verifier agents should work from the **2026-06-27 current-head documents first**, and consult archived 2026-06-25/2026-06-26 material only as historical baseline / context.
