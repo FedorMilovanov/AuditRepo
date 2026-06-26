@@ -1,0 +1,32 @@
+# S3 — owner's 4 questions resolved (2026-06-26)
+
+## #1 rodosloviye — ALREADY FIXED on main (09c2d34)
+robots = index,follow; in sitemap + baseline; audit-pro PASS (no noindex-in-sitemap).
+Resolved the way owner wanted (indexable/professional). No new lane needed.
+
+## #2 Avraam thin indexable body — FIXED (new lane)
+lane/karty-avraam-indexable-text-layer-2026-06-26
+Replaced generic ~467-word sr-only with structured, source-cited text version:
+8 route stages w/ Genesis refs + archaeology, honest source-leveling, 14 verified
+references (web-searched this session). Indexable body 467 -> 1163 words.
+Verified: contract:compare:dist OK, avraam:audit 28/28, astro:check 0 err, seo-audit 0/0.
+Kept sr-only to preserve premium full-screen map UX (pagefind-indexed + a11y + noscript).
+
+## #3 PC-001 (anchor) + PC-004 (canonical CSS) — most professional = DON'T refactor; lock good state
+Investigation on dist:
+- PC-004 "double CSS delivery" = FALSE POSITIVE. No page loads both /css/floating-cluster.css
+  AND _astro/FloatingCluster bundle. 3 SingleArticleCluster pages use only bundle (link removed
+  in session2); 16 Gill/baptisty use only external. Disjoint sets. Original flag matched a comment.
+- PC-001: standalone controls render correctly (fixed, top40/right109, visible, no overflow) —
+  architecture preference, not a defect.
+Decision (cleanest/no-conflict, respects owner visual-parity rule): do NOT refactor CSS delivery
+or introduce PremiumControlAnchor now. Instead LOCK the verified-good state:
+lane/premiumcontrols-rollout-audit-2026-06-26 audit now asserts no-double-CSS-delivery invariant.
+Audit 17/17. Remaining source-level selector duplication = maintainability debt for a future
+dedicated CSS lane (owner: feature-first, then CSS).
+
+## #4 P1-5 migration matrix sync — ALREADY FIXED on main
+migration:metadata:check:strict PASSES (route modes coherent with matrix; profiles coherent;
+content source coverage coherent). Round-12 reconciliation + release-gate lane resolved it.
+
+## Net: all 4 owner items closed (2 were already green on main, 2 new lanes pushed).
