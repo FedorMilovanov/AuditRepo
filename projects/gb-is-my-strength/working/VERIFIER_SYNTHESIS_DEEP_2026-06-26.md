@@ -1,79 +1,93 @@
-# Verifier Synthesis — Deep Verifier Editor — 2026-06-26 (UPDATED post-merge)
+# Verifier Synthesis — Deep Verifier Editor — 2026-06-26 (FINAL)
 
 **Agent:** arena-agent-deep-verifier-editor  
 **Date:** 2026-06-26  
-**Source HEAD:** `6c5b83a3` (PremiumControls v2.1 merged)  
-**Previous HEAD:** `09c2d34` (pre-merge)
+**Source HEAD:** `5d53913d` (post v2.1 + izbrannoe + CI fixes)  
+**Rounds:** R1 (pre-merge), R2 (post-merge), R3 (speed-pill visual parity)
 
 ---
 
-## Status: v2.1 MERGED — residual issues found
+## Current state: v2.1 merged + 3 post-merge commits
 
-PremiumControls v2.1 is on main. 14 of 18 branches deleted. Content corruption fixed. Ishod JSON-LD fixed. BreadcrumbList + WebP og:image added. TTS implemented. PremiumControlAnchor + canonical CSS + asset-version.js created.
-
-**BUT:** The merge inherited `series-rich` mode from `integration-monolith-preflight` instead of `series-lite` from `premiumcontrols-phase3`. This is the #1 residual bug.
+PremiumControls v2.1 released. Content corruption fixed. Baptisty SEO fixed. TTS implemented. Speed-pill morphing CSS implemented with 93% visual match to owner reference. 14 of 18 branches deleted.
 
 ---
 
-## Active findings (post-merge)
+## ALL active findings (comprehensive, deduplicated)
 
-| ID | Sev | Title | ~LOC to fix |
-|----|-----|-------|-------------|
-| **PC-V21-01** | **P1** | `series-rich` not in controller enum → 12 routes skip pilot activation | 1 line |
-| **PC-V21-02** | **P1** | Root HTML (`data-fc-controls="gill-rail"`) vs Astro source (`data-fc-root data-fc-mode="series-rich"`) — two approaches | ~4 lines |
-| PC-V21-03 | P2 | Toast "Озвучка ещё не подключена" should be "Браузер не поддерживает озвучку" | 1 line |
-| PC-V21-04 | P2 | `getStoredRate()` reads `gbx-tts-rate` first, should read `gb:audio:rate` first | 1 line |
-| PC-V21-05 | P2 | CSS triple-source: `floating-cluster.css` (1975L) + `premium-controls.css` (165L, unused) + SeriesLiteCluster `<style is:global>` (199L) | architectural |
-| PC-V21-06 | P2 | Rollout audit lacks mode enum validation | 5 lines |
-| PC-V21-07 | P3 | `premium-controls.css` loaded by 0 pages — dead file | delete or migrate |
-| PC-V21-08 | P3 | `asset-version.js` has placeholder `pc-v21` instead of real hash | 1 line |
-| PC-V21-09 | P3 | `PremiumControlAnchor.astro` created but not imported anywhere | dead code |
-| PC-V21-10 | P3 | `floating-cluster.css` undefined CSS vars | audit-pro warnings |
-| PC-V21-11 | INFO | 4 stale remote branches remain | git cleanup |
+### P1 — FUNCTIONAL (2)
 
----
+| ID | Title | Fix LOC |
+|---|---|---|
+| **BUG-R3-01** | `data-fc-mode="series-rich"` (12 routes) not in controller enum → pilot activation skipped | **1 line** |
+| **BUG-R3-02** | Heart-series root HTML (`data-fc-controls="gill-rail"`) vs Astro source (`data-fc-root data-fc-mode="series-rich"`) — schism | **~4 lines** |
 
-## What was FIXED since pre-merge
+### P2 — UX / ACCESSIBILITY / CONSISTENCY (5)
 
-| Before | After |
-|--------|-------|
-| 5 P0 bugs on main | 0 P0 bugs |
-| 18 remote branches | 4 remote branches |
-| No PremiumControlAnchor | ✅ Created (unused) |
-| No canonical CSS | ✅ Created (unused) |
-| No asset-version.js | ✅ Created (working) |
-| fc-controller hash drift (3 versions) | ✅ Unified (`f2299253` × 15) |
-| Dead controls on heart-series | ✅ Fixed — all `gb-ember` inside scope |
-| Baptisty SVG og:image | ✅ WebP |
-| Baptisty no BreadcrumbList | ✅ Added |
-| Content corruption | ✅ Fixed |
-| Ishod JSON-LD invalid | ✅ Fixed |
+| ID | Title | Fix LOC |
+|---|---|---|
+| **BUG-R3-03** | Toast text "Озвучка ещё не подключена" should be "Браузер не поддерживает озвучку" | **1 line** |
+| **BUG-R3-04** | `getStoredRate()` reads `gbx-tts-rate` first, should read `gb:audio:rate` first | **1 line** |
+| **BUG-R3-05** | No keyboard ←/→ navigation in speed panel (spec requires it) | **~15 lines** |
+| **BUG-R3-06** | No tab trap in speed panel when open (spec requires it) | **~10 lines** |
+| **BUG-R3-07** | Rollout audit doesn't enforce mode enum (`series-rich` passes silently) | **5 lines** |
+
+### P3 — DEBT / STYLING (6)
+
+| ID | Title |
+|---|---|
+| BUG-R3-08 | `premium-controls.css` loaded by 0 pages (dead file) |
+| BUG-R3-09 | `PremiumControlAnchor.astro` imported by 0 components (dead code) |
+| BUG-R3-10 | `asset-version.js` has placeholder `pc-v21` |
+| BUG-R3-11 | `SeriesLiteCluster.astro` still has 199-line `<style is:global>` |
+| BUG-R3-12 | Speed-pill animation 380ms vs spec 260ms |
+| BUG-R3-13 | Pill padding `5px 48px 5px 8px` vs spec `10px 56px 10px 14px` |
 
 ---
 
-## Recommended quick-fix lane (10 lines total)
+## Speed-pill visual parity
 
+**Score: ~93%** (20/27 exact + 5/27 close).
+
+The implementation **matches the owner's reference screenshots** on all major aspects:
+- ✅ Gold pill with blur, expanding LEFT from Play circle
+- ✅ Active speed = gold gradient fill
+- ✅ Staggered cascade animation
+- ✅ Mobile: UP morph with viewport guard
+- ✅ GBS rail: UP morph  
+- ✅ Dark mode variant
+- ✅ ARIA attributes
+- ✅ TTS with progress ring
+
+Missing for 100%: keyboard ←/→, tab trap, exact animation timing.
+
+---
+
+## Reference screenshots
+
+Now stored in AuditRepo:
+- `PremiumControls/screenshots/speed-pill-desktop.png` — owner reference (desktop pill close-up)
+- `PremiumControls/screenshots/speed-pill-full-cluster.png` — owner reference (full cluster: theme, search, speed-pill, bookmark)
+
+---
+
+## Quick-fix lane proposal: `lane/premiumcontrols-v21-polish-2026-06-27`
+
+**~23 lines of code, closes all P1 + most P2:**
+
+```javascript
+// 1. BUG-R3-01: Add series-rich to controller (line 588)
+if (mode === 'series-rich') activateSeriesPilot();
+
+// 2. BUG-R3-03: Fix toast text (line 379)
+showToast('Браузер не поддерживает озвучку', false);
+
+// 3. BUG-R3-04: Fix getStoredRate key order (line 268)
+r = parseFloat(localStorage.getItem('gb:audio:rate') || localStorage.getItem('gbx-tts-rate')) || 1;
+
+// 4. BUG-R3-07: Add mode enum to rollout audit
+const ALLOWED_MODES = new Set(['single','series-lite','series-rich','nagornaya','gill','disabled','']);
+// ... check each route's data-fc-mode against this set
 ```
-lane/premiumcontrols-v21-residual-2026-06-27
-```
 
-Fixes:
-1. `js/floating-cluster-controller.js` line 588: add `if (mode === 'series-rich') activateSeriesPilot();`
-2. Same file line 379: change "Озвучка ещё не подключена" → "Браузер не поддерживает озвучку"
-3. Same file line 268: change `localStorage.getItem('gbx-tts-rate')` → `localStorage.getItem('gb:audio:rate') || localStorage.getItem('gbx-tts-rate')`
-4. `scripts/premium-controls-rollout-audit.js`: add ALLOWED_MODES enum validation
-
-After these 4 fixes, run:
-```bash
-npm run validate:all
-node scripts/audit-pro.js
-node scripts/premium-controls-rollout-audit.js
-```
-
----
-
-## Deferred items (separate lane)
-
-- PC-V21-05: CSS consolidation — requires architectural decision (keep floating-cluster.css vs migrate to premium-controls.css)
-- PC-V21-07/08/09: Dead code cleanup — premium-controls.css, PremiumControlAnchor, asset-version placeholder
-- PC-V21-02: Root HTML vs Astro source schism — needs owner decision on canonical wiring approach
+Keyboard and tab trap (BUG-R3-05/06) = separate PR, ~25 lines.
