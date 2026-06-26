@@ -1,9 +1,9 @@
 # Intake: arena-agent-round18 — Deep Hash + Content Integrity Audit (2026-06-26)
 
-## Meta
-- **Agent:** arena-agent-round18
-- **Date:** 2026-06-26
-- **Source repo:** FedorMilovanov/gb-is-my-strength
+## Identity
+- Agent: arena-agent-round18
+- Date: 2026-06-26
+- Source repo: FedorMilovanov/gb-is-my-strength
 - **Audited SHA:** `09c2d34a` (HEAD main)
 - **Mode:** deep-independent-audit
 - **Focus:** Asset hash integrity, content corruption, cross-source parity, systemic gaps
