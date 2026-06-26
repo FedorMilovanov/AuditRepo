@@ -398,3 +398,10 @@ it is not an official audit input.
 - `projects/gb-is-my-strength/` — gospod-bog.ru (64 bugs, repair-ready)
 
 Позже можно добавлять другие проекты тем же способом. (feat(auditrepo): add Governed Freedom Model — README, templates, scaffold)
+
+---
+
+## 📥 Скачать последние отчёты (для owner)
+Свежие отчёты по Floating Cluster / Hermeneutics / Gill и требования owner — в `_OWNER_DOWNLOADS/`:
+- ZIP: [`_OWNER_DOWNLOADS/gb-floating-cluster-LATEST-REPORTS-2026-06-27.zip`](_OWNER_DOWNLOADS/gb-floating-cluster-LATEST-REPORTS-2026-06-27.zip)
+- Описание и требования: [`_OWNER_DOWNLOADS/README.md`](_OWNER_DOWNLOADS/README.md)
