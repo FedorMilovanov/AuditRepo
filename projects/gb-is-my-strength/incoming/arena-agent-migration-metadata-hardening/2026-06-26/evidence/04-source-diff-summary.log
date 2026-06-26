@@ -1,0 +1,40 @@
+$ git diff --stat HEAD~1..HEAD
+ data/route-profiles/articles.json                  |  2 +-
+ data/route-profiles/biografii.json                 |  2 +-
+ data/route-profiles/karty-avraam.json              |  3 ++-
+ data/route-profiles/karty-early-church.json        |  3 ++-
+ data/route-profiles/karty-ishod.json               |  3 ++-
+ data/route-profiles/karty-maccabim.json            |  3 ++-
+ data/route-profiles/karty-melachim.json            |  3 ++-
+ data/route-profiles/karty-pavel.json               |  3 ++-
+ data/route-profiles/karty-revelation.json          |  3 ++-
+ data/route-profiles/karty-shoftim.json             |  3 ++-
+ data/route-profiles/karty-shvatim.json             |  3 ++-
+ data/route-profiles/karty-yeshua.json              |  3 ++-
+ data/route-profiles/konfessii-russkij-baptizm.json |  3 ++-
+ data/route-profiles/map.json                       |  3 ++-
+ data/route-profiles/rodosloviye.json               |  3 ++-
+ migration/route-migration-matrix.json              |  3 ++-
+ scripts/check-route-migration-matrix.js            | 19 ++++++++++++++++++-
+ scripts/check-route-profiles.js                    | 18 ++++++++++++++++++
+ 18 files changed, 66 insertions(+), 17 deletions(-)
+
+$ git diff --name-status HEAD~1..HEAD
+M	data/route-profiles/articles.json
+M	data/route-profiles/biografii.json
+M	data/route-profiles/karty-avraam.json
+M	data/route-profiles/karty-early-church.json
+M	data/route-profiles/karty-ishod.json
+M	data/route-profiles/karty-maccabim.json
+M	data/route-profiles/karty-melachim.json
+M	data/route-profiles/karty-pavel.json
+M	data/route-profiles/karty-revelation.json
+M	data/route-profiles/karty-shoftim.json
+M	data/route-profiles/karty-shvatim.json
+M	data/route-profiles/karty-yeshua.json
+M	data/route-profiles/konfessii-russkij-baptizm.json
+M	data/route-profiles/map.json
+M	data/route-profiles/rodosloviye.json
+M	migration/route-migration-matrix.json
+M	scripts/check-route-migration-matrix.js
+M	scripts/check-route-profiles.js
