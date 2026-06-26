@@ -178,3 +178,68 @@ The speed-pill implementation is **85-90% matched** to the reference screenshots
 5. Keyboard ←/→ in speed panel — **~15 lines**
 
 **Total: ~23 lines of code to close all P1 + P2 bugs.**
+
+---
+
+## AMENDMENT: Round 3b — Deep controller audit
+
+### BUG-R3-14 (P0): TTS has NO mouse-click start path — speed panel is functionally dead
+
+**Severity: P0 — feature completely broken for mouse users**
+
+The Play button's click handler (`initPlayExpand`, line 782) calls `e.stopPropagation()`, which prevents the click from reaching `initCluster`'s delegation handler where `handlePlayClick()` → `startTts()` lives. The speed panel opens, but selecting a speed only stores the rate — it does NOT start TTS.
+
+**Result:** On ALL pages with the speed-pill, clicking Play opens the panel, selecting speed closes the panel, but TTS **never starts**. The only way to start TTS is keyboard shortcut 'T' (which requires `initKeyboard()` — itself broken on 2 pages due to early return).
+
+**Evidence:** `evidence/tts-no-click-start-path-P0.md`
+
+**Fix:** After speed selection, if state=idle, call `handlePlayClick()` with a slight delay:
+```javascript
+// In panel click handler, after setTimeout(closePanel, 240):
+var cs = (qs('.gb-ember') || {}).dataset || {};
+if (cs.state === 'idle' || !cs.state) {
+  setTimeout(handlePlayClick, 280);
+}
+```
+This is 3 lines. Alternatively redesign the click flow.
+
+---
+
+### BUG-R3-15 (P1): Early return at line 582 skips syncSaveState + initKeyboard on pages without data-fc-root
+
+On Krajne and Rimlyanam7 **root HTML** (which use `data-fc-controls="gill-rail"` instead of `data-fc-root`):
+- `syncSaveState()` never runs → Save button doesn't show saved state on load
+- `initKeyboard()` never runs → D/S/T/B shortcuts dead
+- Ember ARIA labels not initialized
+
+**Fix:** Move `syncThemeButtons()`, `syncSaveState()`, `initKeyboard()`, and the ARIA init OUT of the `if (!roots.length) return;` guard — they should run unconditionally if ANY premium controls exist on the page.
+
+```javascript
+// Move these BEFORE the early return:
+syncThemeButtons();
+syncSaveState();
+initKeyboard();
+// ... then the root-specific pilot activation can use if (!roots.length) return;
+```
+
+---
+
+### BUG-R3-16 (P2): Comment at line 215 says "localStorage.gbx-tts-rate" but code should use gb:audio:rate
+
+```javascript
+// Line 215-217:
+     применяя сохранённую скорость из localStorage.gbx-tts-rate.
+```
+Comment references the old key. Should say `gb:audio:rate`. Misleading for future developers.
+
+---
+
+## UPDATED Summary
+
+| Category | Count |
+|---|---|
+| **P0** | **1** (TTS no click start path) |
+| **P1** | **3** (series-rich mode, root/Astro schism, early-return skips init) |
+| **P2** | **6** (toast text, storage key, keyboard nav, tab trap, audit enum, comment) |
+| **P3** | **6** (dead files, animation timing, CSS duplication) |
+| **Total** | **16 findings** |
