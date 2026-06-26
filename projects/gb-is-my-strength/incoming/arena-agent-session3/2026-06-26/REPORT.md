@@ -238,6 +238,34 @@ Given the goal stated by the owner ("единый монолит, не 100 ли�
 
 ---
 
+# ROUND 9 ADDENDUM — PC-006 rollout-audit guard added + lane collision flagged
+
+> Evidence: `evidence/S3-PC006-rollout-audit.txt`. Conflict: `verification/conflicts/CONFLICT_REGISTRY_2026-06-26-baptisty-seo.md`.
+
+**PC-006 → fixed-current (new guard).** Added `scripts/premium-controls-rollout-audit.js`
+(+ npm `premium-controls:rollout:audit`). Runs against built `dist/` (real DOM → no source-scan
+false positives). Enforces: no dead controls (PC-002 class), no controls on forbidden
+app/landing/catalog routes, controller loaded where controls exist.
+- Proof: on current main it correctly flagged Krajne+Rimlyanam7 as dead (14/16); with PC-002 applied → **16/16**.
+- This lane also re-applies the PC-002 fix so main is green even if the earlier heart-series lane merges later.
+
+**Lane collision flagged (C-BAPT-01):** another agent's `lane/baptisty-seo-structured-og-2026-06-26-arena`
+duplicates my baptisty SEO fix (same BreadcrumbList + WebP og). Logged in conflict registry for the
+integrator to dedup rather than force-merge. My lane is minimal-scope and includes the 11 WebP binaries;
+the other lane is broader (also Body/MDX/map). Integrator picks one; ensure WebP binaries are included
+either way (else og:image 404).
+
+**Session-cumulative recommend `fixed-current`:** CHV-003, CHV-004, PC-002, PC-005, PC-006,
+S3-N1, S3-N2, S3-N4/PC-003/P0-10, S3-N5/P0-02.
+
+**Still open — explicitly need OWNER decision (not safe to guess):**
+- **CHV-002 `/rodosloviye/`**: noindex vs sitemap vs public-baseline 3-way. Decision needed: make it indexable (it's a React genealogy scaffold — thin) OR remove from sitemap+baseline. Mechanical once decided.
+- **N-2026-06-26-05 `/karty/avraam/` thin body** (594→23 words in dist): needs either a real accessible/indexable text layer for the map, or an explicit app-route contract exception. Design/content call.
+- **PC-001 (PremiumControlAnchor)** + **PC-004 (canonical CSS source)**: architecture; owner said "feature-first, CSS later".
+- **P1-5** migration matrix undefined modes / profile mismatches: data reconciliation, owner/integrator policy.
+
+---
+
 # ROUND 8 ADDENDUM — PC-005 PlayEmber semantics FIXED (browser-verified)
 
 > Lane `premiumcontrols-playember-semantics-2026-06-26` (on top of cache-bust-astro lane).

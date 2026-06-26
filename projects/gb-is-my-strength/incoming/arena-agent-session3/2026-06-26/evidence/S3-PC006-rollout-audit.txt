@@ -1,0 +1,21 @@
+# S3-PC006 — PremiumControls route-archetype rollout audit (new guard)
+# lane/premiumcontrols-rollout-audit-2026-06-26 (base current main 09c2d34)
+
+Added scripts/premium-controls-rollout-audit.js + npm premium-controls:rollout:audit.
+Runs against built dist/ (real DOM -> no source-scan false positives).
+Enforces:
+  - dead controls (PC-002 class): gb-ember/gb-save outside [data-fc-root]/[data-fc-controls] -> FAIL
+  - forbidden app/landing/catalog routes carrying article controls -> FAIL
+  - controls present but floating-cluster-controller.js not loaded -> FAIL
+
+Proof it works:
+  - On current main BEFORE PC-002 fix: 14/16, correctly flags
+    /articles/krajne-li-isporcheno-serdce/ and /rimlyanam-7-.../ as dead controls.
+  - AFTER PC-002 fix (included in this lane): 16/16 -> contract OK.
+  - 52 dist pages scanned, 15 carry PremiumControls.
+
+guard:shared-files PASSED; package.json valid (116 scripts).
+Recommendation: add premium-controls:rollout:audit to strangler:audit:production-like.
+
+Status: PC-006 -> fixed-current (new guard). PC-002 re-affirmed (this lane also makes main green
+even if the earlier heart-series lane lands later).
