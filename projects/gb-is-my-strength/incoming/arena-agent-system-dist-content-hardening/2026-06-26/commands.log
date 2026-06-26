@@ -1,0 +1,12 @@
+# commands / environment for system-dist-content-hardening lane
+lane/system-dist-content-hardening-2026-06-26-arena
+b9f3f40
+b9f3f40 [LANE lane/system-dist-content-hardening-2026-06-26-arena] harden dist contract jsonld and content
+7ac9188 [LANE lane/system-release-gate-green-2026-06-26] restore map visual parity
+106f98d chore: auto-update meta, cache-bust [skip ci]
+remote branch:
+## lane/system-dist-content-hardening-2026-06-26-arena
+node:
+v20.20.2
+10.8.2
+v22.23.1
