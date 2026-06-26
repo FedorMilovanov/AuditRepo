@@ -1,98 +1,79 @@
-# Verifier Synthesis — Deep Verifier Editor — 2026-06-26
+# Verifier Synthesis — Deep Verifier Editor — 2026-06-26 (UPDATED post-merge)
 
 **Agent:** arena-agent-deep-verifier-editor  
 **Date:** 2026-06-26  
-**Source HEAD:** `09c2d34` (main)  
-**AuditRepo HEAD:** `d39963b`
+**Source HEAD:** `6c5b83a3` (PremiumControls v2.1 merged)  
+**Previous HEAD:** `09c2d34` (pre-merge)
 
 ---
 
-## Status: CLEAR MERGE PATH IDENTIFIED
+## Status: v2.1 MERGED — residual issues found
 
-After auditing the entire project (both repos, 18 remote branches, all documentation, all agent intakes), the situation is:
+PremiumControls v2.1 is on main. 14 of 18 branches deleted. Content corruption fixed. Ishod JSON-LD fixed. BreadcrumbList + WebP og:image added. TTS implemented. PremiumControlAnchor + canonical CSS + asset-version.js created.
 
-### The problem
-- 18 remote branches, 4+ targeting PremiumControls
-- Multiple branches doing the same work differently
-- Heart-series wiring done with wrong mode in older branches
-- 5 P0 bugs live on main
-- No PC-plan primitives on main
-
-### The solution
-**`lane/premiumcontrols-phase3-2026-06-26`** (tip `c4de1d42`) supersedes 10+ branches and is the canonical merge candidate.
+**BUT:** The merge inherited `series-rich` mode from `integration-monolith-preflight` instead of `series-lite` from `premiumcontrols-phase3`. This is the #1 residual bug.
 
 ---
 
-## Findings summary (DVE-01..DVE-07)
+## Active findings (post-merge)
 
-| ID | Severity | Title | Status |
-|---|---|---|---|
-| DVE-01 | **P0 coord** | phase3 supersedes 4 PC branches — merge it FIRST | **PROPOSAL OPEN** |
-| DVE-02 | P3 | 8 stale branches should be cleaned up | **PROPOSAL OPEN** |
-| DVE-03 | P1 | system-hardening has non-PC fixes that need extraction | **PROPOSAL OPEN** |
-| DVE-04 | P2 | 2 baptisty SEO branches conflict with each other | needs dedup |
-| DVE-05 | P2 | monolith-preflight (17 commits) uses wrong heart-series mode | **SUPERSEDED by phase3** |
-| DVE-06 | P0 | Content corruption, Ishod JSON-LD confirmed on main | **CONFIRMED** — fixed in phase3 |
-| DVE-07 | P3 | Phase3 TTS rate legacy alias bug (`TTS_RATE_LEGACY = TTS_RATE_KEY`) | **NEW BUG** — one-line fix |
-
----
-
-## Cross-reference with prior verifiers
-
-| Prior finding | This synthesis | Agreement |
-|---|---|---|
-| PC-ROLL-01 (4 branches not merged) | ✅ confirmed + found 5th branch (phase3) that resolves it | **STRENGTHENED** |
-| PC-ROLL-02 (heart-series wrong mode) | ✅ confirmed on heart-series branch; **RESOLVED** in phase3 | **RESOLVED** |
-| PC-ROLL-03 (no PremiumControlAnchor) | **RESOLVED** in phase3 (`PremiumControlAnchor.astro`) | **RESOLVED** |
-| PC-ROLL-04 (Phase 1/2 triplicated) | ✅ confirmed; phase3 consolidates all 3 | **RESOLVED** |
-| PC-ROLL-05 (stale bases / dependency chains) | ✅ confirmed; phase3 is 0 behind | **RESOLVED** |
-| PC-ROLL-06 (rollout audit lacks mode enum) | needs verification on phase3's script | **OPEN** |
-| PC-ROLL-07 (Playwright blocked) | still blocked — system lib issue | **STILL OPEN** |
+| ID | Sev | Title | ~LOC to fix |
+|----|-----|-------|-------------|
+| **PC-V21-01** | **P1** | `series-rich` not in controller enum → 12 routes skip pilot activation | 1 line |
+| **PC-V21-02** | **P1** | Root HTML (`data-fc-controls="gill-rail"`) vs Astro source (`data-fc-root data-fc-mode="series-rich"`) — two approaches | ~4 lines |
+| PC-V21-03 | P2 | Toast "Озвучка ещё не подключена" should be "Браузер не поддерживает озвучку" | 1 line |
+| PC-V21-04 | P2 | `getStoredRate()` reads `gbx-tts-rate` first, should read `gb:audio:rate` first | 1 line |
+| PC-V21-05 | P2 | CSS triple-source: `floating-cluster.css` (1975L) + `premium-controls.css` (165L, unused) + SeriesLiteCluster `<style is:global>` (199L) | architectural |
+| PC-V21-06 | P2 | Rollout audit lacks mode enum validation | 5 lines |
+| PC-V21-07 | P3 | `premium-controls.css` loaded by 0 pages — dead file | delete or migrate |
+| PC-V21-08 | P3 | `asset-version.js` has placeholder `pc-v21` instead of real hash | 1 line |
+| PC-V21-09 | P3 | `PremiumControlAnchor.astro` created but not imported anywhere | dead code |
+| PC-V21-10 | P3 | `floating-cluster.css` undefined CSS vars | audit-pro warnings |
+| PC-V21-11 | INFO | 4 stale remote branches remain | git cleanup |
 
 ---
 
-## Canonical merge order
+## What was FIXED since pre-merge
+
+| Before | After |
+|--------|-------|
+| 5 P0 bugs on main | 0 P0 bugs |
+| 18 remote branches | 4 remote branches |
+| No PremiumControlAnchor | ✅ Created (unused) |
+| No canonical CSS | ✅ Created (unused) |
+| No asset-version.js | ✅ Created (working) |
+| fc-controller hash drift (3 versions) | ✅ Unified (`f2299253` × 15) |
+| Dead controls on heart-series | ✅ Fixed — all `gb-ember` inside scope |
+| Baptisty SVG og:image | ✅ WebP |
+| Baptisty no BreadcrumbList | ✅ Added |
+| Content corruption | ✅ Fixed |
+| Ishod JSON-LD invalid | ✅ Fixed |
+
+---
+
+## Recommended quick-fix lane (10 lines total)
 
 ```
-STEP 1: git merge origin/lane/premiumcontrols-phase3-2026-06-26
-        (fixes P0-content × 3, P0-ishod, PC-001..006, adds anchor/CSS/asset-version/TTS)
+lane/premiumcontrols-v21-residual-2026-06-27
+```
 
-STEP 2: Fix DVE-07 (TTS_RATE_LEGACY = 'gbx-tts-rate' instead of TTS_RATE_KEY)
+Fixes:
+1. `js/floating-cluster-controller.js` line 588: add `if (mode === 'series-rich') activateSeriesPilot();`
+2. Same file line 379: change "Озвучка ещё не подключена" → "Браузер не поддерживает озвучку"
+3. Same file line 268: change `localStorage.getItem('gbx-tts-rate')` → `localStorage.getItem('gb:audio:rate') || localStorage.getItem('gbx-tts-rate')`
+4. `scripts/premium-controls-rollout-audit.js`: add ALLOWED_MODES enum validation
 
-STEP 3: Run gates:
-        npm run validate:all
-        node scripts/audit-pro.js
-        npm run content:guard
-
-STEP 4: Delete 10 superseded branches
-
-STEP 5: Merge remaining independent lanes:
-        - karty-avraam-indexable-text-layer (1 ahead, independent)
-        - system-dist-content-hardening (1 ahead, may overlap — verify)
-        - system-migration-metadata-hardening (1 ahead, may overlap — verify)
-        - baptisty-seo-structured-og (1 ahead, verify phase3 coverage)
-
-STEP 6: Extract non-PC fixes from system-premiumcontrols-hardening:
-        - deploy.yml JSON-LD guard
-        - data/series.json updates
-        - scripts/bundle-modules.js
-        Cherry-pick into clean lane, drop PC duplication
-
-STEP 7: Audit integration-monolith-preflight for any unique post-merge work
-        Cherry-pick if needed, then delete
-
-STEP 8: Rebuild UNIFIED_BUG_LEDGER from scratch on new HEAD
+After these 4 fixes, run:
+```bash
+npm run validate:all
+node scripts/audit-pro.js
+node scripts/premium-controls-rollout-audit.js
 ```
 
 ---
 
-## Files in this synthesis
+## Deferred items (separate lane)
 
-- `REPORT.md` — full findings
-- `evidence/branch-conflict-matrix-2026-06-26.md` — 18-branch inventory
-- `evidence/premiumcontrols-phase3-vs-main-verification.md` — phase3 content verification
-- `evidence/phase3-tts-rate-legacy-alias-bug.md` — DVE-07 bug evidence
-- `evidence/monolith-preflight-analysis.md` — why monolith is superseded
-- `comments/comment-on-stale-branches-cleanup.md` — cleanup proposal
-- `comments/comment-on-premiumcontrols-phase3-endorsement.md` — merge endorsement
-- `comments/comment-on-phase3-tts-legacy-alias-bug.md` — DVE-07 fix proposal
+- PC-V21-05: CSS consolidation — requires architectural decision (keep floating-cluster.css vs migrate to premium-controls.css)
+- PC-V21-07/08/09: Dead code cleanup — premium-controls.css, PremiumControlAnchor, asset-version placeholder
+- PC-V21-02: Root HTML vs Astro source schism — needs owner decision on canonical wiring approach
