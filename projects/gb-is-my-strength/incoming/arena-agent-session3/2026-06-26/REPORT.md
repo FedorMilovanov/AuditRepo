@@ -238,6 +238,27 @@ Given the goal stated by the owner ("единый монолит, не 100 ли�
 
 ---
 
+# ROUND 8 ADDENDUM — PC-005 PlayEmber semantics FIXED (browser-verified)
+
+> Lane `premiumcontrols-playember-semantics-2026-06-26` (on top of cache-bust-astro lane).
+> Evidence: `evidence/S3-PC005-playember.txt`.
+
+- `handlePlayClick()` idle no longer shows the contradictory «Озвучка ещё не подключена» toast on a visible control → opens/closes the speed panel instead.
+- Canonical storage key `gb:audio:rate` (with legacy `gbx-tts-rate` alias for back-compat, read + write).
+- Coherent ARIA: panel `id`, ember `aria-haspopup`/`aria-controls`/`aria-expanded`.
+- **Browser-verified:** Play opens panel (no toast), `aria-controls===panel.id`, speed 1.5 persists to both keys, 0 errors.
+- Status: **PC-005 → fixed-current.**
+
+**Remaining open (need owner decision OR larger architecture lane):**
+- PC-001 (PremiumControlAnchor geometry layer) — architecture
+- PC-004 (canonical CSS source — owner said feature-first, CSS later)
+- PC-006 (route-archetype rollout audit) — governance guard
+- N-2026-06-26-05 `/karty/avraam/` thin indexable body — needs accessible text or contract exception
+- CHV-002 `/rodosloviye/` noindex-vs-sitemap-vs-baseline — one owner decision
+- P1-5 migration matrix undefined modes / profile mismatches
+
+---
+
 # ROUND 7 ADDENDUM — IMPLEMENTATION BATCH: 4 more lanes pushed (systemic + SEO)
 
 > Continued "close everything topово". Pushed 4 more lanes to source repo (base `106f98d`).

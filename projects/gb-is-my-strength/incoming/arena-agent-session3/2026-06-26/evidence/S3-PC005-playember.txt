@@ -1,0 +1,17 @@
+# S3-PC005 — PlayEmber semantics normalized (browser-verified)
+# lane/premiumcontrols-playember-semantics-2026-06-26 (based on cache-bust-astro lane)
+
+Fix in js/floating-cluster-controller.js:
+- handlePlayClick() idle: removed contradictory 'Озвучка ещё не подключена' toast;
+  now opens/closes speed panel (honest UI). GBAudio path + playing/paused toggle kept.
+- canonical key gb:audio:rate (readAudioRate/writeAudioRate); legacy gbx-tts-rate kept as alias.
+- coherent ARIA: panel id, ember aria-haspopup/aria-controls/aria-expanded.
+
+Browser (Playwright, hermenevtika dist):
+- Play -> panelOpen=true, no toast
+- aria-controls === panel.id (gb-ember-speed-1)
+- pick 1.5x -> localStorage gb:audio:rate="1.5" AND gbx-tts-rate="1.5"
+- 0 page errors
+data:consistency PASSED; guard:shared-files PASSED; postbuild drift 0/0.
+
+Status: PC-005 -> fixed-current.
