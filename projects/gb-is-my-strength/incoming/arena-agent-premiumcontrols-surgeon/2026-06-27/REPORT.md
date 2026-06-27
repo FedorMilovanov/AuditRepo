@@ -8,19 +8,32 @@
 - Date: 2026-06-27
 - Current source main audited: `23f283d4`
 - Repair branch pushed: `lane/system-premiumcontrols-dist-gate-wiring-2026-06-27`
-- Repair commit pushed: `ae9f3d4f`
-- Mode: current-main reverify + precise system guard wiring + synthesis against new PremiumControls audit wave
+- Repair commits pushed:
+  - `ae9f3d4f` — wire `audit:premium-controls` into dist/deploy gates
+  - `7cb0f8c7` — align `dist-publication-audit` Gill markers with v16 chrome
+- Mode: current-main reverify + precise system guard wiring + stale-guard classification
 
-## 0. What changed during this continuation
+## 0. Sandbox / environment action
 
-After my earlier local surgical branch, the source repo and AuditRepo moved forward materially:
+I re-read `docs/SANDBOX-ENV-2026-06-21.md` and applied its Arena guidance:
 
-- source `origin/main` advanced to `23f283d4` with PremiumControls bulletproof guards and Gill parity work;
-- AuditRepo advanced to `5915cc3` with multiple new PremiumControls reports, including remaining-risk docs, turn-key guides, surgical replay notes, and 50+ route verification notes.
+- Keep Node 22 in PATH for every command.
+- Avoid parallel Astro builds.
+- Use FAST loop + final FULL barrier.
+- If build gates hit sandbox limits, document blockers.
 
-I therefore did **not** treat my earlier local commit as current truth. I fetched the new source main, fast-forwarded local `main`, re-ran a 55-check current-main matrix, and synthesized the actual remaining gap.
+The file states the environment is ~2 vCPU / ~1.9–2 GiB RAM. A later full build attempt hit `exit 137`; because this Arena has sudo/root access, I added temporary swap to increase effective memory for this session:
 
-## 1. New current-main finding confirmed by tests
+```bash
+sudo fallocate -l 4G /swapfile-arena
+sudo chmod 600 /swapfile-arena
+sudo mkswap /swapfile-arena
+sudo swapon /swapfile-arena
+```
+
+After that, `free -h` showed ~1.9 GiB RAM + 4.0 GiB swap, and the full production-like dist barrier completed.
+
+## 1. New current-main findings confirmed by tests
 
 ### PC-GATE-2026-06-27 — PremiumControls audit existed but was not wired into production-like dist/deploy gate
 
@@ -38,7 +51,24 @@ Evidence:
 
 Meaning: the new bulletproof PremiumControls rollout audit could be green manually, but still skipped by the main production-like dist barrier and Pages deploy.
 
-## 2. Repair pushed to source branch
+### PC-DIST-GILL-MARKER-2026-06-27 — `dist-publication-audit` still expected legacy `gbs2-rail` on v16 Gill routes
+
+**Status before repair:** confirmed-current on source `23f283d4` + branch after first repair  
+**Severity:** P1 guard drift / false-red release blocker  
+**Scope:** `scripts/dist-publication-audit.js`
+
+After enabling swap, `npm run strangler:audit:production-like` completed the build but failed at `dist-publication-audit`:
+
+```text
+/articles/dzhon-gill-spravochnik/ missing visual-shadow markers: gbs2-rail
+/articles/dzhon-gill-chast-1-chelovek/ missing visual-shadow markers: gbs2-rail
+/articles/dzhon-gill-chast-2-uchenyi/ missing visual-shadow markers: gbs2-rail
+/articles/dzhon-gill-chast-3-nasledie/ missing visual-shadow markers: gbs2-rail
+```
+
+This was stale guard truth. Current Gill v16 pages correctly use `data-gill-v16` + `gbs-rail`, not legacy `gbs2-rail`.
+
+## 2. Repairs pushed to source branch
 
 Pushed source branch:
 
@@ -46,10 +76,11 @@ Pushed source branch:
 lane/system-premiumcontrols-dist-gate-wiring-2026-06-27
 ```
 
-Pushed commit:
+Commits:
 
 ```text
 ae9f3d4f [LANE lane/system-premiumcontrols-dist-gate-wiring-2026-06-27] system(premiumcontrols): wire rollout audit into dist gates
+7cb0f8c7 [LANE lane/system-premiumcontrols-dist-gate-wiring-2026-06-27] system(gill): align dist publication markers with v16 chrome
 ```
 
 Changes:
@@ -60,18 +91,22 @@ Changes:
   - deploy now runs `npm run audit:premium-controls` after dist JSON-LD parse audit.
 - `scripts/check-workflows.js`
   - workflow policy now requires PremiumControls rollout audit in both production-like dist gate and deploy workflow.
+- `scripts/dist-publication-audit.js`
+  - all five Gill routes now require `data-gill-v16` + `gbs-rail` markers instead of stale `gbs2-rail` markers.
 - `docs/refactor-2026/lanes/system-premiumcontrols-dist-gate-wiring-2026-06-27.md`
-  - source lane report added.
+  - source lane report updated with swap-backed final verification.
 
-## 3. 55-check matrix after repair
+## 3. Verification evidence
 
-Evidence file:
+Evidence files:
 
 ```text
-evidence/PREMIUMCONTROLS_55_SOURCE_MATRIX_ae9f3d4f.log
+evidence/PREMIUMCONTROLS_55_SOURCE_MATRIX_7cb0f8c7.log
+evidence/VALIDATE_STATIC_PUBLICATION_7cb0f8c7.log
+evidence/STRANGLER_AUDIT_PRODUCTION_LIKE_7cb0f8c7.log
 ```
 
-Summary:
+### 55-check source/current-main matrix
 
 ```text
 TOTAL=55 PASS=55 FAIL=0
@@ -100,31 +135,49 @@ Covered areas:
 - production-like PremiumControls audit wiring check;
 - `package.json` parse.
 
+### Full static publication
+
+```text
+npm run validate:static-publication ✅ PASS
+```
+
+### Full production-like dist / Playwright path
+
+```text
+npm run strangler:audit:production-like ✅ PASS
+```
+
+Important sub-results inside that gate:
+
+```text
+PremiumControls rollout audit: 39/39 passed
+✅ PremiumControls rollout contract OK.
+✅ dist smoke passed — representative production-like strangler output is healthy
+✅ CSS parity audit passed: 52/52 pages carry project CSS.
+✅ SW dist readiness audit passed
+```
+
 ## 4. Relation to new AuditRepo PremiumControls wave
 
-I read/synthesized the newly added documents under:
+I synthesized the newer reports that landed after my prior pass, including:
 
-- `PremiumControls/ROADMAP.md`
-- `PremiumControls/REMAINING_RISKS_2026-06-27.md`
-- `PremiumControls/RECONCILIATION_AND_SELF_ANALYSIS_REPORT_2026-06-27.md`
-- `PremiumControls/SURGICAL_REPLAY_CURRENT_MAIN_2026-06-27.md`
-- `PremiumControls/reports/*2026-06-27.md`
-- `incoming/arena-surgical-surgeon/2026-06-27/DEEP_*PREMIUMCONTROLS*.md`
+- `PremiumControls/DEEP_REVERIFY_2026-06-27.md`
+- `PremiumControls/REMOTE_MAIN_DEEP_AUDIT_2026-06-27.md`
+- `PremiumControls/REMOTE_MAIN_DEEP_AUDIT_SUMMARY_2026-06-27.md`
+- `PremiumControls/BUTTON_INTERACTION_AUDIT_2026-06-27.md`
+- `incoming/arena-surgical-surgeon/2026-06-27/DEEP_FOURTH_WAVE_VISUAL_AUDIT_RECONCILIATION_2026-06-27.md`
+- earlier PremiumControls remaining-risk / replay / reconciliation reports.
 
 Synthesis:
 
 - PC-001..PC-006 are no longer broad-open on current main.
-- The active class is now **second-order guard/wiring/architecture debt**, not “PremiumControls globally broken”.
-- The highest-value surgical action was not another visual tweak, but making the existing PremiumControls audit unavoidable in the production-like path.
-- Remaining risk docs are still correct that CSS architecture, controller decomposition, and naming convergence need owner-level sequencing; I did not touch those.
+- Current failures are second-order guard/truth-model issues, not “PremiumControls globally broken”.
+- The newest reports correctly point toward smarter audits and guarded visual stability.
+- My two repairs match that direction: do not retune visuals; instead, make the guards reflect v16 truth and make them unavoidable in production-like/deploy paths.
 
 ## 5. Current recommendation
 
 1. Merge or PR source branch `lane/system-premiumcontrols-dist-gate-wiring-2026-06-27` if CI agrees.
 2. Keep PremiumControls visual/position/speed-pill freeze intact.
 3. Treat controller decomposition and CSS architecture decision as separate owner-approved lanes.
-4. Do not reuse my earlier local `c75da3e9` branch as operational truth; it was superseded by current-main branch `ae9f3d4f`.
-
-## 6. Verification caveat
-
-During extended 50+ testing, a later attempt to run another production-like build after many audit processes hit Arena OOM (`exit 137`). Earlier in the session the full dist barrier had passed after Playwright browser/deps install. The pushed branch is guard wiring only and does not alter built output.
+4. Consider documenting the temporary Arena swap trick in `SANDBOX-ENV-2026-06-21.md` later, but only via a separate docs/system lane; I did not modify that contract in this lane.
