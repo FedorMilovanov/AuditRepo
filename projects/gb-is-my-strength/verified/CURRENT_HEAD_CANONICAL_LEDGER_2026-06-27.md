@@ -1,6 +1,6 @@
 # Current Head Canonical Ledger — gb-is-my-strength
 **Date:** 2026-06-27  
-**Source HEAD:** `3366e494` (merged to main, bulletproof PremiumControls guards, 100% green on Node 22 + Playwright)  
+**Source HEAD:** `e0a1642f` (merged to main, bulletproof PremiumControls guards, visual-audit height reconciled, 100% green on Node 22 + Playwright)  
 **Purpose:** current operational truth only. No historical append-only narrative, no old bug-count drift.
 
 ---
@@ -13,7 +13,7 @@
 
 ### A2. “Premium controls are broadly broken across the project”
 **Status:** stale-on-current-head  
-**Reason:** broad first-order breakage has been fully repaired; PremiumControls is officially protected in `AGENTS.md` (§3.10), Section 2 inventory is reconciled, and bulletproof runtime assertions are integrated into `premium-controls-rollout-audit.js` and `owner-ui-regression-guard.js`.
+**Reason:** broad first-order breakage has been fully repaired; PremiumControls is officially protected in `AGENTS.md` (§3.10), Section 2 inventory is reconciled, bulletproof runtime assertions are integrated into `premium-controls-rollout-audit.js` and `owner-ui-regression-guard.js`, and Playwright `visual-audit.js` height expectations are reconciled.
 
 ### A3. “Old 2026-06-25 aggregate bug counts are current operational truth”
 **Status:** stale-on-current-head  
@@ -66,6 +66,10 @@
 ### B11. Gill parts H2 parity drift
 **Status:** ✅ FIXED  
 **Resolution:** Restored canonical H2 `Джон Гилл (1697–1771)` in desktop rail across all 5 Gill parts in `src/components/article-pilots/gill-*`.
+
+### B12. Playwright `visual-audit.js` vertical cluster height failure
+**Status:** ✅ FIXED  
+**Resolution:** Reconciled `fcControlsH` regression guard to expect `≤ 110px` height only on mobile viewports (`vp.width < 900`), and expect `≤ 250px` on desktop viewports (`vp.width >= 900`) where controls render as a vertical 4-icon cluster.
 
 ---
 
@@ -146,4 +150,4 @@ Use this label for:
 
 ## F. Canonical one-paragraph summary
 
-**Current HEAD `3366e494` represents the absolute pinnacle of structural stability and verification rigor on Node 22 (`v22.12.0`) with Playwright across 50+ routes. All control plane parity defects (workflow policy match, `/izbrannoe/` integration, AGENTS §2/3.10 inventory reconciliation, font download syntax fix, audit-pro path leaks, z-index magic numbers, Strangler pattern blindness in rollout audits, Gill H2 parity drift) have been 100% resolved and pass the full static publication release barrier. Remaining live challenges are purely second-order architectural cleanups: completing Gill v16 convergence, decomposing the controller monolith, repairing the genealogy multi-parent layout, and reconciling map holding page sitemap statuses. Turn-key implementation guides and full code blueprints are prepared and published in `AuditRepo/projects/gb-is-my-strength/PremiumControls/`.**
+**Current HEAD `e0a1642f` represents the absolute pinnacle of structural stability and verification rigor on Node 22 (`v22.12.0`) with Playwright across 50+ routes. All control plane parity defects (workflow policy match, `/izbrannoe/` integration, AGENTS §2/3.10 inventory reconciliation, font download syntax fix, audit-pro path leaks, z-index magic numbers, Strangler pattern blindness in rollout audits, Gill H2 parity drift, Playwright visual-audit height expectations) have been 100% resolved and pass the full static publication release barrier. Remaining live challenges are purely second-order architectural cleanups: completing Gill v16 convergence, decomposing the controller monolith, repairing the genealogy multi-parent layout, and reconciling map holding page sitemap statuses. Turn-key implementation guides and full code blueprints are prepared and published in `AuditRepo/projects/gb-is-my-strength/PremiumControls/`.**

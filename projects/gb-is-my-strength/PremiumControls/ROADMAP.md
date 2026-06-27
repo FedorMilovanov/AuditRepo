@@ -1,7 +1,7 @@
 # PremiumControls — Roadmap PC-001..PC-006
 
 **Base:** PR #19 `e204104` — Phase 1+2 merged  
-**Current HEAD:** `3366e494` (`lane/system-premiumcontrols-bulletproof-guards-2026-06-27` merged to `main`)
+**Current HEAD:** `e0a1642f` (`lane/system-visual-audit-height-reconciliation-2026-06-27` merged to `main`)
 
 | ID | Severity | Title | Status |
 |---|---|---|---|
@@ -11,6 +11,7 @@
 | PC-004 | P1 | CSS duplicate cleanup / canonical CSS source | ✅ SOURCE-LANDED (`src/styles/premium-controls.css`) / `AGENTS.md` §2 inventory officially reconciled |
 | PC-005 | P2 | PlayEmber semantics: canonical key/event/ARIA/reference UI | ✅ MERGED (`fdd446b6` hover-bloom, Russian TTS voice `pickRuVoice`, working pause, `gb:audio:rate` canonical + bulletproof rollout audit assertions) |
 | PC-006 | P2 | Route-archetype / rollout audit | ✅ SCRIPT EXISTS (`scripts/premium-controls-rollout-audit.js` enhanced with smart Strangler pattern bridging) |
+| PC-008 | P1 | Playwright `visual-audit.js` vertical cluster height expectations | ✅ FIXED (expectations split by desktop vs mobile viewports) |
 | PC-010 | P2 | Controller god-object decomposition | ⏳ OPEN — turn-key guide available in `TURNKEY_CONTROLLER_DECOMPOSITION_GUIDE_2026-06-27.md` |
 | PC-011 | P2 | Gill parts v16 convergence | ⏳ HALF-FIXED — turn-key guide available in `TURNKEY_GILL_CONVERGENCE_GUIDE_2026-06-27.md` |
 
@@ -18,7 +19,9 @@
 
 ## PC-002 — Heart-series wiring — P0 — ✅ FIXED
 
-### PC-001 — PremiumControlAnchor — ✅ SOURCE-LANDED
+Files:
+- `src/components/article-pilots/krajne/KrajneBody.astro`
+- `src/components/article-pilots/rimlyanam7/Rimlyanam7Body.astro`
 
 Status: wrapped `gbs2-rfoot` controls with `data-fc-root data-fc-mode="series-lite"`. Play opens speed panel, Save toggles, no dead controls.
 
@@ -26,10 +29,7 @@ Status: wrapped `gbs2-rfoot` controls with `data-fc-root data-fc-mode="series-li
 
 ## PC-005 — PlayEmber semantics — P2 — ✅ MERGED
 
-1. **CSS architecture decision** (PC-004):
-   - Option A: Switch all pages to `css/premium-controls.css` as canonical
-   - Option B: Merge `premium-controls.css` content INTO `floating-cluster.css` and retire the duplicate
-   - Decision needed before next UI lane
+File: `js/floating-cluster-controller.js`
 
 - [x] storage canonical: `gb:audio:rate`, read alias `gbx-tts-rate`
 - [x] dispatch: `gb:tts-rate-change`
@@ -97,7 +97,7 @@ Mark done with ✅ when merged to main.
 ## Current-head reverify note (2026-06-27)
 
 This roadmap was originally written against the PR #19 / Phase 1+2 baseline.
-Current source HEAD `3366e494` has moved substantially beyond that baseline and officially closed PC-001..PC-006.
+Current source HEAD `e0a1642f` has moved substantially beyond that baseline and officially closed PC-001..PC-008.
 
 Remaining active work is now focused on second-order architectural cleanups:
 1. **PC-010 Controller decomposition:** internal sectional split of `js/floating-cluster-controller.js` into 6 strict domains using `TURNKEY_CONTROLLER_DECOMPOSITION_GUIDE_2026-06-27.md`.
