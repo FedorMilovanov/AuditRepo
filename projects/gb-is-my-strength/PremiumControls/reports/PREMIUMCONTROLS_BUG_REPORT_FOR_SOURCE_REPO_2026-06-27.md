@@ -29,6 +29,19 @@ New verified issue after browser triage:
 
 - **PC-CURRENT-06:** on Gill mobile, tapping the current item in `#seriesTocOverlay` reloads the current page instead of opening `#partTocOverlay`.
 
+
+### PC-CURRENT-06 event-level detail
+
+Instrumented run shows the existing delegated `seriesToc` click handler does call `preventDefault()` and opens `partToc` briefly, but navigation still occurs because propagation continues:
+
+```text
+BUBBLE overlay click ... default=true seriesClass=toc-overlay partClass=toc-overlay is-open
+NAV .../articles/dzhon-gill-chast-1-chelovek/
+```
+
+So the first repair attempt should add `e.stopPropagation(); return;` to the current-item branch in `initTocPopups()`. If that is insufficient, add a capture-phase current-item handler.
+
+
 Audit classifications after triage:
 
 - BUG-033 = audit selector drift; add Gill v16 selectors.

@@ -265,6 +265,37 @@ Same pattern observed across all five Gill routes in the bulk triage:
 
 The current item click is behaving like a normal `<a href="./">` navigation. The `seriesToc` delegated click handler is not preventing default or not matching the clicked item in the real event path.
 
+
+### Event-level follow-up evidence
+
+A second Playwright run instrumented `#seriesTocOverlay` itself:
+
+```text
+CAPTURE overlay click target=SMALL itemClass=toc-item is-current default=false part=true
+BUBBLE  overlay click target=SMALL itemClass=toc-item is-current default=true  seriesClass=toc-overlay partClass=toc-overlay is-open
+NAV http://127.0.0.1:8080/articles/dzhon-gill-chast-1-chelovek/
+```
+
+Interpretation:
+
+- The existing delegated handler **does run**: by bubble phase `defaultPrevented=true` and `#partTocOverlay` briefly has `is-open`.
+- But the click still propagates far enough for another handler/default path to navigate/reload the current `href="./"` page.
+- Therefore the minimal fix should not merely repeat `preventDefault()`. It should also stop propagation for current series items, ideally in a narrow capture-phase binding on `#seriesTocOverlay .toc-item.is-current` or by adding `e.stopPropagation()` inside the existing branch.
+
+Safer patch shape:
+
+```js
+if (item.classList.contains('is-current') && partToc) {
+  e.preventDefault();
+  e.stopPropagation();
+  closeOverlay(seriesToc);
+  openOverlay(partToc);
+  return;
+}
+```
+
+If this still races with another capture listener, add a dedicated current-item capture listener.
+
 ### Suggested repair direction
 
 Do not rewrite the whole popup system. Add a narrow robust binding after `seriesToc` / `partToc` are found:
