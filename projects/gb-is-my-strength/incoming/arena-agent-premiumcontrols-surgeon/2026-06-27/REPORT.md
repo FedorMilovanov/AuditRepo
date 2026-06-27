@@ -181,3 +181,27 @@ Synthesis:
 2. Keep PremiumControls visual/position/speed-pill freeze intact.
 3. Treat controller decomposition and CSS architecture decision as separate owner-approved lanes.
 4. Consider documenting the temporary Arena swap trick in `SANDBOX-ENV-2026-06-21.md` later, but only via a separate docs/system lane; I did not modify that contract in this lane.
+
+## 6. External audit toolbox added to source repo
+
+A new source documentation file was created and pushed in the same branch:
+
+```text
+docs/EXTERNAL_AUDIT_CHECKS_TOOLBOX_2026-06-27.md
+```
+
+Source commit:
+
+```text
+01b38ac0 [LANE lane/system-premiumcontrols-dist-gate-wiring-2026-06-27] docs(audit): add external checks toolbox for Arena and production
+```
+
+It documents:
+
+- why OOM happened in Arena and how temporary swap fixes it;
+- Node 22 / Playwright setup;
+- 70 external/local audit tools and sites;
+- suggested staged adoption plan: manual → warn-only → selective CI;
+- first safe experiments for Pa11y, Lighthouse, Lychee, Semgrep, Gitleaks/TruffleHog.
+
+Recommendation: treat this as advisory research. Do not turn all external tools into blocking CI at once.
