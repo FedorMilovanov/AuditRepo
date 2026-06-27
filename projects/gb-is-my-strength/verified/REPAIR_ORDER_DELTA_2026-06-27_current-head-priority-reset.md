@@ -1,181 +1,142 @@
-# Repair Order Delta — 2026-06-27 current-head priority reset
-**Project:** gb-is-my-strength  
-**Source HEAD:** `49b83365606cec1e65060238cefea210439b882d`  
-**Purpose:** replace stale priority instincts inherited from older ledgers with a current-head repair order.
+# Repair Order Delta — current-head priority reset
+
+**Date:** 2026-06-27
+**Source HEAD checked:** `66640561919501e68dd9d3cd290ff9afe53d3068`
+**AuditRepo HEAD before cleanup:** `c3a9ae27df749c09a88650ae0e16e348db61c1c7`
+**Purpose:** replace stale 2026-06-25 repair instincts with current-head order.
 
 ---
 
-## Why this delta exists
+## Current gating note
 
-Older repair thinking was shaped by first-order failures:
-- global premium-controls breakage
-- broken CI/deploy surfaces
-- broad cache-bust / runtime crises
+Fresh source check during cleanup:
 
-Current HEAD is no longer in that state.  
-Therefore the repair order must change.
+```text
+package.json scripts.dist:jsonld:audit = node scripts/dist-jsonld-audit.js --root dist
+npm run workflows:check = PASS
+```
 
-> The next valuable work is no longer “rescue the project from collapse”.
-> It is “close the remaining second-order defects that can quietly reintroduce regressions or mislead future agents”.
+So the old `dist:jsonld:audit --root dist` workflow mismatch is **not** a current repair item. Keep it only as historical/fixed-current context.
 
 ---
 
-# New priority order (current-head)
+# Current priority order
 
-## P0 of process, not of UI — establish one current truth
-### DELTA-1 — Canonical truth cleanup
-**Priority:** Highest  
-**Type:** verification / documentation / control-plane integrity
+## P0 — Truth reconciliation / AGENTS §3.10 formula drift
 
-### Why first
-If this is not done, weak agents will continue acting on stale counts and mixed historical/current ledgers.
+**Priority:** Highest
+**Status:** current repair lane / must happen before UI work
 
-### Scope
-- adopt `CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md` as primary current-head truth
-- demote old aggregate-count narratives to historical role
-- update README/status docs to point at the canonical ledger
+Scope:
 
-### Value
-Prevents incorrect repair selection before any code is touched.
+1. Source `AGENTS.md §3.10` must match live `css/floating-cluster.css` Hermeneutics canon.
+2. AuditRepo active docs must identify old `-28px` calc as SUPERSEDED / WRONG / POS-01 / NEVER REINTRODUCE.
+3. Guard/check must fail if the old formula appears in active docs/code without superseded/forbidden wording.
+4. Historical ledgers stay as evidence but cannot act as current truth.
 
----
+Success:
 
-## P1 — Fix workflow-policy parity before more feature work
-### DELTA-2 — Workflow barrier integrity
-**Priority:** Very high  
-**Type:** system / CI / guard alignment
+- No active source/AuditRepo doc teaches the `-28px` formula as protected truth.
 
-### Current live issue
-- `npm run workflows:check` is red
-- `validate:static-publication` is green
+## P1 — PC-CURRENT-06: Gill mobile current item → part TOC flow
 
-### Why ahead of UI work
-A red policy guard outside the canonical barrier is how future regressions sneak back in while the repo appears healthy.
+**Priority:** Very high
+**Status:** current-open unless source+browser reverify proves fixed
 
-### Scope
-1. fix `dist:jsonld:audit` script to satisfy policy expectation
-   - minimal patch: `node scripts/dist-jsonld-audit.js --root dist`
-2. decide whether `workflows:check` must join `validate:static-publication`
-3. document the decision explicitly if not integrated
+Scope:
 
-### Success condition
-No contradiction between workflow-policy truth and release-barrier truth.
+1. `js/floating-cluster-controller.js`: current item branch must `preventDefault`, `stopPropagation`, open `#partTocOverlay`, and `return`.
+2. `interactive-audit.js`: mobile 390 check for all five Gill routes must assert no navigation/reload and `#partTocOverlay.is-open` after clicking current series item.
 
----
+Success:
 
-## P2 — Finish `/izbrannoe/` completely or mark policy explicitly
-### DELTA-3 — Route contract completion for `/izbrannoe/`
-**Priority:** High  
-**Type:** unfinished feature rollout
+- Browser witness: current series item opens part TOC overlay, not current-page reload.
 
-### Why now
-This is fresh debt, small enough to close quickly, and a good example of source/UI leading contracts.
+## P2 — PC-CURRENT-02: RomanNumeral actual integration
 
-### Scope
-1. add route to `route-migration-matrix.json` if intended production route
-   - current best-fit mode: `strict-native`
-2. decide whether route belongs in `search-manifest.json`
-   - current verifier position: likely **no**, because route profile already marks it personal / noindex / excluded from Pagefind+sitemap
-3. clear or formally reclassify `audit-pro` local-reference warning
-4. if intentional exclusions remain, encode them as policy, not accidental warning residue
+**Priority:** High
 
-### Success condition
-No unresolved contract warnings for a route already visible in source/UI.
+Scope:
 
----
+1. All five Gill PageChrome files import and use `RomanNumeral` for rail, series TOC, and part TOC numerals.
+2. Built/dist Gill output has `.gb-roman` on all five routes.
+3. Rollout audit treats `gb-roman=0` on Gill v16 as fatal.
 
-## P3 — Prepare Gill convergence safely, do not freestyle it
-### DELTA-4 — Gill guard/architecture preflight
-**Priority:** High  
-**Type:** architectural convergence control
+Success:
 
-### Why not later
-Gill is now less about a visible crash and more about a dangerous migration trap:
-- current family split is real
-- target v16-like convergence is desired
-- current owner-ui guard may still anchor to intermediate architecture
+- No raw `I/II/III` divs in Gill rail/TOCs; dist proves `.gb-roman`.
 
-### Scope
-1. inventory exactly what `owner-ui-regression-guard.js` requires for Gill
-2. inventory what the intended target architecture removes/renames
-3. decide whether to preserve `gbs2-*` aliases or retire them formally
-4. only then greenlight the next UI lane
+## P3 — PC-CURRENT-03: unversioned PremiumControls asset refs
 
-### Success condition
-No implementation lane is forced to choose between “correct architecture” and “passing stale guard”.
+**Priority:** High
 
----
+Scope:
 
-## P4 — Keep source-vs-built risk visible in every future UI lane
-### DELTA-5 — Evidence-layer discipline
-**Priority:** Medium-high  
-**Type:** verifier process / build-truth discipline
+1. Version `floating-cluster.css` / `floating-cluster-controller.js` refs in Astro-owned Gill output.
+2. Add fatal guard for unversioned PremiumControls refs.
+3. Keep `asset-version.js` / cache-bust truth consistent.
 
-### Why
-This repo’s hybrid publication model means a source fix can still be a publication lie.
+Success:
 
-### Scope
-For every future route/UI verification note, explicitly label evidence:
-- source
-- committed built HTML
-- production-like dist
-- browser witness
+- No unversioned PremiumControls CSS/controller refs in Gill v16 source/dist.
 
-### Success condition
-No future “fixed” claim is accepted without evidence-layer clarity.
+## P4 — PC-CURRENT-04: CSS inventory decision
 
----
+**Priority:** Medium-high
 
-# Old priorities that should be demoted now
+Current truth:
 
-## DEMOTE-1 — broad premium-controls rescue work
-**Old place:** top urgency  
-**New place:** only route-specific residuals
+- Deployed runtime CSS is `css/floating-cluster.css`.
+- `css/premium-controls.css` is absent from `/css` in source HEAD.
 
-### Reason
-Current HEAD no longer supports global-breakage framing.
+Scope:
+
+Choose and enforce one:
+
+1. Retire `css/premium-controls.css` as deployed canon and remove it from inventories/cache-bust; or
+2. Create/sync/link it intentionally with clear boundary.
+
+Success:
+
+- No doc/script says absent `css/premium-controls.css` is deployed canonical runtime truth.
+
+## P5 — PC-CURRENT-05: CSS malformed transition cleanup + scope leak scan
+
+**Priority:** Medium-high
+
+Scope:
+
+1. Fix malformed transition fragments such as `[data-gill-v16] background ...` inside declaration values.
+2. Fix unscoped comma selectors such as `[data-gill-v16] .x, .y`.
+3. Add CSS sanitation guard.
+4. Do not change visual geometry/top/right/spacing/z-index in this lane.
+
+Success:
+
+- CSS guard catches both malformed fragments and Gill v16 scope leaks.
+
+## P6 — Controller decomposition / cosmetics / premium polish
+
+**Priority:** Later
+
+Only after P0–P5 and owner screenshots:
+
+- controller domain decomposition;
+- premium TOC/rail visual polish;
+- fullscreen/spacious owner-approved overlays;
+- no mass Gill rollout without owner review.
 
 ---
 
-## DEMOTE-2 — generic “CI collapse” repair framing
-**Old place:** top urgency  
-**New place:** narrow workflow-policy parity work
+# Demoted / historical priorities
 
-### Reason
-The active problem is not collapse, but mismatch between specialized guard and canonical barrier.
-
----
-
-## DEMOTE-3 — stale total-bug counting as planning tool
-**Old place:** canonical planning input  
-**New place:** historical context only
-
-### Reason
-Current repair selection must be based on live categories, not inherited totals.
+- Old 2026-06-25 total bug counts: historical baseline only.
+- Workflow `dist:jsonld:audit --root dist` mismatch: fixed-current on source HEAD checked here.
+- Generic “CI collapse”: stale framing.
+- Restoring legacy `gbs2` as Gill base: forbidden target direction.
 
 ---
 
-# Suggested implementation sequence
+# One-paragraph doctrine
 
-## Sequence A — control plane first
-1. canonical truth cleanup
-2. workflow barrier integrity
-3. `/izbrannoe/` completion
-4. Gill guard/architecture preflight
-5. later route/UI surgery
-
-## Sequence B — if owner wants one quick code win first
-1. `/izbrannoe/` completion
-2. workflow barrier integrity
-3. canonical truth cleanup in docs
-4. Gill preflight
-
-### Recommended
-**Sequence A** is safer for multi-agent work.  
-It reduces the chance of another wave of agents reading stale documents and solving yesterday’s problems.
-
----
-
-# One-paragraph current repair doctrine
-
-**As of 2026-06-27, the smartest repair order is to fix the control plane before chasing more UI surgery: establish one canonical current-head truth, remove the workflow-policy mismatch, complete the half-shipped `/izbrannoe/` route contracts, and only then proceed with Gill convergence under an updated guard contract.**
+Current repair work must start by making the dispatcher truth safe: fix AGENTS/AuditRepo formula drift and stale ledgers, then close Gill v16 functional/guard gaps. Do not polish UI while active docs can still reintroduce the Hermeneutics POS-01 `-28px` bug or describe green-but-incomplete PremiumControls as “100% complete.”
