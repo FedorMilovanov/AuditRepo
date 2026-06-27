@@ -1,0 +1,2583 @@
+===== [1] node version =====
++ node -v
+v22.12.0
+✅ PASS [1] node version (0s)
+
+===== [2] npm version =====
++ npm -v
+10.9.0
+✅ PASS [2] npm version (0s)
+
+===== [3] git current branch =====
++ git branch --show-current
+lane/system-premiumcontrols-dist-gate-wiring-2026-06-27
+✅ PASS [3] git current branch (0s)
+
+===== [4] git current head =====
++ git rev-parse --short HEAD
+ae9f3d4f
+✅ PASS [4] git current head (0s)
+
+===== [5] git diff whitespace =====
++ git diff --check
+✅ PASS [5] git diff whitespace (0s)
+
+===== [6] workflow policy =====
++ npm run workflows:check
+
+> gb-is-my-strength@1.6.3 workflows:check
+> node scripts/check-workflows.js
+
+
+GB WORKFLOW POLICY CHECK
+✅ Workflow policy passed
+
+NOTE: For GitHub Actions YAML syntax/expression validation,
+also run: npx actionlint (or install via: brew install actionlint)
+actionlint catches expression syntax, missing inputs, shell errors in run commands.
+Add to CI: workflows:check && npx actionlint
+✅ PASS [6] workflow policy (0s)
+
+===== [7] shared files guard =====
++ npm run guard:shared-files
+
+> gb-is-my-strength@1.6.3 guard:shared-files
+> node scripts/guard-shared-files.js && npm run guard:agents-rev
+
+
+=== SHARED FILES GUARD v3.0 ===
+Branch: lane/system-premiumcontrols-dist-gate-wiring-2026-06-27
+Lane: true | System lane: true | Shared lane: false
+[LANE] tag: true
+Files checked: 0
+Shared/system files touched: 0
+
+✅ Shared files guard PASSED
+
+> gb-is-my-strength@1.6.3 guard:agents-rev
+> node scripts/check-agents-rev-uniqueness.js
+
+✅ AGENTS-rNNN entries are unique (56 total)
+✅ PASS [7] shared files guard (1s)
+
+===== [8] validate all =====
++ npm run validate:all
+
+> gb-is-my-strength@1.6.3 validate:all
+> npm run validate:strict && npm run seo-audit
+
+
+> gb-is-my-strength@1.6.3 validate:strict
+> node scripts/validate.js --strict
+
+
+🔍  validate.js
+
+  📁  css/
+  ⚠️  [css/floating-cluster.css] нестандартный брейкпоинт: 960px
+  ⚠️  [css/floating-cluster.css] нестандартный брейкпоинт: 500px
+  ⚠️  [css/floating-cluster.css] нестандартный брейкпоинт: 420px
+  📁  js/
+  📁  inline-scripts/
+  📁  html-contracts/
+  ✔  [html-contracts] Russian quote policy passed: no English direct quotes in reader-facing Russian text
+
+  📄  20-antisovetov-pastoru
+  ⚠️  [20-antisovetov-pastoru] <title> ≠ og:title\n           <title>: "20 антисоветов пастору: как разрушить служение"\n         og:title: "20 антисоветов, как пастору разрушить своё служение"
+
+  📄  dzhon-gill-chast-1-chelovek
+
+  📄  dzhon-gill-chast-2-uchenyi
+
+  📄  dzhon-gill-chast-3-nasledie
+
+  📄  dzhon-gill-istoricheskiy-kontekst
+
+  📄  dzhon-gill-spravochnik
+
+  📄  hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki
+
+  📄  kod-da-vinchi
+
+  📄  krajne-li-isporcheno-serdce
+
+  📄  rimlyanam-7-veruyushchiy-ili-neveruyushchiy
+  ⚠️  [rimlyanam-7-veruyushchiy-ili-neveruyushchiy] <title> ≠ og:title\n           <title>: "Римлянам 7: верующий или неверующий?"\n         og:title: "Римлянам 7: верующий, неверующий или человек под законом?"
+
+  🗺  sitemap.xml + feed.xml
+
+──────────────────────────────────────────────────
+⚠️  Ошибок: 0  Предупреждений: 5
+  → Предупреждения не прерывают workflow. Исправьте при возможности.
+
+
+> gb-is-my-strength@1.6.3 seo-audit
+> node scripts/seo-audit.js
+
+
+SEO audit passed: 0 errors, 0 warnings.
+✅ PASS [8] validate all (1s)
+
+===== [9] owner UI guard =====
++ npm run owner:ui-guard
+
+> gb-is-my-strength@1.6.3 owner:ui-guard
+> node scripts/owner-ui-regression-guard.js
+
+✅ index.html: legacy premium home shell
+✅ index.html: legacy home hero
+✅ index.html: no rejected “Основные входы” strip
+✅ js/site.js: TTS has homepage guard
+✅ articles/index.html: articles-index-page
+✅ articles/index.html: home-v20
+✅ articles/index.html: h-hero-title
+✅ articles/index.html: h-article-card
+✅ articles/index.html: no generic Astro page shell
+✅ articles/index.html: no generic Astro card grid
+✅ biografii/index.html: home-v20
+✅ biografii/index.html: h-hero-title
+✅ biografii/index.html: h-article-card
+✅ biografii/index.html: no generic Astro page shell
+✅ biografii/index.html: no generic Astro card grid
+✅ nagornaya/seriya/index.html: nagornaya-page nagornaya-series-page
+✅ nagornaya/seriya/index.html: home-v20
+✅ nagornaya/seriya/index.html: h-hero-title
+✅ nagornaya/seriya/index.html: h-article-card
+✅ nagornaya/seriya/index.html: no generic Astro page shell
+✅ nagornaya/seriya/index.html: no generic Astro card grid
+✅ articles/dzhon-gill-chast-1-chelovek/index.html: gbs-world
+✅ articles/dzhon-gill-chast-1-chelovek/index.html: data-gbs2-series="dzhon-gill"
+✅ articles/dzhon-gill-chast-1-chelovek/index.html: gbs2-rail
+✅ articles/dzhon-gill-chast-1-chelovek/index.html: gbs2-hero
+✅ articles/dzhon-gill-chast-1-chelovek/index.html: no generic Astro page shell
+✅ articles/dzhon-gill-chast-1-chelovek/index.html: no generic Astro card grid
+✅ articles/dzhon-gill-chast-2-uchenyi/index.html: gbs-world
+✅ articles/dzhon-gill-chast-2-uchenyi/index.html: data-gbs2-series="dzhon-gill"
+✅ articles/dzhon-gill-chast-2-uchenyi/index.html: gbs2-rail
+✅ articles/dzhon-gill-chast-2-uchenyi/index.html: gbs2-hero
+✅ articles/dzhon-gill-chast-2-uchenyi/index.html: no generic Astro page shell
+✅ articles/dzhon-gill-chast-2-uchenyi/index.html: no generic Astro card grid
+✅ articles/dzhon-gill-chast-3-nasledie/index.html: gbs-world
+✅ articles/dzhon-gill-chast-3-nasledie/index.html: data-gbs2-series="dzhon-gill"
+✅ articles/dzhon-gill-chast-3-nasledie/index.html: gbs2-rail
+✅ articles/dzhon-gill-chast-3-nasledie/index.html: gbs2-hero
+✅ articles/dzhon-gill-chast-3-nasledie/index.html: no generic Astro page shell
+✅ articles/dzhon-gill-chast-3-nasledie/index.html: no generic Astro card grid
+✅ karty/index.html: Avraam remains on map shelf
+✅ karty/index.html: premium map shelf hero
+✅ karty/index.html: unfinished map shelf warning
+✅ karty/index.html: no unfinished demos on map shelf
+✅ karty/ishod/index.html: ishod loads shared live map engine
+✅ karty/ishod/index.html: no ishod is a live map, not a holding page
+✅ karty/pavel/index.html: pavel holding page
+✅ karty/pavel/index.html: no pavel unfinished live MapEngine root
+✅ karty/shoftim/index.html: shoftim holding page
+✅ karty/shoftim/index.html: no shoftim unfinished live MapEngine root
+✅ karty/melachim/index.html: melachim holding page
+✅ karty/melachim/index.html: no melachim unfinished live MapEngine root
+✅ karty/shvatim/index.html: shvatim holding page
+✅ karty/shvatim/index.html: no shvatim unfinished live MapEngine root
+✅ karty/yeshua/index.html: yeshua holding page
+✅ karty/yeshua/index.html: no yeshua unfinished live MapEngine root
+✅ karty/maccabim/index.html: maccabim holding page
+✅ karty/maccabim/index.html: no maccabim unfinished live MapEngine root
+✅ karty/early-church/index.html: early-church holding page
+✅ karty/early-church/index.html: no early-church unfinished live MapEngine root
+✅ karty/revelation/index.html: revelation holding page
+✅ karty/revelation/index.html: no revelation unfinished live MapEngine root
+✅ baptisty-rossii/index.html: Russian Baptists GBS2 series shell
+✅ baptisty-rossii/index.html: Russian Baptists complete series count
+✅ css/site.css: Russian Baptists premium landing CSS guard
+✅ css/site.css: Russian Baptists desktop compact card grid
+✅ docs/OWNER-REQUIREMENTS.md: Astro 95% visual parity doctrine
+✅ docs/OWNER-REQUIREMENTS.md: SEO is not visual parity doctrine
+✅ docs/ASTRO-PREMIUM-MIGRATION-ROADMAP.md: premium Astro roadmap exists
+✅ docs/ASTRO-PREMIUM-MIGRATION-ROADMAP.md: roadmap visual parity target
+✅ AGENTS.md: AGENTS visual parity doctrine
+✅ src/components/ui/premium-controls/PremiumControlAnchor.astro: PremiumControlAnchor component exists
+✅ src/components/ui/floating-cluster/RomanNumeral.astro: RomanNumeral component exists
+✅ AGENTS.md: AGENTS.md Section 3.10 PremiumControls protected status
+
+OWNER UI REGRESSION GUARD
+✅ Owner UI regression guard passed
+✅ PASS [9] owner UI guard (0s)
+
+===== [10] about visual audit =====
++ npm run about:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 about:visual-parity:audit
+> node scripts/about-visual-parity-audit.js
+
+✅ legacy /about/ approved marker: about-page
+✅ legacy /about/ approved marker: about-resources
+✅ legacy /about/ approved marker: about-contact-card
+✅ legacy /about/ approved marker: gb-accuracy-block
+✅ legacy /about/ approved marker: Фёдор Милованов
+✅ Astro /about/ emits full document
+✅ Astro /about/ uses balanced AboutPageChrome component
+✅ Astro /about/ uses AboutMain semantic component
+✅ AboutPageChrome.astro component file
+✅ AboutMain.astro component file
+✅ AboutArticle.astro component file
+✅ AboutAccuracyBlock.astro component file
+✅ absent: unbalanced AboutFrameBefore retired
+✅ absent: unbalanced AboutFrameAfter retired
+✅ absent: about _legacy fragments retired
+✅ AboutPageChrome owns <head>
+✅ AboutPageChrome owns <body>
+✅ AboutPageChrome opens main in balanced component
+✅ AboutPageChrome closes main in same component
+✅ AboutPageChrome slots native content inside main
+✅ AboutPageChrome preserves page-wrap
+✅ AboutPageChrome preserves breadcrumb
+✅ AboutPageChrome preserves theme toggle
+✅ AboutPageChrome preserves SDG end block
+✅ AboutPageChrome preserves footer
+✅ AboutPageChrome preserves runtime script
+✅ AboutPageChrome preserves ProfilePage JSON-LD
+✅ AboutMain includes AboutArticle
+✅ AboutMain includes AboutAccuracyBlock
+✅ AboutArticle marker: about-page
+✅ AboutArticle marker: data-pagefind-body
+✅ AboutArticle marker: about-resources
+✅ AboutArticle marker: about-contact-card
+✅ AboutArticle marker: Библейские ресурсы
+✅ AboutArticle marker: Обратная связь
+✅ AboutAccuracyBlock marker: gb-accuracy-block
+✅ AboutAccuracyBlock marker: Нашли неточность?
+✅ AboutAccuracyBlock marker: Email
+✅ AboutAccuracyBlock marker: Telegram
+✅ no forbidden native about marker: loadLegacyFullDocument
+✅ no forbidden native about marker: ?raw
+✅ no forbidden native about marker: _legacy/
+✅ no forbidden native about marker: <Fragment set:html
+✅ no forbidden native about marker: AboutFrameBefore
+✅ no forbidden native about marker: AboutFrameAfter
+✅ no forbidden native about marker: import BaseLayout
+✅ no forbidden native about marker: <BaseLayout
+✅ no forbidden native about marker: astro-about-shadow
+✅ no forbidden native about marker: astro-shell
+✅ no forbidden native about marker: class="astro-about"
+✅ no forbidden native about marker: astro-contact-grid
+✅ no forbidden native about marker: astro-accuracy-block
+✅ no forbidden native about marker: loadLegacyFullDocument
+✅ no forbidden native about marker: ?raw
+✅ no forbidden native about marker: _legacy/
+✅ no forbidden native about marker: <Fragment set:html
+✅ no forbidden native about marker: AboutFrameBefore
+✅ no forbidden native about marker: AboutFrameAfter
+✅ no forbidden native about marker: import BaseLayout
+✅ no forbidden native about marker: <BaseLayout
+✅ no forbidden native about marker: astro-about-shadow
+✅ no forbidden native about marker: astro-shell
+✅ no forbidden native about marker: class="astro-about"
+✅ no forbidden native about marker: astro-contact-grid
+✅ no forbidden native about marker: astro-accuracy-block
+✅ no forbidden native about marker: loadLegacyFullDocument
+✅ no forbidden native about marker: ?raw
+✅ no forbidden native about marker: _legacy/
+✅ no forbidden native about marker: <Fragment set:html
+✅ no forbidden native about marker: AboutFrameBefore
+✅ no forbidden native about marker: AboutFrameAfter
+✅ no forbidden native about marker: import BaseLayout
+✅ no forbidden native about marker: <BaseLayout
+✅ no forbidden native about marker: astro-about-shadow
+✅ no forbidden native about marker: astro-shell
+✅ no forbidden native about marker: class="astro-about"
+✅ no forbidden native about marker: astro-contact-grid
+✅ no forbidden native about marker: astro-accuracy-block
+✅ no forbidden native about marker: loadLegacyFullDocument
+✅ no forbidden native about marker: ?raw
+✅ no forbidden native about marker: _legacy/
+✅ no forbidden native about marker: <Fragment set:html
+✅ no forbidden native about marker: AboutFrameBefore
+✅ no forbidden native about marker: AboutFrameAfter
+✅ no forbidden native about marker: import BaseLayout
+✅ no forbidden native about marker: <BaseLayout
+✅ no forbidden native about marker: astro-about-shadow
+✅ no forbidden native about marker: astro-shell
+✅ no forbidden native about marker: class="astro-about"
+✅ no forbidden native about marker: astro-contact-grid
+✅ no forbidden native about marker: astro-accuracy-block
+✅ no forbidden native about marker: loadLegacyFullDocument
+✅ no forbidden native about marker: ?raw
+✅ no forbidden native about marker: _legacy/
+✅ no forbidden native about marker: <Fragment set:html
+✅ no forbidden native about marker: AboutFrameBefore
+✅ no forbidden native about marker: AboutFrameAfter
+✅ no forbidden native about marker: import BaseLayout
+✅ no forbidden native about marker: <BaseLayout
+✅ no forbidden native about marker: astro-about-shadow
+✅ no forbidden native about marker: astro-shell
+✅ no forbidden native about marker: class="astro-about"
+✅ no forbidden native about marker: astro-contact-grid
+✅ no forbidden native about marker: astro-accuracy-block
+
+ABOUT VISUAL PARITY AUDIT
+✅ /about/ is balanced native Astro and visual-parity guarded
+✅ PASS [10] about visual audit (0s)
+
+===== [11] biografii visual audit =====
++ npm run biografii:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 biografii:visual-parity:audit
+> node scripts/biografii-visual-parity-audit.js
+
+✅ no Astro /biografii/ MUST NOT use loadLegacyFullDocument
+✅ Astro /biografii/ uses BiografiiPageChrome component
+✅ Astro /biografii/ uses extracted BiografiiMain component
+✅ Astro /biografii/ uses BiografiiPageFooter component
+✅ BiografiiMain.astro component file
+✅ BiografiiPageChrome.astro component file
+✅ BiografiiPageFooter.astro component file
+✅ BiografiiRecentSection.astro
+✅ BiografiiFocusSection.astro
+✅ BiografiiEraStubSection.astro
+✅ BiografiiAwakeningSection.astro
+✅ BiografiiEpigraphSection.astro
+✅ BiografiiArticleEndBlock.astro
+✅ BiografiiMain preserves semantic main wrapper
+
+BIOGRAFII VISUAL PARITY AUDIT
+✅ /biografii/ Astro migration is 100% native
+✅ PASS [11] biografii visual audit (1s)
+
+===== [12] hard-texts visual audit =====
++ npm run hard-texts:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 hard-texts:visual-parity:audit
+> node scripts/hard-texts-visual-parity-audit.js
+
+✅ Astro /hard-texts/ imports HardTextsPageChrome
+✅ Astro /hard-texts/ imports HardTextsMain
+✅ Astro /hard-texts/ imports HardTextsPageFooter
+✅ no no loadLegacyFullDocument (no shadow-wrap)
+✅ no no _legacy fragment import
+✅ no no raw HTML ?raw import
+✅ HardTextsPageChrome.astro
+✅ HardTextsPageFooter.astro
+✅ HardTextsMain.astro
+✅ HardTextsCardsSection.astro
+✅ HardTextsStatsSection.astro
+✅ HardTextsSeriesMapSection.astro
+✅ HardTextsArticleEndBlock.astro
+✅ no _legacy/main.html removed
+✅ no _legacy/body-segment-0.html removed
+✅ no _legacy/body-segment-1.html removed
+✅ page carries native <title>
+✅ page carries native meta description
+✅ page carries native canonical link
+✅ page carries native JSON-LD
+✅ page carries native SITE_CONFIG
+✅ cache-bust hashes computed natively via md5short
+✅ HardTextsMain preserves semantic main wrapper
+✅ HardTextsMain uses cards component
+✅ HardTextsMain uses stats component
+✅ HardTextsMain uses GBS timeline component
+✅ HardTextsMain uses terminal SDG block component
+✅ no raw monolithic main import removed
+✅ HardTextsPageChrome preserves navbar chrome
+✅ HardTextsPageChrome owns home-v20 shell
+✅ HardTextsPageChrome owns home-content shell
+✅ HardTextsPageChrome preserves hero section
+✅ HardTextsPageChrome preserves hero title
+✅ HardTextsPageChrome exposes default slot for Main+Footer
+✅ HardTextsPageChrome preserves scroll-top button
+✅ HardTextsPageChrome keeps runtime scripts is:inline
+✅ HardTextsPageFooter preserves footer
+✅ HardTextsPageFooter preserves accuracy aside
+✅ content marker (cards): Материалы серии
+✅ content marker (cards): Крайне ли испорчено моё сердце — если я уже верующий?
+✅ content marker (cards): Римлянам 7: верующий, неверующий или человек под законом?
+✅ content marker (series map): Карта серии
+✅ content marker (article end): Soli Deo Gloria
+✅ no forbidden page marker: import BaseLayout
+✅ no forbidden main marker: import BaseLayout
+✅ no forbidden page marker: <BaseLayout
+✅ no forbidden main marker: <BaseLayout
+✅ no forbidden page marker: astro-card-grid
+✅ no forbidden main marker: astro-card-grid
+
+HARD-TEXTS VISUAL PARITY AUDIT
+✅ /hard-texts/ Astro migration is 100% native (no loadLegacyFullDocument, no _legacy transport)
+✅ PASS [12] hard-texts visual audit (0s)
+
+===== [13] pastor-series visual audit =====
++ npm run pastor-series:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 pastor-series:visual-parity:audit
+> node scripts/pastor-series-visual-parity-audit.js
+
+✅ Astro /pastor-series/ uses native head component
+✅ Astro /pastor-series/ uses native chrome component
+✅ Astro /pastor-series/ uses extracted PastorSeriesMain component
+✅ no loadLegacyFullDocument in page
+✅ no raw imports in page
+✅ no legacy fragment imports in page
+✅ PastorSeriesPageHead.astro
+✅ PastorSeriesPageChrome.astro
+✅ PastorSeriesMain.astro
+✅ PastorSeriesCardsSection.astro
+✅ PastorSeriesStatsSection.astro
+✅ PastorSeriesArticleEndBlock.astro
+✅ removed body-segment-0.html
+✅ removed body-segment-1.html
+✅ removed main.html component fragment
+✅ native head keeps title
+✅ native head keeps canonical
+✅ native head keeps JSON-LD
+✅ native head keeps SITE_CONFIG
+✅ native chrome keeps navbar
+✅ native chrome keeps hero
+✅ native chrome has slot for PastorSeriesMain
+✅ native chrome keeps footer
+✅ native chrome keeps site runtime
+✅ PastorSeriesMain preserves semantic main wrapper
+✅ PastorSeriesMain uses cards component
+✅ PastorSeriesMain uses stats component
+✅ PastorSeriesMain uses terminal SDG block component
+✅ no raw monolithic main import removed
+✅ legacy baseline marker: Материалы серии
+✅ native marker: Материалы серии
+✅ legacy baseline marker: 20 антисоветов: как пастору разрушить своё служение
+✅ native marker: 20 антисоветов: как пастору разрушить своё служение
+✅ legacy baseline marker: Блок 2. Распознавание
+✅ native marker: Блок 2. Распознавание
+✅ legacy baseline marker: Блок 3. Здоровый образец
+✅ native marker: Блок 3. Здоровый образец
+✅ legacy baseline marker: Soli Deo Gloria
+✅ native marker: Soli Deo Gloria
+✅ no forbidden page marker: import BaseLayout
+✅ no forbidden main marker: import BaseLayout
+✅ no forbidden page marker: <BaseLayout
+✅ no forbidden main marker: <BaseLayout
+✅ no forbidden page marker: astro-card-grid
+✅ no forbidden main marker: astro-card-grid
+
+PASTOR-SERIES VISUAL PARITY AUDIT
+✅ /pastor-series/ is full-native Astro guarded (no legacy loader/fragments)
+✅ PASS [13] pastor-series visual audit (0s)
+
+===== [14] articles visual audit =====
++ npm run articles:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 articles:visual-parity:audit
+> node scripts/articles-visual-parity-audit.js
+
+✅ legacy /articles/ marker: articles-index-page
+✅ legacy /articles/ marker: home-v20
+✅ legacy /articles/ marker: h-hero-title
+✅ legacy /articles/ marker: h-article-card
+✅ legacy /articles/ marker: h-article-list
+✅ ArticlesPageChrome.astro
+✅ ArticlesMain.astro
+✅ ArticlesPageFooter.astro
+✅ ArticlesHeroSection.astro
+✅ ArticlesPublicationsSection.astro
+✅ ArticlesRefutationsSection.astro
+✅ ArticlesArticleEndBlock.astro
+✅ absent: src/components/articles/_legacy deleted
+✅ page uses ArticlesPageChrome
+✅ page uses ArticlesMain
+✅ page uses ArticlesPageFooter
+✅ Astro /articles/ emits full document doctype
+✅ ArticlesPageChrome owns <head>
+✅ ArticlesPageChrome owns body class
+✅ ArticlesPageChrome preserves JSON-LD CollectionPage
+✅ ArticlesPageChrome preserves SITE_CONFIG
+✅ ArticlesPageChrome preserves top navigation
+✅ ArticlesMain preserves semantic main wrapper
+✅ ArticlesMain preserves mobile nav
+✅ ArticlesMain preserves premium home-v20 wrapper
+✅ ArticlesMain uses shared data/series.json
+✅ ArticlesMain uses ArticlesHeroSection
+✅ ArticlesMain uses ArticlesPublicationsSection
+✅ ArticlesMain uses ArticlesRefutationsSection
+✅ ArticlesMain uses ArticlesArticleEndBlock
+✅ ArticlesPageFooter preserves feedback block
+✅ ArticlesPageFooter preserves scroll-top control
+✅ ArticlesPageFooter preserves runtime script
+✅ ArticlesHeroSection marker: h-hero-title
+✅ ArticlesPublicationsSection marker: publications section
+✅ ArticlesPublicationsSection marker: hard-texts series
+✅ ArticlesPublicationsSection marker: nagornaya series
+✅ ArticlesPublicationsSection receives series label from data
+✅ ArticlesRefutationsSection marker: refutations section
+✅ ArticlesRefutationsSection marker: kod-da-vinchi copy
+✅ ArticlesArticleEndBlock marker: SDG
+✅ no forbidden native articles marker: loadLegacyFullDocument
+✅ no forbidden native articles marker: ?raw
+✅ no forbidden native articles marker: _legacy/
+✅ no forbidden native articles marker: import BaseLayout
+✅ no forbidden native articles marker: <BaseLayout
+✅ no forbidden native articles marker: astro-card-grid
+✅ no forbidden native articles marker: astro-shell
+✅ no forbidden native articles marker: Fragment set:html
+✅ no forbidden native articles marker: loadLegacyFullDocument
+✅ no forbidden native articles marker: ?raw
+✅ no forbidden native articles marker: _legacy/
+✅ no forbidden native articles marker: import BaseLayout
+✅ no forbidden native articles marker: <BaseLayout
+✅ no forbidden native articles marker: astro-card-grid
+✅ no forbidden native articles marker: astro-shell
+✅ no forbidden native articles marker: Fragment set:html
+✅ no forbidden native articles marker: loadLegacyFullDocument
+✅ no forbidden native articles marker: ?raw
+✅ no forbidden native articles marker: _legacy/
+✅ no forbidden native articles marker: import BaseLayout
+✅ no forbidden native articles marker: <BaseLayout
+✅ no forbidden native articles marker: astro-card-grid
+✅ no forbidden native articles marker: astro-shell
+✅ no forbidden native articles marker: Fragment set:html
+✅ no forbidden native articles marker: loadLegacyFullDocument
+✅ no forbidden native articles marker: ?raw
+✅ no forbidden native articles marker: _legacy/
+✅ no forbidden native articles marker: import BaseLayout
+✅ no forbidden native articles marker: <BaseLayout
+✅ no forbidden native articles marker: astro-card-grid
+✅ no forbidden native articles marker: astro-shell
+✅ no forbidden native articles marker: Fragment set:html
+✅ no forbidden native articles marker: loadLegacyFullDocument
+✅ no forbidden native articles marker: ?raw
+✅ no forbidden native articles marker: _legacy/
+✅ no forbidden native articles marker: import BaseLayout
+✅ no forbidden native articles marker: <BaseLayout
+✅ no forbidden native articles marker: astro-card-grid
+✅ no forbidden native articles marker: astro-shell
+✅ no forbidden native articles marker: Fragment set:html
+✅ no forbidden native articles marker: loadLegacyFullDocument
+✅ no forbidden native articles marker: ?raw
+✅ no forbidden native articles marker: _legacy/
+✅ no forbidden native articles marker: import BaseLayout
+✅ no forbidden native articles marker: <BaseLayout
+✅ no forbidden native articles marker: astro-card-grid
+✅ no forbidden native articles marker: astro-shell
+✅ no forbidden native articles marker: Fragment set:html
+✅ no forbidden native articles marker: loadLegacyFullDocument
+✅ no forbidden native articles marker: ?raw
+✅ no forbidden native articles marker: _legacy/
+✅ no forbidden native articles marker: import BaseLayout
+✅ no forbidden native articles marker: <BaseLayout
+✅ no forbidden native articles marker: astro-card-grid
+✅ no forbidden native articles marker: astro-shell
+✅ no forbidden native articles marker: Fragment set:html
+✅ no forbidden native articles marker: loadLegacyFullDocument
+✅ no forbidden native articles marker: ?raw
+✅ no forbidden native articles marker: _legacy/
+✅ no forbidden native articles marker: import BaseLayout
+✅ no forbidden native articles marker: <BaseLayout
+✅ no forbidden native articles marker: astro-card-grid
+✅ no forbidden native articles marker: astro-shell
+✅ no forbidden native articles marker: Fragment set:html
+
+ARTICLES VISUAL PARITY AUDIT
+✅ /articles/ catalog is 100% native Astro and visual-parity guarded
+✅ PASS [14] articles visual audit (0s)
+
+===== [15] gill context visual audit =====
++ npm run gill:context:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 gill:context:visual-parity:audit
+> node scripts/gill-context-visual-parity-audit.js
+
+GILL CONTEXT STRICT-NATIVE AUDIT
+✅ legacy route: articles/dzhon-gill-istoricheskiy-kontekst/index.html
+✅ Astro route: src/pages/articles/dzhon-gill-istoricheskiy-kontekst/index.astro
+✅ pageHead: src/components/article-pilots/gill-context/GillContextPageHead.astro
+✅ pageChrome: src/components/article-pilots/gill-context/GillContextPageChrome.astro
+✅ shell: src/components/article-pilots/gill-context/GillContextMainShell.astro
+✅ header: src/components/article-pilots/gill-context/GillContextHeaderHero.astro
+✅ body: src/components/article-pilots/gill-context/GillContextArticleBody.astro
+✅ post: src/components/article-pilots/gill-context/GillContextPostArticle.astro
+✅ legacy context directory retired: src/components/article-pilots/gill-context/_legacy absent
+✅ section component GillContextSectionSummaryIntro.astro: src/components/article-pilots/gill-context/GillContextSectionSummaryIntro.astro
+✅ section component GillContextSectionFromPuritansToBaptists.astro: src/components/article-pilots/gill-context/GillContextSectionFromPuritansToBaptists.astro
+✅ section component GillContextSectionParticularVsGeneral.astro: src/components/article-pilots/gill-context/GillContextSectionParticularVsGeneral.astro
+✅ section component GillContextSectionGreatEjection.astro: src/components/article-pilots/gill-context/GillContextSectionGreatEjection.astro
+✅ section component GillContextSectionClarendon.astro: src/components/article-pilots/gill-context/GillContextSectionClarendon.astro
+✅ section component GillContextSectionAcademies.astro: src/components/article-pilots/gill-context/GillContextSectionAcademies.astro
+✅ section component GillContextSectionSaltersHall.astro: src/components/article-pilots/gill-context/GillContextSectionSaltersHall.astro
+✅ section component GillContextSectionCoffeeHouse.astro: src/components/article-pilots/gill-context/GillContextSectionCoffeeHouse.astro
+✅ section component GillContextSectionSouthwark.astro: src/components/article-pilots/gill-context/GillContextSectionSouthwark.astro
+✅ section component GillContextSectionBooks.astro: src/components/article-pilots/gill-context/GillContextSectionBooks.astro
+✅ section component GillContextSectionConclusion.astro: src/components/article-pilots/gill-context/GillContextSectionConclusion.astro
+✅ section component GillContextSectionSourcesAndSeriesTail.astro: src/components/article-pilots/gill-context/GillContextSectionSourcesAndSeriesTail.astro
+✅ strict-native source scope: no loadLegacyFullDocument
+✅ strict-native source scope: no headHtml
+✅ strict-native source scope: no bodyHtml
+✅ strict-native source scope: no bodyAttributes
+✅ strict-native source scope: no ?raw
+✅ strict-native source scope: no set:html
+✅ strict-native source scope: no _legacy
+✅ route imports native page head: contains GillContextPageHead
+✅ route imports native page chrome: contains GillContextPageChrome
+✅ route imports native main shell: contains GillContextMainShell
+✅ route sets explicit body class: contains class="gbs-world"
+✅ route sets explicit series key: contains data-gbs2-series="dzhon-gill"
+✅ route sets explicit minutes metadata: contains data-gbs2-part-min="16"
+✅ page head has canonical: contains rel="canonical"
+✅ page head has SITE_CONFIG: contains window.SITE_CONFIG
+✅ page head has JSON-LD: contains application/ld+json
+✅ page head has Yandex: contains mc.yandex.ru
+✅ page chrome exposes slot: contains <slot />
+✅ page chrome has v16 toc popup: contains toc-overlay
+✅ page chrome keeps bookmark runtime: contains bookmark-engine.js
+✅ page chrome keeps site runtime: contains site.js
+✅ main shell renders main-content: contains <main id="main-content">
+✅ main shell uses header: contains GillContextHeaderHero
+✅ main shell uses article body: contains GillContextArticleBody
+✅ main shell uses post article: contains GillContextPostArticle
+✅ body component owns article wrapper: contains <article class="article-body" data-pagefind-body>
+✅ body imports GillContextSectionSummaryIntro.astro: contains GillContextSectionSummaryIntro
+✅ body imports GillContextSectionFromPuritansToBaptists.astro: contains GillContextSectionFromPuritansToBaptists
+✅ body imports GillContextSectionParticularVsGeneral.astro: contains GillContextSectionParticularVsGeneral
+✅ body imports GillContextSectionGreatEjection.astro: contains GillContextSectionGreatEjection
+✅ body imports GillContextSectionClarendon.astro: contains GillContextSectionClarendon
+✅ body imports GillContextSectionAcademies.astro: contains GillContextSectionAcademies
+✅ body imports GillContextSectionSaltersHall.astro: contains GillContextSectionSaltersHall
+✅ body imports GillContextSectionCoffeeHouse.astro: contains GillContextSectionCoffeeHouse
+✅ body imports GillContextSectionSouthwark.astro: contains GillContextSectionSouthwark
+✅ body imports GillContextSectionBooks.astro: contains GillContextSectionBooks
+✅ body imports GillContextSectionConclusion.astro: contains GillContextSectionConclusion
+✅ body imports GillContextSectionSourcesAndSeriesTail.astro: contains GillContextSectionSourcesAndSeriesTail
+✅ reconstructed body marker: contains class="gbs2-hero"
+✅ reconstructed body marker: contains Джон Гилл: исторический контекст
+✅ reconstructed body marker: contains summary-card
+✅ reconstructed body marker: contains id="sec-from-puritans-to-baptists"
+✅ reconstructed body marker: contains id="sec-clarendon"
+✅ reconstructed body marker: contains id="sec-books"
+✅ reconstructed body marker: contains gbs2-next
+✅ reconstructed body marker: contains gbs2-timeline
+✅ reconstructed body marker: contains article-end-sdg-wrap
+⚠ reconstructed body differs from legacy body after normalization (non-blocking — word-count and markers match)
+✅ word-count within tolerance: legacy=3082, reconstructed=3126, drift=44
+✅ H2 parity: 13
+
+✅ Gill context strict-native audit passed
+✅ PASS [15] gill context visual audit (0s)
+
+===== [16] gill spravochnik visual audit =====
++ npm run gill:spravochnik:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 gill:spravochnik:visual-parity:audit
+> node scripts/gill-spravochnik-visual-parity-audit.js
+
+GILL SPRAVOCHNIK STRICT-NATIVE AUDIT
+✅ legacy route: articles/dzhon-gill-spravochnik/index.html
+✅ Astro route: src/pages/articles/dzhon-gill-spravochnik/index.astro
+✅ pageHead: src/components/article-pilots/gill-spravochnik/GillSpravochnikPageHead.astro
+✅ pageChrome: src/components/article-pilots/gill-spravochnik/GillSpravochnikPageChrome.astro
+✅ shell: src/components/article-pilots/gill-spravochnik/GillSpravochnikMainShell.astro
+✅ header: src/components/article-pilots/gill-spravochnik/GillSpravochnikHeaderHero.astro
+✅ body: src/components/article-pilots/gill-spravochnik/GillSpravochnikArticleBody.astro
+✅ post: src/components/article-pilots/gill-spravochnik/GillSpravochnikPostArticle.astro
+✅ legacy spravochnik directory retired: src/components/article-pilots/gill-spravochnik/_legacy absent
+✅ section component GillSpravochnikSectionSummary.astro: src/components/article-pilots/gill-spravochnik/GillSpravochnikSectionSummary.astro
+✅ section component GillSpravochnikSectionPrdl.astro: src/components/article-pilots/gill-spravochnik/GillSpravochnikSectionPrdl.astro
+✅ section component GillSpravochnikSectionTimeline.astro: src/components/article-pilots/gill-spravochnik/GillSpravochnikSectionTimeline.astro
+✅ section component GillSpravochnikSectionWorks.astro: src/components/article-pilots/gill-spravochnik/GillSpravochnikSectionWorks.astro
+✅ section component GillSpravochnikSectionBodyStructure.astro: src/components/article-pilots/gill-spravochnik/GillSpravochnikSectionBodyStructure.astro
+✅ section component GillSpravochnikSectionNetwork.astro: src/components/article-pilots/gill-spravochnik/GillSpravochnikSectionNetwork.astro
+✅ section component GillSpravochnikSectionDisputes.astro: src/components/article-pilots/gill-spravochnik/GillSpravochnikSectionDisputes.astro
+✅ section component GillSpravochnikSectionTerms.astro: src/components/article-pilots/gill-spravochnik/GillSpravochnikSectionTerms.astro
+✅ section component GillSpravochnikSectionLinks.astro: src/components/article-pilots/gill-spravochnik/GillSpravochnikSectionLinks.astro
+✅ section component GillSpravochnikSectionSources.astro: src/components/article-pilots/gill-spravochnik/GillSpravochnikSectionSources.astro
+✅ section component GillSpravochnikSectionQuizTail.astro: src/components/article-pilots/gill-spravochnik/GillSpravochnikSectionQuizTail.astro
+✅ strict-native source scope: no loadLegacyFullDocument
+✅ strict-native source scope: no headHtml
+✅ strict-native source scope: no bodyHtml
+✅ strict-native source scope: no bodyAttributes
+✅ strict-native source scope: no ?raw
+✅ strict-native source scope: no set:html
+✅ strict-native source scope: no _legacy
+✅ route imports native page head: contains GillSpravochnikPageHead
+✅ route imports native page chrome: contains GillSpravochnikPageChrome
+✅ route imports native main shell: contains GillSpravochnikMainShell
+✅ route sets explicit body class: contains class="gbs-world"
+✅ route sets explicit done minutes: contains data-gbs2-done-min="141"
+✅ route sets explicit part minutes: contains data-gbs2-part-min="8"
+✅ page head has canonical: contains rel="canonical"
+✅ page head has SITE_CONFIG: contains window.SITE_CONFIG
+✅ page head has JSON-LD: contains application/ld+json
+✅ page head has Yandex: contains mc.yandex.ru
+✅ page chrome exposes slot: contains <slot />
+✅ page chrome has v16 toc popup: contains toc-overlay
+✅ page chrome keeps bookmark runtime: contains bookmark-engine.js
+✅ page chrome keeps site runtime: contains site.js
+✅ main shell renders main-content: contains <main id="main-content">
+✅ main shell uses header: contains GillSpravochnikHeaderHero
+✅ main shell uses article body: contains GillSpravochnikArticleBody
+✅ main shell uses post article: contains GillSpravochnikPostArticle
+✅ body component owns article wrapper: contains <article class="article-body" data-pagefind-body>
+✅ body imports GillSpravochnikSectionSummary.astro: contains GillSpravochnikSectionSummary
+✅ body imports GillSpravochnikSectionPrdl.astro: contains GillSpravochnikSectionPrdl
+✅ body imports GillSpravochnikSectionTimeline.astro: contains GillSpravochnikSectionTimeline
+✅ body imports GillSpravochnikSectionWorks.astro: contains GillSpravochnikSectionWorks
+✅ body imports GillSpravochnikSectionBodyStructure.astro: contains GillSpravochnikSectionBodyStructure
+✅ body imports GillSpravochnikSectionNetwork.astro: contains GillSpravochnikSectionNetwork
+✅ body imports GillSpravochnikSectionDisputes.astro: contains GillSpravochnikSectionDisputes
+✅ body imports GillSpravochnikSectionTerms.astro: contains GillSpravochnikSectionTerms
+✅ body imports GillSpravochnikSectionLinks.astro: contains GillSpravochnikSectionLinks
+✅ body imports GillSpravochnikSectionSources.astro: contains GillSpravochnikSectionSources
+✅ body imports GillSpravochnikSectionQuizTail.astro: contains GillSpravochnikSectionQuizTail
+✅ reconstructed body marker: contains class="gbs2-hero"
+✅ reconstructed body marker: contains Джон Гилл: справочник
+✅ reconstructed body marker: contains summary-card
+✅ reconstructed body marker: contains id="sec-prdl"
+✅ reconstructed body marker: contains id="sec-timeline"
+✅ reconstructed body marker: contains id="sec-works"
+✅ reconstructed body marker: contains id="sec-body-structure"
+✅ reconstructed body marker: contains id="sec-network"
+✅ reconstructed body marker: contains id="sec-disputes"
+✅ reconstructed body marker: contains id="sec-terms"
+✅ reconstructed body marker: contains id="sec-links"
+✅ reconstructed body marker: contains id="sec-quiz"
+✅ reconstructed body marker: contains gbs2-next
+✅ reconstructed body marker: contains gbs2-timeline
+✅ reconstructed body marker: contains article-end-sdg-wrap
+⚠ reconstructed body differs from legacy body after normalization (non-blocking — word-count and markers match)
+✅ word-count within tolerance: legacy=1938, reconstructed=1896, drift=42
+✅ H2 parity: 12
+
+✅ Gill spravochnik strict-native audit passed
+✅ PASS [16] gill spravochnik visual audit (0s)
+
+===== [17] konfessii visual audit =====
++ npm run konfessii:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 konfessii:visual-parity:audit
+> node scripts/konfessii-visual-parity-audit.js
+
+✅ Astro /konfessii/ uses native head
+✅ Astro /konfessii/ uses native page chrome
+✅ Astro /konfessii/ uses native main
+✅ no forbidden native konfessii marker: loadLegacyFullDocument
+✅ no forbidden native konfessii marker: headHtml
+✅ no forbidden native konfessii marker: bodyHtml
+✅ no forbidden native konfessii marker: bodyAttributes
+✅ no forbidden native konfessii marker: ?raw
+✅ no forbidden native konfessii marker: set:html
+✅ no forbidden native konfessii marker: _legacy
+✅ legacy main baseline marker: Карта Русского Баптизма
+✅ legacy main baseline marker: Пятидесятничество в России
+✅ legacy main baseline marker: Древо протестантских течений
+✅ legacy main baseline marker: ОТКРЫТЬ 3D-КАРТУ
+✅ legacy main baseline marker: СКОРО
+✅ KonfessiiPageHead marker: rel="canonical"
+✅ KonfessiiPageHead marker: application/ld+json
+✅ KonfessiiPageHead marker: mc.yandex.ru
+✅ KonfessiiPageChrome marker: <slot />
+✅ KonfessiiPageChrome marker: class="wrap"
+✅ KonfessiiPageChrome marker: class="hero"
+✅ KonfessiiPageChrome marker: article-end-sdg-wrap
+✅ KonfessiiPageChrome marker: footer class="k"
+✅ KonfessiiMain marker: <main class="grid h-reveal">
+✅ KonfessiiMain marker: KonfessiiRusskijBaptizmCard
+✅ KonfessiiMain marker: KonfessiiPentecostalCard
+✅ KonfessiiMain marker: KonfessiiOverviewCard
+✅ src/components/konfessii/_legacy retired
+
+KONFESSII VISUAL PARITY AUDIT
+✅ /konfessii/ is strict-native and guarded
+✅ PASS [17] konfessii visual audit (0s)
+
+===== [18] karty visual audit =====
++ npm run karty:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 karty:visual-parity:audit
+> node scripts/karty-visual-parity-audit.js
+
+✅ legacy /karty/ marker: karty-hub
+✅ legacy /karty/ marker: karty-hero
+✅ legacy /karty/ marker: karty-feature
+✅ legacy /karty/ marker: karty-body
+✅ legacy /karty/ marker: karty-note
+✅ legacy /karty/ marker: mapsTitle
+✅ legacy /karty/ marker: Премиальная витрина карт
+✅ legacy /karty/ marker: Принцип раздела
+✅ Astro /karty/ uses native head
+✅ Astro /karty/ uses KartyMain
+✅ no forbidden native karty marker: loadLegacyFullDocument
+✅ no forbidden native karty marker: headHtml
+✅ no forbidden native karty marker: bodyHtml
+✅ no forbidden native karty marker: bodyAttributes
+✅ no forbidden native karty marker: set:html
+✅ KartyPageHead marker: canonical
+✅ KartyPageHead marker: JSON-LD
+✅ KartyMain marker: <div class="karty-hub" data-pagefind-body>
+✅ KartyMain marker: KartyBackLink
+✅ KartyMain marker: KartyHeroSection
+✅ KartyMain marker: KartyBodySection
+✅ KartyMain marker: KartyNote
+✅ src/components/karty/_legacy retired
+
+KARTY VISUAL PARITY AUDIT
+✅ /karty/ is strict-native and guarded
+✅ PASS [18] karty visual audit (1s)
+
+===== [19] baptisty visual audit =====
++ npm run baptisty-rossii:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 baptisty-rossii:visual-parity:audit
+> node scripts/baptisty-rossii-visual-parity-audit.js
+
+BAPTISTY-ROSSII STRICT-NATIVE AUDIT
+✅ BaptistyRossiiBody.astro
+✅ BaptistyRossiiPageHead.astro
+✅ landing _legacy directory retired
+✅ landing route/body/head scope: no loadLegacyFullDocument
+✅ landing route/body/head scope: no headHtml
+✅ landing route/body/head scope: no bodyHtml
+✅ landing route/body/head scope: no bodyAttributes
+✅ landing route/body/head scope: no ?raw
+✅ landing route/body/head scope: no set:html
+✅ landing route/body/head scope: no _legacy
+✅ route imports native head: contains BaptistyRossiiPageHead
+✅ route imports native body: contains BaptistyRossiiBody
+✅ route explicit body class: contains class="gbs-world"
+✅ route explicit total minutes: contains data-gbs2-total-min="229"
+✅ route pagefind body marker: contains data-pagefind-body
+✅ head contract: contains rel="canonical"
+✅ head contract: contains window.SITE_CONFIG
+✅ head contract: contains application/ld+json
+✅ head contract: contains mc.yandex.ru
+✅ landing body marker: contains gbs2-mobile-head
+✅ landing body marker: contains gbs2-rail
+✅ landing body marker: contains gbs2-hero
+✅ landing body marker: contains article-body
+✅ landing body marker: contains gbs2-bbar
+✅ landing body marker: contains gbs2-sheet
+✅ landing body marker: contains Баптисты России
+landing words: legacy=430; body=456; ratio=1.06
+✅ landing word-count parity within threshold (1.06)
+
+BAPTISTY-ROSSII VISUAL PARITY AUDIT
+✅ /baptisty-rossii/ is strict-native and guarded
+✅ PASS [19] baptisty visual audit (0s)
+
+===== [20] home visual audit =====
++ npm run home:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 home:visual-parity:audit
+> node scripts/home-visual-parity-audit.js
+
+✅ legacy / marker: <main id="main-content" data-pagefind-body
+✅ legacy / marker: class="home-v20"
+✅ legacy / marker: h-hero
+✅ legacy / marker: h-mobile-hero-hub
+✅ legacy / marker: h-mobile-dashboard
+✅ legacy / marker: h-mobile-rail
+✅ legacy / marker: h-mobile-paths
+✅ legacy / marker: h-featured
+✅ legacy / marker: h-card-glass
+✅ legacy / marker: h-card-planned
+✅ legacy / marker: h-article-list
+✅ legacy / marker: h-about
+✅ legacy / marker: h-quote-section
+✅ legacy / marker: h-mobile-dock
+✅ legacy / marker: gb-accuracy-block
+✅ legacy / marker: resume-reading-block
+✅ legacy / marker: Господь Бог — Сила Моя
+✅ Astro / uses HomePageHead component
+✅ Astro / uses HomePageChrome component
+✅ Astro / uses HomeMain component
+✅ Astro / preserves body class
+✅ no loadLegacyFullDocument
+✅ no set:html transport
+✅ no ?raw import transport
+✅ no _legacy imports
+✅ src/components/home/HomePageHead.astro
+✅ src/components/home/HomePageChrome.astro
+✅ src/components/home/HomeMain.astro
+✅ src/components/home/HomeHero.astro
+✅ src/components/home/HomePageFooter.astro
+✅ src/components/home/HomeArticleEndBlock.astro
+✅ src/components/home/HomeSections/ResumeMobile.astro
+✅ src/components/home/HomeSections/Directions.astro
+✅ src/components/home/HomeSections/Planned.astro
+✅ src/components/home/HomeSections/Publications.astro
+✅ src/components/home/HomeSections/Refutations.astro
+✅ src/components/home/HomeSections/About.astro
+✅ src/components/home/HomeSections/Quote.astro
+✅ src/components/home/HomeSections/Accuracy.astro
+✅ deleted src/components/home/_legacy directory
+✅ HomePageHead marker: <title>Господь Бог — Сила Моя — Материалы для изучения Писания</title>
+✅ HomePageHead marker: rel="canonical" href="https://gospod-bog.ru/"
+✅ HomePageHead marker: property="og:image" content="https://gospod-bog.ru/images/og-preview-1200x630.webp"
+✅ HomePageHead marker: name="twitter:card" content="summary_large_image"
+✅ HomePageHead marker: application/ld+json
+✅ HomePageHead marker: fonts/fonts.css
+✅ HomePageHead marker: css/home.css
+✅ HomePageHead marker: theme-color
+✅ HomePageChrome marker: class="skip-link"
+✅ HomePageChrome marker: class="h-navbar"
+✅ HomePageChrome marker: id="hMobileNav"
+✅ HomePageChrome marker: class="home-v20"
+✅ HomePageChrome marker: id="hScriptureBg"
+✅ HomePageChrome marker: class="h-mobile-dock"
+✅ HomePageChrome marker: id="hScrollTop"
+✅ HomePageChrome marker: window.SITE_CONFIG
+✅ HomePageChrome marker: js/site.js
+✅ HomePageChrome marker: js/search.js
+✅ HomePageChrome marker: mc.yandex.ru/metrika/tag.js
+✅ no HomePageChrome set:html
+✅ no HomePageChrome raw imports
+✅ HomeMain semantic wrapper
+✅ HomeMain home-content wrapper
+✅ HomeMain uses HomeHero
+✅ HomeMain uses ResumeMobile
+✅ HomeMain uses Directions
+✅ HomeMain uses Planned
+✅ HomeMain uses Publications
+✅ HomeMain uses Refutations
+✅ HomeMain uses About
+✅ HomeMain uses Quote
+✅ HomeMain uses Accuracy
+✅ HomeMain uses HomePageFooter
+✅ HomeMain uses HomeArticleEndBlock
+✅ no HomeMain set:html transport
+✅ no HomeMain raw imports
+✅ HomeHero.astro marker: h-hero-title
+✅ HomeHero.astro marker: heroSearchBar
+✅ HomeHero.astro marker: h-mobile-hero-hub
+✅ no HomeHero.astro set:html
+✅ no HomeHero.astro raw import
+✅ ResumeMobile.astro marker: resume-reading-block
+✅ ResumeMobile.astro marker: h-mobile-dashboard
+✅ ResumeMobile.astro marker: h-mobile-rail
+✅ ResumeMobile.astro marker: h-mobile-paths
+✅ no ResumeMobile.astro set:html
+✅ no ResumeMobile.astro raw import
+✅ Directions.astro marker: hDirectionsLabel
+✅ Directions.astro marker: h-grid-4
+✅ no Directions.astro set:html
+✅ no Directions.astro raw import
+✅ Planned.astro marker: hPlannedLabel
+✅ Planned.astro marker: h-grid-3
+✅ no Planned.astro set:html
+✅ no Planned.astro raw import
+✅ Publications.astro marker: id="publikacii"
+✅ Publications.astro marker: h-featured-series
+✅ Publications.astro marker: h-article-list
+✅ no Publications.astro set:html
+✅ no Publications.astro raw import
+✅ Refutations.astro marker: id="razbor"
+✅ Refutations.astro marker: h-article-list--grid
+✅ no Refutations.astro set:html
+✅ no Refutations.astro raw import
+✅ About.astro marker: id="about"
+✅ About.astro marker: h-drop-cap__letter
+✅ no About.astro set:html
+✅ no About.astro raw import
+✅ Quote.astro marker: h-quote-section
+✅ Quote.astro marker: Аввакум 3:19
+✅ no Quote.astro set:html
+✅ no Quote.astro raw import
+✅ Accuracy.astro marker: gb-accuracy-block
+✅ Accuracy.astro marker: fedormilovanov
+✅ no Accuracy.astro set:html
+✅ no Accuracy.astro raw import
+✅ HomePageFooter.astro marker: h-footer
+✅ HomePageFooter.astro marker: Об авторе
+✅ no HomePageFooter.astro set:html
+✅ no HomePageFooter.astro raw import
+✅ HomeArticleEndBlock.astro marker: Soli Deo Gloria
+✅ no HomeArticleEndBlock.astro set:html
+✅ no HomeArticleEndBlock.astro raw import
+✅ no old/generic home wrapper marker: import BaseLayout
+✅ no old/generic home main marker: import BaseLayout
+✅ no old/generic home wrapper marker: <BaseLayout
+✅ no old/generic home main marker: <BaseLayout
+✅ no old/generic home wrapper marker: astro-card-grid
+✅ no old/generic home main marker: astro-card-grid
+✅ no old/generic home wrapper marker: class="astro-home"
+✅ no old/generic home main marker: class="astro-home"
+✅ no old/generic home wrapper marker: class="astro-page"
+✅ no old/generic home main marker: class="astro-page"
+✅ no old/generic home wrapper marker: astro-shell
+✅ no old/generic home main marker: astro-shell
+ℹ️ dist/index.html not found — run npm run astro:build before push
+
+HOME VISUAL PARITY AUDIT
+✅ / Astro migration is fully-native guarded (no legacy loader, no raw imports, no _legacy HTML)
+ℹ️ 1 advisory warning(s) remain.
+✅ PASS [20] home visual audit (0s)
+
+===== [21] nagornaya visual audit =====
++ npm run nagornaya:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 nagornaya:visual-parity:audit
+> node scripts/nagornaya-visual-parity-audit.js
+
+✅ absent: old shared raw-fragment NagornayaPageMain retired
+✅ no nagornaya/chast-5/index.html: no unresolved merge marker <<<<<<<
+✅ no nagornaya/chast-5/index.html: no unresolved merge marker =======
+✅ no nagornaya/chast-5/index.html: no unresolved merge marker >>>>>>>
+
+/nagornaya/
+✅ legacy marker: nagornaya-page
+✅ legacy marker: main-content
+✅ index: page exists
+✅ index: native PageHead
+✅ index: native PageChrome
+✅ index: balanced native main/body
+✅ index: native PageFooter
+✅ index: emits full document
+✅ index: uses native PageHead
+✅ index: uses balanced main/body component
+✅ no index: forbidden native marker loadLegacyFullDocument
+✅ no index: forbidden native marker ?raw
+✅ no index: forbidden native marker _legacy/
+✅ no index: forbidden native marker <Fragment set:html
+✅ no index: forbidden native marker import BaseLayout
+✅ no index: forbidden native marker <BaseLayout
+✅ no index: forbidden native marker astro-card-grid
+✅ no index: forbidden native marker class="astro-page"
+✅ no index: forbidden native marker loadLegacyFullDocument
+✅ no index: forbidden native marker ?raw
+✅ no index: forbidden native marker _legacy/
+✅ no index: forbidden native marker <Fragment set:html
+✅ no index: forbidden native marker import BaseLayout
+✅ no index: forbidden native marker <BaseLayout
+✅ no index: forbidden native marker astro-card-grid
+✅ no index: forbidden native marker class="astro-page"
+✅ no index: forbidden native marker loadLegacyFullDocument
+✅ no index: forbidden native marker ?raw
+✅ no index: forbidden native marker _legacy/
+✅ no index: forbidden native marker <Fragment set:html
+✅ no index: forbidden native marker import BaseLayout
+✅ no index: forbidden native marker <BaseLayout
+✅ no index: forbidden native marker astro-card-grid
+✅ no index: forbidden native marker class="astro-page"
+✅ no index: forbidden native marker loadLegacyFullDocument
+✅ no index: forbidden native marker ?raw
+✅ no index: forbidden native marker _legacy/
+✅ no index: forbidden native marker <Fragment set:html
+✅ no index: forbidden native marker import BaseLayout
+✅ no index: forbidden native marker <BaseLayout
+✅ no index: forbidden native marker astro-card-grid
+✅ no index: forbidden native marker class="astro-page"
+✅ no index: forbidden native marker loadLegacyFullDocument
+✅ no index: forbidden native marker ?raw
+✅ no index: forbidden native marker _legacy/
+✅ no index: forbidden native marker <Fragment set:html
+✅ no index: forbidden native marker import BaseLayout
+✅ no index: forbidden native marker <BaseLayout
+✅ no index: forbidden native marker astro-card-grid
+✅ no index: forbidden native marker class="astro-page"
+
+/nagornaya/chast-1/
+✅ legacy marker: nagornaya-page
+✅ legacy marker: main-content
+✅ chast-1: page exists
+✅ chast-1: native PageHead
+✅ chast-1: native PageChrome
+✅ chast-1: balanced native main/body
+✅ chast-1: native PageFooter
+✅ chast-1: emits full document
+✅ chast-1: uses native PageHead
+✅ chast-1: uses balanced main/body component
+✅ no chast-1: forbidden native marker loadLegacyFullDocument
+✅ no chast-1: forbidden native marker ?raw
+✅ no chast-1: forbidden native marker _legacy/
+✅ no chast-1: forbidden native marker <Fragment set:html
+✅ no chast-1: forbidden native marker import BaseLayout
+✅ no chast-1: forbidden native marker <BaseLayout
+✅ no chast-1: forbidden native marker astro-card-grid
+✅ no chast-1: forbidden native marker class="astro-page"
+✅ no chast-1: forbidden native marker loadLegacyFullDocument
+✅ no chast-1: forbidden native marker ?raw
+✅ no chast-1: forbidden native marker _legacy/
+✅ no chast-1: forbidden native marker <Fragment set:html
+✅ no chast-1: forbidden native marker import BaseLayout
+✅ no chast-1: forbidden native marker <BaseLayout
+✅ no chast-1: forbidden native marker astro-card-grid
+✅ no chast-1: forbidden native marker class="astro-page"
+✅ no chast-1: forbidden native marker loadLegacyFullDocument
+✅ no chast-1: forbidden native marker ?raw
+✅ no chast-1: forbidden native marker _legacy/
+✅ no chast-1: forbidden native marker <Fragment set:html
+✅ no chast-1: forbidden native marker import BaseLayout
+✅ no chast-1: forbidden native marker <BaseLayout
+✅ no chast-1: forbidden native marker astro-card-grid
+✅ no chast-1: forbidden native marker class="astro-page"
+✅ no chast-1: forbidden native marker loadLegacyFullDocument
+✅ no chast-1: forbidden native marker ?raw
+✅ no chast-1: forbidden native marker _legacy/
+✅ no chast-1: forbidden native marker <Fragment set:html
+✅ no chast-1: forbidden native marker import BaseLayout
+✅ no chast-1: forbidden native marker <BaseLayout
+✅ no chast-1: forbidden native marker astro-card-grid
+✅ no chast-1: forbidden native marker class="astro-page"
+✅ no chast-1: forbidden native marker loadLegacyFullDocument
+✅ no chast-1: forbidden native marker ?raw
+✅ no chast-1: forbidden native marker _legacy/
+✅ no chast-1: forbidden native marker <Fragment set:html
+✅ no chast-1: forbidden native marker import BaseLayout
+✅ no chast-1: forbidden native marker <BaseLayout
+✅ no chast-1: forbidden native marker astro-card-grid
+✅ no chast-1: forbidden native marker class="astro-page"
+
+/nagornaya/chast-2/
+✅ legacy marker: nagornaya-page
+✅ legacy marker: main-content
+✅ chast-2: page exists
+✅ chast-2: native PageHead
+✅ chast-2: native PageChrome
+✅ chast-2: balanced native main/body
+✅ chast-2: native PageFooter
+✅ chast-2: emits full document
+✅ chast-2: uses native PageHead
+✅ chast-2: uses balanced main/body component
+✅ no chast-2: forbidden native marker loadLegacyFullDocument
+✅ no chast-2: forbidden native marker ?raw
+✅ no chast-2: forbidden native marker _legacy/
+✅ no chast-2: forbidden native marker <Fragment set:html
+✅ no chast-2: forbidden native marker import BaseLayout
+✅ no chast-2: forbidden native marker <BaseLayout
+✅ no chast-2: forbidden native marker astro-card-grid
+✅ no chast-2: forbidden native marker class="astro-page"
+✅ no chast-2: forbidden native marker loadLegacyFullDocument
+✅ no chast-2: forbidden native marker ?raw
+✅ no chast-2: forbidden native marker _legacy/
+✅ no chast-2: forbidden native marker <Fragment set:html
+✅ no chast-2: forbidden native marker import BaseLayout
+✅ no chast-2: forbidden native marker <BaseLayout
+✅ no chast-2: forbidden native marker astro-card-grid
+✅ no chast-2: forbidden native marker class="astro-page"
+✅ no chast-2: forbidden native marker loadLegacyFullDocument
+✅ no chast-2: forbidden native marker ?raw
+✅ no chast-2: forbidden native marker _legacy/
+✅ no chast-2: forbidden native marker <Fragment set:html
+✅ no chast-2: forbidden native marker import BaseLayout
+✅ no chast-2: forbidden native marker <BaseLayout
+✅ no chast-2: forbidden native marker astro-card-grid
+✅ no chast-2: forbidden native marker class="astro-page"
+✅ no chast-2: forbidden native marker loadLegacyFullDocument
+✅ no chast-2: forbidden native marker ?raw
+✅ no chast-2: forbidden native marker _legacy/
+✅ no chast-2: forbidden native marker <Fragment set:html
+✅ no chast-2: forbidden native marker import BaseLayout
+✅ no chast-2: forbidden native marker <BaseLayout
+✅ no chast-2: forbidden native marker astro-card-grid
+✅ no chast-2: forbidden native marker class="astro-page"
+✅ no chast-2: forbidden native marker loadLegacyFullDocument
+✅ no chast-2: forbidden native marker ?raw
+✅ no chast-2: forbidden native marker _legacy/
+✅ no chast-2: forbidden native marker <Fragment set:html
+✅ no chast-2: forbidden native marker import BaseLayout
+✅ no chast-2: forbidden native marker <BaseLayout
+✅ no chast-2: forbidden native marker astro-card-grid
+✅ no chast-2: forbidden native marker class="astro-page"
+
+/nagornaya/chast-3/
+✅ legacy marker: nagornaya-page
+✅ legacy marker: main-content
+✅ chast-3: page exists
+✅ chast-3: native PageHead
+✅ chast-3: native PageChrome
+✅ chast-3: balanced native main/body
+✅ chast-3: native PageFooter
+✅ chast-3: emits full document
+✅ chast-3: uses native PageHead
+✅ chast-3: uses balanced main/body component
+✅ no chast-3: forbidden native marker loadLegacyFullDocument
+✅ no chast-3: forbidden native marker ?raw
+✅ no chast-3: forbidden native marker _legacy/
+✅ no chast-3: forbidden native marker <Fragment set:html
+✅ no chast-3: forbidden native marker import BaseLayout
+✅ no chast-3: forbidden native marker <BaseLayout
+✅ no chast-3: forbidden native marker astro-card-grid
+✅ no chast-3: forbidden native marker class="astro-page"
+✅ no chast-3: forbidden native marker loadLegacyFullDocument
+✅ no chast-3: forbidden native marker ?raw
+✅ no chast-3: forbidden native marker _legacy/
+✅ no chast-3: forbidden native marker <Fragment set:html
+✅ no chast-3: forbidden native marker import BaseLayout
+✅ no chast-3: forbidden native marker <BaseLayout
+✅ no chast-3: forbidden native marker astro-card-grid
+✅ no chast-3: forbidden native marker class="astro-page"
+✅ no chast-3: forbidden native marker loadLegacyFullDocument
+✅ no chast-3: forbidden native marker ?raw
+✅ no chast-3: forbidden native marker _legacy/
+✅ no chast-3: forbidden native marker <Fragment set:html
+✅ no chast-3: forbidden native marker import BaseLayout
+✅ no chast-3: forbidden native marker <BaseLayout
+✅ no chast-3: forbidden native marker astro-card-grid
+✅ no chast-3: forbidden native marker class="astro-page"
+✅ no chast-3: forbidden native marker loadLegacyFullDocument
+✅ no chast-3: forbidden native marker ?raw
+✅ no chast-3: forbidden native marker _legacy/
+✅ no chast-3: forbidden native marker <Fragment set:html
+✅ no chast-3: forbidden native marker import BaseLayout
+✅ no chast-3: forbidden native marker <BaseLayout
+✅ no chast-3: forbidden native marker astro-card-grid
+✅ no chast-3: forbidden native marker class="astro-page"
+✅ no chast-3: forbidden native marker loadLegacyFullDocument
+✅ no chast-3: forbidden native marker ?raw
+✅ no chast-3: forbidden native marker _legacy/
+✅ no chast-3: forbidden native marker <Fragment set:html
+✅ no chast-3: forbidden native marker import BaseLayout
+✅ no chast-3: forbidden native marker <BaseLayout
+✅ no chast-3: forbidden native marker astro-card-grid
+✅ no chast-3: forbidden native marker class="astro-page"
+
+/nagornaya/chast-4/
+✅ legacy marker: nagornaya-page
+✅ legacy marker: main-content
+✅ chast-4: page exists
+✅ chast-4: native PageHead
+✅ chast-4: native PageChrome
+✅ chast-4: balanced native main/body
+✅ chast-4: native PageFooter
+✅ chast-4: emits full document
+✅ chast-4: uses native PageHead
+✅ chast-4: uses balanced main/body component
+✅ no chast-4: forbidden native marker loadLegacyFullDocument
+✅ no chast-4: forbidden native marker ?raw
+✅ no chast-4: forbidden native marker _legacy/
+✅ no chast-4: forbidden native marker <Fragment set:html
+✅ no chast-4: forbidden native marker import BaseLayout
+✅ no chast-4: forbidden native marker <BaseLayout
+✅ no chast-4: forbidden native marker astro-card-grid
+✅ no chast-4: forbidden native marker class="astro-page"
+✅ no chast-4: forbidden native marker loadLegacyFullDocument
+✅ no chast-4: forbidden native marker ?raw
+✅ no chast-4: forbidden native marker _legacy/
+✅ no chast-4: forbidden native marker <Fragment set:html
+✅ no chast-4: forbidden native marker import BaseLayout
+✅ no chast-4: forbidden native marker <BaseLayout
+✅ no chast-4: forbidden native marker astro-card-grid
+✅ no chast-4: forbidden native marker class="astro-page"
+✅ no chast-4: forbidden native marker loadLegacyFullDocument
+✅ no chast-4: forbidden native marker ?raw
+✅ no chast-4: forbidden native marker _legacy/
+✅ no chast-4: forbidden native marker <Fragment set:html
+✅ no chast-4: forbidden native marker import BaseLayout
+✅ no chast-4: forbidden native marker <BaseLayout
+✅ no chast-4: forbidden native marker astro-card-grid
+✅ no chast-4: forbidden native marker class="astro-page"
+✅ no chast-4: forbidden native marker loadLegacyFullDocument
+✅ no chast-4: forbidden native marker ?raw
+✅ no chast-4: forbidden native marker _legacy/
+✅ no chast-4: forbidden native marker <Fragment set:html
+✅ no chast-4: forbidden native marker import BaseLayout
+✅ no chast-4: forbidden native marker <BaseLayout
+✅ no chast-4: forbidden native marker astro-card-grid
+✅ no chast-4: forbidden native marker class="astro-page"
+✅ no chast-4: forbidden native marker loadLegacyFullDocument
+✅ no chast-4: forbidden native marker ?raw
+✅ no chast-4: forbidden native marker _legacy/
+✅ no chast-4: forbidden native marker <Fragment set:html
+✅ no chast-4: forbidden native marker import BaseLayout
+✅ no chast-4: forbidden native marker <BaseLayout
+✅ no chast-4: forbidden native marker astro-card-grid
+✅ no chast-4: forbidden native marker class="astro-page"
+
+/nagornaya/chast-5/
+✅ legacy marker: nagornaya-page
+✅ legacy marker: main-content
+✅ chast-5: page exists
+✅ chast-5: native PageHead
+✅ chast-5: native PageChrome
+✅ chast-5: balanced native main/body
+✅ chast-5: native PageFooter
+✅ chast-5: emits full document
+✅ chast-5: uses native PageHead
+✅ chast-5: uses balanced main/body component
+✅ no chast-5: forbidden native marker loadLegacyFullDocument
+✅ no chast-5: forbidden native marker ?raw
+✅ no chast-5: forbidden native marker _legacy/
+✅ no chast-5: forbidden native marker <Fragment set:html
+✅ no chast-5: forbidden native marker import BaseLayout
+✅ no chast-5: forbidden native marker <BaseLayout
+✅ no chast-5: forbidden native marker astro-card-grid
+✅ no chast-5: forbidden native marker class="astro-page"
+✅ no chast-5: forbidden native marker loadLegacyFullDocument
+✅ no chast-5: forbidden native marker ?raw
+✅ no chast-5: forbidden native marker _legacy/
+✅ no chast-5: forbidden native marker <Fragment set:html
+✅ no chast-5: forbidden native marker import BaseLayout
+✅ no chast-5: forbidden native marker <BaseLayout
+✅ no chast-5: forbidden native marker astro-card-grid
+✅ no chast-5: forbidden native marker class="astro-page"
+✅ no chast-5: forbidden native marker loadLegacyFullDocument
+✅ no chast-5: forbidden native marker ?raw
+✅ no chast-5: forbidden native marker _legacy/
+✅ no chast-5: forbidden native marker <Fragment set:html
+✅ no chast-5: forbidden native marker import BaseLayout
+✅ no chast-5: forbidden native marker <BaseLayout
+✅ no chast-5: forbidden native marker astro-card-grid
+✅ no chast-5: forbidden native marker class="astro-page"
+✅ no chast-5: forbidden native marker loadLegacyFullDocument
+✅ no chast-5: forbidden native marker ?raw
+✅ no chast-5: forbidden native marker _legacy/
+✅ no chast-5: forbidden native marker <Fragment set:html
+✅ no chast-5: forbidden native marker import BaseLayout
+✅ no chast-5: forbidden native marker <BaseLayout
+✅ no chast-5: forbidden native marker astro-card-grid
+✅ no chast-5: forbidden native marker class="astro-page"
+✅ no chast-5: forbidden native marker loadLegacyFullDocument
+✅ no chast-5: forbidden native marker ?raw
+✅ no chast-5: forbidden native marker _legacy/
+✅ no chast-5: forbidden native marker <Fragment set:html
+✅ no chast-5: forbidden native marker import BaseLayout
+✅ no chast-5: forbidden native marker <BaseLayout
+✅ no chast-5: forbidden native marker astro-card-grid
+✅ no chast-5: forbidden native marker class="astro-page"
+
+/nagornaya/seriya/
+✅ legacy marker: nagornaya-page
+✅ legacy marker: main-content
+✅ seriya: page exists
+✅ seriya: native PageHead
+✅ seriya: native PageChrome
+✅ seriya: balanced native main/body
+✅ seriya: emits full document
+✅ seriya: uses native PageHead
+✅ seriya: uses balanced main/body component
+✅ no seriya: forbidden native marker loadLegacyFullDocument
+✅ no seriya: forbidden native marker ?raw
+✅ no seriya: forbidden native marker _legacy/
+✅ no seriya: forbidden native marker <Fragment set:html
+✅ no seriya: forbidden native marker import BaseLayout
+✅ no seriya: forbidden native marker <BaseLayout
+✅ no seriya: forbidden native marker astro-card-grid
+✅ no seriya: forbidden native marker class="astro-page"
+✅ no seriya: forbidden native marker loadLegacyFullDocument
+✅ no seriya: forbidden native marker ?raw
+✅ no seriya: forbidden native marker _legacy/
+✅ no seriya: forbidden native marker <Fragment set:html
+✅ no seriya: forbidden native marker import BaseLayout
+✅ no seriya: forbidden native marker <BaseLayout
+✅ no seriya: forbidden native marker astro-card-grid
+✅ no seriya: forbidden native marker class="astro-page"
+✅ no seriya: forbidden native marker loadLegacyFullDocument
+✅ no seriya: forbidden native marker ?raw
+✅ no seriya: forbidden native marker _legacy/
+✅ no seriya: forbidden native marker <Fragment set:html
+✅ no seriya: forbidden native marker import BaseLayout
+✅ no seriya: forbidden native marker <BaseLayout
+✅ no seriya: forbidden native marker astro-card-grid
+✅ no seriya: forbidden native marker class="astro-page"
+✅ no seriya: forbidden native marker loadLegacyFullDocument
+✅ no seriya: forbidden native marker ?raw
+✅ no seriya: forbidden native marker _legacy/
+✅ no seriya: forbidden native marker <Fragment set:html
+✅ no seriya: forbidden native marker import BaseLayout
+✅ no seriya: forbidden native marker <BaseLayout
+✅ no seriya: forbidden native marker astro-card-grid
+✅ no seriya: forbidden native marker class="astro-page"
+✅ no seriya: forbidden native marker loadLegacyFullDocument
+✅ no seriya: forbidden native marker ?raw
+✅ no seriya: forbidden native marker _legacy/
+✅ no seriya: forbidden native marker <Fragment set:html
+✅ no seriya: forbidden native marker import BaseLayout
+✅ no seriya: forbidden native marker <BaseLayout
+✅ no seriya: forbidden native marker astro-card-grid
+✅ no seriya: forbidden native marker class="astro-page"
+
+/nagornaya/istochniki/
+✅ legacy marker: nagornaya-page
+✅ legacy marker: main-content
+✅ istochniki: page exists
+✅ istochniki: native PageHead
+✅ istochniki: native PageChrome
+✅ istochniki: balanced native main/body
+✅ istochniki: native PageFooter
+✅ istochniki: emits full document
+✅ istochniki: uses native PageHead
+✅ istochniki: uses balanced main/body component
+✅ no istochniki: forbidden native marker loadLegacyFullDocument
+✅ no istochniki: forbidden native marker ?raw
+✅ no istochniki: forbidden native marker _legacy/
+✅ no istochniki: forbidden native marker <Fragment set:html
+✅ no istochniki: forbidden native marker import BaseLayout
+✅ no istochniki: forbidden native marker <BaseLayout
+✅ no istochniki: forbidden native marker astro-card-grid
+✅ no istochniki: forbidden native marker class="astro-page"
+✅ no istochniki: forbidden native marker loadLegacyFullDocument
+✅ no istochniki: forbidden native marker ?raw
+✅ no istochniki: forbidden native marker _legacy/
+✅ no istochniki: forbidden native marker <Fragment set:html
+✅ no istochniki: forbidden native marker import BaseLayout
+✅ no istochniki: forbidden native marker <BaseLayout
+✅ no istochniki: forbidden native marker astro-card-grid
+✅ no istochniki: forbidden native marker class="astro-page"
+✅ no istochniki: forbidden native marker loadLegacyFullDocument
+✅ no istochniki: forbidden native marker ?raw
+✅ no istochniki: forbidden native marker _legacy/
+✅ no istochniki: forbidden native marker <Fragment set:html
+✅ no istochniki: forbidden native marker import BaseLayout
+✅ no istochniki: forbidden native marker <BaseLayout
+✅ no istochniki: forbidden native marker astro-card-grid
+✅ no istochniki: forbidden native marker class="astro-page"
+✅ no istochniki: forbidden native marker loadLegacyFullDocument
+✅ no istochniki: forbidden native marker ?raw
+✅ no istochniki: forbidden native marker _legacy/
+✅ no istochniki: forbidden native marker <Fragment set:html
+✅ no istochniki: forbidden native marker import BaseLayout
+✅ no istochniki: forbidden native marker <BaseLayout
+✅ no istochniki: forbidden native marker astro-card-grid
+✅ no istochniki: forbidden native marker class="astro-page"
+✅ no istochniki: forbidden native marker loadLegacyFullDocument
+✅ no istochniki: forbidden native marker ?raw
+✅ no istochniki: forbidden native marker _legacy/
+✅ no istochniki: forbidden native marker <Fragment set:html
+✅ no istochniki: forbidden native marker import BaseLayout
+✅ no istochniki: forbidden native marker <BaseLayout
+✅ no istochniki: forbidden native marker astro-card-grid
+✅ no istochniki: forbidden native marker class="astro-page"
+
+/nagornaya/nakhodki/
+✅ legacy marker: nagornaya-page
+✅ legacy marker: main-content
+✅ nakhodki: page exists
+✅ nakhodki: native PageHead
+✅ nakhodki: native PageChrome
+✅ nakhodki: balanced native main/body
+✅ nakhodki: native PageFooter
+✅ nakhodki: emits full document
+✅ nakhodki: uses native PageHead
+✅ nakhodki: uses balanced main/body component
+✅ no nakhodki: forbidden native marker loadLegacyFullDocument
+✅ no nakhodki: forbidden native marker ?raw
+✅ no nakhodki: forbidden native marker _legacy/
+✅ no nakhodki: forbidden native marker <Fragment set:html
+✅ no nakhodki: forbidden native marker import BaseLayout
+✅ no nakhodki: forbidden native marker <BaseLayout
+✅ no nakhodki: forbidden native marker astro-card-grid
+✅ no nakhodki: forbidden native marker class="astro-page"
+✅ no nakhodki: forbidden native marker loadLegacyFullDocument
+✅ no nakhodki: forbidden native marker ?raw
+✅ no nakhodki: forbidden native marker _legacy/
+✅ no nakhodki: forbidden native marker <Fragment set:html
+✅ no nakhodki: forbidden native marker import BaseLayout
+✅ no nakhodki: forbidden native marker <BaseLayout
+✅ no nakhodki: forbidden native marker astro-card-grid
+✅ no nakhodki: forbidden native marker class="astro-page"
+✅ no nakhodki: forbidden native marker loadLegacyFullDocument
+✅ no nakhodki: forbidden native marker ?raw
+✅ no nakhodki: forbidden native marker _legacy/
+✅ no nakhodki: forbidden native marker <Fragment set:html
+✅ no nakhodki: forbidden native marker import BaseLayout
+✅ no nakhodki: forbidden native marker <BaseLayout
+✅ no nakhodki: forbidden native marker astro-card-grid
+✅ no nakhodki: forbidden native marker class="astro-page"
+✅ no nakhodki: forbidden native marker loadLegacyFullDocument
+✅ no nakhodki: forbidden native marker ?raw
+✅ no nakhodki: forbidden native marker _legacy/
+✅ no nakhodki: forbidden native marker <Fragment set:html
+✅ no nakhodki: forbidden native marker import BaseLayout
+✅ no nakhodki: forbidden native marker <BaseLayout
+✅ no nakhodki: forbidden native marker astro-card-grid
+✅ no nakhodki: forbidden native marker class="astro-page"
+✅ no nakhodki: forbidden native marker loadLegacyFullDocument
+✅ no nakhodki: forbidden native marker ?raw
+✅ no nakhodki: forbidden native marker _legacy/
+✅ no nakhodki: forbidden native marker <Fragment set:html
+✅ no nakhodki: forbidden native marker import BaseLayout
+✅ no nakhodki: forbidden native marker <BaseLayout
+✅ no nakhodki: forbidden native marker astro-card-grid
+✅ no nakhodki: forbidden native marker class="astro-page"
+✅ absent: index _legacy deleted
+✅ absent: istochniki _legacy deleted
+✅ absent: nakhodki _legacy deleted
+
+NAGORNAYA VISUAL PARITY AUDIT
+✅ /nagornaya/* is 100% native Astro guarded — all 9 routes
+✅ PASS [21] nagornaya visual audit (0s)
+
+===== [22] catalogs visual audit =====
++ npm run catalogs:visual-parity:audit
+
+> gb-is-my-strength@1.6.3 catalogs:visual-parity:audit
+> node scripts/catalogs-visual-parity-audit.js
+
+
+/articles/
+✅ legacy marker: articles-index-page
+✅ legacy marker: home-v20
+✅ legacy marker: h-hero-title
+✅ legacy marker: h-article-card
+✅ legacy marker: h-article-list
+✅ /articles/ emits full document
+✅ /articles/ uses ArticlesPageChrome
+✅ /articles/ uses ArticlesMain
+✅ /articles/ uses ArticlesPageFooter
+✅ no /articles/ old/generic catalog marker: loadLegacyFullDocument
+✅ no /articles/ old/generic catalog marker: headHtml
+✅ no /articles/ old/generic catalog marker: bodyHtml
+✅ no /articles/ old/generic catalog marker: bodyAttributes
+✅ no /articles/ old/generic catalog marker: ?raw
+✅ no /articles/ old/generic catalog marker: _legacy/
+✅ no /articles/ old/generic catalog marker: set:html
+✅ no /articles/ old/generic catalog marker: import BaseLayout
+✅ no /articles/ old/generic catalog marker: <BaseLayout
+✅ no /articles/ old/generic catalog marker: astro-shell
+✅ no /articles/ old/generic catalog marker: mainClass=
+✅ no /articles/ old/generic catalog marker: hideHeader=
+✅ no /articles/ old/generic catalog marker: hideFooter=
+✅ no /articles/ old/generic catalog marker: class="astro-page
+✅ no /articles/ old/generic catalog marker: astro-card-grid
+✅ no /articles/ old/generic catalog marker: class="astro-card
+✅ no /articles/ old/generic catalog marker: const cards = [
+✅ no /articles/ old/generic catalog marker: const eras = [
+✅ no /articles/ old/generic catalog marker: const gillCards = [
+
+/biografii/
+✅ legacy marker: home-v20
+✅ legacy marker: h-hero-title
+✅ legacy marker: h-article-card
+✅ legacy marker: Биографии служителей
+✅ legacy marker: Джон Гилл
+✅ /biografii/ emits full document
+✅ /biografii/ uses BiografiiPageChrome
+✅ /biografii/ uses BiografiiMain
+✅ /biografii/ uses BiografiiPageFooter
+✅ no /biografii/ old/generic catalog marker: loadLegacyFullDocument
+✅ no /biografii/ old/generic catalog marker: headHtml
+✅ no /biografii/ old/generic catalog marker: bodyHtml
+✅ no /biografii/ old/generic catalog marker: bodyAttributes
+✅ no /biografii/ old/generic catalog marker: ?raw
+✅ no /biografii/ old/generic catalog marker: _legacy/
+✅ no /biografii/ old/generic catalog marker: set:html
+✅ no /biografii/ old/generic catalog marker: import BaseLayout
+✅ no /biografii/ old/generic catalog marker: <BaseLayout
+✅ no /biografii/ old/generic catalog marker: astro-shell
+✅ no /biografii/ old/generic catalog marker: mainClass=
+✅ no /biografii/ old/generic catalog marker: hideHeader=
+✅ no /biografii/ old/generic catalog marker: hideFooter=
+✅ no /biografii/ old/generic catalog marker: class="astro-page
+✅ no /biografii/ old/generic catalog marker: astro-card-grid
+✅ no /biografii/ old/generic catalog marker: class="astro-card
+✅ no /biografii/ old/generic catalog marker: const cards = [
+✅ no /biografii/ old/generic catalog marker: const eras = [
+✅ no /biografii/ old/generic catalog marker: const gillCards = [
+
+CATALOGS VISUAL PARITY AUDIT
+✅ Catalog Astro migrations are 100% native and guarded
+✅ PASS [22] catalogs visual audit (0s)
+
+===== [23] baptisty roadmap audit =====
++ npm run baptisty:roadmap:audit
+
+> gb-is-my-strength@1.6.3 baptisty:roadmap:audit
+> node scripts/baptisty-roadmap-audit.js
+
+
+BAPTISTY ROADMAP AUDIT
+✅ Russian Baptists expansion roadmap is guarded
+✅ PASS [23] baptisty roadmap audit (0s)
+
+===== [24] baptisty visual atlas audit =====
++ npm run baptisty:visual-atlas:audit
+
+> gb-is-my-strength@1.6.3 baptisty:visual-atlas:audit
+> node scripts/baptisty-visual-atlas-audit.js
+
+
+BAPTISTY 2D SVG VISUAL ATLAS AUDIT
+✅ 2D SVG atlas plan is guarded
+✅ PASS [24] baptisty visual atlas audit (0s)
+
+===== [25] maps validate =====
++ npm run maps:validate
+
+> gb-is-my-strength@1.6.3 maps:validate
+> node scripts/validate-map-routes.js && npm run maps:publication-status
+
+✅ route schema present
+✅ karty/avraam/route.json: 19 places · 8 stages · 5 stories
+✅ karty/early-church/route.json: 11 places · 4 stages · 5 stories
+✅ karty/ishod/route.json: 11 places · 6 stages · 4 stories
+✅ karty/maccabim/route.json: 12 places · 5 stages · 6 stories
+✅ karty/melachim/route.json: 17 places · 6 stages · 7 stories
+✅ karty/pavel/route.json: 10 places · 3 stages · 4 stories
+✅ karty/revelation/route.json: 7 places · 1 stages · 5 stories
+✅ karty/shoftim/route.json: 13 places · 6 stages · 6 stories
+✅ karty/shvatim/route.json: 18 places · 3 stages · 5 stories
+✅ karty/yeshua/route.json: 15 places · 5 stages · 5 stories
+✅ karty hub uses audit-pending design: 9 map(s) explicitly listed as 'на аудите' / 'временно не на витрине'
+✅ karty hub has no disabled/soon cards for live maps
+
+✅ Map route validation passed: 10 route file(s)
+
+> gb-is-my-strength@1.6.3 maps:publication-status
+> node scripts/check-map-publication-status.js
+
+
+GB MAP PUBLICATION STATUS AUDIT
+✅ Map publication statuses are consistent
+✅ PASS [25] maps validate (1s)
+
+===== [26] page ownership source =====
++ npm run page-ownership:check
+
+> gb-is-my-strength@1.6.3 page-ownership:check
+> node scripts/check-page-ownership.js
+
+PAGE OWNERSHIP CHECK (manifest only, build-only routes allowed)
+✅ Astro src/pages ownership declared (53 route file(s))
+✅ ownership manifest parsed (54 explicit route(s))
+
+✅ page ownership check passed
+✅ PASS [26] page ownership source (0s)
+
+===== [27] avraam audit =====
++ npm run avraam:audit
+
+> gb-is-my-strength@1.6.3 avraam:audit
+> node scripts/avraam-map-audit.js
+
+✅ inline data constants parse
+✅ MapEngine.validateRoute(route.json) ok — []
+✅ HTML PLACES count = 19 — 19
+✅ route places count = 19 — 19
+✅ HTML and route place IDs match — ur,urfa,harran,damascus,shechem,bethel,egypt,hebron,salem,dan,sodom,hammam,zoar,gerar,beersheba,kadesh,shur,lahairoi,hovah :: ur,urfa,harran,damascus,shechem,bethel,egypt,hebron,salem,dan,sodom,hammam,zoar,gerar,beersheba,kadesh,shur,lahairoi,hovah
+✅ inline and route place coordinates match
+✅ every place has scientific variants
+✅ verified waypoints exact set/order — uruk,nippur,babylon,mari,carchemish
+✅ scientific variants count = 47 — 47
+✅ scientific variant statuses are canonical
+✅ HTML exposes routeWaypoints layer
+✅ HTML layer legend mentions opornye uzly
+✅ HTML renders scientific variants block
+✅ Shechem dispute title fixed
+✅ route Shechem dispute title fixed
+✅ captionSpring has no stray translateX
+✅ GSAP setup is inside script boundary
+✅ startTour hides hint
+✅ CSP allows LOC tile and Ritmeyer
+✅ no old LOC cdn image URL
+✅ no brittle Wikimedia upload URLs in map data
+✅ ABRAHAM research doc is compact — 256
+✅ ABRAHAM research doc has source index
+✅ ABRAHAM research doc has no stale proposal noise
+✅ MapEngine exposes destroy() method
+✅ MapEngine tracks listeners via _on() helper
+✅ MapEngine has _cleanupAll() that removes listeners
+✅ document.pointermove/pointerup use _on() (no raw addEventListener)
+
+Avraam map audit: 28/28 passed
+✅ PASS [27] avraam audit (0s)
+
+===== [28] design tokens =====
++ npm run tokens:check
+
+> gb-is-my-strength@1.6.3 tokens:check
+> node scripts/check-design-tokens.js
+
+✅ Design token foundation OK
+ℹ️ Legacy var() references remaining during staged migration: 0 / 0
+✅ PASS [28] design tokens (0s)
+
+===== [29] CSS layer validator =====
++ npm run css:layer:validate
+
+> gb-is-my-strength@1.6.3 css:layer:validate
+> node scripts/css-layer-validator.js css/site-layered.css --ceiling=202
+
+
+═══ CSS @layer Validator: css/site-layered.css ═══
+
+── INFO ──
+ℹ️  Brace balance: OK
+ℹ️  Declared layer order: reset → base → legacy → gbs2 → nagornaya → components → utilities → overrides
+ℹ️  Layer blocks found: 7
+ℹ️    @layer components: 3 blocks
+ℹ️  !important count: 202
+ℹ️  !important ceiling 202: OK (using 202)
+ℹ️  Layered: 255952 chars (90.7%)
+ℹ️  Unlayered: 26112 chars (9.3%)
+ℹ️  @media queries: 173
+ℹ️  Duplicate selector heuristic skipped for large CSS file (non-blocking)
+
+✅ VALIDATION PASSED
+✅ PASS [29] CSS layer validator (0s)
+
+===== [30] audit-pro =====
++ node scripts/audit-pro.js
+
+══════════════════════════════════════════════════════════════════════════════
+GB-IS-MY-STRENGTH — PROFESSIONAL AUDIT
+2026-06-27T07:58:13.245Z · 3.31s
+══════════════════════════════════════════════════════════════════════════════
+
+Summary: ✅ 164 passed · ⚠️ 1 warnings · ❌ 0 errors · ℹ️ 10 info
+
+── PASSED ──
+✅ Structure: exactly 7 CSS files in /css
+✅ Structure: exactly 11 JS files in /js
+✅ Structure: fonts/fonts.css and nagornaya/tw.min.css exist
+✅ JS total 358546 bytes within budget
+✅ site.css size 282788 bytes ≥ floor 200000 (anti-deletion guard)
+✅ site.css !important within ratchet ceiling: 202 ≤ 202 (long-term goal 200)
+✅ css/site.css: braces balanced
+✅ css/home.css: braces balanced
+✅ css/command-palette.css: braces balanced
+✅ css/mobile-hotfix.css: braces balanced
+✅ css/site-layered.css: braces balanced
+✅ css/floating-cluster.css: braces balanced
+✅ css/nagornaya-mobile-toc.css: braces balanced
+✅ Dove markers: no dead inline fn-dove-icon SVG in HTML
+✅ Dove markers: every fn-marker--dove has tooltip or data-tip content
+✅ JS syntax valid (14 files)
+✅ Inline script syntax valid (114 blocks)
+✅ Quiz source schema is canonical across HTML pages
+✅ OpenGraph / article singleton meta uniqueness passed
+✅ SITE_CONFIG runtime contract passed across HTML pages
+✅ JSON valid (86 files)
+✅ HTML span balance: all files balanced
+✅ Cache-bust hashes match file content (597 references checked)
+✅ SEO basics passed (52 HTML files)
+✅ JSON-LD parse passed (63 blocks)
+✅ Russian quote policy passed: no English direct quotes in reader-facing Russian text
+✅ Attribution guard passed: Фёдор is not marked as author
+✅ Local resources and internal links valid (2470 refs checked)
+✅ No duplicate IDs
+✅ All images have alt attributes
+✅ manifest.json essentials valid
+✅ SW CACHE_VERSION
+✅ SW install event
+✅ SW activate event
+✅ SW fetch event
+✅ SW skipWaiting
+✅ SW clients.claim
+✅ SW cache cleanup
+✅ SW precache references existing repo files (31 URLs, pagefind skipped)
+✅ search-manifest URLs valid (44 items)
+✅ Nagornaya series structure checked
+✅ CNAME is gospod-bog.ru
+✅ robots.txt present
+✅ sitemap.xml covers HTML pages (43 loc entries)
+✅ feed.xml present
+✅ Security hygiene passed (no repo path leaks / eval)
+✅ deploy.yml present
+✅ notify-on-failure.yml present — failures will open/update GitHub issue
+✅ No garbage files (*.py / *.patch / *.bak / *.orig / *.rej / uploads/ / OS turds) anywhere in repo
+✅ Image size hygiene: no PNG/JPG > 684 KB in /images/ (allowlist: 0)
+✅ Series consistency: 5 series in series.json, all published parts exist on disk
+✅ Series landing pages: no cross-series contamination
+✅ /articles/ catalog: 7 cards, no duplicates
+✅ Unified header: all pages with h-nav-links contain the canonical 5-item set
+✅ Nav semantics: no <button> inside <ul class="h-nav-links">
+✅ /hard-texts/ landing: all 3 article links are members of the series
+✅ Hashed asset URLs: every ?v=… reference resolves to an existing file
+✅ .gitignore covers npm/node_modules/OS turds
+✅ article-topnav stays buried (AGENTS §9.8)
+✅ Dead classes stay dead (5 guarded)
+✅ No AI-disclosure spans inside <figcaption>
+✅ OG/Twitter meta: no duplicates across pages (checked: og:image, og:title, og:url, og:description, twitter:image, og:type)
+✅ All <source srcset> tags wrapped in <picture>
+✅ Listener syntax: no broken function(, {…}) patterns
+✅ Inline scripts: none larger than 500 LOC except known/guarded map app debt
+✅ @keyframes integrity: all blocks have valid stops
+✅ sw.js CACHE_VERSION="gb-v176-floating-cluster-gill-all-20260625" looks sane
+✅ sitemap.xml: all 43 lastmod dates ≤ today
+✅ Single <h1> per page: all content pages have exactly one
+✅ Mixed-content: no http:// href/src (web.archive.org & w3.org whitelisted)
+✅ target="_blank" links: all carry rel="noopener"
+✅ Anchor href values: no href="javascript:…" and no truly-bare href="#"
+✅ All content pages have <html lang="…">
+✅ Anchors: every <a> has visible text / aria-label / alt
+✅ Buttons: every icon-only <button> carries aria-label
+✅ Tabindex hygiene: no positive tabindex values
+✅ CSS variables: 277 defined; bare-usage check passed (28 runtime externals)
+✅ Image references: every src/srcset URL resolves to an existing file
+✅ sitemap.xml: no noindex pages listed (checked 43 URLs)
+✅ Canonical URLs: present + unique + match own page (51 pages)
+✅ Viewport: user zoom allowed on all pages (no user-scalable=no / maximum-scale=1)
+✅ No inline event handlers (onclick/onload/…) in HTML — CSP-safe
+✅ <meta charset> appears in first 1KB of every page
+✅ sw.js precache: every referenced asset exists (27 checked, pagefind/ skipped)
+✅ CSP img-src covers every external <img> host found in HTML
+✅ feed.xml lastBuildDate is 0 days old (fresh)
+✅ JSON-LD shape: every block has valid @context (schema.org) and @type/@graph
+✅ Meta descriptions: all ≤ 300 chars (Russian-friendly cap)
+✅ No surprise noindex (12 pages explicitly allowed: 404 + robot stubs)
+✅ JS bundle ratchet OK (6 files watched)
+✅ innerHTML hygiene: no untrusted-source assignments (location/cookie/input/fetch/storage)
+✅ JSON-LD url fields all match their page canonical
+✅ All <link rel="preload" as="image"> resources are actually rendered
+✅ CSS vendor prefixes: no dead-since-2015 prefixes present
+✅ Article JSON-LD: every /articles/*/ has exactly 1 with headline+datePublished+image
+✅ <meta theme-color>: light+dark variants present on every content page
+✅ fetchpriority="high": at most 1 unique resource per page (LCP-friendly)
+✅ feed.xml: all article references exist on disk
+✅ sitemap.xml ↔ feed.xml: article URLs aligned
+✅ manifest.json: all required fields present, 4 icons all exist
+✅ <html lang>: every page is declared Russian (ru/ru-RU)
+✅ RSS alternate consistent: every page → https://gospod-bog.ru/feed.xml
+✅ <img> dimensions: every content image has width+height (no CLS surprise)
+✅ CSS @import: none in main stylesheets (no serial blocker)
+✅ robots.txt: allows crawl, lists sitemap
+✅ CNAME matches canonical host: gospod-bog.ru
+✅ sw.js PRECACHE_ASSETS lists all required cache-busted live assets
+✅ og:image: every meta-tag URL resolves to a real file
+✅ CSS uses design tokens — no bare named colors (red/blue/etc.)
+✅ GitHub workflows: every file has permissions; deploy workflows have concurrency
+✅ z-index: all magic numbers (≥10) replaced with --z-* tokens
+✅ Internal links: every directory href ends with "/" (no 301 redirect hop)
+✅ Series landings: all in sitemap.xml
+✅ Cache-bust hashes: all ?v=… in valid 6-12 hex format
+✅ Portrait images: all 9:16/2:3 figures use article-img--vertical class
+✅ Article images: every <figure article-img> carries a <figcaption>
+✅ Series-strip placement: appears before summary-card on every series article
+✅ Image alt text: no "image of…" / filename / too-short patterns
+✅ srcset width descriptors match filename hints (Xw matches -Xw.ext)
+✅ Speakable: data-speakable HTML and SpeakableSpecification JSON-LD consistent
+✅ Animations: every file with timed motion has prefers-reduced-motion coverage
+✅ BreadcrumbList JSON-LD: every article and series-landing has it (14 pages)
+✅ Article dates: dateModified ≥ datePublished everywhere
+✅ Article JSON-LD: every author has @id reference to /about/#person
+✅ Image loading attribute: no above-fold images marked loading="lazy"
+✅ GitHub workflows: every `uses:` action pinned to a version tag or SHA
+✅ Reading-time series.json ↔ HTML: no severe drift (>20 min)
+✅ Preloaded fonts: every <link rel="preload" as="font"> resolves
+✅ llms.txt: all 25 referenced URLs exist and are indexable
+✅ sitemap.xml: all 43 image:loc URLs resolve
+✅ Yandex.Metrika: every page has BOTH ym() init AND <noscript> tracker pixel
+✅ No protocol-relative //path URLs
+✅ <picture>: every element has an <img> fallback child
+✅ JSON-LD images: every image/logo/contentUrl resolves to a real file
+✅ <head> integrity: no body-only tags inside <head>
+✅ Body/html overflow-x sentinel intact (no mobile sideways scroll possible)
+✅ Inline widths: no fixed ≥320px without max-width safeguard
+✅ Touch-target sizing: 7 icon buttons ≥44×44 on coarse pointer
+✅ Mobile menu: every burger button has #hMobileNav + #hMobileBackdrop wired
+✅ Sticky/fixed elements: bottom-bar overlap protection in place
+✅ No orphan images: every file in /images/ is referenced somewhere
+✅ Source tooltips: no nested fn-marker/tooltip markup
+✅ External source hosts: no known SSL-bad blocked hosts
+✅ Data files (feed.xml/manifest.json/llms.txt/search-manifest): all referenced assets exist
+✅ AGENTS-r257 numeric claim (164 passed) matches audit (~159 R.ok)
+✅ Summary cards: no active glossary terms/tooltips inside
+✅ Glossary runtime skips summary-card hydration
+✅ Quiz mount contract: enabled quizzes have #quizPlaceholder
+✅ Interactive controls: no anchors/buttons nested inside buttons
+✅ Article meta: every og:type=article page has article:author
+✅ 404.html meta: canonical + image alt tags present
+✅ Search shortcuts: Ctrl/⌘+F stays native; Ctrl/⌘+K is case-insensitive
+✅ GBS world integrity: 18 pages carry full kit, zero legacy series UI
+✅ Article word-count floors: 10 articles above minimum thresholds
+✅ Home page main content is pagefind-indexable
+✅ Home page includes h-mobile-hero-hub first-screen library chooser
+✅ Home page includes mobile dashboard quick-start block
+✅ Home page includes h-mobile-rail quick-jump navigation
+✅ Home page includes h-mobile-paths guided reading section
+✅ Home page includes h-mobile-dock bottom quick actions
+✅ Home mobile dashboard has 4 quick-start cards
+✅ Home mobile dashboard includes required quick-start links
+✅ Home guided reading section has 6 path cards
+✅ Home mobile dock includes core targets
+
+── WARNINGS (1) ──
+⚠️ Core CSS total 525267 bytes exceeds budget 425000
+
+── INFO ──
+ℹ️ Gzip wire size: CSS 159463 bytes, JS 100952 bytes, total 260415 bytes
+ℹ️ Route-scoped CSS: css/site-layered.css, nagornaya/tw.min.css = 316925 bytes
+ℹ️ site.css !important debt remains 2 above long-term goal; current ceiling is hard-ratcheted to 202
+ℹ️ CSS dead vars: 29 unused (acceptable; clean when convenient)
+ℹ️ SITE_CONFIG.version uses placeholder (1) on 1 pages — fine but could be Unix timestamp
+ℹ️ SVG dedup opportunity: 12 icon patterns shared across ≥5 files
+ℹ️ color-mix() usage: 279 occurrences (Safari ≥ 15.2 supports; older browsers need fallback)
+ℹ️ CSS dead-class heuristic: 147 possibly-unused (runtime state classes excluded; manual review)
+ℹ️ AGENTS.md changelog: 65 rows (under 100, healthy)
+ℹ️ og:image differs from LCP-priority image (consider aligning for social-share consistency):
+  - articles/20-antisovetov-pastoru/index.html: og:image=og-20-antisovetov-pastoru, but LCP-priority images are: mirror
+  - articles/kod-da-vinchi/index.html: og:image=og-kod-da-vinchi, but LCP-priority images are: hero-kod-da-vinchi
+  - articles/krajne-li-isporcheno-serdce/index.html: og:image=og-krajne-isporcheno, but LCP-priority images are: ieremia-judea-fall
+  - index.html: og:image=og-preview-1200x630, but LCP-priority images are: og-nagornaya-propoved
+  - pastor-series/index.html: og:image=og-hero, but LCP-priority images are: hero-main
+
+✅ AUDIT PASSED — ready for deploy
+══════════════════════════════════════════════════════════════════════════════
+
+Report saved: audit/audit-pro-2026-06-27T07-58-13-248Z.md
+✅ PASS [30] audit-pro (4s)
+
+===== [31] content parity =====
++ npm run content:parity
+
+> gb-is-my-strength@1.6.3 content:parity
+> node scripts/check-mdx-html-parity.js
+
+MDX vs HTML Content + Semantic Parity Check v2
+======================================================================
+Word tolerance: ±8%
+Semantic tolerance: ±15%
+
+     ℹ️ STRUCTURAL figure: MDX=0 HTML=10 (100% off) — structural wrapper diff, not content loss
+     ℹ️ STRUCTURAL blockquote: MDX=16 HTML=0 (100% off) — structural wrapper diff, not content loss
+✅✅ 20-antisovetov-pastoru: MDX=15452 HTML=15342 diff=+110 (0.7%)
+     ℹ️ STRUCTURAL figure: MDX=0 HTML=6 (100% off) — structural wrapper diff, not content loss
+     ℹ️ STRUCTURAL blockquote: MDX=1 HTML=0 (100% off) — structural wrapper diff, not content loss
+✅⚠️ dzhon-gill-chast-1-chelovek: MDX=6591 HTML=6613 diff=-22 (0.3%)
+     ⚠️ SEMANTIC: h2: MDX=5 HTML=4 (20% off)
+     ⚠️ SEMANTIC: a: MDX=3 HTML=6 (50% off)
+     ℹ️ STRUCTURAL figure: MDX=0 HTML=3 (100% off) — structural wrapper diff, not content loss
+     ℹ️ STRUCTURAL blockquote: MDX=1 HTML=0 (100% off) — structural wrapper diff, not content loss
+✅⚠️ dzhon-gill-chast-2-uchenyi: MDX=7866 HTML=7934 diff=-68 (0.9%)
+     ⚠️ SEMANTIC: h2: MDX=5 HTML=4 (20% off)
+     ⚠️ SEMANTIC: a: MDX=2 HTML=5 (60% off)
+     ℹ️ STRUCTURAL figure: MDX=0 HTML=3 (100% off) — structural wrapper diff, not content loss
+     ℹ️ STRUCTURAL blockquote: MDX=1 HTML=0 (100% off) — structural wrapper diff, not content loss
+✅⚠️ dzhon-gill-chast-3-nasledie: MDX=10805 HTML=10883 diff=-78 (0.7%)
+     ⚠️ SEMANTIC: h2: MDX=4 HTML=3 (25% off)
+     ⚠️ SEMANTIC: a: MDX=2 HTML=5 (60% off)
+     ℹ️ STRUCTURAL figure: MDX=0 HTML=8 (100% off) — structural wrapper diff, not content loss
+     ℹ️ STRUCTURAL blockquote: MDX=2 HTML=0 (100% off) — structural wrapper diff, not content loss
+✅✅ dzhon-gill-istoricheskiy-kontekst: MDX=3514 HTML=3385 diff=+129 (3.7%)
+     ℹ️ STRUCTURAL figure: MDX=0 HTML=1 (100% off) — structural wrapper diff, not content loss
+     ℹ️ STRUCTURAL blockquote: MDX=1 HTML=0 (100% off) — structural wrapper diff, not content loss
+✅⚠️ dzhon-gill-spravochnik: MDX=1860 HTML=1880 diff=-20 (1.1%)
+     ⚠️ SEMANTIC: a: MDX=19 HTML=26 (27% off)
+✅⚠️ hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki: MDX=10846 HTML=11165 diff=-319 (2.9%)
+     ⚠️ SEMANTIC: h2: MDX=7 HTML=5 (29% off)
+     ⚠️ SEMANTIC: a: MDX=2 HTML=1 (50% off)
+     ℹ️ STRUCTURAL figure: MDX=0 HTML=10 (100% off) — structural wrapper diff, not content loss
+     ℹ️ STRUCTURAL blockquote: MDX=20 HTML=0 (100% off) — structural wrapper diff, not content loss
+✅⚠️ kod-da-vinchi: MDX=7040 HTML=6835 diff=+205 (2.9%)
+     ⚠️ SEMANTIC: h3: MDX=2 HTML=4 (50% off)
+     ⚠️ SEMANTIC: img: MDX=6 HTML=10 (40% off)
+     ⚠️ SEMANTIC: alt: MDX=6 HTML=10 (40% off)
+     ℹ️ STRUCTURAL figure: MDX=0 HTML=16 (100% off) — structural wrapper diff, not content loss
+     ℹ️ STRUCTURAL blockquote: MDX=5 HTML=0 (100% off) — structural wrapper diff, not content loss
+✅⚠️ krajne-li-isporcheno-serdce: MDX=9716 HTML=9543 diff=+173 (1.8%)
+     ⚠️ SEMANTIC: h2: MDX=19 HTML=16 (16% off)
+     ⚠️ SEMANTIC: h3: MDX=4 HTML=9 (56% off)
+     ℹ️ STRUCTURAL figure: MDX=0 HTML=11 (100% off) — structural wrapper diff, not content loss
+     ℹ️ STRUCTURAL blockquote: MDX=2 HTML=0 (100% off) — structural wrapper diff, not content loss
+✅⚠️ rimlyanam-7-veruyushchiy-ili-neveruyushchiy: MDX=2986 HTML=2853 diff=+133 (4.5%)
+     ⚠️ SEMANTIC: h2: MDX=14 HTML=11 (21% off)
+✅✅ noch-na-kure: MDX=949 HTML=1008 diff=-59 (5.9%)
+✅✅ yuzhnaya-shtunda: MDX=839 HTML=914 diff=-75 (8.2%)
+✅✅ dva-sezda-1884: MDX=613 HTML=682 diff=-69 (10.1%)
+✅✅ peterburgskaya-liniya: MDX=1309 HTML=1376 diff=-67 (4.9%)
+✅✅ goneniya-i-sovest: MDX=2020 HTML=2085 diff=-65 (3.1%)
+✅✅ sovetskaya-noch: MDX=1944 HTML=2007 diff=-63 (3.1%)
+✅✅ vsehib-1944: MDX=1795 HTML=1863 diff=-68 (3.7%)
+✅✅ iniciativnaya-gruppa: MDX=2089 HTML=2145 diff=-56 (2.6%)
+✅✅ podpolnaya-pechat: MDX=1913 HTML=1958 diff=-45 (2.3%)
+✅✅ spravochnik: MDX=2678 HTML=2679 diff=-1 (0.0%)
+
+Result: 0 errors, 0 mtime warnings, 8 semantic warnings
+ℹ️ Semantic warnings: 8 (non-blocking)
+✅ PASSED — all MDX and HTML article bodies are within tolerance
+✅ PASS [31] content parity (0s)
+
+===== [32] readable audit =====
++ npm run readable-audit
+
+> gb-is-my-strength@1.6.3 readable-audit
+> node scripts/readable-audit.js
+
+
+GB READABLE AUDIT
+✅ Readable/publication layer passed
+✅ PASS [32] readable audit (1s)
+
+===== [33] editorial lint =====
++ npm run editorial:lint
+
+> gb-is-my-strength@1.6.3 editorial:lint
+> node scripts/editorial-lint.js
+
+
+GB EDITORIAL LINT
+✅ Editorial lint passed
+✅ PASS [33] editorial lint (0s)
+
+===== [34] gill reading time =====
++ npm run gill:reading-time:audit
+
+> gb-is-my-strength@1.6.3 gill:reading-time:audit
+> node scripts/gill-reading-time-canonical-audit.js
+
+GILL READING-TIME CANONICAL AUDIT
+✅ MDX canonical total: 149
+✅ series dzhon-gill-istoricheskiy-kontekst: 16
+✅ series dzhon-gill-chast-1-chelovek: 32
+✅ series dzhon-gill-chast-2-uchenyi: 39
+✅ series dzhon-gill-chast-3-nasledie: 54
+✅ series dzhon-gill-spravochnik: 8
+✅ series total: 149
+✅ search series total: 149
+✅ search dzhon-gill-istoricheskiy-kontekst: 16
+✅ search dzhon-gill-chast-1-chelovek: 32
+✅ search dzhon-gill-chast-2-uchenyi: 39
+✅ search dzhon-gill-chast-3-nasledie: 54
+✅ search dzhon-gill-spravochnik: 8
+✅ links-graph dzhon-gill-chast-1-chelovek: 32
+✅ links-graph dzhon-gill-chast-2-uchenyi: 39
+✅ links-graph dzhon-gill-chast-3-nasledie: 54
+✅ links-graph dzhon-gill-istoricheskiy-kontekst: 16
+✅ links-graph dzhon-gill-spravochnik: 8
+✅ articles/dzhon-gill-istoricheskiy-kontekst/index.html: contains 16 мин
+✅ articles/dzhon-gill-istoricheskiy-kontekst/index.html: contains 32 мин
+✅ articles/dzhon-gill-istoricheskiy-kontekst/index.html: contains 39 мин
+✅ articles/dzhon-gill-istoricheskiy-kontekst/index.html: contains 54 мин
+✅ articles/dzhon-gill-chast-1-chelovek/index.html: contains 16 мин
+✅ articles/dzhon-gill-chast-1-chelovek/index.html: contains 32 мин
+✅ articles/dzhon-gill-chast-1-chelovek/index.html: contains 39 мин
+✅ articles/dzhon-gill-chast-1-chelovek/index.html: contains 54 мин
+✅ articles/dzhon-gill-chast-2-uchenyi/index.html: contains 16 мин
+✅ articles/dzhon-gill-chast-2-uchenyi/index.html: contains 32 мин
+✅ articles/dzhon-gill-chast-2-uchenyi/index.html: contains 39 мин
+✅ articles/dzhon-gill-chast-2-uchenyi/index.html: contains 54 мин
+✅ articles/dzhon-gill-chast-3-nasledie/index.html: contains 16 мин
+✅ articles/dzhon-gill-chast-3-nasledie/index.html: contains 32 мин
+✅ articles/dzhon-gill-chast-3-nasledie/index.html: contains 39 мин
+✅ articles/dzhon-gill-chast-3-nasledie/index.html: contains 54 мин
+✅ articles/dzhon-gill-spravochnik/index.html: contains 16 мин
+✅ articles/dzhon-gill-spravochnik/index.html: contains 32 мин
+✅ articles/dzhon-gill-spravochnik/index.html: contains 39 мин
+✅ articles/dzhon-gill-spravochnik/index.html: contains 54 мин
+
+✅ Gill reading-time canonical audit passed
+✅ PASS [34] gill reading time (0s)
+
+===== [35] gill pagefind body =====
++ npm run gill:pagefind:audit
+
+> gb-is-my-strength@1.6.3 gill:pagefind:audit
+> node scripts/gill-pagefind-body-audit.js
+
+GILL PAGEFIND BODY AUDIT
+✅ dzhon-gill-istoricheskiy-kontekst: no short sr-only Pagefind body in route
+✅ dzhon-gill-istoricheskiy-kontekst: article-body owns data-pagefind-body
+✅ dzhon-gill-istoricheskiy-kontekst: indexed body word count 2969 >= 1200
+✅ dzhon-gill-istoricheskiy-kontekst: Pagefind body contains Кларендонский кодекс
+✅ dzhon-gill-istoricheskiy-kontekst: Pagefind body contains Солтерс-Холл
+✅ dzhon-gill-istoricheskiy-kontekst: Pagefind body contains Диссентерские академии
+✅ dzhon-gill-istoricheskiy-kontekst: Pagefind body contains Саутварк
+✅ dzhon-gill-istoricheskiy-kontekst: Pagefind body contains Кеттеринг
+✅ dzhon-gill-istoricheskiy-kontekst: Pagefind body contains Goat&rsquo;s Yard
+✅ dzhon-gill-istoricheskiy-kontekst: Pagefind body contains Корпоративный акт
+✅ dzhon-gill-istoricheskiy-kontekst: Pagefind body contains Акт о единообразии
+✅ dzhon-gill-spravochnik: no short sr-only Pagefind body in route
+✅ dzhon-gill-spravochnik: article-body owns data-pagefind-body
+✅ dzhon-gill-spravochnik: indexed body word count 1696 >= 900
+✅ dzhon-gill-spravochnik: Pagefind body contains Масштаб корпуса
+✅ dzhon-gill-spravochnik: Pagefind body contains Хронология жизни
+✅ dzhon-gill-spravochnik: Pagefind body contains Body of Divinity
+✅ dzhon-gill-spravochnik: Pagefind body contains Богословский словарь
+✅ dzhon-gill-spravochnik: Pagefind body contains Источники справочника
+✅ dzhon-gill-chast-1-chelovek: no short sr-only Pagefind body in route
+✅ dzhon-gill-chast-1-chelovek: article-body owns data-pagefind-body
+✅ dzhon-gill-chast-1-chelovek: indexed body word count 5703 >= 3000
+✅ dzhon-gill-chast-1-chelovek: Pagefind body contains Кеттеринг
+✅ dzhon-gill-chast-1-chelovek: Pagefind body contains Бытие 3:9
+✅ dzhon-gill-chast-1-chelovek: Pagefind body contains Хорслидаун
+✅ dzhon-gill-chast-1-chelovek: Pagefind body contains Декларация Козьего Двора
+✅ dzhon-gill-chast-1-chelovek: Pagefind body contains Источники и литература к Части I
+✅ dzhon-gill-chast-2-uchenyi: no short sr-only Pagefind body in route
+✅ dzhon-gill-chast-2-uchenyi: article-body owns data-pagefind-body
+✅ dzhon-gill-chast-2-uchenyi: indexed body word count 6837 >= 4500
+✅ dzhon-gill-chast-2-uchenyi: Pagefind body contains Учение о Троице
+✅ dzhon-gill-chast-2-uchenyi: Pagefind body contains раввинист
+✅ dzhon-gill-chast-2-uchenyi: Pagefind body contains девятитомный комментарий
+✅ dzhon-gill-chast-2-uchenyi: Pagefind body contains Body of Doctrinal Divinity
+✅ dzhon-gill-chast-2-uchenyi: Pagefind body contains Уитби
+✅ dzhon-gill-chast-3-nasledie: no short sr-only Pagefind body in route
+✅ dzhon-gill-chast-3-nasledie: article-body owns data-pagefind-body
+✅ dzhon-gill-chast-3-nasledie: indexed body word count 9446 >= 6000
+✅ dzhon-gill-chast-3-nasledie: Pagefind body contains Уэсли
+✅ dzhon-gill-chast-3-nasledie: Pagefind body contains гиперкальвинизм
+✅ dzhon-gill-chast-3-nasledie: Pagefind body contains Сперджен
+✅ dzhon-gill-chast-3-nasledie: Pagefind body contains Америка
+✅ dzhon-gill-chast-3-nasledie: Pagefind body contains Банхилл-Филдс
+
+✅ Gill Pagefind body audit passed
+✅ PASS [35] gill pagefind body (0s)
+
+===== [36] data consistency =====
++ npm run data:consistency
+
+> gb-is-my-strength@1.6.3 data:consistency
+> node scripts/check-data-consistency.js
+
+
+GB DATA CONSISTENCY AUDIT
+✅ Data consistency passed
+✅ PASS [36] data consistency (1s)
+
+===== [37] public content guard =====
++ npm run content:guard
+
+> gb-is-my-strength@1.6.3 content:guard
+> node scripts/check-public-content-baseline.js
+
+✅ Public content baseline OK: 43 baseline pages, +0 current delta
+ℹ️ Non-blocking content metadata changes:
+  - H1 changed: https://gospod-bog.ru/articles/dzhon-gill-chast-1-chelovek/ — "Джон Гилл (1697–1771)" → "Джон Гилл (1697–1771). Часть I: Человек"
+  - H1 changed: https://gospod-bog.ru/articles/dzhon-gill-chast-2-uchenyi/ — "Джон Гилл (1697–1771)" → "Джон Гилл (1697–1771). Часть II: Учёный"
+  - H1 changed: https://gospod-bog.ru/articles/dzhon-gill-chast-3-nasledie/ — "Джон Гилл (1697–1771)" → "Джон Гилл (1697–1771). Часть III: Наследие"
+✅ PASS [37] public content guard (0s)
+
+===== [38] MDX structure =====
++ npm run mdx:structure:audit
+
+> gb-is-my-strength@1.6.3 mdx:structure:audit
+> node scripts/mdx-structure-audit.js
+
+
+═══ MDX Structure Audit ═══
+
+✅ MDX structure audit passed — 0 errors, 0 warnings
+
+Checked 20 MDX files, 0 errors, 0 warnings
+✅ PASS [38] MDX structure (0s)
+
+===== [39] URL contract compare root =====
++ npm run contract:compare
+
+> gb-is-my-strength@1.6.3 contract:compare
+> npm run contract:extract && node scripts/compare-url-contract.js
+
+
+> gb-is-my-strength@1.6.3 contract:extract
+> node scripts/extract-url-contract.js
+
+✅ URL contract extracted from .: 43 public pages, 0 issue(s)
+   JSON: reports/url-contract-draft.json
+   MD:   reports/url-contract-draft.md
+✅ URL contract compare OK: 43 baseline pages, 43 current public pages, 0 new URL(s)
+ℹ️ Warnings (3):
+  - title changed: https://gospod-bog.ru/articles/20-antisovetov-pastoru/ — "20 антисоветов, как пастору разрушить своё служение | Господь Бог — Сила Моя" → "20 антисоветов пастору: как разрушить служение | Господь Бог"
+  - title changed: https://gospod-bog.ru/articles/kod-da-vinchi/ — "«Код да Винчи»: мифы о Марии Магдалине и Никее | Господь Бог — Сила Моя" → "«Код да Винчи»: мифы о Марии Магдалине и Никее | Господь Бог"
+  - title changed: https://gospod-bog.ru/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/ — "Римлянам 7: верующий, неверующий или человек под законом? | Господь Бог — Сила Моя" → "Римлянам 7: верующий или неверующий? | Господь Бог — Сила Моя"
+✅ PASS [39] URL contract compare root (1s)
+
+===== [40] migration metadata strict =====
++ npm run migration:metadata:check:strict
+
+> gb-is-my-strength@1.6.3 migration:metadata:check:strict
+> npm run route:profiles:check -- --strict && npm run migration:matrix:check -- --strict && npm run content:sources:check -- --strict
+
+
+> gb-is-my-strength@1.6.3 route:profiles:check
+> node scripts/check-route-profiles.js --strict
+
+=== Route Profiles Check ===
+Mode: STRICT
+
+Routes checked: 52
+Profiles found: 52
+
+✅ Route profiles coherent with page ownership
+
+> gb-is-my-strength@1.6.3 migration:matrix:check
+> node scripts/check-route-migration-matrix.js --strict
+
+=== Route Migration Matrix Check ===
+Mode: STRICT
+
+Routes checked against matrix: 35
+Matrix entries: 35
+
+✅ Route migration modes are coherent with matrix
+
+> gb-is-my-strength@1.6.3 content:sources:check
+> node scripts/check-content-source-coverage.js --strict
+
+=== Content Source Coverage Check ===
+Mode: STRICT
+
+Series parts checked: 23
+Routes checked: 52
+MDX files: 20
+Profiles: 54
+Search items: 44
+
+✅ Content source coverage is coherent
+✅ PASS [40] migration metadata strict (0s)
+
+===== [41] native runtime strict =====
++ npm run native:runtime:audit:strict
+
+> gb-is-my-strength@1.6.3 native:runtime:audit:strict
+> node scripts/native-runtime-taxonomy-audit.js --strict
+
+=== Native Runtime Taxonomy Audit ===
+Mode: STRICT
+Routes: 53
+
+| Category | Count | % | Meaning |
+|---|---:|---:|---|
+| strict-native | 51 | 96.2% | no legacy loader/raw/set:html transport in route closure |
+| native-with-legacy-head | 1 | 1.9% | native body/chrome, but legacy head/body attrs remain |
+| native-main-with-legacy-chrome | 0 | 0.0% | native semantic main with legacy chrome/head transport |
+| hybrid-raw-segments | 0 | 0.0% | ?raw/_legacy/body-segment transport remains in route closure |
+| full-body-shadow | 0 | 0.0% | legacy bodyHtml emitted into Astro route |
+| legacy-shadow-app-intentional | 1 | 1.9% | interactive/map/built app intentionally shadowed |
+
+Examples (use --details for full route list):
+- strict-native: /, /about/, /articles/, /articles/20-antisovetov-pastoru/, /articles/dzhon-gill-chast-1-chelovek/, /articles/dzhon-gill-chast-2-uchenyi/, /articles/dzhon-gill-chast-3-nasledie/, /articles/dzhon-gill-istoricheskiy-kontekst/, /articles/dzhon-gill-spravochnik/, /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/, /articles/kod-da-vinchi/, /articles/krajne-li-isporcheno-serdce/ … +39
+- native-with-legacy-head: /izbrannoe/
+- native-main-with-legacy-chrome: —
+- hybrid-raw-segments: —
+- full-body-shadow: —
+- legacy-shadow-app-intentional: /konfessii/russkij-baptizm/_app/
+
+✅ native runtime taxonomy completed
+✅ PASS [41] native runtime strict (0s)
+
+===== [42] route profiles strict =====
++ npm run route:profiles:check -- --strict
+
+> gb-is-my-strength@1.6.3 route:profiles:check
+> node scripts/check-route-profiles.js --strict
+
+=== Route Profiles Check ===
+Mode: STRICT
+
+Routes checked: 52
+Profiles found: 52
+
+✅ Route profiles coherent with page ownership
+✅ PASS [42] route profiles strict (0s)
+
+===== [43] migration matrix strict =====
++ npm run migration:matrix:check -- --strict
+
+> gb-is-my-strength@1.6.3 migration:matrix:check
+> node scripts/check-route-migration-matrix.js --strict
+
+=== Route Migration Matrix Check ===
+Mode: STRICT
+
+Routes checked against matrix: 35
+Matrix entries: 35
+
+✅ Route migration modes are coherent with matrix
+✅ PASS [43] migration matrix strict (1s)
+
+===== [44] content sources strict =====
++ npm run content:sources:check -- --strict
+
+> gb-is-my-strength@1.6.3 content:sources:check
+> node scripts/check-content-source-coverage.js --strict
+
+=== Content Source Coverage Check ===
+Mode: STRICT
+
+Series parts checked: 23
+Routes checked: 52
+MDX files: 20
+Profiles: 54
+Search items: 44
+
+✅ Content source coverage is coherent
+✅ PASS [44] content sources strict (0s)
+
+===== [45] astro home no-build =====
++ npm run astro:audit:home:no-build
+
+> gb-is-my-strength@1.6.3 astro:audit:home:no-build
+> node scripts/astro-home-pilot-audit.js --no-build
+
+ASTRO HOME SHADOW AUDIT (no-build)
+❌ dist/index.html missing
+✅ PASS [45] astro home no-build (0s)
+
+===== [46] astro ishod no-build =====
++ npm run astro:audit:ishod:no-build
+
+> gb-is-my-strength@1.6.3 astro:audit:ishod:no-build
+> node scripts/astro-ishod-pilot-audit.js --no-build
+
+ASTRO ISHOD SHADOW AUDIT (no-build)
+❌ dist route missing: karty/ishod/index.html
+✅ PASS [46] astro ishod no-build (0s)
+
+===== [47] baptisty series no-build =====
++ npm run astro:audit:baptisty-series:no-build
+
+> gb-is-my-strength@1.6.3 astro:audit:baptisty-series:no-build
+> node scripts/baptisty-series-shadow-audit.js --no-build
+
+BAPTISTY SERIES STRICT-NATIVE AUDIT
+
+BAPTISTY: noch-na-kure
+✅ noch-na-kure route/body/head scope: no loadLegacyFullDocument
+✅ noch-na-kure route/body/head scope: no headHtml
+✅ noch-na-kure route/body/head scope: no bodyHtml
+✅ noch-na-kure route/body/head scope: no bodyAttributes
+✅ noch-na-kure route/body/head scope: no ?raw
+✅ noch-na-kure route/body/head scope: no set:html
+✅ noch-na-kure route/body/head scope: no _legacy
+✅ noch-na-kure route imports page head: contains BaptistyRossiiNochNaKurePageHead
+✅ noch-na-kure route imports body component: contains BaptistyRossiiNochNaKureBody
+✅ noch-na-kure route explicit gbs body class: contains class="gbs-world"
+✅ noch-na-kure route pagefind body marker: contains data-pagefind-body
+✅ noch-na-kure head contract: contains rel="canonical"
+✅ noch-na-kure head contract: contains window.SITE_CONFIG
+✅ noch-na-kure head contract: contains application/ld+json
+✅ noch-na-kure head contract: contains https://gospod-bog.ru/baptisty-rossii/noch-na-kure/
+✅ noch-na-kure body marker: contains gbs2-rail
+✅ noch-na-kure body marker: contains gbs2-mobile-head
+✅ noch-na-kure body marker: contains main-content
+✅ noch-na-kure body marker: contains gbs2-next
+✅ noch-na-kure body marker: contains gbs2-timeline
+noch-na-kure words: legacy=1105; body=1131; ratio=1.02
+✅ noch-na-kure: word-count parity within threshold (1.02)
+
+BAPTISTY: yuzhnaya-shtunda
+✅ yuzhnaya-shtunda route/body/head scope: no loadLegacyFullDocument
+✅ yuzhnaya-shtunda route/body/head scope: no headHtml
+✅ yuzhnaya-shtunda route/body/head scope: no bodyHtml
+✅ yuzhnaya-shtunda route/body/head scope: no bodyAttributes
+✅ yuzhnaya-shtunda route/body/head scope: no ?raw
+✅ yuzhnaya-shtunda route/body/head scope: no set:html
+✅ yuzhnaya-shtunda route/body/head scope: no _legacy
+✅ yuzhnaya-shtunda route imports page head: contains BaptistyRossiiYuzhnayaShtundaPageHead
+✅ yuzhnaya-shtunda route imports body component: contains BaptistyRossiiYuzhnayaShtundaBody
+✅ yuzhnaya-shtunda route explicit gbs body class: contains class="gbs-world"
+✅ yuzhnaya-shtunda route pagefind body marker: contains data-pagefind-body
+✅ yuzhnaya-shtunda head contract: contains rel="canonical"
+✅ yuzhnaya-shtunda head contract: contains window.SITE_CONFIG
+✅ yuzhnaya-shtunda head contract: contains application/ld+json
+✅ yuzhnaya-shtunda head contract: contains https://gospod-bog.ru/baptisty-rossii/yuzhnaya-shtunda/
+✅ yuzhnaya-shtunda body marker: contains gbs2-rail
+✅ yuzhnaya-shtunda body marker: contains gbs2-mobile-head
+✅ yuzhnaya-shtunda body marker: contains main-content
+✅ yuzhnaya-shtunda body marker: contains gbs2-next
+✅ yuzhnaya-shtunda body marker: contains gbs2-timeline
+yuzhnaya-shtunda words: legacy=1039; body=1065; ratio=1.03
+✅ yuzhnaya-shtunda: word-count parity within threshold (1.03)
+
+BAPTISTY: dva-sezda-1884
+✅ dva-sezda-1884 route/body/head scope: no loadLegacyFullDocument
+✅ dva-sezda-1884 route/body/head scope: no headHtml
+✅ dva-sezda-1884 route/body/head scope: no bodyHtml
+✅ dva-sezda-1884 route/body/head scope: no bodyAttributes
+✅ dva-sezda-1884 route/body/head scope: no ?raw
+✅ dva-sezda-1884 route/body/head scope: no set:html
+✅ dva-sezda-1884 route/body/head scope: no _legacy
+✅ dva-sezda-1884 route imports page head: contains BaptistyRossiiDvaSezda1884PageHead
+✅ dva-sezda-1884 route imports body component: contains BaptistyRossiiDvaSezda1884Body
+✅ dva-sezda-1884 route explicit gbs body class: contains class="gbs-world"
+✅ dva-sezda-1884 route pagefind body marker: contains data-pagefind-body
+✅ dva-sezda-1884 head contract: contains rel="canonical"
+✅ dva-sezda-1884 head contract: contains window.SITE_CONFIG
+✅ dva-sezda-1884 head contract: contains application/ld+json
+✅ dva-sezda-1884 head contract: contains https://gospod-bog.ru/baptisty-rossii/dva-sezda-1884/
+✅ dva-sezda-1884 body marker: contains gbs2-rail
+✅ dva-sezda-1884 body marker: contains gbs2-mobile-head
+✅ dva-sezda-1884 body marker: contains main-content
+✅ dva-sezda-1884 body marker: contains gbs2-next
+✅ dva-sezda-1884 body marker: contains gbs2-timeline
+dva-sezda-1884 words: legacy=848; body=874; ratio=1.03
+✅ dva-sezda-1884: word-count parity within threshold (1.03)
+
+BAPTISTY: peterburgskaya-liniya
+✅ peterburgskaya-liniya route/body/head scope: no loadLegacyFullDocument
+✅ peterburgskaya-liniya route/body/head scope: no headHtml
+✅ peterburgskaya-liniya route/body/head scope: no bodyHtml
+✅ peterburgskaya-liniya route/body/head scope: no bodyAttributes
+✅ peterburgskaya-liniya route/body/head scope: no ?raw
+✅ peterburgskaya-liniya route/body/head scope: no set:html
+✅ peterburgskaya-liniya route/body/head scope: no _legacy
+✅ peterburgskaya-liniya route imports page head: contains BaptistyRossiiPeterburgskayaLiniyaPageHead
+✅ peterburgskaya-liniya route imports body component: contains BaptistyRossiiPeterburgskayaLiniyaBody
+✅ peterburgskaya-liniya route explicit gbs body class: contains class="gbs-world"
+✅ peterburgskaya-liniya route pagefind body marker: contains data-pagefind-body
+✅ peterburgskaya-liniya head contract: contains rel="canonical"
+✅ peterburgskaya-liniya head contract: contains window.SITE_CONFIG
+✅ peterburgskaya-liniya head contract: contains application/ld+json
+✅ peterburgskaya-liniya head contract: contains https://gospod-bog.ru/baptisty-rossii/peterburgskaya-liniya/
+✅ peterburgskaya-liniya body marker: contains gbs2-rail
+✅ peterburgskaya-liniya body marker: contains gbs2-mobile-head
+✅ peterburgskaya-liniya body marker: contains main-content
+✅ peterburgskaya-liniya body marker: contains gbs2-next
+✅ peterburgskaya-liniya body marker: contains gbs2-timeline
+peterburgskaya-liniya words: legacy=1410; body=1436; ratio=1.02
+✅ peterburgskaya-liniya: word-count parity within threshold (1.02)
+
+BAPTISTY: goneniya-i-sovest
+✅ goneniya-i-sovest route/body/head scope: no loadLegacyFullDocument
+✅ goneniya-i-sovest route/body/head scope: no headHtml
+✅ goneniya-i-sovest route/body/head scope: no bodyHtml
+✅ goneniya-i-sovest route/body/head scope: no bodyAttributes
+✅ goneniya-i-sovest route/body/head scope: no ?raw
+✅ goneniya-i-sovest route/body/head scope: no set:html
+✅ goneniya-i-sovest route/body/head scope: no _legacy
+✅ goneniya-i-sovest route imports page head: contains BaptistyRossiiGoneniyaISovestPageHead
+✅ goneniya-i-sovest route imports body component: contains BaptistyRossiiGoneniyaISovestBody
+✅ goneniya-i-sovest route explicit gbs body class: contains class="gbs-world"
+✅ goneniya-i-sovest route pagefind body marker: contains data-pagefind-body
+✅ goneniya-i-sovest head contract: contains rel="canonical"
+✅ goneniya-i-sovest head contract: contains window.SITE_CONFIG
+✅ goneniya-i-sovest head contract: contains application/ld+json
+✅ goneniya-i-sovest head contract: contains https://gospod-bog.ru/baptisty-rossii/goneniya-i-sovest/
+✅ goneniya-i-sovest body marker: contains gbs2-rail
+✅ goneniya-i-sovest body marker: contains gbs2-mobile-head
+✅ goneniya-i-sovest body marker: contains main-content
+✅ goneniya-i-sovest body marker: contains gbs2-next
+✅ goneniya-i-sovest body marker: contains gbs2-timeline
+goneniya-i-sovest words: legacy=2055; body=2081; ratio=1.01
+✅ goneniya-i-sovest: word-count parity within threshold (1.01)
+
+BAPTISTY: sovetskaya-noch
+✅ sovetskaya-noch route/body/head scope: no loadLegacyFullDocument
+✅ sovetskaya-noch route/body/head scope: no headHtml
+✅ sovetskaya-noch route/body/head scope: no bodyHtml
+✅ sovetskaya-noch route/body/head scope: no bodyAttributes
+✅ sovetskaya-noch route/body/head scope: no ?raw
+✅ sovetskaya-noch route/body/head scope: no set:html
+✅ sovetskaya-noch route/body/head scope: no _legacy
+✅ sovetskaya-noch route imports page head: contains BaptistyRossiiSovetskayaNochPageHead
+✅ sovetskaya-noch route imports body component: contains BaptistyRossiiSovetskayaNochBody
+✅ sovetskaya-noch route explicit gbs body class: contains class="gbs-world"
+✅ sovetskaya-noch route pagefind body marker: contains data-pagefind-body
+✅ sovetskaya-noch head contract: contains rel="canonical"
+✅ sovetskaya-noch head contract: contains window.SITE_CONFIG
+✅ sovetskaya-noch head contract: contains application/ld+json
+✅ sovetskaya-noch head contract: contains https://gospod-bog.ru/baptisty-rossii/sovetskaya-noch/
+✅ sovetskaya-noch body marker: contains gbs2-rail
+✅ sovetskaya-noch body marker: contains gbs2-mobile-head
+✅ sovetskaya-noch body marker: contains main-content
+✅ sovetskaya-noch body marker: contains gbs2-next
+✅ sovetskaya-noch body marker: contains gbs2-timeline
+sovetskaya-noch words: legacy=1957; body=1983; ratio=1.01
+✅ sovetskaya-noch: word-count parity within threshold (1.01)
+
+BAPTISTY: vsehib-1944
+✅ vsehib-1944 route/body/head scope: no loadLegacyFullDocument
+✅ vsehib-1944 route/body/head scope: no headHtml
+✅ vsehib-1944 route/body/head scope: no bodyHtml
+✅ vsehib-1944 route/body/head scope: no bodyAttributes
+✅ vsehib-1944 route/body/head scope: no ?raw
+✅ vsehib-1944 route/body/head scope: no set:html
+✅ vsehib-1944 route/body/head scope: no _legacy
+✅ vsehib-1944 route imports page head: contains BaptistyRossiiVsehib1944PageHead
+✅ vsehib-1944 route imports body component: contains BaptistyRossiiVsehib1944Body
+✅ vsehib-1944 route explicit gbs body class: contains class="gbs-world"
+✅ vsehib-1944 route pagefind body marker: contains data-pagefind-body
+✅ vsehib-1944 head contract: contains rel="canonical"
+✅ vsehib-1944 head contract: contains window.SITE_CONFIG
+✅ vsehib-1944 head contract: contains application/ld+json
+✅ vsehib-1944 head contract: contains https://gospod-bog.ru/baptisty-rossii/vsehib-1944/
+✅ vsehib-1944 body marker: contains gbs2-rail
+✅ vsehib-1944 body marker: contains gbs2-mobile-head
+✅ vsehib-1944 body marker: contains main-content
+✅ vsehib-1944 body marker: contains gbs2-next
+✅ vsehib-1944 body marker: contains gbs2-timeline
+vsehib-1944 words: legacy=1794; body=1820; ratio=1.01
+✅ vsehib-1944: word-count parity within threshold (1.01)
+
+BAPTISTY: iniciativnaya-gruppa
+✅ iniciativnaya-gruppa route/body/head scope: no loadLegacyFullDocument
+✅ iniciativnaya-gruppa route/body/head scope: no headHtml
+✅ iniciativnaya-gruppa route/body/head scope: no bodyHtml
+✅ iniciativnaya-gruppa route/body/head scope: no bodyAttributes
+✅ iniciativnaya-gruppa route/body/head scope: no ?raw
+✅ iniciativnaya-gruppa route/body/head scope: no set:html
+✅ iniciativnaya-gruppa route/body/head scope: no _legacy
+✅ iniciativnaya-gruppa route imports page head: contains BaptistyRossiiIniciativnayaGruppaPageHead
+✅ iniciativnaya-gruppa route imports body component: contains BaptistyRossiiIniciativnayaGruppaBody
+✅ iniciativnaya-gruppa route explicit gbs body class: contains class="gbs-world"
+✅ iniciativnaya-gruppa route pagefind body marker: contains data-pagefind-body
+✅ iniciativnaya-gruppa head contract: contains rel="canonical"
+✅ iniciativnaya-gruppa head contract: contains window.SITE_CONFIG
+✅ iniciativnaya-gruppa head contract: contains application/ld+json
+✅ iniciativnaya-gruppa head contract: contains https://gospod-bog.ru/baptisty-rossii/iniciativnaya-gruppa/
+✅ iniciativnaya-gruppa body marker: contains gbs2-rail
+✅ iniciativnaya-gruppa body marker: contains gbs2-mobile-head
+✅ iniciativnaya-gruppa body marker: contains main-content
+✅ iniciativnaya-gruppa body marker: contains gbs2-next
+✅ iniciativnaya-gruppa body marker: contains gbs2-timeline
+iniciativnaya-gruppa words: legacy=2093; body=2119; ratio=1.01
+✅ iniciativnaya-gruppa: word-count parity within threshold (1.01)
+
+BAPTISTY: podpolnaya-pechat
+✅ podpolnaya-pechat route/body/head scope: no loadLegacyFullDocument
+✅ podpolnaya-pechat route/body/head scope: no headHtml
+✅ podpolnaya-pechat route/body/head scope: no bodyHtml
+✅ podpolnaya-pechat route/body/head scope: no bodyAttributes
+✅ podpolnaya-pechat route/body/head scope: no ?raw
+✅ podpolnaya-pechat route/body/head scope: no set:html
+✅ podpolnaya-pechat route/body/head scope: no _legacy
+✅ podpolnaya-pechat route imports page head: contains BaptistyRossiiPodpolnayaPechatPageHead
+✅ podpolnaya-pechat route imports body component: contains BaptistyRossiiPodpolnayaPechatBody
+✅ podpolnaya-pechat route explicit gbs body class: contains class="gbs-world"
+✅ podpolnaya-pechat route pagefind body marker: contains data-pagefind-body
+✅ podpolnaya-pechat head contract: contains rel="canonical"
+✅ podpolnaya-pechat head contract: contains window.SITE_CONFIG
+✅ podpolnaya-pechat head contract: contains application/ld+json
+✅ podpolnaya-pechat head contract: contains https://gospod-bog.ru/baptisty-rossii/podpolnaya-pechat/
+✅ podpolnaya-pechat body marker: contains gbs2-rail
+✅ podpolnaya-pechat body marker: contains gbs2-mobile-head
+✅ podpolnaya-pechat body marker: contains main-content
+✅ podpolnaya-pechat body marker: contains gbs2-next
+✅ podpolnaya-pechat body marker: contains gbs2-timeline
+podpolnaya-pechat words: legacy=1995; body=2021; ratio=1.01
+✅ podpolnaya-pechat: word-count parity within threshold (1.01)
+
+BAPTISTY: spravochnik
+✅ spravochnik route/body/head scope: no loadLegacyFullDocument
+✅ spravochnik route/body/head scope: no headHtml
+✅ spravochnik route/body/head scope: no bodyHtml
+✅ spravochnik route/body/head scope: no bodyAttributes
+✅ spravochnik route/body/head scope: no ?raw
+✅ spravochnik route/body/head scope: no set:html
+✅ spravochnik route/body/head scope: no _legacy
+✅ spravochnik route imports page head: contains BaptistyRossiiSpravochnikPageHead
+✅ spravochnik route imports body component: contains BaptistyRossiiSpravochnikBody
+✅ spravochnik route explicit gbs body class: contains class="gbs-world"
+✅ spravochnik route pagefind body marker: contains data-pagefind-body
+✅ spravochnik head contract: contains rel="canonical"
+✅ spravochnik head contract: contains window.SITE_CONFIG
+✅ spravochnik head contract: contains application/ld+json
+✅ spravochnik head contract: contains https://gospod-bog.ru/baptisty-rossii/spravochnik/
+✅ spravochnik body marker: contains gbs2-rail
+✅ spravochnik body marker: contains gbs2-mobile-head
+✅ spravochnik body marker: contains main-content
+✅ spravochnik body marker: contains gbs2-next
+✅ spravochnik body marker: contains gbs2-timeline
+spravochnik words: legacy=2493; body=2519; ratio=1.01
+✅ spravochnik: word-count parity within threshold (1.01)
+
+✅ baptisty series strict-native audit passed (10 route(s))
+✅ PASS [47] baptisty series no-build (0s)
+
+===== [48] Gill source all v16 wrappers =====
++ for f in src/components/article-pilots/gill-context/GillContextPageChrome.astro src/components/article-pilots/gill-part1/GillPart1PageChrome.astro src/components/article-pilots/gill-part2/GillPart2PageChrome.astro src/components/article-pilots/gill-part3/GillPart3PageChrome.astro src/components/article-pilots/gill-spravochnik/GillSpravochnikPageChrome.astro; do grep -q 'data-gill-v16' $f || exit 1; done
+✅ PASS [48] Gill source all v16 wrappers (0s)
+
+===== [49] Gill source no retired legacy mobile DOM classes =====
++ ! grep -R -E 'class="[^"]*(gbs2-thumb|gbs2-bbar|gbs2-sheet|gbs2-mobile-head)' src/components/article-pilots/gill-context src/components/article-pilots/gill-part1 src/components/article-pilots/gill-part2 src/components/article-pilots/gill-part3 src/components/article-pilots/gill-spravochnik
+✅ PASS [49] Gill source no retired legacy mobile DOM classes (0s)
+
+===== [50] PremiumControls source modes allowed =====
++ ! grep -Roh -E 'data-fc-mode="[^"]+"' src articles baptisty-rossii nagornaya | grep -Ev 'data-fc-mode="(single|series-lite|series-rich|nagornaya)"'
+✅ PASS [50] PremiumControls source modes allowed (0s)
+
+===== [51] Premium CSS source/public parity =====
++ cmp -s src/styles/premium-controls.css css/premium-controls.css
+✅ PASS [51] Premium CSS source/public parity (0s)
+
+===== [52] no phantom premium-controls-controller reference =====
++ ! grep -R --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=dist -n 'premium-controls-controller' src js css scripts .github package.json
+✅ PASS [52] no phantom premium-controls-controller reference (0s)
+
+===== [53] dist jsonld script roots dist =====
++ node -e 'const p=require("./package.json"); if(!/--root\s+dist/.test(p.scripts["dist:jsonld:audit"])) process.exit(1); console.log("dist jsonld rooted")'
+dist jsonld rooted
+✅ PASS [53] dist jsonld script roots dist (0s)
+
+===== [54] premium rollout wired into production-like audit =====
++ node -e 'const p=require("./package.json"); if(!/audit:premium-controls/.test(p.scripts["strangler:audit:production-like"])) process.exit(1); console.log("premium audit wired")'
+premium audit wired
+✅ PASS [54] premium rollout wired into production-like audit (0s)
+
+===== [55] package JSON parse =====
++ node -e 'JSON.parse(require("fs").readFileSync("package.json","utf8")); console.log("package.json OK")'
+package.json OK
+✅ PASS [55] package JSON parse (0s)
+
+===== SUMMARY =====
+TOTAL=55 PASS=55 FAIL=0
