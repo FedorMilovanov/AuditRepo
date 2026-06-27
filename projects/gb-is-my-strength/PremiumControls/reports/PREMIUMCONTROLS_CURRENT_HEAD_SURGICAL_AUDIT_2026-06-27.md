@@ -15,6 +15,12 @@
 
 ---
 
+## Post-push rebase note
+
+After these findings were recorded, `origin/main` in the source repo advanced to `b00ca5b6` (Gill v16 convergence). To avoid PR conflicts, the source lane was reset/rebased onto `origin/main@b00ca5b6` and recommitted as `faf27cb4` with the same low-risk guard/workflow changes. The Playwright residual visibility findings remain valid as a repair playbook category, but the next implementation agent should re-run the provided probe on latest HEAD before editing.
+
+---
+
 ## 1. What changed in the source lane
 
 ### 1.1 Removed retired `fc-*` state selectors
