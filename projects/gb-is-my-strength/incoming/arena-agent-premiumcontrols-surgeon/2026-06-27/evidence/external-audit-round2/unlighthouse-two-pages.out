@@ -1,0 +1,8 @@
+[Unlighthouse] ℹ Using system Chrome located at: /home/user/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome.
+(node:34326) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[Unlighthouse] ✔ Successfully connected to http://127.0.0.1:8081. (Status: 200).
+[Unlighthouse] ℹ Creating Unlighthouse using config from unlighthouse.config
+[Unlighthouse] ℹ The url config has been provided with 2 paths for scanning. Disabling sitemap, robots, sampling and crawler.
+[Unlighthouse] ✔ Unlighthouse has finished scanning http://127.0.0.1:8081: 2 routes in 30s.
+[Unlighthouse] ✔ Generated json report ./reports/external-audit-2026-06-27-round2/unlighthouse/ci-result.json

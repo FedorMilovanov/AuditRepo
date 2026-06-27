@@ -1,0 +1,5 @@
+(node:33806) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Running Lighthouse 1 time(s) on http://127.0.0.1:8081/
+Run #1...done.
+Done running Lighthouse!

@@ -252,3 +252,47 @@ Evidence was copied under:
 ```text
 evidence/external-audit/
 ```
+
+## 8. External audit round 2 — retries, keep/drop refinement, and one real CSS fix
+
+Source commit pushed:
+
+```text
+b3f51ea3 [LANE lane/system-premiumcontrols-dist-gate-wiring-2026-06-27] fix(css): repair malformed floating-cluster comment found by stylelint
+```
+
+New source report update:
+
+```text
+docs/EXTERNAL_AUDIT_EMPIRICAL_RESULTS_2026-06-27.md
+```
+
+Round 2 tested tools with retries:
+
+- `pa11y-ci` sitemap against 43 local dist routes — worked; 7 passes, 615 errors, mostly contrast/accessibility debt. Keep as warn-only.
+- LHCI collect — first failed without Chrome path, succeeded after `CHROME_PATH` was set. Keep with documented Chrome path.
+- Unlighthouse — worked on 2 explicit routes with `CHROME_PATH`, produced JSON report. Keep manual/scheduled, not immediate blocking.
+- webhint — tried wrong flag, corrected flag, then `xvfb-run`; still failed because no supported browser installation was detected. Drop from Arena local quick checks.
+- stylelint — no-config run failed; basic temporary config worked and found a real malformed comment parse defect in `css/floating-cluster.css`. Fixed in source. Keep with a tuned syntax-only config.
+- Semgrep — `npx` failed, `pip install --user` initially failed until `~/.local/bin` was added to PATH; then Semgrep 1.168.0 scanned 125 JS/TS files with 74 rules and 0 findings, with parser/timeout warnings. Keep as warn-only with tuned excludes.
+- Depcheck — ran, but noisy around `_build-tools`, generated/minified files, and package-script dependencies. Defer unless configured with excludes.
+- npm-check-updates — ran and found major upgrades (Astro 7, plugin majors); advisory only.
+- license-checker `--production` — not useful because this static repo has dev-only tool deps.
+- OSV via `npx` — failed because not an npm package; use official binary/action.
+
+Real fix from external tooling:
+
+- `stylelint` exposed malformed CSS comment syntax around `css/floating-cluster.css` v15 mobile bottom-bar section.
+- The fix only normalized comments; no selector/property/visual tuning.
+- Targeted verification after fix:
+  - `npm run validate:all` ✅
+  - `npm run strangler:build:production-like` ✅
+  - `npm run audit:premium-controls` ✅ 39/39
+  - `npm run dist:css-parity` ✅
+  - `npm run guard:shared-files` ✅ after commit
+
+Evidence copied under:
+
+```text
+evidence/external-audit-round2/
+```

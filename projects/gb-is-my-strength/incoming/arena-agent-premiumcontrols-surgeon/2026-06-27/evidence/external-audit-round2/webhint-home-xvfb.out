@@ -1,0 +1,16 @@
+Using the built-in configuration.
+Visit https://webhint.io/docs/user-guide/ to learn how to create your own configuration.
+(node:34268) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✖ 
+Error: No installation found for: "Any supported browsers"
+    at getInstallationPath (/home/user/.npm/_npx/ae8a590c76205bbf/node_modules/@hint/connector-puppeteer/dist/src/lib/chromium-finder.js:249:15)
+    at PuppeteerConnector.toPuppeteerOptions (/home/user/.npm/_npx/ae8a590c76205bbf/node_modules/@hint/connector-puppeteer/dist/src/connector.js:55:59)
+    at new PuppeteerConnector (/home/user/.npm/_npx/ae8a590c76205bbf/node_modules/@hint/connector-puppeteer/dist/src/connector.js:37:30)
+    at new Engine (/home/user/.npm/_npx/ae8a590c76205bbf/node_modules/hint/dist/src/lib/engine.js:35:26)
+    at Analyzer.analyze (/home/user/.npm/_npx/ae8a590c76205bbf/node_modules/hint/dist/src/lib/analyzer.js:141:27)
+    at exports.default (/home/user/.npm/_npx/ae8a590c76205bbf/node_modules/hint/dist/src/lib/cli/analyze.js:219:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /home/user/.npm/_npx/ae8a590c76205bbf/node_modules/hint/dist/src/lib/cli/actions.js:8:20
+    at async Object.execute (/home/user/.npm/_npx/ae8a590c76205bbf/node_modules/hint/dist/src/lib/cli.js:38:23)
+    at async run (/home/user/.npm/_npx/ae8a590c76205bbf/node_modules/hint/dist/src/bin/hint.js:21:24)
