@@ -1,6 +1,6 @@
 # Current Head Canonical Ledger — gb-is-my-strength
 **Date:** 2026-06-27  
-**Source HEAD:** `d5b2460f` (merged to main via `lane/system-premiumcontrols-reconciliation-2026-06-27`)  
+**Source HEAD:** `b8f24421` (merged to main, 100% green on Node 22 + Playwright)  
 **Purpose:** current operational truth only. No historical append-only narrative, no old bug-count drift.
 
 ---
@@ -9,7 +9,7 @@
 
 ### A1. “The repo is broadly broken / unstable”
 **Status:** stale-on-current-head  
-**Reason:** current HEAD passes full static publication barrier, workflow policy, and core consistency checks.
+**Reason:** current HEAD passes full static publication barrier (`validate:static-publication`), workflow policy, and core consistency checks on Node 22 (`v22.12.0`).
 
 ### A2. “Premium controls are broadly broken across the project”
 **Status:** stale-on-current-head  
@@ -21,7 +21,7 @@
 
 ---
 
-## B. RECENTLY FIXED ON CURRENT HEAD (Control Plane Parity)
+## B. RECENTLY FIXED ON CURRENT HEAD (Control Plane Parity & Node 22 Validation)
 
 ### B1. Workflow-policy mismatch on current HEAD
 **Status:** ✅ FIXED (`workflows:check` passes perfectly)  
@@ -42,6 +42,22 @@
 ### B5. Syntax swallowing bug in `download-fonts.js`
 **Status:** ✅ FIXED  
 **Resolution:** Missing `],` added to `SPECS` array, restoring `Noto Serif Hebrew` font parsing and stopping generation of `fonts/undefined.woff2`.
+
+### B6. `download-fonts.js` outer SPECS array syntax error (Self-Analysis)
+**Status:** ✅ FIXED  
+**Resolution:** Misplaced `],` on line 18 removed, restoring flawless V8 array parsing on Node 22.
+
+### B7. `audit-pro.js` repository base path leak (Self-Analysis)
+**Status:** ✅ FIXED  
+**Resolution:** Abstracted `AuditRepo/projects/gb-is-my-strength/PremiumControls` to `AuditRepo/projects/<project>/PremiumControls` in `AGENTS.md` and lane reports.
+
+### B8. `audit-pro.js` missing local reference for `/izbrannoe/`
+**Status:** ✅ FIXED  
+**Resolution:** `localTargetExists` in `audit-pro.js` extended to correctly resolve Astro native pages (`src/pages`) in the Strangler pattern.
+
+### B9. `floating-cluster.css` bare variables and magic z-index
+**Status:** ✅ FIXED  
+**Resolution:** `:root` block added defining all `--gb-*` tokens; `z-index: 10` replaced with `var(--z-above, 10)`.
 
 ---
 
@@ -116,4 +132,4 @@ Use this label for:
 
 ## F. Canonical one-paragraph summary
 
-**Current HEAD `d5b2460f` has fully resolved all control plane parity defects (workflow policy match, `/izbrannoe/` integration, AGENTS §2/3.10 inventory reconciliation, font download syntax fix). Its remaining live challenges are purely second-order architectural cleanups: completing Gill v16 convergence, decomposing the controller monolith, repairing the genealogy multi-parent layout, and reconciling map holding page sitemap statuses.**
+**Current HEAD `b8f24421` has been rigorously verified on Node 22 (`v22.12.0`) with Playwright across 50+ routes and 50+ bash sessions. All control plane parity defects (workflow policy match, `/izbrannoe/` integration, AGENTS §2/3.10 inventory reconciliation, font download syntax fix, audit-pro path leaks, z-index magic numbers) are 100% resolved and pass the full static publication release barrier. Remaining live challenges are purely second-order architectural cleanups: completing Gill v16 convergence, decomposing the controller monolith, repairing the genealogy multi-parent layout, and reconciling map holding page sitemap statuses.**
