@@ -1,6 +1,6 @@
 # PremiumControls — Roadmap PC-001..PC-011
 
-**Base:** PR #19 `e204104` — Phase 1+2 merged  
+**Base:** PR #19 `e204104` — Phase 1+2 merged
 **Current HEAD override:** `819fd3f1` independent reverify — previous `7cbd184a`/PR #19 statuses are historical baseline only
 
 | ID | Severity | Title | Status |
@@ -14,7 +14,7 @@
 | PC-007 | P1 | RomanNumeral integration (`gb-roman`) | ❌ REOPENED — component exists, but all five Gill dist pages have `gb-roman=0` and raw numerals remain |
 | PC-008 | P1 | Playwright `visual-audit.js` vertical cluster height expectations | ✅ FIXED (expectations split by desktop vs mobile viewports) |
 | PC-010 | P2 | Controller god-object decomposition | ⏳ OPEN — turn-key guide available in `TURNKEY_CONTROLLER_DECOMPOSITION_GUIDE_2026-06-27.md` |
-| PC-011 | P1 | Gill parts v16 convergence & Spravochnik accurate audit | ✅ v16 layout markers now present on all five Gill pages; ⚠️ dist-publication audit contract is stale and still expects legacy `gbs2-rail` |
+| PC-011 | P1 | Gill parts v16 convergence & Spravochnik accurate audit | ✅ v16 layout markers present on all five Gill pages; ✅ BUG-032 dist-audit marker gate fixed in source `87505f1b`; ⚠️ RomanNumeral/asset audit hardening still open |
 
 ---
 
@@ -28,6 +28,8 @@ The table above has been corrected for the live PremiumControls gaps found by th
 - **PC-011 layout convergence is mostly landed**, but release gates are blocked by stale `dist-publication-audit.js` expectations.
 
 Primary evidence: `reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPENDENT_VERIFIER_2026-06-27.md`.
+
+87505f1b delta: `reports/PREMIUMCONTROLS_CURRENT_MAIN_87505F1B_DELTA_TRIAGE_2026-06-27.md` — dist publication gate fixed; PC-CURRENT-06 added.
 
 
 ---

@@ -20,6 +20,25 @@ Detailed delta report: `PREMIUMCONTROLS_CURRENT_MAIN_0159DA05_DELTA_VERIFIER_202
 
 ---
 
+
+## Delta note — source `87505f1b`
+
+Source `87505f1b` fixed the BUG-032 gate symptom: `dist-publication-audit.js` now expects `gbs-rail`, and full `npm run strangler:audit:production-like` passes. Residual hardening: add `data-gill-v16` to the marker list too.
+
+New verified issue after browser triage:
+
+- **PC-CURRENT-06:** on Gill mobile, tapping the current item in `#seriesTocOverlay` reloads the current page instead of opening `#partTocOverlay`.
+
+Audit classifications after triage:
+
+- BUG-033 = audit selector drift; add Gill v16 selectors.
+- BUG-034 = visual-audit contract decision; either accept v16 no-cover or restore cover.
+- BUG-035 = false-positive selector drift; `.gb-theme-toggle` / `[data-fc-action="theme"]` are visible and click toggles theme.
+
+Detailed delta report: `PREMIUMCONTROLS_CURRENT_MAIN_87505F1B_DELTA_TRIAGE_2026-06-27.md`.
+
+---
+
 ## Must-fix order
 
 1. `PC-CURRENT-01` — `strangler:audit:production-like` red because `dist-publication-audit.js` expects stale Gill `gbs2-rail` markers.
@@ -27,6 +46,7 @@ Detailed delta report: `PREMIUMCONTROLS_CURRENT_MAIN_0159DA05_DELTA_VERIFIER_202
 3. `PC-CURRENT-02` — `RomanNumeral` not actually used on Gill pages; `gb-roman=0` in dist.
 4. `PC-CURRENT-04` — `css/premium-controls.css` inventory drift.
 5. `PC-CURRENT-05` — malformed CSS transition declarations.
+6. `PC-CURRENT-06` — Gill mobile current series item reloads instead of opening part TOC.
 
 Do not combine all of these in one commit. Each item is a separate small lane.
 

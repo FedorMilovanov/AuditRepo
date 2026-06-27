@@ -23,6 +23,9 @@ Use `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPENDENT_VERIFIER_2
 
 **Follow-up:** source `0159da05` added external-check docs and source BUG-032..BUG-036, but the PremiumControls code/audit holes remain open. See `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_0159DA05_DELTA_VERIFIER_2026-06-27.md`.
 
+
+**Second follow-up:** source `87505f1b` fixes BUG-032/dist-publication gate and `strangler:audit:production-like` now passes, but PC-CURRENT-02/03/04/05 remain open and PC-CURRENT-06 was added. See `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_87505F1B_DELTA_TRIAGE_2026-06-27.md`.
+
 ## Current-head note (2026-06-27)
 
 ⚠️ **Do not treat older aggregate bug counts in this project as current operational truth.**

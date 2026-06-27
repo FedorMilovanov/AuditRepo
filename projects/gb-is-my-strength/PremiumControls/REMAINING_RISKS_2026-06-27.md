@@ -4,7 +4,7 @@
 
 This section supersedes earlier "all fixed" wording where it conflicts.
 
-Confirmed active risks after independent reverify:
+Confirmed active risks after independent reverify. Update: PC-CURRENT-01 is fixed in source `87505f1b`, but kept here as recently-fixed gate context; PC-CURRENT-02..06 remain live:
 
 | ID | Severity | Status | Summary |
 |---|---:|---|---|
@@ -13,6 +13,7 @@ Confirmed active risks after independent reverify:
 | PC-CURRENT-03 | P1/P2 | confirmed-current | Unversioned `floating-cluster.css` / controller refs remain in Astro-owned dist pages. |
 | PC-CURRENT-04 | P1/P2 | confirmed-current | `css/premium-controls.css` listed by inventory/cache-bust but absent; runtime CSS truth unclear. |
 | PC-CURRENT-05 | P2 | confirmed-current | Malformed `[data-gill-v16] background...` fragments in `floating-cluster.css` transition blocks. |
+| PC-CURRENT-06 | P1/P2 | confirmed-current | Gill mobile series overlay current item reloads the page instead of opening the part TOC overlay. |
 
 See:
 - `reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPENDENT_VERIFIER_2026-06-27.md`

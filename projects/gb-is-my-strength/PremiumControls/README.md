@@ -45,6 +45,19 @@ Key delta:
 - PC-CURRENT-02/03/04/05 remain open.
 
 
+
+### Follow-up delta — source HEAD `87505f1b`
+
+Source `87505f1b` fixed the blocking BUG-032 / PC-CURRENT-01 gate issue: `dist-publication-audit.js` now accepts `gbs-rail`, and `npm run strangler:audit:production-like` passes in Arena.
+
+Current delta report: `reports/PREMIUMCONTROLS_CURRENT_MAIN_87505F1B_DELTA_TRIAGE_2026-06-27.md`.
+
+Remaining after `87505f1b`:
+- PC-CURRENT-02/03/04/05 remain open.
+- New PC-CURRENT-06: Gill mobile series overlay current item reloads the page instead of opening `#partTocOverlay`.
+- BUG-035 mobile theme visibility is classified as an audit-selector false-positive: `.gb-theme-toggle` is visible and click toggles theme.
+- BUG-033 is confirmed audit-selector drift; BUG-034 remains a visual-audit contract decision.
+
 ---
 
 ## 1. Что такое PremiumControls (Архитектурная доктрина)

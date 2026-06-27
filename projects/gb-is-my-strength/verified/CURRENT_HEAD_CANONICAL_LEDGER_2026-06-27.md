@@ -33,6 +33,18 @@ Primary evidence: `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPEND
 
 Source `0159da05` added external-check docs and BUG-032..BUG-036 to the source repository, but did not change PremiumControls runtime/audit code. The same code-level holes remain open. See `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_0159DA05_DELTA_VERIFIER_2026-06-27.md`.
 
+
+### Delta after source `87505f1b`
+
+Source `87505f1b` fixes PC-CURRENT-01/BUG-032 enough for `dist-publication-audit.js --require-pagefind --forbid-dev` and full `strangler:audit:production-like` to pass. The residual hardening ask is to require `data-gill-v16` alongside `gbs-rail`.
+
+New/remaining PremiumControls truth after browser triage:
+- PC-CURRENT-02/03/04/05 remain open.
+- PC-CURRENT-06 added: Gill mobile current item in series overlay reloads current page instead of opening part TOC.
+- BUG-035 mobile theme visibility is false-positive audit selector drift; controls are visible/clickable through `.gb-theme-toggle`.
+
+Evidence: `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_87505F1B_DELTA_TRIAGE_2026-06-27.md`.
+
 ---
 
 ## A. STALE / retired broad narratives
