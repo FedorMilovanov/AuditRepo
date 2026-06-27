@@ -1,5 +1,25 @@
 # PremiumControls — Remaining Active Risks (2026-06-27)
 
+## 🔴 Independent current-main override — source HEAD `819fd3f1`
+
+This section supersedes earlier "all fixed" wording where it conflicts.
+
+Confirmed active risks after independent reverify:
+
+| ID | Severity | Status | Summary |
+|---|---:|---|---|
+| PC-CURRENT-01 | P0/P1 | confirmed-current | `strangler:audit:production-like` / `dist-publication-audit.js` fails because Gill marker contract still expects legacy `gbs2-rail` on v16 pages. |
+| PC-CURRENT-02 | P1 | confirmed-current | PC-007 false-green: all Gill dist pages have `gb-roman=0`; raw numerals remain. |
+| PC-CURRENT-03 | P1/P2 | confirmed-current | Unversioned `floating-cluster.css` / controller refs remain in Astro-owned dist pages. |
+| PC-CURRENT-04 | P1/P2 | confirmed-current | `css/premium-controls.css` listed by inventory/cache-bust but absent; runtime CSS truth unclear. |
+| PC-CURRENT-05 | P2 | confirmed-current | Malformed `[data-gill-v16] background...` fragments in `floating-cluster.css` transition blocks. |
+
+See:
+- `reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPENDENT_VERIFIER_2026-06-27.md`
+- `reports/PREMIUMCONTROLS_BUG_REPORT_FOR_SOURCE_REPO_2026-06-27.md`
+
+---
+
 ## P0 Bug — FIXED IN THIS TURN
 
 ### isFavorite() undefined function (NEW — found 2026-06-27)

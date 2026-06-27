@@ -8,6 +8,18 @@
 - Tech: Astro 5 + strangler pattern (root HTML + Astro dist)
 - Premium controls: v16 SVG floating cluster (gb-icon, gb-ember, gb-save)
 
+
+## PremiumControls current-main correction (2026-06-27 / `819fd3f1`)
+
+Independent verifier pass found that older PremiumControls and Gill statements in this project are partly stale:
+
+- Gill v16 layout is now present on all five Gill routes; old statements saying Parts 2/3/Spravochnik remain `gbs2-rail` are stale.
+- Production-like dist audit is red until `scripts/dist-publication-audit.js` accepts current Gill v16 markers.
+- PC-007 RomanNumeral is not actually landed (`gb-roman=0` in all five Gill dist pages).
+- PremiumControls asset versioning is not fully protected because some Astro-owned pages still emit unversioned `floating-cluster.css` / controller refs.
+
+Use `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPENDENT_VERIFIER_2026-06-27.md` before acting on older PremiumControls ledgers.
+
 ## Current-head note (2026-06-27)
 
 ⚠️ **Do not treat older aggregate bug counts in this project as current operational truth.**

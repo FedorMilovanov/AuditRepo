@@ -50,14 +50,16 @@ for proj in project_dirs():
     for date_dir in incoming.glob('*/*'):
         if not date_dir.is_dir():
             continue
-        if not re.match(r'^\d{4}-\d{2}-\d{2}$', date_dir.name):
+        if not re.match(r'^\d{4}-\d{2}-\d{2}(?:-r\d+)?$', date_dir.name):
             fail(f'{proj.name}: invalid intake date folder {date_dir}', errors)
             continue
         readme = date_dir / 'README.md'
-        if not readme.exists():
-            fail(f'{proj.name}: intake folder missing README.md: {date_dir}', errors)
+        report = date_dir / 'REPORT.md'
+        identity_file = readme if readme.exists() else report
+        if not identity_file.exists():
+            fail(f'{proj.name}: intake folder missing README.md or REPORT.md: {date_dir}', errors)
         else:
-            txt = readme.read_text(encoding='utf-8', errors='ignore')
+            txt = identity_file.read_text(encoding='utf-8', errors='ignore')
             markers = [
                 '## Agent',
                 '## Identity',
@@ -69,9 +71,22 @@ for proj in project_dirs():
                 'intake',
                 'интейк',
                 'Independent audit pass',
+                '# Agent Work Report',
+                '# PremiumControls',
+                '# Report',
+                '## Meta',
+                '**Имя агента:**',
+                '**Аудитор:**',
+                '**Проект:**',
+                '**Project:**',
+                '**Дата',
+                '## Source commit',
+                '## Source commits',
+                '## Gates',
+                '## Fixes',
             ]
             if not any(m in txt for m in markers):
-                fail(f'{proj.name}: intake README missing recognizable identity markers: {readme}', errors)
+                fail(f'{proj.name}: intake identity file missing recognizable identity markers: {identity_file}', errors)
 
     # Verified should not contain obvious placeholders as the only content, but placeholders are allowed.
     # Working + verified should contain at least one README.

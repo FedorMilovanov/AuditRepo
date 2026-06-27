@@ -1,19 +1,34 @@
 # PremiumControls — Roadmap PC-001..PC-011
 
 **Base:** PR #19 `e204104` — Phase 1+2 merged  
-**Current HEAD:** `7cbd184a` (`lane/premiumcontrols-atomic-ios-2026-06-27` merged to `main`)
+**Current HEAD override:** `819fd3f1` independent reverify — previous `7cbd184a`/PR #19 statuses are historical baseline only
 
 | ID | Severity | Title | Status |
 |---|---|---|---|
 | PC-001 | P1 | `PremiumControlAnchor` extraction / adoption | ✅ SOURCE-LANDED (`PremiumControlAnchor.astro` exists + protected by `owner-ui-regression-guard`) |
 | PC-002 | P0 | Heart-series `Krajne` / `Rimlyanam7`: `gb-ember`+`gb-save` wiring | ✅ FIXED on current HEAD (`data-fc-root data-fc-mode="series-lite"` + `floating-cluster.css` links surgically injected) |
-| PC-003 | P1 | Source hash drift / asset-version parity | ✅ FIXED (`npm run cache-bust` synced all hashes) |
+| PC-003 | P1 | Source hash drift / asset-version parity | ⚠️ PARTIAL / REOPENED — helper sync exists, but unversioned `floating-cluster.css` / controller refs remain in Astro-owned dist pages |
 | PC-004 | P1 | CSS duplicate cleanup / canonical CSS source | ✅ SOURCE-LANDED (`src/styles/premium-controls.css`) / `AGENTS.md` §2 inventory officially reconciled |
 | PC-005 | P2 | PlayEmber semantics: canonical key/event/ARIA/reference UI | ✅ MERGED (`fdd446b6` hover-bloom, Russian TTS voice `pickRuVoice`, working pause, `gb:audio:rate` canonical + upward bloom container expansion) |
-| PC-006 | P2 | Route-archetype / rollout audit | ✅ SCRIPT EXISTS (`scripts/premium-controls-rollout-audit.js` enhanced with smart Strangler pattern bridging) |
+| PC-006 | P2 | Route-archetype / rollout audit | ⚠️ SCRIPT EXISTS BUT NOT BULLETPROOF — passes while `gb-roman=0` and unversioned PremiumControls assets remain |
+| PC-007 | P1 | RomanNumeral integration (`gb-roman`) | ❌ REOPENED — component exists, but all five Gill dist pages have `gb-roman=0` and raw numerals remain |
 | PC-008 | P1 | Playwright `visual-audit.js` vertical cluster height expectations | ✅ FIXED (expectations split by desktop vs mobile viewports) |
 | PC-010 | P2 | Controller god-object decomposition | ⏳ OPEN — turn-key guide available in `TURNKEY_CONTROLLER_DECOMPOSITION_GUIDE_2026-06-27.md` |
-| PC-011 | P1 | Gill parts v16 convergence & Spravochnik accurate audit | ✅ FIXED (`b00ca5b6` v16 convergence + Spravochnik accurate 200-word tolerance audit alignment) |
+| PC-011 | P1 | Gill parts v16 convergence & Spravochnik accurate audit | ✅ v16 layout markers now present on all five Gill pages; ⚠️ dist-publication audit contract is stale and still expects legacy `gbs2-rail` |
+
+---
+
+## Current-main independent reverify override (2026-06-27 / `819fd3f1`)
+
+The table above has been corrected for the live PremiumControls gaps found by the independent verifier pass:
+
+- **PC-003 is not fully closed** until all `floating-cluster.css` / `floating-cluster-controller.js` refs in Astro-owned dist pages are versioned or routed through `assetUrl()`.
+- **PC-006 is not bulletproof** until the rollout audit fails on missing `gb-roman` and unversioned PremiumControls assets.
+- **PC-007 is reopened** because `RomanNumeral.astro` exists but is not used in Gill PageChrome output (`gb-roman=0`).
+- **PC-011 layout convergence is mostly landed**, but release gates are blocked by stale `dist-publication-audit.js` expectations.
+
+Primary evidence: `reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPENDENT_VERIFIER_2026-06-27.md`.
+
 
 ---
 

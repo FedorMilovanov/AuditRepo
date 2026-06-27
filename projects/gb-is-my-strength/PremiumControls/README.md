@@ -1,11 +1,37 @@
 # PremiumControls — Канонический контракт v3.0 (Текущий HEAD 2026-06-27)
 
-**Project:** `gb-is-my-strength` (`gospod-bog.ru`)  
-**Date:** 2026-06-27 (Углубленная хирургическая редакция после 5 волн аудита)  
-**Replaces:** `Полный план внедрения PremiumControls по всему проекту.pdf` (14 стр, 2026-06), все скриншоты из чата, все предыдущие `floating-cluster` / `PremiumControls` PDF/MD, а также устаревшие сводки по PR #19.  
-**Status:** Phase 1..3 — ПОЛНОСТЬЮ ЗАКРЫТЫ И ВЫВЕРЕНЫ НА АТОМАРНОМ УРОВНЕ (HEAD `4f962f75`), 100% прохождение всех барьеров на Node 22 (`v22.12.0`) и Playwright (`v1.61.1`).  
-**Source repo:** `FedorMilovanov/gb-is-my-strength`  
+**Project:** `gb-is-my-strength` (`gospod-bog.ru`)
+**Date:** 2026-06-27 (Углубленная хирургическая редакция после 5 волн аудита)
+**Replaces:** `Полный план внедрения PremiumControls по всему проекту.pdf` (14 стр, 2026-06), все скриншоты из чата, все предыдущие `floating-cluster` / `PremiumControls` PDF/MD, а также устаревшие сводки по PR #19.
+**Status:** Phase 1..3 — ПОЛНОСТЬЮ ЗАКРЫТЫ И ВЫВЕРЕНЫ НА АТОМАРНОМ УРОВНЕ (HEAD `4f962f75`), 100% прохождение всех барьеров на Node 22 (`v22.12.0`) и Playwright (`v1.61.1`).
+**Source repo:** `FedorMilovanov/gb-is-my-strength`
 **Audit folder:** `AuditRepo/projects/gb-is-my-strength/PremiumControls/`
+
+---
+
+## ⚠️ Current-main independent correction — 2026-06-27 (`819fd3f1`)
+
+This section supersedes any blanket wording below that says PremiumControls is "100% atomically closed" across every barrier.
+
+Independent reverify on source HEAD `819fd3f1` found:
+
+- `validate:static-publication` ✅ PASS.
+- `workflows:check` ✅ PASS.
+- `audit:premium-controls:no-build` ✅ PASS `39/39`, **but it is not strict enough**.
+- `premium-mobile-visibility-smoke` ✅ PASS after `83f0acdc` mobile fallback.
+- `dist-publication-audit.js --require-pagefind --forbid-dev` ❌ FAILS because it still expects old Gill `gbs2-rail` markers for pages now migrated to v16 (`data-gill-v16` + `gbs-rail`).
+
+Confirmed active holes new agents must treat as current:
+
+1. **PC-CURRENT-01:** production-like dist audit marker contract stale for Gill v16.
+2. **PC-CURRENT-02:** PC-007 RomanNumeral is false-green — all Gill dist pages have `gb-roman=0` and still render raw `I/II/III` numerals.
+3. **PC-CURRENT-03:** unversioned PremiumControls assets remain in Astro-owned dist pages (`floating-cluster.css` on Gill/Baptisty, controller on Baptisty).
+4. **PC-CURRENT-04:** `css/premium-controls.css` is listed by AGENTS/cache-bust but absent from `css/`; runtime truth is still `css/floating-cluster.css`.
+5. **PC-CURRENT-05:** `css/floating-cluster.css` contains malformed scoped transition fragments.
+
+Primary current report: `reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPENDENT_VERIFIER_2026-06-27.md`.
+Implementation-facing bug report: `reports/PREMIUMCONTROLS_BUG_REPORT_FOR_SOURCE_REPO_2026-06-27.md`.
+
 
 ---
 
@@ -21,7 +47,7 @@
 | **PremiumControls** | SVG / UI / вариант | `src/components/ui/premium-controls/PremiumControls.astro` (диспетчер: `FloatingCluster.astro`) |
 | **premium-controls-controller.js** | поведение, хранилище, озвучка | `js/floating-cluster-controller.js` (подлежит декомпозиции без новых файлов) |
 
-Старое имя `floating-cluster` / `fc-*` — transitional. 
+Старое имя `floating-cluster` / `fc-*` — transitional.
 
 ### Канонический источник CSS и защита от дублирования
 *   **Канонический источник:** `src/styles/premium-controls.css` (v2.1, "PlayEmber Speed Morph reference match").
