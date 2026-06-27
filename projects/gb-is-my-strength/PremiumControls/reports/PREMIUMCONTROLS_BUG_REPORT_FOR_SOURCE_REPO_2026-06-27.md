@@ -7,6 +7,19 @@
 
 ---
 
+
+## Delta note — source `0159da05`
+
+Source `0159da05` added BUG-032..BUG-036 to `docs/BUGS_FOUND_2026-06-25.md`. Treat those as useful but incomplete:
+
+- BUG-032 repair should require `data-gill-v16` + `gbs-rail`, not only `gbs-rail`.
+- BUG-033/034/035 were reproduced by the verifier and need audit-script/UX triage lanes.
+- This source docs update did not fix PC-CURRENT-01..05.
+
+Detailed delta report: `PREMIUMCONTROLS_CURRENT_MAIN_0159DA05_DELTA_VERIFIER_2026-06-27.md`.
+
+---
+
 ## Must-fix order
 
 1. `PC-CURRENT-01` — `strangler:audit:production-like` red because `dist-publication-audit.js` expects stale Gill `gbs2-rail` markers.

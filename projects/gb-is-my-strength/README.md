@@ -20,6 +20,9 @@ Independent verifier pass found that older PremiumControls and Gill statements i
 
 Use `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPENDENT_VERIFIER_2026-06-27.md` before acting on older PremiumControls ledgers.
 
+
+**Follow-up:** source `0159da05` added external-check docs and source BUG-032..BUG-036, but the PremiumControls code/audit holes remain open. See `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_0159DA05_DELTA_VERIFIER_2026-06-27.md`.
+
 ## Current-head note (2026-06-27)
 
 ⚠️ **Do not treat older aggregate bug counts in this project as current operational truth.**
@@ -80,8 +83,8 @@ archive/
 
 ## Current verifier status (2026-06-27)
 
-**Primary current ledger:** `verified/CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md`  
-**Canonical verifier note:** `verification/CANONICAL_VERIFIER_NOTE_2026-06-27_current-head-status-flips-and-second-order-defects.md`  
+**Primary current ledger:** `verified/CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md`
+**Canonical verifier note:** `verification/CANONICAL_VERIFIER_NOTE_2026-06-27_current-head-status-flips-and-second-order-defects.md`
 **Priority reset:** `verified/REPAIR_ORDER_DELTA_2026-06-27_current-head-priority-reset.md`
 
 ### Main live issues on current HEAD

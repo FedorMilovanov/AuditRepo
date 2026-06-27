@@ -28,6 +28,11 @@ Status flips vs older ledger text:
 
 Primary evidence: `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPENDENT_VERIFIER_2026-06-27.md`.
 
+
+### Delta after source `0159da05`
+
+Source `0159da05` added external-check docs and BUG-032..BUG-036 to the source repository, but did not change PremiumControls runtime/audit code. The same code-level holes remain open. See `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_0159DA05_DELTA_VERIFIER_2026-06-27.md`.
+
 ---
 
 ## A. STALE / retired broad narratives

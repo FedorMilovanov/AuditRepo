@@ -33,6 +33,18 @@ Primary current report: `reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPENDENT_VERIFI
 Implementation-facing bug report: `reports/PREMIUMCONTROLS_BUG_REPORT_FOR_SOURCE_REPO_2026-06-27.md`.
 
 
+### Follow-up delta — source HEAD `0159da05`
+
+After the independent report, source `origin/main` advanced to `0159da05` with an external-check registry and new `docs/BUGS_FOUND_2026-06-25.md` BUG-032..BUG-036 entries. This did **not** repair the PremiumControls code/audit holes; it only documented some of them.
+
+Current delta report: `reports/PREMIUMCONTROLS_CURRENT_MAIN_0159DA05_DELTA_VERIFIER_2026-06-27.md`.
+
+Key delta:
+- BUG-032 in source docs correctly identifies stale Gill `gbs2-rail` dist-audit expectations, but the safer repair should require both `data-gill-v16` and `gbs-rail`.
+- BUG-033/034/035 are confirmed current audit surfaces (`interactive-audit` 17 issues, `visual-audit` 2 HIGH Gill cover issues).
+- PC-CURRENT-02/03/04/05 remain open.
+
+
 ---
 
 ## 1. Что такое PremiumControls (Архитектурная доктрина)
