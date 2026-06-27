@@ -6,42 +6,50 @@
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Unified bug ledger with **60 confirmed bugs (9 P0, 20 P1, 19 P2, 12 P3)** + 4 FP closed. Round 6 fixes: V2-1 (PARTIAL: Gill TOC anchors), V2-2 (Nagornaya font), V2-3 (Avraam skip-link), PS-06 (Hermenevtika readTime). All bugs verified in HEAD source (Round 5). 1 net-new P0: SW precache 404 for site-layered.css + site-modules.js (exist in src/ but not in dist/). |
+| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready-after-current-truth-cleanup** | Current operational truth is no longer the 2026-06-25 “60 confirmed bugs / 9 P0” ledger. Source HEAD checked: `66640561919501e68dd9d3cd290ff9afe53d3068`; AuditRepo HEAD before cleanup: `c3a9ae27df749c09a88650ae0e16e348db61c1c7`. Start from `projects/gb-is-my-strength/verified/CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md`. |
 
 ## Status glossary
 
 - `active` — проект в работе
 - `intake-only` — сырые отчёты есть
 - `verifying` — идёт сводка и дедупликация
+- `current-head-reconciliation-needed` — source ушёл вперёд, active docs/ledgers ещё не сведены к одной правде
+- **→ `repair-ready-after-current-truth-cleanup`** — current operational truth reconciled; implementation agents may proceed from current repair order, not old aggregate counts
 - `repair-in-progress` — implementation идёт, но reverify ещё не закрыло цикл
 - `reverify-needed` — source repo ушёл вперёд, нужен новый HEAD-pass
-- **→ `repair-ready`** — unified ledger and repair order in `verified/` — implementation agent can proceed
 - `archived` — проект завершён
 
-## gb-is-my-strength summary
+## gb-is-my-strength current summary — 2026-06-27
 
-**Total confirmed bugs:** 51 (pre arena-agent-2 amendment)
-**P0 critical:** 9 (fix immediately)
-**Key finding:** P0-10 — All 36+ Astro components have stale hardcoded asset hashes (cache-busting completely broken for Astro-owned pages)
+**Current source HEAD checked:** `66640561919501e68dd9d3cd290ff9afe53d3068`
+**AuditRepo HEAD before cleanup:** `c3a9ae27df749c09a88650ae0e16e348db61c1c7`
+**Current status:** repair-ready after current-truth cleanup; not old 2026-06-25 repair-ready.
 
-**Unified documents:**
-- `verified/UNIFIED_BUG_LEDGER_2026-06-25.md` — complete bug matrix
-- `verified/repair-order-unified-2026-06-25.md` — prioritized fix plan
-- `verification/cross-reference/cross-reference-synthesis-2026-06-25.md` — cross-agent findings merge
-- `verification/CONFLICT_REGISTRY_2026-06-25.md` — disagreements between evidence layers / agents
-- `verification/RECHECK_PROTOCOL_2026-06-25.md` — how to re-run disputed findings correctly
-- `verification/arena-agent-2-corrections-2026-06-25.md` — root-cause corrections (PS-01, P0-1) + 1 FP flag (P0-2) + 2 net-new bugs (speed panel, sw-register toast)
-- `verification/CONFLICT_REGISTRY_2026-06-25.md` — conflicts resolved: C-04 (PS-01 blast radius 23), C-05 (P0-2 not empty), C-06 (PS-05 dist artifact)
+### Active current truth
 
-**Incoming sources:**
-- `incoming/arena-agent/2026-06-25/` — Arena Agent (premium surface, runtime, interactive audit)
-- `incoming/arena-agent-round3/2026-06-25/` — Arena Agent Round 3 (system tooling, CI, Astro source-layer)
-- `incoming/arena-agent-toc/2026-06-25/` — TOC agent intake
-- `incoming/arena-agent-2/2026-06-25/` — Arena Agent 2 (runtime Node DOM-stub + root-source grep; cross-validation of P0/P1 + 2 new bugs)
-- `incoming/arena-agent-round4/2026-06-25/` — Arena Agent Round 4 (deep code audit; GBS2 controls unwired, CSS/JS hash mismatch, site-modules.js in SW but not in cache-bust)
-- `incoming/arena-agent-verifier-2/2026-06-25/` — Verifier-2 (runtime Playwright + Node stub verification; V2-1..V2-4 net-new bugs; P0-2 false positive confirmed)
-- `incoming/arena-agent-round5/2026-06-25/` — Arena Agent Round 5 (full verification audit; all 63 bugs confirmed in HEAD; 1 net-new P0: SW precache 404)
-- `incoming/arena-agent-round6/2026-06-25/` — Arena Agent Round 6 (implementation: V2-1 PARTIAL, V2-2 FIXED, V2-3 FIXED, PS-06 FIXED; 13 files changed; FAST checks passed)
+- `npm run workflows:check` on source HEAD passes; old `dist:jsonld:audit --root dist` workflow-red item is **fixed-current / stale-on-current-head**.
+- Gill v16 is the current base; do **not** revert to legacy `gbs2-rail` / `gbs2-sheet` as target architecture.
+- PremiumControls are partially green, not complete. PC-CURRENT-02/03/04/05/06 remain open unless a fresh source+dist+browser reverify closes them.
+- Hermeneutics floater canonical position is `8.5vw` desktop / `4.5vw` mobile; old `calc(... - 28px)` is SUPERSEDED / WRONG / POS-01 / NEVER REINTRODUCE.
+- Historical aggregate bug counts remain useful as evidence baseline only, not operational planning truth.
+
+## Primary current documents
+
+1. `projects/gb-is-my-strength/verified/CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md` — current-only operational truth.
+2. `projects/gb-is-my-strength/verified/REPAIR_ORDER_DELTA_2026-06-27_current-head-priority-reset.md` — current repair order.
+3. `projects/gb-is-my-strength/verification/CANONICAL_VERIFIER_NOTE_2026-06-27_current-head-status-flips-and-second-order-defects.md` — status flips and stale/current classification.
+4. `projects/gb-is-my-strength/PremiumControls/README.md` — PremiumControls current contract and open PC-CURRENT items.
+
+## Historical / superseded baseline
+
+The 2026-06-25 synthesis remains archived evidence, not active truth:
+
+- `verified/UNIFIED_BUG_LEDGER_2026-06-25.md`
+- `verified/repair-order-unified-2026-06-25.md`
+- `verification/cross-reference/cross-reference-synthesis-2026-06-25.md`
+- older incoming agent folders under `projects/gb-is-my-strength/incoming/`
+
+Do not promote “60 confirmed bugs / 9 P0 / repair-ready” into new prompts without the current-head ledger above.
 
 ## How to add a new project
 
@@ -54,30 +62,3 @@
 5. После первой verified-волны добавить:
    - `verification/START_HERE_<date>.md`
    - `verified/START_HERE_<date>.md`
-
-## gb-is-my-strength — updated 2026-06-25 (Verifier-2 merge)
-
-**Total confirmed bugs:** 60 (9 P0, 20 P1, 19 P2, 12 P3)
-**P0 critical:** 9 (PS-01 primary — fc-controller IIFE defect; P0-10 is systemic cache hash issue; P0-NEW: SW precache 404 for site-layered.css + site-modules.js)
-**P1 high:** 20 (V2-1 PARTIAL, V2-2 FIXED, PS-06 FIXED)
-**P2 medium:** 19 (V2-3 FIXED)
-**P3 low:** 12
-**False positives closed:** 4 (P0-2, FP-P0-4, FP-P0-5, FP-PS-05)
-
-**Key corrections from Verifier-2:**
-- P0-2 is NOT empty — 1869 lines, 68KB CSS → removed from P0
-- PS-01 root cause = lexical IIFE-scope defect (not load-order) — triple-confirmed
-- P0-1 (Gill SAVE NOP) folds into PS-01
-- 4 net-new bugs found (V2-1: Gill TOC anchors; V2-2: Nagornaya font; V2-3: Avraam skip-link; V2-4: feed.xml weekdays)
-
-**Round 5 verification (2026-06-25):**
-- All 63 existing bugs confirmed in HEAD source
-- 1 net-new P0 bug: SW precache 404 — `site-layered.css` and `site-modules.js` exist in src/ but are never imported in any Astro component → not copied to dist/ → 404 on all SW-enabled pages
-
-**Status:** repair-ready — unified ledger + repair order in `verified/`
-
-**Round 6 implementation (2026-06-25):**
-- 4 bugs fixed: V2-1 PARTIAL (Gill TOC anchors), V2-2 (Nagornaya font selector), V2-3 (Avraam skip-link), PS-06 (Hermenevtika readTime)
-- 13 files changed, all verified with targeted grep
-- `npm run data:consistency` ✅ `npm run migration:metadata:check` ✅
-- Report: `incoming/arena-agent-round6/2026-06-25/IMPLEMENTATION_AUDIT_ROUND6.md`
