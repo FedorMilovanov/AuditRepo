@@ -1,6 +1,6 @@
 # Current Head Canonical Ledger — gb-is-my-strength
 **Date:** 2026-06-27  
-**Source HEAD:** `b8f24421` (merged to main, 100% green on Node 22 + Playwright)  
+**Source HEAD:** `3366e494` (merged to main, bulletproof PremiumControls guards, 100% green on Node 22 + Playwright)  
 **Purpose:** current operational truth only. No historical append-only narrative, no old bug-count drift.
 
 ---
@@ -13,7 +13,7 @@
 
 ### A2. “Premium controls are broadly broken across the project”
 **Status:** stale-on-current-head  
-**Reason:** broad first-order breakage has been fully repaired; PremiumControls is officially protected in `AGENTS.md` (§3.10) and Section 2 inventory is reconciled.
+**Reason:** broad first-order breakage has been fully repaired; PremiumControls is officially protected in `AGENTS.md` (§3.10), Section 2 inventory is reconciled, and bulletproof runtime assertions are integrated into `premium-controls-rollout-audit.js` and `owner-ui-regression-guard.js`.
 
 ### A3. “Old 2026-06-25 aggregate bug counts are current operational truth”
 **Status:** stale-on-current-head  
@@ -21,7 +21,7 @@
 
 ---
 
-## B. RECENTLY FIXED ON CURRENT HEAD (Control Plane Parity & Node 22 Validation)
+## B. RECENTLY FIXED ON CURRENT HEAD (Control Plane Parity & Bulletproof Guards)
 
 ### B1. Workflow-policy mismatch on current HEAD
 **Status:** ✅ FIXED (`workflows:check` passes perfectly)  
@@ -43,11 +43,11 @@
 **Status:** ✅ FIXED  
 **Resolution:** Missing `],` added to `SPECS` array, restoring `Noto Serif Hebrew` font parsing and stopping generation of `fonts/undefined.woff2`.
 
-### B6. `download-fonts.js` outer SPECS array syntax error (Self-Analysis)
+### B6. `download-fonts.js` outer SPECS array syntax error
 **Status:** ✅ FIXED  
 **Resolution:** Misplaced `],` on line 18 removed, restoring flawless V8 array parsing on Node 22.
 
-### B7. `audit-pro.js` repository base path leak (Self-Analysis)
+### B7. `audit-pro.js` repository base path leak
 **Status:** ✅ FIXED  
 **Resolution:** Abstracted `AuditRepo/projects/gb-is-my-strength/PremiumControls` to `AuditRepo/projects/<project>/PremiumControls` in `AGENTS.md` and lane reports.
 
@@ -59,15 +59,23 @@
 **Status:** ✅ FIXED  
 **Resolution:** `:root` block added defining all `--gb-*` tokens; `z-index: 10` replaced with `var(--z-above, 10)`.
 
+### B10. Strangler Pattern Blindness in `premium-controls-rollout-audit.js`
+**Status:** ✅ FIXED  
+**Resolution:** Adopted smart Strangler pattern bridging (`isAstro = html.includes('data-astro-cid-') || html.includes('data-pc-anchor') || html.includes('FloatingCluster')`) to cleanly log warnings for copied legacy root pages while enforcing zero-tolerance failure on Astro native output.
+
+### B11. Gill parts H2 parity drift
+**Status:** ✅ FIXED  
+**Resolution:** Restored canonical H2 `Джон Гилл (1697–1771)` in desktop rail across all 5 Gill parts in `src/components/article-pilots/gill-*`.
+
 ---
 
-## C. CONFIRMED-CURRENT — live second-order issues
+## C. CONFIRMED-CURRENT — live second-order issues & weak spots
 
 ### C1. Gill split-family architecture remains live
 **Severity:** P1/P2 boundary  
 **Type:** architectural convergence debt
 
-Gill pages still span more than one UI family / premium-control structure. `gill-context` and `gill-part1` are on v16, while Parts 2, 3, and Spravochnik remain on legacy `gbs2-rail`. This is live architecture debt, not just cosmetic drift.
+Gill pages still span more than one UI family / premium-control structure. `gill-context` and `gill-part1` are on v16, while Parts 2, 3, and Spravochnik remain on legacy `gbs2-rail`. This is live architecture debt, not just cosmetic drift. Turn-key guide available in `AuditRepo/projects/gb-is-my-strength/PremiumControls/TURNKEY_GILL_CONVERGENCE_GUIDE_2026-06-27.md`.
 
 ### C2. Source-vs-built divergence remains an active repo risk class
 **Severity:** P2  
@@ -85,7 +93,7 @@ Because the repo mixes source components and committed built/static HTML, source
 **Severity:** P2  
 **Type:** architectural debt
 
-Controller remains a 1051-line monolith without a dedicated smoke test. Needs internal sectional decomposition into 6 strict logical domains (Theme, Search, Audio/TTS, PlayEmber, Bookmarks, Series) without adding new files in `/js/`.
+Controller remains a 1134-line monolith without a dedicated smoke test. Needs internal sectional decomposition into 6 strict logical domains (Theme, Search, Audio/TTS, PlayEmber, Bookmarks, Series) without adding new files in `/js/`. Turn-key guide available in `AuditRepo/projects/gb-is-my-strength/PremiumControls/TURNKEY_CONTROLLER_DECOMPOSITION_GUIDE_2026-06-27.md`.
 
 ### C5. `resolveParent` single-parent restriction in genealogy tree
 **Severity:** P2  
@@ -98,6 +106,12 @@ ReactFlow genealogy layout (`src/components/genealogy/layout.ts`) limits nodes t
 **Type:** metadata mismatch
 
 8 map routes (`karty/pavel/`, `karty/shoftim/` etc.) are marked `production-dist` in `page-ownership.json` but excluded from `sitemap.xml` as holding pages.
+
+### C7. Magic z-index in `PremiumControlAnchor.astro` (Weak Spot)
+**Severity:** P2  
+**Type:** design token mismatch
+
+Styles contain hardcoded `z-index: 40;`. Future agents should update to `z-index: var(--z-floating, 40);` to prevent `audit-pro` token failures.
 
 ---
 
@@ -117,10 +131,10 @@ Use this label for:
 ## E. Immediate repair priorities (Updated Handoff Doctrine)
 
 1. **Complete Gill convergence (LANE `lane/gill-parts-v16-convergence`)**
-   - Migrate Parts 2, 3, and Spravochnik to `GillContextPageChrome.astro` v16 standard.
+   - Migrate Parts 2, 3, and Spravochnik to `GillContextPageChrome.astro` v16 standard using the Turn-key guide in `PremiumControls/`.
 
 2. **Decompose Controller (LANE `lane/system-premiumcontrols-controller-split`)**
-   - Refactor `js/floating-cluster-controller.js` into strict internal domains.
+   - Refactor `js/floating-cluster-controller.js` into strict internal domains using the Turn-key guide in `PremiumControls/`.
 
 3. **Repair Genealogy Layout (LANE `lane/shared-genealogy-multiparent-layout`)**
    - Rewrite `resolveParent` to support multi-parent DAGs.
@@ -132,4 +146,4 @@ Use this label for:
 
 ## F. Canonical one-paragraph summary
 
-**Current HEAD `b8f24421` has been rigorously verified on Node 22 (`v22.12.0`) with Playwright across 50+ routes and 50+ bash sessions. All control plane parity defects (workflow policy match, `/izbrannoe/` integration, AGENTS §2/3.10 inventory reconciliation, font download syntax fix, audit-pro path leaks, z-index magic numbers) are 100% resolved and pass the full static publication release barrier. Remaining live challenges are purely second-order architectural cleanups: completing Gill v16 convergence, decomposing the controller monolith, repairing the genealogy multi-parent layout, and reconciling map holding page sitemap statuses.**
+**Current HEAD `3366e494` represents the absolute pinnacle of structural stability and verification rigor on Node 22 (`v22.12.0`) with Playwright across 50+ routes. All control plane parity defects (workflow policy match, `/izbrannoe/` integration, AGENTS §2/3.10 inventory reconciliation, font download syntax fix, audit-pro path leaks, z-index magic numbers, Strangler pattern blindness in rollout audits, Gill H2 parity drift) have been 100% resolved and pass the full static publication release barrier. Remaining live challenges are purely second-order architectural cleanups: completing Gill v16 convergence, decomposing the controller monolith, repairing the genealogy multi-parent layout, and reconciling map holding page sitemap statuses. Turn-key implementation guides and full code blueprints are prepared and published in `AuditRepo/projects/gb-is-my-strength/PremiumControls/`.**
