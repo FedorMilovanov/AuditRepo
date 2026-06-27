@@ -1,6 +1,6 @@
 # Current Head Canonical Ledger — gb-is-my-strength
 **Date:** 2026-06-27  
-**Source HEAD:** `e0a1642f` (merged to main, bulletproof PremiumControls guards, visual-audit height reconciled, 100% green on Node 22 + Playwright)  
+**Source HEAD:** `819fd3f1` (merged to main, mobile visibility fallback for hidden series controls landed, bulletproof PremiumControls guards hold, 100% green on Node 22 + Playwright)  
 **Purpose:** current operational truth only. No historical append-only narrative, no old bug-count drift.
 
 ---
