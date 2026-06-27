@@ -1,0 +1,93 @@
+{
+  "lighthouse-home.json": {
+    "performance": 65,
+    "accessibility": 95,
+    "best-practices": 75,
+    "seo": 100
+  },
+  "lighthouse-gill-context.json": {
+    "performance": 56,
+    "accessibility": 92,
+    "best-practices": 75,
+    "seo": 100
+  },
+  "pa11y-home.out": {
+    "issues": 105,
+    "codes": [
+      [
+        "color-contrast",
+        101
+      ],
+      [
+        "aria-prohibited-attr",
+        4
+      ]
+    ]
+  },
+  "pa11y-gill.out": {
+    "issues": 64,
+    "codes": [
+      [
+        "aria-allowed-attr",
+        33
+      ],
+      [
+        "color-contrast",
+        29
+      ],
+      [
+        "aria-hidden-focus",
+        1
+      ],
+      [
+        "aria-valid-attr-value",
+        1
+      ]
+    ]
+  },
+  "pa11y-premium.out": {
+    "issues": 118,
+    "codes": [
+      [
+        "color-contrast",
+        84
+      ],
+      [
+        "aria-allowed-attr",
+        24
+      ],
+      [
+        "aria-hidden-focus",
+        7
+      ],
+      [
+        "scrollable-region-focusable",
+        1
+      ],
+      [
+        "aria-prohibited-attr",
+        1
+      ],
+      [
+        "aria-valid-attr-value",
+        1
+      ]
+    ]
+  },
+  "npm-audit": {
+    "info": 0,
+    "low": 3,
+    "moderate": 5,
+    "high": 0,
+    "critical": 0,
+    "total": 8
+  },
+  "retire": {
+    "version": "5.4.3",
+    "start": "2026-06-27T08:32:05.185Z",
+    "data": [],
+    "messages": [],
+    "errors": [],
+    "time": 19.124
+  }
+}

@@ -205,3 +205,50 @@ It documents:
 - first safe experiments for Pa11y, Lighthouse, Lychee, Semgrep, Gitleaks/TruffleHog.
 
 Recommendation: treat this as advisory research. Do not turn all external tools into blocking CI at once.
+
+## 7. Empirical external-audit tool verification
+
+A follow-up source doc was created and pushed:
+
+```text
+docs/EXTERNAL_AUDIT_EMPIRICAL_RESULTS_2026-06-27.md
+```
+
+Source commit:
+
+```text
+d69debbe [LANE lane/system-premiumcontrols-dist-gate-wiring-2026-06-27] docs(audit): classify external checks by empirical Arena results
+```
+
+What was actually tested:
+
+- 72 external URLs from the toolbox were checked by `curl -I -L`; all resolved or redirected successfully.
+- Lighthouse CLI worked only after setting explicit `CHROME_PATH` to Playwright Chromium.
+- Pa11y with axe runner worked and found real accessibility classes.
+- Linkinator worked and scanned 346 local links successfully.
+- `html-validator-cli` worked on `dist/index.html` and exposed spec-level HTML/ARIA issues; it was flaky on larger Gill HTML through the remote W3C API.
+- `npm audit --json` worked and found 8 dev dependency vulnerabilities (0 high/critical).
+- Retire.js worked and found no vulnerable browser JS libraries.
+- markdownlint-cli2 worked and found style defects in the new toolbox doc; the doc was fixed to pass.
+- Production `curl -I https://gospod-bog.ru/` showed HSTS present but CSP/XCTO/XFO/Referrer/Permissions headers absent.
+- PageSpeed Insights API returned 429 quota without API key, so it should not be treated as a no-key local check.
+- `@axe-core/cli`, Semgrep via `npx`, Lychee via `npx`, and Gitleaks via `npx` were classified as bad local quick paths in Arena; use Pa11y, Linkinator, or official binaries/GitHub Actions instead.
+
+Curated keep list after empirical testing:
+
+1. Lighthouse CLI with explicit `CHROME_PATH`.
+2. Pa11y with axe runner.
+3. Linkinator local crawl.
+4. `html-validator-cli` on representative pages, warn-only.
+5. `npm audit --json` baseline.
+6. Retire.js.
+7. markdownlint-cli2 for docs.
+8. Production header check with `curl`.
+9. SecurityHeaders / Observatory / SSL Labs as manual production checks.
+10. W3C / Rich Results / Schema validators as manual semantic checks.
+
+Evidence was copied under:
+
+```text
+evidence/external-audit/
+```
