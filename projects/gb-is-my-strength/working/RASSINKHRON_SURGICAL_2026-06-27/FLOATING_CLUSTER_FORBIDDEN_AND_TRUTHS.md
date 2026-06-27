@@ -1,4 +1,6 @@
 # FLOATING_CLUSTER_FORBIDDEN_AND_TRUTHS.md
+> **STALE / DO NOT USE AS CURRENT IMPLEMENTATION INSTRUCTION (2026-06-27 reconciliation):** any `calc(... - 28px)` Hermeneutics position shown below is **SUPERSEDED / FORBIDDEN / WRONG / POS-01 / NEVER re-introduce**. Current canonical Hermeneutics position is desktop `right: max(8.5vw, env(safe-area-inset-right, 0px))` and mobile `right: max(4.5vw, env(safe-area-inset-right, 0px))`. Gill v16 is the current base; do not restore legacy `gbs2` as target.
+
 **PremiumControls / Floating Cluster — Protected Subsystem Truths & Forbids**
 **Date:** 2026-06-27 (post RASSINKHRON + 8-screenshot bugs)
 **Source of truth:** gb-floating-cluster-probe-v16.html + owner instructions + VR history
@@ -7,14 +9,20 @@
 - Roman numerals **MUST** use `<RomanNumeral value="II" />` (src/components/ui/floating-cluster/RomanNumeral.astro) → renders `<span class="gb-roman">` (css/floating-cluster.css:2012).
   - Gold italic serif, --color-accent-gold.
   - Applies to: all Gill rails, series TOCs, part TOCs, sheets, bbars.
-- Hermeneutics floater position (breadcrumb-level, not top-right):
+- Hermeneutics floater position (breadcrumb-level, not top-right) — CURRENT CANON:
   ```css
   .gb-floater--hermeneutics {
     top: calc(clamp(24px, 3.5vw, 44px) - 4px);
-    right: max(calc((100vw - min(820px, 92vw)) / 2 - 28px), 16px);
+    right: max(8.5vw, env(safe-area-inset-right, 0px));
+  }
+  @media (max-width: 899px) {
+    .gb-floater--hermeneutics {
+      top: calc(clamp(24px, 3.5vw, 44px) - 4px);
+      right: max(4.5vw, env(safe-area-inset-right, 0px));
+    }
   }
   ```
-  (floating-cluster.css:39; matches legacy .theme-toggle).
+  Old `right: max(calc((100vw - min(820px, 92vw)) / 2 - 28px), 16px);` is SUPERSEDED / FORBIDDEN / WRONG / POS-01 / NEVER re-introduce.
 - All PremiumControls scoped with `data-fc-root` or `data-fc-controls="gill-rail"`.
 - Controller (js/floating-cluster-controller.js — 1051 lines) handles TTS chunking, speed morph, gb:tts-rate-change, favorites, keyboard, Gill/GBS2 init.
 - No double CSS delivery (PC-004).

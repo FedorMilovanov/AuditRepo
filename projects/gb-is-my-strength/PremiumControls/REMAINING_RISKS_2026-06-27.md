@@ -4,13 +4,13 @@
 
 This section supersedes earlier "all fixed" wording where it conflicts.
 
-**Latest source `16e1dccd` status:** PC-CURRENT-01 / BUG-033 / BUG-034 / BUG-035 are fixed or classified as audit drift. PC-CURRENT-02, 03, 04, 05, 06 remain live.
+**Latest reconciled source `6664056` status:** PC-CURRENT-01 / BUG-033 / BUG-034 / BUG-035 are fixed or classified as audit drift. PC-CURRENT-02, 03, 04, 05, 06 remain live until proven closed by a later source+dist+browser reverify.
 
 Confirmed active risks after independent reverify. Update: PC-CURRENT-01 is fixed in source `87505f1b`, but kept here as recently-fixed gate context; PC-CURRENT-02..06 remain live:
 
 | ID | Severity | Status | Summary |
 |---|---:|---|---|
-| PC-CURRENT-01 | P0/P1 | confirmed-current | `strangler:audit:production-like` / `dist-publication-audit.js` fails because Gill marker contract still expects legacy `gbs2-rail` on v16 pages. |
+| PC-CURRENT-01 | P0/P1 | fixed/retired-current | Stale Gill marker contract was fixed by later source; keep as historical context only, not current blocker. |
 | PC-CURRENT-02 | P1 | confirmed-current | PC-007 false-green: all Gill dist pages have `gb-roman=0`; raw numerals remain. |
 | PC-CURRENT-03 | P1/P2 | confirmed-current | Unversioned `floating-cluster.css` / controller refs remain in Astro-owned dist pages. |
 | PC-CURRENT-04 | P1/P2 | confirmed-current | `css/premium-controls.css` listed by inventory/cache-bust but absent; runtime CSS truth unclear. |

@@ -1,6 +1,6 @@
 # Current Head Canonical Ledger — gb-is-my-strength
 **Date:** 2026-06-27
-**Source HEAD:** `819fd3f1` (mobile visibility fallback landed; static/workflow gates pass; independent PremiumControls reverify found production-like dist audit and contract false-green gaps)
+**Source HEAD:** `66640561919501e68dd9d3cd290ff9afe53d3068` (latest source checked in reconciliation; post-16e1dccd commits are mostly audit/docs/workflow, not a PremiumControls final sign-off)
 **Purpose:** current operational truth only. No historical append-only narrative, no old bug-count drift.
 
 ---
@@ -55,6 +55,16 @@ Source `16e1dccd` keeps the production-like gate green and fixes the browser aud
 - `strangler:audit:production-like` ✅ PASS.
 
 Remaining PremiumControls issues: PC-CURRENT-06, PC-CURRENT-02, PC-CURRENT-03, PC-CURRENT-04, PC-CURRENT-05. Evidence: `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_16E1DCCD_DELTA_REVERIFY_2026-06-27.md`.
+
+
+### Delta after source `6664056`
+
+Source moved beyond `16e1dccd`, but the later commits do not close the remaining PremiumControls/Gill runtime holes. Current operational truth remains:
+
+- Gill v16 is the correct current base on all five Gill routes; do not revert to legacy `gbs2` as target architecture.
+- Hermeneutics position canonical is `8.5vw` desktop / `4.5vw` mobile. The old `calc(... - 28px)` formula is SUPERSEDED / FORBIDDEN / WRONG / POS-01 / NEVER re-introduce.
+- PC-CURRENT-02/03/04/05/06 remain open until source+dist+browser evidence proves closure.
+- “100% green” language is historical unless explicitly scoped to a barrier that does not cover these open items.
 
 ---
 
@@ -128,11 +138,11 @@ Remaining PremiumControls issues: PC-CURRENT-06, PC-CURRENT-02, PC-CURRENT-03, P
 
 ## C. CONFIRMED-CURRENT — live second-order issues & weak spots
 
-### C1. Gill split-family architecture remains live
+### C1. Gill v16 consolidation remains live; old “split-family parts 2/3 legacy” wording is stale
 **Severity:** P1/P2 boundary
-**Type:** architectural convergence debt
+**Type:** architectural/visual consolidation debt
 
-Gill pages still span more than one UI family / premium-control structure. `gill-context` and `gill-part1` are on v16, while Parts 2, 3, and Spravochnik remain on legacy `gbs2-rail`. This is live architecture debt, not just cosmetic drift. Turn-key guide available in `AuditRepo/projects/gb-is-my-strength/PremiumControls/TURNKEY_GILL_CONVERGENCE_GUIDE_2026-06-27.md`.
+Current truth: the five Gill routes have moved to the v16 marker family (`data-gill-v16`, `.gbs-rail`, `.mobile-bottom-bar`, `#seriesTocOverlay`, `#partTocOverlay`) in the current source/prod line. The live debt is no longer “parts 2/3/spravochnik are the legacy base”; the live debt is that v16 is unfinished: RomanNumeral is false-green, CSS sanitation is open, mobile current-item overlay behavior needs proof/fix, asset hashing is incomplete, and the premium TOC/rail polish still needs owner screenshots. Do not restore legacy `gbs2-rail` / `gbs2-sheet` as the target.
 
 ### C2. Source-vs-built divergence remains an active repo risk class
 **Severity:** P2
@@ -187,8 +197,8 @@ Use this label for:
 
 ## E. Immediate repair priorities (Updated Handoff Doctrine)
 
-1. **Complete Gill convergence (LANE `lane/gill-parts-v16-convergence`)**
-   - Migrate Parts 2, 3, and Spravochnik to `GillContextPageChrome.astro` v16 standard using the Turn-key guide in `PremiumControls/`.
+1. **Gill v16 consolidation (do not revert to legacy `gbs2`)**
+   - Keep the current v16 base; close PC-CURRENT-06, PC-CURRENT-02, PC-CURRENT-03, PC-CURRENT-04, PC-CURRENT-05 in that order before premium visual polish.
 
 2. **Decompose Controller (LANE `lane/system-premiumcontrols-controller-split`)**
    - Refactor `js/floating-cluster-controller.js` into strict internal domains using the Turn-key guide in `PremiumControls/`.
@@ -203,4 +213,4 @@ Use this label for:
 
 ## F. Canonical one-paragraph summary
 
-**Current HEAD `e0a1642f` represents the absolute pinnacle of structural stability and verification rigor on Node 22 (`v22.12.0`) with Playwright across 50+ routes. All control plane parity defects (workflow policy match, `/izbrannoe/` integration, AGENTS §2/3.10 inventory reconciliation, font download syntax fix, audit-pro path leaks, z-index magic numbers, Strangler pattern blindness in rollout audits, Gill H2 parity drift, Playwright visual-audit height expectations) have been 100% resolved and pass the full static publication release barrier. Remaining live challenges are purely second-order architectural cleanups: completing Gill v16 convergence, decomposing the controller monolith, repairing the genealogy multi-parent layout, and reconciling map holding page sitemap statuses. Turn-key implementation guides and full code blueprints are prepared and published in `AuditRepo/projects/gb-is-my-strength/PremiumControls/`.**
+**Current HEAD `6664056` is not a “PremiumControls 100% complete” state. It is a healthier v16-based state with green-but-incomplete gates. The current safe doctrine is: reconcile truth first, sanitize CSS second, consolidate Gill v16 behavior and RomanNumeral third, then do owner-reviewed premium TOC/rail polish. Hermeneutics position is frozen to `8.5vw` / `4.5vw`; the old `calc(... - 28px)` formula is a forbidden POS-01 bug.**

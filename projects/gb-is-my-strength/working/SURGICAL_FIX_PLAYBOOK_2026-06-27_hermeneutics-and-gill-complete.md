@@ -1,4 +1,6 @@
 # SURGICAL FIX PLAYBOOK — Close Hermeneutics + Gill completely (executable by a weak agent)
+> **STALE / DO NOT USE AS CURRENT IMPLEMENTATION INSTRUCTION (2026-06-27 reconciliation):** any `calc(... - 28px)` Hermeneutics position shown below is **SUPERSEDED / FORBIDDEN / WRONG / POS-01 / NEVER re-introduce**. Current canonical Hermeneutics position is desktop `right: max(8.5vw, env(safe-area-inset-right, 0px))` and mobile `right: max(4.5vw, env(safe-area-inset-right, 0px))`. Gill v16 is the current base; do not restore legacy `gbs2` as target.
+
 **Date:** 2026-06-27
 **Target source HEAD verified against:** `6dc6477`
 **Reference (single source of truth):** `uploads/gb-floating-cluster-probe-v16 (2).html`
@@ -71,7 +73,7 @@ If any line number drifted, re-grep — use the grep result, not the number.
 ```css
 .gb-floater--hermeneutics {
   top: calc(clamp(24px, 3.5vw, 44px) - 4px);
-  right: max(calc((100vw - min(820px, 92vw)) / 2 - 28px), 16px);
+  right: max(calc((100vw - min(820px, 92vw)) / 2 - 28px), 16px); /* SUPERSEDED / FORBIDDEN / WRONG / POS-01 / NEVER re-introduce */
 }
 ```
 This is correct and reference-faithful (breadcrumb-level, content-column edge). Leave it as-is.

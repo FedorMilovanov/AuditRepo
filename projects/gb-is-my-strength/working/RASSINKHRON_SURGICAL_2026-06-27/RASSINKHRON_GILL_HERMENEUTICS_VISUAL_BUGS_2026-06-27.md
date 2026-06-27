@@ -1,4 +1,6 @@
 # RASSINKHRON + PREMIUMCONTROLS: Visual Regressions from Screenshots (2026-06-27)
+> **STALE / DO NOT USE AS CURRENT IMPLEMENTATION INSTRUCTION (2026-06-27 reconciliation):** any `calc(... - 28px)` Hermeneutics position shown below is **SUPERSEDED / FORBIDDEN / WRONG / POS-01 / NEVER re-introduce**. Current canonical Hermeneutics position is desktop `right: max(8.5vw, env(safe-area-inset-right, 0px))` and mobile `right: max(4.5vw, env(safe-area-inset-right, 0px))`. Gill v16 is the current base; do not restore legacy `gbs2` as target.
+
 
 **HEAD:** 49b83365 (post prior surgical report)  
 **Focus:** User-reported bugs in attached screenshots (mobile TOC roman numerals, hermeneutics distance, Gill context "непонятный блок сверху", rail/TOC self-made styles).  
@@ -42,7 +44,7 @@ These are **visual regressions** against:
   ```css
   .gb-floater--hermeneutics {
     top: calc(clamp(24px, 3.5vw, 44px) - 4px);
-    right: max(calc((100vw - min(820px, 92vw)) / 2 - 28px), 16px);
+    right: max(calc((100vw - min(820px, 92vw)) / 2 - 28px), 16px); /* SUPERSEDED / FORBIDDEN / WRONG / POS-01 / NEVER re-introduce */
   }
   ```
 - Problem: "старое близкое расстояние" — the calc offset is insufficient on current viewport/content widths. Matches prior reports (VR-01 position override, breadcrumb-level).

@@ -3,9 +3,51 @@
 **Project:** `gb-is-my-strength` (`gospod-bog.ru`)
 **Date:** 2026-06-27 (Углубленная хирургическая редакция после 5 волн аудита)
 **Replaces:** `Полный план внедрения PremiumControls по всему проекту.pdf` (14 стр, 2026-06), все скриншоты из чата, все предыдущие `floating-cluster` / `PremiumControls` PDF/MD, а также устаревшие сводки по PR #19.
-**Status:** Phase 1..3 — ПОЛНОСТЬЮ ЗАКРЫТЫ И ВЫВЕРЕНЫ НА АТОМАРНОМ УРОВНЕ (HEAD `4f962f75`), 100% прохождение всех барьеров на Node 22 (`v22.12.0`) и Playwright (`v1.61.1`).
+**Current status:** NOT 100% final. Current operational truth is the correction block below; old “100% closed” wording is historical/forensic only and is superseded anywhere it conflicts with PC-CURRENT open items.
+**Last source HEAD independently checked in this reconciliation:** `66640561919501e68dd9d3cd290ff9afe53d3068` (`audit: compact local report storage`).
 **Source repo:** `FedorMilovanov/gb-is-my-strength`
 **Audit folder:** `AuditRepo/projects/gb-is-my-strength/PremiumControls/`
+
+---
+
+## 🚨 Current operational truth — source HEAD `66640561919501e68dd9d3cd290ff9afe53d3068` (2026-06-27)
+
+This block is the active truth for new agents. It supersedes any lower “100% fixed / master barrier / atomically closed” wording in this file unless that lower wording is explicitly historical.
+
+- Gill v16 is the **current base** for the five Gill routes. Do not return to legacy `gbs2-rail` / `gbs2-sheet` as the target architecture.
+- Gill v16 is **not final UI sign-off**. It still needs functional and visual consolidation.
+- Hermeneutics position canonical is the live `css/floating-cluster.css` formula:
+
+```css
+.gb-floater--hermeneutics {
+  top: calc(clamp(24px, 3.5vw, 44px) - 4px);
+  right: max(8.5vw, env(safe-area-inset-right, 0px));
+}
+@media (max-width: 899px) {
+  .gb-floater--hermeneutics {
+    top: calc(clamp(24px, 3.5vw, 44px) - 4px);
+    right: max(4.5vw, env(safe-area-inset-right, 0px));
+  }
+}
+```
+
+- **SUPERSEDED / FORBIDDEN / WRONG / POS-01 / NEVER re-introduce:**
+
+```css
+right: max(calc((100vw - min(820px, 92vw)) / 2 - 28px), 16px);
+```
+
+That old calc was the “впритык” POS-01 bug. It may appear only as forensic history with explicit forbidden/superseded wording.
+
+Current open items unless a later source reverify proves otherwise:
+
+1. **PC-CURRENT-02:** RomanNumeral false-green — `RomanNumeral.astro` exists, but Gill output still has `gb-roman=0` / raw `I/II/III`.
+2. **PC-CURRENT-03:** unversioned PremiumControls asset refs remain on some Astro-owned output (`floating-cluster.css` / controller refs).
+3. **PC-CURRENT-04:** CSS architecture/inventory drift — runtime truth is `css/floating-cluster.css`; `css/premium-controls.css` is absent from `/css` and must not be called deployed canon.
+4. **PC-CURRENT-05:** malformed transition fragments remain in `css/floating-cluster.css`.
+5. **PC-CURRENT-06:** Gill mobile current series item needs guarded proof/fix so it opens `#partTocOverlay` rather than navigating/reloading.
+
+Required sequence: reconciliation → CSS sanitation → Gill v16 functional consolidation → owner-reviewed premium TOC polish.
 
 ---
 
@@ -153,11 +195,11 @@ ARIA и доступность:
 
 ---
 
-## 4. Канонический реестр истины (Текущий HEAD 2026-06-27 `4f962f75`)
+## 4. Historical/forensic registry from old barrier (`4f962f75`) — NOT current operational truth
 
 В ходе пяти волн хирургического вмешательства в репозитории `gb-is-my-strength` были полностью устранены все первоочередные дефекты и расхождения в контрольной плоскости. Устаревшие сводки по PR #19 официально объявляются историческим архивом.
 
-### 4.1 Статус решённых задач (100% FIXED)
+### 4.1 Historical fixed-claim snapshot — superseded where PC-CURRENT remains open
 1.  **PC-001 PremiumControlAnchor:** `PremiumControlAnchor.astro` создан, содержит атрибут `data-pc-anchor` и защищен скриптом `owner-ui-regression-guard.js`.
 2.  **PC-002 Heart-series wiring:** `KrajneBody.astro` и `Rimlyanam7Body.astro` успешно обернуты в `data-fc-root data-fc-mode="series-lite" data-fc-variant="heart"`. Все контролы живы.
 3.  **PC-003 Asset hash unification (PC-MAIN-01 / PC-MAIN-02):** `src/lib/asset-version.js` хелпер создан и автоматически синхронизируется скриптом `scripts/cache-bust.js`. В `package.json` внедрен алиас `"audit:premium-controls:no-build"`.
@@ -204,9 +246,9 @@ AuditRepo/projects/gb-is-my-strength/PremiumControls/
 
 ---
 
-## 6. Мастер-барьер сборки (100% PASS)
+## 6. Historical master-barrier snapshot (not final PremiumControls/Gill UI sign-off)
 
-Запуск `npm run validate:static-publication` в среде Node 22 (`v22.12.0`) подтверждает стопроцентное прохождение всех квалификационных ворот:
+Historical run on an older source proved that barrier snapshot only. It must not be read as current “PremiumControls 100% complete”:
 
 ```text
 ══════════════════════════════════════════════════════════════════════════════

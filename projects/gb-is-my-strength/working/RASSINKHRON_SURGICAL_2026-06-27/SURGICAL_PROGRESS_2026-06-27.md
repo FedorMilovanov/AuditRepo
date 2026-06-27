@@ -1,4 +1,6 @@
 # SURGICAL PROGRESS SUMMARY — 2026-06-27 (RASSINKHRON + PremiumControls)
+> **STALE / DO NOT USE AS CURRENT IMPLEMENTATION INSTRUCTION (2026-06-27 reconciliation):** any `calc(... - 28px)` Hermeneutics position shown below is **SUPERSEDED / FORBIDDEN / WRONG / POS-01 / NEVER re-introduce**. Current canonical Hermeneutics position is desktop `right: max(8.5vw, env(safe-area-inset-right, 0px))` and mobile `right: max(4.5vw, env(safe-area-inset-right, 0px))`. Gill v16 is the current base; do not restore legacy `gbs2` as target.
+
 
 **Instructions followed strictly:** Surgical precision (хирург), evidence-first, only low-risk actions first. Read all docs first (AGENTS.md r297+, LANE_LOCK, WORK_MODES, matrix, etc.). Preserve ALL contracts (visual parity, DOM markers, data-fc-*, gb-*, no new CSS/JS, rollout-audit gate).
 
@@ -55,7 +57,7 @@
   ```css
   .gb-floater--hermeneutics {
     top: calc(clamp(24px, 3.5vw, 44px) - 4px);
-    right: max(calc((100vw - min(820px, 92vw)) / 2 - 28px), 16px);
+    right: max(calc((100vw - min(820px, 92vw)) / 2 - 28px), 16px); /* SUPERSEDED / FORBIDDEN / WRONG / POS-01 / NEVER re-introduce */
   }
   ```
 - Canonical .gb-roman (line 2012) — italic gold serif.

@@ -40,7 +40,7 @@ This is the "хорошее расстояние" the owner remembers: the day/n
 ```css
 .gb-floater--hermeneutics {
   top: calc(clamp(24px, 3.5vw, 44px) - 4px);                      /* top: CORRECT, matches history */
-  right: max(calc((100vw - min(820px, 92vw)) / 2 - 28px), 16px);  /* right: INVENTED, lands ~28px off content edge = впритык */
+  right: max(calc((100vw - min(820px, 92vw)) / 2 - 28px), 16px);  /* SUPERSEDED / FORBIDDEN / WRONG / POS-01 / NEVER re-introduce: invented, lands ~28px off content edge = впритык */
 }
 ```
 - The `top` is faithful to history. Good.
