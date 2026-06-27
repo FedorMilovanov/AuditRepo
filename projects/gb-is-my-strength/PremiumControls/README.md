@@ -58,6 +58,18 @@ Remaining after `87505f1b`:
 - BUG-035 mobile theme visibility is classified as an audit-selector false-positive: `.gb-theme-toggle` is visible and click toggles theme.
 - BUG-033 is confirmed audit-selector drift; BUG-034 remains a visual-audit contract decision.
 
+
+### Follow-up delta — source HEAD `16e1dccd`
+
+Source `16e1dccd` fixes the Gill v16 audit-script false positives: `interactive-audit` and `visual-audit` now pass, and `strangler:audit:production-like` remains green.
+
+Current delta report: `reports/PREMIUMCONTROLS_CURRENT_MAIN_16E1DCCD_DELTA_REVERIFY_2026-06-27.md`.
+
+Current truth after `16e1dccd`:
+- PC-CURRENT-01, BUG-033, BUG-034, BUG-035 are fixed/green.
+- PC-CURRENT-02/03/04/05 remain open.
+- PC-CURRENT-06 remains open and is not covered by `interactive-audit` yet.
+
 ---
 
 ## 1. Что такое PremiumControls (Архитектурная доктрина)

@@ -10,7 +10,7 @@
 | PC-003 | P1 | Source hash drift / asset-version parity | ⚠️ PARTIAL / REOPENED — helper sync exists, but unversioned `floating-cluster.css` / controller refs remain in Astro-owned dist pages |
 | PC-004 | P1 | CSS duplicate cleanup / canonical CSS source | ✅ SOURCE-LANDED (`src/styles/premium-controls.css`) / `AGENTS.md` §2 inventory officially reconciled |
 | PC-005 | P2 | PlayEmber semantics: canonical key/event/ARIA/reference UI | ✅ MERGED (`fdd446b6` hover-bloom, Russian TTS voice `pickRuVoice`, working pause, `gb:audio:rate` canonical + upward bloom container expansion) |
-| PC-006 | P2 | Route-archetype / rollout audit | ⚠️ SCRIPT EXISTS BUT NOT BULLETPROOF — passes while `gb-roman=0` and unversioned PremiumControls assets remain |
+| PC-006 | P2 | Route-archetype / rollout audit | ⚠️ IMPROVED BUT NOT BULLETPROOF — runtime visual/interactive audits now pass, but rollout audit still passes while `gb-roman=0` and unversioned PremiumControls assets remain |
 | PC-007 | P1 | RomanNumeral integration (`gb-roman`) | ❌ REOPENED — component exists, but all five Gill dist pages have `gb-roman=0` and raw numerals remain |
 | PC-008 | P1 | Playwright `visual-audit.js` vertical cluster height expectations | ✅ FIXED (expectations split by desktop vs mobile viewports) |
 | PC-010 | P2 | Controller god-object decomposition | ⏳ OPEN — turn-key guide available in `TURNKEY_CONTROLLER_DECOMPOSITION_GUIDE_2026-06-27.md` |
@@ -30,6 +30,8 @@ The table above has been corrected for the live PremiumControls gaps found by th
 Primary evidence: `reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPENDENT_VERIFIER_2026-06-27.md`.
 
 87505f1b delta: `reports/PREMIUMCONTROLS_CURRENT_MAIN_87505F1B_DELTA_TRIAGE_2026-06-27.md` — dist publication gate fixed; PC-CURRENT-06 added.
+
+16e1dccd delta: `reports/PREMIUMCONTROLS_CURRENT_MAIN_16E1DCCD_DELTA_REVERIFY_2026-06-27.md` — interactive/visual audit false positives fixed; PC-CURRENT-02/03/04/05/06 remain.
 
 
 ---

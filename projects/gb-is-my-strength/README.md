@@ -26,6 +26,9 @@ Use `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_INDEPENDENT_VERIFIER_2
 
 **Second follow-up:** source `87505f1b` fixes BUG-032/dist-publication gate and `strangler:audit:production-like` now passes, but PC-CURRENT-02/03/04/05 remain open and PC-CURRENT-06 was added. See `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_87505F1B_DELTA_TRIAGE_2026-06-27.md`.
 
+
+**Third follow-up:** source `16e1dccd` fixes interactive/visual Gill v16 audit drift and keeps production-like gates green. Remaining PremiumControls work is now PC-CURRENT-06 + PC-CURRENT-02/03/04/05. See `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_16E1DCCD_DELTA_REVERIFY_2026-06-27.md`.
+
 ## Current-head note (2026-06-27)
 
 ⚠️ **Do not treat older aggregate bug counts in this project as current operational truth.**

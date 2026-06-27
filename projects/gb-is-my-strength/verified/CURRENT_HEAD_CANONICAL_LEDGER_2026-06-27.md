@@ -45,6 +45,17 @@ New/remaining PremiumControls truth after browser triage:
 
 Evidence: `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_87505F1B_DELTA_TRIAGE_2026-06-27.md`.
 
+
+### Delta after source `16e1dccd`
+
+Source `16e1dccd` keeps the production-like gate green and fixes the browser audit false positives:
+
+- `interactive-audit` ✅ PASS after adding Gill v16 and current theme selectors.
+- `visual-audit` ✅ PASS after accepting Gill v16 current-card markers.
+- `strangler:audit:production-like` ✅ PASS.
+
+Remaining PremiumControls issues: PC-CURRENT-06, PC-CURRENT-02, PC-CURRENT-03, PC-CURRENT-04, PC-CURRENT-05. Evidence: `PremiumControls/reports/PREMIUMCONTROLS_CURRENT_MAIN_16E1DCCD_DELTA_REVERIFY_2026-06-27.md`.
+
 ---
 
 ## A. STALE / retired broad narratives

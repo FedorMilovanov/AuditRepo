@@ -52,14 +52,34 @@ Detailed delta report: `PREMIUMCONTROLS_CURRENT_MAIN_87505F1B_DELTA_TRIAGE_2026-
 
 ---
 
+
+## Delta note — source `16e1dccd`
+
+Source `16e1dccd` fixed the audit-script false positives from the previous rounds:
+
+- `interactive-audit` now supports Gill v16 and current theme selectors; it passes.
+- `visual-audit` now accepts the Gill v16 current-card marker; it passes.
+- `strangler:audit:production-like` remains green.
+
+Still open for source agents:
+
+- PC-CURRENT-06 — Gill mobile current item in series overlay reloads instead of opening part TOC. This is not covered by the now-green `interactive-audit`.
+- PC-CURRENT-02 — RomanNumeral still false-green.
+- PC-CURRENT-03 — unversioned PremiumControls asset refs.
+- PC-CURRENT-04 — `css/premium-controls.css` architecture drift.
+- PC-CURRENT-05 — malformed transition fragments.
+
+Detailed delta report: `PREMIUMCONTROLS_CURRENT_MAIN_16E1DCCD_DELTA_REVERIFY_2026-06-27.md`.
+
+---
+
 ## Must-fix order
 
-1. `PC-CURRENT-01` — `strangler:audit:production-like` red because `dist-publication-audit.js` expects stale Gill `gbs2-rail` markers.
-2. `PC-CURRENT-03` — unversioned PremiumControls CSS/controller refs in Astro-owned dist pages.
-3. `PC-CURRENT-02` — `RomanNumeral` not actually used on Gill pages; `gb-roman=0` in dist.
+1. `PC-CURRENT-06` — Gill mobile current series item reloads instead of opening part TOC.
+2. `PC-CURRENT-02` — `RomanNumeral` not actually used on Gill pages; `gb-roman=0` in dist.
+3. `PC-CURRENT-03` — unversioned PremiumControls CSS/controller refs in Astro-owned dist pages.
 4. `PC-CURRENT-04` — `css/premium-controls.css` inventory drift.
 5. `PC-CURRENT-05` — malformed CSS transition declarations.
-6. `PC-CURRENT-06` — Gill mobile current series item reloads instead of opening part TOC.
 
 Do not combine all of these in one commit. Each item is a separate small lane.
 

@@ -4,6 +4,8 @@
 
 This section supersedes earlier "all fixed" wording where it conflicts.
 
+**Latest source `16e1dccd` status:** PC-CURRENT-01 / BUG-033 / BUG-034 / BUG-035 are fixed or classified as audit drift. PC-CURRENT-02, 03, 04, 05, 06 remain live.
+
 Confirmed active risks after independent reverify. Update: PC-CURRENT-01 is fixed in source `87505f1b`, but kept here as recently-fixed gate context; PC-CURRENT-02..06 remain live:
 
 | ID | Severity | Status | Summary |
