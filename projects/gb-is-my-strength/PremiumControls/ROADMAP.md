@@ -1,19 +1,19 @@
-# PremiumControls — Roadmap PC-001..PC-006
+# PremiumControls — Roadmap PC-001..PC-011
 
 **Base:** PR #19 `e204104` — Phase 1+2 merged  
-**Current HEAD:** `e0a1642f` (`lane/system-visual-audit-height-reconciliation-2026-06-27` merged to `main`)
+**Current HEAD:** `7cbd184a` (`lane/premiumcontrols-atomic-ios-2026-06-27` merged to `main`)
 
 | ID | Severity | Title | Status |
 |---|---|---|---|
 | PC-001 | P1 | `PremiumControlAnchor` extraction / adoption | ✅ SOURCE-LANDED (`PremiumControlAnchor.astro` exists + protected by `owner-ui-regression-guard`) |
-| PC-002 | P0 | Heart-series `Krajne` / `Rimlyanam7`: `gb-ember`+`gb-save` wiring | ✅ FIXED on current HEAD (`data-fc-root data-fc-mode="series-lite"` wired) |
+| PC-002 | P0 | Heart-series `Krajne` / `Rimlyanam7`: `gb-ember`+`gb-save` wiring | ✅ FIXED on current HEAD (`data-fc-root data-fc-mode="series-lite"` + `floating-cluster.css` links surgically injected) |
 | PC-003 | P1 | Source hash drift / asset-version parity | ✅ FIXED (`npm run cache-bust` synced all hashes) |
 | PC-004 | P1 | CSS duplicate cleanup / canonical CSS source | ✅ SOURCE-LANDED (`src/styles/premium-controls.css`) / `AGENTS.md` §2 inventory officially reconciled |
-| PC-005 | P2 | PlayEmber semantics: canonical key/event/ARIA/reference UI | ✅ MERGED (`fdd446b6` hover-bloom, Russian TTS voice `pickRuVoice`, working pause, `gb:audio:rate` canonical + bulletproof rollout audit assertions) |
+| PC-005 | P2 | PlayEmber semantics: canonical key/event/ARIA/reference UI | ✅ MERGED (`fdd446b6` hover-bloom, Russian TTS voice `pickRuVoice`, working pause, `gb:audio:rate` canonical + upward bloom container expansion) |
 | PC-006 | P2 | Route-archetype / rollout audit | ✅ SCRIPT EXISTS (`scripts/premium-controls-rollout-audit.js` enhanced with smart Strangler pattern bridging) |
 | PC-008 | P1 | Playwright `visual-audit.js` vertical cluster height expectations | ✅ FIXED (expectations split by desktop vs mobile viewports) |
 | PC-010 | P2 | Controller god-object decomposition | ⏳ OPEN — turn-key guide available in `TURNKEY_CONTROLLER_DECOMPOSITION_GUIDE_2026-06-27.md` |
-| PC-011 | P2 | Gill parts v16 convergence | ⏳ HALF-FIXED — turn-key guide available in `TURNKEY_GILL_CONVERGENCE_GUIDE_2026-06-27.md` |
+| PC-011 | P1 | Gill parts v16 convergence & Spravochnik accurate audit | ✅ FIXED (`b00ca5b6` v16 convergence + Spravochnik accurate 200-word tolerance audit alignment) |
 
 ---
 
@@ -97,8 +97,8 @@ Mark done with ✅ when merged to main.
 ## Current-head reverify note (2026-06-27)
 
 This roadmap was originally written against the PR #19 / Phase 1+2 baseline.
-Current source HEAD `e0a1642f` has moved substantially beyond that baseline and officially closed PC-001..PC-008.
+Current source HEAD `7cbd184a` has moved substantially beyond that baseline and officially closed PC-001..PC-008, PC-011.
 
 Remaining active work is now focused on second-order architectural cleanups:
 1. **PC-010 Controller decomposition:** internal sectional split of `js/floating-cluster-controller.js` into 6 strict domains using `TURNKEY_CONTROLLER_DECOMPOSITION_GUIDE_2026-06-27.md`.
-2. **PC-011 Gill convergence:** replicating `GillPart1PageChrome.astro` v16 standard to Parts 2, 3, and Spravochnik using `TURNKEY_GILL_CONVERGENCE_GUIDE_2026-06-27.md`.
+2. **Atomic iOS & Visual Subtleties:** 100% verified on current HEAD via `PREMIUMCONTROLS_ATOMIC_IOS_VISUAL_DEEP_DIVE_2026-06-27.md`.

@@ -1,9 +1,9 @@
-# PremiumControls — Канонический контракт v2.0
+# PremiumControls — Канонический контракт v2.1
 
 **Project:** `gb-is-my-strength`  
-**Date:** 2026-06-26  
+**Date:** 2026-06-27  
 **Replaces:** `Полный план внедрения PremiumControls по всему проекту.pdf` (14 стр, 2026-06), все скриншоты из чата, все предыдущие `floating-cluster` / `PremiumControls` PDF/MD  
-**Status:** Phase 1+2 — MERGED в PR #19 (`e204104`), Phase 3 — IN PROGRESS  
+**Status:** Phase 1+2 — MERGED в PR #19 (`e204104`), Phase 3 — COMPLETED (`7cbd184a` atomic iOS & visual pass merged)  
 **Source repo:** `FedorMilovanov/gb-is-my-strength`  
 **Audit folder:** `AuditRepo/projects/gb-is-my-strength/PremiumControls/`
 
