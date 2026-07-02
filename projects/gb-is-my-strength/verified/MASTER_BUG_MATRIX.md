@@ -2,7 +2,7 @@
 
 **Дата консолидации:** 2026-07-02  
 **HEAD исходного репозитория:** `f284fc60` (актуализирован после пакета исправлений P2/P1)  
-**Режим аудита:** Multi-Agent Synthesis (Passes 1–20 + Pass 13 Infra + Pass 14 Perf + Deep Untouched Zones Audit)  
+**Режим аудита:** Multi-Agent Synthesis (Passes 1–21 + Pass 21 SEO/Public Surface Re-verification)  
 **Статус:** ✅ ЕДИНАЯ ВЕРИФИЦИРОВАННАЯ МАТРИЦА (Очищена от галлюцинаций, черновиков и дубликатов)
 
 ---
@@ -12,11 +12,11 @@
 | Приоритет | Количество | Описание |
 |-----------|------------|----------|
 | 🔴 **P1 (Critical)** | 2 | Критические архитектурные проблемы и утечки памяти (требуют немедленного исправления) |
-| 🟡 **P2 (High)** | 24 | Высокий приоритет: SEO, AI-индексация, безопасность (XSS, HSTS), дублирование, консистентность данных |
-| 🔵 **P3 (Medium)** | 15 | Средний приоритет: a11y, Google Fonts в 3D-приложении, оптимизация картинок, мёртвый код |
+| 🟡 **P2 (High)** | 27 | Высокий приоритет: SEO, AI-индексация, безопасность, publication boundary, Pagefind, CI/CD, консистентность данных |
+| 🔵 **P3 (Medium)** | 21 | Средний приоритет: a11y, Google Fonts в 3D-приложении, social metadata, внутренние ссылки, оптимизация картинок, мёртвый код |
 | ⚪ **S0 (Low)** | 2 | Документация и технический долг в `AGENTS.md` |
-| ❌ **False Positives / Fixed** | 5+ | Опровергнутые или уже исправленные проблемы (`SEO-001`, `BUG-004`, `PC-CURRENT-06`) |
-| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **43** | Единый очищенный реестр без дубликатов и мусорных файлов |
+| ❌ **False Positives / Fixed** | 6+ | Опровергнутые или уже исправленные проблемы (`SEO-001`, `BUG-004`, `HSTS`, `PC-CURRENT-06`) |
+| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **52** | Единый очищенный реестр без дубликатов и мусорных файлов |
 
 ---
 
@@ -28,15 +28,15 @@
 * **Статус:** ✅ Подтверждён (Живой grep: `38 addEventListener, 0 removeEventListener`).
 * **План исправления (Исполнитель):** Добавить жизненный цикл очистки (`removeEventListener` или `AbortController`) для всех слушателей при демонтаже или смене состояния.
 
-### BUG-002: Дублирование кода в 44 компонентах Astro
-* **Файлы:** 39 компонентов `*PageHead.astro` (например, `GillPart1PageHead.astro`, `AntisovetovPageHead.astro`) и 5 компонентов `*PostArticle.astro`.
-* **Суть проблемы:** Копипаст разметки на 92–93% без использования базового компонента (`BasePageHead` / `BasePostArticle`). Любое изменение метатегов или подключений стилей требует ручной правки в 44 файлах.
-* **Статус:** ✅ Подтверждён.
+### BUG-002: Дублирование кода в 45 компонентах Astro
+* **Файлы:** 39 компонентов `*PageHead.astro` (например, `GillPart1PageHead.astro`, `AntisovetovPageHead.astro`) и 6 компонентов `*PostArticle.astro`.
+* **Суть проблемы:** Копипаст разметки на 92–93% без использования базового компонента (`BasePageHead` / `BasePostArticle`). Любое изменение метатегов или подключений стилей требует ручной правки в 45 файлах.
+* **Статус:** ✅ Подтверждён (Pass 21 recount: `39 PageHead + 6 PostArticle = 45`).
 * **План исправления (Исполнитель):** Выделить общий компонент `<BaseArticleHead>` и принять через props специфичные данные (заголовок, description, схему JSON-LD).
 
 ---
 
-## 🟡 P2 — HIGH PRIORITY (24 бага)
+## 🟡 P2 — HIGH PRIORITY (27 багов)
 
 ### 1. Безопасность (Security & XSS) — Включая новые незатронутые зоны
 * **NEW-48: Stored XSS в виджете избранного на главной странице (`Favorites.astro`)** 🔥 *NEW (Untouched Zone)*
@@ -44,20 +44,19 @@
   * *Суть:* В отличие от страницы `/izbrannoe/index.astro`, где используется функция экранирования `esc()`, виджет на главной странице вставлял значения `f.title` и `f.description` из `localStorage['gb-favorites']` напрямую через `innerHTML` без санитизации.
   * *Статус:* ✅ **ИСПРАВЛЕНО И ВЕРИФИЦИРОВАНО** (Коммит `f284fc60` — 2026-07-02: внедрена полная санитизация `esc()` и проверка URL-путей для `f.title`, `f.description`, `f.section`, `f.image`).
 
-* **NEW-28: Отсутствие HTTP-заголовка `Strict-Transport-Security` (HSTS)**
-  * *Суть:* Нет принудительного использования HTTPS (уязвимость к downgrade-атакам).
-* **NEW-29: Отсутствие HTTP-заголовка `X-Frame-Options` / `frame-ancestors`**
-  * *Суть:* Страницы сайта могут быть встроены в iframe сторонних ресурсов (уязвимость к Clickjacking).
+* **NEW-29: Отсутствие HTTP `X-Frame-Options` / HTTP CSP `frame-ancestors`**
+  * *Суть:* На live нет HTTP-заголовков `X-Frame-Options` и `Content-Security-Policy: frame-ancestors ...`; meta CSP не покрывает `frame-ancestors`. Страницы могут быть встроены в iframe сторонних ресурсов (clickjacking risk).
+  * *Статус:* ✅ Подтверждён Pass 21. HSTS не отсутствует и вынесен в False Positives.
 
 ### 2. AI-Индексация, SEO и Инфраструктура
-* **NEW-46: Отсутствие 19 продакшн-роутов в `llms.txt` (AI Crawlers Blindspot)** 🔥 *NEW (Untouched Zone)*
+* **NEW-46: Неполное покрытие `llms.txt` (AI Crawlers Blindspot)** 🔥 *NEW (Untouched Zone)*
   * *Файл:* `llms.txt`
-  * *Суть:* Файл `llms.txt` заявлен как индекс контента для LLM-поисковиков (Perplexity, ChatGPT Search, Claude, Grok). При этом в нём отсутствовали все 8 интерактивных карт, родословие и 10 статей «Баптисты России».
-  * *Статус:* ✅ **ИСПРАВЛЕНО И ВЕРИФИЦИРОВАНО** (Коммит `f284fc60` — 2026-07-02: добавлены 19 недостающих ссылок, теперь 45 ссылок в индексе).
-* **BUG-041 (NEW-41): Отсутствие 8 продакшн-роутов в `sitemap.xml`**
-  * *Файл:* `sitemap.xml`
-  * *Суть:* В статический манифест `sitemap.xml` были забыты 8 продакшн-страниц раздела карт (`/karty/*`).
-  * *Статус:* ✅ **ИСПРАВЛЕНО И ВЕРИФИЦИРОВАНО** (Коммит `f284fc60` — 2026-07-02: добавлены 8 роутов карт, 100% покрытие 53 продакшн-страниц).
+  * *Суть:* Файл `llms.txt` заявлен как индекс контента для LLM-поисковиков (Perplexity, ChatGPT Search, Claude, Grok), но не покрывает весь indexable content surface.
+  * *Статус:* ⚠️ **ЧАСТИЧНО ИСПРАВЛЕНО, НО НЕ ЗАКРЫТО**. Pass 21 на source `f284fc60`: `llms.txt` содержит 42 unique sitemap URLs, `sitemap.xml` содержит 51 URL; отсутствуют `/`, `/nagornaya/seriya/`, `/nagornaya/chast-1..5/`, `/nagornaya/istochniki/`, `/nagornaya/nakhodki/`.
+* **BUG-041 (NEW-41): Sitemap/indexability mismatch for karty holding pages**
+  * *Файл:* `sitemap.xml`, `karty/*/index.html`, `migration/page-ownership.json`
+  * *Суть:* Первоначальная формулировка «8 production routes missing from sitemap» была неполной: эти 8 `/karty/*` routes являются holding pages с `noindex, follow`. Коммит `f284fc60` добавил их в `sitemap.xml`, но тем самым создал обратную проблему: sitemap теперь содержит 8 noindex URL.
+  * *Статус:* ⚠️ **RE-OPENED / NEEDS RE-TRIAGE (Pass 21)**. Source `f284fc60`: `sitemap.xml` = 51 URL, из них 8 имеют `meta robots="noindex, follow"`. Live на момент проверки ещё отдавал старый sitemap 43 URL. Правильное направление — не добавлять noindex holding pages в sitemap, а развести `production-dist` и `indexable` в route metadata.
 * **BUG-003: Рассинхрон в оркестрации SW gate (`sw:dist:audit`)**
   * *Файл:* `package.json`
   * *Суть:* Скрипт `sw:dist:audit` существует, но не включён в команду CI-проверки `validate:static-publication`.
@@ -65,11 +64,28 @@
   * *Файлы:* `src/content/articles/*.mdx` и сгенерированные HTML.
   * *Суть:* В 3 статьях заголовок `title` в MDX frontmatter не совпадает с итоговым тегом `<title>` или H1.
 
+* **NEW-50: Internal `baptisty-rossii/research/**` corpus copied to production**
+  * *Файлы:* `scripts/copy-legacy-to-dist.js`, `baptisty-rossii/research/**`.
+  * *Суть:* В production отдаётся 145 внутренних research/raw-source файлов (~14 MB: `.md`, `.txt`, `.pdf`). Владелец подтвердил, что это рабочие файлы для сбора информации, а не публичный продукт.
+  * *Статус:* ✅ Подтверждён Pass 21 live/source: `/baptisty-rossii/research/*.md`, `raw-sources/*.txt`, `raw-sources/*.pdf` отдают/могут отдавать `200 OK` при текущем широком copy.
+* **NEW-51: Dist/publication audit не ловит nested private/public-data leaks**
+  * *Файлы:* `scripts/dist-publication-audit.js`, `scripts/copy-legacy-to-dist.js`.
+  * *Суть:* Гейт запрещает только top-level private dirs (`src`, `scripts`, `docs`, `audit`, ...), но не проверяет nested leaks: `baptisty-rossii/research/**`, `data/route-profiles/**`, `data/*baseline*.json`.
+  * *Статус:* ✅ Подтверждён Pass 21.
+* **NEW-52: Baptist pages Pagefind индексирует только скрытые 5–7 слов, а не article body**
+  * *Файлы:* `src/pages/baptisty-rossii/*/index.astro`, `scripts/baptisty-series-shadow-audit.js`.
+  * *Суть:* `data-pagefind-body` стоит на `div.sr-only` с текстом вида «Баптисты России. Часть 1...», поэтому Pagefind получает 5–7 слов вместо 800–2400 слов статьи.
+  * *Статус:* ✅ Подтверждён Pass 21 live/source.
+* **NEW-53: IndexNow submit происходит до production deploy**
+  * *Файлы:* `.github/workflows/indexnow.yml`, `.github/workflows/deploy.yml`.
+  * *Суть:* `indexnow.yml` отправляет URL в Bing/Yandex до того, как `deploy.yml` задеплоит новый artifact (deploy запускается `workflow_run` после IndexNow).
+  * *Статус:* ✅ Подтверждён Pass 21.
+
 ### 3. Архитектура и Отключённый код (Dead App Zones)
 * **NEW-47: 1,251 строка мёртвого кода React-приложения генеалогии (`src/components/genealogy/`)** 🔥 *NEW (Untouched Zone)*
   * *Файлы:* `src/components/genealogy/*.tsx`, `src/pages/rodosloviye/index.astro`, `RodosloviyeBody.astro`
   * *Суть:* В проекте реализовано сложное интерактивное React-приложение для сравнения родословий Матфея 1 и Луки 3 (`GenealogyTree.tsx`, `SplitView.tsx`, `DetailPanel.tsx` — 1,251 строка TSX). Однако при миграции на Astro страница `src/pages/rodosloviye/index.astro` была подключена к статическому плейсхолдеру `RodosloviyeBody.astro`, где кнопка «Открыть родословие» просто ведёт по ссылке `/rodosloviye/`, создавая бесконечный цикл перезагрузки страницы. Интерактивное древо недоступно пользователям.
-  * *Статус:* ✅ Подтверждён (0 импортов `GenealogyTree` в `src/pages/`).
+  * *Статус:* ✅ Подтверждён (0 импортов `GenealogyTree` в `src/pages/`; Pass 21 live: `/rodosloviye/` не содержит `ReactFlow`, `genealogy`, `data/genealogy`, а CTA ведёт на саму себя).
 
 ### 4. Консистентность данных (Data Consistency)
 * **BUG-007: Неконсистентность имени поля в `series.json` (`readingTime` vs `readTime`)**
@@ -104,7 +120,7 @@
 
 ---
 
-## 🔵 P3 — MEDIUM PRIORITY (15 багов)
+## 🔵 P3 — MEDIUM PRIORITY (21 баг)
 
 * **NEW-49: Зависимость от сторонних Google Fonts в 3D-карте баптизма (`_app/index.html`)** 🔥 *NEW (Untouched Zone)*
   * *Файл:* `konfessii/russkij-baptizm/_app/index.html`
@@ -123,6 +139,12 @@
 * **BUG-036:** Использование `scrollbar-gutter` без фоллбека.
 * **PC-101:** Мёртвый компонент `GillRailControls.astro`.
 * **PC-107:** Неиспользуемые TypeScript props в интерфейсах PremiumControls.
+* **NEW-54:** 4 sitemap URL имеют 0 live static inlinks из других sitemap-страниц (`/karty/ishod/`, `/map/`, `/nagornaya/nakhodki/`, `/rodosloviye/`).
+* **NEW-55:** `robots.txt` блокирует query-версию `/fonts/fonts.css?v=...` через `Disallow: /*?*` без `Allow: /fonts/*.css?*`.
+* **NEW-56:** Неполные social metadata (`og:site_name`, `og:locale`, `og:image:alt`, `twitter:image:alt`) на Baptist/maps/konfessii routes.
+* **NEW-57:** High-priority image preload не совпадает с реально рендеримым LCP/hero image на Baptist pages и отдельных статьях.
+* **NEW-58:** `feed.xml` title drift на 13 items относительно текущих page titles/headlines.
+* **NEW-59:** `/hard-texts/` объявляет `og:image` 1200×630 для фактического изображения 1360×768.
 
 ---
 
@@ -140,13 +162,18 @@
 * **Результат живой проверки (2026-07-02):** **ЛОЖНАЯ ТРЕВОГА (FALSE POSITIVE).**
 * **Доказательства:** В каждом из 5 компонентов серии (`GillPart1PageHead.astro`, `GillContextPageHead.astro` и др.) явно присутствует схема `"@type": "Article"`. Скрипты верификации `node scripts/dist-jsonld-audit.js` и `schema-rich-results-audit.js` выдают **100% PASS** (63 валидных блока JSON-LD).
 
+### ❌ NEW-28/HSTS — Опровергнут Pass 21
+* **Старое заявление:** отсутствует HTTP `Strict-Transport-Security`.
+* **Результат live проверки:** **ЛОЖНАЯ ТРЕВОГА.** `curl -I https://gospod-bog.ru/` и выборочные внутренние страницы отдают `strict-transport-security: max-age=31556952`.
+* **Остаточные security gaps:** отсутствие HTTP `X-Frame-Options`/`frame-ancestors`, `Referrer-Policy`, `Permissions-Policy`, `X-Content-Type-Options` остаётся актуальным hardening backlog.
+
 ### ❌ BUG-004 — Опровергнут (Охват `cache-bust`)
 * **Суть:** Ранее считалось, что скрипт кэш-бастинга не покрывает часть файлов. Архитектура использует `cache-bust-assets.js` как единый источник правды (21/21 файл покрыт).
 
 ### ✅ ИСПРАВЛЕНО В РЕЖИМЕ ИСПОЛНИТЕЛЯ (Пакет 2026-07-02, коммит `f284fc60` в gb-is-my-strength)
 * **NEW-48 (Security/XSS):** Устранена Stored XSS уязвимость в виджете избранного на главной странице (`Favorites.astro`). Добавлена строгая санитизация `esc()` и проверка валидности путей/изображений.
-* **NEW-46 (AI/SEO):** В индекс `llms.txt` добавлены 19 недостающих ссылок (все 8 карт, родословие, 10 статей «Баптисты России»). Покрытие контента для AI-поисковиков достигло 100%.
-* **BUG-041 (NEW-41, SEO):** В статический манифест `sitemap.xml` добавлены 8 продакшн-роутов раздела карт (`/karty/*`). Покрытие индексации достигло 100% (53 из 53 страниц).
+* **NEW-46 (AI/SEO):** Частично исправлено в `f284fc60`, но Pass 21 re-opened: `llms.txt` всё ещё не покрывает `/` и Nagornaya routes.
+* **BUG-041 (NEW-41, SEO):** Fix attempt in `f284fc60` requires re-triage: sitemap source now includes 8 `noindex, follow` karty holding pages; this is not valid indexable coverage.
 * **BUG-007 (Data Consistency):** Нормализовано имя поля `readTime` → `readingTime` в `data/series.json`.
 * **PC-CURRENT-06 (Mobile UI):** В мобильном отображении серии Джона Гилла текущий элемент в шапке переведён на поток частичного оглавления (Part TOC). Верифицировано смоуком `gill:mobile-play:smoke`.
 
@@ -154,12 +181,14 @@
 
 ## 🛠 ПОСЛЕДУЮЩИЙ ПЛАН РАБОТ ИСПОЛНИТЕЛЯ (Fix Pipeline)
 
-1. **Пакет 1 (Критическая безопасность и AI-SEO — Прямо сейчас):**
-   - Устранить Stored XSS в `Favorites.astro` (добавить `esc()` для `f.title` и `f.description`).
-   - Добавить недостающие 19 ссылок в `llms.txt` (`NEW-46`) и 8 роутов в `sitemap.xml` (`BUG-041`).
-2. **Пакет 2 (Консистентность и архитектура):**
-   - Нормализовать поле `readingTime` в `series.json` и `search-manifest.json`.
-   - Подключить интерактивное древо `GenealogyTree.tsx` на страницу `/rodosloviye/index.astro` или удалить 1,251 строку мёртвого кода (`NEW-47`).
-   - Включить `sw:dist:audit` в CI-gate (`BUG-003`).
-3. **Пакет 3 (Утечка памяти):**
+1. **Пакет 1 (Publication boundary + search correctness — прямо сейчас):**
+   - Закрыть `NEW-50`/`NEW-51`: исключить `baptisty-rossii/research/**` из production artifact и добавить nested/private/public-data whitelist guard в `dist-publication-audit.js`.
+   - Закрыть `NEW-52`: перенести `data-pagefind-body` Baptist pages на реальный `<article>`/`<main>` и добавить word-count guard.
+   - Пересобрать `BUG-041`: убрать `noindex, follow` holding pages из sitemap и добавить отдельное поле/контракт indexability для production-dist routes.
+2. **Пакет 2 (AI/SEO + deploy pipeline):**
+   - Довести `NEW-46`: покрыть `/` и Nagornaya routes в `llms.txt` или явно зафиксировать scope-фильтр.
+   - Закрыть `NEW-53`: перенести IndexNow submit после successful deploy.
+   - Закрыть `BUG-003`: включить `sw:dist:audit` в релевантный production-like CI-gate.
+3. **Пакет 3 (Архитектура/runtime):**
+   - Подключить интерактивное древо `GenealogyTree.tsx` на `/rodosloviye/` или удалить/скрыть dead app zone (`NEW-47`).
    - Добавить очистку слушателей в `floating-cluster-controller.js` (`BUG-001`).
