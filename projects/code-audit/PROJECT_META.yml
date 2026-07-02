@@ -1,0 +1,14 @@
+project_id: code-audit
+display_name: code-audit
+source_repo: 3stoneBrother/code-audit
+default_branch: main
+production_url: (not set)
+audit_repo_project_path: projects/code-audit
+
+rules:
+  raw_reports_path: incoming/<agent>/<date>/
+  working_path: working/
+  verification_path: verification/
+  verified_path: verified/
+  repairs_path: repairs/
+  reverify_path: reverify/
