@@ -1,0 +1,35 @@
+=== floating-cluster-controller.js event listener counts ===
+addEventListener: 38
+removeEventListener: 0
+destroy/cleanup: 0
+
+=== !important counts ===
+site.css: 202
+home.css: 36
+mobile-hotfix.css: 142
+nagornaya-mobile-toc.css: 135
+
+=== PageHead component count ===
+39
+
+=== css/premium-controls.css existence ===
+ls: cannot access 'css/premium-controls.css': No such file or directory
+DOES NOT EXIST
+
+=== CSS files on disk ===
+command-palette.css
+floating-cluster.css
+home.css
+mobile-hotfix.css
+nagornaya-mobile-toc.css
+site-layered.css
+site.css
+
+=== AGENTS.md §12.5.7 duplicates ===
+2
+
+=== AGENTS.md r300 duplicates ===
+2
+
+=== HEAD ===
+d5d9388b56a96ea26fe1c1309b07d6c4e2534f9b
