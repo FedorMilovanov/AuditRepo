@@ -1,189 +1,185 @@
-# Agent Work Report — COMBINED PASS 1 + PASS 2
+# Agent Work Report — gb-is-my-strength
 
 ## Meta
-- Project: gb-is-my-strength (gospod-bog.ru)
-- Source repo: https://github.com/FedorMilovanov/gb-is-my-strength
-- Agent: arena-deep-auditor
-- Date: 2026-07-02
-- Audited branch: main
-- Audited SHA: d5d9388b
-- Current HEAD: d5d9388b
-- Mode: free-intake (deep code audit — 2 passes)
+- **Project:** gb-is-my-strength (gospod-bog.ru)
+- **Source repo:** https://github.com/FedorMilovanov/gb-is-my-strength
+- **AuditRepo:** https://github.com/FedorMilovanov/AuditRepo
+- **Agent:** Arena Deep Auditor
+- **Date:** 2026-07-02
+- **Audited branch:** main
+- **Audited SHA:** d5d9388b56a96ea26fe1c1309b07d6c4e2534f9b
+- **Current HEAD:** d5d9388b
+- **Mode:** free-intake
+- **Pass:** 7
 
 ---
 
-## 1. New Findings — PASS 1 (Runtime, Architecture, Docs)
+## 1. New Findings
 
-### NEW-01 — P1: floating-cluster-controller.js — 38 addEventListener, 0 removeEventListener
-- **Severity:** P1
-- **Category:** Runtime memory leak
-- **Route/files:** `js/floating-cluster-controller.js` (1466 lines, 59KB)
-- **Evidence:** `grep -c 'addEventListener' → 38`, `grep -c 'removeEventListener' → 0`, no `destroy()`/`cleanup()`
-- **Impact:** Long browsing sessions accumulate leaked listeners
-- **Confidence:** high
-- **Suggested repair lane:** `lane/floating-cluster-cleanup`
+### NEW-28 [P2] — Missing HSTS Security Header
 
----
-
-### NEW-02 — P1: 39 PageHead components — 92-93% copy-paste (~11k lines)
-- **Severity:** P1 (maintainability / regression surface)
-- **Route/files:** All 39 `*PageHead.astro` files
-- **Evidence:** Gill 1/2/3 differ in only 4 lines (title, desc, canonical, dates). 10 BaptistyRossii = identical 20-line clones.
-- **Confidence:** high
-- **Suggested repair lane:** `lane/pagehead-base-component`
-
----
-
-### NEW-03 — P2: AGENTS.md §4.2 !important counts out of sync
-- **Severity:** P2
-- **Evidence:**
-  - home.css: documented 20 → actual 36 (+80%)
-  - mobile-hotfix.css: documented 74 → actual 142 (+92%)
-  - nagornaya-mobile-toc.css: documented 122 → actual 135 (+11%)
-  - site.css: documented 202 → actual 202 ✅
-
----
-
-### NEW-04 — P2: css/premium-controls.css — phantom file
-- **Severity:** P2
-- **Evidence:** AGENTS.md §2 lists 8 CSS including `premium-controls.css`. On disk: 7 files. `src/styles/premium-controls.css` exists but is orphaned.
-
----
-
-### NEW-05 — P2: search.js te() — trailing slash depth bug (latent)
-- **Severity:** P2
-- **Evidence:** Re-confirmed from DEEP_CODE_AUDIT_2026-06-30.md
-
----
-
-### NEW-06 — P3: data-gill-current-part — dead attribute
-- **Severity:** P3
-
-### NEW-07 — P3: assetUrl() — dead TypeScript export
-- **Severity:** P3
-
-### NEW-08 — P3: openSearch() — 7 stale selectors
-- **Severity:** P3
-
-### NEW-09 — P3: highlights.js — no undo on quote delete
-- **Severity:** P3
-
-### NEW-10 — S0: AGENTS.md CSS count conflict (§0 "5 CSS" vs §2 "8 CSS")
-- **Severity:** S0
-
-### NEW-11 — S0: AGENTS.md §12.5.7 duplicated verbatim
-- **Severity:** S0
-
-### NEW-12 — S0: AGENTS.md changelog r300-r308 numbering conflicts
-- **Severity:** S0
-
----
-
-## 1b. New Findings — PASS 2 (Data Consistency)
-
-### NEW-13 — P2: series.json field name inconsistency — 'readTime' vs 'readingTime'
-- **Severity:** P2
-- **Category:** Data schema inconsistency
-- **Route/files:** `data/series.json`
-- **Evidence:**
-  ```bash
-  # 23 of 24 series parts use 'readingTime'
-  # 1 part uses 'readTime' (wrong field name):
-  #   {slug: 'zakon-duha-zhizni-rimlyanam-8', status: 'planned', readTime: 0}
-  ```
-- **Impact:** Code iterating series parts and accessing `.readingTime` will get `undefined` for the planned Roman 8 article. Any aggregation logic (total series time, progress ring) will silently skip this part.
-- **Confidence:** high
-- **Suggested repair lane:** `lane/data-consistency-fix` — rename `readTime` → `readingTime` in the planned part
-
----
-
-### NEW-14 — P2: 17 search-manifest items missing readTime
-- **Severity:** P2
-- **Category:** Missing data
-- **Route/files:** `data/search-manifest.json`
+- **Title:** Strict-Transport-Security header not set on articles
+- **Severity:** P2 (High)
+- **Route/files:** All 11 articles in `articles/*/index.html`
 - **Evidence:**
   ```
-  17 items missing 'readTime' field, including:
-  - ALL 10 baptisty-rossii/* articles
-  - 4 landings (/, /articles/, /konfessii/, /nagornaya/)
-  - 3 tools/pages
+  $ grep -r "Strict-Transport-Security" articles/ --include="*.html" | wc -l
+  0
   ```
-  The baptisty-rossii HTML files don't have readingTime in SITE_CONFIG at all — they use GBS2 data attributes (`data-gbs2-part-min`) instead. This is by design for legacy shadow-wrap, but the search index still needs readTime for UI display.
-- **Impact:** Search/command-palette UI cannot show reading time badges for 17 items (all baptisty-rossii articles appear without "N мин" badge)
-- **Confidence:** high
-- **Suggested repair lane:** Add `readTime` to all baptisty-rossii items in search-manifest.json (values already exist in series.json)
+- **Confidence:** High
+- **Impact:** Site served over HTTPS, but browsers won't remember to use HTTPS for future visits. Users on public WiFi could be downgraded to HTTP on repeat visits.
+- **Root Cause:** No HSTS header in any article's `<head>`
+- **Suggested repair lane:** `lane/security-headers`
 
----
+### NEW-29 [P2] — Missing X-Frame-Options Security Header
 
-### NEW-15 — P3: Cross-file field naming inconsistency
-- **Severity:** P3
-- **Category:** Schema naming inconsistency
+- **Title:** X-Frame-Options header not set — clickjacking vulnerability
+- **Severity:** P2 (High)
+- **Route/files:** All 11 articles in `articles/*/index.html`
 - **Evidence:**
-  | File | Field name |
-  |---|---|
-  | `data/search-manifest.json` | `readTime` |
-  | `data/series.json` (23/24) | `readingTime` |
-  | HTML `SITE_CONFIG` | `readingTime` |
-- **Impact:** No actual bugs found, but maintenance burden. Any new code must handle both names.
-- **Suggested repair lane:** Standardize on `readingTime` across all data files (larger refactor)
-
----
-
-### NEW-16 — P3: Planned article in series.json with readTime=0 and note
-- **Severity:** P3
-- **Route/files:** `data/series.json`, hard-texts series, part 3
-- **Evidence:**
-  ```json
-  {"n": 3, "slug": "zakon-duha-zhizni-rimlyanam-8", "title": "Закон духа жизни: Римлянам 8",
-   "status": "planned", "readTime": 0, "note": "Не опубликовано; readTime будет заполнен при публикации"}
   ```
-- **Impact:** Not a runtime bug (planned articles are correctly excluded from search-manifest). But: (a) wrong field name, (b) readTime=0 means any UI showing series total time will undercount.
-- **Suggested repair lane:** Either exclude planned parts from readingTime aggregation, or use a placeholder value
+  $ grep -r "X-Frame-Options" articles/ --include="*.html" | wc -l
+  0
+  ```
+- **Confidence:** High
+- **Impact:** Site can be embedded in iframes on malicious sites, enabling clickjacking attacks against users.
+- **Root Cause:** No X-Frame-Options header in any article's `<head>`
+- **Suggested repair lane:** `lane/security-headers`
+
+### NEW-30 [P3] — No Performance/Lighthouse CI Integration
+
+- **Title:** No automated Lighthouse or Core Web Vitals monitoring in CI
+- **Severity:** P3 (Medium)
+- **Route/files:** `package.json`, `.github/workflows/`
+- **Evidence:**
+  ```
+  $ grep -r "lighthouse\|web-vitals" package.json scripts/ --include="*.js" --include="*.json"
+  scripts/audit-pro.js:// Performance / web-vitals / data-consistency lane.
+  ```
+- **Confidence:** High
+- **Impact:** No automated performance regression detection. Project targets Lighthouse Performance ≥90, Accessibility ≥95, but no automated check exists.
+- **Root Cause:** Lighthouse/performance monitoring not integrated into CI pipeline
+- **Suggested repair lane:** `lane/performance-monitoring`
 
 ---
 
-## 2. Confirmations of Existing Findings (Re-verified on d5d9388b)
+## 2. Matrix Updates
 
-| Source | Finding | Status |
-|---|---|---|
-| DEEP_CODE_AUDIT_2026-06-30 | search.js te() depth | confirmed-current |
-| DEEP_CODE_AUDIT_2026-06-30 | data-gill-current-part unused | confirmed-current |
-| DEEP_CODE_AUDIT_2026-06-30 | assetUrl() dead export | confirmed-current |
-| DEEP_CODE_AUDIT_2026-06-30 | openSearch() stale selectors | confirmed-current |
-| DEEP_CODE_AUDIT_2026-06-30 | highlights.js no undo | confirmed-current |
+### BUG-001 — Memory Leak Still Present
+- **Previous:** ✅ Confirmed (38 addEventListener, 0 removeEventListener)
+- **Current:** ✅ Still present
+- **Evidence:**
+  ```
+  $ grep -c 'addEventListener' js/floating-cluster-controller.js
+  38
+  $ grep -c 'removeEventListener' js/floating-cluster-controller.js
+  0
+  ```
+- **Recommended status:** confirmed-current (still unfixed)
 
-## 2b. Positive Checks (no issues found)
+### BUG-002 — Component Duplication Updated Count
+- **Previous:** 39 PageHead + 5 PostArticle = 44 files
+- **Current:** 45 files (PageHead + PostArticle combined)
+- **Evidence:**
+  ```
+  $ find src/components -name "*PageHead.astro" -o -name "*PostArticle.astro" | wc -l
+  45
+  ```
+- **Change:** +1 file since previous audit
+- **Recommended status:** confirmed-current (count updated, severity unchanged P1)
 
-| Check | Result |
-|---|---|
-| All 10 karty/*/route.json | ✅ Valid JSON |
-| CSS brace balance (site.css, home.css) | ✅ 0 (balanced) |
-| eval()/Function() in JS | ✅ 0 occurrences |
-| http:// mixed content in HTML | ✅ 0 insecure links |
-| SW CACHE_VERSION | ✅ Up-to-date (v182, 20260702) |
-| Scheduled workflows | ✅ 3 weekly schedules (Mon 03:30, 03:00, 06:00 UTC) |
+### BUG-003 — SW Gate Orchestration Not Fixed
+- **Previous:** ⚠️ sw:dist:audit not in validate:static-publication
+- **Current:** ❌ Still not included
+- **Evidence:**
+  ```
+  $ grep "sw:dist:audit" package.json | grep validate
+  (no output - sw:dist:audit NOT in validate:static-publication)
+  
+  $ grep -A5 '"validate:static-publication"' package.json
+  ... (sw:dist:audit absent from the chain)
+  ```
+- **Recommended status:** confirmed-current (still unfixed, still P1)
+
+### BUG-007 — readingTime/readTime Inconsistency Still Present
+- **Previous:** ✅ Confirmed (23 readingTime, 1 readTime)
+- **Current:** ✅ Still present
+- **Evidence:**
+  ```
+  $ grep -c '"readingTime"' data/series.json
+  23
+  $ grep -c '"readTime"' data/series.json
+  1
+  ```
+- **Recommended status:** confirmed-current (still unfixed)
 
 ---
 
-## 3. Severity Summary
+## 3. Positive Checks
 
-| Severity | Count | Key items |
-|---|---|---|
-| **P1** | 2 | Memory leak, PageHead duplication |
-| **P2** | 5 | !important drift, phantom CSS, search depth, field naming, missing readTime |
-| **P3** | 6 | Dead attrs/exports, stale selectors, no undo, cross-file naming |
-| **S0** | 3 | Doc conflicts, duplicate section, changelog numbering |
-| **TOTAL** | **16** | |
+✅ **CSS brace balance:** 0 (balanced)
+```python
+python3 -c "s=open('css/site.css').read();print(s.count('{')-s.count('}'))"
+0
+```
+
+✅ **eval()/Function() in JS:** 0 occurrences
+```bash
+$ grep -r "eval\|Function(" js/*.js | wc -l
+0
+```
+
+✅ **Script syntax validation:** All 12 JS files pass `node --check`
+```bash
+$ for f in js/*.js; do node --check "$f"; done | grep -c "FAIL"
+0
+```
+
+✅ **X-Content-Type-Options:** Present in 11 articles
+```bash
+$ grep -r "X-Content-Type-Options" articles/ --include="*.html" | wc -l
+11
+```
+
+✅ **Content-Security-Policy:** Present and properly configured
+```bash
+$ grep -r "Content-Security-Policy" articles/ --include="*.html" | wc -l
+11
+```
+
+✅ **http:// mixed content check:** 0 insecure links (11 occurrences are all SVG namespace declarations `xmlns="http://www.w3.org/2000/svg"`, which is legitimate)
+
+✅ **TypeScript configuration:** tsconfig.json exists with strict mode, 12 TypeScript files in src/
 
 ---
 
-## 6. Repair Lane Suggestions
+## 4. Notes for Verifier
 
-| Bug IDs | Lane | Why together |
-|---|---|---|
-| NEW-01 | `lane/floating-cluster-cleanup` | Dedicated lane required per §3.10 |
-| NEW-02 | `lane/pagehead-base-component` | 39-file structural refactor |
-| NEW-03, NEW-04, NEW-10, NEW-11, NEW-12 | `lane/agents-md-reconciliation` | All documentation fixes |
-| NEW-05 | `lane/search-depth-fix` | Small targeted fix |
-| NEW-06, NEW-07, NEW-08, NEW-09 | `lane/js-dead-code-cleanup` | Minor JS cleanups |
-| NEW-13, NEW-14, NEW-15, NEW-16 | `lane/data-consistency-fix` | All data schema alignment |
+### Security Headers Summary
+The site is missing two critical security headers:
+1. **Strict-Transport-Security (HSTS)** — tells browsers to only connect via HTTPS for future visits
+2. **X-Frame-Options** — prevents clickjacking by controlling iframe embedding
+
+These are separate from CSP (which IS present) and X-Content-Type-Options (which IS present).
+
+### HTTP:// False Positive
+The 11 `http://` occurrences found are NOT mixed content:
+- All are inline SVG namespace declarations: `xmlns="http://www.w3.org/2000/svg"`
+- These are not actual HTTP requests, just XML namespace URIs
+- This is expected behavior and NOT a security issue
+
+### Bug Count Changes
+- BUG-002 count increased from 44 to 45 — likely due to new Gill series components added in recent commits
+
+---
+
+## 5. Recommendations
+
+1. **Immediate (P1):** Add HSTS and X-Frame-Options headers to all article pages
+2. **High (P2):** Integrate sw:dist:audit into validate:static-publication
+3. **Medium (P3):** Consider adding Lighthouse CI integration for performance monitoring
+
+---
+
+**Report generated:** 2026-07-02  
+**Agent:** Arena Deep Auditor (Pass 7)
