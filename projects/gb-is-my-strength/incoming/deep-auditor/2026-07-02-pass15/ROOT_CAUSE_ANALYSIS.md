@@ -8,7 +8,7 @@
 
 ## 📊 Executive Summary
 
-Проведён **root cause analysis** для 5 критических багов (P1 + P2). Выявлены системные проблемы архитектуры и процесса разработки.
+Проведён **root cause analysis** для 6 критических багов (5 P1/P2 + 1 P1 security). Выявлены системные проблемы архитектуры и процесса разработки.
 
 **Ключевые findings:**
 - 43 @media queries вместо 5 canonical breakpoints
@@ -16,13 +16,15 @@
 - 38 addEventListener без единого removeEventListener
 - 36 копий CSP вместо централизованного компонента
 - 9 production routes отсутствуют в sitemap.xml
+- **Stored XSS в Favorites.astro** — критическая уязвимость безопасности
 
 **Системные проблемы:**
 1. Отсутствие Design System (нет единой стратегии)
 2. Отсутствие Component Library (нет каталога переиспользуемых компонентов)
 3. Отсутствие Code Quality Gates (нет lint rules, automated checks)
-4. Отсутствие Cleanup Process (нет регулярного аудита)
-5. Migration without Refactoring (copy-paste вместо абстракций)
+4. Отсутствие Security Review Process (нет санитизации данных)
+5. Отсутствие Cleanup Process (нет регулярного аудита)
+6. Migration without Refactoring (copy-paste вместо абстракций)
 
 ---
 
@@ -432,6 +434,99 @@ if (missingRoutes.length > 0) {
 
 ---
 
+## 🔴 NEW-48: Stored XSS в Favorites.astro (P1)
+
+### Симптомы
+- `src/components/home/HomeSections/Favorites.astro` использует `innerHTML` без санитизации
+- Данные из `localStorage['gb-favorites']` вставляются напрямую в DOM
+- Потенциальная XSS-уязвимость на главной странице
+
+### Root Cause Analysis
+
+**1. Отсутствие санитизации данных**
+```javascript
+// Проблемный код (строки 38-45):
+card.innerHTML = imgHtml +
+  '<div class="favorites-card__body">' +
+    section +
+    '<span class="favorites-card__title">' + (f.title || 'Статья') + '</span>' +
+    (f.description ? '<span class="favorites-card__desc">' + f.description + '</span>' : '') +
+  '</div>';
+```
+
+Здесь `f.title`, `f.description`, `f.section`, `f.image` берутся из localStorage и вставляются через `innerHTML` без экранирования.
+
+**2. Отсутствие функции экранирования**
+В отличие от страницы `/izbrannoe/index.astro`, где используется функция `esc()`, в Favorites.astro санитизация отсутствует.
+
+**3. Доверие к localStorage**
+Разработчик предполагал, что данные в localStorage безопасны. Однако:
+- localStorage доступен для JavaScript на том же домене
+- Если есть XSS на сайте, злоумышленник может записать вредоносные данные
+- Браузерные расширения могут модифицировать localStorage
+- RSS-импорт (если есть) может принести вредоносный контент
+
+**4. Отсутствие Content Security Policy (CSP) для inline scripts**
+CSP позволяет `script-src 'self' 'unsafe-inline'`, что не защищает от XSS через innerHTML.
+
+### Impact
+- **Security risk** — выполнение произвольного JavaScript на главной странице
+- **Session hijacking** — кража cookies, tokens
+- **Phishing** — подмена контента для обмана пользователей
+- **Reputation damage** — потеря доверия пользователей
+
+### Attack Scenario
+```javascript
+// Злоумышленник находит XSS на сайте и записывает в localStorage:
+localStorage.setItem('gb-favorites', JSON.stringify([
+  {
+    id: 'xss',
+    title: '<img src=x onerror="alert(document.cookie)">',
+    description: 'Normal description',
+    section: 'Статьи'
+  }
+]));
+
+// Пользователь открывает главную страницу, Favorites.astro загружает данные:
+// card.innerHTML = '...<span class="favorites-card__title"><img src=x onerror="..."></span>...'
+// JavaScript выполняется, cookies украдены
+```
+
+### Recommended Fix
+```astro
+---
+// В начале компонента:
+function esc(str: string): string {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+---
+
+<script>
+  // Использовать esc() для всех данных из localStorage:
+  card.innerHTML = imgHtml +
+    '<div class="favorites-card__body">' +
+      section +
+      '<span class="favorites-card__title">' + esc(f.title || 'Статья') + '</span>' +
+      (f.description ? '<span class="favorites-card__desc">' + esc(f.description) + '</span>' : '') +
+    '</div>';
+</script>
+```
+
+Альтернатива: использовать `textContent` вместо `innerHTML`:
+```javascript
+const titleSpan = document.createElement('span');
+titleSpan.className = 'favorites-card__title';
+titleSpan.textContent = f.title || 'Статья';
+card.appendChild(titleSpan);
+```
+
+---
+
 ## 🎯 Общие системные проблемы
 
 ### 1. Отсутствие Design System
@@ -491,7 +586,8 @@ if (missingRoutes.length > 0) {
 | removeEventListener calls | 0 | 38 (matching addEventListener) |
 | Code duplication | 92-93% | <20% |
 | Sitemap coverage | 43/52 routes | 52/52 routes |
+| innerHTML without sanitization | 1 (critical) | 0 |
 
 ---
 
-**Root Cause Analysis complete. 5 critical bugs analyzed. Systemic issues identified. 🔍🎯**
+**Root Cause Analysis complete. 6 critical bugs analyzed. Systemic issues identified. 🔍🎯**
