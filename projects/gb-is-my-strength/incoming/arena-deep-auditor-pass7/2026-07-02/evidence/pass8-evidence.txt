@@ -1,0 +1,67 @@
+Pass 8 — Deep Audit Evidence
+Date: 2026-07-02
+HEAD: d5d9388b56a96ea26fe1c1309b07d6c4e2534f9b
+
+=== NEW-31 Security headers ===
+$ grep -rn "Referrer-Policy\|Permissions-Policy\|Cross-Origin-Opener-Policy" articles/ src/ --include="*.html" --include="*.astro" | wc -l
+0
+
+$ grep -r "Strict-Transport-Security\|X-Frame-Options" articles/ src/ --include="*.html" --include="*.astro"
+(no output)
+
+=== NEW-32 CSP unsafe-inline ===
+$ grep -r "script-src 'self' 'unsafe-inline'" articles/ --include="*.html" | wc -l
+11
+
+=== NEW-33 SW precache drift ===
+PRECACHE_ASSETS sw.js: 26
+ASSETS cache-bust-assets.js: 19
+Missing in SW: css/site-layered.css (283706 bytes), js/series-cards.js (2660 bytes)
+
+=== NEW-34 Budget exceed ===
+audit-pro WARNING:
+⚠️ Core CSS total 444731 bytes exceeds budget 425000
+⚠️ JS total 374593 bytes exceeds budget 365000
+
+=== NEW-35 astro:check gate missing ===
+$ grep "astro:check" package.json
+    "astro:check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+$ grep -A2 "validate:static-publication" package.json | grep astro:check
+(no output)
+
+=== BUG-001 ===
+$ grep -c 'addEventListener' js/floating-cluster-controller.js
+38
+$ grep -c 'removeEventListener' js/floating-cluster-controller.js
+0
+
+=== BUG-002 ===
+$ find src/components -name "*PageHead.astro" | wc -l
+39
+$ find src/components -name "*PostArticle.astro" | wc -l
+6
+total 45
+
+=== BUG-003 ===
+sw:dist:audit exists in package.json but NOT in validate:static-publication chain — confirmed
+
+=== BUG-005 ===
+$ wc -c css/site.css css/site-layered.css
+283648 css/site.css
+283706 css/site-layered.css
+
+=== BUG-006 ===
+$ ls -lh js/site.js
+163K
+
+=== BUG-007 ===
+$ grep -c '"readingTime"' data/series.json
+23
+$ grep -c '"readTime"' data/series.json
+1
+
+=== Positive checks ===
+CSS brace balance: python3 -c "s=open('css/site.css').read();print(s.count('{')-s.count('}'))" → 0
+eval(): $ grep -r "eval\|Function(" js/*.js | wc -l → 0
+node --check scripts/*.js → 0 FAIL
+audit-pro → ✅ PASSED, 0 errors, 3 warnings
