@@ -1,12 +1,12 @@
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-03 runtime no-undef fix lane (READ FIRST)
 
-**Current source main HEAD:** `22eb0840ba8c4bd8c46ed8d7eb38c3266dad44d7` (`main`, also pushed as `lane/system-runtime-no-undef-current-2026-07-03`).
+**Current source main HEAD:** `8a816ce40c57e916797aa37f275e3518ca757203` (auto cache-bust descendant of `8a816ce4`) (`main`, also pushed as `lane/system-runtime-no-undef-current-2026-07-03`).
 
 **Base source main at start:** `4cbe8e88afb3fe13fd04fdae08c1770122a01952`.
 
-**Current local verification:** `CI-P0-GILL-RUNTIME-REFS` is fixed on source main HEAD `22eb0840`. `gill:mobile-layout:audit`, `gill:mobile-play:smoke`, `dist-smoke-audit --no-build --production-like`, `audit:premium-controls`, `validate:static-publication`, and `guard:shared-files` all passed on commit `22eb0840`.
+**Current local verification:** `CI-P0-GILL-RUNTIME-REFS` is fixed on source main HEAD `8a816ce4`. `gill:mobile-layout:audit`, `gill:mobile-play:smoke`, `dist-smoke-audit --no-build --production-like`, `audit:premium-controls`, `validate:static-publication`, and `guard:shared-files` all passed on commit `8a816ce4`.
 
-**Important:** source `main` has advanced to `22eb0840`. Treat the runtime P0 as **fixed-current locally / awaiting GitHub Actions deploy result**. Re-run/observe GitHub Pages Deploy and then check the next hidden gate `sw:dist:audit:deploy-switch` / NEW-66.
+**Important:** source `main` has advanced to `8a816ce4`. Treat the runtime P0 as **fixed-current locally / awaiting GitHub Actions deploy result**. Re-run/observe GitHub Pages Deploy and then check the next hidden gate `sw:dist:audit:deploy-switch` / NEW-66.
 
 **Top remaining priorities after runtime fix on main:** `REG-001` hosting/security headers, `P1-CI-DUPE`, `NEW-66` SW/Pagefind deploy-switch, `NEW-65` `/baptisty-rossii/` visual parity, and `NEW-64` prevention gap (broad runtime smoke not blocking deploy).
 

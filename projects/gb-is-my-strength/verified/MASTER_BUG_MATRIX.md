@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `22eb0840` (source lane runtime no-undef fix; base main `4cbe8e88`)  
+**HEAD исходного репозитория:** `8a816ce4` (source lane runtime no-undef fix; base main `4cbe8e88`)  
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–28)  
 
 ---
@@ -9,11 +9,11 @@
 
 ## 🟢 PASS 39 / RUNTIME NO-UNDEF FIX LANE (2026-07-03)
 
-**Source fix commit:** `22eb0840ba8c4bd8c46ed8d7eb38c3266dad44d7` (`lane/system-runtime-no-undef-current-2026-07-03`).
+**Source fix commit:** `8a816ce40c57e916797aa37f275e3518ca757203` (auto cache-bust descendant of `8a816ce4`) (`lane/system-runtime-no-undef-current-2026-07-03`).
 
-`CI-P0-GILL-RUNTIME-REFS` is **fixed-current on source main HEAD `22eb0840` by local browser/build evidence**; final deploy status is pending GitHub Actions completion. This was not a Gill visual regression: it was global JS runtime no-undef.
+`CI-P0-GILL-RUNTIME-REFS` is **fixed-current on source main HEAD `8a816ce4` by local browser/build evidence**; final deploy status is pending GitHub Actions completion. This was not a Gill visual regression: it was global JS runtime no-undef.
 
-Verified on `22eb0840`:
+Verified on `8a816ce4`:
 
 - `js/site.js` `tt is not defined` fixed by adding a scoped `tt()` helper inside the backlinks/outlinks IIFE.
 - `/nagornaya/` `SiteUtils` runtime/order risk fixed by `safeReady()` calling `window.SiteUtils.ready(fn)` when available.
@@ -113,8 +113,8 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 
 * **P2-AUDIT-DRIFT:** PRECACHE/cache-bust audit drift — ⚠️ RECLASSIFIED on `f1e9abd9`: core ASSETS↔SW drift is now covered (`cache-bust-assets.js` shared by `cache-bust.js`/`audit-pro.js`; `dist-publication-audit.js` confirms 22 shared assets 100% synchronized; `audit-pro` G61 passes). Remaining hidden deploy-switch blocker: `sw:dist:audit:deploy-switch` fails because `/pagefind/pagefind.js` is missing from `PRECACHE_ASSETS` when `--require-pagefind --require-cache-bump` is used.
 * **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке — ✅ VERIFIED-CURRENT on `dbd0bb55`: `js/search.js` 31,534 bytes is loaded on 39 pages; before first user search/open it creates 128 `.cp-*` command-palette nodes and ~106 KB `.cp-*` outerHTML on sampled routes (`/`, `/articles/kod-da-vinchi/`, `/baptisty-rossii/`). Also eagerly requests `/data/search-manifest.json`; Pagefind itself stays lazy (`window.__pagefindReady__ === false` before interaction).
-* ~~**CI-P0-GILL-RUNTIME-REFS:** browser runtime no-undef (`highlights.js` `r`, `site.js` `tt`, `/nagornaya/` `SiteUtils`) blocked Gill mobile layout audit~~ ✅ FIXED-ON-LANE `22eb0840`: `r` was already fixed by `bced1c69`; `22eb0840` adds scoped `tt()` in `js/site.js` and fixes `safeReady()` in `js/nagornaya-mobile-toc.js`. Local gates passed: `gill:mobile-layout:audit`, `dist-smoke-audit --no-build --production-like`, `audit:premium-controls` 87/87, `validate:static-publication`, `guard:shared-files`. Move to fixed-current after source main/deploy confirms `22eb0840` or descendant.
-* ~~**CI-P1-NAGORNAYA-SITEUTILS-ORDER:** `/nagornaya/` pageerror `SiteUtils is not defined` / bad early ready helper~~ ✅ FIXED-ON-LANE `22eb0840`: `safeReady()` now delegates to `window.SiteUtils.ready(fn)` if present and otherwise uses DOMContentLoaded/current fallback. Confirmed by `dist-smoke-audit` and `validate:static-publication` on `22eb0840`.
+* ~~**CI-P0-GILL-RUNTIME-REFS:** browser runtime no-undef (`highlights.js` `r`, `site.js` `tt`, `/nagornaya/` `SiteUtils`) blocked Gill mobile layout audit~~ ✅ FIXED-ON-LANE `8a816ce4`: `r` was already fixed by `bced1c69`; `8a816ce4` adds scoped `tt()` in `js/site.js` and fixes `safeReady()` in `js/nagornaya-mobile-toc.js`. Local gates passed: `gill:mobile-layout:audit`, `dist-smoke-audit --no-build --production-like`, `audit:premium-controls` 87/87, `validate:static-publication`, `guard:shared-files`. Move to fixed-current after source main/deploy confirms `8a816ce4` or descendant.
+* ~~**CI-P1-NAGORNAYA-SITEUTILS-ORDER:** `/nagornaya/` pageerror `SiteUtils is not defined` / bad early ready helper~~ ✅ FIXED-ON-LANE `8a816ce4`: `safeReady()` now delegates to `window.SiteUtils.ready(fn)` if present and otherwise uses DOMContentLoaded/current fallback. Confirmed by `dist-smoke-audit` and `validate:static-publication` on `8a816ce4`.
 * **CHECK-GAP-DIST-SMOKE:** deploy workflow omits `dist-smoke-audit.js`, even though `strangler:audit:production-like` includes it and it independently catches current `tt is not defined`; `validate:static-publication` also omits this browser runtime smoke.
 * **CI-HIDDEN-SW-PAGEFIND-PRECACHE:** hidden next Deploy blocker after `tt` fix: `npm run sw:dist:audit:deploy-switch` currently fails on `f1e9abd9` with `Pagefind bootstrap /pagefind/pagefind.js missing from PRECACHE_ASSETS`; `dist-publication-audit --require-pagefind` passes because it only requires shared cache-bust assets + Pagefind index presence, not Pagefind bootstrap precache.
 * **VIS-BAPTISTY-PARITY:** Visual Parity Guard/current local pixel-diff fails `/baptisty-rossii/` on `f1e9abd9` (desktop 6.131%, mobile 17.368%, threshold 1%); all other default landing routes passed local threshold.

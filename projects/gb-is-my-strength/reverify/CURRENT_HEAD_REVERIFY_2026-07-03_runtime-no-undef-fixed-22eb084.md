@@ -5,7 +5,7 @@
 **Auditor/executor:** Arena Agent  
 **Remote source main at start:** `4cbe8e88afb3fe13fd04fdae08c1770122a01952`  
 **Source fix lane/main:** `lane/system-runtime-no-undef-current-2026-07-03` and `main`  
-**Source fix commit:** `22eb0840ba8c4bd8c46ed8d7eb38c3266dad44d7`  
+**Source fix commit:** `8a816ce40c57e916797aa37f275e3518ca757203` (auto cache-bust descendant of `8a816ce4`)  
 **AuditRepo HEAD at start:** `0895a21838301c546be225d37772131c8041e53c`
 
 ---
@@ -22,17 +22,17 @@ No PremiumControls geometry, Gill rail layout, Hermeneutics position, visual par
 
 | ID | Status after this pass |
 |---|---|
-| `CI-P0-GILL-RUNTIME-REFS` | **fixed on source lane `22eb0840`**. It is not a Gill visual/layout bug. It was a global browser runtime no-undef class. |
+| `CI-P0-GILL-RUNTIME-REFS` | **fixed on source lane `8a816ce4`**. It is not a Gill visual/layout bug. It was a global browser runtime no-undef class. |
 | `highlights.js r is not defined` | Fixed-current on current source main before this lane (`bced1c69` already declared `r`). |
-| `site.js tt is not defined` | Fixed on `22eb0840`: local `tt()` helper added inside the backlinks/outlinks strict IIFE. |
-| `CI-P1-NAGORNAYA-SITEUTILS-ORDER` | Fixed on `22eb0840`: `safeReady()` now calls `window.SiteUtils.ready(fn)` when available and otherwise falls back to DOMContentLoaded/current execution. |
+| `site.js tt is not defined` | Fixed on `8a816ce4`: local `tt()` helper added inside the backlinks/outlinks strict IIFE. |
+| `CI-P1-NAGORNAYA-SITEUTILS-ORDER` | Fixed on `8a816ce4`: `safeReady()` now calls `window.SiteUtils.ready(fn)` when available and otherwise falls back to DOMContentLoaded/current execution. |
 | `PC-CURRENT-06` | Browser-verified passing; do not reopen without fresh failure. |
 
 ---
 
 ## 3. Source changes
 
-Source commit `22eb0840`:
+Source commit `8a816ce4`:
 
 - `js/site.js` — added scoped HTML-escape helper for backlink rendering: `tt(n.title)` now resolves inside the same strict IIFE.
 - `js/nagornaya-mobile-toc.js` — fixed `safeReady()` from `window.safeReady(fn)` to `window.SiteUtils.ready(fn)`.
@@ -71,7 +71,7 @@ Observed acceptance:
 
 ## 5. Remaining blockers after this pass
 
-Do **not** keep `CI-P0-GILL-RUNTIME-REFS` as current on source main `22eb0840` unless GitHub Actions or a fresh browser smoke reproduces a new runtime failure.
+Do **not** keep `CI-P0-GILL-RUNTIME-REFS` as current on source main `8a816ce4` unless GitHub Actions or a fresh browser smoke reproduces a new runtime failure.
 
 Still track separately:
 
@@ -85,7 +85,7 @@ Still track separately:
 
 ## 6. Executor handoff
 
-`22eb0840` has been pushed to source `main`; observe GitHub Pages deploy. Expected next verification is not Gill layout runtime no-undef; the next likely hidden check to confirm is:
+`8a816ce4` has been pushed to source `main`; observe GitHub Pages deploy. Expected next verification is not Gill layout runtime no-undef; the next likely hidden check to confirm is:
 
 ```bash
 npm run pagefind:build:dist
