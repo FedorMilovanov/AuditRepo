@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `edea8b3` (Pass 24b — CI оптимизация + SW + a11y)  
+**HEAD исходного репозитория:** `57d1b3c7` (Pass 24c — CSS extraction + security + performance)  
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–24)  
 
 ---
@@ -12,13 +12,13 @@
 |-----------|------------|----------|
 | 🔴 **P0 (Critical)** | 1 | REG-001 _headers бесполезен (остаётся — нужна CDN-инфра) |
 | 🟠 **P1 (High)** | 1 | CI-дублирование (частично оптимизирован) |
-| 🟡 **P2 (Medium)** | 16 | SEO, SW metadata, CSS-in-JS, search, audit drift |
-| 🔵 **P3 (Medium)** | 16 | a11y, social metadata, мёртвый код, оптимизация |
+| 🟡 **P2 (Medium)** | 14 | SEO, SW metadata, search, audit drift |
+| 🔵 **P3 (Medium)** | 14 | a11y, social metadata, оптимизация |
 | 🔵 **P3 (Refactor)** | 4 | site.js монолит, enhancements.js, no source maps, no ES modules |
 | ⚪ **S0 (Low)** | 2 | Документация |
 | 🟣 **AuditRepo** | 5 | Слабая валидация, stale SHA, нет автоматизации |
 | ❌ **Fixed** | 12 | Исправлено в коммитах `f284fc60`–`47a98da` |
-| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **45** | (было 79, -34 исправлено/закрыто) |
+| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **37** | (было 79, -42 исправлено/закрыто) |
 
 ---
 
@@ -87,8 +87,8 @@
 * **P2-SW-METADATA:** CACHE_METADATA ключ = полный URL, но trimCache ищет по cache keys
 * **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке (~15KB nodes)
 * **P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)
-* **P2-ENH-CSS:** enhancements.js инжектит ~2KB CSS через JS (FOUC, нет кэша)
-* **P2-HIGHLIGHTS-CSS:** highlights.js инжектит ~5KB CSS через JS (FOUC, нет кэша)
+* ~~**P2-ENH-CSS:** enhancements.js инжектит CSS через JS~~ ✅ FIXED (→ css/enhancements-runtime.css)
+* ~~**P2-HIGHLIGHTS-CSS:** highlights.js инжектит CSS через JS~~ ✅ FIXED (→ css/highlights-runtime.css)
 * ~~**BUG-003:** Рассинхрон в оркестрации SW gate~~ ✅ FIXED (sw:dist:audit добавлен в gate)
 * **BUG-012:** Рассинхрон заголовков MDX и HTML (3 статьи)
 * **BUG-041:** Sitemap/indexability mismatch for karty holding pages
