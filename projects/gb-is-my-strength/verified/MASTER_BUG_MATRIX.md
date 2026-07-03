@@ -103,7 +103,7 @@
 * **NEW-31/32:** HTTP Referrer-Policy/Permissions-Policy не применяются (GitHub Pages ограничение, REG-001)
 * ~~**BUG-020:** 336 кнопок без `aria-label` (WCAG)~~ ✅ NOT A BUG — все 674 кнопки имеют visible text или aria-label
 * ~~**BUG-021:** 2 короткие meta descriptions~~ ✅ NOT A BUG — все ≥150 символов (SEO норма)
-* **BUG-022:** 256 переопределённых CSS правил
+* **BUG-022:** Переопределённые CSS правила — ✅ REVERIFIED-CURRENT on `dbd0bb55`, original “256” count is stale/ambiguous. `css/site.css` audit found 178 same-context repeated selector+property keys (190 beyond-first declarations), 133 with changed values; after separating same-rule progressive fallbacks, there are 52 later-rule changed selector+property keys / 54 later overrides. 81 changed keys are same-rule fallback declarations (e.g. rgba → color-mix) and should not be treated as full cascade bugs.
 * ~~**BUG-024:** Мёртвый TypeScript/JS API в helper модулях~~ ✅ CLOSED (Pass 27: 5 dead exports removed from floating-cluster-ui.ts)
 * **PC-107:** Неиспользуемые TypeScript props в PremiumControls интерфейсах
 * **NEW-54-59:** Social metadata gaps, feed.xml title drift, og:image size mismatch
@@ -414,3 +414,20 @@
 * **Most frequent breakpoint values (aggregate):** `600`×21, `768`×20, `899`×18, `480`×18, `640`×8, `680`×5, `900`×5.
 * **BUG-011 ⚠️ reclassified:** exact 768 overlap is real (`max-width:768px` and `min-width:768px` both exist), but direct selector/property collision was not reproduced. In `site.css`, max-768 blocks: 17; min-768 blocks: 1; same selector+property across max/min 768: 0. The single min-768 block only contains `.md\:grid-cols-2` and `.md\:grid-cols-3` grid-template utilities.
 * **Executor guidance:** consolidate breakpoint tokens as CSS architecture work, but do not claim a concrete 768 visual regression without a browser witness or selector/property collision proof.
+
+
+---
+
+## 🟠 PASS 34 P2 AUDIT — CSS override recount (`dbd0bb55`, 2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes; no new report files.
+
+* **BUG-022 ✅ reverified-current with corrected count:** The old “256 overridden rules” wording is not precise for current `css/site.css`.
+* Current `css/site.css` parse: 2,636 selector rule entries.
+* Same media/context repeated selector+property keys: 178 (190 beyond-first declarations), 133 changed-value keys (144 changed beyond-first declarations).
+* After separating same-rule progressive fallbacks from later cascade overrides:
+  - **later-rule repeated keys:** 95 (98 later rule repeats)
+  - **later-rule changed keys:** 52 (54 later changed overrides)
+  - **same-rule fallback changed keys:** 81 (88 same-rule declaration fallbacks, often legacy color value followed by `color-mix(...)`)
+* Examples of real later-rule changed overrides: `body` background/color/font values, `a` color, `.bottom-bar` transition, `.pullquote` border removal, `.btoc-fontsize-btn` min-size 26px→44px, `.gtip.gb-floating-tip` opacity/pointer-events/visibility/transform, print `body/main/p` rules.
+* Executor guidance: treat BUG-022 as CSS cascade debt, but preserve intentional same-rule fallback declarations unless the design-token support matrix changes.
