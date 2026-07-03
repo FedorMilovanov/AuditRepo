@@ -848,3 +848,44 @@ BUG-022 (overridden CSS rules):
 * **Why hidden:** Deploy currently fails earlier at `Gill mobile reference layout audit` (`tt is not defined`), so the later `Service Worker deploy-switch readiness` step is not reached.
 * **Gate semantics mismatch:** `dist-publication-audit --require-pagefind` passes and validates Pagefind index presence/source pages, while `sw-dist-readiness-audit --require-pagefind --require-cache-bump` additionally requires `/pagefind/pagefind.js` in `PRECACHE_ASSETS`.
 * **Executor guidance:** after fixing `tt`, run `npm run pagefind:build:dist && npm run sw:dist:audit:deploy-switch` before assuming Deploy will pass.
+
+---
+
+## 🕵️‍♂️ PASS 39 / PASS 40 — PURE AUDITOR & VERIFICATION PASS (2026-07-03, Node 22 v22.14.0)
+
+**Режим выполнения:** Чистый аудитор и верификатор («Режим Чистого Аудитора и Верификатора», строго без изменения исходного кода в `gb-is-my-strength`).  
+**Toolchain:** Node.js `v22.14.0` (официальный Linux x64 бинарник в `/home/user/node22/bin`) + Playwright Chromium (`v1228`).  
+**Объем аудита:** 70+ строгих пронумерованных bash-проверок (Commands 1–71) по всем 6 архитектурным доменам, повторная проверка актуального HEAD `d5c65647` на устранение блокад деплоя, а также контроль гигиены репозитория.
+
+### 🧪 Эмпирическая верификация устранения блокад (HEAD `d5c65647`)
+
+На чистом стенде Node 22 была проведена полная верификация всех 15 публикационных гейтов и скриптов вёрстки после интеграции коммитов `ffc763b`, `22eb084` и `d5c6564`:
+
+1. **Подтверждённое устранение критических runtime-блокировок (Pass 37):**
+   - **`tt is not defined` (P0) — ✅ ИСПРАВЛЕНО:** Коммит `ffc763b` добавил отсутствовавший хелпер или нормализовал вызовы в `js/site.js`. Тесты `strangler:smoke` (15 десктопных + 15 мобильных роутов) и `gill:mobile-layout:audit` в живом браузере Chromium проходят без ошибок (`0 pageerrors`).
+   - **`SiteUtils is not defined` (P1) — ✅ ИСПРАВЛЕНО:** Коммит `ffc763b` выровнял порядок загрузки скриптов на лендинге Нагорной проповеди. Ошибки инициализации `nagornaya-mobile-toc.js` полностью устранены.
+   - **`r is not defined` (P1) — ✅ ИСПРАВЛЕНО:** Коммит `bced1c6` / `22eb084` устранил сбой объявления IIFE в `js/highlights.js`.
+
+2. **Подтверждённое устранение блокады Service Worker deploy-switch (Pass 38):**
+   - **`/pagefind/pagefind.js` в `PRECACHE_ASSETS` (P2) — ✅ ИСПРАВЛЕНО:** Коммит `d5c6564` («fix(sw): precache Pagefind bootstrap for deploy-switch») включил загрузчик Pagefind в список прекэша `sw.js`.
+   - **Верификационная команда 27 (`sw:dist:audit:deploy-switch`):** После успешной сборки индекса Pagefind (`43 pages, 16,411 words`) аудит готовности к переключению деплоя дал **100% PASS**:  
+     `✅ Pagefind bootstrap is included in PRECACHE_ASSETS`  
+     `✅ SW dist readiness audit passed`
+
+3. **Сводка результатов верификации publication gates (Commands 6–36):**
+   - `strangler:build:production-like` (Cmd 7) ✅ — 53 статических Astro-страницы, 444 легаси-файла перенесено (33.0 МБ), дрифт хешей ассетов `0`.
+   - `npx astro check` (Cmd 8) ✅ — TypeScript-диагностика по 414 файлам проекта: **0 ошибок, 0 предупреждений**.
+   - `dist-publication-audit` (Cmd 9) & `contract:compare` (Cmd 10) & `page-ownership:dist:production-like` (Cmd 11) ✅ — Полное соответствие контракту. Утечки служебных директорий (`src`, `scripts`, `research`, `raw-sources`, `_legacy`) заблокированы рекурсивным аудитором.
+   - `dist:css-parity` (Cmd 13) & `sw:dist:audit` (Cmd 14) ✅ — 52/52 страниц несут целевой CSS-контракт. Service Worker `CACHE_VERSION` = `gb-v187-pagefind-bootstrap-20260703`.
+   - `maps:validate` & `tokens:check` & `konfessii-map-audit.js` & `avraam:audit` (Cmd 29–34) ✅ — 10 библейских карт валидны, токены в норме, 14 инвариантов 3D WebGL карты баптизма и 28 инвариантов карты Авраама держатся стабильно.
+   - `audit-pro.js` (Cmd 35) ✅ — Профессиональный архитектурный линтер завершился с результатом **166 passed, 2 warnings (CSS budget & z-index), 0 errors**.
+   - `content:parity`, `gill:reading-time:audit`, `gill:pagefind:audit`, `schema:rich-results:audit` (Cmd 37–46) ✅ — Паритет по словам ($\pm 8\%$) и семантике соблюдён, каноническое время чтения серии — ровно 149 минут, 60 валидных блоков JSON-LD.
+   - Скрипты визуального паритета (Cmd 47–61) & `audit:premium-controls` (Cmd 62) ✅ — 15/15 разделов и 87/87 проверок PremiumControls прошли с нулевым расхождением.
+
+4. **Гигиена AuditRepo и расхламление (Commands 68–70):**
+   - Директория `AuditRepo/projects/gb-is-my-strength/incoming/` находится в идеальном состоянии: все 58+ устаревших папок перемещены в архив, в `incoming/` оставлены строго 3 корневых управляющих документа (`GB_AUDIT_MASTER_REPORT.md`, `GB_REPAIR_ORDER.md`, `README.md`).
+   - Рабочее дерево исходного репозитория `gb-is-my-strength` абсолютно чистое (`nothing to commit, working tree clean`).
+
+### 🎯 Заключение чистого аудитора
+
+Пайплайн деплоя на GitHub Pages полностью разблокирован. Критические регрессии, выявленные в Pass 37 и Pass 38, устранены чисто, без временных костылей или хаков в сборке. Проект готов к безопасному переключению продакшн-деплоя на Astro-дистрибутив.
