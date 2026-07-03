@@ -1,8 +1,8 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `022014cc` (Pass 26 — AGENTS.md dedup + font preload)  
-**Режим аудита:** Multi-Agent Synthesis (Passes 1–26)  
+**HEAD исходного репозитория:** `36f13424` (Pass 27 — dead exports + AGENTS.md CSS inventory)  
+**Режим аудита:** Multi-Agent Synthesis (Passes 1–27)  
 
 ---
 
@@ -13,11 +13,11 @@
 | 🔴 **P0 (Critical)** | 1 | REG-001 _headers бесполезен (остаётся — нужна CDN-инфра) |
 | 🟠 **P1 (High)** | 1 | CI-дублирование (частично оптимизирован) |
 | 🟡 **P2 (Medium)** | 9 | SEO, search, audit drift |
-| 🔵 **P3 (Medium)** | 8 | a11y, social metadata, оптимизация |
+| 🔵 **P3 (Medium)** | 7 | a11y, social metadata, оптимизация |
 | 🔵 **P3 (Refactor)** | 4 | site.js монолит, enhancements.js, no source maps, no ES modules |
 | 🟣 **AuditRepo** | 5 | Слабая валидация, stale SHA, нет автоматизация |
-| ❌ **Fixed** | 55 | Исправлено в коммитах `f284fc60`–`022014cc` |
-| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **24** | (было 79, -55 исправлено/закрыто) |
+| ❌ **Fixed** | 56 | Исправлено в коммитах `f284fc60`–`36f13424` |
+| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **23** | (было 79, -56 исправлено/закрыто) |
 
 ---
 
@@ -245,3 +245,11 @@
 В рамках задачи по очистке мусора и поддержанию строго одной канонической матрицы (`MASTER_BUG_MATRIX.md`), директория `AuditRepo/projects/gb-is-my-strength/incoming/` была полностью вычищена:
 - Все 58 устаревших директорий от предыдущих прогонов агентов (`arena-agent-6`, `deep-auditor`, `arena-surgical-surgeon` и др.) перенесены в архив `archive/2026-07-03-stale-incoming/`.
 - В `incoming/` оставлены исключительно 3 корневых управляющих документа (`GB_AUDIT_MASTER_REPORT.md`, `GB_REPAIR_ORDER.md`, `README.md`).
+
+---
+
+## ✅ PASS 27 FIXES (коммит `36f13424`, 2026-07-03)
+
+* **BUG-024 ✅:** 5 мёртвых экспортов удалены из `floating-cluster-ui.ts` (68 строк → 18): `FloatingClusterMode`, `FloatingClusterUiConfig`, `floatingClusterUi`, `floatingClusterRoutes`, `getSeriesParts` — 0 внешних потребителей. Живые экспорты `SeriesKey` (4 uses) и `getSeriesLiteMeta` (2 uses) сохранены.
+* **AGENTS.md r312 ✅:** CSS inventory секции §2 обновлён с 8→9 файлов (добавлены `enhancements-runtime.css`, `highlights-runtime.css`, `sw-toast.css`, извлечённые из CSS-in-JS в Pass 24). §0 и §4 таблица маршрутизации CSS обновлены.
+* **NEW FINDING:** Корневые HTML-файлы (baptisty-rossii/*/, nagornaya/*/, articles/*/) — устаревшие артефакты предыдущей сборки, НЕ используются в продакшене. Деплой идёт из `dist/`, который генерируется `astro build`. Astro-компоненты корректно содержат `defer` на site-utils.js и scroll-perf.js. Это НЕ баг — артефакт strangler-миграции.
