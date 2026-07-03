@@ -1,9 +1,9 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
-**Дата консолидации:** 2026-07-02  
-**HEAD исходного репозитория:** `ac132c88` (актуализирован после серии из 12 закрытых багов P1/P2/P3)  
-**Режим аудита:** Multi-Agent Synthesis (Passes 1–21 + Pass 21 SEO/Public Surface Re-verification)  
-**Статус:** ✅ ЕДИНАЯ ВЕРИФИЦИРОВАННАЯ МАТРИЦА (Очищена от галлюцинаций, черновиков и дубликатов)
+**Дата консолидации:** 2026-07-03  
+**HEAD исходного репозитория:** `bba171af` (включая регрессию BUG-001 fix)  
+**Режим аудита:** Multi-Agent Synthesis (Passes 1–22 + Pass 22 Arena Deep Auditor independent source-code audit)  
+**Статус:** ⚠️ РЕГРЕССИЯ P0 — BUG-001 fix ввёл бесконечную рекурсию в `addCleanListener()`, Floating Cluster полностью неработоспособен
 
 ---
 
@@ -11,21 +11,104 @@
 
 | Приоритет | Количество | Описание |
 |-----------|------------|----------|
-| 🔴 **P1 (Critical)** | 2 | Критические архитектурные проблемы и утечки памяти (требуют немедленного исправления) |
-| 🟡 **P2 (High)** | 27 | Высокий приоритет: SEO, AI-индексация, безопасность, publication boundary, Pagefind, CI/CD, консистентность данных |
-| 🔵 **P3 (Medium)** | 21 | Средний приоритет: a11y, Google Fonts в 3D-приложении, social metadata, внутренние ссылки, оптимизация картинок, мёртвый код |
+| 🔴 **P0 (Critical — NEW)** | 3 | Критические регрессии и дрифт: бесконечная рекурсия в FC, AbortController одноразовый, PRECACHE_ASSETS дрифт |
+| 🔴 **P1 (Critical — existing)** | 2 | Критические архитектурные проблемы (1 fixed→regressed, 1 confirmed) |
+| 🟠 **P1+ (High — NEW)** | 5 | XSS через innerHTML, мёртвый CSS 283KB, CI дублирование, deploy-on-fail, back-to-top не кэшируется |
+| 🟡 **P2 (High — existing)** | 27 | SEO, AI-индексация, безопасность, publication boundary, Pagefind, CI/CD, консистентность данных |
+| 🟡 **P2 (Medium — NEW)** | 9 | Audit drift, SW fallback, SW metadata, bookmark dup, search eager, SVG dup, CSS-in-JS ×2 |
+| 🔵 **P3 (Medium — existing)** | 21 | a11y, Google Fonts, social metadata, внутренние ссылки, оптимизация картинок, мёртвый код |
+| 🔵 **P3 (Refactor — NEW)** | 5 | site.js 167KB, enhancements.js 48KB, no source maps, no ES modules, glossary XSS |
 | ⚪ **S0 (Low)** | 2 | Документация и технический долг в `AGENTS.md` |
-| ❌ **False Positives / Fixed** | 6+ | Опровергнутые или уже исправленные проблемы (`SEO-001`, `BUG-004`, `HSTS`, `PC-CURRENT-06`) |
-| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **52** | Единый очищенный реестр без дубликатов и мусорных файлов |
+| 🟣 **AuditRepo (NEW)** | 5 | Weak validation, stale SHA, no content checks, no witness automation, no reverify automation |
+| ❌ **False Positives / Fixed** | 6+ | Опровергнутые или уже исправленные |
+| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **79** | +27 новых в Pass 22, включая 3 критических P0 |
 
 ---
 
-## 🔴 P1 — CRITICAL (2 бага)
+## 🔴 P0 — CRITICAL REGRESSION (3 бага — Pass 22, 2026-07-03)
+
+### P0-FC-REC: Бесконечная рекурсия в `addCleanListener()` — Floating Cluster мёртв
+* **Файл:** `js/floating-cluster-controller.js:47`
+* **Регрессия BUG-001 fix (коммит `36003b91`)**
+* **Суть:** Функция `addCleanListener()` вызывает **саму себя** вместо `target.addEventListener()`. Все 39 вызовов уходят в `RangeError: Maximum call stack size exceeded`.
+* **Влияние:** Floating Cluster полностью неработоспособен: тема, TTS, TOC, scroll progress, overlay, share, favorites, font controls.
+* **Исправление:** Заменить `addCleanListener(target, type, fn, opts)` → `target.addEventListener(type, fn, opts)`
+
+### P0-FC-ABORT: AbortController одноразовый — повторная инициализация невозможна
+* **Файл:** `js/floating-cluster-controller.js:32-33`
+* **Суть:** После `abortCtrl.abort()` все listeners удалены навсегда. `window._fcAbortController` = null. При повторной инициализации (HMR/SPA) новый AbortController создаётся, но не используется корректно.
+* **Исправление:** Пересоздавать `AbortController` после cleanup.
+
+### P0-SW-DRIFT: PRECACHE_ASSETS в sw.js не синхронизирован с cache-bust-assets.js
+* **Файлы:** `sw.js`, `scripts/cache-bust-assets.js`, `scripts/audit-pro.js`
+* **Суть:** 3 независимых списка assets с дрифтом. SW содержит 26 записей (включая manifest, favicons, 404.html, pagefind), cache-bust-assets — 19. `js/modules/back-to-top.js` отсутствует в SW и cache-bust. Нет автоматической проверки синхронизации.
+* **Исправление:** Создать единый `precache-assets.js` и импортировать во все 3 файла.
+
+---
+
+## 🟠 P1+ — HIGH PRIORITY NEW (5 багов — Pass 22)
+
+### P1-SITE-XSS: innerHTML с непроверенными данными из JSON
+* **Файл:** `js/site.js` (строки 288, 484, 309)
+* **Суть:** `w.original`, `w.definition`, `n.title`, `href` подставляются в innerHTML без экранирования. `search.js` имеет `F()` и `safeUrl()`, но они не используются.
+
+### P1-LAYERED-CSS: 283KB мёртвый файл `css/site-layered.css`
+* **Файл:** `css/site-layered.css`
+* **Суть:** Почти копия `site.css` с `@layer`-обёртками. Нигде не подключён. Проверяется audit-pro.js, но не используется в продакшн. `!important`-счётчик считает для неправильного файла.
+
+### P1-CI-DUPE: Дублирование npm ci + cache-bust в IndexNow и Deploy
+* **Файлы:** `.github/workflows/indexnow.yml`, `.github/workflows/deploy.yml`
+* **Суть:** 2× npm ci + 2× cache-bust + Astro build = 20–30 мин CI на каждый пуш.
+
+### P1-DEPLOY-FAIL: deploy.yml запускается при падении indexnow
+* **Файл:** `.github/workflows/deploy.yml`
+* **Суть:** `workflow_run.conclusion == 'failure'` → деплой битого состояния.
+
+### P1-BACK-TOP: `js/modules/back-to-top.js` не кэшируется SW и не cache-bust'ится
+* **Суть:** Отсутствует в PRECACHE_ASSETS и cache-bust-assets.js.
+
+---
+
+## 🟡 P2 NEW — MEDIUM PRIORITY (9 багов — Pass 22)
+
+* **P2-AUDIT-DRIFT:** audit-pro.js не проверяет синхронизацию asset-списков (3 списка дрифта).
+* **P2-AUDIT-LAYERED:** !important-аудит считает для site-layered.css, а не для site.css.
+* **P2-SW-FALLBACK:** cacheFirst fallback для `?v=` ломает cache-bust — возвращает stale.
+* **P2-SW-METADATA:** CACHE_METADATA ключ = полный URL, но trimCache ищет по cache keys.
+* **P2-BOOKMARK-DUP:** getAllForSite определяется дважды в bookmark-engine.js.
+* **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке (~15KB nodes).
+* **P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB).
+* **P2-ENH-CSS:** enhancements.js инжектит ~2KB CSS через JS (FOUC, нет кэша).
+* **P2-HIGHLIGHTS-CSS:** highlights.js инжектит ~5KB CSS через JS (FOUC, нет кэша).
+
+---
+
+## 🔵 P3 NEW — REFACTORING (5 позиций — Pass 22)
+
+* **R-001:** site.js — 167KB монолит (15 модулей).
+* **R-002:** enhancements.js — 48KB (7+ модулей).
+* **R-003:** Нет source maps.
+* **R-004:** Нет `type="module"` → нет tree-shaking.
+* **R-005:** Glossary innerHTML без экранирования в tooltip body.
+
+---
+
+## 🟣 AuditRepo — NEW (5 позиций — Pass 22)
+
+* **AR-001:** validate_audit_repo.py — слабая валидация identity-маркеров (substring match).
+* **AR-002:** PROJECT_REGISTRY.md устарел — SHA от 2026-06-27, текущий 2026-07-03.
+* **AR-003:** check_auditrepo_structure.py не проверяет содержимое working/verified.
+* **AR-004:** MULTI_WITNESS_VERIFICATION_PROTOCOL — не автоматизирован.
+* **AR-005:** Нет reverify-автоматизации при новом коммите в source repo.
+
+---
+
+
 
 ### BUG-001 / PC-102: Memory Leak в `floating-cluster-controller.js`
 * **Файл:** `js/floating-cluster-controller.js` (линии 83, 108, 142 и др.)
 * **Суть проблемы:** В скрипте было зарегистрировано 38 вызовов `addEventListener` без очистки.
-* **Статус:** ✅ **ИСПРАВЛЕНО И ВЕРИФИЦИРОВАНО** (Коммит `36003b91` — 2026-07-02: внедрён паттерн `AbortController` и функция очистки `window.removeFloatingClusterListeners()`, все слушатели теперь управляемы).
+* **Статус:** 🔴 **РЕГРЕССИЯ (Pass 22, 2026-07-03)** — Фикс от `36003b91` ввёл **бесконечную рекурсию** в `addCleanListener()` (строка 47 вызывает саму себя вместо `target.addEventListener()`). Floating Cluster **полностью неработоспособен**. См. P0-FC-REC в incoming/arena-deep-auditor/2026-07-03/REPORT.md.
 
 ### BUG-002: Дублирование кода в 45 компонентах Astro
 * **Файлы:** 39 компонентов `*PageHead.astro` (например, `GillPart1PageHead.astro`, `AntisovetovPageHead.astro`) и 6 компонентов `*PostArticle.astro`.

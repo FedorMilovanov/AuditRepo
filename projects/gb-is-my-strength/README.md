@@ -1,7 +1,8 @@
 # gb-is-my-strength / gospod-bog.ru
 
-**Status:** current-head truth reconciled after source HEAD `66640561919501e68dd9d3cd290ff9afe53d3068` (2026-06-27).
-**AuditRepo HEAD before cleanup:** `c3a9ae27df749c09a88650ae0e16e348db61c1c7`.
+**Status:** ⚠️ CRITICAL REGRESSION — BUG-001 fix (commit `36003b91`) introduced infinite recursion in `addCleanListener()`. Floating Cluster non-functional. See `verified/MASTER_BUG_MATRIX.md` P0-FC-REC.
+**Last source HEAD checked:** `bba171af` (2026-07-03, Arena Deep Auditor Pass 22)
+**Previous HEAD:** `66640561919501e68dd9d3cd290ff9afe53d3068` (2026-06-27)
 
 ## Quick facts
 
@@ -12,7 +13,7 @@
 
 ## Current operational truth
 
-Use `verified/CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md` first. Older 2026-06-25 aggregate bug counts and older “repair-ready” summaries are historical baseline only.
+Use `verified/MASTER_BUG_MATRIX.md` first — updated 2026-07-03 with Pass 22 findings (3 new P0, 5 new P1, 9 new P2).
 
 Current source checks performed during cleanup:
 
