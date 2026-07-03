@@ -105,7 +105,7 @@
 * ~~**BUG-021:** 2 короткие meta descriptions~~ ✅ NOT A BUG — все ≥150 символов (SEO норма)
 * **BUG-022:** Переопределённые CSS правила — ✅ REVERIFIED-CURRENT on `dbd0bb55`, original “256” count is stale/ambiguous. `css/site.css` audit found 178 same-context repeated selector+property keys (190 beyond-first declarations), 133 with changed values; after separating same-rule progressive fallbacks, there are 52 later-rule changed selector+property keys / 54 later overrides. 81 changed keys are same-rule fallback declarations (e.g. rgba → color-mix) and should not be treated as full cascade bugs.
 * ~~**BUG-024:** Мёртвый TypeScript/JS API в helper модулях~~ ✅ CLOSED (Pass 27: 5 dead exports removed from floating-cluster-ui.ts)
-* **PC-107:** Неиспользуемые TypeScript props в PremiumControls интерфейсах
+* ~~**PC-107:** Неиспользуемые TypeScript props в PremiumControls интерфейсах~~ ✅ STALE/FIXED-CURRENT on `dbd0bb55`: original archived finding targeted deleted `GillRailControls.astro` props (`context`, `homeHref`, `includeStyles`). Current source has no `GillRailControls*` file or references; current PremiumControls/FloatingCluster/Gill Props are consumed internally; `astro check` has no PC-107/GillRailControls diagnostics.
 * **NEW-54-59:** Social metadata gaps, feed.xml title drift, og:image size mismatch
 
 ---
@@ -417,3 +417,16 @@
   - **same-rule fallback changed keys:** 81 (88 same-rule declaration fallbacks, often legacy color value followed by `color-mix(...)`)
 * Examples of real later-rule changed overrides: `body` background/color/font values, `a` color, `.bottom-bar` transition, `.pullquote` border removal, `.btoc-fontsize-btn` min-size 26px→44px, `.gtip.gb-floating-tip` opacity/pointer-events/visibility/transform, print `body/main/p` rules.
 * Executor guidance: treat BUG-022 as CSS cascade debt, but preserve intentional same-rule fallback declarations unless the design-token support matrix changes.
+
+
+---
+
+## 🟢 PASS 35 P3 AUDIT — PC-107 retirement check (`dbd0bb55`, 2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes; no new report files.
+
+* **PC-107 ✅ stale/fixed-current:** Archive evidence shows PC-107 originally referred to `GillRailControls.astro` dead TypeScript props (`context`, `homeHref`, `includeStyles`) and reinforced PC-101 dead component deletion.
+* Current source witness: `find src -name '*GillRailControls*'` returns no files; grep for `GillRailControls`, `context`, `homeHref`, `includeStyles` in PremiumControls/Gill source returns no current PC-107 target.
+* Current component Props witness: `PremiumControlAnchor`, `ClusterButton`, `FloatingCluster`, `PlayEmber`, `RomanNumeral`, `SaveButton`, `SeriesLiteCluster`, `SingleArticleCluster`, Gill `*Overlay/Rail/MobileBar/Chrome`, and `SeriesMark` all consume their declared Props internally.
+* `astro check` witness: 414 files checked, 0 errors; no PC-107/GillRailControls unused-prop diagnostics. Remaining hints are unrelated script-processing hints plus unrelated `KartyHoldingPage.astro` `slug` diagnostic.
+* Note: `PremiumControlAnchor` and `ClusterButton` have no current callsites, but that is not PC-107 (unused props). `PremiumControlAnchor` is explicitly protected by `owner-ui-regression-guard.js` as a structural marker.
