@@ -48,3 +48,9 @@ Targeted pixel result remained green:
 
 - `NEW-65` remains fixed-current on source main `932af3f3`.
 - The temporary root local-reference regression from `914c7fb1` / `8d0c12e0` is fixed-current on `932af3f3`.
+
+---
+
+## Remote deploy confirmation
+
+Remote `Deploy to GitHub Pages` is **green** on current source main `932af3f3`: workflow_dispatch run `28685603542` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28685603542).

@@ -6,7 +6,7 @@
 
 **Local verification on `932af3f3`:** `validate:static-publication`, targeted `/baptisty-rossii/` pixel parity, `workflows:check`, and `guard:shared-files` passed.
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-root-path-fix-932af3f.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-root-path-fix-932af3f.md`. Remote `Deploy to GitHub Pages` is **green** on workflow_dispatch run `28685603542`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28685603542.
 
 ---
 

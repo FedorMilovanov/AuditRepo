@@ -21,7 +21,7 @@ Verified on `932af3f3`:
 - `npm run workflows:check` ✅
 - `npm run guard:shared-files` ✅
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-root-path-fix-932af3f.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-root-path-fix-932af3f.md`. Remote Deploy green: workflow_dispatch run `28685603542` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28685603542).
 
 ---
 

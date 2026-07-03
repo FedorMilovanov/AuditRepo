@@ -47,3 +47,9 @@ npm run guard:shared-files                                      PASS after lane 
 `NEW-64` / `CHECK-GAP-DIST-SMOKE`: **fixed-current on source main `8d0c12e0` by source workflow-policy evidence and local runtime smoke evidence**.
 
 Remote Deploy should be observed separately for final workflow confirmation.
+
+---
+
+## Remote deploy confirmation
+
+Remote `Deploy to GitHub Pages` is **green** on current source main `932af3f3`: workflow_dispatch run `28685603542` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28685603542).
