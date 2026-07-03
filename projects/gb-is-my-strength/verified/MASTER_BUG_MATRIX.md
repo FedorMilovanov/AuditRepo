@@ -84,8 +84,10 @@
 
 * **P2-AUDIT-DRIFT:** audit-pro.js не проверяет синхронизацию PRECACHE↔cache-bust↔ALLOWED (улучшено в REG-004, но полный дрифт не решён)
 * **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке — ✅ VERIFIED-CURRENT on `dbd0bb55`: `js/search.js` 31,534 bytes is loaded on 39 pages; before first user search/open it creates 128 `.cp-*` command-palette nodes and ~106 KB `.cp-*` outerHTML on sampled routes (`/`, `/articles/kod-da-vinchi/`, `/baptisty-rossii/`). Also eagerly requests `/data/search-manifest.json`; Pagefind itself stays lazy (`window.__pagefindReady__ === false` before interaction).
-* **CI-P0-GILL-RUNTIME-REFS:** current remote `f1e9abd` Deploy red at `Gill mobile reference layout audit`; partial fix landed in `bced1c6` (`js/highlights.js` strict IIFE now declares `var n,e,r;` — `r=document.createElement("link")` no longer throws). Remaining runtime: `js/site.js` calls undefined `tt(...)` helper at backlinks `tt(n.title)` (also at verse `tt(ref)`/`tt(text)` and original-word `tt(w.lang)`/`tt(w.original)`/`tt(w.definition)` blocks). 20 pageerrors on Gill mobile audit (down from 40 pre-`bced1c6`). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md` (incl. §9 Pass 30.b re-verification) and Pass 34 below.
+* **CI-P0-GILL-RUNTIME-REFS:** current remote `f1e9abd9` Deploy red at `Gill mobile reference layout audit`; partial fix landed in `bced1c69` (`js/highlights.js` strict IIFE now declares `r`; `r is not defined` retired). Remaining runtime: `js/site.js` calls undefined `tt(...)` helper at backlinks `tt(n.title)` (also verse/original-word blocks). 20 pageerrors on Gill mobile audit (down from 40 pre-`bced1c69`). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`.
 * **CI-P1-NAGORNAYA-SITEUTILS-ORDER:** broader dist runtime smoke found `/nagornaya/` pageerror `SiteUtils is not defined` from `js/nagornaya-mobile-toc.js?v=866d4238:1:696`; dist script order loads `nagornaya-mobile-toc.js` before `/js/site-utils.js`, while the TOC script immediately calls `SiteUtils.ready(...)`.
+* **CHECK-GAP-DIST-SMOKE:** deploy workflow omits `dist-smoke-audit.js`, even though `strangler:audit:production-like` includes it and it independently catches current `tt is not defined`; `validate:static-publication` also omits this browser runtime smoke.
+* **VIS-BAPTISTY-PARITY:** Visual Parity Guard/current local pixel-diff fails `/baptisty-rossii/` on `f1e9abd9` (desktop 6.131%, mobile 17.368%, threshold 1%); all other default landing routes passed local threshold.
 * ~~**CI-CSSLAYER-STALE:** `css:layer:validate` pointed at deleted `css/site-layered.css`~~ ✅ FIXED-CURRENT on source `dbd0bb55` by `a65874a0`; script now validates `css/site.css`.
 * ~~**P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)~~ ✅ FIXED (Pass 28: helper _s() + path constants _p0/_p1/_p2, -1.9KB)
 * **BUG-012:** Рассинхрон заголовков MDX и HTML (3 статьи) — NOT A BUG, SEO оптимизация by design
@@ -499,3 +501,19 @@
 * `bced1c6` retired the `r is not defined` half. Dist artifact and source both reflect the fix.
 * Audit-pro `node --check js/highlights.js` and `dist/js/highlights.js?v=c972d20e` no longer surface the bare-assignment pattern.
 * Remaining: `tt is not defined` half in `js/site.js` (see Pass 34 above).
+
+
+---
+
+## 🔴 PASS 37 CURRENT-HEAD / GATE-GAP REVERIFY (source HEAD `f1e9abd9`, 2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes; no new report files.
+
+* **Remote moved:** `gb-is-my-strength/main` advanced to `f1e9abd9` via `bced1c69` (`highlights.js` declares `r`), `8446a0da` (AGENTS duplicate revision fix), and cache-bust commit `f1e9abd9`.
+* **CI remains red:** Deploy run `28680826378` on `f1e9abd9` completed **failure** at **`Gill mobile reference layout audit`**.
+* **Partial runtime fix verified:** `r is not defined` is fixed-current on `f1e9abd9` (`0` route hits in broad runtime smoke; `bced1c69` fixed the strict IIFE declaration in `js/highlights.js`).
+* **P0 still current:** `tt is not defined` remains: Gill layout audit fails with 20 pageerrors; broad 52-route smoke shows 15 route hits; representative `dist-smoke-audit` fails on `/articles/kod-da-vinchi/` desktop+mobile.
+* **P1 still current:** `/nagornaya/` still has `SiteUtils is not defined` from `nagornaya-mobile-toc.js` script order.
+* **Regression archaeology:** `r` was introduced in `57d1b3c7`; `tt(n.title)` was introduced in `47a98da` as part of claimed XSS sanitization, but no reachable `tt` helper exists for the current strict callsite.
+* **Missing gate:** `deploy.yml` does not run `node scripts/dist-smoke-audit.js --no-build --production-like`, although `strangler:audit:production-like` does. `validate:static-publication` also omits this browser runtime smoke. Current deploy relies on Gill-specific browser audits to catch global runtime no-undef regressions.
+* **Visual parity current side finding:** local pixel-diff on `f1e9abd9` fails `/baptisty-rossii/` only: desktop `6.131%`, mobile `17.368%` (threshold `1%`). GitHub Visual Parity Guard failed on `8446a0da`; current `f1e9abd9` was `[skip ci]`, so remote visual parity was not rerun, but local current-head evidence confirms the issue.
