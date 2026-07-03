@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `86827c18` (Pass 25 — dead code cleanup + defer + CSS vars)  
+**HEAD исходного репозитория:** `364bb296` (Pass 25b — CSS extraction + false bugs closed)  
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–24)  
 
 ---
@@ -12,13 +12,13 @@
 |-----------|------------|----------|
 | 🔴 **P0 (Critical)** | 1 | REG-001 _headers бесполезен (остаётся — нужна CDN-инфра) |
 | 🟠 **P1 (High)** | 1 | CI-дублирование (частично оптимизирован) |
-| 🟡 **P2 (Medium)** | 14 | SEO, SW metadata, search, audit drift |
+| 🟡 **P2 (Medium)** | 11 | SEO, search, audit drift |
 | 🔵 **P3 (Medium)** | 10 | a11y, social metadata, оптимизация |
 | 🔵 **P3 (Refactor)** | 4 | site.js монолит, enhancements.js, no source maps, no ES modules |
 | ⚪ **S0 (Low)** | 2 | Документация |
 | 🟣 **AuditRepo** | 5 | Слабая валидация, stale SHA, нет автоматизации |
 | ❌ **Fixed** | 12 | Исправлено в коммитах `f284fc60`–`47a98da` |
-| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **31** | (было 79, -48 исправлено/закрыто) |
+| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **28** | (было 79, -51 исправлено/закрыто) |
 
 ---
 
@@ -88,7 +88,8 @@
 * **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке (~15KB nodes)
 * **P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)
 * ~~**P2-ENH-CSS:** enhancements.js инжектит CSS через JS~~ ✅ FIXED (→ css/enhancements-runtime.css)
-* ~~**P2-HIGHLIGHTS-CSS:** highlights.js инжектит CSS через JS~~ ✅ FIXED (→ css/highlights-runtime.css)
+* ~~**P2-HIGHLIGHTS-CSS:** highlights.js инжектит CSS через JS~~ ✅ FIXED
+* ~~**P2-SW-TOAST-CSS:** sw-register.js инжектит ~1.1KB CSS через JS~~ ✅ FIXED (→ css/sw-toast.css) (→ css/highlights-runtime.css)
 * ~~**BUG-003:** Рассинхрон в оркестрации SW gate~~ ✅ FIXED (sw:dist:audit добавлен в gate)
 * **BUG-012:** Рассинхрон заголовков MDX и HTML (3 статьи)
 * **BUG-041:** Sitemap/indexability mismatch for karty holding pages
@@ -115,7 +116,7 @@
 * **BUG-022:** 256 переопределённых CSS правил
 * **BUG-023:** Мёртвый атрибут `data-gill-current-part`
 * **BUG-024:** Мёртвый TypeScript/JS API
-* **BUG-025:** Устаревшие CSS-селекторы в openSearch()
+* ~~**BUG-025:** Устаревшие CSS-селекторы в openSearch()~~ ✅ NOT A BUG (fallback-by-design)
 * **BUG-034/035:** grid-template-rows: 0fr без фоллбека
 * **BUG-036:** scrollbar-gutter без фоллбека
 * **PC-101:** Мёртвый компонент GillRailControls.astro
