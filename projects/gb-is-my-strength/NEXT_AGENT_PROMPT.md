@@ -1,3 +1,49 @@
+# 🔴 PASS 32 VERIFICATION — 2026-07-03 (READ FIRST)
+
+**Verified source HEAD:** `932af3f32f9088363f1024affa277b6e7db8257e`
+**Verified AuditRepo HEAD:** `c15aefdebdbcd4b41374e88ad686cf5d3f8e074a`
+**Verification type:** Full clone + syntax + build + dist-smoke + branch audit
+
+## CI-P0-GILL-RUNTIME-REFS — STATUS: FIXED-CURRENT on 932af3f3
+
+**Critical finding: The handoff's CI-P0-GILL-RUNTIME-REFS is already FIXED on current main.**
+
+All three runtime no-undef issues identified in Pass 30/31 were fixed by commits that landed AFTER `dbd0bb55`:
+
+| Bug | Fixed in | Verified on current HEAD |
+|-----|----------|------------------------|
+| `r is not defined` in highlights.js strict IIFE | `bced1c69` | ✅ `var r` declared in var statement |
+| `tt is not defined` in site.js | `ffc763bc` | ✅ `function tt(n){}` defined on line 1 |
+| `SiteUtils undefined` script order in nagornaya | `ffc763bc` | ✅ site-utils.js (blocking) loads before nagornaya-mobile-toc.js (defer) |
+
+**Remaining:** `SiteUtils.themeKey` (without `window.` prefix) in minified nagornaya-mobile-toc.js — P2, wrapped in try-catch, theme toggle on click silent-fails but doesn't crash page.
+
+## CI Status on current HEAD 932af3f3
+
+| Guard | Status |
+|-------|--------|
+| Shared Files Guard #418 | ✅ Green |
+| Visual Parity Guard #211 | ✅ Green (0.000% diff) |
+| Deploy to GitHub Pages | ⏳ No run yet on 932af3f3 (last run on parent 8d0c12e0 FAILED ❌) |
+
+**The Deploy failure on 8d0c12e0 needs investigation** — the parent commit's deploy failed with exit code 1 at step 8. Source code P0 issues are already fixed; the failure may be CI/environmental (Playwright browser download/chromium headless shell issue).
+
+## Commands verified
+
+- `node --check js/*.js` — ✅ 11/11 pass
+- `npm run css:layer:validate` ✅
+- `npm run tokens:check` ✅
+- `npm run strangler:build:production-like` ✅ (53 pages, without `astro check` due to sandbox RAM)
+- `node scripts/dist-smoke-audit.js --no-build --production-like` ✅ (14/14 desktop routes, 0 errors)
+
+## Next action for executor
+
+1. Trigger Deploy workflow on `932af3f3` to verify green
+2. If deploy still red: investigate Playwright/browser setup in CI, not source code
+3. Fix `SiteUtils.themeKey` → `window.SiteUtils.themeKey` in minified nagornaya-mobile-toc.js (P2)
+
+---
+
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-03 Baptisty root asset path fix (READ FIRST)
 
 **Current source main HEAD:** `932af3f32f9088363f1024affa277b6e7db8257e`.
