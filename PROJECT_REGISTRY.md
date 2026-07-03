@@ -66,3 +66,5 @@ Do not promote “60 confirmed bugs / 9 P0 / repair-ready” into new prompts wi
 <!-- 2026-07-03: gb-is-my-strength runtime no-undef fix verified on source lane `22eb0840`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb084.md. -->
 
 <!-- 2026-07-03: gb-is-my-strength SW/Pagefind deploy-switch fixed on source main `d5c65647`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-03_sw-pagefind-bootstrap-fixed-d5c6564.md. -->
+
+<!-- 2026-07-03: gb-is-my-strength /baptisty-rossii/ visual parity fixed on source main `914c7fb1`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-visual-parity-fixed-914c7fb.md. -->

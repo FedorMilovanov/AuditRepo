@@ -1,3 +1,17 @@
+# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-03 Baptisty visual parity fix (READ FIRST)
+
+**Current source main HEAD:** `914c7fb11e51e25937e0afc0ef79118c7a246394`.
+
+**Fixed in this pass:** `NEW-65` / `VIS-BAPTISTY-PARITY` — `/baptisty-rossii/` legacy-root vs production-like dist pixel diff is now 0.000% desktop and 0.000% mobile.
+
+**Root cause:** root legacy baseline had stale pre-PremiumControls `.gbs2-rfoot`; dist had current Baptisty PremiumControls footer with Play/Save, increasing footer height by 72.5px. Root was synced to current dist footer contract.
+
+**Local verification on `914c7fb1`:** `strangler:build:production-like`, targeted `visual-parity-screenshots --routes /baptisty-rossii/`, `owner:ui-guard`, `audit:premium-controls`, `baptisty-rossii:visual-parity:audit`, `validate:strict`, and `guard:shared-files` passed.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-visual-parity-fixed-914c7fb.md`.
+
+---
+
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-03 SW/Pagefind deploy-switch fix (READ FIRST)
 
 **Current source main HEAD:** `d5c65647d57cf3bc83b6543cb58135cdd279013f`.

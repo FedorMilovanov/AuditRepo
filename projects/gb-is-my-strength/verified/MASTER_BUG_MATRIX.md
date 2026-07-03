@@ -1,12 +1,34 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `d5c65647` (SW/Pagefind deploy-switch fix; descendant of runtime no-undef fix)
+**HEAD исходного репозитория:** `914c7fb1` (Baptisty visual parity fix; descendant of SW/Pagefind deploy-switch fix)
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–28)  
 
 ---
 
 
+
+## 🟢 PASS 41 / BAPTISTY VISUAL PARITY FIX (2026-07-03)
+
+**Source fix commit:** `914c7fb11e51e25937e0afc0ef79118c7a246394` (`lane/visual-baptisty-parity-2026-07-03`, pushed to `main`).
+
+`NEW-65` / `VIS-BAPTISTY-PARITY` is **fixed-current on source main `914c7fb1` by local W3 pixel evidence**. Root `baptisty-rossii/index.html` is synced with the current dist PremiumControls footer contract.
+
+Verified on `914c7fb1`:
+
+- `npm run strangler:build:production-like` ✅
+- `node scripts/visual-parity-screenshots.js --routes /baptisty-rossii/ --threshold 1.0` ✅
+  - desktop diff: 0.000%
+  - mobile diff: 0.000%
+- `npm run owner:ui-guard` ✅
+- `npm run audit:premium-controls` ✅ 87/87
+- `npm run baptisty-rossii:visual-parity:audit` ✅
+- `npm run validate:strict` ✅ (0 errors, 2 pre-existing warnings)
+- `npm run guard:shared-files` ✅
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-visual-parity-fixed-914c7fb.md`.
+
+---
 
 ## 🟢 PASS 40 / SW PAGEFIND DEPLOY-SWITCH FIX (2026-07-03)
 
@@ -138,7 +160,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 * ~~**CI-P1-NAGORNAYA-SITEUTILS-ORDER:** `/nagornaya/` pageerror `SiteUtils is not defined` / bad early ready helper~~ ✅ FIXED-ON-LANE `8a816ce4`: `safeReady()` now delegates to `window.SiteUtils.ready(fn)` if present and otherwise uses DOMContentLoaded/current fallback. Confirmed by `dist-smoke-audit` and `validate:static-publication` on `8a816ce4`.
 * **CHECK-GAP-DIST-SMOKE:** deploy workflow omits `dist-smoke-audit.js`, even though `strangler:audit:production-like` includes it and it independently catches current `tt is not defined`; `validate:static-publication` also omits this browser runtime smoke.
 * ~~**CI-HIDDEN-SW-PAGEFIND-PRECACHE / NEW-66:** deploy-switch Pagefind bootstrap missing from `PRECACHE_ASSETS`~~ ✅ FIXED-CURRENT on source main `d5c65647`: `sw.js` precaches `/pagefind/pagefind.js`, `CACHE_VERSION` bumped to `gb-v187-pagefind-bootstrap-20260703`, and `npm run sw:dist:audit:deploy-switch` passes after `pagefind:build:dist`.
-* **VIS-BAPTISTY-PARITY:** Visual Parity Guard/current local pixel-diff fails `/baptisty-rossii/` on `f1e9abd9` (desktop 6.131%, mobile 17.368%, threshold 1%); all other default landing routes passed local threshold.
+* ~~**VIS-BAPTISTY-PARITY / NEW-65:** `/baptisty-rossii/` pixel-diff failed because root legacy footer was stale vs dist PremiumControls footer~~ ✅ FIXED-CURRENT on source main `914c7fb1`: targeted pixel guard now reports desktop 0.000%, mobile 0.000%.
 * ~~**CI-CSSLAYER-STALE:** `css:layer:validate` pointed at deleted `css/site-layered.css`~~ ✅ FIXED-CURRENT on source `dbd0bb55` by `a65874a0`; script now validates `css/site.css`.
 * ~~**P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)~~ ✅ FIXED (Pass 28: helper _s() + path constants _p0/_p1/_p2, -1.9KB)
 * **BUG-012:** Рассинхрон заголовков MDX и HTML (3 статьи) — NOT A BUG, SEO оптимизация by design
@@ -161,7 +183,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 * ~~**PC-107:** Неиспользуемые TypeScript props в PremiumControls интерфейсах~~ ✅ STALE/FIXED-CURRENT on `dbd0bb55`: original archived finding targeted deleted `GillRailControls.astro` props (`context`, `homeHref`, `includeStyles`). Current source has no `GillRailControls*` file or references; current PremiumControls/FloatingCluster/Gill Props are consumed internally; `astro check` has no PC-107/GillRailControls diagnostics.
 * **NEW-54-59:** Social/SEO metadata bundle — ✅ REVERIFIED-CURRENT on `dbd0bb55` with split status: NEW-55 fixed-current (`robots.txt` now allows `/fonts/*.css?*` despite `Disallow: /*?*`); NEW-54 still current (4 sitemap URLs with zero static inlinks: `/karty/ishod/`, `/map/`, `/nagornaya/nakhodki/`, `/rodosloviye/`); NEW-56 current (28 routes missing at least one of `og:site_name`, `og:locale`, `og:image:alt`, `twitter:image:alt`, concentrated in Baptist/maps/konfessii); NEW-57 current (12 preload image mismatches, mostly Baptist `.webp` preloads vs `.svg` rendered covers + `/pastor-series/` `hero-main.webp` vs `hero.webp`); NEW-58 current but count changed (23 feed title drifts vs old 13, including 10 Baptist items now in feed); NEW-59 current (`/hard-texts/` declares `og:image` 1200×630 but actual `og-series-heart.webp` is 1360×768).
 * **NEW-64 (P3, PREVENTION-GAP):** deploy chain does not run a broad browser runtime no-undef smoke. Currently caught by `gill:mobile-layout:audit` (5 routes) and by `dist-smoke-audit` (12 routes) only when those audits are run manually or as part of `strangler:audit:production-like` (not in `validate:static-publication`). Recommended: add `dist-smoke-audit --no-build --production-like` to `validate:static-publication` chain OR add a Playwright-based 52-route runtime smoke step to `.github/workflows/deploy.yml` that fails on any `pageerror` (excluding localhost favicon CSP noise). See Pass 35 in this file.
-* **NEW-65 (P2, visual parity /baptisty-rossii/ on `f1e9abd9`):** local pixel-diff on current `f1e9abd9` build fails `/baptisty-rossii/` only: desktop 6.131%, mobile 17.368% (threshold 1%). GitHub Visual Parity Guard failed on `8446a0da`; current `f1e9abd9` is `[skip ci]` so remote visual parity was not rerun, but local current-head evidence confirms the issue. `data/visual-parity-baseline.json` lists `/baptisty-rossii/` at `desktop: 0, mobile: 0` (with 51 total routes); so any 6-17% diff is well above baseline+tolerance. See Pass 37 in this file and the Pass 35 visual-witness re-run on `f1e9abd9` (dist height 12956 vs legacy 12884 = +72 px on desktop, +72 px on mobile — both consistent with a single 72px element added in dist vs legacy).
+* ~~**NEW-65 (P2, visual parity /baptisty-rossii/):** legacy-root vs dist pixel diff 6.131% desktop / 17.368% mobile~~ ✅ FIXED-CURRENT on source main `914c7fb1`: root `baptisty-rossii/index.html` synced to current dist PremiumControls footer; targeted pixel diff is 0.000% desktop and 0.000% mobile. See Pass 41.
 * **NEW-66 (P2, hidden gate — SW/Pagefind deploy-switch on `f1e9abd9`):** `npm run sw:dist:audit:deploy-switch` currently fails on `f1e9abd9` after Pagefind build with "Pagefind bootstrap /pagefind/pagefind.js missing from PRECACHE_ASSETS". Hidden because the deploy chain fails earlier at `Gill mobile reference layout audit` (`tt is not defined`), so the later `Service Worker deploy-switch readiness` step is not reached. Gate-semantics mismatch: `dist-publication-audit --require-pagefind` passes; `sw-dist-readiness-audit --require-pagefind --require-cache-bump` does not. After fixing `tt`, executor should re-run `npm run pagefind:build:dist && npm run sw:dist:audit:deploy-switch` before assuming Deploy will pass. See Pass 38 in this file. W2 re-confirmed in this session: `sw:dist:audit:deploy-switch` exits 1 with the same `Pagefind bootstrap /pagefind/pagefind.js missing from PRECACHE_ASSETS` failure; `dist/pagefind/pagefind.js` exists (built by `pagefind:build:dist`) but `sw.js` `PRECACHE_ASSETS` does not include it; `sw.js` `CACHE_VERSION` is `gb-v186-sw-toast-css-20260703` (older than the source `f1e9abd9` commit hash, indicating `sw.js` has not been cache-busted since Pass 24 / commit 47a98da).
 
 ---
