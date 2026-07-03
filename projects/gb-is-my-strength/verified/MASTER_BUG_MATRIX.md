@@ -24,7 +24,7 @@ Verified on `d5c65647`:
 - `npm run validate:static-publication` ✅
 - `npm run guard:shared-files` ✅
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_sw-pagefind-bootstrap-fixed-d5c6564.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_sw-pagefind-bootstrap-fixed-d5c6564.md`. Remote Deploy green: run `28683773647` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28683773647).
 
 ---
 

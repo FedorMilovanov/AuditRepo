@@ -64,7 +64,7 @@ npm run guard:shared-files                                        PASS after lan
 ## 4. Status
 
 - `CI-HIDDEN-SW-PAGEFIND-PRECACHE` / `NEW-66`: **fixed-current on source main `d5c65647` by local deploy-switch evidence**.
-- GitHub Pages Deploy must still be observed on remote Actions for final deploy-green conclusion.
+- GitHub Pages Deploy is green on run `28683773647`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28683773647.
 
 ---
 

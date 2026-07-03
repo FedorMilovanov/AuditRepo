@@ -6,7 +6,7 @@
 
 **Local verification on `d5c65647`:** `sw:dist:audit:deploy-switch`, `gill:mobile-layout:audit`, `dist-smoke-audit --no-build --production-like`, `audit:premium-controls`, `validate:static-publication`, and `guard:shared-files` passed.
 
-**Remote deploy:** observe GitHub Actions Deploy for final green; local hidden SW gate is fixed.
+**Remote deploy:** `Deploy to GitHub Pages` is **green** on run `28683773647`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28683773647.
 
 Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_sw-pagefind-bootstrap-fixed-d5c6564.md`.
 
