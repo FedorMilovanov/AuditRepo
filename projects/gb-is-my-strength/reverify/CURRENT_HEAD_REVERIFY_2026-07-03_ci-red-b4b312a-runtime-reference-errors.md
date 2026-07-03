@@ -394,3 +394,121 @@ SiteUtils is not defined   1 route hit (/nagornaya/)
 ```
 
 Conclusion: `e2f0ae4e` changed Gill rail/frame UI but did **not** retire `CI-P0-GILL-RUNTIME-REFS` or `CI-P1-NAGORNAYA-SITEUTILS-ORDER`. Both remain **verified-current** on source HEAD `dbd0bb55`.
+
+---
+
+## 10. Pass 34 — current HEAD refresh after `bced1c6` highlights fix (source HEAD `f1e9abd`)
+
+**Date:** 2026-07-03 (continued session)
+**Mode:** pure auditor/verifier; no source-code changes; no new report files.
+
+Two patcher commits landed after the last witness on `dbd0bb55`:
+
+```text
+bced1c6 fix(highlights): declare r in highlights.js IIFE — убираем ReferenceError «r is not defined»
+8446a0d chore(agents-md): resolve duplicate AGENTS-r312 revision-table entry
+```
+
+followed by cache-bust `f1e9abd`. Public GitHub Actions API on `f1e9abd`:
+
+```text
+Run: 28680826378
+Workflow: Deploy to GitHub Pages
+HEAD: f1e9abd
+Status: completed
+Conclusion: failure
+Failed step: 23 Gill mobile reference layout audit
+```
+
+CI is **still red** — the `bced1c6` half-fix did not unblock deploy.
+
+### 10.1 W1 source witness on `f1e9abd`
+
+Static pattern scan:
+
+```text
+js/highlights.js:
+  old bug pattern }r=document.createElement("link")  → 0 hits (RETIRED by bced1c6)
+  fresh declaration var n="gb-highlights-v1",e=!1,r;  → present, var r declared before r=createElement("link")
+
+js/site.js:
+  a.innerHTML=tt(n.title)+'<small>'+(groupNames[n.group]||"")+'</small>';  → still bare tt() call
+  function tt(e){...}                                                     → exists at depth 2 (non-strict outer IIFE)
+  call site:                                                               → at depth 4 (post use strict)
+  → strict-mode IIFE does not see the outer function declaration
+```
+
+### 10.2 W2 dist artifact on `f1e9abd`
+
+After fresh `npm run strangler:build:production-like`:
+
+```text
+dist/js/highlights.js?v=c972d20e → contains var n,e,r; declaration  (r no-undef retired)
+dist/js/site.js?v=77687914       → byte-identical to prior build (166,792 bytes; tt call still at depth 4)
+```
+
+### 10.3 W3 browser witness on `f1e9abd`
+
+Local environment, fresh strangler build, Playwright Chromium 1228:
+
+```text
+AUDIT_BASE=http://127.0.0.1:8091 npm run gill:mobile-layout:audit
+
+  ❌ page error 360x740-light — ReferenceError: tt is not defined
+  ✅ Gill root present 360x740-light
+  ❌ page error 360x740-dark  — ReferenceError: tt is not defined
+  ✅ Gill root present 360x740-dark
+  ❌ page error 390x844-light — ReferenceError: tt is not defined
+  ✅ Gill root present 390x844-light
+  ❌ page error 390x844-dark  — ReferenceError: tt is not defined
+  ✅ Gill root present 390x844-dark
+
+  repeated for 5 Gill routes × 2 viewports × 2 themes = 20 pageerrors
+  Gill layout checks themselves: PASS
+```
+
+Numerical delta from `dbd0bb55`:
+
+```text
+                       dbd0bb55 → f1e9abd
+r is not defined:      20      → 0     (FIXED by bced1c6)
+tt is not defined:     20      → 20    (UNCHANGED)
+SiteUtils not defined:  1      → ?     (not re-tested in Pass 34; presumed unchanged)
+total pageerrors:      40+     → 20
+```
+
+### 10.4 Triangulation update
+
+```text
+CI-P0-GILL-RUNTIME-REFS:
+  highlights half (r no-undef) → retired on f1e9abd (bced1c6)
+  site half (tt no-undef)      → still verified-current on f1e9abd
+  severity: P0 / CI-blocking (deploy red on gill:mobile-layout:audit pageerror gate)
+  recommended executor lane: lane/system-runtime-no-undef (narrowed to site.js)
+CI-P1-NAGORNAYA-SITEUTILS-ORDER:
+  status: still verified-current (not re-tested this pass)
+```
+
+### 10.5 Executor guidance update
+
+`lane/system-runtime-no-undef` is now narrowed to `js/site.js` only. The `r` half of `CI-P0-GILL-RUNTIME-REFS` is already retired by `bced1c6`; do not re-touch `js/highlights.js` IIFE wrapping.
+
+Two equally minimal paths for the `tt` half:
+
+1. **Surgical rename of the strict caller block** (lowest blast radius): drop `"use strict"` from the IIFE that calls `tt(n.title)` so the outer non-strict function-declaration hoisting applies. Re-run `node --check js/site.js` (syntax) and Playwright audit (runtime).
+
+2. **Bring the helper into the strict scope**: insert `function tt(e){...}` inside the same strict IIFE that contains the call, or alias the outer helper as `var tt=function(...)` before the strict block. Keep the original escape semantics (`String(null==e?"":e).replace(/[&<>"]/g,...)`).
+
+After fix:
+
+```text
+node --check js/site.js
+npm run cache-bust         # refreshes ?v=... hash on dist assets
+npm run strangler:build:production-like
+npm run gill:mobile-layout:audit
+node scripts/dist-smoke-audit.js --no-build --production-like
+npm run audit:premium-controls
+npm run validate:static-publication
+```
+
+Acceptance: `gill:mobile-layout:audit` PASS (0 pageerrors on Gill routes), `dist-smoke-audit` PASS (no `r`/`tt`/`SiteUtils` pageerrors on representative routes), Deploy step `Gill mobile reference layout audit` = success.

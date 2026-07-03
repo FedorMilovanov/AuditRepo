@@ -1,5 +1,15 @@
 # Current Head Canonical Ledger — gb-is-my-strength
 
+> **SUPERSEDED 2026-07-03 — Pass 34:** this document is now a historical index, not the live truth. The current operational truth lives in:
+>
+> - `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md` (head line, P0/P1/P2/P3 buckets, Pass 25-34 audit sections)
+> - `projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md` (top-of-page addendum with current HEAD and CI status)
+> - `projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md` (full evidence, including §10 Pass 34 refresh on `f1e9abd`)
+>
+> Do **not** edit this ledger as a competing source of truth. The fresh operational document is `MASTER_BUG_MATRIX.md` (head line updated in Pass 34 to `f1e9abd`).
+
+---
+
 **Evidence date:** 2026-07-01
 **Source HEAD checked:** `8aa0fb27` (fix(remaining): close 6 open issues from deep audit)
 **AuditRepo HEAD:** updated with sandbox CI-regression notes and duplicate block fix

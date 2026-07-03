@@ -1,23 +1,22 @@
-# 🔴 CURRENT HANDOFF ADDENDUM — 2026-07-03 Pass 30 (READ FIRST)
+# 🔴 CURRENT HANDOFF ADDENDUM — 2026-07-03 Pass 34 (READ FIRST)
 
-**Current source HEAD:** `dbd0bb55`
+**Current source HEAD:** `f1e9abd` (cache-bust on top of `bced1c6` highlights fix + `8446a0d` AGENTS-r312 dedup).
 
-**Current CI:** `Deploy to GitHub Pages` is **red** on run `28679684009`.
+**Current CI:** `Deploy to GitHub Pages` is **red** on run `28680826378`.
 
-**Failed step:** `Gill mobile reference layout audit`.
+**Failed step:** `Gill mobile reference layout audit` (still, after `bced1c6`).
 
 ## Verified current blocker
 
-`CI-P0-GILL-RUNTIME-REFS` is the top priority before any P1/P2 cleanup. It remains verified-current after source advanced from `b4b312a8` to `dbd0bb55` (`e2f0ae4e` Gill rail/frame commit did not retire the runtime errors):
+`CI-P0-GILL-RUNTIME-REFS` is partially retired. `bced1c6` fixed the `r is not defined` half in `js/highlights.js` (now `var n,e,r;`). The remaining half is `js/site.js` calling `tt(...)` from a strict-mode IIFE without the helper being declared in that scope:
 
-- `js/highlights.js` throws `ReferenceError: r is not defined` from a strict IIFE assignment to undeclared `r` while injecting `/css/highlights-runtime.css`.
-- `js/site.js` throws `ReferenceError: tt is not defined` at backlink rendering line 484 (`a.innerHTML=tt(n.title)+...`).
-- Broader `dist/` smoke: after filtering localhost favicon CSP noise, 33/52 routes have relevant runtime pageerrors (`r` on 32 routes, `tt` on 15 routes).
-- Additional current bug: `/nagornaya/` throws `SiteUtils is not defined` because `nagornaya-mobile-toc.js` is loaded before `/js/site-utils.js` but immediately calls `SiteUtils.ready(...)`.
-- Reproduced locally after `npm run strangler:build:production-like` + Playwright Chromium/deps: `npm run gill:mobile-layout:audit` → 40 pageerrors (20 + 20).
+- `js/site.js` throws `ReferenceError: tt is not defined` at backlink rendering (`a.innerHTML=tt(n.title)+...`). Same pattern at verse `tt(ref)`/`tt(text)` and original-word `tt(w.lang)`/`tt(w.original)`/`tt(w.definition)` blocks. `function tt(e){...}` exists at depth 2 (non-strict outer IIFE) but the call is at depth 4 (post `use strict`), so strict-mode TDZ rules hide the outer function declaration.
+- Broader `dist/` smoke: previously 33/52 routes had relevant runtime pageerrors on `dbd0bb55` (`r` on 32 routes, `tt` on 15 routes). After `bced1c6` highlights half-fix, only `tt` half remains on relevant routes plus `/nagornaya/` `SiteUtils is not defined`.
+- Additional current bug (unchanged from Pass 30): `/nagornaya/` throws `SiteUtils is not defined` because `nagornaya-mobile-toc.js` is loaded before `/js/site-utils.js` but immediately calls `SiteUtils.ready(...)`. Tracked as `CI-P1-NAGORNAYA-SITEUTILS-ORDER`.
+- Reproduced locally on `f1e9abd` after `npm run strangler:build:production-like` + Playwright Chromium/deps: `npm run gill:mobile-layout:audit` → 20 pageerrors (only `tt` half; down from 40 on `dbd0bb55`).
 - Control witnesses pass: `node --check js/*.js`, `npm run css:layer:validate`, `npm run tokens:check`, `npm run gill:mobile-play:smoke`.
 
-Full evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`.
+Full evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md` §9 and Pass 34 in `verified/MASTER_BUG_MATRIX.md`.
 
 ## Verified P2 follow-up
 

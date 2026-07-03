@@ -84,7 +84,7 @@
 
 * **P2-AUDIT-DRIFT:** audit-pro.js не проверяет синхронизацию PRECACHE↔cache-bust↔ALLOWED (улучшено в REG-004, но полный дрифт не решён)
 * **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке — ✅ VERIFIED-CURRENT on `dbd0bb55`: `js/search.js` 31,534 bytes is loaded on 39 pages; before first user search/open it creates 128 `.cp-*` command-palette nodes and ~106 KB `.cp-*` outerHTML on sampled routes (`/`, `/articles/kod-da-vinchi/`, `/baptisty-rossii/`). Also eagerly requests `/data/search-manifest.json`; Pagefind itself stays lazy (`window.__pagefindReady__ === false` before interaction).
-* **CI-P0-GILL-RUNTIME-REFS:** current remote `dbd0bb55` Deploy red at `Gill mobile reference layout audit`; verified browser runtime errors: `js/highlights.js` strict IIFE assigns undeclared `r` (20 pageerrors), `js/site.js` calls undefined `tt(...)` helper (currently surfacing at backlinks `tt(n.title)`, with additional static refs in verse/original-word blocks; 20 pageerrors). Status confirmed on both `b4b312a8` (Pass 30) and `dbd0bb55` (Pass 30.b, after the parallel patcher's `e2f0ae4` Gill-GB2 fix did not touch the regression). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md` (incl. §9 Pass 30.b re-verification).
+* **CI-P0-GILL-RUNTIME-REFS:** current remote `f1e9abd` Deploy red at `Gill mobile reference layout audit`; partial fix landed in `bced1c6` (`js/highlights.js` strict IIFE now declares `var n,e,r;` — `r=document.createElement("link")` no longer throws). Remaining runtime: `js/site.js` calls undefined `tt(...)` helper at backlinks `tt(n.title)` (also at verse `tt(ref)`/`tt(text)` and original-word `tt(w.lang)`/`tt(w.original)`/`tt(w.definition)` blocks). 20 pageerrors on Gill mobile audit (down from 40 pre-`bced1c6`). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md` (incl. §9 Pass 30.b re-verification) and Pass 34 below.
 * **CI-P1-NAGORNAYA-SITEUTILS-ORDER:** broader dist runtime smoke found `/nagornaya/` pageerror `SiteUtils is not defined` from `js/nagornaya-mobile-toc.js?v=866d4238:1:696`; dist script order loads `nagornaya-mobile-toc.js` before `/js/site-utils.js`, while the TOC script immediately calls `SiteUtils.ready(...)`.
 * ~~**CI-CSSLAYER-STALE:** `css:layer:validate` pointed at deleted `css/site-layered.css`~~ ✅ FIXED-CURRENT on source `dbd0bb55` by `a65874a0`; script now validates `css/site.css`.
 * ~~**P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)~~ ✅ FIXED (Pass 28: helper _s() + path constants _p0/_p1/_p2, -1.9KB)
@@ -459,3 +459,43 @@
 * **NEW-58 ✅ current with updated count:** feed title drift is now 23 items (old report said 13). Increase is because 10 Baptist articles are now present in `feed.xml`; their feed titles omit the visible page suffix `— Баптисты России`. Other drifts remain in articles/Nagornaya.
 * **NEW-59 ✅ current:** `/hard-texts/` `og:image` is `images/og-series-heart.webp`, declared `1200×630`, actual file dimensions `1360×768`.
 * **Executor guidance:** split NEW-54..59 into separate low-risk lanes; NEW-55 should be retired, while NEW-56/57/58/59 need targeted metadata/feed/preload fixes.
+
+---
+
+## 🟡 PASS 34 — Current HEAD refresh: `f1e9abd` (2026-07-03, after `bced1c6` highlights fix + `8446a0d` AGENTS-r312 dedup)
+
+**Mode:** pure auditor/verifier; no source-code changes; no new report files; supersedes the `dbd0bb55` half of the Pass 30.b reverify doc for CI-P0-GILL-RUNTIME-REFS blast radius.
+
+* **Remote moved:** `gb-is-my-strength/main` advanced from `dbd0bb55` to `f1e9abd` via two patcher commits:
+  - `bced1c6 fix(highlights): declare r in highlights.js IIFE — убираем ReferenceError «r is not defined»` (the `r` runtime error is now fixed in source).
+  - `8446a0d chore(agents-md): resolve duplicate AGENTS-r312 revision-table entry` (docs hygiene).
+* **CI status on `f1e9abd`:** Public GitHub Actions API shows `Deploy to GitHub Pages` run `28680826378` on `f1e9abd` completed **failure**; failed step remains **`Gill mobile reference layout audit`**. The patcher fixed only the highlights `r` half; the deploy is still red because the `tt` runtime error in `js/site.js` remains.
+* **W1 source witness (Pass 34):**
+  - `js/highlights.js` now contains `var n="gb-highlights-v1",e=!1,r;` — the bare `r=document.createElement("link")` is now var-declared in the strict IIFE. Pattern search: **0** hits for the old `}r=document.createElement("link")` bug.
+  - `js/site.js` still has `a.innerHTML=tt(n.title)+'<small>'+...` without a `tt` declaration reachable from the strict scope where it is called. Function `tt(e)` exists at depth=2 (non-strict) and `tt(n.title)` call is at depth=4 (strict, post `use strict`), so the strict inner IIFE does not see the outer function declaration under minified TDZ rules.
+* **W2 dist artifact (Pass 34):** `dist/js/highlights.js?v=c972d20e` rebuilt with `var n,e,r;` declaration; `dist/js/site.js?v=77687914` byte-identical to prior build (still 166,792 bytes, still has the `tt` depth-4 call).
+* **W3 browser witness (Pass 34):** After fresh `npm run strangler:build:production-like` and `AUDIT_BASE=http://127.0.0.1:8091 npm run gill-mobile-layout-audit`:
+  - `r is not defined`: **0** pageerrors (was 20 on `dbd0bb55`).
+  - `tt is not defined`: **20** pageerrors (unchanged from `dbd0bb55`).
+  - Total pageerrors: 20 (down from 40 on `dbd0bb55`).
+* **CI-P0-GILL-RUNTIME-REFS — Pass 34 status:**
+  - **Half-fixed:** highlights `r` no-undef. Recommended retirement of the highlights half once dist reflects `var n,e,r;` (already true in current dist).
+  - **Still current:** site `tt` no-undef. Severity remains P0 / CI-blocking because the gill-mobile-layout audit still fails on pageerror and therefore the deploy still red.
+* **CI-P1-NAGORNAYA-SITEUTILS-ORDER:** Not re-tested in Pass 34. Script-ordering issue is structural and presumed still current.
+* **Executor lane update:** `lane/system-runtime-no-undef` is now narrowed to **`js/site.js` only** (highlights half already fixed by `bced1c6`). Minimum fix: add a top-level `function tt(e){return String(null==e?"":e).replace(/[&<>"]/g,function(e){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[e]})}` reachable from the strict scope where the call happens (insert into the same outer non-strict IIFE that already contains the original `tt` declaration, **or** convert the inner `use strict` to non-strict for that block).
+* **Acceptance gates after fix:**
+  - `node --check js/site.js` PASS
+  - `npm run cache-bust` (to refresh `?v=` hash so dist picks up the fix)
+  - `npm run strangler:build:production-like` PASS
+  - `npm run gill:mobile-layout:audit` PASS (0 pageerrors on Gill routes)
+  - `node scripts/dist-smoke-audit.js --no-build --production-like` PASS (no `r`/`tt`/`SiteUtils` pageerrors on representative routes)
+  - `npm run validate:static-publication` PASS
+  - GitHub Actions Deploy run completes with `Gill mobile reference layout audit` step = success.
+
+---
+
+## ✅ PASS 34.b — `CI-P0-GILL-RUNTIME-REFS` highlights half retirement
+
+* `bced1c6` retired the `r is not defined` half. Dist artifact and source both reflect the fix.
+* Audit-pro `node --check js/highlights.js` and `dist/js/highlights.js?v=c972d20e` no longer surface the bare-assignment pattern.
+* Remaining: `tt is not defined` half in `js/site.js` (see Pass 34 above).
