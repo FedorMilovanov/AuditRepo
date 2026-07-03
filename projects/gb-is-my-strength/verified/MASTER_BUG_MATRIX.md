@@ -90,8 +90,8 @@
 * ~~**P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)~~ ✅ FIXED (Pass 28: helper _s() + path constants _p0/_p1/_p2, -1.9KB)
 * **BUG-012:** Рассинхрон заголовков MDX и HTML (3 статьи) — NOT A BUG, SEO оптимизация by design
 * **NEW-43:** Отсутствие атрибутов `width`/`height` у content изображений (только _build-tools)
-* **BUG-010:** Хаос с брейкпоинтами в CSS (20+ breakpoints)
-* **BUG-011:** Конфликт брейкпоинтов на 768px
+* **BUG-010:** Хаос с брейкпоинтами в CSS — ✅ VERIFIED-CURRENT on `dbd0bb55`: aggregate CSS has 128 width conditions across 23 unique px values (`360, 380, 390, 420, 430, 440, 480, 481, 500, 520, 560, 600, 640, 680, 700, 760, 768, 820, 899, 900, 960, 1024, 1180`); `css/site.css` alone has 174 media blocks, 87 width conditions, 18 unique breakpoint values.
+* **BUG-011:** Конфликт брейкпоинтов на 768px — ⚠️ RECLASSIFIED on `dbd0bb55`: exact boundary overlap exists (`max-width:768px` appears 17× in `site.css`; `min-width:768px` appears 1×), but audit found 0 same selector+property collisions between max/min 768 zones; `min-width:768px` only defines `.md\:grid-cols-2`/`.md\:grid-cols-3`. Treat as boundary architecture risk, not proven visual conflict until browser/selector evidence exists.
 * **BUG-014:** Race condition в скриптах сборки
 * **BUG-016:** ~8 неиспользуемых CSS custom properties (5 false positives: --ghost/--translation/--debunk/--planned/--vertical are class suffixes, not properties; 4 truly unused removed in Pass 28: --icon-size, --icon-radius, --ng-toc-bg, --border-strong; 9 remain from 17 original)
 
@@ -388,3 +388,15 @@
   - `/baptisty-rossii/`: 128 `.cp-*` nodes, ~106,049 bytes `.cp-*` outerHTML.
 * Resource evidence on `/` before interaction: browser requests `css/command-palette.css`, `js/search.js`, and `/data/search-manifest.json` on load. Pagefind remains lazy (`window.__pagefindReady__ === false`, no Pagefind resource request before interaction), so the bug scope is eager command-palette DOM + manifest load, not Pagefind eager load.
 * Recommended executor direction: lazy-create the command palette shell and fetch/search-manifest on first open (`#gbSearchBtn`, `Cmd/Ctrl+K`, or `gb:openSearch`), while keeping the small trigger button eager.
+
+
+---
+
+## 🟠 PASS 33 P2 AUDIT — CSS breakpoint verification (`dbd0bb55`, 2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes; no new report files.
+
+* **BUG-010 ✅ verified-current:** breakpoint fragmentation remains broad. Across production CSS files (`site.css`, `floating-cluster.css`, `nagornaya-mobile-toc.css`, `command-palette.css`, runtime CSS, mobile hotfix) there are 128 width media conditions and 23 unique px breakpoint values. `css/site.css` alone contains 174 `@media` blocks, 87 width conditions and 18 unique px values.
+* **Most frequent breakpoint values (aggregate):** `600`×21, `768`×20, `899`×18, `480`×18, `640`×8, `680`×5, `900`×5.
+* **BUG-011 ⚠️ reclassified:** exact 768 overlap is real (`max-width:768px` and `min-width:768px` both exist), but direct selector/property collision was not reproduced. In `site.css`, max-768 blocks: 17; min-768 blocks: 1; same selector+property across max/min 768: 0. The single min-768 block only contains `.md\:grid-cols-2` and `.md\:grid-cols-3` grid-template utilities.
+* **Executor guidance:** consolidate breakpoint tokens as CSS architecture work, but do not claim a concrete 768 visual regression without a browser witness or selector/property collision proof.
