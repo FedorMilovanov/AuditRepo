@@ -34,8 +34,15 @@
 
 ### Security fixes:
 - **P1-SITE-XSS ✅:** Санитизация `w.original`, `w.definition` через `tt()`, `n.title` через `tt()`, `a.href=n.url` через inline safeUrl, verse tooltips `ref`+`text` через `tt()`
-- **NEW-60 ✅:** CSP meta добавлена на 10 karty/ holding pages (было 0/10, стало 10/10)
+- **NEW-60 ✅:** CSP meta добавлена на 10 karty/ holding pages (было 0/10, стало 10/10) — ⚠️ REGRESSION CONFIRMED on `f1e9abd9` (Pass 36): static scan finds 0/10 karty/ holding pages with `Content-Security-Policy` meta. See NEW-69.
 - **NEW-61 ✅:** `form-action 'self'` добавлен в CSP meta на всех 51 странице + _app
+
+- **NEW-68 (P2, CSP form-action regression on `f1e9abd9`):** 51/52 dist HTML pages are missing `form-action 'self'` in their CSP meta. Only `_app/index.html` (3D-карта) has it. Regression of NEW-61 (Pass 24, `47a98da`). The directive was added then but is not present in current dist — build pipeline lost the directive-inject step. Security impact: forms can post to any origin. See Pass 37 in this file.
+- **NEW-69 (P2, CSP meta regression on karty/ holding pages on `f1e9abd9`):** 0/10 karty/*/index.html (avraam, early-church, ishod, maccabim, melachim, pavel, revelation, shoftim, shvatim, yeshua) have any CSP meta. Regression of NEW-60 (Pass 24). See Pass 37 in this file.
+* **NEW-70 (P3, sitemap.xml stale lastmod):** static scan finds only 4 unique `<lastmod>` values across 43 sitemap URLs: 2026-06-18, 2026-06-25 (×2), 2026-07-03. Recent cache-bust commits only updated ~29/43 URLs. See Pass 38 in this file.
+* **NEW-71 (P3, README.md version drift):** README.md says `**Версия документа:** v10 · 2026-06-26 · post-audit hardening (BUG-A1..A10, BUG-B1..B10, BUG-S1..S3 closed)`. Source HEAD = f1e9abd9 (2026-07-03). README is 7 days stale. Owner should re-version. See Pass 38 in this file.
+* **NEW-72 (P2, SVG dedup opportunity across 4 files):** static scan of 11 JS files finds 9 unique SVG fragments duplicated across `js/highlights.js`, `js/search.js`, `js/site.js`, `js/floating-cluster-controller.js`, `js/nagornaya-mobile-toc.js`. Most-duplicated: 5x `<polyline points="20 6 9 17 4 12"/>` (checkmark). Total potential saving: ~1.5-2KB. See Pass 38 in this file.
+- **NEW-67 (P3, dead scripts in `scripts/` on `f1e9abd9`):** 10 scripts with no caller in `package.json`, no workflow reference, no require(): _audit-deep.js, about-leaf-parity-shots.js, deep-check.js, extract-native-pilot.js, genealogy-e2e-v2.js, generate-route-profiles.js, ishod-qa.js, map-visual-qa.js, premium-mobile-visibility-smoke.js, route-impact-report.js. See Pass 37 in this file.
 
 ### Service Worker fixes:
 - **REG-003 ✅:** CACHE_VERSION обновлён до `gb-v183-dead-cleanup-20260703`
@@ -507,6 +514,129 @@
 * Remaining: `tt is not defined` half in `js/site.js` (see Pass 34 above).
 
 ---
+
+
+
+---
+
+## 🟠 PASS 37 — CSP coverage regression and dead scripts on `f1e9abd9` (2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes; no new report files.
+
+### 37.1 CSP coverage regression
+
+Static scan of 52 dist HTML pages on `f1e9abd9`:
+
+```text
+Content-Security-Policy meta present: 41 / 52
+form-action 'self' present:           1  / 52   (only _app/index.html)
+karty/*/index.html with CSP:          0  / 10
+```
+
+The 10 karty/ subpages with no CSP meta (reg regression of NEW-60, fixed in commit `47a98da` Pass 24):
+`/karty/avraam/`, `/karty/early-church/`, `/karty/ishod/`, `/karty/maccabim/`, `/karty/melachim/`, `/karty/pavel/`, `/karty/revelation/`, `/karty/shoftim/`, `/karty/shvatim/`, `/karty/yeshua/`.
+
+All 51 main-site pages have a CSP meta but **without** `form-action 'self'`. The Pass 24 fix added the directive via `strangler:build:production-like` → `copy-legacy-to-dist.js`; the directive is missing in the current dist, meaning either the build pipeline lost the directive-injection step or the legacy HTML files no longer carry the directive. Either way, it is a regression of NEW-61 and is currently undetected by both `owner-ui-regression-guard.js` and `audit-pro.js`.
+
+**Severity:** P2 (security — forms can post to any origin, including phishing/exfil endpoints). Not blocking Deploy today because the site has no cross-origin form submissions, but the regression is real and should be fixed.
+
+### 37.2 Dead scripts (NEW-67)
+
+```text
+Total scripts in scripts/: 89
+Referenced in package.json scripts: 77
+Referenced in .github/workflows: 12
+Module-referenced (cache-bust-assets): 1
+Dead: 10
+```
+
+Dead scripts: `_audit-deep.js`, `about-leaf-parity-shots.js`, `deep-check.js`, `extract-native-pilot.js`, `genealogy-e2e-v2.js`, `generate-route-profiles.js`, `ishod-qa.js`, `map-visual-qa.js`, `premium-mobile-visibility-smoke.js`, `route-impact-report.js`. All are Refactoring 5.0/6.0 era pilot/QA scripts that were superseded. Manual cleanup.
+
+### 37.3 Links-graph and search-manifest sanity (no regression)
+
+```text
+data/links-graph.json: 20 nodes, 75 edges
+Nodes not in search-manifest.json: 8 (hermenevtika, krajne, 5× nagornaya, hard-texts) — all 8 dist files exist; different ID namespace
+Orphan edges (endpoints not in nodes): 0
+data/search-manifest.json: generatedAt = 2026-06-18 (15d stale but content valid)
+```
+
+### 37.4 R-001/002 site.js/enhancements.js size status (no change)
+
+```text
+js/site.js: 166,792 bytes (163KB), 13 §-commented module sections
+  Largest: TTS 7.8KB, StoryMap 6.4KB, Offline 4.3KB
+js/enhancements.js: 45,809 bytes (44.7KB), 9 IIFEs
+R-003 (no source maps) and R-004 (no type="module") still current.
+```
+
+### 37.5 AGENTS.md changelog (no change)
+
+```text
+AGENTS-rNNN entries: 77 unique
+Duplicates: 3 (r248, r252, r269 — historical ranges, not typos)
+check-agents-rev-uniqueness.js: PASS
+```
+
+### 37.6 sw.js cache-bust labels (sanity)
+
+```text
+dist/js/site.js?v=77687914        — unchanged between dbd0bb55 and f1e9abd9
+dist/js/highlights.js?v=c972d20e — unchanged
+sw.js CACHE_VERSION               — gb-v186-sw-toast-css-20260703 (stale; source f1e9abd9 newer)
+```
+
+---
+
+## 🟠 PASS 38 — Sitemap/README drift + SVG dedup scan on `f1e9abd9` (2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes; no new report files.
+
+### 38.1 sitemap.xml lastmod staleness (NEW-70)
+
+```text
+Sitemap URLs: 43
+Unique <lastmod> values: 4
+  2026-06-18T00:00:00+03:00  (1 URL:  /rodosloviye/)
+  2026-06-25T00:00:00+03:00  (1 URL:  /hard-texts/)
+  2026-06-25T19:00:00+03:00  (12 URLs: /konfessii/, /baptisty-rossii/, etc.)
+  2026-07-03T22:44:05+03:00  (~29 URLs: f1e9abd9 cache-bust)
+```
+
+The 14 older URLs are correct (the underlying pages have not been edited since those dates). The Astro sitemap integration does not auto-restamp URLs on cache-bust; it uses `lastmod` from the frontmatter/source. Recommendation: add a `restamp-sitemap` step to the build pipeline.
+
+### 38.2 README.md version drift (NEW-71)
+
+```text
+README.md: Версия документа: v10 · 2026-06-26 · post-audit hardening
+Source HEAD:  f1e9abd9 (2026-07-03)
+```
+
+README is 7 days stale. Owner should update to v11 to include Pass 24 dead-code cleanup (47a98da), Refactoring 6.0 Gill Astro migration (r270-r320), and bced1c6 highlights fix.
+
+### 38.3 SVG dedup scan (NEW-72)
+
+```text
+Files scanned: 11 JS files
+Unique SVG instances: 68
+Duplicated SVG fragments (same viewBox+inner): 9
+Most-duplicated: 5x <polyline points="20 6 9 17 4 12"/> (checkmark) across:
+  - js/highlights.js
+  - js/search.js
+  - js/site.js
+  - js/floating-cluster-controller.js
+Other 4x: <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/> (close X icon)
+```
+
+Total potential saving: ~1.5-2KB. Each duplicate is a small `function _s(w, h, vb, path)` candidate per file. Not blocking Deploy.
+
+### 38.4 Sanity confirmations (no regression)
+
+- `sw.js` CACHE_VERSION = gb-v186-sw-toast-css-20260703 (stale since Pass 24).
+- `sw.js` PRECACHE_ASSETS = 28 entries; `/404.html` is the only HTML page (allowed by `sw-dist-readiness-audit.js`).
+- `/pagefind/pagefind.js` is **still missing** from PRECACHE (NEW-66 confirmed; awaits `tt` fix + cache-bust).
+- `AGENTS.md` r300-r321 = 22 unique entries (8446a0d dedup fix verified).
+- `AGENTS.md` r312 = 1 unique entry (no r300-r320 duplicates).
 
 ## 🟠 PASS 35 — PREVENTION-GAP and dist-smoke triangulation on `f1e9abd` (2026-07-03)
 

@@ -26,6 +26,12 @@ Full evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime
 
 `dist-smoke-audit` is not in the `validate:static-publication` chain. On `f1e9abd`, local `dist-smoke-audit --no-build --production-like` still fails on `/articles/kod-da-vinchi/` (desktop+mobile) with `tt is not defined`. The gill-audit catches it on 5 Gill routes × 2 viewports × 2 themes = 20 pageerrors. CI deploy chain only runs the gill-audit; other article/landing routes could regress `tt` (or any other runtime no-undef) without blocking deploy. See Pass 35 in `MASTER_BUG_MATRIX.md` and §35.1–35.4 in the evidence file.
 
+## NEW-70 / NEW-71 / NEW-72 — Pass 38 findings (P2/P3)
+
+- **NEW-70 (P3, sitemap stale lastmod):** only 4 unique lastmod values across 43 URLs. See Pass 38 in MASTER_BUG_MATRIX.md.
+- **NEW-71 (P3, README version drift):** README is v10 / 2026-06-26, but source HEAD = f1e9abd9 (2026-07-03). Owner should re-version. See Pass 38.
+- **NEW-72 (P2, SVG dedup opportunity):** 9 unique SVG fragments duplicated across 4 files; most-duplicated is the checkmark polyline (5x). Total potential saving ~1.5-2KB. See Pass 38.
+
 ## Verified P2 follow-up
 
 `P2-SEARCH-EAGER` is verified-current on `dbd0bb55`: `search.js` eagerly creates 128 `.cp-*` command-palette nodes / ~106 KB `.cp-*` outerHTML before interaction and eagerly requests `/data/search-manifest.json`; Pagefind itself remains lazy. Do not treat this as fixed by prior SVG dedup.
