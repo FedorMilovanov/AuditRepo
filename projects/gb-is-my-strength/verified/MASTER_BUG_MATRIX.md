@@ -1,11 +1,32 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `8a816ce4` (source lane runtime no-undef fix; base main `4cbe8e88`)  
+**HEAD исходного репозитория:** `d5c65647` (SW/Pagefind deploy-switch fix; descendant of runtime no-undef fix)
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–28)  
 
 ---
 
+
+
+## 🟢 PASS 40 / SW PAGEFIND DEPLOY-SWITCH FIX (2026-07-03)
+
+**Source fix commit:** `d5c65647d57cf3bc83b6543cb58135cdd279013f` (`lane/system-sw-pagefind-bootstrap-2026-07-03`, pushed to `main`).
+
+`CI-HIDDEN-SW-PAGEFIND-PRECACHE` / `NEW-66` is **fixed-current on source main `d5c65647` by local deploy-switch evidence**. `sw.js` now includes `/pagefind/pagefind.js` in `PRECACHE_ASSETS` and bumps `CACHE_VERSION` to `gb-v187-pagefind-bootstrap-20260703`.
+
+Verified on `d5c65647`:
+
+- `npm run pagefind:build:dist` ✅
+- `npm run sw:dist:audit:deploy-switch` ✅
+- `node scripts/dist-smoke-audit.js --no-build --production-like` ✅
+- `npm run gill:mobile-layout:audit` ✅
+- `npm run audit:premium-controls` ✅ 87/87
+- `npm run validate:static-publication` ✅
+- `npm run guard:shared-files` ✅
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_sw-pagefind-bootstrap-fixed-d5c6564.md`.
+
+---
 
 ## 🟢 PASS 39 / RUNTIME NO-UNDEF FIX LANE (2026-07-03)
 
@@ -116,7 +137,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 * ~~**CI-P0-GILL-RUNTIME-REFS:** browser runtime no-undef (`highlights.js` `r`, `site.js` `tt`, `/nagornaya/` `SiteUtils`) blocked Gill mobile layout audit~~ ✅ FIXED-ON-LANE `8a816ce4`: `r` was already fixed by `bced1c69`; `8a816ce4` adds scoped `tt()` in `js/site.js` and fixes `safeReady()` in `js/nagornaya-mobile-toc.js`. Local gates passed: `gill:mobile-layout:audit`, `dist-smoke-audit --no-build --production-like`, `audit:premium-controls` 87/87, `validate:static-publication`, `guard:shared-files`. Move to fixed-current after source main/deploy confirms `8a816ce4` or descendant.
 * ~~**CI-P1-NAGORNAYA-SITEUTILS-ORDER:** `/nagornaya/` pageerror `SiteUtils is not defined` / bad early ready helper~~ ✅ FIXED-ON-LANE `8a816ce4`: `safeReady()` now delegates to `window.SiteUtils.ready(fn)` if present and otherwise uses DOMContentLoaded/current fallback. Confirmed by `dist-smoke-audit` and `validate:static-publication` on `8a816ce4`.
 * **CHECK-GAP-DIST-SMOKE:** deploy workflow omits `dist-smoke-audit.js`, even though `strangler:audit:production-like` includes it and it independently catches current `tt is not defined`; `validate:static-publication` also omits this browser runtime smoke.
-* **CI-HIDDEN-SW-PAGEFIND-PRECACHE:** hidden next Deploy blocker after `tt` fix: `npm run sw:dist:audit:deploy-switch` currently fails on `f1e9abd9` with `Pagefind bootstrap /pagefind/pagefind.js missing from PRECACHE_ASSETS`; `dist-publication-audit --require-pagefind` passes because it only requires shared cache-bust assets + Pagefind index presence, not Pagefind bootstrap precache.
+* ~~**CI-HIDDEN-SW-PAGEFIND-PRECACHE / NEW-66:** deploy-switch Pagefind bootstrap missing from `PRECACHE_ASSETS`~~ ✅ FIXED-CURRENT on source main `d5c65647`: `sw.js` precaches `/pagefind/pagefind.js`, `CACHE_VERSION` bumped to `gb-v187-pagefind-bootstrap-20260703`, and `npm run sw:dist:audit:deploy-switch` passes after `pagefind:build:dist`.
 * **VIS-BAPTISTY-PARITY:** Visual Parity Guard/current local pixel-diff fails `/baptisty-rossii/` on `f1e9abd9` (desktop 6.131%, mobile 17.368%, threshold 1%); all other default landing routes passed local threshold.
 * ~~**CI-CSSLAYER-STALE:** `css:layer:validate` pointed at deleted `css/site-layered.css`~~ ✅ FIXED-CURRENT on source `dbd0bb55` by `a65874a0`; script now validates `css/site.css`.
 * ~~**P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)~~ ✅ FIXED (Pass 28: helper _s() + path constants _p0/_p1/_p2, -1.9KB)

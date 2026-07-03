@@ -1,3 +1,17 @@
+# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-03 SW/Pagefind deploy-switch fix (READ FIRST)
+
+**Current source main HEAD:** `d5c65647d57cf3bc83b6543cb58135cdd279013f`.
+
+**Fixed in this pass:** `CI-HIDDEN-SW-PAGEFIND-PRECACHE` / `NEW-66` — `sw.js` now precaches `/pagefind/pagefind.js` and `CACHE_VERSION` is bumped to `gb-v187-pagefind-bootstrap-20260703`.
+
+**Local verification on `d5c65647`:** `sw:dist:audit:deploy-switch`, `gill:mobile-layout:audit`, `dist-smoke-audit --no-build --production-like`, `audit:premium-controls`, `validate:static-publication`, and `guard:shared-files` passed.
+
+**Remote deploy:** observe GitHub Actions Deploy for final green; local hidden SW gate is fixed.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_sw-pagefind-bootstrap-fixed-d5c6564.md`.
+
+---
+
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-03 runtime no-undef fix lane (READ FIRST)
 
 **Current source main HEAD:** `8a816ce40c57e916797aa37f275e3518ca757203` (auto cache-bust descendant of `8a816ce4`) (`main`, also pushed as `lane/system-runtime-no-undef-current-2026-07-03`).
