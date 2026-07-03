@@ -25,6 +25,8 @@ Full evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime
 
 `BUG-010` is verified-current: 23 unique px breakpoint values across CSS. `BUG-011` is reclassified: exact 768 overlap exists, but no same selector+property collision was found; treat as boundary architecture risk unless a visual/browser witness appears.
 
+`BUG-022` is reverified-current with corrected count: not “256” as a simple current number; `site.css` has 52 later-rule changed selector/property keys (54 later overrides) after separating 81 same-rule progressive fallback keys.
+
 ## Fixed-current stale blocker
 
 The older `css:layer:validate` failure on deleted `css/site-layered.css` is already fixed-current by source commit `a65874a0`; current script validates `css/site.css`. Do **not** reopen that as current.
