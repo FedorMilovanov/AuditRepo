@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `57d1b3c7` (Pass 24c — CSS extraction + security + performance)  
+**HEAD исходного репозитория:** `86827c18` (Pass 25 — dead code cleanup + defer + CSS vars)  
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–24)  
 
 ---
@@ -13,12 +13,12 @@
 | 🔴 **P0 (Critical)** | 1 | REG-001 _headers бесполезен (остаётся — нужна CDN-инфра) |
 | 🟠 **P1 (High)** | 1 | CI-дублирование (частично оптимизирован) |
 | 🟡 **P2 (Medium)** | 14 | SEO, SW metadata, search, audit drift |
-| 🔵 **P3 (Medium)** | 14 | a11y, social metadata, оптимизация |
+| 🔵 **P3 (Medium)** | 10 | a11y, social metadata, оптимизация |
 | 🔵 **P3 (Refactor)** | 4 | site.js монолит, enhancements.js, no source maps, no ES modules |
 | ⚪ **S0 (Low)** | 2 | Документация |
 | 🟣 **AuditRepo** | 5 | Слабая валидация, stale SHA, нет автоматизации |
 | ❌ **Fixed** | 12 | Исправлено в коммитах `f284fc60`–`47a98da` |
-| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **37** | (было 79, -42 исправлено/закрыто) |
+| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **31** | (было 79, -48 исправлено/закрыто) |
 
 ---
 
