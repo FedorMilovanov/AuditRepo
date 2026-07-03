@@ -1,3 +1,5 @@
+> **⚠️ SUPERSEDED 2026-07-03 — This document references HEAD `6664056` which is extremely stale. Current operational truth is in `verified/MASTER_BUG_MATRIX.md` (HEAD `01ff5ce3`). Do not use this as active repair order.**
+
 # Repair Order Delta — current-head priority reset
 
 **Date:** 2026-06-27

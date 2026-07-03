@@ -1,3 +1,42 @@
+# 🔴 PASS 34 CURRENT TRUTH — 2026-07-03 (READ FIRST)
+
+**Current source main HEAD:** `01ff5ce3` (auto cache-bust descendant of `19062297`)
+**Current AuditRepo HEAD:** `8ecb405` (Pass 33 — SiteUtils fix record)
+**CI status on latest commit:** Shared Files Guard #421 ✅ | Visual Parity Guard #212 ⏳ | Deploy to GitHub Pages #1320 ⏳
+
+## CI-P0-GILL-RUNTIME-REFS — STATUS: FIXED-CURRENT
+
+All three runtime no-undef issues are **fixed-current**:
+
+| Bug | Fixed in | Current status |
+|-----|----------|---------------|
+| `r is not defined` in highlights.js | `bced1c69` | ✅ |
+| `tt is not defined` in site.js | `ffc763bc` | ✅ |
+| `SiteUtils undefined` script order nagornaya | `ffc763bc` | ✅ |
+
+## P2-CURRENT-NAGORNAYA-SITEUTILS — STATUS: FIXED-CURRENT (19062297)
+
+Bare `SiteUtils.themeKey` / `SiteUtils.copyText` references in `js/nagornaya-mobile-toc.js` fixed by adding `window.` prefix.
+Committed in `19062297` (lane: `lane/system-nagornaya-siteutils-fix-2026-07-03` → merged to main).
+Local verification: dist-smoke 28/28 routes ✅, audit:premium-controls 87/87 ✅, validate:all 0 errors ✅.
+
+## Deploy status
+
+- Manual Deploy on `932af3f3` (#1319, workflow_dispatch) — ✅ **GREEN** (gospod-bog.ru live)
+- Auto Deploy on `19062297` / `01ff5ce3` (#1320) — ⏳ triggered, awaiting result
+
+## Remaining open items (non-blocking)
+
+- P2/P3: code duplication in PageHead, CSS breakpoint cleanup, SVG dedup opportunities
+- Prevention gap: runtime no-undef smoke not yet auto-gating deploy (but deploy has Gill audit + dist-smoke now)
+
+## Evidence
+
+- `reverify/PASS_32_AUDIT_REPORT_2026-07-03.md` — full Pass 32 report
+- `verified/MASTER_BUG_MATRIX.md` (HEAD updated to `01ff5ce3`, Pass 44 added)
+
+---
+
 # 🔴 PASS 32 VERIFICATION — 2026-07-03 (READ FIRST)
 
 **Verified source HEAD:** `932af3f32f9088363f1024affa277b6e7db8257e`

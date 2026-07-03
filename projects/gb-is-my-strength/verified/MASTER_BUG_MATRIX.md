@@ -1,8 +1,8 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `932af3f3` (Baptisty root asset path correction; descendant of Deploy broad runtime smoke gate)
-**Режим аудита:** Multi-Agent Synthesis (Passes 1–28)  
+**HEAD исходного репозитория:** `01ff5ce3` (auto cache-bust after SiteUtils window. prefix fix)
+**Режим аудита:** Multi-Agent Synthesis (Passes 1–44)  
 
 ---
 
@@ -870,6 +870,39 @@ BUG-022 (overridden CSS rules):
 * **Missing gate:** `deploy.yml` does not run `node scripts/dist-smoke-audit.js --no-build --production-like`, although `strangler:audit:production-like` does. `validate:static-publication` also omits this browser runtime smoke. Current deploy relies on Gill-specific browser audits to catch global runtime no-undef regressions.
 * **Visual parity current side finding:** local pixel-diff on `f1e9abd9` fails `/baptisty-rossii/` only: desktop `6.131%`, mobile `17.368%` (threshold `1%`). GitHub Visual Parity Guard failed on `8446a0da`; current `f1e9abd9` was `[skip ci]`, so remote visual parity was not rerun, but local current-head evidence confirms the issue.
 
+
+
+## 🟢 PASS 44 — NAGORNAYA SITEUTILS WINDOW PREFIX FIX (2026-07-03)
+
+**Source fix commit:** `19062297d263213dc7851110743a6d2e9d1d8fe1` (pushed to main as `lane/system-nagornaya-siteutils-fix-2026-07-03`).
+
+**P2-CURRENT-NAGORNAYA-SITEUTILS** — **fixed-current on 19062297.**
+
+Fixes 3 bare `SiteUtils` references (without `window.` prefix) in strict-mode IIFE in `js/nagornaya-mobile-toc.js`:
+
+- `SiteUtils.themeKey` -> `window.SiteUtils.themeKey` (theme persistence)
+- `SiteUtils.copyText` (x2) -> `window.SiteUtils.copyText` (share copy-to-clipboard)
+
+All other SiteUtils references in this file already use `window.SiteUtils` prefix.
+
+**Local verification on `19062297`:**
+
+- `node --check js/nagornaya-mobile-toc.js` ✅
+- `npm run strangler:build:production-like` ✅ (astro check + 53 pages + 442 legacy files)
+- `npm run audit:premium-controls` ✅ 87/87
+- `npm run validate:all` ✅ (0 errors, 0 warnings)
+- `npm run sw:dist:audit:deploy-switch` ✅
+- `node scripts/dist-publication-audit.js --require-pagefind` ✅
+- `node scripts/dist-smoke-audit.js --no-build --production-like` ✅ **28/28 routes** (14 desktop + 14 mobile), **0 page/console errors**
+- `npm run page-ownership:dist:production-like` ✅
+
+**Remote CI on `19062297`:** Shared Files Guard #421 ✅ Green. Deploy #1320 in progress.
+
+Evidence: `reverify/PASS_32_AUDIT_REPORT_2026-07-03.md`.
+
+---
+
+---
 
 ---
 
