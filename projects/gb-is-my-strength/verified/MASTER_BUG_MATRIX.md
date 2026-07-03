@@ -83,7 +83,7 @@
 ## 🟡 P2 — MEDIUM PRIORITY (9 открытых багов)
 
 * **P2-AUDIT-DRIFT:** audit-pro.js не проверяет синхронизацию PRECACHE↔cache-bust↔ALLOWED (улучшено в REG-004, но полный дрифт не решён)
-* **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке (~15KB nodes)
+* **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке — ✅ VERIFIED-CURRENT on `dbd0bb55`: `js/search.js` 31,534 bytes is loaded on 39 pages; before first user search/open it creates 128 `.cp-*` command-palette nodes and ~106 KB `.cp-*` outerHTML on sampled routes (`/`, `/articles/kod-da-vinchi/`, `/baptisty-rossii/`). Also eagerly requests `/data/search-manifest.json`; Pagefind itself stays lazy (`window.__pagefindReady__ === false` before interaction).
 * **CI-P0-GILL-RUNTIME-REFS:** current remote `dbd0bb55` Deploy red at `Gill mobile reference layout audit`; verified browser runtime errors: `js/highlights.js` strict IIFE assigns undeclared `r` (20 pageerrors), `js/site.js` calls undefined `tt(...)` helper (currently surfacing at backlinks `tt(n.title)`, with additional static refs in verse/original-word blocks; 20 pageerrors). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`.
 * **CI-P1-NAGORNAYA-SITEUTILS-ORDER:** broader dist runtime smoke found `/nagornaya/` pageerror `SiteUtils is not defined` from `js/nagornaya-mobile-toc.js?v=866d4238:1:696`; dist script order loads `nagornaya-mobile-toc.js` before `/js/site-utils.js`, while the TOC script immediately calls `SiteUtils.ready(...)`.
 * ~~**CI-CSSLAYER-STALE:** `css:layer:validate` pointed at deleted `css/site-layered.css`~~ ✅ FIXED-CURRENT on source `dbd0bb55` by `a65874a0`; script now validates `css/site.css`.
@@ -373,3 +373,18 @@
 * **Independent witness still current:** `node scripts/dist-smoke-audit.js --no-build --production-like` fails with the same representative runtime errors (`r`/`tt`) across desktop/mobile representative routes.
 * **Blast radius unchanged:** broad 52-route dist smoke still shows 33 relevant failing routes after filtering localhost favicon CSP noise: `r` ×32, `tt` ×15, `SiteUtils` ×1 on `/nagornaya/`.
 * **Conclusion:** `CI-P0-GILL-RUNTIME-REFS` and `CI-P1-NAGORNAYA-SITEUTILS-ORDER` remain **verified-current** on `dbd0bb55`; previous `b4b312a8` evidence is still valid as root-cause history but no longer latest HEAD.
+
+
+---
+
+## 🟠 PASS 32 P2 AUDIT — Search eager DOM verification (`dbd0bb55`, 2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes; no new report files.
+
+* **P2-SEARCH-EAGER ✅ verified-current:** `js/search.js` is 31,534 bytes and referenced by 39 built pages.
+* Browser evidence before any search interaction/open:
+  - `/`: 128 `.cp-*` nodes, ~106,049 bytes `.cp-*` outerHTML, search button present.
+  - `/articles/kod-da-vinchi/`: 128 `.cp-*` nodes, ~106,049 bytes `.cp-*` outerHTML.
+  - `/baptisty-rossii/`: 128 `.cp-*` nodes, ~106,049 bytes `.cp-*` outerHTML.
+* Resource evidence on `/` before interaction: browser requests `css/command-palette.css`, `js/search.js`, and `/data/search-manifest.json` on load. Pagefind remains lazy (`window.__pagefindReady__ === false`, no Pagefind resource request before interaction), so the bug scope is eager command-palette DOM + manifest load, not Pagefind eager load.
+* Recommended executor direction: lazy-create the command palette shell and fetch/search-manifest on first open (`#gbSearchBtn`, `Cmd/Ctrl+K`, or `gb:openSearch`), while keeping the small trigger button eager.
