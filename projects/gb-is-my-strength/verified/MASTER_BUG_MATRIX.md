@@ -354,3 +354,49 @@
 * **P1-LAYERED-CSS:** 283KB мёртвый site-layered.css
 * **P1-CI-DUPE:** Оба workflow выполняют npm ci + cache-bust
 * **P2-SW-FALLBACK:** cacheFirst fallback стирает ?v= и возвращает stale
+
+---
+
+## 🆕 PASS 23 — DEEP REGRESSION HUNTING (2026-07-03, HEAD `c3ca48cb`)
+
+### REG-006: 🟠 P1 — DEAD ASSET `back-to-top.js` — дублирующая реализация, мёртвый precache
+
+* **Файлы:** `js/modules/back-to-top.js`, `sw.js`, `scripts/cache-bust-assets.js`
+* **Суть:** back-to-top.js добавлен в PRECACHE_ASSETS (commit `e458581`) и cache-bust-assets.js, но **НИКОГДА не загружается ни одной страницей** (0 из 52 HTML, 0 Astro-компонентов).
+* **Причина:** site.js уже содержит встроенный обработчик `#back-to-top` (scroll listener + `scrollToTop()`). Отдельный модуль — дублирующая реализация с `AbortController` и `smooth scroll`.
+* **Влияние:**
+  - SW precache загружает 1289 байт мёртвого кода при каждой установке
+  - cache-bust вычисляет хеш для файла, который никто не запрашивает
+  - Если кто-то подключит back-to-top.js через `<script>`, будут **дублирующиеся обработчики** (site.js + back-to-top.js)
+* **Решение:** Либо удалить back-to-top.js и убрать из PRECACHE/cache-bust, либо заменить встроенный обработчик в site.js на динамическую загрузку модуля.
+
+### REG-007: 🟡 P2 — `series-cards.js` — мёртвый динамический импорт
+
+* **Файл:** `js/series-cards.js` (2642 байта)
+* **Суть:** site.js проверяет `document.querySelector('[data-series-cards]')` и динамически загружает `/js/series-cards.js`. Но атрибут `data-series-cards` **не используется ни на одной странице** (0 HTML, 0 Astro).
+* **Не в PRECACHE_ASSETS** — корректно (динамический импорт), но файл висит мёртвым кодом.
+* **В audit-pro.js ALLOWED_JS** — пропускается аудитом как разрешённый.
+* **Не в cache-bust-assets.js** — динамический импорт использует `SITE_CONFIG.version` вместо file-specific hash.
+
+### REG-008: 🟡 P2 — `pagefind/pagefind.js` в PRECACHE_ASSETS но не существует в source
+
+* **Файл:** `sw.js` PRECACHE_ASSETS включает `/pagefind/pagefind.js`
+* **Суть:** Файл не существует в исходном репозитории (генерируется при сборке). SW install делает `cache.add()` который завершится с ошибкой, но `Promise.allSettled` с `.catch()` глушит её.
+* **Влияние:** Каждый SW install делает бесполезный network request, который завершается 404, тихо проглатывается. Увеличивает время установки SW.
+* **Решение:** Генерировать PRECACHE_ASSETS динамически при сборке, исключая pagefind или проверяя наличие файлов.
+
+### REG-009: 🟡 P2 — Тройной дрифт asset-списков по-прежнему не решён
+
+Три независимых списка ассетов по-прежнему расходятся:
+
+| Ассет | PRECACHE (sw.js) | cache-bust-assets.js | audit-pro.js ALLOWED_JS |
+|-------|------------------|---------------------|------------------------|
+| js/modules/back-to-top.js | ✅ (мёртвый) | ✅ (мёртвый) | ✅ |
+| js/series-cards.js | ❌ | ❌ | ✅ |
+| css/site-layered.css | ❌ | ❌ | ✅ (мёртвый) |
+| manifest.json | ✅ | ❌ | ❌ |
+| favicon.ico | ✅ | ❌ | ❌ |
+| 404.html | ✅ | ❌ | ❌ |
+| pagefind/pagefind.js | ✅ (не существует) | ❌ | ❌ |
+
+Добавленная в `e458581` проверка синхронизации (dist-publication-audit.js) покрывает только PRECACHE↔cache-bust и глушит ошибки в `catch(e){}` (REG-004).
