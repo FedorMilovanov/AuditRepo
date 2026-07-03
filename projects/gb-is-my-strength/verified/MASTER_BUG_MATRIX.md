@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `47a98da` (Pass 24 — массовый фикс багов + чистка мёртвого кода)  
+**HEAD исходного репозитория:** `edea8b3` (Pass 24b — CI оптимизация + SW + a11y)  
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–24)  
 
 ---
@@ -11,14 +11,14 @@
 | Приоритет | Количество | Описание |
 |-----------|------------|----------|
 | 🔴 **P0 (Critical)** | 1 | REG-001 _headers бесполезен (остаётся — нужна CDN-инфра) |
-| 🟠 **P1 (High)** | 2 | CI-дублирование, deploy SPOF |
-| 🟡 **P2 (Medium)** | 19 | SEO, SW, CSS-in-JS, search, audit drift |
+| 🟠 **P1 (High)** | 1 | CI-дублирование (частично оптимизирован) |
+| 🟡 **P2 (Medium)** | 16 | SEO, SW metadata, CSS-in-JS, search, audit drift |
 | 🔵 **P3 (Medium)** | 16 | a11y, social metadata, мёртвый код, оптимизация |
 | 🔵 **P3 (Refactor)** | 4 | site.js монолит, enhancements.js, no source maps, no ES modules |
 | ⚪ **S0 (Low)** | 2 | Документация |
 | 🟣 **AuditRepo** | 5 | Слабая валидация, stale SHA, нет автоматизации |
 | ❌ **Fixed** | 12 | Исправлено в коммитах `f284fc60`–`47a98da` |
-| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **49** | (было 79, -30 исправлено/закрыто) |
+| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **45** | (было 79, -34 исправлено/закрыто) |
 
 ---
 
@@ -75,9 +75,9 @@
 * **Файлы:** `.github/workflows/indexnow.yml`, `.github/workflows/deploy.yml`
 * **Суть:** 2× npm ci + 2× cache-bust + Astro build = 20–30 мин CI на каждый пуш.
 
-### REG-002: Deploy pipeline SPOF для 14 путей
+### REG-002: ~~Deploy pipeline SPOF для 14 путей~~ ✅ FIXED
 * **Файл:** `.github/workflows/deploy.yml`
-* **Суть:** 14 путей триггерят indexnow.yml, но НЕ deploy.yml push. Если indexnow.yml упадёт — деплой полностью заблокирован.
+* **Фикс:** Деплой теперь разрешён при падении indexnow (с warning). Deploy.yml выполняет собственный cache-bust и валидацию.
 
 ---
 
@@ -89,11 +89,11 @@
 * **P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)
 * **P2-ENH-CSS:** enhancements.js инжектит ~2KB CSS через JS (FOUC, нет кэша)
 * **P2-HIGHLIGHTS-CSS:** highlights.js инжектит ~5KB CSS через JS (FOUC, нет кэша)
-* **BUG-003:** Рассинхрон в оркестрации SW gate (`sw:dist:audit`)
+* ~~**BUG-003:** Рассинхрон в оркестрации SW gate~~ ✅ FIXED (sw:dist:audit добавлен в gate)
 * **BUG-012:** Рассинхрон заголовков MDX и HTML (3 статьи)
 * **BUG-041:** Sitemap/indexability mismatch for karty holding pages
 * **NEW-43:** Отсутствие атрибутов `width`/`height` у 65 изображений (CLS)
-* **BUG-005:** Дублирование стилей в site.css (site-layered.css удалён)
+* ~~**BUG-005:** Дублирование стилей~~ ✅ FIXED (site-layered.css удалён в Pass 24)
 * **BUG-010:** Хаос с брейкпоинтами в CSS (20+ breakpoints)
 * **BUG-011:** Конфликт брейкпоинтов на 768px
 * **BUG-013:** Отсутствие Preload для Critical CSS
@@ -101,7 +101,7 @@
 * **BUG-014:** Race condition в скриптах сборки
 * **BUG-016:** ~62 неиспользуемых CSS custom properties
 * **BUG-019:** Скрытый баг с trailing slash в search.js
-* **P2-REG-005:** Порядок PRECACHE_ASSETS и ASSETS расходится (косметический)
+* ~~**P2-REG-005:** Порядок PRECACHE_ASSETS и ASSETS расходится~~ ✅ FIXED (переупорядочен)
 
 ---
 
