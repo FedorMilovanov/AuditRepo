@@ -291,3 +291,52 @@
 * `node --check js/bookmark-engine.js` ✅ SYNTAX OK
 * `node --check js/search.js` ✅ SYNTAX OK
 * All `cache-bust` hashes updated (75 files)
+
+---
+
+## 🕵️‍♂️ PASS 29 — PURE AUDITOR & VERIFICATION PASS (2026-07-03, Node 22 v22.14.0)
+
+**Режим выполнения:** Чистый аудитор и верификатор («Режим Чистого Аудитора и Верификатора», строго без изменения исходного кода в `gb-is-my-strength`).  
+**Toolchain:** Node.js `v22.14.0` (официальный Linux x64 бинарник в `/home/user/.node22/bin`) + Playwright Chromium (`v1228`).  
+**Объем аудита:** 66+ строгих пронумерованных bash-проверок по всем 6 архитектурным доменам, верификация актуального HEAD `45f27c61` на отсутствие регрессий и «костылей», а также подтверждение гигиены репозитория.
+
+### 🧪 Эмпирическая верификация актуального HEAD `45f27c61`
+
+На чистом стенде Node 22 была проведена полная перепроверка всех 15 публикационных гейтов и скриптов вёрстки после удаления мёртвого кода (IIFE в `bookmark-engine.js`, дедупликация 1.9 КБ SVG в `search.js`, удаление 4 неиспользуемых CSS vars, нормализация `prefers-contrast:more`):
+
+1. **Сборка и публикационный контракт (Commands 13–22):**
+   - `npm run strangler:build:production-like`: 100% успешная сборка продакшн-дистрибутива (53 статических Astro-страницы, 444 легаси-файла перенесено, 0 дрифт хешей).
+   - `npx astro check`: TypeScript-диагностика по 414 файлам проекта: **0 ошибок, 0 предупреждений**.
+   - `node scripts/dist-publication-audit.js`: Проверены все 45 обязательных артефактов дистрибутива, подтверждено отсутствие утечек приватных директорий (`src`, `scripts`, `research`, `raw-sources`, `_legacy`).
+   - `npm run contract:compare`: Точное соответствие 43 публичных baseline-страниц.
+   - `npm run page-ownership:dist:production-like`: Подтверждён владелический контракт 53 роутов.
+   - `npm run dist:css-parity`: 52/52 страниц несут корректный CSS-контракт.
+   - `npm run sw:dist:audit`: Верифицирована готовность Service Worker (`CACHE_VERSION` = `gb-v186-sw-toast-css-20260703`, `PRECACHE_ASSETS` = 28 записей).
+   - `npm run editorial:lint` & `check-workflows.js`: Все редакционные нормы и политики GitHub Actions выполнены.
+
+2. **Интерактивные карты, токены и мобильный UX (Commands 23–32):**
+   - `npm run maps:validate` & `npm run maps:publication-status`: Валидация схем 10 библейских карт (Авраам, Исход, Павел и др.) и статусов публикации.
+   - `npm run tokens:check`: Проверка дизайн-токенов (0 легаси `var()` ссылок).
+   - `node scripts/konfessii-map-audit.js`: Проверены 14 инвариантов 3D-карты баптизма (рендеринг WebGL Canvas, отсутствие блокировки кликов геометрией, изоляция iframe `_app/index.html`).
+   - `npm run avraam:audit`: 28/28 проверок интерактивной карты пути Авраама успешно пройдены.
+   - `node scripts/audit-pro.js`: Профессиональный аудит завершён с результатом **166 passed, 2 warnings (CSS budget & z-index), 0 errors**.
+
+3. **Контентная целостность, поисковые индексы и SEO (Commands 33–42):**
+   - `npm run content:parity`: Проверка MDX vs HTML паритета по словам (допуск ±8%) и семантике — все статьи в зелёной зоне.
+   - `npm run gill:reading-time:audit`: Верифицировано каноническое время чтения серии (149 минут) в MDX, `search-manifest.json` и HTML.
+   - `npm run gill:pagefind:audit`: Подтверждено, что все части серии индексируются Pagefind через `<article class="article-body">`.
+   - `node scripts/schema-rich-results-audit.js` & `node scripts/dist-jsonld-audit.js`: 60 валидных блоков JSON-LD, 25 схем Article, 39 BreadcrumbList, 4 FAQPage.
+   - `node scripts/baptisty-series-shadow-audit.js`: 10 роутов «Баптисты России» соответствуют strict-native стандарту без `loadLegacyFullDocument`.
+
+4. **Визуальный паритет и миграция легаси-разделов (Commands 43–57):**
+   - Успешно выполнены все 15 специализированных скриптов визуального паритета: `about`, `biografii`, `hard-texts`, `pastor-series`, `articles`, `gill:context`, `gill:spravochnik`, `konfessii`, `karty`, `baptisty-rossii`, `home`, `nagornaya`, `catalogs`, `baptisty:roadmap`, `baptisty:visual-atlas`.
+
+5. **Аудит незатронутых зон и гигиена (Commands 58–66):**
+   - `npm run audit:premium-controls`: 87/87 проверок PremiumControls прошли успешно.
+   - Проверка файловой структуры (Commands 60–61) подтвердила окончательное удаление мёртвых скриптов `back-to-top.js` и `series-cards.js`, а также мёртвого стиля `site-layered.css`.
+   - `dist/feed.xml` содержит ровно 27 элементов (включая 10 статей «Баптисты России»).
+   - В директории `AuditRepo/projects/gb-is-my-strength/incoming/` поддерживается строгая гигиена: все 58+ устаревших папок перемещены в архив, оставлены исключительно 3 корневых управляющих документа.
+
+### 🎯 Заключение аудитора
+
+Фиксы, внесенные в коммитах `e0877b0`, `d78b1ad`, `36f1342`, `022014c` и `45f27c6`, выполнены качественно и профессионально, без внедрения временных костылей или новых предупреждений линтера. Оставшиеся **19 открытых багов** (из 79 исходных, 60 закрыто) точно отражают текущий остаточный архитектурный долг проекта для последующего закрытия Исполнителем.
