@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `36f13424` (Pass 27 — dead exports + AGENTS.md CSS inventory)  
+**HEAD исходного репозитория:** `d78b1adc` (Pass 27 — regression fix + feed.xml + dead exports)  
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–27)  
 
 ---
@@ -16,8 +16,8 @@
 | 🔵 **P3 (Medium)** | 7 | a11y, social metadata, оптимизация |
 | 🔵 **P3 (Refactor)** | 4 | site.js монолит, enhancements.js, no source maps, no ES modules |
 | 🟣 **AuditRepo** | 5 | Слабая валидация, stale SHA, нет автоматизация |
-| ❌ **Fixed** | 56 | Исправлено в коммитах `f284fc60`–`36f13424` |
-| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **23** | (было 79, -56 исправлено/закрыто) |
+| ❌ **Fixed** | 57 | Исправлено в коммитах `f284fc60`–`d78b1adc` |
+| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **22** | (было 79, -57 исправлено/закрыто) |
 
 ---
 
@@ -253,3 +253,16 @@
 * **BUG-024 ✅:** 5 мёртвых экспортов удалены из `floating-cluster-ui.ts` (68 строк → 18): `FloatingClusterMode`, `FloatingClusterUiConfig`, `floatingClusterUi`, `floatingClusterRoutes`, `getSeriesParts` — 0 внешних потребителей. Живые экспорты `SeriesKey` (4 uses) и `getSeriesLiteMeta` (2 uses) сохранены.
 * **AGENTS.md r312 ✅:** CSS inventory секции §2 обновлён с 8→9 файлов (добавлены `enhancements-runtime.css`, `highlights-runtime.css`, `sw-toast.css`, извлечённые из CSS-in-JS в Pass 24). §0 и §4 таблица маршрутизации CSS обновлены.
 * **NEW FINDING:** Корневые HTML-файлы (baptisty-rossii/*/, nagornaya/*/, articles/*/) — устаревшие артефакты предыдущей сборки, НЕ используются в продакшене. Деплой идёт из `dist/`, который генерируется `astro build`. Astro-компоненты корректно содержат `defer` на site-utils.js и scroll-perf.js. Это НЕ баг — артефакт strangler-миграции.
+
+---
+
+## 🔴 PASS 27 REGRESSION FIX (коммит `d78b1adc`, 2026-07-03)
+
+* **REGRESSION ✅ FIXED:** Предыдущий агент (Pass 26) случайно вставил `<link rel="preconnect" href="https://mc.yandex.ru" crossorigin>` как голый HTML прямо в JS-код frontmatter 4 Astro-компонентов. Это вызвало 35 TypeScript ошибок в `astro check` (ts1005, ts1109, ts2304, ts17008). Без Node 22 этот регресс не был обнаружен.
+  - `BaseLayout.astro`: preconnect перемещён в шаблонную строку metrika
+  - `HomePageChrome.astro`, `KonfessiiPageChrome.astro`, `Baptizm3DBody.astro`: голый `<link>` удалён (preconnect уже есть в соответствующих PageHead)
+* **VERIFIED:** `astro check` → 0 errors, 0 warnings (Node 22 + Playwright установлены)
+* **VERIFIED:** `strangler:build:production-like` → 53 страницы, все `defer` на месте в dist/
+* **NEW-54-59 partial ✅:** 10 статей «Баптисты России» добавлены в feed.xml (17→27 items)
+* **BUG-024 ✅:** 5 мёртвых экспортов удалены из floating-cluster-ui.ts (68→18 строк)
+* **AGENTS.md r312 ✅:** CSS inventory обновлён с 8→9 файлов
