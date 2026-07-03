@@ -1,12 +1,13 @@
 # Current Head Canonical Ledger — gb-is-my-strength
 
-> **SUPERSEDED 2026-07-03 — Pass 34:** this document is now a historical index, not the live truth. The current operational truth lives in:
+> **SUPERSEDED 2026-07-03 — Pass 39 update:** this document is now a historical index, not the live truth. The current operational truth lives in:
 >
-> - `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md` (head line, P0/P1/P2/P3 buckets, Pass 25-34 audit sections)
-> - `projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md` (top-of-page addendum with current HEAD and CI status)
-> - `projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md` (full evidence, including §10 Pass 34 refresh on `f1e9abd`)
+> - `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md` (top Pass 39 section + current buckets)
+> - `projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md` (top-of-page addendum with current source fix commit and remaining priorities)
+> - `projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb084.md` (runtime no-undef fixed on source lane `22eb0840`)
+> - older evidence: `projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`
 >
-> Do **not** edit this ledger as a competing source of truth. The fresh operational document is `MASTER_BUG_MATRIX.md` (head line updated in Pass 34 to `f1e9abd`).
+> Do **not** edit this ledger as a competing source of truth. The fresh operational document is `MASTER_BUG_MATRIX.md`; this file remains historical only.
 
 ---
 

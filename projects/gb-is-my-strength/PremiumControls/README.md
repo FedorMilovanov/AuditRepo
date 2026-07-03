@@ -1,3 +1,20 @@
+# PremiumControls — current contract update (2026-07-03)
+
+**Fresh source verification:** `22eb0840ba8c4bd8c46ed8d7eb38c3266dad44d7` (`lane/system-runtime-no-undef-current-2026-07-03`, base main `4cbe8e88`).
+
+Current PremiumControls/Gill v16 status on this verified lane:
+
+- `npm run audit:premium-controls` ✅ 87/87.
+- `npm run gill:mobile-play:smoke` ✅.
+- `npm run gill:mobile-layout:audit` ✅ after global runtime no-undef fix.
+- PC-CURRENT-06 (Gill mobile current item → `#partTocOverlay` without navigation) is browser-verified passing; do not reopen without fresh browser failure.
+- RomanNumeral / `gb-roman` and label series marks are guarded by `audit:premium-controls` and `gill:mobile-play:smoke` on this lane.
+- The latest P0 was **not** a PremiumControls visual bug: it was global JS runtime no-undef (`site.js` scoped `tt`, Nagornaya `safeReady`).
+
+The older 2026-06-27 PC-CURRENT list below is retained as historical context. Where it conflicts with the 2026-07-03 verified lane evidence above, use the 2026-07-03 evidence first.
+
+---
+
 # PremiumControls — current contract (2026-06-27)
 
 **Project:** `gb-is-my-strength` (`gospod-bog.ru`)

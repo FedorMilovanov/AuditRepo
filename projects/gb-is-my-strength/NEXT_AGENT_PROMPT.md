@@ -1,3 +1,19 @@
+# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-03 runtime no-undef fix lane (READ FIRST)
+
+**Current source fix commit:** `22eb0840ba8c4bd8c46ed8d7eb38c3266dad44d7` (`lane/system-runtime-no-undef-current-2026-07-03`).
+
+**Base source main at start:** `4cbe8e88afb3fe13fd04fdae08c1770122a01952`.
+
+**Current local verification:** `CI-P0-GILL-RUNTIME-REFS` is fixed on the source lane. `gill:mobile-layout:audit`, `gill:mobile-play:smoke`, `dist-smoke-audit --no-build --production-like`, `audit:premium-controls`, `validate:static-publication`, and `guard:shared-files` all passed on commit `22eb0840`.
+
+**Important:** If source `main` has not yet advanced to `22eb0840` or a descendant, treat the runtime fix as **verified-on-lane / pending main deploy**, not fixed-current on deployed `main`. After merge to source main, re-run GitHub Pages Deploy and then check the next hidden gate `sw:dist:audit:deploy-switch` / NEW-66.
+
+**Top remaining priorities after runtime fix reaches main:** `REG-001` hosting/security headers, `P1-CI-DUPE`, `NEW-66` SW/Pagefind deploy-switch, `NEW-65` `/baptisty-rossii/` visual parity, and `NEW-64` prevention gap (broad runtime smoke not blocking deploy).
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb084.md`.
+
+---
+
 # 🔴 CURRENT HANDOFF ADDENDUM — 2026-07-03 Pass 34/37 (READ FIRST)
 
 **Current source HEAD:** `f1e9abd9` (cache-bust on top of `bced1c69` highlights half-fix + `8446a0da` AGENTS-r312 dedup).

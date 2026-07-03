@@ -62,3 +62,5 @@ Do not promote “60 confirmed bugs / 9 P0 / repair-ready” into new prompts wi
 5. После первой verified-волны добавить:
    - `verification/START_HERE_<date>.md`
    - `verified/START_HERE_<date>.md`
+
+<!-- 2026-07-03: gb-is-my-strength runtime no-undef fix verified on source lane `22eb0840`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb084.md. -->
