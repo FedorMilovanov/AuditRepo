@@ -84,9 +84,9 @@
 
 * **P2-AUDIT-DRIFT:** audit-pro.js не проверяет синхронизацию PRECACHE↔cache-bust↔ALLOWED (улучшено в REG-004, но полный дрифт не решён)
 * **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке (~15KB nodes)
-* **CI-P0-GILL-RUNTIME-REFS:** current remote `b4b312a8` Deploy red at `Gill mobile reference layout audit`; verified browser runtime errors: `js/highlights.js` strict IIFE assigns undeclared `r` (20 pageerrors), `js/site.js` calls undefined `tt(...)` helper (currently surfacing at backlinks `tt(n.title)`, with additional static refs in verse/original-word blocks; 20 pageerrors). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`.
+* **CI-P0-GILL-RUNTIME-REFS:** current remote `dbd0bb55` Deploy red at `Gill mobile reference layout audit`; verified browser runtime errors: `js/highlights.js` strict IIFE assigns undeclared `r` (20 pageerrors), `js/site.js` calls undefined `tt(...)` helper (currently surfacing at backlinks `tt(n.title)`, with additional static refs in verse/original-word blocks; 20 pageerrors). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`.
 * **CI-P1-NAGORNAYA-SITEUTILS-ORDER:** broader dist runtime smoke found `/nagornaya/` pageerror `SiteUtils is not defined` from `js/nagornaya-mobile-toc.js?v=866d4238:1:696`; dist script order loads `nagornaya-mobile-toc.js` before `/js/site-utils.js`, while the TOC script immediately calls `SiteUtils.ready(...)`.
-* ~~**CI-CSSLAYER-STALE:** `css:layer:validate` pointed at deleted `css/site-layered.css`~~ ✅ FIXED-CURRENT on source `b4b312a8` by `a65874a0`; script now validates `css/site.css`.
+* ~~**CI-CSSLAYER-STALE:** `css:layer:validate` pointed at deleted `css/site-layered.css`~~ ✅ FIXED-CURRENT on source `dbd0bb55` by `a65874a0`; script now validates `css/site.css`.
 * ~~**P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)~~ ✅ FIXED (Pass 28: helper _s() + path constants _p0/_p1/_p2, -1.9KB)
 * **BUG-012:** Рассинхрон заголовков MDX и HTML (3 статьи) — NOT A BUG, SEO оптимизация by design
 * **NEW-43:** Отсутствие атрибутов `width`/`height` у content изображений (только _build-tools)
@@ -359,3 +359,17 @@
 * **Independent witness:** `node scripts/dist-smoke-audit.js --no-build --production-like` also fails on representative routes with `r is not defined` / `tt is not defined` (6 issues across desktop/mobile `/articles/kod-da-vinchi/`, `/baptisty-rossii/`, `/baptisty-rossii/noch-na-kure/`).
 * **Control witnesses:** `node --check js/*.js` passes (syntax only), `tokens:check` passes, `gill:mobile-play:smoke` passes. This is a browser runtime no-undef regression, not a syntax/build failure.
 * **Full evidence:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`.
+
+
+---
+
+## 🔴 PASS 31 CURRENT-HEAD REFRESH (source HEAD `dbd0bb55`, 2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes; no new report files created. Existing Pass 30 reverify document was appended with current-head evidence.
+
+* **Remote moved:** `gb-is-my-strength/main` advanced from `b4b312a8` to `dbd0bb55` via Gill rail/frame commit `e2f0ae4e` + cache-bust commit `dbd0bb55`.
+* **CI remains red:** GitHub Actions Deploy run `28679684009` on `dbd0bb55` completed **failure**; failed step remains **`Gill mobile reference layout audit`**.
+* **P0 still current:** local reverify on `dbd0bb55` after `npm run strangler:build:production-like` confirms `npm run gill:mobile-layout:audit` still fails with 40 pageerrors: `r is not defined` ×20 and `tt is not defined` ×20.
+* **Independent witness still current:** `node scripts/dist-smoke-audit.js --no-build --production-like` fails with the same representative runtime errors (`r`/`tt`) across desktop/mobile representative routes.
+* **Blast radius unchanged:** broad 52-route dist smoke still shows 33 relevant failing routes after filtering localhost favicon CSP noise: `r` ×32, `tt` ×15, `SiteUtils` ×1 on `/nagornaya/`.
+* **Conclusion:** `CI-P0-GILL-RUNTIME-REFS` and `CI-P1-NAGORNAYA-SITEUTILS-ORDER` remain **verified-current** on `dbd0bb55`; previous `b4b312a8` evidence is still valid as root-cause history but no longer latest HEAD.

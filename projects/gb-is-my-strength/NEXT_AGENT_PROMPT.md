@@ -1,14 +1,14 @@
 # 🔴 CURRENT HANDOFF ADDENDUM — 2026-07-03 Pass 30 (READ FIRST)
 
-**Current source HEAD:** `b4b312a8ce0799e82a1075855518627ce9897d5d`
+**Current source HEAD:** `dbd0bb55`
 
-**Current CI:** `Deploy to GitHub Pages` is **red** on run `28677794134`.
+**Current CI:** `Deploy to GitHub Pages` is **red** on run `28679684009`.
 
 **Failed step:** `Gill mobile reference layout audit`.
 
 ## Verified current blocker
 
-`CI-P0-GILL-RUNTIME-REFS` is the top priority before any P1/P2 cleanup:
+`CI-P0-GILL-RUNTIME-REFS` is the top priority before any P1/P2 cleanup. It remains verified-current after source advanced from `b4b312a8` to `dbd0bb55` (`e2f0ae4e` Gill rail/frame commit did not retire the runtime errors):
 
 - `js/highlights.js` throws `ReferenceError: r is not defined` from a strict IIFE assignment to undeclared `r` while injecting `/css/highlights-runtime.css`.
 - `js/site.js` throws `ReferenceError: tt is not defined` at backlink rendering line 484 (`a.innerHTML=tt(n.title)+...`).
