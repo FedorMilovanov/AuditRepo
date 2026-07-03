@@ -400,3 +400,50 @@
 | pagefind/pagefind.js | ✅ (не существует) | ❌ | ❌ |
 
 Добавленная в `e458581` проверка синхронизации (dist-publication-audit.js) покрывает только PRECACHE↔cache-bust и глушит ошибки в `catch(e){}` (REG-004).
+
+---
+
+## 🆕 PASS 23b — CONTINUED DEEP HUNT (2026-07-03)
+
+### NEW-60: 🟡 P2 — 10 karty/ holding pages missing CSP meta tag
+
+* **Файлы:** `karty/index.html`, `karty/{early-church,ishod,maccabim,melachim,pavel,revelation,shoftim,shvatim,yeshua}/index.html`
+* **Суть:** Только `karty/avraam` имеет CSP meta. Остальные 10 страниц — без CSP. Главная и 42 других страницы имеют CSP в `<meta>`, а 10 карт — нет.
+* **Влияние:** На этих страницах нет ограничения на загрузку скриптов — XSS не ограничен CSP.
+
+### NEW-61: 🟡 P2 — CSP meta на 42 страницах не включает `form-action` и `frame-ancestors`
+
+* **Суть:** `<meta http-equiv="Content-Security-Policy">` не может содержать `frame-ancestors` (не поддерживается в meta-тегах, только в HTTP-заголовках). Но `form-action 'self'` МОЖЕТ быть в meta, и его там нет.
+* **Влияние:** Формы могут отправляться на любой URL (нет form-action ограничения). Clickjacking не ограничен через CSP (только X-Frame-Options HTTP-заголовок, который GitHub Pages тоже не поддерживает).
+* **Решение:** Добавить `form-action 'self'` в meta CSP. Для frame-ancestors — только CDN-прокси.
+
+### NEW-62: 🟡 P2 — Фантомная серия в `data/series.json`: `zakon-duha-zhizni-rimlyanam-8`
+
+* **Файл:** `data/series.json`
+* **Суть:** В серии `hard-texts` указан `zakon-duha-zhizni-rimlyanam-8` с `readingTime: 0`, но HTML-страница не существует, нет в sitemap, нет в search-manifest.
+* **Влияние:** Series navigation может ссылаться на несуществующую страницу. readingTime=0 для расчётов прогресса.
+* **Решение:** Либо создать статью, либо удалить фантомную запись из series.json.
+
+### NEW-63: 🟢 P3 — Два файла верификации Яндекс (мусор)
+
+* **Файлы:** `yandex_42bc0d54a1ca4952.html`, `yandex_d8876d66da1b4592.html`
+* **Суть:** Для одного домена нужен только один файл. Второй — от старой/заменённой верификации.
+* **Решение:** Удалить устаревший файл.
+
+### NEW-64: 🟢 P3 — manifest.json theme_color только light (#fdfcf9)
+
+* **Файл:** `manifest.json`
+* **Суть:** `theme_color: "#fdfcf9"` — только светлая тема. HTML-страницы корректно имеют два meta theme-color (light + dark), но manifest не поддерживает dark variant.
+* **Влияние:** PWA в dark mode показывает светлую панель инструментов.
+* **Решение:** Использовать `meta[name="theme-color"]` с `media="(prefers-color-scheme: dark)"` (уже есть), manifest не может это исправить — это ограничение спецификации.
+
+### Чистка: мёртвые файлы для удаления
+
+| Файл | Размер | Причина |
+|------|--------|---------|
+| `_headers` | 1,033 B | Бесполезен на GitHub Pages |
+| `css/site-layered.css` | 283,706 B | Не подключён нигде |
+| `js/modules/back-to-top.js` | 1,289 B | Никогда не загружается |
+| `js/series-cards.js` | 2,642 B | data-series-cards не используется |
+| `yandex_d8876d66da1b4592.html` | 161 B | Дублирующая верификация |
+| **Итого мёртвого кода** | **288,831 B** | **~282 KB** |
