@@ -4,7 +4,7 @@
 **Date:** 2026-07-03  
 **Auditor/executor:** Arena Agent  
 **Remote source main at start:** `4cbe8e88afb3fe13fd04fdae08c1770122a01952`  
-**Source fix lane:** `lane/system-runtime-no-undef-current-2026-07-03`  
+**Source fix lane/main:** `lane/system-runtime-no-undef-current-2026-07-03` and `main`  
 **Source fix commit:** `22eb0840ba8c4bd8c46ed8d7eb38c3266dad44d7`  
 **AuditRepo HEAD at start:** `0895a21838301c546be225d37772131c8041e53c`
 
@@ -71,7 +71,7 @@ Observed acceptance:
 
 ## 5. Remaining blockers after this pass
 
-Do **not** keep `CI-P0-GILL-RUNTIME-REFS` as current if source main includes `22eb0840` or a descendant and deploy/browser smoke confirms it.
+Do **not** keep `CI-P0-GILL-RUNTIME-REFS` as current on source main `22eb0840` unless GitHub Actions or a fresh browser smoke reproduces a new runtime failure.
 
 Still track separately:
 
@@ -85,7 +85,7 @@ Still track separately:
 
 ## 6. Executor handoff
 
-If `22eb0840` is merged/pushed to source `main`, immediately re-run GitHub Pages deploy. Expected next verification is not Gill layout runtime no-undef; the next likely hidden check to confirm is:
+`22eb0840` has been pushed to source `main`; observe GitHub Pages deploy. Expected next verification is not Gill layout runtime no-undef; the next likely hidden check to confirm is:
 
 ```bash
 npm run pagefind:build:dist

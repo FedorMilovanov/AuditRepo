@@ -11,7 +11,7 @@
 
 **Source fix commit:** `22eb0840ba8c4bd8c46ed8d7eb38c3266dad44d7` (`lane/system-runtime-no-undef-current-2026-07-03`).
 
-`CI-P0-GILL-RUNTIME-REFS` is **fixed on the source lane** and should be moved to fixed-current once `22eb0840` (or descendant) is on source `main` and GitHub Pages Deploy confirms green. This was not a Gill visual regression: it was global JS runtime no-undef.
+`CI-P0-GILL-RUNTIME-REFS` is **fixed-current on source main HEAD `22eb0840` by local browser/build evidence**; final deploy status is pending GitHub Actions completion. This was not a Gill visual regression: it was global JS runtime no-undef.
 
 Verified on `22eb0840`:
 
