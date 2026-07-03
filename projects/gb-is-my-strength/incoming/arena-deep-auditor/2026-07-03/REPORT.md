@@ -145,7 +145,7 @@ if: >
 
 ---
 
-## 🟡 NEW P2 — MEDIUM PRIORITY (9 новых багов)
+## 🟡 NEW P2 — MEDIUM PRIORITY (11 новых багов)
 
 ### P2-AUDIT-DRIFT: audit-pro.js не проверяет синхронизацию asset-списков
 
@@ -186,6 +186,12 @@ Command palette создаёт `<div class="cp-backdrop">` в `document.body` п
 Progress bar CSS инжектируется через `document.createElement("style")` → FOUC, не кэшируется SW, не попадает под CSS-аудит.
 
 ### P2-HIGHLIGHTS-CSS: highlights.js инжектит ~5KB CSS через JS
+
+### P2-TTS-LOCALSTORAGE: TTS rate save без try/catch — Safari private mode crash
+**Файл:** `js/site.js` — `localStorage.setItem("gbx-tts-rate", String(rate))` без try/catch. В Safari private browsing mode выбрасывает исключение → TTS кнопка скорости падает. Также: `parseFloat(localStorage.getItem("gbx-tts-rate"))||1` при инициализации — тоже без try/catch.
+
+### P2-VIEWTRANSITION-TARGET: startViewTransition не проверяет произвольный target
+**Файл:** `js/enhancements.js` — проверяет только `_blank` и `_new`, но не произвольные target (например, `target="iframe_name"`). Ссылка с произвольным target пройдёт проверку и вызовет `startViewTransition`, что сломает навигацию в iframe. Исправление: `!t.hasAttribute("target") || t.target === "_self"`
 
 Та же проблема: highlights panel CSS живёт в JS → FOUC, нет кэширования, нет аудита.
 
@@ -251,7 +257,7 @@ a.innerHTML = function(t,e) { ... '<span class="gtip-papyrus">'+d+'</span>' ... 
 | 🟡 P2 Medium | 9 |
 | 🔵 P3 Refactor | 5 |
 | 🟣 AuditRepo | 5 |
-| **Итого новых** | **27** |
+| **Итого новых** | **29** |
 
 ### Взаимосвязь с MASTER_BUG_MATRIX (Pass 21)
 
