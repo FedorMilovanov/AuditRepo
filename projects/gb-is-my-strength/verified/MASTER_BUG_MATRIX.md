@@ -1,8 +1,8 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `d78b1adc` (Pass 27 — regression fix + feed.xml + dead exports)  
-**Режим аудита:** Multi-Agent Synthesis (Passes 1–27)  
+**HEAD исходного репозитория:** `e0877b0b` (Pass 28 — bookmark-engine IIFE fix, SVG dedup, dead CSS vars)  
+**Режим аудита:** Multi-Agent Synthesis (Passes 1–28)  
 
 ---
 
@@ -12,12 +12,12 @@
 |-----------|------------|----------|
 | 🔴 **P0 (Critical)** | 1 | REG-001 _headers бесполезен (остаётся — нужна CDN-инфра) |
 | 🟠 **P1 (High)** | 1 | CI-дублирование (частично оптимизирован) |
-| 🟡 **P2 (Medium)** | 9 | SEO, search, audit drift |
-| 🔵 **P3 (Medium)** | 7 | a11y, social metadata, оптимизация |
+| 🟡 **P2 (Medium)** | 8 | SEO, search, audit drift |
+| 🔵 **P3 (Medium)** | 6 | a11y, social metadata, оптимизация |
 | 🔵 **P3 (Refactor)** | 4 | site.js монолит, enhancements.js, no source maps, no ES modules |
 | 🟣 **AuditRepo** | 5 | Слабая валидация, stale SHA, нет автоматизация |
-| ❌ **Fixed** | 57 | Исправлено в коммитах `f284fc60`–`d78b1adc` |
-| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **22** | (было 79, -57 исправлено/закрыто) |
+| ❌ **Fixed** | 60 | Исправлено в коммитах `f284fc60`–`e0877b0b` |
+| **ВСЕГО АКТУАЛЬНЫХ БАГОВ** | **19** | (было 79, -60 исправлено/закрыто) |
 
 ---
 
@@ -84,13 +84,13 @@
 
 * **P2-AUDIT-DRIFT:** audit-pro.js не проверяет синхронизацию PRECACHE↔cache-bust↔ALLOWED (улучшено в REG-004, но полный дрифт не решён)
 * **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке (~15KB nodes)
-* **P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)
+* ~~**P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)~~ ✅ FIXED (Pass 28: helper _s() + path constants _p0/_p1/_p2, -1.9KB)
 * **BUG-012:** Рассинхрон заголовков MDX и HTML (3 статьи) — NOT A BUG, SEO оптимизация by design
 * **NEW-43:** Отсутствие атрибутов `width`/`height` у content изображений (только _build-tools)
 * **BUG-010:** Хаос с брейкпоинтами в CSS (20+ breakpoints)
 * **BUG-011:** Конфликт брейкпоинтов на 768px
 * **BUG-014:** Race condition в скриптах сборки
-* **BUG-016:** ~12 неиспользуемых CSS custom properties (non-alias — большинство используются в src/)
+* **BUG-016:** ~8 неиспользуемых CSS custom properties (5 false positives: --ghost/--translation/--debunk/--planned/--vertical are class suffixes, not properties; 4 truly unused removed in Pass 28: --icon-size, --icon-radius, --ng-toc-bg, --border-strong; 9 remain from 17 original)
 
 ---
 
@@ -101,7 +101,7 @@
 * ~~**BUG-020:** 336 кнопок без `aria-label` (WCAG)~~ ✅ NOT A BUG — все 674 кнопки имеют visible text или aria-label
 * ~~**BUG-021:** 2 короткие meta descriptions~~ ✅ NOT A BUG — все ≥150 символов (SEO норма)
 * **BUG-022:** 256 переопределённых CSS правил
-* **BUG-024:** Мёртвый TypeScript/JS API в helper модулях
+* ~~**BUG-024:** Мёртвый TypeScript/JS API в helper модулях~~ ✅ CLOSED (Pass 27: 5 dead exports removed from floating-cluster-ui.ts)
 * **PC-107:** Неиспользуемые TypeScript props в PremiumControls интерфейсах
 * **NEW-54-59:** Social metadata gaps, feed.xml title drift, og:image size mismatch
 
@@ -266,3 +266,28 @@
 * **NEW-54-59 partial ✅:** 10 статей «Баптисты России» добавлены в feed.xml (17→27 items)
 * **BUG-024 ✅:** 5 мёртвых экспортов удалены из floating-cluster-ui.ts (68→18 строк)
 * **AGENTS.md r312 ✅:** CSS inventory обновлён с 8→9 файлов
+
+---
+
+## ✅ PASS 28 FIXES (коммит `e0877b0b`, 2026-07-03)
+
+### Critical syntax fix:
+* **bookmark-engine.js IIFE ✅:** Минифицированный IIFE был обрезан (отсутствовал `}()` — закрывающая скобка + вызов). Файл не проходил `node --check` с `SyntaxError: Unexpected end of input`. Регрессия была внесена в коммите `47a98da` при минификации (оригинал `71f1efdf` был валиден, 12599→9563 байт). Исправлено: добавлен `}()` в конец файла.
+
+### Performance — SVG deduplication:
+* **P2-SEARCH-SVG-DUP ✅:** 10 из 21 SVG-иконок в `search.js` дедуплицированы через helper-функцию `_s(w, sw, vb, p)` и path-константы `_p0` (search), `_p1` (bookmark), `_p2` (star). Результат: 33470→31538 байт (-1932 байта, -5.8%). Выход `_s()` побайтово идентичен оригинальным SVG-строкам.
+
+### Dead CSS cleanup:
+* **BUG-016 partial ✅:** 4 неиспользуемые CSS custom properties удалены (17→13 dead vars):
+  - `--icon-size` (floating-cluster.css:1058) — установлена, но нигде не потребляется через `var()`
+  - `--icon-radius` (floating-cluster.css:1058) — установлена, но нигде не потребляется через `var()`
+  - `--ng-toc-bg` (nagornaya-mobile-toc.css) — определена в `:root` и `html.dark`, но нигде не используется
+  - `--border-strong` (site.css @media prefers-contrast:more) — определена, но нигде не потребляется
+* **FALSE POSITIVES identified:** 5 ранее считавшихся «unused» свойств оказались частями CSS-селекторов (не custom properties): `--ghost` (`.toc-action-btn--ghost`), `--translation` (`.h-article-card--translation`), `--debunk` (`.h-article-card--debunk`), `--planned` (`.h-article-thumb--planned`), `--vertical` (`.article-img--vertical`)
+
+### Gates:
+* `audit-pro` ✅ PASSED
+* `astro check` ✅ 0 errors, 0 warnings
+* `node --check js/bookmark-engine.js` ✅ SYNTAX OK
+* `node --check js/search.js` ✅ SYNTAX OK
+* All `cache-bust` hashes updated (75 files)
