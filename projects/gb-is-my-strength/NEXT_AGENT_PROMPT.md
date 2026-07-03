@@ -15,6 +15,7 @@
 - Current `f1e9abd9` broad `dist/` smoke after filtering localhost favicon CSP noise: 16/52 routes have relevant runtime pageerrors (`tt` on 15 routes, `SiteUtils` on `/nagornaya/`; `r` is now 0).
 - Additional current bug: `/nagornaya/` throws `SiteUtils is not defined` because `nagornaya-mobile-toc.js` is loaded before `/js/site-utils.js` but immediately calls `SiteUtils.ready(...)`.
 - Missing gate: `deploy.yml` omits `dist-smoke-audit.js`; current `tt` is independently caught by `node scripts/dist-smoke-audit.js --no-build --production-like`, but Deploy only catches it because Gill mobile audit is strict.
+- Hidden next gate: after `tt` is fixed, `npm run sw:dist:audit:deploy-switch` currently fails because `/pagefind/pagefind.js` is missing from `PRECACHE_ASSETS`.
 - Visual side finding: `/baptisty-rossii/` pixel-diff fails locally on `f1e9abd9` (desktop 6.131%, mobile 17.368%).
 - Reproduced locally after `npm run strangler:build:production-like` + Playwright Chromium/deps: `npm run gill:mobile-layout:audit` → 20 pageerrors (`tt is not defined`).
 - Control witnesses pass: `node --check js/*.js`, `npm run css:layer:validate`, `npm run tokens:check`, `npm run gill:mobile-play:smoke`.

@@ -82,11 +82,12 @@
 
 ## 🟡 P2 — MEDIUM PRIORITY (9 открытых багов)
 
-* **P2-AUDIT-DRIFT:** audit-pro.js не проверяет синхронизацию PRECACHE↔cache-bust↔ALLOWED (улучшено в REG-004, но полный дрифт не решён)
+* **P2-AUDIT-DRIFT:** PRECACHE/cache-bust audit drift — ⚠️ RECLASSIFIED on `f1e9abd9`: core ASSETS↔SW drift is now covered (`cache-bust-assets.js` shared by `cache-bust.js`/`audit-pro.js`; `dist-publication-audit.js` confirms 22 shared assets 100% synchronized; `audit-pro` G61 passes). Remaining hidden deploy-switch blocker: `sw:dist:audit:deploy-switch` fails because `/pagefind/pagefind.js` is missing from `PRECACHE_ASSETS` when `--require-pagefind --require-cache-bump` is used.
 * **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке — ✅ VERIFIED-CURRENT on `dbd0bb55`: `js/search.js` 31,534 bytes is loaded on 39 pages; before first user search/open it creates 128 `.cp-*` command-palette nodes and ~106 KB `.cp-*` outerHTML on sampled routes (`/`, `/articles/kod-da-vinchi/`, `/baptisty-rossii/`). Also eagerly requests `/data/search-manifest.json`; Pagefind itself stays lazy (`window.__pagefindReady__ === false` before interaction).
 * **CI-P0-GILL-RUNTIME-REFS:** current remote `f1e9abd9` Deploy red at `Gill mobile reference layout audit`; partial fix landed in `bced1c69` (`js/highlights.js` strict IIFE now declares `r`; `r is not defined` retired). Remaining runtime: `js/site.js` calls undefined `tt(...)` helper at backlinks `tt(n.title)` (also verse/original-word blocks). 20 pageerrors on Gill mobile audit (down from 40 pre-`bced1c69`). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`.
 * **CI-P1-NAGORNAYA-SITEUTILS-ORDER:** broader dist runtime smoke found `/nagornaya/` pageerror `SiteUtils is not defined` from `js/nagornaya-mobile-toc.js?v=866d4238:1:696`; dist script order loads `nagornaya-mobile-toc.js` before `/js/site-utils.js`, while the TOC script immediately calls `SiteUtils.ready(...)`.
 * **CHECK-GAP-DIST-SMOKE:** deploy workflow omits `dist-smoke-audit.js`, even though `strangler:audit:production-like` includes it and it independently catches current `tt is not defined`; `validate:static-publication` also omits this browser runtime smoke.
+* **CI-HIDDEN-SW-PAGEFIND-PRECACHE:** hidden next Deploy blocker after `tt` fix: `npm run sw:dist:audit:deploy-switch` currently fails on `f1e9abd9` with `Pagefind bootstrap /pagefind/pagefind.js missing from PRECACHE_ASSETS`; `dist-publication-audit --require-pagefind` passes because it only requires shared cache-bust assets + Pagefind index presence, not Pagefind bootstrap precache.
 * **VIS-BAPTISTY-PARITY:** Visual Parity Guard/current local pixel-diff fails `/baptisty-rossii/` on `f1e9abd9` (desktop 6.131%, mobile 17.368%, threshold 1%); all other default landing routes passed local threshold.
 * ~~**CI-CSSLAYER-STALE:** `css:layer:validate` pointed at deleted `css/site-layered.css`~~ ✅ FIXED-CURRENT on source `dbd0bb55` by `a65874a0`; script now validates `css/site.css`.
 * ~~**P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)~~ ✅ FIXED (Pass 28: helper _s() + path constants _p0/_p1/_p2, -1.9KB)
@@ -517,3 +518,17 @@
 * **Regression archaeology:** `r` was introduced in `57d1b3c7`; `tt(n.title)` was introduced in `47a98da` as part of claimed XSS sanitization, but no reachable `tt` helper exists for the current strict callsite.
 * **Missing gate:** `deploy.yml` does not run `node scripts/dist-smoke-audit.js --no-build --production-like`, although `strangler:audit:production-like` does. `validate:static-publication` also omits this browser runtime smoke. Current deploy relies on Gill-specific browser audits to catch global runtime no-undef regressions.
 * **Visual parity current side finding:** local pixel-diff on `f1e9abd9` fails `/baptisty-rossii/` only: desktop `6.131%`, mobile `17.368%` (threshold `1%`). GitHub Visual Parity Guard failed on `8446a0da`; current `f1e9abd9` was `[skip ci]`, so remote visual parity was not rerun, but local current-head evidence confirms the issue.
+
+
+---
+
+## 🔴 PASS 38 HIDDEN GATE AUDIT — SW/Pagefind deploy-switch (`f1e9abd9`, 2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes; no new report files.
+
+* **P2-AUDIT-DRIFT reclassified:** The original broad “audit-pro does not check PRECACHE↔cache-bust↔ALLOWED” is mostly fixed-current. Evidence: `cache-bust-assets.js` is the shared ASSETS source; `audit-pro` G61 passes; `dist-publication-audit.js --require-pagefind --forbid-dev` reports `sw.js PRECACHE_ASSETS is 100% synchronized with cache-bust-assets.js (22 shared assets)`.
+* **Hidden next Deploy blocker:** `npm run sw:dist:audit:deploy-switch` currently fails on `f1e9abd9` after Pagefind build:
+  - `Pagefind bootstrap /pagefind/pagefind.js missing from PRECACHE_ASSETS`
+* **Why hidden:** Deploy currently fails earlier at `Gill mobile reference layout audit` (`tt is not defined`), so the later `Service Worker deploy-switch readiness` step is not reached.
+* **Gate semantics mismatch:** `dist-publication-audit --require-pagefind` passes and validates Pagefind index presence/source pages, while `sw-dist-readiness-audit --require-pagefind --require-cache-bump` additionally requires `/pagefind/pagefind.js` in `PRECACHE_ASSETS`.
+* **Executor guidance:** after fixing `tt`, run `npm run pagefind:build:dist && npm run sw:dist:audit:deploy-switch` before assuming Deploy will pass.
