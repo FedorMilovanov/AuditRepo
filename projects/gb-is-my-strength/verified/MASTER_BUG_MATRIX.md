@@ -106,7 +106,7 @@
 * **BUG-022:** Переопределённые CSS правила — ✅ REVERIFIED-CURRENT on `dbd0bb55`, original “256” count is stale/ambiguous. `css/site.css` audit found 178 same-context repeated selector+property keys (190 beyond-first declarations), 133 with changed values; after separating same-rule progressive fallbacks, there are 52 later-rule changed selector+property keys / 54 later overrides. 81 changed keys are same-rule fallback declarations (e.g. rgba → color-mix) and should not be treated as full cascade bugs.
 * ~~**BUG-024:** Мёртвый TypeScript/JS API в helper модулях~~ ✅ CLOSED (Pass 27: 5 dead exports removed from floating-cluster-ui.ts)
 * ~~**PC-107:** Неиспользуемые TypeScript props в PremiumControls интерфейсах~~ ✅ STALE/FIXED-CURRENT on `dbd0bb55`: original archived finding targeted deleted `GillRailControls.astro` props (`context`, `homeHref`, `includeStyles`). Current source has no `GillRailControls*` file or references; current PremiumControls/FloatingCluster/Gill Props are consumed internally; `astro check` has no PC-107/GillRailControls diagnostics.
-* **NEW-54-59:** Social metadata gaps, feed.xml title drift, og:image size mismatch
+* **NEW-54-59:** Social/SEO metadata bundle — ✅ REVERIFIED-CURRENT on `dbd0bb55` with split status: NEW-55 fixed-current (`robots.txt` now allows `/fonts/*.css?*` despite `Disallow: /*?*`); NEW-54 still current (4 sitemap URLs with zero static inlinks: `/karty/ishod/`, `/map/`, `/nagornaya/nakhodki/`, `/rodosloviye/`); NEW-56 current (28 routes missing at least one of `og:site_name`, `og:locale`, `og:image:alt`, `twitter:image:alt`, concentrated in Baptist/maps/konfessii); NEW-57 current (12 preload image mismatches, mostly Baptist `.webp` preloads vs `.svg` rendered covers + `/pastor-series/` `hero-main.webp` vs `hero.webp`); NEW-58 current but count changed (23 feed title drifts vs old 13, including 10 Baptist items now in feed); NEW-59 current (`/hard-texts/` declares `og:image` 1200×630 but actual `og-series-heart.webp` is 1360×768).
 
 ---
 
@@ -430,3 +430,18 @@
 * Current component Props witness: `PremiumControlAnchor`, `ClusterButton`, `FloatingCluster`, `PlayEmber`, `RomanNumeral`, `SaveButton`, `SeriesLiteCluster`, `SingleArticleCluster`, Gill `*Overlay/Rail/MobileBar/Chrome`, and `SeriesMark` all consume their declared Props internally.
 * `astro check` witness: 414 files checked, 0 errors; no PC-107/GillRailControls unused-prop diagnostics. Remaining hints are unrelated script-processing hints plus unrelated `KartyHoldingPage.astro` `slug` diagnostic.
 * Note: `PremiumControlAnchor` and `ClusterButton` have no current callsites, but that is not PC-107 (unused props). `PremiumControlAnchor` is explicitly protected by `owner-ui-regression-guard.js` as a structural marker.
+
+
+---
+
+## 🟠 PASS 36 P3 AUDIT — NEW-54..59 social/SEO bundle reverify (`dbd0bb55`, 2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes; no new report files.
+
+* **NEW-54 ✅ current:** sitemap has 43 URLs; four still have zero static inlinks from other sitemap pages: `/karty/ishod/`, `/map/`, `/nagornaya/nakhodki/`, `/rodosloviye/`.
+* **NEW-55 ✅ fixed-current:** `robots.txt` now has an allow rule for cache-busted font CSS (`/fonts/*.css?*`) while `Disallow: /*?*` remains; old query-blocking font stylesheet finding is no longer current.
+* **NEW-56 ✅ current:** 28 built routes miss at least one social metadata field among `og:site_name`, `og:locale`, `og:image:alt`, `twitter:image:alt`. Main clusters: Baptist routes (`og:site_name`, image alts), map holding routes (`og:site_name`/`og:locale`/image alts), `/konfessii/`, `/map/`, plus a few article routes with missing `twitter:image:alt`.
+* **NEW-57 ✅ current:** 12 high-priority image preload mismatches: Baptist routes preload `.webp` covers but render `.svg` covers; `/pastor-series/` preloads `hero-main.webp` while body renders `hero.webp`.
+* **NEW-58 ✅ current with updated count:** feed title drift is now 23 items (old report said 13). Increase is because 10 Baptist articles are now present in `feed.xml`; their feed titles omit the visible page suffix `— Баптисты России`. Other drifts remain in articles/Nagornaya.
+* **NEW-59 ✅ current:** `/hard-texts/` `og:image` is `images/og-series-heart.webp`, declared `1200×630`, actual file dimensions `1360×768`.
+* **Executor guidance:** split NEW-54..59 into separate low-risk lanes; NEW-55 should be retired, while NEW-56/57/58/59 need targeted metadata/feed/preload fixes.

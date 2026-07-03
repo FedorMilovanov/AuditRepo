@@ -29,6 +29,8 @@ Full evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime
 
 `PC-107` is stale/fixed-current: it targeted deleted `GillRailControls.astro` props; current source has no GillRailControls file/references and current PremiumControls/FloatingCluster props are consumed.
 
+`NEW-54..59` reverified on `dbd0bb55`: NEW-55 is fixed-current; NEW-54 zero-inlinks (4 URLs), NEW-56 social metadata gaps (28 routes), NEW-57 preload mismatches (12), NEW-58 feed title drift (23), NEW-59 hard-texts OG dimensions mismatch remain current.
+
 ## Fixed-current stale blocker
 
 The older `css:layer:validate` failure on deleted `css/site-layered.css` is already fixed-current by source commit `a65874a0`; current script validates `css/site.css`. Do **not** reopen that as current.
