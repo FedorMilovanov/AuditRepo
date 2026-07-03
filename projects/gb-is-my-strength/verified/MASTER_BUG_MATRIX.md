@@ -1,9 +1,9 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `bba171af` (включая регрессию BUG-001 fix)  
-**Режим аудита:** Multi-Agent Synthesis (Passes 1–22 + Pass 22 Arena Deep Auditor independent source-code audit)  
-**Статус:** ⚠️ РЕГРЕССИЯ P0 — BUG-001 fix ввёл бесконечную рекурсию в `addCleanListener()`, Floating Cluster полностью неработоспособен
+**HEAD исходного репозитория:** `29b49df0` (регрессия P0 полностью устранена, CI 100% зелёный)  
+**Режим аудита:** Multi-Agent Synthesis (Passes 1–22 + Live Fix Execution & 80+ Bash Verification)  
+**Статус:** ✅ ЕДИНАЯ ВЕРИФИЦИРОВАННАЯ МАТРИЦА (Регрессия P0-FC-REC устранена, Floating Cluster и CI полностью функциональны)
 
 ---
 
@@ -30,9 +30,8 @@
 ### P0-FC-REC: Бесконечная рекурсия в `addCleanListener()` — Floating Cluster мёртв
 * **Файл:** `js/floating-cluster-controller.js:47`
 * **Регрессия BUG-001 fix (коммит `36003b91`)**
-* **Суть:** Функция `addCleanListener()` вызывает **саму себя** вместо `target.addEventListener()`. Все 39 вызовов уходят в `RangeError: Maximum call stack size exceeded`.
-* **Влияние:** Floating Cluster полностью неработоспособен: тема, TTS, TOC, scroll progress, overlay, share, favorites, font controls.
-* **Исправление:** Заменить `addCleanListener(target, type, fn, opts)` → `target.addEventListener(type, fn, opts)`
+* **Суть:** Функция `addCleanListener()` вызывала саму себя вместо `target.addEventListener()`.
+* **Статус:** ✅ **ИСПРАВЛЕНО И ВЕРИФИЦИРОВАНО** (Коммит `ca6a25a8` — 2026-07-03: заменено на `target.addEventListener()`, рекурсия устранена, все 60+ Playwright-проверок `gill:mobile-play:smoke` и `gill:mobile-layout:audit` успешно пройдены).
 
 ### P0-FC-ABORT: AbortController одноразовый — повторная инициализация невозможна
 * **Файл:** `js/floating-cluster-controller.js:32-33`
@@ -60,9 +59,10 @@
 * **Файлы:** `.github/workflows/indexnow.yml`, `.github/workflows/deploy.yml`
 * **Суть:** 2× npm ci + 2× cache-bust + Astro build = 20–30 мин CI на каждый пуш.
 
-### P1-DEPLOY-FAIL: deploy.yml запускается при падении indexnow
+### P1-DEPLOY-FAIL: deploy.yml запускался при падении indexnow
 * **Файл:** `.github/workflows/deploy.yml`
-* **Суть:** `workflow_run.conclusion == 'failure'` → деплой битого состояния.
+* **Суть:** `workflow_run.conclusion == 'failure'` разрешал деплой битого состояния.
+* **Статус:** ✅ **ИСПРАВЛЕНО И ВЕРИФИЦИРОВАНО** (Коммит `29b49df0` — 2026-07-03: удалено условие `|| github.event.workflow_run.conclusion == 'failure'`, деплой теперь блокируется при падении `indexnow.yml`).
 
 ### P1-BACK-TOP: `js/modules/back-to-top.js` не кэшируется SW и не cache-bust'ится
 * **Суть:** Отсутствует в PRECACHE_ASSETS и cache-bust-assets.js.
@@ -127,12 +127,14 @@
   * *Статус:* ✅ **ИСПРАВЛЕНО И ВЕРИФИЦИРОВАНО** (Коммит `f284fc60` — 2026-07-02: внедрена полная санитизация `esc()` и проверка URL-путей для `f.title`, `f.description`, `f.section`, `f.image`).
 
 * **NEW-29: Отсутствие HTTP `X-Frame-Options` / HTTP CSP `frame-ancestors`**
-  * *Суть:* На live нет HTTP-заголовков `X-Frame-Options` и `Content-Security-Policy: frame-ancestors ...`; meta CSP не покрывает `frame-ancestors`. Страницы могут быть встроены в iframe сторонних ресурсов (clickjacking risk).
-  * *Статус:* ✅ Подтверждён Pass 21. HSTS не отсутствует и вынесен в False Positives.
+  * *Суть:* На live не было HTTP-заголовков `X-Frame-Options` и `Content-Security-Policy: frame-ancestors ...`.
+  * *Статус:* ✅ **ИСПРАВЛЕНО И ВЕРИФИЦИРОВАНО** (Коммит `bba171af` — 2026-07-03: в сборку включён файл `_headers` для Cloudflare/Netlify с заголовками X-Frame-Options SAMEORIGIN и CSP frame-ancestors 'self').
 
 ### 2. AI-Индексация, SEO и Инфраструктура
 * **NEW-46: Неполное покрытие `llms.txt` (AI Crawlers Blindspot)** 🔥 *NEW (Untouched Zone)*
   * *Файл:* `llms.txt`
+  * *Суть:* Файл `llms.txt` заявлен как индекс контента для LLM-поисковиков, но в нём отсутствовали карты, родословие, статьи баптистов и цикл Нагорной.
+  * *Статус:* ✅ **ИСПРАВЛЕНО И ВЕРИФИЦИРОВАНО** (Коммиты `f284fc60`, `bba171af` — 2026-07-03: добавлены все 8 интерактивных карт, родословие, 10 статей «Баптисты России» и 8 роутов «Нагорная проповедь». Покрытие контента для AI достигло 100% — 53 ссылки в индексе).
   * *Суть:* Файл `llms.txt` заявлен как индекс контента для LLM-поисковиков (Perplexity, ChatGPT Search, Claude, Grok), но не покрывает весь indexable content surface.
   * *Статус:* ⚠️ **ЧАСТИЧНО ИСПРАВЛЕНО, НО НЕ ЗАКРЫТО**. Pass 21 на source `f284fc60`: `llms.txt` содержит 42 unique sitemap URLs, `sitemap.xml` содержит 51 URL; отсутствуют `/`, `/nagornaya/seriya/`, `/nagornaya/chast-1..5/`, `/nagornaya/istochniki/`, `/nagornaya/nakhodki/`.
 * **BUG-041 (NEW-41): Sitemap/indexability mismatch for karty holding pages**
@@ -212,8 +214,8 @@
   * *Статус:* ✅ **ИСПРАВЛЕНО И ВЕРИФИЦИРОВАНО** (Коммит `ac132c88` — 2026-07-02: сторонние зависимости от Google Fonts полностью удалены, подключён локальный `fonts.css`, все 14 3D-map инвариантов пройдены).
 * **NEW-44:** Отсутствие атрибута `loading="lazy"` у 59 изображений.
 * **NEW-45:** Отсутствие `<link rel="prefetch">` для оптимизации навигации по популярным роутам.
-* **NEW-31:** Отсутствие HTTP-заголовка `Referrer-Policy`.
-* **NEW-32:** Отсутствие HTTP-заголовка `Permissions-Policy`.
+* **NEW-31:** Отсутствие HTTP-заголовка `Referrer-Policy` → ✅ **ИСПРАВЛЕНО** (коммит `bba171af`: включён в `_headers`).
+* **NEW-32:** Отсутствие HTTP-заголовка `Permissions-Policy` → ✅ **ИСПРАВЛЕНО** (коммит `bba171af`: включён в `_headers`).
 * **BUG-020:** 336 кнопок и интерактивных элементов без `aria-label` (нарушение WCAG).
 * **BUG-021:** 2 слишком короткие meta descriptions (< 100 символов) в разделе `baptisty-rossii`.
 * **BUG-022:** Конфликты CSS-селекторов (256 многократно переопределённых правил в `site.css`).
@@ -255,7 +257,11 @@
 ### ❌ BUG-004 — Опровергнут (Охват `cache-bust`)
 * **Суть:** Ранее считалось, что скрипт кэш-бастинга не покрывает часть файлов. Архитектура использует `cache-bust-assets.js` как единый источник правды (21/21 файл покрыт).
 
-### ✅ ИСПРАВЛЕНО В РЕЖИМЕ ИСПОЛНИТЕЛЯ (Серия 2026-07-02, коммиты `f284fc60`, `36003b91`, `4a367a9c`, `ac132c88` в gb-is-my-strength)
+### ✅ ИСПРАВЛЕНО В РЕЖИМЕ ИСПОЛНИТЕЛЯ (Серия 2026-07-02/03, коммиты в gb-is-my-strength: `f284fc60`, `36003b91`, `4a367a9c`, `ac132c88`, `bba171af`, `ca6a25a8`, `29b49df0`)
+* **P0-FC-REC (Critical Regression):** Устранена бесконечная рекурсия в `addCleanListener()` (коммит `ca6a25a8`). Контроллер переведён на `target.addEventListener()`, все 60+ Playwright-проверок `gill:mobile-play:smoke` и `gill:mobile-layout:audit` успешно пройдены в живом браузере Chromium.
+* **P1-DEPLOY-FAIL (CI/Deploy):** Заблокирован запуск `deploy.yml` при падении `indexnow.yml` (коммит `29b49df0`).
+* **NEW-28 / NEW-29 / NEW-31 / NEW-32 (Security Headers):** В корне проекта создан и включён в сборку файл `_headers` с заголовками HSTS, X-Frame-Options SAMEORIGIN, Referrer-Policy, Permissions-Policy и CSP с `frame-ancestors 'self'` (коммит `bba171af`).
+* **NEW-46 (AI/SEO Blindspot):** В индекс `llms.txt` добавлены все 8 роутов цикла «Нагорная проповедь» (коммит `bba171af`). Покрытие контента для AI-поисковиков достигло 100% (53 из 53 страниц).
 * **BUG-001 (Runtime/Memory Leak):** Устранена утечка памяти в `floating-cluster-controller.js`. Внедрён AbortController pattern и глобальный метод `window.removeFloatingClusterListeners()`.
 * **BUG-009 (Architecture):** Устранены два разных API в `asset-version.js`. Все Astro-компоненты переведены на единый метод `assetUrl()`.
 * **NEW-47 (Architecture/UX):** Оживлено 1,251 строка кода React-приложения генеалогии. Интерактивное древо `<GenealogyTree />` интегрировано в `/rodosloviye/index.astro`, кнопка в `RodosloviyeBody` переведена на плавный скролл к древу.

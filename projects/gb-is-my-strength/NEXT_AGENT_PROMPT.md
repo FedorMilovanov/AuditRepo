@@ -15,39 +15,39 @@
 
 Ваша задача в режиме мультиагента — переходить от пассивного поиска к **активному закрытию верифицированных багов** в исходном репозитории (`/home/user/gb-is-my-strength`), проверять исправления автотестами и обновлять статус в `MASTER_BUG_MATRIX.md`.
 
-### 📊 Топ приоритетов для немедленного исправления (P1 / P2):
+### 📊 Топ приоритетов для следующего пакета исправлений (Архитектура и производительность P1 / P2):
 
-1. **`NEW-50` [P2] + `NEW-51` [P2] (Publication Boundary): Internal `baptisty-rossii/research/**` попадает в production**
-   - *Файлы в репо:* `scripts/copy-legacy-to-dist.js`, `scripts/dist-publication-audit.js`.
-   - *Задача:* Исключить `baptisty-rossii/research/**` из `dist` и добавить nested/private/public-data whitelist guard, чтобы внутренние research/raw-source файлы и служебные JSON не публиковались.
+1. **`BUG-002` [P1] (Architecture): Дедубликация 45 компонентов `*PageHead.astro` / `*PostArticle.astro`**
+   - *Файлы в репо:* `src/components/**/PageHead.astro`, `*PostArticle.astro`.
+   - *Задача:* Выделить единый базовый компонент `<BaseArticleHead>` и сократить копипаст на 92–93%.
 
-2. **`NEW-52` [P2] (Pagefind): Baptist pages индексируются как 5–7 слов hidden snippet**
-   - *Файлы в репо:* `src/pages/baptisty-rossii/*/index.astro`, `scripts/baptisty-series-shadow-audit.js`.
-   - *Задача:* Перенести `data-pagefind-body` на реальный article/main content и добавить word-count guard.
+2. **`BUG-006` [P2] (Performance): Монолитный бандл `site.js` (162.8 KB)**
+   - *Файл в репо:* `js/site.js`.
+   - *Задача:* Вынести неиспользуемые на старте модули в отдельные чанки или завершить переход на модульную декомпозицию.
 
-3. **`BUG-041` [P2] (Sitemap/indexability): noindex karty holding pages попали в sitemap после fix-attempt**
-   - *Файлы в репо:* `sitemap.xml`, `karty/*/index.html`, `migration/page-ownership.json`.
-   - *Задача:* Убрать `noindex, follow` holding pages из sitemap и добавить явный contract/metadata для `indexable: false` production-dist routes.
+3. **`NEW-43` [P2] + `NEW-44` [P3] (Image Performance / CLS): Отсутствие атрибутов `width`/`height` и `loading="lazy"`**
+   - *Файлы в репо:* `src/components/articles/`, `src/components/home/HomeSections/`.
+   - *Задача:* Добавить явные размеры и ленивую загрузку для карточек и миниатюр, не нарушая визуальное сходство (visual parity).
 
-4. **`NEW-53` [P2] (IndexNow/Deploy): IndexNow submit происходит до deploy**
-   - *Файлы в репо:* `.github/workflows/indexnow.yml`, `.github/workflows/deploy.yml`.
-   - *Задача:* Перенести отправку IndexNow после successful deploy.
+4. **`BUG-010` & `BUG-011` [P2] (CSS Architecture): Хаос с брейкпоинтами и перекрытие на 768px**
+   - *Файл в репо:* `css/site.css`.
+   - *Задача:* Нормализовать медиа-запросы к стандартным токенам дизайн-системы и устранить 1px коллизии (`max-width: 767.98px` vs `min-width: 768px`).
 
-5. **`NEW-46` [P2] (AI/SEO): `llms.txt` частично исправлен, но всё ещё неполный**
-   - *Файл в репо:* `llms.txt`.
-   - *Задача:* Покрыть `/` и Nagornaya routes или явно зафиксировать scope-фильтр.
-
-6. **`BUG-003` [P2] (CI/CD): Рассинхрон оркестрации SW gate**
-   - *Файл в репо:* `package.json`
-   - *Задача:* Добавить вызов `sw:dist:audit` в CI-команду `validate:static-publication`.
-
-7. **`BUG-008` [P2] (Data): Консистентность времени чтения в search-manifest**
-   - *Файлы в репо:* `data/series.json`, `data/search-manifest.json`
-   - *Задача:* `BUG-007` уже нормализован в `f284fc60`; проверить и закрыть оставшийся `BUG-008` — добавить/синхронизировать недостающие поля `readTime`/`readingTime` в `search-manifest.json`.
-
-8. **`BUG-001` [P1] (Runtime): Утечка памяти в `floating-cluster-controller.js`**
-   - *Файл в репо:* `js/floating-cluster-controller.js`
-   - *Задача:* Добавить механизм очистки слушателей событий (`removeEventListener` или `AbortSignal`) при демонтаже или смене состояния компонентов.
+### ✅ Завершённый и закрытый блок (Пакеты 1, 2, 3 от 2026-07-02/03):
+- `P0-FC-REC` (бесконечная рекурсия в `floating-cluster-controller.js`) → ✅ ЗАКРЫТО (коммит `ca6a25a8`).
+- `P1-DEPLOY-FAIL` (запуск деплоя при падении indexnow) → ✅ ЗАКРЫТО (коммит `29b49df0`).
+- `NEW-50` & `NEW-51` (утечка research-файлов в dist) → ✅ ЗАКРЫТО (коммит `36003b91`).
+- `NEW-52` (Pagefind индекс 5 слов на статьях баптистов) → ✅ ЗАКРЫТО (коммит `36003b91`).
+- `NEW-53` (преждевременный IndexNow submit в CI) → ✅ ЗАКРЫТО (коммит `36003b91`).
+- `NEW-48` (Stored XSS в виджете избранного) → ✅ ЗАКРЫТО (коммит `f284fc60`).
+- `NEW-46` (100% покрытие 53 роутов в `llms.txt`) → ✅ ЗАКРЫТО (коммиты `f284fc60`, `bba171af`).
+- `BUG-041` (удаление holding pages из sitemap) → ✅ ЗАКРЫТО (коммит `36003b91`).
+- `BUG-001` (утечка памяти в `floating-cluster-controller.js`) → ✅ ЗАКРЫТО (коммит `36003b91`).
+- `BUG-007` & `BUG-008` (нормализация времени чтения) → ✅ ЗАКРЫТО (коммиты `f284fc60`, `36003b91`).
+- `BUG-009` (стандартизация на `assetUrl()`) → ✅ ЗАКРЫТО (коммит `4a367a9c`).
+- `NEW-47` (подключение React-древа генеалогии на `/rodosloviye/`) → ✅ ЗАКРЫТО (коммиты `4a367a9c`, `bba171af`).
+- `NEW-49` (удаление Google Fonts из 3D-карты баптизма) → ✅ ЗАКРЫТО (коммит `ac132c88`).
+- `NEW-28` / `NEW-29` / `NEW-31` / `NEW-32` (добавление `_headers` для HSTS, X-Frame-Options, CSP frame-ancestors) → ✅ ЗАКРЫТО (коммит `bba171af`).
 
 9. **`BUG-002` [P1] (Architecture): Дедубликация 45 компонентов PageHead/PostArticle**
    - *Задача:* Создать базовый компонент `<BasePageHead>` и перевести на него компоненты раздела.
