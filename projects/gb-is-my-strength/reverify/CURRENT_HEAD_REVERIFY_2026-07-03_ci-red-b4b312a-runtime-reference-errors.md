@@ -282,6 +282,13 @@ Recommended prevention audit: add or run a browser/runtime no-undef smoke that f
 
 **Source HEAD pulled:** `dbd0bb5` (`chore: auto-update meta, cache-bust [skip ci]`); one patcher commit between this verification and the previous (`e2f0ae4` Gill GB2 frame).
 
+A later source commit landed after the original `b4b312a8` witness:
+
+```text
+e2f0ae4e fix(gill): GB2 меню — закреплённая полностраничная панель с отслеживанием текущего раздела [LANE lane/system-gill-rail-frame]
+dbd0bb55 chore: auto-update meta, cache-bust [skip ci]
+```
+
 **Public GitHub Actions API status on `dbd0bb55`:**
 
 ```text
@@ -363,3 +370,27 @@ Not re-tested in this pass. Script-ordering issue is structural in the route sou
 2. After the patcher's fix, the audit should also re-run `dist-smoke-audit.js --no-build --production-like` to catch any other no-undef smoke that the gill-audit does not visit.
 3. The `tt` failure in `site.js` is structural, not just backlinks — the fix should ensure `tt` is defined for the strict-mode scope where it is called (or replace with a noop / proper escape helper at a top-level scope).
 4. Add an early-exit rule to CI: any pageerror on a Gill route page → block deploy, regardless of which feature caused it.
+
+### 9.6 Independent cross-validator (parallel auditor) confirmation on `dbd0bb55`
+
+A second independent auditor pass (on the same source HEAD) reproduced the same fresh local reverify:
+
+```text
+npm run strangler:build:production-like → PASS (53 pages built, dist hash drift 0)
+npm run gill:mobile-layout:audit → FAIL
+  r is not defined  ×20
+  tt is not defined ×20
+node scripts/dist-smoke-audit.js --no-build --production-like → FAIL (6 representative runtime issues)
+```
+
+Broad `dist/` route smoke on `dbd0bb55` is unchanged from `b4b312a8` after filtering localhost favicon CSP noise:
+
+```text
+routes scanned: 52
+relevant failing routes: 33
+r is not defined          32 route hits
+tt is not defined         15 route hits
+SiteUtils is not defined   1 route hit (/nagornaya/)
+```
+
+Conclusion: `e2f0ae4e` changed Gill rail/frame UI but did **not** retire `CI-P0-GILL-RUNTIME-REFS` or `CI-P1-NAGORNAYA-SITEUTILS-ORDER`. Both remain **verified-current** on source HEAD `dbd0bb55`.
