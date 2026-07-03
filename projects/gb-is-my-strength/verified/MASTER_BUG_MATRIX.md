@@ -107,6 +107,7 @@
 * ~~**BUG-024:** Мёртвый TypeScript/JS API в helper модулях~~ ✅ CLOSED (Pass 27: 5 dead exports removed from floating-cluster-ui.ts)
 * ~~**PC-107:** Неиспользуемые TypeScript props в PremiumControls интерфейсах~~ ✅ STALE/FIXED-CURRENT on `dbd0bb55`: original archived finding targeted deleted `GillRailControls.astro` props (`context`, `homeHref`, `includeStyles`). Current source has no `GillRailControls*` file or references; current PremiumControls/FloatingCluster/Gill Props are consumed internally; `astro check` has no PC-107/GillRailControls diagnostics.
 * **NEW-54-59:** Social/SEO metadata bundle — ✅ REVERIFIED-CURRENT on `dbd0bb55` with split status: NEW-55 fixed-current (`robots.txt` now allows `/fonts/*.css?*` despite `Disallow: /*?*`); NEW-54 still current (4 sitemap URLs with zero static inlinks: `/karty/ishod/`, `/map/`, `/nagornaya/nakhodki/`, `/rodosloviye/`); NEW-56 current (28 routes missing at least one of `og:site_name`, `og:locale`, `og:image:alt`, `twitter:image:alt`, concentrated in Baptist/maps/konfessii); NEW-57 current (12 preload image mismatches, mostly Baptist `.webp` preloads vs `.svg` rendered covers + `/pastor-series/` `hero-main.webp` vs `hero.webp`); NEW-58 current but count changed (23 feed title drifts vs old 13, including 10 Baptist items now in feed); NEW-59 current (`/hard-texts/` declares `og:image` 1200×630 but actual `og-series-heart.webp` is 1360×768).
+* **NEW-64 (P3, PREVENTION-GAP):** deploy chain does not run a broad browser runtime no-undef smoke. Currently caught by `gill:mobile-layout:audit` (5 routes) and by `dist-smoke-audit` (12 routes) only when those audits are run manually or as part of `strangler:audit:production-like` (not in `validate:static-publication`). Recommended: add `dist-smoke-audit --no-build --production-like` to `validate:static-publication` chain OR add a Playwright-based 52-route runtime smoke step to `.github/workflows/deploy.yml` that fails on any `pageerror` (excluding localhost favicon CSP noise). See Pass 35 in this file.
 
 ---
 
@@ -499,3 +500,122 @@
 * `bced1c6` retired the `r is not defined` half. Dist artifact and source both reflect the fix.
 * Audit-pro `node --check js/highlights.js` and `dist/js/highlights.js?v=c972d20e` no longer surface the bare-assignment pattern.
 * Remaining: `tt is not defined` half in `js/site.js` (see Pass 34 above).
+
+---
+
+## 🟠 PASS 35 — PREVENTION-GAP and dist-smoke triangulation on `f1e9abd` (2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes; no new report files.
+
+### 35.1 CI gate inventory
+
+```text
+.github/workflows/deploy.yml calls (filtered):
+  - npm run validate:static-publication (huge chain, see Pass 25-31 evidence)
+  - npm run gill:mobile-layout:audit     ← catches pageerrors on Gill routes only (5 routes)
+  - npm run gill:mobile-play:smoke
+  - node scripts/dist-smoke-audit.js …    ← NOT called in deploy chain
+```
+
+`dist-smoke-audit.js` is referenced in 4 places in `package.json`:
+
+```text
+"strangler:smoke": "node scripts/dist-smoke-audit.js"
+"strangler:smoke:shots": "node scripts/dist-smoke-audit.js --write-shots"
+"strangler:audit:pagefind": "... && node scripts/dist-smoke-audit.js --no-build"
+"strangler:audit:production-like": "... && node scripts/dist-smoke-audit.js --no-build --production-like && ..."
+```
+
+`strangler:audit:production-like` is the most thorough chain, but it is **not** in the `validate:static-publication` chain that deploy.yml runs. So `dist-smoke-audit` is currently a **manual / one-off** smoke, not a blocking CI gate.
+
+### 35.2 W2 dist-smoke on `f1e9abd`
+
+After fresh `npm run strangler:build:production-like`:
+
+```bash
+nohup python3 -m http.server 8091 --bind 127.0.0.1 --directory /home/user/gb-is-my-strength/dist &
+AUDIT_BASE=http://127.0.0.1:8091 node scripts/dist-smoke-audit.js --no-build --production-like
+```
+
+Result on `f1e9abd` (12 representative routes × desktop+mobile = 26 visits):
+
+```text
+24/26 routes PASS (no page/console errors, no overflow, h1 match)
+2/26 routes FAIL on /articles/kod-da-vinchi/ (desktop+mobile):
+  page/console errors: tt is not defined
+```
+
+Delta from `dbd0bb55` (Pass 30 / Pass 31 evidence: 6 issues = 3 routes × 2 viewports):
+
+```text
+                       dbd0bb55 → f1e9abd
+r is not defined:      present → absent  (FIXED by bced1c6)
+tt is not defined:     6 → 2               (2 routes narrowed to /articles/kod-da-vinchi/)
+SiteUtils not defined: 1 → not re-tested   (presumed unchanged)
+```
+
+`/articles/kod-da-vinchi/` is the only representative route that surfaces `tt is not defined` because its backlinks block is built eagerly on first paint. Other articles in dist-smoke scope (`/`, `/articles/`, `/baptisty-rossii/`, `/baptisty-rossii/noch-na-kure/`, `/karty/`, `/karty/avraam/`, `/konfessii/`, `/konfessii/russkij-baptizm/`, `/map/`, `/rodosloviye/`, `/404.html`) either don't render backlinks or render them lazily.
+
+### 35.3 New finding — NEW-64 PREVENTION-GAP
+
+`validate:static-publication` (the chain that deploy.yml runs as the publication gate) does **not** include `dist-smoke-audit` or any other broad browser runtime no-undef smoke. The runtime regression class (`r`, `tt`, `SiteUtils` ReferenceErrors) is caught only when `gill:mobile-layout:audit` happens to visit a route that triggers the broken block.
+
+**Triangulation:**
+- `node --check js/*.js` PASS (syntax check does not catch strict-mode no-undef)
+- `astro check` PASS (TypeScript diagnostics; strict-mode runtime is browser-only)
+- `audit-pro` PASS (does not run scripts in browser)
+- `validate:static-publication` PASS (does not run any browser smoke by default)
+- `gill:mobile-layout:audit` FAIL on `f1e9abd` (catches `tt is not defined` on Gill routes; 5/52 routes)
+- `dist-smoke-audit` FAIL on `f1e9abd` (catches `tt is not defined` on `/articles/kod-da-vinchi/`; 1/12 routes)
+
+**Executor prevention recommendation:** add a blocking step to `.github/workflows/deploy.yml` (or to the `validate:static-publication` chain) that runs `node scripts/dist-smoke-audit.js --no-build --production-like` (or an extended variant that visits all 52 routes, not just 12) and fails on any `pageerror` other than known localhost favicon CSP noise. This would have caught `bced1c6` and the current `tt is not defined` regressions on **every** CI run instead of only when the gill-audit happened to visit a route that triggered the broken block.
+
+**Severity classification:** P3 (preventive, not currently blocking deploy if the gill-audit step is removed or if Gill routes are not touched). But the regression class has been present on `main` for several commits; promoting it to a blocking step is a low-cost high-yield change.
+
+### 35.4 NEW-64 in matrix (recap)
+
+```text
+* **NEW-64 (P3, PREVENTION-GAP):** deploy chain does not run a broad browser runtime no-undef smoke.
+  Currently caught by `gill:mobile-layout:audit` (5 routes) and by `dist-smoke-audit` (12 routes) only when those audits are run manually or as part of `strangler:audit:production-like` (not in `validate:static-publication`).
+  Recommended: add `dist-smoke-audit --no-build --production-like` to `validate:static-publication` chain OR add a Playwright-based 52-route runtime smoke step to `.github/workflows/deploy.yml` that fails on any `pageerror` (excluding localhost favicon CSP noise).
+  Source files implicated: `scripts/dist-smoke-audit.js` (route list), `.github/workflows/deploy.yml` (CI), `package.json` (validate chain).
+```
+
+### 35.5 BUG-016 dead-vars update
+
+`audit-pro` reports: "CSS dead vars: 14 unused (acceptable; clean when convenient)". This matches Pass 28 evidence (4 truly unused removed; 9 remain from 17 original; 5 false positives identified). No change since `f1e9abd`; status remains "stable; manual cleanup recommended when convenient".
+
+### 35.6 BUG-010 / BUG-011 / BUG-022 re-counts
+
+Static pattern scan on current `f1e9abd` source (after `bced1c6` highlights fix and `8446a0d` AGENTS-r312 dedup):
+
+```text
+BUG-010 (CSS breakpoint chaos):
+  total width media conditions across 9 CSS files: 281
+  unique breakpoint values: 67
+  most frequent: 600, 768, 899, 480, 640, 680, 900
+  → BUG-010 ✅ verified-current with widened dataset (was 23/128 on dbd0bb55; now 67/281 on f1e9abd; same conclusion)
+
+BUG-011 (768 conflict):
+  exact 768 boundary exists in both max-width and min-width directions; 0 same selector+property collision
+  → BUG-011 ⚠️ reclassified (architecture risk; no proven visual bug)
+
+BUG-022 (overridden CSS rules):
+  css/site.css: 281,641 bytes, !important=202
+  css/home.css: 77,766 bytes, !important=36
+  css/mobile-hotfix.css: 18,515 bytes, !important=142
+  css/nagornaya-mobile-toc.css: 21,636 bytes, !important=135
+  css/floating-cluster.css: 104,993 bytes, !important=524
+  css/command-palette.css: 29,526 bytes, !important=7
+  css/enhancements-runtime.css: 2,274 bytes, !important=1
+  css/highlights-runtime.css: 5,344 bytes, !important=0
+  css/sw-toast.css: 1,204 bytes, !important=0
+  total !important: 1,047 across 9 files
+  → BUG-022 ✅ verified-current with corrected methodology
+  → AGENTS §4.10 ceiling applies per-file (site.css ≤ 200 ✅ at exactly 202 is over goal by 2, in ceiling; nagornaya-mobile-toc.css/mobile-hotfix.css have no formal ceiling)
+  → floating-cluster.css at 524 is the worst offender (5× over per-file heuristic) and warrants a dedicated cleanup pass
+```
+
+### 35.7 Operational note: cache-bust labels
+
+`dist/js/site.js?v=77687914` byte-identical between `dbd0bb55` and `f1e9abd` builds (file content unchanged). cache-bust still incremented hash on the HTML pages that reference it but the asset itself is unchanged, so the gill-audit pageerror for `tt` is reproducible. `dist/js/highlights.js?v=c972d20e` also unchanged; `r` no-undef is retired.

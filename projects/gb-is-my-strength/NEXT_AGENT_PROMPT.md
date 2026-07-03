@@ -16,7 +16,11 @@
 - Reproduced locally on `f1e9abd` after `npm run strangler:build:production-like` + Playwright Chromium/deps: `npm run gill:mobile-layout:audit` → 20 pageerrors (only `tt` half; down from 40 on `dbd0bb55`).
 - Control witnesses pass: `node --check js/*.js`, `npm run css:layer:validate`, `npm run tokens:check`, `npm run gill:mobile-play:smoke`.
 
-Full evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md` §9 and Pass 34 in `verified/MASTER_BUG_MATRIX.md`.
+Full evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md` §9, Pass 34 in `verified/MASTER_BUG_MATRIX.md`, and Pass 35 below.
+
+## NEW-64 PREVENTION-GAP (P3)
+
+`dist-smoke-audit` is not in the `validate:static-publication` chain. On `f1e9abd`, local `dist-smoke-audit --no-build --production-like` still fails on `/articles/kod-da-vinchi/` (desktop+mobile) with `tt is not defined`. The gill-audit catches it on 5 Gill routes × 2 viewports × 2 themes = 20 pageerrors. CI deploy chain only runs the gill-audit; other article/landing routes could regress `tt` (or any other runtime no-undef) without blocking deploy. See Pass 35 in `MASTER_BUG_MATRIX.md` and §35.1–35.4 in the evidence file.
 
 ## Verified P2 follow-up
 
