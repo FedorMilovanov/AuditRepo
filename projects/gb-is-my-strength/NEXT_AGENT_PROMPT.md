@@ -8,7 +8,7 @@
 
 **Local verification on `914c7fb1`:** `strangler:build:production-like`, targeted `visual-parity-screenshots --routes /baptisty-rossii/`, `owner:ui-guard`, `audit:premium-controls`, `baptisty-rossii:visual-parity:audit`, `validate:strict`, and `guard:shared-files` passed.
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-visual-parity-fixed-914c7fb.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-visual-parity-fixed-914c7fb.md`. Remote `Visual Parity Guard` is **green** on run `28684680251`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28684680251.
 
 ---
 

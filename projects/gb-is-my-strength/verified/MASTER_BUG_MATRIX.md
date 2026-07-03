@@ -26,7 +26,7 @@ Verified on `914c7fb1`:
 - `npm run validate:strict` ✅ (0 errors, 2 pre-existing warnings)
 - `npm run guard:shared-files` ✅
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-visual-parity-fixed-914c7fb.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-visual-parity-fixed-914c7fb.md`. Remote Visual Parity Guard green: run `28684680251` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28684680251).
 
 ---
 

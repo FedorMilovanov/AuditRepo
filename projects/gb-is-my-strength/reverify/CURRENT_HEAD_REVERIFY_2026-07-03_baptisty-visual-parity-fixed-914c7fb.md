@@ -75,3 +75,9 @@ Pixel result after fix:
 `NEW-65` / `VIS-BAPTISTY-PARITY`: **fixed-current on source main `914c7fb1` by local W3 pixel evidence**.
 
 Remote GitHub Actions should be observed separately for final workflow status.
+
+---
+
+## 6. Remote workflow
+
+Remote `Visual Parity Guard — pixel-diff` is **green** on source main `914c7fb1`: run `28684680251` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28684680251).
