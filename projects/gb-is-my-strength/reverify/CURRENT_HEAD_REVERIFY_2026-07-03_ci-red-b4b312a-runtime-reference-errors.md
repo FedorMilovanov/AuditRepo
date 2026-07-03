@@ -512,3 +512,38 @@ npm run validate:static-publication
 ```
 
 Acceptance: `gill:mobile-layout:audit` PASS (0 pageerrors on Gill routes), `dist-smoke-audit` PASS (no `r`/`tt`/`SiteUtils` pageerrors on representative routes), Deploy step `Gill mobile reference layout audit` = success.
+
+
+### 10.6 Additional gate-gap and visual witnesses on `f1e9abd9`
+
+Supplemental local checks on the same current HEAD:
+
+```text
+Broad 52-route dist runtime smoke (localhost favicon CSP noise filtered):
+  relevant failing routes: 16 / 52
+  tt is not defined         15 route hits
+  SiteUtils is not defined   1 route hit (/nagornaya/)
+  r is not defined           0 route hits
+
+node scripts/dist-smoke-audit.js --no-build --production-like:
+  FAIL — /articles/kod-da-vinchi/ desktop+mobile: tt is not defined
+```
+
+Gate-gap witness:
+
+* `strangler:audit:production-like` includes `node scripts/dist-smoke-audit.js --no-build --production-like`.
+* `deploy.yml` does **not** run `dist-smoke-audit.js`.
+* `validate:static-publication` also omits this browser runtime smoke.
+* Current Deploy catches the global `tt` runtime only because Gill mobile layout audit is strict about pageerrors.
+
+Visual parity side finding:
+
+```text
+node scripts/visual-parity-screenshots.js --routes "/,/about/,/articles/,/biografii/,/karty/,/baptisty-rossii/,/nagornaya/,/hard-texts/,/konfessii/,/pastor-series/,/map/" --threshold "1.0"
+
+/baptisty-rossii/ desktop diff = 6.131%
+/baptisty-rossii/ mobile  diff = 17.368%
+all other default landing routes <= 1% threshold
+```
+
+GitHub Visual Parity Guard failed on intermediate commit `8446a0da` at `Run pixel-diff screenshots`; current `f1e9abd9` is `[skip ci]`, so remote visual parity did not rerun. Local evidence confirms the `/baptisty-rossii/` parity issue remains current.
