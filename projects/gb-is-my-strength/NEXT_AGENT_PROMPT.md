@@ -1,3 +1,15 @@
+# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-03 Deploy broad runtime smoke gate (READ FIRST)
+
+**Current source main HEAD:** `8d0c12e0756c6dd0327a212dba6b8a7bbdc01d3e`.
+
+**Fixed in this pass:** `NEW-64` / `CHECK-GAP-DIST-SMOKE` — GitHub Pages Deploy now runs broad production-like browser runtime smoke (`node scripts/dist-smoke-audit.js --no-build --production-like`) after Gill mobile layout audit and before SW deploy-switch readiness. `scripts/check-workflows.js` now protects this step.
+
+**Local verification on `8d0c12e0`:** `workflows:check`, `dist-smoke-audit --no-build --production-like`, `pagefind:build:dist && sw:dist:audit:deploy-switch`, and `guard:shared-files` passed.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_dist-runtime-smoke-gate-fixed-8d0c12e.md`.
+
+---
+
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-03 Baptisty visual parity fix (READ FIRST)
 
 **Current source main HEAD:** `914c7fb11e51e25937e0afc0ef79118c7a246394`.

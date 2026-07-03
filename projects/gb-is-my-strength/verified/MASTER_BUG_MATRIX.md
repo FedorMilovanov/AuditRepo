@@ -1,12 +1,30 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `914c7fb1` (Baptisty visual parity fix; descendant of SW/Pagefind deploy-switch fix)
+**HEAD исходного репозитория:** `8d0c12e0` (Deploy broad runtime smoke gate; descendant of Baptisty visual parity fix)
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–28)  
 
 ---
 
 
+
+## 🟢 PASS 42 / DEPLOY BROAD RUNTIME SMOKE GATE (2026-07-03)
+
+**Source fix commit:** `8d0c12e0756c6dd0327a212dba6b8a7bbdc01d3e` (`lane/system-dist-runtime-smoke-gate-2026-07-03`, pushed to `main`).
+
+`NEW-64` / `CHECK-GAP-DIST-SMOKE` is **fixed-current on source main `8d0c12e0`**. Deploy now runs `node scripts/dist-smoke-audit.js --no-build --production-like`; `scripts/check-workflows.js` enforces this contract.
+
+Verified on `8d0c12e0`:
+
+- `node --check scripts/check-workflows.js` ✅
+- `npm run workflows:check` ✅
+- `node scripts/dist-smoke-audit.js --no-build --production-like` ✅
+- `npm run pagefind:build:dist && npm run sw:dist:audit:deploy-switch` ✅
+- `npm run guard:shared-files` ✅
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_dist-runtime-smoke-gate-fixed-8d0c12e.md`.
+
+---
 
 ## 🟢 PASS 41 / BAPTISTY VISUAL PARITY FIX (2026-07-03)
 
@@ -158,7 +176,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 * **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке — ✅ VERIFIED-CURRENT on `dbd0bb55`: `js/search.js` 31,534 bytes is loaded on 39 pages; before first user search/open it creates 128 `.cp-*` command-palette nodes and ~106 KB `.cp-*` outerHTML on sampled routes (`/`, `/articles/kod-da-vinchi/`, `/baptisty-rossii/`). Also eagerly requests `/data/search-manifest.json`; Pagefind itself stays lazy (`window.__pagefindReady__ === false` before interaction).
 * ~~**CI-P0-GILL-RUNTIME-REFS:** browser runtime no-undef (`highlights.js` `r`, `site.js` `tt`, `/nagornaya/` `SiteUtils`) blocked Gill mobile layout audit~~ ✅ FIXED-ON-LANE `8a816ce4`: `r` was already fixed by `bced1c69`; `8a816ce4` adds scoped `tt()` in `js/site.js` and fixes `safeReady()` in `js/nagornaya-mobile-toc.js`. Local gates passed: `gill:mobile-layout:audit`, `dist-smoke-audit --no-build --production-like`, `audit:premium-controls` 87/87, `validate:static-publication`, `guard:shared-files`. Move to fixed-current after source main/deploy confirms `8a816ce4` or descendant.
 * ~~**CI-P1-NAGORNAYA-SITEUTILS-ORDER:** `/nagornaya/` pageerror `SiteUtils is not defined` / bad early ready helper~~ ✅ FIXED-ON-LANE `8a816ce4`: `safeReady()` now delegates to `window.SiteUtils.ready(fn)` if present and otherwise uses DOMContentLoaded/current fallback. Confirmed by `dist-smoke-audit` and `validate:static-publication` on `8a816ce4`.
-* **CHECK-GAP-DIST-SMOKE:** deploy workflow omits `dist-smoke-audit.js`, even though `strangler:audit:production-like` includes it and it independently catches current `tt is not defined`; `validate:static-publication` also omits this browser runtime smoke.
+* ~~**CHECK-GAP-DIST-SMOKE / NEW-64:** deploy workflow omitted broad `dist-smoke-audit.js` runtime smoke~~ ✅ FIXED-CURRENT on source main `8d0c12e0`: deploy now runs `node scripts/dist-smoke-audit.js --no-build --production-like`; `check-workflows.js` protects the step.
 * ~~**CI-HIDDEN-SW-PAGEFIND-PRECACHE / NEW-66:** deploy-switch Pagefind bootstrap missing from `PRECACHE_ASSETS`~~ ✅ FIXED-CURRENT on source main `d5c65647`: `sw.js` precaches `/pagefind/pagefind.js`, `CACHE_VERSION` bumped to `gb-v187-pagefind-bootstrap-20260703`, and `npm run sw:dist:audit:deploy-switch` passes after `pagefind:build:dist`.
 * ~~**VIS-BAPTISTY-PARITY / NEW-65:** `/baptisty-rossii/` pixel-diff failed because root legacy footer was stale vs dist PremiumControls footer~~ ✅ FIXED-CURRENT on source main `914c7fb1`: targeted pixel guard now reports desktop 0.000%, mobile 0.000%.
 * ~~**CI-CSSLAYER-STALE:** `css:layer:validate` pointed at deleted `css/site-layered.css`~~ ✅ FIXED-CURRENT on source `dbd0bb55` by `a65874a0`; script now validates `css/site.css`.
@@ -182,7 +200,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 * ~~**BUG-024:** Мёртвый TypeScript/JS API в helper модулях~~ ✅ CLOSED (Pass 27: 5 dead exports removed from floating-cluster-ui.ts)
 * ~~**PC-107:** Неиспользуемые TypeScript props в PremiumControls интерфейсах~~ ✅ STALE/FIXED-CURRENT on `dbd0bb55`: original archived finding targeted deleted `GillRailControls.astro` props (`context`, `homeHref`, `includeStyles`). Current source has no `GillRailControls*` file or references; current PremiumControls/FloatingCluster/Gill Props are consumed internally; `astro check` has no PC-107/GillRailControls diagnostics.
 * **NEW-54-59:** Social/SEO metadata bundle — ✅ REVERIFIED-CURRENT on `dbd0bb55` with split status: NEW-55 fixed-current (`robots.txt` now allows `/fonts/*.css?*` despite `Disallow: /*?*`); NEW-54 still current (4 sitemap URLs with zero static inlinks: `/karty/ishod/`, `/map/`, `/nagornaya/nakhodki/`, `/rodosloviye/`); NEW-56 current (28 routes missing at least one of `og:site_name`, `og:locale`, `og:image:alt`, `twitter:image:alt`, concentrated in Baptist/maps/konfessii); NEW-57 current (12 preload image mismatches, mostly Baptist `.webp` preloads vs `.svg` rendered covers + `/pastor-series/` `hero-main.webp` vs `hero.webp`); NEW-58 current but count changed (23 feed title drifts vs old 13, including 10 Baptist items now in feed); NEW-59 current (`/hard-texts/` declares `og:image` 1200×630 but actual `og-series-heart.webp` is 1360×768).
-* **NEW-64 (P3, PREVENTION-GAP):** deploy chain does not run a broad browser runtime no-undef smoke. Currently caught by `gill:mobile-layout:audit` (5 routes) and by `dist-smoke-audit` (12 routes) only when those audits are run manually or as part of `strangler:audit:production-like` (not in `validate:static-publication`). Recommended: add `dist-smoke-audit --no-build --production-like` to `validate:static-publication` chain OR add a Playwright-based 52-route runtime smoke step to `.github/workflows/deploy.yml` that fails on any `pageerror` (excluding localhost favicon CSP noise). See Pass 35 in this file.
+* ~~**NEW-64 (P3, PREVENTION-GAP):** deploy chain did not run broad browser runtime no-undef smoke~~ ✅ FIXED-CURRENT on source main `8d0c12e0`: `.github/workflows/deploy.yml` now runs broad `dist-smoke-audit --no-build --production-like`, and `scripts/check-workflows.js` enforces it. See Pass 42.
 * ~~**NEW-65 (P2, visual parity /baptisty-rossii/):** legacy-root vs dist pixel diff 6.131% desktop / 17.368% mobile~~ ✅ FIXED-CURRENT on source main `914c7fb1`: root `baptisty-rossii/index.html` synced to current dist PremiumControls footer; targeted pixel diff is 0.000% desktop and 0.000% mobile. See Pass 41.
 * **NEW-66 (P2, hidden gate — SW/Pagefind deploy-switch on `f1e9abd9`):** `npm run sw:dist:audit:deploy-switch` currently fails on `f1e9abd9` after Pagefind build with "Pagefind bootstrap /pagefind/pagefind.js missing from PRECACHE_ASSETS". Hidden because the deploy chain fails earlier at `Gill mobile reference layout audit` (`tt is not defined`), so the later `Service Worker deploy-switch readiness` step is not reached. Gate-semantics mismatch: `dist-publication-audit --require-pagefind` passes; `sw-dist-readiness-audit --require-pagefind --require-cache-bump` does not. After fixing `tt`, executor should re-run `npm run pagefind:build:dist && npm run sw:dist:audit:deploy-switch` before assuming Deploy will pass. See Pass 38 in this file. W2 re-confirmed in this session: `sw:dist:audit:deploy-switch` exits 1 with the same `Pagefind bootstrap /pagefind/pagefind.js missing from PRECACHE_ASSETS` failure; `dist/pagefind/pagefind.js` exists (built by `pagefind:build:dist`) but `sw.js` `PRECACHE_ASSETS` does not include it; `sw.js` `CACHE_VERSION` is `gb-v186-sw-toast-css-20260703` (older than the source `f1e9abd9` commit hash, indicating `sw.js` has not been cache-busted since Pass 24 / commit 47a98da).
 
