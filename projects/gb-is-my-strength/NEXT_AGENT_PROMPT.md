@@ -1,3 +1,46 @@
+# 🔴 CURRENT HANDOFF ADDENDUM — 2026-07-03 Pass 30 (READ FIRST)
+
+**Current source HEAD:** `b4b312a8ce0799e82a1075855518627ce9897d5d`
+
+**Current CI:** `Deploy to GitHub Pages` is **red** on run `28677794134`.
+
+**Failed step:** `Gill mobile reference layout audit`.
+
+## Verified current blocker
+
+`CI-P0-GILL-RUNTIME-REFS` is the top priority before any P1/P2 cleanup:
+
+- `js/highlights.js` throws `ReferenceError: r is not defined` from a strict IIFE assignment to undeclared `r` while injecting `/css/highlights-runtime.css`.
+- `js/site.js` throws `ReferenceError: tt is not defined` at backlink rendering line 484 (`a.innerHTML=tt(n.title)+...`).
+- Broader `dist/` smoke: after filtering localhost favicon CSP noise, 33/52 routes have relevant runtime pageerrors (`r` on 32 routes, `tt` on 15 routes).
+- Additional current bug: `/nagornaya/` throws `SiteUtils is not defined` because `nagornaya-mobile-toc.js` is loaded before `/js/site-utils.js` but immediately calls `SiteUtils.ready(...)`.
+- Reproduced locally after `npm run strangler:build:production-like` + Playwright Chromium/deps: `npm run gill:mobile-layout:audit` → 40 pageerrors (20 + 20).
+- Control witnesses pass: `node --check js/*.js`, `npm run css:layer:validate`, `npm run tokens:check`, `npm run gill:mobile-play:smoke`.
+
+Full evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`.
+
+## Fixed-current stale blocker
+
+The older `css:layer:validate` failure on deleted `css/site-layered.css` is already fixed-current by source commit `a65874a0`; current script validates `css/site.css`. Do **not** reopen that as current.
+
+## Role discipline
+
+If operating as **auditor**, do not edit source. Update only AuditRepo evidence/matrix.
+
+If operating as **executor**, use a SYSTEM lane and run at minimum:
+
+```bash
+for f in js/*.js; do node --check "$f"; done
+npm run strangler:build:production-like
+npx playwright install --with-deps chromium
+npm run gill:mobile-layout:audit
+npm run gill:mobile-play:smoke
+npm run validate:static-publication
+npm run guard:shared-files
+```
+
+---
+
 # 🚀 ПРОМПТ ДЛЯ СЛЕДУЮЩЕГО АГЕНТА: Multi-Agent Execution & Verification (Pass 22+)
 
 ## ⚠️ КРИТИЧЕСКОЕ ВНИМАНИЕ (НЕ НАЧИНАЙТЕ С PASS 7, 8 ИЛИ 9!)

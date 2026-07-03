@@ -84,6 +84,9 @@
 
 * **P2-AUDIT-DRIFT:** audit-pro.js не проверяет синхронизацию PRECACHE↔cache-bust↔ALLOWED (улучшено в REG-004, но полный дрифт не решён)
 * **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке (~15KB nodes)
+* **CI-P0-GILL-RUNTIME-REFS:** current remote `b4b312a8` Deploy red at `Gill mobile reference layout audit`; verified browser runtime errors: `js/highlights.js` strict IIFE assigns undeclared `r` (20 pageerrors), `js/site.js` calls undefined `tt(...)` helper (currently surfacing at backlinks `tt(n.title)`, with additional static refs in verse/original-word blocks; 20 pageerrors). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`.
+* **CI-P1-NAGORNAYA-SITEUTILS-ORDER:** broader dist runtime smoke found `/nagornaya/` pageerror `SiteUtils is not defined` from `js/nagornaya-mobile-toc.js?v=866d4238:1:696`; dist script order loads `nagornaya-mobile-toc.js` before `/js/site-utils.js`, while the TOC script immediately calls `SiteUtils.ready(...)`.
+* ~~**CI-CSSLAYER-STALE:** `css:layer:validate` pointed at deleted `css/site-layered.css`~~ ✅ FIXED-CURRENT on source `b4b312a8` by `a65874a0`; script now validates `css/site.css`.
 * ~~**P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)~~ ✅ FIXED (Pass 28: helper _s() + path constants _p0/_p1/_p2, -1.9KB)
 * **BUG-012:** Рассинхрон заголовков MDX и HTML (3 статьи) — NOT A BUG, SEO оптимизация by design
 * **NEW-43:** Отсутствие атрибутов `width`/`height` у content изображений (только _build-tools)
@@ -340,3 +343,19 @@
 ### 🎯 Заключение аудитора
 
 Фиксы, внесенные в коммитах `e0877b0`, `d78b1ad`, `36f1342`, `022014c` и `45f27c6`, выполнены качественно и профессионально, без внедрения временных костылей или новых предупреждений линтера. Оставшиеся **19 открытых багов** (из 79 исходных, 60 закрыто) точно отражают текущий остаточный архитектурный долг проекта для последующего закрытия Исполнителем.
+
+---
+
+## 🔴 PASS 30 CURRENT CI REVERIFY (source HEAD `b4b312a8`, 2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes. Fresh source clone at `b4b312a8ce0799e82a1075855518627ce9897d5d`.
+
+* **CI status:** Public GitHub Actions API shows `Deploy to GitHub Pages` run `28677794134` on `b4b312a8` completed **failure**. Jobs API identifies failed step: **`Gill mobile reference layout audit`**.
+* **CI-CSSLAYER-STALE ✅ fixed-current:** current `package.json` now uses `css:layer:validate = node scripts/css-layer-validator.js css/site.css --ceiling=202`; local `npm run css:layer:validate` passes. The old deleted `css/site-layered.css` blocker is stale/fixed by source commit `a65874a0`.
+* **CI-P0-GILL-RUNTIME-REFS 🔴 verified-current:** after `npm run strangler:build:production-like` and Playwright Chromium install, local `npm run gill:mobile-layout:audit` fails with 40 runtime pageerrors:
+  - `r is not defined` ×20 from `js/highlights.js?v=c972d20e:1:638` — strict IIFE assignment to undeclared `r` while injecting `highlights-runtime.css`.
+  - `tt is not defined` ×20 from `js/site.js?v=77687914:484` — backlinks block calls `tt(n.title)` with no definition in scope.
+* **Blast radius addendum:** broader Playwright scan over 52 `dist/` routes found relevant runtime failures on 33 routes after filtering localhost favicon CSP noise: `r is not defined` on 32 routes, `tt is not defined` on 15 routes, and `SiteUtils is not defined` on `/nagornaya/`.
+* **Independent witness:** `node scripts/dist-smoke-audit.js --no-build --production-like` also fails on representative routes with `r is not defined` / `tt is not defined` (6 issues across desktop/mobile `/articles/kod-da-vinchi/`, `/baptisty-rossii/`, `/baptisty-rossii/noch-na-kure/`).
+* **Control witnesses:** `node --check js/*.js` passes (syntax only), `tokens:check` passes, `gill:mobile-play:smoke` passes. This is a browser runtime no-undef regression, not a syntax/build failure.
+* **Full evidence:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`.
