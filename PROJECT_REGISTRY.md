@@ -70,3 +70,5 @@ Do not promote “60 confirmed bugs / 9 P0 / repair-ready” into new prompts wi
 <!-- 2026-07-03: gb-is-my-strength /baptisty-rossii/ visual parity fixed on source main `914c7fb1`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-visual-parity-fixed-914c7fb.md. -->
 
 <!-- 2026-07-03: gb-is-my-strength deploy broad runtime smoke gate fixed on source main `8d0c12e0`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-03_dist-runtime-smoke-gate-fixed-8d0c12e.md. -->
+
+<!-- 2026-07-03: gb-is-my-strength Baptisty root PremiumControls asset paths fixed on source main `932af3f3`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-root-path-fix-932af3f.md. -->

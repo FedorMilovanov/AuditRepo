@@ -1,3 +1,15 @@
+# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-03 Baptisty root asset path fix (READ FIRST)
+
+**Current source main HEAD:** `932af3f32f9088363f1024affa277b6e7db8257e`.
+
+**Fixed in this pass:** temporary root local-reference regression from the Baptisty visual parity sync. Root `baptisty-rossii/index.html` now uses filesystem-valid `../css/floating-cluster.css` and `../js/floating-cluster-controller.js` paths while preserving 0.000% visual parity.
+
+**Local verification on `932af3f3`:** `validate:static-publication`, targeted `/baptisty-rossii/` pixel parity, `workflows:check`, and `guard:shared-files` passed.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-root-path-fix-932af3f.md`.
+
+---
+
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-03 Deploy broad runtime smoke gate (READ FIRST)
 
 **Current source main HEAD:** `8d0c12e0756c6dd0327a212dba6b8a7bbdc01d3e`.

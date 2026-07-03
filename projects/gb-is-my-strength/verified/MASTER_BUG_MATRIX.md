@@ -1,12 +1,29 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `8d0c12e0` (Deploy broad runtime smoke gate; descendant of Baptisty visual parity fix)
+**HEAD исходного репозитория:** `932af3f3` (Baptisty root asset path correction; descendant of Deploy broad runtime smoke gate)
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–28)  
 
 ---
 
 
+
+## 🟢 PASS 43 / BAPTISTY ROOT ASSET PATH FIX (2026-07-03)
+
+**Source fix commit:** `932af3f32f9088363f1024affa277b6e7db8257e` (`lane/visual-baptisty-root-path-fix-2026-07-03`, pushed to `main`).
+
+Fixes the temporary local-reference regression from the first Baptisty parity sync: root `baptisty-rossii/index.html` now references `../css/floating-cluster.css` and `../js/floating-cluster-controller.js`, not `../../...`.
+
+Verified on `932af3f3`:
+
+- `npm run validate:static-publication` ✅
+- `node scripts/visual-parity-screenshots.js --routes /baptisty-rossii/ --threshold 1.0` ✅ desktop/mobile 0.000%
+- `npm run workflows:check` ✅
+- `npm run guard:shared-files` ✅
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_baptisty-root-path-fix-932af3f.md`.
+
+---
 
 ## 🟢 PASS 42 / DEPLOY BROAD RUNTIME SMOKE GATE (2026-07-03)
 
