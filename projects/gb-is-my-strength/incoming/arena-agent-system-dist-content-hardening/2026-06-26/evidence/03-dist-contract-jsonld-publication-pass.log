@@ -1,6 +1,0 @@
-$ dist contract/jsonld/publication on already built dist
-
-> gb-is-my-strength@1.6.3 contract:extract:dist
-> node scripts/extract-url-contract.js --root dist --out-json reports/url-contract-dist.json --out-md reports/url-contract-dist.md
-
-❌ --root directory does not exist: dist

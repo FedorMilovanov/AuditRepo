@@ -1,8 +1,0 @@
-$ runtime duplicate-id / controls sample
-{"route":"/articles/dzhon-gill-chast-1-chelovek/","errors":[],"dup":[],"gtipDup":[],"fcRoot":false,"fcControls":true,"ember":2,"save":2,"words":6269}
-{"route":"/articles/krajne-li-isporcheno-serdce/","errors":[],"dup":[],"gtipDup":[],"fcRoot":true,"fcControls":false,"ember":1,"save":1,"words":8670}
-{"route":"/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/","errors":[],"dup":[],"gtipDup":[],"fcRoot":true,"fcControls":false,"ember":1,"save":1,"words":2812}
-{"route":"/baptisty-rossii/noch-na-kure/","errors":[],"dup":[],"gtipDup":[],"fcRoot":false,"fcControls":false,"ember":0,"save":0,"words":7}
-{"route":"/map/","errors":[],"dup":[],"gtipDup":[],"fcRoot":false,"fcControls":false,"ember":0,"save":0,"words":130}
-{"route":"/karty/avraam/","errors":[],"dup":[],"gtipDup":[],"fcRoot":false,"fcControls":false,"ember":0,"save":0,"words":669}
-{"route":"/karty/ishod/","errors":[],"dup":[],"gtipDup":[],"fcRoot":false,"fcControls":false,"ember":0,"save":0,"words":24}

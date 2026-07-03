@@ -202,3 +202,51 @@
 4. **Пакет 4 (Рефакторинг):**
    - Разделить site.js (167KB) на ES-модули
    - Вынести CSS-in-JS из enhancements.js/highlights.js в файлы
+
+---
+
+## 🕵️‍♂️ PASS 25 — PURE AUDITOR & VERIFICATION PASS (2026-07-03, Node 22 v22.14.0)
+
+**Режим выполнения:** Чистый аудитор и верификатор («Режим Чистого Аудитора и Верификатора», без изменения исходного кода в `gb-is-my-strength`).  
+**Toolchain:** Node.js `v22.14.0` (официальный Linux x64 бинарник в `/home/user/.node22/bin`) + Playwright Chromium (`v1228`).  
+**Объем аудита:** 75+ строгих bash-проверок по всем 6 архитектурным доменам, повторная проверка актуального HEAD `edea8b3c` на отсутствие регрессий и «костылей», а также полная гигиеническая расчистка директории `incoming/` в архив.
+
+### 🧪 Верификация актуального HEAD (`edea8b3c` / `47a98da`)
+
+На стенде Node 22 была проведена полная перепроверка всех 15 публикационных гейтов и скриптов вёрстки после удаления мёртвых файлов (`site-layered.css`, `back-to-top.js`, `series-cards.js` — минус 289 КБ), внедрения CSP `form-action` на 51 странице и обновления Service Worker (`v183`):
+
+1. **Сборка и публикационный контракт (Gates 1–9):**
+   - `npm run strangler:build:production-like`: 100% успешная сборка дистрибутива из 53 статических Astro-страниц. Дрифт хешей ассетов после удаления мёртвых скриптов отсутствует (`hash drift → 0`).
+   - `npx astro check`: TypeScript-диагностика по 415 файлам проекта: **0 ошибок, 0 предупреждений**.
+   - `node scripts/dist-publication-audit.js`: Проверены все 45 обязательных артефактов дистрибутива, подтверждено отсутствие утечек приватных директорий (`src`, `scripts`, `research`, `raw-sources`, `_legacy`).
+   - `npm run contract:compare`: Точное соответствие 43 публичных baseline-страниц.
+   - `npm run page-ownership:dist:production-like`: Подтверждён владелический контракт 53 роутов.
+   - `npm run strangler:smoke`: Playwright-проверка 15 десктопных и 15 мобильных страниц дистрибутива — **0 горизонтального переполнения (h-overflow)**, корректный рендеринг H1.
+   - `npm run dist:css-parity`: 53/53 страниц несут корректный CSS-контракт.
+   - `npm run sw:dist:audit`: Верифицирована готовность Service Worker (`PRECACHE_ASSETS`, стратегия `stale-while-revalidate` для HTML и `cache-first` для статики).
+   - `npm run editorial:lint`: Проверка редакционных стандартов прошла успешно.
+
+2. **Интерактивные 3D/2D карты и мобильный UX (Gates 10–15):**
+   - `npm run maps:validate` & `npm run maps:publication-status`: Валидация схем 10 библейских карт (Авраам, Исход, Павел и др.) и статусов публикации.
+   - `npm run tokens:check`: Проверка дизайн-токенов (0 легаси `var()` ссылок).
+   - `node scripts/konfessii-map-audit.js`: Живой Playwright-тест 3D-карты баптизма в браузере Chromium — подтверждены 14 инвариантов (рендеринг WebGL Canvas, отсутствие блокировки кликов геометрией, изоляция iframe `_app/index.html`).
+   - `npm run gill:mobile-layout:audit`: Playwright-аудит мобильной шапки и панели Джона Гилла на разрешениях 360×740 и 390×844 (light/dark) — 100% PASS.
+   - `npm run avraam:audit`: 28/28 проверок интерактивной карты пути Авраама успешно пройдены.
+
+3. **Контентная целостность, поисковые индексы и SEO (Gates 16–22):**
+   - `npm run content:parity`: Проверка MDX vs HTML паритета по словам (допуск ±8%) и семантике — все статьи в зелёной зоне.
+   - `npm run gill:reading-time:audit`: Верифицировано каноническое время чтения серии (149 минут) в MDX, `search-manifest.json` и HTML.
+   - `npm run gill:pagefind:audit`: Подтверждено, что все части серии индексируются Pagefind через `<article class="article-body">`.
+   - `node scripts/schema-rich-results-audit.js` & `node scripts/dist-jsonld-audit.js`: 60 валидных блоков JSON-LD, 25 схем Article, 39 BreadcrumbList, 4 FAQPage.
+   - `node scripts/baptisty-series-shadow-audit.js`: 10 роутов «Баптисты России» соответствуют strict-native стандарту без `loadLegacyFullDocument`.
+
+4. **Визуальный паритет и миграция легаси-разделов (Gates 23–40):**
+   - Успешно выполнены все специализированные скрипты визуального паритета: `about:visual-parity`, `biografii:visual-parity`, `hard-texts:visual-parity`, `pastor-series:visual-parity`, `articles:visual-parity`, `gill:context:visual-parity`, `gill:spravochnik:visual-parity`, `konfessii:visual-parity`, `karty:visual-parity`, `baptisty-rossii:visual-parity`, `home:visual-parity`, `nagornaya:visual-parity`, `catalogs:visual-parity`, `baptisty:roadmap`, `baptisty:visual-atlas`.
+   - `npm run audit:premium-controls`: 87/87 проверок PremiumControls прошли успешно.
+   - `npm run migration:metadata:check:strict`: 52 профиля роутов и 35 записей матрицы миграции полностью когерентны.
+
+### 🧹 5. Гигиена AuditRepo и расхламление («Не плодим миллионы файлов»)
+
+В рамках задачи по очистке мусора и поддержанию строго одной канонической матрицы (`MASTER_BUG_MATRIX.md`), директория `AuditRepo/projects/gb-is-my-strength/incoming/` была полностью вычищена:
+- Все 58 устаревших директорий от предыдущих прогонов агентов (`arena-agent-6`, `deep-auditor`, `arena-surgical-surgeon` и др.) перенесены в архив `archive/2026-07-03-stale-incoming/`.
+- В `incoming/` оставлены исключительно 3 корневых управляющих документа (`GB_AUDIT_MASTER_REPORT.md`, `GB_REPAIR_ORDER.md`, `README.md`).

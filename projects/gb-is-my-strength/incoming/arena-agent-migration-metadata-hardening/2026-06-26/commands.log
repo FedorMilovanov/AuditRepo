@@ -1,9 +1,0 @@
-# commands / environment for migration metadata hardening lane
-lane/system-migration-metadata-hardening-2026-06-26-arena
-22de266
-22de266 [LANE lane/system-migration-metadata-hardening-2026-06-26-arena] harden migration metadata contracts
-09c2d34 [LANE lane/system-release-gate-green-2026-06-26] fix deploy parity contracts
-7ac9188 [LANE lane/system-release-gate-green-2026-06-26] restore map visual parity
-node:
-v20.20.2
-10.8.2
