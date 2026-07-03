@@ -84,7 +84,7 @@
 
 * **P2-AUDIT-DRIFT:** audit-pro.js не проверяет синхронизацию PRECACHE↔cache-bust↔ALLOWED (улучшено в REG-004, но полный дрифт не решён)
 * **P2-SEARCH-EAGER:** search.js создаёт DOM при загрузке (~15KB nodes)
-* **CI-P0-GILL-RUNTIME-REFS:** current remote `b4b312a8` Deploy red at `Gill mobile reference layout audit`; verified browser runtime errors: `js/highlights.js` strict IIFE assigns undeclared `r` (20 pageerrors), `js/site.js` calls undefined `tt(...)` helper (currently surfacing at backlinks `tt(n.title)`, with additional static refs in verse/original-word blocks; 20 pageerrors). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`.
+* **CI-P0-GILL-RUNTIME-REFS:** current remote `dbd0bb55` Deploy red at `Gill mobile reference layout audit`; verified browser runtime errors: `js/highlights.js` strict IIFE assigns undeclared `r` (20 pageerrors), `js/site.js` calls undefined `tt(...)` helper (currently surfacing at backlinks `tt(n.title)`, with additional static refs in verse/original-word blocks; 20 pageerrors). Status confirmed on both `b4b312a8` (Pass 30) and `dbd0bb55` (Pass 30.b, after the parallel patcher's `e2f0ae4` Gill-GB2 fix did not touch the regression). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md` (incl. §9 Pass 30.b re-verification).
 * **CI-P1-NAGORNAYA-SITEUTILS-ORDER:** broader dist runtime smoke found `/nagornaya/` pageerror `SiteUtils is not defined` from `js/nagornaya-mobile-toc.js?v=866d4238:1:696`; dist script order loads `nagornaya-mobile-toc.js` before `/js/site-utils.js`, while the TOC script immediately calls `SiteUtils.ready(...)`.
 * ~~**CI-CSSLAYER-STALE:** `css:layer:validate` pointed at deleted `css/site-layered.css`~~ ✅ FIXED-CURRENT on source `b4b312a8` by `a65874a0`; script now validates `css/site.css`.
 * ~~**P2-SEARCH-SVG-DUP:** 20+ дублированных SVG-констант в search.js (~3KB)~~ ✅ FIXED (Pass 28: helper _s() + path constants _p0/_p1/_p2, -1.9KB)
@@ -359,3 +359,18 @@
 * **Independent witness:** `node scripts/dist-smoke-audit.js --no-build --production-like` also fails on representative routes with `r is not defined` / `tt is not defined` (6 issues across desktop/mobile `/articles/kod-da-vinchi/`, `/baptisty-rossii/`, `/baptisty-rossii/noch-na-kure/`).
 * **Control witnesses:** `node --check js/*.js` passes (syntax only), `tokens:check` passes, `gill:mobile-play:smoke` passes. This is a browser runtime no-undef regression, not a syntax/build failure.
 * **Full evidence:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md`.
+
+---
+
+## 🔴 PASS 30.b — independent re-verification on current HEAD `dbd0bb55` (2026-07-03)
+
+**Mode:** pure auditor/verifier; no source-code changes. Independent second run after pulling the parallel patcher's `e2f0ae4` Gill-GB2 fix (which did not touch the runtime regression).
+
+* **CI status on `dbd0bb55`:** Public GitHub Actions API shows `Deploy to GitHub Pages` run `28679684009` on `dbd0bb55` completed **failure** with the same failed step **`Gill mobile reference layout audit`**. The patcher did not unblock CI.
+* **W1 source witness:** `js/highlights.js` still contains the bare `}r=document.createElement("link")` assignment in a strict-mode IIFE on `dbd0bb55`. The pattern is identical to `b4b312a8`.
+* **W3 browser witness (re-run):** `npm run strangler:build:production-like` then `AUDIT_BASE=http://127.0.0.1:8091 npm run gill:mobile-layout:audit` reproduces the same 40 pageerrors on `dbd0bb55`:
+  - `r is not defined` ×20 from `js/highlights.js?v=c972d20e:1:638`
+  - `tt is not defined` ×20 from `js/site.js?v=77687914:484:1`
+* **Triangulation:** 3 independent witnesses (CI API, Pass 30 W3, Pass 30.b W3) confirm the regression is alive on current main. CI-P0-GILL-RUNTIME-REFS remains **P0 / verified-current**.
+* **Recommendation for next executor lane (`lane/system-runtime-no-undef`):** (1) `var r = document.createElement(...)` (or move the assignment into a non-strict inner `function(){…}()`) inside `js/highlights.js`; (2) ensure `tt` is reachable from the strict scope where it is called in `js/site.js` (top-level helper, or wrapper `function(){…}()`); (3) re-run `gill:mobile-layout:audit`, `dist-smoke-audit.js`, and the full `validate:static-publication` after the fix.
+* **Full evidence:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_ci-red-b4b312a-runtime-reference-errors.md` §9.

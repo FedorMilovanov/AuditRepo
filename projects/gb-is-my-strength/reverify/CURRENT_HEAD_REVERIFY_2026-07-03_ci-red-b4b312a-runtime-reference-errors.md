@@ -272,3 +272,94 @@ npm run guard:shared-files
 ```
 
 Recommended prevention audit: add or run a browser/runtime no-undef smoke that fails on pageerror for global JS, because syntax checks and Astro build did not catch this class.
+
+---
+
+## 9. Pass 30.b — second-source independent verification on current HEAD `dbd0bb55`
+
+**Date:** 2026-07-03 (later same session)  
+**Mode:** Pure auditor; no source-code changes; independent re-run on a fresh source checkout after pull of `e2f0ae4` (parallel patcher's `fix(gill): GB2 меню`).
+
+**Source HEAD pulled:** `dbd0bb5` (`chore: auto-update meta, cache-bust [skip ci]`); one patcher commit between this verification and the previous (`e2f0ae4` Gill GB2 frame).
+
+**Public GitHub Actions API status on `dbd0bb55`:**
+
+```text
+Run: 28679684009
+Workflow: Deploy to GitHub Pages
+HEAD: dbd0bb55
+Status: completed
+Conclusion: failure
+URL: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28679684009
+
+JOB deploy: completed failure
+Failed step: 23 Gill mobile reference layout audit
+```
+
+→ CI status is **still red** after the parallel patcher's `e2f0ae4` Gill-GB2 fix; the failing gate is the same step. The patcher did not address the runtime ReferenceErrors.
+
+### 9.1 Source witness on `dbd0bb55`
+
+Static pattern scan on the source files committed in `dbd0bb55` (Node 22):
+
+```text
+js/highlights.js: bare r=document.createElement("link") in strict IIFE → YES (BUG)
+  pattern: }r=document.createElement("link")
+  file contains "use strict": true
+js/site.js: function tt(e) declaration present in source; pattern uses tt(n.title) etc.
+```
+
+`js/highlights.js` is **structurally identical** to the b4b312a8 state with respect to the `r=...` bug — the parallel patcher did not touch this file. So W3 reproduction on a fresh build of `dbd0bb55` must produce the same 40 pageerrors.
+
+### 9.2 W3 (browser) reproduction on `dbd0bb55`
+
+Local environment, fresh strangler build:
+
+```bash
+npm run strangler:build:production-like   # PASS, 53 pages
+nohup python3 -m http.server 8091 --bind 127.0.0.1 --directory /home/user/gb-is-my-strength/dist &
+AUDIT_BASE=http://127.0.0.1:8091 npm run gill:mobile-layout:audit
+```
+
+Observed result (Playwright Chromium 1228, headless):
+
+```text
+40 pageerror events:
+  ❌ r is not defined  × 20
+       at http://127.0.0.1:8091/js/highlights.js?v=c972d20e:1:638
+       at http://127.0.0.1:8091/js/highlights.js?v=c972d20e:1:8481
+  ❌ tt is not defined × 20
+       at http://127.0.0.1:8091/js/site.js?v=77687914:484:1
+       at makeBlock (http://127.0.0.1:8091/js/site.js?v=77687914:479:10)
+       at http://127.0.0.1:8091/js/site.js?v=77687914:490:14
+
+Gill layout checks themselves: PASS (root, bar, part-TOC, series-TOC, no overflow, etc.)
+```
+
+The same 40-failure pattern is independently reproducible. This is the **third** independent confirmation (CI API, Pass 30 W3, this Pass 30.b W3) that the regression is alive on the current main.
+
+### 9.3 CI-P0-GILL-RUNTIME-REFS — status
+
+```text
+Status: verified-current on dbd0bb55 (current HEAD as of 2026-07-03 19:35 UTC)
+Triangulated witnesses:
+  W1 source scan: highlights.js strict IIFE bare r=createElement('link') — present on dbd0bb55
+  W2 dist artifact: dist/js/highlights.js?v=c972d20e still contains the bare assignment
+  W3 browser runtime: 20 pageerrors "r is not defined" per gill-audit run
+  W3 browser runtime: 20 pageerrors "tt is not defined" per gill-audit run
+  GitHub Actions: Gill mobile reference layout audit failing step
+  Cross-tool: dist-smoke-audit.js (Pass 30) also reports the same pageerrors
+Severity: still P0 / CI-blocking
+Ready for executor: YES (system lane recommended: lane/system-runtime-no-undef)
+```
+
+### 9.4 CI-P1-NAGORNAYA-SITEUTILS-ORDER — status
+
+Not re-tested in this pass. Script-ordering issue is structural in the route source and likely independent of the JS runtime fixes. Recommend executor re-verify after the no-undef fix.
+
+### 9.5 Audit recommendation for next auditor pass
+
+1. Do **not** mark `CI-P0-GILL-RUNTIME-REFS` closed until Playwright + `npm run gill:mobile-layout:audit` reports 0 pageerrors on a fresh build.
+2. After the patcher's fix, the audit should also re-run `dist-smoke-audit.js --no-build --production-like` to catch any other no-undef smoke that the gill-audit does not visit.
+3. The `tt` failure in `site.js` is structural, not just backlinks — the fix should ensure `tt` is defined for the strict-mode scope where it is called (or replace with a noop / proper escape helper at a top-level scope).
+4. Add an early-exit rule to CI: any pageerror on a Gill route page → block deploy, regardless of which feature caused it.
