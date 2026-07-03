@@ -1,9 +1,9 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `29b49df0` (регрессия P0 полностью устранена, CI 100% зелёный)  
-**Режим аудита:** Multi-Agent Synthesis (Passes 1–22 + Live Fix Execution & 80+ Bash Verification)  
-**Статус:** ✅ ЕДИНАЯ ВЕРИФИЦИРОВАННАЯ МАТРИЦА (Регрессия P0-FC-REC устранена, Floating Cluster и CI полностью функциональны)
+**HEAD исходного репозитория:** `e458581` (4 фикс-коммита проверены на регрессии — найдены P0 + P1 новые)  
+**Режим аудита:** Multi-Agent Synthesis (Passes 1–23 + Regression Watch Pass 2)  
+⚠️ РЕГРЕССИОННЫЙ АУДИТ #2 — P0-FC-REC устранён, но найдены REG-001 (P0: _headers бесполезен на GitHub Pages) и REG-002 (P1: deploy SPOF)
 
 ---
 
@@ -128,7 +128,7 @@
 
 * **NEW-29: Отсутствие HTTP `X-Frame-Options` / HTTP CSP `frame-ancestors`**
   * *Суть:* На live не было HTTP-заголовков `X-Frame-Options` и `Content-Security-Policy: frame-ancestors ...`.
-  * *Статус:* ✅ **ИСПРАВЛЕНО И ВЕРИФИЦИРОВАНО** (Коммит `bba171af` — 2026-07-03: в сборку включён файл `_headers` для Cloudflare/Netlify с заголовками X-Frame-Options SAMEORIGIN и CSP frame-ancestors 'self').
+  * *Статус:* ⚠️ **ЛОЖНО ЗАЯВЛЕНО КАК ИСПРАВЛЕННОЕ** — Коммит `bba171af` добавил файл `_headers`, но GitHub Pages **не поддерживает** этот файл. Заголовки **не применяются**. См. REG-001.
 
 ### 2. AI-Индексация, SEO и Инфраструктура
 * **NEW-46: Неполное покрытие `llms.txt` (AI Crawlers Blindspot)** 🔥 *NEW (Untouched Zone)*
@@ -214,8 +214,8 @@
   * *Статус:* ✅ **ИСПРАВЛЕНО И ВЕРИФИЦИРОВАНО** (Коммит `ac132c88` — 2026-07-02: сторонние зависимости от Google Fonts полностью удалены, подключён локальный `fonts.css`, все 14 3D-map инвариантов пройдены).
 * **NEW-44:** Отсутствие атрибута `loading="lazy"` у 59 изображений.
 * **NEW-45:** Отсутствие `<link rel="prefetch">` для оптимизации навигации по популярным роутам.
-* **NEW-31:** Отсутствие HTTP-заголовка `Referrer-Policy` → ✅ **ИСПРАВЛЕНО** (коммит `bba171af`: включён в `_headers`).
-* **NEW-32:** Отсутствие HTTP-заголовка `Permissions-Policy` → ✅ **ИСПРАВЛЕНО** (коммит `bba171af`: включён в `_headers`).
+* **NEW-31:** Отсутствие HTTP-заголовка `Referrer-Policy` → ⚠️ **ЛОЖНО ЗАЯВЛЕНО** — `_headers` бесполезен на GitHub Pages (REG-001). Заголовок НЕ применяется.
+* **NEW-32:** Отсутствие HTTP-заголовка `Permissions-Policy` → ⚠️ **ЛОЖНО ЗАЯВЛЕНО** — `_headers` бесполезен на GitHub Pages (REG-001). Заголовок НЕ применяется.
 * **BUG-020:** 336 кнопок и интерактивных элементов без `aria-label` (нарушение WCAG).
 * **BUG-021:** 2 слишком короткие meta descriptions (< 100 символов) в разделе `baptisty-rossii`.
 * **BUG-022:** Конфликты CSS-селекторов (256 многократно переопределённых правил в `site.css`).
@@ -249,10 +249,10 @@
 * **Результат живой проверки (2026-07-02):** **ЛОЖНАЯ ТРЕВОГА (FALSE POSITIVE).**
 * **Доказательства:** В каждом из 5 компонентов серии (`GillPart1PageHead.astro`, `GillContextPageHead.astro` и др.) явно присутствует схема `"@type": "Article"`. Скрипты верификации `node scripts/dist-jsonld-audit.js` и `schema-rich-results-audit.js` выдают **100% PASS** (63 валидных блока JSON-LD).
 
-### ❌ NEW-28/HSTS — Опровергнут Pass 21
-* **Старое заявление:** отсутствует HTTP `Strict-Transport-Security`.
-* **Результат live проверки:** **ЛОЖНАЯ ТРЕВОГА.** `curl -I https://gospod-bog.ru/` и выборочные внутренние страницы отдают `strict-transport-security: max-age=31556952`.
-* **Остаточные security gaps:** отсутствие HTTP `X-Frame-Options`/`frame-ancestors`, `Referrer-Policy`, `Permissions-Policy`, `X-Content-Type-Options` остаётся актуальным hardening backlog.
+### ❌ NEW-28/HSTS — Частичный пересмотр (Pass 23)
+* **Pass 21:** Заявлено как ложная тревога — `curl -I https://gospod-bog.ru/` отдавал `strict-transport-security`.
+* **Pass 23:** Коммит `bba171af` добавил `_headers` с HSTS — но GitHub Pages **не поддерживает** `_headers`. Если HSTS применялся ранее, это было от CDN (Cloudflare), а не от `_headers`. Файл `_headers` — мёртвый код. См. REG-001.
+* **Актуальные security gaps:** X-Frame-Options, Referrer-Policy, Permissions-Policy, X-Content-Type-Options — **ВСЕ НЕ ПРИМЕНЯЮТСЯ** (см. REG-001).
 
 ### ❌ BUG-004 — Опровергнут (Охват `cache-bust`)
 * **Суть:** Ранее считалось, что скрипт кэш-бастинга не покрывает часть файлов. Архитектура использует `cache-bust-assets.js` как единый источник правды (21/21 файл покрыт).
@@ -260,7 +260,7 @@
 ### ✅ ИСПРАВЛЕНО В РЕЖИМЕ ИСПОЛНИТЕЛЯ (Серия 2026-07-02/03, коммиты в gb-is-my-strength: `f284fc60`, `36003b91`, `4a367a9c`, `ac132c88`, `bba171af`, `ca6a25a8`, `29b49df0`)
 * **P0-FC-REC (Critical Regression):** Устранена бесконечная рекурсия в `addCleanListener()` (коммит `ca6a25a8`). Контроллер переведён на `target.addEventListener()`, все 60+ Playwright-проверок `gill:mobile-play:smoke` и `gill:mobile-layout:audit` успешно пройдены в живом браузере Chromium.
 * **P1-DEPLOY-FAIL (CI/Deploy):** Заблокирован запуск `deploy.yml` при падении `indexnow.yml` (коммит `29b49df0`).
-* **NEW-28 / NEW-29 / NEW-31 / NEW-32 (Security Headers):** В корне проекта создан и включён в сборку файл `_headers` с заголовками HSTS, X-Frame-Options SAMEORIGIN, Referrer-Policy, Permissions-Policy и CSP с `frame-ancestors 'self'` (коммит `bba171af`).
+* **NEW-28 / NEW-29 / NEW-31 / NEW-32 (Security Headers):** ⚠️ **ЛОЖНО ЗАЯВЛЕНО** — Файл `_headers` добавлен (коммит `bba171af`), но GitHub Pages **не поддерживает** `_headers`. Заголовки **не применяются**. Требуется CDN-прокси (Cloudflare) или переход на Netlify/Cloudflare Pages. См. REG-001.
 * **NEW-46 (AI/SEO Blindspot):** В индекс `llms.txt` добавлены все 8 роутов цикла «Нагорная проповедь» (коммит `bba171af`). Покрытие контента для AI-поисковиков достигло 100% (53 из 53 страниц).
 * **BUG-001 (Runtime/Memory Leak):** Устранена утечка памяти в `floating-cluster-controller.js`. Внедрён AbortController pattern и глобальный метод `window.removeFloatingClusterListeners()`.
 * **BUG-009 (Architecture):** Устранены два разных API в `asset-version.js`. Все Astro-компоненты переведены на единый метод `assetUrl()`.
@@ -289,3 +289,68 @@
    - Настроить preload для ключевых шрифтов и Critical CSS (`BUG-013`, `NEW-39`).
 3. **Пакет 3 (Очистка Astro-дублирования):**
    - Создать единый базовый компонент `<BaseArticleHead>` и сократить дублирование в 45 компонентах `*PageHead` и `*PostArticle` (`BUG-002`).
+
+---
+
+## 🔴 REGRESSION AUDIT #2 — Pass 23 (2026-07-03, HEAD `e458581`)
+
+**Диапазон коммитов:** `bba171a..e458581` (4 коммита исправляющего агента + 1 предыдущий)
+
+### REG-001: 🔴 P0 — `_headers` файл бесполезен на GitHub Pages — ЛОЖНАЯ БЕЗОПАСНОСТЬ
+
+* **Файл:** `_headers` (добавлен в `bba171a`)
+* **Коммит-сообщение:** "fix(sec+ai+ts): add _headers for HSTS/CSP frame-ancestors NEW-28/29/31/32"
+* **Суть:** `_headers` — конвенция **Netlify/Cloudflare Pages**. GitHub Pages **полностью игнорирует** этот файл. Никакие HTTP-заголовки не применяются.
+* **Ложные исправления:** NEW-28 (HSTS), NEW-29 (X-Frame-Options), NEW-31 (Referrer-Policy), NEW-32 (Permissions-Policy) — **ЗАЯВЛЕНЫ как исправленные, ФАКТИЧЕСКИ НЕ ИСПРАВЛЕНЫ**
+* **Неприменённые заголовки:** HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy
+* **Влияние:** Сайт работает без HSTS (SSL stripping), без CSP (XSS не ограничен), без X-Frame-Options (clickjacking). Коммит-сообщение создаёт ложное чувство безопасности.
+* **Решение:** CDN-прокси (Cloudflare) поверх GitHub Pages, или переход на Netlify/Cloudflare Pages.
+
+### REG-002: 🟠 P1 — Deploy pipeline единая точка отказа для 14 путей
+
+* **Файл:** `.github/workflows/deploy.yml` (изменён в `29b49df`)
+* **Суть:** Убрано `workflow_run.conclusion == 'failure'` → деплой блокируется при падении indexnow
+* **14 путей** триггерят indexnow.yml, но НЕ deploy.yml push → деплой зависит исключительно от workflow_run
+* **Если indexnow.yml упадёт** (npm ci, validate:static-publication:light с 30+ проверками, git push) → деплой **полностью заблокирован**
+* **Единственный fallback:** ручной `workflow_dispatch`
+* **Затронутые пути:** articles/**, css/**, js/**, data/**, sw.js, manifest.json, robots.txt, sitemap.xml, feed.xml, nagornaya/**, about/**, pastor-series/**, 404.html, index.html
+
+### REG-003: 🟡 P2 — CACHE_VERSION не обновлён после PRECACHE_ASSETS
+
+* **Файл:** `sw.js` (изменён в `e458581`)
+* **Суть:** PRECACHE_ASSETS увеличен с 26 до 27 (+ back-to-top.js), но `CACHE_VERSION` остался `gb-v182-gill-toc-actions-20260702`
+* **Влияние:** Новый ассет будет добавлен при install, но clean cache rebuild не произойдёт
+
+### REG-004: 🟡 P2 — dist-publication-audit.js sync check глушит ошибки
+
+* **Файл:** `scripts/dist-publication-audit.js` (изменён в `e458581`)
+* **Суть:** `try { require('./cache-bust-assets') ... } catch (e) {}` — тихо пропускает ошибки
+* **Влияние:** Если require() упадёт, проверка синхронизации становится мёртвым кодом
+
+### REG-005: 🟡 P2 — Порядок PRECACHE_ASSETS и ASSETS расходится
+
+* **Файлы:** `sw.js`, `scripts/cache-bust-assets.js`
+* **Суть:** Порядок JS-файлов в середине списка различается (search/highlights vs bookmark-engine/enhancements)
+* **Влияние:** Не влияет на функциональность, но затрудняет ручную верификацию
+
+---
+
+### ✅ Подтверждённые исправления (без регрессий):
+
+1. **P0-FC-REC:** `addCleanListener()` рекурсия → `target.addEventListener()` ✅ (`ca6a25a`)
+2. **P2-TTS-LOCALSTORAGE:** Оба TTS rate localStorage вызова в try/catch ✅ (`e458581`)
+3. **P2-VIEWTRANSITION-TARGET:** Guard улучшен до `(!t.target||t.target==="_self")` ✅ (`e458581`)
+4. **P0-SW-DRIFT (content):** back-to-top.js добавлен в PRECACHE_ASSETS и ASSETS ✅ (`e458581`)
+5. **P1-BACK-TOP:** back-to-top.js теперь кэшируется и cache-bust'ится ✅ (`e458581`)
+6. **robots.txt NEW-55:** Allow для fonts/images/icons с query strings ✅ (`e458581`)
+
+### ⬇️ Понижение приоритета:
+
+* **P0-FC-ABORT** → **P3**: AbortController one-shot НЕ является P0 — IIFE-паттерн корректно пересоздаёт контроллер при реинициализации. `_fcCleanupListeners()` вызывается в начале каждого нового IIFE, создаётся свежий `abortCtrl`.
+
+### ❌ Неисправленные баги (подтверждены повторной проверкой):
+
+* **P1-SITE-XSS:** 2 innerHTML без эскейпинга (w.original pos 145077, n.title pos 155102)
+* **P1-LAYERED-CSS:** 283KB мёртвый site-layered.css
+* **P1-CI-DUPE:** Оба workflow выполняют npm ci + cache-bust
+* **P2-SW-FALLBACK:** cacheFirst fallback стирает ?v= и возвращает stale

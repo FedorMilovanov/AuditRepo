@@ -1,7 +1,7 @@
 # gb-is-my-strength / gospod-bog.ru
 
-**Status:** ⚠️ CRITICAL REGRESSION — BUG-001 fix (commit `36003b91`) introduced infinite recursion in `addCleanListener()`. Floating Cluster non-functional. See `verified/MASTER_BUG_MATRIX.md` P0-FC-REC.
-**Last source HEAD checked:** `bba171af` (2026-07-03, Arena Deep Auditor Pass 22)
+**Status:** ⚠️ REGRESSION AUDIT #2 — P0-FC-REC fixed (ca6a25a), but REG-001 (P0: `_headers` useless on GitHub Pages) and REG-002 (P1: deploy SPOF) found. See `verified/MASTER_BUG_MATRIX.md`.
+**Last source HEAD checked:** `e458581` (2026-07-03, Arena Deep Auditor Pass 23 — Regression Watch)
 **Previous HEAD:** `66640561919501e68dd9d3cd290ff9afe53d3068` (2026-06-27)
 
 ## Quick facts
@@ -13,7 +13,7 @@
 
 ## Current operational truth
 
-Use `verified/MASTER_BUG_MATRIX.md` first — updated 2026-07-03 with Pass 22 findings (3 new P0, 5 new P1, 9 new P2).
+Use `verified/MASTER_BUG_MATRIX.md` first — updated 2026-07-03 Pass 23: REG-001 (P0: _headers useless on GitHub Pages), REG-002 (P1: deploy SPOF), 5 confirmed fixes.
 
 Current source checks performed during cleanup:
 
