@@ -425,6 +425,49 @@ All 5 Gill articles verified — every image is thematically correct:
 
 ---
 
+
+## 🟢 PASS 64 — COMPREHENSIVE IMAGE PLACEMENT AUDIT (2026-07-05)
+
+**Source HEAD:** `629ed89a`
+
+**Full image audit across the entire site — every image checked in context.**
+
+### Coverage
+
+| Area | Images | Status |
+|------|--------|--------|
+| Gill series (5 articles) | 82 files (incl. variants) | 4 bugs fixed in Pass 63 |
+| Baptisty series (10 articles) | 22 files | ✅ All correct (series navigation) |
+| Pastor series (1 article) | 9 images | ✅ All correct |
+| Krajne/Heart series (2 articles) | 30+ ieremia-* images | ✅ All correct |
+| Romans 7 (1 article) | 13 rim7-* images | ✅ All correct |
+| Da Vinci Code (1 article) | 4 local + 10 Wiki Commons | ✅ All correct |
+| Hermeneutics (1 article) | 1 preview image | ✅ Correct |
+| About page | 0 images | ✅ |
+| Biografii | 5 images | ✅ |
+| Nagornaya | 0 inline images | ✅ |
+| Home page | 10 images | ✅ All link to correct articles |
+
+### Orphaned files removed
+
+| File | Reason |
+|------|--------|
+| `images/gill-authentic-study-cover*` (4 files) | Renamed to gill-study-portrait* in Pass 63 |
+| `images/og-gill-authentic-study-cover.webp` | Superseded by og-dzhon-gill-chast-1-chelovek |
+| `images/og-gill-five-volumes-shelf.webp` | Superseded by og-dzhon-gill-spravochnik |
+| `images/pastor-series/og-hero-600w.webp` | Orphaned variant (900w still used) |
+
+### Cross-article image usage verified
+
+All cross-article image references are in **navigation/related-articles** sections:
+- Series nav shows covers of neighboring articles — CORRECT
+- Related articles at page bottom show thumbnails — CORRECT
+- No alien images in article body content
+
+**Verdict: All images are in their correct context. Zero misplaced images.**
+
+---
+
 ## 🟢 PASS 58 — GILL DESKTOP RAIL VERIFICATION (2026-07-04)
 
 **Verified findings from forensics GPT 5.5 audit (Pass 56):**
