@@ -3,7 +3,7 @@
 Центральный репозиторий для **мультиагентных аудитов, баг-репортов и верификационных прогонов**.
 
 Идея:
-- 5–10 агентов независимо прогоняют проект;
+- много агентов (десятки независимых pass'ов, см. `PROJECT_REGISTRY.md`) прогоняют проект;
 - каждый складывает свои отчёты в `incoming/`;
 - сильный верификатор собирает сводную матрицу багов;
 - после этого implementation-агент чинит уже **подтверждённые** баги.
@@ -46,8 +46,12 @@ audit-repo/
 ├── SANDBOX-ENV-2026-06-21.md      ← ⚠️ ЧИТАТЬ ПЕРВЫМ: паспорт среды Arena (Node, gates, vision, build-mode)
 ├── PROJECT_REGISTRY.md            ← список проектов и статусы
 ├── scripts/
-│   ├── auditrepo.py              ← intake scaffold + utilities
-│   └── scaffold_intake.py        ← fallback если auditrepo.py недоступен
+│   ├── check_auditrepo_structure.py   ← базовая проверка структуры (subset)
+│   ├── validate_audit_repo.py         ← строгая проверка структуры/intake
+│   ├── scaffold_intake.py             ← создать intake-папку агента
+│   ├── scaffold_project.py            ← создать новый проект
+│   ├── scaffold_reverify.py           ← создать reverify-файл под SHA
+│   └── scaffold_retirement_review.py  ← создать retirement-review
 └── projects/
     ├── _templates/
     │   ├── AGENT_REPORT_TEMPLATE.md
@@ -121,9 +125,18 @@ audit-repo/
 
 ### Правила движения статусов
 
-**Promote to `confirmed-current`:**
-- 2 independent agents confirm on same/similar SHA, OR
-- 1 agent gives direct source/build/browser evidence on current HEAD.
+**Promote to `confirmed-current`:** см. `MULTI_WITNESS_VERIFICATION_PROTOCOL.md` (этот
+документ — авторитетный по количеству свидетелей). Кратко:
+- 3 независимых свидетеля с разных ракурсов, ИЛИ
+- 1 сильное browser-воспроизведение на production-like dist (с явной пометкой), ИЛИ
+- для более низкорисковых случаев — 2 независимых агента ИЛИ 1 прямое
+  source/build/browser evidence на current HEAD (обязательно с явной меткой угла свидетеля:
+  `verified-source` / `verified-build` / `verified-browser` / `verified-production-like-dist`).
+
+> Внимание: пороги в этом README и в `MULTI_WITNESS_VERIFICATION_PROTOCOL.md` сведены к
+> единому знаменателю — `MULTI_WITNESS` является источником истины по числу свидетелей.
+> Ранее README допускал `confirmed-current` при 2 агентах, что противоречило MULTI_WITNESS
+> (3 свидетеля). Используйте усиленный барьер.
 
 **Move to `disputed`:**
 - Любой агент даёт конкретное contradictory evidence.
@@ -326,12 +339,12 @@ cat PROJECT_REGISTRY.md
 
 ### 2. Создай intake
 ```bash
-# Preferred (если scripts/auditrepo.py есть)
-python3 scripts/auditrepo.py intake gb-is-my-strength --agent my-agent-name --date 2026-06-25
-
-# Fallback
 python3 scripts/scaffold_intake.py gb-is-my-strength my-agent-name 2026-06-25
 ```
+
+> Примечание: старая документация ссылалась на `scripts/auditrepo.py`, которого не
+> существует. Рабочий scaffold-скрипт — `scaffold_intake.py` (плюс `scaffold_project.py`,
+> `scaffold_reverify.py`, `scaffold_retirement_review.py`).
 
 Создаётся папка:
 ```
@@ -395,7 +408,8 @@ it is not an official audit input.
 ## Проекты
 
 Сейчас активен:
-- `projects/gb-is-my-strength/` — gospod-bog.ru (10 open / 29 closed, repair-ready)
+- `projects/gb-is-my-strength/` — gospod-bog.ru (актуальные счётчики open/closed —
+  см. `PROJECT_REGISTRY.md`; они меняются каждую волну и здесь не хардкодятся).
 
 Позже можно добавлять другие проекты тем же способом. (feat(auditrepo): add Governed Freedom Model — README, templates, scaffold)
 

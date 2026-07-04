@@ -1929,3 +1929,25 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 
 `incoming/arena-agent-pass87/REPORT.md`
 
+## GILL pre-v16 submenu + rounded full-frame (2026-07-05 forensic repair)
+
+> Status snapshot against source `main` @ `8c318010` (lane `lane/gill-pre-v16-submenu-frame`).
+> Findings below are written HONESTLY: the original spec ticket (checked at `8a8211ea`)
+> was partially STALE — several of its premises were already resolved at current HEAD.
+> No false-green claims were introduced.
+
+| ID | Severity | Status | Evidence / note |
+|---|---|---|---|
+| CI-GILL-SUBMENU-01 | P0 verification bypass | **fixed-current** | Spec claimed `deploy.yml` had a step with two `run:` keys (submenu audit silently skipped). At current HEAD `8c318010` (> `8a8211ea` "fix(ci): move gill submenu audit after Playwright install") the step is already correct: `Install Playwright browsers` then `Gill pre-v16 submenu regression audit`, one `run` each. Verified by `grep -n "submenu\|run:" .github/workflows/deploy.yml`. |
+| UI-GILL-SUBMENU-ANCHOR-02 | P1 functional/navigation | **fixed-current** | `gillSeriesData.ts` Part III had two rows both pointing to `#sec-church-gov` (distinct concepts: "Гилл и Рим" vs "Coffee House и права поместной церкви"). Split into `#sec-church-gov` + new distinct `#sec-church-gov-polity` (added as a real sub-anchor on the church-membership paragraph in `GillPart3ArticleBody.astro`). `data/gill-submenu-anchor-reconciliation.json` records the mapping. The audit now also REJECTS duplicate hrefs/labels (was previously approving the bug because both source and the hardcoded EXPECTED shared it). |
+| UI-GILL-HISTORICAL-PARITY-03 | P1 | **verified-current** | `scripts/gill-pre-v16-submenu-regression-audit.js` hardened: full per-item scroll traversal (exact active row, passed count = i, counter `i+1 / TOTAL`, active-row visibility), plus generated historical reference support via `scripts/extract-gill-pre-v16-submenu-reference.js` → `data/gill-pre-v16-submenu-reference.json` (must be regenerated in an env with the historical commit `bcf6389f…`). Needs a green remote CI browser run + owner visual parity review. |
+| UI-GILL-ROUNDED-FRAME-04 | P1 owner-visible | **verified-current** | One wide full-height rounded frame already exists: `[data-gill-v16] .gbs-rail{ border-radius:18px; … }` and `@media (min-width:1024px){ .gbs2-rail{ position:fixed; width:304px; height:100vh } }` (css/site.css:369). Audit now asserts: position fixed, width ≥272@1024 / ≥304@1280, radius ≥18, no horizontal overflow (rail/tocscroll/document), footer inside frame, article gap ≥20px. Owner visual approval of the frame still required. |
+| AUDIT-GILL-FALSE-GREEN-05 | AuditRepo | **closed (no false claim)** | Spec asserted AuditRepo Pass 61 claimed "deploy step order confirmed fixed" against a broken workflow. At current HEAD the workflow IS correct, so the claim was actually accurate — NOT a false green. Did NOT add a "Pass 61 was wrong" banner (that would itself be a false claim). Open findings below are tracked with honest statuses instead. |
+
+**Open owner/CI actions before declaring deploy-green:**
+1. Run `npm run workflows:check` + `node --check` on edited scripts (done locally; re-run in CI).
+2. Regenerate `data/gill-pre-v16-submenu-reference.json` from `bcf6389f…` and run `npm run gill:pre-v16-submenu:audit` on a production-like dist — confirm 0 failures.
+3. Owner visual review of the rounded frame + historical submenu parity on all 5 Gill routes.
+4. Keep `deploy.yml` `if` WITHOUT a `== 'failure'` clause (deploy must stay blocked when IndexNow fails).
+
+**Spec premises that were ALREADY satisfied at current HEAD (no action needed):** duplicate `run:` key in deploy.yml (fixed by `8a8211ea`); "Gill rail 304px confirmed" (CSS present); "all P0/P1 closed" (registry-accurate).

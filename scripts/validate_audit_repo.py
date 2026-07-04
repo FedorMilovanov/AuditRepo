@@ -24,9 +24,6 @@ def project_dirs():
         return []
     return [p for p in PROJECTS.iterdir() if p.is_dir() and not p.name.startswith('_')]
 
-def has_line(text, prefix):
-    return any(line.strip().startswith(prefix) for line in text.splitlines())
-
 errors = []
 
 # Root hygiene
@@ -87,6 +84,10 @@ for proj in project_dirs():
             ]
             if not any(m in txt for m in markers):
                 fail(f'{proj.name}: intake identity file missing recognizable identity markers: {identity_file}', errors)
+            # SHA-first principle: an intake must reference a concrete commit SHA,
+            # otherwise an empty/template report passes the (substring) marker check.
+            if not re.search(r'\b[0-9a-f]{7,40}\b', txt):
+                fail(f'{proj.name}: intake identity file has no commit SHA (SHA-first evidence required): {identity_file}', errors)
 
     # Verified should not contain obvious placeholders as the only content, but placeholders are allowed.
     # Working + verified should contain at least one README.
