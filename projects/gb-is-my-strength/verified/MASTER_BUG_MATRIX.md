@@ -40,7 +40,12 @@
 ## 🟠 P2 — MEDIUM (2 открытых)
 
 - **BUG-011:** 23 уникальных px брейкпоинта, 768px коллизия (reclassified — без визуальной регрессии)
-- **P2-SEARCH-EAGER (partial fix):** search.js 31KB eager load — lazy loader внедрён в Astro-native страницы (izbrannoe). ~48 legacy страниц всё ещё грузят search.js жадно. Требует миграции legacy HTML.
+- **P2-SEARCH-EAGER (partial fix):** search.js 31KB eager load. ✅ Fixed by `30b9fe46`:
+  - search.js: added `__ready` flag and `__gbSearchOpenAfterLoad` mechanism for deferred open.
+  - Astro-native pages: lazy-loaded via inline script (first Ctrl+K/click).
+  - Legacy pages: still load search.js eagerly (due to `<script defer>` in hardcoded HTML), 
+    but `__ready+__gbSearchOpenAfterLoad` ensures deferred search works on first interaction.
+  - Full fix requires: migration of legacy HTML to BaseLayout or inline lazy loader.
 
 ## 🔵 P3 — MEDIUM (2 открытых)
 

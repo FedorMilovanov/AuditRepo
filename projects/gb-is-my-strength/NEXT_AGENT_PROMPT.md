@@ -12,8 +12,8 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-legacy-lazy-init-30b
 
 # 🟢 PASS 43 — 2026-07-04 P2-SEARCH-EAGER lazy search (READ FIRST)
 
-**Source HEAD:** `6e667978` (lazy search + CI optimization + prefetch)
-**AuditRepo HEAD:** `fe6e5b8` (Pass 44)
+**Source HEAD:** `43a515df` (lazy search + CI optimization + prefetch)
+**AuditRepo HEAD:** `fe6e5b8` (Pass 45)
 **Branches:** `origin/main` only (both repos — zero stale branches)
 
 ## P2-SEARCH-EAGER — PARTIALLY FIXED on Astro-native pages
@@ -24,7 +24,7 @@ Legacy pages (articles, nagornaya, baptisty) still load search.js eagerly.
 
 ## CI status
 
-Check GitHub Actions for latest run on `6e667978`.
+Check GitHub Actions for latest run on `43a515df`.
 
 ## Все P0/P1 блокеры закрыты
 

@@ -6,7 +6,7 @@
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Runtime P0 blockers closed. All CI-P0/P1 fixed. Deploy green on `6e667978`. Latest source HEAD: `43a515df` ([skip ci] cache-bust after lazy-search fix). Start from `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`. |
+| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Runtime P0 blockers closed. All CI-P0/P1 fixed. Deploy green on `43a515df` (auto-deploy). Latest source HEAD: `43a515df`. Start from `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`. | (audit(gb): Pass 46 — sync to source 43a515df, document audit)
 
 ## Status glossary
 
@@ -20,8 +20,8 @@
 
 ## gb-is-my-strength current summary — 2026-07-04
 
-**Current source HEAD:** `6e667978` (auto cache-bust after SiteUtils fix)
-**Current AuditRepo HEAD:** `fe6e5b8` (Pass 33 — SiteUtils fix record)
+**Current source HEAD:** `43a515df` (auto cache-bust after SiteUtils fix)
+**Current AuditRepo HEAD:** `2741d51` (Pass 33 — SiteUtils fix record)
 **Current status:** repair-ready. All P0 runtime blockers closed.
 
 ### Current truth
@@ -29,7 +29,7 @@
 - All runtime no-undef issues (`r`, `tt`, `SiteUtils`) — **fixed-current** on `19062297` and earlier.
 - PremiumControls: `audit:premium-controls` 87/87 ✅. PC-CURRENT-06 (Gill mobile) verified passing.
 - Hermeneutics floater canonical position is `8.5vw` desktop / `4.5vw` mobile.
-- Deploy to GitHub Pages: **green** on auto-deploy #1329 (`6e667978`). All CI gates green.
+- Deploy to GitHub Pages: **green** on auto-deploy #1329 (`43a515df`). All CI gates green.
 - Gill v16 is current base.
 - All remote branches merged into main. Zero stale branches in both repos.
 
