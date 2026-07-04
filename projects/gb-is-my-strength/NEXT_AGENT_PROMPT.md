@@ -1,4 +1,29 @@
 
+# 🟢 PASS 40 — 2026-07-04 MASTER_BUG_MATRIX CONSOLIDATED (READ FIRST)
+
+**Source HEAD:** `ba6a8f67` (CI cache-bust optimization)
+**AuditRepo HEAD:** `f2cfe37` (to be updated)
+
+## MASTER_BUG_MATRIX консолидирован
+
+Старая матрица (1065 строк, 46 исторических PASS-секций) → `archive/2026-07-04-stale-matrix/`.
+
+Новая матрица — **компактная, только актуальные данные:**
+- 14 открытых позиций (P2: 4, P3: 7, AuditRepo: 3)
+- 25 закрытых позиций с указанием коммита
+- Сводная таблица
+- Ссылки на архив с полной историей
+
+## CI статус на ba6a8f67
+
+| Guard | Status |
+|-------|--------|
+
+Ожидание завершения CI на новом коммите.
+
+---
+
+
 # 🟢 PASS 39 — 2026-07-04 P1-CI-DUPE fixed (READ FIRST)
 
 **Source HEAD:** `ba6a8f67` (CI cache-bust optimization)
