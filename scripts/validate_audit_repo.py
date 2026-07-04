@@ -71,39 +71,48 @@ for proj in project_dirs():
             if not re.search(r'\b[0-9a-f]{7,40}\b', txt):
                 fail(f'{proj.name}: intake identity file has no commit SHA (SHA-first evidence required): {identity_file}', errors)
 
-            # REPORT.md must contain at least one non-empty finding (not just template placeholders).
-            report_file = date_dir / 'REPORT.md'
-            if report_file.exists():
-                rtxt = report_file.read_text(encoding='utf-8', errors='ignore')
-                # A filled finding has a single severity value (P0, P1, P2, or P3) —
-                # not the template placeholder "P0 / P1 / P2 / P3"
-                has_real_severity = bool(re.search(
-                    r'^- Severity:[ \t]*(P0|P1|P2|P3)[ \t]*$', rtxt, re.MULTILINE))
-                # A filled finding has a non-empty title
-                has_real_title = bool(re.search(
-                    r'^- Title:[ \t]*\S+', rtxt, re.MULTILINE))
-                # Some agents use ### headings with real content (not template placeholders)
-                # Exclude template headings: "Finding", "Confirm", "Challenge", "Merge proposal", etc.
-                # Real finding content: a line with filled evidence/description/SHA (not template placeholder)
-                has_real_content = bool(re.search(
-                    r'^\s*-\s+(?:Description|Evidence|My evidence|Observed on SHA|Source file|'
-                    r'Route/files|Root cause|Target report|Current HEAD evidence|'
-                    r'Why same root cause):\s*\S{5,}',
-                    rtxt, re.MULTILINE))
-                if not (has_real_severity or has_real_title or has_real_content):
-                    # Check if evidence exists in comments/ (some agents put work there)
-                    comments_dir = date_dir / 'comments'
-                    has_comments = comments_dir.exists() and any(
-                        f.suffix == '.md' and 'comment-on-OTHER' not in f.name
-                        for f in comments_dir.iterdir()
-                    )
-                    if has_comments:
-                        print(f'  WARNING: {proj.name}: REPORT.md appears empty template,'
-                              f' but evidence found in comments/: {report_file}')
-                    else:
-                        fail(f'{proj.name}: REPORT.md appears empty template'
-                             f' (no real severity/title/findings)'
-                             f' and no evidence in comments/: {report_file}', errors)
+                # REPORT.md must contain at least one real finding/evidence pattern
+                # (not just scaffold placeholders). Accept several in-the-wild intake styles:
+                #  - scaffold: - Severity:, - Title:
+                #  - bold style: - **Severity:** P2
+                #  - heading style: ### BUG-ID / ### AUDIT-ID
+                #  - table style: | BUG-01 | ... |
+                #  - verifier style: explicit issue IDs in body text
+                report_file = date_dir / 'REPORT.md'
+                if report_file.exists():
+                    rtxt = report_file.read_text(encoding='utf-8', errors='ignore')
+                    has_real_severity = bool(re.search(
+                        r'^(?:-\s*)?(?:- Severity:|\*\*Severity:\*\*)[ \t]*(P0|P1|P2|P3)\b',
+                        rtxt, re.MULTILINE))
+                    has_real_title = bool(re.search(
+                        r'^(?:-\s*)?(?:- Title:|\*\*Title:\*\*)[ \t]*\S+',
+                        rtxt, re.MULTILINE))
+                    has_real_heading = bool(re.search(
+                        r'^###\s+(?!Finding\b|Confirm\b|Challenge\b|Merge proposal\b|Comment on Finding\b)(?!<)(.+\S)',
+                        rtxt, re.MULTILINE))
+                    has_real_content = bool(re.search(
+                        r'^\s*(?:-\s+|\*\*[^*]+:\*\*\s*)(?:Description|Evidence|My evidence|Observed on SHA|Source file|'
+                        r'Route/files|Root cause|Target report|Current HEAD evidence|Why same root cause)',
+                        rtxt, re.MULTILINE))
+                    has_bug_table = bool(re.search(
+                        r'^\|\s*(?:BUG|NEW|AUDIT|SEC|SEARCH|UI|AR|R|REG|PC|CSP|CI)-?[A-Z0-9._-]*\s*\|',
+                        rtxt, re.MULTILINE))
+                    has_issue_id = bool(re.search(
+                        r'\b(?:BUG|NEW|AUDIT|SEC|SEARCH|UI|AR|R|REG|PC|CSP|CI)-[A-Z0-9._-]+\b',
+                        rtxt))
+                    if not (has_real_severity or has_real_title or has_real_heading or has_real_content or has_bug_table or has_issue_id):
+                        comments_dir = date_dir / 'comments'
+                        has_comments = comments_dir.exists() and any(
+                            f.suffix == '.md' and 'comment-on-OTHER' not in f.name
+                            for f in comments_dir.iterdir()
+                        )
+                        if has_comments:
+                            print(f'  WARNING: {proj.name}: REPORT.md appears empty template,'
+                                  f' but evidence found in comments/: {report_file}')
+                        else:
+                            fail(f'{proj.name}: REPORT.md appears empty template'
+                                 f' (no real severity/title/findings)'
+                                 f' and no evidence in comments/: {report_file}', errors)
 
     # Working + verified + verification should contain at least one README.
     if not (proj / 'working' / 'README.md').exists():

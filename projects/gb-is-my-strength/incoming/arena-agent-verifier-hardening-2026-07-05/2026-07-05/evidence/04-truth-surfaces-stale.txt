@@ -1,0 +1,42 @@
+$ sed -n 1,8p projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+# MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
+
+**Консолидация:** 2026-07-05 (обновлено **2026-07-05**, Pass 89 + АУДИТ 1.0–1.3 + Pass 91–92 full matrix verification)
+**HEAD исходного репозитория:** `2f09c8f5` (chore: auto-update meta, cache-bust — post SEC-001/SEC-002 fix). ⚠️ Note: `96959c93` is a valid SHA (verified via `git rev-parse`); previous claim it doesn't exist was incorrect (likely shallow clone artifact).
+**Статус:** 🟡 **AUDIT-P0-SWBASELINE — SEVERITY DISPUTED**: Pass 91 (concurrent agent) downgraded to P2 ("документационный drift"); Pass 92 (this agent) maintains P0 ("CI never fails on stale baseline when --require-cache-bump is used"). Both views documented; **owner decision required**. Deploy-green for runtime. Pass 89: deep-audit-2 witness validity confirmed. Matrix hygiene pass: 3 challenges filed, 2 merges proposed, severity upgrade proposed for NEW-ACTIONLINT-CI-GAP (P3→P1).
+**Verifier note (2026-07-05):** АУДИТ 1.0 intake (arena-agent-audit-1) submitted 18 findings. Independent verifier confirmed 12, rejected 2 (fabricated evidence + false positive), downgraded 2, could not verify 2. Added 1 new verifier finding (SEC-001-VERIFIER). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_audit-1-intake-verification.md` for full evidence.
+
+> ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
+
+$ sed -n 56,72p projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+---
+
+# 🟢 CURRENT TRUTH — 2026-07-05 Pass 71 + Pass 65 merged (READ FIRST)
+
+**Source HEAD:** `8c318010` (merge: seo-fix-og-images lane — final commit of a 4-fix session: BUG-CI-001 CI-gate fix, orphan-image regression fix, README anchor fix, /izbrannoe/ canonical fix, NEW-59 real image-resize fix)
+**AuditRepo HEAD:** Pass 71 (deep JS code review: floating-cluster-controller.js) merged with Pass 65 (verifier sync — 2nd witness on BUG-CI-001, NEW-59 reopened-then-genuinely-fixed, 6 new findings, 1 new regression found+fixed same session, unresolved merge-conflict markers found and cleaned from AuditRepo's own history)
+**Branches:** `origin/main` only (zero stale branches in both repos)
+**CI:** ✅ **All P0 blockers closed** — BUG-CI-001 fixed and independently re-confirmed by 2 agents (Pass 63 + Pass 65) with `actionlint` (0 issues across all 8 workflow files on current HEAD)
+
+## ✅ P0 fixed — BUG-CI-001 (L2, 2 independent witnesses)
+
+| Bug | Description | Fix | Commit |
+|-----|-------------|-----|--------|
+| BUG-CI-001 | deploy.yml duplicate `run:` key — submenu audit disabled | Deleted line 156 | `6e68d7ca` ✅ |
+
+Confirmed post-fix with `actionlint` v1.7.7 release binary → 0 issues across all 8 workflow files.
+
+
+$ sed -n 1,12p PROJECT_REGISTRY.md
+# Project Registry
+
+Список проектов, которые проходят мультиагентные аудиты в этом репозитории.
+
+## Active projects
+
+| Project folder | Source repo | Status | Notes |
+|---|---|---|---|
+`projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | Pass 70 deep CSS review + Pass 65 verifier sync (2 independent BUG-CI-001 witnesses, NEW-59 genuinely fixed, orphan-image regression found+fixed same session). 57 open / 34 closed. Latest source HEAD: `8c318010`. Start from `verified/MASTER_BUG_MATRIX.md`. | (audit(gb): Pass 70 — CSS review + Pass 65 verifier sync merged)
+
+## Status glossary
+

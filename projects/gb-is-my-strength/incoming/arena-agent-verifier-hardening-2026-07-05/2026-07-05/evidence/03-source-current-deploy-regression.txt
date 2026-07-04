@@ -1,0 +1,6 @@
+$ git -C /home/user/repos/gb-is-my-strength rev-parse HEAD
+2f09c8f585426fd5f592e3ea7ab80b80baeab1d4
+
+$ grep -n "workflow_run.conclusion == 'failure'" .github/workflows/deploy.yml
+64:      github.event.workflow_run.conclusion == 'failure'
+72:        if: github.event.workflow_run.conclusion == 'failure'
