@@ -1,3 +1,18 @@
+
+# 🟢 PASS 39 — 2026-07-04 P1-CI-DUPE fixed (READ FIRST)
+
+**Source HEAD:** `ba6a8f67` (CI cache-bust optimization)
+**AuditRepo HEAD:** `ae4bec9` (to be updated)
+
+**Fixed:** `P1-CI-DUPE` — deploy.yml now skips redundant `cache-bust.js` when triggered from IndexNow workflow_run.
+Indexnow.yml already ran cache-bust before the `[skip ci]` commit. Saves ~3s per deploy cycle.
+
+**CI status on `ba6a8f67`:** Shared Files Guard triggered. Awaiting result.
+
+**All prior P0/P1/P2 blockers remain fixed-current.** No regressions.
+
+---
+
 # 🟢 PASS 36 — 2026-07-04 Stale branch cleanup + PremiumControls archive (READ IF AUDITING)
 
 **Cleanup performed:**

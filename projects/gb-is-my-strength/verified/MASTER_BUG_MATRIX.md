@@ -177,7 +177,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 
 ## 🟠 P1 — HIGH PRIORITY (2 открытых бага)
 
-### P1-CI-DUPE: Дублирование npm ci + cache-bust в IndexNow и Deploy
+### P1-CI-DUPE: Дублирование npm ci + cache-bust в IndexNow и Deploy — ✅ FIXED-CURRENT on `ba6a8f67`
 * **Файлы:** `.github/workflows/indexnow.yml`, `.github/workflows/deploy.yml`
 * **Суть:** 2× npm ci + 2× cache-bust + Astro build = 20–30 мин CI на каждый пуш.
 
