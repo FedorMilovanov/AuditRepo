@@ -1,8 +1,8 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
-**Консолидация:** 2026-07-05 (обновлено **2026-07-05**, Pass 89 deep verifier + АУДИТ 1.0 intake + independent verifier pass merged)
-**HEAD исходного репозитория:** `8c318010` (merge: seo-fix-og-images lane) ⚠️ ранее ошибочно указан `96959c93` — этот SHA не существует в source repo (Pass 91)
-**Статус:** ✅ **deploy-green** — BUG-CI-001 fixed, все P0 runtime блокеры закрыты. AUDIT-P0-SWBASELINE переклассифицирован в P2 (Pass 91): baseline .json — документационный drift; SW имеет корректную версию; CI осознанно использует note() а не bad(). Pass 89: deep-audit-2 witness validity confirmed (evidence in comments/, not REPORT.md — structural note, not fraud). Matrix hygiene pass: 3 challenges filed, 2 merges proposed, severity upgrade proposed for NEW-ACTIONLINT-CI-GAP (P3→P1).
+**Консолидация:** 2026-07-05 (обновлено **2026-07-05**, Pass 89 + АУДИТ 1.0–1.3 + Pass 91–92 full matrix verification)
+**HEAD исходного репозитория:** `2f09c8f5` (chore: auto-update meta, cache-bust — post SEC-001/SEC-002 fix). ⚠️ Note: `96959c93` is a valid SHA (verified via `git rev-parse`); previous claim it doesn't exist was incorrect (likely shallow clone artifact).
+**Статус:** 🟡 **AUDIT-P0-SWBASELINE — SEVERITY DISPUTED**: Pass 91 (concurrent agent) downgraded to P2 ("документационный drift"); Pass 92 (this agent) maintains P0 ("CI never fails on stale baseline when --require-cache-bump is used"). Both views documented; **owner decision required**. Deploy-green for runtime. Pass 89: deep-audit-2 witness validity confirmed. Matrix hygiene pass: 3 challenges filed, 2 merges proposed, severity upgrade proposed for NEW-ACTIONLINT-CI-GAP (P3→P1).
 **Verifier note (2026-07-05):** АУДИТ 1.0 intake (arena-agent-audit-1) submitted 18 findings. Independent verifier confirmed 12, rejected 2 (fabricated evidence + false positive), downgraded 2, could not verify 2. Added 1 new verifier finding (SEC-001-VERIFIER). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_audit-1-intake-verification.md` for full evidence.
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
@@ -160,6 +160,13 @@
 
 ---
 
+- **NEW-CACHE-BUST-ASTRO:** *(Pass 91, new)* `enhancements.js` and `highlights.js` use `SITE_CONFIG.version` for runtime CSS cache busting, but Astro-generated `SITE_CONFIG` (from `BaseLayout.astro`) has **no `version` field**. Result: 53 Astro pages load CSS with `?v=` (empty string) — no cache busting. Legacy pages still cache-bust correctly via timestamp.
+  - **Evidence:** `grep -c 'version' src/layouts/BaseLayout.astro` = 0 (in SITE_CONFIG context). Legacy HTML has `"version": 1778943682`.
+  - **Repair lane:** cache-bust-astro-runtime-css
+
+- **NEW-OG-DIMENSIONS-HARDCODED:** *(Pass 91, new)* `src/components/seo/Seo.astro:72-73` hardcodes `og:image:width="1200"` and `og:image:height="630"` for ALL pages. These should be props. Root cause of NEW-59 "phantom fix" (metadata lied about actual image dimensions).
+  - **Repair lane:** seo-og-dimensions-props
+
 ## 🟠 P2 — MEDIUM (2 открытых)
 
 - **BUG-011:** 23 уникальных px брейкпоинта, 768px коллизия (reclassified — без визуальной регрессии)
@@ -173,6 +180,17 @@
 
 - **NEW-72:** SVG dedup micro-optimization (~1.9KB, downgraded from P2)
 - **NEW-54/56/57/58:** Social/SEO metadata bundle (NEW-55/59 fixed)
+
+## 🟣 P3 — HYGIENE (3 new, Pass 91)
+
+- **NEW-STALE-BRANCHES:** 5 merged lane branches still on remote (4 fully merged, 1 merged via alternative path). `git branch -r | grep lane/` = 5 stale refs.
+  - **Repair lane:** cleanup-stale-branches
+
+- **NEW-GITCONFIG-COMMITTED:** `.gitconfig` with agent identity (`agent@arena.ai`) committed to repo root. Not functional but pollutes root.
+  - **Repair lane:** cleanup-gitconfig
+
+- **NEW-PREFETCH-UNCONDITIONAL:** `BaseLayout.astro` emits 5 `<link rel="prefetch">` on every page including the page itself. Wasted bandwidth on mobile.
+  - **Repair lane:** perf-conditional-prefetch
 
 ## 🔵 P3 — REFACTORING (4)
 
