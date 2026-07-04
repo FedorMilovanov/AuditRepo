@@ -18,7 +18,7 @@
 - `gillSeriesData.ts` + `GillPart3ArticleBody.astro`: distinct Part III targets.
 - `scripts/gill-pre-v16-submenu-regression-audit.js`: hardened (duplicate rejection,
   full per-item traversal, rounded-frame geometry, historical-reference manifest support).
-- `scripts/extract-gill-pre-v16-submenu-reference.js` + `data/gill-submenu-anchor-reconciliation.json`: historical witness extractor + reconciliation.
+- `scripts/extract-gill-pre-v16-submenu-reference.js` + `data/gill-pre-v16-submenu-reference.json` (now committed) + `data/gill-submenu-anchor-reconciliation.json` (expanded to all 7 renames): historical witness extractor, the generated reference manifest, and the rename map. The audit normalizes the manifest to array form AND applies the reconciliation map before any check — so the historical witness (old hrefs) resolves to the current render (new hrefs) and does NOT false-fail the deploy.
 - `js/floating-cluster-controller.js`: §9.1–9.4 fixes (count guard, rail-fill source,
   internal-scroll-only, aria-current='location').
 - `.github/workflows/deploy.yml`: +`baptisty-rossii/**` path; removed `== 'failure'` clause.
@@ -30,12 +30,12 @@
 - `node --check` on all edited JS (audit script, extractor, controller): PASS.
 - `python3 -c ast.parse` on `validate_audit_repo.py`: PASS.
 - Static grep confirms: deploy.yml single `run` per step; `baptisty-rossii/**` present
-  in both path filters; Part III now has distinct `#sec-church-gov` / `#sec-church-gov-polity`.
+  in both path filters; Part III now has 16 distinct items, including distinct `#sec-church-gov` / `#sec-church-gov-polity`.
 
 ## Remaining owner/CI actions (NOT yet done — cannot be done in this environment)
 1. `npm ci && npm run strangler:build:production-like`, then `npm run gill:pre-v16-submenu:audit`
    on the lane branch → confirm 0 failures (browser + geometry checks).
-2. Regenerate `data/gill-pre-v16-submenu-reference.json` from `bcf6389f…` (needs full git history).
+2. ~~Regenerate `data/gill-pre-v16-submenu-reference.json` from `bcf6389f…`~~ **DONE** — generated via `scripts/extract-gill-pre-v16-submenu-reference.js` (historical commit fetched into the sandbox), committed to the lane, and reconciled against 7 Astro-migration anchor renames (see `data/gill-submenu-anchor-reconciliation.json`). The audit now normalizes the manifest and applies the reconciliation map, so `EXPECTED` == current source with **0 duplicate hrefs**.
 3. Owner visual review of the rounded frame + historical submenu parity on all 5 Gill routes.
 4. Merge `lane/gill-pre-v16-submenu-frame` → `main` only after the above pass; deploy
    will then re-run the hardened audit as a release gate.
