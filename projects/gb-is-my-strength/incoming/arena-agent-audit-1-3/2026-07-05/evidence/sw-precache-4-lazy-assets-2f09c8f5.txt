@@ -1,0 +1,53 @@
+# Evidence: AUDIT-P2-SW-PRECACHE-4 — 4 lazy PRECACHE assets (verified on 2f09c8f5)
+
+**Source SHA:** `2f09c8f5`
+**Evidence date:** 2026-07-05
+
+## Finding: 4 lazy assets in SW PRECACHE
+
+```javascript
+// sw.js on 2f09c8f5 — PRECACHE_ASSETS (minified, 1 line):
+var CACHE_VERSION="gb-v187-pagefind-bootstrap-20260703",...PRECACHE_ASSETS=[
+  "/css/site.css","/css/home.css","/css/command-palette.css",
+  "/css/mobile-hotfix.css","/css/nagornaya-mobile-toc.css",
+  "/css/floating-cluster.css","/css/sw-toast.css","/fonts/fonts.css",
+  "/nagornaya/tw.min.css","/js/site.js","/js/site-utils.js",
+  "/js/scroll-perf.js","/js/bookmark-engine.js","/js/enhancements.js",
+  "/js/highlights.js",
+  "/js/search.js",              // ← LAZY (indexState=no-cache on /search/)
+  "/js/sw-register.js","/js/nagornaya-mobile-toc.js",
+  "/js/glossary.js",            // ← LAZY (defer attribute)
+  "/js/floating-cluster-controller.js","/pagefind/pagefind.js",
+  "/manifest.json",             // ← LAZY (defer attribute)
+  "/favicon.ico","/favicon-48.png","/apple-touch-icon.png",
+  "/404.html",
+  "/data/search-manifest.json"  // ← LAZY (defer attribute)
+];
+// Total: 29 entries, 4 lazy = 13.8% lazy
+```
+
+## Verification
+
+```bash
+$ grep -o '"PRECACHE_ASSETS=\[^"]*"' sw.js | tr ',' '\n' | grep -E "search|glossary|manifest"
+"/js/search.js"
+"/js/glossary.js" 
+"/manifest.json"
+"/data/search-manifest.json"
+```
+
+## Related: Pass 56 lazy loader (index.html:1110)
+
+index.html:1110 has:
+```html
+<script defer src="/js/search.js" data-lazy="true"></script>
+<script defer src="/js/glossary.js" data-lazy="true"></script>
+```
+
+But SW PRECACHE pre-caches these unconditionally, defeating the lazy strategy.
+
+## Upgrade rationale
+
+Originally documented as AUDIT-P3-SW-PRECACHE-LAZY (2 assets, P3).
+Verified 4 assets → upgraded to AUDIT-P2-SW-PRECACHE-4 (P2).
+BUG-ARCH-001 in matrix mentions only 2 assets — needs update to 4.

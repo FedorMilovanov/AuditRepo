@@ -1,0 +1,55 @@
+# Evidence: AUDIT-P1-CI-GATE-GAP — indexnow.yml uses :light gate (Production CI)
+
+**Source SHA:** `2f09c8f5`
+**Evidence date:** 2026-07-05
+
+## Finding: indexnow.yml uses :light gate (production CI)
+
+```yaml
+# .github/workflows/indexnow.yml:71 (on 2f09c8f5)
+- name: Static publication gates
+  run: npm run validate:static-publication:light
+```
+
+## What :light gate skips (34 commands vs 37)
+
+Full gate (validate:static-publication, 37 commands):
+... && astro:audit:article-mdx:strict && astro:audit:baptisty-series && sw:dist:audit
+
+:light gate (validate:static-publication:light, 34 commands):
+... [MISSING: astro:audit:article-mdx:strict]
+... [MISSING: astro:audit:baptisty-series]
+... [MISSING: sw:dist:audit]
+
+## Critical implication
+
+indexnow.yml workflow:
+1. Triggered on schedule (daily) or manual dispatch
+2. Fetches all article URLs from sitemap
+3. Submits to IndexNow API (search engine indexing)
+4. Uses :light gate → skips sw:dist:audit
+
+If SW distribution is broken:
+- indexnow.yml: :light gate → ✅ PASSES
+- But SW serves stale/broken pages
+- IndexNow submits URLs → search engines index wrong content
+- User experience: broken pages in Google search results
+
+## Comparison: deploy.yml uses full gate
+
+```yaml
+# .github/workflows/deploy.yml:101 (on 2f09c8f5)
+- name: Static publication gates
+  run: npm run validate:static-publication  # FULL gate ✅
+```
+
+deploy.yml uses full gate — catches all 37 checks including sw:dist:audit.
+indexnow.yml uses :light gate — misses sw:dist:audit.
+
+## Fix
+
+Change indexnow.yml:71:
+```yaml
+- name: Static publication gates
+  run: npm run validate:static-publication  # NOT validate:static-publication:light
+```
