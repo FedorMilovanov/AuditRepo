@@ -1331,3 +1331,59 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 
 `incoming/arena-agent-pass75/REPORT.md`
 
+
+---
+
+## 🟢 PASS 76 — DEEP JS CODE REVIEW: search.js (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `js/search.js` (1 line, 33KB minified) — command palette with Pagefind
+
+### Critical Findings (P1)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-039 | Minified code in version control (33KB) | 🔴 P1 |
+| BUG-JS-040 | innerHTML without sanitization (30+ instances) | 🔴 P1 |
+
+### High Priority Findings (P2)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-041 | Complex IIFE (~800+ lines) | 🟡 P2 |
+| BUG-JS-042 | Magic numbers (180, 50, 12, 10, 2, etc.) | 🟡 P2 |
+| BUG-JS-043 | Empty catch blocks (5+) | 🟡 P2 |
+
+### Medium Priority Findings (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-044 | No cleanup system for event listeners | 🔵 P3 |
+| BUG-JS-045 | Duplicate SVG icons (20+ defined, some similar) | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total size | 33KB |
+| Lines | 1 (minified) |
+| Estimated unminified | ~800+ lines |
+| innerHTML risks | 30+ |
+| Magic numbers | 20+ |
+| Empty catches | 5+ |
+| Cleanup system | No |
+| SVG icons | 20+ (some duplicates) |
+
+### Top 5 Recommendations
+
+1. **Unminify search.js** — store source in VCS
+2. **Sanitize innerHTML** — prevent XSS (30+ instances)
+3. **Refactor IIFE** — split into smaller modules
+4. **Extract magic numbers** — create named constants
+5. **Add logging to empty catches** — improve debuggability
+
+### Full Report
+
+`incoming/arena-agent-pass76/REPORT.md`
+
