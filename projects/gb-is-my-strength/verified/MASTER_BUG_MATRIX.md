@@ -972,6 +972,11 @@ The **"Писание" (Scripture)** search scope — a primary feature of the c
 1. `data-pagefind-meta="scripture"` was never added to most ArticleBody components
 2. Generic layouts (ArticleLayout/SeriesArticleLayout) don't support the feature
 3. Nagornaya paralel development created inconsistency (chast-1/2/3 have, 4/5 don't)
+| SEARCH-314 | search.js N() не обрабатывает Hebrew/Greek символы — контент на иврите (עָקֹב) и греческом (πληρόω) не находится | 🔵 **P3** | 4+ страницы имеют Hebrew/Greek текст, но поиск работает только с Cyrillic/Latin |
+| SEARCH-315 | 22 addEventListener, 0 removeEventListener — потенциальная утечка памяти при открытии/закрытии поиска | 🔵 **P3** | re() (close) не вызывает removeEventListener |
+| SEARCH-316 | site.js и search.js оба обрабатывают Escape + Enter — потенциальный конфликт обработчиков | 🔵 **P3** | site.js закрывает тултипы по Escape, search.js закрывает палитру по Escape |
+| SEARCH-317 | XSS: search.js безопасен (F() html-encodes, safeUrl() блокирует javascript:) | ✅ **SAFE** | Все выходные данные проходят через F() + safeUrl() |
+| SEARCH-318 | Минимум 2 символа для поиска — корректное поведение | ✅ **CORRECT** | xe() проверяет e.length < 2 |
 4. No gate verifies that scripture-heavy pages have appropriate meta tags
 
 ### Fix required
