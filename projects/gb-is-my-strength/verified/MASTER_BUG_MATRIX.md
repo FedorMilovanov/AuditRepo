@@ -1,8 +1,9 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
-**Консолидация:** 2026-07-04 (обновлено **2026-07-05**, Pass 89 deep verifier + matrix hygiene merged)
-**HEAD исходного репозитория:** `8c318010` (merge: seo-fix-og-images lane — includes BUG-CI-001 CI fix, orphan-image regression fix, README anchor fix, /izbrannoe/ canonical fix, NEW-59 real image-resize fix)
-**Статус:** ✅ **deploy-green** — BUG-CI-001 fixed (2 independent witnesses confirmed: Pass 63 + deep-audit-2/comments, L2-valid), все P0 блокеры закрыты. NEW-59 reopened then genuinely fixed (Pass 65). Pass 89: deep-audit-2 witness validity confirmed (evidence in comments/, not REPORT.md — structural note, not fraud). Matrix hygiene pass: 3 challenges filed, 2 merges proposed, severity upgrade proposed for NEW-ACTIONLINT-CI-GAP (P3→P1).
+**Консолидация:** 2026-07-05 (обновлено **2026-07-05**, Pass 89 deep verifier + АУДИТ 1.0 intake + independent verifier pass merged)
+**HEAD исходного репозитория:** `96959c93` (docs(gb): point agents to AuditRepo + add verification discipline to AGENTS.md)
+**Статус:** 🔴 **P0 OPEN** — AUDIT-P0-SWBASELINE (SW baseline drift v182→v187, 5 versions stale). Deploy-green for runtime, but SW cache versioning contract is broken. Pass 89: deep-audit-2 witness validity confirmed (evidence in comments/, not REPORT.md — structural note, not fraud). Matrix hygiene pass: 3 challenges filed, 2 merges proposed, severity upgrade proposed for NEW-ACTIONLINT-CI-GAP (P3→P1).
+**Verifier note (2026-07-05):** АУДИТ 1.0 intake (arena-agent-audit-1) submitted 18 findings. Independent verifier confirmed 12, rejected 2 (fabricated evidence + false positive), downgraded 2, could not verify 2. Added 1 new verifier finding (SEC-001-VERIFIER). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_audit-1-intake-verification.md` for full evidence.
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
 
@@ -43,34 +44,44 @@
 
 ---
 
-## 🔴 P0 — CRITICAL (0 открытых)
+## 🔴 P0 — CRITICAL (1 открытый)
 
-*Все P0 блокеры закрыты.*
+| ID | Описание | Статус | Evidence |
+|---|---|---|---|
+| AUDIT-P0-SWBASELINE | SW cache baseline drift: `migration/sw-cache-version-baseline.json` = `gb-v182-*`, actual `sw.js` CACHE_VERSION = `gb-v187-*` (5 versions stale). `sw-dist-readiness-audit.js --require-cache-bump` uses `note()` not `bad()` — CI never fails on stale baseline. | 🔴 OPEN | АУДИТ 1.0 intake + independent verifier confirmation. Verified-source on `96959c93`. |
 
 | ID | Описание | Коммит |
 |---|---|---|
 | BUG-CI-001 | deploy.yml двойной `run:` ключ — submenu audit отключён | `6e68d7ca` ✅ FIXED (2 independent witnesses: arena-agent-pass63 + arena-agent-deep-audit-2, confirmed via actionlint re-run showing 0 issues) |
 
-## 🟠 P1 — CI GATES (2 открытых) + PERFORMANCE (1)
+## 🟠 P1 — CI GATES (2 открытых) + PERFORMANCE (1) + SECURITY (1) + CSS (1)
 
-- **BUG-CI-002:** `validate:static-publication:light` (запускается в indexnow.yml на каждый push) пропускает 3 критические проверки:
+- **AUDIT-P1-FC-IMP:** `css/floating-cluster.css` contains **490 `!important`** rules — 2.4× the ceiling for site.css (202). `audit-pro.js` checks only site.css; floating-cluster.css has **no ceiling, no ratchet, no guard**. Adding unlimited `!important` passes all CI gates.
+  - **Evidence:** `grep -c '!important' css/floating-cluster.css` = 490; `audit-pro.js:77` IMPORTANT_CEIL = 202 (site.css only). АУДИТ 1.0 intake, verified by independent verifier.
+  - **Repair lane:** css-floating-cluster-cleanup
+
+- **SEC-001-VERIFIER:** `js/site.js:288` — `owCard.innerHTML` applies `tt()` HTML escaper to `w.lang`, `w.original`, `w.definition` but **NOT** to `w.transliteration`, `w.gloss`, `w.source`. Inconsistent defense-in-depth; XSS vector if SITE_CONFIG data ever becomes user-generated.
+  - **Evidence:** `python3 -c "..." ` confirms 3/6 fields unescaped. New verifier finding (not in intake).
+  - **Repair lane:** security-innerhtml-escape
+
+- **BUG-CI-002:** *(2nd witness: АУДИТ 1.0 intake + independent verifier, 2026-07-05)* `validate:static-publication:light` (запускается в indexnow.yml на каждый push) пропускает 3 критические проверки:
   - `astro:audit:article-mdx:strict` (MDX структура, Ukrainian 'мін', 'Сперджен')
   - `astro:audit:baptisty-series` (Baptist series shadow audit)
   - `sw:dist:audit` (Service Worker dist readiness)
   - **FULL:** 37 checks, **LIGHT:** 34 checks. Контент-регрессии могут пройти через indexnow.yml незамеченными.
   - **Repair lane:** ci-gate-alignment
 
-- **BUG-CI-003:** indexnow.yml push retry — silent failure. После 3 неудачных попыток `git push` workflow отчитывается как успешный без `exit 1`, `::error::` или уведомления.
+- **BUG-CI-003:** *(2nd witness: АУДИТ 1.0 intake + independent verifier, 2026-07-05)* indexnow.yml push retry — silent failure. После 3 неудачных попыток `git push` workflow отчитывается как успешный без `exit 1`, `::error::` или уведомления.
   - **Evidence:** `grep -A5 "for _attempt" .github/workflows/indexnow.yml`
   - **Repair lane:** ci-fix-emergency
 
-- **BUG-PERF-001:** Memory leaks — addEventListener без removeEventListener в 5 JS файлах (64 listeners total). Критические: `nagornaya-mobile-toc.js` (26 listeners), `search.js` (22 listeners).
+- **BUG-PERF-001:** *(2nd witness: АУДИТ 1.0 intake + independent verifier, 2026-07-05)* Memory leaks — addEventListener без removeEventListener в 5 JS файлах (64 listeners total). Критические: `nagornaya-mobile-toc.js` (26 listeners), `search.js` (22 listeners).
   - **Mitigation:** MPA (Astro) — менее критично чем в SPA, но стоит добавить cleanup для search palette и mobile TOC.
   - **Repair lane:** perf-cleanup
 
-## 🟡 P2 — CI/SEO (3 открытых)
+## 🟡 P2 — CI/SEO (4 открытых)
 
-- **BUG-ARCH-001:** SW PRECACHE_ASSETS содержит `/data/search-manifest.json` и `/js/search.js`, которые теперь lazy-loaded (Pass 56). SW precache загружает оба при install, сводя экономию lazy loading на нет.
+- **BUG-ARCH-001:** *(2nd witness: АУДИТ 1.0 intake + independent verifier, 2026-07-05)* SW PRECACHE_ASSETS содержит `/data/search-manifest.json` и `/js/search.js`, которые теперь lazy-loaded (Pass 56). SW precache загружает оба при install, сводя экономию lazy loading на нет.
   - **Repair lane:** perf-cleanup
 
 - **BUG-SEO-001:** IndexNow submit запускается сразу после `actions/deploy-pages@v4`, до реальной доступности нового контента на GitHub Pages CDN. Поисковики могут краулить старую версию.
@@ -79,10 +90,22 @@
 - **NEW-CANONICAL-IZBRANNOE-01-GAP** *(Pass 65, tooling gap note — underlying bug fixed on `563e85f3`)*: existing canonical-integrity tooling (`audit-pro.js`'s `canonicalSanityGuard()`, `extract-url-contract.js`) structurally cannot catch a relative canonical/og:url on a `noindex` route — `canonicalSanityGuard` skips `dist/` and this route has no legacy root copy; `extract-url-contract.js`'s `issues[]` loop only iterates `publicPages`, excluding noindex pages by default. The bug shipped and is now fixed, but the tooling gap remains.
   - **Repair lane:** tooling-hardening
 
-## 🟢 P3 — CODE QUALITY (2 открытых)
+- **AUDIT-P2-MATRIX-DRIFT:** Route data divergence: `route-migration-matrix.json` = 35 routes, `page-ownership.json` = 54 routes, `sitemap.xml` = 43 URLs. No cross-validation script exists. Routes in ownership but not in matrix have implicit fallback behavior.
+  - **Evidence:** Direct JSON + XML parse. АУДИТ 1.0 intake, verified by independent verifier.
+  - **Repair lane:** migration-data-alignment
+
+## 🟢 P3 — CODE QUALITY (4 открытых)
 
 - **BUG-SW-001:** `isFont()` в sw.js — двойное отрицание `!(origin !== ... || !pathname...)` эквивалентно `origin === ... && pathname...`. Корректно, но затрудняет аудит.
   - **Repair lane:** perf-cleanup
+
+- **AUDIT-P3-STYLE-DUP:** `js/enhancements.js` and `js/highlights.js` inject `<link>` for runtime CSS **without** checking if already injected (no `document.getElementById` guard). If scripts are loaded twice, duplicate `<link>` elements are created. MPA mitigates this (full page reload), but SPA-like View Transitions could trigger it.
+  - **Evidence:** Code inspection. АУДИТ 1.0 intake, verified by independent verifier.
+  - **Repair lane:** code-quality
+
+- **AUDIT-P3-QUOTE-NO-CONFIRM:** `js/highlights.js` — delete button (`.gb-hl-del`) directly removes saved quote from localStorage without `confirm()` dialog. One accidental tap = permanent data loss.
+  - **Evidence:** Code inspection. АУДИТ 1.0 intake, verified by independent verifier.
+  - **Repair lane:** code-quality
 
 - **NEW-SAFEURL-XSS-HARDENING** *(Pass 65)*: `safeUrl()` в `js/search.js` (command palette) блокирует только `javascript:` (`/^javascript:/i`), не блокирует `data:`/`vbscript:`. Текущие вызовы работают только с first-party данными из `search-manifest.json`/Pagefind (эксплойта не найдено), но имя функции подразумевает более полную защиту.
   - **Repair lane:** code-quality/hardening
