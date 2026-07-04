@@ -713,17 +713,100 @@ Full report: `incoming/arena-agent-pass63/REPORT.md`
 
 ---
 
+## 🟢 PASS 69 — DEEP CSS CODE REVIEW: floating-cluster.css (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `css/floating-cluster.css` (2882 lines, 106KB) — complete line-by-line audit
+
+### New findings (7)
+
+| ID | Severity | Description | Status |
+|----|----------|-------------|--------|
+| BUG-CSS-006 | 🔴 P1 | Duplicate :root variable definitions (lines 10-28 and 32-54) | OPEN |
+| BUG-CSS-007 | 🔴 P1 | Duplicate .gb-floater mobile styles (lines ~450-480 and ~550-580) | OPEN |
+| BUG-CSS-008 | 🔴 P1 | "Specificity wars" — 4 layers of !important overriding !important | OPEN |
+| BUG-CSS-009 | 🟡 P2 | MAX_INT z-index values (2147483000, 2147483100) — anti-pattern | OPEN |
+| BUG-CSS-010 | 🟡 P2 | Duplicate .gbs-rail-foot definitions (lines ~900 and ~1000) | OPEN |
+| BUG-CSS-011 | 🔵 P3 | Architectural problems acknowledged in comments but not fixed | OPEN |
+| BUG-CSS-012 | 🔵 P3 | 524 !important in single file (50% of project total) | OPEN |
+
+### Key discoveries
+
+**1. "Specificity wars" — 4 layers of !important:**
+- Layer 1: "v16 FINAL LUXURY POLISH" (lines ~1200-1400) — 186 !important
+- Layer 2: "v16 OWNER DESIGN SURGICAL FIXES" (lines ~1600-1800) — overrides Layer 1
+- Layer 3: "v16 PURITAN ANTIQUE BRASS LUXURY" (lines ~1800-2000) — overrides Layer 2
+- Layer 4: "GILL MOBILE REFERENCE LOCK V3" (lines ~2400-2882) — 278 !important, overrides all
+
+**2. "GILL MOBILE REFERENCE LOCK V3" section:**
+- 480 lines (17% of file)
+- 278 !important (53% of file's !important)
+- MAX_INT z-index values
+- Comment explicitly acknowledges: "overrides older layered 'luxury polish' rules"
+
+**3. Duplicate :root definitions:**
+- First definition (lines 10-28): 19 variables
+- Second definition inside @layer (lines 32-54): 23 variables with **different values**
+- Creates cascade confusion
+
+### File structure
+
+```
+floating-cluster.css (2882 lines, 106KB)
+├── :root variables (2 definitions) — BUG-CSS-006
+├── @layer components (base components)
+├── Gill v16 Series Rail (desktop)
+│   └── .gbs-rail-foot — duplicate — BUG-CSS-010
+├── Gill v16 Mobile Bar
+├── TOC Popups
+├── v16 FINAL LUXURY POLISH — BUG-CSS-008 Layer 1
+├── v16 OWNER DESIGN SURGICAL FIXES — BUG-CSS-008 Layer 2
+├── v16 PURITAN ANTIQUE BRASS LUXURY — BUG-CSS-008 Layer 3
+├── Play Ember Speed Pill
+├── Favorites Block
+├── v16 Layout + Responsive Layer
+├── Gill UI Polish Hotfix 2026-06-29
+└── GILL MOBILE REFERENCE LOCK V3 — BUG-CSS-008 Layer 4, BUG-CSS-012
+    └── 480 lines, 278 !important, MAX_INT z-index — BUG-CSS-009
+```
+
+### Impact analysis
+
+**Current state:**
+- Lines of code: 2882
+- !important: 524 (18% of lines)
+- Duplicate blocks: 4+
+- Maintainability: 🔴 Critical (specificity wars)
+
+**After refactoring (estimated):**
+- Lines of code: ~1200 (60% reduction)
+- !important: <50 (90% reduction)
+- Duplicate blocks: 0
+- Maintainability: 🟢 Good (CSS layers, single source of truth)
+
+**Performance impact:**
+- Current: 106KB CSS
+- After deduplication: ~85KB (20% reduction)
+- After consolidation: ~60KB (43% reduction)
+
+### Full report
+
+`incoming/arena-agent-pass69/REPORT.md`
+
+---
+
 ## 📊 СВОДКА
 
 | Уровень | Открыто | Закрыто |
 |---|---|---|
 | P0 (Critical) | 0 | 4 |
-| P1 (High) | 4 | 8 |
-| P2 (Medium) | 10 | 15 |
+| P1 (High) | 7 | 8 |
+| P2 (Medium) | 12 | 15 |
 | P3 (Medium) | 3 | 5 |
 | P3 (Refactor) | 4 | 0 |
-| P3 (Cleanup) | 15 | 0 |
+| P3 (Cleanup) | 17 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **39** | **32** |
+| **Итого** | **46** | **32** |
 
-*P0: BUG-CI-001 fixed in `6e68d7ca`. P1: BUG-CI-002/003 CI gate gaps + BUG-PERF-001 memory leaks (Pass 65) + BUG-CSS-001 1047 !important (Pass 68). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing, BUG-QUALITY-001/002/003 innerHTML + console + missing WebP (Pass 64-65), BUG-A11Y-001 skip links (Pass 66), BUG-PERF-002 render-blocking CSS (Pass 67), BUG-CSS-002/003 hardcoded colors + breakpoints (Pass 68). P3: 19 items (Pass 64-68). Deletions audit: all removals verified correct, no regressions. Data consistency: all JSON valid, no duplicates. CSS audit: 534KB total, critical technical debt.*
+*P0: BUG-CI-001 fixed in `6e68d7ca`. P1: BUG-CI-002/003 CI gate gaps + BUG-PERF-001 memory leaks (Pass 65) + BUG-CSS-001 1047 !important (Pass 68) + BUG-CSS-006/007/008 floating-cluster.css duplicate definitions + specificity wars (Pass 69). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing, BUG-QUALITY-001/002/003 innerHTML + console + missing WebP (Pass 64-65), BUG-A11Y-001 skip links (Pass 66), BUG-PERF-002 render-blocking CSS (Pass 67), BUG-CSS-002/003 hardcoded colors + breakpoints (Pass 68), BUG-CSS-009/010 MAX_INT z-index + duplicate .gbs-rail-foot (Pass 69). P3: 24 items (Pass 64-69). Deletions audit: all removals verified correct, no regressions. Data consistency: all JSON valid, no duplicates. CSS audit: 534KB total, critical technical debt. floating-cluster.css: 106KB, 524 !important, 4 specificity layers — requires complete refactor.*
