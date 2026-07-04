@@ -20,13 +20,12 @@ Verified 11 major deletions (GillRailControls, site-layered.css, premium-control
 | Уровень | Open | Closed | Всего |
 |---------|------|--------|-------|
 | P0 | 0 | 4 | 4 |
-| P1 | 2 | 8 | 10 |
-| P2 | 3 | 15 | 18 |
-| P3 | 3 | 5 | 8 |
+| P1 | 3 | 8 | 11 |
+| P2 | 6 | 15 | 21 |
+| P3 | 16 | 5 | 21 |
 | Refactor | 4 | 0 | 4 |
-| Cleanup | 5 | 0 | 5 |
 | AuditRepo | 3 | 0 | 3 |
-| **Total** | **20** | **32** | **52** |
+| **Total** | **28** | **32** | **60** |
 
 ## Ключевые документы
 

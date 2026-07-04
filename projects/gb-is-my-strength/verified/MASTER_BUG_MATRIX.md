@@ -48,7 +48,7 @@
 |---|---|---|
 | BUG-CI-001 | deploy.yml двойной `run:` ключ — submenu audit отключён | `6e68d7ca` ✅ FIXED |
 
-## 🟠 P1 — CI GATES (2 открытых)
+## 🟠 P1 — CI GATES (2 открытых) + PERFORMANCE (1)
 
 - **BUG-CI-002:** `validate:static-publication:light` (запускается в indexnow.yml на каждый push) пропускает 3 критические проверки:
   - `astro:audit:article-mdx:strict` (MDX структура, Ukrainian 'мін', 'Сперджен')
@@ -60,6 +60,10 @@
 - **BUG-CI-003:** indexnow.yml push retry — silent failure. После 3 неудачных попыток `git push` workflow отчитывается как успешный без `exit 1`, `::error::` или уведомления.
   - **Evidence:** `grep -A5 "for _attempt" .github/workflows/indexnow.yml`
   - **Repair lane:** ci-fix-emergency
+
+- **BUG-PERF-001:** Memory leaks — addEventListener без removeEventListener в 5 JS файлах (64 listeners total). Критические: `nagornaya-mobile-toc.js` (26 listeners), `search.js` (22 listeners).
+  - **Mitigation:** MPA (Astro) — менее критично чем в SPA, но стоит добавить cleanup для search palette и mobile TOC.
+  - **Repair lane:** perf-cleanup
 
 ## 🟡 P2 — CI/SEO (2 открытых)
 
@@ -534,17 +538,48 @@ Full report: `incoming/arena-agent-pass63/REPORT.md`
 
 ---
 
+## 🟢 PASS 65 — DEEP CODE QUALITY & PERFORMANCE AUDIT (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`
+
+### New findings (8)
+
+| ID | Severity | Description | Status |
+|----|----------|-------------|--------|
+| BUG-PERF-001 | 🟠 P1 | Memory leaks — 64 addEventListener without removeEventListener (5 files) | OPEN |
+| BUG-QUALITY-001 | 🟡 P2 | 6 innerHTML without explicit sanitization (4 safe, 2 need verification) | OPEN |
+| BUG-QUALITY-002 | 🟡 P2 | 7 console statements in production code | OPEN |
+| BUG-QUALITY-003 | 🟡 P2 | 3 images without WebP versions (~352KB wasted) | OPEN |
+| BUG-QUALITY-004 | 🔵 P3 | 2 large images >500KB (gill-bunhill-fields.jpg 560KB) | OPEN |
+| BUG-QUALITY-005 | 🔵 P3 | 65 unused CSS variables | OPEN |
+| BUG-QUALITY-006 | 🔵 P3 | 565 CSS classes not used in HTML (~215 truly unused) | OPEN |
+| BUG-QUALITY-007 | 🔵 P3 | 451 HTML classes not in CSS (Tailwind utilities, not a bug) | INFO |
+
+### Verified clean
+
+✅ Astro components (50 sampled) — no accessibility issues  
+✅ Image optimization — 92% with WebP versions  
+✅ JSON-LD — 63 blocks, all valid  
+✅ Cache-bust — 22 assets, all versions match  
+
+### Full report
+
+`incoming/arena-agent-pass65/REPORT.md`
+
+---
+
 ## 📊 СВОДКА
 
 | Уровень | Открыто | Закрыто |
 |---|---|---|
 | P0 (Critical) | 0 | 4 |
-| P1 (High) | 2 | 8 |
-| P2 (Medium) | 3 | 15 |
+| P1 (High) | 3 | 8 |
+| P2 (Medium) | 6 | 15 |
 | P3 (Medium) | 3 | 5 |
 | P3 (Refactor) | 4 | 0 |
-| P3 (Cleanup) | 5 | 0 |
+| P3 (Cleanup) | 9 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **20** | **32** |
+| **Итого** | **28** | **32** |
 
-*P0: BUG-CI-001 fixed in `6e68d7ca` (1-line deletion). P1: BUG-CI-002/003 CI gate gaps (Pass 64). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing (Pass 64). P3: BUG-SW-001 isFont(), BUG-SEO-002 robots.txt llms.txt scope, BUG-CLEANUP-001/002/003/004 dead code + stale docs (Pass 64). Deletions audit: all removals verified correct, no regressions.*
+*P0: BUG-CI-001 fixed in `6e68d7ca`. P1: BUG-CI-002/003 CI gate gaps + BUG-PERF-001 memory leaks (Pass 65). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing, BUG-QUALITY-001/002/003 innerHTML + console + missing WebP (Pass 64-65). P3: 12 items (Pass 64-65). Deletions audit: all removals verified correct, no regressions.*

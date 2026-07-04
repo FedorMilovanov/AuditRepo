@@ -6,7 +6,7 @@
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-`projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | ✅ P0 blocker fixed (BUG-CI-001 in `6e68d7ca`). Deletions audit passed — no regressions. 20 open / 32 closed. Start from `verified/MASTER_BUG_MATRIX.md`. | (audit(gb): Pass 64 — deep CI + deletions audit) 
+`projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | Pass 65 deep code quality audit complete. 28 open / 32 closed. Latest source HEAD: `6e68d7ca`. Start from `verified/MASTER_BUG_MATRIX.md`. | (audit(gb): Pass 65 — code quality + perf) 
 
 ## Status glossary
 
