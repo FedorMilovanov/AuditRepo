@@ -160,3 +160,107 @@ Most queries in the "Писание" scope will return **0 results** because the
 3. Add `scripture` field to `search-manifest.json` items for Bible-related pages
 4. Regenerate search-manifest
 
+
+---
+
+## 🐛 BUG-SEARCH-006: No existing audit gate validates scripture meta presence (P2)
+
+**Evidence:** Zero checks for `data-pagefind-meta="scripture"` exist in any of the 13 audit scripts:
+- `audit-pro.js` — no scripture checks
+- `check-data-consistency.js` — no scripture checks  
+- `gill-pagefind-body-audit.js` — only checks word-count floors and body presence
+- `sw-dist-readiness-audit.js` — only checks pagefind.js precache
+- `dist-publication-audit.js` — only checks pagefind-body presence
+
+**Result:** Even after adding scripture meta, there is no way to detect regressions.
+
+---
+
+## 🐛 BUG-SEARCH-007: Rodosloviye has 262 Bible refs but ZERO pagefind meta tags (P2)
+
+`RodosloviyeBody.astro` has `data-pagefind-body` but:
+- NO `<span data-pagefind-meta="author" hidden>`
+- NO `<span data-pagefind-meta="readTime" hidden>`
+- NO `<span data-pagefind-meta="category" hidden>`
+- NO `<span data-pagefind-meta="scripture" hidden>`
+- NO `<span data-pagefind-meta="image" hidden>`
+
+Pagefind indexes page content by `data-pagefind-body`, but without meta tags, the search results show no metadata.
+
+---
+
+## 🐛 BUG-SEARCH-008: Nagornaya Chast4/5 have OTHER pagefind meta — just missing scripture (P3)
+
+**Chast-4 and Chast-5 have:** author, readTime, category, image — all present.
+**Chast-4 and Chast-5 are MISSING:** scripture meta ONLY.
+
+This is the easiest fix — single line addition to both `HeaderHero.astro` and `MainShell.astro`.
+
+---
+
+## Custom scripture values recommended for each page
+
+| Page | Recommended `data-pagefind-meta="scripture"` value |
+|------|---------------------------------------------------|
+| rodosloviye/ | `Мф 1, Лк 3, Быт 5,11` |
+| nagornaya/chast-4 | `Мф 5-7, Лк 6, Ин 14-16` |
+| nagornaya/chast-5 | `Мф 5-7, Лк 6, Рим, Иак` |
+| nagornaya/istochniki | `Мф 5-7, Лк 6` |
+| nagornaya/nakhodki | `Мф 5-7, Лк 6` |
+| hard-texts/ | `Иер 17:9, Рим 7, Рим 8` |
+| articles/dzhon-gill-chast-1 | `Деян, 2 Тим, Быт` |
+| articles/dzhon-gill-chast-2 | `Пс, Ис, Рим` |
+| articles/dzhon-gill-chast-3 | `Мф, 1 Тим, 2 Пет` |
+| articles/kod-da-vinchi | `Мф 24, Ин 17, 1 Тим, 2 Тим, Гал, Кол, 2 Пет` |
+| articles/20-antisovetov-pastoru | `1 Тим 3, Тит 1, 1 Пет 5` |
+
+---
+
+## Fix plan (priority order)
+
+### Step 1 (P1 — 5 min fix): Add scripture meta to 5 underivable pages
+Add `<span data-pagefind-meta="scripture" hidden>` to:
+1. `NagornayaChast4MainShell.astro` (line ~11, after readTime)
+2. `NagornayaChast4HeaderHero.astro` (line ~13, after category)
+3. `NagornayaChast5MainShell.astro` (line ~14, after category)
+4. `NagornayaChast5HeaderHero.astro` (line ~13, after category)
+5. `HardTextsPageChrome.astro` (anywhere inside `data-pagefind-body` section)
+
+### Step 2 (P2 — 30 min): Add scripture prop to BaseLayout + ArticleLayout
+1. Add `scripture?: string` to `BaseLayout.astro` Props
+2. Render `<span data-pagefind-meta="scripture" hidden>{scripture}</span>` inside BaseLayout when provided
+3. Add `scripture` handling to `ArticleLayout.astro` and `SeriesArticleLayout.astro`
+4. Add `scripture` to MDX frontmatter interface in content collection config
+5. Update 20 MDX frontmatter files with scripture values
+
+### Step 3 (P2 — 15 min): Add audit gate
+1. Add `data-pagefind-meta="scripture"` check to `check-data-consistency.js` or `audit-pro.js`
+2. Verify: every page with `data-pagefind-body` and ≥5 Bible references must have scripture meta
+
+### Step 4 (P3): Regenerate search-manifest
+1. Add `scripture` field when `data-pagefind-meta="scripture"` is detected
+2. Run `npm run pagefind:build:dist` to rebuild indexes
+
+---
+
+## Verification after fix
+
+```bash
+# 1. Build dist
+npm run strangler:build:production-like
+
+# 2. Rebuild Pagefind index
+npm run pagefind:build:dist
+
+# 3. Verify scripture meta present on target pages
+grep -l 'data-pagefind-meta="scripture"' dist/*/index.html dist/**/*/index.html
+
+# 4. Run existing gates
+node scripts/dist-smoke-audit.js --no-build --production-like
+npm run audit:premium-controls
+npm run gill:mobile-play:smoke
+
+# 5. Full gate
+npm run validate:static-publication
+npm run guard:shared-files
+```

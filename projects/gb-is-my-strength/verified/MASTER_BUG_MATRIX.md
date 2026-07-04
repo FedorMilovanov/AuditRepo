@@ -925,6 +925,9 @@ Aliases reference semantic variables which are already theme-aware — no need t
 | SEARCH-003 | `ArticleLayout.astro` and `SeriesArticleLayout.astro` have no mechanism to inject `data-pagefind-meta="scripture"` | 🟡 **P2** | All MDX articles invisible in "Писание" scope |
 | SEARCH-004 | `search-manifest.json` has no `scripture` field — client-side can't filter | 🔵 **P3** | Only title/description/tags exist, no scripture data |
 | SEARCH-005 | "Писание" tab default suggestions return 0 results because only 3 pages have scripture meta | 🔵 **P3** | Suggestions "Ин 3:16", "Мф 5:3", "Рим 8:28", "Иер 17:9" find nothing |
+| SEARCH-006 | No existing audit gate validates `data-pagefind-meta="scripture"` | 🟡 **P2** | Zero checks in audit-pro, check-data-consistency, or any gate |
+| SEARCH-007 | `rodosloviye/` has 262 Bible refs but ZERO pagefind meta tags (author, readTime, category, scripture, image — all missing) | 🟡 **P2** | `RodosloviyeBody.astro` has bare `data-pagefind-body` with no meta whatsoever |
+| SEARCH-008 | Nagornaya chast-4/5 have all OTHER pagefind meta — only scripture missing | 🔵 **P3** | author, readTime, category, image all present; scripture absent (likely copy-paste gap) |
 
 ### Impact
 
