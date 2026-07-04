@@ -77,7 +77,7 @@
 | BUG-SITEMAP-8-KARTY-MISSING | 8/10 karty/ routes не в sitemap.xml (early-church, maccabim, melachim, pavel, revelation, shoftim, shvatim, yeshua) — invisible to search engines |
 | BUG-FRONTMATTER-INCONSISTENCY-01 | 9/20 MDX-статей (baptisty-rossii) без полей `draft`/`noindex`/`sourcesRequired` — системная несогласованность ArticleLayout vs SeriesArticleLayout | Pass 92 |
 
-## 🟢 P3 — ОТКРЫТО (14)
+## 🟢 P3 — ОТКРЫТО (15)
 
 | ID | Описание |
 |---|---|
@@ -93,6 +93,7 @@
 | AUDIT-P3-SEARCH-LAZY-CONFIRMED | SW precache defeats lazy loader strategy |
 | BUG-011 | 23 unique breakpoints, 768px collision |
 | NEW-72 | SVG dedup micro-optimization (~1.9KB) |
+| DATA-SERIES-DRIFT | `series.json` содержит nagornaya + pastor-series, но `SERIES_ORDER` в site.ts — нет. ArticleLayout:62 пропускает серию если ключа нет в SERIES_ORDER → 20-antisovetov-pastoru не получает prev/next nav и seriesLabel. Низкий impact (1 статья в серии), но архитектурная дыра. |
 | NEW-PREFETCH-UNCONDITIONAL | 5 prefetch hints на каждой странице включая саму себя |
 
 ## 🔵 P3 — РЕФАКТОРИНГ (4)
@@ -147,9 +148,9 @@
 | Закрыто (fixed) | 42 |
 | P1 открыто | 3 |
 | P2 открыто | 10 |
-| P3 открыто | 14 |
+| P3 открыто | 15 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **34** |
+| **Всего открыто** | **35** |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
