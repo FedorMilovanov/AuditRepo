@@ -220,6 +220,65 @@ All CSS custom properties (`--color-*`, `--h-*`, `--gbs2-*`, `--gb-*`) are refer
 4. Check `node -v` (needs 22.12.0) and `export PATH` if needed
 5. Check `git remote -v` for token
 
+
+## 🟠 GILL DESKTOP RAIL — FORENSIC VERIFICATION (2026-07-04)
+
+**Forensic pass against GPT 5.5 audit + independent source verification.** Source HEAD `12f4a50a`.
+
+### Claims verified TRUE (all confirmed in current source)
+
+| # | Claim | File:Line | Evidence |
+|---|-------|-----------|----------|
+| 2.1 | Rail hardcoded at 240px (reference required 304px) | `css/floating-cluster.css:2216,2224` | `grid-template-columns:240px minmax(0,1fr)` — legacy comment says 304px |
+| 2.3 | Every chapter gets `gbs2-sub` because class derived from `subtitle` | `GillSeriesRail.astro:54` | `<li class={item.subtitle ? 'gbs2-sub' : ''}>` — all items have non-empty subtitle |
+| 2.4 | First/current `partToc` item may lack `href` | `gillSeriesData.ts:26` | `href?: string` — optional. E.g. context page item with `current: true` has no `href` |
+| 2.5 | `<span>` directly inside `<ul>` | `GillSeriesRail.astro:51-52` | `<ul class="gbs2-toc"><span aria-hidden="true" class="gbs2-track">...` — invalid HTML |
+| 2.6 | Count overwritten by JS | `floating-cluster-controller.js:1275-1276` | `countEl.textContent = headings.length;` — destroys "N / TOTAL" format |
+| 2.7 | Scrollspy fragile: empty `topLevelAs` possible | `floating-cluster-controller.js:1411` | `qsa('.gbs2-toc > li:not(.gbs2-sub) > a')` — if all items are gbs2-sub, this returns empty |
+| 2.8 | No desktop rail geometry gate exists | — | `scripts/gill-desktop-rail-audit.js` does not exist |
+
+### New bug records (not in previous matrix)
+
+#### UI-GILL-DESKTOP-RAIL-01 — Desktop rail wrong width (240px vs 304px+)
+- **Severity:** 🟠 P1 — owner-visible visual regression
+- **Status:** verified-current (confirmed on HEAD `12f4a50a`)
+- **Root cause:** `css/floating-cluster.css` hardcodes 240px rail; legacy reference was 304px;
+  owner reports cramped appearance, truncated titles, horizontal scrollbar
+- **Evidence:** `floating-cluster.css:2204` comment says "304px col", but `:2216` uses 240px
+- **Fix needed:** Increase `--gill-rail-width` to 304px at ≥80em, 272-288px at 64-80em.
+  Add `scripts/gill-desktop-rail-audit.js` + `package.json` script + deploy workflow step.
+- **Gating gap:** No desktop rail geometry gate exists (only mobile gates).
+
+#### UI-GILL-DESKTOP-TOC-02 — TOC hierarchy/submenu semantic bug
+- **Severity:** 🟠 P1 — functional/UX (scrollspy can fail silently)
+- **Status:** verified-current
+- **Root cause (3 bugs in one):**
+  1. All items get `gbs2-sub` because class derived from `subtitle` existence — scrollspy's
+     `topLevelAs` selector `qsa('.gbs2-toc > li:not(.gbs2-sub) > a')` can return empty
+  2. First/current `partToc` entry may lack `href` field (`href?: string` in interface) —
+     prevents exact hash matching, scrollspy depends on special cases
+  3. Count is overwritten: `/` format → single number
+- **Fix needed:** Add `level: 2 | 3` field to `GillPartTocItem`; restore `level` logic in rail;
+  ensure every item has `href`; preserve `N / TOTAL` count format; fix `<span>` inside `<ul>`.
+
+#### UI-GILL-DESKTOP-FRAME-03 — Frame structure leaks horizontal scroll
+- **Severity:** 🟡 P2 — visual regression
+- **Status:** verified-current
+- **Root cause:** `.gbs-rail` uses `overflow:hidden` but internal `.gbs2-tocscroll` may
+  not own overflow correctly; invalid `<span>` inside `<ul>` contributes.
+- **Fix needed:** Audit ensures `rail.scrollWidth === rail.clientWidth` and
+  `tocscroll.scrollWidth === tocscroll.clientWidth`.
+
+### Current gate coverage gaps
+
+| Area | Current gates | Missing |
+|------|---------------|---------|
+| Mobile layout | ✅ `gill:mobile-layout:audit`, `gill:mobile-play:smoke` | — |
+| Desktop rail geometry | ❌ None | Width, height, overflow, scroll ownership |
+| Desktop TOC scrollspy | ❌ None | Active/passed tracking, count format, dot alignment |
+| PremiumControls | ✅ `audit:premium-controls` 87/87 | Does not prove desktop rail geometry |
+
+
 ## 📊 СВОДКА
 
 | Уровень | Открыто | Закрыто |

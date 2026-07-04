@@ -1,3 +1,34 @@
+
+
+# 🟡 GILL DESKTOP RAIL — FORENSIC AUDIT RESULTS (2026-07-04)
+
+**GPT 5.5 audit verified + independent source confirmation.**
+
+## 6 confirmed bugs found
+
+| ID | Description | Severity | Status |
+|----|-----------|----------|--------|
+| UI-GILL-DESKTOP-RAIL-01 | Rail 240px (need 304px+) | P1 | verified-current |
+| UI-GILL-DESKTOP-TOC-02a | All items get gbs2-sub, scrollspy breaks | P1 | verified-current |
+| UI-GILL-DESKTOP-TOC-02b | Current item may lack href | P1 | verified-current |
+| UI-GILL-DESKTOP-TOC-02c | Count overwritten, loses N/TOTAL format | P1 | verified-current |
+| UI-GILL-DESKTOP-TOC-02d | span inside ul (invalid HTML) | P2 | verified-current |
+| UI-GILL-DESKTOP-FRAME-03 | No desktop rail gate script exists | P2 | verified-current |
+
+## Gate gaps discovered
+
+Current  (87/87) proves mobile layout + RomanNumeral + controller wiring
+but does NOT prove desktop rail geometry, scrollspy, or horizontal overflow.
+
+**No  exists. No  script. No deploy step.**
+
+## Owner requirement
+
+Restore the wide (304px) framed desktop navigation with proper scrollspy, without breaking
+mobile V3 or PremiumControls. See MASTER_BUG_MATRIX.md for full details.
+
+---
+
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 search-manifest timestamp refresh (READ FIRST)
 
 **Current source main HEAD:** `bdaf6e8aa8446e2f9016281ad564e54cc2332f40`.

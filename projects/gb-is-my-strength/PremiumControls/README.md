@@ -120,6 +120,38 @@ Invalid state:
 6. PC-CURRENT-05 malformed transition cleanup + CSS scope leak scan.
 7. Controller decomposition / cosmetics later.
 
+
+---
+
+## 🟠 Gill Desktop Rail — current status (2026-07-04)
+
+**Fresh forensic verification:** Source HEAD '12f4a50a' (past baseline 'bdaf6e8a').
+
+### Current state: owner-rejected — cramped 240px rail, no desktop gate
+
+| ID | Issue | Severity | File |
+|----|-------|----------|------|
+| UI-GILL-DESKTOP-RAIL-01 | Rail hardcoded at 240px (reference 304px) | P1 | floating-cluster.css:2216 |
+| UI-GILL-DESKTOP-TOC-02a | All chapters get gbs2-sub (topLevelAs empty) | P1 | GillSeriesRail.astro:54 |
+| UI-GILL-DESKTOP-TOC-02b | First/current TOC item may lack href | P1 | gillSeriesData.ts:26 |
+| UI-GILL-DESKTOP-TOC-02c | Count overwritten: N/TOTAL to single number | P1 | fc-controller.js:1276 |
+| UI-GILL-DESKTOP-TOC-02d | span directly inside ul (invalid HTML) | P2 | GillSeriesRail.astro:51-52 |
+| UI-GILL-DESKTOP-FRAME-03 | No horizontal overflow guard or desktop audit | P2 | Missing script |
+
+### Current gate gaps
+- desktop rail geometry: NO GATE
+- desktop scrollspy: NO GATE
+- mobile layout: GILL:MOBILE-LAYOUT:AUDIT (existing, unchanged)
+
+### Design target (from GPT 5.5 audit)
+- rail width: 304px >=1280px, 272-288px 1024-1279px
+- full height: calc(100dvh - 32px)
+- frame: radius 20px, border, shadow
+- no horizontal scroll
+- timeline track through dot centers
+- active/passed tracking with scrollspy
+- N/TOTAL count format preserved
+
 ---
 
 ## 5. Historical / superseded evidence
