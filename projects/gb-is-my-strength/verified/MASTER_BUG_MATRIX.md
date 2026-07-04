@@ -148,3 +148,35 @@
 | **Всего открыто** | **37** |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
+
+---
+
+## 🟢 PASS 89 — HTML FILES AUDIT: about/index.html (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `dea91376` (updated by other agents)  
+**Scope:** `about/index.html` (336 lines, 34KB) — about page (sample)
+
+### Observations (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-HTML-ABOUT-001 | Same inline scripts as index.html (not duplicated) | 🔵 P3 |
+| BUG-HTML-ABOUT-002 | Same magic numbers as index.html (not duplicated) | 🔵 P3 |
+
+### Positive Findings
+
+✅ Good SEO meta tags  
+✅ Good accessibility (skip-link, aria-labels)  
+✅ Semantic HTML structure  
+✅ JSON-LD with ProfilePage + Person + BreadcrumbList  
+✅ Contact information with rel="me"  
+
+### Conclusion
+
+about/index.html follows same patterns as index.html. No new issues found. Same recommendations apply.
+
+### Full Report
+
+`incoming/arena-agent-pass89/REPORT.md`
+
