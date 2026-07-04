@@ -108,6 +108,35 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-legacy-lazy-init-30b
 None — all findings are refinements of existing open items.
 
 
+
+## 🟡 PASS 53 — GARBAGE CLEANUP SCAN (2026-07-04)
+
+**Cleanup scan results — all advisory, no source changes in gb-is-my-strength.**
+
+### Cleanup opportunities found
+
+| # | Severity | Item | Size | Recommendation |
+|---|----------|------|------|----------------|
+| 1 | 🟡 **P3** | 10 duplicate image pairs (identical MD5) | ~1MB | Responsive src/srcset variants have identical content — either deduplicate (point all uses to one file) or generate proper size variants |
+| 2 | 🟢 **INFO** | 50 stale lane docs in `docs/refactor-2026/lanes/` | ~500KB | All branches merged and deleted. Consider archiving to `docs/refactor-2026/lanes/ARCHIVE/` |
+| 3 | 🟢 **INFO** | `audit/DEEP_CODE_AUDIT_2026-06-30.md` | 32KB | Tied to stale HEAD `27862d4d` (known from earlier passes). Keep as historical reference |
+| 4 | 🟢 **INFO** | `audit/archive/` (9 files) | ~200KB | June 2-10 historical audits. Keep as historical |
+| 5 | 🟢 **INFO** | `audit/seo-2026-06-25/` (5 files) | ~200KB | Old SEO audit with Playwright JSON results. Keep as reference |
+| 6 | 🟢 **INFO** | `audit/external-checks/` (3 files) | ~52KB | Includes Windows PowerShell audit script. Keep |
+| 7 | 🟢 **INFO** | `yandex_*.html` + `google*.html` in root | ~214B | Also exist in `dist/`. Could be removed from root if GH Pages serves from dist/ only |
+
+### Already clean (verified)
+- All 14 npm packages used (0 unused)
+- All 11 JS files in cache-bust ✅
+- All 9 CSS files in cache-bust ✅
+- No dead .astro components (all imported)
+- No dead images in dist (all referenced)
+- No stale branches in either repo
+- Root files (CNAME, robots.txt, manifest.json, llms.txt, feed.xml) all valid
+
+### Verdict
+No critical garbage found. 7 advisory items above — none blocking. Total potential recovery <2MB.
+
 ## 📊 СВОДКА
 
 | Уровень | Открыто | Закрыто |
