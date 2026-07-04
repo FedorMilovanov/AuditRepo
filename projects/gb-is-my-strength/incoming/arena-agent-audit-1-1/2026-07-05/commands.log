@@ -1,0 +1,91 @@
+# АУДИТ 1.1 — Commands Log (Deep Dive Pass 2)
+# arena-agent-audit-1-1, 2026-07-05
+# Source HEAD: 8c318010 (unchanged)
+
+# Multi-agent awareness check
+cd AuditRepo && git fetch origin main && git log --oneline origin/main -5
+cd gb-is-my-strength && git fetch origin main && git log --oneline origin/main -10
+# → AuditRepo: d53805e (my АУДИТ 1.0) — no new commits from other agents
+# → Source: 8c318010 — no new commits
+
+# Gate checks (all green)
+node scripts/validate.js --strict
+node scripts/audit-pro.js
+node scripts/check-workflows.js
+node scripts/check-data-consistency.js
+node scripts/check-route-migration-matrix.js --strict
+node scripts/seo-audit.js
+# All: 0 errors ✅
+
+# SW CACHE VERSION vs baseline (P0 confirmed)
+grep 'CACHE_VERSION=' sw.js | grep -o 'gb-v[0-9]*-[^"]*'
+python3 -c "import json; d=json.load(open('migration/sw-cache-version-baseline.json')); print(d['currentExpectedCacheVersion'])"
+# v187 vs v182 — 5 version drift
+
+# PRECACHE_ASSETS full parsing (P2 confirmed)
+python3 -c "
+import re
+sw = open('sw.js').read()
+m = re.search(r'PRECACHE_ASSETS\s*=\s*\[([^\]]+)\]', sw)
+assets = [x.strip('\"') for x in re.findall(r'\"([^\"]+)\"', m.group(1))]
+for a in assets:
+    print(a)
+" | wc -l  # 29 assets total
+# Lazy-loaded in precache:
+# /js/search.js, /js/glossary.js, /manifest.json, /data/search-manifest.json
+
+# :light vs :full gate diff (P1 confirmed)
+python3 -c "
+import json
+p = json.load(open('package.json'))
+full = set(p['scripts']['validate:static-publication'].split(' && '))
+light = set(p['scripts']['validate:static-publication:light'].split(' && '))
+for item in sorted(full - light):
+    print(f'  + {item}')
+"
+
+# deploy.yml condition analysis (YAML parsed)
+python3 -c "
+import yaml
+d = yaml.safe_load(open('.github/workflows/deploy.yml'))
+cond = d['jobs']['deploy']['if']
+print('DEPLOY CONDITION:', cond)
+"
+# → includes 'failure' — deploys even when IndexNow fails
+
+# Deploy.yml has IndexNow submission step (line 208)
+grep -n "Submit to IndexNow\|Build IndexNow payload" .github/workflows/deploy.yml
+# → CONFIRMED: IndexNow submission IS in deploy.yml, post-deploy
+
+# Cache-bust skip analysis
+# Condition: if: github.event_name != 'workflow_run'
+# When triggered via workflow_run: condition is FALSE → cache-bust RUNS ✅
+# When triggered via push/manual: condition is TRUE → cache-bust SKIPPED ✅
+
+# glossary.js analysis
+wc -c js/glossary.js  # 7813 bytes — standalone file, lazy loaded
+# __gbGlossaryInitialized guard, fetches /data/glossary.json
+
+# search.js lazy init confirmed
+grep -n "searchLazy\|__gbSearchLazyBound\|__gbSearchBootRequested" index.html | head -5
+
+# z-index magic numbers context
+grep -B2 -A2 "z-index: 2147483" css/floating-cluster.css
+# Intentional: 2^31-1000, 2^31-900 to ensure overlays above all content
+
+# og:image vs LCP mismatch
+python3 -c "
+import re
+for f in ['articles/20-antisovetov-pastoru/index.html','articles/kod-da-vinchi/index.html','index.html','pastor-series/index.html']:
+    html = open(f).read()
+    og = re.search(r'<meta[^>]+property=[\"'\'']og:image[\"'\''][^>]+content=[\"'\'']([^\"'\'']+)', html)
+    lcp = re.findall(r'<img[^>]+fetchpriority=[\"'\'']high[\"'\''][^>]+src=[\"'\'']([^"'\'']+)', html)
+    print(f'{f}: og={og.group(1) if og else \"?\"}, lcp={lcp[:2]}')
+"
+
+# color-mix count
+grep -rn "color-mix" css/ | wc -l  # 90 in CSS files, audit-pro says 201 (includes HTML)
+# In CSS: 21(site) + 44(fc) + 21(home) + 2(mobile) + 1(nagornaya) + 1(command) = 90
+
+# audit-pro INFO items
+node scripts/audit-pro.js 2>&1 | grep "^ℹ️" | head -20
