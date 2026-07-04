@@ -279,6 +279,35 @@ All CSS custom properties (`--color-*`, `--h-*`, `--gbs2-*`, `--gb-*`) are refer
 | PremiumControls | ✅ `audit:premium-controls` 87/87 | Does not prove desktop rail geometry |
 
 
+## 🟢 PASS 58 — GILL DESKTOP RAIL VERIFICATION (2026-07-04)
+
+**Verified findings from forensics GPT 5.5 audit (Pass 56):**
+
+### UI-GILL-DESKTOP-RAIL-01 — Desktop rail 240px vs 304px ✅ CONFIRMED
+- **File:** `css/floating-cluster.css:2216`
+- **Evidence:** `grid-template-columns:240px minmax(0,1fr)` (comment on line 2204 references 304px)
+- **Root cause:** Gill v16 reduced from 304px to 240px without geometry gate
+- **Owner-visible:** Yes — cramped titles, potential scrollbar on narrow screens
+- **Fix needed:** Increase to 304px at ≥80em, add `scripts/gill-desktop-rail-audit.js`
+
+### UI-GILL-DESKTOP-TOC-02 — TOC hierarchy bugs ✅ CONFIRMED
+1. **`gbs2-sub` over-assignment:** `GillSeriesRail.astro:54` applies class based on subtitle existence — ALL items have subtitle → all items get `gbs2-sub`. Scrollspy (`floating-cluster-controller.js:1411`) selector `.gbs2-toc > li:not(.gbs2-sub) > a` returns empty.
+   - **Fallback exists (lines 1424-1432):** climbs `previousElementSibling` — partially mitigates
+2. **Count format overwritten:** `floating-cluster-controller.js:1222` → `countEl.textContent = headings.length;` destroys "N / TOTAL" format
+3. **href optional:** `gillSeriesData.ts:26` — first/current item can have `href?: string`
+
+### Summary
+| Bug | P | File | Evidence |
+|-----|---|------|----------|
+| UI-GILL-DESKTOP-RAIL-01 | **P1** | floating-cluster.css:2216 | 240px vs 304px |
+| UI-GILL-DESKTOP-TOC-02 | **P1** | GillSeriesRail.astro:54 | gbs2-sub prevents scrollspy |
+| UI-GILL-DESKTOP-FRAME-03 | P2 | Overflow | `<span>` inside `<ul>` |
+
+### Verified intact
+All prior P0/P1/P2 fixes remain intact across the codebase.
+
+---
+
 ## 🟢 PASS 57 — DEEP CODE AUDIT (2026-07-04)
 
 **Verified by:** Arena Agent (full codebase walkthrough — all 11 JS, 9 CSS, workflows, sw.js, configs)
