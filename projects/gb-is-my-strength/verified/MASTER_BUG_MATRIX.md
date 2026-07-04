@@ -1546,3 +1546,146 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 
 `incoming/arena-agent-pass79/REPORT.md`
 
+
+---
+
+## 🟢 PASS 80 — DEEP JS CODE REVIEW: sw-register.js (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `js/sw-register.js` (1 line, 2.6KB minified) — service worker registration
+
+### Critical Findings (P1)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-061 | Minified code in version control (2.6KB) | 🔴 P1 |
+
+### High Priority Findings (P2)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-062 | Magic numbers (2500, 8000, 3500, 2) | 🟡 P2 |
+| BUG-JS-063 | Empty catch blocks (2+) | 🟡 P2 |
+
+### Medium Priority Findings (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-064 | No cleanup system for event listeners | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total size | 2.6KB |
+| Lines | 1 (minified) |
+| Estimated unminified | ~70+ lines |
+| Magic numbers | 4 |
+| Empty catches | 2+ |
+| Cleanup system | Partial (pagehide only) |
+
+### Top 4 Recommendations
+
+1. **Unminify sw-register.js** — store source in VCS
+2. **Extract magic numbers** — create CONFIG object
+3. **Add logging to empty catches** — improve debuggability
+4. **Add cleanup system** — prevent memory leaks
+
+### Full Report
+
+`incoming/arena-agent-pass80/REPORT.md`
+
+
+---
+
+## 🟢 PASS 81 — DEEP JS CODE REVIEW: site-utils.js (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `js/site-utils.js` (1 line, 2.3KB minified) — scroll lock management
+
+### Critical Findings (P1)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-065 | Minified code in version control (2.3KB) | 🔴 P1 |
+
+### High Priority Findings (P2)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-066 | Magic number (3000) | 🟡 P2 |
+
+### Medium Priority Findings (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-067 | console.warn in production code | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total size | 2.3KB |
+| Lines | 1 (minified) |
+| Estimated unminified | ~60+ lines |
+| Magic numbers | 1 |
+| Production logging | Yes |
+
+### Top 3 Recommendations
+
+1. **Unminify site-utils.js** — store source in VCS
+2. **Extract magic number** — create CONFIG object
+3. **Conditional logging** — use DEBUG flag
+
+### Full Report
+
+`incoming/arena-agent-pass81/REPORT.md`
+
+---
+
+## 🟢 PASS 82 — DEEP JS CODE REVIEW: scroll-perf.js (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `js/scroll-perf.js` (1 line, 1.7KB minified) — scroll performance optimization
+
+### Critical Findings (P1)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-068 | Minified code in version control (1.7KB) | 🔴 P1 |
+
+### High Priority Findings (P2)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-069 | Magic numbers (120, 100) | 🟡 P2 |
+
+### Medium Priority Findings (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-070 | Empty catch block (1 instance) | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total size | 1.7KB |
+| Lines | 1 (minified) |
+| Estimated unminified | ~50+ lines |
+| Magic numbers | 2 |
+| Empty catches | 1 |
+
+### Top 3 Recommendations
+
+1. **Unminify scroll-perf.js** — store source in VCS
+2. **Extract magic numbers** — create CONFIG object
+3. **Add logging to empty catch** — improve debuggability
+
+### Full Report
+
+`incoming/arena-agent-pass82/REPORT.md`
+
