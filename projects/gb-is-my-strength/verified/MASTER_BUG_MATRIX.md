@@ -75,7 +75,13 @@
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
 
+<<<<<<< HEAD
 ## 🟢 P3 — ОТКРЫТО (25)
+=======
+| VALIDATE-SCOPE-GAP | validate.js проверяет только `articles/` (10 страниц из 40+). baptisty-rossii, nagornaya, karty, konfessii, biografii, hard-texts — **не валидируются** checks #1-#17 (canonical, section, byline, img alt, internal links, quote policy) | Meta-audit |
+| IMAGE-CROSSREF-GAP | Нет cross-ref проверки: image files ↔ search-manifest.json ↔ sitemap.xml. Уже ломалось: `629ed89a` удалил файлы → `fc5f94bd` чинил broken refs | Meta-audit |
+## 🟢 P3 — ОТКРЫТО (17)
+>>>>>>> bb47da8 (audit(meta): validation system audit — 4 new findings, 6 dead scripts, validate.js scope gap)
 
 | ID | Описание |
 |---|---|
@@ -157,6 +163,7 @@
 |---|---|
 | Закрыто (fixed) | 41 |
 | P1 открыто | 3 |
+<<<<<<< HEAD
 | P2 открыто | 7 |
 | P3 открыто | 25 |
 | Рефакторинг | 4 |
@@ -164,3 +171,11 @@
 | **Всего открыто** | **42** |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
+=======
+| P2 открыто | 9 |
+| P3 открыто | 17 |
+| Рефакторинг | 4 |
+| AuditRepo | 3 |
+| **Всего открыто** | **36** |
+| False positives | 5 |
+>>>>>>> bb47da8 (audit(meta): validation system audit — 4 new findings, 6 dead scripts, validate.js scope gap)
