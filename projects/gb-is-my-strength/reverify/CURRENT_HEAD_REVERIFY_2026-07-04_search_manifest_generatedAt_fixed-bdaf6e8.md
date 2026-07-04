@@ -39,3 +39,9 @@ npm run guard:shared-files PASS
 ## 4. Status
 
 Pass 52 `search-manifest generatedAt stale` advisory: **fixed-current on source main `bdaf6e8a`**.
+
+---
+
+## 5. Remote workflow
+
+Remote `Deploy to GitHub Pages` is **green** on source main `bdaf6e8a`: run `28708703645` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28708703645). Source main later advanced to `48dcda89b93ae5ea7bcab7bd4849a821e263209f` via docs-only commit; Shared Files Guard is green.

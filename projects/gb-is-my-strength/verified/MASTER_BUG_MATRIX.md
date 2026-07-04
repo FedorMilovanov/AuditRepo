@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
 **Консолидация:** 2026-07-04
-**HEAD исходного репозитория:** `bdaf6e8a` (search-manifest generatedAt refresh; descendant of `43a515df`)
+**HEAD исходного репозитория:** `48dcda89` (docs-only descendant of search-manifest generatedAt refresh `bdaf6e8a`)
 **Статус:** ✅ **deploy-green** — все P0/P1/P2 блокеры закрыты
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
@@ -98,7 +98,7 @@ Verified on `bdaf6e8a`:
 - `git diff --check` ✅
 - `npm run guard:shared-files` ✅
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search_manifest_generatedAt_fixed-bdaf6e8.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search_manifest_generatedAt_fixed-bdaf6e8.md`. Remote Deploy green: run `28708703645` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28708703645).
 
 ---
 

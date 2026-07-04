@@ -6,7 +6,7 @@
 
 **Local verification on `bdaf6e8a`:** `data:consistency`, `audit-pro`, `git diff --check`, and `guard:shared-files` passed.
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search_manifest_generatedAt_fixed-bdaf6e8.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search_manifest_generatedAt_fixed-bdaf6e8.md`. Remote `Deploy to GitHub Pages` is **green** on run `28708703645`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28708703645. Source main later advanced to `48dcda89` docs-only (`docs(agents)`), Shared Files Guard green.
 
 ---
 
