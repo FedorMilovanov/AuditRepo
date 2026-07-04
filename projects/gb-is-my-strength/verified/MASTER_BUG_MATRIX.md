@@ -1880,3 +1880,47 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 
 `incoming/arena-agent-pass86/REPORT.md`
 
+
+---
+
+## 🟢 PASS 87 — CONFIGURATION FILES AUDIT: package.json (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `8c318010` (updated by other agents)  
+**Scope:** `package.json` (161 lines, 15KB) — npm configuration
+
+### High Priority Findings (P2)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-CONFIG-001 | Too many npm scripts (100+) | 🟡 P2 |
+
+### Medium Priority Findings (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-CONFIG-002 | Long script chains in validate:static-publication (30+ checks) | 🔵 P3 |
+| BUG-CONFIG-003 | Outdated description | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total lines | 161 |
+| Total size | 15KB |
+| npm scripts | 100+ |
+| Node.js version | >=22.12.0 |
+| Astro version | 6.4.6 |
+| React version | 19.2.7 |
+| TypeScript version | 6.0.3 |
+
+### Top 3 Recommendations
+
+1. **Organize npm scripts** — group by category, use npm-run-all
+2. **Parallelize validate:static-publication** — use npm-run-all --parallel
+3. **Update description** — reflect current project state
+
+### Full Report
+
+`incoming/arena-agent-pass87/REPORT.md`
+
