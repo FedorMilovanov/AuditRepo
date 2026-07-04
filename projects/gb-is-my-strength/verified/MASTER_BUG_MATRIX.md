@@ -63,7 +63,7 @@
 | BUG-PERF-001 | addEventListener без removeEventListener: 294 add / 16 remove в 5 JS-файлах | 2 witnesses |
 | SEARCH-SCRIPTURE-BROKEN | 🔍 Scope «Писание» не работает: 0/20 MDX передают scripture:true; ArticleLayout без prop; 44/44 manifest без scripture. ⚠️ Verifier correction: 6 pages (не 3) имеют data-pagefind-meta. **Severity dispute: P1→P2 recommended** (feature gap, не runtime breakage) | Pass 92, verified |
 
-## 🟡 P2 — ОТКРЫТО (7)
+## 🟡 P2 — ОТКРЫТО (9)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -75,7 +75,9 @@
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
 
-## 🟢 P3 — ОТКРЫТО (15)
+| VALIDATE-SCOPE-GAP | validate.js проверяет только `articles/` (10 страниц из 40+). baptisty-rossii, nagornaya, karty, konfessii, biografii, hard-texts — **не валидируются** checks #1-#17 (canonical, section, byline, img alt, internal links, quote policy) | Meta-audit |
+| IMAGE-CROSSREF-GAP | Нет cross-ref проверки: image files ↔ search-manifest.json ↔ sitemap.xml. Уже ломалось: `629ed89a` удалил файлы → `fc5f94bd` чинил broken refs | Meta-audit |
+## 🟢 P3 — ОТКРЫТО (17)
 
 | ID | Описание |
 |---|---|
@@ -95,6 +97,8 @@
 | NEW-PREFETCH-UNCONDITIONAL | 5 prefetch hints на каждой странице включая саму себя |
 | SEARCH-MANIFEST-QUALITY | search-manifest.json: 44/44 без поля slug (ключ отсутствует, не пустой); 44/44 нет scripture; 4/44 нет image. Verified. |
 
+| DEAD-SCRIPTS-6 | 6 мёртвых скриптов (0 вызовов): `_audit-deep.js`, `deep-check.js`, `extract-native-pilot.js`, `genealogy-e2e-v2.js`, `ishod-qa.js`, `map-visual-qa.js` |
+| NOINDEX-PHANTOM | audit-pro.js:2055 NOINDEX_ALLOWLIST содержит `yandex_d8876d66da1b4592.html` — файл не существует (phantom entry) |
 ## 🔵 P3 — РЕФАКТОРИНГ (4)
 
 | ID | Описание |
@@ -145,9 +149,9 @@
 |---|---|
 | Закрыто (fixed) | 41 |
 | P1 открыто | 3 |
-| P2 открыто | 7 |
-| P3 открыто | 15 |
+| P2 открыто | 9 |
+| P3 открыто | 17 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **32** |
+| **Всего открыто** | **36** |
 | False positives | 5 |
