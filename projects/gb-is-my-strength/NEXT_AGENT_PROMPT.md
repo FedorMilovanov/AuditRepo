@@ -1,3 +1,13 @@
+# 🟡 CURRENT HANDOFF ADDENDUM — 2026-07-04 NEW-72 SVG dedup downgraded (READ FIRST)
+
+**Source HEAD checked:** `a434b45ee6d8cefb0ce281039ad683fe9b9589ba`.
+
+**Reclassified in this pass:** `NEW-72` — current exact duplicate SVG scan finds 4 small duplicate patterns (~1.9KB raw theoretical saving, less after gzip). Downgrade from P2 to P3 advisory micro-optimization. Do not mix this with higher-priority CI/security/runtime work.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_svg-dedup-new72-downgrade.md`.
+
+---
+
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 NEW-67 dead scripts reclassified (READ FIRST)
 
 **Source HEAD checked:** `a434b45ee6d8cefb0ce281039ad683fe9b9589ba`.

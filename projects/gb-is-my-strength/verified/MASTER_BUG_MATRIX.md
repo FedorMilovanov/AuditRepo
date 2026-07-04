@@ -141,7 +141,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 - ~~**NEW-69 (P2, CSP meta regression on karty/ holding pages):** karty/map-like dist pages missed CSP meta~~ ✅ FIXED-CURRENT on source main `14574a9a`: postbuild CSP hardening injects CSP on dist pages missing it; `dist-publication-audit` now blocks regressions.
 * ~~**NEW-70 (P3, sitemap.xml stale lastmod):** stale broad June lastmod buckets~~ ✅ FIXED-CURRENT on source main `a434b45e`: sitemap lastmods refreshed from route git commit dates; 43 URLs validate and audit-pro passes.
 * ~~**NEW-71 (P3, README.md version drift):** README stayed at v10 / 2026-06-26~~ ✅ FIXED-CURRENT on source main `da4a65cd`: README version line is now v11 / 2026-07-04.
-* **NEW-72 (P2, SVG dedup opportunity across 4 files):** static scan of 11 JS files finds 9 unique SVG fragments duplicated across `js/highlights.js`, `js/search.js`, `js/site.js`, `js/floating-cluster-controller.js`, `js/nagornaya-mobile-toc.js`. Most-duplicated: 5x `<polyline points="20 6 9 17 4 12"/>` (checkmark). Total potential saving: ~1.5-2KB. See Pass 38 in this file.
+* **NEW-72 (P3, SVG dedup micro-optimization):** downgraded from P2 on source `a434b45e`. Current exact scan finds 4 duplicate SVG patterns (book icon, flip-card finger icon, highlights X, glossary chevron), ~1.9KB raw before helper overhead and likely much less gzip impact. Real but advisory; no deploy/SEO/runtime impact. See `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_svg-dedup-new72-downgrade.md`.
 - ~~**NEW-67 (P3, dead scripts in `scripts/`):** 10 scripts reported dead by no-package-caller heuristic~~ ✅ FALSE-POSITIVE / RECLASSIFIED on source `a434b45e`: all 10 pass `node --check` and have documentation/manual QA/migration ownership evidence. Do not delete from this finding. See `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dead-scripts-new67-reclassified.md`.
 
 ### Service Worker fixes:
@@ -871,6 +871,16 @@ BUG-022 (overridden CSS rules):
 * **Visual parity current side finding:** local pixel-diff on `f1e9abd9` fails `/baptisty-rossii/` only: desktop `6.131%`, mobile `17.368%` (threshold `1%`). GitHub Visual Parity Guard failed on `8446a0da`; current `f1e9abd9` was `[skip ci]`, so remote visual parity was not rerun, but local current-head evidence confirms the issue.
 
 
+
+## 🟡 PASS 49 / NEW-72 SVG DEDUP REVERIFY (2026-07-04)
+
+**Source HEAD checked:** `a434b45ee6d8cefb0ce281039ad683fe9b9589ba`.
+
+`NEW-72` is **downgraded from P2 to P3 advisory micro-optimization**. Current exact duplicate scan finds only 4 duplicate SVG patterns across `js/*.js`, with about 1.9KB raw theoretical saving before helper overhead and likely much smaller gzip impact. This is not a deploy/runtime/SEO blocker.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_svg-dedup-new72-downgrade.md`.
+
+---
 
 ## 🟢 PASS 48 / NEW-67 DEAD SCRIPTS RECLASSIFICATION (2026-07-04)
 
