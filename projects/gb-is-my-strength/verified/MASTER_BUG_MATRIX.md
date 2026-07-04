@@ -796,6 +796,7 @@ floating-cluster.css (2882 lines, 106KB)
 
 ---
 
+<<<<<<< HEAD
 ## 🟢 PASS 70 — DEEP CSS CODE REVIEW: site.css (2026-07-05)
 
 **Agent:** arena-agent  
@@ -909,6 +910,37 @@ Aliases reference semantic variables which are already theme-aware — no need t
 `incoming/arena-agent-pass70/REPORT.md`
 
 ---
+=======
+
+## 🟠 SEARCH SYSTEM AUDIT — results (2026-07-04)
+
+**Deep investigation of search infrastructure: search.js + Pagefind + search-manifest.json.**
+
+### New critical bugs found
+
+| ID | Bug | Severity | Evidence |
+|----|-----|----------|----------|
+| SEARCH-001 | `data-pagefind-meta="scripture"` missing on ~15 Bible-heavy pages | 🔴 **P1** | rodosloviye (262 refs), nagornaya chast-4/5 (24-56 refs), gill articles (12-17 refs), hard-texts (26 refs), kod-da-vinchi (11 refs) — only 3 pages have scripture meta |
+| SEARCH-002 | Nagornaya chast-4 & chast-5 headers lack scripture meta while chast-1/2/3 have it | 🟡 **P2** | `NagornayaChast4/5HeaderHero.astro` and `MainShell.astro` missing `data-pagefind-meta="scripture"` |
+| SEARCH-003 | `ArticleLayout.astro` and `SeriesArticleLayout.astro` have no mechanism to inject `data-pagefind-meta="scripture"` | 🟡 **P2** | All MDX articles invisible in "Писание" scope |
+| SEARCH-004 | `search-manifest.json` has no `scripture` field — client-side can't filter | 🔵 **P3** | Only title/description/tags exist, no scripture data |
+| SEARCH-005 | "Писание" tab default suggestions return 0 results because only 3 pages have scripture meta | 🔵 **P3** | Suggestions "Ин 3:16", "Мф 5:3", "Рим 8:28", "Иер 17:9" find nothing |
+
+### Impact
+
+The **"Писание" (Scripture)** search scope — a primary feature of the command palette — is effectively **broken**. It only indexes 3 pages while 25+ pages with substantial Bible content are invisible. Users searching for Bible verses via the scripture tab get near-zero results.
+
+### Root cause chain
+1. `data-pagefind-meta="scripture"` was never added to most ArticleBody components
+2. Generic layouts (ArticleLayout/SeriesArticleLayout) don't support the feature
+3. Nagornaya paralel development created inconsistency (chast-1/2/3 have, 4/5 don't)
+4. No gate verifies that scripture-heavy pages have appropriate meta tags
+
+### Fix required
+1. Add scripture meta to all ArticleBody components (highest ROI)
+2. Add `scripture` prop to BaseLayout → ArticleLayout
+3. Regenerate search-manifest with scripture field
+>>>>>>> f41e048 (audit(gb): Pass 70 — deep SEARCH system investigation)
 
 ## 📊 СВОДКА
 

@@ -1,102 +1,162 @@
-# Deep Audit Report — Pass 69 (Independent Verification)
+# SEARCH AUDIT REPORT — Pass 69 (Deep Search Investigation)
 
 **Date:** 2026-07-04  
-**Source HEAD:** `629ed89a` (fix(images): remove orphaned image files)  
+**Source HEAD:** `629ed89a`  
 **Mode:** Pure auditor/verifier — no source changes
 
 ---
 
-## New Findings
+## Executive Summary
 
-### BUG-CLEANUP-004: search-manifest stale image references (P2)
-
-**Status:** verified-current  
-**Evidence:** After `629ed89a` deleted 7 orphan images, `dist/data/search-manifest.json` still references 3 deleted files:
-
-| Item | URL | Deleted image |
-|------|-----|---------------|
-| #2 | /biografii/#dzhon-gill-series | /images/gill-authentic-study-cover.webp |
-| #7 | /articles/dzhon-gill-chast-1-chelovek/ | /images/gill-authentic-study-cover.webp |
-| #13 | /articles/dzhon-gill-spravochnik/ | /images/og-gill-five-volumes-shelf.webp |
-
-**Fix needed:** Regenerate search-manifest after orphan image deletion.
+The search system has a **critical architectural gap**: `data-pagefind-meta="scripture"` is missing from almost ALL scripture-heavy pages. The "Писание" (Scripture) search scope — a dedicated tab in the command palette — is effectively broken, returning results from only 3 pages instead of 25+.
 
 ---
 
-### BUG-CLEANUP-005: 3 more orphan images still in /images/ (P3)
+## Search Architecture Overview
 
-**Evidence (from `node scripts/audit-pro.js`):**
-- `images/gill-southwark-sermon.webp` — 477KB, 0 references in dist HTML
-- `images/og-dzhon-gill-spravochnik-600w.webp` — 50KB, 0 references
-- `images/og-dzhon-gill-chast-1-chelovek-600w.webp` — 19KB, 0 references
+The site uses a **dual search system**:
 
-Total wasted: ~546KB. These are 600w variants and a sermon image that no page references.
+1. **search.js** (command palette) — Client-side search over `search-manifest.json` (44 items, metadata only). Provides instant results for page titles/descriptions/tags. Falls back to Pagefind for full-text.
 
----
+2. **Pagefind v1.5.2** — Full-text search index that crawls `data-pagefind-body` content. Indexes 43 pages with 16,411 words.
 
-### CSS-QUALITY-003: 45 duplicate selectors in floating-cluster.css (P3)
-
-**Evidence:** Static analysis reveals 45 selector blocks appearing 2-6 times each.
-
-Worst offenders:
-- `[data-gill-v16] .mobile-bottom-bar` — 6× with different `!important` overrides
-- `[data-gill-v16] .mobile-btoc-progress-fill` — 3×
-- `[data-gill-v16] .mobile-icon-row` — 3×
-- `[data-gill-v16] .gb-series-mark--label.toc-item__num` — 3×
-- `@media (hover: hover) and (pointer: fine)` — 19× (all unique rules inside, this is normal)
-
-The duplicate selectors are mostly v16 base rules + "hotfix" blocks with `!important` overriding them. This is a code smell but not blocking.
+3. **"Писание" scope** — A dedicated tab that filters results by `meta.scripture` from Pagefind. Shows pages tagged with scripture references.
 
 ---
 
-### CSS-QUALITY-004: floating-cluster.css !important flood (P3)
+## 🐛 BUG-SEARCH-001: `data-pagefind-meta="scripture"` MISSING on 15+ scripture-heavy pages (P1)
 
-**Count:** 524 `!important` declarations in `css/floating-cluster.css`.
+Only **3 pages** have `data-pagefind-meta="scripture"` in their content body:
+- `hermenevticheskaya-otsenka` — `2 Тим 3:16` ✅
+- `krajne-li-isporcheno-serdce` — `Иер 17:9` ✅
+- `rimlyanam-7-veruyushchiy-ili-neveruyushchiy` — `Рим 7:14–25` ✅
 
-For comparison:
-- site.css: 202 (near ceiling of 202 — healthy)
-- home.css: 36
-- mobile-hotfix.css: 142
-- nagornaya-mobile-toc.css: 135
+Nagornaya chast-1/2/3 have it in their **headers** (not body, but Pagefind scans entire page so this works):
 
-The pre-v16 restoration block (Gill desktop rail) contributes 0 `!important`. The 524 count comes from accumulated mobile hotfix layers over v16 base CSS. Known pattern from earlier passes.
+### Missing scripture meta on pages that NEED it:
+
+| Page | Bible refs found | Has scripture meta? | Impact |
+|------|:----------------:|:-------------------:|--------|
+| **rodosloviye/** | **262+** (Мф, Лк, Рим, Евр, Иак) | ❌ | 🚨 Genealogy of Christ — 0% visible in scripture search |
+| **nagornaya/chast-5** | 56+ (Мф, Рим, 2 Кор, Иак) | ❌ | Matt 7 / Sermon on Mount — invisible |
+| **nagornaya/chast-4** | 24+ (Ин, Мф, Лк, Рим, 2 Тим) | ❌ | Trusting the Gospels — invisible |
+| **hard-texts/** | 26+ (Иер 17:9, Рим 7) | ❌ | WRONG — it's about Jeremiah 17! |
+| **nagornaya/chast-1** | 82 | ✅ (in header) | OK |
+| **nagornaya/chast-2** | 23 | ✅ (in header) | OK |
+| **nagornaya/chast-3** | 60 | ✅ (in header) | OK |
+| **nagornaya/istochniki** | 12+ | ❌ | Should reference scripture sources |
+| **nagornaya/nakhodki** | 10+ | ❌ | Should reference scripture findings |
+| **dzhon-gill-chast-1-chelovek** | 17+ | ❌ | Theology article with heavy NT citation |
+| **dzhon-gill-chast-2-uchenyi** | 12+ | ❌ | Theology article |
+| **kod-da-vinchi/** | 11+ | ❌ | Apologetics with NT citations |
+
+### Root cause: Where scripture meta SHOULD be set
+
+| Component type | File | Has scripture? |
+|---------------|------|:--------------:|
+| Generic MDX layouts | `ArticleLayout.astro` | ❌ — NO mechanism for it |
+| Generic MDX layouts | `SeriesArticleLayout.astro` | ❌ — NO mechanism for it |
+| Nagornaya 1-3 HeaderHero | `NagornayaChast*HeaderHero.astro` | ✅ |
+| Nagornaya 1-3 MainShell | `NagornayaChast*MainShell.astro` | ✅ |
+| **Nagornaya 4-5 HeaderHero** | `NagornayaChast4/5HeaderHero.astro` | ❌ — **MISSING** |
+| **Nagornaya 4-5 MainShell** | `NagornayaChast4/5MainShell.astro` | ❌ — **MISSING** |
+| **Nagornaya ArticleBody** | `NagornayaChast*ArticleBody.astro` | ❌ — should be in body! |
+| Gill ArticleBody | `GillPart*ArticleBody.astro` | ❌ |
+| KodDaVinchi body | `KodDaVinchiArticleBody.astro` | ❌ |
+| Rodosloviye body | `RodosloviyeBody.astro` | ❌ |
+| HardTexts PageChrome | `HardTextsPageChrome.astro` | ❌ |
 
 ---
 
-### SEO-006: 4 pages without JSON-LD (P3)
+## 🐛 BUG-SEARCH-002: Nagornaya chast-4 & chast-5 completely missing scripture meta (P2)
 
-| Page | Note |
-|------|------|
-| `konfessii/russkij-baptizm/_app/index.html` | 3D SPA shell — expected |
-| `dist/nagornaya/index.html` | Legacy copy? |
-| `dist/nagornaya/istochniki/index.html` | Legacy copy? |
-| `dist/nagornaya/nakhodki/index.html` | Legacy copy? |
+**Evidence:**
+```
+src/components/nagornaya/chast-4/NagornayaChast4HeaderHero.astro — NO scripture meta
+src/components/nagornaya/chast-4/NagornayaChast4MainShell.astro — NO scripture meta
+src/components/nagornaya/chast-5/NagornayaChast5HeaderHero.astro — NO scripture meta
+src/components/nagornaya/chast-5/NagornayaChast5MainShell.astro — NO scripture meta
+```
 
-The 3 nagornaya landing/index pages are legacy root copies. Their `PageHead` components (NagornayaIndexPageHead.astro, etc.) exist but may need JSON-LD injection.
-
----
-
-### SEC-002: Token warning in docs/SANDBOX-ENV (INFO)
-
-`docs/SANDBOX-ENV-2026-06-21.md` in the source repo (72KB — OLD version before cleanup) contains the text "github_pat" in the context of an example token URL. This is the stale pre-cleanup version. **The AuditRepo version was already cleaned to 211 lines.** The source repo still has the old 940-line/72KB version which should be replaced or deleted.
+While chast-1/2/3 all have it. Inconsistency during parallel development.
 
 ---
 
-## Previously Verified (still current)
+## 🐛 BUG-SEARCH-003: ArticleLayout (MDX) has no scripture meta mechanism (P2)
 
-| Item | Status |
-|------|--------|
-| Gill desktop rail: 105/105 submenu audit | ✅ Fixed in `79eab398` |
-| Mobile smoke/layout | ✅ PASS |
-| PremiumControls 87/87 | ✅ PASS |
-| Gill v16 markers on all 5 routes | ✅ v16, roman, rail, toc, track all present |
-| DOCTYPE + lang=ru | ✅ 53/53 pages |
-| Viewport meta | ✅ 53/53 pages |
-| OG image dimensions | ✅ 0 missing |
-| Canonical links | ✅ 53/53 pages |
-| Icons/manifest | ✅ All present and valid |
-| 404.html | ✅ Has title, CSP, canonical, SW |
-| Sitemap | ✅ 43 URLs, all exist in dist |
-| RSS feed | ✅ 27 items |
-| JSON-LD schema.org context | ✅ All use proper schema.org |
+**Evidence:** `src/layouts/ArticleLayout.astro` and `src/layouts/SeriesArticleLayout.astro`
+
+These are the generic layout templates for ALL MDX-based articles. They support `data-pagefind-meta` for:
+- `author` ✅
+- `readTime` ✅
+- `category` ✅
+- `image` ✅
+
+But NOT for `scripture`. Any MDX article will never appear in the "Писание" search scope regardless of its biblical content.
+
+**Fix needed:** Add a `scripture` prop to `BaseLayout` and `ArticleLayout`, and render `<span data-pagefind-meta="scripture" hidden>{scripture}</span>` when provided.
+
+---
+
+## 🐛 BUG-SEARCH-004: search-manifest.json has NO scripture field (P3)
+
+**Evidence:** The 44 items in `data/search-manifest.json` have these keys:
+```
+id, type, url, title, description, section, editor, image, tags, featured, priority, publishedTime, modifiedTime, readTime
+```
+
+No `scripture` field exists. The client-side search function `G()` combines title+description+section into a searchable text, but can't distinguish scripture-relevant pages from non-scripture ones.
+
+**Impact:** When Pagefind isn't loaded yet, the "Писание" scope has no data to filter on.
+
+---
+
+## 🐛 BUG-SEARCH-005: "Писание" scope default suggestions return zero results (P3)
+
+**Evidence in `js/search.js`:**
+```javascript
+"scripture" === C ? (S.innerHTML = '...<div class="cp-suggestions">'+
+  ["Ин 3:16", "Мф 5:3", "Рим 8:28", "Иер 17:9"]
+```
+
+These 4 suggestions are the default empty-state hints for the "Писание" tab. But:
+- "Ин 3:16" → requires `meta.scripture` containing "Ин" on indexed pages → only 3 pages have any scripture meta
+- "Мф 5:3" → only nagornaya pages (1-3) have it
+- "Рим 8:28" → only 1 page has it (rimlyanam7)
+- "Иер 17:9" → only 1 page has it (krajne)
+
+Most queries in the "Писание" scope will return **0 results** because the data isn't there.
+
+---
+
+## Summary of bugs
+
+| ID | Bug | Severity | Affected pages |
+|----|-----|----------|----------------|
+| SEARCH-001 | scripture meta missing on heavy-Bible pages | 🔴 **P1** | ~15 pages (rodosloviye, nagornaya 4-5, hard-texts, Gill, kod-da-vinchi) |
+| SEARCH-002 | Nagornaya chast-4/5 headers lack scripture meta | 🟡 **P2** | 2 pages (chast-4, chast-5) |
+| SEARCH-003 | ArticleLayout can't inject scripture meta | 🟡 **P2** | All MDX articles via layouts |
+| SEARCH-004 | search-manifest lacks scripture field | 🔵 **P3** | Client-side search scope |
+| SEARCH-005 | "Писание" suggestions return empty | 🔵 **P3** | User-visible UX |
+
+---
+
+## What needs to be fixed
+
+### Minimal fix (highest ROI):
+1. Add `data-pagefind-meta="scripture"` to:
+   - `NagornayaChast4HeaderHero.astro` and `MainShell`
+   - `NagornayaChast5HeaderHero.astro` and `MainShell`
+   - `NagornayaChast1-5ArticleBody.astro` (move from header to body)
+   - `RodosloviyeBody.astro` with `Мф 1, Лк 3`
+   - `HardTextsPageChrome.astro` with `Иер 17:9, Рим 7`
+   - `KodDaVinchiArticleBody.astro`
+   - `GillPart*ArticleBody.astro` with key references
+
+### Architectural fix:
+2. Add `scripture` prop to `BaseLayout` → `ArticleLayout` → propagate to `<span data-pagefind-meta="scripture" hidden>`
+
+### Data fix:
+3. Add `scripture` field to `search-manifest.json` items for Bible-related pages
+4. Regenerate search-manifest
 

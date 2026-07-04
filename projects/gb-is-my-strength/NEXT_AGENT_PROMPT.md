@@ -1,3 +1,35 @@
+# 🐛 SEARCH SYSTEM — CRITICAL BUG (2026-07-04)
+
+**14 pages with 262+ Bible references invisible in "Писание" search scope.**
+
+## Summary
+The `data-pagefind-meta="scripture"` attribute is missing from almost ALL scripture-heavy pages.
+Only **3 pages** have it. The "Писание" tab is effectively broken.
+
+## Affected pages (need fix)
+| Page | Bible refs | Priority |
+|------|:----------:|:--------:|
+| /rodosloviye/ | 262+ (Main reference!) | 🔴 P1 |
+| /nagornaya/chast-4,5/ | 24-56 | 🟡 P2 |
+| /nagornaya/istochniki,nakhodki/ | 10-12 | 🟡 P2 |
+| /hard-texts/ | 26 (Иер 17, Рим 7) | 🟡 P2 |
+| /articles/dzhon-gill-*/ | 12-17 | 🟡 P2 |
+| /articles/kod-da-vinchi/ | 11 | 🟡 P2 |
+
+## Root cause
+1. `ArticleLayout.astro` and `SeriesArticleLayout.astro` have no `scripture` prop mechanism
+2. Nagornaya chast-4/5 headers lack scripture meta (chast-1/2/3 have it — inconsistency)
+3. No gate verifies scripture-heavy pages have meta tags
+
+## Fix plan
+1. Add `data-pagefind-meta="scripture"` to all ArticleBody components
+2. Add `scripture` prop to BaseLayout → ArticleLayout
+3. Regenerate search-manifest with scripture field
+
+See MASTER_BUG_MATRIX.md for full details. Verify existing search gates: `gill:pagefind:audit`, `sw:dist:audit:pagefind`.
+
+---
+
 # 🟢 CURRENT TRUTH — 2026-07-05 (READ FIRST)
 
 **Source HEAD:** `6e68d7ca` (fix(ci): remove duplicate run: key — re-enable submenu audit)
