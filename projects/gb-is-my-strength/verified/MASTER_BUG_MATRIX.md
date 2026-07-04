@@ -34,6 +34,9 @@
 | NEW-59 | hard-texts OG dimensions | `c0ab48fc` |
 | NEW-45 | Prefetch hints for navigation | `6e667978` |
 | PC-CURRENT-06 | Gill mobile item -> partTOC flow | V3 |
+| P2-SEARCH-EAGER | Скрыт — полный lazy loader для всех legacy+astro страниц | `546f7016` |
+| UI-GILL-DESKTOP-RAIL-01 | Desktop rail 240→304px + submenu scrollspy | `79eab398` |
+| UI-GILL-DESKTOP-TOC-02 | TOC hierarchy: gbs2-sub fix, scrollspy rewrite | `79eab398` |
 
 ---
 
@@ -382,11 +385,11 @@ All prior P0/P1/P2 fixes remain intact across the codebase.
 | Уровень | Открыто | Закрыто |
 |---|---|---|
 | P0 (Critical) | 0 | 3 |
-| P1 (High) | 2* | 6 |
-| P2 (Medium) | 2* | 14 |
+| P1 (High) | 0 | 8 |
+| P2 (Medium) | 1 | 15 |
 | P3 (Medium) | 2 | 5 |
 | P3 (Refactor) | 4 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **13** | **28** |
+| **Итого** | **10** | **31** |
 
-*P1: UI-GILL-DESKTOP-RAIL-01 (width), UI-GILL-DESKTOP-TOC-02 (hierarchy). P2: BUG-011 reclassified, SEARCH-EAGER partially fixed (Astro-native pages), REG-001 accepted risk (GitHub Pages limitation)*
+*P2: BUG-011 reclassified (no visual regression), SEARCH-EAGER partially fixed (Astro-native pages), REG-001 accepted risk (GitHub Pages limitation)*
