@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
 **Консолидация:** 2026-07-04 (обновлено **2026-07-05**)
-**HEAD исходного репозитория:** `8a8211ea` (CI fix) (CI fix — submenu audit order after Playwright install)
+**HEAD исходного репозитория:** `e5942361` (CI fix) (Gill series image audit fixes (southwark master, OG images, portrait rename))
 **Статус:** ✅ **deploy-green** — все P0/P1/P2 блокеры закрыты
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
@@ -346,6 +346,34 @@ All CSS custom properties (`--color-*`, `--h-*`, `--gbs2-*`, `--gb-*`) are refer
 | NEW-54/56/57/58 | Social/SEO metadata | P3 non-blocking |
 | R-001..R-004 | site.js 167KB monolith, enhancements 48KB, source maps, ESM | Refactoring |
 | AR-001/004/005 | AuditRepo infra | Accepted |
+
+---
+
+
+## 🟢 PASS 63 — GILL SERIES IMAGE AUDIT + FIXES (2026-07-05)
+
+**Source fix commit:** `e5942361` (pushed to main as `lane/fix-gill-images-2026-07-05`).
+
+### Bugs found and fixed
+
+| ID | Severity | Description | Fix |
+|----|----------|-------------|-----|
+| BUG-IMG-01 | P2 | **gill-southwark-sermon**: no full-size master file (only 600w/900w variants) | Created `gill-southwark-sermon.webp` (900x1350) |
+| BUG-IMG-02 | P2 | **Missing OG image for chast-1-chelovek**: used `og-gill-authentic-study-cover.webp` as fallback. No dedicated `og-dzhon-gill-chast-1-chelovek.*` existed | Created `og-dzhon-gill-chast-1-chelovek.webp` + 600w variant |
+| BUG-IMG-03 | P2 | **Missing OG image for spravochnik**: used `og-gill-five-volumes-shelf.webp` as fallback | Created `og-dzhon-gill-spravochnik.webp` + 600w variant |
+| BUG-IMG-04 | P3 | **Misnamed image**: `gill-authentic-study-cover.webp` — filename says "cover" but content is a portrait of Gill at desk | Renamed to `gill-study-portrait.webp` (all references updated) |
+
+### Image placement verification
+
+All 5 Gill articles verified — every image is thematically correct:
+- istoricheskiy-kontekst: 6 unique images (library, clarendon acts, persecution, bookshop, southwark sermon, underground meeting)
+- chast-1-chelovek: 8 unique images (portrait, baptism, funeral, kettering, horsleydown, succession, pulpit)
+- chast-2-uchenyi: 4 unique images (talmud, wesley debate, young boy shop, OG)
+- chast-3-nasledie: 4 unique images (bunhill fields, spurgeon, atlantic map, OG)
+- spravochnik: 2 unique images (five volumes shelf, OG)
+
+### Remaining concern
+- `underground-puritan-meeting.*` (6 files, ~280KB) — used in istoricheskiy-kontekst as historical illustration but not named with `gill-` prefix. Not a functional bug but naming inconsistency.
 
 ---
 
