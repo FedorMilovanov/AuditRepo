@@ -1,135 +1,44 @@
-# 🟢 CURRENT TRUTH — 2026-07-05 (READ FIRST)
+# 🟠 CURRENT TRUTH — 2026-07-05 (READ FIRST)
 
-**Source HEAD:** `8a8211ea` (CI fix — submenu audit after Playwright)
-**AuditRepo HEAD:** `6d4f54a` (Pass 59)
+**Source HEAD:** `e5942361` (fix(images): Gill series image audit fixes)
+**AuditRepo HEAD:** pending (Pass 64 — deep CI audit)
 **Branches:** `origin/main` only (zero stale branches in both repos)
-**CI:** ✅ **All gates green** — build, PremiumControls 87/87, validate:all 0 errors
+**CI:** ⚠️ **P0 blocker open** — BUG-CI-001 (deploy.yml duplicate `run:` key)
 
-## ✅ Все P0/P1/P2 блокеры закрыты
+## ⚠️ P0 CI Blocker — требует немедленного fix
+
+| Bug | Description | Fix |
+|-----|-------------|-----|
+| BUG-CI-001 | deploy.yml строки 155–156: два `run:` ключа в одном step. Второй перезаписывает первый. `gill:pre-v16-submenu:audit` (105 checks) НЕ ЗАПУСКАЕТСЯ. | Удалить строку 156 (`run: npx playwright install --with-deps chromium`). Playwright уже установлен в step 152. |
+
+## Open items summary
 
 | Уровень | Open | Closed | Всего |
 |---------|------|--------|-------|
-| P0 | 0 | 3 | 3 |
-| P1 | 0 | 8 | 8 |
-| P2 | 1 | 15 | 16 |
-| P3 | 2 | 5 | 7 |
+| P0 | 1 | 3 | 4 |
+| P1 | 2 | 8 | 10 |
+| P2 | 3 | 15 | 18 |
+| P3 | 3 | 5 | 8 |
 | Refactor | 4 | 0 | 4 |
 | AuditRepo | 3 | 0 | 3 |
-| **Total** | **10** | **31** | **41** |
+| **Total** | **16** | **31** | **47** |
 
 ## Ключевые документы
 
-- `verified/MASTER_BUG_MATRIX.md` — consolidated canonical truth
+- `verified/MASTER_BUG_MATRIX.md` — consolidated canonical truth (Pass 64 updated)
+- `incoming/arena-agent-pass63/REPORT.md` — Pass 64 deep CI audit report
+
+## P1 items (non-blocking but important)
+
+- BUG-CI-002: `validate:static-publication:light` пропускает 3 gates (MDX strict, baptisty series, SW dist)
+- BUG-CI-003: indexnow.yml push retry — silent failure после 3 неудачных попыток
+
+## P2 items (advisory)
+
+- BUG-ARCH-001: SW PRECACHE_ASSETS содержит lazy-loaded файлы (search-manifest.json, search.js)
+- BUG-SEO-001: IndexNow submit до Pages CDN propagation
+- BUG-011: 23 px breakpoints (reclassified, no visual regression)
 
 ---
 
-# 🟢 GILL DESKTOP RAIL — FIXED on current HEAD 8a8211ea (2026-07-04)
-
-**GPT 5.5 audit all 6 findings resolved.** Lane  merged.
-
-| Bug | Status | Fix |
-|-----|--------|-----|
-| Rail 240px (need 304px+) | FIXED | minmax(272px,304px) + clamp |
-| All items get gbs2-sub | FIXED | level: 2|3 field |
-| Current item may lack href | FIXED | href required now |
-| Count overwritten | FIXED | scrollspy preserves N/TOTAL |
-| span inside ul | FIXED | track moved outside ul |
-| No desktop rail gate | FIXED | gill:pre-v16-submenu:audit 105/105 |
-
-**Verification:** gill:pre-v16-submenu:audit 105/105, mobile smoke/layout PASS, premium-controls 87/87, dist-smoke PASS. Source main: 8a8211ea (with CI fix for Playwright order). Deploy green.
-
----
-
-# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 Search full lazy loader (READ FIRST)
-
-**Current source main HEAD:** `546f7016b55a147dfbbca8e463e3fb0840686ed0`.
-
-**Fixed in this pass:** `P2-SEARCH-EAGER` measured eager-load class — legacy/root pages no longer request `/js/search.js`, build `.cp-*` DOM, request `/data/search-manifest.json`, or load Pagefind before first search interaction.
-
-**Local verification on `546f7016`:** custom Playwright full-lazy smoke, `dist-smoke-audit`, `audit:premium-controls`, `validate:all`, `validate:static-publication`, and `guard:shared-files` passed.
-
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-full-lazy-loader-546f701.md`. Source main is now `aaaaf7a7805daee271557646913b4657975a523e` (auto cache-bust descendant of `546f7016`). Remote `Deploy to GitHub Pages` is **green** on run `28709565563`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28709565563. Remote Visual Parity Guard is **green** on run `28709548827`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28709548827.
-
----
-
-
-
-# 🟡 GILL DESKTOP RAIL — FORENSIC AUDIT RESULTS (2026-07-04)
-
-**GPT 5.5 audit verified + independent source confirmation.**
-
-## 6 confirmed bugs found
-
-| ID | Description | Severity | Status |
-|----|-----------|----------|--------|
-| UI-GILL-DESKTOP-RAIL-01 | Rail 240px (need 304px+) | P1 | verified-current |
-| UI-GILL-DESKTOP-TOC-02a | All items get gbs2-sub, scrollspy breaks | P1 | verified-current |
-| UI-GILL-DESKTOP-TOC-02b | Current item may lack href | P1 | verified-current |
-| UI-GILL-DESKTOP-TOC-02c | Count overwritten, loses N/TOTAL format | P1 | verified-current |
-| UI-GILL-DESKTOP-TOC-02d | span inside ul (invalid HTML) | P2 | verified-current |
-| UI-GILL-DESKTOP-FRAME-03 | No desktop rail gate script exists | P2 | verified-current |
-
-## Gate gaps discovered
-
-Current  (87/87) proves mobile layout + RomanNumeral + controller wiring
-but does NOT prove desktop rail geometry, scrollspy, or horizontal overflow.
-
-**No  exists. No  script. No deploy step.**
-
-## Owner requirement
-
-Restore the wide (304px) framed desktop navigation with proper scrollspy, without breaking
-mobile V3 or PremiumControls. See MASTER_BUG_MATRIX.md for full details.
-
----
-
-# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 search-manifest timestamp refresh (READ FIRST)
-
-**Current source main HEAD:** `bdaf6e8aa8446e2f9016281ad564e54cc2332f40`.
-
-**Fixed in this pass:** Pass 52 advisory — `data/search-manifest.json` `generatedAt` refreshed to `2026-07-04T16:48:42+03:00`. Manifest content was not changed.
-
-**Local verification on `bdaf6e8a`:** `data:consistency`, `audit-pro`, `git diff --check`, and `guard:shared-files` passed.
-
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search_manifest_generatedAt_fixed-bdaf6e8.md`. Remote `Deploy to GitHub Pages` is **green** on run `28708703645`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28708703645. Source main later advanced to `48dcda89` docs-only (`docs(agents)`), Shared Files Guard green.
-
----
-
-# 🟡 CURRENT HANDOFF ADDENDUM — 2026-07-04 Search legacy lazy init (READ FIRST)
-
-**Current source main HEAD:** `30b9fe46bde22e67bbff7a9418718b4e18f5dab5`.
-
-**Improved in this pass:** `P2-SEARCH-EAGER` — legacy/full-document pages still load the first-pass `search.js` file, but it now returns as a lightweight bootstrap: no `.cp-*` command-palette DOM, no `/data/search-manifest.json`, and no Pagefind work until first search interaction. `Ctrl/⌘+K` and search buttons still open the palette.
-
-**Local verification on `30b9fe46`:** custom Playwright search lazy smoke, `validate:all`, `dist-smoke-audit`, `audit:premium-controls`, `validate:static-publication`, and `guard:shared-files` passed.
-
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-legacy-lazy-init-30b9fe4.md`. Source main is now `43a515df3aa409cda59d59cb188f8c60c9ba1ebe` (auto cache-bust descendant of `30b9fe46`). Remote `Deploy to GitHub Pages` is **green** on run `28708425606`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28708425606.
-
----
-
-# 🟢 PASS 43 — 2026-07-04 P2-SEARCH-EAGER lazy search (READ FIRST)
-
-**Source HEAD:** `43a515df` (lazy search + CI optimization + prefetch)
-**AuditRepo HEAD:** `fe6e5b8` (Pass 45)
-**Branches:** `origin/main` only (both repos — zero stale branches)
-
-## P2-SEARCH-EAGER — PARTIALLY FIXED on Astro-native pages
-
-BaseLayout.astro now loads search.js lazily (on first Ctrl+K or click).
-~31KB JS saved on initial pageload. Affects Astro-native pages only.
-Legacy pages (articles, nagornaya, baptisty) still load search.js eagerly.
-
-## CI status
-
-Check GitHub Actions for latest run on `43a515df`.
-
-## Все P0/P1 блокеры закрыты
-
-11 open / 28 closed. Open items are all non-blocking P2/P3/Refactor.
-
----
-
-### Historical addendums
-
-Historical PASS addendums from this session moved to:
-`archive/2026-07-04-next-agent-prompt-history/`
+**Historical addendums archived:** `archive/2026-07-04-next-agent-prompt-history/`

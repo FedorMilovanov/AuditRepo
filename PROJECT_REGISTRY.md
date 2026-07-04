@@ -6,7 +6,7 @@
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Runtime P0 blockers closed. All CI-P0/P1 fixed. Deploy green on `43a515df` (auto-deploy). Latest source HEAD: `43a515df`. Start from `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`. | (audit(gb): Pass 46 — sync to source 43a515df, document audit)
+`projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **reverify-needed** | ⚠️ P0 CI blocker open (BUG-CI-001: deploy.yml duplicate `run:` key disables submenu audit). Latest source HEAD: `e5942361`. 16 open / 31 closed. Start from `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`. | (audit(gb): Pass 64 — deep CI audit) 
 
 ## Status glossary
 
@@ -18,11 +18,11 @@
 - `reverify-needed` — source repo ушёл вперёд, нужен новый HEAD-pass
 - `archived` — проект завершён
 
-## gb-is-my-strength current summary — 2026-07-04
+## gb-is-my-strength current summary — 2026-07-05
 
-**Current source HEAD:** `43a515df` (auto cache-bust after SiteUtils fix)
-**Current AuditRepo HEAD:** `2741d51` (Pass 33 — SiteUtils fix record)
-**Current status:** repair-ready. All P0 runtime blockers closed.
+**Current source HEAD:** `e5942361` (fix(images): Gill series image audit fixes)
+**Current AuditRepo HEAD:** pending (Pass 64 — deep CI audit)
+**Current status:** reverify-needed. P0 CI blocker open (BUG-CI-001).
 
 ### Current truth
 
@@ -33,10 +33,19 @@
 - Gill v16 is current base.
 - All remote branches merged into main. Zero stale branches in both repos.
 
-### Open items (non-blocking)
+### Open items
 
-- P2: SEARCH-EAGER partially fixed on Astro-native pages (lazy loader).
-- P2: BUG-011 CSS breakpoints (reclassified, no visual regression).
+**P0 (blocking):**
+- BUG-CI-001: deploy.yml duplicate `run:` key — submenu audit disabled (Pass 64)
+
+**P1:**
+- BUG-CI-002: `:light` validation skips 3 critical gates (Pass 64)
+- BUG-CI-003: indexnow.yml push retry — silent failure (Pass 64)
+
+**P2 (non-blocking):**
+- BUG-011: CSS breakpoints (reclassified, no visual regression).
+- BUG-ARCH-001: SW precache contradicts lazy search (Pass 64)
+- BUG-SEO-001: IndexNow submit before Pages CDN propagation (Pass 64)
 - P3: SVG dedup (advisory), social metadata bundle.
 - P3/Refactor: site.js monolith, source maps, ES modules.
 - AuditRepo: 3 infra items.

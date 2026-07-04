@@ -1,8 +1,8 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
-**Консолидация:** 2026-07-04 (обновлено **2026-07-05**)
-**HEAD исходного репозитория:** `e5942361` (CI fix) (Gill series image audit fixes (southwark master, OG images, portrait rename))
-**Статус:** ✅ **deploy-green** — все P0/P1/P2 блокеры закрыты
+**Консолидация:** 2026-07-04 (обновлено **2026-07-05**, Pass 64 deep CI audit)
+**HEAD исходного репозитория:** `e5942361` (fix(images): Gill series image audit fixes)
+**Статус:** ⚠️ **P0 CI blocker open** — deploy.yml duplicate `run:` key disables submenu audit
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
 
@@ -37,6 +37,41 @@
 | P2-SEARCH-EAGER | Скрыт — полный lazy loader для всех legacy+astro страниц | `546f7016` |
 | UI-GILL-DESKTOP-RAIL-01 | Desktop rail 240→304px + submenu scrollspy | `79eab398` |
 | UI-GILL-DESKTOP-TOC-02 | TOC hierarchy: gbs2-sub fix, scrollspy rewrite | `79eab398` |
+
+---
+
+## 🔴 P0 — CRITICAL (1 открытый)
+
+- **BUG-CI-001:** deploy.yml — двойной `run:` ключ в step "Gill pre-v16 submenu regression audit" (строки 155–156). Второй `run:` перезаписывает первый. `gill:pre-v16-submenu:audit` (105 проверок) **никогда не запускается** в CI. Playwright install запускается дважды.
+  - **Fix:** удалить строку 156 (`run: npx playwright install --with-deps chromium`). Playwright уже установлен в step 152.
+  - **Evidence:** `sed -n '154,157p' .github/workflows/deploy.yml` на HEAD `e5942361`
+  - **Repair lane:** ci-fix-emergency (1-line deletion)
+
+## 🟠 P1 — CI GATES (2 открытых)
+
+- **BUG-CI-002:** `validate:static-publication:light` (запускается в indexnow.yml на каждый push) пропускает 3 критические проверки:
+  - `astro:audit:article-mdx:strict` (MDX структура, Ukrainian 'мін', 'Сперджен')
+  - `astro:audit:baptisty-series` (Baptist series shadow audit)
+  - `sw:dist:audit` (Service Worker dist readiness)
+  - **FULL:** 37 checks, **LIGHT:** 34 checks. Контент-регрессии могут пройти через indexnow.yml незамеченными.
+  - **Repair lane:** ci-gate-alignment
+
+- **BUG-CI-003:** indexnow.yml push retry — silent failure. После 3 неудачных попыток `git push` workflow отчитывается как успешный без `exit 1`, `::error::` или уведомления.
+  - **Evidence:** `grep -A5 "for _attempt" .github/workflows/indexnow.yml`
+  - **Repair lane:** ci-fix-emergency
+
+## 🟡 P2 — CI/SEO (2 открытых)
+
+- **BUG-ARCH-001:** SW PRECACHE_ASSETS содержит `/data/search-manifest.json` и `/js/search.js`, которые теперь lazy-loaded (Pass 56). SW precache загружает оба при install, сводя экономию lazy loading на нет.
+  - **Repair lane:** perf-cleanup
+
+- **BUG-SEO-001:** IndexNow submit запускается сразу после `actions/deploy-pages@v4`, до реальной доступности нового контента на GitHub Pages CDN. Поисковики могут краулить старую версию.
+  - **Repair lane:** ci-seo
+
+## 🟢 P3 — CODE QUALITY (1 открытый)
+
+- **BUG-SW-001:** `isFont()` в sw.js — двойное отрицание `!(origin !== ... || !pathname...)` эквивалентно `origin === ... && pathname...`. Корректно, но затрудняет аудит.
+  - **Repair lane:** perf-cleanup
 
 ---
 
@@ -457,16 +492,49 @@ All prior P0/P1/P2 fixes remain intact across the codebase.
 
 ---
 
+## 🟢 PASS 64 — DEEP CI/ARCHITECTURE AUDIT (2026-07-05)
+
+**Agent:** arena-agent (Arena.ai Agent Mode)  
+**Source HEAD:** `e5942361`  
+**Scope:** deploy.yml, indexnow.yml, sw.js, package.json, BaseLayout.astro, AuditRepo documentation
+
+### New findings (6)
+
+| ID | Severity | Description | Status |
+|----|----------|-------------|--------|
+| BUG-CI-001 | 🔴 P0 | deploy.yml duplicate `run:` key — submenu audit disabled | OPEN |
+| BUG-CI-002 | 🟠 P1 | `:light` skips 3 critical gates (MDX strict, baptisty, SW) | OPEN |
+| BUG-CI-003 | 🟠 P1 | indexnow.yml push retry — silent failure | OPEN |
+| BUG-ARCH-001 | 🟡 P2 | SW precache contradicts lazy search | OPEN |
+| BUG-SEO-001 | 🟡 P2 | IndexNow submit before Pages CDN propagation | OPEN |
+| BUG-SW-001 | 🟢 P3 | `isFont()` double negation | OPEN |
+
+### False positive retracted
+
+- **BUG-RUNTIME-001 (empty genericRuntime):** FALSE POSITIVE. GitHub raw markdown rendering stripped template literal content. Actual source verified via `git clone`: Yandex Metrika (id: 108353327), `window.SITE_CONFIG`, site-utils.js, scroll-perf.js, site.js, sw-register.js, and lazy search bootstrap all present and correct.
+
+### Repair lanes proposed
+
+1. **ci-fix-emergency:** BUG-CI-001 + BUG-CI-003 (2 files, ~5 lines changed)
+2. **ci-gate-alignment:** BUG-CI-002 + BUG-SEO-001 (package.json + deploy.yml)
+3. **perf-cleanup:** BUG-ARCH-001 + BUG-SW-001 (sw.js only)
+
+### Evidence
+
+Full report: `incoming/arena-agent-pass63/REPORT.md`
+
+---
+
 ## 📊 СВОДКА
 
 | Уровень | Открыто | Закрыто |
 |---|---|---|
-| P0 (Critical) | 0 | 3 |
-| P1 (High) | 0 | 8 |
-| P2 (Medium) | 1 | 15 |
-| P3 (Medium) | 2 | 5 |
+| P0 (Critical) | 1 | 3 |
+| P1 (High) | 2 | 8 |
+| P2 (Medium) | 3 | 15 |
+| P3 (Medium) | 3 | 5 |
 | P3 (Refactor) | 4 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **10** | **31** |
+| **Итого** | **16** | **31** |
 
-*P2: BUG-011 reclassified (no visual regression), SEARCH-EAGER partially fixed (Astro-native pages), REG-001 accepted risk (GitHub Pages limitation)*
+*P0: BUG-CI-001 deploy.yml duplicate run: key (Pass 64). P1: BUG-CI-002/003 CI gate gaps (Pass 64). P2: BUG-011 reclassified (no visual regression), BUG-ARCH-001 SW precache contradiction, BUG-SEO-001 IndexNow timing (Pass 64). P3: BUG-SW-001 isFont() readability (Pass 64).*
