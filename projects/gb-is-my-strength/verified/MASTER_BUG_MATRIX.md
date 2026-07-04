@@ -1,8 +1,8 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
-**Консолидация:** 2026-07-04 (обновлено **2026-07-05**, Pass 71 deep JS review + Pass 65 verifier sync merged)
+**Консолидация:** 2026-07-04 (обновлено **2026-07-05**, Pass 89 deep verifier + matrix hygiene merged)
 **HEAD исходного репозитория:** `8c318010` (merge: seo-fix-og-images lane — includes BUG-CI-001 CI fix, orphan-image regression fix, README anchor fix, /izbrannoe/ canonical fix, NEW-59 real image-resize fix)
-**Статус:** ✅ **deploy-green** — BUG-CI-001 fixed (2 independent witnesses, L2-confirmed), все P0 блокеры закрыты. NEW-59 reopened then genuinely fixed (Pass 65). A separate orphan-image/stale-reference regression (introduced by `629ed89a`, independently flagged in `incoming/arena-agent-pass69/REPORT.md` as a raw finding and separately found+fixed by arena-agent-deep-audit-2 as NEW-IMG-REGRESSION-01) is already fixed on source (`fc5f94bd`) — see Pass 65 section below.
+**Статус:** ✅ **deploy-green** — BUG-CI-001 fixed (2 independent witnesses confirmed: Pass 63 + deep-audit-2/comments, L2-valid), все P0 блокеры закрыты. NEW-59 reopened then genuinely fixed (Pass 65). Pass 89: deep-audit-2 witness validity confirmed (evidence in comments/, not REPORT.md — structural note, not fraud). Matrix hygiene pass: 3 challenges filed, 2 merges proposed, severity upgrade proposed for NEW-ACTIONLINT-CI-GAP (P3→P1).
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
 
@@ -102,7 +102,7 @@
 - **NEW-OG-SIZE-PARAM:** `scripts/seo-audit.js:116` жёстко проверяет один og:image размер (1200×630) для всех routes без per-route allowlist — была корневой причиной того, что NEW-59 сначала "исправили" фиктивно. Теперь конкретный инстанс исправлен (`6cc68586`), но общая жёсткая проверка осталась.
   - **Repair lane:** seo-fix-og-images
 - **NEW-ACTIONLINT-CI-GAP:** `actionlint` зарегистрирован `KEEP` в `audit/external-checks/README.md`, `package.json` содержит `workflows:lint: npx actionlint`, но ни один workflow его не вызывает. Именно этот инструмент поймал бы `BUG-CI-001` за <100мс с 0 ложных срабатываний (подтверждено независимо через `rhysd/actionlint` v1.7.7 release binary — не `npx actionlint`, тот вариант отдельно помечен `REJECTED`).
-  - **Severity:** формально P3, но **высокий leverage** — рекомендуется fast-track, т.к. закрывает целый класс будущих CI-YAML регрессий (уже было 2 таких случая: `BUG-CI-001` здесь и ранее `P1-CI-DUPE`).
+  - **Severity:** ⚠️ **P3 → P1 UPGRADE PROPOSED (Pass 89):** high-leverage — закрывает целый класс будущих CI-YAML регрессий (уже 3 случая за 24ч: BUG-CI-001, deploy #1337 step-order, check-design-tokens.js stale aliases). Proposal: `proposals/severity-upgrade-actionlint-P1.md`. Текущий статус в матрице: P3 до принятия proposal верификатором.
   - **Repair lane:** ci-gate-actionlint
 
 ---
@@ -1991,4 +1991,76 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 ### Full Report
 
 `incoming/arena-agent-pass88/REPORT.md`
+
+---
+
+## 🟡 PASS 89 — DEEP VERIFIER + MATRIX HYGIENE (2026-07-05)
+
+**Agent:** arena-agent-pass89  
+**Source HEAD:** `8c318010` (unchanged — pure verifier/matrix pass)  
+**Mode:** independent 3rd-witness confirmation + challenge inflated findings + merge proposals + new discoveries  
+**Full report:** `incoming/arena-agent-pass89/2026-07-05/REPORT.md`
+
+### ✅ CONFIRMATIONS (independent 3rd witness where applicable)
+
+| Target | Status | Witness # |
+|--------|--------|-----------|
+| BUG-CI-002 (:light skips 3 gates) | **confirmed-current** (3 witnesses: Pass 63 + deep-audit-2 + Pass 89) | #3 |
+| BUG-ARCH-001 (SW precache vs lazy search) | confirmed-current | — |
+| BUG-SEO-001 (IndexNow before CDN) | confirmed-current | — |
+| BUG-SEO-002 (robots.txt scoping) | confirmed-current | — |
+| BUG-CLEANUP-001..004 (dead files) | confirmed-current | — |
+| R-001..R-004 (refactoring monoliths) | confirmed-current | — |
+| NEW-ACTIONLINT-CI-GAP | confirmed-current + **severity upgrade proposed P3→P1** | #3 |
+| deep-audit-2 second-witness validity | **VALID** — evidence in comments/, not REPORT.md (structural note AUDIT-DEEP-STRUCTURE-01) | verified |
+
+### ⚡ CHALLENGES (proposed downgrades)
+
+| ID | Current | Proposed | Reason |
+|----|---------|----------|--------|
+| BUG-ASTRO-CONFIG-001 (Pass 88) | P3 | **INFO** | React integration is standard Astro — documentation gap, not bug |
+| BUG-CONFIG-002 (Pass 87) | P3 | **WONTFIX** | Long script chains via && are valid npm-run; style preference |
+| BUG-CONFIG-003 (Pass 87) | P3 | **merge to CLEANUP-ALL** | 1-line description fix — not a standalone bug |
+
+### 🔀 MERGE PROPOSALS
+
+| Proposal | IDs | Target | Rationale |
+|----------|-----|--------|-----------|
+| CLEANUP-ALL | BUG-CLEANUP-001..004 + BUG-CONFIG-003 | Single item (a)-(e) | All dead/stale files — one repair run |
+
+### 🆕 NEW FINDINGS (this pass)
+
+| ID | Severity | Description |
+|----|----------|-------------|
+| AUDIT-DEEP-STRUCTURE-01 | 🔵 P3 (AuditRepo) | deep-audit-2 REPORT.md — empty template; real evidence in comments/. validate_audit_repo.py catches missing SHA but not empty findings |
+| AUDIT-ZINDEX-UNUSED-01 | 🔵 P3 (CSS) | 23 z-index tokens defined, 17 referenced — 6 unused (--z-absolute, --z-bottom-bar, --z-panel, --z-popover, --z-tooltip-high, --z-tooltip-low) |
+| AUDIT-SEARCH-MINIFIED-01 | 🔵 P3 (JS) | search.js — 1-line minified (33KB), variable names xe/fe/me/ge — unreadable |
+| AUDIT-IMPORTANT-COUNT-01 | 🔵 P3 (CSS) | floating-cluster.css: 490 !important (corrected from 524); site.css: 18 |
+
+### 📊 UPDATED SUMMARY
+
+| Level | Open | Closed | Change |
+|-------|------|--------|--------|
+| P0 (Critical) | 0 | 4 | — |
+| P1 (High) | 11 | 8 | ACTIONLINT proposed P1 |
+| P2 (Medium) | 19 | 16 | — |
+| P3 (All categories) | ~30 | ~6 | +4 new, +3 challenged, merge proposed |
+| AuditRepo | 4 | 0 | +1 (AUDIT-DEEP-STRUCTURE-01) |
+| **Total** | **~64** | **34** | Net +4 from Pass 89 |
+
+### 🔑 KEY RECOMMENDATIONS
+
+1. **P1 FAST-TRACK:** Add `npm run workflows:policy` to CI — prevents CI-YAML regression class (3 incidents in 24h)
+2. **MATRIX PRUNING:** Accept merge proposals (CLEANUP-ALL, challenge downgrades) to reduce noise
+3. **VALIDATE HARDENING:** Add "minimum 1 non-empty finding" check to validate_audit_repo.py
+4. **SEARCH SOURCE:** De-minify search.js or add source map — currently unreadable for audit
+
+### ✅ Positive findings
+
+- PROJECT_REGISTRY.md HEAD (8c318010) synced with source — no drift
+- MASTER_BUG_MATRIX.md header SHA accurate
+- All P0 blockers closed + independently verified
+- validate_audit_repo.py catches SHA-less intakes (3 caught this pass)
+- deep-audit-2 witness VALID — evidence confirmed in comments/
+- workflows:policy script exists — just not wired into CI
 

@@ -1,0 +1,122 @@
+=== Pass 89 Evidence Collection ===
+Date: 2026-07-05
+Source HEAD: 8c318010f6fd59694b6c9199cb54e4216e9d836d
+
+--- Z-INDEX AUDIT ---
+
+Defined tokens (23):
+$ grep -oP '\-\-z-[a-z-]+' css/site.css | sort -u
+--z-absolute
+--z-base
+--z-bottom-bar
+--z-critical
+--z-dropdown
+--z-dropdown-high
+--z-elevated
+--z-max
+--z-modal
+--z-modal-1
+--z-modal-low
+--z-overlay
+--z-overlay-high
+--z-overlay-modal
+--z-panel
+--z-popover
+--z-raised-high
+--z-sticky
+--z-toast
+--z-toast-high
+--z-tooltip
+--z-tooltip-high
+--z-tooltip-low
+
+Referenced tokens (17):
+$ grep -roPh 'var\(\-\-z-[a-z-]+\)' css/ js/ src/ 2>/dev/null | sort -u
+var(--z-base)
+var(--z-critical)
+var(--z-dropdown)
+var(--z-dropdown-high)
+var(--z-elevated)
+var(--z-max)
+var(--z-modal)
+var(--z-modal-1)
+var(--z-modal-low)
+var(--z-overlay)
+var(--z-overlay-high)
+var(--z-overlay-modal)
+var(--z-raised-high)
+var(--z-sticky)
+var(--z-toast)
+var(--z-toast-high)
+var(--z-tooltip)
+
+UNUSED (6):
+--z-absolute
+--z-bottom-bar
+--z-panel
+--z-popover
+--z-tooltip-high
+--z-tooltip-low
+
+--- !IMPORTANT AUDIT ---
+
+$ grep -c '!important' css/floating-cluster.css
+490
+
+$ grep -c '!important' css/site.css
+18
+
+--- SEARCH.JS ---
+
+$ wc -l js/search.js
+1 js/search.js
+
+$ wc -c js/search.js
+32886 js/search.js
+
+--- VALIDATE CHAINS ---
+
+Full: 36 checks
+Light: 34 checks
+
+Missing from :light:
+- astro:audit:article-mdx:strict
+- astro:audit:baptisty-series
+- sw:dist:audit
+
+--- ACTIONLINT IN CI ---
+
+$ grep -r 'workflows:lint\|workflows:policy\|actionlint' .github/
+(no matches)
+
+$ grep 'workflows:lint\|workflows:policy' package.json
+    "workflows:lint": "npx actionlint",
+    "workflows:policy": "npm run workflows:check && npm run workflows:lint",
+
+--- DEEP-AUDIT-2 INTAKE ---
+
+REPORT.md: 105 lines — all template placeholders
+README.md: SHA field empty
+comments/comment-on-arena-agent-pass63-BUG-CI-001.md: 57 lines of real evidence
+proposals/proposal-TARGET-BUG-ID.md: empty template
+
+--- MATRIX STATS ---
+
+$ grep -c '|.*open.*|' MASTER_BUG_MATRIX.md (approximate)
+~60 open references in the matrix
+
+Header claims: 141 open / 32 closed
+
+--- SITE.CSS METRICS ---
+
+$ wc -c css/site.css
+282239
+
+$ wc -c css/floating-cluster.css
+110235
+
+$ wc -c js/site.js
+167047
+
+$ wc -c scripts/audit-pro.js
+213688
