@@ -1272,3 +1272,58 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 
 `incoming/arena-agent-pass74/REPORT.md`
 
+
+---
+
+## 🟢 PASS 75 — DEEP JS CODE REVIEW: nagornaya-mobile-toc.js (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `js/nagornaya-mobile-toc.js` (12 lines, 15KB) — 7 modules
+
+### Critical Findings (P1)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-033 | innerHTML without sanitization (15+ instances) | 🔴 P1 |
+
+### High Priority Findings (P2)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-034 | Magic numbers (200, 280, 1024, 14-20) | 🟡 P2 |
+| BUG-JS-035 | Empty catch blocks (5+) | 🟡 P2 |
+| BUG-JS-036 | Complex main IIFE (~300 lines) | 🟡 P2 |
+
+### Medium Priority Findings (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-037 | No cleanup system for event listeners | 🔵 P3 |
+| BUG-JS-038 | Multiple setTimeout without cleanup | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total size | 15KB |
+| Lines | 12 |
+| Modules | 7 |
+| innerHTML risks | 15+ |
+| Magic numbers | 20+ |
+| Empty catches | 5+ |
+| Cleanup system | No |
+| Timer leaks | 5+ |
+
+### Top 5 Recommendations
+
+1. **Sanitize innerHTML** — prevent XSS (15+ instances)
+2. **Extract magic numbers** — create named constants
+3. **Add logging to empty catches** — improve debuggability
+4. **Refactor main IIFE** — split into smaller modules
+5. **Add cleanup system** — prevent memory leaks
+
+### Full Report
+
+`incoming/arena-agent-pass75/REPORT.md`
+
