@@ -6,7 +6,7 @@
 
 **Local verification on `a434b45e`:** `validate:all`, `audit-pro`, `contract:compare`, and `guard:shared-files` passed.
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_sitemap-lastmod-fixed-a434b45.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_sitemap-lastmod-fixed-a434b45.md`. Remote `Deploy to GitHub Pages` is **green** on run `28694476460`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28694476460.
 
 ---
 

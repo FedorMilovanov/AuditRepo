@@ -886,7 +886,7 @@ Verified on `a434b45e`:
 - `npm run contract:compare` ✅
 - `npm run guard:shared-files` ✅
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_sitemap-lastmod-fixed-a434b45.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_sitemap-lastmod-fixed-a434b45.md`. Remote Deploy green: run `28694476460` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28694476460).
 
 ---
 

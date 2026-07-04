@@ -49,3 +49,9 @@ all lastmod values remain ≤ current date
 `NEW-70`: **fixed-current on source main `a434b45e` by sitemap/static validation evidence**.
 
 Remote workflow should be observed separately because this push triggers IndexNow metadata/cache-bust and then deploy.
+
+---
+
+## 5. Remote workflow
+
+Remote `Deploy to GitHub Pages` is **green** on source main `a434b45e`: run `28694476460` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28694476460).
