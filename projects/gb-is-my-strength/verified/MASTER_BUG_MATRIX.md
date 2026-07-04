@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `14574a9a` (dist CSP form-action/karty CSP hardening; descendant of `01ff5ce3`)
+**HEAD исходного репозитория:** `da4a65cd` (README version drift fixed; descendant of dist CSP hardening)
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–45)  
 
 ---
@@ -140,7 +140,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 - ~~**NEW-68 (P2, CSP form-action regression):** dist HTML pages missed `form-action 'self'`~~ ✅ FIXED-CURRENT on source main `14574a9a`: postbuild CSP hardening appends `form-action 'self'`; `dist-publication-audit` now blocks regressions.
 - ~~**NEW-69 (P2, CSP meta regression on karty/ holding pages):** karty/map-like dist pages missed CSP meta~~ ✅ FIXED-CURRENT on source main `14574a9a`: postbuild CSP hardening injects CSP on dist pages missing it; `dist-publication-audit` now blocks regressions.
 * **NEW-70 (P3, sitemap.xml stale lastmod):** static scan finds only 4 unique `<lastmod>` values across 43 sitemap URLs: 2026-06-18, 2026-06-25 (×2), 2026-07-03. Recent cache-bust commits only updated ~29/43 URLs. See Pass 38 in this file.
-* **NEW-71 (P3, README.md version drift):** README.md says `**Версия документа:** v10 · 2026-06-26 · post-audit hardening (BUG-A1..A10, BUG-B1..B10, BUG-S1..S3 closed)`. Source HEAD = f1e9abd9 (2026-07-03). README is 7 days stale. Owner should re-version. See Pass 38 in this file.
+* ~~**NEW-71 (P3, README.md version drift):** README stayed at v10 / 2026-06-26~~ ✅ FIXED-CURRENT on source main `da4a65cd`: README version line is now v11 / 2026-07-04.
 * **NEW-72 (P2, SVG dedup opportunity across 4 files):** static scan of 11 JS files finds 9 unique SVG fragments duplicated across `js/highlights.js`, `js/search.js`, `js/site.js`, `js/floating-cluster-controller.js`, `js/nagornaya-mobile-toc.js`. Most-duplicated: 5x `<polyline points="20 6 9 17 4 12"/>` (checkmark). Total potential saving: ~1.5-2KB. See Pass 38 in this file.
 - **NEW-67 (P3, dead scripts in `scripts/` on `f1e9abd9`):** 10 scripts with no caller in `package.json`, no workflow reference, no require(): _audit-deep.js, about-leaf-parity-shots.js, deep-check.js, extract-native-pilot.js, genealogy-e2e-v2.js, generate-route-profiles.js, ishod-qa.js, map-visual-qa.js, premium-mobile-visibility-smoke.js, route-impact-report.js. See Pass 37 in this file.
 
@@ -871,6 +871,21 @@ BUG-022 (overridden CSS rules):
 * **Visual parity current side finding:** local pixel-diff on `f1e9abd9` fails `/baptisty-rossii/` only: desktop `6.131%`, mobile `17.368%` (threshold `1%`). GitHub Visual Parity Guard failed on `8446a0da`; current `f1e9abd9` was `[skip ci]`, so remote visual parity was not rerun, but local current-head evidence confirms the issue.
 
 
+
+## 🟢 PASS 46 / README VERSION DRIFT FIX (2026-07-04)
+
+**Source fix commit:** `da4a65cd33e046368dc089d48b42989de2344995` (`lane/docs-readme-current-status-2026-07-04`, pushed to `main`).
+
+`NEW-71` is **fixed-current on source main `da4a65cd`**. README version line now says `v11 · 2026-07-04 · runtime/CI green + dist CSP hardening`.
+
+Verified on `da4a65cd`:
+
+- `git diff --check` ✅
+- `npm run guard:shared-files` ✅
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_readme-version-drift-fixed-da4a65c.md`.
+
+---
 
 ## 🟢 PASS 45 / DIST CSP FORM-ACTION + KARTY CSP FIX (2026-07-04)
 

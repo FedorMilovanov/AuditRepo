@@ -1,3 +1,15 @@
+# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 README version drift fix (READ FIRST)
+
+**Current source main HEAD:** `da4a65cd33e046368dc089d48b42989de2344995`.
+
+**Fixed in this pass:** `NEW-71` — `README.md` version line refreshed to `v11 · 2026-07-04 · runtime/CI green + dist CSP hardening`.
+
+**Local verification on `da4a65cd`:** `git diff --check` and `guard:shared-files` passed.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_readme-version-drift-fixed-da4a65c.md`.
+
+---
+
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 Dist CSP hardening (READ FIRST)
 
 **Current source main HEAD:** `14574a9a21e6a5ba729df837c652c8db6ef599ff`.
