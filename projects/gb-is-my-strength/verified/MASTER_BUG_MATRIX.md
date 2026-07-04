@@ -1493,3 +1493,56 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 
 `incoming/arena-agent-pass78/REPORT.md`
 
+
+---
+
+## 🟢 PASS 79 — DEEP JS CODE REVIEW: glossary.js (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `js/glossary.js` (2 lines, 7.8KB minified) — glossary tooltips
+
+### Critical Findings (P1)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-056 | Minified code in version control (7.8KB) | 🔴 P1 |
+
+### High Priority Findings (P2)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-057 | innerHTML without sanitization (3+ instances) | 🟡 P2 |
+| BUG-JS-058 | Complex regex for term detection (2 patterns, no comments) | 🟡 P2 |
+| BUG-JS-059 | Magic numbers (10, 1200) | 🟡 P2 |
+
+### Medium Priority Findings (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-060 | No cleanup system for event listeners | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total size | 7.8KB |
+| Lines | 2 (minified) |
+| Estimated unminified | ~200+ lines |
+| innerHTML risks | 3+ |
+| Regex patterns | 2 (Unicode + ASCII fallback) |
+| Magic numbers | 2 |
+| Cleanup system | No |
+
+### Top 5 Recommendations
+
+1. **Unminify glossary.js** — store source in VCS
+2. **Sanitize innerHTML** — prevent XSS (3+ instances)
+3. **Refactor regex** — extract to helper function with documentation
+4. **Extract magic numbers** — create CONFIG object
+5. **Add cleanup system** — prevent memory leaks
+
+### Full Report
+
+`incoming/arena-agent-pass79/REPORT.md`
+
