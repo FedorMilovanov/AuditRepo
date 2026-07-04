@@ -796,17 +796,131 @@ floating-cluster.css (2882 lines, 106KB)
 
 ---
 
+## 🟢 PASS 70 — DEEP CSS CODE REVIEW: site.css (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `css/site.css` (575 lines, 275KB) — complete line-by-line audit
+
+### New findings (6)
+
+| ID | Severity | Description | Status |
+|----|----------|-------------|--------|
+| BUG-CSS-013 | 🔴 P1 | Minified code in version control (difficult to read, debug, review) | OPEN |
+| BUG-CSS-014 | 🔴 P1 | Mixed concerns — single file contains 7+ concerns (base, components, utilities, print, GBS, tooltips, animations) | OPEN |
+| BUG-CSS-015 | 🟡 P2 | Duplicate body styles (3 definitions: unlayered Safari fallback + @layer reset + @layer base) | OPEN |
+| BUG-CSS-016 | 🟡 P2 | Duplicate html{scroll-behavior:smooth} (defined twice) | OPEN |
+| BUG-CSS-017 | 🟡 P2 | Duplicate alias variables in :root and html.dark (20+ aliases duplicated) | OPEN |
+| BUG-CSS-018 | 🔵 P3 | Huge inline SVG in fn-marker--dove (~4KB, same path duplicated for light/dark) | OPEN |
+
+### Key discoveries
+
+**1. Minified code in version control:**
+- Entire 575-line file is minified
+- Difficult to read, debug, and review changes
+- Git diffs show entire lines changed for small modifications
+- No source maps for browser DevTools
+
+**2. Mixed concerns — 7+ concerns in single file:**
+| Concern | Lines (estimated) | % of file |
+|---------|-------------------|-----------|
+| Base styles (reset, typography) | ~50 | 9% |
+| Component styles (breadcrumbs, cards, quiz) | ~250 | 43% |
+| Utility classes (Tailwind-like shims) | ~30 | 5% |
+| Print styles | ~40 | 7% |
+| GBS-specific styles | ~100 | 17% |
+| Tooltip styles | ~60 | 10% |
+| Animation keyframes | ~25 | 4% |
+| Dark mode overrides | ~20 | 3% |
+
+**3. Duplicate body styles (3 definitions):**
+- Definition 1 (line 2, unlayered Safari fallback): `body{margin:0;background:#fdfcf9;...}`
+- Definition 2 (line 9, @layer reset): `body{margin:0}`
+- Definition 3 (line 25, @layer base): `body{background:var(--color-canvas);...}`
+- Unlayered styles override layered — cascade confusion
+
+**4. Duplicate alias variables:**
+```css
+:root {
+  --bg: var(--color-canvas);      /* Alias */
+  --text: var(--color-text);      /* Alias */
+  --border: var(--color-border);  /* Alias */
+  /* ... 20+ aliases ... */
+}
+
+html.dark {
+  --bg: var(--color-canvas);      /* DUPLICATE — not needed */
+  --text: var(--color-text);      /* DUPLICATE — not needed */
+  --border: var(--color-border);  /* DUPLICATE — not needed */
+  /* ... 20+ duplicate aliases ... */
+}
+```
+Aliases reference semantic variables which are already theme-aware — no need to duplicate.
+
+**5. Huge inline SVG (~4KB):**
+- fn-marker--dove contains ~2KB inline SVG for light theme
+- html.dark .fn-marker--dove contains ~2KB inline SVG for dark theme
+- Same SVG path, different fill color
+- Should use CSS mask with currentColor instead
+
+### Impact analysis
+
+**Current state:**
+- Lines of code: 575 (minified)
+- File size: 275KB
+- Concerns mixed: 7+ (base, components, utilities, print, GBS, tooltips, animations)
+- Maintainability: 🔴 Critical (minified, mixed concerns)
+
+**After refactoring (estimated):**
+- Lines of code: ~1200 (unminified, split into 10+ files)
+- File size: ~250KB (after deduplication and optimization)
+- Concerns separated: Each file has single responsibility
+- Maintainability: 🟢 Good (readable, separated concerns)
+
+**Performance impact:**
+- Current: 275KB single file (blocks rendering)
+- After splitting: ~250KB total, but can load critical CSS first
+- Critical CSS: ~30KB (loads immediately)
+- Non-critical CSS: ~220KB (loads async)
+- FCP improvement: ~40-50% faster (30KB vs 275KB blocking)
+
+### Comparison with floating-cluster.css
+
+| Metric | floating-cluster.css (Pass 69) | site.css (Pass 70) |
+|--------|-------------------------------|-------------------|
+| Lines | 2882 | 575 |
+| Size | 106KB | 275KB |
+| !important | 524 | 202 |
+| Specificity layers | 4 | 0 |
+| Minified | No | **Yes** |
+| Concerns mixed | No (single component) | **Yes (7+ concerns)** |
+| Duplicate styles | 4+ | 3+ |
+| Inline SVG | 0 | **4KB** |
+| Overall debt | 🔴 Critical | 🔴 Critical |
+
+**Key differences:**
+- **floating-cluster.css** has "specificity wars" (!important overriding !important)
+- **site.css** has "mixed concerns" (everything in one file) and minification
+
+**Both require complete refactoring**, but for different reasons.
+
+### Full report
+
+`incoming/arena-agent-pass70/REPORT.md`
+
+---
+
 ## 📊 СВОДКА
 
 | Уровень | Открыто | Закрыто |
 |---|---|---|
 | P0 (Critical) | 0 | 4 |
-| P1 (High) | 7 | 8 |
-| P2 (Medium) | 12 | 15 |
+| P1 (High) | 9 | 8 |
+| P2 (Medium) | 15 | 15 |
 | P3 (Medium) | 3 | 5 |
 | P3 (Refactor) | 4 | 0 |
-| P3 (Cleanup) | 17 | 0 |
+| P3 (Cleanup) | 18 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **46** | **32** |
+| **Итого** | **52** | **32** |
 
-*P0: BUG-CI-001 fixed in `6e68d7ca`. P1: BUG-CI-002/003 CI gate gaps + BUG-PERF-001 memory leaks (Pass 65) + BUG-CSS-001 1047 !important (Pass 68) + BUG-CSS-006/007/008 floating-cluster.css duplicate definitions + specificity wars (Pass 69). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing, BUG-QUALITY-001/002/003 innerHTML + console + missing WebP (Pass 64-65), BUG-A11Y-001 skip links (Pass 66), BUG-PERF-002 render-blocking CSS (Pass 67), BUG-CSS-002/003 hardcoded colors + breakpoints (Pass 68), BUG-CSS-009/010 MAX_INT z-index + duplicate .gbs-rail-foot (Pass 69). P3: 24 items (Pass 64-69). Deletions audit: all removals verified correct, no regressions. Data consistency: all JSON valid, no duplicates. CSS audit: 534KB total, critical technical debt. floating-cluster.css: 106KB, 524 !important, 4 specificity layers — requires complete refactor.*
+*P0: BUG-CI-001 fixed in `6e68d7ca`. P1: BUG-CI-002/003 CI gate gaps + BUG-PERF-001 memory leaks (Pass 65) + BUG-CSS-001 1047 !important (Pass 68) + BUG-CSS-006/007/008 floating-cluster.css duplicate definitions + specificity wars (Pass 69) + BUG-CSS-013/014 site.css minified code + mixed concerns (Pass 70). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing, BUG-QUALITY-001/002/003 innerHTML + console + missing WebP (Pass 64-65), BUG-A11Y-001 skip links (Pass 66), BUG-PERF-002 render-blocking CSS (Pass 67), BUG-CSS-002/003 hardcoded colors + breakpoints (Pass 68), BUG-CSS-009/010 MAX_INT z-index + duplicate .gbs-rail-foot (Pass 69), BUG-CSS-015/016/017 site.css duplicate styles (Pass 70). P3: 25 items (Pass 64-70). Deletions audit: all removals verified correct, no regressions. Data consistency: all JSON valid, no duplicates. CSS audit: 534KB total, critical technical debt. floating-cluster.css: 106KB, 524 !important, 4 specificity layers — requires complete refactor. site.css: 275KB, minified, 7+ concerns mixed — requires reorganization and build pipeline.*
