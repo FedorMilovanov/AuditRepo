@@ -1,3 +1,15 @@
+# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 Search full lazy loader (READ FIRST)
+
+**Current source main HEAD:** `546f7016b55a147dfbbca8e463e3fb0840686ed0`.
+
+**Fixed in this pass:** `P2-SEARCH-EAGER` measured eager-load class — legacy/root pages no longer request `/js/search.js`, build `.cp-*` DOM, request `/data/search-manifest.json`, or load Pagefind before first search interaction.
+
+**Local verification on `546f7016`:** custom Playwright full-lazy smoke, `dist-smoke-audit`, `audit:premium-controls`, `validate:all`, `validate:static-publication`, and `guard:shared-files` passed.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-full-lazy-loader-546f701.md`. Source main is now `aaaaf7a7805daee271557646913b4657975a523e` (auto cache-bust descendant of `546f7016`). Remote `Deploy to GitHub Pages` is **green** on run `28709565563`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28709565563. Remote Visual Parity Guard is **green** on run `28709548827`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28709548827.
+
+---
+
 
 
 # 🟡 GILL DESKTOP RAIL — FORENSIC AUDIT RESULTS (2026-07-04)

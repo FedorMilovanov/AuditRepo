@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
 **Консолидация:** 2026-07-04
-**HEAD исходного репозитория:** `12f4a50a` (AGENTS.md cleanup + search-manifest fix + ironclad reading checklist)
+**HEAD исходного репозитория:** `aaaaf7a7` (auto cache-bust descendant of search full lazy loader `546f7016`)
 **Статус:** ✅ **deploy-green** — все P0/P1/P2 блокеры закрыты
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
@@ -40,12 +40,11 @@
 ## 🟠 P2 — MEDIUM (2 открытых)
 
 - **BUG-011:** 23 уникальных px брейкпоинта, 768px коллизия (reclassified — без визуальной регрессии)
-- **P2-SEARCH-EAGER (partial fix):** search.js 31KB eager load. ✅ Fixed by `30b9fe46`:
-  - search.js: added `__ready` flag and `__gbSearchOpenAfterLoad` mechanism for deferred open.
-  - Astro-native pages: lazy-loaded via inline script (first Ctrl+K/click).
-  - Legacy pages: still load search.js eagerly (due to `<script defer>` in hardcoded HTML), 
-    but `__ready+__gbSearchOpenAfterLoad` ensures deferred search works on first interaction.
-  - Full fix requires: migration of legacy HTML to BaseLayout or inline lazy loader.
+- ~~**P2-SEARCH-EAGER:** search.js / command palette eager initial load~~ ✅ FIXED-CURRENT on `546f7016` for the measured eager-load class:
+  - no initial `/js/search.js` network request on sampled root/legacy routes;
+  - no initial `.cp-*` DOM;
+  - no initial `/data/search-manifest.json` or Pagefind work;
+  - search opens on first interaction. Remaining search work is broader refactor debt, not this P2 eager-load bug.
 
 ## 🔵 P3 — MEDIUM (2 открытых)
 
@@ -62,6 +61,25 @@
 ## 🟣 AUDITREPO (3)
 
 - **AR-001/004/005:** validate_audit_repo, verification protocol, reverify automation
+
+---
+
+## 🟢 PASS 56 / SEARCH FULL LAZY LOADER (2026-07-04)
+
+**Source fix commit:** `546f7016b55a147dfbbca8e463e3fb0840686ed0` (`lane/search-full-lazy-loader-2026-07-04`, pushed to `main`).
+
+`P2-SEARCH-EAGER` measured eager-load class is **fixed-current on source main `546f7016`**. Legacy/root pages now use inline lazy loaders instead of direct `search.js` script tags. Sampled routes show 0 initial search script/data/Pagefind requests and 0 `.cp-*` DOM before first interaction.
+
+Verified on `546f7016`:
+
+- custom Playwright smoke on `/articles/kod-da-vinchi/`, `/about/`, `/` ✅
+- `node scripts/dist-smoke-audit.js --no-build --production-like` ✅
+- `npm run audit:premium-controls` ✅ 87/87
+- `npm run validate:all` ✅
+- `npm run validate:static-publication` ✅
+- `npm run guard:shared-files` ✅
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-full-lazy-loader-546f701.md`. Source main now `aaaaf7a7` (auto cache-bust descendant); remote Deploy green: run `28709565563` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28709565563); Visual Parity green: run `28709548827` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28709548827).
 
 ---
 
