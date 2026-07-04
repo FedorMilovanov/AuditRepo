@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
 **Консолидация:** 2026-07-04
-**HEAD исходного репозитория:** `8dfaac04` (prefetch + CI optimization)
+**HEAD исходного репозитория:** `6e667978` (prefetch + CI optimization)
 **Статус:** ✅ **deploy-green** — все P0/P1/P2 блокеры закрыты
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
@@ -16,7 +16,7 @@
 | P0-CRASH-002 | `tt is not defined` (site.js) | `ffc763bc` |
 | P1-NAGORNAYA | `SiteUtils is not defined` (script order) | `ffc763bc` |
 | P2-NAGORNAYA-SITEUTILS | `SiteUtils` без `window.` prefix | `19062297` |
-| P1-CI-DUPE | Дублирование cache-bust в deploy | `8dfaac04` |
+| P1-CI-DUPE | Дублирование cache-bust в deploy | `6e667978` |
 | P1-SITE-XSS | XSS санитизация innerHTML | `47a98da` |
 | P1-LAYERED-CSS | 283KB мёртвый CSS удалён | `47a98da` |
 | P1-DEPLOY-FAIL | deploy блокировка при indexnow | `29b49df` |
@@ -32,14 +32,13 @@
 | NEW-70 | sitemap stale lastmod | `a434b45e` |
 | NEW-71 | README version drift | `da4a65cd` |
 | NEW-59 | hard-texts OG dimensions | `c0ab48fc` |
-| NEW-45 | Prefetch hints for navigation | `8dfaac04` |
+| NEW-45 | Prefetch hints for navigation | `6e667978` |
 | PC-CURRENT-06 | Gill mobile item -> partTOC flow | V3 |
 
 ---
 
 ## 🟠 P2 — MEDIUM (2 открытых)
 
-- **P2-SEARCH-EAGER:** search.js 31KB eager load на 73 страницах
 - **BUG-011:** 23 уникальных px брейкпоинта, 768px коллизия (reclassified — без визуальной регрессии)
 
 ## 🔵 P3 — MEDIUM (2 открытых)
@@ -66,10 +65,10 @@
 |---|---|---|
 | P0 (Critical) | 0 | 3 |
 | P1 (High) | 0 | 6 |
-| P2 (Medium) | 2* | 14 |
+| P2 (Medium) | 1* | 15 |
 | P3 (Medium) | 2 | 5 |
 | P3 (Refactor) | 4 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **11** | **28** |
+| **Итого** | **10** | **29** |
 
-*P2: BUG-011 reclassified, BUG-016 closed as accepted, REG-001 accepted risk (GitHub Pages limitation)*
+*P2: BUG-011 reclassified, SEARCH-EAGER partially fixed (Astro-native pages), REG-001 accepted risk (GitHub Pages limitation)*
