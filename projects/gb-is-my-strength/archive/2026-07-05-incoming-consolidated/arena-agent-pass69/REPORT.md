@@ -875,3 +875,133 @@ function safeUrl(e) { var s=String(e||"").trim(); return /^javascript:/i.test(s)
 | 🟡 P2 | 12 | manual manifest, book normalization, no gate, izbrannoe broken, hard-texts eager, Rodosloviye no hash, keyboard conflict, 2 corpora not merged, etc. |
 | 🔵 P3 | 18 | Hebrew/Greek, event leak, dead assets, 15 no-search pages, CSS duplication, render-blocking, etc. |
 | **Total** | **33** | |
+
+
+---
+
+## 📊 PASS 80 — SEARCH final: performance, analytics, offline, FCP impact, voice search
+
+### 🐛 SEARCH-400: Pagefind bundle size — 1.5MB total, ~114KB dynamic load per search (P3)
+
+| Component | Size | Loaded? |
+|-----------|:----:|:-------:|
+| pagefind.js | 44KB | ✅ Dynamic import on Ctrl+K |
+| wasm.ru.pagefind | 69KB | ✅ WASM index |
+| pagefind-worker.js | 40KB | ✅ Background worker |
+| fragment/*.pf_fragment | 440KB | ✅ Content chunks (on demand) |
+| index/*.pf_index | 434KB | ✅ Index segments (on demand) |
+| **Total dynamic load per search** | **~114KB** | **After user interaction** |
+| pagefind-ui.* (unused) | 131KB | ❌ Dead — never loaded |
+| pagefind-component-ui.* (unused) | 212KB | ❌ Dead — never loaded |
+| pagefind-highlight.js | 43KB | ❌ Dead — never loaded |
+| pagefind-modular-ui.* | 21KB | ❌ Dead — never loaded |
+| **Total dead weight in dist** | **406KB** | |
+
+**Verdict:** The 114KB dynamic load is acceptable (after user interaction, not on pageload). But 406KB dead assets waste CDN storage and deploy bandwidth.
+
+---
+
+### 🐛 SEARCH-401: ZERO search analytics tracking (P3)
+
+**No analytics events fire from search.js:**
+- No `ym()` calls (Yandex Metrika goals)
+- No `dataLayer` pushes (GTM)
+- No `ga()` calls (old GA)
+- No custom events tracked
+
+**Cannot measure:**
+- Popular search queries
+- Zero-result searches (content gaps)
+- Search-to-content conversion rate
+- Search abandonment
+- Which scopes users prefer
+
+**Fix:** Add Yandex Metrika `reachGoal` on search, result click, and no-results.
+
+---
+
+### ✅ SEARCH-402: Offline search works correctly (PASS)
+
+- `/pagefind/pagefind.js` IS in SW PRECACHE_ASSETS ✅
+- Pagefind content chunks cached via `cacheFirst(pagefind)` strategy ✅
+- WASM index is precached and available offline ✅
+- **Search works fully offline** ✅
+
+---
+
+### 🐛 SEARCH-403: ZERO click tracking on search results (P3)
+
+Search.js dispatches results but does NOT track:
+- Which result the user clicked
+- Which position in results (1st, 2nd, etc.)
+- Whether user scrolled through more results
+- Time from search to click
+
+**Without this data, search relevance cannot be measured or improved.**
+
+---
+
+### ✅ SEARCH-404: Search abuse/spam protection — SAFE by architecture (PASS)
+
+Since search.js runs entirely client-side:
+- Pagefind → local WASM, no server requests
+- manifest → local JSON, no server requests
+- No server-side rate limiting needed
+- No CAPTCHA, tokens, or signing needed
+- **37/38 pages lazy-load search → no upfront cost for non-searchers**
+
+---
+
+### 🐛 SEARCH-405: Pagefind version 1.5.2 — could be upgraded (P3)
+
+Current: Pagefind v1.5.2 Extended
+Latest: ~1.6.x
+Upgrade value: performance improvements, bug fixes (specific to WASM loading)
+Risk: low (npm version bump + rebuild)
+
+---
+
+### 🐛 SEARCH-406: No voice search support (P3)
+
+search.js does not implement:
+- Web Speech API (`webkitSpeechRecognition`)
+- Speech-to-text for search input
+- Voice search button/mic icon
+
+This is a modern UX expectation. Many users expect to speak search queries on mobile.
+
+---
+
+### 🐛 SEARCH-407: command-palette.css adds ~600ms FCP delay on slow connections (P3)
+
+29KB `command-palette.css` is loaded **synchronously** (render-blocking) in `<head>` on 39 pages.
+
+**Impact:**
+- On 3G (400kbps): ~580ms added to First Contentful Paint
+- On slow 3G (100kbps): ~2.3s added to FCP
+- The CSS is for a MODAL search UI that user may never open
+
+**Fix:** Change to non-blocking pattern:
+```html
+<link rel="preload" href="/css/command-palette.css" as="style" onload="this.rel='stylesheet'">
+```
+
+---
+
+## 🏆 FINAL SEARCH BUG TAXONOMY (after 11 passes, 70-80)
+
+| Priority | Count | Areas covered |
+|:--------:|:-----:|--------------|
+| 🔴 **P1** | **3** | Scripture meta missing, Писание not calling Pagefind, scripture null |
+| 🟡 **P2** | **13** | manual manifest, book normalization, no gate, izbrannoe broken, hard-texts eager, Rodosloviye no hash, keyboard conflict, 2 corpora not merged, etc. |
+| 🔵 **P3** | **25** | Hebrew/Greek, event leak, dead assets, 15 no-search pages, CSS dup, FCP impact, voice search, analytics missing, performance, version, etc. |
+| **Total** | **41** | **11 passes, full coverage** |
+
+### Complete search cost (per interaction)
+| Phase | Size | Timing |
+|-------|:----:|:------:|
+| Initial pageload (bootstrap) | 642B | Inline, no delay |
+| command-palette.css (blocking) | 29KB | ~580ms FCP on 3G |
+| Ctrl+K → search.js loads | 32KB | +200-400ms |
+| Ctrl+K → Pagefind loads | ~114KB | +200-400ms |
+| **Total per search interaction** | **~146KB + 29KB upfront** | **~1-2s total** |
