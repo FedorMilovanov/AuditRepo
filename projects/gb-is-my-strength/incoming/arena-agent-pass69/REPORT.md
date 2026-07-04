@@ -369,3 +369,56 @@ These are deployed to GitHub Pages as part of the dist artifact. They're never r
 | SEARCH-007 | Rodosloviye has 0 pagefind meta tags | 🟡 P2 | Missing all meta |
 | SEARCH-023 | 406KB dead Pagefind UI assets | 🔵 P3 | Not pruned from dist |
 | SEARCH-004/5/8/22 | Various minor | 🔵 P3 | Various |
+
+
+---
+
+## 🐛 BUG-SEARCH-032: 16 Bible book abbreviations missing from $() normalization (P2)
+
+The `$()` function normalizes only 9 abbreviations. **16 book abbreviations found in site content are NOT normalized:**
+
+```
+HANDLED: мф, мат, лк, лук, ин, иоан, рим, иер, кор
+MISSING: Быт, Исх, Втор, Пс, Ис, Деян, Гал, Еф, Флп, Евр, Иак, Иуд, Откр, Агг, Зах, Наум
+```
+
+**Impact:** User searching "Деян 2" or "Евр 11" gets ZERO results for content that actually references these books.
+
+---
+
+## 🐛 BUG-SEARCH-033: hard-texts/ — единственная страница с EAGER search.js загрузкой (P3)
+
+All 37 Astro-native pages correctly use the 642-byte inline lazy bootstrap that loads search.js on first interaction. But hard-texts/index.html still loads search.js eagerly as a direct `<script defer src="./js/search.js">`.
+
+This wastes ~31KB parse+download on initial pageload for the hard-texts series landing page.
+
+**Fix:** Add the lazy search bootstrap to `HardTextsPageChrome.astro` and remove the direct `search.js` script tag.
+
+---
+
+## 🐛 BUG-SEARCH-034: 15 interactive/map pages have zero search (P3)
+
+karty/* (10 pages), konfessii (2 pages), map (1), izbrannoe (1), _app (1) — all lack any search mechanism.
+
+These are `strict-native-app` pages that use their own React/Flow rendering. Search isn't accessible from them at all. Users on these pages must navigate away to use search.
+
+---
+
+## ✅ ALREADY CORRECT: Lazy search bootstrap works well
+
+**37/38 content pages** have optimal lazy loading:
+- 642 bytes inline bootstrap (not 31KB)
+- 31KB search.js loaded externally on first Ctrl+K or click
+- Cached by browser after first load
+
+This confirms the earlier "SEARCH-030" finding was wrong — I incorrectly claimed search.js was inlined.
+
+---
+
+## Summary: Complete search bug taxonomy
+
+| Priority | Count | IDs |
+|:--------:|:-----:|-----|
+| 🔴 P1 | 3 | SEARCH-001 (scripture meta missing), SEARCH-016 (Pagefind not called), SEARCH-017 (scripture always null) |
+| 🟡 P2 | 8 | SEARCH-003, 006, 007, 009, 021, 032 (book normalization), 002, 008 |
+| 🔵 P3 | 7 | SEARCH-004, 005, 022, 023 (dead assets), 033 (hard-texts eager), 034 (no search on maps), 011 |

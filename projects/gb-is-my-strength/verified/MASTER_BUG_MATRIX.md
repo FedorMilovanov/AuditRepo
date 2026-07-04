@@ -951,6 +951,10 @@ Aliases reference semantic variables which are already theme-aware — no need t
 | SEARCH-021 | Two separate search corpora never merge for scripture scope | 🟡 **P2** | manifest (44) vs Pagefind (43 pages, 16K words) |
 | SEARCH-023 | 406KB dead Pagefind UI assets deployed to dist | 🔵 **P3** | pagefind-ui, component-ui, modular-ui, highlight — not used |
 
+| SEARCH-009 | Book name `$()` normalization covers 9/70 Bible abbreviations — 16 found in content but NOT normalized | 🟡 **P2** | Missing: Быт, Исх, Втор, Пс, Ис, Деян, Гал, Еф, Флп, Евр, Иак, Иуд, Откр, Агг, Зах, Наум |
+| SEARCH-032 | 16 book abbreviations visible in site content NOT covered by `$()` normalization | 🟡 **P2** | Same root cause as SEARCH-009, expanded finding |
+| SEARCH-033 | hard-texts/ loads search.js eagerly instead of lazy bootstrap | 🔵 **P3** | Only 1 page affected (37/38 Astro pages correct) |
+| SEARCH-034 | 15 map/interactive app pages have zero search access | 🔵 **P3** | karty/*, konfessii, map, izbrannoe — intentional but user-facing gap |
 ### Impact
 
 The **"Писание" (Scripture)** search scope — a primary feature of the command palette — is effectively **broken**. It only indexes 3 pages while 25+ pages with substantial Bible content are invisible. Users searching for Bible verses via the scripture tab get near-zero results.
