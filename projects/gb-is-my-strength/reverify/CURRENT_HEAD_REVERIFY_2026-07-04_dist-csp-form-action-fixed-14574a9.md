@@ -67,3 +67,9 @@ postbuild CSP files touched: 54 (injected: 16, form-action fixed: 38)
 - `NEW-69`: **fixed-current on source main `14574a9a` by production-like dist evidence**.
 
 Remote GitHub Actions should be observed separately for final workflow status.
+
+---
+
+## 5. Remote workflow
+
+Remote `Deploy to GitHub Pages` is **green** on source main `14574a9a`: run `28693431471` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28693431471).

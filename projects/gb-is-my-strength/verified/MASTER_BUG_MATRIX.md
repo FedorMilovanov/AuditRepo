@@ -887,7 +887,7 @@ Verified on `14574a9a`:
 - `npm run validate:static-publication` ✅
 - manual dist CSP scan: 55 HTML docs, missing CSP 0, missing form-action 0 ✅
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dist-csp-form-action-fixed-14574a9.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dist-csp-form-action-fixed-14574a9.md`. Remote Deploy green: run `28693431471` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28693431471).
 
 ---
 

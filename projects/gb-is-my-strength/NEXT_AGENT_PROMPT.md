@@ -6,7 +6,7 @@
 
 **Local verification on `14574a9a`:** `strangler:build:production-like`, `pagefind:build:dist`, `dist-publication-audit --require-pagefind --forbid-dev`, `strangler:audit:production-like`, `validate:static-publication`, `workflows:check`, and `guard:shared-files` passed.
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dist-csp-form-action-fixed-14574a9.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dist-csp-form-action-fixed-14574a9.md`. Remote `Deploy to GitHub Pages` is **green** on run `28693431471`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28693431471.
 
 ---
 
