@@ -72,3 +72,5 @@
 <!-- 2026-07-04: gb-is-my-strength NEW-59 hard-texts OG dimensions fixed on source main `c0ab48fc`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-04_hardtexts-og-dimensions-fixed-c0ab48f.md. -->
 
 <!-- 2026-07-04: gb-is-my-strength P2-SEARCH-EAGER legacy DOM/data eager work partially fixed on source main `30b9fe46`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-legacy-lazy-init-30b9fe4.md. -->
+
+<!-- 2026-07-04: gb-is-my-strength search-manifest generatedAt refreshed on source main `bdaf6e8a`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search_manifest_generatedAt_fixed-bdaf6e8.md. -->

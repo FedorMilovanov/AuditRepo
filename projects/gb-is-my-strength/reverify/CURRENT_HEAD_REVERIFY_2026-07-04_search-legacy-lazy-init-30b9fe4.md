@@ -82,3 +82,9 @@ What is fixed:
 What remains:
 
 - legacy pages still download the first-pass `search.js` file because script tags remain. That first pass is now a lightweight bootstrap return, but full network lazy-loading of legacy script tags would require a separate higher-risk footer/loader migration.
+
+---
+
+## 5. Remote workflow
+
+Source main is now `43a515df3aa409cda59d59cb188f8c60c9ba1ebe` (auto cache-bust descendant of `30b9fe46bde22e67bbff7a9418718b4e18f5dab5`). Remote `Deploy to GitHub Pages` is **green** on run `28708425606` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28708425606).

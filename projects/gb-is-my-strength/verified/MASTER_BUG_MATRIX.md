@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
 **Консолидация:** 2026-07-04
-**HEAD исходного репозитория:** `43a515df` (auto cache-bust [skip ci] after `30b9fe46` lazy-search)
+**HEAD исходного репозитория:** `bdaf6e8a` (search-manifest generatedAt refresh; descendant of `43a515df`)
 **Статус:** ✅ **deploy-green** — все P0/P1/P2 блокеры закрыты
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
@@ -80,10 +80,27 @@ Verified on `30b9fe46`:
 - `npm run validate:static-publication` ✅
 - `npm run guard:shared-files` ✅
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-legacy-lazy-init-30b9fe4.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-legacy-lazy-init-30b9fe4.md`. Source main now `43a515df` (auto cache-bust descendant); remote Deploy green: run `28708425606` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28708425606).
 
 ---
 
+
+## 🟢 PASS 52b / SEARCH-MANIFEST GENERATEDAT REFRESH (2026-07-04)
+
+**Source fix commit:** `bdaf6e8aa8446e2f9016281ad564e54cc2332f40` (`lane/data-search-manifest-timestamp-2026-07-04`, pushed to `main`).
+
+Pass 52 `search-manifest generatedAt stale` advisory is **fixed-current on source main `bdaf6e8a`**. Only the `generatedAt` field changed; manifest items/content stayed unchanged.
+
+Verified on `bdaf6e8a`:
+
+- `npm run data:consistency` ✅
+- `node scripts/audit-pro.js` ✅
+- `git diff --check` ✅
+- `npm run guard:shared-files` ✅
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search_manifest_generatedAt_fixed-bdaf6e8.md`.
+
+---
 
 ## 🟡 PASS 52 — DEEP AUDIT VERIFICATION (2026-07-04)
 
@@ -96,7 +113,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-legacy-lazy-init-30b
 
 - **P2-SEARCH-EAGER scope confirmed:** lazy search (in BaseLayout) applies ONLY to article detail pages (ArticleLayout→BaseLayout). Catalog/index pages (/, /about/, /articles/, /karty/, /biografii/, /nagornaya/, /baptisty-rossii/) each have their own PageChrome with `<script src="./js/search.js" defer>` — still eager. Already documented as "partially fixed". To fully close, each PageChrome needs its own lazy-load inline script or shared helper.
 - **CSS dynamic load confirmed valid:** `enhancements-runtime.css`, `highlights-runtime.css`, `sw-toast.css` are all legitimately loaded at runtime via JS-created `<link>` elements. Not dead code.
-- **search-manifest.json:** generatedAt=2026-06-18 (16 days stale). All 44 entries point to valid files. 0 dead references (the `#dzhon-gill-series` anchor exists on `/biografii/`). Content valid but timestamp stale.
+- **search-manifest.json:** generatedAt stale advisory fixed by `bdaf6e8a`. All 44 entries still point to valid files; content unchanged.
 - **All 9 CSS + 11 JS files** in cache-bust-assets.js ✅
 - **Gill v16 markers confirmed:** all 5 routes have `data-gill-v16` and `gb-roman` ✅
 - **PremiumControls 87/87:** all PC-CURRENT items closed on current HEAD ✅
