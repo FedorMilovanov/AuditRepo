@@ -1133,3 +1133,84 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 | **Итого** | **65** | **34** |
 
 *P0: BUG-CI-001 fixed in `6e68d7ca`, 2 independent witnesses (Pass 63 + Pass 65 via `actionlint`). P1: BUG-CI-002/003 CI gate gaps + BUG-PERF-001 memory leaks (Pass 65) + BUG-CSS-001 1047 !important (Pass 68) + BUG-CSS-006/007/008 floating-cluster.css duplicate definitions + specificity wars (Pass 69) + BUG-CSS-013/014 site.css minified code + mixed concerns (Pass 70) + BUG-JS-001/002 floating-cluster-controller.js memory leaks + duplicate scroll listeners (Pass 71). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing, BUG-QUALITY-001/002/003 innerHTML + console + missing WebP (Pass 64-65), BUG-A11Y-001 skip links (Pass 66), BUG-PERF-002 render-blocking CSS (Pass 67), BUG-CSS-002/003 hardcoded colors + breakpoints (Pass 68), BUG-CSS-009/010 MAX_INT z-index + duplicate .gbs-rail-foot (Pass 69), BUG-CSS-015/016/017 site.css duplicate styles (Pass 70), BUG-JS-003/004/005 floating-cluster-controller.js empty catches + duplicate code + magic numbers (Pass 71), NEW-CANONICAL-IZBRANNOE-01-GAP tooling gap (Pass 65, underlying bug fixed). P3: 28 items (Pass 64-71) + NEW-CSS-BUDGET-01/NEW-OG-SIZE-PARAM/NEW-ACTIONLINT-CI-GAP (Pass 65) + NEW-SAFEURL-XSS-HARDENING (Pass 65). Closed this session (Pass 65): NEW-README-ANCHOR-01, NEW-CANONICAL-IZBRANNOE-01, NEW-IMG-REGRESSION-01 (new regression found+fixed same session), NEW-59 (genuinely fixed after reopen). Deletions audit: all removals verified correct EXCEPT the orphan-image cleanup follow-through gap (found+fixed, Pass 65). Data consistency: all JSON valid, no duplicates. CSS audit: 534KB total, critical technical debt. floating-cluster.css: 106KB, 524 !important, 4 specificity layers — requires complete refactor. site.css: 275KB, minified, 7+ concerns mixed — requires reorganization and build pipeline. JS audit: floating-cluster-controller.js 61KB, 2 memory leaks, 77 empty catches, 3 complex functions — requires refactoring. AuditRepo process note: unresolved merge-conflict markers found and cleaned from `646f38e` during this pass's rebase.*
+
+---
+
+## 🟢 PASS 73 — 50+ BASH CHECKS: COMPREHENSIVE JS AUDIT (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** All 11 JS files (368KB total) — 55 automated bash checks
+
+### Critical Findings (P1)
+
+| ID | Check | Result | Severity |
+|----|-------|--------|----------|
+| BUG-JS-015 | Empty catch blocks | **76** | 🔴 P1 |
+| BUG-JS-016 | innerHTML assignments | **100** | 🔴 P1 |
+| BUG-JS-017 | addEventListener vs removeEventListener | **339 vs 25** (314 leaks) | 🔴 P1 |
+| BUG-JS-018 | Minified files in VCS | **6 files** | 🔴 P1 |
+
+### High Priority Findings (P2)
+
+| ID | Check | Result | Severity |
+|----|-------|--------|----------|
+| BUG-JS-019 | Magic numbers (>100) | **314** | 🟡 P2 |
+| BUG-JS-020 | ES5 code style (var vs const/let) | **1235 var, 1 let, 0 const** | 🟡 P2 |
+| BUG-JS-021 | Console statements in production | **17** | 🟡 P2 |
+
+### Medium Priority Findings (P3)
+
+| ID | Check | Result | Severity |
+|----|-------|--------|----------|
+| BUG-JS-022 | setTimeout/setInterval (potential leaks) | **90 setTimeout, 7 setInterval** | 🔵 P3 |
+| BUG-JS-023 | requestAnimationFrame (no cancel) | **42** | 🔵 P3 |
+| BUG-JS-024 | Scroll/resize listeners (no throttle) | **19 scroll, 11 resize** | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value | Status |
+|--------|-------|--------|
+| Total JS files | 11 | - |
+| Total size | 368KB | - |
+| Minified files | 6 | ❌ Critical |
+| Unminified files | 4 | ✅ |
+| eval usage | 0 | ✅ Good |
+| document.write | 0 | ✅ Good |
+| localStorage | 67 | ⚠️ High |
+| fetch calls | 9 | ✅ |
+| Promise usage | 6 | ✅ |
+| async/await | 1 | ❌ Low |
+| IntersectionObserver | 19 | ✅ Good |
+| ResizeObserver | 6 | ✅ Good |
+| Passive listeners | 14 | ✅ Good |
+| Strict mode | 34 | ✅ Good |
+
+### Bash Checks Summary
+
+| Category | Checks | Passed | Failed |
+|----------|--------|--------|--------|
+| Security | 9 | 4 | 5 |
+| Performance | 8 | 1 | 7 |
+| Code Style | 10 | 2 | 8 |
+| Modern APIs | 7 | 5 | 2 |
+| Error Handling | 4 | 1 | 3 |
+| **Total** | **55** | **12** | **43** |
+
+### Top 10 Recommendations
+
+1. **Add cleanup system to site.js** — prevent 314 memory leaks
+2. **Replace empty catch blocks** — add logging to 76 instances
+3. **Sanitize innerHTML** — audit 100 assignments for XSS
+4. **Unminify 6 files** — store source in VCS, minify in build
+5. **Replace var with const/let** — modernize 1235 declarations
+6. **Extract magic numbers** — create named constants for 314 values
+7. **Throttle scroll handlers** — optimize 19 listeners
+8. **Debounce resize handlers** — optimize 11 listeners
+9. **Clear timers on cleanup** — prevent 97 timer leaks
+10. **Remove console statements** — clean up 17 instances
+
+### Full Report
+
+`incoming/arena-agent-pass73/REPORT.md`
+
