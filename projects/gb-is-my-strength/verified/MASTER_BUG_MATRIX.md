@@ -42,6 +42,8 @@
 | NEW-IMG-REGRESSION-01 |
 | SEC-001-VERIFIER | innerHTML XSS — 3/6 fields unescaped in owCard | `3d242b1c` |
 | NEW-SAFEURL-XSS-HARDENING | safeUrl() blocked only javascript:, now blocks 4 schemes | `3d242b1c` |
+| NEW-CACHE-BUST-ASTRO | Runtime CSS cache-busting broken on 53 Astro pages — no SITE_CONFIG.version | `6499d42e` |
+| NEW-GITCONFIG-COMMITTED | .gitconfig with agent identity in repo root | `6499d42e` |
 
 ---
 
