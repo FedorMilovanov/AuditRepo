@@ -1,6 +1,6 @@
 # PremiumControls — current contract update (2026-07-03)
 
-**Fresh source verification (2026-07-03 Pass 33):** `01ff5ce3` (main after SiteUtils fix + cache-bust) (auto cache-bust descendant of `8a816ce4`) (`lane/system-runtime-no-undef-current-2026-07-03`, base main `4cbe8e88`).
+**Fresh source verification (2026-07-03 Pass 33):** `c0ab48fc` (main after SiteUtils fix + cache-bust) (auto cache-bust descendant of `8a816ce4`) (`lane/system-runtime-no-undef-current-2026-07-03`, base main `4cbe8e88`).
 
 Current PremiumControls/Gill v16 status on this verified lane:
 

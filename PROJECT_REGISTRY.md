@@ -6,7 +6,7 @@
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Runtime P0 blockers closed. All CI-P0/P1 fixed. Deploy green on `932af3f3` (workflow_dispatch). Latest source main HEAD: `01ff5ce3`. Start from `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`. |
+| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Runtime P0 blockers closed. All CI-P0/P1 fixed. Deploy green on `932af3f3` (workflow_dispatch). Latest source main HEAD: `c0ab48fc`. Start from `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`. |
 
 ## Status glossary
 
@@ -20,8 +20,8 @@
 
 ## gb-is-my-strength current summary — 2026-07-03
 
-**Current source HEAD:** `01ff5ce3` (auto cache-bust after SiteUtils fix)
-**Current AuditRepo HEAD:** `8ecb405` (Pass 33 — SiteUtils fix record)
+**Current source HEAD:** `c0ab48fc` (auto cache-bust after SiteUtils fix)
+**Current AuditRepo HEAD:** `ef5022b` (Pass 33 — SiteUtils fix record)
 **Current status:** repair-ready. All P0 runtime blockers closed.
 
 ### Current truth

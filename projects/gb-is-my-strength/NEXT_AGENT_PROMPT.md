@@ -1,3 +1,16 @@
+# 🟢 PASS 36 — 2026-07-04 Stale branch cleanup + PremiumControls archive (READ IF AUDITING)
+
+**Cleanup performed:**
+- Source repo: deleted 13 stale remote branches (all merged lanes)
+- AuditRepo: deleted 1 stale remote branch
+- PremiumControls: archived 30 historical 2026-06-27 documents to `archive/2026-06-27-premiumcontrols-docs/`
+- PremiumControls: 4 active files remain (README.md, spec/ + screenshots/)
+- PROJECT_REGISTRY.md: HEAD updated to `c0ab48fc`
+
+**Current state:** `origin/main` only in both repos. Zero stale branches.
+
+---
+
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 hard-texts OG dimensions fix (READ FIRST)
 
 **Current source main HEAD:** `c0ab48fc845ef27a1575d13a078dc832cab8df48`.

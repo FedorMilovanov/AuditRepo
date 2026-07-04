@@ -2,7 +2,7 @@
 
 **Дата консолидации:** 2026-07-03  
 **HEAD исходного репозитория:** `c0ab48fc` (hard-texts OG dimensions fix; descendant of sitemap lastmod refresh)
-**Режим аудита:** Multi-Agent Synthesis (Passes 1–45)  
+**Режим аудита:** Multi-Agent Synthesis (Passes 1–46)  
 
 ---
 
@@ -993,6 +993,22 @@ Evidence: `reverify/PASS_32_AUDIT_REPORT_2026-07-03.md`.
 ---
 
 ---
+
+
+## 🟢 PASS 46 — STALE BRANCHES CLEANUP + PREMIUMCONTROLS ARCHIVE (2026-07-04)
+
+**Action:** Repository hygiene cleanup.
+
+- **Source repo:** 13 stale remote lanes deleted — all merged into main. Only `origin/main` remains.
+- **AuditRepo:** 1 stale remote lane deleted. Only `origin/main` remains.
+- **PremiumControls/:** 30 historical documents (2026-06-27 deep dives, patches, reports) archived to `archive/2026-06-27-premiumcontrols-docs/`. Only 4 active files remain: README.md, spec/playember-speed-morph.md, 2 screenshots.
+- **PROJECT_REGISTRY.md** updated to `c0ab48fc`.
+- **verified/README.md** updated to reference MASTER_BUG_MATRIX.md as single source of truth.
+
+**Deploy status:** #1325 in progress on `c0ab48fc`. Shared Files Guard #428 ✅. Visual Parity Guard #213 ✅.
+
+---
+
 
 ---
 
