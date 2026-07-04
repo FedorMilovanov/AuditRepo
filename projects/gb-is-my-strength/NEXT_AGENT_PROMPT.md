@@ -1,3 +1,15 @@
+# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 Dist CSP hardening (READ FIRST)
+
+**Current source main HEAD:** `14574a9a21e6a5ba729df837c652c8db6ef599ff`.
+
+**Fixed in this pass:** `NEW-68` and `NEW-69` — production-like `dist/` now has CSP meta on every HTML document and every CSP includes `form-action 'self'`. `dist-publication-audit.js` now blocks regressions.
+
+**Local verification on `14574a9a`:** `strangler:build:production-like`, `pagefind:build:dist`, `dist-publication-audit --require-pagefind --forbid-dev`, `strangler:audit:production-like`, `validate:static-publication`, `workflows:check`, and `guard:shared-files` passed.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dist-csp-form-action-fixed-14574a9.md`.
+
+---
+
 # 🔴 PASS 34 CURRENT TRUTH — 2026-07-03 (READ FIRST)
 
 **Current source main HEAD:** `01ff5ce3` (auto cache-bust descendant of `19062297`)

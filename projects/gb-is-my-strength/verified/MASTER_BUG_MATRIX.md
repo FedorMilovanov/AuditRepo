@@ -1,8 +1,8 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `01ff5ce3` (auto cache-bust after SiteUtils window. prefix fix)
-**Режим аудита:** Multi-Agent Synthesis (Passes 1–44)  
+**HEAD исходного репозитория:** `14574a9a` (dist CSP form-action/karty CSP hardening; descendant of `01ff5ce3`)
+**Режим аудита:** Multi-Agent Synthesis (Passes 1–45)  
 
 ---
 
@@ -137,8 +137,8 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 - **NEW-60 ✅:** CSP meta добавлена на 10 karty/ holding pages (было 0/10, стало 10/10) — ⚠️ REGRESSION CONFIRMED on `f1e9abd9` (Pass 36): static scan finds 0/10 karty/ holding pages with `Content-Security-Policy` meta. See NEW-69.
 - **NEW-61 ✅:** `form-action 'self'` добавлен в CSP meta на всех 51 странице + _app
 
-- **NEW-68 (P2, CSP form-action regression on `f1e9abd9`):** 51/52 dist HTML pages are missing `form-action 'self'` in their CSP meta. Only `_app/index.html` (3D-карта) has it. Regression of NEW-61 (Pass 24, `47a98da`). The directive was added then but is not present in current dist — build pipeline lost the directive-inject step. Security impact: forms can post to any origin. See Pass 37 in this file.
-- **NEW-69 (P2, CSP meta regression on karty/ holding pages on `f1e9abd9`):** 0/10 karty/*/index.html (avraam, early-church, ishod, maccabim, melachim, pavel, revelation, shoftim, shvatim, yeshua) have any CSP meta. Regression of NEW-60 (Pass 24). See Pass 37 in this file.
+- ~~**NEW-68 (P2, CSP form-action regression):** dist HTML pages missed `form-action 'self'`~~ ✅ FIXED-CURRENT on source main `14574a9a`: postbuild CSP hardening appends `form-action 'self'`; `dist-publication-audit` now blocks regressions.
+- ~~**NEW-69 (P2, CSP meta regression on karty/ holding pages):** karty/map-like dist pages missed CSP meta~~ ✅ FIXED-CURRENT on source main `14574a9a`: postbuild CSP hardening injects CSP on dist pages missing it; `dist-publication-audit` now blocks regressions.
 * **NEW-70 (P3, sitemap.xml stale lastmod):** static scan finds only 4 unique `<lastmod>` values across 43 sitemap URLs: 2026-06-18, 2026-06-25 (×2), 2026-07-03. Recent cache-bust commits only updated ~29/43 URLs. See Pass 38 in this file.
 * **NEW-71 (P3, README.md version drift):** README.md says `**Версия документа:** v10 · 2026-06-26 · post-audit hardening (BUG-A1..A10, BUG-B1..B10, BUG-S1..S3 closed)`. Source HEAD = f1e9abd9 (2026-07-03). README is 7 days stale. Owner should re-version. See Pass 38 in this file.
 * **NEW-72 (P2, SVG dedup opportunity across 4 files):** static scan of 11 JS files finds 9 unique SVG fragments duplicated across `js/highlights.js`, `js/search.js`, `js/site.js`, `js/floating-cluster-controller.js`, `js/nagornaya-mobile-toc.js`. Most-duplicated: 5x `<polyline points="20 6 9 17 4 12"/>` (checkmark). Total potential saving: ~1.5-2KB. See Pass 38 in this file.
@@ -871,6 +871,25 @@ BUG-022 (overridden CSS rules):
 * **Visual parity current side finding:** local pixel-diff on `f1e9abd9` fails `/baptisty-rossii/` only: desktop `6.131%`, mobile `17.368%` (threshold `1%`). GitHub Visual Parity Guard failed on `8446a0da`; current `f1e9abd9` was `[skip ci]`, so remote visual parity was not rerun, but local current-head evidence confirms the issue.
 
 
+
+## 🟢 PASS 45 / DIST CSP FORM-ACTION + KARTY CSP FIX (2026-07-04)
+
+**Source fix commit:** `14574a9a21e6a5ba729df837c652c8db6ef599ff` (`lane/security-dist-csp-form-action-2026-07-04`, pushed to `main`).
+
+`NEW-68` and `NEW-69` are **fixed-current on source main `14574a9a` by production-like dist evidence**. `astro-cache-bust-postbuild.js` now hardens dist CSP after Astro build/copy, and `dist-publication-audit.js` blocks missing CSP/form-action regressions.
+
+Verified on `14574a9a`:
+
+- `npm run strangler:build:production-like` ✅
+- `npm run pagefind:build:dist` ✅
+- `node scripts/dist-publication-audit.js --require-pagefind --forbid-dev` ✅
+- `npm run strangler:audit:production-like` ✅
+- `npm run validate:static-publication` ✅
+- manual dist CSP scan: 55 HTML docs, missing CSP 0, missing form-action 0 ✅
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dist-csp-form-action-fixed-14574a9.md`.
+
+---
 
 ## 🟢 PASS 44 — NAGORNAYA SITEUTILS WINDOW PREFIX FIX (2026-07-03)
 
