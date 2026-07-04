@@ -1689,3 +1689,51 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 
 `incoming/arena-agent-pass82/REPORT.md`
 
+
+---
+
+## 🟢 PASS 83 — DEEP HTML CODE REVIEW: index.html (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `index.html` (1142 lines, 75KB) — home page
+
+### High Priority Findings (P2)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-HTML-001 | Inline scripts without cleanup (10+ instances) | 🟡 P2 |
+| BUG-HTML-002 | innerHTML without sanitization in favorites script | 🟡 P2 |
+| BUG-HTML-003 | Magic numbers (1778943682, 108353327) | 🟡 P2 |
+
+### Medium Priority Findings (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-HTML-004 | Duplicate favorites functionality | 🔵 P3 |
+| BUG-HTML-005 | No noscript fallback for interactive elements | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total size | 75KB |
+| Lines | 1142 |
+| Inline scripts | 10+ |
+| innerHTML risks | 1 |
+| Magic numbers | 2 |
+| Duplicate functionality | Yes |
+| Noscript fallbacks | No |
+
+### Top 5 Recommendations
+
+1. **Move inline scripts to external files** — improve maintainability
+2. **Sanitize innerHTML** — prevent XSS in favorites script
+3. **Extract magic numbers** — create CONFIG object
+4. **Remove duplicate favorites functionality** — use bookmark-engine.js
+5. **Add noscript fallbacks** — improve accessibility
+
+### Full Report
+
+`incoming/arena-agent-pass83/REPORT.md`
+
