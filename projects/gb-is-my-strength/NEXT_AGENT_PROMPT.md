@@ -1,3 +1,15 @@
+# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 Sitemap lastmod refresh (READ FIRST)
+
+**Current source main HEAD:** `a434b45ee6d8cefb0ce281039ad683fe9b9589ba`.
+
+**Fixed in this pass:** `NEW-70` — `sitemap.xml` route `<lastmod>` values refreshed from each public route file's latest git commit date, converted to Moscow `+03:00` ISO8601.
+
+**Local verification on `a434b45e`:** `validate:all`, `audit-pro`, `contract:compare`, and `guard:shared-files` passed.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_sitemap-lastmod-fixed-a434b45.md`.
+
+---
+
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 README version drift fix (READ FIRST)
 
 **Current source main HEAD:** `da4a65cd33e046368dc089d48b42989de2344995`.

@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `da4a65cd` (README version drift fixed; descendant of dist CSP hardening)
+**HEAD исходного репозитория:** `a434b45e` (sitemap lastmod refresh; descendant of README version drift fix)
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–45)  
 
 ---
@@ -139,7 +139,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 
 - ~~**NEW-68 (P2, CSP form-action regression):** dist HTML pages missed `form-action 'self'`~~ ✅ FIXED-CURRENT on source main `14574a9a`: postbuild CSP hardening appends `form-action 'self'`; `dist-publication-audit` now blocks regressions.
 - ~~**NEW-69 (P2, CSP meta regression on karty/ holding pages):** karty/map-like dist pages missed CSP meta~~ ✅ FIXED-CURRENT on source main `14574a9a`: postbuild CSP hardening injects CSP on dist pages missing it; `dist-publication-audit` now blocks regressions.
-* **NEW-70 (P3, sitemap.xml stale lastmod):** static scan finds only 4 unique `<lastmod>` values across 43 sitemap URLs: 2026-06-18, 2026-06-25 (×2), 2026-07-03. Recent cache-bust commits only updated ~29/43 URLs. See Pass 38 in this file.
+* ~~**NEW-70 (P3, sitemap.xml stale lastmod):** stale broad June lastmod buckets~~ ✅ FIXED-CURRENT on source main `a434b45e`: sitemap lastmods refreshed from route git commit dates; 43 URLs validate and audit-pro passes.
 * ~~**NEW-71 (P3, README.md version drift):** README stayed at v10 / 2026-06-26~~ ✅ FIXED-CURRENT on source main `da4a65cd`: README version line is now v11 / 2026-07-04.
 * **NEW-72 (P2, SVG dedup opportunity across 4 files):** static scan of 11 JS files finds 9 unique SVG fragments duplicated across `js/highlights.js`, `js/search.js`, `js/site.js`, `js/floating-cluster-controller.js`, `js/nagornaya-mobile-toc.js`. Most-duplicated: 5x `<polyline points="20 6 9 17 4 12"/>` (checkmark). Total potential saving: ~1.5-2KB. See Pass 38 in this file.
 - **NEW-67 (P3, dead scripts in `scripts/` on `f1e9abd9`):** 10 scripts with no caller in `package.json`, no workflow reference, no require(): _audit-deep.js, about-leaf-parity-shots.js, deep-check.js, extract-native-pilot.js, genealogy-e2e-v2.js, generate-route-profiles.js, ishod-qa.js, map-visual-qa.js, premium-mobile-visibility-smoke.js, route-impact-report.js. See Pass 37 in this file.
@@ -871,6 +871,24 @@ BUG-022 (overridden CSS rules):
 * **Visual parity current side finding:** local pixel-diff on `f1e9abd9` fails `/baptisty-rossii/` only: desktop `6.131%`, mobile `17.368%` (threshold `1%`). GitHub Visual Parity Guard failed on `8446a0da`; current `f1e9abd9` was `[skip ci]`, so remote visual parity was not rerun, but local current-head evidence confirms the issue.
 
 
+
+## 🟢 PASS 47 / SITEMAP LASTMOD REFRESH (2026-07-04)
+
+**Source fix commit:** `a434b45ee6d8cefb0ce281039ad683fe9b9589ba` (`lane/seo-sitemap-lastmod-refresh-2026-07-04`, pushed to `main`).
+
+`NEW-70` is **fixed-current on source main `a434b45e`**. `sitemap.xml` now uses route-specific git modification timestamps converted to Moscow `+03:00` ISO8601.
+
+Verified on `a434b45e`:
+
+- `git diff --check` ✅
+- `npm run validate:all` ✅
+- `node scripts/audit-pro.js` ✅
+- `npm run contract:compare` ✅
+- `npm run guard:shared-files` ✅
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_sitemap-lastmod-fixed-a434b45.md`.
+
+---
 
 ## 🟢 PASS 46 / README VERSION DRIFT FIX (2026-07-04)
 
