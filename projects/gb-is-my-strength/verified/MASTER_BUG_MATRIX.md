@@ -75,7 +75,7 @@
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
 
-## 🟢 P3 — ОТКРЫТО (17)
+## 🟢 P3 — ОТКРЫТО (22)
 
 | ID | Описание |
 |---|---|
@@ -93,6 +93,11 @@
 | NEW-72 | SVG dedup micro-optimization (~1.9KB) |
 | DATA-SERIES-DRIFT | `series.json` содержит nagornaya + pastor-series, но `SERIES_ORDER` в site.ts — нет. ArticleLayout:62 пропускает серию если ключа нет в SERIES_ORDER → 20-antisovetov-pastoru не получает prev/next nav и seriesLabel. Низкий impact (1 статья в серии), но архитектурная дыра. |
 | SHADOW-AUDIT-NARROW | `legacy-shadow-wrapper-audit.js` проверяет только 7/52 (13%) production-dist маршрутов. Не охвачены: все страницы статей, baptisty-rossii, karty (8 из 10), biografii, about, pastor-series, konfessii, rodosloviye. |
+| AUDIT-PRO-SITEMAP-ROOT-ONLY | `publicFiles()` проверяет покрытие sitemap по `htmlPages` (root HTML). Если Astro-страница существует только в dist/ (без root-копии), её URL не попадёт в проверку покрытия — sitemap может недосчитаться страниц, а аудит пройдёт. |
+| AUDIT-PRO-FC-IMPORTANT-GAP | `importantBudget()` (стр. 263) проверяет `!important` только в `css/site.css` (ceiling 202). `css/floating-cluster.css` (490 !important) не имеет ни ceiling, ни ratchet. Добавление 10 новых !important в floating-cluster.css проходит CI молча. Подтверждает AUDIT-P1-FC-IMP. |
+| AUDIT-PRO-REQUIRE-CRASH | `const CACHE_BUST_ASSETS = require('./cache-bust-assets').ASSETS` — синхронный require без try-catch. Если файл отсутствует, audit-pro падает до выполнения любых проверок. |
+| AUDIT-PRO-VM-DEPRECATED | `extractSiteConfig()` и `inlineScriptSyntax()` используют `new vm.Script()` — deprecated в Node 22.12+. При полном удалении API в будущей версии Node аудит упадёт. Альтернатива: `new Function()` в sandbox. |
+| AUDIT-PRO-ROOT-ONLY | `audit-pro.js` проверяет ТОЛЬКО root HTML (`walk(ROOT)`, `dist/` в skipDirs). `/izbrannoe/` (Astro-only, без root-копии) невидим для 7 гвардов: canonical, sitemap, SEO, cache-bust, JSON-LD, links, a11y. При `astro build` в dist/ генерируются 54 страницы — аудит проверяет только 50 root HTML. |
 | STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |
 | NEW-PREFETCH-UNCONDITIONAL | 5 prefetch hints на каждой странице включая саму себя |
 | SEARCH-MANIFEST-QUALITY | search-manifest.json: 44/44 без поля slug (ключ отсутствует, не пустой); 44/44 нет scripture; 4/44 нет image. Verified. |
@@ -148,9 +153,9 @@
 | Закрыто (fixed) | 41 |
 | P1 открыто | 3 |
 | P2 открыто | 7 |
-| P3 открыто | 17 |
+| P3 открыто | 22 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **34** |
+| **Всего открыто** | **39** |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
