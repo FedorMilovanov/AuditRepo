@@ -2,7 +2,7 @@
 
 > Единый реестр всех багов проекта gospod-bog.ru.  
 > Дата консолидации: **2026-07-05** (полная реструктуризация из 2174-строчного документа).  
-> Source HEAD: `d1941a6d` | AuditRepo HEAD: `77c23c4`  
+> Source HEAD: `d1941a6d` | AuditRepo HEAD: `e42d865`  
 > Предыдущая версия: `archive/2026-07-05-matrix-pre-restructure/`
 
 ---
@@ -47,14 +47,14 @@
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (4)
+## 🟠 P1 — ОТКРЫТО (2)
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | AUDIT-P1-FC-IMP | `floating-cluster.css`: 490 `!important`, audit-pro проверяет только site.css. Нет ceiling/ratchet. | АУДИТ 1.0 + verifier |
 | BUG-PERF-001 | addEventListener без removeEventListener: 294 add / 16 remove в 5 JS-файлах | 2 witnesses |
 
-## 🟡 P2 — ОТКРЫТО (10)
+## 🟡 P2 — ОТКРЫТО (7)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -65,8 +65,6 @@
 | AUDIT-P2-MATRIX-DRIFT | route-migration-matrix (35) ≠ page-ownership (54) ≠ sitemap (43). Нет cross-validation. | АУДИТ 1.0 |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
-| BUG-SITEMAP-8-KARTY-MISSING | 8/10 karty/ routes не в sitemap.xml (early-church, maccabim, melachim, pavel, revelation, shoftim, shvatim, yeshua) — invisible to search engines |
-| BUG-FRONTMATTER-INCONSISTENCY-01 | 9/20 MDX-статей (baptisty-rossii) без полей `draft`/`noindex`/`sourcesRequired` — системная несогласованность ArticleLayout vs SeriesArticleLayout | 1200×630 — не props | Pass 91 |
 
 ## 🟢 P3 — ОТКРЫТО (13)
 
@@ -121,6 +119,8 @@
 - `AUDIT-P2-NODE-REGEX` — fabricated evidence (функция mustScript не существует). Archive: `archive/false-positive/`
 - `AUDIT-P3-REACT-UNDOCUMENTED` — React IS used. Archive: `archive/false-positive/`
 - `BUG-ASTRO-CONFIG-001` (Pass 88) — downgraded to INFO.
+- `BUG-SITEMAP-8-KARTY-MISSING` — 8 karty/ routes are temporary placeholders with `data-pagefind-ignore`, intentionally excluded from sitemap by `check-map-publication-status.js`.
+- `BUG-FRONTMATTER-INCONSISTENCY-01` — Zod schema uses `.default(false)` / `.default(true)`. Omitting fields is valid, not inconsistency.
 
 ### Архив:
 - 36 incoming pass-папок → `archive/2026-07-05-incoming-consolidated/`
@@ -133,44 +133,14 @@
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 41 |
-| P1 открыто | 4 |
-| P2 открыто | 10 |
+| Закрыто (fixed) | 33 |
+| P1 открыто | 2 |
+| P2 открыто | 7 |
 | P3 открыто | 13 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **38** |
+| **Всего открыто** | **29** |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
 
 ---
-
-## 🟢 PASS 89 — HTML FILES AUDIT: about/index.html (2026-07-05)
-
-**Agent:** arena-agent  
-**Source HEAD:** `dea91376` (updated by other agents)  
-**Scope:** `about/index.html` (336 lines, 34KB) — about page (sample)
-
-### Observations (P3)
-
-| ID | Description | Severity |
-|----|-------------|----------|
-| BUG-HTML-ABOUT-001 | Same inline scripts as index.html (not duplicated) | 🔵 P3 |
-| BUG-HTML-ABOUT-002 | Same magic numbers as index.html (not duplicated) | 🔵 P3 |
-
-### Positive Findings
-
-✅ Good SEO meta tags  
-✅ Good accessibility (skip-link, aria-labels)  
-✅ Semantic HTML structure  
-✅ JSON-LD with ProfilePage + Person + BreadcrumbList  
-✅ Contact information with rel="me"  
-
-### Conclusion
-
-about/index.html follows same patterns as index.html. No new issues found. Same recommendations apply.
-
-### Full Report
-
-`incoming/arena-agent-pass89/REPORT.md`
-
