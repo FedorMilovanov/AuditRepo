@@ -47,17 +47,16 @@
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (5)
+## 🟠 P1 — ОТКРЫТО (4)
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | AUDIT-P1-FC-IMP | `floating-cluster.css`: 490 `!important`, audit-pro проверяет только site.css. Нет ceiling/ratchet. | АУДИТ 1.0 + verifier |
-| BUG-CI-002 | `validate:static-publication:light` пропускает 3 чека: `article-mdx:strict`, `baptisty-series`, `sw:dist:audit` | 5 witnesses |
-| AUDIT-P1-CI-GATE-GAP | То же что BUG-CI-002: `indexnow.yml:71` использует `:light` → SW-регрессии попадают в IndexNow | АУДИТ 1.3 |
+| BUG-CI-002 | `validate:static-publication:light` пропускает 3 чека (article-mdx:strict, baptisty-series, sw:dist:audit). `indexnow.yml` вызывает `:light` → контент-регрессии доходят до поисковиков без полной проверки. | 5 witnesses |
 | BUG-CI-003 | indexnow.yml push retry: после 3 fail → exit 0 (silent failure) | 2 witnesses |
 | BUG-PERF-001 | addEventListener без removeEventListener: 294 add / 16 remove в 5 JS-файлах | 2 witnesses |
 
-## 🟡 P2 — ОТКРЫТО (8)
+## 🟡 P2 — ОТКРЫТО (10)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -68,7 +67,9 @@
 | AUDIT-P2-MATRIX-DRIFT | route-migration-matrix (35) ≠ page-ownership (54) ≠ sitemap (43). Нет cross-validation. | АУДИТ 1.0 |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
-| NEW-OG-DIMENSIONS-HARDCODED | Seo.astro hardcodes og:image:width/height 1200×630 — не props | Pass 91 |
+| NEW-OG-DIMENSIONS-HARDCODED | Seo.astro hardcodes og:image:width/height |
+| BUG-SITEMAP-8-KARTY-MISSING | 8/10 karty/ routes не в sitemap.xml (early-church, maccabim, melachim, pavel, revelation, shoftim, shvatim, yeshua) — invisible to search engines |
+| BUG-FRONTMATTER-INCONSISTENCY-01 | 9/20 MDX-статей (baptisty-rossii) без полей `draft`/`noindex`/`sourcesRequired` — системная несогласованность ArticleLayout vs SeriesArticleLayout | 1200×630 — не props | Pass 91 |
 
 ## 🟢 P3 — ОТКРЫТО (17)
 
@@ -114,8 +115,8 @@
 ## Примечания
 
 ### Дубликаты (объединены):
+- **BUG-CI-002** поглотил **AUDIT-P1-CI-GATE-GAP** (один root cause — `:light` gate в indexnow.yml). Оставлен BUG-CI-002 с расширенным описанием.
 - **BUG-ARCH-001** = **AUDIT-P2-SW-PRECACHE-4** (одна суть: SW precache содержит lazy assets). Оставлено оба ID для обратной совместимости с reverify-документами.
-- **BUG-CI-002** ≈ **AUDIT-P1-CI-GATE-GAP** (один root cause: `:light` gate). Два ID т.к. описывают разные аспекты (пропущенные чеки vs IndexNow последствия).
 - **NEW-CACHE-BUST-ASTRO** закрыто (`6499d42e`), но **AUDIT-P3-SEARCH-LAZY-CONFIRMED** и **AUDIT-P2-SW-PRECACHE-4** описывают ту же тему SW/lazy — не дубликаты, разные root causes.
 
 ### Severity dispute: BUG-SW-BASELINE-DRIFT
@@ -140,12 +141,12 @@
 | Категория | Количество |
 |---|---|
 | Закрыто (fixed) | 33 |
-| P1 открыто | 5 |
-| P2 открыто | 8 |
+| P1 открыто | 4 |
+| P2 открыто | 10 |
 | P3 открыто | 17 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **37** |
+| **Всего открыто** | **38** |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
 
