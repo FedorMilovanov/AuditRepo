@@ -1214,3 +1214,61 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 
 `incoming/arena-agent-pass73/REPORT.md`
 
+
+---
+
+## 🟢 PASS 74 — DEEP JS CODE REVIEW: enhancements.js (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `js/enhancements.js` (14 lines, 45KB minified) — 15 IIFE modules
+
+### Critical Findings (P1)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-025 | Minified code in version control (45KB) | 🔴 P1 |
+| BUG-JS-026 | Duplicate jget/jset functions (defined 3+ times) | 🔴 P1 |
+
+### High Priority Findings (P2)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-027 | Multiple empty catch blocks (10+) | 🟡 P2 |
+| BUG-JS-028 | innerHTML usage without sanitization (20+ instances) | 🟡 P2 |
+| BUG-JS-029 | Magic numbers (600, 80, 28, 90, 210, 70, etc.) | 🟡 P2 |
+
+### Medium Priority Findings (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-JS-030 | No cleanup system for event listeners | 🔵 P3 |
+| BUG-JS-031 | Complex functions (GBS2 TOC ~200 lines, GBS2 Progress ~150 lines) | 🔵 P3 |
+| BUG-JS-032 | Multiple setTimeout without cleanup (10+) | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total size | 45KB |
+| Lines | 14 (minified) |
+| IIFE modules | 15 |
+| Empty catches | 10+ |
+| innerHTML risks | 20+ |
+| Duplicate code | 3+ instances (jget/jset) |
+| Magic numbers | 30+ |
+| Cleanup system | No |
+| Timer leaks | 10+ |
+
+### Top 5 Recommendations
+
+1. **Unminify enhancements.js** — store source in VCS
+2. **Deduplicate jget/jset** — define once in SiteUtils
+3. **Add logging to empty catches** — improve debuggability
+4. **Sanitize innerHTML** — prevent XSS
+5. **Extract magic numbers** — create named constants
+
+### Full Report
+
+`incoming/arena-agent-pass74/REPORT.md`
+
