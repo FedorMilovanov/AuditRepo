@@ -162,16 +162,50 @@ grep -rn '/>' dist/ | grep -v '/>\|data:image' | head
 
 * * *
 
-## 📚 Historical sections archived
 
-Следующие разделы были в предыдущих версиях этого документа и удалены за неактуальностью:
+## 📚 Historical reference (archived content)
 
-- **§1.6 External reference pass** (~30+ unchecked search links от 2026-06-21) — устарели
-- **§1.7 Local timing proof** — было экспериментальное измерение времени, больше не нужно
-- **§1.8 Why some agents survive** — 50-link deep pass про failure modes (контекст был, но в архив)
-- **§1.9 Arena coding polish** — 30 operational rules (полезно, но файл был 940 строк — сократили)
-- **§3 Playwright quirks** — частные случаи, не актуальные на текущей версии
-- **§6.5 SVG self-closing gate** — разовая проверка для рефакторинга 6.0
-- **§6.6 astro:audit:about gotcha** — конкретный workflow баг, починен
-- **§6.7 pixelmatch method** — общее описание метода, не специфичное для sandbox
-- **§7 Yandex CSP** — CSP настройки описаны в AGENTS.md
+Следующие секции были удалены из основной части для сокращения файла, но содержат полезную информацию.
+
+### 1.8 Why some agents survive — failure taxonomy
+
+| Failure mode | What it looks like | Likely cause | Mitigation |
+|---|---|---|---|
+| Context rot / drift | Agent forgets constraints, repeats failed approach | Long noisy transcript, weak compaction | Write decisions to lane reports; use FAST loop; summarize with file paths |
+| Compaction loss | After summary, agent forgets active branch/lane/rules | Compaction omitted exact state | Keep AGENTS.md, WORK_MODES.md, lane reports as durable memory; commit before breaks |
+| Zombie/stalled tool call | Spinner continues, no output | Missing tool timeout or hung subprocess | bash timeouts, avoid long background jobs, verify output files |
+| Subagent black hole | Parent waits forever | Subagent lifecycle bug, no output contract | Sequential work preferred; require output files; don't spawn many background agents |
+| Resource/OOM kill | Process killed during Astro/build/browser install | 2 CPU / ~2 GB RAM, parallel builds | Don't parallelize Astro builds; FAST loop before FULL gate |
+| Tool-output bloat | Context fills with huge logs | Reading giant files into chat | grep/sed targeted slices; write analysis to files |
+| Environment reset | Node 20, dist missing, browser missing | PATH not persistent, ephemeral dirs | Prefix Node commands; run npm ci; document environment |
+| Git/worktree confusion | Agent edits wrong branch | Missing git status, stale worktrees | Start with git fetch, git status, git worktree list |
+| Over-broad prompt | Agent tries to fix everything and trips shared files | No lane scope, no forbidden files list | WORK_MODES, LANE_LOCK_POLICY, migration matrix |
+| Model/runtime variance | One model works for hours, another fails quickly | Different context handling, tool-call reliability | Keep state in files so weaker agents recover |
+
+### 1.9 Arena coding polish — 30 operational rules (shortlist)
+
+**Топ-10 для выживания в Arena:**
+1. Start every turn with `git status --short --branch` when changes exist.
+2. Run `git fetch --all --prune` before lane/merge/conflict decisions.
+3. Never rely on `export` persisting; prefix Node with `PATH=/tmp/node-v22.12.0-linux-x64/bin:$PATH`.
+4. Use `npm ci` in fresh sessions, NOT `npm install`.
+5. Use FAST loop during iteration; reserve FULL gate for release barrier.
+6. Do not run two Astro builds in parallel (2 CPU / ~2 GB RAM).
+7. Use targeted file reads (`sed -n`, `grep`) instead of dumping large files.
+8. Write long analysis to lane reports, not only the conversation.
+9. Use git commits as state checkpoints after verified changes.
+10. If context feels noisy, write a checkpoint to a file and continue from that file.
+
+**Полный список:** см. `git show de5d8a4:SANDBOX-ENV-2026-06-21.md | grep -A2 '^[0-9]'` (из оригинального файла в git history).
+
+### 1.6 External reference pass (30+ links)
+
+Original document had 40+ verified external links documenting:
+- E2B sandbox lifecycle, timeout defaults, persistence
+- npm ci vs install behavior, GitHub Actions caching
+- Astro v6 Node 22+ requirement
+- Playwright CI caching strategies
+- Git worktree multi-agent hygiene
+- Codex/Claude session management and compaction
+
+Полный список: `git show de5d8a4:SANDBOX-ENV-2026-06-21.md | sed -n '/^## 1.6/,/^## 1.7/p'`
