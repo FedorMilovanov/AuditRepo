@@ -1778,3 +1778,52 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 
 `incoming/arena-agent-pass84/REPORT.md`
 
+
+---
+
+## 🟢 PASS 85 — BUILD SCRIPTS AUDIT: validate.js (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `scripts/validate.js` (783 lines, 33KB) — main validation script
+
+### High Priority Findings (P2)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-SCRIPT-001 | Complex validateArticle() function (~200 lines) | 🟡 P2 |
+| BUG-SCRIPT-002 | Empty catch blocks (5+ instances) | 🟡 P2 |
+
+### Medium Priority Findings (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-SCRIPT-003 | Magic numbers (1000, 260, 85) | 🔵 P3 |
+| BUG-SCRIPT-004 | Hardcoded paths throughout | 🔵 P3 |
+| BUG-SCRIPT-005 | No unit tests for validation logic | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total lines | 783 |
+| Total size | 33KB |
+| Validation functions | 8 |
+| Function complexity | High (~200 lines) |
+| Empty catches | 5+ |
+| Magic numbers | 3+ |
+| Hardcoded paths | Yes |
+| Unit tests | No |
+
+### Top 5 Recommendations
+
+1. **Refactor validateArticle()** — split into smaller functions
+2. **Add logging to empty catches** — improve debuggability
+3. **Extract magic numbers** — create CONFIG object
+4. **Use configuration file** — replace hardcoded paths
+5. **Add unit tests** — ensure correctness
+
+### Full Report
+
+`incoming/arena-agent-pass85/REPORT.md`
+
