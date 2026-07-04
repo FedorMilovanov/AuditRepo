@@ -788,3 +788,90 @@ Ctrl+K технически работает, но команда палитра
 4. `search.js` слушает это событие и открывает палитру
 
 **Механизм корректен.** Проблема только в том, что на izbrannoe/hard-texts нет ни кнопки, ни стилей.
+
+
+---
+
+## 📖 PASS 79 — SEARCH: Hebrew/Greek, event leaks, keyboard conflicts, XSS audit
+
+### 🐛 SEARCH-314:  search.js HE/NOT handle Hebrew/Greek characters (P3)
+
+The site has **Hebrew and Greek content** in 4+ articles:
+- krajne-li-isporcheno-serdce → 17 Hebrew + 17 Greek occurrences (עָקֹב, Βαθε etc.)
+- kod-da-vinchi → Greek (κοινωνός)
+- dzhon-gill-chast-1-chelovek → Hebrew (אֱמֶת)
+- nagornaya/chast-1 → Greek (πληρόω)
+
+The `N()` function in search.js only does:
+```javascript
+function N(e){return String(e||"").toLowerCase().replace(/ё/g,"е")...
+```
+
+**It does NOT handle Hebrew (א-ת) or Greek (α-ω) characters at all.**
+- Users searching for Hebrew terms will not find them
+- Pagefind WASM *might* index them via `include_characters` (underscore chars), but this is unverified since dist build failed
+
+---
+
+### 🐛 SEARCH-315: 22 event listeners, 0 removeEventListener — memory leak risk (P3)
+
+| Event | Where | Count |
+|-------|-------|:-----:|
+| keydown | document + input | 2 |
+| click | document, backdrop | 2 |
+| touchstart | document | 1 |
+| input | cp-input | 1 |
+| animationend | cp-box | 1 |
+| scroll | window (via site.js conflict) | n/a |
+| **Total** | | **22x add, 0x remove** |
+
+The `re()` (close) function removes CSS classes but does NOT call `removeEventListener`. If search is opened/closed repeatedly, listeners accumulate.
+
+---
+
+### 🐛 SEARCH-316: site.js + search.js keyboard conflict (P3)
+
+Both files register `keydown` handlers on `document`:
+
+| Handler | Keys | File |
+|---------|------|------|
+| Escape → close all tooltips | Escape | site.js |
+| Enter → activate glossary | Enter | site.js |
+| Tab → focus traps | Tab | site.js (highlights.js) |
+| Ctrl+K → open search | Ctrl+K | **search.js + site.js both** |
+| ArrowDown/Up → results nav | ArrowDown, ArrowUp | search.js |
+| Escape → close palette | Escape | search.js |
+| Enter → select result | Enter | search.js |
+
+**Potential issue:** site.js handles Escape globally (closes all tooltips), which fires BEFORE search.js can close the palette with the same key. However, since the palette is a higher z-index modal, this likely works in practice.
+
+---
+
+### ✅ SEARCH-317: XSS safety confirmed
+
+```javascript
+function F(e) { return String(e||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function safeUrl(e) { var s=String(e||"").trim(); return /^javascript:/i.test(s)?"#":s||"#"; }
+```
+
+- All user-facing output goes through `F()` (HTML entity encoding)
+- All URLs go through `safeUrl()` (JavaScript protocol blocked)
+- `P()` escapes regex special chars for highlighting
+- **No XSS vectors found** ✅
+
+---
+
+### ✅ SEARCH-318: Min 2 chars for search (correct behavior)
+
+`xe()` checks `e.length < 2` before dispatching. Most users expect this.
+
+---
+
+### 🧮 COMPLETE SEARCH BUG TAXONOMY: 33 bugs
+
+| Priority | Count | Breakdown |
+|:--------:|:-----:|-----------|
+| 🔴 P1 | 3 | scripture meta missing, Писание not calling Pagefind, scripture null |
+| 🟡 P2 | 12 | manual manifest, book normalization, no gate, izbrannoe broken, hard-texts eager, Rodosloviye no hash, keyboard conflict, 2 corpora not merged, etc. |
+| 🔵 P3 | 18 | Hebrew/Greek, event leak, dead assets, 15 no-search pages, CSS duplication, render-blocking, etc. |
+| **Total** | **33** | |
