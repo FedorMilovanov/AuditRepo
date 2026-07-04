@@ -75,7 +75,7 @@
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
 
-## 🟢 P3 — ОТКРЫТО (16)
+## 🟢 P3 — ОТКРЫТО (17)
 
 | ID | Описание |
 |---|---|
@@ -92,6 +92,7 @@
 | BUG-011 | 23 unique breakpoints, 768px collision |
 | NEW-72 | SVG dedup micro-optimization (~1.9KB) |
 | DATA-SERIES-DRIFT | `series.json` содержит nagornaya + pastor-series, но `SERIES_ORDER` в site.ts — нет. ArticleLayout:62 пропускает серию если ключа нет в SERIES_ORDER → 20-antisovetov-pastoru не получает prev/next nav и seriesLabel. Низкий impact (1 статья в серии), но архитектурная дыра. |
+| SHADOW-AUDIT-NARROW | `legacy-shadow-wrapper-audit.js` проверяет только 7/52 (13%) production-dist маршрутов. Не охвачены: все страницы статей, baptisty-rossii, karty (8 из 10), biografii, about, pastor-series, konfessii, rodosloviye. |
 | STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |
 | NEW-PREFETCH-UNCONDITIONAL | 5 prefetch hints на каждой странице включая саму себя |
 | SEARCH-MANIFEST-QUALITY | search-manifest.json: 44/44 без поля slug (ключ отсутствует, не пустой); 44/44 нет scripture; 4/44 нет image. Verified. |
@@ -147,9 +148,9 @@
 | Закрыто (fixed) | 41 |
 | P1 открыто | 3 |
 | P2 открыто | 7 |
-| P3 открыто | 16 |
+| P3 открыто | 17 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **33** |
+| **Всего открыто** | **34** |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
