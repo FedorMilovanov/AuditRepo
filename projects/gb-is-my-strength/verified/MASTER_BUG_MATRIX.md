@@ -75,7 +75,7 @@
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
 
-## 🟢 P3 — ОТКРЫТО (22)
+## 🟢 P3 — ОТКРЫТО (25)
 
 | ID | Описание |
 |---|---|
@@ -97,6 +97,9 @@
 | AUDIT-PRO-FC-IMPORTANT-GAP | `importantBudget()` (стр. 263) проверяет `!important` только в `css/site.css` (ceiling 202). `css/floating-cluster.css` (490 !important) не имеет ни ceiling, ни ratchet. Добавление 10 новых !important в floating-cluster.css проходит CI молча. Подтверждает AUDIT-P1-FC-IMP. |
 | AUDIT-PRO-REQUIRE-CRASH | `const CACHE_BUST_ASSETS = require('./cache-bust-assets').ASSETS` — синхронный require без try-catch. Если файл отсутствует, audit-pro падает до выполнения любых проверок. |
 | AUDIT-PRO-VM-DEPRECATED | `extractSiteConfig()` и `inlineScriptSyntax()` используют `new vm.Script()` — deprecated в Node 22.12+. При полном удалении API в будущей версии Node аудит упадёт. Альтернатива: `new Function()` в sandbox. |
+| SEO-AUDIT-ROOT-ONLY | `seo-audit.js` исключает `dist/` из `walk()`. Astro-only страницы без root-копии невидимы для SEO-аудита: проверки canonical, og:image, JSON-LD, Twitter cards, FAQ, robots. Та же архитектурная проблема что AUDIT-PRO-ROOT-ONLY. |
+| VALIDATE-JS-VM-DEPRECATED | `extractSiteConfigFromHtml()` использует `new vm.Script()` — deprecated в Node 22.12+. Дублирует ту же проблему что и `audit-pro.js` (AUDIT-PRO-VM-DEPRECATED). При удалении API — validate.js упадёт. |
+| VALIDATE-JS-ARTICLES-ONLY | `scripts/validate.js` (`validateArticle()`) проверяет только `articles/*`. 9 baptisty-rossii статей (dva-sezda-1884…yuzhnaya-shtunda) НЕ проходят 17 проверок: canonical, byline, og:image, breadcrumb, author-card и др. `EXTRA_PAGES` = 4 страницы (pastor-series, biografii, about, index) — жёстко захардкожено. |
 | AUDIT-PRO-ROOT-ONLY | `audit-pro.js` проверяет ТОЛЬКО root HTML (`walk(ROOT)`, `dist/` в skipDirs). `/izbrannoe/` (Astro-only, без root-копии) невидим для 7 гвардов: canonical, sitemap, SEO, cache-bust, JSON-LD, links, a11y. При `astro build` в dist/ генерируются 54 страницы — аудит проверяет только 50 root HTML. |
 | STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |
 | NEW-PREFETCH-UNCONDITIONAL | 5 prefetch hints на каждой странице включая саму себя |
@@ -153,9 +156,9 @@
 | Закрыто (fixed) | 41 |
 | P1 открыто | 3 |
 | P2 открыто | 7 |
-| P3 открыто | 22 |
+| P3 открыто | 25 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **39** |
+| **Всего открыто** | **42** |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
