@@ -2,12 +2,12 @@
 
 > Единый реестр всех багов проекта gospod-bog.ru.  
 > Дата консолидации: **2026-07-05** (полная реструктуризация из 2174-строчного документа).  
-> Source HEAD: `d1941a6d` | AuditRepo HEAD: `e42d865`  
+> Source HEAD: `d1941a6d` | AuditRepo HEAD: `9d67b17`  
 > Предыдущая версия: `archive/2026-07-05-matrix-pre-restructure/`
 
 ---
 
-## ✅ ЗАКРЫТО (42 бага)
+## ✅ ЗАКРЫТО (41)
 
 | ID | Описание | Коммит |
 |---|---|---|
@@ -63,7 +63,7 @@
 | BUG-PERF-001 | addEventListener без removeEventListener: 294 add / 16 remove в 5 JS-файлах | 2 witnesses |
 | SEARCH-SCRIPTURE-BROKEN | 🔍 Scope «Писание» не работает: 0/20 MDX передают scripture:true; ArticleLayout без prop; 44/44 manifest без scripture. ⚠️ Verifier correction: 6 pages (не 3) имеют data-pagefind-meta. **Severity dispute: P1→P2 recommended** (feature gap, не runtime breakage) | Pass 92, verified |
 
-## 🟡 P2 — ОТКРЫТО (9)
+## 🟡 P2 — ОТКРЫТО (7)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -74,8 +74,6 @@
 | AUDIT-P2-MATRIX-DRIFT | route-migration-matrix (35) ≠ page-ownership (54) ≠ sitemap (43). Нет cross-validation. | АУДИТ 1.0 |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
-| BUG-SITEMAP-8-KARTY-MISSING | 8/10 karty/ routes не в sitemap.xml (early-church, maccabim, melachim, pavel, revelation, shoftim, shvatim, yeshua) — invisible to search engines |
-| BUG-FRONTMATTER-INCONSISTENCY-01 | 9/20 MDX-статей (baptisty-rossii) без полей `draft`/`noindex`/`sourcesRequired` — системная несогласованность ArticleLayout vs SeriesArticleLayout | Pass 92 |
 
 ## 🟢 P3 — ОТКРЫТО (15)
 
@@ -147,18 +145,9 @@
 |---|---|
 | Закрыто (fixed) | 41 |
 | P1 открыто | 3 |
-<<<<<<< HEAD
-| P2 открыто | 9 |
-| P3 открыто | 14 |
-| Рефакторинг | 4 |
-| AuditRepo | 3 |
-| **Всего открыто** | **33** |
-=======
-| P2 открыто | 10 |
+| P2 открыто | 7 |
 | P3 открыто | 15 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **35** |
->>>>>>> 6e79be6 (audit(gb): deep targeted audit — 1 new finding, 13 areas clean)
-| False positives отклонено | 3 |
-| Passes processed | 93+ |
+| **Всего открыто** | **32** |
+| False positives | 5 |
