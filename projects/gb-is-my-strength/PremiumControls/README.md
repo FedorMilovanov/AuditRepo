@@ -136,12 +136,12 @@ Invalid state:
 | UI-GILL-DESKTOP-TOC-02b | First/current TOC item may lack href | P1 | gillSeriesData.ts:26 |
 | UI-GILL-DESKTOP-TOC-02c | Count overwritten: N/TOTAL to single number | P1 | fc-controller.js:1276 |
 | UI-GILL-DESKTOP-TOC-02d | span directly inside ul (invalid HTML) | P2 | GillSeriesRail.astro:51-52 |
-| UI-GILL-DESKTOP-FRAME-03 | No horizontal overflow guard or desktop audit | P2 | Missing script |
+| UI-GILL-DESKTOP-FRAME-03 | No horizontal overflow guard or desktop audit | P2 | FIXED: gill:pre-v16-submenu:audit created and wired |
 
-### Current gate gaps
-- desktop rail geometry: NO GATE
-- desktop scrollspy: NO GATE
-- mobile layout: GILL:MOBILE-LAYOUT:AUDIT (existing, unchanged)
+### Current gate gaps (FIXED in 79eab398)
+- desktop rail geometry: gill:pre-v16-submenu:audit (5 routes × 6 viewports)
+- desktop scrollspy: static TOC + browser assertions (105/105 checks)
+- mobile layout: GILL:MOBILE-LAYOUT:AUDIT (unchanged, still passes)
 
 ### Design target (from GPT 5.5 audit)
 - rail width: 304px >=1280px, 272-288px 1024-1279px

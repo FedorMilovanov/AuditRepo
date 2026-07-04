@@ -1,3 +1,20 @@
+# 🟢 GILL DESKTOP RAIL — FIXED on current HEAD 8a8211ea (2026-07-04)
+
+**GPT 5.5 audit all 6 findings resolved.** Lane  merged.
+
+| Bug | Status | Fix |
+|-----|--------|-----|
+| Rail 240px (need 304px+) | FIXED | minmax(272px,304px) + clamp |
+| All items get gbs2-sub | FIXED | level: 2|3 field |
+| Current item may lack href | FIXED | href required now |
+| Count overwritten | FIXED | scrollspy preserves N/TOTAL |
+| span inside ul | FIXED | track moved outside ul |
+| No desktop rail gate | FIXED | gill:pre-v16-submenu:audit 105/105 |
+
+**Verification:** gill:pre-v16-submenu:audit 105/105, mobile smoke/layout PASS, premium-controls 87/87, dist-smoke PASS. Source main: 8a8211ea (with CI fix for Playwright order). Deploy green.
+
+---
+
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 Search full lazy loader (READ FIRST)
 
 **Current source main HEAD:** `546f7016b55a147dfbbca8e463e3fb0840686ed0`.

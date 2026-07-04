@@ -246,7 +246,7 @@ All CSS custom properties (`--color-*`, `--h-*`, `--gbs2-*`, `--gb-*`) are refer
 
 **Forensic pass against GPT 5.5 audit + independent source verification.** Source HEAD `12f4a50a`.
 
-### Claims verified TRUE (all confirmed in current source)
+### Claims verified TRUE (all confirmed in current source) — ALL FIXED in 79eab398
 
 | # | Claim | File:Line | Evidence |
 |---|-------|-----------|----------|
@@ -262,7 +262,7 @@ All CSS custom properties (`--color-*`, `--h-*`, `--gbs2-*`, `--gb-*`) are refer
 
 #### UI-GILL-DESKTOP-RAIL-01 — Desktop rail wrong width (240px vs 304px+)
 - **Severity:** 🟠 P1 — owner-visible visual regression
-- **Status:** verified-current (confirmed on HEAD `12f4a50a`)
+- **Status:** ✅ FIXED-CURRENT (79eab398 + 8a8211ea)
 - **Root cause:** `css/floating-cluster.css` hardcodes 240px rail; legacy reference was 304px;
   owner reports cramped appearance, truncated titles, horizontal scrollbar
 - **Evidence:** `floating-cluster.css:2204` comment says "304px col", but `:2216` uses 240px
@@ -295,8 +295,8 @@ All CSS custom properties (`--color-*`, `--h-*`, `--gbs2-*`, `--gb-*`) are refer
 | Area | Current gates | Missing |
 |------|---------------|---------|
 | Mobile layout | ✅ `gill:mobile-layout:audit`, `gill:mobile-play:smoke` | — |
-| Desktop rail geometry | ❌ None | Width, height, overflow, scroll ownership |
-| Desktop TOC scrollspy | ❌ None | Active/passed tracking, count format, dot alignment |
+| Desktop rail geometry | ✅ gill:pre-v16-submenu:audit | 105/105 checks, 5 routes x 6 viewports |
+| Desktop TOC scrollspy | ✅ gill:pre-v16-submenu:audit | Static TOC + browser scrollspy assertions |
 | PremiumControls | ✅ `audit:premium-controls` 87/87 | Does not prove desktop rail geometry |
 
 
