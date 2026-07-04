@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
-**Консолидация:** 2026-07-04
-**HEAD исходного репозитория:** `aaaaf7a7` (auto cache-bust descendant of search full lazy loader `546f7016`)
+**Консолидация:** 2026-07-04 (обновлено **2026-07-05**)
+**HEAD исходного репозитория:** `8a8211ea` (CI fix — submenu audit order after Playwright install)
 **Статус:** ✅ **deploy-green** — все P0/P1/P2 блокеры закрыты
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
@@ -82,7 +82,7 @@ Verified on `546f7016`:
 - `npm run validate:static-publication` ✅
 - `npm run guard:shared-files` ✅
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-full-lazy-loader-546f701.md`. Source main now `aaaaf7a7` (auto cache-bust descendant); remote Deploy green: run `28709565563` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28709565563); Visual Parity green: run `28709548827` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28709548827).
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-full-lazy-loader-546f701.md`. Source main now `8a8211ea` (auto cache-bust descendant); remote Deploy green: run `28709565563` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28709565563); Visual Parity green: run `28709548827` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28709548827).
 
 ---
 

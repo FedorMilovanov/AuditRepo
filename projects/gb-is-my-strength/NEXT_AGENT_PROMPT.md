@@ -1,3 +1,28 @@
+# 🟢 CURRENT TRUTH — 2026-07-05 (READ FIRST)
+
+**Source HEAD:** `8a8211ea` (CI fix — submenu audit after Playwright)
+**AuditRepo HEAD:** `6d4f54a` (Pass 59)
+**Branches:** `origin/main` only (zero stale branches in both repos)
+**CI:** ✅ **All gates green** — build, PremiumControls 87/87, validate:all 0 errors
+
+## ✅ Все P0/P1/P2 блокеры закрыты
+
+| Уровень | Open | Closed | Всего |
+|---------|------|--------|-------|
+| P0 | 0 | 3 | 3 |
+| P1 | 0 | 8 | 8 |
+| P2 | 1 | 15 | 16 |
+| P3 | 2 | 5 | 7 |
+| Refactor | 4 | 0 | 4 |
+| AuditRepo | 3 | 0 | 3 |
+| **Total** | **10** | **31** | **41** |
+
+## Ключевые документы
+
+- `verified/MASTER_BUG_MATRIX.md` — consolidated canonical truth
+
+---
+
 # 🟢 GILL DESKTOP RAIL — FIXED on current HEAD 8a8211ea (2026-07-04)
 
 **GPT 5.5 audit all 6 findings resolved.** Lane  merged.
