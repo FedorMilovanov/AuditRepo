@@ -40,6 +40,7 @@
 ## 🟠 P2 — MEDIUM (2 открытых)
 
 - **BUG-011:** 23 уникальных px брейкпоинта, 768px коллизия (reclassified — без визуальной регрессии)
+- **P2-SEARCH-EAGER (partial fix):** search.js 31KB eager load — lazy loader внедрён в Astro-native страницы (izbrannoe). ~48 legacy страниц всё ещё грузят search.js жадно. Требует миграции legacy HTML.
 
 ## 🔵 P3 — MEDIUM (2 открытых)
 
@@ -84,10 +85,10 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-legacy-lazy-init-30b
 |---|---|---|
 | P0 (Critical) | 0 | 3 |
 | P1 (High) | 0 | 6 |
-| P2 (Medium) | 1* | 15 |
+| P2 (Medium) | 2* | 14 |
 | P3 (Medium) | 2 | 5 |
 | P3 (Refactor) | 4 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **10** | **29** |
+| **Итого** | **11** | **28** |
 
 *P2: BUG-011 reclassified, SEARCH-EAGER partially fixed (Astro-native pages), REG-001 accepted risk (GitHub Pages limitation)*

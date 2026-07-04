@@ -395,7 +395,7 @@ it is not an official audit input.
 ## Проекты
 
 Сейчас активен:
-- `projects/gb-is-my-strength/` — gospod-bog.ru (64 bugs, repair-ready)
+- `projects/gb-is-my-strength/` — gospod-bog.ru (10 open / 29 closed, repair-ready)
 
 Позже можно добавлять другие проекты тем же способом. (feat(auditrepo): add Governed Freedom Model — README, templates, scaffold)
 

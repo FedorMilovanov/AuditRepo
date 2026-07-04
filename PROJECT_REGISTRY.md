@@ -6,7 +6,7 @@
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Runtime P0 blockers closed. All CI-P0/P1 fixed. Deploy green on `932af3f3` (workflow_dispatch). Latest source main HEAD: `c0ab48fc`. Start from `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`. |
+| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Runtime P0 blockers closed. All CI-P0/P1 fixed. Deploy green on `932af3f3` (workflow_dispatch). Latest source main HEAD: `6e667978`. Start from `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`. |
 
 ## Status glossary
 
@@ -18,10 +18,10 @@
 - `reverify-needed` — source repo ушёл вперёд, нужен новый HEAD-pass
 - `archived` — проект завершён
 
-## gb-is-my-strength current summary — 2026-07-03
+## gb-is-my-strength current summary — 2026-07-04
 
-**Current source HEAD:** `c0ab48fc` (auto cache-bust after SiteUtils fix)
-**Current AuditRepo HEAD:** `ef5022b` (Pass 33 — SiteUtils fix record)
+**Current source HEAD:** `6e667978` (auto cache-bust after SiteUtils fix)
+**Current AuditRepo HEAD:** `fe6e5b8` (Pass 33 — SiteUtils fix record)
 **Current status:** repair-ready. All P0 runtime blockers closed.
 
 ### Current truth
@@ -29,15 +29,17 @@
 - All runtime no-undef issues (`r`, `tt`, `SiteUtils`) — **fixed-current** on `19062297` and earlier.
 - PremiumControls: `audit:premium-controls` 87/87 ✅. PC-CURRENT-06 (Gill mobile) verified passing.
 - Hermeneutics floater canonical position is `8.5vw` desktop / `4.5vw` mobile.
-- Deploy to GitHub Pages: **green** on manual run (workflow_dispatch, `932af3f3`). Auto-deploy on latest `01ff5ce3` is pending.
+- Deploy to GitHub Pages: **green** on auto-deploy #1329 (`6e667978`). All CI gates green.
 - Gill v16 is current base.
-- All remote branches merged into main.
+- All remote branches merged into main. Zero stale branches in both repos.
 
 ### Open items (non-blocking)
 
-- P2: Nagornaya `SiteUtils.themeKey` / `SiteUtils.copyText` — **fixed-current on `19062297`** (window. prefix added).
-- P2/P3: code duplication in PageHead components, CSS breakpoint cleanup, SVG dedup.
-- Prevention gap: runtime no-undef smoke not yet auto-gating deploy.
+- P2: SEARCH-EAGER partially fixed on Astro-native pages (lazy loader).
+- P2: BUG-011 CSS breakpoints (reclassified, no visual regression).
+- P3: SVG dedup (advisory), social metadata bundle.
+- P3/Refactor: site.js monolith, source maps, ES modules.
+- AuditRepo: 3 infra items.
 
 ### Primary current documents
 
