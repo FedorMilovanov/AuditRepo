@@ -39,7 +39,9 @@
 | UI-GILL-DESKTOP-TOC-02 | TOC hierarchy: gbs2-sub fix, scrollspy rewrite | `79eab398` |
 | NEW-README-ANCHOR-01 | README.md TOC stale anchor (Рефакторинг 4.5→5.0) | `c82a8d4b` |
 | NEW-CANONICAL-IZBRANNOE-01 | `/izbrannoe/` canonical/og:url relative→absolute; bonus fix: SITE_CONFIG.page.id was mis-tagged "home" | `563e85f3` |
-| NEW-IMG-REGRESSION-01 | orphan-image cleanup (`629ed89a`) left 2 broken refs in search-manifest.json/sitemap.xml + missed 3 more orphans — `audit-pro.js` was failing on main (found independently by both arena-agent-deep-audit-2/Pass 65 and arena-agent-pass69's raw incoming report) | `fc5f94bd` |
+| NEW-IMG-REGRESSION-01 |
+| SEC-001-VERIFIER | innerHTML XSS — 3/6 fields unescaped in owCard | `3d242b1c` |
+| NEW-SAFEURL-XSS-HARDENING | safeUrl() blocked only javascript:, now blocks 4 schemes | `3d242b1c` |
 
 ---
 
@@ -59,9 +61,7 @@
   - **Evidence:** `grep -c '!important' css/floating-cluster.css` = 490; `audit-pro.js:77` IMPORTANT_CEIL = 202 (site.css only). АУДИТ 1.0 intake, verified by independent verifier.
   - **Repair lane:** css-floating-cluster-cleanup
 
-- **SEC-001-VERIFIER:** `js/site.js:288` — `owCard.innerHTML` applies `tt()` HTML escaper to `w.lang`, `w.original`, `w.definition` but **NOT** to `w.transliteration`, `w.gloss`, `w.source`. Inconsistent defense-in-depth; XSS vector if SITE_CONFIG data ever becomes user-generated.
-  - **Evidence:** `python3 -c "..." ` confirms 3/6 fields unescaped. New verifier finding (not in intake).
-  - **Repair lane:** security-innerhtml-escape
+- ~~**SEC-001-VERIFIER:** `js/site.js:288` — `owCard.innerHTML` 3/6 fields unescaped~~ ✅ **FIXED-CURRENT** on `3d242b1c` (lane/security-innerhtml-escape-2026-07-05). All 6 fields now use `tt()`. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_sec-001-002-fixed.md`.
 
 - **BUG-CI-002:** *(2nd witness: АУДИТ 1.0 intake + independent verifier, 2026-07-05)* `validate:static-publication:light` (запускается в indexnow.yml на каждый push) пропускает 3 критические проверки:
   - `astro:audit:article-mdx:strict` (MDX структура, Ukrainian 'мін', 'Сперджен')
@@ -106,7 +106,7 @@
   - **Evidence:** Code inspection. АУДИТ 1.0 intake, verified by independent verifier.
   - **Repair lane:** code-quality
 
-- **NEW-SAFEURL-XSS-HARDENING** *(Pass 65)*: `safeUrl()` в `js/search.js` (command palette) блокирует только `javascript:` (`/^javascript:/i`), не блокирует `data:`/`vbscript:`. Текущие вызовы работают только с first-party данными из `search-manifest.json`/Pagefind (эксплойта не найдено), но имя функции подразумевает более полную защиту.
+- ~~**NEW-SAFEURL-XSS-HARDENING**~~ *(Pass 65)*: `safeUrl()` в `js/search.js` (command palette) блокирует только `javascript:` (`/^javascript:/i`), не блокирует `data:`/`vbscript:`. Текущие вызовы работают только с first-party данными из `search-manifest.json`/Pagefind (эксплойта не найдено), но имя функции подразумевает более полную защиту.
   - **Repair lane:** code-quality/hardening
 
 ## 🟣 P3 — CLEANUP (5 открытых)
