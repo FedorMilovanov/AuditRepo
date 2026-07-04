@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
 **Консолидация:** 2026-07-04
-**HEAD исходного репозитория:** `30b9fe46` (search legacy lazy init; descendant of `6e667978`)
+**HEAD исходного репозитория:** `43a515df` (auto cache-bust [skip ci] after `30b9fe46` lazy-search)
 **Статус:** ✅ **deploy-green** — все P0/P1/P2 блокеры закрыты
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
@@ -78,6 +78,30 @@ Verified on `30b9fe46`:
 Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-legacy-lazy-init-30b9fe4.md`.
 
 ---
+
+
+## 🟡 PASS 52 — DEEP AUDIT VERIFICATION (2026-07-04)
+
+**Verified by:** Arena Agent (deep audit mode)  
+**Source HEAD:** `43a515df`  
+**Source HEAD (deployed):** `6e667978` (green deploy)  
+**All 11 gates passed:** data:consistency, guard:shared-files, workflows:check, production-like build, audit:premium-controls (87/87), dist:css-parity, dist:jsonld, schema:rich-results, gill:context/spravochnik parity, dist-smoke (28/28 routes Playwright) ✅
+
+### Findings
+
+- **P2-SEARCH-EAGER scope confirmed:** lazy search (in BaseLayout) applies ONLY to article detail pages (ArticleLayout→BaseLayout). Catalog/index pages (/, /about/, /articles/, /karty/, /biografii/, /nagornaya/, /baptisty-rossii/) each have their own PageChrome with `<script src="./js/search.js" defer>` — still eager. Already documented as "partially fixed". To fully close, each PageChrome needs its own lazy-load inline script or shared helper.
+- **CSS dynamic load confirmed valid:** `enhancements-runtime.css`, `highlights-runtime.css`, `sw-toast.css` are all legitimately loaded at runtime via JS-created `<link>` elements. Not dead code.
+- **search-manifest.json:** generatedAt=2026-06-18 (16 days stale). All 44 entries point to valid files. 0 dead references (the `#dzhon-gill-series` anchor exists on `/biografii/`). Content valid but timestamp stale.
+- **All 9 CSS + 11 JS files** in cache-bust-assets.js ✅
+- **Gill v16 markers confirmed:** all 5 routes have `data-gill-v16` and `gb-roman` ✅
+- **PremiumControls 87/87:** all PC-CURRENT items closed on current HEAD ✅
+- **No XSS vectors:** no eval, new Function, or document.write. All innerHTML is hardcoded/static ✅
+- **No stale branches:** only origin/main in both repos ✅
+
+### New items added
+
+None — all findings are refinements of existing open items.
+
 
 ## 📊 СВОДКА
 

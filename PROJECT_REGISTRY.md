@@ -6,7 +6,7 @@
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Runtime P0 blockers closed. All CI-P0/P1 fixed. Deploy green on `932af3f3` (workflow_dispatch). Latest source main HEAD: `6e667978`. Start from `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`. |
+| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | Runtime P0 blockers closed. All CI-P0/P1 fixed. Deploy green on `6e667978`. Latest source HEAD: `43a515df` ([skip ci] cache-bust after lazy-search fix). Start from `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`. |
 
 ## Status glossary
 
