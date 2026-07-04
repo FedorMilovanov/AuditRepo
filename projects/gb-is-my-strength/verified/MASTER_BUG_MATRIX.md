@@ -1740,3 +1740,41 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 
 `incoming/arena-agent-pass83/REPORT.md`
 
+
+---
+
+## 🟢 PASS 84 — DATA FILES AUDIT: JSON VALIDATION (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `data/*.json` (13 files, ~300KB total)
+
+### Medium Priority Findings (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-DATA-001 | public-content-baseline.json missing generatedAt field | 🔵 P3 |
+| BUG-DATA-002 | glossary.json large file (162KB) | 🔵 P3 |
+| BUG-DATA-003 | No JSON schema validation | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total JSON files | 13 |
+| Total size | ~300KB |
+| Valid files | 13 (100%) |
+| Invalid files | 0 |
+| Schema validation | No |
+| Generated timestamps | Partial |
+
+### Top 3 Recommendations
+
+1. **Add generatedAt to public-content-baseline.json** — track updates
+2. **Split glossary.json** — improve loading performance
+3. **Add JSON schema validation** — automate validation
+
+### Full Report
+
+`incoming/arena-agent-pass84/REPORT.md`
+
