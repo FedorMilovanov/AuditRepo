@@ -115,7 +115,11 @@
 - **NEW-CANONICAL-IZBRANNOE-01-GAP** *(Pass 65, tooling gap note — underlying bug fixed on `563e85f3`)*: existing canonical-integrity tooling (`audit-pro.js`'s `canonicalSanityGuard()`, `extract-url-contract.js`) structurally cannot catch a relative canonical/og:url on a `noindex` route — `canonicalSanityGuard` skips `dist/` and this route has no legacy root copy; `extract-url-contract.js`'s `issues[]` loop only iterates `publicPages`, excluding noindex pages by default. The bug shipped and is now fixed, but the tooling gap remains.
   - **Repair lane:** tooling-hardening
 
-- **AUDIT-P2-MATRIX-DRIFT:** Route data divergence: `route-migration-matrix.json` = 35 routes, `page-ownership.json` = 54 routes, `sitemap.xml` = 43 URLs. No cross-validation script exists. Routes in ownership but not in matrix have implicit fallback behavior.
+- **AUDIT-P2-MATRIX-DRIFT:** Route data divergence
+
+- **BUG-FRONTMATTER-INCONSISTENCY-01** *(Pass 92)*: 9/20 MDX articles (все baptisty-rossii/russian-baptism) не имеют полей `draft`, `noindex`, `sourcesRequired` — в отличие от 11 не-baptisty статей где эти поля есть. Системная несогласованность фронматтера между `ArticleLayout` и `SeriesArticleLayout`.
+  - **Evidence:** grep фронматтера 20 MDX файлов. Pass 92 intake.
+  - **Repair lane:** content-structure-normalization: `route-migration-matrix.json` = 35 routes, `page-ownership.json` = 54 routes, `sitemap.xml` = 43 URLs. No cross-validation script exists. Routes in ownership but not in matrix have implicit fallback behavior.
   - **Evidence:** Direct JSON + XML parse. АУДИТ 1.0 intake, verified by independent verifier.
   - **Repair lane:** migration-data-alignment
 
@@ -136,6 +140,9 @@
   - **Repair lane:** code-quality/hardening
 
 ## 🟣 P3 — CLEANUP (5 открытых)
+
+- **BUG-SITEMAP-8-KARTY-MISSING** *(Pass 93)*: 8/10 karty/ routes отсутствуют в sitemap.xml (early-church, maccabim, melachim, pavel, revelation, shoftim, shvatim, yeshua). Только /karty/, avraam, ishod проиндексированы. Все 8 — production-dist.
+  - **Repair lane:** seo-sitemap-fix
 
 - **BUG-SEO-002:** robots.txt — `Allow: /llms.txt` применяется только к ImagesiftBot, а не ко всем blocked AI bots. Нужно добавить в каждый User-agent блок или создать глобальный.
 - **BUG-CLEANUP-001:** 4 dead scripts (~27KB): `about-leaf-parity-shots.js`, `generate-route-profiles.js`, `premium-mobile-visibility-smoke.js`, `route-impact-report.js`. 0 external references.
@@ -184,6 +191,13 @@
 - **NEW-54/56/57/58:** Social/SEO metadata bundle (NEW-55/59 fixed)
 
 ## 🟣 P3 — HYGIENE (3 new, Pass 91)
+
+- **BUG-FONTS-CSS-MINIFIED** *(Pass 92)*: `fonts/fonts.css` — 1 строка, 6.5KB, 27 @font-face деклараций. Невозможно аудировать без deminify. Плюс: Noto Serif Greek грузит И woff2 И ttf (fallback) — двойной объём после добавления woff2.
+  - **Repair lane:** fonts-cleanup
+- **BUG-DEV-ROUTE-EXPOSED** *(Pass 92)*: `/dev/astro-test/` в page-ownership — корректно excluded через `--production-like`, но существует в VCS и генерируется при `astro build`.
+  - **Repair lane:** code-quality
+- **BUG-ARTICLE-NO-SERIES** *(Pass 92)*: 2 статьи без поля `series` (hermenevticheskaya, kod-da-vinchi). Вероятно intentionally standalone, но схема фронматтера должна это документировать.
+  - **Repair lane:** content-structure-normalization
 
 - **NEW-STALE-BRANCHES:** 5 merged lane branches still on remote (4 fully merged, 1 merged via alternative path). `git branch -r | grep lane/` = 5 stale refs.
   - **Repair lane:** cleanup-stale-branches
