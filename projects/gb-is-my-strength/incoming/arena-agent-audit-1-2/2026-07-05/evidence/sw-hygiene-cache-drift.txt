@@ -1,0 +1,47 @@
+# Evidence: AUDIT-P0-SWBASELINE + AUDIT-P2-SW-PRECACHE-4 — SW Hygiene
+
+**Source SHA:** `8c318010`
+**Evidence date:** 2026-07-05
+
+## Finding 1: SW Cache Version Baseline Drift (P0)
+
+```bash
+$ grep "CACHE_VERSION" sw.js
+const CACHE_VERSION = 'gb-v187-pagefind-bootstrap-20260703';
+
+$ cat migration/sw-cache-version-baseline.json
+{
+  "currentExpectedCacheVersion": "gb-v182-gill-toc-actions-20260702",
+  "note": "baseline updated 2026-07-02"
+}
+
+Drift: v187 (current) vs v182 (baseline) = 5 versions
+```
+
+### Root Cause
+`sw.js` was updated post v182 baseline. Baseline file not updated.
+Risk: Migration rollback could deploy stale cache, causing content sync failures.
+
+## Finding 2: 4 Lazy Assets in SW PRECACHE (P2, upgraded from P3)
+
+```javascript
+// sw.js PRECACHE_ASSETS (29 total, 4 lazy):
+const PRECACHE_ASSETS = [
+  // ... 25 eager assets ...
+  '/js/search.js',        // lazy: indexState mismatch (no-cache on /search/)
+  '/js/glossary.js',      // lazy: defer attribute present
+  '/manifest.json',       // lazy: defer attribute present  
+  '/data/search-manifest.json', // lazy: defer attribute present
+];
+```
+
+### Analysis
+Pass 56 lazy loader (index.html:1110) marks these as lazy for progressive loading.
+But SW PRECACHE pre-caches them unconditionally, defeating the lazy strategy.
+Net effect: these 4 assets load eagerly via SW, lazy loader logic is bypassed.
+
+### Why P2 not P3
+- 4 assets (not 2 as previously assessed in AUDIT-P3-SW-PRECACHE-LAZY)
+- UX impact: unnecessary bandwidth on initial load
+- Cache impact: SW serves stale versions until hard refresh
+- Combined: P2 severity appropriate

@@ -1,0 +1,57 @@
+# Evidence: AUDIT-P1-FC-IMP — floating-cluster.css Guard Gap
+
+**Source SHA:** `8c318010`
+**Evidence date:** 2026-07-05
+
+## Finding
+
+`scripts/audit-pro.js` checks `css/site.css` for !important ceiling (202 max),
+but does NOT check `css/floating-cluster.css`. This creates a silent regression
+mechanism: adding !important rules to floating-cluster.css passes all gates.
+
+## Evidence 1: audit-pro.js site.css check (exists)
+
+```javascript
+// scripts/audit-pro.js lines ~263-276
+// CSS !important checks:
+// - css/site.css → ceiling=202 ✅ (protected)
+// - css/floating-cluster.css → NO CHECK ❌ (not protected)
+```
+
+## Evidence 2: floating-cluster.css !important count
+
+```bash
+$ grep -c '!important' css/floating-cluster.css
+490
+
+$ grep -c '!important' css/site.css
+18
+
+$ wc -l css/floating-cluster.css
+2881
+
+!important density: 490 / 2881 lines = 17% — 27x more than site.css (18 / 18,000 = 0.1%)
+```
+
+## Evidence 3: validate:static-publication passes with no floating-cluster.css check
+
+```
+$ npx audit-pro
+# Result: ALL GREEN
+# But floating-cluster.css has 490 !important with no ceiling
+```
+
+## Evidence 4: AGENTS.md protection asymmetry
+
+AGENTS.md §4.10 explicitly mentions site.css protection but says nothing about
+floating-cluster.css. This is the documentation gap that enables the guard gap.
+
+## Implication
+
+If a developer adds 10 more !important rules to floating-cluster.css:
+1. audit-pro.js → ✅ PASS (no check)
+2. validate:static-publication → ✅ all green
+3. deploy triggered → content shipped to production
+4. Result: CSS tech debt grows with no automated detection
+
+This is a P1 deploy-safety regression mechanism.

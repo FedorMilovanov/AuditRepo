@@ -1,0 +1,43 @@
+# Evidence: AUDIT-P1-CI-GATE-GAP — :light Gate Missing 3 Critical Checks
+
+**Source SHA:** `8c318010`
+**Evidence date:** 2026-07-05
+
+## Finding
+
+`validate:static-publication` has 37 commands.
+`validate:static-publication:light` has 34 commands.
+The :light gate skips 3 checks that the full gate performs.
+
+## Evidence: package.json
+
+```json
+{
+  "scripts": {
+    "validate:static-publication": "astro check && astro build && npx tsc --noEmit && ..." // 37 commands
+    
+    "validate:static-publication:light": "astro check && astro build && ..." // 34 commands
+  }
+}
+```
+
+## Missing from :light gate
+
+Based on diff of the two scripts, :light is missing:
+1. `astro:audit:article-mdx:strict` — strict MDX article validation
+2. `astro:audit:baptisty-series` — specific series audit
+3. `sw:dist:audit` — service worker distribution audit
+
+These are skipped via the `:light` qualifier in `CI_COMMIT_MESSAGE` detection.
+
+## Risk
+
+PRs that only trigger :light gate (e.g., docs changes, small content updates)
+can bypass critical article-level and SW-level validation. A broken article or
+malformed SW registration could be deployed without catching it.
+
+## Combined AUDIT-SW-HYGIENE
+
+This finding relates to AUDIT-P0-SWBASELINE and AUDIT-P2-SW-PRECACHE-4.
+All three involve SW health and CI gate consistency. Proposed as unified 
+repair lane AUDIT-SW-HYGIENE.

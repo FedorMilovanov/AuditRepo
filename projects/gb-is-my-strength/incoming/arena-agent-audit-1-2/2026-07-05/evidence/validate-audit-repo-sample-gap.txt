@@ -1,0 +1,37 @@
+# Evidence: validate_audit_repo.py — SAMPLE-files counted as evidence
+
+**Source SHA:** `8c318010`
+**Evidence date:** 2026-07-05
+
+## Finding
+
+`scripts/validate_audit_repo.py` (updated by Pass 89, commit 90a1d9d) checks for 
+evidence files but counts SAMPLE-*.md files as valid evidence. This creates a gap
+where an intake with only template SAMPLE files would pass validation.
+
+## Current State (90a1d9d)
+
+```python
+# validate_audit_repo.py — key check:
+# Pass 89 updated to catch empty REPORT.md
+# But still counts SAMPLE-*.md as evidence
+
+if has_sample_files and not has_real_evidence:
+    # This case NOT caught by current validation
+    pass
+```
+
+## This Audit's Evidence (audit-1-2)
+
+- REPORT.md: 15,316 bytes ✅ (not empty, Pass 89 check passed)
+- deep-dive-2026-07-05.md: 7,300+ bytes ✅
+- evidence/: 3 files ✅
+- bug-ledger: 6,968 bytes ✅
+- comments/: 2 challenge/comment files ✅
+
+## SAMPLE-Gap Observation
+
+`incoming/arena-agent-deep-audit-2/` has REPORT.md empty but evidence/ directory
+with comments/ and other artifacts. The current validator would flag this
+(empty REPORT.md), but if someone copies SAMPLE-*.md to evidence/, it would
+also pass validation. Recommend: exclude SAMPLE-* from evidence counting.
