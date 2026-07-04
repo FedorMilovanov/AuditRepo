@@ -6,7 +6,7 @@
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-`projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **reverify-needed** | ⚠️ P0 CI blocker open (BUG-CI-001: deploy.yml duplicate `run:` key disables submenu audit). Latest source HEAD: `e5942361`. 16 open / 31 closed. Start from `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`. | (audit(gb): Pass 64 — deep CI audit) 
+`projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **repair-ready** | ✅ P0 blocker fixed (BUG-CI-001 in `6e68d7ca`). Deletions audit passed — no regressions. 20 open / 32 closed. Start from `verified/MASTER_BUG_MATRIX.md`. | (audit(gb): Pass 64 — deep CI + deletions audit) 
 
 ## Status glossary
 
@@ -20,9 +20,9 @@
 
 ## gb-is-my-strength current summary — 2026-07-05
 
-**Current source HEAD:** `e5942361` (fix(images): Gill series image audit fixes)
-**Current AuditRepo HEAD:** pending (Pass 64 — deep CI audit)
-**Current status:** reverify-needed. P0 CI blocker open (BUG-CI-001).
+**Current source HEAD:** `6e68d7ca` (fix(ci): remove duplicate run: key — re-enable submenu audit)
+**Current AuditRepo HEAD:** pending (Pass 64 — deep CI + deletions audit)
+**Current status:** repair-ready. All P0 blockers closed. Deletions audit passed.
 
 ### Current truth
 
@@ -34,9 +34,6 @@
 - All remote branches merged into main. Zero stale branches in both repos.
 
 ### Open items
-
-**P0 (blocking):**
-- BUG-CI-001: deploy.yml duplicate `run:` key — submenu audit disabled (Pass 64)
 
 **P1:**
 - BUG-CI-002: `:light` validation skips 3 critical gates (Pass 64)

@@ -1,8 +1,8 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
-**Консолидация:** 2026-07-04 (обновлено **2026-07-05**, Pass 64 deep CI audit)
-**HEAD исходного репозитория:** `e5942361` (fix(images): Gill series image audit fixes)
-**Статус:** ⚠️ **P0 CI blocker open** — deploy.yml duplicate `run:` key disables submenu audit
+**Консолидация:** 2026-07-04 (обновлено **2026-07-05**, Pass 64 deep CI audit + deletions audit)
+**HEAD исходного репозитория:** `6e68d7ca` (fix(ci): remove duplicate run: key in deploy.yml — re-enable submenu audit)
+**Статус:** ✅ **deploy-green** — BUG-CI-001 fixed, все P0 блокеры закрыты
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
 
@@ -40,12 +40,13 @@
 
 ---
 
-## 🔴 P0 — CRITICAL (1 открытый)
+## 🔴 P0 — CRITICAL (0 открытых)
 
-- **BUG-CI-001:** deploy.yml — двойной `run:` ключ в step "Gill pre-v16 submenu regression audit" (строки 155–156). Второй `run:` перезаписывает первый. `gill:pre-v16-submenu:audit` (105 проверок) **никогда не запускается** в CI. Playwright install запускается дважды.
-  - **Fix:** удалить строку 156 (`run: npx playwright install --with-deps chromium`). Playwright уже установлен в step 152.
-  - **Evidence:** `sed -n '154,157p' .github/workflows/deploy.yml` на HEAD `e5942361`
-  - **Repair lane:** ci-fix-emergency (1-line deletion)
+*Все P0 блокеры закрыты.*
+
+| ID | Описание | Коммит |
+|---|---|---|
+| BUG-CI-001 | deploy.yml двойной `run:` ключ — submenu audit отключён | `6e68d7ca` ✅ FIXED |
 
 ## 🟠 P1 — CI GATES (2 открытых)
 
@@ -537,13 +538,13 @@ Full report: `incoming/arena-agent-pass63/REPORT.md`
 
 | Уровень | Открыто | Закрыто |
 |---|---|---|
-| P0 (Critical) | 1 | 3 |
+| P0 (Critical) | 0 | 4 |
 | P1 (High) | 2 | 8 |
 | P2 (Medium) | 3 | 15 |
 | P3 (Medium) | 3 | 5 |
 | P3 (Refactor) | 4 | 0 |
 | P3 (Cleanup) | 5 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **21** | **31** |
+| **Итого** | **20** | **32** |
 
-*P0: BUG-CI-001 deploy.yml duplicate run: key (Pass 64). P1: BUG-CI-002/003 CI gate gaps (Pass 64). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing (Pass 64). P3: BUG-SW-001 isFont(), BUG-SEO-002 robots.txt llms.txt scope, BUG-CLEANUP-001/002/003/004 dead code + stale docs (Pass 64).*
+*P0: BUG-CI-001 fixed in `6e68d7ca` (1-line deletion). P1: BUG-CI-002/003 CI gate gaps (Pass 64). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing (Pass 64). P3: BUG-SW-001 isFont(), BUG-SEO-002 robots.txt llms.txt scope, BUG-CLEANUP-001/002/003/004 dead code + stale docs (Pass 64). Deletions audit: all removals verified correct, no regressions.*

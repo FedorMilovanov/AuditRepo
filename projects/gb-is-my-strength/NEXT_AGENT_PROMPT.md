@@ -1,27 +1,32 @@
-# 🟠 CURRENT TRUTH — 2026-07-05 (READ FIRST)
+# 🟢 CURRENT TRUTH — 2026-07-05 (READ FIRST)
 
-**Source HEAD:** `e5942361` (fix(images): Gill series image audit fixes)
-**AuditRepo HEAD:** pending (Pass 64 — deep CI audit)
+**Source HEAD:** `6e68d7ca` (fix(ci): remove duplicate run: key — re-enable submenu audit)
+**AuditRepo HEAD:** pending (Pass 64 — deep CI + deletions audit)
 **Branches:** `origin/main` only (zero stale branches in both repos)
-**CI:** ⚠️ **P0 blocker open** — BUG-CI-001 (deploy.yml duplicate `run:` key)
+**CI:** ✅ **All P0 blockers closed** — BUG-CI-001 fixed, deletions audit passed
 
-## ⚠️ P0 CI Blocker — требует немедленного fix
+## ✅ P0 fixed — BUG-CI-001
 
-| Bug | Description | Fix |
-|-----|-------------|-----|
-| BUG-CI-001 | deploy.yml строки 155–156: два `run:` ключа в одном step. Второй перезаписывает первый. `gill:pre-v16-submenu:audit` (105 checks) НЕ ЗАПУСКАЕТСЯ. | Удалить строку 156 (`run: npx playwright install --with-deps chromium`). Playwright уже установлен в step 152. |
+| Bug | Description | Fix | Commit |
+|-----|-------------|-----|--------|
+| BUG-CI-001 | deploy.yml duplicate `run:` key — submenu audit disabled | Deleted line 156 | `6e68d7ca` ✅ |
+
+## ✅ Deletions Audit — no regressions
+
+Verified 11 major deletions (GillRailControls, site-layered.css, premium-controls, legacy utils, _headers, etc.). All were dead code or duplicates. Zero broken asset references, 63/63 JSON-LD valid, 22/22 cache-bust versions correct.
 
 ## Open items summary
 
 | Уровень | Open | Closed | Всего |
 |---------|------|--------|-------|
-| P0 | 1 | 3 | 4 |
+| P0 | 0 | 4 | 4 |
 | P1 | 2 | 8 | 10 |
 | P2 | 3 | 15 | 18 |
 | P3 | 3 | 5 | 8 |
 | Refactor | 4 | 0 | 4 |
+| Cleanup | 5 | 0 | 5 |
 | AuditRepo | 3 | 0 | 3 |
-| **Total** | **16** | **31** | **47** |
+| **Total** | **20** | **32** | **52** |
 
 ## Ключевые документы
 
