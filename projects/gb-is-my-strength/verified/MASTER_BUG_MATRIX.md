@@ -76,15 +76,12 @@
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
 
 <<<<<<< HEAD
-## 🟢 P3 — ОТКРЫТО (25)
-=======
-| VALIDATE-SCOPE-GAP | validate.js проверяет только `articles/` (10 страниц из 40+). baptisty-rossii, nagornaya, karty, konfessii, biografii, hard-texts — **не валидируются** checks #1-#17 (canonical, section, byline, img alt, internal links, quote policy) | Meta-audit |
-| IMAGE-CROSSREF-GAP | Нет cross-ref проверки: image files ↔ search-manifest.json ↔ sitemap.xml. Уже ломалось: `629ed89a` удалил файлы → `fc5f94bd` чинил broken refs | Meta-audit |
-## 🟢 P3 — ОТКРЫТО (17)
->>>>>>> bb47da8 (audit(meta): validation system audit — 4 new findings, 6 dead scripts, validate.js scope gap)
+## 🟢 P3 — ОТКРЫТО (29)
 
 | ID | Описание |
 |---|---|
+| VALIDATE-SCOPE-GAP | validate.js проверяет только `articles/` (10 страниц из 40+). baptisty-rossii, nagornaya, karty, konfessii, biografii, hard-texts — **не валидируются** checks #1-#17 (canonical, section, byline, img alt, internal links, quote policy) | Meta-audit |
+| IMAGE-CROSSREF-GAP | Нет cross-ref проверки: image files ↔ search-manifest.json ↔ sitemap.xml. Уже ломалось: `629ed89a` удалил файлы → `fc5f94bd` чинил broken refs | Meta-audit |
 | BUG-SW-001 | sw.js `isFont()` — двойное отрицание, читаемость |
 | AUDIT-P3-STYLE-DUP | enhancements/highlights inject CSS `<link>` без ID guard (дубликат при повторной загрузке) |
 | AUDIT-P3-QUOTE-NO-CONFIRM | highlights.js delete без confirm() |
@@ -110,9 +107,9 @@
 | STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |
 | NEW-PREFETCH-UNCONDITIONAL | 5 prefetch hints на каждой странице включая саму себя |
 | SEARCH-MANIFEST-QUALITY | search-manifest.json: 44/44 без поля slug (ключ отсутствует, не пустой); 44/44 нет scripture; 4/44 нет image. Verified. |
-
 | DEAD-SCRIPTS-6 | 6 мёртвых скриптов (0 вызовов): `_audit-deep.js`, `deep-check.js`, `extract-native-pilot.js`, `genealogy-e2e-v2.js`, `ishod-qa.js`, `map-visual-qa.js` |
 | NOINDEX-PHANTOM | audit-pro.js:2055 NOINDEX_ALLOWLIST содержит `yandex_d8876d66da1b4592.html` — файл не существует (phantom entry) |
+
 ## 🔵 P3 — РЕФАКТОРИНГ (4)
 
 | ID | Описание |
@@ -165,17 +162,17 @@
 | P1 открыто | 3 |
 <<<<<<< HEAD
 | P2 открыто | 7 |
-| P3 открыто | 25 |
+| P3 открыто | 29 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **42** |
+| **Всего открыто** | **46** |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
 =======
 | P2 открыто | 9 |
-| P3 открыто | 17 |
+| P3 открыто | 29 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **36** |
+| **Всего открыто** | **46** |
 | False positives | 5 |
 >>>>>>> bb47da8 (audit(meta): validation system audit — 4 new findings, 6 dead scripts, validate.js scope gap)
