@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
 **Консолидация:** 2026-07-04
-**HEAD исходного репозитория:** `6e667978` (prefetch + CI optimization)
+**HEAD исходного репозитория:** `30b9fe46` (search legacy lazy init; descendant of `6e667978`)
 **Статус:** ✅ **deploy-green** — все P0/P1/P2 блокеры закрыты
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
@@ -56,6 +56,25 @@
 ## 🟣 AUDITREPO (3)
 
 - **AR-001/004/005:** validate_audit_repo, verification protocol, reverify automation
+
+---
+
+## 🟡 PASS 51 / SEARCH LEGACY LAZY INIT (2026-07-04)
+
+**Source fix commit:** `30b9fe46bde22e67bbff7a9418718b4e18f5dab5` (`lane/search-legacy-lazy-init-2026-07-04`, pushed to `main`).
+
+`P2-SEARCH-EAGER` is **partially improved further**. Legacy/full-document pages still download the first-pass `search.js`, but the eager DOM/data work is stopped: no `.cp-*` DOM, no search manifest, no Pagefind until first search interaction.
+
+Verified on `30b9fe46`:
+
+- custom Playwright smoke on `/articles/kod-da-vinchi/`, `/about/`, `/` ✅
+- `npm run validate:all` ✅
+- `node scripts/dist-smoke-audit.js --no-build --production-like` ✅
+- `npm run audit:premium-controls` ✅ 87/87
+- `npm run validate:static-publication` ✅
+- `npm run guard:shared-files` ✅
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-legacy-lazy-init-30b9fe4.md`.
 
 ---
 
