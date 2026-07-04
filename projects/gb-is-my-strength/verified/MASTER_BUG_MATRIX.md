@@ -63,7 +63,7 @@
 | BUG-PERF-001 | addEventListener без removeEventListener: 294 add / 16 remove в 5 JS-файлах | 2 witnesses |
 | SEARCH-SCRIPTURE-BROKEN | 🔍 Scope «Писание» не работает: 0/20 MDX передают scripture:true; ArticleLayout без prop; 44/44 manifest без scripture. ⚠️ Verifier correction: 6 pages (не 3) имеют data-pagefind-meta. **Severity dispute: P1→P2 recommended** (feature gap, не runtime breakage) | Pass 92, verified |
 
-## 🟡 P2 — ОТКРЫТО (9)
+## 🟡 P2 — ОТКРЫТО (7)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -75,7 +75,6 @@
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
 
-<<<<<<< HEAD
 ## 🟢 P3 — ОТКРЫТО (29)
 
 | ID | Описание |
@@ -160,7 +159,6 @@
 |---|---|
 | Закрыто (fixed) | 41 |
 | P1 открыто | 3 |
-<<<<<<< HEAD
 | P2 открыто | 7 |
 | P3 открыто | 29 |
 | Рефакторинг | 4 |
@@ -168,11 +166,3 @@
 | **Всего открыто** | **46** |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
-=======
-| P2 открыто | 9 |
-| P3 открыто | 29 |
-| Рефакторинг | 4 |
-| AuditRepo | 3 |
-| **Всего открыто** | **46** |
-| False positives | 5 |
->>>>>>> bb47da8 (audit(meta): validation system audit — 4 new findings, 6 dead scripts, validate.js scope gap)
