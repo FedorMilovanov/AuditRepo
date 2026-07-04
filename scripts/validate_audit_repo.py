@@ -78,16 +78,19 @@ for proj in project_dirs():
                 # A filled finding has a single severity value (P0, P1, P2, or P3) —
                 # not the template placeholder "P0 / P1 / P2 / P3"
                 has_real_severity = bool(re.search(
-                    r'^- Severity:\s*(P0|P1|P2|P3)\s*$', rtxt, re.MULTILINE))
+                    r'^- Severity:[ \t]*(P0|P1|P2|P3)[ \t]*$', rtxt, re.MULTILINE))
                 # A filled finding has a non-empty title
                 has_real_title = bool(re.search(
-                    r'^- Title:\s*\S+', rtxt, re.MULTILINE))
+                    r'^- Title:[ \t]*\S+', rtxt, re.MULTILINE))
                 # Some agents use ### headings with real content (not template placeholders)
                 # Exclude template headings: "Finding", "Confirm", "Challenge", "Merge proposal", etc.
-                has_real_section = bool(re.search(
-                    r'^###\s+(?!Finding\s*$|Confirm\s*$|Challenge\s*$|Merge proposal\s*$)'
-                    r'\S+.*\n.{10,}', rtxt, re.MULTILINE))
-                if not (has_real_severity or has_real_title or has_real_section):
+                # Real finding content: a line with filled evidence/description/SHA (not template placeholder)
+                has_real_content = bool(re.search(
+                    r'^\s*-\s+(?:Description|Evidence|My evidence|Observed on SHA|Source file|'
+                    r'Route/files|Root cause|Target report|Current HEAD evidence|'
+                    r'Why same root cause):\s*\S{5,}',
+                    rtxt, re.MULTILINE))
+                if not (has_real_severity or has_real_title or has_real_content):
                     # Check if evidence exists in comments/ (some agents put work there)
                     comments_dir = date_dir / 'comments'
                     has_comments = comments_dir.exists() and any(
