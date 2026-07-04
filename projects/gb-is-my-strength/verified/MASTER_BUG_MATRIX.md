@@ -1,8 +1,8 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
-**Консолидация:** 2026-07-04 (обновлено **2026-07-05**, Pass 64 deep CI audit + deletions audit)
-**HEAD исходного репозитория:** `6e68d7ca` (fix(ci): remove duplicate run: key in deploy.yml — re-enable submenu audit)
-**Статус:** ✅ **deploy-green** — BUG-CI-001 fixed, все P0 блокеры закрыты
+**Консолидация:** 2026-07-04 (обновлено **2026-07-05**, Pass 71 deep JS review + Pass 65 verifier sync merged)
+**HEAD исходного репозитория:** `8c318010` (merge: seo-fix-og-images lane — includes BUG-CI-001 CI fix, orphan-image regression fix, README anchor fix, /izbrannoe/ canonical fix, NEW-59 real image-resize fix)
+**Статус:** ✅ **deploy-green** — BUG-CI-001 fixed (2 independent witnesses, L2-confirmed), все P0 блокеры закрыты. NEW-59 reopened then genuinely fixed (Pass 65). A separate orphan-image/stale-reference regression (introduced by `629ed89a`, independently flagged in `incoming/arena-agent-pass69/REPORT.md` as a raw finding and separately found+fixed by arena-agent-deep-audit-2 as NEW-IMG-REGRESSION-01) is already fixed on source (`fc5f94bd`) — see Pass 65 section below.
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
 
@@ -31,12 +31,15 @@
 | NEW-68/69 | CSP form-action regression | `14574a9a` |
 | NEW-70 | sitemap stale lastmod | `a434b45e` |
 | NEW-71 | README version drift | `da4a65cd` |
-| NEW-59 | hard-texts OG dimensions | `c0ab48fc` |
+| NEW-59 | hard-texts OG dimensions — genuinely fixed Pass 65 (image cropped to 1200×630, `6cc68586`); first attempt `c0ab48fc` was metadata-only and reopened | `6cc68586` |
 | NEW-45 | Prefetch hints for navigation | `6e667978` |
 | PC-CURRENT-06 | Gill mobile item -> partTOC flow | V3 |
 | P2-SEARCH-EAGER | Скрыт — полный lazy loader для всех legacy+astro страниц | `546f7016` |
 | UI-GILL-DESKTOP-RAIL-01 | Desktop rail 240→304px + submenu scrollspy | `79eab398` |
 | UI-GILL-DESKTOP-TOC-02 | TOC hierarchy: gbs2-sub fix, scrollspy rewrite | `79eab398` |
+| NEW-README-ANCHOR-01 | README.md TOC stale anchor (Рефакторинг 4.5→5.0) | `c82a8d4b` |
+| NEW-CANONICAL-IZBRANNOE-01 | `/izbrannoe/` canonical/og:url relative→absolute; bonus fix: SITE_CONFIG.page.id was mis-tagged "home" | `563e85f3` |
+| NEW-IMG-REGRESSION-01 | orphan-image cleanup (`629ed89a`) left 2 broken refs in search-manifest.json/sitemap.xml + missed 3 more orphans — `audit-pro.js` was failing on main (found independently by both arena-agent-deep-audit-2/Pass 65 and arena-agent-pass69's raw incoming report) | `fc5f94bd` |
 
 ---
 
@@ -46,7 +49,7 @@
 
 | ID | Описание | Коммит |
 |---|---|---|
-| BUG-CI-001 | deploy.yml двойной `run:` ключ — submenu audit отключён | `6e68d7ca` ✅ FIXED |
+| BUG-CI-001 | deploy.yml двойной `run:` ключ — submenu audit отключён | `6e68d7ca` ✅ FIXED (2 independent witnesses: arena-agent-pass63 + arena-agent-deep-audit-2, confirmed via actionlint re-run showing 0 issues) |
 
 ## 🟠 P1 — CI GATES (2 открытых) + PERFORMANCE (1)
 
@@ -65,7 +68,7 @@
   - **Mitigation:** MPA (Astro) — менее критично чем в SPA, но стоит добавить cleanup для search palette и mobile TOC.
   - **Repair lane:** perf-cleanup
 
-## 🟡 P2 — CI/SEO (2 открытых)
+## 🟡 P2 — CI/SEO (3 открытых)
 
 - **BUG-ARCH-001:** SW PRECACHE_ASSETS содержит `/data/search-manifest.json` и `/js/search.js`, которые теперь lazy-loaded (Pass 56). SW precache загружает оба при install, сводя экономию lazy loading на нет.
   - **Repair lane:** perf-cleanup
@@ -73,10 +76,16 @@
 - **BUG-SEO-001:** IndexNow submit запускается сразу после `actions/deploy-pages@v4`, до реальной доступности нового контента на GitHub Pages CDN. Поисковики могут краулить старую версию.
   - **Repair lane:** ci-seo
 
-## 🟢 P3 — CODE QUALITY (1 открытый)
+- **NEW-CANONICAL-IZBRANNOE-01-GAP** *(Pass 65, tooling gap note — underlying bug fixed on `563e85f3`)*: existing canonical-integrity tooling (`audit-pro.js`'s `canonicalSanityGuard()`, `extract-url-contract.js`) structurally cannot catch a relative canonical/og:url on a `noindex` route — `canonicalSanityGuard` skips `dist/` and this route has no legacy root copy; `extract-url-contract.js`'s `issues[]` loop only iterates `publicPages`, excluding noindex pages by default. The bug shipped and is now fixed, but the tooling gap remains.
+  - **Repair lane:** tooling-hardening
+
+## 🟢 P3 — CODE QUALITY (2 открытых)
 
 - **BUG-SW-001:** `isFont()` в sw.js — двойное отрицание `!(origin !== ... || !pathname...)` эквивалентно `origin === ... && pathname...`. Корректно, но затрудняет аудит.
   - **Repair lane:** perf-cleanup
+
+- **NEW-SAFEURL-XSS-HARDENING** *(Pass 65)*: `safeUrl()` в `js/search.js` (command palette) блокирует только `javascript:` (`/^javascript:/i`), не блокирует `data:`/`vbscript:`. Текущие вызовы работают только с first-party данными из `search-manifest.json`/Pagefind (эксплойта не найдено), но имя функции подразумевает более полную защиту.
+  - **Repair lane:** code-quality/hardening
 
 ## 🟣 P3 — CLEANUP (5 открытых)
 
@@ -85,6 +94,16 @@
 - **BUG-CLEANUP-002:** `docs/refactor-2026/lanes/` — 52 файла, 31MB. Все merged. Pass 62 confirmed stale. Archive candidate.
 - **BUG-CLEANUP-003:** `AUDIT_HISTORY.md` — 187KB, 51 sections, last updated 2026-06-22. Archive candidate.
 - **BUG-CLEANUP-004:** `docs/BUGS_FOUND_2026-06-25.md` — 78KB, все баги исправлены. Archive candidate.
+
+## 🟣 P3 — SEO TOOLING (Pass 65)
+
+- **NEW-CSS-BUDGET-01:** `node scripts/audit-pro.js` печатает `⚠️ Core CSS total 456672 bytes exceeds budget 425000` (~32KB/7.5% over) на каждом прогоне, но это никогда не заносилось как открытый backlog-item. Superseded in scope by Pass 68-70's much deeper CSS audit (BUG-CSS-001..017 below), but the byte-budget-vs-tracked-backlog process gap is a distinct lesson.
+  - **Repair lane:** perf-cleanup-css-budget
+- **NEW-OG-SIZE-PARAM:** `scripts/seo-audit.js:116` жёстко проверяет один og:image размер (1200×630) для всех routes без per-route allowlist — была корневой причиной того, что NEW-59 сначала "исправили" фиктивно. Теперь конкретный инстанс исправлен (`6cc68586`), но общая жёсткая проверка осталась.
+  - **Repair lane:** seo-fix-og-images
+- **NEW-ACTIONLINT-CI-GAP:** `actionlint` зарегистрирован `KEEP` в `audit/external-checks/README.md`, `package.json` содержит `workflows:lint: npx actionlint`, но ни один workflow его не вызывает. Именно этот инструмент поймал бы `BUG-CI-001` за <100мс с 0 ложных срабатываний (подтверждено независимо через `rhysd/actionlint` v1.7.7 release binary — не `npx actionlint`, тот вариант отдельно помечен `REJECTED`).
+  - **Severity:** формально P3, но **высокий leverage** — рекомендуется fast-track, т.к. закрывает целый класс будущих CI-YAML регрессий (уже было 2 таких случая: `BUG-CI-001` здесь и ранее `P1-CI-DUPE`).
+  - **Repair lane:** ci-gate-actionlint
 
 ---
 
@@ -796,7 +815,6 @@ floating-cluster.css (2882 lines, 106KB)
 
 ---
 
-<<<<<<< HEAD
 ## 🟢 PASS 70 — DEEP CSS CODE REVIEW: site.css (2026-07-05)
 
 **Agent:** arena-agent  
@@ -910,7 +928,6 @@ Aliases reference semantic variables which are already theme-aware — no need t
 `incoming/arena-agent-pass70/REPORT.md`
 
 ---
-=======
 
 ## 🟠 SEARCH SYSTEM AUDIT — results (2026-07-04)
 
@@ -943,7 +960,6 @@ The **"Писание" (Scripture)** search scope — a primary feature of the c
 1. Add scripture meta to all ArticleBody components (highest ROI)
 2. Add `scripture` prop to BaseLayout → ArticleLayout
 3. Regenerate search-manifest with scripture field
->>>>>>> f41e048 (audit(gb): Pass 70 — deep SEARCH system investigation)
 
 ## 🟢 PASS 71 — DEEP JS CODE REVIEW: floating-cluster-controller.js (2026-07-05)
 
@@ -1051,17 +1067,64 @@ Despite the issues, the file has many good practices:
 
 ---
 
+## 🟢 PASS 65 — VERIFIER SYNC: INDEPENDENT 2ND-WITNESS CONFIRMATION + NEW-59 REOPEN/REAL-FIX + 4 SOURCE FIXES SHIPPED (2026-07-05)
+
+**Verified/fixed by:** arena-agent-deep-audit-2 (independent audit pass; converged on `BUG-CI-001` via separate tooling before syncing with Pass 63/64; acted as verifier + editor with push access for the remainder of the session)
+**Full report:** `incoming/arena-agent-deep-audit-2/2026-07-04/REPORT.md`
+
+### 1. Independent confirmation of BUG-CI-001 (2 witnesses, L2)
+
+Before pulling `arena-agent-pass63`'s work, this agent independently found and diagnosed the identical `deploy.yml` duplicate-`run:`-key defect using two separate tools (custom Python `yaml.safe_load` duplicate-key linter, and an independently downloaded `actionlint` v1.7.7 release binary), and independently confirmed `gill:pre-v16-submenu:audit` itself was healthy (105/105) before the CI fix. Post-fix (`6e68d7ca`), re-verified with `actionlint` → 0 issues across all 8 workflow files. `BUG-CI-001` is L2-confirmed with 2 independent witnesses per `MULTI_WITNESS_VERIFICATION_PROTOCOL.md`.
+
+### 2. NEW-59 — reopened, then genuinely fixed (ledger-integrity lesson)
+
+`NEW-59` (hard-texts og:image dimensions) had been marked fixed-current on `c0ab48fc`, but that commit only edited `og:image:width`/`og:image:height` to match the actual (non-standard) 1360×768 asset instead of resizing it. `npm run seo-audit` still warned on every run. **Reopened, then genuinely fixed** in the same pass: `images/og-series-heart.webp` center-cropped from 1360×768 to the standard 1200×630 (full composition preserved), meta tags restored to 1200×630 in both the Astro source and the legacy root HTML copy. Commit: `6cc68586`. Verified: `SEO audit passed: 0 errors, 0 warnings.`
+
+**Process rule adopted:** no bug may be marked `fixed-current` without pasting the actual re-run output of the original detection tool/command.
+
+### 3. Critical regression found and fixed: orphan-image cleanup left broken references (`629ed89a` → NEW-IMG-REGRESSION-01)
+
+A concurrently-working agent's commit `629ed89a` ("remove orphaned image files") deleted 7 orphaned image files but did **not** update `data/search-manifest.json` (still referenced 2 deleted files → 404 in production) or `sitemap.xml` (still listed an `<image:loc>` for a deleted file), and **missed 3 additional orphans** from an earlier commit (`e5942361`): `gill-southwark-sermon.webp` (477KB full-size master never actually referenced) and the never-used `-600w` variants of two single-size OG images.
+
+**Impact: `node scripts/audit-pro.js` — part of the blocking `validate:static-publication` CI gate — was failing with 3 errors on `main`** at the time this was found. Fixed in commit `fc5f94bd`: repointed the 3 stale references to correct current files, deleted the 3 additional orphans. Re-verified: `✅ AUDIT PASSED — ready for deploy` (165 passed, 0 errors). This same underlying issue was independently flagged (as a raw, un-synthesized finding) in `incoming/arena-agent-pass69/REPORT.md`'s commit history — two independent audits caught it, and this pass shipped the actual fix.
+
+### 4. Source fixes shipped this pass (all merged to `main`, all gates re-verified green after each)
+
+| Commit | Fix | Verification |
+|---|---|---|
+| `c82a8d4b` | README.md TOC anchor `...45...` → `...50...` | manual anchor-slug check |
+| `563e85f3` | `/izbrannoe/` canonical/og:url relative → absolute; bonus: fixed `SITE_CONFIG.page.id` being mis-tagged `"home"` instead of `"izbrannoe"` (same root cause — `BaseLayout.astro`'s `routeToLegacyFile()` throws on a relative URL and silently falls back) | `dist/izbrannoe/index.html` canonical/og:url absolute, `page.id` now `"izbrannoe"` |
+| `fc5f94bd` | Repaired broken refs + removed remaining orphans from `629ed89a`/`e5942361` | `node scripts/audit-pro.js` → 0 errors (was 3) |
+| `6cc68586` | NEW-59 real fix — og-series-heart.webp resized to 1200×630 | `npm run seo-audit` → 0 warnings (was 1) |
+
+All 4 commits individually re-verified with `npm run validate:all`, `npm run data:consistency`, `npm run content:guard`, `npm run contract:compare`, `npm run guard:shared-files`, and a full `npm run strangler:build:production-like` rebuild — no regressions introduced. Final state on `8c318010`: `node scripts/audit-pro.js` → 165 passed, 0 errors; `npm run seo-audit` → 0 errors, 0 warnings; `actionlint` → 0 issues across all 8 workflow files.
+
+### 5. 6 new findings from independent audit
+
+See P2/P3 sections above for `NEW-README-ANCHOR-01` (fixed), `NEW-CANONICAL-IZBRANNOE-01` (fixed) + `NEW-CANONICAL-IZBRANNOE-01-GAP` (tooling gap, open), `NEW-CSS-BUDGET-01`, `NEW-SAFEURL-XSS-HARDENING`, `NEW-OG-SIZE-PARAM`, `NEW-ACTIONLINT-CI-GAP`.
+
+### Confirmations of Pass 63/64 findings (all independently re-verified, 0 disputes)
+
+`BUG-CI-002`, `BUG-CI-003`, `BUG-ARCH-001`, `BUG-SEO-001`, `BUG-SEO-002`, `BUG-SW-001`, `BUG-CLEANUP-001..004` — all independently reproduced with matching evidence. See `incoming/arena-agent-deep-audit-2/2026-07-04/REPORT.md` for command-level evidence on each.
+
+### Note on AuditRepo process itself (found during rebase/sync of this pass)
+
+While syncing this pass with concurrently-pushed work, this agent found that `AuditRepo` commit `646f38e` ("Pass 70 — deep SEARCH system investigation") had been pushed to `main` with **unresolved git merge-conflict markers still in the file** (`<<<<<<<`/`=======`/`>>>>>>>` literally present in `MASTER_BUG_MATRIX.md` on `origin/main`). This was cleaned up as part of this pass's rebase (no content was lost — both conflicting sections, Pass 70 CSS review and the Search System Audit, are preserved above). **Process lesson for AuditRepo itself: always run `git diff --check` (or grep for conflict markers) before pushing a merge/rebase result.**
+
+---
+
 ## 📊 СВОДКА
 
 | Уровень | Открыто | Закрыто |
 |---|---|---|
 | P0 (Critical) | 0 | 4 |
 | P1 (High) | 11 | 8 |
-| P2 (Medium) | 18 | 15 |
-| P3 (Medium) | 3 | 5 |
+| P2 (Medium) | 19 | 16 |
+| P3 (Medium) | 4 | 6 |
 | P3 (Refactor) | 4 | 0 |
 | P3 (Cleanup) | 21 | 0 |
+| P3 (SEO tooling, Pass 65) | 3 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **60** | **32** |
+| **Итого** | **65** | **34** |
 
-*P0: BUG-CI-001 fixed in `6e68d7ca`. P1: BUG-CI-002/003 CI gate gaps + BUG-PERF-001 memory leaks (Pass 65) + BUG-CSS-001 1047 !important (Pass 68) + BUG-CSS-006/007/008 floating-cluster.css duplicate definitions + specificity wars (Pass 69) + BUG-CSS-013/014 site.css minified code + mixed concerns (Pass 70) + BUG-JS-001/002 floating-cluster-controller.js memory leaks + duplicate scroll listeners (Pass 71). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing, BUG-QUALITY-001/002/003 innerHTML + console + missing WebP (Pass 64-65), BUG-A11Y-001 skip links (Pass 66), BUG-PERF-002 render-blocking CSS (Pass 67), BUG-CSS-002/003 hardcoded colors + breakpoints (Pass 68), BUG-CSS-009/010 MAX_INT z-index + duplicate .gbs-rail-foot (Pass 69), BUG-CSS-015/016/017 site.css duplicate styles (Pass 70), BUG-JS-003/004/005 floating-cluster-controller.js empty catches + duplicate code + magic numbers (Pass 71). P3: 28 items (Pass 64-71). Deletions audit: all removals verified correct, no regressions. Data consistency: all JSON valid, no duplicates. CSS audit: 534KB total, critical technical debt. floating-cluster.css: 106KB, 524 !important, 4 specificity layers — requires complete refactor. site.css: 275KB, minified, 7+ concerns mixed — requires reorganization and build pipeline. JS audit: floating-cluster-controller.js 61KB, 2 memory leaks, 77 empty catches, 3 complex functions — requires refactoring.*
+*P0: BUG-CI-001 fixed in `6e68d7ca`, 2 independent witnesses (Pass 63 + Pass 65 via `actionlint`). P1: BUG-CI-002/003 CI gate gaps + BUG-PERF-001 memory leaks (Pass 65) + BUG-CSS-001 1047 !important (Pass 68) + BUG-CSS-006/007/008 floating-cluster.css duplicate definitions + specificity wars (Pass 69) + BUG-CSS-013/014 site.css minified code + mixed concerns (Pass 70) + BUG-JS-001/002 floating-cluster-controller.js memory leaks + duplicate scroll listeners (Pass 71). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing, BUG-QUALITY-001/002/003 innerHTML + console + missing WebP (Pass 64-65), BUG-A11Y-001 skip links (Pass 66), BUG-PERF-002 render-blocking CSS (Pass 67), BUG-CSS-002/003 hardcoded colors + breakpoints (Pass 68), BUG-CSS-009/010 MAX_INT z-index + duplicate .gbs-rail-foot (Pass 69), BUG-CSS-015/016/017 site.css duplicate styles (Pass 70), BUG-JS-003/004/005 floating-cluster-controller.js empty catches + duplicate code + magic numbers (Pass 71), NEW-CANONICAL-IZBRANNOE-01-GAP tooling gap (Pass 65, underlying bug fixed). P3: 28 items (Pass 64-71) + NEW-CSS-BUDGET-01/NEW-OG-SIZE-PARAM/NEW-ACTIONLINT-CI-GAP (Pass 65) + NEW-SAFEURL-XSS-HARDENING (Pass 65). Closed this session (Pass 65): NEW-README-ANCHOR-01, NEW-CANONICAL-IZBRANNOE-01, NEW-IMG-REGRESSION-01 (new regression found+fixed same session), NEW-59 (genuinely fixed after reopen). Deletions audit: all removals verified correct EXCEPT the orphan-image cleanup follow-through gap (found+fixed, Pass 65). Data consistency: all JSON valid, no duplicates. CSS audit: 534KB total, critical technical debt. floating-cluster.css: 106KB, 524 !important, 4 specificity layers — requires complete refactor. site.css: 275KB, minified, 7+ concerns mixed — requires reorganization and build pipeline. JS audit: floating-cluster-controller.js 61KB, 2 memory leaks, 77 empty catches, 3 complex functions — requires refactoring. AuditRepo process note: unresolved merge-conflict markers found and cleaned from `646f38e` during this pass's rebase.*

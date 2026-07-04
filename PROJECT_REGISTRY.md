@@ -6,7 +6,7 @@
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-`projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | Pass 65 deep code quality audit complete. 28 open / 32 closed. Latest source HEAD: `6e68d7ca`. Start from `verified/MASTER_BUG_MATRIX.md`. | (audit(gb): Pass 65 — code quality + perf) 
+`projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | Pass 70 deep CSS review + Pass 65 verifier sync (2 independent BUG-CI-001 witnesses, NEW-59 genuinely fixed, orphan-image regression found+fixed same session). 57 open / 34 closed. Latest source HEAD: `8c318010`. Start from `verified/MASTER_BUG_MATRIX.md`. | (audit(gb): Pass 70 — CSS review + Pass 65 verifier sync merged)
 
 ## Status glossary
 
@@ -18,34 +18,31 @@
 - `reverify-needed` — source repo ушёл вперёд, нужен новый HEAD-pass
 - `archived` — проект завершён
 
-## gb-is-my-strength current summary — 2026-07-05
+## gb-is-my-strength current summary — 2026-07-05 (Pass 70 + Pass 65 merged)
 
-**Current source HEAD:** `6e68d7ca` (fix(ci): remove duplicate run: key — re-enable submenu audit)
-**Current AuditRepo HEAD:** pending (Pass 64 — deep CI + deletions audit)
-**Current status:** repair-ready. All P0 blockers closed. Deletions audit passed.
+**Current source HEAD:** `8c318010` (merge: seo-fix-og-images lane — includes BUG-CI-001 CI fix, orphan-image regression fix, README anchor fix, /izbrannoe/ canonical fix, NEW-59 real image-resize fix)
+**Current AuditRepo HEAD:** Pass 70 (deep CSS review) + Pass 65 (verifier sync — 2 independent BUG-CI-001 witnesses, NEW-59 reopened then genuinely fixed, 6 new findings, 1 new regression found+fixed same session)
+**Current status:** active. All P0 blockers closed (2 independent witnesses). 4 source fixes shipped and re-verified this session (all gates green after each). Deep CSS audit (Pass 68-70) found significant technical debt (floating-cluster.css 106KB/524 !important, site.css 275KB minified) requiring dedicated refactor lanes — see MASTER_BUG_MATRIX.md.
 
 ### Current truth
 
 - All runtime no-undef issues (`r`, `tt`, `SiteUtils`) — **fixed-current** on `19062297` and earlier.
 - PremiumControls: `audit:premium-controls` 87/87 ✅. PC-CURRENT-06 (Gill mobile) verified passing.
 - Hermeneutics floater canonical position is `8.5vw` desktop / `4.5vw` mobile.
-- Deploy to GitHub Pages: **green** on auto-deploy #1329 (`43a515df`). All CI gates green.
+- Deploy gate (`gill:pre-v16-submenu:audit`, 105 checks) re-confirmed wired correctly via independent `actionlint` re-run (0 issues, all 8 workflow files) on `8c318010`.
+- `node scripts/audit-pro.js` on `8c318010`: 165 passed, 0 errors (was 3 errors mid-session due to a concurrent agent's incomplete orphan-image cleanup — found and fixed in the same pass, see MASTER_BUG_MATRIX.md Pass 65 §4).
+- `npm run seo-audit` on `8c318010`: 0 errors, 0 warnings (NEW-59 genuinely fixed — image resized, not just relabeled).
 - Gill v16 is current base.
 - All remote branches merged into main. Zero stale branches in both repos.
+- **Runtime layer confirmed solid across Pass 64-70 audits** — no crash bugs, no live-exploit XSS, no visual-parity regressions. Open issues are CI-process, documentation, SEO/metadata-ledger, and CSS technical-debt (Pass 68-70).
 
-### Open items
+### Open items (see MASTER_BUG_MATRIX.md for full detail — 57 open / 34 closed)
 
-**P1:**
-- BUG-CI-002: `:light` validation skips 3 critical gates (Pass 64)
-- BUG-CI-003: indexnow.yml push retry — silent failure (Pass 64)
-
-**P2 (non-blocking):**
-- BUG-011: CSS breakpoints (reclassified, no visual regression).
-- BUG-ARCH-001: SW precache contradicts lazy search (Pass 64)
-- BUG-SEO-001: IndexNow submit before Pages CDN propagation (Pass 64)
-- P3: SVG dedup (advisory), social metadata bundle.
-- P3/Refactor: site.js monolith, source maps, ES modules.
-- AuditRepo: 3 infra items.
+**P1:** BUG-CI-002/003 (CI gate gaps), BUG-PERF-001 (memory leaks), BUG-CSS-001/006/007/008/013/014 (CSS technical debt, Pass 68-70).
+**P2:** BUG-011, BUG-ARCH-001, BUG-SEO-001, BUG-QUALITY-001/002/003, BUG-A11Y-001, BUG-PERF-002, BUG-CSS-002/003/009/010/015/016/017, NEW-CANONICAL-IZBRANNOE-01-GAP (tooling gap note, underlying bug fixed).
+**P3:** BUG-SW-001, NEW-SAFEURL-XSS-HARDENING, BUG-SEO-002, BUG-CLEANUP-001..004, NEW-CSS-BUDGET-01, NEW-OG-SIZE-PARAM, NEW-ACTIONLINT-CI-GAP (high-leverage — recommend fast-track), 25 CSS/quality items from Pass 64-70.
+**Refactor:** site.js monolith, source maps, ES modules, floating-cluster.css + site.css complete reorganization (Pass 68-70).
+**AuditRepo:** 3 infra items.
 
 ### Primary current documents
 
