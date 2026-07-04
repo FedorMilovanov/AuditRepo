@@ -1,0 +1,50 @@
+# Evidence: AUDIT-P2-WORKFLOWS-CHECK-GAP — check-workflows.js doesn't validate deploy job if: conditions
+
+**Source SHA:** `2f09c8f5`
+**Evidence date:** 2026-07-05
+
+## Finding: check-workflows.js covers structural checks but not job-level conditions
+
+```bash
+$ cat scripts/check-workflows.js | grep -i "if:\|condition\|job\|deploy"
+# Only found in context: no job-level if: condition checks
+
+$ npm run workflows:check
+✅ Workflow policy passed
+```
+
+## check-workflows.js scope (from source):
+
+1. `mustAllWorkflowsHaveBasics()`: checks all .yml files have name:, on:, permissions:
+2. `mustScript()`: validates package.json scripts have specific content
+3. NO checks for: job-level if: expressions, deploy job conditions, workflow_run triggers
+
+## Evidence: deploy.yml has policy-relevant condition
+
+```yaml
+# deploy.yml:63-64
+if: >
+  github.event_name == 'workflow_dispatch' ||
+  github.event_name == 'push' ||
+  github.event.workflow_run.conclusion == 'success' ||
+  github.event.workflow_run.conclusion == 'failure'
+```
+
+`workflows:check` passes → deploy.yml has || failure → passes tool.
+The tool doesn't catch changes to deploy job conditions.
+
+## Repair lane: ci-gate-semantics
+
+Extend check-workflows.js to validate:
+1. deploy job doesn't unconditionally allow workflow_run failure
+2. IndexNow job doesn't bypass validation gates
+3. All jobs with workflow_run trigger have appropriate outcome guards
+
+```javascript
+// Proposed additions to check-workflows.js:
+function mustNotBypassFailureGates() {
+  const deployYml = read('.github/workflows/deploy.yml');
+  // Warn if deploy job allows workflow_run conclusion == 'failure'
+  // without explicit human approval step
+}
+```

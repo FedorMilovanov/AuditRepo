@@ -66,7 +66,13 @@
   - `astro:audit:baptisty-series` (Baptist series shadow audit)
   - `sw:dist:audit` (Service Worker dist readiness)
   - **FULL:** 37 checks, **LIGHT:** 34 checks. Контент-регрессии могут пройти через indexnow.yml незамеченными.
+  - **5th witness (АУДИТ 1.3):** indexnow.yml:71 explicitly uses `validate:static-publication:light` — confirmed production CI issue (not just local dev).
   - **Repair lane:** ci-gate-alignment
+
+- **AUDIT-P1-CI-GATE-GAP** *(5th witness, АУДИТ 1.3)*: Same root cause as BUG-CI-002. `indexnow.yml:71` uses `:light` gate → skips `sw:dist:audit`. If SW is broken, IndexNow submits URLs for stale content → search engines index wrong pages. Cross-reference: BUG-CI-002.
+  - **Evidence:** `grep -n "validate.*publication.*light" .github/workflows/indexnow.yml` → line 71.
+  - **Severity:** P1 — production CI impact.
+  - **Repair lane:** ci-gate-indexnow-fix (change to full gate)
 
 - **BUG-CI-003:** *(2nd witness: АУДИТ 1.0 intake + independent verifier, 2026-07-05)* indexnow.yml push retry — silent failure. После 3 неудачных попыток `git push` workflow отчитывается как успешный без `exit 1`, `::error::` или уведомления.
   - **Evidence:** `grep -A5 "for _attempt" .github/workflows/indexnow.yml`
@@ -76,17 +82,30 @@
   - **Mitigation:** MPA (Astro) — менее критично чем в SPA, но стоит добавить cleanup для search palette и mobile TOC.
   - **Repair lane:** perf-cleanup
 
-## 🟡 P2 — CI/SEO (5 открытых) + SW BASELINE (1)
+## 🟡 P2 — CI/SEO (4 открытых) + SW HYGIENE (1)
 
 - **BUG-SW-BASELINE-DRIFT** *(reclassified P0→P2, Pass 91)*: `migration/sw-cache-version-baseline.json` = `gb-v182-*`, actual `sw.js` CACHE_VERSION = `gb-v187-*` (5 версий stale). `sw-dist-readiness-audit.js --require-cache-bump` использует `note()` а не `bad()` — CI осознанно не фейлится на stale baseline. SW имеет корректную версию; baseline .json — документационный drift, не runtime bug.
   - **Evidence:** АУДИТ 1.0 intake + independent verifier. Verified-source on `8c318010`.
   - **Repair lane:** system-sw-baseline-sync
   - **Reclassified:** P0→P2 (Pass 91) — не deploy-blocker; SW работает корректно.
 
+- **AUDIT-P2-SW-PRECACHE-4** *(АУДИТ 1.1, verified on 2f09c8f5)*: SW PRECACHE_ASSETS (29 entries) includes 4 lazy assets: `/js/search.js` (indexState=no-cache), `/js/glossary.js` (defer), `/manifest.json` (defer), `/data/search-manifest.json` (defer). Pass 56 lazy loader marks these as lazy, but SW pre-caches unconditionally — defeats lazy strategy. Upgrade from P3 (was only 2 assets confirmed).
+  - **Evidence:** `grep PRECACHE_ASSETS sw.js` → 29 entries, 4 lazy. `grep -E "search|glossary|manifest" sw.js` confirmed.
+  - **Repair lane:** AUDIT-SW-HYGIENE
+  - **Verifier note:** Pass 91 corrected 96959c93 → 8c318010, but SW findings still valid.
+
+- **AUDIT-P2-AR-STALE** *(АУДИТ 1.0)*: AuditRepo lags source by 3+ commits (8c318010 vs 2f09c8f5) and 28+ passes (63-88) not fully synthesized into matrix. Process gap, not source code bug.
+  - **Repair lane:** auditrepo-sync
+
+- **AUDIT-P2-WORKFLOWS-CHECK-GAP** *(АУДИТ 1.4)*: `scripts/check-workflows.js` validates workflow structure and package.json content but does NOT validate deploy job `if:` conditions. The `|| failure` condition in deploy.yml:63-64 is not caught by `workflows:check` — passes despite policy-relevant change.
+  - **Evidence:** `npm run workflows:check` → ✅ PASS while deploy.yml has `|| failure`. check-workflows.js only checks name:/on:/permissions: and package.json scripts.
+  - **Repair lane:** ci-gate-semantics
+
 ## 🟡 P2 — CI/SEO (4 открытых)
 
 - **BUG-ARCH-001:** *(2nd witness: АУДИТ 1.0 intake + independent verifier, 2026-07-05)* SW PRECACHE_ASSETS содержит `/data/search-manifest.json` и `/js/search.js`, которые теперь lazy-loaded (Pass 56). SW precache загружает оба при install, сводя экономию lazy loading на нет.
-  - **Repair lane:** perf-cleanup
+  - **⚠️ UPGRADE (АУДИТ 1.1):** Actually **4 assets** (not 2): search.js, glossary.js, manifest.json, search-manifest.json all marked lazy by Pass 56 but pre-cached by SW. Supersedes original BUG-ARCH-001 scope. See AUDIT-P2-SW-PRECACHE-4.
+  - **Repair lane:** AUDIT-SW-HYGIENE
 
 - **BUG-SEO-001:** IndexNow submit запускается сразу после `actions/deploy-pages@v4`, до реальной доступности нового контента на GitHub Pages CDN. Поисковики могут краулить старую версию.
   - **Repair lane:** ci-seo
@@ -131,6 +150,13 @@
 - **NEW-ACTIONLINT-CI-GAP:** `actionlint` зарегистрирован `KEEP` в `audit/external-checks/README.md`, `package.json` содержит `workflows:lint: npx actionlint`, но ни один workflow его не вызывает. Именно этот инструмент поймал бы `BUG-CI-001` за <100мс с 0 ложных срабатываний (подтверждено независимо через `rhysd/actionlint` v1.7.7 release binary — не `npx actionlint`, тот вариант отдельно помечен `REJECTED`).
   - **Severity:** ⚠️ **P3 → P1 UPGRADE PROPOSED (Pass 89):** high-leverage — закрывает целый класс будущих CI-YAML регрессий (уже 3 случая за 24ч: BUG-CI-001, deploy #1337 step-order, check-design-tokens.js stale aliases). Proposal: `proposals/severity-upgrade-actionlint-P1.md`. Текущий статус в матрице: P3 до принятия proposal верификатором.
   - **Repair lane:** ci-gate-actionlint
+
+- **AUDIT-P3-OG-LCP-MISMATCH** *(АУДИТ 1.1, confirmed by Pass 89)*: On 4 routes, Open Graph `og:image` differs from the LCP (Largest Contentful Paint) priority image. Social sharing shows one image, browser prioritizes another. CLS risk if dimensions differ. Related to NEW-OG-SIZE-PARAM (same scope).
+  - **Repair lane:** seo-hardening
+
+- **AUDIT-P3-SEARCH-LAZY-CONFIRMED** *(АУДИТ 1.1)*: Pass 56 lazy loader (index.html:1110) marks `/js/search.js`, `/js/glossary.js`, `/manifest.json`, `/data/search-manifest.json` as lazy. SW PRECACHE pre-caches all unconditionally, defeating the lazy strategy. Net: SW serves eagerly, lazy loader is bypassed.
+  - **Evidence:** index.html:1110 has `data-lazy="true"`, SW PRECACHE has same assets without lazy markers.
+  - **Repair lane:** ARCH-SEARCH (Pass 89 merge proposal)
 
 ---
 
