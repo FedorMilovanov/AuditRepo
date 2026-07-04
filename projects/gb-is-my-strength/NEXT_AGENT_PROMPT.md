@@ -19,7 +19,7 @@
 
 **Local verification on `c0ab48fc`:** `validate:strict`, `schema:rich-results:audit`, `audit-pro`, `git diff --check`, and `guard:shared-files` passed.
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_hardtexts-og-dimensions-fixed-c0ab48f.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_hardtexts-og-dimensions-fixed-c0ab48f.md`. Remote `Deploy to GitHub Pages` is **green** on run `28696329971`: https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28696329971.
 
 ---
 

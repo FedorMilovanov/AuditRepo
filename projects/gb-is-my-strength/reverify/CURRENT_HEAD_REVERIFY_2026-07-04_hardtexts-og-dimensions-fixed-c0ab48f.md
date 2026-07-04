@@ -42,3 +42,9 @@ npm run guard:shared-files                               PASS
 `NEW-59`: **fixed-current on source main `c0ab48fc`**.
 
 Other `NEW-54..58` social/SEO bundle items remain separate and should not be closed by this fix.
+
+---
+
+## 5. Remote workflow
+
+Remote `Deploy to GitHub Pages` is **green** on source main `c0ab48fc`: run `28696329971` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28696329971).

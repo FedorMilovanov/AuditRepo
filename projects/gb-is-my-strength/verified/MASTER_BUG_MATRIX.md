@@ -886,7 +886,7 @@ Verified on `c0ab48fc`:
 - `node scripts/audit-pro.js` ✅
 - `npm run guard:shared-files` ✅
 
-Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_hardtexts-og-dimensions-fixed-c0ab48f.md`.
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_hardtexts-og-dimensions-fixed-c0ab48f.md`. Remote Deploy green: run `28696329971` (https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/28696329971).
 
 ---
 
