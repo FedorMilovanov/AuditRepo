@@ -154,6 +154,36 @@ None — all findings are refinements of existing open items.
 ### Verdict
 No critical garbage found. 7 advisory items above — none blocking. Total potential recovery <2MB.
 
+
+## 🟡 PASS 54 — DEEPER GARBAGE CLEANUP (2026-07-04)
+
+**Additional findings beyond Pass 53.**
+
+### Migration matrix exclude — stale?
+All 5 excluded patterns (`nagornaya/**`, `articles/dzhon-gill-*`, `articles/krajne-li-isporcheno-serdce`, `articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy`, `hard-texts/**`) now have **Astro native pages**. If all are native, the exclude list serves no purpose. However — these routes use legacy PageChrome/PageHead components that load their own runtime (not BaseLayout). Documented as "scope: all-routes-except-nagornaya-gill-heart-hard-texts". **Keep as-is — intentional design boundary.**
+
+### CSS — 120 classes in CSS not found in dist HTML
+| Prefix | Count | Nature |
+|--------|-------|--------|
+| `gbs2-` | 33 | Legacy Gill series — ONLY used in legacy root copies, not in dist Astro pages. By design. |
+| `btoc-` | 30 | Nagornaya bottom TOC — injected dynamically by JS, not in static HTML. Valid. |
+| `bar-` | 11 | Nagornaya bottom bar — injected dynamically by JS. Valid. |
+| `h-` | 20 | Home v20 — some may be stale after home refactor (h-cp-btn, h-home-entry-strip classes) |
+| `gb-` | 19 | Various bookmark/toast/feature classes — some dynamic |
+| `fc-` | 2 | Floating cluster scoping classes — dynamic |
+| `nag-` | 5 | Nagornaya sidebar/fontsize — injected dynamically |
+
+**Actionable cleanup:** `h-cp-btn`, `h-home-entry-strip*` — these home v20 intermediate classes may be dead after final home design. Minimal waste (<1KB).
+
+### React usage confirmed
+React (`@astrojs/react` + `react` ^19.2.7) is used **only** for the `/rodosloviye/` (Genealogy) page — `GenealogyTree.tsx` with `@xyflow/react`. Legitimate. Cannot be removed.
+
+### SW CACHE_VERSION
+Current `gb-v187-pagefind-bootstrap-20260703` — 1 day behind source HEAD `43a515df`. SW is rebuilt on explicit cache-bust commits (`[skip ci]` does not rebuild). Expected behavior — not stale.
+
+### CSS variables — all used
+All CSS custom properties (`--color-*`, `--h-*`, `--gbs2-*`, `--gb-*`) are referenced in CSS rules. No dead variables.
+
 ## 📊 СВОДКА
 
 | Уровень | Открыто | Закрыто |
