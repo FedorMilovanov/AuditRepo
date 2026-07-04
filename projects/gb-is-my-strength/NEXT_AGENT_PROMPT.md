@@ -1,6 +1,32 @@
-# 🐛 SEARCH SYSTEM — CRITICAL BUG, still open (2026-07-04, Pass 69/70)
+# 🐛 SEARCH SYSTEM — 2 CRITICAL ARCHITECTURAL BUGS + 7 FINDINGS (2026-07-04)
+>>>>>>> 4f2df52 (audit(gb): Pass 72 — SEARCH critical architectural bugs found)
 
-**14 pages with 262+ Bible references invisible in "Писание" search scope.**
+## 🔴 P1 — Писание search scope is architecturally broken
+
+**Bug SEARCH-016:** When user selects the "Писание" tab, search.js calls `fe()` (local manifest search on 44 items), NOT `Ee()` (Pagefind full-text search on 43 pages / 16K words).
+
+The entire "Писание" scope searches ONLY page titles + descriptions — NOT the actual scripture content. It NEVER calls Pagefind.
+
+**Bug SEARCH-017:** The `G()` function builds a search string that includes `e.scripture`, but this field is null for ALL 44 manifest items — the manifest has no `scripture` field.
+
+## 🟡 P2 — Book abbreviation normalization covers 9/70 books
+
+The `$()` function normalizes only: мф, мат, лк, лук, ин, иоан, рим, иер, кор. Missing: мк, деян, гал, еф, кол, евр, откр, 1пет, 2пет, and 50+ others.
+
+## 🔵 P3 — 406KB dead Pagefind UI assets
+
+pagefind-ui.*, pagefind-component-ui.*, pagefind-modular-ui.*, pagefind-highlight.js are deployed but never loaded.
+
+---
+
+**Full details:** `incoming/arena-agent-pass69/REPORT.md`
+**Matrix:** `verified/MASTER_BUG_MATRIX.md`
+**Fix plan priority:**
+1. Fix `xe()` branching — scripture scope must call Ee() (Pagefind)
+2. Add scripture field to manifest items
+3. Complete $() normalization for all 70+ books
+4. Add scripture meta to all article bodies (SEARCH-001)
+5. Remove dead Pagefind UI bundles from dist
 
 ## Summary
 The `data-pagefind-meta="scripture"` attribute is missing from almost ALL scripture-heavy pages.

@@ -264,3 +264,108 @@ npm run gill:mobile-play:smoke
 npm run validate:static-publication
 npm run guard:shared-files
 ```
+
+---
+
+## 🐛 BUG-SEARCH-016 (CRITICAL ARCHITECTURAL): "Писание" scope NEVER calls Pagefind — uses local manifest only (P1)
+
+**Evidence** in `js/search.js`:
+```javascript
+// xe() function — MAIN search dispatch
+function xe(e) {
+  if(e && !(e.length<2))
+    return W ? (++M, void ye(e)) 
+    : void (
+        "authors" !== C && "scripture" !== C 
+          ? Ee(e)    // ← Pagefind full-text search
+          : fe(...)   // ← local manifest search ONLY
+      );
+}
+```
+
+When scope (`C`) is `"scripture"` or `"authors"`, `fe()` is called — which ONLY searches the local `search-manifest.json` (44 items, title/desc/tags only).
+
+When scope is `"all"` or `"articles"`, `Ee()` is called — which uses **Pagefind full-text search** across 43 pages with 16,411 words.
+
+**Impact:** The "Писание" tab:
+- ❌ NEVER searches actual article content
+- ❌ NEVER finds scripture references in the text
+- ❌ ONLY searches page titles and descriptions from manifest
+- ❌ `e.scripture` is `null` for all 44 manifest items (no scripture field)
+- ✅ Only works if user types words that happen to appear in a page TITLE or DESCRIPTION
+
+**Worse:** The `Ee()` function (Pagefind) actually HAS proper scripture handling — it checks `meta.scripture` from Pagefind results and separates "Писание" results from "Статьи". But it's NEVER CALLED for the scripture scope.
+
+---
+
+## 🐛 BUG-SEARCH-017: G() function composition includes e.scripture but it's always null (P1)
+
+The `G()` function builds a combined search string from manifest item fields:
+```
+e.title + e.description + e.section + e.author + e.editor + e.scripture + e.tags
+```
+
+But `e.scripture` is `undefined` for ALL 44 items because manifest has no `scripture` field. This means the scripture scope searches only titles and descriptions — completely missing the point.
+
+---
+
+## 🐛 BUG-SEARCH-009: Book name normalization only covers 9 of ~70 Bible books (P2)
+
+The `$()` function normalizes only:
+```
+мф→матфей, мат→матфей, лк→лука, лук→лука, ин→иоанн, иоан→иоанн, 
+рим→римлянам, иер→иеремия, кор→коринфянам
+```
+
+**MISSING abbreviations (60+):** мк, деян, гал, еф, флп, кол, 1фес, 2фес, 1тим, 2тим, тит, флм, евр, иак, 1пет, 2пет, 1ин, 2ин, 3ин, иуд, откр, быт, исх, лев, чис, втор, нав, суд, руфь, 1цар, 2цар, 3цар, 4цар, 1пар, 2пар, ездр, неем, есф, иов, пс, притч, еккл, песн, ис, плач, иез, дан, ос, иоил, ам, авд, иона, мих, наум, авв, соф, агг, зах, мал
+
+**Impact:** User searching "Мк 1" or "Деян 2" will get ZERO results because the abbreviations aren't normalized to the full book names stored in the content.
+
+---
+
+## 🐛 BUG-SEARCH-021: Two completely separate search corpora (P2)
+
+The search system has two independent indices that never merge for the scripture scope:
+
+| Index | Items | Content | Used by scopes |
+|-------|-------|---------|----------------|
+| search-manifest.json | 44 | metadata only | Писание, Авторы |
+| Pagefind (WASM) | 43 pages, 16K words | full-text | Все, Статьи |
+
+A search for "Иер 17" in the "Писание" tab returns ONLY pages whose title/description contains "Иер" or "17". It NEVER finds the actual content.
+
+A search for "Иер 17" in the "Все" tab uses Pagefind and CAN find content, but doesn't know it's a scripture reference.
+
+---
+
+## 🐛 BUG-SEARCH-023: 406KB dead Pagefind UI assets in dist (P3)
+
+search.js has its own custom command palette UI. Pagefind's built-in UI bundles are never loaded:
+
+| File | Size | Loaded? |
+|------|:----:|:-------:|
+| pagefind-ui.css + pagefind-ui.js | 131KB | ❌ Custom UI used |
+| pagefind-component-ui.css + .js | 211KB | ❌ Custom UI used |
+| pagefind-modular-ui.css + .js | 21KB | ❌ Custom UI used |
+| pagefind-highlight.js | 43KB | ❌ Not used |
+| **Total dead weight** | **406KB** | |
+
+These are deployed to GitHub Pages as part of the dist artifact. They're never requested by users but use up deployment bandwidth and cache space.
+
+---
+
+## Summary of ALL search bugs (SEARCH-001 through SEARCH-023)
+
+| ID | Bug | Severity | Root Cause |
+|----|-----|:--------:|------------|
+| SEARCH-001 | scripture meta missing on 15+ pages | 🔴 P1 | Components never added it |
+| SEARCH-016 | Писание scope never calls Pagefind | 🔴 **P1** | `xe()` branches wrong |
+| SEARCH-017 | G() function scripture field always null | 🔴 **P1** | manifest has no scripture |
+| SEARCH-003 | ArticleLayout can't inject scripture | 🟡 P2 | Missing prop chain |
+| SEARCH-009 | Book abbreviations not normalized (60+ missing) | 🟡 P2 | Incomplete $() function |
+| SEARCH-021 | Two separate corpora never merge | 🟡 P2 | Architecture issue |
+| SEARCH-006 | No audit gate for scripture meta | 🟡 P2 | Missing gate |
+| SEARCH-002 | Nagornaya 4/5 headers lack scripture | 🟡 P2 | Copy-paste gap |
+| SEARCH-007 | Rodosloviye has 0 pagefind meta tags | 🟡 P2 | Missing all meta |
+| SEARCH-023 | 406KB dead Pagefind UI assets | 🔵 P3 | Not pruned from dist |
+| SEARCH-004/5/8/22 | Various minor | 🔵 P3 | Various |

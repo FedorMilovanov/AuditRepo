@@ -945,6 +945,11 @@ Aliases reference semantic variables which are already theme-aware — no need t
 | SEARCH-006 | No existing audit gate validates `data-pagefind-meta="scripture"` | 🟡 **P2** | Zero checks in audit-pro, check-data-consistency, or any gate |
 | SEARCH-007 | `rodosloviye/` has 262 Bible refs but ZERO pagefind meta tags (author, readTime, category, scripture, image — all missing) | 🟡 **P2** | `RodosloviyeBody.astro` has bare `data-pagefind-body` with no meta whatsoever |
 | SEARCH-008 | Nagornaya chast-4/5 have all OTHER pagefind meta — only scripture missing | 🔵 **P3** | author, readTime, category, image all present; scripture absent (likely copy-paste gap) |
+| SEARCH-016 | **CRITICAL:** Писание scope NEVER calls Pagefind — uses local manifest only (no full-text search) | 🔴 **P1** | `xe()` branches: scripture/authors → `fe()` (manifest), all/articles → `Ee()` (Pagefind) |
+| SEARCH-017 | G() function composition includes `e.scripture` but it's always null for all 44 items | 🔴 **P1** | manifest has no `scripture` field |
+| SEARCH-009 | Book name `$()` normalization covers only 9/70 Bible abbreviations | 🟡 **P2** | мк, деян, гал, еф, кол, евр, откр and 50+ more omitted |
+| SEARCH-021 | Two separate search corpora never merge for scripture scope | 🟡 **P2** | manifest (44) vs Pagefind (43 pages, 16K words) |
+| SEARCH-023 | 406KB dead Pagefind UI assets deployed to dist | 🔵 **P3** | pagefind-ui, component-ui, modular-ui, highlight — not used |
 
 ### Impact
 
