@@ -142,7 +142,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 * ~~**NEW-70 (P3, sitemap.xml stale lastmod):** stale broad June lastmod buckets~~ ✅ FIXED-CURRENT on source main `a434b45e`: sitemap lastmods refreshed from route git commit dates; 43 URLs validate and audit-pro passes.
 * ~~**NEW-71 (P3, README.md version drift):** README stayed at v10 / 2026-06-26~~ ✅ FIXED-CURRENT on source main `da4a65cd`: README version line is now v11 / 2026-07-04.
 * **NEW-72 (P2, SVG dedup opportunity across 4 files):** static scan of 11 JS files finds 9 unique SVG fragments duplicated across `js/highlights.js`, `js/search.js`, `js/site.js`, `js/floating-cluster-controller.js`, `js/nagornaya-mobile-toc.js`. Most-duplicated: 5x `<polyline points="20 6 9 17 4 12"/>` (checkmark). Total potential saving: ~1.5-2KB. See Pass 38 in this file.
-- **NEW-67 (P3, dead scripts in `scripts/` on `f1e9abd9`):** 10 scripts with no caller in `package.json`, no workflow reference, no require(): _audit-deep.js, about-leaf-parity-shots.js, deep-check.js, extract-native-pilot.js, genealogy-e2e-v2.js, generate-route-profiles.js, ishod-qa.js, map-visual-qa.js, premium-mobile-visibility-smoke.js, route-impact-report.js. See Pass 37 in this file.
+- ~~**NEW-67 (P3, dead scripts in `scripts/`):** 10 scripts reported dead by no-package-caller heuristic~~ ✅ FALSE-POSITIVE / RECLASSIFIED on source `a434b45e`: all 10 pass `node --check` and have documentation/manual QA/migration ownership evidence. Do not delete from this finding. See `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dead-scripts-new67-reclassified.md`.
 
 ### Service Worker fixes:
 - **REG-003 ✅:** CACHE_VERSION обновлён до `gb-v183-dead-cleanup-20260703`
@@ -871,6 +871,16 @@ BUG-022 (overridden CSS rules):
 * **Visual parity current side finding:** local pixel-diff on `f1e9abd9` fails `/baptisty-rossii/` only: desktop `6.131%`, mobile `17.368%` (threshold `1%`). GitHub Visual Parity Guard failed on `8446a0da`; current `f1e9abd9` was `[skip ci]`, so remote visual parity was not rerun, but local current-head evidence confirms the issue.
 
 
+
+## 🟢 PASS 48 / NEW-67 DEAD SCRIPTS RECLASSIFICATION (2026-07-04)
+
+**Source HEAD checked:** `a434b45ee6d8cefb0ce281039ad683fe9b9589ba`.
+
+`NEW-67` is **false-positive / reclassified**. The original heuristic (no `package.json` caller / no workflow reference) is insufficient for this repo because multiple scripts are documented manual QA, migration helpers, or diagnostic tooling. All 10 named scripts pass `node --check` and have documentation/manual ownership evidence. No source deletion recommended from this finding.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dead-scripts-new67-reclassified.md`.
+
+---
 
 ## 🟢 PASS 47 / SITEMAP LASTMOD REFRESH (2026-07-04)
 

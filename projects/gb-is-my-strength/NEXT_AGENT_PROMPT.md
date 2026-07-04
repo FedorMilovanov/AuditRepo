@@ -1,3 +1,13 @@
+# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 NEW-67 dead scripts reclassified (READ FIRST)
+
+**Source HEAD checked:** `a434b45ee6d8cefb0ce281039ad683fe9b9589ba`.
+
+**Reclassified in this pass:** `NEW-67` — the "dead scripts" report is a false-positive / manual tooling classification issue. The 10 scripts pass syntax checks and have documentation/manual QA/migration ownership evidence. Do not delete them from the old no-package-caller heuristic.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dead-scripts-new67-reclassified.md`.
+
+---
+
 # 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 Sitemap lastmod refresh (READ FIRST)
 
 **Current source main HEAD:** `a434b45ee6d8cefb0ce281039ad683fe9b9589ba`.
