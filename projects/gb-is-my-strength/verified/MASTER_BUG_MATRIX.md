@@ -1833,3 +1833,50 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 
 `incoming/arena-agent-pass85/REPORT.md`
 
+
+---
+
+## 🟢 PASS 86 — ASTRO COMPONENTS AUDIT: BaseLayout.astro (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `src/layouts/BaseLayout.astro` (177 lines, 7KB) — main Astro layout
+
+### Medium Priority Findings (P3)
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| BUG-ASTRO-001 | Large inline scripts in makeGenericRuntime() (3 scripts) | 🔵 P3 |
+| BUG-ASTRO-002 | Magic numbers in makeGenericRuntime() (Yandex ID) | 🔵 P3 |
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total lines | 177 |
+| Total size | 7KB |
+| Props | 20+ |
+| Inline scripts | 3 large |
+| Magic numbers | 1 |
+| Code quality | Good |
+| Performance | Good |
+
+### Positive Findings
+
+✅ Clean Astro layout structure  
+✅ SEO component extracted separately  
+✅ Lazy search loading (~31KB saved)  
+✅ Font preloading (3 fonts)  
+✅ Navigation prefetch hints (5 pages)  
+✅ TypeScript props interface  
+✅ Good comments  
+
+### Top 2 Recommendations
+
+1. **Move inline scripts to external files** — improve maintainability
+2. **Extract magic numbers** — create CONFIG object
+
+### Full Report
+
+`incoming/arena-agent-pass86/REPORT.md`
+
