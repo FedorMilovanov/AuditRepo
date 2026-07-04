@@ -184,6 +184,42 @@ Current `gb-v187-pagefind-bootstrap-20260703` — 1 day behind source HEAD `43a5
 ### CSS variables — all used
 All CSS custom properties (`--color-*`, `--h-*`, `--gbs2-*`, `--gb-*`) are referenced in CSS rules. No dead variables.
 
+
+## 🟡 PASS 55 — DOCUMENTATION CLEANUP (2026-07-04)
+
+### AGENTS.md cleanup
+- **Removed** 65 lines of stale revision history (r244-r294, refactoring work from June 19-22)
+- **Archived** to `docs/archive/AGENTS_REVISION_HISTORY_2026-07-04.md`
+- Only **5** AGENTS-r references remain (slim table + 3 inline notes)
+- Global git config (`user.name` + `user.email`) now set to survive sessions
+
+### SANDBOX-ENV cleanup
+- **Reduced** from 940 lines/71KB → **177 lines/6KB** (81% reduction)
+- Removed obsolete sections: external reference pass, timing proof, SVG gate, pixelmatch method, Yandex CSP
+- Added explicit "new session != new conversation" warning
+- Added git survival guide for rebase/conflict recovery
+- Added compact table of what persists/not persists between sessions
+- Historical content lives in git history (no archive needed)
+
+### Cleanup results
+| Document | Before | After | Reduction |
+|---|---|---|---|
+| AGENTS.md | 1659 lines | 1593 lines | -66 lines (-4%) |
+| SANDBOX-ENV-2026-06-21.md | 940 lines / 71KB | 177 lines / 6KB | -763 lines (-81%) |
+
+### Sandbox survival facts confirmed
+
+**Persists between sessions:** workspace files (ext4), git repos, remote URLs with token, node_modules, ~/.cache/, npm cache, /tmp/
+
+**Does NOT persist:** global git config, ~/.git-credentials, SSH keys, environment variables, bash history/aliases, background processes, terminal state, current working directory
+
+**Every new user message may be a new session.** First thing to do in any session:
+1. `pwd` and `ls` to find workspace
+2. `git log --oneline -1` to check HEAD
+3. `git config user.name` if it fails — set it
+4. Check `node -v` (needs 22.12.0) and `export PATH` if needed
+5. Check `git remote -v` for token
+
 ## 📊 СВОДКА
 
 | Уровень | Открыто | Закрыто |
