@@ -957,6 +957,9 @@ Aliases reference semantic variables which are already theme-aware — no need t
 | SEARCH-034 | 15 map/interactive app pages have zero search access | 🔵 **P3** | karty/*, konfessii, map, izbrannoe — intentional but user-facing gap |
 ### Impact
 
+| SEARCH-082 | search-manifest.json — ПОЛНОСТЬЮ РУЧНОЙ файл. Ни один скрипт не генерирует его | 🟡 **P2** | update-meta.js не пишет manifest. В deploy.yml нет шага генерации. При добавлении статьи — 13 полей вручную |
+| SEARCH-083 | me() конвертит manifest → display: scripture всегда null для всех 44 items (поле отсутствует в данных) | 🔴 **P1** | Прямое доказательство SEARCH-017: корневая причина |
+| SEARCH-084 | deploy.yml не проверяет data-pagefind-meta="scripture" на страницах | 🟡 **P2** | Есть проверка pagefind.js, pagefind-body — но нет scripture meta |
 The **"Писание" (Scripture)** search scope — a primary feature of the command palette — is effectively **broken**. It only indexes 3 pages while 25+ pages with substantial Bible content are invisible. Users searching for Bible verses via the scripture tab get near-zero results.
 
 ### Root cause chain

@@ -455,3 +455,136 @@ This confirms the earlier "SEARCH-030" finding was wrong — I incorrectly claim
 | Default suggestions (Ин 3:16, Мф 5:3 и т.д.) | ✅ Показываются, но результаты — из manifest, а не из Pagefind |
 | Pagefind loaded через search.js | ✅ Загружается и работает |
 | Поиск "Римлянам 7" в "Все" | ✅ 5 результатов, включая точное совпадение |
+
+
+---
+
+## 🧪 PASS 75 — PLAYWRIGHT COMPARISON PROOF: ALL (9 results) vs Писание (2 results) for "Иер 17:9"
+
+**Методология:** Playwright Chromium на production-like dist. Загружена статья, открыт Ctrl+K, введён запрос "Иер 17:9", измерено количество результатов во вкладках "Все" и "Писание".
+
+**Результат:**
+| Scope | Результатов | Движок |
+|-------|:-----------:|--------|
+| **Все** | **9** | Pagefind (полнотекстовый) |
+| **Писание** | **2** | Manifest (метаданные, title+description) |
+| **Разница** | **7 результатов потеряно** | |
+
+**Доказательство:** Писание вкладка показывает на 7 результатов МЕНЬШЕ, потому что ищет ТОЛЬКО по title/description manifest, а не по полному тексту через Pagefind.
+
+---
+
+## 🐛 BUG-SEARCH-082: search-manifest.json — ПОЛНОСТЬЮ РУЧНОЙ файл, не генерируется (P2)
+
+**Доказательство:**
+- `data/search-manifest.json` обновлялся 15+ раз через git, НИ РАЗУ не был сгенерирован скриптом
+- `scripts/update-meta.js` НЕ пишет search-manifest (только sitemap + feed.xml)
+- В `package.json` нет скрипта для генерации search-manifest
+- В `.github/workflows/deploy.yml` нет шага для генерации search-manifest
+- Только `indexnow.yml` запускает `update-meta.js`, но тот не трогает manifest
+
+**Кто мог бы генерировать:**
+- `scripts/route-impact-report.js` — может писать JSON, но не генерирует manifest
+- `scripts/audit-pro.js` — читает и валидирует manifest, но не пишет
+- `scripts/check-data-consistency.js` — валидирует, но не генерирует
+
+**Impact:** При добавлении новой статьи нужно вручную:
+1. Добавить запись в `data/search-manifest.json`
+2. Указать 13+ полей (id, type, url, title, description, section, editor, image, tags, featured, priority, publishedTime, modifiedTime, readTime)
+3. Нигде не задокументировано
+
+---
+
+## 🐛 BUG-SEARCH-083: me() — scripture для manifest всегда null (P1, переподтверждение)
+
+**Доказательство:**
+```javascript
+// me() function — converts manifest item to display item
+function me(e) {
+  return {
+    ...
+    article: {
+      ...
+      scripture: e.scripture || null,  // ← ВСЕГДА null
+      ...
+    }
+  }
+}
+```
+
+44/44 manifest items have `scripture: undefined`. This is the root cause of why:
+1. Писание scope shows no "Ссылка" tag (that's only added by Ee/Pagefind path)
+2. Писание scope shows fewer results
+3. No scripture-related metadata is searchable via manifest
+
+---
+
+## 🐛 BUG-SEARCH-084: deploy.yml — нет шага для поиска scripture в gate (P2)
+
+**Доказательство:** deploy.yml имеет шаги для:
+- `pagefind:build:dist` ✅
+- `check dist/pagefind/pagefind.js` ✅  
+- `dist-publication-audit --require-pagefind` ✅
+- Но НИГДЕ не проверяет: есть ли data-pagefind-meta="scripture" на страницах
+
+---
+
+## Архитектурная карта SEARCH (обновлённая)
+
+```
+User presses Ctrl+K
+    │
+    ▼
+┌─────────────────────────────────────────────────────┐
+│ 642B inline bootstrap (37 pages)                     │
+│ ← creates GBSearch helper object                     │
+│ ← binds Ctrl+K, click on search button               │
+│ ← DYNAMICALLY loads search.js (~30KB) on FIRST use   │
+└─────────────────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────────────────┐
+│ search.js command palette (custom UI, not Pagefind) │
+│                                                      │
+│ 1. Loads /data/search-manifest.json (44 items)       │
+│ 2. Shows default results for each scope              │
+│ 3. User types → dispatches to appropriate engine:    │
+│                                                      │
+│    scope="all"       → Ee() → Pagefind WASM search   │
+│    scope="articles"  → Ee() → Pagefind WASM search   │
+│    scope="scripture" → fe() → LOCAL MANIFEST ONLY  ←│ ❌
+│    scope="authors"   → fe() → LOCAL MANIFEST ONLY  ←│ ❌
+│                                                      │
+│ 4. Pagefind search (Ee) properly handles scripture:  │
+│    - Reads meta.scripture from index                 │
+│    - Tags results as isScripture=true                │
+│    - Adds "Ссылка" badge                            │
+│    - Can filter by scripture scope                   │
+│                                                      │
+│ 5. Manifest search (fe) CANNOT handle scripture:     │
+│    - No scripture field in manifest data              │
+│    - Scripture scope just filters by title/desc/tags  │
+│    - No "Ссылка" badge ever                          │
+│    - No scripture scope distinction                  │
+└─────────────────────────────────────────────────────┘
+```
+
+---
+
+## FIX PLAN (updated priority)
+
+### Phase 1 — Fix the Писание scope (P1, 30 min)
+1. Change `xe()` branching: scripture scope → call `Ee()` (Pagefind) instead of `fe()` (manifest)
+2. Add `data-pagefind-meta="scripture"` to ALL article body components (15+ files)
+3. Rebuild Pagefind index
+
+### Phase 2 — Add missing functionality (P2, 1 hour)
+4. Complete `$()` normalization for all 70+ Bible book abbreviations
+5. Add scripture field to search-manifest items (auto-detect from pagefind or manual)
+6. Add scripture meta check to deploy.yml gate
+7. Create script to auto-generate search-manifest from page structure
+
+### Phase 3 — Cleanup (P3)
+8. Remove 406KB dead Pagefind UI assets from dist
+9. Fix hard-texts/ eager loading → use lazy bootstrap
+10. Remove 3 dead image refs from search-manifest
