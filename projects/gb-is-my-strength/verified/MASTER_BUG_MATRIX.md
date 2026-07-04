@@ -2,7 +2,7 @@
 
 > Единый реестр всех багов проекта gospod-bog.ru.  
 > Дата консолидации: **2026-07-05** (полная реструктуризация из 2174-строчного документа).  
-> Source HEAD: `dea91376` | AuditRepo HEAD: `77c23c4`  
+> Source HEAD: `d1941a6d` | AuditRepo HEAD: `77c23c4`  
 > Предыдущая версия: `archive/2026-07-05-matrix-pre-restructure/`
 
 ---
@@ -52,8 +52,6 @@
 | ID | Описание | Witnesses |
 |---|---|---|
 | AUDIT-P1-FC-IMP | `floating-cluster.css`: 490 `!important`, audit-pro проверяет только site.css. Нет ceiling/ratchet. | АУДИТ 1.0 + verifier |
-| BUG-CI-002 | `validate:static-publication:light` пропускает 3 чека (article-mdx:strict, baptisty-series, sw:dist:audit). `indexnow.yml` вызывает `:light` → контент-регрессии доходят до поисковиков без полной проверки. | 5 witnesses |
-| BUG-CI-003 | indexnow.yml push retry: после 3 fail → exit 0 (silent failure) | 2 witnesses |
 | BUG-PERF-001 | addEventListener без removeEventListener: 294 add / 16 remove в 5 JS-файлах | 2 witnesses |
 
 ## 🟡 P2 — ОТКРЫТО (10)
@@ -67,30 +65,25 @@
 | AUDIT-P2-MATRIX-DRIFT | route-migration-matrix (35) ≠ page-ownership (54) ≠ sitemap (43). Нет cross-validation. | АУДИТ 1.0 |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
-| NEW-OG-DIMENSIONS-HARDCODED | Seo.astro hardcodes og:image:width/height |
 | BUG-SITEMAP-8-KARTY-MISSING | 8/10 karty/ routes не в sitemap.xml (early-church, maccabim, melachim, pavel, revelation, shoftim, shvatim, yeshua) — invisible to search engines |
 | BUG-FRONTMATTER-INCONSISTENCY-01 | 9/20 MDX-статей (baptisty-rossii) без полей `draft`/`noindex`/`sourcesRequired` — системная несогласованность ArticleLayout vs SeriesArticleLayout | 1200×630 — не props | Pass 91 |
 
-## 🟢 P3 — ОТКРЫТО (17)
+## 🟢 P3 — ОТКРЫТО (13)
 
 | ID | Описание |
 |---|---|
 | BUG-SW-001 | sw.js `isFont()` — двойное отрицание, читаемость |
 | AUDIT-P3-STYLE-DUP | enhancements/highlights inject CSS `<link>` без ID guard (дубликат при повторной загрузке) |
 | AUDIT-P3-QUOTE-NO-CONFIRM | highlights.js delete без confirm() |
-| BUG-SEO-002 | robots.txt `Allow: /llms.txt` только для ImagesiftBot |
-| BUG-CLEANUP-001 | 4 dead scripts (~27KB), 0 callers |
 | BUG-CLEANUP-002 | `docs/refactor-2026/lanes/` — 31MB stale |
 | BUG-CLEANUP-003 | `AUDIT_HISTORY.md` — 187KB stale |
 | BUG-CLEANUP-004 | `docs/BUGS_FOUND_2026-06-25.md` — 78KB stale |
 | NEW-CSS-BUDGET-01 | audit-pro CSS budget warning на каждом прогоне, не в backlog |
 | NEW-OG-SIZE-PARAM | seo-audit.js hardcoded OG size check, нет per-route allowlist |
-| NEW-ACTIONLINT-CI-GAP | actionlint зарегистрирован, но не вызывается в CI (high-leverage fix) |
 | AUDIT-P3-OG-LCP-MISMATCH | 4 routes: og:image ≠ LCP image |
 | AUDIT-P3-SEARCH-LAZY-CONFIRMED | SW precache defeats lazy loader strategy |
 | BUG-011 | 23 unique breakpoints, 768px collision |
 | NEW-72 | SVG dedup micro-optimization (~1.9KB) |
-| NEW-STALE-BRANCHES | 5 merged lane branches на remote |
 | NEW-PREFETCH-UNCONDITIONAL | 5 prefetch hints на каждой странице включая саму себя |
 
 ## 🔵 P3 — РЕФАКТОРИНГ (4)
@@ -140,10 +133,10 @@
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 33 |
+| Закрыто (fixed) | 41 |
 | P1 открыто | 4 |
 | P2 открыто | 10 |
-| P3 открыто | 17 |
+| P3 открыто | 13 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
 | **Всего открыто** | **38** |
