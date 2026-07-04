@@ -1,3 +1,15 @@
+# 🟢 CURRENT HANDOFF ADDENDUM — 2026-07-04 hard-texts OG dimensions fix (READ FIRST)
+
+**Current source main HEAD:** `c0ab48fc845ef27a1575d13a078dc832cab8df48`.
+
+**Fixed in this pass:** `NEW-59` — `/hard-texts/` now declares `og:image` dimensions `1360×768`, matching `images/og-series-heart.webp`.
+
+**Local verification on `c0ab48fc`:** `validate:strict`, `schema:rich-results:audit`, `audit-pro`, `git diff --check`, and `guard:shared-files` passed.
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_hardtexts-og-dimensions-fixed-c0ab48f.md`.
+
+---
+
 # 🟡 CURRENT HANDOFF ADDENDUM — 2026-07-04 NEW-72 SVG dedup downgraded (READ FIRST)
 
 **Source HEAD checked:** `a434b45ee6d8cefb0ce281039ad683fe9b9589ba`.

@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 **Дата консолидации:** 2026-07-03  
-**HEAD исходного репозитория:** `a434b45e` (sitemap lastmod refresh; descendant of README version drift fix)
+**HEAD исходного репозитория:** `c0ab48fc` (hard-texts OG dimensions fix; descendant of sitemap lastmod refresh)
 **Режим аудита:** Multi-Agent Synthesis (Passes 1–45)  
 
 ---
@@ -216,7 +216,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 * **BUG-022:** Переопределённые CSS правила — ✅ REVERIFIED-CURRENT on `dbd0bb55`, original “256” count is stale/ambiguous. `css/site.css` audit found 178 same-context repeated selector+property keys (190 beyond-first declarations), 133 with changed values; after separating same-rule progressive fallbacks, there are 52 later-rule changed selector+property keys / 54 later overrides. 81 changed keys are same-rule fallback declarations (e.g. rgba → color-mix) and should not be treated as full cascade bugs.
 * ~~**BUG-024:** Мёртвый TypeScript/JS API в helper модулях~~ ✅ CLOSED (Pass 27: 5 dead exports removed from floating-cluster-ui.ts)
 * ~~**PC-107:** Неиспользуемые TypeScript props в PremiumControls интерфейсах~~ ✅ STALE/FIXED-CURRENT on `dbd0bb55`: original archived finding targeted deleted `GillRailControls.astro` props (`context`, `homeHref`, `includeStyles`). Current source has no `GillRailControls*` file or references; current PremiumControls/FloatingCluster/Gill Props are consumed internally; `astro check` has no PC-107/GillRailControls diagnostics.
-* **NEW-54-59:** Social/SEO metadata bundle — ✅ REVERIFIED-CURRENT on `dbd0bb55` with split status: NEW-55 fixed-current (`robots.txt` now allows `/fonts/*.css?*` despite `Disallow: /*?*`); NEW-54 still current (4 sitemap URLs with zero static inlinks: `/karty/ishod/`, `/map/`, `/nagornaya/nakhodki/`, `/rodosloviye/`); NEW-56 current (28 routes missing at least one of `og:site_name`, `og:locale`, `og:image:alt`, `twitter:image:alt`, concentrated in Baptist/maps/konfessii); NEW-57 current (12 preload image mismatches, mostly Baptist `.webp` preloads vs `.svg` rendered covers + `/pastor-series/` `hero-main.webp` vs `hero.webp`); NEW-58 current but count changed (23 feed title drifts vs old 13, including 10 Baptist items now in feed); NEW-59 current (`/hard-texts/` declares `og:image` 1200×630 but actual `og-series-heart.webp` is 1360×768).
+* **NEW-54-59:** Social/SEO metadata bundle — split status: NEW-55 fixed-current; NEW-59 fixed-current on `c0ab48fc` (`/hard-texts/` OG dimensions now match `og-series-heart.webp` 1360×768). NEW-54 still current (4 sitemap URLs with zero static inlinks: `/karty/ishod/`, `/map/`, `/nagornaya/nakhodki/`, `/rodosloviye/`); NEW-56 current (social metadata gaps); NEW-57 current (preload image mismatches); NEW-58 current (feed title drift).
 * ~~**NEW-64 (P3, PREVENTION-GAP):** deploy chain did not run broad browser runtime no-undef smoke~~ ✅ FIXED-CURRENT on source main `8d0c12e0`: `.github/workflows/deploy.yml` now runs broad `dist-smoke-audit --no-build --production-like`, and `scripts/check-workflows.js` enforces it. See Pass 42.
 * ~~**NEW-65 (P2, visual parity /baptisty-rossii/):** legacy-root vs dist pixel diff 6.131% desktop / 17.368% mobile~~ ✅ FIXED-CURRENT on source main `914c7fb1`: root `baptisty-rossii/index.html` synced to current dist PremiumControls footer; targeted pixel diff is 0.000% desktop and 0.000% mobile. See Pass 41.
 * ~~**NEW-66 (P2, hidden gate — SW/Pagefind deploy-switch):** Pagefind bootstrap missing from SW precache~~ ✅ FIXED-CURRENT by `d5c65647`: `/pagefind/pagefind.js` is in `PRECACHE_ASSETS`, `CACHE_VERSION` bumped to `gb-v187-pagefind-bootstrap-20260703`, `sw:dist:audit:deploy-switch` and Deploy are green.
@@ -871,6 +871,24 @@ BUG-022 (overridden CSS rules):
 * **Visual parity current side finding:** local pixel-diff on `f1e9abd9` fails `/baptisty-rossii/` only: desktop `6.131%`, mobile `17.368%` (threshold `1%`). GitHub Visual Parity Guard failed on `8446a0da`; current `f1e9abd9` was `[skip ci]`, so remote visual parity was not rerun, but local current-head evidence confirms the issue.
 
 
+
+## 🟢 PASS 50 / HARD-TEXTS OG DIMENSIONS FIX (2026-07-04)
+
+**Source fix commit:** `c0ab48fc845ef27a1575d13a078dc832cab8df48` (`lane/seo-hardtexts-og-dimensions-2026-07-04`, pushed to `main`).
+
+`NEW-59` is **fixed-current on source main `c0ab48fc`**. `/hard-texts/` now declares `og:image:width=1360` and `og:image:height=768`, matching `images/og-series-heart.webp`.
+
+Verified on `c0ab48fc`:
+
+- PIL image check ✅
+- `npm run validate:strict` ✅
+- `npm run schema:rich-results:audit` ✅
+- `node scripts/audit-pro.js` ✅
+- `npm run guard:shared-files` ✅
+
+Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-04_hardtexts-og-dimensions-fixed-c0ab48f.md`.
+
+---
 
 ## 🟡 PASS 49 / NEW-72 SVG DEDUP REVERIFY (2026-07-04)
 
