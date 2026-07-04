@@ -1,25 +1,24 @@
+# 🟢 PASS 43 — 2026-07-04 P2-SEARCH-EAGER lazy search (READ FIRST)
 
-# 🟢 PASS 40 — 2026-07-04 MASTER_BUG_MATRIX CONSOLIDATED (READ FIRST)
+**Source HEAD:** `6e667978` (lazy search + CI optimization + prefetch)
+**AuditRepo HEAD:** `2b4b325` (Pass 43)
+**Branches:** `origin/main` only (both repos — zero stale branches)
 
-**Source HEAD:** `ba6a8f67` (CI cache-bust optimization)
-**AuditRepo HEAD:** `f2cfe37` (to be updated)
+## P2-SEARCH-EAGER — PARTIALLY FIXED on Astro-native pages
 
-## MASTER_BUG_MATRIX консолидирован
+BaseLayout.astro now loads search.js lazily (on first Ctrl+K or click).
+~31KB JS saved on initial pageload. Affects Astro-native pages only.
+Legacy pages (articles, nagornaya, baptisty) still load search.js eagerly.
 
-Старая матрица (1065 строк, 46 исторических PASS-секций) → `archive/2026-07-04-stale-matrix/`.
+## CI status
 
-Новая матрица — **компактная, только актуальные данные:**
-- 14 открытых позиций (P2: 4, P3: 7, AuditRepo: 3)
-- 25 закрытых позиций с указанием коммита
-- Сводная таблица
-- Ссылки на архив с полной историей
+Check GitHub Actions for latest run on `6e667978`.
 
-## CI статус на ba6a8f67
+## Все P0/P1 блокеры закрыты
 
-| Guard | Status |
-|-------|--------|
+11 open / 29 closed. Open items are all non-blocking P2/P3/Refactor.
 
-Ожидание завершения CI на новом коммите.
+---
 
 ---
 
