@@ -177,7 +177,7 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 
 ## 🟠 P1 — HIGH PRIORITY (2 открытых бага)
 
-### P1-CI-DUPE: Дублирование npm ci + cache-bust в IndexNow и Deploy — ✅ FIXED-CURRENT on `ba6a8f67`
+### P1-CI-DUPE: Дублирование npm ci + cache-bust в IndexNow и Deploy — ✅ FIXED-CURRENT on `8dfaac04`
 * **Файлы:** `.github/workflows/indexnow.yml`, `.github/workflows/deploy.yml`
 * **Суть:** 2× npm ci + 2× cache-bust + Astro build = 20–30 мин CI на каждый пуш.
 
@@ -209,7 +209,10 @@ Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-03_runtime-no-undef-fixed-22eb
 
 ## 🔵 P3 — MEDIUM (8 открытых багов)
 
-* **NEW-45:** Отсутствие `<link rel="prefetch">` для навигации
+* * **NEW-45:** Отсутствие `<link rel="prefetch">` для навигации — ✅ FIXED on `8dfaac04`
+- **Суть:** Добавлены prefetch-hints для 5 навигационных роутов в BaseLayout.astro
+- **Фикс:** `<link rel="prefetch">` для /articles/, /biografii/, /hard-texts/, /karty/, /about/
+- **Ограничение:** Только Astro-native страницы. Legacy страницы не имеют prefetch — это нормально для P3.
 * **NEW-31/32:** HTTP Referrer-Policy/Permissions-Policy не применяются (GitHub Pages ограничение, REG-001)
 * ~~**BUG-020:** 336 кнопок без `aria-label` (WCAG)~~ ✅ NOT A BUG — все 674 кнопки имеют visible text или aria-label
 * ~~**BUG-021:** 2 короткие meta descriptions~~ ✅ NOT A BUG — все ≥150 символов (SEO норма)
