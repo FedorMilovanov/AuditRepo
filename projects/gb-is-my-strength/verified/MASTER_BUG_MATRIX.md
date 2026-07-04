@@ -942,17 +942,123 @@ The **"Писание" (Scripture)** search scope — a primary feature of the c
 3. Regenerate search-manifest with scripture field
 >>>>>>> f41e048 (audit(gb): Pass 70 — deep SEARCH system investigation)
 
+## 🟢 PASS 71 — DEEP JS CODE REVIEW: floating-cluster-controller.js (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`  
+**Scope:** `js/floating-cluster-controller.js` (1494 lines, 61KB) — complete line-by-line manual audit
+
+### New findings (8)
+
+| ID | Severity | Description | Status |
+|----|----------|-------------|--------|
+| BUG-JS-001 | 🔴 P1 | Memory leaks — scroll listeners not cleaned on page unload (lines 1228, 1301) | OPEN |
+| BUG-JS-002 | 🔴 P1 | Potential duplicate scroll listeners (no idempotency guards) | OPEN |
+| BUG-JS-003 | 🟡 P2 | Empty catch blocks hide real errors (77 instances) | OPEN |
+| BUG-JS-004 | 🟡 P2 | Duplicate code — getFavorites/setFavorites duplicate BookmarkEngine | OPEN |
+| BUG-JS-005 | 🟡 P2 | Magic numbers without explanations (50, 180, 600, 260, 120) | OPEN |
+| BUG-JS-006 | 🔵 P3 | High complexity — 3 functions with 200+ lines (initPlayExpand, updateScrollProgress, initGbs2Controls) | OPEN |
+| BUG-JS-007 | 🔵 P3 | Accessibility — long press (600ms) without visual indicator | OPEN |
+| BUG-JS-008 | 🔵 P3 | No debouncing — only throttling via requestAnimationFrame | OPEN |
+
+### Key discoveries
+
+**1. Memory leaks despite cleanup system:**
+- Cleanup system exists (AbortController + manual tracking)
+- But `window._fcCleanupListeners()` only called at re-initialization, not on page unload
+- SPA navigation or page reload → listeners accumulate
+- 2 scroll listeners on window (lines 1228, 1301) never cleaned
+
+**2. Empty catch blocks (77 instances):**
+- Most for localStorage operations (acceptable)
+- But some hide real errors (e.g., AbortController.abort, removeEventListener)
+- No logging even in development mode
+- Difficult to debug when something breaks
+
+**3. Duplicate code:**
+- `getFavorites()`, `setFavorites()`, `isFavorite()` (lines 203-234) duplicate BookmarkEngine logic
+- Different storage keys: `gb-favorites` vs BookmarkEngine's key
+- Maintenance burden: must update both systems
+
+**4. Magic numbers:**
+```javascript
+if (favs.length > 50) favs = favs.slice(0, 50); // why 50?
+if (buf.length >= 180 && i % 2 === 1) { ... } // why 180?
+pressTimer = setTimeout(..., 600); // why 600ms?
+leaveTimer = setTimeout(closePanel, 260); // why 260ms?
+if (headings[i].getBoundingClientRect().top < 120) { ... } // why 120px?
+```
+
+**5. High complexity:**
+| Function | Lines | Responsibilities |
+|----------|-------|------------------|
+| `initPlayExpand()` | 200+ | Event listeners, DOM manipulation, state management, keyboard navigation |
+| `updateScrollProgress()` | 140+ | Scroll tracking, progress calculation, DOM updates, scroll-spy |
+| `initGbs2Controls()` | 200+ | TOC population, sheet management, tab switching, font controls, share, scroll progress |
+
+**6. Accessibility issue:**
+- Long press (600ms) to stop TTS — no visual feedback
+- Users don't know about this feature
+- No progress indicator during long press
+
+### Positive findings
+
+Despite the issues, the file has many good practices:
+- ✅ Good structure — clear sections with comments
+- ✅ Cleanup system — AbortController + manual tracking
+- ✅ Defensive programming — many try/catch blocks
+- ✅ Good accessibility — aria-labels, keyboard navigation
+- ✅ Feature detection — speechSynthesis, matchMedia
+- ✅ Fallbacks — SiteUtils, BookmarkEngine
+- ✅ Single console statement — only 1 console.warn
+
+### Impact analysis
+
+**Current state:**
+- Lines of code: 1494
+- Memory leaks: 2 (scroll listeners)
+- Empty catch blocks: 77
+- Magic numbers: 5+
+- Complex functions: 3 (200+ lines each)
+- Maintainability: 🟡 Moderate (good structure, but complexity issues)
+
+**After refactoring (estimated):**
+- Lines of code: ~1600 (slightly more due to extracted functions)
+- Memory leaks: 0
+- Empty catch blocks: 0 (all have logging)
+- Magic numbers: 0 (all extracted to constants)
+- Complex functions: 0 (all <50 lines)
+- Maintainability: 🟢 Good (modular, well-documented)
+
+### Technical debt score
+
+| Metric | Current | Target | Score |
+|--------|---------|--------|-------|
+| Memory leaks | 2 | 0 | 🔴 Critical |
+| Empty catch blocks | 77 | 0 | 🟡 High |
+| Magic numbers | 5+ | 0 | 🟡 High |
+| Complex functions (>100 lines) | 3 | 0 | 🔵 Medium |
+| Code duplication | 1 | 0 | 🔵 Medium |
+
+**Overall Technical Debt:** 🟡 **High** (memory leaks critical, but good structure overall)
+
+### Full report
+
+`incoming/arena-agent-pass71/REPORT.md`
+
+---
+
 ## 📊 СВОДКА
 
 | Уровень | Открыто | Закрыто |
 |---|---|---|
 | P0 (Critical) | 0 | 4 |
-| P1 (High) | 9 | 8 |
-| P2 (Medium) | 15 | 15 |
+| P1 (High) | 11 | 8 |
+| P2 (Medium) | 18 | 15 |
 | P3 (Medium) | 3 | 5 |
 | P3 (Refactor) | 4 | 0 |
-| P3 (Cleanup) | 18 | 0 |
+| P3 (Cleanup) | 21 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **52** | **32** |
+| **Итого** | **60** | **32** |
 
-*P0: BUG-CI-001 fixed in `6e68d7ca`. P1: BUG-CI-002/003 CI gate gaps + BUG-PERF-001 memory leaks (Pass 65) + BUG-CSS-001 1047 !important (Pass 68) + BUG-CSS-006/007/008 floating-cluster.css duplicate definitions + specificity wars (Pass 69) + BUG-CSS-013/014 site.css minified code + mixed concerns (Pass 70). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing, BUG-QUALITY-001/002/003 innerHTML + console + missing WebP (Pass 64-65), BUG-A11Y-001 skip links (Pass 66), BUG-PERF-002 render-blocking CSS (Pass 67), BUG-CSS-002/003 hardcoded colors + breakpoints (Pass 68), BUG-CSS-009/010 MAX_INT z-index + duplicate .gbs-rail-foot (Pass 69), BUG-CSS-015/016/017 site.css duplicate styles (Pass 70). P3: 25 items (Pass 64-70). Deletions audit: all removals verified correct, no regressions. Data consistency: all JSON valid, no duplicates. CSS audit: 534KB total, critical technical debt. floating-cluster.css: 106KB, 524 !important, 4 specificity layers — requires complete refactor. site.css: 275KB, minified, 7+ concerns mixed — requires reorganization and build pipeline.*
+*P0: BUG-CI-001 fixed in `6e68d7ca`. P1: BUG-CI-002/003 CI gate gaps + BUG-PERF-001 memory leaks (Pass 65) + BUG-CSS-001 1047 !important (Pass 68) + BUG-CSS-006/007/008 floating-cluster.css duplicate definitions + specificity wars (Pass 69) + BUG-CSS-013/014 site.css minified code + mixed concerns (Pass 70) + BUG-JS-001/002 floating-cluster-controller.js memory leaks + duplicate scroll listeners (Pass 71). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing, BUG-QUALITY-001/002/003 innerHTML + console + missing WebP (Pass 64-65), BUG-A11Y-001 skip links (Pass 66), BUG-PERF-002 render-blocking CSS (Pass 67), BUG-CSS-002/003 hardcoded colors + breakpoints (Pass 68), BUG-CSS-009/010 MAX_INT z-index + duplicate .gbs-rail-foot (Pass 69), BUG-CSS-015/016/017 site.css duplicate styles (Pass 70), BUG-JS-003/004/005 floating-cluster-controller.js empty catches + duplicate code + magic numbers (Pass 71). P3: 28 items (Pass 64-71). Deletions audit: all removals verified correct, no regressions. Data consistency: all JSON valid, no duplicates. CSS audit: 534KB total, critical technical debt. floating-cluster.css: 106KB, 524 !important, 4 specificity layers — requires complete refactor. site.css: 275KB, minified, 7+ concerns mixed — requires reorganization and build pipeline. JS audit: floating-cluster-controller.js 61KB, 2 memory leaks, 77 empty catches, 3 complex functions — requires refactoring.*
