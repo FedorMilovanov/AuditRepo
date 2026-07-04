@@ -73,6 +73,14 @@
 - **BUG-SW-001:** `isFont()` в sw.js — двойное отрицание `!(origin !== ... || !pathname...)` эквивалентно `origin === ... && pathname...`. Корректно, но затрудняет аудит.
   - **Repair lane:** perf-cleanup
 
+## 🟣 P3 — CLEANUP (5 открытых)
+
+- **BUG-SEO-002:** robots.txt — `Allow: /llms.txt` применяется только к ImagesiftBot, а не ко всем blocked AI bots. Нужно добавить в каждый User-agent блок или создать глобальный.
+- **BUG-CLEANUP-001:** 4 dead scripts (~27KB): `about-leaf-parity-shots.js`, `generate-route-profiles.js`, `premium-mobile-visibility-smoke.js`, `route-impact-report.js`. 0 external references.
+- **BUG-CLEANUP-002:** `docs/refactor-2026/lanes/` — 52 файла, 31MB. Все merged. Pass 62 confirmed stale. Archive candidate.
+- **BUG-CLEANUP-003:** `AUDIT_HISTORY.md` — 187KB, 51 sections, last updated 2026-06-22. Archive candidate.
+- **BUG-CLEANUP-004:** `docs/BUGS_FOUND_2026-06-25.md` — 78KB, все баги исправлены. Archive candidate.
+
 ---
 
 ## 🟠 P2 — MEDIUM (2 открытых)
@@ -534,7 +542,8 @@ Full report: `incoming/arena-agent-pass63/REPORT.md`
 | P2 (Medium) | 3 | 15 |
 | P3 (Medium) | 3 | 5 |
 | P3 (Refactor) | 4 | 0 |
+| P3 (Cleanup) | 5 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **16** | **31** |
+| **Итого** | **21** | **31** |
 
-*P0: BUG-CI-001 deploy.yml duplicate run: key (Pass 64). P1: BUG-CI-002/003 CI gate gaps (Pass 64). P2: BUG-011 reclassified (no visual regression), BUG-ARCH-001 SW precache contradiction, BUG-SEO-001 IndexNow timing (Pass 64). P3: BUG-SW-001 isFont() readability (Pass 64).*
+*P0: BUG-CI-001 deploy.yml duplicate run: key (Pass 64). P1: BUG-CI-002/003 CI gate gaps (Pass 64). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing (Pass 64). P3: BUG-SW-001 isFont(), BUG-SEO-002 robots.txt llms.txt scope, BUG-CLEANUP-001/002/003/004 dead code + stale docs (Pass 64).*

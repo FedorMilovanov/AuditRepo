@@ -172,6 +172,59 @@
 
 ---
 
+### BUG-SEO-002: robots.txt — `Allow: /llms.txt` scoped to wrong User-agent
+- **Severity:** P3
+- **Route/files:** `robots.txt`
+- **Evidence:**
+  ```
+  User-agent: ImagesiftBot
+  Disallow: /
+
+  Allow: /llms.txt
+
+  Sitemap: https://gospod-bog.ru/sitemap.xml
+  ```
+  `Allow: /llms.txt` стоит после `User-agent: ImagesiftBot` — по правилам robots.txt, это правило применяется ТОЛЬКО к ImagesiftBot. Если владелец хочет разрешить всем blocked AI bots доступ к `/llms.txt`, нужно добавить `Allow: /llms.txt` в каждый User-agent блок или создать глобальный `User-agent: *` блок.
+- **Confidence:** high
+- **Suggested repair lane:** seo-fix
+
+### BUG-CLEANUP-001: 4 dead scripts (~27KB)
+- **Severity:** P3
+- **Route/files:** `scripts/`
+- **Evidence:**
+  ```
+  about-leaf-parity-shots.js      3KB  0 external refs (superseded)
+  generate-route-profiles.js      4KB  0 external refs (one-time generator)
+  premium-mobile-visibility-smoke.js  4KB  0 external refs (superseded)
+  route-impact-report.js         11KB  0 external refs (superseded)
+  ```
+  Note: `genealogy-e2e-v2.js`, `ishod-qa.js`, `map-visual-qa.js` — NOT dead (intentionally kept for manual QA per docs/BUGS_FOUND_2026-06-25.md).
+- **Confidence:** high
+- **Suggested repair lane:** cleanup
+
+### BUG-CLEANUP-002: 31MB stale lane docs
+- **Severity:** P3 (advisory)
+- **Route/files:** `docs/refactor-2026/lanes/`
+- **Evidence:** 52 files, 31MB total. Pass 62 confirmed all merged. Should be archived per CLEANUP_RETENTION_POLICY §3.2.
+- **Confidence:** high
+- **Suggested repair lane:** cleanup (owner decision)
+
+### BUG-CLEANUP-003: AUDIT_HISTORY.md stale (187KB)
+- **Severity:** P3 (advisory)
+- **Route/files:** `AUDIT_HISTORY.md`
+- **Evidence:** 187KB, 51 sections, last updated 2026-06-22 (12 days stale). Pass 62 flagged. Should be archived.
+- **Confidence:** high
+- **Suggested repair lane:** cleanup (owner decision)
+
+### BUG-CLEANUP-004: docs/BUGS_FOUND_2026-06-25.md stale (78KB)
+- **Severity:** P3 (advisory)
+- **Route/files:** `docs/BUGS_FOUND_2026-06-25.md`
+- **Evidence:** 78KB, all bugs fixed per Pass 62. Should be archived.
+- **Confidence:** high
+- **Suggested repair lane:** cleanup (owner decision)
+
+---
+
 ## 8. Notes for Verifier
 
 1. **BUG-CI-001 is P0 and trivially fixable** — delete line 156 (`run: npx playwright install --with-deps chromium`) from deploy.yml. Playwright is already installed at line 152. This is a 1-line fix that re-enables 105 submenu regression checks.
