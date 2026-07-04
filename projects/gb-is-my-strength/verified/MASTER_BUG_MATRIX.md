@@ -569,17 +569,42 @@ Full report: `incoming/arena-agent-pass63/REPORT.md`
 
 ---
 
+## 🟢 PASS 66 — DATA CONSISTENCY, ERROR HANDLING & ACCESSIBILITY (2026-07-05)
+
+**Agent:** arena-agent  
+**Source HEAD:** `6e68d7ca`
+
+### New findings (3)
+
+| ID | Severity | Description | Status |
+|----|----------|-------------|--------|
+| BUG-A11Y-001 | 🟡 P2 | 8 legacy article pages without skip links | OPEN |
+| BUG-QUALITY-008 | 🔵 P3 | 77 empty catch blocks (9 files, mostly intentional) | OPEN |
+| BUG-A11Y-002 | 🔵 P3 | 3 SPA apps without semantic landmarks | OPEN |
+
+### Verified clean
+
+✅ Data consistency — 68 JSON files valid, no duplicates  
+✅ Error handling — 44 catch blocks with fallback (35%)  
+✅ Accessibility — all images have alt, all buttons have names, all inputs have labels  
+
+### Full report
+
+`incoming/arena-agent-pass66/REPORT.md`
+
+---
+
 ## 📊 СВОДКА
 
 | Уровень | Открыто | Закрыто |
 |---|---|---|
 | P0 (Critical) | 0 | 4 |
 | P1 (High) | 3 | 8 |
-| P2 (Medium) | 6 | 15 |
+| P2 (Medium) | 7 | 15 |
 | P3 (Medium) | 3 | 5 |
 | P3 (Refactor) | 4 | 0 |
-| P3 (Cleanup) | 9 | 0 |
+| P3 (Cleanup) | 11 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **28** | **32** |
+| **Итого** | **31** | **32** |
 
-*P0: BUG-CI-001 fixed in `6e68d7ca`. P1: BUG-CI-002/003 CI gate gaps + BUG-PERF-001 memory leaks (Pass 65). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing, BUG-QUALITY-001/002/003 innerHTML + console + missing WebP (Pass 64-65). P3: 12 items (Pass 64-65). Deletions audit: all removals verified correct, no regressions.*
+*P0: BUG-CI-001 fixed in `6e68d7ca`. P1: BUG-CI-002/003 CI gate gaps + BUG-PERF-001 memory leaks (Pass 65). P2: BUG-011 reclassified, BUG-ARCH-001 SW precache, BUG-SEO-001 IndexNow timing, BUG-QUALITY-001/002/003 innerHTML + console + missing WebP (Pass 64-65), BUG-A11Y-001 skip links (Pass 66). P3: 14 items (Pass 64-66). Deletions audit: all removals verified correct, no regressions. Data consistency: all JSON valid, no duplicates.*
