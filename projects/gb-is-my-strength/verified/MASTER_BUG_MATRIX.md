@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
 **Консолидация:** 2026-07-04 (обновлено **2026-07-05**)
-**HEAD исходного репозитория:** `8a8211ea` (CI fix — submenu audit order after Playwright install)
+**HEAD исходного репозитория:** `8a8211ea` (CI fix) (CI fix — submenu audit order after Playwright install)
 **Статус:** ✅ **deploy-green** — все P0/P1/P2 блокеры закрыты
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
@@ -299,6 +299,55 @@ All CSS custom properties (`--color-*`, `--h-*`, `--gbs2-*`, `--gb-*`) are refer
 | Desktop TOC scrollspy | ✅ gill:pre-v16-submenu:audit | Static TOC + browser scrollspy assertions |
 | PremiumControls | ✅ `audit:premium-controls` 87/87 | Does not prove desktop rail geometry |
 
+
+
+## 🟢 PASS 62 — COMPREHENSIVE STALE-CONTENT SCAN (2026-07-05)
+
+**Scan of previously unaudited areas in source repo (`8a8211ea`).**
+
+### Source repo stale files
+
+| File | Size | Status | Action |
+|------|------|--------|--------|
+| `docs/BUGS_FOUND_2026-06-25.md` | **80KB** | Stale — references commits from 2026-06-25..29, all fixed-current | Archive to docs/archive/ |
+| `AUDIT_HISTORY.md` | **191KB** | 51 version sections, last updated 2026-06-22. Contains ancient history | Archive to docs/archive/ |
+| `docs/refactor-2026/lanes/` | **52 files** | All lanes merged and deleted. Stale documentation | Archive to docs/archive/ |
+| `_check-fonts.mjs` | 3KB | Build-time diagnostic tool | Keep (build tooling) |
+| `_check-styles.mjs` | 3KB | Build-time diagnostic tool | Keep |
+| `_diag-kod.mjs` | 6KB | Build-time diagnostic tool | Keep |
+| `RUN-LOCAL-WINDOWS-AUDIT.cmd` | 1KB | Local Windows tool | Keep |
+| `_build-tools/` | 2 dirs | Build-time tooling | Keep |
+| `google*.html` / `yandex*.html` | <1KB | Verification tokens — also in dist/ | Redundant but harmless |
+
+### Data / SEO findings
+
+| Check | Result |
+|-------|--------|
+| search-manifest.json items | 44 — all valid |
+| generatedAt | 2026-07-04T16:48:42+03:00 ✅ refreshed |
+| Broken references | 0 (biografii/#dzhon-gill-series is a valid anchor on /biografii/) |
+| Duplicate image pairs | 10 pairs (~1.9MB, identified in Pass 53) — responsive variants |
+| heaviest images | gill-bunhill-fields.jpg (573KB), gill-wesley-debate.jpg (415KB) |
+
+### Layout audit
+
+| Layout | Uses BaseLayout | search.js loading | Status |
+|--------|:--------------:|:-----------------:|:------:|
+| BaseLayout.astro | — | **Lazy** (inline bootstrap) | ✅ |
+| ArticleLayout.astro | ✅ BaseLayout | **Lazy** (inherited) | ✅ |
+| SeriesArticleLayout.astro | ✅ BaseLayout | **Lazy** (inherited) | ✅ |
+
+### Remaining open items (10)
+
+| ID | Category | Status |
+|----|----------|--------|
+| BUG-011 | CSS breakpoints (23 values, 768px overlap) | Reclassified — no visual regression |
+| NEW-72 | SVG dedup (~1.9KB) | Advisory P3 |
+| NEW-54/56/57/58 | Social/SEO metadata | P3 non-blocking |
+| R-001..R-004 | site.js 167KB monolith, enhancements 48KB, source maps, ESM | Refactoring |
+| AR-001/004/005 | AuditRepo infra | Accepted |
+
+---
 
 ## 🟢 PASS 58 — GILL DESKTOP RAIL VERIFICATION (2026-07-04)
 
