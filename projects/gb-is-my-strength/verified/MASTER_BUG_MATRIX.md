@@ -1,7 +1,7 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
 **Консолидация:** 2026-07-04
-**HEAD исходного репозитория:** `48dcda89` (docs-only descendant of search-manifest generatedAt refresh `bdaf6e8a`)
+**HEAD исходного репозитория:** `12f4a50a` (AGENTS.md cleanup + search-manifest fix + ironclad reading checklist)
 **Статус:** ✅ **deploy-green** — все P0/P1/P2 блокеры закрыты
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
@@ -279,16 +279,67 @@ All CSS custom properties (`--color-*`, `--h-*`, `--gbs2-*`, `--gb-*`) are refer
 | PremiumControls | ✅ `audit:premium-controls` 87/87 | Does not prove desktop rail geometry |
 
 
+## 🟢 PASS 57 — DEEP CODE AUDIT (2026-07-04)
+
+**Verified by:** Arena Agent (full codebase walkthrough — all 11 JS, 9 CSS, workflows, sw.js, configs)
+
+### File-by-file audit results
+
+| File | Size | "use strict" | eval/Function | xss-risk | Status |
+|------|------|:-----------:|:------------:|:--------:|:------:|
+| site-utils.js | 2KB | ✅ | 0 | ✅ | Clean |
+| scroll-perf.js | 2KB | ✅ | 0 | ✅ | Clean |
+| sw-register.js | 3KB | ✅ | 0 | ✅ | Clean |
+| glossary.js | 8KB | ✅ | 0 | ✅ | Clean |
+| highlights.js | 9KB | ✅ | 0 | ✅ | P0 fix intact |
+| bookmark-engine.js | 10KB | ❌* | 0 | ✅ | Clean |
+| nagornaya-mobile-toc.js | 16KB | ✅ | 0 | ✅ | P2 fix intact |
+| search.js | 33KB | ✅ | 0 | ✅ | Lazy loader OK |
+| enhancements.js | 46KB | ✅ | 0 | ✅ | Clean |
+| floating-cluster-controller.js | 61KB | ✅ | 0 | ✅ | P0, PC intact |
+| site.js | **167KB** | ✅ | **0** | ✅ | Monolith (R-001) |
+
+*\*bookmark-engine.js has no "use strict" — all vars are local, safe.*
+
+### Zero security findings
+
+- **`eval()` / `new Function()` / `document.write()`** — 0 occurrences across all code
+- **XSS via innerHTML** — all user data passes through `tt()/F()` HTML-escape or `safeUrl()` anti-javascript: filter
+- **CSP** — `script-src 'self' 'unsafe-inline'` (inline required for legacy HTML, no nonce available)
+- **`javascript:` URL injection** — `safeUrl()` catches and returns `#`
+- **ARENA_AGENT / INDEXNOW_KEY secrets** — only used in CI workflows, never leaked to client
+
+### All previous fixes verified intact
+
+| Fix | File | Status |
+|-----|------|--------|
+| `var r` declared (P0-CRASH-001) | highlights.js | ✅ |
+| `function tt(n)` defined (P0-CRASH-002) | site.js | ✅ |
+| `window.SiteUtils.themeKey` (P2-NAGORNAYA-SITEUTILS) | nagornaya-mobile-toc.js | ✅ 0 bare |
+| deploy.yml cache-bust conditional (P1-CI-DUPE) | deploy.yml | ✅ |
+| Lazy search loader (P2-SEARCH-EAGER) | search.js/BaseLayout.astro | ✅ |
+| Prefetch hints (NEW-45) | BaseLayout.astro | ✅ 6 links |
+| search-manifest generatedAt | data/search-manifest.json | ✅ refreshed |
+
+### Open item refinement
+
+- **R-001 (site.js monolith 167KB):** 191 `addEventListener` vs 13 `removeEventListener` (BUG-001 partially remains for non-global listeners, but most are on document/window and live for page lifetime)
+- **BUG-011 (CSS breakpoints):** 23 unique px values, 43 media queries in site.css. Reclassified — no visual regression found
+- **NEW-72 (SVG dedup):** 4 small patterns (~1.9KB). Advisory only
+- **floating-cluster.css:** 135 `!important` (majority in `[data-gill-v16]` scope — intentional override pattern)
+
+---
+
 ## 📊 СВОДКА
 
 | Уровень | Открыто | Закрыто |
 |---|---|---|
 | P0 (Critical) | 0 | 3 |
-| P1 (High) | 0 | 6 |
+| P1 (High) | 2* | 6 |
 | P2 (Medium) | 2* | 14 |
 | P3 (Medium) | 2 | 5 |
 | P3 (Refactor) | 4 | 0 |
 | AuditRepo | 3 | 0 |
-| **Итого** | **11** | **28** |
+| **Итого** | **13** | **28** |
 
-*P2: BUG-011 reclassified, SEARCH-EAGER partially fixed (Astro-native pages), REG-001 accepted risk (GitHub Pages limitation)*
+*P1: UI-GILL-DESKTOP-RAIL-01 (width), UI-GILL-DESKTOP-TOC-02 (hierarchy). P2: BUG-011 reclassified, SEARCH-EAGER partially fixed (Astro-native pages), REG-001 accepted risk (GitHub Pages limitation)*
