@@ -659,3 +659,49 @@ User types → 180ms debounce → xe(query)
 - **406KB** dead Pagefind UI assets deployed
 - **180ms** debounce (acceptable)
 - **10-12** max results per query
+
+
+---
+
+## ✅ SEARCH INVESTIGATION COMPLETE — Executive Summary
+
+After 7 deep-dive passes (70-76) and 24 unique bugs found across 3 severity levels, the SEARCH system has been **completely audited**.
+
+### What was investigated
+| Area | Method | Depth |
+|------|--------|-------|
+| search-manifest.json | Static analysis + git history | All 44 items, fields, tags, coverage |
+| search.js (32KB) | Full code decompilation | Every function decoded: xe, fe, Ee, ye, we, ge, me, G, J, te |
+| Pagefind index (1.5.2) | Binary analysis + rebuild | 43 pages, 16K words, wasm fragments |
+| command-palette.css | Static analysis | 29KB CSS, responsive, mobile support |
+| Browser behavior | Playwright E2E tests | ALL vs SCRIPTURE scope comparison, 8 queries |
+| UX | Code analysis | Debounce (180ms), max results (10-12), keyboard nav |
+| Build pipeline | Deploy.yml analysis | pagefind build + check, NO manifest generation |
+
+### 24 bugs found
+| Priority | Count | Key findings |
+|:--------:|:-----:|--------------|
+| 🔴 P1 | 3 | scripture meta missing; Писание not calling Pagefind; scripture field always null |
+| 🟡 P2 | 10 | manual manifest; missing book normalization; no gate; 2 corpora not merged |
+| 🔵 P3 | 11 | 406KB dead assets; hard-texts eager; 15 no-search pages; etc. |
+
+### Root cause chain
+```
+search.js → xe() → scripture scope → fe() [≡ manifest only, NO pagefind]
+                                        ↓
+                                   me() → article.scripture = null [≡ no field in manifest]
+                                        ↓
+                                   G() searches title+description+null → metadata only
+                                        ↓
+                                   Писание tab shows FEWER results than ALL tab
+```
+
+### Summary of cost
+| Asset | Size | Status |
+|-------|:----:|--------|
+| search.js (external) | 32KB | ✅ Lazy loaded on 37/38 pages |
+| Inline bootstrap | 642B | ✅ Minimal, on 37/38 pages |
+| command-palette.css | 29KB | ✅ Loaded on all pages via site.css |
+| Pagefind index (WASM) | 134KB | ✅ Built by deploy.yml |
+| Dead Pagefind UI assets | 406KB | ❌ Deployed but never loaded |
+| **Total for search** | **~62KB** per user interaction | |
