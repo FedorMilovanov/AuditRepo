@@ -1,8 +1,8 @@
 # MASTER BUG MATRIX — gb-is-my-strength (CONSOLIDATED)
 
 **Консолидация:** 2026-07-05 (обновлено **2026-07-05**, Pass 89 deep verifier + АУДИТ 1.0 intake + independent verifier pass merged)
-**HEAD исходного репозитория:** `96959c93` (docs(gb): point agents to AuditRepo + add verification discipline to AGENTS.md)
-**Статус:** 🔴 **P0 OPEN** — AUDIT-P0-SWBASELINE (SW baseline drift v182→v187, 5 versions stale). Deploy-green for runtime, but SW cache versioning contract is broken. Pass 89: deep-audit-2 witness validity confirmed (evidence in comments/, not REPORT.md — structural note, not fraud). Matrix hygiene pass: 3 challenges filed, 2 merges proposed, severity upgrade proposed for NEW-ACTIONLINT-CI-GAP (P3→P1).
+**HEAD исходного репозитория:** `8c318010` (merge: seo-fix-og-images lane) ⚠️ ранее ошибочно указан `96959c93` — этот SHA не существует в source repo (Pass 91)
+**Статус:** ✅ **deploy-green** — BUG-CI-001 fixed, все P0 runtime блокеры закрыты. AUDIT-P0-SWBASELINE переклассифицирован в P2 (Pass 91): baseline .json — документационный drift; SW имеет корректную версию; CI осознанно использует note() а не bad(). Pass 89: deep-audit-2 witness validity confirmed (evidence in comments/, not REPORT.md — structural note, not fraud). Matrix hygiene pass: 3 challenges filed, 2 merges proposed, severity upgrade proposed for NEW-ACTIONLINT-CI-GAP (P3→P1).
 **Verifier note (2026-07-05):** АУДИТ 1.0 intake (arena-agent-audit-1) submitted 18 findings. Independent verifier confirmed 12, rejected 2 (fabricated evidence + false positive), downgraded 2, could not verify 2. Added 1 new verifier finding (SEC-001-VERIFIER). See `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_audit-1-intake-verification.md` for full evidence.
 
 > ⚠️ Исторические PASS-секции (30–46) перемещены в `archive/2026-07-04-stale-matrix/`.
@@ -45,11 +45,9 @@
 
 ---
 
-## 🔴 P0 — CRITICAL (1 открытый)
+## 🔴 P0 — CRITICAL (0 открытых)
 
-| ID | Описание | Статус | Evidence |
-|---|---|---|---|
-| AUDIT-P0-SWBASELINE | SW cache baseline drift: `migration/sw-cache-version-baseline.json` = `gb-v182-*`, actual `sw.js` CACHE_VERSION = `gb-v187-*` (5 versions stale). `sw-dist-readiness-audit.js --require-cache-bump` uses `note()` not `bad()` — CI never fails on stale baseline. | 🔴 OPEN | АУДИТ 1.0 intake + independent verifier confirmation. Verified-source on `96959c93`. |
+*Все P0 runtime блокеры закрыты. BUG-CI-001 fixed (2 independent witnesses).*
 
 | ID | Описание | Коммит |
 |---|---|---|
@@ -77,6 +75,13 @@
 - **BUG-PERF-001:** *(2nd witness: АУДИТ 1.0 intake + independent verifier, 2026-07-05)* Memory leaks — addEventListener без removeEventListener в 5 JS файлах (64 listeners total). Критические: `nagornaya-mobile-toc.js` (26 listeners), `search.js` (22 listeners).
   - **Mitigation:** MPA (Astro) — менее критично чем в SPA, но стоит добавить cleanup для search palette и mobile TOC.
   - **Repair lane:** perf-cleanup
+
+## 🟡 P2 — CI/SEO (5 открытых) + SW BASELINE (1)
+
+- **BUG-SW-BASELINE-DRIFT** *(reclassified P0→P2, Pass 91)*: `migration/sw-cache-version-baseline.json` = `gb-v182-*`, actual `sw.js` CACHE_VERSION = `gb-v187-*` (5 версий stale). `sw-dist-readiness-audit.js --require-cache-bump` использует `note()` а не `bad()` — CI осознанно не фейлится на stale baseline. SW имеет корректную версию; baseline .json — документационный drift, не runtime bug.
+  - **Evidence:** АУДИТ 1.0 intake + independent verifier. Verified-source on `8c318010`.
+  - **Repair lane:** system-sw-baseline-sync
+  - **Reclassified:** P0→P2 (Pass 91) — не deploy-blocker; SW работает корректно.
 
 ## 🟡 P2 — CI/SEO (4 открытых)
 
