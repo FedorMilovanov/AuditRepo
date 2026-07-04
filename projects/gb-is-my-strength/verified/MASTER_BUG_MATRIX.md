@@ -963,6 +963,12 @@ Aliases reference semantic variables which are already theme-aware — no need t
 The **"Писание" (Scripture)** search scope — a primary feature of the command palette — is effectively **broken**. It only indexes 3 pages while 25+ pages with substantial Bible content are invisible. Users searching for Bible verses via the scripture tab get near-zero results.
 
 ### Root cause chain
+| SEARCH-220 | izbrannoe/ — search загружен, но ПОЛНОСТЬЮ СЛОМАН (нет CSS, нет кнопки, нет DOM-палитры) | 🟡 **P2** | Ctrl+K технически работает, но UI невидим без command-palette.css и cp-backdrop |
+| SEARCH-221 | 35 PageHead компонентов дублируют загрузку command-palette.css (29KB render-blocking × 35 копий) | 🔵 **P3** | Должен загружаться только из BaseLayout + app PageHeads |
+| SEARCH-222 | hard-texts — search.js загружен EAGER (единственная страница), но кнопки поиска НЕТ на странице | 🟡 **P2** | Ctrl+K работает, пользователь не видит триггера |
+| SEARCH-223 | 15 app/map страниц имеют НОЛЬ поисковой инфраструктуры | 🔵 **P3** | karty/* (10), konfessii (2), map (1), izbrannoe (1) |
+| SEARCH-224 | Rodosloviye загружает command-palette.css БЕЗ хеша версии (?v=afe33045) | 🟡 **P2** | Старый кэш не обновится при смене CSS |
+| SEARCH-225 | 29KB command-palette.css — render-blocking на всех страницах. Должен быть async/deferred | 🔵 **P3** | Критический CSS для модального поиска не нужен при первой загрузке |
 1. `data-pagefind-meta="scripture"` was never added to most ArticleBody components
 2. Generic layouts (ArticleLayout/SeriesArticleLayout) don't support the feature
 3. Nagornaya paralel development created inconsistency (chast-1/2/3 have, 4/5 don't)

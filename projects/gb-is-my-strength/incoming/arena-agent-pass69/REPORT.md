@@ -705,3 +705,86 @@ search.js → xe() → scripture scope → fe() [≡ manifest only, NO pagefind]
 | Pagefind index (WASM) | 134KB | ✅ Built by deploy.yml |
 | Dead Pagefind UI assets | 406KB | ❌ Deployed but never loaded |
 | **Total for search** | **~62KB** per user interaction | |
+
+
+---
+
+## 🧠 PASS 78 — SEARCH UI GAPS: missing buttons, broken pages, CSS duplication
+
+### 🐛 SEARCH-220: izbrannoe/ — search загружен, но ПОЛНОСТЬЮ СЛОМАН (P2)
+
+**Тройная проблема:**
+1. **Нет command-palette.css** — search UI будет без стилей (невидим)
+2. **Нет cp-backdrop HTML** — search.js создаёт его динамически, но CSS не загружен
+3. **Нет search button** — пользователь не может нажать кнопку
+
+Ctrl+K технически работает, но команда палитра отображается без CSS → невидима.
+
+**Причина:** `/izbrannoe/` использует `native-with-legacy-head` режим, который не включает command-palette.css.
+
+---
+
+### 🐛 SEARCH-221: 35 PageHead компонентов ДУБЛИРУЮТ command-palette.css (P3)
+
+**29KB CSS загружается в 35 разных PageHead компонентах** + BaseLayout + hard-texts + Rodosloviye.
+
+Уникальные компоненты, дублирующие один и тот же `<link rel="stylesheet" href="...command-palette.css?v=...">`:
+- 32 PageHead.astro файла (каждый для своей секции)
+- 1 BaseLayout.astro
+- 1 hard-texts/index.astro
+- 1 RodosloviyeStyles.astro
+
+Хотя браузер кэширует CSS после первой загрузки, дублирование:
+- Усложняет поддержку (при смене CSS пути нужно менять 35 файлов)
+- Добавляет 29KB render-blocking ресурса на каждую первую загрузку
+- Не используется предзагрузка (preload)
+
+**Архитектурный debt:** command-palette.css должен загружаться ТОЛЬКО в BaseLayout + app-специфичных PageHeads, а не во всех 35.
+
+---
+
+### 🐛 SEARCH-222: hard-texts — search.js загружен eager, но кнопки поиска НЕТ (P2)
+
+`hard-texts/index.html` загружает `search.js` как `<script src="/js/search.js?v=fb5cf04f" defer>` — это **единственная страница**, где search.js не ленивый.
+
+Но на странице **нет кнопки поиска** — `Se()` функция search.js не находит подходящий DOM элемент для вставки кнопки. Ctrl+K работает, но пользователь не видит визуального триггера.
+
+---
+
+### 🐛 SEARCH-223: 15 app/map страниц имеют НОЛЬ поисковой инфраструктуры (P3)
+
+Страницы без search.js, command-palette.css, bootstrap — без поиска вообще:
+- karty/* (10 страниц карт)
+- konfessii/* (2 страницы конфессий)
+- map/ (карта связей)
+- izbrannoe/ (избранное — парадокс: search.js есть, но сломан)
+
+---
+
+### 🐛 SEARCH-224: Rodosloviye загружает command-palette.css БЕЗ хеша версии (P2)
+
+```html
+<link rel="stylesheet" href="/css/command-palette.css">
+```
+
+Все остальные страницы используют `?v=afe33045`, но Rodosloviye — без хеша. Это значит:
+- После изменения CSS, старый кэш браузера может не обновиться
+- Разные версии CSS на разных страницах
+
+---
+
+### 🐛 SEARCH-225: 29KB command-palette.css — render-blocking на ВСЕХ страницах (P3)
+
+`command-palette.css` (29KB) загружается как обычный `<link rel="stylesheet">` в `<head>` — это **render-blocking** ресурс. Критический CSS для палитры можно было бы загружать асинхронно, т.к. поиск — это взаимодействие, а не первоначальный контент.
+
+---
+
+### Исправление: openSearch() механизм работает корректно ✅
+
+`floating-cluster-controller.js` имеет `openSearch()` функцию, которая:
+1. Ищет существующую кнопку поиска (`#gbSearchBtn`, `[data-gbs2-search]`)
+2. Если найдена — кликает по ней
+3. Если не найдена — диспатчит `gb:openSearch` custom event
+4. `search.js` слушает это событие и открывает палитру
+
+**Механизм корректен.** Проблема только в том, что на izbrannoe/hard-texts нет ни кнопки, ни стилей.
