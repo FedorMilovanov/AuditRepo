@@ -588,3 +588,74 @@ User presses Ctrl+K
 8. Remove 406KB dead Pagefind UI assets from dist
 9. Fix hard-texts/ eager loading → use lazy bootstrap
 10. Remove 3 dead image refs from search-manifest
+
+
+---
+
+## 🧠 PASS 76 — SEARCH ARCHITECTURE FULL DECODE: scoring, debounce, limits, flow
+
+### ge() — Scoring Algorithm (completely decoded)
+```
+Exact title match:              +120  ← highest priority
+Title contains query:            +70
+Description contains query:      +28
+Per-word in title:               +20  (each word)
+Per-word in description:          +8  (each word)
+Per-word in e.scripture:         +10  ← ALWAYS ZERO — manifest has no scripture field!
+Priority bonus:                  +2× priority (0-100)
+```
+
+### Search flow (completely mapped)
+```
+User types → 180ms debounce → xe(query)
+  ├─ if query<2 chars → we() [show default state]
+  ├─ if W (pagefind failed) → ye() [use scoring + manifest]
+  ├─ if scope=scripture OR authors → fe() [manifest only]
+  ├─ if scope=all OR articles → Ee() [pagefind]
+  │
+  ├─ fe() → loads /data/search-manifest.json
+  │   → filters by G() or J() 
+  │   → maps via me() [scripture=null]
+  │   → max 12 results (ye) or unlimited (fe callback)
+  │   → groups by scope name
+  │
+  └─ Ee() → checks pagefind via HEAD
+       → loads pagefind.js dynamically (dynamic import)
+       → window.__pagefind__.search(query)
+       → processes results: extracts meta.scripture
+       → if has scripture meta → isScripture=true, tag "Ссылка"
+       → max 10 results
+       → groups: Писание section + Статьи section
+```
+
+### Max results limits
+| Search path | Max | Source |
+|------------|:---:|--------|
+| Empty state history | 6 | `slice(0,6)` |
+| Empty state featured | 5 | `slice(0,5)` |
+| ye() fallback (pagefind down) | 12 | `slice(0,12)` |
+| Ee() pagefind success | 10 | `slice(0,10)` |
+
+### Debounce
+- **180ms** after user stops typing before executing search
+- Clear timeout on each new keystroke (no queue buildup)
+- No loading during debounce
+
+---
+
+## COMPLETE SEARCH BUG TAXONOMY (24 bugs)
+
+| Priority | Count | IDs |
+|:--------:|:-----:|-----|
+| 🔴 P1 | 3 | SEARCH-001 (scripture meta missing), SEARCH-016 (Писание не вызывает Pagefind), SEARCH-017 (e.scripture всегда null) |
+| 🟡 P2 | 10 | SEARCH-003, 006, 007, 009+032 (book norm), 021 (2 corpora), 082 (manual manifest), 084 (no gate), 002, 008 |
+| 🔵 P3 | 11 | SEARCH-004, 005, 022, 023 (406KB dead), 033 (hard-texts eager), 034 (maps no search), 011, 024, 083 |
+| **Total** | **24** | |
+
+### Key metrics
+- Only **3/43** Pagefind-indexed pages have `data-pagefind-meta="scripture"`
+- **0/44** manifest items have `scripture` field
+- **16/70** Bible book abbreviations NOT normalized by `$()`
+- **406KB** dead Pagefind UI assets deployed
+- **180ms** debounce (acceptable)
+- **10-12** max results per query
