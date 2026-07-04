@@ -44,17 +44,25 @@
 | NEW-SAFEURL-XSS-HARDENING | safeUrl() blocked only javascript: | `3d242b1c` |
 | NEW-CACHE-BUST-ASTRO | Runtime CSS ?v= empty на 53 Astro-страницах | `6499d42e` |
 | NEW-GITCONFIG-COMMITTED | .gitconfig agent identity в корне репо | `6499d42e` |
+| BUG-CI-002 | `:light` gate aligned with `:full` — 3 missing checks added | `85a2fd65` |
+| AUDIT-P1-CI-GATE-GAP | → merged into BUG-CI-002 (same root cause: indexnow.yml :light gate) | `85a2fd65` |
+| BUG-CI-003 | indexnow.yml push retry: exit 1 + ::error:: после 3 fail | `85a2fd65` |
+| NEW-ACTIONLINT-CI-GAP | actionlint v1.7.7 wired into shared-files-guard.yml | `85a2fd65` |
+| NEW-OG-DIMENSIONS-HARDCODED | Seo.astro og:image:width/height → props с defaults 1200/630 | `85a2fd65` |
+| BUG-CLEANUP-001 | 4 dead scripts (~23KB) удалены | `85a2fd65` |
+| BUG-SEO-002 | robots.txt: `Allow: /llms.txt` во всех 14 заблокированных AI-ботах | `85a2fd65` |
+| NEW-STALE-BRANCHES | 5 merged lane branches удалены с remote | `85a2fd65` |
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (4)
+## 🟠 P1 — ОТКРЫТО (2)
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | AUDIT-P1-FC-IMP | `floating-cluster.css`: 490 `!important`, audit-pro проверяет только site.css. Нет ceiling/ratchet. | АУДИТ 1.0 + verifier |
 | BUG-PERF-001 | addEventListener без removeEventListener: 294 add / 16 remove в 5 JS-файлах | 2 witnesses |
 
-## 🟡 P2 — ОТКРЫТО (10)
+## 🟡 P2 — ОТКРЫТО (9)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -66,7 +74,7 @@
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
 | BUG-SITEMAP-8-KARTY-MISSING | 8/10 karty/ routes не в sitemap.xml (early-church, maccabim, melachim, pavel, revelation, shoftim, shvatim, yeshua) — invisible to search engines |
-| BUG-FRONTMATTER-INCONSISTENCY-01 | 9/20 MDX-статей (baptisty-rossii) без полей `draft`/`noindex`/`sourcesRequired` — системная несогласованность ArticleLayout vs SeriesArticleLayout | 1200×630 — не props | Pass 91 |
+| BUG-FRONTMATTER-INCONSISTENCY-01 | 9/20 MDX-статей (baptisty-rossii) без полей `draft`/`noindex`/`sourcesRequired` — системная несогласованность ArticleLayout vs SeriesArticleLayout | Pass 92 |
 
 ## 🟢 P3 — ОТКРЫТО (13)
 
@@ -108,7 +116,6 @@
 ## Примечания
 
 ### Дубликаты (объединены):
-- **BUG-CI-002** поглотил **AUDIT-P1-CI-GATE-GAP** (один root cause — `:light` gate в indexnow.yml). Оставлен BUG-CI-002 с расширенным описанием.
 - **BUG-ARCH-001** = **AUDIT-P2-SW-PRECACHE-4** (одна суть: SW precache содержит lazy assets). Оставлено оба ID для обратной совместимости с reverify-документами.
 - **NEW-CACHE-BUST-ASTRO** закрыто (`6499d42e`), но **AUDIT-P3-SEARCH-LAZY-CONFIRMED** и **AUDIT-P2-SW-PRECACHE-4** описывают ту же тему SW/lazy — не дубликаты, разные root causes.
 
@@ -134,17 +141,14 @@
 | Категория | Количество |
 |---|---|
 | Закрыто (fixed) | 41 |
-| P1 открыто | 4 |
-| P2 открыто | 10 |
+| P1 открыто | 2 |
+| P2 открыто | 9 |
 | P3 открыто | 13 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **38** |
+| **Всего открыто** | **31** |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
-
----
-
 ## 🟢 PASS 89 — HTML FILES AUDIT: about/index.html (2026-07-05)
 
 **Agent:** arena-agent  
