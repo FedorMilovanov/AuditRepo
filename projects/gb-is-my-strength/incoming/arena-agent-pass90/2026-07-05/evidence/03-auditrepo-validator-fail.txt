@@ -1,0 +1,2 @@
+AUDITREPO VALIDATION: FAIL
+- code-audit: intake identity file has no commit SHA (SHA-first evidence required): /home/user/repos/AuditRepo/projects/code-audit/incoming/arena-agent/2026-07-02/README.md

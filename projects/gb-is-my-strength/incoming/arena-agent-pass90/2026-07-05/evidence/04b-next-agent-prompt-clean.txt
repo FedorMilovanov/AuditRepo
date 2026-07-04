@@ -1,0 +1,2 @@
+$ grep -n "<<<<<<<\\|=======\\|>>>>>>>" projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+(no conflict markers)

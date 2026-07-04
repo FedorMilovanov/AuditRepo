@@ -20,7 +20,6 @@
 | P1-CI-DUPE | Дублирование cache-bust в deploy | `6e667978` |
 | P1-SITE-XSS | XSS санитизация innerHTML | `47a98da` |
 | P1-LAYERED-CSS | 283KB мёртвый CSS удалён | `47a98da` |
-| P1-DEPLOY-FAIL | deploy блокировка при indexnow | `29b49df` |
 | P0-FC-REC | Бесконечная рекурсия FC controller | `ca6a25a8` |
 | NEW-48 | Stored XSS в Favorites.astro | `f284fc60` |
 | NEW-46 | llms.txt — 19 missing routes | `f284fc60` |
@@ -1155,7 +1154,7 @@ See P2/P3 sections above for `NEW-README-ANCHOR-01` (fixed), `NEW-CANONICAL-IZBR
 
 ### Note on AuditRepo process itself (found during rebase/sync of this pass)
 
-While syncing this pass with concurrently-pushed work, this agent found that `AuditRepo` commit `646f38e` ("Pass 70 — deep SEARCH system investigation") had been pushed to `main` with **unresolved git merge-conflict markers still in the file** (`<<<<<<<`/`=======`/`>>>>>>>` literally present in `MASTER_BUG_MATRIX.md` on `origin/main`). This was cleaned up as part of this pass's rebase (no content was lost — both conflicting sections, Pass 70 CSS review and the Search System Audit, are preserved above). **Process lesson for AuditRepo itself: always run `git diff --check` (or grep for conflict markers) before pushing a merge/rebase result.**
+While syncing this pass with concurrently-pushed work, this agent found that `AuditRepo` commit `646f38e` ("Pass 70 — deep SEARCH system investigation") had been pushed to `main` with **unresolved git merge-conflict markers still in the file** (left/divider/right conflict markers literally present in `MASTER_BUG_MATRIX.md` on `origin/main`). This was cleaned up as part of this pass's rebase (no content was lost — both conflicting sections, Pass 70 CSS review and the Search System Audit, are preserved above). **Process lesson for AuditRepo itself: always run `git diff --check` (or grep for conflict markers) before pushing a merge/rebase result.**
 
 ---
 
@@ -2086,4 +2085,39 @@ While syncing this pass with concurrently-pushed work, this agent found that `Au
 - validate_audit_repo.py catches SHA-less intakes (3 caught this pass)
 - deep-audit-2 witness VALID — evidence confirmed in comments/
 - workflows:policy script exists — just not wired into CI
+
+---
+
+## 🟡 PASS 90 — VERIFIER DRIFT AUDIT: DEPLOY GATE SEMANTICS + AUDITREPO HYGIENE (2026-07-05)
+
+**Agent:** arena-agent-pass90
+**Source HEAD:** `8c318010`
+**AuditRepo HEAD at start:** `b0b27a3`
+**Full report:** `incoming/arena-agent-pass90/2026-07-05/REPORT.md`
+
+### Canonical updates
+
+| ID | Severity | Description | Status |
+|----|----------|-------------|--------|
+| P1-DEPLOY-FAIL | 🟠 P1 | deploy gate regression reopened: current `deploy.yml` allows `workflow_run.conclusion == 'failure'` while comment says failure must block deploy | REOPENED-CURRENT |
+| AR-006 | 🟡 P2 | `NEXT_AGENT_PROMPT.md` had a raw right-side conflict marker in canonical handoff file | FIXED-IN-AUDITREPO / PROCESS NOTE |
+| AR-007 | 🟡 P2 | strict `validate_audit_repo.py` was red at pass start because committed intake metadata lacked SHA; metadata backfill in the same pass returned the repo to green | FIXED-IN-AUDITREPO |
+| AR-008 | 🔵 P3 | `scaffold_intake.py` emits empty SHA fields by default, but strict validator rejects SHA-less intake metadata — recurrence risk remains | OPEN |
+| CHECK-001 | 🔵 P3 | `css-layer-validator.js` threshold drift: warns only below 50%, message claims target `≥80%` | OPEN |
+
+### Key evidence
+
+- `incoming/arena-agent-pass90/2026-07-05/evidence/01-deploy-gate-regression.txt`
+- `incoming/arena-agent-pass90/2026-07-05/evidence/02-workflows-check-pass.txt`
+- `incoming/arena-agent-pass90/2026-07-05/evidence/03-auditrepo-validator-fail.txt`
+- `incoming/arena-agent-pass90/2026-07-05/evidence/03-auditrepo-validator-reconciled.txt`
+- `incoming/arena-agent-pass90/2026-07-05/evidence/04-next-agent-prompt-conflict-marker.txt`
+- `incoming/arena-agent-pass90/2026-07-05/evidence/04b-next-agent-prompt-clean.txt`
+- `incoming/arena-agent-pass90/2026-07-05/evidence/06-scaffold-vs-validator-mismatch.txt`
+
+### Notes
+
+1. This pass does **not** dispute BUG-CI-001; that fix remains real. It reopens a **different** deploy-gate contract regression: the workflow now allows deploy on failed `workflow_run` again.
+2. `npm run workflows:check` currently gives a false-green on this semantic regression; workflow policy needs a stronger assertion.
+3. The strict validator result is green again after Pass 90 metadata hygiene, but the scaffold/validator contract mismatch remains open.
 

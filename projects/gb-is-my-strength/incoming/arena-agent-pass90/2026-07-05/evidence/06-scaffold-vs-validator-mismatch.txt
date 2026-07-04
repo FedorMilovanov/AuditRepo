@@ -1,0 +1,18 @@
+$ nl -ba scripts/scaffold_intake.py | sed -n 25,33p
+    25	README_TEMPLATE = """# Intake — {project} — {agent} — {date}
+    26	
+    27	## Identity
+    28	- Project: {project}
+    29	- Agent: {agent}
+    30	- Date: {date}
+    31	- Audited branch:
+    32	- Audited SHA:
+    33	- Current source HEAD at start:
+
+$ nl -ba scripts/validate_audit_repo.py | sed -n 85,90p
+    85	            if not any(m in txt for m in markers):
+    86	                fail(f'{proj.name}: intake identity file missing recognizable identity markers: {identity_file}', errors)
+    87	            # SHA-first principle: an intake must reference a concrete commit SHA,
+    88	            # otherwise an empty/template report passes the (substring) marker check.
+    89	            if not re.search(r'\b[0-9a-f]{7,40}\b', txt):
+    90	                fail(f'{proj.name}: intake identity file has no commit SHA (SHA-first evidence required): {identity_file}', errors)

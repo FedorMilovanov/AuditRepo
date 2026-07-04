@@ -1,5 +1,4 @@
 # 🐛 SEARCH SYSTEM — 2 CRITICAL ARCHITECTURAL BUGS + 7 FINDINGS (2026-07-04)
->>>>>>> 4f2df52 (audit(gb): Pass 72 — SEARCH critical architectural bugs found)
 
 ## 🔴 P1 — Писание search scope is architecturally broken
 
@@ -85,11 +84,15 @@ Commit `629ed89a` ("remove orphaned image files") deleted 7 files but didn't upd
 
 Pass 64's deletions audit verified 11 major deletions with no regressions. Pass 65 found a *later*, separate deletion commit (`629ed89a`) introduced a regression — see above, now resolved.
 
-## ⚠️ AuditRepo process note (Pass 65)
+## ⚠️ AuditRepo process note (Pass 65 + Pass 90)
 
-Commit `646f38e` ("Pass 70 — deep SEARCH system investigation") was pushed to AuditRepo `main` with **unresolved git merge-conflict markers still in the file** (`MASTER_BUG_MATRIX.md`). Cleaned up during Pass 65's rebase — no content lost. **Always grep for conflict markers (or run `git diff --check`) before pushing a merge/rebase result.**
+Commit `646f38e` ("Pass 70 — deep SEARCH system investigation") had previously pushed unresolved merge-conflict markers into AuditRepo history (`MASTER_BUG_MATRIX.md`). Pass 65 cleaned that incident. Pass 90 found a **new raw right-side conflict marker in `NEXT_AGENT_PROMPT.md` on current HEAD** and removed it. Rule remains unchanged: **always grep for conflict markers (or run `git diff --check`) before pushing a merge/rebase result.**
 
-## Open items summary (Pass 71 + Pass 65 merged — see MASTER_BUG_MATRIX.md for full detail)
+## ⚠️ Strict validator truth (Pass 90)
+
+At pass start, `python3 scripts/validate_audit_repo.py` was red because committed intake metadata lacked SHA-first fields. Pass 90 backfilled the recoverable SHA metadata and returned strict validation to green. The remaining open process bug is not the validator result itself, but the contract mismatch: `scripts/scaffold_intake.py` still emits empty SHA fields by default while strict validation rejects SHA-less intake metadata.
+
+## Open items summary (Pass 90 note: numeric counts below predate the P1-DEPLOY-FAIL reopen and AuditRepo hygiene split; use `MASTER_BUG_MATRIX.md` as source of truth for statuses)
 
 | Уровень | Open | Closed | Всего |
 |---------|------|--------|-------|

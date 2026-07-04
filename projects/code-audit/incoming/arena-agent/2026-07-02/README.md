@@ -4,12 +4,12 @@
 - Project: code-audit
 - Agent: arena-agent
 - Date: 2026-07-02
-- Audited branch:
-- Audited SHA:
-- Current source HEAD at start:
-- Environment:
-- Build mode:
-- Browser / device if used:
+- Audited branch: `main` *(recovered during Pass 90 metadata hygiene)*
+- Audited SHA: original 2026-07-02 intake did not record the audited commit; current source HEAD recovered on 2026-07-05 = `6f88ae38ffdb1cd7e9821f28d417b255b4489be7`
+- Current source HEAD at start: `6f88ae38ffdb1cd7e9821f28d417b255b4489be7` *(recovery note; original value absent in initial scaffolded intake)*
+- Environment: Arena sandbox
+- Build mode: source audit
+- Browser / device if used: not recorded in original intake
 
 ## Scope
 - Routes checked:

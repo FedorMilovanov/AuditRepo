@@ -1,0 +1,16 @@
+$ nl -ba scripts/css-layer-validator.js | sed -n 117,123p
+   117	const layeredPct = (layeredChars / totalChars * 100).toFixed(1);
+   118	info.push(`Layered: ${layeredChars} chars (${layeredPct}%)`);
+   119	info.push(`Unlayered: ${unlayeredChars} chars (${(100 - parseFloat(layeredPct)).toFixed(1)}%)`);
+   120	
+   121	if (parseFloat(layeredPct) < 50) {
+   122	  warnings.push(`Only ${layeredPct}% of CSS is in @layer blocks (target: ≥80%)`);
+   123	}
+
+$ nl -ba scripts/check-mdx-html-parity.js | sed -n 197,200p
+   197	console.log(`Result: ${errors} errors, ${warnings} mtime warnings, ${semanticWarnings} semantic warnings`);
+   198	if (errors > 0) {
+   199	  console.log('❌ FAILED — content disparity detected (semantic: ${semanticWarnings} warnings)');
+   200	  process.exit(1);
+
+$ grep -n "<title> ≠ og:title\\|SEO audit passed" -n audit/audit-pro-* 2>/dev/null || true

@@ -1,0 +1,12 @@
+
+> gb-is-my-strength@1.6.3 workflows:check
+> node scripts/check-workflows.js
+
+
+GB WORKFLOW POLICY CHECK
+✅ Workflow policy passed
+
+NOTE: For GitHub Actions YAML syntax/expression validation,
+also run: npx actionlint (or install via: brew install actionlint)
+actionlint catches expression syntax, missing inputs, shell errors in run commands.
+Add to CI: workflows:check && npx actionlint

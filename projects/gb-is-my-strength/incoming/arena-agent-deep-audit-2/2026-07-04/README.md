@@ -4,12 +4,12 @@
 - Project: gb-is-my-strength
 - Agent: arena-agent-deep-audit-2
 - Date: 2026-07-04
-- Audited branch:
-- Audited SHA:
-- Current source HEAD at start:
-- Environment:
-- Build mode:
-- Browser / device if used:
+- Audited branch: `main`
+- Audited SHA: `8a8211ea`
+- Current source HEAD at start: `8a8211ea`
+- Environment: Arena sandbox
+- Build mode: source / dist / production-like dist
+- Browser / device if used: mixed local source + workflow verification
 
 ## Scope
 - Routes checked:

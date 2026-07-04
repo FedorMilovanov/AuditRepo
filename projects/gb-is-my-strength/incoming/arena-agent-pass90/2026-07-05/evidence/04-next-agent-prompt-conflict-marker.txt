@@ -1,0 +1,2 @@
+$ grep -n "<<<<<<<\\|=======\\|>>>>>>>" projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+2:>>>>>>> 4f2df52 (audit(gb): Pass 72 — SEARCH critical architectural bugs found)
