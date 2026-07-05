@@ -2,12 +2,12 @@
 
 > Единый реестр всех багов проекта gospod-bog.ru.  
 > Дата консолидации: **2026-07-05** (полная реструктуризация из 2174-строчного документа).  
-> Source HEAD: `671cd163` (Merge PR #35 — gates hardening; PR#33/#34/#35 все смержены) | AuditRepo HEAD: см. git log  
+> Source HEAD: `de71fb3d` (deploy run 28747336849 SUCCESS — всё дневное на проде) | AuditRepo HEAD: см. git log  
 > Предыдущая версия: `archive/2026-07-05-matrix-pre-restructure/`
 
 ---
 
-## ✅ ЗАКРЫТО (66)
+## ✅ ЗАКРЫТО (70)
 
 | ID | Описание | Коммит |
 |---|---|---|
@@ -67,6 +67,10 @@
 | GATE-GAP-NATIVE-TEXT-PARITY | content-coverage-audit.js (word-multiset legacy↔dist, 50 маршрутов) в prod-like chain + deploy.yml | `PR#36` |
 | SEARCH-MANIFEST-QUALITY | scripture-часть закрыта (15 items + guard); slug/image-части остаются P3-мелочью | `PR#36` |
 | CONTENT-LOSS-AVRAAM-SOURCES | 🆕→закрыт в том же PR: /karty/avraam/ потерял весь научный аппарат «Источники и метод» (14 пунктов) — MapEngine не рендерит панель источников. Восстановлен в статичный слой. Найден новым coverage-гейтом | `PR#36` |
+| UI-GILL-SCROLLSPY-DEAD-06 | Scrollspy суб-меню был мёртв на всех Gill-страницах (гейт initGbs2Controls); ревив + FATAL live-режим аудита. **На проде** (run 28747336849) | `655e1652` PR#34 |
+| UI-GILL-SUBMENU-ORDER-07 | Монотонность меню chast-1/2/3 восстановлена (данные+рантайм+аудит). **На проде** | `655e1652` PR#34 |
+| UI-GILL-DOT-TRACK-OFFSET-08 | Точки на линии трека (7.5px→0.5px, историческое размещение внутри ul). **На проде** | `655e1652` PR#34 |
+| DEPLOY-YML-DEAD-WARN-STEP | Мёртвый недостижимый warn-шаг «Deploying anyway» удалён из deploy.yml | `655e1652` PR#34 |
 | AUDIT-P2-SW-PRECACHE-4 | 4 lazy-ассета убраны из SW PRECACHE; CACHE_VERSION v188; G61: LAZY_NO_PRECACHE + запрет реинтродукции | `PR#37` |
 | BUG-ARCH-001 | = дубликат SW-PRECACHE-4, закрыт тем же фиксом | `PR#37` |
 | AUDIT-P3-SEARCH-LAZY-CONFIRMED | = та же суть (precache побеждал lazy), закрыт тем же фиксом | `PR#37` |
@@ -80,19 +84,16 @@
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (4: SCROLLSPY-06 и ORDER-07 merged PR#34, ждут только зелёного Pages-деплоя)
+## 🟠 P1 — ОТКРЫТО (2)
 
 | ID | Описание | Witnesses |
 |---|---|---|
-| UI-GILL-SCROLLSPY-DEAD-06 | 🆕 Scrollspy pre-v16 суб-меню был МЁРТВ на всех Gill-страницах в проде (initGbs2Controls гейт не пускал v16-страницы; меню — замороженный SSR «1 / N»). Аудит маскировал green-обходом (35/35 ячеек). **Fix in PR #34** (`655e1652`): гейт открыт, обход → FATAL в CI. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_gill-scrollspy-dead-revived.md` | эмпирика headless, verified |
-| UI-GILL-SUBMENU-ORDER-07 | 🆕 Меню chast-1/2/3 нарушало монотонность порядка документа (статьи выросли после bcf6389f; systematics: меню#3 ↔ документ#17/29) → active-index замерзал посреди статьи. **Fix in PR #34**: reorder по документу + `reorders` в reconciliation + рантайм-сортировка + fatal-ассерт монотонности | эмпирика headless, verified |
 | BUG-PERF-001 | addEventListener без removeEventListener: 339 add / 25 remove по всем js/ (294/16 в 5 файлах) | 2 witnesses + пересчёт 07-05 |
 
 ## 🟡 P2 — ОТКРЫТО (5)
 
 | ID | Описание | Witnesses |
 |---|---|---|
-| UI-GILL-DOT-TRACK-OFFSET-08 | 🆕 Точки суб-меню не на линии трека (7.5px): track вынесен из ul при реставрации, аудит закрепил ошибку («valid track sibling»). **Fix in PR #34**: track внутрь ul (исторично), проверка перевёрнута, ассерт ≤4px | измерено headless, verified |
 | AUDIT-P2-WORKFLOWS-CHECK-GAP | `check-workflows.js` не проверяет deploy `if:` условия — `|| failure` не ловится | АУДИТ 1.4 |
 | AUDIT-P2-MATRIX-DRIFT | route-migration-matrix (35) ≠ page-ownership (54) ≠ sitemap (43). Нет cross-validation. | АУДИТ 1.0 |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
@@ -102,6 +103,7 @@
 
 | ID | Описание |
 |---|---|
+| GATE-MARKER-DATA-DRIFT | 🆕 Системный риск: захардкоженные строки/значения в гейтах 4 раза за 05.07 расходились с работой параллельных лейнов (маркер pastor-series, зеркало timestamps, двойник precache-проверки audit-pro↔dist-publication-audit, label chast-2). Рекомендация: (а) выносить маркеры/списки в data/*.json рядом с контентом; (б) дедуплицировать двойные проверки через общий модуль (по образцу cache-bust-assets.js) | хроника 4 инцидентов 05.07 |
 | VALIDATE-SCOPE-GAP | validate.js проверяет только `articles/` (10 страниц из 40+). baptisty-rossii, nagornaya, karty, konfessii, biografii, hard-texts — **не валидируются** checks #1-#17 (canonical, section, byline, img alt, internal links, quote policy) | Meta-audit |
 | NEW-CSS-BUDGET-01 | audit-pro CSS budget warning на каждом прогоне, не в backlog |
 | NEW-OG-SIZE-PARAM | seo-audit.js hardcoded OG size check, нет per-route allowlist |
@@ -116,7 +118,6 @@
 | VALIDATE-JS-ARTICLES-ONLY | `scripts/validate.js` (`validateArticle()`) проверяет только `articles/*`. 9 baptisty-rossii статей (dva-sezda-1884…yuzhnaya-shtunda) НЕ проходят 17 проверок: canonical, byline, og:image, breadcrumb, author-card и др. `EXTRA_PAGES` = 4 страницы (pastor-series, biografii, about, index) — жёстко захардкожено. |
 | AUDIT-PRO-ROOT-ONLY | `audit-pro.js` проверяет ТОЛЬКО root HTML (`walk(ROOT)`, `dist/` в skipDirs). `/izbrannoe/` (Astro-only, без root-копии) невидим для 7 гвардов: canonical, sitemap, SEO, cache-bust, JSON-LD, links, a11y. При `astro build` в dist/ генерируются 54 страницы — аудит проверяет только 50 root HTML. |
 | STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |
-| DEPLOY-YML-DEAD-WARN-STEP | 🆕 deploy.yml:72-75 — warn-шаг с `if: conclusion == 'failure'` недостижим (job-level `if:` скипает job при failure) и несёт вводящий в заблуждение текст «Deploying anyway». Источник grep-ложноположительных reopen'ов P1-DEPLOY-FAIL. Удалить шаг. |
 
 ## 🔵 P3 — РЕФАКТОРИНГ (4)
 
@@ -170,7 +171,7 @@
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 66 |
+| Закрыто (fixed) | 70 |
 | P1 открыто | 4 |
 | P2 открыто | 5 |
 | P3 открыто | 24 |
