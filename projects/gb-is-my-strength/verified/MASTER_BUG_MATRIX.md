@@ -7,7 +7,7 @@
 
 ---
 
-## ✅ ЗАКРЫТО (41)
+## ✅ ЗАКРЫТО (52)
 
 | ID | Описание | Коммит |
 |---|---|---|
@@ -55,7 +55,7 @@
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (5, из них 2 fix-in-PR#34; +1 закрыт merged PR#33)
+## 🟠 P1 — ОТКРЫТО (4: SCROLLSPY-06 и ORDER-07 merged PR#34, ждут только зелёного Pages-деплоя)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -66,7 +66,7 @@
 | BUG-PERF-001 | addEventListener без removeEventListener: 339 add / 25 remove по всем js/ (294/16 в 5 файлах) | 2 witnesses + пересчёт 07-05 |
 | SEARCH-SCRIPTURE-BROKEN | 🔍 Scope «Писание» не работает: 0/20 MDX передают scripture:true; ArticleLayout без prop; 44/44 manifest без scripture. ⚠️ Verifier correction: 6 pages (не 3) имеют data-pagefind-meta. **Severity dispute: P1→P2 recommended** (feature gap, не runtime breakage) | Pass 92, verified |
 
-## 🟡 P2 — ОТКРЫТО (12, из них 1 fix-in-PR#34)
+## 🟡 P2 — ОТКРЫТО (5)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -82,7 +82,7 @@
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
 
-## 🟢 P3 — ОТКРЫТО (30)
+## 🟢 P3 — ОТКРЫТО (24, DEPLOY-YML-DEAD-WARN-STEP merged PR#34)
 
 | ID | Описание |
 |---|---|
@@ -169,12 +169,12 @@
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 41 |
-| P1 открыто | 5 (2 fix-in-PR#34) |
-| P2 открыто | 12 (1 fix-in-PR#34) |
-| P3 открыто | 30 (1 fix-in-PR#34: DEPLOY-YML-DEAD-WARN-STEP) |
+| Закрыто (fixed) | 52 |
+| P1 открыто | 4 |
+| P2 открыто | 5 |
+| P3 открыто | 24 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **53** (−1 закрыт PR#33, 4 закроются merge PR#34) |
+| **Всего открыто** | **40** (11 закрыто PR#33/#35 + самоизлечение; PR#34-тройка закроется зелёным деплоем) |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
