@@ -37,11 +37,9 @@
 
 На текущей удалённой ветке (`AuditRepo` remote main и `gb-is-my-strength` remote main) стабильнее всего выглядят следующие утверждения:
 
-### A. `P1-DEPLOY-FAIL` — current/open
-В body матрицы это уже отражено как reopened/current.
-Суть:
-- `deploy.yml` допускает `github.event.workflow_run.conclusion == 'failure'`;
-- локальный workflow policy check это не ловит.
+### A. `P1-DEPLOY-FAIL` — ⛔ SUPERSEDED 2026-07-05: остаётся ЗАКРЫТ (false reopen)
+~~В body матрицы это уже отражено как reopened/current.~~
+Reachability-анализ на `68b2bf4c` показал: grep-хит `conclusion == 'failure'` находится в **недостижимом** warn-шаге (deploy.yml:72-75, dead code); job-level `if:` (строки 62-65) блокирует деплой при failure. Канон — матрица (закрыт `29b49df`) + новый P3 `DEPLOY-YML-DEAD-WARN-STEP`. См. `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_content-parity-loss-restored.md` §4.
 
 ### B. `BUG-SW-BASELINE-DRIFT` — current, но severity disputed historically
 Текущая устойчивая часть утверждения:

@@ -2,7 +2,7 @@
 
 > Единый реестр всех багов проекта gospod-bog.ru.  
 > Дата консолидации: **2026-07-05** (полная реструктуризация из 2174-строчного документа).  
-> Source HEAD: `82de4f45` (verified: Gill submenu PR merged, no matrix bugs affected) | AuditRepo HEAD: `9d67b17`  
+> Source HEAD: `68b2bf4c` (Merge PR #32 — path-leak fix; ⚠️ CACHE-BUST-STALE-MAIN: audit-pro красный на чистом checkout, см. P2) | AuditRepo HEAD: см. git log  
 > Предыдущая версия: `archive/2026-07-05-matrix-pre-restructure/`
 
 ---
@@ -55,19 +55,22 @@
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (3)
+## 🟠 P1 — ОТКРЫТО (4)
 
 | ID | Описание | Witnesses |
 |---|---|---|
-| AUDIT-P1-FC-IMP | `floating-cluster.css`: 490 `!important`, audit-pro проверяет только site.css. Нет ceiling/ratchet. | АУДИТ 1.0 + verifier |
-| BUG-PERF-001 | addEventListener без removeEventListener: 294 add / 16 remove в 5 JS-файлах | 2 witnesses |
+| CONTENT-PARITY-LOSS-01 | 🆕 Потеря контента на 2 production-маршрутах: SEO-проза из `e0e83598` (25.06) ушла в legacy shadow-поверхность через 2 дня после astro-cutover (23.06). `/nagornaya/seriya/` — 81 слово («О серии», аннотации частей I–V); `/konfessii/russkij-baptizm/` — 88 слов («Три истока»). **Fix prepared:** commit `d2f34a66` (branch `claude/image-generation-query-3e8rd5`, push blocked — нет write-доступа у сессии). Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_content-parity-loss-restored.md` | word-multiset diff, verified |
+| AUDIT-P1-FC-IMP | `floating-cluster.css`: 490 строк / 524 вхождения `!important` (490 = grep -c строк, 524 = grep -o вхождений — оба числа верны), audit-pro проверяет только site.css (ceiling 202, сейчас ровно на потолке). Нет ceiling/ratchet. | АУДИТ 1.0 + verifier |
+| BUG-PERF-001 | addEventListener без removeEventListener: 339 add / 25 remove по всем js/ (294/16 в 5 файлах) | 2 witnesses + пересчёт 07-05 |
 | SEARCH-SCRIPTURE-BROKEN | 🔍 Scope «Писание» не работает: 0/20 MDX передают scripture:true; ArticleLayout без prop; 44/44 manifest без scripture. ⚠️ Verifier correction: 6 pages (не 3) имеют data-pagefind-meta. **Severity dispute: P1→P2 recommended** (feature gap, не runtime breakage) | Pass 92, verified |
 
-## 🟡 P2 — ОТКРЫТО (7)
+## 🟡 P2 — ОТКРЫТО (10)
 
 | ID | Описание | Witnesses |
 |---|---|---|
-| BUG-SW-BASELINE-DRIFT | SW baseline `v182` vs actual `v187` (5 версий). CI: note(), не bad(). ⚠️ Severity disputed: P0 vs P2. | АУДИТ 1.0, Pass 91 reclassified |
+| GATE-GAP-NATIVE-TEXT-PARITY | 🆕 Нет текстового parity-гейта legacy↔Astro для native-маршрутов — из-за этого CONTENT-PARITY-LOSS-01 прожил 10 дней. Рекомендация: word-coverage гейт | reverify 07-05 content-parity |
+| CACHE-BUST-STALE-MAIN | 🆕 main `68b2bf4c`: 26 cache-bust mismatch (audit-pro красный на чистом checkout). Цепочка: PR #31 менял js → indexnow упал на path-leak гейте → auto-commit не состоялся → PR #32 docs-only не перезапустил. Прод корректен (deploy гоняет свой cache-bust). Самолечится следующим content-пушем в main | reverify 07-05 |
+| BUG-SW-BASELINE-DRIFT | SW baseline `v182` vs actual `v187` (5 версий). CI: note(), не bad(). ✅ Severity dispute resolved → P2 (гейт сверяет только pre-switch v171; фикс: bump baseline + равенство `currentExpectedCacheVersion` под `--require-cache-bump`). | АУДИТ 1.0, Pass 91, reverify 07-05 |
 | AUDIT-P2-SW-PRECACHE-4 | SW PRECACHE содержит 4 lazy-loaded ассета (search.js, glossary.js, manifest.json, search-manifest.json) | АУДИТ 1.1 |
 | BUG-ARCH-001 | = дубликат AUDIT-P2-SW-PRECACHE-4 (исходное описание: SW precache vs lazy loading) | АУДИТ 1.0 + verifier |
 | AUDIT-P2-WORKFLOWS-CHECK-GAP | `check-workflows.js` не проверяет deploy `if:` условия — `|| failure` не ловится | АУДИТ 1.4 |
@@ -75,7 +78,7 @@
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
 
-## 🟢 P3 — ОТКРЫТО (29)
+## 🟢 P3 — ОТКРЫТО (30)
 
 | ID | Описание |
 |---|---|
@@ -106,6 +109,7 @@
 | STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |
 | NEW-PREFETCH-UNCONDITIONAL | 5 prefetch hints на каждой странице включая саму себя |
 | SEARCH-MANIFEST-QUALITY | search-manifest.json: 44/44 без поля slug (ключ отсутствует, не пустой); 44/44 нет scripture; 4/44 нет image. Verified. |
+| DEPLOY-YML-DEAD-WARN-STEP | 🆕 deploy.yml:72-75 — warn-шаг с `if: conclusion == 'failure'` недостижим (job-level `if:` скипает job при failure) и несёт вводящий в заблуждение текст «Deploying anyway». Источник grep-ложноположительных reopen'ов P1-DEPLOY-FAIL. Удалить шаг. |
 | DEAD-SCRIPTS-6 | 6 мёртвых скриптов (0 вызовов): `_audit-deep.js`, `deep-check.js`, `extract-native-pilot.js`, `genealogy-e2e-v2.js`, `ishod-qa.js`, `map-visual-qa.js` |
 | NOINDEX-PHANTOM | audit-pro.js:2055 NOINDEX_ALLOWLIST содержит `yandex_d8876d66da1b4592.html` — файл не существует (phantom entry) |
 
@@ -134,10 +138,14 @@
 - **BUG-ARCH-001** = **AUDIT-P2-SW-PRECACHE-4** (одна суть: SW precache содержит lazy assets). Оставлено оба ID для обратной совместимости с reverify-документами.
 - **NEW-CACHE-BUST-ASTRO** закрыто (`6499d42e`), но **AUDIT-P3-SEARCH-LAZY-CONFIRMED** и **AUDIT-P2-SW-PRECACHE-4** описывают ту же тему SW/lazy — не дубликаты, разные root causes.
 
-### Severity dispute: BUG-SW-BASELINE-DRIFT
+### Severity dispute: BUG-SW-BASELINE-DRIFT — RESOLVED → P2 (2026-07-05)
 - **Pass 91 (agent):** P2 — "документационный drift, SW корректен, CI осознанно note()"
 - **Pass 92 (agent):** P0 — "CI не фейлится при --require-cache-bump, deploy-safety gap"
-- **Решение:** требуется owner decision. Помечен P2 с ⚠️.
+- **Решение (владелец делегировал; reverify 07-05):** P2. Гейт энфорсит только «≠ pre-switch v171» (`sw-dist-readiness-audit.js:82-89`), `currentExpectedCacheVersion` — note(). Фикс: bump baseline v182→v187 + строгое равенство под `--require-cache-bump`.
+
+### Dispute resolution: P1-DEPLOY-FAIL — остаётся ЗАКРЫТ (false reopen, 2026-07-05)
+- Intake `arena-agent-verifier-hardening-2026-07-05` и `working/VERIFIER_SYNTHESIS` считали reopened по grep-хиту `conclusion == 'failure'` в deploy.yml.
+- **Reachability-анализ на `68b2bf4c`:** job-level `if:` (deploy.yml:62-65) пускает только success/dispatch/push → при failure job скипается. Хит — в недостижимом warn-шаге (deploy.yml:72-75, dead code). См. DEPLOY-YML-DEAD-WARN-STEP (P3) и `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_content-parity-loss-restored.md` §4.
 
 ### False positives (отклонённые находки):
 - `AUDIT-P2-NODE-REGEX` — fabricated evidence (функция mustScript не существует). Archive: `archive/false-positive/`
@@ -158,11 +166,11 @@
 | Категория | Количество |
 |---|---|
 | Закрыто (fixed) | 41 |
-| P1 открыто | 3 |
-| P2 открыто | 7 |
-| P3 открыто | 29 |
+| P1 открыто | 4 |
+| P2 открыто | 10 |
+| P3 открыто | 30 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **46** |
+| **Всего открыто** | **50** |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
