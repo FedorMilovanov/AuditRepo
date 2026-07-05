@@ -7,7 +7,7 @@
 
 ---
 
-## ✅ ЗАКРЫТО (52)
+## ✅ ЗАКРЫТО (56)
 
 | ID | Описание | Коммит |
 |---|---|---|
@@ -63,6 +63,10 @@
 | AUDIT-PRO-REQUIRE-CRASH | require cache-bust-assets → fatal с диагностикой | `8d1e8891` PR#35 |
 | DEAD-SCRIPTS-6 | 6 мёртвых скриптов удалены (0 ссылок, перепроверено) | `8d1e8891` PR#35 |
 | CACHE-BUST-STALE-MAIN | самоизлечился первым content-пушем (предсказано в reverify) | `8fd5bb36` |
+| SEARCH-SCRIPTURE-BROKEN | Скоуп «Писание»: Pagefind-first роутинг + 70 сокращений (все 66 книг) + scripture в 15 items манифеста + guard. Живой смоук: «Иер 17:9»/«Рим 7»/«Мф 5» находят. Layout-prop rollout meta на остальные страницы — след. лейн | `PR#36` |
+| GATE-GAP-NATIVE-TEXT-PARITY | content-coverage-audit.js (word-multiset legacy↔dist, 50 маршрутов) в prod-like chain + deploy.yml | `PR#36` |
+| SEARCH-MANIFEST-QUALITY | scripture-часть закрыта (15 items + guard); slug/image-части остаются P3-мелочью | `PR#36` |
+| CONTENT-LOSS-AVRAAM-SOURCES | 🆕→закрыт в том же PR: /karty/avraam/ потерял весь научный аппарат «Источники и метод» (14 пунктов) — MapEngine не рендерит панель источников. Восстановлен в статичный слой. Найден новым coverage-гейтом | `PR#36` |
 
 ---
 
@@ -73,13 +77,11 @@
 | UI-GILL-SCROLLSPY-DEAD-06 | 🆕 Scrollspy pre-v16 суб-меню был МЁРТВ на всех Gill-страницах в проде (initGbs2Controls гейт не пускал v16-страницы; меню — замороженный SSR «1 / N»). Аудит маскировал green-обходом (35/35 ячеек). **Fix in PR #34** (`655e1652`): гейт открыт, обход → FATAL в CI. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_gill-scrollspy-dead-revived.md` | эмпирика headless, verified |
 | UI-GILL-SUBMENU-ORDER-07 | 🆕 Меню chast-1/2/3 нарушало монотонность порядка документа (статьи выросли после bcf6389f; systematics: меню#3 ↔ документ#17/29) → active-index замерзал посреди статьи. **Fix in PR #34**: reorder по документу + `reorders` в reconciliation + рантайм-сортировка + fatal-ассерт монотонности | эмпирика headless, verified |
 | BUG-PERF-001 | addEventListener без removeEventListener: 339 add / 25 remove по всем js/ (294/16 в 5 файлах) | 2 witnesses + пересчёт 07-05 |
-| SEARCH-SCRIPTURE-BROKEN | 🔍 Scope «Писание» не работает: 0/20 MDX передают scripture:true; ArticleLayout без prop; 44/44 manifest без scripture. ⚠️ Verifier correction: 6 pages (не 3) имеют data-pagefind-meta. **Severity dispute: P1→P2 recommended** (feature gap, не runtime breakage) | Pass 92, verified |
 
 ## 🟡 P2 — ОТКРЫТО (5)
 
 | ID | Описание | Witnesses |
 |---|---|---|
-| GATE-GAP-NATIVE-TEXT-PARITY | 🆕 Нет текстового parity-гейта legacy↔Astro для native-маршрутов — из-за этого CONTENT-PARITY-LOSS-01 прожил 10 дней. Рекомендация: word-coverage гейт | reverify 07-05 content-parity |
 | UI-GILL-DOT-TRACK-OFFSET-08 | 🆕 Точки суб-меню не на линии трека (7.5px): track вынесен из ul при реставрации, аудит закрепил ошибку («valid track sibling»). **Fix in PR #34**: track внутрь ul (исторично), проверка перевёрнута, ассерт ≤4px | измерено headless, verified |
 | AUDIT-P2-SW-PRECACHE-4 | SW PRECACHE содержит 4 lazy-loaded ассета (search.js, glossary.js, manifest.json, search-manifest.json) | АУДИТ 1.1 |
 | BUG-ARCH-001 | = дубликат AUDIT-P2-SW-PRECACHE-4 (исходное описание: SW precache vs lazy loading) | АУДИТ 1.0 + verifier |
@@ -114,7 +116,6 @@
 | AUDIT-PRO-ROOT-ONLY | `audit-pro.js` проверяет ТОЛЬКО root HTML (`walk(ROOT)`, `dist/` в skipDirs). `/izbrannoe/` (Astro-only, без root-копии) невидим для 7 гвардов: canonical, sitemap, SEO, cache-bust, JSON-LD, links, a11y. При `astro build` в dist/ генерируются 54 страницы — аудит проверяет только 50 root HTML. |
 | STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |
 | NEW-PREFETCH-UNCONDITIONAL | 5 prefetch hints на каждой странице включая саму себя |
-| SEARCH-MANIFEST-QUALITY | search-manifest.json: 44/44 без поля slug (ключ отсутствует, не пустой); 44/44 нет scripture; 4/44 нет image. Verified. |
 | DEPLOY-YML-DEAD-WARN-STEP | 🆕 deploy.yml:72-75 — warn-шаг с `if: conclusion == 'failure'` недостижим (job-level `if:` скипает job при failure) и несёт вводящий в заблуждение текст «Deploying anyway». Источник grep-ложноположительных reopen'ов P1-DEPLOY-FAIL. Удалить шаг. |
 
 ## 🔵 P3 — РЕФАКТОРИНГ (4)
@@ -169,7 +170,7 @@
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 52 |
+| Закрыто (fixed) | 56 |
 | P1 открыто | 4 |
 | P2 открыто | 5 |
 | P3 открыто | 24 |
