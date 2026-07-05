@@ -7,7 +7,7 @@
 
 ---
 
-## ✅ ЗАКРЫТО (56)
+## ✅ ЗАКРЫТО (66)
 
 | ID | Описание | Коммит |
 |---|---|---|
@@ -67,6 +67,16 @@
 | GATE-GAP-NATIVE-TEXT-PARITY | content-coverage-audit.js (word-multiset legacy↔dist, 50 маршрутов) в prod-like chain + deploy.yml | `PR#36` |
 | SEARCH-MANIFEST-QUALITY | scripture-часть закрыта (15 items + guard); slug/image-части остаются P3-мелочью | `PR#36` |
 | CONTENT-LOSS-AVRAAM-SOURCES | 🆕→закрыт в том же PR: /karty/avraam/ потерял весь научный аппарат «Источники и метод» (14 пунктов) — MapEngine не рендерит панель источников. Восстановлен в статичный слой. Найден новым coverage-гейтом | `PR#36` |
+| AUDIT-P2-SW-PRECACHE-4 | 4 lazy-ассета убраны из SW PRECACHE; CACHE_VERSION v188; G61: LAZY_NO_PRECACHE + запрет реинтродукции | `PR#37` |
+| BUG-ARCH-001 | = дубликат SW-PRECACHE-4, закрыт тем же фиксом | `PR#37` |
+| AUDIT-P3-SEARCH-LAZY-CONFIRMED | = та же суть (precache побеждал lazy), закрыт тем же фиксом | `PR#37` |
+| BUG-SW-001 | isFont() двойное отрицание → позитивная форма | `PR#37` |
+| AUDIT-P3-STYLE-DUP | ID-гарды на инъекцию runtime-CSS (enhancements/highlights) | `PR#37` |
+| AUDIT-P3-QUOTE-NO-CONFIRM | confirm() перед удалением цитаты | `PR#37` |
+| NEW-PREFETCH-UNCONDITIONAL | prefetch-хинты BaseLayout исключают текущую страницу | `PR#37` |
+| BUG-CLEANUP-002 | 31MB stale pixel-diff скриншотов удалены; docs/refactor-2026 32MB→1.3MB (журналы лейнов сохранены) | `PR#37` |
+| BUG-CLEANUP-003 | AUDIT_HISTORY.md — закрыт как BY-DESIGN: файл защищён правилами AGENTS.md (§«Оставлять AUDIT_HISTORY.md»), удаление противоречило бы governance | by-design |
+| BUG-CLEANUP-004 | docs/BUGS_FOUND_2026-06-25.md → docs/archive/ | `PR#37` |
 
 ---
 
@@ -83,8 +93,6 @@
 | ID | Описание | Witnesses |
 |---|---|---|
 | UI-GILL-DOT-TRACK-OFFSET-08 | 🆕 Точки суб-меню не на линии трека (7.5px): track вынесен из ul при реставрации, аудит закрепил ошибку («valid track sibling»). **Fix in PR #34**: track внутрь ul (исторично), проверка перевёрнута, ассерт ≤4px | измерено headless, verified |
-| AUDIT-P2-SW-PRECACHE-4 | SW PRECACHE содержит 4 lazy-loaded ассета (search.js, glossary.js, manifest.json, search-manifest.json) | АУДИТ 1.1 |
-| BUG-ARCH-001 | = дубликат AUDIT-P2-SW-PRECACHE-4 (исходное описание: SW precache vs lazy loading) | АУДИТ 1.0 + verifier |
 | AUDIT-P2-WORKFLOWS-CHECK-GAP | `check-workflows.js` не проверяет deploy `if:` условия — `|| failure` не ловится | АУДИТ 1.4 |
 | AUDIT-P2-MATRIX-DRIFT | route-migration-matrix (35) ≠ page-ownership (54) ≠ sitemap (43). Нет cross-validation. | АУДИТ 1.0 |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
@@ -95,16 +103,9 @@
 | ID | Описание |
 |---|---|
 | VALIDATE-SCOPE-GAP | validate.js проверяет только `articles/` (10 страниц из 40+). baptisty-rossii, nagornaya, karty, konfessii, biografii, hard-texts — **не валидируются** checks #1-#17 (canonical, section, byline, img alt, internal links, quote policy) | Meta-audit |
-| BUG-SW-001 | sw.js `isFont()` — двойное отрицание, читаемость |
-| AUDIT-P3-STYLE-DUP | enhancements/highlights inject CSS `<link>` без ID guard (дубликат при повторной загрузке) |
-| AUDIT-P3-QUOTE-NO-CONFIRM | highlights.js delete без confirm() |
-| BUG-CLEANUP-002 | `docs/refactor-2026/lanes/` — 31MB stale |
-| BUG-CLEANUP-003 | `AUDIT_HISTORY.md` — 187KB stale |
-| BUG-CLEANUP-004 | `docs/BUGS_FOUND_2026-06-25.md` — 78KB stale |
 | NEW-CSS-BUDGET-01 | audit-pro CSS budget warning на каждом прогоне, не в backlog |
 | NEW-OG-SIZE-PARAM | seo-audit.js hardcoded OG size check, нет per-route allowlist |
 | AUDIT-P3-OG-LCP-MISMATCH | 4 routes: og:image ≠ LCP image |
-| AUDIT-P3-SEARCH-LAZY-CONFIRMED | SW precache defeats lazy loader strategy |
 | BUG-011 | 23 unique breakpoints, 768px collision |
 | NEW-72 | SVG dedup micro-optimization (~1.9KB) |
 | SHADOW-AUDIT-NARROW | `legacy-shadow-wrapper-audit.js` проверяет только 7/52 (13%) production-dist маршрутов. Не охвачены: все страницы статей, baptisty-rossii, karty (8 из 10), biografii, about, pastor-series, konfessii, rodosloviye. |
@@ -115,7 +116,6 @@
 | VALIDATE-JS-ARTICLES-ONLY | `scripts/validate.js` (`validateArticle()`) проверяет только `articles/*`. 9 baptisty-rossii статей (dva-sezda-1884…yuzhnaya-shtunda) НЕ проходят 17 проверок: canonical, byline, og:image, breadcrumb, author-card и др. `EXTRA_PAGES` = 4 страницы (pastor-series, biografii, about, index) — жёстко захардкожено. |
 | AUDIT-PRO-ROOT-ONLY | `audit-pro.js` проверяет ТОЛЬКО root HTML (`walk(ROOT)`, `dist/` в skipDirs). `/izbrannoe/` (Astro-only, без root-копии) невидим для 7 гвардов: canonical, sitemap, SEO, cache-bust, JSON-LD, links, a11y. При `astro build` в dist/ генерируются 54 страницы — аудит проверяет только 50 root HTML. |
 | STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |
-| NEW-PREFETCH-UNCONDITIONAL | 5 prefetch hints на каждой странице включая саму себя |
 | DEPLOY-YML-DEAD-WARN-STEP | 🆕 deploy.yml:72-75 — warn-шаг с `if: conclusion == 'failure'` недостижим (job-level `if:` скипает job при failure) и несёт вводящий в заблуждение текст «Deploying anyway». Источник grep-ложноположительных reopen'ов P1-DEPLOY-FAIL. Удалить шаг. |
 
 ## 🔵 P3 — РЕФАКТОРИНГ (4)
@@ -170,7 +170,7 @@
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 56 |
+| Закрыто (fixed) | 66 |
 | P1 открыто | 4 |
 | P2 открыто | 5 |
 | P3 открыто | 24 |
