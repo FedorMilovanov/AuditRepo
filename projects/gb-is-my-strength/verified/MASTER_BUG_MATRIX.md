@@ -55,20 +55,24 @@
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (4)
+## 🟠 P1 — ОТКРЫТО (5, из них 2 fix-in-PR#34; +1 закрыт merged PR#33)
 
 | ID | Описание | Witnesses |
 |---|---|---|
-| CONTENT-PARITY-LOSS-01 | 🆕 Потеря контента на 2 production-маршрутах: SEO-проза из `e0e83598` (25.06) ушла в legacy shadow-поверхность через 2 дня после astro-cutover (23.06). `/nagornaya/seriya/` — 81 слово («О серии», аннотации частей I–V); `/konfessii/russkij-baptizm/` — 88 слов («Три истока»). **Fix prepared:** commit `d2f34a66` (branch `claude/image-generation-query-3e8rd5`, push blocked — нет write-доступа у сессии). Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_content-parity-loss-restored.md` | word-multiset diff, verified |
+| CONTENT-PARITY-LOSS-01 | ✅→ЗАКРЫТ: потеря контента на 2 production-маршрутах (`/nagornaya/seriya/` 81 слово «О серии»; `/konfessii/russkij-baptizm/` 88 слов «Три истока») — восстановлено, **merged PR #33** (`d2f34a66`→`f5618cd5`), deploy пошёл. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_content-parity-loss-restored.md` | word-multiset diff, verified, merged |
+| UI-GILL-SCROLLSPY-DEAD-06 | 🆕 Scrollspy pre-v16 суб-меню был МЁРТВ на всех Gill-страницах в проде (initGbs2Controls гейт не пускал v16-страницы; меню — замороженный SSR «1 / N»). Аудит маскировал green-обходом (35/35 ячеек). **Fix in PR #34** (`655e1652`): гейт открыт, обход → FATAL в CI. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_gill-scrollspy-dead-revived.md` | эмпирика headless, verified |
+| UI-GILL-SUBMENU-ORDER-07 | 🆕 Меню chast-1/2/3 нарушало монотонность порядка документа (статьи выросли после bcf6389f; systematics: меню#3 ↔ документ#17/29) → active-index замерзал посреди статьи. **Fix in PR #34**: reorder по документу + `reorders` в reconciliation + рантайм-сортировка + fatal-ассерт монотонности | эмпирика headless, verified |
 | AUDIT-P1-FC-IMP | `floating-cluster.css`: 490 строк / 524 вхождения `!important` (490 = grep -c строк, 524 = grep -o вхождений — оба числа верны), audit-pro проверяет только site.css (ceiling 202, сейчас ровно на потолке). Нет ceiling/ratchet. | АУДИТ 1.0 + verifier |
 | BUG-PERF-001 | addEventListener без removeEventListener: 339 add / 25 remove по всем js/ (294/16 в 5 файлах) | 2 witnesses + пересчёт 07-05 |
 | SEARCH-SCRIPTURE-BROKEN | 🔍 Scope «Писание» не работает: 0/20 MDX передают scripture:true; ArticleLayout без prop; 44/44 manifest без scripture. ⚠️ Verifier correction: 6 pages (не 3) имеют data-pagefind-meta. **Severity dispute: P1→P2 recommended** (feature gap, не runtime breakage) | Pass 92, verified |
 
-## 🟡 P2 — ОТКРЫТО (10)
+## 🟡 P2 — ОТКРЫТО (12, из них 1 fix-in-PR#34)
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | GATE-GAP-NATIVE-TEXT-PARITY | 🆕 Нет текстового parity-гейта legacy↔Astro для native-маршрутов — из-за этого CONTENT-PARITY-LOSS-01 прожил 10 дней. Рекомендация: word-coverage гейт | reverify 07-05 content-parity |
+| UI-GILL-DOT-TRACK-OFFSET-08 | 🆕 Точки суб-меню не на линии трека (7.5px): track вынесен из ul при реставрации, аудит закрепил ошибку («valid track sibling»). **Fix in PR #34**: track внутрь ul (исторично), проверка перевёрнута, ассерт ≤4px | измерено headless, verified |
+| UI-GILL-SUBMENU-LABEL-SEMANTICS-09 | 🆕 3 reconciliation-записи: подпись меню ≠ смысл текущего заголовка цели (напр. «Гилл и Рим…» → «Управление церковью…»), а `decision` утверждает «preserved verbatim». **Owner decision needed**: правкой подписей меню или заголовков статей | конформанс-аудит ТЗ |
 | CACHE-BUST-STALE-MAIN | 🆕 main `68b2bf4c`: 26 cache-bust mismatch (audit-pro красный на чистом checkout). Цепочка: PR #31 менял js → indexnow упал на path-leak гейте → auto-commit не состоялся → PR #32 docs-only не перезапустил. Прод корректен (deploy гоняет свой cache-bust). Самолечится следующим content-пушем в main | reverify 07-05 |
 | BUG-SW-BASELINE-DRIFT | SW baseline `v182` vs actual `v187` (5 версий). CI: note(), не bad(). ✅ Severity dispute resolved → P2 (гейт сверяет только pre-switch v171; фикс: bump baseline + равенство `currentExpectedCacheVersion` под `--require-cache-bump`). | АУДИТ 1.0, Pass 91, reverify 07-05 |
 | AUDIT-P2-SW-PRECACHE-4 | SW PRECACHE содержит 4 lazy-loaded ассета (search.js, glossary.js, manifest.json, search-manifest.json) | АУДИТ 1.1 |
@@ -166,11 +170,11 @@
 | Категория | Количество |
 |---|---|
 | Закрыто (fixed) | 41 |
-| P1 открыто | 4 |
-| P2 открыто | 10 |
-| P3 открыто | 30 |
+| P1 открыто | 5 (2 fix-in-PR#34) |
+| P2 открыто | 12 (1 fix-in-PR#34) |
+| P3 открыто | 30 (1 fix-in-PR#34: DEPLOY-YML-DEAD-WARN-STEP) |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **50** |
+| **Всего открыто** | **53** (−1 закрыт PR#33, 4 закроются merge PR#34) |
 | False positives отклонено | 3 |
 | Passes processed | 93+ |
