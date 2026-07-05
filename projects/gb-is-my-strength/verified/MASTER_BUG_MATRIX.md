@@ -2,7 +2,7 @@
 
 > Единый реестр всех багов проекта gospod-bog.ru.  
 > Дата консолидации: **2026-07-05** (полная реструктуризация из 2174-строчного документа).  
-> Source HEAD: `d1941a6d` | AuditRepo HEAD: `9d67b17`  
+> Source HEAD: `82de4f45` (verified: Gill submenu PR merged, no matrix bugs affected) | AuditRepo HEAD: `9d67b17`  
 > Предыдущая версия: `archive/2026-07-05-matrix-pre-restructure/`
 
 ---
