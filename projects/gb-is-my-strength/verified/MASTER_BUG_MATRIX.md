@@ -2,7 +2,7 @@
 
 > Единый реестр всех багов проекта gospod-bog.ru.  
 > Дата консолидации: **2026-07-05** (полная реструктуризация из 2174-строчного документа).  
-> Source HEAD: `68b2bf4c` (Merge PR #32 — path-leak fix; ⚠️ CACHE-BUST-STALE-MAIN: audit-pro красный на чистом checkout, см. P2) | AuditRepo HEAD: см. git log  
+> Source HEAD: `671cd163` (Merge PR #35 — gates hardening; PR#33/#34/#35 все смержены) | AuditRepo HEAD: см. git log  
 > Предыдущая версия: `archive/2026-07-05-matrix-pre-restructure/`
 
 ---
@@ -52,6 +52,17 @@
 | BUG-CLEANUP-001 | 4 dead scripts (~23KB) удалены | `85a2fd65` |
 | BUG-SEO-002 | robots.txt: `Allow: /llms.txt` во всех 14 заблокированных AI-ботах | `85a2fd65` |
 | NEW-STALE-BRANCHES | 5 merged lane branches удалены с remote | `85a2fd65` |
+| CONTENT-PARITY-LOSS-01 | Потеря контента на 2 прод-маршрутах («О серии» 81 слово, «Три истока» 88 слов) — восстановлено, на проде | `d2f34a66` PR#33 |
+| AUDIT-P1-FC-IMP | !important ratchet-потолки для floating-cluster(524)/mobile-hotfix(142)/nagornaya-toc(135) в audit-pro | `8d1e8891` PR#35 |
+| AUDIT-PRO-FC-IMPORTANT-GAP | = закрыт тем же multi-file ratchet | `8d1e8891` PR#35 |
+| BUG-SW-BASELINE-DRIFT | baseline v182→v187 + fatal-равенство currentExpectedCacheVersion под --require-cache-bump | `8d1e8891` PR#35 |
+| IMAGE-CROSSREF-GAP | imageCrossRef guard (data/*.json+sitemap ↔ диск); поймал и починил 3 битые ссылки в links-graph.json | `8d1e8891` PR#35 |
+| DATA-SERIES-DRIFT | series.json ↔ SERIES_ORDER sync-чек (док. исключения nagornaya/pastor-series) | `8d1e8891` PR#35 |
+| UI-GILL-SUBMENU-LABEL-SEMANTICS-09 | Owner decision: подпись = текущему заголовку. Скан: 19/56 дрейфов; 17 relabels + label↔heading энфорс в аудите | `8d1e8891` PR#35 |
+| NOINDEX-PHANTOM | phantom yandex-запись удалена из NOINDEX_ALLOWLIST | `8d1e8891` PR#35 |
+| AUDIT-PRO-REQUIRE-CRASH | require cache-bust-assets → fatal с диагностикой | `8d1e8891` PR#35 |
+| DEAD-SCRIPTS-6 | 6 мёртвых скриптов удалены (0 ссылок, перепроверено) | `8d1e8891` PR#35 |
+| CACHE-BUST-STALE-MAIN | самоизлечился первым content-пушем (предсказано в reverify) | `8fd5bb36` |
 
 ---
 
@@ -59,10 +70,8 @@
 
 | ID | Описание | Witnesses |
 |---|---|---|
-| CONTENT-PARITY-LOSS-01 | ✅→ЗАКРЫТ: потеря контента на 2 production-маршрутах (`/nagornaya/seriya/` 81 слово «О серии»; `/konfessii/russkij-baptizm/` 88 слов «Три истока») — восстановлено, **merged PR #33** (`d2f34a66`→`f5618cd5`), deploy пошёл. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_content-parity-loss-restored.md` | word-multiset diff, verified, merged |
 | UI-GILL-SCROLLSPY-DEAD-06 | 🆕 Scrollspy pre-v16 суб-меню был МЁРТВ на всех Gill-страницах в проде (initGbs2Controls гейт не пускал v16-страницы; меню — замороженный SSR «1 / N»). Аудит маскировал green-обходом (35/35 ячеек). **Fix in PR #34** (`655e1652`): гейт открыт, обход → FATAL в CI. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-05_gill-scrollspy-dead-revived.md` | эмпирика headless, verified |
 | UI-GILL-SUBMENU-ORDER-07 | 🆕 Меню chast-1/2/3 нарушало монотонность порядка документа (статьи выросли после bcf6389f; systematics: меню#3 ↔ документ#17/29) → active-index замерзал посреди статьи. **Fix in PR #34**: reorder по документу + `reorders` в reconciliation + рантайм-сортировка + fatal-ассерт монотонности | эмпирика headless, verified |
-| AUDIT-P1-FC-IMP | `floating-cluster.css`: 490 строк / 524 вхождения `!important` (490 = grep -c строк, 524 = grep -o вхождений — оба числа верны), audit-pro проверяет только site.css (ceiling 202, сейчас ровно на потолке). Нет ceiling/ratchet. | АУДИТ 1.0 + verifier |
 | BUG-PERF-001 | addEventListener без removeEventListener: 339 add / 25 remove по всем js/ (294/16 в 5 файлах) | 2 witnesses + пересчёт 07-05 |
 | SEARCH-SCRIPTURE-BROKEN | 🔍 Scope «Писание» не работает: 0/20 MDX передают scripture:true; ArticleLayout без prop; 44/44 manifest без scripture. ⚠️ Verifier correction: 6 pages (не 3) имеют data-pagefind-meta. **Severity dispute: P1→P2 recommended** (feature gap, не runtime breakage) | Pass 92, verified |
 
@@ -72,9 +81,6 @@
 |---|---|---|
 | GATE-GAP-NATIVE-TEXT-PARITY | 🆕 Нет текстового parity-гейта legacy↔Astro для native-маршрутов — из-за этого CONTENT-PARITY-LOSS-01 прожил 10 дней. Рекомендация: word-coverage гейт | reverify 07-05 content-parity |
 | UI-GILL-DOT-TRACK-OFFSET-08 | 🆕 Точки суб-меню не на линии трека (7.5px): track вынесен из ul при реставрации, аудит закрепил ошибку («valid track sibling»). **Fix in PR #34**: track внутрь ul (исторично), проверка перевёрнута, ассерт ≤4px | измерено headless, verified |
-| UI-GILL-SUBMENU-LABEL-SEMANTICS-09 | 🆕 3 reconciliation-записи: подпись меню ≠ смысл текущего заголовка цели (напр. «Гилл и Рим…» → «Управление церковью…»), а `decision` утверждает «preserved verbatim». **Owner decision needed**: правкой подписей меню или заголовков статей | конформанс-аудит ТЗ |
-| CACHE-BUST-STALE-MAIN | 🆕 main `68b2bf4c`: 26 cache-bust mismatch (audit-pro красный на чистом checkout). Цепочка: PR #31 менял js → indexnow упал на path-leak гейте → auto-commit не состоялся → PR #32 docs-only не перезапустил. Прод корректен (deploy гоняет свой cache-bust). Самолечится следующим content-пушем в main | reverify 07-05 |
-| BUG-SW-BASELINE-DRIFT | SW baseline `v182` vs actual `v187` (5 версий). CI: note(), не bad(). ✅ Severity dispute resolved → P2 (гейт сверяет только pre-switch v171; фикс: bump baseline + равенство `currentExpectedCacheVersion` под `--require-cache-bump`). | АУДИТ 1.0, Pass 91, reverify 07-05 |
 | AUDIT-P2-SW-PRECACHE-4 | SW PRECACHE содержит 4 lazy-loaded ассета (search.js, glossary.js, manifest.json, search-manifest.json) | АУДИТ 1.1 |
 | BUG-ARCH-001 | = дубликат AUDIT-P2-SW-PRECACHE-4 (исходное описание: SW precache vs lazy loading) | АУДИТ 1.0 + verifier |
 | AUDIT-P2-WORKFLOWS-CHECK-GAP | `check-workflows.js` не проверяет deploy `if:` условия — `|| failure` не ловится | АУДИТ 1.4 |
@@ -87,7 +93,6 @@
 | ID | Описание |
 |---|---|
 | VALIDATE-SCOPE-GAP | validate.js проверяет только `articles/` (10 страниц из 40+). baptisty-rossii, nagornaya, karty, konfessii, biografii, hard-texts — **не валидируются** checks #1-#17 (canonical, section, byline, img alt, internal links, quote policy) | Meta-audit |
-| IMAGE-CROSSREF-GAP | Нет cross-ref проверки: image files ↔ search-manifest.json ↔ sitemap.xml. Уже ломалось: `629ed89a` удалил файлы → `fc5f94bd` чинил broken refs | Meta-audit |
 | BUG-SW-001 | sw.js `isFont()` — двойное отрицание, читаемость |
 | AUDIT-P3-STYLE-DUP | enhancements/highlights inject CSS `<link>` без ID guard (дубликат при повторной загрузке) |
 | AUDIT-P3-QUOTE-NO-CONFIRM | highlights.js delete без confirm() |
@@ -100,11 +105,8 @@
 | AUDIT-P3-SEARCH-LAZY-CONFIRMED | SW precache defeats lazy loader strategy |
 | BUG-011 | 23 unique breakpoints, 768px collision |
 | NEW-72 | SVG dedup micro-optimization (~1.9KB) |
-| DATA-SERIES-DRIFT | `series.json` содержит nagornaya + pastor-series, но `SERIES_ORDER` в site.ts — нет. ArticleLayout:62 пропускает серию если ключа нет в SERIES_ORDER → 20-antisovetov-pastoru не получает prev/next nav и seriesLabel. Низкий impact (1 статья в серии), но архитектурная дыра. |
 | SHADOW-AUDIT-NARROW | `legacy-shadow-wrapper-audit.js` проверяет только 7/52 (13%) production-dist маршрутов. Не охвачены: все страницы статей, baptisty-rossii, karty (8 из 10), biografii, about, pastor-series, konfessii, rodosloviye. |
 | AUDIT-PRO-SITEMAP-ROOT-ONLY | `publicFiles()` проверяет покрытие sitemap по `htmlPages` (root HTML). Если Astro-страница существует только в dist/ (без root-копии), её URL не попадёт в проверку покрытия — sitemap может недосчитаться страниц, а аудит пройдёт. |
-| AUDIT-PRO-FC-IMPORTANT-GAP | `importantBudget()` (стр. 263) проверяет `!important` только в `css/site.css` (ceiling 202). `css/floating-cluster.css` (490 !important) не имеет ни ceiling, ни ratchet. Добавление 10 новых !important в floating-cluster.css проходит CI молча. Подтверждает AUDIT-P1-FC-IMP. |
-| AUDIT-PRO-REQUIRE-CRASH | `const CACHE_BUST_ASSETS = require('./cache-bust-assets').ASSETS` — синхронный require без try-catch. Если файл отсутствует, audit-pro падает до выполнения любых проверок. |
 | AUDIT-PRO-VM-DEPRECATED | `extractSiteConfig()` и `inlineScriptSyntax()` используют `new vm.Script()` — deprecated в Node 22.12+. При полном удалении API в будущей версии Node аудит упадёт. Альтернатива: `new Function()` в sandbox. |
 | SEO-AUDIT-ROOT-ONLY | `seo-audit.js` исключает `dist/` из `walk()`. Astro-only страницы без root-копии невидимы для SEO-аудита: проверки canonical, og:image, JSON-LD, Twitter cards, FAQ, robots. Та же архитектурная проблема что AUDIT-PRO-ROOT-ONLY. |
 | VALIDATE-JS-VM-DEPRECATED | `extractSiteConfigFromHtml()` использует `new vm.Script()` — deprecated в Node 22.12+. Дублирует ту же проблему что и `audit-pro.js` (AUDIT-PRO-VM-DEPRECATED). При удалении API — validate.js упадёт. |
@@ -114,8 +116,6 @@
 | NEW-PREFETCH-UNCONDITIONAL | 5 prefetch hints на каждой странице включая саму себя |
 | SEARCH-MANIFEST-QUALITY | search-manifest.json: 44/44 без поля slug (ключ отсутствует, не пустой); 44/44 нет scripture; 4/44 нет image. Verified. |
 | DEPLOY-YML-DEAD-WARN-STEP | 🆕 deploy.yml:72-75 — warn-шаг с `if: conclusion == 'failure'` недостижим (job-level `if:` скипает job при failure) и несёт вводящий в заблуждение текст «Deploying anyway». Источник grep-ложноположительных reopen'ов P1-DEPLOY-FAIL. Удалить шаг. |
-| DEAD-SCRIPTS-6 | 6 мёртвых скриптов (0 вызовов): `_audit-deep.js`, `deep-check.js`, `extract-native-pilot.js`, `genealogy-e2e-v2.js`, `ishod-qa.js`, `map-visual-qa.js` |
-| NOINDEX-PHANTOM | audit-pro.js:2055 NOINDEX_ALLOWLIST содержит `yandex_d8876d66da1b4592.html` — файл не существует (phantom entry) |
 
 ## 🔵 P3 — РЕФАКТОРИНГ (4)
 
