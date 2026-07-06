@@ -4,7 +4,7 @@
 > Дата консолидации: **2026-07-05** (полная реструктуризация из 2174-строчного документа).  
 > Source HEAD: `de71fb3d` (deploy run 28747336849 SUCCESS — всё дневное на проде) | AuditRepo HEAD: см. git log  
 > Предыдущая версия: `archive/2026-07-05-matrix-pre-restructure/`
-> **🔴 2026-07-06 arena-auditor: deploy STALE** — последний успешный деплой `e044908e` (2026-07-05T19:27Z); HEAD `14a49be8` (Merge PR #48) проваливает публикацию на шаге «Deploy to GitHub Pages» (infra: `error_count: 10`, `timeout: 600000`). Все quality-гейты на HEAD зелёные. См. секцию «AUDITOR / ARENA — 2026-07-06» внизу.
+> **🟢 2026-07-06 arena-auditor: deploy-GREEN** — HEAD `14a49be8` (Merge PR #48) успешно задеплоен: run `28794737410` (`workflow_dispatch`, 2026-07-06T13:22Z, conclusion=success). Все quality-гейты зелёные; D-17/D-18 RESOLVED. См. секцию «AUDITOR / ARENA — 2026-07-06» внизу.
 
 ---
 
@@ -216,8 +216,8 @@
 
 | ID | Sev | Описание | Статус | Evidence |
 |---|---|---|---|---|
-| D-17 | 🔴 High | Продакшн STALE — 4 failed/cancelled деплоя подряд; HEAD не опубликован | OPEN | CI runs 28756822942 / 28757603646 / 28758340460 / 28758726417; последний success `e044908e` |
-| D-18 | 🟠 Med | HEAD-деплой зелёный по гейтам, но падает на «Deploy to GitHub Pages» (infra/timeout, error_count 10) | OPEN (infra) | run 28758726417 log: `error_count: 10`, `timeout: 600000` |
+| D-17 | 🔴→✅ | Продакшн STALE (4 failed/cancelled деплоя подряд) — RESOLVED: HEAD `14a49be8` задеплоен run `28794737410` (workflow_dispatch, 2026-07-06T13:22Z, success) | RESOLVED (2026-07-06) | CI runs 28756822942 / 28757603646 / 28758340460 / 28758726417 → 28794737410 success |
+| D-18 | 🟠→✅ | HEAD-деплой зелёный по гейтам, но падал на «Deploy to GitHub Pages» (infra/timeout, error_count 10) — RESOLVED: перезапуск (run `28794737410`) успешен | RESOLVED (2026-07-06) | run 28758726417 (`error_count: 10`, `timeout: 600000`) → 28794737410 success |
 | D-1 | 🟠 Med | `concurrency: cancel-in-progress` губит push-деплои; публикация держится на цепочке `workflow_run` (IndexNow→deploy) | OPEN (carry-over) | `deploy.yml:50-52` |
 | D-2 | 🟠 Med | css-layer-validator слабый (только brace-count; не ловит семантику); @layer-адопция 21.9% (цель ≥80%); 200 `!important` (потолок 202) | OPEN (carry-over) | `css:layer:validate` |
 | D-3 | 🟡 Low | JS total 375041 > 365000 (CSS-бюджет теперь OK) | OPEN (carry-over) | `audit-pro.js` |

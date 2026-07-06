@@ -139,3 +139,19 @@
 ---
 
 *Сгенерировано аудитором на основе прямого чтения кода (HEAD `14a49be8`), локальных гейтов на Node v22.12.0 и статуса CI через GitHub API. Правок в репо не вносилось.*
+
+---
+
+## ADDENDUM — 2026-07-06 (вечер, повторная проверка)
+
+**Состояние продакшна ИЗМЕНИЛОСЬ (в лучшую сторону):**
+
+- **HEAD `14a49be8` УСПЕШНО ЗАДЕПЛОЕН.** Перезапуск деплоя через `workflow_dispatch` прошёл: run **`28794737410`** (conclusion=**success**, 2026-07-06T13:22Z). Это подтверждает гипотезу D-18 — падение «Deploy to GitHub Pages» (error_count 10, timeout 600000) было **инфраструктурным/транзиентным**, не багом кода.
+- **D-17 (stale prod) → RESOLVED.** Продакшн теперь актуален: последний успешный деплой = `14a49be8` (а не `e044908e`). Фичи PR #45–#48 (3D-tilt `/izbrannoe/`, Писание в глоссарии, Bible-tooltip, TTS/kinetic numeral, SW baseline gb-v189) **НА продакшне**.
+- **D-18 (infra Pages-publish) → RESOLVED** (перезапуск успешен).
+
+**Локально (Node 22, HEAD `14a49be8`) audit-pro.js — PASSED**, но бюджеты: Core CSS total **464636** > 425000 (warning, снова выше лимита) и JS total **375041** > 365000 (warning). → **D-3: оба бюджета превышены** (carry-over).
+
+**Итог по D-*:** RESOLVED — D-9, D-14, D-15, D-16, **D-17, D-18**. OPEN (carry-over, не блокирующие) — D-1 (concurrency), D-2 (css-layer/!important), D-3 (бюджеты CSS+JS), D-4 (magic z-index), D-7 (path-leak комментарий), D-8 (`*.md` в deploy paths).
+
+**Действие для владельца:** устранить carry-over D-1…D-8 (или оставить как техдолг) + вручную отозвать fine-grained PAT.
