@@ -1,8 +1,8 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 > Единый реестр всех багов проекта gospod-bog.ru.  
-> **Source HEAD: `14a49be83ab57212c0bbd26a8249b75ac026511d`** (Merge PR#48) — задеплоен: run `28794737410` (`workflow_dispatch`, 2026-07-06T13:22Z, success), артефакт `8110554604`.  
-> Обновлено: **2026-07-06** (fable-super-audit: единый HEAD, D-строки arena влиты в канонические таблицы, счётчики пересобраны).  
+> **Source HEAD: `14a49be83ab57212c0bbd26a8249b75ac026511d`** (Merge PR#48) — **НОВЫЙ HEAD `36b815c2` НЕ deploy-green: run `28827343079` FAILURE (2026-07-06T22:23Z, Gill play-smoke). Продакшн ЗАПЕРТ на последнем GREEN run `28794737410` @ `14a49be8` (2026-07-06T13:22Z).**  
+> Обновлено: **2026-07-06** (+arena cycle4: HEAD→36b815c2, deploy FAILING, D-23) (fable-super-audit: единый HEAD, D-строки arena влиты в канонические таблицы, счётчики пересобраны).  
 > Расширенный системный бэклог (CI/даты/SW/security/Bible/семантика — ~70 находок): **`SUPER_AUDIT_2026-07-06_14a49be8.md`** — закрывается волнами W1–W10; в счётчики матрицы не входит.  
 > Дата консолидации: 2026-07-05 (реструктуризация из монолита — `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`).
 
@@ -318,3 +318,25 @@
 **Продолжение досье** (ч.2, углублённая): конкретные позиции Гилла с прямыми цитатами из первоисточников — готовый материал для статьи «Богословие Джона Гилла». Полное досье: `incoming/arena-auditor/2026-07-06/RESEARCH_gill-theology-deep-dive_2026-07-06.md`. Связано с ч.1: `RESEARCH_gill-series-gaps-primary-sources_2026-07-06.md`.
 
 **Кратко:** пять пунктов кальвинизма (избрание/отвержение, particular redemption, действенная благодать, претерпение, развращение); завет благодати как вечный завет Троицы (две администрации, Агарь/Сарра); прямые цитаты экзегезы 1 Тим 2:4 и Ин 3:16 («все»/«мир» = народы/избранные, не каждый индивид); вечное оправдание; кредобаптизм; сбалансированный разбор спора о «гипер-кальвинизме» (Edinburgh thesis — критика; Ella/Nettles/George — защита; нюанс: free offer без duty-faith).
+
+---
+
+### 🔁 Re-audit cycle 4 — 2026-07-06 (arena-auditor, Node v22.12.0)
+
+**Контекст:** HEAD **сдвинулся** `14a49be8` → `36b815c2` (8 новых коммитов, вкл. Vosk TTS-движок `f7df07bd`/`92f27598`, merge `86bec6ea`). **Деплой НЕ green:** run `28827343079` (workflow_run, `36b815c2`, 2026-07-06T22:23Z) → FAILURE на шаге `Gill mobile TOC and PlayEmber smoke` (`deploy.yml:158-159`). Последний GREEN-деплой = `28794737410` @ `14a49be8` (2026-07-06T13:22Z) — **продакшн заперт на старом HEAD** (регрессия, не инфра-таймаут как D-17/D-18).
+
+**Регресс-контроль (локально, все зелёные):** `audit-pro.js` ✅ (warning: JS 410104 > 365000 — **D-3 ухудшен** на ~35 КБ из-за TTS); `validate:all` ✅ (2 warning D-19); `data:consistency` ✅; `gill:series:data:consistency:audit` ✅; `native:runtime:audit:strict` ✅ (51/53).
+
+**NEW — D-23 (P1, deploy-блокирующая регрессия):** `gill:mobile-play:smoke` падает 8 assertion'ов на state-машине PlayEmber-плеера: `data-state` висит `["idle","idle"]` после тапов Play; `speed select from idle` → `{"calls":2,"rates":[1,1.75]}` (двойной speak); `long press stop` → `{"cancels":7,"calls":2}`. Гипотеза: double-binding/race в интеграции Vosk TTS (`js/floating-cluster-controller.js` play/speed/stop + `pickEngine()` ~324; `js/vosk-tts-engine.js`; `PlayEmber.astro:6` декларирует `data-state`). Тест: `scripts/gill-v16-mobile-play-smoke.js`. Полный отчёт: `incoming/arena-auditor/2026-07-06/AUDIT_gb-main_36b815c2_2026-07-06_cycle4.md`. (Отношение к D-15: D-15 = series-marks smoke, уже RESOLVED; D-23 = плеер play/speed/stop — genuinely new.)
+
+**Подтверждено RESOLVED (проверено по исходникам `gb` @ `365de509`):** D-21 (`js/glossary.js` апгрейд-путь `l()` теперь `innerHTML=detail`), D-22 (`Favorites.astro` `safePath = /^\/(?!\/)/` отсекает `javascript:`/`//host`).
+
+**Всё ещё OPEN (re-verified в cycle 4):**
+- **D-4** (Low): 6 magic z-index, те же строки — `floating-cluster.css:2372/2447/2504/2697/2882`, `mobile-hotfix.css:129`; токены `--z-*` (24) есть → фикс тривиален, не сделан.
+- **D-7** (Low): `PremiumControlAnchor.astro:3` → `// See: AuditRepo/projects/gb-is-my-strength/PremiumControls/README.md §1`. ⚠️ Коммит `437c6a33` пофиксил **другой** path-leak (в AGENTS.md), этот НЕ тронут.
+- **D-19** (Low): `validate:all` 2 warning — `20-antisovetov-pastoru`, `rimlyanam-7` (`<title>`≠`og:title`).
+- **D-2** (Med): `css:layer:validate` → **21.9%** layered (62404/222363), цель ≥80%.
+- **D-3** (Low): JS 410104 > 365000 (ухудшено vs 375041).
+- **D-1 / D-8 / D-9 / D-20:** без изменений к `36b815c2`.
+
+**Gill research (контент, НЕ баг):** ч.3 — `RESEARCH_gill-series-structure-proposal_2026-07-06.md`. Ответ на вопрос владельца: серия УЖЕ = «Введение + I + II + III + Справочник»; рекомендация — добавить **Часть IV. Богословие** (доктринальный климакс, «недостающее золото») → итог 6 документов. Связано: ч.1 `RESEARCH_gill-series-gaps-primary-sources_2026-07-06.md`, ч.2 `RESEARCH_gill-theology-deep-dive_2026-07-06.md`.
