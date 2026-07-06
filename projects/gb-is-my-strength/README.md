@@ -35,10 +35,19 @@ npm run workflows:check = PASS
   (JS port of vosk-tts's Python text pipeline), `js/vosk-tts-engine.js`
   (browser wrapper, lazy-loads model+runtime only on first click, caches in
   IndexedDB). CSP (`script-src`/`connect-src`) extended to
-  `cdn.jsdelivr.net` and `alphacephei.com` on every page shipping the
-  ember (37 `*PageHead.astro`/`*PageChrome.astro` components + 26 legacy
-  static HTML pages under `articles/`, `baptisty-rossii/`, `nagornaya/` +
-  the `DEFAULT_DIST_CSP` fallback in `scripts/astro-cache-bust-postbuild.js`).
+  `cdn.jsdelivr.net` and `alphacephei.com` on the 37 `*PageHead.astro`/
+  `*PageChrome.astro` components that actually reach production (verified
+  via `migration/page-ownership.json` — see the incoming report's
+  post-merge correction) + the `DEFAULT_DIST_CSP` fallback in
+  `scripts/astro-cache-bust-postbuild.js`. A same-day follow-up also
+  edited 26 root-level legacy HTML pages under `articles/`,
+  `baptisty-rossii/`, `nagornaya/` on the mistaken belief they were live —
+  they are all `owner: astro` / `status: production-dist` in
+  `page-ownership.json` and `copy-legacy-to-dist.js` never copies them
+  into `dist/`, so those 26 are stale strangler-migration leftovers with
+  no production effect. Harmless edit, but not a real fix; see the
+  incoming report for the full correction and a housekeeping suggestion
+  (deleting this class of orphaned root HTML) for a future pass.
   Full detail and known caveats: `incoming/vosk-tts-integration-2026-07-06/REPORT.md`.
   **This merged straight to `main` without going through this repo's normal
   PR-triggered CI/validate:static-publication gate** (explicit user

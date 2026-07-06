@@ -78,15 +78,37 @@ User asked to merge straight to `main` (explicit decision, bypassing the
 normal PR/CI gate) and to "recheck everything thoroughly" first. Two
 independent passes were run against commit `f7df07b`:
 
-**Code review (general-purpose agent, adversarial)** found and all were
-fixed in follow-up commit `92f2759` before merge:
-- 26 root-level static HTML pages (`baptisty-rossii/**`, `nagornaya/chast-*`,
-  `articles/*`) load `floating-cluster-controller.js` but are hand-authored
-  HTML, not Astro components — the first CSP patch only touched `*.astro`
-  files via a `grep --include="*.astro"`, silently missing all 26. Fixed:
-  same CSP patch applied to all 26 (verified with an exhaustive re-grep
-  afterward — see the `README.md` "Recent changes" entry for the final
-  file count).
+**Code review (general-purpose agent, adversarial)** found the items below.
+All were "fixed" in follow-up commit `92f2759` before merge, but **one of
+them was a false positive that a closer look (prompted by the user asking
+"isn't this legacy garbage?") caught after the merge** — corrected below,
+not reverted (the edit is harmless dead-code churn, just not a real bug):
+
+- ~~26 root-level static HTML pages (`baptisty-rossii/**`,
+  `nagornaya/chast-*`, `articles/*`) load `floating-cluster-controller.js`
+  but are hand-authored HTML, not Astro components — the first CSP patch
+  only touched `*.astro` files via a `grep --include="*.astro"`, silently
+  missing all 26 on production.~~ **FALSE POSITIVE, corrected 2026-07-06
+  post-merge.** Checked `migration/page-ownership.json`: all 26 routes are
+  `"owner": "astro"` / `"status": "production-dist"`. Checked
+  `scripts/copy-legacy-to-dist.js`: it explicitly does **not** copy legacy
+  HTML over astro-owned routes into `dist/`. Checked
+  `.github/workflows/deploy.yml`: GitHub Pages is deployed from `dist/`
+  only (`actions/upload-pages-artifact` `path: dist`). Conclusion: these 26
+  root-level files are **stale strangler-migration leftovers that are never
+  served in production** — the routes are actually built from the
+  `*PageHead.astro`/`*PageChrome.astro` components, which the *first* CSP
+  patch (commit `f7df07b`) already correctly covered. The CSP edits applied
+  to the 26 root files in `92f2759` are inert (harmless, but pointless —
+  they patch files nobody reads). Left as-is rather than reverted, since
+  reverting a no-op edit isn't worth another commit; flagging here so the
+  next audit pass doesn't repeat the same false alarm, and doesn't count
+  this as a real fix in any bug tally.
+  **Housekeeping suggestion for a future pass (not done here, out of
+  scope):** these 26+ orphaned root HTML files (and however many more
+  exist for other already-migrated `owner: astro` routes) could be deleted
+  from the repo entirely — they're dead weight, not a safety net (deploy
+  never reads them).
 - `pauseTts()` didn't guard against the async `resolveTtsEngine()` promise
   (fired by `startTts()`) overriding a pause that happened while Vosk was
   still loading. Fixed: the `.then()` callback now checks `ttsState.paused`
