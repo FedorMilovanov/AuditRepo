@@ -4,6 +4,7 @@
 > Дата консолидации: **2026-07-05** (полная реструктуризация из 2174-строчного документа).  
 > Source HEAD: `de71fb3d` (deploy run 28747336849 SUCCESS — всё дневное на проде) | AuditRepo HEAD: см. git log  
 > Предыдущая версия: `archive/2026-07-05-matrix-pre-restructure/`
+> **🔴 2026-07-06 arena-auditor: deploy STALE** — последний успешный деплой `e044908e` (2026-07-05T19:27Z); HEAD `14a49be8` (Merge PR #48) проваливает публикацию на шаге «Deploy to GitHub Pages» (infra: `error_count: 10`, `timeout: 600000`). Все quality-гейты на HEAD зелёные. См. секцию «AUDITOR / ARENA — 2026-07-06» внизу.
 
 ---
 
@@ -197,3 +198,50 @@
 | **Всего открыто** | **40** (11 закрыто PR#33/#35 + самоизлечение; PR#34-тройка закроется зелёным деплоем) |
 | False positives отклонено | 3 |
 | Passes processed | 94+ |
+
+---
+
+## 🔴 AUDITOR / ARENA — 2026-07-06 (independent auditor, Node v22.12.0)
+
+**Объект:** `main` @ `14a49be83ab57212c0bbd26a8249b75ac026511d` (Merge PR #48). Полные отчёты: `incoming/arena-auditor/2026-07-06/AUDIT_gb-main_e044908e_2026-07-05.md` и `incoming/arena-auditor/2026-07-06/AUDIT_gb-main_14a49be8_2026-07-06.md`.
+
+**Метод:** локально Node 22 + `npm ci`, статические гейты (`audit-pro.js`, `css:layer:validate`, `data:consistency`, `gill:series:data:consistency:audit`, `native:runtime:audit:strict`, `migration:metadata:check:strict`, `validate:all`, visual-parity audits) — все PASSED. Браузерные гейты и Pages-публикация проверены через GitHub API (CI run-логи). Полный `strangler:build:production-like` локально OOM (exit 137, ~1 ГБ при нужных ~2 ГБ) — см. `docs/SANDBOX-ENV-2026-06-21.md`.
+
+### Вердикт
+- 🔴 **Продакшн STALE.** Последний успешный деплой — `e044908e` (2026-07-05T19:27Z). С тех пор **4 попытки подряд failed/cancelled**: PR #45 `55a7d437e`, PR #46 `2e760e746`, cache-bust `5704924ab`, HEAD `14a49be8` (`28758726417`). В окне последних 40 прогонов — 0 успешных деплоев. Фичи PR #45–#48 (3D-tilt `/izbrannoe/`, Писание в глоссарии, Bible-tooltip, TTS/kinetic numeral, SW baseline gb-v189) **НЕ на продакшне**.
+- 🟠 HEAD `14a49be8` проходит **ВСЕ quality-гейты** (Static gates, Build, Pagefind, Gill submenu audit, Gill mobile layout, dist-smoke, content coverage 50/50, **SW readiness ✅ CACHE_VERSION=gb-v189 matches baseline**), но деплой падает на шаге **«Deploy to GitHub Pages»** (`error_count: 10`, `timeout: 600000` → «Deployment failed, try again later»). Баг НЕ в коде — нужен перезапуск деплоя.
+- 🟢 Локальные гейты (Node 22) — все PASSED. **CSS-бюджет теперь в норме** (предупреждение исчезло vs `e044908e`); JS total 375041 > 365000 (превышен).
+
+### Найденные проблемы (аудиторские D-*)
+
+| ID | Sev | Описание | Статус | Evidence |
+|---|---|---|---|---|
+| D-17 | 🔴 High | Продакшн STALE — 4 failed/cancelled деплоя подряд; HEAD не опубликован | OPEN | CI runs 28756822942 / 28757603646 / 28758340460 / 28758726417; последний success `e044908e` |
+| D-18 | 🟠 Med | HEAD-деплой зелёный по гейтам, но падает на «Deploy to GitHub Pages» (infra/timeout, error_count 10) | OPEN (infra) | run 28758726417 log: `error_count: 10`, `timeout: 600000` |
+| D-1 | 🟠 Med | `concurrency: cancel-in-progress` губит push-деплои; публикация держится на цепочке `workflow_run` (IndexNow→deploy) | OPEN (carry-over) | `deploy.yml:50-52` |
+| D-2 | 🟠 Med | css-layer-validator слабый (только brace-count; не ловит семантику); @layer-адопция 21.9% (цель ≥80%); 200 `!important` (потолок 202) | OPEN (carry-over) | `css:layer:validate` |
+| D-3 | 🟡 Low | JS total 375041 > 365000 (CSS-бюджет теперь OK) | OPEN (carry-over) | `audit-pro.js` |
+| D-4 | 🟡 Low | Magic z-index: `floating-cluster.css:2649` `2147483000`, `:2834` `2147483100`, `:2324` `2102 !important`, `:2399` `9999`, `:2456` `3000`; `mobile-hotfix.css:129` `2102 !important` | OPEN (carry-over) | grep |
+| D-7 | 🟡 Low | Residual path-leak в комментарии `src/components/ui/premium-controls/PremiumControlAnchor.astro:3` (`AuditRepo/projects/gb-is-my-strength/...`) — не ловится §14 `audit-pro.js` | OPEN (carry-over) | grep |
+| D-8 | 🟡 Low | `deploy.yml` `paths:` не включает `*.md` (doc-only не триггерит push-деплой) | OPEN (carry-over) | `deploy.yml:9-33` |
+| D-14 | 🔴→✅ | spravochnik H2-parity divergence («Справочник по Гиллу» vs legacy «Джон Гилл (1697–1771)») блокировал PR #45; к HEAD закрыто (гейты зелёные в 28758726417) | RESOLVED @HEAD | run 28756822942 → 28758726417 |
+| D-15 | 🔴→✅ | Gill series-marks smoke expectation stale (ждал 5 меток вкл. текущую; rail по дизайну рендерит только sibling-метки) блокировал PR #46; к HEAD закрыто | RESOLVED @HEAD | `GillSeriesRail.astro:34-36,47-49,90-92`; run 28757603646 → 28758726417 |
+| D-16 | 🔴→✅ | SW CACHE_VERSION gb-v189 ≠ baseline gb-v188 блокировал cache-bust; пофикшено `b712bb15` (baseline → gb-v189) | RESOLVED (`b712bb15`) | run 28758340460 → 28758726417 SW readiness ✅ |
+| D-9 | 🟡→✅ | Висячие ветки слиты (PR #47 `website-text-image-audit-9ep5z9`, PR #48 `image-generation-query-3e8rd5`) → delete-safe на origin | RESOLVED | `git merge-base --is-ancestor` |
+
+### Позитив (новый код)
+- 3D-tilt `/izbrannoe/` a11y-корректен: только `(hover:hover) and (pointer:fine)` (`js/site.js:577`) + `@media (prefers-reduced-motion:reduce){transform:none}` (`izbrannoe/index.astro:186`).
+- TTS (`js/site.js:98-197`) надёжен: feature-detect, `cancel()` на stop/`beforeunload`, pause/resume на `visibilitychange`, poll `voiceschanged`, guard устаревших utterance (`_uttGen`).
+- Локальные стат-гейты зелёные; `native:runtime` — `/izbrannoe/` теперь `native-with-legacy-head` (1.9%, ок).
+
+### Рекомендации
+1. **(High) D-17/D-18:** немедленно **перезапустить деплой HEAD `14a49be8`** (гейты зелёные; сбой инфраструктурный). Убедиться, что прогон доходит до «Deploy to GitHub Pages» и завершается success. Если `timeout/error_count` повторяется — исследовать размер Pages-артефакта и 10-мин таймаут шага публикации.
+2. **(Med) D-1:** убрать `cancel-in-progress` (или сделать деплой чисто push-триггером); задокументировать «продакшн = последний успешный `workflow_run`».
+3. **(Med) D-2:** усилить CSS-валидатор (postcss-парсинг) + поднять @layer-адопцию.
+4. **(Low) D-3/D-4/D-7/D-8:** бюджет JS; z-index-токены (`--z-*`); убрать внутренний путь из комментария `PremiumControlAnchor.astro:3`; добавить `*.md` в `deploy.yml paths:`.
+5. **(Low) D-9:** удалить слитые ветки (`image-generation-query-3e8rd5`, `website-text-image-audit-9ep5z9`) из origin.
+6. **(Process) D-16:** CACHE_VERSION-bump и обновление `sw-cache-version-baseline.json` делать ОДНИМ коммитом (аудит это уже требует, но разрыв вызвал транзиентный фейл деплоя).
+
+### Ограничения
+- Полный build OOM локально; браузерные гейты/публикация — через CI (авторитетно).
+- GitHub fine-grained PAT **нельзя отозвать через API** (GET/DELETE `/user/fine_grained_personal_access_tokens` → 404; GET `/authorizations` → 404) — отзыв вручную владельцем: https://github.com/settings/tokens (Fine-grained) → `github_pat_11B5…`.
