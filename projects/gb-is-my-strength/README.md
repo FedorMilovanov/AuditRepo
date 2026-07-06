@@ -1,8 +1,8 @@
 # gb-is-my-strength / gospod-bog.ru
 
-**Status:** ⚠️ REGRESSION AUDIT #2 — P0-FC-REC fixed (ca6a25a), but REG-001 (P0: `_headers` useless on GitHub Pages) and REG-002 (P1: deploy SPOF) found. See `verified/MASTER_BUG_MATRIX.md`.
-**Last source HEAD checked:** `e458581` (2026-07-03, Arena Deep Auditor Pass 23 — Regression Watch)
-**Previous HEAD:** `66640561919501e68dd9d3cd290ff9afe53d3068` (2026-06-27)
+**Status:** ⚠️ REGRESSION AUDIT #2 — P0-FC-REC fixed (ca6a25a), but REG-001 (P0: `_headers` useless on GitHub Pages) and REG-002 (P1: deploy SPOF) found. See `verified/MASTER_BUG_MATRIX.md`. **Separately:** TTS engine swap (2026-07-06, see below) merged directly to `main`, bypassing the normal PR/CI review gate at the user's explicit request — needs its own dedicated audit pass, it has not been through the workflow this repo normally requires.
+**Last source HEAD checked:** `86bec6e` (2026-07-06, Vosk TTS engine merge — see "Recent changes not yet audited" below)
+**Previous HEAD:** `e458581` (2026-07-03, Arena Deep Auditor Pass 23 — Regression Watch)
 
 ## Quick facts
 
@@ -23,6 +23,34 @@ AuditRepo HEAD before cleanup: c3a9ae27df749c09a88650ae0e16e348db61c1c7
 package.json scripts.dist:jsonld:audit = node scripts/dist-jsonld-audit.js --root dist
 npm run workflows:check = PASS
 ```
+
+### Recent changes not yet audited by a dedicated pass
+
+- **2026-07-06, `main` @ `86bec6e`** — TTS engine on article pages
+  (`js/floating-cluster-controller.js`'s "Слушать" ember) replaced: Web
+  Speech API (`speechSynthesis`) → **vosk-tts** (alphacep/vosk-tts, Apache
+  2.0, VITS + BERT stress model) run client-side via onnxruntime-web, with
+  automatic silent fallback to Web Speech on any failure (network,
+  unsupported browser, model parse error). New files: `js/vosk-tts-core.js`
+  (JS port of vosk-tts's Python text pipeline), `js/vosk-tts-engine.js`
+  (browser wrapper, lazy-loads model+runtime only on first click, caches in
+  IndexedDB). CSP (`script-src`/`connect-src`) extended to
+  `cdn.jsdelivr.net` and `alphacephei.com` on every page shipping the
+  ember (37 `*PageHead.astro`/`*PageChrome.astro` components + 26 legacy
+  static HTML pages under `articles/`, `baptisty-rossii/`, `nagornaya/` +
+  the `DEFAULT_DIST_CSP` fallback in `scripts/astro-cache-bust-postbuild.js`).
+  Full detail and known caveats: `incoming/vosk-tts-integration-2026-07-06/REPORT.md`.
+  **This merged straight to `main` without going through this repo's normal
+  PR-triggered CI/validate:static-publication gate** (explicit user
+  decision — see the incoming report for why). `npm run validate`
+  (non-strict) was run and passed clean; `validate:static-publication` /
+  full `astro:build` were **not** run. Flag this for the next audit pass:
+  treat it as unverified against this repo's usual bar until someone runs
+  the full validation suite and/or a live production smoke test of the
+  "Слушать" button confirms the `alphacephei.com` model fetch actually
+  succeeds cross-origin from `gospod-bog.ru` (verified only from
+  `localhost`/`file://` during development — see the incoming report's
+  CORS caveat).
 
 ### Current fixed/stale items
 
