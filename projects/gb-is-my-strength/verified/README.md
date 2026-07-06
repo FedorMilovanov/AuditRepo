@@ -1,19 +1,19 @@
 # Verified
 
-This folder should contain only **current canonical operational truth** and current repair-order truth.
+Здесь живёт только **текущая каноническая правда**. Всё историческое — в `../archive/`.
 
-## Primary current files
+## Текущий канонический набор (2026-07-06, source HEAD `14a49be8`)
 
-- `MASTER_BUG_MATRIX.md` — **the single canonical source of truth.** Consolidated on 2026-07-03 with HEAD `932af3f3`, updated for Pass 44 (SiteUtils fix) and HEAD `01ff5ce3`.
+- `MASTER_BUG_MATRIX.md` — канон точечных багов (единый HEAD, счётчики пересобраны, D-строки arena влиты).
+- `SUPER_AUDIT_2026-07-06_14a49be8.md` — канон системного бэклога: верифицированные находки, опровергнутые формулировки, план волн W0–W10, правила закрытия.
+- `START_HERE.md` — сводка для владельца (регенерируется при каждой волне).
 
-## Historical / superseded files
+## Примечания
 
-These are retained for evidence but not active truth:
+- `PLAYEMBER_INTERACTION_SPEC_2026-06-27.md` — спека PlayEmber; зона PremiumControls in-flight у владельца, спеку сверять с текущим source перед использованием.
+- Устаревшие доки (`ACTION_PLAN`, `CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27`, `REPAIR_ORDER_DELTA_2026-06-27`, `DEFINITIVE_PREMIUMCONTROLS_FINAL_HANDOFF_2026-06-27`) перенесены в `../archive/2026-07-06-stale-verified/` (2026-07-06).
 
-- `CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27.md` — **SUPERSEDED** (has banner). Historical index only.
-- `REPAIR_ORDER_DELTA_2026-06-27_current-head-priority-reset.md` — **SUPERSEDED** (HEAD `6664056`, very stale). See MASTER_BUG_MATRIX.md for current priorities.
-- `DEFINITIVE_PREMIUMCONTROLS_FINAL_HANDOFF_2026-06-27.md` — Historical. Current PremiumControls truth: MASTER_BUG_MATRIX.md + audit:premium-controls 87/87.
-- `PLAYEMBER_INTERACTION_SPEC_2026-06-27.md` — Active spec, check against current source.
+## Правило
 
-## Rule
-If a document is primarily historical, append-only, or superseded by current-head truth, it should not live in this folder root.
+Один канонический документ на слой. Новые находки — через `incoming/` → матрица/SUPER_AUDIT,
+не параллельными «current»-доками. Исторические/superseded файлы не живут в корне этой папки.

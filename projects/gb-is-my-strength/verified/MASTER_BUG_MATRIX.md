@@ -1,10 +1,10 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 > Единый реестр всех багов проекта gospod-bog.ru.  
-> Дата консолидации: **2026-07-05** (полная реструктуризация из 2174-строчного документа).  
-> Source HEAD: `de71fb3d` (deploy run 28747336849 SUCCESS — всё дневное на проде) | AuditRepo HEAD: см. git log  
-> Предыдущая версия: `archive/2026-07-05-matrix-pre-restructure/`
-> **🟢 2026-07-06 arena-auditor: deploy-GREEN** — HEAD `14a49be8` (Merge PR #48) успешно задеплоен: run `28794737410` (`workflow_dispatch`, 2026-07-06T13:22Z, conclusion=success). Все quality-гейты зелёные; D-17/D-18 RESOLVED. См. секцию «AUDITOR / ARENA — 2026-07-06» внизу.
+> **Source HEAD: `14a49be83ab57212c0bbd26a8249b75ac026511d`** (Merge PR#48) — задеплоен: run `28794737410` (`workflow_dispatch`, 2026-07-06T13:22Z, success), артефакт `8110554604`.  
+> Обновлено: **2026-07-06** (fable-super-audit: единый HEAD, D-строки arena влиты в канонические таблицы, счётчики пересобраны).  
+> Расширенный системный бэклог (CI/даты/SW/security/Bible/семантика — ~70 находок): **`SUPER_AUDIT_2026-07-06_14a49be8.md`** — закрывается волнами W1–W10; в счётчики матрицы не входит.  
+> Дата консолидации: 2026-07-05 (реструктуризация из монолита — `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`).
 
 ---
 
@@ -102,22 +102,29 @@
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (2)
+## 🟠 P1 — ОТКРЫТО (1)
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | BUG-PERF-001 | addEventListener без removeEventListener: 339 add / 25 remove по всем js/ (294/16 в 5 файлах) | 2 witnesses + пересчёт 07-05 |
 
-## 🟡 P2 — ОТКРЫТО (5)
+> P0/P1-класса системные находки (транзакция релиза, петля дат, SW-ключи, XSS-поверхности, Bible-корпус) ведутся в `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W6) и переносятся сюда по мере закрытия.
+
+## 🟡 P2 — ОТКРЫТО (9)
 
 | ID | Описание | Witnesses |
 |---|---|---|
-| AUDIT-P2-WORKFLOWS-CHECK-GAP | `check-workflows.js` не проверяет deploy `if:` условия — `|| failure` не ловится | АУДИТ 1.4 |
+| AUDIT-P2-WORKFLOWS-CHECK-GAP | `check-workflows.js` не проверяет deploy `if:` условия — `|| failure` не ловится; шире: строковые regex вместо YAML-топологии (см. SUPER_AUDIT W1) | АУДИТ 1.4 + fable 07-06 |
 | AUDIT-P2-MATRIX-DRIFT | route-migration-matrix (35) ≠ page-ownership (54) ≠ sitemap (43). Нет cross-validation. | АУДИТ 1.0 |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
+| D-1 | `concurrency: cancel-in-progress` губит push-деплои; deploy и indexnow в РАЗНЫХ concurrency-группах — не сериализуются (часть SEO-CANON-P0-01) | arena 07-06 + fable: deploy.yml:50-52, indexnow.yml:36-38 |
+| D-2 | css-layer-validator: заголовок обещает проверку порядка @layer, код проверяет только необъявленные слои; порог <50% против цели ≥80%; валидирует только site.css | arena cycle2 |
+| D-19 | `<title>` ≠ `og:title`/`twitter:title`/JSON-LD headline на 2 кастомных PageHead (antisovetov, rimlyanam-7): 4 независимых литерала мимо Seo.astro | arena cycle2; `validate:all` |
+| D-21 | Глоссарий: dual renderer — `o()` innerHTML vs `l()` textContent → литеральный `<em>` в серверных тултипах; innerHTML из JSON = XSS-поверхность (W5) | arena cycle3 + fable: js/glossary.js, data/glossary.json (55 `<em>`) |
+| D-22 | Favorites.astro: `f.path` → `card.href` без проверки схемы (javascript:); image-regex пропускает protocol-relative `//host` (W5) | arena cycle3 + fable: Favorites.astro:34-38 |
 
-## 🟢 P3 — ОТКРЫТО (24, DEPLOY-YML-DEAD-WARN-STEP merged PR#34)
+## 🟢 P3 — ОТКРЫТО (20)
 
 | ID | Описание |
 |---|---|
@@ -136,6 +143,11 @@
 | VALIDATE-JS-ARTICLES-ONLY | `scripts/validate.js` (`validateArticle()`) проверяет только `articles/*`. 9 baptisty-rossii статей (dva-sezda-1884…yuzhnaya-shtunda) НЕ проходят 17 проверок: canonical, byline, og:image, breadcrumb, author-card и др. `EXTRA_PAGES` = 4 страницы (pastor-series, biografii, about, index) — жёстко захардкожено. |
 | AUDIT-PRO-ROOT-ONLY | `audit-pro.js` проверяет ТОЛЬКО root HTML (`walk(ROOT)`, `dist/` в skipDirs). `/izbrannoe/` (Astro-only, без root-копии) невидим для 7 гвардов: canonical, sitemap, SEO, cache-bust, JSON-LD, links, a11y. При `astro build` в dist/ генерируются 54 страницы — аудит проверяет только 50 root HTML. |
 | STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |
+| D-3 | JS total 375041 > 365000 (бюджет audit-pro); CSS-бюджет в норме |
+| D-4 | Magic z-index: `floating-cluster.css:2372/2447/2504/2697/2882`, `mobile-hotfix.css:129` — токены `--z-*` существуют, фикс тривиален (⚠️ PremiumControls in-flight — согласовать) |
+| D-7 | Path-leak в комментарии `PremiumControlAnchor.astro:3` (внутренний путь AuditRepo) — не ловится §14 audit-pro |
+| D-8 | `deploy.yml paths:` не включает `*.md` (doc-only не триггерит деплой; by-design пока Markdown не публичный вход, см. SUPER_AUDIT W4) |
+| D-20 | Слитые ветки `image-generation-query-3e8rd5`, `website-text-image-audit-9ep5z9` не удалены с origin (housekeeping, W0) |
 
 ## 🔵 P3 — РЕФАКТОРИНГ (4)
 
@@ -180,28 +192,31 @@
 
 ### Архив:
 - 36 incoming pass-папок → `archive/2026-07-05-incoming-consolidated/`
-- Предыдущая 2174-строчная матрица → `archive/2026-07-05-matrix-pre-restructure/`
-- 41 PASS evidence section из старой матрицы → `archive/2026-07-05-pass-evidence/`
+- Предыдущая 2174-строчная матрица (вкл. PASS-evidence секции) → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`
+- ⚠️ Прежние ссылки на `archive/2026-07-05-matrix-pre-restructure/` и `archive/2026-07-05-pass-evidence/` были битыми (папки не существовали) — исправлено 2026-07-06.
 
 ---
 
-## Статистика
+## Статистика (пересобрано 2026-07-06, включая влитые D-строки)
 
 | Категория | Количество |
 |---|---|
 | Закрыто (fixed) | 87 |
-| P1 открыто | 4 |
-| P2 открыто | 5 |
-| P3 открыто | 24 |
+| P1 открыто | 1 |
+| P2 открыто | 9 |
+| P3 открыто | 20 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто** | **40** (11 закрыто PR#33/#35 + самоизлечение; PR#34-тройка закроется зелёным деплоем) |
+| **Всего открыто (матрица)** | **37** |
+| Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10) |
 | False positives отклонено | 3 |
-| Passes processed | 94+ |
+| Passes processed | 94+ и fable-super-audit 07-06 |
 
 ---
 
-## 🔴 AUDITOR / ARENA — 2026-07-06 (independent auditor, Node v22.12.0)
+## 🔴 AUDITOR / ARENA — 2026-07-06 (independent auditor, Node v22.12.0) — ИСТОРИЧЕСКИЙ ЛОГ
+
+> ℹ️ **2026-07-06 fable-super-audit:** открытые D-строки из этой секции ВЛИТЫ в канонические таблицы P2/P3 выше и в счётчики. Секция сохранена как evidence-лог интейка. Позитивные заявления cycle2/3 («/izbrannoe/ чист», «TTS надёжен», «SW-дефект не подтверждён») **ОТОЗВАНЫ** — опровергнуты верификацией (см. `SUPER_AUDIT_2026-07-06_14a49be8.md` §1 и `incoming/fable-super-audit/2026-07-06/REPORT.md` §3).
 
 **Объект:** `main` @ `14a49be83ab57212c0bbd26a8249b75ac026511d` (Merge PR #48). Полные отчёты: `incoming/arena-auditor/2026-07-06/AUDIT_gb-main_e044908e_2026-07-05.md` и `incoming/arena-auditor/2026-07-06/AUDIT_gb-main_14a49be8_2026-07-06.md`.
 
@@ -239,7 +254,7 @@
 - Локальные стат-гейты зелёные; `native:runtime` — `/izbrannoe/` теперь `native-with-legacy-head` (1.9%, ок).
 
 ### Рекомендации
-1. **(High) D-17/D-18:** немедленно **перезапустить деплой HEAD `14a49be8`** (гейты зелёные; сбой инфраструктурный). Убедиться, что прогон доходит до «Deploy to GitHub Pages» и завершается success. Если `timeout/error_count` повторяется — исследовать размер Pages-артефакта и 10-мин таймаут шага публикации.
+1. ~~(High) D-17/D-18: немедленно перезапустить деплой HEAD `14a49be8`~~ — **ВЫПОЛНЕНО** (run `28794737410` success, 2026-07-06T13:22Z). Артефакт ~32.3MB при лимите 1GB — гипотеза размера отклонена; RCA сбоя 28758726417 = transient/unknown.
 2. **(Med) D-1:** убрать `cancel-in-progress` (или сделать деплой чисто push-триггером); задокументировать «продакшн = последний успешный `workflow_run`».
 3. **(Med) D-2:** усилить CSS-валидатор (postcss-парсинг) + поднять @layer-адопцию.
 4. **(Low) D-3/D-4/D-7/D-8:** бюджет JS; z-index-токены (`--z-*`); убрать внутренний путь из комментария `PremiumControlAnchor.astro:3`; добавить `*.md` в `deploy.yml paths:`.
