@@ -382,3 +382,13 @@ D-23 (P1, deploy-блокирующая регрессия) — 🟠→✅ **RES
 Канонические тома (Research → `Джон Гилл/`): `01_SERIES_GAPS_AND_PRIMARY_SOURCES` · `02_THEOLOGY_DEEP_DIVE` · `03_STRUCTURE_PROPOSAL` · `04_CONTENT_DEEPENING_AUDIT_AND_EXEGESIS_SET` · `05_BODY_OF_DIVINITY_TOC_AND_ARTICLE_SKELETON` · `06_SITE_INDEX_LAW_ANTINOMIANISM_ELECTION`.
 
 Аудит-отчёты (D-23 deploy-регрессия и пр.) остаются в AuditRepo — они НЕ «исследование», поэтому не переносились.
+
+---
+
+### 🔧 D-23 RESOLVED — 2026-07-06 (поздно, arena-auditor + другой агент)
+
+**D-23 (Gill v16 mobile/play smoke, 8 провалов) ЗАКРЫТА.** Подтверждено green-деплоем: run `28829729903` (conclusion=success, HEAD `75f807b73`, workflow_run, 2026-07-06T23:14Z) — продакшн снова GREEN. Фикс регрессии (play/speed/stop state-машина PlayEmber-плеера / интеграция Vosk TTS) выполнен другим агентом поверх `36b815c2`.
+
+Статус: матричный заголовок обновлён на «D-23 RESOLVED / продакшн GREEN @ 75f807b73». Запись cycle-4 («HEAD 36b815c2 НЕ deploy-green») — историческая: на момент cycle-4 деплой действительно падал, позже пофикшено.
+
+Связь: cycle-4 отчёт `AUDIT_gb-main_36b815c2_2026-07-06_cycle4.md` (исходная находка D-23); Gill-исследования перенесены в `FedorMilovanov/Research` (отдел «Джон Гилл»).
