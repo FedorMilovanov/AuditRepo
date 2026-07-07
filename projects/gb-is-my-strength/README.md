@@ -1,8 +1,8 @@
 # gb-is-my-strength / gospod-bog.ru
 
 **Status:** ⚠️ REGRESSION AUDIT #2 — P0-FC-REC fixed (ca6a25a), but REG-001 (P0: `_headers` useless on GitHub Pages) and REG-002 (P1: deploy SPOF) found. See `verified/MASTER_BUG_MATRIX.md`. **Separately:** TTS engine swap (2026-07-06, see below) merged directly to `main`, bypassing the normal PR/CI review gate at the user's explicit request — needs its own dedicated audit pass, it has not been through the workflow this repo normally requires.
-**Last source HEAD checked:** `86bec6e` (2026-07-06, Vosk TTS engine merge — see "Recent changes not yet audited" below)
-**Previous HEAD:** `e458581` (2026-07-03, Arena Deep Auditor Pass 23 — Regression Watch)
+**Last source HEAD checked:** `24582e7` (2026-07-07, `ALLOWED_JS` audit-allowlist fix — deploy.yml run `28863052825` confirmed green, all 30 steps incl. Gill smoke tests)
+**Previous HEAD:** `86bec6e` (2026-07-06, Vosk TTS engine merge — see "Recent changes not yet audited" below)
 
 ## Quick facts
 
@@ -60,6 +60,34 @@ npm run workflows:check = PASS
   succeeds cross-origin from `gospod-bog.ru` (verified only from
   `localhost`/`file://` during development — see the incoming report's
   CORS caveat).
+
+- **2026-07-06→07, `main` @ `3280445` → `c95ef43` → `24582e7`** — three
+  follow-up pushes after the TTS merge above, all direct-to-`main`:
+  - `3280445` — **D-23 deploy-blocking regression fix.** The original
+    `resolveTtsEngine()` design (synchronous wait for Vosk on first click)
+    broke the deploy-blocking `gill:mobile-play:smoke` test (8 failing
+    assertions), silently pinning production to `14a49be8` with no
+    user-visible error. Fixed by making Web Speech start immediately/
+    synchronously when available, warming Vosk silently in the background
+    (`warmVoskInBackground()`) for next time.
+  - `c95ef43` — layered Russian stress dictionary (`js/vosk-stress-lookup.js`
+    + `js/vosk-custom-terms.json` + `js/vosk-stress-marker.bin`, sourced
+    from the new [gb-vosk-tts](https://github.com/FedorMilovanov/gb-vosk-tts)
+    repo) wired into `vosk-tts-engine.js` to fill stress gaps for
+    site-specific theological terms and proper names vosk-tts's own
+    dictionary leaves completely unstressed.
+  - `24582e7` — **repeat of the same CI-blocking-miss pattern as D-23:**
+    `scripts/audit-pro.js`'s `ALLOWED_JS` allowlist didn't include the new
+    `js/vosk-stress-lookup.js`, failing `indexnow.yml`'s "Static publication
+    gates" step and blocking `deploy.yml`'s `workflow_run` trigger. Fixed by
+    adding the filename to `ALLOWED_JS`; confirmed via `mcp__github__actions_get`
+    that `deploy.yml` re-ran (triggered directly via its own `scripts/**`
+    push-path filter) and completed all 30 steps successfully.
+  Full detail: `incoming/vosk-tts-integration-2026-07-06/REPORT.md`
+  ("Round 3"). **Recurring lesson for this repo:** any push that adds a new
+  file under `js/` must also add it to `scripts/audit-pro.js`'s `ALLOWED_JS`
+  set, or CI fails silently and deploy just never runs — always check
+  Actions status after a direct-to-`main` push, don't assume green.
 
 ### Current fixed/stale items
 

@@ -171,6 +171,71 @@ the Web Speech branch, since Vosk's `<audio>`-based playback doesn't have
 an equivalent yet). `npm run validate` and the full Playwright e2e suite
 were re-run against the merged tree and passed before pushing.
 
+## Round 3: layered Russian stress dictionary + a real CI-blocking miss (2026-07-07)
+
+Separate follow-up request: vosk-tts's bundled dictionary leaves any word it
+doesn't know **completely unstressed** (no G2P guess, just silence on the
+stress mark), which was hurting site-specific theological terminology
+(диспенсационализм, ковенантное, законничество…) and proper names
+(МакАртур, Топледи, etc.) that the model's own dictionary has no chance of
+knowing. Built a separate public repo,
+[gb-vosk-tts](https://github.com/FedorMilovanov/gb-vosk-tts) (MIT), housing:
+
+- `data/custom-terms.json` — 159-entry site-specific dictionary, built by
+  scanning the site's actual article text for words `russian-stress-marker`
+  doesn't cover, then verifying each candidate's stress via ~12 parallel
+  web-research agents across 30+ sources (Wikipedia, Gramota.ru, etc.), plus
+  two direct user corrections (МакА́ртур, То́пледи). ~10 low-confidence
+  entries are flagged in `data/REVIEW-custom-terms.md` for the user to spot
+  check later (not yet reviewed as of this writing).
+- `data/russian-stress-marker.bin` — vendored MIT FSA dictionary
+  (github.com/zdarsch/russian-stress-marker) covering ~2M accented Russian
+  word forms, chosen over StressRNN's Zaliznyak-derived dictionary (NC-tainted
+  license) after an explicit user decision.
+- `src/stress-lookup.js` — layered lookup (`custom-terms` → `russian-stress-marker`
+  → fall through unchanged) that only ever *fills gaps*, never overrides
+  vosk-tts's own dictionary.
+
+Ported into `gb-is-my-strength` as `js/vosk-stress-lookup.js` +
+`js/vosk-custom-terms.json` + `js/vosk-stress-marker.bin`, wired into
+`js/vosk-tts-engine.js` (`injectCustomStress()`, called in `synthChunk()`
+before any word not already in vosk-tts's own `state.dic` reaches G2P).
+
+**Bug found while building this:** the UMD wrapper in `stress-lookup.js`
+originally did `root.StressLookup = factory()`, where `factory()`'s return
+object *also* has an own `StressLookup` property (the class constructor) —
+assigning the whole module object to a global named identically to one of
+its own properties is a footgun that would have shadowed the constructor in
+browser global scope. Fixed by naming the browser global `VoskStressLookup`
+instead, distinct from the internal class name `StressLookup`, in both repos.
+
+**Real CI-blocking miss (not a false positive this time):** pushed the
+integration to `main` as commit `c95ef43`, then proactively checked GitHub
+Actions status (a practice adopted after the D-23 regression below) and
+found `indexnow.yml` **failed**: `scripts/audit-pro.js`'s "Static publication
+gates" check has a hardcoded `ALLOWED_JS` allowlist for files under `js/`,
+and `js/vosk-stress-lookup.js` wasn't in it —
+`❌ Forbidden JS files in js/: js/vosk-stress-lookup.js`. Since `deploy.yml`
+only runs via `workflow_run` after `indexnow.yml` succeeds, this silently
+blocked deploy exactly the way the D-23 regression did — `main` would have
+stayed pinned to the previous commit indefinitely with no visible error
+anywhere except the Actions tab. Fixed in commit `24582e7` (added the
+filename to `ALLOWED_JS`), verified locally first via `node
+scripts/audit-pro.js` (168 checks pass, only pre-existing warnings), pushed,
+and confirmed via `mcp__github__actions_get`/`actions_list` that
+`deploy.yml` run `28863052825` (triggered directly by its own `scripts/**`
+push-path filter, not by waiting on `indexnow.yml`) ran all 30 steps
+including the Gill smoke tests that broke D-23, and completed
+`conclusion: success`.
+
+**Lesson reinforced for future passes on this repo:** `scripts/audit-pro.js`
+requires every new `js/` filename to be added to its `ALLOWED_JS` allowlist
+by hand — this is easy to miss when adding a new file, and the failure mode
+(CI fails silently, deploy just never runs, no user-visible error on the
+live site) is identical in shape to the D-23 state-machine regression.
+Always check Actions status after any direct-to-`main` push that adds new
+files under `js/`.
+
 ## Open items for next pass
 
 - **Real reachability of `alphacephei.com` from `gospod-bog.ru` in
