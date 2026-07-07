@@ -1,8 +1,8 @@
 # gb-is-my-strength / gospod-bog.ru
 
 **Status:** ⚠️ REGRESSION AUDIT #2 — P0-FC-REC fixed (ca6a25a), but REG-001 (P0: `_headers` useless on GitHub Pages) and REG-002 (P1: deploy SPOF) found. See `verified/MASTER_BUG_MATRIX.md`. **Separately:** TTS engine swap (2026-07-06, see below) merged directly to `main`, bypassing the normal PR/CI review gate at the user's explicit request — needs its own dedicated audit pass, it has not been through the workflow this repo normally requires.
-**Last source HEAD checked:** `24582e7` (2026-07-07, `ALLOWED_JS` audit-allowlist fix — deploy.yml run `28863052825` confirmed green, all 30 steps incl. Gill smoke tests)
-**Previous HEAD:** `86bec6e` (2026-07-06, Vosk TTS engine merge — see "Recent changes not yet audited" below)
+**Last source HEAD checked:** `e6f6628` (2026-07-07, Vosk model re-hosted alphacephei.com → Hugging Face — deploy.yml run `28895823438` confirmed green, all 30 steps incl. Gill smoke tests; TTS is now confirmed **actually audible in production**, see "Recent changes not yet audited" below, Round 4)
+**Previous HEAD:** `24582e7` (2026-07-07, `ALLOWED_JS` audit-allowlist fix — deploy.yml run `28863052825` confirmed green, all 30 steps incl. Gill smoke tests)
 
 ## Quick facts
 
@@ -55,11 +55,9 @@ npm run workflows:check = PASS
   (non-strict) was run and passed clean; `validate:static-publication` /
   full `astro:build` were **not** run. Flag this for the next audit pass:
   treat it as unverified against this repo's usual bar until someone runs
-  the full validation suite and/or a live production smoke test of the
-  "Слушать" button confirms the `alphacephei.com` model fetch actually
-  succeeds cross-origin from `gospod-bog.ru` (verified only from
-  `localhost`/`file://` during development — see the incoming report's
-  CORS caveat).
+  the full validation suite. ~~The `alphacephei.com` model fetch CORS
+  caveat below~~ **RESOLVED in Round 4 (2026-07-07): it does NOT work, the
+  site now uses Hugging Face instead — see below.**
 
 - **2026-07-06→07, `main` @ `3280445` → `c95ef43` → `24582e7`** — three
   follow-up pushes after the TTS merge above, all direct-to-`main`:
@@ -88,6 +86,43 @@ npm run workflows:check = PASS
   file under `js/` must also add it to `scripts/audit-pro.js`'s `ALLOWED_JS`
   set, or CI fails silently and deploy just never runs — always check
   Actions status after a direct-to-`main` push, don't assume green.
+
+- **2026-07-07, `main` @ `ea3044e` → `e6f6628` (Round 4)** — the CORS caveat
+  flagged above turned out to be a real, confirmed production bug: **the
+  entire TTS feature from Rounds 1–3 was live in the code but never
+  actually audible** — `alphacephei.com` sends no
+  `Access-Control-Allow-Origin`, so every visitor's `fetch()` for the model
+  silently failed (`net::ERR_FAILED`) and fell back to Web Speech forever,
+  with zero visible error on the site itself. Confirmed via real DevTools
+  console output from the user's own browser on `gospod-bog.ru`. Tried and
+  rejected as re-hosting options (in order): GitHub direct commit (100MB
+  hard limit), GitHub Releases (uploads fine, but its
+  `objects.githubusercontent.com` redirect target also sends no CORS
+  headers), Netlify (brand-new account auto-suspended on first large
+  upload, before any test was possible), Cloudflare Workers (no
+  foreign-issued card available for signup). Landed on **Hugging Face Hub**
+  (`huggingface.co/CurtMil/gb-vosk-tts-model`) — confirmed via a real
+  `fetch({method:'HEAD'})` from the user's browser console that it sends
+  `access-control-allow-origin: *`. Updated `MODEL_URL` in
+  `js/vosk-tts-engine.js` and `connect-src` CSP (`alphacephei.com` →
+  `huggingface.co`) across all 37 Astro head components + the dist CSP
+  fallback in `scripts/astro-cache-bust-postbuild.js`. `deploy.yml` run
+  `28895823438` confirmed green, all 30 steps incl. Gill smoke tests.
+  Also generated **real audio from the actual production ONNX model for
+  the first time in this project** (Node + `onnxruntime-node`, downloaded
+  from this session's own GitHub Release mirror) — user confirmed voice
+  quality is good. Bonus finding (not yet shipped): `quantize_dynamic()`
+  INT8 quantization shrinks the BERT sub-model 654MB → 156.5MB cleanly
+  (verified audio-correct); the main VITS sub-model's quantized output is
+  broken (bad `MatMulInteger` shape) and was left unquantized. Full zip
+  782MB → 280MB achievable if someone re-uploads the BERT-quantized
+  variant later. Full detail:
+  `incoming/vosk-tts-integration-2026-07-06/REPORT.md` ("Round 4").
+  **Meta-lesson across Rounds 1–4:** this is the third distinct case on
+  this integration where code review + passing CI still shipped something
+  silently non-functional in production (D-23 state machine, the
+  `ALLOWED_JS` gate, now CORS reachability) — each was only caught by
+  proactive post-push verification, not by the review/CI process itself.
 
 ### Current fixed/stale items
 

@@ -236,11 +236,101 @@ live site) is identical in shape to the D-23 state-machine regression.
 Always check Actions status after any direct-to-`main` push that adds new
 files under `js/`.
 
+## Round 4: alphacephei.com CORS confirmed broken in production, re-hosted on Hugging Face (2026-07-07)
+
+The open item below ("real reachability of `alphacephei.com` ... not
+directly verified") turned out to be a real production bug, not a
+theoretical risk. User reported the "Слушать" button never actually spoke
+in the new voice — real-browser DevTools on `gospod-bog.ru` showed:
+
+```
+Failed to load resource: net::ERR_FAILED — alphacephei.com/vosk...-ru-0.9-multi.zip
+[gbx-tts] background Vosk warm-up failed, staying on Web Speech: TypeError: Failed to fetch
+```
+
+`alphacephei.com` does not send `Access-Control-Allow-Origin` on the model
+download — confirmed by curl from this session's sandbox (blocked by the
+sandbox's own egress policy, so tested indirectly) and, decisively, by a
+real `fetch()` run in the user's own browser console against
+`gospod-bog.ru`. So every visitor silently fell back to Web Speech forever
+— the entire vosk-tts integration from Rounds 1–3 was live in the code but
+never actually audible in production.
+
+**Attempted fixes, in order, before landing on the real one:**
+- GitHub repo direct commit: blocked by GitHub's 100MB/file hard limit.
+- GitHub Releases (2GB/file limit, upload succeeded): the resulting
+  `objects.githubusercontent.com`/Azure Blob redirect target sends **no**
+  CORS headers either — confirmed via curl, same failure mode.
+- Netlify (free, no card, `_headers` file support): user's brand-new
+  account was auto-suspended by Netlify's anti-fraud system on the first
+  large-file upload attempt, before any CORS test was possible.
+- Cloudflare Workers (CORS-adding proxy in front of the GitHub Release
+  URL): ruled out, user has no foreign-issued card for Cloudflare signup.
+- A `deep-research` workflow pass (94 sub-agents, 30+ source target) was
+  run to survey alternatives; most candidate hosts (Vercel, GitHub Pages'
+  own CORS behavior, Cloudflare Pages, Surge, Render, Firebase, Supabase,
+  GitLab) returned **no verified claims** — turned out this sandbox's own
+  egress proxy blocks most of those domains too, so the research agents
+  hit the same wall independently. The one actionable, moderate-confidence
+  finding that survived: Hugging Face Hub is a plausible CORS-friendly
+  host (built for exactly this browser-ML use case; `transformers.js`
+  relies on the same pattern in production).
+
+**Fix:** re-uploaded the same model as a public Hugging Face model repo
+(`huggingface.co/CurtMil/gb-vosk-tts-model`), then had the user run a real
+`fetch({method:'HEAD'})` from a neutral page's console (first attempt was
+contaminated by our own site's CSP blocking the request — a false
+"CORS failure" that was actually our `connect-src` denying it; retested on
+`example.com` to isolate Hugging Face's actual behavior). Result:
+`access-control-allow-origin: *` — confirmed working. Updated
+`MODEL_URL` in `js/vosk-tts-engine.js` and the `connect-src` CSP directive
+(`alphacephei.com` → `huggingface.co`) across all 37 `*PageHead.astro`/
+`*PageChrome.astro` components plus the `DEFAULT_DIST_CSP` fallback in
+`scripts/astro-cache-bust-postbuild.js`. Pushed as `ea3044e` (rebased
+cleanly onto ~20 unrelated commits that had landed on `main` in the
+meantime); `deploy.yml` run `28895823438` (on the auto-cache-bust commit
+`e6f6628` built on top of it) completed all 30 steps, including the
+Gill/PlayEmber smoke tests, `conclusion: success`.
+
+**Verification beyond CI:** before switching hosts, generated **real audio
+from the actual production ONNX model** for the first time in this
+project's history (previous e2e tests only exercised a synthetic dummy
+model to test the player's plumbing) — downloaded the model from this
+session's own GitHub Release copy, ran the full JS text pipeline +
+`onnxruntime-node` inference in Node, produced real `.wav` samples (female
+and male speakers), sent them to the user. User confirmed quality is good
+("Вот хороший голос").
+
+**Bonus, unrequested but validated:** while waiting on CI, tried ONNX
+Runtime's `quantize_dynamic()` (INT8, weight-only, no calibration data
+needed) on both sub-models. The BERT sub-model (654MB, ~88% of total
+weight) quantized cleanly: **654MB → 156.5MB**, and produced a real audio
+sample confirmed still working correctly. The main VITS model (179MB)
+failed to quantize usably — `quantize_dynamic()` completed without error
+but the resulting graph has a broken `MatMulInteger` shape in one node
+(`/matcha/decoder/estimator/time_mlp/...`) and refuses to load at
+inference time; left unquantized. Net effect: the full model zip shrinks
+from 782MB → **280MB** (−64%) with the BERT-only quantization, verified
+audio-correct. **Not yet shipped** — this is a candidate follow-up, not
+applied to the production model/CSP/`MODEL_URL` in this round; would need
+someone to re-upload the quantized zip to the Hugging Face repo and swap
+`MODEL_URL`'s filename before it takes effect.
+
+**Lesson reinforced again:** this is the *third* distinct "looked done in
+code review but silently didn't work in production" failure on this
+integration (D-23 state machine, `ALLOWED_JS` audit gate, now CORS
+reachability) — all three were only caught because of proactive
+post-push verification (checking Actions status, and this time, asking
+the user to actually test the live button). Code review and passing CI
+are necessary but were **not sufficient** for any of the three; the
+actual fix each time required a real browser/production signal.
+
 ## Open items for next pass
 
-- **Real reachability of `alphacephei.com` from `gospod-bog.ru` in
-  production is still not directly verified** (see CORS section above) —
-  highest-priority thing for the next audit pass to actually check, ideally
+- ~~Real reachability of `alphacephei.com` from `gospod-bog.ru` in
+  production is still not directly verified~~ **RESOLVED 2026-07-07 (Round
+  4): confirmed broken (no CORS headers), site now points at Hugging Face
+  instead.** Original text, for history:
   with `curl -I -H "Origin: https://gospod-bog.ru" https://alphacephei.com/vosk/models/vosk-model-tts-ru-0.9-multi.zip`
   from a normal (non-sandboxed) network and confirming
   `Access-Control-Allow-Origin`.
