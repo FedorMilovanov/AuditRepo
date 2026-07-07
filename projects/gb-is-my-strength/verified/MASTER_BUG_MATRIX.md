@@ -372,3 +372,13 @@ D-23 (P1, deploy-блокирующая регрессия) — 🟠→✅ **RES
 **Добыто:** (1) полный инвентарь сайта — 20 статей; **расширенная карта ссылок**: две прямые доктринальные ссылки, которых не было в ч.5 — `rimlyanam-7-veruyushchiy-ili-neveruyushchiy` (Римлянам 7 → закон/антиномизм) и `krajne-li-isporcheno-serdce` (total depravity); плюс `hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki` (герменевтика), `kod-da-vinchi` (канон), серия `russian-baptism` (баптистская идентичность); (2) две новые цитаты — Рим 3:31 (закон «establish», отменён лишь as covenant of works) и Деян 13:48 (вера = «fruit and effect of the decree»; избрание sovereign/irrespective/unconditional/particular); (3) Cause of God and Truth Part III «arguments from reason» (якорь = первичное предисловие) + таксономия рациональных возражений (свобода воли, справедливость отвержения, искренность Евангелия, антиномизм, условность декретов) + нюанс duty-faith. Итог: каркас статьи расширен до **8 разделов** с полной картой ссылок.
 
 Связано: ч.1–ч.5 `RESEARCH_gill-*`; аудит `AUDIT_gb-main_36b815c2_2026-07-06_cycle4.md`.
+
+---
+
+### 📚 Gill research → перенесено в Research repo (2026-07-06)
+
+**Консолидация:** все 6 исследовательских досье Гилла перенесены в канонический отдел **«Джон Гилл»** репозитория `FedorMilovanov/Research` (по указанию владельца — «чтобы не путаться потом»). Индекс отдела: `Джон Гилл/00_README_AND_NAVIGATION.md`. Файлы-заглушки в `incoming/arena-auditor/2026-07-06/RESEARCH_gill-*` теперь перенаправляют туда.
+
+Канонические тома (Research → `Джон Гилл/`): `01_SERIES_GAPS_AND_PRIMARY_SOURCES` · `02_THEOLOGY_DEEP_DIVE` · `03_STRUCTURE_PROPOSAL` · `04_CONTENT_DEEPENING_AUDIT_AND_EXEGESIS_SET` · `05_BODY_OF_DIVINITY_TOC_AND_ARTICLE_SKELETON` · `06_SITE_INDEX_LAW_ANTINOMIANISM_ELECTION`.
+
+Аудит-отчёты (D-23 deploy-регрессия и пр.) остаются в AuditRepo — они НЕ «исследование», поэтому не переносились.
