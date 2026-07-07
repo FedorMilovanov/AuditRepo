@@ -1,0 +1,888 @@
+{
+  "startedAt": "2026-07-07T11:05:18.317Z",
+  "runs": [
+    {
+      "route": "avraam",
+      "viewport": "desktop-1920",
+      "state": "initial",
+      "elapsedMs": 2463,
+      "file": "avraam/desktop-1920/initial/viewport.png",
+      "fileBytes": 165011,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": true,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "desktop-1920",
+      "state": "intro-dismissed",
+      "elapsedMs": 3810,
+      "file": "avraam/desktop-1920/intro-dismissed/viewport.png",
+      "fileBytes": 898125,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "desktop-1920",
+      "state": "place-open",
+      "elapsedMs": 4627,
+      "file": "avraam/desktop-1920/place-open/viewport.png",
+      "fileBytes": 901660,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "desktop-1920",
+      "state": "place-open-2",
+      "elapsedMs": 5462,
+      "file": "avraam/desktop-1920/place-open-2/viewport.png",
+      "fileBytes": 804712,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": true,
+        "panelName": "Шалем · гора Мория",
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": "story"
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "desktop-1920",
+      "state": "place-open-last",
+      "elapsedMs": 5530,
+      "file": "avraam/desktop-1920/place-open-last/viewport.png",
+      "fileBytes": 791713,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": true,
+        "panelName": "Дамаск",
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": "story"
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "desktop-1920",
+      "state": "layer-off",
+      "elapsedMs": 4275,
+      "file": "avraam/desktop-1920/layer-off/viewport.png",
+      "fileBytes": 900414,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "desktop-1920",
+      "state": "layer-off-2",
+      "elapsedMs": 4215,
+      "file": "avraam/desktop-1920/layer-off-2/viewport.png",
+      "fileBytes": 900086,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "desktop-1920",
+      "state": "story-main",
+      "elapsedMs": 5633,
+      "file": "avraam/desktop-1920/story-main/viewport.png",
+      "fileBytes": 865749,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": true,
+        "panelName": "Ур Халдейский",
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": "story"
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "desktop-1920",
+      "state": "story-second",
+      "elapsedMs": 3807,
+      "file": "avraam/desktop-1920/story-second/viewport.png",
+      "fileBytes": 898333,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "desktop-1920",
+      "state": "theme-light",
+      "elapsedMs": 3561,
+      "file": "avraam/desktop-1920/theme-light/viewport.png",
+      "fileBytes": 898823,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "desktop-1920",
+      "state": "search",
+      "elapsedMs": 3348,
+      "file": "avraam/desktop-1920/search/viewport.png",
+      "fileBytes": 164101,
+      "errors": [
+        "pageerror: q is not defined"
+      ],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": true,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "desktop-1920",
+      "state": "panel-tab-arch",
+      "elapsedMs": 4679,
+      "file": "avraam/desktop-1920/panel-tab-arch/viewport.png",
+      "fileBytes": 901299,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "mobile-iphone14",
+      "state": "initial",
+      "elapsedMs": 3810,
+      "file": "avraam/mobile-iphone14/initial/viewport.png",
+      "fileBytes": 283813,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": true,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "mobile-iphone14",
+      "state": "intro-dismissed",
+      "elapsedMs": 4975,
+      "file": "avraam/mobile-iphone14/intro-dismissed/viewport.png",
+      "fileBytes": 1263813,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "mobile-iphone14",
+      "state": "place-open",
+      "elapsedMs": 5894,
+      "file": "avraam/mobile-iphone14/place-open/viewport.png",
+      "fileBytes": 1266042,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "mobile-iphone14",
+      "state": "place-open-2",
+      "elapsedMs": 6860,
+      "file": "avraam/mobile-iphone14/place-open-2/viewport.png",
+      "fileBytes": 747873,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": true,
+        "panelName": "Шалем · гора Мория",
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": "story"
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "mobile-iphone14",
+      "state": "place-open-last",
+      "elapsedMs": 6113,
+      "file": "avraam/mobile-iphone14/place-open-last/viewport.png",
+      "fileBytes": 535486,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": true,
+        "panelName": "Дамаск",
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": "story"
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "mobile-iphone14",
+      "state": "layer-off",
+      "elapsedMs": 5408,
+      "file": "avraam/mobile-iphone14/layer-off/viewport.png",
+      "fileBytes": 1270724,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "mobile-iphone14",
+      "state": "layer-off-2",
+      "elapsedMs": 5402,
+      "file": "avraam/mobile-iphone14/layer-off-2/viewport.png",
+      "fileBytes": 1268692,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "mobile-iphone14",
+      "state": "story-main",
+      "elapsedMs": 6749,
+      "file": "avraam/mobile-iphone14/story-main/viewport.png",
+      "fileBytes": 619573,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": true,
+        "panelName": "Ур Халдейский",
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": "story"
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "mobile-iphone14",
+      "state": "story-second",
+      "elapsedMs": 4796,
+      "file": "avraam/mobile-iphone14/story-second/viewport.png",
+      "fileBytes": 1263855,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "mobile-iphone14",
+      "state": "theme-light",
+      "elapsedMs": 4464,
+      "file": "avraam/mobile-iphone14/theme-light/viewport.png",
+      "fileBytes": 1264877,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "mobile-iphone14",
+      "state": "search",
+      "elapsedMs": 4449,
+      "file": "avraam/mobile-iphone14/search/viewport.png",
+      "fileBytes": 281536,
+      "errors": [
+        "pageerror: q is not defined"
+      ],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": true,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "avraam",
+      "viewport": "mobile-iphone14",
+      "state": "panel-tab-arch",
+      "elapsedMs": 5660,
+      "file": "avraam/mobile-iphone14/panel-tab-arch/viewport.png",
+      "fileBytes": 1265666,
+      "errors": [],
+      "dom": {
+        "placeCount": 19,
+        "labelCount": 19,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "desktop-1920",
+      "state": "initial",
+      "elapsedMs": 2185,
+      "file": "ishod/desktop-1920/initial/viewport.png",
+      "fileBytes": 94106,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": true,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "desktop-1920",
+      "state": "intro-dismissed",
+      "elapsedMs": 3052,
+      "file": "ishod/desktop-1920/intro-dismissed/viewport.png",
+      "fileBytes": 181848,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "desktop-1920",
+      "state": "place-open",
+      "elapsedMs": 3863,
+      "file": "ishod/desktop-1920/place-open/viewport.png",
+      "fileBytes": 182417,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "desktop-1920",
+      "state": "place-open-2",
+      "elapsedMs": 3980,
+      "file": "ishod/desktop-1920/place-open-2/viewport.png",
+      "fileBytes": 211739,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": true,
+        "panelName": "Синай · гора Хорив",
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": "story"
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "desktop-1920",
+      "state": "place-open-last",
+      "elapsedMs": 3853,
+      "file": "ishod/desktop-1920/place-open-last/viewport.png",
+      "fileBytes": 181056,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "desktop-1920",
+      "state": "layer-off",
+      "elapsedMs": 3554,
+      "file": "ishod/desktop-1920/layer-off/viewport.png",
+      "fileBytes": 182640,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "desktop-1920",
+      "state": "layer-off-2",
+      "elapsedMs": 3560,
+      "file": "ishod/desktop-1920/layer-off-2/viewport.png",
+      "fileBytes": 181505,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "desktop-1920",
+      "state": "story-main",
+      "elapsedMs": 3964,
+      "file": "ishod/desktop-1920/story-main/viewport.png",
+      "fileBytes": 257509,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": true,
+        "panelName": "Раамсес",
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": "story"
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "desktop-1920",
+      "state": "theme-light",
+      "elapsedMs": 2745,
+      "file": "ishod/desktop-1920/theme-light/viewport.png",
+      "fileBytes": 182512,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "desktop-1920",
+      "state": "search",
+      "elapsedMs": 3047,
+      "file": "ishod/desktop-1920/search/viewport.png",
+      "fileBytes": 93479,
+      "errors": [
+        "pageerror: q is not defined"
+      ],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": true,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "desktop-1920",
+      "state": "panel-tab-arch",
+      "elapsedMs": 3862,
+      "file": "ishod/desktop-1920/panel-tab-arch/viewport.png",
+      "fileBytes": 182285,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "mobile-iphone14",
+      "state": "initial",
+      "elapsedMs": 2447,
+      "file": "ishod/mobile-iphone14/initial/viewport.png",
+      "fileBytes": 165840,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": true,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "mobile-iphone14",
+      "state": "intro-dismissed",
+      "elapsedMs": 3239,
+      "file": "ishod/mobile-iphone14/intro-dismissed/viewport.png",
+      "fileBytes": 305837,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "mobile-iphone14",
+      "state": "place-open",
+      "elapsedMs": 4034,
+      "file": "ishod/mobile-iphone14/place-open/viewport.png",
+      "fileBytes": 305284,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "mobile-iphone14",
+      "state": "place-open-2",
+      "elapsedMs": 4080,
+      "file": "ishod/mobile-iphone14/place-open-2/viewport.png",
+      "fileBytes": 309608,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "mobile-iphone14",
+      "state": "place-open-last",
+      "elapsedMs": 4038,
+      "file": "ishod/mobile-iphone14/place-open-last/viewport.png",
+      "fileBytes": 304713,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "mobile-iphone14",
+      "state": "layer-off",
+      "elapsedMs": 3740,
+      "file": "ishod/mobile-iphone14/layer-off/viewport.png",
+      "fileBytes": 322709,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "mobile-iphone14",
+      "state": "layer-off-2",
+      "elapsedMs": 3745,
+      "file": "ishod/mobile-iphone14/layer-off-2/viewport.png",
+      "fileBytes": 321739,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "mobile-iphone14",
+      "state": "story-main",
+      "elapsedMs": 4488,
+      "file": "ishod/mobile-iphone14/story-main/viewport.png",
+      "fileBytes": 478427,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": true,
+        "panelName": "Раамсес",
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": "story"
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "mobile-iphone14",
+      "state": "theme-light",
+      "elapsedMs": 2955,
+      "file": "ishod/mobile-iphone14/theme-light/viewport.png",
+      "fileBytes": 307260,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "mobile-iphone14",
+      "state": "search",
+      "elapsedMs": 3239,
+      "file": "ishod/mobile-iphone14/search/viewport.png",
+      "fileBytes": 162699,
+      "errors": [
+        "pageerror: q is not defined"
+      ],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": true,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    },
+    {
+      "route": "ishod",
+      "viewport": "mobile-iphone14",
+      "state": "panel-tab-arch",
+      "elapsedMs": 4062,
+      "file": "ishod/mobile-iphone14/panel-tab-arch/viewport.png",
+      "fileBytes": 305194,
+      "errors": [],
+      "dom": {
+        "placeCount": 11,
+        "labelCount": 11,
+        "panelOpen": false,
+        "panelName": null,
+        "introVisible": false,
+        "layerPanel": true,
+        "activeStory": "main",
+        "activeTab": null
+      }
+    }
+  ],
+  "finishedAt": "2026-07-07T11:08:34.581Z"
+}
