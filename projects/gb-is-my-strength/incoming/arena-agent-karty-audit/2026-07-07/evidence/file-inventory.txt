@@ -1,0 +1,41 @@
+=== FILE INVENTORY (karty/ tree, depth 2) ===
+247536	karty/avraam/avraam-app.js
+187058	karty/avraam/route.json
+182394	karty/avraam/index.html
+171197	karty/_engine/map-engine.js
+72877	karty/avraam/base.svg
+71625	karty/melachim/route.json
+63011	karty/shvatim/route.json
+57314	karty/yeshua/route.json
+55381	karty/shoftim/route.json
+50532	karty/maccabim/route.json
+50013	karty/ishod/route.json
+42460	karty/early-church/route.json
+39114	karty/pavel/route.json
+38604	karty/_engine/base-geo.svg
+30158	karty/revelation/route.json
+16085	karty/index.html
+7102	karty/melachim/index.html
+7094	karty/revelation/index.html
+7072	karty/maccabim/index.html
+7056	karty/early-church/index.html
+7044	karty/pavel/index.html
+7031	karty/shvatim/index.html
+7000	karty/yeshua/index.html
+6996	karty/shoftim/index.html
+6694	karty/ishod/index.html
+5924	karty/_shared/README.md
+4138	karty/_shared/route.schema.json
+
+=== TOTAL SIZE OF karty/ ===
+1.5M	/home/user/repo/karty/
+
+=== KEY FILES LINE COUNTS ===
+  2634 /home/user/repo/karty/_engine/map-engine.js
+   173 /home/user/repo/karty/_shared/README.md
+   108 /home/user/repo/karty/_shared/route.schema.json
+  2407 /home/user/repo/karty/avraam/avraam-app.js
+  2140 /home/user/repo/karty/avraam/route.json
+    67 /home/user/repo/karty/ishod/index.html
+   696 /home/user/repo/karty/ishod/route.json
+  8225 total

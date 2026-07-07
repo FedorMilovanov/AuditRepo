@@ -1,0 +1,43 @@
+=== route.json KEYS PER ROUTE (vs schema) ===
+SCHEMA known keys: ['ctx', 'meta', 'places', 'scientific_variants', 'signature', 'stages', 'stories', 'verified_waypoints']
+
+== karty/avraam/route.json ==
+  top keys: 14  → extra vs schema: ['ctx_index', 'layers', 'notes', 'places_index', 'stages_index', 'timeline', 'yec_position']
+  meta keys: 12  → extra vs schema: ['coord_system', 'engine', 'generated', 'version', 'yec_date']
+  places=19 stories=5 stages=8 ctx=7
+== karty/ishod/route.json ==
+  top keys: 9  → extra vs schema: ['layers', 'timeline']
+  meta keys: 7  → extra vs schema: —
+  places=11 stories=4 stages=6 ctx=0
+== karty/early-church/route.json ==
+  top keys: 10  → extra vs schema: ['layers', 'publication', 'timeline']
+  meta keys: 7  → extra vs schema: —
+  places=11 stories=5 stages=4 ctx=3
+== karty/maccabim/route.json ==
+  top keys: 10  → extra vs schema: ['layers', 'publication', 'timeline']
+  meta keys: 7  → extra vs schema: —
+  places=12 stories=6 stages=5 ctx=3
+== karty/melachim/route.json ==
+  top keys: 11  → extra vs schema: ['layers', 'publication', 'timeline']
+  meta keys: 7  → extra vs schema: —
+  places=17 stories=7 stages=6 ctx=4
+== karty/pavel/route.json ==
+  top keys: 10  → extra vs schema: ['layers', 'publication', 'timeline']
+  meta keys: 7  → extra vs schema: —
+  places=10 stories=4 stages=3 ctx=0
+== karty/revelation/route.json ==
+  top keys: 10  → extra vs schema: ['layers', 'publication', 'timeline']
+  meta keys: 7  → extra vs schema: —
+  places=7 stories=5 stages=1 ctx=2
+== karty/shoftim/route.json ==
+  top keys: 11  → extra vs schema: ['layers', 'publication', 'timeline']
+  meta keys: 7  → extra vs schema: —
+  places=13 stories=6 stages=6 ctx=4
+== karty/shvatim/route.json ==
+  top keys: 10  → extra vs schema: ['layers', 'publication', 'timeline']
+  meta keys: 7  → extra vs schema: —
+  places=18 stories=5 stages=3 ctx=3
+== karty/yeshua/route.json ==
+  top keys: 9  → extra vs schema: ['layers', 'publication', 'timeline']
+  meta keys: 7  → extra vs schema: —
+  places=15 stories=5 stages=5 ctx=0

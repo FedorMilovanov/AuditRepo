@@ -1,0 +1,71 @@
+=== MAP-ENGINE PUBLIC API (v0.52.0) ===
+  // ── Public exports ──
+  return {
+    // v0.2 data layer
+    loadRoute,validateRoute,compareRouteData,normalizeRouteData,collectPhotoHosts,
+    getPlaceIndex,getPlaceById,getStageForPlace,getRelatedPlaceIds,getTabContentKey,
+    getPanelModel,getPanelSections,getStoryViewport,getStoryState,getPlaceOrder,auditStoryDefinitions,
+    // v0.3 rendering
+    createMap,
+    version:'0.52.0',buildDate:'2026-06-18'
+  };
+})();
+
+if(typeof window!=='undefined')window.MapEngine=MapEngine;
+if(typeof module!=='undefined')module.exports=MapEngine;
+
+=== ARCHAEOLOGY_REFERENCES: categories and counts ===
+Total categories: 13
+Total items: 58
+Categories: ['exodus_route', 'jerusalem_first_temple', 'maccabees', 'early_church', 'davidic_kingdom', 'general', 'judges_period', 'kings_period', 'jesus_ministry', 'dead_sea_scrolls', 'babylonian_exile', 'persian_return', 'jericho_ai']
+
+=== HARDCODED ID -> CATEGORY mapping (_renderArchaeologyFooter) ===
+      const exodusIds = ['rameses','succoth','etham','pihahiroth','migdol','marah','elim','rephidim','sinai','kadesh','eziongeber'];
+      if (exodusIds.includes(place.id)) cat = 'exodus_route';
+      // Jerusalem/Temple/David
+      const jerusalemIds = ['jerusalem','jerusalem_kings','cityofdavid','temple','hebron','lachish','beersheba'];
+      if (jerusalemIds.includes(place.id)) cat = 'jerusalem_first_temple';
+      // Maccabees
+      const maccabeeIds = ['modiin','jerusalem_meet','antioch_syria','betzecharia','bethzur','emmaus','elasa'];
+      if (maccabeeIds.includes(place.id)) cat = 'maccabees';
+      // Early Church
+      const churchIds = ['jerusalem_upper','temple_early','damascus','antioch','ephesus','laodicea','philadelphia','sardis','thyatira','smyrna','pergamos','philippi','corinth','athens','thessaloniki','capernaum','bethsaida'];
+      if (churchIds.includes(place.id)) cat = 'early_church';
+      // Judges
+      const judgesIds = ['shiloh','timnath','gaza','ashkelon','ashdod','ekron','gath','hazor','bethel','shechem'];
+      if (judgesIds.includes(place.id)) cat = 'judges_period';
+      // Kings
+      const kingsIds = ['samaria','megiddo','jezreel','dan','beersheba','hazor','lachish'];
+      if (kingsIds.includes(place.id)) cat = 'kings_period';
+      // Jesus ministry
+      const jesusIds = ['nazareth','capernaum','magdala','bethlehem','jericho','jerusalem','bethany','cana','tabgha','bethebara'];
+      if (jesusIds.includes(place.id)) cat = 'jesus_ministry';
+      // Dead Sea Scrolls
+      const dssIds = ['qumran','masada','jericho'];
+      if (dssIds.includes(place.id)) cat = 'dead_sea_scrolls';
+      // Babylonian exile
+      const exileIds = ['babylon','jerusalem','lachish','azekah'];
+      if (exileIds.includes(place.id) && !cat) cat = 'babylonian_exile';
+      // Persian return
+      const persianIds = ['jerusalem','babylon','elephantine'];
+      if (persianIds.includes(place.id) && !cat) cat = 'persian_return';
+      // Jericho/Ai
+      const conquestIds = ['jericho','ai','gai','hazor','gilgal'];
+      if (conquestIds.includes(place.id) && !cat) cat = 'jericho_ai';
+      // Davidic
+      const davidIds = ['jerusalem','hebron','bethlehem'];
+      if (davidIds.includes(place.id) && !cat) cat = 'davidic_kingdom';
+      
+      if (cat && ARCHAEOLOGY_REFERENCES[cat]) {
+        const refs = ARCHAEOLOGY_REFERENCES[cat];
+
+=== _classifySource (хардкод регекспы для источников) ===
+    function _classifySource(item) {
+      const hay = `${item.ref || ''} ${item.src || ''}`.toLowerCase();
+      if (/papyrus|inscription|stele|bulla|tablet|cylinder|ostraca|coin|scroll|siloam|pilate stone|tel dan/.test(hay)) return {kind:'primary',label:'первичный'};
+      if (/excavation|dig|mission|iaa|survey|field|shiloh|pool|gate|tunnel|stratigraphy/.test(hay)) return {kind:'field',label:'раскопки'};
+      if (/university|journal|pnas|bar |bas |biblical archaeology society|atiqot|hebrew university|tel aviv/.test(hay)) return {kind:'academic',label:'научн.'};
+      if (/abr|associates for biblical research|aig|answers|creation|bible archaeology report|bibleplaces|base institute/.test(hay)) return {kind:'conservative',label:'консерв.'};
+      return {kind:'heritage',label:'heritage'};
+    }
+

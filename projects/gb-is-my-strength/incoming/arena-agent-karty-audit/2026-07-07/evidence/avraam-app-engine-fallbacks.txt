@@ -1,0 +1,54 @@
+=== MapEngine Public API (formal declaration) ===
+    getPlaceIndex,getPlaceById,getStageForPlace,getRelatedPlaceIds,getTabContentKey,
+    getPanelModel,getPanelSections,getStoryViewport,getStoryState,getPlaceOrder,auditStoryDefinitions,
+    // v0.3 rendering
+    createMap,
+    version:'0.52.0',buildDate:'2026-06-18'
+  };
+})();
+
+if(typeof window!=='undefined')window.MapEngine=MapEngine;
+if(typeof module!=='undefined')module.exports=MapEngine;
+
+=== avraam-app.js: window.MapEngine? fallback patterns ===
+677:window.AvraamRouteAudit = window.MapEngine?.validateRoute ? window.MapEngine.validateRoute(window.AvraamRouteData) : null;
+680:  if(!window.MapEngine?.loadRoute || !window.MapEngine?.compareRouteData) return;
+698:  const engineStory = window.MapEngine?.getStoryState ? window.MapEngine.getStoryState(window.AvraamRouteData, st.id) : null;
+999:  const visual=window.MapEngine?.getPlaceVisual ? window.MapEngine.getPlaceVisual(pl) : {markerClass:'marker'+(pl.type==='cand'?' cand':'')+(pl.type==='lot'?' lot-type':''),cssColor:pl.type==='lot'?'var(--lot)':pl.type==='cand'?'var(--cand)':'#e8c879',color:pl.type==='lot'?'#e0813f':pl.type==='cand'?'#9b8cf0':'#e8c879'};
+1172:  const col=(window.MapEngine?.getPlaceVisual?window.MapEngine.getPlaceVisual(pl).color:(pl.type==='lot'?'#e0813f':pl.type==='cand'?'#9b8cf0':'#e8c879'));
+1186:  const on=id=>window.MapEngine?.isLayerOn ? window.MapEngine.isLayerOn(LAYERS,id) : LAYERS.find(l=>l.id===id).on;
+1187:  const routeLayer=p=>window.MapEngine?.getRouteLayerId ? window.MapEngine.getRouteLayerId(p.dataset.color||p.dataset.cls||'gold') : (p.dataset.color==='war'?'war':p.dataset.color==='lot'?'lot':'abr');
+1188:  const placeLayer=pl=>window.MapEngine?.getPlaceLayerId ? window.MapEngine.getPlaceLayerId(pl) : (pl.type==='cand'?'cand':pl.type==='lot'?'lot':'abr');
+1217:  const engineOrder = window.MapEngine?.getPlaceOrder ? window.MapEngine.getPlaceOrder(window.AvraamRouteData, activeStory, {includeCandidates}) : null;
+1243:  const model=window.MapEngine?.getPanelModel ? window.MapEngine.getPanelModel(window.AvraamRouteData,id,RELATED) : null;
+1317:  const section=window.MapEngine?.getPanelSections ? window.MapEngine.getPanelSections(window.AvraamRouteData,pl.id,t,RELATED) : null;
+1318:  const tabContent = section?.contentKey || (window.MapEngine?.getTabContentKey ? window.MapEngine.getTabContentKey(t) : (t==='story'?'story':t==='bible'?'bible':t==='arch'?'arch':t==='he'?'he_deep':'story'));
+1327:  const rels=section?.relatedIds || (window.MapEngine?.getRelatedPlaceIds ? window.MapEngine.getRelatedPlaceIds(window.AvraamRouteData,pl.id,RELATED) : RELATED[pl.id]);
+
+=== avraam-app.js: const PLACES (full route duplication) ===
+"use strict";
+/* ================= DATA ================= */
+const PLACES=[
+{id:"ur",name:"Ур Халдейский",he:"אוּר כַּשְׂדִּים",tr:"Ур Касдим",x:1710,y:897,type:"main",era:["bronze"],stage:0,kick:"Точка отсчёта · Шумер",id1:"Телль эль-Мукайяр",id2:"Ирак, Нижняя Месопотамия",ep1:"Быт 11:28–31; 15:7",ep2:"родина рода Тераха",side:"t",
+
+=== avraam-app.js: avraam-specific (not in engine) ===
+  if(typeof measuring!=='undefined'&&measuring&&mPts.length)drawMeasure();
+function closeCtx(){ctxCard.classList.remove('show');}
+ctxCard.querySelector('.cc-x').addEventListener('click',closeCtx);
+svg.addEventListener('pointerdown',()=>closeCtx());
+  if(typeof closeCtx==='function')closeCtx();
+  if(e.key==='Escape'){if(document.getElementById('photoModal').classList.contains('open')){document.getElementById('photoModal').classList.remove('open');return;}if(typeof measuring!=='undefined'&&measuring){mPts=[];drawMeasure();mHud.innerHTML='Точки сброшены — кликайте заново. Клик по ⟍ — выход.';}closePanel();document.getElementById('modal').classList.remove('open');document.getElementById('treeModal').style.display='none';document.getElementById('lifeModal').style.display='none';closeSearch();stopTour();}
+function changeAmbientChord(stageIdx){
+  if(typeof closeCtx==='function')closeCtx();
+  changeAmbientChord(i);
+function createAbrahamWalker(accent){
+function clearCaravanArtifacts(){
+  clearCaravanArtifacts();
+  const walker=createAbrahamWalker(dotFill);
+      clearCaravanArtifacts();
+        clearCaravanArtifacts();
+  clearCaravanArtifacts();
+function closeSearch(){searchModal.classList.remove('open');}
+    el.onclick=()=>{closeSearch();stopTour();openPlace(srItems[+el.dataset.i].id);};
+  else if(e.key==='Enter'&&srItems[srSel]){closeSearch();stopTour();openPlace(srItems[srSel].id);}
+  else if(e.key==='Escape')closeSearch();

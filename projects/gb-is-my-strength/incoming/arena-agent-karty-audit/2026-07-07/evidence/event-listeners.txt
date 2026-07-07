@@ -1,0 +1,33 @@
+=== EVENT LISTENERS: addEventListener vs removeEventListener ===
+--- karty/_engine/map-engine.js ---
+addEventListener: 43
+removeEventListener: 1
+ratio: 97% no-cleanup
+--- karty/avraam/avraam-app.js ---
+addEventListener: 70
+removeEventListener: 0
+ratio: 100% no-cleanup
+
+=== ДУБЛЬ: ключевые функции в обоих движках ===
+Format: <function> | map-engine count | avraam-app count
+  getPlaceVisual: map-engine=0  avraam-app=2 [ONLY avraam-app]
+  getRouteLayerId: map-engine=0  avraam-app=1 [ONLY avraam-app]
+  getPlaceLayerId: map-engine=0  avraam-app=1 [ONLY avraam-app]
+  isLayerOn: map-engine=0  avraam-app=1 [ONLY avraam-app]
+  getPlaceOrder: map-engine=2  avraam-app=1 [BOTH]
+  getPanelModel: map-engine=3  avraam-app=1 [BOTH]
+  getPanelSections: map-engine=2  avraam-app=1 [BOTH]
+  getTabContentKey: map-engine=2  avraam-app=1 [BOTH]
+  getRelatedPlaceIds: map-engine=3  avraam-app=1 [BOTH]
+  getStoryState: map-engine=4  avraam-app=1 [BOTH]
+  loadRoute: map-engine=4  avraam-app=2 [BOTH]
+  validateRoute: map-engine=3  avraam-app=1 [BOTH]
+  compareRouteData: map-engine=3  avraam-app=2 [BOTH]
+  normalizeRouteData: map-engine=9  avraam-app=0 [ONLY engine]
+  collectPhotoHosts: map-engine=3  avraam-app=0 [ONLY engine]
+  getPlaceIndex: map-engine=3  avraam-app=0 [ONLY engine]
+  getPlaceById: map-engine=2  avraam-app=0 [ONLY engine]
+  getStageForPlace: map-engine=3  avraam-app=0 [ONLY engine]
+  getStoryViewport: map-engine=3  avraam-app=0 [ONLY engine]
+  auditStoryDefinitions: map-engine=2  avraam-app=0 [ONLY engine]
+  createMap: map-engine=4  avraam-app=0 [ONLY engine]
