@@ -113,12 +113,13 @@
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (11)
+## 🟡 P2 — ОТКРЫТО (12)
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | TTS-DL-UNZIP-SYNC | `fflate.unzipSync` по полному ~280 МБ архиву на main thread (vosk-tts-engine.js:107-108) — разовый фриз при фоновой прогревке. Не дизайн. Fix: async `unzip()` в Worker | V12 W1-CI-44, verified |
 | TTS-DL-NO-TABLOCK | Нет межвкладочного лока: `_voskWarmupStarted` — page-local (controller:343), `navigator.locks`/`BroadcastChannel` отсутствуют → 2 вкладки могут качать 280 МБ дважды. Низкая частота; fix осмыслен только вместе с TTS-DL-CONSENT | V12 W1-CI-39, verified |
+| TTS-OUTCOME-TELEMETRY | Нет success/selected-engine телеметрии: `reportTtsIssue` шлёт только `vosk_tts_failed` (controller:308) → невозможно измерить долю Vosk vs Web Speech в проде. Именно поэтому CSP-инцидент прятался днями. Дёшево: добавить typed outcome (requested/selected/reason). Не дизайн | V10 W1-CI-26/29, verified |
 | AUDIT-P2-WORKFLOWS-CHECK-GAP | `check-workflows.js` не проверяет deploy `if:` условия — `|| failure` не ловится; шире: строковые regex вместо YAML-топологии (см. SUPER_AUDIT W1) | АУДИТ 1.4 + fable 07-06 |
 | AUDIT-P2-MATRIX-DRIFT | route-migration-matrix (35) ≠ page-ownership (54) ≠ sitemap (43). Нет cross-validation. | АУДИТ 1.0 |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
@@ -208,11 +209,11 @@
 |---|---|
 | Закрыто (fixed) | 87 |
 | P1 открыто | 2 |
-| P2 открыто | 11 |
+| P2 открыто | 12 |
 | P3 открыто | 20 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **40** |
+| **Всего открыто (матрица)** | **41** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10) |
 | False positives отклонено | 3 |
 | Passes processed | 94+ и fable-super-audit 07-06 |
