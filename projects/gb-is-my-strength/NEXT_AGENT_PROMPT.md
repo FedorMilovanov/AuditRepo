@@ -1,50 +1,146 @@
 # NEXT AGENT PROMPT — gb-is-my-strength
 
-> **Актуально на 2026-07-06.** Source HEAD: `14a49be83ab57212c0bbd26a8249b75ac026511d` (задеплоен, run `28794737410`).
-> Это — удобная сводка. **Авторитет при конфликте:** `verified/MASTER_BUG_MATRIX.md` (точечные баги)
-> и `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (системный бэклог + план волн W0–W10).
-> Прежний промпт (Pass 71, `8c318010`; SEARCH-016/017 — уже закрыты PR#36) устарел и заархивирован.
+> **Current as of 2026-07-09.**  
+> Source `main` checked: `ac26d8efa2b952df6dc46eef05908e6d65287e82`.  
+> AuditRepo canonical matrix: `verified/MASTER_BUG_MATRIX.md`.  
+> Gill V10 intake: `incoming/gpt-5-5-gill-series-master-audit/2026-07-09/`.
 
-## Перед началом (обязательно)
+## Before any work
 
 ```bash
-git fetch --all --prune && git checkout main && git pull --ff-only && git rev-parse HEAD
+git fetch --all --prune
+git checkout main
+git pull --ff-only
+git rev-parse HEAD
 ```
 
-1. Сверь HEAD: если `main` уехал с `14a49be8` — сначала запиши reverify-дельту (что изменилось), не работай по старой правде.
-2. Прочитай в source-репо: `AGENTS.md` (полностью, особенно §0, §3.10, §9 и «Верификационная дисциплина»), `docs/WORK_MODES.md`, `docs/OWNER-INVARIANTS.md`.
-3. Прочитай здесь: `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` §0–§2 (что подтверждено, что опровергнуто) и §3 (в какой волне твоя задача).
+1. Compare source HEAD with `ac26d8e`.
+2. If it moved, record a reverify delta before relying on this handoff.
+3. Read source-repo `AGENTS.md`, `docs/WORK_MODES.md`, and `docs/OWNER-INVARIANTS.md`.
+4. Read AuditRepo:
+   - `verified/START_HERE.md`
+   - `verified/MASTER_BUG_MATRIX.md`
+   - Gill V10 `REPORT.md`
+   - Gill V10 master artifact.
 
-## Текущее состояние (одним абзацем)
+## Current state
 
-Прод = main, все штатные гейты зелёные. Точечных открытых багов в матрице: **P1×1, P2×9, P3×20** (+4 рефакторинг, +3 AuditRepo). Главная работа — системная, волнами из SUPER_AUDIT: **W1 транзакция релиза (P0) → W2 редакционные даты (P0) → W3 SW/кэш → W4 route-реестр/sitemap/IndexNow → W5 security/XSS → W6 Bible-корпус → W7 семантические гейты → W8 SEO-очистка → W9 a11y/perf → W10 автоматизация AuditRepo**. W0 (гигиена правды) выполнена 2026-07-06.
+The active matrix contains:
 
-## Зоны in-flight — НЕ ТРОГАТЬ без владельца
+```text
+P0  6
+P1  6
+P2 10
+P3 19
+Refactor 4
+AuditRepo 3
+Total active 48
+```
 
-- **PremiumControls / Floating Cluster / Gill-визуал** — владелец активно дорабатывает («не доделано», freeze-правила AGENTS §3.10). Не закрывать/не открывать PC-находки, не менять визуал.
-- **Глоссарий (data/glossary.json) и Библия-тултипы** — владелец обновляет данные. Инфраструктура вокруг них (санитайзер W5, версия кэша W3, корпус W6) — приоритетна, но координируй с этим треком; массово не править данные.
+The six P0s are Gill-series structural publication blockers. They do not mean the production site is wholly unavailable.
 
-## Жёсткие правила (не обсуждаются)
+## Gill task truth
 
-1. Один сабсистем на PR. Волны из SUPER_AUDIT не смешивать.
-2. SHA-first: любой фикс/закрытие — с immutable SHA + командой + результатом.
-3. Не считать зелёный шаг workflow доказательством (IndexNow глушится `|| true`; `[skip ci]`-HEAD не проверен сам по себе).
-4. Паритет Astro↔legacy ≠ правда контента. Байтовое совпадение не закрывает семантические классы.
-5. Не деплоить/не мержить с падающими гейтами через ослабление аудита; каждое исключение в гейте — с замещающим семантическим контрактом.
-6. Не «исправляй» уже исправленное: сверься с ЗАКРЫТО-таблицей матрицы и §1 SUPER_AUDIT (опровергнутые формулировки).
-7. Позитивные заявления («чисто», «надёжно») — только с именованным инвариантом, окружением и негативным тестом (GATE-29).
-8. AuditRepo обновляй атомарно с фиксом: строка в матрице + статус в SUPER_AUDIT + reverify при смене HEAD.
+Do **not** start by writing Part IV.
 
-## Формат финального отчёта
+The required sequence is:
+
+```text
+1. canonical content source
+2. series manifest
+3. generated outline / Reader AST
+4. remove legacy III/IV/V internal numbering
+5. content ownership manifest
+6. deduplicate/reorder Part III
+7. Research canonical/superseded statuses
+8. relocate doctrine from Parts II–III
+9. expand historical Introduction
+10. author Part IV
+11. publish all projections atomically
+```
+
+### Page ownership
+
+```text
+Introduction = historical/legal/confessional/print/urban world
+Part I       = personal biography and pastoral formation
+Part II      = scholarship, method, publication and intellectual workflow
+Part III     = reception, controversy as history, influence, final life and death
+Part IV      = doctrine, disputed texts and evaluation
+Reference    = works, chronology, glossary, editions, sources, corrections
+```
+
+### Part IV
+
+Use:
+
+```text
+Часть IV. Богословие
+Спорные тексты и логика спасения в системе Джона Гилла
+```
+
+Distinguish:
+
+- seven disputed texts;
+- two positive soteriological anchors (`John 3:3`, `Romans 8:30`).
+
+Do not put `7` or `9` into the permanent H1.
+
+## Separate lanes — do not mix
+
+### Gill content/architecture
+
+Owner editorial decision required before moving prose.
+
+### PremiumControls / Floating Cluster visual work
+
+Do not alter rail geometry or visual behavior in a content lane.
+
+### TTS model delivery
+
+`TTS-DL-CONSENT` remains an owner decision. Save-Data is not explicit consent. Do not combine this with Gill article restructuring.
+
+### Glossary/Bible data
+
+Coordinate before touching owner-edited data.
+
+## Older SUPER_AUDIT
+
+`verified/SUPER_AUDIT_2026-07-06_14a49be8.md` is supporting historical evidence, not an automatically current repair order. Reverify each W1–W10 claim against current source HEAD before implementation.
+
+## Hard rules
+
+1. One subsystem per PR.
+2. SHA-first: no current SHA, no repair-ready claim.
+3. A green workflow step is evidence only when the failure path is strict and the checked/deployed SHA is explicit.
+4. Astro↔legacy parity is not content truth.
+5. Do not weaken a gate to make migration pass; replace the obsolete contract with a stronger semantic contract.
+6. Do not edit or delete another agent’s incoming evidence.
+7. Browser claims require browser evidence.
+8. Update AuditRepo atomically with source repair.
+
+## Required final report format
 
 ```text
 Source functional SHA / bot SHA / deployed SHA:
 AuditRepo SHA:
-Canonical IDs (матрица/SUPER_AUDIT):
+Canonical matrix IDs:
 Root cause:
+Owner decision used:
 Fix + files:
 Tests / mutation tests:
-Production-like result (какая цепочка, точный SHA):
+Production-like result:
 Remaining risks:
-AuditRepo update (коммит):
+AuditRepo update:
 ```
+
+## AuditRepo branch validation
+
+For documentation-only AuditRepo work:
+
+```bash
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/validate_audit_repo.py
+```
+
+No merge claim without those results.
