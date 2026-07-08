@@ -8,10 +8,12 @@
 
 ---
 
-## ✅ ЗАКРЫТО (87)
+## ✅ ЗАКРЫТО (90)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| TTS-OUTCOME-TELEMETRY | success/selected-engine телеметрия добавлена: `reportTtsOutcome()` шлёт `tts_engine_selected {engine}` при старте воспроизведения — теперь видно долю Vosk vs Web Speech (её отсутствие и прятало CSP-инцидент). Fire-and-forget, не влияет на playback | `a459ff3` |
+| D-22 | Favorites/izbrannoe: `f.path`→href без проверки схемы (само-XSS) + protocol-relative `//host` в image — **уже исправлено другим агентом** (`/^\/(?!\/)/` + protocol-allowlist на оба рендерера); стро́ка висела в P2 open по инерции, снята при quick-fix reverify 2026-07-08 | `365de50` |
 | P0-CRASH-001 | `r is not defined` (highlights.js) | `bced1c69` |
 | P0-CRASH-002 | `tt is not defined` (site.js) | `ffc763bc` |
 | P0-FC-REC | Бесконечная рекурсия FC controller | `ca6a25a8` |
@@ -113,13 +115,12 @@
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (12)
+## 🟡 P2 — ОТКРЫТО (10)
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | TTS-DL-UNZIP-SYNC | `fflate.unzipSync` по полному ~280 МБ архиву на main thread (vosk-tts-engine.js:107-108) — разовый фриз при фоновой прогревке. Не дизайн. Fix: async `unzip()` в Worker | V12 W1-CI-44, verified |
 | TTS-DL-NO-TABLOCK | Нет межвкладочного лока: `_voskWarmupStarted` — page-local (controller:343), `navigator.locks`/`BroadcastChannel` отсутствуют → 2 вкладки могут качать 280 МБ дважды. Низкая частота; fix осмыслен только вместе с TTS-DL-CONSENT | V12 W1-CI-39, verified |
-| TTS-OUTCOME-TELEMETRY | Нет success/selected-engine телеметрии: `reportTtsIssue` шлёт только `vosk_tts_failed` (controller:308) → невозможно измерить долю Vosk vs Web Speech в проде. Именно поэтому CSP-инцидент прятался днями. Дёшево: добавить typed outcome (requested/selected/reason). Не дизайн | V10 W1-CI-26/29, verified |
 | AUDIT-P2-WORKFLOWS-CHECK-GAP | `check-workflows.js` не проверяет deploy `if:` условия — `|| failure` не ловится; шире: строковые regex вместо YAML-топологии (см. SUPER_AUDIT W1) | АУДИТ 1.4 + fable 07-06 |
 | AUDIT-P2-MATRIX-DRIFT | route-migration-matrix (35) ≠ page-ownership (54) ≠ sitemap (43). Нет cross-validation. | АУДИТ 1.0 |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
@@ -128,9 +129,8 @@
 | D-2 | css-layer-validator: заголовок обещает проверку порядка @layer, код проверяет только необъявленные слои; порог <50% против цели ≥80%; валидирует только site.css | arena cycle2 |
 | D-19 | `<title>` ≠ `og:title`/`twitter:title`/JSON-LD headline на 2 кастомных PageHead (antisovetov, rimlyanam-7): 4 независимых литерала мимо Seo.astro | arena cycle2; `validate:all` |
 | D-21 | Глоссарий: dual renderer — `o()` innerHTML vs `l()` textContent → литеральный `<em>` в серверных тултипах; innerHTML из JSON = XSS-поверхность (W5) | arena cycle3 + fable: js/glossary.js, data/glossary.json (55 `<em>`) |
-| D-22 | Favorites.astro: `f.path` → `card.href` без проверки схемы (javascript:); image-regex пропускает protocol-relative `//host` (W5) | arena cycle3 + fable: Favorites.astro:34-38 |
 
-## 🟢 P3 — ОТКРЫТО (20)
+## 🟢 P3 — ОТКРЫТО (19)
 
 | ID | Описание |
 |---|---|
@@ -151,9 +151,8 @@
 | STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |
 | D-3 | JS total 375041 > 365000 (бюджет audit-pro); CSS-бюджет в норме |
 | D-4 | Magic z-index: `floating-cluster.css:2372/2447/2504/2697/2882`, `mobile-hotfix.css:129` — токены `--z-*` существуют, фикс тривиален (⚠️ PremiumControls in-flight — согласовать) |
-| D-7 | Path-leak в комментарии `PremiumControlAnchor.astro:3` (внутренний путь AuditRepo) — не ловится §14 audit-pro |
+| D-7 | ⬇️ Downgraded (reverify 2026-07-08): строка 3 `PremiumControlAnchor.astro` — репо-**относительная** ссылка на doc (`AuditRepo/projects/.../PremiumControls/README.md §1`), а не абсолютный внутренний путь/секрет → фактически безобидно. Косметика: убрать ссылку при случае |
 | D-8 | `deploy.yml paths:` не включает `*.md` (doc-only не триггерит деплой; by-design пока Markdown не публичный вход, см. SUPER_AUDIT W4) |
-| D-20 | Слитые ветки `image-generation-query-3e8rd5`, `website-text-image-audit-9ep5z9` не удалены с origin (housekeeping, W0) |
 
 ## 🔵 P3 — РЕФАКТОРИНГ (4)
 
@@ -203,17 +202,17 @@
 
 ---
 
-## Статистика (пересобрано 2026-07-08: +2 TTS-строки, влитые D-строки)
+## Статистика (пересобрано 2026-07-08: quick-fix reverify — +3 закрыто, TTS-строки)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 87 |
+| Закрыто (fixed) | 90 |
 | P1 открыто | 2 |
-| P2 открыто | 12 |
-| P3 открыто | 20 |
+| P2 открыто | 10 |
+| P3 открыто | 19 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **41** |
+| **Всего открыто (матрица)** | **38** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10) |
 | False positives отклонено | 3 |
 | Passes processed | 94+ и fable-super-audit 07-06 |
