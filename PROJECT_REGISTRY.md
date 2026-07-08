@@ -1,68 +1,59 @@
 # Project Registry
 
-Список проектов, которые проходят мультиагентные аудиты в этом репозитории.
+Список проектов, проходящих мультиагентные аудиты в этом репозитории.
 
 ## Active projects
 
-| Project folder | Source repo | Status | Notes |
+| Project folder | Source repo | Status | Current canonical entry |
 |---|---|---|---|
-`projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active / repair-in-progress** | 2026-07-06 fable-super-audit: единый консолидированный аудит + план волн W0–W10. Матрица: 87 закрыто / 37 открыто (P1×1, P2×9, P3×20, рефакторинг×4, AR×3) + системный бэклог в SUPER_AUDIT. Source HEAD: `14a49be8` (на проде, run 28794737410). Start: `verified/MASTER_BUG_MATRIX.md` → `verified/SUPER_AUDIT_2026-07-06_14a49be8.md`. |
+| `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active / repair-in-progress / older systemic backlog reverify-needed** | `verified/START_HERE.md` → `verified/MASTER_BUG_MATRIX.md` |
 
 ## Status glossary
 
-- `active` — проект в работе
-- `intake-only` — сырые отчёты есть
-- `verifying` — идёт сводка и дедупликация
-- `repair-ready` — current operational truth reconciled; implementation agents may proceed
-- `repair-in-progress` — implementation идёт, но reverify ещё не закрыло цикл
-- `reverify-needed` — source repo ушёл вперёд, нужен новый HEAD-pass
-- `archived` — проект завершён
+- `active` — проект в работе.
+- `intake-only` — сырые отчёты есть, канонической сводки ещё нет.
+- `verifying` — идёт дедупликация и проверка.
+- `repair-ready` — current-head evidence, repair lane and owner decisions собраны.
+- `repair-in-progress` — source implementation идёт, но reverify не закрыл цикл.
+- `reverify-needed` — источник ушёл вперёд относительно старого verified документа.
+- `archived` — активная работа завершена.
 
-## gb-is-my-strength current summary — 2026-07-06 (fable-super-audit)
+## gb-is-my-strength current summary — 2026-07-09
 
-**Current source HEAD:** `14a49be83ab57212c0bbd26a8249b75ac026511d` (Merge PR#48) — **на проде** (run `28794737410`, workflow_dispatch, success, артефакт `8110554604`).
-**Current status:** active / repair-in-progress. Точечные баги — в матрице (87 закрыто / 37 открыто). Системная работа — волнами W0–W10 из `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (W0 гигиена правды выполнена 2026-07-06).
+- Current source HEAD checked: `ac26d8efa2b952df6dc46eef05908e6d65287e82`.
+- Research HEAD checked: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`.
+- AuditRepo base before Gill V10 branch: `18713174a343740cc0886df6c6441c51bde61274`.
+- Active matrix: 6 P0, 6 P1, 10 P2, 19 P3, 4 refactoring, 3 AuditRepo = 48 active items.
+- Historical closed/fixed count retained: 90.
+- Current major intake: `projects/gb-is-my-strength/incoming/gpt-5-5-gill-series-master-audit/2026-07-09/`.
 
-### Current truth (кратко)
+### Current priority truth
 
-- Прод = main; штатные гейты зелёные. НО: зелёный IndexNow-шаг ≠ принятая нотификация (`|| true`); транзакция релиза (валидированный/собранный/задеплоенный SHA) не гарантирована — W1.
-- Массовые `modified_time 2026-07-06T02:10:54+03:00` на проде — техническая, не редакционная свежесть (петля bot-дат) — W2.
-- In-flight зоны владельца: **PremiumControls/Gill** (freeze) и **глоссарий/Библия-тултипы** — не трогать без координации.
-- Опровергнутые старые формулировки (lane-ветки, «64 bugs», quiz-хоткеи, «izbrannoe чист», «TTS надёжен» и др.) — см. SUPER_AUDIT §1; не переносить их дальше.
+1. Gill Part IV is not an additive article task. First resolve canonical content source, series manifest, outline/Reader AST, topic ownership and Part III duplication.
+2. Historical Gill submenu count is an obsolete content contract; visual witness and current outline completeness must be separate gates.
+3. TTS ~280 MB consent/lifecycle remains an owner UX decision and is a separate lane.
+4. `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` remains supporting evidence but is tied to old source SHA; reverify before repair.
 
 ### Primary current documents
 
-1. `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md` — канон точечных багов.
-2. `projects/gb-is-my-strength/verified/SUPER_AUDIT_2026-07-06_14a49be8.md` — канон системного бэклога + план волн.
-3. `projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md` — handoff для следующего агента.
-4. `projects/gb-is-my-strength/PremiumControls/README.md` — PremiumControls contract (in-flight, owner).
+1. `projects/gb-is-my-strength/verified/START_HERE.md`
+2. `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`
+3. `projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md`
+4. `projects/gb-is-my-strength/incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md`
+5. `projects/gb-is-my-strength/incoming/gpt-5-5-gill-series-master-audit/2026-07-09/artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md`
+
+## Registry rules
+
+- Project status must name one current canonical entrypoint.
+- Do not hardcode old bug counts in root README prose; use the project matrix.
+- When source HEAD moves significantly, mark old systemic documents `reverify-needed` rather than silently treating them as current.
+- Raw `incoming` evidence is never rewritten or silently deleted.
+- Superseded canonical handoffs are indexed in `archive/stale/` or by immutable commit pointer.
 
 ## How to add a new project
 
-1. Создать папку через scaffold:
-   - `python3 scripts/scaffold_project.py <project-folder> --source-repo <owner/repo> [--production-url <url>]`
-2. Убедиться, что создан `PROJECT_META.yml`
-3. Внести запись в этот registry
-4. При первом intake создать:
-   - `python3 scripts/scaffold_intake.py <project> <agent> <YYYY-MM-DD>`
-5. После первой verified-волны добавить:
-   - `verification/START_HERE_<date>.md`
-   - `verified/START_HERE_<date>.md`
-
-<!-- 2026-07-04: gb-is-my-strength dist CSP form-action/karty CSP fixed on source main `14574a9a`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dist-csp-form-action-fixed-14574a9.md. -->
-
-<!-- 2026-07-04: gb-is-my-strength README version drift fixed on source main `da4a65cd`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-04_readme-version-drift-fixed-da4a65c.md. -->
-
-<!-- 2026-07-04: gb-is-my-strength sitemap lastmod drift fixed on source main `a434b45e`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-04_sitemap-lastmod-fixed-a434b45.md. -->
-
-<!-- 2026-07-04: gb-is-my-strength NEW-67 dead scripts reclassified as false-positive/manual tooling; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dead-scripts-new67-reclassified.md. -->
-
-<!-- 2026-07-04: gb-is-my-strength NEW-72 SVG dedup downgraded to P3 advisory; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-04_svg-dedup-new72-downgrade.md. -->
-
-<!-- 2026-07-04: gb-is-my-strength NEW-59 hard-texts OG dimensions fixed on source main `c0ab48fc`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-04_hardtexts-og-dimensions-fixed-c0ab48f.md. -->
-
-<!-- 2026-07-04: gb-is-my-strength P2-SEARCH-EAGER legacy DOM/data eager work partially fixed on source main `30b9fe46`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-legacy-lazy-init-30b9fe4.md. -->
-
-<!-- 2026-07-04: gb-is-my-strength search-manifest generatedAt refreshed on source main `bdaf6e8a`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search_manifest_generatedAt_fixed-bdaf6e8.md. -->
-
-<!-- 2026-07-04: gb-is-my-strength P2-SEARCH-EAGER measured eager-load class fixed on source main `546f7016`; see projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-04_search-full-lazy-loader-546f701.md. -->
+1. Create the project folder with `scripts/scaffold_project.py`.
+2. Confirm `PROJECT_META.yml` exists.
+3. Add the project row here.
+4. Create the first intake with `scripts/scaffold_intake.py`.
+5. After verification, add `verification/START_HERE_<date>.md` and `verified/START_HERE.md`.
