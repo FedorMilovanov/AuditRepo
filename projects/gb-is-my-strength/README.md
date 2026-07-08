@@ -1,74 +1,78 @@
 # gb-is-my-strength / gospod-bog.ru
 
-**Status:** 🟢 active / repair-in-progress — прод = main, работа идёт волнами W0–W10 (см. SUPER_AUDIT).
-**Last source HEAD checked:** `14a49be83ab57212c0bbd26a8249b75ac026511d` (2026-07-06, fable-super-audit; на проде — run `28794737410`).
+**Status:** 🟢 active / repair-in-progress / reverify-needed for older systemic backlog  
+**Current source HEAD checked:** `ac26d8efa2b952df6dc46eef05908e6d65287e82` (2026-07-09)  
+**Source repository:** `FedorMilovanov/gb-is-my-strength`
 
-## Quick facts
+## Start here — current truth
 
-- Source: `FedorMilovanov/gb-is-my-strength`
-- Production: `https://gospod-bog.ru` (GitHub Pages, деплой из `dist/` strangler-сборки)
-- Tech: Astro + strangler pattern (root legacy HTML + Astro dist), Pagefind, SW PWA
-- In-flight зоны владельца: PremiumControls/Gill (freeze), глоссарий + Библия-тултипы
+1. `verified/START_HERE.md` — owner and next-agent handoff at current source HEAD.
+2. `verified/MASTER_BUG_MATRIX.md` — canonical operational matrix.
+3. `incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md` — official Gill V10 source-verified intake.
+4. `incoming/gpt-5-5-gill-series-master-audit/2026-07-09/artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md` — detailed Gill architecture/content research.
+5. `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` — supporting systemic backlog tied to old SHA; reverify each item before implementation.
 
-## Порядок чтения (текущая правда)
+## Current matrix summary
 
-1. `verified/MASTER_BUG_MATRIX.md` — канон точечных багов (87 закрыто / 37 открыто).
-2. `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` — канон системного бэклога: верифицированные находки (CI/даты/SW/security/Bible/семантика), опровергнутые старые формулировки (§1), план волн W0–W10 (§3).
-3. `NEXT_AGENT_PROMPT.md` — handoff и правила для следующего агента.
-4. `PremiumControls/README.md` — контракт in-flight зоны (owner).
-5. Сырые доказательства: `incoming/fable-super-audit/2026-07-06/REPORT.md`, `incoming/arena-auditor/2026-07-06/`.
+| Category | Count |
+|---|---:|
+| Historical closed/fixed | 90 |
+| P0 open | 6 |
+| P1 open | 6 |
+| P2 open | 10 |
+| P3 open | 19 |
+| Refactoring | 4 |
+| AuditRepo | 3 |
+| **Active items** | **48** |
 
-## Правила проекта (сжатие)
+The six P0 rows are Gill-series structural publication blockers, not a claim that the entire production site is unavailable.
 
-- SHA-first; один сабсистем на PR; закрытие только с fixture+fix+gates+witness.
-- Паритет Astro↔legacy ≠ правда контента; зелёный шаг workflow ≠ доказательство.
-- `[skip ci]` bot-HEAD не считается проверенным сам по себе.
-- Старые audit-доки (в `archive/`) — только evidence, не текущая правда.
+## Current priority tracks
 
-## История
+### Gill series V10
 
-Прежние статус-баннеры этого README (Pass 23, REG-001/REG-002, HEAD `e458581`) устарели:
-REG-волна закрыта, актуальная история — в матрице и `archive/`.
+Required order:
 
-**TTS-трек (не входит в W0–W10, отдельная линия работы, HEAD этого трека
-на 2026-07-07: `e6f6628`, новее `14a49be8` выше — требует сверки с
-основным каноном при следующем проходе):** Web Speech → vosk-tts (Apache
-2.0, VITS+BERT), прямые пуши в `main` с явного разрешения пользователя,
-4 раунда фиксов (D-23 регрессия деплоя, `ALLOWED_JS` gate, реально
-неработавший из-за отсутствия CORS у `alphacephei.com` фетч модели —
-перевезли на Hugging Face, подтверждено живым тестом из браузера).
-Полная история: `incoming/vosk-tts-integration-2026-07-06/REPORT.md`.
-Аудит качества голоса/фичи: `incoming/tts-quality-audit-2026-07-07/REPORT.md`
-(из этого списка реально сделано: голос по умолчанию, версия кэша,
-телеметрия, чанкинг, нормализация текста — сроки/века/сокращения).
+```text
+canonical content graph
+→ series manifest
+→ outline / Reader AST
+→ content ownership and relocation
+→ Part III cleanup
+→ Research canonical brief
+→ Part IV authoring
+→ atomic six-document publication
+```
 
-**2026-07-08 — чистка за "Arena Agent" + 2 реальных фикса:** сторонний
-проход того же трека закоммитил раздутый (10 773 строки, "продолжай"-
-зацикливание) `audit/AUDIT_TTS_2026-07-08.md` **прямо в `gb-is-my-strength`**
-(не в этот репо) двумя коммитами (`6fe1049`, `fe390d3`), причём сообщения
-коммитов утверждают несуществующую работу (`git show --stat` на `6fe1049`
-показывает единственный изменённый файл — сам аудит-документ, а не
-заявленный пропатченный smoke-тест с `--real-tts`). Файл удалён из
-`gb-is-my-strength` (`4b26455`). Первые ~170 строк документа (разделы 1–8)
-оказались точными и попали в реальную работу: добавлена SHA-256-проверка
-целостности модели (P0 из прошлого аудита) + досинхронизирован отставший
-`gb-vosk-tts`. Полная разборка: `incoming/tts-quality-audit-2026-07-08-arena-agent-cleanup/REPORT.md`.
+Do not publish Part IV as an additive page: Parts II–III already contain most of its doctrinal scope.
 
-**2026-07-08 — CSP-фикс Xet-CDN + верификация V10/V12-исследований (GPT-5.5).**
-(1) Найден **детерминированный CSP-дефект**, блокировавший холодную загрузку
-модели после переезда на HF: CSP `connect-src` разрешал `huggingface.co`, но
-реальные байты отдаёт редирект на `*.aws.cdn.hf.co` — браузер блокировал
-именно редирект-цель. **Точная историческая доля затронутых сессий неизвестна**
-(нет success/selected-engine телеметрии — только `vosk_tts_failed`), поэтому
-«Vosk ни разу не работал» — правдоподобно, но строго не доказуемо (поправка из
-V10 §4). Fix `932230d` (`https://*.aws.cdn.hf.co` в 37 CSP-компонентов +
-dist-fallback), деплой `47a5e89` зелёный. (2) Верифицированы **два** документа
-GPT-5.5: **V12** (доставка модели: OPFS/resume/multi-tab/rollback) и **V10**
-(широкий CI/CD: размножение сборок, functional-vs-bot SHA, release-транзакция,
-render truth, SW, z-index). Факты о текущем коде в обоих подтверждены
-построчно; крупная перестройка осознанно отклонена как несоразмерная. Находки
-V10 `W1-CI-24…30`: TTS/CSP-часть уже закрыта (`932230d`); системные —
-дубликаты матрицы (`D-1` concurrency, `D-4` z-index, SW-drift); реально новое —
-typed outcome-телеметрия + пин ревизии URL. Разбор: `incoming/tts-delivery-
-architecture-verification-2026-07-08/REPORT.md`. К внедрению: 1 UX-решение
-владельца (неявная загрузка 280 МБ) + 2 не-дизайн улучшения.
+### TTS model lifecycle
+
+`TTS-DL-CONSENT` remains an owner UX decision. Save-Data is mitigation, not explicit consent. Do not mix the neural-model delivery lane with Gill content work.
+
+### Older systemic backlog
+
+`SUPER_AUDIT_2026-07-06_14a49be8.md` remains useful evidence for release transaction, editorial dates, SW/cache, route registries, security, Bible corpus and semantic gates. Its wording is not automatically current at `ac26d8e`; reverify first.
+
+## Project rules
+
+- SHA-first; source claim without immutable SHA is not repair-ready.
+- One subsystem per source PR.
+- Astro↔legacy parity is not proof of content correctness.
+- A green workflow step is not proof unless its failure path is strict and the checked/deployed SHA is explicit.
+- Do not rewrite or delete another agent’s `incoming` evidence.
+- Old canonical documents are indexed under `archive/stale/`; active entrypoints must not preserve multiple competing truths.
+- Update AuditRepo atomically with source repair: matrix row, evidence, reverify and canonical handoff.
+
+## In-flight / owner-coordination zones
+
+- Gill editorial ownership and Part IV scope.
+- PremiumControls/Floating Cluster visual behavior.
+- TTS consent and large-model lifecycle.
+- Glossary/Bible tooltip data.
+
+Infrastructure may be audited, but owner-facing behavior or content should not be changed without coordination.
+
+## Historical note
+
+The former project README mixed 2026-07-06 status banners with later TTS incident history and no longer represented one current truth. It remains available in Git history at AuditRepo base commit `18713174a343740cc0886df6c6441c51bde61274` and is indexed in `archive/stale/2026-07-09-pre-gill-v10/README.md`.
