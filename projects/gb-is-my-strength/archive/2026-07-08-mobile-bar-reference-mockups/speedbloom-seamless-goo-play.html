@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Раскрытие скоростей — бесшовное «вытекание» (goo), день/ночь/мобила/одиночная</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#111;font-family:'Source Sans 3','Segoe UI',system-ui,sans-serif;padding:34px 22px 90px;color:#cfc7ba}
+  h1{font-family:Lora,Georgia,serif;font-size:22px;color:#f2ead9;margin:0 0 6px}
+  .sub{color:#9a928c;font-size:13.5px;max-width:820px;line-height:1.6;margin:0 0 30px}
+  .zone{display:flex;gap:36px;flex-wrap:wrap;align-items:flex-start}
+  .panel{border-radius:22px;padding:70px 40px 40px;position:relative;min-width:420px}
+  .panel h3{position:absolute;top:14px;left:20px;margin:0;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;opacity:.6}
+  .panel.day{background:linear-gradient(180deg,#f4ede0,#e9dfcc);color:#4a3a24}
+  .panel.night{background:linear-gradient(180deg,#221c16,#141110);color:#e8dcc8}
+  .panel.mob{background:linear-gradient(180deg,#1e1913,#131009);width:390px;min-width:390px;padding:70px 12px 30px}
+  .panel.single{min-width:560px}
+
+  /* ===================== GOO BLOOM: общий каркас ===================== */
+  /* Силуэт (пилюля+круг) — ОДИН SVG, один общий градиент (userSpaceOnUse), слияние —
+     метабол-фильтр (feGaussianBlur → feColorMatrix, канонический «gooey effect»,
+     Lucas Bebber / Codrops). Диск НЕ анимируется и всегда на месте — это и есть
+     Play; полоса растёт из его же центра. Золотой контур рисует САМ ФИЛЬТР
+     (feMorphology dilate поверх уже слитой формы → feComposite out даёт кольцо
+     ровной толщины) — это не CSS drop-shadow (тот на вогнутой шейке даёт
+     геометрические искажения при офсете кривой). Мягкая тень всего кластера —
+     CSS drop-shadow НА <svg>: применяется к уже готовому результату фильтра,
+     т.е. следует слитому силуэту вместе с контуром (как в референсе).
+     Контент (чипы, треугольник, блик, внутреннее кольцо-«тарелка», фокус) —
+     отдельным чётким слоем поверх, фильтр их не касается. */
+  .sil{position:absolute;inset:0;overflow:visible;
+    filter:drop-shadow(0 10px 20px var(--silsh,rgba(120,85,40,.26))) drop-shadow(0 3px 6px var(--silsh2,rgba(120,85,40,.18)));}
+  .night .sil,.mob .sil{--silsh:rgba(0,0,0,.55);--silsh2:rgba(0,0,0,.4)}
+  .content{position:absolute;inset:0;pointer-events:none}
+  .hint{margin-top:120px;text-align:center;font-size:11px;opacity:.55;letter-spacing:.08em;text-transform:uppercase}
+
+  /* чипы скоростей — общие для всех вариантов */
+  .chip{border:1px solid var(--cbd);border-radius:13px;background:var(--cbg);
+    font-size:13px;font-weight:700;padding:7px 11px;color:var(--ctx);cursor:pointer;pointer-events:auto;
+    opacity:0;transform:translateY(12px) scale(.82);
+    transition:opacity .26s ease,transform .4s cubic-bezier(.3,1.4,.4,1),background .25s,color .25s,border-color .25s;
+    -webkit-tap-highlight-color:transparent;}
+  .day .chip{--cbd:rgba(150,110,60,.35);--cbg:linear-gradient(180deg,#fffdf6,#f6ecd9);--ctx:#5a452a}
+  .night .chip,.mob .chip{--cbd:rgba(232,190,120,.22);--cbg:linear-gradient(180deg,#332a20,#241d15);--ctx:#d8c8a8}
+  .chip.on{--cbg:linear-gradient(160deg,#d5ab6d,#b98a4e);--ctx:#fff;--cbd:transparent;
+    box-shadow:0 3px 9px rgba(160,115,55,.35),inset 0 1px 0 rgba(255,255,255,.45)}
+  .night .chip.on,.mob .chip.on{--cbg:linear-gradient(160deg,#dbb173,#a97f45);--ctx:#241708;
+    box-shadow:0 3px 10px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,240,200,.55),0 0 14px -2px rgba(219,177,115,.4)}
+  @media(hover:hover){.chip:hover:not(.on){transform:translateY(-1px) scale(1.05)}}
+  .chip:focus-visible{box-shadow:0 0 0 3px rgba(255,255,255,.95),0 0 0 6px #b8863f}
+  .bloom.open .chip{opacity:1;transform:none}
+
+  /* PLAY — контентный слой поверх диска: мягкий перламутровый блик и тонкое
+     внутреннее кольцо-«тарелка» (как в референсе: кнопка сидит в круглом
+     углублении, концентрическая линия внутри выпуклости). Фокус — box-shadow
+     на самой кнопке, не трогает базовый вид. */
+  .play{position:absolute;pointer-events:auto;cursor:pointer;border:0;background:transparent;
+    border-radius:50%;display:grid;place-items:center;overflow:visible}
+  .play::before{content:'';position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(14% 11% at 37% 40%, var(--spec), transparent 100%),
+               radial-gradient(60% 55% at 40% 34%, var(--hi), transparent 70%),
+               radial-gradient(75% 60% at 50% 100%, var(--lo), transparent 72%);}
+  .play::after{content:'';position:absolute;inset:11%;border-radius:50%;
+    border:1px solid var(--ring);
+    box-shadow:inset 0 1px 1px var(--ringlite,transparent)}
+  .day .play{--spec:rgba(255,255,255,.8);--hi:rgba(255,255,255,.85);--lo:rgba(150,110,60,.16);--pic:#7a5a30;
+    --ring:rgba(150,110,60,.3);--ringlite:rgba(255,255,255,.55)}
+  .night .play,.mob .play{--spec:rgba(255,245,220,.16);--hi:rgba(255,235,190,.1);--lo:rgba(0,0,0,.3);--pic:#e6c286;
+    --ring:rgba(223,177,115,.28);--ringlite:rgba(255,235,190,.12)}
+  /* :not(.ringsvg) — иначе эта старая общая правка (родом ещё до кольца/метки)
+     перебивает по специфичности .ringsvg и сжимает кольцо+метку в 20×20px */
+  .play svg:not(.ringsvg){width:20px;height:20px;fill:var(--pic);transform:translateX(1.5px);position:relative;transition:transform .3s}
+  .play:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(255,255,255,.95),0 0 0 6px #b8863f}
+  .bloom.open .play svg:not(.ringsvg){transform:translateX(1.5px) scale(1.06)}
+
+  /* ================= ВЕРТИКАЛЬНАЯ (день/ночь): полоса растёт вверх ================= */
+  .bloom.vert{position:relative;width:340px;height:132px;margin:0 auto}
+  .bloom.vert .sil{width:340px;height:132px}
+  .bloom.vert .bar{transform-box:view-box;transform-origin:170px 78px;transform:scale(.14);
+    transition:transform .52s cubic-bezier(.3,1.24,.4,1);}
+  .bloom.vert.open .bar{transform:scale(1)}
+  .bloom.vert .chips{position:absolute;left:0;right:0;top:0;height:60px;display:flex;align-items:center;justify-content:center;gap:7px;padding:0 20px}
+  .bloom.vert.open .chips .chip:nth-child(1){transition-delay:.12s}
+  .bloom.vert.open .chips .chip:nth-child(2){transition-delay:.17s}
+  .bloom.vert.open .chips .chip:nth-child(3){transition-delay:.22s}
+  .bloom.vert.open .chips .chip:nth-child(4){transition-delay:.27s}
+  .bloom.vert.open .chips .chip:nth-child(5){transition-delay:.32s}
+  .bloom.vert.open .chips .chip:nth-child(6){transition-delay:.37s}
+  .bloom.vert .play{left:50%;top:40px;width:76px;height:76px;margin-left:-38px}
+
+  /* ================= ГОРИЗОНТАЛЬНАЯ (одиночная статья, мобила): полоса растёт влево ================= */
+  .bloom.horiz{position:relative;margin:0 auto}
+  .bloom.horiz .bar{transform-box:view-box;transform:scale(.12);
+    transition:transform .5s cubic-bezier(.3,1.24,.4,1);}
+  .bloom.horiz.open .bar{transform:scale(1)}
+  .bloom.horiz .chips{position:absolute;display:flex;align-items:center;gap:7px}
+  .bloom.horiz.open .chips .chip:nth-child(6){transition-delay:.08s}
+  .bloom.horiz.open .chips .chip:nth-child(5){transition-delay:.12s}
+  .bloom.horiz.open .chips .chip:nth-child(4){transition-delay:.16s}
+  .bloom.horiz.open .chips .chip:nth-child(3){transition-delay:.20s}
+  .bloom.horiz.open .chips .chip:nth-child(2){transition-delay:.24s}
+  .bloom.horiz.open .chips .chip:nth-child(1){transition-delay:.28s}
+
+  /* одиночная статья · день: 470×112, диск r45 центр (400,56) */
+  .single .bloom.horiz{width:470px;height:112px}
+  .single .sil{width:470px;height:112px}
+  .single .bar{transform-origin:400px 56px}
+  .single .chips{left:0;top:24px;height:64px;padding:0 66px 0 20px;width:390px}
+  .single .play{left:355px;top:11px;width:90px;height:90px}
+
+  /* мобила · 390px: 362×92, диск r36 центр (316,46) */
+  .mob .bloom.horiz{width:362px;height:92px}
+  .mob .sil{width:362px;height:92px}
+  .mob .bar{transform-origin:316px 46px}
+  .mob .chips{left:0;top:18px;height:56px;padding:0 48px 0 14px;width:306px}
+  .mob .chips .chip{padding:5px 6px;font-size:11px}
+  .mob .play{left:280px;top:10px;width:72px;height:72px}
+
+  /* ===== play/pause, прогресс-кольцо, метка скорости внутри круга =====
+     Кольцо и метка — отдельный SVG-слой внутри кнопки (строится JS, уникальные
+     id дуг). Метка идёт по нижней дуге (textPath), видна всегда; кольцо — только
+     в .playing, тонкое золотое, дефицитное. Раскрытие по hover работает в любом
+     состоянии — и в паузе, и при игре. */
+  .ic-pause{display:none;fill:var(--pic)}
+  .bloom.playing .ic-play{display:none}
+  .bloom.playing .ic-pause{display:block}
+  .ringsvg{position:absolute;inset:4%;pointer-events:none;overflow:visible}
+  .prog{fill:none;stroke:var(--arc);stroke-width:3.2;stroke-linecap:round;
+    stroke-dasharray:100 100;stroke-dashoffset:100;opacity:0;transition:opacity .4s;
+    filter:drop-shadow(0 0 3px var(--arcglow))}
+  .bloom.playing .prog{opacity:1;animation:progdemo 24s linear infinite}
+  @keyframes progdemo{from{stroke-dashoffset:100}to{stroke-dashoffset:2}}
+  .spd{font-family:'Source Sans 3','Segoe UI',sans-serif;font-weight:700;font-size:11.5px;
+    letter-spacing:.06em;fill:var(--spdc)}
+  .day .play{--arc:#c39a5e;--arcglow:rgba(195,154,94,.45);--spdc:rgba(122,90,48,.78)}
+  .night .play,.mob .play{--arc:#dfb173;--arcglow:rgba(223,177,115,.5);--spdc:rgba(223,177,115,.85)}
+  @media(prefers-reduced-motion:reduce){.bloom.playing .prog{animation:none;stroke-dashoffset:34}}
+</style>
+</head>
+<body>
+<h1>Бесшовное «вытекание»: пилюля вытекает из круга Play (goo-слияние)</h1>
+<p class="sub">Технология метабол-фильтра (Lucas Bebber / Codrops «gooey effect»): один SVG-силуэт с общим градиентом, слияние считает <b>feGaussianBlur → feColorMatrix</b> — фигуры физически сливаются в одну, шва нет. Диск (Play) не анимируется и всегда на месте; полоса вырастает из его же центра. Тонкий золотой контур — не CSS-тень, а отдельный проход фильтра (<b>feMorphology dilate → feComposite out</b>), обводящий истинную слитую границу силуэта. Внутри выпуклости — тонкое кольцо-«тарелка», в котором сидит Play (как в референсе); весь кластер отбрасывает мягкую тень по слитому периметру.</p>
+
+<div class="zone">
+  <div class="panel day">
+    <h3>День</h3>
+    <div class="bloom vert" data-hover>
+      <svg class="sil" viewBox="0 0 340 132">
+        <g filter="url(#goo-v)">
+          <rect class="bar" x="0" y="0" width="340" height="60" rx="30" fill="url(#surf-day)"/>
+          <circle class="disc" cx="170" cy="78" r="38" fill="url(#surf-day)"/>
+        </g>
+      </svg>
+      <div class="content">
+        <div class="chips">
+          <button class="chip">0.75×</button><button class="chip">1×</button><button class="chip">1.25×</button>
+          <button class="chip">1.5×</button><button class="chip on">1.75×</button><button class="chip">2×</button>
+        </div>
+        <button class="play" aria-label="Озвучка/пауза"><svg viewBox="0 0 24 24"><path class="ic-play" d="M7 4.6v14.8L19 12 7 4.6z"/><g class="ic-pause"><rect x="7" y="5" width="3.4" height="14" rx="1.2"/><rect x="13.6" y="5" width="3.4" height="14" rx="1.2"/></g></svg></button>
+      </div>
+    </div>
+    <div class="hint">hover / focus</div>
+  </div>
+
+  <div class="panel night">
+    <h3>Ночь</h3>
+    <div class="bloom vert playing" data-hover>
+      <svg class="sil" viewBox="0 0 340 132">
+        <g filter="url(#goo-v-night)">
+          <rect class="bar" x="0" y="0" width="340" height="60" rx="30" fill="url(#surf-night)"/>
+          <circle class="disc" cx="170" cy="78" r="38" fill="url(#surf-night)"/>
+        </g>
+      </svg>
+      <div class="content">
+        <div class="chips">
+          <button class="chip">0.75×</button><button class="chip">1×</button><button class="chip">1.25×</button>
+          <button class="chip">1.5×</button><button class="chip on">1.75×</button><button class="chip">2×</button>
+        </div>
+        <button class="play" aria-label="Озвучка/пауза"><svg viewBox="0 0 24 24"><path class="ic-play" d="M7 4.6v14.8L19 12 7 4.6z"/><g class="ic-pause"><rect x="7" y="5" width="3.4" height="14" rx="1.2"/><rect x="13.6" y="5" width="3.4" height="14" rx="1.2"/></g></svg></button>
+      </div>
+    </div>
+    <div class="hint">hover / focus</div>
+  </div>
+
+  <div class="panel mob">
+    <h3>Мобила · 390px</h3>
+    <div class="bloom horiz playing" data-tap>
+      <svg class="sil" viewBox="0 0 362 92">
+        <g filter="url(#goo-h-mob)">
+          <rect class="bar" x="0" y="18" width="306" height="56" rx="28" fill="url(#surf-mob)"/>
+          <circle class="disc" cx="316" cy="46" r="36" fill="url(#surf-mob)"/>
+        </g>
+      </svg>
+      <div class="content">
+        <div class="chips">
+          <button class="chip">0.75×</button><button class="chip">1×</button><button class="chip">1.25×</button>
+          <button class="chip">1.5×</button><button class="chip on">1.75×</button><button class="chip">2×</button>
+        </div>
+        <button class="play" aria-label="Озвучка/пауза"><svg viewBox="0 0 24 24"><path class="ic-play" d="M7 4.6v14.8L19 12 7 4.6z"/><g class="ic-pause"><rect x="7" y="5" width="3.4" height="14" rx="1.2"/><rect x="13.6" y="5" width="3.4" height="14" rx="1.2"/></g></svg></button>
+      </div>
+    </div>
+    <div class="hint">tap по кругу справа</div>
+  </div>
+
+  <div class="panel day single">
+    <h3>Одиночная статья · день</h3>
+    <div class="bloom horiz" data-hover>
+      <svg class="sil" viewBox="0 0 470 112">
+        <g filter="url(#goo-h)">
+          <rect class="bar" x="0" y="24" width="390" height="64" rx="32" fill="url(#surf-day)"/>
+          <circle class="disc" cx="400" cy="56" r="45" fill="url(#surf-day)"/>
+        </g>
+      </svg>
+      <div class="content">
+        <div class="chips">
+          <button class="chip">0.75×</button><button class="chip">1×</button><button class="chip">1.25×</button>
+          <button class="chip">1.5×</button><button class="chip on">1.75×</button><button class="chip">2×</button>
+        </div>
+        <button class="play" aria-label="Озвучка/пауза"><svg viewBox="0 0 24 24"><path class="ic-play" d="M7 4.6v14.8L19 12 7 4.6z"/><g class="ic-pause"><rect x="7" y="5" width="3.4" height="14" rx="1.2"/><rect x="13.6" y="5" width="3.4" height="14" rx="1.2"/></g></svg></button>
+      </div>
+    </div>
+    <div class="hint">hover / focus</div>
+  </div>
+</div>
+
+<!-- общие defs: goo-фильтры (свои stdDeviation под масштаб) + градиенты (userSpaceOnUse — общая сетка на весь силуэт) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="surf-day" x1="0" y1="0" x2="0" y2="122" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#fffdf8"/><stop offset=".22" stop-color="#fbf6ea"/>
+    <stop offset=".62" stop-color="#f1e6d0"/><stop offset="1" stop-color="#e6d6b8"/>
+  </linearGradient>
+  <linearGradient id="surf-night" x1="0" y1="0" x2="0" y2="122" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#38301f"/><stop offset=".22" stop-color="#2c251d"/>
+    <stop offset=".62" stop-color="#201913"/><stop offset="1" stop-color="#15100b"/>
+  </linearGradient>
+  <linearGradient id="surf-mob" x1="0" y1="0" x2="0" y2="92" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#38301f"/><stop offset=".22" stop-color="#2c251d"/>
+    <stop offset=".62" stop-color="#1e1811"/><stop offset="1" stop-color="#130f09"/>
+  </linearGradient>
+  <!-- goo + КОНТУР: после метабол-слияния расширяем слитую форму (feMorphology
+       dilate) и вычитаем исходную (feComposite operator=out) — кольцо ровной
+       толщины по ИСТИННОЙ слитой кривизне. Контур мягче референсного золота:
+       светлый тан с лёгкой прозрачностью, как на DALLE-дне. -->
+  <filter id="goo-v" color-interpolation-filters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 32 -15" result="goo"/>
+    <feMorphology in="goo" operator="dilate" radius="1.5" result="dilated"/>
+    <feComposite in="dilated" in2="goo" operator="out" result="ring"/>
+    <feFlood flood-color="#c39a5e" flood-opacity=".9" result="ringColor"/>
+    <feComposite in="ringColor" in2="ring" operator="in" result="goldRing"/>
+    <feMerge><feMergeNode in="goo"/><feMergeNode in="goldRing"/></feMerge>
+  </filter>
+  <filter id="goo-v-night" color-interpolation-filters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 32 -15" result="goo"/>
+    <feMorphology in="goo" operator="dilate" radius="1.5" result="dilated"/>
+    <feComposite in="dilated" in2="goo" operator="out" result="ring"/>
+    <feFlood flood-color="#dfb173" flood-opacity=".9" result="ringColor"/>
+    <feComposite in="ringColor" in2="ring" operator="in" result="goldRing"/>
+    <feMerge><feMergeNode in="goo"/><feMergeNode in="goldRing"/></feMerge>
+  </filter>
+  <filter id="goo-h" color-interpolation-filters="sRGB" x="-20%" y="-30%" width="140%" height="160%">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 32 -15" result="goo"/>
+    <feMorphology in="goo" operator="dilate" radius="1.5" result="dilated"/>
+    <feComposite in="dilated" in2="goo" operator="out" result="ring"/>
+    <feFlood flood-color="#c39a5e" flood-opacity=".9" result="ringColor"/>
+    <feComposite in="ringColor" in2="ring" operator="in" result="goldRing"/>
+    <feMerge><feMergeNode in="goo"/><feMergeNode in="goldRing"/></feMerge>
+  </filter>
+  <filter id="goo-h-mob" color-interpolation-filters="sRGB" x="-20%" y="-30%" width="140%" height="160%">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="5.5" result="blur"/>
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 34 -16" result="goo"/>
+    <feMorphology in="goo" operator="dilate" radius="1.3" result="dilated"/>
+    <feComposite in="dilated" in2="goo" operator="out" result="ring"/>
+    <feFlood flood-color="#dfb173" flood-opacity=".9" result="ringColor"/>
+    <feComposite in="ringColor" in2="ring" operator="in" result="goldRing"/>
+    <feMerge><feMergeNode in="goo"/><feMergeNode in="goldRing"/></feMerge>
+  </filter>
+</defs></svg>
+
+<script>
+  document.querySelectorAll('.bloom[data-hover]').forEach(b=>{
+    let t;
+    const fine=()=>matchMedia('(hover:hover) and (pointer:fine)').matches;
+    b.addEventListener('mouseenter',()=>{if(fine()){clearTimeout(t);b.classList.add('open')}});
+    b.addEventListener('mouseleave',()=>{if(fine())t=setTimeout(()=>b.classList.remove('open'),240)});
+    b.querySelector('.play').addEventListener('focus',()=>b.classList.add('open'));
+  });
+  document.querySelectorAll('.bloom[data-tap]').forEach(b=>{
+    b.querySelector('.play').addEventListener('click',()=>b.classList.toggle('open'));
+  });
+
+  // кольцо прогресса + метка скорости по нижней дуге (уникальные id дуг)
+  const NS='http://www.w3.org/2000/svg';
+  function initRing(btn,idx,label){
+    const svg=document.createElementNS(NS,'svg');
+    svg.setAttribute('class','ringsvg'); svg.setAttribute('viewBox','0 0 100 100');
+    const c=document.createElementNS(NS,'circle');
+    c.setAttribute('class','prog');
+    c.setAttribute('cx','50');c.setAttribute('cy','50');c.setAttribute('r','45');
+    c.setAttribute('pathLength','100');
+    const arc=document.createElementNS(NS,'path');
+    const pid='lblarc'+idx; arc.setAttribute('id',pid);
+    arc.setAttribute('d','M20.5,60 A34,34 0 0 0 79.5,60'); arc.setAttribute('fill','none');
+    const t=document.createElementNS(NS,'text'); t.setAttribute('class','spd');
+    const tp=document.createElementNS(NS,'textPath');
+    tp.setAttribute('href','#'+pid); tp.setAttribute('startOffset','50%');
+    tp.setAttribute('text-anchor','middle'); tp.textContent=label;
+    t.appendChild(tp); svg.append(c,arc,t); btn.appendChild(svg);
+  }
+  document.querySelectorAll('.bloom').forEach((b,i)=>{
+    const on=b.querySelector('.chip.on');
+    initRing(b.querySelector('.play'), i, on?on.textContent:'1×');
+  });
+  document.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{
+    const b=ch.closest('.bloom');
+    b.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+    ch.classList.add('on');
+    const tp=b.querySelector('.spd textPath'); if(tp) tp.textContent=ch.textContent;
+  }));
+  // клик по Play в hover-панелях = play/pause; раскрытие остаётся на hover в ЛЮБОМ состоянии
+  document.querySelectorAll('.bloom[data-hover] .play').forEach(pl=>
+    pl.addEventListener('click',()=>pl.closest('.bloom').classList.toggle('playing')));
+</script>
+</body>
+</html>

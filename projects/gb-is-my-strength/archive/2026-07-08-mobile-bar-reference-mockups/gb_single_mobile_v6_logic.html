@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bottom-bar + btoc + gb-ember(Play, канон) + скорости-вверх · день/ночь (канон) · logic deepened</title>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');}catch(_){}})();</script>
+
+<style>
+/* ============ ТОКЕНЫ ТЕМЫ (реальные fallback-значения из css/*.css) ============ */
+:root{
+  --z-overlay-high:3000; --z-sticky:1000; --z-bottom-bar:2000;
+  --color-canvas:#fdfcf9; --color-surface:#ffffff; --color-surface-muted:#f4f2ed;
+  --color-surface-alt:#f5f5f3; --color-text:#1a1a1a; --color-text-primary:#1a1a18;
+  --color-text-secondary:#555555; --color-text-muted:#6a6a6a; --color-text-faint:#888888;
+  --color-border:#e5e2dc; --color-border-strong:#cfc9bd;
+  --color-accent:#7a2e2e; --color-accent-soft:#f6ece8; --color-accent-strong:#5f2323;
+  --color-accent-gold:#b8936a; --color-accent-gold-bright:#d8aa6d;
+  --bg-alt:#f5f5f3;
+  /* реальные easing-токены — css/floating-cluster.css :root */
+  --gb-ease-out:cubic-bezier(.2,.7,.2,1);
+  --gb-ease-spring:cubic-bezier(.34,1.56,.64,1);
+}
+html.dark{
+  --color-canvas:#0e1116; --color-surface:#161a21; --color-surface-muted:#1a1f28;
+  --color-surface-alt:#13171e; --color-text:#e6e1d7; --color-text-primary:#e6e1d7;
+  --color-text-secondary:#9ca3af; --color-text-muted:#9ca3af; --color-text-faint:#6b7280;
+  --color-border:#232830; --color-border-strong:#2f3540;
+  --color-accent:#d4a574; --color-accent-soft:#1f1a13; --color-accent-strong:#e8b878;
+  --bg-alt:#13171e;
+}
+:root{color-scheme:light}
+html.dark{color-scheme:dark}
+
+/* ============ ПОСТОЯННЫЙ bottom-bar (канон из site.css) ============ */
+.bottom-bar{position:absolute;bottom:0;left:0;right:0;z-index:var(--z-bottom-bar);background:var(--color-canvas);border-top:1px solid var(--color-border);padding:0 0 env(safe-area-inset-bottom,0px)}
+.bottom-bar-inner{display:flex;align-items:center;justify-content:space-between;height:54px;padding:0 10px;gap:6px}
+/* круг прогресса чтения — снизу слева, единственный источник % на экране */
+.bar-progress{position:relative;width:36px;height:36px;flex-shrink:0}
+.bar-progress svg{transform:rotate(-90deg);width:36px;height:36px}
+.bar-progress-track{fill:none;stroke:var(--color-border);stroke-width:3}
+.bar-progress-fill{fill:none;stroke:var(--color-accent);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .15s linear}
+.bar-progress-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Source Sans 3',system-ui,sans-serif;font-size:9px;font-weight:700;color:var(--color-accent);pointer-events:none;font-variant-numeric:tabular-nums}
+.bar-section-btn{flex:1;min-width:0;background:0 0;border:none;cursor:pointer;padding:6px 8px;text-align:left;display:flex;flex-direction:column;gap:2px;overflow:hidden}
+.bar-section-label{font-family:'Source Sans 3',system-ui,sans-serif;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-muted);opacity:.6;line-height:1}
+.bar-section-name{font-family:'Source Sans 3',system-ui,sans-serif;font-size:13px;font-weight:600;color:var(--color-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
+.bar-icon-btn{width:38px;height:38px;border:none;background:0 0;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .15s,color .15s;flex-shrink:0;color:var(--color-text-muted);touch-action:manipulation;position:relative}
+/* БАГ (та же семья, что и «ободки вокруг SVG»): :hover ниже раньше не был
+   загорожен media-запросом — на реальном тач-устройстве тап способен
+   «залипающе» вызвать :hover (известная особенность мобильных браузеров:
+   Safari/Chrome на телефоне могут держать :hover-состояние до следующего
+   тапа где-то ещё), и подсветка/кольцо оставались висеть на кнопке до
+   случайного тапа в другое место — выглядит как баг. Профессиональный
+   подход для тач-первого интерфейса: hover-стили в принципе не должны
+   применяться, если у устройства нет мыши/точного указателя — тап должен
+   давать обратную связь только через :active (она гаснет сама, с уходом
+   пальца). Все :hover ниже по файлу так же обёрнуты. */
+@media (hover:hover) and (pointer:fine){
+  .bar-icon-btn:hover{background:var(--color-surface-muted);color:var(--color-text)}
+}
+.bar-icon-btn:active{background:var(--color-border);transition-duration:.08s}
+.bar-icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.bar-icon-btn:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+.bar-divider{width:1px;height:24px;background:var(--color-border);flex-shrink:0}
+/* A−/A+ (канон fbtn.txt: Lora-сериф) */
+.bar-font{width:34px;height:38px;border:none;background:0 0;cursor:pointer;display:grid;place-items:center;border-radius:8px;transition:background .15s,color .15s,opacity .15s;flex-shrink:0;font-family:Lora,Georgia,serif;font-size:16px;font-weight:700;color:var(--color-text-muted);line-height:1}
+@media (hover:hover) and (pointer:fine){
+  .bar-font:hover:not(:disabled){background:var(--color-surface-muted);color:var(--color-accent)}
+}
+.bar-font:active:not(:disabled){background:var(--color-border);transition-duration:.08s}
+.bar-font:disabled{opacity:.3;cursor:default}
+.bar-font:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+
+/* ============ CANON: .gb-theme-toggle — css/floating-cluster.css:217-243 =============
+   Взято 1-в-1 из репозитория (не изобретено): крест-фейд sun/moon через
+   opacity+rotate+scale, БЕЗ View Transitions API — реальный toggleTheme()
+   в js/floating-cluster-controller.js делает простой classList.toggle('dark'),
+   View Transition в реальном коде используется только для переходов между
+   страницами (клик по <a>), не для смены темы. Прежняя версия этого файла
+   ошибочно вызывала document.startViewTransition() на смене темы — этого
+   эффекта не существует на сайте, чинил по замечанию владельца. */
+.gb-theme-toggle{position:relative;overflow:hidden}
+.gb-theme-toggle .theme-icon-sun,
+.gb-theme-toggle .theme-icon-moon{
+  position:absolute;inset:0;display:grid;place-items:center;
+  transition:opacity .32s var(--gb-ease-out),transform .42s var(--gb-ease-spring);
+}
+.gb-theme-toggle .theme-icon-sun{opacity:1;transform:rotate(0) scale(1)}
+.gb-theme-toggle .theme-icon-moon{opacity:0;transform:rotate(-90deg) scale(.5)}
+html.dark .gb-theme-toggle .theme-icon-sun{opacity:0;transform:rotate(90deg) scale(.5)}
+html.dark .gb-theme-toggle .theme-icon-moon{opacity:1;transform:rotate(0) scale(1)}
+.gb-theme-toggle .theme-icon-sun svg,.gb-theme-toggle .theme-icon-moon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+html.dark .bar-icon-btn.is-theme{color:#f5c542}
+
+/* ============ bTOC-OVERLAY (канон) ============ */
+.btoc-overlay{position:absolute;inset:0;z-index:var(--z-overlay-high);display:block;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s}
+.btoc-overlay.open{opacity:1;visibility:visible;pointer-events:auto}
+.btoc-panel{position:absolute;bottom:0;left:0;right:0;background:var(--color-canvas);border-radius:20px 20px 0 0;max-height:78%;overflow:hidden;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1);overscroll-behavior:contain;box-shadow:0 -12px 40px rgba(0,0,0,.18)}
+.btoc-overlay.open .btoc-panel{transform:translateY(0)}
+.btoc-handle{display:flex;justify-content:center;padding:8px 0 2px;flex-shrink:0}
+.btoc-handle::after{content:'';width:36px;height:4px;border-radius:2px;background:var(--color-border)}
+.btoc-header{display:flex;justify-content:space-between;align-items:center;padding:6px 18px 10px;flex-shrink:0}
+.btoc-header-left{display:flex;flex-direction:column;gap:2px}
+.btoc-title{font-family:'Source Sans 3',system-ui,sans-serif;font-size:16px;font-weight:700;color:var(--color-text)}
+.btoc-subtitle{font-family:'Source Sans 3',system-ui,sans-serif;font-size:11px;color:var(--color-text-muted)}
+.btoc-close{width:32px;height:32px;border:none;background:var(--color-surface-muted);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--color-text-muted);transition:background .15s;flex-shrink:0}
+@media (hover:hover) and (pointer:fine){ .btoc-close:hover{background:var(--color-border)} }
+.btoc-close:active{background:var(--color-border);transition-duration:.08s}
+.btoc-progress-row{display:flex;align-items:center;gap:12px;padding:0 18px 10px;flex-shrink:0}
+.btoc-progress-bar-wrap{flex:1;height:4px;background:var(--color-border);border-radius:2px;overflow:hidden}
+.btoc-progress-bar-fill{height:100%;background:var(--color-accent);border-radius:2px;transition:width .15s linear}
+.btoc-progress-pct{font-family:'Source Sans 3',system-ui,sans-serif;font-size:12px;font-weight:700;color:var(--color-accent);min-width:32px;text-align:right}
+.btoc-reading-time{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 18px 10px;flex-shrink:0;font-family:'Source Sans 3',system-ui,sans-serif}
+.btoc-reading-time span{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-muted)}
+.btoc-nav{flex:1;min-height:0;overflow-y:auto;padding:0 0 4px;position:relative;padding-left:4px}
+.btoc-link{display:flex;align-items:center;gap:12px;padding:11px 14px 11px 16px;margin:0 10px 2px 0;text-decoration:none;position:relative;border-left:2px solid var(--color-border);border-radius:0 12px 12px 0;transition:background .18s,border-color .18s;cursor:pointer;color:var(--color-text)}
+@media (hover:hover) and (pointer:fine){ .btoc-link:hover{background:var(--color-surface-alt)} }
+.btoc-link:active{background:var(--color-surface-alt);transition-duration:.08s}
+.btoc-link.active{background:var(--color-surface-muted);border-inline-start-color:var(--color-accent)}
+.btoc-link-num{font-family:'Source Sans 3',system-ui,sans-serif;font-size:10px;font-weight:700;color:var(--color-text-muted);opacity:.5;min-width:18px;text-align:right}
+.btoc-link.active .btoc-link-num{color:var(--color-accent);opacity:1}
+.btoc-link-text{font-family:'Source Sans 3',system-ui,sans-serif;font-size:14px;color:var(--color-text);line-height:1.4;font-feature-settings:"liga" 1,"kern" 1,"calt" 1,"lnum" 1}
+.btoc-link.active .btoc-link-text{color:var(--color-accent);font-weight:600}
+.btoc-link[hidden]{display:none}
+.btoc-footer{padding:9px 14px 13px;flex-shrink:0;border-top:1px solid var(--color-border);margin-top:3px}
+.btoc-share-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:10px 14px;background:var(--bg-alt,#f5f5f3);border:1px solid var(--color-border);border-radius:8px;font-family:'Source Sans 3',system-ui,sans-serif;font-size:13px;font-weight:600;color:var(--color-text-primary,#1a1a18);cursor:pointer;transition:background .15s,border-color .15s}
+@media (hover:hover) and (pointer:fine){ .btoc-share-btn:hover{background:var(--color-border);border-color:var(--color-text-muted)} }
+.btoc-share-btn:active{background:var(--color-border);border-color:var(--color-text-muted);transition-duration:.08s}
+
+/* ============ ВЕРХНЯЯ ПАНЕЛЬ ============ */
+.gb-topbar{position:absolute;top:0;left:0;right:0;z-index:var(--z-sticky);display:flex;align-items:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 11px) 12px 10px;background:color-mix(in srgb,var(--color-canvas) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--color-border)}
+
+/* ============ .gb-icon — 40×40 иконка-кнопка ============
+   Раньше здесь было точное 1-в-1 копирование канона (halo-КОЛЬЦО ::before,
+   только бордер, не заливка) — владелец справедливо спросил: «это же
+   мобильный интерфейс, ободки вокруг SVG нужны, или это только для
+   просмотра мышкой на компе?» Ответ проф. практики touch-first интерфейсов:
+   раз hover физически недостижим на реальном тач-устройстве, а нажатие уже
+   даёт цветную заливку самой иконки — контурное кольцо было лишним
+   «desktop-artifact»-слоем, который на телефоне не нужен вообще, а при
+   просмотре мышкой на компьютере лишь шумит. Заменено на мягкую заливку
+   currentColor (как «state layer» в Material/iOS) — она читается как
+   нативный тап-отклик приложения, а не как debug-контур; hover — по-прежнему
+   строго за (hover:hover) and (pointer:fine), реального тач-устройства
+   вообще не касается. */
+.gb-icon{
+  --icon-stroke:1.7;
+  width:40px;height:40px;display:grid;place-items:center;position:relative;
+  color:var(--color-text);background:transparent;border:0;border-radius:50%;
+  transition:color .2s var(--gb-ease-out);
+  cursor:pointer;flex-shrink:0;transform-origin:center;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+.gb-icon::before{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:currentColor;opacity:0;transform:scale(.6);
+  transition:opacity .18s ease,transform .22s var(--gb-ease-spring);
+  pointer-events:none;
+}
+@media (hover:hover) and (pointer:fine){
+  .gb-icon:hover{color:var(--color-accent)}
+  .gb-icon:hover::before{opacity:.08;transform:scale(1)}
+  html.dark .gb-icon:hover{color:var(--color-accent-strong)}
+}
+.gb-icon:active{color:var(--color-accent);transform:scale(.94);transition:transform .1s ease,color .1s ease}
+.gb-icon:active::before{opacity:.14;transform:scale(1);transition-duration:.08s}
+html.dark .gb-icon:active{color:var(--color-accent-strong)}
+.gb-icon:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
+.gb-icon svg{
+  width:20px;height:20px;stroke:currentColor;fill:none;
+  stroke-width:var(--icon-stroke);stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .32s var(--gb-ease-spring),stroke-width .28s var(--gb-ease-out);
+}
+/* ===== Закладки/Избранное — бинарный тумблер (добавил/не добавил), не
+   счётчик. Раньше висела статичная цифра «3» на иконке — бессмысленная:
+   это не «3 новых уведомления», это ОДНА статья, у которой либо стоит
+   флаг «в избранном», либо нет. Плюс сам toggle .is-on раньше НИЧЕГО не
+   красил (класс менялся, а CSS для него не было) — кнопка выглядела
+   сломанной, нажатие как будто ничего не делало. Взял канонный паттерн
+   .gb-save.is-saved (тот же bounce-подскок, что и в реальном
+   floating-cluster.css): золотая заливка иконки + один пружинный bounce
+   в момент добавления, плюс всплывающий тост снизу — статус виден и без
+   иконки. */
+.gb-icon.is-on{color:var(--color-accent-gold-bright)}
+.gb-icon.is-on svg{fill:var(--color-accent-gold);stroke:var(--color-accent-gold)}
+.gb-icon.is-on.is-bump svg{animation:gb-save-bounce .5s var(--gb-ease-spring)}
+@keyframes gb-save-bounce{0%{transform:scale(1)}40%{transform:scale(1.3)}70%{transform:scale(.92)}100%{transform:scale(1)}}
+html.dark .gb-icon.is-on{color:var(--color-accent-gold-bright)}
+
+/* тост «Добавлено/Убрано из избранного» — тот же канонный .gb-fc-toast:
+   выезжает снизу с лёгким пружинным перелётом, гаснет плавным fade */
+.gb-fc-toast{
+  position:absolute;left:50%;bottom:64px;z-index:calc(var(--z-overlay-high) + 10);
+  transform:translateX(-50%) translateY(14px) scale(.96);
+  padding:9px 14px;border-radius:12px;
+  background:rgba(20,24,31,.94);color:#fff;
+  font-family:'Source Sans 3',system-ui,sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.01em;
+  display:flex;align-items:center;gap:8px;
+  box-shadow:0 12px 32px rgba(0,0,0,.28);
+  opacity:0;pointer-events:none;
+  transition:opacity .25s cubic-bezier(.2,.7,.2,1),transform .34s cubic-bezier(.34,1.56,.64,1);
+  white-space:nowrap;
+}
+.gb-fc-toast.is-open{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+.gb-fc-toast svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;color:var(--color-accent-gold-bright);flex-shrink:0}
+html.dark .gb-fc-toast{background:rgba(245,240,230,.96);color:#161a21}
+
+/* поиск — своя фича этого макета (фильтр по оглавлению), в каноне это
+   отдельная command-palette кнопка; здесь честно оставляем как есть,
+   т.к. это не то, что было отмечено багом */
+.gb-search{flex:1;min-width:0;display:flex;align-items:center;gap:8px;height:40px;background:var(--color-surface-muted);border:1px solid var(--color-border);border-radius:999px;padding:0 14px}
+.gb-search:focus-within{border-color:var(--color-accent);box-shadow:0 0 0 3px var(--color-accent-soft)}
+.gb-search svg{width:16px;height:16px;stroke:var(--color-text-muted);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.gb-search input{flex:1;min-width:0;border:0;background:transparent;outline:0;font-family:'Source Sans 3',system-ui,sans-serif;font-size:14px;color:var(--color-text)}
+.gb-search input::placeholder{color:var(--color-text-faint)}
+
+/* ============ CANON: .gb-ember — css/floating-cluster.css:249-393 (Play) =============
+   Взято 1-в-1: ОДНО кольцо (ring-track тонкий фон 0.4 opacity + ring-progress
+   поверх), а не «трек всегда виден + вторая анимированная дуга поверх» —
+   вот что владелец назвал «нагромождением». В каноне сам SVG-слой
+   (.gb-ember__ring-svg) скрыт (opacity:0), пока data-state==idle, и
+   показывается ТОЛЬКО во время playing/paused/complete. Прогресс — не
+   фейковая петля на 24s, а honest stroke-dashoffset от --p (0..1),
+   которую двигает JS по факту чтения/озвучки — та же переменная, что
+   управляет числом «X%» в левом нижнем углу нижнего бара: один источник
+   правды на оба индикатора, они больше не могут разойтись. */
+.gb-ember{
+  --p:0;--ember-size:46px;--ring-color:var(--color-accent); /* канон-мобиль даёт диапазон 42-46px, берём верх */
+  appearance:none;border:0;position:relative;display:grid;place-items:center;
+  isolation:isolate;cursor:pointer;color:var(--color-text);
+  width:var(--ember-size);height:var(--ember-size);border-radius:50%;
+  background:transparent;
+  transition:transform .32s var(--gb-ease-spring),color .28s var(--gb-ease-out);
+  flex-shrink:0;transform-origin:center;
+}
+/* заливка вместо контурного кольца — тот же довод, что и у .gb-icon выше:
+   тач-первый интерфейс не нуждается в hover-ободке, нужен только опрятный
+   отклик на нажатие. */
+.gb-ember::before{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:var(--ring-color);opacity:0;transform:scale(.6);
+  transition:opacity .18s ease,transform .22s var(--gb-ease-spring);
+  pointer-events:none;
+}
+@media (hover:hover) and (pointer:fine){
+  .gb-ember:hover::before{opacity:.08;transform:scale(1)}
+}
+.gb-ember:active{transform:scale(.94);transition:transform .1s ease}
+.gb-ember:active::before{opacity:.16;transform:scale(1);transition-duration:.08s}
+.gb-ember:focus-visible{outline:2px solid var(--color-accent);outline-offset:4px;border-radius:50%}
+
+.gb-ember__ring-svg{
+  position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;
+  opacity:0;transform:rotate(-90deg);transform-origin:center;
+  transition:opacity .28s var(--gb-ease-out);
+}
+.gb-ember[data-state="playing"] .gb-ember__ring-svg,
+.gb-ember[data-state="paused"] .gb-ember__ring-svg,
+.gb-ember[data-state="complete"] .gb-ember__ring-svg{opacity:1}
+/* idle: кольцо канонично скрыто (opacity:0 по умолчанию выше) — раньше тут
+   была наша добавка, чтобы дать опору дуге-подписи скорости внутри кольца;
+   теперь скорость живёт отдельным бейджем (.play-speed) на самом Play, а
+   не подписью внутри него, так что чистый канон снова уместен без правок. */
+
+.gb-ember__ring-track{fill:none;stroke:var(--color-border);stroke-width:1.5;opacity:.4}
+.gb-ember__ring-progress{
+  fill:none;stroke:var(--ring-color);stroke-width:1.5;stroke-linecap:round;
+  stroke-dasharray:283;
+  stroke-dashoffset:calc(283 - 283 * min(1,max(0,var(--p,0))));
+  transition:stroke-dashoffset .42s cubic-bezier(.4,0,.2,1);
+}
+/* ===== НАША добавка поверх канона: «дышащее» кольцо, пока реально играет =====
+   Владелец: «мягкая анимация, где-то будто толще линия, будто чуть тоньше».
+   В каноне такой анимации нет (там кольцо просто честно показывает прогресс,
+   без «живости») — это осознанное добавление ТОЛЬКО поверх состояния
+   playing, канонная геометрия/математика прогресса (stroke-dashoffset от
+   --p) не тронута ни на пиксель — колеблется только толщина линии. */
+@keyframes gb-ember-breathe{
+  0%,100%{stroke-width:1.4}
+  50%{stroke-width:2.4}
+}
+.gb-ember[data-state="playing"] .gb-ember__ring-progress{
+  animation:gb-ember-breathe 2.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion:reduce){
+  .gb-ember[data-state="playing"] .gb-ember__ring-progress{animation:none}
+}
+
+.gb-ember__glyph{position:relative;z-index:2;width:14px;height:14px;fill:currentColor;transform:translateX(1px)}
+.gb-ember__pause{position:relative;z-index:2;width:14px;height:14px;display:none;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+.gb-ember__check{display:none;position:relative;z-index:2;width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.gb-ember[data-state="playing"] .gb-ember__glyph,
+.gb-ember[data-state="paused"] .gb-ember__glyph,
+.gb-ember[data-state="complete"] .gb-ember__glyph{display:none}
+.gb-ember[data-state="playing"] .gb-ember__pause,
+.gb-ember[data-state="paused"] .gb-ember__pause{display:block}
+.gb-ember[data-state="complete"] .gb-ember__check{display:block}
+.gb-ember[data-state="playing"]{color:var(--ring-color)}
+.gb-ember[data-state="paused"]{color:var(--ring-color)}
+.gb-ember[data-state="complete"]{color:var(--color-accent-gold-bright)}
+html.dark .gb-ember{--ring-color:#eed093;color:#eed093;box-shadow:0 0 14px rgba(216,176,104,.22)}
+
+/* ============ Скорости: рельса подменяет поиск в одном слоте + бейдж на Play ============
+   Взято у более удачного варианта (владелец прислал пример) вместо моей
+   прошлой «блум-пилюли слева от Play» — там был целый букет геометрических
+   багов (пилюля наезжала то на кнопку «Назад», то на саму Play, требовала скролл
+   с фейдом и т.д.), потому что пилюля и Play пытались жить в одной
+   физической полосе. Этот вариант проще и по конструкции лишён этого
+   класса багов: рельса скоростей занимает МЕСТО ПОИСКА (тот же .gb-slot,
+   просто второй слой поверх, включается/выключается через
+   .gb-topbar.speed-open) — Play при этом не двигается и ни с кем не делит
+   пространство. Выбранная скорость остаётся маленьким бейджем в углу
+   Play — это и есть «оставление скорости на PLAY» из примера. */
+.gb-slot{flex:1;min-width:0;position:relative;height:40px}
+.gb-search,.speed-rail{position:absolute;inset:0;display:flex;align-items:center}
+.gb-search{transition:opacity .25s ease,transform .25s cubic-bezier(.3,1.2,.4,1)}
+.gb-topbar.speed-open .gb-search{opacity:0;transform:translateX(-8px);pointer-events:none}
+.speed-rail{
+  /* БАГ: было justify-content:flex-end — с overflow-x:auto это известная
+     дыра в Chrome (и вообще во flexbox-спеке): контент, вылезающий в
+     СТАРТОВУЮ сторону при flex-end, не считается «переполнением» —
+     scrollWidth оставался равен clientWidth, хотя чипы физически
+     рендерились ЗА пределами рельсы, под кнопкой «Назад» (там их и ловил
+     pointer-events — реальный клик по «1×» попадал в homeBtn). Overflow
+     корректно клипуется/скроллится только когда лишний контент растёт в
+     ЕСТЕСТВЕННУЮ (стартовую) сторону — переключил на flex-start. */
+  justify-content:flex-start;gap:3px;opacity:0;transform:translateX(12px);
+  transition:opacity .25s ease,transform .25s cubic-bezier(.3,1.2,.4,1);pointer-events:none;
+  overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;
+  -webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+  scroll-snap-type:x proximity;
+  /* мягкая растушёвка по краям НЕ означает «тут больше нечего смотреть» —
+     раньше владелец жаловался, что при 5 чипах «2×» уходил за край и
+     достать его пальцем не получалось (drag на overflow:auto в
+     синтетических touch-событиях ненадёжен, а по факту и вживую
+     подгружал не всегда — заменил на явный pointer-drag ниже в JS,
+     который одинаково работает и мышью, и пальцем). Плюс чипы стали
+     компактнее — при обычной ширине слота (~194px) все 5 чаще всего
+     видны разом БЕЗ скролла вообще, скролл — подстраховка на узких
+     экранах/крупном системном шрифте, а не основной способ выбора. */
+  mask-image:linear-gradient(90deg,transparent 0,#000 8px,#000 calc(100% - 8px),transparent 100%);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8px,#000 calc(100% - 8px),transparent 100%);
+  cursor:grab;
+}
+.speed-rail:active{cursor:grabbing}
+.speed-rail::-webkit-scrollbar{display:none}
+.gb-topbar.speed-open .speed-rail{opacity:1;transform:translateX(0);pointer-events:auto}
+.speed-rail .spd{
+  flex:0 0 auto;font:700 10.5px/1 'Source Sans 3',system-ui,sans-serif;
+  border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text-muted);
+  padding:6px 6px;min-width:0;border-radius:8px;cursor:pointer;
+  transition:background .15s,color .15s,border-color .15s,transform .12s;white-space:nowrap;
+  -webkit-tap-highlight-color:transparent;scroll-snap-align:center;position:relative;
+}
+/* увеличенная зона тапа — визуально компактный чип, но палец не промахивается (WCAG 2.5.5 ~44px) */
+.speed-rail .spd::before{content:'';position:absolute;inset:-7px -1px}
+@media (hover:hover) and (pointer:fine){
+  .speed-rail .spd:hover{color:var(--color-text);border-color:var(--color-border-strong)}
+}
+.speed-rail .spd:active{transform:scale(.92);transition-duration:.08s}
+.speed-rail .spd.on{background:var(--color-accent);color:#fff;border-color:var(--color-accent)}
+.speed-rail .spd.on:active{transform:scale(.92)}
+.speed-rail .spd:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+/* пока рельсу тащат пальцем/мышью — глушим hover/active-переход чипов,
+   чтобы драг не «залипал» на цветовых transition */
+.speed-rail.is-dragging .spd{transition:none}
+.speed-rail.is-dragging{scroll-snap-type:none}
+
+/* Play сидит в собственной ячейке фиксированного размера — бейдж скорости
+   позиционируется от НЕЁ, а не от Play (ember сам вправе scale() на hover/
+   active, and если бы бейдж был вложен в .gb-ember, transform:scale() от
+   :active подхватывал бы и его — дёргало бы бейдж вместе с кругом). */
+.play-wrap{position:relative;flex:0 0 var(--ember-size,46px);width:var(--ember-size,46px);height:var(--ember-size,46px);display:grid;place-items:center}
+.play-speed{
+  /* Бейдж текущей скорости — залит акцентом (бордо), а не светлым canvas.
+     Раньше был светлый фон + приглушённый текст: на светлом баре читался
+     плохо (владелец: «не белым, а таким цветом как на скрине, так лучше
+     видно»). Теперь как выбранный чип — сплошной бордо + белый текст,
+     виден всегда, а не только пока открыта рельса. */
+  appearance:none;position:absolute;right:-3px;bottom:-2px;z-index:4;
+  min-width:25px;height:15px;padding:0 4px;border-radius:999px;
+  border:1px solid var(--color-accent);background:var(--color-accent);color:#fff;
+  font:800 8.5px/13px 'Source Sans 3',system-ui,sans-serif;letter-spacing:.01em;text-align:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.16);cursor:pointer;
+  transition:background .2s,color .2s,border-color .2s,transform .18s,box-shadow .18s;
+}
+/* увеличенная зона тапа — сам бейдж визуально крошечный, палец промахивался бы */
+.play-speed::before{content:'';position:absolute;inset:-9px -7px;border-radius:999px}
+@media (hover:hover) and (pointer:fine){
+  .play-speed:hover{background:var(--color-accent-strong);border-color:var(--color-accent-strong)}
+}
+.play-speed:active{transform:scale(.94)}
+.play-speed:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
+/* пока рельса открыта — бейдж чуть ярче, чтобы связать его с активным чипом */
+.gb-topbar.speed-open .play-speed{background:var(--color-accent-strong);border-color:var(--color-accent-strong);color:#fff}
+html.dark .play-speed{color:#1a1410;box-shadow:0 2px 7px rgba(0,0,0,.34)}
+html.dark .gb-topbar.speed-open .play-speed{color:#1a1410}
+/* лёгкий «бамп» бейджа при выборе новой скорости — вместо целой карусели
+   заезда/выезда достаточно намекнуть, что значение обновилось */
+.play-speed.is-bump{animation:play-speed-bump .28s ease-out}
+@keyframes play-speed-bump{
+  0%,100%{filter:none}
+  50%{filter:brightness(1.12)}
+}
+
+
+/* ============ V5: защита PLAY от внешнего CSS ============
+   На автономном прототипе нет отдельной большой кнопки в потоке статьи.
+   Этот scoped-guard не даёт глобальным button/.gb-ember правилам раздуть
+   единственный штатный PLAY или залить его кремовым фоном. */
+.gb-topbar .play-wrap{
+  --ember-size:46px;
+  flex:0 0 46px;width:46px;height:46px;min-width:46px;min-height:46px;
+  max-width:46px;max-height:46px;
+}
+.gb-topbar .play-wrap>.gb-ember{
+  --ember-size:46px;
+  width:46px!important;height:46px!important;
+  min-width:46px!important;min-height:46px!important;
+  max-width:46px!important;max-height:46px!important;
+  margin:0!important;padding:0!important;line-height:1!important;
+  font-size:0!important;background:transparent!important;
+  border-radius:50%!important;overflow:visible;
+}
+.gb-topbar .play-wrap>.gb-ember::after{content:none!important}
+.gb-topbar .play-wrap>.gb-ember>svg{display:block;max-width:none;max-height:none}
+
+/* Канонический номер части как ненавязчивый водяной знак заголовка.
+   Он не участвует в чтении, не ловит клики и не ухудшает контраст текста. */
+.mobile-series-watermark{
+  position:absolute;top:74px;right:14px;z-index:0;
+  font-family:Lora,Georgia,serif;font-size:118px;font-weight:700;line-height:.8;
+  letter-spacing:-.08em;color:var(--color-accent);opacity:.035;
+  pointer-events:none;user-select:none;-webkit-user-select:none;
+}
+html.dark .mobile-series-watermark{opacity:.055}
+.faux-art>.ln,.faux-art>h1,.faux-art>.byline,.faux-art>p{position:relative;z-index:1}
+@media (prefers-reduced-motion:reduce){.play-speed.is-bump{animation:none}}
+
+/* ============ ОБВЁРТКА ============ */
+*{box-sizing:border-box}
+body{margin:0;background:#15161a;font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:#cfcfd4;-webkit-font-smoothing:antialiased;padding:28px 16px 70px}
+.stage{display:flex;flex-direction:column;align-items:center;gap:18px}
+.legend{max-width:480px;text-align:center}
+.legend h1{font-size:18px;margin:0 0 8px;color:#fff;font-weight:700}
+.legend p{font-size:13px;line-height:1.6;margin:0;color:#9a9aa2}
+.legend code{background:#26272d;color:#e7b878;padding:1px 6px;border-radius:5px;font-size:12px}
+.legend b{color:#d4a574}
+.legend .hint{margin-top:12px;font-size:12px;color:#8e8f98;line-height:1.5}
+.legend .row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.legend button{font-family:inherit;font-size:12.5px;font-weight:600;color:#e7b878;background:#1d1e23;border:1px solid #3a3b44;padding:8px 14px;border-radius:9px;cursor:pointer;transition:.15s}
+.legend button:hover{background:#262830;border-color:#e7b878}
+.phone{position:relative;width:390px;max-width:100%;height:760px;border-radius:44px;background:#000;padding:11px;box-shadow:0 24px 70px rgba(0,0,0,.5),0 0 0 2px #2a2b30,0 0 0 9px #0c0c0e;overflow:hidden}
+.phone .notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:112px;height:25px;background:#000;border-radius:0 0 17px 17px;z-index:60}
+.screen{position:relative;width:100%;height:100%;border-radius:33px;overflow:hidden;background:var(--color-canvas)}
+.faux-art{position:absolute;inset:0;overflow-y:auto;background:var(--color-canvas);color:var(--color-text);font-family:Lora,Georgia,serif;padding:62px 22px 68px;transition:font-size .2s;scroll-behavior:smooth}
+.faux-art::-webkit-scrollbar{width:3px}
+.faux-art::-webkit-scrollbar-thumb{background:var(--color-border-strong);border-radius:2px}
+.faux-art .ln{height:4px;width:38px;background:var(--color-accent);margin:0 0 16px;border-radius:3px}
+.faux-art h1{font-size:23px;line-height:1.18;margin:0 0 8px;color:var(--color-text-primary);font-weight:700}
+.faux-art .byline{font:500 12px/1 'Source Sans 3',system-ui,sans-serif;color:var(--color-text-muted);margin:0 0 18px}
+.faux-art p{font-size:1em;line-height:1.72;margin:0 0 14px;transition:background-color .3s,box-shadow .3s;border-radius:6px}
+/* «текст двигается по мере прослушки» — параграф, который сейчас озвучивается,
+   получает мягкую подсветку; она следует за автоскроллом/наблюдателем ниже,
+   отдельного кода не нужно — переиспользуем существующий IntersectionObserver */
+.faux-art p.is-reading{background:var(--color-accent-soft);box-shadow:inset 3px 0 0 var(--color-accent);padding-left:10px;margin-left:-10px}
+
+/* ===== Repo-native TOC actions ==========================================
+   В TOC остаются только канонические действия статьи:
+   «Поделиться статьёй» и «Распечатать / PDF».
+
+   Когда site.js уже создал .article-end-actions-wrap, мы клонируем
+   существующие кнопки вместе с их реальными классами и SVG. Поэтому mounted
+   controls не перерисовываются этим прототипом. Собственный спокойный стиль
+   применяется только к текстовому standalone-fallback. */
+.btoc-footer{
+  padding:10px 12px 12px;
+  flex-shrink:0;
+  border-top:1px solid var(--color-border);
+  background:var(--color-canvas);
+  box-shadow:0 -8px 18px color-mix(in srgb,var(--color-canvas) 86%,transparent);
+}
+.btoc-repo-actions{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:8px;
+  align-items:stretch;
+}
+.btoc-repo-actions.is-repo-mounted > *{
+  width:100%;
+  min-width:0;
+  max-width:none;
+  box-sizing:border-box;
+}
+.btoc-repo-actions:not(.is-repo-mounted) > [data-repo-action-fallback]{
+  min-width:0;
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:9px 10px;
+  border:1px solid var(--color-border);
+  border-radius:11px;
+  background:var(--color-surface-muted);
+  color:var(--color-text);
+  font:700 12.5px/1.15 'Source Sans 3',system-ui,sans-serif;
+  text-align:center;
+  cursor:pointer;
+  transition:background .16s ease,border-color .16s ease,color .16s ease;
+}
+.btoc-repo-actions:not(.is-repo-mounted) > [data-repo-action-fallback]:active{
+  background:var(--color-border);
+}
+.btoc-repo-actions:not(.is-repo-mounted) > [data-repo-action-fallback]:focus-visible{
+  outline:2px solid var(--color-accent);
+  outline-offset:2px;
+}
+@media (hover:hover) and (pointer:fine){
+  .btoc-repo-actions:not(.is-repo-mounted) > [data-repo-action-fallback]:hover{
+    border-color:var(--color-border-strong);
+    background:var(--color-border);
+  }
+}
+
+@media print{
+  .gb-topbar,.bottom-bar,.btoc-overlay,.gb-fc-toast,.legend,.controls{display:none!important}
+  body{background:#fff!important;padding:0!important}
+  .phone,.screen,.article-scroll,.faux-art{position:static!important;width:auto!important;height:auto!important;overflow:visible!important;border:0!important;box-shadow:none!important;border-radius:0!important}
+}
+
+/* =====================================================================
+   V6 — углублённая поведенческая логика, доступность и устойчивость
+   ===================================================================== */
+:root{
+  --gb-vv-height:100%;
+  --reader-font-size:16px;
+}
+.faux-art{
+  font-size:var(--reader-font-size);
+  overscroll-behavior-y:contain;
+  scrollbar-gutter:stable;
+}
+.faux-art:focus-visible{outline:2px solid var(--color-accent);outline-offset:-3px}
+.screen{height:min(100%,var(--gb-vv-height));}
+.btoc-overlay{overscroll-behavior:contain;touch-action:none}
+.btoc-panel{
+  --sheet-drag:0px;
+  max-height:min(82%,calc(var(--gb-vv-height) - 58px));
+  will-change:transform;
+  touch-action:pan-y;
+}
+.btoc-overlay.open .btoc-panel{transform:translateY(var(--sheet-drag))}
+.btoc-panel.is-dragging{transition:none!important;user-select:none}
+.btoc-handle{
+  appearance:none;border:0;background:transparent;width:100%;min-height:26px;
+  margin:0;padding:8px 0 4px;display:flex;justify-content:center;cursor:grab;
+  color:inherit;touch-action:none;flex-shrink:0;
+}
+.btoc-handle:active{cursor:grabbing}
+.btoc-handle::after{content:'';width:38px;height:4px;border-radius:999px;background:var(--color-border-strong);opacity:.9}
+.btoc-handle:focus-visible::after{outline:2px solid var(--color-accent);outline-offset:4px}
+body.btoc-open .faux-art{scrollbar-color:transparent transparent}
+.reader-resume{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin:0 16px 10px;padding:9px 12px;border:1px solid color-mix(in srgb,var(--color-accent) 28%,var(--color-border));
+  border-radius:12px;background:color-mix(in srgb,var(--color-accent-soft) 56%,var(--color-surface));
+  color:var(--color-text);font:600 12px/1.3 'Source Sans 3',system-ui,sans-serif;cursor:pointer;
+}
+.reader-resume[hidden]{display:none!important}
+.reader-resume strong{color:var(--color-accent)}
+.reader-resume::after{content:'→';font-size:16px;color:var(--color-accent)}
+.reader-resume:hover{border-color:var(--color-accent)}
+.reader-resume:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.btoc-link[aria-current="location"]{box-shadow:inset 3px 0 0 var(--color-accent)}
+.btoc-link[hidden]{display:none!important}
+.btoc-link--preview{cursor:default;opacity:.82}
+.btoc-link--preview:hover{background:transparent}
+.btoc-part-cta{
+  display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 16px 18px;padding:11px 14px;
+  border-radius:12px;border:1px solid var(--color-accent);background:var(--color-accent);color:#fff!important;
+  font:700 13px/1.2 'Source Sans 3',system-ui,sans-serif;text-decoration:none!important;
+}
+.btoc-part-cta:hover{filter:brightness(.96)}
+.series-chip{position:relative;overflow:hidden}
+.series-chip::after{
+  content:'';position:absolute;left:5px;right:5px;bottom:2px;height:2px;border-radius:99px;
+  background:linear-gradient(90deg,var(--color-accent) calc(var(--part-p,0)*100%),var(--color-border) 0);
+  opacity:.7;
+}
+.series-chip[data-complete="true"]::before{content:'✓';position:absolute;right:2px;top:0;font-size:8px;color:var(--color-accent)}
+.gb-topbar [inert],.bottom-bar[inert]{pointer-events:none!important}
+.play-speed[aria-expanded="true"]{outline:2px solid color-mix(in srgb,var(--color-accent) 65%,transparent);outline-offset:2px}
+.speed-rail:focus-within{outline:1px solid color-mix(in srgb,var(--color-accent) 40%,transparent);outline-offset:2px;border-radius:12px}
+.gb-fc-toast{max-width:calc(100% - 24px);text-align:left}
+@supports not (color:color-mix(in srgb,red,blue)){
+  .reader-resume{border-color:var(--color-border);background:var(--color-surface-muted)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .gb-ember[data-state="playing"]{animation:none!important}
+}
+@media (max-height:640px){
+  .btoc-panel{max-height:88%}
+  .btoc-reading-time{padding-top:5px;padding-bottom:5px}
+}
+.faux-art.is-font-resizing{transition:none!important;scroll-behavior:auto!important}
+
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="legend">
+    <h1>gb-ember (канон) · скорости в слоте поиска · бейдж на Play</h1>
+    <p>Play — точная копия <code>.gb-ember</code> из репозитория (одно кольцо, честный <code>--p</code>), плюс наша добавка: мягкое «дыхание» толщины линии, пока реально играет. Скорости выезжают на место поиска, выбранная остаётся бейджем на самом Play. Кольцо и процент внизу слева — один источник данных.</p>
+    <div class="hint">👆 Жми ▶ с нуля — статья едет вниз (как будто озвучка) и один раз показывает рельсу скоростей; тап по бейджу на Play открывает её снова в любой момент.</div>
+    <div class="row">
+      <button id="themeBtn" type="button">🌙 Сменить тему</button>
+      <button id="tocBtn" type="button" aria-controls="btocOverlay" aria-expanded="false">📑 Оглавление</button>
+    </div>
+  </div>
+
+  <div class="phone"><div class="notch"></div><div class="screen" id="screen">
+
+    <!-- СТАТЬЯ -->
+    <div class="faux-art" id="fauxArt" tabindex="0" aria-label="Текст статьи">
+      <span class="mobile-series-watermark" aria-hidden="true">I</span>
+      <div class="ln"></div>
+      <h1>Джон Гилл. Часть I. Человек</h1>
+      <div class="byline">Кеттеринг → Лондон · ~32 мин чтения</div>
+      <p id="sec-01" data-sec="01">В ноябре 1697 года в семье скромного продавца угля и свечей родился мальчик, которому суждено было стать одним из самых плодовитых богословов XVIII столетия. Никакого университета — только книжная лавка и неутолимая жажда Писания.</p>
+      <p id="sec-03" data-sec="03">«Где ты?» — вопрос из Бытия 3:9, однажды поразивший его сердце, определил всю дальнейшую жизнь и пасторское служение длиной в пятьдесят один год в Хорслидауне. Это обращение стало поворотным моментом: юноша оставил мирские увлечения и посвятил себя изучению Священного Писания день и ночь.</p>
+      <p id="sec-05" data-sec="05">Гилл читал Мишну и Талмуд в подлиннике, сверяя христианское толкование с еврейской экзегетической традицией — подход, редкий для протестантского богослова того времени и вызывавший споры среди современников. Знание древнееврейского он приобрёл самостоятельно, без учителей, по старым фолиантам.</p>
+      <p id="sec-07" data-sec="07">В 1718 году, в возрасте двадцати одного года, он начал проповедовать. А спустя два года, 22 марта 1720-го, был рукоположен и принял приглашение стать пастором баптистской церкви в Хорслидауне, Саутворк. Это служение продлится без малого пятьдесят один год — до самой смерти.</p>
+      <p id="sec-09" data-sec="09">Декларация Козьего Двора 1729 года, принятая церковью под его руководством, стала одним из самых значимых исповеданий веры ранних английских баптистов. В ней утверждались кальвинистские основы, но без впадения в гипер-кальвинизм: Евангелие должно проповедоваться всем без исключения.</p>
+      <p id="sec-11" data-sec="11">Систематическая евангелизация Саутварка — бедного района к югу от Темзы — шла рука об руку с пастырской заботой. Гилл посещал больных, утешал скорбящих, наставлял обращающихся. Его проповеди собирали толпы, жаждущих живого слова посреди социальной тьмы.</p>
+      <p id="sec-13" data-sec="13">За богословом всегда стоял человек глубокой внутренней молитвы. Три личных высказывания, дошедших до нас в записях современников, рисуют портрет кроткого, но твёрдого в убеждениях пастыря: «Моя надежда — не в моих трудах, но в заслугах Христа».</p>
+      <p id="sec-15" data-sec="15">Исторический контекст Саутворка — джиновая лихорадка, правовое бесправие бедняков, эпидемии — делает служение Гилла ещё более значимым. Он был голосом истины, не боясь обличать несправедливость с кафедры.</p>
+      <p id="sec-16" data-sec="16">«Проверь себя»: каким годом датируется рукоположение Гилла? Какой вопрос из Книги Бытия изменил его жизнь? Вспомните название исповедания 1729 года.</p>
+    </div>
+
+    <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+    <div class="gb-topbar" id="topbar">
+      <!-- Стрелка «Назад» — канон .gb-icon -->
+      <button class="gb-icon" id="homeBtn" aria-label="Назад" data-home-href="../../" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <!-- слот: поиск по оглавлению ⇄ рельса скоростей (подменяют друг друга в одном месте) -->
+      <div class="gb-slot">
+        <label class="gb-search" for="tocSearch">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="tocSearch" type="search" enterkeyhint="search" aria-controls="btocNav" aria-autocomplete="list" placeholder="Поиск по разделам…" autocomplete="off">
+        </label>
+        <div class="speed-rail" id="speedRail" role="radiogroup" aria-label="Скорость воспроизведения">
+          <button class="spd" type="button" role="radio" data-speed="0.75" aria-checked="false">0.75×</button>
+          <button class="spd" type="button" role="radio" data-speed="1" aria-checked="false">1×</button>
+          <button class="spd" type="button" role="radio" data-speed="1.25" aria-checked="false">1.25×</button>
+          <button class="spd on" type="button" role="radio" data-speed="1.5" aria-checked="true">1.5×</button>
+          <button class="spd" type="button" role="radio" data-speed="1.75" aria-checked="false">1.75×</button>
+          <button class="spd" type="button" role="radio" data-speed="2" aria-checked="false">2×</button>
+        </div>
+      </div>
+      <!-- PLAY — канон .gb-ember (кольцо/дыхание не тронуты) + отдельный бейдж выбранной скорости -->
+      <span class="play-wrap">
+        <button class="gb-ember" id="playEmber" type="button" data-state="idle" data-fc-action="play"
+                style="--p:0" aria-label="Озвучка" aria-pressed="false">
+          <svg class="gb-ember__ring-svg" viewBox="0 0 100 100" aria-hidden="true">
+            <circle class="gb-ember__ring-track" cx="50" cy="50" r="45"/>
+            <circle class="gb-ember__ring-progress" cx="50" cy="50" r="45"/>
+          </svg>
+          <svg class="gb-ember__glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.8v14.4L18.5 12 7 4.8z"/></svg>
+          <svg class="gb-ember__pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
+          <svg class="gb-ember__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.1L19 7"/></svg>
+        </button>
+        <button class="play-speed" id="playSpeed" type="button" aria-controls="speedRail" aria-expanded="false" aria-label="Выбрать скорость, сейчас 1.5×">1.5×</button>
+      </span>
+      <!-- Избранное — бинарный тумблер «добавлено / не добавлено», без счётчика -->
+      <button class="gb-icon" id="bookBtn" aria-label="Добавить в избранное" aria-pressed="false" type="button">
+        <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+
+    <!-- ПОСТОЯННЫЙ bottom-bar (всегда висит) -->
+    <div class="bottom-bar" id="bottomBar">
+      <div class="bottom-bar-inner">
+        <!-- круг прогресса чтения — единственное число процентов на экране -->
+        <div class="bar-progress" role="progressbar" aria-label="Прогресс чтения" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><svg aria-hidden="true" viewBox="0 0 36 36"><circle class="bar-progress-track" cx="18" cy="18" r="15.5"></circle><circle class="bar-progress-fill" cx="18" cy="18" id="barProgressFill" r="15.5" stroke-dasharray="97.4" stroke-dashoffset="97.4"></circle></svg><span class="bar-progress-text" id="barProgressText">0%</span></div>
+        <!-- «Сейчас читаете» -->
+        <button aria-label="Открыть оглавление" class="bar-section-btn" id="barSectionBtn" type="button" aria-controls="btocOverlay" aria-expanded="false"><span class="bar-section-label">Сейчас читаете</span><span class="bar-section-name" id="barSectionName">Книжная лавка вместо школы</span></button>
+        <span class="bar-divider"></span>
+        <!-- Тема — канон .gb-theme-toggle (реальный crossfade, без View Transition) -->
+        <button class="bar-icon-btn is-theme gb-theme-toggle" id="barThemeBtn" aria-label="Тема" aria-pressed="false" type="button">
+          <span class="theme-icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>
+          <span class="theme-icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span>
+        </button>
+        <!-- A−/A+ (Lora-сериф) -->
+        <button class="bar-font" id="fontMinus" aria-label="Уменьшить шрифт" type="button">A−</button>
+        <button class="bar-font" id="fontPlus" aria-label="Увеличить шрифт" type="button">A+</button>
+        <span class="bar-divider"></span>
+        <!-- Поделиться -->
+        <button class="bar-icon-btn" id="barShareBtn" aria-label="Поделиться" type="button"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>
+      </div>
+    </div>
+
+    <!-- РАСКРЫВАЮЩИЙСЯ btoc -->
+    <div class="btoc-overlay" id="btocOverlay" aria-hidden="true" inert>
+      <div class="btoc-panel" id="btocPanel" role="dialog" aria-modal="false" aria-labelledby="btocTitle" aria-describedby="btocSubtitle" tabindex="-1">
+        <button class="btoc-handle" id="btocHandle" type="button" aria-label="Закрыть оглавление"></button>
+        <div class="btoc-header"><div class="btoc-header-left"><div class="btoc-title" id="btocTitle">Содержание</div><div class="btoc-subtitle" id="btocSubtitle">16 разделов</div></div><button aria-label="Закрыть" class="btoc-close" id="btocClose" type="button"><svg aria-hidden="true" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" viewBox="0 0 24 24" width="14"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+        <div class="btoc-progress-row"><div class="btoc-progress-bar-wrap" id="btocProgressBar" role="progressbar" aria-label="Прогресс текущего материала" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="btoc-progress-bar-fill" id="btocProgressFill" style="width:0%"></div></div><span class="btoc-progress-pct" id="btocProgressPct">0%</span></div>
+        <div class="btoc-reading-time"><span><svg aria-hidden="true" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ~32 мин чтения</span><span id="btocTimeLeft">Осталось: ~32 мин</span></div>
+        <button class="reader-resume" id="readerResume" type="button" hidden><span>Продолжить чтение</span></button>
+        <nav class="btoc-nav" id="btocNav">
+          <a class="btoc-link" href="#sec-01" data-sec="01" data-name="Коротко"><span class="btoc-link-num">01</span><span class="btoc-link-text">Коротко</span></a>
+          <a class="btoc-link" href="#sec-01" data-sec="01" data-name="I. Ранние годы"><span class="btoc-link-num">02</span><span class="btoc-link-text">I. Ранние годы, обращение и формирование характера</span></a>
+          <a class="btoc-link" href="#sec-05" data-sec="05" data-name="Гении без университетов"><span class="btoc-link-num">03</span><span class="btoc-link-text">Откуда рождаются гении без университетов</span></a>
+          <a class="btoc-link" href="#sec-01" data-sec="01" data-name="Три пророчества"><span class="btoc-link-num">04</span><span class="btoc-link-text">Утро рождения: три пророчества</span></a>
+          <a class="btoc-link active" href="#sec-05" data-sec="05" data-name="Книжная лавка вместо школы"><span class="btoc-link-num">05</span><span class="btoc-link-text">Книжная лавка вместо грамматической школы</span></a>
+          <a class="btoc-link" href="#sec-03" data-sec="03" data-name="Бытие 3:9"><span class="btoc-link-num">06</span><span class="btoc-link-text">Бытие 3:9 — вопрос, изменивший жизнь</span></a>
+          <a class="btoc-link" href="#sec-07" data-sec="07" data-name="II. Служение в Хорслидауне"><span class="btoc-link-num">07</span><span class="btoc-link-text">II. Пасторское служение в Хорслидауне</span></a>
+          <a class="btoc-link" href="#sec-07" data-sec="07" data-name="Пятьдесят один год"><span class="btoc-link-num">08</span><span class="btoc-link-text">Хорслидаун: пятьдесят один год на одном месте</span></a>
+          <a class="btoc-link" href="#sec-07" data-sec="07" data-name="Рукоположение 1720"><span class="btoc-link-num">09</span><span class="btoc-link-text">Рукоположение 22 марта 1720 года: полный протокол</span></a>
+          <a class="btoc-link" href="#sec-09" data-sec="09" data-name="Декларация Козьего Двора"><span class="btoc-link-num">10</span><span class="btoc-link-text">Декларация Козьего Двора 1729 года</span></a>
+          <a class="btoc-link" href="#sec-11" data-sec="11" data-name="Евангелизация Саутварка"><span class="btoc-link-num">11</span><span class="btoc-link-text">Систематическая евангелизация Саутварка</span></a>
+          <a class="btoc-link" href="#sec-13" data-sec="13" data-name="Проповедь на похоронах"><span class="btoc-link-num">12</span><span class="btoc-link-text">Проповедь отца на похоронах дочери</span></a>
+          <a class="btoc-link" href="#sec-13" data-sec="13" data-name="Три высказывания"><span class="btoc-link-num">13</span><span class="btoc-link-text">Три личных высказывания: человек за богословом</span></a>
+          <a class="btoc-link" href="#sec-13" data-sec="13" data-name="Личная духовность"><span class="btoc-link-num">14</span><span class="btoc-link-text">Личная духовность: молитва и домашнее благочестие</span></a>
+          <a class="btoc-link" href="#sec-15" data-sec="15" data-name="Исторический контекст"><span class="btoc-link-num">15</span><span class="btoc-link-text">Исторический контекст: Саутворк и правовое бесправие</span></a>
+          <a class="btoc-link" href="#sec-16" data-sec="16" data-name="Проверь себя"><span class="btoc-link-num">16</span><span class="btoc-link-text">Проверь себя</span></a>
+          <div class="" id="tocEmpty" hidden style="padding:24px;text-align:center;color:var(--color-text-faint);font:500 13px/1.5 'Source Sans 3',system-ui,sans-serif">Ничего не найдено</div>
+        </nav>
+        <div class="sr-only" id="tocSearchStatus" role="status" aria-live="polite"></div>
+        <div class="btoc-footer">
+          <div class="btoc-repo-actions" id="btocRepoActions" data-gb-toc-actions aria-label="Действия со статьёй">
+            <!-- Standalone fallback без придуманных SVG. В репозитории эти две
+                 кнопки заменяются cloneNode() из .article-end-actions-wrap,
+                 поэтому используются точные существующие иконки и классы. -->
+            <button type="button" data-repo-action-fallback="share">Поделиться статьёй</button>
+            <button type="button" data-repo-action-fallback="print">Распечатать / PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- тост «Добавлено/Убрано из избранного» -->
+    <div class="gb-fc-toast" id="fcToast" role="status" aria-live="polite">
+      <svg id="fcToastIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.1L19 7"/></svg>
+      <span id="fcToastText">Добавлено в избранное</span>
+    </div>
+
+  </div></div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  try{
+    if(window.__gbMobileV6Cleanup && typeof window.__gbMobileV6Cleanup==='function'){
+      try{window.__gbMobileV6Cleanup()}catch(_){ }
+    } else if(window.__gbMobileV6Abort && typeof window.__gbMobileV6Abort.abort==='function'){
+      try{window.__gbMobileV6Abort.abort()}catch(_){ }
+    }
+    var abortCtrl=typeof AbortController!=='undefined'?new AbortController():null;
+    window.__gbMobileV6Abort=abortCtrl;
+    var CONFIG={"series":false,"pagePath":"/articles/dzhon-gill-chast-1-chelovek/","title":"Джон Гилл. Часть I. Человек","description":"Первая часть биографии Джона Гилла: детство, призвание, семья и служение.","section":"Биографии служителей","image":"https://gospod-bog.ru/images/og-dzhon-gill-chast-1-chelovek.webp","currentMinutes":32,"currentPart":"I"};
+    var html=document.documentElement;
+    var art=document.getElementById('fauxArt');
+    var screen=document.getElementById('screen');
+    var ov=document.getElementById('btocOverlay');
+    var panel=document.getElementById('btocPanel');
+    var topbar=document.getElementById('topbar');
+    var bottomBar=document.getElementById('bottomBar');
+    var homeBtn=document.getElementById('homeBtn');
+    var search=document.getElementById('tocSearch');
+    var searchLayer=search.closest('.gb-search')||search;
+    var speedRail=document.getElementById('speedRail');
+    var playSpeed=document.getElementById('playSpeed');
+    var ember=document.getElementById('playEmber');
+    var bookBtn=document.getElementById('bookBtn');
+    var tocBtn=document.getElementById('tocBtn');
+    var barSectionBtn=document.getElementById('barSectionBtn');
+    var closeBtn=document.getElementById('btocClose');
+    var handle=document.getElementById('btocHandle');
+    var resumeBtn=document.getElementById('readerResume');
+    var searchStatus=document.getElementById('tocSearchStatus');
+    var secName=document.getElementById('barSectionName');
+    var fill=document.getElementById('barProgressFill');
+    var pctEl=document.getElementById('barProgressText');
+    var tocFill=document.getElementById('btocProgressFill');
+    var tocPct=document.getElementById('btocProgressPct');
+    var tocLeft=document.getElementById('btocTimeLeft');
+    var tocTotal=document.getElementById('btocTotalTime');
+    var fcToast=document.getElementById('fcToast');
+    var fcToastText=document.getElementById('fcToastText');
+    var fcToastIcon=document.getElementById('fcToastIcon');
+    var reduceMotion=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var C=CONFIG.series?78.54:97.4;
+    var CURRENT_PART_MIN=CONFIG.currentMinutes;
+    var links=[];
+    var currentSection='';
+    var preferredActiveLink=null;
+    var progressTicking=false;
+    var storageWriteTimer=0;
+    var fcToastHideTimer=0;
+    var tocReturnFocus=null;
+    var tocHistoryActive=false;
+    var observerToDisconnect=[];
+
+    if(!art||!ov||!panel||!topbar||!bottomBar||!search||!speedRail||!ember) return;
+
+    function on(target,type,fn,options){
+      if(!target||!target.addEventListener) return;
+      var opts=options;
+      if(abortCtrl){
+        if(typeof options==='boolean') opts={capture:options,signal:abortCtrl.signal};
+        else if(options&&typeof options==='object'){
+          opts={}; Object.keys(options).forEach(function(k){opts[k]=options[k]}); opts.signal=abortCtrl.signal;
+        } else opts={signal:abortCtrl.signal};
+      }
+      target.addEventListener(type,fn,opts);
+    }
+    function clamp(v,min,max){return Math.min(max,Math.max(min,v))}
+    function safeGet(key){try{return localStorage.getItem(key)}catch(_){return null}}
+    function safeSet(key,value){try{localStorage.setItem(key,value);return true}catch(_){return false}}
+    function safeJson(key,fallback){try{var raw=localStorage.getItem(key);return raw?JSON.parse(raw):fallback}catch(_){return fallback}}
+    function scrollBehavior(){return reduceMotion?'auto':'smooth'}
+    function normalizeText(value){
+      var s=String(value||'').toLocaleLowerCase('ru-RU').replace(/ё/g,'е');
+      if(s.normalize) s=s.normalize('NFKD').replace(/[\u0300-\u036f]/g,'');
+      return s.replace(/[^a-zа-я0-9]+/gi,' ').trim().replace(/\s+/g,' ');
+    }
+    function pluralSections(n){
+      var m100=n%100,m10=n%10;
+      if(m100>=11&&m100<=14) return 'разделов';
+      if(m10===1) return 'раздел';
+      if(m10>=2&&m10<=4) return 'раздела';
+      return 'разделов';
+    }
+    function setInert(el,value){if(!el)return;try{el.inert=!!value}catch(_){if(value)el.setAttribute('aria-hidden','true');else el.removeAttribute('aria-hidden')}}
+    function focusSafe(el){if(!el||!el.focus)return;try{el.focus({preventScroll:true})}catch(_){try{el.focus()}catch(__){}}}
+    function currentProgress(){
+      var max=Math.max(0,art.scrollHeight-art.clientHeight);
+      return max>0?clamp(art.scrollTop/max,0,1):0;
+    }
+    function setScrollTopInstant(top){
+      var previous=art.style.scrollBehavior;art.style.scrollBehavior='auto';art.scrollTop=top;
+      if(previous)art.style.scrollBehavior=previous;else art.style.removeProperty('scroll-behavior');
+    }
+    function scrollToProgress(p,behavior){
+      var max=Math.max(0,art.scrollHeight-art.clientHeight),top=max*clamp(p,0,1),mode=behavior||scrollBehavior();
+      if(mode==='auto')setScrollTopInstant(top);else art.scrollTo({top:top,behavior:mode});
+    }
+    function showToast(message,positive){
+      if(!fcToast||!fcToastText)return;
+      fcToastText.textContent=message;
+      if(fcToastIcon)fcToastIcon.style.color=positive?'':'var(--color-text-muted)';
+      fcToast.classList.add('is-open');
+      clearTimeout(fcToastHideTimer);
+      fcToastHideTimer=setTimeout(function(){fcToast.classList.remove('is-open')},2200);
+    }
+
+    /* ---------- visual viewport / mobile keyboard ---------- */
+    function syncViewport(){
+      var h=window.visualViewport?window.visualViewport.height:window.innerHeight;
+      if(h>0)html.style.setProperty('--gb-vv-height',Math.round(h)+'px');
+    }
+    syncViewport();
+    on(window,'resize',syncViewport,{passive:true});
+    if(window.visualViewport){on(window.visualViewport,'resize',syncViewport,{passive:true});on(window.visualViewport,'scroll',syncViewport,{passive:true})}
+
+    /* ---------- theme: canonical html.dark + localStorage.theme ---------- */
+    function isDark(){return html.classList.contains('dark')}
+    function syncThemeButtons(){
+      var dark=isDark();
+      document.querySelectorAll('.gb-theme-toggle').forEach(function(btn){btn.setAttribute('aria-pressed',dark?'true':'false')});
+      var demoBtn=document.getElementById('themeBtn');
+      if(demoBtn)demoBtn.textContent=dark?'☀️ Светлая тема':'🌙 Сменить тему';
+    }
+    function setTheme(dark,persist){
+      html.classList.toggle('dark',!!dark);
+      if(persist!==false)safeSet('theme',dark?'dark':'light');
+      syncThemeButtons();
+    }
+    function initTheme(){
+      var stored=safeGet('theme');
+      if(stored==='dark'||stored==='light')setTheme(stored==='dark',false);
+      else syncThemeButtons();
+    }
+    initTheme();
+    var themeBtn=document.getElementById('themeBtn'),barThemeBtn=document.getElementById('barThemeBtn');
+    on(themeBtn,'click',function(){setTheme(!isDark(),true)});
+    on(barThemeBtn,'click',function(){setTheme(!isDark(),true)});
+
+    /* ---------- reading state / resume ---------- */
+    var READING_KEY='gb:reading-state:'+CONFIG.pagePath;
+    var savedReading=safeJson(READING_KEY,null);
+    function validSavedReading(s){return !!(s&&s.v===2&&typeof s.progress==='number'&&s.progress>=.04&&s.progress<.97&&Date.now()-s.updatedAt<14*86400000)}
+    function updateResume(){
+      if(!resumeBtn)return;
+      if(validSavedReading(savedReading)){
+        var pv=Math.round(savedReading.progress*100);
+        resumeBtn.hidden=false;
+        resumeBtn.innerHTML='<span>Продолжить чтение <strong>'+pv+'%</strong></span>';
+        resumeBtn.setAttribute('aria-label','Продолжить чтение с '+pv+' процентов');
+      }else resumeBtn.hidden=true;
+    }
+    function writeReadingState(force){
+      clearTimeout(storageWriteTimer);
+      var write=function(){
+        var p=currentProgress();
+        savedReading={v:2,progress:p,section:currentSection||'',name:secName?secName.textContent:'',updatedAt:Date.now(),complete:p>=.97};
+        safeSet(READING_KEY,JSON.stringify(savedReading));
+        if(force)updateResume();
+      };
+      if(force)write();else storageWriteTimer=setTimeout(write,900);
+    }
+    updateResume();
+    on(resumeBtn,'click',function(){
+      if(!validSavedReading(savedReading))return;
+      closeTOC({restoreFocus:false});
+      scrollToProgress(savedReading.progress,scrollBehavior());
+      showToast('Позиция восстановлена · '+Math.round(savedReading.progress*100)+'%',true);
+    });
+
+    /* ---------- favorites: canonical gb-favorites ---------- */
+    var FAV_KEY='gb-favorites';
+    function getFavorites(){var v=safeJson(FAV_KEY,[]);return Array.isArray(v)?v:[]}
+    function isFavorite(){return getFavorites().some(function(x){return x&&x.path===CONFIG.pagePath})}
+    function syncFavorite(){
+      var yes=isFavorite();
+      bookBtn.classList.toggle('is-on',yes);bookBtn.classList.toggle('is-saved',yes);
+      bookBtn.setAttribute('aria-pressed',yes?'true':'false');
+      bookBtn.setAttribute('aria-label',yes?'Убрать из избранного':'Добавить в избранное');
+    }
+    function toggleFavorite(){
+      var list=getFavorites(),idx=-1;
+      list.forEach(function(x,i){if(x&&x.path===CONFIG.pagePath)idx=i});
+      if(idx>=0){list.splice(idx,1);safeSet(FAV_KEY,JSON.stringify(list));syncFavorite();showToast('Убрано из Избранного',false);return}
+      list.unshift({path:CONFIG.pagePath,title:CONFIG.title,description:CONFIG.description||'',section:CONFIG.section||'',image:CONFIG.image||'',addedAt:Date.now()});
+      if(list.length>50)list=list.slice(0,50);
+      safeSet(FAV_KEY,JSON.stringify(list));syncFavorite();
+      bookBtn.classList.remove('is-bump');void bookBtn.offsetWidth;bookBtn.classList.add('is-bump');
+      showToast('Добавлено в Избранное',true);
+    }
+    syncFavorite();
+    on(bookBtn,'click',toggleFavorite);
+
+    /* ---------- series state (weighted, per-part, migrates V5 scalar) ---------- */
+    var seriesState=null,seriesFill=null,tocSeriesRing=null,tocSeriesPct=null,tocSeriesMeta=null,dualProgressBtn=null;
+    var selectedPart=CONFIG.currentPart||null;
+    var SERIES_KEY='gb:series-progress:dzhon-gill:v2';
+    var LEGACY_SERIES_KEY='gb:series-progress:john-gill';
+    function defaultSeriesState(){return {v:2,parts:{intro:1,I:0,II:0,III:0,ref:0},updatedAt:Date.now()}}
+    function loadSeriesState(){
+      var s=safeJson(SERIES_KEY,null);
+      if(!s||s.v!==2||!s.parts){
+        s=defaultSeriesState();
+        var legacy=parseFloat(safeGet(LEGACY_SERIES_KEY)||'0');
+        if(isFinite(legacy)&&legacy>0){s.parts.I=clamp((legacy*CONFIG.seriesTotal-16)/CONFIG.currentMinutes,0,1)}
+      }
+      Object.keys(CONFIG.parts||{}).forEach(function(k){s.parts[k]=clamp(parseFloat(s.parts[k])||0,0,1)});
+      return s;
+    }
+    function seriesOverall(){
+      if(!CONFIG.series)return 0;
+      var total=0,done=0;
+      Object.keys(CONFIG.parts).forEach(function(k){var m=CONFIG.parts[k].minutes;total+=m;done+=m*(seriesState.parts[k]||0)});
+      return total?done/total:0;
+    }
+    function persistSeries(){if(!CONFIG.series)return;seriesState.updatedAt=Date.now();safeSet(SERIES_KEY,JSON.stringify(seriesState));safeSet(LEGACY_SERIES_KEY,String(seriesOverall()))}
+    function updateSeriesChips(){
+      if(!CONFIG.series)return;
+      document.querySelectorAll('.series-chip[data-part]').forEach(function(chip){
+        var id=chip.getAttribute('data-part'),p=seriesState.parts[id]||0,part=CONFIG.parts[id];
+        chip.style.setProperty('--part-p',String(p));chip.dataset.complete=p>=.97?'true':'false';
+        chip.setAttribute('aria-label',(part?part.title:id)+' · '+Math.round(p*100)+'%');
+      });
+    }
+    function renderSeriesOverall(){
+      if(!CONFIG.series)return;
+      var p=seriesOverall(),pv=Math.round(p*100);
+      if(seriesFill)seriesFill.style.strokeDashoffset=100.53*(1-p);
+      if(tocSeriesRing)tocSeriesRing.style.strokeDashoffset=113*(1-p);
+      if(tocSeriesPct)tocSeriesPct.textContent=pv+'%';
+      var seriesProgressEl=document.getElementById('btocSeriesProgress');if(seriesProgressEl)seriesProgressEl.setAttribute('aria-valuenow',String(pv));
+      if(tocSeriesMeta)tocSeriesMeta.textContent='Освоено '+Math.round(CONFIG.seriesTotal*p)+' из '+CONFIG.seriesTotal+' мин';
+      if(dualProgressBtn)dualProgressBtn.setAttribute('aria-label','Статья '+Math.round(currentProgress()*100)+'%, серия '+pv+'%');
+      updateSeriesChips();
+    }
+    if(CONFIG.series){
+      seriesState=loadSeriesState();
+      seriesFill=document.getElementById('barSeriesProgressFill');
+      tocSeriesRing=document.getElementById('btocSeriesRing');
+      tocSeriesPct=document.getElementById('btocSeriesPct');
+      tocSeriesMeta=document.getElementById('btocSeriesMeta');
+      dualProgressBtn=document.getElementById('dualProgressBtn');
+      renderSeriesOverall();
+    }
+
+    /* ---------- progress and deterministic active section ---------- */
+    function refreshLinks(){links=Array.prototype.slice.call(document.querySelectorAll('#btocNav .btoc-link'))}
+    refreshLinks();
+    var sectionNodes=Array.prototype.slice.call(art.querySelectorAll('[data-sec]'));
+    function chooseActiveLink(sec){
+      var candidates=links.filter(function(a){return a.getAttribute('data-sec')===sec});
+      if(!candidates.length)return null;
+      if(preferredActiveLink&&candidates.indexOf(preferredActiveLink)>=0)return preferredActiveLink;
+      return candidates[0];
+    }
+    function setActiveSection(sec){
+      if(!sec)return;
+      if(sec!==currentSection){currentSection=sec;preferredActiveLink=null}
+      var active=chooseActiveLink(sec);
+      links.forEach(function(a){
+        var on=a===active;a.classList.toggle('active',on);
+        if(on)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');
+      });
+      sectionNodes.forEach(function(p){p.classList.toggle('is-reading',p.getAttribute('data-sec')===sec)});
+      if(active&&secName)secName.textContent=active.getAttribute('data-name')||active.textContent.trim();
+    }
+    function detectSection(){
+      if(!sectionNodes.length)return;
+      var line=art.scrollTop+Math.min(art.clientHeight*.32,180),chosen=sectionNodes[0];
+      sectionNodes.forEach(function(node){if(node.offsetTop<=line)chosen=node});
+      setActiveSection(chosen.getAttribute('data-sec'));
+    }
+    function updatePartProgressUI(partId,p){
+      var part=CONFIG.series&&CONFIG.parts?CONFIG.parts[partId]:null;
+      var mins=part?part.minutes:CURRENT_PART_MIN;
+      var pv=Math.round(p*100);
+      if(tocFill)tocFill.style.width=pv+'%';if(tocPct)tocPct.textContent=pv+'%';
+      var tocProgressBar=document.getElementById('btocProgressBar');if(tocProgressBar)tocProgressBar.setAttribute('aria-valuenow',String(pv));
+      if(tocLeft)tocLeft.textContent='Осталось: ~'+Math.max(0,Math.round(mins*(1-p)))+' мин';
+      if(tocTotal)tocTotal.textContent='~'+mins+' мин чтения';
+    }
+    function renderProgress(p){
+      p=clamp(p,0,1);var pv=Math.round(p*100);
+      if(fill)fill.style.strokeDashoffset=C*(1-p);
+      if(pctEl)pctEl.textContent=pv+'%';
+      var progressShell=fill&&fill.closest('.bar-progress');
+      if(progressShell)progressShell.setAttribute('aria-valuenow',String(pv));
+      if(!CONFIG.series||selectedPart===CONFIG.currentPart)updatePartProgressUI(CONFIG.currentPart,p);
+      if(ember.dataset.state&&ember.dataset.state!=='idle')ember.style.setProperty('--p',String(p));
+      if(CONFIG.series){
+        var old=seriesState.parts[CONFIG.currentPart]||0;
+        if(p>old+.002||p>=.97){seriesState.parts[CONFIG.currentPart]=Math.max(old,p);persistSeries()}
+        renderSeriesOverall();
+      }
+    }
+    function updateReadingUI(){detectSection();renderProgress(currentProgress());writeReadingState(false)}
+    on(art,'scroll',function(){
+      if(progressTicking)return;progressTicking=true;
+      requestAnimationFrame(function(){updateReadingUI();progressTicking=false});
+    },{passive:true});
+
+    /* ---------- TOC sheet: focus trap, history back, inert background ---------- */
+    function setSheetBackgroundInert(value){
+      setInert(art,value);setInert(bottomBar,value);setInert(homeBtn,value);setInert(bookBtn,value);
+      var wrap=ember.closest('.play-wrap');if(wrap)setInert(wrap,value);
+    }
+    function focusablesInSheet(){
+      var selector='button:not([disabled]):not([hidden]),a[href]:not([hidden]),input:not([disabled]):not([hidden]),[tabindex]:not([tabindex="-1"]):not([hidden])';
+      var arr=[];
+      if(!searchLayer.inert&&search.offsetParent!==null)arr.push(search);
+      Array.prototype.slice.call(panel.querySelectorAll(selector)).forEach(function(el){if(el.offsetParent!==null&&!el.closest('[inert]'))arr.push(el)});
+      return arr;
+    }
+    function openTOC(opener){
+      if(ov.classList.contains('open'))return;
+      closeSpeeds();
+      tocReturnFocus=opener&&opener.nodeType===1?opener:document.activeElement;
+      ov.inert=false;ov.setAttribute('aria-hidden','false');ov.classList.add('open');document.body.classList.add('btoc-open');
+      tocBtn.setAttribute('aria-expanded','true');barSectionBtn.setAttribute('aria-expanded','true');
+      setSheetBackgroundInert(true);
+      if(window.history&&history.pushState){
+        try{history.pushState({gbMobileToc:true},'',location.href);tocHistoryActive=true}catch(_){tocHistoryActive=false}
+      }
+      setTimeout(function(){
+        var active=panel.querySelector('.btoc-link.active:not([hidden])');
+        if(opener!==search)focusSafe(active||closeBtn||panel);
+      },40);
+    }
+    function closeTOC(options){
+      if(!ov.classList.contains('open'))return;
+      options=options||{};
+      ov.classList.remove('open');ov.setAttribute('aria-hidden','true');document.body.classList.remove('btoc-open');
+      tocBtn.setAttribute('aria-expanded','false');barSectionBtn.setAttribute('aria-expanded','false');
+      panel.style.removeProperty('--sheet-drag');panel.classList.remove('is-dragging');
+      setSheetBackgroundInert(false);ov.inert=true;
+      var restore=tocReturnFocus;tocReturnFocus=null;
+      if(options.restoreFocus!==false)focusSafe(restore);
+      if(tocHistoryActive&&!options.fromHistory&&history.state&&history.state.gbMobileToc){
+        tocHistoryActive=false;try{history.back()}catch(_){ }
+      }else tocHistoryActive=false;
+    }
+    var suppressHandleClick=false;
+    on(closeBtn,'click',function(){closeTOC()});
+    on(handle,'click',function(e){if(suppressHandleClick){e.preventDefault();suppressHandleClick=false;return}closeTOC()});
+    on(barSectionBtn,'click',function(){openTOC(this)});
+    on(tocBtn,'click',function(){openTOC(this)});
+    on(ov,'click',function(e){if(e.target===ov)closeTOC()});
+    on(window,'popstate',function(){if(ov.classList.contains('open'))closeTOC({fromHistory:true});else tocHistoryActive=false});
+    on(document,'keydown',function(e){
+      if(e.key==='Escape'){
+        if(topbar.classList.contains('speed-open')){closeSpeeds();return}
+        if(search.value){search.value='';filterLinks();return}
+        if(ov.classList.contains('open')){e.preventDefault();closeTOC();return}
+      }
+      if(ov.classList.contains('open')&&e.key==='Tab'){
+        var items=focusablesInSheet();if(!items.length)return;
+        var first=items[0],last=items[items.length-1];
+        if(e.shiftKey&&document.activeElement===first){e.preventDefault();focusSafe(last)}
+        else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();focusSafe(first)}
+      }
+    });
+
+    /* ---------- drag sheet down to close ---------- */
+    (function(){
+      var dragging=false,startY=0,lastY=0,startT=0,pid=null;
+      on(handle,'pointerdown',function(e){
+        if(!ov.classList.contains('open'))return;
+        dragging=true;startY=lastY=e.clientY;startT=performance.now();pid=e.pointerId;panel.classList.add('is-dragging');
+        try{handle.setPointerCapture(pid)}catch(_){ }
+      });
+      on(handle,'pointermove',function(e){
+        if(!dragging||e.pointerId!==pid)return;lastY=e.clientY;var dy=Math.max(0,lastY-startY);panel.style.setProperty('--sheet-drag',dy+'px');
+      });
+      function end(e){
+        if(!dragging||(pid!==null&&e.pointerId!==pid))return;
+        var dy=Math.max(0,lastY-startY),dt=Math.max(1,performance.now()-startT),velocity=dy/dt;
+        if(dy>4)suppressHandleClick=true;
+        dragging=false;pid=null;panel.classList.remove('is-dragging');
+        if(dy>72||velocity>.55)closeTOC();else panel.style.setProperty('--sheet-drag','0px');
+      }
+      on(handle,'pointerup',end);on(handle,'pointercancel',end);
+    })();
+
+    /* ---------- nav click / keyboard ---------- */
+    function bindNavLinks(){
+      refreshLinks();
+      links.forEach(function(a){
+        if(a.dataset.v6Bound)return;a.dataset.v6Bound='true';
+        on(a,'click',function(e){
+          var sec=a.getAttribute('data-sec');if(!sec)return;
+          var target=art.querySelector('[data-sec="'+sec+'"]');if(!target)return;
+          e.preventDefault();preferredActiveLink=a;setActiveSection(sec);closeTOC({restoreFocus:false});
+          art.scrollTo({top:Math.max(0,target.offsetTop-18),behavior:scrollBehavior()});
+          setTimeout(function(){writeReadingState(true)},reduceMotion?0:450);
+        });
+        on(a,'keydown',function(e){
+          if(e.key!=='ArrowDown'&&e.key!=='ArrowUp'&&e.key!=='Home'&&e.key!=='End')return;
+          var visible=links.filter(function(x){return !x.hidden&&x.offsetParent!==null&&x.matches('a[href],button')});
+          if(!visible.length)return;e.preventDefault();var idx=visible.indexOf(a);
+          if(e.key==='Home')idx=0;else if(e.key==='End')idx=visible.length-1;else idx=(idx+(e.key==='ArrowDown'?1:-1)+visible.length)%visible.length;
+          focusSafe(visible[idx]);
+        });
+      });
+    }
+    bindNavLinks();
+
+    /* ---------- normalized search + keyboard ---------- */
+    var sub=document.getElementById('btocSubtitle');
+    var empty=document.getElementById('tocEmpty');
+    function searchableLinks(){return links.filter(function(a){return !a.classList.contains('btoc-part-cta')})}
+    function filterLinks(){
+      var q=normalizeText(search.value),shown=0;
+      searchableLinks().forEach(function(a){var hit=!q||normalizeText(a.textContent).indexOf(q)>=0;a.hidden=!hit;if(hit)shown++});
+      if(sub)sub.textContent=shown+' '+pluralSections(shown);
+      if(empty)empty.hidden=shown!==0;
+      if(searchStatus)searchStatus.textContent=q?(shown+' '+pluralSections(shown)+' найдено'):'';
+      if(q&&!ov.classList.contains('open'))openTOC(search);
+      return shown;
+    }
+    on(search,'input',filterLinks);
+    on(search,'focus',function(){closeSpeeds()});
+    on(search,'keydown',function(e){
+      var visible=searchableLinks().filter(function(a){return !a.hidden&&a.offsetParent!==null&&a.matches('a[href],button')});
+      if(e.key==='ArrowDown'&&visible.length){e.preventDefault();focusSafe(visible[0])}
+      if(e.key==='Enter'&&visible.length===1){e.preventDefault();visible[0].click()}
+    });
+
+    /* ---------- series tabs and previews with real canonical routes ---------- */
+    function createSeriesRow(section,index,current){
+      var tag=current?'a':'div',row=document.createElement(tag);row.className='btoc-link'+(current?'':' btoc-link--preview');
+      var num=document.createElement('span');var numText=section.num||String(index+1).padStart(2,'0');num.className=(/^[IVXLCDM]+$/.test(numText)?'gb-roman gb-series-mark ':'')+'btoc-link-num';num.textContent=numText;
+      var text=document.createElement('span');text.className='btoc-link-text';text.textContent=section.name;
+      row.appendChild(num);row.appendChild(text);row.setAttribute('data-name',section.dataName||section.name);
+      if(current&&section.sec){row.href='#sec-'+section.sec;row.setAttribute('data-sec',section.sec)}
+      return row;
+    }
+    function renderSeriesPart(id){
+      if(!CONFIG.series)return;
+      var part=CONFIG.parts[id];if(!part)return;selectedPart=id;
+      var nav=document.getElementById('btocNav'),title=document.getElementById('btocTitle');
+      title.textContent=part.title;nav.innerHTML='';
+      part.sections.forEach(function(s,i){nav.appendChild(createSeriesRow(s,i,id===CONFIG.currentPart))});
+      empty=document.createElement('div');empty.id='tocEmpty';empty.hidden=true;empty.style.cssText='padding:24px;text-align:center;color:var(--color-text-faint);font:500 13px/1.5 Source Sans 3,system-ui,sans-serif';empty.textContent='Ничего не найдено';nav.appendChild(empty);
+      if(id!==CONFIG.currentPart){
+        var cta=document.createElement('a');cta.className='btoc-part-cta';cta.href=part.href;cta.textContent='Открыть «'+part.shortTitle+'» →';nav.appendChild(cta);
+      }
+      refreshLinks();bindNavLinks();search.value='';
+      if(sub)sub.textContent=part.sections.length+' '+pluralSections(part.sections.length);
+      updatePartProgressUI(id,seriesState.parts[id]||0);
+      document.querySelectorAll('.series-chip').forEach(function(chip){
+        var on=chip.getAttribute('data-part')===id;chip.setAttribute('aria-selected',on?'true':'false');chip.tabIndex=on?0:-1;if(on)nav.setAttribute('aria-labelledby',chip.id);
+      });
+      updateSeriesChips();
+    }
+    if(CONFIG.series){
+      var seriesSwitcher=document.getElementById('seriesSwitcher');
+      on(seriesSwitcher,'click',function(e){var chip=e.target.closest('.series-chip');if(chip)renderSeriesPart(chip.getAttribute('data-part'))});
+      on(seriesSwitcher,'keydown',function(e){
+        if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'&&e.key!=='Home'&&e.key!=='End')return;
+        var chips=Array.prototype.slice.call(seriesSwitcher.querySelectorAll('.series-chip')),active=document.activeElement,idx=chips.indexOf(active);if(idx<0)idx=0;e.preventDefault();
+        if(e.key==='Home')idx=0;else if(e.key==='End')idx=chips.length-1;else idx=(idx+(e.key==='ArrowRight'?1:-1)+chips.length)%chips.length;
+        focusSafe(chips[idx]);chips[idx].click();
+      });
+      if(dualProgressBtn)on(dualProgressBtn,'click',function(){showToast('Статья '+Math.round(currentProgress()*100)+'% · серия '+Math.round(seriesOverall()*100)+'%',false)});
+    }
+
+    /* ---------- PLAY demo: no fighting with manual scroll ---------- */
+    var rate=parseFloat(safeGet('gb:audio:rate')||safeGet('gbx-tts-rate')||'1.5');
+    var allowedRates=[.75,1,1.25,1.5,1.75,2];if(allowedRates.indexOf(rate)<0)rate=1.5;
+    var playing=false,rafId=null,playStartTime=0,playStartProgress=0;
+    var BASE_DURATION=26000;
+    function setEmberState(state,p){
+      ember.dataset.state=state;if(typeof p==='number')ember.style.setProperty('--p',String(p));
+      var label=state==='playing'?'Пауза':state==='paused'?'Продолжить озвучку':state==='complete'?'Прослушано. Воспроизвести снова':'Озвучка';
+      ember.setAttribute('aria-label',label);ember.setAttribute('aria-pressed',state==='playing'?'true':'false');
+    }
+    function rebasePlayback(){if(!playing)return;playStartProgress=currentProgress();playStartTime=performance.now()}
+    function playbackStep(now){
+      if(!playing)return;
+      var duration=BASE_DURATION/rate,p=playStartProgress+(now-playStartTime)/duration;
+      p=clamp(p,0,1);scrollToProgress(p,'auto');renderProgress(p);setEmberState('playing',p);
+      if(p>=1){playing=false;rafId=null;setEmberState('complete',1);writeReadingState(true);showToast('Озвучка завершена',true);return}
+      rafId=requestAnimationFrame(playbackStep);
+    }
+    function startPlayback(){
+      var p=currentProgress();
+      if(ember.dataset.state==='complete'||p>=.995){art.scrollTop=0;p=0;renderProgress(0)}
+      playing=true;playStartProgress=p;playStartTime=performance.now();setEmberState('playing',p);
+      if(rafId)cancelAnimationFrame(rafId);rafId=requestAnimationFrame(playbackStep);
+    }
+    function pausePlayback(reason){
+      if(!playing)return;playing=false;if(rafId)cancelAnimationFrame(rafId);rafId=null;setEmberState('paused',currentProgress());
+      if(reason==='user')showToast('Озвучка приостановлена: ручная прокрутка',false);
+      if(reason==='hidden')showToast('Озвучка приостановлена в фоне',false);
+    }
+
+    /* ---------- speed rail ---------- */
+    var speedTimer=0;
+    function fmtRate(r){return String(r).replace(/\.0$/,'')+'×'}
+    function syncSpeedButtons(bump){
+      speedRail.querySelectorAll('[data-speed]').forEach(function(btn){var on=parseFloat(btn.getAttribute('data-speed'))===rate;btn.classList.toggle('on',on);btn.setAttribute('aria-checked',on?'true':'false');btn.tabIndex=on?0:-1});
+      playSpeed.textContent=fmtRate(rate);playSpeed.setAttribute('aria-label','Выбрать скорость, сейчас '+fmtRate(rate));
+      if(bump){playSpeed.classList.remove('is-bump');void playSpeed.offsetWidth;playSpeed.classList.add('is-bump')}
+    }
+    function openSpeeds(autoClose){
+      clearTimeout(speedTimer);topbar.classList.add('speed-open');playSpeed.setAttribute('aria-expanded','true');
+      try{search.blur()}catch(_){ }setInert(searchLayer,true);searchLayer.setAttribute('aria-hidden','true');setInert(speedRail,false);speedRail.setAttribute('aria-hidden','false');
+      var active=speedRail.querySelector('.spd.on');if(active)setTimeout(function(){active.scrollIntoView({block:'nearest',inline:'center',behavior:'auto'})},20);
+      if(autoClose)speedTimer=setTimeout(closeSpeeds,4500);
+    }
+    function closeSpeeds(){
+      clearTimeout(speedTimer);topbar.classList.remove('speed-open');playSpeed.setAttribute('aria-expanded','false');setInert(speedRail,true);speedRail.setAttribute('aria-hidden','true');setInert(searchLayer,false);searchLayer.setAttribute('aria-hidden','false');
+    }
+    speedRail.inert=true;speedRail.setAttribute('aria-hidden','true');syncSpeedButtons(false);
+    on(ember,'click',function(){
+      if(playing){pausePlayback();closeSpeeds();return}
+      var fresh=ember.dataset.state==='idle'||ember.dataset.state==='complete';startPlayback();if(fresh)openSpeeds(true);else closeSpeeds();
+    });
+    on(playSpeed,'click',function(e){e.preventDefault();e.stopPropagation();topbar.classList.contains('speed-open')?closeSpeeds():openSpeeds(false)});
+    on(document,'pointerdown',function(e){if(topbar.classList.contains('speed-open')&&!topbar.contains(e.target))closeSpeeds()},{passive:true});
+    speedRail.querySelectorAll('[data-speed]').forEach(function(btn){
+      on(btn,'click',function(){
+        rate=parseFloat(btn.getAttribute('data-speed'));safeSet('gb:audio:rate',String(rate));safeSet('gbx-tts-rate',String(rate));syncSpeedButtons(true);rebasePlayback();btn.scrollIntoView({block:'nearest',inline:'center',behavior:scrollBehavior()});setTimeout(closeSpeeds,220);
+      });
+      on(btn,'keydown',function(e){
+        if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'&&e.key!=='Home'&&e.key!=='End')return;
+        var chips=Array.prototype.slice.call(speedRail.querySelectorAll('[data-speed]')),idx=chips.indexOf(btn);e.preventDefault();
+        if(e.key==='Home')idx=0;else if(e.key==='End')idx=chips.length-1;else idx=(idx+(e.key==='ArrowRight'?1:-1)+chips.length)%chips.length;
+        focusSafe(chips[idx]);chips[idx].click();
+      });
+    });
+    (function(){
+      var dragging=false,startX=0,startScroll=0,moved=false,pid=null;
+      on(speedRail,'pointerdown',function(e){dragging=true;moved=false;startX=e.clientX;startScroll=speedRail.scrollLeft;pid=e.pointerId});
+      on(speedRail,'pointermove',function(e){if(!dragging||e.pointerId!==pid)return;var dx=e.clientX-startX;if(!moved&&Math.abs(dx)>4){moved=true;speedRail.classList.add('is-dragging');try{speedRail.setPointerCapture(pid)}catch(_){ }}if(moved)speedRail.scrollLeft=startScroll-dx});
+      function end(e){if(!dragging||(pid!==null&&e.pointerId!==pid))return;dragging=false;pid=null;speedRail.classList.remove('is-dragging')}
+      on(speedRail,'pointerup',end);on(speedRail,'pointercancel',end);on(speedRail,'click',function(e){if(moved){e.stopPropagation();moved=false}},true);
+    })();
+
+    /* pause auto-scroll when user takes control */
+    ['wheel','touchstart','pointerdown'].forEach(function(type){on(art,type,function(){if(playing)pausePlayback('user')},{passive:true})});
+    on(document,'keydown',function(e){if(playing&&['PageDown','PageUp','ArrowDown','ArrowUp','Home','End',' '].indexOf(e.key)>=0&&!/input|textarea|button|select/i.test((e.target.tagName||'')))pausePlayback('user')});
+    on(document,'visibilitychange',function(){if(document.hidden&&playing)pausePlayback('hidden')});
+
+    /* ---------- font size, preserving relative position ---------- */
+    var sizes=[14,15,16,18,20],fontKey='gb:reader:font-level',lvl=parseInt(safeGet(fontKey),10);if(!isFinite(lvl)||lvl<0||lvl>=sizes.length)lvl=2;
+    var fM=document.getElementById('fontMinus'),fP=document.getElementById('fontPlus');
+    function applyFont(announce){
+      var p=currentProgress();art.classList.add('is-font-resizing');art.style.setProperty('--reader-font-size',sizes[lvl]+'px');safeSet(fontKey,String(lvl));fM.disabled=lvl===0;fP.disabled=lvl===sizes.length-1;
+      fM.setAttribute('aria-label','Уменьшить шрифт. Сейчас '+sizes[lvl]+' пикселей');fP.setAttribute('aria-label','Увеличить шрифт. Сейчас '+sizes[lvl]+' пикселей');
+      requestAnimationFrame(function(){scrollToProgress(p,'auto');renderProgress(p);rebasePlayback();requestAnimationFrame(function(){art.classList.remove('is-font-resizing')})});if(announce)showToast('Размер текста: '+sizes[lvl]+' px',true);
+    }
+    applyFont(false);
+    on(fM,'click',function(){if(lvl>0){lvl--;applyFont(true)}});on(fP,'click',function(){if(lvl<sizes.length-1){lvl++;applyFont(true)}});
+
+    /* ---------- share / print / canonical action proxy ---------- */
+    function copyFallback(text){
+      var ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;left:-9999px';document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');showToast('Ссылка скопирована',true)}catch(_){showToast('Не удалось скопировать ссылку',false)}ta.remove();
+    }
+    function fallbackShare(){
+      var cfg={title:CONFIG.title,url:location.href};
+      if(window.SiteShare&&typeof window.SiteShare.open==='function'){window.SiteShare.open(null,{dialogTitle:'Поделиться статьёй',title:cfg.title,url:cfg.url});return}
+      if(navigator.share){navigator.share(cfg).catch(function(err){if(err&&err.name!=='AbortError')showToast('Не удалось открыть меню публикации',false)});return}
+      if(window.SiteUtils&&typeof window.SiteUtils.copyText==='function'){window.SiteUtils.copyText(location.href,function(){showToast('Ссылка скопирована',true)});return}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(location.href).then(function(){showToast('Ссылка скопирована',true)}).catch(function(){copyFallback(location.href)});return}
+      copyFallback(location.href);
+    }
+    var barShareBtn=document.getElementById('barShareBtn');on(barShareBtn,'click',fallbackShare);
+    var repoActionsMount=document.getElementById('btocRepoActions'),repoActionsMounted=false,actionObserver=null;
+    function stripCloneIds(root){if(!root)return;root.removeAttribute('id');root.querySelectorAll('[id]').forEach(function(el){el.removeAttribute('id')})}
+    function mountCanonicalArticleActions(){
+      if(!repoActionsMount||repoActionsMounted)return false;
+      var source=Array.prototype.slice.call(document.querySelectorAll('.article-end-actions-wrap')).find(function(el){return !el.closest('.btoc-footer')});
+      if(!source)return false;var controls=Array.prototype.slice.call(source.querySelectorAll('button,a[href]'));if(!controls.length)return false;
+      repoActionsMount.innerHTML='';controls.slice(0,2).forEach(function(original){var clone=original.cloneNode(true);stripCloneIds(clone);clone.setAttribute('data-repo-action-proxy','true');on(clone,'click',function(ev){ev.preventDefault();closeTOC({restoreFocus:false});setTimeout(function(){original.click()},220)});repoActionsMount.appendChild(clone)});
+      repoActionsMount.classList.add('is-repo-mounted');repoActionsMounted=true;return true;
+    }
+    if(repoActionsMount){
+      on(repoActionsMount,'click',function(ev){var fallback=ev.target.closest('[data-repo-action-fallback]');if(!fallback)return;ev.preventDefault();var kind=fallback.getAttribute('data-repo-action-fallback');closeTOC({restoreFocus:false});setTimeout(function(){if(kind==='print')window.print();else fallbackShare()},220)});
+      if(!mountCanonicalArticleActions()&&'MutationObserver' in window){actionObserver=new MutationObserver(function(){if(mountCanonicalArticleActions()){actionObserver.disconnect();actionObserver=null}});actionObserver.observe(document.body,{childList:true,subtree:true});observerToDisconnect.push(actionObserver)}
+    }
+
+    /* ---------- back semantics ---------- */
+    on(homeBtn,'click',function(){
+      if(ov.classList.contains('open')){closeTOC();return}
+      if(topbar.classList.contains('speed-open')){closeSpeeds();return}
+      var href=homeBtn.getAttribute('data-home-href');if(href)window.location.href=href;
+    });
+
+    /* ---------- cross-tab sync / lifecycle ---------- */
+    on(window,'storage',function(e){
+      if(e.key==='theme'&&(e.newValue==='dark'||e.newValue==='light'))setTheme(e.newValue==='dark',false);
+      if(e.key===FAV_KEY)syncFavorite();
+      if(e.key==='gb:audio:rate'||e.key==='gbx-tts-rate'){var r=parseFloat(e.newValue||'');if(allowedRates.indexOf(r)>=0){rate=r;syncSpeedButtons(false);rebasePlayback()}}
+      if(CONFIG.series&&e.key===SERIES_KEY){seriesState=loadSeriesState();renderSeriesOverall();if(selectedPart)updatePartProgressUI(selectedPart,seriesState.parts[selectedPart]||0)}
+      if(e.key===READING_KEY){savedReading=safeJson(READING_KEY,null);updateResume()}
+    });
+    on(window,'pagehide',function(){writeReadingState(true);if(CONFIG.series)persistSeries();if(actionObserver)actionObserver.disconnect()});
+    on(window,'beforeunload',function(){writeReadingState(true)});
+
+    /* ---------- first render ---------- */
+    window.__gbMobileV6Cleanup=function(){
+      try{if(abortCtrl)abortCtrl.abort()}catch(_){ }
+      observerToDisconnect.forEach(function(o){try{o.disconnect()}catch(_){ }});observerToDisconnect=[];
+      if(rafId)cancelAnimationFrame(rafId);rafId=null;playing=false;
+      clearTimeout(storageWriteTimer);clearTimeout(fcToastHideTimer);clearTimeout(speedTimer);
+      window.__gbMobileV6Abort=null;
+    };
+    detectSection();renderProgress(currentProgress());filterLinks();
+    if(CONFIG.series)renderSeriesOverall();
+  }catch(err){if(window.console)console.warn('gb-mobile-v6:',err)}
+})();
+
+</script>
+</body>
+</html>
