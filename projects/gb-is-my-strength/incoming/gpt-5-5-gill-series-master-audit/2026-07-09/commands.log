@@ -4,7 +4,7 @@
 Initial source HEAD:
   FedorMilovanov/gb-is-my-strength main -> ac26d8efa2b952df6dc46eef05908e6d65287e82
 
-Final source HEAD:
+Final source HEAD used by this intake:
   FedorMilovanov/gb-is-my-strength main -> 30d9fb61fe2c9116ee53a54d681c01455eef4fe6
 
 Research HEAD:
@@ -58,19 +58,22 @@ Governance files inspected:
 Verifier corrections made:
   - removed invalid L2/L3/confirmed-current promotion for one source witness
   - restored incoming -> working -> verification -> verified layering
-  - corrected counts to 38 canonical open + 11 pending candidates
+  - corrected counts to 38 canonical carry-over + 11 pending candidates
+  - clarified that the 38 carry-over rows were not mass-reverified on 30d9fb61
   - removed stale current-rail 3-of-5 / 5-of-5 subclaim
   - clarified 7-commit delta versus PR #50 scope
   - changed Part IV seven-plus-two classification to owner/editorial proposal
   - rejected a potentially non-dereferenceable JSON-LD @id proposal
+  - separated canonical files from historical SUPER_AUDIT support
   - added comments folder contract
   - added mandatory cumulative-artifact correction file
 
-AuditRepo validation runs observed:
+Earlier AuditRepo validation observed:
   run 28984462579 -> success on earlier PR head a4f02506b3f653a66d5184adc6d4db1e011b0072
 
-Final-head validation:
-  pending after all verifier corrections; fetch and record the final workflow result before merge
+Final-head validation source of truth:
+  GitHub pull-request checks for the final branch HEAD.
+  Do not copy a run ID into this log, because doing so would create a newer HEAD and make that run non-final.
 
 Local commands not executed because the tool container could not resolve github.com:
   python3 scripts/check_auditrepo_structure.py
