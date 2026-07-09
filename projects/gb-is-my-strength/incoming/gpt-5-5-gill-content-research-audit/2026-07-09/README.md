@@ -26,7 +26,7 @@
 
 ## Verification posture
 
-This is a large mixed-status content audit. The attached master contains direct-source confirmations, current-source findings, disputed interpretations, HOLD/locator queues and Research-only defects. It must **not** be treated as 480 automatically confirmed canonical bugs.
+This is a large mixed-status content audit. The master contains direct-source confirmations, current-source findings, disputed interpretations, HOLD/locator queues and Research-only defects. It must **not** be treated as 480 automatically confirmed canonical bugs.
 
 - Raw audit intake: yes.
 - Direct current-source evidence: present for many production claims.
@@ -37,9 +37,20 @@ This is a large mixed-status content audit. The attached master contains direct-
 ## Files in this folder
 
 - `REPORT.md` — universal intake summary and verifier handoff.
-- `artifacts/GILL_SERIES_FINAL_MASTER_AUDIT_ALL_FINDINGS_2026-07-09.md` — complete cumulative master, findings `001–480`.
+- `artifacts/MASTER_ARTIFACT_MANIFEST.md` — exact identity, size and SHA-256 of the complete 431 KB master artifact delivered to the owner.
 - `proposals/proposal-GILL-CONTENT-AUDIT-MATRIX-INTEGRATION.md` — governed proposal for matrix/ledger integration.
 - `commands.log` — source refs and retrieval/verification actions.
+- `../../../working/GILL_CONTENT_RESEARCH_MATRIX_2026-07-09.md` — working map/matrix; pending verifier and excluded from canonical counters.
+
+## Full master artifact
+
+Authoritative file name:
+
+```text
+GILL_SERIES_FINAL_MASTER_AUDIT_ALL_FINDINGS_2026-07-09.md
+```
+
+The local artifact contains findings `GILL-CONTENT-001…480`, 11,557 lines and 431,460 bytes. The GitHub connector cannot accept a mounted local file and blocked large encoded transport, so no partial payload is retained. The exact SHA-256 and target repository path are recorded in `artifacts/MASTER_ARTIFACT_MANIFEST.md`.
 
 ## Freedom with Evidence
 
