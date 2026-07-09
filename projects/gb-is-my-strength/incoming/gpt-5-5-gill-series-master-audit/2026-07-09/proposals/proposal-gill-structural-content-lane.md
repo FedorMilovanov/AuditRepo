@@ -5,7 +5,8 @@
 - Project: `gb-is-my-strength`
 - Proposed by: `gpt-5-5-gill-series-master-audit`
 - Date: 2026-07-09
-- Current source HEAD: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`
+- Gill evidence reconciled through image lane: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`
+- Current source effects: `../../../reverify/START_HERE_2026-07-09.md`
 - Proposal type: repair order / split / publication program
 - Status: `proposal-open`
 
@@ -37,11 +38,11 @@ GILL-V10-CLAIM-PROVENANCE
 GILL-V10-RESTORED-FIGURE-RELOCATION
 ```
 
-## Current-source note
+## Gill image-lane note
 
 The `d579745c` image lane verifies normal JS-on image placement and improves visual presentation. It does not accept this structural program. For Part III figures, no-JS/Pagefind/print/TTS evidence is still required before deciding whether direct semantic rendering is necessary.
 
-Current rail already renders `Часть X из 3`; the old `3 из 5` claim is excluded.
+The reconciled rail renders `Часть X из 3`; the old `3 из 5` claim is excluded.
 
 ## Proposed phases
 
