@@ -1,7 +1,9 @@
 # OWNER / NEXT-AGENT START HERE — gospod-bog.ru
 
 > Date: **2026-07-09**  
-> Source `main` checked: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`  
+> Current source `main`: `ff55161b6858a1bbb0fad5704a11c6b41c961879`  
+> Gill functional tree audited: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`  
+> Net compare: no changed files  
 > Research checked: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
 
 ## Canonical verified documents
@@ -18,6 +20,7 @@
 - [`../working/START_HERE_2026-07-09.md`](../working/START_HERE_2026-07-09.md) — 11 Gill V10 candidates structured as a working matrix.
 - [`../verification/START_HERE_2026-07-09.md`](../verification/START_HERE_2026-07-09.md) — independent witness queue and promotion rules.
 - [`../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md`](../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md) — raw official intake evidence.
+- [`../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_ff55161.md`](../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_ff55161.md) — current-head freshness proof.
 
 ## Correct project counts
 
@@ -30,17 +33,17 @@
 | Canonical P3 open | 19 |
 | Refactoring | 4 |
 | AuditRepo | 3 |
-| **Canonical open total** | **38** |
+| **Canonical open/carry-over total** | **38** |
 | **Gill V10 pending candidates** | **11** |
 
 Correct wording:
 
 ```text
-38 canonical open/carry-over rows
+38 canonical carry-over rows from the base ledger
 + 11 Gill V10 candidates pending cross-verification
 ```
 
-Do not call this “49 active confirmed bugs”.
+The 38 carry-over rows were not mass-reverified by the Gill intake; recheck a selected row on current source before repair or status change.
 
 ## Gill V10 status
 
@@ -56,10 +59,11 @@ Six candidates have a proposed P0 publication-blocker severity, four have propos
 
 ## Current-head corrections already made
 
-1. Source advanced from `ac26d8e` to `30d9fb61`; the full seven-commit delta was reviewed.
-2. Current `GillSeriesRail.astro` correctly renders numbered progress as `Часть X из 3`. The earlier `3 из 5` display subclaim was removed.
-3. PR #50 itself introduced runtime relocation of two Part III figures; its no-JS/Pagefind/print/TTS impact remains a candidate requiring witnesses.
-4. No new Gill row was promoted directly from raw intake into verified truth.
+1. The functional audit advanced from `ac26d8e` to `30d9fb61`; the seven-commit delta was reviewed.
+2. Current `GillSeriesRail.astro` correctly renders numbered progress as `Часть X из 3`; the earlier `3 из 5` subclaim was removed.
+3. PR #50 introduced runtime relocation of two Part III figures; its no-JS/Pagefind/print/TTS impact remains a candidate requiring witnesses.
+4. Later source commits `273ac48e` and `ff55161b` have an empty net file diff against `30d9fb61`; the functional tree is unchanged.
+5. No new Gill row was promoted directly from raw intake into verified truth.
 
 ## Owner decisions that may proceed while verification runs
 
@@ -93,11 +97,12 @@ These remain proposals until the owner accepts them.
 
 ## What the next agent should do
 
-1. Recheck source HEAD against `30d9fb61`.
-2. Work from `verification/START_HERE_2026-07-09.md`.
-3. Supply independent source/build/browser witnesses for one candidate lane.
-4. Record an explicit verifier decision before source implementation.
-5. Keep Gill content, PremiumControls visual work, TTS model delivery and glossary data in separate lanes.
+1. Recheck source HEAD against `ff55161b`.
+2. If it moved, compare from the audited functional tree and record a new reverify delta.
+3. Work from `verification/START_HERE_2026-07-09.md`.
+4. Supply independent source/build/browser witnesses for one candidate lane.
+5. Record an explicit verifier decision before source implementation.
+6. Keep Gill content, PremiumControls visual work, TTS model delivery and glossary data in separate lanes.
 
 ## Hard rules
 
