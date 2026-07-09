@@ -8,10 +8,13 @@ Environment:
 Initial source baseline:
   ac26d8efa2b952df6dc46eef05908e6d65287e82
 
-Current source HEAD:
+Gill evidence reconciled through:
   d579745c23d9a0e6dea3a8148a3369d46c47b94b
 
-Research HEAD:
+Sole current-head record:
+  ../../reverify/START_HERE_2026-07-09.md
+
+Research evidence HEAD:
   58e1ea5fab638812ae693a1d0b1e79c4dcb47131
 
 AuditRepo base:
@@ -21,9 +24,10 @@ Source ranges reviewed:
   ac26d8e..30d9fb61  — initial functional reconciliation
   30d9fb61..ff55161b — temporary placeholder added and removed; empty net diff
   ff55161b..d579745c — Gill image/hero/figure-placement lane
+  d579745c..2313f36  — Hermenevtika rail plus automatic metadata/cache-bust update; no Gill candidate status change
 
-Current source effect:
-  - normal JS-on image placement independently browser-verified by the image lane
+Verified Gill image-lane effect:
+  - normal JS-on image placement independently browser-verified
   - Part III figure runtime relocation still present
   - no-JS/Pagefind/print/custom-TTS impact not established
   - content source, manifest, semantic TOC, numbering, ownership and Research candidates unchanged
@@ -39,7 +43,8 @@ Primary source systems inspected:
   scripts/gill-series-data-consistency-audit.js
   js/floating-cluster-controller.js
   Gill PageHead structured data
-  current GillPart3RestoredFigures.astro
+  GillPart3RestoredFigures.astro
+  Gill image-lane report
 
 Research files inspected:
   Джон Гилл/00_README_AND_NAVIGATION.md
@@ -58,12 +63,14 @@ Governance files inspected:
   scripts/validate_audit_repo.py
 
 Cleanup corrections:
-  - restored full existing canonical bug matrix
+  - restored a complete canonical status ledger: 90 closed IDs and 38 detailed open rows
+  - removed stale cycle diaries and Research appendices from the active matrix
   - kept Gill candidates outside canonical counts
-  - replaced stale master + correction overlay with one normalized artifact
+  - replaced stale master + correction overlay with one compact normalized rationale
   - moved intermediate master and SHA notes to archive/stale
   - created one project-level current reverify entrypoint
-  - removed active references to deleted correction/delta files
+  - corrected relative navigation paths
+  - removed volatile current SHA duplication from raw/working/verification layers
   - reduced layer READMEs to pointers
   - closed stale 3-of-5 subclaim
   - retained Part IV and seven-plus-two as proposals
