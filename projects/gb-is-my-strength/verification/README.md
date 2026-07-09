@@ -4,9 +4,9 @@ This folder contains active verification doctrine and current-head status-resolu
 
 ## Current entrypoint
 
-- `START_HERE_2026-07-09.md` — Gill V10 cross-verification queue at source `30d9fb61`.
+- `START_HERE_2026-07-09.md` — Gill V10 cross-verification queue; current source HEAD `ff55161b`, audited functional tree `30d9fb61`, empty net file delta.
 
-The Gill V10 intake currently provides one source witness. Its new rows remain `verified-source / needs-cross-verification` and are not repair-ready.
+The Gill V10 intake currently provides one source witness. Its new rows remain `verified-source / needs-cross-verification` and are not repair-ready. The tree-identical freshness recheck does not count as a second independent witness.
 
 ## Long-lived core
 
