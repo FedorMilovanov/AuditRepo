@@ -29,6 +29,12 @@ All severities below are **proposals**. New Gill rows are not `confirmed-current
 - `../../../working/START_HERE_2026-07-09.md`
 - `../../../verification/START_HERE_2026-07-09.md`
 
+The cumulative baseline artifact must be read together with:
+
+- `artifacts/STATUS_AND_CORRECTIONS_2026-07-09.md`
+
+That correction file overrides stale status language, the old rail-count subclaim, the provisional JSON-LD `@id`, and wording that treated Part IV proposals as canonical decisions.
+
 ## Current-head reconciliation
 
 The baseline range `ac26d8e..30d9fb61` contains seven commits. It includes intervening Gill rail/Floating Cluster/PageHead work and Merge PR #50 restoring Part III illustrations.
