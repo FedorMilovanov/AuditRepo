@@ -1,92 +1,92 @@
 # gb-is-my-strength / gospod-bog.ru
 
-**Status:** 🟢 active / repair-in-progress / reverify-needed for older systemic backlog  
+**Status:** 🟢 active / repair-in-progress; Gill V10 verifying  
 **Current source HEAD checked:** `30d9fb61fe2c9116ee53a54d681c01455eef4fe6` (2026-07-09)  
-**Initial Gill V10 baseline:** `ac26d8efa2b952df6dc46eef05908e6d65287e82`  
+**Research HEAD checked:** `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`  
 **Source repository:** `FedorMilovanov/gb-is-my-strength`
 
-## Start here — current truth
+## Start here by layer
 
-1. `verified/START_HERE.md` — owner and next-agent handoff at current source HEAD.
-2. `verified/MASTER_BUG_MATRIX.md` — canonical operational matrix.
-3. `incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md` — official current-head Gill V10 intake.
-4. `incoming/gpt-5-5-gill-series-master-audit/2026-07-09/artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md` — detailed Gill architecture/content research baseline.
-5. `incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_30d9fb61.md` — PR #50 delta and restored-figure finding.
-6. `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` — supporting systemic backlog tied to old SHA; reverify each item before implementation.
+### Canonical verified layer
 
-## Current matrix summary
+1. `verified/START_HERE.md` — owner and next-agent handoff.
+2. `verified/MASTER_BUG_MATRIX.md` — 38 canonical open/carry-over rows.
+3. `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` — older systemic backlog; current-head reverify required.
+
+### Active working and verification layers
+
+4. `working/START_HERE_2026-07-09.md` — 11 Gill V10 candidates, not verified truth.
+5. `verification/START_HERE_2026-07-09.md` — witness queue and promotion rules.
+
+### Raw evidence
+
+6. `incoming/gpt-5-5-gill-series-master-audit/2026-07-09/` — official Gill V10 intake package.
+
+## Correct counts
 
 | Category | Count |
 |---|---:|
 | Historical closed/fixed | 90 |
-| P0 open | 6 |
-| P1 open | 6 |
-| P2 open | 11 |
-| P3 open | 19 |
+| Canonical P0 open | 0 |
+| Canonical P1 open | 2 |
+| Canonical P2 open | 10 |
+| Canonical P3 open | 19 |
 | Refactoring | 4 |
 | AuditRepo | 3 |
-| **Active items** | **49** |
+| **Canonical open total** | **38** |
+| **Gill V10 pending candidates** | **11** |
 
-The six P0 rows are Gill-series structural publication blockers, not a claim that the entire production site is unavailable.
+Do not describe the project as having “49 active confirmed bugs”.
 
-## Current-head change during the audit
+## Gill V10 status
 
-Source `main` advanced from `ac26d8e` to `30d9fb61` through Merge PR #50, restoring two Gill Part III illustrations. The article body itself did not change, so the original V10 structural findings remain current.
-
-New scoped P2:
+The Gill findings currently have one direct source witness:
 
 ```text
-GILL-V10-RESTORED-FIGURE-RELOCATION
+verified-source
+needs-cross-verification
+not repair-ready
 ```
 
-The figures are server-rendered after the article and moved client-side by heading/prose anchors. This needs a browser/Pagefind/print witness and should ultimately be replaced by direct semantic placement.
-
-## Current priority tracks
-
-### Gill series V10
-
-Required order:
+The proposed implementation sequence remains useful as a working hypothesis, but source work must wait for verification:
 
 ```text
 canonical content graph
 → series manifest
-→ outline / Reader AST
-→ content ownership and relocation
-→ Part III cleanup
+→ outline / Reader model
+→ semantic figure placement
+→ topic ownership / Part III cleanup
 → Research canonical brief
-→ Part IV authoring
-→ atomic six-document publication
+→ Introduction / Part IV authoring
+→ atomic publication
 ```
 
-Do not publish Part IV as an additive page: Parts II–III already contain most of its doctrinal scope.
+## Current-head correction
 
-### TTS model lifecycle
+The baseline range `ac26d8e..30d9fb61` contains seven commits. Current rail code has already fixed the former display error that counted Introduction/Reference as numbered parts: it now renders `Часть X из 3`. The broader five-document manifest/audit hardcoding remains only a pending candidate.
 
-`TTS-DL-CONSENT` remains an owner UX decision. Save-Data is mitigation, not explicit consent. Do not mix the neural-model delivery lane with Gill content work.
+PR #50 added two restored Part III figures through client-side relocation. The exact no-JS, Pagefind, print and TTS impact has not yet been browser/build verified.
 
-### Older systemic backlog
-
-`SUPER_AUDIT_2026-07-06_14a49be8.md` remains useful evidence for release transaction, editorial dates, SW/cache, route registries, security, Bible corpus and semantic gates. Its wording is not automatically current at `30d9fb61`; reverify first.
-
-## Project rules
-
-- SHA-first; source claim without immutable SHA is not repair-ready.
-- One subsystem per source PR.
-- Astro↔legacy parity is not proof of content correctness.
-- A green workflow step is not proof unless its failure path is strict and the checked/deployed SHA is explicit.
-- Do not rewrite or delete another agent’s `incoming` evidence.
-- Old canonical documents are indexed under `archive/stale/`; active entrypoints must not preserve multiple competing truths.
-- Update AuditRepo atomically with source repair: matrix row, evidence, reverify and canonical handoff.
-
-## In-flight / owner-coordination zones
+## Separate coordination lanes
 
 - Gill editorial ownership and Part IV scope.
 - PremiumControls/Floating Cluster visual behavior.
 - TTS consent and large-model lifecycle.
 - Glossary/Bible tooltip data.
 
-Infrastructure may be audited, but owner-facing behavior or content should not be changed without coordination.
+Do not mix these in one source PR.
+
+## Project rules
+
+- SHA-first.
+- Raw intake is evidence, not canonical truth.
+- One source witness cannot be promoted directly to `confirmed-current`.
+- Astro↔legacy parity is not proof of content correctness.
+- Browser claims require browser evidence.
+- Do not rewrite or delete another agent’s `incoming` evidence.
+- Only verified `repair-ready` rows may enter implementation.
+- Update AuditRepo atomically with any source repair.
 
 ## Historical note
 
-The former project README mixed 2026-07-06 status banners with later TTS incident history and no longer represented one current truth. It remains available in Git history at AuditRepo base commit `18713174a343740cc0886df6c6441c51bde61274` and is indexed in `archive/stale/2026-07-09-pre-gill-v10/README.md`.
+The former project README and matrix remain available at immutable AuditRepo commit `18713174a343740cc0886df6c6441c51bde61274` and are indexed in `archive/stale/2026-07-09-pre-gill-v10/README.md`.
