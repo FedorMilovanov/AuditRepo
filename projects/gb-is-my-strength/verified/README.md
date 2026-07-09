@@ -6,15 +6,15 @@ Canonical entrypoint:
 START_HERE.md
 ```
 
-Full existing ledger:
+Canonical status ledger:
 
 ```text
 MASTER_BUG_MATRIX.md
 ```
 
-Current source HEAD: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`.
+Do not duplicate the current source SHA or project-status summary here. `START_HERE.md` and `../reverify/START_HERE_2026-07-09.md` are the only active freshness records.
 
-Gill V10 remains outside canonical bug truth until verifier promotion. Its active supporting layers are:
+Gill V10 remains outside canonical bug truth until verifier promotion. Its supporting layers are:
 
 ```text
 ../working/START_HERE_2026-07-09.md
@@ -23,5 +23,3 @@ Gill V10 remains outside canonical bug truth until verifier promotion. Its activ
 ```
 
 `SUPER_AUDIT_2026-07-06_14a49be8.md` is historical supporting evidence tied to an older source state. Do not use it as current repair truth without reverify.
-
-Do not maintain a second status summary in this README; update `START_HERE.md` instead.
