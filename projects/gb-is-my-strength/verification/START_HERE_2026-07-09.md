@@ -1,7 +1,9 @@
 # Verification START HERE — Gill V10 — 2026-07-09
 
 > Layer: `verification/` — active dispute/status-resolution queue.  
-> Source HEAD: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.  
+> Current source HEAD: `ff55161b6858a1bbb0fad5704a11c6b41c961879`.  
+> Functional tree audited: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.  
+> Net compare `30d9fb61..ff55161b`: no changed files.  
 > Working synthesis: `../working/START_HERE_2026-07-09.md`.  
 > Raw intake: `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/`.
 
@@ -26,7 +28,7 @@ fixed-current
 false-positive
 ```
 
-No new Gill candidate is counted as a canonical open bug in `verified/MASTER_BUG_MATRIX.md` until this queue produces the required independent evidence.
+The empty-tree freshness delta to `ff55161b` does not add an independent witness. No new Gill candidate is counted as a canonical open bug until this queue produces the required evidence.
 
 ## Verification queue
 
@@ -48,13 +50,22 @@ No new Gill candidate is counted as a canonical open bug in `verified/MASTER_BUG
 
 ### Old `3 из 5` subclaim — removed
 
-Current `GillSeriesRail.astro` filters `GILL_SERIES_ITEMS` to Roman items and renders numbered progress as `Часть X из 3`. Therefore the earlier subclaim that the current rail still displays `3 из 5` is stale on `30d9fb61` and must not be carried into the Gill V10 candidate.
+Current `GillSeriesRail.astro` filters `GILL_SERIES_ITEMS` to Roman items and renders numbered progress as `Часть X из 3`. Therefore the earlier subclaim that the current rail still displays `3 из 5` is stale and must not be carried into the Gill V10 candidate.
 
 This does **not** close the broader manifest candidate because the data/audit layers still hardcode five documents, expected order and total `149`.
 
-### PR #50 scope — clarified
+### Functional range scope — clarified
 
-The full baseline range `ac26d8e..30d9fb61` includes seven commits. PR #50 itself changed only the Part III shell, the new restored-figures component and its lane report. Other rail/Floating Cluster/PageHead edits were intervening commits and were reviewed separately for relevance.
+The baseline range `ac26d8e..30d9fb61` includes seven commits. PR #50 itself changed only the Part III shell, the new restored-figures component and its lane report. Other rail/Floating Cluster/PageHead edits were intervening commits and were reviewed separately for relevance.
+
+### Current no-op HEAD — clarified
+
+The range `30d9fb61..ff55161b` contains a temporary placeholder commit and its removal. GitHub compare returns no changed files. The current tree is identical to the audited functional tree; no candidate predicate or status changed.
+
+Evidence:
+
+- `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_30d9fb61.md`
+- `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_ff55161.md`
 
 ## Promotion rules
 
@@ -71,6 +82,7 @@ A verifier must create a decision record that lists, per candidate:
 
 ```text
 source SHA
+functional tree SHA
 witness types
 accepted/rejected severity
 canonical status
