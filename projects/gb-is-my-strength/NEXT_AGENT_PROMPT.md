@@ -2,9 +2,7 @@
 
 > **Current as of 2026-07-09.**  
 > Source `main`: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.  
-> Initial Gill V10 baseline: `ac26d8efa2b952df6dc46eef05908e6d65287e82`.  
-> AuditRepo canonical matrix: `verified/MASTER_BUG_MATRIX.md`.  
-> Gill V10 intake: `incoming/gpt-5-5-gill-series-master-audit/2026-07-09/`.
+> Research: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`.
 
 ## Before any work
 
@@ -16,128 +14,114 @@ git rev-parse HEAD
 ```
 
 1. Compare source HEAD with `30d9fb61`.
-2. If it moved, record a reverify delta before relying on this handoff.
+2. If it moved, create a reverify delta before using the Gill candidate map.
 3. Read source-repo `AGENTS.md`, `docs/WORK_MODES.md`, and `docs/OWNER-INVARIANTS.md`.
-4. Read AuditRepo:
+4. Read AuditRepo by layer:
    - `verified/START_HERE.md`
    - `verified/MASTER_BUG_MATRIX.md`
-   - Gill V10 `REPORT.md`
-   - Gill V10 master artifact
-   - `evidence/REVERIFY_DELTA_30d9fb61.md`.
+   - `working/START_HERE_2026-07-09.md`
+   - `verification/START_HERE_2026-07-09.md`
+   - Gill V10 raw intake only as evidence.
 
-## Current state
-
-```text
-P0  6
-P1  6
-P2 11
-P3 19
-Refactor 4
-AuditRepo 3
-Total active 49
-```
-
-The six P0s are Gill-series structural publication blockers. They do not mean the production site is wholly unavailable.
-
-## Current-head Gill change
-
-Merge PR #50 restored two Part III figures without changing `GillPart3ArticleBody.astro`.
-
-New P2:
+## Correct status
 
 ```text
-GILL-V10-RESTORED-FIGURE-RELOCATION
+38 canonical open/carry-over rows
+11 Gill V10 candidates pending cross-verification
+90 historical closed/fixed rows
 ```
 
-The figures are server-rendered after the article and moved into place by inline JS; the burial anchor matches exact Russian prose. Do not call this fixed or harmless without browser, no-JS, Pagefind and print verification.
-
-## Gill task truth
-
-Do **not** start by writing Part IV.
-
-Required sequence:
+The Gill candidates currently have one source witness:
 
 ```text
-1. canonical content source
-2. series manifest
-3. generated outline / Reader AST
-4. remove legacy III/IV/V internal numbering
-5. direct semantic ownership of restored figures
-6. content ownership manifest
-7. deduplicate/reorder Part III
-8. Research canonical/superseded statuses
-9. relocate doctrine from Parts II–III
-10. expand historical Introduction
-11. author Part IV
-12. publish all projections atomically
+verified-source
+needs-cross-verification
+not repair-ready
 ```
 
-### Page ownership
+Do **not** implement a Gill candidate directly from the raw intake or working matrix.
+
+## Recommended next task
+
+Choose one Gill candidate and provide an independent witness angle from the verification queue.
+
+Examples:
+
+- build a current heading↔TOC inventory;
+- compare production-like dist with MDX/Astro/root representations;
+- run no-JS/Pagefind/print/TTS checks for restored figures;
+- produce an independent topic-ownership map;
+- verify the Rippon wording and correct the Research dossier.
+
+Then write a verifier decision with:
 
 ```text
-Introduction = historical/legal/confessional/print/urban world
-Part I       = personal biography and pastoral formation
-Part II      = scholarship, method, publication and intellectual workflow
-Part III     = reception, controversy as history, influence, final life and death
-Part IV      = doctrine, disputed texts and evaluation
-Reference    = works, chronology, glossary, editions, sources, corrections
+source SHA
+witness types
+accepted/rejected severity
+canonical status
+owner decision
+repair lane
+not-stale result
 ```
 
-### Part IV
+## Gill candidate plan — not yet an implementation order
 
-Use:
+```text
+canonical content graph
+→ series manifest
+→ outline / Reader model
+→ semantic figure placement
+→ topic ownership / Part III cleanup
+→ Research governance
+→ Introduction / Part IV authoring
+→ atomic publication
+```
+
+### Current-head correction
+
+Current `GillSeriesRail.astro` already filters Roman items and renders `Часть X из 3`. The old `3 из 5` display claim is stale and must not be reintroduced. The broader five-document manifest/audit hardcoding remains a candidate.
+
+### Part IV proposal
 
 ```text
 Часть IV. Богословие
 Спорные тексты и логика спасения в системе Джона Гилла
 ```
 
-Distinguish:
+Proposed evidence classification:
 
-- seven disputed texts;
-- two positive soteriological anchors (`John 3:3`, `Romans 8:30`).
+- seven disputed/universal-redemption texts;
+- two positive soteriological anchors.
 
-Do not put `7` or `9` into the permanent H1.
+This remains an owner/editorial proposal, not canonical truth.
 
 ## Separate lanes — do not mix
 
-### Gill content/architecture
-
-Owner editorial decision required before moving prose.
-
-### PremiumControls / Floating Cluster visual work
-
-Do not alter rail geometry or visual behavior in a content lane.
-
-### TTS model delivery
-
-`TTS-DL-CONSENT` remains an owner decision. Save-Data is not explicit consent. Do not combine this with Gill article restructuring.
-
-### Glossary/Bible data
-
-Coordinate before touching owner-edited data.
-
-## Older SUPER_AUDIT
-
-`verified/SUPER_AUDIT_2026-07-06_14a49be8.md` is supporting historical evidence, not an automatically current repair order. Reverify each W1–W10 claim against current source HEAD before implementation.
+- Gill content/architecture.
+- PremiumControls/Floating Cluster visual work.
+- TTS model delivery and consent.
+- Glossary/Bible data.
 
 ## Hard rules
 
 1. One subsystem per PR.
-2. SHA-first: no current SHA, no repair-ready claim.
-3. A green workflow step is evidence only when the failure path is strict and the checked/deployed SHA is explicit.
-4. Astro↔legacy parity is not content truth.
-5. Do not weaken a gate to make migration pass; replace obsolete contracts with stronger semantic contracts.
-6. Do not edit or delete another agent’s incoming evidence.
-7. Browser claims require browser evidence.
-8. Update AuditRepo atomically with source repair.
+2. SHA-first.
+3. Raw intake is not verified truth.
+4. One source witness is not `confirmed-current`.
+5. Browser claims require browser evidence.
+6. Do not weaken obsolete gates; replace them with stronger semantic contracts.
+7. Do not edit or delete another agent’s incoming evidence.
+8. Only `repair-ready` rows may enter implementation.
+9. Update AuditRepo atomically with any source repair.
 
 ## Required final report format
 
 ```text
 Source functional SHA / bot SHA / deployed SHA:
 AuditRepo SHA:
-Canonical matrix IDs:
+Candidate/canonical matrix IDs:
+Witness types:
 Root cause:
 Owner decision used:
 Fix + files:
@@ -147,13 +131,11 @@ Remaining risks:
 AuditRepo update:
 ```
 
-## AuditRepo branch validation
-
-For documentation-only AuditRepo work:
+## AuditRepo validation
 
 ```bash
 python3 scripts/check_auditrepo_structure.py
 python3 scripts/validate_audit_repo.py
 ```
 
-No merge claim without those results.
+No merge claim without checks on the final PR head.
