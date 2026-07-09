@@ -4,10 +4,14 @@
 > Source `main` checked: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`  
 > Research checked: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
 
-## Canonical documents
+## Canonical verified documents
 
 - [`MASTER_BUG_MATRIX.md`](./MASTER_BUG_MATRIX.md) — canonical open/carry-over ledger.
-- `SUPER_AUDIT_2026-07-06_14a49be8.md` — historical systemic backlog; current-head reverify required.
+- `START_HERE.md` — this canonical owner/agent handoff.
+
+## Supporting historical evidence
+
+- `SUPER_AUDIT_2026-07-06_14a49be8.md` — system audit tied to old source SHA; retain as evidence, reverify before repair use.
 
 ## Active non-canonical Gill layers
 
