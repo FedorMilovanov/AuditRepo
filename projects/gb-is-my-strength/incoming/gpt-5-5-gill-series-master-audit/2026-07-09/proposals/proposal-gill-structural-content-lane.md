@@ -5,13 +5,15 @@
 - Proposed by: `gpt-5-5-gill-series-master-audit`
 - Date: 2026-07-09
 - Initial source SHA: `ac26d8efa2b952df6dc46eef05908e6d65287e82`
-- Current source SHA: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`
+- Functional tree audited: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`
+- Current source HEAD: `ff55161b6858a1bbb0fad5704a11c6b41c961879`
+- Net compare `30d9fb61..ff55161b`: no changed files
 - Proposal type: repair-lane / split / publication-order
 - Proposal status: `proposal-open`
 
 ## Verification prerequisite
 
-This proposal is based on one source witness. It is not accepted and must not start a source implementation lane until the relevant candidates are promoted through:
+This proposal is based on one source witness. The empty-tree freshness reverify is not a second witness. The proposal is not accepted and must not start a source implementation lane until the relevant candidates are promoted through:
 
 - `../../../../verification/START_HERE_2026-07-09.md`
 - `../../../../working/START_HERE_2026-07-09.md`
@@ -38,11 +40,11 @@ not repair-ready
 - `GILL-V10-CLAIM-PROVENANCE`
 - `GILL-V10-RESTORED-FIGURE-RELOCATION`
 
-## Current-head correction
+## Current-head corrections
 
-Current `GillSeriesRail.astro` already renders numbered progress as `Часть X из 3`. The obsolete `3 из 5` display subclaim is not part of this proposal.
-
-The remaining manifest candidate concerns five-document IDs/order/maps, total `149` and the consistency audit’s fixed expectations.
+- Current `GillSeriesRail.astro` renders numbered progress as `Часть X из 3`. The obsolete `3 из 5` display subclaim is not part of this proposal.
+- The remaining manifest candidate concerns five-document IDs/order/maps, total `149` and the consistency audit’s fixed expectations.
+- Later source commits `273ac48e` and `ff55161b` have an empty net diff against the audited functional tree; no proposal predicate changed.
 
 ## Proposed program
 
@@ -97,6 +99,7 @@ Do not invent `/series/dzhon-gill/#series` unless `/series/dzhon-gill/` is a rea
 - `../artifacts/STATUS_AND_CORRECTIONS_2026-07-09.md`
 - `../evidence/SOURCE_EVIDENCE_INDEX.md`
 - `../evidence/REVERIFY_DELTA_30d9fb61.md`
+- `../evidence/REVERIFY_DELTA_ff55161.md`
 
 ## What must not be mixed
 
