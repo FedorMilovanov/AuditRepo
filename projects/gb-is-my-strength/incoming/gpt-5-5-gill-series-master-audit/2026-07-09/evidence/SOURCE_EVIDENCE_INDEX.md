@@ -4,10 +4,13 @@
 
 - Source repository: `FedorMilovanov/gb-is-my-strength`
 - Source branch: `main`
-- Source SHA verified at start/end: `ac26d8efa2b952df6dc46eef05908e6d65287e82`
+- Initial source SHA: `ac26d8efa2b952df6dc46eef05908e6d65287e82`
+- Current source SHA at end: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`
 - Research repository: `FedorMilovanov/Research`
 - Research SHA: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
 - AuditRepo base SHA: `18713174a343740cc0886df6c6441c51bde61274`
+
+The current-head delta is documented in `REVERIFY_DELTA_30d9fb61.md`. It did not modify `GillPart3ArticleBody.astro`, so the baseline content/outline findings remain current.
 
 ## Production content truth
 
@@ -61,7 +64,7 @@ Checked:
 - `scripts/gill-pre-v16-submenu-regression-audit.js`
 - `src/components/article-pilots/gill-series/gillSeriesData.ts`
 
-Critical policy text:
+Critical policy:
 
 - historical labels + order + item count are preserved;
 - Part II is documented as having grown from 6 to 29 sections;
@@ -71,28 +74,30 @@ Critical policy text:
 
 Checked headings/IDs in `GillPart2ArticleBody.astro`, including:
 
-- `part-theology`
-- `part-controversy`
-- `sec-trinity`
-- `sec-hebrew`
-- `sec-canticles`
-- `sec-covenant`
-- `sec-dd`
-- `sec-ordinances`
-- `sec-eschatology`
-- `sec-commentary`
-- `sec-habakkuk`
-- `sec-systematics`
-- `sec-pactum`
-- `sec-ecclesiology`
-- `sec-whitby`
-- `sec-pastoral`
-- `sec-deism-polemic`
-- `sec-gill-catholicity`
-- `sec-ordo-salutis`
-- `sec-gill-solter`
-- `sec-sources-part2`
-- `sec-quiz`
+```text
+part-theology
+part-controversy
+sec-trinity
+sec-hebrew
+sec-canticles
+sec-covenant
+sec-dd
+sec-ordinances
+sec-eschatology
+sec-commentary
+sec-habakkuk
+sec-systematics
+sec-pactum
+sec-ecclesiology
+sec-whitby
+sec-pastoral
+sec-deism-polemic
+sec-gill-catholicity
+sec-ordo-salutis
+sec-gill-solter
+sec-sources-part2
+sec-quiz
+```
 
 Configured TOC has only six rows.
 
@@ -106,6 +111,8 @@ Checked in `GillPart3ArticleBody.astro`:
 - repeated clusters exist for Islam, Spurgeon, Toplady, America and final days;
 - many independent H3 IDs are absent from `partToc`.
 
+This body file was unchanged between `ac26d8e` and `30d9fb61`.
+
 ## Part I structural evidence
 
 Checked:
@@ -114,7 +121,7 @@ Checked:
 - `GillPart1SectionLastWordsWife.astro` → `sec-last-words-wife`
 - `GillPart1SectionSkeppDetail.astro` → `sec-skepp-detail`
 
-These sections are independent current H3s absent from the manual TOC.
+These are independent current H3 sections absent from the manual TOC.
 
 ## Historical Introduction evidence
 
@@ -131,7 +138,7 @@ Checked current context section components:
 - `GillContextSectionBooks.astro`
 - `GillContextSectionConclusion.astro`
 
-The ten H2 backbone is coherent. Main ownership issue: `sec-books` narrates personal Gill biography already owned by Part I, while Part I/II repeat Southwark and Salters’ Hall.
+The ten-H2 backbone is coherent. Main ownership issue: `sec-books` narrates personal Gill biography already owned by Part I, while Part I/II repeat Southwark and Salters’ Hall.
 
 ## TTS / Reader evidence
 
@@ -146,6 +153,23 @@ Checked `GillContextPageHead.astro`:
 - JSON-LD `speakable.cssSelector` includes `.summary-card` and `[data-speakable]`.
 
 Contradiction: schema declares the summary speakable; custom Play excludes it.
+
+## Current-head restored-figure evidence
+
+Checked at `30d9fb61`:
+
+- `src/components/article-pilots/gill-part3/GillPart3MainShell.astro`
+- `src/components/article-pilots/gill-part3/GillPart3RestoredFigures.astro`
+
+Observed:
+
+- `GillPart3RestoredFigures` is SSR-rendered after `GillPart3ArticleBody`;
+- figures initially sit outside `<article class="article-body" data-pagefind-body>`;
+- inline JS moves the Spurgeon figure by heading/neighbor elements;
+- inline JS finds the Bunhill placement by exact Russian prose fragments;
+- TTS reads neither figures nor captions.
+
+This supports `GILL-V10-RESTORED-FIGURE-RELOCATION`. Impact on no-JS/Pagefind/print requires browser/artifact witness.
 
 ## Vosk lifecycle evidence
 
@@ -180,5 +204,6 @@ Conflicts:
 
 - No Playwright/browser run in this intake.
 - No production deployment verification.
-- No claim that current CI is green for source `ac26d8e`.
+- No claim that current CI is green for source `30d9fb61`.
 - No source-code change was made.
+- AuditRepo validation commands were not executable through the connector and must run before merge.
