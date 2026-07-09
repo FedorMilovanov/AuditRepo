@@ -1,90 +1,74 @@
 # Source/API inspection log — 2026-07-09
-# No local source checkout, source build or browser run was available.
 
-Initial source HEAD:
-  FedorMilovanov/gb-is-my-strength main -> ac26d8efa2b952df6dc46eef05908e6d65287e82
+Environment:
+  GitHub connector source inspection
+  no local source checkout by this intake
+  no source build/browser run by this intake
 
-Functional source tree audited:
-  FedorMilovanov/gb-is-my-strength -> 30d9fb61fe2c9116ee53a54d681c01455eef4fe6
+Initial source baseline:
+  ac26d8efa2b952df6dc46eef05908e6d65287e82
 
-Current source HEAD after freshness reverify:
-  FedorMilovanov/gb-is-my-strength main -> ff55161b6858a1bbb0fad5704a11c6b41c961879
-
-Freshness compare:
-  30d9fb61fe2c9116ee53a54d681c01455eef4fe6..ff55161b6858a1bbb0fad5704a11c6b41c961879
-  2 commits
-  changed files: 0
-  interpretation: current source tree is identical to the audited functional tree
+Current source HEAD:
+  d579745c23d9a0e6dea3a8148a3369d46c47b94b
 
 Research HEAD:
-  FedorMilovanov/Research main -> 58e1ea5fab638812ae693a1d0b1e79c4dcb47131
+  58e1ea5fab638812ae693a1d0b1e79c4dcb47131
 
 AuditRepo base:
-  FedorMilovanov/AuditRepo main -> 18713174a343740cc0886df6c6441c51bde61274
+  18713174a343740cc0886df6c6441c51bde61274
 
-Functional audit compare:
-  ac26d8efa2b952df6dc46eef05908e6d65287e82..30d9fb61fe2c9116ee53a54d681c01455eef4fe6
-  7 commits
+Source ranges reviewed:
+  ac26d8e..30d9fb61  — initial functional reconciliation
+  30d9fb61..ff55161b — temporary placeholder added and removed; empty net diff
+  ff55161b..d579745c — Gill image/hero/figure-placement lane
 
-Relevant source files inspected:
-  src/pages/articles/dzhon-gill-chast-2-uchenyi/index.astro
-  src/components/article-pilots/gill-series/gillSeriesData.ts
-  src/components/article-pilots/gill-series/GillSeriesRail.astro
-  src/components/article-pilots/gill-context/*
-  src/components/article-pilots/gill-part1/*
-  src/components/article-pilots/gill-part2/GillPart2ArticleBody.astro
-  src/components/article-pilots/gill-part3/GillPart3ArticleBody.astro
-  src/components/article-pilots/gill-part3/GillPart3MainShell.astro
-  src/components/article-pilots/gill-part3/GillPart3RestoredFigures.astro
-  src/components/ui/floating-cluster/SingleArticleCluster.astro
-  src/components/article-pilots/gill-context/GillContextPageHead.astro
-  js/floating-cluster-controller.js
+Current source effect:
+  - normal JS-on image placement independently browser-verified by the image lane
+  - Part III figure runtime relocation still present
+  - no-JS/Pagefind/print/custom-TTS impact not established
+  - content source, manifest, semantic TOC, numbering, ownership and Research candidates unchanged
+
+Primary source systems inspected:
+  Gill Astro routes/shells/article bodies
+  src/content/articles/dzhon-gill-*.mdx
+  root legacy Gill HTML shadows
+  gillSeriesData.ts and GillSeriesRail.astro
+  data/series.json
   data/gill-submenu-anchor-reconciliation.json
   scripts/gill-pre-v16-submenu-regression-audit.js
   scripts/gill-series-data-consistency-audit.js
-  data/series.json
-  src/content/articles/dzhon-gill-*.mdx
+  js/floating-cluster-controller.js
+  Gill PageHead structured data
+  current GillPart3RestoredFigures.astro
 
 Research files inspected:
   Джон Гилл/00_README_AND_NAVIGATION.md
-  Джон Гилл/03_STRUCTURE_PROPOSAL.md
-  Джон Гилл/04_CONTENT_DEEPENING_AUDIT_AND_EXEGESIS_SET.md
-  Джон Гилл/05_BODY_OF_DIVINITY_TOC_AND_ARTICLE_SKELETON.md
-  Джон Гилл/07_VVEDENIE_DEEP.md
-  Джон Гилл/31_GILL_DEPT_MASTER_MAP.md
-  Джон Гилл/42_THE_CREATION_IMAGE_OF_GOD_AND_PROVIDENCE.md
+  03_STRUCTURE_PROPOSAL.md
+  04_CONTENT_DEEPENING_AUDIT_AND_EXEGESIS_SET.md
+  05_BODY_OF_DIVINITY_TOC_AND_ARTICLE_SKELETON.md
+  07_VVEDENIE_DEEP.md
+  department register through dossier 42
 
 Governance files inspected:
-  README.md
   CONTRIBUTING.md
   MULTI_WITNESS_VERIFICATION_PROTOCOL.md
   CLEANUP_RETENTION_POLICY.md
   scripts/scaffold_intake.py
+  scripts/check_auditrepo_structure.py
   scripts/validate_audit_repo.py
-  projects/gb-is-my-strength/working/README.md
-  projects/gb-is-my-strength/verification/README.md
 
-Verifier corrections made:
-  - removed invalid L2/L3/confirmed-current promotion for one source witness
-  - restored incoming -> working -> verification -> verified layering
-  - corrected counts to 38 canonical carry-over + 11 pending candidates
-  - clarified that the 38 carry-over rows were not mass-reverified on the current source
-  - removed stale current-rail 3-of-5 / 5-of-5 subclaim
-  - clarified 7-commit functional delta versus PR #50 scope
-  - recorded tree-identical current-head freshness delta
-  - changed Part IV seven-plus-two classification to owner/editorial proposal
-  - rejected a potentially non-dereferenceable JSON-LD @id proposal
-  - separated canonical files from historical SUPER_AUDIT support
-  - added comments folder contract
-  - added mandatory cumulative-artifact correction file
+Cleanup corrections:
+  - restored full existing canonical bug matrix
+  - kept Gill candidates outside canonical counts
+  - replaced stale master + correction overlay with one normalized artifact
+  - moved intermediate master and SHA notes to archive/stale
+  - created one project-level current reverify entrypoint
+  - removed active references to deleted correction/delta files
+  - reduced layer READMEs to pointers
+  - closed stale 3-of-5 subclaim
+  - retained Part IV and seven-plus-two as proposals
 
-Final-head validation source of truth:
-  GitHub pull-request checks for the final branch HEAD.
-  Do not copy a run ID into this log, because doing so would create a newer HEAD and make that run non-final.
+AuditRepo validation source of truth:
+  GitHub pull-request checks on the final branch HEAD.
 
-Local commands not executed because the tool container could not resolve github.com:
-  python3 scripts/check_auditrepo_structure.py
-  python3 scripts/validate_audit_repo.py
-  source-repo build/browser checks
-
-GitHub Actions must run both AuditRepo validators on the final PR head. Source findings remain W1 verified-source / needs-cross-verification.
+Do not copy a workflow run ID into this log: editing the log would create a newer branch HEAD and make that run non-final.
