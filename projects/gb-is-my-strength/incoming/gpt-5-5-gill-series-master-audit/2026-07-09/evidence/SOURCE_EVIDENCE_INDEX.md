@@ -1,12 +1,18 @@
 # Gill V10 — Source Evidence Index
 
-## Heads and boundary
+## Evidence boundary
 
 - Source repo: `FedorMilovanov/gb-is-my-strength`
 - Initial baseline: `ac26d8efa2b952df6dc46eef05908e6d65287e82`
-- Current source HEAD: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`
-- Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
+- Gill evidence reconciled through image lane: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`
+- Research evidence HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
 - Witness produced by this intake: source inspection
+
+The current source HEAD and effects of later commits are maintained only in:
+
+```text
+../../../reverify/START_HERE_2026-07-09.md
+```
 
 Default status:
 
@@ -14,12 +20,6 @@ Default status:
 verified-source
 needs-cross-verification
 not repair-ready
-```
-
-Current-head effects are recorded in:
-
-```text
-../../../reverify/START_HERE_2026-07-09.md
 ```
 
 ## Content representations
@@ -61,7 +61,7 @@ reading total 149
 consistency audit expecting exactly five items
 ```
 
-Current rail correctly renders `Часть X из 3`. The former `3 из 5` display claim is excluded.
+The reconciled rail renders `Часть X из 3`. The former `3 из 5` display claim is excluded.
 
 ## TOC and heading contracts
 
@@ -76,7 +76,7 @@ Observed:
 
 - historical label/order/count is protected;
 - Part II is documented as having expanded beyond six sections;
-- current Part II `partToc` still contains six rows;
+- Part II `partToc` contains six rows in the evidence baseline;
 - source headings exist outside the configured manual TOCs;
 - at least one stored TOC level does not match the source heading level.
 
@@ -93,7 +93,7 @@ Observed:
 - topic clusters recur around Islam, Spurgeon, Toplady, America and final days;
 - internal H2 numbering begins at V.
 
-The current image lane did not reorder this prose.
+The Gill image lane did not reorder this prose.
 
 ## Reader projections
 
@@ -108,7 +108,7 @@ Observed:
 
 Build/browser/TTS/a11y/print evidence remains required.
 
-## Restored Part III figures — current source
+## Restored Part III figures — Gill image lane
 
 Checked:
 
@@ -116,7 +116,7 @@ Checked:
 - `GillPart3RestoredFigures.astro`
 - `docs/refactor-2026/lanes/gill-image-premium-audit-2026-07-09.md`
 
-Current source mechanism:
+Mechanism at the reconciled Gill evidence boundary:
 
 - figures server-render after the article body;
 - inline JavaScript removes legacy copies;
@@ -130,7 +130,7 @@ Independent image-lane evidence establishes:
 normal JS-on placement succeeds
 exactly one Spurgeon figure
 exactly one Bunhill figure
-intended current visual locations
+intended visual locations
 ```
 
 Still unverified:
@@ -146,7 +146,7 @@ Therefore `GILL-V10-RESTORED-FIGURE-RELOCATION` is narrowed, not closed.
 
 ## TTS consent confirmation
 
-Current controller source shows Save-Data/opt-out as partial warm-up mitigation rather than explicit consent for every model-load path. This is supporting evidence for existing canonical row `TTS-DL-CONSENT`, not a new Gill candidate.
+The inspected controller source shows Save-Data/opt-out as partial warm-up mitigation rather than explicit consent for every model-load path. This is supporting evidence for existing canonical row `TTS-DL-CONSENT`, not a new Gill candidate.
 
 ## Research evidence
 
@@ -170,6 +170,6 @@ Proposed dossier statuses and the seven-plus-two classification require independ
 ## Limits
 
 - This intake did not run the source-repository build or browser suite.
-- Browser claims above come from the independent current image lane and apply only to its exact JS-on placement assertions.
+- Browser claims above come from the independent Gill image lane and apply only to its exact JS-on placement assertions.
 - No production deployment claim is made by this intake.
 - No Gill candidate is canonical or repair-ready solely from this index.
