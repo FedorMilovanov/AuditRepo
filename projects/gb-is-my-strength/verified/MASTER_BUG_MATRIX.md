@@ -2,16 +2,19 @@
 
 > **Canonical operational ledger.**  
 > Source repository: `FedorMilovanov/gb-is-my-strength`  
-> Gill V10 source context checked: `main` @ `30d9fb61fe2c9116ee53a54d681c01455eef4fe6` (2026-07-09)  
+> Current source HEAD: `ff55161b6858a1bbb0fad5704a11c6b41c961879` (2026-07-09)  
+> Gill functional tree audited: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`  
+> Net compare `30d9fb61..ff55161b`: no changed files  
 > Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`  
 > AuditRepo base before this branch: `18713174a343740cc0886df6c6441c51bde61274`
 
 ## Layer status
 
-- The 38 P1/P2/P3/refactoring/AuditRepo rows below are the canonical **carry-over ledger from the AuditRepo base**. This Gill intake did not mass-reverify every carry-over row on source `30d9fb61`; each still needs its own current-head check before repair or closure.
+- The 38 P1/P2/P3/refactoring/AuditRepo rows below are the canonical **carry-over ledger from the AuditRepo base**. This Gill intake did not mass-reverify every carry-over row on source `ff55161b`; each still needs its own current-head check before repair or closure.
 - The new Gill V10 intake currently has one source witness only. Its 11 rows are listed in **Pending cross-verification** and are **not counted as canonical open bugs**.
 - Browser, built-artifact and production-like claims were not made by the Gill intake.
 - `SUPER_AUDIT_2026-07-06_14a49be8.md` remains supporting historical evidence tied to an older source SHA; reverify each systemic claim before implementation.
+- Freshness proof for the no-op current-head advance: `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_ff55161.md`.
 
 ## Current handoff layers
 
@@ -90,7 +93,7 @@ No canonical P0 row is added by this Gill intake. Six Gill publication-blocker c
 | `D-7` | Benign repo-relative documentation pointer in a source comment; cosmetic only. |
 | `D-8` | Markdown-only changes do not trigger deploy; by-design while Markdown is not public input. |
 
-All P3 descriptions above are carry-over summaries, not a claim that this Gill intake reverified them on `30d9fb61`.
+All P3 descriptions above are carry-over summaries, not a claim that this Gill intake reverified them on `ff55161b`.
 
 ---
 
@@ -177,7 +180,7 @@ Do not report `49 active confirmed bugs`. The correct wording is:
 # Current next steps
 
 1. Run the Gill cross-verification queue before source implementation.
-2. Reverify any selected carry-over row on the current source HEAD before repair or closure.
+2. Reverify any selected carry-over row on current source `ff55161b` before repair or closure.
 3. Record owner decisions for content ownership, Part IV scope and TTS consent.
 4. Promote, downgrade, merge or reject each Gill candidate through a verification decision document.
 5. Only promoted `repair-ready` rows may enter a source-repair lane.
