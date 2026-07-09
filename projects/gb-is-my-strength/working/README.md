@@ -6,9 +6,7 @@ Current synthesis entrypoint:
 START_HERE_2026-07-09.md
 ```
 
-Current source HEAD: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`.
-
-This layer contains candidate synthesis, not verified truth and not implementation instructions. Current-head effects are recorded in:
+This layer contains candidate synthesis, not verified truth and not implementation instructions. The evidence boundary is fixed in the synthesis document; all source-head changes belong only in:
 
 ```text
 ../reverify/START_HERE_2026-07-09.md
