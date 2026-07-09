@@ -1,8 +1,8 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
 > Canonical status ledger for the existing project backlog.  
-> Current project source HEAD: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`.  
 > Matrix counts last reconciled: 2026-07-08.  
+> Current source HEAD and not-stale effects: `START_HERE.md` → `../reverify/START_HERE_2026-07-09.md`.  
 > The Gill V10 intake did **not** mass-reverify these 38 open rows; reverify a selected row before repair, closure or severity change.  
 > Gill V10 candidates are tracked in `../working/START_HERE_2026-07-09.md` and are not included here.
 
