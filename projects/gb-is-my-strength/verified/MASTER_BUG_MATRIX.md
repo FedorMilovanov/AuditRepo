@@ -5,6 +5,8 @@
 > Обновлено: **2026-07-06** (D-23 RESOLVED, deploy-green `28829729903`) (fable-super-audit: единый HEAD, D-строки arena влиты в канонические таблицы, счётчики пересобраны).  
 > Расширенный системный бэклог (CI/даты/SW/security/Bible/семантика — ~70 находок): **`SUPER_AUDIT_2026-07-06_14a49be8.md`** — закрывается волнами W1–W10; в счётчики матрицы не входит.  
 > Дата консолидации: 2026-07-05 (реструктуризация из монолита — `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`).
+>
+> **🔄 Reverify 2026-07-09 (claude-auditor) — source сдвинулся `75f807b` → `2313f36f`** (main, +delta: mobile-bar v4 refactor + speed-slot dedup, Hermenevtika rail rework, Gill premium images, quotes FAB, series «Часть N из N» fixes; deploy green). Fresh HEAD-pass, 2 witness auditors. **Runtime SOLID: 0 P0/P1 crash/XSS/visual-regression в дельте.** Vosk-находки уже отслежены (TTS-DL-UNZIP-SYNC/CONSENT/NO-TABLOCK — не дублирую). **+8 новых P3** из этого рефактор-дельты (хвост P3-open; из них NF-GATE-IZ5-STALE / NF-STRANGLER-BAR-DRIFT — конкретные инстансы уже-трекнутых GATE-MARKER-DATA-DRIFT / STRANGLER-HYGIENE). Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-09_head-2313f36f-149-commit-delta.md`, `incoming/claude-auditor/2026-07-09/`.
 
 ---
 
@@ -130,7 +132,7 @@
 | D-19 | `<title>` ≠ `og:title`/`twitter:title`/JSON-LD headline на 2 кастомных PageHead (antisovetov, rimlyanam-7): 4 независимых литерала мимо Seo.astro | arena cycle2; `validate:all` |
 | D-21 | Глоссарий: dual renderer — `o()` innerHTML vs `l()` textContent → литеральный `<em>` в серверных тултипах; innerHTML из JSON = XSS-поверхность (W5) | arena cycle3 + fable: js/glossary.js, data/glossary.json (55 `<em>`) |
 
-## 🟢 P3 — ОТКРЫТО (19)
+## 🟢 P3 — ОТКРЫТО (27)
 
 | ID | Описание |
 |---|---|
@@ -153,6 +155,14 @@
 | D-4 | Magic z-index: `floating-cluster.css:2372/2447/2504/2697/2882`, `mobile-hotfix.css:129` — токены `--z-*` существуют, фикс тривиален (⚠️ PremiumControls in-flight — согласовать) |
 | D-7 | ⬇️ Downgraded (reverify 2026-07-08): строка 3 `PremiumControlAnchor.astro` — репо-**относительная** ссылка на doc (`AuditRepo/projects/.../PremiumControls/README.md §1`), а не абсолютный внутренний путь/секрет → фактически безобидно. Косметика: убрать ссылку при случае |
 | D-8 | `deploy.yml paths:` не включает `*.md` (doc-only не триггерит деплой; by-design пока Markdown не публичный вход, см. SUPER_AUDIT W4) |
+| NF-DEAD-ENHANCE-SHIM | 🆕 reverify 07-09: `enhanceGillMobileBarMarkup` мёртв для прода (bail :986 — все prod-страницы уже v4); тело (988-1047) строит `.mobile-btoc-meter`/`.mobile-icon-row`, чей CSS удалён `30bf3f5c`. Автор отложил в follow-up. `floating-cluster-controller.js:973-1048`. verified-source |
+| NF-SPEEDSLOT-4TH-COPY | 🆕 reverify 07-09: дедуп speed-slot 3-из-4 — `GillSeriesRail.astro:209` держит собственный inline `initGillRailSpeedSlot`, не импортит `_shared/speedSlot.ts` (как 2 мобильных бара + HermenevtikaRail). Рефактор-мелочь. verified-source |
+| NF-GATE-IZ5-STALE | 🆕 reverify 07-09 (инстанс GATE-MARKER-DATA-DRIFT): гейты хардкодят запрещённый маркер «Часть 1 из 5» (`premium-controls-rollout-audit.js:210`, `gill-v16-mobile-play-smoke.js:253`), но части теперь рендерят «из 3» → guard проходит вакуумно, пропустит будущий miscount. Fix идёт вместе с выносом счётчиков в data/. verified-source |
+| NF-STRANGLER-BAR-DRIFT | 🆕 reverify 07-09 (конкретика STRANGLER-HYGIENE): корневой legacy-HTML Гилла = старый 1-уровневый мобильный бар (`#mobTocBtn`, без `__label`) vs v4 в astro. Production-dist → не отдаётся, но дрейфует. verified-source |
+| NEW-VOSK-DEAD-SPLITSENTENCES | 🆕 reverify 07-09: мёртвый экспорт `splitSentences` (`vosk-tts-core.js:413,446`) — контроллер использует свой `splitTtsChunks`. verified-source |
+| NEW-HARDTEXTS-CSP-MISSING-HFCDN | 🆕 reverify 07-09: `hard-texts/index.astro:122` connect-src без `*.aws.cdn.hf.co` (единственный astro-файл без него из 37). Инертно — на hard-texts нет кнопки Listen; выровнять для консистентности. verified-source |
+| NEW-HIGHLIGHTS-NO-REINIT-GUARD | 🆕 reverify 07-09 *(suspected)*: `highlights.js` IIFE без re-init guard — двойной `<script>`-include продублирует FAB + глобальные mouseup/keydown/scroll/resize. Низкий риск (статический include). |
+| NEW-SAVE-QUOTE-TIMER-RACE | 🆕 reverify 07-09 *(suspected)*: кнопка «Сохранить цитату» инжектится одноразовым таймером 500ms (`highlights.js le()`); если `#selection-share-popup` не в DOM на +500ms — не добавляется и не ретраится. Зависит от порядка init. |
 
 ## 🔵 P3 — РЕФАКТОРИНГ (4)
 
@@ -202,20 +212,20 @@
 
 ---
 
-## Статистика (пересобрано 2026-07-08: quick-fix reverify — +3 закрыто, TTS-строки)
+## Статистика (пересобрано 2026-07-09: reverify @ `2313f36f` — +8 P3 из mobile-bar/rail дельты; 0 закрыто дельтой; runtime clean)
 
 | Категория | Количество |
 |---|---|
 | Закрыто (fixed) | 90 |
 | P1 открыто | 2 |
 | P2 открыто | 10 |
-| P3 открыто | 19 |
+| P3 открыто | 27 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **38** |
+| **Всего открыто (матрица)** | **46** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10) |
 | False positives отклонено | 3 |
-| Passes processed | 94+ и fable-super-audit 07-06 |
+| Passes processed | 95+ (reverify 2026-07-09 @ 2313f36f, claude-auditor) |
 
 ---
 
