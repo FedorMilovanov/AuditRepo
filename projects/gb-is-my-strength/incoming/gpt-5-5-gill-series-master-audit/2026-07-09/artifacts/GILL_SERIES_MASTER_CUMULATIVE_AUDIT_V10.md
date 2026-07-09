@@ -1,65 +1,48 @@
-# JOHN GILL SERIES — NORMALIZED AUDIT HANDOFF V10
+# JOHN GILL SERIES — NORMALIZED RATIONALE V10
 
 > Project: `FedorMilovanov/gb-is-my-strength`  
-> Current source `main`: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`  
-> Research: `FedorMilovanov/Research@58e1ea5fab638812ae693a1d0b1e79c4dcb47131`  
-> Date: 2026-07-09  
-> Layer: raw intake synthesis; **not verified truth and not an implementation order**.
+> Gill evidence reconciled through image lane: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`  
+> Research evidence: `FedorMilovanov/Research@58e1ea5fab638812ae693a1d0b1e79c4dcb47131`  
+> Layer: raw rationale; **not verified truth and not an implementation order**.
 
-## 0. Authority and status
-
-This document is the corrected, self-contained V10 handoff. It replaces the earlier intermediate draft and the former correction-overlay file.
-
-Current status of the eleven Gill candidates:
+The current source HEAD is intentionally not duplicated here. Read:
 
 ```text
-W1 source witness
+../../../reverify/START_HERE_2026-07-09.md
+```
+
+## Authority
+
+The eleven Gill candidates remain outside the canonical bug count:
+
+```text
 verified-source
 needs-cross-verification
 not repair-ready
 ```
 
-The image lane merged at `d579745c` adds browser/build evidence for the visual image-placement work, but it does not independently verify the editorial, source-of-truth, TOC, TTS, print or no-JS claims in this audit.
+The Gill image lane supplies a positive JS-on browser witness for image placement only. It does not verify content ownership, semantic outline completeness, Part IV scope, TTS/search/print behavior or no-JS figure placement.
 
-Use these active entrypoints:
+Active reading order:
 
 ```text
+../../../verified/START_HERE.md
+../../../verified/MASTER_BUG_MATRIX.md
 ../../../working/START_HERE_2026-07-09.md
 ../../../verification/START_HERE_2026-07-09.md
-../../../verified/START_HERE.md
 ../../../reverify/START_HERE_2026-07-09.md
+this file only for rationale
 ```
 
-The original 1020-line intermediate draft is retained only under `../../../archive/stale/2026-07-09-gill-v10-intermediate/` for provenance. Do not use it as current guidance.
+The superseded long draft and intermediate SHA notes are historical only under:
 
----
+```text
+../../../archive/stale/2026-07-09-gill-v10-intermediate/
+```
 
-# 1. Scope and non-goals
+## Proposed six-document ownership model
 
-Checked systems:
-
-- five published John Gill routes;
-- proposed Part IV publication model;
-- Astro article bodies, MDX corpus and root legacy shadows;
-- series data and consistency audits;
-- manual TOC/submenu contracts;
-- custom TTS and structured-data projections;
-- Research dossiers 03/04/05/07 and the department register;
-- current Part III figure-placement mechanism.
-
-Not performed by this intake:
-
-- source code repair;
-- production deployment;
-- a full source-repository build by this agent;
-- browser verification by this agent;
-- owner editorial approval.
-
----
-
-# 2. Proposed six-document ownership model
-
-This is an editorial proposal pending owner decision, not a canonical production declaration:
+This is an owner/editorial proposal:
 
 ```text
 Introduction — historical world
@@ -77,109 +60,85 @@ Proposed Part IV title:
 Спорные тексты и логика спасения в системе Джона Гилла
 ```
 
-Do not put `7` or `9` in the permanent H1 before the evidence set is independently checked and accepted.
+The classification “seven disputed texts plus two positive anchors” is also only a proposal. Do not put `7` or `9` in the permanent H1 before independent checking and owner acceptance.
 
-Proposed classification:
+# Candidate rationale
 
-```text
-seven disputed/universal-redemption texts
-+ two positive soteriological anchors
-```
+## `GILL-V10-SOURCE-TRUTH`
 
-This remains a proposal.
+**Proposed severity:** P0 publication blocker.
 
----
-
-# 3. Candidate root-cause map
-
-## GILL-V10-SOURCE-TRUTH
-
-**Proposed severity:** P0 publication blocker.  
-**Status:** W1 source witness; needs cross-verification.
-
-Observed source model:
+Observed representations:
 
 ```text
-A. src/content/articles/dzhon-gill-*.mdx
-B. production Astro article-body components
-C. root legacy HTML shadows
+MDX corpus
+production Astro bodies
+root legacy HTML shadows
 ```
 
-Production routes render Astro bodies, while Research and the Gill consistency audit still consume MDX data as an authoritative input. A direct Part II divergence was observed:
+Production routes render Astro bodies, while Research and the Gill consistency audit still consume MDX. Part II contains a direct factual divergence: MDX treats Gill’s 1720 pastorate as occurring “in the same year” as Salters’ Hall 1719; the production Astro body says “the following year”.
 
-- MDX associates the 1720 pastorate with Salters’ Hall 1719 as “the same year”;
-- the production Astro body says “the following year”.
-
-Required next witnesses:
+Required next evidence:
 
 - independent MDX↔Astro↔dist comparison;
-- explicit owner choice of canonical content source.
+- owner choice of canonical content source.
 
-## GILL-V10-SERIES-MANIFEST
+## `GILL-V10-SERIES-MANIFEST`
 
-**Proposed severity:** P0 publication blocker.  
-**Status:** W1 source witness; needs cross-verification.
+**Proposed severity:** P0 publication blocker.
 
-Source/audit layers still maintain multiple fixed five-document representations:
-
-- document IDs;
-- marks and routes;
-- expected order;
-- MDX map;
-- total reading time `149`;
-- consistency audit expecting exactly five items.
-
-Current rail code correctly counts only Roman-numbered parts and renders `Часть X из 3`. The old `3 из 5` display claim is closed and must not be reintroduced.
-
-Required next witness: independent hardcoding inventory plus a sixth-item mutation test.
-
-## GILL-V10-HISTORICAL-TOC-CONTRACT
-
-**Proposed severity:** P0 publication blocker.  
-**Status:** W1 source witness; needs build/browser verification.
-
-The historical submenu regression contract protects old labels/order/item count. Part II is documented as having grown from six to many more source sections, yet the current configured TOC still contains six rows.
-
-Required contract split:
+Five-document values remain duplicated across data/audit layers:
 
 ```text
-historical visual witness → rail geometry/animation/layout
-current outline gate      → eligible headings/levels/order/IDs/exclusions
+document IDs
+marks and routes
+expected order
+MDX map
+reading total 149
+consistency audit expecting exactly five items
 ```
 
-Required next witnesses:
+Current rail numbering is not part of this defect: it renders `Часть X из 3`. The old `3 из 5` claim is closed.
 
-- generated source heading↔TOC inventory;
-- production-like rendered outline;
-- browser scrollspy/mobile TOC behavior.
+Required next evidence: independent inventory and sixth-item mutation test.
 
-## GILL-V10-ROMAN-NUMBER-COLLISION
+## `GILL-V10-HISTORICAL-TOC-CONTRACT`
 
-**Proposed severity:** P0 publication blocker.  
-**Status:** W1 source witness; needs editorial/rendered-outline verification.
+**Proposed severity:** P0 publication blocker.
 
-Standalone Part II retains internal headings III/IV and Part III begins with V. A series Part IV would therefore collide with a hidden mega-article numbering system.
+Historical submenu label/order/count is protected, but Part II expanded far beyond its six configured TOC rows. Historical visual witness and current semantic completeness need separate contracts:
+
+```text
+historical witness → geometry, animation, layout
+current outline    → eligible headings, levels, order, IDs, exclusions
+```
+
+Required next evidence: generated heading↔TOC inventory plus rendered/browser scrollspy checks.
+
+## `GILL-V10-ROMAN-NUMBER-COLLISION`
+
+**Proposed severity:** P0 publication blocker.
+
+Standalone Part II retains internal III/IV headings and Part III begins with V. A series Part IV would collide with this inherited mega-article numbering.
 
 Proposed rule:
 
 ```text
 Roman numerals identify series parts only.
-Internal article headings are unnumbered or use local Arabic numbering.
+Internal headings are unnumbered or locally numbered.
 ```
 
-## GILL-V10-PART3-NARRATIVE
+## `GILL-V10-PART3-NARRATIVE`
 
-**Proposed severity:** P0 publication blocker.  
-**Status:** W1 source witness; editorial impact needs independent review.
+**Proposed severity:** P0 publication blocker.
 
-The article reaches final sermons, death, burial and epitaph, then resumes with substantial doctrinal and reception material. Repeated clusters were observed around Islam, Spurgeon, Toplady, America and final days.
+Part III reaches death, burial and epitaph, then resumes substantial doctrinal/reception material. Topic clusters recur around Islam, Spurgeon, Toplady, America and final days.
 
 Proposed terminal order:
 
 ```text
 reception and disputes
-→ ecclesial/transatlantic influence
-→ later reception
+→ influence and later reception
 → final ministry and illness
 → death, burial and epitaph
 → short reassessment/bridge
@@ -187,114 +146,102 @@ reception and disputes
 → quiz
 ```
 
-No section move is authorized until an independent section ledger and owner decision exist.
+No prose move is authorized without an independent section ledger and owner decision.
 
-## GILL-V10-PART4-OWNERSHIP
+## `GILL-V10-PART4-OWNERSHIP`
 
-**Proposed severity:** P0 publication blocker.  
-**Status:** W1 source witness plus owner decision required.
+**Proposed severity:** P0 publication blocker.
 
 Parts II–III already contain much of the proposed doctrinal scope: Trinity, covenant, eternal justification, ordo salutis, redemption, ordinances, ecclesiology, eschatology and gospel-offer material.
 
-Part IV must not be added as a duplicate article. Required next step: independent topic-ownership map and owner-approved `KEEP/MOVE/SPLIT/MERGE/DELETE-DUPLICATE/REFERENCE` ledger.
+Part IV must not be added as a duplicate article. Required next evidence: independent topic map plus owner-approved `KEEP/MOVE/SPLIT/MERGE/DELETE-DUPLICATE/REFERENCE` ledger.
 
-## GILL-V10-RESEARCH-CANON
+## `GILL-V10-RESEARCH-CANON`
 
-**Proposed severity:** P1.  
-**Status:** W1 Research-repository witness.
+**Proposed severity:** P1.
 
-Dossiers 03/04/05/07 contain broad, focused and expanded Part IV plans without explicit active/superseded metadata. Proposed dossier classifications remain proposals until a second Research reviewer and the owner accept them.
+Research dossiers 03/04/05/07 contain broad, focused and expanded plans without accepted active/superseded metadata. Classification requires another Research reviewer and owner acceptance.
 
-## GILL-V10-INTRO-OWNERSHIP
+## `GILL-V10-INTRO-OWNERSHIP`
 
-**Proposed severity:** P1.  
-**Status:** W1 source witness plus editorial decision required.
+**Proposed severity:** P1.
 
-Introduction, Part I and Part II overlap around Kettering/bookshop biography, Southwark and Salters’ Hall. The proposed boundary is:
+Introduction, Part I and Part II overlap around Kettering/bookshop biography, Southwark and Salters’ Hall.
+
+Proposed boundary:
 
 ```text
-Introduction = historical system and environment
+Introduction = historical system/environment
 Part I       = personal biography
 Part II      = scholarly method/publication
 ```
 
-## GILL-V10-READER-PROJECTIONS
+## `GILL-V10-READER-PROJECTIONS`
 
-**Proposed severity:** P1.  
-**Status:** W1 source witness; runtime impact unverified.
+**Proposed severity:** P1.
 
-Observed selector mismatch:
+Source selectors differ:
 
 - custom TTS reads `p, h2, h3, li`;
-- H4, tables and figure captions are not selected;
+- H4, tables and figure captions are excluded;
 - `.summary-card` is excluded by custom Play;
 - structured data can mark summary content speakable.
 
-Required witnesses:
+Required next evidence: built extraction comparison and browser/TTS/a11y/print witnesses.
 
-- built article extraction comparison;
-- browser/TTS/a11y/print checks;
-- owner decision on the shared Reader projection scope.
+## `GILL-V10-CLAIM-PROVENANCE`
 
-## GILL-V10-CLAIM-PROVENANCE
-
-**Proposed severity:** P1.  
-**Status:** W1 Research witness.
+**Proposed severity:** P1.
 
 Research dossier 07 first distinguishes Rippon’s “more than ten thousand” printing sheets from a modern ten-million-word extrapolation, then later attributes the ten-million figure directly to Rippon.
 
-Required next witness: independent primary-source check and a corrected Research claim register.
+Required next evidence: independent primary-source check and corrected Research claim register.
 
-## GILL-V10-RESTORED-FIGURE-RELOCATION
+## `GILL-V10-RESTORED-FIGURE-RELOCATION`
 
-**Proposed severity:** P2.  
-**Current status on `d579745c`:** source mechanism confirmed; JS-on browser placement independently verified by the image lane; no-JS/Pagefind/print/TTS impact still unresolved.
+**Proposed severity:** P2.
 
-Current mechanism:
+At the Gill image evidence boundary:
 
 - figures server-render after the article body;
-- inline JS removes legacy copies;
-- Spurgeon placement searches for exact date/text content;
+- inline JavaScript removes legacy copies;
+- Spurgeon placement searches for a dated paragraph;
 - Bunhill placement searches for exact Russian burial prose;
-- figures are then inserted into the article.
+- figures are inserted into the article at runtime.
 
-The image lane confirms that normal JS-on browser placement now produces exactly one Spurgeon and one Bunhill figure at the intended locations. It does **not** establish semantic placement without JavaScript or inclusion in Pagefind/TTS/print projections.
+The independent image lane verifies normal JS-on success: exactly one Spurgeon and one Bunhill figure appear at the intended locations.
 
-Required remaining witnesses:
+Still unresolved:
 
-- JavaScript-disabled render;
-- built Pagefind index;
-- print output;
-- custom TTS extraction.
+```text
+JavaScript-disabled placement
+Pagefind inclusion
+print result
+custom-TTS inclusion
+```
 
-Do not call this candidate fixed or repair-ready yet.
+This candidate is narrowed, not fixed or repair-ready.
 
----
+# Existing canonical row supported
 
-# 4. Existing non-Gill row confirmed
+`TTS-DL-CONSENT` already exists in the canonical matrix. This intake adds source support that Save-Data/opt-out is partial mitigation rather than explicit consent for the whole neural-model lifecycle. It is not a duplicate Gill row and still requires an owner UX decision.
 
-`TTS-DL-CONSENT` already exists in the canonical matrix. This intake adds a source witness that Save-Data/opt-out is partial mitigation rather than explicit consent for the neural-model lifecycle.
-
-It is not a duplicate Gill row and remains dependent on an owner UX decision.
-
----
-
-# 5. Safe architecture proposal
+# Safe program proposal
 
 Only after candidate promotion and owner decisions:
 
 ```text
-A. choose one canonical content source
-B. generate one series manifest
-C. generate current outline/Reader projections
-D. normalize internal numbering
-E. approve topic ownership and Part III relocation
-F. govern Research dossier status
-G. author Introduction/Part IV
-H. publish all projections atomically
+choose one canonical content source
+→ generate one series manifest
+→ generate current outline/Reader projections
+→ normalize internal numbering
+→ approve topic ownership and Part III relocation
+→ govern Research status
+→ author Introduction/Part IV
+→ publish all projections atomically
 ```
 
-Suggested manifest fields:
+Suggested manifest shape:
 
 ```ts
 interface GillSeriesItem {
@@ -315,13 +262,9 @@ interface GillSeriesItem {
 
 Never derive `partOrdinal` from `seriesPosition`.
 
-For structured data, do not invent `/series/dzhon-gill/` unless it is a real canonical route. A future series node must use a dereferenceable existing route or a published series hub.
+Do not invent `/series/dzhon-gill/` as a structured-data identity unless that route exists and is canonical.
 
----
-
-# 6. Proposed gates
-
-These are design proposals, not current required checks:
+Proposed gates, not current requirements:
 
 ```text
 gill:outline:audit
@@ -330,17 +273,14 @@ gill:content-ownership:audit
 manifest-driven gill:series:data:consistency:audit
 ```
 
-Any replacement for the historical submenu audit must preserve its real visual regression value while removing the false requirement that current semantic outline count equal the old count.
-
----
-
-# 7. Verification and implementation boundary
+# Implementation boundary
 
 Before implementation, a verifier decision must record:
 
 ```text
 current source SHA
 candidate ID
+exact claim
 independent witness types
 accepted/rejected severity
 owner decision where required
@@ -348,30 +288,12 @@ repair lane
 not-stale result
 ```
 
-Only rows explicitly promoted to `repair-ready` may enter a source repair lane.
+Only explicitly promoted `repair-ready` rows may enter source implementation.
 
-Do not mix in one implementation PR:
+Do not mix:
 
 - Gill editorial/content architecture;
 - PremiumControls visual work;
 - TTS model delivery;
 - glossary/Bible data;
-- unrelated site migration.
-
----
-
-# 8. Current authoritative reading order
-
-For another agent:
-
-```text
-1. ../../../verified/START_HERE.md
-2. ../../../verified/MASTER_BUG_MATRIX.md
-3. ../../../working/START_HERE_2026-07-09.md
-4. ../../../verification/START_HERE_2026-07-09.md
-5. ../../../reverify/START_HERE_2026-07-09.md
-6. this normalized artifact only for rationale
-7. ../REPORT.md / ../evidence/SOURCE_EVIDENCE_INDEX.md only when exact evidence is needed
-```
-
-Do not start implementation from the archived intermediate draft.
+- unrelated route migration.
