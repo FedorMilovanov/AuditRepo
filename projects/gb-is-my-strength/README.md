@@ -11,7 +11,10 @@
 
 1. `verified/START_HERE.md` — owner and next-agent handoff.
 2. `verified/MASTER_BUG_MATRIX.md` — 38 canonical open/carry-over rows.
-3. `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` — older systemic backlog; current-head reverify required.
+
+### Supporting historical evidence
+
+3. `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` — older systemic audit; current-head reverify required before repair use.
 
 ### Active working and verification layers
 
@@ -56,7 +59,7 @@ canonical content graph
 → outline / Reader model
 → semantic figure placement
 → topic ownership / Part III cleanup
-→ Research canonical brief
+→ Research governance
 → Introduction / Part IV authoring
 → atomic publication
 ```
