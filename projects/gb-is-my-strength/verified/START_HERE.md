@@ -1,12 +1,12 @@
 # OWNER / NEXT-AGENT START HERE — gospod-bog.ru
 
 > Date: **2026-07-09**  
-> Current source `main`: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`  
+> Current source `main`: `2313f36f6aeaf7415e85d5e353e7e4cd10222ece`  
 > Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
 
 ## Canonical verified documents
 
-1. [`MASTER_BUG_MATRIX.md`](./MASTER_BUG_MATRIX.md) — full existing canonical ledger with 90 closed and 38 open rows.
+1. [`MASTER_BUG_MATRIX.md`](./MASTER_BUG_MATRIX.md) — canonical status ledger: 90 closed IDs and complete 38 open rows.
 2. `START_HERE.md` — this current owner/agent handoff.
 
 `SUPER_AUDIT_2026-07-06_14a49be8.md` is supporting historical evidence tied to an older source state. Reverify any selected row before implementation or closure.
@@ -17,13 +17,13 @@ Active non-canonical layers:
 
 1. [`../working/START_HERE_2026-07-09.md`](../working/START_HERE_2026-07-09.md) — eleven structured candidates.
 2. [`../verification/START_HERE_2026-07-09.md`](../verification/START_HERE_2026-07-09.md) — required independent witnesses and owner decisions.
-3. [`../reverify/START_HERE_2026-07-09.md`](../reverify/START_HERE_2026-07-09.md) — exact effect of current source HEAD.
+3. [`../reverify/START_HERE_2026-07-09.md`](../reverify/START_HERE_2026-07-09.md) — sole current-head effect record.
 4. [`../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md`](../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md) — raw evidence; use only when tracing a claim.
 
 Correct project truth:
 
 ```text
-90 historical closed/fixed rows
+90 historical closed/fixed IDs
 38 canonical open rows in the existing matrix
 11 Gill V10 candidates pending cross-verification
 ```
@@ -38,15 +38,11 @@ not repair-ready
 
 ## Current-head effect
 
-The source advanced to `d579745c` through a verified Gill image lane.
+The Gill image lane at `d579745c` verified normal JS-on image placement and corrected image/caption/hero presentation. The current source later advanced through a Hermenevtika rail change and automatic metadata/cache-bust update.
 
-That lane:
+Those later commits did not resolve the Gill content source, series manifest, semantic TOC, Roman numbering, Part III prose order, Part IV ownership, Research governance or Reader/TTS projection candidates.
 
-- verified normal JS-on image placement in a production-like browser matrix;
-- corrected image/caption/hero presentation;
-- did not resolve the Gill content source, series manifest, semantic TOC, Roman numbering, Part III prose order, Part IV ownership, Research governance or Reader/TTS projection candidates.
-
-The Part III figure candidate is narrower now: JS-on placement succeeds, but the source still relocates figures at runtime by date/text matching. No-JS, Pagefind, print and custom-TTS behavior remain unverified.
+The Part III figure candidate remains narrowed: JS-on placement succeeds, but runtime date/text relocation remains. No-JS, Pagefind, print and custom-TTS behavior remain unverified.
 
 ## Owner proposals — not status decisions
 
@@ -70,8 +66,8 @@ The seven-disputed-plus-two-anchor classification also remains a proposal.
 
 ## Next-agent rule
 
-1. Confirm source HEAD against `d579745c`.
-2. Read `reverify/START_HERE_2026-07-09.md`.
+1. Confirm source HEAD against `2313f36`.
+2. Read `../reverify/START_HERE_2026-07-09.md`.
 3. Pick one existing candidate from the verification queue.
 4. Add a genuinely independent witness angle.
 5. Record a verifier decision before implementation.
