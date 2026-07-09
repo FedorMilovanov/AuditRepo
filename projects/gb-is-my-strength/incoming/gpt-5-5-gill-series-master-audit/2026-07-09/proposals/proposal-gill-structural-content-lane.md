@@ -14,9 +14,9 @@
 This proposal is not accepted and is not an implementation instruction. Target candidates remain in:
 
 ```text
-../../../../working/START_HERE_2026-07-09.md
-../../../../verification/START_HERE_2026-07-09.md
-../../../../reverify/START_HERE_2026-07-09.md
+../../../working/START_HERE_2026-07-09.md
+../../../verification/START_HERE_2026-07-09.md
+../../../reverify/START_HERE_2026-07-09.md
 ```
 
 No phase may begin until its candidates are verifier-promoted and required owner decisions exist.
@@ -95,7 +95,7 @@ Do not invent `/series/dzhon-gill/#series` unless that route exists and is canon
 ../REPORT.md
 ../artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md
 ../evidence/SOURCE_EVIDENCE_INDEX.md
-../../../../reverify/START_HERE_2026-07-09.md
+../../../reverify/START_HERE_2026-07-09.md
 ```
 
 ## Do not mix
