@@ -1,128 +1,123 @@
-# Proposal — Gill series structural-content lane
+# Proposal — Gill structural-content program
 
 ## Identity
+
 - Project: `gb-is-my-strength`
 - Proposed by: `gpt-5-5-gill-series-master-audit`
 - Date: 2026-07-09
-- Initial source SHA: `ac26d8efa2b952df6dc46eef05908e6d65287e82`
-- Functional tree audited: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`
-- Current source HEAD: `ff55161b6858a1bbb0fad5704a11c6b41c961879`
-- Net compare `30d9fb61..ff55161b`: no changed files
-- Proposal type: repair-lane / split / publication-order
-- Proposal status: `proposal-open`
+- Current source HEAD: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`
+- Proposal type: repair order / split / publication program
+- Status: `proposal-open`
 
-## Verification prerequisite
+## Boundary
 
-This proposal is based on one source witness. The empty-tree freshness reverify is not a second witness. The proposal is not accepted and must not start a source implementation lane until the relevant candidates are promoted through:
-
-- `../../../../verification/START_HERE_2026-07-09.md`
-- `../../../../working/START_HERE_2026-07-09.md`
-
-Current labels:
+This proposal is not accepted and is not an implementation instruction. Target candidates remain in:
 
 ```text
-verified-source
-needs-cross-verification
-not repair-ready
+../../../../working/START_HERE_2026-07-09.md
+../../../../verification/START_HERE_2026-07-09.md
+../../../../reverify/START_HERE_2026-07-09.md
 ```
 
-## Target candidate IDs
+No phase may begin until its candidates are verifier-promoted and required owner decisions exist.
 
-- `GILL-V10-SOURCE-TRUTH`
-- `GILL-V10-SERIES-MANIFEST`
-- `GILL-V10-HISTORICAL-TOC-CONTRACT`
-- `GILL-V10-ROMAN-NUMBER-COLLISION`
-- `GILL-V10-PART3-NARRATIVE`
-- `GILL-V10-PART4-OWNERSHIP`
-- `GILL-V10-RESEARCH-CANON`
-- `GILL-V10-INTRO-OWNERSHIP`
-- `GILL-V10-READER-PROJECTIONS`
-- `GILL-V10-CLAIM-PROVENANCE`
-- `GILL-V10-RESTORED-FIGURE-RELOCATION`
+## Target candidates
 
-## Current-head corrections
+```text
+GILL-V10-SOURCE-TRUTH
+GILL-V10-SERIES-MANIFEST
+GILL-V10-HISTORICAL-TOC-CONTRACT
+GILL-V10-ROMAN-NUMBER-COLLISION
+GILL-V10-PART3-NARRATIVE
+GILL-V10-PART4-OWNERSHIP
+GILL-V10-RESEARCH-CANON
+GILL-V10-INTRO-OWNERSHIP
+GILL-V10-READER-PROJECTIONS
+GILL-V10-CLAIM-PROVENANCE
+GILL-V10-RESTORED-FIGURE-RELOCATION
+```
 
-- Current `GillSeriesRail.astro` renders numbered progress as `Часть X из 3`. The obsolete `3 из 5` display subclaim is not part of this proposal.
-- The remaining manifest candidate concerns five-document IDs/order/maps, total `149` and the consistency audit’s fixed expectations.
-- Later source commits `273ac48e` and `ff55161b` have an empty net diff against the audited functional tree; no proposal predicate changed.
+## Current-source note
 
-## Proposed program
+The `d579745c` image lane verifies normal JS-on image placement and improves visual presentation. It does not accept this structural program. For Part III figures, no-JS/Pagefind/print/TTS evidence is still required before deciding whether direct semantic rendering is necessary.
 
-### Phase A — canonical graph
+Current rail already renders `Часть X из 3`; the old `3 из 5` claim is excluded.
 
-1. Select the canonical article source.
-2. Create a series manifest.
-3. Create topic ownership data.
-4. Generate word counts, dates, related links and series projections.
+## Proposed phases
 
-### Phase B — outline and Reader model
+### A — content source and manifest
 
-1. Separate historical visual witness from current content completeness.
+1. Choose one canonical article source.
+2. Define one series manifest.
+3. Generate word counts, editorial dates, related links and navigation projections.
+4. Separate series position from part ordinal.
+
+### B — current outline and Reader projections
+
+1. Preserve historical visual regression value separately from semantic completeness.
 2. Generate TOC from eligible headings.
 3. Normalize internal III/IV/V numbering.
-4. Add table/audio/search summaries where verified necessary.
-5. Render restored figures directly in owning semantic sections if the relocation candidate is promoted.
+4. Define explicit TTS/search/print/table/figure projections.
+5. Decide figure rendering only after remaining figure witnesses.
 
-### Phase C — editorial relocation
+### C — editorial ownership
 
-1. Mark sections `KEEP/MOVE/SPLIT/MERGE/DELETE-DUPLICATE/REFERENCE`.
-2. Deduplicate and reorder Part III.
-3. Move accepted doctrinal ownership into a Part IV draft.
-4. Move accepted personal biography to Part I.
+1. Build a `KEEP/MOVE/SPLIT/MERGE/DELETE-DUPLICATE/REFERENCE` ledger.
+2. Reorder and deduplicate Part III if accepted.
+3. Move accepted doctrine into a Part IV draft.
+4. Move accepted biography into Part I.
 5. Keep accepted historical systems in the Introduction.
 
-### Phase D — Research governance and authoring
+### D — Research governance and authoring
 
-1. Mark dossiers only after independent Research review.
-2. Split dossier 07 if accepted.
-3. Resolve the seven-versus-nine evidence-set proposal.
-4. Author Part IV only after owner-approved relocation.
+1. Classify dossiers only after independent Research review.
+2. Correct claim provenance.
+3. Resolve the seven-versus-nine proposal.
+4. Author Part IV only after owner-approved ownership boundaries.
 
-### Phase E — atomic publication
+### E — atomic publication
 
-If the prior phases are verified and accepted, publish from one manifest:
+If A–D are verified and accepted, publish all generated projections together:
 
-- series UI and neighboring cards;
-- PageHead and a dereferenceable series JSON-LD identity;
-- sitemap/RSS/llms.txt/catalogs;
-- Pagefind/TTS/print/reading time;
-- outline, ownership and projection gates.
+```text
+series UI and neighboring cards
+PageHead and dereferenceable series structured data
+sitemap / RSS / llms.txt / catalogs
+Pagefind / TTS / print / reading time
+outline / ownership / projection gates
+```
 
-## JSON-LD correction
-
-Do not invent `/series/dzhon-gill/#series` unless `/series/dzhon-gill/` is a real canonical route. Prefer a dedicated published hub or an existing canonical Gill route plus `#series`.
+Do not invent `/series/dzhon-gill/#series` unless that route exists and is canonical.
 
 ## Evidence
 
-- `../REPORT.md`
-- `../artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md`
-- `../artifacts/STATUS_AND_CORRECTIONS_2026-07-09.md`
-- `../evidence/SOURCE_EVIDENCE_INDEX.md`
-- `../evidence/REVERIFY_DELTA_30d9fb61.md`
-- `../evidence/REVERIFY_DELTA_ff55161.md`
+```text
+../REPORT.md
+../artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md
+../evidence/SOURCE_EVIDENCE_INDEX.md
+../../../../reverify/START_HERE_2026-07-09.md
+```
 
-## What must not be mixed
+## Do not mix
 
-- Gill visual redesign.
-- Vosk model-delivery architecture.
-- Unrelated site-wide article migration.
-- Glossary/Bible data changes.
-- Source implementation before verifier promotion and owner decisions.
+- Gill visual redesign or PremiumControls;
+- Vosk delivery architecture;
+- glossary/Bible data;
+- unrelated route migration;
+- unverified content moves.
 
 ## Proposed acceptance criteria
 
 - one declared content source;
-- manifest not hardcoded to five items;
-- complete generated TOC with level parity;
-- no Roman-number collision;
-- Part III terminal narrative order;
-- figures directly owned by semantic sections where accepted;
-- no duplicate canonical topic owners;
-- Part IV scope accepted by owner;
-- Reader projections verified by build/browser witnesses;
-- publication surfaces update atomically.
+- manifest not fixed to five items;
+- generated TOC with level parity and explicit exclusions;
+- no series/internal Roman-number collision;
+- owner-approved topic boundaries;
+- terminal Part III narrative order if accepted;
+- Reader projections verified by appropriate witnesses;
+- publication surfaces updated atomically.
 
-## Proposal lifecycle
+Lifecycle:
 
 ```text
 proposal-open
@@ -130,4 +125,4 @@ proposal-open
 → proposal-accepted / proposal-rejected / proposal-superseded
 ```
 
-No transition has occurred yet.
+No transition has occurred.
