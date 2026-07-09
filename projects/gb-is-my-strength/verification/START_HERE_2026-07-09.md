@@ -1,9 +1,8 @@
 # Verification START HERE — Gill V10 — 2026-07-09
 
-> Layer: `verification/` — active status-resolution queue.  
-> Current source HEAD: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`.  
+> Layer: `verification/` — stable status-resolution queue.  
 > Working synthesis: `../working/START_HERE_2026-07-09.md`.  
-> Current-head reverify: `../reverify/START_HERE_2026-07-09.md`.
+> Sole current-head reverify: `../reverify/START_HERE_2026-07-09.md`.
 
 ## Current verdict
 
@@ -15,11 +14,11 @@ needs-cross-verification
 not repair-ready
 ```
 
-The figure-relocation candidate now has two different observations:
+The figure-relocation candidate has two different observations:
 
 ```text
 source witness: figures are relocated at runtime by text/date matching
-browser witness: normal JS-on placement succeeds on current source
+browser witness: normal JS-on placement succeeds in the verified Gill image lane
 ```
 
 The browser witness proves the success path, not the suspected no-JS/Pagefind/print/TTS impact. Therefore that candidate is narrowed but not promoted, closed or repair-ready.
@@ -48,16 +47,16 @@ Current rail displays `Часть X из 3`. The former `3 из 5` claim is stal
 
 ### Narrowed: Part III figures
 
-The current image lane verifies exactly one Bunhill and one Spurgeon figure at the intended locations with JavaScript enabled. It does not establish:
+The verified image lane records exactly one Bunhill and one Spurgeon figure at the intended locations with JavaScript enabled. It does not establish:
 
 - semantic placement without JavaScript;
 - Pagefind inclusion;
 - print stability;
 - custom-TTS inclusion.
 
-### Unchanged by the image lane
+### Unchanged by later source movement
 
-The image commit does not resolve content-source ownership, manifest hardcoding, semantic TOC completeness, internal Roman numbering, Part III prose order, Part IV ownership, Research status or Reader projection differences.
+Current source effects are maintained only in `../reverify/START_HERE_2026-07-09.md`. Do not duplicate current SHA analysis in this queue.
 
 ## Promotion rules
 
