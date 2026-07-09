@@ -8,10 +8,12 @@
 - Agent: GPT-5.5 Thinking / source-structure auditor
 - Date: 2026-07-09
 - Initial source baseline: `ac26d8efa2b952df6dc46eef05908e6d65287e82`
-- Current source HEAD: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`
-- Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
+- Gill evidence reconciled through image lane: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`
+- Research evidence HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
 - Witness produced by this intake: source inspection
 - Source build/browser run by this agent: none
+
+The current source HEAD is maintained only in `../../reverify/START_HERE_2026-07-09.md`.
 
 ## Verification boundary
 
@@ -26,7 +28,7 @@ needs-cross-verification
 not repair-ready
 ```
 
-The figure-relocation candidate additionally has an independent positive browser witness from the current image lane: normal JS-on placement succeeds. The suspected no-JS/Pagefind/print/TTS impact remains unverified.
+The figure-relocation candidate additionally has an independent positive browser witness from the Gill image lane: normal JS-on placement succeeds. The suspected no-JS/Pagefind/print/TTS impact remains unverified.
 
 Current status and next evidence are controlled by:
 
@@ -77,7 +79,7 @@ The Gill manifest and historical submenu contracts are scoped examples of existi
 - A green historical submenu audit does not prove complete current navigation.
 - Part IV is not safely publishable as a simple additive sixth article until topic ownership is accepted.
 - Seven disputed texts plus two positive anchors is a proposed classification, not canonical truth.
-- The current image-lane success does not prove no-JS, search, print or TTS behavior.
+- The Gill image-lane success does not prove no-JS, search, print or TTS behavior.
 
 ---
 
@@ -117,13 +119,13 @@ The detailed proposal is `proposals/proposal-gill-structural-content-lane.md` an
 
 ## 7. Reverify notes
 
-Current source `d579745c` changes Gill image presentation and runtime figure placement. Exact effects are recorded only in:
+The Gill image lane changes image presentation and runtime figure placement. Exact effects of all later source movement are recorded only in:
 
 ```text
 ../../reverify/START_HERE_2026-07-09.md
 ```
 
-Ten candidates are unchanged. The figure candidate is narrowed by positive JS-on browser evidence but remains unresolved for no-JS/Pagefind/print/TTS.
+Ten candidates remain unchanged. The figure candidate is narrowed by positive JS-on browser evidence but remains unresolved for no-JS/Pagefind/print/TTS.
 
 ---
 
