@@ -1,15 +1,17 @@
 # OWNER / NEXT-AGENT START HERE — gospod-bog.ru
 
 > Date: **2026-07-09**  
-> Source `main` checked: `ac26d8efa2b952df6dc46eef05908e6d65287e82`  
+> Current source `main`: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`  
+> Initial Gill V10 baseline: `ac26d8efa2b952df6dc46eef05908e6d65287e82`  
 > Research checked: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`  
 > AuditRepo branch: `audit/gill-series-v10-canonical-2026-07-09`
 
 ## Canonical documents
 
 - [`MASTER_BUG_MATRIX.md`](./MASTER_BUG_MATRIX.md) — current operational matrix.
-- [`../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md`](../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md) — official Gill V10 intake.
-- [`../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md`](../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md) — detailed architecture/content research.
+- [`../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md`](../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md) — official current-head Gill V10 intake.
+- [`../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md`](../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md) — detailed baseline architecture/content research.
+- [`../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_30d9fb61.md`](../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_30d9fb61.md) — current-head PR #50 delta.
 - `SUPER_AUDIT_2026-07-06_14a49be8.md` — supporting historical backlog only; reverify each claim on current source.
 
 ## Current matrix
@@ -19,19 +21,31 @@
 | Historical closed/fixed | 90 |
 | P0 open | 6 |
 | P1 open | 6 |
-| P2 open | 10 |
+| P2 open | 11 |
 | P3 open | 19 |
 | Refactoring | 4 |
 | AuditRepo | 3 |
-| **Active items** | **48** |
+| **Active items** | **49** |
 
 The six P0s are structural blockers for a coherent six-document Gill publication. They do not mean the whole production site is down.
+
+## Source delta during this work
+
+Merge PR #50 restored Part III illustrations. It did not modify `GillPart3ArticleBody.astro`, so V10 content/outline findings remain current.
+
+New P2:
+
+```text
+GILL-V10-RESTORED-FIGURE-RELOCATION
+```
+
+The two restored figures are initially SSR-rendered after the article and then moved by inline JS. One anchor depends on exact Russian prose. Browser/no-JS/Pagefind/print verification is still required.
 
 ## Owner decisions needed
 
 ### 1. Gill editorial ownership
 
-Accept or revise this page ownership:
+Accept or revise:
 
 ```text
 Introduction = historical world
@@ -65,7 +79,7 @@ Recommended evidence design:
 
 ```text
 A. canonical content source + series manifest
-B. generated outline / Reader AST + Roman normalization
+B. generated outline / Reader AST + Roman normalization + direct figure placement
 C. section ownership + Part III dedup/reorder
 D. Research statuses + claim register
 E. Introduction expansion + Part IV authoring
@@ -80,8 +94,9 @@ Do not author or publish Part IV before A–D.
 2. Historical submenu audit can reject a complete TOC and approve an incomplete one.
 3. Part II/III legacy Roman numbering collides with planned Part IV.
 4. Part III continues after death, burial and sources, and repeats major episodes.
-5. TTS/schema/search/print do not share one semantic article model.
-6. Old systemic SUPER_AUDIT wording is tied to `14a49be8`; current source moved to `ac26d8e`.
+5. Restored figures depend on client-side DOM relocation instead of direct semantic ownership.
+6. TTS/schema/search/print do not share one semantic article model.
+7. Old systemic SUPER_AUDIT wording is tied to `14a49be8`; current source is `30d9fb61`.
 
 ## Non-negotiable rules
 
@@ -95,11 +110,11 @@ Do not author or publish Part IV before A–D.
 
 ## Merge readiness for this AuditRepo branch
 
-Before merge, run in AuditRepo checkout:
+Before merge, run in an AuditRepo checkout:
 
 ```bash
 python3 scripts/check_auditrepo_structure.py
 python3 scripts/validate_audit_repo.py
 ```
 
-Then inspect branch diff to ensure only AuditRepo documentation/evidence changed.
+Then inspect the branch diff. This branch should remain draft until those commands pass.
