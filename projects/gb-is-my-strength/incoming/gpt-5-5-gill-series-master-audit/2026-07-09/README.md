@@ -35,12 +35,23 @@ Details: `evidence/REVERIFY_DELTA_30d9fb61.md`.
 
 ## Files in this intake
 - `REPORT.md` — raw source-audit report and candidate map
-- `artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md` — cumulative working research artifact
+- `artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md` — cumulative baseline research artifact
+- `artifacts/STATUS_AND_CORRECTIONS_2026-07-09.md` — **mandatory verifier corrections and current interpretation**
 - `evidence/SOURCE_EVIDENCE_INDEX.md` — exact source contracts inspected
 - `evidence/REVERIFY_DELTA_30d9fb61.md` — current-head delta and scope correction
 - `proposals/proposal-gill-structural-content-lane.md` — open repair-order proposal
 - `comments/README.md` — comments-folder contract; no third-party comment created
 - `commands.log` — API/validation log
+
+## Artifact precedence
+
+Anyone reading the cumulative V10 artifact must also read `artifacts/STATUS_AND_CORRECTIONS_2026-07-09.md`. The correction file supersedes stale wording in the baseline artifact, including:
+
+- witness/canonical status;
+- current SHA;
+- the removed `5-of-5` subclaim;
+- JSON-LD `@id` safety;
+- Part IV and Research classifications as proposals rather than decisions.
 
 ## Verification status
 
