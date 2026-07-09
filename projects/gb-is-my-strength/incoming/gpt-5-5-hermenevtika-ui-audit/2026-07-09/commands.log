@@ -1,0 +1,52 @@
+2026-07-09 source audit log
+
+Repository state
+- fetched FedorMilovanov/gb-is-my-strength metadata and main HEAD
+- fetched FedorMilovanov/AuditRepo metadata and main HEAD
+- searched current source branches/commits and open PRs
+- searched current AuditRepo branches and open PRs
+- verified no active Hermeneutics implementation PR/lane in the current remote view
+
+Source files inspected
+- AGENTS.md
+- docs/WORK_MODES.md
+- docs/LANE_LOCK_POLICY.md
+- docs/OWNER-INVARIANTS.md
+- docs/refactor-2026/lanes/README.md
+- docs/refactor-2026/REFRACTOR_AUDIT_LIVING.md
+- migration/route-migration-matrix.json
+- package.json
+- src/pages/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/index.astro
+- src/components/article-pilots/hermenevtika/HermenevtikaBody.astro
+- src/components/article-pilots/hermenevtika/HermenevtikaPageHead.astro
+- src/components/article-pilots/hermenevtika/HermenevtikaRail.astro
+- src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro
+- src/components/article-pilots/hermenevtika/hermenevtikaToc.ts
+- src/components/ui/floating-cluster/FloatingCluster.astro
+- src/components/ui/floating-cluster/SingleArticleCluster.astro
+- js/site.js
+- js/site-utils.js
+- js/floating-cluster-controller.js
+- css/floating-cluster.css
+
+AuditRepo governance inspected
+- README.md
+- projects/gb-is-my-strength/README.md
+- projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+- projects/_templates/AGENT_REPORT_TEMPLATE.md
+- current open Gill audit PR packages for overlap/freshness only
+
+Evidence mode
+- direct GitHub source/API inspection
+- owner-reported browser symptom for nested Scripture links inside footnote popovers
+- no local clone
+- no npm install/build
+- no production-like strangler dist
+- no Playwright/browser automation
+- no screenshots
+
+Result
+- 10 current-head source candidates documented
+- route-local and optional SYSTEM repair lanes separated
+- no source repository files changed by this audit
+- no canonical verified ledger status changed directly
