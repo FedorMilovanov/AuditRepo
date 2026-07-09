@@ -1,11 +1,18 @@
 # Working — gb-is-my-strength
 
-This folder is intentionally kept as a lightweight active working layer so `scripts/validate_audit_repo.py` can verify the canonical AuditRepo structure.
+This folder contains active synthesis drafts that are **not ready for `verified/`**.
 
-Historical/stale working documents were demoted to `archive/2026-07-03-stale-working/` during cleanup. Do not restore old competing matrices here. Current operational truth is:
+## Current entrypoint
 
-- `../NEXT_AGENT_PROMPT.md`
-- `../verified/MASTER_BUG_MATRIX.md`
-- current-head evidence under `../reverify/`
+- `START_HERE_2026-07-09.md` — Gill V10 candidate matrix at source `30d9fb61`; W1 `verified-source`, `needs-cross-verification`.
 
-Use this folder only for genuinely active synthesis drafts that are not ready for `verified/`.
+## Layer contract
+
+- `incoming/` supplies raw evidence.
+- `working/` deduplicates and structures candidate findings.
+- `verification/` resolves witness thresholds, disputes, severity and promotion.
+- `verified/` contains only canonical ledgers and approved handoffs.
+
+The Gill V10 candidate rows must not be treated as implementation instructions until the verification queue promotes them.
+
+Historical/stale working documents remain under `archive/2026-07-03-stale-working/`. Do not restore old competing matrices here.
