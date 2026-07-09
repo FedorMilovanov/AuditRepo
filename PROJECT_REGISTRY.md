@@ -20,10 +20,11 @@
 
 ## gb-is-my-strength current summary — 2026-07-09
 
-- Current source HEAD checked: `ac26d8efa2b952df6dc46eef05908e6d65287e82`.
+- Current source HEAD checked: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.
+- Initial Gill V10 baseline: `ac26d8efa2b952df6dc46eef05908e6d65287e82`.
 - Research HEAD checked: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`.
 - AuditRepo base before Gill V10 branch: `18713174a343740cc0886df6c6441c51bde61274`.
-- Active matrix: 6 P0, 6 P1, 10 P2, 19 P3, 4 refactoring, 3 AuditRepo = 48 active items.
+- Active matrix: 6 P0, 6 P1, 11 P2, 19 P3, 4 refactoring, 3 AuditRepo = 49 active items.
 - Historical closed/fixed count retained: 90.
 - Current major intake: `projects/gb-is-my-strength/incoming/gpt-5-5-gill-series-master-audit/2026-07-09/`.
 
@@ -31,8 +32,9 @@
 
 1. Gill Part IV is not an additive article task. First resolve canonical content source, series manifest, outline/Reader AST, topic ownership and Part III duplication.
 2. Historical Gill submenu count is an obsolete content contract; visual witness and current outline completeness must be separate gates.
-3. TTS ~280 MB consent/lifecycle remains an owner UX decision and is a separate lane.
-4. `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` remains supporting evidence but is tied to old source SHA; reverify before repair.
+3. Merge PR #50 restored Part III figures through runtime relocation. `GILL-V10-RESTORED-FIGURE-RELOCATION` requires browser/Pagefind/print verification and direct semantic placement.
+4. TTS ~280 MB consent/lifecycle remains an owner UX decision and is a separate lane.
+5. `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` remains supporting evidence but is tied to old source SHA; reverify before repair.
 
 ### Primary current documents
 
@@ -41,6 +43,7 @@
 3. `projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md`
 4. `projects/gb-is-my-strength/incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md`
 5. `projects/gb-is-my-strength/incoming/gpt-5-5-gill-series-master-audit/2026-07-09/artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md`
+6. `projects/gb-is-my-strength/incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_30d9fb61.md`
 
 ## Registry rules
 
