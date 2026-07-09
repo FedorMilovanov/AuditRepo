@@ -1,39 +1,33 @@
 # Source/API inspection log — 2026-07-09
-# No local shell/build/browser commands were run against the source repo.
+# No local source checkout, source build or browser run was available.
 
-Initial GitHub source HEAD:
+Initial source HEAD:
   FedorMilovanov/gb-is-my-strength main -> ac26d8efa2b952df6dc46eef05908e6d65287e82
 
-Final current source HEAD after mid-pass update:
+Final source HEAD:
   FedorMilovanov/gb-is-my-strength main -> 30d9fb61fe2c9116ee53a54d681c01455eef4fe6
 
-Current-head delta inspected:
-  compare ac26d8efa2b952df6dc46eef05908e6d65287e82..30d9fb61fe2c9116ee53a54d681c01455eef4fe6
-  result: 7 commits ahead
-  relevant new files/changes:
-    src/components/article-pilots/gill-part3/GillPart3RestoredFigures.astro
-    src/components/article-pilots/gill-part3/GillPart3MainShell.astro
-    src/components/article-pilots/gill-series/GillSeriesRail.astro
-    css/floating-cluster.css
-    PageHead/cache-bust metadata changes
-  unchanged structural owner:
-    src/components/article-pilots/gill-part3/GillPart3ArticleBody.astro
-
-GitHub Research HEAD:
+Research HEAD:
   FedorMilovanov/Research main -> 58e1ea5fab638812ae693a1d0b1e79c4dcb47131
 
 AuditRepo base:
   FedorMilovanov/AuditRepo main -> 18713174a343740cc0886df6c6441c51bde61274
 
-Inspected source paths:
+Current-head compare:
+  ac26d8efa2b952df6dc46eef05908e6d65287e82..30d9fb61fe2c9116ee53a54d681c01455eef4fe6
+  7 commits
+
+Relevant source files inspected:
   src/pages/articles/dzhon-gill-chast-2-uchenyi/index.astro
   src/components/article-pilots/gill-series/gillSeriesData.ts
+  src/components/article-pilots/gill-series/GillSeriesRail.astro
   src/components/article-pilots/gill-context/*
   src/components/article-pilots/gill-part1/*
   src/components/article-pilots/gill-part2/GillPart2ArticleBody.astro
   src/components/article-pilots/gill-part3/GillPart3ArticleBody.astro
   src/components/article-pilots/gill-part3/GillPart3MainShell.astro
   src/components/article-pilots/gill-part3/GillPart3RestoredFigures.astro
+  src/components/ui/floating-cluster/SingleArticleCluster.astro
   src/components/article-pilots/gill-context/GillContextPageHead.astro
   js/floating-cluster-controller.js
   data/gill-submenu-anchor-reconciliation.json
@@ -42,7 +36,7 @@ Inspected source paths:
   data/series.json
   src/content/articles/dzhon-gill-*.mdx
 
-Inspected Research paths:
+Research files inspected:
   Джон Гилл/00_README_AND_NAVIGATION.md
   Джон Гилл/03_STRUCTURE_PROPOSAL.md
   Джон Гилл/04_CONTENT_DEEPENING_AUDIT_AND_EXEGESIS_SET.md
@@ -51,12 +45,36 @@ Inspected Research paths:
   Джон Гилл/31_GILL_DEPT_MASTER_MAP.md
   Джон Гилл/42_THE_CREATION_IMAGE_OF_GOD_AND_PROVIDENCE.md
 
-AuditRepo branch diff inspection:
-  compare 18713174a343740cc0886df6c6441c51bde61274..<branch-head>
-  expected scope: AuditRepo docs/evidence only; no source-repo code
+Governance files inspected:
+  README.md
+  CONTRIBUTING.md
+  MULTI_WITNESS_VERIFICATION_PROTOCOL.md
+  CLEANUP_RETENTION_POLICY.md
+  scripts/scaffold_intake.py
+  scripts/validate_audit_repo.py
+  projects/gb-is-my-strength/working/README.md
+  projects/gb-is-my-strength/verification/README.md
 
-Validation not run in this environment:
+Verifier corrections made:
+  - removed invalid L2/L3/confirmed-current promotion for one source witness
+  - restored incoming -> working -> verification -> verified layering
+  - corrected counts to 38 canonical open + 11 pending candidates
+  - removed stale current-rail 3-of-5 / 5-of-5 subclaim
+  - clarified 7-commit delta versus PR #50 scope
+  - changed Part IV seven-plus-two classification to owner/editorial proposal
+  - rejected a potentially non-dereferenceable JSON-LD @id proposal
+  - added comments folder contract
+  - added mandatory cumulative-artifact correction file
+
+AuditRepo validation runs observed:
+  run 28984462579 -> success on earlier PR head a4f02506b3f653a66d5184adc6d4db1e011b0072
+
+Final-head validation:
+  pending after all verifier corrections; fetch and record the final workflow result before merge
+
+Local commands not executed because the tool container could not resolve github.com:
   python3 scripts/check_auditrepo_structure.py
   python3 scripts/validate_audit_repo.py
+  source-repo build/browser checks
 
-These commands must pass before merge. No CI-green or merge-ready claim is made by this intake.
+GitHub Actions must run both AuditRepo validators on the final PR head. Source findings remain W1 verified-source / needs-cross-verification.
