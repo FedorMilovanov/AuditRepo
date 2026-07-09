@@ -29,11 +29,19 @@ The artifact was initially assembled at source baseline:
 ac26d8efa2b952df6dc46eef05908e6d65287e82
 ```
 
-The final current source HEAD checked during the intake is:
+The functional source tree audited after the seven-commit recheck is:
 
 ```text
 30d9fb61fe2c9116ee53a54d681c01455eef4fe6
 ```
+
+The current source `main` after the final freshness recheck is:
+
+```text
+ff55161b6858a1bbb0fad5704a11c6b41c961879
+```
+
+GitHub compare `30d9fb61..ff55161b` returns no changed files. The two later commits add and remove an accidental placeholder, so the current source tree is identical to the audited functional tree.
 
 Research HEAD remains:
 
@@ -41,7 +49,12 @@ Research HEAD remains:
 58e1ea5fab638812ae693a1d0b1e79c4dcb47131
 ```
 
-The seven-commit delta is documented in `../evidence/REVERIFY_DELTA_30d9fb61.md`.
+Evidence:
+
+- `../evidence/REVERIFY_DELTA_30d9fb61.md`
+- `../evidence/REVERIFY_DELTA_ff55161.md`
+
+The empty-tree freshness check does not count as a second independent witness.
 
 ## Exact content corrections
 
@@ -62,7 +75,7 @@ However, current `GillSeriesRail.astro` already filters Roman items and renders 
 Часть X из 3
 ```
 
-Therefore the old current-UI subclaim `3 из 5` / `5-of-5 labels` is stale on `30d9fb61` and must not be used as evidence for `GILL-V10-SERIES-MANIFEST`.
+Therefore the old current-UI subclaim `3 из 5` / `5-of-5 labels` is stale on the current tree and must not be used as evidence for `GILL-V10-SERIES-MANIFEST`.
 
 ### 2. Section 3.3 — JSON-LD `@id`
 
@@ -123,7 +136,7 @@ Candidate root-cause consolidation map
 
 The consolidated IDs are used to organize working synthesis. They are not canonical open bugs until verifier promotion.
 
-## Current validated statements
+## Current source observations
 
 The following are direct source observations, not status promotions:
 
