@@ -27,7 +27,7 @@ They mixed several time layers:
 
 - project/registry/next-agent headers pointed to source `14a49be8` from 2026-07-06;
 - the matrix had later 2026-07-08 TTS updates and another source header;
-- Gill V10 began on `ac26d8e`, while final checked source HEAD became `30d9fb61`;
+- Gill V10 began on `ac26d8e`, audited functional tree `30d9fb61`, and current source HEAD is `ff55161b` with an empty net file diff from that tree;
 - no active working/verification entrypoint represented the Gill research state.
 
 ## Replacement by layer
