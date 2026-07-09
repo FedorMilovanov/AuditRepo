@@ -1,241 +1,175 @@
 # Gill V10 — Source Evidence Index
 
-## Immutable heads
+## Heads and boundary
 
-- Source repository: `FedorMilovanov/gb-is-my-strength`
-- Source branch: `main`
-- Initial source SHA: `ac26d8efa2b952df6dc46eef05908e6d65287e82`
-- Functional source tree audited: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`
-- Current source HEAD after freshness reverify: `ff55161b6858a1bbb0fad5704a11c6b41c961879`
-- Net compare `30d9fb61..ff55161b`: no changed files
-- Research repository: `FedorMilovanov/Research`
-- Research SHA: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
-- AuditRepo base SHA: `18713174a343740cc0886df6c6441c51bde61274`
+- Source repo: `FedorMilovanov/gb-is-my-strength`
+- Initial baseline: `ac26d8efa2b952df6dc46eef05908e6d65287e82`
+- Current source HEAD: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`
+- Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
+- Witness produced by this intake: source inspection
 
-## Witness boundary
-
-This index records one direct source witness:
+Default status:
 
 ```text
-W1
 verified-source
 needs-cross-verification
+not repair-ready
 ```
 
-The tree-identical freshness reverify to `ff55161b` is not an independent second witness. This index does not prove built-artifact or browser impact and does not promote new Gill candidates to canonical open status.
+Current-head effects are recorded in the project-level file:
 
-Mandatory companion corrections:
+```text
+../../../../reverify/START_HERE_2026-07-09.md
+```
 
-- `../artifacts/STATUS_AND_CORRECTIONS_2026-07-09.md`
-- `REVERIFY_DELTA_30d9fb61.md`
-- `REVERIFY_DELTA_ff55161.md`
-
-## Production content representation
+## Content representations
 
 Checked:
 
-- `src/pages/articles/dzhon-gill-chast-2-uchenyi/index.astro`
-- `src/components/article-pilots/gill-part2/GillPart2MainShell.astro`
-- `src/components/article-pilots/gill-part2/GillPart2ArticleBody.astro`
-- `src/components/article-pilots/gill-part3/GillPart3ArticleBody.astro`
-- `src/components/article-pilots/gill-context/GillContextArticleBody.astro`
-- `src/components/article-pilots/gill-part1/GillPart1ArticleBody.astro`
-
-Source observation: live Astro routes import/render Astro article bodies; MDX is not the sole production body.
-
-## Competing content representations
-
-Checked:
-
-- `src/content/articles/dzhon-gill-chast-2-uchenyi.mdx`
-- `src/components/article-pilots/gill-part2/GillPart2ArticleBody.astro`
+- `src/content/articles/dzhon-gill-*.mdx`
+- production Gill Astro route/shell/body components
 - `scripts/gill-series-data-consistency-audit.js`
-- Research `Джон Гилл/00_README_AND_NAVIGATION.md`
+- root legacy Gill HTML shadows
+- Research department navigation
 
-Direct divergence witness:
+Observed:
 
-- MDX places 1720 in “the same year” as Salters’ Hall 1719;
-- production Astro says Gill came to the pastorate the following year.
+- published Astro routes render Astro bodies;
+- MDX remains an audit/Research input;
+- Part II MDX says the 1720 pastorate occurred “in the same year” as Salters’ Hall 1719;
+- production Astro says “the following year”.
 
-This supports a source-of-truth candidate. A production-like artifact witness is still required for canonical promotion.
+This supports `GILL-V10-SOURCE-TRUTH`; a second source/artifact witness is required.
 
-## Series hardcoding
+## Series manifest
 
 Checked:
 
 - `data/series.json`
 - `src/components/article-pilots/gill-series/gillSeriesData.ts`
 - `scripts/gill-series-data-consistency-audit.js`
-- `src/components/article-pilots/gill-series/GillSeriesRail.astro`
+- `GillSeriesRail.astro`
 
-Current source observations:
+Observed fixed parallel values:
 
-- five document IDs/items;
-- explicit marks and routes;
-- progress total `149` repeated per page;
-- hardcoded expected order;
-- hardcoded MDX map;
-- consistency audit expects exactly five items and total `149`.
+```text
+five document IDs/items
+marks and routes
+expected order
+MDX map
+reading total 149
+consistency audit expecting exactly five items
+```
 
-### Current-head correction
+Current rail correctly renders `Часть X из 3`. The former `3 из 5` display claim is excluded.
 
-`GillSeriesRail.astro` filters Roman items and renders numbered progress as `Часть X из 3`. The former `3 из 5` / `5-of-5 labels` display subclaim is stale and excluded from the candidate evidence.
-
-## TOC reconciliation and regression audit
+## TOC and heading contracts
 
 Checked:
 
 - `data/gill-submenu-anchor-reconciliation.json`
 - `scripts/gill-pre-v16-submenu-regression-audit.js`
-- `src/components/article-pilots/gill-series/gillSeriesData.ts`
-
-Source observations:
-
-- historical labels/order/item count are preserved;
-- comments document Part II growth from 6 to 29 sections;
-- current regression logic compares rendered row count with historical expected count;
-- Part II current `partToc` still contains six rows.
-
-Built outline and browser scrollspy evidence remain required.
-
-## Part II structural evidence
-
-Checked headings/IDs in `GillPart2ArticleBody.astro`, including:
-
-```text
-part-theology
-part-controversy
-sec-trinity
-sec-hebrew
-sec-canticles
-sec-covenant
-sec-dd
-sec-ordinances
-sec-eschatology
-sec-commentary
-sec-habakkuk
-sec-systematics
-sec-pactum
-sec-ecclesiology
-sec-whitby
-sec-pastoral
-sec-deism-polemic
-sec-gill-catholicity
-sec-ordo-salutis
-sec-gill-solter
-sec-sources-part2
-sec-quiz
-```
-
-Configured Part II TOC has six rows and records `sec-hebrew` as level 2 although the source heading is H3 under `part-theology`.
-
-## Part III structural evidence
-
-Checked in `GillPart3ArticleBody.astro`:
-
-- article begins with H2 `V. Историческое влияние и память`;
-- death/burial/epitaph occur before later major chapters;
-- a sources section occurs before later substantive article content;
-- repeated source clusters exist for Islam, Spurgeon, Toplady, America and final days;
-- multiple source headings are not represented in current `partToc`.
-
-This body file was unchanged in the final PR #50 merge. The later no-op source-head advance also changed no files.
-
-## Part I structural evidence
-
-Checked:
-
-- `GillPart1SectionIllnessFamily.astro` → `sec-illness-family`
-- `GillPart1SectionLastWordsWife.astro` → `sec-last-words-wife`
-- `GillPart1SectionSkeppDetail.astro` → `sec-skepp-detail`
-
-These source H3 sections are absent from the manual TOC. Built/browser impact remains unverified.
-
-## Historical Introduction evidence
-
-Checked current context components:
-
-- `GillContextSectionFromPuritansToBaptists.astro`
-- `GillContextSectionParticularVsGeneral.astro`
-- `GillContextSectionGreatEjection.astro`
-- `GillContextSectionClarendon.astro`
-- `GillContextSectionAcademies.astro`
-- `GillContextSectionSaltersHall.astro`
-- `GillContextSectionCoffeeHouse.astro`
-- `GillContextSectionSouthwark.astro`
-- `GillContextSectionBooks.astro`
-- `GillContextSectionConclusion.astro`
-
-Source observation: the ten-H2 backbone is coherent; `sec-books` contains personal Gill biography while Part I/II also carry overlapping Southwark/Salters’ Hall context. Final ownership requires editorial review.
-
-## TTS / Reader evidence
-
-Checked `js/floating-cluster-controller.js`:
-
-- `getArticleText()` selects `p, h2, h3, li`;
-- excludes `.summary-card`, `aside`, `.reading-list-section`, `[data-pagefind-ignore]` and other nodes;
-- H4, table and figcaption content is not selected.
-
-Checked `GillContextPageHead.astro`:
-
-- JSON-LD `speakable.cssSelector` includes `.summary-card` and `[data-speakable]`.
-
-Source contradiction: schema declares summary content speakable while custom Play excludes `.summary-card`. Runtime/a11y impact requires build/browser witnesses.
-
-## Restored-figure evidence
-
-Checked in the audited functional tree:
-
-- `src/components/article-pilots/gill-part3/GillPart3MainShell.astro`
-- `src/components/article-pilots/gill-part3/GillPart3RestoredFigures.astro`
+- `gillSeriesData.ts`
+- Part I/II/III source headings
 
 Observed:
 
-- `GillPart3RestoredFigures` SSR-renders after `GillPart3ArticleBody`;
-- figures initially sit outside `<article class="article-body" data-pagefind-body>`;
-- inline JS moves the Spurgeon figure by heading/neighbor elements;
-- inline JS finds Bunhill placement by exact Russian prose fragments;
-- custom TTS selector does not read figure captions.
+- historical label/order/count is protected;
+- Part II is documented as having expanded beyond six sections;
+- current Part II `partToc` still contains six rows;
+- source headings exist outside the configured manual TOCs;
+- at least one stored TOC level does not match the source heading level.
 
-No-JS/Pagefind/print/TTS/browser impact is pending verification.
+A built heading↔TOC inventory and browser witness are still required.
 
-## Vosk lifecycle evidence
+## Part III prose structure
 
-Checked current functional tree `floating-cluster-controller.js`:
+Checked `GillPart3ArticleBody.astro`.
 
-- local opt-out key: `gbx-vosk-warmup`;
-- Save-Data only prevents the background warm-up path;
-- no-WebSpeech fallback directly loads Vosk and calls `ensureLoaded()`;
-- `gb:vosk-model-download-start` is a notification, not a consent gate;
-- Stop/cancel controls playback, not the network/model-init lifecycle.
+Observed:
 
-This is an additional source witness for the existing canonical `TTS-DL-CONSENT` row, not a duplicate Gill candidate.
+- death, burial and epitaph precede later major material;
+- a sources section appears before later substantive prose;
+- topic clusters recur around Islam, Spurgeon, Toplady, America and final days;
+- internal H2 numbering begins at V.
+
+The current image lane did not reorder this prose.
+
+## Reader projections
+
+Checked `js/floating-cluster-controller.js` and Gill PageHead structured data.
+
+Observed:
+
+- custom TTS selects `p, h2, h3, li`;
+- H4, tables and figure captions are excluded;
+- `.summary-card` is excluded by custom Play;
+- structured data can mark summary content speakable.
+
+Build/browser/TTS/a11y/print evidence remains required.
+
+## Restored Part III figures — current source
+
+Checked:
+
+- `GillPart3MainShell.astro`
+- `GillPart3RestoredFigures.astro`
+- current image-lane report at `d579745c`
+
+Current source mechanism:
+
+- figures server-render after the article body;
+- inline JavaScript removes legacy copies;
+- Spurgeon placement searches for the 16 August 1859 paragraph;
+- Bunhill placement searches for exact Russian burial prose;
+- figures are inserted into the article at runtime.
+
+Independent image-lane evidence establishes:
+
+```text
+normal JS-on placement succeeds
+exactly one Spurgeon figure
+exactly one Bunhill figure
+intended current visual locations
+```
+
+Still unverified:
+
+```text
+JavaScript-disabled placement
+Pagefind inclusion
+print result
+custom-TTS inclusion
+```
+
+Therefore `GILL-V10-RESTORED-FIGURE-RELOCATION` is narrowed, not closed.
+
+## TTS consent confirmation
+
+Current controller source shows Save-Data/opt-out as partial warm-up mitigation rather than explicit consent for every model-load path. This is supporting evidence for existing canonical row `TTS-DL-CONSENT`, not a new Gill candidate.
 
 ## Research evidence
 
 Checked:
 
-- `Джон Гилл/00_README_AND_NAVIGATION.md`
+- `00_README_AND_NAVIGATION.md`
 - `03_STRUCTURE_PROPOSAL.md`
 - `04_CONTENT_DEEPENING_AUDIT_AND_EXEGESIS_SET.md`
 - `05_BODY_OF_DIVINITY_TOC_AND_ARTICLE_SKELETON.md`
 - `07_VVEDENIE_DEEP.md`
-- latest dossier 42 registration
 
-Source observations:
+Observed:
 
-- broad Part IV versus focused exegesis proposals;
-- seven-text versus expanded working set;
-- one dossier serving both historical Introduction and Part IV opening;
-- dossier 07 first labels ten million words a modern extrapolation, then attributes that number directly to Rippon.
+- broad and focused Part IV plans coexist;
+- seven-text and expanded sets coexist;
+- dossier 07 serves both Introduction and Part IV roles;
+- dossier 07 inconsistently handles Rippon and the ten-million-word extrapolation.
 
-The proposed “seven disputed + two positive anchors” resolution remains an owner/editorial proposal.
+Proposed dossier statuses and the seven-plus-two classification require independent review and owner acceptance.
 
 ## Limits
 
-- No local source checkout was available through the connector environment.
-- No Playwright/browser run.
-- No production-like build or deployment verification.
-- No claim that source CI is green for `ff55161b` or the audited functional tree.
-- No source-code change was made.
-- AuditRepo GitHub Actions validates repository structure/rules only, not the source-repo findings.
+- This intake did not run the source-repository build or browser suite.
+- Browser claims above come from the independent current image lane and apply only to its exact JS-on placement assertions.
+- No production deployment claim is made by this intake.
+- No Gill candidate is canonical or repair-ready solely from this index.
