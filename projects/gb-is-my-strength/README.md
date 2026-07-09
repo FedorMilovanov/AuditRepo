@@ -1,7 +1,9 @@
 # gb-is-my-strength / gospod-bog.ru
 
 **Status:** 🟢 active / repair-in-progress; Gill V10 verifying  
-**Current source HEAD checked:** `30d9fb61fe2c9116ee53a54d681c01455eef4fe6` (2026-07-09)  
+**Current source HEAD:** `ff55161b6858a1bbb0fad5704a11c6b41c961879` (2026-07-09)  
+**Gill functional tree audited:** `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`  
+**Net delta `30d9fb61..ff55161b`:** empty file diff  
 **Research HEAD checked:** `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`  
 **Source repository:** `FedorMilovanov/gb-is-my-strength`
 
@@ -24,6 +26,7 @@
 ### Raw evidence
 
 6. `incoming/gpt-5-5-gill-series-master-audit/2026-07-09/` — official Gill V10 intake package.
+7. `incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_ff55161.md` — current no-op source-head freshness proof.
 
 ## Correct counts
 
@@ -64,11 +67,12 @@ canonical content graph
 → atomic publication
 ```
 
-## Current-head correction
+## Current-head corrections
 
-The baseline range `ac26d8e..30d9fb61` contains seven commits. Current rail code has already fixed the former display error that counted Introduction/Reference as numbered parts: it now renders `Часть X из 3`. The broader five-document manifest/audit hardcoding remains only a pending candidate.
-
-PR #50 added two restored Part III figures through client-side relocation. The exact no-JS, Pagefind, print and TTS impact has not yet been browser/build verified.
+- The baseline range `ac26d8e..30d9fb61` contains seven commits.
+- Current rail code already fixed the former display error that counted Introduction/Reference as numbered parts: it renders `Часть X из 3`.
+- PR #50 added two restored Part III figures through client-side relocation; no-JS/Pagefind/print/TTS impact remains unverified.
+- Later commits `273ac48e` and `ff55161b` add and remove an accidental placeholder. Their net compare against `30d9fb61` contains no changed files, so the audited functional tree is unchanged.
 
 ## Separate coordination lanes
 
