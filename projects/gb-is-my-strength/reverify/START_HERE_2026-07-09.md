@@ -1,41 +1,51 @@
 # REVERIFY START HERE — Gill V10 — 2026-07-09
 
-> Current source `main`: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`  
-> Previous freshness point: `ff55161b6858a1bbb0fad5704a11c6b41c961879`  
+> Current source `main`: `2313f36f6aeaf7415e85d5e353e7e4cd10222ece`  
+> Last Gill functional image lane: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`  
 > Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`  
 > Scope: recheck of the already-defined Gill V10 candidates only; no new-finding sweep.
 
-## Source delta reviewed
+## Source ranges reviewed
 
-`ff55161b..d579745c` is one Gill image-system commit. It changes:
+### `ff55161b..d579745c` — Gill image lane
 
-- shared hero/image presentation;
-- image placement and captions across the five published Gill routes;
-- Part III Bunhill/Spurgeon relocation logic;
-- desktop rail cover presentation;
-- route-local Part II image correction bridge.
+This lane changed shared Gill hero/image presentation, captions, Part III Bunhill/Spurgeon relocation logic, desktop rail covers and a Part II correction bridge. Its report records:
 
-The lane records a successful production-like build and a 15 route/viewport Playwright image matrix.
+- production-like build success;
+- static-publication and strict-native checks;
+- Playwright geometry/screenshots for five routes at three viewports;
+- exactly one Spurgeon and one Bunhill figure at the intended JS-on locations.
+
+### `d579745c..2313f36` — unrelated functional lane plus bot metadata
+
+The two later commits contain:
+
+- a Hermenevtika rail/speed-slot change;
+- shared CSS removal limited to `.hrail-top` Hermenevtika selectors;
+- an automatic metadata/cache-bust update;
+- Gill PageHead/root-shadow changes limited to technical `article:modified_time` and generated asset/version fields.
+
+No Gill article body, series manifest, manual TOC data, Research dossier, TTS extraction logic or Part III figure-relocation mechanism changed in this range.
 
 ## Candidate status effects
 
-| Candidate | Effect of `d579745c` |
+| Candidate | Effect at `2313f36` |
 |---|---|
-| `GILL-V10-SOURCE-TRUTH` | unchanged; canonical MDX/Astro/root-content question not resolved |
-| `GILL-V10-SERIES-MANIFEST` | unchanged; five-document data/audit hardcoding not resolved |
-| `GILL-V10-HISTORICAL-TOC-CONTRACT` | unchanged; current semantic outline contract not resolved |
+| `GILL-V10-SOURCE-TRUTH` | unchanged; MDX/Astro/root-content ownership is unresolved; technical metadata churn does not choose a canonical body |
+| `GILL-V10-SERIES-MANIFEST` | unchanged |
+| `GILL-V10-HISTORICAL-TOC-CONTRACT` | unchanged |
 | `GILL-V10-ROMAN-NUMBER-COLLISION` | unchanged |
-| `GILL-V10-PART3-NARRATIVE` | unchanged; image movement does not reorder the article’s prose architecture |
+| `GILL-V10-PART3-NARRATIVE` | unchanged |
 | `GILL-V10-PART4-OWNERSHIP` | unchanged |
 | `GILL-V10-RESEARCH-CANON` | unchanged |
-| `GILL-V10-INTRO-OWNERSHIP` | unchanged; image placement/caption edits do not settle page ownership |
-| `GILL-V10-READER-PROJECTIONS` | unchanged; no shared TTS/search/print/outline projection was introduced |
+| `GILL-V10-INTRO-OWNERSHIP` | unchanged |
+| `GILL-V10-READER-PROJECTIONS` | unchanged; Hermenevtika-specific CSS/rail work does not change Gill TOC/TTS/search/print projections |
 | `GILL-V10-CLAIM-PROVENANCE` | unchanged |
-| `GILL-V10-RESTORED-FIGURE-RELOCATION` | narrowed: JS-on browser placement is now positively verified; source still relocates figures at runtime using text/date matching; no-JS/Pagefind/print/TTS behavior remains unverified |
+| `GILL-V10-RESTORED-FIGURE-RELOCATION` | unchanged from the narrowed state: JS-on placement verified; runtime text/date relocation remains; no-JS/Pagefind/print/TTS unresolved |
 
 ## Current verdict
 
-Ten candidates remain exactly at:
+Ten candidates remain:
 
 ```text
 W1 source witness
@@ -44,32 +54,31 @@ needs-cross-verification
 not repair-ready
 ```
 
-`GILL-V10-RESTORED-FIGURE-RELOCATION` now has:
+`GILL-V10-RESTORED-FIGURE-RELOCATION` has:
 
 ```text
-source-confirmed mechanism
+source-confirmed runtime relocation
 + independent JS-on browser success witness
-+ unresolved non-JS / Pagefind / print / TTS impact
++ unresolved no-JS / Pagefind / print / custom-TTS impact
 ```
 
-This is not enough to call the candidate fixed, false-positive or repair-ready.
+This is not enough to call it fixed, false-positive or repair-ready.
 
-## Stale statements removed from active use
+## Stale statements barred from active handoffs
 
-The following must not appear in active handoffs:
-
-- current source HEAD `ff55161b`;
-- “net delta is empty” as the latest source state;
-- current Part III figures are unverified in normal JS-on browser placement;
-- the old `Часть 3 из 5` display defect;
+- current source HEAD `d579745c` or earlier;
+- “net delta is empty” as the latest state;
+- normal JS-on Part III image placement is unverified;
+- `Часть 3 из 5` is a current defect;
 - Gill has 49 confirmed active bugs;
-- Part IV scope or seven-plus-two set is already canonical.
+- Part IV scope or the seven-plus-two set is canonical;
+- technical bot `modified_time` proves an editorial content revision.
 
 ## Next verifier action
 
 Do not perform another broad search. Pick one existing candidate from `../verification/START_HERE_2026-07-09.md` and add a genuinely independent witness angle.
 
-For the figure candidate, the remaining bounded checks are:
+For the figure candidate, the bounded remaining checks are:
 
 ```text
 JavaScript disabled
@@ -87,4 +96,4 @@ custom TTS extraction
 this file
 ```
 
-Older SHA-delta notes are historical only and live under `../archive/stale/2026-07-09-gill-v10-intermediate/`.
+Older SHA-delta notes are historical only under `../archive/stale/2026-07-09-gill-v10-intermediate/`.
