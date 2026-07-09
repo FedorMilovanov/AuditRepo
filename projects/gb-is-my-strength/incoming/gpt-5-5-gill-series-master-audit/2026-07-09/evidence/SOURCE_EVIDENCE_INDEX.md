@@ -5,14 +5,29 @@
 - Source repository: `FedorMilovanov/gb-is-my-strength`
 - Source branch: `main`
 - Initial source SHA: `ac26d8efa2b952df6dc46eef05908e6d65287e82`
-- Current source SHA at end: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`
+- Final source SHA checked: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`
 - Research repository: `FedorMilovanov/Research`
 - Research SHA: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
 - AuditRepo base SHA: `18713174a343740cc0886df6c6441c51bde61274`
 
-The current-head delta is documented in `REVERIFY_DELTA_30d9fb61.md`. It did not modify `GillPart3ArticleBody.astro`, so the baseline content/outline findings remain current.
+## Witness boundary
 
-## Production content truth
+This index records one direct source witness:
+
+```text
+W1
+verified-source
+needs-cross-verification
+```
+
+It does not prove built-artifact or browser impact and does not promote new Gill candidates to canonical open status.
+
+Mandatory companion corrections:
+
+- `../artifacts/STATUS_AND_CORRECTIONS_2026-07-09.md`
+- `REVERIFY_DELTA_30d9fb61.md`
+
+## Production content representation
 
 Checked:
 
@@ -23,9 +38,9 @@ Checked:
 - `src/components/article-pilots/gill-context/GillContextArticleBody.astro`
 - `src/components/article-pilots/gill-part1/GillPart1ArticleBody.astro`
 
-Conclusion: live routes render Astro article bodies; MDX is not the sole production body.
+Source observation: live Astro routes import/render Astro article bodies; MDX is not the sole production body.
 
-## Competing canonical sources
+## Competing content representations
 
 Checked:
 
@@ -36,8 +51,10 @@ Checked:
 
 Direct divergence witness:
 
-- MDX wording places 1720 in “the same year” as Salters’ Hall 1719;
-- production Astro body says Gill came to the pastorate one year later.
+- MDX places 1720 in “the same year” as Salters’ Hall 1719;
+- production Astro says Gill came to the pastorate the following year.
+
+This supports a source-of-truth candidate. A production-like artifact witness is still required for canonical promotion.
 
 ## Series hardcoding
 
@@ -46,15 +63,20 @@ Checked:
 - `data/series.json`
 - `src/components/article-pilots/gill-series/gillSeriesData.ts`
 - `scripts/gill-series-data-consistency-audit.js`
+- `src/components/article-pilots/gill-series/GillSeriesRail.astro`
 
-Observed hardcoding:
+Current source observations:
 
-- five documents;
-- marks and route maps;
-- progress totals `149`;
-- expected order;
-- MDX map;
-- previous/next labels such as `3 из 5`, `5 из 5`.
+- five document IDs/items;
+- explicit marks and routes;
+- progress total `149` repeated per page;
+- hardcoded expected order;
+- hardcoded MDX map;
+- consistency audit expects exactly five items and total `149`.
+
+### Current-head correction
+
+`GillSeriesRail.astro` now filters Roman items and renders numbered progress as `Часть X из 3`. The former `3 из 5` / `5-of-5 labels` display subclaim is stale and excluded from the candidate evidence.
 
 ## TOC reconciliation and regression audit
 
@@ -64,11 +86,14 @@ Checked:
 - `scripts/gill-pre-v16-submenu-regression-audit.js`
 - `src/components/article-pilots/gill-series/gillSeriesData.ts`
 
-Critical policy:
+Source observations:
 
-- historical labels + order + item count are preserved;
-- Part II is documented as having grown from 6 to 29 sections;
-- regression audit requires current row count to equal historical expected count.
+- historical labels/order/item count are preserved;
+- comments document Part II growth from 6 to 29 sections;
+- current regression logic compares rendered row count with historical expected count;
+- Part II current `partToc` still contains six rows.
+
+Built outline and browser scrollspy evidence remain required.
 
 ## Part II structural evidence
 
@@ -99,19 +124,19 @@ sec-sources-part2
 sec-quiz
 ```
 
-Configured TOC has only six rows.
+Configured Part II TOC has six rows and records `sec-hebrew` as level 2 although the source heading is H3 under `part-theology`.
 
 ## Part III structural evidence
 
 Checked in `GillPart3ArticleBody.astro`:
 
-- article begins at H2 `V. Историческое влияние и память`;
-- death/burial/epitaph occur before later major doctrinal and biographical chapters;
-- sources occur before later substantive article sections;
-- repeated clusters exist for Islam, Spurgeon, Toplady, America and final days;
-- many independent H3 IDs are absent from `partToc`.
+- article begins with H2 `V. Историческое влияние и память`;
+- death/burial/epitaph occur before later major chapters;
+- a sources section occurs before later substantive article content;
+- repeated source clusters exist for Islam, Spurgeon, Toplady, America and final days;
+- multiple source headings are not represented in current `partToc`.
 
-This body file was unchanged between `ac26d8e` and `30d9fb61`.
+This body file was unchanged in the final PR #50 merge.
 
 ## Part I structural evidence
 
@@ -121,11 +146,11 @@ Checked:
 - `GillPart1SectionLastWordsWife.astro` → `sec-last-words-wife`
 - `GillPart1SectionSkeppDetail.astro` → `sec-skepp-detail`
 
-These are independent current H3 sections absent from the manual TOC.
+These source H3 sections are absent from the manual TOC. Built/browser impact remains unverified.
 
 ## Historical Introduction evidence
 
-Checked current context section components:
+Checked current context components:
 
 - `GillContextSectionFromPuritansToBaptists.astro`
 - `GillContextSectionParticularVsGeneral.astro`
@@ -138,7 +163,7 @@ Checked current context section components:
 - `GillContextSectionBooks.astro`
 - `GillContextSectionConclusion.astro`
 
-The ten-H2 backbone is coherent. Main ownership issue: `sec-books` narrates personal Gill biography already owned by Part I, while Part I/II repeat Southwark and Salters’ Hall.
+Source observation: the ten-H2 backbone is coherent; `sec-books` contains personal Gill biography while Part I/II also carry overlapping Southwark/Salters’ Hall context. Final ownership requires editorial review.
 
 ## TTS / Reader evidence
 
@@ -146,13 +171,13 @@ Checked `js/floating-cluster-controller.js`:
 
 - `getArticleText()` selects `p, h2, h3, li`;
 - excludes `.summary-card`, `aside`, `.reading-list-section`, `[data-pagefind-ignore]` and other nodes;
-- H4 titles and tables are not spoken.
+- H4, table and figcaption content is not selected.
 
 Checked `GillContextPageHead.astro`:
 
 - JSON-LD `speakable.cssSelector` includes `.summary-card` and `[data-speakable]`.
 
-Contradiction: schema declares the summary speakable; custom Play excludes it.
+Source contradiction: schema declares summary content speakable while custom Play excludes `.summary-card`. Runtime/a11y impact requires build/browser witnesses.
 
 ## Current-head restored-figure evidence
 
@@ -163,24 +188,25 @@ Checked at `30d9fb61`:
 
 Observed:
 
-- `GillPart3RestoredFigures` is SSR-rendered after `GillPart3ArticleBody`;
+- `GillPart3RestoredFigures` SSR-renders after `GillPart3ArticleBody`;
 - figures initially sit outside `<article class="article-body" data-pagefind-body>`;
 - inline JS moves the Spurgeon figure by heading/neighbor elements;
-- inline JS finds the Bunhill placement by exact Russian prose fragments;
-- TTS reads neither figures nor captions.
+- inline JS finds Bunhill placement by exact Russian prose fragments;
+- custom TTS selector does not read figure captions.
 
-This supports `GILL-V10-RESTORED-FIGURE-RELOCATION`. Impact on no-JS/Pagefind/print requires browser/artifact witness.
+No-JS/Pagefind/print/TTS/browser impact is pending verification.
 
 ## Vosk lifecycle evidence
 
 Checked current `floating-cluster-controller.js`:
 
 - local opt-out key: `gbx-vosk-warmup`;
-- Save-Data only prevents background warm-up path;
-- `_voskWarmupStarted` is set before the opt-out return;
+- Save-Data only prevents the background warm-up path;
 - no-WebSpeech fallback directly loads Vosk and calls `ensureLoaded()`;
-- `gb:vosk-model-download-start` triggers a toast but is not a consent gate;
+- `gb:vosk-model-download-start` is a notification, not a consent gate;
 - Stop/cancel controls playback, not the network/model-init lifecycle.
+
+This is an additional source witness for the existing canonical `TTS-DL-CONSENT` row, not a duplicate Gill candidate.
 
 ## Research evidence
 
@@ -193,17 +219,20 @@ Checked:
 - `07_VVEDENIE_DEEP.md`
 - latest dossier 42 registration
 
-Conflicts:
+Source observations:
 
-- broad Part IV versus focused exegesis;
-- seven disputed texts versus nine undifferentiated texts;
-- one dossier used for both historical Introduction and Part IV opening;
-- ten-thousand-sheet primary statement versus ten-million-word modern extrapolation.
+- broad Part IV versus focused exegesis proposals;
+- seven-text versus expanded working set;
+- one dossier serving both historical Introduction and Part IV opening;
+- dossier 07 first labels ten million words a modern extrapolation, then attributes that number directly to Rippon.
+
+The proposed “seven disputed + two positive anchors” resolution remains an owner/editorial proposal.
 
 ## Limits
 
-- No Playwright/browser run in this intake.
-- No production deployment verification.
-- No claim that current CI is green for source `30d9fb61`.
+- No local source checkout was available through the connector environment.
+- No Playwright/browser run.
+- No production-like build or deployment verification.
+- No claim that source CI is green for `30d9fb61`.
 - No source-code change was made.
-- AuditRepo validation commands were not executable through the connector and must run before merge.
+- AuditRepo GitHub Actions validates repository structure/rules only, not the source-repo findings.
