@@ -31,9 +31,9 @@ The figure-relocation candidate additionally has an independent positive browser
 Current status and next evidence are controlled by:
 
 ```text
-../../../working/START_HERE_2026-07-09.md
-../../../verification/START_HERE_2026-07-09.md
-../../../reverify/START_HERE_2026-07-09.md
+../../working/START_HERE_2026-07-09.md
+../../verification/START_HERE_2026-07-09.md
+../../reverify/START_HERE_2026-07-09.md
 ```
 
 ---
@@ -120,7 +120,7 @@ The detailed proposal is `proposals/proposal-gill-structural-content-lane.md` an
 Current source `d579745c` changes Gill image presentation and runtime figure placement. Exact effects are recorded only in:
 
 ```text
-../../../reverify/START_HERE_2026-07-09.md
+../../reverify/START_HERE_2026-07-09.md
 ```
 
 Ten candidates are unchanged. The figure candidate is narrowed by positive JS-on browser evidence but remains unresolved for no-JS/Pagefind/print/TTS.
@@ -135,7 +135,7 @@ Ten candidates are unchanged. The figure candidate is narrowed by positive JS-on
 - Record owner decisions separately from technical evidence.
 - Only an explicitly promoted `repair-ready` row may enter implementation.
 
-Detailed rationale is in the corrected self-contained artifact:
+Detailed rationale is in:
 
 ```text
 artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md
