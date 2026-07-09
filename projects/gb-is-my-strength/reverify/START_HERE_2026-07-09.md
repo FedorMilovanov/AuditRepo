@@ -67,7 +67,7 @@ The following must not appear in active handoffs:
 
 ## Next verifier action
 
-Do not perform another broad search. Pick one existing candidate from `verification/START_HERE_2026-07-09.md` and add a genuinely independent witness angle.
+Do not perform another broad search. Pick one existing candidate from `../verification/START_HERE_2026-07-09.md` and add a genuinely independent witness angle.
 
 For the figure candidate, the remaining bounded checks are:
 
@@ -81,10 +81,10 @@ custom TTS extraction
 ## Reading order
 
 ```text
-verified/START_HERE.md
-working/START_HERE_2026-07-09.md
-verification/START_HERE_2026-07-09.md
+../verified/START_HERE.md
+../working/START_HERE_2026-07-09.md
+../verification/START_HERE_2026-07-09.md
 this file
 ```
 
-Older SHA-delta notes are historical only and live under `archive/stale/2026-07-09-gill-v10-intermediate/`.
+Older SHA-delta notes are historical only and live under `../archive/stale/2026-07-09-gill-v10-intermediate/`.
