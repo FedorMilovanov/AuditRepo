@@ -1,7 +1,9 @@
 # Working START HERE — Gill V10 candidate synthesis — 2026-07-09
 
 > Layer: `working/` — synthesis in progress, **not verified truth**.  
-> Source current HEAD: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.  
+> Current source HEAD: `ff55161b6858a1bbb0fad5704a11c6b41c961879`.  
+> Functional tree audited: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.  
+> Net compare `30d9fb61..ff55161b`: no changed files.  
 > Initial baseline: `ac26d8efa2b952df6dc46eef05908e6d65287e82`.  
 > Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`.  
 > Raw intake: `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/`.
@@ -16,7 +18,7 @@ needs-cross-verification
 not repair-ready
 ```
 
-The severity column is a proposal, not a canonical assignment. No implementation agent should fix these rows from this document alone.
+The empty-tree freshness reverify to `ff55161b` does not count as an independent second witness. The severity column is a proposal, not a canonical assignment. No implementation agent should fix these rows from this document alone.
 
 ## Candidate matrix — 11 rows
 
@@ -40,18 +42,24 @@ The severity column is a proposal, not a canonical assignment. No implementation
 
 ## Current-head reconciliation
 
-The `ac26d8e` → `30d9fb61` range contains seven commits, not only PR #50:
+### Functional delta `ac26d8e` → `30d9fb61`
 
-- intervening Gill rail/Floating Cluster/PageHead changes;
-- Merge PR #50 restoring Part III figures.
+The range contains seven commits, including intervening Gill rail/Floating Cluster/PageHead changes and Merge PR #50 restoring Part III figures.
 
-Current recheck results:
+Results:
 
 - `GillPart3ArticleBody.astro`, `gillSeriesData.ts`, the Gill consistency audit and `floating-cluster-controller.js` owning the core candidate predicates were not changed in a way that closes those predicates;
-- current `GillSeriesRail.astro` **did** fix the old display error that counted Introduction/Reference as numbered parts (`Часть 3 из 5`); that stale subclaim has been removed from the candidate matrix;
+- current `GillSeriesRail.astro` **did** fix the old display error that counted Introduction/Reference as numbered parts (`Часть 3 из 5`); that stale subclaim has been removed;
 - PR #50 added the separate runtime figure-relocation candidate.
 
-See `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_30d9fb61.md`.
+### Freshness delta `30d9fb61` → `ff55161b`
+
+Two temporary-placeholder commits have an empty net file diff. The current source tree is identical to the audited functional tree, and no candidate status changed.
+
+See:
+
+- `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_30d9fb61.md`
+- `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_ff55161.md`
 
 ## Proposed implementation order — only after promotion
 
