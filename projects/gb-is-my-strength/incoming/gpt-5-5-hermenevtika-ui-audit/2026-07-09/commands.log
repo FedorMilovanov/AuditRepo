@@ -1,11 +1,15 @@
 2026-07-09 source audit log
 
 Repository state
-- fetched FedorMilovanov/gb-is-my-strength metadata and main HEAD
-- fetched FedorMilovanov/AuditRepo metadata and main HEAD
+- fetched FedorMilovanov/gb-is-my-strength metadata and initial main HEAD d579745c
+- fetched FedorMilovanov/AuditRepo metadata and main HEAD 18713174
 - searched current source branches/commits and open PRs
 - searched current AuditRepo branches and open PRs
-- verified no active Hermeneutics implementation PR/lane in the current remote view
+- verified no separate active Hermeneutics implementation PR/lane in the initial remote view
+- source main advanced during audit to 2313f36f
+- compared d579745c..2313f36f: two commits ahead
+- inspected functional commit b8eabe75 and bot metadata commit 2313f36f
+- repeated current-source checks for HermenevtikaRail, HermenevtikaMobileBar and shared speedSlot
 
 Source files inspected
 - AGENTS.md
@@ -22,6 +26,7 @@ Source files inspected
 - src/components/article-pilots/hermenevtika/HermenevtikaRail.astro
 - src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro
 - src/components/article-pilots/hermenevtika/hermenevtikaToc.ts
+- src/components/article-pilots/_shared/speedSlot.ts
 - src/components/ui/floating-cluster/FloatingCluster.astro
 - src/components/ui/floating-cluster/SingleArticleCluster.astro
 - js/site.js
@@ -45,8 +50,16 @@ Evidence mode
 - no Playwright/browser automation
 - no screenshots
 
+Writes performed
+- created AuditRepo branch audit/hermenevtika-ui-current-head-2026-07-09
+- opened AuditRepo PR #7
+- added mandatory current-HEAD correction after source main advanced
+- opened source issue #53 for the primary footnote/Scripture conflict
+- no source implementation files changed
+
 Result
-- 10 current-head source candidates documented
-- route-local and optional SYSTEM repair lanes separated
-- no source repository files changed by this audit
+- 11 current source candidates documented after delta reverify
+- HERM-UI-008 narrowed because b8eabe75 removed the stale rail bloom model
+- HERM-UI-011 added for hidden keyboard-focusable search/speed layers and incomplete radiogroup keyboard behavior
+- route-local, shared speed-slot and optional SYSTEM repair ownership separated
 - no canonical verified ledger status changed directly
