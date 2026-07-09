@@ -32,7 +32,7 @@
 Current-head interpretation is not duplicated here. Read:
 
 ```text
-../../../reverify/START_HERE_2026-07-09.md
+../../reverify/START_HERE_2026-07-09.md
 ```
 
 ## Status boundary
@@ -51,18 +51,18 @@ The current image lane adds a positive JS-on browser witness only for actual ima
 
 ```text
 this folder = raw evidence
-../../../working/START_HERE_2026-07-09.md = candidate synthesis
-../../../verification/START_HERE_2026-07-09.md = evidence gaps and promotion rules
-../../../reverify/START_HERE_2026-07-09.md = current-head effect
-../../../verified/START_HERE.md = canonical project handoff
+../../working/START_HERE_2026-07-09.md = candidate synthesis
+../../verification/START_HERE_2026-07-09.md = evidence gaps and promotion rules
+../../reverify/START_HERE_2026-07-09.md = current-head effect
+../../verified/START_HERE.md = canonical project handoff
 ```
 
 ## Historical material
 
-The original intermediate 1020-line draft and old SHA-delta notes were moved to:
+The original intermediate draft and old SHA-delta notes were moved to:
 
 ```text
-../../../archive/stale/2026-07-09-gill-v10-intermediate/
+../../archive/stale/2026-07-09-gill-v10-intermediate/
 ```
 
 They are retained for provenance and must not be used as active guidance.
