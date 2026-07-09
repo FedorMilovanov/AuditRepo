@@ -4,13 +4,16 @@
 
 ## Current canonical set — 2026-07-09
 
-Source HEAD checked: `ac26d8efa2b952df6dc46eef05908e6d65287e82`.
+Current source HEAD checked: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.
+
+Initial Gill V10 baseline: `ac26d8efa2b952df6dc46eef05908e6d65287e82`.
 
 1. `START_HERE.md` — текущая сводка для владельца и следующего агента.
 2. `MASTER_BUG_MATRIX.md` — канон активных operational IDs и текущих счётчиков.
-3. `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md` — официальный Gill V10 intake.
-4. `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md` — supporting detailed research.
-5. `SUPER_AUDIT_2026-07-06_14a49be8.md` — supporting historical systemic backlog; **reverify-needed**, not automatically current at `ac26d8e`.
+3. `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md` — официальный current-head Gill V10 intake.
+4. `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md` — supporting detailed baseline research.
+5. `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_30d9fb61.md` — current-head delta after Part III image restoration.
+6. `SUPER_AUDIT_2026-07-06_14a49be8.md` — supporting historical systemic backlog; **reverify-needed**, not automatically current at `30d9fb61`.
 
 ## Canonicality rules
 
@@ -19,6 +22,10 @@ Source HEAD checked: `ac26d8efa2b952df6dc46eef05908e6d65287e82`.
 - Browser/production behavior must not be promoted from source inspection alone.
 - A finding is not `repair-ready` until it has current SHA, evidence, owner decisions where required, repair lane and not-stale check.
 - Do not keep parallel “current” ledgers in `verified/`.
+
+## Current Gill delta
+
+Merge PR #50 did not change `GillPart3ArticleBody.astro`; the V10 structure/TOC/ownership findings remain current. It introduced `GILL-V10-RESTORED-FIGURE-RELOCATION`: figures are SSR-rendered after the article and moved client-side to semantic locations. The exact impact needs browser/Pagefind/print verification.
 
 ## Historical material
 
