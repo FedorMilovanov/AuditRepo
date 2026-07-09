@@ -2,13 +2,16 @@
 
 Здесь живёт только **каноническая операционная правда**. Raw intake, working synthesis и verification queue не становятся каноническими только потому, что на них есть ссылки из этого слоя.
 
-## Current canonical set — 2026-07-09
+## Current canonical files — 2026-07-09
 
 Source HEAD checked: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.
 
 1. `START_HERE.md` — текущая каноническая сводка для владельца и следующего агента.
-2. `MASTER_BUG_MATRIX.md` — 38 canonical open/carry-over rows плюс отдельная, **не считаемая канонической**, таблица 11 Gill V10 candidates pending cross-verification.
-3. `SUPER_AUDIT_2026-07-06_14a49be8.md` — supporting historical systemic backlog; reverify-needed against current source.
+2. `MASTER_BUG_MATRIX.md` — 38 canonical open/carry-over rows плюс отдельная, **не считаемая каноническими багами**, таблица 11 Gill V10 candidates pending cross-verification.
+
+## Supporting verified-history document
+
+- `SUPER_AUDIT_2026-07-06_14a49be8.md` — исторический системный аудит, привязанный к старому source SHA. Он сохраняет evidence и план волн, но требует current-head reverify перед использованием как repair truth.
 
 ## Non-canonical supporting layers
 
@@ -44,7 +47,7 @@ Do not describe the project as having “49 active confirmed bugs”.
 
 ## Current Gill status
 
-The Gill V10 package is **not** a source-fix order. It is a candidate map awaiting independent witnesses. One stale subclaim was already removed during recheck: current `GillSeriesRail.astro` correctly counts only three Roman-numbered parts, so the old `Часть 3 из 5` display defect is not part of the candidate manifest issue.
+The Gill V10 package is **not** a source-fix order. It is a candidate map awaiting independent witnesses. One stale subclaim was removed during recheck: current `GillSeriesRail.astro` correctly counts only three Roman-numbered parts, so the old `Часть 3 из 5` display defect is not part of the candidate manifest issue.
 
 ## Historical material
 
