@@ -68,9 +68,6 @@ Verifier corrections made:
   - added comments folder contract
   - added mandatory cumulative-artifact correction file
 
-Earlier AuditRepo validation observed:
-  run 28984462579 -> success on earlier PR head a4f02506b3f653a66d5184adc6d4db1e011b0072
-
 Final-head validation source of truth:
   GitHub pull-request checks for the final branch HEAD.
   Do not copy a run ID into this log, because doing so would create a newer HEAD and make that run non-final.
