@@ -1,94 +1,87 @@
 # Verification START HERE — Gill V10 — 2026-07-09
 
-> Layer: `verification/` — active dispute/status-resolution queue.  
-> Current source HEAD: `ff55161b6858a1bbb0fad5704a11c6b41c961879`.  
-> Functional tree audited: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.  
-> Net compare `30d9fb61..ff55161b`: no changed files.  
+> Layer: `verification/` — active status-resolution queue.  
+> Current source HEAD: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`.  
 > Working synthesis: `../working/START_HERE_2026-07-09.md`.  
-> Raw intake: `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/`.
+> Current-head reverify: `../reverify/START_HERE_2026-07-09.md`.
 
 ## Current verdict
 
-The Gill V10 intake is a strong **W1 source witness**, but it is not a multi-witness verified ledger.
-
-Allowed current labels:
+The Gill intake is not a verified repair ledger. Ten candidates have one source witness only:
 
 ```text
 verified-source
 needs-cross-verification
-reproduced-by-agent
+not repair-ready
 ```
 
-Not allowed yet for the new Gill rows:
+The figure-relocation candidate now has two different observations:
 
 ```text
-confirmed-current
-repair-ready
-fixed-current
-false-positive
+source witness: figures are relocated at runtime by text/date matching
+browser witness: normal JS-on placement succeeds on current source
 ```
 
-The empty-tree freshness delta to `ff55161b` does not add an independent witness. No new Gill candidate is counted as a canonical open bug until this queue produces the required evidence.
+The browser witness proves the success path, not the suspected no-JS/Pagefind/print/TTS impact. Therefore that candidate is narrowed but not promoted, closed or repair-ready.
 
 ## Verification queue
 
-| Candidate | Witness 2 | Witness 3 / promotion evidence | Owner decision needed |
+| Candidate | Next independent evidence | Promotion/decision evidence | Owner decision |
 |---|---|---|---|
-| `GILL-V10-SOURCE-TRUTH` | independent source diff of MDX/Astro/root | production-like dist proving which representation is public | choose canonical content source |
-| `GILL-V10-SERIES-MANIFEST` | independent hardcoding inventory | mutation test adding a draft sixth item without manual list edits | approve target six-document model |
-| `GILL-V10-HISTORICAL-TOC-CONTRACT` | generated heading↔TOC inventory | browser scrollspy/mobile TOC witness | approve whether every H2/H3 is navigable or explicitly excluded |
-| `GILL-V10-ROMAN-NUMBER-COLLISION` | independent source/editorial review | rendered screenshot/accessibility outline | approve local heading numbering rule |
-| `GILL-V10-PART3-NARRATIVE` | independent editorial section-order ledger | owner/editorial acceptance of terminal sequence | yes |
-| `GILL-V10-PART4-OWNERSHIP` | independent topic duplication map | owner-approved ownership manifest | yes |
-| `GILL-V10-RESEARCH-CANON` | Research-repo reviewer classifies dossiers | second reviewer checks successor links/status metadata | approve canonical Research brief |
-| `GILL-V10-INTRO-OWNERSHIP` | independent overlap review | owner accepts page-boundary decisions | yes |
-| `GILL-V10-READER-PROJECTIONS` | built artifact extraction comparison | browser/TTS/a11y/print witness | approve Reader model scope |
-| `GILL-V10-CLAIM-PROVENANCE` | primary-source check of Rippon wording | Research correction committed and rechecked | no, unless wording choice is disputed |
-| `GILL-V10-RESTORED-FIGURE-RELOCATION` | no-JS + built Pagefind check | print/TTS/browser placement check | choose direct-placement repair |
+| `GILL-V10-SOURCE-TRUTH` | MDX/Astro/root source diff by another verifier | production-like dist identifying the public body | choose canonical content source |
+| `GILL-V10-SERIES-MANIFEST` | independent hardcoding inventory | sixth-item mutation test without manual parallel edits | approve target series model |
+| `GILL-V10-HISTORICAL-TOC-CONTRACT` | generated heading↔TOC inventory | rendered/browser outline and scrollspy | define eligible/excluded headings |
+| `GILL-V10-ROMAN-NUMBER-COLLISION` | independent editorial/source review | rendered accessibility outline | approve numbering rule |
+| `GILL-V10-PART3-NARRATIVE` | independent section-order/duplication ledger | owner acceptance of terminal sequence | required |
+| `GILL-V10-PART4-OWNERSHIP` | independent topic-ownership map | owner-approved relocation ledger | required |
+| `GILL-V10-RESEARCH-CANON` | independent Research dossier classification | accepted successor/status metadata | required |
+| `GILL-V10-INTRO-OWNERSHIP` | independent overlap review | owner-approved page boundaries | required |
+| `GILL-V10-READER-PROJECTIONS` | built extraction comparison | browser/TTS/a11y/print witness | approve Reader scope |
+| `GILL-V10-CLAIM-PROVENANCE` | primary-source check | corrected Research claim rechecked | only if wording remains disputed |
+| `GILL-V10-RESTORED-FIGURE-RELOCATION` | JavaScript-disabled render and built Pagefind check | print and custom-TTS checks | decide whether direct semantic placement is required |
 
-## Specific current-head corrections already resolved in verification
+## Resolved or narrowed statements
 
-### Old `3 из 5` subclaim — removed
+### Closed: numbered-part display
 
-Current `GillSeriesRail.astro` filters `GILL_SERIES_ITEMS` to Roman items and renders numbered progress as `Часть X из 3`. Therefore the earlier subclaim that the current rail still displays `3 из 5` is stale and must not be carried into the Gill V10 candidate.
+Current rail displays `Часть X из 3`. The former `3 из 5` claim is stale and must not return to any active report.
 
-This does **not** close the broader manifest candidate because the data/audit layers still hardcode five documents, expected order and total `149`.
+### Narrowed: Part III figures
 
-### Functional range scope — clarified
+The current image lane verifies exactly one Bunhill and one Spurgeon figure at the intended locations with JavaScript enabled. It does not establish:
 
-The baseline range `ac26d8e..30d9fb61` includes seven commits. PR #50 itself changed only the Part III shell, the new restored-figures component and its lane report. Other rail/Floating Cluster/PageHead edits were intervening commits and were reviewed separately for relevance.
+- semantic placement without JavaScript;
+- Pagefind inclusion;
+- print stability;
+- custom-TTS inclusion.
 
-### Current no-op HEAD — clarified
+### Unchanged by the image lane
 
-The range `30d9fb61..ff55161b` contains a temporary placeholder commit and its removal. GitHub compare returns no changed files. The current tree is identical to the audited functional tree; no candidate predicate or status changed.
-
-Evidence:
-
-- `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_30d9fb61.md`
-- `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_ff55161.md`
+The image commit does not resolve content-source ownership, manifest hardcoding, semantic TOC completeness, internal Roman numbering, Part III prose order, Part IV ownership, Research status or Reader projection differences.
 
 ## Promotion rules
 
 Follow `MULTI_WITNESS_VERIFICATION_PROTOCOL.md`:
 
-1. One source witness stays `needs-cross-verification`.
-2. Two independent witness angles may become `confirmed-on-sha` / `likely-current`.
-3. `confirmed-current` requires the strengthened multi-witness threshold or a strong production-like browser witness.
-4. `repair-ready` additionally requires current SHA, route/files, evidence, repair lane, owner decision where applicable and a not-stale check.
+1. One source witness remains `needs-cross-verification`.
+2. Two independent angles can support `confirmed-on-sha` or `likely-current` only for the exact claim both establish.
+3. `confirmed-current` or `repair-ready` requires the stronger threshold and a current not-stale check.
+4. Owner decisions are required in addition to technical witnesses where the queue says so.
 
-## Required output before implementation
+## Required verifier decision
 
-A verifier must create a decision record that lists, per candidate:
+Before implementation, record:
 
 ```text
-source SHA
-functional tree SHA
+current source SHA
+candidate ID
+exact claim being verified
 witness types
 accepted/rejected severity
-canonical status
+status
 owner decision
 repair lane
 not-stale result
 ```
 
-Until then, implementation agents must treat `../working/START_HERE_2026-07-09.md` as a candidate map, not an instruction to modify the source repository.
+Do not conduct another broad audit from this file. Pick one existing candidate and close its stated evidence gap.
