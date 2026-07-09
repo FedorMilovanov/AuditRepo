@@ -27,7 +27,7 @@ They mixed several time layers:
 
 - project/registry/next-agent headers still pointed to source `14a49be8` from 2026-07-06;
 - the matrix had later 2026-07-08 TTS updates and source header `75f807b`;
-- the actual source `main` checked for Gill V10 was `ac26d8e`;
+- Gill V10 began on `ac26d8e`, while final current source HEAD became `30d9fb61` during the pass;
 - the previous project README embedded long incident histories beside current instructions;
 - no single entrypoint represented current Gill Part IV/content-ownership research.
 
