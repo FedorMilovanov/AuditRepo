@@ -16,10 +16,10 @@ needs-cross-verification
 not repair-ready
 ```
 
-Current-head effects are recorded in the project-level file:
+Current-head effects are recorded in:
 
 ```text
-../../../../reverify/START_HERE_2026-07-09.md
+../../../reverify/START_HERE_2026-07-09.md
 ```
 
 ## Content representations
@@ -114,7 +114,7 @@ Checked:
 
 - `GillPart3MainShell.astro`
 - `GillPart3RestoredFigures.astro`
-- current image-lane report at `d579745c`
+- `docs/refactor-2026/lanes/gill-image-premium-audit-2026-07-09.md`
 
 Current source mechanism:
 
