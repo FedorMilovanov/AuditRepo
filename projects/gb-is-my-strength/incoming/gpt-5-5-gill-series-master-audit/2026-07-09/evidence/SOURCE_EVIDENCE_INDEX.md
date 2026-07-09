@@ -5,7 +5,9 @@
 - Source repository: `FedorMilovanov/gb-is-my-strength`
 - Source branch: `main`
 - Initial source SHA: `ac26d8efa2b952df6dc46eef05908e6d65287e82`
-- Final source SHA checked: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`
+- Functional source tree audited: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`
+- Current source HEAD after freshness reverify: `ff55161b6858a1bbb0fad5704a11c6b41c961879`
+- Net compare `30d9fb61..ff55161b`: no changed files
 - Research repository: `FedorMilovanov/Research`
 - Research SHA: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
 - AuditRepo base SHA: `18713174a343740cc0886df6c6441c51bde61274`
@@ -20,12 +22,13 @@ verified-source
 needs-cross-verification
 ```
 
-It does not prove built-artifact or browser impact and does not promote new Gill candidates to canonical open status.
+The tree-identical freshness reverify to `ff55161b` is not an independent second witness. This index does not prove built-artifact or browser impact and does not promote new Gill candidates to canonical open status.
 
 Mandatory companion corrections:
 
 - `../artifacts/STATUS_AND_CORRECTIONS_2026-07-09.md`
 - `REVERIFY_DELTA_30d9fb61.md`
+- `REVERIFY_DELTA_ff55161.md`
 
 ## Production content representation
 
@@ -76,7 +79,7 @@ Current source observations:
 
 ### Current-head correction
 
-`GillSeriesRail.astro` now filters Roman items and renders numbered progress as `Часть X из 3`. The former `3 из 5` / `5-of-5 labels` display subclaim is stale and excluded from the candidate evidence.
+`GillSeriesRail.astro` filters Roman items and renders numbered progress as `Часть X из 3`. The former `3 из 5` / `5-of-5 labels` display subclaim is stale and excluded from the candidate evidence.
 
 ## TOC reconciliation and regression audit
 
@@ -136,7 +139,7 @@ Checked in `GillPart3ArticleBody.astro`:
 - repeated source clusters exist for Islam, Spurgeon, Toplady, America and final days;
 - multiple source headings are not represented in current `partToc`.
 
-This body file was unchanged in the final PR #50 merge.
+This body file was unchanged in the final PR #50 merge. The later no-op source-head advance also changed no files.
 
 ## Part I structural evidence
 
@@ -179,9 +182,9 @@ Checked `GillContextPageHead.astro`:
 
 Source contradiction: schema declares summary content speakable while custom Play excludes `.summary-card`. Runtime/a11y impact requires build/browser witnesses.
 
-## Current-head restored-figure evidence
+## Restored-figure evidence
 
-Checked at `30d9fb61`:
+Checked in the audited functional tree:
 
 - `src/components/article-pilots/gill-part3/GillPart3MainShell.astro`
 - `src/components/article-pilots/gill-part3/GillPart3RestoredFigures.astro`
@@ -198,7 +201,7 @@ No-JS/Pagefind/print/TTS/browser impact is pending verification.
 
 ## Vosk lifecycle evidence
 
-Checked current `floating-cluster-controller.js`:
+Checked current functional tree `floating-cluster-controller.js`:
 
 - local opt-out key: `gbx-vosk-warmup`;
 - Save-Data only prevents the background warm-up path;
@@ -233,6 +236,6 @@ The proposed “seven disputed + two positive anchors” resolution remains an o
 - No local source checkout was available through the connector environment.
 - No Playwright/browser run.
 - No production-like build or deployment verification.
-- No claim that source CI is green for `30d9fb61`.
+- No claim that source CI is green for `ff55161b` or the audited functional tree.
 - No source-code change was made.
 - AuditRepo GitHub Actions validates repository structure/rules only, not the source-repo findings.
