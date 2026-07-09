@@ -8,9 +8,9 @@
 
 ## gb-is-my-strength — current state
 
-- Current source HEAD: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`.
+- Current source HEAD: `2313f36f6aeaf7415e85d5e353e7e4cd10222ece`.
 - Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`.
-- Existing canonical matrix: 90 closed/fixed, 38 open.
+- Existing canonical matrix: 90 closed/fixed IDs, 38 open rows.
 - Gill V10: 11 candidates pending cross-verification; not included in the canonical open count.
 
 Active entrypoints:
