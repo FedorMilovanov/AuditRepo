@@ -4,7 +4,7 @@
 - Project: `gb-is-my-strength`
 - Source repo: `FedorMilovanov/gb-is-my-strength`
 - Research repo: `FedorMilovanov/Research`
-- Agent: GPT-5.5 Thinking / source-structure verifier
+- Agent: GPT-5.5 Thinking / source-structure auditor
 - Date: 2026-07-09
 - Audited branch: `main`
 - Initial audited SHA: `ac26d8efa2b952df6dc46eef05908e6d65287e82`
@@ -14,9 +14,31 @@
 - Build mode: source-only audit
 - Browser / device: not used
 
+## Verification boundary
+
+This report provides one witness angle:
+
+```text
+W1 source witness
+verified-source
+needs-cross-verification
+```
+
+All severities below are **proposals**. New Gill rows are not `confirmed-current`, are not counted as canonical open bugs and are not repair-ready. Promotion is controlled by:
+
+- `../../../working/START_HERE_2026-07-09.md`
+- `../../../verification/START_HERE_2026-07-09.md`
+
 ## Current-head reconciliation
 
-Source advanced during the audit through Merge PR #50, which restored Gill Part III illustrations. `GillPart3ArticleBody.astro` did not change, so all original V10 structural/content findings remain current. The new `GillPart3RestoredFigures.astro` design adds one current-head P2 finding: figures SSR outside the article and are moved client-side into semantic positions.
+The baseline range `ac26d8e..30d9fb61` contains seven commits. It includes intervening Gill rail/Floating Cluster/PageHead work and Merge PR #50 restoring Part III illustrations.
+
+Recheck results:
+
+- article-body/data/audit source predicates behind the candidates remain observed;
+- current `GillSeriesRail.astro` now correctly counts only Roman-numbered parts as `Часть X из 3`, so the old `3 из 5` display subclaim is removed;
+- PR #50 introduced a separate runtime figure-relocation candidate;
+- no build/browser/production-like witness was produced.
 
 Full delta: `evidence/REVERIFY_DELTA_30d9fb61.md`.
 
@@ -25,136 +47,149 @@ Full delta: `evidence/REVERIFY_DELTA_30d9fb61.md`.
 ## 1. New Findings
 
 ### GILL-V10-SOURCE-TRUTH
-- Title: Three competing content truths make production, Research and audits disagree
-- Severity: P0
+- Title: Three competing content representations can make production, Research and audits disagree
+- Proposed severity: P0 publication blocker
 - Route(s): all Gill-series routes
 - Source file(s): MDX corpus, production Astro article bodies, root legacy shadows, consistency audit
-- Observed on SHA: `30d9fb61` (original comparison at `ac26d8e`; affected files unchanged)
-- Expected: one canonical content source feeds production, Research, word counts, dates, search, TTS and structured data.
-- Actual: production renders Astro bodies; Research/audits frequently treat MDX as canonical; root legacy HTML persists as a third shadow. A direct factual divergence already exists in Part II around Salters’ Hall 1719 versus the 1720 pastorate.
+- Observed on SHA: `30d9fb61`
+- Expected: one declared canonical source feeds production, Research, metadata and reader projections.
+- Actual source observation: production routes render Astro bodies; the consistency audit calls MDX/frontmatter canonical inputs; root legacy HTML remains. Part II contains a direct MDX↔Astro factual divergence around Salters’ Hall 1719 and Gill’s 1720 pastorate.
 - Evidence: artifact §2; source index.
-- Confidence: high
-- Verification level: L3 source-current
+- Confidence: high for source observation
+- Verification: `W1 / verified-source / needs-cross-verification`
+- Required next witness: independent source review + production-like artifact comparison
 - Suggested repair lane: canonical content source / generated projections
-- Consolidates: `GILL-P0-015`, `GILL-P0-016`, `GILL-P1-105..107`.
+- Consolidates candidate sub-IDs: `GILL-P0-015`, `GILL-P0-016`, `GILL-P1-105..107`.
 
 ### GILL-V10-SERIES-MANIFEST
-- Title: Five-document hardcoding and its audit block safe Part IV publication
-- Severity: P0
+- Title: Five-document hardcoding can block safe Part IV publication
+- Proposed severity: P0 publication blocker
 - Source file(s): `data/series.json`, `gillSeriesData.ts`, `gill-series-data-consistency-audit.js`
 - Observed on SHA: `30d9fb61`
-- Actual: IDs, marks, routes, expected order, MDX map, progress total `149` and 5-of-5 labels are maintained in multiple places.
-- Evidence: artifact §3.
-- Confidence: high
-- Verification level: L3 source-current
+- Actual source observation: IDs, marks, routes, expected order, MDX map and progress total `149` are maintained in multiple places. The consistency audit explicitly expects five items.
+- Current-head correction: current rail code already fixed the former `Часть 3 из 5` display bug by counting only Roman items. That stale subclaim is excluded.
+- Evidence: artifact §3; source index.
+- Confidence: high for source observation
+- Verification: `W1 / verified-source / needs-cross-verification`
+- Required next witness: second source inventory + sixth-item mutation test
 - Suggested repair lane: manifest-driven series graph
-- Consolidates: `GILL-P0-017`, `GILL-P0-019`, `GILL-P1-110`.
+- Consolidates candidate sub-IDs: `GILL-P0-017`, `GILL-P0-019`, `GILL-P1-110`.
 
 ### GILL-V10-HISTORICAL-TOC-CONTRACT
-- Title: Historical submenu count is protected more strongly than current article completeness
-- Severity: P0
+- Title: Historical submenu count may be protected more strongly than current article completeness
+- Proposed severity: P0 publication blocker
 - Source file(s): reconciliation JSON, submenu regression audit, series TOC data, article bodies
 - Observed on SHA: `30d9fb61`
-- Actual: policy preserves historical item count while admitting Part II grew from 6 to 29 sections; the audit requires rendered count to equal the historical count. Part I/III also contain meaningful current headings absent from the menu.
+- Actual source observation: policy preserves historical labels/order/item count while comments acknowledge Part II grew from 6 to 29 sections; the audit requires current rendered count to equal historical count. Part I/III also have source headings absent from the configured menu.
 - Evidence: artifact §4.
-- Confidence: high
-- Verification level: L3 source-current
+- Confidence: high for source observation
+- Verification: `W1 / verified-source / needs-cross-verification`
+- Required next witness: built heading↔TOC inventory + browser scrollspy witness
 - Suggested repair lane: generated outline / Reader AST
-- Consolidates: `GILL-P0-018`, `GILL-P0-040..042`, `GILL-P1-207`.
+- Consolidates candidate sub-IDs: `GILL-P0-018`, `GILL-P0-040..042`, `GILL-P1-207`.
 
 ### GILL-V10-ROMAN-NUMBER-COLLISION
 - Title: Standalone Parts II–III preserve hidden mega-article chapter numbering
-- Severity: P0
+- Proposed severity: P0 publication blocker
 - Observed on SHA: `30d9fb61`
-- Actual: Part II begins with internal III/IV; Part III begins with V. Planned series Part IV would collide semantically with internal IV.
-- Evidence: production article-body headings.
-- Confidence: high
-- Verification level: L3 source-current
+- Actual source observation: Part II begins with internal III/IV; Part III begins with V. A future series Part IV could collide semantically with internal IV.
+- Evidence: current article-body headings.
+- Confidence: high for source observation
+- Verification: `W1 / verified-source / needs-cross-verification`
+- Required next witness: independent editorial/source review + rendered outline capture
 - Suggested repair lane: outline normalization before Part IV
-- Consolidates: `GILL-P0-043`, `GILL-P0-044`.
+- Consolidates candidate sub-IDs: `GILL-P0-043`, `GILL-P0-044`.
 
 ### GILL-V10-PART3-NARRATIVE
-- Title: Part III is non-terminal, duplicated and only partially navigable
-- Severity: P0
+- Title: Part III appears non-terminal, duplicated and partially navigable
+- Proposed severity: P0 publication blocker
 - Observed on SHA: `30d9fb61`; article body unchanged by PR #50
-- Actual: death/burial/epitaph and a sources block are followed by major new content. Islam, Spurgeon, Toplady, America and final-days material repeat. Many real headings are absent from TOC.
+- Actual source observation: death/burial/epitaph and a sources block are followed by major new content. Islam, Spurgeon, Toplady, America and final-days clusters recur. Several source headings are absent from configured TOC data.
 - Evidence: artifact §6.
-- Confidence: high
-- Verification level: L3 source-current
+- Confidence: high for source ordering; editorial impact needs another reviewer
+- Verification: `W1 / verified-source / needs-cross-verification`
+- Required next witness: independent section-order and duplication ledger
 - Suggested repair lane: Part III editorial restructure
-- Consolidates: `GILL-P0-045..047`.
+- Consolidates candidate sub-IDs: `GILL-P0-045..047`.
 
 ### GILL-V10-PART4-OWNERSHIP
-- Title: Part IV cannot be additive because Parts II–III already consume its doctrinal scope
-- Severity: P0
+- Title: Part IV may duplicate doctrine already owned by Parts II–III
+- Proposed severity: P0 publication blocker
 - Observed on SHA: source `30d9fb61`, Research `58e1ea5`
-- Actual: Part II already contains Trinity, covenant, eternal justification, ordo salutis, pactum salutis, redemption, ordinances, ecclesiology, eschatology and gospel-offer material; Part III adds doctrinal adjudication.
+- Actual source observation: Part II already contains Trinity, covenant, eternal justification, ordo salutis, pactum salutis, redemption, ordinances, ecclesiology, eschatology and gospel-offer material; Part III adds doctrinal adjudication.
 - Evidence: artifact §§7–8.
-- Confidence: high
-- Verification level: L3 source-current for structure; owner decision required for relocation
+- Confidence: high for topic presence; ownership is an editorial decision
+- Verification: `W1 / verified-source / needs-cross-verification`
+- Required next witness: independent topic map + owner decision
 - Suggested repair lane: topic ownership manifest + relocation
-- Consolidates: `GILL-P0-048` and prior overlap findings.
+- Consolidates candidate sub-IDs: `GILL-P0-048` and prior overlap findings.
 
 ### GILL-V10-RESEARCH-CANON
-- Title: Research contains mutually superseding Part IV/Introduction plans without status metadata
-- Severity: P1
+- Title: Research contains competing Part IV/Introduction plans without status metadata
+- Proposed severity: P1
 - Observed on SHA: Research `58e1ea5`
-- Actual: dossier 03 recommends broad Part IV; 04 says it duplicates Part II and prefers seven disputed texts; 05 expands to nine; 07 serves both the historical Introduction and Part IV opening.
+- Actual source observation: dossier 03 recommends broad Part IV; 04 argues that broad Part IV duplicates Part II and prefers seven disputed texts; 05 expands the working set; 07 serves both historical Introduction and Part IV opening.
 - Evidence: artifact §9.
-- Confidence: high
-- Verification level: L2 source-current
+- Confidence: high for document conflict
+- Verification: `W1 / verified-source / needs-cross-verification`
+- Required next witness: independent Research-repo classification
 - Suggested repair lane: Research status metadata and split dossier 07
-- Consolidates: `GILL-P1-108`, `GILL-P1-208`, `GILL-P1-209`, `GILL-P0-049`.
+- Consolidates candidate sub-IDs: `GILL-P1-108`, `GILL-P1-208`, `GILL-P1-209`, `GILL-P0-049`.
 
 ### GILL-V10-INTRO-OWNERSHIP
-- Title: Historical Introduction repeats biography and later doctrine instead of missing historical systems
-- Severity: P1
+- Title: Historical Introduction appears to overlap biography and later doctrine
+- Proposed severity: P1
 - Observed on SHA: `30d9fb61`
-- Actual: Kettering bookshop biography overlaps Part I; Part I/II repeat Southwark and Salters’ Hall; Research dossier 07 imports hyper-Calvinism and eternal justification into the historical opening.
+- Actual source observation: Kettering bookshop biography overlaps Part I; Part I/II repeat Southwark and Salters’ Hall; Research dossier 07 imports hyper-Calvinism and eternal justification into the historical opening.
 - Evidence: artifact §10.
-- Confidence: high
-- Verification level: L3 source-current
+- Confidence: high for overlap; final ownership needs editorial review
+- Verification: `W1 / verified-source / needs-cross-verification`
+- Required next witness: independent overlap map + owner decision
 - Suggested repair lane: historical Introduction expansion after ownership freeze
 
 ### GILL-V10-READER-PROJECTIONS
-- Title: TOC, custom TTS, schema speakable, search and print infer different articles
-- Severity: P1
+- Title: TOC, custom TTS, schema speakable, search and print use different source projections
+- Proposed severity: P1
 - Observed on SHA: `30d9fb61`
-- Actual: schema marks summary speakable while custom Play excludes it; H4 titles disappear from audio; glossary card titles pollute H3 outline; essential tables have no spoken summary.
+- Actual source observation: schema marks summary content speakable while custom Play excludes `.summary-card`; H4 titles and tables are absent from the custom TTS selector; glossary card headings can enter the document outline.
 - Evidence: artifact §11.
-- Confidence: high
-- Verification level: source contradiction confirmed; browser/a11y witness pending
+- Confidence: high for selector contradiction; user impact unverified
+- Verification: `W1 / verified-source / needs-cross-verification`
+- Required next witness: built artifact + browser/TTS/a11y/print checks
 - Suggested repair lane: Reader AST / semantic projections
-- Consolidates: `GILL-P1-213..216`.
+- Consolidates candidate sub-IDs: `GILL-P1-213..216`.
 
 ### GILL-V10-TTS-CONSENT-LIFECYCLE
-- Title: Save-Data mitigation does not establish consent or a cancellable ~280 MB lifecycle
-- Severity: P1
+- Title: Save-Data mitigation does not itself establish consent or a cancellable ~280 MB lifecycle
+- Relation: confirmation/extension of existing canonical row `TTS-DL-CONSENT`; not a new Gill candidate count
 - Observed on SHA: `30d9fb61`
-- Actual: no-WebSpeech fallback bypasses warm-up opt-out path; download-start is informational, not a gate; Stop does not abort model download/initialization; no visible progress/delete/storage lifecycle exists.
-- Relation: extends existing matrix row `TTS-DL-CONSENT`; not counted as a duplicate matrix row.
-- Consolidates: `GILL-P0-013`, `GILL-P0-014`, `GILL-P1-099..104`.
+- Source observation: no-WebSpeech fallback directly loads Vosk; download-start is informational rather than a gate; Stop does not abort model initialization; no visible model progress/delete/storage lifecycle exists.
+- Witness contribution: additional independent source confirmation for the existing row
+- Recommended status: keep existing P1 row; owner UX decision and repair-ready checks still required
+- Consolidates candidate sub-IDs: `GILL-P0-013`, `GILL-P0-014`, `GILL-P1-099..104`.
 
 ### GILL-V10-CLAIM-PROVENANCE
-- Title: Research turns an inferred ten-million-word estimate into a Rippon primary-source claim
-- Severity: P1
+- Title: Research attributes a modern ten-million-word extrapolation directly to Rippon
+- Proposed severity: P1
 - Observed on SHA: Research `58e1ea5`
-- Actual: dossier 07 correctly calls ten million words a modern extrapolation, then later attributes that number directly to Rippon.
-- Evidence: artifact §9.4.
+- Actual source observation: dossier 07 first states that Rippon’s “more than ten thousand” refers to printing sheets and that ten million words is a modern extrapolation; a later paragraph says Rippon testified to more than ten million words.
+- Evidence: artifact §9.4; Research dossier 07.
 - Confidence: high
-- Verification level: L2 source-current
+- Verification: `W1 / verified-source / needs-cross-verification`
+- Required next witness: independent primary-source/Research correction check
 - Suggested repair lane: claim-and-quote register
 
 ### GILL-V10-RESTORED-FIGURE-RELOCATION
-- Title: Restored Part III figures are SSR-rendered after the article and moved client-side by fragile anchors
-- Severity: P2
+- Title: Restored Part III figures SSR after the article and are moved client-side by fragile anchors
+- Proposed severity: P2
 - Observed on SHA: `30d9fb61`
 - Source files: `GillPart3MainShell.astro`, `GillPart3RestoredFigures.astro`
-- Actual: figures initially exist outside `<article data-pagefind-body>`. Inline JS moves one by heading ID/neighbor paragraphs and the burial figure by matching exact Russian prose text. No-JS, Pagefind, print/snapshot and TTS semantics can differ.
+- Actual source observation: figures initially exist outside `<article data-pagefind-body>`. Inline JS moves one by heading/neighbor elements and the burial figure by matching exact Russian prose.
 - Evidence: `evidence/REVERIFY_DELTA_30d9fb61.md`.
-- Confidence: high for source behavior; impact needs browser/Pagefind/print witness
-- Verification level: L2 source-current / needs-browser-witness
-- Suggested repair lane: render figures directly in owning semantic sections or Reader AST
+- Confidence: high for source behavior; impact unverified
+- Verification: `W1 / verified-source / needs-cross-verification`
+- Required next witness: no-JS/Pagefind/print/TTS/browser checks
+- Suggested repair lane: direct semantic placement or Reader projection
 
 ---
 
@@ -162,61 +197,66 @@ Full delta: `evidence/REVERIFY_DELTA_30d9fb61.md`.
 
 ### Confirm TTS-DL-CONSENT
 - Target: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`
-- Evidence: current control flow still treats Save-Data/opt-out as partial warm-up mitigation, not explicit consent.
-- Recommended status: remain P1; owner decision required; not repair-ready.
+- My evidence: current control flow still treats Save-Data/opt-out as partial warm-up mitigation, not explicit consent.
+- Recommended status: retain existing P1; owner decision required; not repair-ready.
 
 ### Confirm AUDIT-P2-MATRIX-DRIFT
-- Evidence: Gill series has a concrete five-item drift set across data, UI, audit, minutes and route/mark maps.
-- Recommended status: keep generic site-wide row; scoped Gill manifest blocker is separately P0 for Part IV.
+- My evidence: Gill series has a concrete five-document drift set across data, audit, progress totals and source maps.
+- Current-head correction: do not reuse the stale `3 из 5` rail-display subclaim.
+- Recommended status: keep generic site-wide row; Gill manifest remains a pending scoped candidate.
 
 ### Confirm GATE-MARKER-DATA-DRIFT
-- Evidence: historical submenu audit freezes six Part II rows while comments admit twenty-nine current sections.
-- Recommended status: keep generic P3 row; Gill scoped root cause is P0.
+- My evidence: historical submenu count remains encoded while current article structure has expanded.
+- Recommended status: keep generic P3 row; scoped Gill candidate awaits independent witnesses.
 
 ---
 
 ## 3. Challenges / Disputes
 
 ### Challenge: “green Gill submenu audit proves complete current navigation”
-The audit compares rendered rows to a historical manifest and never proves all eligible current H2/H3 headings are represented. Treat the gate as a visual witness only after removing content-count semantics.
+The source audit compares rendered rows to a historical manifest and does not itself prove all eligible current headings are represented. A build/browser witness is required.
 
 ### Challenge: “Part IV is a simple sixth article”
-Production Parts II–III already contain the proposed doctrine. Replace additive authoring with relocation-first ownership.
+Parts II–III contain substantial proposed doctrine. Relocation-first is a working proposal pending owner/editorial verification.
 
-### Challenge: “seven versus nine is an unresolved number choice”
-Canonical distinction:
+### Proposed resolution: seven versus nine
+A possible classification is:
 
-- seven disputed texts;
+- seven disputed/universal-redemption texts;
 - two positive soteriological anchors (`John 3:3`, `Romans 8:30`).
 
-Do not put either count in the permanent H1.
+This is not canonical until independently checked and accepted by the owner. Avoid putting either count in the permanent H1 before that decision.
 
 ---
 
 ## 4. Duplicate / Merge Proposals
 
-- `GILL-V10-HISTORICAL-TOC-CONTRACT` consolidates `GILL-P0-018`, `040..042`, `P1-207` and Part III outline gaps.
-- `GILL-V10-SOURCE-TRUTH` consolidates `GILL-P0-015`, `016`, `GILL-P1-105..107`.
-- `GILL-V10-PART4-OWNERSHIP` consolidates broad Part IV overlap findings.
-- `GILL-V10-RESTORED-FIGURE-RELOCATION` remains separate because it was introduced after the initial V10 baseline and has a precise current repair target.
+- `GILL-V10-HISTORICAL-TOC-CONTRACT` proposes consolidating `GILL-P0-018`, `040..042`, `P1-207` and Part III outline gaps.
+- `GILL-V10-SOURCE-TRUTH` proposes consolidating `GILL-P0-015`, `016`, `GILL-P1-105..107`.
+- `GILL-V10-PART4-OWNERSHIP` proposes consolidating broad Part IV overlap findings.
+- `GILL-V10-RESTORED-FIGURE-RELOCATION` remains separate because it was introduced after the baseline and has a precise source target.
+
+All merge proposals remain `proposal-open`.
 
 ---
 
 ## 5. Severity Proposals
 
-- P0 Gill rows are publication/migration blockers, not whole-site outage claims.
-- `GILL-V10-READER-PROJECTIONS` remains P1 pending browser/a11y witness.
-- `GILL-V10-RESTORED-FIGURE-RELOCATION` is P2 pending demonstrated Pagefind/print/no-JS impact.
-- `GILL-V10-CLAIM-PROVENANCE` is P1 and must block the inaccurate claim from publication.
+- Six Gill candidates are proposed P0 **publication blockers**, not whole-site outage claims.
+- Four Gill candidates are proposed P1.
+- `GILL-V10-RESTORED-FIGURE-RELOCATION` is proposed P2 pending impact witnesses.
+- No proposed severity is canonical yet.
 
 ---
 
 ## 6. Repair Lane Suggestions
 
+These are working suggestions only:
+
 ### Lane A — canonical graph
 `GILL-V10-SOURCE-TRUTH`, `GILL-V10-SERIES-MANIFEST`
 
-### Lane B — outline and Reader AST
+### Lane B — outline and Reader model
 `GILL-V10-HISTORICAL-TOC-CONTRACT`, `GILL-V10-ROMAN-NUMBER-COLLISION`, `GILL-V10-READER-PROJECTIONS`, `GILL-V10-RESTORED-FIGURE-RELOCATION`
 
 ### Lane C — editorial ownership
@@ -226,20 +266,19 @@ Do not put either count in the permanent H1.
 `GILL-V10-RESEARCH-CANON`, `GILL-V10-CLAIM-PROVENANCE`
 
 ### Lane E — atomic publication
-After A–D, update series UI, navigation, PageHead, CreativeWorkSeries JSON-LD, sitemap, RSS, llms.txt, catalogs, Pagefind, TTS, print, reading time and tests from one manifest.
-
-Do not mix these lanes with PremiumControls visual redesign, Vosk delivery architecture or glossary data.
+Only after verified A–D decisions: series UI, navigation, PageHead, series JSON-LD, sitemap, RSS, llms.txt, catalogs, Pagefind, TTS, print, reading time and tests.
 
 ---
 
 ## 7. Reverify Notes
 
 - Initial source: `ac26d8e`.
-- Final current source: `30d9fb61`.
-- Delta inspected file-by-file.
-- `GillPart3ArticleBody.astro` unchanged, so V10 body/TOC/narrative findings remain current.
-- New restored-figure component introduced one P2 semantic-placement risk.
-- No browser or production-like build was run.
+- Final source: `30d9fb61`.
+- Full seven-commit delta inspected for relevant files.
+- Current rail fixed the old numbered-part display subclaim.
+- PR #50 introduced the restored-figure relocation candidate.
+- Result for new Gill rows: `verified-source / needs-cross-verification`.
+- No browser, build or production-like run was performed.
 - No claim that source CI/deploy is green.
 - No source-code change was made.
 - No third-party incoming evidence was edited or deleted.
@@ -248,14 +287,14 @@ Do not mix these lanes with PremiumControls visual redesign, Vosk delivery archi
 
 ## 8. Notes for Verifier
 
-### Proposed Part IV
+### Proposed Part IV title
 
 ```text
 Часть IV. Богословие
 Спорные тексты и логика спасения в системе Джона Гилла
 ```
 
-### Historical Introduction target
+### Proposed historical Introduction target
 
 - 24–28 minutes;
 - 5,000–5,600 words;
@@ -271,6 +310,6 @@ gill:content-ownership:audit
 manifest-driven gill:series:data:consistency:audit
 ```
 
-### Publication rule
+### Publication proposal
 
-Do not publish Part IV as an additive page. Repair the graph, outline and ownership first, then publish the six-document series atomically.
+Do not publish Part IV additively before the graph, outline and ownership candidates are independently verified and accepted.
