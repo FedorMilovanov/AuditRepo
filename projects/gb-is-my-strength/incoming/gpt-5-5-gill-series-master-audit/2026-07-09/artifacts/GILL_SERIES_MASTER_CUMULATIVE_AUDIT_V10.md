@@ -24,13 +24,13 @@ The image lane merged at `d579745c` adds browser/build evidence for the visual i
 Use these active entrypoints:
 
 ```text
-working/START_HERE_2026-07-09.md
-verification/START_HERE_2026-07-09.md
-verified/START_HERE.md
-reverify/START_HERE_2026-07-09.md
+../../../working/START_HERE_2026-07-09.md
+../../../verification/START_HERE_2026-07-09.md
+../../../verified/START_HERE.md
+../../../reverify/START_HERE_2026-07-09.md
 ```
 
-The original 1020-line intermediate draft is retained only under `archive/stale/2026-07-09-gill-v10-intermediate/` for provenance. Do not use it as current guidance.
+The original 1020-line intermediate draft is retained only under `../../../archive/stale/2026-07-09-gill-v10-intermediate/` for provenance. Do not use it as current guidance.
 
 ---
 
@@ -365,13 +365,13 @@ Do not mix in one implementation PR:
 For another agent:
 
 ```text
-1. verified/START_HERE.md
-2. verified/MASTER_BUG_MATRIX.md
-3. working/START_HERE_2026-07-09.md
-4. verification/START_HERE_2026-07-09.md
-5. reverify/START_HERE_2026-07-09.md
+1. ../../../verified/START_HERE.md
+2. ../../../verified/MASTER_BUG_MATRIX.md
+3. ../../../working/START_HERE_2026-07-09.md
+4. ../../../verification/START_HERE_2026-07-09.md
+5. ../../../reverify/START_HERE_2026-07-09.md
 6. this normalized artifact only for rationale
-7. REPORT.md / SOURCE_EVIDENCE_INDEX.md only when exact evidence is needed
+7. ../REPORT.md / ../evidence/SOURCE_EVIDENCE_INDEX.md only when exact evidence is needed
 ```
 
 Do not start implementation from the archived intermediate draft.
