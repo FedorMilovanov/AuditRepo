@@ -7,13 +7,16 @@
 > Дата консолидации: 2026-07-05 (реструктуризация из монолита — `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`).
 >
 > **🔄 Reverify 2026-07-09 (claude-auditor) — source сдвинулся `75f807b` → `2313f36f`** (main, +delta: mobile-bar v4 refactor + speed-slot dedup, Hermenevtika rail rework, Gill premium images, quotes FAB, series «Часть N из N» fixes; deploy green). Fresh HEAD-pass, 2 witness auditors. **Runtime SOLID: 0 P0/P1 crash/XSS/visual-regression в дельте.** Vosk-находки уже отслежены (TTS-DL-UNZIP-SYNC/CONSENT/NO-TABLOCK — не дублирую). **+8 новых P3** из этого рефактор-дельты (хвост P3-open; из них NF-GATE-IZ5-STALE / NF-STRANGLER-BAR-DRIFT — конкретные инстансы уже-трекнутых GATE-MARKER-DATA-DRIFT / STRANGLER-HYGIENE). Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-09_head-2313f36f-149-commit-delta.md`, `incoming/claude-auditor/2026-07-09/`.
+>
+> **➡️ Фаза 2 (2026-07-09, deploy green `fc4b6326`): стек `native-source-contract-v1` влит в gb-main.** `route-migration-matrix.json` теперь ПРОИЗВОДНЫЙ (материализуется из page-ownership + route-profiles; режимы 8→3), registry-driven чекеры заменили прямые (оригиналы → `scripts/legacy-audits/*`), добавлен editorial-freeze baseline `data/editorial-metadata.json`. **Закрыто: AUDIT-P2-MATRIX-DRIFT.** Побочно: при интеграции лейны уронили секцию `/karty/*` (david/isus вместо 11) — поймано новым контрактом, исправлено регенерацией. `izbrannoe`/`BaseLayout` рантайм переведён на нативные `<script>` (strict-native clean). AGENTS.md синхронизирован (r323; JS 11→14 vosk-TTS). Барьер зелёный (validate:static-publication + visual-parity + dist-audits + editorial-freeze). Ещё открыто: NF-SPEEDSLOT-4TH-COPY (GillSeriesRail не импортит `_shared/speedSlot`) + хвост P3.
 
 ---
 
-## ✅ ЗАКРЫТО (90)
+## ✅ ЗАКРЫТО (91)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| AUDIT-P2-MATRIX-DRIFT | **ЗАКРЫТ стеком `native-source-contract-v1` (r323, deploy green `fc4b6326`).** `route-migration-matrix.json` больше не расходится с ownership/sitemap — он **производный**: материализуется из `page-ownership.json` + `route-profiles/*` движком `effective-route-registry.js`, cross-validation через registry-driven чекеры (`route-profile-contract-audit`/`route-migration-matrix-contract-audit`/`content-source-provenance-audit`, `migration:metadata:check:strict`). ⚠️ При интеграции лейны сами уронили секцию `/karty/*` (david/isus вместо 11 реальных, 8 переименованных потеряны) — поймано новым контрактом, исправлено регенерацией (`sync-route-migration-matrix --write`). | `e679362` gb-main |
 | TTS-OUTCOME-TELEMETRY | success/selected-engine телеметрия добавлена: `reportTtsOutcome()` шлёт `tts_engine_selected {engine}` при старте воспроизведения — теперь видно долю Vosk vs Web Speech (её отсутствие и прятало CSP-инцидент). Fire-and-forget, не влияет на playback | `a459ff3` |
 | D-22 | Favorites/izbrannoe: `f.path`→href без проверки схемы (само-XSS) + protocol-relative `//host` в image — **уже исправлено другим агентом** (`/^\/(?!\/)/` + protocol-allowlist на оба рендерера); стро́ка висела в P2 open по инерции, снята при quick-fix reverify 2026-07-08 | `365de50` |
 | P0-CRASH-001 | `r is not defined` (highlights.js) | `bced1c69` |
@@ -117,14 +120,13 @@
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (10)
+## 🟡 P2 — ОТКРЫТО (9)
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | TTS-DL-UNZIP-SYNC | `fflate.unzipSync` по полному ~280 МБ архиву на main thread (vosk-tts-engine.js:107-108) — разовый фриз при фоновой прогревке. Не дизайн. Fix: async `unzip()` в Worker | V12 W1-CI-44, verified |
 | TTS-DL-NO-TABLOCK | Нет межвкладочного лока: `_voskWarmupStarted` — page-local (controller:343), `navigator.locks`/`BroadcastChannel` отсутствуют → 2 вкладки могут качать 280 МБ дважды. Низкая частота; fix осмыслен только вместе с TTS-DL-CONSENT | V12 W1-CI-39, verified |
 | AUDIT-P2-WORKFLOWS-CHECK-GAP | `check-workflows.js` не проверяет deploy `if:` условия — `|| failure` не ловится; шире: строковые regex вместо YAML-топологии (см. SUPER_AUDIT W1) | АУДИТ 1.4 + fable 07-06 |
-| AUDIT-P2-MATRIX-DRIFT | route-migration-matrix (35) ≠ page-ownership (54) ≠ sitemap (43). Нет cross-validation. | АУДИТ 1.0 |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
 | D-1 | `concurrency: cancel-in-progress` губит push-деплои; deploy и indexnow в РАЗНЫХ concurrency-группах — не сериализуются (часть SEO-CANON-P0-01) | arena 07-06 + fable: deploy.yml:50-52, indexnow.yml:36-38 |
@@ -212,17 +214,17 @@
 
 ---
 
-## Статистика (пересобрано 2026-07-09: reverify @ `2313f36f` — +8 P3 из mobile-bar/rail дельты; 0 закрыто дельтой; runtime clean)
+## Статистика (обновлено 2026-07-09: +1 закрыто стеком r323 — AUDIT-P2-MATRIX-DRIFT; ранее reverify @ `2313f36f` +8 P3; runtime clean)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 90 |
+| Закрыто (fixed) | 91 |
 | P1 открыто | 2 |
-| P2 открыто | 10 |
+| P2 открыто | 9 |
 | P3 открыто | 27 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **46** |
+| **Всего открыто (матрица)** | **45** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10) |
 | False positives отклонено | 3 |
 | Passes processed | 95+ (reverify 2026-07-09 @ 2313f36f, claude-auditor) |
