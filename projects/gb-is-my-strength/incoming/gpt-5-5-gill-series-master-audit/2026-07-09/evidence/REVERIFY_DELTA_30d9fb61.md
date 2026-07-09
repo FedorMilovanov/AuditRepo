@@ -3,25 +3,39 @@
 ## Meta
 
 - Initial audited source SHA: `ac26d8efa2b952df6dc46eef05908e6d65287e82`
-- New source `main`: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`
-- Trigger: Merge PR #50 — restore lost Gill Part III illustrations
+- Final source `main`: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`
+- Range size: 7 commits
 - Date checked: 2026-07-09
+- Witness type: W1 source/history review only
 
-## Changed scope relevant to Gill
+## Scope clarification
 
-The delta adds/restores:
+The full range is not identical to PR #50.
+
+### Intervening commits in the range
+
+The compare includes Gill rail/Floating Cluster/PageHead/cache-bust changes before the final image-restoration merge.
+
+Relevant reviewed files include:
+
+- `src/components/article-pilots/gill-series/GillSeriesRail.astro`
+- `src/components/ui/floating-cluster/SingleArticleCluster.astro`
+- `css/floating-cluster.css`
+- Gill PageHead files
+
+### PR #50 itself
+
+Merge PR #50 added/restored:
 
 - `src/components/article-pilots/gill-part3/GillPart3RestoredFigures.astro`
-- two lines in `GillPart3MainShell.astro` to render the component after `GillPart3ArticleBody`
-- Gill/Floating Cluster CSS changes
-- Gill rail/chrome changes
-- technical PageHead/cache-bust metadata updates
+- import/render lines in `GillPart3MainShell.astro`
+- route-lane documentation
 
-`GillPart3ArticleBody.astro` did **not** change in this delta.
+It did not modify `GillPart3ArticleBody.astro`.
 
-## Effect on existing V10 findings
+## Effect on baseline candidate predicates
 
-The following findings remain current because their owning article body/data/audit sources did not change:
+The current-head review confirms that the source predicates behind these candidates are still observable:
 
 - `GILL-V10-SOURCE-TRUTH`
 - `GILL-V10-SERIES-MANIFEST`
@@ -34,14 +48,36 @@ The following findings remain current because their owning article body/data/aud
 - `GILL-V10-READER-PROJECTIONS`
 - `GILL-V10-CLAIM-PROVENANCE`
 
-No prior V10 structural finding is closed by the image-restoration merge.
+This is **not** a promotion to `confirmed-current`. Their status remains:
 
-## New current-head finding
+```text
+verified-source
+needs-cross-verification
+```
+
+## Stale subclaim removed
+
+Current `GillSeriesRail.astro` now does:
+
+```text
+romanItems = GILL_SERIES_ITEMS.filter(mark.kind === 'roman')
+seriesMeta = Часть X из romanItems.length
+```
+
+Therefore it correctly displays three numbered parts and no longer exhibits the old `Часть 3 из 5` defect.
+
+Consequences:
+
+- remove `5-of-5 labels` from current evidence;
+- do not reopen that display bug;
+- retain only the broader candidate that five documents/order/maps/total remain hardcoded in data/audit layers.
+
+## New current-head candidate
 
 ### GILL-V10-RESTORED-FIGURE-RELOCATION
 
-- Severity proposal: P2
-- Verification: source-confirmed design risk; browser/Pagefind/print witness pending
+- Proposed severity: P2
+- Current status: `W1 / verified-source / needs-cross-verification`
 - Files:
   - `GillPart3MainShell.astro`
   - `GillPart3RestoredFigures.astro`
@@ -57,7 +93,7 @@ GillPart3RestoredFigures
 GillPart3PostArticle
 ```
 
-The restored figures are therefore initially outside:
+The restored figures initially sit outside:
 
 ```html
 <article class="article-body" data-pagefind-body>
@@ -72,25 +108,26 @@ An inline client script then:
 - inserts the Bunhill figure after that paragraph;
 - removes the fallback wrapper if empty.
 
-### Risks
+### Source-derived risks requiring witnesses
 
-1. No-JS render leaves both figures after the entire article instead of at their semantic sections.
-2. Initial static `data-pagefind-body` does not contain the figures/captions.
-3. Bunhill placement depends on exact Russian prose text, not a stable semantic anchor.
-4. The figures are invisible to the existing TTS extractor because it neither reads `figure/figcaption` nor sees a semantic Reader block.
-5. Print/snapshot behavior can differ depending on whether client relocation has executed.
-6. Duplicate-detection uses image `src*` queries rather than canonical figure ownership.
+1. No-JS keeps both figures after the article rather than at semantic sections.
+2. The figures/captions are initially outside `data-pagefind-body`; built Pagefind behavior must be measured.
+3. Bunhill placement depends on exact Russian prose text.
+4. Existing custom TTS selector does not read `figure` or `figcaption`.
+5. Print/snapshot result may depend on whether relocation ran.
+6. Duplicate detection uses `img[src*=...]` rather than section ownership.
 
-### Recommended correction
+### Required next evidence
 
-Render each figure directly in its owning article section or project it from the proposed Reader AST/content graph. Do not use runtime DOM relocation as the canonical placement mechanism.
+- built static HTML and Pagefind index check;
+- JavaScript-disabled render;
+- print output before/after relocation;
+- custom TTS extraction check;
+- browser placement check.
 
-### Relation to existing findings
+## Result
 
-This is a concrete new instance of:
-
-- `GILL-V10-READER-PROJECTIONS`
-- `GILL-V10-SOURCE-TRUTH`
-- the need for stable content ownership and generated projections.
-
-It remains a separate P2 row because it was introduced after the initial V10 baseline and has a precise repair target.
+- One stale subclaim was removed.
+- One new source candidate was added.
+- No Gill candidate was promoted to canonical open or repair-ready status.
+- No source code was changed by this AuditRepo intake.
