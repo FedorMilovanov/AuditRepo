@@ -1,7 +1,9 @@
 # NEXT AGENT PROMPT — gb-is-my-strength
 
 > **Current as of 2026-07-09.**  
-> Source `main`: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.  
+> Current source `main`: `ff55161b6858a1bbb0fad5704a11c6b41c961879`.  
+> Gill functional tree audited: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.  
+> Net compare `30d9fb61..ff55161b`: no changed files.  
 > Research: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`.
 
 ## Before any work
@@ -13,23 +15,26 @@ git pull --ff-only
 git rev-parse HEAD
 ```
 
-1. Compare source HEAD with `30d9fb61`.
-2. If it moved, create a reverify delta before using the Gill candidate map.
+1. Compare source HEAD with `ff55161b`.
+2. If it moved, compare from the audited functional tree and record a reverify delta before using the Gill candidate map.
 3. Read source-repo `AGENTS.md`, `docs/WORK_MODES.md`, and `docs/OWNER-INVARIANTS.md`.
 4. Read AuditRepo by layer:
    - `verified/START_HERE.md`
    - `verified/MASTER_BUG_MATRIX.md`
    - `working/START_HERE_2026-07-09.md`
    - `verification/START_HERE_2026-07-09.md`
-   - Gill V10 raw intake only as evidence.
+   - Gill V10 raw intake only as evidence
+   - `incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_ff55161.md`.
 
 ## Correct status
 
 ```text
-38 canonical open/carry-over rows
+38 canonical carry-over rows from the base ledger
 11 Gill V10 candidates pending cross-verification
 90 historical closed/fixed rows
 ```
+
+The 38 carry-over rows were not mass-reverified by the Gill intake. Recheck any selected carry-over row on the current source before repair or status change.
 
 The Gill candidates currently have one source witness:
 
@@ -78,9 +83,12 @@ canonical content graph
 → atomic publication
 ```
 
-### Current-head correction
+### Current-head corrections
 
-Current `GillSeriesRail.astro` already filters Roman items and renders `Часть X из 3`. The old `3 из 5` display claim is stale and must not be reintroduced. The broader five-document manifest/audit hardcoding remains a candidate.
+- Current `GillSeriesRail.astro` already filters Roman items and renders `Часть X из 3`; the old `3 из 5` display claim is stale.
+- The broader five-document manifest/audit hardcoding remains a candidate.
+- PR #50 figure relocation remains a candidate requiring browser/build witnesses.
+- `273ac48e` and `ff55161b` produce an empty net file diff against the audited tree, so no candidate predicate changed.
 
 ### Part IV proposal
 
@@ -118,7 +126,7 @@ This remains an owner/editorial proposal, not canonical truth.
 ## Required final report format
 
 ```text
-Source functional SHA / bot SHA / deployed SHA:
+Source functional SHA / current HEAD / deployed SHA:
 AuditRepo SHA:
 Candidate/canonical matrix IDs:
 Witness types:
