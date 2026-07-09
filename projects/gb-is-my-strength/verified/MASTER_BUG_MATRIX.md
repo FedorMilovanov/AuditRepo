@@ -2,13 +2,13 @@
 
 > **Canonical operational ledger.**  
 > Source repository: `FedorMilovanov/gb-is-my-strength`  
-> Source branch checked: `main` @ `30d9fb61fe2c9116ee53a54d681c01455eef4fe6` (2026-07-09)  
+> Gill V10 source context checked: `main` @ `30d9fb61fe2c9116ee53a54d681c01455eef4fe6` (2026-07-09)  
 > Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`  
 > AuditRepo base before this branch: `18713174a343740cc0886df6c6441c51bde61274`
 
 ## Layer status
 
-- The existing canonical carry-over backlog remains in the P1/P2/P3/refactoring/AuditRepo tables below.
+- The 38 P1/P2/P3/refactoring/AuditRepo rows below are the canonical **carry-over ledger from the AuditRepo base**. This Gill intake did not mass-reverify every carry-over row on source `30d9fb61`; each still needs its own current-head check before repair or closure.
 - The new Gill V10 intake currently has one source witness only. Its 11 rows are listed in **Pending cross-verification** and are **not counted as canonical open bugs**.
 - Browser, built-artifact and production-like claims were not made by the Gill intake.
 - `SUPER_AUDIT_2026-07-06_14a49be8.md` remains supporting historical evidence tied to an older source SHA; reverify each systemic claim before implementation.
@@ -17,7 +17,7 @@
 
 ### Verified / canonical
 
-1. `MASTER_BUG_MATRIX.md` — this ledger.
+1. `MASTER_BUG_MATRIX.md` — this carry-over ledger and pending-queue index.
 2. `START_HERE.md` — owner and next-agent canonical handoff.
 
 ### Working / not verified
@@ -40,7 +40,7 @@ No canonical P0 row is added by this Gill intake. Six Gill publication-blocker c
 
 ---
 
-# 🟠 P1 — CANONICAL OPEN (2)
+# 🟠 P1 — CANONICAL OPEN / CARRY-OVER (2)
 
 | ID | Description | Status / evidence |
 |---|---|---|
@@ -49,24 +49,24 @@ No canonical P0 row is added by this Gill intake. Six Gill publication-blocker c
 
 ---
 
-# 🟡 P2 — CANONICAL OPEN (10)
+# 🟡 P2 — CANONICAL OPEN / CARRY-OVER (10)
 
 | ID | Description | Status |
 |---|---|---|
-| `TTS-DL-UNZIP-SYNC` | `fflate.unzipSync` handles the full model archive on the main thread; potential one-time freeze. | verified previously; reverify current engine before fix |
-| `TTS-DL-NO-TABLOCK` | No inter-tab lock; page-local warm-up state can permit duplicate large downloads. | verified previously; only fix with consent lifecycle |
-| `AUDIT-P2-WORKFLOWS-CHECK-GAP` | Workflow checker does not validate deploy `if:` topology and relies on brittle string/regex checks. | carry-over / SUPER_AUDIT W1 |
+| `TTS-DL-UNZIP-SYNC` | `fflate.unzipSync` handles the full model archive on the main thread; potential one-time freeze. | carry-over; reverify current engine before fix |
+| `TTS-DL-NO-TABLOCK` | No inter-tab lock; page-local warm-up state can permit duplicate large downloads. | carry-over; only fix with consent lifecycle after reverify |
+| `AUDIT-P2-WORKFLOWS-CHECK-GAP` | Workflow checker does not validate deploy `if:` topology and relies on brittle string/regex checks. | carry-over / SUPER_AUDIT W1; reverify current workflow |
 | `AUDIT-P2-MATRIX-DRIFT` | Route migration, ownership and sitemap registries lack complete cross-validation. | carry-over; Gill manifest is a candidate scoped instance |
 | `BUG-SEO-001` | IndexNow submit can occur before actual CDN availability. | carry-over; reverify current workflows |
-| `NEW-CANONICAL-IZBRANNOE-01-GAP` | Canonical guard historically missed relative canonical on noindex routes. | tooling gap; reverify current guard |
+| `NEW-CANONICAL-IZBRANNOE-01-GAP` | Canonical guard historically missed relative canonical on noindex routes. | carry-over tooling gap; reverify current guard |
 | `D-1` | Deploy and IndexNow concurrency groups are separate; cancel-in-progress can discard push deploys. | carry-over; reverify current YAML |
 | `D-2` | CSS layer validator promises order/coverage checks but historically checks a narrower contract. | carry-over; reverify current script |
 | `D-19` | Some custom PageHeads maintain separate title/OG/Twitter/JSON-LD literals. | carry-over; reverify affected routes |
-| `D-21` | Glossary has dual render semantics (`innerHTML` vs `textContent`), causing markup drift and an XSS-sensitive surface. | carry-over; coordinate with glossary owner |
+| `D-21` | Glossary has dual render semantics (`innerHTML` vs `textContent`), causing markup drift and an XSS-sensitive surface. | carry-over from base matrix; reverify before any repair/status claim |
 
 ---
 
-# 🟢 P3 — CANONICAL OPEN (19)
+# 🟢 P3 — CANONICAL OPEN / CARRY-OVER (19)
 
 | ID | Description |
 |---|---|
@@ -90,9 +90,11 @@ No canonical P0 row is added by this Gill intake. Six Gill publication-blocker c
 | `D-7` | Benign repo-relative documentation pointer in a source comment; cosmetic only. |
 | `D-8` | Markdown-only changes do not trigger deploy; by-design while Markdown is not public input. |
 
+All P3 descriptions above are carry-over summaries, not a claim that this Gill intake reverified them on `30d9fb61`.
+
 ---
 
-# 🔵 REFACTORING (4)
+# 🔵 REFACTORING — CARRY-OVER (4)
 
 | ID | Description |
 |---|---|
@@ -101,7 +103,7 @@ No canonical P0 row is added by this Gill intake. Six Gill publication-blocker c
 | `R-003` | No source maps. |
 | `R-004` | Limited module/tree-shaking architecture. |
 
-# 🟣 AUDITREPO (3)
+# 🟣 AUDITREPO — CARRY-OVER (3)
 
 | ID | Description |
 |---|---|
@@ -155,18 +157,18 @@ Canonical promotion is governed by `../verification/START_HERE_2026-07-09.md`.
 |---|---:|
 | Historical closed/fixed | 90 |
 | Canonical P0 open | 0 |
-| Canonical P1 open | 2 |
-| Canonical P2 open | 10 |
-| Canonical P3 open | 19 |
-| Refactoring | 4 |
-| AuditRepo | 3 |
-| **Canonical open total** | **38** |
+| Canonical P1 open/carry-over | 2 |
+| Canonical P2 open/carry-over | 10 |
+| Canonical P3 open/carry-over | 19 |
+| Refactoring carry-over | 4 |
+| AuditRepo carry-over | 3 |
+| **Canonical open/carry-over total** | **38** |
 | Gill V10 pending candidates | 11 |
 
 Do not report `49 active confirmed bugs`. The correct wording is:
 
 ```text
-38 canonical open/carry-over rows
+38 canonical carry-over rows from the base ledger, each requiring current-head reverify before repair/status change
 + 11 Gill V10 candidates pending cross-verification
 ```
 
@@ -175,7 +177,7 @@ Do not report `49 active confirmed bugs`. The correct wording is:
 # Current next steps
 
 1. Run the Gill cross-verification queue before source implementation.
-2. Record owner decisions for content ownership, Part IV scope and TTS consent.
-3. Promote, downgrade, merge or reject each Gill candidate through a verification decision document.
-4. Only promoted `repair-ready` rows may enter a source-repair lane.
-5. Keep the older systemic backlog under current-head reverify discipline.
+2. Reverify any selected carry-over row on the current source HEAD before repair or closure.
+3. Record owner decisions for content ownership, Part IV scope and TTS consent.
+4. Promote, downgrade, merge or reject each Gill candidate through a verification decision document.
+5. Only promoted `repair-ready` rows may enter a source-repair lane.
