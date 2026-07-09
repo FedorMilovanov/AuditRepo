@@ -1,10 +1,25 @@
 # Source/API inspection log — 2026-07-09
 # No local shell/build/browser commands were run against the source repo.
 
-GitHub source HEAD check:
+Initial GitHub source HEAD:
   FedorMilovanov/gb-is-my-strength main -> ac26d8efa2b952df6dc46eef05908e6d65287e82
 
-GitHub Research HEAD check:
+Final current source HEAD after mid-pass update:
+  FedorMilovanov/gb-is-my-strength main -> 30d9fb61fe2c9116ee53a54d681c01455eef4fe6
+
+Current-head delta inspected:
+  compare ac26d8efa2b952df6dc46eef05908e6d65287e82..30d9fb61fe2c9116ee53a54d681c01455eef4fe6
+  result: 7 commits ahead
+  relevant new files/changes:
+    src/components/article-pilots/gill-part3/GillPart3RestoredFigures.astro
+    src/components/article-pilots/gill-part3/GillPart3MainShell.astro
+    src/components/article-pilots/gill-series/GillSeriesRail.astro
+    css/floating-cluster.css
+    PageHead/cache-bust metadata changes
+  unchanged structural owner:
+    src/components/article-pilots/gill-part3/GillPart3ArticleBody.astro
+
+GitHub Research HEAD:
   FedorMilovanov/Research main -> 58e1ea5fab638812ae693a1d0b1e79c4dcb47131
 
 AuditRepo base:
@@ -17,6 +32,8 @@ Inspected source paths:
   src/components/article-pilots/gill-part1/*
   src/components/article-pilots/gill-part2/GillPart2ArticleBody.astro
   src/components/article-pilots/gill-part3/GillPart3ArticleBody.astro
+  src/components/article-pilots/gill-part3/GillPart3MainShell.astro
+  src/components/article-pilots/gill-part3/GillPart3RestoredFigures.astro
   src/components/article-pilots/gill-context/GillContextPageHead.astro
   js/floating-cluster-controller.js
   data/gill-submenu-anchor-reconciliation.json
@@ -34,8 +51,12 @@ Inspected Research paths:
   Джон Гилл/31_GILL_DEPT_MASTER_MAP.md
   Джон Гилл/42_THE_CREATION_IMAGE_OF_GOD_AND_PROVIDENCE.md
 
-Validation not run in this environment:
-  python3 scripts/validate_audit_repo.py
-  python3 scripts/check_auditrepo_structure.py
+AuditRepo branch diff inspection:
+  compare 18713174a343740cc0886df6c6441c51bde61274..<branch-head>
+  expected scope: AuditRepo docs/evidence only; no source-repo code
 
-These must be run by the PR/implementation verifier before merge.
+Validation not run in this environment:
+  python3 scripts/check_auditrepo_structure.py
+  python3 scripts/validate_audit_repo.py
+
+These commands must pass before merge. No CI-green or merge-ready claim is made by this intake.
