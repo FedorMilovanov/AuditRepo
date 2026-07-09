@@ -1,6 +1,6 @@
 # NEXT AGENT PROMPT — gb-is-my-strength
 
-> Current source `main`: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`  
+> Current source `main`: `2313f36f6aeaf7415e85d5e353e7e4cd10222ece`  
 > Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`
 
 ## First read
@@ -17,7 +17,7 @@ Use raw intake only to trace exact evidence.
 ## Current status
 
 ```text
-90 historical closed/fixed rows
+90 historical closed/fixed IDs
 38 canonical open rows in the existing matrix
 11 Gill V10 candidates pending cross-verification
 ```
@@ -34,11 +34,12 @@ not repair-ready
 
 Do **not** run another broad audit or invent new candidate families.
 
-1. Confirm source HEAD against `d579745c`.
-2. Pick exactly one existing Gill candidate from the verification queue.
-3. Supply a genuinely independent witness angle.
-4. Record a verifier decision for the exact claim checked.
-5. Do not implement unless the row is explicitly promoted to `repair-ready` and any owner decision is present.
+1. Confirm source HEAD against `2313f36`.
+2. Read `reverify/START_HERE_2026-07-09.md` for the exact current delta.
+3. Pick exactly one existing Gill candidate from the verification queue.
+4. Supply a genuinely independent witness angle.
+5. Record a verifier decision for the exact claim checked.
+6. Do not implement unless the row is explicitly promoted to `repair-ready` and any owner decision is present.
 
 Bounded examples:
 
@@ -50,7 +51,7 @@ Bounded examples:
 
 ## Current source effect already known
 
-The `d579745c` image lane verified normal JS-on image placement. It did not resolve the broader content, manifest, outline, numbering, Part IV ownership or Reader-projection candidates.
+The Gill image lane at `d579745c` verified normal JS-on image placement. Later Hermenevtika/shared-metadata commits did not resolve the broader Gill candidates.
 
 For `GILL-V10-RESTORED-FIGURE-RELOCATION`:
 
