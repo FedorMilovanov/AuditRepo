@@ -1,69 +1,62 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
-> **Canonical operational matrix.**  
+> **Canonical operational ledger.**  
 > Source repository: `FedorMilovanov/gb-is-my-strength`  
-> Source branch: `main`  
-> **Current source HEAD checked: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6` (2026-07-09).**  
-> Initial Gill V10 baseline: `ac26d8efa2b952df6dc46eef05908e6d65287e82`.  
-> Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`.  
-> AuditRepo base: `18713174a343740cc0886df6c6441c51bde61274`.
+> Source branch checked: `main` @ `30d9fb61fe2c9116ee53a54d681c01455eef4fe6` (2026-07-09)  
+> Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`  
+> AuditRepo base before this branch: `18713174a343740cc0886df6c6441c51bde61274`
 
-## Verification warning
+## Layer status
 
-- Source `main` advanced during the audit through Merge PR #50, restoring Gill Part III illustrations.
-- The `ac26d8e` → `30d9fb61` delta was inspected. `GillPart3ArticleBody.astro` did not change, so the original structural/content findings remain current.
-- No browser, production-like build or deploy run was executed in this intake.
-- Source-structural findings may be `confirmed-source-current`; browser-dependent UX claims remain `needs-browser-witness`.
-- The 2026-07-06 `SUPER_AUDIT_2026-07-06_14a49be8.md` remains supporting evidence tied to an older source SHA. Reverify every item before implementation.
+- The existing canonical carry-over backlog remains in the P1/P2/P3/refactoring/AuditRepo tables below.
+- The new Gill V10 intake currently has one source witness only. Its 11 rows are listed in **Pending cross-verification** and are **not counted as canonical open bugs**.
+- Browser, built-artifact and production-like claims were not made by the Gill intake.
+- `SUPER_AUDIT_2026-07-06_14a49be8.md` remains supporting historical evidence tied to an older source SHA; reverify each systemic claim before implementation.
 
-## Canonical current inputs
+## Current handoff layers
 
-1. `MASTER_BUG_MATRIX.md` — this operational index.
-2. `START_HERE.md` — current owner/agent handoff.
-3. `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/REPORT.md` — official current-head Gill V10 intake.
-4. `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/artifacts/GILL_SERIES_MASTER_CUMULATIVE_AUDIT_V10.md` — detailed Gill research baseline.
-5. `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/evidence/REVERIFY_DELTA_30d9fb61.md` — current-head delta and restored-figure finding.
-6. `SUPER_AUDIT_2026-07-06_14a49be8.md` — historical systemic backlog; reverify-needed.
+### Verified / canonical
+
+1. `MASTER_BUG_MATRIX.md` — this ledger.
+2. `START_HERE.md` — owner and next-agent canonical handoff.
+
+### Working / not verified
+
+3. `../working/START_HERE_2026-07-09.md` — Gill V10 candidate matrix.
+
+### Verification queue
+
+4. `../verification/START_HERE_2026-07-09.md` — required witness plan and promotion rules.
+
+### Raw intake / evidence
+
+5. `../incoming/gpt-5-5-gill-series-master-audit/2026-07-09/` — official raw source-audit package.
 
 ---
 
-# 🔴 P0 — OPEN / STRUCTURAL MIGRATION BLOCKERS (6)
+# 🔴 P0 — CANONICAL OPEN (0)
 
-These are blockers to publishing a coherent six-document Gill series, not claims that the whole production website is unavailable.
+No canonical P0 row is added by this Gill intake. Six Gill publication-blocker candidates remain pending cross-verification below.
+
+---
+
+# 🟠 P1 — CANONICAL OPEN (2)
 
 | ID | Description | Status / evidence |
 |---|---|---|
-| `GILL-V10-SOURCE-TRUTH` | Three content truths compete: MDX, production Astro bodies and root legacy HTML. Research/audits may verify text different from production; direct Part II factual divergence already exists. | `confirmed-source-current` @ `30d9fb61`; V10 intake |
-| `GILL-V10-SERIES-MANIFEST` | Gill series is hardcoded as five documents across data, expected IDs/order/marks/routes and total `149`; current audit is a Part IV migration blocker. | `confirmed-source-current`; manifest lane required |
-| `GILL-V10-HISTORICAL-TOC-CONTRACT` | Historical submenu item count is frozen while Part II is documented as 6→29 sections. Green regression audit certifies an intentionally incomplete current outline and false heading levels. | `confirmed-source-current`; reconciliation + audit source |
-| `GILL-V10-ROMAN-NUMBER-COLLISION` | Standalone Part II begins at internal III/IV and Part III at V; publishing series Part IV creates two meanings for Roman IV. | `confirmed-source-current`; outline normalization required |
-| `GILL-V10-PART3-NARRATIVE` | Part III is non-terminal and internally duplicated: death/burial and sources are followed by major content; many real headings are absent from TOC. | `confirmed-source-current`; article body unchanged by PR #50 |
-| `GILL-V10-PART4-OWNERSHIP` | Parts II–III already own most proposed Part IV doctrine. Additive authoring would create a third copy; relocation/ownership must precede writing. | `confirmed-source-current`; owner editorial decision required |
+| `BUG-PERF-001` | addEventListener without corresponding cleanup: historical count 339 add / 25 remove across JS. | carry-over; reverify current source before repair |
+| `TTS-DL-CONSENT` | First Play can trigger background download of ~280 MB neural model without explicit consent. Save-Data/opt-out is partial mitigation; owner UX decision required. | existing verified row; Gill V10 adds another source witness but does not make it repair-ready |
 
 ---
 
-# 🟠 P1 — OPEN (6)
-
-| ID | Description | Status / evidence |
-|---|---|---|
-| `BUG-PERF-001` | addEventListener without corresponding cleanup: historical count 339 add / 25 remove across JS. | carry-over; reverify before repair |
-| `TTS-DL-CONSENT` | First Play can trigger background download of ~280 MB neural model without explicit consent. Save-Data/opt-out is only partial mitigation; owner UX decision required. | confirmed by V12 + Gill V10 flow |
-| `GILL-V10-RESEARCH-CANON` | Research dossiers 03/04/05/07 contain superseding Part IV/Introduction plans without canonical/supporting/superseded metadata; includes seven-versus-nine ambiguity. | `confirmed-source-current` @ Research `58e1ea5` |
-| `GILL-V10-INTRO-OWNERSHIP` | Historical Introduction repeats personal Kettering biography while Parts I–II repeat Southwark/Salters’ Hall; dossier 07 mixes historical context with Part IV theology. | `confirmed-source-current`; editorial ownership required |
-| `GILL-V10-READER-PROJECTIONS` | TOC, custom TTS, JSON-LD speakable, search and print infer different articles: summary contradiction, H4 loss, glossary H3 pollution, table loss. | source contradiction confirmed; browser/a11y witness pending |
-| `GILL-V10-CLAIM-PROVENANCE` | Research converts Rippon’s “more than ten thousand” printing-sheet statement into a direct “more than ten million words” claim after correctly calling it an extrapolation. | `confirmed-source-current`; block claim until fixed |
-
----
-
-# 🟡 P2 — OPEN (11)
+# 🟡 P2 — CANONICAL OPEN (10)
 
 | ID | Description | Status |
 |---|---|---|
-| `GILL-V10-RESTORED-FIGURE-RELOCATION` | Part III restored figures SSR after `<article>` and are moved client-side by heading/prose anchors. No-JS, static Pagefind, print/snapshot and TTS semantics can diverge; Bunhill placement depends on exact Russian copy. | source-confirmed @ `30d9fb61`; browser/Pagefind/print witness pending |
 | `TTS-DL-UNZIP-SYNC` | `fflate.unzipSync` handles the full model archive on the main thread; potential one-time freeze. | verified previously; reverify current engine before fix |
-| `TTS-DL-NO-TABLOCK` | No inter-tab lock; page-local warm-up state permits duplicate large downloads in multiple tabs. | verified previously; only fix with consent lifecycle |
+| `TTS-DL-NO-TABLOCK` | No inter-tab lock; page-local warm-up state can permit duplicate large downloads. | verified previously; only fix with consent lifecycle |
 | `AUDIT-P2-WORKFLOWS-CHECK-GAP` | Workflow checker does not validate deploy `if:` topology and relies on brittle string/regex checks. | carry-over / SUPER_AUDIT W1 |
-| `AUDIT-P2-MATRIX-DRIFT` | Route migration, ownership and sitemap registries have no complete cross-validation. | carry-over; Gill manifest is scoped high-priority instance |
+| `AUDIT-P2-MATRIX-DRIFT` | Route migration, ownership and sitemap registries lack complete cross-validation. | carry-over; Gill manifest is a candidate scoped instance |
 | `BUG-SEO-001` | IndexNow submit can occur before actual CDN availability. | carry-over; reverify current workflows |
 | `NEW-CANONICAL-IZBRANNOE-01-GAP` | Canonical guard historically missed relative canonical on noindex routes. | tooling gap; reverify current guard |
 | `D-1` | Deploy and IndexNow concurrency groups are separate; cancel-in-progress can discard push deploys. | carry-over; reverify current YAML |
@@ -73,7 +66,7 @@ These are blockers to publishing a coherent six-document Gill series, not claims
 
 ---
 
-# 🟢 P3 — OPEN (19)
+# 🟢 P3 — CANONICAL OPEN (19)
 
 | ID | Description |
 |---|---|
@@ -86,7 +79,7 @@ These are blockers to publishing a coherent six-document Gill series, not claims
 | `NEW-72` | SVG dedup micro-optimization. |
 | `SHADOW-AUDIT-NARROW` | Legacy-shadow audit covers only a fraction of production-dist routes. |
 | `AUDIT-PRO-SITEMAP-ROOT-ONLY` | Sitemap coverage audit can miss Astro-only dist pages. |
-| `AUDIT-PRO-VM-DEPRECATED` | Audit helper uses `vm.Script` path considered fragile for future Node changes. |
+| `AUDIT-PRO-VM-DEPRECATED` | Audit helper uses a `vm.Script` path considered fragile for future Node changes. |
 | `SEO-AUDIT-ROOT-ONLY` | SEO audit excludes dist and can miss Astro-only output. |
 | `VALIDATE-JS-VM-DEPRECATED` | Duplicate `vm.Script` dependency in validate path. |
 | `VALIDATE-JS-ARTICLES-ONLY` | Article validator does not cover all article-like route families. |
@@ -94,7 +87,7 @@ These are blockers to publishing a coherent six-document Gill series, not claims
 | `STRANGLER-HYGIENE` | Most Astro routes still have root legacy shadows; by-design today, long-term debt. |
 | `D-3` | Historical JS budget exceeded configured audit budget. |
 | `D-4` | Magic z-index values remain; coordinate with PremiumControls. |
-| `D-7` | Benign repo-relative documentation pointer in source comment; cosmetic only. |
+| `D-7` | Benign repo-relative documentation pointer in a source comment; cosmetic only. |
 | `D-8` | Markdown-only changes do not trigger deploy; by-design while Markdown is not public input. |
 
 ---
@@ -118,12 +111,41 @@ These are blockers to publishing a coherent six-document Gill series, not claims
 
 ---
 
+# 🟤 PENDING CROSS-VERIFICATION — GILL V10 (11, NOT COUNTED)
+
+All rows below are currently:
+
+```text
+W1 source witness
+verified-source
+needs-cross-verification
+not repair-ready
+```
+
+| Candidate ID | Proposed severity | Candidate summary |
+|---|---:|---|
+| `GILL-V10-SOURCE-TRUTH` | P0 publication blocker | MDX, production Astro bodies and root legacy shadows are separate representations; a Part II factual divergence is source-observed. |
+| `GILL-V10-SERIES-MANIFEST` | P0 publication blocker | Five-document IDs/order/maps and total `149` remain hardcoded. Current rail already fixed the obsolete `Часть 3 из 5` display subclaim, so that subclaim is excluded. |
+| `GILL-V10-HISTORICAL-TOC-CONTRACT` | P0 publication blocker | Historical item-count witness can preserve an incomplete current outline; Part II still configures only six TOC rows. |
+| `GILL-V10-ROMAN-NUMBER-COLLISION` | P0 publication blocker | Standalone Part II begins at internal III/IV and Part III at V, potentially colliding with future series Part IV. |
+| `GILL-V10-PART3-NARRATIVE` | P0 publication blocker | Major material follows death/burial and sources; repeated topic clusters need independent editorial verification. |
+| `GILL-V10-PART4-OWNERSHIP` | P0 publication blocker | Parts II–III appear to consume much of the proposed Part IV doctrinal scope; owner decision required. |
+| `GILL-V10-RESEARCH-CANON` | P1 | Research dossiers contain competing/superseding plans without explicit status metadata. |
+| `GILL-V10-INTRO-OWNERSHIP` | P1 | Introduction/Part I/Part II appear to overlap in biography and historical context ownership. |
+| `GILL-V10-READER-PROJECTIONS` | P1 | Source selectors indicate TOC/TTS/schema/table projections differ; build/browser witnesses required. |
+| `GILL-V10-CLAIM-PROVENANCE` | P1 | Research dossier 07 contradicts itself about Rippon versus the modern ten-million-word extrapolation. |
+| `GILL-V10-RESTORED-FIGURE-RELOCATION` | P2 | Part III figures SSR after the article and are moved client-side; no-JS/Pagefind/print/TTS impact requires verification. |
+
+Canonical promotion is governed by `../verification/START_HERE_2026-07-09.md`.
+
+---
+
 # ✅ CLOSED / HISTORICAL
 
-- Previous canonical matrix recorded **90 closed/fixed items** through 2026-07-08.
-- The complete closed table and historical evidence remain at immutable AuditRepo commit `18713174a343740cc0886df6c6441c51bde61274`, path `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`.
-- Do not copy closed rows back into the active matrix unless current-head reverify reopens one.
+- The previous canonical matrix recorded **90 closed/fixed items** through 2026-07-08.
+- The complete historical closed table remains available at immutable AuditRepo commit `18713174a343740cc0886df6c6441c51bde61274`, path `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`.
 - Known recent closures include `TTS-OUTCOME-TELEMETRY` (`a459ff3`) and already-fixed `D-22` (`365de50`).
+- Do not reopen or remove historical rows without the repository retirement/reverify protocol.
 
 ---
 
@@ -131,31 +153,29 @@ These are blockers to publishing a coherent six-document Gill series, not claims
 
 | Category | Count |
 |---|---:|
-| Closed/fixed historical | 90 |
-| P0 open | 6 |
-| P1 open | 6 |
-| P2 open | 11 |
-| P3 open | 19 |
+| Historical closed/fixed | 90 |
+| Canonical P0 open | 0 |
+| Canonical P1 open | 2 |
+| Canonical P2 open | 10 |
+| Canonical P3 open | 19 |
 | Refactoring | 4 |
 | AuditRepo | 3 |
-| **Total active matrix items** | **49** |
+| **Canonical open total** | **38** |
+| Gill V10 pending candidates | 11 |
 
-Counting policy:
+Do not report `49 active confirmed bugs`. The correct wording is:
 
-- Gill V10 uses consolidated root-cause IDs; detailed sub-IDs remain in intake evidence.
-- `TTS-DL-CONSENT` is not duplicated as a separate Gill row.
-- Generic drift rows remain because they cover the whole site; scoped Gill P0 rows describe concrete publication blockers.
+```text
+38 canonical open/carry-over rows
++ 11 Gill V10 candidates pending cross-verification
+```
 
 ---
 
-# Current repair order
+# Current next steps
 
-1. Reverify old systemic W1/W2 claims against `30d9fb61`; do not implement directly from `14a49be8` wording.
-2. Resolve `TTS-DL-CONSENT` with the owner; do not mix with Gill content.
-3. Gill Lane A: canonical content source + manifest.
-4. Gill Lane B: outline/Reader AST + Roman normalization + direct semantic placement of restored figures.
-5. Gill Lane C: content ownership, Part III cleanup and relocation.
-6. Gill Lane D: Research statuses/claim register and Part IV authoring.
-7. Gill Lane E: atomic six-document publication.
-
-Full acceptance criteria are in the official intake proposal.
+1. Run the Gill cross-verification queue before source implementation.
+2. Record owner decisions for content ownership, Part IV scope and TTS consent.
+3. Promote, downgrade, merge or reject each Gill candidate through a verification decision document.
+4. Only promoted `repair-ready` rows may enter a source-repair lane.
+5. Keep the older systemic backlog under current-head reverify discipline.
