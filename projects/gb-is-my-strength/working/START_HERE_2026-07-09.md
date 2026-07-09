@@ -1,9 +1,9 @@
 # Working START HERE — Gill V10 candidate synthesis — 2026-07-09
 
-> Layer: `working/` — synthesis in progress; **not verified truth**.  
-> Current source HEAD: `d579745c23d9a0e6dea3a8148a3369d46c47b94b`.  
-> Research HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`.  
-> Current-head interpretation: `../reverify/START_HERE_2026-07-09.md`.
+> Layer: `working/` — stable candidate synthesis; **not verified truth**.  
+> Evidence reconciled through Gill image lane `d579745c`.  
+> Research evidence HEAD: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`.  
+> Sole current-head interpretation: `../reverify/START_HERE_2026-07-09.md`.
 
 ## Status
 
