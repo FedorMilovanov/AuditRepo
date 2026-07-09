@@ -20,8 +20,9 @@
 
 ## gb-is-my-strength current summary — 2026-07-09
 
-- Current source HEAD checked: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.
-- Initial Gill V10 baseline: `ac26d8efa2b952df6dc46eef05908e6d65287e82`.
+- Current source HEAD: `ff55161b6858a1bbb0fad5704a11c6b41c961879`.
+- Gill functional tree audited: `30d9fb61fe2c9116ee53a54d681c01455eef4fe6`.
+- Net compare `30d9fb61..ff55161b`: empty file delta; current tree is identical to the audited tree.
 - Research HEAD checked: `58e1ea5fab638812ae693a1d0b1e79c4dcb47131`.
 - AuditRepo base before this branch: `18713174a343740cc0886df6c6441c51bde61274`.
 - Canonical open/carry-over ledger: 38 rows.
