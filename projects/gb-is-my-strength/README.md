@@ -1,7 +1,9 @@
 # gb-is-my-strength / gospod-bog.ru
 
-**Status:** 🟢 active / repair-in-progress — прод = main, работа идёт волнами W0–W10 (см. SUPER_AUDIT).
-**Last source HEAD checked:** `14a49be83ab57212c0bbd26a8249b75ac026511d` (2026-07-06, fable-super-audit; на проде — run `28794737410`).
+**Status:** 🟢 active — прод = main. Работа идёт волнами W0–W10 (см. SUPER_AUDIT).
+**Старт и карта документов:** [`DOC_MAP.md`](./DOC_MAP.md). Текущий HEAD / deploy / «что дальше» —
+в [`NEXT_AGENT_PROMPT.md`](./NEXT_AGENT_PROMPT.md); открыто/закрыто — в `verified/MASTER_BUG_MATRIX.md`.
+_(Этот README намеренно не хранит HEAD/счётчики — правило Single-Writer-Per-Fact, чтобы не дрейфовали.)_
 
 ## Quick facts
 

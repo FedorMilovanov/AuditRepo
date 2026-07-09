@@ -1,21 +1,31 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
-> Единый реестр всех багов проекта gospod-bog.ru.  
-> **Source HEAD: `75f807b` — DEPLOY GREEN: run `28829729903` SUCCESS (2026-07-06T23:26Z, все 30+ шагов включая `Gill mobile TOC and PlayEmber smoke` ✅). D-23 фикс (`3280445`) подтверждён на реальном проде — продакшн больше НЕ заперт на `14a49be8`.**  
-> Обновлено: **2026-07-06** (D-23 RESOLVED, deploy-green `28829729903`) (fable-super-audit: единый HEAD, D-строки arena влиты в канонические таблицы, счётчики пересобраны).  
-> Расширенный системный бэклог (CI/даты/SW/security/Bible/семантика — ~70 находок): **`SUPER_AUDIT_2026-07-06_14a49be8.md`** — закрывается волнами W1–W10; в счётчики матрицы не входит.  
-> Дата консолидации: 2026-07-05 (реструктуризация из монолита — `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`).
->
-> **🔄 Reverify 2026-07-09 (claude-auditor) — source сдвинулся `75f807b` → `2313f36f`** (main, +delta: mobile-bar v4 refactor + speed-slot dedup, Hermenevtika rail rework, Gill premium images, quotes FAB, series «Часть N из N» fixes; deploy green). Fresh HEAD-pass, 2 witness auditors. **Runtime SOLID: 0 P0/P1 crash/XSS/visual-regression в дельте.** Vosk-находки уже отслежены (TTS-DL-UNZIP-SYNC/CONSENT/NO-TABLOCK — не дублирую). **+8 новых P3** из этого рефактор-дельты (хвост P3-open; из них NF-GATE-IZ5-STALE / NF-STRANGLER-BAR-DRIFT — конкретные инстансы уже-трекнутых GATE-MARKER-DATA-DRIFT / STRANGLER-HYGIENE). Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-09_head-2313f36f-149-commit-delta.md`, `incoming/claude-auditor/2026-07-09/`.
->
-> **➡️ Фаза 2 (2026-07-09, deploy green `fc4b6326`): стек `native-source-contract-v1` влит в gb-main.** `route-migration-matrix.json` теперь ПРОИЗВОДНЫЙ (материализуется из page-ownership + route-profiles; режимы 8→3), registry-driven чекеры заменили прямые (оригиналы → `scripts/legacy-audits/*`), добавлен editorial-freeze baseline `data/editorial-metadata.json`. **Закрыто: AUDIT-P2-MATRIX-DRIFT.** Побочно: при интеграции лейны уронили секцию `/karty/*` (david/isus вместо 11) — поймано новым контрактом, исправлено регенерацией. `izbrannoe`/`BaseLayout` рантайм переведён на нативные `<script>` (strict-native clean). AGENTS.md синхронизирован (r323; JS 11→14 vosk-TTS). Барьер зелёный (validate:static-publication + visual-parity + dist-audits + editorial-freeze). Ещё открыто: NF-SPEEDSLOT-4TH-COPY (GillSeriesRail не импортит `_shared/speedSlot`) + хвост P3.
+> **SSOT по багам проекта gospod-bog.ru** (открыто/закрыто/severity/счётчики). Волатильные
+> факты живут только здесь и в [`../NEXT_AGENT_PROMPT.md`](../NEXT_AGENT_PROMPT.md); карта
+> всех документов и правило Single-Writer-Per-Fact — [`../DOC_MAP.md`](../DOC_MAP.md).
+> Мастхед — это **статус, не changelog**: per-session заметки идут в `## Session log` внизу.
+
+## Статус
+
+| Поле | Значение |
+|---|---|
+| Source HEAD | `1491fbb2` (main; PR#67 Gill Часть IV «Экзегет» + rail, PR#68 rail-CSS-scope hotfix) |
+| Deploy | `deploy.yml` @ `1491fbb2` — ⏳ verifying (стамп «green» ставится только после подтверждённого прогона; предыдущий деплой PR#67 упал на scope-leak, PR#68 чинит) |
+| Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы** |
+| Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
+
+_История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (91)
+## ✅ ЗАКРЫТО (95)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| GILL-PART4-EXEGETE | 🆕 Новая **Часть IV «Экзегет»** серии Гилла (`/articles/dzhon-gill-chast-4-ekzeget/`): герменевтический метод + разбор 7 «универсалистских» текстов против Уитби, triple-render (Astro+MDX+legacy), реальная hero-картинка владельца. Логический реордер отображения III↔IV (Экзегет=III, Наследие=IV) — slugs/routes/ids сохранены (живой URL `/chast-3-nasledie/`). Премиум-рейл: сворачиваемый узкий/широкий + demand-scroll под серии 10+ частей. Барьер зелёный (169 passed). | `eca5dcc9` PR#67 |
+| GILL-PART4-STRAGGLER-LABEL | 🆕 2 устаревших «Богословие» в SUBMENU-карточках Части IV после переименования в «Экзегет» (MDX-твин стр.33 + legacy HTML стр.269). Найдено adversarial self-audit собственной работы **до** мерджа. | `96549bb3` PR#67 |
+| GILL-RAIL-CSS-SCOPE-LEAK-DEPLOY | 🆕 Мердж PR#67 уронил прод-деплой: новый rail-CSS сработал ложным срабатыванием scope-leak гейта (`premium-controls-rollout-audit.js` требует, чтобы `[data-gill-v16]` шёл первым в каждом арме; не распознаёт `.gbs2-world[data-gill-v16]`). Fix: переставить компаунд-селекторы (`[data-gill-v16].gbs2-world`) — семантика CSS идентична. `audit:premium-controls` 98/98. | `1491fbb2` PR#68 |
+| KARTY-Q-BUG-P0 | 🆕 **Запись задним числом** (был фикс, не было строки в матрице → дрейф): `ReferenceError: q is not defined`, `karty/_engine/map-engine.js` — `q` использовалась вне scope её `setTimeout` при показе счётчика совпадений; крешила поиск на проде `/karty/ishod/` и любом map-engine-маршруте. Найдено Playwright-ground-truth (статический karty-audit ошибочно писал «нет q-бага»). Проверено 2026-07-09: `q` теперь в scope на строке 866, комментарий документирует фикс. | `f7e9696` → merge `763271b3` |
 | AUDIT-P2-MATRIX-DRIFT | **ЗАКРЫТ стеком `native-source-contract-v1` (r323, deploy green `fc4b6326`).** `route-migration-matrix.json` больше не расходится с ownership/sitemap — он **производный**: материализуется из `page-ownership.json` + `route-profiles/*` движком `effective-route-registry.js`, cross-validation через registry-driven чекеры (`route-profile-contract-audit`/`route-migration-matrix-contract-audit`/`content-source-provenance-audit`, `migration:metadata:check:strict`). ⚠️ При интеграции лейны сами уронили секцию `/karty/*` (david/isus вместо 11 реальных, 8 переименованных потеряны) — поймано новым контрактом, исправлено регенерацией (`sync-route-migration-matrix --write`). | `e679362` gb-main |
 | TTS-OUTCOME-TELEMETRY | success/selected-engine телеметрия добавлена: `reportTtsOutcome()` шлёт `tts_engine_selected {engine}` при старте воспроизведения — теперь видно долю Vosk vs Web Speech (её отсутствие и прятало CSP-инцидент). Fire-and-forget, не влияет на playback | `a459ff3` |
 | D-22 | Favorites/izbrannoe: `f.path`→href без проверки схемы (само-XSS) + protocol-relative `//host` в image — **уже исправлено другим агентом** (`/^\/(?!\/)/` + protocol-allowlist на оба рендерера); стро́ка висела в P2 open по инерции, снята при quick-fix reverify 2026-07-08 | `365de50` |
@@ -134,7 +144,7 @@
 | D-19 | `<title>` ≠ `og:title`/`twitter:title`/JSON-LD headline на 2 кастомных PageHead (antisovetov, rimlyanam-7): 4 независимых литерала мимо Seo.astro | arena cycle2; `validate:all` |
 | D-21 | Глоссарий: dual renderer — `o()` innerHTML vs `l()` textContent → литеральный `<em>` в серверных тултипах; innerHTML из JSON = XSS-поверхность (W5) | arena cycle3 + fable: js/glossary.js, data/glossary.json (55 `<em>`) |
 
-## 🟢 P3 — ОТКРЫТО (27)
+## 🟢 P3 — ОТКРЫТО (25)
 
 | ID | Описание |
 |---|---|
@@ -147,9 +157,7 @@
 | NEW-72 | SVG dedup micro-optimization (~1.9KB) |
 | SHADOW-AUDIT-NARROW | `legacy-shadow-wrapper-audit.js` проверяет только 7/52 (13%) production-dist маршрутов. Не охвачены: все страницы статей, baptisty-rossii, karty (8 из 10), biografii, about, pastor-series, konfessii, rodosloviye. |
 | AUDIT-PRO-SITEMAP-ROOT-ONLY | `publicFiles()` проверяет покрытие sitemap по `htmlPages` (root HTML). Если Astro-страница существует только в dist/ (без root-копии), её URL не попадёт в проверку покрытия — sitemap может недосчитаться страниц, а аудит пройдёт. |
-| AUDIT-PRO-VM-DEPRECATED | `extractSiteConfig()` и `inlineScriptSyntax()` используют `new vm.Script()` — deprecated в Node 22.12+. При полном удалении API в будущей версии Node аудит упадёт. Альтернатива: `new Function()` в sandbox. |
 | SEO-AUDIT-ROOT-ONLY | `seo-audit.js` исключает `dist/` из `walk()`. Astro-only страницы без root-копии невидимы для SEO-аудита: проверки canonical, og:image, JSON-LD, Twitter cards, FAQ, robots. Та же архитектурная проблема что AUDIT-PRO-ROOT-ONLY. |
-| VALIDATE-JS-VM-DEPRECATED | `extractSiteConfigFromHtml()` использует `new vm.Script()` — deprecated в Node 22.12+. Дублирует ту же проблему что и `audit-pro.js` (AUDIT-PRO-VM-DEPRECATED). При удалении API — validate.js упадёт. |
 | VALIDATE-JS-ARTICLES-ONLY | `scripts/validate.js` (`validateArticle()`) проверяет только `articles/*`. 9 baptisty-rossii статей (dva-sezda-1884…yuzhnaya-shtunda) НЕ проходят 17 проверок: canonical, byline, og:image, breadcrumb, author-card и др. `EXTRA_PAGES` = 4 страницы (pastor-series, biografii, about, index) — жёстко захардкожено. |
 | AUDIT-PRO-ROOT-ONLY | `audit-pro.js` проверяет ТОЛЬКО root HTML (`walk(ROOT)`, `dist/` в skipDirs). `/izbrannoe/` (Astro-only, без root-копии) невидим для 7 гвардов: canonical, sitemap, SEO, cache-bust, JSON-LD, links, a11y. При `astro build` в dist/ генерируются 54 страницы — аудит проверяет только 50 root HTML. |
 | STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |
@@ -206,28 +214,69 @@
 - `BUG-ASTRO-CONFIG-001` (Pass 88) — downgraded to INFO.
 - `BUG-SITEMAP-8-KARTY-MISSING` — 8 karty/ routes are temporary placeholders with `data-pagefind-ignore`, intentionally excluded from sitemap by `check-map-publication-status.js`.
 - `BUG-FRONTMATTER-INCONSISTENCY-01` — Zod schema uses `.default(false)` / `.default(true)`. Omitting fields is valid, not inconsistency.
+- `AUDIT-PRO-VM-DEPRECATED` / `VALIDATE-JS-VM-DEPRECATED` — **опровергнуто живым тестом 2026-07-09.** `new vm.Script(...)` на текущем рантайме (Node **v22.22.2**) под `node --pending-deprecation` даёт **0 предупреждений**. Deprecated — другая, более старая функция `vm.createScript()`, а не класс `vm.Script`/`new vm.Script()` (это актуальный, не устаревший API). Оригинальная находка не была прогнана на живом рантайме до фиксации claim'а. Обе строки сняты с P3-open.
 
 ### Архив:
 - 36 incoming pass-папок → `archive/2026-07-05-incoming-consolidated/`
 - Предыдущая 2174-строчная матрица (вкл. PASS-evidence секции) → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`
 - ⚠️ Прежние ссылки на `archive/2026-07-05-matrix-pre-restructure/` и `archive/2026-07-05-pass-evidence/` были битыми (папки не существовали) — исправлено 2026-07-06.
 
+### Archive-candidates (incoming/, superseded — к переносу в `archive/stale/` следующей чисткой):
+> Инвентаризация incoming/ 2026-07-09 (без физического переноса — evidence-трейлы, чтобы не конфликтовать с активными агентами). Все — evidence уже-обработанных находок:
+- `incoming/arena-agent-verifier-hardening-2026-07-05/` — reopen-claim P1-DEPLOY-FAIL признан false (см. выше §Dispute); содержал AR-014, теперь закрыт governance-сессией 07-09.
+- `incoming/fable-super-audit/2026-07-06/` — влит в `SUPER_AUDIT_2026-07-06_14a49be8.md`; позитивные cycle2/3-заявления отозваны.
+- `incoming/arena-agent-karty-visual-baseline-*/` — вытеснен `arena-agent-karty-*-v3-deep-audit` (12/75 VB отозвано ground-truth Playwright).
+- `incoming/arena-auditor/2026-07-06/RESEARCH_gill-*` — контент перенесён в `FedorMilovanov/Research`; остались заглушки.
+> Karty-технический кластер (KARTY-03/04/05/07/11/14, addEventListener-leaks, GSAP-CDN, JS-CSS-инъекция) — **НЕ archive**: реальные, но долгострой karty-Atlas, ведётся отдельно. Q-BUG P0 из этого интейка — закрыт (см. KARTY-Q-BUG-P0).
+
 ---
 
-## Статистика (обновлено 2026-07-09: +1 закрыто стеком r323 — AUDIT-P2-MATRIX-DRIFT; ранее reverify @ `2313f36f` +8 P3; runtime clean)
+## Статистика (обновлено 2026-07-09 сессией Gill Часть IV: +4 закрыто [PR#67/#68 + запись KARTY-Q-BUG-P0], −2 P3 реклассифицированы в false-positive [VM-DEPRECATED])
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 91 |
+| Закрыто (fixed) | 95 |
 | P1 открыто | 2 |
 | P2 открыто | 9 |
-| P3 открыто | 27 |
+| P3 открыто | 25 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **45** |
+| **Всего открыто (матрица)** | **43** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10) |
-| False positives отклонено | 3 |
+| False positives отклонено | 5 |
 | Passes processed | 95+ (reverify 2026-07-09 @ 2313f36f, claude-auditor) |
+
+---
+
+## Session log (append-only)
+
+> Сюда идут per-session заметки о HEAD-переходах и что влито — **чтобы мастхед оставался
+> чистым статусом**. Новое — сверху. Детали каждого HEAD — в парном `reverify/` доке.
+
+- **2026-07-09 — Gill Часть IV «Экзегет» + rail + doc-governance (source → `1491fbb2`).**
+  Влито: PR#67 (`eca5dcc9`) Часть IV «Экзегет» + сворачиваемый rail + логический реордер
+  III↔IV; PR#68 (`1491fbb2`) hotfix rail-CSS scope-leak, разблокировал прод-деплой
+  (мердж PR#67 его уронил на `audit:premium-controls` 97/98). Записано 4 закрытия
+  (вкл. задним числом KARTY-Q-BUG-P0 — был фикс `f7e9696`, не было строки), VM-DEPRECATED
+  ×2 → false-positive (живой Node-тест). Governance: добавлен `DOC_MAP.md` (Single-Writer-
+  Per-Fact), мастхед матрицы переведён из changelog в статус-блок, `PROJECT_REGISTRY`/
+  `README`/`START_HERE` перестали переписывать HEAD/счётчики. Закрывает дрейф-находку
+  AR-014. Инвентаризация `incoming/`: ценные находки (Q-BUG, дефолтный TTS-голос) уже
+  были починены, но не отмечены — теперь отмечены; остальное — karty-Atlas (долгострой)
+  и owner-gated визуал.
+- **2026-07-09 — Фаза 2, стек `native-source-contract-v1` (deploy green `fc4b6326`).**
+  `route-migration-matrix.json` стал производным (page-ownership + route-profiles; режимы
+  8→3), registry-driven чекеры заменили прямые (оригиналы → `scripts/legacy-audits/*`),
+  editorial-freeze baseline `data/editorial-metadata.json`. Закрыто AUDIT-P2-MATRIX-DRIFT.
+  При интеграции лейны уронили `/karty/*` (david/isus вместо 11) — поймано контрактом,
+  регенерировано. AGENTS.md синхр. (r323). Ещё открыто: NF-SPEEDSLOT-4TH-COPY + хвост P3.
+- **2026-07-09 — reverify (claude-auditor), source `75f807b` → `2313f36f`.** Delta:
+  mobile-bar v4 + speed-slot dedup, Hermenevtika rail rework, Gill premium images, quotes
+  FAB. Runtime SOLID (0 P0/P1 в дельте). +8 P3 (хвост). Evidence:
+  `reverify/CURRENT_HEAD_REVERIFY_2026-07-09_head-2313f36f-149-commit-delta.md`.
+- **2026-07-06 — fable-super-audit, source `75f807b` (deploy green `28829729903`).** D-23
+  RESOLVED (`3280445`), продакшн больше не заперт на `14a49be8`. D-строки arena влиты в
+  канонические таблицы, счётчики пересобраны, системный бэклог → SUPER_AUDIT (W1–W10).
 
 ---
 

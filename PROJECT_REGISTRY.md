@@ -6,7 +6,7 @@
 
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
-`projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active / repair-in-progress** | 2026-07-06 fable-super-audit: единый консолидированный аудит + план волн W0–W10. Матрица: 87 закрыто / 37 открыто (P1×1, P2×9, P3×20, рефакторинг×4, AR×3) + системный бэклог в SUPER_AUDIT. Source HEAD: `14a49be8` (на проде, run 28794737410). Start: `verified/MASTER_BUG_MATRIX.md` → `verified/SUPER_AUDIT_2026-07-06_14a49be8.md`. |
+`projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | Astro static site (gospod-bog.ru), strangler-миграция. **Старт: [`projects/gb-is-my-strength/DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md).** HEAD/счётчики/статус намеренно НЕ дублируются здесь (правило Single-Writer-Per-Fact, `CLEANUP_RETENTION_POLICY.md` §8) — они в матрице + `NEXT_AGENT_PROMPT.md`. |
 
 ## Status glossary
 
@@ -18,24 +18,18 @@
 - `reverify-needed` — source repo ушёл вперёд, нужен новый HEAD-pass
 - `archived` — проект завершён
 
-## gb-is-my-strength current summary — 2026-07-06 (fable-super-audit)
+## gb-is-my-strength — где правда
 
-**Current source HEAD:** `14a49be83ab57212c0bbd26a8249b75ac026511d` (Merge PR#48) — **на проде** (run `28794737410`, workflow_dispatch, success, артефакт `8110554604`).
-**Current status:** active / repair-in-progress. Точечные баги — в матрице (87 закрыто / 37 открыто). Системная работа — волнами W0–W10 из `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (W0 гигиена правды выполнена 2026-07-06).
+Этот registry намеренно **не** хранит HEAD, счётчики и «current truth» проекта — они
+дрейфовали, когда жили в 4 файлах сразу (находка AR-014). Единая точка входа и карта
+всех документов проекта:
 
-### Current truth (кратко)
+➡️ **[`projects/gb-is-my-strength/DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md)**
 
-- Прод = main; штатные гейты зелёные. НО: зелёный IndexNow-шаг ≠ принятая нотификация (`|| true`); транзакция релиза (валидированный/собранный/задеплоенный SHA) не гарантирована — W1.
-- Массовые `modified_time 2026-07-06T02:10:54+03:00` на проде — техническая, не редакционная свежесть (петля bot-дат) — W2.
-- In-flight зоны владельца: **PremiumControls/Gill** (freeze) и **глоссарий/Библия-тултипы** — не трогать без координации.
-- Опровергнутые старые формулировки (lane-ветки, «64 bugs», quiz-хоткеи, «izbrannoe чист», «TTS надёжен» и др.) — см. SUPER_AUDIT §1; не переносить их дальше.
-
-### Primary current documents
-
-1. `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md` — канон точечных багов.
-2. `projects/gb-is-my-strength/verified/SUPER_AUDIT_2026-07-06_14a49be8.md` — канон системного бэклога + план волн.
-3. `projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md` — handoff для следующего агента.
-4. `projects/gb-is-my-strength/PremiumControls/README.md` — PremiumControls contract (in-flight, owner).
+Оттуда — к канонам: `verified/MASTER_BUG_MATRIX.md` (баги),
+`NEXT_AGENT_PROMPT.md` (текущий HEAD / что дальше),
+`verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (системный бэклог, волны W1–W10),
+`PremiumControls/README.md` (in-flight зона владельца).
 
 ## How to add a new project
 

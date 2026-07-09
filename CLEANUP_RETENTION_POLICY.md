@@ -158,3 +158,41 @@ Recommended output:
 - never overwrite another agent’s intake folder to “clean it up”
 - never mark a bug false-positive without explicit recheck record
 - never leave multiple verified ledgers without naming which one is canonical
+
+---
+
+## 8. Single-Writer-Per-Fact (anti-drift, added 2026-07-09)
+
+The root cause of doc drift is **the same fact written in several files**. When the
+current source HEAD, open/closed counts, or project status live in the matrix header
+*and* the registry *and* the README *and* the handoff prompt, every update must touch
+all four — and in practice one or two get missed, so the surfaces disagree (this was
+finding **AR-014**).
+
+Rule:
+
+```text
+Every volatile fact has exactly ONE owner file.
+Every other document links to it — it never restates it.
+```
+
+Per-project ownership is declared in that project's `DOC_MAP.md`. The general split:
+
+| Fact class | Single owner |
+|---|---|
+| Bug status / severity / counts | `verified/MASTER_BUG_MATRIX.md` |
+| Current source HEAD, deploy state, "what next" | `NEXT_AGENT_PROMPT.md` |
+| System backlog + wave plan | the project's `SUPER_AUDIT_*.md` |
+| Stable project shape (tech, freeze zones, reading order) | project `README.md` |
+| Which projects exist | root `PROJECT_REGISTRY.md` |
+
+Consequences:
+
+- A **matrix header is a status block, not a changelog.** One line for current HEAD +
+  deploy. Per-session narrative goes to an append-only `## Session log` section at the
+  bottom of the matrix (or a `reverify/` doc), never accreted into the masthead.
+- The registry and README **must not** restate HEAD/counts. If they need one, they link.
+- Closing a session updates **two** files (matrix + handoff prompt), not five.
+
+Before adding a fact to a doc, ask: *does another file already own this?* If yes, link.
+
