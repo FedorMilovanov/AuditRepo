@@ -435,7 +435,11 @@ Exit: доки не противоречат коду; контракт утве
 - Playwright-смоук расширить с 2 до 10 карт (smoke:maps уже есть — параметризовать по реестру).
 Exit: MAP-* строки в MASTER_BUG_MATRIX закрыты с коммитами; смоук 10/10.
 
-### KA-2. Реестры данных v1
+### KA-2. Реестры данных v1 — 🔶 НАЧАТА: шаг KA-2a выполнен 2026-07-10 (gb, коммит f9424af)
+
+Сделано (только новые файлы, рантайм не тронут): `data/atlas/coordinate-spaces.json` (семейство levant зафиксировано, legacy-artistic проекция задокументирована честно — обратного x/y→lat/lng нет, координаты придут из OpenBible); `data/atlas/schemas/place.schema.json` (JSON Schema 2020-12: словарь уверенности + score OpenBible + accuracyMeters Pleiades + sameAs + placements + geometryLicense); `scripts/atlas-extract-places.js` → `data/atlas/places-draft.json` (133 вхождения → 115 канонических кандидатов, 13 кросс-картных, все needsReview). **Найдены реальные дефекты данных:** jerusalem/jericho/bethel имеют разные x/y в разных картах одного семейства; в shoftim два Хеврона; Иерусалим живёт под 5 локальными id. Остаток KA-2: ручная проверка слияний, заполнение geo/identifications/sameAs из OpenBible (зафиксировать версию снапшота 11.2021), разнесение по places/*.json + Ajv-гейт, placeId-резолвер в движке (системный лейн), вынос ARCHAEOLOGY_REFERENCES (системный лейн), Research/ATLAS досье.
+
+Исходный план волны:
 - `data/atlas/{places,persons,periods,polities,events,sources,interpretations}/` + JSON Schema + Ajv-валидатор `atlas:data:check` в CI.
 - Мигрировать места 10 карт в реестр places (скриптом `atlas:migrate --map=<slug>`, старый route.json остаётся рабочим — поле place расширяется `placeId`-ссылкой; движку добавляется resolver, ничего не ломается).
 - Заполнить sameAs (OpenBible slug, Pleiades URI где есть) — полуавтоматически по названиям, вручную подтвердить.
