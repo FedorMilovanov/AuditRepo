@@ -294,6 +294,7 @@ karty/<slug>/route.json          ← остаётся: вид карты (x/y в
 | **Viz.Bible** (R. Rouse) | Жив, но активность упала после ~2020 | Dashboard «глава = карта+таймлайн+люди»; данные Theographic (открытые, GitHub) | Bus-factor=1; НЕ путать с bibviz.com |
 | ❌ «bible.geography» | **Не существует** (в GPT-списках не было, проверено на будущее) | — | — |
 | ❌ «Here Dwells» | **Не существует** — это «Here Dragons Abound» (блог S. Turner) | SVG-техники стилизации из блога — см. §7 | — |
+| ❌ «Anchor (Yale) Bible Atlas» | **Не существует как продукт** (конфляция в GPT-обзоре): есть Anchor Yale Bible **Dictionary** (6 тт., проприетарные модули Logos/Accordance) — авторитет для сверки идентификаций, не источник карт/данных | — | — |
 
 ### 6.2-бис Шедевры карто-сторителлинга (проверено; для вдохновения Shell и туров)
 
@@ -337,7 +338,8 @@ karty/<slug>/route.json          ← остаётся: вид карты (x/y в
 |---|---|---|---|
 | **OpenBible Bible-Geocoding-Data** (GitHub) | 1 342 древних места ↔ 1 596 кандидатов, 3 259 идентификаций, 21 088 типизированных голосов из 73 взвешенных источников (Anchor Yale, Carta 5-е, Tübingen…); 56% мест имеют >1 кандидата; JSONL + JSON Schema + 6 621 GeoJSON/KML + thumbnails | **CC BY 4.0 (verbatim в license.txt)**; ODbL для OSM-геометрий; изображения — пофайлово (sentinel/CC/PD; 300 «copyright» — только метаданные) | ✅ основа реестра places. ⚠️ GitHub-снапшот от 11.2021 — при импорте зафиксировать версию. Модель уверенности брать целиком: typed votes (+30…−20) → декадные time-scores (нормировка ≤1000 на место; time_total ≥500 = высокая уверенность) → isobands для регионов (потолок 90%). ❗ Собственных данных ДОРОГ у OpenBible нет (в GPT-обзоре — неточность): дороги — Itiner-e |
 | **OpenBible cross-references** | 344 799 перекрёстных ссылок (TSV, обновлено 11.2025) | CC-BY | ✅ бонус: будущая связка «место→стихи→связанные отрывки» |
-| **Pleiades dumps** | античные места, URI, связи | CC-BY 3.0 | ✅ sameAs + сверка НЗ-мест |
+| **Pleiades dumps** (v4.1: 41 480 мест; daily JSON + GIS CSV) | античные места, URI, связи; собственная модель точности: `location_precision` (precise/rough), `association_certainty` (certain/less-certain/uncertain), `accuracy_radius` в метрах | CC BY 3.0 (verbatim в credits) | ✅ sameAs + сверка НЗ-мест; модель точности — второй эталон (наряду с OpenBible) для нашего реестра. ~34k записей из Barrington → греко-римский перекос; ВЗ-Левант тоньше (TAVO/GANE-догрузка) |
+| **DARMC / Mapping Past Societies** (Harvard) | римские дороги (Barrington-производные), епархии, кораблекрушения | **CC BY-NC 3.0** | ⚠️ NC — только сверка; дороги в продукт — Itiner-e (CC BY) или AWMC (ODbL) |
 | **WHG / Linked Places Format** | формат данных, периодные имена | CC-BY 4.0 | ✅ ориентир схемы; публикация нашего газеттира |
 | **AWMC geodata** (github.com/AWMC/geodata) | античные береговые линии(!), реки, римские дороги, регионы — GeoJSON с Pleiades-ключами | **ODC-ODbL** (атрибуция + share-alike для производной БД) | ✅ **главный источник базовой географии** — древние берега/озёра вместо современных; ODbL учитывать в NOTICE |
 | **Natural Earth** (+GitHub-зеркало) | берега/рельеф/реки 10m/50m/110m; растр **Natural Earth II** («мир до модерной эры» — идеален как фон атласа) | Public Domain («crediting unnecessary») | ✅ подложка широких семейств (ane-wide). ⚠️ Проверено в данных: география СОВРЕМЕННАЯ — Мёртвое море двумя бассейнами (совр. дамбы), водохранилища Асад/Насер как Reservoir, слоя вади нет (только River (Intermittent)); древние береговые линии/уровни — рисовать самим или AWMC |
