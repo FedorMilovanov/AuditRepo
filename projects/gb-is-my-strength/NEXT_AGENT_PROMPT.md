@@ -3,9 +3,9 @@
 > **Этот файл — SSOT по «где мы сейчас»** (текущий HEAD + что дальше). Карта всех
 > документов и правило Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-09.** Source HEAD: `7a410be9` (main; PR#67 Gill Часть IV «Экзегет»
-> + сворачиваемый rail + реордер III↔IV; PR#68 hotfix rail-CSS scope-leak; PR#69 hotfix
-> устаревшего deploy-only smoke-теста). **Prod deploy ✅ GREEN** — run `29058726462`, все шаги success.
+> **Актуально на 2026-07-10.** Source HEAD: `b8459bdf` (main; PR#67 Gill Часть IV «Экзегет»
+> + rail + реордер III↔IV; PR#68/#69 deploy-hotfixes; PR#70 CI-INDEXNOW-checker fix;
+> PR#71 sibling-grid propagation). **Prod deploy ✅ GREEN** — run `29065454930`, 0 failed steps.
 > **Авторитет при конфликте:** `verified/MASTER_BUG_MATRIX.md` (точечные баги)
 > и `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (системный бэклог + план волн W0–W10).
 > Прежние промпты (Pass 71 `8c318010`; 2026-07-06 `14a49be8`) устарели; SEARCH-016/017 и
