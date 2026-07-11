@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Референс: улучшенный экран запуска теста (Гилл)</title>
+<style>
+/* ── Токены репо (css/site.css), 1:1 ── */
+:root{
+  --color-canvas:#fdfcf9; --color-surface:#ffffff; --color-surface-muted:#f4f2ed;
+  --color-text:#1a1a1a; --color-text-muted:#6a6a6a; --color-border:#e5e2dc;
+  --color-accent:#7a2e2e; --color-accent-soft:#f0e4e4;
+  --gb-serif:"Lora",Georgia,serif; --gb-sans:"Source Sans 3",system-ui,sans-serif;
+}
+html.dark{
+  --color-canvas:#0e1116; --color-surface:#161a21; --color-surface-muted:#161a21;
+  --color-text:#e6e1d7; --color-text-muted:#a0988a; --color-border:#232830;
+  --color-accent:#d4a574; --color-accent-soft:rgba(212,165,116,.12);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--color-canvas);color:var(--color-text);
+  font-family:var(--gb-sans);line-height:1.6;
+  transition:background .3s,color .3s;padding:40px 16px;display:flex;justify-content:center}
+.wrap{width:100%;max-width:720px}
+.demo-toolbar{display:flex;gap:8px;justify-content:flex-end;margin-bottom:24px}
+.demo-toolbar button{font:inherit;font-size:13px;padding:7px 14px;border-radius:8px;
+  border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text-muted);cursor:pointer}
+.demo-note{font-size:12.5px;color:var(--color-text-muted);margin:0 0 20px;line-height:1.5}
+
+/* ── h2 «Проверь себя» — как в репо ── */
+h2#sec-quiz{font-family:var(--gb-serif);font-weight:600;font-size:21px;margin:0 0 20px;
+  padding-bottom:8px;border-bottom:1px solid var(--color-border)}
+
+/* ── quiz-overlay + launch-hero: реальные классы репо ── */
+.quiz-wrapper{position:relative;border-radius:14px;overflow:hidden}
+.quiz-overlay{position:relative;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:44px 24px 40px;border-radius:14px;
+  background:var(--color-surface);border:1px solid var(--color-border);
+  transition:background .25s ease}
+
+/* НОВОЕ 1 — плашка «пора повторить» (SM-2). Появляется только если dueCount>0 */
+.quiz-due-note{width:100%;max-width:440px;margin:0 0 22px;padding:12px 16px;border-radius:12px;
+  display:flex;align-items:flex-start;gap:11px;
+  background:var(--color-accent-soft);border:1px solid color-mix(in srgb,var(--color-accent) 30%,transparent)}
+.quiz-due-note svg{width:18px;height:18px;color:var(--color-accent);flex-shrink:0;margin-top:1px}
+.quiz-due-note b{color:var(--color-text)}
+.quiz-due-note span{font-size:13px;line-height:1.5;color:var(--color-text-muted)}
+
+/* launch-hero: тот же DOM, что в js/site.js */
+.quiz-launch-hero{display:flex;flex-direction:column;align-items:center;gap:14px;
+  background:none;border:none;cursor:pointer;padding:8px 24px 4px;border-radius:12px;
+  color:var(--color-text);outline:0;transition:transform .22s cubic-bezier(.34,1.56,.64,1)}
+.quiz-launch-hero:hover{transform:scale(1.04)}
+.quiz-launch-icon{display:flex;align-items:center;justify-content:center;width:72px;height:72px;
+  border-radius:50%;background:var(--color-accent);color:#fff;flex-shrink:0;
+  box-shadow:0 6px 28px rgba(0,0,0,.22),0 2px 8px rgba(0,0,0,.12);
+  transition:box-shadow .22s ease,transform .22s ease}
+html.dark .quiz-launch-icon{color:#1a1a1a}
+.quiz-launch-hero:hover .quiz-launch-icon{transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(0,0,0,.32),0 4px 12px rgba(0,0,0,.18)}
+.quiz-launch-icon svg{width:36px;height:36px}
+.quiz-launch-label{font-family:var(--gb-serif);font-size:32px;font-weight:700;
+  letter-spacing:-.01em;line-height:1;color:var(--color-text)}
+.quiz-launch-hint{font-family:var(--gb-sans);font-size:12px;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--color-text-muted);opacity:.75}
+
+/* НОВОЕ 2 — категории-чипы: предпросмотр охвата теста (интерливинг виден заранее) */
+.quiz-launch-meta{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:20px;max-width:440px}
+.quiz-cat-chip{font-family:var(--gb-sans);font-size:11.5px;font-weight:600;letter-spacing:.02em;
+  padding:5px 12px;border-radius:20px;background:var(--color-surface-muted);
+  color:var(--color-text-muted);border:1px solid var(--color-border)}
+.quiz-cat-chip b{color:var(--color-accent);font-weight:700}
+
+/* НОВОЕ 3 — memory-note (в репо уже есть; показан для полноты картины) */
+.quiz-memory-note{width:100%;max-width:440px;margin:22px 0 0;padding:11px 15px;border-radius:10px;
+  background:var(--color-surface-muted);border:1px solid var(--color-border);
+  font-size:13px;line-height:1.5;color:var(--color-text-muted);text-align:center}
+.quiz-memory-note strong{color:var(--color-text)}
+.quiz-memory-note span{color:var(--color-accent);font-weight:600}
+
+.legend{margin-top:32px;padding:20px 22px;border-radius:12px;background:var(--color-surface-muted);
+  border:1px solid var(--color-border);font-size:13.5px;line-height:1.65;color:var(--color-text-muted)}
+.legend h3{margin:0 0 10px;font-family:var(--gb-serif);font-size:16px;color:var(--color-text)}
+.legend .new{color:var(--color-accent);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="demo-toolbar">
+    <button id="themeBtn" type="button">☾ Тема</button>
+    <button id="dueBtn" type="button">Показать «пора повторить»</button>
+  </div>
+  <p class="demo-note">Референс экрана запуска теста. Классы (<code>quiz-launch-hero</code>,
+  <code>quiz-launch-icon</code>, <code>quiz-launch-label</code>, <code>quiz-launch-hint</code>,
+  <code>quiz-memory-note</code>) совпадают с реальными в <code>js/site.js</code>. Подсвечены три
+  новшества, которых в репо ещё нет.</p>
+
+  <h2 id="sec-quiz">Проверь себя</h2>
+
+  <div class="quiz-wrapper">
+    <div class="quiz-overlay" id="quizOverlay">
+
+      <!-- НОВОЕ 1: плашка интервального повторения (SM-2). Скрыта, если due=0 -->
+      <div class="quiz-due-note" id="dueNote" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>
+        <span><b>Пора освежить.</b> 3 вопроса из этого раздела вы проходили пару дней назад — самое время повторить, пока память не остыла.</span>
+      </div>
+
+      <button class="quiz-launch-hero" id="quizLaunch" type="button" aria-label="Пройти тест">
+        <span class="quiz-launch-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </span>
+        <span class="quiz-launch-label">Пройти тест</span>
+        <span class="quiz-launch-hint" id="quizHint">проверь себя — 8 вопросов</span>
+      </button>
+
+      <!-- НОВОЕ 2: категории-чипы — заранее видно, что тест смешивает темы (интерливинг) -->
+      <div class="quiz-launch-meta" id="quizMeta">
+        <span class="quiz-cat-chip">Термин <b>2</b></span>
+        <span class="quiz-cat-chip">Метод <b>1</b></span>
+        <span class="quiz-cat-chip">Имя <b>1</b></span>
+        <span class="quiz-cat-chip">Место <b>1</b></span>
+        <span class="quiz-cat-chip">Дата <b>1</b></span>
+        <span class="quiz-cat-chip">Понятие <b>2</b></span>
+      </div>
+
+      <!-- Уже есть в репо: прошлый результат -->
+      <div class="quiz-memory-note">
+        <strong>Ваш прошлый результат:</strong> 6 из 8 · лучший: 7 из 8<br>
+        <span>Хорошо</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="legend">
+    <h3>Что нового относительно репо</h3>
+    <p><span class="new">1. Плашка «пора освежить»</span> — интервальное повторение (SM-2).
+    Появляется только если по этому разделу есть вопросы, «созревшие» для повтора
+    (<code>GBSpacedRepetition.dueCount(pageId) &gt; 0</code>). Это единственная крупная
+    недостающая механика. Без давления: не пуш, а мягкое приглашение.</p>
+    <p><span class="new">2. Категории-чипы</span> — заранее показывают, что тест смешивает
+    типы вопросов (термин / метод / имя / место / дата / понятие). Делает интерливинг
+    видимым и задаёт ожидание охвата. Данные берутся из уже существующего поля
+    <code>category</code> в вопросах.</p>
+    <p><span class="new">3. memory-note</span> — прошлый и лучший результат.
+    Это в репо уже есть (<code>quiz-memory-note</code>), показан для полноты.</p>
+    <p style="margin-bottom:0">Всё остальное (круглый значок, серифный заголовок 32px,
+    оверлей) — 1:1 с текущим репо, не менять.</p>
+  </div>
+</div>
+
+<script>
+document.getElementById('themeBtn').addEventListener('click',function(){
+  document.documentElement.classList.toggle('dark');
+});
+var due=false;
+document.getElementById('dueBtn').addEventListener('click',function(){
+  due=!due;
+  document.getElementById('dueNote').style.display = due ? 'flex' : 'none';
+  this.textContent = due ? 'Скрыть «пора повторить»' : 'Показать «пора повторить»';
+});
+document.getElementById('quizLaunch').addEventListener('click',function(){
+  alert('Демо: здесь запускается существующий движок теста (js/site.js). Референс показывает только экран запуска.');
+});
+</script>
+</body>
+</html>

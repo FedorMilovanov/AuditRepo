@@ -1,0 +1,1331 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gill · мобильные бары v2 — образец 1-в-1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   ОБРАЗЕЦ 1-в-1 — GILL МОБИЛЬНЫЙ ХРОМ v2
+   Изменения против v1:
+   • Оба бара БЕЗ РАМОК, заподлицо к краям (нативный tab-bar), frosted-стекло,
+     hairline-разделитель, safe-area.
+   • A−/A+ убраны из нижнего бара → значок «Настройки» (шестерёнка) + поповер
+     «размер текста / межстрочный интервал» (паттерн Aa).
+   • Верхний бар умно скрывается при скролле вниз, возвращается при скролле
+     вверх; ПОКА ИДЁТ ОЗВУЧКА — закреплён (Play не теряется).
+   • Тонкая линия прогресса у верхнего края (= body::before в проекте) —
+     ориентир, когда бар спрятан.
+
+   Классы/SVG/токены — проектные (floating-cluster.css + site.css). Леса образца
+   помечены .mock-*. Мобильные правила в репозитории живут в @media(≤960/899/390);
+   здесь обёртки сняты (рамка фиксировано 390px) — метки стоят у блоков.
+   ============================================================================ */
+
+/* ---------------- ЛЕСА ОБРАЗЦА (mock-*) — не вставлять в проект ---------------- */
+*{box-sizing:border-box}
+body{margin:0;background:#e9e6df;font-family:"Source Sans 3",system-ui,sans-serif;
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:16px;padding:26px 16px 60px}
+html.dark body{background:#05070a}
+.mock-toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center;
+  padding:10px 14px;border-radius:14px;background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+html.dark .mock-toolbar{background:#12161d;box-shadow:0 6px 20px rgba(0,0,0,.5)}
+.mock-btn{border:1px solid #d8d3c8;background:#faf8f4;color:#2b2b2b;font:600 13px/1 "Source Sans 3",sans-serif;
+  padding:9px 14px;border-radius:10px;cursor:pointer;transition:background .15s,border-color .15s}
+.mock-btn:hover{background:#f0ece3;border-color:#b8936a}
+html.dark .mock-btn{background:#1b2029;border-color:#2f3540;color:#e6e1d7}
+html.dark .mock-btn:hover{background:#232a34;border-color:#d4a574}
+.mock-tag{font:700 11px/1 "Source Sans 3",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#8a7a5e;align-self:center}
+html.dark .mock-tag{color:#9c8c7a}
+.mock-hint{font:500 12px/1.5 "Source Sans 3",sans-serif;color:#8a7a5e;max-width:390px;text-align:center}
+html.dark .mock-hint{color:#8a7f70}
+
+/* Рамка телефона: transform → containing block для position:fixed баров */
+.mock-phone{position:relative;width:min(390px,calc(100vw - 16px));height:780px;max-height:calc(100dvh - 16px);flex:0 0 auto;transform:translateZ(0);
+  overflow:hidden;border-radius:44px;background:var(--color-canvas,#fdfcf9);
+  border:11px solid #14161b;box-shadow:0 24px 60px rgba(0,0,0,.28),0 0 0 2px #2a2d34}
+html.dark .mock-phone{box-shadow:0 24px 60px rgba(0,0,0,.6),0 0 0 2px #000}
+.mock-scroll{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;color:var(--color-text,#1a1a1a)}
+
+/* Заглушка статьи (леса) */
+.page-wrap{width:100%}
+.mock-article{padding:0 22px}
+.mock-article h1{font-family:"Lora",Georgia,serif;font-weight:600;font-size:26px;line-height:1.22;margin:0 0 12px}
+.mock-article .lead{font-family:"Source Sans 3",sans-serif;color:var(--color-text-muted,#6a6a6a);font-size:15px;line-height:1.6;margin:0 0 20px}
+.mock-article p{font-family:var(--mock-ff,"Lora",Georgia,serif);font-size:var(--mock-fs,16px);line-height:var(--mock-lh,1.75);margin:0 0 18px;text-align:justify;transition:font-size .18s ease,line-height .18s ease,font-family .15s ease}
+.mock-article h2{font-family:"Lora",Georgia,serif;font-weight:600;font-size:21px;margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--color-border,#e5e2dc)}
+
+/* ---------------- ТОКЕНЫ (site.css :root/html.dark + gb-* floating-cluster.css) --- */
+:root{
+  --color-canvas:#fdfcf9;--color-surface:#ffffff;--color-surface-muted:#f4f2ed;
+  --color-text:#1a1a1a;--color-text-muted:#6a6a6a;--color-text-faint:#888888;
+  --color-border:#e5e2dc;--color-border-strong:#cfc9bd;
+  --color-accent:#7a2e2e;--color-accent-strong:#5f2323;--color-accent-soft:#f6ece8;
+  --color-tooltip-bg:#2a2a2a;--color-tooltip-text:#ffffff;
+  --gb-accent:var(--color-accent);--gb-accent-strong:var(--color-accent-strong);
+  --gb-accent-gold:#d4a857;--gb-accent-gold-bright:#ffd18b;--gb-accent-gold-deep:#b8874a;
+  --gb-surface:var(--color-surface);--gb-surface-muted:var(--color-surface-muted);
+  --gb-border:var(--color-border);--gb-border-strong:var(--color-border-strong);
+  --gb-text:var(--color-text);--gb-text-muted:var(--color-text-muted);--gb-text-faint:var(--color-text-faint);
+  --gb-font-serif:"Lora",Georgia,"Times New Roman",serif;
+  --gb-font-serif-display:"Lora",Georgia,serif;
+  --gb-font-sans:"Source Sans 3",system-ui,-apple-system,sans-serif;
+  --f-body:var(--gb-font-serif);--f-ui:var(--gb-font-sans);
+  --gb-ease-out:cubic-bezier(.2,.7,.2,1);--gb-ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --gb-ease-overshoot:cubic-bezier(.34,1.56,.64,1);--gb-ease-precise:cubic-bezier(.2,.8,.2,1);
+}
+html.dark{
+  --color-canvas:#0e1116;--color-surface:#161a21;--color-surface-muted:#161a21;
+  --color-text:#e6e1d7;--color-text-muted:#9ca3af;--color-text-faint:#6b7280;
+  --color-border:#232830;--color-border-strong:#2f3540;
+  --color-accent:#d4a574;--color-accent-strong:#e8b878;--color-accent-soft:#1f1a13;
+  --color-tooltip-bg:#f5f0e6;--color-tooltip-text:#1a1a1a;
+}
+/* СЕПИЯ — тёплый режим чтения. Заметь: это ТОЛЬКО remap токенов, теми же
+   именами. Ни одно из правил, использующих var(--color-*), не дублируется —
+   они подхватывают сепию автоматически. Ровно то, ради чего в репо сделан
+   двухслойный токен-слой (docs/DESIGN-TOKENS.md). */
+html.sepia{
+  --color-canvas:#f4ecd8;--color-surface:#efe6cf;--color-surface-muted:#e8ddc4;
+  --color-text:#4b3a26;--color-text-muted:#7a6647;--color-text-faint:#9c8663;
+  --color-border:#ddcca8;--color-border-strong:#c9b48a;
+  --color-accent:#8a5a2b;--color-accent-strong:#6f4620;--color-accent-soft:#eadfc4;
+  --color-tooltip-bg:#4b3a26;--color-tooltip-text:#f4ecd8;
+}
+html{color-scheme:light}html.dark{color-scheme:dark}
+
+/* ===========================================================================
+   КАНОНИЧЕСКИЕ КИРПИЧИКИ gb-* (floating-cluster.css) — дословно
+   =========================================================================== */
+.gb-icon{--icon-stroke:1.7;width:40px;height:40px;display:grid;place-items:center;position:relative;
+  color:var(--color-text,#1a1a1a);background:transparent;border:0;border-radius:50%;
+  transition:color .28s var(--gb-ease-out),transform .32s var(--gb-ease-spring);cursor:pointer;flex-shrink:0;transform-origin:center}
+.gb-icon::before{content:'';position:absolute;inset:6px;border-radius:50%;border:1px solid var(--color-accent,#7a2e2e);
+  opacity:0;transform:scale(.7);transition:opacity .28s var(--gb-ease-out),transform .32s var(--gb-ease-spring);pointer-events:none}
+@media (hover:hover) and (pointer:fine){
+  .gb-icon:hover{color:var(--color-accent,#7a2e2e);transform:scale(1.12)}
+  .gb-icon:hover::before{opacity:.35;transform:scale(1)}
+  html.dark .gb-icon:hover{color:var(--color-accent-strong,#e8b878)}
+  .gb-icon:hover svg{transform:scale(1.02)}
+}
+.gb-icon:active{transform:scale(.88);transition:transform .12s cubic-bezier(.4,0,.2,1)}
+.gb-icon:active::before{opacity:.5;transform:scale(1)}
+.gb-icon:focus-visible{outline:2px solid var(--color-accent,#7a2e2e);outline-offset:4px;border-radius:50%}
+/* «Избранное» использует общий .gb-icon halo, но при is-saved он сталкивается
+   цветом с золотым «сохранено» (бургунди-кольцо на золотой иконке = читалось
+   как «толстый тёмный ободок»). Чиним: halo подстраивается под золото. */
+.gb-save.is-saved::before{border-color:var(--color-accent-gold,#b8936a)}
+/* Настоящее подтверждение — не статичный ободок, а короткий расходящийся
+   импульс (канон микро-интеракций «избранное»: Spotify/Etsy heart burst). */
+.gb-save::after{content:'';position:absolute;inset:6px;border-radius:50%;pointer-events:none;
+  box-shadow:0 0 0 0 color-mix(in srgb,var(--color-accent-gold,#b8936a) 45%,transparent)}
+.gb-save.is-bump::after{animation:gb-save-burst .5s var(--gb-ease-out)}
+@keyframes gb-save-burst{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--color-accent-gold,#b8936a) 45%,transparent)}100%{box-shadow:0 0 0 13px color-mix(in srgb,var(--color-accent-gold,#b8936a) 0%,transparent)}}
+.gb-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:var(--icon-stroke,1.7);stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .32s var(--gb-ease-spring),stroke-width .28s var(--gb-ease-out)}
+
+.gb-theme-toggle{overflow:hidden}
+.gb-theme-toggle .theme-icon-sun,.gb-theme-toggle .theme-icon-moon{position:absolute;inset:0;display:grid;place-items:center;
+  transition:opacity .32s var(--gb-ease-out),transform .42s var(--gb-ease-spring)}
+.gb-theme-toggle .theme-icon-sun{opacity:1;transform:rotate(0) scale(1)}
+.gb-theme-toggle .theme-icon-moon{opacity:0;transform:rotate(-90deg) scale(.5)}
+html.dark .gb-theme-toggle .theme-icon-sun{opacity:0;transform:rotate(90deg) scale(.5)}
+html.dark .gb-theme-toggle .theme-icon-moon{opacity:1;transform:rotate(0) scale(1)}
+.gb-theme-toggle .theme-icon-sun svg,.gb-theme-toggle .theme-icon-moon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+.gb-ember{--p:0;--ember-size:36px;--ring-color:var(--color-accent,#7a2e2e);appearance:none;border:0;position:relative;
+  display:grid;place-items:center;isolation:isolate;cursor:pointer;color:var(--color-text,#1a1a1a);
+  width:var(--ember-size);height:var(--ember-size);border-radius:50%;background:transparent;
+  transition:transform .32s var(--gb-ease-spring),color .28s var(--gb-ease-out);flex-shrink:0;transform-origin:center}
+.gb-ember::before{content:'';position:absolute;inset:6px;border-radius:50%;border:1px solid var(--ring-color);
+  opacity:0;transform:scale(.7);transition:opacity .28s var(--gb-ease-out),transform .32s var(--gb-ease-spring);pointer-events:none}
+@media (hover:hover) and (pointer:fine){.gb-ember:hover{transform:scale(1.12)}.gb-ember:hover::before{opacity:.4;transform:scale(1)}}
+.gb-ember:active{transform:scale(.88);transition:transform .12s cubic-bezier(.4,0,.2,1)}
+.gb-ember:active::before{opacity:.55;transform:scale(1)}
+.gb-ember:focus-visible{outline:2px solid var(--color-accent,#7a2e2e);outline-offset:4px;border-radius:50%}
+.gb-ember__ring-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;opacity:0;
+  transform:rotate(-90deg);transform-origin:center;transition:opacity .28s var(--gb-ease-out)}
+.gb-ember[data-state="playing"] .gb-ember__ring-svg,.gb-ember[data-state="paused"] .gb-ember__ring-svg,.gb-ember[data-state="complete"] .gb-ember__ring-svg{opacity:1}
+.gb-ember__ring-track{fill:none;stroke:var(--color-border,#e5e2dc);stroke-width:1.5;opacity:.4}
+.gb-ember__ring-progress{fill:none;stroke:var(--ring-color);stroke-width:1.5;stroke-linecap:round;stroke-dasharray:283;
+  stroke-dashoffset:calc(283 - 283 * min(1, max(0, var(--p, 0))));transition:stroke-dashoffset .42s cubic-bezier(.4,0,.2,1)}
+.gb-ember__glyph{position:relative;z-index:2;width:14px;height:14px;fill:currentColor;transform:translateX(1px)}
+.gb-ember__pause{position:relative;z-index:2;width:14px;height:14px;display:none;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+.gb-ember__check{display:none;position:relative;z-index:2;width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.gb-ember[data-state="playing"] .gb-ember__glyph,.gb-ember[data-state="complete"] .gb-ember__glyph{display:none}
+.gb-ember[data-state="playing"] .gb-ember__pause{display:block}
+.gb-ember[data-state="complete"] .gb-ember__check{display:block}
+.gb-ember[data-state="playing"]{color:var(--ring-color)}.gb-ember[data-state="paused"]{color:var(--ring-color)}
+/* Явное «нажато/играет» состояние — тонкого кольца на 36-40px мало, добавляем
+   мягкое дышащее свечение вокруг Play, пока идёт озвучка. */
+.gb-ember[data-state="playing"]{background:color-mix(in srgb,var(--ring-color) 12%,transparent);animation:gb-ember-breathe 1.8s ease-in-out infinite}
+@keyframes gb-ember-breathe{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ring-color) 22%,transparent)}50%{box-shadow:0 0 0 5px color-mix(in srgb,var(--ring-color) 0%,transparent)}}
+.gb-ember[data-state="complete"]{color:var(--color-accent-gold-bright,#d8aa6d)}
+html.dark .gb-ember{--ring-color:#eed093;color:#eed093;box-shadow:0 0 14px rgba(216,176,104,.22)}
+
+.gb-save{width:40px;height:40px;display:grid;place-items:center;position:relative;color:var(--color-text,#1a1a1a);
+  background:transparent;border:0;border-radius:50%;transition:color .28s var(--gb-ease-out),transform .32s var(--gb-ease-spring);cursor:pointer;flex-shrink:0;transform-origin:center}
+@media (hover:hover) and (pointer:fine){.gb-save:hover{color:var(--color-accent-gold,#b8936a);transform:scale(1.10)}html.dark .gb-save:hover{color:var(--color-accent-strong,#e8b878)}}
+.gb-save:active{transform:scale(.88);transition:transform .12s cubic-bezier(.4,0,.2,1)}
+.gb-save:focus-visible{outline:2px solid var(--color-accent,#7a2e2e);outline-offset:4px;border-radius:50%}
+.gb-save.is-saved{color:var(--color-accent-gold-bright,#d8aa6d)}
+.gb-save.is-saved svg{fill:var(--color-accent-gold,#b8936a);stroke:var(--color-accent-gold,#b8936a);animation:gb-save-bounce .5s var(--gb-ease-spring)}
+@keyframes gb-save-bounce{0%{transform:scale(1)}40%{transform:scale(1.30)}70%{transform:scale(.92)}100%{transform:scale(1)}}
+.gb-save svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .32s var(--gb-ease-spring),fill .28s var(--gb-ease-out),stroke .28s var(--gb-ease-out)}
+
+/* speed-bloom (вешает контроллер initPlayExpand) */
+.gb-ember-wrap{position:relative;display:inline-flex;align-items:center}
+.gb-ember-expand{position:absolute;right:0;top:50%;transform:translateY(-50%) translateX(var(--gb-ember-shift,0px));
+  display:flex;align-items:center;gap:3px;padding:10px 48px 10px 14px;border-radius:999px;
+  background:color-mix(in srgb,var(--color-surface,#fff) 96%,transparent);
+  border:1.5px solid color-mix(in srgb,var(--color-accent-gold,#b8936a) 30%,var(--color-border,#e5e2dc));
+  box-shadow:0 4px 20px rgba(184,147,106,.10),0 8px 32px rgba(0,0,0,.06),inset 0 1px 0 rgba(255,255,255,.8);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);
+  opacity:0;pointer-events:none;clip-path:circle(20px at calc(100% - 24px) 50%);
+  transition:clip-path .42s cubic-bezier(.16,1.08,.3,1),opacity .26s ease,box-shadow .34s ease;z-index:0;white-space:nowrap}
+html.dark .gb-ember-expand{background:color-mix(in srgb,var(--color-surface,#161a21) 94%,transparent);
+  border-color:color-mix(in srgb,var(--color-accent-gold,#b8936a) 22%,rgba(255,255,255,.08));
+  box-shadow:0 4px 24px rgba(216,176,104,.08),0 12px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.05)}
+.gb-ember-expand.is-open{opacity:1;pointer-events:auto;clip-path:inset(0 0 0 0 round 999px);z-index:1;
+  box-shadow:0 6px 28px rgba(184,147,106,.14),0 12px 40px rgba(0,0,0,.07),inset 0 1px 0 rgba(255,255,255,.8)}
+html.dark .gb-ember-expand.is-open{box-shadow:0 6px 28px rgba(216,176,104,.12),0 16px 48px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.05)}
+.gb-ember-expand::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(184,147,106,.2),transparent);opacity:0;transition:opacity .25s ease .12s}
+.gb-ember-expand.is-open::before{opacity:1}
+html.dark .gb-ember-expand::before{background:linear-gradient(90deg,transparent,rgba(216,176,104,.15),transparent)}
+.gb-ember-expand__btn{display:grid;place-items:center;min-width:36px;height:30px;padding:0 6px;
+  border:1.5px solid color-mix(in srgb,var(--color-border,#e5e2dc) 70%,transparent);border-radius:12px;background:transparent;
+  font-family:var(--f-ui,'Source Sans 3',sans-serif);font-size:12px;font-weight:700;color:var(--color-text-muted,#6a6a6a);cursor:pointer;
+  opacity:0;transform:translateX(12px) scale(.85);
+  transition:opacity .2s ease,transform .28s cubic-bezier(.34,1.56,.64,1),background .18s ease,color .18s ease,border-color .18s ease;-webkit-tap-highlight-color:transparent}
+.gb-ember-expand.is-open .gb-ember-expand__btn:nth-child(1){opacity:1;transform:none;transition-delay:.025s,.025s,0s,0s,0s}
+.gb-ember-expand.is-open .gb-ember-expand__btn:nth-child(2){opacity:1;transform:none;transition-delay:.05s,.05s,0s,0s,0s}
+.gb-ember-expand.is-open .gb-ember-expand__btn:nth-child(3){opacity:1;transform:none;transition-delay:.075s,.075s,0s,0s,0s}
+.gb-ember-expand.is-open .gb-ember-expand__btn:nth-child(4){opacity:1;transform:none;transition-delay:.10s,.10s,0s,0s,0s}
+.gb-ember-expand.is-open .gb-ember-expand__btn:nth-child(5){opacity:1;transform:none;transition-delay:.125s,.125s,0s,0s,0s}
+.gb-ember-expand.is-open .gb-ember-expand__btn:nth-child(6){opacity:1;transform:none;transition-delay:.15s,.15s,0s,0s,0s}
+@media (hover:hover) and (pointer:fine){
+  .gb-ember-expand__btn:hover{background:color-mix(in srgb,var(--color-accent-gold,#b8936a) 10%,transparent);border-color:color-mix(in srgb,var(--color-accent-gold,#b8936a) 40%,transparent);color:var(--color-text,#1a1a1a)}
+  html.dark .gb-ember-expand__btn:hover{background:rgba(216,176,104,.08);border-color:rgba(216,176,104,.25);color:var(--color-accent-gold-bright,#f0c896)}
+}
+.gb-ember-expand__btn:active{transform:scale(.92);transition-duration:.06s}
+.gb-ember-expand__btn.is-active{background:linear-gradient(135deg,var(--color-accent-gold,#b8936a),var(--color-accent-gold-bright,#d8aa6d));border-color:transparent;color:#fff;font-weight:800;box-shadow:0 2px 8px rgba(184,147,106,.2)}
+html.dark .gb-ember-expand__btn.is-active{background:linear-gradient(135deg,var(--color-accent-gold,#b8936a),#eed093);color:#0e1116;box-shadow:0 2px 12px rgba(216,176,104,.2)}
+.gb-ember-expand__stop{display:none}
+/* (мобильный down-bloom удалён — скорости теперь раздвигаются инлайн в баре,
+   см. .mobile-top-slot / .mobile-top-speedrail ниже) */
+
+/* ===========================================================================
+   GILL МОБИЛЬНЫЕ БАРЫ v2 [@media(max-width:960px) в floating-cluster.css]
+   =========================================================================== */
+:root{
+  --gill-mobile-bar-h:74px;
+  --gill-mobile-topbar-h:56px;
+  /* frosted-стекло (полупрозрачнее, чем v1, чтобы blur читался) */
+  --gill-mobile-bar-bg:rgba(253,251,246,.80);
+  --gill-mobile-sheet-bg:rgba(252,250,246,.98);
+  --gill-mobile-hairline:rgba(120,96,66,.16);
+  --gill-mobile-bar-ink:#241b15;
+  --gill-mobile-bar-muted:rgba(55,45,34,.74);
+  --gill-mobile-bar-gold:#7d5a2f;
+  --gill-mobile-track:rgba(125,90,47,.24);
+  --gill-ring-article:#9c3a3a;
+  --gill-read-line:linear-gradient(90deg,#d4a857,#ffd18b,#d4a857);
+}
+html.dark{
+  --gill-mobile-bar-bg:rgba(13,17,23,.78);
+  --gill-mobile-sheet-bg:rgba(20,25,32,.98);
+  --gill-mobile-hairline:rgba(232,184,120,.16);
+  --gill-mobile-bar-ink:#f5ead7;
+  --gill-mobile-bar-muted:rgba(245,234,215,.74);
+  --gill-mobile-bar-gold:#eed093;
+  --gill-mobile-track:rgba(238,208,147,.22);
+  --gill-ring-article:#e2735c;
+  --gill-read-line:linear-gradient(90deg,#eed093,#c59b58,#eed093);
+}
+
+[data-gill-v16] .page-wrap{padding-top:calc(var(--gill-mobile-topbar-h) + 18px);padding-bottom:calc(var(--gill-mobile-bar-h) + 40px);max-width:100vw}
+
+/* --- Линия прогресса у верхнего края (= html body::before, --gb-read-pct) --- */
+.mock-reading-line{position:fixed;top:0;left:0;right:0;height:2.5px;z-index:2147483600;
+  background:var(--gill-read-line);transform-origin:left;transform:scaleX(var(--rd,0));
+  transition:transform .12s linear;pointer-events:none;opacity:.95}
+
+/* --- ВЕРХНИЙ БАР: без рамок, заподлицо, frosted, умное скрытие --- */
+[data-gill-v16] .mobile-top-bar{
+  position:fixed;left:0;right:0;top:0;z-index:2147483000;min-height:var(--gill-mobile-topbar-h);box-sizing:border-box;
+  display:flex;align-items:center;gap:8px;padding:calc(8px + env(safe-area-inset-top,0px)) 14px 8px;
+  border:0;border-radius:0;border-bottom:1px solid transparent;   /* у верха рамки нет — бесшовно со страницей */
+  background:transparent;
+  -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+  color:var(--gill-mobile-bar-ink);overflow:visible;isolation:isolate;
+  transition:transform .42s var(--gb-ease-spring),opacity .3s ease,background .28s var(--gb-ease-out),border-color .28s var(--gb-ease-out)}
+/* Frosted-фон + hairline проявляются только когда под баром текст — как в
+   Telegram / iOS large-title: у самого верха бар растворяется в странице,
+   никакой «отдельной рамки». */
+[data-gill-v16] .mobile-top-bar.is-scrolled{background:var(--gill-mobile-bar-bg);border-bottom-color:var(--gill-mobile-hairline)}
+[data-gill-v16] .mobile-top-bar.is-hidden{transform:translateY(-100%);opacity:0;pointer-events:none}
+[data-gill-v16] .mobile-top-bar .gb-icon{width:40px;height:40px;min-width:40px;min-height:40px;border-radius:999px;background:transparent;color:var(--gill-mobile-bar-ink);border:0;box-shadow:none;flex-shrink:0}
+/* Тач-зона ≥44px даже когда визуал ужат до 36px на узких экранах (WCAG 2.5.5).
+   Невидимый ::after расширяет область касания, не меняя вид иконки.
+   .gb-save исключён — у него ::after занят burst-анимацией; его зона — через min-size. */
+[data-gill-v16] .mobile-top-bar .gb-icon:not(.gb-save)::after,[data-gill-v16] .mobile-bottom-bar > .gb-icon:not(.gb-save)::after,[data-gill-v16] .mobile-top-ember::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:999px;pointer-events:auto}
+/* Назад+Домой — одна навигационная группа: прижимаем визуально (гештальт-близость),
+   тач-зоны 40px не перекрываются (сдвиг 12px < 20px радиуса). */
+[data-gill-v16] .mobile-top-bar .mobile-home-link{margin-left:-12px}
+[data-gill-v16] .mobile-top-bar .gb-icon svg{width:20px;height:20px;stroke:currentColor}
+/* ── Slot-swap search⇄speeds — канонический механизм из репозитория
+   (_shared/speedSlot.ts + HermenevtikaMobileBar .hm-*): слот фикс. высоты,
+   поиск-оверлей уходит, рельса-оверлей всплывает, бейдж скорости на Play.
+   Имена в Gill-конвенции. Улучшения: каскад чипов + видимый бейдж. ── */
+[data-gill-v16] .mobile-top-slot{position:relative;flex:1 1 auto;min-width:0;height:36px}   /* фикс высоты — тот самый баг-фикс */
+[data-gill-v16] .mobile-top-search{position:absolute;inset:0;margin:0;display:flex;align-items:center;gap:7px;padding:0 12px;
+  border-radius:999px;border:1px solid var(--gill-mobile-hairline);background:color-mix(in srgb,var(--gill-mobile-bar-gold) 7%,transparent);cursor:text;
+  transition:opacity .28s ease,transform .3s var(--gb-ease-spring)}
+[data-gill-v16] .mobile-top-search svg{width:15px;height:15px;stroke:var(--gill-mobile-bar-muted);fill:none;stroke-width:2;flex-shrink:0}
+[data-gill-v16] .mobile-top-search{border:1px solid var(--gill-mobile-hairline);cursor:pointer;text-align:left}
+[data-gill-v16] .mobile-top-search__txt{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--gb-font-sans,sans-serif);font-size:13px;color:var(--gill-mobile-bar-muted)}
+@media (hover:hover){[data-gill-v16] .mobile-top-search:hover .mobile-top-search__txt{color:var(--gill-mobile-bar-ink)}}
+[data-gill-v16] .mobile-top-search input{flex:1 1 auto;min-width:0;border:0;background:transparent;outline:0;padding:0;font-family:var(--gb-font-sans,sans-serif);font-size:13px;color:var(--gill-mobile-bar-ink)}
+[data-gill-v16] .mobile-top-search input::placeholder{color:var(--gill-mobile-bar-muted);opacity:.8}
+[data-gill-mobile-bar].speed-open .mobile-top-search{opacity:0;transform:translateX(-8px);pointer-events:none}
+/* Рельса скоростей — оверлей в том же слоте, всплывает при .speed-open */
+[data-gill-v16] .mobile-speedrail{position:absolute;inset:0;display:flex;align-items:center;gap:4px;
+  opacity:0;transform:translateX(8px);pointer-events:none;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;cursor:grab;
+  transition:opacity .25s ease,transform .3s cubic-bezier(.3,1.2,.4,1)}
+[data-gill-v16] .mobile-speedrail::-webkit-scrollbar{display:none}
+[data-gill-v16] .mobile-speedrail.is-dragging{cursor:grabbing}
+[data-gill-mobile-bar].speed-open .mobile-speedrail{opacity:1;transform:translateX(0);pointer-events:auto}
+[data-gill-v16] .mobile-spd{flex:0 0 auto;position:relative;font-family:var(--gb-font-sans,sans-serif);font-size:11px;font-weight:800;
+  border:1px solid var(--gill-mobile-hairline);background:transparent;color:var(--gill-mobile-bar-muted);padding:6px 9px;border-radius:9px;cursor:pointer;white-space:nowrap;
+  opacity:0;transform:translateX(8px) scale(.9);transition:opacity .18s ease,transform .26s var(--gb-ease-spring),background .15s,color .15s,border-color .15s}
+[data-gill-v16] .mobile-spd::before{content:'';position:absolute;inset:-7px -1px}   /* больше тап-таргет */
+[data-gill-v16] .mobile-spd:active{transform:scale(.92);transition-duration:.08s}
+[data-gill-v16] .mobile-spd[aria-checked="true"]{background:var(--gill-mobile-bar-gold);color:#fff;border-color:transparent}
+html.dark [data-gill-v16] .mobile-spd[aria-checked="true"]{color:#0e1116}
+/* Улучшение: чипы въезжают каскадом при раскрытии */
+[data-gill-mobile-bar].speed-open .mobile-spd{opacity:1;transform:none}
+[data-gill-mobile-bar].speed-open .mobile-spd:nth-child(1){transition-delay:.02s}
+[data-gill-mobile-bar].speed-open .mobile-spd:nth-child(2){transition-delay:.05s}
+[data-gill-mobile-bar].speed-open .mobile-spd:nth-child(3){transition-delay:.08s}
+[data-gill-mobile-bar].speed-open .mobile-spd:nth-child(4){transition-delay:.11s}
+[data-gill-mobile-bar].speed-open .mobile-spd:nth-child(5){transition-delay:.14s}
+/* Бейдж скорости на Play (снизу-справа) — показывает текущую, реоткрывает рельсу */
+[data-gill-v16] .mobile-spdbadge{position:absolute;right:-3px;bottom:-2px;z-index:3;min-width:18px;height:14px;padding:0 3px;border-radius:999px;
+  border:1px solid var(--gill-mobile-bar-gold);background:var(--gill-mobile-bar-gold);color:#fff;font-family:var(--gb-font-sans,sans-serif);font-size:8px;font-weight:800;line-height:1;cursor:pointer;
+  display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.22);transition:transform .18s var(--gb-ease-spring)}
+html.dark [data-gill-v16] .mobile-spdbadge{color:#0e1116}
+[data-gill-v16] .mobile-spdbadge::before{content:'';position:absolute;inset:-5px -4px}
+[data-gill-v16] .mobile-spdbadge.is-bump{animation:mob-spdbadge-bump .3s var(--gb-ease-spring)}
+@keyframes mob-spdbadge-bump{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
+[data-gill-v16] .mobile-playwrap{position:relative;flex-shrink:0;display:grid;place-items:center}
+[data-gill-v16] .mobile-playwrap .mobile-top-ember{--ember-size:40px;--ring-color:var(--gill-mobile-bar-gold);color:var(--gill-mobile-bar-ink)}
+
+/* --- НИЖНИЙ БАР: без рамок, заподлицо к краям (нативный tab-bar) --- */
+[data-gill-v16] .mobile-bottom-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:2147483000;min-height:var(--gill-mobile-bar-h);box-sizing:border-box;
+  display:flex;align-items:center;gap:4px;padding:8px 14px calc(8px + env(safe-area-inset-bottom,0px));
+  border:0;border-radius:0;border-top:1px solid var(--gill-mobile-hairline);
+  background:var(--gill-mobile-bar-bg);-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+  color:var(--gill-mobile-bar-ink);overflow:visible;isolation:isolate;
+  transition:transform .42s var(--gb-ease-spring)}
+[data-gill-v16] .mobile-bottom-bar.is-hidden{transform:translateY(100%)}
+
+[data-gill-v16] .bar-progress.dual-progress{position:relative;appearance:none;flex:0 0 auto;width:38px;height:38px;border:0;padding:0;margin:0;background:transparent;color:inherit;cursor:default}
+[data-gill-v16] .bar-progress.dual-progress svg{width:38px;height:38px;transform:rotate(-90deg);overflow:visible}
+[data-gill-v16] .bar-series-track,[data-gill-v16] .bar-series-fill,[data-gill-v16] .bar-progress-track,[data-gill-v16] .bar-progress-fill{fill:none;transform-origin:center}
+[data-gill-v16] .bar-series-track{stroke:var(--gill-mobile-track);stroke-width:1.7;opacity:.8}
+[data-gill-v16] .bar-series-fill{stroke:var(--gill-mobile-bar-gold);stroke-width:1.9;stroke-linecap:round;transition:stroke-dashoffset .24s linear}
+[data-gill-v16] .bar-progress-track{stroke:var(--gill-mobile-track);stroke-width:2.6;opacity:.85}
+[data-gill-v16] .bar-progress-fill{stroke:var(--gill-ring-article);stroke-width:2.8;stroke-linecap:round;transition:stroke-dashoffset .15s linear}
+[data-gill-v16] .bar-progress-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--gb-font-sans,sans-serif);font-size:9px;font-weight:800;letter-spacing:-.02em;color:var(--gill-ring-article);pointer-events:none;font-variant-numeric:tabular-nums}
+
+[data-gill-v16] .mobile-btoc-section{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:2px;padding:6px 8px;border:0;border-radius:12px;background:transparent;color:var(--gill-mobile-bar-ink);text-align:left;cursor:pointer}
+[data-gill-v16] .mobile-btoc-section__label{display:block;font-family:var(--gb-font-sans,sans-serif);font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;line-height:1;color:var(--gill-mobile-bar-muted);opacity:.75}
+[data-gill-v16] .mobile-btoc-section__main,[data-gill-v16] #gbs2MobSec{display:block;width:100%;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--gb-font-serif,serif);font-size:13.5px;font-weight:800;letter-spacing:.01em;line-height:1.15;color:var(--gill-mobile-bar-ink);opacity:1}
+
+[data-gill-v16] .mobile-bottom-bar > .gb-icon{flex:0 0 auto;width:40px;height:40px;min-width:40px;min-height:40px;border-radius:999px;background:transparent;color:var(--gill-mobile-bar-muted);border:0;box-shadow:none}
+[data-gill-v16] .mobile-bottom-bar > .gb-icon svg{width:19px;height:19px;stroke:currentColor}
+[data-gill-v16] .mobile-bottom-bar > .gb-icon svg{width:19px;height:19px;stroke:currentColor}
+
+/* ===== СПРАВКА ПО РАЗДЕЛУ («?» в верхнем баре) =====
+   Шторка по образцу .toc-sheet (реальный канон Gill v16): ручка, шапка,
+   вкладки Термины/Конспект/Тест. Классы .hlp-* — НОВЫЕ (аналога в репо нет),
+   но термины/тест опираются на существующие механики: глоссарий (.gterm/.gtip,
+   js/glossary.js) и quiz-канон цветов из css/site.css. */
+.mock-phone .hlp-overlay{position:absolute;inset:0;z-index:2147483300;background:rgba(20,14,6,.45);
+  opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s ease,visibility .28s}
+.mock-phone .hlp-overlay.is-open{opacity:1;visibility:visible;pointer-events:auto}
+.mock-phone .hlp-sheet{position:absolute;bottom:0;left:0;right:0;max-height:86%;display:flex;flex-direction:column;
+  background:var(--color-canvas,#fdfcf9);border-radius:22px 22px 0 0;box-shadow:0 -14px 44px rgba(20,14,6,.28);
+  transform:translateY(100%);transition:transform .34s cubic-bezier(.32,.72,0,1)}
+.mock-phone .hlp-overlay.is-open .hlp-sheet{transform:none}
+.hlp-handle{flex:0 0 auto;display:flex;justify-content:center;padding:9px 0 4px;background:transparent;border:0;cursor:pointer;width:100%}
+.hlp-handle::after{content:'';width:38px;height:4px;border-radius:2px;background:var(--color-border,#e5e2dc)}
+.hlp-head{flex:0 0 auto;padding:2px 18px 10px}
+.hlp-head .lab{font-family:var(--gb-font-sans,sans-serif);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent,#7a2e2e)}
+html.dark .hlp-head .lab{color:var(--color-accent,#d4a574)}
+.hlp-head h3{margin:2px 0 0;font-family:var(--gb-font-serif,serif);font-size:17px;font-weight:600;color:var(--color-text,#1a1a1a)}
+.hlp-tabs{flex:0 0 auto;display:flex;gap:6px;padding:0 16px 10px}
+.hlp-tab{flex:1;height:34px;border:1px solid var(--color-border,#e5e2dc);border-radius:10px;background:transparent;cursor:pointer;
+  font-family:var(--gb-font-sans,sans-serif);font-size:12.5px;font-weight:700;color:var(--color-text-muted,#6a6a6a);transition:all .16s}
+.hlp-tab[aria-selected="true"]{background:color-mix(in srgb,var(--color-accent,#7a2e2e) 9%,transparent);
+  border-color:color-mix(in srgb,var(--color-accent,#7a2e2e) 40%,transparent);color:var(--color-text,#1a1a1a)}
+html.dark .hlp-tab[aria-selected="true"]{background:color-mix(in srgb,var(--color-accent,#d4a574) 14%,transparent);border-color:color-mix(in srgb,var(--color-accent,#d4a574) 45%,transparent)}
+.hlp-body{flex:1 1 auto;min-height:0;overflow-y:auto;padding:2px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+.hlp-pane{display:none}.hlp-pane.is-active{display:block}
+/* Термины: активное припоминание — определение раскрывается по тапу */
+.hlp-term{width:100%;text-align:left;border:1px solid var(--color-border,#e5e2dc);border-radius:12px;background:var(--color-surface,#fff);
+  padding:12px 14px;margin:0 0 8px;cursor:pointer;transition:border-color .16s}
+html.dark .hlp-term{background:var(--color-surface,#161a21)}
+.hlp-term__word{display:flex;align-items:center;gap:8px;font-family:var(--gb-font-serif,serif);font-size:15px;font-weight:600;color:var(--color-text,#1a1a1a)}
+.hlp-term__word::after{content:'';width:7px;height:7px;border-right:1.6px solid var(--color-text-muted,#6a6a6a);border-bottom:1.6px solid var(--color-text-muted,#6a6a6a);
+  transform:rotate(45deg);margin-left:auto;transition:transform .2s;flex-shrink:0}
+.hlp-term.is-open .hlp-term__word::after{transform:rotate(-135deg)}
+.hlp-term__hint{margin-top:3px;font-family:var(--gb-font-sans,sans-serif);font-size:11px;color:var(--color-text-muted,#6a6a6a);opacity:.75}
+.hlp-term__def{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s cubic-bezier(.4,0,.2,1)}
+.hlp-term.is-open .hlp-term__def{grid-template-rows:1fr}
+.hlp-term.is-open .hlp-term__hint{display:none}
+.hlp-term__def>div{overflow:hidden}
+.hlp-term__def p{margin:8px 0 0;font-family:var(--gb-font-sans,sans-serif);font-size:13.5px;line-height:1.55;color:var(--color-text,#1a1a1a)}
+.hlp-term.is-open{border-color:color-mix(in srgb,var(--color-accent,#7a2e2e) 40%,transparent)}
+/* Конспект: пояснения к разделам, не заголовки */
+.hlp-outline{list-style:none;margin:0;padding:0}
+.hlp-outline li{display:flex;gap:12px;padding:11px 2px;border-bottom:1px solid var(--color-border,#e5e2dc)}
+.hlp-outline li:last-child{border-bottom:0}
+.hlp-outline .n{flex:0 0 auto;width:22px;font-family:var(--gb-font-serif,serif);font-size:13px;font-weight:700;color:var(--color-accent,#7a2e2e);text-align:right}
+html.dark .hlp-outline .n{color:var(--color-accent,#d4a574)}
+.hlp-outline b{display:block;font-family:var(--gb-font-sans,sans-serif);font-size:13px;font-weight:700;color:var(--color-text,#1a1a1a)}
+.hlp-outline small{display:block;margin-top:2px;font-family:var(--gb-font-sans,sans-serif);font-size:12.5px;line-height:1.5;color:var(--color-text-muted,#6a6a6a)}
+/* Тест по определениям: цвета — quiz-канон site.css */
+.hlp-q{font-family:var(--gb-font-sans,sans-serif);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--color-text-muted,#6a6a6a);margin:4px 0 4px}
+.hlp-q b{display:block;margin-top:4px;font-family:var(--gb-font-serif,serif);font-size:18px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--color-text,#1a1a1a)}
+.hlp-cat{display:inline-block;margin-bottom:7px;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  background:color-mix(in srgb,var(--color-accent,#7a2e2e) 12%,transparent);color:var(--color-accent,#7a2e2e)}
+html.dark .hlp-cat{background:color-mix(in srgb,var(--color-accent,#d4a574) 16%,transparent);color:var(--color-accent,#d4a574)}
+.hlp-why{margin-top:12px;padding:11px 14px;border-radius:10px;font-family:var(--gb-font-sans,sans-serif);font-size:12.5px;line-height:1.55;
+  background:var(--color-surface-muted,#f4f2ed);border:1px solid var(--color-border,#e5e2dc);color:var(--color-text,#1a1a1a)}
+html.dark .hlp-why{background:var(--color-surface-muted,#161a21)}
+.hlp-streak{font-family:var(--gb-font-sans,sans-serif);font-size:12px;font-weight:700;color:var(--color-text-muted,#6a6a6a)}
+/* Поиск по разделу */
+.hlp-search{display:flex;align-items:center;gap:9px;padding:11px 14px;border-radius:12px;border:1px solid var(--color-border,#e5e2dc);background:var(--color-surface,#fff)}
+html.dark .hlp-search{background:var(--color-surface,#161a21)}
+.hlp-search svg{width:16px;height:16px;color:var(--color-text-muted,#6a6a6a);flex-shrink:0}
+.hlp-search input{flex:1;min-width:0;border:0;background:transparent;outline:0;font-family:var(--gb-font-sans,sans-serif);font-size:14px;color:var(--color-text,#1a1a1a)}
+.hlp-search-hint{margin-top:10px;font-family:var(--gb-font-sans,sans-serif);font-size:12.5px;line-height:1.5;color:var(--color-text-muted,#6a6a6a)}
+.hlp-search-results{margin-top:12px;display:flex;flex-direction:column;gap:7px}
+.hlp-hit{text-align:left;border:0;background:transparent;padding:9px 10px;border-radius:9px;cursor:pointer;font-family:var(--gb-font-sans,sans-serif);font-size:13px;line-height:1.5;color:var(--color-text,#1a1a1a);border-left:2px solid var(--color-border,#e5e2dc)}
+.hlp-hit:hover{background:var(--color-surface-muted,#f4f2ed);border-left-color:var(--color-accent,#7a2e2e)}
+html.dark .hlp-hit:hover{background:var(--color-surface-muted,#161a21)}
+.hlp-hit mark{background:color-mix(in srgb,var(--color-accent,#7a2e2e) 22%,transparent);color:inherit;border-radius:2px;padding:0 1px}
+.hlp-hit small{color:var(--color-text-faint,#9c8663)}
+/* Заметки (реальные gb-highlights-v1) */
+.hlp-note{border:1px solid var(--color-border,#e5e2dc);border-radius:12px;background:var(--color-surface,#fff);padding:12px 14px;margin-bottom:9px}
+html.dark .hlp-note{background:var(--color-surface,#161a21)}
+.hlp-note__q{font-family:var(--gb-font-serif,serif);font-size:14px;line-height:1.5;color:var(--color-text,#1a1a1a);border-left:3px solid var(--color-accent,#7a2e2e);padding-left:11px}
+html.dark .hlp-note__q{border-left-color:var(--color-accent,#d4a574)}
+.hlp-note__row{display:flex;gap:8px;margin-top:10px}
+.hlp-note__go,.hlp-note__del{border:1px solid var(--color-border,#e5e2dc);background:transparent;border-radius:8px;padding:5px 12px;font-family:var(--gb-font-sans,sans-serif);font-size:12px;font-weight:600;cursor:pointer;color:var(--color-text-muted,#6a6a6a)}
+.hlp-note__go{color:var(--color-accent,#7a2e2e);border-color:color-mix(in srgb,var(--color-accent,#7a2e2e) 35%,transparent)}
+html.dark .hlp-note__go{color:var(--color-accent,#d4a574)}
+.hlp-empty{text-align:center;padding:30px 16px;font-family:var(--gb-font-sans,sans-serif);font-size:13px;line-height:1.6;color:var(--color-text-muted,#6a6a6a)}
+.hlp-empty b{display:block;margin-bottom:5px;color:var(--color-text,#1a1a1a);font-size:14px}
+.hlp-opts{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.hlp-opt{padding:11px 14px;min-height:44px;border-radius:10px;border:1px solid var(--color-border,#e5e2dc);background:var(--color-surface,#fff);
+  color:var(--color-text,#1a1a1a);font-family:var(--gb-font-sans,sans-serif);font-size:13px;line-height:1.45;font-weight:500;cursor:pointer;text-align:left;
+  transition:background .15s,border-color .15s,color .15s}
+html.dark .hlp-opt{background:var(--color-surface,#161a21)}
+.hlp-opt.correct{background:var(--color-fact-bg,#eef5ec);border-color:var(--color-fact-border,#b8d0b0);color:#1a5a1a;font-weight:700}
+html.dark .hlp-opt.correct{background:#0d2218;border-color:#2a6b4a;color:#6ecf9a}
+.hlp-opt.wrong{background:var(--color-danger-bg,#f7e9e9);border-color:var(--color-danger-border,#d9a7a7);color:#8a2020}
+html.dark .hlp-opt.wrong{background:#2a1418;border-color:#6b2a30;color:#f09090}
+.hlp-opt[disabled]{cursor:default}
+@keyframes hlp-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+.hlp-opt.wrong{animation:hlp-shake .35s ease}
+.hlp-meta{display:flex;align-items:center;justify-content:space-between;margin-top:14px;font-family:var(--gb-font-sans,sans-serif);font-size:12px;color:var(--color-text-muted,#6a6a6a)}
+.hlp-next{border:1px solid var(--color-accent,#7a2e2e);background:transparent;color:var(--color-accent,#7a2e2e);
+  border-radius:9px;padding:8px 16px;font-family:var(--gb-font-sans,sans-serif);font-size:12.5px;font-weight:700;cursor:pointer;visibility:hidden}
+html.dark .hlp-next{border-color:var(--color-accent,#d4a574);color:var(--color-accent,#d4a574)}
+.hlp-next.is-visible{visibility:visible}
+.hlp-done{text-align:center;padding:22px 8px 6px}
+.hlp-done .score{font-family:var(--gb-font-serif,serif);font-size:34px;font-weight:700;color:var(--color-accent,#7a2e2e)}
+html.dark .hlp-done .score{color:var(--color-accent,#d4a574)}
+.hlp-done p{margin:6px 0 14px;font-family:var(--gb-font-sans,sans-serif);font-size:13px;color:var(--color-text-muted,#6a6a6a)}
+
+/* --- Закладка «Продолжить чтение» (паттерн сайта bookmark-toast) --- */
+.mock-phone .bm-toast{position:absolute;left:12px;right:12px;bottom:74px;z-index:2147483300;
+  display:flex;align-items:center;gap:11px;padding:12px 12px 12px 14px;border-radius:14px;
+  background:var(--gill-mobile-sheet-bg,var(--color-surface,#fff));
+  border:1px solid var(--color-border,#e5e2dc);
+  box-shadow:0 12px 34px rgba(20,14,6,.22),inset 0 1px 0 rgba(255,255,255,.5);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);
+  opacity:0;visibility:hidden;transform:translateY(12px);pointer-events:none;
+  transition:opacity .28s ease,transform .34s cubic-bezier(.32,.72,0,1),visibility .28s}
+.mock-phone .bm-toast.show{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+.bm-toast__ic{flex-shrink:0;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+  background:var(--color-accent-soft,#f0e4e4);color:var(--color-accent,#7a2e2e)}
+html.dark .bm-toast__ic{background:color-mix(in srgb,var(--color-accent,#d4a574) 15%,transparent);color:var(--color-accent,#d4a574)}
+.bm-toast__ic svg{width:17px;height:19px;fill:currentColor;stroke:currentColor;stroke-width:1.5}
+.bm-toast__body{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.bm-toast__body b{font-family:var(--gb-font-serif,serif);font-size:14px;font-weight:600;color:var(--color-text,#1a1a1a);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bm-toast__body small{font-family:var(--gb-font-sans,sans-serif);font-size:11.5px;color:var(--color-text-muted,#6a6a6a);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bm-toast__go{flex-shrink:0;font-family:var(--gb-font-sans,sans-serif);font-size:12.5px;font-weight:700;
+  color:#fff;background:var(--color-accent,#7a2e2e);border:0;border-radius:9px;padding:8px 14px;cursor:pointer;white-space:nowrap;
+  transition:transform .15s,filter .15s}
+html.dark .bm-toast__go{color:#1a1a1a}
+.bm-toast__go:active{transform:scale(.94)}
+@media (hover:hover) and (pointer:fine){.bm-toast__go:hover{filter:brightness(1.08)}}
+.bm-toast__x{flex-shrink:0;width:30px;height:30px;border:0;background:none;cursor:pointer;color:var(--color-text-faint,#9c9488);display:grid;place-items:center;border-radius:8px}
+.bm-toast__x svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9}
+@media (hover:hover) and (pointer:fine){.bm-toast__x:hover{color:var(--color-accent,#7a2e2e)}}
+.mock-phone .set-overlay{position:absolute;inset:0;z-index:2147483400;background:rgba(20,14,6,.45);
+  opacity:0;visibility:hidden;pointer-events:none;transition:opacity .26s ease,visibility .26s}
+.mock-phone .set-overlay.is-open{opacity:1;visibility:visible;pointer-events:auto}
+.mock-phone .set-sheet{position:absolute;bottom:0;left:0;right:0;display:flex;flex-direction:column;
+  background:var(--gill-mobile-sheet-bg,var(--color-canvas));border-radius:22px 22px 0 0;box-shadow:0 -14px 44px rgba(20,14,6,.28);
+  transform:translateY(100%);transition:transform .34s cubic-bezier(.32,.72,0,1)}
+.mock-phone .set-overlay.is-open .set-sheet{transform:none}
+.set-handle{flex:0 0 auto;display:flex;justify-content:center;padding:9px 0 4px;background:transparent;border:0;cursor:pointer;width:100%}
+.set-handle::after{content:'';width:38px;height:4px;border-radius:2px;background:var(--color-border,#e5e2dc)}
+.set-head{flex:0 0 auto;padding:2px 20px 12px}
+.set-head .lab{font-family:var(--gb-font-sans,sans-serif);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent,#7a2e2e)}
+html.dark .set-head .lab{color:var(--color-accent,#d4a574)}
+.set-head h3{margin:2px 0 0;font-family:var(--gb-font-serif,serif);font-size:17px;font-weight:600;color:var(--color-text,#1a1a1a)}
+.set-body{padding:0 20px calc(20px + env(safe-area-inset-bottom,0px))}
+.mset-fbtn[aria-disabled="true"]{opacity:.32;cursor:default;pointer-events:none}
+.mset-fbtn:focus-visible,.mset-lh__btn:focus-visible{outline:2px solid var(--gill-mobile-bar-gold);outline-offset:2px}
+.mset-row + .mset-row{margin-top:14px}
+.mset-label{display:block;margin-bottom:8px;font-family:var(--gb-font-sans,sans-serif);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gill-mobile-bar-muted)}
+.mset-seg{display:flex;align-items:center;gap:8px;padding:5px;border-radius:12px;border:1px solid var(--gill-mobile-hairline);background:color-mix(in srgb,var(--gill-mobile-bar-gold) 7%,transparent)}
+.mset-fbtn{flex:0 0 auto;display:grid;place-items:center;width:34px;height:30px;border:0;border-radius:9px;background:transparent;color:var(--gill-mobile-bar-ink);font-family:var(--gb-font-serif,serif);font-weight:700;line-height:1;cursor:pointer;transition:background .15s,transform .12s}
+.mset-fbtn--sm{font-size:13px}.mset-fbtn--lg{font-size:19px}
+.mset-fbtn:hover{background:color-mix(in srgb,var(--gill-mobile-bar-gold) 14%,transparent)}
+.mset-fbtn:active{transform:scale(.9)}
+.mset-dots{flex:1 1 auto;display:flex;align-items:center;justify-content:center;gap:6px}
+.mset-dot{width:6px;height:6px;border-radius:50%;background:var(--gill-mobile-track);transition:background .18s,transform .18s}
+.mset-dot.on{background:var(--gill-mobile-bar-gold);transform:scale(1.2)}
+.mset-lh{display:flex;gap:6px}
+.mset-lh__btn{flex:1;height:34px;border:1px solid var(--gill-mobile-hairline);border-radius:10px;background:transparent;
+  color:var(--gill-mobile-bar-muted);font-family:var(--gb-font-sans,sans-serif);font-size:12px;font-weight:700;cursor:pointer;transition:all .16s}
+.mset-lh__btn:hover{color:var(--gill-mobile-bar-ink)}
+.mset-lh__btn.is-active{background:color-mix(in srgb,var(--gill-mobile-bar-gold) 16%,transparent);border-color:color-mix(in srgb,var(--gill-mobile-bar-gold) 45%,transparent);color:var(--gill-mobile-bar-ink)}
+.mock-article{transition:padding .22s ease}
+/* Контекстное «Сохранить в заметки» — всплывает ТОЛЬКО при выделении текста
+   (аудит §4505: нельзя показывать кнопку без контекста). */
+.sel-save{position:absolute;z-index:2147483350;transform:translate(-50%,-100%) translateY(-8px);
+  display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:10px;border:0;cursor:pointer;
+  background:var(--color-text,#1a1a1a);color:var(--color-canvas,#fff);
+  font-family:var(--gb-font-sans,sans-serif);font-size:12.5px;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.28);
+  opacity:0;visibility:hidden;transition:opacity .14s ease,visibility .14s}
+.sel-save.is-on{opacity:1;visibility:visible}
+.sel-save svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.sel-save::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:9px;height:9px;background:var(--color-text,#1a1a1a)}
+
+/* --- 390px доводка [@media(max-width:390px)] --- */
+@media (max-width:390px){
+  [data-gill-v16] .mobile-top-bar{gap:6px;padding-left:11px;padding-right:11px}
+  [data-gill-v16] .mobile-bottom-bar{gap:2px;padding-left:11px;padding-right:11px}
+  [data-gill-v16] .mobile-top-bar .gb-icon,[data-gill-v16] .mobile-playwrap .mobile-top-ember{width:36px;height:36px;min-width:36px;min-height:36px;--ember-size:36px}
+  [data-gill-v16] .mobile-btoc-section__main,[data-gill-v16] #gbs2MobSec{font-size:12.5px}
+  [data-gill-v16] .bar-progress.dual-progress,[data-gill-v16] .bar-progress.dual-progress svg{width:34px;height:34px}
+  [data-gill-v16] .mobile-bottom-bar > .gb-icon{width:36px}
+}
+@media (prefers-reduced-motion:reduce){
+  .gb-icon,.gb-ember,.gb-save,.gb-theme-toggle svg,.gb-ember-expand,.gb-ember-expand__btn,
+  [data-gill-v16] .mobile-top-bar,[data-gill-v16] .mobile-bottom-bar,.mobile-settings-pop,.mock-reading-line{animation:none!important;transition-duration:.01ms!important}
+}
+
+/* ===== SUBMENU: оглавление части (.btoc-* — дословно из site.css) ===== */
+[data-gill-v16] .btoc-overlay{position:absolute;inset:0;z-index:2147483200;display:block;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s}
+[data-gill-v16] .btoc-overlay.open{opacity:1;visibility:visible;pointer-events:auto}
+[data-gill-v16] .btoc-panel{position:absolute;bottom:0;left:0;right:0;background:var(--color-canvas);border-radius:20px 20px 0 0;max-height:85%;overflow:hidden;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1)}
+[data-gill-v16] .btoc-overlay.open .btoc-panel{transform:translateY(0)}
+.btoc-handle{display:flex;justify-content:center;padding:10px 0 2px;flex-shrink:0;cursor:grab}
+.btoc-handle::after{content:'';width:36px;height:4px;border-radius:2px;background:var(--color-border)}
+.btoc-header{display:flex;justify-content:space-between;align-items:center;padding:6px 20px 10px;flex-shrink:0}
+.btoc-header-left{display:flex;flex-direction:column;gap:2px}
+.btoc-title{font-family:'Source Sans 3',sans-serif;font-size:16px;font-weight:700;color:var(--color-text)}
+.btoc-subtitle{font-family:'Source Sans 3',sans-serif;font-size:11px;color:var(--color-text-muted)}
+.btoc-close{width:32px;height:32px;border:none;background:var(--color-surface-muted);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--color-text-muted);font-size:15px;transition:background .15s}
+.btoc-close:hover{background:var(--color-border)}
+.btoc-progress-row{display:flex;align-items:center;gap:12px;padding:0 20px 10px;flex-shrink:0}
+.btoc-progress-bar-wrap{flex:1;height:4px;background:var(--color-border);border-radius:2px;overflow:hidden}
+.btoc-progress-bar-fill{height:100%;background:var(--color-accent);border-radius:2px;transition:width .2s}
+.btoc-progress-pct{font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:700;color:var(--color-accent);min-width:32px;text-align:right}
+.btoc-nav{flex:1;min-height:0;overflow-y:auto;padding:0 12px 16px 4px}
+.btoc-link{display:flex;align-items:center;gap:12px;padding:12px 16px 12px 18px;margin:0 0 2px;width:100%;text-align:left;background:none;border:0;border-left:2px solid var(--color-border);border-radius:0 12px 12px 0;cursor:pointer;transition:background .18s,border-color .18s,transform .22s cubic-bezier(.2,.7,.2,1)}
+.btoc-link:hover{transform:translateX(3px)}
+.btoc-link.active{background:var(--color-surface-muted);border-left-color:var(--color-accent)}
+.btoc-link-num{font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:700;color:var(--color-text-muted);opacity:.5;min-width:18px;text-align:right}
+.btoc-link.active .btoc-link-num{color:var(--color-accent);opacity:1}
+.btoc-link-text{font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--color-text);line-height:1.4}
+.btoc-link.active .btoc-link-text{color:var(--color-accent);font-weight:600}
+.btoc-footer{padding:10px 20px calc(14px + env(safe-area-inset-bottom,0px));flex-shrink:0;border-top:1px solid var(--color-border)}
+.btoc-share-btn{display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;background:var(--color-surface-muted);border:1px solid var(--color-border);border-radius:8px;font-family:'Source Sans 3',sans-serif;font-size:13px;font-weight:600;color:var(--color-text);cursor:pointer;text-align:left}
+.btoc-share-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== SEARCH: командная палитра (.cp-* — command-palette.css, компактно) ===== */
+[data-gill-v16] .cp-backdrop{position:absolute;inset:0;z-index:2147483300;display:none;align-items:flex-start;justify-content:center;padding:calc(8px + env(safe-area-inset-top,0px)) 8px 8px;font-family:'Source Sans 3',sans-serif}
+[data-gill-v16] .cp-backdrop.is-open{display:flex}
+.cp-bg{position:absolute;inset:0;background:var(--color-canvas);opacity:.86;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+html.dark .cp-bg{opacity:.92}
+.cp-box{position:relative;z-index:1;display:flex;flex-direction:column;width:100%;max-height:calc(100% - 16px);border-radius:16px;overflow:hidden;background:var(--color-surface);border:1px solid var(--color-border);box-shadow:var(--shadow-xl,0 16px 44px rgba(16,18,22,.14));transform:translateY(-8px) scale(.985);opacity:0;transition:transform .3s cubic-bezier(.22,1,.32,1),opacity .24s}
+.cp-backdrop.is-open .cp-box{transform:none;opacity:1}
+.cp-input-wrap{display:flex;align-items:center;gap:11px;padding:14px 16px;border-bottom:1px solid var(--color-border)}
+.cp-input-wrap svg{width:18px;height:18px;stroke:var(--color-text-muted);fill:none;stroke-width:2;stroke-linecap:round;opacity:.6;flex-shrink:0}
+.cp-input{flex:1;min-width:0;border:0;background:0 0;outline:0;font-size:16px;color:var(--color-text)}
+.cp-input::placeholder{color:var(--color-text-muted);opacity:.7}
+.cp-scope-row{display:flex;gap:4px;padding:8px 12px;border-bottom:1px solid var(--color-border);overflow-x:auto;scrollbar-width:none}
+.cp-scope-row::-webkit-scrollbar{display:none}
+.cp-scope-chip{flex:0 0 auto;padding:6px 12px;border-radius:99px;border:1px solid transparent;background:0 0;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--color-text-muted);cursor:pointer;white-space:nowrap}
+.cp-scope-chip.active{background:var(--color-accent-soft);color:var(--color-accent);border-color:color-mix(in srgb,var(--color-accent) 18%,transparent)}
+.cp-list{flex:1;overflow-y:auto;padding:4px 0 8px;min-height:120px}
+.cp-group-hd{padding:12px 18px 5px;font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--color-text-muted);opacity:.5;display:flex;justify-content:space-between}
+.cp-item{display:flex;align-items:center;gap:11px;width:calc(100% - 16px);margin:2px 8px;padding:10px 14px;border:1px solid transparent;border-radius:11px;background:0 0;text-align:left;cursor:pointer;color:inherit}
+.cp-item.is-active{background:var(--color-surface-muted);border-color:color-mix(in srgb,var(--color-accent) 20%,transparent)}
+.cp-item-ic{flex-shrink:0;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--color-surface-muted);color:var(--color-text-muted)}
+.cp-item.is-active .cp-item-ic{background:var(--color-accent-soft);color:var(--color-accent)}
+.cp-item-ic svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cp-item-tx{min-width:0;flex:1}
+.cp-item-t{display:block;font-family:'Lora',Georgia,serif;font-size:14px;font-weight:600;color:var(--color-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cp-item.is-active .cp-item-t{color:var(--color-accent)}
+.cp-item-s{display:block;font-size:11.5px;color:var(--color-text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cp-hl{background:color-mix(in srgb,var(--color-accent) 18%,transparent);border-radius:3px;font-weight:700;color:inherit}
+.cp-footer{display:flex;gap:12px;padding:9px 14px calc(9px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--color-border);font-size:10px;color:var(--color-text-muted)}
+.cp-footer .r{margin-left:auto}
+.cp-footer kbd{padding:2px 6px;border-radius:5px;background:var(--color-surface-muted);border:1px solid var(--color-border)}
+</style>
+</head>
+<body>
+
+<div class="mock-toolbar">
+  <span class="mock-tag">Образец v2 · mobile</span>
+  <button class="mock-btn" id="mockTheme">☾ / ☀ тема</button>
+  <button class="mock-btn" id="mockPlay">▶ / ❚❚ озвучка</button>
+  <button class="mock-btn" id="mockReveal">показать/скрыть бары</button>
+</div>
+<div class="mock-hint">Прокрути внутри телефона: бары уезжают за край, текст свободен. Нажми озвучку — верхний бар закрепится (Play не теряется). Шестерёнка снизу = размер текста + интервал.</div>
+
+<div class="mock-phone">
+  <!-- Линия прогресса у верхнего края (= body::before --gb-read-pct) -->
+  <div class="mock-reading-line" id="readLine" aria-hidden="true"></div>
+
+  <div class="mock-scroll" id="scroller" data-gill-v16>
+
+    <!-- ===== ВЕРХНИЙ БАР ===== -->
+    <div class="mobile-top-bar" data-fc-root data-fc-variant="gill" data-gill-mobile-bar data-gb-speed-custom>
+      <button class="gb-icon" id="mobBackBtn" type="button" aria-label="Назад" data-home-href="../../biografii/">
+        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <a class="gb-icon mobile-home-link" href="/" aria-label="На главную" data-tip="На главную">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h4v-6h6v6h4V10"/></svg>
+      </a>
+      <div class="mobile-top-slot" id="mobSlot">
+        <button class="mobile-top-search" id="mobHelpBtn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Обучение по разделу">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 2.5 9 12 14l9.5-5L12 4z"/><path d="M6 11v4.2c0 .5.3 1 .8 1.2 1.4.7 3.3 1.1 5.2 1.1s3.8-.4 5.2-1.1c.5-.2.8-.7.8-1.2V11"/><path d="M21.5 9v4"/></svg>
+          <span class="mobile-top-search__txt">Обучение</span>
+        </button>
+        <!-- Рельса скоростей — оверлей в том же слоте (initSpeedSlot). Поиск гаснет, рельса всплывает. -->
+        <div class="mobile-speedrail" id="mobSpeedrail" role="radiogroup" aria-label="Скорость озвучки">
+          <button class="mobile-spd" type="button" role="radio" data-speed="1"    aria-checked="true">1×</button>
+          <button class="mobile-spd" type="button" role="radio" data-speed="1.25" aria-checked="false">1.25×</button>
+          <button class="mobile-spd" type="button" role="radio" data-speed="1.5"  aria-checked="false">1.5×</button>
+          <button class="mobile-spd" type="button" role="radio" data-speed="1.75" aria-checked="false">1.75×</button>
+          <button class="mobile-spd" type="button" role="radio" data-speed="2"    aria-checked="false">2×</button>
+        </div>
+      </div>
+      <span class="mobile-playwrap">
+        <button type="button" class="gb-ember mobile-top-ember" data-state="idle" data-fc-action="play" style="--p:0"
+                aria-label="Озвучка" data-tip="Озвучка">
+          <svg class="gb-ember__ring-svg" viewBox="0 0 100 100" aria-hidden="true"><circle class="gb-ember__ring-track" cx="50" cy="50" r="45"/><circle class="gb-ember__ring-progress" cx="50" cy="50" r="45"/></svg>
+          <svg class="gb-ember__glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.8v14.4L18.5 12 7 4.8z"/></svg>
+          <svg class="gb-ember__pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
+          <svg class="gb-ember__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.1L19 7"/></svg>
+        </button>
+        <button class="mobile-spdbadge" id="mobSpdBadge" type="button" aria-label="Выбрать скорость, сейчас 1×">1×</button>
+      </span>
+      <button type="button" class="gb-save gb-icon" data-fc-action="save" aria-label="Добавить в Избранное" aria-pressed="false" data-tip="Сохранить">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+
+    <!-- ===== СТАТЬЯ (леса) ===== -->
+    <div class="page-wrap">
+      <article class="mock-article lh-normal" id="article">
+        <h1>Джон Гилл: пастырь и богослов</h1>
+        <p class="lead">Часть III. Годы служения в Саутуарке и формирование зрелой богословской системы.</p>
+        <p>Джон Гилл (1697–1771) более полувека нёс пасторское служение в одной общине, соединяя кропотливую экзегезу с попечением о душах. Его труды по систематическому богословию стали ориентиром для многих поколений баптистов.</p>
+        <h2>Ранние годы</h2>
+        <p>С юности Гилл проявлял редкую усидчивость в изучении древних языков. К одиннадцати годам он читал по-латыни и по-гречески, а позднее самостоятельно освоил еврейский, что заложило основу его будущей работы над текстом Писания.</p>
+        <p>Формирование его взглядов шло в среде, где живо обсуждались вопросы завета, благодати и церковного устройства. Эти темы он впоследствии разовьёт в объёмных сочинениях.</p>
+        <p>Отдельное место в его подготовке занимало самостоятельное чтение раввинистической литературы — редкое для баптистского служителя того времени увлечение, которое впоследствии отличит его комментарии особой текстологической строгостью.</p>
+        <h2>Служение в Саутуарке</h2>
+        <p>Приняв кафедру, Гилл посвятил ей десятилетия неустанного труда. Проповедь, катехизация и письменное наставление составляли распорядок его дней, а прихожане ценили в нём соединение учёности и пастырской теплоты.</p>
+        <p>Он вёл систематические курсы по основным разделам вероучения, стремясь дать общине не отрывочные впечатления, а цельную картину Писания — от творения до эсхатологии.</p>
+        <p>Переписка тех лет свидетельствует о широком круге его связей: к нему обращались за советом служители из других общин, а его проповеди нередко публиковались отдельными изданиями.</p>
+        <h2>Зрелые труды</h2>
+        <p>Итогом десятилетий стали обширные комментарии и систематические сочинения, к которым обращались последующие поколения. В них соединились строгость метода и пастырская забота о простом читателе.</p>
+        <p>Многотомный комментарий на весь корпус Писания — труд, на который ушло около двадцати лет, — остаётся памятником его экзегетической школы: подробный разбор еврейского и греческого текста соседствует в нём с практическим приложением.</p>
+        <h2>Экзегетический метод Гилла</h2>
+        <p>Гилл последовательно держался грамматико-исторического подхода, избегая как чрезмерной аллегоризации, так и поверхностного буквализма. Каждый спорный стих он рассматривал в свете параллельных мест и раввинистических источников.</p>
+        <p>Такая методичность сделала его труды справочным изданием для нескольких поколений проповедников, даже среди тех, кто не разделял отдельных пунктов его богословской системы.</p>
+        <h2>Наследие и влияние</h2>
+        <p>Влияние Гилла на баптистскую традицию Британии и Северной Америки трудно переоценить: его сочинения переиздавались на протяжении двух столетий и остаются предметом изучения историков богословия.</p>
+        <p>Пастыри последующих поколений — включая тех, кто вёл ту же кафедру в Саутуарке, — прямо признавали его труды основой собственного образования.</p>
+      </article>
+    </div>
+
+    <!-- ===== НИЖНИЙ БАР ===== -->
+    <div class="mobile-bottom-bar" data-fc-root data-fc-variant="gill" data-gill-mobile-bar>
+      <div class="bar-progress dual-progress" id="gbs2DualProgress" role="img" aria-label="Статья 34%, серия 58%">
+        <svg viewBox="0 0 36 36" aria-hidden="true">
+          <circle class="bar-series-track"  cx="18" cy="18" r="16"></circle>
+          <circle class="bar-series-fill"   id="gbs2MobSeriesRing"  cx="18" cy="18" r="16"   stroke-dasharray="100.53" stroke-dashoffset="42.2"></circle>
+          <circle class="bar-progress-track" cx="18" cy="18" r="12.5"></circle>
+          <circle class="bar-progress-fill"  id="gbs2MobArticleRing" cx="18" cy="18" r="12.5" stroke-dasharray="78.54"  stroke-dashoffset="51.8"></circle>
+        </svg>
+        <span class="bar-progress-text" id="gbs2MobPct">34%</span>
+      </div>
+
+      <button type="button" class="mobile-btoc-section" id="mobPartTocBtn" aria-label="Открыть оглавление части: Служение в Саутуарке">
+        <span class="mobile-btoc-section__label">Сейчас читаете</span>
+        <span class="mobile-btoc-section__main" id="gbs2MobSec">Служение в Саутуарке</span>
+      </button>
+
+      <button class="gb-icon gb-theme-toggle" type="button" data-fc-action="theme" aria-label="Тема">
+        <span class="theme-icon-sun"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>
+        <span class="theme-icon-moon"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span>
+      </button>
+
+      <!-- A−/A+ переехали в лист «Настройки чтения» (значок шестерёнки открывает его) -->
+      <button class="gb-icon" id="mobSettingsBtn" type="button" data-fc-action="settings" aria-label="Настройки чтения" aria-haspopup="dialog" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </button>
+
+      <button class="gb-icon" type="button" data-action="share" aria-label="Поделиться">
+        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      </button>
+    </div>
+
+    <!-- ===== SUBMENU: оглавление части (кнопка раздела снизу открывает) ===== -->
+    <div class="btoc-overlay" id="btoc">
+      <div class="btoc-panel" role="dialog" aria-modal="true" aria-label="Оглавление части">
+        <div class="btoc-handle" id="btocHandle"></div>
+        <div class="btoc-header">
+          <div class="btoc-header-left">
+            <div class="btoc-title">Оглавление части</div>
+            <div class="btoc-subtitle">Джон Гилл · Часть III</div>
+          </div>
+          <button class="btoc-close" id="btocClose" aria-label="Закрыть">✕</button>
+        </div>
+        <div class="btoc-progress-row">
+          <div class="btoc-progress-bar-wrap"><div class="btoc-progress-bar-fill" style="width:34%"></div></div>
+          <span class="btoc-progress-pct">34%</span>
+        </div>
+        <div class="btoc-nav" id="btocNav"></div>
+        <div class="btoc-footer">
+          <button class="btoc-share-btn"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>Поделиться этой частью</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SEARCH: командная палитра (тап по полю поиска открывает) ===== -->
+    <div class="cp-backdrop" id="cp" role="dialog" aria-modal="true" aria-label="Поиск по сайту">
+      <div class="cp-bg" id="cpBg"></div>
+      <div class="cp-box">
+        <div class="cp-input-wrap">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input class="cp-input" id="cpInput" type="text" placeholder="Поиск по статьям, Писанию…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </div>
+        <div class="cp-scope-row" id="cpScopes"></div>
+        <div class="cp-list" id="cpList"></div>
+        <div class="cp-footer"><span><kbd>↑↓</kbd> навигация</span><span><kbd>↵</kbd> открыть</span><span class="r"><kbd>esc</kbd> закрыть</span></div>
+      </div>
+    </div>
+
+  </div><!-- /.mock-scroll -->
+    <!-- ===== РАЗДЕЛ ОБУЧЕНИЯ ===== -->
+    <div class="hlp-overlay" id="hlpOverlay" aria-hidden="true">
+      <div class="hlp-sheet" role="dialog" aria-modal="true" aria-label="Обучение по разделу">
+        <button class="hlp-handle" type="button" aria-label="Закрыть"></button>
+        <div class="hlp-head">
+          <div class="lab">Обучение · Часть III</div>
+          <h3>Годы служения в Саутуарке</h3>
+        </div>
+        <div class="hlp-tabs" role="tablist">
+          <button class="hlp-tab" role="tab" aria-selected="true"  data-pane="search">Поиск</button>
+          <button class="hlp-tab" role="tab" aria-selected="false" data-pane="terms">Термины</button>
+          <button class="hlp-tab" role="tab" aria-selected="false" data-pane="outline">Конспект</button>
+          <button class="hlp-tab" role="tab" aria-selected="false" data-pane="quiz">Тест</button>
+          <button class="hlp-tab" role="tab" aria-selected="false" data-pane="notes">Заметки</button>
+        </div>
+        <div class="hlp-body">
+          <div class="hlp-pane is-active" data-pane="search">
+            <label class="hlp-search" for="hlpSearchIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input id="hlpSearchIn" type="search" placeholder="Найти слово в этом разделе…" autocomplete="off">
+            </label>
+            <div class="hlp-search-hint" id="hlpSearchHint">Введите слово — подсветятся все совпадения в тексте раздела, с переходами по ним.</div>
+            <div class="hlp-search-results" id="hlpSearchRes"></div>
+          </div>
+          <div class="hlp-pane" data-pane="terms">
+            <button class="hlp-term" type="button"><span class="hlp-term__word">Экзегеза</span><span class="hlp-term__hint">коснись, чтобы раскрыть определение</span><span class="hlp-term__def"><div><p>Истолкование смысла текста, исходящее из самого текста — его языка, грамматики и контекста, — а не привнесённое извне.</p></div></span></button>
+            <button class="hlp-term" type="button"><span class="hlp-term__word">Катехизация</span><span class="hlp-term__hint">коснись, чтобы раскрыть определение</span><span class="hlp-term__def"><div><p>Систематическое наставление в основах веры — в форме последовательных занятий, а не отдельных проповедей.</p></div></span></button>
+            <button class="hlp-term" type="button"><span class="hlp-term__word">Систематическое богословие</span><span class="hlp-term__hint">коснись, чтобы раскрыть определение</span><span class="hlp-term__def"><div><p>Упорядоченное изложение вероучения по темам (Бог, творение, спасение…), собирающее свидетельства всего Писания воедино.</p></div></span></button>
+            <button class="hlp-term" type="button"><span class="hlp-term__word">Грамматико-исторический метод</span><span class="hlp-term__hint">коснись, чтобы раскрыть определение</span><span class="hlp-term__def"><div><p>Подход к толкованию, при котором смысл определяется грамматикой языка оригинала и историческими обстоятельствами написания.</p></div></span></button>
+            <button class="hlp-term" type="button"><span class="hlp-term__word">Раввинистическая литература</span><span class="hlp-term__hint">коснись, чтобы раскрыть определение</span><span class="hlp-term__def"><div><p>Корпус иудейских толкований (Талмуд, мидраши), который Гилл привлекал как исторический фон новозаветного текста.</p></div></span></button>
+          </div>
+          <div class="hlp-pane" data-pane="outline">
+            <ul class="hlp-outline">
+              <li><span class="n">I</span><span><b>Ранние годы</b><small>Как складывалась языковая база будущего экзегета: латынь и греческий к одиннадцати, еврейский — самостоятельно.</small></span></li>
+              <li><span class="n">II</span><span><b>Служение в Саутуарке</b><small>Из чего состоял ежедневный труд пастора: проповедь, катехизация, переписка с другими общинами.</small></span></li>
+              <li><span class="n">III</span><span><b>Зрелые труды</b><small>Двадцать лет работы над комментарием на весь корпус Писания — и почему это стало памятником школы.</small></span></li>
+              <li><span class="n">IV</span><span><b>Экзегетический метод</b><small>Почему Гилл держался грамматико-исторического подхода и чем это отличалось от аллегоризации.</small></span></li>
+              <li><span class="n">V</span><span><b>Наследие и влияние</b><small>Два столетия переизданий: как труды Гилла стали справочником для поколений проповедников.</small></span></li>
+            </ul>
+          </div>
+          <div class="hlp-pane" data-pane="quiz" id="hlpQuiz"></div>
+          <div class="hlp-pane" data-pane="notes" id="hlpNotes"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== НАСТРОЙКИ ЧТЕНИЯ (лист снизу) =====
+         Лист, а не якорный поповер: растянут по ширине рамки, поэтому
+         ФИЗИЧЕСКИ не может упереться в правый край. Живёт прямым потомком
+         рамки (в проде — body), вне overflow:hidden скроллера — по прямому
+         указанию мастер-аудита §18.3 «speed/settings не должны обрезаться». -->
+    <div class="set-overlay" id="setOverlay" aria-hidden="true">
+      <div class="set-sheet" role="dialog" aria-modal="true" aria-label="Настройки чтения">
+        <button class="set-handle" type="button" aria-label="Закрыть"></button>
+        <div class="set-head"><div class="lab">Чтение</div><h3>Настройки</h3></div>
+        <div class="set-body">
+          <div class="mset-row">
+            <span class="mset-label">Тема</span>
+            <div class="mset-lh" id="themeSeg">
+              <button class="mset-lh__btn is-active" type="button" data-theme="light" aria-pressed="true">День</button>
+              <button class="mset-lh__btn" type="button" data-theme="sepia" aria-pressed="false">Сепия</button>
+              <button class="mset-lh__btn" type="button" data-theme="dark" aria-pressed="false">Ночь</button>
+            </div>
+          </div>
+          <div class="mset-row">
+            <span class="mset-label">Размер текста</span>
+            <div class="mset-seg">
+              <button class="mset-fbtn mset-fbtn--sm" type="button" data-fc-action="font-down" aria-label="Меньше">A</button>
+              <span class="mset-dots" id="fsDots">
+                <i class="mset-dot"></i><i class="mset-dot on"></i><i class="mset-dot"></i><i class="mset-dot"></i><i class="mset-dot"></i>
+              </span>
+              <button class="mset-fbtn mset-fbtn--lg" type="button" data-fc-action="font-up" aria-label="Больше">A</button>
+            </div>
+          </div>
+          <div class="mset-row">
+            <span class="mset-label">Межстрочный интервал</span>
+            <div class="mset-lh" id="lhSeg">
+              <button class="mset-lh__btn" type="button" data-lh="1.55" aria-pressed="false">Плотный</button>
+              <button class="mset-lh__btn is-active" type="button" data-lh="1.75" aria-pressed="true">Обычный</button>
+              <button class="mset-lh__btn" type="button" data-lh="2" aria-pressed="false">Свободный</button>
+            </div>
+          </div>
+          <div class="mset-row">
+            <span class="mset-label">Ширина текста</span>
+            <div class="mset-lh" id="mwSeg">
+              <button class="mset-lh__btn" type="button" data-pad="34" aria-pressed="false">Узкая</button>
+              <button class="mset-lh__btn is-active" type="button" data-pad="22" aria-pressed="true">Обычная</button>
+              <button class="mset-lh__btn" type="button" data-pad="12" aria-pressed="false">Широкая</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="sel-save" id="selSave" type="button">
+      <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>В заметки
+    </button>
+    <!-- ===== ЗАКЛАДКА «Продолжить чтение» (как на сайте: BookmarkEngine + toast) =====
+         Save в баре сохраняет позицию чтения → всплывает эта плашка. При
+         повторном заходе на статью она же показывает «Вы остановились здесь». -->
+    <div class="bm-toast" id="bmToast" role="status" aria-hidden="true">
+      <span class="bm-toast__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>
+      </span>
+      <span class="bm-toast__body">
+        <b id="bmToastTitle">Закладка сохранена</b>
+        <small id="bmToastMeta">Вернётесь сюда с главной страницы</small>
+      </span>
+      <button class="bm-toast__go" type="button" id="bmToastGo">Продолжить</button>
+      <button class="bm-toast__x" type="button" id="bmToastX" aria-label="Скрыть">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+</div><!-- /.mock-phone -->
+
+<script>
+/* Оживление образца. В проекте: делегирование на [data-fc-root] в
+   floating-cluster-controller.js + скролл-логика в скрипте компонента. */
+(function(){
+  var root=document.documentElement;
+  var scroller=document.getElementById('scroller');
+  var topBar=document.querySelector('.mobile-top-bar');
+  var botBar=document.querySelector('.mobile-bottom-bar');
+  var readLine=document.getElementById('readLine');
+  var ember=document.querySelector('.mobile-top-ember');
+  var speedrail=document.querySelector('.mobile-speedrail');
+  var spdBadge=document.getElementById('mobSpdBadge');
+  var setBtn=document.getElementById('mobSettingsBtn');
+  var article=document.getElementById('article');
+  var playing=false, progT=null, lastTop=0, hidden=false;
+
+  function toggleTheme(){ root.classList.toggle('dark'); }
+  document.getElementById('mockTheme').addEventListener('click',toggleTheme);
+  document.querySelectorAll('[data-fc-action="theme"]').forEach(function(b){b.addEventListener('click',toggleTheme);});
+
+  /* --- умное скрытие: вниз — прячем, вверх — показываем; при озвучке — закреплено --- */
+  function showChrome(){ hidden=false; topBar.classList.remove('is-hidden'); botBar.classList.remove('is-hidden'); }
+  function hideChrome(){ if(playing) return; hidden=true; topBar.classList.add('is-hidden'); botBar.classList.add('is-hidden'); closeSettings(); }
+  function onScroll(){
+    var t=scroller.scrollTop;
+    var max=scroller.scrollHeight-scroller.clientHeight;
+    readLine.style.setProperty('--rd', max>0 ? (t/max).toFixed(4) : 0);
+    topBar.classList.toggle('is-scrolled', t>6);   // бесшовно у верха, frosted при скролле
+    var d=t-lastTop;
+    if(t<8){ showChrome(); }
+    else if(d>6 && t>64){ hideChrome(); }
+    else if(d<-6){ showChrome(); }
+    lastTop=t;
+  }
+  scroller.addEventListener('scroll',onScroll,{passive:true});
+
+  /* --- озвучка: кольцо прогресса + авто-скролл синхронно с --p + закрепление баров --- */
+  function setState(s){ ember.setAttribute('data-state',s); ember.setAttribute('aria-label', s==='playing'?'Пауза':'Озвучка'); }
+  function togglePlay(){
+    if(ember.getAttribute('data-state')==='playing'){ playing=false; setState('paused'); clearInterval(progT); }
+    else{
+      var was=ember.getAttribute('data-state');
+      playing=true; setState('playing'); showChrome();
+      if((was==='idle'||was==='complete') && !speedOfferedThisSession){ speedOfferedThisSession=true; openSpeeds(true); } // авто-открытие ОДИН раз за сессию
+      var p=parseFloat(ember.style.getPropertyValue('--p'))||0; clearInterval(progT);
+      progT=setInterval(function(){
+        p+=0.01; if(p>=1){p=1;clearInterval(progT);setState('complete');playing=false;}
+        ember.style.setProperty('--p',p.toFixed(3));
+        var max=scroller.scrollHeight-scroller.clientHeight;   // скролл жёстко привязан к p — видно, как «читает» вниз
+        if(max>0) scroller.scrollTop = p*max;
+      },90);
+    }
+  }
+  ember.addEventListener('click', togglePlay);
+  document.getElementById('mockPlay').addEventListener('click', togglePlay);
+  function forceHide(){ topBar.classList.add('is-hidden'); botBar.classList.add('is-hidden'); hidden=true; closeSettings(); }
+  document.getElementById('mockReveal').addEventListener('click', function(){ hidden ? showChrome() : forceHide(); });
+
+  /* --- SLOT-SWAP скоростей: порт _shared/speedSlot.ts (канон репозитория) --- */
+  var chips=[].slice.call(speedrail.querySelectorAll('.mobile-spd'));
+  var speedOfferedThisSession=false, spdCloseTimer=null;
+  function fmtRate(r){ return String(r).replace(/\.0$/,'')+'×'; }
+  function syncRate(rate){
+    chips.forEach(function(c){ c.setAttribute('aria-checked', parseFloat(c.dataset.speed)===rate ? 'true':'false'); });
+    spdBadge.textContent=fmtRate(rate); spdBadge.setAttribute('aria-label','Выбрать скорость, сейчас '+fmtRate(rate));
+  }
+  function openSpeeds(autoClose){
+    clearTimeout(spdCloseTimer); topBar.classList.add('speed-open');
+    var a=speedrail.querySelector('.mobile-spd[aria-checked="true"]'); if(a) setTimeout(function(){a.scrollIntoView({block:'nearest',inline:'center'});},20);
+    if(autoClose) spdCloseTimer=setTimeout(closeSpeeds,4500);   // авто-закрытие подсказки
+  }
+  function closeSpeeds(){ clearTimeout(spdCloseTimer); topBar.classList.remove('speed-open'); }
+  spdBadge.addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation(); topBar.classList.contains('speed-open')?closeSpeeds():openSpeeds(false); });
+  chips.forEach(function(chip){
+    chip.addEventListener('click',function(e){ e.stopPropagation();
+      var rate=parseFloat(chip.dataset.speed); syncRate(rate);
+      spdBadge.classList.remove('is-bump'); void spdBadge.offsetWidth; spdBadge.classList.add('is-bump');   // bump-анимация
+      setTimeout(closeSpeeds,220);
+    });
+  });
+  // закрытие по тапу вне бара + по фокусу поиска
+  document.addEventListener('pointerdown',function(e){ if(topBar.classList.contains('speed-open') && !topBar.contains(e.target)) closeSpeeds(); },{passive:true});
+  document.getElementById('mobHelpBtn').addEventListener('click',closeSpeeds);
+  // drag-scroll рельсы
+  (function(){ var drag=false,sx=0,ss=0,moved=false,pid=null;
+    speedrail.addEventListener('pointerdown',function(e){ drag=true;moved=false;sx=e.clientX;ss=speedrail.scrollLeft;pid=e.pointerId; });
+    speedrail.addEventListener('pointermove',function(e){ if(!drag||e.pointerId!==pid)return; var dx=e.clientX-sx;
+      if(!moved&&Math.abs(dx)>4){moved=true;speedrail.classList.add('is-dragging');try{speedrail.setPointerCapture(pid);}catch(_){}}
+      if(moved)speedrail.scrollLeft=ss-dx; });
+    function end(e){ if(!drag||(pid!==null&&e.pointerId!==pid))return; drag=false;pid=null;speedrail.classList.remove('is-dragging'); }
+    speedrail.addEventListener('pointerup',end); speedrail.addEventListener('pointercancel',end);
+    speedrail.addEventListener('click',function(e){ if(moved){e.stopPropagation();moved=false;} },true);
+  })();
+  syncRate(1);
+
+  /* --- сохранить = ЗАКЛАДКА «продолжить чтение» (BookmarkEngine-формат) --- */
+  var bmToast=document.getElementById('bmToast');
+  var bmKey='gb-reading-bookmark-v1';   // одна запись на статью, как BookmarkEngine
+  function currentSectionTitle(){
+    var secs=[].slice.call(document.querySelectorAll('#article h2'));
+    var top=(document.getElementById('scroller')||document.documentElement).scrollTop+90, cur=secs[0];
+    secs.forEach(function(s){ if(s.offsetTop<=top) cur=s; });
+    return cur ? cur.textContent.replace(/#\s*$/,'').trim() : 'Начало статьи';
+  }
+  function showBmToast(title,meta){
+    document.getElementById('bmToastTitle').textContent=title;
+    document.getElementById('bmToastMeta').textContent=meta;
+    bmToast.classList.add('show'); bmToast.setAttribute('aria-hidden','false');
+    clearTimeout(showBmToast._t); showBmToast._t=setTimeout(hideBmToast,4200);
+  }
+  function hideBmToast(){ bmToast.classList.remove('show'); bmToast.setAttribute('aria-hidden','true'); }
+  document.getElementById('bmToastX').addEventListener('click',hideBmToast);
+  document.getElementById('bmToastGo').addEventListener('click',function(){
+    var raw; try{ raw=JSON.parse(localStorage.getItem(bmKey)); }catch(_){ raw=null; }
+    hideBmToast();
+    var sc=document.getElementById('scroller');
+    if(raw && typeof raw.scrollY==='number' && sc) sc.scrollTo({top:raw.scrollY,behavior:'smooth'});
+  });
+
+  document.querySelectorAll('[data-fc-action="save"]').forEach(function(b){
+    var byPointer=false;
+    b.addEventListener('pointerdown',function(e){ byPointer = e.pointerType!=='' ; });
+    b.addEventListener('click',function(){
+      var on=b.classList.toggle('is-saved'); b.setAttribute('aria-pressed',on);
+      if(on){
+        b.classList.remove('is-bump'); void b.offsetWidth; b.classList.add('is-bump');
+        // сохраняем позицию в формате BookmarkEngine (path/title/section/progress/scrollY)
+        var sc=document.getElementById('scroller');
+        var sec=currentSectionTitle();
+        var max=sc?sc.scrollHeight-sc.clientHeight:0;
+        var pct=max>0?Math.min(100,Math.round(sc.scrollTop/max*100)):0;
+        try{ localStorage.setItem(bmKey, JSON.stringify({
+          path:location.pathname, title:'Джон Гилл. Часть III — Наследие',
+          sectionTitle:sec, progress:pct, scrollY:sc?Math.round(sc.scrollTop):0, savedAt:Date.now()
+        })); }catch(_){}
+        showBmToast('Закладка сохранена', 'Вы остановились на «'+sec+'» · '+pct+'%');
+      } else {
+        try{ localStorage.removeItem(bmKey); }catch(_){}
+        hideBmToast();
+      }
+      if(byPointer) b.blur();
+      byPointer=false;
+    });
+  });
+
+  /* --- настройки: лист снизу (без всякой collision-математики — не режется) --- */
+  var setOv=document.getElementById('setOverlay');
+  var setSheet=setOv.querySelector('.set-sheet');
+  function closeSettings(){ setOv.classList.remove('is-open'); setOv.setAttribute('aria-hidden','true'); setBtn.setAttribute('aria-expanded','false'); }
+  function openSettings(){ setOv.classList.add('is-open'); setOv.setAttribute('aria-hidden','false'); setBtn.setAttribute('aria-expanded','true'); }
+  setBtn.addEventListener('click',function(e){ e.stopPropagation(); setOv.classList.contains('is-open')?closeSettings():openSettings(); });
+  setOv.querySelector('.set-handle').addEventListener('click',closeSettings);
+  setOv.addEventListener('click',function(e){ if(e.target===setOv) closeSettings(); });   // только прямой клик в подложку
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&setOv.classList.contains('is-open')){ closeSettings(); setBtn.focus(); } });
+
+  var fsLevels=[14,15,16,18,20], fsIdx=2;
+  var fsDownBtn=document.querySelector('[data-fc-action="font-down"]'), fsUpBtn=document.querySelector('[data-fc-action="font-up"]');
+  function applyFs(){ article.style.setProperty('--mock-fs', fsLevels[fsIdx]+'px');
+    document.querySelectorAll('#fsDots .mset-dot').forEach(function(d,i){ d.classList.toggle('on', i<=fsIdx); });
+    fsDownBtn.setAttribute('aria-disabled', fsIdx===0);
+    fsUpBtn.setAttribute('aria-disabled', fsIdx===fsLevels.length-1);
+  }
+  fsDownBtn.addEventListener('click',function(){ fsIdx=Math.max(0,fsIdx-1); applyFs(); });
+  fsUpBtn.addEventListener('click',function(){ fsIdx=Math.min(fsLevels.length-1,fsIdx+1); applyFs(); });
+  applyFs();
+
+  document.getElementById('themeSeg').addEventListener('click',function(e){
+    var b=e.target.closest('.mset-lh__btn'); if(!b)return;
+    this.querySelectorAll('.mset-lh__btn').forEach(function(x){x.classList.remove('is-active');x.setAttribute('aria-pressed','false');});
+    b.classList.add('is-active'); b.setAttribute('aria-pressed','true');
+    var t=b.dataset.theme, r=document.documentElement;
+    r.classList.remove('dark','sepia');
+    if(t==='dark') r.classList.add('dark'); else if(t==='sepia') r.classList.add('sepia');
+    // в реальном проекте — localStorage 'theme' и синхронизация с bar-theme-toggle
+  });
+
+  document.getElementById('lhSeg').addEventListener('click',function(e){
+    var b=e.target.closest('.mset-lh__btn'); if(!b)return;
+    this.querySelectorAll('.mset-lh__btn').forEach(function(x){x.classList.remove('is-active');x.setAttribute('aria-pressed','false');});
+    b.classList.add('is-active'); b.setAttribute('aria-pressed','true'); article.style.setProperty('--mock-lh', b.dataset.lh);
+  });
+
+  document.getElementById('mwSeg').addEventListener('click',function(e){
+    var b=e.target.closest('.mset-lh__btn'); if(!b)return;
+    this.querySelectorAll('.mset-lh__btn').forEach(function(x){x.classList.remove('is-active');x.setAttribute('aria-pressed','false');});
+    b.classList.add('is-active'); b.setAttribute('aria-pressed','true'); article.style.padding='0 '+b.dataset.pad+'px';
+  });
+
+  /* --- тап по пустому месту статьи прячет/показывает хром (Apple Books) --- */
+  article.addEventListener('click',function(e){ if(e.target.closest('a,button'))return; hidden?showChrome():forceHide(); });
+
+  onScroll();
+
+  /* ===== SUBMENU: оглавление части (.btoc-*) ===== */
+  var PARTS=[['I','Ранние годы'],['II','Служение в Саутуарке'],['III','Зрелые труды'],['IV','Экзегетический метод Гилла'],['V','Наследие и влияние']];
+  var btoc=document.getElementById('btoc');
+  document.getElementById('btocNav').innerHTML=PARTS.map(function(s,i){return '<button class="btoc-link'+(i===1?' active':'')+'"><span class="btoc-link-num">'+s[0]+'</span><span class="btoc-link-text">'+s[1]+'</span></button>';}).join('');
+  function openBtoc(){ btoc.classList.add('open'); }
+  function closeBtoc(){ btoc.classList.remove('open'); }
+  document.getElementById('mobPartTocBtn').addEventListener('click',openBtoc);
+  document.getElementById('btocClose').addEventListener('click',closeBtoc);
+  document.getElementById('btocHandle').addEventListener('click',closeBtoc);
+  btoc.addEventListener('click',function(e){ if(e.target===btoc) closeBtoc(); });
+  document.getElementById('btocNav').addEventListener('click',function(e){var l=e.target.closest('.btoc-link');if(!l)return;this.querySelectorAll('.btoc-link').forEach(function(x){x.classList.remove('active');});l.classList.add('active');setTimeout(closeBtoc,140);});
+
+  /* ===== SEARCH: командная палитра (.cp-*) ===== */
+  function _svg(p){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';}
+  var IC={book:_svg('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'),
+    hash:_svg('<line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/>'),
+    zap:_svg('<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>'),
+    star:_svg('<polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/>'),
+    user:_svg('<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'),
+    scr:_svg('<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>'),
+    clock:_svg('<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>')};
+  var CPDATA=[
+    {t:'Джон Гилл: пастырь и богослов — Часть I',s:'Биографии · ранние годы',ic:'user',scr:''},
+    {t:'Крайне ли испорчено моё сердце',s:'Экзегеза · разбор Иеремии 17',ic:'book',scr:'Иер 17:9'},
+    {t:'«Код да Винчи»: подмена?',s:'Апологетика · канон, Никея',ic:'zap',scr:''},
+    {t:'Нагорная проповедь — серия в 5 частях',s:'Сравнение Мф 5–7 и Лк 6',ic:'star',scr:'Мф 5–7'},
+    {t:'Два съезда 1884 года',s:'История баптизма России',ic:'book',scr:''},
+    {t:'Герменевтическая оценка герменевтики',s:'Переводы · метод',ic:'book',scr:''}
+  ];
+  var SCOPES=[['all','Все'],['sections','Разделы'],['articles','Статьи'],['scripture','Писание'],['authors','Авторы']];
+  var cp=document.getElementById('cp'),cpIn=document.getElementById('cpInput'),cpList=document.getElementById('cpList'),cpSc=document.getElementById('cpScopes');
+  var cpScope='all',cpAct=0,cpFlat=[];
+  function _n(s){return String(s||'').toLowerCase().replace(/ё/g,'е');}
+  function _hl(t,q){var w=_n(q).split(/\s+/).filter(function(x){return x.length>1;});if(!w.length)return t;try{return t.replace(new RegExp('('+w.join('|')+')','gi'),'<mark class="cp-hl">$1</mark>');}catch(e){return t;}}
+  function _match(d,q){return _n(d.t+' '+d.s+' '+d.scr).indexOf(_n(q))>-1;}
+  function cpItem(ic,t,s){cpFlat.push(1);return '<button class="cp-item'+((cpFlat.length-1)===cpAct?' is-active':'')+'" data-i="'+(cpFlat.length-1)+'"><span class="cp-item-ic">'+ic+'</span><span class="cp-item-tx"><span class="cp-item-t">'+t+'</span>'+(s?'<span class="cp-item-s">'+s+'</span>':'')+'</span></button>';}
+  function cpRender(){
+    cpSc.innerHTML=SCOPES.map(function(s){return '<button class="cp-scope-chip'+(s[0]===cpScope?' active':'')+'" data-s="'+s[0]+'">'+s[1]+'</button>';}).join('');
+    var q=cpIn.value.trim();cpFlat=[];var h='';
+    if(cpScope==='sections'||(cpScope==='all')){
+      var secs=PARTS.filter(function(p){return !q||_n(p[1]).indexOf(_n(q))>-1;});
+      if(cpScope==='sections'||(q&&secs.length)){h+='<div class="cp-group-hd"><span>Разделы статьи</span><span>'+secs.length+'</span></div>';secs.forEach(function(p){h+=cpItem(IC.hash,_hl(p[1],q),'Раздел · Часть III');});}
+      if(cpScope==='sections'){cpList.innerHTML=h;cpSetAct(0);return;}
+    }
+    if(!q){
+      h+='<div class="cp-group-hd"><span>Продолжить</span></div>'+cpItem(IC.clock,'Джон Гилл · Служение в Саутуарке','34% · продолжить чтение');
+      h+='<div class="cp-group-hd"><span>Недавние запросы</span></div>';['Иер 17:9','канон','баптисты'].forEach(function(r){h+=cpItem(IC.clock,r,'');});
+    } else {
+      var pool=CPDATA.filter(function(d){return cpScope==='scripture'?(d.scr&&_match(d,q)):_match(d,q);});
+      if(pool.length){h+='<div class="cp-group-hd"><span>'+(cpScope==='scripture'?'Писание':'Материалы')+'</span><span>'+pool.length+'</span></div>';
+        pool.forEach(function(d){h+=cpItem(IC[d.ic]||IC.book,_hl(d.t,q),d.scr?('Писание: '+d.scr):_hl(d.s,q));});}
+      if(!cpFlat.length){h='<div style="padding:38px 22px;text-align:center;color:var(--color-text-muted);font-size:12px"><div style="font-weight:700;color:var(--color-text);margin-bottom:6px;font-size:14px">Ничего не найдено</div>Попробуйте: Гилл · Иер · канон · баптисты</div>';}
+    }
+    cpList.innerHTML=h;cpSetAct(0);
+  }
+  function cpSetAct(i){var els=cpList.querySelectorAll('.cp-item');if(!els.length){cpAct=0;return;}if(i<0)i=0;if(i>=els.length)i=els.length-1;cpAct=i;els.forEach(function(e,j){e.classList.toggle('is-active',j===i);});var a=els[i];if(a)a.scrollIntoView({block:'nearest'});}
+  cpSc.addEventListener('click',function(e){var b=e.target.closest('.cp-scope-chip');if(!b)return;cpScope=b.dataset.s;cpAct=0;cpRender();cpIn.focus();});
+  cpList.addEventListener('click',function(e){if(e.target.closest('.cp-item'))closeCp();});
+  cpIn.addEventListener('input',function(){cpAct=0;cpRender();});
+  cpIn.addEventListener('keydown',function(e){if(e.key==='ArrowDown'){e.preventDefault();cpSetAct(cpAct+1);}else if(e.key==='ArrowUp'){e.preventDefault();cpSetAct(cpAct-1);}else if(e.key==='Escape'){e.preventDefault();closeCp();}else if(e.key==='Enter'){e.preventDefault();closeCp();}});
+  document.getElementById('cpBg').addEventListener('click',closeCp);
+  function openCp(){ topBar.classList.remove('speed-open'); cp.classList.add('is-open'); cpIn.value=''; cpScope='all'; cpAct=0; cpRender(); setTimeout(function(){cpIn.focus();},50); }
+  function closeCp(){ cp.classList.remove('is-open'); }
+  // палитра остаётся только на ⌘K/Ctrl+K; пилюля в баре теперь открывает Справку
+  document.addEventListener('keydown',function(e){ if((e.metaKey||e.ctrlKey)&&_n(e.key)==='k'){e.preventDefault();cp.classList.contains('is-open')?closeCp():openCp();} });
+})();
+
+/* ===== Справка по разделу ===== */
+(function(){
+  var ov=document.getElementById('hlpOverlay'), btn=document.getElementById('mobHelpBtn');
+  var sheet=ov.querySelector('.hlp-sheet');
+  function openHlp(){ ov.classList.add('is-open'); ov.setAttribute('aria-hidden','false'); btn.setAttribute('aria-expanded','true'); }
+  function closeHlp(){ ov.classList.remove('is-open'); ov.setAttribute('aria-hidden','true'); btn.setAttribute('aria-expanded','false'); }
+  btn.addEventListener('click',openHlp);
+  ov.querySelector('.hlp-handle').addEventListener('click',closeHlp);
+  ov.addEventListener('click',function(e){ if(e.target===ov) closeHlp(); });   // только сама подложка: перерисованные узлы (тест) отсоединяются до всплытия, contains() дал бы ложное «вне шторки»
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&ov.classList.contains('is-open')){ closeHlp(); btn.focus(); } });
+
+  /* вкладки */
+  ov.querySelectorAll('.hlp-tab').forEach(function(t){
+    t.addEventListener('click',function(){
+      ov.querySelectorAll('.hlp-tab').forEach(function(x){x.setAttribute('aria-selected','false');});
+      t.setAttribute('aria-selected','true');
+      ov.querySelectorAll('.hlp-pane').forEach(function(p){p.classList.toggle('is-active',p.dataset.pane===t.dataset.pane);});
+    });
+  });
+
+  /* термины: активное припоминание (tap-to-reveal) */
+  ov.querySelectorAll('.hlp-term').forEach(function(c){
+    c.addEventListener('click',function(){ var on=c.classList.toggle('is-open'); c.setAttribute('aria-expanded',on); });
+  });
+
+  /* ===== Бесконечный многогранный тест ===== 
+     Пул: термины, имена, места, богословские понятия, даты. Случайный порядок,
+     разбор неверных, счётчик серии. Не заканчивается — можно освежать сколько
+     угодно. При интеграции пул берётся из gillSeriesData.ts (по всей серии). */
+  var POOL=[
+    {cat:'Термин', q:'Что такое экзегеза?', opts:[
+      {t:'Истолкование текста из него самого — языка, грамматики, контекста',ok:true},
+      {t:'Пересказ текста современным языком для новоначальных'},
+      {t:'Сопоставление разных переводов одного отрывка'},
+      {t:'Привнесение в текст собственных идей читателя'}],
+      why:'Экзегеза «извлекает» смысл из текста, в отличие от эйзегезы, которая привносит смысл извне.'},
+    {cat:'Термин', q:'Что такое катехизация?', opts:[
+      {t:'Публичный диспут о спорных пунктах вероучения'},
+      {t:'Систематическое наставление в основах веры',ok:true},
+      {t:'Чин принятия нового члена в общину'},
+      {t:'Толкование пророческих книг'}],
+      why:'Катехизация — последовательное обучение основам, а не разовое событие.'},
+    {cat:'Метод', q:'Грамматико-исторический метод — это…', opts:[
+      {t:'Поиск скрытых аллегорий за буквальным смыслом'},
+      {t:'Датировка рукописей по особенностям почерка'},
+      {t:'Толкование по грамматике оригинала и историческим обстоятельствам',ok:true},
+      {t:'Чтение текста только в переводе, без оригинала'}],
+      why:'Метод определяет смысл через язык оригинала и исторический контекст написания.'},
+    {cat:'Имя', q:'Кто такой Джон Гилл?', opts:[
+      {t:'Баптистский пастор и богослов-экзегет XVIII века',ok:true},
+      {t:'Английский король, покровитель Реформации'},
+      {t:'Переводчик Библии короля Иакова'},
+      {t:'Основатель методистского движения'}],
+      why:'Гилл (1697–1771) более полувека служил в одной общине и составил комментарий на всё Писание.'},
+    {cat:'Место', q:'Где Гилл нёс основное служение?', opts:[
+      {t:'Женева'},
+      {t:'Саутуарк (Лондон)',ok:true},
+      {t:'Виттенберг'},
+      {t:'Эдинбург'}],
+      why:'Саутуарк — район Лондона, где Гилл десятилетиями возглавлял баптистскую общину.'},
+    {cat:'Дата', q:'Годы жизни Джона Гилла?', opts:[
+      {t:'1509–1564'},
+      {t:'1697–1771',ok:true},
+      {t:'1631–1705'},
+      {t:'1703–1791'}],
+      why:'1697–1771: почти весь XVIII век, эпоха расцвета английского баптизма.'},
+    {cat:'Понятие', q:'Что такое систематическое богословие?', opts:[
+      {t:'Упорядоченное изложение вероучения по темам, из всего Писания',ok:true},
+      {t:'История догматов в хронологическом порядке'},
+      {t:'Свод церковных канонов и правил'},
+      {t:'Собрание проповедей одного автора'}],
+      why:'Оно собирает свидетельства всего Писания по темам: Бог, творение, спасение и т. д.'},
+    {cat:'Источник', q:'Раввинистическая литература — это…', opts:[
+      {t:'Ранние христианские апологии'},
+      {t:'Иудейские толкования: Талмуд, мидраши',ok:true},
+      {t:'Собрание греческих философских трактатов'},
+      {t:'Латинские комментарии Средневековья'}],
+      why:'Гилл привлекал её как исторический фон новозаветного текста — редкость для баптиста той эпохи.'}
+  ];
+  var qWrap=document.getElementById('hlpQuiz'), streak=0, seen=0, order=[], oi=0;
+  function reshuffle(){ order=POOL.map(function(_,i){return i;}); for(var i=order.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=order[i];order[i]=order[j];order[j]=t;} oi=0; }
+  reshuffle();
+  function renderQ(){
+    if(oi>=order.length) reshuffle();   // бесконечно: пул перетасовывается заново
+    var q=POOL[order[oi]], answered=false;
+    var optOrder=q.opts.map(function(_,i){return i;}); for(var i=optOrder.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=optOrder[i];optOrder[i]=optOrder[j];optOrder[j]=t;}
+    var html='<div class="hlp-q"><span class="hlp-cat">'+q.cat+'</span>'+q.q+'</div><div class="hlp-opts">';
+    optOrder.forEach(function(origIdx){ html+='<button class="hlp-opt" type="button" data-ok="'+(q.opts[origIdx].ok?1:0)+'">'+q.opts[origIdx].t+'</button>'; });
+    html+='</div><div class="hlp-why" hidden></div><div class="hlp-meta"><span class="hlp-streak"></span><button class="hlp-next" type="button">Дальше →</button></div>';
+    qWrap.innerHTML=html;
+    updateStreak();
+    qWrap.querySelectorAll('.hlp-opt').forEach(function(b){
+      b.addEventListener('click',function(){
+        if(answered) return; answered=true; seen++;
+        var ok=b.dataset.ok==='1';
+        if(ok){ b.classList.add('correct'); streak++; }
+        else{
+          b.classList.add('wrong'); streak=0;
+          qWrap.querySelector('.hlp-opt[data-ok="1"]').classList.add('correct');
+          var why=qWrap.querySelector('.hlp-why'); why.textContent=q.why; why.hidden=false;   // разбор только при ошибке
+        }
+        qWrap.querySelectorAll('.hlp-opt').forEach(function(x){x.disabled=true;});
+        updateStreak();
+        qWrap.querySelector('.hlp-next').classList.add('is-visible');
+      });
+    });
+    qWrap.querySelector('.hlp-next').addEventListener('click',function(){ oi++; renderQ(); });
+  }
+  function updateStreak(){
+    var el=qWrap.querySelector('.hlp-streak'); if(!el) return;
+    el.textContent = streak>=2 ? ('🔥 '+streak+' подряд') : ('Пройдено: '+seen);
+  }
+  renderQ();
+
+  /* ===== Поиск по разделу ===== 
+     Ищет по тексту статьи, показывает фрагменты с подсветкой, тап — переход к
+     месту. При интеграции: то же, но источник — Pagefind/раздельный индекс
+     статьи (js/search.js), а переход — по якорю абзаца. */
+  var sIn=document.getElementById('hlpSearchIn'), sRes=document.getElementById('hlpSearchRes'), sHint=document.getElementById('hlpSearchHint');
+  var paras=[].slice.call(document.querySelectorAll('#article p, #article h2'));
+  function esc(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+  function runSearch(){
+    var q=sIn.value.trim();
+    sRes.innerHTML='';
+    if(q.length<2){ sHint.hidden=false; return; }
+    sHint.hidden=true;
+    var re=new RegExp(esc(q),'gi'), hits=0;
+    paras.forEach(function(p){
+      var txt=p.textContent; if(!re.test(txt)) return; re.lastIndex=0;
+      hits++;
+      var idx=txt.toLowerCase().indexOf(q.toLowerCase());
+      var from=Math.max(0,idx-30), frag=(from>0?'…':'')+txt.slice(from,idx+q.length+40)+'…';
+      var safe=frag.replace(new RegExp('('+esc(q)+')','gi'),'<mark>$1</mark>');
+      var btn=document.createElement('button'); btn.className='hlp-hit'; btn.type='button';
+      btn.innerHTML=safe;
+      btn.addEventListener('click',function(){
+        document.getElementById('hlpOverlay').classList.remove('is-open');
+        document.getElementById('hlpOverlay').setAttribute('aria-hidden','true');
+        p.scrollIntoView({behavior:'smooth',block:'center'});
+        p.style.transition='background .3s'; p.style.background='color-mix(in srgb,var(--color-accent,#7a2e2e) 14%,transparent)';
+        setTimeout(function(){ p.style.background=''; },1400);
+      });
+      sRes.appendChild(btn);
+    });
+    if(!hits){ var e=document.createElement('div'); e.className='hlp-empty'; e.innerHTML='<b>Ничего не найдено</b>По запросу «'+q+'» в этом разделе совпадений нет.'; sRes.appendChild(e); }
+  }
+  sIn.addEventListener('input',runSearch);
+
+  /* ===== Заметки (реальный источник gb-highlights-v1) ===== */
+  var notesWrap=document.getElementById('hlpNotes');
+  function loadNotes(){
+    var raw=[]; try{ raw=JSON.parse(localStorage.getItem('gb-highlights-v1'))||[]; }catch(_){ raw=[]; }
+    // демо-данные, если пусто (в проде — реальные выделения пользователя)
+    if(!raw.length) raw=[
+      {id:'d1',text:'К одиннадцати годам он читал по-латыни и по-гречески, а позднее самостоятельно освоил еврейский.',title:'Ранние годы'},
+      {id:'d2',text:'Проповедь, катехизация и письменное наставление составляли распорядок его дней.',title:'Служение в Саутуарке'}
+    ];
+    notesWrap.innerHTML='';
+    if(!raw.length){ notesWrap.innerHTML='<div class="hlp-empty"><b>Заметок пока нет</b>Выделите фразу в тексте и сохраните — она появится здесь, и по ней можно будет вернуться к месту в статье.</div>'; return; }
+    raw.forEach(function(n){
+      var card=document.createElement('div'); card.className='hlp-note';
+      card.innerHTML='<div class="hlp-note__q">'+n.text+'</div><div class="hlp-note__row">'+
+        '<button class="hlp-note__go" type="button">Перейти к месту</button>'+
+        '<button class="hlp-note__del" type="button">Удалить</button></div>';
+      card.querySelector('.hlp-note__del').addEventListener('click',function(){ card.remove(); if(!notesWrap.children.length) loadNotes(); });
+      notesWrap.appendChild(card);
+    });
+  }
+  // грузим заметки при первом открытии вкладки
+  ov.querySelectorAll('.hlp-tab').forEach(function(t){
+    if(t.dataset.pane==='notes') t.addEventListener('click',loadNotes,{once:true});
+  });
+
+  /* ===== Контекстное сохранение заметки при выделении ===== 
+     Кнопка всплывает только при активном выделении (аудит §4505). Сохраняет
+     в реальный формат gb-highlights-v1 — тот же, что читает вкладка «Заметки». */
+  var selBtn=document.getElementById('selSave'), phone=document.querySelector('.mock-phone'), art=document.getElementById('article');
+  var pendingText='';
+  function hideSel(){ selBtn.classList.remove('is-on'); }
+  document.addEventListener('selectionchange',function(){
+    var sel=document.getSelection();
+    if(!sel||sel.isCollapsed||!sel.rangeCount){ hideSel(); return; }
+    var txt=sel.toString().trim();
+    var anchor=sel.anchorNode;
+    if(txt.length<4 || !art.contains(anchor&&anchor.nodeType===3?anchor.parentNode:anchor)){ hideSel(); return; }
+    var rect=sel.getRangeAt(0).getBoundingClientRect(), pr=phone.getBoundingClientRect();
+    if(!rect.width){ hideSel(); return; }
+    pendingText=txt;
+    selBtn.style.left=(rect.left+rect.width/2-pr.left)+'px';
+    selBtn.style.top=(rect.top-pr.top)+'px';
+    selBtn.classList.add('is-on');
+  });
+  selBtn.addEventListener('click',function(){
+    if(!pendingText) return;
+    var arr=[]; try{ arr=JSON.parse(localStorage.getItem('gb-highlights-v1'))||[]; }catch(_){ arr=[]; }
+    arr.unshift({id:Date.now()+'-'+Math.random().toString(36).slice(2), text:pendingText, title:'Часть III', href:'#'});
+    try{ localStorage.setItem('gb-highlights-v1', JSON.stringify(arr)); }catch(_){}
+    selBtn.innerHTML='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.1L19 7"/></svg>Сохранено';
+    window.getSelection().removeAllRanges();
+    setTimeout(function(){ hideSel(); selBtn.innerHTML='<svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>В заметки'; },900);
+  });
+})();
+</script>
+</body>
+</html>
