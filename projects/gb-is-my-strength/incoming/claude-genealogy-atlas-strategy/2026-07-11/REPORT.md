@@ -503,6 +503,20 @@ LOD; теряем SVG-чёткость пергамента, простоту a1
 ## 8. Notes for Verifier
 - Это strategy-intake: findings секций 1–7 — L0; стратегия §S — proposal-open до
   решений владельца (§S10).
+- **Обновление 2026-07-11 (тот же день):** параллельный deep-research workflow
+  завершился (verify-фаза упала на session-лимите — результаты L0). Приложение:
+  evidence/web-research-workflow-appendix. Ни один вывод REPORT не опровергнут;
+  два усиления приняты в план: (1) **BradyStephenson/bible-data** (CC BY 4.0, 5 450
+  связей с провенансом explicit/inferred/implicit) — добавить 3-м свидетелем рёбер в
+  Phase 1 для честной пометки «прямая vs выведенная связь»; (2) академические входы
+  Phase 2 (McGuffin & Balakrishnan; Springer Genealogical Graph Layout; DOI-trees) +
+  Cytoscape-WebGL-бенчмарк, численно подтвердивший, что bottleneck — плотность рёбер,
+  а наш граф (3056 узлов / ~2053 ребра) в зелёной зоне. Реестр источников: 89 уникальных.
+- **Прогресс имплементации (не только аудит):** после «начинай» владельца Phase 1
+  запущена в source-repo main (docs) + ветке (код). Работает пайплайн
+  `scripts/genealogy-build/` → `data/genealogy/v2/` (3056 персон, 2053 ребра, 14
+  кластеров, 76 народов, 0 циклов/дублей/битых рёбер, валидатор коллизий поймал 2
+  реальных бага мэппинга). Статус датасета — phase1-draft, в рантайм не подключён.
 - Параллельно готовились: сводка архивных генеалогических intake AuditRepo и разбор
   интеграционных паттернов (Explore-агенты) + deep-research workflow c adversarial
   verify; их результаты будут приложены как comments/evidence-дополнения, если
