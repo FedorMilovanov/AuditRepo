@@ -9,8 +9,9 @@ stop losing them between sessions.
 
 | File | What it is | Status |
 |------|------------|--------|
-| `gill-mobile-bars-v2.7.html` | Mobile bars + learning sheet + **part-TOC (оглавление частей)** + tests/features. Latest. | ✅ **CANONICAL** — reconcile to this |
-| `gill-mobile-bars-v2.6.html` | Prior iteration: search moved to a trailing icon tab; 4 text tabs (Термины/Конспект/Тест/Заметки). | superseded by v2.7 |
+| `gill-mobile-bars-v2.8.html` | v2.7 + **fixes the part-TOC/search overlay "уезжает/просвечивает" bug** (overlay must sit over the content area & stay fixed on scroll, not inside scrollable content) + **calibration meter** in tests (visual bar, green ≥70% / yellow 40-69% / red below — the test's "изюминка"). | ✅ **CANONICAL** — reconcile to this |
+| `gill-mobile-bars-v2.7.html` | Mobile bars + learning sheet + part-TOC (`.btoc-*`) + `.hlp-mastery`/`.hlp-meta`. | superseded by v2.8 |
+| `gill-mobile-bars-v2.6.html` | Prior iteration: search moved to a trailing icon tab; 4 text tabs (Термины/Конспект/Тест/Заметки). | superseded |
 | `gill-mobile-bars-v2.5.html` | Earlier: borderless/flush frosted bars, `.hlp-*` learning panel, 5 text tabs. | superseded |
 | `gill-quiz-launch-reference.html` | Quiz launch screen mockup (`quiz-launch-hero`, category chips, spaced-repetition note). | reference |
 | `gill-quiz-launch-TASK.md` | Task spec for the quiz launch screen. NOTE per owner: do **not** show "how many of each question type / how many authors" — that count-chip idea is a reference error, skip it. | task |
