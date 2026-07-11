@@ -71,3 +71,20 @@ registry(6) → freeze → rollout. Движок выбирается registry, 
   §8). Появление бара — после скролла мимо родного хедера (no двойной шапки).
 - `_shared/mobileChromeRegistry.ts` — route→{enabled, engine, adapter};
   каталог = первая запись; страницы читают registry при сборке.
+
+## ИТОГ: план выполнен полностью — все 6 этапов в main
+- Этап 3 (Gill series) → PR #85 → `2aabea4`
+- Этап 4 (Herm article) → PR #86 → `2d842a0`
+- Этапы 5+6 (page engine + registry, пилот /articles/) → PR #87 → `af59a21`
+- Попутно: разблокировка CI — PR #88 → `f4a74f0` (5 свежезалитых pastor-series
+  MDX без владельца красили native-source-contract для всех PR; помечены явным
+  contentStatus:"draft" по контракту аудита; снять при подключении профилей).
+
+Все три движка живут в проде: **series** (Гилл ×6 маршрутов), **article**
+(Герменевтика), **page** (каталог /articles/: Back·Home·Поиск сверху, палитра
+GBSearch, появление синхронно с автоскрытием родного navbar). Registry —
+единая точка конфигурации; rollout на остальные страницы = записи в
+mobileChromeRegistry.ts (+ для page-страниц вставка MobileChromePage).
+
+По плану далее: freeze 10–14 дней без layout-экспериментов (только блокирующие
+фиксы), production monitoring, затем rollout.
