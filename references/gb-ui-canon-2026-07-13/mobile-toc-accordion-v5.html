@@ -1,0 +1,252 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Оглавление части — аккордеон v2</title>
+<style>
+/* ============ tokens: strict 4pt grid, one gold, one bordeaux ============ */
+:root{
+  --canvas:#f7f3ec; --surface:#fffdf9; --ink:#221d18; --muted:#7d746a; --faint:#988d7f;
+  --line:#e8dfd2; --hair:#eee6da;
+  --gold:#b8894a; --gold-deep:#8a6430; --gold-bright:#d8aa6d;
+  --accent:#7a2e2e;
+  --cur-bg:linear-gradient(180deg,#fbf3e6,#f8eddc);
+  --cur-line:#e6cb9c;
+  --press:rgba(184,137,74,.10);
+  --active-pill:rgba(184,137,74,.14);
+}
+html.dark{
+  --canvas:#0e1116; --surface:#141920; --ink:#ede7dc; --muted:#9a9184; --faint:#837c6f;
+  --line:#262c35; --hair:#222831;
+  --gold:#d8aa6d; --gold-deep:#e5bd85; --gold-bright:#f0c896;
+  --accent:#e08a7e;
+  --cur-bg:linear-gradient(180deg,rgba(216,170,109,.12),rgba(216,170,109,.06));
+  --cur-line:rgba(216,170,109,.30);
+  --press:rgba(216,170,109,.10);
+  --active-pill:rgba(216,170,109,.16);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:#c7c0b4;font-family:"Source Sans 3","SF Pro Text",system-ui,sans-serif;
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:14px;padding:22px 14px 60px}
+html.dark body{background:#04060a}
+.tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.tbtn{border:1px solid #cbbda5;background:#fbf8f2;color:#2b2b2b;font:600 13px/1 sans-serif;padding:9px 13px;border-radius:9px;cursor:pointer}
+html.dark .tbtn{background:#1a1f27;border-color:#333;color:#e6e1d7}
+
+.phone{width:390px;max-width:94vw;height:770px;background:var(--surface);border-radius:36px;
+  box-shadow:0 30px 80px rgba(0,0,0,.42);overflow:hidden;position:relative;border:9px solid #17140f;
+  display:flex;flex-direction:column;color:var(--ink)}
+
+/* ============ header ============ */
+.grip{width:36px;height:4px;border-radius:99px;background:var(--line);margin:10px auto 2px;flex:0 0 auto}
+.hd{flex:0 0 auto;display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;
+  column-gap:12px;padding:6px 16px 12px}
+.hd__back{width:40px;height:40px;border:0;border-radius:12px;background:var(--canvas);color:var(--ink);
+  display:grid;place-items:center;cursor:pointer;transition:transform .15s;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 1px 2px rgba(60,44,20,.06)}
+html.dark .hd__back{box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 1px 3px rgba(0,0,0,.4)}
+.hd__back:active{transform:scale(.92)}
+.hd__back svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.hd__eyebrow{font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hd__title{font-family:Lora,Georgia,serif;font-size:21px;font-weight:600;letter-spacing:.005em;margin-top:2px}
+.hd__pct{justify-self:end;text-align:right}
+.hd__pct b{display:block;font-size:15px;font-weight:800;color:var(--gold-deep);font-variant-numeric:tabular-nums}
+.hd__pct span{display:block;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:1px}
+.hd__bar{flex:0 0 auto;height:2px;margin:0 16px;background:var(--hair);border-radius:99px;overflow:hidden}
+.hd__bar i{display:block;height:100%;width:34%;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--gold-bright));
+  box-shadow:0 0 6px color-mix(in srgb,var(--gold) 50%,transparent)}
+
+/* ============ scroll list ============ */
+.acc{flex:1;min-height:0;overflow-y:auto;padding:12px 14px 18px;scrollbar-width:none;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 14px,#000 calc(100% - 18px),transparent 100%);
+          mask-image:linear-gradient(to bottom,transparent 0,#000 14px,#000 calc(100% - 18px),transparent 100%)}
+.acc::-webkit-scrollbar{display:none}
+
+/* ============ part card ============ */
+.part{--fill:var(--surface);position:relative;border-radius:16px;margin-bottom:6px;background:transparent;transition:background .25s}
+.part.cur{--fill:#f8f1e2;background:var(--fill);
+  box-shadow:0 8px 22px -14px rgba(138,100,48,.4)}
+html.dark .part.cur{--fill:#211d14;background:var(--fill);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 10px 26px -14px rgba(0,0,0,.6)}
+.part.cur::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:99px;
+  background:linear-gradient(180deg,var(--gold-bright),var(--gold));
+  box-shadow:0 0 7px color-mix(in srgb,var(--gold) 40%,transparent)}
+.part:not(.cur).open{--fill:#f7f4ec;background:var(--fill)}
+html.dark .part:not(.cur).open{--fill:#191e26;background:var(--fill)}
+
+.part:not(.cur):not(.open)+.part:not(.cur):not(.open)>.part__hd::before{content:"";position:absolute;top:-4px;left:64px;right:12px;height:1px;background:var(--hair)}
+.part__hd{position:relative;width:100%;display:grid;grid-template-columns:44px minmax(0,1fr) auto 24px;align-items:center;
+  column-gap:10px;min-height:64px;padding:10px 12px 10px 10px;background:transparent;border:0;border-radius:15px;
+  cursor:pointer;text-align:left;color:var(--ink);font-family:inherit;transition:background .15s}
+.part__hd:active{background:var(--press)}
+
+.part__num{width:44px;height:44px;display:grid;place-items:center;
+  font-family:Lora,Georgia,serif;font-style:italic;font-weight:600;font-size:19px;line-height:1;
+  color:var(--gold);letter-spacing:.02em;padding-bottom:2px}
+.part.cur .part__num{color:var(--gold-deep)}
+.part.cur .part__t{font-weight:700}
+.part--label .part__hd{min-height:80px}
+.part__num--label{font-style:normal;font-family:inherit;width:44px;padding:0;border:0;background:none;
+  position:relative;height:100%;place-self:stretch;display:grid;place-items:center;overflow:visible}
+.part__num--label i{display:block;font-style:normal;font-size:8px;font-weight:800;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--gold-deep);white-space:nowrap;transform:rotate(-90deg);opacity:.88}
+
+.part__meta{min-width:0;padding:1px 0}
+.part__t{display:block;font-family:Lora,Georgia,serif;font-weight:600;font-size:15.5px;line-height:1.25;
+  color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.part__s{display:flex;align-items:center;gap:5px;font-size:11.5px;line-height:1.3;color:var(--muted);margin-top:3px;
+  white-space:nowrap;overflow:hidden}
+.part__s .now{display:inline-flex;align-items:center;gap:5px;color:var(--gold-deep);font-weight:700}
+.part__s .now::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold-deep)}
+.part__done{color:var(--gold);display:inline-flex}
+.part__done svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+.part__min{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums;white-space:nowrap;padding-top:1px}
+.part__chev{width:24px;height:24px;display:grid;place-items:center;color:var(--faint);
+  transition:transform .34s cubic-bezier(.34,1.56,.64,1),color .2s}
+.part__chev svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.part.open .part__chev{transform:rotate(180deg);color:var(--gold)}
+.subs .sub{opacity:0;transform:translateY(-5px)}
+.part.open .subs .sub{opacity:1;transform:none;transition:opacity .28s ease,transform .34s cubic-bezier(.22,1,.36,1),background .15s}
+.part.open .subs .sub:nth-child(2){transition-delay:.03s}.part.open .subs .sub:nth-child(3){transition-delay:.06s}
+.part.open .subs .sub:nth-child(4){transition-delay:.09s}.part.open .subs .sub:nth-child(5){transition-delay:.12s}
+.part.open .subs .sub:nth-child(6){transition-delay:.15s}.part.open .subs .sub:nth-child(n+7){transition-delay:.18s}
+
+/* ============ submenu ============ */
+.subs{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s cubic-bezier(.22,1,.36,1)}
+.part.open .subs{grid-template-rows:1fr}
+.subs>div{overflow:hidden;min-height:0}
+.subs__pad{padding:2px 12px 12px;position:relative}
+.subs__rail{position:absolute;left:calc(12px + 22px);top:20px;bottom:30px;width:2px;border-radius:99px;
+  background:var(--line)}
+.part.cur .subs__rail{background:color-mix(in srgb,var(--gold) 38%,transparent)}
+
+.sub{position:relative;display:flex;align-items:baseline;gap:8px;min-height:40px;align-items:center;
+  padding:7px 10px 7px 44px;border-radius:11px;text-decoration:none;color:var(--ink);
+  font-family:Lora,Georgia,serif;font-size:13.5px;line-height:1.35;transition:background .15s}
+.sub:active{background:var(--press)}
+.sub .dot{position:absolute;left:18px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;
+  border:2px solid var(--line);background:var(--fill)}
+.part.cur .sub .dot{border-color:color-mix(in srgb,var(--gold) 45%,transparent)}
+.sub.h3{min-height:34px;font-size:12.5px;color:var(--muted);padding-left:58px}
+.sub.h3 .dot{width:6px;height:6px;margin-top:-3px;left:20px;border-width:2px}
+.sub.h3.active .dot{width:8px;height:8px;margin-top:-4px;left:19px}
+.sub.go{color:var(--gold-deep);font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:.01em;min-height:36px}
+.sub.go .dot{width:16px;height:16px;margin-top:-8px;left:15px;border:0;border-radius:50%;
+  background:color-mix(in srgb,var(--gold) 10%,var(--fill))}
+.sub.go .dot::before{content:"→";position:absolute;inset:0;display:grid;place-items:center;font-size:13px;line-height:1;color:var(--gold-deep)}
+.sub.done .dot{background:var(--gold);border-color:var(--gold)}
+.sub.done{color:var(--muted)}
+.sub.active{background:color-mix(in srgb,var(--gold) 15%,var(--fill));font-weight:700;color:var(--ink);
+  box-shadow:0 3px 10px -6px rgba(138,100,48,.5)}
+.sub.active .dot{background:var(--gold-deep);border-color:var(--gold-deep);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 18%,transparent),0 0 6px color-mix(in srgb,var(--gold) 45%,transparent)}
+
+/* ============ footer ============ */
+.foot{flex:0 0 auto;display:grid;grid-template-columns:1fr 1fr 48px;gap:8px;
+  padding:10px 16px 16px;border-top:1px solid var(--hair);background:var(--surface);
+  box-shadow:0 -10px 18px -14px rgba(60,44,20,.18)}
+html.dark .foot{box-shadow:0 -12px 20px -14px rgba(0,0,0,.55)}
+.fbtn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:12px;
+  font:700 13px/1 sans-serif;letter-spacing:.01em;cursor:pointer;transition:background .15s,transform .12s;border:0}
+.fbtn:active{transform:scale(.97)}
+.fbtn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.fbtn--listen{background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.38),0 3px 14px -3px color-mix(in srgb,var(--gold) 55%,transparent)}
+html.dark .fbtn--listen{color:#1a1408}
+.fbtn--cont{background:color-mix(in srgb,var(--gold) 10%,transparent);color:var(--gold-deep);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+html.dark .fbtn--cont{box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.fbtn--pdf{background:transparent;color:var(--faint);border:1px solid var(--line)}
+.fbtn--pdf svg{width:17px;height:17px}
+
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style></head>
+<body>
+<div class="tools">
+  <button class="tbtn" onclick="render(6)">6 частей (Гилл)</button>
+  <button class="tbtn" onclick="render(20)">20 частей</button>
+  <button class="tbtn" onclick="document.documentElement.classList.toggle('dark')">День/ночь</button>
+</div>
+
+<div class="phone">
+  <div class="grip"></div>
+  <div class="hd">
+    <button class="hd__back" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div>
+      <div class="hd__eyebrow">Джон Гилл · часть 1 из 4</div>
+      <div class="hd__title">Оглавление части</div>
+    </div>
+    <div class="hd__pct"><b>34%</b><span>прочитано</span></div>
+  </div>
+  <div class="hd__bar"><i></i></div>
+  <div class="acc" id="acc"></div>
+  <div class="foot">
+    <button class="fbtn fbtn--listen"><svg viewBox="0 0 24 24" style="fill:currentColor;stroke:none"><path d="M7 4.8v14.4L18.5 12 7 4.8z"/></svg>Слушать часть</button>
+    <button class="fbtn fbtn--cont">Продолжить<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    <button class="fbtn fbtn--pdf" aria-label="Распечатать · сохранить PDF" title="Распечатать · PDF"><svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
+  </div>
+</div>
+
+<script>
+const ROMAN=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX'];
+const CHECK='<span class="part__done"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.1L19 7"/></svg></span>';
+const GILL=[
+  {mark:'Введение',label:true,title:'Исторический контекст',sub:'Полтора века до Гилла',min:16,done:true,
+   secs:[['I. От пуритан к диссентерам',2,'done'],['II. Партикулярные и генеральные баптисты',2,'done'],['III. Тень 1662 года: Великое изгнание',2,'done'],['IV. Кларендонский кодекс',2,'done'],['V. Диссентерские академии',2,'done'],['VI. Солтерс-Холл (1719)',2,'done'],['VII. Кофейная политика',2,'done'],['VIII. Саутварк: джин, дым и Евангелие',2,'done'],['IX. Кеттеринг и книжная лавка',2,'done'],['X. Итог',2,'done']]},
+  {mark:'I',title:'Человек',sub:'now',min:39,cur:true,
+   secs:[['I. Становление и призвание',2,'done'],['Откуда рождаются гении без университетов',3,'done'],['Утро рождения: три пророчества',3,'active'],['Книжная лавка вместо школы',3],['Бытие 3:9 — вопрос, изменивший жизнь',3],['II. Пасторское служение в Хорслидауне',2],['Хорслидаун: 51 год на одном месте',3],['Систематическая евангелизация Саутварка',3],['Декларация Козьего Двора 1729 года',3],['Проверь себя',2]]},
+  {mark:'II',title:'Учёный',sub:'Иврит и раввинистика',min:71,
+   secs:[['Раввинист — христианин с Мишной в руках',2],['Проверь себя',2]]},
+  {mark:'III',title:'Экзегет',sub:'Комментарий на всю Библию',min:54,
+   secs:[['Джон Гилл: экзегет за работой',2],['Проверь себя',2]]},
+  {mark:'IV',title:'Наследие',sub:'Два столетия переизданий',min:39,
+   secs:[['V. Историческое влияние и память',2],['Проверь себя',2]]},
+  {mark:'Справочник',label:true,title:'Справочник по Гиллу',sub:'Хронология, труды, словарь',min:8,
+   secs:[['I. Масштаб корпуса',2],['II. Хронология жизни',2],['III. Основные труды',2],['IV. Структура «Свода богословия»',2],['V. Сеть влияний',2],['VI. Спорные темы',2],['VII. Богословский словарь',2],['VIII. Читать дальше',2]]},
+];
+function makeMany(n){
+  const arr=[{mark:'Пролог',label:true,title:'Пролог серии',sub:'Как читать эту серию',min:12,done:true,
+    secs:[['I. Зачем эта серия',2,'done'],['II. Как читать',2,'done']]}];
+  for(let i=0;i<n;i++){arr.push({mark:ROMAN[i],title:'Тема части '+(i+1),sub:i===2?'now':'Подзаголовок части',min:14+i,cur:i===2,done:i<2,
+    secs:[['I. Первый раздел',2,i<3?'done':''],['Подраздел один',3,i===2?'done':''],['Подраздел два',3,i===2?'active':''],['II. Второй раздел',2],['III. Третий раздел',2],['Проверь себя',2]]});}
+  arr.push({mark:'Справочник',label:true,title:'Справочник серии',sub:'Индекс и словарь',min:9,
+    secs:[['I. Индекс',2],['II. Словарь',2]]});
+  return arr;
+}
+function render(n){
+  const data=n===6?GILL:makeMany(n);
+  const curIdx=data.findIndex(p=>p.cur);
+  const romans=data.filter(p=>!p.label).length;
+  const curNum=data.slice(0,curIdx+1).filter(p=>!p.label).length;
+  document.querySelector('.hd__eyebrow').textContent=(n===6?'Джон Гилл':'Серия')+' · часть '+curNum+' из '+romans;
+  const acc=document.getElementById('acc'); acc.innerHTML='';
+  data.forEach(p=>{
+    const el=document.createElement('div');
+    el.className='part'+(p.cur?' cur open':'');
+    if(p.label) el.classList.add('part--label');
+    const num=p.label
+      ? '<span class="part__num part__num--label"><i>'+p.mark+'</i></span>'
+      : '<span class="part__num">'+p.mark+'</span>';
+    const sub=p.sub==='now'
+      ? '<span class="now">Сейчас читаете · 34%</span>'
+      : (p.done?CHECK+' ':'')+p.sub;
+    const goRow=p.cur?'':'<a class="sub go" href="#"><span class="dot"></span><span>Перейти к части</span></a>';
+    const subs=goRow+p.secs.map(s=>{
+      const lvl=s[1],st=s[2]||'';
+      return '<a class="sub '+(lvl===3?'h3 ':'')+st+'" href="#"><span class="dot"></span><span>'+s[0]+'</span></a>';
+    }).join('');
+    el.innerHTML=
+      '<button class="part__hd" aria-expanded="'+(!!p.cur)+'">'+num+
+      '<span class="part__meta"><span class="part__t">'+p.title+'</span><span class="part__s">'+sub+'</span></span>'+
+      '<span class="part__min">'+p.min+' мин</span>'+
+      '<span class="part__chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></button>'+
+      '<div class="subs"><div><div class="subs__pad"><span class="subs__rail"></span>'+subs+'</div></div></div>';
+    const hd=el.querySelector('.part__hd');
+    hd.addEventListener('click',()=>{const o=el.classList.toggle('open');hd.setAttribute('aria-expanded',o);});
+    acc.appendChild(el);
+  });
+  const act=acc.querySelector('.sub.active')||acc.querySelector('.part.cur'); if(act) act.scrollIntoView({block:'center'});
+}
+render(6);
+</script>
+</body></html>
