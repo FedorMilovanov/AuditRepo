@@ -53,3 +53,14 @@ Vosk-движок требует в CSP КАЖДОЙ страницы:
 mobile-toc-{light,dark,bottom-vertical-labels}.png · mobile-bottombar-canon.png ·
 theme-toggle-canon-swap.png · play-ember-breath-dark.png ·
 desktop-rail-{light,dark-depth}.png · desktop-current-card-depth.png
+
+## Глобальная миграция серии «Сердце» (hard-texts) — 2026-07-13, ВНЕДРЕНО
+Все 6 страниц серии «Тайны человеческого сердца» (пролог, крайне, римлянам-7,
+новое-сердце, сердце-и-дух, справочник) переведены с legacy series-lite
+(gbs2-mobile-head/bbar/sheet) на ЕДИНЫЙ series-движок Гилла:
+- GillSeriesChrome + SeriesConfig (src/components/article-pilots/_shared/series/);
+  серия-специфика ТОЛЬКО в hardTextsSeriesConfig.ts (марки, кожаные ленты,
+  partToc, обложки, quiz:[] → вкладка «Тест» скрыта движком).
+- Меняешь движок (PLAY/тему/сепию/аккордеон) — меняется ВЕСЬ сайт разом.
+- Нагорная — индивидуальная, в движок НЕ входит (решение владельца).
+- Баптисты — сырые, НЕ мигрировать без переработки контента (решение владельца).
