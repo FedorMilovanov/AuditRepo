@@ -30,6 +30,8 @@ git fetch --all --prune && git checkout main && git pull --ff-only && git rev-pa
 
 **Прод устарел.** Main полный контентом (генеалогический атлас v1, серия «Сердце», mobile-chrome, atlas sheets), но **не деплоится**: static gates красные. Канонические P0: `PROD-STALE-DEPLOY-RED`, `DEP-BLOCK-EDITORIAL-REGISTRY` (5 routes missing in editorial-metadata), `DEP-BLOCK-MAPS-VALIDATE` (hub 9≠10 + nachalo + avraam stats), `DEP-BLOCK-CSS-IMPORTANT-CEILING` (210>202), `DEP-BLOCK-AVRAAM-AUDIT`. Счётчики — только в матрице. После разблокировки деплоя — снова W1 системно (concurrency, deterministic build, IndexNow asserts), затем W2–W10.
 
+**Нагорная проповедь — 12 визуальных багов** (аудит 2026-07-14). Критические: NG-VIS-01 (невидимый текст в тёмной теме на всех 5 частях), NG-VIS-02 (сломанные заголовки секций ch.2/ch.5), NG-VIS-03 (emoji вместо SVG). Полный отчёт: `incoming/arena-auditor/2026-07-14/evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md`.
+
 ## 🔥 Приоритет №1 — разблокировать деплой (один PR / один сабсистем «release-unblock»)
 
 Порядок (из reverify §1.4):
