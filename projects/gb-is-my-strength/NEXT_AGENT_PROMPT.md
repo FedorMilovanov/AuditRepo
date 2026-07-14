@@ -3,9 +3,16 @@
 > **Этот файл — SSOT по «где мы сейчас»** (текущий HEAD + что дальше). Карта всех
 > документов и правило Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-10.** Source HEAD: `b8459bdf` (main; PR#67 Gill Часть IV «Экзегет»
-> + rail + реордер III↔IV; PR#68/#69 deploy-hotfixes; PR#70 CI-INDEXNOW-checker fix;
-> PR#71 sibling-grid propagation). **Prod deploy ✅ GREEN** — run `29065454930`, 0 failed steps.
+> **Актуально на 2026-07-14.** Source HEAD: `bd8cb9a0` (main, authoritative `git ls-remote origin main`,
+> коммит 2026-07-13 20:17Z). ⚠️ Прежний `b8459bdf` **не существует как git-объект** — история разошлась
+> (`P2-SSOT-DRIFT-2026-07-14`). **Prod deploy 🔴 RED** (verified 2026-07-14): Deploy #1568 fail
+> (`css:layer:validate` — `site.css` 210 `!important` > 202), Metadata&IndexNow #1330 fail (5 metadata
+> records missing), Visual Parity #383 fail; Native Source Contract #151 ✅. Прежняя запись «GREEN @
+> `29065454930`@b8459bdf» ссылалась на несуществующий SHA.
+> **Первоочередное:** 3 P1 deploy-blocker из контент-сессий 07-11..13 — `P1-CSS-IMPORTANT-GATE-DRIFT`,
+> `P1-EDITORIAL-METADATA-REGISTRY-GAP`, `P1-NAGORNAYA-JS-UNREGISTERED` (последовательны; зелёный требует всех трёх;
+> +10 `site.css` `!important` — реальные WCAG-фиксы, развязывать архитектурно, НЕ удалять). Детали:
+> `reverify/CURRENT_HEAD_REVERIFY_2026-07-14_bd8cb9a0_css-important-gate-drift.md`.
 > **Авторитет при конфликте:** `verified/MASTER_BUG_MATRIX.md` (точечные баги)
 > и `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (системный бэклог + план волн W0–W10).
 > Прежние промпты (Pass 71 `8c318010`; 2026-07-06 `14a49be8`) устарели; SEARCH-016/017 и
@@ -17,13 +24,13 @@
 git fetch --all --prune && git checkout main && git pull --ff-only && git rev-parse HEAD
 ```
 
-1. Сверь HEAD: если `main` уехал с `14a49be8` — сначала запиши reverify-дельту (что изменилось), не работай по старой правде.
+1. Сверь HEAD: если `main` уехал с `bd8cb9a0` — сначала запиши reverify-дельту (что изменилось), не работай по старой правде. ⚠️ Локальные checkout'ы молча откатываются на container-reset — доверяй только `git ls-remote origin main`.
 2. Прочитай в source-репо: `AGENTS.md` (полностью, особенно §0, §3.10, §9 и «Верификационная дисциплина»), `docs/WORK_MODES.md`, `docs/OWNER-INVARIANTS.md`.
 3. Прочитай здесь: `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` §0–§2 (что подтверждено, что опровергнуто) и §3 (в какой волне твоя задача).
 
 ## Текущее состояние (одним абзацем)
 
-Прод = main, штатные гейты зелёные. Точечные открытые баги + их счётчики — в `verified/MASTER_BUG_MATRIX.md` (единственный владелец счётчиков, здесь намеренно не дублируются). Главная работа — системная, волнами из SUPER_AUDIT: **W1 транзакция релиза (P0) → W2 редакционные даты (P0) → W3 SW/кэш → W4 route-реестр/sitemap/IndexNow → W5 security/XSS → W6 Bible-корпус → W7 семантические гейты → W8 SEO-очистка → W9 a11y/perf → W10 автоматизация AuditRepo**. W0 (гигиена правды) выполнена 2026-07-06.
+Прод = main, **но деплой сейчас 🔴 RED** (3 workflow, см. шапку выше) — публикация заблокирована CSS-`!important`-контрактом + metadata-registry + unregistered JS. Точечные открытые баги + их счётчики — в `verified/MASTER_BUG_MATRIX.md` (единственный владелец счётчиков, здесь намеренно не дублируются). Главная работа — системная, волнами из SUPER_AUDIT: **W1 транзакция релиза (P0) → W2 редакционные даты (P0) → W3 SW/кэш → W4 route-реестр/sitemap/IndexNow → W5 security/XSS → W6 Bible-корпус → W7 семантические гейты → W8 SEO-очистка → W9 a11y/perf → W10 автоматизация AuditRepo**. W0 (гигиена правды) выполнена 2026-07-06.
 
 ## Зоны in-flight — НЕ ТРОГАТЬ без владельца
 
