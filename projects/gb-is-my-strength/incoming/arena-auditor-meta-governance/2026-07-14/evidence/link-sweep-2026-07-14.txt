@@ -1,0 +1,13 @@
+Total broken relative links: 12
+  projects/gb-is-my-strength/archive/2026-06-27-premiumcontrols-docs/PREMIUMCONTROLS_SURGICAL_COMPLETION_TURNKEY_2026-06-27.md  ->  [^"']+\.(?:webp|jpe?g|png
+  projects/gb-is-my-strength/archive/2026-06-27-premiumcontrols-docs/PREMIUMCONTROLS_SURGICAL_COMPLETION_TURNKEY_2026-06-27.md  ->  [^"']+\.(?:webp|jpe?g|png
+  projects/gb-is-my-strength/archive/2026-06-27-premiumcontrols-docs/SURGICAL_REPLAY_CURRENT_MAIN_2026-06-27.md  ->  ?:(?:\\\\.\\\\.\\\\/
+  projects/gb-is-my-strength/archive/2026-06-27-premiumcontrols-docs/SURGICAL_REPLAY_CURRENT_MAIN_2026-06-27.md  ->  ?:/|(?:\\\\.\\\\./
+  projects/gb-is-my-strength/archive/2026-07-05-incoming-consolidated/arena-agent-audit-1/2026-07-05/REPORT.md  ->  [^"']+\.webp[^"']*
+  projects/gb-is-my-strength/archive/2026-07-05-incoming-consolidated/arena-agent-pass85/REPORT.md  ->  [^»"]{0,260}[A-Za-z]{4,}[^»"]{0,260}
+  projects/gb-is-my-strength/incoming/arena-agent-karty-strategy/2026-07-07/proposals/proposal-OWNER-5-visual-qa-baseline.md  ->  screenshots/desktop-main.png
+  projects/gb-is-my-strength/incoming/arena-agent-karty-strategy/2026-07-07/proposals/proposal-OWNER-5-visual-qa-baseline.md  ->  screenshots/desktop-panel.png
+  projects/gb-is-my-strength/incoming/arena-agent-karty-strategy/2026-07-07/proposals/proposal-OWNER-5-visual-qa-baseline.md  ->  screenshots/desktop-tour.png
+  projects/gb-is-my-strength/incoming/arena-agent-karty-strategy/2026-07-07/proposals/proposal-OWNER-5-visual-qa-baseline.md  ->  screenshots/mobile-main.png
+  projects/gb-is-my-strength/incoming/arena-agent-karty-strategy/2026-07-07/proposals/proposal-OWNER-5-visual-qa-baseline.md  ->  screenshots/mobile-panel.png
+  projects/gb-is-my-strength/incoming/arena-auditor-meta-governance/2026-07-14/REPORT.md  ->  screenshots/…

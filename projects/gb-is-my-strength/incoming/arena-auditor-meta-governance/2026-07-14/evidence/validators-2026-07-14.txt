@@ -1,0 +1,12 @@
+# structure + rule validators @ 77ae956
+$ python3 scripts/check_auditrepo_structure.py
+AUDITREPO STRUCTURE CHECK: PASS
+
+$ python3 scripts/validate_audit_repo.py
+AUDITREPO VALIDATION: PASS
+
+$ grep -n minimum_witnesses projects/gb-is-my-strength/PROJECT_META.yml
+40:  minimum_witnesses_for_confirmed_current: 2
+
+$ grep -c code-audit PROJECT_REGISTRY.md
+0

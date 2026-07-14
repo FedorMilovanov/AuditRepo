@@ -3,13 +3,23 @@
 > **Этот файл — SSOT по «где мы сейчас»** (текущий HEAD + что дальше). Карта всех
 > документов и правило Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-10.** Source HEAD: `b8459bdf` (main; PR#67 Gill Часть IV «Экзегет»
-> + rail + реордер III↔IV; PR#68/#69 deploy-hotfixes; PR#70 CI-INDEXNOW-checker fix;
-> PR#71 sibling-grid propagation). **Prod deploy ✅ GREEN** — run `29065454930`, 0 failed steps.
+> **Актуально на 2026-07-14 (live-reverify).** Source HEAD: **`2ca2af3b`** (main; +287 коммитов
+> над `b8459bdf`: PR#72–#88 mobile-chrome/Gill/Hermenevtika readers + TTS RU-voice + gill-quiz CBM,
+> merge `0aee6171` генеалогия «Библейский атлас родословий», merge `2ca2af3b` карта Авраама).
+> **🔴 Prod deploy RED @ `2ca2af3b`** — 3 workflow падают (Deploy *Static publication gates*
+> `29338523013`, Metadata & IndexNow *Validate registry structure* `29338522715`, Visual Parity
+> *pixel-diff* `29338522526`). **Прод заперт на последнем зелёном `b8459bdf`** (run `29065454930`);
+> генеалогия/атлас + mobile-reader НЕ на проде.
+>
+> **➡️ ПЕРВЫЙ ПРИОРИТЕТ — разблокировать деплой** (release-транзакция W1, owner-gated). Три корня
+> (все воспроизведены локально на `2ca2af3b`, Node v22.22.3): **REG-VALIDATE-GENEALOGY-TEMPLATE**,
+> **REG-EDITORIAL-METADATA-MISSING**, **CACHE-BUST-NO-WRITER** — детали в матрице (P1) и
+> `reverify/CURRENT_HEAD_REVERIFY_2026-07-14_2ca2af3b.md`.
+>
 > **Авторитет при конфликте:** `verified/MASTER_BUG_MATRIX.md` (точечные баги)
 > и `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (системный бэклог + план волн W0–W10).
-> Прежние промпты (Pass 71 `8c318010`; 2026-07-06 `14a49be8`) устарели; SEARCH-016/017 и
-> KARTY-Q-BUG-P0 — уже закрыты (см. матрицу), не переоткрывать.
+> Прежние промпты (Pass 71 `8c318010`; 2026-07-06 `14a49be8`; 2026-07-10 `b8459bdf`) устарели;
+> SEARCH-016/017, KARTY-Q-BUG-P0, CI-INDEXNOW-CHECKER-STALE — уже закрыты (см. матрицу), не переоткрывать.
 
 ## Перед началом (обязательно)
 
@@ -23,7 +33,7 @@ git fetch --all --prune && git checkout main && git pull --ff-only && git rev-pa
 
 ## Текущее состояние (одним абзацем)
 
-Прод = main, штатные гейты зелёные. Точечные открытые баги + их счётчики — в `verified/MASTER_BUG_MATRIX.md` (единственный владелец счётчиков, здесь намеренно не дублируются). Главная работа — системная, волнами из SUPER_AUDIT: **W1 транзакция релиза (P0) → W2 редакционные даты (P0) → W3 SW/кэш → W4 route-реестр/sitemap/IndexNow → W5 security/XSS → W6 Bible-корпус → W7 семантические гейты → W8 SEO-очистка → W9 a11y/perf → W10 автоматизация AuditRepo**. W0 (гигиена правды) выполнена 2026-07-06.
+⚠️ **Прод НЕ на main:** штатные гейты **красные** на `2ca2af3b`, прод заперт на `b8459bdf`. Первый приоритет — разблокировать деплой (3 P1-регрессии выше), затем сверить, что генеалогия/атлас реально доехали до прода. Точечные открытые баги + их счётчики — в `verified/MASTER_BUG_MATRIX.md` (единственный владелец счётчиков, здесь намеренно не дублируются). Системная работа — волнами из SUPER_AUDIT: **W1 транзакция релиза (P0) → W2 редакционные даты (P0) → W3 SW/кэш → W4 route-реестр/sitemap/IndexNow → W5 security/XSS → W6 Bible-корпус → W7 семантические гейты → W8 SEO-очистка → W9 a11y/perf → W10 автоматизация AuditRepo**. W0 (гигиена правды) выполнена 2026-07-06.
 
 ## Зоны in-flight — НЕ ТРОГАТЬ без владельца
 

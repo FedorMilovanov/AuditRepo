@@ -1,0 +1,31 @@
+# CANON REVERIFY — open matrix bugs vs LIVE source 2ca2af3b (2026-07-14)
+
+## CI-INDEXNOW-CHECKER-STALE (matrix: P2 OPEN) => NOW FIXED on live (PR#70 3a43cada)
+$ grep -n "contents:.*read" scripts/check-workflows.js
+  157:must('.github/workflows/indexnow.yml', indexnow, /contents:\s*read/, 'indexnow is a read-only readiness gate: contents: read (least-privilege — cache-bust is validated here, not committed; IndexNow submission + deploy moved to deploy.yml in NEW-53)');
+$ node scripts/check-workflows.js
+  ✅ Workflow policy passed
+  => matrix row is STALE; should move to ЗАКРЫТО @ 3a43cada
+
+## D-19 antisovetov half (P2 OPEN) => STILL OPEN (confirmed live)
+    ⚠️  [20-antisovetov-pastoru] <title> ≠ og:title\n           <title>: "20 антисоветов пастору: как разрушить служение"\n         og:title: "20 антисоветов, как пастору разрушить своё служение"
+  rimlyanam-7 half: no longer flagged (closed 2026-07-11, consistent with canon)
+
+## D-4 magic z-index (P3 OPEN) => STILL OPEN (lines drifted)
+  css/floating-cluster.css:2833:    z-index: 2102 !important;
+  css/floating-cluster.css:2908:  z-index: 9999 !important;
+  css/floating-cluster.css:3199:    z-index: 2147483000 !important;
+  css/floating-cluster.css:3244:    z-index: 2147483000;
+
+## D-7 path-leak PremiumControlAnchor.astro:3 (P3 OPEN) => STILL OPEN
+  3:// See: AuditRepo/projects/gb-is-my-strength/PremiumControls/README.md §1
+
+## TTS-DL-CONSENT (P1 OPEN) => STILL OPEN (mechanism unchanged)
+  369:  var _voskWarmupStarted = false;
+  370:  function warmVoskInBackground() {
+
+## Extended carry-forward reverify (still-confirmed on live 2ca2af3b):
+- TTS-DL-UNZIP-SYNC (P2): vosk-tts-engine.js:110 fflate.unzipSync (main thread) — STILL OPEN
+- NF-VOSK-DEAD-SPLITSENTENCES (P3): vosk-tts-core.js:413/446 dead export — STILL OPEN
+- NEW-HARDTEXTS-CSP-MISSING-HFCDN (P3): hard-texts/index.astro:122 connect-src has huggingface.co but not *.aws.cdn.hf.co — STILL OPEN
+- D-8 (P3): deploy.yml paths still exclude *.md — STILL OPEN

@@ -1,0 +1,39 @@
+# LIVE SOURCE REVERIFY EVIDENCE — gb-is-my-strength
+# AuditRepo canon HEAD: b8459bdf (2026-07-10)  |  LIVE source HEAD: 2ca2af3b (2026-07-14T13:54Z)
+# delta: 287 commits ahead, 300 files; merged PRs #72–#88 + genealogy atlas merges
+
+## GATE 1 — Metadata & IndexNow Readiness :: 'Validate registry structure' => FAILURE
+  === Editorial Metadata Registry Check ===
+  Eligible routes: 25
+  Registry records: 20
+  ❌ Registry check failed (5 error(s)):
+    - /articles/dzhon-gill-chast-4-ekzeget/: metadata record missing
+    - /articles/chto-bibliya-nazyvaet-serdcem/: metadata record missing
+    - /articles/novoe-serdce/: metadata record missing
+    - /articles/serdce-i-duh/: metadata record missing
+    - /articles/serdce-spravochnik/: metadata record missing
+
+## GATE 2 — Deploy 'Static publication gates' => FAILURE (validate:static-publication -> validate:all -> validate:strict)
+    ❌  [scripts/genealogy-build/atlas-template.html] inline <script> syntax error (#1): Unexpected token ';'
+    ❌  [scripts/genealogy-build/interactive-template.html] inline <script> syntax error (#1): Unexpected token ';'
+  ❌  Ошибок: 2  Предупреждений: 2
+  validate:strict EXIT=1
+
+## audit-pro.js summary (also in static-publication chain)
+  Summary: ✅ 157 passed · ⚠️ 8 warnings · ❌ 114 errors · ℹ️ 10 info
+  ❌ AUDIT FAILED — fix errors before deploy
+  error categories (deduped):
+    Summary: ✅ N passed · ⚠️ 8 warnings · ❌ N errors · ℹ️ N info
+    ❌ <html> without lang attribute (aNy/SEO):
+    ❌ <meta charset> not in first N bytes (browser may re-parse):
+    ❌ AUDIT FAILED — fix errors before deploy
+    ❌ Canonical URL issues:
+    ❌ Forbidden JS files in js/: js/nagornaya-bar-extras.js
+    ❌ Inline script syntax failed: scripts/genealogy-build/atlas-template.html (#1) — Unexpected token ';'
+    ❌ Inline script syntax failed: scripts/genealogy-build/interactive-template.html (#1) — Unexpected token ';'
+    ❌ Orphan images in /images/ — N files, NKB wasted:
+    ❌ Oversized raw images in /images/ (convert to webp + responsive sizes, or add to ALLOWLIST):
+    ❌ Repository base path leak in docs/ATLAS-CONTRACT-N-N-N.md
+    ❌ Repository base path leak in scripts/genealogy-build/README.md
+    ❌ css/site.css has N !important — exceeds ratchet ceiling N. This is a regression: refactor into @layer / higher specificity instead of adding !important.
+  cache-bust mismatches (read-only): 103  -> 0 after 'node scripts/cache-bust.js --write' (82 files)
