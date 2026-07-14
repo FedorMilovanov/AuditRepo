@@ -99,3 +99,9 @@ audit/gill-series-v10-canonical-2026-07-09, audit/hermenevtika-ui-current-head-2
 claude/website-map-audit-ik3ypo, incoming/gpt-5-5-gill-image-restoration-2026-07-09,
 main, claude/dns-configuration-setup-c0w26g (эта работа). Референсы канона
 зафиксированы в main-ветке коммитом 2d40bb1 (+ bb2e00b). Потерь нет.
+
+## Зачистка выполнена (владелец, 2026-07-14)
+Все 17 веток Группы A удалены с origin (main-репо). Проверено `git fetch --prune`
+— подтверждено отсутствие на remote. Остались: main, claude/dns-configuration-setup-c0w26g
+(рабочая), 3 контентные (Группа B, ждут ручной сверки), 2 чужие (Группа C,
+атлас/генеалогия, другая активная сессия). Финальное состояние чистое.
