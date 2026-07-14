@@ -1,0 +1,31 @@
+# CONTINUED CSS/JS AUDIT — PASS 6 — gb-is-my-strength @ 21624a3 (2026-07-14)
+# Node v22.22.3; postcss@8.5.16 + css-tree + acorn. Source moved 2ca2af3b -> 21624a3 (40 commits).
+
+## REVERIFY of my earlier CSS/JS findings on the NEW head 21624a3:
+[FIXED-CURRENT] AUDIT-CSS-SITECSS-STRUCT-CORRUPTION — postcss+css-tree now parse site.css with 0 errors;
+    broken reduced-motion pattern gone (concurrent fix @ 912ffe3, per matrix). CONFIRMED fixed.
+[FIXED-CURRENT] AUDIT-CSS-FLOATCLUSTER-COMMENT-CORRUPTION — the `/* ===` banner opener at line ~1458 is
+    restored; css-tree: 0 bogus selectors; `.mobile-bottom-bar` parses correctly. floating-cluster.css
+    was heavily edited (+406/-39) in the delta. CONFIRMED fixed (residual 260/259 marker imbalance is
+    inside a string/comment — css-tree clean — benign, not structural).
+[RESOLVED] AUDIT-CSS-NO-STRUCTURAL-PARSE — a concurrent agent implemented EXACTLY my recommendation:
+    scripts/check-engine-contracts.js:135-140 now runs css-tree.parse({onParseError}) over 6 CSS files
+    as a live gate (`npm run engine:contracts`). Ran it: all 6 "CSS AST: ... парсится без ошибок" ✅.
+    The whole corruption class is now gated. CONFIRMED resolved.
+
+## STILL-OPEN (reverified present on 21624a3) — these are the ones worth landing:
+[OPEN] AUDIT-CSS-GBFLOATER-DUP-MEDIA — .gb-floater AND html.dark .gb-floater byte-identical in TWO
+    @media(max-width:899px) blocks (lines 112 == 665, 128 == 682; postcss AST diff confirms identical
+    bodies 450/116 chars). Dead duplication; merge blocks. NOT in matrix yet.
+[OPEN] AUDIT-JS-ESCAPER-DUP-X5 — site.js still has function tt() x3 (two .replace() chains + one
+    /[&<>"]/g lookup-table) + h() in highlights.js + F() in search.js = 5 copies; site-utils.js has
+    none. D-21 drift class. Fix: hoist one escaper to SiteUtils. NOT in matrix yet.
+[OPEN carry] AUDIT-CSS-DEAD-KEYFRAMES-TOKENS — @keyframes fx-breathe still defined 2x in site.css
+    (already tracked in matrix).
+
+## NEW observations this pass (recorded, not raised as bugs):
+- !important density per file: mobile-hotfix.css 142/123 rules = 115%, nagornaya-mobile-toc 134/138 = 97%,
+  floating-cluster 506/989 = 51% — extreme, but these are the ratcheted files (audit-pro tracks ceilings).
+- NEW css file series-samizdat.css (added in delta, 12KB, 11 !important) — postcss/css-tree: 0 errors, clean.
+- JS: vosk splitSentences still exported dead (2 refs); highlights.js still no _initialized guard (0) —
+  both already tracked (NF-VOSK-DEAD-SPLITSENTENCES / NEW-HIGHLIGHTS-NO-REINIT-GUARD).
