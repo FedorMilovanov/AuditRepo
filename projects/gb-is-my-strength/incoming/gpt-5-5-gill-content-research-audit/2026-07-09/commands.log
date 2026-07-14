@@ -1,0 +1,22 @@
+# Audit actions / source refs — 2026-07-09
+
+# Source repositories and refs
+GitHub: FedorMilovanov/gb-is-my-strength main@08d9fd1ed097f36a8ad0e3b0ff20eb48e3c080cf
+GitHub: functional source commit f5e000e87f7fe148ee6ea6b3f9623dfe1d207a35
+GitHub: FedorMilovanov/Research main@58e1ea5fab638812ae693a1d0b1e79c4dcb47131
+GitHub: FedorMilovanov/AuditRepo base main@18713174a343740cc0886df6c6441c51bde61274
+
+# Main retrieval/check classes
+- GitHub fetch_file/search/search_commits/fetch_commit across current Gill Astro components.
+- GitHub fetch_file across Research/Джон Гилл/00_README_AND_NAVIGATION.md and dossiers 01–42.
+- Official/public web source retrieval for SBJT 25.1, Macritchie 2025 Glasgow thesis, Themelios, Rippon 1838, legislation/history and primary-public-domain texts.
+- PDF parsed-text verification; screenshot attempts recorded in the master where cache misses occurred.
+- Local cumulative synthesis and ID-integrity check:
+  findings=480; unique=480; range=001–480; missing=none; duplicates=none.
+- Aggregate triage extraction:
+  P0/P0–P1 candidates=75; explicit needs-source/unverified/unsupported/unresolved=101.
+
+# No source repo mutation
+- No production code changed.
+- No Research files changed.
+- No build/browser claims made.
