@@ -1,0 +1,19 @@
+# AR-CI-RED — AuditRepo own CI was RED on main (concurrent-agent structure violations)
+# Discovered on sync: origin/main was 581 commits ahead of my base 77ae956.
+
+## BEFORE (origin/main 1539ec4) — python3 scripts/validate_audit_repo.py:
+AUDITREPO VALIDATION: FAIL
+- unexpected root markdown file: DEBT-REGISTER.md
+- gb-is-my-strength: intake folder missing README.md or REPORT.md: .../claude-atlas-deep-audit/2026-07-10
+- gb-is-my-strength: invalid intake date folder .../claude-genealogy-atlas-strategy/2026-07-14-milestone-atlas-v1
+
+## REPAIR (minimal, non-destructive — CLEANUP §7 "never overwrite another agent's intake"):
+1. git mv DEBT-REGISTER.md -> projects/gb-is-my-strength/working/DEBT-REGISTER.md   (root hygiene)
+2. + projects/.../claude-atlas-deep-audit/2026-07-10/README.md                       (additive index)
+3. git mv .../2026-07-14-milestone-atlas-v1 -> .../2026-07-14-r1  + README.md + note  (valid date form)
+
+## AFTER — python3 scripts/validate_audit_repo.py:
+AUDITREPO STRUCTURE CHECK: PASS
+AUDITREPO VALIDATION: PASS
+
+## Lesson for concurrent agents: run validate_audit_repo.py BEFORE push.

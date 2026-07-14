@@ -1,0 +1,39 @@
+# DEEP CSS + JS AUDIT — gb-is-my-strength @ 2ca2af3b (2026-07-14, Node v22.22.3)
+# Tools: postcss@8.5.16 + css-tree (both in repo node_modules), acorn, node --check
+
+## ===== CSS: STRUCTURAL CORRUPTION in css/site.css (NEW finding, gate-invisible) =====
+Two independent parsers FAIL on css/site.css:
+  postcss: "40:16304 Unknown word .bottom-bar,.btoc-link,.flip-card-inner,.h-article-card,.quiz-option"
+  css-tree: 9 parse errors @ offsets 179799,180014,201874,201914,203062,277864 (+3)
+Corruption cluster (each = malformed rule browsers drop via error-recovery):
+  1) @media (prefers-reduced-motion:reduce){.bottom-bar,.btoc-link,.flip-card-inner,.h-article-card,.quiz-option}
+     → selector list with NO declaration block, immediately followed by next @media.
+     IMPACT: reduce-motion users get NO motion suppression for these 5 component classes (a11y).
+  2) ...;.ehrman-block,.info-box,.quote-box}@media(forced-colors...)  → dangling selector list, no {}.
+  3) ...,.resume-reading-title,@supports(animation-timeline:scroll()){...}  → selector list broken by @supports mid-list (trailing comma).
+  4) @media (hover:hover) and (pointer:fine){html.dark }  → empty rule (no declarations).
+  5) .gbx-backlinks__maplink:rgba(122,46,46,0.08);gbx-backlinks__maplink:hover{...  → malformed decl: missing property, ":rgba(...)" as stray selector fragment.
+GATES MISS IT: audit-pro only checks brace-balance (passes — braces ARE balanced);
+  validate.js does 0 structural CSS parsing; css-layer-validator only checks !important count.
+  Same class as historical CSS-PARSE-CORRUPTION-SITECSS (PR#42) — the blind spot never got a gate.
+STATUS: pre-existing (present in b8459bdf too; site.css content +0/-0 in the 2ca2af3b delta).
+
+## css/site.css duplicate @keyframes fx-breathe (defined 2× in same file → first is dead)
+
+## CSS var hygiene (NOT a bug — verified no false positive):
+  202 custom props defined, 219 used. "50 undefined" all have var(--x,fallback) OR are JS-runtime-set
+  (--mouse-x,--scroll-pct,--gbs2-*) OR defined in @layer base (--z-* tokens exist). 0 truly-missing.
+  33 defined-but-unused tokens (dead: --label,--ghost,--docked,--tg,--vk,--wa,...) — minor cleanup.
+  z-index: 72 var(--z-*) tokenised vs 9 hardcoded magic (D-4 already tracks the hardcoded ones).
+
+## ===== JS analysis =====
+All 15 js/*.js pass `node --check` (0 syntax errors). 0 debugger, 0 TODO/FIXME, 1 console.log (behind debug flag — ok).
+BUG-PERF-001 reverify: addEventListener 349 / removeEventListener 25 (was 339/25 — grew +10). STILL OPEN, slightly worse.
+  Per-file leaders: site.js 196/13, enhancements.js 48/1, nagornaya-mobile-toc.js 26/0, search.js 22/0.
+XSS surface (innerHTML): 28 sinks; data-derived ones wrap through tt() (HTML-escape) or DOMPurify-style
+  strip (enhancements.js FAQ). site.js:451 titleText (textContent, low risk) + bibleRefs .btip (curated JSON,
+  by-design raw like glossary D-21) are the only unescaped — no new XSS bug (posture is sound).
+NEW-HIGHLIGHTS-NO-REINIT-GUARD reverify: STILL OPEN — highlights.js IIFE has no _initialized guard
+  (contrast bookmark-engine.js which guards via window.BookmarkEngine._initialized). Double-include → dup FAB + listeners.
+NF-VOSK-DEAD-SPLITSENTENCES reverify: STILL OPEN — vosk-tts-core.js:413/446 exports splitSentences,
+  controller uses its own splitTtsChunks (floating-cluster-controller.js:487).

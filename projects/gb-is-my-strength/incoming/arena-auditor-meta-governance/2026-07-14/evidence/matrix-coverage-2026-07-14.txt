@@ -1,0 +1,98 @@
+# check_matrix_coverage.py — full output @ 77ae956 (2026-07-14T13:49:39Z)
+$ python3 scripts/check_matrix_coverage.py
+matrix: 123 ids total, 44 open rows; evidence files: 126; archived-only evidence: 0
+
+91 problem(s):
+  - ORPHAN-CLAIM: open bug CI-INDEXNOW-CHECKER-STALE has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug D-1 has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug D-19 has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug D-2 has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug D-21 has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug D-3 has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug D-4 has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug D-7 has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug D-8 has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug NF-DEAD-ENHANCE-SHIM has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug NF-GATE-IZ5-STALE has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug NF-SPEEDSLOT-4TH-COPY has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug NF-STRANGLER-BAR-DRIFT has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug TTS-DL-CONSENT has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug TTS-DL-NO-TABLOCK has no evidence in reverify/incoming/working/archive
+  - ORPHAN-CLAIM: open bug TTS-DL-UNZIP-SYNC has no evidence in reverify/incoming/working/archive
+  - UNREGISTERED-EVIDENCE: reverify mentions AUDIT-GILL-FALSE-GREEN-05 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions AUDIT-P0-SWBASELINE but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions AUDIT-P2-ACTIONLINT-NOT-WIRED but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions AUDIT-P2-AR-STALE but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions AUDIT-P2-IXNOW-RETRY but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions AUDIT-P2-SEARCH-TE but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions AUDIT-P3-MATRIX-DUPE but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions AUDIT-P3-PARITY-SCOPE but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions AUDIT-P3-SEO-HARDCODED-OG but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions AUDIT-P3-SITEUTILS-WARN but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions AUDIT-P3-STALE-DOCS but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions AUDIT-P3-SW-PRECACHE-LAZY but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions NEW-54 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions NEW-67 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions NEW-69 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions NEW-VOSK-FETCH-NO-ABORT but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions NEW-VOSK-UNZIP-SYNC-JANK but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions P0-GILL-RUNTIME-REFS but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions P1-NAGORNAYA-SITEUTILS-ORDER but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions P1-SECURITY but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions P2-PERF but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions P2-SEO but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions P3-HYGIENE but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions P3-INFO but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions P3-PERF but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions PC-CURRENT but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions PC-CURRENT-01 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions PC-CURRENT-02 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions PC-CURRENT-03 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions PC-CURRENT-04 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions PC-CURRENT-05 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions PC-MAIN-03 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions REG-001 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions ROOT-ONLY but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions SEC-001 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions SEC-002 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions UI-GILL-DESKTOP-FRAME-03 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions UI-GILL-DESKTOP-TOC-02a but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions UI-GILL-DESKTOP-TOC-02b but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions UI-GILL-DESKTOP-TOC-02c but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions UI-GILL-DESKTOP-TOC-02d but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions UI-GILL-HISTORICAL-PARITY-03 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions UI-GILL-ROUNDED-FRAME-04 but matrix does not
+  - UNREGISTERED-EVIDENCE: reverify mentions UI-GILL-SUBMENU-ANCHOR-02 but matrix does not
+  - BAD-COMMIT-REF: closed bug SEARCH-SCRIPTURE-BROKEN ref 'PR#36' is not a short SHA
+  - BAD-COMMIT-REF: closed bug GATE-GAP-NATIVE-TEXT-PARITY ref 'PR#36' is not a short SHA
+  - BAD-COMMIT-REF: closed bug SEARCH-MANIFEST-QUALITY ref 'PR#36' is not a short SHA
+  - BAD-COMMIT-REF: closed bug CONTENT-LOSS-AVRAAM-SOURCES ref 'PR#36' is not a short SHA
+  - BAD-COMMIT-REF: closed bug CSS-PARSE-CORRUPTION-SITECSS ref 'PR#42' is not a short SHA
+  - BAD-COMMIT-REF: closed bug GILL-SUBMENU-STEPPED-FILL ref 'PR#43' is not a short SHA
+  - BAD-COMMIT-REF: closed bug GLOSSARY-CARD-LILAC-LIGHT ref 'PR#43' is not a short SHA
+  - BAD-COMMIT-REF: closed bug HEADING-ANCHOR-FOCUS-FRAME ref 'PR#43' is not a short SHA
+  - BAD-COMMIT-REF: closed bug GILL-SUBMENU-COLLAPSIBLE-SUBGROUPS ref 'PR#44' is not a short SHA
+  - BAD-COMMIT-REF: closed bug GILL-RAIL-FLOW-CARD-RESTORE ref 'PR#45' is not a short SHA
+  - BAD-COMMIT-REF: closed bug GILL-SUBMENU-SUBDOT-CLIPPED ref 'PR#45' is not a short SHA
+  - BAD-COMMIT-REF: closed bug GILL-RAIL-FILL-LURCH ref 'PR#45' is not a short SHA
+  - BAD-COMMIT-REF: closed bug GILL-RAIL-LINE-GOLD-NOT-BEIGE ref 'PR#45' is not a short SHA
+  - BAD-COMMIT-REF: closed bug ARTICLE-END-ACTIONS-SKIPPED ref 'PR#45' is not a short SHA
+  - BAD-COMMIT-REF: closed bug GILL-SAVE-NO-FILL ref 'PR#45' is not a short SHA
+  - BAD-COMMIT-REF: closed bug RESUME-TOAST-STALE-NAG ref 'PR#45' is not a short SHA
+  - BAD-COMMIT-REF: closed bug GBS2-HERO-BOTTOM-STRIP ref 'PR#45' is not a short SHA
+  - BAD-COMMIT-REF: closed bug GILL-KINETIC-OVERLAP ref 'PR#45' is not a short SHA
+  - BAD-COMMIT-REF: closed bug TTS-PILL-CLIPPED-RING-DEAD ref 'PR#45' is not a short SHA
+  - BAD-COMMIT-REF: closed bug HOME-SEARCH-ICON-LAZY-MISSING ref 'PR#45' is not a short SHA
+  - BAD-COMMIT-REF: closed bug AUDIT-FILL-MONOTONIC-LAYOUT-AWARE ref 'PR#45' is not a short SHA
+  - BAD-COMMIT-REF: closed bug AUDIT-P2-SW-PRECACHE-4 ref 'PR#37' is not a short SHA
+  - BAD-COMMIT-REF: closed bug BUG-ARCH-001 ref 'PR#37' is not a short SHA
+  - BAD-COMMIT-REF: closed bug AUDIT-P3-SEARCH-LAZY-CONFIRMED ref 'PR#37' is not a short SHA
+  - BAD-COMMIT-REF: closed bug BUG-SW-001 ref 'PR#37' is not a short SHA
+  - BAD-COMMIT-REF: closed bug AUDIT-P3-STYLE-DUP ref 'PR#37' is not a short SHA
+  - BAD-COMMIT-REF: closed bug AUDIT-P3-QUOTE-NO-CONFIRM ref 'PR#37' is not a short SHA
+  - BAD-COMMIT-REF: closed bug NEW-PREFETCH-UNCONDITIONAL ref 'PR#37' is not a short SHA
+  - BAD-COMMIT-REF: closed bug BUG-CLEANUP-002 ref 'PR#37' is not a short SHA
+  - BAD-COMMIT-REF: closed bug BUG-CLEANUP-003 ref 'by-design' is not a short SHA
+  - BAD-COMMIT-REF: closed bug BUG-CLEANUP-004 ref 'PR#37' is not a short SHA
+
+EXIT: 0
