@@ -3,20 +3,19 @@
 > **Этот файл — SSOT по «где мы сейчас»** (текущий HEAD + что дальше). Карта всех
 > документов и правило Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-14.** Source HEAD: `bd8cb9a0` (main, authoritative `git ls-remote origin main`,
-> коммит 2026-07-13 20:17Z). ⚠️ Прежний `b8459bdf` **не существует как git-объект** — история разошлась
-> (`P2-SSOT-DRIFT-2026-07-14`). **Prod deploy 🔴 RED** (verified 2026-07-14): Deploy #1568 fail
-> (`css:layer:validate` — `site.css` 210 `!important` > 202), Metadata&IndexNow #1330 fail (5 metadata
-> records missing), Visual Parity #383 fail; Native Source Contract #151 ✅. Прежняя запись «GREEN @
-> `29065454930`@b8459bdf» ссылалась на несуществующий SHA.
-> **Первоочередное:** 3 P1 deploy-blocker из контент-сессий 07-11..13 — `P1-CSS-IMPORTANT-GATE-DRIFT`,
-> `P1-EDITORIAL-METADATA-REGISTRY-GAP`, `P1-NAGORNAYA-JS-UNREGISTERED` (последовательны; зелёный требует всех трёх;
-> +10 `site.css` `!important` — реальные WCAG-фиксы, развязывать архитектурно, НЕ удалять). Детали:
-> `reverify/CURRENT_HEAD_REVERIFY_2026-07-14_bd8cb9a0_css-important-gate-drift.md`.
+> **Актуально на 2026-07-14 (FAST-loop RCA пройден).** Source HEAD: `2ca2af3b` (main; merge «Библейский атлас — карта
+> Авраама»; мерджи «Генеалогия v1» `0aee617`, сердечные статьи А3–Д1, фиксы Нагорной/karty/
+> map/hard-texts). **Prod deploy 🔴 RED** — с 2026-07-11 `deploy.yml` падает на шаге `Static
+> publication gates` и параллельно фейлятся `Metadata & IndexNow Readiness` (registry structure) и `Visual Parity Guard — pixel-diff`
+> (56 failure + 24 cancelled, 0 success после run `29138555390` @ `007b67de`;
+> последняя попытка — run `29338523013` @ `2ca2af3b`). Контент серий «Сердце», Атлас v1 и
+> карта Авраама **не доехали до продакшена** — P0 DEPLOY-STATIC-GATES-RED-2026-07-11 в матрице.
+> **RCA локализован (arena-auditor-2026-07-14)**: `audit-pro`/`validate` walk(ROOT) не скипят `scripts/` (ложные срабатывания на build-шаблонах `scripts/genealogy-build/*.html`, placeholder `/*__ATLAS__*/;` валит inline-script syntax + все HTML-контракты), `js/nagornaya-bar-extras.js` не внесён в `ALLOWED_JS` в `audit-pro.js`; реальные регрессии: `site.css !important` 210 > ceiling 200, 2 path-leak `AuditRepo/...` в markdown, oversized `images/atlas-export/avraam-{hires,preview}.png`, 38 orphan images; плюс `data/editorial-metadata.json` без 5 новых статей, visual-parity нуждается в owner-approved baseline refresh.
 > **Авторитет при конфликте:** `verified/MASTER_BUG_MATRIX.md` (точечные баги)
-> и `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (системный бэклог + план волн W0–W10).
-> Прежние промпты (Pass 71 `8c318010`; 2026-07-06 `14a49be8`) устарели; SEARCH-016/017 и
-> KARTY-Q-BUG-P0 — уже закрыты (см. матрицу), не переоткрывать.
+> и `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (системный бэклог + план волн W0–W10);
+> атлас-трек KA-0…KA-8 — в `working/atlas/DEBT-REGISTER.md`.
+> Прежние промпты (Pass 71 `8c318010`; 2026-07-06 `14a49be8`; 2026-07-10 `b8459bdf`)
+> устарели; SEARCH-016/017 и KARTY-Q-BUG-P0 закрыты (см. матрицу), не переоткрывать.
 
 ## Перед началом (обязательно)
 
@@ -24,13 +23,13 @@
 git fetch --all --prune && git checkout main && git pull --ff-only && git rev-parse HEAD
 ```
 
-1. Сверь HEAD: если `main` уехал с `bd8cb9a0` — сначала запиши reverify-дельту (что изменилось), не работай по старой правде. ⚠️ Локальные checkout'ы молча откатываются на container-reset — доверяй только `git ls-remote origin main`.
+1. Сверь HEAD: если `main` уехал с `14a49be8` — сначала запиши reverify-дельту (что изменилось), не работай по старой правде.
 2. Прочитай в source-репо: `AGENTS.md` (полностью, особенно §0, §3.10, §9 и «Верификационная дисциплина»), `docs/WORK_MODES.md`, `docs/OWNER-INVARIANTS.md`.
 3. Прочитай здесь: `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` §0–§2 (что подтверждено, что опровергнуто) и §3 (в какой волне твоя задача).
 
 ## Текущее состояние (одним абзацем)
 
-Прод = main, **но деплой сейчас 🔴 RED** (3 workflow, см. шапку выше) — публикация заблокирована CSS-`!important`-контрактом + metadata-registry + unregistered JS. Точечные открытые баги + их счётчики — в `verified/MASTER_BUG_MATRIX.md` (единственный владелец счётчиков, здесь намеренно не дублируются). Главная работа — системная, волнами из SUPER_AUDIT: **W1 транзакция релиза (P0) → W2 редакционные даты (P0) → W3 SW/кэш → W4 route-реестр/sitemap/IndexNow → W5 security/XSS → W6 Bible-корпус → W7 семантические гейты → W8 SEO-очистка → W9 a11y/perf → W10 автоматизация AuditRepo**. W0 (гигиена правды) выполнена 2026-07-06.
+Прод = main, **но деплой красный на Static publication gates с 11 июля** (P0 DEPLOY-STATIC-GATES-RED-2026-07-11) — RCA локализован в проходе 2026-07-14: блокирует не одна «загадочная» ошибка, а **комплекс из 11 ошибок audit-pro + missing editorial-metadata records + визуальный пиксель-бейзлайн**, среди которых часть — tooling-ложные срабатывания на build-шаблонах `scripts/genealogy-build/*.html` (audit-pro/validate walk не скипят `scripts/`) и отсутствие `js/nagornaya-bar-extras.js` в `ALLOWED_JS`, а часть — реальные регрессии (!important ceiling, path-leak в markdown, oversized/bitmap-orphans). Полный список и repair-lane (п.1–8) — в `reverify/CURRENT_HEAD_REVERIFY_2026-07-14_2ca2af3b.md` §FAST-loop RCA и в строке P0 матрицы. Точечные открытые баги и их счётчики живут в `verified/MASTER_BUG_MATRIX.md` (единственный владелец). Главный системный приоритет сейчас — **W1 транзакция релиза (P0)** — красный деплой блокирует продвижение всех других волн; Атлас/Сердца/Нагорная фиксы не доезжают до продакшена с 11 июля. План волн SUPER_AUDIT по-прежнему: W2 редакционные даты (P0) → W3 SW/кэш → W4 route-реестр/sitemap/IndexNow → W5 security/XSS → W6 Bible-корпус → W7 семантические гейты → W8 SEO-очистка → W9 a11y/perf → W10 автоматизация AuditRepo. Дополнительный in-flight трек — Атлас/Генеалогия (KA-0…KA-8, в работе владельцем; верифицированные результаты интейков в `incoming/claude-atlas-deep-audit/` и `working/atlas/DEBT-REGISTER.md`). W0 выполнена 2026-07-06.
 
 ## Зоны in-flight — НЕ ТРОГАТЬ без владельца
 
@@ -45,8 +44,9 @@ git fetch --all --prune && git checkout main && git pull --ff-only && git rev-pa
 4. Паритет Astro↔legacy ≠ правда контента. Байтовое совпадение не закрывает семантические классы.
 5. Не деплоить/не мержить с падающими гейтами через ослабление аудита; каждое исключение в гейте — с замещающим семантическим контрактом.
 6. Не «исправляй» уже исправленное: сверься с ЗАКРЫТО-таблицей матрицы и §1 SUPER_AUDIT (опровергнутые формулировки).
-7. Позитивные заявления («чисто», «надёжно») — только с именованным инвариантом, окружением и негативным тестом (GATE-29).
-8. AuditRepo обновляй атомарно с фиксом: строка в матрице + статус в SUPER_AUDIT + reverify при смене HEAD.
+7. **Пока `DEPLOY-STATIC-GATES-RED-2026-07-11` не закрыт — не мержь новых контентных/фича-коммитов в `main`** без локального FAST-гейта (`npm run guard:shared-files && npm run data:consistency && npm run migration:metadata:check:strict && npm run audit-pro`). Прод-застревание важнее новых фич.
+8. Позитивные заявления («чисто», «надёжно») — только с именованным инвариантом, окружением и негативным тестом (GATE-29).
+9. AuditRepo обновляй атомарно с фиксом: строка в матрице + статус в SUPER_AUDIT + reverify при смене HEAD.
 
 ## Формат финального отчёта
 
