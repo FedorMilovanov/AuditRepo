@@ -172,6 +172,59 @@ All six are in the **source repo** (owner-gated release transaction W1); I did *
 
 ---
 
+## 🎨 THIRD-PASS DEEPENING — CSS + JS deep-dive (2026-07-14)
+
+> Owner: *"досконально проверить и углубить исследования по CSS и еще JS"*. Ran real AST parsers
+> from the repo's own `node_modules` (`postcss@8.5.16`, `css-tree`, `acorn`) + `node --check`.
+> Full evidence: `../incoming/arena-auditor-meta-governance/2026-07-14/evidence/css-js-deep-audit-2026-07-14.txt`.
+
+### 🔴 AUDIT-CSS-SITECSS-STRUCT-CORRUPTION (new, P1) — structural corruption invisible to all gates
+Two independent parsers fail on `css/site.css`:
+- `postcss`: `40:16304 Unknown word .bottom-bar,.btoc-link,.flip-card-inner,.h-article-card,.quiz-option`
+- `css-tree`: **9 parse errors** (offsets 179799, 180014, 201874, 201914, 203062, 277864, +3)
+
+Five malformed rules (browsers drop them via error-recovery):
+1. `@media (prefers-reduced-motion:reduce){.bottom-bar,.btoc-link,.flip-card-inner,.h-article-card,.quiz-option}`
+   — a **selector list with NO declaration block**, immediately followed by the next `@media`.
+   **Impact: reduce-motion users get zero motion suppression for these 5 component classes (a11y).**
+2. `...;.ehrman-block,.info-box,.quote-box}@media(forced-colors...)` — dangling selector list, no `{}`.
+3. `...,.resume-reading-title,@supports (animation-timeline:scroll()){...}` — list broken by `@supports` (trailing comma).
+4. `@media (hover:hover) and (pointer:fine){html.dark }` — empty rule (no declarations).
+5. `.gbx-backlinks__maplink:rgba(122,46,46,0.08);gbx-backlinks__maplink:hover{...` — malformed declaration (no property).
+
+**Why gates miss it:** `audit-pro.js` checks only brace-balance (which *passes* — braces are balanced;
+the corruption is structural, not brace-level); `validate.js` does no structural CSS parsing;
+`css-layer-validator.js` only counts `!important`. This is the **same blind spot** that let the
+historical `CSS-PARSE-CORRUPTION-SITECSS` (PR#42) ship. **Pre-existing** (present in `b8459bdf`;
+`site.css` is `+0/-0` in the delta — only its `?v=` hash changed).
+
+### AUDIT-CSS-NO-STRUCTURAL-PARSE (new, P3) — the gate gap itself
+No CSS gate runs a real parser. Fix is cheap: add `postcss`/`css-tree` `parse()` with an
+`onParseError`→fatal step to `audit-pro.js` (both libs are already installed). Closes the whole class.
+
+### AUDIT-CSS-DEAD-KEYFRAMES-TOKENS (new, P3) — minor hygiene
+- `@keyframes fx-breathe` is defined **twice in the same `site.css`** (first def is dead).
+- 33 `--custom-props` defined but never used (`--label`, `--ghost`, `--docked`, `--tg`, `--vk`, `--wa`, …).
+- **No false positive on vars:** all "50 undefined" `var()` refs have a fallback, are JS-runtime-set
+  (`--mouse-x`, `--scroll-pct`, `--gbs2-*`), or are defined in `@layer base` (`--z-*` tokens exist).
+
+### JS deep-dive — mostly healthy; reverify confirmations
+- All 15 `js/*.js` pass `node --check` (0 syntax errors); 0 `debugger`, 0 TODO/FIXME, 1 `console.log`
+  (behind a `debug` flag — legit).
+- **BUG-PERF-001 reverify:** addEventListener **349** / removeEventListener **25** (was 339/25 → grew
+  +10 with the atlas/nagornaya work). Still-confirmed, marginally worse. Leaders: site.js 196/13,
+  enhancements.js 48/1, nagornaya-mobile-toc.js 26/0, search.js 22/0.
+- **XSS surface (28 innerHTML sinks): sound, no new bug.** Data-derived writes route through `tt()`
+  (HTML-escape) or the FAQ builder's script/attr stripper. Only `site.js:451` (`titleText` from
+  `.textContent`, low risk) and `bibleRefs .btip` (curated `#bibleRefs` JSON, by-design raw like
+  glossary D-21) are unescaped.
+- **NEW-HIGHLIGHTS-NO-REINIT-GUARD reverify — still-confirmed:** `highlights.js` IIFE has no
+  `_initialized` guard (contrast `bookmark-engine.js`'s `window.BookmarkEngine._initialized`).
+- **NF-VOSK-DEAD-SPLITSENTENCES reverify — still-confirmed:** `vosk-tts-core.js:413/446` exports
+  `splitSentences`, but the controller uses its own `splitTtsChunks` (`floating-cluster-controller.js:487`).
+
+---
+
 ## Status changes vs canon (matrix reverify)
 
 | Bug ID | Previous status | Current status | Evidence angle |
@@ -185,6 +238,7 @@ All six are in the **source repo** (owner-gated release transaction W1); I did *
 
 ## Buckets
 - **regression (new, deploy-blocking):** REG-VALIDATE-GENEALOGY-TEMPLATE, REG-EDITORIAL-METADATA-MISSING, CACHE-BUST-NO-WRITER (recurred), GATE-CSS-IMPORTANT-RATCHET, AUDIT-ATLAS-DOC-PATH-LEAK, AUDIT-FORBIDDEN-JS-NAGORNAYA.
+- **new (3rd pass, deep CSS/JS — not deploy-blocking but real):** AUDIT-CSS-SITECSS-STRUCT-CORRUPTION (P1, a11y + gate blind spot), AUDIT-CSS-NO-STRUCTURAL-PARSE (P3 gate gap), AUDIT-CSS-DEAD-KEYFRAMES-TOKENS (P3 hygiene). BUG-PERF-001 re-measured 349/25.
 - **fixed-current (this pass, in AuditRepo):** AR-CI-RED (AuditRepo's own `validate_audit_repo.py` restored to PASS after 3 concurrent-agent violations).
 - **fixed-current (source, prior pass):** CI-INDEXNOW-CHECKER-STALE.
 - **still-confirmed:** D-19 (antisovetov), D-4, D-7, TTS-DL-CONSENT, TTS-DL-UNZIP-SYNC, NF-VOSK-DEAD-SPLITSENTENCES, NEW-HARDTEXTS-CSP-MISSING-HFCDN, D-8 (+ all other open P2/P3 carried forward, not re-witnessed this pass).
