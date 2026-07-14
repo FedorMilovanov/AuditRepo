@@ -1,0 +1,46 @@
+# DEEP CSS + JS AUDIT — PASS 4 (detailed) — gb-is-my-strength @ 2ca2af3b
+# Node v22.22.3; tools: postcss@8.5.16, css-tree, acorn, node --check
+
+## ===== CSS: per-file AST health (ALL files, not just site.css) =====
+command-palette.css        csstree-errs=0  postcss=ok
+enhancements-runtime.css   csstree-errs=0  postcss=ok
+floating-cluster.css       csstree-errs=1  postcss=ok    <-- NEW finding
+highlights-runtime.css     csstree-errs=0  postcss=ok
+home.css                   csstree-errs=0  postcss=ok
+mobile-hotfix.css          csstree-errs=0  postcss=ok
+nagornaya-mobile-toc.css   csstree-errs=0  postcss=ok
+site.css                   csstree-errs=9  postcss=FAIL   (already tracked: AUDIT-CSS-SITECSS-STRUCT-CORRUPTION)
+sw-toast.css               csstree-errs=0  postcss=ok
+
+## NEW: AUDIT-CSS-FLOATCLUSTER-COMMENT-CORRUPTION (css/floating-cluster.css)
+Comment markers UNBALANCED: 237 `/*` vs 236 `*/` (one opener lost).
+Root: line 1405 `/* ====` opens, line 1407 `/* ----` opens a 2nd (CSS comments don't nest) →
+  the 1405 comment closes at line 1409 `*/`, so rules 1410-1423 (.gbs-rail-foot) render fine,
+  BUT lines 1424-1426 ("v15: MOBILE PREVIEW — Save REMOVED..." + "===== */") are NAKED TEXT
+  ending in a stray `*/` with no matching `/*`.
+Browser error-recovery: the naked text becomes a bogus SELECTOR that swallows the next rule
+  `[data-gill-v16] .mobile-bottom-bar{...}` (line 1429) — css-tree confirms its 19 declarations
+  get attached to selector "v15: MOBILE PREVIEW..." (decls=19) instead.
+IMPACT (measured, NOT overclaimed): of the 19 dropped props, most (position/background/border-radius/
+  box-shadow/backdrop-filter/padding) ARE re-set by LATER .mobile-bottom-bar rules (2786 @media, etc).
+  Only justify-content, font-family, font-size are genuinely lost → minor mobile-bar spacing/font drift.
+  Severity P3. Real risk is LATENT: future edits to the 1429 block silently fail.
+Pre-existing (b8459bdf also unbalanced 198/197). Shipped verbatim to dist (css/ copied as-is).
+Gate-invisible for the same reason as site.css (audit-pro only brace-balances).
+
+## ===== JS: detailed pass =====
+Timers: setInterval/clearInterval BALANCED per file (no timer leaks). setTimeout heavy in site.js(46)
+  but paired with clearTimeout where it matters (debounce patterns).
+localStorage: 28 setItem calls — ALL guarded (try/catch or helper wrappers T()/A()). No unguarded write.
+JSON.parse: 12 calls; the 2 that looked bare (site.js:487, vosk-tts-engine.js:196) are BOTH inside
+  try/catch (getProgress) resp. a .then().catch() chain. No unguarded parse. No new bug.
+XSS: (pass 3) sound — data routes via tt()/strip. No change.
+ReDoS: no nested-quantifier regex found. search.js escapes user input via P() before RegExp.
+Listeners: search.js 22/0 — all bound ONCE to singleton .cp-backdrop (guarded by __gbSearchBootRequested);
+  NOT a leak. enhancements.js 48/1 — ResizeObserver/IntersectionObserver used; still-open BUG-PERF-001
+  covers the aggregate add/remove imbalance (349/25, reverified pass 3).
+
+## Budget reverify (D-3 / NEW-CSS-BUDGET-01) — canon numbers STALE:
+  audit-pro live: "JS total 469101 > 365000" (canon D-3 said 375041) — grew ~94KB (atlas/TTS/mobile).
+  audit-pro live: "Core CSS total 554013 > 425000" — canon D-3 says "CSS-бюджет в норме" (STALE!).
+  Both are ⚠️ warnings (not deploy-blocking). NEW-CSS-BUDGET-01 should carry the concrete 554013/425000.

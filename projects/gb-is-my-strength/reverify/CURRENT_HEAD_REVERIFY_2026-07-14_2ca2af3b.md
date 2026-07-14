@@ -225,6 +225,46 @@ No CSS gate runs a real parser. Fix is cheap: add `postcss`/`css-tree` `parse()`
 
 ---
 
+## 🔍 FOURTH-PASS — detailed CSS/JS (2026-07-14)
+
+> Owner: *"ещё проход по CSS и JS, более детальный."* Ran a **per-file AST scan of ALL CSS**
+> (pass 3 only deep-parsed site.css) + targeted JS defensive-coding checks. Full evidence:
+> `../incoming/arena-auditor-meta-governance/2026-07-14/evidence/css-js-deep-audit-pass4-2026-07-14.txt`.
+
+### 🆕 AUDIT-CSS-FLOATCLUSTER-COMMENT-CORRUPTION (P3) — a SECOND corrupted CSS file
+Per-file css-tree scan flagged `css/floating-cluster.css` too (1 error; postcss tolerated it, which is
+why pass 3 missed it). **Comment markers unbalanced: 237 `/*` vs 236 `*/`.** Line 1405 `/* ===` opens,
+line 1407 `/* ---` opens a second (CSS comments don't nest) → 1405's comment closes at line 1409 `*/`,
+so the `.gbs-rail-foot` rules (1410-1423) render, **but** lines 1424-1426 (`v15: MOBILE PREVIEW — Save
+REMOVED...` + `===== */`) are naked text ending in a stray `*/`. Browser error-recovery turns it into a
+bogus selector that **swallows the next rule** `[data-gill-v16] .mobile-bottom-bar{...}` (line 1429) —
+css-tree confirms its 19 declarations bind to selector `"v15: MOBILE PREVIEW..."`.
+**Impact — measured, deliberately not overclaimed:** of the 19 lost props, most (position, background,
+border-radius, box-shadow, backdrop-filter, padding) **are re-set by later `.mobile-bottom-bar` rules**
+(the `@media (max-width:63.99em)` block at 2786, etc.). Only `justify-content`, `font-family`,
+`font-size` are genuinely lost → minor mobile-bar spacing/font drift. Real hazard is **latent**: future
+edits to the 1429 block silently fail. Pre-existing (b8459bdf also 198/197). Copied verbatim to dist.
+Gate-invisible (same brace-balance blind spot). Fix: restore the `/*` on line 1424 + the structural
+CSS parse from AUDIT-CSS-NO-STRUCTURAL-PARSE (which would have caught both this and site.css).
+
+### JS detailed pass — defensively sound, no new bug (false positives ruled out)
+- **Timers:** setInterval/clearInterval balanced per file; setTimeout-heavy `site.js` (46) pairs
+  clearTimeout in debounce patterns. No timer leak.
+- **localStorage (28 setItem):** all guarded (try/catch or `T()`/`A()` wrappers). The 2 "bare"
+  `JSON.parse` (site.js:487, vosk-tts-engine.js:196) are **both** inside try/catch resp. a
+  `.then().catch()` chain — no unguarded parse. **No new bug** (checked before claiming).
+- **ReDoS:** no nested-quantifier regex; search.js escapes user input via `P()` before `new RegExp`.
+- **Listeners:** search.js's 22-add/0-remove is **not a leak** — bound once to the singleton
+  `.cp-backdrop` (guarded by `__gbSearchBootRequested`). The aggregate imbalance stays tracked under
+  BUG-PERF-001 (349/25, pass 3).
+
+### Budget reverify — canon D-3 numbers were STALE
+`audit-pro` live: **JS total 469101 > 365000** (canon D-3 said 375041 — grew ~94KB) and **Core CSS
+total 554013 > 425000** — but canon D-3 explicitly said "CSS-бюджет в норме" (stale since the atlas
+work). Both ⚠️ warnings (not deploy-blocking). Updated D-3 + NEW-CSS-BUDGET-01 with concrete figures.
+
+---
+
 ## Status changes vs canon (matrix reverify)
 
 | Bug ID | Previous status | Current status | Evidence angle |
@@ -239,6 +279,7 @@ No CSS gate runs a real parser. Fix is cheap: add `postcss`/`css-tree` `parse()`
 ## Buckets
 - **regression (new, deploy-blocking):** REG-VALIDATE-GENEALOGY-TEMPLATE, REG-EDITORIAL-METADATA-MISSING, CACHE-BUST-NO-WRITER (recurred), GATE-CSS-IMPORTANT-RATCHET, AUDIT-ATLAS-DOC-PATH-LEAK, AUDIT-FORBIDDEN-JS-NAGORNAYA.
 - **new (3rd pass, deep CSS/JS — not deploy-blocking but real):** AUDIT-CSS-SITECSS-STRUCT-CORRUPTION (P1, a11y + gate blind spot), AUDIT-CSS-NO-STRUCTURAL-PARSE (P3 gate gap), AUDIT-CSS-DEAD-KEYFRAMES-TOKENS (P3 hygiene). BUG-PERF-001 re-measured 349/25.
+- **new (4th pass, detailed CSS/JS):** AUDIT-CSS-FLOATCLUSTER-COMMENT-CORRUPTION (P3, 2nd corrupted CSS file — minor visual impact, latent hazard). Budget reverify: D-3 refreshed (JS 469101; CSS 554013>425000 — canon "в норме" was stale), NEW-CSS-BUDGET-01 given concrete figures. JS defensively sound — no new bug (localStorage/JSON.parse/timers/regex all checked).
 - **fixed-current (this pass, in AuditRepo):** AR-CI-RED (AuditRepo's own `validate_audit_repo.py` restored to PASS after 3 concurrent-agent violations).
 - **fixed-current (source, prior pass):** CI-INDEXNOW-CHECKER-STALE.
 - **still-confirmed:** D-19 (antisovetov), D-4, D-7, TTS-DL-CONSENT, TTS-DL-UNZIP-SYNC, NF-VOSK-DEAD-SPLITSENTENCES, NEW-HARDTEXTS-CSP-MISSING-HFCDN, D-8 (+ all other open P2/P3 carried forward, not re-witnessed this pass).
