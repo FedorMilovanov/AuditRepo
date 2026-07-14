@@ -11,6 +11,9 @@
 - **Environment:** Claude Code remote sandbox, Node 22, npm ci OK
 - **Build mode:** source + plain `astro build` (evidence валиден для Astro-owned strict-native-app маршрута; strangler-слой не гонялся)
 - **Report type:** **strategy / foundation audit** (по прецеденту `arena-agent-karty-strategy/2026-07-07`)
+- **⤳ UPDATE 2026-07-14:** стратегия РЕАЛИЗОВАНА (атлас v1) и подтверждена владельцем —
+  см. `../2026-07-14-milestone-atlas-v1/MILESTONE.md`. Счётчики кластеров исправлены
+  на честные (TIPNR): Потомки Авраама 764 (не 318 из макета), Допотопные 25 (не 165).
 - **Companion doc в source repo:** `docs/GENEALOGY-FOUNDATION-2026-07-11.md` (ветка `claude/biblical-genealogy-svg-6l6qb8`)
 - **Внешнее исследование:** `artifacts/web-research-sources-2026-07-11.md` (65 аннотированных источников)
 
