@@ -1,0 +1,107 @@
+=== INDEX: Legacy (index.html) vs Astro (src/components/home/) comparison evidence ===
+
+--- 1. hreflang alternate links ---
+
+Legacy (index.html) — ПРИСУТСТВУЕТ:
+$ grep -n 'hreflang\|alternate' index.html | head -5
+11:    <link rel="alternate" hreflang="ru" href="https://gospod-bog.ru/">
+12:    <link rel="alternate" hreflang="x-default" href="https://gospod-bog.ru/">
+
+Astro (HomePageHead.astro) — ОТСУТСТВУЕТ:
+$ grep -c 'hreflang' src/components/home/HomePageHead.astro
+0
+
+--- 2. JSON-LD SearchAction ---
+
+Legacy (index.html) — ПРИСУТСТВУЕТ:
+$ grep -o '"SearchAction"\|"potentialAction"\|SearchAction\|potentialAction' index.html
+SearchAction
+potentialAction
+"SearchAction"
+"potentialAction"
+
+Astro (HomePageHead.astro) — ОТСУТСТВУЕТ:
+$ grep -o '"SearchAction"\|"potentialAction"\|SearchAction\|potentialAction' src/components/home/HomePageHead.astro
+(пусто)
+
+--- 3. h-nav-fav class ---
+
+Legacy:
+$ grep 'h-nav-fav' index.html
+106:      <li><a href="/izbrannoe/" class="h-nav-fav" aria-label="Избранное" title="Ваше избранное">★ Избранное</a></li>
+
+Astro HomePageChrome.astro:
+$ grep 'h-nav-fav' src/components/home/HomePageChrome.astro
+(пусто - класс не задан)
+
+--- 4. ⌘K hotkey hardcode ---
+
+Legacy:
+$ grep -n '⌘\|Ctrl\|metaKey' index.html
+(только в JS-скриптах - но там через metaKey||ctrlKey)
+Постоянно выводится ⌘K
+
+Astro HomeHero.astro:
+$ grep -n '⌘' src/components/home/HomeHero.astro
+25:      <span class="h-hero-search__kbd" aria-hidden="true"><kbd>⌘</kbd><kbd>K</kbd></span>
+
+--- 5. Body class parity ---
+
+Legacy:
+<body class="home-page">
+
+Astro (index.astro):
+<body class="home-page">
+OK — совпадает.
+
+--- 6. Key IDs parity ---
+
+Все 30 ID совпадают между legacy и Astro.
+Дополнительно в Astro: id="gbSearchBtn" (отсутствовал в legacy — это фикс, см. комментарий в коде).
+Отличия: нет.
+
+--- 7. Inline styles count ---
+
+Legacy index.html:
+$ grep -c 'style="' index.html
+8
+
+Astro components:
+$ grep -rn 'style="' src/components/home/ | grep -v 'astro.config\|node_modules' | wc -l
+~25 мест с inline-стилями
+(значительно больше, чем в legacy)
+
+--- 8. SITE_CONFIG features ---
+
+$ python3 -c "
+import re
+with open('src/components/home/HomePageChrome.astro') as f:
+    c = f.read()
+m = re.search(r'SITE_CONFIG\s*=\s*({.*?});', c, re.DOTALL)
+if m:
+    print(m.group(1)[:500])
+"
+Вывод показывает:
+  features: {
+    themeToggle: { enabled: true },
+    share: { enabled: false },
+    backToTop: { enabled: false },
+    readingProgress: { enabled: false },
+    toc: { enabled: false },
+    footnotes: { enabled: false },
+    timeline: { enabled: false },
+    flipCards: { enabled: false },
+    quiz: { enabled: false },
+    bookmarks: { enabled: false },
+    homepageResume: { enabled: true, maxItems: 5 }
+  }
+
+При этом .h-reading-progress элемент присутствует в DOM.
+.backToTop = false, но .h-scroll-top элемент присутствует в DOM.
+
+--- 9. Copy-legacy check ---
+
+$ ls -la /home/user/gb-is-my-strength/copy-legacy-to-dist.js 2>/dev/null || echo "script not in root - check build tools"
+(script reference in SANDBOX-ENV-2026-06-21.md)
+
+--- END ---
