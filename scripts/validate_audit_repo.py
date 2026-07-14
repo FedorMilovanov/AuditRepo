@@ -24,10 +24,25 @@ def project_dirs():
 
 errors = []
 
-# Root hygiene
+# Root hygiene: .md-файлы по allow-list
 for p in ROOT.glob('*.md'):
     if p.name not in ALLOWED_ROOT_MD:
         fail(f'unexpected root markdown file: {p.name}', errors)
+
+# AR-006: allow-list КОРНЕВЫХ ДИРЕКТОРИЙ и не-.md файлов — до этого валидатор
+# молча пропускал мусор уровня корня (прецедент: verification/atlas/ с 27 PNG).
+# verification/ и references/ узаконены: их используют atlas-трек и UI-канон.
+ALLOWED_ROOT_DIRS = {
+    '.git', '.github', 'projects', 'scripts', 'verification', 'references',
+    '_OWNER_DOWNLOADS',
+}
+ALLOWED_ROOT_FILES = {'.gitignore'}
+for p in ROOT.iterdir():
+    if p.is_dir():
+        if p.name not in ALLOWED_ROOT_DIRS:
+            fail(f'unexpected root directory: {p.name}/ (внесите в ALLOWED_ROOT_DIRS осознанно или уберите в projects/<proj>/)', errors)
+    elif p.suffix != '.md' and p.name not in ALLOWED_ROOT_FILES:
+        fail(f'unexpected root file: {p.name}', errors)
 
 # Required roots
 for required in ['README.md', 'PROJECT_REGISTRY.md', 'projects', 'scripts']:
