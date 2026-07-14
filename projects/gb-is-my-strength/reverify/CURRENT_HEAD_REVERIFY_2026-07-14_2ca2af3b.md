@@ -1,295 +1,201 @@
-# CURRENT HEAD REVERIFY — 2026-07-14 @ `2ca2af3b`
+# Current Head Reverify — 2026-07-14 @ `2ca2af3b`
 
 ## Project
-- Project: gb-is-my-strength (gospod-bog.ru)
-- Source repo: `FedorMilovanov/gb-is-my-strength`
-- Current source HEAD SHA: **`2ca2af3b`** (`merge: Библейский атлас — карта Авраама`, 2026-07-14T13:54:18Z)
-- Canon HEAD of record (before this reverify): **`b8459bdf`** (2026-07-10, = PR#71)
-- Date: 2026-07-14
-- Verifier: arena-auditor-meta-governance (Arena.ai Agent Mode)
-- Witness angles: `verified-source` + `verified-build-tooling` (local gate reproduction, Node v22.22.3, `npm ci`) + `verified-ci` (GitHub Actions run status via API)
+- **Project:** gb-is-my-strength / gospod-bog.ru
+- **Source repo:** `FedorMilovanov/gb-is-my-strength`
+- **Current HEAD SHA:** `2ca2af3b91ace0a94d1537595a8d6e66281c0023`  
+  (`merge: Библейский атлас — карта Авраама`, 2026-07-14T13:54Z)
+- **Previous canonical HEAD (matrix/NEXT_AGENT):** `b8459bdf` (2026-07-10)
+- **Delta:** **+287 commits**, **~300 files** (269 added / 31 modified in compare API)
+- **Date:** 2026-07-14
+- **Verifier:** arena-auditor-head-reverify (Arena Agent Mode)
+- **Witness angles used:** `verified-source` (local sparse+archive checkout), `verified-ci` (GitHub Actions API), historical compare `b8459bdf…2ca2af3b` / `007b67def5…2ca2af3b`
+- **Not run this session:** full `strangler:build:production-like` (OOM risk / time), live browser on prod (TLS handshake from sandbox to Pages failed), full `validate:static-publication` end-to-end
 
-## Why this reverify exists
-Owner note: *"много пушей и MERGE был, актуализируй прошлые анализы"*. Confirmed by API:
-the source repo was last pushed **2026-07-14T14:03Z** while the AuditRepo canon (matrix
-masthead + `NEXT_AGENT_PROMPT.md`) was still frozen at `b8459bdf` / deploy GREEN run
-`29065454930` from **2026-07-10**. The prior analyses are therefore **stale**.
-
-### Delta magnitude (`gh api compare b8459bdf...2ca2af3b`)
-- **287 commits ahead**, **300 files changed**, `status=ahead`, `behind_by=0`.
-- Merged PRs since canon: **#72, #73, #74, #75, #76, #77, #78, #80, #81, #82, #83, #84,
-  #85, #86, #87, #88** (mobile-chrome shell + Gill/Hermenevtika readers, TTS RU-voice,
-  gill quiz CBM) **plus two non-PR merges**: `0aee6171` (genealogy «Библейский атлас
-  родословий» — course, engines, data) and `2ca2af3b` (Авраам map).
-- Largest additions: `audit/atlas-preview/*.html` (12 sheet pages, ~1000 lines each) and
-  the genealogy build pipeline `scripts/genealogy-build/**`.
+## Compared against
+- `verified/MASTER_BUG_MATRIX.md` (masthead still claimed GREEN @ `b8459bdf`)
+- `NEXT_AGENT_PROMPT.md` (still 2026-07-10 / GREEN)
+- `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (frozen @ `14a49be8` — plan still valid, claims not re-stamped)
+- Incoming: genealogy strategy/milestone, atlas deep-audit + DEBT-REGISTER, karty cluster
+- Last formal reverify: `CURRENT_HEAD_REVERIFY_2026-07-09_head-2313f36f-149-commit-delta.md`
 
 ---
 
-## 🔴 HEADLINE: production deploy is RED on live HEAD (canon says GREEN — STALE)
+## 0. Executive verdict (one screen)
 
-Canon masthead: *"Deploy ✅ GREEN — run 29065454930 @ b8459bdf, 0 failed steps."*
-**Live truth (2026-07-14):** the last content merges do **not** deploy. Three workflows
-fail on `2ca2af3b` (and on the prior merge `0aee6171`):
+```text
+Source main  = 2ca2af3b  (2026-07-14)
+Prod deploy  = STALE / RED
+Last GREEN deploy = 007b67def5 @ 2026-07-11T03:46Z (run 29138555390)
+Since then: ~277 commits on main, 0 successful deploys
+Deploy pipeline since 2026-07-11: ~59 failure + ~25 cancelled of ~85 runs
+Readers still see ~2026-07-11 site; main has genealogy atlas v1, heart-series expansion,
+mobile-chrome, atlas sheet work, cache-bust churn — NONE of that is on production.
 
-| Workflow | Failing step | CI run |
+Canonical AuditRepo SSOT (matrix + NEXT_AGENT) was 4 days / 287 commits behind.
+This reverify restores HEAD truth and registers deploy-blocking findings.
+```
+
+---
+
+## 1. Deploy / release transaction (P0)
+
+### 1.1 Facts (CI API)
+
+| Fact | Value | Witness |
 |---|---|---|
-| Deploy to GitHub Pages | **Static publication gates** | `29338523013` (failure) |
-| Metadata & IndexNow Readiness | **Validate registry structure** | `29338522715` (failure) |
-| Visual Parity Guard — pixel-diff | Run pixel-diff screenshots | `29338522526` (failure) |
+| HEAD | `2ca2af3b` | `gh api …/commits/main` |
+| Deploy run @ HEAD | `29338523013` **failure** | Actions API |
+| Failed step | **Static publication gates** (`npm run validate:static-publication`) — step 7; all build/deploy steps skipped | job steps JSON |
+| Sibling fails @ HEAD | Visual Parity Guard `29338522526` fail; Metadata & IndexNow Readiness `29338522715` fail on **Validate registry structure** | Actions API |
+| Last success deploy | `29138555390` @ `007b67def5` 2026-07-11T03:46 | workflow deploy.yml success list |
+| First failure after green | ~`4506c3d7ce` 2026-07-11T08:26 (mobile Gill polish #82) | deploy history |
+| Since 2026-07-11 | **1 success / 59 failure / 25 cancelled** (n≈85) | jq over deploy runs |
 
-Last GREEN deploy of record remains `b8459bdf` → **production is stale-locked at the
-2026-07-10 HEAD**; genealogy/atlas + mobile-reader work (PR#72–#88) is **not live**.
-(CI blob-log download was throttling out; root causes below were reproduced **locally**
-against a fresh clone of `2ca2af3b`, which is stronger evidence than log scraping.)
+### 1.2 Confirmed deploy-blocking defects (source gates, exit=1)
 
-### Root cause A — `validate:strict` chokes on genealogy build templates (deploy blocker)
-- **`REG-VALIDATE-GENEALOGY-TEMPLATE` (new, P1 deploy-blocking regression)**
-- `node scripts/validate.js --strict` → **EXIT 1**, 2 errors:
-  ```
-  ❌ [scripts/genealogy-build/atlas-template.html] inline <script> syntax error (#1): Unexpected token ';'
-  ❌ [scripts/genealogy-build/interactive-template.html] inline <script> syntax error (#1): Unexpected token ';'
-  ```
-- Mechanism (witness triad): the two files are **build-time templates** with placeholders
-  substituted at build (`build-atlas.mjs:156` → `tpl.replace('/*__ATLAS__*/', JSON.stringify(scene))`;
-  same for `/*__GRAPH__*/`). As raw source, `const ATLAS=/*__ATLAS__*/;` reduces to
-  `const ATLAS=;` → genuinely invalid JS. They are **never served** (only consumed by the
-  build). But `validate.js` `walkHtmlFiles()` (line 467) recurses from repo ROOT with a
-  skip-set (`.git,node_modules,dist,build,...`) that **does not exclude `scripts/`**, so it
-  lint-checks build inputs as if they were pages.
-- `validate:strict` is inside `validate:all` → `validate:static-publication` → the deploy
-  job's *Static publication gates* step (`deploy.yml:97`). One EXIT 1 fails the whole deploy.
-- **Repair options** (owner/impl decision, release-transaction lane): (a) add `scripts/` (or
-  specifically `scripts/genealogy-build/`) to the `validate.js` walk skip-set; or (b) skip
-  `<script>` bodies containing build placeholders (`/*__…__*/`); or (c) move templates to a
-  `*.tpl.html`/`_build-tools/` name the walkers already ignore. Same drift also trips
-  `audit-pro.js` (lang/canonical/charset/inline-script on the same 2 files — its `skipDirs`
-  ignores `audit/` but not `scripts/`).
+Run on checkout `2ca2af3b` (sparse + `git archive` of legacy HTML trees so root mirrors exist):
 
-### Root cause B — 5 new routes missing editorial-metadata records (readiness blocker)
-- **`REG-EDITORIAL-METADATA-MISSING` (new, P1 deploy-blocking regression)**
-- `node scripts/editorial-metadata-registry.js --check` → 5 errors (Eligible 25 / Records 20):
-  ```
-  /articles/dzhon-gill-chast-4-ekzeget/: metadata record missing
-  /articles/chto-bibliya-nazyvaet-serdcem/: metadata record missing
-  /articles/novoe-serdce/: metadata record missing
-  /articles/serdce-i-duh/: metadata record missing
-  /articles/serdce-spravochnik/: metadata record missing
-  ```
-- Mechanism: new content (Gill Part IV + «Сердце» series articles landed 2026-07-13/14) was
-  published without appending records to the editorial-metadata registry. This is the
-  *Validate registry structure* step in `Metadata & IndexNow Readiness` → and because
-  `deploy.yml` deploys via `workflow_run` on that workflow's `conclusion == 'success'`, a red
-  readiness workflow also blocks the content-push deploy path.
-- Repair: add the 5 editorial-metadata records (dates/author) for the new routes.
-
-### Root cause C — site-wide cache-bust drift (audit-pro, systemic — predicted 2026-07-11)
-- **`CACHE-BUST-NO-WRITER` (confirms the owner's 2026-07-11 follow-up prediction)**
-- `audit-pro.js` reports **114 errors**; the dominant class is `Cache-bust mismatch` across
-  `nagornaya/**`, `rodosloviye/`, `pastor-series/`, `karty/` (`?v=` hashes stale vs source).
-- Reproduced fix: `node scripts/cache-bust.js --write` regenerates **82 files** and drops
-  cache-bust mismatches to **0**. No workflow runs `cache-bust --write`+commit (indexnow &
-  editorial-metadata only *check*; deploy's cache-bust step is a no-op "skip if IndexNow did
-  it"), so every concurrent asset-touching push leaves main red for everyone — exactly the
-  systemic finding logged on 2026-07-11 (`9fce2bc`). It has **recurred**.
-
-### Also failing in the audit-pro cluster (all in the static-publication chain)
-- Base-path leaks in **new** files: `docs/ATLAS-CONTRACT-2026-07-10.md`,
-  `scripts/genealogy-build/README.md` (contain `AuditRepo/projects/gb-is-my-strength/…`).
-- Orphan images: 38 files / ~1605 KB in `/images/` (incl. `atlas-*-scene-1200w.webp`).
-- Forbidden JS: `js/nagornaya-bar-extras.js` not in `ALLOWED_JS` allowlist (`audit-pro.js:52`).
-- Oversized raw images; a `css/site.css !important` ratchet regression.
-
----
-
-## 🔬 SECOND-PASS DEEPENING (2026-07-14, real production-like build + wider gate sweep)
-
-> Owner: *"анализируй глубже"*. This pass added a **real artifact witness** (`strangler:build:production-like`
-> completed, 58 pages / dist produced, `npm run …` EXIT 0) and swept the full `audit-pro`/`css:layer`
-> gate surface. Source HEAD re-confirmed unchanged at `2ca2af3b`; Node v22.22.3 (≥ SANDBOX 22.12 req).
-
-### W2 artifact witness strengthens Root cause A (it is a TOOLING-scope bug, not a real defect)
-- The production-like build emits **0 files** from `scripts/genealogy-build/` into `dist/`
-  (`find dist -path '*genealogy-build*'` = 0), and the real atlas page `dist/rodosloviye/index.html`
-  builds with **8 inline scripts, 0 syntax errors**. So `validate.js`/`audit-pro.js` failing on the
-  two build templates is confirmed **audit-drift**, not a served defect.
-- **Proven fix (Root cause A):** replicating the walker with `scripts/genealogy-build` skipped →
-  inline-script errors drop from 2 to **0**. **Proven fix (Root cause C):** `cache-bust.js --write`
-  → mismatches **0** (82 files touched). Both fixes verified locally.
-- Correction to the count above: on this fresh clone `audit-pro.js` = **114→ (cache-bust now 103
-  mismatches)**; the number is volatile per concurrent asset pushes — the *class* is stable.
-
-### Three ADDITIONAL deploy blockers found this pass (all in `validate:static-publication`)
-- **`GATE-CSS-IMPORTANT-RATCHET` (new, P2 deploy-blocking).** `css/site.css` now has **210
-  `!important` > ceiling 200** (`audit-pro.js` `IMPORTANT_CEIL`) — AND the separate gate
-  `npm run css:layer:validate` (`--ceiling=202`) also fails: `❌ !important count 210 exceeds
-  ceiling 202`. A genuine regression from the atlas/mobile-reader CSS work (not tooling drift).
-  Repair: refactor the added rules into `@layer`/higher specificity, or (owner-gated) raise ceiling.
-- **`AUDIT-ATLAS-DOC-PATH-LEAK` (new, P3 deploy-blocking).** `audit-pro.js` §14 fails on repository
-  base-path leaks in two **new** atlas files: `docs/ATLAS-CONTRACT-2026-07-10.md` and
-  `scripts/genealogy-build/README.md` (both embed `AuditRepo/projects/gb-is-my-strength/…`).
-  Repair: replace with a repo-relative or generic reference (same class as D-7).
-- **`AUDIT-FORBIDDEN-JS-NAGORNAYA` (new, P3 — allowlist gap, NOT dead code).** `audit-pro.js`
-  flags `js/nagornaya-bar-extras.js` as a forbidden JS file, but it is **genuinely used** by all 5
-  `nagornaya/chast-*` pages (confirmed in `dist/nagornaya/chast-*/index.html` and the
-  `NagornayaChast*PageFooter.astro` sources). So the file is legitimate — the fix is to add it to
-  `ALLOWED_JS` (`audit-pro.js:52`), not to delete it. (Distinguished from a false positive: the
-  gate is correctly *firing*, the *allowlist* is stale.)
-
-### Nuance logged (avoid a false positive on orphan images)
-- The 38 "orphan" images include `atlas-*-scene-1200w.webp`, which **are** referenced — but only
-  by `audit/atlas-preview/*.html`, a directory `audit-pro.js` deliberately excludes from its walk
-  (`skipDirs` has `audit`). So they read as orphaned to the walker while being real preview assets.
-  Not raised as a standalone bug; noted for the verifier as measurement scope, not waste.
-
-### Deploy-blocker inventory (consolidated — 6 distinct classes)
-| # | ID | Class | Gate | Fix proven? |
-|---|---|---|---|---|
-| A | REG-VALIDATE-GENEALOGY-TEMPLATE | tooling scope | validate:strict | ✅ skip `scripts/genealogy-build` → 0 |
-| B | REG-EDITORIAL-METADATA-MISSING | content/registry | editorial-metadata --check | add 5 records |
-| C | CACHE-BUST-NO-WRITER | systemic pipeline | audit-pro cache-bust | ✅ `cache-bust --write` → 0 |
-| D | GATE-CSS-IMPORTANT-RATCHET | real CSS regression | audit-pro + css:layer | refactor / owner ceiling |
-| E | AUDIT-ATLAS-DOC-PATH-LEAK | doc hygiene | audit-pro §14 | strip repo path (×2 files) |
-| F | AUDIT-FORBIDDEN-JS-NAGORNAYA | allowlist gap | audit-pro ALLOWED_JS | register js file |
-
-All six are in the **source repo** (owner-gated release transaction W1); I did **not** modify source.
-
-### 🟣 AR-CI-RED — AuditRepo's OWN CI was red on `main` (concurrent-agent governance defect) — FIXED
-- On sync, `origin/main` was **581 commits ahead** (concurrent agents' atlas verification work) but
-  had **broken `validate_audit_repo.py`** — i.e. AuditRepo's own CI (`auditrepo-validate.yml`) was red:
-  1. stray root `DEBT-REGISTER.md` (not in `ALLOWED_ROOT_MD`);
-  2. intake `claude-atlas-deep-audit/2026-07-10/` missing required `README.md`/`REPORT.md`
-     (had `ATLAS_DEEP_AUDIT_AND_MASTER_PLAN.md` + `DEBT-REGISTER.md` but neither named right);
-  3. intake `claude-genealogy-atlas-strategy/2026-07-14-milestone-atlas-v1/` — invalid date-folder
-     name (regex allows only `YYYY-MM-DD[-rN]`).
-- **Repaired minimally & non-destructively** (respecting CLEANUP §7 — no intake content deleted):
-  (1) `git mv DEBT-REGISTER.md → working/DEBT-REGISTER.md` (root-hygiene, outside any intake);
-  (2) **added** an index `README.md` to the 2026-07-10 intake pointing at its existing files;
-  (3) `git mv …/2026-07-14-milestone-atlas-v1 → …/2026-07-14-r1` + a preservation note + index
-  `README.md` (original label retained in `MILESTONE.md` title). After: **both validators PASS**.
-- Lesson for concurrent agents: run `python3 scripts/validate_audit_repo.py` **before** pushing —
-  root MD files and intake folder naming are the two easiest ways to turn `main` CI red for everyone.
-
----
-
-## 🎨 THIRD-PASS DEEPENING — CSS + JS deep-dive (2026-07-14)
-
-> Owner: *"досконально проверить и углубить исследования по CSS и еще JS"*. Ran real AST parsers
-> from the repo's own `node_modules` (`postcss@8.5.16`, `css-tree`, `acorn`) + `node --check`.
-> Full evidence: `../incoming/arena-auditor-meta-governance/2026-07-14/evidence/css-js-deep-audit-2026-07-14.txt`.
-
-### 🔴 AUDIT-CSS-SITECSS-STRUCT-CORRUPTION (new, P1) — structural corruption invisible to all gates
-Two independent parsers fail on `css/site.css`:
-- `postcss`: `40:16304 Unknown word .bottom-bar,.btoc-link,.flip-card-inner,.h-article-card,.quiz-option`
-- `css-tree`: **9 parse errors** (offsets 179799, 180014, 201874, 201914, 203062, 277864, +3)
-
-Five malformed rules (browsers drop them via error-recovery):
-1. `@media (prefers-reduced-motion:reduce){.bottom-bar,.btoc-link,.flip-card-inner,.h-article-card,.quiz-option}`
-   — a **selector list with NO declaration block**, immediately followed by the next `@media`.
-   **Impact: reduce-motion users get zero motion suppression for these 5 component classes (a11y).**
-2. `...;.ehrman-block,.info-box,.quote-box}@media(forced-colors...)` — dangling selector list, no `{}`.
-3. `...,.resume-reading-title,@supports (animation-timeline:scroll()){...}` — list broken by `@supports` (trailing comma).
-4. `@media (hover:hover) and (pointer:fine){html.dark }` — empty rule (no declarations).
-5. `.gbx-backlinks__maplink:rgba(122,46,46,0.08);gbx-backlinks__maplink:hover{...` — malformed declaration (no property).
-
-**Why gates miss it:** `audit-pro.js` checks only brace-balance (which *passes* — braces are balanced;
-the corruption is structural, not brace-level); `validate.js` does no structural CSS parsing;
-`css-layer-validator.js` only counts `!important`. This is the **same blind spot** that let the
-historical `CSS-PARSE-CORRUPTION-SITECSS` (PR#42) ship. **Pre-existing** (present in `b8459bdf`;
-`site.css` is `+0/-0` in the delta — only its `?v=` hash changed).
-
-### AUDIT-CSS-NO-STRUCTURAL-PARSE (new, P3) — the gate gap itself
-No CSS gate runs a real parser. Fix is cheap: add `postcss`/`css-tree` `parse()` with an
-`onParseError`→fatal step to `audit-pro.js` (both libs are already installed). Closes the whole class.
-
-### AUDIT-CSS-DEAD-KEYFRAMES-TOKENS (new, P3) — minor hygiene
-- `@keyframes fx-breathe` is defined **twice in the same `site.css`** (first def is dead).
-- 33 `--custom-props` defined but never used (`--label`, `--ghost`, `--docked`, `--tg`, `--vk`, `--wa`, …).
-- **No false positive on vars:** all "50 undefined" `var()` refs have a fallback, are JS-runtime-set
-  (`--mouse-x`, `--scroll-pct`, `--gbs2-*`), or are defined in `@layer base` (`--z-*` tokens exist).
-
-### JS deep-dive — mostly healthy; reverify confirmations
-- All 15 `js/*.js` pass `node --check` (0 syntax errors); 0 `debugger`, 0 TODO/FIXME, 1 `console.log`
-  (behind a `debug` flag — legit).
-- **BUG-PERF-001 reverify:** addEventListener **349** / removeEventListener **25** (was 339/25 → grew
-  +10 with the atlas/nagornaya work). Still-confirmed, marginally worse. Leaders: site.js 196/13,
-  enhancements.js 48/1, nagornaya-mobile-toc.js 26/0, search.js 22/0.
-- **XSS surface (28 innerHTML sinks): sound, no new bug.** Data-derived writes route through `tt()`
-  (HTML-escape) or the FAQ builder's script/attr stripper. Only `site.js:451` (`titleText` from
-  `.textContent`, low risk) and `bibleRefs .btip` (curated `#bibleRefs` JSON, by-design raw like
-  glossary D-21) are unescaped.
-- **NEW-HIGHLIGHTS-NO-REINIT-GUARD reverify — still-confirmed:** `highlights.js` IIFE has no
-  `_initialized` guard (contrast `bookmark-engine.js`'s `window.BookmarkEngine._initialized`).
-- **NF-VOSK-DEAD-SPLITSENTENCES reverify — still-confirmed:** `vosk-tts-core.js:413/446` exports
-  `splitSentences`, but the controller uses its own `splitTtsChunks` (`floating-cluster-controller.js:487`).
-
----
-
-## 🔍 FOURTH-PASS — detailed CSS/JS (2026-07-14)
-
-> Owner: *"ещё проход по CSS и JS, более детальный."* Ran a **per-file AST scan of ALL CSS**
-> (pass 3 only deep-parsed site.css) + targeted JS defensive-coding checks. Full evidence:
-> `../incoming/arena-auditor-meta-governance/2026-07-14/evidence/css-js-deep-audit-pass4-2026-07-14.txt`.
-
-### 🆕 AUDIT-CSS-FLOATCLUSTER-COMMENT-CORRUPTION (P3) — a SECOND corrupted CSS file
-Per-file css-tree scan flagged `css/floating-cluster.css` too (1 error; postcss tolerated it, which is
-why pass 3 missed it). **Comment markers unbalanced: 237 `/*` vs 236 `*/`.** Line 1405 `/* ===` opens,
-line 1407 `/* ---` opens a second (CSS comments don't nest) → 1405's comment closes at line 1409 `*/`,
-so the `.gbs-rail-foot` rules (1410-1423) render, **but** lines 1424-1426 (`v15: MOBILE PREVIEW — Save
-REMOVED...` + `===== */`) are naked text ending in a stray `*/`. Browser error-recovery turns it into a
-bogus selector that **swallows the next rule** `[data-gill-v16] .mobile-bottom-bar{...}` (line 1429) —
-css-tree confirms its 19 declarations bind to selector `"v15: MOBILE PREVIEW..."`.
-**Impact — measured, deliberately not overclaimed:** of the 19 lost props, most (position, background,
-border-radius, box-shadow, backdrop-filter, padding) **are re-set by later `.mobile-bottom-bar` rules**
-(the `@media (max-width:63.99em)` block at 2786, etc.). Only `justify-content`, `font-family`,
-`font-size` are genuinely lost → minor mobile-bar spacing/font drift. Real hazard is **latent**: future
-edits to the 1429 block silently fail. Pre-existing (b8459bdf also 198/197). Copied verbatim to dist.
-Gate-invisible (same brace-balance blind spot). Fix: restore the `/*` on line 1424 + the structural
-CSS parse from AUDIT-CSS-NO-STRUCTURAL-PARSE (which would have caught both this and site.css).
-
-### JS detailed pass — defensively sound, no new bug (false positives ruled out)
-- **Timers:** setInterval/clearInterval balanced per file; setTimeout-heavy `site.js` (46) pairs
-  clearTimeout in debounce patterns. No timer leak.
-- **localStorage (28 setItem):** all guarded (try/catch or `T()`/`A()` wrappers). The 2 "bare"
-  `JSON.parse` (site.js:487, vosk-tts-engine.js:196) are **both** inside try/catch resp. a
-  `.then().catch()` chain — no unguarded parse. **No new bug** (checked before claiming).
-- **ReDoS:** no nested-quantifier regex; search.js escapes user input via `P()` before `new RegExp`.
-- **Listeners:** search.js's 22-add/0-remove is **not a leak** — bound once to the singleton
-  `.cp-backdrop` (guarded by `__gbSearchBootRequested`). The aggregate imbalance stays tracked under
-  BUG-PERF-001 (349/25, pass 3).
-
-### Budget reverify — canon D-3 numbers were STALE
-`audit-pro` live: **JS total 469101 > 365000** (canon D-3 said 375041 — grew ~94KB) and **Core CSS
-total 554013 > 425000** — but canon D-3 explicitly said "CSS-бюджет в норме" (stale since the atlas
-work). Both ⚠️ warnings (not deploy-blocking). Updated D-3 + NEW-CSS-BUDGET-01 with concrete figures.
-
----
-
-## Status changes vs canon (matrix reverify)
-
-| Bug ID | Previous status | Current status | Evidence angle |
+| ID (new) | Gate | Exit | Root cause (evidence) |
 |---|---|---|---|
-| CI-INDEXNOW-CHECKER-STALE | P2 OPEN | **fixed-current** → move to ЗАКРЫТО @ `3a43cada` (PR#70) | verified-source + tool: `check-workflows.js:157` now requires `contents: read`; `node scripts/check-workflows.js` → ✅ passed |
-| D-19 (antisovetov half) | P2 OPEN | **still-confirmed** (open) | verified-source: `validate.js` still flags `20-antisovetov-pastoru` `<title>`≠`og:title`; rimlyanam-7 half correctly no longer flagged |
-| D-4 (magic z-index) | P3 OPEN | **still-confirmed** (lines drifted) | `floating-cluster.css:2833/2908/3199/3244/3464/4337`, `mobile-hotfix.css:129` |
-| D-7 (path-leak comment) | P3 OPEN | **still-confirmed** | `PremiumControlAnchor.astro:3` still `// See: AuditRepo/projects/...` |
-| TTS-DL-CONSENT | P1 OPEN | **still-confirmed** | `floating-cluster-controller.js:369-409` warm/ensureLoaded path unchanged |
-| Deploy status (masthead) | GREEN @ b8459bdf | **regression: RED @ 2ca2af3b** | 3 CI workflows failing + local repro (Root causes A/B/C) |
+| **DEP-BLOCK-EDITORIAL-REGISTRY** | `node scripts/editorial-metadata-registry.js --check` | **1** | Eligible routes **25**, registry records **20**. Missing: `/articles/dzhon-gill-chast-4-ekzeget/`, `/articles/chto-bibliya-nazyvaet-serdcem/`, `/articles/novoe-serdce/`, `/articles/serdce-i-duh/`, `/articles/serdce-spravochnik/`. Registry `sourceCommit` still `e6793627…` (native-source-contract era). **This is the IndexNow readiness hard fail** (`indexnow.yml` step «Validate registry structure»). |
+| **DEP-BLOCK-CSS-IMPORTANT-CEILING** | `css:layer:validate` (`site.css --ceiling=202`) | **1** | `!important count 210 exceeds ceiling 202`. Layered ratio still ~21.2% (warning, target ≥80%). Related to open **D-2** / budget class. |
+| **DEP-BLOCK-MAPS-VALIDATE** | `maps:validate` → `validate-map-routes.js` | **1** | **25 issues**, three clusters: (A) hub audit-pending count **9 ≠ 10 missing** after `nachalo` added (exception `hasAuditPendingDesign` requires exact count match → falls through to 10× «missing clickable route card»); (B) `karty/nachalo/route.json` incomplete (meta.id/era/viewport, stories empty, photos without src/alt, stage undefined); (C) avraam meta.stats drift (places 19≠22, scientific_variants 45≠46) + stage-less places babylon/mari/paran-region; shoftim stats 13≠12. |
+| **DEP-BLOCK-AVRAAM-AUDIT** | `avraam:audit` | **1** | 25/27: route places 22 vs HTML/legacy expectation 19; new IDs `babylon,mari,paran-region` not in HTML place set. |
 
-## Buckets
-- **regression (new, deploy-blocking):** REG-VALIDATE-GENEALOGY-TEMPLATE, REG-EDITORIAL-METADATA-MISSING, CACHE-BUST-NO-WRITER (recurred), GATE-CSS-IMPORTANT-RATCHET, AUDIT-ATLAS-DOC-PATH-LEAK, AUDIT-FORBIDDEN-JS-NAGORNAYA.
-- **new (3rd pass, deep CSS/JS — not deploy-blocking but real):** AUDIT-CSS-SITECSS-STRUCT-CORRUPTION (P1, a11y + gate blind spot), AUDIT-CSS-NO-STRUCTURAL-PARSE (P3 gate gap), AUDIT-CSS-DEAD-KEYFRAMES-TOKENS (P3 hygiene). BUG-PERF-001 re-measured 349/25.
-- **new (4th pass, detailed CSS/JS):** AUDIT-CSS-FLOATCLUSTER-COMMENT-CORRUPTION (P3, 2nd corrupted CSS file — minor visual impact, latent hazard). Budget reverify: D-3 refreshed (JS 469101; CSS 554013>425000 — canon "в норме" was stale), NEW-CSS-BUDGET-01 given concrete figures. JS defensively sound — no new bug (localStorage/JSON.parse/timers/regex all checked).
-- **fixed-current (this pass, in AuditRepo):** AR-CI-RED (AuditRepo's own `validate_audit_repo.py` restored to PASS after 3 concurrent-agent violations).
-- **fixed-current (source, prior pass):** CI-INDEXNOW-CHECKER-STALE.
-- **still-confirmed:** D-19 (antisovetov), D-4, D-7, TTS-DL-CONSENT, TTS-DL-UNZIP-SYNC, NF-VOSK-DEAD-SPLITSENTENCES, NEW-HARDTEXTS-CSP-MISSING-HFCDN, D-8 (+ all other open P2/P3 carried forward, not re-witnessed this pass).
-- **needs-manual-check:** Visual Parity pixel-diff failure (needs a full Playwright screenshot run; the production-like build itself succeeds, so this is likely a baseline delta from the atlas/mobile-reader visual changes — flagged, not root-caused here).
-- **audit-drift (tooling):** genealogy build templates tripping `validate.js`/`audit-pro.js` because their file walkers do not skip `scripts/` build inputs (Root cause A); `atlas-*-scene` images read as orphans because the walker skips `audit/` where they're referenced.
+**Not deploy-blocking on full tree (after legacy HTML present):**
+- `route:profiles:check --strict` ✅
+- `page-ownership:check` ✅
+- `maps:publication-status` ✅
+- `gill:series:data:consistency:audit` ✅
+- `mdx:structure:audit` ✅
+- `tokens:check` ✅
+- `editorial:lint` (root-html) ✅
 
-## Notes for verifier
-- These are **L2** (source + build-tooling + CI) — strong, but the three regressions touch the
-  **release transaction** (SUPER_AUDIT W1) and pipeline/gate config, which is owner-gated per
-  `NEXT_AGENT_PROMPT.md` rule 5. I did **not** modify the source repo. Recommend routing A/B/C
-  as one release-unblock lane (owner decision), and updating the matrix masthead + counters +
-  `NEXT_AGENT_PROMPT.md` HEAD to `2ca2af3b` with deploy=RED.
-- Full command evidence: `../incoming/arena-auditor-meta-governance/2026-07-14/evidence/live-source-reverify-2026-07-14.txt` and `canon-open-bugs-reverify-2026-07-14.txt`.
+**Sparse-checkout false alarms (do not promote):**
+- `content:guard` / route-profile «legacy reference not found» without `articles/`+`baptisty-rossii/` trees — artifact of incomplete checkout, not product bug.
+
+### 1.3 Why prod is stale (lifecycle)
+
+1. Content + atlas + mobile-chrome land on `main` without registry/meta/hub-stat co-updates.
+2. `validate:static-publication` fails early → no Pages artifact → no deploy.
+3. Concurrent `cancel-in-progress: true` on **both** `deploy.yml` and `indexnow.yml` (still true @ HEAD) cancels in-flight runs when next push arrives — amplifies red window (**SEO-CANON-P0-01 / D-1 still OPEN**, verified-source).
+4. Cache-bust commits (`9fce2bc`, `13dc077`, `bdbaaa8`, …) intended to «unblock deploy» cannot pass if maps/editorial/css gates stay red.
+
+### 1.4 Recommended unblock order (implementation, not done here)
+
+1. `node scripts/editorial-metadata-registry.js --write` (or approved freeze workflow) → include 5 missing routes → commit registry.  
+2. Hub: bump «на аудите» **9 → 10** (or add `nachalo` to featured/audit list consistently) in **both** `karty/index.html` and Astro `KartyHeroSection`.  
+3. Either complete `nachalo/route.json` to schema **or** exclude draft routes from `validate-map-routes` live set until ready.  
+4. Sync `avraam` meta.stats + HTML place IDs with route.json (or document extra places as non-featured waypoints and teach audit).  
+5. `css:layer:validate`: raise ceiling with justification **or** remove 8+ `!important` from `site.css`.  
+6. One PR: gates green → deploy green → only then more content.
+
+---
+
+## 2. What landed since `b8459bdf` (product delta)
+
+| Stream | Highlights | On prod? |
+|---|---|---|
+| **Genealogy / «Библейский атлас родословий»** | AGENTS §13 locked; `scripts/genealogy-build/*`; `data/genealogy/v2/*` (table of nations 70, atlas-interactive.html, interactive trees); owner-confirmed milestone 2026-07-14 (`0aee617` → merge) | **No** |
+| **Karty / Atlas sheets** | Sheet engine, nachalo prologue map, avraam enrichment (+babylon/mari/paran), river/LOD/geometry marathons (AuditRepo verification screenshots 07-11…12) | **No** (prod still old avraam-era) |
+| **Heart series content** | Many new MDX (`serdce-i-yazyk`, `serdce-i-telo`, `kak-hranit-serdce`, `serdce-ne-v-odinochku`, …); pilots for chto-bibliya / novoe-serdce / serdce-i-duh / serdce-spravochnik | **No** |
+| **Gill** | Part IV already at `b8459bdf`; later mobile reader, CBM quiz, speed-rail, chrome adapters | Partial at last green only |
+| **Mobile chrome** | Shared shell, Gill/Hermenevtika adapters, page engine Back·Home·Search (PR#80–#87) | **No** (post-green) |
+| **TTS** | Russian skip English originals + glossary (PR#78) etc. | Only if in `007b67` tree |
+
+AuditRepo main **did** receive: genealogy intakes (07-11 + milestone 07-14), atlas DEBT/verification screenshots, matrix session log 07-11 — but **did not** update SSOT HEAD/deploy until this reverify.
+
+---
+
+## 3. Matrix bug status recheck (sample)
+
+| Bug ID | Previous | Current assessment @ `2ca2af3b` | Notes |
+|---|---|---|---|
+| D-1 / SEO-CANON-P0-01 concurrency | OPEN | **still-confirmed** | `cancel-in-progress: true` in deploy.yml:50-52 **and** indexnow.yml:30-32 |
+| D-2 css-layer-validator | OPEN | **still-confirmed + worsened** | ceiling breach 210>202 is now **blocking deploy** |
+| D-19 title≠og | OPEN (half) | **still-confirmed** (antisovetov); rimlyanam half closed 07-11 | no new evidence of full close |
+| D-21 glossary dual-render / XSS surface | OPEN | **still-confirmed** | 55 `<em>` in glossary.json; Favorites still has safePath (D-22 stay closed) |
+| D-22 Favorites scheme | CLOSED | **fixed-current** | `safePath = /^\\/(?!\\/)/` present |
+| CI-INDEXNOW-CHECKER-STALE | OPEN (PR-only) | **partially mitigated** | check-workflows now requires `contents: read` for indexnow; **new** fail is editorial registry, not contents:write |
+| BUG-PERF-001 listeners | OPEN | **needs-manual-check** | not re-counted this pass |
+| TTS-DL-CONSENT | OPEN | **needs-manual-check** | owner decision; code path not re-traced |
+| KARTY-Q-BUG-P0 | CLOSED | **fixed-current** (assume; map-engine not re-browsered) | do not reopen without browser fail |
+| SEO-CANON-P0-03 date loop / P0-05 SW unversioned precache / P1-30 SWR HTML | OPEN in SUPER_AUDIT | **still-likely** | SW still `gb-v189-lazy-precache-20260705`; BaseLayout still `version: Date.now()` |
+| AR-001/004/005 | OPEN | **still-confirmed** | tooling automation backlog |
+
+---
+
+## 4. New findings to promote into matrix
+
+### P0 — release
+1. **PROD-STALE-DEPLOY-RED** — production not updated since `007b67def5` (2026-07-11); HEAD `2ca2af3b` cannot deploy.  
+2. **DEP-BLOCK-EDITORIAL-REGISTRY** — 5 eligible routes missing from `data/editorial-metadata.json`.  
+3. **DEP-BLOCK-MAPS-VALIDATE** — hub 9≠10 + nachalo schema + avraam stats.  
+4. **DEP-BLOCK-CSS-IMPORTANT-CEILING** — site.css 210 > 202.  
+5. **DEP-BLOCK-AVRAAM-AUDIT** — place-count / ID set mismatch (22 vs 19).
+
+### P1 / process
+6. **SSOT-HEAD-DRIFT-4D** — matrix + NEXT_AGENT claimed GREEN @ `b8459bdf` while main + deploy diverged (this reverify closes the *documentation* half).  
+7. **HUB-AUDIT-COUNT-DRIFT** — design exception in `validate-map-routes.js` is brittle (exact integer match); adding a map without bumping «на аудите» fails the whole static chain.
+
+### Genealogy / atlas (track, not all repair-ready)
+8. Milestone v1 **implemented** in source (see `incoming/claude-genealogy-atlas-strategy/2026-07-14-milestone-atlas-v1/`) — status upgrade from strategy proposal to **shipped-in-main / not-on-prod**.  
+9. Atlas DEBT-REGISTER still open: D-1, D-3, D-4, D-5, D-7, D-9…D-14 (separate long-running track).
+
+---
+
+## 5. SUPER_AUDIT waves — freshness note
+
+W0 hygiene done historically. **W1 (release transaction) is now empirically on fire** — not theoretical. Until W1 gates pass, shipping genealogy/heart/atlas to readers is impossible regardless of content quality.
+
+W2–W10 claims remain directionally valid; individual OPEN rows need per-ID reverify after deploy is green again. Do **not** bulk-close SUPER_AUDIT items from this pass.
+
+---
+
+## 6. Environment notes
+
+- Arena sandbox: Node v22.22.3, 3.8 GiB RAM, no full production-like build this session.  
+- `gh run view --log-failed` / Actions log zip download returned EOF (receiver); failure localization via job step names + local gate reproduction.  
+- Live `https://gospod-bog.ru` TLS from sandbox: `SSL_ERROR_SYSCALL` (cannot browser-witness prod HTML here). DNS resolves to GitHub Pages IPs.  
+- Local AuditRepo session was **42 commits behind** `origin/main` at start; merged before writing this file.
+
+---
+
+## 7. Buckets summary
+
+### still-confirmed
+D-1, D-2 (+blocking), D-19 (partial), D-21, SUPER_AUDIT W1 cluster, AR-* tooling
+
+### fixed-current (reconfirmed)
+D-22; check-workflows indexnow `contents: read` (CI-INDEXNOW-CHECKER-STALE no longer the active IndexNow fail mode)
+
+### regression / new blocking
+PROD-STALE-DEPLOY-RED, DEP-BLOCK-* quintet, HUB-AUDIT-COUNT-DRIFT
+
+### needs-manual-check
+BUG-PERF-001, TTS-DL-*, full browser MAP-*, PremiumControls freeze zone (untouched)
+
+### documentation fixed by this reverify
+SSOT HEAD/deploy stamps in matrix + NEXT_AGENT (paired commit)
+
+---
+
+## 8. Commands log (representative)
+
+```bash
+gh api repos/FedorMilovanov/gb-is-my-strength/commits/main
+gh api repos/.../compare/b8459bdf...2ca2af3b91ac   # ahead_by 287
+gh api repos/.../actions/workflows/deploy.yml/runs
+gh api repos/.../actions/runs/29338523013/jobs      # Static publication gates fail
+git clone --depth=1 --filter=blob:none ... gb-src @ 2ca2af3b
+node scripts/editorial-metadata-registry.js --check   # exit 1, 5 missing
+node scripts/css-layer-validator.js css/site.css --ceiling=202  # exit 1, 210
+node scripts/validate-map-routes.js                   # exit 1, 25 issues
+node scripts/avraam-map-audit.js                      # exit 1, 25/27
+node scripts/check-route-profiles.js --strict         # exit 0 (with legacy trees)
+node scripts/check-page-ownership.js                  # exit 0
+npm run gill:series:data:consistency:audit            # exit 0
+```
+
+Full command trail: `incoming/arena-auditor-head-reverify/2026-07-14/commands.log` + REPORT.md.

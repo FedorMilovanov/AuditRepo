@@ -1,23 +1,5 @@
-# Agent Work Report — Genealogy atlas v1 milestone
+> **Folder renamed 2026-07-14 by arena-auditor-meta-governance (CI-repair):** `2026-07-14-milestone-atlas-v1` → `2026-07-14-r1` to satisfy the intake date-folder contract (`validate_audit_repo.py` regex `^\d{4}-\d{2}-\d{2}(?:-r\d+)?$`), which was failing on `main`. Content unchanged; the original label «milestone-atlas-v1» is retained in this file's title. See finding AR-CI-RED.
 
-## Meta
-- Project: gb-is-my-strength
-- Agent: claude-genealogy-atlas-strategy
-- Date: 2026-07-14
-- Audited SHA: 0aee617 / main 2ca2af3b
-- Mode: milestone
-
-## 1. New Findings
-### GENEALOGY-ATLAS-V1-MILESTONE
-- Title: Библейский атлас родословий v1 built and merged to main (owner-confirmed)
-- Severity: P1 (delivery / product track; blocked on prod by deploy red as of 2026-07-14 reverify)
-- Evidence: AGENTS §13; data/genealogy/v2/build/atlas-interactive.html; merge 0aee617
-- Description: Strategy intake 2026-07-11 implemented. Honest TIPNR cluster counters. Force-graph demoted to secondary views.
-
-## 8. Notes for Verifier
-Full narrative in MILESTONE.md (same folder). Cross-link: reverify CURRENT_HEAD_REVERIFY_2026-07-14 notes GENEALOGY-ATLAS-V1-SHIPPED-NOT-PROD.
-
----
 # MILESTONE — Генеалогия: «Библейский атлас родословий» v1 построен и в main
 
 ## Meta
