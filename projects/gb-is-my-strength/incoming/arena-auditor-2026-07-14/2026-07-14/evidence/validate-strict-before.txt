@@ -1,0 +1,41 @@
+
+🔍  validate.js
+
+  📁  css/
+  ⚠️  [css/floating-cluster.css] нестандартный брейкпоинт: 1199px
+  📁  js/
+  📁  inline-scripts/
+  ❌  [scripts/genealogy-build/atlas-template.html] inline <script> syntax error (#1): Unexpected token ';'
+  ❌  [scripts/genealogy-build/interactive-template.html] inline <script> syntax error (#1): Unexpected token ';'
+  📁  html-contracts/
+  ✔  [html-contracts] Russian quote policy passed: no English direct quotes in reader-facing Russian text
+
+  📄  20-antisovetov-pastoru
+  ⚠️  [20-antisovetov-pastoru] <title> ≠ og:title\n           <title>: "20 антисоветов пастору: как разрушить служение"\n         og:title: "20 антисоветов, как пастору разрушить своё служение"
+
+  📄  dzhon-gill-chast-1-chelovek
+
+  📄  dzhon-gill-chast-2-uchenyi
+
+  📄  dzhon-gill-chast-3-nasledie
+
+  📄  dzhon-gill-chast-4-ekzeget
+
+  📄  dzhon-gill-istoricheskiy-kontekst
+
+  📄  dzhon-gill-spravochnik
+
+  📄  hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki
+
+  📄  kod-da-vinchi
+
+  📄  krajne-li-isporcheno-serdce
+
+  📄  rimlyanam-7-veruyushchiy-ili-neveruyushchiy
+
+  🗺  sitemap.xml + feed.xml
+
+──────────────────────────────────────────────────
+❌  Ошибок: 2  Предупреждений: 2
+  → --strict: прерываем workflow из-за ошибок.
+

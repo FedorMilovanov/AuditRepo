@@ -3,13 +3,14 @@
 > **Этот файл — SSOT по «где мы сейчас»** (текущий HEAD + что дальше). Карта всех
 > документов и правило Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-14.** Source HEAD: `2ca2af3b` (main; merge «Библейский атлас — карта
+> **Актуально на 2026-07-14 (FAST-loop RCA пройден).** Source HEAD: `2ca2af3b` (main; merge «Библейский атлас — карта
 > Авраама»; мерджи «Генеалогия v1» `0aee617`, сердечные статьи А3–Д1, фиксы Нагорной/karty/
 > map/hard-texts). **Prod deploy 🔴 RED** — с 2026-07-11 `deploy.yml` падает на шаге `Static
-> publication gates` (56 failure + 24 cancelled, 0 success после run `29138555390` @ `007b67de`;
+> publication gates` и параллельно фейлятся `Metadata & IndexNow Readiness` (registry structure) и `Visual Parity Guard — pixel-diff`
+> (56 failure + 24 cancelled, 0 success после run `29138555390` @ `007b67de`;
 > последняя попытка — run `29338523013` @ `2ca2af3b`). Контент серий «Сердце», Атлас v1 и
-> карта Авраама **не доехали до продакшена** — первым приоритетом локализовать и починить
-> упавший гейт (P0 DEPLOY-STATIC-GATES-RED-2026-07-11 в матрице).
+> карта Авраама **не доехали до продакшена** — P0 DEPLOY-STATIC-GATES-RED-2026-07-11 в матрице.
+> **RCA локализован (arena-auditor-2026-07-14)**: `audit-pro`/`validate` walk(ROOT) не скипят `scripts/` (ложные срабатывания на build-шаблонах `scripts/genealogy-build/*.html`, placeholder `/*__ATLAS__*/;` валит inline-script syntax + все HTML-контракты), `js/nagornaya-bar-extras.js` не внесён в `ALLOWED_JS` в `audit-pro.js`; реальные регрессии: `site.css !important` 210 > ceiling 200, 2 path-leak `AuditRepo/...` в markdown, oversized `images/atlas-export/avraam-{hires,preview}.png`, 38 orphan images; плюс `data/editorial-metadata.json` без 5 новых статей, visual-parity нуждается в owner-approved baseline refresh.
 > **Авторитет при конфликте:** `verified/MASTER_BUG_MATRIX.md` (точечные баги)
 > и `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (системный бэклог + план волн W0–W10);
 > атлас-трек KA-0…KA-8 — в `working/atlas/DEBT-REGISTER.md`.
@@ -28,7 +29,7 @@ git fetch --all --prune && git checkout main && git pull --ff-only && git rev-pa
 
 ## Текущее состояние (одним абзацем)
 
-Прод = main, **но деплой красный на Static publication gates с 11 июля** (P0 DEPLOY-STATIC-GATES-RED-2026-07-11). Точечные открытые баги и их счётчики живут в `verified/MASTER_BUG_MATRIX.md` (единственный владелец). Главный системный приоритет сейчас — **W1 транзакция релиза (P0)** — красный деплой блокирует продвижение всех других волн. План волн SUPER_AUDIT по-прежнему: W2 редакционные даты (P0) → W3 SW/кэш → W4 route-реестр/sitemap/IndexNow → W5 security/XSS → W6 Bible-корпус → W7 семантические гейты → W8 SEO-очистка → W9 a11y/perf → W10 автоматизация AuditRepo. Дополнительный in-flight трек — Атлас/Генеалогия (KA-0…KA-8, в работе владельцем; верифицированные результаты интейков в `incoming/claude-atlas-deep-audit/` и `working/atlas/DEBT-REGISTER.md`). W0 выполнена 2026-07-06.
+Прод = main, **но деплой красный на Static publication gates с 11 июля** (P0 DEPLOY-STATIC-GATES-RED-2026-07-11) — RCA локализован в проходе 2026-07-14: блокирует не одна «загадочная» ошибка, а **комплекс из 11 ошибок audit-pro + missing editorial-metadata records + визуальный пиксель-бейзлайн**, среди которых часть — tooling-ложные срабатывания на build-шаблонах `scripts/genealogy-build/*.html` (audit-pro/validate walk не скипят `scripts/`) и отсутствие `js/nagornaya-bar-extras.js` в `ALLOWED_JS`, а часть — реальные регрессии (!important ceiling, path-leak в markdown, oversized/bitmap-orphans). Полный список и repair-lane (п.1–8) — в `reverify/CURRENT_HEAD_REVERIFY_2026-07-14_2ca2af3b.md` §FAST-loop RCA и в строке P0 матрицы. Точечные открытые баги и их счётчики живут в `verified/MASTER_BUG_MATRIX.md` (единственный владелец). Главный системный приоритет сейчас — **W1 транзакция релиза (P0)** — красный деплой блокирует продвижение всех других волн; Атлас/Сердца/Нагорная фиксы не доезжают до продакшена с 11 июля. План волн SUPER_AUDIT по-прежнему: W2 редакционные даты (P0) → W3 SW/кэш → W4 route-реестр/sitemap/IndexNow → W5 security/XSS → W6 Bible-корпус → W7 семантические гейты → W8 SEO-очистка → W9 a11y/perf → W10 автоматизация AuditRepo. Дополнительный in-flight трек — Атлас/Генеалогия (KA-0…KA-8, в работе владельцем; верифицированные результаты интейков в `incoming/claude-atlas-deep-audit/` и `working/atlas/DEBT-REGISTER.md`). W0 выполнена 2026-07-06.
 
 ## Зоны in-flight — НЕ ТРОГАТЬ без владельца
 

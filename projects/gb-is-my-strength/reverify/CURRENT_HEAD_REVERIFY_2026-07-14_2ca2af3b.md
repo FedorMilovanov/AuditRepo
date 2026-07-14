@@ -83,7 +83,41 @@
 3. Once deploy turns green, run a production-like dist + browser witness on the genealogy atlas (`/rodosloviye/`) and Abraham map (`/karty/avraam/`) and record in the next reverify.
 4. Promote new open items into MASTER_BUG_MATRIX; update masthead HEAD/deploy status.
 
+## FAST-loop RCA appendix (2026-07-14 второй проход, arena-auditor-2026-07-14)
+
+- Environment: Debian 13, Node v22.22.3 (extracted to `/tmp/node-v22.12.0-linux-x64/`), npm 10.9.8, clone depth 50 (`/tmp/gb-is-my-strength`), `npm ci` clean (476 пакетов, нет OOM при статических гейтах; 3.5 GB RAM свободно).
+- Runs:
+  - `npm run guard:shared-files` ✅ (Shared files guard PASSED; AGENTS-rNNN unique).
+  - `npm run data:consistency` ✅ (GB DATA CONSISTENCY AUDIT passed).
+  - `npm run migration:metadata:check:strict` ✅ (route profiles 57/57; migration matrix 57/57; content provenance 24 series parts / 48 MDX clean).
+  - `node scripts/cache-bust.js` (dry) — 30+ страниц с stale ?v= (все CSS-ссылки на `cac8aeeb/997b959e/de7e9ea8` при новых хешах `74dbfad5/a6a3187a/f952392d`). После `--write` все cache-bust ссылки перегенерированы.
+  - `node scripts/audit-pro.js` ДО `cache-bust --write`: 157 passed · ⚠️8 · **❌114 errors** (в основном cache-bust mismatch).
+  - `node scripts/audit-pro.js` ПОСЛЕ `cache-bust --write`: 158 passed · ⚠️8 · **❌11 errors** (именно это блокирует `Static publication gates`):
+    1. ❌ Forbidden JS: `js/nagornaya-bar-extras.js` не внесён в `ALLOWED_JS` (audit-pro.js:52) — файл реально используется `NagornayaChast{1..5}PageFooter.astro` как `../../js/nagornaya-bar-extras.js?v=1`.
+    2. ❌ `css/site.css` 210 `!important` > ceiling 200 (регрессия от контента/Нагорной серии).
+    3. ❌ Inline script syntax в `scripts/genealogy-build/atlas-template.html` и `interactive-template.html` — placeholder `const ATLAS=/*__ATLAS__*/;` не является валидным JS (`Unexpected token ';'`); обе шаблоны — build-time input для `build-atlas.mjs`, не прод-страницы. **Tooling gap:** `audit-pro.js` walk(ROOT) и `validate.js:validateInlineScripts()` не скипят `scripts/` директорию → build-шаблоны детектируются как прод HTML и роняют все HTML-гварды (ниже пункты 4–9 — из того же источника).
+    4–9. ❌ По 2 ошибки на каждый build-шаблон: `<html>` без `lang`, нет `<link rel="canonical">`, `<meta charset>` не в первых 1024 байтах; плюс 4 предупреждения (нет JSON-LD, нет `theme-color`, sitemap говорит URL не существует).
+    10. ❌ Repository base path leak в `docs/ATLAS-CONTRACT-2026-07-10.md` и `scripts/genealogy-build/README.md` (строки вида `AuditRepo/projects/gb-is-my-strength/...`); семантически безобидно, но Гейт 890 ругается.
+    11. ❌ Oversized raw images: `images/atlas-export/avraam-hires.png` (16 MB) и `avraam-preview.png` (1.7 MB) > budget 683 KB; не конвертированы в webp/responsive.
+    12. ❌ 38 orphan images (~1605 KB): atlas-{ishod,shvatim,pavel,early-church,avraam,maccabim,yeshua}-scene-{900w,1200w}.webp и og-изображения на 2 новые статьи (`og-chto-bibliya-nazyvaet-serdcem.jpg`, `og-serdce-spravochnik.jpg`) — не ссылаются ниоткуда на собранном root.
+  - `npm run validate:strict` ❌ падает на тех же 2 build-шаблонах (inline script syntax); предупреждения: D-19 title≠og:title на `20-antisovetov-pastoru`, 1199px breakpoint.
+  - `npm run ci:check` ✅ (cache-bust dry + workflows:check), но это более лёгкая цепочка и не запускает audit-pro.
+- Параллельно фейлятся два других workflow (тоже видны как RED на push):
+  - **Metadata & IndexNow Readiness** (`indexnow.yml` job `readiness`, step 5 «Validate registry structure») — `scripts/editorial-metadata-registry.js`: Eligible=25, в `data/editorial-metadata.json` записей=20, не хватает 5 маршрутов: `/articles/dzhon-gill-chast-4-ekzeget/`, `/articles/chto-bibliya-nazyvaet-serdcem/`, `/articles/novoe-serdce/`, `/articles/serdce-i-duh/`, `/articles/serdce-spravochnik/` (Часть IV Гилла + 4 «сердечных» статьи). Требуется `node scripts/editorial-metadata-registry.js --write` (или build-режим) и коммит.
+  - **Visual Parity Guard — pixel-diff** (`visual-parity.yml` job `pixel-diff`, step 8 «Run pixel-diff screenshots») — требует owner-approved refresh baseline под новые страницы Атласа/Авраама/сердец/Нагорной (по правилам контракта, скрипт не может сам повышать threshold без `OWNER_APPROVED: 'true'`).
+- `guard:shared-files` → `data:consistency` → `migration:metadata:check:strict` все три зелёные — узкое место P0 именно в audit-pro/validate цепочке и двух параллельных гейтах (registry + pixel-baseline), а не в данных/миграции.
+- Repair lane (рекомендация для следующего агента/implementer-а):
+  1. В `audit-pro.js` добавить `'scripts'` в `skipDirs` (строка 95) и аналогично в `validate.js` исключить build-шаблоны из HTML-walk (или skip path `scripts/genealogy-build/*.html` у инлайн-скрипт и HTML-контракт проверок).
+  2. В `ALLOWED_JS` (audit-pro.js:52) добавить `'js/nagornaya-bar-extras.js'` (легитимный скрипт, подключаемый Astro-футерами chast-1..5).
+  3. Сбить `!important` в `css/site.css` до ≤200 либо официально поднять ratchet-ceiling одним коммитом с согласованием владельца (AGENTS не советует без owner-decision — сейчас 210 = регрессия на 10).
+  4. Убрать два `AuditRepo/...` path-leak из markdown (заменить на канонические относительные ссылки на docs внутри source-репо или убрать упоминание).
+  5. Конвертировать `images/atlas-export/avraam-{hires,preview}.png` в webp/responsive и добавить в ALLOWLIST, либо подключить реально в прод (OG-размеры и т.п.).
+  6. Orphan images: удалить или подключить atlas-*-scene-* вебпа как hero/OG на картах/статьях; проверить og-* для новых «сердечных» статей.
+  7. `node scripts/editorial-metadata-registry.js --write` и закоммитить `data/editorial-metadata.json` с 5 новыми записями.
+  8. После озеленения `validate:static-publication` — владелец запускает visual-parity workflow_dispatch с `updateBaseline=true` + `OWNER_APPROVED: 'true'` для рефреша пиксель-бейзлайнов.
+  9. Перезапустить deploy; ожидать зелёный `deploy.yml` на `main`.
+
 ## Outcome
 - Canon HEAD before reverify: `b8459bdf` (stale 4 days).
-- Reverified HEAD: `2ca2af3b` (deploy red, trackable).
-- Canon after this session: needs masthead + matrix update (done in same commit as this reverify).
+- Reverified HEAD: `2ca2af3b` (deploy red, root-cause локализован по 11 audit-pro errors + registry + pixel-baseline).
+- Canon after this session: masthead + matrix + NEXT_AGENT_PROMPT обновлены с FAST-loop RCA; evidence сохранена в `incoming/arena-auditor-2026-07-14/2026-07-14/evidence/`.

@@ -114,6 +114,49 @@
 - Result: confirmed-current in bad state (deploy red); structural AuditRepo fixes applied and verified.
 - Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-14_2ca2af3b.md`, validator PASS.
 
+## 1b. P0 RCA — FAST-loop deepening (второй проход 2026-07-14)
+
+После первого прохода (structural repair + reverify) был выполнен локальный FAST-цикл на клоне source `2ca2af3b` (Node v22.22.3, npm ci 476 пакетов, 3.5 GB RAM свободно, OOM не случился).
+
+### Выполнено
+- `npm run guard:shared-files` → ✅
+- `npm run data:consistency` → ✅
+- `npm run migration:metadata:check:strict` → ✅ (route profiles 57/57, migration matrix 57/57, content provenance clean)
+- `node scripts/cache-bust.js` (dry) — выявил 114 stale `?v=` ссылок (CSS-хеши не совпадали)
+- `node scripts/cache-bust.js --write` — перегенерировал ревизии
+- `node scripts/audit-pro.js` до cache-bust: 157 passed · ⚠️8 · **❌114 errors** (в основном cache-bust mismatch)
+- `node scripts/audit-pro.js` после cache-bust --write: 158 passed · ⚠️8 · **❌11 errors**
+- `npm run validate:strict` → ❌ (те же 2 build-шаблона)
+- `node scripts/editorial-metadata-registry.js` → ❌ 5 missing records
+
+### 11 blocking errors в audit-pro (после cache-bust):
+1. `js/nagornaya-bar-extras.js` не внесён в `ALLOWED_JS` (audit-pro.js:52) — легитимный скрипт, подключаемый Astro-футерами chast-1..5.
+2. `css/site.css` — 210 !important > ratchet ceiling 200 (регрессия от Нагорной/контента).
+3. Inline script syntax fail в `scripts/genealogy-build/{atlas,interactive}-template.html` — placeholder `const ATLAS=/*__ATLAS__*/;` не валиден; **это build-шаблоны**, не прод-страницы → tooling gap: `audit-pro.walk(ROOT)` (строка 95 skipDirs) **не скипит `scripts/`**; тот же пропуск в `validate.js:validateInlineScripts()`. Из этой же причины ошибки 4–9 ниже.
+4–9. По 2 ошибки на каждый build-шаблон: `<html>` без `lang`, нет canonical, `<meta charset>` не в первых 1024 байтах; плюс warnings JSON-LD/theme-color/sitemap.
+10. Repository base path leak в `docs/ATLAS-CONTRACT-2026-07-10.md` и `scripts/genealogy-build/README.md` (строки `AuditRepo/projects/...`).
+11. Oversized raw PNG `images/atlas-export/avraam-hires.png` (16 MB) + `avraam-preview.png` (1.7 MB); 38 orphan images (~1.6 MB, включая og-* на 2 новые «сердечные» статьи).
+
+### Дополнительно — параллельные красные workflow (тот же root cause — мерджи 07-11..14 без гейтов):
+- **Metadata & IndexNow Readiness** step «Validate registry structure»: `data/editorial-metadata.json` не содержит 5 новых маршрутов (`dzhon-gill-chast-4-ekzeget`, `chto-bibliya-nazyvaet-serdcem`, `novoe-serdce`, `serdce-i-duh`, `serdce-spravochnik`). Исправляется `node scripts/editorial-metadata-registry.js --write`.
+- **Visual Parity Guard — pixel-diff**: новые страницы (Атлас, Авраам, Сердца, Нагорная фиксы) требуют owner-approved baseline refresh (`workflow_dispatch` с `updateBaseline=true` + `OWNER_APPROVED`).
+
+### Repair lane suggestions (P0):
+1. Добавить `'scripts'` в `skipDirs` (audit-pro.js:95) и аналогично исключить `scripts/genealogy-build/*.html` из validate.js (inline-script + HTML-contract checks).
+2. Добавить `'js/nagornaya-bar-extras.js'` в `ALLOWED_JS` (audit-pro.js:52).
+3. Сбить `!important` в `css/site.css` до ≤200 либо одной транзакцией owner-aproved ratchet bump.
+4. Починить два `AuditRepo/...` path-leak в markdown (заменить на канонические внутренние ссылки).
+5. Конвертировать oversized PNG в webp/responsive или добавить в allowlist; удалить/подключить orphan images.
+6. `node scripts/editorial-metadata-registry.js --write` и коммит `data/editorial-metadata.json`.
+7. После озеленения validate:static-publication — владелец рефрешит pixel-diff baseline через workflow_dispatch.
+8. Перезапустить deploy; ожидать зелёный на `main`.
+
+### Evidence (added to `evidence/`):
+- `audit-pro-before-cachebust.txt` — 114 errors pre-cachebust.
+- `audit-pro-after-cachebust.txt` + `audit-pro-after-cachebust.md` — 11 errors (blocking set).
+- `metadata-registry-before.txt` — 5 missing records.
+- `validate-strict-before.txt` — validate:strict failures на build-шаблонах.
+
 ## 8. Notes for Verifier
 
 - Валидатор validate_audit_repo.py после фиксов PASS.

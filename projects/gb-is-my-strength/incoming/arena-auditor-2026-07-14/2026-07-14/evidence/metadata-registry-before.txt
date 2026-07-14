@@ -1,0 +1,9 @@
+=== Editorial Metadata Registry Check ===
+Eligible routes: 25
+Registry records: 20
+❌ Registry check failed (5 error(s)):
+  - /articles/dzhon-gill-chast-4-ekzeget/: metadata record missing
+  - /articles/chto-bibliya-nazyvaet-serdcem/: metadata record missing
+  - /articles/novoe-serdce/: metadata record missing
+  - /articles/serdce-i-duh/: metadata record missing
+  - /articles/serdce-spravochnik/: metadata record missing

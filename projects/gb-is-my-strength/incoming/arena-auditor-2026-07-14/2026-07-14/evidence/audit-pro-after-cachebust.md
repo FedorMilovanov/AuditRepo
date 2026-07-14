@@ -1,0 +1,236 @@
+# gb-is-my-strength — Professional Audit Report
+
+**Date:** 2026-07-14T14:40:31.690Z
+**Result:** ❌ FAILED
+**Summary:** 158 passed · 8 warnings · 11 errors
+**Duration:** 4.60s
+
+## ✅ Passed
+- Structure: exactly 7 CSS files in /css
+- Structure: fonts/fonts.css and nagornaya/tw.min.css exist
+- site.css size 291092 bytes ≥ floor 200000 (anti-deletion guard)
+- image cross-ref: all 65 referenced /images/ paths exist (data/*.json + sitemap.xml)
+- css/floating-cluster.css !important within ratchet ceiling: 503 ≤ 524 (long-term goal 100)
+- css/mobile-hotfix.css !important within ratchet ceiling: 142 ≤ 142 (long-term goal 0)
+- css/nagornaya-mobile-toc.css !important within ratchet ceiling: 135 ≤ 135 (long-term goal 50)
+- css/site.css: braces balanced
+- css/home.css: braces balanced
+- css/command-palette.css: braces balanced
+- css/mobile-hotfix.css: braces balanced
+- css/floating-cluster.css: braces balanced
+- css/enhancements-runtime.css: braces balanced
+- css/highlights-runtime.css: braces balanced
+- css/sw-toast.css: braces balanced
+- css/nagornaya-mobile-toc.css: braces balanced
+- Dove markers: no dead inline fn-dove-icon SVG in HTML
+- Dove markers: every fn-marker--dove has tooltip or data-tip content
+- JS syntax valid (15 files)
+- Quiz source schema is canonical across HTML pages
+- OpenGraph / article singleton meta uniqueness passed
+- SITE_CONFIG runtime contract passed across HTML pages
+- JSON valid (493 files)
+- HTML span balance: all files balanced
+- Cache-bust hashes match file content (615 references checked)
+- SEO basics passed (55 HTML files)
+- JSON-LD parse passed (64 blocks)
+- Russian quote policy passed: no English direct quotes in reader-facing Russian text
+- Attribution guard passed: Фёдор is not marked as author
+- Local resources and internal links valid (2484 refs checked)
+- No duplicate IDs
+- All images have alt attributes
+- manifest.json essentials valid
+- SW CACHE_VERSION
+- SW install event
+- SW activate event
+- SW fetch event
+- SW skipWaiting
+- SW clients.claim
+- SW cache cleanup
+- SW precache references existing repo files (30 URLs, pagefind skipped)
+- search-manifest URLs valid (45 items)
+- Nagornaya series structure checked
+- CNAME is gospod-bog.ru
+- robots.txt present
+- feed.xml present
+- deploy.yml present
+- notify-on-failure.yml present — failures will open/update GitHub issue
+- No garbage files (*.py / *.patch / *.bak / *.orig / *.rej / uploads/ / OS turds) anywhere in repo
+- Series consistency: 5 series in series.json, all published parts exist on disk
+- Series landing pages: no cross-series contamination
+- /articles/ catalog: 7 cards, no duplicates
+- Unified header: all pages with h-nav-links contain the canonical 5-item set
+- Nav semantics: no <button> inside <ul class="h-nav-links">
+- /hard-texts/ landing: all 3 article links are members of the series
+- Hashed asset URLs: every ?v=… reference resolves to an existing file
+- .gitignore covers npm/node_modules/OS turds
+- article-topnav stays buried (AGENTS §9.8)
+- Dead classes stay dead (5 guarded)
+- No AI-disclosure spans inside <figcaption>
+- OG/Twitter meta: no duplicates across pages (checked: og:image, og:title, og:url, og:description, twitter:image, og:type)
+- All <source srcset> tags wrapped in <picture>
+- Listener syntax: no broken function(, {…}) patterns
+- Inline scripts: none larger than 500 LOC except known/guarded map app debt
+- @keyframes integrity: all blocks have valid stops
+- sw.js CACHE_VERSION="gb-v189-lazy-precache-20260705" looks sane
+- sitemap.xml: all 44 lastmod dates ≤ today
+- Single <h1> per page: all content pages have exactly one
+- Mixed-content: no http:// href/src (web.archive.org & w3.org whitelisted)
+- target="_blank" links: all carry rel="noopener"
+- Anchor href values: no href="javascript:…" and no truly-bare href="#"
+- Anchors: every <a> has visible text / aria-label / alt
+- Buttons: every icon-only <button> carries aria-label
+- Tabindex hygiene: no positive tabindex values
+- CSS variables: 298 defined; bare-usage check passed (28 runtime externals)
+- Image references: every src/srcset URL resolves to an existing file
+- sitemap.xml: no noindex pages listed (checked 44 URLs)
+- Viewport: user zoom allowed on all pages (no user-scalable=no / maximum-scale=1)
+- No inline event handlers (onclick/onload/…) in HTML — CSP-safe
+- sw.js precache: every referenced asset exists (26 checked, pagefind/ skipped)
+- CSP img-src covers every external <img> host found in HTML
+- feed.xml lastBuildDate is 6 days old (fresh)
+- JSON-LD shape: every block has valid @context (schema.org) and @type/@graph
+- Meta descriptions: all ≤ 300 chars (Russian-friendly cap)
+- No surprise noindex (11 pages explicitly allowed: 404 + robot stubs)
+- JS bundle ratchet OK (6 files watched)
+- innerHTML hygiene: no untrusted-source assignments (location/cookie/input/fetch/storage)
+- JSON-LD url fields all match their page canonical
+- All <link rel="preload" as="image"> resources are actually rendered
+- CSS vendor prefixes: no dead-since-2015 prefixes present
+- Article JSON-LD: every /articles/*/ has exactly 1 with headline+datePublished+image
+- fetchpriority="high": at most 1 unique resource per page (LCP-friendly)
+- feed.xml: all article references exist on disk
+- sitemap.xml ↔ feed.xml: article URLs aligned
+- manifest.json: all required fields present, 4 icons all exist
+- <html lang>: every page is declared Russian (ru/ru-RU)
+- RSS alternate consistent: every page → https://gospod-bog.ru/feed.xml
+- <img> dimensions: every content image has width+height (no CLS surprise)
+- CSS @import: none in main stylesheets (no serial blocker)
+- robots.txt: allows crawl, lists sitemap
+- CNAME matches canonical host: gospod-bog.ru
+- sw.js PRECACHE_ASSETS lists all required cache-busted live assets (lazy set excluded by design)
+- sw.js PRECACHE_ASSETS contains no lazy-loaded assets
+- og:image: every meta-tag URL resolves to a real file
+- CSS uses design tokens — no bare named colors (red/blue/etc.)
+- GitHub workflows: every file has permissions; deploy workflows have concurrency
+- Internal links: every directory href ends with "/" (no 301 redirect hop)
+- Series landings: all in sitemap.xml
+- Cache-bust hashes: all ?v=… in valid 6-12 hex format
+- Portrait images: all 9:16/2:3 figures use article-img--vertical class
+- Article images: every <figure article-img> carries a <figcaption>
+- Series-strip placement: appears before summary-card on every series article
+- Image alt text: no "image of…" / filename / too-short patterns
+- srcset width descriptors match filename hints (Xw matches -Xw.ext)
+- Speakable: data-speakable HTML and SpeakableSpecification JSON-LD consistent
+- Animations: every file with timed motion has prefers-reduced-motion coverage
+- BreadcrumbList JSON-LD: every article and series-landing has it (15 pages)
+- Article dates: dateModified ≥ datePublished everywhere
+- Article JSON-LD: every author has @id reference to /about/#person
+- Image loading attribute: no above-fold images marked loading="lazy"
+- GitHub workflows: every `uses:` action pinned to a version tag or SHA
+- Reading-time series.json ↔ HTML: no severe drift (>20 min)
+- Preloaded fonts: every <link rel="preload" as="font"> resolves
+- llms.txt: all 44 referenced URLs exist and are indexable
+- sitemap.xml: all 44 image:loc URLs resolve
+- Yandex.Metrika: every page has BOTH ym() init AND <noscript> tracker pixel
+- No protocol-relative //path URLs
+- <picture>: every element has an <img> fallback child
+- JSON-LD images: every image/logo/contentUrl resolves to a real file
+- <head> integrity: no body-only tags inside <head>
+- Body/html overflow-x sentinel intact (no mobile sideways scroll possible)
+- Inline widths: no fixed ≥320px without max-width safeguard
+- Touch-target sizing: 7 icon buttons ≥44×44 on coarse pointer
+- Mobile menu: every burger button has #hMobileNav + #hMobileBackdrop wired
+- Sticky/fixed elements: bottom-bar overlap protection in place
+- Source tooltips: no nested fn-marker/tooltip markup
+- External source hosts: no known SSL-bad blocked hosts
+- Data files (feed.xml/manifest.json/llms.txt/search-manifest): all referenced assets exist
+- Summary cards: no active glossary terms/tooltips inside
+- Glossary runtime skips summary-card hydration
+- Quiz mount contract: enabled quizzes have #quizPlaceholder
+- Interactive controls: no anchors/buttons nested inside buttons
+- Article meta: every og:type=article page has article:author
+- 404.html meta: canonical + image alt tags present
+- Search shortcuts: Ctrl/⌘+F stays native; Ctrl/⌘+K is case-insensitive
+- GBS world integrity: 19 pages carry full kit, zero legacy series UI
+- Article word-count floors: 11 articles above minimum thresholds
+- Home page main content is pagefind-indexable
+- Home page includes h-mobile-hero-hub first-screen library chooser
+- Home page includes mobile dashboard quick-start block
+- Home page includes h-mobile-rail quick-jump navigation
+- Home page includes h-mobile-paths guided reading section
+- Home page includes h-mobile-dock bottom quick actions
+- Home mobile dashboard has 4 quick-start cards
+- Home mobile dashboard includes required quick-start links
+- Home guided reading section has 6 path cards
+- Home mobile dock includes core targets
+- CDN SRI: all external scripts and stylesheets have integrity= attribute
+
+## ⚠️ Warnings
+- Core CSS total 554013 bytes exceeds budget 425000
+- JS total 469101 bytes exceeds budget 365000
+- JSON-LD: scripts/genealogy-build/atlas-template.html has no ld+json block
+- JSON-LD: scripts/genealogy-build/interactive-template.html has no ld+json block
+- sitemap missing URL: https://gospod-bog.ru/scripts/genealogy-build/atlas-template.html
+- sitemap missing URL: https://gospod-bog.ru/scripts/genealogy-build/interactive-template.html
+- <meta theme-color> incomplete (mobile address-bar):
+  - scripts/genealogy-build/atlas-template.html: no <meta name="theme-color">
+  - scripts/genealogy-build/interactive-template.html: no <meta name="theme-color">
+- Magic z-index numbers (use design tokens):
+  - css/mobile-hotfix.css: z-index: 2102 (use --z-* token; see AGENTS-r33)
+  - css/floating-cluster.css: z-index: 2102 (use --z-* token; see AGENTS-r33)
+  - css/floating-cluster.css: z-index: 9999 (use --z-* token; see AGENTS-r33)
+  - css/floating-cluster.css: z-index: 3000 (use --z-* token; see AGENTS-r33)
+  - css/floating-cluster.css: z-index: 2147483000 (use --z-* token; see AGENTS-r33)
+  - css/floating-cluster.css: z-index: 2147483000 (use --z-* token; see AGENTS-r33)
+  - css/floating-cluster.css: z-index: 2147483100 (use --z-* token; see AGENTS-r33)
+  - css/floating-cluster.css: z-index: 2147483000 (use --z-* token; see AGENTS-r33)
+
+## ❌ Errors
+- Forbidden JS files in js/: js/nagornaya-bar-extras.js
+- css/site.css has 210 !important — exceeds ratchet ceiling 200. This is a regression: refactor into @layer / higher specificity instead of adding !important.
+- Inline script syntax failed: scripts/genealogy-build/atlas-template.html (#1) — Unexpected token ';'
+- Inline script syntax failed: scripts/genealogy-build/interactive-template.html (#1) — Unexpected token ';'
+- Repository base path leak in docs/ATLAS-CONTRACT-2026-07-10.md
+- Repository base path leak in scripts/genealogy-build/README.md
+- Oversized raw images in /images/ (convert to webp + responsive sizes, or add to ALLOWLIST):
+  - images/atlas-export/avraam-hires.png — 15998 KB > 683.59375 KB
+  - images/atlas-export/avraam-preview.png — 1703 KB > 683.59375 KB
+- <html> without lang attribute (a11y/SEO):
+  - scripts/genealogy-build/atlas-template.html: <html> missing lang attribute
+  - scripts/genealogy-build/interactive-template.html: <html> missing lang attribute
+- Canonical URL issues:
+  - scripts/genealogy-build/atlas-template.html: missing <link rel="canonical">
+  - scripts/genealogy-build/interactive-template.html: missing <link rel="canonical">
+- <meta charset> not in first 1024 bytes (browser may re-parse):
+  - scripts/genealogy-build/atlas-template.html: <meta charset> not in first 1KB
+  - scripts/genealogy-build/interactive-template.html: <meta charset> not in first 1KB
+- Orphan images in /images/ — 38 files, 1605KB wasted:
+  - 93KB atlas-ishod-scene-1200w.webp
+  - 88KB atlas-shvatim-scene-1200w.webp
+  - 76KB atlas-pavel-scene-1200w.webp
+  - 73KB atlas-early-church-scene-1200w.webp
+  - 70KB og-chto-bibliya-nazyvaet-serdcem.jpg
+  - 69KB atlas-avraam-scene-1200w.webp
+  - 68KB atlas-ishod-scene-900w.webp
+  - 67KB atlas-maccabim-scene-1200w.webp
+  - 67KB atlas-yeshua-scene-1200w.webp
+  - 63KB atlas-shvatim-scene-900w.webp
+  - 63KB og-serdce-spravochnik.jpg
+  - 55KB atlas-pavel-scene-900w.webp
+
+## ℹ️ Info
+- Gzip wire size: CSS 140511 bytes, JS 137045 bytes, total 277556 bytes
+- Route-scoped CSS: css/home.css, css/nagornaya-mobile-toc.css, nagornaya/tw.min.css = 137995 bytes
+- CSS dead vars: 21 unused (acceptable; clean when convenient)
+- SITE_CONFIG.version uses placeholder (1) on 1 pages — fine but could be Unix timestamp
+- SVG dedup opportunity: 16 icon patterns shared across ≥5 files
+- color-mix() usage: 228 occurrences (Safari ≥ 15.2 supports; older browsers need fallback)
+- CSS dead-class heuristic: 262 possibly-unused (runtime state classes excluded; manual review)
+- AGENTS.md changelog: 3 rows (under 100, healthy)
+- og:image differs from LCP-priority image (consider aligning for social-share consistency):
+  - articles/20-antisovetov-pastoru/index.html: og:image=og-20-antisovetov-pastoru, but LCP-priority images are: mirror
+  - articles/kod-da-vinchi/index.html: og:image=og-kod-da-vinchi, but LCP-priority images are: hero-kod-da-vinchi
+  - articles/krajne-li-isporcheno-serdce/index.html: og:image=og-krajne-isporcheno, but LCP-priority images are: ieremia-judea-fall
+  - index.html: og:image=og-preview-1200x630, but LCP-priority images are: og-nagornaya-propoved
+  - pastor-series/index.html: og:image=og-hero, but LCP-priority images are: hero-main
+- AGENTS.md: latest row has no machine-readable "NN passed" claim
