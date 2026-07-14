@@ -37,3 +37,23 @@
     ❌ Repository base path leak in scripts/genealogy-build/README.md
     ❌ css/site.css has N !important — exceeds ratchet ceiling N. This is a regression: refactor into @layer / higher specificity instead of adding !important.
   cache-bust mismatches (read-only): 103  -> 0 after 'node scripts/cache-bust.js --write' (82 files)
+
+## ===== SECOND-PASS DEEPENING (2026-07-14) — real build + wider sweep =====
+$ npm run strangler:build:production-like   → EXIT 0 (58 pages, dist emitted)
+artifact-witness: genealogy-build files in dist = 0 (never served) → REG-VALIDATE-GENEALOGY-TEMPLATE is TOOLING scope
+rodosloviye/index.html served inline scripts: 8, syntax errors: 0 (atlas runtime is clean)
+
+PROVEN FIX A: walker skipping scripts/genealogy-build → inline-script errors 2 → 0
+PROVEN FIX C: node scripts/cache-bust.js --write → cache-bust mismatches → 0 (82 files)
+
+NEW blocker D — GATE-CSS-IMPORTANT-RATCHET:
+  ❌ !important count 210 exceeds ceiling 202
+  ℹ️  !important count: 210
+  ❌ VALIDATION FAILED — 1 error(s)
+  audit-pro: css/site.css has 210 !important — exceeds ratchet ceiling 200
+
+NEW blocker E — AUDIT-ATLAS-DOC-PATH-LEAK (audit-pro §14):
+  docs/ATLAS-CONTRACT-2026-07-10.md + scripts/genealogy-build/README.md contain AuditRepo/projects/...
+
+NEW blocker F — AUDIT-FORBIDDEN-JS-NAGORNAYA (allowlist gap, NOT dead):
+  js/nagornaya-bar-extras.js referenced by 5 nagornaya pages (dist + PageFooter.astro) — register in ALLOWED_JS

@@ -102,6 +102,76 @@ against a fresh clone of `2ca2af3b`, which is stronger evidence than log scrapin
 
 ---
 
+## 🔬 SECOND-PASS DEEPENING (2026-07-14, real production-like build + wider gate sweep)
+
+> Owner: *"анализируй глубже"*. This pass added a **real artifact witness** (`strangler:build:production-like`
+> completed, 58 pages / dist produced, `npm run …` EXIT 0) and swept the full `audit-pro`/`css:layer`
+> gate surface. Source HEAD re-confirmed unchanged at `2ca2af3b`; Node v22.22.3 (≥ SANDBOX 22.12 req).
+
+### W2 artifact witness strengthens Root cause A (it is a TOOLING-scope bug, not a real defect)
+- The production-like build emits **0 files** from `scripts/genealogy-build/` into `dist/`
+  (`find dist -path '*genealogy-build*'` = 0), and the real atlas page `dist/rodosloviye/index.html`
+  builds with **8 inline scripts, 0 syntax errors**. So `validate.js`/`audit-pro.js` failing on the
+  two build templates is confirmed **audit-drift**, not a served defect.
+- **Proven fix (Root cause A):** replicating the walker with `scripts/genealogy-build` skipped →
+  inline-script errors drop from 2 to **0**. **Proven fix (Root cause C):** `cache-bust.js --write`
+  → mismatches **0** (82 files touched). Both fixes verified locally.
+- Correction to the count above: on this fresh clone `audit-pro.js` = **114→ (cache-bust now 103
+  mismatches)**; the number is volatile per concurrent asset pushes — the *class* is stable.
+
+### Three ADDITIONAL deploy blockers found this pass (all in `validate:static-publication`)
+- **`GATE-CSS-IMPORTANT-RATCHET` (new, P2 deploy-blocking).** `css/site.css` now has **210
+  `!important` > ceiling 200** (`audit-pro.js` `IMPORTANT_CEIL`) — AND the separate gate
+  `npm run css:layer:validate` (`--ceiling=202`) also fails: `❌ !important count 210 exceeds
+  ceiling 202`. A genuine regression from the atlas/mobile-reader CSS work (not tooling drift).
+  Repair: refactor the added rules into `@layer`/higher specificity, or (owner-gated) raise ceiling.
+- **`AUDIT-ATLAS-DOC-PATH-LEAK` (new, P3 deploy-blocking).** `audit-pro.js` §14 fails on repository
+  base-path leaks in two **new** atlas files: `docs/ATLAS-CONTRACT-2026-07-10.md` and
+  `scripts/genealogy-build/README.md` (both embed `AuditRepo/projects/gb-is-my-strength/…`).
+  Repair: replace with a repo-relative or generic reference (same class as D-7).
+- **`AUDIT-FORBIDDEN-JS-NAGORNAYA` (new, P3 — allowlist gap, NOT dead code).** `audit-pro.js`
+  flags `js/nagornaya-bar-extras.js` as a forbidden JS file, but it is **genuinely used** by all 5
+  `nagornaya/chast-*` pages (confirmed in `dist/nagornaya/chast-*/index.html` and the
+  `NagornayaChast*PageFooter.astro` sources). So the file is legitimate — the fix is to add it to
+  `ALLOWED_JS` (`audit-pro.js:52`), not to delete it. (Distinguished from a false positive: the
+  gate is correctly *firing*, the *allowlist* is stale.)
+
+### Nuance logged (avoid a false positive on orphan images)
+- The 38 "orphan" images include `atlas-*-scene-1200w.webp`, which **are** referenced — but only
+  by `audit/atlas-preview/*.html`, a directory `audit-pro.js` deliberately excludes from its walk
+  (`skipDirs` has `audit`). So they read as orphaned to the walker while being real preview assets.
+  Not raised as a standalone bug; noted for the verifier as measurement scope, not waste.
+
+### Deploy-blocker inventory (consolidated — 6 distinct classes)
+| # | ID | Class | Gate | Fix proven? |
+|---|---|---|---|---|
+| A | REG-VALIDATE-GENEALOGY-TEMPLATE | tooling scope | validate:strict | ✅ skip `scripts/genealogy-build` → 0 |
+| B | REG-EDITORIAL-METADATA-MISSING | content/registry | editorial-metadata --check | add 5 records |
+| C | CACHE-BUST-NO-WRITER | systemic pipeline | audit-pro cache-bust | ✅ `cache-bust --write` → 0 |
+| D | GATE-CSS-IMPORTANT-RATCHET | real CSS regression | audit-pro + css:layer | refactor / owner ceiling |
+| E | AUDIT-ATLAS-DOC-PATH-LEAK | doc hygiene | audit-pro §14 | strip repo path (×2 files) |
+| F | AUDIT-FORBIDDEN-JS-NAGORNAYA | allowlist gap | audit-pro ALLOWED_JS | register js file |
+
+All six are in the **source repo** (owner-gated release transaction W1); I did **not** modify source.
+
+### 🟣 AR-CI-RED — AuditRepo's OWN CI was red on `main` (concurrent-agent governance defect) — FIXED
+- On sync, `origin/main` was **581 commits ahead** (concurrent agents' atlas verification work) but
+  had **broken `validate_audit_repo.py`** — i.e. AuditRepo's own CI (`auditrepo-validate.yml`) was red:
+  1. stray root `DEBT-REGISTER.md` (not in `ALLOWED_ROOT_MD`);
+  2. intake `claude-atlas-deep-audit/2026-07-10/` missing required `README.md`/`REPORT.md`
+     (had `ATLAS_DEEP_AUDIT_AND_MASTER_PLAN.md` + `DEBT-REGISTER.md` but neither named right);
+  3. intake `claude-genealogy-atlas-strategy/2026-07-14-milestone-atlas-v1/` — invalid date-folder
+     name (regex allows only `YYYY-MM-DD[-rN]`).
+- **Repaired minimally & non-destructively** (respecting CLEANUP §7 — no intake content deleted):
+  (1) `git mv DEBT-REGISTER.md → working/DEBT-REGISTER.md` (root-hygiene, outside any intake);
+  (2) **added** an index `README.md` to the 2026-07-10 intake pointing at its existing files;
+  (3) `git mv …/2026-07-14-milestone-atlas-v1 → …/2026-07-14-r1` + a preservation note + index
+  `README.md` (original label retained in `MILESTONE.md` title). After: **both validators PASS**.
+- Lesson for concurrent agents: run `python3 scripts/validate_audit_repo.py` **before** pushing —
+  root MD files and intake folder naming are the two easiest ways to turn `main` CI red for everyone.
+
+---
+
 ## Status changes vs canon (matrix reverify)
 
 | Bug ID | Previous status | Current status | Evidence angle |
@@ -114,11 +184,12 @@ against a fresh clone of `2ca2af3b`, which is stronger evidence than log scrapin
 | Deploy status (masthead) | GREEN @ b8459bdf | **regression: RED @ 2ca2af3b** | 3 CI workflows failing + local repro (Root causes A/B/C) |
 
 ## Buckets
-- **regression (new, deploy-blocking):** REG-VALIDATE-GENEALOGY-TEMPLATE, REG-EDITORIAL-METADATA-MISSING, CACHE-BUST-NO-WRITER (recurred).
-- **fixed-current:** CI-INDEXNOW-CHECKER-STALE.
-- **still-confirmed:** D-19 (antisovetov), D-4, D-7, TTS-DL-CONSENT (+ all other open P2/P3 not individually re-touched — carried forward, not re-witnessed this pass).
-- **needs-manual-check:** Visual Parity pixel-diff failure (needs a Playwright/build run > sandbox budget; likely downstream of the same content delta — flagged, not root-caused here).
-- **audit-drift (tooling):** genealogy build templates tripping `validate.js`/`audit-pro.js` because their file walkers do not skip `scripts/` build inputs.
+- **regression (new, deploy-blocking):** REG-VALIDATE-GENEALOGY-TEMPLATE, REG-EDITORIAL-METADATA-MISSING, CACHE-BUST-NO-WRITER (recurred), GATE-CSS-IMPORTANT-RATCHET, AUDIT-ATLAS-DOC-PATH-LEAK, AUDIT-FORBIDDEN-JS-NAGORNAYA.
+- **fixed-current (this pass, in AuditRepo):** AR-CI-RED (AuditRepo's own `validate_audit_repo.py` restored to PASS after 3 concurrent-agent violations).
+- **fixed-current (source, prior pass):** CI-INDEXNOW-CHECKER-STALE.
+- **still-confirmed:** D-19 (antisovetov), D-4, D-7, TTS-DL-CONSENT, TTS-DL-UNZIP-SYNC, NF-VOSK-DEAD-SPLITSENTENCES, NEW-HARDTEXTS-CSP-MISSING-HFCDN, D-8 (+ all other open P2/P3 carried forward, not re-witnessed this pass).
+- **needs-manual-check:** Visual Parity pixel-diff failure (needs a full Playwright screenshot run; the production-like build itself succeeds, so this is likely a baseline delta from the atlas/mobile-reader visual changes — flagged, not root-caused here).
+- **audit-drift (tooling):** genealogy build templates tripping `validate.js`/`audit-pro.js` because their file walkers do not skip `scripts/` build inputs (Root cause A); `atlas-*-scene` images read as orphans because the walker skips `audit/` where they're referenced.
 
 ## Notes for verifier
 - These are **L2** (source + build-tooling + CI) — strong, but the three regressions touch the

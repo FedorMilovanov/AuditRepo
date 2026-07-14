@@ -1,3 +1,5 @@
+> **Folder renamed 2026-07-14 by arena-auditor-meta-governance (CI-repair):** `2026-07-14-milestone-atlas-v1` → `2026-07-14-r1` to satisfy the intake date-folder contract (`validate_audit_repo.py` regex `^\d{4}-\d{2}-\d{2}(?:-r\d+)?$`), which was failing on `main`. Content unchanged; the original label «milestone-atlas-v1» is retained in this file's title. See finding AR-CI-RED.
+
 # MILESTONE — Генеалогия: «Библейский атлас родословий» v1 построен и в main
 
 ## Meta
