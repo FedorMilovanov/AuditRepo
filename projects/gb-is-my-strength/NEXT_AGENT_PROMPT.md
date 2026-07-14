@@ -36,6 +36,29 @@ git fetch --all --prune && git checkout main && git pull --ff-only && git rev-pa
 - **PremiumControls / Floating Cluster / Gill-визуал** — владелец активно дорабатывает («не доделано», freeze-правила AGENTS §3.10). Не закрывать/не открывать PC-находки, не менять визуал.
 - **Глоссарий (data/glossary.json) и Библия-тултипы** — владелец обновляет данные. Инфраструктура вокруг них (санитайзер W5, версия кэша W3, корпус W6) — приоритетна, но координируй с этим треком; массово не править данные.
 
+## Нагорная проповедь — актуальное состояние (3 цикла аудита 2026-07-14)
+
+**20 багов** (6 P1 + 10 P2 + 4 P3). Архитектурный корень: **NG-CSS-01** — `tw.min.css` содержит 0 dark-селекторов, вся тёмная тема — `!important` хаки в `mobile-hotfix.css`.
+
+**Ключевые P1:**
+- **NG-DARK-01** → 54 Tailwind-класса без dark-ремапа (168× text-600, 47× text-700, 52× border-stone-100)
+- **NG-CSS-01** → tw.min.css без dark-вариантов (архитектурная причина NG-DARK-01)
+- **NG-BODY-01** → `bg-stone-100` на body не ремапится, фон светло-серый в dark
+- **NG-STRUCT-01** → Секции ch.2–5 без group-wrapper (регресс Astro-миграции), emoji вместо SVG
+- **NG-INLINE-01** → «Из библиотеки» на inline стилях, невидимы в dark
+
+**Единое решение:** `data-chapter="N"` + per-chapter `--ng-accent`/`--ng-accent-soft` CSS custom properties → закрывает NG-CSS-01 + NG-BODY-01 + NG-DARK-01 + NG-DARK-04/05.
+
+**Дальнейшие шаги:**
+1. Создать `css/nagornaya-chapter-vars.css` с per-chapter CSS vars (light + dark)
+2. Добавить `data-chapter="N"` на `<body>` в 5 `index.astro`
+3. Заменить accent Tailwind-классы на `var(--ng-accent)` в Section-компонентах
+4. Создать `NagornayaLibraryLinks.astro` → убирает ~98 inline style=
+5. Удалить 15 мёртвых компонентов
+6. Fix NG-SEO-01 (add scripture meta ch.4/5, update footer version)
+
+Evidence: `incoming/arena-auditor/2026-07-14/evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md`
+
 ## Жёсткие правила (не обсуждаются)
 
 1. Один сабсистем на PR. Волны из SUPER_AUDIT не смешивать.
