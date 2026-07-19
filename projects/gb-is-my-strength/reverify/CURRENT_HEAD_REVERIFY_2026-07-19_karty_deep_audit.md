@@ -123,6 +123,14 @@ Third quality pass inspecting meta elements and page ownership contracts:
 3. **Page Ownership Omission (`QUAL-P2-03`):** `migration/page-ownership.json` contains 0 entries under `/karty/`, bypassing centralized owner validation.
 4. **Full SEO & Registry Evidence:** See `incoming/arena-auditor-karty-verification/2026-07-19/EVIDENCE_SEO_OPENGRAPH_AND_MIGRATION_REGISTRY_2026-07-19.md`.
 
+### 3.9 Keyboard Focus Traps, Marker Double-Click Zoom & DOM Re-creation Pass
+Fourth quality pass inspecting event propagation and DOM node allocation:
+1. **Escape Key Event Cascade (`ENGINE-P1-27`):** Uncoordinated listeners on `document` close both the photo modal AND the parent place panel simultaneously.
+2. **Unconstrained Double-Click Zoom (`ENGINE-P1-29`):** Double-clicking a marker forces camera zoom width `w=450` without checking story boundaries, cropping out adjacent places.
+3. **DOM Node Re-creation GC Spikes (`QUAL-P2-04`):** `renderMarkers()` destroys and rebuilds 54+ SVG DOM nodes per click, causing garbage collector spikes and wiping toggled layer opacities (`ENGINE-P1-24`).
+4. **Full Focus & Lifecycle Evidence:** See `incoming/arena-auditor-karty-verification/2026-07-19/EVIDENCE_FOCUS_TRAPS_AND_DOM_RECREATION_2026-07-19.md`.
+
+
 
 
 
