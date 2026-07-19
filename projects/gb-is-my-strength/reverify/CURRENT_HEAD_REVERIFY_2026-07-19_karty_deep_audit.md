@@ -116,6 +116,14 @@ Secondary quality pass inspecting event loop performance and strict schema valid
 3. **Uncleaned Timer Closures (`QUAL-P1-06`):** 58 `setTimeout` and `requestAnimationFrame` timers run without lifecycle cancellation, executing callbacks on detached DOM nodes.
 4. **Full Schema & Performance Evidence:** See `incoming/arena-auditor-karty-verification/2026-07-19/EVIDENCE_AJV_SCHEMA_EVENT_LOOPS_AND_PERFORMANCE_2026-07-19.md`.
 
+### 3.8 OpenGraph, Social Cards & Migration Ownership Registry Pass
+Third quality pass inspecting meta elements and page ownership contracts:
+1. **Fallback OpenGraph Card Usage (`QUAL-P1-08`):** 8 holding map pages use the generic hub image `https://gospod-bog.ru/images/og-karty-1200x630.webp` with title "визуальный аудит", missing custom route preview graphics.
+2. **Route Profile Status Drift (`QUAL-P1-09`):** `data/route-profiles/karty-*.json` files declare `currentStatus: "production-dist"` and `migrationMode: "strict-native-app"` for all 11 map routes, misrepresenting the holding status of 8 placeholder maps.
+3. **Page Ownership Omission (`QUAL-P2-03`):** `migration/page-ownership.json` contains 0 entries under `/karty/`, bypassing centralized owner validation.
+4. **Full SEO & Registry Evidence:** See `incoming/arena-auditor-karty-verification/2026-07-19/EVIDENCE_SEO_OPENGRAPH_AND_MIGRATION_REGISTRY_2026-07-19.md`.
+
+
 
 
 
