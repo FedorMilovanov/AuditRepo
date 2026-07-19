@@ -101,6 +101,15 @@ Specific investigation into river endpoints and coastline animations:
 4. **Layout Unsettled Zero Length (`RIVER-P1-04`):** `getTotalLength()` returning 0 prior to DOM layout settlement sets `stroke-dasharray="0"`, flashing stroke transitions instantly across water bodies.
 5. **Full River Evidence:** See `incoming/arena-auditor-karty-verification/2026-07-19/EVIDENCE_RIVER_ANIMATION_AND_VECTOR_DISPLACEMENT_2026-07-19.md`.
 
+### 3.6 Touch Targets, Typography, and Quality Optimization Pass
+Deep pass on interactive controls, Hebrew rendering, verse typography, and event delegation:
+1. **Touch Target Dimensions (`QUAL-P1-01`):** 15 controls fail WCAG AAA 44px minimum sizing (`.me-back` 36px, `.me-story-chip` 36px, `.me-arch-more` 32px, `.me-panel__resize` 12px width, navigation dots 6-8px).
+2. **Hebrew Typography (`QUAL-P1-02`):** 244+ Hebrew words lack declared `font-family: "Noto Serif Hebrew"` and `dir="rtl"` container attributes in dynamic JS rendering.
+3. **Verse Citation Formatting (`QUAL-P1-03`):** 39 verse range citations in engine maps use ASCII hyphens `-` instead of Russian typographic en-dashes `–`.
+4. **Photo Modal Event Delegation (`QUAL-P1-04` / `ENGINE-P1-28`):** Delegated click listener on `panel` overwrites full-res photo modal image URLs with 320px low-res thumbnails.
+5. **Full Quality Evidence:** See `incoming/arena-auditor-karty-verification/2026-07-19/EVIDENCE_TYPOGRAPHY_TOUCH_TARGETS_AND_QUALITY_2026-07-19.md`.
+
+
 
 
 
