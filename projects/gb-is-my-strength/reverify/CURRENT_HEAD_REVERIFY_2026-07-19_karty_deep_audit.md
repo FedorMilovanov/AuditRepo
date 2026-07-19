@@ -93,6 +93,15 @@ Following explicit owner clarification:
 - **Basemap Disparity Audit:** 10 out of 11 maps (`ishod`, `pavel`, `shoftim`, `melachim`, `shvatim`, `yeshua`, `maccabim`, `early-church`, `revelation`, `nachalo`) currently have 0 B physical SVG basemaps in their folders and pass `{}` to `MapEngine.createMap`, causing `baseGeoUrl` to remain `undefined` and rendering bare nodes over a black void.
 - **Architectural Fix:** Auto-default `baseGeoUrl` to `../_engine/base-geo.svg`, merge `<defs>` gradients/filters into the SVG container, and replace black background rects with parchment design tokens. Full report: `incoming/arena-auditor-karty-verification/2026-07-19/EVIDENCE_PARADIGM_AND_SVG_BASEMAP_AUDIT_2026-07-19.md`.
 
+### 3.5 River Coastline Disconnection & Vector Animation Audit
+Specific investigation into river endpoints and coastline animations:
+1. **Filter Distortion (`RIVER-P1-01`):** `karty/avraam/base.svg` filter `#waterRipple` applies `feDisplacementMap scale="7"`, dynamically deforming sea shoreline boundaries by ±7 SVG units over a 14s loop while river path mouths remain static. This causes static river mouths (Kishon, Jordan, Nile Delta) to alternate between detaching from shorelines and overshooting into open sea.
+2. **Missing Defs (`RIVER-P1-02`):** `karty/_engine/base-geo.svg` references `filter="url(#waterRipple)"` 4 times, but `#waterRipple` is omitted from its `<defs>`, creating broken SVG filter references.
+3. **Round Cap Projection (`RIVER-P1-03`):** `stroke-linecap="round"` on 3..5px river strokes projects a 2.5px rounded cap past endpoint coordinates into sea water during `stroke-dashoffset` path reveal transitions.
+4. **Layout Unsettled Zero Length (`RIVER-P1-04`):** `getTotalLength()` returning 0 prior to DOM layout settlement sets `stroke-dasharray="0"`, flashing stroke transitions instantly across water bodies.
+5. **Full River Evidence:** See `incoming/arena-auditor-karty-verification/2026-07-19/EVIDENCE_RIVER_ANIMATION_AND_VECTOR_DISPLACEMENT_2026-07-19.md`.
+
+
 
 
 ---
