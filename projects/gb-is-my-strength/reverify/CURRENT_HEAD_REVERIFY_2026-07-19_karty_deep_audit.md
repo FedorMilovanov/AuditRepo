@@ -109,6 +109,14 @@ Deep pass on interactive controls, Hebrew rendering, verse typography, and event
 4. **Photo Modal Event Delegation (`QUAL-P1-04` / `ENGINE-P1-28`):** Delegated click listener on `panel` overwrites full-res photo modal image URLs with 320px low-res thumbnails.
 5. **Full Quality Evidence:** See `incoming/arena-auditor-karty-verification/2026-07-19/EVIDENCE_TYPOGRAPHY_TOUCH_TARGETS_AND_QUALITY_2026-07-19.md`.
 
+### 3.7 Ajv Draft 2020-12 Schema, Passive Listeners & Timer Leaks Pass
+Secondary quality pass inspecting event loop performance and strict schema validation:
+1. **Ajv Schema Violations (`QUAL-P1-07`, `QUAL-P2-02`):** Ajv 2020-12 validation against `karty/_shared/route.schema.json` rejects 4 map routes (`early-church`, `melachim`, `revelation` use underscores `_` in story IDs breaking `pattern: "^[a-z0-9-]+$"`; `nachalo` omits root `stories` and `meta` properties).
+2. **Non-Passive High-Frequency Listeners (`QUAL-P1-05`):** 16 `wheel`, `touchstart`, `touchmove`, and `mousemove` listeners lack `{ passive: true }`, blocking compositor thread scrolling on mobile devices.
+3. **Uncleaned Timer Closures (`QUAL-P1-06`):** 58 `setTimeout` and `requestAnimationFrame` timers run without lifecycle cancellation, executing callbacks on detached DOM nodes.
+4. **Full Schema & Performance Evidence:** See `incoming/arena-auditor-karty-verification/2026-07-19/EVIDENCE_AJV_SCHEMA_EVENT_LOOPS_AND_PERFORMANCE_2026-07-19.md`.
+
+
 
 
 
