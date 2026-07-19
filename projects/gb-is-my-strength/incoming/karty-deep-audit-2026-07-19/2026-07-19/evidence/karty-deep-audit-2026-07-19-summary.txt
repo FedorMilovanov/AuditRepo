@@ -1,0 +1,74 @@
+================================================================================
+EVIDENCE SUMMARY: KARTY DEEP VISUAL AND FUNCTIONAL AUDIT (2026-07-19)
+Audited Commit: c2c339708252
+Audited Branch: arena/019f7280-gb-is-my-strength
+================================================================================
+
+P0 BLOCKERS (8):
+--------------------------------------------------------------------------------
+MAP-P0-01: Mobile panel bounds overflow
+  - Top values on 390x844: Maccabees -581px (height 1425px), Exodus -212px (height 1056px),
+    Tribes -197px (1041px), Judges -146px (990px), Kingdoms -126px (970px).
+  - Affected: 56 overflow states across 9 engine maps. Header, tabs, close button offscreen.
+
+MAP-P0-02: Share button runtime crash
+  - Trigger: Click .me-share-btn on any MapEngine map.
+  - Error: Uncaught ReferenceError: getState is not defined at HTMLButtonElement.<anonymous> (map-engine.js)
+
+MAP-P0-03: Search delayed callback runtime crash & opacity clear defect
+  - Trigger: Search "Раамсес" -> wait 3s.
+  - Error: Uncaught ReferenceError: inStory is not defined.
+  - Clear search input: sets inline opacity="" on all marker groups, wiping active story dimming.
+
+MAP-P0-04: Initial viewport overwritten by flyTo
+  - Read: meta.viewport_init correct.
+  - Execution: 200ms delay calls flyTo(first.x, first.y, Math.min(view.w, 900)).
+  - Result: Pavel camera width forced 1780 -> 900, visible places drops from 10/10 to 4/10.
+
+MAP-P0-05: Deep links & URL state restoration broken
+  - Query parameters (?story=sinai&place=sinai) ignored.
+  - Hash #story=sinai leaves chip "Весь Исход" active.
+  - Hash #story=sinai&place=sinai opens Sinai panel but chip remains "Весь Исход".
+  - Share button writes query, loader reads hash.
+
+MAP-P0-06: Layer toggles default selector mismatch
+  - Selector: [data-layer="{layer.id}"] searching for "main", "journey1", "journey2", "journey3".
+  - DOM tags: stage-0, stage-1, data-stage.
+  - Result: 0 matching elements across all 9 engine maps. Toggles are no-ops.
+
+MAP-P0-07: Light theme toggle hardcoded colors
+  - CSS vars updated, computed styles stay: map rgb(7, 10, 16), panel rgba(13, 17, 26, 0.95), SVG #0d1d2e.
+  - Pixel diff: ~0.24% (icon/toast only).
+
+MAP-P0-08: Zoom controls click/keyboard bypass
+  - .click() / Enter / Space on zoom + / - buttons produces 0 viewBox change.
+  - Requires continuous mousedown event listener.
+
+P1 HIGH PRIORITY (20):
+--------------------------------------------------------------------------------
+MAP-P1-01: Tour caption / camera misalignment (step 1 Mara vs caption Stage I, skips current place flyTo)
+MAP-P1-02: Tour controls omitted from touch / mobile UI (Space key press only)
+MAP-P1-03: shoftim stages count 6 in metadata, but all 12 places assigned to stage 0 (stages II-VI broken)
+MAP-P1-04: Header UI collisions (search x theme 44x23px, search x share 6x23px, header x timeline 1440x53px, stories x timeline 1007x36px)
+MAP-P1-05: Mobile viewport occupancy 3.8% (Judges) to 28.5% (Maccabees) - dense label collisions
+MAP-P1-06: Archaeology footer rendered under all tabs (267 out-of-tab instances across 723 states)
+MAP-P1-07: Exact marker coordinate overlaps (Early Church 624,800 x2; Life of Jesus 623,800 x2, 622,799 x2)
+MAP-P1-08: Story switch opacity flash + search clear opacity destruction
+MAP-P1-09: Story switch auto-opens place panel after 600ms, obscuring map on mobile
+MAP-P1-10: Base geography SVG missing or obscured under dark background rect
+MAP-P1-11: Scale bar math uses cfg.W0 / view.w (constant W0=1900) instead of canvasWidth / view.w (1.32x to 4.87x error factor)
+MAP-P1-12: Compass embedded inside map pan/zoom SVG group at (50,80) instead of screen overlay
+MAP-P1-13: Systemic accessibility failures (113/113 markers no roles/tabindex/labels; panel no dialog semantics; reduced motion JS bypass)
+MAP-P1-14: destroy() lifecycle leaks keydown listeners & deletes shared <style id="me-base-css">, stripping styles from second instance
+AVRAAM-P1-01: Primary CTA opacity 0 for 1.8s while pointer-events active
+AVRAAM-P1-02: Canaan initial cluster overcrowding (Damascus/Dan, Sodom/Beersheba, Hebron/Mamre, Salem/Moriah)
+AVRAAM-P1-03: Mobile panel navigation duplication (prev/next row + mobile arrows + desktop pseudo-elements "← ←")
+AVRAAM-P1-04: Avraam tabs plain <div> missing role="tab", tabindex, keyboard handlers
+AVRAAM-P1-05: Desktop landscape 1024x450 blocked by "Rotate device" overlay
+KARTY-DATA-P1-01: Lack of manual labelAnchor and leader coordinates (0-5 per map on 8 engine maps)
+
+P2 MEDIUM PRIORITY / HUB (3):
+--------------------------------------------------------------------------------
+AVRAAM-P2-01: DOM payload 1540 nodes, 1103 SVG, 60 GSAP animations, 824KB payload, route.json credentials mismatch double fetch
+HUB-P2-01: Hub /karty/ preview OG overlapping text, 138px desktop gap, QA terms on public hub, /karty/ishod/ published and indexable without hub link
+GATE-P1-01: maps:validate and smoke:maps pass invalid stages, duplicate coordinates, JS runtime crashes, and omit panel bounds checks
