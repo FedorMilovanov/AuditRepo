@@ -12,12 +12,13 @@
 
 | Component Area | Audit Verdict | Severity Summary | Key Root Causes |
 | :--- | :--- | :--- | :--- |
+| **Zoom LOD & Font Strokes** | **FAILED (CRUTCH)** | 1 P1 (`LOD-P1-01`) | Non-scaling 2.6px outline stroke completely fills character counters when font sizes shrink to 1.4–2.3px at zoom level z4 |
 | **Media & Image Architecture** | **FAILED (CRUTCH)** | 1 P1 (`MEDIA-P1-01`) | 100% of archaeology/place photos (312 URLs across all 11 maps) depend on direct uncached hotlinking to Wikimedia Commons CDNs |
 | **Shared Basemaps & Geography** | **FAILED (CRUTCH)** | 4 P1 (`BASE-P1-01`..`04`), 1 P2 (`BASE-P2-01`) | Empty `<defs>` & 18 missing ID references (`#hill`, `#peak`, `#canaanRidge`); forced 50% opacity in `map-engine.js`; dark galaxy mode in `avraam/base.svg`; coarse regional vectors |
 | **Draft Sheet Topography & Relief** | **FAILED (CRUTCH)** | 1 P1 (`RELIEF-P1-01`) | Mountain relief in "ideal draft engine" `sheet-engine.js` is drawn using geometric `<ellipse>` shapes with line hatches, and is empty (`''`) for `urheimat` |
 | **Draft Sheet Route Splines** | **FAILED (CRUTCH)** | 1 P1 (`ROUTE-P1-01`) | Single Catmull-Rom spline forces unbranching route spaghetti bowing into open seas without `route_via` crutch points |
-| **Coordinate Mesh & Graticule** | **FAILED (WEAK)** | 1 P1 (`GRAT-P1-01`) | Linear unprojected affine grid math treats Earth as a flat 2D rectangle and lacks grid lines across map body |
-| **Cartouche, Waves & Compass** | **FAILED (WEAK)** | 3 P1 (`SEA-P1-01`, `ORN-P1-01`, `CART-P1-01`), 1 P1 (`ROSE-P1-01`) | 20px repeating tile grid creates "bathroom tile" sea patterns; 3-line cartouche corners; magic float cartouche width formulas (`length * 14.6`); modern Russian letter `С` on compass |
+| **Coordinate Mesh & Graticule** | **FAILED (WEAK)** | 2 P1 (`GRAT-P1-01`..`02`) | Linear unprojected affine grid math treats Earth as a flat 2D rectangle and lacks grid lines; ticks vanish completely on zoom |
+| **Cartouche, Waves & Compass** | **FAILED (WEAK)** | 3 P1 (`SEA-P1-01`, `ORN-P1-01`, `CART-P1-01`), 2 P1 (`ROSE-P1-01`, `COMP-P1-01`) | 20px repeating tile grid creates "bathroom tile" sea patterns; 3-line cartouche corners; magic float cartouche width formulas (`length * 14.6`); modern Russian letter `С` on compass; HUD scale ratio error up to 22% |
 | **Label Halos & Typography** | **FAILED (WEAK)** | 1 P1 (`HALO-P1-01`), 2 P1 (`TEXT-P1-01`, `FONT-P1-01`), 1 P1 (`QUAL-P1-02`) | Dead `halos` boilerplate array; text CSS stroke eating into small letter counters; monospace text length multiplication |
 | **Glyph Dataset Completeness** | **FAILED (INCOMPLETE)** | 1 P1 (`GLYPH-P1-01`) | 9 of 11 map JSON datasets contain zero `glyph` properties, forcing 82% of maps to render plain dots |
 | **Territory Regions & Boundaries** | **FAILED (CRUTCH)** | 1 P1 (`REG-P1-01`) | `map-engine.js` omits `route.regions` rendering, failing to draw 13 tribal allotment polygons in `shvatim` |
@@ -49,6 +50,7 @@ All structured evidence and raw findings from this pass are persisted in:
   - `EVIDENCE_DRAFT_SHEET_ELLIPSE_RELIEF_AND_CATMULL_SPLINES.md`
   - `EVIDENCE_GRATICULE_LINEAR_GRID_AND_WATER_TEXTURE_TILE.md`
   - `EVIDENCE_MEDIA_HOTLINKING_CARTOUCHE_FORMULAS_AND_COMPASS_STYLING.md`
+  - `EVIDENCE_ZOOM_LOD_TEXT_OBLITERATION_AND_GRATICULE_CULLING.md`
 
 ---
 

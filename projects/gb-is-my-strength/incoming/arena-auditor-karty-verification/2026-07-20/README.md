@@ -8,7 +8,7 @@
 - **Source commit:** `32ae0d7d62bee81737a9aae1f136946d047fe4fb` on `main`
 
 ## Scope
-Drawing quality, basemap SVG structures, vector path routines, label plates, architectural glyphs, XML validity, Hebrew typography, style lifecycle management, minimap geography, campaign overlays, territory polygon rendering (`route.regions`), filter animation performance, mobile layout collisions, draft sheet relief ellipses, Catmull-Rom route splines, glyph data completeness, linear coordinate math, sea wave tiling, cartouche ornaments, text halo rendering, media hotlinking, cartouche box formulas, and compass rose styling against Option 1 Aesthetic Canon ("ВАРИАНТ 1: Эстетика: древняя карта в стиле атласа").
+Drawing quality, basemap SVG structures, vector path routines, label plates, architectural glyphs, XML validity, Hebrew typography, style lifecycle management, minimap geography, campaign overlays, territory polygon rendering (`route.regions`), filter animation performance, mobile layout collisions, draft sheet relief ellipses, Catmull-Rom route splines, glyph data completeness, linear coordinate math, sea wave tiling, cartouche ornaments, text halo rendering, media hotlinking, cartouche box formulas, compass rose styling, zoom LOD stroke text obliteration, graticule opacity culling, and screen HUD scale ratios against Option 1 Aesthetic Canon ("ВАРИАНТ 1: Эстетика: древняя карта в стиле атласа").
 
 ---
 
@@ -26,3 +26,4 @@ Drawing quality, basemap SVG structures, vector path routines, label plates, arc
 10. `EVIDENCE_DRAFT_SHEET_ELLIPSE_RELIEF_AND_CATMULL_SPLINES.md` — Audit of offline draft sheet engine (`sheet-engine.js`), primitive stretched `<ellipse>` mountains, unbranching Catmull-Rom spline route bowing into water, and zero glyph properties in 9 of 11 map datasets.
 11. `EVIDENCE_GRATICULE_LINEAR_GRID_AND_WATER_TEXTURE_TILE.md` — Audit of linear unprojected graticule equations, 20px repeating sea pattern grid, primitive 3-line cartouche corner flourishes, and dead `halos` boilerplate array.
 12. `EVIDENCE_MEDIA_HOTLINKING_CARTOUCHE_FORMULAS_AND_COMPASS_STYLING.md` — Audit of 312 external hotlinked Wikimedia Commons photo URLs, magic multiplier cartouche width equations (`length * 14.6`), and modern Russian letter `С` in compass rose.
+13. `EVIDENCE_ZOOM_LOD_TEXT_OBLITERATION_AND_GRATICULE_CULLING.md` — Audit of non-scaling 2.6px outline stroke filling character counters on z4 zoom (1.4–2.3px font size), graticule complete disappearance on zoom, and HUD scale ratio mismatch.
