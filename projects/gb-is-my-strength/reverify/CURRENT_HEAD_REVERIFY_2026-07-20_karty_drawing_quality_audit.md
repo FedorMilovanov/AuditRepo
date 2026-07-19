@@ -13,6 +13,8 @@
 | Component Area | Audit Verdict | Severity Summary | Key Root Causes |
 | :--- | :--- | :--- | :--- |
 | **Shared Basemaps & Geography** | **FAILED (CRUTCH)** | 4 P1 (`BASE-P1-01`..`04`), 1 P2 (`BASE-P2-01`) | Empty `<defs>` & 18 missing ID references (`#hill`, `#peak`, `#canaanRidge`); forced 50% opacity in `map-engine.js`; dark galaxy mode in `avraam/base.svg`; coarse regional vectors |
+| **Territory Regions & Boundaries** | **FAILED (CRUTCH)** | 1 P1 (`REG-P1-01`) | `map-engine.js` omits `route.regions` rendering, failing to draw 13 tribal allotment polygons in `shvatim` |
+| **Filter Performance & CPU Jank** | **FAILED (WEAK)** | 1 P1 (`PERF-P1-01`) | Continuous 14s `feTurbulence` animation loop forces canvas re-rasterization and pan/zoom drag jank (15–20 fps) |
 | **Engine Architecture & Styles** | **FAILED (CRUTCH)** | 2 P1 (`ARCH-P1-01`, `CSS-P1-01`) | Architectural split: parchment atlas present in offline `sheet-engine.js`, but production `map-engine.js` renders dark schematic; `destroy()` removes shared CSS |
 | **Export Asset Pipeline** | **FAILED (CRUTCH)** | 1 P1 (`SVG-P1-01`) | Standalone exported SVGs contain unescaped `&nbsp;` HTML entities crashing XML parsers |
 | **Route Path Vector Geometry** | **FAILED (CRUTCH)** | 1 P0 (`DATA-P0-01`), 1 P1 (`RIVER-P1-04`), 1 P2 (`DATA-P2-01`) | Straight `M...L...L...` lines ignoring `stages[].paths`; `getTotalLength()` zero-reflow bug; missing curved paths in 10/11 maps |
@@ -20,7 +22,7 @@
 | **Label Plates & Typography** | **FAILED (WEAK)** | 2 P1 (`TEXT-P1-01`, `FONT-P1-01`), 1 P1 (`QUAL-P1-02`) | Fixed monospace length multiplier clipping wide glyphs; Hebrew font fallback error (`Georgia, "Times New Roman"`) forcing system sans-serif |
 | **Minimap & Overlays** | **FAILED (WEAK)** | 3 P1 (`MINI-P1-01`, `WAYP-P1-01`, `SIG-P1-01`) | Bare black minimap without basemap geography; unplated 7px grey waypoint text; hardcoded campaign offsets |
 | **Hydrology & Coastal Ripple** | **FAILED (CRUTCH)** | 5 P1 (`RIVER-P1-01`..`05`) | `#waterRipple` scale=7 shoreline deformation detaching static river mouths |
-| **Viewport Navigation UI** | **FAILED (WEAK)** | 3 P1 (`MAP-P1-11`..`12`, `15`) | Unanchored compass rose in world coordinates; mobile scale bar math distortion |
+| **Viewport Navigation UI** | **FAILED (WEAK)** | 4 P1 (`MAP-P1-11`..`12`, `15`, `UI-P1-01`) | Unanchored compass rose in world coordinates; mobile scale bar math distortion; header search input absolute position collision on 390px screens |
 
 ---
 
@@ -37,6 +39,7 @@ All structured evidence and raw findings from this pass are persisted in:
   - `EVIDENCE_EXPORT_SVG_ENTITY_ERRORS_AND_COARSE_GEOMETRY.md`
   - `EVIDENCE_HEBREW_TYPOGRAPHY_AND_STYLE_CLEANUP_DESTROY_BUG.md`
   - `EVIDENCE_MINIMAP_BLANK_GEOMETRY_AND_CAMPAIGN_HARDCODED_OFFSETS.md`
+  - `EVIDENCE_UNRENDERED_REGIONS_AND_PERFORMANCE_OVERLAPS.md`
 
 ---
 
