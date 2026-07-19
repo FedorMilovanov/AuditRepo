@@ -13,6 +13,9 @@
 | Component Area | Audit Verdict | Severity Summary | Key Root Causes |
 | :--- | :--- | :--- | :--- |
 | **Shared Basemaps & Geography** | **FAILED (CRUTCH)** | 4 P1 (`BASE-P1-01`..`04`), 1 P2 (`BASE-P2-01`) | Empty `<defs>` & 18 missing ID references (`#hill`, `#peak`, `#canaanRidge`); forced 50% opacity in `map-engine.js`; dark galaxy mode in `avraam/base.svg`; coarse regional vectors |
+| **Draft Sheet Engine Topography** | **FAILED (CRUTCH)** | 1 P1 (`RELIEF-P1-01`) | Mountain relief in "ideal draft engine" `sheet-engine.js` is drawn using geometric `<ellipse>` shapes with line hatches, and is empty (`''`) for `urheimat` |
+| **Draft Sheet Route Splines** | **FAILED (CRUTCH)** | 1 P1 (`ROUTE-P1-01`) | Single Catmull-Rom spline forces unbranching route spaghetti bowing into open seas without `route_via` crutch points |
+| **Glyph Dataset Completeness** | **FAILED (INCOMPLETE)** | 1 P1 (`GLYPH-P1-01`) | 9 of 11 map JSON datasets contain zero `glyph` properties, forcing 82% of maps to render plain dots |
 | **Territory Regions & Boundaries** | **FAILED (CRUTCH)** | 1 P1 (`REG-P1-01`) | `map-engine.js` omits `route.regions` rendering, failing to draw 13 tribal allotment polygons in `shvatim` |
 | **Filter Performance & CPU Jank** | **FAILED (WEAK)** | 1 P1 (`PERF-P1-01`) | Continuous 14s `feTurbulence` animation loop forces canvas re-rasterization and pan/zoom drag jank (15–20 fps) |
 | **Engine Architecture & Styles** | **FAILED (CRUTCH)** | 2 P1 (`ARCH-P1-01`, `CSS-P1-01`) | Architectural split: parchment atlas present in offline `sheet-engine.js`, but production `map-engine.js` renders dark schematic; `destroy()` removes shared CSS |
@@ -40,6 +43,7 @@ All structured evidence and raw findings from this pass are persisted in:
   - `EVIDENCE_HEBREW_TYPOGRAPHY_AND_STYLE_CLEANUP_DESTROY_BUG.md`
   - `EVIDENCE_MINIMAP_BLANK_GEOMETRY_AND_CAMPAIGN_HARDCODED_OFFSETS.md`
   - `EVIDENCE_UNRENDERED_REGIONS_AND_PERFORMANCE_OVERLAPS.md`
+  - `EVIDENCE_DRAFT_SHEET_ELLIPSE_RELIEF_AND_CATMULL_SPLINES.md`
 
 ---
 

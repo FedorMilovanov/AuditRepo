@@ -8,13 +8,13 @@
 - **Source commit:** `32ae0d7d62bee81737a9aae1f136946d047fe4fb` on `main`
 
 ## Scope
-Drawing quality, basemap SVG structures, vector path routines, label plates, architectural glyphs, XML validity, Hebrew typography, style lifecycle management, minimap geography, campaign overlays, territory polygon rendering (`route.regions`), filter animation performance, and mobile layout collisions against Option 1 Aesthetic Canon ("ВАРИАНТ 1: Эстетика: древняя карта в стиле атласа").
+Drawing quality, basemap SVG structures, vector path routines, label plates, architectural glyphs, XML validity, Hebrew typography, style lifecycle management, minimap geography, campaign overlays, territory polygon rendering (`route.regions`), filter animation performance, mobile layout collisions, draft sheet relief ellipses, Catmull-Rom route splines, and glyph data completeness against Option 1 Aesthetic Canon ("ВАРИАНТ 1: Эстетика: древняя карта в стиле атласа").
 
 ---
 
 ## Deliverables in this Audit Directory
 
-1. `REPORT.md` — Comprehensive audit report on rendering/drawing quality, basemap crutches, straight-line path routing, marker glyphs, dual engine divergence, typography, minimap rendering, unrendered regions, and performance jank.
+1. `REPORT.md` — Comprehensive audit report on rendering/drawing quality, basemap crutches, straight-line path routing, marker glyphs, dual engine divergence, typography, minimap rendering, unrendered regions, draft sheet ellipse relief, and Catmull-Rom splines.
 2. `EVIDENCE_BASEMAP_DEFS_AND_PARCHMENT_CANON_AUDIT.md` — Deep audit of shared basemaps (`base-geo.svg`, `base-geo-mediterranean.svg`, `base-geo-urheimat.svg`), empty `<defs>`, forced 50% opacity dimming, and dark mode / starry sky clutter in `avraam/base.svg`.
 3. `EVIDENCE_ROUTE_DRAWING_AND_CURVED_GEOMETRY.md` — Audit of straight-line routing (`M...L...L...`) vs. curved Bezier paths (`stages[].paths`), layout settlement `getTotalLength()` zero-length animation jumps.
 4. `EVIDENCE_ARCHITECTURAL_GLYPHS_AND_LABEL_PLATES.md` — Audit of generic circle place markers (`r=4.5`) vs handcrafted architectural glyphs, text plate monospace width estimation errors (`length * 0.6`), and `circle:nth-child(3)` hover target bug.
@@ -23,3 +23,4 @@ Drawing quality, basemap SVG structures, vector path routines, label plates, arc
 7. `EVIDENCE_HEBREW_TYPOGRAPHY_AND_STYLE_CLEANUP_DESTROY_BUG.md` — Audit of Hebrew font fallback errors (`Georgia, "Times New Roman"`) and global `<style id="me-base-css">` DOM deletion on instance destroy.
 8. `EVIDENCE_MINIMAP_BLANK_GEOMETRY_AND_CAMPAIGN_HARDCODED_OFFSETS.md` — Audit of geography-less minimap floating dots, unplated archaeology waypoint labels, and hardcoded pixel offsets in signature campaign overlays.
 9. `EVIDENCE_UNRENDERED_REGIONS_AND_PERFORMANCE_OVERLAPS.md` — Audit of completely unrendered `route.regions` tribal allotment polygons in `shvatim`, continuous 14s `feTurbulence` re-rasterization jank, and header search absolute positioning overlap on mobile 390px.
+10. `EVIDENCE_DRAFT_SHEET_ELLIPSE_RELIEF_AND_CATMULL_SPLINES.md` — Audit of offline draft sheet engine (`sheet-engine.js`), primitive stretched `<ellipse>` mountains, unbranching Catmull-Rom spline route bowing into water, and zero glyph properties in 9 of 11 map datasets.
