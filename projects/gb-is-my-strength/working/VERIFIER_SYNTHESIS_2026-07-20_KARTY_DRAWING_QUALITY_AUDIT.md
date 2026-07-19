@@ -13,12 +13,19 @@ This synthesis aggregates the findings from our deep quality audit on the vector
 ### The Fundamental Quality Gap
 The current implementation across the 11 biblical maps is **not top quality**; it is built on placeholder mechanics, crude monospace calculations, unanchored UI elements, and broken architectural abstractions.
 
-While the project's documentation references historical research and coordinate spaces, the actual rendered result in `MapEngine` defaults to:
-1. **Broken / Dark Basemaps:** Loading `base-geo.svg` fails to resolve fill colors because `<defs>` is empty. `map-engine.js` forces a 50% opacity mask on the background and renders dark navy rectangles (`#0d1d2e`).
-2. **Straight-Line Geometries:** Rather than following curved trade routes (`stages[].paths`), `map-engine.js` draws straight `L` lines across mountains and seas.
-3. **Generic Circle Nodes:** Place markers are plain SVG circles (`r=4.5`). Zero architectural icons exist across the dataset.
-4. **Clipped Text Plates:** Label backgrounds use `length * 0.6 * 10` estimation, cutting off wide Cyrillic and Hebrew text.
-5. **Floating Rivers & Distorted Compass:** Sea ripple displacement scale=7 detaches river mouths, and the compass rose pans/zooms in world space instead of locking to the viewport UI.
+Key Structural & Vector Quality Breakdown Items:
+1. **Broken / Dark Basemaps & Missing Symbols (`BASE-P1-01`..`04`):**
+   Loading `base-geo.svg` fails to resolve fills and mountain symbols because `<defs>` is empty and 18 referenced IDs (including `#hill`, `#peak`, `#peak-snow`, `#canaanRidge`, `#landG`) are missing. `map-engine.js` forces a 50% opacity mask on the background over a dark navy rectangle (`#0d1d2e`).
+2. **Dual Engine Divergence (`ARCH-P1-01`):**
+   The warm parchment atlas aesthetic (`GEO_DEFS`, symbols, light palette) exists exclusively inside Node.js build tools (`scripts/lib/sheet-engine.js`) for non-interactive static HTML previews. The live production web client (`map-engine.js`) renders a dark schematic map.
+3. **Invalid XML Entity Exports (`SVG-P1-01`):**
+   Exported standalone SVG assets in `images/atlas-export/*.svg` contain raw `&nbsp;` HTML entities, crashing standard XML parsers.
+4. **Straight-Line Geometries (`DATA-P0-01`, `DATA-P2-01`):**
+   `map-engine.js` draws straight `L` lines across mountains and seas, ignoring `stages[].paths`. Moreover, 10 out of 11 maps lack curved path definitions altogether.
+5. **Generic Circle Nodes (`DRAW-P1-03`):**
+   Place markers are plain SVG circles (`r=4.5`). Zero architectural icons exist across the dataset.
+6. **Clipped Text Plates (`TEXT-P1-01`):**
+   Label backgrounds use `length * 0.6 * 10` estimation, cutting off wide Cyrillic and Hebrew text.
 
 ---
 
@@ -26,20 +33,19 @@ While the project's documentation references historical research and coordinate 
 
 To bring the biblical maps section to Option 1 Aesthetic Canon quality:
 
-1. **Fix Basemap Defs & Warm Parchment Palette (`BASE-P1-01`..`03`):**
-   - Populate `karty/_engine/base-geo.svg` with self-contained `<defs>` or have `MapEngine.createMap` automatically inject a standardized parchment palette (`#f4eee0` land, `#2e4d6b` stroke, warm ivory label plates, high-contrast aquatic blue sea).
+1. **Unify Parchment Definitions into Core Engine (`BASE-P1-01`..`04`, `ARCH-P1-01`):**
+   - Populate `karty/_engine/base-geo.svg` with self-contained `<defs>` (including `#hill`, `#peak`, `#peak-snow`, `#canaanRidge`, `#landG`, `#seaG`).
+   - Align `map-engine.js` with `sheet-engine.js` to eliminate the dark schematic fallbacks and render a warm parchment atlas.
    - Remove `opacity="0.5"` from `me-base-geo` in `map-engine.js:2612`.
-   - Remove dark mode charcoal fill and night sky star overlay from `avraam/base.svg`.
 
-2. **Enable Curved SVG Trade Route Path Rendering (`DATA-P0-01`):**
-   - Refactor `map-engine.js` `renderMarkers`/`renderPaths` to check for `stage.paths` array or smooth Bezier spline interpolation (`M...C...` / `M...Q...`) between places.
+2. **Clean XML Entities in Export Pipeline (`SVG-P1-01`):**
+   - Update `atlas-export-sheet.js` to sanitize HTML entities (replace `&nbsp;` with `&#160;` or regular spaces) prior to saving standalone SVG files.
 
-3. **Implement Architectural Icon System (`DRAW-P1-03`):**
+3. **Enable Curved SVG Trade Route Path Rendering (`DATA-P0-01`, `DATA-P2-01`):**
+   - Refactor `map-engine.js` `renderMarkers`/`renderPaths` to check for `stage.paths` or smooth Bezier spline interpolation between places. Author curved trade route paths for the remaining 10 maps.
+
+4. **Implement Architectural Icon System (`DRAW-P1-03`):**
    - Create a set of handcrafted SVG city glyphs (gate, tower, tent, tabernacle, altar, temple, port, battle) and map `place.icon` in `route.json` to these symbols.
 
-4. **Dynamic SVG Text Measurement for Label Plates (`TEXT-P1-01`):**
-   - Replace `length * fontSize * 0.6` estimation with `SVGTextElement.getBBox()` or precise character width tables, wrapped in warm vellum/parchment plate rectangles with subtle drop shadows.
-
-5. **Anchor Compass and Fix Mobile Scale Bar (`MAP-P1-11`..`12`):**
-   - Move `#me-compass` into a viewport UI layer outside the panning `<svg>` space.
-   - Update `updateScaleBar()` to use `container.clientWidth` instead of constant `W0 = 1900`.
+5. **Dynamic SVG Text Measurement for Label Plates (`TEXT-P1-01`):**
+   - Replace `length * fontSize * 0.6` estimation with `SVGTextElement.getBBox()` or precise character width tables.
