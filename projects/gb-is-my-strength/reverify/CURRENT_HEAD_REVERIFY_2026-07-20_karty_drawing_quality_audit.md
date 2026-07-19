@@ -14,7 +14,7 @@
 | :--- | :--- | :--- | :--- |
 | **Zoom LOD & Font Strokes** | **FAILED (CRUTCH)** | 1 P1 (`LOD-P1-01`) | Non-scaling 2.6px outline stroke completely fills character counters when font sizes shrink to 1.4–2.3px at zoom level z4 |
 | **Media & Image Architecture** | **FAILED (CRUTCH)** | 1 P1 (`MEDIA-P1-01`) | 100% of archaeology/place photos (312 URLs across all 11 maps) depend on direct uncached hotlinking to Wikimedia Commons CDNs |
-| **Shared Basemaps & Geography** | **FAILED (CRUTCH)** | 4 P1 (`BASE-P1-01`..`04`), 1 P2 (`BASE-P2-01`) | Empty `<defs>` & 18 missing ID references (`#hill`, `#peak`, `#canaanRidge`); forced 50% opacity in `map-engine.js`; dark galaxy mode in `avraam/base.svg`; coarse regional vectors |
+| **Shared Basemaps & Geography** | **FAILED (CRUTCH)** | 3 P1 (`BASE-P1-01`..`03`), 1 P2 (`BASE-P2-01`) | Empty `<defs>` & 18 missing ID references (`#hill`, `#peak`, `#canaanRidge`); forced 50% opacity in `map-engine.js`; dark galaxy mode in `avraam/base.svg`; coarse regional vectors |
 | **Draft Sheet Topography & Relief** | **FAILED (CRUTCH)** | 1 P1 (`RELIEF-P1-01`) | Mountain relief in "ideal draft engine" `sheet-engine.js` is drawn using geometric `<ellipse>` shapes with line hatches, and is empty (`''`) for `urheimat` |
 | **Draft Sheet Route Splines** | **FAILED (CRUTCH)** | 1 P1 (`ROUTE-P1-01`) | Single Catmull-Rom spline forces unbranching route spaghetti bowing into open seas without `route_via` crutch points |
 | **Coordinate Mesh & Graticule** | **FAILED (WEAK)** | 1 P1 (`GRAT-P1-01`) | Linear unprojected affine grid math treats Earth as a flat 2D rectangle, lacks interior grid lines, and ticks vanish completely (`opacity: 0`) when zoomed >4% |

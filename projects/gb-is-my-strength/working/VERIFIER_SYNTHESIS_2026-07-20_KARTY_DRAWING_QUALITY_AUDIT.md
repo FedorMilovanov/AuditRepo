@@ -41,7 +41,7 @@ Key Live Engine Breakdown Items (`map-engine.js`):
    `map-engine.js` lacks code to render `route.regions`, leaving the 12 Tribes map (`shvatim`) without any tribal allotment borders or color fills.
 2. **`feTurbulence` Animation Loop Jank (`PERF-P1-01`):**
    Continuous 14s SVG animation on sea turbulence forces full-canvas CPU/GPU re-rasterization on every frame, causing frame drops (15–20 fps) during drag/zoom gestures on mobile GPUs.
-3. **Broken / Dark Basemaps & Missing Symbols (`BASE-P1-01`..`04`):**
+3. **Broken / Dark Basemaps & Missing Symbols (`BASE-P1-01`..`03`):**
    Loading `base-geo.svg` fails to resolve fills and mountain symbols because `<defs>` is empty and 18 referenced IDs are missing. `map-engine.js` forces a 50% opacity mask on the background over a dark navy rectangle (`#0d1d2e`).
 4. **Dual Engine Divergence (`ARCH-P1-01`):**
    The warm parchment atlas aesthetic (`GEO_DEFS`, symbols, light palette) exists exclusively inside Node.js build tools (`scripts/lib/sheet-engine.js`).
