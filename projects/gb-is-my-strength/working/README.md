@@ -9,3 +9,5 @@ Historical/stale working documents were demoted to `archive/2026-07-03-stale-wor
 - current-head evidence under `../reverify/`
 
 Use this folder only for genuinely active synthesis drafts that are not ready for `verified/`.
+
+Current branch reconciliation research: [`BRANCH_RESEARCH_RECONCILIATION_2026-07-20.md`](./BRANCH_RESEARCH_RECONCILIATION_2026-07-20.md). It is a content-based review of the six remote branches not contained in `main`; it does not promote any stale prototype finding to verified truth.
