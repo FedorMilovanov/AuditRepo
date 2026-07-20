@@ -1,0 +1,9 @@
+Package date: 2026-07-15
+Source repository: FedorMilovanov/gb-is-my-strength
+Source HEAD inspected: e9faea5b1cc33e877a5971dcb2ad6a99209270de
+Source branch at inspection: main
+Audit repository: FedorMilovanov/AuditRepo
+Audit HEAD inspected: 182af1227c4ff48f4af2422692d9765d763cfc90
+Audit branch at inspection: main
+Prototype source files modified: none
+Note: hashes are the immutable heads captured at the beginning of the research pass.
