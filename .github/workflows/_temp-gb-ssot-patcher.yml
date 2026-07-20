@@ -23,18 +23,18 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Apply exact SSOT patch
-        run: python scripts/_temp_patch_gb_ssot_1f80f12.py
+      - name: Move closed P0 rows to FIXED
+        run: python scripts/_temp_fix_gb_matrix_p0_move.py
 
-      - name: Verify patch integrity
+      - name: Verify placement
         run: |
-          grep -q '1f80f12d8bea9a9eb2c196ed030ddfc5be3924df' projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
-          grep -q 'CURRENT_HEAD_REVERIFY_2026-07-21_1f80f12.md' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -q '^| MAP-P0-02 | ✅ \*\*FIXED 2026-07-21' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -q '^| ASTRO-P0-02 | ✅ \*\*FIXED 2026-07-21' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
 
-      - name: Commit patched SSOT files
+      - name: Commit corrected matrix
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-          git commit -m "reconcile(gb): advance SSOT to source head 1f80f12"
+          git add projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          git commit -m "reconcile(gb): move landed map P0 rows to fixed"
           git push origin HEAD:reconcile/gb-head-1f80f12-2026-07-21
