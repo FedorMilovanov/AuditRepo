@@ -1,9 +1,8 @@
 # gb-is-my-strength / gospod-bog.ru
 
-**Status:** 🟢 active — прод = main. Работа идёт волнами W0–W10 (см. SUPER_AUDIT).
-**Старт и карта документов:** [`DOC_MAP.md`](./DOC_MAP.md). Текущий HEAD / deploy / «что дальше» —
-в [`NEXT_AGENT_PROMPT.md`](./NEXT_AGENT_PROMPT.md); открыто/закрыто — в `verified/MASTER_BUG_MATRIX.md`.
-_(Этот README намеренно не хранит HEAD/счётчики — правило Single-Writer-Per-Fact, чтобы не дрейфовали.)_
+**Status:** 🟢 active. Текущий HEAD / deploy / «что дальше» живут в [`NEXT_AGENT_PROMPT.md`](./NEXT_AGENT_PROMPT.md); не дублируем их здесь, чтобы не дрейфовали.
+**Старт и карта документов:** [`DOC_MAP.md`](./DOC_MAP.md). Открыто/закрыто — в `verified/MASTER_BUG_MATRIX.md`.
+_(Этот README намеренно не хранит HEAD/счётчики/механизм текущего deploy-стопа — правило Single-Writer-Per-Fact.)_
 
 ## Quick facts
 

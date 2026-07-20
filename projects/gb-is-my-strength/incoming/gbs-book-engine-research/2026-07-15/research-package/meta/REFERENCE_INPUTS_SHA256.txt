@@ -1,0 +1,15 @@
+# SHA256 inventory of canonical source/reference inputs
+4a8059182adb4df52a44e9bf0205ff9ddaaa2dc5e8f49cd66f18f29aeae095dd  /home/user/gb-is-my-strength/src/components/ui/floating-cluster/PlayEmber.astro
+c770d170819f3696f38d31577a6612da6e01bdc09db08f5e5b2a90b81526d545  /home/user/gb-is-my-strength/src/components/ui/floating-cluster/SaveButton.astro
+18aa8e3b4b9eaa37cb7b83fec34b689bea4d7b13de3e66c63ae8f79166249bf5  /home/user/gb-is-my-strength/src/components/article-pilots/gill-series/GillSeriesMobileBar.astro
+1fc94965e836a65f95db4a83278f36e3d2f4017941582fbbc4df3cf6f49024be  /home/user/gb-is-my-strength/src/components/article-pilots/gill-series/GillSeriesRail.astro
+683d389720b4cbabdcdf034f9ee3f9bf3f3d2fd37680c0abd0c30207b4a4ff84  /home/user/gb-is-my-strength/src/components/article-pilots/gill-series/GillPartTocOverlay.astro
+30b9ec6084b7be1d452cee45c94fb3c87cb5fd08e14db36fbfa8ca220295864d  /home/user/gb-is-my-strength/src/components/article-pilots/_shared/ReaderRail.astro
+2098402ccf68a5f758ca53b87ac55743ec7a444d79683330c82cefa70bc6d344  /home/user/gb-is-my-strength/src/components/article-pilots/_shared/ReaderSettings.astro
+881bdd8d1b8d9b8c88e3eb5503d7a3fffc8dc46d6bbfebd5a0a91f43728f4eb0  /home/user/gb-is-my-strength/src/components/article-pilots/_shared/MobileChromeShell.astro
+24e8e983ad267f3e3229eae4d0e027b8df93a40a3a39ad398800948c504a42ea  /home/user/gb-is-my-strength/src/components/article-pilots/_shared/series/seriesConfig.ts
+92bcf9af0e7e08a3ddb2e2a0ce9182ecc35f4d5c39005633a17ca30843e7333c  /home/user/gb-is-my-strength/css/floating-cluster.css
+0730228bd7c8acb06174dfc158ce3ea4c6162593dfa69702b1611821904c9cf5  /home/user/gb-is-my-strength/js/floating-cluster-controller.js
+d542a6b8198f23c32ab817728ca1995da357ef398dae7eccc8a6fd56c4237ccd  /home/user/AuditRepo/references/gb-ui-canon-2026-07-13/mobile-toc-accordion-v5.html
+48f8eb6f72b4c93faf5354bd0485d80e948b6246a28b7967de3072064695af74  /home/user/AuditRepo/references/gill-mobile/gill-mobile-bars-v2.9.html
+0bfdc2db73e1a5ef602904eca8a64fa02b627977fd12b0a46b3af481cd91cfda  /home/user/AuditRepo/references/gb-ui-canon-2026-07-13/ENGINES_ARCHITECTURE.md
