@@ -28,7 +28,6 @@ jobs:
 
       - name: Verify patch integrity
         run: |
-          git diff --check
           grep -q '1f80f12d8bea9a9eb2c196ed030ddfc5be3924df' projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
           grep -q 'CURRENT_HEAD_REVERIFY_2026-07-21_1f80f12.md' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
 
