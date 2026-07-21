@@ -14,7 +14,7 @@
 > **Авторитет при конфликте:** `verified/MASTER_BUG_MATRIX.md` (точечные баги + счётчики)
 > и `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (системный бэклог W0–W10).  
 > Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_1a66bd8.md`.
-> Прежние reverify (`32ae0d7d`, `2ca2af3b`, `b8459bdf`, `14a49be8`) исторические.
+> Прежние reverify (`1f80f12`, `32ae0d7d`, `2ca2af3b`, `b8459bdf`, `14a49be8`) исторические.
 
 ## Перед началом (обязательно)
 
@@ -29,7 +29,7 @@ git fetch --all --prune && git checkout main && git pull --ff-only && git rev-pa
 
 ## Текущее состояние (одним абзацем)
 
-**Source release gates зелёные на `1a66bd8`.** PR #94 снял старый atlas-export PNG blocker; PR #95 закрыл дубли цитат, ARIA и конкурентный scroll-lock; PR #96 закрыл `MAP-P0-02`, `MAP-P0-03`, `MAP-P0-08`, `ASTRO-P0-01`, `ASTRO-P0-02`, добавил постоянный regression guard и исправил обнаруженный full-gate hash-drift `site-utils.js` в 38 HTML/Astro ссылках. Exact post-merge deployed SHA пока не подтверждён доступным connector witness, поэтому `PROD-STALE-DEPLOY-RED` не закрывать декларативно.
+**Source release gates зелёные на `1a66bd8`.** PR #94 снял старый atlas-export PNG blocker; PR #95 закрыл дубли цитат, ARIA и конкурентный scroll-lock; PR #96 закрыл первый runtime P0-кластер карт и cache-bust drift; PR #97 закрыл `MAP-P0-04/05` единой initial-state/deep-link транзакцией с pure и Chromium witnesses. Exact post-merge deployed SHA пока не подтверждён доступным connector witness, поэтому `PROD-STALE-DEPLOY-RED` не закрывать декларативно.
 
 **Раздел карт /karty/ — живой P0 остаток после PR #97:** `MAP-P0-01` (mobile panel escape), `MAP-P0-06` (inert layer toggles), `MAP-P0-07` (theme variables не управляют hardcoded palette), `ASTRO-P0-03`..`ASTRO-P0-06` (warning/data counters/error fallback) и `DATA-P0-01` (authored curved paths игнорируются). `MAP-P0-04/05` закрыты единой initial-state транзакцией и browser witnesses на `ishod`/`avraam`; не переоткрывать без fresh witness на `1a66bd8` или новее.
 
