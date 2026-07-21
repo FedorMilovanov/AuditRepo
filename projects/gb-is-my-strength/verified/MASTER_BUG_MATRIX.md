@@ -9,22 +9,23 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `75b236acd31a779b431406710309f6a086b7f845` (main; PR #98 maps, PR #101 Reader R1 and PR #102 Reader R3 façade landed) |
-| Deploy | 🟠 **SOURCE/RELEASE GATES GREEN THROUGH `75b236ac` / EXACT DEPLOYED SHA PROOF PENDING.** PR #102 final head passed Shared Files Guard, Route Registry Validators, Native Source Contract, Astro, production-like build and functional engine sweep. |
+| Source HEAD | `3a715551409a01bff0d81e2921a12a45e6973ef3` (main; PR #98 maps, PR #101 Reader R1, PR #102 Reader R3 and PR #103 Reader R4 landed) |
+| Deploy | 🟠 **SOURCE/RELEASE GATES GREEN THROUGH `3a715551` / EXACT DEPLOYED SHA PROOF PENDING.** PR #103 final head passed Shared Files Guard, Route Registry Validators, Native Source Contract, Astro, production-like dist, native output, workflow policy and clean-tree checks. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_75b236ac.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_3a715551.md` |
 
-⚠️ Старые 2026-07-14/20 deploy-формулировки ниже исторические. Текущий source/release authority — `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_75b236ac.md`; exact production deployment остаётся отдельным доказательством.
+⚠️ Старые 2026-07-14/20 deploy-формулировки ниже исторические. Текущий source/release authority — `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_3a715551.md`; exact production deployment остаётся отдельным доказательством.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (113)
+## ✅ ЗАКРЫТО (114)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| READER-R4-PUBLIC-SURFACE-REGISTRY-01 | ✅ **FIXED 2026-07-21.** Все 76 public routes явно классифицированы через существующие route profiles: 51 series (27 flat/24 book), 2 article, 9 page, 14 special. Derived chrome/config/settings registry, read-only audit и adversarial mutation tests встроены в постоянный CI; второго SSOT и отдельного book engine нет. | `3a715551` PR#103 |
 | READER-R3-SERIES-FACADE-01 | ✅ **FIXED 2026-07-21.** Нейтральный `SeriesReaderChrome` стал public façade для 41 series/book consumer; direct `GillSeriesChrome` imports изолированы постоянным guard, без нового book engine и без DOM/CSS/runtime redesign. | `75b236ac` PR#102 |
 | READER-R1-PREFERENCES-01 | ✅ **FIXED 2026-07-21.** Единое `gb:reader-preferences:v1`, Day/Night/Sepia, text preferences, legacy migration, cross-tab sync и общий first-paint bootstrap для series/book/article/page/special. Cross-engine matrix green. | `ffdba149` PR#101 |
 | RUNTIME-SCROLL-LOCK-FEEDBACK-02 | ✅ **FIXED 2026-07-21.** MutationObserver больше не создаёт бесконечный feedback loop при открытии settings; lock idempotent/repair-only, runtime guard + engine click witness. | `ffdba149` PR#101 |

@@ -3,13 +3,13 @@
 > **SSOT по текущему состоянию source-проекта.** Карта документов и правило
 > Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-21. Source `main`: `75b236acd31a779b431406710309f6a086b7f845`.**
-> PR #98 (карты), #101 (Reader R1) и #102 (Reader R3 façade) влиты.
+> **Актуально на 2026-07-21. Source `main`: `3a715551409a01bff0d81e2921a12a45e6973ef3`.**
+> PR #98 (карты), #101 (Reader R1), #102 (Reader R3 façade) и #103 (Reader R4 registry) влиты.
 > Source/release gates зелёные на точных PR-head; **exact deployed SHA proof всё ещё pending**.
 > Не объявлять production-deploy подтверждённым без отдельного witness.
 >
 > Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
-> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_75b236ac.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_3a715551.md`.
 
 ## Перед началом
 
@@ -18,7 +18,7 @@ git fetch --all --prune
 git checkout main
 git pull --ff-only
 git rev-parse HEAD
-# expect 75b236ac… or newer
+# expect 3a715551… or newer
 ```
 
 Если HEAD новее — сначала записать reverify delta. Затем прочитать `AGENTS.md`,
@@ -29,10 +29,10 @@ git rev-parse HEAD
 ### Единая типология контента
 
 - `series` — обычная серия и книга;
-- книга — **`series.shape = 'book'`**, а не отдельный движок;
+- книга — **`surface=series` + `seriesShape=book`**, а не отдельный движок;
 - `article` — самостоятельная большая статья;
 - `page` — каталог, справочная и другая нестатейная страница;
-- `special` — карты, 3D, графы и иные приложения, использующие общую инфраструктуру только там, где это уместно.
+- `special` — карты, 3D, графы и иные приложения.
 
 Трёхуровневая книга уже есть: главы `tier:'chapter'`, статьи глав, chapter/article rail
 и трёхуровневое TOC. Старые book-прототипы AuditRepo — evidence, не код для полного merge.
@@ -50,42 +50,52 @@ git rev-parse HEAD
 ### Reader R3 — PR #102 (`75b236ac`)
 
 - нейтральный public façade `SeriesReaderChrome`;
-- historical `GillSeriesChrome` остаётся одной внутренней проверенной реализацией;
-- все **41** production consumer (Gill, книга «Сердце», Баптисты и другие серии)
-  механически переведены на façade;
-- DOM/CSS/runtime implementation не переписывались;
-- `series:facade:guard` запрещает новые прямые импорты `GillSeriesChrome` вне façade;
-- guard подключён к `engine:contracts` и Shared Files Guard;
+- historical `GillSeriesChrome` остаётся одной внутренней реализацией;
+- все 41 production series/book consumer переведены на façade;
+- постоянный `series:facade:guard` запрещает direct implementation imports;
+- DOM/CSS/runtime implementation не переписывались.
+
+### Reader R4 — PR #103 (`3a715551`)
+
+- все 76 public routes классифицированы в существующих `data/route-profiles`;
+- `surfaceContractVersion: 1`, `surface: series|article|page|special`;
+- `seriesShape: flat|book` только для series;
+- фактический baseline: 51 series (27 flat + 24 book), 2 article, 9 page, 14 special;
+- chrome owner, config sources и settings capability выводятся из resolved import graph
+  и `mobileChromeRegistry.ts`, а не из второго route-list;
+- 41 exact `SeriesReaderChrome` consumer, 0 direct `GillSeriesChrome` leaks;
+- read-only `surface:registry:check` и adversarial `surface:registry:test` встроены
+  в strict migration metadata и Route Registry Validators;
 - финальные Shared Files Guard, Route Registry Validators, Native Source Contract,
-  Astro, production-like build и functional `engine:sweep` зелёные;
-- временные proof/recovery workflows удалены до merge;
-- runtime CSS восстановлен byte-for-byte, лишнего cache-bust churn нет.
+  Astro, production-like dist, native output, workflow policy и clean-tree зелёные;
+- временные runners/scripts/triggers удалены до merge.
 
-## Следующий обязательный SYSTEM lane — Reader R4
+## Следующий обязательный SYSTEM lane — Reader R5
 
-Создать **полный декларативный registry всех публичных поверхностей** и связать его с
-существующими ownership/profile contracts без нового мегадвижка.
+Создать единый **overlay lifecycle / focus / scroll-lock API** для reader-поверхностей,
+не меняя визуальный контракт.
 
-Цель registry:
+Цели R5:
 
-1. Для каждого публичного route явно указать `surface`: `series | article | page | special`.
-2. Для `series` отдельно декларативно указать `shape: flat | book`; книга не становится новым engine.
-3. Указать adapter/chrome owner, config source, settings capability и сознательные исключения.
-4. Registry должен выводиться из одного канона или строго cross-validate существующие
-   `page-ownership`, route profiles, mobile registry и migration matrix — без второго SSOT.
-5. Все production Astro routes должны быть покрыты; legacy/built-app routes получают явный статус.
-6. Добавить read-only validator и negative mutation tests: неизвестный route, неверный surface,
-   book без series, special с насильно подключённым reader chrome, drift source/profile.
-7. Сначала inventory/report, затем отдельный implementation commit, затем full gates.
+1. Инвентаризировать все overlay/sheet/dialog реализации и прямые записи
+   `body.style.overflow`, `documentElement.style.overflow`, локальные lock counters и focus traps.
+2. Ввести один lifecycle coordinator поверх уже существующего `SiteUtils` scroll-lock:
+   register/open/close/destroy, owner token, nested overlays, restore focus, Escape policy.
+3. Перевести standalone article settings и другие reader overlays с прямого overflow на coordinator.
+4. Сохранить DOM/CSS/selectors и публичные кнопки; R5 — runtime infrastructure, не redesign.
+5. Гарантировать, что один overlay не снимает lock другого и destroy снимает только свой token.
+6. Добавить dependency-free mutation/runtime tests и Chromium witnesses минимум для:
+   series settings, standalone article settings, nested/competing overlay и ordinary page navigation.
+7. Проверить `aria-hidden`, `inert`, initial focus, focus return, Escape и reduced-motion.
+8. Перед merge: Shared Files Guard, Route Registry, Native Source, production-like build,
+   functional engine sweep и targeted browser matrix.
 
-**Не смешивать R4** с overlay lifecycle, визуальным redesign, контентом, картографией,
-переименованием Gill DOM/CSS или удалением compatibility storage keys.
+**Не смешивать R5** с единым progress/bookmarks/notes storage, визуальным redesign,
+картографией, контентом или удалением compatibility preference keys.
 
-## После R4
+## После R5
 
-- R5: единый overlay lifecycle/focus/scroll-lock API (issue #58), убрать прямые
-  `body.style.overflow` у standalone settings после browser parity;
-- единое reader progress/bookmarks/notes state (issue #59) без дублирования storage;
+- R6: единое reader progress/bookmarks/notes state (issue #59) без дублирования storage;
 - mobile quality/performance sweep 320–430 px: safe areas, 44px targets, overflow,
   listeners, focus, overlays, desktop parity;
 - compatibility keys удалять только после миграционного browser witness.
@@ -93,7 +103,7 @@ git rev-parse HEAD
 ## Открытый P0 карт после PR #98
 
 `MAP-P0-01`, `ASTRO-P0-03..06`, `DATA-P0-01`. Layer/theme defects закрыты.
-Reader R4 с картографическими runtime-fix не смешивать.
+Reader R5 с картографическими runtime-fix не смешивать.
 
 ## Другие крупные остатки
 
