@@ -23,19 +23,18 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Apply exact SSOT patch
-        run: python scripts/_temp_patch_gb_ssot_1a66bd8.py
+      - name: Correct SSOT provenance
+        run: python scripts/_temp_correct_gb_ssot_1a66bd8.py
 
-      - name: Verify target HEAD and fixed rows
+      - name: Verify corrections
         run: |
-          grep -q '1a66bd8ef6c0316842deef75371db9598f7a16c6' projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
-          grep -q '^| MAP-P0-04 | ✅ \*\*FIXED 2026-07-21' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-          grep -q '^| MAP-P0-05 | ✅ \*\*FIXED 2026-07-21' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -q 'PR #97 закрыл `MAP-P0-04/05`' projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+          grep -q 'CURRENT_HEAD_REVERIFY_2026-07-21_1f80f12.md' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
 
-      - name: Commit patched SSOT files
+      - name: Commit corrected SSOT files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-          git commit -m "reconcile(gb): advance SSOT to source head 1a66bd8"
+          git commit -m "reconcile(gb): correct 1a66bd8 SSOT provenance"
           git push origin HEAD:reconcile/gb-head-1a66bd8-2026-07-21
