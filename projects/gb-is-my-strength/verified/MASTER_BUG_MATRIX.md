@@ -9,22 +9,23 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `3a715551409a01bff0d81e2921a12a45e6973ef3` (main; PR #98 maps, PR #101 Reader R1, PR #102 Reader R3 and PR #103 Reader R4 landed) |
-| Deploy | 🟠 **SOURCE/RELEASE GATES GREEN THROUGH `3a715551` / EXACT DEPLOYED SHA PROOF PENDING.** PR #103 final head passed Shared Files Guard, Route Registry Validators, Native Source Contract, Astro, production-like dist, native output, workflow policy and clean-tree checks. |
+| Source HEAD | `43d8672f59128de816cfd47c638c132a73d71599` (main; PR #98 maps, PR #101 Reader R1, PR #102 Reader R3, PR #103 Reader R4 and PR #104 Reader R5 landed) |
+| Deploy | 🟠 **SOURCE/RELEASE GATES GREEN THROUGH `43d8672f` / EXACT DEPLOYED SHA PROOF PENDING.** PR #104 passed Shared Files Guard, Route Registry Validators, Native Source Contract, Astro, production-like dist, native output, workflow policy, clean-tree and Chromium/Firefox/WebKit overlay matrix. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_3a715551.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_43d8672f.md` |
 
-⚠️ Старые 2026-07-14/20 deploy-формулировки ниже исторические. Текущий source/release authority — `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_3a715551.md`; exact production deployment остаётся отдельным доказательством.
+⚠️ Старые 2026-07-14/20 deploy-формулировки ниже исторические. Текущий source/release authority — `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_43d8672f.md`; exact production deployment остаётся отдельным доказательством.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (114)
+## ✅ ЗАКРЫТО (115)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| READER-R5-OVERLAY-RUNTIME-01 | ✅ **FIXED 2026-07-21.** Один canonical OverlayRuntime владеет reader overlay stack, named scroll tokens, exact style/scroll/focus restoration, inert/aria policy, top-layer Escape и pagehide recovery. `site.js` delegate-only; ReaderSettings, Hermenevtika и shared Gill/series sheets мигрированы. Permanent VM/static tests и Chromium/Firefox/WebKit matrix green. Special map/3D adapters остаются отдельным открытым остатком issue #58. | `43d8672f` PR#104 |
 | READER-R4-PUBLIC-SURFACE-REGISTRY-01 | ✅ **FIXED 2026-07-21.** Все 76 public routes явно классифицированы через существующие route profiles: 51 series (27 flat/24 book), 2 article, 9 page, 14 special. Derived chrome/config/settings registry, read-only audit и adversarial mutation tests встроены в постоянный CI; второго SSOT и отдельного book engine нет. | `3a715551` PR#103 |
 | READER-R3-SERIES-FACADE-01 | ✅ **FIXED 2026-07-21.** Нейтральный `SeriesReaderChrome` стал public façade для 41 series/book consumer; direct `GillSeriesChrome` imports изолированы постоянным guard, без нового book engine и без DOM/CSS/runtime redesign. | `75b236ac` PR#102 |
 | READER-R1-PREFERENCES-01 | ✅ **FIXED 2026-07-21.** Единое `gb:reader-preferences:v1`, Day/Night/Sepia, text preferences, legacy migration, cross-tab sync и общий first-paint bootstrap для series/book/article/page/special. Cross-engine matrix green. | `ffdba149` PR#101 |
@@ -805,3 +806,12 @@ D-23 (P1, deploy-блокирующая регрессия) — 🟠→✅ **RES
 - Adversarial engine witness exposed/fixed scroll-lock MutationObserver feedback loop.
 - Final evidence: Shared Files Guard, Native Source Contract, cross-engine matrix and engine:sweep 98/98.
 - Exact deployed SHA remains pending; next isolated lane is R3 `SeriesReaderChrome` façade.
+
+### 2026-07-21 — Reader R5 unified overlay runtime (`43d8672f`)
+
+- Source `main` advanced to `43d8672f59128de816cfd47c638c132a73d71599` via PR #104.
+- One protected OverlayRuntime now owns reader overlay stack, named scroll tokens, focus, inert/aria and lifecycle recovery.
+- The competing private `site.js` lock implementation was replaced by canonical delegates.
+- ReaderSettings, Hermenevtika mobile TOC and shared Gill/series sheets were migrated without visual redesign.
+- Permanent evidence: Shared Files Guard, Route Registry, Native Source, production-like build, clean-tree and Chromium/Firefox/WebKit matrix.
+- Exact deployed SHA remains pending; issue #58 remains open only for special map/3D adapters.

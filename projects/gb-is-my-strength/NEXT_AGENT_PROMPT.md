@@ -3,13 +3,13 @@
 > **SSOT по текущему состоянию source-проекта.** Карта документов и правило
 > Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-21. Source `main`: `3a715551409a01bff0d81e2921a12a45e6973ef3`.**
-> PR #98 (карты), #101 (Reader R1), #102 (Reader R3 façade) и #103 (Reader R4 registry) влиты.
+> **Актуально на 2026-07-21. Source `main`: `43d8672f59128de816cfd47c638c132a73d71599`.**
+> PR #98 (карты), #101 (Reader R1), #102 (Reader R3 façade), #103 (Reader R4 registry) и #104 (Reader R5 overlay runtime) влиты.
 > Source/release gates зелёные на точных PR-head; **exact deployed SHA proof всё ещё pending**.
 > Не объявлять production-deploy подтверждённым без отдельного witness.
 >
 > Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
-> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_3a715551.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_43d8672f.md`.
 
 ## Перед началом
 
@@ -18,7 +18,7 @@ git fetch --all --prune
 git checkout main
 git pull --ff-only
 git rev-parse HEAD
-# expect 3a715551… or newer
+# expect 43d8672f… or newer
 ```
 
 Если HEAD новее — сначала записать reverify delta. Затем прочитать `AGENTS.md`,
@@ -70,30 +70,39 @@ git rev-parse HEAD
   Astro, production-like dist, native output, workflow policy и clean-tree зелёные;
 - временные runners/scripts/triggers удалены до merge.
 
-## Следующий обязательный SYSTEM lane — Reader R5
+### Reader R5 — PR #104 (`43d8672f`)
 
-Создать единый **overlay lifecycle / focus / scroll-lock API** для reader-поверхностей,
-не меняя визуальный контракт.
+- один защищённый `window.OverlayRuntime` / `SiteUtils.OverlayRuntime` store;
+- named/reference-counted scroll owners и ordered top-layer stack;
+- exact restoration исходных body/html styles, classes, attributes и `scrollY`;
+- exact opener focus return, общий focus trap и Escape только для top layer;
+- nested `inert` / `aria-hidden` claims, idempotent reopen и pagehide/beforeunload recovery;
+- `site.js` больше не содержит вторую private scroll-lock implementation;
+- ReaderSettings, Hermenevtika mobile TOC и Gill/series TOC, learning, settings, GBS2 sheets мигрированы;
+- постоянные VM/static contracts и browser matrix Chromium/Firefox/WebKit зелёные;
+- временные runners, patchers и raw inventory удалены до merge.
 
-Цели R5:
+## Следующий обязательный SYSTEM lane — Special Overlay Adapters
 
-1. Инвентаризировать все overlay/sheet/dialog реализации и прямые записи
-   `body.style.overflow`, `documentElement.style.overflow`, локальные lock counters и focus traps.
-2. Ввести один lifecycle coordinator поверх уже существующего `SiteUtils` scroll-lock:
-   register/open/close/destroy, owner token, nested overlays, restore focus, Escape policy.
-3. Перевести standalone article settings и другие reader overlays с прямого overflow на coordinator.
-4. Сохранить DOM/CSS/selectors и публичные кнопки; R5 — runtime infrastructure, не redesign.
-5. Гарантировать, что один overlay не снимает lock другого и destroy снимает только свой token.
-6. Добавить dependency-free mutation/runtime tests и Chromium witnesses минимум для:
-   series settings, standalone article settings, nested/competing overlay и ordinary page navigation.
-7. Проверить `aria-hidden`, `inert`, initial focus, focus return, Escape и reduced-motion.
-8. Перед merge: Shared Files Guard, Route Registry, Native Source, production-like build,
-   functional engine sweep и targeted browser matrix.
+Закрыть оставшуюся часть issue #58 для `special`-поверхностей, не меняя географию,
+визуальный стиль или бизнес-логику карт/3D.
 
-**Не смешивать R5** с единым progress/bookmarks/notes storage, визуальным redesign,
-картографией, контентом или удалением compatibility preference keys.
+Цели lane:
 
-## После R5
+1. Повторно инвентаризировать только production direct writers вне canonical runtime:
+   `karty/_engine/map-engine.js`, 3D/MindMap consumers и built-app adapters.
+2. Подключить их к `OverlayRuntime` через узкие special adapters с отдельными owner IDs.
+3. Удалить direct body/html overflow/position/top writers и локальные competing Escape handlers.
+4. Сохранить существующие DOM/CSS/selectors, map camera, gestures и modal visuals.
+5. Добавить browser witnesses: photo/gallery nested over place panel, map sheet + global reader overlay,
+   Escape top-only, exact focus/scroll restore, pagehide/destroy и mobile landscape.
+6. Расширить static guard так, чтобы direct lock writers оставались только в canonical module/bridge.
+7. После полного special-surface parity закрыть issue #58; только затем переходить к R6.
+
+**Не смешивать** с MAP-P0/P1 rendering fixes, layer/theme work, reader state R6,
+контентом, визуальным redesign или compatibility-key cleanup.
+
+## После special adapters
 
 - R6: единое reader progress/bookmarks/notes state (issue #59) без дублирования storage;
 - mobile quality/performance sweep 320–430 px: safe areas, 44px targets, overflow,
@@ -103,7 +112,7 @@ git rev-parse HEAD
 ## Открытый P0 карт после PR #98
 
 `MAP-P0-01`, `ASTRO-P0-03..06`, `DATA-P0-01`. Layer/theme defects закрыты.
-Reader R5 с картографическими runtime-fix не смешивать.
+Special overlay adapter lane не должен исправлять map rendering/data defects.
 
 ## Другие крупные остатки
 
