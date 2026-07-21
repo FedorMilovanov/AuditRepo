@@ -3,13 +3,13 @@
 > **SSOT по текущему состоянию source-проекта.** Карта документов и правило
 > Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-21. Source `main`: `ffdba1496b66a18b16feaa231af5922d118dc3f8`.**
-> PR #98 (карты: layers/theme) и PR #101 (Reader R1) влиты.
-> Release/source gates зелёные на точных PR-head; **exact deployed SHA proof всё ещё pending**.
+> **Актуально на 2026-07-21. Source `main`: `75b236acd31a779b431406710309f6a086b7f845`.**
+> PR #98 (карты), #101 (Reader R1) и #102 (Reader R3 façade) влиты.
+> Source/release gates зелёные на точных PR-head; **exact deployed SHA proof всё ещё pending**.
 > Не объявлять production-deploy подтверждённым без отдельного witness.
 >
 > Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
-> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_ffdba149.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_75b236ac.md`.
 
 ## Перед началом
 
@@ -18,11 +18,11 @@ git fetch --all --prune
 git checkout main
 git pull --ff-only
 git rev-parse HEAD
-# expect ffdba149… or newer
+# expect 75b236ac… or newer
 ```
 
 Если HEAD новее — сначала записать reverify delta. Затем прочитать `AGENTS.md`,
-`docs/WORK_MODES.md`, `docs/OWNER-INVARIANTS.md`, архитектуру Reader Platform и этот SSOT.
+`docs/WORK_MODES.md`, `docs/OWNER-INVARIANTS.md`, документы Reader Platform и этот SSOT.
 
 ## Что уже landed — не переделывать заново
 
@@ -34,84 +34,72 @@ git rev-parse HEAD
 - `page` — каталог, справочная и другая нестатейная страница;
 - `special` — карты, 3D, графы и иные приложения, использующие общую инфраструктуру только там, где это уместно.
 
-Трёхуровневая книга уже есть в source: главы `tier:'chapter'`, статьи глав,
-chapter/article rail и трёхуровневое TOC. Старые book-прототипы AuditRepo — evidence,
-не код для полного merge.
+Трёхуровневая книга уже есть: главы `tier:'chapter'`, статьи глав, chapter/article rail
+и трёхуровневое TOC. Старые book-прототипы AuditRepo — evidence, не код для полного merge.
 
-### Reader R1 — PR #101
+### Reader R1 — PR #101 (`ffdba149`)
 
-На `ffdba149` landed:
-
-- каноническое `gb:reader-preferences:v1` и `window.GBReaderPreferences`;
+- единое `gb:reader-preferences:v1` и `window.GBReaderPreferences`;
 - День / Ночь / Сепия, размер, line-height, measure, text mode, reduced motion;
-- миграция Gill/Hermenevtika/global legacy keys и cross-tab sync;
-- единый first-paint `ReaderPreferencesHead` вместо локальных theme-bootstrap;
-- семантическая Sepia без blanket filters для изображений, видео, карт и 3D;
-- shared assets в cache-bust, service worker, audit allowlists и Shared Files Guard;
-- permanent pure/browser regressions.
+- миграция legacy keys и cross-tab sync;
+- единый first-paint `ReaderPreferencesHead`;
+- semantic Sepia без blanket filters для изображений, видео, карт и 3D;
+- idempotent shared scroll-lock без MutationObserver feedback loop;
+- cross-engine matrix и functional `engine:sweep` 98/98.
 
-Во время прогона дополнительно закрыт runtime blocker: общий scroll-lock создавал
-feedback loop `MutationObserver → ensureLockState → повторная запись style/class` и
-блокировал renderer при открытии настроек. Lock теперь идемпотентен, observer чинит
-только реальный drift. `engine:sweep` гарантированно закрывает browser/server в `finally`.
+### Reader R3 — PR #102 (`75b236ac`)
 
-Доказательства PR #101:
+- нейтральный public façade `SeriesReaderChrome`;
+- historical `GillSeriesChrome` остаётся одной внутренней проверенной реализацией;
+- все **41** production consumer (Gill, книга «Сердце», Баптисты и другие серии)
+  механически переведены на façade;
+- DOM/CSS/runtime implementation не переписывались;
+- `series:facade:guard` запрещает новые прямые импорты `GillSeriesChrome` вне façade;
+- guard подключён к `engine:contracts` и Shared Files Guard;
+- финальные Shared Files Guard, Route Registry Validators, Native Source Contract,
+  Astro, production-like build и functional `engine:sweep` зелёные;
+- временные proof/recovery workflows удалены до merge;
+- runtime CSS восстановлен byte-for-byte, лишнего cache-bust churn нет.
 
-- Shared Files Guard + actionlint — green;
-- Native Source Contract, Astro, production-like dist, native article/series output — green;
-- cross-engine Chromium matrix — green;
-- functional `engine:sweep` — **98/98 PASS**;
-- временные proof/corrector workflows удалены до merge.
+## Следующий обязательный SYSTEM lane — Reader R4
 
-### Карты — PR #98
+Создать **полный декларативный registry всех публичных поверхностей** и связать его с
+существующими ownership/profile contracts без нового мегадвижка.
 
-На `6a7539f9` закрыты `MAP-P0-06/07`:
+Цель registry:
 
-- составные layer memberships;
-- `main`, `stage.cls`, `place.type`, journey1–3 и общие города нескольких путешествий;
-- сохранение выключенных слоёв после story switch/re-render;
-- соблюдение `on:false` на первом рендере;
-- реальная Day/Night палитра canvas/SVG/chrome.
+1. Для каждого публичного route явно указать `surface`: `series | article | page | special`.
+2. Для `series` отдельно декларативно указать `shape: flat | book`; книга не становится новым engine.
+3. Указать adapter/chrome owner, config source, settings capability и сознательные исключения.
+4. Registry должен выводиться из одного канона или строго cross-validate существующие
+   `page-ownership`, route profiles, mobile registry и migration matrix — без второго SSOT.
+5. Все production Astro routes должны быть покрыты; legacy/built-app routes получают явный статус.
+6. Добавить read-only validator и negative mutation tests: неизвестный route, неверный surface,
+   book без series, special с насильно подключённым reader chrome, drift source/profile.
+7. Сначала inventory/report, затем отдельный implementation commit, затем full gates.
 
-Не переоткрывать эти пункты без fresh witness на `6a7539f9` или новее.
+**Не смешивать R4** с overlay lifecycle, визуальным redesign, контентом, картографией,
+переименованием Gill DOM/CSS или удалением compatibility storage keys.
 
-## Следующий обязательный SYSTEM lane — Reader R3
+## После R4
 
-Создать нейтральный façade **`SeriesReaderChrome`** над текущим
-`GillSeriesChrome`, сохранив существующий DOM/CSS/селекторы/поведение.
-
-Порядок:
-
-1. Инвентаризировать все реальные импорты и runtime-владельцев.
-2. Добавить façade, который один напрямую импортирует historical Gill implementation.
-3. Механически перевести series/book imports на façade без визуального redesign.
-4. Добавить guard: новые маршруты не импортируют `GillSeriesChrome` напрямую.
-5. Подтвердить flat series + `shape:'book'` + Gill эталоны браузером.
-6. Прогнать Shared Files Guard, Native Source Contract, production-like build и `engine:sweep`.
-7. Только отдельной следующей волной R4 — полный registry всех public routes: series/article/page/special.
-
-**Запрещено:** создавать новый книжный мегадвижок, переименовывать DOM/CSS одним большим
-рефакторингом, смешивать façade с overlay/runtime redesign или контентными правками.
-
-## После R3/R4
-
-- R5: единый overlay lifecycle/scroll-lock/focus runtime (issue #58), убрать прямые
+- R5: единый overlay lifecycle/focus/scroll-lock API (issue #58), убрать прямые
   `body.style.overflow` у standalone settings после browser parity;
 - единое reader progress/bookmarks/notes state (issue #59) без дублирования storage;
 - mobile quality/performance sweep 320–430 px: safe areas, 44px targets, overflow,
   listeners, focus, overlays, desktop parity;
-- удалять compatibility keys только после миграционного browser witness.
+- compatibility keys удалять только после миграционного browser witness.
 
 ## Открытый P0 карт после PR #98
 
 `MAP-P0-01`, `ASTRO-P0-03..06`, `DATA-P0-01`. Layer/theme defects закрыты.
-Следующие map lanes не смешивать с Reader R3.
+Reader R4 с картографическими runtime-fix не смешивать.
 
 ## Другие крупные остатки
 
-- Нагорная проповедь: архитектурный dark-theme долг (`NG-CSS-01`, `NG-BODY-01`,
-  `NG-DARK-01` и связанные), inline/library cleanup и SEO/TOC задачи;
-- exact deployed SHA proof (`PROD-STALE-DEPLOY-RED`) остаётся отдельным witness-task;
+- Нагорная проповедь: dark-theme architecture (`NG-CSS-01`, `NG-BODY-01`,
+  `NG-DARK-01` и связанные), inline/library cleanup, SEO/TOC;
+- exact deployed SHA proof (`PROD-STALE-DEPLOY-RED`) — отдельная witness-задача;
 - PremiumControls/Floating Cluster/Gill visual contract, glossary data и genealogy
   visual language — owner/freeze zones по `AGENTS.md`.
 

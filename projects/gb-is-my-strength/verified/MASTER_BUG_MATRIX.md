@@ -9,22 +9,23 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `ffdba1496b66a18b16feaa231af5922d118dc3f8` (main; PR #98 map layers/theme and PR #101 Reader R1 landed) |
-| Deploy | 🟠 **SOURCE/RELEASE GATES GREEN AT `ffdba149` / EXACT DEPLOYED SHA PROOF PENDING.** PR #101 final cleanup head passed Shared Files Guard, Native Source Contract, production-like build, cross-engine Chromium matrix and engine:sweep 98/98. |
+| Source HEAD | `75b236acd31a779b431406710309f6a086b7f845` (main; PR #98 maps, PR #101 Reader R1 and PR #102 Reader R3 façade landed) |
+| Deploy | 🟠 **SOURCE/RELEASE GATES GREEN THROUGH `75b236ac` / EXACT DEPLOYED SHA PROOF PENDING.** PR #102 final head passed Shared Files Guard, Route Registry Validators, Native Source Contract, Astro, production-like build and functional engine sweep. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_ffdba149.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_75b236ac.md` |
 
-⚠️ Старые 2026-07-14/20 deploy-формулировки ниже исторические. Текущий source/release authority — `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_ffdba149.md`; exact production deployment остаётся отдельным доказательством.
+⚠️ Старые 2026-07-14/20 deploy-формулировки ниже исторические. Текущий source/release authority — `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_75b236ac.md`; exact production deployment остаётся отдельным доказательством.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (112)
+## ✅ ЗАКРЫТО (113)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| READER-R3-SERIES-FACADE-01 | ✅ **FIXED 2026-07-21.** Нейтральный `SeriesReaderChrome` стал public façade для 41 series/book consumer; direct `GillSeriesChrome` imports изолированы постоянным guard, без нового book engine и без DOM/CSS/runtime redesign. | `75b236ac` PR#102 |
 | READER-R1-PREFERENCES-01 | ✅ **FIXED 2026-07-21.** Единое `gb:reader-preferences:v1`, Day/Night/Sepia, text preferences, legacy migration, cross-tab sync и общий first-paint bootstrap для series/book/article/page/special. Cross-engine matrix green. | `ffdba149` PR#101 |
 | RUNTIME-SCROLL-LOCK-FEEDBACK-02 | ✅ **FIXED 2026-07-21.** MutationObserver больше не создаёт бесконечный feedback loop при открытии settings; lock idempotent/repair-only, runtime guard + engine click witness. | `ffdba149` PR#101 |
 | MAP-P0-06 | ✅ **FIXED 2026-07-21.** Composite layer membership, stage.cls/place.type, journey1–3, shared cities, persistence across re-render. | `6a7539f9` PR#98 |
