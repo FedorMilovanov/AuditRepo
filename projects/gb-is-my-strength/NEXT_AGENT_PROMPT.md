@@ -3,13 +3,14 @@
 > **SSOT по текущему состоянию source-проекта.** Карта документов и правило
 > Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-21. Source `main`: `43d8672f59128de816cfd47c638c132a73d71599`.**
-> PR #98 (карты), #101 (Reader R1), #102 (Reader R3 façade), #103 (Reader R4 registry) и #104 (Reader R5 overlay runtime) влиты.
-> Source/release gates зелёные на точных PR-head; **exact deployed SHA proof всё ещё pending**.
+> **Актуально на 2026-07-21. Source `main`: `1bbebc2d9fcfe8a0af7c32e3a6796379927d48b8`.**
+> PR #98, #101–#104, #106 (special overlay adapters), #108 (asset revision reconciliation)
+> и #109 (pre-merge revision/workflow guard) влиты.
+> Source/release gates зелёные; **exact deployed SHA proof всё ещё pending**.
 > Не объявлять production-deploy подтверждённым без отдельного witness.
 >
 > Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
-> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_43d8672f.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_1bbebc2d.md`.
 
 ## Перед началом
 
@@ -18,7 +19,7 @@ git fetch --all --prune
 git checkout main
 git pull --ff-only
 git rev-parse HEAD
-# expect 43d8672f… or newer
+# expect 1bbebc2d… or newer
 ```
 
 Если HEAD новее — сначала записать reverify delta. Затем прочитать `AGENTS.md`,
@@ -82,27 +83,36 @@ git rev-parse HEAD
 - постоянные VM/static contracts и browser matrix Chromium/Firefox/WebKit зелёные;
 - временные runners, patchers и raw inventory удалены до merge.
 
-## Следующий обязательный SYSTEM lane — Special Overlay Adapters
+### Special Overlay Adapters — PR #106 (`39f6c3ac`)
 
-Закрыть оставшуюся часть issue #58 для `special`-поверхностей, не меняя географию,
-визуальный стиль или бизнес-логику карт/3D.
+- MapEngine place panel и nested photo viewer используют отдельные canonical owner IDs;
+- MindMap3D fullscreen, committed built launcher, global image viewer и mobile-menu fallbacks мигрированы;
+- direct production body/html lock writers запрещены постоянным source guard;
+- foreign-owner isolation, double destroy, fallback adapter и built-output witnesses добавлены;
+- Chromium, Firefox и WebKit matrix зелёная; временные diagnostics удалены до merge.
 
-Цели lane:
+### Deploy revision repair — PR #108 (`869558cd`) и PR #109 (`1bbebc2d`)
 
-1. Повторно инвентаризировать только production direct writers вне canonical runtime:
-   `karty/_engine/map-engine.js`, 3D/MindMap consumers и built-app adapters.
-2. Подключить их к `OverlayRuntime` через узкие special adapters с отдельными owner IDs.
-3. Удалить direct body/html overflow/position/top writers и локальные competing Escape handlers.
-4. Сохранить существующие DOM/CSS/selectors, map camera, gestures и modal visuals.
-5. Добавить browser witnesses: photo/gallery nested over place panel, map sheet + global reader overlay,
-   Escape top-only, exact focus/scroll restore, pagehide/destroy и mobile landscape.
-6. Расширить static guard так, чтобы direct lock writers оставались только в canonical module/bridge.
-7. После полного special-surface parity закрыть issue #58; только затем переходить к R6.
+- 62 stale source-файла / 113 cache-bust mismatches синхронизированы explicit `--write` транзакцией;
+- runtime blobs PR #106 остались byte-identical, generated diff ограничен HTML/Astro/asset-version;
+- temporary reconciliation workflow удалён до merge;
+- read-only asset revision check и workflow policy теперь блокируют каждый PR;
+- direct/manual deploy больше не проглатывает cache-bust failure через `|| echo`;
+- exact production Pages SHA всё ещё требует отдельного witness.
 
-**Не смешивать** с MAP-P0/P1 rendering fixes, layer/theme work, reader state R6,
-контентом, визуальным redesign или compatibility-key cleanup.
+## Следующая обязательная транзакция — exact production witness
 
-## После special adapters
+Source implementation issue #58 завершена, но production claim требует отдельного доказательства.
+
+1. Получить immutable GitHub Pages deployment/run witness для current `main` или более нового SHA.
+2. Проверить, что production HTML ссылается на актуальные revision hashes, а опубликованные
+   `site-utils.js`, `site.js`, floating cluster, MapEngine и MindMap blobs соответствуют source.
+3. Только после этого закрыть `PROD-STALE-DEPLOY-RED` и issue #58 с run/deployment evidence.
+4. Затем перейти к R6 / issue #59: единое progress/bookmarks/notes state без нового движка.
+
+Не смешивать witness-транзакцию с map rendering/data P0/P1, визуальным redesign или content edits.
+
+## После production witness
 
 - R6: единое reader progress/bookmarks/notes state (issue #59) без дублирования storage;
 - mobile quality/performance sweep 320–430 px: safe areas, 44px targets, overflow,
@@ -112,7 +122,7 @@ git rev-parse HEAD
 ## Открытый P0 карт после PR #98
 
 `MAP-P0-01`, `ASTRO-P0-03..06`, `DATA-P0-01`. Layer/theme defects закрыты.
-Special overlay adapter lane не должен исправлять map rendering/data defects.
+Special overlay runtime source-complete; production witness не должен исправлять map rendering/data defects.
 
 ## Другие крупные остатки
 
@@ -120,7 +130,9 @@ Special overlay adapter lane не должен исправлять map renderin
   `NG-DARK-01` и связанные), inline/library cleanup, SEO/TOC;
 - exact deployed SHA proof (`PROD-STALE-DEPLOY-RED`) — отдельная witness-задача;
 - PremiumControls/Floating Cluster/Gill visual contract, glossary data и genealogy
-  visual language — owner/freeze zones по `AGENTS.md`.
+  visual language — owner/freeze zones по `AGENTS.md`;
+- generated asset manifest и read-only workflow policy v2 — issues #56/#64,
+  не смешивать с one-time deploy witness или R6.
 
 ## Жёсткие правила
 
