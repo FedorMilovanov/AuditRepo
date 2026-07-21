@@ -1,0 +1,243 @@
+name: TEMP run Reader R3 reconciliation
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Reconcile Reader R3 source truth
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          root = Path('projects/gb-is-my-strength')
+          source_sha = '75b236acd31a779b431406710309f6a086b7f845'
+
+          next_prompt = '''# NEXT AGENT PROMPT — gb-is-my-strength
+
+> **SSOT по текущему состоянию source-проекта.** Карта документов и правило
+> Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
+>
+> **Актуально на 2026-07-21. Source `main`: `75b236acd31a779b431406710309f6a086b7f845`.**
+> PR #98 (карты), #101 (Reader R1) и #102 (Reader R3 façade) влиты.
+> Source/release gates зелёные на точных PR-head; **exact deployed SHA proof всё ещё pending**.
+> Не объявлять production-deploy подтверждённым без отдельного witness.
+>
+> Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_75b236ac.md`.
+
+## Перед началом
+
+```bash
+git fetch --all --prune
+git checkout main
+git pull --ff-only
+git rev-parse HEAD
+# expect 75b236ac… or newer
+```
+
+Если HEAD новее — сначала записать reverify delta. Затем прочитать `AGENTS.md`,
+`docs/WORK_MODES.md`, `docs/OWNER-INVARIANTS.md`, документы Reader Platform и этот SSOT.
+
+## Что уже landed — не переделывать заново
+
+### Единая типология контента
+
+- `series` — обычная серия и книга;
+- книга — **`series.shape = 'book'`**, а не отдельный движок;
+- `article` — самостоятельная большая статья;
+- `page` — каталог, справочная и другая нестатейная страница;
+- `special` — карты, 3D, графы и иные приложения, использующие общую инфраструктуру только там, где это уместно.
+
+Трёхуровневая книга уже есть: главы `tier:'chapter'`, статьи глав, chapter/article rail
+и трёхуровневое TOC. Старые book-прототипы AuditRepo — evidence, не код для полного merge.
+
+### Reader R1 — PR #101 (`ffdba149`)
+
+- единое `gb:reader-preferences:v1` и `window.GBReaderPreferences`;
+- День / Ночь / Сепия, размер, line-height, measure, text mode, reduced motion;
+- миграция legacy keys и cross-tab sync;
+- единый first-paint `ReaderPreferencesHead`;
+- semantic Sepia без blanket filters для изображений, видео, карт и 3D;
+- idempotent shared scroll-lock без MutationObserver feedback loop;
+- cross-engine matrix и functional `engine:sweep` 98/98.
+
+### Reader R3 — PR #102 (`75b236ac`)
+
+- нейтральный public façade `SeriesReaderChrome`;
+- historical `GillSeriesChrome` остаётся одной внутренней проверенной реализацией;
+- все **41** production consumer (Gill, книга «Сердце», Баптисты и другие серии)
+  механически переведены на façade;
+- DOM/CSS/runtime implementation не переписывались;
+- `series:facade:guard` запрещает новые прямые импорты `GillSeriesChrome` вне façade;
+- guard подключён к `engine:contracts` и Shared Files Guard;
+- финальные Shared Files Guard, Route Registry Validators, Native Source Contract,
+  Astro, production-like build и functional `engine:sweep` зелёные;
+- временные proof/recovery workflows удалены до merge;
+- runtime CSS восстановлен byte-for-byte, лишнего cache-bust churn нет.
+
+## Следующий обязательный SYSTEM lane — Reader R4
+
+Создать **полный декларативный registry всех публичных поверхностей** и связать его с
+существующими ownership/profile contracts без нового мегадвижка.
+
+Цель registry:
+
+1. Для каждого публичного route явно указать `surface`: `series | article | page | special`.
+2. Для `series` отдельно декларативно указать `shape: flat | book`; книга не становится новым engine.
+3. Указать adapter/chrome owner, config source, settings capability и сознательные исключения.
+4. Registry должен выводиться из одного канона или строго cross-validate существующие
+   `page-ownership`, route profiles, mobile registry и migration matrix — без второго SSOT.
+5. Все production Astro routes должны быть покрыты; legacy/built-app routes получают явный статус.
+6. Добавить read-only validator и negative mutation tests: неизвестный route, неверный surface,
+   book без series, special с насильно подключённым reader chrome, drift source/profile.
+7. Сначала inventory/report, затем отдельный implementation commit, затем full gates.
+
+**Не смешивать R4** с overlay lifecycle, визуальным redesign, контентом, картографией,
+переименованием Gill DOM/CSS или удалением compatibility storage keys.
+
+## После R4
+
+- R5: единый overlay lifecycle/focus/scroll-lock API (issue #58), убрать прямые
+  `body.style.overflow` у standalone settings после browser parity;
+- единое reader progress/bookmarks/notes state (issue #59) без дублирования storage;
+- mobile quality/performance sweep 320–430 px: safe areas, 44px targets, overflow,
+  listeners, focus, overlays, desktop parity;
+- compatibility keys удалять только после миграционного browser witness.
+
+## Открытый P0 карт после PR #98
+
+`MAP-P0-01`, `ASTRO-P0-03..06`, `DATA-P0-01`. Layer/theme defects закрыты.
+Reader R4 с картографическими runtime-fix не смешивать.
+
+## Другие крупные остатки
+
+- Нагорная проповедь: dark-theme architecture (`NG-CSS-01`, `NG-BODY-01`,
+  `NG-DARK-01` и связанные), inline/library cleanup, SEO/TOC;
+- exact deployed SHA proof (`PROD-STALE-DEPLOY-RED`) — отдельная witness-задача;
+- PremiumControls/Floating Cluster/Gill visual contract, glossary data и genealogy
+  visual language — owner/freeze zones по `AGENTS.md`.
+
+## Жёсткие правила
+
+1. Один subsystem на PR; не смешивать waves.
+2. SHA-first: любой статус — immutable SHA + команда/witness + результат.
+3. Не ослаблять gates ради зелёного CI.
+4. Astro↔legacy parity не доказывает истинность контента.
+5. Не переоткрывать закрытое без fresh negative witness.
+6. Positive claim = invariant + environment + negative test.
+7. AuditRepo matrix + этот prompt обновлять атомарно после merge.
+8. Не утверждать deploy без exact deployed SHA witness.
+'''
+          (root / 'NEXT_AGENT_PROMPT.md').write_text(next_prompt, encoding='utf-8')
+
+          matrix_path = root / 'verified/MASTER_BUG_MATRIX.md'
+          matrix = matrix_path.read_text(encoding='utf-8')
+          matrix = matrix.replace(
+              '| Source HEAD | `ffdba1496b66a18b16feaa231af5922d118dc3f8` (main; PR #98 map layers/theme and PR #101 Reader R1 landed) |',
+              '| Source HEAD | `75b236acd31a779b431406710309f6a086b7f845` (main; PR #98 maps, PR #101 Reader R1 and PR #102 Reader R3 façade landed) |'
+          )
+          matrix = matrix.replace(
+              '| Deploy | 🟠 **SOURCE/RELEASE GATES GREEN AT `ffdba149` / EXACT DEPLOYED SHA PROOF PENDING.** PR #101 final cleanup head passed Shared Files Guard, Native Source Contract, production-like build, cross-engine Chromium matrix and engine:sweep 98/98. |',
+              '| Deploy | 🟠 **SOURCE/RELEASE GATES GREEN THROUGH `75b236ac` / EXACT DEPLOYED SHA PROOF PENDING.** PR #102 final head passed Shared Files Guard, Route Registry Validators, Native Source Contract, Astro, production-like build and functional engine sweep. |'
+          )
+          matrix = matrix.replace(
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_ffdba149.md` |',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_75b236ac.md` |'
+          )
+          matrix = matrix.replace(
+              'Текущий source/release authority — `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_ffdba149.md`;',
+              'Текущий source/release authority — `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_75b236ac.md`;'
+          )
+          matrix = matrix.replace('## ✅ ЗАКРЫТО (112)', '## ✅ ЗАКРЫТО (113)', 1)
+          marker = '|---|---|---|\n'
+          row = '| READER-R3-SERIES-FACADE-01 | ✅ **FIXED 2026-07-21.** Нейтральный `SeriesReaderChrome` стал public façade для 41 series/book consumer; direct `GillSeriesChrome` imports изолированы постоянным guard, без нового book engine и без DOM/CSS/runtime redesign. | `75b236ac` PR#102 |\n'
+          if row not in matrix:
+              pos = matrix.index(marker) + len(marker)
+              matrix = matrix[:pos] + row + matrix[pos:]
+          matrix_path.write_text(matrix, encoding='utf-8')
+
+          reverify = root / 'reverify/CURRENT_HEAD_REVERIFY_2026-07-21_75b236ac.md'
+          reverify.write_text('''# CURRENT HEAD REVERIFY — 2026-07-21 — `75b236ac`
+
+## Immutable source truth
+
+- Repository: `FedorMilovanov/gb-is-my-strength`
+- Source `main`: `75b236acd31a779b431406710309f6a086b7f845`
+- Landed transaction: PR #102, Reader R3 neutral `SeriesReaderChrome` façade
+- Exact deployed SHA: **not independently witnessed; keep `PROD-STALE-DEPLOY-RED` open as deploy-proof task**
+
+## What changed after `ffdba149`
+
+- Added neutral public façade `SeriesReaderChrome` over the existing Gill implementation.
+- Migrated 41 production series/book consumers: Gill reference routes, three-level heart book,
+  Baptist series and other series articles.
+- Kept book declarative as `series.shape='book'`; no separate book engine.
+- Added permanent direct-import isolation guard and wired it into Shared Files Guard and
+  `engine:contracts`.
+- Updated architecture/migration documentation and route-owner descriptions.
+- Removed all temporary inventory/recovery/parity workflows before merge.
+- Reverted an unnecessary CSS-comment edit so runtime CSS and cache-bust inputs remain unchanged.
+
+## Verified gates on PR #102 final head `a8b34b1`
+
+- Shared Files Guard: PASS
+- `series:facade:guard`: PASS, 41 consumers
+- Route Registry Validators: PASS
+- Native Source Contract: PASS
+- Astro type/template check: PASS
+- production-like build: PASS
+- native article/series output: PASS
+- migration metadata coherence and workflow policy: PASS
+- tracked-tree mutation check: PASS
+- full functional `engine:sweep`: PASS
+
+## Current architecture boundary
+
+- `SeriesReaderChrome` is the public series/book entrypoint.
+- `GillSeriesChrome` is the internal historical implementation and may be imported directly only
+  by the façade.
+- DOM/CSS selectors and runtime behavior remain intentionally stable.
+- Next lane is R4: complete public-surface registry (`series/article/page/special`) cross-validated
+  against existing ownership/profile/migration authorities, not a second SSOT.
+
+## Remaining material risks
+
+1. Exact deployed SHA proof remains pending.
+2. R4 full route/surface registry is not yet landed.
+3. Overlay lifecycle/focus/direct `body.style.overflow` debt remains R5.
+4. Mobile quality/performance sweep remains after platform registry/lifecycle work.
+5. Map P0 remainder, Nagornaya dark-theme debt and owner/freeze zones stay separate lanes.
+''', encoding='utf-8')
+          PY
+      - name: Validate reconciled truth
+        shell: bash
+        run: |
+          grep -q '75b236acd31a779b431406710309f6a086b7f845' projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+          grep -q 'Reader R4' projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+          grep -q 'READER-R3-SERIES-FACADE-01' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -q 'ЗАКРЫТО (113)' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          test -f projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-21_75b236ac.md
+      - name: Commit reconciled SSOT and remove workflow
+        shell: bash
+        run: |
+          git rm .github/workflows/_temp-run-reader-r3-reconcile.yml
+          git add projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+                  projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+                  projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-21_75b236ac.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'reconcile(gb): record Reader R3 at 75b236ac'
+          git push origin HEAD:main
