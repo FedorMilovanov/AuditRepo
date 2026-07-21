@@ -3,14 +3,15 @@
 > **SSOT по текущему состоянию source-проекта.** Карта документов и правило
 > Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-21. Source `main`: `1bbebc2d9fcfe8a0af7c32e3a6796379927d48b8`.**
-> PR #98, #101–#104, #106 (special overlay adapters), #108 (asset revision reconciliation)
-> и #109 (pre-merge revision/workflow guard) влиты.
-> Source/release gates зелёные; **exact deployed SHA proof всё ещё pending**.
-> Не объявлять production-deploy подтверждённым без отдельного witness.
+> **Актуально на 2026-07-22. Source `main`: `2b67ee8f6ee788cb0457b5171e1d99d7afeff5dd`.**
+> PR #98, #101–#104, #106, #108, #109, #111 и #115 влиты.
+> Source/release gates после исправления Gill smoke снова готовы к linked readiness → Pages,
+> но **exact successful deployed SHA + production blob proof всё ещё pending**.
+> Не объявлять production-deploy подтверждённым без автоматического witness в issue #58.
 >
 > Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
-> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_1bbebc2d.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_2b67ee8f_nagornaya-deep-audit.md`.
+> Новый verified intake: `incoming/gpt-5-6-nagornaya-deep-audit/2026-07-22/REPORT.md`.
 
 ## Перед началом
 
@@ -19,7 +20,7 @@ git fetch --all --prune
 git checkout main
 git pull --ff-only
 git rev-parse HEAD
-# expect 1bbebc2d… or newer
+# expect 2b67ee8f… or newer
 ```
 
 Если HEAD новее — сначала записать reverify delta. Затем прочитать `AGENTS.md`,
@@ -61,86 +62,129 @@ git rev-parse HEAD
 - все 76 public routes классифицированы в существующих `data/route-profiles`;
 - `surfaceContractVersion: 1`, `surface: series|article|page|special`;
 - `seriesShape: flat|book` только для series;
-- фактический baseline: 51 series (27 flat + 24 book), 2 article, 9 page, 14 special;
-- chrome owner, config sources и settings capability выводятся из resolved import graph
-  и `mobileChromeRegistry.ts`, а не из второго route-list;
-- 41 exact `SeriesReaderChrome` consumer, 0 direct `GillSeriesChrome` leaks;
-- read-only `surface:registry:check` и adversarial `surface:registry:test` встроены
-  в strict migration metadata и Route Registry Validators;
-- финальные Shared Files Guard, Route Registry Validators, Native Source Contract,
-  Astro, production-like dist, native output, workflow policy и clean-tree зелёные;
-- временные runners/scripts/triggers удалены до merge.
+- baseline: 51 series (27 flat + 24 book), 2 article, 9 page, 14 special;
+- derived registry и adversarial mutation tests встроены в постоянный CI;
+- 41 exact `SeriesReaderChrome` consumer, 0 direct `GillSeriesChrome` leaks.
 
-### Reader R5 — PR #104 (`43d8672f`)
+### Reader R5 + special overlays — PR #104 (`43d8672f`), PR #106 (`39f6c3ac`)
 
-- один защищённый `window.OverlayRuntime` / `SiteUtils.OverlayRuntime` store;
-- named/reference-counted scroll owners и ordered top-layer stack;
-- exact restoration исходных body/html styles, classes, attributes и `scrollY`;
-- exact opener focus return, общий focus trap и Escape только для top layer;
-- nested `inert` / `aria-hidden` claims, idempotent reopen и pagehide/beforeunload recovery;
-- `site.js` больше не содержит вторую private scroll-lock implementation;
-- ReaderSettings, Hermenevtika mobile TOC и Gill/series TOC, learning, settings, GBS2 sheets мигрированы;
-- постоянные VM/static contracts и browser matrix Chromium/Firefox/WebKit зелёные;
-- временные runners, patchers и raw inventory удалены до merge.
+- один canonical `OverlayRuntime`;
+- named/reference-counted owners, top-layer Escape, focus trap/return, exact style/scroll restore;
+- reader, Gill/series, Hermenevtika, MapEngine, MindMap3D/built launcher, global image viewer и mobile fallbacks мигрированы;
+- direct production lock writers запрещены;
+- Chromium/Firefox/WebKit matrix зелёная.
 
-### Special Overlay Adapters — PR #106 (`39f6c3ac`)
+### Deploy repair — PR #108/#109/#111/#115
 
-- MapEngine place panel и nested photo viewer используют отдельные canonical owner IDs;
-- MindMap3D fullscreen, committed built launcher, global image viewer и mobile-menu fallbacks мигрированы;
-- direct production body/html lock writers запрещены постоянным source guard;
-- foreign-owner isolation, double destroy, fallback adapter и built-output witnesses добавлены;
-- Chromium, Firefox и WebKit matrix зелёная; временные diagnostics удалены до merge.
+- PR #108 (`869558cd`): 62 stale sources / 113 revision mismatches reconciled;
+- PR #109 (`1bbebc2d`): read-only revisions + workflow policy block every PR and direct deploy;
+- PR #111 (`372eba5b`): readiness workflow name correctly linked to Pages deploy, protected regression test;
+- failed Pages run `29870616511` reached only stale Gill mobile smoke assertion;
+- PR #115 (`2b67ee8f`) corrected that assertion; complete production-like build + Gill smoke passed;
+- production UI/runtime was not changed by #115;
+- exact successful Pages/blob witness remains required.
 
-### Deploy revision repair — PR #108 (`869558cd`) и PR #109 (`1bbebc2d`)
+## Current mandatory boundary — finish production witness
 
-- 62 stale source-файла / 113 cache-bust mismatches синхронизированы explicit `--write` транзакцией;
-- runtime blobs PR #106 остались byte-identical, generated diff ограничен HTML/Astro/asset-version;
-- temporary reconciliation workflow удалён до merge;
-- read-only asset revision check и workflow policy теперь блокируют каждый PR;
-- direct/manual deploy больше не проглатывает cache-bust failure через `|| echo`;
-- exact production Pages SHA всё ещё требует отдельного witness.
+Issue #58 is source-complete but must stay open until the observer records:
 
-## Следующая обязательная транзакция — exact production witness
+1. successful `Metadata & IndexNow Readiness`;
+2. successful `Deploy to GitHub Pages` with immutable run ID/head SHA;
+3. PASS for source-vs-production SHA-256 of `site-utils.js`, `site.js`, floating cluster,
+   MapEngine and committed MindMap app;
+4. cleanup of temporary observer/trigger through PR #110.
 
-Source implementation issue #58 завершена, но production claim требует отдельного доказательства.
+Do not merge another functional `main` change before this evidence, otherwise the comparison target becomes ambiguous.
 
-1. Получить immutable GitHub Pages deployment/run witness для current `main` или более нового SHA.
-2. Проверить, что production HTML ссылается на актуальные revision hashes, а опубликованные
-   `site-utils.js`, `site.js`, floating cluster, MapEngine и MindMap blobs соответствуют source.
-3. Только после этого закрыть `PROD-STALE-DEPLOY-RED` и issue #58 с run/deployment evidence.
-4. Затем перейти к R6 / issue #59: единое progress/bookmarks/notes state без нового движка.
+## Prepared but not landed — highlights / issue #112 / PR #113
 
-Не смешивать witness-транзакцию с map rendering/data P0/P1, визуальным redesign или content edits.
+The matrix previously claimed highlight dedupe/ARIA was fixed by PR #95, but current `main`
+does not contain it. The real implementation is in draft PR #113:
 
-## После production witness
+- compact old duplicate saved quotes by normalized path + text;
+- prevent new same-page duplicates while preserving same text on another page;
+- preserve 200-item cap and storage schema;
+- synchronize dialog `aria-hidden` initial/open/close state;
+- dependency-free regression and full `validate:static-publication:light` already passed.
 
-- R6: единое reader progress/bookmarks/notes state (issue #59) без дублирования storage;
-- mobile quality/performance sweep 320–430 px: safe areas, 44px targets, overflow,
-  listeners, focus, overlays, desktop parity;
-- compatibility keys удалять только после миграционного browser witness.
+Before merge: rebuild a clean branch from current main, materialize only permanent files/generated
+revisions, rerun final guards, then merge and close issue #112. Do not resurrect temporary patchers.
 
-## Открытый P0 карт после PR #98
+## New verified Nagornaya lanes
 
-`MAP-P0-01`, `ASTRO-P0-03..06`, `DATA-P0-01`. Layer/theme defects закрыты.
-Special overlay runtime source-complete; production witness не должен исправлять map rendering/data defects.
+### P0 — `NG-RUNTIME-BAR-ASSET-01`
 
-## Другие крупные остатки
+- all five Part I–V native footers use `nagornaya-bar-extras.js?v=1`;
+- canonical asset hash is `3c7e0bdd`;
+- `cache-bust.js` only recognizes eight-hex Astro revisions, so `v=1` bypasses the guard;
+- checked-in shadow HTML omits the asset;
+- asset file itself exists and `js/` is copied to dist.
 
-- Нагорная проповедь: dark-theme architecture (`NG-CSS-01`, `NG-BODY-01`,
-  `NG-DARK-01` и связанные), inline/library cleanup, SEO/TOC;
-- exact deployed SHA proof (`PROD-STALE-DEPLOY-RED`) — отдельная witness-задача;
-- PremiumControls/Floating Cluster/Gill visual contract, glossary data и genealogy
-  visual language — owner/freeze zones по `AGENTS.md`;
-- generated asset manifest и read-only workflow policy v2 — issues #56/#64,
-  не смешивать с one-time deploy witness или R6.
+Prepare an isolated technical PR now, but do not merge before production witness. Required:
+revision regex hardening, five Astro refs, five shadow refs/regeneration, permanent source contract,
+production-like dist + 360/390 Chromium runtime witness.
+
+### P0 pastoral safety — `NG-PASTORAL-SAFETY-01`
+
+Part V currently says:
+
+> «Полное отсутствие плодов — смертный приговор вере» … «Мф 7:21 относится к нему».
+
+Preserve the warning against self-deception, but replace final-verdict/omniscient language with
+pastorally calibrated evidence and explicit safeguards. Separate owner-reviewable content PR.
+
+### P1 source integrity — `NG-SOURCE-INTEGRITY-01`
+
+- Green is TMSJ 12/1 **pp. 49–68**, not 49–74;
+- Thomas Jesus Seminar is `tmsj7d.pdf`, TMSJ 7/1, pp. 75–105;
+- `tmsj7h.pdf` is Nichols, TMSJ 7/2, pp. 213–239;
+- individual TMSJ author argument ≠ automatic institutional TMS position.
+
+Fix as a separate bibliography/attribution PR after P0s.
+
+### P1 architecture — argument/source transparency
+
+Grouped lanes, not dozens of unrelated matrix rows:
+
+- `NG-EPISTEMIC-MODEL-LAYERS-01`: label text → reconstruction → literary model → doctrine → application;
+- `NG-SOURCE-REGISTRY-01`: requested/final URL, exact object, author/title/pages, extraction/OCR, supported/not-supported claim, source role/tradition, author vs institution, last checked;
+- `NG-UI-EPISTEMIC-BIAS-01`: replace red/green answer-key styling for disputed models with neutral comparison; browser screenshot witness first.
+
+Use a reusable table/pattern:
+
+```text
+claim | type | primary evidence | alternative | series position | confidence | change condition
+```
+
+The detailed C43–C94 checklist remains in the incoming report; do not inflate the canonical matrix with every sentence-level action.
+
+## Reader R6 after current P0 boundaries
+
+Issue #59 remains the next reader-platform wave:
+
+- one progress/resume/bookmark/note state service;
+- migrate existing keys without losing user data;
+- article-boundary progress rather than whole-document/footer progress;
+- eliminate duplicate scroll/resize owners;
+- no new content engine.
+
+R6 must remain separate from Nagornaya prose/source/UI work.
+
+## Other open P0/P1
+
+- maps: `MAP-P0-01`, `ASTRO-P0-03..06`, `DATA-P0-01`;
+- Nagornaya dark-theme architecture: `NG-CSS-01`, `NG-BODY-01`, `NG-DARK-01` cluster;
+- generated asset manifest / workflow policy v2: issues #56/#64, not part of the current one-off fixes;
+- PremiumControls/Floating Cluster/Gill visual contract and other owner/freeze zones: follow `AGENTS.md`.
 
 ## Жёсткие правила
 
-1. Один subsystem на PR; не смешивать waves.
-2. SHA-first: любой статус — immutable SHA + команда/witness + результат.
+1. Один subsystem на PR; technical bar asset, pastoral wording, source integrity, UI model and R6 are separate lanes.
+2. SHA-first: любой статус — immutable SHA + command/witness + result.
 3. Не ослаблять gates ради зелёного CI.
 4. Astro↔legacy parity не доказывает истинность контента.
-5. Не переоткрывать закрытое без fresh negative witness.
+5. Не переоткрывать закрытое без fresh negative witness; highlight is reopened because current source disproves the ledger row.
 6. Positive claim = invariant + environment + negative test.
-7. AuditRepo matrix + этот prompt обновлять атомарно после merge.
-8. Не утверждать deploy без exact deployed SHA witness.
+7. AuditRepo matrix + этот prompt обновлять атомарно after merge/status change.
+8. Не утверждать deploy без exact deployed SHA/blob witness.
+9. User-supplied AI reports are evidence intake, not canonical truth until current-head/source/PDF/browser verification.
