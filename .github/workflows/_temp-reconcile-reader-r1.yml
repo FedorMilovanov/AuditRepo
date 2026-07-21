@@ -1,0 +1,337 @@
+name: TEMP reconcile reader R1 SSOT
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    if: github.head_ref == 'reconcile/reader-r1-ffdba149-2026-07-21'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Advance source truth and reader platform plan
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('projects/gb-is-my-strength')
+          matrix_path = root / 'verified/MASTER_BUG_MATRIX.md'
+          prompt_path = root / 'NEXT_AGENT_PROMPT.md'
+          reverify_path = root / 'reverify/CURRENT_HEAD_REVERIFY_2026-07-21_ffdba149.md'
+
+          source_sha = 'ffdba1496b66a18b16feaa231af5922d118dc3f8'
+          map_sha = '6a7539f97b53c591cdb0b4229caaec9d20e423b9'
+          final_pr_head = 'deca733ca2fd102f1cd81da7ac43ef9c6b207aec'
+
+          prompt = f'''# NEXT AGENT PROMPT — gb-is-my-strength
+
+> **SSOT по текущему состоянию source-проекта.** Карта документов и правило
+> Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
+>
+> **Актуально на 2026-07-21. Source `main`: `{source_sha}`.**
+> PR #98 (карты: layers/theme) и PR #101 (Reader R1) влиты.
+> Release/source gates зелёные на точных PR-head; **exact deployed SHA proof всё ещё pending**.
+> Не объявлять production-deploy подтверждённым без отдельного witness.
+>
+> Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_ffdba149.md`.
+
+## Перед началом
+
+```bash
+git fetch --all --prune
+git checkout main
+git pull --ff-only
+git rev-parse HEAD
+# expect {source_sha[:8]}… or newer
+```
+
+Если HEAD новее — сначала записать reverify delta. Затем прочитать `AGENTS.md`,
+`docs/WORK_MODES.md`, `docs/OWNER-INVARIANTS.md`, архитектуру Reader Platform и этот SSOT.
+
+## Что уже landed — не переделывать заново
+
+### Единая типология контента
+
+- `series` — обычная серия и книга;
+- книга — **`series.shape = 'book'`**, а не отдельный движок;
+- `article` — самостоятельная большая статья;
+- `page` — каталог, справочная и другая нестатейная страница;
+- `special` — карты, 3D, графы и иные приложения, использующие общую инфраструктуру только там, где это уместно.
+
+Трёхуровневая книга уже есть в source: главы `tier:'chapter'`, статьи глав,
+chapter/article rail и трёхуровневое TOC. Старые book-прототипы AuditRepo — evidence,
+не код для полного merge.
+
+### Reader R1 — PR #101
+
+На `{source_sha[:8]}` landed:
+
+- каноническое `gb:reader-preferences:v1` и `window.GBReaderPreferences`;
+- День / Ночь / Сепия, размер, line-height, measure, text mode, reduced motion;
+- миграция Gill/Hermenevtika/global legacy keys и cross-tab sync;
+- единый first-paint `ReaderPreferencesHead` вместо локальных theme-bootstrap;
+- семантическая Sepia без blanket filters для изображений, видео, карт и 3D;
+- shared assets в cache-bust, service worker, audit allowlists и Shared Files Guard;
+- permanent pure/browser regressions.
+
+Во время прогона дополнительно закрыт runtime blocker: общий scroll-lock создавал
+feedback loop `MutationObserver → ensureLockState → повторная запись style/class` и
+блокировал renderer при открытии настроек. Lock теперь идемпотентен, observer чинит
+только реальный drift. `engine:sweep` гарантированно закрывает browser/server в `finally`.
+
+Доказательства PR #101:
+
+- Shared Files Guard + actionlint — green;
+- Native Source Contract, Astro, production-like dist, native article/series output — green;
+- cross-engine Chromium matrix — green;
+- functional `engine:sweep` — **98/98 PASS**;
+- временные proof/corrector workflows удалены до merge.
+
+### Карты — PR #98
+
+На `{map_sha[:8]}` закрыты `MAP-P0-06/07`:
+
+- составные layer memberships;
+- `main`, `stage.cls`, `place.type`, journey1–3 и общие города нескольких путешествий;
+- сохранение выключенных слоёв после story switch/re-render;
+- соблюдение `on:false` на первом рендере;
+- реальная Day/Night палитра canvas/SVG/chrome.
+
+Не переоткрывать эти пункты без fresh witness на `{map_sha[:8]}` или новее.
+
+## Следующий обязательный SYSTEM lane — Reader R3
+
+Создать нейтральный façade **`SeriesReaderChrome`** над текущим
+`GillSeriesChrome`, сохранив существующий DOM/CSS/селекторы/поведение.
+
+Порядок:
+
+1. Инвентаризировать все реальные импорты и runtime-владельцев.
+2. Добавить façade, который один напрямую импортирует historical Gill implementation.
+3. Механически перевести series/book imports на façade без визуального redesign.
+4. Добавить guard: новые маршруты не импортируют `GillSeriesChrome` напрямую.
+5. Подтвердить flat series + `shape:'book'` + Gill эталоны браузером.
+6. Прогнать Shared Files Guard, Native Source Contract, production-like build и `engine:sweep`.
+7. Только отдельной следующей волной R4 — полный registry всех public routes: series/article/page/special.
+
+**Запрещено:** создавать новый книжный мегадвижок, переименовывать DOM/CSS одним большим
+рефакторингом, смешивать façade с overlay/runtime redesign или контентными правками.
+
+## После R3/R4
+
+- R5: единый overlay lifecycle/scroll-lock/focus runtime (issue #58), убрать прямые
+  `body.style.overflow` у standalone settings после browser parity;
+- единое reader progress/bookmarks/notes state (issue #59) без дублирования storage;
+- mobile quality/performance sweep 320–430 px: safe areas, 44px targets, overflow,
+  listeners, focus, overlays, desktop parity;
+- удалять compatibility keys только после миграционного browser witness.
+
+## Открытый P0 карт после PR #98
+
+`MAP-P0-01`, `ASTRO-P0-03..06`, `DATA-P0-01`. Layer/theme defects закрыты.
+Следующие map lanes не смешивать с Reader R3.
+
+## Другие крупные остатки
+
+- Нагорная проповедь: архитектурный dark-theme долг (`NG-CSS-01`, `NG-BODY-01`,
+  `NG-DARK-01` и связанные), inline/library cleanup и SEO/TOC задачи;
+- exact deployed SHA proof (`PROD-STALE-DEPLOY-RED`) остаётся отдельным witness-task;
+- PremiumControls/Floating Cluster/Gill visual contract, glossary data и genealogy
+  visual language — owner/freeze zones по `AGENTS.md`.
+
+## Жёсткие правила
+
+1. Один subsystem на PR; не смешивать waves.
+2. SHA-first: любой статус — immutable SHA + команда/witness + результат.
+3. Не ослаблять gates ради зелёного CI.
+4. Astro↔legacy parity не доказывает истинность контента.
+5. Не переоткрывать закрытое без fresh negative witness.
+6. Positive claim = invariant + environment + negative test.
+7. AuditRepo matrix + этот prompt обновлять атомарно после merge.
+8. Не утверждать deploy без exact deployed SHA witness.
+'''
+          prompt_path.write_text(prompt, encoding='utf-8')
+
+          reverify = f'''# CURRENT HEAD REVERIFY — 2026-07-21 — `{source_sha[:8]}`
+
+## Immutable source truth
+
+- Source repository: `FedorMilovanov/gb-is-my-strength`
+- `main`: `{source_sha}`
+- Map layers/theme merge: `{map_sha}` (PR #98)
+- Reader R1 final PR head: `{final_pr_head}`
+- Reader R1 squash merge: `{source_sha}` (PR #101)
+- Exact deployed SHA: **not proven by available connector witness**
+
+## Landed transactions
+
+### PR #98 — map layers and palette
+
+Closed `MAP-P0-06` and `MAP-P0-07`: composite memberships, alternate journeys,
+shared cities, persistent/default-off layers and actual light/dark SVG/canvas/chrome palette.
+Pure and Chromium witnesses passed before merge.
+
+### PR #101 — Reader R1
+
+Introduced one canonical reader preference store/API and site-wide Day/Night/Sepia
+foundation across series, book-shaped series, standalone article, ordinary page and map.
+Removed route-owned anti-FOUC implementations in favour of `ReaderPreferencesHead`.
+
+Adversarial proof found and fixed two runtime/test defects:
+
+1. `engine:sweep` did not close browser/server on exceptions and could hang CI;
+2. scroll-lock MutationObserver rewrote already-correct lock styles forever, starving
+   the renderer on the first physical settings click.
+
+The lock is now idempotent and repair-only; runtime contract prevents regression.
+
+## Verification
+
+On final cleanup head `{final_pr_head}`:
+
+- Shared Files Guard: PASS;
+- runtime/reader/map regressions: PASS;
+- actionlint: PASS;
+- Native Source Contract: PASS;
+- Astro type/template check: PASS;
+- production-like dist: PASS;
+- native article/series output + migration metadata: PASS;
+- cross-engine Chromium matrix: PASS;
+- `engine:sweep`: **98/98 PASS**.
+
+Temporary proof/corrector workflows were removed before merge.
+
+## Architectural conclusion
+
+Book remains declarative `series.shape='book'`; do not fork a book engine.
+The next safe transaction is R3 `SeriesReaderChrome` façade with mechanical import
+migration and unchanged DOM/CSS, followed by R4 full public route registry.
+
+## Remaining risks
+
+- exact production deployed SHA is still unproven;
+- overlay lifecycle remains partially split (issue #58);
+- unified progress/bookmarks/notes state remains open (issue #59);
+- map P0 remainder: `MAP-P0-01`, `ASTRO-P0-03..06`, `DATA-P0-01`.
+'''
+          reverify_path.write_text(reverify, encoding='utf-8')
+
+          matrix = matrix_path.read_text(encoding='utf-8')
+          matrix = re.sub(
+              r'\| Source HEAD \| .*? \|',
+              f'| Source HEAD | `{source_sha}` (main; PR #98 map layers/theme and PR #101 Reader R1 landed) |',
+              matrix,
+              count=1,
+          )
+          matrix = re.sub(
+              r'\| Deploy \| .*? \|',
+              f'| Deploy | 🟠 **SOURCE/RELEASE GATES GREEN AT `{source_sha[:8]}` / EXACT DEPLOYED SHA PROOF PENDING.** PR #101 final cleanup head passed Shared Files Guard, Native Source Contract, production-like build, cross-engine Chromium matrix and engine:sweep 98/98. |',
+              matrix,
+              count=1,
+          )
+          matrix = re.sub(
+              r'\| Last reverify \| .*? \|',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_ffdba149.md` |',
+              matrix,
+              count=1,
+          )
+          matrix = matrix.replace(
+              'Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_1a66bd8.md`.',
+              'Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_ffdba149.md`.',
+          )
+          matrix = matrix.replace(
+              'Текущий source/release authority — `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_1a66bd8.md`;',
+              'Текущий source/release authority — `reverify/CURRENT_HEAD_REVERIFY_2026-07-21_ffdba149.md`;',
+          )
+
+          open_prefixes = (
+              '| MAP-P0-06 |',
+              '| MAP-P0-07 |',
+              '| ASTRO-P1-03 |',
+              '| ENGINE-P1-24 |',
+              '| ENGINE-P1-25 |',
+          )
+          lines = [line for line in matrix.splitlines() if not line.startswith(open_prefixes)]
+          matrix = '\n'.join(lines) + '\n'
+
+          closed_anchor = '| ID | Описание | Коммит |\n|---|---|---|\n'
+          closed_rows = f'''| READER-R1-PREFERENCES-01 | ✅ **FIXED 2026-07-21.** Единое `gb:reader-preferences:v1`, Day/Night/Sepia, text preferences, legacy migration, cross-tab sync и общий first-paint bootstrap для series/book/article/page/special. Cross-engine matrix green. | `{source_sha[:8]}` PR#101 |
+| RUNTIME-SCROLL-LOCK-FEEDBACK-02 | ✅ **FIXED 2026-07-21.** MutationObserver больше не создаёт бесконечный feedback loop при открытии settings; lock idempotent/repair-only, runtime guard + engine click witness. | `{source_sha[:8]}` PR#101 |
+| MAP-P0-06 | ✅ **FIXED 2026-07-21.** Composite layer membership, stage.cls/place.type, journey1–3, shared cities, persistence across re-render. | `{map_sha[:8]}` PR#98 |
+| MAP-P0-07 | ✅ **FIXED 2026-07-21.** Theme toggle реально меняет canvas/SVG/chrome palette без blanket filters. | `{map_sha[:8]}` PR#98 |
+| ASTRO-P1-03 | ✅ **CLOSED AS SAME ROOT AS MAP-P0-06.** Авраамские abr/lot/war/cand memberships работают по составным данным. | `{map_sha[:8]}` PR#98 |
+| ENGINE-P1-24 | ✅ **FIXED WITH MAP-P0-06.** Layer visibility survives `renderMarkers()`/story switch. | `{map_sha[:8]}` PR#98 |
+| ENGINE-P1-25 | ✅ **FIXED WITH MAP-P0-06.** `on:false` respected on initial render and after re-render. | `{map_sha[:8]}` PR#98 |
+'''
+          if closed_rows.splitlines()[0] not in matrix:
+              if matrix.count(closed_anchor) != 1:
+                  raise SystemExit('closed table anchor mismatch')
+              matrix = matrix.replace(closed_anchor, closed_anchor + closed_rows, 1)
+
+          matrix = re.sub(
+              r'\| PROD-STALE-DEPLOY-RED \|.*',
+              f'| PROD-STALE-DEPLOY-RED | 🟠 **2026-07-21 REVERIFY:** source/release gates green at `{source_sha[:8]}` after PR #98/#101, including cross-engine Chromium and engine:sweep 98/98. Keep open only as exact deployed-SHA witness task. | verified-source + verified-pr-gates; deploy witness pending |',
+              matrix,
+              count=1,
+          )
+
+          def recount(section_title_pattern, next_heading_pattern):
+              nonlocal_matrix = None
+
+          closed_start = matrix.index('## ✅ ЗАКРЫТО (')
+          closed_table = matrix.index('| ID | Описание | Коммит |', closed_start)
+          next_section = matrix.index('\n---', closed_table)
+          closed_count = sum(
+              1 for line in matrix[closed_table:next_section].splitlines()
+              if line.startswith('| ') and not line.startswith('| ID ') and not line.startswith('|---')
+          )
+          matrix = re.sub(r'## ✅ ЗАКРЫТО \(\d+\)', f'## ✅ ЗАКРЫТО ({closed_count})', matrix, count=1)
+
+          p1_match = re.search(r'## 🟠 P1 — ОТКРЫТО \(\d+\)', matrix)
+          if not p1_match:
+              raise SystemExit('P1 heading missing')
+          p1_table = matrix.index('| ID | Описание | Witnesses |', p1_match.end())
+          p1_end = matrix.index('\n---', p1_table)
+          p1_count = sum(
+              1 for line in matrix[p1_table:p1_end].splitlines()
+              if line.startswith('| ') and not line.startswith('| ID ') and not line.startswith('|---')
+          )
+          matrix = re.sub(r'## 🟠 P1 — ОТКРЫТО \(\d+\)', f'## 🟠 P1 — ОТКРЫТО ({p1_count})', matrix, count=1)
+
+          session = f'''\n### 2026-07-21 — Reader R1 and map layer/theme reconciliation (`{source_sha[:8]}`)\n\n- Source `main` advanced to `{source_sha}`.\n- PR #98 closed MAP-P0-06/07 and their duplicate P1 rows.\n- PR #101 landed canonical reader preferences, site-wide Sepia and first-paint convergence.\n- Adversarial engine witness exposed/fixed scroll-lock MutationObserver feedback loop.\n- Final evidence: Shared Files Guard, Native Source Contract, cross-engine matrix and engine:sweep 98/98.\n- Exact deployed SHA remains pending; next isolated lane is R3 `SeriesReaderChrome` façade.\n'''
+          if session.splitlines()[1] not in matrix:
+              matrix += session
+
+          matrix_path.write_text(matrix, encoding='utf-8')
+
+          assert source_sha in prompt_path.read_text(encoding='utf-8')
+          assert source_sha in matrix_path.read_text(encoding='utf-8')
+          assert 'MAP-P0-06 | 🆕' not in matrix
+          assert 'MAP-P0-07 | 🆕' not in matrix
+          assert reverify_path.exists()
+          PY
+      - name: Show reconciled status
+        run: |
+          grep -n "Source HEAD\|Last reverify\|ЗАКРЫТО\|P1 — ОТКРЫТО\|MAP-P0-06\|READER-R1" projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md | head -30
+          grep -n "Source `main`\|Следующий обязательный SYSTEM lane" projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+      - name: Commit reconciliation
+        shell: bash
+        run: |
+          git rm .github/workflows/_temp-reconcile-reader-r1.yml
+          git add projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+                  projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+                  projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-21_ffdba149.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'reconcile(gb): record Reader R1 at ffdba149'
+          git push origin "HEAD:${GITHUB_HEAD_REF}"
