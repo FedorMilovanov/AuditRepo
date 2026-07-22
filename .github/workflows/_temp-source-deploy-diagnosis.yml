@@ -14,6 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Current-main observer. The source release fix must remain an ancestor;
+      # the workflow records the latest readiness/Pages state and live markers.
       - name: Query readiness and Pages for current source main
         shell: bash
         run: |
