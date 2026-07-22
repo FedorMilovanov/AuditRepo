@@ -12,14 +12,14 @@ jobs:
   observe:
     if: ${{ github.event.pull_request.number == 23 }}
     runs-on: ubuntu-latest
-    timeout-minutes: 14
+    timeout-minutes: 25
     steps:
       - name: Checkout observer request
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Wait for exact source workflows and verify live origin
+      - name: Wait for exact source CI, Pages and live origin
         shell: bash
         run: |
           set -o pipefail
@@ -40,6 +40,15 @@ jobs:
           if len(sha) != 40:
               raise SystemExit(f'INVALID_TARGET_SHA={sha!r}')
 
+          required_names = [
+              'Shared Files Guard',
+              'Visual Parity Guard — pixel-diff',
+              'Native Source Contract',
+              'Route Registry Validators',
+              'Metadata & IndexNow Readiness',
+              'Deploy to GitHub Pages',
+          ]
+
           def source_runs():
               api_url = f'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/runs?head_sha={sha}&per_page=100'
               api_req = urllib.request.Request(api_url, headers={
@@ -54,30 +63,36 @@ jobs:
               matching = [run for run in runs if run.get('name') == name]
               return sorted(matching, key=lambda item: item.get('created_at', ''))[-1] if matching else None
 
-          deadline = time.time() + 660
-          readiness = None
-          pages = None
+          deadline = time.time() + 1200
+          selected = {}
           while time.time() < deadline:
               runs = source_runs()
-              readiness = latest(runs, 'Metadata & IndexNow Readiness')
-              pages = latest(runs, 'Deploy to GitHub Pages')
-              readiness_state = f"{readiness.get('status')}:{readiness.get('conclusion')}" if readiness else 'not-found'
-              pages_state = f"{pages.get('status')}:{pages.get('conclusion')}" if pages else 'not-found'
-              print(f'POLL readiness={readiness_state} pages={pages_state}', flush=True)
-              if readiness and readiness.get('status') == 'completed' and readiness.get('conclusion') != 'success':
-                  raise SystemExit('READINESS_FAILED')
-              if pages and pages.get('status') == 'completed' and pages.get('conclusion') != 'success':
-                  raise SystemExit('PAGES_FAILED')
-              if (readiness and readiness.get('status') == 'completed' and readiness.get('conclusion') == 'success'
-                      and pages and pages.get('status') == 'completed' and pages.get('conclusion') == 'success'):
+              selected = {name: latest(runs, name) for name in required_names}
+              states = []
+              all_green = True
+              for name in required_names:
+                  run = selected[name]
+                  if not run:
+                      states.append(f'{name}=not-found')
+                      all_green = False
+                      continue
+                  state = f"{run.get('status')}:{run.get('conclusion')}"
+                  states.append(f'{name}={state}')
+                  if run.get('status') == 'completed' and run.get('conclusion') != 'success':
+                      raise SystemExit(f'EXACT_SHA_WORKFLOW_FAILED={name}:{run.get("id")}:{state}')
+                  if run.get('status') != 'completed' or run.get('conclusion') != 'success':
+                      all_green = False
+              print('POLL ' + ' | '.join(states), flush=True)
+              if all_green:
                   break
               time.sleep(20)
           else:
               raise SystemExit('EXACT_SHA_WORKFLOWS_TIMEOUT')
 
           print(f'TARGET_SHA={sha}')
-          print(f"READINESS={readiness.get('id')}:completed:success")
-          print(f"PAGES={pages.get('id')}:completed:success")
+          for name in required_names:
+              run = selected[name]
+              print(f"WORKFLOW={name}|{run.get('id')}|completed|success")
 
           witness_url = f'https://gospod-bog.ru/nagornaya/istochniki/?witness={sha}-{int(time.time())}'
           live_req = urllib.request.Request(witness_url, headers={
