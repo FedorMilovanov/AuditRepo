@@ -37,20 +37,21 @@ jobs:
                   key, value = raw.split('=', 1)
                   values[key.strip()] = value.strip()
           sha = values.get('target', '')
-          if len(sha) != 40:
-              raise SystemExit(f'INVALID_TARGET_SHA={sha!r}')
+          premerge_sha = values.get('premerge', '')
+          if len(sha) != 40 or len(premerge_sha) != 40:
+              raise SystemExit(f'INVALID_SHA target={sha!r} premerge={premerge_sha!r}')
 
-          required_names = [
+          main_required = [
               'Shared Files Guard',
               'Visual Parity Guard — pixel-diff',
               'Native Source Contract',
-              'Route Registry Validators',
               'Metadata & IndexNow Readiness',
               'Deploy to GitHub Pages',
           ]
+          premerge_required = ['Route Registry Validators']
 
-          def source_runs():
-              api_url = f'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/runs?head_sha={sha}&per_page=100'
+          def source_runs(head_sha):
+              api_url = f'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/runs?head_sha={head_sha}&per_page=100'
               api_req = urllib.request.Request(api_url, headers={
                   'Accept': 'application/vnd.github+json',
                   'User-Agent': 'auditrepo-exact-sha-observer',
@@ -63,14 +64,23 @@ jobs:
               matching = [run for run in runs if run.get('name') == name]
               return sorted(matching, key=lambda item: item.get('created_at', ''))[-1] if matching else None
 
+          premerge_runs = source_runs(premerge_sha)
+          premerge_selected = {name: latest(premerge_runs, name) for name in premerge_required}
+          for name, run in premerge_selected.items():
+              if not run:
+                  raise SystemExit(f'PREMERGE_WORKFLOW_NOT_FOUND={name}')
+              state = f"{run.get('status')}:{run.get('conclusion')}"
+              if run.get('status') != 'completed' or run.get('conclusion') != 'success':
+                  raise SystemExit(f'PREMERGE_WORKFLOW_NOT_SUCCESS={name}:{run.get("id")}:{state}')
+
           deadline = time.time() + 1200
           selected = {}
           while time.time() < deadline:
-              runs = source_runs()
-              selected = {name: latest(runs, name) for name in required_names}
+              runs = source_runs(sha)
+              selected = {name: latest(runs, name) for name in main_required}
               states = []
               all_green = True
-              for name in required_names:
+              for name in main_required:
                   run = selected[name]
                   if not run:
                       states.append(f'{name}=not-found')
@@ -90,9 +100,13 @@ jobs:
               raise SystemExit('EXACT_SHA_WORKFLOWS_TIMEOUT')
 
           print(f'TARGET_SHA={sha}')
-          for name in required_names:
+          print(f'PREMERGE_SHA={premerge_sha}')
+          for name in main_required:
               run = selected[name]
-              print(f"WORKFLOW={name}|{run.get('id')}|completed|success")
+              print(f"MAIN_WORKFLOW={name}|{run.get('id')}|completed|success")
+          for name in premerge_required:
+              run = premerge_selected[name]
+              print(f"PREMERGE_WORKFLOW={name}|{run.get('id')}|completed|success")
 
           witness_url = f'https://gospod-bog.ru/nagornaya/istochniki/?witness={sha}-{int(time.time())}'
           live_req = urllib.request.Request(witness_url, headers={
