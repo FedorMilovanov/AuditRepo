@@ -1,4 +1,4 @@
-name: TEMP Observe GB Pages f9439ef3
+name: TEMP Observe GB Exact Pages And Live
 
 on:
   pull_request:
@@ -14,21 +14,37 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Query exact source workflow runs
-        env:
-          TARGET_SHA: f9439ef303601e1dc68b5c40ff4d0e1ec8db6a3e
+      - name: Checkout observer request
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Query exact source workflows and verify live origin
         run: |
           python3 - <<'PY'
-          import json, os, urllib.request
+          import hashlib
+          import json
+          import pathlib
+          import time
+          import urllib.request
 
-          sha = os.environ['TARGET_SHA']
-          url = f'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/runs?head_sha={sha}&per_page=100'
-          req = urllib.request.Request(url, headers={
+          trigger = pathlib.Path('.audit-temp-pages-observer-trigger').read_text(encoding='utf-8')
+          values = {}
+          for raw in trigger.splitlines():
+              if '=' in raw:
+                  key, value = raw.split('=', 1)
+                  values[key.strip()] = value.strip()
+          sha = values.get('target', '')
+          if len(sha) != 40:
+              raise SystemExit(f'INVALID_TARGET_SHA={sha!r}')
+
+          api_url = f'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/runs?head_sha={sha}&per_page=100'
+          api_req = urllib.request.Request(api_url, headers={
               'Accept': 'application/vnd.github+json',
               'User-Agent': 'auditrepo-exact-sha-observer',
               'X-GitHub-Api-Version': '2022-11-28',
           })
-          with urllib.request.urlopen(req, timeout=30) as response:
+          with urllib.request.urlopen(api_req, timeout=30) as response:
               payload = json.load(response)
 
           runs = payload.get('workflow_runs', [])
@@ -48,14 +64,64 @@ jobs:
                   'html_url': run.get('html_url'),
               }, ensure_ascii=False, sort_keys=True))
 
-          names = {run.get('name'): run for run in runs}
-          readiness = names.get('Metadata & IndexNow Readiness')
-          deploy = names.get('Deploy to GitHub Pages')
+          by_name = {}
+          for run in runs:
+              by_name.setdefault(run.get('name'), []).append(run)
+          readiness = sorted(by_name.get('Metadata & IndexNow Readiness', []), key=lambda item: item.get('created_at', ''))[-1:]
+          pages = sorted(by_name.get('Deploy to GitHub Pages', []), key=lambda item: item.get('created_at', ''))[-1:]
           if not readiness:
               raise SystemExit('READINESS_RUN_NOT_FOUND')
+          readiness = readiness[0]
           print(f"READINESS={readiness.get('id')}:{readiness.get('status')}:{readiness.get('conclusion')}")
-          if deploy:
-              print(f"PAGES={deploy.get('id')}:{deploy.get('status')}:{deploy.get('conclusion')}")
-          else:
-              print('PAGES=NOT_FOUND')
+          if readiness.get('status') != 'completed' or readiness.get('conclusion') != 'success':
+              raise SystemExit('READINESS_NOT_SUCCESS')
+          if not pages:
+              raise SystemExit('PAGES_RUN_NOT_FOUND')
+          pages = pages[0]
+          print(f"PAGES={pages.get('id')}:{pages.get('status')}:{pages.get('conclusion')}")
+          if pages.get('status') != 'completed' or pages.get('conclusion') != 'success':
+              raise SystemExit('PAGES_NOT_SUCCESS')
+
+          witness_url = f'https://gospod-bog.ru/nagornaya/istochniki/?witness={sha}-{int(time.time())}'
+          live_req = urllib.request.Request(witness_url, headers={
+              'User-Agent': 'auditrepo-live-origin-witness',
+              'Cache-Control': 'no-cache, no-store, max-age=0',
+              'Pragma': 'no-cache',
+              'Accept': 'text/html,application/xhtml+xml',
+          })
+          with urllib.request.urlopen(live_req, timeout=45) as response:
+              body = response.read()
+              status = response.status
+              headers = dict(response.headers.items())
+          text = body.decode('utf-8', errors='replace')
+          required = [
+              'Ключевые библиографические данные и доступные первичные объекты проверены на дату обновления',
+              'TMSJ 12/1 (Spring 2001), pp. 49–68',
+              'tmsj7d.pdf',
+              'TMSJ 7/1 (Spring 1996), pp. 75–105',
+              'tmsj7h.pdf',
+              'TMSJ 7/2 (Fall 1996), pp. 213–239',
+              'не автоматически официальную позицию TMS',
+          ]
+          forbidden = [
+              'Все ссылки верифицированы по первоисточникам',
+              'TMSJ 12/1 (Spring 2001), pp. 49–74',
+          ]
+          missing = [item for item in required if item not in text]
+          present_forbidden = [item for item in forbidden if item in text]
+          print(f'LIVE_URL={witness_url}')
+          print(f'LIVE_STATUS={status}')
+          print(f'LIVE_BYTES={len(body)}')
+          print(f'LIVE_SHA256={hashlib.sha256(body).hexdigest()}')
+          print(f"LIVE_ETAG={headers.get('ETag', '')}")
+          print(f"LIVE_LAST_MODIFIED={headers.get('Last-Modified', '')}")
+          print(f'LIVE_REQUIRED_PASS={len(required) - len(missing)}/{len(required)}')
+          print(f'LIVE_FORBIDDEN_PASS={len(forbidden) - len(present_forbidden)}/{len(forbidden)}')
+          if missing:
+              print('LIVE_MISSING=' + json.dumps(missing, ensure_ascii=False))
+          if present_forbidden:
+              print('LIVE_FORBIDDEN_PRESENT=' + json.dumps(present_forbidden, ensure_ascii=False))
+          if status != 200 or missing or present_forbidden:
+              raise SystemExit('LIVE_ORIGIN_WITNESS_FAILED')
+          print('LIVE_ORIGIN_WITNESS=PASS')
           PY
