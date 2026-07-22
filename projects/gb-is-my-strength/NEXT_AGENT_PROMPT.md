@@ -3,14 +3,14 @@
 > **SSOT по текущему состоянию source-проекта.** Карта документов и правило
 > Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-22. Source `main`: `9c3dec16717563885c36a497f3b47ff793a6bf4f`.**
-> PR #119, #123, #125, #128 и #131 завершили release-транзакцию; PR #126 закрыл технический P0 Нагорной.
+> **Актуально на 2026-07-22. Source `main`: `5650c96b838c78dcda3c37b75f8e58755469cacd`.**
+> Release-транзакция завершена; PR #126 закрыл технический P0 Нагорной, PR #120 — highlights/ARIA, PR #138 — pastoral safety.
 > **Production подтверждена:** Pages run `29910271842` успешно развернул exact readiness-verified
 > SHA `a0c9c025b05eccfce0ab4818da250d05d1b65da0`; observer записал PASS для пяти
 > критических source/live blob. Issue #58 закрыта, временный observer удалён PR #131.
 >
 > Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
-> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_9c3dec16_nagornaya-bar.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_5650c96_highlights-pastoral.md`.
 > Новый verified intake: `incoming/gpt-5-6-nagornaya-deep-audit/2026-07-22/REPORT.md`.
 
 ## Перед началом
@@ -20,7 +20,7 @@ git fetch --all --prune
 git checkout main
 git pull --ff-only
 git rev-parse HEAD
-# expect 9c3dec16… or newer
+# expect 5650c96… or newer
 ```
 
 Если HEAD новее — сначала записать reverify delta. Затем прочитать `AGENTS.md`,
@@ -85,26 +85,20 @@ git rev-parse HEAD
 - observer recorded PASS for `site-utils.js`, `site.js`, floating cluster, MapEngine and committed MindMap app;
 - issue #58 closed completed; PR #131 (`942a79eb`) removed the temporary observer and trigger.
 
-## Current mandatory boundary — continue isolated fixes
+## Current mandatory boundary — source integrity next
 
-1. Revalidate and merge PR #120 (highlights dedupe/ARIA), then close issue #112.
-2. Recreate the verified pastoral-safety artifact as a clean separate PR.
-3. Proceed to source-integrity P1 and argument/source registry.
-4. Begin Reader R6 only as a separate state-platform lane; do not combine these tasks.
+1. Implement issue #140 (`NG-SOURCE-INTEGRITY-01`) as one bibliography/attribution PR.
+2. Build the source-role registry and arguments/alternatives architecture separately.
+3. Capture browser baselines before neutral comparison UI changes.
+4. Begin Reader R6 only as an independent state-platform lane; do not combine these tasks.
 
-## Prepared but not landed — highlights / issue #112 / PR #120
+## Highlights hardening — LANDED PR #120 (`26efb711`)
 
-The matrix previously claimed highlight dedupe/ARIA was fixed by PR #95, but current `main`
-does not contain it. The clean rebuilt implementation is in draft PR #120:
-
-- compact old duplicate saved quotes by normalized path + text;
-- prevent new same-page duplicates while preserving same text on another page;
-- preserve 200-item cap and storage schema;
-- synchronize dialog `aria-hidden` initial/open/close state;
-- dependency-free regression and full `validate:static-publication:light` already passed.
-
-PR #120 has already been rebuilt cleanly and synchronized with the release fixes. Revalidate from current
-`main`, merge only the permanent runtime/test/generated-revision diff, then close issue #112.
+- legacy same-page/same-text duplicates compact on read with newest stable ordering;
+- new same-page duplicates are blocked while identical text on another route remains valid;
+- 200-item cap and `gb-highlights-v1` compatibility are preserved;
+- dialog `aria-hidden=true → false → true` is synchronized across initial/open/close state;
+- dependency-free regression is permanent in Shared Files Guard; issue #112 closed.
 
 ## New verified Nagornaya lanes
 
@@ -116,14 +110,14 @@ PR #120 has already been rebuilt cleanly and synchronized with the release fixes
 - 11 newly exposed Baptist PageHead revision mismatches were regenerated mechanically; content/UI unchanged;
 - final Shared Files, Route Registry, Native Source, Editorial Metadata and Chromium/Firefox/WebKit checks passed.
 
-### P0 pastoral safety — `NG-PASTORAL-SAFETY-01`
+### P0 pastoral safety — `NG-PASTORAL-SAFETY-01` — LANDED PR #138 (`5650c96`)
 
-Part V currently says:
-
-> «Полное отсутствие плодов — смертный приговор вере» … «Мф 7:21 относится к нему».
-
-Preserve the warning against self-deception, but replace final-verdict/omniscient language with
-pastorally calibrated evidence and explicit safeguards. Separate owner-reviewable content PR.
+- Christ's warning against self-deception and the necessity of fruit remain explicit;
+- final-verdict wording and direct assignment of Matt 7:21 to a reader were removed;
+- persistent fruitlessness now triggers serious self-examination, repentance and pastoral support;
+- final judgment of the heart is explicitly reserved to Christ;
+- mechanical application to a contrite believer fighting sin is forbidden;
+- two Astro layers, committed shadow and permanent regression are synchronized.
 
 ### P1 source integrity — `NG-SOURCE-INTEGRITY-01`
 
@@ -132,7 +126,7 @@ pastorally calibrated evidence and explicit safeguards. Separate owner-reviewabl
 - `tmsj7h.pdf` is Nichols, TMSJ 7/2, pp. 213–239;
 - individual TMSJ author argument ≠ automatic institutional TMS position.
 
-Fix as a separate bibliography/attribution PR after P0s.
+Implement through issue #140 as the next isolated bibliography/attribution PR.
 
 ### P1 architecture — argument/source transparency
 
