@@ -1,0 +1,183 @@
+name: Temp current truth inventory
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout AuditRepo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout exact source merge
+        uses: actions/checkout@v4
+        with:
+          repository: FedorMilovanov/gb-is-my-strength
+          ref: f1946b523d45028c17e39ecf1dc6e9b361887401
+          path: source-f1946b52
+          fetch-depth: 1
+
+      - name: Inventory canonical truth and stale material
+        shell: bash
+        run: |
+          mkdir -p reports/current-truth
+          python3 - <<'PY'
+          from pathlib import Path
+          import json, re, subprocess
+
+          root = Path('.')
+          project = root / 'projects/gb-is-my-strength'
+          matrix_path = project / 'verified/MASTER_BUG_MATRIX.md'
+          next_path = project / 'NEXT_AGENT_PROMPT.md'
+          registry_path = root / 'PROJECT_REGISTRY.md'
+          matrix = matrix_path.read_text(encoding='utf-8')
+          next_prompt = next_path.read_text(encoding='utf-8')
+          registry = registry_path.read_text(encoding='utf-8')
+
+          section = None
+          rows = []
+          for line_no, line in enumerate(matrix.splitlines(), 1):
+              if line.startswith('## '): section = line[3:].strip()
+              if line.startswith('| ') and line.count('|') >= 3 and not line.startswith('|---'):
+                  cells = [cell.strip() for cell in line.strip('|').split('|')]
+                  if cells and cells[0] not in {'ID', 'Поле', 'Категория'}:
+                      rows.append({'line': line_no, 'section': section, 'id': cells[0], 'text': line})
+
+          open_rows = [r for r in rows if r['section'] and ('ОТКРЫТО' in r['section'] or 'P0/P1' in r['section'])]
+          fixed_inside_open = [r for r in open_rows if re.search(r'✅|FIXED|CLOSED', r['text'], re.I)]
+          ids = {}
+          for row in rows: ids.setdefault(row['id'], []).append(row['line'])
+          duplicate_ids = {key: value for key, value in ids.items() if len(value) > 1}
+
+          candidates = []
+          incoming = project / 'incoming'
+          patterns = [
+              'arena-agent-verifier-hardening-2026-07-05',
+              'fable-super-audit',
+              'arena-agent-karty-visual-baseline',
+          ]
+          if incoming.exists():
+              for path in incoming.rglob('*'):
+                  rel = path.relative_to(project).as_posix()
+                  if any(pattern in rel for pattern in patterns) or 'RESEARCH_gill-' in path.name:
+                      candidates.append(rel)
+
+          canonical = {
+              'matrix_source_heads': sorted(set(re.findall(r'(?i)(?:Source HEAD|source main|source)\D{0,20}`([0-9a-f]{7,40})', matrix))),
+              'next_source_heads': sorted(set(re.findall(r'(?i)(?:Source HEAD|source main|source)\D{0,20}`([0-9a-f]{7,40})', next_prompt))),
+              'matrix_mentions_issue153_active': 'NG-UI-EPISTEMIC-BIAS-01' in matrix and 'issue #153' in matrix,
+              'next_mentions_issue153_active': 'ACTIVE ISSUE #153' in next_prompt or 'Issue #153:' in next_prompt,
+              'project_registry_historical_comments': len(re.findall(r'<!-- 2026-', registry)),
+          }
+          stats = {}
+          for match in re.finditer(r'^\|\s*([^|]+?)\s*\|\s*\*?\*?(\d+)\*?\*?\s*\|$', matrix, re.M):
+              stats[match.group(1).strip()] = int(match.group(2))
+
+          report = {
+              'auditrepo_head': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(),
+              'canonical': canonical,
+              'heading_counts': re.findall(r'^## .*?\((\d+)\)', matrix, re.M),
+              'statistics': stats,
+              'matrix_rows': len(rows),
+              'open_rows_detected': len(open_rows),
+              'fixed_rows_inside_open_sections': fixed_inside_open,
+              'duplicate_ids': duplicate_ids,
+              'archive_candidates_existing': sorted(set(candidates)),
+              'incoming_file_count': sum(1 for p in incoming.rglob('*') if p.is_file()) if incoming.exists() else 0,
+              'archive_file_count': sum(1 for p in (project/'archive').rglob('*') if p.is_file()) if (project/'archive').exists() else 0,
+          }
+          out = Path('reports/current-truth/auditrepo-inventory.json')
+          out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+          Path('reports/current-truth/auditrepo-inventory.txt').write_text(
+              json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Run AuditRepo validators
+        shell: bash
+        run: |
+          set +e
+          python3 scripts/check_auditrepo_structure.py > reports/current-truth/check-structure.log 2>&1
+          echo $? > reports/current-truth/check-structure.exit
+          python3 scripts/validate_audit_repo.py > reports/current-truth/validate-audit-repo.log 2>&1
+          echo $? > reports/current-truth/validate-audit-repo.exit
+          if test -f scripts/check_matrix_coverage.py; then
+            python3 scripts/check_matrix_coverage.py > reports/current-truth/check-matrix-coverage.log 2>&1
+            echo $? > reports/current-truth/check-matrix-coverage.exit
+          fi
+          cat reports/current-truth/*.exit
+
+      - name: Verify exact source and legacy claims
+        shell: bash
+        run: |
+          cd source-f1946b52
+          {
+            echo "SOURCE_SHA=$(git rev-parse HEAD)"
+            echo "CSS_BYTES=$(find css -maxdepth 1 -type f -name '*.css' -print0 | xargs -0 cat | wc -c)"
+            echo '--- site-layered.css references ---'
+            grep -RIn --exclude-dir=.git --exclude='package-lock.json' 'site-layered\.css' . || true
+            echo '--- site-modules.js references ---'
+            grep -RIn --exclude-dir=.git --exclude='package-lock.json' 'site-modules\.js' . || true
+            echo '--- service worker precache mentions ---'
+            grep -RIn --exclude-dir=.git -E 'site-layered\.css|site-modules\.js' sw.js js scripts .github 2>/dev/null || true
+            echo '--- permanent semantic markers ---'
+            grep -RIn -E 'nagornaya-(part4-green-model|part4-thomas-model|matthew-luke-observation-matrix)' src/components scripts | head -50
+          } > ../reports/current-truth/source-f1946b52.log 2>&1
+
+      - name: Query exact deployment workflow runs
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl -fsSL \
+            -H 'Accept: application/vnd.github+json' \
+            'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/runs?head_sha=f1946b523d45028c17e39ecf1dc6e9b361887401&per_page=100' \
+            > reports/current-truth/source-actions-runs.json
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          data=json.loads(Path('reports/current-truth/source-actions-runs.json').read_text())
+          rows=[]
+          for run in data.get('workflow_runs',[]):
+              rows.append({key:run.get(key) for key in ['id','name','event','status','conclusion','head_sha','run_number','created_at','updated_at','html_url']})
+          Path('reports/current-truth/source-actions-summary.json').write_text(json.dumps(rows,indent=2),encoding='utf-8')
+          print(json.dumps(rows,indent=2))
+          PY
+
+      - name: Witness live semantic markers
+        shell: bash
+        run: |
+          set +e
+          base='https://gospod-bog.ru'
+          stamp="$(date +%s)"
+          curl -fsSL --retry 3 "$base/nagornaya/chast-1/?witness=$stamp" > /tmp/chast1.html
+          c1=$?
+          curl -fsSL --retry 3 "$base/nagornaya/chast-4/?witness=$stamp" > /tmp/chast4.html
+          c4=$?
+          {
+            echo "curl_chast1=$c1"
+            echo "curl_chast4=$c4"
+            for marker in nagornaya-matthew-luke-observation-matrix nagornaya-part4-green-model nagornaya-part4-thomas-model; do
+              if grep -Fq "$marker" /tmp/chast1.html /tmp/chast4.html; then echo "$marker=present"; else echo "$marker=absent"; fi
+            done
+            if grep -Fq 'Допустимо' /tmp/chast4.html; then echo 'old_verdict_marker=present'; else echo 'old_verdict_marker=absent'; fi
+            sha256sum /tmp/chast1.html /tmp/chast4.html
+          } | tee reports/current-truth/live-witness.log
+
+      - name: Upload current truth inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: current-truth-inventory-${{ github.run_id }}
+          path: reports/current-truth/**
+          if-no-files-found: error
+          retention-days: 7
