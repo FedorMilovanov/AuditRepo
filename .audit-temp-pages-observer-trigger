@@ -1,2 +1,3 @@
 target=aeae401d782d769dad582395f2045fa79c020f42
-poll=full-final
+premerge=15afc705ad021e5c0dd10437b4c1fc1b70464c36
+poll=trigger-aware-final
