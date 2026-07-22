@@ -1,0 +1,200 @@
+name: TEMP Reconcile Production Closure Main
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/_temp-production-closure-main-trigger'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: temp-reconcile-production-closure-main
+  cancel-in-progress: true
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Patch production closure SSOT
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('projects/gb-is-my-strength')
+          prompt_path = root / 'NEXT_AGENT_PROMPT.md'
+          matrix_path = root / 'verified/MASTER_BUG_MATRIX.md'
+          reverify_path = root / 'reverify/CURRENT_HEAD_REVERIFY_2026-07-22_942a79eb_production-closure.md'
+
+          prompt = prompt_path.read_text()
+          prompt = re.sub(
+              r'> \*\*Актуально на 2026-07-22\.[\s\S]*?> Новый verified intake:.*?\n',
+              '''> **Актуально на 2026-07-22. Source `main`: `942a79eb6d9bd7542e47470260dd3bbd69d533d8`.**
+> PR #125, #128 и #131 закрыли production boundary.
+> **Production подтверждён:** readiness `29909598796` и Pages `29910271842`
+> успешно опубликовали exact SHA `a0c9c025b05eccfce0ab4818da250d05d1b65da0`;
+> пять critical source/live blob сравнений PASS. Issue #58 закрыт.
+>
+> Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_942a79eb_production-closure.md`.
+> Verified Nagornaya intake: `incoming/gpt-5-6-nagornaya-deep-audit/2026-07-22/REPORT.md`.
+> Reader R6 Level A research: `FedorMilovanov/Research@291da43d`; source issue #127.
+''',
+              prompt,
+              count=1,
+          )
+          prompt = prompt.replace('# expect 2b67ee8f… or newer', '# expect 942a79eb… or newer')
+          prompt = re.sub(
+              r'### Deploy repair — PR #108/#109/#111/#115[\s\S]*?(?=## Current mandatory boundary)',
+              '''### Deploy closure — PR #108/#109/#111/#115/#125/#128/#131
+
+- stale revisions and Gill smoke were corrected without weakening gates;
+- PR #125 (`e4cf04ab`) made readiness the sole automatic deploy owner and pinned exact `workflow_run.head_sha`;
+- PR #128 (`a0c9c025`) synchronized the committed v191 service-worker baseline;
+- readiness `29909598796`: success;
+- Pages `29910271842`: success for exact `a0c9c025`;
+- production blobs: 5/5 PASS;
+- PR #131 (`942a79eb`) removed observer infrastructure;
+- issue #58 is closed completed.
+
+''',
+              prompt,
+              count=1,
+          )
+          prompt = re.sub(
+              r'## Current mandatory boundary — finish production witness[\s\S]*?(?=## Prepared but not landed)',
+              '''## Current mandatory boundary — Nagornaya runtime P0
+
+Production closure is complete. Do not reopen it without a fresh negative live witness.
+Next: refresh, verify and merge clean PR #126 (`NG-RUNTIME-BAR-ASSET-01`).
+Then rebuild pastoral safety #117 from fresh main because both lanes touch Part V shadow HTML.
+Keep runtime asset, pastoral wording, source integrity, epistemic UI and Reader R6 in separate PRs.
+
+''',
+              prompt,
+              count=1,
+          )
+          prompt = re.sub(
+              r'## Prepared but not landed — highlights / issue #112 / PR #113[\s\S]*?(?=## New verified Nagornaya lanes)',
+              '''## Prepared but not landed — highlights / issue #112
+
+PR #120 proves the logical dedupe/ARIA fix but is stale and must not be merged as-is.
+A clean current-main lane must preserve route-scoped duplicates, the 200-item cap and canonical overlay,
+regenerate revisions, add the permanent regression to Shared Files Guard, remove all temporary files,
+and close #112 only after merge.
+
+''',
+              prompt,
+              count=1,
+          )
+          prompt = re.sub(
+              r'### P0 — `NG-RUNTIME-BAR-ASSET-01`[\s\S]*?(?=### P0 pastoral safety)',
+              '''### P0 — `NG-RUNTIME-BAR-ASSET-01`
+
+Clean PR #126 is prepared: five native footers, five shadow pages, stronger arbitrary-`?v=`
+cache-bust matching, permanent source/Chromium contracts and 11 generated Baptist PageHead
+revision reconciliations. Refresh against `942a79eb`, require all standard CI green, then merge.
+
+''',
+              prompt,
+              count=1,
+          )
+          prompt = re.sub(
+              r'## Reader R6 after current P0 boundaries[\s\S]*?(?=## Other open P0/P1)',
+              '''## Reader R6 after current P0 boundaries
+
+Authority: source issue #127 and Level A Research commit `291da43d`.
+`BookmarkEngine` owns progress/resume/completed; `gb-favorites` owns explicit saved materials;
+`GBHighlights` owns quotations/notes. Sequence: route identity + migration contracts → progress façade
+→ favorites façade → notes index adapter → only then unified library UI. No new content engine.
+
+''',
+              prompt,
+              count=1,
+          )
+          prompt_path.write_text(prompt)
+
+          matrix = matrix_path.read_text()
+          matrix = re.sub(r'^\| Source HEAD \|.*$', '| Source HEAD | `942a79eb6d9bd7542e47470260dd3bbd69d533d8` (main; exact-SHA single-owner deploy, v191 baseline, production witness and observer cleanup landed) |', matrix, count=1, flags=re.M)
+          matrix = re.sub(r'^\| Deploy \|.*$', '| Deploy | 🟢 **PRODUCTION VERIFIED.** Readiness `29909598796` and Pages `29910271842` succeeded; exact deployed source `a0c9c025b05eccfce0ab4818da250d05d1b65da0`; 5/5 critical source/live SHA-256 comparisons PASS. Issue #58 closed; observer removed by PR #131 (`942a79eb`). |', matrix, count=1, flags=re.M)
+          matrix = re.sub(r'^\| Last reverify \|.*$', '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_942a79eb_production-closure.md` |', matrix, count=1, flags=re.M)
+          matrix = re.sub(r'^⚠️ Старые .*$', '⚠️ Старые deploy-формулировки ниже исторические. Current production authority: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_942a79eb_production-closure.md`.', matrix, count=1, flags=re.M)
+
+          closure_ids = ('PROD-STALE-DEPLOY-RED','CI-DEPLOY-SINGLE-OWNER-01','SW-CACHE-V191-BASELINE-01','PROD-OBSERVER-CLEANUP-01')
+          matrix = '\n'.join(line for line in matrix.splitlines() if not any(line.startswith(f'| {item} |') for item in closure_ids)) + '\n'
+          rows = [
+            '| PROD-OBSERVER-CLEANUP-01 | ✅ **FIXED 2026-07-22.** Temporary Pages observer and trigger removed after immutable live evidence; no product/runtime changes. | `942a79eb` PR#131 |',
+            '| SW-CACHE-V191-BASELINE-01 | ✅ **FIXED 2026-07-22.** Expected service-worker baseline synchronized to committed v191 without another runtime cache bump. | `a0c9c025` PR#128 |',
+            '| CI-DEPLOY-SINGLE-OWNER-01 | ✅ **FIXED 2026-07-22.** Every main push enters readiness once; Pages has no direct push owner and checks out exact successful `workflow_run.head_sha`. | `e4cf04ab` PR#125 |',
+            '| PROD-STALE-DEPLOY-RED | ✅ **CLOSED 2026-07-22 — PRODUCTION VERIFIED.** Readiness `29909598796`, Pages `29910271842`, exact `a0c9c025`, five source/live blob PASS; issue #58 closed. | deployed `a0c9c025`; cleanup `942a79eb` |',
+          ]
+          marker = '|---|---|---|\n'
+          pos = matrix.find(marker, matrix.find('## ✅ ЗАКРЫТО'))
+          if pos < 0: raise SystemExit('closed table marker missing')
+          pos += len(marker)
+          matrix = matrix[:pos] + '\n'.join(rows) + '\n' + matrix[pos:]
+
+          def count_rows(section):
+              return sum(1 for line in section.splitlines() if line.startswith('| ') and not line.startswith('| ID ') and not line.startswith('|---'))
+          closed = re.search(r'^## ✅ ЗАКРЫТО \(\d+\)', matrix, re.M)
+          next_h = re.search(r'^## ', matrix[closed.end():], re.M)
+          end = closed.end() + (next_h.start() if next_h else len(matrix))
+          count = count_rows(matrix[closed.end():end])
+          matrix = matrix[:closed.start()] + f'## ✅ ЗАКРЫТО ({count})' + matrix[closed.end():]
+          log = '''\n### 2026-07-22 — production closure `942a79eb`\n\n- PR #125: single automatic readiness owner + exact verified-SHA checkout.\n- PR #128: v191 SW baseline synchronized.\n- Readiness `29909598796` and Pages `29910271842` success for exact `a0c9c025`.\n- Five critical source/live blob comparisons PASS.\n- Issue #58 closed; PR #131 removed observer; current source `942a79eb`.\n- Next: PR #126 → pastoral #117 → highlights #112 → Reader R6 #127.\n'''
+          if 'production closure `942a79eb`' not in matrix:
+              matrix = matrix.rstrip() + '\n' + log
+          matrix_path.write_text(matrix)
+
+          reverify_path.write_text('''# CURRENT HEAD REVERIFY — production closure 2026-07-22
+
+## Exact truth
+
+- Current source after cleanup: `942a79eb6d9bd7542e47470260dd3bbd69d533d8`.
+- Exact deployed source: `a0c9c025b05eccfce0ab4818da250d05d1b65da0`.
+- Readiness `29909598796`: success.
+- Pages `29910271842` (#1625): success.
+- Issue #58: closed completed.
+
+## Live blob witness
+
+```text
+js/site-utils.js                          9b3e37815942 PASS
+js/site.js                                ce40e214e833 PASS
+js/floating-cluster-controller.js         3af716d98204 PASS
+karty/_engine/map-engine.js               a238fd662077 PASS
+konfessii/russkij-baptizm/_app/index.html d4f89fc048f5 PASS
+```
+
+PR #125 established one automatic readiness owner and exact `workflow_run.head_sha` checkout.
+PR #128 synchronized the v191 SW baseline without bumping `sw.js` again.
+PR #131 deleted exactly the temporary observer workflow and trigger.
+
+Next governed sequence: PR #126, pastoral #117, highlights #112, Reader R6 #127.
+''')
+          PY
+
+      - name: Validate
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          git diff --check
+
+      - name: Commit SSOT
+        run: |
+          git add projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+                  projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+                  projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-22_942a79eb_production-closure.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'reconcile(gb): record verified production closure'
+          git push origin HEAD:main
