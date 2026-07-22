@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download and extract materializer failure
+      - name: Download and extract materializer commit failure
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -21,16 +21,16 @@ jobs:
           curl -fsSL -L \
             -H 'Accept: application/vnd.github+json' \
             -H "Authorization: Bearer $GH_TOKEN" \
-            'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/jobs/89071247794/logs' \
+            'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/jobs/89072425083/logs' \
             > /tmp/premium-log/materializer.log
           python3 - <<'PY'
           from pathlib import Path
           lines=Path('/tmp/premium-log/materializer.log').read_text(encoding='utf-8-sig',errors='replace').splitlines()
           hits=[]
-          needles=['expected one Play anchor','insertion anchor drift','patched ','SystemExit','Traceback','##[error]']
+          needles=['/tmp/allowed.txt','/tmp/changed.txt','diff -u','git commit','git push','rejected','denied','error:','fatal:','##[error]']
           for i,line in enumerate(lines):
               if any(needle in line for needle in needles):
-                  start=max(0,i-12); end=min(len(lines),i+24)
+                  start=max(0,i-16); end=min(len(lines),i+40)
                   hits.append('\n'.join(lines[start:end]))
           Path('/tmp/premium-log/extract.txt').write_text('\n\n===== HIT =====\n\n'.join(hits),encoding='utf-8')
           print(Path('/tmp/premium-log/extract.txt').read_text())
