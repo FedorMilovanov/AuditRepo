@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Query readiness and Pages by workflow file
+      - name: Query readiness and Pages by exact source SHA
         shell: bash
         run: |
           mkdir -p /tmp/deploy-diagnosis
@@ -26,9 +26,9 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import json, urllib.request
-          target='f1946b523d45028c17e39ecf1dc6e9b361887401'
+          target='6fe9be4064ffa4d50549607f89a9d2ca2f42c2f5'
           root=Path('/tmp/deploy-diagnosis')
-          summary={}
+          summary={'target':target}
           for workflow in ['indexnow.yml','deploy.yml']:
               data=json.loads((root/f'{workflow}.runs.json').read_text())
               all_runs=[]
@@ -52,6 +52,31 @@ jobs:
           (root/'summary.json').write_text(json.dumps(summary,indent=2),encoding='utf-8')
           print(json.dumps(summary,indent=2))
           PY
+
+      - name: Witness live semantic and ARIA markers
+        shell: bash
+        run: |
+          set +e
+          stamp="$(date +%s)"
+          curl -fsSL --retry 3 "https://gospod-bog.ru/nagornaya/chast-1/?witness=$stamp" > /tmp/chast1.html
+          c1=$?
+          curl -fsSL --retry 3 "https://gospod-bog.ru/nagornaya/chast-4/?witness=$stamp" > /tmp/chast4.html
+          c4=$?
+          {
+            echo "curl_chast1=$c1"
+            echo "curl_chast4=$c4"
+            for marker in nagornaya-matthew-luke-observation-matrix nagornaya-part4-green-model nagornaya-part4-thomas-model; do
+              if grep -Fq "$marker" /tmp/chast1.html /tmp/chast4.html; then echo "$marker=present"; else echo "$marker=absent"; fi
+            done
+            for file in /tmp/chast1.html /tmp/chast4.html; do
+              if grep -Eq 'class="gb-ember nag-sidebar-ember"[^>]+aria-haspopup="dialog"[^>]+aria-expanded="false"' "$file"; then
+                echo "$(basename "$file")_premium_aria=present"
+              else
+                echo "$(basename "$file")_premium_aria=absent"
+              fi
+            done
+            sha256sum /tmp/chast1.html /tmp/chast4.html
+          } | tee /tmp/deploy-diagnosis/live-witness.log
 
       - name: Upload deploy diagnosis
         uses: actions/upload-artifact@v4
