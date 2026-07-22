@@ -1,0 +1,75 @@
+name: Temp archive superseded intake
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: temp-archive-superseded-intake-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Move explicitly superseded intake to archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          dest='projects/gb-is-my-strength/archive/stale/2026-07-23-current-truth-cleanup'
+          mkdir -p "$dest"
+          git mv \
+            projects/gb-is-my-strength/incoming/fable-super-audit/2026-07-06 \
+            "$dest/fable-super-audit-2026-07-06"
+          rmdir projects/gb-is-my-strength/incoming/fable-super-audit
+          git mv \
+            projects/gb-is-my-strength/incoming/arena-agent-verifier-hardening-2026-07-05/2026-07-05 \
+            "$dest/arena-agent-verifier-hardening-2026-07-05"
+          rmdir projects/gb-is-my-strength/incoming/arena-agent-verifier-hardening-2026-07-05
+          cat > "$dest/README.md" <<'EOF'
+          # Current-truth cleanup archive — 2026-07-23
+
+          This directory preserves evidence removed from active `incoming/` after explicit current-head verification.
+
+          Nothing was silently deleted. Items are archived only when their active conclusions were already promoted to a canonical ledger, validator or reverify record.
+
+          ## Archived intake
+
+          - `fable-super-audit-2026-07-06/` — audited source `14a49be8`; its verified conclusions were promoted to `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` and the intake README explicitly names that promotion.
+          - `arena-agent-verifier-hardening-2026-07-05/` — audited source `2f09c8fe` and old AuditRepo `77c23c4`; its validator/current-truth findings were absorbed into current AuditRepo scripts and later canonical matrix/NEXT work.
+          - `PROJECT_REGISTRY_SESSION_COMMENTS_2026-07-04.md` — historical registry comments demoted from the static project index under Single-Writer-Per-Fact.
+
+          ## Deliberately retained in active incoming
+
+          - Karty technical and visual evidence remains active until the Karty lane is reverified against current source.
+          - Raw Gill research evidence remains active until every referenced claim is indexed or separately archived with a provenance map.
+          EOF
+
+      - name: Validate AuditRepo after archive move
+        shell: bash
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          git diff --check
+
+      - name: Commit archive move
+        env:
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          git status --short
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'archive(audit): demote superseded intake from active truth'
+          git push origin HEAD:"$BRANCH"
