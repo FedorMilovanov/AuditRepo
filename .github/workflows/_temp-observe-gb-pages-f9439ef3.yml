@@ -20,8 +20,10 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Query exact source workflows and verify live origin
+        shell: bash
         run: |
-          python3 - <<'PY'
+          set -o pipefail
+          python3 - <<'PY' | tee gb-live-witness.txt
           import hashlib
           import json
           import pathlib
@@ -48,22 +50,6 @@ jobs:
               payload = json.load(response)
 
           runs = payload.get('workflow_runs', [])
-          print(f'TARGET_SHA={sha}')
-          print(f'RUN_COUNT={len(runs)}')
-          for run in sorted(runs, key=lambda item: item.get('created_at', '')):
-              print(json.dumps({
-                  'id': run.get('id'),
-                  'name': run.get('name'),
-                  'event': run.get('event'),
-                  'status': run.get('status'),
-                  'conclusion': run.get('conclusion'),
-                  'head_sha': run.get('head_sha'),
-                  'head_branch': run.get('head_branch'),
-                  'created_at': run.get('created_at'),
-                  'updated_at': run.get('updated_at'),
-                  'html_url': run.get('html_url'),
-              }, ensure_ascii=False, sort_keys=True))
-
           by_name = {}
           for run in runs:
               by_name.setdefault(run.get('name'), []).append(run)
@@ -72,13 +58,15 @@ jobs:
           if not readiness:
               raise SystemExit('READINESS_RUN_NOT_FOUND')
           readiness = readiness[0]
-          print(f"READINESS={readiness.get('id')}:{readiness.get('status')}:{readiness.get('conclusion')}")
-          if readiness.get('status') != 'completed' or readiness.get('conclusion') != 'success':
-              raise SystemExit('READINESS_NOT_SUCCESS')
           if not pages:
               raise SystemExit('PAGES_RUN_NOT_FOUND')
           pages = pages[0]
+
+          print(f'TARGET_SHA={sha}')
+          print(f"READINESS={readiness.get('id')}:{readiness.get('status')}:{readiness.get('conclusion')}")
           print(f"PAGES={pages.get('id')}:{pages.get('status')}:{pages.get('conclusion')}")
+          if readiness.get('status') != 'completed' or readiness.get('conclusion') != 'success':
+              raise SystemExit('READINESS_NOT_SUCCESS')
           if pages.get('status') != 'completed' or pages.get('conclusion') != 'success':
               raise SystemExit('PAGES_NOT_SUCCESS')
 
@@ -125,3 +113,12 @@ jobs:
               raise SystemExit('LIVE_ORIGIN_WITNESS_FAILED')
           print('LIVE_ORIGIN_WITNESS=PASS')
           PY
+
+      - name: Upload exact witness
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gb-live-witness-${{ github.run_id }}
+          path: gb-live-witness.txt
+          if-no-files-found: error
+          retention-days: 14
