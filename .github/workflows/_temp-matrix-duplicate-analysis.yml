@@ -1,0 +1,80 @@
+name: Temp matrix duplicate analysis
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Analyze active duplicate IDs without writing
+        shell: bash
+        run: |
+          mkdir -p reports/matrix-duplicates
+          python3 - <<'PY'
+          from pathlib import Path
+          import collections, difflib, json, re
+
+          path=Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          lines=path.read_text(encoding='utf-8').splitlines()
+          target_ids={'S-T-01','S-SEC-01','NG-DARK-04','NG-DARK-05','NG-A11Y-01','NG-MOBILE-01'}
+          section=None
+          rows=collections.defaultdict(list)
+          for line_no,line in enumerate(lines,1):
+              if line.startswith('## '): section=line[3:].strip()
+              if not (line.startswith('| ') and line.count('|')>=3 and not line.startswith('|---')): continue
+              cells=[cell.strip() for cell in line.strip('|').split('|')]
+              if cells and cells[0] in target_ids:
+                  rows[cells[0]].append({
+                      'line':line_no,
+                      'section':section,
+                      'cells':cells,
+                      'row':line,
+                  })
+
+          report={}
+          for ident,items in sorted(rows.items()):
+              pairs=[]
+              for i in range(len(items)):
+                  for j in range(i+1,len(items)):
+                      left=items[i]['row']; right=items[j]['row']
+                      pairs.append({
+                          'left_line':items[i]['line'],
+                          'right_line':items[j]['line'],
+                          'ratio':round(difflib.SequenceMatcher(None,left,right).ratio(),4),
+                          'literal':left==right,
+                          'same_section':items[i]['section']==items[j]['section'],
+                      })
+              report[ident]={'rows':items,'pairs':pairs}
+
+          out=Path('reports/matrix-duplicates/duplicate-analysis.json')
+          out.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+          md=['# Active duplicate-ID analysis','',
+              'Read-only report. No canonical row was changed. Literal duplicates may be consolidated; semantic collisions must be renamed.']
+          for ident,data in report.items():
+              md += ['',f'## {ident}']
+              for item in data['rows']:
+                  md += ['',f"- line {item['line']} — `{item['section']}`",'',item['row']]
+              md += ['','Pair comparison:']
+              for pair in data['pairs']:
+                  md.append(f"- {pair['left_line']} ↔ {pair['right_line']}: ratio={pair['ratio']}, literal={pair['literal']}, same_section={pair['same_section']}")
+          Path('reports/matrix-duplicates/duplicate-analysis.md').write_text('\n'.join(md)+'\n',encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          missing=target_ids-set(report)
+          if missing: raise SystemExit(f'Missing expected duplicate IDs: {sorted(missing)}')
+          PY
+
+      - name: Upload duplicate analysis
+        uses: actions/upload-artifact@v4
+        with:
+          name: matrix-duplicate-analysis-${{ github.run_id }}
+          path: reports/matrix-duplicates/**
+          if-no-files-found: error
+          retention-days: 7
