@@ -31,12 +31,12 @@ jobs:
           kept=[]
           section_rows=collections.Counter()
           section_open_rows=collections.defaultdict(list)
-          fixed_rx=re.compile(r'✅|\b(?:FIXED|RESOLVED|CLOSED|MERGED|FIXED-CURRENT)\b',re.I)
           header_rx=re.compile(r'^(##\s+.*(?:ОТКРЫТО|P0/P1).*?)\s*\((\d+)\)\s*$')
+          strip_count=lambda value: re.sub(r'\s*\(\d+\)\s*$','',value).strip()
 
           for line_no,line in enumerate(lines,1):
               if line.startswith('## '):
-                  section=line[3:].strip()
+                  section=strip_count(line[3:].strip())
                   open_section=('ОТКРЫТО' in section or section.startswith('🔴 P0/P1'))
               is_row=line.startswith('| ') and line.count('|')>=3 and not line.startswith('|---')
               if is_row:
@@ -44,7 +44,8 @@ jobs:
                   is_header=bool(cells and cells[0] in {'ID','Поле','Категория','Статус'})
                   if open_section and not is_header:
                       ident=cells[0] if cells else '<missing>'
-                      if fixed_rx.search(line):
+                      status_cell=cells[1] if len(cells)>1 else ''
+                      if status_cell.startswith('✅'):
                           removed.append({'line':line_no,'section':section,'id':ident,'row':line})
                           continue
                       section_rows[section]+=1
@@ -52,12 +53,11 @@ jobs:
               kept.append(line)
 
           normalized=[]
-          current_section=None
           for line in kept:
               m=header_rx.match(line)
               if m:
                   title=m.group(1)
-                  section_name=title[3:].strip()
+                  section_name=strip_count(title[3:].strip())
                   line=f'{title} ({section_rows.get(section_name,0)})'
               normalized.append(line)
 
@@ -67,16 +67,14 @@ jobs:
           Path('reports/matrix-normalization/candidate.diff').write_text(diff,encoding='utf-8')
 
           archive=['# Rows removed from open sections — proposal only','','Generated 2026-07-23. No canonical file was changed.','',
-                   'These rows are eligible for demotion because their current open-section text itself explicitly says FIXED/RESOLVED/CLOSED.']
+                   'These rows are eligible for demotion only because their status cell begins with an explicit ✅ marker.']
           for item in removed:
               archive += ['',f"## {item['id']}",f"- Original line: {item['line']}",f"- Original section: {item['section']}",'',item['row']]
           Path('reports/matrix-normalization/removed-fixed-rows.md').write_text('\n'.join(archive)+'\n',encoding='utf-8')
 
-          remaining=[]
-          for section,ids in section_open_rows.items():
-              for ident in ids: remaining.append((ident,section))
           grouped=collections.defaultdict(list)
-          for ident,section in remaining: grouped[ident].append(section)
+          for section,ids in section_open_rows.items():
+              for ident in ids: grouped[ident].append(section)
           duplicates={ident:sections for ident,sections in grouped.items() if len(sections)>1}
           report={
               'removed_fixed_rows':len(removed),
@@ -84,6 +82,10 @@ jobs:
               'open_section_counts':dict(section_rows),
               'remaining_duplicate_ids':duplicates,
               'remaining_open_rows':sum(section_rows.values()),
+              'safety':{
+                  'status_rule':'second table cell starts with ✅',
+                  'active_ar_idx_css_preserved':'AR-IDX-CSS-01' not in [item['id'] for item in removed],
+              },
           }
           Path('reports/matrix-normalization/report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
           print(json.dumps(report,ensure_ascii=False,indent=2))
