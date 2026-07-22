@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: temp-apply-gb-production-witness-pr
@@ -24,48 +23,20 @@ jobs:
           ref: reconcile/gb-production-witness-2026-07-22
           fetch-depth: 0
 
-      - name: Apply exact SSOT reconciliation
-        run: python3 scripts/_temp_run_reconcile_gb_production_witness.py
+      - name: Apply exact post-merge SSOT reconciliation
+        run: python3 scripts/_temp_finalize_gb_nagornaya_bar.py
 
-      - name: Publish scoped permanent files with diagnostics
-        id: publish
+      - name: Publish scoped permanent files
         shell: bash
         run: |
-          set +e
-          : > /tmp/audit-publish-diagnostic.txt
-          git diff --check >> /tmp/audit-publish-diagnostic.txt 2>&1
-          diff_rc=$?
+          set -euo pipefail
+          git diff --check
           git add \
             projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
             projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
-            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-22_942a79eb_production-witness.md
-          names=$(git diff --cached --name-only)
-          count=$(printf '%s\n' "$names" | sed '/^$/d' | wc -l)
-          {
-            echo "diff_check_rc=$diff_rc"
-            echo "staged_count=$count"
-            echo 'staged_files:'
-            printf '%s\n' "$names"
-          } >> /tmp/audit-publish-diagnostic.txt
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-22_9c3dec16_nagornaya-bar.md
+          test "$(git diff --cached --name-only | wc -l)" -eq 3
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'reconcile(gb): record exact production witness [audit-witness]' >> /tmp/audit-publish-diagnostic.txt 2>&1
-          commit_rc=$?
-          echo "commit_rc=$commit_rc" >> /tmp/audit-publish-diagnostic.txt
-          if [ "$commit_rc" -eq 0 ]; then
-            git push origin HEAD:reconcile/gb-production-witness-2026-07-22 >> /tmp/audit-publish-diagnostic.txt 2>&1
-            push_rc=$?
-          else
-            push_rc=99
-          fi
-          echo "push_rc=$push_rc" >> /tmp/audit-publish-diagnostic.txt
-          cat /tmp/audit-publish-diagnostic.txt
-          if [ "$diff_rc" -ne 0 ] || [ "$count" -ne 3 ] || [ "$commit_rc" -ne 0 ] || [ "$push_rc" -ne 0 ]; then
-            exit 1
-          fi
-
-      - name: Post diagnostic to PR
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh pr comment 21 --repo "$GITHUB_REPOSITORY" --body-file /tmp/audit-publish-diagnostic.txt
+          git commit -m 'reconcile(gb): record Nagornaya bar P0 merge [audit-witness]'
+          git push origin HEAD:reconcile/gb-production-witness-2026-07-22
