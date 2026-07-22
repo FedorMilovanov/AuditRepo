@@ -1,0 +1,45 @@
+name: TEMP Fix GB Registry Matrix Rows
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: ${{ github.event.pull_request.number == 25 && github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Apply exact row fix
+        run: python3 scripts/_temp_fix_registry_matrix_rows.py
+
+      - name: Remove temporary branch files
+        run: |
+          rm -f scripts/_temp_fix_registry_matrix_rows.py
+          rm -f .audit-temp-registry-matrix-row-trigger
+
+      - name: Validate and commit
+        run: |
+          test ! -e scripts/_temp_fix_registry_matrix_rows.py
+          test ! -e .audit-temp-registry-matrix-row-trigger
+          grep -q 'NG-SOURCE-REGISTRY-01 | ✅' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -q 'NG-EPISTEMIC-MODEL-LAYERS-01 | ✅' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          ! grep -q 'NG-SOURCE-REGISTRY-01 | 🟠' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          ! grep -q 'NG-EPISTEMIC-MODEL-LAYERS-01 | 🟠' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "fix(audit): place registry rows in closed matrix section"
+          git push origin HEAD:reconcile/gb-source-registry-2026-07-22
