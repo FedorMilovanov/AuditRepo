@@ -1,0 +1,183 @@
+name: Temp apply duplicate resolution
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: temp-apply-duplicate-resolution-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  normalize:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Resolve proven duplicate IDs
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import collections, json, re
+
+          matrix_path=Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          archive_path=Path('projects/gb-is-my-strength/archive/stale/2026-07-23-current-truth-cleanup/MATRIX_DUPLICATE_ROWS_RESOLVED.md')
+          original=matrix_path.read_text(encoding='utf-8')
+          lines=original.splitlines()
+          strip_count=lambda value: re.sub(r'\s*\(\d+\)\s*$','',value).strip()
+          target={'S-T-01','S-SEC-01','NG-DARK-04','NG-DARK-05','NG-A11Y-01','NG-MOBILE-01'}
+
+          section=None
+          found=collections.defaultdict(list)
+          for index,line in enumerate(lines):
+              if line.startswith('## '): section=strip_count(line[3:].strip())
+              if not (line.startswith('| ') and line.count('|')>=3 and not line.startswith('|---')): continue
+              cells=[cell.strip() for cell in line.strip('|').split('|')]
+              if cells and cells[0] in target:
+                  found[cells[0]].append({'index':index,'line_no':index+1,'section':section,'row':line,'cells':cells})
+
+          expected_counts={'S-T-01':3,'S-SEC-01':3,'NG-DARK-04':2,'NG-DARK-05':2,'NG-A11Y-01':2,'NG-MOBILE-01':2}
+          actual={key:len(found[key]) for key in target}
+          if actual != expected_counts:
+              raise SystemExit(f'Duplicate inventory drift: {actual}')
+
+          remove_indexes=set()
+          archive=[]
+          moved_rows=[]
+
+          for ident in ['S-T-01','S-SEC-01']:
+              items=found[ident]
+              p1=[item for item in items if item['section'].startswith('🟠 P1')]
+              p2=[item for item in items if item['section'].startswith('🟡 P2')]
+              if len(p1)!=1 or len(p2)!=2 or len({item['row'] for item in items})!=1:
+                  raise SystemExit(f'{ident}: expected one P1 row plus two literal P2 copies')
+              for item in p2:
+                  remove_indexes.add(item['index'])
+                  archive.append({**item,'action':'removed literal duplicate; canonical P1 row retained'})
+
+          for ident in ['NG-DARK-04','NG-DARK-05']:
+              items=found[ident]
+              if not all(item['section'].startswith('🟢 P3') for item in items):
+                  raise SystemExit(f'{ident}: expected both rows in P3')
+              keep=max(items,key=lambda item:len(item['row']))
+              for item in items:
+                  remove_indexes.add(item['index'])
+                  archive.append({**item,'action':'P3 duplicate removed; richer row moved to P2' if item is keep else 'shorter duplicate removed'})
+              moved_rows.append(keep['row'])
+
+          for ident in ['NG-A11Y-01','NG-MOBILE-01']:
+              items=found[ident]
+              if not all(item['section'].startswith('🟢 P3') for item in items):
+                  raise SystemExit(f'{ident}: expected both rows in P3')
+              keep=max(items,key=lambda item:len(item['row']))
+              for item in items:
+                  if item is keep: continue
+                  remove_indexes.add(item['index'])
+                  archive.append({**item,'action':'shorter duplicate removed; richer P3 row retained'})
+
+          output=[line for index,line in enumerate(lines) if index not in remove_indexes]
+
+          p2_heading=next(i for i,line in enumerate(output) if line.startswith('## 🟡 P2'))
+          p3_heading=next(i for i,line in enumerate(output) if line.startswith('## 🟢 P3'))
+          p2_last_row=max(i for i in range(p2_heading,p3_heading) if output[i].startswith('| ') and not output[i].startswith('|---'))
+          output[p2_last_row+1:p2_last_row+1]=moved_rows
+
+          # Recompute open-section heading counts from actual table rows.
+          section=None
+          counts=collections.Counter()
+          for line in output:
+              if line.startswith('## '): section=strip_count(line[3:].strip())
+              if line.startswith('| ') and line.count('|')>=3 and not line.startswith('|---'):
+                  cells=[cell.strip() for cell in line.strip('|').split('|')]
+                  if cells and cells[0] not in {'ID','Поле','Категория','Статус'} and section and ('ОТКРЫТО' in section or section.startswith('🔴 P0/P1')):
+                      counts[section]+=1
+
+          heading_rx=re.compile(r'^(##\s+.*(?:ОТКРЫТО|P0/P1).*?)\s*\((\d+)\)\s*$')
+          normalized=[]
+          for line in output:
+              match=heading_rx.match(line)
+              if match:
+                  title=match.group(1)
+                  key=strip_count(title[3:].strip())
+                  line=f'{title} ({counts.get(key,0)})'
+              normalized.append(line)
+          candidate='\n'.join(normalized)+'\n'
+
+          # Postconditions.
+          post=collections.Counter()
+          post_sections={}
+          section=None
+          for line in normalized:
+              if line.startswith('## '): section=strip_count(line[3:].strip())
+              if line.startswith('| ') and line.count('|')>=3 and not line.startswith('|---'):
+                  cells=[cell.strip() for cell in line.strip('|').split('|')]
+                  if cells and cells[0] in target:
+                      post[cells[0]]+=1
+                      post_sections[cells[0]]=section
+          if any(post[key]!=1 for key in target):
+              raise SystemExit(f'Duplicate resolution failed: {dict(post)}')
+          if not post_sections['NG-DARK-04'].startswith('🟡 P2') or not post_sections['NG-DARK-05'].startswith('🟡 P2'):
+              raise SystemExit('NG-DARK rows were not moved to P2')
+          expected_section_counts={
+              '🟠 P1 — ОТКРЫТО':98,
+              '🟡 P2 — ОТКРЫТО':36,
+              '🟢 P3 — ОТКРЫТО':58,
+          }
+          for key,value in expected_section_counts.items():
+              if counts.get(key)!=value:
+                  raise SystemExit(f'{key}: expected {value}, got {counts.get(key)}')
+
+          changed=candidate!=original
+          if changed:
+              matrix_path.write_text(candidate,encoding='utf-8')
+              archive_path.parent.mkdir(parents=True,exist_ok=True)
+              doc=['# Duplicate matrix rows resolved — 2026-07-23','',
+                   'This file preserves every row removed or relocated during duplicate-ID cleanup.','',
+                   '- Literal P2 copies of `S-T-01` and `S-SEC-01` were removed; the higher-severity P1 rows remain canonical.',
+                   '- Richer `NG-DARK-04/05` rows moved from P3 to P2 because their own wording classified them as P2.',
+                   '- Shorter `NG-A11Y-01` and `NG-MOBILE-01` duplicates were removed; richer P3 rows remain canonical.',
+                   '', 'No distinct finding was deleted.']
+              for item in archive:
+                  doc += ['',f"## {item['cells'][0]} — original line {item['line_no']}",f"- Section: {item['section']}",f"- Action: {item['action']}",'',item['row']]
+              archive_path.write_text('\n'.join(doc)+'\n',encoding='utf-8')
+          Path('/tmp/duplicate-resolution.changed').write_text('1' if changed else '0')
+          print(json.dumps({'changed':changed,'post':dict(post),'counts':dict(counts),'archived_rows':len(archive)},ensure_ascii=False,indent=2))
+          PY
+
+      - name: Validate AuditRepo
+        shell: bash
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          git diff --check
+
+      - name: Commit duplicate resolution
+        env:
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          if test "$(cat /tmp/duplicate-resolution.changed)" = 0; then
+            echo 'Duplicate resolution already applied.'
+            exit 0
+          fi
+          cat > /tmp/allowed.txt <<'EOF'
+          projects/gb-is-my-strength/archive/stale/2026-07-23-current-truth-cleanup/MATRIX_DUPLICATE_ROWS_RESOLVED.md
+          projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          EOF
+          sort -o /tmp/allowed.txt /tmp/allowed.txt
+          git add -A
+          git diff --cached --name-only | sort > /tmp/staged.txt
+          diff -u /tmp/allowed.txt /tmp/staged.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'cleanup(matrix): resolve duplicate finding IDs'
+          git push origin HEAD:"$BRANCH"
