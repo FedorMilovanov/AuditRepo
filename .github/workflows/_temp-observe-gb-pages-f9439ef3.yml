@@ -12,14 +12,14 @@ jobs:
   observe:
     if: ${{ github.event.pull_request.number == 23 }}
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 14
     steps:
       - name: Checkout observer request
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Query exact source workflows and verify live origin
+      - name: Wait for exact source workflows and verify live origin
         shell: bash
         run: |
           set -o pipefail
@@ -40,35 +40,44 @@ jobs:
           if len(sha) != 40:
               raise SystemExit(f'INVALID_TARGET_SHA={sha!r}')
 
-          api_url = f'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/runs?head_sha={sha}&per_page=100'
-          api_req = urllib.request.Request(api_url, headers={
-              'Accept': 'application/vnd.github+json',
-              'User-Agent': 'auditrepo-exact-sha-observer',
-              'X-GitHub-Api-Version': '2022-11-28',
-          })
-          with urllib.request.urlopen(api_req, timeout=30) as response:
-              payload = json.load(response)
+          def source_runs():
+              api_url = f'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/runs?head_sha={sha}&per_page=100'
+              api_req = urllib.request.Request(api_url, headers={
+                  'Accept': 'application/vnd.github+json',
+                  'User-Agent': 'auditrepo-exact-sha-observer',
+                  'X-GitHub-Api-Version': '2022-11-28',
+              })
+              with urllib.request.urlopen(api_req, timeout=30) as response:
+                  return json.load(response).get('workflow_runs', [])
 
-          runs = payload.get('workflow_runs', [])
-          by_name = {}
-          for run in runs:
-              by_name.setdefault(run.get('name'), []).append(run)
-          readiness = sorted(by_name.get('Metadata & IndexNow Readiness', []), key=lambda item: item.get('created_at', ''))[-1:]
-          pages = sorted(by_name.get('Deploy to GitHub Pages', []), key=lambda item: item.get('created_at', ''))[-1:]
-          if not readiness:
-              raise SystemExit('READINESS_RUN_NOT_FOUND')
-          readiness = readiness[0]
-          if not pages:
-              raise SystemExit('PAGES_RUN_NOT_FOUND')
-          pages = pages[0]
+          def latest(runs, name):
+              matching = [run for run in runs if run.get('name') == name]
+              return sorted(matching, key=lambda item: item.get('created_at', ''))[-1] if matching else None
+
+          deadline = time.time() + 660
+          readiness = None
+          pages = None
+          while time.time() < deadline:
+              runs = source_runs()
+              readiness = latest(runs, 'Metadata & IndexNow Readiness')
+              pages = latest(runs, 'Deploy to GitHub Pages')
+              readiness_state = f"{readiness.get('status')}:{readiness.get('conclusion')}" if readiness else 'not-found'
+              pages_state = f"{pages.get('status')}:{pages.get('conclusion')}" if pages else 'not-found'
+              print(f'POLL readiness={readiness_state} pages={pages_state}', flush=True)
+              if readiness and readiness.get('status') == 'completed' and readiness.get('conclusion') != 'success':
+                  raise SystemExit('READINESS_FAILED')
+              if pages and pages.get('status') == 'completed' and pages.get('conclusion') != 'success':
+                  raise SystemExit('PAGES_FAILED')
+              if (readiness and readiness.get('status') == 'completed' and readiness.get('conclusion') == 'success'
+                      and pages and pages.get('status') == 'completed' and pages.get('conclusion') == 'success'):
+                  break
+              time.sleep(20)
+          else:
+              raise SystemExit('EXACT_SHA_WORKFLOWS_TIMEOUT')
 
           print(f'TARGET_SHA={sha}')
-          print(f"READINESS={readiness.get('id')}:{readiness.get('status')}:{readiness.get('conclusion')}")
-          print(f"PAGES={pages.get('id')}:{pages.get('status')}:{pages.get('conclusion')}")
-          if readiness.get('status') != 'completed' or readiness.get('conclusion') != 'success':
-              raise SystemExit('READINESS_NOT_SUCCESS')
-          if pages.get('status') != 'completed' or pages.get('conclusion') != 'success':
-              raise SystemExit('PAGES_NOT_SUCCESS')
+          print(f"READINESS={readiness.get('id')}:completed:success")
+          print(f"PAGES={pages.get('id')}:completed:success")
 
           witness_url = f'https://gospod-bog.ru/nagornaya/istochniki/?witness={sha}-{int(time.time())}'
           live_req = urllib.request.Request(witness_url, headers={
