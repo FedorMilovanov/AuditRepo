@@ -1,0 +1,98 @@
+name: Temp matrix normalization proposal
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build conservative matrix cleanup proposal
+        shell: bash
+        run: |
+          mkdir -p reports/matrix-normalization
+          python3 - <<'PY'
+          from pathlib import Path
+          import collections, difflib, json, re
+
+          path=Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          original=path.read_text(encoding='utf-8')
+          lines=original.splitlines()
+          section=None
+          open_section=False
+          removed=[]
+          kept=[]
+          section_rows=collections.Counter()
+          section_open_rows=collections.defaultdict(list)
+          fixed_rx=re.compile(r'✅|\b(?:FIXED|RESOLVED|CLOSED|MERGED|FIXED-CURRENT)\b',re.I)
+          header_rx=re.compile(r'^(##\s+.*(?:ОТКРЫТО|P0/P1).*?)\s*\((\d+)\)\s*$')
+
+          for line_no,line in enumerate(lines,1):
+              if line.startswith('## '):
+                  section=line[3:].strip()
+                  open_section=('ОТКРЫТО' in section or section.startswith('🔴 P0/P1'))
+              is_row=line.startswith('| ') and line.count('|')>=3 and not line.startswith('|---')
+              if is_row:
+                  cells=[cell.strip() for cell in line.strip('|').split('|')]
+                  is_header=bool(cells and cells[0] in {'ID','Поле','Категория','Статус'})
+                  if open_section and not is_header:
+                      ident=cells[0] if cells else '<missing>'
+                      if fixed_rx.search(line):
+                          removed.append({'line':line_no,'section':section,'id':ident,'row':line})
+                          continue
+                      section_rows[section]+=1
+                      section_open_rows[section].append(ident)
+              kept.append(line)
+
+          normalized=[]
+          current_section=None
+          for line in kept:
+              m=header_rx.match(line)
+              if m:
+                  title=m.group(1)
+                  section_name=title[3:].strip()
+                  line=f'{title} ({section_rows.get(section_name,0)})'
+              normalized.append(line)
+
+          candidate='\n'.join(normalized)+'\n'
+          Path('reports/matrix-normalization/MASTER_BUG_MATRIX.candidate.md').write_text(candidate,encoding='utf-8')
+          diff=''.join(difflib.unified_diff(original.splitlines(True),candidate.splitlines(True),fromfile='MASTER_BUG_MATRIX.md',tofile='MASTER_BUG_MATRIX.candidate.md'))
+          Path('reports/matrix-normalization/candidate.diff').write_text(diff,encoding='utf-8')
+
+          archive=['# Rows removed from open sections — proposal only','','Generated 2026-07-23. No canonical file was changed.','',
+                   'These rows are eligible for demotion because their current open-section text itself explicitly says FIXED/RESOLVED/CLOSED.']
+          for item in removed:
+              archive += ['',f"## {item['id']}",f"- Original line: {item['line']}",f"- Original section: {item['section']}",'',item['row']]
+          Path('reports/matrix-normalization/removed-fixed-rows.md').write_text('\n'.join(archive)+'\n',encoding='utf-8')
+
+          remaining=[]
+          for section,ids in section_open_rows.items():
+              for ident in ids: remaining.append((ident,section))
+          grouped=collections.defaultdict(list)
+          for ident,section in remaining: grouped[ident].append(section)
+          duplicates={ident:sections for ident,sections in grouped.items() if len(sections)>1}
+          report={
+              'removed_fixed_rows':len(removed),
+              'removed_ids':[item['id'] for item in removed],
+              'open_section_counts':dict(section_rows),
+              'remaining_duplicate_ids':duplicates,
+              'remaining_open_rows':sum(section_rows.values()),
+          }
+          Path('reports/matrix-normalization/report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+
+      - name: Upload proposal
+        uses: actions/upload-artifact@v4
+        with:
+          name: matrix-normalization-proposal-${{ github.run_id }}
+          path: reports/matrix-normalization/**
+          if-no-files-found: error
+          retention-days: 7
