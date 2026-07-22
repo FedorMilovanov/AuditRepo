@@ -1,4 +1,4 @@
-name: Temp PremiumControls deploy log
+name: Temp archive failure extractor
 
 on:
   pull_request:
@@ -12,31 +12,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download and extract materializer commit failure
+      - name: Download and extract archive failure
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          mkdir -p /tmp/premium-log
+          mkdir -p /tmp/archive-log
           curl -fsSL -L \
             -H 'Accept: application/vnd.github+json' \
             -H "Authorization: Bearer $GH_TOKEN" \
-            'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/jobs/89072425083/logs' \
-            > /tmp/premium-log/materializer.log
+            'https://api.github.com/repos/FedorMilovanov/AuditRepo/actions/jobs/89073609133/logs' \
+            > /tmp/archive-log/archive.log
           python3 - <<'PY'
           from pathlib import Path
-          lines=Path('/tmp/premium-log/materializer.log').read_text(encoding='utf-8-sig',errors='replace').splitlines()
+          lines=Path('/tmp/archive-log/archive.log').read_text(encoding='utf-8-sig',errors='replace').splitlines()
           hits=[]
-          needles=['/tmp/allowed.txt','/tmp/changed.txt','diff -u','git commit','git push','rejected','denied','error:','fatal:','##[error]']
+          needles=['git mv','rmdir','cannot','No such file','Directory not empty','fatal:','##[error]']
           for i,line in enumerate(lines):
               if any(needle in line for needle in needles):
                   start=max(0,i-16); end=min(len(lines),i+40)
                   hits.append('\n'.join(lines[start:end]))
-          Path('/tmp/premium-log/extract.txt').write_text('\n\n===== HIT =====\n\n'.join(hits),encoding='utf-8')
-          print(Path('/tmp/premium-log/extract.txt').read_text())
+          Path('/tmp/archive-log/extract.txt').write_text('\n\n===== HIT =====\n\n'.join(hits),encoding='utf-8')
+          print(Path('/tmp/archive-log/extract.txt').read_text())
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: premium-controls-materializer-log-${{ github.run_id }}
-          path: /tmp/premium-log/**
+          name: archive-failure-log-${{ github.run_id }}
+          path: /tmp/archive-log/**
           retention-days: 3
