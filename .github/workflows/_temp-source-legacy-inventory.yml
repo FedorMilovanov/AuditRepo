@@ -56,9 +56,8 @@ jobs:
 
           python3 - <<'PY'
           from pathlib import Path
-          import collections, json, re, subprocess
+          import collections, json, subprocess
 
-          root=Path('.')
           tracked=subprocess.check_output(['git','ls-files'],text=True).splitlines()
           text_ext={'.html','.astro','.md','.mdx','.js','.mjs','.cjs','.ts','.tsx','.jsx','.json','.yml','.yaml','.css'}
           candidates=[]
@@ -79,7 +78,6 @@ jobs:
               if p.name.startswith('_temp') or p.name.startswith('temp-') or '/_temp' in f'/{low}' or '/temp-' in f'/{low}':
                   temp_files.append(rel)
 
-          # Build a conservative reference index from tracked text files.
           references=collections.defaultdict(list)
           for rel in tracked:
               p=Path(rel)
@@ -87,15 +85,12 @@ jobs:
               try: text=p.read_text(encoding='utf-8',errors='ignore')
               except Exception: continue
               for item in legacy_files:
-                  target=item['path']
-                  base=Path(target).name
+                  target=item['path']; base=Path(target).name
                   if target==rel: continue
-                  if target in text or base in text:
-                      references[target].append(rel)
+                  if target in text or base in text: references[target].append(rel)
 
           for item in legacy_files:
-              rel=item['path']
-              refs=sorted(set(references.get(rel,[])))
+              rel=item['path']; refs=sorted(set(references.get(rel,[])))
               candidates.append({**item,'referenceCount':len(refs),'references':refs[:30]})
 
           report={
@@ -128,11 +123,25 @@ jobs:
       - name: Run current source contracts
         shell: bash
         run: |
+          set +e
           cd source-current
-          node scripts/route-profile-contract-audit.js --strict > ../reports/source-legacy/route-profile-contract.log 2>&1
-          node scripts/check-workflows.js > ../reports/source-legacy/workflow-contract.log 2>&1
+          node -r ./scripts/install-effective-route-registry.js \
+            scripts/route-profile-contract-audit.js --strict \
+            > ../reports/source-legacy/route-profile-contract.log 2>&1
+          route_status=$?
+          node scripts/check-workflows.js \
+            > ../reports/source-legacy/workflow-contract.log 2>&1
+          workflow_status=$?
+          cd ..
+          printf '%s\n' "$route_status" > reports/source-legacy/route-profile-contract.exit
+          printf '%s\n' "$workflow_status" > reports/source-legacy/workflow-contract.exit
+          if test "$route_status" -ne 0 || test "$workflow_status" -ne 0; then
+            echo "Source contracts reported debt: route=$route_status workflows=$workflow_status"
+            exit 1
+          fi
 
       - name: Upload legacy inventory
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: source-legacy-inventory-${{ github.run_id }}
