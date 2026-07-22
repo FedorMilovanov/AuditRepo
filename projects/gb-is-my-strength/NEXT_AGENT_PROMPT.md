@@ -3,14 +3,14 @@
 > **SSOT по текущему состоянию source-проекта.** Карта документов и правило
 > Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-22. Source `main`: `2b67ee8f6ee788cb0457b5171e1d99d7afeff5dd`.**
-> PR #98, #101–#104, #106, #108, #109, #111 и #115 влиты.
-> Source/release gates после исправления Gill smoke снова готовы к linked readiness → Pages,
-> но **exact successful deployed SHA + production blob proof всё ещё pending**.
-> Не объявлять production-deploy подтверждённым без автоматического witness в issue #58.
+> **Актуально на 2026-07-22. Source `main`: `9c3dec16717563885c36a497f3b47ff793a6bf4f`.**
+> PR #119, #123, #125, #128 и #131 завершили release-транзакцию; PR #126 закрыл технический P0 Нагорной.
+> **Production подтверждена:** Pages run `29910271842` успешно развернул exact readiness-verified
+> SHA `a0c9c025b05eccfce0ab4818da250d05d1b65da0`; observer записал PASS для пяти
+> критических source/live blob. Issue #58 закрыта, временный observer удалён PR #131.
 >
 > Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
-> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_2b67ee8f_nagornaya-deep-audit.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_9c3dec16_nagornaya-bar.md`.
 > Новый verified intake: `incoming/gpt-5-6-nagornaya-deep-audit/2026-07-22/REPORT.md`.
 
 ## Перед началом
@@ -20,7 +20,7 @@ git fetch --all --prune
 git checkout main
 git pull --ff-only
 git rev-parse HEAD
-# expect 2b67ee8f… or newer
+# expect 9c3dec16… or newer
 ```
 
 Если HEAD новее — сначала записать reverify delta. Затем прочитать `AGENTS.md`,
@@ -74,32 +74,28 @@ git rev-parse HEAD
 - direct production lock writers запрещены;
 - Chromium/Firefox/WebKit matrix зелёная.
 
-### Deploy repair — PR #108/#109/#111/#115
+### Production release closure — PR #119/#123/#125/#128/#131
 
-- PR #108 (`869558cd`): 62 stale sources / 113 revision mismatches reconciled;
-- PR #109 (`1bbebc2d`): read-only revisions + workflow policy block every PR and direct deploy;
-- PR #111 (`372eba5b`): readiness workflow name correctly linked to Pages deploy, protected regression test;
-- failed Pages run `29870616511` reached only stale Gill mobile smoke assertion;
-- PR #115 (`2b67ee8f`) corrected that assertion; complete production-like build + Gill smoke passed;
-- production UI/runtime was not changed by #115;
-- exact successful Pages/blob witness remains required.
+- PR #119 (`41f78f43`) made readiness observe every `scripts/**` correction;
+- PR #123 (`a6a78304`) aligned the Gill frosted-bar audit with the canonical `.80/.78 + blur` contract;
+- PR #125 (`e4cf04ab`) established one automatic owner: every `main` push → readiness → Pages;
+- automatic deploy checks out exact `workflow_run.head_sha`, never moving `main`;
+- Pages run `29907735891` then exposed one final SW baseline drift, fixed by PR #128 (`a0c9c025`);
+- Pages run `29910271842` succeeded for exact `a0c9c025` through all publication/runtime/SW/deploy stages;
+- observer recorded PASS for `site-utils.js`, `site.js`, floating cluster, MapEngine and committed MindMap app;
+- issue #58 closed completed; PR #131 (`942a79eb`) removed the temporary observer and trigger.
 
-## Current mandatory boundary — finish production witness
+## Current mandatory boundary — continue isolated fixes
 
-Issue #58 is source-complete but must stay open until the observer records:
+1. Revalidate and merge PR #120 (highlights dedupe/ARIA), then close issue #112.
+2. Recreate the verified pastoral-safety artifact as a clean separate PR.
+3. Proceed to source-integrity P1 and argument/source registry.
+4. Begin Reader R6 only as a separate state-platform lane; do not combine these tasks.
 
-1. successful `Metadata & IndexNow Readiness`;
-2. successful `Deploy to GitHub Pages` with immutable run ID/head SHA;
-3. PASS for source-vs-production SHA-256 of `site-utils.js`, `site.js`, floating cluster,
-   MapEngine and committed MindMap app;
-4. cleanup of temporary observer/trigger through PR #110.
-
-Do not merge another functional `main` change before this evidence, otherwise the comparison target becomes ambiguous.
-
-## Prepared but not landed — highlights / issue #112 / PR #113
+## Prepared but not landed — highlights / issue #112 / PR #120
 
 The matrix previously claimed highlight dedupe/ARIA was fixed by PR #95, but current `main`
-does not contain it. The real implementation is in draft PR #113:
+does not contain it. The clean rebuilt implementation is in draft PR #120:
 
 - compact old duplicate saved quotes by normalized path + text;
 - prevent new same-page duplicates while preserving same text on another page;
@@ -107,22 +103,18 @@ does not contain it. The real implementation is in draft PR #113:
 - synchronize dialog `aria-hidden` initial/open/close state;
 - dependency-free regression and full `validate:static-publication:light` already passed.
 
-Before merge: rebuild a clean branch from current main, materialize only permanent files/generated
-revisions, rerun final guards, then merge and close issue #112. Do not resurrect temporary patchers.
+PR #120 has already been rebuilt cleanly and synchronized with the release fixes. Revalidate from current
+`main`, merge only the permanent runtime/test/generated-revision diff, then close issue #112.
 
 ## New verified Nagornaya lanes
 
-### P0 — `NG-RUNTIME-BAR-ASSET-01`
+### P0 — `NG-RUNTIME-BAR-ASSET-01` — LANDED PR #126 (`9c3dec16`)
 
-- all five Part I–V native footers use `nagornaya-bar-extras.js?v=1`;
-- canonical asset hash is `3c7e0bdd`;
-- `cache-bust.js` only recognizes eight-hex Astro revisions, so `v=1` bypasses the guard;
-- checked-in shadow HTML omits the asset;
-- asset file itself exists and `js/` is copied to dist.
-
-Prepare an isolated technical PR now, but do not merge before production witness. Required:
-revision regex hardening, five Astro refs, five shadow refs/regeneration, permanent source contract,
-production-like dist + 360/390 Chromium runtime witness.
+- five native Part I–V footers and five committed shadow pages load canonical `nagornaya-bar-extras.js?v=3c7e0bdd`;
+- Astro cache-bust matching now rejects arbitrary stale `?v=` values, including `v=1`;
+- permanent source/adversarial and 360/390/1024 Chromium contracts are wired into CI;
+- 11 newly exposed Baptist PageHead revision mismatches were regenerated mechanically; content/UI unchanged;
+- final Shared Files, Route Registry, Native Source, Editorial Metadata and Chromium/Firefox/WebKit checks passed.
 
 ### P0 pastoral safety — `NG-PASTORAL-SAFETY-01`
 
