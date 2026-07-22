@@ -3,16 +3,17 @@
 > **SSOT по текущему состоянию source-проекта.** Карта документов и правило
 > Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-22. Source `main`: `aeae401d782d769dad582395f2045fa79c020f42`.**
-> PR #145 закрыл all-route browser breadth и 320px-дефекты нативной Нагорной серии;
-> PR #148 закрыл красный pixel-parity gate через явную route-owned policy без ослабления общего допуска.
-> **Production подтверждена для exact SHA `aeae401d…`:** readiness `29938007259` → Pages `29938389078`;
-> exact main checks Shared Files `29938007239`, Visual Parity `29938007421`, Native Source `29938007246` — success.
-> Pre-merge exact head `15afc705…`: Route Registry `29937357579`, public browser matrix **3428/3428 PASS**.
-> Live-origin witness: AuditRepo run `29938751151`, artifact `8537627473` — 7/7 required, 2/2 forbidden-absence PASS.
+> **Актуально на 2026-07-22. Source `main`: `6c4106aecd35a3c95b09b041332d653f581ceb92`.**
+> PR #151 (`0a449118`) отдельно зафиксировал native visual ownership `/hard-texts/` без изменения UI;
+> PR #149 (`6c4106ae`) закрыл source-role registry и argument-layer architecture Нагорной.
+> **Production подтверждена для exact SHA `6c4106ae…`:** readiness `29950459817` → Pages `29951046722`;
+> exact main checks Shared Files `29950458595`, Visual Parity `29950458386`, Native Source `29950458319` — success.
+> Pre-merge exact head `e9d23d04…`: Route Registry/browser `29949641685`, **3428/3428 PASS**;
+> `/nagornaya/istochniki/` — 33/33 browser contracts и 0.000% desktop/mobile pixel diff.
+> Live/registry witness: AuditRepo run `29950695954`, artifact `8542524012` — registry 3 sources/6 claims, live 8/8 required and 2/2 stale markers absent.
 >
 > Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
-> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_aeae401d_reader-browser-visual-policy-production.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_6c4106ae_source-registry-production.md`.
 > Новый verified intake: `incoming/gpt-5-6-nagornaya-deep-audit/2026-07-22/REPORT.md`.
 
 ## Перед началом
@@ -22,7 +23,7 @@ git fetch --all --prune
 git checkout main
 git pull --ff-only
 git rev-parse HEAD
-# expect aeae401d… or newer
+# expect 6c4106ae… or newer
 ```
 
 Если HEAD новее — сначала записать reverify delta. Затем прочитать `AGENTS.md`,
@@ -91,7 +92,8 @@ git rev-parse HEAD
 - screenshot capture диагностический (`--warn-only`), sole verdict принадлежит policy validator;
 - default `legacy-diff` остаётся блокирующим на baseline + 0.5%; общий tolerance не повышен;
 - `native-contract` разрешён только явно, с причиной, минимум двумя уникальными реально существующими guard-файлами и agreement route-profile ↔ central policy;
-- `/articles/` и `/baptisty-rossii/` имеют explicit native ownership; retired legacy HTML не является их render owner;
+- `/articles/`, `/baptisty-rossii/` и `/hard-texts/` имеют explicit native ownership; retired legacy HTML не является их render owner;
+- Hard Texts ownership исправлен отдельно PR #151 после fresh 2.496% screenshot witness; причина и реальные guards синхронизированы в profile/policy;
 - `/karty/` остаётся `legacy-diff` с owner-reviewed 2.0506% mobile glyph-raster baseline;
 - fake guard, legacy regression, unknown mode, missing strict-new baseline и update без `OWNER_APPROVED=true` падают adversarial tests.
 
@@ -100,17 +102,17 @@ git rev-parse HEAD
 - PR #125 (`e4cf04ab`) установил одного automatic owner: `main` push → readiness → Pages;
 - automatic deploy checkout использует exact `workflow_run.head_sha`, не moving `main`;
 - исторический production witness `a0c9c025` / Pages `29910271842` остаётся архивной границей;
-- текущая граница — exact `aeae401d…`: readiness `29938007259`, Pages `29938389078`, все deploy/Pages/IndexNow stages green;
-- live origin после cache-buster содержит исправленные Green/Thomas/Nichols данные и bounded attribution, старые 49–74/universal wording отсутствуют;
-- immutable witness — AuditRepo run `29938751151`, artifact `8537627473`, live SHA-256 `b430cdc33e6245e2dc024e8c8802bb5e487bc19a862aee2601c122c72df3f561`.
+- текущая граница — exact `6c4106ae…`: readiness `29950459817`, Pages `29951046722`, все deploy/Pages/IndexNow stages green;
+- exact registry blob содержит 3 verified TMSJ sources, 6 claims, author/institution boundaries и neutral Green alternative; SHA-256 `d105f6a309de866550118a4fa7dcd8c8ec9cb8c3f0f68d23dd0c944a8845b4c2`;
+- live origin после cache-buster содержит все три exact PDF/page rows и bounded attribution; 8/8 required, 2/2 stale absent;
+- immutable witness — AuditRepo run `29950695954`, artifact `8542524012`, live SHA-256 `b430cdc33e6245e2dc024e8c8802bb5e487bc19a862aee2601c122c72df3f561`.
 
 ## Current mandatory boundary
 
-1. Issue #142: source-role and argument-layer registry pilot (`NG-SOURCE-REGISTRY-01` + `NG-EPISTEMIC-MODEL-LAYERS-01`).
-2. Capture/retain neutral-comparison browser baseline before epistemic UI redesign.
-3. Issue #146: replace remaining `routeType=unknown` / misnamed series-hub semantics explicitly, without creating another engine.
-4. Reader R6 / issue #59 remains an independent state-platform lane after the source-role boundary.
-5. Do not combine registry, UI redesign, route semantics and ReaderState in one PR.
+1. Issue #153: build the neutral comparison UI from the landed claim registry; preserve the exact 0.000% sources-page baseline and confessional series position.
+2. Issue #146: replace remaining `routeType=unknown` / misnamed series-hub semantics explicitly, without creating another engine.
+3. Reader R6 / issue #59 remains an independent state-platform lane.
+4. Do not combine epistemic UI, route semantics and ReaderState in one PR.
 
 ## Highlights hardening — LANDED PR #120 (`26efb711`)
 
@@ -148,21 +150,29 @@ git rev-parse HEAD
 - Part IV distinguishes Green's article, TMSJ venue and the series' confessional synthesis;
 - issue #140 closed after full publication and Native Source contracts passed.
 
-### P1 architecture — argument/source transparency — ACTIVE ISSUE #142
+### P1 source-role and argument-layer architecture — LANDED PR #149 (`6c4106ae`)
 
-Grouped lanes, not dozens of unrelated matrix rows:
+- canonical `data/nagornaya/source-registry.json` + JSON Schema own the Green/Thomas/Nichols pilot metadata;
+- verified PDF records require requested/resolved URL, exact object, pages, extraction method and last-checked date;
+- claim records label historical reconstruction, literary model and doctrinal synthesis, plus alternative, series position, confidence and change condition;
+- author-level articles cannot be promoted to institutional doctrine; `doesNotSupport` conflicts fail adversarial tests;
+- native sources page derives pilot rows from registry IDs without duplicating URLs/titles or changing visible output;
+- final PR head `e9d23d04` passed 3428/3428 browser contracts; sources route 33/33 and 0.000% desktop/mobile.
 
-- `NG-EPISTEMIC-MODEL-LAYERS-01`: label text → reconstruction → literary model → doctrine → application;
-- `NG-SOURCE-REGISTRY-01`: requested/final URL, exact object, author/title/pages, extraction/OCR, supported/not-supported claim, source role/tradition, author vs institution, last checked;
-- `NG-UI-EPISTEMIC-BIAS-01`: replace red/green answer-key styling for disputed models with neutral comparison; preserve browser baseline first.
+### P1 neutral comparison UI — ACTIVE ISSUE #153
 
-Use a reusable table/pattern:
+- consume registry/claim data or a typed projection; no second claim SSOT;
+- distinguish observation → reconstruction → model → doctrine → application visibly;
+- preserve a clear confessional series position while representing alternatives before the conclusion;
+- keep Reader R6 and route semantics out of this UI PR.
+
+Reusable contract:
 
 ```text
-claim | type | primary evidence | alternative | series position | confidence | change condition
+claim | layer | primary evidence | alternative | series position | confidence | limits | change condition
 ```
 
-The detailed C43–C94 checklist remains in the incoming report; do not inflate the canonical matrix with every sentence-level action.
+The detailed C43–C94 checklist remains evidence intake; do not inflate the canonical matrix with every sentence-level action.
 
 ## Reader R6 after current boundaries
 
