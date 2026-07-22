@@ -3,14 +3,14 @@
 > **SSOT по текущему состоянию source-проекта.** Карта документов и правило
 > Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-22. Source `main`: `5650c96b838c78dcda3c37b75f8e58755469cacd`.**
-> Release-транзакция завершена; PR #126 закрыл технический P0 Нагорной, PR #120 — highlights/ARIA, PR #138 — pastoral safety.
+> **Актуально на 2026-07-22. Source `main`: `2599844b2ea0962f728824564ed6fa6ef9592270`.**
+> Release-транзакция завершена; PR #126, #120, #138 и #141 закрыли технический, runtime, pastoral и source-integrity lanes Нагорной.
 > **Production подтверждена:** Pages run `29910271842` успешно развернул exact readiness-verified
 > SHA `a0c9c025b05eccfce0ab4818da250d05d1b65da0`; observer записал PASS для пяти
 > критических source/live blob. Issue #58 закрыта, временный observer удалён PR #131.
 >
 > Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
-> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_5650c96_highlights-pastoral.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_2599844b_source-integrity.md`.
 > Новый verified intake: `incoming/gpt-5-6-nagornaya-deep-audit/2026-07-22/REPORT.md`.
 
 ## Перед началом
@@ -20,7 +20,7 @@ git fetch --all --prune
 git checkout main
 git pull --ff-only
 git rev-parse HEAD
-# expect 5650c96… or newer
+# expect 2599844b… or newer
 ```
 
 Если HEAD новее — сначала записать reverify delta. Затем прочитать `AGENTS.md`,
@@ -85,12 +85,12 @@ git rev-parse HEAD
 - observer recorded PASS for `site-utils.js`, `site.js`, floating cluster, MapEngine and committed MindMap app;
 - issue #58 closed completed; PR #131 (`942a79eb`) removed the temporary observer and trigger.
 
-## Current mandatory boundary — source integrity next
+## Current mandatory boundary — source-role architecture next
 
-1. Implement issue #140 (`NG-SOURCE-INTEGRITY-01`) as one bibliography/attribution PR.
-2. Build the source-role registry and arguments/alternatives architecture separately.
-3. Capture browser baselines before neutral comparison UI changes.
-4. Begin Reader R6 only as an independent state-platform lane; do not combine these tasks.
+1. Implement issue #142 (`NG-SOURCE-REGISTRY-01` + `NG-EPISTEMIC-MODEL-LAYERS-01`) as a data/schema pilot.
+2. Capture browser baselines before neutral comparison UI changes.
+3. Keep Reader R6 issue #59 as an independent state-platform lane.
+4. Do not combine registry, UI redesign and ReaderState in one PR.
 
 ## Highlights hardening — LANDED PR #120 (`26efb711`)
 
@@ -119,16 +119,17 @@ git rev-parse HEAD
 - mechanical application to a contrite believer fighting sin is forbidden;
 - two Astro layers, committed shadow and permanent regression are synchronized.
 
-### P1 source integrity — `NG-SOURCE-INTEGRITY-01`
+### P1 source integrity — `NG-SOURCE-INTEGRITY-01` — LANDED PR #141 (`2599844b`)
 
-- Green is TMSJ 12/1 **pp. 49–68**, not 49–74;
-- Thomas Jesus Seminar is `tmsj7d.pdf`, TMSJ 7/1, pp. 75–105;
-- `tmsj7h.pdf` is Nichols, TMSJ 7/2, pp. 213–239;
-- individual TMSJ author argument ≠ automatic institutional TMS position.
+- Green / `tmsj12d.pdf` corrected to TMSJ 12/1, pp. 49–68;
+- Thomas Jesus Seminar linked to exact `tmsj7d.pdf`, TMSJ 7/1, pp. 75–105;
+- Nichols Davidic Kingdom linked to exact `tmsj7h.pdf`, TMSJ 7/2, pp. 213–239;
+- a permanent negative contract forbids Jesus Seminar metadata resolving to `tmsj7h.pdf`;
+- universal verification wording is bounded by available objects/last-checked state;
+- Part IV distinguishes Green's article, TMSJ venue and the series' confessional synthesis;
+- issue #140 closed after full publication and Native Source contracts passed.
 
-Implement through issue #140 as the next isolated bibliography/attribution PR.
-
-### P1 architecture — argument/source transparency
+### P1 architecture — argument/source transparency — ACTIVE ISSUE #142
 
 Grouped lanes, not dozens of unrelated matrix rows:
 
