@@ -21,7 +21,18 @@ jobs:
           fetch-depth: 0
 
       - name: Apply exact SSOT finalizer
-        run: python3 scripts/_temp_finalize_gb_source_registry.py
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/_temp_finalize_gb_source_registry.py')
+          text = path.read_text(encoding='utf-8')
+          old = 'matrix = matrix.rstrip() + session + "\\n"'
+          new = 'matrix = matrix.rstrip() + session.rstrip() + "\\n"'
+          if text.count(old) != 1:
+              raise SystemExit(f'expected one EOF-normalization target, found {text.count(old)}')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+          python3 scripts/_temp_finalize_gb_source_registry.py
 
       - name: Remove temporary branch infrastructure
         run: |
@@ -68,8 +79,10 @@ jobs:
 
       - name: Commit SSOT and cleanup
         run: |
+          rm -f finalizer-diagnostics.txt
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
+          git diff --cached --check
           git commit -m "reconcile(gb): record source registry production closure"
           git push origin HEAD:reconcile/gb-source-registry-2026-07-22
