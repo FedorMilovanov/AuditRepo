@@ -3,14 +3,14 @@
 > **SSOT по текущему состоянию source-проекта.** Карта документов и правило
 > Single-Writer-Per-Fact: [`DOC_MAP.md`](./DOC_MAP.md).
 >
-> **Актуально на 2026-07-22. Source `main`: `942a79eb6d9bd7542e47470260dd3bbd69d533d8`.**
-> PR #119, #123, #125, #128 и #131 завершили release-транзакцию после Reader R5/special overlays.
+> **Актуально на 2026-07-22. Source `main`: `9c3dec16717563885c36a497f3b47ff793a6bf4f`.**
+> PR #119, #123, #125, #128 и #131 завершили release-транзакцию; PR #126 закрыл технический P0 Нагорной.
 > **Production подтверждена:** Pages run `29910271842` успешно развернул exact readiness-verified
 > SHA `a0c9c025b05eccfce0ab4818da250d05d1b65da0`; observer записал PASS для пяти
 > критических source/live blob. Issue #58 закрыта, временный observer удалён PR #131.
 >
 > Авторитет по точечным статусам: `verified/MASTER_BUG_MATRIX.md`.
-> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_942a79eb_production-witness.md`.
+> Current reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-07-22_9c3dec16_nagornaya-bar.md`.
 > Новый verified intake: `incoming/gpt-5-6-nagornaya-deep-audit/2026-07-22/REPORT.md`.
 
 ## Перед началом
@@ -20,7 +20,7 @@ git fetch --all --prune
 git checkout main
 git pull --ff-only
 git rev-parse HEAD
-# expect 942a79eb… or newer
+# expect 9c3dec16… or newer
 ```
 
 Если HEAD новее — сначала записать reverify delta. Затем прочитать `AGENTS.md`,
@@ -85,12 +85,12 @@ git rev-parse HEAD
 - observer recorded PASS for `site-utils.js`, `site.js`, floating cluster, MapEngine and committed MindMap app;
 - issue #58 closed completed; PR #131 (`942a79eb`) removed the temporary observer and trigger.
 
-## Current mandatory boundary — land isolated prepared P0 fixes
+## Current mandatory boundary — continue isolated fixes
 
-1. Revalidate and merge PR #126 (`NG-RUNTIME-BAR-ASSET-01`) from current main.
-2. Revalidate and merge PR #120 (highlights dedupe/ARIA), then close issue #112.
-3. Recreate the verified pastoral-safety artifact as a clean separate PR.
-4. Only then proceed to source-integrity P1 and Reader R6; do not combine these lanes.
+1. Revalidate and merge PR #120 (highlights dedupe/ARIA), then close issue #112.
+2. Recreate the verified pastoral-safety artifact as a clean separate PR.
+3. Proceed to source-integrity P1 and argument/source registry.
+4. Begin Reader R6 only as a separate state-platform lane; do not combine these tasks.
 
 ## Prepared but not landed — highlights / issue #112 / PR #120
 
@@ -108,17 +108,13 @@ PR #120 has already been rebuilt cleanly and synchronized with the release fixes
 
 ## New verified Nagornaya lanes
 
-### P0 — `NG-RUNTIME-BAR-ASSET-01`
+### P0 — `NG-RUNTIME-BAR-ASSET-01` — LANDED PR #126 (`9c3dec16`)
 
-- all five Part I–V native footers use `nagornaya-bar-extras.js?v=1`;
-- canonical asset hash is `3c7e0bdd`;
-- `cache-bust.js` only recognizes eight-hex Astro revisions, so `v=1` bypasses the guard;
-- checked-in shadow HTML omits the asset;
-- asset file itself exists and `js/` is copied to dist.
-
-Clean draft PR #126 already implements this technical P0 and passed source, adversarial, production-like
-and Chromium checks. It is now synchronized with the v191 SW baseline; refresh from `942a79eb`, rerun
-standard CI, then merge before other Nagornaya content or UI work.
+- five native Part I–V footers and five committed shadow pages load canonical `nagornaya-bar-extras.js?v=3c7e0bdd`;
+- Astro cache-bust matching now rejects arbitrary stale `?v=` values, including `v=1`;
+- permanent source/adversarial and 360/390/1024 Chromium contracts are wired into CI;
+- 11 newly exposed Baptist PageHead revision mismatches were regenerated mechanically; content/UI unchanged;
+- final Shared Files, Route Registry, Native Source, Editorial Metadata and Chromium/Firefox/WebKit checks passed.
 
 ### P0 pastoral safety — `NG-PASTORAL-SAFETY-01`
 
