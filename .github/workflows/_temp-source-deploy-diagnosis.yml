@@ -1,0 +1,62 @@
+name: Temp source deploy diagnosis
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Query readiness and Pages by workflow file
+        shell: bash
+        run: |
+          mkdir -p /tmp/deploy-diagnosis
+          for workflow in indexnow.yml deploy.yml; do
+            curl -fsSL -H 'Accept: application/vnd.github+json' \
+              "https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/workflows/$workflow/runs?per_page=100" \
+              > "/tmp/deploy-diagnosis/$workflow.runs.json"
+          done
+          python3 - <<'PY'
+          from pathlib import Path
+          import json, urllib.request
+          target='f1946b523d45028c17e39ecf1dc6e9b361887401'
+          root=Path('/tmp/deploy-diagnosis')
+          summary={}
+          for workflow in ['indexnow.yml','deploy.yml']:
+              data=json.loads((root/f'{workflow}.runs.json').read_text())
+              all_runs=[]
+              for run in data.get('workflow_runs',[]):
+                  row={key:run.get(key) for key in ['id','name','event','status','conclusion','head_sha','head_branch','run_number','created_at','updated_at','html_url','jobs_url']}
+                  all_runs.append(row)
+              exact=[r for r in all_runs if r['head_sha']==target]
+              summary[workflow]={'exact':exact,'latest':all_runs[:10]}
+              for run in exact:
+                  req=urllib.request.Request(run['jobs_url'],headers={'Accept':'application/vnd.github+json','User-Agent':'AuditRepo-current-truth'})
+                  with urllib.request.urlopen(req) as response:
+                      jobs=json.load(response)
+                  normalized=[]
+                  for job in jobs.get('jobs',[]):
+                      normalized.append({
+                          'id':job.get('id'),'name':job.get('name'),'status':job.get('status'),'conclusion':job.get('conclusion'),
+                          'started_at':job.get('started_at'),'completed_at':job.get('completed_at'),
+                          'steps':[{k:step.get(k) for k in ['name','status','conclusion','number']} for step in job.get('steps',[])]
+                      })
+                  (root/f"{workflow}.{run['id']}.jobs.json").write_text(json.dumps(normalized,indent=2),encoding='utf-8')
+          (root/'summary.json').write_text(json.dumps(summary,indent=2),encoding='utf-8')
+          print(json.dumps(summary,indent=2))
+          PY
+
+      - name: Upload deploy diagnosis
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-deploy-diagnosis-${{ github.run_id }}
+          path: /tmp/deploy-diagnosis/**
+          if-no-files-found: error
+          retention-days: 3
