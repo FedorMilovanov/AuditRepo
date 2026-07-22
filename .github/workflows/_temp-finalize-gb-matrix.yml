@@ -1,0 +1,38 @@
+name: TEMP Finalize GB Matrix
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    if: ${{ github.event.pull_request.number == 23 }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Apply exact matrix finalizer
+        run: python3 scripts/_temp_finalize_gb_matrix.py
+
+      - name: Commit final matrix
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          if git diff --cached --quiet; then
+            echo "Matrix already finalized"
+            exit 0
+          fi
+          git commit -m "docs(gb): finalize reader and visual production matrix"
+          git push origin "HEAD:${HEAD_REF}"
