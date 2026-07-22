@@ -1,0 +1,48 @@
+name: TEMP Finalize GB Source Registry SSOT
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    if: ${{ github.event.pull_request.number == 25 && github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Apply exact SSOT finalizer
+        run: python3 scripts/_temp_finalize_gb_source_registry.py
+
+      - name: Remove temporary branch infrastructure
+        run: |
+          rm -f scripts/_temp_finalize_gb_source_registry.py
+          rm -f .audit-temp-source-registry-witness-trigger
+          rm -f .audit-temp-source-registry-finalize-trigger
+
+      - name: Validate expected permanent diff
+        run: |
+          test -f projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+          test -f projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          test -f projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-22_6c4106ae_source-registry-production.md
+          test ! -e scripts/_temp_finalize_gb_source_registry.py
+          test ! -e .audit-temp-source-registry-witness-trigger
+          test ! -e .audit-temp-source-registry-finalize-trigger
+          git diff --check
+
+      - name: Commit SSOT and cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "reconcile(gb): record source registry production closure"
+          git push origin HEAD:reconcile/gb-source-registry-2026-07-22
