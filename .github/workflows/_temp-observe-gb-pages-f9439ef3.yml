@@ -1,0 +1,61 @@
+name: TEMP Observe GB Pages f9439ef3
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  observe:
+    if: ${{ github.event.pull_request.number == 23 }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Query exact source workflow runs
+        env:
+          TARGET_SHA: f9439ef303601e1dc68b5c40ff4d0e1ec8db6a3e
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+
+          sha = os.environ['TARGET_SHA']
+          url = f'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/runs?head_sha={sha}&per_page=100'
+          req = urllib.request.Request(url, headers={
+              'Accept': 'application/vnd.github+json',
+              'User-Agent': 'auditrepo-exact-sha-observer',
+              'X-GitHub-Api-Version': '2022-11-28',
+          })
+          with urllib.request.urlopen(req, timeout=30) as response:
+              payload = json.load(response)
+
+          runs = payload.get('workflow_runs', [])
+          print(f'TARGET_SHA={sha}')
+          print(f'RUN_COUNT={len(runs)}')
+          for run in sorted(runs, key=lambda item: item.get('created_at', '')):
+              print(json.dumps({
+                  'id': run.get('id'),
+                  'name': run.get('name'),
+                  'event': run.get('event'),
+                  'status': run.get('status'),
+                  'conclusion': run.get('conclusion'),
+                  'head_sha': run.get('head_sha'),
+                  'head_branch': run.get('head_branch'),
+                  'created_at': run.get('created_at'),
+                  'updated_at': run.get('updated_at'),
+                  'html_url': run.get('html_url'),
+              }, ensure_ascii=False, sort_keys=True))
+
+          names = {run.get('name'): run for run in runs}
+          readiness = names.get('Metadata & IndexNow Readiness')
+          deploy = names.get('Deploy to GitHub Pages')
+          if not readiness:
+              raise SystemExit('READINESS_RUN_NOT_FOUND')
+          print(f"READINESS={readiness.get('id')}:{readiness.get('status')}:{readiness.get('conclusion')}")
+          if deploy:
+              print(f"PAGES={deploy.get('id')}:{deploy.get('status')}:{deploy.get('conclusion')}")
+          else:
+              print('PAGES=NOT_FOUND')
+          PY
