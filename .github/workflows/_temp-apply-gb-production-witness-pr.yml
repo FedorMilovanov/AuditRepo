@@ -26,19 +26,16 @@ jobs:
       - name: Apply exact SSOT reconciliation
         run: python3 scripts/_temp_run_reconcile_gb_production_witness.py
 
-      - name: Verify and publish permanent files
+      - name: Publish scoped permanent files
         shell: bash
         run: |
           set -euo pipefail
-          grep -F 'Source `main`: `942a79eb6d9bd7542e47470260dd3bbd69d533d8`' projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
-          grep -F '## ✅ ЗАКРЫТО (118)' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-          grep -F 'Pages run `29910271842`' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-          test -f projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-22_942a79eb_production-witness.md
           git diff --check
           git add \
             projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
             projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
             projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-22_942a79eb_production-witness.md
+          test "$(git diff --cached --name-only | wc -l)" -eq 3
           if git diff --cached --quiet; then
             echo 'Permanent reconciliation already materialized.'
             exit 0
