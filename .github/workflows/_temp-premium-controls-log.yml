@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download and extract failed deploy step
+      - name: Download and extract materializer failure
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -21,21 +21,22 @@ jobs:
           curl -fsSL -L \
             -H 'Accept: application/vnd.github+json' \
             -H "Authorization: Bearer $GH_TOKEN" \
-            'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/jobs/89062394575/logs' \
-            > /tmp/premium-log/deploy.log
+            'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/jobs/89071247794/logs' \
+            > /tmp/premium-log/materializer.log
           python3 - <<'PY'
           from pathlib import Path
-          lines=Path('/tmp/premium-log/deploy.log').read_text(encoding='utf-8-sig',errors='replace').splitlines()
+          lines=Path('/tmp/premium-log/materializer.log').read_text(encoding='utf-8-sig',errors='replace').splitlines()
           hits=[]
+          needles=['expected one Play anchor','insertion anchor drift','patched ','SystemExit','Traceback','##[error]']
           for i,line in enumerate(lines):
-              if 'PremiumControls' in line or 'premium-controls' in line or '##[error]' in line:
-                  start=max(0,i-12); end=min(len(lines),i+30)
+              if any(needle in line for needle in needles):
+                  start=max(0,i-12); end=min(len(lines),i+24)
                   hits.append('\n'.join(lines[start:end]))
           Path('/tmp/premium-log/extract.txt').write_text('\n\n===== HIT =====\n\n'.join(hits),encoding='utf-8')
           print(Path('/tmp/premium-log/extract.txt').read_text())
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: premium-controls-deploy-log-${{ github.run_id }}
+          name: premium-controls-materializer-log-${{ github.run_id }}
           path: /tmp/premium-log/**
           retention-days: 3
