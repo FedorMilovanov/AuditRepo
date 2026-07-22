@@ -14,10 +14,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Query readiness and Pages by exact source SHA
+      - name: Query readiness and Pages for current source main
         shell: bash
         run: |
           mkdir -p /tmp/deploy-diagnosis
+          curl -fsSL -H 'Accept: application/vnd.github+json' \
+            'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/commits/main' \
+            > /tmp/deploy-diagnosis/source-main.json
           for workflow in indexnow.yml deploy.yml; do
             curl -fsSL -H 'Accept: application/vnd.github+json' \
               "https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/actions/workflows/$workflow/runs?per_page=100" \
@@ -26,9 +29,21 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import json, urllib.request
-          target='6fe9be4064ffa4d50549607f89a9d2ca2f42c2f5'
           root=Path('/tmp/deploy-diagnosis')
-          summary={'target':target}
+          target=json.loads((root/'source-main.json').read_text())['sha']
+          required_ancestor='6fe9be4064ffa4d50549607f89a9d2ca2f42c2f5'
+          compare_url=f'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/compare/{required_ancestor}...{target}'
+          req=urllib.request.Request(compare_url,headers={'Accept':'application/vnd.github+json','User-Agent':'AuditRepo-current-truth'})
+          with urllib.request.urlopen(req) as response:
+              comparison=json.load(response)
+          summary={
+              'target':target,
+              'required_ancestor':required_ancestor,
+              'ancestor_status':comparison.get('status'),
+              'ahead_by':comparison.get('ahead_by'),
+          }
+          if comparison.get('status') not in {'ahead','identical'}:
+              raise SystemExit(f'Release fix {required_ancestor} is not an ancestor of current main {target}')
           for workflow in ['indexnow.yml','deploy.yml']:
               data=json.loads((root/f'{workflow}.runs.json').read_text())
               all_runs=[]
@@ -36,7 +51,7 @@ jobs:
                   row={key:run.get(key) for key in ['id','name','event','status','conclusion','head_sha','head_branch','run_number','created_at','updated_at','html_url','jobs_url']}
                   all_runs.append(row)
               exact=[r for r in all_runs if r['head_sha']==target]
-              summary[workflow]={'exact':exact,'latest':all_runs[:10]}
+              summary[workflow]={'exact':exact,'latest':all_runs[:12]}
               for run in exact:
                   req=urllib.request.Request(run['jobs_url'],headers={'Accept':'application/vnd.github+json','User-Agent':'AuditRepo-current-truth'})
                   with urllib.request.urlopen(req) as response:
