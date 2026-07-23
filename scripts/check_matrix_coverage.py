@@ -38,7 +38,7 @@ ISSUE_PREFIXES = (
 )
 PREFIX_ALT = '|'.join(re.escape(prefix) for prefix in ISSUE_PREFIXES)
 TOKEN_RE = re.compile(
-    rf'\b((?:{PREFIX_ALT})[A-Z0-9]*(?:-[A-Za-z0-9]+)+)\b'
+    rf'(?<![A-Za-z0-9-])((?:{PREFIX_ALT})[A-Z0-9]*(?:-[A-Za-z0-9]+)+)(?![A-Za-z0-9-])'
 )
 EXACT_ID_RE = re.compile(rf'^(?:{PREFIX_ALT})[A-Z0-9]*(?:-[A-Za-z0-9]+)+$')
 UPPER_ID_RE = re.compile(r'^[A-Z0-9]+(?:-[A-Z0-9]+)+$')
