@@ -68,10 +68,13 @@ jobs:
           project = Path('projects/gb-is-my-strength')
           coverage = json.loads(Path('reports/matrix-id-classification/coverage.json').read_text())
           ids = []
+          diagnostic_rx = re.compile(
+              r'^UNREGISTERED-EVIDENCE: reverify explicitly registers ([A-Z0-9][A-Za-z0-9-]+) '
+          )
           for diagnostic in coverage['diagnostics']:
-              if not diagnostic.startswith('UNREGISTERED-EVIDENCE:'):
-                  continue
-              ids.append(diagnostic.split()[3])
+              match = diagnostic_rx.match(diagnostic)
+              if match:
+                  ids.append(match.group(1))
           ids = sorted(set(ids))
 
           contexts = {finding_id: [] for finding_id in ids}
