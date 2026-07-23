@@ -1,0 +1,64 @@
+name: Temporary run audit-pro closure
+
+on:
+  push:
+    branches:
+      - agent/close-audit-pro-root-only-73c49e99
+    paths:
+      - scripts/tmp-close-audit-pro-trigger.txt
+
+permissions:
+  contents: write
+
+jobs:
+  run-reconciler:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/close-audit-pro-root-only-73c49e99
+          fetch-depth: 0
+
+      - name: Extract and execute reconciler
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          source = Path('.github/workflows/tmp-close-audit-pro-root-only.yml').read_text(encoding='utf-8')
+          start_marker = "          python3 - <<'PY'\n"
+          end_marker = "\n          PY\n"
+          if source.count(start_marker) != 1:
+              raise SystemExit('reconciler start marker missing or duplicated')
+          body = source.split(start_marker, 1)[1].split(end_marker, 1)[0]
+          lines = []
+          for line in body.splitlines():
+              if line.startswith('          '):
+                  line = line[10:]
+              lines.append(line)
+          Path('/tmp/auditrepo-reconcile.py').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+          python3 /tmp/auditrepo-reconcile.py
+
+      - name: Validate AuditRepo
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/check_matrix_coverage.py --warn-only --verbose --json-out /tmp/matrix-coverage.json
+
+      - name: Commit only permanent evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/tmp-close-audit-pro-root-only.yml
+          rm .github/workflows/tmp-run-close-audit-pro.yml
+          rm scripts/tmp-close-audit-pro-trigger.txt
+          git config user.name "audit-reconciler[bot]"
+          git config user.email "audit-reconciler[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "chore(audit): close registry-owned audit-pro corpus gap"
+          git push origin HEAD:agent/close-audit-pro-root-only-73c49e99
