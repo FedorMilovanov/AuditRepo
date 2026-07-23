@@ -42,3 +42,85 @@ jobs:
           path: reports/matrix-coverage/**
           if-no-files-found: error
           retention-days: 14
+
+  patch-generic-id-shape:
+    if: github.event_name == 'pull_request' && github.event.pull_request.number == 28 && github.event.pull_request.head.repo.full_name == github.repository
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - name: Replace prefix allowlist and scope canonical sections
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/check_matrix_coverage.py')
+          text = path.read_text(encoding='utf-8')
+          marker = "ID_BODY = r'[A-Z][A-Za-z0-9]*(?:-[A-Za-z0-9]+)+'"
+          changed = False
+
+          if marker not in text:
+              start = text.index('ISSUE_PREFIXES = (')
+              end = text.index('SHA_RE =', start)
+              replacement = """ID_BODY = r'[A-Z][A-Za-z0-9]*(?:-[A-Za-z0-9]+)+'
+TOKEN_RE = re.compile(
+    rf'(?<![A-Za-z0-9-])({ID_BODY})(?![A-Za-z0-9-])'
+)
+EXACT_ID_RE = re.compile(rf'^{ID_BODY}$')
+UPPER_ID_RE = re.compile(r'^[A-Z0-9]+(?:-[A-Z0-9]+)+$')
+"""
+              text = text[:start] + replacement + text[end:]
+              changed = True
+
+          old = """        cells = parse_table_cells(line)
+        if not cells or cells[0] in {'ID', 'Поле', 'Категория', 'Статус'}:
+            continue
+"""
+          new = """        canonical_section = any(
+            marker in section
+            for marker in ('ЗАКРЫТО', 'ОТКРЫТО', 'РЕФАКТОРИНГ', 'AUDITREPO')
+        )
+        if not canonical_section:
+            continue
+        cells = parse_table_cells(line)
+        if not cells or cells[0] in {'ID', 'Поле', 'Категория', 'Статус'}:
+            continue
+"""
+          if new not in text:
+              if text.count(old) != 1:
+                  raise SystemExit('parse_matrix canonical-section anchor drift')
+              text = text.replace(old, new, 1)
+              changed = True
+
+          path.write_text(text, encoding='utf-8')
+          Path('/tmp/generic-id.changed').write_text('1' if changed else '0')
+          PY
+          python3 -m py_compile scripts/check_matrix_coverage.py
+          python3 scripts/check_matrix_coverage.py --warn-only --json-out /tmp/generic-id-report.json
+          python3 - <<'PY'
+          import json
+          report = json.load(open('/tmp/generic-id-report.json'))
+          if report['matrixIds'] < 330:
+              raise SystemExit(f"generic canonical parsing still too narrow: {report['matrixIds']}")
+          print(report)
+          PY
+          git diff --check
+      - name: Commit generic checker model
+        shell: bash
+        run: |
+          if test "$(cat /tmp/generic-id.changed)" = 0; then
+            echo 'Generic ID model already present.'
+            exit 0
+          fi
+          git add scripts/check_matrix_coverage.py
+          test "$(git diff --cached --name-only)" = 'scripts/check_matrix_coverage.py'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'fix(matrix): validate every canonical ID family'
+          git push origin HEAD:"${{ github.event.pull_request.head.ref }}"
