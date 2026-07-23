@@ -44,6 +44,18 @@ jobs:
             > /tmp/current-truth-sync.py
           test -s /tmp/current-truth-sync.py
           python3 /tmp/current-truth-sync.py
+          python3 - <<'PY'
+          from pathlib import Path
+          files = [
+              Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md'),
+              Path('projects/gb-is-my-strength/archive/stale/2026-07-23-current-truth-cleanup/NEXT_AGENT_PROMPT_PRE_83F04647.md'),
+              Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-23_83f04647_production.md'),
+              Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md'),
+          ]
+          for path in files:
+              lines = path.read_text(encoding='utf-8').splitlines()
+              path.write_text('\n'.join(line.rstrip() for line in lines) + '\n', encoding='utf-8')
+          PY
 
       - name: Validate synchronized truth
         shell: bash
