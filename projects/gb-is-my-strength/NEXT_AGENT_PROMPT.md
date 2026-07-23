@@ -4,31 +4,27 @@
 > `archive/stale/2026-07-23-current-truth-cleanup/`. Bug status and counts belong to
 > `verified/MASTER_BUG_MATRIX.md`; this file owns the exact current source/deploy boundary and next execution order.
 
-**Source main:** `0f5b330799292d995c62bbb7d63a83870d93318e`
-**Production:** ✅ exact `0f5b3307`
-**Readiness:** `29972524675` — success
-**Pages:** `29972909431` — success, all 30 deployment stages green
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_0f5b3307_production.md`
+**Source main:** `8a5352671375fdb01b6c30273c25ec4283a13f69`
+**Production:** ✅ exact `8a535267`
+**Readiness:** `30006414898` — success
+**Pages:** `30007024100` — success
+**Live sitemap:** 66 `<loc>`, SHA-256 `5f3fa280af1ddc73f166decce47535d48ec60718375dd7c0418ea3675f82a801`
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_8a535267_sitemap_contract.md`
 
 ## 1) Proven production boundary
 
-The deployed source is exact `0f5b330799292d995c62bbb7d63a83870d93318e`.
+The deployed source is exact `8a5352671375fdb01b6c30273c25ec4283a13f69`.
 
 Exact chain:
 
-1. Metadata & IndexNow Readiness `29972524675` — success on `0f5b3307`;
-2. Deploy to GitHub Pages `29972909431` — success on the same SHA;
-3. all 30 deploy stages passed, including static publication, Astro build, ownership, Pagefind, visual parity, JSON-LD, PremiumControls, Gill browser smokes, broad runtime, content coverage, Service Worker, Pages and IndexNow;
-4. `0f5b3307` differs from deployed `a73f609f` only by a source comment in `PremiumControlAnchor.astro`; rendered output is unchanged;
-5. the previous live witness remains byte-relevant for rendered pages and found all Nagornaya epistemic markers plus Play-control ARIA.
+1. Metadata & IndexNow Readiness `30006414898` — success on `8a535267`;
+2. Deploy to GitHub Pages `30007024100` — success on the same SHA;
+3. observer `30006649281`, artifact `8563907298`, independently matched both workflow records by exact `head_sha`;
+4. live `sitemap.xml` contains 66 `<loc>` entries and hashes to `5f3fa280af1ddc73f166decce47535d48ec60718375dd7c0418ea3675f82a801`.
 
-Completed source-cleanup descendants:
+PR #163 closed the sitemap audit-scope defect without changing page markup, CSS, runtime or content. Expected sitemap routes now derive from the existing effective route registry rather than committed/root HTML.
 
-- PR #159 — retired four proven unreferenced legacy control/evidence files: `681a8a97`;
-- PR #160 — replaced two Atlas workspace-specific paths: `a73f609f`;
-- PR #162 — removed the final workspace-specific `AuditRepo/projects/...` source comment: `0f5b3307`.
-
-Canonical evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_0f5b3307_production.md`.
+Canonical evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_8a535267_sitemap_contract.md`.
 
 ## 2) Completed lanes — do not reopen without current-head evidence
 
@@ -37,8 +33,9 @@ Canonical evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_0f5b3307_producti
 - `NG-PREMIUM-CONTROLS-ARIA-01` — closed by PR #158.
 - `AUDIT-ATLAS-DOC-PATH-LEAK` — closed by PR #160 + PR #162.
 - `AUDIT-FORBIDDEN-JS-NAGORNAYA` — closed: canonical allowlist contains `nagornaya-bar-extras.js`; exact audit-pro is green.
-- `GATE-CSS-IMPORTANT-RATCHET` — closed: site.css is 183 against hard ceiling 200; both CSS gates are green.
+- `GATE-CSS-IMPORTANT-RATCHET` — closed: site.css is 183 against ceiling 200; both CSS gates are green.
 - `ASTRO-P0-03` and `ASTRO-P0-04` — closed: map-route stats are fatal in CI and Avraam has one canonical 19-place set.
+- `AUDIT-PRO-SITEMAP-ROOT-ONLY` — closed by PR #163: 66 indexable production routes are registry-derived sitemap obligations; explicit `seo.indexable=false` is the only production exemption; Astro-only route mutations fail.
 
 The isolated mobile-map HTTP witness proved `ishod` and `avraam` clean when the required local server is started. The earlier `ERR_CONNECTION_REFUSED` result was test orchestration, not a product defect.
 
@@ -46,37 +43,38 @@ The isolated mobile-map HTTP witness proved `ishod` and `avraam` clean when the 
 
 Other agents are active. Do not overwrite or absorb their branches:
 
-- source PR #161 — universal glossary contract; touches glossary runtime, many published HTML files, Gill chrome and asset versions;
-- source PR #156 — Gill editorial/research corrections; touches Gill article components only;
+- source PR #161 — universal glossary contract; it has expanded substantially and now touches shared runtime, many publication files and dedicated CI;
+- source PR #156 — Gill editorial/research corrections;
 - Research PR #7 and AuditRepo PR #27 — Gill source corpus and its audit record.
 
-Before starting a source lane, compare its file set against these PRs and rebase from the latest `main`. Work must land through an isolated, reviewed diff and then merge into `main`.
+Before starting a source lane, refresh the current `main`, list all active PR files and compare intersections. Work must land through an isolated, reviewed diff and merge into `main` only after exact checks.
 
 ## 4) Active work, in order
 
-1. **Finish AuditRepo current-truth cleanup — PR #28**
-   - remove all `_temp-*` workflows and the one-shot reconciliation writer;
-   - keep permanent matrix coverage tooling and archived evidence;
-   - obtain clean `AuditRepo Validate` and strict zero matrix coverage;
-   - merge the cleaned PR into `main`.
+1. **Finish AuditRepo PR #29**
+   - move `AUDIT-PRO-SITEMAP-ROOT-ONLY` from P3 open to closed;
+   - update counters and source/deploy authority to exact `8a535267`;
+   - remove the temporary production observer and restore read-only AuditRepo validation;
+   - require zero matrix coverage drift before merge.
 
-2. **Independent source lane: `AUDIT-PRO-SITEMAP-ROOT-ONLY`**
-   - current audit-pro sitemap coverage derives from committed/root HTML while `dist/` is skipped;
-   - extend or replace this check with the effective route registry / production-like dist contract;
-   - do not touch glossary or Gill article files;
-   - require mutation coverage proving an Astro-only route cannot disappear from sitemap unnoticed.
+2. **Re-evaluate `SEO-AUDIT-ROOT-ONLY` after active PR refresh**
+   - current `seo-audit.js` excludes `dist/` and audits only the root publication corpus;
+   - preserve source/repository checks, but add a registry-driven production-dist mode after build rather than replacing one scope with another;
+   - do not duplicate canonical route ownership or create hardcoded route lists;
+   - confirm no overlap with the expanded glossary PR #161 before writing `package.json`, CI or shared scripts.
 
 3. **Reader R6 / issue #59**
    - unify progress, resume, bookmarks and notes only after shared-runtime overlap with PR #161 is resolved;
    - do not create a separate book engine; books remain `surface=series` + `seriesShape=book`.
 
-4. Continue verified P0/P1 order from `MASTER_BUG_MATRIX.md` after the governance and sitemap-audit lanes.
+4. Continue verified P0/P1 order from `MASTER_BUG_MATRIX.md` after current-truth synchronization and active-PR collision checks.
 
 ## 5) Open findings that remain real
 
-- `AUDIT-PRO-SITEMAP-ROOT-ONLY` — audit scope gap, not a currently broken sitemap.
-- `STRANGLER-HYGIENE` — migration/reference debt; runtime is already legacy-clean.
-- `TTS-DL-NO-TABLOCK` — no cross-tab ownership for the large model download.
+- `AUDIT-PRO-ROOT-ONLY` — broader audit-pro HTML/SEO/a11y scope still derives from root publication files; the sitemap sub-gap alone is closed.
+- `SEO-AUDIT-ROOT-ONLY` — `seo-audit.js` excludes `dist/`.
+- `STRANGLER-HYGIENE` — migration/reference debt remains; runtime ownership is clean.
+- `TTS-DL-NO-TABLOCK` — no current proof of cross-tab ownership for the large model download.
 - `REG-001` — GitHub Pages response-header limitation / hosting decision.
 
 Do not close these from old reports or by aliasing. Each needs current-source evidence or an explicit owner decision.
@@ -95,7 +93,7 @@ After any production-impacting merge:
 
 - exact readiness success;
 - exact Pages success;
-- live marker/hash witness when rendered output changes;
+- live marker/hash witness for the artifact or rendered surface that changed;
 - only then update AuditRepo current truth.
 
 ## 7) Data hygiene rules
