@@ -97,29 +97,9 @@ jobs:
                                   )[:4000],
                               })
 
-          matrix = (project / 'verified/MASTER_BUG_MATRIX.md').read_text(encoding='utf-8')
-          canonical_rows = []
-          for line_no, line in enumerate(matrix.splitlines(), 1):
-              if line.startswith('| ') and not line.startswith('|---'):
-                  cells = [cell.strip() for cell in line.strip('|').split('|')]
-                  if cells and '-' in cells[0] and cells[0] not in {'ID', 'Поле', 'Категория', 'Статус'}:
-                      canonical_rows.append({'id': cells[0], 'line': line_no, 'row': line})
-
-          report = {
-              'unregisteredIds': ids,
-              'contexts': contexts,
-              'canonicalRows': canonical_rows,
-          }
+          report = {'unregisteredIds': ids, 'contexts': contexts}
           Path('reports/matrix-id-classification/report.json').write_text(
               json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
-          )
-          md = ['# Matrix ID classification contexts', '']
-          for finding_id in ids:
-              md += [f'## {finding_id}', '']
-              for item in contexts[finding_id][:20]:
-                  md += [f"### {item['file']}:{item['line']}", '', '```text', item['context'], '```', '']
-          Path('reports/matrix-id-classification/report.md').write_text(
-              '\n'.join(md), encoding='utf-8'
           )
           print(f'Collected contexts for {len(ids)} unresolved IDs')
           PY
@@ -130,3 +110,53 @@ jobs:
           path: reports/matrix-id-classification/**
           if-no-files-found: error
           retention-days: 7
+
+  patch-token-boundary:
+    if: github.event_name == 'pull_request' && github.event.pull_request.number == 28 && github.event.pull_request.head.repo.full_name == github.repository
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - name: Replace substring-permitting ID boundary
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/check_matrix_coverage.py')
+          text = path.read_text(encoding='utf-8')
+          old = "    rf'\\b((?:{PREFIX_ALT})[A-Z0-9]*(?:-[A-Za-z0-9]+)+)\\b'"
+          new = "    rf'(?<![A-Za-z0-9-])((?:{PREFIX_ALT})[A-Z0-9]*(?:-[A-Za-z0-9]+)+)(?![A-Za-z0-9-])'"
+          if new in text:
+              Path('/tmp/token-boundary.changed').write_text('0')
+          else:
+              if text.count(old) != 1:
+                  raise SystemExit('TOKEN_RE anchor drift')
+              path.write_text(text.replace(old, new, 1), encoding='utf-8')
+              Path('/tmp/token-boundary.changed').write_text('1')
+          PY
+          python3 -m py_compile scripts/check_matrix_coverage.py
+          python3 scripts/check_matrix_coverage.py --warn-only > /tmp/token-boundary-report.log
+          if grep -Eq 'UNREGISTERED-EVIDENCE:.*\b(ARIA-01|DEPLOY-RED|UI-EPISTEMIC-BIAS-01|AVRAAM-AUDIT|MAPS-VALIDATE)\b' /tmp/token-boundary-report.log; then
+            cat /tmp/token-boundary-report.log
+            echo 'suffix/subtoken false positive remains' >&2
+            exit 1
+          fi
+          git diff --check
+      - name: Commit checker boundary fix
+        shell: bash
+        run: |
+          if test "$(cat /tmp/token-boundary.changed)" = 0; then
+            echo 'Token boundary already fixed.'
+            exit 0
+          fi
+          git add scripts/check_matrix_coverage.py
+          test "$(git diff --cached --name-only)" = 'scripts/check_matrix_coverage.py'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'fix(matrix): reject suffix matches inside canonical IDs'
+          git push origin HEAD:"${{ github.event.pull_request.head.ref }}"
