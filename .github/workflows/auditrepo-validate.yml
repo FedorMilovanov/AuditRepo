@@ -2,7 +2,9 @@ name: AuditRepo Validate
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - agent/current-truth-cleanup-2026-07-23
   pull_request:
 
 jobs:
@@ -18,3 +20,57 @@ jobs:
       - name: Validate repo rules
         run: python3 scripts/validate_audit_repo.py
 
+  sync-current-truth:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/agent/current-truth-cleanup-2026-07-23'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/current-truth-cleanup-2026-07-23
+          fetch-depth: 0
+
+      - name: Extract and run canonical synchronization
+        shell: bash
+        run: |
+          awk '
+            /python3 - <<'"'"'PY'"'"'/ { capture=1; next }
+            capture && /^          PY$/ { exit }
+            capture { sub(/^          /, ""); print }
+          ' .github/workflows/_temp-sync-production-current-truth.yml \
+            > /tmp/current-truth-sync.py
+          test -s /tmp/current-truth-sync.py
+          python3 /tmp/current-truth-sync.py
+
+      - name: Validate synchronized truth
+        shell: bash
+        run: |
+          cat /tmp/current-truth-sync.json
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/check_matrix_coverage.py > /tmp/matrix-coverage-after-sync.log 2>&1 || true
+          if grep -q 'BAD-COMMIT-REF' /tmp/matrix-coverage-after-sync.log; then
+            cat /tmp/matrix-coverage-after-sync.log
+            exit 1
+          fi
+          git diff --check
+
+      - name: Commit current production truth
+        shell: bash
+        run: |
+          cat > /tmp/allowed.txt <<'EOF'
+          projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+          projects/gb-is-my-strength/archive/stale/2026-07-23-current-truth-cleanup/NEXT_AGENT_PROMPT_PRE_83F04647.md
+          projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-23_83f04647_production.md
+          projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          EOF
+          sort -o /tmp/allowed.txt /tmp/allowed.txt
+          git add -A
+          git diff --cached --name-only | sort > /tmp/staged.txt
+          diff -u /tmp/allowed.txt /tmp/staged.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'docs(audit): synchronize exact production current truth'
+          git push origin HEAD:agent/current-truth-cleanup-2026-07-23
