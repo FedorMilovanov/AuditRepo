@@ -61,12 +61,16 @@ jobs:
         with:
           python-version: '3.12'
       - name: Apply reviewed reconciliation module
+        shell: bash
         run: |
+          set -o pipefail
           mkdir -p reports/matrix-reconcile
-          python3 scripts/reconcile_current_matrix.py \
+          python3 scripts/run_reconcile_current_matrix.py \
             | tee reports/matrix-reconcile/run.log
       - name: Prove strict zero coverage
+        shell: bash
         run: |
+          set -o pipefail
           python3 scripts/check_auditrepo_structure.py
           python3 scripts/validate_audit_repo.py
           python3 scripts/check_matrix_coverage.py \
