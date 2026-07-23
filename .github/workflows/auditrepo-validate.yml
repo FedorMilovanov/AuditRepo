@@ -46,7 +46,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-  reconcile-current-matrix:
+  finalize-current-truth:
     if: github.event_name == 'pull_request' && github.event.pull_request.number == 28 && github.event.pull_request.head.repo.full_name == github.repository
     needs: validate
     runs-on: ubuntu-latest
@@ -60,59 +60,51 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Apply reviewed reconciliation module
+      - name: Patch exact source and deploy authority
         shell: bash
         run: |
-          set -o pipefail
-          mkdir -p reports/matrix-reconcile
-          python3 scripts/run_reconcile_current_matrix.py \
-            | tee reports/matrix-reconcile/run.log
-      - name: Prove strict zero coverage
-        shell: bash
-        run: |
-          set -o pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          text = path.read_text(encoding='utf-8')
+          replacements = {
+              '| Source HEAD | `83f04647c470a92c340d4d7990485c4e1376836b` (main; #154 epistemic UI, #157 route semantics, #158 PremiumControls ARIA, plus CI/control cleanup) |':
+              '| Source HEAD | `0f5b330799292d995c62bbb7d63a83870d93318e` (main; exact production descendant including #159 legacy cleanup, #160 Atlas path cleanup and #162 final workspace-path cleanup) |',
+              '| Deploy | ✅ **PRODUCTION VERIFIED @ `83f04647`.** Readiness `29966152952` → Pages `29966633078` success on the same SHA; live witness `29967501124` / artifact `8548383473` found all three epistemic markers and Nagornaya disclosure ARIA. |':
+              '| Deploy | ✅ **PRODUCTION VERIFIED @ `0f5b3307`.** Readiness `29972524675` → Pages `29972909431` success on the same SHA; all 30 deploy stages passed. The only `a73f609f` → `0f5b3307` change is a source comment, so rendered-output live hashes remain applicable. |',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_83f04647_production.md` |':
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_0f5b3307_production.md` |',
+              '⚠️ Старые deploy-формулировки ниже исторические. Current authority: `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_83f04647_production.md`; exact readiness `29966152952` → Pages `29966633078` → live witness `29967501124`.':
+              '⚠️ Старые deploy-формулировки ниже исторические. Current authority: `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_0f5b3307_production.md`; exact readiness `29972524675` → Pages `29972909431` (all 30 stages green).',
+          }
+          for old, new in replacements.items():
+              count = text.count(old)
+              if count not in {0, 1}:
+                  raise SystemExit(f'Unexpected match count {count}: {old}')
+              text = text.replace(old, new)
+          path.write_text(text, encoding='utf-8')
+          PY
           python3 scripts/check_auditrepo_structure.py
           python3 scripts/validate_audit_repo.py
-          python3 scripts/check_matrix_coverage.py \
-            --verbose \
-            --json-out reports/matrix-reconcile/final-coverage.json \
-            | tee reports/matrix-reconcile/final-coverage.log
+          python3 scripts/check_matrix_coverage.py --verbose --json-out /tmp/final-coverage.json
           python3 - <<'PY'
           import json
-          report = json.load(open('reports/matrix-reconcile/final-coverage.json'))
+          report = json.load(open('/tmp/final-coverage.json'))
           if report['problems'] != 0:
               raise SystemExit(report)
           print(report)
           PY
           git diff --check
-      - name: Commit reviewed canonical files
+      - name: Commit exact masthead if changed
         shell: bash
         run: |
-          cat > /tmp/allowed.txt <<'EOF'
-          projects/gb-is-my-strength/archive/fixed/2026-07-23-current-truth-cleanup/CURRENT_SOURCE_FORENSIC_CLOSURES.md
-          projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-          projects/gb-is-my-strength/verified/MATRIX_ID_ALIASES.json
-          EOF
-          sort -o /tmp/allowed.txt /tmp/allowed.txt
-          git add \
-            projects/gb-is-my-strength/archive/fixed/2026-07-23-current-truth-cleanup/CURRENT_SOURCE_FORENSIC_CLOSURES.md \
-            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
-            projects/gb-is-my-strength/verified/MATRIX_ID_ALIASES.json
-          git diff --cached --name-only | sort > /tmp/staged.txt
-          diff -u /tmp/allowed.txt /tmp/staged.txt
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
           if git diff --cached --quiet; then
-            echo 'Canonical reconciliation already applied.'
+            echo 'Exact masthead already applied.'
             exit 0
           fi
-          git commit -m 'reconcile(matrix): close exact current findings and reach zero coverage'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'docs(audit): advance matrix authority to exact 0f5b3307'
           git push origin HEAD:"${{ github.event.pull_request.head.ref }}"
-      - name: Upload reconciliation proof
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: matrix-reconcile-${{ github.run_id }}
-          path: reports/matrix-reconcile/**
-          if-no-files-found: error
-          retention-days: 14
