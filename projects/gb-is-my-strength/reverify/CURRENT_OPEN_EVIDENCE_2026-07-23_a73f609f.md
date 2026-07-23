@@ -7,6 +7,8 @@ Readiness: `29969886676` — success
 Pages: `29970303813` — success  
 Live witness: AuditRepo run `29971344184`, artifact `8549786188`
 
+Current production authority has advanced to comment-only descendant `0f5b330799292d995c62bbb7d63a83870d93318e`; see `CURRENT_HEAD_REVERIFY_2026-07-23_0f5b3307_production.md`. The open source findings below remain valid because the descendant changes no audit/runtime implementation.
+
 This document supplies independent evidence for canonical rows that remain open after the current-truth cleanup. It does not turn historical aliases into new findings.
 
 ## `AUDIT-PRO-SITEMAP-ROOT-ONLY`
@@ -34,7 +36,7 @@ The exact current-source inventory proved:
 
 The runtime is clean, but the migration/reference surface is not zero. The finding remains open until every retained legacy path has an explicit owner decision and the copy surface is reduced or frozen by policy.
 
-Evidence: current-source legacy inventory run `29966482139`, artifact `8548013735`; exact production build on `a73f609f` in current-source forensic run `29971872480`, artifact `8550022319`.
+Evidence: current-source legacy inventory run `29966482139`, artifact `8548013735`; exact production build on `a73f609f` in current-source forensic run `29973088988`, artifact `8550461930`.
 
 ## `TTS-DL-NO-TABLOCK`
 
@@ -59,9 +61,9 @@ Live `HEAD` responses for `/` and `/karty/avraam/` on 2026-07-23 contain:
 
 The pages still carry their HTML/meta security policy, but GitHub Pages does not expose the additional response headers through repository configuration. Closing this finding requires an explicit hosting/proxy decision or a documented by-design acceptance.
 
-Evidence: exact current-source forensic run `29971872480`, artifact `8550022319`, files `live-headers-root.txt` and `live-headers-avraam.txt`.
+Evidence: exact current-source forensic run `29973088988`, artifact `8550461930`, files `live-headers-root.txt` and `live-headers-avraam.txt`.
 
-## Verified-current closures awaiting matrix promotion
+## Verified-current closures already promoted to the matrix
 
 The same forensic run establishes the following current facts:
 
@@ -69,5 +71,14 @@ The same forensic run establishes the following current facts:
 - `GATE-CSS-IMPORTANT-RATCHET`: `css/site.css` has 183 `!important` declarations against a hard ceiling of 200; `css:layer:validate` and `audit-pro` pass.
 - historical CSS syntax IDs `CSS-SYNTAX-001/002/003/005` and `CSS-DEAD-004`: exact patterns absent; css-tree parses all guarded engine stylesheets without errors.
 - historical deploy-block IDs `DEP-BLOCK-EDITORIAL-REGISTRY`, `DEP-BLOCK-CSS-IMPORTANT-CEILING`, `DEP-BLOCK-MAPS-VALIDATE`, `DEP-BLOCK-AVRAAM-AUDIT`: exact current commands all exit 0.
+- `AUDIT-ATLAS-DOC-PATH-LEAK`: PR #160 removed the two Atlas paths and PR #162 / `0f5b3307` removed the final source-comment occurrence.
 
-`AUDIT-ATLAS-DOC-PATH-LEAK` is not marked closed here because the forensic run found one additional workspace-specific reference in `PremiumControlAnchor.astro`; source PR #162 addresses that final instance and must merge before matrix closure.
+## Map mobile smoke orchestration
+
+The combined forensic workflow initially ran `smoke:maps:mobile` without its required HTTP server and received `ERR_CONNECTION_REFUSED`. The isolated witness run `29973088987`, artifact `8550488736`, started the server first and passed both production maps:
+
+- `ishod`: overflow 0, runtime errors 0, undersized controls 0;
+- `avraam`: overflow 0, runtime errors 0, undersized controls 0;
+- final result: `Mobile maps clean`.
+
+The failed first invocation is classified as test orchestration only. It does not justify a production map change or a new canonical bug row.
