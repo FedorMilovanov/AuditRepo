@@ -1,6 +1,6 @@
 # Matrix ID and evidence model
 
-Status: canonical governance contract for `MASTER_BUG_MATRIX.md`, `scripts/check_matrix_coverage.py` and `scripts/matrix_coverage_contexts.py`.
+Status: canonical governance contract for `MASTER_BUG_MATRIX.md`, `scripts/check_matrix_coverage.py`, `scripts/matrix_coverage_contexts.py` and reviewed transactions in `scripts/reconcile_current_matrix.py`.
 
 ## Canonical findings
 
@@ -53,4 +53,4 @@ The coverage job remains diagnostic while historical IDs and orphan claims are r
 - mutable closed references are zero;
 - the diagnostic reports zero problems on a clean PR head.
 
-A zero-coverage promotion must be produced by a reviewed transaction with an exact allowlist, archived original rows and strict `check_matrix_coverage.py` success before commit. The workflow cannot manufacture zero by suppressing diagnostics or weakening ID/evidence rules.
+A zero-coverage promotion must be produced by the idempotent reviewed transaction module, with an exact commit allowlist, archived original rows and strict `check_matrix_coverage.py` success before commit. The workflow cannot manufacture zero by suppressing diagnostics or weakening ID/evidence rules.
