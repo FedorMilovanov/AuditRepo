@@ -13,7 +13,7 @@ A canonical finding is a stable ID in the first column of one of the active matr
 
 Historical auditor/session tables are evidence logs, not a second canonical registry. IDs repeated there do not create duplicate canonical rows. Rows outside the four canonical section families are never counted as canonical merely because their first cell resembles an ID.
 
-Every canonical ID appears in exactly one active table. A finding cannot remain in an open table after the same ID has been promoted to `✅ ЗАКРЫТО`; the superseded row must move to archive evidence.
+Every canonical ID appears in exactly one active table. A finding cannot remain in an open table after the same ID has been promoted to `✅ ЗАКРЫТО`; the superseded row must move to archive evidence. The first generic-checker finding was `CI-INDEXNOW-CHECKER-STALE`: its fixed row remains canonical and the obsolete P2 copy is preserved in `archive/fixed/2026-07-23-current-truth-cleanup/CANONICAL_DUPLICATE_CI_INDEXNOW.md`.
 
 The ID grammar is repository-wide rather than prefix-allowlisted: an uppercase-leading alphanumeric segment followed by one or more hyphen-separated segments. This covers current families such as `CI-*`, `GILL-*`, `TTS-*`, `D-*`, `NG-*`, `MAP-*` and future families without changing the checker.
 
