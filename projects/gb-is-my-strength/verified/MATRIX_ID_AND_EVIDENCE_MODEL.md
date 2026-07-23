@@ -27,6 +27,8 @@ An explicit ID in `reverify/`, `incoming/` or `working/` must resolve through ex
 
 Aliases may not target missing canonical IDs. A historical ID cannot be ignored merely because its wording is inconvenient.
 
+Outside a table-key, a previously unknown evidence token is credible only when it is uppercase and has at least one of: a numeric discriminator, a family already present in the canonical matrix, or three or more semantic segments. This preserves historical IDs such as `AUDIT-CSS-SITECSS-STRUCT-CORRUPTION` while rejecting prose compounds such as `Follow-up`, `Current-head` and `SHA-256`.
+
 ## Evidence for open findings
 
 An open finding must have at least one traceable witness:
