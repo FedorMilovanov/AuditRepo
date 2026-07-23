@@ -1,0 +1,59 @@
+name: Materialize 7187 Source Truth
+
+on:
+  push:
+    branches:
+      - agent/close-seo-html-scope-04fc99f4
+    paths:
+      - ".github/workflows/materialize-7187-source-truth.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/close-seo-html-scope-04fc99f4
+          fetch-depth: 0
+      - name: Advance matrix source authority
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          file = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          text = file.read_text(encoding='utf-8')
+
+          replacements = {
+            '| Source HEAD | `04fc99f4a7925f28577f3b0a6654d3b1aa4af9ba` (current source main; PR #165 registry-derived production SEO + PR #167 registry-derived production HTML breadth) |':
+              '| Source HEAD | `7187c32a39e1d5b185dbf385f651da0906911d74` (current source main; PR #165 SEO, PR #167 HTML breadth, PR #166 explicit Search & Index policy) |',
+            '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_04fc99f4_seo-html-contracts.md` |':
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_7187c32a_search-seo-html-contracts.md` |',
+            '⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `04fc99f4`; last exact production authority: `8a535267`; source/CI evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_04fc99f4_seo-html-contracts.md`.':
+              '⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `7187c32a`; last exact production authority: `8a535267`; source/CI evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_7187c32a_search-seo-html-contracts.md`.',
+            '| AUDIT-PRO-ROOT-ONLY | 🔄 **NARROWED, STILL OPEN @ `04fc99f4`.** Sitemap breadth is registry-driven (#163), production SEO breadth is registry/dist-driven (#165), and static HTML/link/alt/JSON-LD/H1 breadth covers all 75 production routes (#167). Remaining scope is limited to `audit-pro.js`-specific root-corpus inference and duplicated publication/cache-bust/general checks that have not yet been migrated or retired. |':
+              '| AUDIT-PRO-ROOT-ONLY | 🔄 **NARROWED, STILL OPEN @ `7187c32a`.** Sitemap breadth is registry-driven (#163), production SEO breadth is registry/dist-driven (#165), static HTML/link/alt/JSON-LD/H1 breadth covers all 75 routes (#167), and Search/Pagefind/manifest/sitemap/RSS membership is explicit (#166). Remaining scope is limited to `audit-pro.js`-specific root-corpus inference and duplicated publication/cache-bust/general checks not yet migrated or retired. |',
+            '## Статистика (обновлено 2026-07-23: source 04fc99f4 + SEO/HTML breadth contracts)':
+              '## Статистика (обновлено 2026-07-23: source 7187c32a + Search/SEO/HTML contracts)',
+            '- **2026-07-23 — Source `04fc99f4`: registry-derived SEO and HTML breadth.** PR #165 moved production SEO to the effective registry and built `dist`; PR #167 added the 75-route static HTML/link/alt/JSON-LD/H1 contract and removed one public link to an unpublished Baptist research file. Exact source CI is green; production authority remains `8a535267` until a same-SHA readiness/Pages/live witness exists. Closed `SEO-AUDIT-ROOT-ONLY`, `VALIDATE-SCOPE-GAP` and `VALIDATE-JS-ARTICLES-ONLY`; broader `AUDIT-PRO-ROOT-ONLY` remains narrowly open. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_04fc99f4_seo-html-contracts.md`.':
+              '- **2026-07-23 — Source `7187c32a`: Search, SEO and HTML breadth.** PR #165 moved production SEO to the effective registry and built `dist`; PR #167 added the 75-route static HTML/link/alt/JSON-LD/H1 contract and removed one public link to an unpublished Baptist research file; PR #166 added one explicit 75-route Search & Index policy for robots, Pagefind, search-manifest, sitemap and RSS and normalized 94 RSS metadata drifts. Exact source CI is green; production authority remains `8a535267` until a same-SHA readiness/Pages/live witness exists. Closed `SEO-AUDIT-ROOT-ONLY`, `VALIDATE-SCOPE-GAP` and `VALIDATE-JS-ARTICLES-ONLY`; broader `AUDIT-PRO-ROOT-ONLY` remains narrowly open. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_7187c32a_search-seo-html-contracts.md`.'
+          }
+
+          for old, new in replacements.items():
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'expected one exact source-truth string, found {count}: {old[:100]}')
+              text = text.replace(old, new, 1)
+
+          file.write_text(text, encoding='utf-8')
+          PY
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          git commit -m "chore(audit): advance source truth to 7187c32a"
+          git push origin HEAD:agent/close-seo-html-scope-04fc99f4
