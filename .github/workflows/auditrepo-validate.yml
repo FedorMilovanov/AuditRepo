@@ -45,3 +45,210 @@ jobs:
           path: reports/matrix-coverage/**
           if-no-files-found: error
           retention-days: 14
+
+  reconcile-current-matrix:
+    if: github.event_name == 'pull_request' && github.event.pull_request.number == 28 && github.event.pull_request.head.repo.full_name == github.repository
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply reviewed matrix reconciliation
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import collections, json, re
+
+          project = Path('projects/gb-is-my-strength')
+          matrix_path = project / 'verified/MASTER_BUG_MATRIX.md'
+          aliases_path = project / 'verified/MATRIX_ID_ALIASES.json'
+          archive_path = project / 'archive/fixed/2026-07-23-current-truth-cleanup/CURRENT_SOURCE_FORENSIC_CLOSURES.md'
+
+          closures = {
+              'AUDIT-ATLAS-DOC-PATH-LEAK': (
+                  '✅ **FIXED/VERIFIED 2026-07-23.** PR #160 replaced two workspace-specific Atlas documentation paths; PR #162 removed the final `AuditRepo/projects/...` reference from `PremiumControlAnchor.astro`. The final source uses explicit repository identity plus repository-relative paths.',
+                  '0f5b3307',
+              ),
+              'AUDIT-FORBIDDEN-JS-NAGORNAYA': (
+                  '✅ **FIXED/VERIFIED CURRENT.** `js/nagornaya-bar-extras.js` is in canonical `ALLOWED_JS`; exact current `audit-pro` passes 170 checks with 0 errors.',
+                  'a73f609f',
+              ),
+              'GATE-CSS-IMPORTANT-RATCHET': (
+                  '✅ **FIXED/VERIFIED CURRENT.** `css/site.css` uses 183 `!important` declarations against the hard ceiling 200; `css:layer:validate` and `audit-pro` both pass.',
+                  'a73f609f',
+              ),
+              'ASTRO-P0-03': (
+                  '✅ **FIXED/VERIFIED CURRENT.** `validate-map-routes.js` now promotes stats mismatches to fatal `bad(...)` diagnostics; exact `maps:validate` passes all 11 routes.',
+                  'a73f609f',
+              ),
+              'ASTRO-P0-04': (
+                  '✅ **FIXED/VERIFIED CURRENT.** Exact `avraam:audit` proves one canonical set of 19 non-context places in HTML and route data; all 27 Avraam assertions pass.',
+                  'a73f609f',
+              ),
+          }
+
+          original = matrix_path.read_text(encoding='utf-8')
+          lines = original.splitlines()
+          removed = []
+          output = []
+          section = ''
+          for line_no, line in enumerate(lines, 1):
+              if line.startswith('## '):
+                  section = line[3:].strip()
+                  if section.startswith('🔴 P0/P1'):
+                      line = '## 🔴 P0/P1 — ОТКРЫТО — release / deploy + karty runtime'
+                      section = line[3:].strip()
+              if line.startswith('| ') and not line.startswith('|---'):
+                  cells = [cell.strip() for cell in line.strip('|').split('|')]
+                  finding_id = cells[0] if cells else ''
+                  is_open_section = 'ОТКРЫТО' in section or section.startswith('🔴 P0/P1')
+                  if finding_id in closures and is_open_section:
+                      removed.append({
+                          'id': finding_id,
+                          'line': line_no,
+                          'section': section,
+                          'row': line,
+                      })
+                      continue
+              output.append(line)
+
+          if {item['id'] for item in removed} != set(closures):
+              raise SystemExit(f'closure rows drift: found {[item["id"] for item in removed]}')
+
+          closed_heading = next(i for i,line in enumerate(output) if line.startswith('## ✅ ЗАКРЫТО'))
+          closed_separator = next(
+              i for i in range(closed_heading, len(output))
+              if output[i].startswith('|---')
+          )
+          closed_rows = [
+              f'| {finding_id} | {description} | `{commit}` |'
+              for finding_id,(description,commit) in closures.items()
+          ]
+          output[closed_separator + 1:closed_separator + 1] = closed_rows
+
+          if not any(line.startswith('| REG-001 |') for line in output):
+              p2_heading = next(i for i,line in enumerate(output) if line.startswith('## 🟡 P2'))
+              p2_separator = next(
+                  i for i in range(p2_heading, len(output))
+                  if output[i].startswith('|---')
+              )
+              output.insert(
+                  p2_separator + 1,
+                  '| REG-001 | 🟡 **Hosting/security-header decision.** GitHub Pages live responses expose HSTS but no response-level CSP, X-Frame-Options, Referrer-Policy or Permissions-Policy. Closing requires a proxy/hosting decision or explicit by-design acceptance. | `reverify/CURRENT_OPEN_EVIDENCE_2026-07-23_a73f609f.md` |',
+              )
+
+          def heading_key(line):
+              value = line[3:].strip()
+              value = re.sub(r'\s*\(\d+\)\s*', ' ', value)
+              return re.sub(r'\s+', ' ', value).strip()
+
+          section_counts = collections.Counter()
+          current = ''
+          for line in output:
+              if line.startswith('## '):
+                  current = heading_key(line)
+                  continue
+              if not any(marker in current for marker in ('ЗАКРЫТО','ОТКРЫТО','РЕФАКТОРИНГ','AUDITREPO')):
+                  continue
+              if line.startswith('| ') and not line.startswith('|---'):
+                  cells = [cell.strip() for cell in line.strip('|').split('|')]
+                  if cells and cells[0] not in {'ID','Поле','Категория','Статус'} and re.match(r'^[A-Z][A-Za-z0-9]*(?:-[A-Za-z0-9]+)+$', cells[0]):
+                      section_counts[current] += 1
+
+          normalized = []
+          for line in output:
+              if line.startswith('## ✅ ЗАКРЫТО'):
+                  line = f'## ✅ ЗАКРЫТО ({section_counts["✅ ЗАКРЫТО"]})'
+              elif line.startswith('## 🔴 P0/P1'):
+                  key = next(key for key in section_counts if key.startswith('🔴 P0/P1'))
+                  line = f'## 🔴 P0/P1 — ОТКРЫТО ({section_counts[key]}) — release / deploy + karty runtime'
+              elif line.startswith('## 🟠 P1 — ОТКРЫТО'):
+                  key = next(key for key in section_counts if key.startswith('🟠 P1 — ОТКРЫТО'))
+                  line = f'## 🟠 P1 — ОТКРЫТО ({section_counts[key]})'
+              elif line.startswith('## 🟡 P2 — ОТКРЫТО'):
+                  key = next(key for key in section_counts if key.startswith('🟡 P2 — ОТКРЫТО'))
+                  line = f'## 🟡 P2 — ОТКРЫТО ({section_counts[key]})'
+              elif line.startswith('## 🟢 P3 — ОТКРЫТО'):
+                  key = next(key for key in section_counts if key.startswith('🟢 P3 — ОТКРЫТО'))
+                  line = f'## 🟢 P3 — ОТКРЫТО ({section_counts[key]})'
+              elif line.startswith('## 🔵 P3 — РЕФАКТОРИНГ'):
+                  key = next(key for key in section_counts if key.startswith('🔵 P3 — РЕФАКТОРИНГ'))
+                  line = f'## 🔵 P3 — РЕФАКТОРИНГ ({section_counts[key]})'
+              elif line.startswith('## 🟣 AUDITREPO'):
+                  key = next(key for key in section_counts if key.startswith('🟣 AUDITREPO'))
+                  line = f'## 🟣 AUDITREPO ({section_counts[key]})'
+              normalized.append(line)
+
+          matrix_path.write_text('\n'.join(line.rstrip() for line in normalized) + '\n', encoding='utf-8')
+
+          aliases = json.loads(aliases_path.read_text(encoding='utf-8'))
+          additions = {
+              'CSS-DEAD-004': {'status':'retired','reason':'Exact current-source forensic run 29971872480 found the historical empty dark-mode rule absent; css-tree parses all guarded stylesheets.'},
+              'CSS-SYNTAX-001': {'status':'retired','reason':'Exact historical malformed reduced-motion selector pattern absent on a73f609f; CSS AST contracts pass.'},
+              'CSS-SYNTAX-002': {'status':'retired','reason':'Exact dangling selector pattern absent on a73f609f; CSS AST contracts pass.'},
+              'CSS-SYNTAX-003': {'status':'retired','reason':'Exact @supports-in-selector pattern absent on a73f609f; CSS AST contracts pass.'},
+              'CSS-SYNTAX-005': {'status':'retired','reason':'Exact malformed backlinks rgba selector absent on a73f609f; CSS AST contracts pass.'},
+              'DEP-BLOCK-AVRAAM-AUDIT': {'status':'retired','reason':'Historical deploy blocker no longer active: exact avraam:audit is 27/27 on a73f609f.'},
+              'DEP-BLOCK-CSS-IMPORTANT-CEILING': {'status':'retired','reason':'Historical deploy blocker no longer active: site.css is 183 against ceiling 200 and exact CSS gates pass.'},
+              'DEP-BLOCK-EDITORIAL-REGISTRY': {'status':'retired','reason':'Historical deploy blocker no longer active: editorial registry has 43/43 eligible records and exact check exits 0.'},
+              'DEP-BLOCK-MAPS-VALIDATE': {'status':'retired','reason':'Historical deploy blocker no longer active: exact maps:validate passes all 11 route files; detailed current map findings remain canonical separately.'},
+              'UI-GILL-DESKTOP-FRAME-03': {'status':'retired','reason':'Historical missing-prevention-gate claim is superseded by permanent Gill submenu/layout/browser gates and exact Pages deployment success.'},
+          }
+          for finding_id, record in additions.items():
+              existing = aliases['aliases'].get(finding_id)
+              if existing is not None and existing != record:
+                  raise SystemExit(f'alias disposition conflict for {finding_id}: {existing}')
+              aliases['aliases'][finding_id] = record
+          aliases_path.write_text(json.dumps(aliases, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          archive_path.parent.mkdir(parents=True, exist_ok=True)
+          doc = [
+              '# Current-source forensic closures — 2026-07-23',
+              '',
+              'Exact source audit: run `29971872480`, artifact `8550022319` on `a73f609f`.',
+              'Final workspace-path source closure: PR #162 / `0f5b3307`.',
+              '',
+              'The rows below were removed from open sections and promoted to the canonical closed table. Original wording is preserved verbatim.',
+          ]
+          for item in removed:
+              doc += ['', f"## {item['id']}", '', f"- Original line: {item['line']}", f"- Original section: {item['section']}", '', item['row']]
+          archive_path.write_text('\n'.join(doc) + '\n', encoding='utf-8')
+          PY
+      - name: Prove zero coverage and repository validity
+        shell: bash
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/check_matrix_coverage.py --verbose --json-out /tmp/final-coverage.json
+          python3 - <<'PY'
+          import json
+          report=json.load(open('/tmp/final-coverage.json'))
+          if report['problems'] != 0:
+              raise SystemExit(report)
+          print(report)
+          PY
+          git diff --check
+      - name: Commit reviewed reconciliation
+        shell: bash
+        run: |
+          cat > /tmp/allowed.txt <<'EOF'
+          projects/gb-is-my-strength/archive/fixed/2026-07-23-current-truth-cleanup/CURRENT_SOURCE_FORENSIC_CLOSURES.md
+          projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          projects/gb-is-my-strength/verified/MATRIX_ID_ALIASES.json
+          EOF
+          sort -o /tmp/allowed.txt /tmp/allowed.txt
+          git add -A
+          git diff --cached --name-only | sort > /tmp/staged.txt
+          diff -u /tmp/allowed.txt /tmp/staged.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '4189828+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'reconcile(matrix): close exact current findings and reach zero coverage'
+          git push origin HEAD:"${{ github.event.pull_request.head.ref }}"
