@@ -17,3 +17,28 @@ jobs:
         run: python3 scripts/check_auditrepo_structure.py
       - name: Validate repo rules
         run: python3 scripts/validate_audit_repo.py
+
+  matrix-coverage-diagnostic:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Measure matrix evidence coverage
+        run: |
+          mkdir -p reports/matrix-coverage
+          python3 scripts/check_matrix_coverage.py \
+            --warn-only \
+            --verbose \
+            --json-out reports/matrix-coverage/report.json \
+            | tee reports/matrix-coverage/report.log
+      - name: Upload matrix coverage diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: matrix-coverage-${{ github.run_id }}
+          path: reports/matrix-coverage/**
+          if-no-files-found: error
+          retention-days: 14
