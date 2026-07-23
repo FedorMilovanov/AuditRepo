@@ -3,16 +3,16 @@
 
 The checker deliberately separates three concepts:
 
-1. canonical finding IDs — first-column IDs in MASTER_BUG_MATRIX.md;
+1. canonical finding IDs — first-column IDs in active canonical tables of
+   MASTER_BUG_MATRIX.md;
 2. explicit evidence IDs — IDs used as headings, table keys, labels or exact
    backticked tokens in reverify/incoming/working documents;
 3. direct matrix witnesses — existing evidence-document paths or immutable
    ``verified-source/browser/ci/build (<sha>)`` markers recorded in a matrix row.
 
-This avoids the old broad prose regex that treated words such as ``CSS-parser``
-or ``ROOT-ONLY`` as independent findings, while still rejecting real orphan
-claims, unregistered historical IDs, broken evidence paths and mutable closed
-references.
+Historical auditor/session tables are evidence logs rather than a second
+canonical registry. The generic ID grammar covers all current families such as
+CI, GILL, TTS, D, NG and future families without a hardcoded prefix allowlist.
 """
 
 from __future__ import annotations
@@ -26,21 +26,11 @@ import sys
 from dataclasses import dataclass
 from typing import Iterable
 
-ISSUE_PREFIXES = (
-    'P0', 'P1', 'P2', 'P3', 'BUG', 'NEW', 'AUDIT', 'SEC', 'UI', 'PC', 'R',
-    'AR', 'SEARCH', 'DATA', 'GATE', 'CONTENT', 'CACHE', 'DEPLOY', 'SEO',
-    'VALIDATE', 'IMAGE', 'SHADOW', 'NOINDEX', 'STRANGLER', 'DEAD', 'MAP',
-    'AVRAAM', 'HUB', 'KARTY', 'ASTRO', 'ENGINE', 'A11Y', 'RIVER', 'QUAL',
-    'DRAW', 'BASE', 'TEXT', 'ARCH', 'SVG', 'FONT', 'MINI', 'WAYP', 'CSS',
-    'SIG', 'REG', 'PERF', 'RELIEF', 'ROUTE', 'GLYPH', 'GRAT', 'SEA', 'ORN',
-    'HALO', 'MEDIA', 'CART', 'ROSE', 'LOD', 'COMP', 'NF', 'ATLAS',
-    'GENEALOGY', 'AUDITREPO',
-)
-PREFIX_ALT = '|'.join(re.escape(prefix) for prefix in ISSUE_PREFIXES)
+ID_BODY = r'[A-Z][A-Za-z0-9]*(?:-[A-Za-z0-9]+)+'
 TOKEN_RE = re.compile(
-    rf'(?<![A-Za-z0-9-])((?:{PREFIX_ALT})[A-Z0-9]*(?:-[A-Za-z0-9]+)+)(?![A-Za-z0-9-])'
+    rf'(?<![A-Za-z0-9-])({ID_BODY})(?![A-Za-z0-9-])'
 )
-EXACT_ID_RE = re.compile(rf'^(?:{PREFIX_ALT})[A-Z0-9]*(?:-[A-Za-z0-9]+)+$')
+EXACT_ID_RE = re.compile(rf'^{ID_BODY}$')
 UPPER_ID_RE = re.compile(r'^[A-Z0-9]+(?:-[A-Z0-9]+)+$')
 SHA_RE = re.compile(r'^[0-9a-f]{7,10}$')
 FULL_SHA_RE = re.compile(r'^[0-9a-f]{7,40}$')
@@ -53,6 +43,8 @@ WITNESS_RE = re.compile(
     r'(?P<sha>[0-9a-f]{7,40})\b',
     re.IGNORECASE,
 )
+CANONICAL_SECTION_MARKERS = ('ЗАКРЫТО', 'ОТКРЫТО', 'РЕФАКТОРИНГ', 'AUDITREPO')
+OPEN_SECTION_MARKERS = ('ОТКРЫТО', 'РЕФАКТОРИНГ', 'AUDITREPO')
 
 
 @dataclass(frozen=True)
@@ -82,6 +74,10 @@ def read_markdown(paths: Iterable[pathlib.Path]) -> dict[pathlib.Path, str]:
     return result
 
 
+def is_canonical_section(section: str) -> bool:
+    return any(marker in section for marker in CANONICAL_SECTION_MARKERS)
+
+
 def parse_matrix(matrix: str) -> tuple[dict[str, MatrixRow], set[str], list[MatrixRow]]:
     rows: dict[str, MatrixRow] = {}
     open_ids: set[str] = set()
@@ -91,6 +87,8 @@ def parse_matrix(matrix: str) -> tuple[dict[str, MatrixRow], set[str], list[Matr
     for line_no, line in enumerate(matrix.splitlines(), 1):
         if line.startswith('## '):
             section = line[3:].strip()
+            continue
+        if not is_canonical_section(section):
             continue
         cells = parse_table_cells(line)
         if not cells or cells[0] in {'ID', 'Поле', 'Категория', 'Статус'}:
@@ -105,7 +103,7 @@ def parse_matrix(matrix: str) -> tuple[dict[str, MatrixRow], set[str], list[Matr
                 f'lines {rows[finding_id].line_no} and {line_no}'
             )
         rows[finding_id] = row
-        if any(marker in section for marker in ('ОТКРЫТО', 'РЕФАКТОРИНГ', 'AUDITREPO')):
+        if any(marker in section for marker in OPEN_SECTION_MARKERS):
             open_ids.add(finding_id)
         if 'ЗАКРЫТО' in section:
             closed_rows.append(row)
@@ -162,7 +160,10 @@ def structured_ids(text: str, known_ids: set[str]) -> dict[str, set[str]]:
     return filtered
 
 
-def load_aliases(path: pathlib.Path, matrix_ids: set[str]) -> tuple[dict[str, str | None], set[str]]:
+def load_aliases(
+    path: pathlib.Path,
+    matrix_ids: set[str],
+) -> tuple[dict[str, str | None], set[str]]:
     if not path.exists():
         return {}, set()
     data = json.loads(path.read_text(encoding='utf-8'))
@@ -188,7 +189,9 @@ def load_aliases(path: pathlib.Path, matrix_ids: set[str]) -> tuple[dict[str, st
             raise ValueError(f'{path}: unsupported status {status!r} for {alias}')
         if status == 'alias':
             if target not in matrix_ids:
-                raise ValueError(f'{path}: alias {alias} targets missing canonical ID {target!r}')
+                raise ValueError(
+                    f'{path}: alias {alias} targets missing canonical ID {target!r}'
+                )
             aliases[alias] = target
         else:
             aliases[alias] = None
@@ -200,7 +203,9 @@ def row_direct_witness(
     project: pathlib.Path,
 ) -> tuple[bool, list[str]]:
     problems: list[str] = []
-    paths = list(dict.fromkeys(match.group('path') for match in PATH_RE.finditer(row.line)))
+    paths = list(
+        dict.fromkeys(match.group('path') for match in PATH_RE.finditer(row.line))
+    )
     existing_paths = 0
     for rel in paths:
         candidate = project / rel
@@ -208,7 +213,8 @@ def row_direct_witness(
             existing_paths += 1
         else:
             problems.append(
-                f'BROKEN-EVIDENCE-PATH: open bug {row.finding_id} references missing {rel}'
+                f'BROKEN-EVIDENCE-PATH: open bug {row.finding_id} '
+                f'references missing {rel}'
             )
 
     immutable_witness = any(
@@ -299,7 +305,11 @@ def main() -> int:
         )
 
     for finding_id in sorted(reverify_ids):
-        if finding_id in matrix_rows or finding_id in aliases or finding_id in ignored_tokens:
+        if (
+            finding_id in matrix_rows
+            or finding_id in aliases
+            or finding_id in ignored_tokens
+        ):
             continue
         problems.append(
             f'UNREGISTERED-EVIDENCE: reverify explicitly registers {finding_id} '
@@ -307,7 +317,11 @@ def main() -> int:
         )
 
     for row in closed_rows:
-        ref = row.cells[-1].strip('`').split()[0].strip('`') if row.cells[-1] else ''
+        ref = (
+            row.cells[-1].strip('`').split()[0].strip('`')
+            if row.cells[-1]
+            else ''
+        )
         if ref and not SHA_RE.fullmatch(ref) and ref not in NON_SHA_OK:
             problems.append(
                 f'BAD-COMMIT-REF: closed bug {row.finding_id} ref {ref!r} '
@@ -323,7 +337,9 @@ def main() -> int:
         'directWitnessedOpenRows': len(direct_witnessed),
         'archivedOnlyOpenRows': len(archived_only),
         'problems': len(problems),
-        'problemKinds': dict(collections.Counter(item.split(':', 1)[0] for item in problems)),
+        'problemKinds': dict(
+            collections.Counter(item.split(':', 1)[0] for item in problems)
+        ),
         'directWitnessedIds': direct_witnessed,
         'archivedOnlyIds': archived_only,
         'diagnostics': problems,
@@ -344,7 +360,10 @@ def main() -> int:
     if args.json_out:
         output = pathlib.Path(args.json_out)
         output.parent.mkdir(parents=True, exist_ok=True)
-        output.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        output.write_text(
+            json.dumps(summary, ensure_ascii=False, indent=2) + '\n',
+            encoding='utf-8',
+        )
 
     if problems:
         print(f'\n{len(problems)} problem(s):')
