@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "aliases": {
+    "AGENTS-r321": {
+      "status": "informational",
+      "reason": "Opaque AGENTS revision self-reference; reverify explicitly says it is not an active bug."
+    },
+    "AUDIT-CSS-FLOATCLUSTER-COMMENT-CORRUPTION": {
+      "status": "retired",
+      "reason": "Reverify marks the comment/parser corruption fixed-current after the floating-cluster stylesheet rewrite."
+    },
+    "AUDIT-CSS-NO-STRUCTURAL-PARSE": {
+      "status": "retired",
+      "reason": "Resolved by the structural css-tree parse gate in check-engine-contracts.js."
+    },
+    "AUDIT-CSS-SITECSS-STRUCT-CORRUPTION": {
+      "status": "retired",
+      "reason": "Fixed-current at source witness 912ffe3; postcss and css-tree parse site.css with zero errors."
+    },
+    "AUDIT-GILL-FALSE-GREEN-05": {
+      "status": "false-positive",
+      "reason": "Reverify closed the claim: no false-green assertion was introduced."
+    },
+    "AUDIT-P0-SWBASELINE": {
+      "status": "alias",
+      "canonical": "BUG-SW-BASELINE-DRIFT",
+      "reason": "Same Service Worker baseline-drift root cause."
+    },
+    "AUDIT-P2-ACTIONLINT-NOT-WIRED": {
+      "status": "alias",
+      "canonical": "NEW-ACTIONLINT-CI-GAP",
+      "reason": "Reverify explicitly maps the intake ID to the canonical Actionlint CI gap."
+    },
+    "AUDIT-P2-AR-STALE": {
+      "status": "retired",
+      "reason": "Historical AuditRepo lag claim superseded by the current-truth reconciliation and archived intake processing."
+    },
+    "AUDIT-P2-IXNOW-RETRY": {
+      "status": "alias",
+      "canonical": "BUG-CI-003",
+      "reason": "Same IndexNow retry/silent-failure root cause."
+    },
+    "AUDIT-P2-NODE-REGEX": {
+      "status": "false-positive",
+      "reason": "Reverify proves the cited mustScript function and code lines never existed."
+    },
+    "AUDIT-P2-SEARCH-TE": {
+      "status": "informational",
+      "reason": "Verified correct for trailingSlash=always; only a hypothetical future-config risk."
+    },
+    "AUDIT-P3-MATRIX-DUPE": {
+      "status": "informational",
+      "reason": "AGENTS revision-history opacity, acknowledged as non-harmful rather than a source defect."
+    },
+    "AUDIT-P3-PARITY-SCOPE": {
+      "status": "informational",
+      "reason": "Workflow trigger breadth and route screenshot scope intentionally operate at different granularity."
+    },
+    "AUDIT-P3-REACT-UNDOCUMENTED": {
+      "status": "false-positive",
+      "reason": "React is actively used and the original claim was rejected by reverify."
+    },
+    "AUDIT-P3-SEO-HARDCODED-OG": {
+      "status": "alias",
+      "canonical": "NEW-OG-SIZE-PARAM",
+      "reason": "Same hardcoded OpenGraph dimensions audit root cause."
+    },
+    "AUDIT-P3-SITEUTILS-WARN": {
+      "status": "informational",
+      "reason": "Historical intake supplied no verifiable source line or runtime witness."
+    },
+    "AUDIT-P3-STALE-DOCS": {
+      "status": "retired",
+      "reason": "Umbrella intake split into canonical BUG-CLEANUP-002/003/004 decisions; historical row is not independently actionable."
+    },
+    "AUDIT-P3-SW-PRECACHE-LAZY": {
+      "status": "alias",
+      "canonical": "BUG-ARCH-001",
+      "reason": "Same lazy-assets-in-precache root cause."
+    },
+    "BUG-ASTRO-CONFIG-001": {
+      "status": "informational",
+      "reason": "Reverify downgraded the claim after confirming the Astro React integration is used."
+    },
+    "CHECK-GAP-DIST-SMOKE": {
+      "status": "alias",
+      "canonical": "NEW-64",
+      "reason": "Same broad production-like runtime smoke prevention gap."
+    },
+    "CI-CSSLAYER-STALE": {
+      "status": "retired",
+      "reason": "Fixed-current by a65874a0; the package script targets css/site.css and the validator passes."
+    },
+    "CI-GILL-SUBMENU-01": {
+      "status": "retired",
+      "reason": "Pre-v16 submenu reverify marks the CI finding fixed-current."
+    },
+    "CI-HIDDEN-SW-PAGEFIND-PRECACHE": {
+      "status": "alias",
+      "canonical": "NEW-66",
+      "reason": "Same Service Worker/Pagefind deploy-switch contract."
+    },
+    "CI-P0-GILL-RUNTIME-REFS": {
+      "status": "retired",
+      "reason": "Global runtime no-undef regression fixed by the 22eb084 lane and later deployment witnesses."
+    },
+    "CI-P1-NAGORNAYA-SITEUTILS-ORDER": {
+      "status": "retired",
+      "reason": "Fixed by safeReady fallback in 8a816ce4 and verified in the runtime no-undef closure."
+    },
+    "NEW-67": {
+      "status": "false-positive",
+      "reason": "Reverify proved the supposed dead scripts are documented manual QA/migration tools, not deletion-ready dead code."
+    },
+    "NEW-68": {
+      "status": "retired",
+      "reason": "CSP form-action regression fixed-current by production-like evidence at 14574a9a."
+    },
+    "NEW-69": {
+      "status": "retired",
+      "reason": "Missing CSP on Astro map routes fixed-current by production-like evidence at 14574a9a."
+    },
+    "NEW-VOSK-UNZIP-SYNC-JANK": {
+      "status": "alias",
+      "canonical": "TTS-DL-UNZIP-SYNC",
+      "reason": "Reverify explicitly records the Vosk intake name as the canonical synchronous-unzip finding."
+    },
+    "PC-CURRENT": {
+      "status": "informational",
+      "reason": "Umbrella label for the six PremiumControls checks, not an independent finding."
+    },
+    "PC-CURRENT-01": {
+      "status": "retired",
+      "reason": "Deep audit marks the Gill marker publication finding stale/fixed."
+    },
+    "PC-CURRENT-02": {
+      "status": "retired",
+      "reason": "RomanNumeral is active on all five Gill routes."
+    },
+    "PC-CURRENT-03": {
+      "status": "retired",
+      "reason": "Required PremiumControls files are present in cache-bust and asset-version registries."
+    },
+    "PC-CURRENT-04": {
+      "status": "retired",
+      "reason": "Obsolete premium-controls.css was removed; floating-cluster.css is canonical."
+    },
+    "PC-CURRENT-05": {
+      "status": "retired",
+      "reason": "Deep audit verified valid keyframes and clean transitions."
+    },
+    "SEC-002": {
+      "status": "alias",
+      "canonical": "NEW-SAFEURL-XSS-HARDENING",
+      "reason": "Reverify explicitly identifies SEC-002 as the safeUrl scheme-blocklist hardening finding."
+    },
+    "SEO-CANON-P0-01": {
+      "status": "alias",
+      "canonical": "D-1",
+      "reason": "Same cancel-in-progress deployment starvation/concurrency root cause."
+    },
+    "SSOT-HEAD-DRIFT-4D": {
+      "status": "retired",
+      "reason": "Documentation half closed by reverify; current cleanup restores exact source/readiness/Pages/live authority."
+    },
+    "UI-GILL-HISTORICAL-PARITY-03": {
+      "status": "retired",
+      "reason": "Pre-v16 frame reverify marks historical parity verified-current; later browser gates are permanent."
+    },
+    "UI-GILL-ROUNDED-FRAME-04": {
+      "status": "retired",
+      "reason": "Rounded frame was verified-current; remaining owner approval was visual preference, not a source bug."
+    },
+    "UI-GILL-SUBMENU-ANCHOR-02": {
+      "status": "retired",
+      "reason": "Pre-v16 submenu reverify marks the anchor finding fixed-current."
+    },
+    "VIS-BAPTISTY-PARITY": {
+      "status": "alias",
+      "canonical": "NEW-65",
+      "reason": "Reverify explicitly closes NEW-65 / VIS-BAPTISTY-PARITY as one visual parity finding."
+    }
+  },
+  "ignoredTokens": []
+}
