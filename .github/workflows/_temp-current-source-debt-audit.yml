@@ -1,0 +1,178 @@
+name: Temp current source debt audit
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    if: github.event.pull_request.number == 28
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout exact production source
+        uses: actions/checkout@v4
+        with:
+          repository: FedorMilovanov/gb-is-my-strength
+          ref: a73f609f3163c8021525028e805132793d5db954
+          path: source-current
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+          cache: npm
+          cache-dependency-path: source-current/package-lock.json
+      - name: Install source dependencies
+        working-directory: source-current
+        run: npm ci
+      - name: Run exact source contracts
+        shell: bash
+        run: |
+          mkdir -p reports/current-source-debt
+          cd source-current
+          set +e
+          for spec in \
+            'maps-validate::npm run maps:validate' \
+            'avraam-audit::npm run avraam:audit' \
+            'css-layer::npm run css:layer:validate' \
+            'audit-pro::node scripts/audit-pro.js' \
+            'engine-contracts::node scripts/check-engine-contracts.js' \
+            'editorial-registry::node scripts/editorial-metadata-registry.js --check'
+          do
+            name="${spec%%::*}"
+            command="${spec#*::}"
+            bash -lc "$command" > "../reports/current-source-debt/${name}.log" 2>&1
+            printf '%s\n' "$?" > "../reports/current-source-debt/${name}.exit"
+          done
+          git rev-parse HEAD > ../reports/current-source-debt/source-sha.txt
+          cd ..
+      - name: Inspect exact historical patterns and current implementations
+        shell: bash
+        run: |
+          cd source-current
+          python3 - <<'PY'
+          from pathlib import Path
+          import json, re, subprocess
+
+          root = Path('.')
+          tracked = subprocess.check_output(['git','ls-files'], text=True).splitlines()
+          text_files = []
+          for rel in tracked:
+              path = Path(rel)
+              if path.suffix.lower() in {'.css','.js','.mjs','.cjs','.ts','.tsx','.astro','.html','.json','.md'} and path.is_file():
+                  text_files.append(path)
+
+          patterns = {
+              'CSS-SYNTAX-001': '@media (prefers-reduced-motion:reduce){.bottom-bar,.btoc-link,.flip-card-inner,.h-article-card,.quiz-option}',
+              'CSS-SYNTAX-002': '.ehrman-block,.info-box,.quote-box}',
+              'CSS-SYNTAX-003': '.resume-reading-title,@supports (animation-timeline:scroll())',
+              'CSS-DEAD-004': '@media (hover:hover) and (pointer:fine){html.dark }',
+              'CSS-SYNTAX-005': '.gbx-backlinks__maplink:rgba(122,46,46,0.08)',
+              'ATLAS-WORKSPACE-PATH': 'AuditRepo/projects/gb-is-my-strength/',
+          }
+          pattern_hits = {}
+          for finding, needle in patterns.items():
+              hits = []
+              for path in text_files:
+                  text = path.read_text(encoding='utf-8', errors='ignore')
+                  if needle in text:
+                      for line_no, line in enumerate(text.splitlines(), 1):
+                          if needle in line:
+                              hits.append({'file': str(path), 'line': line_no, 'text': line[:1000]})
+              pattern_hits[finding] = hits
+
+          def grep_context(pattern, paths):
+              rx = re.compile(pattern, re.I)
+              found = []
+              for rel in paths:
+                  path = Path(rel)
+                  if not path.exists() or not path.is_file():
+                      continue
+                  lines = path.read_text(encoding='utf-8', errors='ignore').splitlines()
+                  for line_no, line in enumerate(lines, 1):
+                      if rx.search(line):
+                          start=max(0,line_no-3); end=min(len(lines),line_no+2)
+                          found.append({
+                              'file': rel,
+                              'line': line_no,
+                              'context': '\n'.join(f'{i+1}: {lines[i]}' for i in range(start,end)),
+                          })
+              return found[:100]
+
+          report = {
+              'sourceSha': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(),
+              'patternHits': pattern_hits,
+              'forbiddenJs': grep_context(r'nagornaya-bar-extras|ALLOWED_JS', ['scripts/audit-pro.js']),
+              'sitemapAudit': grep_context(r'sitemap|SITEMAP', ['scripts/audit-pro.js','scripts/validate.js','scripts/check-public-content-baseline.js']),
+              'mapPanel': grep_context(r'me-panel|max-height|100dvh|visualViewport|safe-area', ['karty/_engine/map-engine.js','karty/_engine/map-engine.css','css/map-engine.css']),
+              'mapValidation': grep_context(r'warning|process\.exit|missingCount|places|scientific_variants', ['scripts/validate-map-routes.js','scripts/avraam-map-audit.js']),
+              'mapPaths': grep_context(r'stages?\[|\.paths|stage\.paths|routePath|pathD|curv', ['karty/_engine/map-engine.js','scripts/validate-map-routes.js']),
+              'errorFallback': grep_context(r'noscript|error|catch|fallback|initiali', ['src/components/maps/MapEngine.astro','src/pages/karty/avraam/index.astro','karty/_engine/map-engine.js']),
+              'gillGeometry': grep_context(r'geometry|rail|desktop|bounding|overflow', ['scripts/gill-v16-submenu-pre-v16-audit.js','scripts/gill-mobile-layout-audit.js','scripts/gill-v16-mobile-reference-layout-audit.js']),
+          }
+          Path('../reports/current-source-debt/source-inspection.json').write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps({
+              'sourceSha': report['sourceSha'],
+              'patternHitCounts': {key: len(value) for key,value in pattern_hits.items()},
+              'forbiddenJsContexts': len(report['forbiddenJs']),
+              'sitemapContexts': len(report['sitemapAudit']),
+              'mapPanelContexts': len(report['mapPanel']),
+              'mapPathContexts': len(report['mapPaths']),
+          }, ensure_ascii=False, indent=2))
+          PY
+          cd ..
+      - name: Build and run mobile map browser smoke
+        shell: bash
+        run: |
+          cd source-current
+          set +e
+          npm run strangler:build:production-like > ../reports/current-source-debt/build.log 2>&1
+          build_status=$?
+          printf '%s\n' "$build_status" > ../reports/current-source-debt/build.exit
+          if test "$build_status" -eq 0; then
+            npx playwright install --with-deps chromium > ../reports/current-source-debt/playwright-install.log 2>&1
+            printf '%s\n' "$?" > ../reports/current-source-debt/playwright-install.exit
+            npm run smoke:maps:mobile > ../reports/current-source-debt/map-mobile-smoke.log 2>&1
+            printf '%s\n' "$?" > ../reports/current-source-debt/map-mobile-smoke.exit
+          fi
+          cd ..
+      - name: Capture live hosting headers
+        shell: bash
+        run: |
+          set +e
+          curl -fsSIL --retry 3 'https://gospod-bog.ru/' > reports/current-source-debt/live-headers-root.txt
+          printf '%s\n' "$?" > reports/current-source-debt/live-headers-root.exit
+          curl -fsSIL --retry 3 'https://gospod-bog.ru/karty/avraam/' > reports/current-source-debt/live-headers-avraam.txt
+          printf '%s\n' "$?" > reports/current-source-debt/live-headers-avraam.exit
+      - name: Summarize audit outcomes
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          root=Path('reports/current-source-debt')
+          exits={path.stem:int(path.read_text().strip()) for path in root.glob('*.exit') if path.read_text().strip().isdigit()}
+          inspection=json.loads((root/'source-inspection.json').read_text()) if (root/'source-inspection.json').exists() else {}
+          summary={
+              'exits':exits,
+              'sourceSha':(root/'source-sha.txt').read_text().strip() if (root/'source-sha.txt').exists() else None,
+              'patternHitCounts':{key:len(value) for key,value in inspection.get('patternHits',{}).items()},
+          }
+          (root/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
+          print(json.dumps(summary,ensure_ascii=False,indent=2))
+          PY
+      - name: Upload exact source debt audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: current-source-debt-audit-${{ github.run_id }}
+          path: reports/current-source-debt/**
+          if-no-files-found: error
+          retention-days: 7
