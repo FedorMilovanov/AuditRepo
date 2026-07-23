@@ -45,3 +45,79 @@ jobs:
           path: reports/matrix-coverage/**
           if-no-files-found: error
           retention-days: 14
+
+  observe-sitemap-contract-production:
+    if: github.event_name == 'pull_request' && github.head_ref == 'agent/close-sitemap-contract-8a535267'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    env:
+      TARGET_SHA: 8a5352671375fdb01b6c30273c25ec4283a13f69
+      SOURCE_REPO: FedorMilovanov/gb-is-my-strength
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wait for exact readiness and Pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p reports/sitemap-production-witness
+          api_get() {
+            curl --fail --silent --show-error \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "$1"
+          }
+          wait_for_workflow() {
+            local workflow="$1"
+            local label="$2"
+            local out="$3"
+            for attempt in $(seq 1 80); do
+              api_get "https://api.github.com/repos/$SOURCE_REPO/actions/workflows/$workflow/runs?branch=main&per_page=40" > "$out.all.json"
+              jq --arg sha "$TARGET_SHA" '[.workflow_runs[] | select(.head_sha == $sha)] | sort_by(.created_at) | last // empty' "$out.all.json" > "$out.json"
+              if [ -s "$out.json" ]; then
+                status=$(jq -r '.status // empty' "$out.json")
+                conclusion=$(jq -r '.conclusion // empty' "$out.json")
+                run_id=$(jq -r '.id // empty' "$out.json")
+                echo "$label attempt=$attempt run=$run_id status=$status conclusion=$conclusion"
+                if [ "$status" = "completed" ]; then
+                  if [ "$conclusion" != "success" ]; then
+                    cat "$out.json"
+                    return 1
+                  fi
+                  api_get "https://api.github.com/repos/$SOURCE_REPO/actions/runs/$run_id/jobs?per_page=100" > "$out.jobs.json"
+                  return 0
+                fi
+              else
+                echo "$label attempt=$attempt exact run not created yet"
+              fi
+              sleep 20
+            done
+            echo "Timed out waiting for $label on $TARGET_SHA" >&2
+            return 1
+          }
+          wait_for_workflow indexnow.yml readiness reports/sitemap-production-witness/readiness
+          wait_for_workflow deploy.yml pages reports/sitemap-production-witness/pages
+      - name: Verify live sitemap contract surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          cache_buster="$(date +%s)"
+          curl --fail --silent --show-error \
+            "https://gospod-bog.ru/sitemap.xml?cb=$cache_buster" \
+            -o reports/sitemap-production-witness/live-sitemap.xml
+          loc_count=$(grep -c '<loc>' reports/sitemap-production-witness/live-sitemap.xml)
+          sha256sum reports/sitemap-production-witness/live-sitemap.xml \
+            > reports/sitemap-production-witness/live-sitemap.sha256
+          printf 'target=%s\nloc_count=%s\n' "$TARGET_SHA" "$loc_count" \
+            | tee reports/sitemap-production-witness/summary.txt
+          test "$loc_count" -eq 66
+      - name: Upload exact production witness
+        uses: actions/upload-artifact@v4
+        with:
+          name: sitemap-production-witness-${{ github.run_id }}
+          path: reports/sitemap-production-witness/**
+          if-no-files-found: error
+          retention-days: 30
