@@ -11,7 +11,7 @@ A canonical finding is a stable ID in the first column of one of the active matr
 - `РЕФАКТОРИНГ`;
 - `AUDITREPO`.
 
-Historical auditor/session tables are evidence logs, not a second canonical registry. IDs repeated there do not create duplicate canonical rows.
+Historical auditor/session tables are evidence logs, not a second canonical registry. IDs repeated there do not create duplicate canonical rows. Rows outside the four canonical section families are never counted as canonical merely because their first cell resembles an ID.
 
 The ID grammar is repository-wide rather than prefix-allowlisted: an uppercase-leading alphanumeric segment followed by one or more hyphen-separated segments. This covers current families such as `CI-*`, `GILL-*`, `TTS-*`, `D-*`, `NG-*`, `MAP-*` and future families without changing the checker.
 
