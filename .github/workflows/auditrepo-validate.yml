@@ -42,3 +42,134 @@ jobs:
           path: reports/matrix-coverage/**
           if-no-files-found: error
           retention-days: 14
+
+  patch-evidence-id-filter:
+    if: github.event_name == 'pull_request' && github.event.pull_request.number == 28 && github.event.pull_request.head.repo.full_name == github.repository
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - name: Tighten evidence ID credibility without prefix allowlists
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/check_matrix_coverage.py')
+          text = path.read_text(encoding='utf-8')
+          changed = False
+
+          old_signature = 'def structured_ids(text: str, known_ids: set[str]) -> dict[str, set[str]]:'
+          new_signature = 'def structured_ids(\n    text: str,\n    known_ids: set[str],\n    canonical_families: set[str],\n) -> dict[str, set[str]]:'
+          if new_signature not in text:
+              if text.count(old_signature) != 1:
+                  raise SystemExit('structured_ids signature anchor drift')
+              text = text.replace(old_signature, new_signature, 1)
+              changed = True
+
+          old_filter = '''    # Backticked prose-like tokens are only considered new evidence IDs when
+    # they look like stable uppercase identifiers and contain a numeric
+    # discriminator. Existing canonical/alias IDs are always retained.
+    filtered: dict[str, set[str]] = {}
+    for token, contexts in found.items():
+        strong_context = bool(contexts & {'table-key', 'heading', 'label'})
+        credible_backtick = (
+            token in known_ids
+            or (
+                bool(UPPER_ID_RE.fullmatch(token))
+                and any(char.isdigit() for char in token)
+                and not re.fullmatch(r'P[0-3](?:-[A-Z0-9]+)+', token)
+            )
+        )
+        if strong_context or credible_backtick:
+            filtered[token] = contexts
+    return filtered
+'''
+          new_filter = '''    # A table-key is an explicit declaration. Elsewhere, canonical/alias IDs
+    # are always retained; unknown candidates must look like stable uppercase
+    # identifiers and carry either a numeric discriminator, a family already
+    # present in the canonical matrix, or at least three semantic segments.
+    # This excludes prose compounds such as Follow-up, Current-head and SHA-256
+    # without returning to a hardcoded prefix allowlist.
+    filtered: dict[str, set[str]] = {}
+    lexical_non_findings = {'SHA-256'}
+    for token, contexts in found.items():
+        if token in lexical_non_findings:
+            continue
+        if 'table-key' in contexts or token in known_ids:
+            filtered[token] = contexts
+            continue
+        if not UPPER_ID_RE.fullmatch(token):
+            continue
+        segments = token.split('-')
+        credible = (
+            any(char.isdigit() for char in token)
+            or segments[0] in canonical_families
+            or len(segments) >= 3
+        )
+        if credible:
+            filtered[token] = contexts
+    return filtered
+'''
+          if new_filter not in text:
+              if text.count(old_filter) != 1:
+                  raise SystemExit('structured_ids filter anchor drift')
+              text = text.replace(old_filter, new_filter, 1)
+              changed = True
+
+          old_known = '''    known_ids = set(matrix_rows) | set(aliases) | ignored_tokens
+    evidence_occurrences: dict[str, list[str]] = collections.defaultdict(list)
+'''
+          new_known = '''    known_ids = set(matrix_rows) | set(aliases) | ignored_tokens
+    canonical_families = {finding_id.split('-', 1)[0] for finding_id in matrix_rows}
+    evidence_occurrences: dict[str, list[str]] = collections.defaultdict(list)
+'''
+          if new_known not in text:
+              if text.count(old_known) != 1:
+                  raise SystemExit('known_ids anchor drift')
+              text = text.replace(old_known, new_known, 1)
+              changed = True
+
+          text = text.replace(
+              'ids = structured_ids(text, known_ids)',
+              'ids = structured_ids(text, known_ids, canonical_families)',
+          )
+          text = text.replace(
+              'for finding_id in structured_ids(text, known_ids):',
+              'for finding_id in structured_ids(text, known_ids, canonical_families):',
+          )
+
+          path.write_text(text, encoding='utf-8')
+          Path('/tmp/evidence-id-filter.changed').write_text('1' if changed else '0')
+          PY
+          python3 -m py_compile scripts/check_matrix_coverage.py
+          python3 scripts/check_matrix_coverage.py --warn-only --json-out /tmp/filter-report.json
+          python3 - <<'PY'
+          import json
+          report = json.load(open('/tmp/filter-report.json'))
+          diagnostics = '\n'.join(report['diagnostics'])
+          forbidden = ['Follow-up', 'Current-head', 'SHA-256', 'Astro-Native', 'Blast-radius']
+          remaining = [token for token in forbidden if token in diagnostics]
+          if remaining:
+              raise SystemExit(f'prose compounds remain classified as IDs: {remaining}')
+          print(report)
+          PY
+          git diff --check
+      - name: Commit evidence ID filter
+        shell: bash
+        run: |
+          if test "$(cat /tmp/evidence-id-filter.changed)" = 0; then
+            echo 'Evidence ID filter already present.'
+            exit 0
+          fi
+          git add scripts/check_matrix_coverage.py
+          test "$(git diff --cached --name-only)" = 'scripts/check_matrix_coverage.py'
+          git config user.name 'github-actions[bot]'
+          git config user.email '4189827+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'fix(matrix): distinguish evidence IDs from prose compounds'
+          git push origin HEAD:"${{ github.event.pull_request.head.ref }}"
