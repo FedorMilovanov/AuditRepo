@@ -13,7 +13,9 @@ Date: 2026-07-24
 
 `AUDIT-PRO-ROOT-ONLY` is closed by source PR #169, merge `73c49e992358c850832ac1bbd37c426e7b9e75bb`.
 
-The fix does not turn `audit-pro.js` into a second `dist` audit. It gives the early source gate an explicit registry-owned corpus:
+The source merge is `73c49e99`; the exact pre-merge PR head used by the cited CI evidence is `7bda4b44`.
+
+The fix does not turn `audit-pro.js` into a second `dist` audit. Instead, it gives the early source gate an explicit registry-owned corpus:
 
 - 75 production routes total;
 - 52 committed production-shadow HTML files audited at source time;
