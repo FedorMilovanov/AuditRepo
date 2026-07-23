@@ -52,3 +52,5 @@ The coverage job remains diagnostic while historical IDs and orphan claims are r
 - every open finding has traceable evidence;
 - mutable closed references are zero;
 - the diagnostic reports zero problems on a clean PR head.
+
+A zero-coverage promotion must be produced by a reviewed transaction with an exact allowlist, archived original rows and strict `check_matrix_coverage.py` success before commit. The workflow cannot manufacture zero by suppressing diagnostics or weakening ID/evidence rules.
