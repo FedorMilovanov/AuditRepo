@@ -2,9 +2,7 @@ name: AuditRepo Validate
 
 on:
   push:
-    branches:
-      - main
-      - agent/current-truth-cleanup-2026-07-23
+    branches: [main]
   pull_request:
 
 jobs:
@@ -21,7 +19,10 @@ jobs:
         run: python3 scripts/validate_audit_repo.py
 
   sync-current-truth:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/agent/current-truth-cleanup-2026-07-23'
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'agent/current-truth-cleanup-2026-07-23'
     needs: validate
     runs-on: ubuntu-latest
     permissions:
@@ -29,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: agent/current-truth-cleanup-2026-07-23
+          ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
 
       - name: Extract and run canonical synchronization
@@ -73,4 +74,4 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m 'docs(audit): synchronize exact production current truth'
-          git push origin HEAD:agent/current-truth-cleanup-2026-07-23
+          git push origin HEAD:"${{ github.event.pull_request.head.ref }}"
