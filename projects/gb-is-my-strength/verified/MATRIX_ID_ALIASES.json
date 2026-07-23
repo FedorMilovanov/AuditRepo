@@ -179,6 +179,46 @@
       "status": "alias",
       "canonical": "NEW-65",
       "reason": "Reverify explicitly closes NEW-65 / VIS-BAPTISTY-PARITY as one visual parity finding."
+    },
+    "CSS-DEAD-004": {
+      "status": "retired",
+      "reason": "Exact current-source forensic run 29971872480 found the historical empty dark-mode rule absent; css-tree parses all guarded stylesheets."
+    },
+    "CSS-SYNTAX-001": {
+      "status": "retired",
+      "reason": "Exact historical malformed reduced-motion selector pattern absent on a73f609f; CSS AST contracts pass."
+    },
+    "CSS-SYNTAX-002": {
+      "status": "retired",
+      "reason": "Exact dangling selector pattern absent on a73f609f; CSS AST contracts pass."
+    },
+    "CSS-SYNTAX-003": {
+      "status": "retired",
+      "reason": "Exact @supports-in-selector pattern absent on a73f609f; CSS AST contracts pass."
+    },
+    "CSS-SYNTAX-005": {
+      "status": "retired",
+      "reason": "Exact malformed backlinks rgba selector absent on a73f609f; CSS AST contracts pass."
+    },
+    "DEP-BLOCK-AVRAAM-AUDIT": {
+      "status": "retired",
+      "reason": "Historical deploy blocker no longer active: exact avraam:audit is 27/27 on a73f609f."
+    },
+    "DEP-BLOCK-CSS-IMPORTANT-CEILING": {
+      "status": "retired",
+      "reason": "Historical deploy blocker no longer active: site.css is 183 against ceiling 200 and exact CSS gates pass."
+    },
+    "DEP-BLOCK-EDITORIAL-REGISTRY": {
+      "status": "retired",
+      "reason": "Historical deploy blocker no longer active: editorial registry has 43/43 eligible records and exact check exits 0."
+    },
+    "DEP-BLOCK-MAPS-VALIDATE": {
+      "status": "retired",
+      "reason": "Historical deploy blocker no longer active: exact maps:validate passes all 11 route files; detailed current map findings remain canonical separately."
+    },
+    "UI-GILL-DESKTOP-FRAME-03": {
+      "status": "retired",
+      "reason": "Historical missing-prevention-gate claim is superseded by permanent Gill submenu/layout/browser gates and exact Pages deployment success."
     }
   },
   "ignoredTokens": []
