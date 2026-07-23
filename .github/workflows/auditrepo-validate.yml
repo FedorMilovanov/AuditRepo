@@ -42,3 +42,88 @@ jobs:
           path: reports/matrix-coverage/**
           if-no-files-found: error
           retention-days: 14
+
+  matrix-id-classification:
+    if: github.event_name == 'pull_request' && github.event.pull_request.number == 28
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect exact contexts for unresolved IDs
+        shell: bash
+        run: |
+          mkdir -p reports/matrix-id-classification
+          python3 scripts/check_matrix_coverage.py \
+            --warn-only \
+            --json-out reports/matrix-id-classification/coverage.json \
+            > reports/matrix-id-classification/coverage.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import json, re
+
+          project = Path('projects/gb-is-my-strength')
+          coverage = json.loads(Path('reports/matrix-id-classification/coverage.json').read_text())
+          ids = []
+          for diagnostic in coverage['diagnostics']:
+              if not diagnostic.startswith('UNREGISTERED-EVIDENCE:'):
+                  continue
+              ids.append(diagnostic.split()[3])
+          ids = sorted(set(ids))
+
+          contexts = {finding_id: [] for finding_id in ids}
+          roots = [project / 'reverify', project / 'incoming', project / 'working', project / 'archive']
+          for root in roots:
+              if not root.exists():
+                  continue
+              for path in root.rglob('*.md'):
+                  lines = path.read_text(encoding='utf-8', errors='ignore').splitlines()
+                  for line_no, line in enumerate(lines, 1):
+                      for finding_id in ids:
+                          if re.search(rf'(?<![A-Za-z0-9-]){re.escape(finding_id)}(?![A-Za-z0-9-])', line):
+                              start = max(0, line_no - 2)
+                              end = min(len(lines), line_no + 2)
+                              contexts[finding_id].append({
+                                  'file': str(path.relative_to(project)),
+                                  'line': line_no,
+                                  'context': '\n'.join(
+                                      f'{index + 1}: {lines[index]}' for index in range(start, end)
+                                  )[:4000],
+                              })
+
+          matrix = (project / 'verified/MASTER_BUG_MATRIX.md').read_text(encoding='utf-8')
+          canonical_rows = []
+          for line_no, line in enumerate(matrix.splitlines(), 1):
+              if line.startswith('| ') and not line.startswith('|---'):
+                  cells = [cell.strip() for cell in line.strip('|').split('|')]
+                  if cells and '-' in cells[0] and cells[0] not in {'ID', 'Поле', 'Категория', 'Статус'}:
+                      canonical_rows.append({'id': cells[0], 'line': line_no, 'row': line})
+
+          report = {
+              'unregisteredIds': ids,
+              'contexts': contexts,
+              'canonicalRows': canonical_rows,
+          }
+          Path('reports/matrix-id-classification/report.json').write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          md = ['# Matrix ID classification contexts', '']
+          for finding_id in ids:
+              md += [f'## {finding_id}', '']
+              for item in contexts[finding_id][:20]:
+                  md += [f"### {item['file']}:{item['line']}", '', '```text', item['context'], '```', '']
+          Path('reports/matrix-id-classification/report.md').write_text(
+              '\n'.join(md), encoding='utf-8'
+          )
+          print(f'Collected contexts for {len(ids)} unresolved IDs')
+          PY
+      - name: Upload ID classification contexts
+        uses: actions/upload-artifact@v4
+        with:
+          name: matrix-id-classification-${{ github.run_id }}
+          path: reports/matrix-id-classification/**
+          if-no-files-found: error
+          retention-days: 7
