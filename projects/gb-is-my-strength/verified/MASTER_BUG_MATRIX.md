@@ -9,13 +9,13 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `83f04647c470a92c340d4d7990485c4e1376836b` (main; #154 epistemic UI, #157 route semantics, #158 PremiumControls ARIA, plus CI/control cleanup) |
-| Deploy | ✅ **PRODUCTION VERIFIED @ `83f04647`.** Readiness `29966152952` → Pages `29966633078` success on the same SHA; live witness `29967501124` / artifact `8548383473` found all three epistemic markers and Nagornaya disclosure ARIA. |
+| Source HEAD | `0f5b330799292d995c62bbb7d63a83870d93318e` (main; exact production descendant including #159 legacy cleanup, #160 Atlas path cleanup and #162 final workspace-path cleanup) |
+| Deploy | ✅ **PRODUCTION VERIFIED @ `0f5b3307`.** Readiness `29972524675` → Pages `29972909431` success on the same SHA; all 30 deploy stages passed. The only `a73f609f` → `0f5b3307` change is a source comment, so rendered-output live hashes remain applicable. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_83f04647_production.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_0f5b3307_production.md` |
 
-⚠️ Старые deploy-формулировки ниже исторические. Current authority: `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_83f04647_production.md`; exact readiness `29966152952` → Pages `29966633078` → live witness `29967501124`.
+⚠️ Старые deploy-формулировки ниже исторические. Current authority: `reverify/CURRENT_HEAD_REVERIFY_2026-07-23_0f5b3307_production.md`; exact readiness `29972524675` → Pages `29972909431` (all 30 stages green).
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
