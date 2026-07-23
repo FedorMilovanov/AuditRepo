@@ -35,6 +35,9 @@ jobs:
             --verbose \
             --json-out reports/matrix-coverage/report.json \
             | tee reports/matrix-coverage/report.log
+          python3 scripts/matrix_coverage_contexts.py \
+            --json-out reports/matrix-coverage/contexts.json \
+            --markdown-out reports/matrix-coverage/contexts.md
       - name: Upload matrix coverage diagnostics
         uses: actions/upload-artifact@v4
         with:
