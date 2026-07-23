@@ -1,0 +1,65 @@
+name: Temp map mobile HTTP witness
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  witness:
+    if: github.event.pull_request.number == 28
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: FedorMilovanov/gb-is-my-strength
+          ref: a73f609f3163c8021525028e805132793d5db954
+          path: source-current
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+          cache: npm
+          cache-dependency-path: source-current/package-lock.json
+      - name: Build exact production-like source
+        working-directory: source-current
+        run: |
+          npm ci
+          npm run strangler:build:production-like
+          npx playwright install --with-deps chromium
+      - name: Serve dist and run mobile map smoke
+        shell: bash
+        run: |
+          mkdir -p reports/map-mobile-http
+          cd source-current
+          python3 -m http.server 8090 --directory dist \
+            > ../reports/map-mobile-http/http-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl -fsS 'http://127.0.0.1:8090/karty/avraam/' >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl -fsS 'http://127.0.0.1:8090/karty/ishod/' >/dev/null
+          set +e
+          npm run smoke:maps:mobile \
+            > ../reports/map-mobile-http/map-mobile-smoke.log 2>&1
+          status=$?
+          set -e
+          printf '%s\n' "$status" > ../reports/map-mobile-http/map-mobile-smoke.exit
+          git rev-parse HEAD > ../reports/map-mobile-http/source-sha.txt
+          cat ../reports/map-mobile-http/map-mobile-smoke.log
+          exit "$status"
+      - name: Upload mobile map witness
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: map-mobile-http-witness-${{ github.run_id }}
+          path: reports/map-mobile-http/**
+          if-no-files-found: error
+          retention-days: 7
