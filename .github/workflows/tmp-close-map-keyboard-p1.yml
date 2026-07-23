@@ -1,0 +1,47 @@
+name: Temporary close map keyboard P1 rows
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - scripts/tmp-close-map-keyboard-p1.py
+      - .github/workflows/tmp-close-map-keyboard-p1.yml
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact reconciliation branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/close-map-keyboard-p1-bd537dc1
+          fetch-depth: 0
+
+      - name: Reconcile canonical rows and source authority
+        run: python3 scripts/tmp-close-map-keyboard-p1.py
+
+      - name: Validate AuditRepo before commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/check_matrix_coverage.py --warn-only --verbose --json-out /tmp/matrix-coverage.json
+
+      - name: Commit permanent SSOT documents only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "audit-reconciler[bot]"
+          git config user.email "audit-reconciler[bot]@users.noreply.github.com"
+          git add \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-24_bd537dc1_map-keyboard-contract.md
+          git diff --cached --check
+          git commit -m "chore(audit): close map keyboard P1 pair"
+          git push origin HEAD:agent/close-map-keyboard-p1-bd537dc1
