@@ -1,0 +1,30 @@
+{
+  "matrixIds": 335,
+  "openRows": 193,
+  "evidenceFiles": 260,
+  "aliasIds": 52,
+  "ignoredTokens": 0,
+  "directWitnessedOpenRows": 11,
+  "archivedOnlyOpenRows": 3,
+  "problems": 0,
+  "problemKinds": {},
+  "directWitnessedIds": [
+    "AR-IDX-A11Y-01",
+    "AR-IDX-CSS-01",
+    "AR-IDX-CSS-02",
+    "AR-IDX-CSS-03",
+    "AR-IDX-JS-01",
+    "AR-IDX-JS-02",
+    "AR-IDX-PERF-01",
+    "AR-IDX-PERF-02",
+    "ATLAS-D-NAMESPACE-COLLISION",
+    "BASE-P1-02",
+    "BASE-P1-03"
+  ],
+  "archivedOnlyIds": [
+    "AR-006",
+    "AUDIT-P3-OG-LCP-MISMATCH",
+    "R-003"
+  ],
+  "diagnostics": []
+}
