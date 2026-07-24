@@ -93,25 +93,52 @@ jobs:
         run: exit 1
 
       - name: Remove exact transient root artifact
+        id: cleanup
         if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success'
+        continue-on-error: true
         shell: bash
         run: |
-          set -euo pipefail
-          if test -d verified; then
-            echo 'Transient root verified/ detected; proving zero tracked scope.'
-            git ls-files --stage -- verified || true
-            git check-ignore -v verified/GILL_PRIMARY_SOURCE_AND_PRODUCTION_CLOSURE_2026-07-24.md || true
-            test -z "$(git ls-files -- verified)"
-            mapfile -t files < <(find verified -type f -printf '%P\n' | sort)
-            test "${#files[@]}" -eq 1
-            test "${files[0]}" = "GILL_PRIMARY_SOURCE_AND_PRODUCTION_CLOSURE_2026-07-24.md"
-            rm -rf verified
-            echo 'Removed exact untracked transient Gill evidence copy; canonical project evidence remains untouched.'
-          fi
+          set -o pipefail
+          {
+            set -u
+            if test -d verified; then
+              echo 'Transient root verified/ detected.'
+              echo '--- tracked entries ---'
+              git ls-files --stage -- verified || true
+              echo '--- ignore source ---'
+              git check-ignore -v verified/GILL_PRIMARY_SOURCE_AND_PRODUCTION_CLOSURE_2026-07-24.md || true
+              echo '--- all entries ---'
+              find verified -maxdepth 4 -printf '%y|%P|%l\n' | sort
+              tracked="$(git ls-files -- verified)"
+              printf 'tracked=%q\n' "$tracked"
+              test -z "$tracked"
+              mapfile -t files < <(find verified -type f -printf '%P\n' | sort)
+              printf 'file_count=%s\n' "${#files[@]}"
+              printf 'files=%s\n' "${files[*]-}"
+              test "${#files[@]}" -eq 1
+              test "${files[0]}" = "GILL_PRIMARY_SOURCE_AND_PRODUCTION_CLOSURE_2026-07-24.md"
+              rm -rf verified
+              echo 'Removed exact untracked transient Gill evidence copy.'
+            else
+              echo 'No transient root verified/ directory.'
+            fi
+          } 2>&1 | tee /tmp/cache-bust-cleanup.log
+
+      - name: Upload cleanup diagnostic
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.cleanup.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cache-bust-cleanup-diagnostic-${{ github.run_id }}
+          path: /tmp/cache-bust-cleanup.log
+          if-no-files-found: error
+
+      - name: Stop after cleanup failure
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.cleanup.outcome == 'failure'
+        run: exit 1
 
       - name: Validate AuditRepo structure and rules
         id: validate
-        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success'
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.cleanup.outcome == 'success'
         continue-on-error: true
         shell: bash
         run: |
@@ -122,7 +149,7 @@ jobs:
           } 2>&1 | tee /tmp/cache-bust-validation.log
 
       - name: Upload validation diagnostic
-        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.validate.outcome == 'failure'
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.cleanup.outcome == 'success' && steps.validate.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: cache-bust-validation-diagnostic-${{ github.run_id }}
@@ -130,11 +157,11 @@ jobs:
           if-no-files-found: error
 
       - name: Stop after validation failure
-        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.validate.outcome == 'failure'
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.cleanup.outcome == 'success' && steps.validate.outcome == 'failure'
         run: exit 1
 
       - name: Validate matrix coverage and contexts
-        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.validate.outcome == 'success'
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.cleanup.outcome == 'success' && steps.validate.outcome == 'success'
         shell: bash
         run: |
           set -euo pipefail
@@ -162,7 +189,7 @@ jobs:
           PY
 
       - name: Verify exact permanent scope
-        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.validate.outcome == 'success'
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.cleanup.outcome == 'success' && steps.validate.outcome == 'success'
         run: |
           test ! -e scripts/_tmp_close_cache_bust_no_writer.py
           test -f projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-24_20ded750_cache-bust-fail-closed.md
@@ -171,7 +198,7 @@ jobs:
           git status --short
 
       - name: Commit permanent reconciliation
-        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.validate.outcome == 'success'
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.cleanup.outcome == 'success' && steps.validate.outcome == 'success'
         shell: bash
         run: |
           set -euo pipefail
