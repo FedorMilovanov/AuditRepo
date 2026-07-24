@@ -9,22 +9,23 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `20ded750327f79e46efa4e50d4d7cd7171e7d9a1` (current source main; glossary #183, source-aware coverage #186, Bible resolver #185 and fail-closed asset policy #187) |
+| Source HEAD | `c8b47201f5b7210d69809c38808bfbda15695dcd` (current source main; ReaderState R6 #191 and all-route Android/WebKit #200 layered on current INDEX, Gill and Nagornaya work) |
 | Deploy | ✅ **LAST EXACT PRODUCTION @ `8a535267`.** Readiness `30006414898` → Pages `30007024100` success on the same SHA; source `main` is newer and source/CI verified only. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_20ded750_cache-bust-fail-closed.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_c8b47201_reader-r6-matrix-closure.md` |
 
-⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `20ded750`; last exact production authority: `8a535267`; source/CI evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_20ded750_cache-bust-fail-closed.md`.
+⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `c8b47201`; last exact production authority: `8a535267`; source/CI evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_c8b47201_reader-r6-matrix-closure.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (143)
+## ✅ ЗАКРЫТО (144)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| READER-R6-STATE-01 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #191 replaced independent whole-document progress/resume calculations with one bounded `ReaderState`: one scroll+rAF owner, explicit before/active/after phases, canonical section/time/completion state, one persisted key with BookmarkEngine v4 and `gb-series-pos` migration, and shared consumers across Gill/series/book, Hermenevtika and ordinary `/about/`. ReaderState alone publishes `--gb-read-pct`/`--gb-read-active`. Exact head `2461198f`: Shared `30098725861`, Gill reconciliation `30098725874`, Overlay `30098725895`, Glossary `30098725882`, Native Source `30098725918`, Route Registry/engine sweep `30098725866` and Visual `30098725897` succeeded. Issue #59 closed; merge `a4372707`. | `a4372707` PR#191 |
 | CACHE-BUST-NO-WRITER | ✅ **FIXED/SUPERSEDED BY FAIL-CLOSED POLICY 2026-07-24.** Общий metadata auto-writer намеренно запрещён: PR #187 делает блокирующими read-only revision checks на PR и `main`, catch-all readiness до production build и exact-SHA deploy linkage. Живая мутация `js/search.js` завершилась nonzero и оставила файл побайтно неизменённым. Единственный существующий glossary-autofix разрешён только для явно помеченного `autofix` same-repository PR, с job-scoped write permission, повторным read-only check, `git add -u` и push только в requesting head. 17 adversarial mutations защищают все границы. | `20ded750` PR#187 |
 | TTS-DL-CONSENT | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** Owner-approved PR #177 preserves immediate Web Speech and shows one compact post-start card only on a real ~280 MB model cache miss. `Не загружать` aborts the active transfer through `AbortController`, persists the opt-out and leaves the ordinary voice working. Exact final head `1c38a8b6`: TTS Download Consent `30083527472`, Shared Files Guard `30083527643`, Route Registry Validators `30083527432` and Visual Parity `30083527431` all succeeded; the production-like 75-route Chromium matrix, route semantics and Nagornaya UI remained green. Manual review also fixed and mutation-guarded a disconnected loading-pulse keyframe. | `96b7a20f` PR#177 |
 | MAP-P1-16 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #173 isolates `input`, `textarea`, `select`, active `contenteditable`, `role=textbox`, IME composition and Alt/Ctrl/Meta chords before any global MapEngine shortcut; Escape remains the canonical overlay close command. Exact final head `64e36c82`: Map Keyboard Contract `30049773607`, Shared Files Guard `30049773605`, Chromium/Firefox/WebKit Overlay Runtime Browser `30049773623` and Visual Parity `30049773601` all succeeded. Exact smoke artifact `8580550637` records `ishod` routes 4/4, signature/story/scientific/keyboard `ok`, 1366px map width, zero overflow and zero console errors. | `bd537dc1` PR#173 |
@@ -47,7 +48,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | RUNTIME-HIGHLIGHT-DEDUPE-01 | ✅ **FIXED 2026-07-22.** Legacy duplicates compact by normalized route+text; new same-page duplicates are blocked; cross-page same text and 200-item cap remain valid; dialog ARIA lifecycle is synchronized and permanently guarded. Issue #112 closed. | `26efb711` PR#120 |
 | NG-PASTORAL-SAFETY-01 | ✅ **FIXED 2026-07-22.** Part V retains the warning about persistent fruitlessness but replaces omniscient/final-verdict wording with self-examination, repentance, pastoral support, Christ's final judgment and protection for contrite believers. Native/shadow parity and permanent regression landed. | `5650c96` PR#138 |
 | NG-SOURCE-INTEGRITY-01 | ✅ **FIXED 2026-07-22.** Green corrected to 49–68; Thomas and Nichols linked to exact official `tmsj7d.pdf` / `tmsj7h.pdf`; negative object regression added; source-verification claim bounded; Part IV separates Green's argument, venue and series synthesis. Issue #140 closed; full publication and Native Source green. | `2599844b` PR#141 |
-| READER-PUBLIC-SURFACE-BROWSER-01 | ✅ **FIXED/VERIFIED 2026-07-22.** PR #145 added a registry-derived Chromium breadth matrix for all 75 public production routes at 320/390/1440 and closed the only initial failure: the native Nagornaya 320px bar/speed-sheet/heading/glossary cluster. Final PR head recorded **3428/3428 PASS**, with permanent failure diagnostics and regressions. | `f9439ef3` PR#145 |
+| READER-PUBLIC-SURFACE-BROWSER-01 | ✅ **FIXED/EXTENDED SOURCE+CI VERIFIED 2026-07-24.** PR #145 established the registry-derived Chromium breadth matrix for all 75 public routes at 320/390/1440 and closed the initial Nagornaya mobile failure with 3428/3428 PASS. PR #200 then added permanent all-route touch/browser coverage: Android Chromium 360/430 and iPhone/desktop WebKit 320/390/1440, with exact head `da05253b`, Shared `30098798681`, Route Registry `30098798531`, Android 1828/1828 and WebKit 2660/2660 PASS. Product HTML/Astro/CSS/runtime/content/data were unchanged by #200. | `f9439ef3` PR#145 + `c8b47201` PR#200 |
 | CI-VISUAL-PARITY-ROUTE-POLICY-01 | ✅ **FIXED/VERIFIED 2026-07-22.** PR #148 made screenshot capture diagnostic and route policy authoritative: blocking `legacy-diff` remains baseline+0.5%; explicit `native-contract` requires a reason, real unique guard files and profile/policy agreement. `/articles/` and `/baptisty-rossii/` declare native ownership; `/karty/` retains reviewed legacy raster baseline. Fake guards and ordinary regressions fail. Exact main pixel gate and production deploy are green. | `aeae401d` PR#148 |
 | CI-HARD-TEXTS-NATIVE-VISUAL-OWNERSHIP-01 | ✅ **FIXED/VERIFIED 2026-07-22.** Fresh screenshots exposed a 2.496% mobile legacy-vs-dist difference because retired legacy HTML omitted the current six-card «Материалы серии» section. PR #151 declared explicit native ownership with route-specific source/component, data-consistency and all-route browser guards; tolerance stayed 0.5%; product UI unchanged. | `0a449118` PR#151 |
 | NG-SOURCE-REGISTRY-01 | ✅ **FIXED/VERIFIED 2026-07-22.** PR #149 added the canonical source registry + JSON Schema for Green/Thomas/Nichols, exact PDF/page/extraction/last-checked metadata, supports/doesNotSupport and author/editorial/institution levels. Native source rows derive from registry IDs; exact live/registry witness passed. | `6c4106ae` PR#149 |
@@ -881,3 +882,13 @@ D-23 (P1, deploy-блокирующая регрессия) — 🟠→✅ **RES
 - Exact pre-merge head passed Shared Files, static registry/audit-pro, production-like build, 3428/3428 public-surface Chromium and 126/126 route semantics.
 - Exact source readiness `30006414898` and Pages `30007024100` succeeded; observer `30006649281` artifact `8563907298` recorded 66 live sitemap URLs and SHA-256 `5f3fa280af1ddc73f166decce47535d48ec60718375dd7c0418ea3675f82a801`.
 - `AUDIT-PRO-SITEMAP-ROOT-ONLY` closed; broader `AUDIT-PRO-ROOT-ONLY` and `SEO-AUDIT-ROOT-ONLY` remain open. Closed count 134 → 135; open P3 count 56 → 55.
+
+
+### 2026-07-24 — Reader R6 canonical closure and cross-browser extension (`c8b47201`)
+
+- PR #191 squash-merged ReaderState R6 as `a43727078d0f39e541a5aad8cd250a90310181a9`; issue #59 closed completed.
+- Exact R6 head `2461198f45033d8cce5f2444a9492d9f8176fa01` passed Shared Files, Gill reconciliation, Overlay, Glossary, Native Source, Route Registry/engine sweep and Visual Parity.
+- PR #200 merged as `c8b47201f5b7210d69809c38808bfbda15695dcd` and extended all 75 public routes to Android Chromium plus iPhone/desktop WebKit without changing product surfaces; exact head `da05253bfc37db7b57318492f5576bd929c5c140` passed 1828/1828 Android and 2660/2660 WebKit assertions.
+- `READER-R6-STATE-01` is added as a closed canonical row; `READER-PUBLIC-SURFACE-BROWSER-01` is extended rather than duplicated.
+- Closed count `143 → 144`; canonical open counts remain P0/P1 `4`, P1 `94`, P2 `35`, P3 `51`, refactoring `4`, AuditRepo `4` — total open `192`.
+- Last exact production authority remains `8a535267`; this reconciliation advances source/CI truth only.
