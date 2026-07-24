@@ -9,24 +9,26 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `5636a6a1911c7eb0e7637406e87e749dd65dbaaf` (current source main; map recovery #203 and control-plane #204/#205 layered on homepage, Gill, Reader R6 and all-route Android/WebKit work) |
+| Source HEAD | `184d7ed1b50161ec5fa1418ca24539e33977e2a8` (current source main; complete map P0 closure through #218/#224 plus archaeology registry foundation #226, layered on the preserved homepage, Gill, Reader R6 and all-route browser chain) |
 | Deploy | ✅ **LAST EXACT PRODUCTION @ `8a535267`.** Readiness `30006414898` → Pages `30007024100` success on the same SHA; source `main` is newer and source/CI verified only. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_5636a6a1_map-p0-control-plane.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_184d7ed1_map-p0-closure.md` |
 
-⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `5636a6a1`; last exact production authority: `8a535267`; source/CI evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_5636a6a1_map-p0-control-plane.md`.
+⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `184d7ed1`; last exact production authority: `8a535267`; source/CI evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_184d7ed1_map-p0-closure.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (146)
+## ✅ ЗАКРЫТО (148)
 
 | ID | Описание | Коммит |
 |---|---|---|
 | ASTRO-P0-05 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #203 replaces console-only MapEngine initialization failures with a route-owned accessible recovery surface: `.me-error[role="alert"]`, synchronized `data-map-state`/`aria-busy`, safe text rendering, retry and return controls ≥44 px. Exact head `1338f71f` passed Shared, Native Source, Route Registry Chromium/WebKit, Overlay, Glossary and Visual Parity. | `0461faa8` PR#203 |
 | ASTRO-P0-06 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** Ishod and Avraam now expose readable no-JS and runtime fallbacks instead of an opaque black scene when JavaScript is disabled, `route.json` returns 503, the engine asset fails, initialization throws or returns null. Permanent `engine:sweep` covers eight normal/failure scenarios. | `0461faa8` PR#203 |
+| MAP-P0-01 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #218 constrains shared MapEngine detail panels to the mobile safe-area/viewport and bounds the desktop floating panel; header, tabs and navigation remain fixed while only `.me-content` scrolls with `min-height:0`. Exact head `39569068`: Chromium/WebKit 320×568 and 390×844 contract covers every Ishod marker and real Maccabim data, forced 1500px content and live viewport-height reduction; Shared `30108888569`, Overlay `30108888784` and Visual `30108888609` succeeded. | `d57d49b8` PR#218 |
+| DATA-P0-01 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #224 upgrades shared MapEngine to v0.55 and makes valid author-authored `stages[].paths` authoritative: all 15 Avraam cubic Bézier paths preserve exact `d`, order, semantic color, dash state, underlay, arrow, layer membership and stage label; malformed geometry fails closed to generated `M/L`. Exact head `be2b707c`: seven map jobs `30113097520`, Shared `30113097647`, three-engine Overlay `30113097467` and Visual `30113097686` succeeded. | `c27176bf` PR#224 |
 | READER-R6-STATE-01 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #191 replaced independent whole-document progress/resume calculations with one bounded `ReaderState`: one scroll+rAF owner, explicit before/active/after phases, canonical section/time/completion state, one persisted key with BookmarkEngine v4 and `gb-series-pos` migration, and shared consumers across Gill/series/book, Hermenevtika and ordinary `/about/`. ReaderState alone publishes `--gb-read-pct`/`--gb-read-active`. Exact head `2461198f`: Shared `30098725861`, Gill reconciliation `30098725874`, Overlay `30098725895`, Glossary `30098725882`, Native Source `30098725918`, Route Registry/engine sweep `30098725866` and Visual `30098725897` succeeded. Issue #59 closed; merge `a4372707`. | `a4372707` PR#191 |
 | CACHE-BUST-NO-WRITER | ✅ **FIXED/SUPERSEDED BY FAIL-CLOSED POLICY 2026-07-24.** Общий metadata auto-writer намеренно запрещён: PR #187 делает блокирующими read-only revision checks на PR и `main`, catch-all readiness до production build и exact-SHA deploy linkage. Живая мутация `js/search.js` завершилась nonzero и оставила файл побайтно неизменённым. Единственный существующий glossary-autofix разрешён только для явно помеченного `autofix` same-repository PR, с job-scoped write permission, повторным read-only check, `git add -u` и push только в requesting head. 17 adversarial mutations защищают все границы. | `20ded750` PR#187 |
 | TTS-DL-CONSENT | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** Owner-approved PR #177 preserves immediate Web Speech and shows one compact post-start card only on a real ~280 MB model cache miss. `Не загружать` aborts the active transfer through `AbortController`, persists the opt-out and leaves the ordinary voice working. Exact final head `1c38a8b6`: TTS Download Consent `30083527472`, Shared Files Guard `30083527643`, Route Registry Validators `30083527432` and Visual Parity `30083527431` all succeeded; the production-like 75-route Chromium matrix, route semantics and Nagornaya UI remained green. Manual review also fixed and mutation-guarded a disconnected loading-pulse keyframe. | `96b7a20f` PR#177 |
@@ -175,12 +177,10 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🔴 P0/P1 — ОТКРЫТО (2) — release / deploy + karty runtime
+## ✅ P0/P1 — ОТКРЫТО (0)
 
 | ID | Описание | Witnesses |
 |---|---|---|
-| MAP-P0-01 | 🆕 **Karty P0:** Мобильная панель `.me-panel` уходит выше viewport до -581px (Маккавеи), -212px (Исход); заголовок, крестик и tabs недоступны | verified-browser (c2c339708252) |
-| DATA-P0-01 | 🆕 **Karty P0:** MapEngine полностью игнорирует все 15 авторских криволинейных SVG-маршрутов `stages[].paths` в `avraam/route.json`, рисуя прямые `L`-отрезки | verified-source (32ae0d7d) |
 
 ---
 
