@@ -1,0 +1,56 @@
+name: Temporary Reader R6 Audit Sync
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/_temp-reader-r6-audit-sync.yml"
+      - "scripts/_temp_apply_reader_r6_audit_sync.py"
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact AuditRepo branch
+        uses: actions/checkout@v4
+        with:
+          ref: lane/reader-r6-audit-sync-2026-07-24
+          fetch-depth: 0
+
+      - name: Merge exact current AuditRepo main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "e318194b308829e24962eddf3be985a457a374e5"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git merge --no-ff origin/main -m "merge current AuditRepo main before Reader R6 canonical closure"
+
+      - name: Materialize missing canonical closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/_temp_apply_reader_r6_audit_sync.py
+          rm scripts/_temp_apply_reader_r6_audit_sync.py
+          rm .github/workflows/_temp-reader-r6-audit-diagnostics.yml
+          rm .github/workflows/_temp-reader-r6-audit-sync.yml
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/check_matrix_coverage.py --warn-only
+          git diff --check
+
+      - name: Commit permanent SSOT files only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -A
+          git diff --cached --check
+          test "$(git diff --cached --name-only | grep -c '^\.github/workflows/_temp-' || true)" = "0"
+          test "$(git diff --cached --name-only | grep -c '^scripts/_temp_' || true)" = "0"
+          git commit -m "audit(reader): close ReaderState R6 canonical row"
+          git push origin HEAD:lane/reader-r6-audit-sync-2026-07-24
