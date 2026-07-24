@@ -6,6 +6,11 @@ on:
       - audit/source-boundary-c8b47201-2026-07-24
     paths:
       - .github/workflows/reconcile-source-boundary-c8b.yml
+  pull_request:
+    types: [opened]
+    branches: [main]
+    paths:
+      - .github/workflows/reconcile-source-boundary-c8b.yml
 
 permissions:
   contents: write
