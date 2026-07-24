@@ -59,7 +59,7 @@ jobs:
           '''
           patched, count = re.subn(
               r'    open_row = \(\n.*?\n    \)\n    closed_row = \(\n',
-              replacement,
+              lambda _match: replacement,
               text,
               count=1,
               flags=re.DOTALL,
