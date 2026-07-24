@@ -40,6 +40,32 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Align canonical open-row anchor
+        if: steps.payload.outputs.present == 'true'
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/_tmp_close_cache_bust_no_writer.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''    open_row = (
+              "| CACHE-BUST-NO-WRITER | После read-only миграции нет writer/job, который атомарно обновляет stale `?v=` при merge; "
+              "каждый concurrent asset push оставляет `main` красным | Регрессионный live-анализ PR #109 |\\n"
+          )
+          '''
+          new = '''    open_row = (
+              "| CACHE-BUST-NO-WRITER | 🆕🟠 **Рецидив находки 2026-07-11.** `audit-pro.js` = 114 ошибок, доминирует `Cache-bust mismatch` по `nagornaya/**`, `rodosloviye/`, `pastor-series/`, `karty/` (`?v=` хэши устарели). "
+              "`node scripts/cache-bust.js --write` регенерирует **82 файла** → mismatch 0. Ни один workflow не делает `cache-bust --write`+commit (indexnow/editorial-metadata только *проверяют*; шаг cache-bust в deploy — no-op «skip if IndexNow did it») → каждый concurrent asset-пуш оставляет main красным. "
+              "Ровно то, что предсказано в session-log 07-11 (`9fce2bc`) как follow-up — **повторилось**. Fix (owner-decision, пайплайн): `cache-bust --write`+auto-commit в metadata-workflow. | verified-source + verified-build; session-log 2026-07-11 |\\n"
+          )
+          '''
+          count = text.count(old)
+          if count != 1:
+              raise SystemExit(f'canonical anchor patch expected one old block, found {count}')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+
       - name: Apply guarded SSOT reconciliation
         if: steps.payload.outputs.present == 'true'
         run: python3 scripts/_tmp_close_cache_bust_no_writer.py
