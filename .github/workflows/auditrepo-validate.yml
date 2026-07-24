@@ -57,12 +57,32 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+          show-progress: false
       - name: Refresh main
         run: git pull --ff-only origin main
       - name: Apply guarded matrix reconciliation
         run: python3 scripts/reconcile_5636_matrix.py
-      - name: Check generated diff whitespace
-        run: git diff --check -- projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+      - name: Capture generated diff diagnostics
+        shell: bash
+        run: |
+          mkdir -p reports/reconcile-5636
+          git diff --check -- projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md > reports/reconcile-5636/diff-check.log 2>&1 || true
+          git diff --numstat -- projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md > reports/reconcile-5636/numstat.txt
+          git diff --stat -- projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md > reports/reconcile-5636/stat.txt
+          git diff -- projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md > reports/reconcile-5636/matrix.patch
+          git status --short > reports/reconcile-5636/status.txt
+      - name: Upload generated diff diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: reconcile-5636-${{ github.run_id }}
+          path: reports/reconcile-5636/**
+          if-no-files-found: error
+          retention-days: 7
+      - name: Enforce generated diff whitespace
+        shell: bash
+        run: |
+          cat reports/reconcile-5636/diff-check.log
+          test ! -s reports/reconcile-5636/diff-check.log
       - name: Check generated file scope
         shell: bash
         run: |
