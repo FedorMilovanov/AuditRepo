@@ -100,6 +100,18 @@ jobs:
         run: |
           set -o pipefail
           {
+            echo '--- root directories after reconciliation ---'
+            find . -maxdepth 2 -type d -print | sort
+            echo '--- root verified inventory ---'
+            if test -e verified; then
+              ls -ld verified
+              find verified -maxdepth 4 -printf '%y %p -> %l\n' | sort
+            else
+              echo 'verified/ absent'
+            fi
+            echo '--- git status ---'
+            git status --short --untracked-files=all
+            echo '--- validators ---'
             python3 scripts/check_auditrepo_structure.py
             python3 scripts/validate_audit_repo.py
           } 2>&1 | tee /tmp/cache-bust-validation.log
