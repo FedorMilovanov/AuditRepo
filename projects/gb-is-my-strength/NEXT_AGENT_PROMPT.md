@@ -44,7 +44,7 @@ The current `main@c8b47201` preserves both independently merged workflow additio
 - `npm run engine:sweep` for ReaderState R6;
 - the `public-surface-cross-browser` Chromium/WebKit matrix.
 
-The homepage still retains its approved native contract: Avvakum 3:19 inline translation, 39 background phrases, four SVG directions, lion label, no-JS routes, breakpoint/BFCache cleanup and fail-closed reveal capture. No hidden fifth homepage package or unpublished local commit was found.
+The homepage still retains its approved native contract: Avvakum 3:19 inline translation, 39 background phrases, four SVG route directions, lion label, no-JS routes, breakpoint/BFCache cleanup and fail-closed reveal capture. No hidden fifth homepage package or unpublished local commit was found.
 
 ## 4) Active work, in order
 
@@ -98,6 +98,7 @@ After a production-impacting merge:
 - `PROJECT_REGISTRY.md` is static.
 - `NEXT_AGENT_PROMPT.md` owns current execution truth.
 - `verified/MASTER_BUG_MATRIX.md` owns status and counters.
+- Reader R6 is canonical only as `READER-R6-STATE-01`; do not maintain a parallel operational-only status.
 - `reverify/` owns immutable current-head witnesses.
 - superseded intake moves to `archive/stale/`; fixed evidence moves to `archive/fixed/`.
 - no silent evidence deletion and no temporary workflow in a final diff.
