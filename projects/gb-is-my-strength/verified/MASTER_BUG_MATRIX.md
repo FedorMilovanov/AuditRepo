@@ -9,22 +9,23 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `96b7a20f6d9b65fc2363c04c744c5f1af24e000c` (current source main; homepage PRs #181/#182 plus PR #177 cancellable enhanced-voice download contract) |
+| Source HEAD | `20ded750327f79e46efa4e50d4d7cd7171e7d9a1` (current source main; glossary #183, source-aware coverage #186, Bible resolver #185 and fail-closed asset policy #187) |
 | Deploy | ✅ **LAST EXACT PRODUCTION @ `8a535267`.** Readiness `30006414898` → Pages `30007024100` success on the same SHA; source `main` is newer and source/CI verified only. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_96b7a20f_tts-download-consent.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_20ded750_cache-bust-fail-closed.md` |
 
-⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `96b7a20f`; last exact production authority: `8a535267`; source/CI evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_96b7a20f_tts-download-consent.md`.
+⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `20ded750`; last exact production authority: `8a535267`; source/CI evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_20ded750_cache-bust-fail-closed.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (142)
+## ✅ ЗАКРЫТО (143)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| CACHE-BUST-NO-WRITER | ✅ **FIXED/SUPERSEDED BY FAIL-CLOSED POLICY 2026-07-24.** Общий metadata auto-writer намеренно запрещён: PR #187 делает блокирующими read-only revision checks на PR и `main`, catch-all readiness до production build и exact-SHA deploy linkage. Живая мутация `js/search.js` завершилась nonzero и оставила файл побайтно неизменённым. Единственный существующий glossary-autofix разрешён только для явно помеченного `autofix` same-repository PR, с job-scoped write permission, повторным read-only check, `git add -u` и push только в requesting head. 17 adversarial mutations защищают все границы. | `20ded750` PR#187 |
 | TTS-DL-CONSENT | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** Owner-approved PR #177 preserves immediate Web Speech and shows one compact post-start card only on a real ~280 MB model cache miss. `Не загружать` aborts the active transfer through `AbortController`, persists the opt-out and leaves the ordinary voice working. Exact final head `1c38a8b6`: TTS Download Consent `30083527472`, Shared Files Guard `30083527643`, Route Registry Validators `30083527432` and Visual Parity `30083527431` all succeeded; the production-like 75-route Chromium matrix, route semantics and Nagornaya UI remained green. Manual review also fixed and mutation-guarded a disconnected loading-pulse keyframe. | `96b7a20f` PR#177 |
 | MAP-P1-16 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #173 isolates `input`, `textarea`, `select`, active `contenteditable`, `role=textbox`, IME composition and Alt/Ctrl/Meta chords before any global MapEngine shortcut; Escape remains the canonical overlay close command. Exact final head `64e36c82`: Map Keyboard Contract `30049773607`, Shared Files Guard `30049773605`, Chromium/Firefox/WebKit Overlay Runtime Browser `30049773623` and Visual Parity `30049773601` all succeeded. Exact smoke artifact `8580550637` records `ishod` routes 4/4, signature/story/scientific/keyboard `ok`, 1366px map width, zero overflow and zero console errors. | `bd537dc1` PR#173 |
 | MAP-P1-17 | ✅ **FIXED AS SAME ROOT 2026-07-24.** Number keys now query visible `.me-tab[data-tab]` nodes in actual DOM order and invoke the canonical `.click()` handler, so `sci` cannot be skipped by a duplicate `TAB_KEYS.filter` policy. Permanent source regression blocks direct `renderTabContent`, hardcoded tab availability and reclassification of bespoke legacy `avraam` as shared MapEngine; `ishod` is the canonical live engine fixture. | `bd537dc1` PR#173 |
@@ -182,7 +183,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (95)
+## 🟠 P1 — ОТКРЫТО (94)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -274,7 +275,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | BASE-P2-01 | 🆕 **Karty P2:** Грубая, низкодетализированная геометрия побережий в `base-geo-mediterranean.svg` (123 команды) и `urheimat.svg` (68 команд) | verified-source (32ae0d7d) |
 | DATA-P2-01 | 🆕 **Karty P2:** Полное отсутствие описаний кривых путей `stages[].paths` у 10 из 11 карт в репозитории | verified-source (32ae0d7d) |
 |---|---|---|
-| CACHE-BUST-NO-WRITER | 🆕🟠 **Рецидив находки 2026-07-11.** `audit-pro.js` = 114 ошибок, доминирует `Cache-bust mismatch` по `nagornaya/**`, `rodosloviye/`, `pastor-series/`, `karty/` (`?v=` хэши устарели). `node scripts/cache-bust.js --write` регенерирует **82 файла** → mismatch 0. Ни один workflow не делает `cache-bust --write`+commit (indexnow/editorial-metadata только *проверяют*; шаг cache-bust в deploy — no-op «skip if IndexNow did it») → каждый concurrent asset-пуш оставляет main красным. Ровно то, что предсказано в session-log 07-11 (`9fce2bc`) как follow-up — **повторилось**. Fix (owner-decision, пайплайн): `cache-bust --write`+auto-commit в metadata-workflow. | verified-source + verified-build; session-log 2026-07-11 |
 | BUG-PERF-001 | addEventListener без removeEventListener: 339 add / 25 remove по всем js/ (294/16 в 5 файлах) | 2 witnesses + пересчёт 07-05 |
 | NG-CSS-01 | 🆕 **Нагорная P1:** `tw.min.css` без dark-вариантов — 0 `html.dark` селекторов в 34KB Tailwind-выходе для нагорной. Все dark-ремапы живут исключительно на `!important` хаках `mobile-hotfix.css`. Архитектурная причина NG-DARK-01. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
 | NG-BODY-01 | 🆕 **Нагорная P1:** `bg-stone-100` на `<body>` не ремапится в dark — body фон остаётся светло-серым `#f5f5f4` в тёмной теме. `.bg-stone-100` (0,1,0) > `body` (0,0,1). `mobile-hotfix.css` ремапит `bg-stone-50` но **НЕ `bg-stone-100`**. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
@@ -447,18 +447,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-07-24: source 96b7a20f + cancellable TTS download contract)
+## Статистика (обновлено 2026-07-24: source 20ded750 + fail-closed asset revision policy)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 142 |
+| Закрыто (fixed) | 143 |
 | **P0 открыто** | **0** |
-| P1 открыто | 95 |
+| P1 открыто | 94 |
 | P2 открыто | 36 |
 | P3 открыто | 54 |
 | Рефакторинг | 4 |
 | AuditRepo | 4 |
-| **Всего открыто (матрица)** | **193** |
+| **Всего открыто (матрица)** | **192** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -469,6 +469,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 > Сюда идут per-session заметки о HEAD-переходах и что влито — **чтобы мастхед оставался
 > чистым статусом**. Новое — сверху. Детали каждого HEAD — в парном `reverify/` доке.
+
+- **2026-07-24 — Source `20ded750`: fail-closed asset revisions instead of a general writer.** PR #187 permanently mutation-tests read-only cache-bust coverage on every PR/main push, catch-all readiness before build, successful exact-SHA deploy linkage and explicit-only `--write`. The one pre-existing glossary autofix writer is constrained to an explicitly labeled same-repository PR, job-scoped write permission, tracked-file staging, post-write read-only validation and push-back only to the requesting head. Exact clean head `c8cd3a03` passed Shared Files Guard `30086484719`; policy run `30086392750` rejected 17 adversarial mutations and proved a stale `js/search.js` fails without rewriting. Production authority remains `8a535267` pending same-SHA deployment evidence. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_20ded750_cache-bust-fail-closed.md`.
 
 - **2026-07-24 — Source `96b7a20f`: owner-approved cancellable enhanced-voice download.** PR #177 preserves immediate Web Speech, announces the real ~280 MB cache-miss transfer through one compact post-start card, aborts it with `AbortController` on `Не загружать`, persists refusal and keeps the ordinary voice available. Exact final head `1c38a8b6` passed TTS Download Consent `30083527472`, Shared Files Guard `30083527643`, Route Registry Validators `30083527432` and Visual Parity `30083527431`; all 75 public routes, route semantics and Nagornaya UI stayed green. Manual review fixed a silent pulse-keyframe disconnect and added a sixth adversarial mutation. `TTS-DL-NO-TABLOCK` and `TTS-DL-UNZIP-SYNC` remain open. Production authority remains `8a535267` pending same-SHA deploy evidence. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_96b7a20f_tts-download-consent.md`.
 

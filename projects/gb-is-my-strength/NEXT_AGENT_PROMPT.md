@@ -4,22 +4,22 @@
 > `archive/stale/2026-07-23-current-truth-cleanup/`. Bug status and counts belong to
 > `verified/MASTER_BUG_MATRIX.md`; this file owns the exact current source/deploy boundary and next execution order.
 
-**Source main:** `96b7a20f6d9b65fc2363c04c744c5f1af24e000c`
+**Source main:** `20ded750327f79e46efa4e50d4d7cd7171e7d9a1`
 **Last exact production:** ✅ `8a5352671375fdb01b6c30273c25ec4283a13f69`
 **Production readiness:** `30006414898` — success
 **Production Pages:** `30007024100` — success
 **Live sitemap witness:** 66 `<loc>`, SHA-256 `5f3fa280af1ddc73f166decce47535d48ec60718375dd7c0418ea3675f82a801`
-**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_96b7a20f_tts-download-consent.md`
+**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_20ded750_cache-bust-fail-closed.md`
 
 ## 1) Exact boundary
 
 Source and production are intentionally different authorities:
 
-- source `main` is `96b7a20f`;
+- source `main` is `20ded750`;
 - the last exact deployed Pages SHA remains `8a535267`;
-- homepage PRs #181/#182, Gill PRs #156/#174, audit corpus PR #169, map keyboard PR #173 and cancellable TTS PR #177 are source/CI verified, but this AuditRepo update does not claim a new exact Pages deployment.
+- homepage PRs #181/#182, Gill PRs #156/#174, glossary PR #183, Bible PR #185, content-coverage PR #186, audit corpus PR #169, map keyboard PR #173, cancellable TTS PR #177 and fail-closed revision PR #187 are source/CI verified, but this AuditRepo update does not claim a new exact Pages deployment.
 
-Canonical evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_96b7a20f_tts-download-consent.md`.
+Canonical evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_20ded750_cache-bust-fail-closed.md`.
 
 ## 2) Newly completed lanes
 
@@ -32,6 +32,7 @@ Canonical evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_96b7a20f_tts-down
 - `MAP-P1-16` — closed by PR #173: editable fields, IME composition and Alt/Ctrl/Meta chords are isolated from global MapEngine shortcuts while Escape remains the overlay close command.
 - `MAP-P1-17` — closed by PR #173: numeric navigation derives the actual visible DOM tab order, reaches `sci` through the canonical click handler, and permanently separates shared `ishod` MapEngine smoke from bespoke legacy `avraam`.
 - `TTS-DL-CONSENT` — closed by owner-approved PR #177: immediate Web Speech remains, one compact card announces a real model cache miss, `Не загружать` aborts and persists refusal, and permanent source/mutation/desktop/mobile Chromium contracts guard the behavior.
+- `CACHE-BUST-NO-WRITER` — closed by PR #187 as an obsolete unsafe prescription: general workflow writers are forbidden, stale revisions fail closed before merge/deploy, and the single glossary autofix exception is permanently constrained and mutation-tested.
 
 PR #167 removed one real public broken link from `/baptisty-rossii/` to an unpublished local research Markdown file. PR #166 then normalized four missing search-manifest entries and 94 RSS metadata drifts through the shared policy projection.
 
@@ -39,10 +40,9 @@ PR #167 removed one real public broken link from `/baptisty-rossii/` to an unpub
 
 Do not overwrite or absorb active branches:
 
-- source PR #180 — current universal glossary v2 lane; it supersedes older glossary branches only after exact-head acceptance and owns a broad cache-bust surface;
-- source PR #178 — strict canonical Bible-reference resolver, intentionally waiting on glossary integration;
+- source PR #178 is superseded by merged Bible PR #185 and must not be merged from its stale branch;
 - source PR #136 and #130 — isolated documentation link repairs;
-- Research PR #7 and AuditRepo PR #27 — Gill source corpus and evidence.
+- glossary PR #183, Bible PR #185, Research PR #7 and AuditRepo Gill PR #27 are merged; refresh their resulting `main` state rather than reopening the retired branches.
 
 Before any source work, refresh `main`, list active PR files and compare intersections.
 
