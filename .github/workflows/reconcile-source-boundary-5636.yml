@@ -1,5 +1,6 @@
 name: Reconcile 5636 source boundary once
 
+# Same-repository PR event used only to execute the guarded matrix transaction.
 on:
   pull_request:
     branches: [main]
