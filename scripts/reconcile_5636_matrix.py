@@ -41,14 +41,14 @@ open_old = '''## 🔴 P0/P1 — ОТКРЫТО (4) — release / deploy + karty 
 | MAP-P0-01 | 🆕 **Karty P0:** Мобильная панель `.me-panel` уходит выше viewport до -581px (Маккавеи), -212px (Исход); заголовок, крестик и tabs недоступны | verified-browser (c2c339708252) |
 | ASTRO-P0-05 | 🆕 **Karty P0:** Исключение инициализации MapEngine перехватывается только в console; пользователь видит рабочий, но пустой чёрный экран без `.me-error` | verified-browser (c2c339708252) |
 | ASTRO-P0-06 | 🆕 **Karty P0:** Выключение JavaScript или сбой загрузки `route.json` блокирует экран сплошным `#070a10` поверх `<noscript>` и sr-only контента | verified-browser (c2c339708252) |
-| DATA-P0-01 | 🆕 **Karty P0:** MapEngine полностью игнорирует все 15 авторских криволинейных SVG-маршрутов `stages[].paths` in `avraam/route.json`, рисуя прямые `L`-отрезки | verified-source (32ae0d7d) |
+| DATA-P0-01 | 🆕 **Karty P0:** MapEngine полностью игнорирует все 15 авторских криволинейных SVG-маршрутов `stages[].paths` в `avraam/route.json`, рисуя прямые `L`-отрезки | verified-source (32ae0d7d) |
 '''
 open_new = '''## 🔴 P0/P1 — ОТКРЫТО (2) — release / deploy + karty runtime
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | MAP-P0-01 | 🆕 **Karty P0:** Мобильная панель `.me-panel` уходит выше viewport до -581px (Маккавеи), -212px (Исход); заголовок, крестик и tabs недоступны | verified-browser (c2c339708252) |
-| DATA-P0-01 | 🆕 **Karty P0:** MapEngine полностью игнорирует все 15 авторских криволинейных SVG-маршрутов `stages[].paths` in `avraam/route.json`, рисуя прямые `L`-отрезки | verified-source (32ae0d7d) |
+| DATA-P0-01 | 🆕 **Karty P0:** MapEngine полностью игнорирует все 15 авторских криволинейных SVG-маршрутов `stages[].paths` в `avraam/route.json`, рисуя прямые `L`-отрезки | verified-source (32ae0d7d) |
 '''
 if text.count(open_old) != 1:
     raise SystemExit(f'guard failed: open-P0 block count={text.count(open_old)}')
