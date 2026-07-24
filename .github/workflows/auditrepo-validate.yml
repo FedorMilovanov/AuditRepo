@@ -6,53 +6,6 @@ on:
   pull_request:
 
 jobs:
-  materialize-map-p0-184d:
-    if: >-
-      github.event_name == 'pull_request' &&
-      github.event.pull_request.head.repo.full_name == github.repository &&
-      github.head_ref == 'agent/reconcile-map-p0-184d7ed1'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout exact reconciliation branch
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Apply guarded matrix transaction
-        run: python3 scripts/reconcile_map_p0_184d.py --write
-      - name: Verify matrix-only mutation and validators
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 scripts/reconcile_map_p0_184d.py
-          git diff --check
-          mapfile -t changed < <(git diff --name-only)
-          printf 'changed[%s]=%s\n' "${#changed[@]}" "${changed[*]}"
-          test "${#changed[@]}" -eq 1
-          test "${changed[0]}" = "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
-          python3 scripts/check_auditrepo_structure.py
-          python3 scripts/validate_audit_repo.py
-      - name: Commit exact SSOT reconciliation
-        shell: bash
-        env:
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        run: |
-          set -euo pipefail
-          if git diff --quiet; then
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-          git diff --cached --check
-          git commit -m "audit: close remaining map P0 rows at 184d7ed1"
-          git push origin "HEAD:${HEAD_REF}"
-
   validate:
     runs-on: ubuntu-latest
     steps:
