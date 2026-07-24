@@ -93,13 +93,31 @@ jobs:
         run: exit 1
 
       - name: Validate AuditRepo structure and rules
+        id: validate
         if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success'
+        continue-on-error: true
+        shell: bash
         run: |
-          python3 scripts/check_auditrepo_structure.py
-          python3 scripts/validate_audit_repo.py
+          set -o pipefail
+          {
+            python3 scripts/check_auditrepo_structure.py
+            python3 scripts/validate_audit_repo.py
+          } 2>&1 | tee /tmp/cache-bust-validation.log
+
+      - name: Upload validation diagnostic
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.validate.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cache-bust-validation-diagnostic-${{ github.run_id }}
+          path: /tmp/cache-bust-validation.log
+          if-no-files-found: error
+
+      - name: Stop after validation failure
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.validate.outcome == 'failure'
+        run: exit 1
 
       - name: Validate matrix coverage and contexts
-        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success'
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.validate.outcome == 'success'
         shell: bash
         run: |
           set -euo pipefail
@@ -127,7 +145,7 @@ jobs:
           PY
 
       - name: Verify exact permanent scope
-        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success'
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.validate.outcome == 'success'
         run: |
           test ! -e scripts/_tmp_close_cache_bust_no_writer.py
           test -f projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-24_20ded750_cache-bust-fail-closed.md
@@ -135,7 +153,7 @@ jobs:
           git status --short
 
       - name: Commit permanent reconciliation
-        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success'
+        if: steps.payload.outputs.present == 'true' && steps.apply.outcome == 'success' && steps.validate.outcome == 'success'
         shell: bash
         run: |
           set -euo pipefail
