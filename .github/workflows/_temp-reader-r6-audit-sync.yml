@@ -50,7 +50,7 @@ jobs:
           set -euo pipefail
           git add -A
           git diff --cached --check
-          test "$(git diff --cached --name-only | grep -c '^\.github/workflows/_temp-' || true)" = "0"
-          test "$(git diff --cached --name-only | grep -c '^scripts/_temp_' || true)" = "0"
+          test "$(git diff --cached --name-status | awk '$1 !~ /^D/ && $2 ~ /^\.github\/workflows\/_temp-/ { count++ } END { print count + 0 }')" = "0"
+          test "$(git diff --cached --name-status | awk '$1 !~ /^D/ && $2 ~ /^scripts\/_temp_/ { count++ } END { print count + 0 }')" = "0"
           git commit -m "audit(reader): close ReaderState R6 canonical row"
           git push origin HEAD:lane/reader-r6-audit-sync-2026-07-24
