@@ -9,22 +9,23 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `bd537dc107bd4b80c72075357f452690cbc39781` (current source main; Gill source-truth PRs #156/#174 plus PR #173 input-safe, DOM-driven MapEngine keyboard contract) |
+| Source HEAD | `96b7a20f6d9b65fc2363c04c744c5f1af24e000c` (current source main; homepage PRs #181/#182 plus PR #177 cancellable enhanced-voice download contract) |
 | Deploy | ✅ **LAST EXACT PRODUCTION @ `8a535267`.** Readiness `30006414898` → Pages `30007024100` success on the same SHA; source `main` is newer and source/CI verified only. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_bd537dc1_map-keyboard-contract.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_96b7a20f_tts-download-consent.md` |
 
-⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `bd537dc1`; last exact production authority: `8a535267`; source/CI evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_bd537dc1_map-keyboard-contract.md`.
+⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `96b7a20f`; last exact production authority: `8a535267`; source/CI evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_96b7a20f_tts-download-consent.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (141)
+## ✅ ЗАКРЫТО (142)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| TTS-DL-CONSENT | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** Owner-approved PR #177 preserves immediate Web Speech and shows one compact post-start card only on a real ~280 MB model cache miss. `Не загружать` aborts the active transfer through `AbortController`, persists the opt-out and leaves the ordinary voice working. Exact final head `1c38a8b6`: TTS Download Consent `30083527472`, Shared Files Guard `30083527643`, Route Registry Validators `30083527432` and Visual Parity `30083527431` all succeeded; the production-like 75-route Chromium matrix, route semantics and Nagornaya UI remained green. Manual review also fixed and mutation-guarded a disconnected loading-pulse keyframe. | `96b7a20f` PR#177 |
 | MAP-P1-16 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #173 isolates `input`, `textarea`, `select`, active `contenteditable`, `role=textbox`, IME composition and Alt/Ctrl/Meta chords before any global MapEngine shortcut; Escape remains the canonical overlay close command. Exact final head `64e36c82`: Map Keyboard Contract `30049773607`, Shared Files Guard `30049773605`, Chromium/Firefox/WebKit Overlay Runtime Browser `30049773623` and Visual Parity `30049773601` all succeeded. Exact smoke artifact `8580550637` records `ishod` routes 4/4, signature/story/scientific/keyboard `ok`, 1366px map width, zero overflow and zero console errors. | `bd537dc1` PR#173 |
 | MAP-P1-17 | ✅ **FIXED AS SAME ROOT 2026-07-24.** Number keys now query visible `.me-tab[data-tab]` nodes in actual DOM order and invoke the canonical `.click()` handler, so `sci` cannot be skipped by a duplicate `TAB_KEYS.filter` policy. Permanent source regression blocks direct `renderTabContent`, hardcoded tab availability and reclassification of bespoke legacy `avraam` as shared MapEngine; `ishod` is the canonical live engine fixture. | `bd537dc1` PR#173 |
 | AUDIT-PRO-ROOT-ONLY | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #169 makes the early source HTML corpus registry-owned without duplicating the production-dist audit: all 75 production routes are explicit as 52 committed source shadows + 23 dist-only routes delegated to mandatory production SEO/HTML/Search contracts; unregistered root HTML and duplicate route mappings are blocking; repeated publication guards consume one corpus; the previously vacuous Russian quote-policy path test is repaired; adversarial mutations are permanent CI. Exact final head `7bda4b44`: Shared Files Guard `30045742164` and Route Registry Validators `30045742230` succeeded; Chromium recorded 75/75 routes, 3428/3428 contracts, route semantics 126/126 and Nagornaya UI 174/174. | `73c49e99` PR#169 |
@@ -181,7 +182,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (96)
+## 🟠 P1 — ОТКРЫТО (95)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -275,7 +276,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 |---|---|---|
 | CACHE-BUST-NO-WRITER | 🆕🟠 **Рецидив находки 2026-07-11.** `audit-pro.js` = 114 ошибок, доминирует `Cache-bust mismatch` по `nagornaya/**`, `rodosloviye/`, `pastor-series/`, `karty/` (`?v=` хэши устарели). `node scripts/cache-bust.js --write` регенерирует **82 файла** → mismatch 0. Ни один workflow не делает `cache-bust --write`+commit (indexnow/editorial-metadata только *проверяют*; шаг cache-bust в deploy — no-op «skip if IndexNow did it») → каждый concurrent asset-пуш оставляет main красным. Ровно то, что предсказано в session-log 07-11 (`9fce2bc`) как follow-up — **повторилось**. Fix (owner-decision, пайплайн): `cache-bust --write`+auto-commit в metadata-workflow. | verified-source + verified-build; session-log 2026-07-11 |
 | BUG-PERF-001 | addEventListener без removeEventListener: 339 add / 25 remove по всем js/ (294/16 в 5 файлах) | 2 witnesses + пересчёт 07-05 |
-| TTS-DL-CONSENT | Неявная загрузка ~280 МБ модели: первый клик «Слушать» молча качает нейромодель в фоне (`warmVoskInBackground`→`ensureLoaded`, floating-cluster-controller.js:344/363), пользователь не спрошен и на этой сессии хорошего голоса не слышит. **Меняет UX → решение владельца.** Верификация V12 (GPT-5.5) построчно подтверждена | `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md` |
 | NG-CSS-01 | 🆕 **Нагорная P1:** `tw.min.css` без dark-вариантов — 0 `html.dark` селекторов в 34KB Tailwind-выходе для нагорной. Все dark-ремапы живут исключительно на `!important` хаках `mobile-hotfix.css`. Архитектурная причина NG-DARK-01. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
 | NG-BODY-01 | 🆕 **Нагорная P1:** `bg-stone-100` на `<body>` не ремапится в dark — body фон остаётся светло-серым `#f5f5f4` в тёмной теме. `.bg-stone-100` (0,1,0) > `body` (0,0,1). `mobile-hotfix.css` ремапит `bg-stone-50` но **НЕ `bg-stone-100`**. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
 | GENEALOGY-ATLAS-V1-SHIPPED-NOT-PROD | 🆕 Атлас родословий v1 **в main** (AGENTS §13, `data/genealogy/v2/build/atlas-interactive.html`, owner milestone 07-14) но **не на проде** из-за PROD-STALE-DEPLOY-RED. Delivery risk, не дефект движка. | milestone intake + verified-ci |
@@ -308,7 +308,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 |---|---|---|
 | TTS-DL-UNZIP-SYNC | `fflate.unzipSync` по полному ~280 МБ архиву на main thread (vosk-tts-engine.js:107-108) — разовый фриз при фоновой прогревке. Не дизайн. Fix: async `unzip()` в Worker | V12 W1-CI-44, verified |
-| TTS-DL-NO-TABLOCK | Нет межвкладочного лока: `_voskWarmupStarted` — page-local (controller:343), `navigator.locks`/`BroadcastChannel` отсутствуют → 2 вкладки могут качать 280 МБ дважды. Низкая частота; fix осмыслен только вместе с TTS-DL-CONSENT | V12 W1-CI-39, verified |
+| TTS-DL-NO-TABLOCK | Нет межвкладочного лока: `_voskWarmupStarted` — page-local, `navigator.locks`/`BroadcastChannel` отсутствуют → 2 вкладки всё ещё могут качать модель дважды. Consent UX закрыт PR #177, но cross-tab ownership остаётся самостоятельным P2 runtime-долгом. | V12 W1-CI-39, verified; PR#177 residual |
 | AUDIT-P2-WORKFLOWS-CHECK-GAP | `check-workflows.js` не проверяет deploy `if:` условия — `|| failure` не ловится; шире: строковые regex вместо YAML-топологии (см. SUPER_AUDIT W1) | АУДИТ 1.4 + fable 07-06 |
 | HUB-AUDIT-COUNT-DRIFT | 🆕 2026-07-14: `hasAuditPendingDesign()` в `validate-map-routes.js` требует exact integer «на аудите» == missingCount. Добавление `nachalo` (11-я карта, 10 missing) при стате «9» роняет весь `maps:validate`/deploy. Fix: генерировать счётчик из publication statuses route.json. | verified-source, mechanism of DEP-BLOCK-MAPS-VALIDATE |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
@@ -447,18 +447,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-07-24: source bd537dc1 + MapEngine keyboard contracts)
+## Статистика (обновлено 2026-07-24: source 96b7a20f + cancellable TTS download contract)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 141 |
+| Закрыто (fixed) | 142 |
 | **P0 открыто** | **0** |
-| P1 открыто | 96 |
+| P1 открыто | 95 |
 | P2 открыто | 36 |
 | P3 открыто | 54 |
 | Рефакторинг | 4 |
 | AuditRepo | 4 |
-| **Всего открыто (матрица)** | **194** |
+| **Всего открыто (матрица)** | **193** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -469,6 +469,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 > Сюда идут per-session заметки о HEAD-переходах и что влито — **чтобы мастхед оставался
 > чистым статусом**. Новое — сверху. Детали каждого HEAD — в парном `reverify/` доке.
+
+- **2026-07-24 — Source `96b7a20f`: owner-approved cancellable enhanced-voice download.** PR #177 preserves immediate Web Speech, announces the real ~280 MB cache-miss transfer through one compact post-start card, aborts it with `AbortController` on `Не загружать`, persists refusal and keeps the ordinary voice available. Exact final head `1c38a8b6` passed TTS Download Consent `30083527472`, Shared Files Guard `30083527643`, Route Registry Validators `30083527432` and Visual Parity `30083527431`; all 75 public routes, route semantics and Nagornaya UI stayed green. Manual review fixed a silent pulse-keyframe disconnect and added a sixth adversarial mutation. `TTS-DL-NO-TABLOCK` and `TTS-DL-UNZIP-SYNC` remain open. Production authority remains `8a535267` pending same-SHA deploy evidence. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_96b7a20f_tts-download-consent.md`.
 
 - **2026-07-24 — Source `bd537dc1`: input-safe, DOM-driven MapEngine keyboard contract.** PR #173 closed `MAP-P1-16` and `MAP-P1-17` without touching homepage, Gill, glossary or route HTML ownership. Editable/IME/modifier input is isolated; number keys follow visible DOM tabs and canonical click behavior; `ishod` is the shared MapEngine fixture while `avraam` remains explicit bespoke legacy. Exact final head `64e36c82` passed Map Keyboard `30049773607`, Shared Guard `30049773605`, Overlay Browser `30049773623` and Visual Parity `30049773601`; artifact `8580550637` records a clean live smoke. Production authority remains `8a535267` pending a same-SHA deploy witness. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_bd537dc1_map-keyboard-contract.md`.
 
