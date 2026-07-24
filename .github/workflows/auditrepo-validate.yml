@@ -45,3 +45,39 @@ jobs:
           path: reports/matrix-coverage/**
           if-no-files-found: error
           retention-days: 14
+
+  repository-history-forensic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Checkout exact head with complete history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Node 22.12
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+      - name: Validate script and disposition ledger
+        run: |
+          node --check scripts/repository_history_forensic_audit.mjs
+          node -e "JSON.parse(require('node:fs').readFileSync('projects/gb-is-my-strength/verified/closed-unmerged-pr-dispositions.json', 'utf8'))"
+      - name: Inventory every branch and closed PR head
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/repository_history_forensic_audit.mjs --strict
+      - name: Verify tracked tree is unchanged
+        run: git diff --exit-code
+      - name: Upload forensic inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: auditrepo-history-forensic-${{ github.run_id }}
+          path: |
+            reports/repository-history-forensic-audit.json
+            reports/repository-history-forensic-audit.md
+          if-no-files-found: error
+          retention-days: 30

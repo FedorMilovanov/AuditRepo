@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "sourceReport": "projects/gb-is-my-strength/verified/CLOSED_UNMERGED_PR_FORENSIC_2026-07-24.md",
+  "recordedAt": "2026-07-24",
+  "pullRequests": {
+    "3": {
+      "category": "archived",
+      "archiveRef": "archive/forensic-pr-3-vosk-tts-report-2026-07-24",
+      "note": "Vosk runtime remains in the source repository; this exact AuditRepo head is retained as implementation/report provenance."
+    },
+    "6": {
+      "category": "superseded",
+      "replacementPrs": [10],
+      "note": "Gill V10 intake package was preserved and reconciled by merged AuditRepo PR #10."
+    },
+    "7": {
+      "category": "superseded",
+      "replacementPrs": [10],
+      "note": "Hermeneutics intake package was preserved and reconciled by merged AuditRepo PR #10."
+    },
+    "15": {
+      "category": "diagnostic",
+      "landedCommits": ["d84862013e0a8839c04edd0f138a9c731bd2ffb7"],
+      "note": "One-shot Reader R1 transaction provenance; workflow was removed after the landed SSOT commit."
+    },
+    "16": {
+      "category": "diagnostic",
+      "landedCommits": ["f94e196e6244a6a9e1492d5d85d0a389f11cdb6d"],
+      "note": "Reader R3 trigger-only PR; target reconciliation landed directly in main."
+    },
+    "17": {
+      "category": "diagnostic",
+      "landedCommits": ["1b9ff502c2dc19be63b5f58079156f8a727bceaa"],
+      "note": "Reader R4 trigger-only PR; target reconciliation landed directly in main."
+    },
+    "18": {
+      "category": "diagnostic",
+      "landedCommits": ["650def0a3a73e3e77dd396bc1d59c70a407e1ee0"],
+      "note": "Reader R5 trigger-only PR; target reconciliation landed directly in main."
+    },
+    "27": {
+      "category": "superseded",
+      "replacementPrs": [34],
+      "note": "Stale Gill evidence wave was replaced by the canonical AuditRepo/source/Research closure chain recorded in PR #34."
+    },
+    "42": {
+      "category": "diagnostic",
+      "landedCommits": ["f242ce3758db876dcf239d8b442c72922a9a6104"],
+      "note": "Read-only retrigger for the 5636 source-boundary transaction; the final writer was removed."
+    },
+    "43": {
+      "category": "diagnostic",
+      "landedCommits": ["f242ce3758db876dcf239d8b442c72922a9a6104"],
+      "note": "Event-only materializer trigger; matrix result landed in main and one-shot workflows were cleaned."
+    },
+    "44": {
+      "category": "diagnostic",
+      "landedCommits": ["a62ed7e3f73016a90123624cea737caa36784e76"],
+      "note": "Final validation marker for the cleaned 5636 transaction boundary."
+    }
+  }
+}
