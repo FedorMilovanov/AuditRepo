@@ -1,5 +1,6 @@
 name: Reconcile 5636 source boundary once
 
+# Retriggered through server-side auto-merge so the ordinary main push event runs.
 on:
   push:
     branches: [main]
