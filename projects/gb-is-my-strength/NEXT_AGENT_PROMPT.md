@@ -1,74 +1,79 @@
 # NEXT AGENT PROMPT — gb-is-my-strength
 
 > **Current operational truth only.** Historical prompts are archived under
-> `archive/stale/2026-07-23-current-truth-cleanup/`. Bug status and counts belong to
+> `archive/stale/2026-07-23-current-truth-cleanup/`. Bug status and counters belong to
 > `verified/MASTER_BUG_MATRIX.md`; this file owns the exact current source/deploy boundary and next execution order.
 
-**Source main:** `20ded750327f79e46efa4e50d4d7cd7171e7d9a1`
+**Source main:** `c8b47201f5b7210d69809c38808bfbda15695dcd`
 **Last exact production:** ✅ `8a5352671375fdb01b6c30273c25ec4283a13f69`
 **Production readiness:** `30006414898` — success
 **Production Pages:** `30007024100` — success
 **Live sitemap witness:** 66 `<loc>`, SHA-256 `5f3fa280af1ddc73f166decce47535d48ec60718375dd7c0418ea3675f82a801`
-**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_20ded750_cache-bust-fail-closed.md`
+**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_c8b47201_home-reader-gill-webkit.md`
 
 ## 1) Exact boundary
 
-Source and production are intentionally different authorities:
+Source and production remain intentionally separate authorities:
 
-- source `main` is `20ded750`;
+- source `main` is `c8b47201`;
 - the last exact deployed Pages SHA remains `8a535267`;
-- homepage PRs #181/#182, Gill PRs #156/#174, glossary PR #183, Bible PR #185, content-coverage PR #186, audit corpus PR #169, map keyboard PR #173, cancellable TTS PR #177 and fail-closed revision PR #187 are source/CI verified, but this AuditRepo update does not claim a new exact Pages deployment.
+- the source chain through homepage hardening, final Gill reconciliation, ReaderState R6 and the permanent Android/WebKit all-route gate is source/CI verified;
+- this AuditRepo update **does not** claim that `c8b47201` has passed exact readiness or been deployed to Pages.
 
-Canonical evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_20ded750_cache-bust-fail-closed.md`.
+Canonical source evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_c8b47201_home-reader-gill-webkit.md`.
 
-## 2) Newly completed lanes
+## 2) Newly completed source lanes
 
-- `AUDIT-PRO-SITEMAP-ROOT-ONLY` — closed by PR #163.
-- `SEO-AUDIT-ROOT-ONLY` — closed by PR #165: production SEO is registry-derived and audits all 75 built routes.
-- `VALIDATE-SCOPE-GAP` — closed by PR #167: static HTML obligations derive from the public-surface registry.
-- `VALIDATE-JS-ARTICLES-ONLY` — closed by the same PR #167 contract; `articles/*` and hardcoded `EXTRA_PAGES` are no longer the only breadth witness.
-- Search & Index issue #57 — implemented by PR #166 through one explicit 75-route policy matrix for robots, Pagefind, search-manifest, sitemap and RSS.
-- `AUDIT-PRO-ROOT-ONLY` — closed by PR #169: the source HTML corpus is registry-owned, 52 committed production shadows and 23 dist-only routes are explicit, unregistered root HTML is blocking, duplicated HTML scans use one corpus, and adversarial mutations are permanent CI.
-- `MAP-P1-16` — closed by PR #173: editable fields, IME composition and Alt/Ctrl/Meta chords are isolated from global MapEngine shortcuts while Escape remains the overlay close command.
-- `MAP-P1-17` — closed by PR #173: numeric navigation derives the actual visible DOM tab order, reaches `sci` through the canonical click handler, and permanently separates shared `ishod` MapEngine smoke from bespoke legacy `avraam`.
-- `TTS-DL-CONSENT` — closed by owner-approved PR #177: immediate Web Speech remains, one compact card announces a real model cache miss, `Не загружать` aborts and persists refusal, and permanent source/mutation/desktop/mobile Chromium contracts guard the behavior.
-- `CACHE-BUST-NO-WRITER` — closed by PR #187 as an obsolete unsafe prescription: general workflow writers are forbidden, stale revisions fail closed before merge/deploy, and the single glossary autofix exception is permanently constrained and mutation-tested.
+- Homepage PR #190 restored the lost edge-state package: breakpoint and BFCache cleanup, no-JS navigation, focus transfer and correct landmarks.
+- Homepage PR #193 made every substantive reveal section visible without JavaScript and in print.
+- Homepage PR #196 added the early no-`IntersectionObserver` fallback.
+- Homepage audit PR #195 made Visual Parity fail closed on hidden reveal content before screenshot capture.
+- Nagornaya PR #197 contained the first iPhone 320 WebKit overflow pair without root clipping.
+- Gill PR #192 completed the final source-level claim reconciliation across the native series and added a permanent read-only audit.
+- Nagornaya PR #199 closed the remaining Part III iPhone 320 matrix/summary overflow with route-owned selectors.
+- Reader R6 PR #191 introduced one canonical ReaderState transaction for progress, resume, bookmarks and reading consumers, including migration from legacy keys.
+- Browser PR #200 added permanent all-route touch/scroll audits for Android Chromium and iPhone/desktop WebKit. Exact artifacts recorded **1828/1828 Chromium PASS** and **2660/2660 WebKit PASS** over all 75 production routes.
+- Superseded duplicate branches PR #194 and PR #201 were closed unmerged so broader stale product CSS cannot return.
 
-PR #167 removed one real public broken link from `/baptisty-rossii/` to an unpublished local research Markdown file. PR #166 then normalized four missing search-manifest entries and 94 RSS metadata drifts through the shared policy projection.
+At this snapshot, `FedorMilovanov/gb-is-my-strength` has **no open pull requests**.
 
-## 3) Concurrent-agent boundaries
+## 3) Lost-work and collision recheck
 
-Do not overwrite or absorb active branches:
+The current `main@c8b47201` preserves both independently merged workflow additions:
 
-- source PR #178 is superseded by merged Bible PR #185 and must not be merged from its stale branch;
-- source PR #136 and #130 — isolated documentation link repairs;
-- glossary PR #183, Bible PR #185, Research PR #7 and AuditRepo Gill PR #27 are merged; refresh their resulting `main` state rather than reopening the retired branches.
+- `npm run engine:sweep` for ReaderState R6;
+- the `public-surface-cross-browser` Chromium/WebKit matrix.
 
-Before any source work, refresh `main`, list active PR files and compare intersections.
+The homepage still retains its approved native contract: Avvakum 3:19 inline translation, 39 background phrases, four SVG directions, lion label, no-JS routes, breakpoint/BFCache cleanup and fail-closed reveal capture. No hidden fifth homepage package or unpublished local commit was found.
 
 ## 4) Active work, in order
 
-1. **Handle the PR #167 warning inventory only after active-PR collision checks**
-   - 19 title/OG-title drifts;
-   - 10 Baptist reading pages without `article:modified_time`;
-   - 5 Nagornaya reading pages without the generic byline marker.
-   These are visible editorial debts, not suppressed baseline exceptions.
+1. **Prove the current exact production boundary**
+   - locate or run `Metadata & IndexNow Readiness` for the current source SHA;
+   - require `Deploy to GitHub Pages` success on the same readiness-verified SHA;
+   - capture a live marker/hash witness;
+   - only then advance production authority and close stale deployment/CI alert issues.
 
-2. **Reader R6 / issue #59**
-   - unify progress, resume, bookmarks and notes only after shared-runtime overlap with PR #161 is resolved;
-   - books remain `surface=series` + `seriesShape=book`, not a second engine.
+2. **Continue canonical P0/P1 order from `MASTER_BUG_MATRIX.md`**
+   - refresh current `main` and active-branch intersections before each lane;
+   - prioritize remaining Karty release/runtime P0 rows;
+   - do not reopen source-verified homepage, Gill, Reader R6 or browser-coverage work without current-head counter-evidence.
 
-3. Continue verified P0/P1 order from `MASTER_BUG_MATRIX.md`, refreshing active PR intersections before every lane.
+3. **Remaining independent findings**
+   - `STRANGLER-HYGIENE` migration/reference debt;
+   - `TTS-DL-NO-TABLOCK` cross-tab ownership for the large model download;
+   - `TTS-DL-UNZIP-SYNC` main-thread archive extraction;
+   - `REG-001` GitHub Pages response-header/hosting limitation;
+   - the PR #167 editorial warning inventory where still reproduced on current source.
 
-## 5) Open findings that remain real
+## 5) Concurrent-agent boundaries
 
-- `STRANGLER-HYGIENE` — migration/reference debt remains.
-- `TTS-DL-NO-TABLOCK` — no current proof of cross-tab ownership for the large model download; consent UX is fixed, duplicate downloads remain possible.
-- `TTS-DL-UNZIP-SYNC` — the full archive is still synchronously unzipped on the main thread.
-- `REG-001` — GitHub Pages response-header limitation / hosting decision.
-- the 34 PR #167 warning-inventory items described above.
+There are no open source PRs at this snapshot. Before new source work:
 
-Do not reopen the closed sitemap/SEO/HTML breadth rows or the new Search & Index policy without current-head counter-evidence.
+1. refresh `main`;
+2. list active PRs/branches again;
+3. compare changed filenames and workflow intersections;
+4. never restore superseded PR #194 or #201 product diffs.
 
 ## 6) Non-negotiable gates
 
@@ -77,7 +82,7 @@ Before source merge:
 - Shared Files Guard;
 - Native Source Contract when source/profile paths are touched;
 - Search Manifest Policy when search/index data is touched;
-- Route Registry Validators and browser matrix for public semantics;
+- Route Registry Validators, Reader engine sweep and cross-browser matrices for public semantics;
 - Visual Parity for rendered surfaces;
 - production-like build and the route-specific release gate.
 
@@ -86,7 +91,7 @@ After a production-impacting merge:
 - exact readiness success;
 - exact Pages success;
 - live marker/hash witness for the changed artifact or surface;
-- only then advance the production authority in AuditRepo.
+- only then advance production authority in AuditRepo.
 
 ## 7) Data hygiene
 
