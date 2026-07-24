@@ -1,0 +1,99 @@
+name: Temporary Cache-Bust Policy Reconciler
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/_tmp-close-cache-bust-no-writer.yml"
+      - "scripts/_tmp_close_cache_bust_no_writer.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tmp-close-cache-bust-policy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/close-cache-bust-no-writer-20ded750
+          fetch-depth: 0
+
+      - name: Detect reconciliation payload
+        id: payload
+        shell: bash
+        run: |
+          if test -f scripts/_tmp_close_cache_bust_no_writer.py; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "Cache-bust reconciliation is already materialized."
+          fi
+
+      - name: Set up Python 3.12
+        if: steps.payload.outputs.present == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Apply guarded SSOT reconciliation
+        if: steps.payload.outputs.present == 'true'
+        run: python3 scripts/_tmp_close_cache_bust_no_writer.py
+
+      - name: Validate AuditRepo structure and rules
+        if: steps.payload.outputs.present == 'true'
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+
+      - name: Validate matrix coverage and contexts
+        if: steps.payload.outputs.present == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/matrix-coverage
+          python3 scripts/check_matrix_coverage.py \
+            --warn-only \
+            --verbose \
+            --json-out /tmp/matrix-coverage/report.json \
+            | tee /tmp/matrix-coverage/report.log
+          python3 scripts/matrix_coverage_contexts.py \
+            --json-out /tmp/matrix-coverage/contexts.json \
+            --markdown-out /tmp/matrix-coverage/contexts.md
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('/tmp/matrix-coverage/report.json').read_text(encoding='utf-8'))
+          problems = report.get('problems') or report.get('coverage_problems') or []
+          if problems:
+              raise SystemExit(f"matrix coverage problems: {problems}")
+          contexts = json.loads(Path('/tmp/matrix-coverage/contexts.json').read_text(encoding='utf-8'))
+          unresolved = contexts.get('unresolved') or contexts.get('problems') or []
+          if unresolved:
+              raise SystemExit(f"unresolved evidence contexts: {unresolved}")
+          print('Matrix coverage and evidence contexts contain zero problems.')
+          PY
+
+      - name: Verify exact permanent scope
+        if: steps.payload.outputs.present == 'true'
+        run: |
+          test ! -e scripts/_tmp_close_cache_bust_no_writer.py
+          test -f projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-24_20ded750_cache-bust-fail-closed.md
+          git diff --check
+          git status --short
+
+      - name: Commit permanent reconciliation
+        if: steps.payload.outputs.present == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "chore(audit): close cache-bust writer P1"
+          git push origin HEAD:agent/close-cache-bust-no-writer-20ded750
