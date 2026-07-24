@@ -1,0 +1,69 @@
+name: Temporary Reader R6 Audit Diagnostics
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/_temp-reader-r6-audit-diagnostics.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+
+      - name: Inspect matrix, reader references and validators
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          text = matrix_path.read_text()
+          lines = text.splitlines()
+
+          print('== counted headings ==')
+          for line in lines:
+              if re.match(r'^## .*\(\d+\)', line):
+                  print(line)
+
+          print('== reader/#59 references ==')
+          for i, line in enumerate(lines, 1):
+              low = line.lower()
+              if 'reader' in low or 'bookmark' in low or 'issue #59' in low or '#59' in low:
+                  print(f'{i}: {line}')
+
+          print('== actual table rows per counted section ==')
+          heading_re = re.compile(r'^## (.+?) \((\d+)\)')
+          sections = []
+          for i, line in enumerate(lines):
+              m = heading_re.match(line)
+              if m:
+                  sections.append((i, m.group(1), int(m.group(2))))
+          for idx, (start, name, declared) in enumerate(sections):
+              end = sections[idx + 1][0] if idx + 1 < len(sections) else len(lines)
+              rows = []
+              for line in lines[start + 1:end]:
+                  if line.startswith('| ') and not line.startswith('|---') and not line.startswith('| ID ') and not line.startswith('| Поле '):
+                      rows.append(line)
+              print(f'{name}: declared={declared} actual={len(rows)}')
+
+          print('== scripts ==')
+          for path in sorted(Path('scripts').glob('*')):
+              if path.is_file():
+                  print(path)
+          PY
+
+      - name: Run repository validators
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          if test -f scripts/check_matrix_coverage.py; then python3 scripts/check_matrix_coverage.py; fi
