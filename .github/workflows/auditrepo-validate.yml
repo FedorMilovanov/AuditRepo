@@ -45,3 +45,36 @@ jobs:
           path: reports/matrix-coverage/**
           if-no-files-found: error
           retention-days: 14
+
+  reconcile-5636-once:
+    if: github.event_name == 'pull_request' && github.head_ref == 'agent/execute-5636-materializer' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout exact main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Refresh main
+        run: git pull --ff-only origin main
+      - name: Apply guarded matrix reconciliation
+        run: python3 scripts/reconcile_5636_matrix.py
+      - name: Verify matrix-only diff
+        shell: bash
+        run: |
+          git diff --check
+          test "$(git diff --name-only)" = "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
+          grep -F 'Source HEAD | `5636a6a1911c7eb0e7637406e87e749dd65dbaaf`' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -F '## ✅ ЗАКРЫТО (146)' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -F '## 🔴 P0/P1 — ОТКРЫТО (2)' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+      - name: Commit exact matrix result
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          git diff --cached --check
+          git commit -m "audit: record 5636 source closure boundary"
+          git push origin HEAD:main
