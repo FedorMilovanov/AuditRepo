@@ -1,6 +1,10 @@
 name: Reconcile 5636 source boundary once
 
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/reconcile-source-boundary-5636.yml
   push:
     branches: [main]
     paths:
@@ -15,6 +19,7 @@ concurrency:
 
 jobs:
   reconcile:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
