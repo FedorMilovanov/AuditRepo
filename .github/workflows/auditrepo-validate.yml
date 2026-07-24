@@ -61,14 +61,31 @@ jobs:
         run: git pull --ff-only origin main
       - name: Apply guarded matrix reconciliation
         run: python3 scripts/reconcile_5636_matrix.py
-      - name: Verify matrix-only diff
+      - name: Check generated diff whitespace
+        run: git diff --check -- projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+      - name: Check generated file scope
         shell: bash
         run: |
-          git diff --check
-          test "$(git diff --name-only)" = "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
-          grep -F 'Source HEAD | `5636a6a1911c7eb0e7637406e87e749dd65dbaaf`' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-          grep -F '## ✅ ЗАКРЫТО (146)' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-          grep -F '## 🔴 P0/P1 — ОТКРЫТО (2)' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          git status --short
+          mapfile -t changed < <(git diff --name-only)
+          printf 'changed[%s]=%s\n' "${#changed[@]}" "${changed[*]}"
+          test "${#changed[@]}" -eq 1
+          test "${changed[0]}" = "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
+      - name: Check generated authority markers
+        shell: bash
+        run: |
+          matrix=projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -F 'Source HEAD | `5636a6a1911c7eb0e7637406e87e749dd65dbaaf`' "$matrix"
+          grep -F '## ✅ ЗАКРЫТО (146)' "$matrix"
+          grep -F '## 🔴 P0/P1 — ОТКРЫТО (2)' "$matrix"
+          test "$(grep -c '^| ASTRO-P0-05 |' "$matrix")" -eq 1
+          test "$(grep -c '^| ASTRO-P0-06 |' "$matrix")" -eq 1
+          test "$(grep -c '^| MAP-P0-01 |' "$matrix")" -eq 1
+          test "$(grep -c '^| DATA-P0-01 |' "$matrix")" -eq 1
+      - name: Validate generated AuditRepo state
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
       - name: Commit exact matrix result
         shell: bash
         run: |
