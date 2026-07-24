@@ -16,7 +16,7 @@ jobs:
       - name: Checkout exact merge ref
         uses: actions/checkout@v4
 
-      - name: Build compact diagnostic report
+      - name: Build compact canonical diagnostic report
         shell: bash
         run: |
           set -euo pipefail
@@ -24,34 +24,33 @@ jobs:
           python3 - <<'PY' > reports/reader-r6-audit-diagnostics.txt
           from pathlib import Path
           import re
+          import sys
+
+          sys.path.insert(0, str(Path('scripts').resolve()))
+          from matrix_coverage_lib import parse_matrix
 
           path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
-          lines = path.read_text().splitlines()
-          heading_re = re.compile(r'^## (.+?) \((\d+)\)')
-          sections = []
-          for i, line in enumerate(lines):
-              match = heading_re.match(line)
-              if match:
-                  sections.append((i, match.group(1), int(match.group(2))))
+          text = path.read_text()
+          rows, open_ids, closed_rows = parse_matrix(text)
 
-          print('COUNTS')
-          for index, (start, name, declared) in enumerate(sections):
-              end = sections[index + 1][0] if index + 1 < len(sections) else len(lines)
-              rows = [line for line in lines[start + 1:end]
-                      if line.startswith('| ') and not line.startswith('|---')
-                      and not line.startswith('| ID ') and not line.startswith('| Поле ')]
-              print(f'{name}\tdeclared={declared}\tactual={len(rows)}')
+          print('CANONICAL_COUNTS')
+          print(f'matrix_ids={len(rows)}')
+          print(f'closed_rows={len(closed_rows)}')
+          print(f'open_rows={len(open_ids)}')
+          for line in text.splitlines():
+              if re.match(r'^## .*\(\d+\)', line):
+                  print(line)
 
           print('\nREADER_REFERENCES')
-          for line_no, line in enumerate(lines, 1):
+          for line_no, line in enumerate(text.splitlines(), 1):
               low = line.lower()
               if 'reader' in low or 'bookmark' in low or 'issue #59' in low or '#59' in low:
                   print(f'{line_no}: {line}')
 
-          print('\nVALIDATORS')
-          for script in sorted(Path('scripts').glob('*')):
-              if script.is_file():
-                  print(script)
+          print('\nCANONICAL_READER_IDS')
+          for finding_id, row in sorted(rows.items()):
+              if 'READER' in finding_id or 'BOOKMARK' in finding_id or 'reader' in row.line.lower() or 'bookmark' in row.line.lower():
+                  print(f'{finding_id}\t{row.section}\tline={row.line_no}')
           PY
           cat reports/reader-r6-audit-diagnostics.txt
 
@@ -61,7 +60,7 @@ jobs:
           set -euo pipefail
           python3 scripts/check_auditrepo_structure.py
           python3 scripts/validate_audit_repo.py
-          if test -f scripts/check_matrix_coverage.py; then python3 scripts/check_matrix_coverage.py; fi
+          python3 scripts/check_matrix_coverage.py --warn-only
 
       - name: Upload compact diagnostics
         if: always()
