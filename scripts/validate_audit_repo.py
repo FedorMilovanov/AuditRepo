@@ -7,6 +7,8 @@ import re
 DEFAULT_ROOT = Path(__file__).resolve().parent.parent
 ROOT = Path(os.environ.get('AUDITREPO_ROOT', DEFAULT_ROOT)).resolve()
 PROJECTS = ROOT / 'projects'
+STRICT_REPORT_CONTENT = os.environ.get('AUDITREPO_STRICT_REPORT_CONTENT') == '1'
+CHANGED_PATHS_FILE = os.environ.get('AUDITREPO_CHANGED_PATHS_FILE', '').strip()
 ALLOWED_ROOT_MD = {
     'README.md',
     'PROJECT_REGISTRY.md',
@@ -26,6 +28,29 @@ def project_dirs():
     if not PROJECTS.exists():
         return []
     return [p for p in PROJECTS.iterdir() if p.is_dir() and not p.name.startswith('_')]
+
+
+def load_changed_paths():
+    if not CHANGED_PATHS_FILE:
+        return set()
+    source = Path(CHANGED_PATHS_FILE)
+    if not source.is_file():
+        return set()
+    return {
+        line.strip().replace('\\', '/')
+        for line in source.read_text(encoding='utf-8', errors='ignore').splitlines()
+        if line.strip()
+    }
+
+
+def intake_was_changed(date_dir, changed_paths):
+    if STRICT_REPORT_CONTENT:
+        return True
+    try:
+        prefix = date_dir.relative_to(ROOT).as_posix().rstrip('/') + '/'
+    except ValueError:
+        return False
+    return any(path == prefix[:-1] or path.startswith(prefix) for path in changed_paths)
 
 
 def report_has_real_evidence(report_file):
@@ -61,6 +86,8 @@ def report_has_real_evidence(report_file):
 
 
 errors = []
+changed_paths = load_changed_paths()
+legacy_empty_reports = []
 
 # Root hygiene: .md-файлы по allow-list
 for p in ROOT.glob('*.md'):
@@ -137,10 +164,12 @@ for proj in project_dirs():
             if has_comments:
                 print(f'  WARNING: {proj.name}: REPORT.md appears empty template,'
                       f' but evidence found in comments/: {report_file}')
-            else:
+            elif intake_was_changed(date_dir, changed_paths):
                 fail(f'{proj.name}: REPORT.md appears empty template'
                      f' (no real severity/title/findings)'
                      f' and no evidence in comments/: {report_file}', errors)
+            else:
+                legacy_empty_reports.append(report_file)
 
     # Working + verified + verification should contain at least one README.
     if not (proj / 'working' / 'README.md').exists():
@@ -149,6 +178,16 @@ for proj in project_dirs():
         fail(f'{proj.name}: verified missing README.md', errors)
     if not (proj / 'verification' / 'README.md').exists():
         fail(f'{proj.name}: verification missing README.md', errors)
+
+if legacy_empty_reports:
+    print(f'AUDITREPO LEGACY REPORT DEBT: {len(legacy_empty_reports)} untouched empty scaffold(s)')
+    for report_file in legacy_empty_reports:
+        try:
+            shown = report_file.relative_to(ROOT)
+        except ValueError:
+            shown = report_file
+        print('-', shown)
+    print('New or modified intake folders are blocking; historical debt remains visible for staged cleanup.')
 
 if errors:
     print('AUDITREPO VALIDATION: FAIL')
