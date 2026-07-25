@@ -9,21 +9,23 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `184d7ed1b50161ec5fa1418ca24539e33977e2a8` (current source main; complete map P0 closure through #218/#224 plus archaeology registry foundation #226, layered on the preserved homepage, Gill, Reader R6 and all-route browser chain) |
-| Deploy | ✅ **LAST EXACT PRODUCTION @ `8a535267`.** Readiness `30006414898` → Pages `30007024100` success on the same SHA; source `main` is newer and source/CI verified only. |
+| Source HEAD | `d94b54889e4f5f0330adaf2b9947e59af4aee7e4` (current source main; merged PDF convergence PR #283 after the TTS/deploy/editorial sequence; duplicate print ownership removed) |
+| Deploy | ⚠️ **SEPARATE AUTHORITIES.** Last fully imported exact production witness remains `8a535267`; newer candidate `ddcf7153` has permanent post-deploy TTS verification in source, but exact readiness/Pages/live-artifact IDs are not yet imported into AuditRepo. Current source `d94b5488` is not claimed deployed here. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_184d7ed1_map-p0-closure.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_d94b5488_multiagent-convergence.md` |
 
-⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `184d7ed1`; last exact production authority: `8a535267`; source/CI evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_184d7ed1_map-p0-closure.md`.
+⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `d94b5488`; last fully imported exact production witness: `8a535267`; newer production candidate requiring evidence import: `ddcf7153`; source/orchestration evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_d94b5488_multiagent-convergence.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (148)
+## ✅ ЗАКРЫТО (150)
 
 | ID | Описание | Коммит |
+| AUDIT-SSOT-CURRENT-HEAD-DRIFT | ✅ **FIXED/SOURCE GOVERNANCE VERIFIED 2026-07-25.** AuditRepo no longer points agents at `184d7ed1` and obsolete map-first PR ownership. `NEXT_AGENT_PROMPT.md`, matrix masthead and immutable reverify/convergence reports now own `main@d94b5488`, current PR boundaries and the explicit production-evidence gap. | `d94b5488` source + current AuditRepo convergence PR |
+| ORCH-DUPLICATE-PRINT-SURFACE-OWNERS | ✅ **FIXED 2026-07-25.** PR #283 became the sole PDF product owner and merged as `d94b5488`; PR #280 was closed without merge as superseded. Test-only PR #286 owns only the missing physical front/back evidence and changes no product CSS/JS. | PR #283 merged; PR #280 closed; PR #286 bounded |
 |---|---|---|
 | ASTRO-P0-05 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #203 replaces console-only MapEngine initialization failures with a route-owned accessible recovery surface: `.me-error[role="alert"]`, synchronized `data-map-state`/`aria-busy`, safe text rendering, retry and return controls ≥44 px. Exact head `1338f71f` passed Shared, Native Source, Route Registry Chromium/WebKit, Overlay, Glossary and Visual Parity. | `0461faa8` PR#203 |
 | ASTRO-P0-06 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** Ishod and Avraam now expose readable no-JS and runtime fallbacks instead of an opaque black scene when JavaScript is disabled, `route.json` returns 503, the engine asset fails, initialization throws or returns null. Permanent `engine:sweep` covers eight normal/failure scenarios. | `0461faa8` PR#203 |
@@ -184,9 +186,15 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (94)
+## 🟠 P1 — ОТКРЫТО (100)
 
 | ID | Описание | Witnesses |
+| CI-ALERT-NO-RECOVERY-STATE | Failure notifier has no exact-head recovery/superseded state, can leave stale failure issues open after green recovery, does not reliably download diagnostic artifacts and may present workflow-name heuristics as root cause. | forensic delta 2026-07-25; notify-on-failure lifecycle |
+| CI-BUILD-VALIDATION-DUPLICATION | Readiness and deploy repeat dependency installation, production-like build and overlapping full/light validation instead of promoting one verified immutable artifact. | workflow/control-plane forensic 2026-07-25 |
+| DEPLOY-PROVENANCE-TTS-COUPLING | PR #284 uses generic deployment-provenance naming/path but its schema and ownership are TTS-specific. Generic repository/commit/workflow/artifact/build/routes/assets identity must be separated from `extensions.tts` before merge. | open draft PR #284 |
+| CI-WORKFLOW-PROLIFERATION | Control plane expanded from the earlier 19-workflow baseline to roughly 26 permanent workflows with repeated heavy setup/build/test sections. Capability inventory and convergence are required before adding workflows. | current control-plane artifacts; forensic delta 2026-07-25 |
+| WORKFLOW-POLICY-SHADOW-ERA | Workflow policy still protects historical shadow/route names and hardcoded dist paths instead of effective-route-registry coverage, capability gates, read-only validation and permission contracts. | existing source issue #64 |
+| AUDIT-PRODUCTION-EVIDENCE-IMPORT-GAP | AuditRepo cannot safely advance production authority beyond `8a535267` until exact readiness, Pages, deployment and live-contract artifact identifiers for newer candidate `ddcf7153` are imported and reconciled. | `ddcf7153` production candidate; evidence import pending |
 |---|---|---|
 | S-T-01 | 🟡 **ЧАСТИЧНО 2026-07-14**: чекер серий + orphan-scan + legacy-selector-ban теперь видят .astro/.mdx; полный route-level паритет гейтов для Astro-мира — остаётся. | Auditor 2026-07-14 |
 | S-SEC-01 | Blacklist-based HTML Sanitization in enhancements.js (XSS risk) | Auditor 2026-07-14 |
@@ -288,9 +296,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (35)
+## 🟡 P2 — ОТКРЫТО (37)
 
 | ID | Описание | Witnesses |
+| GENESIS6-ACTIVATION-OWNER-GAP | Canonical Genesis 6 MDX/images are landed as intentional draft/noindex content, but no active five-route activation owner exists. Snapshots may not remain independent workstreams. | PR #285 closed/reset; no active activation PR |
+| RESEARCH-AUTHORITY-MANIFEST-MISSING | Research supersession/authority remains prose-only. A machine-readable manifest must govern document scope, supersedes, canonical authority, source grade, rights status and pinned source commit. | Research forensic review 2026-07-25 |
 |---|---|---|
 | REG-001 | 🟡 **Hosting/security-header decision.** GitHub Pages live responses expose HSTS but no response-level CSP, X-Frame-Options, Referrer-Policy or Permissions-Policy. Closing requires a proxy/hosting decision or explicit by-design acceptance. | `reverify/CURRENT_OPEN_EVIDENCE_2026-07-23_a73f609f.md` |
 | AVRAAM-P2-01 | 🆕 **Karty P2:** Тяжёлый payload Авраама (~824KB, 1540 DOM, 1103 SVG, 60 GSAP animations) + дублирующий fetch route.json | verified-browser (c2c339708252) |
@@ -901,3 +911,12 @@ D-23 (P1, deploy-блокирующая регрессия) — 🟠→✅ **RES
 - PR #205 removed deleted editorial branch triggers and migrated Bible, Glossary and TTS workflow linting to the shared runner. Exact artifact: 19 workflows, 151 npm scripts, 452 references, 0 hard issues and 3 bounded warnings.
 - Current source has no open PRs. Reader R6 issue #127, Nagornaya umbrella #117 and stale aggregate CI alerts #12/#17 were closed after source verification.
 - Production authority intentionally remains `8a535267`; exact readiness → Pages → live evidence for `5636a6a1` has not been established.
+
+### 2026-07-25 — d94b5488 multi-agent convergence
+
+- Source authority advanced from `184d7ed1` to `d94b5488`.
+- Duplicate PDF ownership closed through merged #283 and superseded #280.
+- Stale Genesis snapshot #285 closed/reset; no activation owner exists.
+- Current active source PRs recorded as #284 and #286.
+- Production authority remains fail-closed pending exact evidence import for `ddcf7153`.
+- Added notifier, build-once, workflow proliferation, provenance coupling and Research authority findings.

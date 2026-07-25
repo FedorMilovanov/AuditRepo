@@ -1,104 +1,126 @@
 # NEXT AGENT PROMPT — gb-is-my-strength
 
-> **Current operational truth only.** Historical prompts are archived. Bug status and counters belong to `verified/MASTER_BUG_MATRIX.md`; this file owns the exact current source/deploy boundary and next execution order.
+> **Current operational truth only.** Historical prompts are archived. Bug status and counters belong to `verified/MASTER_BUG_MATRIX.md`; this file owns the exact current source/deploy boundary, shared-surface ownership and next execution order.
 
-**Source main:** `184d7ed1b50161ec5fa1418ca24539e33977e2a8`
-**Last exact production:** ✅ `8a5352671375fdb01b6c30273c25ec4283a13f69`
-**Production readiness:** `30006414898` — success
-**Production Pages:** `30007024100` — success
-**Live sitemap witness:** 66 `<loc>`, SHA-256 `5f3fa280af1ddc73f166decce47535d48ec60718375dd7c0418ea3675f82a801`
-**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_184d7ed1_map-p0-closure.md`
+**Source main:** `d94b54889e4f5f0330adaf2b9947e59af4aee7e4`
+**Last fully imported exact production witness:** ✅ `8a5352671375fdb01b6c30273c25ec4283a13f69`
+**Newer production candidate:** ⚠️ `ddcf71533fe85606ae59d5a6e0d8662db3dd28cb` — permanent post-deploy TTS contract exists in source, but exact readiness/Pages/live-artifact IDs have not yet been imported into AuditRepo.
+**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_d94b5488_multiagent-convergence.md`
+**Multi-agent convergence report:** `reverify/MULTIAGENT_CONVERGENCE_2026-07-25_d94b5488.md`
 
 ## 1) Exact boundary
 
 Source and production remain separate authorities:
 
-- source `main` is `184d7ed1`;
-- last exact deployed Pages SHA remains `8a535267`;
-- current source contains the reconciled homepage, Gill source authority, ReaderState R6, all-route Android/WebKit coverage, accessible map recovery, control-plane zero-warning policy, map panel repair, authored route geometry and the first archaeology source registry;
-- this AuditRepo update **does not** claim that `184d7ed1` has passed exact readiness or reached Pages.
+- source `main` is `d94b5488` after merged PR #283;
+- PR #283 is the sole accepted owner of the shared PDF product surface and removes repeated gold progress decoration while keeping reversible cards intact;
+- PR #280 is closed without merge as a superseded diagnostic branch;
+- PR #285 is closed without merge and its temporary Genesis snapshot branch is reset to current `main`;
+- the last fully pinned AuditRepo production authority remains `8a535267` until newer exact run IDs and artifacts are imported;
+- `ddcf7153` is a newer production candidate, not yet canonical production authority inside AuditRepo;
+- this AuditRepo update advances source and orchestration truth only; it does not manufacture missing production evidence.
 
-Canonical source evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-24_184d7ed1_map-p0-closure.md`.
+Canonical evidence:
 
-## 2) Newly completed map lanes
+- `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_d94b5488_multiagent-convergence.md`;
+- `reverify/MULTIAGENT_CONVERGENCE_2026-07-25_d94b5488.md`.
 
-- PR #218 → `d57d49b8`: `MAP-P0-01` fixed. Map panels are viewport/safe-area bounded; only content scrolls; permanent Chromium/WebKit 320/390 contracts cover Ishod and real Maccabim data.
-- PR #224 → `c27176bf`: `DATA-P0-01` fixed. MapEngine v0.55 renders all 15 author-authored Avraam Bézier paths with exact geometry, colors, dash state, arrows and fallback; Chromium/WebKit/Firefox agree.
-- PR #226 → `184d7ed1`: versioned archaeology source registry foundation. Current machine report: 52 records, 42 verified, 31 high-evidence, 6 YEC interpretation sources, 11 governed claims, 0 problems, 0 warnings.
+## 2) Current active pull requests
 
-Canonical P0/P1 release/runtime count becomes **0** after the atomic matrix transaction. This does not close the large independent P1/P2/P3 map backlog.
+At this snapshot the active source PRs are:
 
-## 3) Archaeology and YEC policy
+- **#284 — deployment provenance**: draft. The current implementation is TTS-coupled and must not be accepted as universal provenance until generic deployment identity/build/routes/assets fields are separated from `extensions.tts`.
+- **#286 — reversible-card physical PDF proof**: draft, narrow evidence-only follow-up. It adds no workflow and no product CSS/JS; it must physically prove both front and flipped-back faces on one page through the existing Print Paper Contract.
 
-- Scripture remains the project’s highest interpretive authority.
-- Conventional archaeological dates and field observations remain visible as evidence metadata.
-- YEC/conservative sources are a distinct interpretation layer and cannot replace excavation reports, object records, institutional archives or peer-reviewed publications.
-- Retracted work cannot support a positive claim.
-- No personal house, altar, inscription or artefact may be attributed to Abraham without direct primary evidence.
-- Expand source coverage to all current map categories before deleting hardcoded archaeology from MapEngine.
+There is no active Genesis 6 activation PR. The canonical Genesis corpus remains intentionally `draft: true` and `noindex: true` until one explicit owner is created for the five-route activation.
 
-## 4) Active work, in order
+## 3) Shared-surface ownership
 
-1. **Finish this AuditRepo reconciliation**
-   - atomically move `MAP-P0-01` and `DATA-P0-01` from open to closed;
-   - closed counter `146→148`;
-   - P0/P1 open counter `2→0`;
-   - source boundary `5636a6a1→184d7ed1`;
-   - keep production authority unchanged.
+- One shared/route surface has one active product owner.
+- PDF product ownership is closed through merged #283; #286 owns only the missing permanent physical test.
+- Do not revive #280 or create another print implementation branch.
+- Do not create another Genesis snapshot. A future activation must use one named activation PR and one owner.
+- Before every lane, refresh `main`, open PRs, changed filenames and workflow intersections.
 
-2. **Expand archaeology registry before runtime migration**
-   - cover every existing hardcoded category: Exodus, First Temple/Jerusalem, Maccabees, Early Church, Judges, Kings, Jesus ministry, Dead Sea Scrolls, exile, Persian return, conquest and Davidic kingdom;
-   - use original excavation/object/institutional and peer-reviewed sources first;
-   - record direct DOI/retraction links and explicit uncertainty;
-   - preserve YEC interpretation separately.
+## 4) CI status semantics
 
-3. **Atomic runtime migration**
-   - only after corpus coverage is complete, remove `ARCHAEOLOGY_REFERENCES` from `map-engine.js`;
-   - replace heuristic source classification with registry tiers;
-   - render archaeology material only in the archaeology context, not under every tab;
-   - preserve offline/local operation and fail-closed fallback;
-   - require Chromium/WebKit/Firefox and Visual Parity evidence.
+Do not treat every red status as the same defect. Classify it first:
 
-4. **Continue map P1 order from current HEAD**
-   - refresh open PRs and ownership before selecting a lane;
-   - prioritize reproduced runtime/accessibility/cartographic defects, not cosmetic churn;
-   - do not modify `scripts/engine-sweep.mjs` while reader PR #209 owns it.
+1. **protective failure** — for example Shared Files Guard rejecting temporary write workflows in a final tree;
+2. **product regression** — for example `back: card root is not atomic`;
+3. **cancelled/superseded run** — a newer head cancelled the old run through concurrency;
+4. **stale alert lifecycle** — an old failure issue remains open after a green recovery.
 
-5. **Prove exact production**
-   - readiness success for one current source SHA;
-   - Pages success on that same SHA;
-   - live marker/hash witness;
-   - only then advance production authority and close deploy/source alerts.
+`notify-on-failure.yml` currently lacks a recovery state machine and does not reliably consume route-impact artifacts. Do not trust its inferred root-cause prose without the actual failed step and log excerpt.
 
-## 5) Current parallel source PR boundaries
+## 5) Active work, in order
 
-At this snapshot, open source PRs include reader #209, editorial #213/#227 and governance #228. They do not own the archaeology registry or current map engine source, but every new lane must refresh changed filenames and mergeability before work.
+1. **Finish exact physical PDF proof (#286)**
+   - require front and flipped-back PDFs;
+   - require outer card root `atomic` in both states;
+   - require marker start/end on the same physical page;
+   - use no article-text selectors;
+   - merge only after exact-head Print Paper artifact review.
 
-Do not resurrect superseded map PR #194/#201/#202 or any temporary writer in a final diff.
+2. **Refactor deployment provenance (#284) before merge**
+   - generic manifest owns repository, commit SHA, workflow identity, artifact digest, build metadata, route-registry snapshot and critical assets;
+   - TTS-specific hashes/policy live only under `extensions.tts`;
+   - do not create a second specialized workflow;
+   - deploy must eventually promote the same immutable artifact that readiness verified.
+
+3. **Fix CI alert lifecycle**
+   - key alerts by workflow + branch/PR + latest head SHA;
+   - open/update on failure;
+   - close or mark recovered on exact-head success;
+   - distinguish cancelled/superseded;
+   - download the actual diagnostic artifact and quote the failed step/log, not a guessed root cause.
+
+4. **Inventory and converge CI before adding permanent workflows**
+   - map capabilities to current workflows/scripts;
+   - identify duplicate `npm ci`, production build and validation passes;
+   - target build-once → upload immutable artifact → deploy same artifact → generic live witness;
+   - specialized TTS/PDF/Gill/Nagornaya checks remain capability gates, not parallel CI platforms.
+
+5. **Replace shadow-era workflow policy (existing issue #64)**
+   - derive route coverage from effective route registry;
+   - enforce read-only validation and permissions;
+   - forbid mutating validation;
+   - remove hardcoded historical route/shadow requirements where capability contracts supersede them.
+
+6. **Resolve Genesis 6 activation ownership**
+   - current state is intentionally draft/noindex;
+   - activation requires one explicit PR and one owner for all five routes;
+   - no standalone snapshot may remain open without a named consumer.
+
+7. **Add Research authority manifest**
+   - machine-readable document IDs, scope, supersedes, authority, source grade, rights state and pinned source commit;
+   - block cycles, duplicate canonical authority, missing documents, stale site references and unresolved image rights.
 
 ## 6) Non-negotiable gates
 
 Before source merge:
 
-- route-specific source/browser contract;
+- exact-head changed-file and ownership refresh;
 - Shared Files Guard;
 - repository control-plane audit for workflow/package changes;
-- Native Source/Route Registry gates when relevant;
-- Chromium/WebKit/Firefox for map runtime changes;
-- Visual Parity and production-like build;
-- exact-head review with no temporary workflow/materializer in final scope.
+- Native Source/Route Registry/Visual gates when relevant;
+- route-specific browser/PDF contracts;
+- production-like build;
+- no `_temp-*` workflow/materializer in final scope;
+- no mutation in a nominally read-only validation step.
 
 After a production-impacting merge:
 
 - exact readiness;
-- exact Pages;
-- live marker/hash witness;
-- only then update production authority.
+- exact Pages deployment from the same verified artifact identity;
+- generic live witness plus capability-specific witness where relevant;
+- only then advance production authority in AuditRepo.
 
 ## 7) Data hygiene
 
 - `PROJECT_REGISTRY.md` remains static.
 - `NEXT_AGENT_PROMPT.md` owns current execution truth.
 - `verified/MASTER_BUG_MATRIX.md` owns statuses and counters.
-- `reverify/` owns immutable current-head witnesses.
-- no silent evidence deletion; no temporary workflow in a final diff.
+- `reverify/` owns immutable current-head and convergence witnesses.
+- stale failure issues are not evidence of current failure.
+- no silent evidence deletion and no temporary workflow in a final diff.
