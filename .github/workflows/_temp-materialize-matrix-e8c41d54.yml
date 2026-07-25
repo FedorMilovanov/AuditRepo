@@ -1,0 +1,43 @@
+name: TEMP Materialize Matrix e8c41d54
+
+on:
+  push:
+    branches:
+      - audit/_temp-materialize-matrix-e8c41d54
+    paths:
+      - scripts/_temp_materialize_matrix_e8c41d54.py
+      - .github/workflows/_temp-materialize-matrix-e8c41d54.yml
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact temporary lane
+        uses: actions/checkout@v4
+        with:
+          ref: audit/_temp-materialize-matrix-e8c41d54
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Materialize matrix repair
+        run: python3 scripts/_temp_materialize_matrix_e8c41d54.py
+      - name: Validate final tree
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          test ! -e scripts/_temp_materialize_matrix_e8c41d54.py
+          test ! -e .github/workflows/_temp-materialize-matrix-e8c41d54.yml
+          git diff --check
+      - name: Publish prevalidated final blob
+        run: |
+          git config user.name "audit-reconciliation-bot"
+          git config user.email "audit-reconciliation-bot@users.noreply.github.com"
+          git add -A
+          git commit -m "audit: zero matrix diagnostics at e8c41d54"
+          git push origin HEAD:audit/_temp-materialize-matrix-e8c41d54
