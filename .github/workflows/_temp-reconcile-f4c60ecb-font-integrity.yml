@@ -1,0 +1,54 @@
+name: TEMP Reconcile f4c60ecb Font Integrity
+
+on:
+  push:
+    branches:
+      - audit/reconcile-7b462b96-concurrency-20260725
+    paths:
+      - scripts/_temp_reconcile_f4c60ecb_font_integrity.py
+      - .github/workflows/_temp-reconcile-f4c60ecb-font-integrity.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: temp-reconcile-f4c60ecb-font-integrity
+  cancel-in-progress: false
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact AuditRepo lane
+        uses: actions/checkout@v4
+        with:
+          ref: audit/reconcile-7b462b96-concurrency-20260725
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Materialize f4c60ecb SSOT transaction
+        run: python3 scripts/_temp_reconcile_f4c60ecb_font_integrity.py
+
+      - name: Validate final canonical tree
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 scripts/check_matrix_coverage.py --verbose
+          test ! -e scripts/_temp_reconcile_f4c60ecb_font_integrity.py
+          git diff --check
+
+      - name: Publish tested documentation transaction
+        run: |
+          git config user.name "audit-reconciliation-bot"
+          git config user.email "audit-reconciliation-bot@users.noreply.github.com"
+          git rm .github/workflows/_temp-reconcile-f4c60ecb-font-integrity.yml
+          git add -A
+          git diff --cached --check
+          git commit -m "audit: reconcile source f4c60ecb font integrity"
+          git push origin HEAD:audit/reconcile-7b462b96-concurrency-20260725
