@@ -1,0 +1,56 @@
+name: TEMP Block Matrix Evidence Integrity
+
+on:
+  push:
+    branches:
+      - audit/block-matrix-evidence-integrity-20260725
+    paths:
+      - scripts/_temp_block_matrix_evidence_integrity.py
+      - .github/workflows/_temp-block-matrix-evidence-integrity.yml
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - scripts/_temp_block_matrix_evidence_integrity.py
+      - .github/workflows/_temp-block-matrix-evidence-integrity.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: temp-block-matrix-evidence-integrity
+  cancel-in-progress: false
+
+jobs:
+  materialize:
+    if: github.event_name == 'push' || github.event.pull_request.head.ref == 'audit/block-matrix-evidence-integrity-20260725'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact audit lane
+        uses: actions/checkout@v4
+        with:
+          ref: audit/block-matrix-evidence-integrity-20260725
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Materialize blocking evidence integrity
+        run: python3 scripts/_temp_block_matrix_evidence_integrity.py
+      - name: Validate final tree and blocking coverage
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 scripts/check_matrix_coverage.py --verbose
+          test ! -e scripts/_temp_block_matrix_evidence_integrity.py
+          test ! -e .github/workflows/_temp-block-matrix-evidence-integrity.yml
+          git diff --check
+      - name: Publish tested control-plane transaction
+        run: |
+          git config user.name "audit-reconciliation-bot"
+          git config user.email "audit-reconciliation-bot@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "fix(audit): make matrix evidence integrity blocking"
+          git push origin HEAD:audit/block-matrix-evidence-integrity-20260725
