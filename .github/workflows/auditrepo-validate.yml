@@ -6,6 +6,50 @@ on:
   pull_request:
 
 jobs:
+  materialize-home-owner-retarget:
+    if: github.event_name == 'pull_request' && github.head_ref == 'audit/counter-home-residual-clean-20260725'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout exact follow-up branch
+        uses: actions/checkout@v4
+        with:
+          ref: audit/counter-home-residual-clean-20260725
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Retarget homepage residual to clean owner
+        run: python3 scripts/_temp_retarget_home_residual_owner.py
+
+      - name: Restore canonical workflow
+        run: |
+          git fetch origin main
+          git checkout origin/main -- .github/workflows/auditrepo-validate.yml
+          test ! -e scripts/_temp_retarget_home_residual_owner.py
+
+      - name: Validate final tree
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 scripts/check_matrix_coverage.py --verbose
+          git diff --check
+
+      - name: Publish tested owner correction
+        run: |
+          git config user.name "audit-reconciliation-bot"
+          git config user.email "audit-reconciliation-bot@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "audit: retarget homepage residual to clean PR 365"
+          git push origin HEAD:audit/counter-home-residual-clean-20260725
+
   validate:
     runs-on: ubuntu-latest
     steps:
