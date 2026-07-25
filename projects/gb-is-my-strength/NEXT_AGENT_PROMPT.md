@@ -30,14 +30,14 @@
 
 Refresh before every action. At this capture:
 
-- no open source pull request exists;
+- **#361 — homepage lifecycle evidence owner:** test-only extension of the existing Runtime Interactive Audit; owns `.github/workflows/interactive-audit.yml` and `scripts/home-browser-lifecycle-contract.mjs` only;
 - no current Genesis 6 activation/finalizer owner exists;
 - #287 is archived infrastructure and must not be reopened as a product lane.
 
 Merged/closed convergence:
 
 - #336/#346 close trustworthy source-link engine acceptance;
-- #338 closes homepage browser-contract issue #299;
+- #338 closes the broad homepage browser-contract issue #299; #361 owns only residual lifecycle/shortcut evidence and must not redesign the homepage;
 - #354 closes five broken Gill source records and issue #352;
 - #348 closes the Research authority-manifest/provenance gap without activating publication;
 - Research issue #16 is closed completed;
@@ -67,7 +67,7 @@ PR #354 preserved the intended works and exact citation identities while replaci
 
 ### Homepage runtime and source-link acceptance
 
-PR #338 permanently covers homepage Chromium/WebKit/no-JS behavior. PRs #324/#336/#346 guarantee per-hop source-link policy, DNS validation/request pinning, evidence secrecy, bounded response handling and fail-closed systemic detection.
+PR #338 permanently covers the broad homepage Chromium/WebKit/no-JS behavior. PR #361 may extend only residual lifecycle/shortcut evidence in the existing workflow. PRs #324/#336/#346 guarantee per-hop source-link policy, DNS validation/request pinning, evidence secrecy, bounded response handling and fail-closed systemic detection.
 
 ### Deployment witness projection and concurrency
 
@@ -89,27 +89,33 @@ Research provenance success proves authority ordering and pinning only. It is no
 
 ## 5) Active work, in order
 
-1. **Create one fresh Genesis 6 product-finalizer owner**
-   - start from current `main@9407cc92`;
+1. **Finish exact owner #361 without crossing product files**
+   - test-only Chromium/WebKit lifecycle and shortcut evidence;
+   - keep the permanent Runtime Interactive Audit as sole workflow owner;
+   - no product CSS, route, content, theme or search implementation changes;
+   - require clean two-file scope and exact-head browser/Shared/publication gates.
+
+2. **Create one fresh Genesis 6 product-finalizer owner**
+   - start from current source main after refreshing #361 status;
    - consume the pinned provenance registry and exact Research bundles;
    - add/review canonical MDX and route ownership in one normal product PR;
    - use shared `SeriesReaderChrome` with `defineSeriesConfig(...)`;
    - keep `draft-noindex` until exact-head Astro/build/Chromium/WebKit, rights/source and publication gates pass;
    - do not reuse archived issue #287 transport.
 
-2. **Converge #292 + #295 in one release lane**
+3. **Converge #292 + #295 in one release lane**
    - build and validate one pinned candidate in readiness;
    - compute whole-artifact digest and generic build/routes/Pagefind/sitemap/feed/core identities;
    - deploy the same candidate without a second install/build;
    - retain fail-closed recovery and rollback.
 
-3. **Reconcile legacy guessed CI alerts**
+4. **Reconcile legacy guessed CI alerts**
    - #261/#272/#279/#259/#90/#89 only with exact newer same-identity evidence.
 
-4. **Harden privileged control plane (#301 + #64)**
+5. **Harden privileged control plane (#301 + #64)**
    - capability registry, effective permissions, persisted credentials and full-SHA pins.
 
-5. **Continue R3 hardening**
+6. **Continue R3 hardening**
    - #298 owner-approved product goldens;
    - keep Research authority and site activation as separate boundaries.
 
