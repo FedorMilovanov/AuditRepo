@@ -1,0 +1,52 @@
+name: TEMP Materialize Current Convergence
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/_temp-materialize-current-convergence.yml'
+      - 'scripts/_temp-materialize-current-convergence.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: temp-current-convergence-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  materialize:
+    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'audit/current-head-multiagent-convergence-20260725'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: audit/current-head-multiagent-convergence-20260725
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+      - name: Apply atomic matrix transaction
+        run: node scripts/_temp-materialize-current-convergence.mjs
+      - name: Validate convergence scope
+        run: |
+          set -euo pipefail
+          node --check scripts/_temp-materialize-current-convergence.mjs
+          git diff --check
+          grep -Fq 'd94b54889e4f5f0330adaf2b9947e59af4aee7e4' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -Fq '| CI-ALERT-NO-RECOVERY-STATE |' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -Fq '| GENESIS6-ACTIVATION-OWNER-GAP |' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          test "$(grep -Fc '| AUDIT-SSOT-CURRENT-HEAD-DRIFT |' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md)" -eq 1
+          test "$(grep -Fc '| ORCH-DUPLICATE-PRINT-SURFACE-OWNERS |' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md)" -eq 1
+      - name: Publish matrix only
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          git diff --cached --check
+          git diff --cached --quiet && { echo 'No matrix changes staged' >&2; exit 1; }
+          git commit -m 'audit: materialize current convergence matrix'
+          git push origin HEAD:audit/current-head-multiagent-convergence-20260725
