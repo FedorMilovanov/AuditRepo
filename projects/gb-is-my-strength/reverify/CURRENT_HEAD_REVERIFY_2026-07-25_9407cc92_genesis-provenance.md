@@ -86,8 +86,9 @@ A future product owner must start from fresh current `main`, consume the pinned 
 
 ## Current ownership at capture
 
-- No open source pull request exists.
+- Open source PR #361 owns only the two-file homepage lifecycle/shortcut evidence extension in the existing Runtime Interactive Audit.
 - No current Genesis 6 activation/finalizer owner exists.
+- PR #361 does not intersect the Genesis provenance files or publication state.
 
 Refresh source main and ownership before every future action.
 
