@@ -2,6 +2,7 @@
 
 from pathlib import Path
 
+# Synchronize-only exact-match materializer; it deletes itself before publish.
 ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT / "projects" / "gb-is-my-strength"
 MATRIX = PROJECT / "verified" / "MASTER_BUG_MATRIX.md"
