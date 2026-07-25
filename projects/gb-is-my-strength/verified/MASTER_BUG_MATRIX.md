@@ -9,23 +9,24 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `7b462b96f0e776dbd155e19cd7eb01610499e137` (current source main; #321 notifier ordering, #324 core redirect-hop policy and #332 canonical witness concurrency merged; only active source PR at capture: #309 fonts) |
-| Deploy | ⚠️ **SEPARATE AUTHORITIES.** Exact Pages/live/TTS production evidence remains imported for `f5e29998`: readiness `30169126149`, deploy `30169443420`, Pages artifact `8622641548` (`sha256:38a3a138…`), TTS witness artifact `8622642553` (`sha256:bacb0330…`), successful GitHub Pages deployment, exact live pointer and run-addressed provenance. Historical ledger run `30169981463` remains failure after validation; operator comment `5080203496` is transparent recovery. PR #332 merged canonical automatic/manual writer locking as `7b462b96`. Current source `7b462b96` is not claimed deployed; automated replay observation and whole-release identity/build-once remain open. |
+| Source HEAD | `f4c60ecbc15b9a6bd5353f9d1c0d81d2d72b6b3e` (current source main; #321 notifier ordering, #324 core redirect-hop policy, #332 canonical witness concurrency and #309 deterministic font pipeline merged; active source owners at capture: #336 source-link residual and #338 homepage browser contract) |
+| Deploy | ⚠️ **SEPARATE AUTHORITIES.** Exact Pages/live/TTS production evidence remains imported for `f5e29998`: readiness `30169126149`, deploy `30169443420`, Pages artifact `8622641548` (`sha256:38a3a138…`), TTS witness artifact `8622642553` (`sha256:bacb0330…`), successful GitHub Pages deployment, exact live pointer and run-addressed provenance. Historical ledger run `30169981463` remains failure after validation; operator comment `5080203496` is transparent recovery. Current source `f4c60ecb` includes merged deterministic-font PR #309 but is not claimed deployed; automated replay observation and whole-release identity/build-once remain open. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_7b462b96_canonical-ledger-lock.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_f4c60ecb_font-integrity.md` |
 
-⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `7b462b96`; exact imported Pages/live/TTS production authority: `f5e29998`. Historical automated ledger run remains failure; operator comment `5080203496` is transparent recovery, while #332 closes canonical writer concurrency only. Automated replay observation, newer-source deployment and whole-release identity/build-once remain open. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_7b462b96_canonical-ledger-lock.md`.
+⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `f4c60ecb`; exact imported Pages/live/TTS production authority: `f5e29998`. Historical automated ledger run remains failure; operator comment `5080203496` is transparent recovery. PR #309 closes deterministic font integrity at source+CI only. Automated replay observation, newer-source deployment and whole-release identity/build-once remain open. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_f4c60ecb_font-integrity.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (155)
+## ✅ ЗАКРЫТО (156)
 
 | ID | Описание | Коммит |
 |---|---|---|
-| AUDIT-SSOT-CURRENT-HEAD-DRIFT | ✅ **FIXED/RECONCILED AGAIN 2026-07-25.** Operational SSOT now records source `main@7b462b96`, exact deployed Pages/live/TTS authority `f5e29998`, merged #321/#324/#332, sole active #309 ownership and the remaining #303/automated-replay/whole-release boundaries without conflating source, operator projection and production. Immutable R2/R3/R4/R5 intakes preserve prior snapshots. | `7b462b96` source + exact `f5e29998` evidence import |
+| FONT-PIPELINE-FAIL-OPEN | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-25.** PR #309 replaced the fail-open production-adjacent downloader with 28 pinned WOFF2 records, a separate support manifest, a fully offline fail-closed verifier, an explicit exact-source transactional maintainer generator and permanent every-declaration/alias adversarial fixtures. Three reviewed upstream drifts are recorded without silently replacing tracked bytes; readiness/deploy perform no font network fetch and issue #302 is closed. Exact head `7a035a42` passed Shared Files Guard `30172960934`, Editorial Metadata v3 `30172960931` and TTS Download Consent `30172960928`; squash merge `f4c60ecb`. No font binary, typography or visible UI was changed. | `f4c60ecb` PR#309; issue #302 |
+| AUDIT-SSOT-CURRENT-HEAD-DRIFT | ✅ **FIXED/RECONCILED AGAIN 2026-07-25.** Operational SSOT now records source `main@f4c60ecb`, exact deployed Pages/live/TTS authority `f5e29998`, merged #321/#324/#332/#309, active #336/#338 ownership and the remaining automated-replay/whole-release boundaries without conflating source, operator projection and production. Immutable R2/R3/R4/R5 intakes preserve prior snapshots. | `f4c60ecb` source + exact `f5e29998` evidence import |
 | CI-ALERT-NO-RECOVERY-STATE | ✅ **FIXED/SOURCE+LIVE VERIFIED 2026-07-25.** PR #308 replaced one-way guessed alerts with a machine-marked workflow+PR/branch state machine, exact failed jobs/steps/artifacts, stale-run ordering, recovery closure and trusted-default-branch execution. `4f23a100` added the ledger lifecycle edge; PR #321 / `a105c354` then made transition ordering monotonic against the newest seen lifecycle event. Live issues #310/#317/#311 prove factual PR-separated alerts. Legacy guessed issues remain separate evidence cleanup. | `779ac52b` PR#308 + `4f23a100` + `a105c354` |
 | SERIES-CAPABILITY-INTERFACE | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-25.** Every reading `surface: series` route must resolve the canonical shared façade with a `defineSeriesConfig(...)`-bound generic flat/book config or carry one explicit owner-approved capability exception. Existing Nagornaya native routes are machine-registered. PR #319 made the full registry contract a permanent Shared Files Guard owner and added the missing deceptive route-specific `SeriesReaderChrome` name regression; exact run `30170548516` passed and issue #300 closed. | `be78785b` PR#319 |
 | ORCH-DUPLICATE-PRINT-SURFACE-OWNERS | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-25.** PR #283 became the sole accepted PDF owner, PR #280 closed without merge, and sole follow-up #286 merged as `f5e29998` after exact physical front/back proof. No competing print lane remains. | `f5e29998` |
@@ -199,7 +200,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | DEPLOY-PROVENANCE-TTS-COUPLING | PR #290 fixed exact-checkout and flat-SHA overwrite races with `current.json` plus run-addressed evidence. Remaining record is top-level TTS-specific and not bound to the whole readiness/deployed Pages artifact digest, route/build identity or pinned toolchain. | merged PR #290; open source #292 + #295 |
 | CI-WORKFLOW-PROLIFERATION | Control plane expanded from the earlier 19-workflow baseline to roughly 26 permanent workflows with repeated heavy setup/build/test sections. Capability inventory and convergence are required before adding workflows. | current control-plane artifacts; forensic delta 2026-07-25 |
 | WORKFLOW-POLICY-SHADOW-ERA | Workflow policy still protects historical shadow/route names and hardcoded dist paths instead of effective-route-registry coverage, capability gates, read-only validation and permission contracts. | existing source issue #64 |
-| AUDIT-PRODUCTION-EVIDENCE-IMPORT-GAP | ✅ Exact readiness, Pages deployment, Pages/TTS artifacts, successful GitHub Pages deployment, live pointer and run-addressed provenance are imported for `f5e29998`. PRs #312/#332 fixed truthful projection, trusted replay and canonical concurrency; operator comment `5080203496` preserves historical automated run `30169981463` as failure. Residual gap remains: automated replay has not been observed, current source `7b462b96` has no exact deployment witness, and generic whole-release digest/build-once remain #292/#295. | artifact `8622690663` (`sha256:79d5735b…`); PR #312/`733ba309`; PR #332/`7b462b96`; operator comment `5080203496`; `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_7b462b96_canonical-ledger-lock.md` |
+| AUDIT-PRODUCTION-EVIDENCE-IMPORT-GAP | ✅ Exact readiness, Pages deployment, Pages/TTS artifacts, successful GitHub Pages deployment, live pointer and run-addressed provenance are imported for `f5e29998`. PRs #312/#332 fixed truthful projection, trusted replay and canonical concurrency; operator comment `5080203496` preserves historical automated run `30169981463` as failure. Residual gap remains: automated replay has not been observed, current source `f4c60ecb` has no exact deployment witness, and generic whole-release digest/build-once remain #292/#295. | artifact `8622690663` (`sha256:79d5735b…`); PR #312/`733ba309`; PR #332/`7b462b96`; PR #309/`f4c60ecb`; operator comment `5080203496`; `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_f4c60ecb_font-integrity.md` |
 | EDITORIAL-PROJECTION-51-DRIFT | Projection-only Search/RSS observations must not overwrite canonical editorial dates. Reconcile the 51-field diff by field class and retain human editorial authority; do not add a generic writer merely to make the workflow green. | source issue #217; `reverify/MULTIAGENT_CONVERGENCE_2026-07-25_d94b5488.md` |
 | S-T-01 | 🟡 **ЧАСТИЧНО 2026-07-14**: чекер серий + orphan-scan + legacy-selector-ban теперь видят .astro/.mdx; полный route-level паритет гейтов для Astro-мира — остаётся. | Auditor 2026-07-14 |
 | S-SEC-01 | Blacklist-based HTML Sanitization in enhancements.js (XSS risk) | Auditor 2026-07-14 |
@@ -463,11 +464,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-07-25: source be78785b + exact f5e29998 production import)
+## Статистика (обновлено 2026-07-25: source f4c60ecb + exact f5e29998 production import)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 155 |
+| Закрыто (fixed) | 156 |
 | **P0 открыто** | **0** |
 | P1 открыто | 100 |
 | P2 открыто | 37 |
@@ -482,6 +483,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+- **2026-07-25 deterministic font integrity (`f4c60ecb`)** — PR #309 closes source issue #302 without typography redesign: 28 tracked WOFF2 files and support assets are pinned, production verification is offline and fail-closed, the legacy downloader is disabled, exact-source refresh is transactional, every CSS declaration/alias is validated and three reviewed upstream drifts remain explicit. Exact head `7a035a42` passed Shared Files Guard `30172960934`, Editorial Metadata v3 `30172960931` and TTS Download Consent `30172960928` before squash merge. Production authority remains `f5e29998`; no deployment of `f4c60ecb` is claimed. Active source owners are #336 and #338. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_f4c60ecb_font-integrity.md`.
 
 - **2026-07-25 notifier/series/production reconciliation (`be78785b`)** — merged #308/#314 establish the factual recovery-aware notifier and complete readiness→deploy→ledger subscription; live machine-marked alerts prove PR-separated exact-step evidence. Series issue #300 is closed by registry/interface commits plus merged #319 and exact Shared Files Guard `30170548516`. Audit artifact `8622690663` imports exact readiness `30169126149`, deploy `30169443420`, Pages artifact `8622641548`, TTS artifact `8622642553`, successful Pages deployment and live run-addressed provenance for `f5e29998`. Ledger `30169981463` failed only posting to PR #286; #312 owns the permission fix. Current `be78785b` remains undeployed here.
 
