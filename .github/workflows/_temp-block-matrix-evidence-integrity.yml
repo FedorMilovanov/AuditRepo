@@ -7,12 +7,6 @@ on:
     paths:
       - scripts/_temp_block_matrix_evidence_integrity.py
       - .github/workflows/_temp-block-matrix-evidence-integrity.yml
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches: [main]
-    paths:
-      - scripts/_temp_block_matrix_evidence_integrity.py
-      - .github/workflows/_temp-block-matrix-evidence-integrity.yml
 
 permissions:
   contents: write
@@ -23,7 +17,7 @@ concurrency:
 
 jobs:
   materialize:
-    if: github.event_name == 'push' || github.event.pull_request.head.ref == 'audit/block-matrix-evidence-integrity-20260725'
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout exact audit lane
