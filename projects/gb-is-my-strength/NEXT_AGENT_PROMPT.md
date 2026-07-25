@@ -2,45 +2,46 @@
 
 > **Current operational truth only.** Historical prompts are archived. Bug status and counters belong to `verified/MASTER_BUG_MATRIX.md`; this file owns the exact current source/deploy boundary, shared-surface ownership and next execution order.
 
-**Source main:** `e8c41d54512a9c5090dd9d8761a5ee912505c8fc`
+**Source main:** `f5e29998c5b42cc9e4e7c917b1e1c1072aa52320`
 **Last fully imported exact production witness:** ✅ `8a5352671375fdb01b6c30273c25ec4283a13f69`
-**Current production candidate:** ⚠️ `e8c41d54512a9c5090dd9d8761a5ee912505c8fc` — PR #297 corrected the merged #293 ledger architecture in source, but exact readiness, Pages, run-addressed provenance, TTS witness artifact and downstream ledger result have not yet been imported into AuditRepo.
-**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_e8c41d54_auditor-r2.md`
-**Immutable forensic intake:** `incoming/auditor-brain/2026-07-25-r2/REPORT.md`
+**Current production candidate:** ⚠️ `f5e29998c5b42cc9e4e7c917b1e1c1072aa52320` — PR #286 merged after complete exact-head Chromium/WebKit/PDF proof, but exact readiness, Pages, run-addressed provenance, TTS witness artifact and downstream ledger result for the merge SHA have not yet been imported into AuditRepo.
+**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_f5e29998_auditor-r4.md`
+**Immutable deep-audit intake:** `incoming/auditor-brain/2026-07-25-r3/REPORT.md`
 
 ## 1) Exact boundary
 
 Source and production remain separate authorities:
 
-- source `main` is `e8c41d54` after merged corrective PR #297;
-- PR #290 fixed manual exact checkout and replaced the mutable flat SHA object with `deployments/current.json` plus run-addressed evidence;
-- PR #293 then coupled repository acceptance projection to the Pages deploy; PR #297 has now corrected that source architecture by moving a truthful TTS capability witness to a retryable downstream ledger with exact artifact identity and least privilege;
-- whole-site release-candidate identity is still unresolved: the provenance record remains TTS-coupled and readiness/deploy still build different artifacts. Source issues #292 and #295 remain open;
-- PR #283 removed duplicate PDF ownership, but a later physical two-state contract found a flipped-back specificity defect. PR #286 remains the sole active product correction owner;
-- temporary Genesis transport PR #296 completed its read-only check and closed without merge. Issue #287 remains the transport/finalizer coordination record, but there is no active five-route product activation PR;
-- PR #288 is closed without merge as obsolete timing evidence; issue #289 is closed as a superseded old-SHA acceptance target, without claiming deployment success;
-- the last fully pinned AuditRepo production authority remains `8a535267` until exact newer run IDs and artifacts are imported;
-- this update advances source/orchestration truth only and does not manufacture missing production evidence.
+- source `main` is `f5e29998` after merged print PR #286;
+- PR #286 fixed the reversible-card flipped-back print defect through generic selector specificity, without adding priority flags or weakening an unrelated screen rule;
+- exact PR head `4dc1e155b990660687c568ded5541c10768d5d1c` passed the complete permanent workflow matrix, including physical front/back PDFs, raster audit, Chromium/WebKit public-surface traversal and state restoration;
+- PR #297 remains the accepted source architecture for downstream TTS capability-witness recording; whole-site release identity is still unresolved because provenance remains capability-coupled and readiness/deploy still build separate artifacts;
+- source issues #292 and #295 own generic whole-artifact provenance and build-once promotion; #294 owns failure/recovery lifecycle;
+- R3 hardening issues #298–#303 own product goldens, homepage runtime testing, shared series capabilities, privileged Actions/pinning, deterministic fonts and redirect-chain enforcement;
+- issue #287 remains a temporary Genesis transport coordination record, not an active product owner;
+- the last fully pinned AuditRepo production authority remains `8a5352671375fdb01b6c30273c25ec4283a13f69` until exact newer run IDs and artifacts are imported;
+- this update advances source/CI truth only and does not manufacture deployment evidence.
 
 Canonical evidence:
 
-- `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_e8c41d54_auditor-r2.md`;
-- `incoming/auditor-brain/2026-07-25-r2/REPORT.md`.
+- `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_f5e29998_auditor-r4.md`;
+- `incoming/auditor-brain/2026-07-25-r3/REPORT.md`.
 
 ## 2) Current active pull requests
 
-At this snapshot the only active source PR is:
+At this snapshot there are **no open source pull requests**.
 
-- **#286 — reversible-card physical PDF product repair**: draft, based on current `main@e8c41d54`. It uses generic flipped-state specificity for `.flip-card`, `.heart-flip-card` and `.error-flip-card`, preserves screen rotation and claims guarded physical front/back PASS. Final merge still requires an actually executed exact-head permanent matrix, inspected Print Paper artifact, no temporary files, and a contract that restores the initially visible state rather than forcing front during test cleanup.
+PR #286 is merged and no longer owns an active lane. Do not reopen #280/#283/#286 or create another print implementation branch unless a new exact regression is reproduced.
 
 There is no active Genesis 6 product PR. A future finalizer/activation must start from fresh current main, verify the complete issue #287 archive, use one owner and self-clean all transport scaffolding. Draft/noindex remains the safe default unless activation is explicitly approved.
 
 ## 3) Shared-surface ownership
 
 - One shared/route surface has one active product owner.
-- PR #286 is the sole active print product owner. Do not revive #280, reopen #283 or create another print implementation lane.
+- The reversible-card print defect is source-closed through merged #286; permanent Print Paper contracts now own regression detection.
 - The merged #297 ledger is source architecture, not proof of current production. Do not reopen #293 or add a parallel TTS acceptance workflow.
 - Source #292 owns generic whole-artifact provenance identity; #295 owns build-once promotion; #294 owns notifier lifecycle; #64 owns workflow-policy migration.
+- Issues #298–#303 are separate R3 hardening contracts and must not be absorbed into unrelated route-specific lanes.
 - Issue #287 may coordinate Genesis transport/finalization, but no temporary verifier or snapshot is a product owner.
 - Before every lane, refresh `main`, open PRs, changed filenames, active workflows and shared-file intersections.
 
@@ -49,22 +50,20 @@ There is no active Genesis 6 product PR. A future finalizer/activation must star
 Do not treat every red status as the same defect. Classify it first:
 
 1. **protective failure** — Shared Files Guard rejects temporary write workflows or cross-lane ownership in a final tree;
-2. **product regression** — example: flipped card retains 3D transform or physical markers split/disappear;
+2. **product regression** — a permanent browser/PDF/runtime contract fails on the exact head;
 3. **cancelled/superseded run** — a newer head or concurrency cancelled an old run;
 4. **stale alert lifecycle** — an old failure issue remains open after a newer green recovery;
 5. **post-publish ledger failure** — downstream repository projection failed after Pages may already be healthy; it must not be presented as a deployment failure;
 6. **temporary transport verification failure** — a payload/hash failure blocks that transport lane only and is not proof of a live-site regression.
 
-`notify-on-failure.yml` still lacks a recovery state machine, subscribes to stale IndexNow ownership, does not genuinely consume route-impact artifacts and may present workflow-name heuristics as root cause. Source issue: #294.
+`notify-on-failure.yml` still lacks a recovery state machine, does not genuinely consume route-impact artifacts and may present workflow-name heuristics as root cause. Source issue: #294.
 
 ## 5) Active work, in order
 
-1. **Finish source repair #286**
-   - verify current PR head/body SHA consistency;
-   - require executed exact-head front and flipped-back PDFs, atomic outer root, static/flat/untransformed inner wrapper, auto height, no transition and same-page markers;
-   - prove `GBPrintPagination.reset()` restores an initially front card and an initially flipped card without test cleanup overwriting the state under test;
-   - retain generic card families and screen flip behavior;
-   - remove any temporary workflow/materializer and inspect the exact artifact before merge.
+1. **Import or establish exact production evidence for `f5e29998`**
+   - require readiness, Pages, run-addressed provenance, live report artifact and downstream ledger for the same merge SHA;
+   - distinguish a missing ledger target from a failed deployment;
+   - do not advance production authority from source CI alone.
 
 2. **Converge release artifact architecture (#295 + #292)**
    - readiness builds and validates one exact candidate under a pinned toolchain;
@@ -73,27 +72,33 @@ Do not treat every red status as the same defect. Classify it first:
    - capability evidence remains under extensions such as `extensions.tts`.
 
 3. **Fix CI alert lifecycle (#294)**
-   - listen to actual readiness/deploy ownership;
+   - listen to the actual readiness/deploy/ledger ownership graph;
    - open/update on failure and close only on a newer exact success;
    - distinguish cancelled/superseded and post-publish ledger failures;
-   - quote exact failed jobs/steps and real artifact data;
-   - explicitly choose non-blocking or separate-workflow ownership for IndexNow.
+   - quote exact failed jobs/steps and real artifact data.
 
-4. **Replace shadow-era workflow policy (#64)**
-   - derive route coverage from the effective route registry;
-   - separate source, candidate-dist, promotion and live-witness capability classes;
-   - enforce read-only validation and least privilege;
-   - stop requiring the deploy workflow itself to reinstall, rebuild and rerun route-specific gates;
-   - replace raw numeric ratchets with named semantic budgets where appropriate.
+4. **Harden the control plane (#301 + #64)**
+   - inventory every write permission, OIDC/deployment surface and persisted credential;
+   - pin privileged third-party Actions by full commit SHA;
+   - derive workflow capability policy from the effective registry rather than shadow-era route names;
+   - keep validation read-only and least-privilege.
 
-5. **Define one Genesis 6 finalizer/activation owner (#287)**
+5. **Add product-level browser and visual barriers (#298 + #299 + #300)**
+   - owner-approved immutable product goldens separate from legacy↔dist parity;
+   - permanent Chromium/WebKit homepage interaction contract;
+   - require every `surface: series` route to consume the shared reader capability interface or an explicit machine-readable exception.
+
+6. **Make external inputs deterministic (#302 + #303)**
+   - fail-closed font manifest with format/size/SHA verification;
+   - enforce source-link policy on every redirect hop, including private/local/plain-HTTP/error destinations.
+
+7. **Define one Genesis 6 finalizer/activation owner (#287)**
    - reconstruct and verify all declared chunks/full archive from fresh current main;
    - reject unsafe archive paths and ambiguous 3-way application;
    - keep transport evidence outside the final product diff;
-   - preserve draft/noindex unless activation is separately approved;
-   - no second snapshot/verifier workstream.
+   - preserve draft/noindex unless activation is separately approved.
 
-6. **Add Research authority manifest (Research #16)**
+8. **Add Research authority manifest (Research #16)**
    - machine-readable IDs, scope, authority, supersedes/applies-to, source grade, rights state and pinned Research SHA;
    - block cycles, duplicate authority, missing overlays, stale site imports and unresolved image rights;
    - consolidate XLVIII + XLIX + L + LI through a deterministic publication compiler or final dossiers.
