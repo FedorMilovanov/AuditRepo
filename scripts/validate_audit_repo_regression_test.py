@@ -48,6 +48,7 @@ def build_fixture(root: Path) -> Path:
 def run_validator(root: Path) -> subprocess.CompletedProcess[str]:
     env = os.environ.copy()
     env['AUDITREPO_ROOT'] = str(root)
+    env['AUDITREPO_STRICT_REPORT_CONTENT'] = '1'
     return subprocess.run(
         [sys.executable, str(VALIDATOR)],
         text=True,
