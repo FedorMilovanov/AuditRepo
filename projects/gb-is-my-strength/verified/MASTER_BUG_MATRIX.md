@@ -9,26 +9,27 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `e8c41d54512a9c5090dd9d8761a5ee912505c8fc` (current source main; corrective capability-witness ledger PR #297 merged; print PR #286 is the only active source PR) |
-| Deploy | ⚠️ **SEPARATE AUTHORITIES.** Last fully imported exact production witness remains `8a535267`. Current candidate `e8c41d54` has the corrected downstream capability-witness architecture in source, but exact readiness, Pages, run-addressed provenance, witness artifact and ledger result are not yet imported. Current source is not claimed deployed here. |
+| Source HEAD | `f5e29998c5b42cc9e4e7c917b1e1c1072aa52320` (current source main; print PR #286 merged after complete exact-head physical PDF and cross-browser proof; no source PR is open) |
+| Deploy | ⚠️ **SEPARATE AUTHORITIES.** Last fully imported exact production witness remains `8a535267`. Current candidate `f5e29998` includes merged print repair #286, but exact readiness, Pages, run-addressed provenance, witness artifact and downstream ledger result for this merge SHA are not yet imported. Current source is not claimed deployed here. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_e8c41d54_auditor-r2.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_f5e29998_auditor-r4.md` |
 
-⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `e8c41d54`; last fully imported exact production witness: `8a535267`; current production candidate requiring evidence import: `e8c41d54`; source/orchestration evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_e8c41d54_auditor-r2.md`.
+⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `f5e29998`; last fully imported exact production witness: `8a535267`; current production candidate requiring evidence import: `f5e29998`; source/orchestration evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_f5e29998_auditor-r4.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (152)
+## ✅ ЗАКРЫТО (153)
 
 | ID | Описание | Коммит |
 |---|---|---|
-| AUDIT-SSOT-CURRENT-HEAD-DRIFT | ✅ **FIXED/RECONCILED AGAIN 2026-07-25.** Operational SSOT now records `main@e8c41d54`, merged corrective #297, sole active print PR #286, closed temporary Genesis verifier #296 and the fail-closed production-evidence gap. Immutable R2 intake preserves the drift/self-correction evidence. | `e8c41d54` source + AuditRepo R2 reconciliation |
-| ORCH-DUPLICATE-PRINT-SURFACE-OWNERS | ✅ **FIXED 2026-07-25.** PR #283 became the sole accepted PDF product owner and PR #280 closed without merge. A later physical contract found a separate residual back-face product defect; PR #286 is now the sole correction owner rather than a competing implementation. | `d94b5488` |
+| AUDIT-SSOT-CURRENT-HEAD-DRIFT | ✅ **FIXED/RECONCILED AGAIN 2026-07-25.** Operational SSOT now records `main@f5e29998`, merged print repair #286, no open source PR and the fail-closed production-evidence gap. Immutable R2/R3 intakes preserve the drift and self-correction evidence. | `f5e29998` source + AuditRepo R4 reconciliation |
+| ORCH-DUPLICATE-PRINT-SURFACE-OWNERS | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-25.** PR #283 became the sole accepted PDF owner, PR #280 closed without merge, and sole follow-up #286 merged as `f5e29998` after exact physical front/back proof. No competing print lane remains. | `f5e29998` |
 | AUDITREPO-REPORT-SHA-BYPASS | ✅ **FIXED/AUDITREPO CI VERIFIED 2026-07-25.** SHA-bearing empty report scaffolds no longer bypass content validation. New/modified empty intakes block, historical debt remains visible, strict mode and a black-box temporary-tree regression are permanent. | `6cba8af0` |
 | DEPLOY-ACCEPTANCE-LEDGER-TTS-COUPLING | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-25.** PR #297 removed repository mutation and excess permissions from Pages deploy, made the TTS evidence upload fail closed, and moved exact artifact/report validation plus a truthful `extensions.tts` capability witness into a retryable downstream ledger. Whole-site artifact identity remains #292/#295. | `e8c41d54` PR#297; exact head `1ae9c9f5` |
+| PRINT-REVERSIBLE-BACK-3D-FLOW | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-25.** PR #286 corrected flipped-state selector specificity for all three reversible-card families without adding `!important` or weakening unrelated screen behavior. Exact head `4dc1e155` passed Print Paper run `30168130026`, physical front/back same-page markers, full flattened inner-state/restoration checks, raster audit, Chromium/WebKit route registry and the complete permanent workflow matrix; merged as `f5e29998`. Production deployment remains separately unclaimed. | `f5e29998` PR#286 |
 | ASTRO-P0-05 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #203 replaces console-only MapEngine initialization failures with a route-owned accessible recovery surface: `.me-error[role="alert"]`, synchronized `data-map-state`/`aria-busy`, safe text rendering, retry and return controls ≥44 px. Exact head `1338f71f` passed Shared, Native Source, Route Registry Chromium/WebKit, Overlay, Glossary and Visual Parity. | `0461faa8` PR#203 |
 | ASTRO-P0-06 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** Ishod and Avraam now expose readable no-JS and runtime fallbacks instead of an opaque black scene when JavaScript is disabled, `route.json` returns 503, the engine asset fails, initialization throws or returns null. Permanent `engine:sweep` covers eight normal/failure scenarios. | `0461faa8` PR#203 |
 | MAP-P0-01 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #218 constrains shared MapEngine detail panels to the mobile safe-area/viewport and bounds the desktop floating panel; header, tabs and navigation remain fixed while only `.me-content` scrolls with `min-height:0`. Exact head `39569068`: Chromium/WebKit 320×568 and 390×844 contract covers every Ishod marker and real Maccabim data, forced 1500px content and live viewport-height reduction; Shared `30108888569`, Overlay `30108888784` and Visual `30108888609` succeeded. | `d57d49b8` PR#218 |
@@ -188,17 +189,16 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (102)
+## 🟠 P1 — ОТКРЫТО (101)
 
 | ID | Описание | Witnesses |
 |---|---|---|
-| PRINT-REVERSIBLE-BACK-3D-FLOW | Flipped reversible-card outer root remains atomic, but the inner wrapper retained `matrix3d` and the active back-face physical markers disappeared (`0/0`). PR #286 is the sole generic correction owner; merge requires exact-head permanent front/back evidence and state-restoration proof. | PR #286 physical PDFs/runs `30165390363`, `30166039373`; R2 intake |
 | CI-ALERT-NO-RECOVERY-STATE | Failure notifier has no exact-head recovery/superseded state, does not actually download route-impact evidence, guesses causes/routes, misses the real readiness gateway and subscribes to stale IndexNow workflow ownership while deploy swallows IndexNow failures. | source issue #294; R2 intake |
 | CI-BUILD-VALIDATION-DUPLICATION | Readiness validates one Node-22.12 production-like dist but uploads no candidate; deploy uses floating Node 22, repeats install/validation/build and publishes a separately produced dist instead of promoting the exact verified artifact. | source issue #295; current readiness/deploy graph |
 | DEPLOY-PROVENANCE-TTS-COUPLING | PR #290 fixed exact-checkout and flat-SHA overwrite races with `current.json` plus run-addressed evidence. Remaining record is top-level TTS-specific and not bound to the whole readiness/deployed Pages artifact digest, route/build identity or pinned toolchain. | merged PR #290; open source #292 + #295 |
 | CI-WORKFLOW-PROLIFERATION | Control plane expanded from the earlier 19-workflow baseline to roughly 26 permanent workflows with repeated heavy setup/build/test sections. Capability inventory and convergence are required before adding workflows. | current control-plane artifacts; forensic delta 2026-07-25 |
 | WORKFLOW-POLICY-SHADOW-ERA | Workflow policy still protects historical shadow/route names and hardcoded dist paths instead of effective-route-registry coverage, capability gates, read-only validation and permission contracts. | existing source issue #64 |
-| AUDIT-PRODUCTION-EVIDENCE-IMPORT-GAP | AuditRepo cannot safely advance production authority beyond `8a535267` until exact readiness, Pages, run-addressed provenance, live artifact and downstream capability-witness identifiers for current candidate `e8c41d54` are imported. Superseded issue #289 was closed without claiming deployment. | `incoming/auditor-brain/2026-07-25-r2/REPORT.md`; `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_e8c41d54_auditor-r2.md` |
+| AUDIT-PRODUCTION-EVIDENCE-IMPORT-GAP | AuditRepo cannot safely advance production authority beyond `8a535267` until exact readiness, Pages, run-addressed provenance, live artifact and downstream capability-witness identifiers for current candidate `f5e29998` are imported. Source CI and merged PR evidence do not prove deployment. | `incoming/auditor-brain/2026-07-25-r3/REPORT.md`; `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_f5e29998_auditor-r4.md` |
 | EDITORIAL-PROJECTION-51-DRIFT | Projection-only Search/RSS observations must not overwrite canonical editorial dates. Reconcile the 51-field diff by field class and retain human editorial authority; do not add a generic writer merely to make the workflow green. | source issue #217; `reverify/MULTIAGENT_CONVERGENCE_2026-07-25_d94b5488.md` |
 | S-T-01 | 🟡 **ЧАСТИЧНО 2026-07-14**: чекер серий + orphan-scan + legacy-selector-ban теперь видят .astro/.mdx; полный route-level паритет гейтов для Astro-мира — остаётся. | Auditor 2026-07-14 |
 | S-SEC-01 | Blacklist-based HTML Sanitization in enhancements.js (XSS risk) | Auditor 2026-07-14 |
@@ -462,18 +462,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-07-25: source e8c41d54 + auditor R2 reconciliation)
+## Статистика (обновлено 2026-07-25: source f5e29998 + print source closure)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 152 |
+| Закрыто (fixed) | 153 |
 | **P0 открыто** | **0** |
-| P1 открыто | 102 |
+| P1 открыто | 101 |
 | P2 открыто | 37 |
 | P3 открыто | 51 |
 | Рефакторинг | 4 |
 | AuditRepo | 4 |
-| **Всего открыто (матрица)** | **198** |
+| **Всего открыто (матрица)** | **197** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -481,6 +481,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+- **2026-07-25 auditor R4 (`f5e29998`)** — merged #286 closes `PRINT-REVERSIBLE-BACK-3D-FLOW` at source+CI level after exact physical front/back, state-restoration, raster and Chromium/WebKit proof. No source PR remains open. Production authority stays fail-closed at `8a535267` pending exact readiness/Pages/provenance/live-artifact/downstream-ledger import for `f5e29998`.
 
 - **2026-07-25 matrix diagnostics zeroed (`e8c41d54`)** — named the release-blocking P0/P1 section, registered editorial projection drift, attached explicit production-gap evidence, normalized immutable closed refs and aligned counters.
 
