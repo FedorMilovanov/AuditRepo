@@ -2,74 +2,76 @@
 
 > **Current operational truth only.** Historical prompts are archived. Bug status and counters belong to `verified/MASTER_BUG_MATRIX.md`; this file owns the exact current source/deploy boundary, shared-surface ownership and next execution order.
 
-**Source main:** `b594ba82afbbefb8cc5c27ea2604d9f308392daa`
+**Source main:** `9407cc92eb22dc6eab76f831df35a09429663e3e`
 **Exact imported production authority:** ✅ `f5e29998c5b42cc9e4e7c917b1e1c1072aa52320` for readiness, Pages, Pages artifact, successful GitHub Pages deployment, live pointer/provenance and TTS capability witness.
-**Current source deployment status:** ⚠️ `b594ba82` is newer than the imported production witness and is **not** claimed deployed.
-**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_b594ba82_home-links-clean.md`
+**Current source deployment status:** ⚠️ `9407cc92` is newer than the imported production witness and is **not** claimed deployed.
+**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_9407cc92_genesis-provenance.md`
 **Immutable deep-audit intakes:** `incoming/auditor-brain/2026-07-25-r3/REPORT.md` and `incoming/auditor-brain/2026-07-25-r5/REPORT.md`
 
 ## 1) Exact boundary
 
-- source `main` is `b594ba82` after merged source-link hardening PRs #336/#346, homepage browser-contract PR #338 and Gill source-repair PR #354;
+- source `main` is `9407cc92` after merged source-link hardening PRs #336/#346, homepage browser-contract PR #338, Gill source-repair PR #354 and Genesis 6 Research provenance PR #348;
 - exact production authority remains `f5e29998`: readiness `30169126149`, deploy `30169443420`, Pages deployment `5603663894`, Pages artifact `8622641548` (`sha256:38a3a138d9f062e43c0e3ed52666113759d310cb0231e2ee388fc522b25e2b2c`) and TTS artifact `8622642553` (`sha256:bacb0330c7a2201289eeeb7d2b9b9dc832106eec292cd890afc1c5819e1eec7f`);
-- historical ledger run `30169981463` remains failure after validating the artifact/report and receiving 403 on PR projection;
-- trusted manual replay run `30171194731` later completed successfully for exact deploy run `30169443420`, without rewriting the historical failed run;
-- PR #336 (`f65795b2`) added malformed-input evidence fingerprinting, full-SHA workflow pins and permanent source/mutation coverage;
-- PR #346 (`6c005e49`) repaired modern Node pinned-DNS callback shapes, systemic pre-HTTP warning detection, bounded response probes and bot-block classification;
-- post-merge Source Link Audit run `30175242133` on exact `main@6c005e49` published artifact `8624053524` (`sha256:d20c3b5773560d0c3453b552c538cf1f4f977dd390b6171d85a17b6909bfd3e6`): 201 checked, 165 pass, 31 transient warning, 5 hard and 35 redirect hops;
-- PR #354 (`b594ba82`) replaced those five hard Gill source records with citation-preserving authoritative gateways/records;
-- real-network run `30175593224` published artifact `8624151439` (`sha256:2bee8f47a8d558f498b1db46d4ef74ae85b83a3d7d9c8f541753354daed34096`): 201 checked, 171 pass, 30 warning, **0 hard**, 34 redirect hops, `systemicTransportFailure=false`;
-- exact clean head `031368f2` passed Gill Final Source Reconciliation `30175919593`, Overlay Runtime Browser `30175919620`, Glossary `30175919619`, Shared Guard `30175919626`, Editorial Dateline `30175919606`, Native Source `30175919608`, Gill submenu `30175919621`, Print Paper `30175919607`, Visual Parity `30175919629` and Route Registry `30175919627`;
-- issue #352 is closed completed; no broken-source P2 row remains;
-- PR #338 (`31758828`) permanently covers homepage Chromium/WebKit/no-JS interaction behavior and issue #299 is closed;
-- no exact post-merge readiness/Pages/live witness for `b594ba82` has been imported;
+- historical ledger run `30169981463` remains failure; trusted manual replay `30171194731` later completed successfully for exact deploy run `30169443420` without rewriting that history;
+- source-link artifact `8624151439` (`sha256:2bee8f47a8d558f498b1db46d4ef74ae85b83a3d7d9c8f541753354daed34096`) proves 201 checked, 171 pass, 30 warnings, zero hard errors and 34 redirect hops after PR #354;
+- PR #338 (`31758828`) permanently covers homepage Chromium/WebKit/no-JS interaction behavior;
+- PR #348 (`9407cc92`) adds only the machine-readable Research→site authority boundary for Genesis 6 articles 6–9;
+- #348 pins Research commit `9bba3d45d3475468798f69e4b6067acae673b79c`, authority base `b654c5375a7b212ff9b42c08bb0193eeaad70746`, manifest digest `95320cc56c678fcacf4f24985f96150c231b1d91338349c19005e277b16125dd`, exact publication bundles and rights-decision IDs;
+- exact #348 head `ce75fcde` passed Genesis 6 Research provenance `30176399705`, Shared Files Guard `30176399710` and Visual Parity `30176399701`;
+- Research issue #16 is closed completed;
+- source issue #287 remains archived/not-planned transport history and is **not** an activation owner;
+- no routes, MDX, covers, theme, CSS, generated output or publication-state changes were introduced by #348;
+- `draft-noindex` remains the safe default; `GENESIS6-ACTIVATION-OWNER-GAP` remains open until a fresh product PR exists;
+- no exact post-merge readiness/Pages/live witness for `9407cc92` has been imported;
 - #292/#295 still own whole-release digest/provenance and build-once promotion;
-- never infer deployment of source `b594ba82` from source, browser or network evidence.
+- never infer deployment or publication activation from source provenance CI.
 
 ## 2) Current ownership
 
 Refresh before every action. At this capture:
 
-- **#348 — Genesis 6 provenance owner:** exact Research→site authority boundary only; draft/noindex remains the safe publication state.
+- no open source pull request exists;
+- no current Genesis 6 activation/finalizer owner exists;
+- #287 is archived infrastructure and must not be reopened as a product lane.
 
 Merged/closed convergence:
 
-- #336 merged as `f65795b2`, closing malformed evidence/action-pin boundaries;
-- #346 merged as `6c005e49`, closing native network acceptance defects;
-- #338 merged as `31758828`, closing #299 with production-like Chromium/WebKit interaction evidence;
-- #354 merged as `b594ba82`, closing #352 with five exact citation-preserving source replacements and zero hard network results;
+- #336/#346 close trustworthy source-link engine acceptance;
+- #338 closes homepage browser-contract issue #299;
+- #354 closes five broken Gill source records and issue #352;
+- #348 closes the Research authority-manifest/provenance gap without activating publication;
+- Research issue #16 is closed completed;
 - #321/#324/#332/#309 remain accepted notifier, redirect-core, witness-concurrency and deterministic-font contracts;
 - temporary dispatch/materialization/diagnostic PRs remain closed without merge and no `_temp-*` workflow is canonical.
 
 ## 3) Closed systemic/content contracts
 
+### Genesis 6 Research authority provenance — source + CI verified
+
+PR #348 guarantees:
+
+- exact Research repository and 40-character commit pin;
+- exact authority-base commit and SHA-256 manifest digest;
+- exact manifest, publication-ledger and authority-contract paths;
+- four ordered bundles for articles 6–9;
+- exact reader-base, overlay and rights-decision identifiers;
+- Research’s own authority graph validator runs before the site contract;
+- checkout credentials are disabled and workflow Actions are pinned by full SHA;
+- `draft-noindex`, exact-head site evidence and separate production witness remain mandatory.
+
+This closes only `RESEARCH-AUTHORITY-MANIFEST-MISSING`. It does not close `GENESIS6-ACTIVATION-OWNER-GAP` and does not claim the articles are published.
+
 ### Gill external source integrity — content + real-network verified
 
-PR #354 changed exactly the two Gill source-owner components and preserved the intended works:
+PR #354 preserved the intended works and exact citation identities while replacing five genuinely broken source URLs. Exact real-network acceptance has zero hard errors.
 
-- Thomas Crosby, *The History of the English Baptists* — Open Library record/available scan for the four-volume 1738 work;
-- First London Baptist Confession 1644/1646 — documented downloads page containing Angus Library historical scans;
-- *A Charge of Partiality, Imposition, and Assuming Authority in Matters of Faith* (1719) — Folger catalog, exact title/year/ESTC N3754;
-- Brian Cowan, “What Was Masculine About the Public Sphere?” — canonical DOI with volume/year/pages;
-- John Gill bibliography gateway — University of Pennsylvania Online Books Page, explicitly not mislabelled as a source edition.
+### Homepage runtime and source-link acceptance
 
-Exact real-network acceptance has zero hard errors. Issue #352 is closed.
+PR #338 permanently covers homepage Chromium/WebKit/no-JS behavior. PRs #324/#336/#346 guarantee per-hop source-link policy, DNS validation/request pinning, evidence secrecy, bounded response handling and fail-closed systemic detection.
 
-### Homepage runtime interaction contract — source + cross-browser verified
+### Deployment witness projection and concurrency
 
-PR #338 permanently proves mobile-menu focus/cleanup, BFCache, canonical search shortcuts, Pagefind lazy initialization, Hebrew pointer/keyboard behavior, reading progress, reduced-motion, overflow and JavaScript-disabled reachability in production-like Chromium/WebKit/no-JS variants.
-
-### Trustworthy source-link network acceptance — source + real-network verified
-
-PRs #324, #336 and #346 guarantee per-hop policy, DNS validation/request pinning, evidence secrecy, full-SHA workflow dependencies, bounded response prefixes, truthful status classification and fail-closed systemic-warning detection.
-
-### Deployment witness projection and concurrency — source + replay verified
-
-PRs #312 and #332 keep Pages deploy read-only, isolate write permissions, canonicalize deploy-run aliases before locking and permanently mutation-test replay/artifact/supply-chain boundaries. Manual replay `30171194731` completed successfully against exact deploy run `30169443420`.
-
-### Deterministic font pipeline and failure lifecycle — source fixed
-
-PR #309 keeps 28 tracked WOFF2 files pinned and production verification offline/fail-closed. PR #321 keeps notifier lifecycle monotonic against the newest seen transition.
+PRs #312/#332 keep Pages deploy read-only, isolate write permissions, canonicalize deploy-run aliases before locking and permanently mutation-test replay/artifact/supply-chain boundaries. Replay `30171194731` is successful; historical run `30169981463` remains failure.
 
 ## 4) CI semantics
 
@@ -81,16 +83,19 @@ Classify red states before changing code:
 4. post-publish projection failure;
 5. temporary evidence-carrier failure;
 6. stale lifecycle alert;
-7. expected fail-closed network run with an uploaded diagnostic artifact.
+7. expected fail-closed network run with uploaded diagnostic evidence.
 
-Historical network artifact `8624053524` remains valid evidence of the five former hard records; accepted replacement artifact `8624151439` proves their closure.
+Research provenance success proves authority ordering and pinning only. It is not route activation, visual approval, deployment or live publication evidence.
 
 ## 5) Active work, in order
 
-1. **Finish exact owner #348 without crossing files**
-   - exact Research provenance only;
-   - no premature Genesis routes, theme or publication activation;
-   - keep draft/noindex until separate product and production evidence exists.
+1. **Create one fresh Genesis 6 product-finalizer owner**
+   - start from current `main@9407cc92`;
+   - consume the pinned provenance registry and exact Research bundles;
+   - add/review canonical MDX and route ownership in one normal product PR;
+   - use shared `SeriesReaderChrome` with `defineSeriesConfig(...)`;
+   - keep `draft-noindex` until exact-head Astro/build/Chromium/WebKit, rights/source and publication gates pass;
+   - do not reuse archived issue #287 transport.
 
 2. **Converge #292 + #295 in one release lane**
    - build and validate one pinned candidate in readiness;
@@ -104,14 +109,13 @@ Historical network artifact `8624053524` remains valid evidence of the five form
 4. **Harden privileged control plane (#301 + #64)**
    - capability registry, effective permissions, persisted credentials and full-SHA pins.
 
-5. **Continue R3 hardening without crossing owners**
-   - #298 product goldens;
-   - #287 one Genesis finalizer/activation owner;
-   - Research #16 authority/supersession/rights manifest.
+5. **Continue R3 hardening**
+   - #298 owner-approved product goldens;
+   - keep Research authority and site activation as separate boundaries.
 
 ## 6) Non-negotiable gates
 
-Before merge: refresh main/owners, exact-head focused+broad tests, Shared Files Guard/actionlint, relevant browser/PDF/route/network gates, no `_temp-*` final files and no semantic weakening.
+Before merge: refresh main/owners, exact-head focused+broad tests, Shared Files Guard/actionlint, relevant browser/PDF/route/network/provenance gates, no `_temp-*` final files and no semantic weakening.
 
 After a production-impacting merge: exact readiness, same-artifact Pages promotion, generic live witness plus capability evidence, successful run-addressed acceptance, then and only then advance AuditRepo production authority.
 
@@ -122,4 +126,4 @@ After a production-impacting merge: exact readiness, same-artifact Pages promoti
 - `verified/MASTER_BUG_MATRIX.md` owns statuses/counters.
 - `reverify/` owns immutable current-head witnesses; `incoming/` owns raw evidence.
 - temporary workflows and transport branches never become product owners.
-- source CI, browser evidence, network-link evidence and production deployment are separate authorities.
+- source CI, provenance, browser evidence, network evidence and production deployment are separate authorities.
