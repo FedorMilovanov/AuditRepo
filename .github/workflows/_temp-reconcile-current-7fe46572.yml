@@ -7,6 +7,12 @@ on:
     paths:
       - scripts/_temp_reconcile_current_7fe46572.py
       - .github/workflows/_temp-reconcile-current-7fe46572.yml
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - scripts/_temp_reconcile_current_7fe46572.py
+      - .github/workflows/_temp-reconcile-current-7fe46572.yml
 
 permissions:
   contents: write
@@ -17,6 +23,7 @@ concurrency:
 
 jobs:
   materialize:
+    if: github.event_name == 'push' || github.event.pull_request.head.ref == 'audit/reconcile-current-7fe46572-20260725'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout exact audit lane
