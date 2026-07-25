@@ -9,23 +9,24 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `d94b54889e4f5f0330adaf2b9947e59af4aee7e4` (current source main; merged PDF convergence PR #283 after the TTS/deploy/editorial sequence; duplicate print ownership removed) |
-| Deploy | ⚠️ **SEPARATE AUTHORITIES.** Last fully imported exact production witness remains `8a535267`; newer candidate `ddcf7153` has permanent post-deploy TTS verification in source, but exact readiness/Pages/live-artifact IDs are not yet imported into AuditRepo. Current source `d94b5488` is not claimed deployed here. |
+| Source HEAD | `dab31616ca77b7833e9d12ad9c80d63a751ed19e` (current source main; PR #293 TTS acceptance recorder merged; corrective ledger PR #297, print PR #286 and temporary Genesis transport verifier #296 are active) |
+| Deploy | ⚠️ **SEPARATE AUTHORITIES.** Last fully imported exact production witness remains `8a535267`. Current candidate `dab31616` includes the merged #293 recorder, but exact readiness, Pages, run-addressed provenance, witness artifact and downstream ledger evidence are not yet imported. Current source is not claimed deployed here. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_d94b5488_multiagent-convergence.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_dab31616_auditor-r2.md` |
 
-⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `d94b5488`; last fully imported exact production witness: `8a535267`; newer production candidate requiring evidence import: `ddcf7153`; source/orchestration evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_d94b5488_multiagent-convergence.md`.
+⚠️ Старые deploy-формулировки ниже исторические. Current source authority: `dab31616`; last fully imported exact production witness: `8a535267`; current production candidate requiring evidence import: `dab31616`; source/orchestration evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_dab31616_auditor-r2.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (150)
+## ✅ ЗАКРЫТО (151)
 
 | ID | Описание | Коммит |
-| AUDIT-SSOT-CURRENT-HEAD-DRIFT | ✅ **FIXED/SOURCE GOVERNANCE VERIFIED 2026-07-25.** AuditRepo no longer points agents at `184d7ed1` and obsolete map-first PR ownership. `NEXT_AGENT_PROMPT.md`, matrix masthead and immutable reverify/convergence reports now own `main@d94b5488`, current PR boundaries and the explicit production-evidence gap. | `d94b5488` source + current AuditRepo convergence PR |
-| ORCH-DUPLICATE-PRINT-SURFACE-OWNERS | ✅ **FIXED 2026-07-25.** PR #283 became the sole PDF product owner and merged as `d94b5488`; PR #280 was closed without merge as superseded. Test-only PR #286 owns only the missing physical front/back evidence and changes no product CSS/JS. | PR #283 merged; PR #280 closed; PR #286 bounded |
+| AUDIT-SSOT-CURRENT-HEAD-DRIFT | ✅ **FIXED/RECONCILED AGAIN 2026-07-25.** Operational SSOT now records `main@dab31616`, merged #293, corrective #297, real print scope #286, temporary Genesis verifier #296 and the fail-closed production-evidence gap. Immutable R2 intake preserves the drift/self-correction evidence. | `dab31616` source + AuditRepo R2 reconciliation |
+| ORCH-DUPLICATE-PRINT-SURFACE-OWNERS | ✅ **FIXED 2026-07-25.** PR #283 became the sole accepted PDF product owner and PR #280 closed without merge. A later physical contract found a separate residual back-face product defect; PR #286 is now the sole correction owner rather than a competing implementation. | PR #283 merged; PR #280 closed; PR #286 sole follow-up |
+| AUDITREPO-REPORT-SHA-BYPASS | ✅ **FIXED/AUDITREPO CI VERIFIED 2026-07-25.** SHA-bearing empty report scaffolds no longer bypass content validation. New/modified empty intakes block, historical debt remains visible, strict mode and a black-box temporary-tree regression are permanent. | AuditRepo `6cba8af0`; run `30166440002` |
 |---|---|---|
 | ASTRO-P0-05 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** PR #203 replaces console-only MapEngine initialization failures with a route-owned accessible recovery surface: `.me-error[role="alert"]`, synchronized `data-map-state`/`aria-busy`, safe text rendering, retry and return controls ≥44 px. Exact head `1338f71f` passed Shared, Native Source, Route Registry Chromium/WebKit, Overlay, Glossary and Visual Parity. | `0461faa8` PR#203 |
 | ASTRO-P0-06 | ✅ **FIXED/SOURCE+CI VERIFIED 2026-07-24.** Ishod and Avraam now expose readable no-JS and runtime fallbacks instead of an opaque black scene when JavaScript is disabled, `route.json` returns 503, the engine asset fails, initialization throws or returns null. Permanent `engine:sweep` covers eight normal/failure scenarios. | `0461faa8` PR#203 |
@@ -186,15 +187,17 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (100)
+## 🟠 P1 — ОТКРЫТО (102)
 
 | ID | Описание | Witnesses |
-| CI-ALERT-NO-RECOVERY-STATE | Failure notifier has no exact-head recovery/superseded state, can leave stale failure issues open after green recovery, does not reliably download diagnostic artifacts and may present workflow-name heuristics as root cause. | forensic delta 2026-07-25; notify-on-failure lifecycle |
-| CI-BUILD-VALIDATION-DUPLICATION | Readiness and deploy repeat dependency installation, production-like build and overlapping full/light validation instead of promoting one verified immutable artifact. | workflow/control-plane forensic 2026-07-25 |
-| DEPLOY-PROVENANCE-TTS-COUPLING | PR #284 uses generic deployment-provenance naming/path but its schema and ownership are TTS-specific. Generic repository/commit/workflow/artifact/build/routes/assets identity must be separated from `extensions.tts` before merge. | open draft PR #284 |
+| PRINT-REVERSIBLE-BACK-3D-FLOW | Flipped reversible-card outer root remains atomic, but the inner wrapper retains `matrix3d` and the active back-face physical markers disappear (`0/0`). PR #286 must fix one generic product owner and remove temporary materializers before merge. | PR #286 physical PDFs/runs `30165390363`, `30166039373`; R2 intake |
+| DEPLOY-ACCEPTANCE-LEDGER-TTS-COUPLING | PR #293 merged its TTS-specific repository recorder inside the generic Pages deploy despite the architecture review. Draft corrective PR #297 removes deploy mutation/permissions, validates exact artifact ID/size/digest/report and records a downstream generic envelope with `extensions.tts`; row stays open until #297 exact-head and post-merge witness pass. | merged #293; corrective PR #297; source #292/#295 |
+| CI-ALERT-NO-RECOVERY-STATE | Failure notifier has no exact-head recovery/superseded state, does not actually download route-impact evidence, guesses causes/routes, misses the real readiness gateway and subscribes to stale IndexNow workflow ownership while deploy swallows IndexNow failures. | source issue #294; R2 intake |
+| CI-BUILD-VALIDATION-DUPLICATION | Readiness validates one Node-22.12 production-like dist but uploads no candidate; deploy uses floating Node 22, repeats install/validation/build and publishes a separately produced dist instead of promoting the exact verified artifact. | source issue #295; current readiness/deploy graph |
+| DEPLOY-PROVENANCE-TTS-COUPLING | PR #290 fixed exact-checkout and flat-SHA overwrite races with `current.json` plus run-addressed evidence. Remaining record is top-level TTS-specific and not bound to the whole readiness/deployed Pages artifact digest, route/build identity or pinned toolchain. | merged PR #290; open source #292 + #295 |
 | CI-WORKFLOW-PROLIFERATION | Control plane expanded from the earlier 19-workflow baseline to roughly 26 permanent workflows with repeated heavy setup/build/test sections. Capability inventory and convergence are required before adding workflows. | current control-plane artifacts; forensic delta 2026-07-25 |
 | WORKFLOW-POLICY-SHADOW-ERA | Workflow policy still protects historical shadow/route names and hardcoded dist paths instead of effective-route-registry coverage, capability gates, read-only validation and permission contracts. | existing source issue #64 |
-| AUDIT-PRODUCTION-EVIDENCE-IMPORT-GAP | AuditRepo cannot safely advance production authority beyond `8a535267` until exact readiness, Pages, deployment and live-contract artifact identifiers for newer candidate `ddcf7153` are imported and reconciled. | `ddcf7153` production candidate; evidence import pending |
+| AUDIT-PRODUCTION-EVIDENCE-IMPORT-GAP | AuditRepo cannot safely advance production authority beyond `8a535267` until exact readiness, Pages, run-addressed provenance, live artifact and downstream capability-witness identifiers for current candidate `dab31616` are imported. Superseded issue #289 was closed without claiming deployment. | `dab31616` candidate; evidence import pending |
 |---|---|---|
 | S-T-01 | 🟡 **ЧАСТИЧНО 2026-07-14**: чекер серий + orphan-scan + legacy-selector-ban теперь видят .astro/.mdx; полный route-level паритет гейтов для Astro-мира — остаётся. | Auditor 2026-07-14 |
 | S-SEC-01 | Blacklist-based HTML Sanitization in enhancements.js (XSS risk) | Auditor 2026-07-14 |
@@ -299,8 +302,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 ## 🟡 P2 — ОТКРЫТО (37)
 
 | ID | Описание | Witnesses |
-| GENESIS6-ACTIVATION-OWNER-GAP | Canonical Genesis 6 MDX/images are landed as intentional draft/noindex content, but no active five-route activation owner exists. Snapshots may not remain independent workstreams. | PR #285 closed/reset; no active activation PR |
-| RESEARCH-AUTHORITY-MANIFEST-MISSING | Research supersession/authority remains prose-only. A machine-readable manifest must govern document scope, supersedes, canonical authority, source grade, rights status and pinned source commit. | Research forensic review 2026-07-25 |
+| GENESIS6-ACTIVATION-OWNER-GAP | Canonical Genesis 6 MDX/images remain draft/noindex. Issue #287 and temporary PR #296 now own payload transport verification only; they are not a final product activation owner. #296 must close without merge, and at most one fresh-main finalizer/activation lane may consume all 26 verified chunks and self-clean. | issue #287; temporary PR #296; no final product PR yet |
+| RESEARCH-AUTHORITY-MANIFEST-MISSING | Genesis/Jude/Peter publication still requires manual composition of XLVIII base + XLIX text corrections + L rights decisions + LI precision overlays. Add machine-readable authority/supersession/rights manifest and pinned Research SHA/compiler. | Research issue #16; Research `b654c537` |
 |---|---|---|
 | REG-001 | 🟡 **Hosting/security-header decision.** GitHub Pages live responses expose HSTS but no response-level CSP, X-Frame-Options, Referrer-Policy or Permissions-Policy. Closing requires a proxy/hosting decision or explicit by-design acceptance. | `reverify/CURRENT_OPEN_EVIDENCE_2026-07-23_a73f609f.md` |
 | AVRAAM-P2-01 | 🆕 **Karty P2:** Тяжёлый payload Авраама (~824KB, 1540 DOM, 1103 SVG, 60 GSAP animations) + дублирующий fetch route.json | verified-browser (c2c339708252) |
@@ -477,6 +480,10 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+- **2026-07-25 auditor R2 follow-up (`dab31616`)** — PR #293 merged the in-deploy TTS acceptance recorder; corrective #297 now owns downstream generic capability-witness repair. Temporary Genesis transport verifier #296 is active but is not a final activation owner. Production authority remains fail-closed.
+
+- **2026-07-25 auditor R2 (`7fe46572`)** — corrected premature print-success claim; recorded real flipped-back 3D/PDF defect, merged AuditRepo report-validator fix `6cba8af0`, updated #290 provenance residual, #293 acceptance-ledger coupling, #294 notifier and #295 build-once architecture; production authority remains fail-closed.
 
 > Сюда идут per-session заметки о HEAD-переходах и что влито — **чтобы мастхед оставался
 > чистым статусом**. Новое — сверху. Детали каждого HEAD — в парном `reverify/` доке.
