@@ -1,0 +1,35 @@
+name: TEMP Reconcile be78785 Production Evidence
+
+on:
+  push:
+    branches:
+      - agent/reconcile-be78785-production
+    paths:
+      - scripts/_temp_reconcile_be78785.py
+      - .github/workflows/_temp-reconcile-be78785.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: temp-reconcile-be78785-production
+  cancel-in-progress: false
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: agent/reconcile-be78785-production
+
+      - name: Configure commit identity
+        run: |
+          git config user.name "audit-reconciliation-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Apply fail-closed reconciliation and self-clean
+        run: python3 scripts/_temp_reconcile_be78785.py
