@@ -35,6 +35,29 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Repair one-shot script against current matrix shape
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/_temp_reconcile_current_7fe46572.py')
+          text = path.read_text(encoding='utf-8')
+          start = text.index('# Add Research P2 row to the first P2 open table and ratchet its counter.')
+          end_marker = "MATRIX.write_text(matrix, encoding='utf-8')"
+          end = text.index(end_marker, start) + len(end_marker)
+          replacement = '''matrix = replace_once(matrix,
+              '| RESEARCH-AUTHORITY-MANIFEST-MISSING | Research supersession/authority remains prose-only. A machine-readable manifest must govern document scope, supersedes, canonical authority, source grade, rights status and pinned source commit. | Research forensic review 2026-07-25 |',
+              '| RESEARCH-AUTHORITY-MANIFEST-MISSING | Genesis/Jude/Peter publication still requires manual composition of XLVIII base + XLIX text corrections + L rights decisions + LI precision overlays. Add machine-readable authority/supersession/rights manifest and pinned Research SHA/compiler. | Research issue #16; Research `b654c537` |',
+              'Research manifest row')
+
+          session_match = re.search(r'^## Session log(?: \\(append-only\\))?\\n', matrix, re.MULTILINE)
+          if not session_match:
+              raise RuntimeError('Session log header not found')
+          session_entry = '\\n- **2026-07-25 auditor R2 (`7fe46572`)** — corrected premature print-success claim; recorded real flipped-back 3D/PDF defect, merged AuditRepo report-validator fix `6cba8af0`, updated #290 provenance residual, #293 acceptance-ledger coupling, #294 notifier and #295 build-once architecture; production authority remains fail-closed.\\n'
+          matrix = matrix[:session_match.end()] + session_entry + matrix[session_match.end():]
+          MATRIX.write_text(matrix, encoding='utf-8')'''
+          path.write_text(text[:start] + replacement + text[end:], encoding='utf-8')
+          PY
       - name: Materialize current-head SSOT transaction
         run: python3 scripts/_temp_reconcile_current_7fe46572.py
       - name: Validate final tree before publication
