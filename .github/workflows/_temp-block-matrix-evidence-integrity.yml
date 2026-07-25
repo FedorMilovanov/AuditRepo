@@ -29,22 +29,34 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Keep workflow mutation outside the GITHUB_TOKEN writer
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/_temp_block_matrix_evidence_integrity.py')
+          text = path.read_text(encoding='utf-8')
+          start = text.index("workflow = VALIDATE_WORKFLOW.read_text")
+          end = text.index("VALIDATE_WORKFLOW.write_text(workflow, encoding='utf-8')", start)
+          end += len("VALIDATE_WORKFLOW.write_text(workflow, encoding='utf-8')")
+          text = text[:start] + text[end:]
+          text = text.replace('for temp in (SELF, TEMP_WORKFLOW):', 'for temp in (SELF,):')
+          path.write_text(text, encoding='utf-8')
+          PY
       - name: Materialize blocking evidence integrity
         run: python3 scripts/_temp_block_matrix_evidence_integrity.py
-      - name: Validate final tree and blocking coverage
+      - name: Validate matrix and repository
         run: |
           python3 scripts/check_auditrepo_structure.py
           python3 scripts/validate_audit_repo.py
           python3 scripts/validate_audit_repo_regression_test.py
           python3 scripts/check_matrix_coverage.py --verbose
           test ! -e scripts/_temp_block_matrix_evidence_integrity.py
-          test ! -e .github/workflows/_temp-block-matrix-evidence-integrity.yml
           git diff --check
-      - name: Publish tested control-plane transaction
+      - name: Publish tested matrix transaction
         run: |
           git config user.name "audit-reconciliation-bot"
           git config user.email "audit-reconciliation-bot@users.noreply.github.com"
           git add -A
           git diff --cached --check
-          git commit -m "fix(audit): make matrix evidence integrity blocking"
+          git commit -m "fix(audit): repair matrix evidence integrity"
           git push origin HEAD:audit/block-matrix-evidence-integrity-20260725
