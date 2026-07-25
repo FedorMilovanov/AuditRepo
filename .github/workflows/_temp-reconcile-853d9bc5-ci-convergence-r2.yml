@@ -7,6 +7,12 @@ on:
     paths:
       - scripts/_temp_reconcile_853d9bc5_ci_convergence.py
       - .github/workflows/_temp-reconcile-853d9bc5-ci-convergence-r2.yml
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - scripts/_temp_reconcile_853d9bc5_ci_convergence.py
+      - .github/workflows/_temp-reconcile-853d9bc5-ci-convergence-r2.yml
 
 permissions:
   contents: write
@@ -17,6 +23,7 @@ concurrency:
 
 jobs:
   materialize:
+    if: github.event_name == 'push' || github.event.pull_request.head.ref == 'audit/reconcile-853d9bc5-ci-convergence-r2'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout exact audit lane
