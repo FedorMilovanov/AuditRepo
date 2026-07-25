@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import os
 import sys
 import re
 
-ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get('AUDITREPO_ROOT', DEFAULT_ROOT)).resolve()
 PROJECTS = ROOT / 'projects'
+STRICT_REPORT_CONTENT = os.environ.get('AUDITREPO_STRICT_REPORT_CONTENT') == '1'
+CHANGED_PATHS_FILE = os.environ.get('AUDITREPO_CHANGED_PATHS_FILE', '').strip()
 ALLOWED_ROOT_MD = {
     'README.md',
     'PROJECT_REGISTRY.md',
@@ -15,15 +19,75 @@ ALLOWED_ROOT_MD = {
     'CONCURRENT_EDIT_PROTOCOL.md',
 }
 
+
 def fail(msg, errors):
     errors.append(msg)
+
 
 def project_dirs():
     if not PROJECTS.exists():
         return []
     return [p for p in PROJECTS.iterdir() if p.is_dir() and not p.name.startswith('_')]
 
+
+def load_changed_paths():
+    if not CHANGED_PATHS_FILE:
+        return set()
+    source = Path(CHANGED_PATHS_FILE)
+    if not source.is_file():
+        return set()
+    return {
+        line.strip().replace('\\', '/')
+        for line in source.read_text(encoding='utf-8', errors='ignore').splitlines()
+        if line.strip()
+    }
+
+
+def intake_was_changed(date_dir, changed_paths):
+    if STRICT_REPORT_CONTENT:
+        return True
+    try:
+        prefix = date_dir.relative_to(ROOT).as_posix().rstrip('/') + '/'
+    except ValueError:
+        return False
+    return any(path == prefix[:-1] or path.startswith(prefix) for path in changed_paths)
+
+
+def report_has_real_evidence(report_file):
+    """Reject untouched scaffolds while accepting the report styles used in the repo."""
+    rtxt = report_file.read_text(encoding='utf-8', errors='ignore')
+    has_real_severity = bool(re.search(
+        r'^(?:-\s*)?(?:- Severity:|\*\*Severity:\*\*)[ \t]*(P0|P1|P2|P3)\b',
+        rtxt, re.MULTILINE))
+    has_real_title = bool(re.search(
+        r'^(?:-\s*)?(?:- Title:|\*\*Title:\*\*)[ \t]*\S+',
+        rtxt, re.MULTILINE))
+    has_real_heading = bool(re.search(
+        r'^###\s+(?!Finding\b|Confirm\b|Challenge\b|Merge proposal\b|Comment on Finding\b)(?!<)(.+\S)',
+        rtxt, re.MULTILINE))
+    has_real_content = bool(re.search(
+        r'^\s*(?:-\s+|\*\*[^*]+:\*\*\s*)(?:Description|Evidence|My evidence|Observed on SHA|Source file|'
+        r'Route/files|Root cause|Target report|Current HEAD evidence|Why same root cause)',
+        rtxt, re.MULTILINE))
+    has_bug_table = bool(re.search(
+        r'^\|\s*(?:BUG|NEW|AUDIT|SEC|SEARCH|UI|AR|R|REG|PC|CSP|CI)-?[A-Z0-9._-]*\s*\|',
+        rtxt, re.MULTILINE))
+    has_issue_id = bool(re.search(
+        r'\b(?:BUG|NEW|AUDIT|SEC|SEARCH|UI|AR|R|REG|PC|CSP|CI)-[A-Z0-9._-]+\b',
+        rtxt))
+    return any((
+        has_real_severity,
+        has_real_title,
+        has_real_heading,
+        has_real_content,
+        has_bug_table,
+        has_issue_id,
+    ))
+
+
 errors = []
+changed_paths = load_changed_paths()
+legacy_empty_reports = []
 
 # Root hygiene: .md-файлы по allow-list
 for p in ROOT.glob('*.md'):
@@ -83,52 +147,29 @@ for proj in project_dirs():
             ]
             if not any(m in txt for m in markers):
                 fail(f'{proj.name}: intake identity file missing recognizable identity markers: {identity_file}', errors)
-            # SHA-first principle: an intake must reference a concrete commit SHA
+            # SHA-first principle: an intake must reference a concrete commit SHA.
             if not re.search(r'\b[0-9a-f]{7,40}\b', txt):
                 fail(f'{proj.name}: intake identity file has no commit SHA (SHA-first evidence required): {identity_file}', errors)
 
-                # REPORT.md must contain at least one real finding/evidence pattern
-                # (not just scaffold placeholders). Accept several in-the-wild intake styles:
-                #  - scaffold: - Severity:, - Title:
-                #  - bold style: - **Severity:** P2
-                #  - heading style: ### BUG-ID / ### AUDIT-ID
-                #  - table style: | BUG-01 | ... |
-                #  - verifier style: explicit issue IDs in body text
-                report_file = date_dir / 'REPORT.md'
-                if report_file.exists():
-                    rtxt = report_file.read_text(encoding='utf-8', errors='ignore')
-                    has_real_severity = bool(re.search(
-                        r'^(?:-\s*)?(?:- Severity:|\*\*Severity:\*\*)[ \t]*(P0|P1|P2|P3)\b',
-                        rtxt, re.MULTILINE))
-                    has_real_title = bool(re.search(
-                        r'^(?:-\s*)?(?:- Title:|\*\*Title:\*\*)[ \t]*\S+',
-                        rtxt, re.MULTILINE))
-                    has_real_heading = bool(re.search(
-                        r'^###\s+(?!Finding\b|Confirm\b|Challenge\b|Merge proposal\b|Comment on Finding\b)(?!<)(.+\S)',
-                        rtxt, re.MULTILINE))
-                    has_real_content = bool(re.search(
-                        r'^\s*(?:-\s+|\*\*[^*]+:\*\*\s*)(?:Description|Evidence|My evidence|Observed on SHA|Source file|'
-                        r'Route/files|Root cause|Target report|Current HEAD evidence|Why same root cause)',
-                        rtxt, re.MULTILINE))
-                    has_bug_table = bool(re.search(
-                        r'^\|\s*(?:BUG|NEW|AUDIT|SEC|SEARCH|UI|AR|R|REG|PC|CSP|CI)-?[A-Z0-9._-]*\s*\|',
-                        rtxt, re.MULTILINE))
-                    has_issue_id = bool(re.search(
-                        r'\b(?:BUG|NEW|AUDIT|SEC|SEARCH|UI|AR|R|REG|PC|CSP|CI)-[A-Z0-9._-]+\b',
-                        rtxt))
-                    if not (has_real_severity or has_real_title or has_real_heading or has_real_content or has_bug_table or has_issue_id):
-                        comments_dir = date_dir / 'comments'
-                        has_comments = comments_dir.exists() and any(
-                            f.suffix == '.md' and 'comment-on-OTHER' not in f.name
-                            for f in comments_dir.iterdir()
-                        )
-                        if has_comments:
-                            print(f'  WARNING: {proj.name}: REPORT.md appears empty template,'
-                                  f' but evidence found in comments/: {report_file}')
-                        else:
-                            fail(f'{proj.name}: REPORT.md appears empty template'
-                                 f' (no real severity/title/findings)'
-                                 f' and no evidence in comments/: {report_file}', errors)
+        # REPORT content is an independent invariant. Previously this entire block
+        # was accidentally nested under the missing-SHA branch, allowing any
+        # SHA-bearing empty scaffold to pass validation.
+        report_file = date_dir / 'REPORT.md'
+        if report_file.exists() and not report_has_real_evidence(report_file):
+            comments_dir = date_dir / 'comments'
+            has_comments = comments_dir.exists() and any(
+                f.suffix == '.md' and 'comment-on-OTHER' not in f.name
+                for f in comments_dir.iterdir()
+            )
+            if has_comments:
+                print(f'  WARNING: {proj.name}: REPORT.md appears empty template,'
+                      f' but evidence found in comments/: {report_file}')
+            elif intake_was_changed(date_dir, changed_paths):
+                fail(f'{proj.name}: REPORT.md appears empty template'
+                     f' (no real severity/title/findings)'
+                     f' and no evidence in comments/: {report_file}', errors)
+            else:
+                legacy_empty_reports.append(report_file)
 
     # Working + verified + verification should contain at least one README.
     if not (proj / 'working' / 'README.md').exists():
@@ -137,6 +178,16 @@ for proj in project_dirs():
         fail(f'{proj.name}: verified missing README.md', errors)
     if not (proj / 'verification' / 'README.md').exists():
         fail(f'{proj.name}: verification missing README.md', errors)
+
+if legacy_empty_reports:
+    print(f'AUDITREPO LEGACY REPORT DEBT: {len(legacy_empty_reports)} untouched empty scaffold(s)')
+    for report_file in legacy_empty_reports:
+        try:
+            shown = report_file.relative_to(ROOT)
+        except ValueError:
+            shown = report_file
+        print('-', shown)
+    print('New or modified intake folders are blocking; historical debt remains visible for staged cleanup.')
 
 if errors:
     print('AUDITREPO VALIDATION: FAIL')
