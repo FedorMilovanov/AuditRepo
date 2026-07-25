@@ -6,6 +6,50 @@ on:
   pull_request:
 
 jobs:
+  materialize-counter-home-followup:
+    if: github.event_name == 'pull_request' && github.head_ref == 'audit/reconcile-9407cc92-genesis-home-residual-20260725'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout exact follow-up branch
+        uses: actions/checkout@v4
+        with:
+          ref: audit/reconcile-9407cc92-genesis-home-residual-20260725
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Materialize counter and homepage residual follow-up
+        run: python3 scripts/_temp_materialize_counter_home_residual.py
+
+      - name: Restore canonical workflow
+        run: |
+          git fetch origin main
+          git checkout origin/main -- .github/workflows/auditrepo-validate.yml
+          test ! -e scripts/_temp_materialize_counter_home_residual.py
+
+      - name: Validate final tree
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 scripts/check_matrix_coverage.py --verbose
+          git diff --check
+
+      - name: Publish tested follow-up
+        run: |
+          git config user.name "audit-reconciliation-bot"
+          git config user.email "audit-reconciliation-bot@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "audit: guard counters and register homepage residual"
+          git push origin HEAD:audit/reconcile-9407cc92-genesis-home-residual-20260725
+
   validate:
     runs-on: ubuntu-latest
     steps:
