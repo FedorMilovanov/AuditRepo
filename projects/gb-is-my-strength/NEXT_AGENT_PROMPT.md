@@ -2,101 +2,98 @@
 
 > **Current operational truth only.** Historical prompts are archived. Bug status and counters belong to `verified/MASTER_BUG_MATRIX.md`; this file owns the exact current source/deploy boundary, shared-surface ownership and next execution order.
 
-**Source main:** `dab31616ca77b7833e9d12ad9c80d63a751ed19e`
+**Source main:** `e8c41d54512a9c5090dd9d8761a5ee912505c8fc`
 **Last fully imported exact production witness:** ✅ `8a5352671375fdb01b6c30273c25ec4283a13f69`
-**Current production candidate:** ⚠️ `dab31616ca77b7833e9d12ad9c80d63a751ed19e` — PR #293 merged its TTS acceptance recorder, but exact readiness, Pages, run-addressed provenance, witness artifact and downstream repository ledger have not yet been imported into AuditRepo.
-**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_dab31616_auditor-r2.md`
+**Current production candidate:** ⚠️ `e8c41d54512a9c5090dd9d8761a5ee912505c8fc` — PR #297 corrected the merged #293 ledger architecture in source, but exact readiness, Pages, run-addressed provenance, TTS witness artifact and downstream ledger result have not yet been imported into AuditRepo.
+**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_e8c41d54_auditor-r2.md`
 **Immutable forensic intake:** `incoming/auditor-brain/2026-07-25-r2/REPORT.md`
 
 ## 1) Exact boundary
 
 Source and production remain separate authorities:
 
-- source `main` is `dab31616` after merged PR #293;
-- PR #290 fixed manual exact-checkout and replaced the mutable flat SHA object with `deployments/current.json` plus run-addressed evidence;
-- PR #293 then persisted TTS acceptance from inside the Pages deploy workflow; the architecture review was valid, and draft PR #297 now owns the corrective move to a downstream, retryable capability-witness ledger;
-- the whole Pages artifact is still not bound to the readiness candidate digest; generic/artifact identity remains open in source issue #292 and build-once issue #295;
-- PR #283 removed duplicate PDF ownership, but a later physical two-state contract proved the flipped back face still retains 3D transform; PR #286 owns the sole product correction;
-- PR #296 is a temporary read-only Genesis 6 transport verifier for issue #287. It is not the final five-route activation PR and must close without merge after verification;
-- PR #288 is closed without merge as an obsolete propagation-timing witness; issue #289 is closed as a superseded old-SHA acceptance target, without claiming production success;
-- the last fully pinned AuditRepo production authority remains `8a535267` until newer exact run IDs and artifacts are imported;
+- source `main` is `e8c41d54` after merged corrective PR #297;
+- PR #290 fixed manual exact checkout and replaced the mutable flat SHA object with `deployments/current.json` plus run-addressed evidence;
+- PR #293 then coupled repository acceptance projection to the Pages deploy; PR #297 has now corrected that source architecture by moving a truthful TTS capability witness to a retryable downstream ledger with exact artifact identity and least privilege;
+- whole-site release-candidate identity is still unresolved: the provenance record remains TTS-coupled and readiness/deploy still build different artifacts. Source issues #292 and #295 remain open;
+- PR #283 removed duplicate PDF ownership, but a later physical two-state contract found a flipped-back specificity defect. PR #286 remains the sole active product correction owner;
+- temporary Genesis transport PR #296 completed its read-only check and closed without merge. Issue #287 remains the transport/finalizer coordination record, but there is no active five-route product activation PR;
+- PR #288 is closed without merge as obsolete timing evidence; issue #289 is closed as a superseded old-SHA acceptance target, without claiming deployment success;
+- the last fully pinned AuditRepo production authority remains `8a535267` until exact newer run IDs and artifacts are imported;
 - this update advances source/orchestration truth only and does not manufacture missing production evidence.
 
 Canonical evidence:
 
-- `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_dab31616_auditor-r2.md`;
+- `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_e8c41d54_auditor-r2.md`;
 - `incoming/auditor-brain/2026-07-25-r2/REPORT.md`.
 
 ## 2) Current active pull requests
 
-At this snapshot the active source PRs are:
+At this snapshot the only active source PR is:
 
-- **#286 — reversible-card physical PDF product repair**: draft. The front state passes; the flipped back state retained `matrix3d` and lost markers. Final head must publish one generic inner-wrapper print rule for all three card families, remove every `_temp-*` materializer/workflow and pass exact-head front/back PDFs plus the five-route matrix. Do not weaken unrelated screen rules to satisfy a raw `!important` count.
-- **#297 — downstream deployment capability-witness ledger**: draft corrective successor to merged #293. It removes repository metadata mutation from the Pages job, downloads the exact successful-run artifact, validates artifact ID/size/digest and report PASS, records a generic envelope with `extensions.tts`, and truthfully limits the claim to a TTS capability witness. Whole-site artifact identity remains #292/#295.
-- **#296 — Genesis 6 V3 transport verifier**: temporary read-only PR. It verifies numbered issue #287 payload chunks and must close without merge. A product activation/finalizer lane must still have one explicit owner, reconstruct all 26 chunks, verify the full archive, apply on fresh current main and self-clean every temporary file.
+- **#286 — reversible-card physical PDF product repair**: draft, based on current `main@e8c41d54`. It uses generic flipped-state specificity for `.flip-card`, `.heart-flip-card` and `.error-flip-card`, preserves screen rotation and claims guarded physical front/back PASS. Final merge still requires an actually executed exact-head permanent matrix, inspected Print Paper artifact, no temporary files, and a contract that restores the initially visible state rather than forcing front during test cleanup.
+
+There is no active Genesis 6 product PR. A future finalizer/activation must start from fresh current main, verify the complete issue #287 archive, use one owner and self-clean all transport scaffolding. Draft/noindex remains the safe default unless activation is explicitly approved.
 
 ## 3) Shared-surface ownership
 
 - One shared/route surface has one active product owner.
 - PR #286 is the sole active print product owner. Do not revive #280, reopen #283 or create another print implementation lane.
-- PR #297 owns only the correction of the merged #293 acceptance-ledger projection. It must not claim build-once artifact architecture (#295) or generic provenance completion (#292).
-- PR #296 owns transport verification only. It must not become a second Genesis product implementation beside a later activation/finalizer PR.
+- The merged #297 ledger is source architecture, not proof of current production. Do not reopen #293 or add a parallel TTS acceptance workflow.
+- Source #292 owns generic whole-artifact provenance identity; #295 owns build-once promotion; #294 owns notifier lifecycle; #64 owns workflow-policy migration.
+- Issue #287 may coordinate Genesis transport/finalization, but no temporary verifier or snapshot is a product owner.
 - Before every lane, refresh `main`, open PRs, changed filenames, active workflows and shared-file intersections.
 
 ## 4) CI status semantics
 
 Do not treat every red status as the same defect. Classify it first:
 
-1. **protective failure** — Shared Files Guard rejecting temporary write workflows in a final tree;
-2. **product regression** — flipped card inner wrapper remains in 3D flow and active-face markers are `0/0`;
-3. **cancelled/superseded run** — a newer head or Pages concurrency cancelled the old run;
-4. **stale alert lifecycle** — an old failure issue remains open after a green recovery;
-5. **post-publish ledger failure** — repository comment/issue projection failed after Pages may already be healthy; it must not be presented as a deployment failure;
-6. **temporary transport verification failure** — chunk/hash/shape failure in #296 blocks the transport lane only and is not proof that the live site regressed.
+1. **protective failure** — Shared Files Guard rejects temporary write workflows or cross-lane ownership in a final tree;
+2. **product regression** — example: flipped card retains 3D transform or physical markers split/disappear;
+3. **cancelled/superseded run** — a newer head or concurrency cancelled an old run;
+4. **stale alert lifecycle** — an old failure issue remains open after a newer green recovery;
+5. **post-publish ledger failure** — downstream repository projection failed after Pages may already be healthy; it must not be presented as a deployment failure;
+6. **temporary transport verification failure** — a payload/hash failure blocks that transport lane only and is not proof of a live-site regression.
 
-`notify-on-failure.yml` still lacks a recovery state machine, subscribes to stale IndexNow ownership, does not actually consume route-impact artifacts and may present workflow-name heuristics as root cause. Source issue: #294.
+`notify-on-failure.yml` still lacks a recovery state machine, subscribes to stale IndexNow ownership, does not genuinely consume route-impact artifacts and may present workflow-name heuristics as root cause. Source issue: #294.
 
 ## 5) Active work, in order
 
 1. **Finish source repair #286**
-   - fix the product owner, not the test;
-   - require front and flipped-back PDFs, atomic outer root, static/untransformed inner wrapper and same-page markers;
-   - retain generic `.flip-card`, `.heart-flip-card`, `.error-flip-card` families;
-   - remove temporary workflow/materializer and review the exact artifact before merge.
+   - verify current PR head/body SHA consistency;
+   - require executed exact-head front and flipped-back PDFs, atomic outer root, static/flat/untransformed inner wrapper, auto height, no transition and same-page markers;
+   - prove `GBPrintPagination.reset()` restores an initially front card and an initially flipped card without test cleanup overwriting the state under test;
+   - retain generic card families and screen flip behavior;
+   - remove any temporary workflow/materializer and inspect the exact artifact before merge.
 
-2. **Review and finish corrective ledger #297**
-   - deploy remains least-privilege and its result does not depend on repository issue projection;
-   - exact artifact metadata/report/SHA/run/attempt are fail-closed;
-   - machine marker, idempotency and ambiguity are permanent;
-   - claim remains “TTS capability witness”, not whole-site acceptance;
-   - no product CSS/JS or unrelated release ownership enters the PR.
-
-3. **Converge release artifact architecture (#295 + #292)**
+2. **Converge release artifact architecture (#295 + #292)**
    - readiness builds and validates one exact candidate under a pinned toolchain;
-   - publish whole-artifact digest and generic build/route identity;
-   - deploy promotes the same artifact without a second install/build;
-   - capability evidence lives under extensions such as `extensions.tts`.
+   - publish whole-artifact digest plus generic build/route/Pagefind/sitemap/feed/core identities;
+   - deploy promotes that same artifact without a second install/build;
+   - capability evidence remains under extensions such as `extensions.tts`.
 
-4. **Finish and remove Genesis transport scaffolding (#287/#296)**
-   - verify all `000–025` chunks and full archive SHA-256, not a partial subset;
-   - close #296 without merge after evidence;
-   - create at most one explicit finalizer/activation owner from fresh current main;
-   - final product commit contains no transport issue/workflow/temp payload and preserves draft/noindex unless activation is explicitly approved.
-
-5. **Fix CI alert lifecycle (#294)**
+3. **Fix CI alert lifecycle (#294)**
    - listen to actual readiness/deploy ownership;
    - open/update on failure and close only on a newer exact success;
-   - distinguish cancelled/superseded;
+   - distinguish cancelled/superseded and post-publish ledger failures;
    - quote exact failed jobs/steps and real artifact data;
    - explicitly choose non-blocking or separate-workflow ownership for IndexNow.
 
-6. **Replace shadow-era workflow policy (source issue #64)**
-   - derive route coverage from effective route registry;
-   - enforce read-only validation and permissions;
-   - forbid mutating validation;
-   - move from raw numeric ratchets to named semantic capability budgets where needed.
+4. **Replace shadow-era workflow policy (#64)**
+   - derive route coverage from the effective route registry;
+   - separate source, candidate-dist, promotion and live-witness capability classes;
+   - enforce read-only validation and least privilege;
+   - stop requiring the deploy workflow itself to reinstall, rebuild and rerun route-specific gates;
+   - replace raw numeric ratchets with named semantic budgets where appropriate.
 
-7. **Add Research authority manifest (Research issue #16)**
+5. **Define one Genesis 6 finalizer/activation owner (#287)**
+   - reconstruct and verify all declared chunks/full archive from fresh current main;
+   - reject unsafe archive paths and ambiguous 3-way application;
+   - keep transport evidence outside the final product diff;
+   - preserve draft/noindex unless activation is separately approved;
+   - no second snapshot/verifier workstream.
+
+6. **Add Research authority manifest (Research #16)**
    - machine-readable IDs, scope, authority, supersedes/applies-to, source grade, rights state and pinned Research SHA;
    - block cycles, duplicate authority, missing overlays, stale site imports and unresolved image rights;
    - consolidate XLVIII + XLIX + L + LI through a deterministic publication compiler or final dossiers.
@@ -108,7 +105,7 @@ Before source merge:
 - exact-head changed-file and ownership refresh;
 - Shared Files Guard and control-plane audit for workflow/package changes;
 - relevant Native Source/Route Registry/Visual gates;
-- focused browser/PDF/transport contract plus broad family regression;
+- focused browser/PDF/content contract plus broad family regression;
 - production-like build when product or release surfaces change;
 - no `_temp-*` workflow/materializer in final product scope;
 - no unrelated semantic weakening to preserve a numeric count;
