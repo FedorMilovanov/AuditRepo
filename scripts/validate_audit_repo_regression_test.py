@@ -36,6 +36,25 @@ def build_fixture(root: Path) -> Path:
     write(project / 'working' / 'README.md', '# Working\n')
     write(project / 'verification' / 'README.md', '# Verification\n')
     write(project / 'verified' / 'README.md', '# Verified\n')
+    write(
+        project / 'verified' / 'MASTER_BUG_MATRIX.md',
+        '# MASTER BUG MATRIX — fixture\n\n'
+        '## ✅ ЗАКРЫТО (1)\n\n'
+        '## 🟠 P1 — ОТКРЫТО (2)\n\n'
+        '## 🟡 P2 — ОТКРЫТО (3)\n\n'
+        '## 🟢 P3 — ОТКРЫТО (4)\n\n'
+        '## Статистика\n\n'
+        '| Категория | Количество |\n'
+        '|---|---|\n'
+        '| Закрыто (fixed) | 1 |\n'
+        '| **P0 открыто** | **0** |\n'
+        '| P1 открыто | 2 |\n'
+        '| P2 открыто | 3 |\n'
+        '| P3 открыто | 4 |\n'
+        '| Рефакторинг | 1 |\n'
+        '| AuditRepo | 1 |\n'
+        '| **Всего открыто (матрица)** | **11** |\n',
+    )
 
     intake = project / 'incoming' / 'validator-regression' / '2026-07-25'
     write(
@@ -97,6 +116,31 @@ def main() -> int:
         valid = run_validator(root)
         require(valid.returncode == 0, 'real finding failed validator', valid)
         require('AUDITREPO VALIDATION: PASS' in valid.stdout, 'PASS marker missing', valid)
+
+        # Canonical heading and statistics counters must remain identical.
+        matrix_path = root / 'projects' / 'fixture-project' / 'verified' / 'MASTER_BUG_MATRIX.md'
+        matrix_text = matrix_path.read_text(encoding='utf-8')
+        matrix_path.write_text(matrix_text.replace('| Закрыто (fixed) | 1 |', '| Закрыто (fixed) | 9 |'), encoding='utf-8')
+        mismatch = run_validator(root)
+        require(mismatch.returncode == 1, 'mismatched matrix counters unexpectedly passed', mismatch)
+        require(
+            'matrix counter mismatch for fixed' in mismatch.stdout,
+            'matrix mismatch failure did not identify the divergent counter',
+            mismatch,
+        )
+
+        matrix_path.write_text(matrix_text.replace('**11**', '**12**'), encoding='utf-8')
+        total_mismatch = run_validator(root)
+        require(total_mismatch.returncode == 1, 'mismatched total-open counter unexpectedly passed', total_mismatch)
+        require(
+            'matrix total-open mismatch' in total_mismatch.stdout,
+            'total-open mismatch did not identify arithmetic drift',
+            total_mismatch,
+        )
+
+        matrix_path.write_text(matrix_text, encoding='utf-8')
+        restored = run_validator(root)
+        require(restored.returncode == 0, 'restored matrix counters failed validator', restored)
 
     print('AUDITREPO VALIDATOR REGRESSION: PASS')
     return 0

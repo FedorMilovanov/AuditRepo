@@ -85,6 +85,55 @@ def report_has_real_evidence(report_file):
     ))
 
 
+def validate_matrix_summary(proj, errors):
+    """Fail closed when canonical section counters and summary statistics diverge."""
+    matrix = proj / 'verified' / 'MASTER_BUG_MATRIX.md'
+    if not matrix.is_file():
+        return
+
+    text = matrix.read_text(encoding='utf-8', errors='ignore')
+
+    def capture(pattern, label):
+        match = re.search(pattern, text, re.MULTILINE)
+        if not match:
+            fail(f'{proj.name}: matrix counter missing: {label}', errors)
+            return None
+        return int(match.group(1))
+
+    headings = {
+        'fixed': capture(r'^## ✅ ЗАКРЫТО \((\d+)\)$', 'fixed heading'),
+        'p1': capture(r'^## 🟠 P1 — ОТКРЫТО \((\d+)\)$', 'P1 heading'),
+        'p2': capture(r'^## 🟡 P2 — ОТКРЫТО \((\d+)\)$', 'P2 heading'),
+        'p3': capture(r'^## 🟢 P3 — ОТКРЫТО \((\d+)\)$', 'P3 heading'),
+    }
+    summary = {
+        'fixed': capture(r'^\| Закрыто \(fixed\) \| (\d+) \|$', 'fixed summary'),
+        'p0': capture(r'^\| \*\*P0 открыто\*\* \| \*\*(\d+)\*\* \|$', 'P0 summary'),
+        'p1': capture(r'^\| P1 открыто \| (\d+) \|$', 'P1 summary'),
+        'p2': capture(r'^\| P2 открыто \| (\d+) \|$', 'P2 summary'),
+        'p3': capture(r'^\| P3 открыто \| (\d+) \|$', 'P3 summary'),
+        'refactoring': capture(r'^\| Рефакторинг \| (\d+) \|$', 'refactoring summary'),
+        'auditrepo': capture(r'^\| AuditRepo \| (\d+) \|$', 'AuditRepo summary'),
+        'total': capture(r'^\| \*\*Всего открыто \(матрица\)\*\* \| \*\*(\d+)\*\* \|$', 'total-open summary'),
+    }
+
+    for key in ('fixed', 'p1', 'p2', 'p3'):
+        if headings[key] is not None and summary[key] is not None and headings[key] != summary[key]:
+            fail(
+                f'{proj.name}: matrix counter mismatch for {key}: heading={headings[key]} summary={summary[key]}',
+                errors,
+            )
+
+    total_parts = [summary[key] for key in ('p0', 'p1', 'p2', 'p3', 'refactoring', 'auditrepo')]
+    if summary['total'] is not None and all(value is not None for value in total_parts):
+        calculated = sum(total_parts)
+        if calculated != summary['total']:
+            fail(
+                f'{proj.name}: matrix total-open mismatch: calculated={calculated} summary={summary["total"]}',
+                errors,
+            )
+
+
 errors = []
 changed_paths = load_changed_paths()
 legacy_empty_reports = []
@@ -119,6 +168,8 @@ for proj in project_dirs():
     for rel in ['README.md', 'PROJECT_META.yml', 'incoming', 'working', 'verification', 'verified', 'repairs', 'reverify', 'archive']:
         if not (proj / rel).exists():
             fail(f'{proj.name}: missing {rel}', errors)
+
+    validate_matrix_summary(proj, errors)
 
     # Intake structure
     incoming = proj / 'incoming'
