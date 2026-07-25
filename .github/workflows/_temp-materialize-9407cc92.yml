@@ -1,0 +1,39 @@
+name: TEMP Materialize 9407cc92 Genesis Provenance Reconciliation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    if: github.head_ref == 'audit/reconcile-9407cc92-genesis-provenance-20260725'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact reconciliation branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: audit/reconcile-9407cc92-genesis-provenance-20260725
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Apply exact reconciliation and self-clean
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 projects/gb-is-my-strength/_temp_materialize_9407cc92.py
+          test ! -e projects/gb-is-my-strength/_temp_materialize_9407cc92.py
+          test ! -e .github/workflows/_temp-materialize-9407cc92.yml
+          git diff --check
+          git add projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            projects/gb-is-my-strength/_temp_materialize_9407cc92.py \
+            .github/workflows/_temp-materialize-9407cc92.yml
+          git diff --cached --name-only
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'audit: materialize 9407cc92 provenance reconciliation'
+          git push origin HEAD:audit/reconcile-9407cc92-genesis-provenance-20260725
