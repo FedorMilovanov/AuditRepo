@@ -17,6 +17,8 @@ jobs:
         run: python3 scripts/check_auditrepo_structure.py
       - name: Validate repo rules
         run: python3 scripts/validate_audit_repo.py
+      - name: Test validator report-content regressions
+        run: python3 scripts/validate_audit_repo_regression_test.py
 
   matrix-coverage-diagnostic:
     runs-on: ubuntu-latest
