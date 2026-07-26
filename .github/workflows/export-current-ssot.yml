@@ -1,0 +1,40 @@
+name: Export Current SSOT
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/export-current-ssot.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact diagnostic head
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Verify exact export scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+          test -f projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          test -f scripts/validate_audit_repo.py
+
+      - name: Upload exact current SSOT sources
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: current-ssot-${{ github.run_id }}
+          path: |
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+            scripts/validate_audit_repo.py
+            scripts/validate_audit_repo_regression_test.py
+          if-no-files-found: error
+          retention-days: 1
