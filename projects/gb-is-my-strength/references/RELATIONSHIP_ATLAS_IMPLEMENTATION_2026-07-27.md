@@ -1,27 +1,29 @@
 # Relationship Atlas implementation and consolidation record — 2026-07-28
 
-Статус: **reference / exact combined CI pending / не operational SSOT**  
+Статус: **`SOURCE-MERGED / REVERIFY-EVIDENCE-RECORDED / NOT-OPERATIONAL-SSOT`**  
 Source owner: `FedorMilovanov/gb-is-my-strength`  
 Superseded source PR: `#425`  
-Current source PR: `#471`  
-Final site base: `cfbea1d33005908503d48d525a68a04db7045db1`  
+Merged source PR: `#471`  
+Final pre-Atlas site base: `cfbea1d33005908503d48d525a68a04db7045db1`  
 Latest captured Atlas source: `fe548f1755b75550efdac1574a1bc6b01f06beea`  
 Combined two-parent commit: `d723ce73d95a8da8096073e79bae82c4e2a89c38`  
-Exact CI head: `77b6815a45bbdc1a7492fa7e2f868ed58f61d0db`
+Exact accepted CI head: `15b2d03f411deff29fedff86fa94e979b338ad18`  
+Final source merge commit: `03f051b25f83c078c4a2c38fa3055e381ec8ed93`  
+Final Research authority: `0a9105c499fa801f4095bce7ec311fcb728206a7`
 
 ## 1. Назначение записи
 
-Этот документ фиксирует фактическую архитектуру Relationship Atlas и путь её консолидации с финальным Genesis 6 / 1 Енох authority state.
+Этот документ фиксирует фактическую архитектуру Relationship Atlas, её объединение с финальным Genesis 6 / 1 Енох authority state и exact-head evidence, по которому source PR был слит.
 
 Он не заменяет:
 
 - source contracts в `gb-is-my-strength`;
 - `MASTER_BUG_MATRIX.md`;
 - `NEXT_AGENT_PROMPT.md`;
-- exact-head CI;
-- отдельный operational reverify после source merge.
+- отдельный CURRENT_HEAD_REVERIFY;
+- operational counters и disposition дефектов.
 
-Counters и статусы дефектов настоящим reference не меняются.
+Настоящая reference-запись не меняет counters и не объявляет operational issue закрытым автоматически.
 
 ## 2. Почему старый implementation lane superseded
 
@@ -31,9 +33,9 @@ Counters и статусы дефектов настоящим reference не м
 - runtime article projection;
 - отсутствие typed relation catalog;
 - ручной `data/links-graph.json` как единственный semantic owner;
-- ранний data-driven MapBody.
+- ранний data-driven `MapBody`.
 
-Финальная source-ветка ушла дальше. Эти формулы больше не соответствуют коду и не должны использоваться как acceptance evidence.
+Финальная архитектура ушла дальше. Эти формулы больше не соответствуют source truth и не являются acceptance evidence.
 
 ## 3. Граница владения
 
@@ -52,9 +54,9 @@ Counters и статусы дефектов настоящим reference не м
 - background;
 - compares;
 - explains;
-- и inverse semantics, определённых typed catalog.
+- inverse semantics typed catalog.
 
-Article relationship panel не повторяет части той же серии. Поле `seriesOrder` доступно компилятору только для общей модели и не попадает в article projection.
+Article relationship panel не повторяет части той же серии. `seriesOrder` доступен общей модели, но исключён из article projection.
 
 ## 4. Каноническая архитектура
 
@@ -63,7 +65,7 @@ Article relationship panel не повторяет части той же сер
 - `data/relations.json`;
 - `data/relations.schema.json`;
 - канонические relation IDs;
-- explicit source/target;
+- explicit source / target;
 - relation kind;
 - rationale;
 - inverse label and semantics;
@@ -76,7 +78,7 @@ Article relationship panel не повторяет части той же сер
 - `src/lib/relations/compiled.ts`;
 - `src/pages/data/relations.compiled.json.ts`.
 
-Один compiled graph используется:
+Один compiled graph используется для:
 
 1. SSR Атласа;
 2. build-time article projection;
@@ -89,9 +91,9 @@ Article relationship panel не повторяет части той же сер
 
 - `scripts/project-relations-to-dist.mjs`;
 - semantic `<nav>` внедряется после production-like build;
-- старые `.gbx-backlinks` и stale relation panels удаляются;
+- stale `.gbx-backlinks` и старые relation panels удаляются;
 - article HTML не fetch-ит graph data в runtime;
-- runtime relationship-panel script удалён;
+- runtime relationship-panel script отсутствует;
 - CSS materialized с content hash;
 - отсутствие обязательной projection является fail-closed ошибкой.
 
@@ -124,7 +126,7 @@ Article relationship panel не повторяет части той же сер
 
 ## 5. Runtime consolidation
 
-Source PR также сводит общие article interactions в явные runtime-модули:
+Общие article interactions сведены в явные модули:
 
 - `article-tooltips.js`;
 - `article-quiz.js`;
@@ -133,18 +135,29 @@ Source PR также сводит общие article interactions в явные 
 - `print-pagination-geometry.js`;
 - `article-interactions.js/css`.
 
-Последняя tooltip-правка не ослабляет browser contract:
+Exact combined audit выявил одну настоящую keyboard/hover race на сноске статьи о герменевтике:
 
-- нет forced click;
-- timeout acceptance не увеличен;
-- сохранены keyboard, ARIA и OverlayRuntime;
-- hover state стабилизирован через pointer epoch и переход anchor ↔ floating tip.
+- explicit keyboard focus открыл правильную footnote surface;
+- synthetic pointer hover мог немедленно заменить её другой tooltip surface;
+- diagnostic предыдущего head: `markerOpen: false / tipOpen: true / nestedFocusable: 1`.
+
+Исправление в accepted head `15b2d03...`:
+
+- различает реальное движение указателя и synthetic pointer event;
+- не разрешает hover перехватить active non-hover tooltip до реального pointer movement;
+- сохраняет keyboard, ARIA и OverlayRuntime;
+- не использует forced click;
+- не увеличивает acceptance timeout;
+- не ослабляет audit;
+- не меняет article source или footnote content.
+
+После исправления полный Runtime Interactive Audit прошёл на exact head.
 
 ## 6. Publication boundary Genesis 6
 
 Консолидация доказала отсутствие file overlap между Atlas scope и семью финальными Genesis 6 файлами.
 
-В combined tree семь Genesis blobs взяты byte-for-byte из final site main.
+В combined tree Genesis blobs были взяты byte-for-byte из final site main.
 
 Дополнительно:
 
@@ -152,9 +165,10 @@ Source PR также сводит общие article interactions в явные 
 - relation compiler импортирует только `status: published`;
 - 6A/6B отсутствуют в legacy graph;
 - Atlas не публикует и не индексирует draft/noindex Енохов блок;
-- Research provenance остаётся закреплён на final Research main `0a9105c499fa801f4095bce7ec311fcb728206a7`.
+- Research provenance закреплён на final Research main `0a9105c499fa801f4095bce7ec311fcb728206a7`;
+- publication state не менялся.
 
-## 7. Последняя source race и её закрытие
+## 7. Source race и её закрытие
 
 Во время первой consolidation исходная PR #425 получила дополнительные коммиты.
 
@@ -165,12 +179,13 @@ Source PR также сводит общие article interactions в явные 
 - map fallback assertion;
 - hardened tooltip activation.
 
-После capture:
+Затем:
 
+- immutable latest source head `fe548f1...` был сохранён вторым родителем combined commit;
 - исходный PR #425 закрыт как superseded;
 - его branch ref нормализован к site main;
-- immutable source head сохранён вторым родителем combined commit;
-- текущей merge-целью является только PR #471.
+- successor #471 стал единственной merge-целью;
+- после merge successor branch также нормализован к final site main.
 
 ## 8. Deterministic evidence surface
 
@@ -199,30 +214,71 @@ Source scope содержит:
 - DOM/detail consistency;
 - browser console cleanliness.
 
-## 9. Текущий acceptance boundary
+## 9. Exact-head CI acceptance
 
-До merge source PR #471 обязательны:
+Accepted exact head:
 
-- неизменный exact head `77b6815a45bbdc1a7492fa7e2f868ed58f61d0db`;
-- complete CI success;
+`15b2d03f411deff29fedff86fa94e979b338ad18`
+
+На нём завершились `success`:
+
+- Genesis 6 Research provenance;
+- Shared Files Guard;
+- Glossary Contract;
+- Overlay Runtime Browser;
+- Editorial Dateline Contract;
+- Native Source Contract;
+- Print Paper Contract;
+- Gill Final Source Reconciliation;
+- Gill pre-v16 submenu contract;
+- Runtime Interactive Audit;
+- Source Authority Contract;
+- Visual Parity Guard — pixel-diff;
+- Route Registry Validators, включая Chromium и WebKit all-public-surfaces.
+
+Перед merge также подтверждены:
+
+- branch `0 behind` относительно `main`;
 - отсутствие unresolved review threads;
-- подтверждение zero-behind относительно site main;
-- отсутствие нового source race.
+- отсутствие submitted reviews с блокирующим verdict;
+- неизменность exact head;
+- отсутствие Genesis authority/content diff.
 
-Отменённые runs предыдущего head не являются evidence.
+## 10. Merge result
 
-## 10. Действия после source merge
+Source PR `#471` слит squash-методом.
 
-После merge #471 этот reference должен получить:
+Final source merge commit:
 
-- final source merge commit;
-- финальный exact-head CI inventory;
-- статус `SOURCE-MERGED / REVERIFY-EVIDENCE-RECORDED`;
-- подтверждение нуля открытых source PR;
-- отдельное решение, какие строки operational matrix действительно закрываются.
+`03f051b25f83c078c4a2c38fa3055e381ec8ed93`
 
-Только затем допустим отдельный CURRENT_HEAD_REVERIFY или изменение counters.
+Merge сохранил:
 
-## 11. Итог
+- typed relation compiler;
+- build-time article projection;
+- SSR/no-JS Atlas fallback;
+- browser state contracts;
+- explicit-focus versus synthetic-hover fix;
+- final Genesis 6 authority;
+- draft/noindex boundary;
+- отсутствие manuscript/research artifact deletion.
 
-> Relationship Atlas больше не является ручным прототипом или browser-side backlink injector. Это typed, compiled и fail-closed relation system с build-time article projection, SSR/no-JS Atlas и проверяемым browser state. Genesis 6 authority сохранён byte-for-byte и остаётся draft/noindex. Настоящий документ фиксирует implementation evidence, но не объявляет source merge или operational закрытие до завершения exact combined CI.
+После merge открытых source PR по текущему контуру не осталось.
+
+## 11. Operational boundary
+
+Эта запись подтверждает source implementation и exact-head evidence.
+
+Она не выполняет автоматически:
+
+- изменение `MASTER_BUG_MATRIX.md`;
+- пересчёт counters;
+- перевод всех исторических строк в `CLOSED`;
+- live-production verification после deploy;
+- deployment witness acceptance.
+
+Для этих действий нужен отдельный CURRENT_HEAD_REVERIFY / production witness pass с его собственными доказательствами.
+
+## 12. Итог
+
+> Relationship Atlas слит как typed, compiled и fail-closed relation system с build-time article projection, SSR/no-JS Atlas, проверяемым browser state и исправленной keyboard/hover ownership. Genesis 6 authority сохранён и остаётся draft/noindex. Source merge и exact-head CI зафиксированы; operational counters настоящим reference не изменяются.
