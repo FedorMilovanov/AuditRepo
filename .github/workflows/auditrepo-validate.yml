@@ -51,8 +51,6 @@ jobs:
           python3 scripts/matrix_coverage_contexts.py \
             --json-out reports/matrix-coverage/contexts.json \
             --markdown-out reports/matrix-coverage/contexts.md
-          cp projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
-            reports/matrix-coverage/MASTER_BUG_MATRIX.md
       - name: Upload matrix coverage diagnostics
         uses: actions/upload-artifact@v4
         with:
