@@ -41,7 +41,7 @@ PR #492 records two qualified reader-authority decisions without public activati
 
 Preserved source invariants:
 
-- Research authority: `FedorMilovanov/Research@753e09027d4a33af5658e1221ef8371e9dfae22`;
+- Research authority: `FedorMilovanov/Research@753e09027d4a33af5659ce1221ef8371e9dfae22`;
 - extension manifest digest: `sha256:947e7b86705fd1729f86f0f99c60afee9b850f794d439729698be7d2f1edaaf7`;
 - 6A remains 27 claim-level footnote groups;
 - 6B remains 26 claim-level footnote groups;
