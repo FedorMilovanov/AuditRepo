@@ -3,27 +3,43 @@
 > **Current operational truth only.** Historical prompts are archived. Bug status and counters belong to `verified/MASTER_BUG_MATRIX.md`; this file owns the exact current source/deploy boundary, shared-surface ownership and next execution order.
 
 **Source main:** `0e5cd33e02de8c424bfaab4127e4463851bfeb1e`  
-**Exact imported production authority:** `36cb2cd06d9a688c3ef9331c6cd478f1a87b5ec8`  
-**Current source deployment status:** 🟡 source is newer than imported production authority; the automatic Pages/live/ledger result for `0e5cd33e…` is not yet accepted.  
-**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-28_0e5cd33e_genesis6-lxv-lxvi-source.md`  
-**Last exact production reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-28_36cb2cd0_atlas-release-production.md`
+**Exact production authority:** ✅ `0e5cd33e02de8c424bfaab4127e4463851bfeb1e`  
+**Current source deployment status:** ✅ source and production authority converge on the same exact SHA.  
+**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-29_0e5cd33e_genesis6-lxv-lxvi-production.md`  
+**Previous production reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-28_36cb2cd0_atlas-release-production.md`
 
 ## 1. Exact current boundary
 
 - source PR #492 merged as `0e5cd33e02de8c424bfaab4127e4463851bfeb1e`;
 - exact accepted PR head: `e5494e4bcebb8c4e76e8bb74c3f5a89b6e6f5dec`;
-- PR #492 used current Atlas/Gill production source `36cb2cd0…` as its fresh base and preserved that lane without overlap;
-- all eleven required pull-request workflows passed on the unchanged PR head;
-- the merge changes six Genesis 6 authority/content files only;
-- production evidence was explicitly not claimed by PR #492;
-- publication remains blocked: `draft: true`, `noindex: true`, `releaseState: blocked`, `mayPublish: false`, `mayRemoveNoindex: false`;
-- issue #362 remains the sole phased Genesis 6 activation owner.
+- all eleven required pull-request workflows passed on that unchanged head;
+- automatic Deploy to GitHub Pages run `30404104621`, attempt 1, completed successfully for exact `0e5cd33e…`;
+- readiness job `90425509477` built and validated one immutable candidate;
+- promotion job `90428720816` downloaded and published that same-run candidate without checkout, install or rebuild;
+- generic live and TTS live acceptance passed;
+- downstream deployment-release-witness comment `5110400608` bound the same release/control-plane SHA and artifacts.
 
-Until a successful exact-main deployment for `0e5cd33e…` proves immutable candidate identity, same-byte Pages promotion, generic live acceptance, TTS live acceptance and downstream ledger recording, production authority remains the already accepted `36cb2cd0…`.
+Candidate identity:
+
+- candidate ID: `0e5cd33e02de8c424bfaab4127e4463851bfeb1e:30404104621-1`;
+- tree digest: `sha256:696f8a4ed22f2eb1501896387684b86c9e9cf2fb87ef774cc6a2ff6097983d07`;
+- files: `1134`;
+- bytes: `80752137`;
+- route profiles: `84`;
+- HTML files: `83`;
+- sitemap routes: `66`;
+- Pagefind files: `95`.
+
+Transport and live evidence:
+
+- candidate artifact `8706215495`, digest `sha256:8e4e348485a5244d8f0a1a79375a14c9b0a1bf2cefc0a443764a8887b72111db`;
+- Pages artifact `8706224526`, digest `sha256:3f3a96fe3000e889491b56c43a0ce957b2a9c7269856935f0fb75eeec92d3bed`;
+- generic live artifact `8706227232`, digest `sha256:0d502dfb61499b3988f3830cde04567b7f45528dc1d8bab1767ba6a5078cf6ff`;
+- TTS live artifact `8706227688`, digest `sha256:e1cfc2ff3aa1645cb816dbbeb20a1f487413d3d71e3b3500638b824fa5b51c78`.
 
 ## 2. Genesis source result
 
-PR #492 records two qualified reader-authority decisions without public activation:
+PR #492 records two qualified reader-authority decisions:
 
 ### LXV — 1 Enoch 70–71
 
@@ -45,72 +61,50 @@ Preserved source invariants:
 - extension manifest digest: `sha256:947e7b86705fd1729f86f0f99c60afee9b850f794d439729698be7d2f1edaaf7`;
 - 6A remains 27 claim-level footnote groups;
 - 6B remains 26 claim-level footnote groups;
-- six-part reading total reconciles to 170 minutes;
+- six-part reading total remains 170 minutes;
 - no manuscript image or protected apparatus reproduction was introduced.
 
-## 3. Exact-head source evidence for PR #492
+## 3. Publication boundary remains separate
 
-Exact head `e5494e4bcebb8c4e76e8bb74c3f5a89b6e6f5dec` passed:
+Infrastructure production acceptance does **not** activate Genesis routes. The following remains authoritative:
 
-- Genesis 6 Research provenance `30403175226`;
-- Shared Files Guard `30403175204`;
-- Glossary Contract `30403175174`;
-- Overlay Runtime Browser `30403175282`;
-- Deploy Candidate Contract `30403175166`;
-- Editorial Dateline Contract `30403175193`;
-- Native Source Contract `30403175170`;
-- Print Paper Contract `30403175164`;
-- Visual Parity Guard `30403175185`;
-- Route Registry Validators `30403175169`;
-- Runtime Interactive Audit `30403175200`.
+```text
+draft: true
+noindex: true
+sourcesRequired: true
+releaseState: blocked
+mayPublish: false
+mayRemoveNoindex: false
+```
 
-Unavailable checks: none. Failed checks on final head: none. Changed files: six. Review threads: none.
+Issue #362 remains the sole phased publication owner. A production deploy proves the repository release bytes only; it does not authorize editorial/confessional publication.
 
-## 4. Last accepted production authority
+## 4. Preserved Atlas/Gill production result
 
-Atlas/Gill repair `36cb2cd06d9a688c3ef9331c6cd478f1a87b5ec8` remains the exact imported production authority:
-
-- deploy run `30401217018`, attempt 1;
-- readiness job `90416223206`;
-- same-byte promotion job `90420385359`;
-- candidate artifact `8705240254`;
-- Pages artifact `8705247717`;
-- generic live artifact `8705250390`;
-- TTS live artifact `8705250835`;
-- downstream witness comment `5110091399`;
-- prior deploy failure issue #474 closed through newer-success transition.
-
-Its accepted product result remains intact in current source ancestry:
+The earlier Atlas/Gill repair from `36cb2cd0…` remains in current source ancestry and production:
 
 - legacy `enhancements.js` is absent from migrated Gill routes;
-- `ReaderActionsRuntime` remains sole native interaction owner;
+- `ReaderActionsRuntime` remains the sole native interaction owner;
 - observer-based deletion of `.reader-setting-btn` remains absent;
 - canonical reader settings and glossary tooltip remain guarded;
 - typed Relationship Atlas, one compiler, build-time relation projection and no-JS navigation remain canonical.
 
-## 5. Current ownership and next execution order
+## 5. Current ownership and next order
 
 Refresh before every action.
 
-1. Resolve the automatic `Deploy to GitHub Pages` run for exact source `0e5cd33e…`.
-2. Do not infer production from PR #492 source acceptance.
-3. Advance production authority only if the same run proves:
-   - one immutable candidate;
-   - same-run promotion without checkout/rebuild;
-   - successful Pages deployment;
-   - generic live contract;
-   - TTS extension contract;
-   - downstream deployment-release-witness bound to `0e5cd33e…`.
-4. Keep Genesis publication blocked under issue #362 even if infrastructure deployment succeeds; source deployment does not remove `draft/noindex`.
-5. Do not reopen or duplicate the completed Atlas/Gill lane.
+1. Do not reopen or duplicate the completed Atlas/Gill release lane.
+2. Do not treat infrastructure production acceptance as Genesis publication approval.
+3. Continue Genesis work only through issue #362 and its explicit phase boundaries.
+4. Start unrelated work only from current open owners and the canonical bug matrix.
 
 ## 6. CI semantics and hygiene
 
-A green PR is source evidence. Readiness is candidate evidence. Same-byte Pages promotion plus generic/TTS live contracts are production evidence. The downstream ledger is the accepted release witness. Publication activation is a separate editorial/route decision.
+A green PR is source evidence. Readiness is candidate evidence. Same-byte Pages promotion plus generic/TTS live contracts are production evidence. The downstream ledger is the accepted release witness. Publication activation is a separate decision.
 
 - `PROJECT_REGISTRY.md` remains static;
 - this file owns current source/deploy truth;
 - `verified/MASTER_BUG_MATRIX.md` owns canonical bug rows, severity and counters;
 - `reverify/` owns immutable head/release witnesses;
 - temporary workflows and transport branches never become product owners;
-- the Atlas production reverify remains valid historical production evidence even while source main advances.
+- no matrix counter/status change is justified by this deployment-only reconciliation.
