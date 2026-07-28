@@ -2,112 +2,115 @@
 
 > **Current operational truth only.** Historical prompts are archived. Bug status and counters belong to `verified/MASTER_BUG_MATRIX.md`; this file owns the exact current source/deploy boundary, shared-surface ownership and next execution order.
 
-**Source main:** `36cb2cd06d9a688c3ef9331c6cd478f1a87b5ec8`  
-**Exact production authority:** ✅ `36cb2cd06d9a688c3ef9331c6cd478f1a87b5ec8`  
-**Current source deployment status:** ✅ source and production authority are the same exact SHA.  
-**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-28_36cb2cd0_atlas-release-production.md`
+**Source main:** `0e5cd33e02de8c424bfaab4127e4463851bfeb1e`  
+**Exact imported production authority:** `36cb2cd06d9a688c3ef9331c6cd478f1a87b5ec8`  
+**Current source deployment status:** 🟡 source is newer than imported production authority; the automatic Pages/live/ledger result for `0e5cd33e…` is not yet accepted.  
+**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-28_0e5cd33e_genesis6-lxv-lxvi-source.md`  
+**Last exact production reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-28_36cb2cd0_atlas-release-production.md`
 
-## 1. Exact boundary
+## 1. Exact current boundary
 
-- source PR #485 squash-merged as `36cb2cd06d9a688c3ef9331c6cd478f1a87b5ec8`;
-- its final PR head was `e0b899e1c41f1401d9118433ca12013b97f92d20`;
-- all 14 required exact-head workflows completed successfully on that unchanged head;
-- automatic deploy run `30401217018`, attempt 1, completed successfully for exact `36cb2cd0…`;
-- readiness job `90416223206` built and validated one immutable candidate;
-- promotion job `90420385359` downloaded and published that same-run candidate without checkout, install or rebuild;
-- generic live and TTS live acceptance passed;
-- downstream `deployment-release-witness` comment `5110091399` bound the same release/control-plane SHA and artifacts;
-- machine-owned failure issue #474 closed through its newer-success transition.
+- source PR #492 merged as `0e5cd33e02de8c424bfaab4127e4463851bfeb1e`;
+- exact accepted PR head: `e5494e4bcebb8c4e76e8bb74c3f5a89b6e6f5dec`;
+- PR #492 used current Atlas/Gill production source `36cb2cd0…` as its fresh base and preserved that lane without overlap;
+- all eleven required pull-request workflows passed on the unchanged PR head;
+- the merge changes six Genesis 6 authority/content files only;
+- production evidence was explicitly not claimed by PR #492;
+- publication remains blocked: `draft: true`, `noindex: true`, `releaseState: blocked`, `mayPublish: false`, `mayRemoveNoindex: false`;
+- issue #362 remains the sole phased Genesis 6 activation owner.
 
-Candidate identity:
+Until a successful exact-main deployment for `0e5cd33e…` proves immutable candidate identity, same-byte Pages promotion, generic live acceptance, TTS live acceptance and downstream ledger recording, production authority remains the already accepted `36cb2cd0…`.
 
-- candidate ID: `36cb2cd06d9a688c3ef9331c6cd478f1a87b5ec8:30401217018-1`;
-- tree digest: `sha256:05eed9d5a59d95a9811f00df0a40465932471ad1ddc5cddae7d270d1716c2833`;
-- files: `1134`;
-- bytes: `80741035`;
-- route profiles: `84`;
-- HTML files: `83`;
-- sitemap routes: `66`;
-- Pagefind files: `95`.
+## 2. Genesis source result
 
-Transport and live evidence:
+PR #492 records two qualified reader-authority decisions without public activation:
 
-- candidate artifact `8705240254`, digest `sha256:202ed0c6a78898a77d3d508a7f1528350013c5cd1f2a004e3997949ed3221e35`;
-- Pages artifact `8705247717`, digest `sha256:1553563b26c0b934c3c4c237f1d1f551dc149c70ba8bf6bd6365b2536e3e54f8`;
-- generic live artifact `8705250390`, digest `sha256:23f31f509eec30bd6c83592edca408867456455b7ca8904984666cb3619d6ed8`;
-- TTS live artifact `8705250835`, digest `sha256:68a3068b4965ca642c9cef1a09779b631f2166389185816231d93ee8cd50878a`.
+### LXV — 1 Enoch 70–71
 
-## 2. Closed repair result
+- modern critical 71:14 retains direct second-person address to Enoch;
+- Charles's third-person wording is treated as editorial emendation/history of interpretation rather than neutral manuscript default;
+- composition of 70–71 and total figure identity remain qualified;
+- reader status: `DIRECT-ADDRESS-ESTABLISHED / COMPOSITION-AND-IDENTITY-QUALIFIED`.
 
-### Gill reader ownership
+### LXVI — Astronomical Book plurality
 
-- the legacy `enhancements.js` owner is absent on migrated Gill routes;
-- `ReaderActionsRuntime` is the sole native article-interaction owner;
-- the global `.reader-setting-btn` MutationObserver and post-render deletion patch are absent;
-- canonical `Шире`, `Сепия`, theme and line-height controls are preserved;
-- the historical-context glossary tooltip passes the full runtime audit;
-- the permanent source guard rejects legacy/native coexistence and observer-based cleanup.
+- `4Q208` and `4Q209` witness genuine scheme-level textual plurality within one compositional tradition;
+- `4Q208–4Q211` are multiple physical manuscripts, not one immutable Aramaic text;
+- reconstruction direction and joins remain qualified;
+- reader status: `TEXTUAL-PLURALITY-ESTABLISHED / EVOLUTION-MODEL-QUALIFIED`.
 
-### Relationship Atlas and release boundary
+Preserved source invariants:
 
-- typed relation data, one compiler and build-time article projection remain canonical;
-- series navigation remains owned by the series engine;
-- Atlas no-JS mode has one page heading and a complete server-rendered navigation list;
-- private relation diagnostics remain outside public `dist`;
-- Route Registry and Print Paper explicitly checkout the exact PR source SHA;
-- no article text, route state or Genesis publication state changed.
+- Research authority: `FedorMilovanov/Research@753e09027d4a33af5658e1221ef8371e9dfae22`;
+- extension manifest digest: `sha256:947e7b86705fd1729f86f0f99c60afee9b850f794d439729698be7d2f1edaaf7`;
+- 6A remains 27 claim-level footnote groups;
+- 6B remains 26 claim-level footnote groups;
+- six-part reading total reconciles to 170 minutes;
+- no manuscript image or protected apparatus reproduction was introduced.
 
-## 3. Exact-head source evidence
+## 3. Exact-head source evidence for PR #492
 
-Final source head `e0b899e1c41f1401d9118433ca12013b97f92d20` passed:
+Exact head `e5494e4bcebb8c4e76e8bb74c3f5a89b6e6f5dec` passed:
 
-- Shared Files Guard `30400246023`;
-- Visual Parity Guard `30400245977`;
-- Print Paper Contract `30400246011`;
-- Gill Final Source Reconciliation `30400245842`;
-- Branch Hygiene Report `30400245776`;
-- Glossary Contract `30400245877`;
-- Overlay Runtime Browser `30400245676`;
-- Deploy Candidate Contract `30400245760`;
-- Editorial Dateline Contract `30400245617`;
-- Native Source Contract `30400245673`;
-- Route Registry Validators `30400245833`;
-- Gill pre-v16 submenu contract `30400245615`;
-- Source Authority Contract `30400245699`;
-- Runtime Interactive Audit `30400245645`.
+- Genesis 6 Research provenance `30403175226`;
+- Shared Files Guard `30403175204`;
+- Glossary Contract `30403175174`;
+- Overlay Runtime Browser `30403175282`;
+- Deploy Candidate Contract `30403175166`;
+- Editorial Dateline Contract `30403175193`;
+- Native Source Contract `30403175170`;
+- Print Paper Contract `30403175164`;
+- Visual Parity Guard `30403175185`;
+- Route Registry Validators `30403175169`;
+- Runtime Interactive Audit `30403175200`.
 
-Review threads: `0`. Submitted reviews: `0`. Merge used expected-head protection.
+Unavailable checks: none. Failed checks on final head: none. Changed files: six. Review threads: none.
 
-## 4. Current ownership and next order
+## 4. Last accepted production authority
+
+Atlas/Gill repair `36cb2cd06d9a688c3ef9331c6cd478f1a87b5ec8` remains the exact imported production authority:
+
+- deploy run `30401217018`, attempt 1;
+- readiness job `90416223206`;
+- same-byte promotion job `90420385359`;
+- candidate artifact `8705240254`;
+- Pages artifact `8705247717`;
+- generic live artifact `8705250390`;
+- TTS live artifact `8705250835`;
+- downstream witness comment `5110091399`;
+- prior deploy failure issue #474 closed through newer-success transition.
+
+Its accepted product result remains intact in current source ancestry:
+
+- legacy `enhancements.js` is absent from migrated Gill routes;
+- `ReaderActionsRuntime` remains sole native interaction owner;
+- observer-based deletion of `.reader-setting-btn` remains absent;
+- canonical reader settings and glossary tooltip remain guarded;
+- typed Relationship Atlas, one compiler, build-time relation projection and no-JS navigation remain canonical.
+
+## 5. Current ownership and next execution order
 
 Refresh before every action.
 
-- no source PR remains open for the Atlas/Gill production-repair lane;
-- issue #474 is closed completed by exact newer-success evidence;
-- issue #362 remains the sole phased Genesis 6 activation owner; `draft-noindex` is unchanged;
-- unrelated content, route and control-plane lanes must not be folded into the completed Atlas repair;
-- next work resumes only from current open owners and the canonical matrix, not from the superseded PR #425 or historical branch names.
+1. Resolve the automatic `Deploy to GitHub Pages` run for exact source `0e5cd33e…`.
+2. Do not infer production from PR #492 source acceptance.
+3. Advance production authority only if the same run proves:
+   - one immutable candidate;
+   - same-run promotion without checkout/rebuild;
+   - successful Pages deployment;
+   - generic live contract;
+   - TTS extension contract;
+   - downstream deployment-release-witness bound to `0e5cd33e…`.
+4. Keep Genesis publication blocked under issue #362 even if infrastructure deployment succeeds; source deployment does not remove `draft/noindex`.
+5. Do not reopen or duplicate the completed Atlas/Gill lane.
 
-## 5. CI semantics
+## 6. CI semantics and hygiene
 
-Classify red states before changing code:
-
-1. product/content hard failure;
-2. protective guard failure;
-3. cancelled/superseded run;
-4. post-publish projection failure;
-5. temporary evidence-carrier failure;
-6. stale lifecycle alert;
-7. expected fail-closed network run with uploaded diagnostic evidence.
-
-A green PR is source evidence. Readiness is candidate evidence. Same-byte Pages promotion plus generic/TTS live contracts are production evidence. The downstream ledger is the accepted release witness. These authorities are not interchangeable.
-
-## 6. Data hygiene
+A green PR is source evidence. Readiness is candidate evidence. Same-byte Pages promotion plus generic/TTS live contracts are production evidence. The downstream ledger is the accepted release witness. Publication activation is a separate editorial/route decision.
 
 - `PROJECT_REGISTRY.md` remains static;
-- this file owns current execution truth;
-- `verified/MASTER_BUG_MATRIX.md` owns statuses and counters;
-- `reverify/` owns immutable current-head witnesses;
-- `incoming/` owns raw evidence;
+- this file owns current source/deploy truth;
+- `verified/MASTER_BUG_MATRIX.md` owns canonical bug rows, severity and counters;
+- `reverify/` owns immutable head/release witnesses;
 - temporary workflows and transport branches never become product owners;
-- the historical Relationship Atlas reference remains source evidence and is not operational SSOT.
+- the Atlas production reverify remains valid historical production evidence even while source main advances.
