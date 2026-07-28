@@ -9,7 +9,7 @@
 - Research repository: `FedorMilovanov/Research`;
 - final Research cleanup head: `753e09027d4a33af5659ce1221ef8371e9dfae22`;
 - original site-ref inventory: 41 refs in `GENESIS6_ENOCH_REMOTE_REF_RECOVERY_LEDGER_2026-07-28.md`;
-- divergent-content authority: `GENESIS6_ENOCH_DIVERGENT_HISTORY_RETROSPECTIVE_CONTENT_AUDIT_2026-07-28.md` and forensic anchor `1c4fc6d701f4fa7925a9d51c550fb56f6fb46a5a`.
+- divergent-content authority: `projects/gb-is-my-strength/references/GENESIS6_ENOCH_DIVERGENT_RETROSPECTIVE_CONTENT_AUDIT_2026-07-28.md` and forensic anchor `1c4fc6d701f4fa7925a9d51c550fb56f6fb46a5a`.
 
 ## Useful content preservation
 
