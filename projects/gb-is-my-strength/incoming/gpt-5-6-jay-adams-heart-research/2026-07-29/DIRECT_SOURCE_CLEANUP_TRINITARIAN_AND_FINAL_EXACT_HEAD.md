@@ -11,9 +11,9 @@
 ### Research
 
 - PR: `FedorMilovanov/Research#38`
-- current authority head: `8f3438cb3162f7f81debdc682532332783741460`
+- current authority head: `3418a0b227a93e7b9a8b714ecc94692874674b8f`
 - current authority file: `СЕРИЯ СЕРДЦЕ/71_V84H_DIRECT_SOURCE_CLEANUP_TRINITARIAN_AND_FINAL_EXACT_HEAD.md`
-- branch before this AuditRepo closure: `35 ahead / 0 behind main`
+- branch before this AuditRepo correction: `36 ahead / 0 behind main`
 - disposition: direct source cleanup closed; ready for owner review; keep draft
 
 ### Site
@@ -24,11 +24,11 @@
 - state: `16 ahead / 0 behind main`
 - mergeable, draft
 - changed surface: exactly two canonical Astro files
-- exact diff: `+99 / -44`
+- exact diff: `+94 / -39`
 
 ### AuditRepo
 
-This file becomes the current governed closure after its commit. Earlier files retain historical findings, but embedded older Research/Site SHA and incomplete cleanup statuses are superseded.
+This file is the current governed closure after its correction commit. Earlier files retain historical findings, but embedded older Research/Site SHA, inaccurate diff counters and incomplete cleanup statuses are superseded.
 
 No merge, deployment or production witness is claimed.
 
