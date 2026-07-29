@@ -91,7 +91,7 @@ Site language must include at least:
 - psychosis;
 - mania with major loss of judgment;
 - threat to others;
-- severe self-neglect / inability to provide basic care.
+- severe neglect of basic needs or inability to provide basic self-care.
 
 This remains a referral boundary, not a public self-triage algorithm.
 
@@ -220,7 +220,7 @@ PASS only if the site diff remains within the declared canonical Astro files unl
 
 - Research V84C: written on Research draft branch.
 - Audit intake: written here; no canonical counters changed.
-- Site PR #498: requires one further bounded editorial commit and new exact-head CI.
-- Existing green CI on prior head must not be reused as evidence for a moved head.
+- Site PR #498: bounded editorial follow-up implemented; new exact-head CI required.
+- Existing green CI on the prior head must not be reused as evidence for the moved head.
 - Production: not claimed.
 - Merge/readiness: owner decision required after final exact-head evidence.
