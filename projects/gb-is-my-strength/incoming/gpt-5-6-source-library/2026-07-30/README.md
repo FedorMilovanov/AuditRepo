@@ -7,9 +7,10 @@
 - Audited branch: `main`
 - Audited source SHA at branch creation: `97f5da7122b96d6cdedd55e4717234ac700233f4`
 - Research source commit: `eb95d0176c8f1a72dc2eaa34c32818b933d0b298`
-- Proposed source-doc branch: `research/open-source-manuscript-index-2026-07-30`
-- Proposed source-doc commit: `ee8e634b089275001f0b5f2fae4c1b8aab412bde`
-- Pull request: `FedorMilovanov/gb-is-my-strength#508`
+- Source-doc branch: `research/open-source-manuscript-index-2026-07-30`
+- Source-doc commit: `ee8e634b089275001f0b5f2fae4c1b8aab412bde`
+- Pull request: `FedorMilovanov/gb-is-my-strength#508` — **merged**
+- Squash merge SHA: `90cccf7ebf1cd3c3fe913041960cafe80104c7a1`
 - Mode: `free-intake / source-rights evidence`
 
 ## Scope
