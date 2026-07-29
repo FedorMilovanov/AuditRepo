@@ -8,6 +8,7 @@
 - Date: `2026-07-30`
 - Audited branch: `main`
 - Audited SHA: `97f5da7122b96d6cdedd55e4717234ac700233f4`
+- Documentation merge SHA: `90cccf7ebf1cd3c3fe913041960cafe80104c7a1`
 - Mode: `free-intake / source-rights evidence`
 
 ## 1. New Findings
@@ -88,14 +89,15 @@ None.
 ## 6. Repair Lane Suggestions
 
 - Keep source/rights documentation separate from route implementation.
-- Merge PR `#508` only as documentation.
+- PR `#508` was merged as documentation only.
 - Any future facsimile integration requires its own bounded lane with written permission, exact asset, credit line and production-use terms.
 
 ## 7. Reverify Notes
 
 - PR: https://github.com/FedorMilovanov/gb-is-my-strength/pull/508
+- Merge SHA: `90cccf7ebf1cd3c3fe913041960cafe80104c7a1`
 - Cross-project index: https://github.com/FedorMilovanov/Research/blob/main/SOURCE_LIBRARY/MASTER_OPEN_ACCESS_SOURCE_INDEX_2026-07-30.md
-- Result at intake time: source documentation prepared; no production asset added.
+- Result: documentation is merged; no production asset or route was changed.
 
 ## 8. Notes for Verifier
 
