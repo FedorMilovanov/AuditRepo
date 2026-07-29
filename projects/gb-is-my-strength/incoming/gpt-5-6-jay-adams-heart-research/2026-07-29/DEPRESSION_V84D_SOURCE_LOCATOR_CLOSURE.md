@@ -14,7 +14,7 @@ This intake corrects evidence classification, citation locators, historical tran
 The manual final readback found:
 
 - Wesley Center had been overstated as a full primary HTML text of Thomas Goodwin;
-- Timothy Rogers quotations lacked published internal locators;
+- three Timothy Rogers fragments lacked the full published locator set;
 - `Spirits` and `phthisis` required historically accurate Russian rendering;
 - the William Gurnall paragraph made emotional horror an infallible proof of non-consent, beyond what the primary text establishes;
 - the burn-out sentence could preserve the WHO classification boundary more exactly;
@@ -80,14 +80,32 @@ Locator:
 
 The passage begins `Do not urge your Friends under the Disease of Melancholly, to things which they cannot do` and compares them with persons whose bones are broken.
 
-### DP-042 — Rogers claim wording is lowered from generic verification to reproducible locator
+### DP-042 — Rogers warning about disease and the devil receives Advice 6 locator
+
+Site fragment:
+
+> Не приписывайте дьяволу то, что есть всего лишь действие болезни.
+
+Locator:
+
+`The Preface: Containing Several Advices to the Relations and Friends of Melancholly People`, `Advice 6 — Sixthly`.
+
+Governed meaning:
+
+- not every feeling or word of a melancholy sufferer should be attributed to Satan;
+- many manifestations may follow naturally from bodily disease;
+- this does not deny that Satan may exploit an already weakened mind for temptation.
+
+The short Russian sentence must not be used to deny every spiritual struggle in illness.
+
+### DP-043 — Rogers claim wording is lowered from generic verification to reproducible locators
 
 The site must say what was verified and where, rather than use the broad label `verified by the primary source`.
 
 Allowed:
 
 - identify the 1691 EEBO-TCP edition record;
-- publish the two translated passages with `Preface, Advice 1 / Advice 5`;
+- publish the translated fragments with `Preface, Advice 1 / Advice 5 / Advice 6`;
 - label the Russian passages as translations of historical text.
 
 Not allowed without page-image verification:
@@ -96,7 +114,7 @@ Not allowed without page-image verification:
 - facsimile-verbatim claim;
 - modern medical endorsement of the humoral explanation.
 
-### DP-043 — WHO burn-out wording is tightened
+### DP-044 — WHO burn-out wording is tightened
 
 Required formula:
 
@@ -104,11 +122,11 @@ Required formula:
 
 The reader-facing Russian sentence now preserves occupational scope, unmanaged-stress wording, non-disease classification and non-universality.
 
-### DP-044 — risk is assessed, not established by the label
+### DP-045 — risk is assessed, not established by the label
 
 The summary now says risk is evaluated within a broader professional assessment. A classification label does not by itself establish danger.
 
-### DP-045 — Gurnall supports a will/motion distinction, not an emotion-only test
+### DP-046 — Gurnall supports a will/motion distinction, not an emotion-only test
 
 Primary locator:
 
@@ -147,10 +165,11 @@ Intermediate source-integrity heads:
 - `c9554c86edddaa21c6dd3c9b293b486abeecd881` — source locators;
 - `f1698f626e5ed6be2fcdadaf46045733b3ca8f51` — Rogers historical translation;
 - `1cee7f222a0c0f8829c18f23f83e06c3a8de1eaf` — Gurnall paragraph;
+- `f3faa07cf473e581fa75db74ab4218a34a96fc89` — synchronized practical question.
 
 Final content head:
 
-`f3faa07cf473e581fa75db74ab4218a34a96fc89`
+`425396b5be73d78a4c06e82d5c9b42f6ea84a65d`
 
 Changed file only in the V84D correction:
 
@@ -178,7 +197,7 @@ PASS only if extract, full-text link, original-edition metadata and page-image v
 
 ### Gate K — quote locator
 
-PASS only if each Rogers quotation names `Preface, Advice 1` or `Preface, Advice 5`.
+PASS only if Rogers fragments name `Preface, Advice 1`, `Advice 5` and `Advice 6`.
 
 ### Gate L — historical translation and no humoral import
 
@@ -188,11 +207,18 @@ PASS only if:
 - `phthisis` is not mistranslated as pleurisy;
 - Rogers and Baxter are used for pastoral distinctions, not as current biological authority.
 
-### Gate M — burn-out scope
+### Gate M — Rogers Advice 6 boundary
+
+PASS only if the disease/devil distinction:
+
+- prevents automatic demonization of bodily symptoms;
+- does not deny every spiritual struggle or satanic temptation in illness.
+
+### Gate N — burn-out scope
 
 PASS only if burn-out remains occupational, arises from chronic workplace stress not successfully managed, is not called a medical condition and is not broadened to all exhaustion.
 
-### Gate N — Gurnall paraphrase
+### Gate O — Gurnall paraphrase
 
 PASS only if:
 
@@ -200,7 +226,7 @@ PASS only if:
 - emotional fear is not treated as an infallible verdict;
 - the explanatory paragraph and practical self-question use the same boundary.
 
-### Gate O — exact-head evidence
+### Gate P — exact-head evidence
 
 PASS only after the final site SHA completes its own workflow set. Old-head success cannot be reused.
 
