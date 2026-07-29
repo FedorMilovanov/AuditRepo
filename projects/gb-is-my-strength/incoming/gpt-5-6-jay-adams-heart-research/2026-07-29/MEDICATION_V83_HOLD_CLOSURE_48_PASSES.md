@@ -4,7 +4,7 @@
 **Проект:** серия «Тайны человеческого сердца»  
 **Тип:** content/research governance; не медицинское руководство и не canonical bug closure  
 **Статус:** `RESEARCH READY / SITE HOLD`  
-**Research authority:** `FedorMilovanov/Research`, `СЕРИЯ СЕРДЦЕ/62_V83_MEDICATION_HOLD_CLOSURE_48_NEW_PASSES.md`
+**Research authority:** `FedorMilovanov/Research`, `СЕРИЯ СЕРДЦЕ/62_V83_MEDICATION_HOLD_CLOSURE_48_NEW_PASSES.md`, branch head `34be5fc14ec1374822ecfe9b97185cc98f390eed`
 
 ---
 
