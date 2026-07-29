@@ -9,13 +9,14 @@
 
 ## 1. Correction scope
 
-This intake corrects evidence classification, citation locators and historical translation precision only. It does not reopen the theological architecture of V84B or the editorial-completeness decisions of V84C.
+This intake corrects evidence classification, citation locators, historical translation precision and one overstated paraphrase. It does not reopen the theological architecture of V84B or the editorial-completeness decisions of V84C.
 
 The manual final readback found:
 
 - Wesley Center had been overstated as a full primary HTML text of Thomas Goodwin;
 - Timothy Rogers quotations lacked published internal locators;
 - `Spirits` and `phthisis` required historically accurate Russian rendering;
+- the William Gurnall paragraph made emotional horror an infallible proof of non-consent, beyond what the primary text establishes;
 - the burn-out sentence could preserve the WHO classification boundary more exactly;
 - the summary used an imprecise risk verb.
 
@@ -107,6 +108,32 @@ The reader-facing Russian sentence now preserves occupational scope, unmanaged-s
 
 The summary now says risk is evaluated within a broader professional assessment. A classification label does not by itself establish danger.
 
+### DP-045 — Gurnall supports a will/motion distinction, not an emotion-only test
+
+Primary locator:
+
+- *The Christian in Complete Armour*;
+- `Direction VIII`;
+- `Faith's Second Quenching Power`;
+- sections on affrighting temptations and temptation to blasphemy.
+
+Supported:
+
+- enticing/alluring temptations are distinguished from affrighting temptations;
+- blasphemous motions may be injected to annoy and frighten rather than persuade;
+- Gurnall says the Christian's sin often lies more in the sad conclusion drawn from the motions — for example, `I am not a child of God` — than in the motions themselves;
+- a thought appearing in imagination is not identical with the will's consent.
+
+Not supported as an infallible rule:
+
+- emotional horror by itself proves hatred of the thought and absence of consent.
+
+Required site formula:
+
+> The presence of an injected thought is not the same as consent of the will. But fear alone is not an infallible test; ask whether the will receives and feeds the thought or rejects it, grieves over it and carries it to Christ.
+
+The practical self-question must use the same boundary and must not contradict the explanatory paragraph.
+
 ---
 
 ## 3. Site implementation
@@ -115,15 +142,17 @@ Previous exact-green head:
 
 `8202c7d8cef261ccf1d72b10a57d669a624c53b4`
 
-Intermediate source-locator head:
+Intermediate source-integrity heads:
 
-`c9554c86edddaa21c6dd3c9b293b486abeecd881`
+- `c9554c86edddaa21c6dd3c9b293b486abeecd881` — source locators;
+- `f1698f626e5ed6be2fcdadaf46045733b3ca8f51` — Rogers historical translation;
+- `1cee7f222a0c0f8829c18f23f83e06c3a8de1eaf` — Gurnall paragraph;
 
 Final content head:
 
-`f1698f626e5ed6be2fcdadaf46045733b3ca8f51`
+`f3faa07cf473e581fa75db74ab4218a34a96fc89`
 
-Changed file only:
+Changed file only in the V84D correction:
 
 `src/components/article-pilots/tma-na-serdce/TmaNaSerdceBody.astro`
 
@@ -163,7 +192,15 @@ PASS only if:
 
 PASS only if burn-out remains occupational, arises from chronic workplace stress not successfully managed, is not called a medical condition and is not broadened to all exhaustion.
 
-### Gate N — exact-head evidence
+### Gate N — Gurnall paraphrase
+
+PASS only if:
+
+- injected motion and willing consent are distinguished;
+- emotional fear is not treated as an infallible verdict;
+- the explanatory paragraph and practical self-question use the same boundary.
+
+### Gate O — exact-head evidence
 
 PASS only after the final site SHA completes its own workflow set. Old-head success cannot be reused.
 
@@ -171,8 +208,8 @@ PASS only after the final site SHA completes its own workflow set. Old-head succ
 
 ## 5. Disposition
 
-- Research V84D written and synchronized with the final translation.
+- Research V84D synchronized with Goodwin, Rogers, Gurnall and WHO corrections.
 - Audit V84D updated here.
-- Site source and translation correction committed on the existing bounded lane.
+- Site source, translation and paraphrase corrections committed on the existing bounded lane.
 - Production not claimed.
 - PRs remain draft pending exact-head verification and owner decision.
