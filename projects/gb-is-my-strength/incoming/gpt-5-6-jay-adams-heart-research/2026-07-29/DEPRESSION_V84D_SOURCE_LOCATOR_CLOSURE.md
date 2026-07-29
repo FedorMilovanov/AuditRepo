@@ -9,7 +9,7 @@
 
 ## 1. Correction scope
 
-This intake corrects evidence classification, citation locators, historical translation precision and one overstated paraphrase. It does not reopen the theological architecture of V84B or the editorial-completeness decisions of V84C.
+This intake corrects evidence classification, citation locators, historical translation precision, one overstated paraphrase and one author/editor attribution boundary. It does not reopen the theological architecture of V84B or the editorial-completeness decisions of V84C.
 
 The manual final readback found:
 
@@ -17,6 +17,7 @@ The manual final readback found:
 - three Timothy Rogers fragments lacked the full published locator set;
 - `Spirits` and `phthisis` required historically accurate Russian rendering;
 - the William Gurnall paragraph made emotional horror an infallible proof of non-consent, beyond what the primary text establishes;
+- `despair is not humility` had been phrased as Gurnall's own warning rather than an editorial theological inference from his mercy argument;
 - the burn-out sentence could preserve the WHO classification boundary more exactly;
 - the summary used an imprecise risk verb.
 
@@ -140,15 +141,19 @@ Supported:
 - enticing/alluring temptations are distinguished from affrighting temptations;
 - blasphemous motions may be injected to annoy and frighten rather than persuade;
 - Gurnall says the Christian's sin often lies more in the sad conclusion drawn from the motions — for example, `I am not a child of God` — than in the motions themselves;
-- a thought appearing in imagination is not identical with the will's consent.
+- a thought appearing in imagination is not identical with the will's consent;
+- Gurnall describes despair as misrepresenting God and shaming divine mercy.
 
-Not supported as an infallible rule:
+Not supported as an infallible rule or direct Gurnall wording:
 
-- emotional horror by itself proves hatred of the thought and absence of consent.
+- emotional horror by itself proves hatred of the thought and absence of consent;
+- `despair is not humility` as Gurnall's own concise formula.
 
-Required site formula:
+Required site formulas:
 
 > The presence of an injected thought is not the same as consent of the will. But fear alone is not an infallible test; ask whether the will receives and feeds the thought or rejects it, grieves over it and carries it to Christ.
+
+> `Despair is not humility` may be stated as an editorial theological inference from Gurnall's warning that despair slanders divine mercy; it must not be presented as his direct wording.
 
 The practical self-question must use the same boundary and must not contradict the explanatory paragraph.
 
@@ -165,11 +170,12 @@ Intermediate source-integrity heads:
 - `c9554c86edddaa21c6dd3c9b293b486abeecd881` — source locators;
 - `f1698f626e5ed6be2fcdadaf46045733b3ca8f51` — Rogers historical translation;
 - `1cee7f222a0c0f8829c18f23f83e06c3a8de1eaf` — Gurnall paragraph;
-- `f3faa07cf473e581fa75db74ab4218a34a96fc89` — synchronized practical question.
+- `f3faa07cf473e581fa75db74ab4218a34a96fc89` — synchronized practical question;
+- `425396b5be73d78a4c06e82d5c9b42f6ea84a65d` — Rogers Advice 6 locator.
 
 Final content head:
 
-`425396b5be73d78a4c06e82d5c9b42f6ea84a65d`
+`31c26fac34929cdbc75414c8eae9e607f556a49d`
 
 Changed file only in the V84D correction:
 
@@ -218,13 +224,14 @@ PASS only if the disease/devil distinction:
 
 PASS only if burn-out remains occupational, arises from chronic workplace stress not successfully managed, is not called a medical condition and is not broadened to all exhaustion.
 
-### Gate O — Gurnall paraphrase
+### Gate O — Gurnall paraphrase and inference
 
 PASS only if:
 
 - injected motion and willing consent are distinguished;
 - emotional fear is not treated as an infallible verdict;
-- the explanatory paragraph and practical self-question use the same boundary.
+- the explanatory paragraph and practical self-question use the same boundary;
+- `despair is not humility` is labeled as editorial inference rather than direct Gurnall wording.
 
 ### Gate P — exact-head evidence
 
@@ -236,6 +243,6 @@ PASS only after the final site SHA completes its own workflow set. Old-head succ
 
 - Research V84D synchronized with Goodwin, Rogers, Gurnall and WHO corrections.
 - Audit V84D updated here.
-- Site source, translation and paraphrase corrections committed on the existing bounded lane.
+- Site source, translation, paraphrase and attribution corrections committed on the existing bounded lane.
 - Production not claimed.
 - PRs remain draft pending exact-head verification and owner decision.
