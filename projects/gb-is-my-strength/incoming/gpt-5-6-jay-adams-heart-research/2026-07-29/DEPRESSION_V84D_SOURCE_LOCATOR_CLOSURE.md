@@ -9,12 +9,13 @@
 
 ## 1. Correction scope
 
-This intake corrects evidence classification and citation locators only. It does not reopen the theological architecture of V84B or the editorial-completeness decisions of V84C.
+This intake corrects evidence classification, citation locators and historical translation precision only. It does not reopen the theological architecture of V84B or the editorial-completeness decisions of V84C.
 
 The manual final readback found:
 
 - Wesley Center had been overstated as a full primary HTML text of Thomas Goodwin;
 - Timothy Rogers quotations lacked published internal locators;
+- `Spirits` and `phthisis` required historically accurate Russian rendering;
 - the burn-out sentence could preserve the WHO classification boundary more exactly;
 - the summary used an imprecise risk verb.
 
@@ -52,13 +53,23 @@ The Folger record for the 1659 edition is:
 
 Metadata supports title, author, date and edition identity. It does not substitute for textual inspection.
 
-### DP-040 — Rogers quotation 1 receives an internal locator
+### DP-040 — Rogers quotation 1 receives an internal locator and translation boundary
 
 Locator:
 
 `The Preface: Containing Several Advices to the Relations and Friends of Melancholly People`, `Advice 1 — First`.
 
 The passage begins `Melancholly seizes on the Brain and Spirits...` and contains the comparison with fever, phthisis, gout and stone.
+
+Governed Russian rendering:
+
+> Меланхолия овладевает мозгом и жизненными духами и лишает их способности к мысли или действию… Когда этот тяжкий недуг глубоко укоренился, бороться с ним так же тщетно, как бороться с горячкой или чахоткой, подагрой или каменной болезнью.
+
+Required notes:
+
+- `Spirits` means the early-modern physiological category rendered «жизненные духи», not the human soul or the Holy Spirit;
+- `phthisis` means consumption/phthisis and is rendered «чахотка», not «плеврит»;
+- the historical physiology is not imported as current medical science.
 
 ### DP-041 — Rogers quotation 2 receives an internal locator
 
@@ -88,9 +99,9 @@ Not allowed without page-image verification:
 
 Required formula:
 
-> Burn-out in ICD-11 is described as an occupational phenomenon resulting from chronic workplace stress, not as a medical condition or a name for every form of exhaustion.
+> Burn-out in ICD-11 is described as an occupational phenomenon resulting from chronic workplace stress that has not been successfully managed, not as a medical condition or a name for every form of exhaustion.
 
-The reader-facing Russian sentence now preserves occupational scope, non-disease classification and non-universality.
+The reader-facing Russian sentence now preserves occupational scope, unmanaged-stress wording, non-disease classification and non-universality.
 
 ### DP-044 — risk is assessed, not established by the label
 
@@ -104,9 +115,13 @@ Previous exact-green head:
 
 `8202c7d8cef261ccf1d72b10a57d669a624c53b4`
 
-New head:
+Intermediate source-locator head:
 
 `c9554c86edddaa21c6dd3c9b293b486abeecd881`
+
+Final content head:
+
+`f1698f626e5ed6be2fcdadaf46045733b3ca8f51`
 
 Changed file only:
 
@@ -136,24 +151,28 @@ PASS only if extract, full-text link, original-edition metadata and page-image v
 
 PASS only if each Rogers quotation names `Preface, Advice 1` or `Preface, Advice 5`.
 
-### Gate L — no humoral import
+### Gate L — historical translation and no humoral import
 
-PASS only if Rogers and Baxter are used for pastoral distinctions, not as current biological authority.
+PASS only if:
+
+- `Spirits` is not confused with soul or Holy Spirit;
+- `phthisis` is not mistranslated as pleurisy;
+- Rogers and Baxter are used for pastoral distinctions, not as current biological authority.
 
 ### Gate M — burn-out scope
 
-PASS only if burn-out remains occupational, is not called a medical condition and is not broadened to all exhaustion.
+PASS only if burn-out remains occupational, arises from chronic workplace stress not successfully managed, is not called a medical condition and is not broadened to all exhaustion.
 
 ### Gate N — exact-head evidence
 
-PASS only after the new site SHA completes its own workflow set. Old-head success cannot be reused.
+PASS only after the final site SHA completes its own workflow set. Old-head success cannot be reused.
 
 ---
 
 ## 5. Disposition
 
-- Research V84D written.
-- Audit V84D written here.
-- Site source correction committed on the existing bounded lane.
+- Research V84D written and synchronized with the final translation.
+- Audit V84D updated here.
+- Site source and translation correction committed on the existing bounded lane.
 - Production not claimed.
 - PRs remain draft pending exact-head verification and owner decision.
