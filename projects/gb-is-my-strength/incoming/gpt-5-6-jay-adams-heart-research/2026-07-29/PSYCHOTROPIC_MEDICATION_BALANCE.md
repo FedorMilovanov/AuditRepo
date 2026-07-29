@@ -3,8 +3,9 @@
 **Дата:** 2026-07-29  
 **Проект:** серия «Тайны человеческого сердца»  
 **Тип:** content/research governance; не медицинское руководство и не canonical bug closure  
-**Статус:** `RESEARCH READY / SITE HOLD`  
-**Research authority:** `FedorMilovanov/Research`, файл `СЕРИЯ СЕРДЦЕ/61_V82_PSYCHOTROPIC_MEDICATION_BODY_SOUL_BIBLICAL_COUNSELING.md`
+**Статус:** `V82 SNAPSHOT / SUPERSEDED FOR CURRENT AUTHORITY BY V83`  
+**Research authority V82:** `FedorMilovanov/Research`, файл `СЕРИЯ СЕРДЦЕ/61_V82_PSYCHOTROPIC_MEDICATION_BODY_SOUL_BIBLICAL_COUNSELING.md`  
+**Current authority:** `62_V83_MEDICATION_HOLD_CLOSURE_48_NEW_PASSES.md` + `MEDICATION_V83_HOLD_CLOSURE_48_PASSES.md`
 
 ---
 
@@ -25,12 +26,14 @@
 |---|---|---|
 | Production article | `gb-is-my-strength/articles/krajne-li-isporcheno-serdce/index.html` | site unchanged |
 | Jay Adams corpus | Research V81 | draft PR `Research#38` |
-| Medication balance corpus | Research V82 | branch `agent/jay-adams-heart-primary-sources-v81`; commit `fc2a2208fba5aace1076e2e2aea4f896a2acf2e8` |
-| Christian source corpus | 56 official conservative resources | CCEF/BCC/IBCD/ACBC/TMS/TMSJ/GCC/Faith/publishers |
-| Medical safety corpus | 10 official resources | NICE/FDA/MHRA/RCPsych; factual safety only |
+| Medication balance corpus | Research V82 | historical snapshot in the same PR |
+| Current medication deepening | Research V83 | branch `agent/jay-adams-heart-primary-sources-v81`; commit `34be5fc14ec1374822ecfe9b97185cc98f390eed` |
+| Christian source corpus V82 | 56 official conservative resources | CCEF/BCC/IBCD/ACBC/TMS/TMSJ/GCC/Faith/publishers |
+| V83 new Christian passes | 48 additional official links | status-separated full texts / abstracts / indexes / backlog |
+| Medical safety corpus | V82 10 + V83 12 passes | NICE/FDA/MHRA/RCPsych; factual safety only |
 | Site integration | future separate PR | `HOLD` |
 
-Single-writer rule: full source ledger and exact theological synthesis live in Research V82. This audit document records disposition, gates and prohibited drift.
+Single-writer rule: current source ledger and exact synthesis live in Research V83. This V82 document remains a historical governed snapshot; V83 records the newer disposition, HOLD closure and publication gates.
 
 ---
 
@@ -108,70 +111,8 @@ Pass only if:
 - abuse is not treated as a mere communication or mood problem;
 - medication discussion never delays immediate safety action.
 
-### GATE F — source integrity
-
-Pass only if:
-
-- exact quotes come from full text and exact locator;
-- TMSJ/Hodges PDF quotes remain HOLD until page-image verification;
-- official book pages are not used as proof of unseen chapters;
-- old pharmacological claims are not treated as current without M1 verification.
-
 ---
 
-## 6. Forbidden publication drift
+## 6. Supersession note
 
-Do not publish any of the following:
-
-- `all psychiatric diagnosis is fiction`;
-- `all depression is personal sin`;
-- `a faithful Christian never needs medication`;
-- `medication proves weak faith`;
-- `medication cures the heart`;
-- `a biological label removes moral/spiritual agency`;
-- `all psychotropics are addictive in the same way`;
-- `antidepressant withdrawal and benzodiazepine addiction are the same category`;
-- `stop taking the drug and trust God`;
-- `because a doctor prescribed it, no spiritual discernment is needed`;
-- `because a counselor sees a heart issue, no physician is needed`;
-- any individual diagnosis or treatment recommendation from the public article.
-
----
-
-## 7. Minimal future site change
-
-The existing Jeremiah 17 article should receive only a compact bridge in the section on darkness/illness:
-
-1. embodied-soul statement;
-2. medication may be bodily aid but not heart-renewal;
-3. neither medication use nor refusal is an automatic measure of faith;
-4. no abrupt self-directed withdrawal;
-5. link to future dedicated chapter.
-
-Do **not** insert the full 56-source ledger into the public article. Keep the full dispute and source map in Research; use selected footnotes and a further-reading module.
-
-Proposed future chapter:
-
-> **Сердце, мозг и лекарство: где кончается медицина и начинается душепопечение?**
-
----
-
-## 8. PDF status
-
-Parsed official PDFs:
-
-- Wayne Mack, `The Sufficiency of Scripture in Counseling`;
-- John MacArthur, `The Psychology Epidemic and Its Cure`;
-- Wayne Mack, `Involvement and Biblical Counseling`;
-- Charles Hodges, `Psychiatric Medication and Spiritual Depression` outline.
-
-Required screenshot attempts returned `Cache miss`. Therefore all new verbatim PDF quotations remain `HOLD`; broad title/argument mapping is allowed but page-image verification is required before publication.
-
----
-
-## 9. Final disposition
-
-- Research V82: `READY FOR THEOLOGICAL REVIEW`.
-- Medical fact layer: `READY AS SAFETY LEDGER`, not as individual advice.
-- Production integration: `HOLD` until Research PR review and selection of exact paragraphs.
-- Canonical bug counters: unchanged.
+This document preserves the V82 decision and gates. For all current source counts, PDF-HOLD disposition, side-effect/withdrawal distinctions and future article wording, use V83. Do not update V82 counters independently after V83; this avoids two competing writers for the same current facts.
