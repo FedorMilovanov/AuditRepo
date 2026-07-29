@@ -63,7 +63,7 @@ The final article source in `main` preserves:
 - no equation `depression = sin` or `depression = innocence`;
 - one Trinitarian work of redemption, real personal distinctions, real judgment and substitution, one Person/two natures and no speculative internal-metaphysical mechanism beyond revelation.
 
-The textual/theological base does not need another broad rewrite before closure.
+The textual/theological base does not need another broad rewrite before closure. Remaining work is source-of-truth, source-provenance and release cleanup.
 
 ---
 
@@ -72,6 +72,8 @@ The textual/theological base does not need another broad rewrite before closure.
 ### A-POST-001 — stale pre-merge authority
 
 The earlier final AuditRepo file still calls the PRs draft/unmerged. This new authority supersedes that status without rewriting historical evidence.
+
+Resolution path: Research PR `#39` and AuditRepo PR `#102`.
 
 ### A-POST-002 — tma TOC mismatch
 
@@ -87,14 +89,14 @@ Stale labels:
 - `#ne-odin-diagnoz`;
 - `#kogda-tma-bolezn`.
 
-Required correction: source-of-truth config edit; no runtime DOM patch.
+Required correction: source-of-truth config edit; no runtime DOM patch. Governed task: Site issue `#509`.
 
 ### A-POST-003 — reading-time mismatch
 
 - article metadata: `34` minutes;
 - heart-series config: `26` minutes.
 
-Required correction: one canonical value and a validator that compares page metadata with series config.
+Required correction: one canonical value and a validator that compares page metadata with series config. Governed task: Site issue `#509`.
 
 ### A-POST-004 — invalid book-progress arithmetic
 
@@ -104,26 +106,42 @@ Additional articles are declared full articles inside four chapters, but current
 - uses the core-only `HEART_TOTAL_MIN`;
 - excludes extra-article minutes from the series total.
 
-Required correction: ordered cumulative progress across every actual article in book order.
+Required correction: ordered cumulative progress across every actual article in book order. Correct full total after `tma=34`: `727` minutes. Governed task: Site issue `#509`.
 
 ### A-POST-005 — `/hard-texts/` landing drift
 
-The landing source still contains duplicated/historical values:
+The live landing still contains duplicated/historical values:
 
 - Romans 7: `12` rather than `45` minutes;
 - `3 parts / 2 published / 53 minutes`;
 - a three-node map;
 - static structured data that does not describe the current four-chapter book and its articles.
 
-Required correction: derive reader-facing and machine-readable values from the active series/data contracts.
+Resolution path: Site PR `#510` derives the landing inventory and machine-readable parts from the active book contract, migrates the route to `surface=series / seriesShape=book`, updates the route/mobile/visual policy and ratchets regression tests.
 
 ### A-POST-006 — live release not yet witnessed
 
-At audit time the public site still served the old three-part/12-minute version while `main` held the newer source.
+At audit time the public site still served the old three-part/12-minute version while `main` held newer article source and the cleanup PR remained unmerged.
 
-This observation occurred minutes after the latest `main` push. A temporary one-line `tmp` probe commit was immediately removed, and the pages workflow uses `cancel-in-progress: true`; therefore the latest push restarted the deployment queue. The observation is a `LIVE-WITNESS-PENDING` state, not proof of a failed deploy.
+A temporary one-line `tmp` probe commit was immediately removed, and the pages workflow uses `cancel-in-progress: true`; the related pushes restarted/cancelled preceding deployment attempts. The current observation is `LIVE-WITNESS-PENDING`, not permission to bypass the deployment pipeline.
 
-Required evidence is the controlled `deploy.yml` run for the then-current `main` SHA plus its live-release artifact.
+Required evidence is the controlled `deploy.yml` run for the final `main` SHA plus its live-release artifact.
+
+### A-POST-007 — Rogers translations require scan-first provenance
+
+The current University of Michigan EEBO-TCP item correctly identifies Timothy Rogers 1691 and exposes the Preface structure used for advice locators. It also carries an explicit rights notice for redistribution of its keyboarded/encoded edition.
+
+The underlying historical book is available as a full-view British Library scan through Google Books. Therefore full source-clean closure requires:
+
+- visual verification of Preface advices `1`, `5`, `6` against the 1691 page images;
+- image/page and printed-page/signature locators where visible;
+- scan-first provenance for the three Russian direct translations;
+- Michigan retained only as structural TOC/search aid with its rights boundary respected;
+- no large English transcription import.
+
+Governed task: Site issue `#513`.
+
+This is a provenance/rights-cleanup gate, not evidence that the current Russian translations are theologically or textually false.
 
 ---
 
@@ -165,16 +183,24 @@ These gates do not block the current article because held claims were not import
 
 Full closure requires all of the following:
 
-1. current Research and Audit post-merge authorities merged;
-2. tma TOC repaired to exact H2 order/labels;
-3. tma reading time unified at the canonical value;
-4. full-book cumulative progress corrected;
-5. `/hard-texts/` counters, core times, map and structured data derived from current contracts;
-6. exact-head Site cleanup checks green;
-7. Site cleanup merged;
-8. controlled deploy completed for the final `main` SHA;
-9. live release evidence read and matched to that SHA;
-10. live checks confirm route, canonical, current text, repaired TOC, correct times, current series chrome, sitemap and Pagefind.
+1. Research PR `#39` and AuditRepo PR `#102` merged after owner approval;
+2. Site PR `#510` exact-head checks and artifact readback green, then merged;
+3. Site issue `#509` completed:
+   - exact tma H2/TOC parity;
+   - `34` canonical minutes;
+   - cumulative progress across every book page;
+   - total `727`;
+   - automated parity/progress contract;
+4. Site issue `#513` completed:
+   - Rogers advices `1`, `5`, `6` visually verified from open 1691 scan;
+   - page-image locators recorded;
+   - reader-facing source block changed to scan-first provenance;
+5. final exact-head Site checks green;
+6. final Site cleanup merged;
+7. controlled deploy completed for the final `main` SHA;
+8. live release evidence read and matched to that SHA;
+9. live checks confirm route, canonical, current text, repaired TOC, `34` minutes, `727` total, four-chapter chrome, sitemap, Pagefind and scan-first Rogers source;
+10. obsolete merged feature/maintenance branches deleted only after all dependent PRs close.
 
 ---
 
@@ -186,7 +212,11 @@ Full closure requires all of the following:
 
 `PRE-MERGE WORKFLOW STATUS SUPERSEDED`
 
-`SITE SOURCE-OF-TRUTH CLEANUP REQUIRED`
+`LANDING CLEANUP IN SITE PR #510`
+
+`TOC / TIME / PROGRESS TASK OPEN AS #509`
+
+`ROGERS SCAN-FIRST PROVENANCE TASK OPEN AS #513`
 
 `LIVE RELEASE WITNESS REQUIRED`
 
