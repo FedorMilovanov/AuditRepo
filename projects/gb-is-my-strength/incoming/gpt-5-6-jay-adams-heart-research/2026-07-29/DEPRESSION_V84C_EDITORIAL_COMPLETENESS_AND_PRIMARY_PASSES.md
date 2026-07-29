@@ -1,7 +1,7 @@
 # DEPRESSION V84C — EDITORIAL COMPLETENESS AND 20+ PRIMARY PASSES
 
 **Date:** 2026-07-29  
-**Status:** RESEARCH CORRECTION READY / SITE FOLLOW-UP REQUIRED / PRODUCTION NOT CLAIMED  
+**Status:** RESEARCH CORRECTION READY / SITE FOLLOW-UP IMPLEMENTED / PRODUCTION NOT CLAIMED  
 **Authority:** Research `СЕРИЯ СЕРДЦЕ/66_V84C_EDITORIAL_COMPLETENESS_20PLUS_PRIMARY_PASSES.md`  
 **Scope:** depression / spiritual darkness / guilt / body / burnout / grief / crisis within heart-series editorial lane
 
@@ -28,9 +28,9 @@ Medical language may describe and protect. It may not define guilt, regeneration
 
 ### DP-027 — David omission is a material balance defect
 
-The current site draft strongly protects sufferers from automatic moral accusation but lacks a separate reader-facing case where Scripture explicitly relates darkness to real hidden guilt.
+The earlier site draft strongly protected sufferers from automatic moral accusation but lacked a separate reader-facing case where Scripture explicitly relates darkness to real hidden guilt.
 
-Required insertion:
+Implemented insertion:
 
 - Psalm 31/32 — silence, wasting bones, groaning, heavy hand;
 - Psalm 37/38 — sin as burden, bodily and inward distress;
@@ -51,13 +51,13 @@ A diagnostic label/category does not by itself establish:
 - substances/medications;
 - relational and social context.
 
-NICE requires a comprehensive assessment not based merely on symptom count.
+NICE requires a comprehensive assessment not based merely on symptom count. The site summary and body now distinguish classification from broader professional assessment.
 
 ### DP-029 — Goodwin supplies a missing epistemic guardrail
 
 In *A Child of Light Walking in Darkness*, Isaiah 50 darkness is not known sinful practice or ignorance. A real child of God may lack felt testimony of divine favour and may misread promises, providence and correction through fear, conscience and accusation.
 
-Governed inference:
+Implemented inference:
 
 > The intensity and subjective certainty of self-condemnation do not authenticate it as God's verdict.
 
@@ -79,11 +79,11 @@ Forbidden inferences:
 - ICD-11 burnout is an occupational phenomenon, not a universal medical condition;
 - depressive disorder is a clinical category requiring assessment.
 
-Overlap does not erase distinction.
+The main article now gives a concise distinction and links to the dedicated suffering article rather than duplicating it.
 
 ### DP-032 — crisis wording was too narrow
 
-Site language must include at least:
+Site language now includes:
 
 - suicidal intent or plan;
 - recent attempt;
@@ -91,7 +91,7 @@ Site language must include at least:
 - psychosis;
 - mania with major loss of judgment;
 - threat to others;
-- severe neglect of basic needs or inability to provide basic self-care.
+- severe neglect of basic needs / self-care boundary.
 
 This remains a referral boundary, not a public self-triage algorithm.
 
@@ -111,7 +111,7 @@ Book edition remains `BOOK-FULLTEXT-HOLD`; official sermon pages are a separate 
 
 ### DP-034 — confession must proceed to cleansing and Gospel assurance
 
-A David section may not end with exposure of guilt. It must continue through Psalm 51 to cleansing, renewed heart and restored joy.
+The David section does not end with exposure of guilt. It continues through Psalm 50/51 to cleansing, renewed heart and restored joy.
 
 Forbidden drift:
 
@@ -125,11 +125,11 @@ Forbidden drift:
 
 `serdce-pod-skorbyu` already carries external loss, Job, providence and lament.
 
-Required site action: cross-link and concise distinction, not wholesale duplication.
+Implemented action: cross-links and concise distinctions, not wholesale duplication.
 
-### DP-036 — final editorial insertion set is bounded
+### DP-036 — final editorial insertion set remained bounded
 
-Permitted in current site PR:
+Implemented in current site PR:
 
 1. diagnosis vs assessment refinement;
 2. Goodwin epistemic paragraph;
@@ -218,9 +218,9 @@ PASS only if the site diff remains within the declared canonical Astro files unl
 
 ## 6. Current disposition
 
-- Research V84C: written on Research draft branch.
-- Audit intake: written here; no canonical counters changed.
-- Site PR #498: bounded editorial follow-up implemented; new exact-head CI required.
-- Existing green CI on the prior head must not be reused as evidence for the moved head.
+- Research V84C: written and refined on Research draft branch.
+- Audit intake: updated here; no canonical counters changed.
+- Site PR #498: bounded editorial follow-up implemented on two canonical Astro files.
+- New exact-head CI is required; prior-head green evidence cannot be reused.
 - Production: not claimed.
 - Merge/readiness: owner decision required after final exact-head evidence.
