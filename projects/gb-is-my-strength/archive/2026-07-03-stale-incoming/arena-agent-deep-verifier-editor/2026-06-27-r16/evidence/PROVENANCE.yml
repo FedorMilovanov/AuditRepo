@@ -1,0 +1,57 @@
+schema_version: 1
+reviewed_at: 2026-07-30
+archive_context:
+  project: "gb-is-my-strength"
+  run_or_batch: "arena-agent-deep-verifier-editor / 2026-06-27-r16"
+  archived_under: "2026-07-03-stale-incoming"
+  origin_class: "project-local QA evidence screenshots"
+  capture_tool: "UNRESOLVED"
+  capture_url_or_route: "UNRESOLVED"
+  captured_by: "UNRESOLVED"
+  rights_status: "INTERNAL-AUDIT-EVIDENCE"
+  public_source_use: false
+  notes: >-
+    These PNG files document visual QA findings in an archived agent run. They are
+    not archival historical images and are not evidence for article claims. The
+    original browser URL, viewport, commit and capture tool were not preserved
+    beside the files and must not be invented.
+
+assets:
+  - path: "gill-rail-thumbnails.png"
+    size_bytes: 17049
+    sha256: "e4146446c0cdac128cba94f159ce88a47ac1743487ef5f2380aa049b6db5a956"
+    inferred_subject_from_filename: "Gill rail thumbnail presentation"
+    evidence_purpose: "visual regression / layout review"
+    capture_time: "UNRESOLVED (directory context: 2026-06-27-r16)"
+    route_or_url: "UNRESOLVED"
+
+  - path: "hermeneutics-position.png"
+    size_bytes: 291710
+    sha256: "21b20f8baaf1130012d78de08b9652ea9b037f3a17f6fb0771fbcbea41357062"
+    inferred_subject_from_filename: "hermeneutics component positioning"
+    evidence_purpose: "visual regression / position review"
+    capture_time: "UNRESOLVED (directory context: 2026-06-27-r16)"
+    route_or_url: "UNRESOLVED"
+
+  - path: "gill-part1-vertical-text-bug.png"
+    size_bytes: 103207
+    sha256: "134d9e13796116d2b857fed18a102b53579b0c33dfe35092d020e969b083ba7a"
+    inferred_subject_from_filename: "Gill part 1 vertical-text bug"
+    evidence_purpose: "bug evidence"
+    capture_time: "UNRESOLVED (directory context: 2026-06-27-r16)"
+    route_or_url: "UNRESOLVED"
+
+usage_boundary:
+  allowed:
+    - "internal audit history"
+    - "visual regression comparison"
+    - "explaining why an archived issue was opened or closed"
+  blocked:
+    - "using the screenshots as historical or theological source material"
+    - "claiming a specific production URL or commit without recovered evidence"
+    - "reusing third-party visible content outside the audit context without review"
+
+recovery_tasks:
+  - "inspect the r16 report/log for route, viewport and commit"
+  - "record browser/capture tool if found"
+  - "link each screenshot to the exact bug or audit row"
