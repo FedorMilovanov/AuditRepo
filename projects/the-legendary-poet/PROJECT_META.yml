@@ -1,0 +1,14 @@
+project_id: the-legendary-poet
+display_name: The Legendary Poet
+source_repo: FedorMilovanov/TheLegendaryPoet
+default_branch: main
+production_url: https://thelegendarypoet.ru
+audit_repo_project_path: projects/the-legendary-poet
+
+rules:
+  raw_reports_path: incoming/<agent>/<date>/
+  working_path: working/
+  verification_path: verification/
+  verified_path: verified/
+  repairs_path: repairs/
+  reverify_path: reverify/
