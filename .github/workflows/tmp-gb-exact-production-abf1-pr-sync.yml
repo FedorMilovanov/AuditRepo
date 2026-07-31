@@ -32,6 +32,8 @@ jobs:
         run: |
           set -euo pipefail
           python3 - <<'PY'
+          import sys
+          sys.path.insert(0, 'scripts')
           from check_matrix_coverage import generate_reconciliation_artifact
           generate_reconciliation_artifact()
           PY
