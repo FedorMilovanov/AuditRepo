@@ -58,6 +58,12 @@ Public current pointer and immutable manifest were independently read back and m
 | sitemap | `sha256:e205cf8312508f5029efba5c15e00146f198fc025fa399e62f0fc9cf2ca476e6` |
 | feed | `sha256:a42fd83b0e9a1b1ce1d24a93a61f7f2888b08d8a5aa0dc6e3a4b2d650c7f032e` |
 
+## AuditRepo materialization evidence
+
+- AuditRepo Validate run `30672897788` independently generated the authority documents after reading the source branch, ledger, public pointer and immutable manifest; artifact `8809406373`, digest `sha256:6d5d772eae228f4c27666c39c17cea04a83c1115e28a918ed796fb398774ec23`.
+- Self-cleaning reconciliation run `30673258027` completed successfully, restored the canonical validator, removed all temporary workflow/bootstrap/generator files and produced the exact three-file PR boundary.
+- Final PR file allowlist: `NEXT_AGENT_PROMPT.md`, this reverify and `verified/MASTER_BUG_MATRIX.md` only.
+
 ## AuditRepo disposition
 
 `NEXT_AGENT_PROMPT.md`, the matrix masthead and this reverify become current authority. Historical reverifies remain immutable. Counters remain 164 closed / 192 open. PR #109 remains closed without merge.
