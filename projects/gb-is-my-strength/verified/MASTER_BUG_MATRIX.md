@@ -9,13 +9,13 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `a7b2f2b514a9745102ca88579bc0caad9a28754e` (current source main; PR #551 migrated Pixelmatch to 7.2.0 through controlled ESM loading with checkerboard:false and no baseline rewrite; Node 22.23.1/npm 10.9.8 remain inherited; premium homepage closure remains in ancestry; Astro 7 remains separately owned) |
-| Deploy | ✅ **SOURCE = PRODUCTION AUTHORITY.** Exact run `30652948250` attempt `1` built and promoted candidate `a7b2f2b514a9745102ca88579bc0caad9a28754e:30652948250-1` from `a7b2f2b514a9745102ca88579bc0caad9a28754e`; live pointer and immutable manifest match digest `sha256:4b7b6e432e26ac1bdcbc62f56907309a5c3e2eb81cbd1abdafade960b6081e2f`. Candidate artifact `8802579827` (`sha256:b4fa81fb2a95cc11b37f37fbc7655f69254f270466f221a388b13abf5f47b5ed`), generic live `8802590967` (`sha256:ec3dd58f7b584eb9b02763e2efdf0cf0029745c53ea25741f39b0cde6645abe0`), TTS `8802591444` (`sha256:4057921a4b9da740720f5aa5466a4181ef66d0d9f0ddbb760982744885baa066`). Source ledger comment `5146092545`. |
+| Source HEAD | `abf1edba190280e554dfda085bef9fb6594c896d` (current source main; PR #643 merged the Windows-safe Astro launcher over Astro 7, Gill verification, sitemap-image SEO and the Baptist book landing; physical Windows build and 16-route audit passed) |
+| Deploy | ✅ **SOURCE = PRODUCTION AUTHORITY.** Run `30669840189` attempt `1` promoted `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`; release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`; digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Candidate `8808656612` (`sha256:c7ddd49753c2a6f7c93b4962cce372a1be99d6f7871e76db6d6b9de12f4c3159`), generic live `8808666936` (`sha256:28333e7d19ebc51641f00ca086e8d77d2a92880ee546161f78a8e4d034957f10`), TTS `8808667707` (`sha256:7b8354caca07d12e682243c22487afe189413dbd5a0fbe36235c55395089aa54`). Ledger `5148074092`; Windows witness `5148209495`. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-31_a7b2f2b5_exact-production-home-closure.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_abf1edba_exact-production-windows-astro-closure.md` |
 
-⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Текущие source и exact production authority совпадают на `a7b2f2b514a9745102ca88579bc0caad9a28754e`: run `30652948250` attempt `1`, candidate `a7b2f2b514a9745102ca88579bc0caad9a28754e:30652948250-1`, live/TTS PASS. Главная `/` завершена в текущей ancestry; Pixelmatch PR #551, A04 PR #624 and Baptist research PR #625 уже влиты; Astro 7 остаётся отдельной активной lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-31_a7b2f2b5_exact-production-home-closure.md`.
+⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Текущие source и exact production authority совпадают на `abf1edba190280e554dfda085bef9fb6594c896d`: run `30669840189` attempt `1`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, generic live/TTS PASS. Astro 7, Gill verification, sitemap-image SEO, Baptist book landing и Windows-safe launcher находятся в текущей ancestry. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_abf1edba_exact-production-windows-astro-closure.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
@@ -468,7 +468,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-07-31: source = production `a7b2f2b5`; homepage/Pixelmatch exact release reconciled)
+## Статистика (обновлено 2026-08-01: source = production `abf1edba`; Windows Astro exact release reconciled)
 
 | Категория | Количество |
 |---|---|
@@ -487,6 +487,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+- **2026-08-01 — source/production convergence `abf1edba` and Windows Astro closure** — PR #643 merged the permanent launcher; exact head `12f6d54e` passed 8/8 workflows. Physical Windows comment `5148209495` records clean `abf1edba190280e554dfda085bef9fb6594c896d`, `npm ci`, 82 pages, 918 legacy files, zero drift and Baptist 16/16. Deploy `30669840189` attempt `1` promoted `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1` (`sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`); generic/TTS artifacts `8808666936` / `8808667707` passed. AuditRepo PR #110 changes authority/evidence only; counters stay 164 closed / 192 open. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_abf1edba_exact-production-windows-astro-closure.md`.
 
 - **2026-07-31 — source/production convergence `a7b2f2b5` and homepage closure reconciliation** — PR #551 migrated Pixelmatch to 7.2.0 through controlled ESM loading, preserved checkerboard:false semantics and every visual baseline, and did not change homepage components. Deploy run `30652948250` attempt `1` built candidate `a7b2f2b514a9745102ca88579bc0caad9a28754e:30652948250-1` (`sha256:4b7b6e432e26ac1bdcbc62f56907309a5c3e2eb81cbd1abdafade960b6081e2f`), promoted the same bytes and produced generic/TTS live PASS; the public pointer and immutable manifest were independently read back. AuditRepo PR #108 synchronizes `NEXT_AGENT_PROMPT`, this masthead/session log and the paired reverify; counters remain 164 closed / 192 open. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-31_a7b2f2b5_exact-production-home-closure.md`.
 
