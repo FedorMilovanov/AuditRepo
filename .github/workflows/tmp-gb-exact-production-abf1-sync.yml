@@ -1,0 +1,207 @@
+name: One-shot gb exact production reconciliation
+on:
+  push:
+    branches:
+      - agent/gb-exact-production-sync-abf1edba-20260801
+permissions:
+  contents: write
+concurrency:
+  group: gb-exact-production-abf1edba
+  cancel-in-progress: false
+jobs:
+  reconcile:
+    if: github.ref_name == 'agent/gb-exact-production-sync-abf1edba-20260801'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact audit branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: agent/gb-exact-production-sync-abf1edba-20260801
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Reconcile source, live deployment and AuditRepo SSOT
+        run: |
+          python3 - <<'PY'
+          import json,re,time,urllib.request
+          from pathlib import Path
+          S='abf1edba190280e554dfda085bef9fb6594c896d'; R='FedorMilovanov/gb-is-my-strength'
+          PR=643; REL=5148074092; WIN=5148209495; RUN=30669840189; ATT=1
+          BASE='f912bd91d21f6a20c6ded670b7c40fb05339ec9b'; APR=110
+          REV='reverify/CURRENT_HEAD_REVERIFY_2026-08-01_abf1edba_exact-production-windows-astro-closure.md'
+          def get(u,b=False):
+              if b:u+=('&' if '?' in u else '?')+f'a={time.time_ns()}'
+              q=urllib.request.Request(u,headers={'User-Agent':'AuditRepo-sync/1','Cache-Control':'no-cache'})
+              with urllib.request.urlopen(q,timeout=45) as x:return json.load(x)
+          def need(x,m):
+              if not x:raise SystemExit(m)
+          need(get(f'https://api.github.com/repos/{R}/branches/main')['commit']['sha']==S,'source main moved')
+          cs=get(f'https://api.github.com/repos/{R}/issues/{PR}/comments?per_page=100')
+          rc=next((x for x in cs if x['id']==REL),None); wc=next((x for x in cs if x['id']==WIN),None)
+          need(rc and wc,'witness comment missing')
+          need(f'deployment-release-witness:{S}:{S}:' in rc['body'],'release marker mismatch')
+          need(f'windows-physical-witness:{S}' in wc['body'],'windows marker mismatch')
+          m=re.search(r'```json\s*([\s\S]*?)\s*```',rc['body']); need(m,'ledger JSON missing')
+          L=json.loads(m.group(1)); need(L['releaseSha']==S and L['controlPlaneSha']==S,'ledger SHA mismatch')
+          D=L['deploy']; C=L['releaseCandidate']; T=C['transportArtifact']; G=L['liveWitnessArtifact']
+          X=L['extensions']['tts']; XA=X['witnessArtifact']; B=L['build']
+          need(D['event']=='push' and D['runId']==RUN and D['runAttempt']==ATT,'deploy mismatch')
+          CID=f'{S}:{RUN}-{ATT}'; need(C['candidateId']==CID,'candidate mismatch')
+          need(B['node']=='22.23.1' and B['npm']=='10.9.8' and X['result']=='PASS','toolchain/TTS mismatch')
+          P=get(L['live']['currentPointer'],True); M=get('https://gospod-bog.ru'+C['immutablePath'],True)
+          for n,o in [('pointer',P),('manifest',M)]:
+              need(o['releaseSha']==S and o['controlPlaneSha']==S,f'{n} SHA mismatch')
+              need(o['workflow']['runId']==RUN and o['workflow']['runAttempt']==ATT,f'{n} run mismatch')
+              need(o['artifact']['candidateId']==CID and o['artifact']['digest']==C['digest'],f'{n} candidate mismatch')
+          need(M['artifact']['files']==C['files'] and M['artifact']['bytes']==C['bytes'],'size mismatch')
+          for k in ('home','sitemap','feed','pagefind','serviceWorker'):need(k in M['criticalAssets'],f'missing {k}')
+          for k in ('controller','engine','noticeCss','serviceWorker'):need(k in M['tts']['assets'],f'missing tts {k}')
+          N=f'''# NEXT AGENT PROMPT — gb-is-my-strength
+
+          > **Только текущая операционная правда.** Счётчики принадлежат `verified/MASTER_BUG_MATRIX.md`.
+
+          **Source main:** `{S}`
+          **Exact production authority:** ✅ `{S}`
+          **Current reverify:** `{REV}`
+          **AuditRepo PR:** `#{APR}`
+
+          ## Точная граница
+
+          - PR #{PR} влит как `{S}`; Astro `7.1.6` / Sätteri `0.3.5`;
+          - `astro:dev/check/build/preview` используют постоянный Windows/Linux launcher `scripts/astro-cli.mjs`, без `cross-env`;
+          - Gill six-surface gate, sitemap-image SEO и книжная витрина «Баптисты России» сохранены;
+          - Node/npm: `22.23.1` / `10.9.8`;
+          - exact PR head `12f6d54e` прошёл 8/8 workflow;
+          - физический Windows witness: comment `{WIN}` — `npm ci`, 82-page build, 918 legacy files, drift 0, Baptist audit 16/16, clean tree.
+
+          ## Exact production
+
+          - run `{RUN}`, attempt `{ATT}`, push;
+          - release SHA = control-plane SHA = `{S}`;
+          - candidate `{CID}`, digest `{C['digest']}`, files/bytes `{C['files']}` / `{C['bytes']}`;
+          - immutable path `{C['immutablePath']}`;
+          - candidate artifact `{T['id']}` / `{T['digest']}`;
+          - generic live `{G['id']}` / `{G['digest']}`;
+          - TTS `{XA['id']}` / `{XA['digest']}`;
+          - release ledger comment `{REL}`.
+
+          ```text
+          source = release = control plane = current pointer = immutable manifest
+          generic live PASS = TTS live PASS
+          ```
+
+          ## Следующий порядок
+
+          1. Сохранять `{S}` как current exact source+production authority.
+          2. После следующего source merge требовать новый same-SHA deployment witness.
+          3. Не запускать устаревшие `Finalize-AuditRepo109.ps1`/PR #109 workflow.
+          4. Не возвращать старый `cross-env` autostash и не менять матричные счётчики.
+          '''
+          Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md').write_text(N,encoding='utf-8',newline='\n')
+          Q=f'''# CURRENT HEAD REVERIFY — exact production and Windows Astro closure
+
+          **Date:** 2026-08-01  
+          **Source:** `{R}` @ `{S}`  
+          **Source PR:** `#{PR}`  
+          **AuditRepo PR:** `#{APR}`  
+          **Status:** `SOURCE = RELEASE = CONTROL PLANE = LIVE = TTS`
+
+          ## Scope and source
+
+          This reconciliation changes no product code, route, content, visual baseline or bug count. PR #{PR} replaced POSIX-only Astro env assignments with a permanent Node launcher and preserved Astro 7 native Sätteri, Gill six-surface claim enforcement, sitemap-image SEO and the Baptist book landing. Exact head `12f6d54e` passed all eight required workflows.
+
+          ## Physical Windows witness
+
+          Source comment `{WIN}` records the final merged-main run:
+
+          | Check | Result |
+          |---|---|
+          | HEAD | `{S}` |
+          | PowerShell / Node / npm | `7.6.3` / `22.23.1` / `10.9.8` |
+          | `npm ci` | PASS, 483 packages |
+          | Astro 7 contract | PASS |
+          | production-like build | PASS, 82 pages |
+          | legacy copy | 918 files / 65,360 KB |
+          | HTML / sitemap images | 86 / 28 inserted, 6 synchronized, 39 unchanged |
+          | governed drift | 0 |
+          | Baptist native audit | PASS, 16 routes |
+          | final worktree | clean |
+
+          Six `hard-texts` notices only report missing immutable migration content-floor baselines; the audit exited successfully.
+
+          ## Exact immutable release
+
+          | Field | Value |
+          |---|---|
+          | release/control SHA | `{S}` |
+          | deploy | `{RUN}` attempt `{ATT}` |
+          | candidate | `{CID}` |
+          | digest | `{C['digest']}` |
+          | files / bytes | `{C['files']}` / `{C['bytes']}` |
+          | immutable path | `{C['immutablePath']}` |
+          | ledger comment | `{REL}` |
+
+          | Artifact | ID | Digest | Bytes |
+          |---|---:|---|---:|
+          | candidate | `{T['id']}` | `{T['digest']}` | `{T['bytes']}` |
+          | generic live | `{G['id']}` | `{G['digest']}` | `{G['bytes']}` |
+          | TTS live | `{XA['id']}` | `{XA['digest']}` | `{XA['bytes']}` |
+
+          The public current pointer and immutable manifest were independently read back and matched the ledger on both SHAs, run/attempt, candidate identity/digest, file/byte counts, Node/npm, five critical assets and four TTS assets.
+
+          | Build identity | Value |
+          |---|---|
+          | package-lock | `{B['packageLockDigest']}` |
+          | route registry | `{B['routeRegistryDigest']}` |
+          | profiles / HTML / sitemap | `{B['routeCounts']['profiles']}` / `{B['routeCounts']['html']}` / `{B['routeCounts']['sitemap']}` |
+          | Pagefind | `{B['pagefindDigest']}` / `{B['pagefindFiles']}` files |
+          | sitemap | `{B['sitemapDigest']}` |
+          | feed | `{B['feedDigest']}` |
+
+          ## AuditRepo disposition
+
+          `NEXT_AGENT_PROMPT.md`, the matrix masthead and this reverify now own current authority. Historical reverifies remain immutable. Counters remain 164 closed / 192 open. PR #109 remains closed without merge; temporary bootstrap/workflow files are removed before commit.
+
+          ```text
+          SOURCE MAIN: VERIFIED
+          EXACT PR CI: VERIFIED
+          PHYSICAL WINDOWS BUILD: VERIFIED
+          EXACT LIVE DEPLOYMENT: VERIFIED
+          GENERIC LIVE: PASS
+          TTS LIVE: PASS
+          AUDITREPO AUTHORITY: RECONCILED
+          ```
+          '''
+          rp=Path('projects/gb-is-my-strength')/REV; rp.parent.mkdir(parents=True,exist_ok=True); rp.write_text(Q,encoding='utf-8',newline='\n')
+          mp=Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md'); z=mp.read_text(encoding='utf-8')
+          rows={
+          r'^\| Source HEAD \|.*$':f'| Source HEAD | `{S}` (current source main; PR #{PR} merged the Windows-safe Astro launcher over Astro 7, Gill verification, sitemap-image SEO and the Baptist book landing; physical Windows build and 16-route audit passed) |',
+          r'^\| Deploy \|.*$':f'| Deploy | ✅ **SOURCE = PRODUCTION AUTHORITY.** Run `{RUN}` attempt `{ATT}` promoted `{CID}`; release/control SHA `{S}`; digest `{C["digest"]}`. Candidate `{T["id"]}` (`{T["digest"]}`), generic live `{G["id"]}` (`{G["digest"]}`), TTS `{XA["id"]}` (`{XA["digest"]}`). Ledger `{REL}`; Windows witness `{WIN}`. |',
+          r'^\| Last reverify \|.*$':f'| Last reverify | `{REV}` |'}
+          for p,v in rows.items():
+              z,n=re.subn(p,v,z,count=1,flags=re.M); need(n==1,f'row mismatch {p}')
+          w=f'⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Текущие source и exact production authority совпадают на `{S}`: run `{RUN}` attempt `{ATT}`, candidate `{CID}`, generic live/TTS PASS. Astro 7, Gill verification, sitemap-image SEO, Baptist book landing и Windows-safe launcher находятся в текущей ancestry. Evidence: `{REV}`.'
+          z,n=re.subn(r'^⚠️ Deploy-формулировки в исторических строках ниже.*$',w,z,count=1,flags=re.M);need(n==1,'warning mismatch')
+          h='## Статистика (обновлено 2026-08-01: source = production `abf1edba`; Windows Astro exact release reconciled)'
+          z,n=re.subn(r'^## Статистика \(обновлено .*?\)$',h,z,count=1,flags=re.M);need(n==1,'stats mismatch')
+          a='## Session log (append-only)\n';need(a in z,'session anchor missing')
+          e=f'''\n- **2026-08-01 — source/production convergence `abf1edba` and Windows Astro closure** — PR #{PR} merged the permanent launcher; exact head `12f6d54e` passed 8/8 workflows. Physical Windows comment `{WIN}` records clean `{S}`, `npm ci`, 82 pages, 918 legacy files, zero drift and Baptist 16/16. Deploy `{RUN}` attempt `{ATT}` promoted `{CID}` (`{C['digest']}`); generic/TTS artifacts `{G['id']}` / `{XA['id']}` passed. AuditRepo PR #{APR} changes authority/evidence only; counters stay 164 closed / 192 open. Evidence: `{REV}`.\n'''
+          z=z.replace(a,a+e,1);mp.write_text(z,encoding='utf-8',newline='\n')
+          Path('.github/workflows/tmp-gb-exact-production-abf1-sync.yml').unlink(missing_ok=True)
+          Path('.github/gb-abf1-sync-bootstrap.md').unlink(missing_ok=True)
+          need(get(f'https://api.github.com/repos/{R}/branches/main')['commit']['sha']==S,'source moved at end')
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "f912bd91d21f6a20c6ded670b7c40fb05339ec9b"
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/check_auditrepo_structure.py
+          expected="$(printf '%s\n' 'projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md' 'projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-01_abf1edba_exact-production-windows-astro-closure.md' 'projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md'|sort)"
+          actual="$(git diff --name-only origin/main --|sort)"
+          test "$actual" = "$expected"
+          git diff --check
+          git add -A
+          git commit -m "audit(gb): reconcile abf1edba exact production and Windows closure"
+          git push origin HEAD:agent/gb-exact-production-sync-abf1edba-20260801
