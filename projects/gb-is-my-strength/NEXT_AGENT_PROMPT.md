@@ -1,110 +1,70 @@
 # NEXT AGENT PROMPT — gb-is-my-strength
 
-> **Current operational truth only.** Historical prompts are archived. Bug status and counters belong to `verified/MASTER_BUG_MATRIX.md`; this file owns the exact current source/deploy boundary, shared-surface ownership and next execution order.
+> **Current operational truth only.** Bug status and counters belong to `verified/MASTER_BUG_MATRIX.md`; this file owns the exact source/deploy boundary, active ownership and next execution order.
 
-**Source main:** `0e5cd33e02de8c424bfaab4127e4463851bfeb1e`  
-**Exact production authority:** ✅ `0e5cd33e02de8c424bfaab4127e4463851bfeb1e`  
-**Current source deployment status:** ✅ source and production authority converge on the same exact SHA.  
-**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-29_0e5cd33e_genesis6-lxv-lxvi-production.md`  
-**Previous production reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-28_36cb2cd0_atlas-release-production.md`
+**Source main:** `ca8c8130a1ec7d9b12cc14e9274fe2ba855076a1`
+**Exact production authority:** ✅ `ca8c8130a1ec7d9b12cc14e9274fe2ba855076a1`
+**Current source deployment status:** ✅ source, release candidate, Pages/live pointer and TTS authority converge on the same exact SHA.
+**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-31_ca8c8130_exact-production-home-closure.md`
+**AuditRepo base used for this reconciliation:** `3213e449b41041a71c59bf581c276bb0a26d0c67`
 
 ## 1. Exact current boundary
 
-- source PR #492 merged as `0e5cd33e02de8c424bfaab4127e4463851bfeb1e`;
-- exact accepted PR head: `e5494e4bcebb8c4e76e8bb74c3f5a89b6e6f5dec`;
-- all eleven required pull-request workflows passed on that unchanged head;
-- automatic Deploy to GitHub Pages run `30404104621`, attempt 1, completed successfully for exact `0e5cd33e…`;
-- readiness job `90425509477` built and validated one immutable candidate;
-- promotion job `90428720816` downloaded and published that same-run candidate without checkout, install or rebuild;
-- generic live and TTS live acceptance passed;
-- downstream deployment-release-witness comment `5110400608` bound the same release/control-plane SHA and artifacts.
+- source PR #624 merged as `ca8c8130a1ec7d9b12cc14e9274fe2ba855076a1`;
+- Node/npm toolchain is pinned to `22.23.1` / `10.9.8` across active workflow and release surfaces;
+- deploy run `30651535224` attempt `1` built one immutable candidate and promoted the same candidate bytes;
+- release and control-plane SHAs are both `ca8c8130a1ec7d9b12cc14e9274fe2ba855076a1`;
+- candidate ID: `ca8c8130a1ec7d9b12cc14e9274fe2ba855076a1:30651535224-1`;
+- candidate tree digest: `sha256:ed25db05618922ab271e85ff883ac965388c39d4c99eb66d38051916a56c7942`;
+- candidate files / bytes: `1150` / `81201894`;
+- immutable live provenance: `/deployments/ca8c8130a1ec7d9b12cc14e9274fe2ba855076a1/30651535224-1.json`;
+- candidate transport artifact: ID `8802022675`, `sha256:629e3f7c8dc0140219406f258a401aeb3c1bae33045f70afa8a88d9c0e385ead`;
+- generic live witness artifact: ID `8802032844`, `sha256:a99e9627f1a6480cdf76924d64f53a21d075dbe1dc7af30ab02b3dded171887a`;
+- TTS live witness artifact: ID `8802033419`, `sha256:112b0235b525a77bae118ffc38533f60e863dc2f0a2c0016612c2843a3387072`;
+- source release-ledger comment: PR #624, comment `5145907989`.
 
-Candidate identity:
+## 2. Homepage closure
 
-- candidate ID: `0e5cd33e02de8c424bfaab4127e4463851bfeb1e:30404104621-1`;
-- tree digest: `sha256:696f8a4ed22f2eb1501896387684b86c9e9cf2fb87ef774cc6a2ff6097983d07`;
-- files: `1134`;
-- bytes: `80752137`;
-- route profiles: `84`;
-- HTML files: `83`;
-- sitemap routes: `66`;
-- Pagefind files: `95`.
+The premium native `/` implementation is complete in current ancestry. The accepted chain includes the premium index rebuild, responsive edge-state closure, semantic H1 dash, source-language/citation corrections, semantic drop-cap guard and the final two marginal-source corrections. Subsequent CI/toolchain commits did not redesign or replace the homepage.
 
-Transport and live evidence:
+Do not reopen the MAIN INDEX redesign without a new owner decision and current browser/visual evidence. Future Astro/Pixelmatch migrations must prove homepage parity against the existing contracts rather than treating the route as unfinished.
 
-- candidate artifact `8706215495`, digest `sha256:8e4e348485a5244d8f0a1a79375a14c9b0a1bf2cefc0a443764a8887b72111db`;
-- Pages artifact `8706224526`, digest `sha256:3f3a96fe3000e889491b56c43a0ce957b2a9c7269856935f0fb75eeec92d3bed`;
-- generic live artifact `8706227232`, digest `sha256:0d502dfb61499b3988f3830cde04567b7f45528dc1d8bab1767ba6a5078cf6ff`;
-- TTS live artifact `8706227688`, digest `sha256:e1cfc2ff3aa1645cb816dbbeb20a1f487413d3d71e3b3500638b824fa5b51c78`.
+## 3. Production evidence boundary
 
-## 2. Genesis source result
-
-PR #492 records two qualified reader-authority decisions:
-
-### LXV — 1 Enoch 70–71
-
-- modern critical 71:14 retains direct second-person address to Enoch;
-- Charles's third-person wording is treated as editorial emendation/history of interpretation rather than neutral manuscript default;
-- composition of 70–71 and total figure identity remain qualified;
-- reader status: `DIRECT-ADDRESS-ESTABLISHED / COMPOSITION-AND-IDENTITY-QUALIFIED`.
-
-### LXVI — Astronomical Book plurality
-
-- `4Q208` and `4Q209` witness genuine scheme-level textual plurality within one compositional tradition;
-- `4Q208–4Q211` are multiple physical manuscripts, not one immutable Aramaic text;
-- reconstruction direction and joins remain qualified;
-- reader status: `TEXTUAL-PLURALITY-ESTABLISHED / EVOLUTION-MODEL-QUALIFIED`.
-
-Preserved source invariants:
-
-- Research authority: `FedorMilovanov/Research@753e09027d4a33af5659ce1221ef8371e9dfae22`;
-- extension manifest digest: `sha256:947e7b86705fd1729f86f0f99c60afee9b850f794d439729698be7d2f1edaaf7`;
-- 6A remains 27 claim-level footnote groups;
-- 6B remains 26 claim-level footnote groups;
-- six-part reading total remains 170 minutes;
-- no manuscript image or protected apparatus reproduction was introduced.
-
-## 3. Publication boundary remains separate
-
-Infrastructure production acceptance does **not** activate Genesis routes. The following remains authoritative:
+The exact production claim is based on all of the following agreeing:
 
 ```text
-draft: true
-noindex: true
-sourcesRequired: true
-releaseState: blocked
-mayPublish: false
-mayRemoveNoindex: false
+source main
+= release SHA
+= control-plane SHA
+= live /deployments/current.json
+= immutable run manifest
+= generic live PASS
+= TTS live PASS
 ```
 
-Issue #362 remains the sole phased publication owner. A production deploy proves the repository release bytes only; it does not authorize editorial/confessional publication.
+A later source merge invalidates only the *current-head convergence claim* and requires a new reverify; it does not erase this immutable release witness.
 
-## 4. Preserved Atlas/Gill production result
+## 4. Active ownership — do not collide
 
-The earlier Atlas/Gill repair from `36cb2cd0…` remains in current source ancestry and production:
+Refresh before every mutation. At this reconciliation the protected independent lanes were:
 
-- legacy `enhancements.js` is absent from migrated Gill routes;
-- `ReaderActionsRuntime` remains the sole native interaction owner;
-- observer-based deletion of `.reader-setting-btn` remains absent;
-- canonical reader settings and glossary tooltip remain guarded;
-- typed Relationship Atlas, one compiler, build-time relation projection and no-JS navigation remain canonical.
+- Astro 7 phase one — PR #549;
+- Pixelmatch 7 — PR #551;
+- Baptist book/research integration — PR #625.
 
-## 5. Current ownership and next order
+Do not reset, rebase, force-push, close, delete or absorb those lanes without explicit owner handoff. The homepage closure lane and this AuditRepo synchronization do not own them.
 
-Refresh before every action.
+## 5. Cleanup disposition
 
-1. Do not reopen or duplicate the completed Atlas/Gill release lane.
-2. Do not treat infrastructure production acceptance as Genesis publication approval.
-3. Continue Genesis work only through issue #362 and its explicit phase boundaries.
-4. Start unrelated work only from current open owners and the canonical bug matrix.
+- no temporary Node migration writer/exporter/transfer file remains in source `main`;
+- this AuditRepo synchronization uses one self-deleting writer/workflow; neither may remain in the final PR diff;
+- closed diagnostic branches may be deleted only when their PR records explicitly mark them disposable or transferred and the platform operation is actually available;
+- branch deletion is housekeeping, not evidence of source or production correctness.
 
-## 6. CI semantics and hygiene
+## 6. Next order
 
-A green PR is source evidence. Readiness is candidate evidence. Same-byte Pages promotion plus generic/TTS live contracts are production evidence. The downstream ledger is the accepted release witness. Publication activation is a separate decision.
-
-- `PROJECT_REGISTRY.md` remains static;
-- this file owns current source/deploy truth;
-- `verified/MASTER_BUG_MATRIX.md` owns canonical bug rows, severity and counters;
-- `reverify/` owns immutable head/release witnesses;
-- temporary workflows and transport branches never become product owners;
-- no matrix counter/status change is justified by this deployment-only reconciliation.
+1. Preserve the exact production witness above as immutable evidence.
+2. Continue only through the named active lane owners.
+3. On the next source-main merge, create a new current-head reverify before claiming source=production again.
+4. Do not change matrix counters for this synchronization: it reconciles existing closed status and current authority, not a new bug-class transition.
