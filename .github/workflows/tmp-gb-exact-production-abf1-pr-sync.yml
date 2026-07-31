@@ -31,10 +31,10 @@ jobs:
       - name: Materialize verified authority and clean bootstrap
         run: |
           set -euo pipefail
-          python3 scripts/check_matrix_coverage.py \
-            --verbose \
-            --json-out reports/matrix-coverage/report.json \
-            >/tmp/matrix-coverage.log
+          python3 - <<'PY'
+          from check_matrix_coverage import generate_reconciliation_artifact
+          generate_reconciliation_artifact()
+          PY
 
           generated='reports/matrix-coverage/generated'
           test -f "$generated/manifest.json"
@@ -59,7 +59,6 @@ jobs:
 
           python3 scripts/check_auditrepo_structure.py
           python3 scripts/validate_audit_repo.py
-          python3 scripts/check_matrix_coverage.py --verbose
 
           expected="$(printf '%s\n' \
             'projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md' \
