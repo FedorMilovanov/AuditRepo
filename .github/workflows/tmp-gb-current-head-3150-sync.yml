@@ -1,0 +1,291 @@
+name: Temporary gb current-head exact-production sync
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tmp-gb-current-head-3150-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'agent/gb-current-head-production-sync-3150bbc-20260731'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout exact audit head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Reconcile exact source production and SSOT
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AUDIT_PR: ${{ github.event.pull_request.number }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, time, urllib.request
+          from pathlib import Path
+
+          REPO = 'FedorMilovanov/gb-is-my-strength'
+          SHA = '3150bbcbb0763f244f963a7e0555342df5362581'
+          SHORT = SHA[:8]
+          SOURCE_PR = 632
+          token = os.environ.get('GH_TOKEN', '')
+          audit_pr = os.environ['AUDIT_PR']
+          workflow = Path('.github/workflows/tmp-gb-current-head-3150-sync.yml')
+          next_path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          reverify_rel = f'projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-31_{SHORT}_exact-production-home-closure.md'
+          reverify_path = Path(reverify_rel)
+
+          def get(url, bust=False):
+              if bust:
+                  url += ('&' if '?' in url else '?') + f'audit={time.time_ns()}'
+              headers = {'Accept':'application/vnd.github+json','User-Agent':'AuditRepo-sync/3.0','Cache-Control':'no-cache'}
+              if token:
+                  headers['Authorization'] = f'Bearer {token}'
+              with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=45) as r:
+                  return json.load(r)
+
+          def need(value, message):
+              if not value:
+                  raise SystemExit(message)
+
+          need(get(f'https://api.github.com/repos/{REPO}/branches/main')['commit']['sha'] == SHA, 'source main moved before wait')
+          ledger = None
+          comment_id = None
+          for _ in range(450):
+              need(get(f'https://api.github.com/repos/{REPO}/branches/main')['commit']['sha'] == SHA, 'source main moved while waiting')
+              comments = get(f'https://api.github.com/repos/{REPO}/issues/{SOURCE_PR}/comments?per_page=100')
+              for c in reversed(comments):
+                  body = c.get('body') or ''
+                  if f'deployment-release-witness:{SHA}:{SHA}:' not in body:
+                      continue
+                  m = re.search(r'```json\s*([\s\S]*?)\s*```', body)
+                  need(m, 'ledger JSON fence missing')
+                  ledger = json.loads(m.group(1))
+                  comment_id = c['id']
+                  break
+              if ledger:
+                  break
+              time.sleep(10)
+          need(ledger, 'exact production ledger timeout')
+          need(ledger.get('schemaVersion') == 3 and ledger.get('kind') == 'deployment-release-witness', 'ledger schema/kind mismatch')
+          need(ledger.get('repository') == REPO, 'ledger repository mismatch')
+          need(ledger.get('releaseSha') == SHA and ledger.get('controlPlaneSha') == SHA, 'ledger SHA mismatch')
+
+          deploy = ledger['deploy']
+          candidate = ledger['releaseCandidate']
+          transport = candidate['transportArtifact']
+          live_artifact = ledger['liveWitnessArtifact']
+          tts = ledger['extensions']['tts']
+          tts_artifact = tts['witnessArtifact']
+          build = ledger['build']
+          run_id = int(deploy['runId'])
+          attempt = int(deploy['runAttempt'])
+          candidate_id = candidate['candidateId']
+          digest = candidate['digest']
+          immutable = candidate['immutablePath']
+          files = int(candidate['files'])
+          size = int(candidate['bytes'])
+
+          need(deploy.get('event') == 'push', 'production is not automatic push release')
+          need(candidate_id == f'{SHA}:{run_id}-{attempt}', 'candidate ID mismatch')
+          need(immutable == f'/deployments/{SHA}/{run_id}-{attempt}.json', 'immutable path mismatch')
+          need(build.get('node') == '22.23.1' and build.get('npm') == '10.9.8', 'toolchain mismatch')
+          need(tts.get('result') == 'PASS', 'TTS did not pass')
+
+          pointer = get(ledger['live']['currentPointer'], True)
+          manifest = get(f'https://gospod-bog.ru{immutable}', True)
+          for label, obj in [('pointer', pointer), ('manifest', manifest)]:
+              need(obj.get('repository') == REPO, f'{label} repository mismatch')
+              need(obj.get('releaseSha') == SHA and obj.get('controlPlaneSha') == SHA, f'{label} SHA mismatch')
+              need(obj.get('immutablePath') == immutable, f'{label} immutable path mismatch')
+              need(int(obj['workflow']['runId']) == run_id and int(obj['workflow']['runAttempt']) == attempt, f'{label} run mismatch')
+              need(obj['artifact']['candidateId'] == candidate_id and obj['artifact']['digest'] == digest, f'{label} candidate mismatch')
+          need(int(manifest['artifact']['files']) == files and int(manifest['artifact']['bytes']) == size, 'manifest file/byte mismatch')
+          need(manifest['build']['node'] == '22.23.1' and manifest['build']['npm'] == '10.9.8', 'manifest toolchain mismatch')
+          for key in ('home','sitemap','feed','pagefind','serviceWorker'):
+              need(key in manifest.get('criticalAssets', {}), f'missing critical asset {key}')
+          for key in ('controller','engine','noticeCss','serviceWorker'):
+              need(key in manifest.get('tts', {}).get('assets', {}), f'missing TTS asset {key}')
+
+          next_text = f'''# NEXT AGENT PROMPT — gb-is-my-strength
+
+> **Только текущая операционная правда.** Статусы и счётчики багов принадлежат `verified/MASTER_BUG_MATRIX.md`; этот файл владеет точной границей source/deploy, активными владельцами и следующим порядком действий.
+
+**Source main:** `{SHA}`
+**Exact production authority:** ✅ `{SHA}`
+**Current source deployment status:** ✅ source, release candidate, Pages/live pointer и TTS authority сходятся на одном точном SHA.
+**Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-31_{SHORT}_exact-production-home-closure.md`
+**Previous exact production witness:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-31_a7b2f2b5_exact-production-home-closure.md`
+
+## 1. Точная текущая граница
+
+- source PR #{SOURCE_PR} влит как `{SHA}`;
+- существующий корпус «Баптисты России» опубликован как каноническая четырёхглавная book-series;
+- сохранены исторические URL, тексты статей, справочник и общий объём 229 минут;
+- landing `/baptisty-rossii/` остаётся на текущем flat shell до отдельной landing migration;
+- Node/npm закреплены на `22.23.1` / `10.9.8`;
+- deploy run `{run_id}`, attempt `{attempt}`, собрал и продвинул один immutable candidate;
+- candidate ID: `{candidate_id}`;
+- candidate tree digest: `{digest}`;
+- candidate files / bytes: `{files}` / `{size}`;
+- immutable live provenance: `{immutable}`;
+- candidate artifact: `{transport['id']}` / `{transport['digest']}`;
+- generic live artifact: `{live_artifact['id']}` / `{live_artifact['digest']}`;
+- TTS artifact: `{tts_artifact['id']}` / `{tts_artifact['digest']}`;
+- source release-ledger comment: PR #{SOURCE_PR}, comment `{comment_id}`.
+
+## 2. Закрытие главной страницы
+
+MAIN INDEX `/` остаётся завершённым. PR #{SOURCE_PR} не изменял `src/pages/index.astro`, домашние компоненты или visual baselines. Не открывать redesign главной без нового решения владельца и свежих browser/visual evidence.
+
+## 3. Граница production evidence
+
+```text
+source main
+= release SHA
+= control-plane SHA
+= live /deployments/current.json
+= immutable run manifest
+= generic live PASS
+= TTS live PASS
+```
+
+Следующий merge в source потребует нового current-head reverify, но не отменит это immutable release-свидетельство.
+
+## 4. Активное владение — не пересекаться
+
+Единственная оставшаяся защищённая независимая source-lane — Astro 7 PR #549. Не reset, rebase, force-push, close, delete и не поглощать её без явного handoff владельца.
+
+## 5. Результат очистки
+
+- в source `main` отсутствуют временные Node/Pixelmatch/Baptist writer, exporter, bootstrap и transfer-файлы;
+- временный AuditRepo workflow удаляется до финального commit;
+- исторические raw intake и remote refs не удаляются молча;
+- branch cleanup является housekeeping, а не production evidence.
+
+## 6. Следующий порядок
+
+1. Сохранять `{SHA}` как текущую exact production authority.
+2. Оставить Astro 7 его назначенному владельцу.
+3. После следующего merge создать новый current-head reverify.
+4. Не менять счётчики матрицы из-за этой синхронизации.
+'''
+          next_path.write_text(next_text, encoding='utf-8', newline='\n')
+
+          pointer_summary = {k:pointer[k] for k in ('schemaVersion','repository','releaseSha','controlPlaneSha','immutablePath','workflow','artifact')}
+          manifest_summary = {k:manifest[k] for k in ('schemaVersion','repository','releaseSha','controlPlaneSha','immutablePath','workflow','artifact','build','criticalAssets','tts')}
+          reverify = f'''# CURRENT HEAD REVERIFY — exact production, Baptist book reader and homepage closure
+
+**Date:** 2026-07-31
+**Source repository:** `{REPO}`
+**Exact source main:** `{SHA}`
+**Source owner PR:** `#{SOURCE_PR}`
+**AuditRepo synchronization PR:** `#{audit_pr}`
+**Status:** `SOURCE = RELEASE = CONTROL PLANE = LIVE = TTS`
+
+## 1. Scope and authority
+
+This reverify closes the current-head source/deploy boundary after the Baptist book-reader publication. It does not continue Astro 7, rewrite visual baselines or reinterpret historical bug counts.
+
+## 2. Source result
+
+PR #{SOURCE_PR} composes the existing Baptist inventory as four chapters, preserves every historical route, article, reference endpaper and 229 reading minutes, changes ten article profiles from `flat` to `book`, generalizes the public-surface registry for explicit book configs, and leaves the landing shell unchanged. Its exact diff is 15 Baptist/registry files and contains no homepage or homepage-baseline file.
+
+## 3. Exact immutable release
+
+| Field | Exact value |
+|---|---|
+| Release SHA | `{SHA}` |
+| Control-plane SHA | `{SHA}` |
+| Deploy run | `{run_id}` attempt `{attempt}` |
+| Candidate ID | `{candidate_id}` |
+| Candidate tree digest | `{digest}` |
+| Candidate files | `{files}` |
+| Candidate bytes | `{size}` |
+| Immutable path | `{immutable}` |
+| Source ledger comment | `{comment_id}` on PR `#{SOURCE_PR}` |
+
+| Artifact | ID | Digest | Bytes |
+|---|---:|---|---:|
+| `{transport['name']}` | `{transport['id']}` | `{transport['digest']}` | `{transport['bytes']}` |
+| `{live_artifact['name']}` | `{live_artifact['id']}` | `{live_artifact['digest']}` | `{live_artifact['bytes']}` |
+| `{tts_artifact['name']}` | `{tts_artifact['id']}` | `{tts_artifact['digest']}` | `{tts_artifact['bytes']}` |
+
+## 4. Independent live readback
+
+Pointer and immutable manifest matched the trusted ledger on SHA, run, candidate ID/digest, file/byte counts, immutable path, Node/npm, critical assets and TTS assets.
+
+```json
+{json.dumps(pointer_summary, ensure_ascii=False, indent=2)}
+```
+
+```json
+{json.dumps(manifest_summary, ensure_ascii=False, indent=2)}
+```
+
+## 5. Ownership and cleanup
+
+MAIN INDEX remains closed. Astro 7 PR #549 remains separately owned. The temporary AuditRepo workflow deletes itself before commit. Matrix counters remain unchanged. Previous immutable reverifies remain historical evidence.
+'''
+          reverify_path.write_text(reverify, encoding='utf-8', newline='\n')
+
+          matrix = matrix_path.read_text(encoding='utf-8')
+          source_row = f'| Source HEAD | `{SHA}` (current source main; PR #{SOURCE_PR} published the existing Russian Baptist corpus as a four-chapter book-shaped reader while preserving routes, content and 229 minutes; premium homepage closure remains in ancestry; Astro 7 remains separately owned) |'
+          deploy_row = f'| Deploy | ✅ **SOURCE = PRODUCTION AUTHORITY.** Exact run `{run_id}` attempt `{attempt}` built and promoted candidate `{candidate_id}` from `{SHA}`; live pointer and immutable manifest match digest `{digest}`. Candidate artifact `{transport["id"]}` (`{transport["digest"]}`), generic live `{live_artifact["id"]}` (`{live_artifact["digest"]}`), TTS `{tts_artifact["id"]}` (`{tts_artifact["digest"]}`). Source ledger comment `{comment_id}`. |'
+          last_row = f'| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-07-31_{SHORT}_exact-production-home-closure.md` |'
+          matrix, n1 = re.subn(r'^\| Source HEAD \|.*$', source_row, matrix, count=1, flags=re.M)
+          matrix, n2 = re.subn(r'^\| Deploy \|.*$', deploy_row, matrix, count=1, flags=re.M)
+          matrix, n3 = re.subn(r'^\| Last reverify \|.*$', last_row, matrix, count=1, flags=re.M)
+          need((n1,n2,n3) == (1,1,1), f'masthead replacement mismatch {(n1,n2,n3)}')
+
+          warning = f'⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Текущие source и exact production authority совпадают на `{SHA}`: run `{run_id}` attempt `{attempt}`, candidate `{candidate_id}`, live/TTS PASS. Главная `/` завершена в текущей ancestry; Baptist book-reader PR #{SOURCE_PR} уже влит; Astro 7 остаётся отдельной активной lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-31_{SHORT}_exact-production-home-closure.md`.'
+          matrix, nw = re.subn(r'^⚠️ Deploy-формулировки в исторических строках ниже.*$', warning, matrix, count=1, flags=re.M)
+          need(nw == 1, 'warning replacement mismatch')
+
+          evidence = f'| AUDIT-PRODUCTION-EVIDENCE-IMPORT-GAP | ✅ **FIXED/EXACT PRODUCTION+LEDGER RECONCILED 2026-07-31.** Source, release, control plane, live pointer and immutable manifest converge at `{SHA}`. Run `{run_id}` attempt `{attempt}` published candidate `{candidate_id}` / `{digest}`; generic and TTS live artifacts passed and source PR #{SOURCE_PR} received machine ledger comment `{comment_id}`. A later source merge requires a new current-head witness but does not invalidate this immutable release record. | `{SHORT}` production run `{run_id}` |'
+          matrix, ne = re.subn(r'^\| AUDIT-PRODUCTION-EVIDENCE-IMPORT-GAP \|.*$', evidence, matrix, count=1, flags=re.M)
+          need(ne == 1, 'evidence row replacement mismatch')
+
+          session = f'- **2026-07-31 — source/production convergence `{SHORT}` and Baptist book-reader publication** — PR #{SOURCE_PR} published the existing Baptist corpus as a four-chapter book-shaped reader without changing homepage components or visual baselines. Exact run `{run_id}` attempt `{attempt}` published `{candidate_id}` / `{digest}`; current pointer, immutable manifest, generic live and TTS witnesses converge on `{SHA}`. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-07-31_{SHORT}_exact-production-home-closure.md`.'
+          need(matrix.count('## Session log') == 1, 'Session log heading mismatch')
+          matrix = matrix.replace('## Session log\n', f'## Session log\n\n{session}\n', 1)
+          matrix_path.write_text(matrix, encoding='utf-8', newline='\n')
+          workflow.unlink()
+          PY
+
+      - name: Validate and commit exact bounded reconciliation
+        run: |
+          git diff --check
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/check_auditrepo_structure.py
+          test ! -e .github/workflows/tmp-gb-current-head-3150-sync.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "audit(gb): reconcile Baptist book reader exact production"
+          git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
+
+      - name: Verify final exact three-file diff
+        run: |
+          git fetch --no-tags origin "+main:refs/remotes/origin/main"
+          printf '%s\n' \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-31_3150bbcb_exact-production-home-closure.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            | sort > /tmp/expected.txt
+          git diff --name-only origin/main...HEAD | sort > /tmp/actual.txt
+          diff -u /tmp/expected.txt /tmp/actual.txt
+          test ! -e .github/workflows/tmp-gb-current-head-3150-sync.yml
