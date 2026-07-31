@@ -1,0 +1,105 @@
+name: Temporary final gb audit polish
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tmp-final-gb-audit-polish-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  polish:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'agent/gb-current-head-production-sync-20260731'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout exact head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Verify source main is still the accepted production SHA
+        env:
+          EXPECTED_SHA: ca8c8130a1ec7d9b12cc14e9274fe2ba855076a1
+        run: |
+          current="$(python3 - <<'PY'
+          import json, urllib.request
+          url = 'https://api.github.com/repos/FedorMilovanov/gb-is-my-strength/branches/main'
+          req = urllib.request.Request(url, headers={'Accept':'application/vnd.github+json','User-Agent':'AuditRepo-final-polish/1.0'})
+          with urllib.request.urlopen(req, timeout=30) as response:
+              print(json.load(response)['commit']['sha'])
+          PY
+          )"
+          test "$current" = "$EXPECTED_SHA"
+
+      - name: Apply bounded text corrections and self-delete
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          next_path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          next_text = next_path.read_text(encoding='utf-8')
+          stale = '- Baptist book/research integration — PR #625.\n'
+          if next_text.count(stale) != 1:
+              raise SystemExit('expected exactly one stale Baptist active-lane line')
+          next_path.write_text(next_text.replace(stale, ''), encoding='utf-8')
+
+          rev_path = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-31_ca8c8130_exact-production-home-closure.md')
+          rev_text = rev_path.read_text(encoding='utf-8')
+          old = ('This reverify closes only the current-head source/deploy boundary and the stale AuditRepo SSOT. '
+                 'It does not modify source product code, does not continue Astro 7 or Pixelmatch work and does not '
+                 'expand the merged A04/Baptist scopes and does not reinterpret historical bug counts.')
+          new = ('This reverify closes only the current-head source/deploy boundary and the stale AuditRepo SSOT. '
+                 'It does not modify source product code, continue Astro 7 or Pixelmatch work, expand the merged '
+                 'A04/Baptist scopes, or reinterpret historical bug counts.')
+          if rev_text.count(old) != 1:
+              raise SystemExit('expected exactly one reverify grammar target')
+          rev_path.write_text(rev_text.replace(old, new), encoding='utf-8')
+
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          matrix_text = matrix_path.read_text(encoding='utf-8')
+          old_matrix = 'Astro 7 and Pixelmatch remain separate active lanes;'
+          new_matrix = 'Astro 7 и Pixelmatch остаются отдельными активными lanes;'
+          if matrix_text.count(old_matrix) != 1:
+              raise SystemExit('expected exactly one matrix language target')
+          matrix_path.write_text(matrix_text.replace(old_matrix, new_matrix), encoding='utf-8')
+
+          Path('.github/workflows/tmp-final-gb-audit-polish.yml').unlink()
+          PY
+
+      - name: Validate final repository state
+        run: |
+          git diff --check
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/check_auditrepo_structure.py
+          test ! -e .github/workflows/tmp-final-gb-audit-polish.yml
+          test ! -e .github/workflows/tmp-gb-current-head-sync.yml
+          test ! -e scripts/tmp_sync_gb_current_head.py
+
+      - name: Commit and push exact final head
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "audit(gb): polish final ownership and evidence wording"
+          git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
+
+      - name: Verify exact three-file final diff
+        run: |
+          git fetch --no-tags origin "+main:refs/remotes/origin/main"
+          printf '%s\n' \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-31_ca8c8130_exact-production-home-closure.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            | sort > /tmp/expected.txt
+          git diff --name-only origin/main...HEAD | sort > /tmp/actual.txt
+          diff -u /tmp/expected.txt /tmp/actual.txt
