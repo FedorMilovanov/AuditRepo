@@ -1,20 +1,20 @@
 # NEXT AGENT PROMPT — gb-is-my-strength
 
-> **Current operational truth only.** Bug status and counters belong to `verified/MASTER_BUG_MATRIX.md`; this file owns the exact source/deploy boundary, active ownership and next execution order.
+> **Только текущая операционная правда.** Статусы и счётчики багов принадлежат `verified/MASTER_BUG_MATRIX.md`; этот файл владеет точной границей source/deploy, активными владельцами и следующим порядком действий.
 
 **Source main:** `a7b2f2b514a9745102ca88579bc0caad9a28754e`
 **Exact production authority:** ✅ `a7b2f2b514a9745102ca88579bc0caad9a28754e`
-**Current source deployment status:** ✅ source, release candidate, Pages/live pointer and TTS authority converge on the same exact SHA.
+**Current source deployment status:** ✅ source, release candidate, Pages/live pointer и TTS authority сходятся на одном точном SHA.
 **Current source reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-07-31_a7b2f2b5_exact-production-home-closure.md`
 **AuditRepo base used for this reconciliation:** `3213e449b41041a71c59bf581c276bb0a26d0c67`
 
-## 1. Exact current boundary
+## 1. Точная текущая граница
 
-- source PR #551 merged as `a7b2f2b514a9745102ca88579bc0caad9a28754e`;
-- Pixelmatch is `7.2.0`, loaded through the controlled ESM path with `checkerboard: false`;
-- Node/npm remain pinned to `22.23.1` / `10.9.8` across active workflow and release surfaces;
-- deploy run `30652948250` attempt `1` built one immutable candidate and promoted the same candidate bytes;
-- release and control-plane SHAs are both `a7b2f2b514a9745102ca88579bc0caad9a28754e`;
+- source PR #551 влит как `a7b2f2b514a9745102ca88579bc0caad9a28754e`;
+- Pixelmatch обновлён до `7.2.0`, загружается через контролируемый ESM-путь с `checkerboard: false`;
+- Node/npm остаются закреплены на `22.23.1` / `10.9.8` во всех активных workflow и release-поверхностях;
+- deploy run `30652948250`, attempt `1`, собрал один immutable candidate и продвинул те же самые байты;
+- release SHA и control-plane SHA равны `a7b2f2b514a9745102ca88579bc0caad9a28754e`;
 - candidate ID: `a7b2f2b514a9745102ca88579bc0caad9a28754e:30652948250-1`;
 - candidate tree digest: `sha256:4b7b6e432e26ac1bdcbc62f56907309a5c3e2eb81cbd1abdafade960b6081e2f`;
 - candidate files / bytes: `1150` / `81201894`;
@@ -24,13 +24,13 @@
 - TTS live witness artifact: ID `8802591444`, `sha256:4057921a4b9da740720f5aa5466a4181ef66d0d9f0ddbb760982744885baa066`;
 - source release-ledger comment: PR #551, comment `5146092545`.
 
-## 2. Homepage closure
+## 2. Закрытие главной страницы
 
-The premium native `/` implementation is complete in current ancestry. The accepted chain includes the premium index rebuild, responsive edge-state closure, semantic H1 dash, source-language/citation corrections, semantic drop-cap guard and the final two marginal-source corrections.
+Премиальная нативная реализация `/` завершена в текущей ancestry. Принятая цепочка включает основной rebuild индекса, закрытие адаптивных крайних состояний, настоящее тире в H1, исправления исходных языков и ссылок, семантическую защиту буквицы и две последние поправки источников маргиналий.
 
-PR #551 changed only the Pixelmatch dependency/lockfile, its functional migration contract, the controlled import path and migration documentation. It preserved every visual baseline and did not redesign or replace homepage components. Do not reopen MAIN INDEX without a new owner decision and current browser/visual evidence.
+PR #551 изменил только зависимость и lockfile Pixelmatch, функциональный migration-contract, контролируемый import-путь и документацию миграции. Все visual baselines сохранены; компоненты главной не переделывались и не заменялись. Не открывать MAIN INDEX заново без нового решения владельца и свежих browser/visual evidence.
 
-## 3. Production evidence boundary
+## 3. Граница production evidence
 
 ```text
 source main
@@ -42,22 +42,22 @@ source main
 = TTS live PASS
 ```
 
-A later source merge invalidates only the current-head convergence claim and requires a new reverify; it does not erase this immutable release witness.
+Более поздний merge в source отменяет только заявление о текущем совпадении HEAD и production и требует нового reverify; он не отменяет это immutable release-свидетельство.
 
-## 4. Active ownership — do not collide
+## 4. Активное владение — не пересекаться
 
-The remaining protected independent source lane is Astro 7 phase one — PR #549. Do not reset, rebase, force-push, close, delete or absorb it without explicit owner handoff. This synchronization does not own Astro 7.
+Единственная оставшаяся защищённая независимая source-lane — Astro 7 phase one, PR #549. Не reset, rebase, force-push, close, delete и не поглощать её без явного handoff владельца. Эта синхронизация не владеет Astro 7.
 
-## 5. Cleanup disposition
+## 5. Результат очистки
 
-- no temporary Node/Pixelmatch migration writer, exporter, bootstrap or transfer file remains in source `main`;
-- no temporary AuditRepo workflow or writer remains in the final PR diff;
-- historical raw intakes and remote refs are not silently deleted; cleanup remains content- and disposition-based;
-- branch deletion is housekeeping, not evidence of source or production correctness.
+- в source `main` не осталось временных Node/Pixelmatch writer, exporter, bootstrap или transfer-файлов;
+- в финальном diff AuditRepo отсутствуют временные workflow и writer;
+- исторические raw intake и remote refs не удаляются молча: очистка остаётся evidence- и disposition-based;
+- удаление ветки является housekeeping, а не доказательством корректности source или production.
 
-## 6. Next order
+## 6. Следующий порядок
 
-1. Preserve the exact production witness above as immutable evidence.
-2. Leave Astro 7 to its named owner and require fresh homepage parity after its future merge.
-3. On the next source-main merge, create a new current-head reverify before claiming source=production again.
-4. Do not change matrix counters for this synchronization: it reconciles existing closed status and current authority, not a new bug-class transition.
+1. Сохранять указанное exact production witness как immutable evidence.
+2. Оставить Astro 7 его назначенному владельцу и после будущего merge потребовать свежий homepage parity.
+3. После следующего merge в source `main` создать новый current-head reverify до заявления `source = production`.
+4. Не менять счётчики матрицы из-за этой синхронизации: она согласует уже закрытый статус и текущую authority, а не создаёт новый переход класса бага.
