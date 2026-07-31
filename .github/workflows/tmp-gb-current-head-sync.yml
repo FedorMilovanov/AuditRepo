@@ -76,8 +76,19 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: python3 scripts/tmp_sync_gb_current_head.py
 
-      - name: Assert temporary control plane self-deleted
+      - name: Normalize generated audit markdown and assert cleanup
         run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          for rel in (
+              'projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md',
+              'projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-31_dec072be_exact-production-home-closure.md',
+          ):
+              path = Path(rel)
+              lines = path.read_text(encoding='utf-8').splitlines()
+              path.write_text('\n'.join(line.rstrip() for line in lines) + '\n', encoding='utf-8')
+          PY
           test ! -e scripts/tmp_sync_gb_current_head.py
           test ! -e .github/workflows/tmp-gb-current-head-sync.yml
           git diff --check
