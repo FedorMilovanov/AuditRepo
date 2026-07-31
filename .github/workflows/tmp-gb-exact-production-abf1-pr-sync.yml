@@ -54,6 +54,7 @@ jobs:
           git show origin/main:scripts/check_matrix_coverage.py > scripts/check_matrix_coverage.py
 
           rm -rf reports/matrix-coverage
+          rmdir reports 2>/dev/null || true
           rm -f \
             scripts/tmp_abf1_reconcile_artifact.py \
             .github/gb-abf1-sync-bootstrap.md \
