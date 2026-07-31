@@ -47,6 +47,10 @@ jobs:
           text = text.replace('PR #569 is not the exact merged owner of the expected SHA', 'PR #625 is not the exact merged owner of the expected SHA')
           text = text.replace('timed out waiting for the exact deployment-release-witness on PR #569', 'timed out waiting for the exact deployment-release-witness on PR #625')
           text = text.replace(
+              'match = re.search(r"```json\\s*(\\{[\\s\\S]*?\\})\\s*```", body)',
+              'match = re.search(r"```json\\s*([\\s\\S]*?)\\s*```", body)',
+          )
+          text = text.replace(
               'f"| Source HEAD | `{EXPECTED_SHA}` (current source main; PR #{SOURCE_PR} pinned Node 22.23.1/npm 10.9.8; "',
               'f"| Source HEAD | `{EXPECTED_SHA}` (current source main; PR #{SOURCE_PR} added research-only Baptist book/source ledgers; Node 22.23.1/npm 10.9.8 remains inherited; "',
           )
