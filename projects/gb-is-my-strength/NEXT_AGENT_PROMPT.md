@@ -6,7 +6,7 @@
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
 **Current source deployment status:** ⚠️ `source != production`; same-SHA production witness для текущего source отсутствует.  
 **Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_b4b02f72_source-vs-production.md`  
-**AuditRepo synchronization:** current lane `agent/current-source-production-boundary-20260801`.
+**AuditRepo synchronization PR:** `#114`.
 
 ## 1. Точная граница source
 
