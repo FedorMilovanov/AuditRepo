@@ -1,0 +1,36 @@
+# SD-6 — source-verified per-row verdict on ACTUAL HEAD 2273b8c9 (map-engine.js @ 2273b8c9, v0.57.0)
+
+Direct source inspection of `karty/_engine/map-engine.js` at ref 2273b8c9 (fetched via gh api).
+This upgrades/corrects the earlier candidate list.
+
+## FIXED on current HEAD 2273b8c9 (source-verified) — candidates for reverify-close
+- ASTRO-P1-02  stage palette: `getStageColor(normalized)` now normalizes (no transparent past index 5).
+               Diff: STAGE_COLORS + getStageColor() used in timeline/legend/dot/layer color resolution.
+- ENGINE-P1-22 distance scaling: `kmBetween()` now calls `distanceKm(p1,p2,cfg.kmPerUnit)`; the raw
+               hardcoded `*0.92` path is replaced by governed `distanceKm(..., kmPerUnit=DEFAULTS.kmPerUnit)`.
+- ENGINE-P1-23 marker-dot targeting: `g.querySelector('circle:nth-child(3)')` removed; only remaining
+               nth-child(3) is CSS `.me-sig-wave:nth-child(3)` (unrelated animation). Semantic marker-dot logic.
+- ENGINE-P1-21 letterboxing coordinate transform: `clientPointToView()` now computes
+               scale=min(width/viewW,height/viewH) + offsetX/offsetY (centered letterbox meet). Fixed.
+- MAP-P1-14   shared-CSS lifecycle: bounded lease via baseCssLeaseActive/baseCssLeaseCount; css removed
+               only when lease count reaches 0; destroy() -> _cleanupAll() removes per-instance state.
+- MAP-P1-15   measure button: single `<button class="me-zoom-btn" data-measure title="Измерить расстояние">↔</button>`;
+               the old duplicate `id="me-ruler-btn"` is gone (0 occurrences).
+- ENGINE-P1-28 delegated photo owner: one panel click handler resolves `img.dataset.src||currentSrc||src`
+               and calls openPhoto once ("One gallery owner: delegation opens the canonical full-size source once").
+
+## STILL OPEN on current HEAD 2273b8c9 (source-verified) — NOT fixed by PR #709
+- MAP-P1-11   scale bar STILL uses `cfg.W0 / view.w`:
+                 function updateScaleBar() { const pxPerKm = 1 / cfg.kmPerUnit;
+                   const screenPxPerKm = (cfg.W0 / view.w) * pxPerKm; ... }
+               The defect described (scale-bar ratio using cfg.W0/view.w rather than rendered canvas width)
+               is still present. Needs browser reverify + a real fix; do NOT close.
+- ENGINE-P1-26 search-outside-story click: no dedicated handler for search-highlighted points outside the
+               current story was found in the engine (search wiring lives outside map-engine.js); remains open
+               pending a browser/route-level reverify on 2273b8c9.
+
+## Net
+- Fixed (source-verified, revert close candidates on 2273b8c9): ASTRO-P1-02, ENGINE-P1-21/22/23/28, MAP-P1-14/15.
+- Still open: MAP-P1-11, ENGINE-P1-26 (and any not listed).
+- Per SHA-first: this lane does NOT close rows; these are dispositions for the verifier to execute a
+  reverify on 2273b8c9 and close only the non-reproducing ones.

@@ -46,9 +46,9 @@
 - `SD-5` — **authority drift (P1-freshness):** AuditRepo canon records source main = `efaf2a51`
   (PR #669/#691 era), but the actual source main HEAD is `2273b8c9` (PR #730), **14 commits ahead**
   (live `gh api compare` => ahead_by=14). Needs verifier authority-only sync + paired reverify.
-- `SD-6` — **map-engine fixes landed on actual HEAD (P2):** source PR #709 (merge `8bd891b13`, now in
-  `2273b8c9`) corresponds to open matrix rows ASTRO-P1-02, ENGINE-P1-21/22/23/26/28, MAP-P1-11/14/15
-  (verified via `map-engine.js` diff). Schedule reverify on `2273b8c9`; do NOT auto-close (SHA-first).
+- `SD-6` — **map-engine fixes landed on actual HEAD (P2), source-verified:** on `2273b8c9` the engine
+  fixes ASTRO-P1-02, ENGINE-P1-21/22/23/28, MAP-P1-14/15 (revert-close candidates); MAP-P1-11 (scale bar
+  still `cfg.W0/view.w`) and ENGINE-P1-26 remain OPEN. Schedule reverify on `2273b8c9`; do NOT auto-close.
 - Everything else (P0/P1/P2/P3/Refactoring/AuditRepo row counts; HEAD vs prod `abf1edba`;
   DOC_MAP and PROJECT_REGISTRY target files) synchronized OK. Coverage deep-dive clean: no
   ORPHAN-CLAIM; registry invariants hold; cross-section duplicate D-* IDs are benign.

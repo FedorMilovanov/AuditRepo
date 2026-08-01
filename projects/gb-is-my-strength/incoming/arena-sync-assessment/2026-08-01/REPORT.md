@@ -67,7 +67,11 @@
   witnessed on old SHAs (`c2c339708252` / `32ae0d7d`).
 - **Severity:** P2 (matrix freshness; drives reverify work, does not by itself change counters)
 - **File(s):** `karty/_engine/map-engine.js` (in PR #709); matrix rows ASTRO-P1-02, ENGINE-P1-21/22/23/26/28, MAP-P1-11/14/15.
-- **Evidence:** `evidence/sd6_mapengine_fixes_candidates.txt` (diff + PR-text correspondence map).
+- **Evidence:** `evidence/sd6_mapengine_fixes_candidates.txt` (diff + PR-text correspondence map),
+  upgraded by `evidence/sd6_verified_on_2273b8c9.txt` (direct source inspection of `map-engine.js` @ `2273b8c9`).
+- **Source-verified on 2273b8c9 (revert-close candidates):** ASTRO-P1-02, ENGINE-P1-21/22/23/28, MAP-P1-14/15.
+- **Still OPEN on 2273b8c9 (do NOT close):** MAP-P1-11 (scale bar still `cfg.W0 / view.w`),
+  ENGINE-P1-26 (no search-outside-story click handler in engine).
 - **Correspondence (direct):** ASTRO-P1-02 (getStageColor normalize), ENGINE-P1-22 (distanceKm/kmPerUnit),
   ENGINE-P1-23 (removed circle:nth-child(3)), MAP-P1-15 (single me-ruler-btn), MAP-P1-14 (me-base-css lease).
   **Candidate (PR text):** ENGINE-P1-21 (letterboxing), MAP-P1-11 (scale bar), ENGINE-P1-28 (photo owner), ENGINE-P1-26 (marker identity).
@@ -264,8 +268,9 @@ Not applicable (this lane is the initial assessment, not a recheck of a prior fi
   - SD-4: schedule fresh reverify of `AUDIT-P3-OG-LCP-MISMATCH` on the actual source HEAD `2273b8c9`
     (after SD-5 authority sync).
   - SD-5: advance recorded source HEAD to `2273b8c9` + paired reverify (authority-only sync).
-  - SD-6: reverify map-engine candidate rows (ASTRO-P1-02, ENGINE-P1-21/22/23/26/28, MAP-P1-11/14/15)
-    on `2273b8c9`; close only non-reproducing (SHA-first).
+  - SD-6: reverify map-engine candidate rows on `2273b8c9`; close only non-reproducing (SHA-first).
+    Source-verified on `2273b8c9`: FIXED candidates ASTRO-P1-02, ENGINE-P1-21/22/23/28, MAP-P1-14/15;
+    STILL OPEN MAP-P1-11, ENGINE-P1-26. See `proposals/proposal-SD-6-mapengine-reverify.md`.
 - **Boundary:** this lane changed no canonical matrix row, status, severity, counter, source repo
   file, Research/Drive data or production evidence. Per README "Freedom with Evidence" an agent must
   NOT directly change canonical status in the verified ledger; hence only an intake report + proposals.
