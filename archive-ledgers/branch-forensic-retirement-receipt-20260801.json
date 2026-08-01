@@ -1,0 +1,19 @@
+{
+  "repository": "FedorMilovanov/AuditRepo",
+  "archiveBranch": "archive/legacy-diverged-heads-20260801",
+  "retiredAt": "2026-08-01T15:49:23.777915+00:00",
+  "policy": "No open PR and all changes relative to merge base were restricted to .github/workflows/** and reports/**.",
+  "deletedCount": 2,
+  "deleted": [
+    {
+      "branch": "audit/full-branch-disposition-20260801",
+      "sha": "38a334936927494a67c7d9928ca2fdff127f5b6c",
+      "fileCount": 3
+    },
+    {
+      "branch": "audit/full-branch-details-20260801",
+      "sha": "cae5b090fe755bd5b7fdc09dc0947fbe4aa67121",
+      "fileCount": 43
+    }
+  ]
+}
