@@ -2,43 +2,50 @@
 
 > **Только текущая операционная правда.** Счётчики принадлежат `verified/MASTER_BUG_MATRIX.md`.
 
-**Source main:** `abf1edba190280e554dfda085bef9fb6594c896d`
-**Exact production authority:** ✅ `abf1edba190280e554dfda085bef9fb6594c896d`
-**Current source deployment status:** ✅ source, release candidate, live pointer и TTS authority сходятся на одном SHA.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_abf1edba_exact-production-windows-astro-closure.md`
-**AuditRepo synchronization PR:** `#110`
+**Source main:** `b4b02f72c26f5ac9c58ea9efe11cfcf4fa3d2c19`  
+**Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
+**Current source deployment status:** ⚠️ `source != production`; same-SHA production witness для текущего source отсутствует.  
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_b4b02f72_source-vs-production.md`  
+**AuditRepo synchronization:** current lane `agent/current-source-production-boundary-20260801`.
 
-## 1. Точная граница
+## 1. Точная граница source
 
-- source PR #643 влит как `abf1edba190280e554dfda085bef9fb6594c896d`;
-- Astro `7.1.6` / native Sätteri `0.3.5`;
-- `astro:dev/check/build/preview` используют постоянный Windows/Linux launcher `scripts/astro-cli.mjs`, без `cross-env`;
-- Gill six-surface gate, sitemap-image SEO и книжная витрина «Баптисты России» сохранены;
-- Node/npm: `22.23.1` / `10.9.8`;
-- exact PR head `12f6d54e` прошёл 8/8 обязательных workflow;
-- физический Windows witness: source comment `5148209495` — `npm ci`, 82-page build, 918 legacy files, drift 0, Baptist audit 16/16, clean tree.
+- current source `main` = `b4b02f72c26f5ac9c58ea9efe11cfcf4fa3d2c19`;
+- после последнего exact production в source ancestry находятся:
+  - bug-hunt repairs через `be970bfc13882119e99605ba1689605af4a4af8a`;
+  - PR #659 / `65bf6c4a015c933aa3ec8d4046e587e58eabd568` — Atlas geometry verifier;
+  - PR #665 / `8a8ebf70d1a1e51a4f57d3d38a7ef4a97ff65e5b` — Avraam heading lifecycle;
+  - PR #666 / `424b09b25fc9d4bace3938f4d44f430be8cc7e4b` — Karty story-ID schema/runtime alignment;
+  - PR #668 / `b4b02f72c26f5ac9c58ea9efe11cfcf4fa3d2c19` — README Astro 7 truth;
+- AuditRepo PR #112 / `2ef6cf66a011c46086758fea67d5732e1ec292b9` сохраняет exact Karty evidence;
+- draft source PR #667 остаётся active/unmerged и **не входит** в current source truth;
+- ни один post-`abf1edba` merge не считается production без отдельного same-SHA witness.
 
-## 2. Exact production
+## 2. Last exact production
 
 - deploy `30669840189`, attempt `1`, event `push`;
 - release SHA = control-plane SHA = `abf1edba190280e554dfda085bef9fb6594c896d`;
 - candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`;
-- digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`;
+- release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`;
 - files / bytes `1152` / `81177351`;
 - immutable path `/deployments/abf1edba190280e554dfda085bef9fb6594c896d/30669840189-1.json`;
 - candidate artifact `8808656612` / `sha256:c7ddd49753c2a6f7c93b4962cce372a1be99d6f7871e76db6d6b9de12f4c3159`;
 - generic live `8808666936` / `sha256:28333e7d19ebc51641f00ca086e8d77d2a92880ee546161f78a8e4d034957f10`;
 - TTS `8808667707` / `sha256:7b8354caca07d12e682243c22487afe189413dbd5a0fbe36235c55395089aa54`;
-- release ledger comment `5148074092`.
+- release ledger comment `5148074092`;
+- physical Windows witness `5148209495`.
 
 ```text
-source = release = control plane = current pointer = immutable manifest
-generic live PASS = TTS live PASS
+current source = b4b02f72c26f5ac9c58ea9efe11cfcf4fa3d2c19
+last exact production = abf1edba190280e554dfda085bef9fb6594c896d
+source != production
 ```
 
 ## 3. Следующий порядок
 
-1. Сохранять `abf1edba190280e554dfda085bef9fb6594c896d` как current exact source+production authority.
-2. После следующего source merge требовать новый same-SHA deployment witness.
-3. Не запускать устаревшие `Finalize-AuditRepo109.ps1` и workflow PR #109.
-4. Не возвращать старый `cross-env` autostash и не менять матричные счётчики.
+1. Не продвигать `b4b02f72` в production authority без exact same-SHA readiness → candidate → Pages/live → TTS → ledger evidence.
+2. Не переоткрывать #659/#665/#666/#668 по stale evidence; использовать exact-head отчёты и AuditRepo PR #112.
+3. Не вмешиваться в draft PR #667 без explicit handoff; он не входит в current source.
+4. Следующий архитектурный порядок после текущих активных lanes: source issue #56 → #62 → #64.
+5. Не запускать устаревшие `Finalize-AuditRepo109.ps1` и workflow PR #109.
+6. Не менять матричные счётчики в authority-only синхронизации.
