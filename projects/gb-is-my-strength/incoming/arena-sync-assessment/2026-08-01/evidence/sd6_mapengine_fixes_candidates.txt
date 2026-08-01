@@ -1,0 +1,40 @@
+# SD-6 — map-engine runtime fixes landed on actual source HEAD 2273b8c9 (PR #709)
+# => multiple open matrix rows are candidate fixed-current (need reverify, not auto-close)
+
+## Source facts (live, 2026-08-01)
+- Actual source main HEAD: 2273b8c930eebf383d429b917d3636bc28a80bae (PR #730, 14 commits past recorded canon efaf2a51).
+- Commit 8bd891b1371d4ac2438f9026e40a9c723856556b = merge of PR #709
+  "fix(map-engine): close unattended runtime P1 normalization".
+- PR #709 lane record: "deterministic extended-stage colors instead of palette collapse;
+  correct pointer projection under centered SVG letterboxing; governed distance scaling;
+  bounded shared-CSS lifecycle lease; semantic marker-dot targeting; one measure-button/ARIA owner
+  and one delegated photo owner; synchronized v0.57 runtime/source contracts; authored and generated
+  route arrows now retain distinct marker identities, including fail-closed generated fallback
+  after invalid authored geometry." Exact head 66db6626 passed all 8 workflows; production not claimed.
+
+## Diff evidence (karty/_engine/map-engine.js in 8bd891b13)
+- Added getStageColor(index) -> normalized stage colors (no palette collapse past index 5).  [ASTRO-P1-02]
+- Added distanceKm(p1,p2,kmPerUnit=DEFAULTS.kmPerUnit) -> governed distance scaling.     [ENGINE-P1-22, MAP-P1-11]
+- Removed `g.querySelector('circle:nth-child(3)')` -> semantic marker-dot targeting.      [ENGINE-P1-23]
+- Single `me-ruler-btn` in zoomControls -> one measure-button owner.                     [MAP-P1-15]
+- `me-base-css` shared-CSS lifecycle handling.                                            [MAP-P1-14]
+- `me-arrow-authored-*` vs `me-arrow-generated-*` -> distinct arrow marker identity.      [ENGINE-P1-26/ASTRO-P1-05 candidate]
+- PR text also cites centered-SVG letterboxing pointer projection.                        [ENGINE-P1-21 candidate]
+
+## Candidate matrix rows that PR #709 likely fixes (ALL NEED REVERIFY on 2273b8c9, NOT auto-close)
+Direct matches (source diff/PR text):
+  ASTRO-P1-02  stage palette 6 colors -> normalized
+  ENGINE-P1-22 kmBetween 0.92 hardcode -> governed kmPerUnit
+  ENGINE-P1-23 circle:nth-child(3) -> semantic marker-dot
+  MAP-P1-15    two measure buttons -> one owner
+  MAP-P1-14    shared me-base-css lifecycle -> bounded lease
+Candidate (PR text, needs diff/line confirm):
+  ENGINE-P1-21 letterboxing coordinate transform
+  MAP-P1-11    scale bar cfg.W0/view.w
+  ENGINE-P1-28 delegated photo owner
+  ENGINE-P1-26 distinct authored/generated marker identity
+
+## Rule
+Per SHA-first (README): a bug confirmed on an old SHA must be reverified on current HEAD before
+closure. None of these rows may be closed on source-PR evidence alone. This finding only flags them
+for reverify on actual HEAD 2273b8c9 (after SD-5 authority sync). This lane does not close anything.

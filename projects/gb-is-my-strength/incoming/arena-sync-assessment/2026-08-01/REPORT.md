@@ -60,6 +60,28 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-6 — map-engine runtime fixes landed on actual HEAD; multiple open rows are candidate fixed-current
+- **Category:** AUDITREPO / data-sync (matrix freshness vs new source HEAD; not a product claim, not a closure)
+- **Title:** source PR #709 ("map-engine runtime P1 normalization", merge `8bd891b13`, now in actual
+  HEAD `2273b8c9`) fixes defects that correspond to several open Karty/map matrix rows, which were
+  witnessed on old SHAs (`c2c339708252` / `32ae0d7d`).
+- **Severity:** P2 (matrix freshness; drives reverify work, does not by itself change counters)
+- **File(s):** `karty/_engine/map-engine.js` (in PR #709); matrix rows ASTRO-P1-02, ENGINE-P1-21/22/23/26/28, MAP-P1-11/14/15.
+- **Evidence:** `evidence/sd6_mapengine_fixes_candidates.txt` (diff + PR-text correspondence map).
+- **Correspondence (direct):** ASTRO-P1-02 (getStageColor normalize), ENGINE-P1-22 (distanceKm/kmPerUnit),
+  ENGINE-P1-23 (removed circle:nth-child(3)), MAP-P1-15 (single me-ruler-btn), MAP-P1-14 (me-base-css lease).
+  **Candidate (PR text):** ENGINE-P1-21 (letterboxing), MAP-P1-11 (scale bar), ENGINE-P1-28 (photo owner), ENGINE-P1-26 (marker identity).
+- **Expected:** open rows reflect the current source state.
+- **Actual:** these rows are open but their fix has likely landed on actual HEAD `2273b8c9` (which the
+  canon has not yet recorded — see SD-5).
+- **Confidence:** medium-high (source diff + PR text; needs reverify, not auto-close).
+- **Verification level:** L1 (source-level witness, no live browser run in this lane).
+- **Suggested repair lane:** after SD-5 authority sync, run one reverify pass of this cluster on
+  `2273b8c9` (verified-source/browser); close only non-reproducing rows, per SHA-first rule. Do not
+  close on PR description alone. See `proposals/proposal-SD-6-mapengine-reverify.md`.
+
+---
+
 ### Finding SD-5 — AuditRepo canonical source HEAD is stale vs actual source repo (authority drift)
 - **Category:** AUDITREPO / data-sync (authority-only HEAD drift, not a product bug)
 - **Title:** AuditRepo canon records source main = `efaf2a51` (PR #669/#691 era), but the actual
@@ -144,6 +166,7 @@ None.
 - Target bug: SD-4 → proposed severity **P3** (evidence-freshness). Current: unregistered.
 - Target bug: SD-5 → proposed severity **P1** for authority freshness (blocking trusted current-HEAD
   reverifies) / P3 as bug-class. Current: unregistered.
+- Target bug: SD-6 → proposed severity **P2** (matrix freshness; reverify-driving). Current: unregistered.
 
 ---
 
