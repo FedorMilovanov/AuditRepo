@@ -176,6 +176,8 @@ None.
   counters 165/191 in `MASTER_BUG_MATRIX.md` + propagated to `NEXT_AGENT_PROMPT.md`).
 - Lane: `AUDITREPO-evidence-registry-reconcile` — SD-3 (add two `informational` registry records)
   + SD-4 (schedule fresh reverify of `AUDIT-P3-OG-LCP-MISMATCH`).
+- Lane: `source-authority-sync-2273b8c9` — SD-5 (advance recorded source HEAD to `2273b8c9` + paired
+  reverify) then SD-6 (reverify map-engine candidate rows on that HEAD).
 - Why together: all four are data-sync / evidence-hygiene fixes in the same canonical layer; none
   touches product code.
 - What must NOT be mixed: no product/source repo changes; no Research/Drive changes; no
@@ -201,6 +203,18 @@ Not applicable (this lane is the initial assessment, not a recheck of a prior fi
 - Other coverage stats are consistent: 356 canonical ids / 191 open rows; registry 52
   (11 aliases, 7 informational, 30 retired, 4 false-positive); direct witnesses 10; archived-only 2.
   No additional unregistered IDs beyond SD-3.
+
+### Source-delta pass (this lane, same date) — SD-5/SD-6 + remaining commits clean
+- SD-5: recorded source HEAD `efaf2a51` is stale; actual source main = `2273b8c9` (14 commits ahead).
+- SD-6: PR #709 (map-engine runtime normalization) fixes map-engine defects matching open rows
+  ASTRO-P1-02, ENGINE-P1-21/22/23/26/28, MAP-P1-11/14/15 (verified via `map-engine.js` diff);
+  schedule reverify, do NOT auto-close.
+- Remaining delta commits introduced no additional open-matrix-row overlaps:
+  - a11y #728 (`6d49d75ce`): adds test coverage, zero product mutation.
+  - indexnow.yml change: only adds Antisovetov Wave 8 contract step (not D-1 / BUG-SEO-001).
+  - resume-toast #730 (`2273b8c93`): RESUME-TOAST-STALE-NAG already closed; no open row.
+  - antisovetov Wave 8 (`41617252e`): content/source boundaries; D-19 antisovetov PageHead half
+    remains open (not addressed).
 
 ### Continuation pass (this lane, same date) — refined conclusions
 - **SD-1 resolved:** closed counter 165 is **correct** per canonical tooling
@@ -249,6 +263,9 @@ Not applicable (this lane is the initial assessment, not a recheck of a prior fi
   - SD-3: add two `informational` registry records for `RIGHT-*` (or an accepted disposition).
   - SD-4: schedule fresh reverify of `AUDIT-P3-OG-LCP-MISMATCH` on the actual source HEAD `2273b8c9`
     (after SD-5 authority sync).
+  - SD-5: advance recorded source HEAD to `2273b8c9` + paired reverify (authority-only sync).
+  - SD-6: reverify map-engine candidate rows (ASTRO-P1-02, ENGINE-P1-21/22/23/26/28, MAP-P1-11/14/15)
+    on `2273b8c9`; close only non-reproducing (SHA-first).
 - **Boundary:** this lane changed no canonical matrix row, status, severity, counter, source repo
   file, Research/Drive data or production evidence. Per README "Freedom with Evidence" an agent must
   NOT directly change canonical status in the verified ledger; hence only an intake report + proposals.
