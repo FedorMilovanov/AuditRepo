@@ -6,6 +6,7 @@
 **Source merge:** `0ff04232ee08a8f81711db640395901124aca787` (PR #688)
 **Exact PR head:** `fff6155b651620b5e497585948d3b2a9fae5cd67`
 **Production claim:** `no`
+**AuditRepo disposition PR:** `#117`
 
 ## 1. Original claim
 
