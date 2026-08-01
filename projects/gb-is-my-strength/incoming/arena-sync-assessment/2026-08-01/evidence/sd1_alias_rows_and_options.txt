@@ -1,0 +1,39 @@
+# SD-1 reconciliation detail — 2026-08-01
+
+Closed table (## ✅ ЗАКРЫТО) physically holds 166 rows; all claimed counters = 165.
+Goal: give the verifier the exact row inventory to pick a defensible disposition.
+
+## Merge / alias / duplicate-style rows inside the closed table (4)
+| ID | Description marker |
+|---|---|
+| AUDIT-P1-CI-GATE-GAP        | "→ merged into BUG-CI-002 (same root cause: indexnow.yml :light gate)" |
+| AUDIT-PRO-FC-IMPORTANT-GAP  | "= закрыт тем же multi-file ratchet" (as AUDIT-P1-FC-IMP) |
+| BUG-ARCH-001                | "= дубликат SW-PRECACHE-4, закрыт тем же фиксом" |
+| AUDIT-P3-SEARCH-LAZY-CONFIRMED | "= та же суть (precache побеждал lazy), закрыт тем же фиксом" |
+
+Note: matrix keeps these rows "для обратной совместимости с reverify-документами"
+(Примечания → Дубликаты). They are distinct ID rows but not independent root causes.
+
+## Cross-section duplicate-ID check (all sections)
+Only D-1, D-2, D-3, D-4, D-7, D-8, D-19, D-21, D-22 appear twice. Every case is one row in an
+open section (P2/P3) plus a mirror entry in the HISTORICAL AUDITOR LOG section
+(## 🔴 AUDITOR / ARENA — 2026-07-06), which is a non-counting log, not a counter section.
+=> Not a matrix counter defect; cross-reference only.
+
+## Closed-in-open check (rows marked closed but listed in an open section)
+- AR-006   -> genuinely CLOSED, listed in open AUDITREPO section (see SD-2). REAL.
+- MAP-P1-19 -> "крестик закрытия" = closing cross button wording. FALSE POSITIVE (open).
+- TTS-DL-NO-TABLOCK -> "Consent UX закрыт PR #177" describes a sub-part; row is an open P2 residual. FALSE POSITIVE.
+- D-19 -> "половина ЗАКРЫТА" — genuinely partial (antisovetov half still open). Correctly open.
+
+=> SD-2 (AR-006) is the only genuine closed-row-inside-open-section case.
+
+## Verifier disposition options for SD-1
+A. Treat the authoritative closed TABLE as SSOT and reconcile the counter upward to 166
+   (header "ЗАКРЫТО (166)", statistics "Закрыто (fixed) | 166", NEXT_AGENT_PROMPT "166 closed").
+   Open total unaffected (still 191).
+B. Keep counter 165 and explicitly exempt exactly ONE merge-alias row from the count
+   (e.g. AUDIT-P1-CI-GATE-GAP "merged into BUG-CI-002") with a one-line counting rule,
+   so table-minus-exempted == counter.
+C. Any other single-row disposition the verifier prefers — the invariant must be
+   "closed rows (minus non-counting aliases) == closed counter == NEXT_AGENT_PROMPT claim".
