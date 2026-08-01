@@ -24,6 +24,7 @@ SHA_RE = re.compile(r"^[0-9a-f]{7,10}$")
 FULL_SHA_RE = re.compile(r"^[0-9a-f]{7,40}$")
 NON_SHA_OK = {"V3", "V2", "V1", "BY-DESIGN"}
 LEXICAL_NON_FINDINGS = {"SHA-256"}
+REGISTRY_STATUSES = ("alias", "retired", "informational", "false-positive")
 PATH_RE = re.compile(
     r"(?P<path>(?:reverify|incoming|working|archive)/[^`|\s)]+?\.md)"
 )
@@ -44,6 +45,14 @@ class MatrixRow:
     line_no: int
     line: str
     cells: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class RegistryEntry:
+    finding_id: str
+    status: str
+    canonical: str | None
+    reason: str
 
 
 def parse_table_cells(line: str) -> list[str]:
@@ -121,79 +130,163 @@ def candidate_is_credible(
     )
 
 
+def structured_id_occurrences(
+    text: str,
+    known_ids: set[str],
+    canonical_families: set[str],
+) -> dict[str, dict[str, object]]:
+    """Return credible IDs with exact structural contexts and line numbers."""
+    found: dict[str, dict[str, object]] = collections.defaultdict(
+        lambda: {"contexts": set(), "lines": set()}
+    )
+
+    def record(token: str, context: str, line_no: int) -> None:
+        found[token]["contexts"].add(context)
+        found[token]["lines"].add(line_no)
+
+    for line_no, line in enumerate(text.splitlines(), 1):
+        cells = parse_table_cells(line)
+        if cells and is_finding_id(cells[0]):
+            record(cells[0], "table-key", line_no)
+
+        if re.match(r"^#{1,6}\s+", line):
+            for token in TOKEN_RE.findall(line):
+                record(token, "heading", line_no)
+
+        label_match = None
+        if not re.match(r"^#{1,6}\s+", line):
+            label_match = re.match(
+                r"^\s*(?:[-*]\s+)?(?P<label>(?:\*\*|`)?[^:—–]{1,180}?"
+                r"(?:\*\*|`)?)(?:\s*[:—–]\s+)",
+                line,
+            )
+        if label_match:
+            for token in TOKEN_RE.findall(label_match.group("label")):
+                record(token, "label", line_no)
+
+        for content in re.findall(r"`([^`\n]+)`", line):
+            if is_finding_id(content):
+                record(content, "backtick", line_no)
+
+    result: dict[str, dict[str, object]] = {}
+    for token, details in found.items():
+        contexts = set(details["contexts"])
+        if not candidate_is_credible(token, contexts, known_ids, canonical_families):
+            continue
+        result[token] = {
+            "contexts": sorted(contexts),
+            "lines": sorted(set(details["lines"])),
+        }
+    return result
+
+
 def structured_ids(
     text: str,
     known_ids: set[str],
     canonical_families: set[str],
 ) -> dict[str, set[str]]:
-    """Return explicit, credible IDs and the contexts that exposed them."""
-    found: dict[str, set[str]] = collections.defaultdict(set)
-
-    for line in text.splitlines():
-        cells = parse_table_cells(line)
-        if cells and is_finding_id(cells[0]):
-            found[cells[0]].add("table-key")
-
-        if re.match(r"^#{1,6}\s+", line):
-            for token in TOKEN_RE.findall(line):
-                found[token].add("heading")
-
-        label_match = re.match(
-            r"^\s*(?:[-*]\s+)?(?P<label>(?:\*\*|`)?[^:—–]{1,180}?"
-            r"(?:\*\*|`)?)(?:\s*[:—–]\s+)",
-            line,
-        )
-        if label_match:
-            for token in TOKEN_RE.findall(label_match.group("label")):
-                found[token].add("label")
-
-        for content in re.findall(r"`([^`\n]+)`", line):
-            if is_finding_id(content):
-                found[content].add("backtick")
-
+    """Compatibility wrapper returning explicit IDs and exposing contexts."""
     return {
-        token: contexts
-        for token, contexts in found.items()
-        if candidate_is_credible(token, contexts, known_ids, canonical_families)
+        token: set(details["contexts"])
+        for token, details in structured_id_occurrences(
+            text, known_ids, canonical_families
+        ).items()
     }
 
 
 def load_aliases(
     path: pathlib.Path,
     matrix_ids: set[str],
-) -> tuple[dict[str, str | None], set[str]]:
+) -> tuple[
+    dict[str, str | None],
+    set[str],
+    dict[str, RegistryEntry],
+    dict[str, int],
+]:
     if not path.exists():
-        return {}, set()
+        return {}, set(), {}, {status: 0 for status in REGISTRY_STATUSES}
     data = json.loads(path.read_text(encoding="utf-8"))
     if data.get("version") != 1:
         raise ValueError(f"{path}: expected version 1")
 
-    ignored = set(data.get("ignoredTokens", []))
+    raw_entries = data.get("aliases", {})
+    if not isinstance(raw_entries, dict):
+        raise ValueError(f"{path}: aliases must be an object")
+
+    raw_ignored = data.get("ignoredTokens", [])
+    if not isinstance(raw_ignored, list) or not all(
+        isinstance(item, str) and item.strip() for item in raw_ignored
+    ):
+        raise ValueError(f"{path}: ignoredTokens must be a list of non-empty strings")
+    ignored = set(raw_ignored)
+    for token in ignored:
+        if is_finding_id(token):
+            raise ValueError(
+                f"{path}: finding-like ignored token {token!r} must use a reasoned "
+                "registry entry instead"
+            )
+        if token in matrix_ids:
+            raise ValueError(f"{path}: ignored token {token!r} is already canonical")
+
     aliases: dict[str, str | None] = {}
-    for alias, raw in data.get("aliases", {}).items():
-        if not is_finding_id(alias):
-            raise ValueError(f"{path}: invalid alias ID {alias!r}")
-        if alias in matrix_ids:
-            raise ValueError(f"{path}: alias {alias} is already canonical")
-        if isinstance(raw, str):
-            target = raw
-            status = "alias"
-        elif isinstance(raw, dict):
-            target = raw.get("canonical")
-            status = raw.get("status", "alias")
-        else:
-            raise ValueError(f"{path}: alias {alias} must be string or object")
-        if status not in {"alias", "retired", "informational", "false-positive"}:
-            raise ValueError(f"{path}: unsupported status {status!r} for {alias}")
+    registry: dict[str, RegistryEntry] = {}
+    status_counts: collections.Counter[str] = collections.Counter()
+
+    for finding_id, raw in raw_entries.items():
+        if not is_finding_id(finding_id):
+            raise ValueError(f"{path}: invalid registry ID {finding_id!r}")
+        if finding_id in matrix_ids:
+            raise ValueError(f"{path}: registry ID {finding_id} is already canonical")
+        if not isinstance(raw, dict):
+            raise ValueError(
+                f"{path}: registry entry {finding_id} must be an object with "
+                "status and reason"
+            )
+
+        status = raw.get("status", "alias")
+        if status not in REGISTRY_STATUSES:
+            raise ValueError(
+                f"{path}: unsupported status {status!r} for {finding_id}"
+            )
+        reason = raw.get("reason")
+        if not isinstance(reason, str) or not reason.strip():
+            raise ValueError(
+                f"{path}: registry entry {finding_id} requires a non-empty reason"
+            )
+
+        target = raw.get("canonical")
         if status == "alias":
+            if not isinstance(target, str) or not is_finding_id(target):
+                raise ValueError(
+                    f"{path}: alias {finding_id} requires a valid canonical ID"
+                )
             if target not in matrix_ids:
                 raise ValueError(
-                    f"{path}: alias {alias} targets missing canonical ID {target!r}"
+                    f"{path}: alias {finding_id} targets missing canonical ID {target!r}"
                 )
-            aliases[alias] = target
+            aliases[finding_id] = target
         else:
-            aliases[alias] = None
-    return aliases, ignored
+            if target is not None:
+                raise ValueError(
+                    f"{path}: non-alias entry {finding_id} must not declare canonical"
+                )
+            aliases[finding_id] = None
+            target = None
+
+        registry[finding_id] = RegistryEntry(
+            finding_id=finding_id,
+            status=status,
+            canonical=target,
+            reason=reason.strip(),
+        )
+        status_counts[status] += 1
+
+    return (
+        aliases,
+        ignored,
+        registry,
+        {status: status_counts.get(status, 0) for status in REGISTRY_STATUSES},
+    )
 
 
 def row_direct_witness(row: MatrixRow, project: pathlib.Path) -> tuple[bool, list[str]]:
@@ -225,8 +318,10 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
     matrix_rows, open_ids, closed_rows = parse_matrix(
         matrix_path.read_text(encoding="utf-8")
     )
-    aliases, ignored_tokens = load_aliases(aliases_path, set(matrix_rows))
-    known_ids = set(matrix_rows) | set(aliases) | ignored_tokens
+    aliases, ignored_tokens, registry, registry_counts = load_aliases(
+        aliases_path, set(matrix_rows)
+    )
+    known_ids = set(matrix_rows) | set(registry) | ignored_tokens
     canonical_families = {finding_id.split("-", 1)[0] for finding_id in matrix_rows}
 
     evidence_paths: list[pathlib.Path] = []
@@ -241,14 +336,21 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
 
     evidence_occurrences: dict[str, list[str]] = collections.defaultdict(list)
     archive_occurrences: dict[str, list[str]] = collections.defaultdict(list)
-    reverify_ids: set[str] = set()
+    reverify_occurrences: dict[str, list[dict[str, object]]] = collections.defaultdict(list)
 
     for path, text in evidence.items():
-        ids = structured_ids(text, known_ids, canonical_families)
-        for finding_id in ids:
-            evidence_occurrences[finding_id].append(str(path.relative_to(project)))
+        details = structured_id_occurrences(text, known_ids, canonical_families)
+        relative = str(path.relative_to(project))
+        for finding_id, occurrence in details.items():
+            evidence_occurrences[finding_id].append(relative)
             if "reverify" in path.parts:
-                reverify_ids.add(finding_id)
+                reverify_occurrences[finding_id].append(
+                    {
+                        "file": relative,
+                        "lines": occurrence["lines"],
+                        "contexts": occurrence["contexts"],
+                    }
+                )
 
     for path, text in archive.items():
         for finding_id in structured_ids(text, known_ids, canonical_families):
@@ -265,6 +367,7 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
     problems: list[str] = []
     archived_only: list[str] = []
     direct_witnessed: list[str] = []
+    unregistered_evidence: list[dict[str, object]] = []
 
     for finding_id in sorted(open_ids):
         row = matrix_rows[finding_id]
@@ -283,12 +386,18 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
             "existing evidence path, immutable verified-* witness, or archived evidence"
         )
 
-    for finding_id in sorted(reverify_ids):
-        if finding_id in matrix_rows or finding_id in aliases or finding_id in ignored_tokens:
+    for finding_id in sorted(reverify_occurrences):
+        if finding_id in matrix_rows or finding_id in registry or finding_id in ignored_tokens:
             continue
+        occurrences = reverify_occurrences[finding_id]
+        first = occurrences[0]
+        first_line = first["lines"][0] if first["lines"] else "?"
         problems.append(
-            f"UNREGISTERED-EVIDENCE: reverify explicitly registers {finding_id} "
-            "but matrix/alias registry does not"
+            f"UNREGISTERED-EVIDENCE: reverify explicitly registers {finding_id} at "
+            f"{first['file']}:{first_line} but matrix/registry does not"
+        )
+        unregistered_evidence.append(
+            {"id": finding_id, "occurrences": occurrences}
         )
 
     for row in closed_rows:
@@ -305,7 +414,9 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
         "matrixIds": len(matrix_rows),
         "openRows": len(open_ids),
         "evidenceFiles": len(evidence),
-        "aliasIds": len(aliases),
+        "registryIds": len(registry),
+        "aliasIds": registry_counts["alias"],
+        "registryStatusCounts": registry_counts,
         "ignoredTokens": len(ignored_tokens),
         "directWitnessedOpenRows": len(direct_witnessed),
         "archivedOnlyOpenRows": len(archived_only),
@@ -315,6 +426,7 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
         ),
         "directWitnessedIds": direct_witnessed,
         "archivedOnlyIds": archived_only,
+        "unregisteredEvidence": unregistered_evidence,
         "diagnostics": problems,
     }
 
@@ -335,11 +447,19 @@ def main(argv: list[str] | None = None) -> int:
         print(f"FATAL: {error}")
         return 2
 
+    counts = report["registryStatusCounts"]
     print(
         "matrix: {matrixIds} canonical ids, {openRows} open rows; "
-        "evidence files: {evidenceFiles}; aliases: {aliasIds}; "
+        "evidence files: {evidenceFiles}; registry: {registryIds} "
+        "(aliases: {aliasIds}, informational: {informational}, "
+        "retired: {retired}, false-positive: {false_positive}); "
         "direct witnesses: {directWitnessedOpenRows}; archived-only: "
-        "{archivedOnlyOpenRows}".format(**report)
+        "{archivedOnlyOpenRows}".format(
+            **report,
+            informational=counts["informational"],
+            retired=counts["retired"],
+            false_positive=counts["false-positive"],
+        )
     )
     if args.verbose:
         if report["directWitnessedIds"]:
