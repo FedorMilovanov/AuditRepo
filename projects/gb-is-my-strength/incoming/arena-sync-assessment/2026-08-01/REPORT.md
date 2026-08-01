@@ -7,7 +7,10 @@
 - Date: 2026-08-01
 - Audited branch (AuditRepo): arena/019fbded-auditrepo
 - Audited SHA (AuditRepo): `bc067a1cbaf33ed3cafa72cf6f4e5201056125db`
-- Current HEAD at start/end: source `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3`; last exact production `abf1edba190280e554dfda085bef9fb6594c896d` (per `NEXT_AGENT_PROMPT.md`)
+- Current HEAD at start (recorded canon): source `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3`;
+  last exact production `abf1edba190280e554dfda085bef9fb6594c896d` (per `NEXT_AGENT_PROMPT.md`).
+  **Live check (SD-5): actual source main HEAD = `2273b8c9` (PR #730), 14 commits ahead of the
+  recorded canon.**
 - Environment: Arena sandbox
 - Build mode: source (AuditRepo documents; no product build / browser run)
 - Browser / device if used: none
@@ -57,20 +60,42 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-5 — AuditRepo canonical source HEAD is stale vs actual source repo (authority drift)
+- **Category:** AUDITREPO / data-sync (authority-only HEAD drift, not a product bug)
+- **Title:** AuditRepo canon records source main = `efaf2a51` (PR #669/#691 era), but the actual
+  source repo `FedorMilovanov/gb-is-my-strength` main HEAD is `2273b8c9` (PR #730), **14 commits ahead**.
+- **Severity:** P1 for authority freshness (any current-HEAD reverify / repair-order built on the
+  stale recorded HEAD is untrustworthy); P3 as a bug-class (data-sync).
+- **File(s):** `NEXT_AGENT_PROMPT.md`, `verified/MASTER_BUG_MATRIX.md` masthead (both say `efaf2a51`);
+  actual source = `2273b8c9`.
+- **Evidence:** `evidence/sd5_source_head_drift.txt` (live `gh api .../compare/efaf2a51...2273b8c9`
+  => `status=ahead, ahead_by=14`, full 14-commit delta, source PR up to #730).
+- **Expected:** recorded source HEAD == actual source main HEAD.
+- **Actual:** recorded `efaf2a51` vs actual `2273b8c9` (delta: Wave 8/10/11 Antisovetov/diotrophes
+  content, map-engine ownership #709, a11y/WebKit scene closure #728, resume-toast fix #730, etc.).
+- **Confidence:** high (live API evidence).
+- **Verification level:** L1.
+- **Suggested repair lane:** verifier-owned authority-only synchronization pass (per project rule)
+  to advance the recorded source HEAD to `2273b8c9` with a paired reverify, BEFORE any product
+  reverify/repair uses a "current HEAD" claim. This is the same lane that last synced `efaf2a51`.
+- **Do not mix with:** SD-1/SD-2/SD-3 (matrix/registry); SD-4 must be re-targeted to `2273b8c9`.
+
+---
+
 ### Finding SD-4 — open bug with archive-only evidence (`AUDIT-P3-OG-LCP-MISMATCH`)
 - **Category:** AUDITREPO / data-sync (evidence-freshness risk, not a product-bug claim)
 - **Title:** the only open bug with archive-only evidence is `AUDIT-P3-OG-LCP-MISMATCH`
   (4 routes: `og:image` ≠ LCP image), whose evidence dates to 2026-07-05 archive and a 2026-07-09
-  reverify note "needs-live-recheck". No fresh witness on/after 2026-07-09; current source HEAD is
-  `efaf2a51` (2026-08-01).
+  reverify note "needs-live-recheck". No fresh witness on/after 2026-07-09.
 - **Severity:** P3 (evidence-freshness; no product claim)
 - **File(s):** matrix line 370; evidence
   `archive/2026-07-05-incoming-consolidated/arena-agent-audit-1-1/2026-07-05/REPORT.md`;
   reverify `..._2026-07-09_head-2313f36f-149-commit-delta.md:34`.
 - **Evidence:** `evidence/sd4_archive_only_open_bugs.txt` (from `check_matrix_coverage.py` `archivedOnlyIds`).
-- **Recommended action:** verifier schedules a fresh reverify of `AUDIT-P3-OG-LCP-MISMATCH` on current
-  HEAD `efaf2a51` before any closure/repair; do not close or repair from archived 2026-07-05 evidence
-  alone. See `proposals/proposal-SD-4-archive-only-evidence.md`.
+- **Recommended action:** verifier schedules a fresh reverify of `AUDIT-P3-OG-LCP-MISMATCH` on the
+  ACTUAL current source HEAD **`2273b8c9`** (not the stale recorded `efaf2a51`, see SD-5) before any
+  closure/repair; do not close or repair from archived 2026-07-05 evidence alone.
+  See `proposals/proposal-SD-4-archive-only-evidence.md`.
 - **Confidence:** high (tool output + reverify note).
 - **Verification level:** L1.
 
@@ -117,6 +142,8 @@ None.
 - Target bug: SD-2 → proposed severity **P3** (counter semantics). Current: unregistered.
 - Target bug: SD-3 → proposed severity **P3** (registry/evidence hygiene). Current: unregistered.
 - Target bug: SD-4 → proposed severity **P3** (evidence-freshness). Current: unregistered.
+- Target bug: SD-5 → proposed severity **P1** for authority freshness (blocking trusted current-HEAD
+  reverifies) / P3 as bug-class. Current: unregistered.
 
 ---
 
@@ -162,7 +189,8 @@ Not applicable (this lane is the initial assessment, not a recheck of a prior fi
   AR-006, so the canonical open total 191 counts one CLOSED item; if treated closed, open → 190.
   Disposition options in `proposals/proposal-SD-2-ar006-counting.md` + `evidence/sd2_resolved_ar006.txt`.
 - **SD-4 added:** `AUDIT-P3-OG-LCP-MISMATCH` is the only open bug with archive-only evidence;
-  recommend a fresh reverify on current HEAD `efaf2a51` (do not close/repair from 2026-07-05 archive).
+  recommend a fresh reverify on the ACTUAL current source HEAD `2273b8c9` (see SD-5; do not close/repair
+  from 2026-07-05 archive).
   See `proposals/proposal-SD-4-archive-only-evidence.md`.
 - **Coverage deep-dive (clean):** registry invariants all hold (alias targets resolve; no non-alias↔canonical
   overlap; all reasons filled). Every one of the 191 open IDs has evidence / direct witness / archived
@@ -178,9 +206,10 @@ Not applicable (this lane is the initial assessment, not a recheck of a prior fi
 - **What is synchronized (no action needed):**
   - Open section counts match their headers: P0=0, P1=96, P2=36, P3=51, Refactoring=4, AuditRepo=4.
   - Open total 191 = arithmetic sum of section headers.
-  - HEAD/deploy authority consistent across docs: source `efaf2a51…` / production `abf1edba…`
-    match in `NEXT_AGENT_PROMPT.md`, matrix masthead, matrix session log and the referenced reverify
-    `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md` (file exists).
+  - Recorded HEAD/deploy authority internally consistent across docs: `efaf2a51…` / production
+    `abf1edba…` match in `NEXT_AGENT_PROMPT.md`, matrix masthead, matrix session log and the referenced
+    reverify `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md` (file exists).
+    ⚠️ But the recorded HEAD `efaf2a51` is stale vs the actual source main `2273b8c9` (see SD-5).
   - All files referenced by `DOC_MAP.md` and `PROJECT_REGISTRY.md` exist:
     `verified/MASTER_BUG_MATRIX.md`, `NEXT_AGENT_PROMPT.md`,
     `verified/SUPER_AUDIT_2026-07-06_14a49be8.md`, `README.md`, `PremiumControls/README.md`,
@@ -195,7 +224,8 @@ Not applicable (this lane is the initial assessment, not a recheck of a prior fi
   - SD-2: decide AR-006 counting semantics (keep visible + exclude from counter → open 190, or move
     row to closed). Applies to `## Статистика` and `NEXT_AGENT_PROMPT.md`.
   - SD-3: add two `informational` registry records for `RIGHT-*` (or an accepted disposition).
-  - SD-4: schedule fresh reverify of `AUDIT-P3-OG-LCP-MISMATCH` on current HEAD `efaf2a51`.
+  - SD-4: schedule fresh reverify of `AUDIT-P3-OG-LCP-MISMATCH` on the actual source HEAD `2273b8c9`
+    (after SD-5 authority sync).
 - **Boundary:** this lane changed no canonical matrix row, status, severity, counter, source repo
   file, Research/Drive data or production evidence. Per README "Freedom with Evidence" an agent must
   NOT directly change canonical status in the verified ledger; hence only an intake report + proposals.

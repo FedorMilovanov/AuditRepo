@@ -41,8 +41,12 @@
   `reverify/..._9407cc92_genesis-b594-production.md:27`. They are Research rights-decisions, not
   bugs; recommended fix = two `informational` registry records.
 - `SD-4` — `AUDIT-P3-OG-LCP-MISMATCH` (open, P3) has archive-only evidence (2026-07-05) + a
-  2026-07-09 "needs-live-recheck" note; recommend a fresh reverify on current HEAD `efaf2a51`.
-- Everything else (P0/P1/P2/P3/Refactoring/AuditRepo row counts; HEAD=efaf2a51 / prod=abf1edba;
+  2026-07-09 "needs-live-recheck" note; recommend a fresh reverify on the ACTUAL current source HEAD
+  `2273b8c9` (after SD-5 authority sync).
+- `SD-5` — **authority drift (P1-freshness):** AuditRepo canon records source main = `efaf2a51`
+  (PR #669/#691 era), but the actual source main HEAD is `2273b8c9` (PR #730), **14 commits ahead**
+  (live `gh api compare` => ahead_by=14). Needs verifier authority-only sync + paired reverify.
+- Everything else (P0/P1/P2/P3/Refactoring/AuditRepo row counts; HEAD vs prod `abf1edba`;
   DOC_MAP and PROJECT_REGISTRY target files) synchronized OK. Coverage deep-dive clean: no
   ORPHAN-CLAIM; registry invariants hold; cross-section duplicate D-* IDs are benign.
 

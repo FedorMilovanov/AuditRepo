@@ -1,0 +1,43 @@
+# SD-5 — AuditRepo canonical source HEAD is stale vs actual source repo
+
+Observed 2026-08-01 (this lane). Live check via GitHub API (gh api).
+
+## Canonical (AuditRepo) claim
+- projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md:
+    "**Source main:** `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3`"  (era: PR #669 Karty inventory / PR #691 headline contract)
+- MASTER_BUG_MATRIX.md masthead: Source HEAD = `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3`
+- Last exact production authority: `abf1edba190280e554dfda085bef9fb6594c896d`; source != production.
+
+## Actual source repo (FedorMilovanov/gb-is-my-strength)
+gh api repos/FedorMilovanov/gb-is-my-strength/commits/main -> SHA:
+    2273b8c930eebf383d429b917d3636bc28a80bae  "fix(series): keep resume toast above mobile controls (#730)"
+
+gh api .../compare/efaf2a51...2273b8c9 -> status=ahead, ahead_by=14.
+
+Commits in the delta (14):
+  41617252e fix(content): apply Wave 8 Antisovetov source boundaries
+  cce47d20e docs(home): close Agent 17 archaeology and component lab (#710)
+  4c53bafbc content(diotrophes): add Wave 10 bounded product draft
+  8bd891b13 fix(map-engine): normalize runtime ownership and state (#709)
+  664511210 ci(diotrophes): make bounded diff gate ignore sync false positives (#718)
+  d0fe4a7dc content(diotrophes): add Wave 11 faithful-witness supplement
+  71a231d4a placeholder
+  75c49df99 revert: remove accidental A13 placeholder
+  ec282adab ci(diotrophes): make Wave 11 diff gate base-SHA stable
+  febd64e52 ci(diotrophes): make Wave 10 diff gate base-SHA stable
+  0ea8d5a27 ci(diotrophes): combine Wave 11 event-base and blob-exact diff (#726)
+  6d49d75ce test(a11y): close A13 mobile WebKit scene coverage (#728)
+  4fbd8b22e test(webkit): isolate overlay checks from resume prompt
+  2273b8c93 fix(series): keep resume toast above mobile controls (#730)
+
+## Interpretation
+- The AuditRepo canon records source main = efaf2a51, but the real source main is 2273b8c9.
+- This is an authority-only HEAD drift (not a bug in source). The project's own rule
+  (Single-Writer-Per-Fact / authority-only projection) requires a fresh sync pass to advance the
+  recorded source HEAD to 2273b8c9 BEFORE any "current HEAD" reverify of product bugs is trusted.
+- Consequence for SD-4: the recommended reverify of AUDIT-P3-OG-LCP-MISMATCH should target the
+  ACTUAL current source HEAD 2273b8c9, not the stale recorded efaf2a51.
+
+## Boundary
+- This lane does NOT rewrite NEXT_AGENT_PROMPT / masthead (that is verifier-owned authority-only
+  reconciliation). It only records the drift as evidence.
