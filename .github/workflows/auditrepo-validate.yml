@@ -41,6 +41,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Test matrix coverage control plane
+        run: |
+          python3 -m py_compile \
+            scripts/check_matrix_coverage.py \
+            scripts/matrix_coverage_lib.py \
+            scripts/matrix_coverage_contexts.py \
+            scripts/matrix_coverage_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
       - name: Enforce matrix evidence coverage
         run: |
           mkdir -p reports/matrix-coverage
