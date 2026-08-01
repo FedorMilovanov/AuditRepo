@@ -1,0 +1,265 @@
+name: One-shot gb authority sync
+
+on:
+  push:
+    branches:
+      - agent/gb-source-authority-0ff04232-20260801
+    paths:
+      - .github/workflows/gb-authority-sync.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gb-authority-sync-0ff04232
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: agent/gb-source-authority-0ff04232-20260801
+          fetch-depth: 0
+
+      - name: Apply authority-only projection
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          source = "0ff04232ee08a8f81711db640395901124aca787"
+          production = "abf1edba190280e554dfda085bef9fb6594c896d"
+          reverify_rel = "reverify/CURRENT_HEAD_REVERIFY_2026-08-01_0ff04232_source-vs-production.md"
+          project = Path("projects/gb-is-my-strength")
+
+          next_prompt = f'''# NEXT AGENT PROMPT — gb-is-my-strength
+
+          > **Только текущая операционная правда.** Счётчики принадлежат `verified/MASTER_BUG_MATRIX.md`.
+
+          **Source main:** `{source}`  
+          **Last exact production authority:** `{production}`  
+          **Current source deployment status:** ⚠️ `source != production`; same-SHA production witness для текущего source отсутствует.  
+          **Current reverify:** `{reverify_rel}`  
+          **AuditRepo synchronization:** authority-only projection; bug rows and counters are unchanged.
+
+          ## 1. Точная граница source
+
+          - current source `main` = `{source}`;
+          - после канонического `2f9ad5d89143fd45be1b882219eadfc89bfbdbae` в source ancestry находятся:
+            - PR #675 / `0131f8b9d6c717f85a8990700b72b09b575219a4` — homepage discovery metadata parity; exact head `404db8d14087d29522e56f190717d6224e8e3bfb`, 9/9 workflows green;
+            - PR #672 / `eb129d3e122b8932216232319f4e735e6866d941` — approval-gated Editorial Metadata v3; exact head `7de20ed77e60ec05bb91322ac03800a3d9860410`, 9/9 workflows green;
+            - PR #678 / `af60f833c70c4a74e0add987dc7a3a568b676589` — Nagornaya dark body surfaces; exact head `dcf9a7f9424034285c4d0be28729bb52b7106490`, 8/8 workflows green;
+            - PR #683 / `d93039866d721ff0b1ead08c8b7bccc0eb2b8b1b` — glossary dictionary trust boundary; exact head `92e12ac4fa7edb516ffd7e178b54c60ce8534046`, 17/17 workflows green;
+            - PR #688 / `{source}` — Workflow Policy v2; exact head `fff6155b651620b5e497585948d3b2a9fae5cd67`, 4/4 triggered workflows green;
+          - source issue #64 closed through PR #688;
+          - active source owners at capture: #669 Karty inventory, #680 NoteRegistry, #691 canonical article headline; do not duplicate or modify their branches/files;
+          - no post-`{production[:8]}` merge is production without a separate same-SHA witness.
+
+          ## 2. Last exact production
+
+          - deploy `30669840189`, attempt `1`, event `push`;
+          - release SHA = control-plane SHA = `{production}`;
+          - candidate `{production}:30669840189-1`;
+          - release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`;
+          - files / bytes `1152` / `81177351`;
+          - immutable path `/deployments/{production}/30669840189-1.json`;
+          - candidate artifact `8808656612` / `sha256:c7ddd49753c2a6f7c93b4962cce372a1be99d6f7871e76db6d6b9de12f4c3159`;
+          - generic live `8808666936` / `sha256:28333e7d19ebc51641f00ca086e8d77d2a92880ee546161f78a8e4d034957f10`;
+          - TTS `8808667707` / `sha256:7b8354caca07d12e682243c22487afe189413dbd5a0fbe36235c55395089aa54`;
+          - release ledger comment `5148074092`;
+          - physical Windows witness `5148209495`.
+
+          ```text
+          current source = {source}
+          last exact production = {production}
+          source != production
+          ```
+
+          ## 3. Следующий порядок
+
+          1. Не продвигать `{source[:8]}` в production authority без exact same-SHA readiness → candidate → Pages/live → TTS → ledger evidence.
+          2. Не вмешиваться в активные owner-lanes #669/#680/#691; использовать их exact heads и review boundaries.
+          3. После освобождения зависимых scope следующий свободный фундамент — source issue #62 Legacy Reference Quarantine.
+          4. После NoteRegistry продолжать единый ReaderProjection; не добавлять route-local note/TTS/search/print engines.
+          5. Строка `WORKFLOW-POLICY-SHADOW-ERA` и матричные счётчики остаются verifier-owned; authority-only синхронизация не переписывает bug rows.
+          '''
+          next_prompt = re.sub(r'^          ', '', next_prompt, flags=re.MULTILINE)
+          (project / "NEXT_AGENT_PROMPT.md").write_text(next_prompt, encoding="utf-8")
+
+          reverify = f'''# CURRENT HEAD REVERIFY — source `{source[:8]}` vs production `{production[:8]}`
+
+          **Дата:** 2026-08-01  
+          **Статус:** `SOURCE_CURRENT / PRODUCTION_STALE_RELATIVE_TO_SOURCE`  
+          **Production claim для `{source[:8]}`:** `no`
+
+          ## 1. Authority boundary
+
+          - Current source `main`: `{source}`.
+          - Last exact production authority: `{production}`.
+          - Эти SHA **не совпадают**. Текущий source нельзя называть production без нового same-SHA witness.
+          - AuditRepo canonical authority до этой синхронизации оставалась на `2f9ad5d89143fd45be1b882219eadfc89bfbdbae`; PR #115 был evidence-only и не менял эту границу.
+          - Active source owners at capture: #669, #680 and #691. Эта синхронизация не изменяет их ветки, PR, checks или файлы.
+
+          ## 2. Source ancestry после `2f9ad5d8`
+
+          - PR #675 — homepage discovery metadata parity; merge `0131f8b9d6c717f85a8990700b72b09b575219a4`, exact head `404db8d14087d29522e56f190717d6224e8e3bfb`, 9/9 triggered workflows green.
+          - PR #672 — Editorial Metadata v3; merge `eb129d3e122b8932216232319f4e735e6866d941`, exact head `7de20ed77e60ec05bb91322ac03800a3d9860410`, 9/9 triggered workflows green.
+          - PR #678 — Nagornaya dark body surfaces; merge `af60f833c70c4a74e0add987dc7a3a568b676589`, exact head `dcf9a7f9424034285c4d0be28729bb52b7106490`, 8/8 triggered workflows green.
+          - PR #683 — glossary dictionary trust boundary; merge `d93039866d721ff0b1ead08c8b7bccc0eb2b8b1b`, exact head `92e12ac4fa7edb516ffd7e178b54c60ce8534046`, 17/17 triggered workflows green.
+          - PR #688 — Workflow Policy v2; merge/current source `{source}`, exact head `fff6155b651620b5e497585948d3b2a9fae5cd67`.
+
+          Exact PR #688 evidence:
+
+          - Metadata & IndexNow Readiness run `30681815950` — success;
+          - Shared Files Guard run `30681815958` — success, including Workflow Policy v2 and actionlint;
+          - Node Toolchain Contract run `30681815957` — success, including read-only validation proof;
+          - TTS Download Consent run `30681815981` — success, including source/mutation contract and real-route Chromium matrix;
+          - review threads: `0`;
+          - merge guarded by expected head SHA `fff6155b651620b5e497585948d3b2a9fae5cd67`.
+
+          Workflow Policy v2 removes route-name ownership from active workflow policy, derives production route presence from `migration/page-ownership.json`, proves validation leaves tracked source clean, and isolates explicit same-repository label-gated autofix capabilities from ordinary read-only checks. Source issue #64 is closed.
+
+          ## 3. Last exact production witness
+
+          The last admitted exact source/release/control/live authority remains:
+
+          - release/control SHA: `{production}`;
+          - deploy run: `30669840189`, attempt `1`;
+          - candidate identity: `{production}:30669840189-1`;
+          - release digest: `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`;
+          - candidate artifact `8808656612`: `sha256:c7ddd49753c2a6f7c93b4962cce372a1be99d6f7871e76db6d6b9de12f4c3159`;
+          - generic live artifact `8808666936`: `sha256:28333e7d19ebc51641f00ca086e8d77d2a92880ee546161f78a8e4d034957f10`;
+          - TTS live artifact `8808667707`: `sha256:7b8354caca07d12e682243c22487afe189413dbd5a0fbe36235c55395089aa54`;
+          - release ledger comment: `5148074092`;
+          - physical Windows witness: `5148209495`.
+
+          Этот immutable witness остаётся действительным для `{production[:8]}`, но не переносится на более новый source по наследованию.
+
+          ## 4. Decision
+
+          ```text
+          current source = {source}
+          last exact production = {production}
+          source != production
+          ```
+
+          Для продвижения production authority требуется новый same-SHA путь:
+
+          1. exact-source readiness;
+          2. candidate identity and digest;
+          3. privileged Pages promotion тех же bytes;
+          4. generic live verification;
+          5. TTS capability verification;
+          6. immutable manifest/current-pointer readback;
+          7. downstream release ledger evidence.
+
+          ## 5. Canonical synchronization boundary
+
+          Эта синхронизация:
+
+          - обновляет current source/production boundary в `NEXT_AGENT_PROMPT`, мастхеде/статистической подписи/session log матрицы и этом reverify;
+          - не меняет open/closed/severity bug rows;
+          - не меняет счётчики: 164 closed / 192 open;
+          - не заявляет production для текущего source;
+          - не изменяет Research, Google Drive, source branches, active PRs или release evidence.
+
+          Отдельный verifier может disposition-нуть матричную строку `WORKFLOW-POLICY-SHADOW-ERA` после проверки merge `0ff04232`; authority-only lane не повышает source CI до bug-row closure автоматически.
+          '''
+          reverify = re.sub(r'^          ', '', reverify, flags=re.MULTILINE)
+          new_reverify = project / reverify_rel
+          if new_reverify.exists():
+              raise SystemExit(f"refusing to overwrite existing {new_reverify}")
+          new_reverify.write_text(reverify, encoding="utf-8")
+
+          matrix_path = project / "verified/MASTER_BUG_MATRIX.md"
+          matrix = matrix_path.read_text(encoding="utf-8")
+          original = matrix
+
+          def replace_one(pattern, replacement, label):
+              global matrix
+              matrix, count = re.subn(pattern, replacement, matrix, count=1, flags=re.MULTILINE)
+              if count != 1:
+                  raise SystemExit(f"{label}: expected one replacement, got {count}")
+
+          replace_one(
+              r'^\| Source HEAD \|.*$',
+              f'| Source HEAD | `{source}` (current source main; post-production ancestry includes Pagefind PR #667, homepage discovery PR #675, Editorial Metadata v3 PR #672, Nagornaya dark surfaces PR #678, glossary trust boundary PR #683 and Workflow Policy v2 PR #688; no current production claim) |',
+              'source masthead',
+          )
+          replace_one(
+              r'^\| Deploy \|.*$',
+              f'| Deploy | ⚠️ **SOURCE ≠ PRODUCTION.** Last exact production remains run `30669840189` attempt `1`, which promoted `{production}:30669840189-1`; release/control SHA `{production}`; digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Candidate `8808656612` (`sha256:c7ddd49753c2a6f7c93b4962cce372a1be99d6f7871e76db6d6b9de12f4c3159`), generic live `8808666936` (`sha256:28333e7d19ebc51641f00ca086e8d77d2a92880ee546161f78a8e4d034957f10`), TTS `8808667707` (`sha256:7b8354caca07d12e682243c22487afe189413dbd5a0fbe36235c55395089aa54`). Ledger `5148074092`; Windows witness `5148209495`. Current source `{source}` requires a new same-SHA production witness. |',
+              'deploy masthead',
+          )
+          replace_one(
+              r'^\| Last reverify \|.*$',
+              f'| Last reverify | `{reverify_rel}` |',
+              'reverify masthead',
+          )
+          replace_one(
+              r'^⚠️ Deploy-формулировки.*$',
+              f'⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current source = `{source}`; last exact production authority = `{production}`. Более новые source-коммиты не наследуют live/production-доказательства старого SHA. PRs #675/#672/#678/#683/#688 слиты и входят в current source; active source owners at capture: #669/#680/#691. Evidence: `{reverify_rel}`.',
+              'authority paragraph',
+          )
+          replace_one(
+              r'^## Статистика \(обновлено 2026-08-01: source `[^`]+`; last exact production `abf1edba`; counters unchanged\)$',
+              '## Статистика (обновлено 2026-08-01: source `0ff04232`; last exact production `abf1edba`; counters unchanged)',
+              'statistics heading',
+          )
+
+          session_marker = '## Session log (append-only)\n\n'
+          if matrix.count(session_marker) != 1:
+              raise SystemExit('session log marker must occur exactly once')
+          session_entry = f'''- **2026-08-01 — source advanced to `0ff04232`; production remains `abf1edba`.** Current source now includes homepage discovery PR #675 / `0131f8b9`, Editorial Metadata v3 PR #672 / `eb129d3e`, Nagornaya dark surfaces PR #678 / `af60f833`, glossary trust boundary PR #683 / `d9303986` and Workflow Policy v2 PR #688 / `{source}`. Exact #688 head `fff6155b` passed Metadata `30681815950`, Shared/Workflow Policy/actionlint `30681815958`, Node/read-only `30681815957` and TTS/Chromium `30681815981`; review threads 0. Active source owners at capture are #669/#680/#691. Last exact production remains deploy `30669840189` attempt `1` at `{production}`; no same-SHA production witness exists for current source. Authority-only synchronization changes no bug rows or counters: 164 closed / 192 open. `WORKFLOW-POLICY-SHADOW-ERA` disposition remains verifier-owned. Evidence: `{reverify_rel}`.'''
+          if session_entry in matrix:
+              raise SystemExit('session entry already exists')
+          matrix = matrix.replace(session_marker, session_marker + session_entry + '\n\n', 1)
+
+          for invariant in [
+              '## ✅ ЗАКРЫТО (164)',
+              '## 🟠 P1 — ОТКРЫТО (97)',
+              '## 🟡 P2 — ОТКРЫТО (36)',
+              '## 🟢 P3 — ОТКРЫТО (51)',
+              '| Закрыто (fixed) | 164 |',
+              '| **Всего открыто (матрица)** | **192** |',
+          ]:
+              if invariant not in original or invariant not in matrix:
+                  raise SystemExit(f'counter invariant drift: {invariant}')
+          if matrix.count(source) < 4:
+              raise SystemExit('new source authority is not projected to all required masthead surfaces')
+          matrix_path.write_text(matrix, encoding="utf-8")
+
+          Path('.github/workflows/gb-authority-sync.yml').unlink()
+          PY
+
+      - name: Validate exact changed surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t changed < <(git status --short | sed -E 's/^.. //' | sort)
+          printf '%s\n' "${changed[@]}"
+          expected=(
+            ".github/workflows/gb-authority-sync.yml"
+            "projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md"
+            "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-01_0ff04232_source-vs-production.md"
+            "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
+          )
+          mapfile -t expected_sorted < <(printf '%s\n' "${expected[@]}" | sort)
+          diff -u <(printf '%s\n' "${expected_sorted[@]}") <(printf '%s\n' "${changed[@]}")
+          python validate_audit_repo.py
+          git diff --check
+
+      - name: Commit authority projection and remove generator
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "audit(gb): advance current source authority to 0ff04232"
+          git push origin HEAD:agent/gb-source-authority-0ff04232-20260801
