@@ -3,6 +3,7 @@
 **Date:** 2026-08-01
 **Status:** `SOURCE_CURRENT / PRODUCTION_STALE_RELATIVE_TO_SOURCE`
 **Production claim for `efaf2a51`:** `no`
+**AuditRepo synchronization PR:** `#118`
 
 ## 1. Authority boundary
 
