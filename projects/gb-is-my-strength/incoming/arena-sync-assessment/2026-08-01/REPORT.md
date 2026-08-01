@@ -60,6 +60,24 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-3 — unregistered `RIGHT-*` evidence IDs flagged by matrix coverage checker
+- **Category:** AUDITREPO / data-sync (evidence-registry hygiene, not a product bug)
+- **Title:** `check_matrix_coverage.py` fails-closed on two unregistered evidence IDs —
+  `RIGHT-4Q204-OPEN-SCHEMATIC` and `RIGHT-P72-TEXT-LINK-ONLY` — referenced in reverify.
+- **Severity:** P3 (governance/registry; no product impact)
+- **File(s):** `reverify/CURRENT_HEAD_REVERIFY_2026-07-26_9407cc92_genesis-b594-production.md:27`;
+  missing registry entries in `verified/MATRIX_ID_ALIASES.json`.
+- **Evidence:** `evidence/sd3_unregistered_rights_ids.txt` (exact checker output).
+- **Nature:** the two IDs are **Research rights-decisions** (`RIGHT-*`), pinned by Genesis-6
+  provenance (Research commit `9bba3d45`, rights for Articles 6–9) — not bug IDs. They do not belong
+  in the bug matrix, but the hardened coverage checker correctly flags them because no registry
+  disposition exists.
+- **Confidence:** high (project tool output, reproducible).
+- **Verification level:** L1.
+- **Suggested repair lane:** verifier/implementation adds two `informational` registry records
+  (with non-empty reason) to clear the diagnostic; do NOT add to matrix or `ignoredTokens`.
+  See `proposals/proposal-SD-3-rights-ids-registry.md`.
+
 ---
 
 ## 2. Confirmations of Existing Findings
@@ -99,6 +117,17 @@ Not applicable (this lane is the initial assessment, not a recheck of a prior fi
 ---
 
 ## 8. Notes for Verifier
+
+### Coverage-checker pass (this lane, same date) — SD-3
+- Running the project's own `scripts/check_matrix_coverage.py` yields exactly **2 problems**, both
+  UNREGISTERED-EVIDENCE for `RIGHT-4Q204-OPEN-SCHEMATIC` and `RIGHT-P72-TEXT-LINK-ONLY` at
+  `reverify/CURRENT_HEAD_REVERIFY_2026-07-26_9407cc92_genesis-b594-production.md:27`. These are
+  Research rights-decisions (not bugs). This is precisely the scenario the 2026-08-01 control-plane
+  audit designed the hardened checker to catch; it now fires with exact file:line.
+  Recommended: two `informational` registry records with reason (do not fabricate bugs).
+- Other coverage stats are consistent: 356 canonical ids / 191 open rows; registry 52
+  (11 aliases, 7 informational, 30 retired, 4 false-positive); direct witnesses 10; archived-only 2.
+  No additional unregistered IDs beyond SD-3.
 
 ### Continuation pass (this lane, same date) — refined conclusions
 - **SD-1 refined:** the closed table's 4 merged/alias-style rows are

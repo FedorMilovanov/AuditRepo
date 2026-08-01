@@ -34,6 +34,10 @@
   (closed table is SSOT). Open total unaffected.
 - `SD-2` — `AR-006` is marked CLOSED but is listed in the 🟣 AUDITREPO open section and is included
   in the canonical open total (191). Confirmed as the ONLY genuine closed-in-open row (full sweep).
+- `SD-3` — `check_matrix_coverage.py` fails-closed on 2 unregistered evidence IDs
+  (`RIGHT-4Q204-OPEN-SCHEMATIC`, `RIGHT-P72-TEXT-LINK-ONLY`) referenced in
+  `reverify/..._9407cc92_genesis-b594-production.md:27`. They are Research rights-decisions, not
+  bugs; recommended fix = two `informational` registry records.
 - Everything else (P0/P1/P2/P3/Refactoring/AuditRepo row counts; HEAD=efaf2a51 / prod=abf1edba;
   DOC_MAP and PROJECT_REGISTRY target files) synchronized OK. Cross-section duplicate D-* IDs are
   benign (open section + non-counting historical log).

@@ -1,0 +1,32 @@
+# SD-3 — UNREGISTERED-EVIDENCE: RIGHT-* rights-decision IDs
+
+Command (project's own matrix coverage checker):
+  python3 scripts/check_matrix_coverage.py
+
+Output:
+  matrix: 356 canonical ids, 191 open rows; evidence files: 319; registry: 52
+    (aliases: 11, informational: 7, retired: 30, false-positive: 4); direct witnesses: 10; archived-only: 2
+
+  2 problem(s):
+    - UNREGISTERED-EVIDENCE: reverify explicitly registers RIGHT-4Q204-OPEN-SCHEMATIC
+      at reverify/CURRENT_HEAD_REVERIFY_2026-07-26_9407cc92_genesis-b594-production.md:27
+      but matrix/registry does not
+    - UNREGISTERED-EVIDENCE: reverify explicitly registers RIGHT-P72-TEXT-LINK-ONLY
+      at reverify/CURRENT_HEAD_REVERIFY_2026-07-26_9407cc92_genesis-b594-production.md:27
+      but matrix/registry does not
+
+Context at the flagged line (reverify/CURRENT_HEAD_REVERIFY_2026-07-26_9407cc92_genesis-b594-production.md):
+  - Research commit `9bba3d45d3475468798f69e4b6067acae673b79c`;
+  - authority base `b654c5375a7b212ff9b42c08bb0193eeaad70746`;
+  - manifest SHA-256 `95320cc56c678fcacf4f24985f96150c231b1d91338349c19005e277b16125dd`;
+  - four ordered article bundles for Articles 6-9;
+  - rights decisions `RIGHT-4Q204-OPEN-SCHEMATIC` and `RIGHT-P72-TEXT-LINK-ONLY`.
+
+Registry state:
+  MATRIX_ID_ALIASES.json -> aliases with key starting "RIGHT": {} (none)
+  ignoredTokens: []
+
+These are Research rights-decision identifiers (RIGHT-*), NOT bug IDs. They are legitimately
+referenced as provenance evidence in the reverify doc but are not bugs and do not belong in the
+bug matrix. The matrix coverage checker (hardened per MATRIX_COVERAGE_CONTROL_PLANE_AUDIT_2026-08-01)
+correctly fails-closed on them with exact file:line.
