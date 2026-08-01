@@ -40,9 +40,11 @@
   (`RIGHT-4Q204-OPEN-SCHEMATIC`, `RIGHT-P72-TEXT-LINK-ONLY`) referenced in
   `reverify/..._9407cc92_genesis-b594-production.md:27`. They are Research rights-decisions, not
   bugs; recommended fix = two `informational` registry records.
+- `SD-4` — `AUDIT-P3-OG-LCP-MISMATCH` (open, P3) has archive-only evidence (2026-07-05) + a
+  2026-07-09 "needs-live-recheck" note; recommend a fresh reverify on current HEAD `efaf2a51`.
 - Everything else (P0/P1/P2/P3/Refactoring/AuditRepo row counts; HEAD=efaf2a51 / prod=abf1edba;
-  DOC_MAP and PROJECT_REGISTRY target files) synchronized OK. Cross-section duplicate D-* IDs are
-  benign (open section + non-counting historical log).
+  DOC_MAP and PROJECT_REGISTRY target files) synchronized OK. Coverage deep-dive clean: no
+  ORPHAN-CLAIM; registry invariants hold; cross-section duplicate D-* IDs are benign.
 
 ## Files in this folder
 - `REPORT.md` — universal work package (sections 1–8) with full evidence.

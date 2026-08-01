@@ -1,0 +1,30 @@
+# SD-2 RESOLUTION — AR-006 closed-in-open counting
+
+## Confirmed facts
+- AR-006 row sits in the OPEN section `## 🟣 AUDITREPO (4)` (matrix line 427):
+  "✅ CLOSED 2026-07-14: ALLOWED_ROOT_DIRS/FILES в validate_audit_repo.py (...)".
+- Session log (line 845) confirms: "AR-006 закрыт: root allow-list ...; корневой passes/ выселен в проект."
+- AR-006 has NO closing reverify in reverify/working/ (only archived intake + row/session-log text), but
+  the fix is governance (validate_audit_repo.py ALLOWED_ROOT_DIRS) and is validated by the fact that
+  `scripts/validate_audit_repo.py` currently PASSes — the fix is observable in the working tooling.
+- The AUDITREPO open section has 4 rows: AR-001, AR-004, AR-005, AR-006. AR-006 is closed.
+
+## Counter consequence
+- Open total 191 = P1(96) + P2(36) + P3(51) + REFACT(4) + AUDITREPO(4).
+- AUDITREPO(4) includes AR-006 (closed). So the canonical open total 191 counts one CLOSED item.
+- If AR-006 were treated as closed (moved to closed table), open would become 190 and AUDITREPO open = 3.
+
+## Full-section sweep (already done, evidence: sd1_alias_rows_and_options.txt)
+- AR-006 is the ONLY genuine closed-but-listed-in-open-section row.
+- MAP-P1-19 ("крестик закрытия" = close button), TTS-DL-NO-TABLOCK ("Consent UX закрыт PR#177" =
+  describes a sub-part; row is an open residual), D-19 ("половина ЗАКРЫТА" = genuinely partial) are
+  wording false positives, correctly open.
+
+## Verifier options
+- A. Move AR-006 to the closed table (or annotate AUDITREPO open count as 3) and set open total 190.
+- B. Keep AR-006 visible in AUDITREPO for traceability but exclude it from the open counter with a
+  one-line counting rule (open total 190, AUDITREPO-open 3).
+- Either way the invariant must hold: open_total == sum(open section counts), and no CLOSED item
+  counted as open.
+- NOTE: this is a small delta (1) and touches the canonical total 191 that is propagated to
+  NEXT_AGENT_PROMPT, so it is verifier-owned; not a product bug.

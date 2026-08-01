@@ -57,6 +57,25 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-4 — open bug with archive-only evidence (`AUDIT-P3-OG-LCP-MISMATCH`)
+- **Category:** AUDITREPO / data-sync (evidence-freshness risk, not a product-bug claim)
+- **Title:** the only open bug with archive-only evidence is `AUDIT-P3-OG-LCP-MISMATCH`
+  (4 routes: `og:image` ≠ LCP image), whose evidence dates to 2026-07-05 archive and a 2026-07-09
+  reverify note "needs-live-recheck". No fresh witness on/after 2026-07-09; current source HEAD is
+  `efaf2a51` (2026-08-01).
+- **Severity:** P3 (evidence-freshness; no product claim)
+- **File(s):** matrix line 370; evidence
+  `archive/2026-07-05-incoming-consolidated/arena-agent-audit-1-1/2026-07-05/REPORT.md`;
+  reverify `..._2026-07-09_head-2313f36f-149-commit-delta.md:34`.
+- **Evidence:** `evidence/sd4_archive_only_open_bugs.txt` (from `check_matrix_coverage.py` `archivedOnlyIds`).
+- **Recommended action:** verifier schedules a fresh reverify of `AUDIT-P3-OG-LCP-MISMATCH` on current
+  HEAD `efaf2a51` before any closure/repair; do not close or repair from archived 2026-07-05 evidence
+  alone. See `proposals/proposal-SD-4-archive-only-evidence.md`.
+- **Confidence:** high (tool output + reverify note).
+- **Verification level:** L1.
+
+---
+
 ### Finding SD-3 — unregistered `RIGHT-*` evidence IDs flagged by matrix coverage checker
 - **Category:** AUDITREPO / data-sync (evidence-registry hygiene, not a product bug)
 - **Title:** `check_matrix_coverage.py` fails-closed on two unregistered evidence IDs —
@@ -93,18 +112,25 @@ None.
 ---
 
 ## 5. Severity Proposals
-- Target bug: SD-1 → proposed severity **P2** (canonical counter drift). Current: unregistered.
-- Target bug: SD-2 → proposed severity **P3**. Current: unregistered.
+- Target bug: SD-1 → proposed severity **P3** (row-shape / ID-naming; corrected down from the initial
+  P2 "counter drift" framing after running canonical tooling). Current: unregistered.
+- Target bug: SD-2 → proposed severity **P3** (counter semantics). Current: unregistered.
+- Target bug: SD-3 → proposed severity **P3** (registry/evidence hygiene). Current: unregistered.
+- Target bug: SD-4 → proposed severity **P3** (evidence-freshness). Current: unregistered.
 
 ---
 
 ## 6. Repair Lane Suggestions
-- Bug IDs: SD-1, SD-2
-- Lane: `AUDITREPO-matrix-counter-reconcile` (single governance pass)
-- Why together: both are matrix counter/status-sync inconsistencies in `MASTER_BUG_MATRIX.md`
-  touching the same canonical counters (165/191) that are propagated to `NEXT_AGENT_PROMPT.md`.
+- Bug IDs: SD-1, SD-2, SD-3, SD-4
+- Lane: `AUDITREPO-matrix-counter-reconcile` (single governance pass) — SD-1 + SD-2 (canonical
+  counters 165/191 in `MASTER_BUG_MATRIX.md` + propagated to `NEXT_AGENT_PROMPT.md`).
+- Lane: `AUDITREPO-evidence-registry-reconcile` — SD-3 (add two `informational` registry records)
+  + SD-4 (schedule fresh reverify of `AUDIT-P3-OG-LCP-MISMATCH`).
+- Why together: all four are data-sync / evidence-hygiene fixes in the same canonical layer; none
+  touches product code.
 - What must NOT be mixed: no product/source repo changes; no Research/Drive changes; no
-  PremiumControls owner-zone changes; no reclassification of any product bug severity.
+  PremiumControls owner-zone changes; no reclassification of any product bug severity; no
+  counter/total edit without an explicit verifier decision.
 
 ---
 
@@ -131,9 +157,20 @@ Not applicable (this lane is the initial assessment, not a recheck of a prior fi
   (`check_matrix_coverage.py`: 356 canonical ids, 191 open => 165 closed). The only mismatch is the
   combined slash-ID row `NEW-68/69` (two distinct fixed bugs, invisible to canonical ID counting).
   Severity corrected P2 → P3. Options in `proposals/proposal-SD-1-closed-counter.md`.
-- **SD-2 confirmed as the unique case:** a full-section sweep found AR-006 is the only genuine
-  "closed-but-listed-in-open-section" row. All other flagged rows are false positives on wording
-  (MAP-P1-19, TTS-DL-NO-TABLOCK, D-19 partial). Evidence: `evidence/sd1_alias_rows_and_options.txt`.
+- **SD-2 confirmed as the unique case + counter consequence:** a full-section sweep found AR-006 is
+  the only genuine closed-but-listed-in-open-section row. Concretely, AUDITREPO(4) includes closed
+  AR-006, so the canonical open total 191 counts one CLOSED item; if treated closed, open → 190.
+  Disposition options in `proposals/proposal-SD-2-ar006-counting.md` + `evidence/sd2_resolved_ar006.txt`.
+- **SD-4 added:** `AUDIT-P3-OG-LCP-MISMATCH` is the only open bug with archive-only evidence;
+  recommend a fresh reverify on current HEAD `efaf2a51` (do not close/repair from 2026-07-05 archive).
+  See `proposals/proposal-SD-4-archive-only-evidence.md`.
+- **Coverage deep-dive (clean):** registry invariants all hold (alias targets resolve; no non-alias↔canonical
+  overlap; all reasons filled). Every one of the 191 open IDs has evidence / direct witness / archived
+  evidence — no ORPHAN-CLAIM. `R-003` archive-only is fine (refactoring backlog). Evidence:
+  `evidence/coverage_deep_dive.txt`.
+- **SD-2 wording false-positives confirmed:** all other closed-marked rows in open sections are false
+  positives on wording (MAP-P1-19, TTS-DL-NO-TABLOCK, D-19 partial). Evidence:
+  `evidence/sd1_alias_rows_and_options.txt`.
 - **Cross-section duplicate IDs (D-1/2/3/4/7/8/19/21/22) are benign:** each appears in an open
   section plus the non-counting HISTORICAL AUDITOR LOG section; they do not inflate counters.
   Evidence: `evidence/cross_section_id_check.txt`.
@@ -152,9 +189,13 @@ Not applicable (this lane is the initial assessment, not a recheck of a prior fi
   - `NEXT_AGENT_PROMPT.md` "AuditRepo synchronization: authority-only projection" and matrix
     masthead agree on `source != production` and on 165/191.
 - **Needs verifier disposition (L1 → L2):**
-  - SD-1: confirm whether the extra 166th closed row should be excluded (alias/sub-row) or the
-    counter bumped to 166, then reconcile header, `## Статистика` and `NEXT_AGENT_PROMPT.md`.
-  - SD-2: decide AR-006 counting semantics (keep visible + exclude from counter, or move to closed).
+  - SD-1: decide split `NEW-68`+`NEW-69` (closed→167) vs rename to one slash-free ID (closed→166);
+    reconcile header, `## Статистика` and `NEXT_AGENT_PROMPT.md` accordingly. Closed counter 165 is
+    currently correct, so any change here is a deliberate canonical decision.
+  - SD-2: decide AR-006 counting semantics (keep visible + exclude from counter → open 190, or move
+    row to closed). Applies to `## Статистика` and `NEXT_AGENT_PROMPT.md`.
+  - SD-3: add two `informational` registry records for `RIGHT-*` (or an accepted disposition).
+  - SD-4: schedule fresh reverify of `AUDIT-P3-OG-LCP-MISMATCH` on current HEAD `efaf2a51`.
 - **Boundary:** this lane changed no canonical matrix row, status, severity, counter, source repo
   file, Research/Drive data or production evidence. Per README "Freedom with Evidence" an agent must
   NOT directly change canonical status in the verified ledger; hence only an intake report + proposals.

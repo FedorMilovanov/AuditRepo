@@ -1,0 +1,23 @@
+# SD-4 — open bugs whose evidence is archive-only (stale-evidence risk)
+
+Source: scripts/check_matrix_coverage.py report (archivedOnlyIds).
+
+## AUDIT-P3-OG-LCP-MISMATCH  (open, P3)
+- Matrix row (line 370): "4 routes: og:image ≠ LCP image".
+- Evidence ONLY in archive: archive/2026-07-05-incoming-consolidated/arena-agent-audit-1-1/2026-07-05/REPORT.md (line 101).
+- Also mentioned once in reverify CURRENT_HEAD_REVERIFY_2026-07-09_head-2313f36f-149-commit-delta.md line 34
+  as "AUDIT-P3-OG-LCP-MISMATCH — needs-live-recheck", within a still-open list (not a per-finding witness).
+- No fresh reverify/incoming/working evidence on or after 2026-07-09.
+- Current source HEAD is efaf2a51 (2026-08-01). The bug's evidence is ~3 weeks old and explicitly
+  flagged "needs-live-recheck" — it may be stale or already fixed on current HEAD.
+
+## R-003  (open, Refactoring)
+- Matrix row (line 417): "Нет source maps".
+- Evidence archive-only. This is a refactoring backlog item (permanently deferred, not expected to
+  be reverified) — acceptable.
+
+## Verifier note
+- AUDIT-P3-OG-LCP-MISMATCH is the only OPEN bug at real stale-evidence risk. Recommend a fresh
+  reverify on current HEAD efaf2a51 (does og:image == LCP on the 4 routes now?) before any closure
+  or repair-order. If it still reproduces, promote with fresh evidence; if not, move to stale/fixed.
+- This is a data-sync / evidence-freshness finding, not a product bug claim.
