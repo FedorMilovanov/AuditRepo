@@ -9,13 +9,13 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `0ff04232ee08a8f81711db640395901124aca787` (current source main; post-production ancestry includes Pagefind PR #667, homepage discovery PR #675, Editorial Metadata v3 PR #672, Nagornaya dark surfaces PR #678, glossary trust boundary PR #683 and Workflow Policy v2 PR #688; no current production claim) |
-| Deploy | ⚠️ **SOURCE ≠ PRODUCTION.** Last exact production remains run `30669840189` attempt `1`, which promoted `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`; release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`; digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Candidate `8808656612` (`sha256:c7ddd49753c2a6f7c93b4962cce372a1be99d6f7871e76db6d6b9de12f4c3159`), generic live `8808666936` (`sha256:28333e7d19ebc51641f00ca086e8d77d2a92880ee546161f78a8e4d034957f10`), TTS `8808667707` (`sha256:7b8354caca07d12e682243c22487afe189413dbd5a0fbe36235c55395089aa54`). Ledger `5148074092`; Windows witness `5148209495`. Current source `0ff04232ee08a8f81711db640395901124aca787` requires a new same-SHA production witness. |
+| Source HEAD | `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` (current source main; post-production ancestry includes Pagefind #667, homepage #675, Editorial Metadata v3 #672, Nagornaya #678, glossary trust boundary #683, Workflow Policy v2 #688, canonical headline #691 and governed Karty inventory #669; no current production claim) |
+| Deploy | ⚠️ **SOURCE ≠ PRODUCTION.** Last exact production remains run `30669840189` attempt `1`, which promoted `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`; release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`; digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Candidate `8808656612` (`sha256:c7ddd49753c2a6f7c93b4962cce372a1be99d6f7871e76db6d6b9de12f4c3159`), generic live `8808666936` (`sha256:28333e7d19ebc51641f00ca086e8d77d2a92880ee546161f78a8e4d034957f10`), TTS `8808667707` (`sha256:7b8354caca07d12e682243c22487afe189413dbd5a0fbe36235c55395089aa54`). Ledger `5148074092`; Windows witness `5148209495`. Current source `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` requires a new same-SHA production witness. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_0ff04232_source-vs-production.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md` |
 
-⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current source = `0ff04232ee08a8f81711db640395901124aca787`; last exact production authority = `abf1edba190280e554dfda085bef9fb6594c896d`. Более новые source-коммиты не наследуют live/production-доказательства старого SHA. PRs #675/#672/#678/#683/#688 слиты и входят в current source; active source owners at capture: #669/#680/#691. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_0ff04232_source-vs-production.md`.
+⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current source = `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3`; last exact production authority = `abf1edba190280e554dfda085bef9fb6594c896d`. Более новые source-коммиты не наследуют live/production-доказательства старого SHA. PRs #691/#669 слиты после Workflow Policy v2; active source owner at capture: #680. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
@@ -468,7 +468,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-01: source `0ff04232`; last exact production `abf1edba`; workflow policy closure verified)
+## Статистика (обновлено 2026-08-01: source `efaf2a51`; last exact production `abf1edba`; counters 165/191 unchanged)
 
 | Категория | Количество |
 |---|---|
@@ -487,6 +487,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+- **2026-08-01 — source advanced to `efaf2a51`; production remains `abf1edba`.** PR #691 / `c5ae325e` established one canonical article-headline contract; exact head `6736bf98` passed 14/14 triggered workflows. PR #669 / `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` replaced the Karty literal audit count with one governed route inventory; exact head `94748bb7` passed 8/8 triggered workflows. Active source owner at capture: #680 NoteRegistry. AuditRepo PR #117 already closed `WORKFLOW-POLICY-SHADOW-ERA`; counters remain 165 closed / 191 open. No same-SHA production witness exists for current source. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md`.
 
 - **2026-08-01 — `WORKFLOW-POLICY-SHADOW-ERA` closed at source `0ff04232`.** Verifier matched the open claim to source PR #688: route coverage is registry-derived, ordinary validation is source-read-only, explicit autofix/transactional write capabilities are isolated, actionlint is blocking and SYSTEM failure lifecycle coverage is current. Exact head `fff6155b` passed runs `30681815950`, `30681815958`, `30681815957` and `30681815981`; review threads 0; issue #64 closed. One P1 row moved to fixed: closed 164 → 165, P1 97 → 96, total open 192 → 191. Production remains `abf1edba`; no production claim for `0ff04232`. Evidence: `reverify/WORKFLOW_POLICY_SHADOW_ERA_CLOSURE_2026-08-01_0ff04232.md`.
 
