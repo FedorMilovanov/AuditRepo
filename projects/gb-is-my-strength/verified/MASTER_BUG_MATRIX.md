@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (164)
+## ✅ ЗАКРЫТО (165)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| WORKFLOW-POLICY-SHADOW-ERA | ✅ **FIXED/SOURCE+CI VERIFIED 2026-08-01.** Source PR #688 replaces hardcoded route-path policy with registry-owned production-route coverage, capability-based gates, source-read-only validation and explicit permission/write-capability contracts. It also keeps build-once candidate promotion and live witnesses separated, makes actionlint blocking and expands stateful SYSTEM-gate failure coverage. Exact head `fff6155b651620b5e497585948d3b2a9fae5cd67` passed Metadata `30681815950`, Shared/Workflow Policy/actionlint `30681815958`, Node/read-only `30681815957` and TTS/Chromium `30681815981`; zero review threads. Squash merge `0ff04232ee08a8f81711db640395901124aca787`; source issue #64 closed. Production is not claimed. | `0ff04232` PR#688; issue #64; runs `30681815950`/`30681815958`/`30681815957`/`30681815981` |
 | HOME-BROWSER-LIFECYCLE-RESIDUAL | ✅ **FIXED/SOURCE+CHROMIUM+WEBKIT VERIFIED 2026-07-26.** PR #405 replaced the impossible blanket WebKit BFCache expectation with a stricter capability-aware contract. Chromium must emit coherent persisted=true events and preserve the exact document token; Playwright WebKit may report persisted=false only with coherent pagehide/pageshow, a new token, `navigationType=back_forward`, restored theme/menu/scroll state and all runtime/shortcut/Pagefind/back-to-top assertions. Exact head `88d17334` passed Runtime `30196286302` and Shared `30196286327`; artifact `8630244568` (`sha256:a92dde7ab47e2b669c131c4acd5ebe606e64adb2f92ba49347218f0772ef1a57`). No retry, waiver or product-runtime edit. | `cc2e829f` PR#405; issue #299 |
 | CI-BUILD-VALIDATION-DUPLICATION | ✅ **FIXED/SOURCE+CI+PRODUCTION VERIFIED 2026-07-26.** PR #370 makes `Deploy to GitHub Pages` the sole production owner. Readiness performs the only checkout, `npm ci` and production-like build under Node 22.12.0/npm 10.9.0, validates that exact `dist`, writes provenance and uploads candidate `8634711632`. Privileged promotion downloads, verifies and publishes the same candidate without checkout/install/build. Exact run `30211404138` completed both jobs successfully. | `cd4b7706` PR#370; issue #295; run `30211404138` |
 | DEPLOY-PROVENANCE-TTS-COUPLING | ✅ **FIXED/SOURCE+PRODUCTION+LIVE VERIFIED 2026-07-26.** PR #370 replaces top-level TTS-shaped provenance with schema-v4 generic release manifest plus schema-v3 current pointer. Candidate identity/path belong to `releaseSha`; workflow/artifact transport belong to `controlPlaneSha`; automatic production requires equality. Whole-tree digest `sha256:0f1780b179b6dce95dbebb8427a3e44441709d03c3a576afa1234fe86681b1a4` covers 1,110 files / 78,985,779 bytes. Generic live artifact `8634715957` verifies pointer→manifest→build/route/Pagefind/sitemap/feed/core assets before TTS artifact `8634716211` verifies `extensions.tts`. | `cd4b7706` PR#370; issue #292 |
@@ -200,12 +201,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (97)
+## 🟠 P1 — ОТКРЫТО (96)
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | CI-WORKFLOW-PROLIFERATION | Control plane expanded from the earlier 19-workflow baseline to roughly 26 permanent workflows with repeated heavy setup/build/test sections. Capability inventory and convergence are required before adding workflows. | current control-plane artifacts; forensic delta 2026-07-25 |
-| WORKFLOW-POLICY-SHADOW-ERA | Workflow policy still protects historical shadow/route names and hardcoded dist paths instead of effective-route-registry coverage, capability gates, read-only validation and permission contracts. | existing source issue #64 |
 | EDITORIAL-PROJECTION-51-DRIFT | Projection-only Search/RSS observations must not overwrite canonical editorial dates. Reconcile the 51-field diff by field class and retain human editorial authority; do not add a generic writer merely to make the workflow green. | source issue #217; `reverify/MULTIAGENT_CONVERGENCE_2026-07-25_d94b5488.md` |
 | S-T-01 | 🟡 **ЧАСТИЧНО 2026-07-14**: чекер серий + orphan-scan + legacy-selector-ban теперь видят .astro/.mdx; полный route-level паритет гейтов для Astro-мира — остаётся. | Auditor 2026-07-14 |
 | S-SEC-01 | Blacklist-based HTML Sanitization in enhancements.js (XSS risk) | Auditor 2026-07-14 |
@@ -468,18 +468,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-01: source `0ff04232`; last exact production `abf1edba`; counters unchanged)
+## Статистика (обновлено 2026-08-01: source `0ff04232`; last exact production `abf1edba`; workflow policy closure verified)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 164 |
+| Закрыто (fixed) | 165 |
 | **P0 открыто** | **0** |
-| P1 открыто | 97 |
+| P1 открыто | 96 |
 | P2 открыто | 36 |
 | P3 открыто | 51 |
 | Рефакторинг | 4 |
 | AuditRepo | 4 |
-| **Всего открыто (матрица)** | **192** |
+| **Всего открыто (матрица)** | **191** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -487,6 +487,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+- **2026-08-01 — `WORKFLOW-POLICY-SHADOW-ERA` closed at source `0ff04232`.** Verifier matched the open claim to source PR #688: route coverage is registry-derived, ordinary validation is source-read-only, explicit autofix/transactional write capabilities are isolated, actionlint is blocking and SYSTEM failure lifecycle coverage is current. Exact head `fff6155b` passed runs `30681815950`, `30681815958`, `30681815957` and `30681815981`; review threads 0; issue #64 closed. One P1 row moved to fixed: closed 164 → 165, P1 97 → 96, total open 192 → 191. Production remains `abf1edba`; no production claim for `0ff04232`. Evidence: `reverify/WORKFLOW_POLICY_SHADOW_ERA_CLOSURE_2026-08-01_0ff04232.md`.
 
 - **2026-08-01 — source advanced to `0ff04232`; production remains `abf1edba`.** Current source now includes homepage discovery PR #675 / `0131f8b9`, Editorial Metadata v3 PR #672 / `eb129d3e`, Nagornaya dark surfaces PR #678 / `af60f833`, glossary trust boundary PR #683 / `d9303986` and Workflow Policy v2 PR #688 / `0ff04232ee08a8f81711db640395901124aca787`. Exact #688 head `fff6155b` passed Metadata `30681815950`, Shared/Workflow Policy/actionlint `30681815958`, Node/read-only `30681815957` and TTS/Chromium `30681815981`; review threads 0. Active source owners at capture are #669/#680/#691. Last exact production remains deploy `30669840189` attempt `1` at `abf1edba190280e554dfda085bef9fb6594c896d`; no same-SHA production witness exists for current source. Authority-only synchronization changes no bug rows or counters: 164 closed / 192 open. `WORKFLOW-POLICY-SHADOW-ERA` disposition remains verifier-owned. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_0ff04232_source-vs-production.md`.
 
