@@ -1,0 +1,104 @@
+name: One-shot gb authority sync efaf2a51 PR
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/gb-authority-sync-efaf2a51.yml
+      - .github/workflows/gb-authority-sync-efaf2a51-pr.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gb-authority-sync-efaf2a51-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'agent/gb-source-authority-efaf2a51-20260801'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact PR branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Execute reviewed authority projection
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          workflow = Path('.github/workflows/gb-authority-sync-efaf2a51.yml').read_text(encoding='utf-8')
+          opener = "          python3 - <<'PY'\n"
+          closer = "\n          PY\n"
+          start = workflow.index(opener) + len(opener)
+          end = workflow.index(closer, start)
+          block = workflow[start:end]
+          code = '\n'.join(
+              line[10:] if line.startswith('          ') else line
+              for line in block.splitlines()
+          ) + '\n'
+          Path('/tmp/gb-authority-sync-efaf2a51.py').write_text(code, encoding='utf-8')
+          compile(code, '/tmp/gb-authority-sync-efaf2a51.py', 'exec')
+          PY
+          python3 /tmp/gb-authority-sync-efaf2a51.py
+          python3 - <<'PY'
+          from pathlib import Path
+          for rel in (
+              'projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md',
+              'projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md',
+          ):
+              path = Path(rel)
+              text = path.read_text(encoding='utf-8')
+              path.write_text('\n'.join(line.rstrip() for line in text.splitlines()) + '\n', encoding='utf-8')
+          PY
+          rm .github/workflows/gb-authority-sync-efaf2a51-pr.yml
+
+      - name: Validate exact authority surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t changed < <(git status --short | sed -E 's/^.. //' | sort)
+          expected=(
+            ".github/workflows/gb-authority-sync-efaf2a51-pr.yml"
+            ".github/workflows/gb-authority-sync-efaf2a51.yml"
+            "projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md"
+            "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md"
+            "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
+          )
+          mapfile -t expected_sorted < <(printf '%s\n' "${expected[@]}" | sort)
+          diff -u <(printf '%s\n' "${expected_sorted[@]}") <(printf '%s\n' "${changed[@]}")
+
+          final_paths="${RUNNER_TEMP}/auditrepo-final-paths.txt"
+          printf '%s\n' "${changed[@]}" \
+            | grep -v '^\.github/workflows/gb-authority-sync-efaf2a51' \
+            > "${final_paths}"
+          diff -u <(printf '%s\n' \
+            "projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md" \
+            "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md" \
+            "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md") \
+            <(sort "${final_paths}")
+
+          python3 scripts/check_auditrepo_structure.py
+          AUDITREPO_CHANGED_PATHS_FILE="${final_paths}" python3 scripts/validate_audit_repo.py
+          AUDITREPO_CHANGED_PATHS_FILE="${final_paths}" python3 scripts/validate_audit_repo_regression_test.py
+          git diff --check
+
+      - name: Commit authority projection and remove generators
+        shell: bash
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "audit(gb): advance current source authority to efaf2a51"
+          git push origin "HEAD:${HEAD_REF}"
