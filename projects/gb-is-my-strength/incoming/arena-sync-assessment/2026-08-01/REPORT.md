@@ -21,28 +21,25 @@
 
 ## 1. New Findings
 
-### Finding SD-1 — closed counter drift in MASTER_BUG_MATRIX
-- **Category:** AUDITREPO / data-sync (not a product bug)
-- **Title:** `## ✅ ЗАКРЫТО` table holds **166** ID rows while the header, the `## Статистика`
-  block, `NEXT_AGENT_PROMPT.md` and the session log all claim **165 closed**.
-- **Severity:** P2 (matrix/counter integrity; affects canonical counters and NEXT_AGENT_PROMPT claims)
-- **Route(s) / file(s):** `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md` (closed section);
-  counter propagated to `NEXT_AGENT_PROMPT.md` line "165 closed / 191 open".
-- **Observed on SHA:** AuditRepo `bc067a1cbaf33ed3cafa72cf6f4e5201056125db`
-- **Repro / evidence:**
-  - `evidence/matrix_row_counts.txt` — per-section physical row counts vs claimed counters.
-  - Closed section: rows at lines 27–192 → **166 unique data rows**; header says `(165)`.
-  - P1/P2/P3/Refactoring/AuditRepo row counts all match their headers (96/36/51/4/4); open total 191 = claimed.
-- **Expected:** closed physical row count == claimed closed counter (165).
-- **Actual:** 166 rows vs 165 claimed. Off-by-one.
-- **Confidence:** high (direct document count, reproducible).
-- **Verification level:** L1 (single agent) — direct source evidence on current HEAD, awaiting a 2nd witness per MULTI_WITNESS before any counter edit.
-- **Suggested repair lane:** one `AUDITREPO` reconciliation pass — verifier decides whether (a) one row is
-  an alias/sub-row that should not count (e.g. merge-alias rows such as `AUDIT-P1-CI-GATE-GAP`
-  "→ merged into BUG-CI-002", `AUDIT-PRO-FC-IMPORTANT-GAP` "= закрыт тем же ratchet",
-  `BUG-ARCH-001`, `AUDIT-P3-SEARCH-LAZY-CONFIRMED`) and excludes it, or (b) the counter should be
-  bumped to 166. Must NOT mix with product fixes.
-- **Do not mix with:** product bug closures; do not auto-bump the counter without a disposition.
+### Finding SD-1 — combined slash-ID row `NEW-68/69` in the closed table (RESOLVED: not a counter bug)
+- **Category:** AUDITREPO / data-sync (row-shape / ID-naming, not a product bug)
+- **Title:** closed table physically holds 166 rows, but the canonical closed counter 165 is
+  **correct**; the extra row `NEW-68/69` is invisible to canonical ID counting because of the `/`.
+- **Severity:** P3 (cosmetic/ID-shape; **corrected down from the initial P2 "counter drift" framing**)
+- **File(s):** `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md` closed row `NEW-68/69` (line 130).
+- **Evidence:** `evidence/sd1_resolved_canonical.txt` + `evidence/matrix_row_counts.txt`.
+- **Analysis:** the project SSOT tool `scripts/check_matrix_coverage.py` reports
+  `356 canonical ids, 191 open rows` => 165 closed canonical, which **matches** the claimed counter.
+  `UPPER_ID_RE` = `^[A-Z0-9]+(?:-[A-Z0-9]+)+$` rejects the slash, so `NEW-68/69` is not counted.
+  `NEW-68` (dist CSP missing `form-action 'self'`) and `NEW-69` (Astro karty routes missing CSP meta)
+  are two distinct bugs, both fixed at `14574a9a`, combined into one slash-ID row.
+- **Expected:** every fixed bug is a counted canonical closed ID.
+- **Actual:** `NEW-68` and `NEW-69` are present only as the combined non-counted row.
+- **Confidence:** high (canonical tool output + reverify, reproducible).
+- **Verification level:** L1.
+- **Suggested repair lane:** verifier picks split (Option A) or rename (Option B) per
+  `proposals/proposal-SD-1-closed-counter.md`; counter/total must be reconciled intentionally.
+- **Do not mix with:** any other closed-row change.
 
 ### Finding SD-2 — AR-006 marked CLOSED but counted inside the open total
 - **Category:** AUDITREPO / data-sync
@@ -130,11 +127,10 @@ Not applicable (this lane is the initial assessment, not a recheck of a prior fi
   No additional unregistered IDs beyond SD-3.
 
 ### Continuation pass (this lane, same date) — refined conclusions
-- **SD-1 refined:** the closed table's 4 merged/alias-style rows are
-  `AUDIT-P1-CI-GATE-GAP`, `AUDIT-PRO-FC-IMPORTANT-GAP`, `BUG-ARCH-001`,
-  `AUDIT-P3-SEARCH-LAZY-CONFIRMED`. Recommended disposition: treat the closed table as SSOT and
-  reconcile the counter to **166** (Option A), keeping `closed == counter == NEXT_AGENT_PROMPT claim`.
-  Open total stays 191 either way. Full options: `proposals/proposal-SD-1-closed-counter.md`.
+- **SD-1 resolved:** closed counter 165 is **correct** per canonical tooling
+  (`check_matrix_coverage.py`: 356 canonical ids, 191 open => 165 closed). The only mismatch is the
+  combined slash-ID row `NEW-68/69` (two distinct fixed bugs, invisible to canonical ID counting).
+  Severity corrected P2 → P3. Options in `proposals/proposal-SD-1-closed-counter.md`.
 - **SD-2 confirmed as the unique case:** a full-section sweep found AR-006 is the only genuine
   "closed-but-listed-in-open-section" row. All other flagged rows are false positives on wording
   (MAP-P1-19, TTS-DL-NO-TABLOCK, D-19 partial). Evidence: `evidence/sd1_alias_rows_and_options.txt`.

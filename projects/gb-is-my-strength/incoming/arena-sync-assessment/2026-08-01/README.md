@@ -29,9 +29,11 @@
 - Checked existence of every file referenced by `DOC_MAP.md` and `PROJECT_REGISTRY.md`.
 
 ## Findings summary
-- `SD-1` — closed counter drift: `## ✅ ЗАКРЫТО (165)` physically holds **166** unique ID rows.
-  Refined: 4 merged/alias-style rows identified; recommended disposition = reconcile counter to 166
-  (closed table is SSOT). Open total unaffected.
+- `SD-1` — **resolved as NOT a counter bug (P3):** closed table physically holds 166 rows but the
+  canonical closed counter 165 is correct (per `check_matrix_coverage.py`: 356 canonical / 191 open).
+  The single non-canonical row is `NEW-68/69` (two distinct fixed bugs, slash makes it invisible to
+  canonical ID counting). Options: split into `NEW-68`+`NEW-69` (counter→167) or rename to one
+  slash-free ID (counter→166).
 - `SD-2` — `AR-006` is marked CLOSED but is listed in the 🟣 AUDITREPO open section and is included
   in the canonical open total (191). Confirmed as the ONLY genuine closed-in-open row (full sweep).
 - `SD-3` — `check_matrix_coverage.py` fails-closed on 2 unregistered evidence IDs
