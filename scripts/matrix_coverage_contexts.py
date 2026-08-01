@@ -6,49 +6,37 @@ from __future__ import annotations
 import argparse
 import json
 import pathlib
-import re
 
 from matrix_coverage_lib import build_report
-
-UNREGISTERED_RE = re.compile(
-    r"^UNREGISTERED-EVIDENCE: reverify explicitly registers "
-    r"(?P<finding>[A-Z][A-Za-z0-9]*(?:-[A-Za-z0-9]+)+) "
-)
 
 
 def collect_contexts(project: pathlib.Path, radius: int = 2) -> dict[str, object]:
     coverage = build_report(project)
-    unresolved = []
-    for diagnostic in coverage["diagnostics"]:
-        match = UNREGISTERED_RE.match(diagnostic)
-        if match:
-            unresolved.append(match.group("finding"))
-    unresolved = sorted(set(unresolved))
+    unresolved_entries = coverage.get("unregisteredEvidence", [])
+    unresolved = [entry["id"] for entry in unresolved_entries]
 
     contexts: dict[str, list[dict[str, object]]] = {
         finding_id: [] for finding_id in unresolved
     }
-    reverify = project / "reverify"
-    if reverify.exists():
-        for path in sorted(reverify.rglob("*.md")):
+    for entry in unresolved_entries:
+        finding_id = entry["id"]
+        for occurrence in entry.get("occurrences", []):
+            path = project / str(occurrence["file"])
             lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
-            for line_no, line in enumerate(lines, 1):
-                for finding_id in unresolved:
-                    pattern = rf"(?<![A-Za-z0-9-]){re.escape(finding_id)}(?![A-Za-z0-9-])"
-                    if not re.search(pattern, line):
-                        continue
-                    start = max(0, line_no - radius - 1)
-                    end = min(len(lines), line_no + radius)
-                    contexts[finding_id].append(
-                        {
-                            "file": str(path.relative_to(project)),
-                            "line": line_no,
-                            "context": "\n".join(
-                                f"{index + 1}: {lines[index]}"
-                                for index in range(start, end)
-                            ),
-                        }
-                    )
+            for line_no in occurrence.get("lines", []):
+                start = max(0, int(line_no) - radius - 1)
+                end = min(len(lines), int(line_no) + radius)
+                contexts[finding_id].append(
+                    {
+                        "file": str(occurrence["file"]),
+                        "line": int(line_no),
+                        "structuralContexts": occurrence.get("contexts", []),
+                        "context": "\n".join(
+                            f"{index + 1}: {lines[index]}"
+                            for index in range(start, end)
+                        ),
+                    }
+                )
 
     return {
         "unresolvedIds": unresolved,
@@ -85,9 +73,12 @@ def main() -> int:
                 markdown.extend(["No exact reverify context found.", ""])
                 continue
             for entry in entries:
+                structural = ", ".join(entry.get("structuralContexts", [])) or "unknown"
                 markdown.extend(
                     [
                         f"### {entry['file']}:{entry['line']}",
+                        "",
+                        f"Structural contexts: `{structural}`",
                         "",
                         "```text",
                         str(entry["context"]),
