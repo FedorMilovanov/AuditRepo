@@ -49,6 +49,20 @@ jobs:
           compile(code, '/tmp/gb-authority-sync.py', 'exec')
           PY
           python /tmp/gb-authority-sync.py
+          python - <<'PY'
+          from pathlib import Path
+
+          for rel in (
+              'projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md',
+              'projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-01_0ff04232_source-vs-production.md',
+          ):
+              path = Path(rel)
+              text = path.read_text(encoding='utf-8')
+              path.write_text(
+                  '\n'.join(line.rstrip() for line in text.splitlines()) + '\n',
+                  encoding='utf-8',
+              )
+          PY
           rm .github/workflows/gb-authority-sync-pr.yml
 
       - name: Validate exact changed surface
