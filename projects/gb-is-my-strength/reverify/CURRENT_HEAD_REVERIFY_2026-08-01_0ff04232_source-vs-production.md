@@ -3,6 +3,7 @@
 **Дата:** 2026-08-01
 **Статус:** `SOURCE_CURRENT / PRODUCTION_STALE_RELATIVE_TO_SOURCE`
 **Production claim для `0ff04232`:** `no`
+**AuditRepo synchronization PR:** `#116`
 
 ## 1. Authority boundary
 
