@@ -2,25 +2,24 @@
 
 > **Только текущая операционная правда.** Счётчики принадлежат `verified/MASTER_BUG_MATRIX.md`.
 
-**Source main:** `2f9ad5d89143fd45be1b882219eadfc89bfbdbae`  
-**Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
-**Current source deployment status:** ⚠️ `source != production`; same-SHA production witness для текущего source отсутствует.  
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_2f9ad5d8_source-vs-production.md`  
-**AuditRepo synchronization PR:** `#114`.
+**Source main:** `0ff04232ee08a8f81711db640395901124aca787`
+**Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`
+**Current source deployment status:** ⚠️ `source != production`; same-SHA production witness для текущего source отсутствует.
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_0ff04232_source-vs-production.md`
+**AuditRepo synchronization:** authority-only projection; bug rows and counters are unchanged.
 
 ## 1. Точная граница source
 
-- current source `main` = `2f9ad5d89143fd45be1b882219eadfc89bfbdbae`;
-- после последнего exact production в source ancestry находятся:
-  - bug-hunt repairs через `be970bfc13882119e99605ba1689605af4a4af8a`;
-  - PR #659 / `65bf6c4a015c933aa3ec8d4046e587e58eabd568` — Atlas geometry verifier;
-  - PR #665 / `8a8ebf70d1a1e51a4f57d3d38a7ef4a97ff65e5b` — Avraam heading lifecycle;
-  - PR #666 / `424b09b25fc9d4bace3938f4d44f430be8cc7e4b` — Karty story-ID schema/runtime alignment;
-  - PR #668 / `b4b02f72c26f5ac9c58ea9efe11cfcf4fa3d2c19` — README Astro 7 truth;
-  - PR #667 / `2f9ad5d89143fd45be1b882219eadfc89bfbdbae` — Pagefind scripture/noindex/RSS contract, exact head `8eaf822bca32e1f7be332c2b323a2dba5ff60dd4`, 9/9 workflows green;
-- AuditRepo PR #112 / `2ef6cf66a011c46086758fea67d5732e1ec292b9` сохраняет exact Karty evidence;
-- на момент этой синхронизации открытых source PR нет;
-- ни один post-`abf1edba` merge не считается production без отдельного same-SHA witness.
+- current source `main` = `0ff04232ee08a8f81711db640395901124aca787`;
+- после канонического `2f9ad5d89143fd45be1b882219eadfc89bfbdbae` в source ancestry находятся:
+  - PR #675 / `0131f8b9d6c717f85a8990700b72b09b575219a4` — homepage discovery metadata parity; exact head `404db8d14087d29522e56f190717d6224e8e3bfb`, 9/9 workflows green;
+  - PR #672 / `eb129d3e122b8932216232319f4e735e6866d941` — approval-gated Editorial Metadata v3; exact head `7de20ed77e60ec05bb91322ac03800a3d9860410`, 9/9 workflows green;
+  - PR #678 / `af60f833c70c4a74e0add987dc7a3a568b676589` — Nagornaya dark body surfaces; exact head `dcf9a7f9424034285c4d0be28729bb52b7106490`, 8/8 workflows green;
+  - PR #683 / `d93039866d721ff0b1ead08c8b7bccc0eb2b8b1b` — glossary dictionary trust boundary; exact head `92e12ac4fa7edb516ffd7e178b54c60ce8534046`, 17/17 workflows green;
+  - PR #688 / `0ff04232ee08a8f81711db640395901124aca787` — Workflow Policy v2; exact head `fff6155b651620b5e497585948d3b2a9fae5cd67`, 4/4 triggered workflows green;
+- source issue #64 closed through PR #688;
+- active source owners at capture: #669 Karty inventory, #680 NoteRegistry, #691 canonical article headline; do not duplicate or modify their branches/files;
+- no post-`abf1edba` merge is production without a separate same-SHA witness.
 
 ## 2. Last exact production
 
@@ -37,15 +36,15 @@
 - physical Windows witness `5148209495`.
 
 ```text
-current source = 2f9ad5d89143fd45be1b882219eadfc89bfbdbae
+current source = 0ff04232ee08a8f81711db640395901124aca787
 last exact production = abf1edba190280e554dfda085bef9fb6594c896d
 source != production
 ```
 
 ## 3. Следующий порядок
 
-1. Не продвигать `2f9ad5d8` в production authority без exact same-SHA readiness → candidate → Pages/live → TTS → ledger evidence.
-2. Не переоткрывать #659/#665/#666/#667/#668 по stale evidence; использовать exact-head отчёты и AuditRepo PR #112.
-3. Следующий архитектурный порядок: source issue #56 → #62 → #64.
-4. Не запускать устаревшие `Finalize-AuditRepo109.ps1` и workflow PR #109.
-5. Не менять матричные счётчики в authority-only синхронизации.
+1. Не продвигать `0ff04232` в production authority без exact same-SHA readiness → candidate → Pages/live → TTS → ledger evidence.
+2. Не вмешиваться в активные owner-lanes #669/#680/#691; использовать их exact heads и review boundaries.
+3. После освобождения зависимых scope следующий свободный фундамент — source issue #62 Legacy Reference Quarantine.
+4. После NoteRegistry продолжать единый ReaderProjection; не добавлять route-local note/TTS/search/print engines.
+5. Строка `WORKFLOW-POLICY-SHADOW-ERA` и матричные счётчики остаются verifier-owned; authority-only синхронизация не переписывает bug rows.
