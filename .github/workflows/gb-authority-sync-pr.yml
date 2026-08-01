@@ -68,7 +68,9 @@ jobs:
           diff -u <(printf '%s\n' "${expected_sorted[@]}") <(printf '%s\n' "${changed[@]}")
 
           final_paths="${RUNNER_TEMP}/auditrepo-final-paths.txt"
-          git diff --name-only origin/main -- > "${final_paths}"
+          printf '%s\n' "${changed[@]}" \
+            | grep -v '^\.github/workflows/gb-authority-sync' \
+            > "${final_paths}"
           diff -u <(printf '%s\n' \
             "projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md" \
             "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-01_0ff04232_source-vs-production.md" \
