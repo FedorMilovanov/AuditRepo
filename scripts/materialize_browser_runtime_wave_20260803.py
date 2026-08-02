@@ -65,16 +65,34 @@ matrix = replace_once(
     "",
     "QUAL open row removal",
 )
-session_entry = (
-    "## Session log\n\n"
-    "- **2026-08-03 — expanded browser/runtime wave @ exact source/main `1944eb1b`.** Production-like Chromium run "
-    "`30769737659` confirmed `A11Y-P1-01`, narrowed `AVRAAM-P1-04` to the current ARIA/Space/arrow residual, and "
-    "closed `QUAL-P1-04` as stale after the Цоар modal retained the 1280px full source immediately and after 700 ms. "
-    "Canonical arithmetic moves 358 IDs from 186 closed / 172 open to **187 closed / 171 open**; P1 84→83. "
-    "The parallel Atlas PR-head job is evidence-only and does not replace the source/main disposition anchor. No production claim. "
-    "Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-03_1944eb1b_browser-runtime-wave.md`.\n\n"
+
+matrix = replace_once(
+    matrix,
+    "## Статистика (обновлено 2026-08-02: source `d23546ce`; last exact production `abf1edba`; 358 canonical = 186 closed + 172 open)",
+    "## Статистика (обновлено 2026-08-03: source `1944eb1b`; last exact production `abf1edba`; 358 canonical = 187 closed + 171 open)",
+    "statistics heading",
 )
-matrix = replace_once(matrix, "## Session log\n\n", session_entry, "session log insertion")
+matrix = replace_once(matrix, "| Закрыто (fixed) | 186 |", "| Закрыто (fixed) | 187 |", "statistics closed")
+matrix = replace_once(matrix, "| P1 открыто | 84 |", "| P1 открыто | 83 |", "statistics P1")
+matrix = replace_once(
+    matrix,
+    "| **Всего открыто (матрица)** | **172** |",
+    "| **Всего открыто (матрица)** | **171** |",
+    "statistics open",
+)
+
+session_marker = "## Session log (append-only)\n\n"
+session_entry = (
+    "### 2026-08-03 — expanded browser/runtime wave @ exact source/main `1944eb1b`\n"
+    "- Production-like Chromium run `30769737659` confirmed `A11Y-P1-01`, narrowed `AVRAAM-P1-04` "
+    "to the current ARIA/Space/arrow residual, and closed `QUAL-P1-04` as stale after the Цоар modal "
+    "retained the 1280px full source immediately and after 700 ms.\n"
+    "- Canonical arithmetic moved from **186 closed / 172 open** to **187 closed / 171 open**; P1 moved "
+    "from **84** to **83**.\n"
+    "- The parallel Atlas PR-head job is evidence-only and does not replace the source/main disposition anchor. "
+    "No production claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-03_1944eb1b_browser-runtime-wave.md`.\n\n"
+)
+matrix = replace_once(matrix, session_marker, session_marker + session_entry, "session log insertion")
 
 if matrix.count("| QUAL-P1-04 |") != 1:
     raise SystemExit("QUAL-P1-04 must exist exactly once after closure")
