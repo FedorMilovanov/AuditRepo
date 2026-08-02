@@ -120,7 +120,22 @@ jobs:
         with:
           python-version: '3.12'
       - name: Apply deterministic third-pass hardening
-        run: python3 scripts/_matrix_third_pass_once.py
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/_matrix_third_pass_once.py')
+          text = path.read_text(encoding='utf-8')
+          replacements = {
+              '        "def row_direct_witness(\\n",\n': '        "def row_direct_witness(row: MatrixRow, project: pathlib.Path) -> tuple[bool, list[str]]:\\n",\n',
+              '        "def build_report(\\n",\n': '        "def build_report(project: pathlib.Path) -> dict[str, object]:\\n",\n',
+          }
+          for old, new in replacements.items():
+              if text.count(old) != 1:
+                  raise SystemExit(f'materializer marker count={text.count(old)} for {old!r}')
+              text = text.replace(old, new, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+          python3 scripts/_matrix_third_pass_once.py
       - name: Validate generated transaction
         run: |
           set -o pipefail
