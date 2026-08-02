@@ -60,6 +60,24 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-11 — sheet-engine + GATE cluster verdicts on 2273b8c9
+- **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
+- **Title:** direct source inspection of `scripts/lib/sheet-engine.js` + `scripts/atlas-label-audit.js` on `2273b8c9`.
+- **Severity:** P2 (informs the reverify lane)
+- **File(s):** `scripts/lib/sheet-engine.js`, `scripts/atlas-label-audit.js`, karty `route.json` @ `2273b8c9`.
+- **Evidence:** `evidence/sd11_sheet_engine_gate.txt`.
+- **STILL OPEN (source-verified):** SEA-P1-01 (20×20 seaPattern tile), ROUTE-P1-01 (catmullRom +
+  route_via), ORN-P1-01 (cartW `len*14.6` + cornerOrn), GRAT-P1-01 (graticule, zoom `opacity:0`),
+  RELIEF-P1-01 (ellipse relief, urheimat empty), HALO-P1-01 (`halos=[]` never pushed; CSS `paint-order`
+  stroke emulation), GLYPH-P1-01 (avraam 14/22 glyph, ishod/shvatim/pavel 0).
+- **FIXED candidate (revert-close):** GATE-P1-02 — `atlas-label-audit.js` now audits marker-to-marker
+  overlap, label-over-marker, clipping, safe-area (SAFE_INSET=24) per map with negative tests.
+- **Confidence:** high (source).
+- **Verification level:** L1.
+- **Suggested repair lane:** fold into batched Karty reverify (SD-7); close GATE-P1-02 with evidence.
+
+---
+
 ### Finding SD-10 — source-verified map-engine/Avraam cluster verdicts on 2273b8c9
 - **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
 - **Title:** direct source inspection of `map-engine.js` + Avraam components on `2273b8c9` classifies more rows.
@@ -254,6 +272,7 @@ None.
 - Target bug: SD-8 → proposed severity **P2** (reverify triage; confirms still-open Karty cluster). Current: unregistered.
 - Target bug: SD-9 → proposed severity **P2** (data-layer triage; 1 stale-fixed, 3 still-open, 1 partial). Current: unregistered.
 - Target bug: SD-10 → proposed severity **P2** (map-engine/Avraam triage; 6 still-open, 1 fixed, 2 reverify). Current: unregistered.
+- Target bug: SD-11 → proposed severity **P2** (sheet-engine/GATE triage; 7 still-open, 1 fixed). Current: unregistered.
 
 ---
 
