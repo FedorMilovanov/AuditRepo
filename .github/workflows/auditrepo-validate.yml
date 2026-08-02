@@ -142,6 +142,12 @@ jobs:
           path.write_text(text, encoding='utf-8')
           PY
           python3 scripts/_matrix_reconcile_once.py
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          lines = path.read_text(encoding='utf-8').splitlines()
+          path.write_text('\n'.join(line.rstrip() for line in lines) + '\n', encoding='utf-8')
+          PY
       - name: Remove all one-time materializer code
         run: |
           rm scripts/_matrix_reconcile_once.py .github/workflows/_matrix-reconcile-once.yml
