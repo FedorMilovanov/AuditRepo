@@ -3,10 +3,10 @@
 > **Только текущая операционная правда.** Счётчики принадлежат `verified/MASTER_BUG_MATRIX.md`.
 
 **Verified product/evidence anchor:** `fc1085c805d72e6d43f58a6383c680d4e886183b`
-**Source main observed after anchor:** `f9234dbbe832d80b4d9a453ce3d2f58da832b24f` (two workflow-only cleanup commits after the anchor)
+**Source main observed after anchor:** `92bfa45a02e53d7b735af73025a79d99ffe75b67` (final observation in this verifier pass; source movement after the durable anchor is not itself a matrix verdict)
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`
 **Deployment status:** ⚠️ verified anchor `!=` production; no post-production same-SHA witness.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md`
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_69d1e72a_third-pass-gate-hardening.md`
 **Canonical matrix:** **358 IDs = 168 closed + 190 open**.
 
 ## 1. Точная граница source
@@ -16,9 +16,9 @@
 - AuditRepo PR #120 merge-time anchor `8f17085dc8411cffbcb5a4dcd2f8fc5db9c30a97` is **20 commits behind the verified anchor**;
 - the first 9 commits after PR #120 add the Pihahiroth uncertainty lane and modify Ishod projection surfaces, so Ishod browser/runtime verdicts still require a fresh exact-head witness;
 - the next 11 commits up to `fc1085c8` affect Wave12/search/visual-policy files only and do not touch the earlier Karty/Vosk/genealogy evidence-critical paths;
-- two later commits through `f9234dbb` only remove a completed normalization writer and pin actions in the Pihahiroth release workflow; they do not change product, Karty/Ishod data or matrix evidence;
+- source movement through `92bfa45a` includes the earlier four workflow-only commits plus eight later commits affecting feed/sitemap, Wave12/search workflows and audit/registry scripts; no Karty/Ishod data, Vosk, genealogy or matrix-evidence path changed;
 - future source movement does not silently change matrix statuses: a new status requires a new exact-head reverify;
-- active source owner: draft PR #680 at `282ee9aec770b6f7c91145d39f935ea14136d29e`; do not modify its branch or owner files;
+- active source owner: draft PR #680 at `f95948ebd3f84791e150445ed505772965e180f7`; do not modify its branch or owner files;
 - no post-`abf1edba` source merge is production without a separate same-SHA witness.
 
 ## 2. Last exact production
@@ -32,7 +32,7 @@
 
 ```text
 verified product/evidence anchor = fc1085c805d72e6d43f58a6383c680d4e886183b
-source main later observed = f9234dbbe832d80b4d9a453ce3d2f58da832b24f
+source main finally observed in this pass = 92bfa45a02e53d7b735af73025a79d99ffe75b67
 last exact production = abf1edba190280e554dfda085bef9fb6594c896d
 verified anchor != production
 ```
@@ -44,7 +44,7 @@ verified anchor != production
 - counters: P0 0, P1 96, P2 36, P3 51, Refactoring 4, AuditRepo 3; total open 190; closed 168;
 - rights-policy labels `RIGHT-4Q204-OPEN-SCHEMATIC` and `RIGHT-P72-TEXT-LINK-ONLY` are informational registry entries, not bugs;
 - matrix coverage is blocking and must report zero diagnostics; CI uses `pipefail`, so `check_matrix_coverage.py | tee` cannot hide a non-zero exit;
-- noncanonical table IDs, explicit CLOSED rows in open sections, heading/stat counter drift and unregistered reverify IDs are permanent blocking diagnostics.
+- noncanonical table IDs, explicit closed rows in open sections, missing/duplicate section or statistics counters, per-category drift, archive-only open evidence, duplicate registry keys and unregistered reverify IDs are permanent blocking diagnostics.
 
 ## 4. Следующий порядок
 

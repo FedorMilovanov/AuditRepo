@@ -23,6 +23,19 @@ MATRIX = """# matrix
 | ID | Описание | Evidence |
 |---|---|---|
 | OPEN-ONE | open | reverify/known.md |
+
+## Статистика
+
+| Категория | Количество |
+|---|---|
+| Закрыто (fixed) | 1 |
+| **P0 открыто** | **0** |
+| P1 открыто | 1 |
+| P2 открыто | 0 |
+| P3 открыто | 0 |
+| Рефакторинг | 0 |
+| AuditRepo | 0 |
+| **Всего открыто (матрица)** | **1** |
 """
 
 
@@ -89,6 +102,8 @@ def main() -> int:
     with tempfile.TemporaryDirectory() as temp:
         project = write_project(pathlib.Path(temp), entries)
         report = build_report(project)
+        assert report["closedRows"] == 1
+        assert report["openRows"] == 1
         assert report["registryIds"] == 4
         assert report["aliasIds"] == 1
         assert report["registryStatusCounts"] == {
@@ -168,6 +183,71 @@ def main() -> int:
         project = write_project(pathlib.Path(temp), entries, matrix=bad_count)
         report = build_report(project)
         assert report["problemKinds"]["SECTION-COUNT-MISMATCH"] == 1
+
+
+    with tempfile.TemporaryDirectory() as temp:
+        missing_count = MATRIX.replace("## P1 — ОТКРЫТО (1)", "## P1 — ОТКРЫТО")
+        project = write_project(pathlib.Path(temp), entries, matrix=missing_count)
+        report = build_report(project)
+        assert report["problemKinds"]["SECTION-COUNT-MISSING"] == 1
+
+    with tempfile.TemporaryDirectory() as temp:
+        missing_stat = MATRIX.replace("| P1 открыто | 1 |\n", "")
+        project = write_project(pathlib.Path(temp), entries, matrix=missing_stat)
+        report = build_report(project)
+        assert report["problemKinds"]["STAT-ROW-MISSING"] == 1
+
+    with tempfile.TemporaryDirectory() as temp:
+        duplicate_stat = MATRIX.replace(
+            "| P1 открыто | 1 |\n",
+            "| P1 открыто | 1 |\n| P1 открыто | 1 |\n",
+        )
+        project = write_project(pathlib.Path(temp), entries, matrix=duplicate_stat)
+        report = build_report(project)
+        assert report["problemKinds"]["STAT-ROW-DUPLICATE"] == 1
+
+    with tempfile.TemporaryDirectory() as temp:
+        category_drift = MATRIX.replace("| P1 открыто | 1 |", "| P1 открыто | 0 |")
+        project = write_project(pathlib.Path(temp), entries, matrix=category_drift)
+        report = build_report(project)
+        assert report["problemKinds"]["STAT-COUNT-MISMATCH"] == 1
+
+    with tempfile.TemporaryDirectory() as temp:
+        fixed_without_emoji = MATRIX.replace(
+            "| OPEN-ONE | open | reverify/known.md |",
+            "| OPEN-ONE | **FIXED 2026-08-02** | reverify/known.md |",
+        )
+        project = write_project(pathlib.Path(temp), entries, matrix=fixed_without_emoji)
+        report = build_report(project)
+        assert report["problemKinds"]["CLOSED-IN-OPEN"] == 1
+
+    with tempfile.TemporaryDirectory() as temp:
+        fixed = dict(entries)
+        fixed["NEW-UNREGISTERED-01"] = {
+            "status": "informational",
+            "reason": "Test-only evidence label.",
+        }
+        archived_matrix = MATRIX.replace(
+            "| OPEN-ONE | open | reverify/known.md |",
+            "| OPEN-ONE | open | archive/old.md |",
+        )
+        project = write_project(pathlib.Path(temp), fixed, matrix=archived_matrix)
+        (project / "reverify" / "known.md").unlink()
+        (project / "archive" / "old.md").write_text(
+            "# OPEN-ONE — historical witness\n", encoding="utf-8"
+        )
+        report = build_report(project)
+        assert report["archivedOnlyOpenRows"] == 1
+        assert report["problemKinds"]["ARCHIVED-ONLY-OPEN"] == 1
+
+    with tempfile.TemporaryDirectory() as temp:
+        project = write_project(pathlib.Path(temp), entries)
+        (project / "verified" / "MATRIX_ID_ALIASES.json").write_text(
+            '{"version":1,"aliases":{"INFO-ONE":{"status":"informational","reason":"a"},'
+            '"INFO-ONE":{"status":"retired","reason":"b"}},"ignoredTokens":[]}\n',
+            encoding="utf-8",
+        )
+        expect_value_error(project, "duplicate JSON key")
 
     print("matrix coverage regression tests: PASS")
     return 0

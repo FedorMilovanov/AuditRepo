@@ -115,24 +115,49 @@ def matrix_integrity_problems(
     matrix: str,
     matrix_rows: dict[str, MatrixRow],
 ) -> list[str]:
-    """Validate matrix row shape and human-declared counters before evidence coverage."""
+    """Validate canonical section shape, status semantics and all declared counters."""
     problems: list[str] = []
     section = ""
     declared_counts: dict[str, int] = {}
     actual_counts: collections.Counter[str] = collections.Counter()
+    seen_section_keys: set[str] = set()
+    statistics_rows: dict[str, list[tuple[int, str]]] = collections.defaultdict(list)
 
     for line_no, line in enumerate(matrix.splitlines(), 1):
         if line.startswith("## "):
             section = line[3:].strip()
             if is_canonical_section(section):
+                section_key = re.sub(r"\s*\(\d+\)\s*$", "", section)
+                if section_key in seen_section_keys:
+                    problems.append(
+                        f"SECTION-DUPLICATE: canonical section {section_key!r} appears more than once"
+                    )
+                seen_section_keys.add(section_key)
+
+                is_closed = "ЗАКРЫТО" in section
+                is_open = any(marker in section for marker in OPEN_SECTION_MARKERS)
+                if is_closed and is_open:
+                    problems.append(
+                        f"SECTION-STATUS-AMBIGUOUS: canonical section {section!r} is both open and closed"
+                    )
+
                 match = re.search(r"\((\d+)\)\s*$", section)
                 if match:
                     declared_counts[section] = int(match.group(1))
+                else:
+                    problems.append(
+                        f"SECTION-COUNT-MISSING: canonical section {section!r} has no trailing count"
+                    )
             continue
-        if not is_canonical_section(section):
-            continue
+
         cells = parse_table_cells(line)
-        if not cells or cells[0] in HEADER_IDS:
+        if section.startswith("Статистика") and cells and cells[0] not in HEADER_IDS:
+            label = cells[0].strip().strip("*").strip()
+            value = cells[1].strip().strip("*").strip() if len(cells) > 1 else ""
+            statistics_rows[label].append((line_no, value))
+            continue
+
+        if not is_canonical_section(section) or not cells or cells[0] in HEADER_IDS:
             continue
         finding_id = cells[0]
         if not is_finding_id(finding_id):
@@ -144,10 +169,12 @@ def matrix_integrity_problems(
         actual_counts[section] += 1
         description = cells[1] if len(cells) > 1 else ""
         if any(marker in section for marker in OPEN_SECTION_MARKERS) and re.match(
-            r"^\s*✅\s*\**CLOSED\b", description, re.IGNORECASE
+            r"^\s*(?:✅\s*)?(?:\*\*)?\s*(?:CLOSED|FIXED|ЗАКРЫТ(?:О|А|Ы)?)\b",
+            description,
+            re.IGNORECASE,
         ):
             problems.append(
-                f"CLOSED-IN-OPEN: {finding_id} is explicitly CLOSED in open section "
+                f"CLOSED-IN-OPEN: {finding_id} is explicitly closed in open section "
                 f"{section!r} at line {line_no}"
             )
 
@@ -164,26 +191,46 @@ def matrix_integrity_problems(
         any(marker in row.section for marker in OPEN_SECTION_MARKERS)
         for row in matrix_rows.values()
     )
-    closed_stat = re.search(
-        r"^\|\s*Закрыто \(fixed\)\s*\|\s*\**(\d+)\**\s*\|$",
-        matrix,
-        re.MULTILINE,
-    )
-    open_stat = re.search(
-        r"^\|\s*\**Всего открыто \(матрица\)\**\s*\|\s*\**(\d+)\**\s*\|$",
-        matrix,
-        re.MULTILINE,
-    )
-    if closed_stat and int(closed_stat.group(1)) != closed_actual:
-        problems.append(
-            f"STAT-COUNT-MISMATCH: closed statistic declares {closed_stat.group(1)} "
-            f"but matrix contains {closed_actual} closed canonical rows"
+
+    def section_total(pattern: str) -> int:
+        return sum(
+            count for counted_section, count in actual_counts.items()
+            if re.search(pattern, counted_section, re.IGNORECASE)
         )
-    if open_stat and int(open_stat.group(1)) != open_actual:
-        problems.append(
-            f"STAT-COUNT-MISMATCH: open statistic declares {open_stat.group(1)} "
-            f"but matrix contains {open_actual} open canonical rows"
-        )
+
+    expected_statistics = {
+        "Закрыто (fixed)": closed_actual,
+        "P0 открыто": section_total(r"\bP0\b.*ОТКРЫТО"),
+        "P1 открыто": section_total(r"\bP1\b.*ОТКРЫТО"),
+        "P2 открыто": section_total(r"\bP2\b.*ОТКРЫТО"),
+        "P3 открыто": section_total(r"\bP3\b.*ОТКРЫТО"),
+        "Рефакторинг": section_total(r"РЕФАКТОРИНГ"),
+        "AuditRepo": section_total(r"AUDITREPO"),
+        "Всего открыто (матрица)": open_actual,
+    }
+    for label, expected in expected_statistics.items():
+        entries = statistics_rows.get(label, [])
+        if not entries:
+            problems.append(f"STAT-ROW-MISSING: statistics row {label!r} is absent")
+            continue
+        if len(entries) > 1:
+            lines = ", ".join(str(line_no) for line_no, _ in entries)
+            problems.append(
+                f"STAT-ROW-DUPLICATE: statistics row {label!r} appears at lines {lines}"
+            )
+            continue
+        line_no, value = entries[0]
+        if not re.fullmatch(r"\d+", value):
+            problems.append(
+                f"STAT-VALUE-INVALID: statistics row {label!r} at line {line_no} "
+                f"has non-numeric value {value!r}"
+            )
+            continue
+        if int(value) != expected:
+            problems.append(
+                f"STAT-COUNT-MISMATCH: statistics row {label!r} declares {value} "
+                f"but matrix contains {expected}"
+            )
     return problems
 
 def candidate_is_credible(
@@ -270,6 +317,15 @@ def structured_ids(
     }
 
 
+def reject_duplicate_json_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    """Reject silent JSON object-key overwrites at every nesting level."""
+    result: dict[str, object] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON key {key!r}")
+        result[key] = value
+    return result
+
 def load_aliases(
     path: pathlib.Path,
     matrix_ids: set[str],
@@ -281,7 +337,10 @@ def load_aliases(
 ]:
     if not path.exists():
         return {}, set(), {}, {status: 0 for status in REGISTRY_STATUSES}
-    data = json.loads(path.read_text(encoding="utf-8"))
+    data = json.loads(
+        path.read_text(encoding="utf-8"),
+        object_pairs_hook=reject_duplicate_json_keys,
+    )
     if data.get("version") != 1:
         raise ValueError(f"{path}: expected version 1")
 
@@ -368,22 +427,23 @@ def load_aliases(
 def row_direct_witness(row: MatrixRow, project: pathlib.Path) -> tuple[bool, list[str]]:
     problems: list[str] = []
     paths = list(dict.fromkeys(match.group("path") for match in PATH_RE.finditer(row.line)))
-    existing_paths = 0
+    active_existing_paths = 0
     for relative in paths:
         candidate = project / relative
-        if candidate.is_file():
-            existing_paths += 1
-        else:
+        if not candidate.is_file():
             problems.append(
                 f"BROKEN-EVIDENCE-PATH: open bug {row.finding_id} "
                 f"references missing {relative}"
             )
+            continue
+        if relative.startswith("archive/"):
+            continue
+        active_existing_paths += 1
     immutable_witness = any(
         FULL_SHA_RE.fullmatch(match.group("sha"))
         for match in WITNESS_RE.finditer(row.line)
     )
-    return bool(existing_paths or immutable_witness), problems
-
+    return bool(active_existing_paths or immutable_witness), problems
 
 def build_report(project: pathlib.Path) -> dict[str, object]:
     matrix_path = project / "verified" / "MASTER_BUG_MATRIX.md"
@@ -455,6 +515,9 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
             continue
         if finding_id in canonical_archive:
             archived_only.append(finding_id)
+            problems.append(
+                f"ARCHIVED-ONLY-OPEN: open bug {finding_id} is supported only by archived evidence"
+            )
             continue
         problems.append(
             f"ORPHAN-CLAIM: open bug {finding_id} has no explicit evidence ID, "
@@ -487,6 +550,7 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
 
     return {
         "matrixIds": len(matrix_rows),
+        "closedRows": len(closed_rows),
         "openRows": len(open_ids),
         "evidenceFiles": len(evidence),
         "registryIds": len(registry),
@@ -524,7 +588,8 @@ def main(argv: list[str] | None = None) -> int:
 
     counts = report["registryStatusCounts"]
     print(
-        "matrix: {matrixIds} canonical ids, {openRows} open rows; "
+        "matrix: {matrixIds} canonical ids, {closedRows} closed rows, "
+        "{openRows} open rows; "
         "evidence files: {evidenceFiles}; registry: {registryIds} "
         "(aliases: {aliasIds}, informational: {informational}, "
         "retired: {retired}, false-positive: {false_positive}); "
