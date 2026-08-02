@@ -61,6 +61,9 @@
 - `SD-11` — **sheet-engine/GATE triage on `2273b8c9` (P2):** STILL OPEN SEA-P1-01, ROUTE-P1-01,
   ORN-P1-01, GRAT-P1-01, RELIEF-P1-01, HALO-P1-01, GLYPH-P1-01 (partial: avraam glyph 14/22);
   FIXED candidate GATE-P1-02 (atlas-label-audit now checks overlap/clipping/safe-area).
+- `SD-12` — **remaining Karty units on `2273b8c9` (P2):** STILL OPEN MAP-P1-12, MAP-P1-20, SIG-P1-01,
+  WAYP-P1-01, MEDIA-P1-01, LOD-P1-01 (partial); FIXED candidates COMP-P1-01 (atlas-reader real width),
+  CSS-P1-01 (bounded me-base-css lease); ~25 browser/runtime/CI rows need browser reverify.
 - `SD-7` — **65 open Karty-cluster rows witnessed on `32ae0d7d`, 607 commits behind actual source main
   `2273b8c9` (P2):** none repair-ready per SHA-first without a fresh reverify; recommend one batched
   Karty reverify lane on `2273b8c9` (reuse SD-6 map-engine subset). **Supplementary:** +7 rows on

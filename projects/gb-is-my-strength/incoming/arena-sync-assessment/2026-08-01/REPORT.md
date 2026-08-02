@@ -60,6 +60,26 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-12 — remaining Karty unit verdicts on 2273b8c9
+- **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
+- **Title:** direct source inspection of the remaining Karty unit rows on `2273b8c9`.
+- **Severity:** P2 (informs the reverify lane)
+- **File(s):** `karty/_engine/map-engine.js`, `sw.js`, `scripts/lib/sheet-engine.js`, `audit/atlas-preview/atlas-reader.js`, karty `route.json` @ `2273b8c9`.
+- **Evidence:** `evidence/sd12_remaining_units.txt`.
+- **STILL OPEN (source-verified):** MAP-P1-12 (compass translate(50,80) in svg group), MAP-P1-20 (sw.js
+  `cacheFirst` for static unversioned assets), SIG-P1-01 (hardcoded `origin.x-74` offsets), WAYP-P1-01
+  (`.lab-wp` small labels, no plate), MEDIA-P1-01 (external Wikimedia: ishod 22, avraam 76), LOD-P1-01
+  (partial: z4 1.4px label + 2.6px stroke).
+- **FIXED candidates (revert-close):** COMP-P1-01 (atlas-reader now uses `svgR.width/vb[2]` real width),
+  CSS-P1-01 (bounded `me-base-css` lease, same root as MAP-P1-14).
+- **Browser/runtime/CI (need browser reverify, not source-only):** MAP-P1-01..19 (browser), AVRAAM-P1-01..05,
+  GATE-P1-01/03/04, DRAW-P1-02, SVG-P1-01 (artifact).
+- **Confidence:** high (source where checkable).
+- **Verification level:** L1 (source); browser needed for browser-class rows.
+- **Suggested repair lane:** fold into batched Karty reverify (SD-7).
+
+---
+
 ### Finding SD-11 — sheet-engine + GATE cluster verdicts on 2273b8c9
 - **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
 - **Title:** direct source inspection of `scripts/lib/sheet-engine.js` + `scripts/atlas-label-audit.js` on `2273b8c9`.
@@ -273,6 +293,7 @@ None.
 - Target bug: SD-9 → proposed severity **P2** (data-layer triage; 1 stale-fixed, 3 still-open, 1 partial). Current: unregistered.
 - Target bug: SD-10 → proposed severity **P2** (map-engine/Avraam triage; 6 still-open, 1 fixed, 2 reverify). Current: unregistered.
 - Target bug: SD-11 → proposed severity **P2** (sheet-engine/GATE triage; 7 still-open, 1 fixed). Current: unregistered.
+- Target bug: SD-12 → proposed severity **P2** (remaining units; 6 still-open, 2 fixed, ~25 browser-class). Current: unregistered.
 
 ---
 
