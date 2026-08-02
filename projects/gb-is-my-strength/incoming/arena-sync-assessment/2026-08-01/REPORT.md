@@ -73,6 +73,9 @@
   (ENGINE-P1-21/22/23/28 fixed; MAP-P1-11, ENGINE-P1-26 open); the remaining ~57 need per-row reverify.
   **Supplementary (SD-7b):** 7 more open rows on other stale SHAs (`2ca2af3` x3, `21624a3` x3,
   `30bf3f5c` x1), 658-1105 commits behind current main → combined stale-witness open surface ≈ **72 rows**.
+  Additionally **D-19** (Antisovetov PageHead half) is NOT addressed by Wave 8 (`41617252e` changes
+  `AntisovetovBody.astro`, not any PageHead/Seo/meta/title file) → remains open; needs reverify on
+  `2273b8c9`. Evidence: `evidence/sd7b_d19_antisovetov_open.txt`.
 - **Confidence:** high (tool + live API).
 - **Verification level:** L1.
 - **Suggested repair lane:** one batched Karty reverify lane on `2273b8c9` (after SD-5), reusing SD-6

@@ -18,3 +18,8 @@ Same stale-witness surface as SD-7, but on SHAs other than `32ae0d7d`. Verified 
 - Combined with SD-7's 65-row cluster, the total stale-witness open surface is ~72 rows.
 - None is repair-ready per SHA-first without a fresh reverify on `2273b8c9`.
 - No product claim; verifier-owned scheduling. These fold into the same batched reverify lane as SD-7.
+
+## SD-7b — D-19 (antisovetov PageHead) not addressed by Wave 8
+Wave 8 (41617252e) changes AntisovetovBody.astro + indexnow + contract; does NOT touch any
+PageHead/Seo/meta/title file -> D-19 antisovetov half remains open; needs reverify on 2273b8c9.
+See sd7b_d19_antisovetov_open.txt.
