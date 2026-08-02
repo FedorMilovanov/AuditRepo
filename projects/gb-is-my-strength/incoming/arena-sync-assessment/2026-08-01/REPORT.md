@@ -60,6 +60,25 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-8 — source-verified "still open" Karty cluster on actual HEAD 2273b8c9
+- **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
+- **Title:** direct source inspection of `map-engine.js` + `base-geo.svg` on `2273b8c9` confirms several
+  Karty P1 rows are STILL OPEN (not fixed by PR #709 / the 14-commit delta).
+- **Severity:** P2 (informs the reverify lane; confirms no broad Karty fix landed)
+- **File(s):** `karty/_engine/map-engine.js`, `karty/_engine/base-geo.svg` @ `2273b8c9`.
+- **Evidence:** `evidence/sd8_verified_still_open.txt`.
+- **Confirmed STILL OPEN (keep open):** BASE-P1-01 (6 missing IDs in base-geo.svg), BASE-P1-02
+  (opacity 0.5 on me-base-geo persists, line 2884), RIVER-P1-02 (waterRipple def absent, 4 uses),
+  RIVER-P1-03 (39 `stroke-linecap="round"`), QUAL-P1-05 (no `{passive:true}` on 5 listeners),
+  RIVER-P1-01 (root = RIVER-P1-02).
+- **Likely FIXED (browser reverify then close):** QUAL-P1-04 (single gallery delegation via `data.src`).
+- **Partial (reverify):** QUAL-P1-06 (timers 58→21 in current file).
+- **Confidence:** high (direct source).
+- **Verification level:** L1 (source); browser needed for QUAL-P1-04 close.
+- **Suggested repair lane:** fold into batched Karty reverify (SD-7); do not close the still-open rows.
+
+---
+
 ### Finding SD-7 — large open Karty cluster witnessed on a far-behind SHA (evidence freshness)
 - **Category:** AUDITREPO / data-sync (evidence-freshness, not a product claim)
 - **Title:** 65 open matrix rows carry witness SHA `32ae0d7d`, which is **607 commits** behind the
@@ -195,6 +214,7 @@ None.
   reverifies) / P3 as bug-class. Current: unregistered.
 - Target bug: SD-6 → proposed severity **P2** (matrix freshness; reverify-driving). Current: unregistered.
 - Target bug: SD-7 → proposed severity **P2** (matrix freshness; 65-row batched reverify). Current: unregistered.
+- Target bug: SD-8 → proposed severity **P2** (reverify triage; confirms still-open Karty cluster). Current: unregistered.
 
 ---
 
@@ -206,7 +226,7 @@ None.
   + SD-4 (schedule fresh reverify of `AUDIT-P3-OG-LCP-MISMATCH`).
 - Lane: `source-authority-sync-2273b8c9` — SD-5 (advance recorded source HEAD to `2273b8c9` + paired
   reverify) then SD-6 (reverify map-engine candidate rows on that HEAD) and SD-7 (batched Karty reverify
-  lane for the 65 `32ae0d7d`-witnessed rows).
+  lane for the 65 `32ae0d7d`-witnessed rows) + SD-8 (keep confirmed-still-open cluster, close only QUAL-P1-04).
 - Why together: all four are data-sync / evidence-hygiene fixes in the same canonical layer; none
   touches product code.
 - What must NOT be mixed: no product/source repo changes; no Research/Drive changes; no
