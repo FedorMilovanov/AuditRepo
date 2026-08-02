@@ -49,7 +49,6 @@ replacements = {
     "| Закрыто (fixed) | 184 |": "| Закрыто (fixed) | 185 |",
     "| P1 открыто | 85 |": "| P1 открыто | 84 |",
     "| **Всего открыто (матрица)** | **174** |": "| **Всего открыто (матрица)** | **173** |",
-    "358 canonical = 184 closed + 174 open": "358 canonical = 185 closed + 173 open",
 }
 for old, new in replacements.items():
     count = text.count(old)
@@ -58,13 +57,23 @@ for old, new in replacements.items():
     text = text.replace(old, new, 1)
 
 status_lines = text.splitlines()
+source_anchor_updates = 0
+last_reverify_updates = 0
+stats_updates = 0
 for i, line in enumerate(status_lines):
     if line.startswith("| Source verification anchor |"):
         status_lines[i] = f"| Source verification anchor | `{SOURCE}` (exact source reverify anchor for stale closure `{TARGET_ID}`; no production claim). |"
+        source_anchor_updates += 1
     elif line.startswith("| Last reverify |"):
         status_lines[i] = f"| Last reverify | `{REVERIFY_REL}` |"
+        last_reverify_updates += 1
     elif line.startswith("## Статистика (обновлено 2026-08-02:"):
         status_lines[i] = f"## Статистика (обновлено 2026-08-02: source `{SOURCE[:8]}`; last exact production `{PRODUCTION[:8]}`; 358 canonical = 185 closed + 173 open)"
+        stats_updates += 1
+if (source_anchor_updates, last_reverify_updates, stats_updates) != (1, 1, 1):
+    raise SystemExit(
+        f"status update shape changed: source={source_anchor_updates}, reverify={last_reverify_updates}, stats={stats_updates}"
+    )
 text = "\n".join(status_lines) + "\n"
 
 session_marker = "## Session log (append-only)\n"
