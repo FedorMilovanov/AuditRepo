@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `b251c4b99265a9915881048c5fbde61f810d8c96` (exact source reverify anchor for stale closure `AR-IDX-CSS-01`; no production claim). |
+| Source verification anchor | `d23546ce177c23c14aa82de511b2b1fc7a1f8bd3` (source merge closing `SHADOW-AUDIT-NARROW`; no production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_b251c4b9_home-z-token-stale-closure.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_d23546ce_shadow-audit-coverage-closure.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (185)
+## ✅ ЗАКРЫТО (186)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| SHADOW-AUDIT-NARROW | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Source PR #780 replaced the manually maintained seven-route sample in `scripts/legacy-shadow-wrapper-audit.js` with an ownership-registry-derived set: every route with `owner=astro`, `status=production-dist` and a committed root HTML shadow becomes an obligation. The audit now fails on malformed ownership data, empty discovery, duplicate shadow files and stale overrides, and checks canonical ownership, required title/description/H1, committed-shadow indexability disposition, route-specific structural markers and retained reader-text ratio. Exact witness head `202b4e9a8fad64c6defa00ae1aa78349c0918ede` discovered and passed **52 routes** in production-like build run `30766785459`; the same permanent script blob was retained on clean head `019cbf2f56d9107883f390b169f92b2f70af0ae8`, which passed Metadata `30766961604` and Shared Files Guard `30766961603`. Squash merge `d23546ce177c23c14aa82de511b2b1fc7a1f8bd3`. No production claim. | `d23546ce` PR#780; runs `30766785459`/`30766785503`/`30766961604`/`30766961603` |
 | AR-IDX-CSS-01 | ✅ **STALE-ON-CURRENT-HEAD / SOURCE VERIFIED 2026-08-02.** The historical root-cause claim is obsolete: `css/site.css` now defines the shared z-index scale in `:root`, including `--z-elevated`, `--z-dropdown-high`, `--z-sticky`, `--z-bottom-bar`, `--z-tooltip-low` and `--z-toast-high`, while `css/home.css` consumes those tokens. The original inference that Home fixed/sticky layers fall back to `z-index:auto` because the tokens are absent is therefore not reproducible. This disposition does not claim that every independent stacking interaction is perfect; it closes only this canonical missing-token claim. Exact source anchor `b251c4b99265a9915881048c5fbde61f810d8c96`; the intervening NoteRegistry merge did not touch either CSS owner. No production claim. | `b251c4b9` source reverify |
 | NEW-VOSK-DEAD-SPLITSENTENCES | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Source PR #755 removed the unused `splitSentences` definition and public export from `js/vosk-tts-core.js`; runtime chunking remains owned by `splitTtsChunks`, and a fail-closed scan found zero source call sites. Exact head `b348e22b79cf1a802b0d32098ed0a37de5d8e67b` passed Shared Files, Metadata, Deploy Candidate, Print, Visual Parity, Route Registry and Runtime Interactive workflows. Squash merge `aed8ed2244ad566b0458e490f629d394122dbf95`. Production is not claimed. | `aed8ed22` PR#755; runs `30756863997`/`30756863994`/`30756863993`/`30756863988`/`30756863991`/`30756864007`/`30756864014` |
 | ASTRO-P1-02 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Extended stage colors no longer collapse after the sixth palette entry: the shared MapEngine normalizes stage color resolution across timeline, legend, dots and layers. Source PR #709 closed the defect and its exact head passed eight triggered workflows; the owner file is unchanged through verifier anchor `3aba5112`. | `8bd891b1` |
@@ -357,7 +358,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NG-DARK-04 | 🆕 **Нагорная P2:** `bg-rose-50` без dark-ремапа — 26 контейнеров (13 MainShell + 13 Sections) в ch.5 остаются #fff1f2 в тёмной теме. **Подтверждено cycle 4:** `bg-rose-50` ОТСУТСТВУЕТ в blanket `.bg-*-50` группе `mobile-hotfix.css` (перечислены 14 цветов, НО НЕ rose). Решение: per-chapter `var(--ng-accent-soft)`. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §5.2 |
 | NG-DARK-05 | 🆕 **Нагорная P2:** `bg-stone-100/200` без dark-ремапа — 18 контейнеров остаются светлыми. Решение: ремап → `var(--color-surface-alt)`/`var(--color-surface-2)`. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §5.2 |
 
-## 🟢 P3 — ОТКРЫТО (48)
+## 🟢 P3 — ОТКРЫТО (47)
 | NG-VIS-04 | 🆕 **Нагорная P2 (→ NG-TABLE-01):** Табличная перегрузка — 8 секций без текстовых абзацев (ch.2/III/V/IX/X, ch.3/V/VII/VIII, ch.5/III). Только гриды/карточки/таблицы — нет «воздуха». ch.2 имеет 1.5x structured/text ratio. **Контентная правка — требует автора.** Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-TABLE-01 |
 | NG-VIS-05 | 🆕 **Нагорная P2 (→ NG-REVEAL-01):** Класс `reveal` — НЕ мёртвый: используется glossary.js для поиска `div.reveal` при гидратации. Анимации нет (и не планировалась) — только семантический маркер. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-REVEAL-01 |
 | NG-VIS-06 | 🆕 **Нагорная P2 (→ NG-FONT-01, объединён с NG-STRUCT-01):** `font-sans` на h2 только в ch.5 — объединено в NG-STRUCT-01. |
@@ -375,7 +376,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AUDIT-P3-OG-LCP-MISMATCH | 4 routes: og:image ≠ LCP image |
 | BUG-011 | 23 unique breakpoints, 768px collision |
 | NEW-72 | SVG dedup micro-optimization (~1.9KB) |
-| SHADOW-AUDIT-NARROW | `legacy-shadow-wrapper-audit.js` проверяет только 7/52 (13%) production-dist маршрутов. Не охвачены: все страницы статей, baptisty-rossii, karty (8 из 10), biografii, about, pastor-series, konfessii, rodosloviye. |
 | NG-TOC-01 | 🆕 **Нагорная P2:** TOC accent-number не per-chapter — `mobile-hotfix.css` hardcodes `var(--ng-toc-accent-2, #f59e0b)` (amber fallback). Решается через `var(--ng-accent)`. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §8 |
 | NG-CROSS-01 | 🆕 **Нагорная P3:** Кросс-главные цветовые утечки — 20+ экземпляров не-акцентных цветов: ch.2 text-purple-800 (Ipsissima vox), ch.4 text-emerald-700 ×8 (Concursus таблица), ch.5 text-blue-*/bg-emerald-*. Не ломает визуал сейчас, но затрудняет миграцию на CSS vars. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §2.2 |
 | NG-SERIYA-01 | 🆕 **Нагорная P3:** Seriya page без `bg-stone-100` на `<body>` — единственная из 9 nagornaya-страниц без него (есть `nagornaya-series-page`). Нужен `data-chapter` для CSS vars. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §8 |
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-02: source `b251c4b9`; last exact production `abf1edba`; 358 canonical = 185 closed + 173 open)
+## Статистика (обновлено 2026-08-02: source `d23546ce`; last exact production `abf1edba`; 358 canonical = 186 closed + 172 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 185 |
+| Закрыто (fixed) | 186 |
 | **P0 открыто** | **0** |
 | P1 открыто | 84 |
 | P2 открыто | 34 |
-| P3 открыто | 48 |
+| P3 открыто | 47 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **173** |
+| **Всего открыто (матрица)** | **172** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-02 — registry-derived shadow-audit closure @ `d23546ce`
+- Closed `SHADOW-AUDIT-NARROW` after source PR #780 replaced the seven-route sample with ownership-registry-derived coverage.
+- Exact production-like witness discovered and passed 52 committed-shadow routes; clean one-file head passed Metadata and Shared Files Guard.
+- Canonical arithmetic moved from **185 closed / 173 open** to **186 closed / 172 open**; P3 moved from **48** to **47**. No production claim.
 
 ### 2026-08-02 — stale Home z-token closure @ `b251c4b9`
 - Closed `AR-IDX-CSS-01` as stale after exact source reverify: the shared z-index tokens are defined in `css/site.css` and consumed by `css/home.css`.
