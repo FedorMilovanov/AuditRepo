@@ -33,7 +33,9 @@ jobs:
           git diff --check
           python scripts/matrix_coverage_regression_test.py
           python scripts/check_matrix_coverage.py --verbose --json-out /tmp/matrix-coverage.json
-          python validate_audit_repo.py
+          python scripts/check_auditrepo_structure.py
+          python scripts/validate_audit_repo.py
+          python scripts/validate_audit_repo_regression_test.py
           python - <<'PY'
           import pathlib
           import sys
