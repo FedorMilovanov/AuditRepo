@@ -1,0 +1,40 @@
+# SD-1 RESOLUTION — counter 165 is CORRECT (canonical tooling SSOT)
+
+Root cause of the earlier "166 vs 165" observation:
+
+The project's own SSOT tool `scripts/check_matrix_coverage.py` counts canonical finding IDs with
+UPPER_ID_RE = `^[A-Z0-9]+(?:-[A-Z0-9]+)+$` (matrix_coverage_lib.py:22). An ID containing a character
+outside `[A-Z0-9-]` (e.g. `/`) fails the regex and is NOT counted as a canonical ID.
+
+Confirmed with the tool:
+  matrix: 356 canonical ids, 191 open rows
+  => closed canonical ids = 356 - 191 = 165   (matches the claimed closed counter 165)
+
+Physical-vs-canonical mismatch:
+  Physical closed-table rows = 166
+  Canonical closed rows parsed by the tool = 165
+  The single physical row NOT counted as canonical: `NEW-68/69`  (contains a slash `/`)
+
+What NEW-68/69 actually is (reverify/CURRENT_HEAD_REVERIFY_2026-07-04_dist-csp-form-action-fixed-14574a9.md):
+  - NEW-68: dist CSP meta existed on many pages but missed `form-action 'self'`.
+  - NEW-69: Astro-owned karty/map-like dist routes missed CSP meta entirely.
+  Both FIXED-CURRENT at source `14574a9a`. Two DISTINCT bugs combined into one slash-ID row.
+
+Consequences:
+  1. The closed counter 165 is NOT a drift error; it is consistent with canonical tooling.
+  2. The combined row `NEW-68/69` is simultaneously (a) invisible to canonical ID counting and
+     (b) represents two distinct fixed bugs, so neither NEW-68 nor NEW-69 is currently a counted
+     canonical closed ID.
+  3. There is no canonical counter mismatch. SD-1 is reclassified from "counter drift (P2)" to a
+     cosmetic ID-naming / row-shape inconsistency (P3).
+
+Fix options (verifier decision; touches the canonical total, so must be intentional):
+  A. Split the combined row into two rows `NEW-68` and `NEW-69`
+     => closed canonical +2 -> 167, canonical total 356 -> 358, closed counter -> 167.
+  B. Rename the combined row to ONE slash-free canonical ID (e.g. `NEW-CSP-FORM-ACTION`, or keep
+     primary `NEW-68` and fold NEW-69 in)
+     => closed canonical +1 -> 166, canonical total 356 -> 357, closed counter -> 166.
+  C. Leave as-is; optionally add a one-line note that the slash-ID row is not canonical-counted.
+     No counter/total change.
+Invariant to preserve after any fix: closed_canonical == closed_counter == NEXT_AGENT_PROMPT claim,
+and total_canonical == closed_canonical + open(191).

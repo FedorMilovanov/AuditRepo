@@ -1,0 +1,36 @@
+# Matrix coverage deep-dive — 2026-08-01
+
+Ran `scripts/check_matrix_coverage.py` (project's canonical SSOT tool) and inspected the report.
+
+## Global stats
+- matrixIds: 356  (canonical finding IDs in active matrix tables)
+- openRows: 191   (canonical OPEN rows across P1+P2+P3+REFACT+AUDITREPO)
+- closed canonical: 356 - 191 = 165   (== claimed closed counter 165  -> SD-1 resolved)
+- evidenceFiles scanned: 320 (reverify + incoming + working)
+- registry: 52 (11 alias, 7 informational, 30 retired, 4 false-positive)
+- ignoredTokens: 0
+
+## Problems flagged (exactly 2, both SD-3)
+- UNREGISTERED-EVIDENCE: RIGHT-4Q204-OPEN-SCHEMATIC @ ..._9407cc92_genesis-b594-production.md:27
+- UNREGISTERED-EVIDENCE: RIGHT-P72-TEXT-LINK-ONLY @ ..._9407cc92_genesis-b594-production.md:27
+(These are Research rights-decisions, not bugs. -> SD-3.)
+
+## Open bugs whose evidence is ARCHIVE-ONLY (2)  [risk: stale/untracked evidence]
+- AUDIT-P3-OG-LCP-MISMATCH  (P3: og:image != LCP image on 4 routes)  -- evidence only in archive/
+- R-003                     (Refactoring: "Нет source maps")          -- refactoring backlog, archive-ok
+
+## Open bugs with a DIRECT witness embedded in their row (10)
+- AR-IDX-A11Y-01, AR-IDX-CSS-02, AR-IDX-CSS-03, AR-IDX-JS-01, AR-IDX-JS-02,
+  AR-IDX-PERF-01, AR-IDX-PERF-02, ATLAS-D-NAMESPACE-COLLISION, BASE-P1-02, BASE-P1-03
+
+## Registry invariants (all hold)
+- All alias targets resolve to a canonical matrix ID (0 missing targets).
+- No non-alias registry entry overlaps a canonical matrix ID (no double counting).
+- Every informational/retired/false-positive entry has a non-empty reason.
+
+## Summary for verifier
+- The only checker problems are the 2 RIGHT-* (SD-3). No ORPHAN-CLAIM for any open bug:
+  every one of the 191 open IDs has evidence, a direct witness, or archived evidence.
+- AUDIT-P3-OG-LCP-MISMATCH has only archived evidence -> candidate for a fresh reverify (its
+  evidence is from 2026-07-05 archive; may be stale/fixed on current HEAD efaf2a51).
+- R-003 archive-only is fine (refactoring backlog).

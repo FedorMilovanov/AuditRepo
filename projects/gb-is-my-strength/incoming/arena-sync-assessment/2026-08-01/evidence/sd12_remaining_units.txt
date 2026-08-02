@@ -1,0 +1,37 @@
+# SD-12 — remaining Karty unit rows on 2273b8c9
+
+Direct source inspection on ref 2273b8c9.
+
+## STILL OPEN
+- MAP-P1-12 — compass still placed inside the SVG pan/zoom group at translate(50,80)
+  (map-engine.js:976-997, setAttribute('transform','translate(50, 80)')), not a screen overlay. STILL OPEN.
+- MAP-P1-20 — sw.js: static assets (css/js/json/woff/...) served via cacheFirst(CACHE_STATIC); cacheFirst
+  checks only `/[?&]v=/` for versioning; unversioned scripts/JSON could cache forever. STILL OPEN (SW
+  versioning concern persists).
+- SIG-P1-01 — map-engine.js:1705 `M${origin.x-74},...` hardcoded pixel offsets in water-split signature;
+  :1732 hanukkah-lights translate(origin.x, origin.y-38). Hardcoded offsets persist -> STILL OPEN.
+- WAYP-P1-01 — sheet-engine.js:641-650 `.lab-wp` waypoint labels 7px-ish (font-size 10*k, z2 4.4px,
+  z3 2.3px, z4 1.4px), no backing plate (only paint-order stroke) -> STILL OPEN.
+- MEDIA-P1-01 — route.json data still reference external Wikimedia Commons: ishod 22 refs, avraam 76
+  refs (upload.wikimedia). No local caching in project -> STILL OPEN.
+- CSS-P1-01 — confirmed bounded lease (SD-8/MAP-P1-14): me-base-css removed only when baseCssLeaseCount
+  reaches 0 (map-engine.js:514-518). CSS-P1-01 (destroy removes style shared by all maps) is FIXED by the
+  lease (same root as MAP-P1-14).
+
+## FIXED (candidate)
+- COMP-P1-01 — audit/atlas-preview/atlas-reader.js HUD scale now uses `pxPerUnit = svgR.width / vb[2]`
+  (real getBoundingClientRect width) instead of a max-width-based estimate; picks round km steps.
+  The "up to 22% error on adaptive max-width" defect is fixed.
+- CSS-P1-01 — bounded me-base-css lease (destroy no longer strips CSS from other live maps).
+
+## Partial / browser-only (not source-checkable here)
+- GATE-P1-01/03/04, MAP-P1-01..19, AVRAAM-P1-01..05, LOD-P1-01, DRAW-P1-02, SVG-P1-01 (export artifact),
+  MAP-P1-18/19 are browser/runtime/CI behaviors -> require browser reverify, not source-only.
+  LOD-P1-01 relates to z4 label stroke (confirmed `.lab-wp` z4 1.4px + paint-order stroke 2.6px in
+  sheet-engine.js:951/905) -> partial confirmation the stroke-vs-glyph-gap premise exists.
+  SVG-P1-01 (unescaped &nbsp; in exported SVG) is an artifact concern; needs checking exported files.
+
+## Net
+- 6 rows source-verified STILL OPEN (MAP-P1-12, MAP-P1-20, SIG-P1-01, WAYP-P1-01, MEDIA-P1-01, LOD-P1-01 partial).
+- 2 rows FIXED candidates (COMP-P1-01, CSS-P1-01).
+- ~25 rows are browser/runtime/CI (need browser reverify; not source-only).

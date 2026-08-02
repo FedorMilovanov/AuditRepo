@@ -1,0 +1,26 @@
+# Matrix physical row counts vs claimed counters — 2026-08-01
+
+AuditRepo HEAD: bc067a1cbaf33ed3cafa72cf6f4e5201056125db
+File: projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+
+Command (python): count table data rows per section between exact `##` header boundaries,
+excluding the `| ID |...|` header row and `|---|` separators.
+
+Section                        physical rows    header-claims
+## ✅ ЗАКРЫТО                   166              165          <-- SD-1
+## 🔴 RELEASE-BLOCKING P0/P1     0                0
+## 🟠 P1                         96               96
+## 🟡 P2                         36               36
+## 🟢 P3                         51               51
+## 🔵 P3 — РЕФАКТОРИНГ            4                4
+## 🟣 AUDITREPO                   4                4
+
+Sum of open sections = 96 + 36 + 51 + 4 + 4 = 191  (matches claimed total open 191)
+
+Closed rows unique check: 166 rows, 166 unique IDs, no duplicate ID rows.
+
+Claimed closed = 165 (header "ЗАКРЫТО (165)", ## Статистика "Закрыто (fixed) | 165",
+NEXT_AGENT_PROMPT "canonical counters remain 165 closed / 191 open",
+session log "counters remain 165 closed / 191 open").
+
+=> Closed table physically holds one more row (166) than every claimed counter (165).

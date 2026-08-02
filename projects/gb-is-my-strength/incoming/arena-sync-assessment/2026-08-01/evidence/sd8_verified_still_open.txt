@@ -1,0 +1,41 @@
+# SD-8 — source-verified "still open" cluster on actual HEAD 2273b8c9
+# (defects that PR #709 / the 14-commit delta did NOT fix)
+
+Direct source inspection on ref 2273b8c9 of `karty/_engine/map-engine.js` and `karty/_engine/base-geo.svg`.
+These rows were witnessed on 32ae0d7d; we confirm the defect pattern is STILL in the current file,
+so they are NOT fixed and remain genuinely open (do NOT schedule for close).
+
+## Confirmed STILL OPEN on 2273b8c9
+- **BASE-P1-01** — base-geo.svg: `id="hill"`=0, `id="peak"`=0, `id="peak-snow"`=0, `id="canaanRidge"`=0,
+  `id="landG"`=0, `id="seaG"`=0. All 6 referenced IDs still absent (empty/failed `<defs>`, missing
+  relief fills/highlands). STILL OPEN.
+- **BASE-P1-02** — map-engine.js:2884 still `baseGeoG.setAttribute('opacity','0.5')` (relief-washing
+  opacity on me-base-geo). STILL OPEN (PR #709 did not remove it).
+- **RIVER-P1-02** — base-geo.svg: `id="waterRipple"` def is ABSENT, but `url(#waterRipple)` used 4x.
+  STILL OPEN (missing filter definition).
+- **RIVER-P1-03** — base-geo.svg: `stroke-linecap="round"` present 39x (river rounded ends can still
+  poke past coordinates). STILL OPEN.
+- **QUAL-P1-05** — map-engine.js lines 2401/2412/2434/2653/2670: wheel/touchstart/touchmove/mousemove
+  listeners have NO `{ passive: true }` (grep: no passive option on any). STILL OPEN (mobile scroll lag).
+
+## Likely FIXED (same root as SD-6 / ENGINE-P1-28)
+- **QUAL-P1-04** — gallery delegated click now resolves `img.dataset.src || currentSrc || src` once
+  (map-engine.js ~2565) and calls openPhoto once; no longer resets full-size to 320px thumbnail on a
+  second delegated click. Source-verified fixed; needs a browser reverify to close (SHA-first).
+
+## Partial / needs closer look
+- **QUAL-P1-06** — timers: claimed 58 setTimeout/rAF in the original row; current file has 21.
+  Count dropped substantially, but lifecycle-cleanup binding was not exhaustively audited here.
+  Mark "reverify" (not auto-close, not confirmed fixed).
+
+## RIVER-P1-01
+- The `feDisplacementMap scale="7"` filter itself is absent (because the whole waterRipple def is
+  missing — see RIVER-P1-02), so the "scale=7 deformation" premise no longer applies as stated, but
+  the missing-def root cause (RIVER-P1-02) is open. Treat as open via RIVER-P1-02.
+
+## Net
+- 6 rows confirmed STILL OPEN on current HEAD (BASE-P1-01/02, RIVER-P1-02/03, QUAL-P1-05, RIVER-P1-01-root).
+- 1 row likely fixed (QUAL-P1-04).
+- 1 row partial (QUAL-P1-06).
+- These are NOT part of PR #709's map-engine runtime P1 lane (that lane = SD-6's 7 fixed rows).
+- No product claim; verifier-owned. This shrinks the ambiguity for the 75+ reverify surface.

@@ -1,0 +1,18 @@
+# SD-7b — D-19 (Antisovetov PageHead) remains open; not addressed by Wave 8
+
+## Facts (2026-08-01)
+- D-19 open row: `<title>` != og:title/twitter:title/JSON-LD headline on 2 custom PageHeads
+  (`20-antisovetov-pastoru` via AntisovetovPageHead.astro, `rimlyanam-7`). rimlyanam-7 half already
+  closed (2026-07-11); antisovetov half remains open.
+- Wave 8 (commit 41617252e, "apply Wave 8 Antisovetov source boundaries") changed only:
+  - .github/workflows/indexnow.yml (adds antisovetov-wave8-contract step)
+  - scripts/antisovetov-wave8-contract.mjs
+  - src/components/article-pilots/antisovetov/AntisovetovBody.astro
+- It did NOT touch any PageHead / Seo / head / meta / title file (grep: none).
+- Source main is `2273b8c9`; D-19 witness era is `2ca2af3` (698 commits behind, see SD-7 supplementary).
+
+## Conclusion
+- D-19 antisovetov half is NOT addressed by the Wave 8 delta → remains open.
+- Like the other SD-7 stale-witness rows, D-19 needs a fresh reverify on `2273b8c9`
+  (does `<title>` == og:title on the antisovetov page now?).
+- No product claim, no closure. Verifier-owned.

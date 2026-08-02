@@ -1,0 +1,34 @@
+# SD-11 — sheet-engine.js + GATE clusters on 2273b8c9
+
+Direct source inspection on ref 2273b8c9 of scripts/lib/sheet-engine.js and scripts/atlas-label-audit.js.
+
+## STILL OPEN (source-verified)
+- **SEA-P1-01** — sheet-engine.js:49 `#seaPattern` is a 20x20 tile (width/height 20, wave path), the
+  "tile effect over seas" premise is unchanged. STILL OPEN.
+- **ROUTE-P1-01** — sheet-engine.js:477 catmullRom(), :531 routePath=catmullRom(routePts), :521-525
+  still bends via `route.route_via` (the "needs via points, no branching" concern persists). STILL OPEN.
+- **ORN-P1-01** — sheet-engine.js:741 `cartW = max(400, 46 + len(title)*14.6 ...)` and #cornerOrn
+  symbol; the width-formula + corner-ornament design unchanged. STILL OPEN.
+- **GRAT-P1-01** — sheet-engine.js:442 graticule(), :1010-1011 `.graticule` + `svg.zoomed .graticule{opacity:0}`; the "tick marks fade at zoom>4% / non-projection grid" concern persists. STILL OPEN.
+- **RELIEF-P1-01** — sheet-engine.js:184-193 `<g class="relief">` filled with `<ellipse>` mountains
+  (stretched ovals) + `RELIEF[family] || ''`; urheimat relief emptiness not addressed in engine.
+  STILL OPEN (by premise).
+- **HALO-P1-01** — sheet-engine.js:579 `const halos = []` declared, :822 `${halos.join('')}` rendered,
+  but **halos.push is never called** (grep: no halos.push). Halo is instead emulated via CSS
+  `paint-order:stroke; stroke:rgba(...); stroke-width:2.6px` (lines 900-906). The "unused halos array +
+  CSS stroke emulation" defect is STILL OPEN.
+- **GLYPH-P1-01** — renderer `glyphSvg()` has 9+ cases (town/altar/oak/tent/well/palm/gate/pyramid...);
+  but live route.json data: avraam 14/22 places with glyph, ishod 0/11, shvatim 0/18, pavel 0/10.
+  So the "9 of 11 maps have 0 glyph" defect is STILL largely OPEN (avraam fixed, others not).
+
+## FIXED (source-verified, revert-close)
+- **GATE-P1-02** — scripts/atlas-label-audit.js now actually audits per-map: computes overlap(),
+  overlapArea(), touchesEdgeSafeArea(SAFE_INSET=24), MARKER_R=8; report includes label-label pairs,
+  label-over-marker, marker-marker pairs, clipped labels, safe-area hits; writes reports/atlas-label-audit.md
+  and has negative-test assertions (lines 177-185). The "reports 0 collisions and checks nothing" bug is
+  FIXED.
+
+## Net
+- 7 rows STILL OPEN (SEA, ROUTE, ORN, GRAT, RELIEF, HALO, GLYPH — data partially).
+- 1 row FIXED candidate (GATE-P1-02).
+- These are sheet-engine (static atlas) rows — distinct from map-engine runtime rows (SD-6/8/10).

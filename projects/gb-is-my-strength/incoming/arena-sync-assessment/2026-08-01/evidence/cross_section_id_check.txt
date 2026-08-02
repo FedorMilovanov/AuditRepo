@@ -1,0 +1,14 @@
+# Cross-section duplicate-ID check — 2026-08-01
+
+Script: build per-section ID sets, count global duplicates.
+File: verified/MASTER_BUG_MATRIX.md
+
+Global duplicate IDs: D-1, D-2, D-3, D-4, D-7, D-8, D-19, D-21, D-22
+
+All nine are the same pattern: an ID that appears once in an open section (P2/P3) and once in the
+HISTORICAL AUDITOR LOG section (## 🔴 AUDITOR / ARENA — 2026-07-06). The historical log is a
+non-counting narrative appendix, not a counter section. The canonical open counts
+(P1=96, P2=36, P3=51, REF=4, AUDITREPO=4, total=191) are computed only from the counter sections,
+so these repeats do NOT inflate the counters.
+
+=> Not a defect. Kept as evidence to pre-empt a verifier "duplicate ID" question.

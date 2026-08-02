@@ -1,0 +1,34 @@
+# SD-10 — source-verified verdicts for map-engine/Avraam clusters on 2273b8c9
+
+Direct source inspection on ref 2273b8c9 of karty/_engine/map-engine.js, src/components/karty/avraam/*, src/pages/karty/avraam/*.
+
+## STILL OPEN
+- FONT-P1-01 — .hw CSS still `font-family: Georgia,"Times New Roman",serif` (map-engine.js:609); no
+  Noto Serif Hebrew. STILL OPEN.
+- TEXT-P1-01 — label width still `labelText.length * fontSize * 0.6` (map-engine.js:1891) monospace
+  estimate; wide glyphs (Ш/Ж/ת/ש) can clip. STILL OPEN.
+- A11Y-P1-03 — `.me-arch-meta { color: rgba(154,162,174,.4) }` (map-engine.js:711) low-contrast; also
+  many rgba(154,162,174,.4/.5/.6) usages. STILL OPEN.
+- DRAW-P1-03 — markers still plain circles r=4.5 (map-engine.js:1872, 1064, 1818); no icon system.
+  STILL OPEN.
+- MINI-P1-01 — minimap (map-engine.js:1329-1331) = dark rect + place dots only; NO base-geo vectors
+  (land/sea). STILL OPEN.
+- A11Y-P1-02 — sr-only text fallback (AvraamMap.astro:15) is still before the interactive map in DOM
+  order; no skip-link (interactive now has aria-label). STILL OPEN.
+
+## FIXED (source-verified, revert-close after browser reverify)
+- A11Y-P1-01 — two-h1 during intro is FIXED: AvraamMap.astro:14 has single sr-only h1; index.astro
+  MutationObserver removes it when map state=ready; engine has one intro h1. No two h1 simultaneously.
+
+## Notes / partial
+- PERF-P1-01 — avraam/base.svg still has feTurbulence (4x baseFrequency, 5x feTurbulence). The "14s
+  infinite feTurbulence animation" claim needs verifying it is animated (animateTransform) vs static;
+  mark reverify, do not auto-close.
+- DRAW-P1-01 — label model v2 with place.labelAnchor + leader{dx,dy} now implemented (header comment
+  v0.53, §11 P-8/P-9); the fixed "12px shift in 100x16 window" concern may be superseded; mark reverify.
+
+## Net
+- 6 rows confirmed STILL OPEN (FONT-P1-01, TEXT-P1-01, A11Y-P1-02/03, DRAW-P1-03, MINI-P1-01).
+- 1 row FIXED candidate (A11Y-P1-01).
+- 2 rows need reverify (PERF-P1-01, DRAW-P1-01).
+- These are map-engine/browser/Avraam rows (distinct from SD-6 map-engine runtime fixes and SD-8/SD-9).

@@ -1,0 +1,26 @@
+# SD-13 — tour / story / a11y rows on 2273b8c9
+
+Direct source inspection of map-engine.js + route.json data at ref 2273b8c9.
+
+## STILL OPEN (source-verified)
+- MAP-P1-03 — shoftim/route.json: 6 stages, but all 12 places bound to stage 0 (`{0:12}`). The
+  "6 stages in metadata, all places on stage 0" defect persists. STILL OPEN.
+- MAP-P1-01 — tour advance (runTourStep) uses `showCaption(route.stages[tourStepIdx], tourStepIdx, len)`
+  (labels stage by tourStepIdx, not by sid), and pre-flyTo(nextPlace) at :2503-2505 happens before the
+  stop check. The "shows stage-I label for stage-III / animates dot not by sid / flyTo before stop"
+  premise is still present in code. STILL OPEN (browser confirm recommended).
+- MAP-P1-02 — tour entry is still keyboard-only: only the `' '`/`Spacebar` key handler calls startTour()
+  (:2751); there is no touch/mobile UI affordance to start the tour (no data-tour button; startTour only
+  exposed via API/keyboard). STILL OPEN (mobile/touch has no tour trigger).
+- MAP-P1-13 — only the search input has role/aria-label (searchbox); the 113 marker dots have no
+  role/tabindex (grep: no marker role/tabindex). STILL OPEN.
+
+## FIXED (source-verified, revert-close)
+- ASTRO-P1-04 — tour/layer membership now reads `story.stages || story.stage_ids` (map-engine.js:302,
+  :324) and validateRoute checks both `st.stages||st.stage_ids` (:101). The "reads only stage_ids,
+  ignores stages" defect is fixed.
+
+## Notes
+- ASTRO-P1-02 was already source-verified FIXED in SD-6 (getStageColor).
+- MAP-P1-03/MAP-P1-01 are data+code confirmed open; MAP-P1-02/MAP-P1-13 are code-confirmed open.
+- No product claim; verifier-owned. Fold into SD-7 batched reverify lane.

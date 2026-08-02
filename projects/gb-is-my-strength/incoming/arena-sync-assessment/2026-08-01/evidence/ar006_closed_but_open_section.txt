@@ -1,0 +1,18 @@
+# SD-2 evidence — AR-006 marked CLOSED but counted in the open total
+
+File: projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+
+Section "## 🟣 AUDITREPO (4)" (open section), row 427:
+| AR-006 | ✅ **CLOSED 2026-07-14**: ALLOWED_ROOT_DIRS/FILES в validate_audit_repo.py
+  (verification/ и references/ узаконены ...); первый же прогон поймал и выселил корневой
+  passes/ → projects/gb-is-my-strength/passes/. | REPORT §1 + fix-verify (оба валидатора PASS) |
+
+Confirmation of closed state in Session log, line 845:
+- AR-006 закрыт: root allow-list в validate_audit_repo.py; корневой passes/ выселен в проект.
+
+AR-006 is NOT present in the `## ✅ ЗАКРЫТО (165)` table (checked the 166 closed IDs).
+
+Impact on counters:
+- AUDITREPO section count = 4 includes AR-006 (closed).
+- Total open = P1(96)+P2(36)+P3(51)+REFACT(4)+AUDITREPO(4) = 191, therefore includes one CLOSED
+  item (AR-006). If AR-006 is treated as closed, open total would be 190 and AUDITREPO open count 3.

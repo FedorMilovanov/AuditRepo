@@ -1,0 +1,30 @@
+# SD-7 — large open Karty cluster witnessed on a far-behind SHA (evidence freshness)
+
+## Facts
+- Actual source main HEAD: 2273b8c930eebf383d429b917d3636bc28a80bae (2026-08-01).
+- 65 open matrix rows carry the witness SHA `32ae0d7d62bee81737a9aae1f136946d047fe4fb`
+  (merge: "атлас — 256 этимологий (18 батчей, ~377 научных прогонов)").
+- Live check: gh api .../compare/32ae0d7d...2273b8c9 => status=ahead, ahead_by=607, behind_by=0.
+  i.e. `32ae0d7d` is an ancestor of current main, and source has moved **607 commits** past it.
+
+## Scale
+65 open rows witnessed on 32ae0d7d, by prefix family:
+  QUAL 13, ENGINE 7, RIVER 5, BASE 4, GATE 3, ASTRO 3, DRAW 3, MAP 2, DATA 2, A11Y 2,
+  and ~30 single families (ARCH, SVG, TEXT, FONT, MINI, WAYP, CSS, SIG, REG, PERF, UI, RELIEF,
+  ROUTE, GLYPH, GRAT, SEA, ORN, HALO, MEDIA, LOD, COMP, ...).
+
+## Interpretation (SHA-first, README)
+- A bug without current-SHA evidence is not repair-ready. These 65 rows were witnessed on a SHA
+  607 commits behind current main, so NONE is repair-ready on current HEAD without a fresh reverify.
+- This is a deliberate evidence-freshness observation, NOT a claim that these bugs are fixed/open.
+  Some of these rows are covered by SD-6 (map-engine fixes in PR #709 land on 2273b8c9):
+  ENGINE-P1-21/22/23/28 (fixed), MAP-P1-11/ENGINE-P1-26 (still open). The rest need per-row reverify.
+- Qualitatively: a full 65-row reverify is a large pass. Recommend a batched Karty reverify lane on
+  2273b8c9, reusing SD-6's verified dispositions as the map-engine subset.
+
+## Boundary
+No product claim, no closure, no counter change. Verifier-owned scheduling decision.
+
+## Supplementary (2026-08-01) — see sd7_supplementary_stale_witnesses.txt
+7 additional open rows on other stale SHAs (2ca2af3 x3, 21624a3 x3, 30bf3f5c x1), 658-1105 commits
+behind current main. Combined stale-witness open surface ~72 rows. None repair-ready per SHA-first.
