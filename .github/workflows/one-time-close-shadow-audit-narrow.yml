@@ -1,0 +1,64 @@
+name: One-time close shadow audit narrow
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  close-shadow-audit-narrow:
+    if: github.head_ref == 'verifier/close-shadow-audit-narrow-20260802' && github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Materialize closure
+        run: python scripts/_close_shadow_audit_narrow_once.py
+
+      - name: Validate transaction
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          python scripts/matrix_coverage_regression_test.py
+          python scripts/check_matrix_coverage.py --verbose --json-out /tmp/matrix-coverage.json
+          python scripts/check_auditrepo_structure.py
+          python scripts/validate_audit_repo.py
+          python scripts/validate_audit_repo_regression_test.py
+          python - <<'PY'
+          import pathlib
+          import sys
+          sys.path.insert(0, 'scripts')
+          from matrix_coverage_lib import parse_matrix
+          matrix = pathlib.Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md').read_text(encoding='utf-8')
+          rows, open_ids, closed_rows = parse_matrix(matrix)
+          assert len(rows) == 358, len(rows)
+          assert len(closed_rows) == 186, len(closed_rows)
+          assert len(open_ids) == 172, len(open_ids)
+          assert 'SHADOW-AUDIT-NARROW' not in open_ids
+          print('matrix closure arithmetic: PASS')
+          PY
+
+      - name: Commit permanent files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+                  projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+                  projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-02_d23546ce_shadow-audit-coverage-closure.md
+          git diff --cached --quiet && { echo 'No permanent diff produced'; exit 1; }
+          git commit -m 'audit(gb): close narrow shadow-audit finding'
+          git push origin HEAD:${{ github.head_ref }}
