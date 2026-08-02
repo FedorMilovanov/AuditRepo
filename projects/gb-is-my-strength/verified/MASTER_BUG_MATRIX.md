@@ -9,22 +9,37 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `fc1085c805d72e6d43f58a6383c680d4e886183b` (durable product/evidence anchor verified by PR #121; former canonical `efaf2a51` is 65 commits behind). During this third pass source `main` was observed first at `6cfa7468e033ed44dac79b9752b127f406d33724` and finally at `92bfa45a02e53d7b735af73025a79d99ffe75b67`. The eight-commit delta changes feed/sitemap, Wave12/search workflows and audit/registry scripts, but not Karty/Ishod data, Vosk, genealogy or matrix-evidence paths. |
+| Source verification anchor | `3aba5112f0fc37712e027a1ad1d8379debe54377` (exact closure-wave V1 anchor). Fifteen source/data findings were independently reverified: eight MapEngine rows remain fixed by source PR #709 with their owner file unchanged, and seven additional rows are fixed/stale on this exact anchor. This is a finding-disposition anchor, not a production claim. |
 | Deploy | ⚠️ **VERIFIED SOURCE ANCHOR ≠ PRODUCTION.** Last exact production remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Anchor `fc1085c805d72e6d43f58a6383c680d4e886183b` has no same-SHA production witness. Later cleanup-only source tips do not create a production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_69d1e72a_third-pass-gate-hardening.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md` |
 
-⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Verified product/evidence anchor = `fc1085c805d72e6d43f58a6383c680d4e886183b`; final source `main` observation in this pass = `92bfa45a02e53d7b735af73025a79d99ffe75b67`; last exact production authority = `abf1edba190280e554dfda085bef9fb6594c896d`. The eight commits after `6cfa7468` touch generated feed/sitemap, Wave12/search control-plane and pastor-series/public-surface audit scripts. They do not touch Karty/Ishod data, Vosk, genealogy or matrix-evidence paths, so verdicts remain anchored to `fc1085c805d72e6d43f58a6383c680d4e886183b`. Any later status change requires a new exact-head reverify. Active source owner: draft PR #680 at `f95948ebd3f84791e150445ed505772965e180f7`; не вмешиваться в его ветку. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_69d1e72a_third-pass-gate-hardening.md`.
+⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (168)
+## ✅ ЗАКРЫТО (183)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| ASTRO-P1-02 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Extended stage colors no longer collapse after the sixth palette entry: the shared MapEngine normalizes stage color resolution across timeline, legend, dots and layers. Source PR #709 closed the defect and its exact head passed eight triggered workflows; the owner file is unchanged through verifier anchor `3aba5112`. | `8bd891b1` |
+| ENGINE-P1-21 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Screen-to-SVG projection now models centered `preserveAspectRatio=meet` letterboxing with the effective scale and offsets. Source PR #709 closed the 1.63x ruler-coordinate error; the MapEngine owner file is unchanged through `3aba5112`. | `8bd891b1` |
+| ENGINE-P1-22 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Distance calculation now uses governed `cfg.kmPerUnit` through the canonical distance helper instead of a hardcoded `0.92` multiplier. Closed by source PR #709 and preserved through `3aba5112`. | `8bd891b1` |
+| ENGINE-P1-23 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Marker animation targets the semantic marker-dot owner; the stale `circle:nth-child(3)` runtime selector is absent. Closed by source PR #709 and preserved through `3aba5112`. | `8bd891b1` |
+| ENGINE-P1-28 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Gallery opening has one delegated owner and resolves the canonical full-size source once, so a thumbnail click no longer overwrites the full image. Closed by source PR #709 and preserved through `3aba5112`. | `8bd891b1` |
+| MAP-P1-14 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Shared MapEngine CSS is protected by a bounded lease; destroying one instance removes per-instance state and cannot strip styles from another live map. Closed by source PR #709 and preserved through `3aba5112`. | `8bd891b1` |
+| MAP-P1-15 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** The toolbar now has one governed distance-measure button and owner; the dead duplicate `#me-ruler-btn` is absent. Closed by source PR #709 and preserved through `3aba5112`. | `8bd891b1` |
+| CSS-P1-01 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Same resolved root cause as `MAP-P1-14`: the shared `me-base-css` node is removed only after the final active lease, not when any one map is destroyed. Source PR #709; unchanged through `3aba5112`. | `8bd891b1` |
+| GATE-P1-02 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-02.** `atlas-label-audit.js` now measures label-label, label-marker and marker-marker overlap, clipping and safe-area hits, emits a report and includes adversarial assertions. The original zero-work audit claim is not reproducible at exact anchor `3aba5112`. | `3aba5112` |
+| COMP-P1-01 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-02.** Atlas preview scale derives pixels per unit from the rendered SVG `getBoundingClientRect()` width and viewBox, eliminating the adaptive max-width estimate that produced the reported error. Reverified at `3aba5112`. | `3aba5112` |
+| ASTRO-P1-04 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-02.** Story/tour membership accepts both canonical `story.stages` and legacy `story.stage_ids`, and route validation applies the same compatibility rule. Reverified at `3aba5112`. | `3aba5112` |
+| GATE-P1-04 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-02.** Dist smoke diagnostics filter the known local CSP/Yandex/favicon transport noise before recording page and console errors, while retaining real failures. Reverified at `3aba5112`. | `3aba5112` |
+| QUAL-P2-03 | ✅ **STALE-ON-CURRENT-HEAD / SOURCE VERIFIED 2026-08-02.** The absence claim is obsolete: the current page-ownership registry contains the Karty hub and all governed Karty routes, including Avraam, Ishod, Early Church, Maccabim, Melachim, Pavel, Revelation, Shoftim, Shvatim and Yeshua. Directly rechecked at `3aba5112`. | `3aba5112` |
+| NEW-VOSK-FETCH-NO-ABORT | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-02.** The model download owns an `AbortController` and aborts the active request during cancellation/cleanup; the historical uncancellable 280 MB fetch claim is no longer reproducible. Relevant Vosk owner files are unchanged through `3aba5112`. | `3aba5112` |
+| AR-AUDIT-17 | ✅ **STALE-ON-CURRENT-HEAD / SOURCE VERIFIED 2026-08-02.** The genealogy templates are build-time placeholder sources, not inputs to the claimed `validate:all` inline-script check; generated atlas output contains substituted data. The reported two-error gate failure is not reproducible at `3aba5112`. | `3aba5112` |
 | WORKFLOW-POLICY-SHADOW-ERA | ✅ **FIXED/SOURCE+CI VERIFIED 2026-08-01.** Source PR #688 replaces hardcoded route-path policy with registry-owned production-route coverage, capability-based gates, source-read-only validation and explicit permission/write-capability contracts. It also keeps build-once candidate promotion and live witnesses separated, makes actionlint blocking and expands stateful SYSTEM-gate failure coverage. Exact head `fff6155b651620b5e497585948d3b2a9fae5cd67` passed Metadata `30681815950`, Shared/Workflow Policy/actionlint `30681815958`, Node/read-only `30681815957` and TTS/Chromium `30681815981`; zero review threads. Squash merge `0ff04232ee08a8f81711db640395901124aca787`; source issue #64 closed. Production is not claimed. | `0ff04232` PR#688; issue #64; runs `30681815950`/`30681815958`/`30681815957`/`30681815981` |
 | HOME-BROWSER-LIFECYCLE-RESIDUAL | ✅ **FIXED/SOURCE+CHROMIUM+WEBKIT VERIFIED 2026-07-26.** PR #405 replaced the impossible blanket WebKit BFCache expectation with a stricter capability-aware contract. Chromium must emit coherent persisted=true events and preserve the exact document token; Playwright WebKit may report persisted=false only with coherent pagehide/pageshow, a new token, `navigationType=back_forward`, restored theme/menu/scroll state and all runtime/shortcut/Pagefind/back-to-top assertions. Exact head `88d17334` passed Runtime `30196286302` and Shared `30196286327`; artifact `8630244568` (`sha256:a92dde7ab47e2b669c131c4acd5ebe606e64adb2f92ba49347218f0772ef1a57`). No retry, waiver or product-runtime edit. | `cc2e829f` PR#405; issue #299 |
 | CI-BUILD-VALIDATION-DUPLICATION | ✅ **FIXED/SOURCE+CI+PRODUCTION VERIFIED 2026-07-26.** PR #370 makes `Deploy to GitHub Pages` the sole production owner. Readiness performs the only checkout, `npm ci` and production-like build under Node 22.12.0/npm 10.9.0, validates that exact `dist`, writes provenance and uploads candidate `8634711632`. Privileged promotion downloads, verifies and publishes the same candidate without checkout/install/build. Exact run `30211404138` completed both jobs successfully. | `cd4b7706` PR#370; issue #295; run `30211404138` |
@@ -203,7 +218,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (96)
+## 🟠 P1 — ОТКРЫТО (85)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -224,7 +239,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | MAP-P1-11 | 🆕 **Karty P1:** Scale bar использует `cfg.W0 / view.w` вместо `canvasWidth / view.w`, ошибка масштаба от 1.32x (desktop) до 4.87x (mobile) | verified-source (c2c339708252) |
 | MAP-P1-12 | 🆕 **Karty P1:** Compass размещён в координатах карты (50,80) внутри SVG pan/zoom группы вместо screen overlay, улетая за экран | verified-browser (c2c339708252) |
 | MAP-P1-13 | 🆕 **Karty P1:** A11y: 113/113 маркеров без role/tabindex/labels; panel без role=dialog/aria-hidden; JS flyTo/tour игнорирует reduced-motion | verified-browser (c2c339708252) |
-| MAP-P1-14 | 🆕 **Karty P1:** Destroy lifecycle не снимает keydown listeners и удаляет общий `<style id="me-base-css">`, обесцвечивая второй инстанс | verified-browser (c2c339708252) |
 | AVRAAM-P1-01 | 🆕 **Karty P1:** Primary CTA «Начать кинотур» невидим (opacity 0) 1.8 секунды после загрузки, оставаясь физически кликабельным | verified-browser (c2c339708252) |
 | AVRAAM-P1-02 | 🆕 **Karty P1:** Initial viewport Авраама сжимает кластер Ханаана (Дамаск/Дан, Содом/Беэр-Шева, Хеврон/Мамре) при пустом востоке | verified-browser (c2c339708252) |
 | AVRAAM-P1-03 | 🆕 **Karty P1:** Mobile panel Авраама дублирует навигацию (prev/next row + mobile arrows + p-elem `← ←`), квадратный share, tabs 42px | verified-browser (c2c339708252) |
@@ -232,23 +246,15 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AVRAAM-P1-05 | 🆕 **Karty P1:** Short landscape desktop (1024×450) блокируется оверлеем «Разверните устройство» из-за слепого media query | verified-browser (c2c339708252) |
 | KARTY-DATA-P1-01 | 🆕 **Karty P1:** Острая нехватка ручных anchors/leaders в route.json (8 из 9 engine-карт имеют лишь 0–5 анкоров) | verified-source (c2c339708252) |
 | ASTRO-P1-01 | 🆕 **Karty P1:** Начальная камера Авраама на 1-й точке уводит 18 из 19 мест за пределы видимого viewBox | verified-browser (c2c339708252) |
-| ASTRO-P1-02 | 🆕 **Karty P1:** Палитра `STAGE_COLORS` содержит 6 цветов; этапы VII и VIII Авраама получают прозрачные маркеры и лишаются SVG-стрелок | verified-source (32ae0d7d) |
-| ASTRO-P1-04 | 🆕 **Karty P1:** Tour mode читает только `story.stage_ids`, игнорируя alias `story.stages` и проходя все 8 этапов во всех сюжетах | verified-source (32ae0d7d) |
 | ASTRO-P1-05 | 🆕 **Karty P1:** Статический root (`avraam-app.js`) и deploy build (`AvraamMap.astro`) отдают две абсолютно разные реализации рендерера | verified-source (32ae0d7d) |
-| MAP-P1-15 | 🆕 **Karty P1:** В тулбаре зума рендерятся две кнопки «Измерить расстояние», первая из которых (`⟍`, `#me-ruler-btn`) мёртвая и без обработчика | verified-source (32ae0d7d) |
 | MAP-P1-18 | 🆕 **Karty P1:** Модальное окно галереи всегда загружает thumbnail 320px и не поддерживает свайпы на touch-экранах | verified-browser (c2c339708252) |
 | MAP-P1-19 | 🆕 **Karty P1:** Мобильный landscape (844×390) переключается в desktop-панель, уводя заголовок и крестик закрытия на -357px за верх экрана | verified-browser (c2c339708252) |
 | MAP-P1-20 | 🆕 **Karty P1:** Service Worker кэширует неверсионированные скрипты и JSON карт с политикой `cacheFirst`, создавая риск вечных устаревших ресурсов | verified-source (32ae0d7d) |
-| GATE-P1-02 | 🆕 **Karty P1:** `atlas-label-audit.js` сообщает 0 коллизий для всех карт, полностью пропуская marker-to-marker overlap, safe area и clipping | verified-source (32ae0d7d) |
 | GATE-P1-03 | 🆕 **Karty P1:** `atlas:gate` постоянно красный на регрессии waypoints/chars Авраама, пока schema-гейты ошибочно остаются зелёными | verified-ci (32ae0d7d) |
 | DATA-P1-03 | 🆕 **Karty P1:** Дизайн-токены эпох `route.meta.era` не читаются рантаймом и не меняют палитру карты | verified-source (32ae0d7d) |
 | DATA-P1-04 | 🆕 **Karty P1:** Полностью отсутствует semantic zoom/LOD — шрифты подписей масштабируются до 1.5px на mobile zoom-out и 40px на desktop zoom-in | verified-browser (c2c339708252) |
-| ENGINE-P1-21 | 🆕 **Karty P1:** Трансформация координат экрана в SVG игнорирует letterboxing `preserveAspectRatio="meet"`, создавая ошибку линейки в 1.63x | verified-source (32ae0d7d) |
-| ENGINE-P1-22 | 🆕 **Karty P1:** Функция измерения расстояния `kmBetween()` хардкодит множитель `0.92`, игнорируя настраиваемый `cfg.kmPerUnit` | verified-source (32ae0d7d) |
-| ENGINE-P1-23 | 🆕 **Karty P1:** Анимации hover/click запрашивают `circle:nth-child(3)`, анимируя штриховое кольцо этапа вместо центральной точки маркера | verified-source (32ae0d7d) |
 | ENGINE-P1-26 | 🆕 **Karty P1:** Поиск подсвечивает точки вне текущего сюжета, но не добавляет на них обработчик клика, делая их некликабельными | verified-browser (c2c339708252) |
 | ENGINE-P1-27 | 🆕 **Karty P1:** Нажатие Escape в модальном окне фотографии одновременно закрывает родительскую панель места | verified-browser (c2c339708252) |
-| ENGINE-P1-28 | 🆕 **Karty P1:** Делегированный клик панели повторно вызывал `openPhoto(img.src)`, перезаписывая полноразмерное фото миниатюрой | verified-source (32ae0d7d) |
 | ENGINE-P1-29 | 🆕 **Karty P1:** Двойной клик по маркеру принудительно приближает камеру до `w=450` без учёта границ сюжета, обрезая соседние места | verified-source (32ae0d7d) |
 | A11Y-P1-01 | 🆕 **Karty P1:** Во время отображения интро в DOM одновременно находятся два элемента `<h1>` | verified-source (32ae0d7d) |
 | A11Y-P1-02 | 🆕 **Karty P1:** Текстовая sr-only версия Авраама расположена до интерактивной карты в порядке чтения без skip link | verified-source (32ae0d7d) |
@@ -279,7 +285,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | FONT-P1-01 | 🆕 **Karty P1:** Выпадение ивритских слов в системный sans-serif из-за объявления `font-family: Georgia, "Times New Roman"` в `.hw` (`map-engine.js:463`) вместо `Noto Serif Hebrew` | verified-source (32ae0d7d) |
 | MINI-P1-01 | 🆕 **Karty P1:** Миникарта (`.me-minimap`) не содержит векторов географии (суша/моря), показывая точки над пустым чёрным прямоугольником, и перезаписывает `flyTo` | verified-source (32ae0d7d) |
 | WAYP-P1-01 | 🆕 **Karty P1:** Подписи точек археологии рендерятся 7px серым текстом без подложек и плашек, накладываясь на линии рельефа | verified-source (32ae0d7d) |
-| CSS-P1-01 | 🆕 **Karty P1:** Вызов `destroy()` удаляет `<style id="me-base-css">`, лишая CSS-стилей все остальные активные карты на странице | verified-source (32ae0d7d) |
 | SIG-P1-01 | 🆕 **Karty P1:** Оверлеи кампаний (`water-split`, `hanukkah-lights`) используют жесткие пиксельные смещения (`origin.x - 74`), искажаясь при смене масштаба | verified-source (32ae0d7d) |
 | REG-P1-01 | 🆕 **Karty P1:** `map-engine.js` полностью игнорирует `route.regions`, в результате чего на карте 12 колен (`shvatim`) 13 полигонов уделв не рендерятся вообще | verified-source (32ae0d7d) |
 | PERF-P1-01 | 🆕 **Karty P1:** Бесконечная 14-секундная анимация `feTurbulence` в `avraam/base.svg:28` вызывает непрерывную переристовку холста и лаги 15–20 fps при драге | verified-source (32ae0d7d) |
@@ -293,7 +298,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | HALO-P1-01 | 🆕 **Karty P1:** Заявленный массив `halos = []` в `sheet-engine.js:579` не используется, а имитация обводки через CSS `stroke` мылит шрифт мелкого кегля 10–11px | verified-source (32ae0d7d) |
 | MEDIA-P1-01 | 🆕 **Karty P1:** 100% фотографий карт (312 ссылок) загружаются напрямую с внешнего CDN Wikimedia Commons без локального кэширования в проекте | verified-source (32ae0d7d) |
 | LOD-P1-01 | 🆕 **Karty P1:** Нескейлящаяся обводка 2.6px полностью затапливает просветы букв при сжатии шрифтов до 1.4–2.3px на ступени зума z4 | verified-source (32ae0d7d) |
-| COMP-P1-01 | 🆕 **Karty P1:** Расчёт длины масштабной линейки в `atlas-reader.js:28` даёт погрешность реального расстояния на экране до 22% при адаптивных `max-width` | verified-source (32ae0d7d) |
 | BASE-P2-01 | 🆕 **Karty P2:** Грубая, низкодетализированная геометрия побережий в `base-geo-mediterranean.svg` (123 команды) и `urheimat.svg` (68 команд) | verified-source (32ae0d7d) |
 | DATA-P2-01 | 🆕 **Karty P2:** Полное отсутствие описаний кривых путей `stages[].paths` у 10 из 11 карт в репозитории | verified-source (32ae0d7d) |
 |---|---|---|
@@ -309,7 +313,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (36)
+## 🟡 P2 — ОТКРЫТО (34)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -321,10 +325,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 | MAP-P2-02 | 🆕 **Karty P2:** `preload route.json` вызывает предупреждение браузера о несоответствии credentials и создаёт двойной сетевой запрос | verified-browser (c2c339708252) |
 | ENGINE-P2-03 | 🆕 **Karty P2:** Безусловная искусственная задержка загрузки (600 мс) скрывает уже полученные данные карты | verified-source (32ae0d7d) |
 | ENGINE-P2-04 | 🆕 **Karty P2:** Тосты и уведомления о смене сюжета не имеют `role="status"` и `aria-live`, оставаясь невидимыми для скринридеров | verified-source (32ae0d7d) |
-| GATE-P1-04 | 🆕 **Karty P2:** Прогон `dist-smoke-audit` корректно фиксирует фатальный инфо-сбой Авраама, но логи загрязнены сетевым шумом | verified-ci (32ae0d7d) |
 | QUAL-P2-01 | 🆕 **Karty P2:** Профили маршрутов 8 holding-карт в `data/route-profiles/karty-*.json` указывают `currentStatus: "production-dist"`, вызывая дрейф статусов | verified-source (32ae0d7d) |
 | QUAL-P2-02 | 🆕 **Karty P2:** Черновой лист `nachalo/route.json` не содержит обязательных полей `stories`, `meta.id`, `meta.era`, `meta.stats`, не проходя Ajv валидацию | verified-source (32ae0d7d) |
-| QUAL-P2-03 | 🆕 **Karty P2:** Маршруты `/karty/` отсутствуют в центральном файле `migration/page-ownership.json`, обходя общую систему валидации владельцев | verified-source (32ae0d7d) |
 | QUAL-P2-04 | 🆕 **Karty P2:** `renderMarkers()` уничтожает и заново создаёт 54+ SVG-узлов при каждом вызове, вызывая нагрузки на GC и сброс состояния слоёв | verified-source (32ae0d7d) |
 
 
@@ -354,7 +356,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NG-DARK-04 | 🆕 **Нагорная P2:** `bg-rose-50` без dark-ремапа — 26 контейнеров (13 MainShell + 13 Sections) в ch.5 остаются #fff1f2 в тёмной теме. **Подтверждено cycle 4:** `bg-rose-50` ОТСУТСТВУЕТ в blanket `.bg-*-50` группе `mobile-hotfix.css` (перечислены 14 цветов, НО НЕ rose). Решение: per-chapter `var(--ng-accent-soft)`. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §5.2 |
 | NG-DARK-05 | 🆕 **Нагорная P2:** `bg-stone-100/200` без dark-ремапа — 18 контейнеров остаются светлыми. Решение: ремап → `var(--color-surface-alt)`/`var(--color-surface-2)`. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §5.2 |
 
-## 🟢 P3 — ОТКРЫТО (51)
+## 🟢 P3 — ОТКРЫТО (49)
 | NG-VIS-04 | 🆕 **Нагорная P2 (→ NG-TABLE-01):** Табличная перегрузка — 8 секций без текстовых абзацев (ch.2/III/V/IX/X, ch.3/V/VII/VIII, ch.5/III). Только гриды/карточки/таблицы — нет «воздуха». ch.2 имеет 1.5x structured/text ratio. **Контентная правка — требует автора.** Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-TABLE-01 |
 | NG-VIS-05 | 🆕 **Нагорная P2 (→ NG-REVEAL-01):** Класс `reveal` — НЕ мёртвый: используется glossary.js для поиска `div.reveal` при гидратации. Анимации нет (и не планировалась) — только семантический маркер. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-REVEAL-01 |
 | NG-VIS-06 | 🆕 **Нагорная P2 (→ NG-FONT-01, объединён с NG-STRUCT-01):** `font-sans` на h2 только в ch.5 — объединено в NG-STRUCT-01. |
@@ -395,8 +397,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NG-VIS-12 | 🆕 **Нагорная P3:** Устаревшая версия «v4.0 · Апрель 2026» в футере всех 5 частей. Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` |
 | NEW-HIGHLIGHTS-NO-REINIT-GUARD | 🆕 reverify 07-09 *(suspected)*: `highlights.js` IIFE без re-init guard — двойной `<script>`-include продублирует FAB + глобальные mouseup/keydown/scroll/resize. Низкий риск (статический include). |
 | NEW-SAVE-QUOTE-TIMER-RACE | 🆕 reverify 07-09 *(suspected)*: кнопка «Сохранить цитату» инжектится одноразовым таймером 500ms (`highlights.js le()`); если `#selection-share-popup` не в DOM на +500ms — не добавляется и не ретраится. Зависит от порядка init. |
-| NEW-VOSK-FETCH-NO-ABORT | 🆕 reverify 07-14 (verified-source `2ca2af3`): 280MB model `fetch(MODEL_URL)` not wired to AbortController; continues after navigation/opt-out. `js/vosk-tts-engine.js:166`. Reported by claude-auditor 07-09, confirmed 07-14. |
-| AR-AUDIT-17 | 🆕 reverify 07-14 (verified-source `2ca2af3`): `validate:all` fails with 2 inline script syntax errors in `scripts/genealogy-build/atlas-template.html` and `interactive-template.html`. Genealogy build templates — not production code, but gate regression. |
 | NG-DARK-01 | 🆕 **Нагорная P1 (корневая):** 54 Tailwind-класса без dark-ремапа — `text-{accent}-600` (165×), `text-{accent}-700` (75×), `text-amber-800` (7×), `border-stone-100` (52×), `bg-rose-50` (13×), `bg-stone-100/200` (5×). Текущий ремап в `mobile-hotfix.css` покрывает только -800/-900 уровни; -500/-600/-700 не покрыты → невидимый текст и потеря идентичности глав. **Профессиональное решение:** per-chapter CSS custom properties (`--ng-accent`/`--ng-accent-soft`) + `data-chapter="N"` на body → одно решение закрывает 8 багов. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` |
 | NG-STRUCT-01 | 🆕 **Нагорная P1:** Сломанная структура заголовков секций — ch.2/SectionX, ch.5/SectionI–IV/X не имеют `<div class="group mb-6 mt-12">` обёртки (нет иконки, подзаголовка, отступа). Регресс Astro-миграции. + Emoji вместо SVG (19 секций ch.2/ch.5) + `font-sans` на h2 (4× ch.5). Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` |
 | NG-INLINE-01 | 🆕 **Нагорная P1:** «Из библиотеки» блок — inline `color:#1c1410`/`#8a7968`/`#b8882a`/`background:#faf8f5` на всех 5 частях, дублирование 5×. CSS override не пробивает inline `style=`. **Решение:** Astro-компонент `NagornayaLibraryLinks.astro` + Tailwind + CSS vars. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-INLINE-01 |
@@ -473,14 +473,14 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 168 |
+| Закрыто (fixed) | 183 |
 | **P0 открыто** | **0** |
-| P1 открыто | 96 |
-| P2 открыто | 36 |
-| P3 открыто | 51 |
+| P1 открыто | 85 |
+| P2 открыто | 34 |
+| P3 открыто | 49 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **190** |
+| **Всего открыто (матрица)** | **175** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-02 — fixed-source closure wave V1 @ `3aba5112`
+- Reverified 15 source/data candidates against exact source anchor `3aba5112f0fc37712e027a1ad1d8379debe54377`.
+- Closed 11 P1, 2 P2 and 2 P3 rows as `FIXED-CURRENT` or `STALE-ON-CURRENT-HEAD`; no browser-only row was promoted.
+- Canonical arithmetic moved from **168 closed / 190 open** to **183 closed / 175 open** while retaining **358 total IDs**.
+- `A11Y-P1-01` and `QUAL-P1-04` remain open pending exact-anchor browser evidence. No product or production mutation is claimed.
 
 ### 2026-08-02 — third independent AuditRepo gate pass @ `69d1e72a`
 - Re-read `AuditRepo/main` and source `main`: AuditRepo remained exactly `69d1e72a8b59faafe1e68bd89704cf6fb8cda424`; source was observed at `6cfa7468e033ed44dac79b9752b127f406d33724` at gate start and `92bfa45a02e53d7b735af73025a79d99ffe75b67` before merge.
