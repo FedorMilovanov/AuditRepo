@@ -43,20 +43,25 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          expected=(
+          permanent=(
             projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
             projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
             projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-03_1944eb1b_browser-runtime-wave.md
           )
+          expected_status=(
+            .github/workflows/materialize-browser-runtime-wave-20260803.yml
+            scripts/materialize_browser_runtime_wave_20260803.py
+            "${permanent[@]}"
+          )
           mapfile -t changed < <(git status --short | sed -E 's/^.. //' | sort)
-          mapfile -t wanted < <(printf '%s\n' "${expected[@]}" | sort)
+          mapfile -t wanted < <(printf '%s\n' "${expected_status[@]}" | sort)
           if [[ "$(printf '%s\n' "${changed[@]}")" != "$(printf '%s\n' "${wanted[@]}")" ]]; then
             printf 'Unexpected final working-tree scope:\n%s\n' "$(git status --short)" >&2
             exit 1
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "${expected[@]}"
+          git add "${permanent[@]}"
           git add -u scripts/materialize_browser_runtime_wave_20260803.py .github/workflows/materialize-browser-runtime-wave-20260803.yml
           git commit -m "audit(gb): record exact browser runtime wave"
           git push origin "HEAD:${HEAD_REF}"
