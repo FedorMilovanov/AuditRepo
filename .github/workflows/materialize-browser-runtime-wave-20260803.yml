@@ -24,6 +24,21 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
 
+      - name: Normalize immutable closure reference
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/materialize_browser_runtime_wave_20260803.py')
+          text = path.read_text(encoding='utf-8')
+          old = 'No production claim. | `1944eb1b`; run `30769737659`; artifact `8840166904` |'
+          new = 'No production claim. | `1944eb1b` run `30769737659` artifact `8840166904` |'
+          if text.count(old) != 1:
+              raise SystemExit(f'immutable ref normalization expected one match, found {text.count(old)}')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+
       - name: Materialize fail-closed matrix disposition
         run: python scripts/materialize_browser_runtime_wave_20260803.py
 
