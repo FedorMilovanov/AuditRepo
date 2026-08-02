@@ -3,6 +3,9 @@
 > Сводная диспозиция по всем находкам для **верификатора**. Один файл — одно решение.
 > Все находки — governance/data-sync (не продукт-баги). Лейн не менял канон (README Freedom-with-Evidence:
 > агент не правит verified ledger напрямую). Здесь только disposition-предложение.
+>
+> **Машинно-читаемый полный список source/data-вердиктов по строкам Karty — [`VERIFIED_DISPOSITIONS.md`](VERIFIED_DISPOSITIONS.md)**
+> (SD-6..SD-14: ~15 FIXED-кандидатов, ~38 STILL-OPEN, ~20 browser-класс).
 
 **AuditRepo HEAD:** `bc067a1cbaf33ed3cafa72cf6f4e5201056125db` (зафиксированный канон).
 **Фактический source main:** `2273b8c930eebf383d429b917d3636bc28a80bae` (PR #730; +14 коммитов к канону `efaf2a51`).
