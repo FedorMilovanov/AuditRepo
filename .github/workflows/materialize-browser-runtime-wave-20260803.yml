@@ -1,0 +1,62 @@
+name: Materialize Browser Runtime Wave 2026-08-03
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/materialize_browser_runtime_wave_20260803.py"
+      - ".github/workflows/materialize-browser-runtime-wave-20260803.yml"
+
+concurrency:
+  group: materialize-browser-runtime-wave-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Materialize fail-closed matrix disposition
+        run: python scripts/materialize_browser_runtime_wave_20260803.py
+
+      - name: Validate canonical AuditRepo contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/matrix_coverage_regression_test.py
+          python scripts/check_matrix_coverage.py --verbose --json-out /tmp/matrix-coverage.json
+          python scripts/check_auditrepo_structure.py
+          python scripts/validate_audit_repo.py
+          python scripts/validate_audit_repo_regression_test.py
+
+      - name: Commit permanent evidence only
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected=(
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-03_1944eb1b_browser-runtime-wave.md
+          )
+          mapfile -t changed < <(git status --short | sed -E 's/^.. //' | sort)
+          mapfile -t wanted < <(printf '%s\n' "${expected[@]}" | sort)
+          if [[ "$(printf '%s\n' "${changed[@]}")" != "$(printf '%s\n' "${wanted[@]}")" ]]; then
+            printf 'Unexpected final working-tree scope:\n%s\n' "$(git status --short)" >&2
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${expected[@]}"
+          git add -u scripts/materialize_browser_runtime_wave_20260803.py .github/workflows/materialize-browser-runtime-wave-20260803.yml
+          git commit -m "audit(gb): record exact browser runtime wave"
+          git push origin "HEAD:${HEAD_REF}"
