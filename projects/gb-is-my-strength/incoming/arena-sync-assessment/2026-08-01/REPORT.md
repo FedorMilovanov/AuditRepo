@@ -60,6 +60,24 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-7 — large open Karty cluster witnessed on a far-behind SHA (evidence freshness)
+- **Category:** AUDITREPO / data-sync (evidence-freshness, not a product claim)
+- **Title:** 65 open matrix rows carry witness SHA `32ae0d7d`, which is **607 commits** behind the
+  actual source main `2273b8c9` (live `gh api compare` => ahead_by=607).
+- **Severity:** P2 (matrix freshness; drives a large batched reverify; no counter change by itself)
+- **File(s):** `MASTER_BUG_MATRIX.md` open Karty-cluster rows (families: QUAL 13, ENGINE 7, RIVER 5,
+  BASE 4, GATE 3, ASTRO 3, DRAW 3, MAP 2, DATA 2, A11Y 2, + ~30 single).
+- **Evidence:** `evidence/sd7_stale_karty_witnesses.txt`.
+- **Analysis:** per SHA-first, none of these 65 rows is repair-ready on current HEAD without a fresh
+  reverify. SD-6 already source-verified the map-engine subset on `2273b8c9`
+  (ENGINE-P1-21/22/23/28 fixed; MAP-P1-11, ENGINE-P1-26 open); the remaining ~57 need per-row reverify.
+- **Confidence:** high (tool + live API).
+- **Verification level:** L1.
+- **Suggested repair lane:** one batched Karty reverify lane on `2273b8c9` (after SD-5), reusing SD-6
+  dispositions. Do not auto-close. See `proposals/proposal-SD-7-karty-reverify-lane.md`.
+
+---
+
 ### Finding SD-6 — map-engine runtime fixes landed on actual HEAD; multiple open rows are candidate fixed-current
 - **Category:** AUDITREPO / data-sync (matrix freshness vs new source HEAD; not a product claim, not a closure)
 - **Title:** source PR #709 ("map-engine runtime P1 normalization", merge `8bd891b13`, now in actual
@@ -171,6 +189,7 @@ None.
 - Target bug: SD-5 → proposed severity **P1** for authority freshness (blocking trusted current-HEAD
   reverifies) / P3 as bug-class. Current: unregistered.
 - Target bug: SD-6 → proposed severity **P2** (matrix freshness; reverify-driving). Current: unregistered.
+- Target bug: SD-7 → proposed severity **P2** (matrix freshness; 65-row batched reverify). Current: unregistered.
 
 ---
 
@@ -181,7 +200,8 @@ None.
 - Lane: `AUDITREPO-evidence-registry-reconcile` — SD-3 (add two `informational` registry records)
   + SD-4 (schedule fresh reverify of `AUDIT-P3-OG-LCP-MISMATCH`).
 - Lane: `source-authority-sync-2273b8c9` — SD-5 (advance recorded source HEAD to `2273b8c9` + paired
-  reverify) then SD-6 (reverify map-engine candidate rows on that HEAD).
+  reverify) then SD-6 (reverify map-engine candidate rows on that HEAD) and SD-7 (batched Karty reverify
+  lane for the 65 `32ae0d7d`-witnessed rows).
 - Why together: all four are data-sync / evidence-hygiene fixes in the same canonical layer; none
   touches product code.
 - What must NOT be mixed: no product/source repo changes; no Research/Drive changes; no
@@ -271,6 +291,8 @@ Not applicable (this lane is the initial assessment, not a recheck of a prior fi
   - SD-6: reverify map-engine candidate rows on `2273b8c9`; close only non-reproducing (SHA-first).
     Source-verified on `2273b8c9`: FIXED candidates ASTRO-P1-02, ENGINE-P1-21/22/23/28, MAP-P1-14/15;
     STILL OPEN MAP-P1-11, ENGINE-P1-26. See `proposals/proposal-SD-6-mapengine-reverify.md`.
+  - SD-7: batched Karty reverify lane for the 65 rows witnessed on `32ae0d7d` (607 commits behind
+    `2273b8c9`). See `proposals/proposal-SD-7-karty-reverify-lane.md`.
 - **Boundary:** this lane changed no canonical matrix row, status, severity, counter, source repo
   file, Research/Drive data or production evidence. Per README "Freedom with Evidence" an agent must
   NOT directly change canonical status in the verified ledger; hence only an intake report + proposals.

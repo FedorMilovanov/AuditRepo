@@ -49,6 +49,9 @@
 - `SD-6` — **map-engine fixes landed on actual HEAD (P2), source-verified:** on `2273b8c9` the engine
   fixes ASTRO-P1-02, ENGINE-P1-21/22/23/28, MAP-P1-14/15 (revert-close candidates); MAP-P1-11 (scale bar
   still `cfg.W0/view.w`) and ENGINE-P1-26 remain OPEN. Schedule reverify on `2273b8c9`; do NOT auto-close.
+- `SD-7` — **65 open Karty-cluster rows witnessed on `32ae0d7d`, 607 commits behind actual source main
+  `2273b8c9` (P2):** none repair-ready per SHA-first without a fresh reverify; recommend one batched
+  Karty reverify lane on `2273b8c9` (reuse SD-6 map-engine subset).
 - Everything else (P0/P1/P2/P3/Refactoring/AuditRepo row counts; HEAD vs prod `abf1edba`;
   DOC_MAP and PROJECT_REGISTRY target files) synchronized OK. Coverage deep-dive clean: no
   ORPHAN-CLAIM; registry invariants hold; cross-section duplicate D-* IDs are benign.
