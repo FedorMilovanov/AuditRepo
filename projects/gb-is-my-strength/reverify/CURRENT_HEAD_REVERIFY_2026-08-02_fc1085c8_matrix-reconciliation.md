@@ -1,12 +1,13 @@
-# Current-head matrix reconciliation — 2026-08-02 — `fc1085c8`
+# Verified-anchor matrix reconciliation — 2026-08-02 — `fc1085c8`
 
 **AuditRepo base:** `a4ac63a1bfaa2549766cf911f3de886f21873875` (PR #120 merge)
-**Exact source main at final verifier review:** `fc1085c805d72e6d43f58a6383c680d4e886183b`
-**Former canonical source:** `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` (**65 commits behind**)
-**PR #120 merge-time source anchor:** `8f17085dc8411cffbcb5a4dcd2f8fc5db9c30a97` (**20 commits behind**)
-**Intermediate matrix-review anchor:** `5373c9854b3f1bb767cf18c4539de82db26b7b7a` (**11 commits behind**)
+**Verified product/evidence anchor:** `fc1085c805d72e6d43f58a6383c680d4e886183b`
+**Source main later observed:** `f9234dbbe832d80b4d9a453ce3d2f58da832b24f`
+**Former canonical source:** `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` (**65 commits behind the verified anchor**)
+**PR #120 merge-time source anchor:** `8f17085dc8411cffbcb5a4dcd2f8fc5db9c30a97` (**20 commits behind the verified anchor**)
+**Intermediate matrix-review anchor:** `5373c9854b3f1bb767cf18c4539de82db26b7b7a` (**11 commits behind the verified anchor**)
 **Last exact production:** `abf1edba190280e554dfda085bef9fb6594c896d`
-**Production claim:** no; `source != production`
+**Production claim:** no; verified anchor `!=` production
 
 ## Why this transaction exists
 
@@ -34,11 +35,11 @@ After repair:
 
 The older proposal “split → 357 total” was rejected as arithmetically incorrect: replacing a zero-count slash row with two canonical IDs increases 356 to 358.
 
-## Source delta boundary
+## Source-delta boundary
 
 The first 9 commits after PR #120's source anchor add the Pihahiroth uncertainty release lane and change Ishod projection surfaces, including `IshodMap.astro` and `IshodPageHead.astro`. Ishod/browser/runtime classifications therefore remain open pending a fresh exact-head witness.
 
-The final 11 commits from `5373c985` to `fc1085c8` change Wave12/search/visual-policy surfaces only:
+The next 11 commits from `5373c985` to the verified anchor `fc1085c8` change Wave12/search/visual-policy surfaces only:
 
 - Wave12 release and canonical-discovery workflows/contracts;
 - search-manifest policy and sitemap normalization;
@@ -46,6 +47,13 @@ The final 11 commits from `5373c985` to `fc1085c8` change Wave12/search/visual-p
 - visual-parity baseline and pastor-series visual policy.
 
 They do not touch the earlier Karty/Vosk/genealogy evidence-critical paths, so this authority refresh does not silently reclassify those rows.
+
+After the anchor was verified, source `main` advanced through `f9234dbb` by two control-plane-only cleanup commits:
+
+- removal of the completed canonical-discovery normalization writer;
+- action pin normalization in the Pihahiroth release workflow.
+
+Those two commits change no product, Karty/Ishod data, Vosk, genealogy or matrix-evidence path. They are recorded as later observed source-tip movement, not as a new product/evidence anchor. Future status changes still require a new exact-head reverify.
 
 Draft source PR #680 is active at `282ee9aec770b6f7c91145d39f935ea14136d29e`. Its branch and owner files are outside this AuditRepo transaction.
 
