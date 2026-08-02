@@ -105,7 +105,7 @@ jobs:
 
   # BEGIN ONE-TIME MATRIX MATERIALIZER
   one-time-matrix-materializer:
-    if: github.event_name == 'pull_request' && github.head_ref == 'verifier/matrix-reconcile-20260802' && github.event.pull_request.head.sha == 'b23a226bb4d96da5299d1ccae7c174829200dd1a'
+    if: github.event_name == 'pull_request' && github.head_ref == 'verifier/matrix-reconcile-20260802' && github.actor != 'github-actions[bot]'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
