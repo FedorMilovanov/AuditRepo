@@ -1,10 +1,14 @@
-# VERIFIED DISPOSITIONS — source/data-verified verdicts on actual HEAD 2273b8c9
+# VERIFIED DISPOSITIONS — source/data verdicts carried to merge-time source `8f17085d`
 
-> Машинно-читаемая сводка всех вердиктов source/data-верификации (SD-6..SD-14) для верификатора.
-> Формат: `ID | verdict | evidence-file`. Фактический source HEAD = `2273b8c9`; канон AuditRepo = `efaf2a51` (stale, SD-5).
-> Лейн НЕ менял канон; всё — L1 evidence-based; закрытие/реклассификация — за верификатором (SHA-first).
+> Explicit source/data-verification summary for SD-6..SD-15.
+> Original evidence was collected at `2273b8c930eebf383d429b917d3636bc28a80bae`.
+> `MERGE_TIME_REVALIDATION_2026-08-02_8f17085.md` reviewed the 31-commit delta to
+> `8f17085dc8411cffbcb5a4dcd2f8fc5db9c30a97`: all evidence-critical paths were unchanged except
+> `migration/page-ownership.json`, which was directly rechecked and preserves the SD-9 verdict.
+> Canonical AuditRepo source authority is still `efaf2a51` and remains stale (SD-5).
+> This lane does not change canonical statuses; close/reclassify only in an exact-HEAD verifier transaction.
 
-## FIXED (source/data-verified — кандидаты на reverify-close)
+## FIXED candidates (source/data-verified; reverify before canonical close)
 | ID | Evidence |
 |---|---|
 | ENGINE-P1-21 | sd6_verified_on_2273b8c9.txt |
@@ -14,8 +18,8 @@
 | ASTRO-P1-02 | sd6_verified_on_2273b8c9.txt |
 | MAP-P1-14 | sd6_verified_on_2273b8c9.txt |
 | MAP-P1-15 | sd6_verified_on_2273b8c9.txt |
-| A11Y-P1-01 | sd10_browser_engine_clusters.txt |
-| QUAL-P2-03 | sd9_data_validation.txt |
+| A11Y-P1-01 | sd10_browser_engine_clusters.txt (browser confirm before close) |
+| QUAL-P2-03 | sd9_data_validation.txt + merge-time page-ownership recheck |
 | GATE-P1-02 | sd11_sheet_engine_gate.txt |
 | GATE-P1-04 | sd14_gate_draw.txt |
 | COMP-P1-01 | sd12_remaining_units.txt |
@@ -25,10 +29,12 @@
 | NEW-VOSK-FETCH-NO-ABORT | sd15_vosk_genealogy.txt |
 | AR-AUDIT-17 | sd15_vosk_genealogy.txt (stale/fixed) |
 
-## STILL OPEN (source/data-verified — держать открытыми, свежий witness)
+**Listed FIXED candidates: 17.**
+
+## STILL OPEN (source/data-verified; keep open with fresh witness)
 | ID | Evidence |
 |---|---|
-| MAP-P1-11 | sd6_verified_on_2273b8c9.txt (scale bar cfg.W0/view.w) |
+| MAP-P1-11 | sd6_verified_on_2273b8c9.txt (scale bar `cfg.W0/view.w`) |
 | ENGINE-P1-26 | sd6_verified_on_2273b8c9.txt |
 | BASE-P1-01 | sd8_verified_still_open.txt |
 | BASE-P1-02 | sd8_verified_still_open.txt |
@@ -66,14 +72,43 @@
 | MAP-P1-13 | sd13_tour_a11y.txt |
 | DRAW-P1-02 | sd14_gate_draw.txt |
 | NEW-VOSK-DEAD-SPLITSENTENCES | sd15_vosk_genealogy.txt |
-| MAP-P1-10 | (baseOpacity/me-base-geo 0.5, this pass) |
+| MAP-P1-10 | baseOpacity / `me-base-geo` 0.5 (this pass) |
 
-## BROWSER/RUNTIME/CI CLASS (не source-verifiable — нужен browser reverify на 2273b8c9)
-- MAP-P1-04,05,06,08,09,18,19; AVRAAM-P1-01,02,03,04,05; GATE-P1-03; GATE-P1-01 (browser JS-crash part);
-  SVG-P1-01 (artifact); DRAW-P1-01 (needs visual); PERF-P1-01 (feTurbulence animated?). ~20 rows.
+**Listed STILL OPEN entries: 39.**
 
-## Aggregate
-- FIXED candidates: ~15 rows.
-- STILL OPEN confirmed: ~38 rows.
-- BROWSER class: ~20 rows.
-- Plus governance findings SD-1..SD-5 (counters, registry, OG-LCP, authority drift) — not product rows.
+## BROWSER / RUNTIME / CI class
+
+These entries are not closed by source inspection or merge-time path carry-forward. Execute browser/runtime
+verification on the exact source HEAD used by the verifier transaction:
+
+- MAP-P1-04
+- MAP-P1-05
+- MAP-P1-06
+- MAP-P1-08
+- MAP-P1-09
+- MAP-P1-18
+- MAP-P1-19
+- AVRAAM-P1-01
+- AVRAAM-P1-02
+- AVRAAM-P1-03
+- AVRAAM-P1-04
+- AVRAAM-P1-05
+- GATE-P1-03
+- GATE-P1-01 (browser JS-crash part)
+- SVG-P1-01 (artifact)
+- DRAW-P1-01 (visual)
+- PERF-P1-01 (`feTurbulence` runtime behavior)
+
+**Listed browser/runtime/CI entries: 17.**
+
+## Authority / stale-witness update
+
+- Merge-time source: `8f17085d`
+- Canonical source authority: `efaf2a51` → **45 commits behind**
+- Original inspection SHA: `2273b8c9` → **31 commits behind**
+- `32ae0d7d` → **638 commits behind**
+- `2ca2af3` → **729 commits behind**
+- `21624a3` → **689 commits behind**
+- `30bf3f5c` → **1136 commits behind**
+
+Governance findings SD-1..SD-5 remain separate from product-row verdicts.
