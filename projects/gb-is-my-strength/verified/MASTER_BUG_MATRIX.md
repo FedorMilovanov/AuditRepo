@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `aed8ed2244ad566b0458e490f629d394122dbf95` (exact source+CI closure anchor for `NEW-VOSK-DEAD-SPLITSENTENCES`; no production claim). |
+| Source verification anchor | `b251c4b99265a9915881048c5fbde61f810d8c96` (exact source reverify anchor for stale closure `AR-IDX-CSS-01`; no production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_aed8ed22_vosk-dead-split-closure.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_b251c4b9_home-z-token-stale-closure.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (184)
+## ✅ ЗАКРЫТО (185)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| AR-IDX-CSS-01 | ✅ **STALE-ON-CURRENT-HEAD / SOURCE VERIFIED 2026-08-02.** The historical root-cause claim is obsolete: `css/site.css` now defines the shared z-index scale in `:root`, including `--z-elevated`, `--z-dropdown-high`, `--z-sticky`, `--z-bottom-bar`, `--z-tooltip-low` and `--z-toast-high`, while `css/home.css` consumes those tokens. The original inference that Home fixed/sticky layers fall back to `z-index:auto` because the tokens are absent is therefore not reproducible. This disposition does not claim that every independent stacking interaction is perfect; it closes only this canonical missing-token claim. Exact source anchor `b251c4b99265a9915881048c5fbde61f810d8c96`; the intervening NoteRegistry merge did not touch either CSS owner. No production claim. | `b251c4b9` source reverify |
 | NEW-VOSK-DEAD-SPLITSENTENCES | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Source PR #755 removed the unused `splitSentences` definition and public export from `js/vosk-tts-core.js`; runtime chunking remains owned by `splitTtsChunks`, and a fail-closed scan found zero source call sites. Exact head `b348e22b79cf1a802b0d32098ed0a37de5d8e67b` passed Shared Files, Metadata, Deploy Candidate, Print, Visual Parity, Route Registry and Runtime Interactive workflows. Squash merge `aed8ed2244ad566b0458e490f629d394122dbf95`. Production is not claimed. | `aed8ed22` PR#755; runs `30756863997`/`30756863994`/`30756863993`/`30756863988`/`30756863991`/`30756864007`/`30756864014` |
 | ASTRO-P1-02 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Extended stage colors no longer collapse after the sixth palette entry: the shared MapEngine normalizes stage color resolution across timeline, legend, dots and layers. Source PR #709 closed the defect and its exact head passed eight triggered workflows; the owner file is unchanged through verifier anchor `3aba5112`. | `8bd891b1` |
 | ENGINE-P1-21 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Screen-to-SVG projection now models centered `preserveAspectRatio=meet` letterboxing with the effective scale and offsets. Source PR #709 closed the 1.63x ruler-coordinate error; the MapEngine owner file is unchanged through `3aba5112`. | `8bd891b1` |
@@ -219,7 +220,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (85)
+## 🟠 P1 — ОТКРЫТО (84)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -306,7 +307,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NG-CSS-01 | 🆕 **Нагорная P1:** `tw.min.css` без dark-вариантов — 0 `html.dark` селекторов в 34KB Tailwind-выходе для нагорной. Все dark-ремапы живут исключительно на `!important` хаках `mobile-hotfix.css`. Архитектурная причина NG-DARK-01. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
 | NG-BODY-01 | 🆕 **Нагорная P1:** `bg-stone-100` на `<body>` не ремапится в dark — body фон остаётся светло-серым `#f5f5f4` в тёмной теме. `.bg-stone-100` (0,1,0) > `body` (0,0,1). `mobile-hotfix.css` ремапит `bg-stone-50` но **НЕ `bg-stone-100`**. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
 | GENEALOGY-ATLAS-V1-SHIPPED-NOT-PROD | 🆕 Атлас родословий v1 **в main** (AGENTS §13, `data/genealogy/v2/build/atlas-interactive.html`, owner milestone 07-14) но **не на проде** из-за PROD-STALE-DEPLOY-RED. Delivery risk, не дефект движка. | milestone intake + verified-ci |
-| AR-IDX-CSS-01 | **18 `--z-*` CSS variables используются в home.css без fallback — НЕ ОПРЕДЕЛЕНЫ.** `var(--z-sticky)`, `var(--z-toast-high)`, `var(--z-dropdown-high)`, `var(--z-tooltip-low)`, `var(--z-elevated)`, `var(--z-bottom-bar)` — все падают в `z-index: auto`. Navbar (fixed), mobile backdrop, scroll-to-top, reading progress — stacking сломан на INDEX. **Отличается от D-4:** D-4 про hardcoded `2102 !important` в floating-cluster, этот про отсутствующие токены в home.css. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-CSS-01) |
 | AR-IDX-01 | **hreflang alternate теги отсутствуют в Astro HomePageHead** — legacy содержит `<link rel="alternate" hreflang="ru">` и `x-default`, Astro потерял. SEO-регрессия. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-01) |
 | AR-IDX-02 | **SearchAction отсутствует в JSON-LD WebSite** — legacy содержит `potentialAction`, Astro потерял. Google Site Search Box в выдаче не появится. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-02) |
 
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-02: source `fc1085c8`; last exact production `abf1edba`; 358 canonical = 168 closed + 190 open)
+## Статистика (обновлено 2026-08-02: source `b251c4b9`; last exact production `abf1edba`; 358 canonical = 185 closed + 173 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 184 |
+| Закрыто (fixed) | 185 |
 | **P0 открыто** | **0** |
-| P1 открыто | 85 |
+| P1 открыто | 84 |
 | P2 открыто | 34 |
 | P3 открыто | 48 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **174** |
+| **Всего открыто (матрица)** | **173** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-02 — stale Home z-token closure @ `b251c4b9`
+- Closed `AR-IDX-CSS-01` as stale after exact source reverify: the shared z-index tokens are defined in `css/site.css` and consumed by `css/home.css`.
+- The NoteRegistry delta from `7e43efa1` to `b251c4b9` touched neither CSS owner.
+- Canonical arithmetic moved from **184 closed / 174 open** to **185 closed / 173 open**; P1 moved from **85** to **84**. No production claim.
 
 ### 2026-08-02 — Vosk dead split closure @ `aed8ed22`
 - Source PR #755 removed one dead function/export from `js/vosk-tts-core.js`; zero call sites remained.
