@@ -60,6 +60,23 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-15 — Vosk / genealogy / NF verdicts on 2273b8c9
+- **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
+- **Title:** direct source inspection of vosk-tts, validate.js, genealogy templates on `2273b8c9`.
+- **Severity:** P2 (informs the reverify lane)
+- **File(s):** `js/vosk-tts-engine.js`, `js/vosk-tts-core.js`, `scripts/validate.js`, `scripts/genealogy-build/*` @ `2273b8c9`.
+- **Evidence:** `evidence/sd15_vosk_genealogy.txt`.
+- **FIXED candidates:** NEW-VOSK-FETCH-NO-ABORT (`modelDownloadController.abort()` present),
+  AR-AUDIT-17 (validate.js checks only `js/*.js`; `scripts/` skipped; templates not in validate:all;
+  inline "errors" are build-time placeholders replaced at generation).
+- **STILL OPEN:** NEW-VOSK-DEAD-SPLITSENTENCES (`splitSentences` exported, no call sites).
+- **REVERIFY:** NF-DEAD-ENHANCE-SHIM (not rechecked in this pass).
+- **Confidence:** high (source where checkable).
+- **Verification level:** L1 (source).
+- **Suggested repair lane:** fold into batched reverify (SD-7).
+
+---
+
 ### Finding SD-14 — GATE + DRAW verdicts on 2273b8c9
 - **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
 - **Title:** direct source inspection of validate-map-routes.js, dist-smoke-audit.js, base-geo.svg on `2273b8c9`.

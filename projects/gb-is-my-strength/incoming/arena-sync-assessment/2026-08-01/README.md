@@ -70,6 +70,8 @@
 - `SD-14` — **GATE/DRAW on `2273b8c9` (P2):** GATE-P1-01 PARTIALLY FIXED (validate-map-routes now checks
   stages/dup-ids/bounds); GATE-P1-04 FIXED (dist-smoke ignoreLocalNoise); DRAW-P1-02 OPEN (5 dup paths);
   GATE-P1-03 browser/CI class.
+- `SD-15` — **Vosk/genealogy on `2273b8c9` (P2):** FIXED NEW-VOSK-FETCH-NO-ABORT, AR-AUDIT-17 (stale);
+  STILL OPEN NEW-VOSK-DEAD-SPLITSENTENCES; REVERIFY NF-DEAD-ENHANCE-SHIM.
 - `SD-7` — **65 open Karty-cluster rows witnessed on `32ae0d7d`, 607 commits behind actual source main
   `2273b8c9` (P2):** none repair-ready per SHA-first without a fresh reverify; recommend one batched
   Karty reverify lane on `2273b8c9` (reuse SD-6 map-engine subset). **Supplementary:** +7 rows on

@@ -34,6 +34,7 @@
 | **SD-12** | P2 | оставшиеся Karty units | L1, source @ `2273b8c9` | **STILL OPEN:** MAP-P1-12, MAP-P1-20, SIG-P1-01, WAYP-P1-01, MEDIA-P1-01, LOD-P1-01 (partial). **FIXED (close):** COMP-P1-01, CSS-P1-01. **BROWSER-CLASS (~25):** MAP-P1-01..19, AVRAAM-P1-*, GATE-P1-*, DRAW-P1-02, SVG-P1-01 → нужен browser reverify. |
 | **SD-13** | P2 | tour/story/a11y | L1, source+data @ `2273b8c9` | **STILL OPEN:** MAP-P1-03 (shoftim stage-0), MAP-P1-01 (tour tourStepIdx), MAP-P1-02 (keyboard-only), MAP-P1-13 (markers no role/tabindex). **FIXED (close):** ASTRO-P1-04 (stage_ids/stages). Fold в SD-7. |
 | **SD-14** | P2 | GATE/DRAW | L1, source @ `2273b8c9` | **PARTIAL-FIXED:** GATE-P1-01 (validate-map-routes теперь проверяет stages/dup-ids/bounds; JS-crash часть не изменена). **FIXED (close):** GATE-P1-04 (dist-smoke ignoreLocalNoise). **OPEN:** DRAW-P1-02 (5 dup paths). **BROWSER:** GATE-P1-03. |
+| **SD-15** | P2 | Vosk/genealogy | L1, source @ `2273b8c9` | **FIXED (close):** NEW-VOSK-FETCH-NO-ABORT, AR-AUDIT-17 (stale). **OPEN:** NEW-VOSK-DEAD-SPLITSENTENCES. **REVERIFY:** NF-DEAD-ENHANCE-SHIM. |
 
 ---
 

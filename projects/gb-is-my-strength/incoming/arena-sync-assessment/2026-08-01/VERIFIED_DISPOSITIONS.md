@@ -22,6 +22,8 @@
 | CSS-P1-01 | sd12_remaining_units.txt |
 | ASTRO-P1-04 | sd13_tour_a11y.txt |
 | QUAL-P1-04 | sd8_verified_still_open.txt (likely; browser confirm) |
+| NEW-VOSK-FETCH-NO-ABORT | sd15_vosk_genealogy.txt |
+| AR-AUDIT-17 | sd15_vosk_genealogy.txt (stale/fixed) |
 
 ## STILL OPEN (source/data-verified — держать открытыми, свежий witness)
 | ID | Evidence |
@@ -63,6 +65,7 @@
 | MAP-P1-02 | sd13_tour_a11y.txt |
 | MAP-P1-13 | sd13_tour_a11y.txt |
 | DRAW-P1-02 | sd14_gate_draw.txt |
+| NEW-VOSK-DEAD-SPLITSENTENCES | sd15_vosk_genealogy.txt |
 | MAP-P1-10 | (baseOpacity/me-base-geo 0.5, this pass) |
 
 ## BROWSER/RUNTIME/CI CLASS (не source-verifiable — нужен browser reverify на 2273b8c9)
