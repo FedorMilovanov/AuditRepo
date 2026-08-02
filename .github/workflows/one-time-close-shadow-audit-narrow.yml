@@ -24,7 +24,11 @@ jobs:
           python-version: '3.12'
 
       - name: Materialize closure
-        run: python scripts/_close_shadow_audit_narrow_once.py
+        shell: bash
+        run: |
+          set -euo pipefail
+          sed -i 's/## 🔧 РЕФАКТОРИНГ/## 🔵 P3 — РЕФАКТОРИНГ/' scripts/_close_shadow_audit_narrow_once.py
+          python scripts/_close_shadow_audit_narrow_once.py
 
       - name: Validate transaction
         shell: bash
