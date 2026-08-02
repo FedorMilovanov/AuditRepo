@@ -1,0 +1,41 @@
+# Consolidated Disposition — arena-sync-assessment 2026-08-01
+
+> Сводная диспозиция по всем находкам для **верификатора**. Один файл — одно решение.
+> Все находки — governance/data-sync (не продукт-баги). Лейн не менял канон (README Freedom-with-Evidence:
+> агент не правит verified ledger напрямую). Здесь только disposition-предложение.
+
+**AuditRepo HEAD:** `bc067a1cbaf33ed3cafa72cf6f4e5201056125db` (зафиксированный канон).
+**Фактический source main:** `2273b8c930eebf383d429b917d3636bc28a80bae` (PR #730; +14 коммитов к канону `efaf2a51`).
+**Last exact production:** `abf1edba190280e554dfda085bef9fb6594c896d` (source != production).
+**Валидатор:** `validate_audit_repo.py` → PASS. **Матрица:** 356 canonical / 191 open / 165 closed (счётчики корректны).
+
+---
+
+## Сводная таблица
+
+| ID | Sev | Файлы канона | Верифицировано | Диспозиция для верификатора |
+|---|---|---|---|---|
+| **SD-1** | P3 | `MASTER_BUG_MATRIX.md` закрытая строка `NEW-68/69` | L1, tool | `NEW-68`+`NEW-69` (2 разных бага) в одной строке со слэшем → не считаются каноническим ID. Вариант A: split → 167/357/167. Вариант B: rename → 166/356/166. Вариант C: оставить + note. Инвариант: closed==counter==NEXT_AGENT_PROMPT; total==closed+191. |
+| **SD-2** | P3 | `MASTER_BUG_MATRIX.md` `AUDITREPO(4)` включает закрытый AR-006 | L1, sweep (единственный случай) | Решить: AR-006 закрыт → open 190 / AUDITREPO-open 3 (или исключить из счётчика с note). Пропагировать в `## Статистика` + `NEXT_AGENT_PROMPT`. |
+| **SD-3** | P3 | `verified/MATRIX_ID_ALIASES.json` | L1, tool (2 UNREGISTERED-EVIDENCE) | Добавить 2 записи `status:informational` + reason для `RIGHT-4Q204-OPEN-SCHEMATIC`, `RIGHT-P72-TEXT-LINK-ONLY` (Research rights, не баги). Не в матрицу, не в ignoredTokens. |
+| **SD-4** | P3 | `AUDIT-P3-OG-LCP-MISMATCH` (строка 370) | L1, tool (archived-only) | Свежий reverify на **`2273b8c9`** (после SD-5). Если не воспроизводится → stale/fixed; если да → оставить + свежее evidence. Не закрывать по архивному evidence 07-05. |
+| **SD-5** | P1-fresh / P3 | `NEXT_AGENT_PROMPT.md` + мастхед `MASTER_BUG_MATRIX.md` | L1, live `gh api compare` (ahead_by=14) | Authority-only sync: advance source HEAD `efaf2a51`→**`2273b8c9`** + парный `reverify/CURRENT_HEAD_REVERIFY_<date>_2273b8c9_*.md` (14-коммитная дельта, source!=production, не клеймить прод без same-SHA witness). |
+| **SD-6** | P2 | открытые Karty/Engine-строки | L1→source-verified на `2273b8c9` | **Fixed (revert-close):** ASTRO-P1-02, ENGINE-P1-21/22/23/28, MAP-P1-14/15. **Open:** MAP-P1-11 (scale bar всё ещё `cfg.W0/view.w`), ENGINE-P1-26. Reverify на `2273b8c9`, закрывать только не-воспроизводящиеся. |
+
+---
+
+## Порядок (рекомендуемый)
+1. **SD-5** сначала: зафиксировать фактический HEAD `2273b8c9` в каноне + reverify-скелет.
+2. **SD-6 + SD-4**: reverify на `2273b8c9` (map-engine кластер + OG-LCP). Закрыть подтверждённые.
+3. **SD-1/SD-2**: одно решениe по счётчикам (165/191 → целевые) + пропагация в `NEXT_AGENT_PROMPT`.
+4. **SD-3**: registry-записи RIGHT-*.
+
+## Инварианты, которые держать
+- `closed_canonical == closed_counter == NEXT_AGENT_PROMPT claim`
+- `total_canonical == closed_canonical + open(191)` (или пересчитать, если SD-2 меняет open)
+- `open_total == Σ(секции открытых)`; закрытый пункт не считается открытым (SD-2)
+- канон правит **только** верификатор; source/main остаётся нетронутым
+
+## Boundary
+Лейн не менял: ни одной canonical-строки, статуса, severity, счётчика, source-файла, Research/Drive,
+production-данных. Все факты — evidence-based (11 evidence-файлов, 6 proposals в этом intake).
