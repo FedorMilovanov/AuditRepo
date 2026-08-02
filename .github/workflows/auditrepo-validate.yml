@@ -51,6 +51,7 @@ jobs:
           python3 scripts/matrix_coverage_regression_test.py
       - name: Enforce matrix evidence coverage
         run: |
+          set -o pipefail
           mkdir -p reports/matrix-coverage
           python3 scripts/check_matrix_coverage.py \
             --verbose \

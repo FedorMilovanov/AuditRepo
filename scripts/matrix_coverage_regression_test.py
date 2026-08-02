@@ -26,12 +26,17 @@ MATRIX = """# matrix
 """
 
 
-def write_project(root: pathlib.Path, entries: dict[str, object], ignored=None) -> pathlib.Path:
+def write_project(
+    root: pathlib.Path,
+    entries: dict[str, object],
+    ignored=None,
+    matrix: str = MATRIX,
+) -> pathlib.Path:
     project = root / "project"
     for directory in ("verified", "reverify", "incoming", "working", "archive"):
         (project / directory).mkdir(parents=True, exist_ok=True)
     (project / "verified" / "MASTER_BUG_MATRIX.md").write_text(
-        MATRIX, encoding="utf-8"
+        matrix, encoding="utf-8"
     )
     (project / "verified" / "MATRIX_ID_ALIASES.json").write_text(
         json.dumps(
@@ -137,6 +142,32 @@ def main() -> int:
     with tempfile.TemporaryDirectory() as temp:
         project = write_project(pathlib.Path(temp), entries, ignored=["HIDDEN-FINDING-01"])
         expect_value_error(project, "must use a reasoned registry entry")
+
+
+    with tempfile.TemporaryDirectory() as temp:
+        malformed_matrix = MATRIX.replace(
+            "| FIXED-ONE | closed | `abcdef1` |",
+            "| FIXED-ONE/TWO | closed | `abcdef1` |",
+        )
+        project = write_project(pathlib.Path(temp), entries, matrix=malformed_matrix)
+        report = build_report(project)
+        assert report["problemKinds"]["NONCANONICAL-MATRIX-ID"] == 1
+        assert report["problemKinds"]["SECTION-COUNT-MISMATCH"] == 1
+
+    with tempfile.TemporaryDirectory() as temp:
+        closed_in_open = MATRIX.replace(
+            "| OPEN-ONE | open | reverify/known.md |",
+            "| OPEN-ONE | ✅ **CLOSED 2026-08-02** | reverify/known.md |",
+        )
+        project = write_project(pathlib.Path(temp), entries, matrix=closed_in_open)
+        report = build_report(project)
+        assert report["problemKinds"]["CLOSED-IN-OPEN"] == 1
+
+    with tempfile.TemporaryDirectory() as temp:
+        bad_count = MATRIX.replace("## P1 — ОТКРЫТО (1)", "## P1 — ОТКРЫТО (2)")
+        project = write_project(pathlib.Path(temp), entries, matrix=bad_count)
+        report = build_report(project)
+        assert report["problemKinds"]["SECTION-COUNT-MISMATCH"] == 1
 
     print("matrix coverage regression tests: PASS")
     return 0

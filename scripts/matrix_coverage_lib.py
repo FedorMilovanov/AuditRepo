@@ -110,6 +110,82 @@ def parse_matrix(matrix: str) -> tuple[dict[str, MatrixRow], set[str], list[Matr
     return rows, open_ids, closed_rows
 
 
+
+def matrix_integrity_problems(
+    matrix: str,
+    matrix_rows: dict[str, MatrixRow],
+) -> list[str]:
+    """Validate matrix row shape and human-declared counters before evidence coverage."""
+    problems: list[str] = []
+    section = ""
+    declared_counts: dict[str, int] = {}
+    actual_counts: collections.Counter[str] = collections.Counter()
+
+    for line_no, line in enumerate(matrix.splitlines(), 1):
+        if line.startswith("## "):
+            section = line[3:].strip()
+            if is_canonical_section(section):
+                match = re.search(r"\((\d+)\)\s*$", section)
+                if match:
+                    declared_counts[section] = int(match.group(1))
+            continue
+        if not is_canonical_section(section):
+            continue
+        cells = parse_table_cells(line)
+        if not cells or cells[0] in HEADER_IDS:
+            continue
+        finding_id = cells[0]
+        if not is_finding_id(finding_id):
+            problems.append(
+                f"NONCANONICAL-MATRIX-ID: canonical section {section!r} line {line_no} "
+                f"uses invalid table ID {finding_id!r}"
+            )
+            continue
+        actual_counts[section] += 1
+        description = cells[1] if len(cells) > 1 else ""
+        if any(marker in section for marker in OPEN_SECTION_MARKERS) and re.match(
+            r"^\s*✅\s*\**CLOSED\b", description, re.IGNORECASE
+        ):
+            problems.append(
+                f"CLOSED-IN-OPEN: {finding_id} is explicitly CLOSED in open section "
+                f"{section!r} at line {line_no}"
+            )
+
+    for counted_section, expected in declared_counts.items():
+        actual = actual_counts[counted_section]
+        if actual != expected:
+            problems.append(
+                f"SECTION-COUNT-MISMATCH: {counted_section!r} declares {expected} "
+                f"but contains {actual} canonical rows"
+            )
+
+    closed_actual = sum("ЗАКРЫТО" in row.section for row in matrix_rows.values())
+    open_actual = sum(
+        any(marker in row.section for marker in OPEN_SECTION_MARKERS)
+        for row in matrix_rows.values()
+    )
+    closed_stat = re.search(
+        r"^\|\s*Закрыто \(fixed\)\s*\|\s*\**(\d+)\**\s*\|$",
+        matrix,
+        re.MULTILINE,
+    )
+    open_stat = re.search(
+        r"^\|\s*\**Всего открыто \(матрица\)\**\s*\|\s*\**(\d+)\**\s*\|$",
+        matrix,
+        re.MULTILINE,
+    )
+    if closed_stat and int(closed_stat.group(1)) != closed_actual:
+        problems.append(
+            f"STAT-COUNT-MISMATCH: closed statistic declares {closed_stat.group(1)} "
+            f"but matrix contains {closed_actual} closed canonical rows"
+        )
+    if open_stat and int(open_stat.group(1)) != open_actual:
+        problems.append(
+            f"STAT-COUNT-MISMATCH: open statistic declares {open_stat.group(1)} "
+            f"but matrix contains {open_actual} open canonical rows"
+        )
+    return problems
+
 def candidate_is_credible(
     token: str,
     contexts: set[str],
@@ -315,9 +391,8 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
     if not matrix_path.exists():
         raise FileNotFoundError(matrix_path)
 
-    matrix_rows, open_ids, closed_rows = parse_matrix(
-        matrix_path.read_text(encoding="utf-8")
-    )
+    matrix_text = matrix_path.read_text(encoding="utf-8")
+    matrix_rows, open_ids, closed_rows = parse_matrix(matrix_text)
     aliases, ignored_tokens, registry, registry_counts = load_aliases(
         aliases_path, set(matrix_rows)
     )
@@ -364,7 +439,7 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
         if target and alias in archive_occurrences:
             canonical_archive.add(target)
 
-    problems: list[str] = []
+    problems: list[str] = matrix_integrity_problems(matrix_text, matrix_rows)
     archived_only: list[str] = []
     direct_witnessed: list[str] = []
     unregistered_evidence: list[dict[str, object]] = []

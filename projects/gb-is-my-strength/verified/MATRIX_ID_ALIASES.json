@@ -112,14 +112,6 @@
       "status": "false-positive",
       "reason": "Reverify proved the supposed dead scripts are documented manual QA/migration tools, not deletion-ready dead code."
     },
-    "NEW-68": {
-      "status": "retired",
-      "reason": "CSP form-action regression fixed-current by production-like evidence at 14574a9a."
-    },
-    "NEW-69": {
-      "status": "retired",
-      "reason": "Missing CSP on Astro map routes fixed-current by production-like evidence at 14574a9a."
-    },
     "NEW-VOSK-UNZIP-SYNC-JANK": {
       "status": "alias",
       "canonical": "TTS-DL-UNZIP-SYNC",
@@ -219,6 +211,14 @@
     "UI-GILL-DESKTOP-FRAME-03": {
       "status": "retired",
       "reason": "Historical missing-prevention-gate claim is superseded by permanent Gill submenu/layout/browser gates and exact Pages deployment success."
+    },
+    "RIGHT-4Q204-OPEN-SCHEMATIC": {
+      "status": "informational",
+      "reason": "Research rights-policy evidence label for an open schematic; it is not a product defect and does not belong in the bug matrix."
+    },
+    "RIGHT-P72-TEXT-LINK-ONLY": {
+      "status": "informational",
+      "reason": "Research rights-policy evidence label limiting P72 to a text link; it is not a product defect and does not belong in the bug matrix."
     }
   },
   "ignoredTokens": []

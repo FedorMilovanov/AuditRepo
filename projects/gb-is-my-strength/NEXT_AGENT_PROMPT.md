@@ -2,21 +2,24 @@
 
 > **Только текущая операционная правда.** Счётчики принадлежат `verified/MASTER_BUG_MATRIX.md`.
 
-**Source main:** `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3`
+**Verified product/evidence anchor:** `fc1085c805d72e6d43f58a6383c680d4e886183b`
+**Source main observed after anchor:** `f9234dbbe832d80b4d9a453ce3d2f58da832b24f` (two workflow-only cleanup commits after the anchor)
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`
-**Current source deployment status:** ⚠️ `source != production`; same-SHA production witness для текущего source отсутствует.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md`
-**AuditRepo synchronization:** authority-only projection; canonical counters remain 165 closed / 191 open.
+**Deployment status:** ⚠️ verified anchor `!=` production; no post-production same-SHA witness.
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md`
+**Canonical matrix:** **358 IDs = 168 closed + 190 open**.
 
 ## 1. Точная граница source
 
-- current source `main` = `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3`;
-- после канонического `0ff04232ee08a8f81711db640395901124aca787` в source ancestry находятся:
-  - PR #691 / `c5ae325e5e73f1997112c395fd28f3a52f02ee96` — canonical article headline contract; exact head `6736bf988e3c4e69ffe4ffe90c4f987b12523674`, 14/14 triggered workflows green;
-  - PR #669 / `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` — Karty audit count derived from governed route inventory; exact head `94748bb7e4ce7035a5687465200fb24676ac4249`, 8/8 triggered workflows green;
-- Workflow Policy v2 remains merged at `0ff04232ee08a8f81711db640395901124aca787`; AuditRepo PR #117 moved `WORKFLOW-POLICY-SHADOW-ERA` to fixed and set counters to 165 closed / 191 open;
-- active source owner at capture: #680 NoteRegistry; do not modify its branch or owner files;
-- no post-`abf1edba` merge is production without a separate same-SHA witness.
+- verified product/evidence anchor = `fc1085c805d72e6d43f58a6383c680d4e886183b`;
+- former canonical source `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` is **65 commits behind the verified anchor**;
+- AuditRepo PR #120 merge-time anchor `8f17085dc8411cffbcb5a4dcd2f8fc5db9c30a97` is **20 commits behind the verified anchor**;
+- the first 9 commits after PR #120 add the Pihahiroth uncertainty lane and modify Ishod projection surfaces, so Ishod browser/runtime verdicts still require a fresh exact-head witness;
+- the next 11 commits up to `fc1085c8` affect Wave12/search/visual-policy files only and do not touch the earlier Karty/Vosk/genealogy evidence-critical paths;
+- two later commits through `f9234dbb` only remove a completed normalization writer and pin actions in the Pihahiroth release workflow; they do not change product, Karty/Ishod data or matrix evidence;
+- future source movement does not silently change matrix statuses: a new status requires a new exact-head reverify;
+- active source owner: draft PR #680 at `282ee9aec770b6f7c91145d39f935ea14136d29e`; do not modify its branch or owner files;
+- no post-`abf1edba` source merge is production without a separate same-SHA witness.
 
 ## 2. Last exact production
 
@@ -24,24 +27,28 @@
 - release SHA = control-plane SHA = `abf1edba190280e554dfda085bef9fb6594c896d`;
 - candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`;
 - release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`;
-- files / bytes `1152` / `81177351`;
-- immutable path `/deployments/abf1edba190280e554dfda085bef9fb6594c896d/30669840189-1.json`;
-- candidate artifact `8808656612` / `sha256:c7ddd49753c2a6f7c93b4962cce372a1be99d6f7871e76db6d6b9de12f4c3159`;
-- generic live `8808666936` / `sha256:28333e7d19ebc51641f00ca086e8d77d2a92880ee546161f78a8e4d034957f10`;
-- TTS `8808667707` / `sha256:7b8354caca07d12e682243c22487afe189413dbd5a0fbe36235c55395089aa54`;
-- release ledger comment `5148074092`;
-- physical Windows witness `5148209495`.
+- candidate artifact `8808656612`; generic live `8808666936`; TTS `8808667707`;
+- release ledger comment `5148074092`; physical Windows witness `5148209495`.
 
 ```text
-current source = efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3
+verified product/evidence anchor = fc1085c805d72e6d43f58a6383c680d4e886183b
+source main later observed = f9234dbbe832d80b4d9a453ce3d2f58da832b24f
 last exact production = abf1edba190280e554dfda085bef9fb6594c896d
-source != production
+verified anchor != production
 ```
 
-## 3. Следующий порядок
+## 3. Матрица и AuditRepo
 
-1. Не продвигать `efaf2a51` в production authority без exact same-SHA readiness → candidate → Pages/live → TTS → ledger evidence.
-2. Не вмешиваться в active owner-lane #680; использовать его exact head, file boundary and CI evidence.
-3. После освобождения зависимого scope следующий свободный фундамент — source issue #62 Legacy Reference Quarantine.
-4. После NoteRegistry продолжать единый ReaderProjection; не добавлять route-local note/TTS/search/print engines.
-5. `WORKFLOW-POLICY-SHADOW-ERA` закрыт; canonical counters = 165 closed / 191 open.
+- `NEW-68` and `NEW-69` are separate closed canonical IDs; the former slash row counted as zero IDs, so the repair adds two canonical IDs;
+- `AR-006` is closed and no longer counted in the open AUDITREPO section;
+- counters: P0 0, P1 96, P2 36, P3 51, Refactoring 4, AuditRepo 3; total open 190; closed 168;
+- rights-policy labels `RIGHT-4Q204-OPEN-SCHEMATIC` and `RIGHT-P72-TEXT-LINK-ONLY` are informational registry entries, not bugs;
+- matrix coverage is blocking and must report zero diagnostics; CI uses `pipefail`, so `check_matrix_coverage.py | tee` cannot hide a non-zero exit;
+- noncanonical table IDs, explicit CLOSED rows in open sections, heading/stat counter drift and unregistered reverify IDs are permanent blocking diagnostics.
+
+## 4. Следующий порядок
+
+1. Do not promote any post-`abf1edba` source SHA to production authority without exact same-SHA readiness → candidate → Pages/live → TTS → ledger evidence.
+2. Do not interfere with active owner PR #680.
+3. Re-run Ishod/Pihahiroth browser/runtime verification on an exact chosen source SHA before changing related matrix statuses.
+4. Keep canonical counters synchronized atomically between this file and `MASTER_BUG_MATRIX.md`.

@@ -9,19 +9,19 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` (current source main; post-production ancestry includes Pagefind #667, homepage #675, Editorial Metadata v3 #672, Nagornaya #678, glossary trust boundary #683, Workflow Policy v2 #688, canonical headline #691 and governed Karty inventory #669; no current production claim) |
-| Deploy | ⚠️ **SOURCE ≠ PRODUCTION.** Last exact production remains run `30669840189` attempt `1`, which promoted `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`; release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`; digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Candidate `8808656612` (`sha256:c7ddd49753c2a6f7c93b4962cce372a1be99d6f7871e76db6d6b9de12f4c3159`), generic live `8808666936` (`sha256:28333e7d19ebc51641f00ca086e8d77d2a92880ee546161f78a8e4d034957f10`), TTS `8808667707` (`sha256:7b8354caca07d12e682243c22487afe189413dbd5a0fbe36235c55395089aa54`). Ledger `5148074092`; Windows witness `5148209495`. Current source `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` requires a new same-SHA production witness. |
+| Source verification anchor | `fc1085c805d72e6d43f58a6383c680d4e886183b` (exact product/evidence anchor verified by this transaction; former canonical `efaf2a51` is 65 commits behind this anchor). Source `main` was later observed at `f9234dbbe832d80b4d9a453ce3d2f58da832b24f` after two control-plane-only cleanup commits; those commits do not alter product or evidence-critical paths. |
+| Deploy | ⚠️ **VERIFIED SOURCE ANCHOR ≠ PRODUCTION.** Last exact production remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Anchor `fc1085c805d72e6d43f58a6383c680d4e886183b` has no same-SHA production witness. Later cleanup-only source tips do not create a production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md` |
 
-⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current source = `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3`; last exact production authority = `abf1edba190280e554dfda085bef9fb6594c896d`. Более новые source-коммиты не наследуют live/production-доказательства старого SHA. PRs #691/#669 слиты после Workflow Policy v2; active source owner at capture: #680. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md`.
+⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Verified product/evidence anchor = `fc1085c805d72e6d43f58a6383c680d4e886183b`; last exact production authority = `abf1edba190280e554dfda085bef9fb6594c896d`. Source `main` was subsequently observed at `f9234dbbe832d80b4d9a453ce3d2f58da832b24f`: the two post-anchor commits only removed a completed normalization writer and pinned actions in the Pihahiroth release workflow. No product, Karty/Ishod data, Vosk, genealogy or matrix-evidence path changed, so verdicts remain anchored to `fc1085c805d72e6d43f58a6383c680d4e886183b`. Any later status change still requires a new exact-head reverify. Active source owner: draft PR #680 at `282ee9aec770b6f7c91145d39f935ea14136d29e`; не вмешиваться в его ветку. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (165)
+## ✅ ЗАКРЫТО (168)
 
 | ID | Описание | Коммит |
 |---|---|---|
@@ -127,7 +127,9 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NEW-64 | Runtime smoke in deploy | `8d0c12e0` |
 | NEW-65 | Baptisty visual parity | `914c7fb1` |
 | NEW-66 | SW/Pagefind deploy-switch | `d5c65647` |
-| NEW-68/69 | CSP form-action regression | `14574a9a` |
+| NEW-68 | Dist CSP omitted `form-action 'self'` | `14574a9a` |
+| NEW-69 | Astro Karty routes omitted the CSP meta projection | `14574a9a` |
+| AR-006 | ✅ **CLOSED 2026-07-14 / CANONICALIZED 2026-08-02.** AuditRepo root allowlists and structure validation were hardened; stray root/intake violations were moved or completed without deleting evidence, and both validators passed. The row was previously marked CLOSED while physically counted in the open AUDITREPO section. | `4c069662` |
 | NEW-70 | sitemap stale lastmod | `a434b45e` |
 | NEW-71 | README version drift | `da4a65cd` |
 | NEW-README-ANCHOR-01 | README.md TOC stale anchor | `c82a8d4b` |
@@ -417,14 +419,13 @@ _История сессий (HEAD-переходы, что влито) — в �
 | R-003 | Нет source maps |
 | R-004 | Нет type="module"/tree-shaking |
 
-## 🟣 AUDITREPO (4)
+## 🟣 AUDITREPO (3)
 
 | ID | Описание |
 |---|---|
 | AR-001 | validate_audit_repo.py hardening |
 | AR-004 | verification protocol automation |
 | AR-005 | reverify automation |
-| AR-006 | ✅ **CLOSED 2026-07-14**: ALLOWED_ROOT_DIRS/FILES в validate_audit_repo.py (verification/ и references/ узаконены — atlas-трек и UI-канон); первый же прогон поймал и выселил корневой passes/ → projects/gb-is-my-strength/passes/. | REPORT §1 + fix-verify (оба валидатора PASS) |
 
 > ✅ **AR-CI-RED — ЗАКРЫТ 2026-07-14** (governance, не баг source-репо): `origin/main` был на 581 коммит впереди (параллельные агенты, atlas-верификация), но **AuditRepo CI (`validate_audit_repo.py`) был красный**: (1) stray root `DEBT-REGISTER.md`; (2) intake `claude-atlas-deep-audit/2026-07-10` без `README.md`/`REPORT.md`; (3) intake-папка `claude-genealogy-atlas-strategy/2026-07-14-milestone-atlas-v1` с невалидным именем даты. Починено **минимально и без удаления чужого контента** (CLEANUP §7): `git mv` root-файла в `working/`, additive-`README.md` в 2026-07-10 intake, `git mv …/2026-07-14-milestone-atlas-v1 → …/2026-07-14-r1` + preservation-note. Оба валидатора PASS. Урок для параллельных агентов: гонять `validate_audit_repo.py` **до** пуша. Детали: `reverify/CURRENT_HEAD_REVERIFY_2026-07-14_2ca2af3b.md` §AR-CI-RED.
 
@@ -468,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-01: source `efaf2a51`; last exact production `abf1edba`; counters 165/191 unchanged)
+## Статистика (обновлено 2026-08-02: source `fc1085c8`; last exact production `abf1edba`; 358 canonical = 168 closed + 190 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 165 |
+| Закрыто (fixed) | 168 |
 | **P0 открыто** | **0** |
 | P1 открыто | 96 |
 | P2 открыто | 36 |
 | P3 открыто | 51 |
 | Рефакторинг | 4 |
-| AuditRepo | 4 |
-| **Всего открыто (матрица)** | **191** |
+| AuditRepo | 3 |
+| **Всего открыто (матрица)** | **190** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -487,6 +488,14 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-02 — verifier matrix reconciliation @ source `fc1085c8`
+- Verification anchor advanced from stale `efaf2a51` to exact source snapshot `fc1085c805d72e6d43f58a6383c680d4e886183b` (**65 commits**, source-only; production remains `abf1edba190280e554dfda085bef9fb6594c896d`).
+- Corrected canonical identity: combined noncanonical row `NEW-68/69` became two distinct closed IDs `NEW-68` and `NEW-69`; total canonical count therefore increases by **2**, not 1.
+- Moved `AR-006` from the open AUDITREPO table to closed; open AUDITREPO 4→3, total open 191→190, closed 165→168, total canonical 356→358.
+- Registered `RIGHT-4Q204-OPEN-SCHEMATIC` and `RIGHT-P72-TEXT-LINK-ONLY` as informational rights-policy evidence IDs.
+- Hardened matrix coverage against noncanonical table IDs, explicit CLOSED rows inside open sections, section/stat counter drift, and fixed the `tee`/missing-`pipefail` false-green in CI.
+- Exact rationale and source-delta boundary: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md`.
 
 - **2026-08-01 — source advanced to `efaf2a51`; production remains `abf1edba`.** PR #691 / `c5ae325e` established one canonical article-headline contract; exact head `6736bf98` passed 14/14 triggered workflows. PR #669 / `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` replaced the Karty literal audit count with one governed route inventory; exact head `94748bb7` passed 8/8 triggered workflows. Active source owner at capture: #680 NoteRegistry. AuditRepo PR #117 already closed `WORKFLOW-POLICY-SHADOW-ERA`; counters remain 165 closed / 191 open. No same-SHA production witness exists for current source. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md`.
 
