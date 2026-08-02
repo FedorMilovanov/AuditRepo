@@ -60,6 +60,25 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-10 — source-verified map-engine/Avraam cluster verdicts on 2273b8c9
+- **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
+- **Title:** direct source inspection of `map-engine.js` + Avraam components on `2273b8c9` classifies more rows.
+- **Severity:** P2 (informs the reverify lane)
+- **File(s):** `karty/_engine/map-engine.js`, `src/components/karty/avraam/*`, `src/pages/karty/avraam/*` @ `2273b8c9`.
+- **Evidence:** `evidence/sd10_browser_engine_clusters.txt`.
+- **STILL OPEN (keep open):** FONT-P1-01 (`.hw` = Georgia, no Hebrew font), TEXT-P1-01
+  (`labelWidth = length*fontSize*0.6`), A11Y-P1-02 (sr-only before map, no skip link), A11Y-P1-03
+  (`rgba(154,162,174,.4)` contrast), DRAW-P1-03 (plain r=4.5 circles), MINI-P1-01 (minimap no geography).
+- **FIXED candidate (browser reverify then close):** A11Y-P1-01 (single sr-only h1 + MutationObserver
+  removal on ready — no two h1 simultaneously).
+- **NEED REVERIFY:** PERF-P1-01 (feTurbulence present; animated vs static?), DRAW-P1-01 (label v2 with
+  anchors/leaders supersedes the 12px-shift concern).
+- **Confidence:** high (source).
+- **Verification level:** L1 (source); browser for A11Y-P1-01 close.
+- **Suggested repair lane:** fold into batched Karty reverify (SD-7).
+
+---
+
 ### Finding SD-9 — data-layer validation on actual HEAD 2273b8c9 (route.json / page-ownership / regions)
 - **Category:** AUDITREPO / data-sync (reverify triage on live data, not a product claim)
 - **Title:** live data checks on `2273b8c9` classify several Karty data rows as stale-fixed, still-open, or partial.
@@ -234,6 +253,7 @@ None.
 - Target bug: SD-7 → proposed severity **P2** (matrix freshness; 65-row batched reverify). Current: unregistered.
 - Target bug: SD-8 → proposed severity **P2** (reverify triage; confirms still-open Karty cluster). Current: unregistered.
 - Target bug: SD-9 → proposed severity **P2** (data-layer triage; 1 stale-fixed, 3 still-open, 1 partial). Current: unregistered.
+- Target bug: SD-10 → proposed severity **P2** (map-engine/Avraam triage; 6 still-open, 1 fixed, 2 reverify). Current: unregistered.
 
 ---
 

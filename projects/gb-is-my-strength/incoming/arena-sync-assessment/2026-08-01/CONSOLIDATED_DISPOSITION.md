@@ -24,6 +24,7 @@
 | **SD-7** | P2 | 65 открытых Karty-строк с witness `32ae0d7d` (+7 supplementary) | L1, live API (ahead_by=607/698/658/1105) | Один батчевый Karty reverify-лейн на `2273b8c9` (после SD-5), reuse SD-6 map-engine subset; закрывать только не-воспроизводящиеся; остальное — свежий witness. Combined stale-witness surface ≈ **72 rows**. |
 | **SD-8** | P2 | Karty P1-кластер (base-geo.svg, map-engine.js) | L1, source-inspection @ `2273b8c9` | **STILL OPEN (держать):** BASE-P1-01/02, RIVER-P1-01/02/03, QUAL-P1-05. **Likely fixed (browser reverify→close):** QUAL-P1-04. **Partial:** QUAL-P1-06. Fold в SD-7 лейн; не закрывать still-open. |
 | **SD-9** | P2 | data-слой (page-ownership, route.json, regions) | L1, live-data @ `2273b8c9` | **STALE/FIXED (close):** QUAL-P2-03 (karty-роуты теперь в page-ownership). **STILL OPEN:** QUAL-P1-07, QUAL-P2-02, REG-P1-01. **PARTIAL:** DATA-P2-01 (avraam paths 8/8, ishod 0/6). Fold в SD-7. |
+| **SD-10** | P2 | map-engine/Avraam кластер | L1, source @ `2273b8c9` | **STILL OPEN:** FONT-P1-01, TEXT-P1-01, A11Y-P1-02/03, DRAW-P1-03, MINI-P1-01. **FIXED (browser→close):** A11Y-P1-01. **REVERIFY:** PERF-P1-01, DRAW-P1-01. Fold в SD-7. |
 
 ---
 
