@@ -60,6 +60,22 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-13 — tour / story / a11y verdicts on 2273b8c9
+- **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
+- **Title:** direct source + data inspection of tour/story/a11y rows on `2273b8c9`.
+- **Severity:** P2 (informs the reverify lane)
+- **File(s):** `karty/_engine/map-engine.js`, `karty/shoftim/route.json` @ `2273b8c9`.
+- **Evidence:** `evidence/sd13_tour_a11y.txt`.
+- **STILL OPEN (source-verified):** MAP-P1-03 (shoftim 6 stages, all 12 places stage 0), MAP-P1-01
+  (tour uses `tourStepIdx` not `sid`; pre-`flyTo` before stop), MAP-P1-02 (tour entry keyboard-only Space,
+  no touch affordance), MAP-P1-13 (marker dots no role/tabindex).
+- **FIXED candidate (revert-close):** ASTRO-P1-04 (tour/membership reads `story.stages||story.stage_ids`; validate checks both).
+- **Confidence:** high (source + data).
+- **Verification level:** L1 (source); MAP-P1-01/02 recommend browser confirm.
+- **Suggested repair lane:** fold into batched Karty reverify (SD-7).
+
+---
+
 ### Finding SD-12 — remaining Karty unit verdicts on 2273b8c9
 - **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
 - **Title:** direct source inspection of the remaining Karty unit rows on `2273b8c9`.
@@ -294,6 +310,7 @@ None.
 - Target bug: SD-10 → proposed severity **P2** (map-engine/Avraam triage; 6 still-open, 1 fixed, 2 reverify). Current: unregistered.
 - Target bug: SD-11 → proposed severity **P2** (sheet-engine/GATE triage; 7 still-open, 1 fixed). Current: unregistered.
 - Target bug: SD-12 → proposed severity **P2** (remaining units; 6 still-open, 2 fixed, ~25 browser-class). Current: unregistered.
+- Target bug: SD-13 → proposed severity **P2** (tour/story/a11y; 4 still-open, 1 fixed). Current: unregistered.
 
 ---
 

@@ -64,6 +64,9 @@
 - `SD-12` — **remaining Karty units on `2273b8c9` (P2):** STILL OPEN MAP-P1-12, MAP-P1-20, SIG-P1-01,
   WAYP-P1-01, MEDIA-P1-01, LOD-P1-01 (partial); FIXED candidates COMP-P1-01 (atlas-reader real width),
   CSS-P1-01 (bounded me-base-css lease); ~25 browser/runtime/CI rows need browser reverify.
+- `SD-13` — **tour/story/a11y on `2273b8c9` (P2):** STILL OPEN MAP-P1-03 (shoftim stage-0), MAP-P1-01,
+  MAP-P1-02 (keyboard-only tour), MAP-P1-13 (markers no role/tabindex); FIXED candidate ASTRO-P1-04
+  (stage_ids/stages both read).
 - `SD-7` — **65 open Karty-cluster rows witnessed on `32ae0d7d`, 607 commits behind actual source main
   `2273b8c9` (P2):** none repair-ready per SHA-first without a fresh reverify; recommend one batched
   Karty reverify lane on `2273b8c9` (reuse SD-6 map-engine subset). **Supplementary:** +7 rows on
