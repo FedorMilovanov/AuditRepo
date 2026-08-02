@@ -2,20 +2,22 @@
 
 > **Только текущая операционная правда.** Счётчики принадлежат `verified/MASTER_BUG_MATRIX.md`.
 
-**Source main:** `fc1085c805d72e6d43f58a6383c680d4e886183b`
+**Verified product/evidence anchor:** `fc1085c805d72e6d43f58a6383c680d4e886183b`
+**Source main observed after anchor:** `f9234dbbe832d80b4d9a453ce3d2f58da832b24f` (two workflow-only cleanup commits after the anchor)
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`
-**Current source deployment status:** ⚠️ `source != production`; same-SHA production witness для текущего source отсутствует.
+**Deployment status:** ⚠️ verified anchor `!=` production; no post-production same-SHA witness.
 **Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md`
 **Canonical matrix:** **358 IDs = 168 closed + 190 open**.
 
 ## 1. Точная граница source
 
-- exact source `main` at final verifier review = `fc1085c805d72e6d43f58a6383c680d4e886183b`;
-- former canonical source `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` is **65 commits behind**;
-- AuditRepo PR #120 merge-time anchor `8f17085dc8411cffbcb5a4dcd2f8fc5db9c30a97` is **20 commits behind**;
-- prior matrix-review anchor `5373c9854b3f1bb767cf18c4539de82db26b7b7a` is **11 commits behind**;
-- those final 11 commits affect Wave12/search/visual-policy files only; they do not touch the earlier Karty/Vosk/genealogy evidence-critical paths;
-- the preceding Pihahiroth/Ishod delta did touch Ishod projection files, so Ishod browser/runtime verdicts still require a fresh exact-head witness and are not inherited source-only;
+- verified product/evidence anchor = `fc1085c805d72e6d43f58a6383c680d4e886183b`;
+- former canonical source `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` is **65 commits behind the verified anchor**;
+- AuditRepo PR #120 merge-time anchor `8f17085dc8411cffbcb5a4dcd2f8fc5db9c30a97` is **20 commits behind the verified anchor**;
+- the first 9 commits after PR #120 add the Pihahiroth uncertainty lane and modify Ishod projection surfaces, so Ishod browser/runtime verdicts still require a fresh exact-head witness;
+- the next 11 commits up to `fc1085c8` affect Wave12/search/visual-policy files only and do not touch the earlier Karty/Vosk/genealogy evidence-critical paths;
+- two later commits through `f9234dbb` only remove a completed normalization writer and pin actions in the Pihahiroth release workflow; they do not change product, Karty/Ishod data or matrix evidence;
+- future source movement does not silently change matrix statuses: a new status requires a new exact-head reverify;
 - active source owner: draft PR #680 at `282ee9aec770b6f7c91145d39f935ea14136d29e`; do not modify its branch or owner files;
 - no post-`abf1edba` source merge is production without a separate same-SHA witness.
 
@@ -29,9 +31,10 @@
 - release ledger comment `5148074092`; physical Windows witness `5148209495`.
 
 ```text
-current source = fc1085c805d72e6d43f58a6383c680d4e886183b
+verified product/evidence anchor = fc1085c805d72e6d43f58a6383c680d4e886183b
+source main later observed = f9234dbbe832d80b4d9a453ce3d2f58da832b24f
 last exact production = abf1edba190280e554dfda085bef9fb6594c896d
-source != production
+verified anchor != production
 ```
 
 ## 3. Матрица и AuditRepo
@@ -45,7 +48,7 @@ source != production
 
 ## 4. Следующий порядок
 
-1. Do not promote `fc1085c8` to production authority without exact same-SHA readiness → candidate → Pages/live → TTS → ledger evidence.
+1. Do not promote any post-`abf1edba` source SHA to production authority without exact same-SHA readiness → candidate → Pages/live → TTS → ledger evidence.
 2. Do not interfere with active owner PR #680.
-3. Re-run Ishod/Pihahiroth browser/runtime verification on the exact current source before changing related matrix statuses.
+3. Re-run Ishod/Pihahiroth browser/runtime verification on an exact chosen source SHA before changing related matrix statuses.
 4. Keep canonical counters synchronized atomically between this file and `MASTER_BUG_MATRIX.md`.
