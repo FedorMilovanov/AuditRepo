@@ -21,7 +21,7 @@
 | **SD-4** | P3 | `AUDIT-P3-OG-LCP-MISMATCH` (строка 370) | L1, tool (archived-only) | Свежий reverify на **`2273b8c9`** (после SD-5). Если не воспроизводится → stale/fixed; если да → оставить + свежее evidence. Не закрывать по архивному evidence 07-05. |
 | **SD-5** | P1-fresh / P3 | `NEXT_AGENT_PROMPT.md` + мастхед `MASTER_BUG_MATRIX.md` | L1, live `gh api compare` (ahead_by=14) | Authority-only sync: advance source HEAD `efaf2a51`→**`2273b8c9`** + парный `reverify/CURRENT_HEAD_REVERIFY_<date>_2273b8c9_*.md` (14-коммитная дельта, source!=production, не клеймить прод без same-SHA witness). |
 | **SD-6** | P2 | открытые Karty/Engine-строки | L1→source-verified на `2273b8c9` | **Fixed (revert-close):** ASTRO-P1-02, ENGINE-P1-21/22/23/28, MAP-P1-14/15. **Open:** MAP-P1-11 (scale bar всё ещё `cfg.W0/view.w`), ENGINE-P1-26. Reverify на `2273b8c9`, закрывать только не-воспроизводящиеся. |
-| **SD-7** | P2 | 65 открытых Karty-строк с witness `32ae0d7d` | L1, live API (ahead_by=607) | Один батчевый Karty reverify-лейн на `2273b8c9` (после SD-5), reuse SD-6 map-engine subset; закрывать только не-воспроизводящиеся; остальное — свежий witness. |
+| **SD-7** | P2 | 65 открытых Karty-строк с witness `32ae0d7d` (+7 supplementary) | L1, live API (ahead_by=607/698/658/1105) | Один батчевый Karty reverify-лейн на `2273b8c9` (после SD-5), reuse SD-6 map-engine subset; закрывать только не-воспроизводящиеся; остальное — свежий witness. Combined stale-witness surface ≈ **72 rows**. |
 
 ---
 

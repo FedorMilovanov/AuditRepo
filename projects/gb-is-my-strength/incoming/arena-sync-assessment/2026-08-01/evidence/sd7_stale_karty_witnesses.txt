@@ -24,3 +24,7 @@
 
 ## Boundary
 No product claim, no closure, no counter change. Verifier-owned scheduling decision.
+
+## Supplementary (2026-08-01) — see sd7_supplementary_stale_witnesses.txt
+7 additional open rows on other stale SHAs (2ca2af3 x3, 21624a3 x3, 30bf3f5c x1), 658-1105 commits
+behind current main. Combined stale-witness open surface ~72 rows. None repair-ready per SHA-first.
