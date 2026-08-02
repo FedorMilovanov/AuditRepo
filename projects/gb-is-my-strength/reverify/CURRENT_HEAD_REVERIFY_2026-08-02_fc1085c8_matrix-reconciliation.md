@@ -1,10 +1,11 @@
-# Current-head matrix reconciliation — 2026-08-02 — `5373c985`
+# Current-head matrix reconciliation — 2026-08-02 — `fc1085c8`
 
-**AuditRepo base:** `a4ac63a1bfaa2549766cf911f3de886f21873875` (PR #120 merge)  
-**Exact source main:** `5373c9854b3f1bb767cf18c4539de82db26b7b7a`  
-**Previous canonical source:** `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` (**54 commits behind**)  
-**PR #120 merge-time source anchor:** `8f17085dc8411cffbcb5a4dcd2f8fc5db9c30a97` (**9 commits behind**)  
-**Last exact production:** `abf1edba190280e554dfda085bef9fb6594c896d`  
+**AuditRepo base:** `a4ac63a1bfaa2549766cf911f3de886f21873875` (PR #120 merge)
+**Exact source main at final verifier review:** `fc1085c805d72e6d43f58a6383c680d4e886183b`
+**Former canonical source:** `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` (**65 commits behind**)
+**PR #120 merge-time source anchor:** `8f17085dc8411cffbcb5a4dcd2f8fc5db9c30a97` (**20 commits behind**)
+**Intermediate matrix-review anchor:** `5373c9854b3f1bb767cf18c4539de82db26b7b7a` (**11 commits behind**)
+**Last exact production:** `abf1edba190280e554dfda085bef9fb6594c896d`
 **Production claim:** no; `source != production`
 
 ## Why this transaction exists
@@ -14,7 +15,7 @@ The post-PR-120 independent audit found four canonical/control-plane defects:
 1. `NEW-68/69` was a physical closed-table row but not a canonical ID because `/` violates the matrix ID grammar. It represented two distinct bugs and counted as zero IDs.
 2. `AR-006` was explicitly marked CLOSED while remaining in the open AUDITREPO section and in the 191-open total.
 3. Two rights-policy evidence IDs were visible in reverify but absent from matrix/registry: `RIGHT-4Q204-OPEN-SCHEMATIC` and `RIGHT-P72-TEXT-LINK-ONLY`.
-4. The supposedly blocking coverage job piped `check_matrix_coverage.py` into `tee` without `pipefail`; the script returned 1 for the two diagnostics, but Bash returned the status of `tee`, so CI was falsely green.
+4. The supposedly blocking coverage job piped `check_matrix_coverage.py` into `tee` without `pipefail`; the script returned 1 for the diagnostics, but Bash returned the status of `tee`, so CI was falsely green.
 
 ## Correct arithmetic
 
@@ -35,9 +36,18 @@ The older proposal “split → 357 total” was rejected as arithmetically inco
 
 ## Source delta boundary
 
-The 9-commit delta from `8f17085d` to `5373c985` adds the Pihahiroth uncertainty release lane and changes Ishod projection surfaces, including `IshodMap.astro` and `IshodPageHead.astro`. Therefore Ishod/browser/runtime classifications from the earlier source-only carry-forward are not auto-closed here. This transaction updates authority and matrix governance only.
+The first 9 commits after PR #120's source anchor add the Pihahiroth uncertainty release lane and change Ishod projection surfaces, including `IshodMap.astro` and `IshodPageHead.astro`. Ishod/browser/runtime classifications therefore remain open pending a fresh exact-head witness.
 
-Draft source PR #680 NoteRegistry is active and based on `5373c9854b3f1bb767cf18c4539de82db26b7b7a`. Its branch and owner files are outside this AuditRepo transaction.
+The final 11 commits from `5373c985` to `fc1085c8` change Wave12/search/visual-policy surfaces only:
+
+- Wave12 release and canonical-discovery workflows/contracts;
+- search-manifest policy and sitemap normalization;
+- Diotrophes metadata/route profile;
+- visual-parity baseline and pastor-series visual policy.
+
+They do not touch the earlier Karty/Vosk/genealogy evidence-critical paths, so this authority refresh does not silently reclassify those rows.
+
+Draft source PR #680 is active at `282ee9aec770b6f7c91145d39f935ea14136d29e`. Its branch and owner files are outside this AuditRepo transaction.
 
 ## Permanent control-plane changes
 

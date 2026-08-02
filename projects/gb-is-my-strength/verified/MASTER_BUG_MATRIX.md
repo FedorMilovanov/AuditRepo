@@ -9,13 +9,13 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `5373c9854b3f1bb767cf18c4539de82db26b7b7a` (current source main; 54 commits ahead of previous canonical `efaf2a51`; includes the Pihahiroth uncertainty release lane; source-only authority, no production claim) |
-| Deploy | ⚠️ **SOURCE ≠ PRODUCTION.** Last exact production remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Current source `5373c9854b3f1bb767cf18c4539de82db26b7b7a` requires a new same-SHA production witness. |
+| Source HEAD | `fc1085c805d72e6d43f58a6383c680d4e886183b` (exact source main at final verifier review; 65 commits ahead of former canonical `efaf2a51`; includes Pihahiroth/Ishod and Wave12/search discovery lanes; source-only authority, no production claim) |
+| Deploy | ⚠️ **SOURCE ≠ PRODUCTION.** Last exact production remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Current source `fc1085c805d72e6d43f58a6383c680d4e886183b` requires a new same-SHA production witness. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_5373c985_matrix-reconciliation.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md` |
 
-⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current source = `5373c9854b3f1bb767cf18c4539de82db26b7b7a`; last exact production authority = `abf1edba190280e554dfda085bef9fb6594c896d`. Source is 54 commits ahead of the former canonical `efaf2a51`; the final nine commits after AuditRepo PR #120 include the Pihahiroth/Ishod release lane, so Ishod browser/runtime verdicts require a fresh exact-head witness. Active source owner at capture: draft PR #680 NoteRegistry, based on `5373c9854b3f1bb767cf18c4539de82db26b7b7a`; не вмешиваться в его ветку. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_5373c985_matrix-reconciliation.md`.
+⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current source = `fc1085c805d72e6d43f58a6383c680d4e886183b`; last exact production authority = `abf1edba190280e554dfda085bef9fb6594c896d`. Source is 65 commits ahead of former canonical `efaf2a51`; the 20-commit delta after AuditRepo PR #120 includes the Pihahiroth/Ishod lane plus Wave12/search discovery work. The last 11 commits after `5373c985` do not touch the earlier Karty/Vosk/genealogy evidence-critical paths, but Ishod browser/runtime verdicts still require a fresh exact-head witness. Active source owner: draft PR #680 at `282ee9aec770b6f7c91145d39f935ea14136d29e`; не вмешиваться в его ветку. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
@@ -469,7 +469,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-02: source `5373c985`; last exact production `abf1edba`; 358 canonical = 168 closed + 190 open)
+## Статистика (обновлено 2026-08-02: source `fc1085c8`; last exact production `abf1edba`; 358 canonical = 168 closed + 190 open)
 
 | Категория | Количество |
 |---|---|
@@ -489,13 +489,13 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ## Session log (append-only)
 
-### 2026-08-02 — verifier matrix reconciliation @ source `5373c985`
-- Authority advanced from stale `efaf2a51` to exact current source `5373c9854b3f1bb767cf18c4539de82db26b7b7a` (**54 commits**, source-only; production remains `abf1edba190280e554dfda085bef9fb6594c896d`).
+### 2026-08-02 — verifier matrix reconciliation @ source `fc1085c8`
+- Authority advanced from stale `efaf2a51` to exact current source `fc1085c805d72e6d43f58a6383c680d4e886183b` (**65 commits**, source-only; production remains `abf1edba190280e554dfda085bef9fb6594c896d`).
 - Corrected canonical identity: combined noncanonical row `NEW-68/69` became two distinct closed IDs `NEW-68` and `NEW-69`; total canonical count therefore increases by **2**, not 1.
 - Moved `AR-006` from the open AUDITREPO table to closed; open AUDITREPO 4→3, total open 191→190, closed 165→168, total canonical 356→358.
 - Registered `RIGHT-4Q204-OPEN-SCHEMATIC` and `RIGHT-P72-TEXT-LINK-ONLY` as informational rights-policy evidence IDs.
 - Hardened matrix coverage against noncanonical table IDs, explicit CLOSED rows inside open sections, section/stat counter drift, and fixed the `tee`/missing-`pipefail` false-green in CI.
-- Exact rationale and source-delta boundary: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_5373c985_matrix-reconciliation.md`.
+- Exact rationale and source-delta boundary: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md`.
 
 - **2026-08-01 — source advanced to `efaf2a51`; production remains `abf1edba`.** PR #691 / `c5ae325e` established one canonical article-headline contract; exact head `6736bf98` passed 14/14 triggered workflows. PR #669 / `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` replaced the Karty literal audit count with one governed route inventory; exact head `94748bb7` passed 8/8 triggered workflows. Active source owner at capture: #680 NoteRegistry. AuditRepo PR #117 already closed `WORKFLOW-POLICY-SHADOW-ERA`; counters remain 165 closed / 191 open. No same-SHA production witness exists for current source. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-01_efaf2a51_source-vs-production.md`.
 
