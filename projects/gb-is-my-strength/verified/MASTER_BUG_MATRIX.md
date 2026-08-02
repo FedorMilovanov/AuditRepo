@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `3aba5112f0fc37712e027a1ad1d8379debe54377` (exact closure-wave V1 anchor). Fifteen source/data findings were independently reverified: eight MapEngine rows remain fixed by source PR #709 with their owner file unchanged, and seven additional rows are fixed/stale on this exact anchor. This is a finding-disposition anchor, not a production claim. |
+| Source verification anchor | `aed8ed2244ad566b0458e490f629d394122dbf95` (exact source+CI closure anchor for `NEW-VOSK-DEAD-SPLITSENTENCES`; no production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_aed8ed22_vosk-dead-split-closure.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (183)
+## ✅ ЗАКРЫТО (184)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| NEW-VOSK-DEAD-SPLITSENTENCES | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Source PR #755 removed the unused `splitSentences` definition and public export from `js/vosk-tts-core.js`; runtime chunking remains owned by `splitTtsChunks`, and a fail-closed scan found zero source call sites. Exact head `b348e22b79cf1a802b0d32098ed0a37de5d8e67b` passed Shared Files, Metadata, Deploy Candidate, Print, Visual Parity, Route Registry and Runtime Interactive workflows. Squash merge `aed8ed2244ad566b0458e490f629d394122dbf95`. Production is not claimed. | `aed8ed22` PR#755; runs `30756863997`/`30756863994`/`30756863993`/`30756863988`/`30756863991`/`30756864007`/`30756864014` |
 | ASTRO-P1-02 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Extended stage colors no longer collapse after the sixth palette entry: the shared MapEngine normalizes stage color resolution across timeline, legend, dots and layers. Source PR #709 closed the defect and its exact head passed eight triggered workflows; the owner file is unchanged through verifier anchor `3aba5112`. | `8bd891b1` |
 | ENGINE-P1-21 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Screen-to-SVG projection now models centered `preserveAspectRatio=meet` letterboxing with the effective scale and offsets. Source PR #709 closed the 1.63x ruler-coordinate error; the MapEngine owner file is unchanged through `3aba5112`. | `8bd891b1` |
 | ENGINE-P1-22 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Distance calculation now uses governed `cfg.kmPerUnit` through the canonical distance helper instead of a hardcoded `0.92` multiplier. Closed by source PR #709 and preserved through `3aba5112`. | `8bd891b1` |
@@ -356,7 +357,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NG-DARK-04 | 🆕 **Нагорная P2:** `bg-rose-50` без dark-ремапа — 26 контейнеров (13 MainShell + 13 Sections) в ch.5 остаются #fff1f2 в тёмной теме. **Подтверждено cycle 4:** `bg-rose-50` ОТСУТСТВУЕТ в blanket `.bg-*-50` группе `mobile-hotfix.css` (перечислены 14 цветов, НО НЕ rose). Решение: per-chapter `var(--ng-accent-soft)`. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §5.2 |
 | NG-DARK-05 | 🆕 **Нагорная P2:** `bg-stone-100/200` без dark-ремапа — 18 контейнеров остаются светлыми. Решение: ремап → `var(--color-surface-alt)`/`var(--color-surface-2)`. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §5.2 |
 
-## 🟢 P3 — ОТКРЫТО (49)
+## 🟢 P3 — ОТКРЫТО (48)
 | NG-VIS-04 | 🆕 **Нагорная P2 (→ NG-TABLE-01):** Табличная перегрузка — 8 секций без текстовых абзацев (ch.2/III/V/IX/X, ch.3/V/VII/VIII, ch.5/III). Только гриды/карточки/таблицы — нет «воздуха». ch.2 имеет 1.5x structured/text ratio. **Контентная правка — требует автора.** Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-TABLE-01 |
 | NG-VIS-05 | 🆕 **Нагорная P2 (→ NG-REVEAL-01):** Класс `reveal` — НЕ мёртвый: используется glossary.js для поиска `div.reveal` при гидратации. Анимации нет (и не планировалась) — только семантический маркер. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-REVEAL-01 |
 | NG-VIS-06 | 🆕 **Нагорная P2 (→ NG-FONT-01, объединён с NG-STRUCT-01):** `font-sans` на h2 только в ch.5 — объединено в NG-STRUCT-01. |
@@ -389,7 +390,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NF-SPEEDSLOT-4TH-COPY | 🆕 reverify 07-09: дедуп speed-slot 3-из-4 — `GillSeriesRail.astro:209` держит собственный inline `initGillRailSpeedSlot`, не импортит `_shared/speedSlot.ts` (как 2 мобильных бара + HermenevtikaRail). Рефактор-мелочь. verified-source |
 | NF-GATE-IZ5-STALE | 🆕 reverify 07-09 (инстанс GATE-MARKER-DATA-DRIFT): гейты хардкодят запрещённый маркер «Часть 1 из 5» (`premium-controls-rollout-audit.js:210`, `gill-v16-mobile-play-smoke.js:253`), но части теперь рендерят «из 3» → guard проходит вакуумно, пропустит будущий miscount. Fix идёт вместе с выносом счётчиков в data/. verified-source |
 | NF-STRANGLER-BAR-DRIFT | 🆕 reverify 07-09 (конкретика STRANGLER-HYGIENE): корневой legacy-HTML Гилла = старый 1-уровневый мобильный бар (`#mobTocBtn`, без `__label`) vs v4 в astro. Production-dist → не отдаётся, но дрейфует. verified-source |
-| NEW-VOSK-DEAD-SPLITSENTENCES | 🆕 reverify 07-09: мёртвый экспорт `splitSentences` (`vosk-tts-core.js:413,446`) — контроллер использует свой `splitTtsChunks`. verified-source |
 | NEW-HARDTEXTS-CSP-MISSING-HFCDN | 🆕 reverify 07-09: `hard-texts/index.astro:122` connect-src без `*.aws.cdn.hf.co` (единственный astro-файл без него из 37). Инертно — на hard-texts нет кнопки Listen; выровнять для консистентности. verified-source |
 | NG-VIS-09 | 🆕 **Нагорная P3:** «Из библиотеки» на inline-стилях вместо Tailwind — не адаптивно к тёмной теме, дублируется в 5 файлах. Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` |
 | NG-VIS-10 | 🆕 **Нагорная P3:** Библиография не использует ref-*/ref-card систему site.css (ad-hoc markup). Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` |
@@ -473,14 +473,14 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 183 |
+| Закрыто (fixed) | 184 |
 | **P0 открыто** | **0** |
 | P1 открыто | 85 |
 | P2 открыто | 34 |
-| P3 открыто | 49 |
+| P3 открыто | 48 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **175** |
+| **Всего открыто (матрица)** | **174** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-02 — Vosk dead split closure @ `aed8ed22`
+- Source PR #755 removed one dead function/export from `js/vosk-tts-core.js`; zero call sites remained.
+- Seven exact-head workflows passed; source squash merge `aed8ed2244ad566b0458e490f629d394122dbf95`.
+- Matrix moved to **184 closed / 174 open**; P3 moved **49 → 48**. No production claim.
 
 ### 2026-08-02 — fixed-source closure wave V1 @ `3aba5112`
 - Reverified 15 source/data candidates against exact source anchor `3aba5112f0fc37712e027a1ad1d8379debe54377`.
