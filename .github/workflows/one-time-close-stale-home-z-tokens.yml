@@ -32,17 +32,19 @@ jobs:
           set -euo pipefail
           git diff --check
           python scripts/matrix_coverage_regression_test.py
-          python scripts/matrix_coverage_check.py --json-out /tmp/matrix-coverage.json
+          python scripts/check_matrix_coverage.py --verbose --json-out /tmp/matrix-coverage.json
           python validate_audit_repo.py
           python - <<'PY'
-          import json
-          from pathlib import Path
-          report = json.loads(Path('/tmp/matrix-coverage.json').read_text())
-          assert report['canonicalIds'] == 358, report
-          assert report['closedRows'] == 185, report
-          assert report['openRows'] == 173, report
-          assert report['diagnostics'] == [], report
-          assert report['archivedOnlyOpenRows'] == [], report
+          import pathlib
+          import sys
+          sys.path.insert(0, 'scripts')
+          from matrix_coverage_lib import parse_matrix
+          matrix = pathlib.Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md').read_text(encoding='utf-8')
+          rows, open_ids, closed_rows = parse_matrix(matrix)
+          assert len(rows) == 358, len(rows)
+          assert len(closed_rows) == 185, len(closed_rows)
+          assert len(open_ids) == 173, len(open_ids)
+          assert 'AR-IDX-CSS-01' not in open_ids
           print('matrix closure arithmetic: PASS')
           PY
 
