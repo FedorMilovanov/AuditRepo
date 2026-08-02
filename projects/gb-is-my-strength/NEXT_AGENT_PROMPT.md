@@ -1,54 +1,38 @@
 # NEXT AGENT PROMPT — gb-is-my-strength
 
-> **Только текущая операционная правда.** Счётчики принадлежат `verified/MASTER_BUG_MATRIX.md`.
+> **Meaningful handoff only.** The matrix is a durable verified backlog, not per-commit source telemetry.
 
-**Verified product/evidence anchor:** `fc1085c805d72e6d43f58a6383c680d4e886183b`
-**Source main observed after anchor:** `92bfa45a02e53d7b735af73025a79d99ffe75b67` (final observation in this verifier pass; source movement after the durable anchor is not itself a matrix verdict)
+**Exact finding-disposition anchor:** `3aba5112f0fc37712e027a1ad1d8379debe54377`
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`
-**Deployment status:** ⚠️ verified anchor `!=` production; no post-production same-SHA witness.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_69d1e72a_third-pass-gate-hardening.md`
-**Canonical matrix:** **358 IDs = 168 closed + 190 open**.
+**Deployment status:** ⚠️ source verification `!=` production; this closure wave makes no production claim.
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`
+**Canonical matrix:** **358 IDs = 183 closed + 175 open**.
 
-## 1. Точная граница source
+## What changed
 
-- verified product/evidence anchor = `fc1085c805d72e6d43f58a6383c680d4e886183b`;
-- former canonical source `efaf2a51b1fcc7b7d3f8c9558ecb5acf849df3b3` is **65 commits behind the verified anchor**;
-- AuditRepo PR #120 merge-time anchor `8f17085dc8411cffbcb5a4dcd2f8fc5db9c30a97` is **20 commits behind the verified anchor**;
-- the first 9 commits after PR #120 add the Pihahiroth uncertainty lane and modify Ishod projection surfaces, so Ishod browser/runtime verdicts still require a fresh exact-head witness;
-- the next 11 commits up to `fc1085c8` affect Wave12/search/visual-policy files only and do not touch the earlier Karty/Vosk/genealogy evidence-critical paths;
-- source movement through `92bfa45a` includes the earlier four workflow-only commits plus eight later commits affecting feed/sitemap, Wave12/search workflows and audit/registry scripts; no Karty/Ishod data, Vosk, genealogy or matrix-evidence path changed;
-- future source movement does not silently change matrix statuses: a new status requires a new exact-head reverify;
-- active source owner: draft PR #680 at `f95948ebd3f84791e150445ed505772965e180f7`; do not modify its branch or owner files;
-- no post-`abf1edba` source merge is production without a separate same-SHA witness.
+Closure wave V1 independently reverified and closed 15 source/data findings:
 
-## 2. Last exact production
+- 11 P1 rows: `ASTRO-P1-02`, `ASTRO-P1-04`, `ENGINE-P1-21`, `ENGINE-P1-22`, `ENGINE-P1-23`, `ENGINE-P1-28`, `MAP-P1-14`, `MAP-P1-15`, `GATE-P1-02`, `COMP-P1-01`, `CSS-P1-01`;
+- 2 P2 rows: `GATE-P1-04`, `QUAL-P2-03`;
+- 2 P3 rows: `NEW-VOSK-FETCH-NO-ABORT`, `AR-AUDIT-17`.
 
-- deploy `30669840189`, attempt `1`, event `push`;
-- release SHA = control-plane SHA = `abf1edba190280e554dfda085bef9fb6594c896d`;
-- candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`;
-- release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`;
-- candidate artifact `8808656612`; generic live `8808666936`; TTS `8808667707`;
-- release ledger comment `5148074092`; physical Windows witness `5148209495`.
+Eight MapEngine rows are fixed by source PR #709 / merge `8bd891b1371d4ac2438f9026e40a9c723856556b`; their owner file is unchanged through the selected anchor. The remaining rows were directly carried forward or rechecked on `3aba5112f0fc37712e027a1ad1d8379debe54377`. Browser-only candidates were not closed.
 
-```text
-verified product/evidence anchor = fc1085c805d72e6d43f58a6383c680d4e886183b
-source main finally observed in this pass = 92bfa45a02e53d7b735af73025a79d99ffe75b67
-last exact production = abf1edba190280e554dfda085bef9fb6594c896d
-verified anchor != production
-```
+## Current counts
 
-## 3. Матрица и AuditRepo
+- P0: 0
+- P1: 85
+- P2: 34
+- P3: 49
+- Refactoring: 4
+- AuditRepo: 3
+- Total open: 175
+- Closed: 183
 
-- `NEW-68` and `NEW-69` are separate closed canonical IDs; the former slash row counted as zero IDs, so the repair adds two canonical IDs;
-- `AR-006` is closed and no longer counted in the open AUDITREPO section;
-- counters: P0 0, P1 96, P2 36, P3 51, Refactoring 4, AuditRepo 3; total open 190; closed 168;
-- rights-policy labels `RIGHT-4Q204-OPEN-SCHEMATIC` and `RIGHT-P72-TEXT-LINK-ONLY` are informational registry entries, not bugs;
-- matrix coverage is blocking and must report zero diagnostics; CI uses `pipefail`, so `check_matrix_coverage.py | tee` cannot hide a non-zero exit;
-- noncanonical table IDs, explicit closed rows in open sections, missing/duplicate section or statistics counters, per-category drift, archive-only open evidence, duplicate registry keys and unregistered reverify IDs are permanent blocking diagnostics.
+## Next meaningful work
 
-## 4. Следующий порядок
-
-1. Do not promote any post-`abf1edba` source SHA to production authority without exact same-SHA readiness → candidate → Pages/live → TTS → ledger evidence.
-2. Do not interfere with active owner PR #680.
-3. Re-run Ishod/Pihahiroth browser/runtime verification on an exact chosen source SHA before changing related matrix statuses.
-4. Keep canonical counters synchronized atomically between this file and `MASTER_BUG_MATRIX.md`.
+1. Run the expanded exact-anchor browser/runtime wave for 23 rows, including `AVRAAM-P1-04`, `A11Y-P1-01` and `QUAL-P1-04` in addition to the previous plan.
+2. Close every browser result as fixed/stale/false/duplicate or narrow it to the real residual; keep only confirmed-current findings open.
+3. Repair confirmed-current clusters in independent bounded lanes: MapEngine runtime, base geography/rivers/SVG, Karty data/schema, sheet/atlas engine, SW/media and Vosk cleanup.
+4. Do not modify active source PR #680 or manually edit `migration/route-migration-matrix.json`.
+5. Do not create an AuditRepo sync solely because source `main` moved; update only material finding/evidence/handoff facts.
