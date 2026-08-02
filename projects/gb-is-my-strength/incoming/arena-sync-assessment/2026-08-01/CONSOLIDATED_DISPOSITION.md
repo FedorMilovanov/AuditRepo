@@ -6,6 +6,8 @@
 >
 > **Машинно-читаемый полный список source/data-вердиктов по строкам Karty — [`VERIFIED_DISPOSITIONS.md`](VERIFIED_DISPOSITIONS.md)**
 > (SD-6..SD-14: ~15 FIXED-кандидатов, ~38 STILL-OPEN, ~20 browser-класс).
+> **Browser-класс:** план + reverify-скелет — `artifacts/BROWSER_REVERIFY_PLAN.md` и
+> `artifacts/CURRENT_HEAD_REVERIFY_2026-08-01_2273b8c9_karty-browser.md`.
 
 **AuditRepo HEAD:** `bc067a1cbaf33ed3cafa72cf6f4e5201056125db` (зафиксированный канон).
 **Фактический source main:** `2273b8c930eebf383d429b917d3636bc28a80bae` (PR #730; +14 коммитов к канону `efaf2a51`).

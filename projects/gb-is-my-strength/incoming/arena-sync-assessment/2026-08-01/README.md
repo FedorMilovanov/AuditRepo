@@ -80,9 +80,12 @@
 
 ## Files in this folder
 - `REPORT.md` — universal work package (sections 1–8) with full evidence.
-- `evidence/` — grep/python output backing SD-1 and SD-2.
-- `proposals/` — status/severity/repair-lane proposals.
-- `comments/` — (none)
+- `CONSOLIDATED_DISPOSITION.md` — сводная диспозиция SD-1..SD-14 для верификатора.
+- `VERIFIED_DISPOSITIONS.md` — машинно-читаемая таблица source/data-вердиктов (SD-6..SD-14).
+- `evidence/` — 20 файлов (per-finding + per-cluster).
+- `proposals/` — 15 файлов.
+- `artifacts/` — `BROWSER_REVERIFY_PLAN.md` + готовый reverify-скелет
+  `CURRENT_HEAD_REVERIFY_2026-08-01_2273b8c9_karty-browser.md` (browser-класс, ~20 строк).
 - `commands.log` — audit commands used.
 
 ## Freedom with Evidence
