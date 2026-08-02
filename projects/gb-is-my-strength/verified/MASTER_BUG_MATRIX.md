@@ -9,13 +9,13 @@
 
 | Поле | Значение |
 |---|---|
-| Source HEAD | `fc1085c805d72e6d43f58a6383c680d4e886183b` (exact source main at final verifier review; 65 commits ahead of former canonical `efaf2a51`; includes Pihahiroth/Ishod and Wave12/search discovery lanes; source-only authority, no production claim) |
-| Deploy | ⚠️ **SOURCE ≠ PRODUCTION.** Last exact production remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Current source `fc1085c805d72e6d43f58a6383c680d4e886183b` requires a new same-SHA production witness. |
+| Source verification anchor | `fc1085c805d72e6d43f58a6383c680d4e886183b` (exact product/evidence anchor verified by this transaction; former canonical `efaf2a51` is 65 commits behind this anchor). Source `main` was later observed at `f9234dbbe832d80b4d9a453ce3d2f58da832b24f` after two control-plane-only cleanup commits; those commits do not alter product or evidence-critical paths. |
+| Deploy | ⚠️ **VERIFIED SOURCE ANCHOR ≠ PRODUCTION.** Last exact production remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Anchor `fc1085c805d72e6d43f58a6383c680d4e886183b` has no same-SHA production witness. Later cleanup-only source tips do not create a production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
 | Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md` |
 
-⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current source = `fc1085c805d72e6d43f58a6383c680d4e886183b`; last exact production authority = `abf1edba190280e554dfda085bef9fb6594c896d`. Source is 65 commits ahead of former canonical `efaf2a51`; the 20-commit delta after AuditRepo PR #120 includes the Pihahiroth/Ishod lane plus Wave12/search discovery work. The last 11 commits after `5373c985` do not touch the earlier Karty/Vosk/genealogy evidence-critical paths, but Ishod browser/runtime verdicts still require a fresh exact-head witness. Active source owner: draft PR #680 at `282ee9aec770b6f7c91145d39f935ea14136d29e`; не вмешиваться в его ветку. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md`.
+⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Verified product/evidence anchor = `fc1085c805d72e6d43f58a6383c680d4e886183b`; last exact production authority = `abf1edba190280e554dfda085bef9fb6594c896d`. Source `main` was subsequently observed at `f9234dbbe832d80b4d9a453ce3d2f58da832b24f`: the two post-anchor commits only removed a completed normalization writer and pinned actions in the Pihahiroth release workflow. No product, Karty/Ishod data, Vosk, genealogy or matrix-evidence path changed, so verdicts remain anchored to `fc1085c805d72e6d43f58a6383c680d4e886183b`. Any later status change still requires a new exact-head reverify. Active source owner: draft PR #680 at `282ee9aec770b6f7c91145d39f935ea14136d29e`; не вмешиваться в его ветку. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
@@ -490,7 +490,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 ## Session log (append-only)
 
 ### 2026-08-02 — verifier matrix reconciliation @ source `fc1085c8`
-- Authority advanced from stale `efaf2a51` to exact current source `fc1085c805d72e6d43f58a6383c680d4e886183b` (**65 commits**, source-only; production remains `abf1edba190280e554dfda085bef9fb6594c896d`).
+- Verification anchor advanced from stale `efaf2a51` to exact source snapshot `fc1085c805d72e6d43f58a6383c680d4e886183b` (**65 commits**, source-only; production remains `abf1edba190280e554dfda085bef9fb6594c896d`).
 - Corrected canonical identity: combined noncanonical row `NEW-68/69` became two distinct closed IDs `NEW-68` and `NEW-69`; total canonical count therefore increases by **2**, not 1.
 - Moved `AR-006` from the open AUDITREPO table to closed; open AUDITREPO 4→3, total open 191→190, closed 165→168, total canonical 356→358.
 - Registered `RIGHT-4Q204-OPEN-SCHEMATIC` and `RIGHT-P72-TEXT-LINK-ONLY` as informational rights-policy evidence IDs.
