@@ -1,0 +1,38 @@
+# SD-14 — GATE + DRAW rows on 2273b8c9
+
+Direct source inspection on ref 2273b8c9 of validate-map-routes.js, dist-smoke-audit.js, base-geo.svg.
+
+## GATE-P1-01 — PARTIALLY FIXED
+- Claim: "maps:validate and smoke:maps pass false-greens (don't check stages, duplicate coords,
+  JS crashes, bounds)".
+- maps:validate = `node scripts/validate-map-routes.js && npm run maps:publication-status`.
+- validate-map-routes.js now checks (lines 100-135): meta.id regex, meta.era missing, meta.viewport_init
+  numeric, places/stages/stories empty, duplicate place ids (findDuplicateIds), duplicate story ids,
+  invalid coordinates, x out of SVG range (<-250 or >2200), y out of range (<-250 or >1600), stage outside
+  stages[] (for non-ctx/region), photos array, signatures (validateSignature: lampstands/sea-voyage/
+  judge-cycles/tribe-stars/ministry-light, north/south ids).
+- => stages, duplicate coords, bounds ARE now checked (the "false-green" for these classes is largely
+  addressed). JS-crashes still live in the browser smoke (smoke:maps -> map-browser-smoke.js), not in
+  validate-map-routes. So PARTIALLY FIXED: data-level gates fixed; browser JS-crash detection unchanged.
+
+## GATE-P1-04 — FIXED (source-verified)
+- Claim: "dist-smoke-audit logs polluted by network noise".
+- dist-smoke-audit.js now has ignoreLocalNoise() (lines 70-78) filtering CSP-violation-gospod-bog,
+  Failed to load resource mc.yandex, favicon; pageerror/console 'error' uses ignoreLocalNoise before
+  adding to seenErrors (lines 80, 83). Local network noise is filtered. FIXED candidate.
+
+## DRAW-P1-02 — STILL OPEN
+- base-geo.svg has 87 <path>; duplicate 'd' path attribute values: 5 (grep uniq -d). The
+  "duplicate overlay river channels -> doubled-line effect" premise is still present (5 duplicate paths).
+  STILL OPEN (browser confirm recommended).
+
+## GATE-P1-03 — needs CI run
+- No standalone `atlas:gate` npm script (only baptisty:visual-atlas:audit); atlas-label-audit.js is a
+  script but not exposed as a gating npm target by that name. "atlas:gate always red" is a CI-state
+  claim; cannot be source-verified here. Mark "needs CI/browser reverify" (browser-class).
+
+## Net
+- GATE-P1-01: PARTIALLY FIXED (data gates now strong; JS-crash gate unchanged).
+- GATE-P1-04: FIXED candidate.
+- DRAW-P1-02: STILL OPEN.
+- GATE-P1-03: browser/CI class (not source-verifiable).

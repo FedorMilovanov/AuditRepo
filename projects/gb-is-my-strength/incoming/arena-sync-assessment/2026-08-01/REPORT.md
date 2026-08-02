@@ -60,6 +60,25 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-14 — GATE + DRAW verdicts on 2273b8c9
+- **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
+- **Title:** direct source inspection of validate-map-routes.js, dist-smoke-audit.js, base-geo.svg on `2273b8c9`.
+- **Severity:** P2 (informs the reverify lane)
+- **File(s):** `scripts/validate-map-routes.js`, `scripts/dist-smoke-audit.js`, `karty/_engine/base-geo.svg` @ `2273b8c9`.
+- **Evidence:** `evidence/sd14_gate_draw.txt`.
+- **GATE-P1-01 → PARTIALLY FIXED:** validate-map-routes.js now checks meta.id/era, duplicate place/story
+  ids, coord bounds (`x<-250|x>2200`, `y<-250|y>1600`), stage outside stages[], signatures. Data-level
+  false-greens largely addressed; browser JS-crash detection unchanged.
+- **GATE-P1-04 → FIXED candidate:** dist-smoke-audit.js has `ignoreLocalNoise()` filtering
+  CSP/yandex/favicon noise.
+- **DRAW-P1-02 → STILL OPEN:** base-geo.svg has 5 duplicate `d="..."` path values (doubled river-line effect).
+- **GATE-P1-03 → browser/CI class:** no standalone `atlas:gate` npm target; needs CI/browser reverify.
+- **Confidence:** high (source where checkable).
+- **Verification level:** L1 (source); browser for GATE-P1-03/DRAW-P1-02.
+- **Suggested repair lane:** fold into batched Karty reverify (SD-7).
+
+---
+
 ### Finding SD-13 — tour / story / a11y verdicts on 2273b8c9
 - **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
 - **Title:** direct source + data inspection of tour/story/a11y rows on `2273b8c9`.
@@ -311,6 +330,7 @@ None.
 - Target bug: SD-11 → proposed severity **P2** (sheet-engine/GATE triage; 7 still-open, 1 fixed). Current: unregistered.
 - Target bug: SD-12 → proposed severity **P2** (remaining units; 6 still-open, 2 fixed, ~25 browser-class). Current: unregistered.
 - Target bug: SD-13 → proposed severity **P2** (tour/story/a11y; 4 still-open, 1 fixed). Current: unregistered.
+- Target bug: SD-14 → proposed severity **P2** (GATE/DRAW; 1 partial-fixed, 1 fixed, 1 open, 1 browser). Current: unregistered.
 
 ---
 
