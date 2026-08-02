@@ -9,13 +9,13 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `fc1085c805d72e6d43f58a6383c680d4e886183b` (exact product/evidence anchor verified by this transaction; former canonical `efaf2a51` is 65 commits behind this anchor). Source `main` was later observed at `f9234dbbe832d80b4d9a453ce3d2f58da832b24f` after two control-plane-only cleanup commits; those commits do not alter product or evidence-critical paths. |
+| Source verification anchor | `fc1085c805d72e6d43f58a6383c680d4e886183b` (durable product/evidence anchor verified by PR #121; former canonical `efaf2a51` is 65 commits behind). Source `main` is now exactly `6cfa7468e033ed44dac79b9752b127f406d33724` after four workflow/control-plane-only commits; no product or matrix-evidence path changed. |
 | Deploy | ⚠️ **VERIFIED SOURCE ANCHOR ≠ PRODUCTION.** Last exact production remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Anchor `fc1085c805d72e6d43f58a6383c680d4e886183b` has no same-SHA production witness. Later cleanup-only source tips do not create a production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_69d1e72a_third-pass-gate-hardening.md` |
 
-⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Verified product/evidence anchor = `fc1085c805d72e6d43f58a6383c680d4e886183b`; last exact production authority = `abf1edba190280e554dfda085bef9fb6594c896d`. Source `main` was subsequently observed at `f9234dbbe832d80b4d9a453ce3d2f58da832b24f`: the two post-anchor commits only removed a completed normalization writer and pinned actions in the Pihahiroth release workflow. No product, Karty/Ishod data, Vosk, genealogy or matrix-evidence path changed, so verdicts remain anchored to `fc1085c805d72e6d43f58a6383c680d4e886183b`. Any later status change still requires a new exact-head reverify. Active source owner: draft PR #680 at `282ee9aec770b6f7c91145d39f935ea14136d29e`; не вмешиваться в его ветку. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_fc1085c8_matrix-reconciliation.md`.
+⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Verified product/evidence anchor = `fc1085c805d72e6d43f58a6383c680d4e886183b`; current source `main` observed exactly at `6cfa7468e033ed44dac79b9752b127f406d33724`; last exact production authority = `abf1edba190280e554dfda085bef9fb6594c896d`. The four post-anchor commits only remove completed workflow writers and pin actions in the Pihahiroth/Wave12 release workflows. No product, Karty/Ishod data, Vosk, genealogy or matrix-evidence path changed, so verdicts remain anchored to `fc1085c805d72e6d43f58a6383c680d4e886183b`. Any later status change requires a new exact-head reverify. Active source owner: draft PR #680 at `a231a5005f92d5f1e677ea87ece8bfb6a9dc31d7`; не вмешиваться в его ветку. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_69d1e72a_third-pass-gate-hardening.md`.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
@@ -488,6 +488,14 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-02 — third independent AuditRepo gate pass @ `69d1e72a`
+- Re-read `AuditRepo/main` and source `main`: AuditRepo remained exactly `69d1e72a8b59faafe1e68bd89704cf6fb8cda424`; source remained exactly `6cfa7468e033ed44dac79b9752b127f406d33724`.
+- Preserved matrix arithmetic: **358 canonical = 168 closed + 190 open**; no status was changed without new product evidence.
+- Refreshed operational authority from the intermediate source observation to exact `6cfa7468e033ed44dac79b9752b127f406d33724` and active NoteRegistry head `a231a5005f92d5f1e677ea87ece8bfb6a9dc31d7`.
+- Hardened coverage so a canonical section cannot omit its counter, statistics rows cannot be missing/duplicated/non-numeric or drift per category, archive-only open evidence is blocking, and duplicate JSON registry keys are rejected.
+- Expanded closed-in-open detection beyond the exact emoji spelling and exposed closed-row totals in machine output.
+- Exact evidence and boundary: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_69d1e72a_third-pass-gate-hardening.md`.
 
 ### 2026-08-02 — verifier matrix reconciliation @ source `fc1085c8`
 - Verification anchor advanced from stale `efaf2a51` to exact source snapshot `fc1085c805d72e6d43f58a6383c680d4e886183b` (**65 commits**, source-only; production remains `abf1edba190280e554dfda085bef9fb6594c896d`).
