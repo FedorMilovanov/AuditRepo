@@ -52,6 +52,9 @@
 - `SD-8` — **source-verified still-open cluster on `2273b8c9` (P2):** BASE-P1-01/02, RIVER-P1-01/02/03,
   QUAL-P1-05 confirmed STILL OPEN (not fixed by PR #709); QUAL-P1-04 likely fixed (browser reverify to
   close); QUAL-P1-06 partial (timers 58→21). Fold into SD-7 reverify lane.
+- `SD-9` — **data-layer triage on `2273b8c9` (P2):** QUAL-P2-03 stale/fixed (karty routes now in
+  page-ownership); QUAL-P1-07, QUAL-P2-02, REG-P1-01 still open; DATA-P2-01 partial (avraam has paths,
+  ishod doesn't).
 - `SD-7` — **65 open Karty-cluster rows witnessed on `32ae0d7d`, 607 commits behind actual source main
   `2273b8c9` (P2):** none repair-ready per SHA-first without a fresh reverify; recommend one batched
   Karty reverify lane on `2273b8c9` (reuse SD-6 map-engine subset). **Supplementary:** +7 rows on

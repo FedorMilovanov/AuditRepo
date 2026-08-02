@@ -1,0 +1,40 @@
+# SD-9 — data-layer validation on actual HEAD 2273b8c9 (route.json / page-ownership / regions)
+
+Direct checks of live repo data at ref 2273b8c9.
+
+## QUAL-P2-03 — STALE / FIXED (karty routes NOW in page-ownership)
+- Claim: "/karty/ routes absent from migration/page-ownership.json".
+- Now: `migration/page-ownership.json` `routes` dict has 83 keys incl.
+  `/karty/`, `/karty/avraam/`, `/karty/early-church/`, `/karty/ishod/`, `/karty/maccabim/`,
+  `/karty/melachim/`, `/karty/pavel/`, `/karty/revelation/`, `/karty/shoftim/`, `/karty/shvatim/`.
+- => defect resolved since the row was written; candidate for stale/fixed-current after a reverify.
+
+## QUAL-P1-07 — STILL OPEN
+- Claim: story ids use `_` instead of `-`, breaking Ajv schema.
+- Still present on 2273b8c9:
+  - melachim: `exile_return`
+  - revelation: `first_love`
+  - early-church: `jerusalem_church`, `peter_john`, `stephen_philip`, `paul_early`
+  (ishod clean). STILL OPEN.
+
+## QUAL-P2-02 — STILL OPEN (nachalo route.json still missing required fields)
+- `karty/nachalo/route.json` top keys: meta, stages, places, ctx, verified_waypoints, publication,
+  sidenote, overlays.
+- meta keys: title, subtitle, sheet_no, sheet_viewport, position_note.
+- NO `stories`, NO `meta.id`, NO `meta.era`, NO `meta.stats`. STILL OPEN (fails Ajv as claimed).
+
+## DATA-P2-01 — PARTIAL / OPEN
+- Claim: "no curve path descriptions stages[].paths in 10 of 11 maps".
+- ishod: 6 stages, 0 with `paths`. avraam: 8 stages, 8 with `paths` (avraam fixed/rich).
+- => still broadly true (ishod and most others lack paths); keep open; avraam is an exception.
+
+## REG-P1-01 — STILL OPEN
+- `karty/shvatim/route.json` HAS `regions` (13 polygons) and `meta`.
+- `karty/_engine/map-engine.js` does NOT reference `route.regions` / `.regions` (grep: none).
+- => data present, runtime ignores regions -> 13 tribe-shvatim polygons still not rendered. STILL OPEN.
+
+## Summary
+- FIXED (candidate stale): QUAL-P2-03.
+- STILL OPEN: QUAL-P1-07, QUAL-P2-02, REG-P1-01.
+- PARTIAL: DATA-P2-01 (avraam has paths, ishod does not).
+- All fold into the batched Karty reverify lane (SD-7) / data reconciliation.

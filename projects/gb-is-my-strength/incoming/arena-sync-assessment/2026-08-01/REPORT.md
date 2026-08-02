@@ -60,6 +60,24 @@
   open section for traceability but exclude from counter, or move row to closed).
 - **Do not mix with:** product fixes.
 
+### Finding SD-9 — data-layer validation on actual HEAD 2273b8c9 (route.json / page-ownership / regions)
+- **Category:** AUDITREPO / data-sync (reverify triage on live data, not a product claim)
+- **Title:** live data checks on `2273b8c9` classify several Karty data rows as stale-fixed, still-open, or partial.
+- **Severity:** P2 (informs the reverify lane)
+- **File(s):** `migration/page-ownership.json`, `karty/*/route.json`, `karty/_engine/map-engine.js` @ `2273b8c9`.
+- **Evidence:** `evidence/sd9_data_validation.txt`.
+- **Verdicts:**
+  - **QUAL-P2-03 → STALE/FIXED candidate:** `/karty/*` routes now present in `page-ownership.json` (83 routes incl. all 10 karty).
+  - **QUAL-P1-07 → STILL OPEN:** underscore story ids persist (`exile_return`, `first_love`, `jerusalem_church`, `peter_john`, `stephen_philip`, `paul_early`).
+  - **QUAL-P2-02 → STILL OPEN:** `nachalo/route.json` still lacks `stories` / `meta.id` / `meta.era` / `meta.stats`.
+  - **DATA-P2-01 → PARTIAL:** `avraam` now has `stages[].paths` (8/8), `ishod` has none (0/6).
+  - **REG-P1-01 → STILL OPEN:** `shvatim/route.json` has 13 regions, but `map-engine.js` ignores `route.regions`.
+- **Confidence:** high (live data inspection).
+- **Verification level:** L1.
+- **Suggested repair lane:** fold into batched Karty reverify (SD-7); close QUAL-P2-03 with evidence, keep others open.
+
+---
+
 ### Finding SD-8 — source-verified "still open" Karty cluster on actual HEAD 2273b8c9
 - **Category:** AUDITREPO / data-sync (reverify triage, not a product claim)
 - **Title:** direct source inspection of `map-engine.js` + `base-geo.svg` on `2273b8c9` confirms several
@@ -215,6 +233,7 @@ None.
 - Target bug: SD-6 → proposed severity **P2** (matrix freshness; reverify-driving). Current: unregistered.
 - Target bug: SD-7 → proposed severity **P2** (matrix freshness; 65-row batched reverify). Current: unregistered.
 - Target bug: SD-8 → proposed severity **P2** (reverify triage; confirms still-open Karty cluster). Current: unregistered.
+- Target bug: SD-9 → proposed severity **P2** (data-layer triage; 1 stale-fixed, 3 still-open, 1 partial). Current: unregistered.
 
 ---
 
