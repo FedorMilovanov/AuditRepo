@@ -119,8 +119,29 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Apply deterministic matrix reconciliation
-        run: python3 scripts/_matrix_reconcile_once.py
+      - name: Correct and apply deterministic matrix reconciliation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/_matrix_reconcile_once.py')
+          text = path.read_text(encoding='utf-8')
+          old = '        r"^\\| AR-006 \\|.*\\n",\n'
+          new = '        r"^\\| AR-006 \\|.*REPORT §1 \\+ fix-verify.*\\n",\n'
+          if text.count(old) != 1:
+              raise SystemExit(f'AR-006 materializer pattern count={text.count(old)}')
+          text = text.replace(old, new, 1)
+          replacements = {
+              '- noncanonical IDs in canonical tables are blocking (`NONCANONICAL-MATRIX-ID`);': '- noncanonical IDs in canonical tables are blocking;',
+              '- an explicit CLOSED description inside an open section is blocking (`CLOSED-IN-OPEN`);': '- an explicit CLOSED description inside an open section is blocking;',
+              '- section heading and statistics drift are blocking (`SECTION-COUNT-MISMATCH`, `STAT-COUNT-MISMATCH`);': '- section heading and statistics drift are blocking;',
+          }
+          for source, target in replacements.items():
+              if text.count(source) != 1:
+                  raise SystemExit(f'reverify wording count={text.count(source)} for {source}')
+              text = text.replace(source, target, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+          python3 scripts/_matrix_reconcile_once.py
       - name: Remove all one-time materializer code
         run: |
           rm scripts/_matrix_reconcile_once.py .github/workflows/_matrix-reconcile-once.yml
