@@ -2,11 +2,11 @@
 
 > **Meaningful handoff only.** The matrix is the durable verified backlog; this file is the single writer for current source head, active owner lanes and the next executable barriers.
 
-**AuditRepo base before this handoff:** `c2ba675a155b3f03a2a46a89a9d039b8489ac489`  
+**AuditRepo base before this handoff:** `d0d74a8abd708af4f43fc363877e4c8682cc7395`  
 **Exact finding-disposition anchor:** `d69268b27bb83fe8741159da59f9c1b038d7d9b9`  
-**Current Product main:** `354039a1587854d5210324d349967e74f6b4def7`  
+**Current Product main:** `eb95261159c436a3dd9e0fb0c96b96f6d587cfe3`  
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
-**Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `354039a1`.  
+**Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `eb952611`.  
 **Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-03_d69268b2_atlas-a11y-closure.md`  
 **Canonical matrix:** **358 IDs = 189 closed + 169 open**.
 
@@ -24,16 +24,20 @@ The following Product waves are merged in `main` and must not be reimplemented:
 - `0f427b9902787b75626e38a201a2da635f9d7db5` — Home design-audit ownership and WebKit search readiness race closure;
 - `e604b97dbbe45cf9ba9e2a84551b799f0dac1a0e` — Diotrophes segmented long-page/no-JS evidence; former PR #810 is merged;
 - `1a59d4f97636f74048964d3ad57d089d790159d3` — route-level Offline/PWA contract; former PR #819 is merged;
-- `354039a1587854d5210324d349967e74f6b4def7` — final Home residual closure from PR #841. Exact PR head `4730ae6545ad5ec0e8b4225f1351b0917fa58333` passed 11/11 workflows, including Chromium/WebKit Home interaction, headed lifecycle, A13 mobile WebKit accessibility, full Runtime Interactive Audit, Visual Parity, Native Source, Route Registry, Print, Deploy Candidate and Shared Files Guard. Browser artifact `8866871085`, digest `sha256:67fe8c81802c4896efecdc28015e00e0c3138b94719d0b8457ec8fd70fccc0b0`, records the centered terminal footer and responsive Home surfaces. Every visible marginalia phrase is now click/Enter/Space/Escape interactive with ARIA-backed translation/source semantics and per-phrase fail-closed localhost assertions.
+- `354039a1587854d5210324d349967e74f6b4def7` — Home marginalia/footer residual closure from PR #841. Exact PR head `4730ae6545ad5ec0e8b4225f1351b0917fa58333` passed 11/11 workflows. Every visible marginalia phrase is click/keyboard interactive with ARIA-backed translation/source semantics; the terminal footer is centered;
+- `a1082785d8423783ba5a6561a4544b41abc8c40a` — Gill mobile Part TOC click-completion boundary from PR #843;
+- `d56a1467ba52340ac4f983874316f3c5121ef220` — bounded floating-tooltip hover transit and hit testing from PR #842;
+- `f268f83982680e1d8d8c9860d367b209ce207fe7` — Gill mobile Part TOC trigger→overlay ARIA ownership from PR #850;
+- `eb95261159c436a3dd9e0fb0c96b96f6d587cfe3` — Home sacred-name flip closure from PR #845. Exact PR head `eea184202b52e4e7401b65c1fb26931ab29a3193` passed 11/11 workflows. The Habakkuk words now perform a complete Hebrew→translation swap on click/tap, focus and fine-pointer hover; revealed translations including “Яхве” use theme ink rather than cyan; the sacred-name label is lowered; reduced-motion keeps the same semantic swap without animation. Home browser artifact `8869841024` (`home-browser-contract-30848499857`), digest `sha256:da165a0b6e9bb772d4010b66adba1cadc1e90654785cf6189658fb2937d0cdec`.
 
-These source merges do **not** change canonical AuditRepo counts by themselves. `A11Y-P1-02` and `A11Y-P1-03` have a separate active verifier transaction in AuditRepo PR #132. The Home closeout was an owner-directed product residual, not a silent matrix disposition.
+These source merges do **not** change canonical AuditRepo counts by themselves. `A11Y-P1-02` and `A11Y-P1-03` have a separate active verifier transaction in AuditRepo PR #132. The Home closures were owner-directed Product residuals, not silent matrix dispositions.
 
 ## Active canonical owner lanes
 
 ### Product repository
 
-- No open owner Product lane currently overlaps Home, Diotrophes or Offline/PWA.
-- Dependabot PR #799 is an automated Playwright patch and is not authority for product or AuditRepo dispositions.
+- PR #848 (`dependabot/playwright-1.62.1-exact-20260803`) is the only open Product lane observed at this handoff. It is a draft dependency-only two-file projection and is not authority for product or AuditRepo dispositions until synchronized with current Product main and its own exact-head fan-out passes.
+- No open Product owner lane overlaps the merged Home sacred-flip surface.
 
 ### AuditRepo
 
@@ -53,9 +57,10 @@ These source merges do **not** change canonical AuditRepo counts by themselves. 
 
 ## Next meaningful work
 
-1. Monitor exact heads before every mutation; do not reconstruct merged PR #810, #819, #833 or #841.
+1. Monitor exact heads before every mutation; do not reconstruct merged PR #810, #819, #833, #841, #842, #843, #845 or #850.
 2. Finish AuditRepo PR #132 only after its two-row disposition and canonical arithmetic pass the final exact-head validators.
-3. Obtain a separate same-SHA deployment/live witness for Product `main@354039a1587854d5210324d349967e74f6b4def7`; source and PR green are not production authority.
-4. Then reverify independent current P1 clusters against one exact source anchor. Close only fixed/stale/false/duplicate findings or narrow confirmed residuals with evidence.
-5. Preserve Single-Writer-Per-Fact: counts/statuses only in `verified/MASTER_BUG_MATRIX.md`; live source/deploy/next-step truth only here.
-6. Do not turn noncanonical visual polish or historical reports into new repair-ready matrix rows without current-head verification.
+3. Treat Product PR #848 as dependency-only and stale-base until it is synchronized to Product `main@eb95261159c436a3dd9e0fb0c96b96f6d587cfe3` or later and passes its own exact-head barrier.
+4. Obtain a separate same-SHA deployment/live witness for Product `main@eb95261159c436a3dd9e0fb0c96b96f6d587cfe3`; source and PR green are not production authority.
+5. Then reverify independent current P1 clusters against one exact source anchor. Close only fixed/stale/false/duplicate findings or narrow confirmed residuals with evidence.
+6. Preserve Single-Writer-Per-Fact: counts/statuses only in `verified/MASTER_BUG_MATRIX.md`; live source/deploy/next-step truth only here.
+7. Do not turn noncanonical visual polish or historical reports into new repair-ready matrix rows without current-head verification.
