@@ -46,17 +46,17 @@ jobs:
           path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
           lines = path.read_text(encoding='utf-8').splitlines()
           rules = {
-              '| Закрыто (fixed) |': ('187', '189'),
-              '| P1 открыто |': ('83', '81'),
-              '| Всего открыто (матрица) |': ('171', '169'),
+              'Закрыто (fixed)': ('187', '189'),
+              'P1 открыто': ('83', '81'),
+              'Всего открыто (матрица)': ('171', '169'),
           }
-          for prefix, (old, new) in rules.items():
-              indexes = [index for index, line in enumerate(lines) if line.startswith(prefix)]
+          for label, (old, new) in rules.items():
+              indexes = [index for index, line in enumerate(lines) if line.startswith('|') and label in line]
               if len(indexes) != 1:
-                  raise SystemExit(f'guard failed: {prefix} count={len(indexes)}')
+                  raise SystemExit(f'guard failed: {label} count={len(indexes)}')
               index = indexes[0]
               if lines[index].count(old) != 1:
-                  raise SystemExit(f'guard failed: {prefix} old value count={lines[index].count(old)}: {lines[index]}')
+                  raise SystemExit(f'guard failed: {label} old value count={lines[index].count(old)}: {lines[index]}')
               lines[index] = lines[index].replace(old, new, 1)
           path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
           PY
