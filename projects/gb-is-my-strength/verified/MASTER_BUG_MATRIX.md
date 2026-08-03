@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `1944eb1b5e594d2d6b5eafa5b9889bc60c9aeef5` (exact source/main browser-runtime finding witness; no production claim). |
+| Source verification anchor | `d69268b27bb83fe8741159da59f9c1b038d7d9b9` (source/main merge of PR #759; exact verified PR head `33a2380d6748da26d64eb33d84ff7e588fd6e508`; no production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-03_1944eb1b_browser-runtime-wave.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-03_d69268b2_atlas-a11y-closure.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (187)
+## ✅ ЗАКРЫТО (189)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| A11Y-P1-01 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM VERIFIED 2026-08-03.** Source PR #759 established one page-level heading owner during the visible intro lifecycle: the static page heading remains the sole H1 and the visual intro title is H2. The bounded Chromium accessibility witness run `30771541994` sampled the lifecycle and recorded `maxH1CountDuringIntro=1`; artifact `8840711226`, digest `sha256:bc92b51ebc665585b222bcb56d2298ba2523e7ae16d629f8b694ef0519f95fdc`. Final exact PR head `33a2380d6748da26d64eb33d84ff7e588fd6e508` also passed the 304-state Dossier witness, seven-viewport Reference Baseline, Static Projection, Overlay, Map Keyboard and all source gates before merge `d69268b27bb83fe8741159da59f9c1b038d7d9b9`. No production claim. | `d69268b2` PR#759; runs `30771541994`/`30779633089`/`30779633071` |
+| AVRAAM-P1-04 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM VERIFIED 2026-08-03.** The narrowed residual is repaired in source PR #759: the panel owns a `tablist`/`tab`/`tabpanel` relationship, `aria-selected` state, roving `tabindex`, locally owned Enter/Space activation and Arrow/Home/End focus navigation, so tab keys no longer fall through to global map navigation. Bounded Chromium witness run `30771541994` passed the ARIA pattern, roving focus, Enter, Space, numeric shortcut and ArrowRight while proving that the global tour did not activate. Final exact head `33a2380d6748da26d64eb33d84ff7e588fd6e508` passed Map Keyboard run `30779633059`, Dossier run `30779633089` (`304/304`, zero failures/warnings/errors) and Reference Baseline run `30779633071` before merge `d69268b27bb83fe8741159da59f9c1b038d7d9b9`. No production claim. | `d69268b2` PR#759; runs `30771541994`/`30779633059`/`30779633089` |
 | QUAL-P1-04 | ✅ **STALE-ON-CURRENT-HEAD / SOURCE+CHROMIUM VERIFIED 2026-08-03.** The historical delegated-click regression is not reproducible on exact source/main anchor `1944eb1b5e594d2d6b5eafa5b9889bc60c9aeef5`. Production-like Chromium opened the single-photo Цоар fixture through story `lot`: the visible trigger used the 320px thumbnail while `data-src` owned the 1280px source; the modal contained exactly one open instance and retained the exact `width=1280` URL both immediately and after 700 ms, with no reset to `width=320`. Exact workflow run `30769737659`; artifact `8840166904`, digest `sha256:eef8df91e454721ba6afdc29138e90420a1e0bfb2ee28323046348310214246a`. No production claim. | `1944eb1b` run `30769737659` artifact `8840166904` |
 | SHADOW-AUDIT-NARROW | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-02.** Source PR #780 replaced the manually maintained seven-route sample in `scripts/legacy-shadow-wrapper-audit.js` with an ownership-registry-derived set: every route with `owner=astro`, `status=production-dist` and a committed root HTML shadow becomes an obligation. The audit now fails on malformed ownership data, empty discovery, duplicate shadow files and stale overrides, and checks canonical ownership, required title/description/H1, committed-shadow indexability disposition, route-specific structural markers and retained reader-text ratio. Exact witness head `202b4e9a8fad64c6defa00ae1aa78349c0918ede` discovered and passed **52 routes** in production-like build run `30766785459`; the same permanent script blob was retained on clean head `019cbf2f56d9107883f390b169f92b2f70af0ae8`, which passed Metadata `30766961604` and Shared Files Guard `30766961603`. Squash merge `d23546ce177c23c14aa82de511b2b1fc7a1f8bd3`. No production claim. | `d23546ce` PR#780; runs `30766785459`/`30766785503`/`30766961604`/`30766961603` |
 | AR-IDX-CSS-01 | ✅ **STALE-ON-CURRENT-HEAD / SOURCE VERIFIED 2026-08-02.** The historical root-cause claim is obsolete: `css/site.css` now defines the shared z-index scale in `:root`, including `--z-elevated`, `--z-dropdown-high`, `--z-sticky`, `--z-bottom-bar`, `--z-tooltip-low` and `--z-toast-high`, while `css/home.css` consumes those tokens. The original inference that Home fixed/sticky layers fall back to `z-index:auto` because the tokens are absent is therefore not reproducible. This disposition does not claim that every independent stacking interaction is perfect; it closes only this canonical missing-token claim. Exact source anchor `b251c4b99265a9915881048c5fbde61f810d8c96`; the intervening NoteRegistry merge did not touch either CSS owner. No production claim. | `b251c4b9` source reverify |
@@ -222,7 +224,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (83)
+## 🟠 P1 — ОТКРЫТО (81)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -246,7 +248,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AVRAAM-P1-01 | 🆕 **Karty P1:** Primary CTA «Начать кинотур» невидим (opacity 0) 1.8 секунды после загрузки, оставаясь физически кликабельным | verified-browser (c2c339708252) |
 | AVRAAM-P1-02 | 🆕 **Karty P1:** Initial viewport Авраама сжимает кластер Ханаана (Дамаск/Дан, Содом/Беэр-Шева, Хеврон/Мамре) при пустом востоке | verified-browser (c2c339708252) |
 | AVRAAM-P1-03 | 🆕 **Karty P1:** Mobile panel Авраама дублирует навигацию (prev/next row + mobile arrows + p-elem `← ←`), квадратный share, tabs 42px | verified-browser (c2c339708252) |
-| AVRAAM-P1-04 | 🟡 **PARTIAL-STALE / NARROWED 2026-08-03:** историческая часть про обычные `<div>` и полное отсутствие клавиатуры устарела: на exact source/main `1944eb1b` вкладки — нативные `<button>`, Enter активирует сфокусированную вкладку, цифровой shortcut `2` активирует вторую. Подтверждённый остаток: контейнер без `role="tablist"`; кнопки без `role="tab"`, `aria-selected` и roving `tabindex`; Space не активирует выбранную вкладку, ArrowRight не переводит фокус между вкладками и вместо этого попадает в глобальную навигацию карты. | Chromium run `30769737659`; artifact `8840166904`; exact source `1944eb1b` |
 | AVRAAM-P1-05 | 🆕 **Karty P1:** Short landscape desktop (1024×450) блокируется оверлеем «Разверните устройство» из-за слепого media query | verified-browser (c2c339708252) |
 | KARTY-DATA-P1-01 | 🆕 **Karty P1:** Острая нехватка ручных anchors/leaders в route.json (8 из 9 engine-карт имеют лишь 0–5 анкоров) | verified-source (c2c339708252) |
 | ASTRO-P1-01 | 🆕 **Karty P1:** Начальная камера Авраама на 1-й точке уводит 18 из 19 мест за пределы видимого viewBox | verified-browser (c2c339708252) |
@@ -260,7 +261,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | ENGINE-P1-26 | 🆕 **Karty P1:** Поиск подсвечивает точки вне текущего сюжета, но не добавляет на них обработчик клика, делая их некликабельными | verified-browser (c2c339708252) |
 | ENGINE-P1-27 | 🆕 **Karty P1:** Нажатие Escape в модальном окне фотографии одновременно закрывает родительскую панель места | verified-browser (c2c339708252) |
 | ENGINE-P1-29 | 🆕 **Karty P1:** Двойной клик по маркеру принудительно приближает камеру до `w=450` без учёта границ сюжета, обрезая соседние места | verified-source (32ae0d7d) |
-| A11Y-P1-01 | 🔴 **CONFIRMED-CURRENT / CHROMIUM VERIFIED 2026-08-03:** на exact source/main `1944eb1b` MutationObserver/25ms sampling зафиксировал во время видимого интро одновременно два `<h1>`: статический `h1.sr-only` и `h1.me-intro__title`. Максимум `2`, 23 intro-samples; исторический дефект воспроизводится без двусмысленности. | Chromium run `30769737659`; artifact `8840166904`; exact source `1944eb1b` |
 | A11Y-P1-02 | 🆕 **Karty P1:** Текстовая sr-only версия Авраама расположена до интерактивной карты в порядке чтения без skip link | verified-source (32ae0d7d) |
 | A11Y-P1-03 | 🆕 **Karty P1:** Мелкий текст метаданных археологии (`rgba(154,162,174,.4)`) имеет контраст 2.15:1, не проходя WCAG AA (минимум 4.5:1) | verified-browser (c2c339708252) |
 | RIVER-P1-01 | 🆕 **Karty P1:** `#waterRipple` `feDisplacementMap scale="7"` деформирует береговую линию на ±7px, отрывая статичные устья рек (Киссон, Иордан, дельта Нила) от берега | verified-source (32ae0d7d) |
@@ -473,14 +473,14 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 187 |
+| Закрыто (fixed) | 189 |
 | **P0 открыто** | **0** |
-| P1 открыто | 83 |
+| P1 открыто | 81 |
 | P2 открыто | 34 |
 | P3 открыто | 47 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **171** |
+| **Всего открыто (матрица)** | **169** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,13 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-03 — Atlas accessibility closure @ source merge `d69268b2`
+- Source PR #759 merged exact verified head `33a2380d6748da26d64eb33d84ff7e588fd6e508` as `d69268b27bb83fe8741159da59f9c1b038d7d9b9`.
+- Closed `A11Y-P1-01`: the visible intro lifecycle now has exactly one H1; sampled Chromium witness run `30771541994` recorded `maxH1CountDuringIntro=1`.
+- Closed `AVRAAM-P1-04`: ARIA tab semantics, roving focus, Space/Enter and Arrow/Home/End ownership passed bounded accessibility and final Map Keyboard run `30779633059`.
+- Final head also passed Dossier `30779633089` (`304/304`) and Reference Baseline `30779633071` (seven viewports, zero verification failures).
+- Canonical arithmetic moved from **187 closed / 171 open** to **189 closed / 169 open**; P1 moved from **83** to **81**. No production claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-03_d69268b2_atlas-a11y-closure.md`.
 
 ### 2026-08-03 — expanded browser/runtime wave @ exact source/main `1944eb1b`
 - Production-like Chromium run `30769737659` confirmed `A11Y-P1-01`, narrowed `AVRAAM-P1-04` to the current ARIA/Space/arrow residual, and closed `QUAL-P1-04` as stale after the Цоар modal retained the 1280px full source immediately and after 700 ms.
