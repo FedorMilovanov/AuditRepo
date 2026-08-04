@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (exact Product footer-version scan: overstated `NG-VIS-12` merged into still-open owner `NG-SEO-01`; no Product mutation, source-fix or production claim). |
+| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (exact Product effective-cascade verification: `NG-BODY-01` is fixed-current; broad `NG-DARK-01` remains open pending current-residual narrowing; no browser or live-production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (212)
+## ✅ ЗАКРЫТО (213)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| NG-BODY-01 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` has the effective dark selector `html.dark body.nagornaya-page .bg-stone-100` with `background-color: var(--color-surface-muted) !important` in linked `css/nagornaya-mobile-toc.css`. A fail-closed scan found the stylesheet on every current legacy Nagornaya body surface. The historical row inspected only `mobile-hotfix.css` and missed the actual owner file. Broad `NG-DARK-01` remains open but must exclude this fixed subset. No browser or live-production claim. | `f9d01207` source |
 | NG-VIS-12 | ✅ **OVERSTATED-CURRENT + DUPLICATE / MERGED INTO `NG-SEO-01` 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` source scan found the stale `v4.0 · Апрель 2026` literal only on chapter parts 1–3, not all five. That exact 1–3 stale / 4–5 absent footer-version residual is already owned by open `NG-SEO-01`, which also retains title and Pagefind metadata drift. No Product mutation, source-fix or production claim. | `f9d01207` |
 | NG-VIS-09 | ✅ **DUPLICATE / MERGED INTO `NG-INLINE-01` 2026-08-04.** The same “Из библиотеки” inline-style implementation, dark-theme failure and five-file duplication are already owned by open P1 root `NG-INLINE-01`. Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` source scan confirmed the current repeated inline blocks. No Product mutation, source-fix or production claim. | `f9d01207` |
 | NG-VIS-11 | ✅ **DUPLICATE / MERGED INTO `NG-INLINE-01` 2026-08-04.** Hardcoded `#b8882a` and `#8a7968` are direct subsets of the exact inline palette already listed by open root `NG-INLINE-01`. Current Product source scan confirmed both values in the repeated blocks; closing the subset does not claim a fix. No Product mutation or production claim. | `f9d01207` |
@@ -247,7 +248,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (71)
+## 🟠 P1 — ОТКРЫТО (70)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -321,7 +322,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 |---|---|---|
 | BUG-PERF-001 | addEventListener без removeEventListener: 339 add / 25 remove по всем js/ (294/16 в 5 файлах) | 2 witnesses + пересчёт 07-05 |
 | NG-CSS-01 | 🆕 **Нагорная P1:** `tw.min.css` без dark-вариантов — 0 `html.dark` селекторов в 34KB Tailwind-выходе для нагорной. Все dark-ремапы живут исключительно на `!important` хаках `mobile-hotfix.css`. Архитектурная причина NG-DARK-01. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
-| NG-BODY-01 | 🆕 **Нагорная P1:** `bg-stone-100` на `<body>` не ремапится в dark — body фон остаётся светло-серым `#f5f5f4` в тёмной теме. `.bg-stone-100` (0,1,0) > `body` (0,0,1). `mobile-hotfix.css` ремапит `bg-stone-50` но **НЕ `bg-stone-100`**. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
 | GENEALOGY-ATLAS-V1-SHIPPED-NOT-PROD | 🆕 Атлас родословий v1 **в main** (AGENTS §13, `data/genealogy/v2/build/atlas-interactive.html`, owner milestone 07-14) но **не на проде** из-за PROD-STALE-DEPLOY-RED. Delivery risk, не дефект движка. | milestone intake + verified-ci |
 
 > P0/P1-класса системные находки (транзакция релиза, петля дат, SW-ключи, XSS-поверхности, Bible-корпус) ведутся в `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W6) и переносятся сюда по мере закрытия.
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 212 closed + 146 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 213 closed + 145 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 212 |
+| Закрыто (fixed) | 213 |
 | **P0 открыто** | **0** |
-| P1 открыто | 71 |
+| P1 открыто | 70 |
 | P2 открыто | 29 |
 | P3 открыто | 39 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **146** |
+| **Всего открыто (матрица)** | **145** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
