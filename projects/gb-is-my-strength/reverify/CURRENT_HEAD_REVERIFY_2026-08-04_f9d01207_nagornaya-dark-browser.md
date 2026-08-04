@@ -20,7 +20,8 @@ Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` passed the permanent ni
 The preliminary run measured all 19 source-residual tokens and reported zero meaningful browser/page/overflow errors after applying the Product repository's existing local-smoke boundary for absolute-origin CSP image noise. The refined run repeated the full matrix with a stricter semantic classifier:
 
 - ordinary and large text use WCAG thresholds `4.5:1` and `3:1`;
-- emoji-only and non-text graphics are not misclassified as ordinary text;
+- SVG and other non-text graphics use the `3:1` graphical-object boundary;
+- emoji-only elements are not misclassified as CSS-coloured ordinary text;
 - a background is a light island only above luminance `0.65` over a parent below `0.35`;
 - decorative borders are not called broken merely because they are intentionally subtle;
 - absence of a dedicated selector is never sufficient by itself.
@@ -31,17 +32,17 @@ Refined run `30908030497` recorded **36 observations, 0 meaningful errors and 18
 
 The native-dist source boundary was **19 tokens / 443 uses**. Refined Chromium confirms **9 tokens / 142 source uses** as actual dark-theme defects:
 
-| Token | Source uses | Minimum observed dark contrast | Refined failure evidence |
+| Token | Source uses | Minimum observed dark contrast | Refined semantic failure evidence |
 |---|---:|---:|---|
-| `text-blue-600` | 41 | 3.40:1 | 34 / 36 visible samples |
-| `text-rose-600` | 41 | 3.74:1 | 24 / 24 |
-| `text-purple-600` | 40 | 3.27:1 | 34 / 34 |
-| `text-purple-700` | 12 | 2.52:1 | 24 / 24 |
-| `text-teal-700` | 3 | 3.21:1 | 6 / 6 |
-| `bg-stone-200` | 2 | 1.05:1 | 4 / 4 text samples + 4 light islands |
-| `text-orange-700` | 1 | 3.40:1 | 2 / 2 |
-| `text-red-600` | 1 | 3.64:1 | 2 / 2 |
-| `text-rose-700` | 1 | 2.84:1 | 2 / 2 |
+| `text-blue-600` | 41 | 3.40:1 | 8 / 10 textual samples fail; SVG/icon colour passes 3:1 |
+| `text-rose-600` | 41 | 3.74:1 | 4 / 4 textual samples fail; emoji excluded from text scoring |
+| `text-purple-600` | 40 | 3.27:1 | 4 / 4 textual samples fail; graphics pass 3:1 |
+| `text-purple-700` | 12 | 2.52:1 | 24 / 24 textual samples fail |
+| `text-teal-700` | 3 | 3.21:1 | 6 / 6 textual samples fail |
+| `bg-stone-200` | 2 | 1.05:1 | 4 / 4 text samples fail and 4 light islands are present |
+| `text-orange-700` | 1 | 3.40:1 | 2 / 2 textual samples fail |
+| `text-red-600` | 1 | 3.64:1 | 2 / 2 textual samples fail |
+| `text-rose-700` | 1 | 2.84:1 | 2 / 2 textual samples fail |
 
 `bg-stone-200` is both a contrast failure and a confirmed light island. The other eight are text-contrast failures. This is the only accepted Product-repair boundary from this lane.
 
@@ -51,22 +52,22 @@ The remaining **10 tokens / 301 source uses** are browser-readable or effectivel
 
 | Token | Source uses | Refined Chromium verdict |
 |---|---:|---|
-| `border-stone-100` | 167 | remapped subtle decorative border |
-| `text-amber-600` | 45 | browser-readable remap |
-| `text-blue-700` | 22 | browser-readable remap |
-| `text-emerald-700` | 15 | browser-readable remap |
-| `text-emerald-600` | 14 | theme-static but readable |
-| `bg-stone-100` | 13 | effective body cascade covered |
-| `text-amber-800` | 11 | browser-readable remap |
-| `text-amber-700` | 8 | browser-readable remap |
-| `text-red-700` | 3 | browser-readable remap |
-| `text-teal-600` | 3 | theme-static but readable |
+| `border-stone-100` | 167 | remapped subtle decorative border; no text/graphic failure |
+| `text-amber-600` | 45 | browser-readable remap; minimum textual contrast 12.05:1 |
+| `text-blue-700` | 22 | browser-readable remap; minimum textual contrast 9.75:1 |
+| `text-emerald-700` | 15 | browser-readable remap; minimum textual contrast 8.92:1 |
+| `text-emerald-600` | 14 | theme-static but readable; minimum contrast 4.67:1 |
+| `bg-stone-100` | 13 | effective body cascade covered; dark body RGB `[14, 17, 22]` |
+| `text-amber-800` | 11 | browser-readable remap; minimum contrast 12.20:1 |
+| `text-amber-700` | 8 | browser-readable remap; minimum contrast 12.20:1 |
+| `text-red-700` | 3 | browser-readable remap; minimum contrast 9.27:1 |
+| `text-teal-600` | 3 | theme-static graphic colour; minimum contrast 4.70:1 |
 
 The most important corrections are:
 
 - `border-stone-100` was a false positive in the preliminary coarse classifier: refined semantics identify a theme-remapped subtle decorative border, not unreadable text or a missing structural boundary;
-- `bg-stone-100` is **effective-body-cascade-covered**. Every dark fixture renders the body on the same dark surface (`rgb(14, 17, 22)` in the preliminary computed evidence), including the three native routes whose source body class still contains `bg-stone-100`;
-- `text-emerald-600` and `text-teal-600` remain theme-static but pass the text threshold and are not repair obligations.
+- `bg-stone-100` is **effective-body-cascade-covered**. Every dark fixture renders the body on the same dark surface (`rgb(14, 17, 22)`), including the three native routes whose source body class still contains `bg-stone-100`;
+- `text-emerald-600` and `text-teal-600` remain theme-static but pass their applicable contrast boundaries and are not repair obligations.
 
 ## Canonical dispositions
 
