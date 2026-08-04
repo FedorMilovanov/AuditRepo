@@ -48,7 +48,7 @@ The historical schema mismatch is therefore not open on current head.
 
 This closure covers only the internal story/filter ID schema mismatch. It does not validate unrelated route fields, rename existing IDs, claim all Karty schema debt is closed, or establish deployment of current Product `main`.
 
-## Proposed canonical arithmetic
+## Canonical arithmetic applied by this transaction
 
 - Canonical IDs: **358**
 - Closed: **194 → 195**
