@@ -1,0 +1,100 @@
+name: Complete SEARCH-P2-08 AuditRepo closure
+
+on:
+  pull_request:
+    branches: [main]
+    types: [labeled, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: search-p2-08-auditrepo-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  reconcile:
+    if: >-
+      github.event_name == 'pull_request' &&
+      contains(github.event.pull_request.labels.*.name, 'autofix') &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'lane/search-p2-08-closure-20260805'
+    permissions:
+      contents: write
+      pull-requests: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      HEAD_REF: ${{ github.event.pull_request.head.ref }}
+    steps:
+      - name: Checkout exact closure branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Node 22.12
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+
+      - name: Validate helper syntax
+        run: python3 -m py_compile .github/tmp/search_p2_08_closure.py
+
+      - name: Apply exact three-owner SSOT transaction
+        run: python3 .github/tmp/search_p2_08_closure.py apply
+
+      - name: Prepare exact changed-path authority
+        shell: bash
+        run: |
+          changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
+          cat > "${changed_file}" <<'EOF'
+          projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+          projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b8882bf0_legacy-verse-authority-closure.md
+          projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          EOF
+          cat "${changed_file}"
+          echo "AUDITREPO_CHANGED_PATHS_FILE=${changed_file}" >> "${GITHUB_ENV}"
+
+      - name: Validate AuditRepo structure and rules
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+
+      - name: Validate matrix coverage control plane
+        run: |
+          python3 -m py_compile \
+            scripts/check_matrix_coverage.py \
+            scripts/matrix_coverage_lib.py \
+            scripts/matrix_coverage_contexts.py \
+            scripts/matrix_coverage_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p /tmp/search-p2-08-matrix-coverage
+          python3 scripts/check_matrix_coverage.py \
+            --verbose \
+            --json-out /tmp/search-p2-08-matrix-coverage/report.json
+          python3 scripts/matrix_coverage_contexts.py \
+            --json-out /tmp/search-p2-08-matrix-coverage/contexts.json \
+            --markdown-out /tmp/search-p2-08-matrix-coverage/contexts.md
+
+      - name: Run strict repository-history forensic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/repository_history_forensic_audit.mjs --strict
+
+      - name: Remove generated diagnostics
+        shell: bash
+        run: |
+          rm -f \
+            reports/repository-history-forensic-audit.json \
+            reports/repository-history-forensic-audit.md
+          find . -type d -name __pycache__ -prune -exec rm -rf {} +
+
+      - name: Self-clean and publish exact three-file head
+        run: python3 .github/tmp/search_p2_08_closure.py finalize
