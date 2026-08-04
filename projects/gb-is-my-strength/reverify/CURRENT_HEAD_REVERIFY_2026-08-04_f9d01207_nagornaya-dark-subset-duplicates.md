@@ -6,6 +6,7 @@
 - Open root owner: `NG-DARK-01`
 - Current Product anchor: `f9d0120718569c510833dba7a3abd68ce2f6a003`
 - AuditRepo base: `92bd5457c391604507147694a826791cb0c061d2`
+- AuditRepo consolidation PR: `#146`
 - Current production claim: **none**
 
 ## Current source boundary
