@@ -54,7 +54,7 @@ Source movement does **not** change canonical AuditRepo counts by itself. AuditR
 - Refactoring: 4
 - AuditRepo: 3
 - Total open: 167
-- Closed: 189
+- Closed: 191
 
 ## Next meaningful work
 
