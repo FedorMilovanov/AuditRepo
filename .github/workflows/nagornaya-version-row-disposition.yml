@@ -1,0 +1,249 @@
+name: Complete Nagornaya footer-version disposition
+
+on:
+  pull_request:
+    types: [synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  complete:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'verify/nagornaya-version-row-disposition-20260804'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout canonical verifier branch
+        uses: actions/checkout@v4
+        with:
+          ref: verify/nagornaya-version-row-disposition-20260804
+          fetch-depth: 0
+
+      - name: Checkout exact Product source
+        uses: actions/checkout@v4
+        with:
+          repository: FedorMilovanov/gb-is-my-strength
+          ref: f9d0120718569c510833dba7a3abd68ce2f6a003
+          path: _product
+          fetch-depth: 1
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify immutable bases and scan current version surface
+        shell: bash
+        run: |
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "17c84848808b63a1910b0d50c8e2553aac0ee4e4"
+          git merge-base --is-ancestor origin/main HEAD
+          test "$(git -C _product rev-parse HEAD)" = "f9d0120718569c510833dba7a3abd68ce2f6a003"
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          product = Path('_product')
+          reverify = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md')
+          literal = re.compile(r'v4\.0\s*(?:·|&middot;|&#183;)\s*Апрель 2026', re.IGNORECASE)
+          part_re = re.compile(r'(?:^|/)nagornaya/chast-([1-5])(?:/|$)')
+          matches = []
+          parts = set()
+          roots = [product / 'nagornaya', product / 'src/components/nagornaya']
+          for root in roots:
+              if not root.exists():
+                  continue
+              for path in root.rglob('*'):
+                  if not path.is_file() or path.suffix.lower() not in {'.html', '.astro', '.mdx'}:
+                      continue
+                  try:
+                      text = path.read_text(encoding='utf-8')
+                  except (OSError, UnicodeDecodeError):
+                      continue
+                  if not literal.search(text):
+                      continue
+                  rel = path.relative_to(product).as_posix()
+                  matches.append(rel)
+                  found = part_re.search(rel)
+                  if found:
+                      parts.add(found.group(1))
+
+          matches = sorted(set(matches))
+          expected = {'1', '2', '3'}
+          if parts != expected:
+              raise SystemExit(f'current footer-version part set mismatch: expected {sorted(expected)}, found {sorted(parts)}; files={matches}')
+          if not matches:
+              raise SystemExit('no current stale footer-version files found')
+
+          doc = reverify.read_text(encoding='utf-8')
+          marker = '{{CURRENT_SOURCE_SCAN}}'
+          if doc.count(marker) != 1:
+              raise SystemExit('source scan placeholder must exist exactly once')
+          inventory = [
+              f'- Exact source scan found **{len(matches)}** matching files and the chapter set **{{1, 2, 3}}**:',
+              *[f'  - `{path}`' for path in matches],
+              '- No matching source file belongs to chapter 4 or chapter 5.',
+          ]
+          reverify.write_text(doc.replace(marker, '\n'.join(inventory), 1), encoding='utf-8')
+          PY
+          rm -rf _product
+
+      - name: Apply bounded canonical transaction
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          handoff_path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          matrix = matrix_path.read_text(encoding='utf-8')
+          handoff = handoff_path.read_text(encoding='utf-8')
+
+          def replace_once(text, old, new, label):
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected one marker, found {count}')
+              return text.replace(old, new, 1)
+
+          open_row = '| NG-VIS-12 | 🆕 **Нагорная P3:** Устаревшая версия «v4.0 · Апрель 2026» в футере всех 5 частей. Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` |\n'
+          closed_row = '| NG-VIS-12 | ✅ **OVERSTATED-CURRENT + DUPLICATE / MERGED INTO `NG-SEO-01` 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` source scan found the stale `v4.0 · Апрель 2026` literal only on chapter parts 1–3, not all five. That exact 1–3 stale / 4–5 absent footer-version residual is already owned by open `NG-SEO-01`, which also retains title and Pagefind metadata drift. No Product mutation, source-fix or production claim. | `f9d01207` |\n'
+
+          matrix = replace_once(
+              matrix,
+              '| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (exact Product source scan plus verifier consolidation: `NG-VIS-09/11` merged into still-open root `NG-INLINE-01`; no Product mutation, source-fix or production claim). |',
+              '| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (exact Product footer-version scan: overstated `NG-VIS-12` merged into still-open owner `NG-SEO-01`; no Product mutation, source-fix or production claim). |',
+              'matrix source anchor',
+          )
+          matrix = replace_once(
+              matrix,
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-library-inline-duplicates.md` |',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md` |',
+              'matrix reverify',
+          )
+          matrix = replace_once(matrix, '## ✅ ЗАКРЫТО (211)', '## ✅ ЗАКРЫТО (212)', 'closed heading')
+          matrix = replace_once(
+              matrix,
+              '| ID | Описание | Коммит |\n|---|---|---|\n| NG-VIS-09 |',
+              '| ID | Описание | Коммит |\n|---|---|---|\n' + closed_row + '| NG-VIS-09 |',
+              'closed row insertion',
+          )
+          matrix = replace_once(matrix, open_row, '', 'open NG-VIS-12 row')
+          matrix = replace_once(matrix, '## 🟢 P3 — ОТКРЫТО (40)', '## 🟢 P3 — ОТКРЫТО (39)', 'P3 heading')
+          matrix = replace_once(
+              matrix,
+              '## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 211 closed + 147 open)',
+              '## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 212 closed + 146 open)',
+              'statistics narrative',
+          )
+          matrix = replace_once(matrix, '| Закрыто (fixed) | 211 |', '| Закрыто (fixed) | 212 |', 'fixed summary')
+          matrix = replace_once(matrix, '| P3 открыто | 40 |', '| P3 открыто | 39 |', 'P3 summary')
+          matrix = replace_once(
+              matrix,
+              '| **Всего открыто (матрица)** | **147** |',
+              '| **Всего открыто (матрица)** | **146** |',
+              'total-open summary',
+          )
+
+          handoff = replace_once(
+              handoff,
+              '**AuditRepo base before this handoff:** `5a5a21f09d58572f2860e2807d0e7d8454eb9aea`',
+              '**AuditRepo base before this handoff:** `17c84848808b63a1910b0d50c8e2553aac0ee4e4`',
+              'handoff AuditRepo base',
+          )
+          handoff = replace_once(
+              handoff,
+              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-library-inline-duplicates.md`',
+              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md`',
+              'handoff reverify',
+          )
+          handoff = replace_once(
+              handoff,
+              '**Canonical matrix:** **358 IDs = 211 closed + 147 open**.',
+              '**Canonical matrix:** **358 IDs = 212 closed + 146 open**.',
+              'handoff arithmetic',
+          )
+          handoff = replace_once(
+              handoff,
+              'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143–#146 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #147 merges `NG-VIS-09/11` into still-open root `NG-INLINE-01` after an exact Product source scan; it makes no Product mutation, source-fix or production claim.',
+              'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143–#147 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #149 classifies overstated `NG-VIS-12` and merges it into still-open `NG-SEO-01` after an exact Product source scan; it makes no Product mutation, source-fix or production claim.',
+              'handoff source movement',
+          )
+          handoff = replace_once(
+              handoff,
+              '- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority; `NG-DARK-01` and `NG-INLINE-01` remain open current root owners.',
+              '- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority; `NG-DARK-01`, `NG-INLINE-01` and `NG-SEO-01` remain open current root owners.',
+              'handoff Product owners',
+          )
+          handoff = replace_once(
+              handoff,
+              '- PR #147 (`verify/nagornaya-library-inline-duplicates-20260804`) is the active canonical duplicate-consolidation lane for `NG-VIS-09/11`.\n- Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.',
+              '- PR #148 (`audit/tts-deep-current-head-2026-08-04`) is a disjoint one-file incoming TTS evidence lane.\n- PR #149 (`verify/nagornaya-version-row-disposition-20260804`) is the active canonical disposition lane for `NG-VIS-12`; its final diff is bounded to the matrix, this handoff and the paired reverify document.',
+              'handoff AuditRepo owners',
+          )
+          handoff = replace_once(handoff, '- P3: 40', '- P3: 39', 'handoff P3')
+          handoff = replace_once(handoff, '- Total open: 147', '- Total open: 146', 'handoff open')
+          handoff = replace_once(handoff, '- Closed: 211', '- Closed: 212', 'handoff closed')
+          handoff = replace_once(
+              handoff,
+              '1. Merge AuditRepo PR #147 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.\n2. Keep `NG-INLINE-01` open until a bounded Product repair extracts the repeated library block; do not recreate `NG-VIS-09/11` as separate owners. Keep `NG-DARK-01` open independently.',
+              '1. Merge AuditRepo PR #149 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head; preserve disjoint PR #148.\n2. Keep `NG-SEO-01` open for its exact 1–3 stale / 4–5 absent version residual plus title/Pagefind drift; do not recreate `NG-VIS-12`. Keep `NG-INLINE-01` and `NG-DARK-01` open independently.',
+              'handoff next work',
+          )
+
+          if matrix.count('| NG-VIS-12 |') != 1:
+              raise SystemExit('NG-VIS-12 must exist exactly once after disposition')
+          if matrix.count('| NG-SEO-01 |') != 1:
+              raise SystemExit('NG-SEO-01 must remain open exactly once')
+          if '## ✅ ЗАКРЫТО (212)' not in matrix or '## 🟢 P3 — ОТКРЫТО (39)' not in matrix:
+              raise SystemExit('matrix headings were not updated')
+          if '**358 IDs = 212 closed + 146 open**' not in handoff:
+              raise SystemExit('handoff arithmetic missing')
+
+          matrix_path.write_text(matrix, encoding='utf-8')
+          handoff_path.write_text(handoff, encoding='utf-8')
+          PY
+
+      - name: Validate bounded transaction
+        shell: bash
+        run: |
+          ! grep -R '{{CURRENT_SOURCE_SCAN}}' projects/gb-is-my-strength
+          git diff --check
+          changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
+          printf '%s\n' \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            > "${changed_file}"
+          export AUDITREPO_CHANGED_PATHS_FILE="${changed_file}"
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 -m py_compile \
+            scripts/check_matrix_coverage.py \
+            scripts/matrix_coverage_lib.py \
+            scripts/matrix_coverage_contexts.py \
+            scripts/matrix_coverage_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p reports/matrix-coverage
+          python3 scripts/check_matrix_coverage.py --verbose --json-out reports/matrix-coverage/report.json
+          python3 scripts/matrix_coverage_contexts.py \
+            --json-out reports/matrix-coverage/contexts.json \
+            --markdown-out reports/matrix-coverage/contexts.md
+
+      - name: Commit canonical disposition and remove executor
+        shell: bash
+        run: |
+          rm .github/workflows/nagornaya-version-row-disposition.yml
+          rm -rf reports/matrix-coverage
+          git diff --check
+          git status --short
+          git add \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            .github/workflows/nagornaya-version-row-disposition.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "audit(gb): consolidate Nagornaya footer-version row"
+          git push origin HEAD:verify/nagornaya-version-row-disposition-20260804
