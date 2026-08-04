@@ -12,7 +12,21 @@
 
 The closure transaction performs a fail-closed scan of Product exact SHA `f9d0120718569c510833dba7a3abd68ce2f6a003`. It requires at least five current text-source files containing the “Из библиотеки” block together with inline `style=` markup and the hardcoded `#b8882a` / `#8a7968` palette. The resulting current-source inventory is inserted below before the canonical commit:
 
-{{CURRENT_SOURCE_SCAN}}
+- Exact source scan found **14** current files containing the block, inline style boundary and both hardcoded colors:
+  - `nagornaya/chast-1/index.html`
+  - `nagornaya/chast-2/index.html`
+  - `nagornaya/chast-3/index.html`
+  - `nagornaya/chast-5/index.html`
+  - `nagornaya/nakhodki/index.html`
+  - `src/components/nagornaya/chast-1/NagornayaChast1MainShell.astro`
+  - `src/components/nagornaya/chast-1/NagornayaChast1SectionX.astro`
+  - `src/components/nagornaya/chast-2/NagornayaChast2MainShell.astro`
+  - `src/components/nagornaya/chast-2/NagornayaChast2SectionX.astro`
+  - `src/components/nagornaya/chast-3/NagornayaChast3MainShell.astro`
+  - `src/components/nagornaya/chast-3/NagornayaChast3SectionX.astro`
+  - `src/components/nagornaya/chast-5/NagornayaChast5MainShell.astro`
+  - `src/components/nagornaya/chast-5/NagornayaChast5SectionX.astro`
+  - `src/components/nagornaya/nakhodki/NagornayaNakhodkiMainShell.astro`
 
 This source witness confirms that the root defect remains current. The transaction does not close or narrow `NG-INLINE-01`.
 
