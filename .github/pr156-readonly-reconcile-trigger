@@ -1,5 +1,5 @@
 run=2026-08-04T14:40Z
-main=d66f6772c8cf8b3ef6aa91176c3cc143a934f369
+main=681f11ef4c96f607774db1277d0e779ba132a48a
 search=aba0b1f43201875654d9f39b3cae0fe87e281acc
-mode=read-only-artifact
-synchronize=3
+mode=exact-tree-finalize
+synchronize=4
