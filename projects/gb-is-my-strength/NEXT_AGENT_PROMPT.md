@@ -2,12 +2,12 @@
 
 > **Meaningful handoff only.** The matrix is the durable verified backlog; this file is the single writer for current source head, active owner lanes and the next executable barriers.
 
-**AuditRepo base before this handoff:** `f59571e6690e695a7fcf5d1a4da71c33fb6401aa`
+**AuditRepo base before this handoff:** `a1ae62a06a803824d4dd828bbd06a4cead3dd1b1`
 **Exact finding-disposition anchor:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
 **Current Product main:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
 **Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `f9d01207`.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md`
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-current-residual.md`
 **Canonical matrix:** **358 IDs = 213 closed + 145 open**.
 
 ## Source convergence since the disposition anchor
@@ -35,19 +35,19 @@ The following Product waves are merged in `main` and must not be reimplemented:
 - `0fbe7d1ead9ebd1bea867418e254da438ec63329` — current Product main after subsequent independently merged lanes; this handoff uses it only as exact source-state authority and does not infer additional matrix dispositions.
 - `f9d0120718569c510833dba7a3abd68ce2f6a003` — Product PR #873 bounded `QUAL-P1-02` repair: Hebrew-capable font stack, isolated RTL token semantics, explicit Hebrew title boundaries and permanent source/Chromium witnesses; exact PR head `cf128cc429ccfa1c48fce4638b3f489f8dc27135` passed 11/11 workflows.
 
-Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141, #143–#147 and #149 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #150 closes `NG-BODY-01` as fixed-current after exact effective-cascade source verification; it makes no Product mutation, browser or live-production claim.
+Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141, #143–#147, #149 and #150 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #151 narrows `NG-DARK-01` through an exact route-linked CSS inventory; counts remain unchanged and the lane makes no Product mutation, browser, production or TTS claim.
 
 ## Active canonical owner lanes
 
 ### Product repository
 
 - Product PR #875 (`lane/system-tts-deep-audit-2026-08-04`) is an unrelated TTS diagnostic lane; it does not overlap this verifier-only Nagornaya transaction.
-- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority. `NG-BODY-01` is fixed-current; `NG-DARK-01` remains open only for a freshly narrowed residual. `NG-INLINE-01` and `NG-SEO-01` remain open current root owners.
+- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority. `NG-BODY-01` is fixed-current; `NG-DARK-01` remains open only for the generated **12-token / 327-use historically in-scope residual**. `NG-INLINE-01` and `NG-SEO-01` remain open current root owners.
 
 ### AuditRepo
 
 - PR #148 (`audit/tts-deep-current-head-2026-08-04`) is a disjoint one-file incoming TTS evidence lane.
-- PR #150 (`verify/nagornaya-body-subset-duplicate-20260804`) is the active canonical fixed-current lane for `NG-BODY-01`; its final diff is bounded to the matrix, this handoff and the paired reverify document.
+- PR #151 (`verify/nagornaya-dark-current-residual-20260804`) is the active canonical narrowing lane for `NG-DARK-01`; its final diff is bounded to the matrix, this handoff and the paired reverify document.
 
 ## Current counts
 
@@ -62,8 +62,8 @@ Source movement does **not** change canonical AuditRepo counts by itself. AuditR
 
 ## Next meaningful work
 
-1. Merge AuditRepo PR #150 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head; preserve disjoint PR #148.
-2. Reverify and narrow `NG-DARK-01` against current CSS before any Product mutation; exclude fixed `NG-BODY-01` and do not recreate it. Keep `NG-INLINE-01` and `NG-SEO-01` open independently.
+1. Merge AuditRepo PR #151 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head; preserve all disjoint lanes.
+2. Use only the generated **12-token / 327-use historical-scope `NG-DARK-01` residual** for future browser verification or a bounded Product repair; do not recreate fixed `NG-BODY-01`, promote the 37 out-of-scope ambient tokens without evidence, or restore retired duplicate wording. Keep `NG-INLINE-01` and `NG-SEO-01` open independently.
 3. `QUAL-P1-06` and narrowed `QUAL-P1-09` remain confirmed Product candidates; `QUAL-P1-02` is closed by Product PR #873 and must not be reimplemented.
 4. Narrow `MAP-P1-20` rather than closing its still-current unversioned static-resource residual.
 5. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence.
