@@ -8,6 +8,7 @@
 - Product mutation: **none**
 - Production claim: **none**
 - TTS scope: **excluded**
+- Recovery executor: **staged; canonical content remains fail-closed pending reproduced native build**
 
 {{NATIVE_DIST_INVENTORY}}
 
