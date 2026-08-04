@@ -5,6 +5,7 @@
 - AuditRepo base: `850429a299a6118db85811602fdb661b81b2296f`
 - Canonical owner: `NG-DARK-01`
 - Source boundary: native production-like dist residual from AuditRepo PR #152
+- Browser executor registration head: `62c442d19856680d7b9bf0d552d96fcc73170c31`
 - Status: **PENDING EXACT CHROMIUM EVIDENCE**
 - Product mutation: **none**
 - TTS scope: **excluded**
