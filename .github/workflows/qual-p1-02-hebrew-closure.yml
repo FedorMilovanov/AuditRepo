@@ -1,0 +1,198 @@
+name: Complete QUAL-P1-02 AuditRepo closure
+
+on:
+  pull_request:
+    types: [synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  complete:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'verify/qual-p1-02-hebrew-closure-20260804'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout canonical verifier branch
+        uses: actions/checkout@v4
+        with:
+          ref: verify/qual-p1-02-hebrew-closure-20260804
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify immutable AuditRepo base
+        shell: bash
+        run: |
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "9211b3edd7ca486c1a7457abc24ccdbf99c18d84"
+          git merge-base --is-ancestor origin/main HEAD
+
+      - name: Apply bounded canonical transaction
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          handoff_path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          matrix = matrix_path.read_text(encoding='utf-8')
+          handoff = handoff_path.read_text(encoding='utf-8')
+
+          def replace_once(text, old, new, label):
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected one marker, found {count}')
+              return text.replace(old, new, 1)
+
+          old_open_row = '| QUAL-P1-02 | 🔴 **CONFIRMED-CURRENT / CANONICAL OWNER 2026-08-04:** Динамический Hebrew tab по-прежнему использует `.hw { font-family: Georgia,"Times New Roman",serif }`, не имеет `dir="rtl"` на rendered Hebrew boundary и получает данные из `he_deep`. Один bounded Product repair должен одновременно исправить Hebrew-capable font stack и RTL semantics; font-only duplicate `FONT-P1-01` merged сюда. | current source `0fbe7d1e`; `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-hebrew-font-duplicate.md` |\n'
+          closed_row = '| QUAL-P1-02 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM+CI VERIFIED 2026-08-04.** Product PR #873 repaired the canonical dynamic Hebrew rendering root cause: `.hw` now uses a Hebrew-capable stack with isolated RTL semantics; rendered Hebrew tokens own `lang="he" dir="rtl"`; Hebrew title boundaries are explicit; Russian transliteration and explanations remain LTR. Exact PR head `cf128cc429ccfa1c48fce4638b3f489f8dc27135` passed all eleven triggered workflows, permanent source audit **44/44**, production-like Chromium `hebrew=ok`, zero browser errors and zero horizontal overflow. Squash merge `f9d0120718569c510833dba7a3abd68ce2f6a003`. No production claim. | `f9d01207` PR#873; exact `cf128cc4` |\n'
+
+          matrix = replace_once(
+              matrix,
+              '| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current verifier consolidation; three aggregate Nagornaya rows merged into still-open root owners; no Product mutation or current production claim). |',
+              '| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (`QUAL-P1-02` Hebrew font/RTL root cause fixed by Product PR #873 after exact-head source, Chromium and CI verification; no production claim). |',
+              'matrix source anchor',
+          )
+          matrix = replace_once(
+              matrix,
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-aggregate-duplicates.md` |',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_qual-p1-02-hebrew-semantics.md` |',
+              'matrix reverify',
+          )
+          matrix = replace_once(matrix, '## ✅ ЗАКРЫТО (206)', '## ✅ ЗАКРЫТО (207)', 'closed heading')
+          matrix = replace_once(
+              matrix,
+              '| ID | Описание | Коммит |\n|---|---|---|\n| NG-INLINE-02 |',
+              '| ID | Описание | Коммит |\n|---|---|---|\n' + closed_row + '| NG-INLINE-02 |',
+              'closed row insertion',
+          )
+          matrix = replace_once(matrix, old_open_row, '', 'open QUAL-P1-02 row')
+          matrix = replace_once(matrix, '## 🟠 P1 — ОТКРЫТО (72)', '## 🟠 P1 — ОТКРЫТО (71)', 'P1 heading')
+
+          handoff = replace_once(
+              handoff,
+              '**AuditRepo base before this handoff:** `1445d688e50fb5b7c997ae565e27462e4c6cc1e9`',
+              '**AuditRepo base before this handoff:** `9211b3edd7ca486c1a7457abc24ccdbf99c18d84`',
+              'handoff AuditRepo base',
+          )
+          handoff = replace_once(
+              handoff,
+              '**Exact finding-disposition anchor:** `0fbe7d1ead9ebd1bea867418e254da438ec63329`',
+              '**Exact finding-disposition anchor:** `f9d0120718569c510833dba7a3abd68ce2f6a003`',
+              'handoff disposition anchor',
+          )
+          handoff = replace_once(
+              handoff,
+              '**Current Product main:** `0fbe7d1ead9ebd1bea867418e254da438ec63329`',
+              '**Current Product main:** `f9d0120718569c510833dba7a3abd68ce2f6a003`',
+              'handoff Product main',
+          )
+          handoff = replace_once(
+              handoff,
+              '**Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `0fbe7d1e`.',
+              '**Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `f9d01207`.',
+              'handoff deployment boundary',
+          )
+          handoff = replace_once(
+              handoff,
+              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-aggregate-duplicates.md`',
+              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_qual-p1-02-hebrew-semantics.md`',
+              'handoff reverify',
+          )
+          handoff = replace_once(
+              handoff,
+              '**Canonical matrix:** **358 IDs = 206 closed + 152 open**.',
+              '**Canonical matrix:** **358 IDs = 207 closed + 151 open**.',
+              'handoff arithmetic',
+          )
+          old_product_bullet = '- `0fbe7d1ead9ebd1bea867418e254da438ec63329` — current Product main after subsequent independently merged lanes; this handoff uses it only as exact source-state authority and does not infer additional matrix dispositions.'
+          new_product_bullet = old_product_bullet + '\n- `f9d0120718569c510833dba7a3abd68ce2f6a003` — Product PR #873 bounded `QUAL-P1-02` repair: Hebrew-capable font stack, isolated RTL token semantics, explicit Hebrew title boundaries and permanent source/Chromium witnesses; exact PR head `cf128cc429ccfa1c48fce4638b3f489f8dc27135` passed 11/11 workflows.'
+          handoff = replace_once(handoff, old_product_bullet, new_product_bullet, 'Product convergence bullet')
+          handoff = replace_once(
+              handoff,
+              'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #144 merges three additional Nagornaya aggregate rows into still-open root owners; it makes no Product mutation or production claim.',
+              'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143–#144 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. Product PR #873 is merged and supplies the exact source/Chromium/CI evidence for closing `QUAL-P1-02`; AuditRepo PR #145 records only that disposition and makes no Product mutation or production claim.',
+              'handoff source movement',
+          )
+          handoff = replace_once(
+              handoff,
+              '- No open Product PR was observed at exact state capture for this transaction.\n- Product `main@0fbe7d1ead9ebd1bea867418e254da438ec63329` is source authority only; the last exact production authority remains separate.',
+              '- Product PR #875 (`lane/system-tts-deep-audit-2026-08-04`) is an unrelated TTS diagnostic lane touching `scripts/tts-engine-lifecycle-browser-test.js`; it does not overlap this Karty closure.\n- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` is source authority for `QUAL-P1-02`; the last exact production authority remains separate.',
+              'handoff Product owners',
+          )
+          handoff = replace_once(
+              handoff,
+              '- PR #144 (`verify/nagornaya-aggregate-duplicates-20260804`) is the active canonical consolidation lane for `NG-INLINE-02`, `NG-STRUCT-02` and `NG-MOBILE-01`.',
+              '- PR #145 (`verify/qual-p1-02-hebrew-closure-20260804`) is the active canonical closure lane for `QUAL-P1-02`.',
+              'handoff AuditRepo owner',
+          )
+          handoff = replace_once(handoff, '- P1: 72', '- P1: 71', 'handoff P1')
+          handoff = replace_once(handoff, '- Total open: 152', '- Total open: 151', 'handoff open')
+          handoff = replace_once(handoff, '- Closed: 206', '- Closed: 207', 'handoff closed')
+          handoff = replace_once(
+              handoff,
+              '1. Merge AuditRepo PR #144 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.\n2. Re-fetch both repositories and continue current-head harvest; keep all Nagornaya root owners open until bounded Product repairs exist.\n3. `QUAL-P1-02`, `QUAL-P1-06` and narrowed `QUAL-P1-09` remain confirmed Product candidates; do not double-count their subsets.',
+              '1. Merge AuditRepo PR #145 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.\n2. Re-fetch both repositories and continue current-head harvest; keep all Nagornaya root owners open until bounded Product repairs exist.\n3. `QUAL-P1-06` and narrowed `QUAL-P1-09` remain confirmed Product candidates; `QUAL-P1-02` is closed by Product PR #873 and must not be reimplemented.',
+              'handoff next work',
+          )
+
+          if matrix.count('| QUAL-P1-02 |') != 1:
+              raise SystemExit('QUAL-P1-02 must exist exactly once after closure')
+          if '## ✅ ЗАКРЫТО (207)' not in matrix or '## 🟠 P1 — ОТКРЫТО (71)' not in matrix:
+              raise SystemExit('matrix headings were not updated')
+          if '**358 IDs = 207 closed + 151 open**' not in handoff:
+              raise SystemExit('handoff arithmetic missing')
+
+          matrix_path.write_text(matrix, encoding='utf-8')
+          handoff_path.write_text(handoff, encoding='utf-8')
+          PY
+
+      - name: Validate bounded transaction
+        shell: bash
+        run: |
+          git diff --check
+          changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
+          printf '%s\n' \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_qual-p1-02-hebrew-semantics.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            > "${changed_file}"
+          export AUDITREPO_CHANGED_PATHS_FILE="${changed_file}"
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 -m py_compile \
+            scripts/check_matrix_coverage.py \
+            scripts/matrix_coverage_lib.py \
+            scripts/matrix_coverage_contexts.py \
+            scripts/matrix_coverage_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p reports/matrix-coverage
+          python3 scripts/check_matrix_coverage.py \
+            --verbose \
+            --json-out reports/matrix-coverage/report.json
+          python3 scripts/matrix_coverage_contexts.py \
+            --json-out reports/matrix-coverage/contexts.json \
+            --markdown-out reports/matrix-coverage/contexts.md
+
+      - name: Commit canonical closure and remove executor
+        shell: bash
+        run: |
+          rm .github/workflows/qual-p1-02-hebrew-closure.yml
+          rm -rf reports/matrix-coverage
+          git diff --check
+          git status --short
+          git add \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_qual-p1-02-hebrew-semantics.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            .github/workflows/qual-p1-02-hebrew-closure.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "audit(gb): close QUAL-P1-02 Hebrew semantics"
+          git push origin HEAD:verify/qual-p1-02-hebrew-closure-20260804
