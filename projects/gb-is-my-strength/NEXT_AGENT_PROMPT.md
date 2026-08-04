@@ -2,13 +2,13 @@
 
 > **Meaningful handoff only.** The matrix is the durable verified backlog; this file is the single writer for current source head, active owner lanes and the next executable barriers.
 
-**AuditRepo base before this handoff:** `ac44c0546c7d637455466dff34828a8c025126e4`
+**AuditRepo base before this handoff:** `1d8fb7f2e00d76010afab5d5e808bfa4cf687958`
 **Exact finding-disposition anchor:** `0fbe7d1ead9ebd1bea867418e254da438ec63329`
 **Current Product main:** `0fbe7d1ead9ebd1bea867418e254da438ec63329`
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
 **Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `0fbe7d1e`.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_editorial-projection-51.md`
-**Canonical matrix:** **358 IDs = 192 closed + 166 open**.
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_home-discovery-metadata.md`
+**Canonical matrix:** **358 IDs = 194 closed + 164 open**.
 
 ## Source convergence since the disposition anchor
 
@@ -29,9 +29,10 @@ The following Product waves are merged in `main` and must not be reimplemented:
 - `d56a1467ba52340ac4f983874316f3c5121ef220` — bounded floating-tooltip hover transit and hit testing from PR #842;
 - `f268f83982680e1d8d8c9860d367b209ce207fe7` — Gill mobile Part TOC trigger→overlay ARIA ownership from PR #850;
 - `eb95261159c436a3dd9e0fb0c96b96f6d587cfe3` — Home sacred-name flip closure from PR #845. Exact PR head `eea184202b52e4e7401b65c1fb26931ab29a3193` passed 11/11 workflows. The Habakkuk words now perform a complete Hebrew→translation swap on click/tap, focus and fine-pointer hover; revealed translations including “Яхве” use theme ink rather than cyan; the sacred-name label is lowered; reduced-motion keeps the same semantic swap without animation. Home browser artifact `8869841024` (`home-browser-contract-30848499857`), digest `sha256:da165a0b6e9bb772d4010b66adba1cadc1e90654785cf6189658fb2937d0cdec`.
+- `0131f8b9d6c717f85a8990700b72b09b575219a4` — Home discovery metadata parity from PR #675: canonical `ru`/`x-default` alternates, complete WebSite SearchAction and permanent production-like assertions;
 - `0fbe7d1ead9ebd1bea867418e254da438ec63329` — current Product main after subsequent independently merged lanes; this handoff uses it only as exact source-state authority and does not infer additional matrix dispositions.
 
-Source movement does **not** change canonical AuditRepo counts by itself. PR #132 is merged and its two Avraam dispositions remain bounded. AuditRepo PR #136 applies one additional current-head closure: `EDITORIAL-PROJECTION-51-DRIFT` is fixed by Product PR #442 and retained by the approval-gated editorial metadata architecture at `0fbe7d1e`. Historical deployment evidence for `f7e42699` does not establish current production.
+Source movement does **not** change canonical AuditRepo counts by itself. PR #132 and PR #136 are merged and their dispositions remain bounded. AuditRepo PR #137 applies two additional current-head closures: `AR-IDX-01` and `AR-IDX-02` are fixed by Product PR #675 and retained with permanent Home discovery assertions at `0fbe7d1e`. No current production claim is made.
 
 ## Active canonical owner lanes
 
@@ -42,23 +43,23 @@ Source movement does **not** change canonical AuditRepo counts by itself. PR #13
 
 ### AuditRepo
 
-- PR #136 (`verify/editorial-projection-51-closure-20260804`) is the active canonical closure lane for `EDITORIAL-PROJECTION-51-DRIFT`.
+- PR #137 (`verify/home-discovery-metadata-closure-20260804`) is the active canonical closure lane for `AR-IDX-01` and `AR-IDX-02`.
 - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
 
 ## Current counts
 
 - P0: 0
-- P1: 78
+- P1: 76
 - P2: 34
 - P3: 47
 - Refactoring: 4
 - AuditRepo: 3
-- Total open: 166
-- Closed: 192
+- Total open: 164
+- Closed: 194
 
 ## Next meaningful work
 
-1. Merge AuditRepo PR #136 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
+1. Merge AuditRepo PR #137 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
 2. Re-fetch both repositories and continue the current-head harvest before opening any Product repair lane.
 3. Obtain a separate same-SHA deployment/live witness when making a production claim; source/PR green at `0fbe7d1e` is not production authority.
 4. Preserve Single-Writer-Per-Fact: counts/statuses only in `verified/MASTER_BUG_MATRIX.md`; current source/deploy/next-step truth only here.

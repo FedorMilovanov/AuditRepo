@@ -55,7 +55,7 @@ Later Home waves changed the component blob but retained the repaired discovery 
 
 This closure covers only homepage hreflang parity and the WebSite SearchAction contract. It does not claim Google will display a search box, approve unrelated homepage SEO findings, or establish deployment of current Product `main`.
 
-## Proposed canonical arithmetic
+## Canonical arithmetic applied by this transaction
 
 - Canonical IDs: **358**
 - Closed: **192 → 194**

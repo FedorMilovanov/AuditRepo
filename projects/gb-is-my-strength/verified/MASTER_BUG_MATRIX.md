@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; fixed implementation merge `f7e426996fd41a23ca720299a8ef1ce7f1c0952f`; exact green preservation/workflow head `7de20ed77e60ec05bb91322ac03800a3d9860410`; no current production claim). |
+| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; Home discovery implementation merge `0131f8b9d6c717f85a8990700b72b09b575219a4`; exact green PR head `404db8d14087d29522e56f190717d6224e8e3bfb`; no current production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_editorial-projection-51.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_home-discovery-metadata.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (192)
+## ✅ ЗАКРЫТО (194)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| AR-IDX-01 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #675 restored canonical Home alternates for `hreflang="ru"` and `hreflang="x-default"`, both targeting `https://gospod-bog.ru/`, and added parsed production-like assertions. Exact PR head `404db8d14087d29522e56f190717d6224e8e3bfb` merged as `0131f8b9d6c717f85a8990700b72b09b575219a4` after nine green workflows. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains both links and the fail-closed assertions. No current production claim. | `0131f8b9` PR#675; current `0fbe7d1e` |
+| AR-IDX-02 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #675 restored WebSite `SearchAction`, the canonical `https://gospod-bog.ru/?q={search_term_string}` EntryPoint and `required name=search_term_string`, with permanent production-like assertions. Exact PR head `404db8d14087d29522e56f190717d6224e8e3bfb` merged as `0131f8b9d6c717f85a8990700b72b09b575219a4` after nine green workflows. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains the complete contract. No current production claim. | `0131f8b9` PR#675; current `0fbe7d1e` |
 | EDITORIAL-PROJECTION-51-DRIFT | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #442 restored exactly 27 unauthorized `editorialPublishedAt` changes while retaining all 51 proven RSS/Search projection observations, review statuses, modification dates, provenance and source boundary. It added permanent preservation and frozen/observed diff contracts; issue #217 closed in merge `f7e426996fd41a23ca720299a8ef1ce7f1c0952f`. At current Product anchor `0fbe7d1ead9ebd1bea867418e254da438ec63329`, workflow blob `00caeeaecff5a70d22ccbfa1263aefd5ef637640` and preservation-test blob `0c7a733df4c6b661fdffd377e7f0d5b4c3bc9708` are identical to exact green head `7de20ed77e60ec05bb91322ac03800a3d9860410`, where Editorial Metadata v3 run `30679631914` succeeded. Historical same-SHA deployment witness `30300756799` belongs to `f7e42699`; no current production claim. | `f7e42699` PR#442; run `30679631914`; current `0fbe7d1e` |
 | A11Y-P1-02 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM VERIFIED 2026-08-03.** Source PR #812 added one route-owned focus-reveal skip link before the full sr-only projection and targets the programmatically focusable `#stage` owner. Exact Chromium Dossier run `30807589787` on verified head `3bd7f8a47bab65f08de45d81707cff2f6233cc55` proved first-Tab focus, visible `295.125 × 44` geometry, native activation to `#stage` with hash synchronization, `tabindex="-1"`, and `304/304` expected states; artifact `8853648893`, digest `sha256:54653a134572f2c6885168dacb938c9213c687d0425f7c5ec497876bdd9d7522`. Squash merge `778a218d9e6dc4c051721fc0f0fe56ee9125c797`. No production claim. | `778a218d` PR#812; run `30807589787`; artifact `8853648893` |
 | A11Y-P1-03 | ✅ **STALE-ON-CURRENT-HEAD / SOURCE+CHROMIUM VERIFIED 2026-08-03.** The historical `2.15:1` archaeology-metadata contrast claim is not reproducible on the exact verified source head. The browser-composited Dossier witness sampled `1208` instances through ancestor backgrounds: minimum `5.084:1`, maximum `7.351:1`, invalid samples `0`, against the WCAG AA `4.5:1` threshold. Exact run `30807589787`, artifact `8853648893`, digest `sha256:54653a134572f2c6885168dacb938c9213c687d0425f7c5ec497876bdd9d7522`; source merge `778a218d9e6dc4c051721fc0f0fe56ee9125c797`. This closes only the canonical `2.15:1` claim; no all-route or production claim. | `778a218d` PR#812; run `30807589787`; artifact `8853648893` |
@@ -227,7 +229,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (78)
+## 🟠 P1 — ОТКРЫТО (76)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -308,8 +310,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NG-CSS-01 | 🆕 **Нагорная P1:** `tw.min.css` без dark-вариантов — 0 `html.dark` селекторов в 34KB Tailwind-выходе для нагорной. Все dark-ремапы живут исключительно на `!important` хаках `mobile-hotfix.css`. Архитектурная причина NG-DARK-01. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
 | NG-BODY-01 | 🆕 **Нагорная P1:** `bg-stone-100` на `<body>` не ремапится в dark — body фон остаётся светло-серым `#f5f5f4` в тёмной теме. `.bg-stone-100` (0,1,0) > `body` (0,0,1). `mobile-hotfix.css` ремапит `bg-stone-50` но **НЕ `bg-stone-100`**. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
 | GENEALOGY-ATLAS-V1-SHIPPED-NOT-PROD | 🆕 Атлас родословий v1 **в main** (AGENTS §13, `data/genealogy/v2/build/atlas-interactive.html`, owner milestone 07-14) но **не на проде** из-за PROD-STALE-DEPLOY-RED. Delivery risk, не дефект движка. | milestone intake + verified-ci |
-| AR-IDX-01 | **hreflang alternate теги отсутствуют в Astro HomePageHead** — legacy содержит `<link rel="alternate" hreflang="ru">` и `x-default`, Astro потерял. SEO-регрессия. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-01) |
-| AR-IDX-02 | **SearchAction отсутствует в JSON-LD WebSite** — legacy содержит `potentialAction`, Astro потерял. Google Site Search Box в выдаче не появится. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-02) |
 
 > P0/P1-класса системные находки (транзакция релиза, петля дат, SW-ключи, XSS-поверхности, Bible-корпус) ведутся в `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W6) и переносятся сюда по мере закрытия.
 >
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 192 closed + 166 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 194 closed + 164 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 192 |
+| Закрыто (fixed) | 194 |
 | **P0 открыто** | **0** |
-| P1 открыто | 78 |
+| P1 открыто | 76 |
 | P2 открыто | 34 |
 | P3 открыто | 47 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **166** |
+| **Всего открыто (матрица)** | **164** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-04 — Home discovery metadata parity closure @ current source `0fbe7d1e`
+- Closed `AR-IDX-01` and `AR-IDX-02` as FIXED-CURRENT.
+- Product PR #675 / merge `0131f8b9d6c717f85a8990700b72b09b575219a4` restored both Home hreflang alternates and the complete WebSite SearchAction contract.
+- Exact Product head `404db8d14087d29522e56f190717d6224e8e3bfb` passed nine triggered workflows; current source retains the repaired metadata and permanent production-like assertions.
+- Canonical arithmetic moved from **192 closed / 166 open** to **194 closed / 164 open**; P1 moved from **78** to **76**. No current production claim.
 
 ### 2026-08-04 — editorial projection-only drift closure @ current source `0fbe7d1e`
 - Closed `EDITORIAL-PROJECTION-51-DRIFT` as FIXED-CURRENT and architecture-superseded.
