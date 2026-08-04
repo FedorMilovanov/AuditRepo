@@ -81,6 +81,8 @@ The authoritative source residual is **19 tokens / 443 uses**:
 
 Missing direct coverage is still a source-level obligation, not proof of a visual contrast failure. Future browser verification must operate on native production-like output and classify the 19-token set before Product mutation.
 
+Closed cross-reference rows are aligned to the same authority: `NG-DARK-04` remains a covered duplicate; `NG-DARK-05` keeps current `bg-stone-100/200` only under root `NG-DARK-01`; `NG-MOBILE-01` points its body subset to that root rather than treating closed `NG-BODY-01` as a second open owner.
+
 ## Evidence boundary
 
 - exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003`;
