@@ -1,82 +1,88 @@
-# CURRENT HEAD REVERIFY — Nagornaya dark-theme browser/computed-style verification
+# CURRENT HEAD REVERIFY — Nagornaya dark-theme refined browser disposition
 
 - Date: 2026-08-04
 - Product anchor: `f9d0120718569c510833dba7a3abd68ce2f6a003`
 - AuditRepo base: `850429a299a6118db85811602fdb661b81b2296f`
 - Browser evidence lane: AuditRepo PR #153
-- Exact workflow run: `30907436765`
+- Preliminary Chromium run: `30907436765`
+- Refined authority run: `30908030497`
+- Refined artifact: `8892026949`
+- Artifact digest: `sha256:ff3896b0c208b4e385552dd2b1646149b1e441de3fb495cb7d9f08d7697c0b43`
 - Canonical owner: `NG-DARK-01`
-- Input boundary: 19 tokens / 443 uses from native production-like dist
 - Product mutation: **none**
 - TTS scope: **excluded**
 - Production claim: **none**
 
-## Method
+## Authority and method
 
-The exact Product SHA passed the permanent nine-route native Astro contract and `strangler:build:production-like`. Headless Chromium then loaded all nine built routes at desktop `1440×900` and mobile `390×844`, in explicit light and dark themes: **36 independent route/theme/viewport observations**.
+Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` passed the permanent nine-route native Astro contract and `strangler:build:production-like`. Chromium loaded all nine native built routes at desktop `1440×900` and mobile `390×844`, in explicit light and dark themes: **36 / 36 route-theme-viewport observations**.
 
-For every visible element carrying one of the 19 source-residual utility tokens, the harness recorded computed foreground/background/border values, effective ancestor background, body surface, light-vs-dark property changes and WCAG contrast. Normal text used a `4.5:1` threshold; large/bold text used `3:1`. Borders were only classified as near-invisible below the deliberately conservative `1.3:1` threshold. A light background was classified as a light island only when its luminance exceeded `0.65` over a parent below `0.35`.
+The preliminary run measured all 19 source-residual tokens and reported zero meaningful browser/page/overflow errors after applying the Product repository's existing local-smoke boundary for absolute-origin CSP image noise. The refined run repeated the full matrix with a stricter semantic classifier:
 
-Missing a dedicated selector was **not** treated as a browser defect by itself.
+- ordinary and large text use WCAG thresholds `4.5:1` and `3:1`;
+- emoji-only and non-text graphics are not misclassified as ordinary text;
+- a background is a light island only above luminance `0.65` over a parent below `0.35`;
+- decorative borders are not called broken merely because they are intentionally subtle;
+- absence of a dedicated selector is never sufficient by itself.
 
-## Harness integrity
+Refined run `30908030497` recorded **36 observations, 0 meaningful errors and 184 explicitly classified local CSP-noise messages**. Artifact `8892026949` preserves the complete machine evidence (`sha256:ff3896b0c208b4e385552dd2b1646149b1e441de3fb495cb7d9f08d7697c0b43`).
 
-- Observations: **36 / 36**.
-- Browser/page/overflow errors: **0**.
-- Verdict distribution: `browser-readable`=6, `confirmed-near-invisible-border`=1, `confirmed-text-contrast-failure`=9, `effective-body-cascade-covered`=1, `theme-static-but-readable`=2.
-- Confirmed browser failures: `border-stone-100`, `text-blue-600`, `text-rose-600`, `text-purple-600`, `text-purple-700`, `text-teal-700`, `bg-stone-200`, `text-orange-700`, `text-red-600`, `text-rose-700`.
-- Browser-readable/effective tokens: `text-amber-600`, `text-blue-700`, `text-emerald-700`, `text-emerald-600`, `bg-stone-100`, `text-amber-800`, `text-amber-700`, `text-red-700`, `text-teal-600`.
-- Not visible in dark fixtures: none.
+## Canonical browser-confirmed residual
 
-## Token-level results
+The native-dist source boundary was **19 tokens / 443 uses**. Refined Chromium confirms **9 tokens / 142 source uses** as actual dark-theme defects:
 
-| Token | Browser verdict | Dark visible samples | Min dark text contrast | Dark text failures | Min dark border contrast | Dark light-islands | Property changes across theme |
-|---|---|---:|---:|---:|---:|---:|---|
-| `border-stone-100` | confirmed-near-invisible-border | 334 | — | 0 | 1.17 | 0 | yes |
-| `text-amber-600` | browser-readable | 90 | 12.05 | 0 | — | 0 | yes |
-| `text-blue-600` | confirmed-text-contrast-failure | 36 | 3.40 | 34 | — | 0 | no |
-| `text-rose-600` | confirmed-text-contrast-failure | 24 | 3.74 | 24 | — | 0 | no |
-| `text-purple-600` | confirmed-text-contrast-failure | 34 | 3.27 | 34 | — | 0 | no |
-| `text-blue-700` | browser-readable | 44 | 9.75 | 0 | — | 0 | yes |
-| `text-emerald-700` | browser-readable | 30 | 8.92 | 0 | — | 0 | yes |
-| `text-emerald-600` | theme-static-but-readable | 28 | 4.67 | 0 | — | 0 | no |
-| `bg-stone-100` | effective-body-cascade-covered | 26 | 13.39 | 0 | — | 0 | yes |
-| `text-purple-700` | confirmed-text-contrast-failure | 24 | 2.52 | 24 | — | 0 | no |
-| `text-amber-800` | browser-readable | 22 | 12.20 | 0 | — | 0 | yes |
-| `text-amber-700` | browser-readable | 16 | 12.20 | 0 | — | 0 | yes |
-| `text-red-700` | browser-readable | 6 | 9.27 | 0 | — | 0 | yes |
-| `text-teal-600` | theme-static-but-readable | 6 | 4.70 | 0 | — | 0 | no |
-| `text-teal-700` | confirmed-text-contrast-failure | 6 | 3.21 | 6 | — | 0 | no |
-| `bg-stone-200` | confirmed-text-contrast-failure | 4 | 1.05 | 4 | — | 4 | no |
-| `text-orange-700` | confirmed-text-contrast-failure | 2 | 3.40 | 2 | — | 0 | no |
-| `text-red-600` | confirmed-text-contrast-failure | 2 | 3.64 | 2 | — | 0 | no |
-| `text-rose-700` | confirmed-text-contrast-failure | 2 | 2.84 | 2 | — | 0 | no |
+| Token | Source uses | Minimum observed dark contrast | Refined failure evidence |
+|---|---:|---:|---|
+| `text-blue-600` | 41 | 3.40:1 | 34 / 36 visible samples |
+| `text-rose-600` | 41 | 3.74:1 | 24 / 24 |
+| `text-purple-600` | 40 | 3.27:1 | 34 / 34 |
+| `text-purple-700` | 12 | 2.52:1 | 24 / 24 |
+| `text-teal-700` | 3 | 3.21:1 | 6 / 6 |
+| `bg-stone-200` | 2 | 1.05:1 | 4 / 4 text samples + 4 light islands |
+| `text-orange-700` | 1 | 3.40:1 | 2 / 2 |
+| `text-red-600` | 1 | 3.64:1 | 2 / 2 |
+| `text-rose-700` | 1 | 2.84:1 | 2 / 2 |
 
-## Dark body surfaces
+`bg-stone-200` is both a contrast failure and a confirmed light island. The other eight are text-contrast failures. This is the only accepted Product-repair boundary from this lane.
 
-| Route | Viewport | Computed background | RGB | Luminance |
-|---|---|---|---|---:|
-| `/nagornaya/` | desktop | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/chast-1/` | desktop | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/chast-2/` | desktop | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/chast-3/` | desktop | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/chast-4/` | desktop | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/chast-5/` | desktop | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/seriya/` | desktop | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/istochniki/` | desktop | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/nakhodki/` | desktop | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/` | mobile | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/chast-1/` | mobile | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/chast-2/` | mobile | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/chast-3/` | mobile | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/chast-4/` | mobile | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/chast-5/` | mobile | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/seriya/` | mobile | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/istochniki/` | mobile | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
-| `/nagornaya/nakhodki/` | mobile | `composite(rgb(14, 17, 22),white-fallback)` | [14, 17, 22] | 0.006 |
+## Removed from the repair boundary
+
+The remaining **10 tokens / 301 source uses** are browser-readable or effectively governed by the current cascade:
+
+| Token | Source uses | Refined Chromium verdict |
+|---|---:|---|
+| `border-stone-100` | 167 | remapped subtle decorative border |
+| `text-amber-600` | 45 | browser-readable remap |
+| `text-blue-700` | 22 | browser-readable remap |
+| `text-emerald-700` | 15 | browser-readable remap |
+| `text-emerald-600` | 14 | theme-static but readable |
+| `bg-stone-100` | 13 | effective body cascade covered |
+| `text-amber-800` | 11 | browser-readable remap |
+| `text-amber-700` | 8 | browser-readable remap |
+| `text-red-700` | 3 | browser-readable remap |
+| `text-teal-600` | 3 | theme-static but readable |
+
+The most important corrections are:
+
+- `border-stone-100` was a false positive in the preliminary coarse classifier: refined semantics identify a theme-remapped subtle decorative border, not unreadable text or a missing structural boundary;
+- `bg-stone-100` is **effective-body-cascade-covered**. Every dark fixture renders the body on the same dark surface (`rgb(14, 17, 22)` in the preliminary computed evidence), including the three native routes whose source body class still contains `bg-stone-100`;
+- `text-emerald-600` and `text-teal-600` remain theme-static but pass the text threshold and are not repair obligations.
+
+## Canonical dispositions
+
+`NG-DARK-01` remains **OPEN / CURRENT**, narrowed to **9 browser-confirmed tokens / 142 source uses**: `text-blue-600` (41×), `text-rose-600` (41×), `text-purple-600` (40×), `text-purple-700` (12×), `text-teal-700` (3×), `bg-stone-200` (2×), `text-orange-700` (1×), `text-red-600` (1×), `text-rose-700` (1×).
+
+`NG-BODY-01` is a stale visual subset and remains closed as duplicate/merged into the root history: native source still contains three `bg-stone-100` body owners, but Chromium proves the effective dark body cascade is correct.
+
+`NG-DARK-05` remains a closed duplicate: `bg-stone-100` is removed from the repair boundary, while `bg-stone-200` remains represented only by open root `NG-DARK-01`.
+
+`NG-MOBILE-01` remains a closed aggregate duplicate: its body subset is browser-effective; independent `NG-TOC-01` and `NG-A11Y-01` owners remain unchanged.
 
 ## Evidence boundary
 
-This is browser/computed-style evidence on production-like native output, not a Product repair or live-production witness. The raw machine evidence is attached to workflow run `30907436765` as artifact `nagornaya-dark-browser-evidence`.
-
-Canonical matrix and handoff are intentionally unchanged in this first pass. The next commit must manually review these measurements, distinguish confirmed failures from readable/static design choices, and only then narrow or preserve `NG-DARK-01`.
+- exact source and native production-like build only;
+- Chromium computed-style evidence at two viewports and two themes;
+- no Product mutation;
+- no deployed-SHA or live-production claim;
+- no TTS inspection or modification;
+- canonical arithmetic remains **358 = 213 closed + 145 open**, P1 **70**.

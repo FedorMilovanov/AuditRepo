@@ -2,12 +2,12 @@
 
 > **Meaningful handoff only.** The matrix is the durable verified backlog; this file is the single writer for current source head, active owner lanes and the next executable barriers.
 
-**AuditRepo base before this handoff:** `0142b93de01160b77eda71cb9fd2f72fd8a4fbdc`
+**AuditRepo base before this handoff:** `850429a299a6118db85811602fdb661b81b2296f`
 **Exact finding-disposition anchor:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
 **Current Product main:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
 **Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `f9d01207`.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md`
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-browser.md`
 **Canonical matrix:** **358 IDs = 213 closed + 145 open**.
 
 ## Source convergence since the disposition anchor
@@ -35,19 +35,19 @@ The following Product waves are merged in `main` and must not be reimplemented:
 - `0fbe7d1ead9ebd1bea867418e254da438ec63329` — current Product main after subsequent independently merged lanes; this handoff uses it only as exact source-state authority and does not infer additional matrix dispositions.
 - `f9d0120718569c510833dba7a3abd68ce2f6a003` — Product PR #873 bounded `QUAL-P1-02` repair: Hebrew-capable font stack, isolated RTL token semantics, explicit Hebrew title boundaries and permanent source/Chromium witnesses; exact PR head `cf128cc429ccfa1c48fce4638b3f489f8dc27135` passed 11/11 workflows.
 
-Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141, #143–#147 and #149–#151 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #152 corrects `NG-DARK-01` authority from legacy shadows to native production-like dist; counts remain unchanged and the lane makes no Product mutation, browser, production or TTS claim.
+Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PR #152 is merged and established native-dist source authority. AuditRepo PR #153 adds refined Chromium truth and narrows `NG-DARK-01` to 9 browser-confirmed tokens / 142 uses; counts remain unchanged. Neither lane mutates Product, touches TTS, or claims production.
 
 ## Active canonical owner lanes
 
 ### Product repository
 
 - Product PR #875 (`lane/system-tts-deep-audit-2026-08-04`) is an unrelated TTS diagnostic lane; it does not overlap this verifier-only Nagornaya transaction.
-- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority. Native production-like dist, not legacy shadows, owns `NG-DARK-01`: 19 historical-scope tokens / 443 uses lack complete direct dark coverage. `NG-BODY-01` is current on three built body routes but remains closed only as duplicate/merged into this root. `NG-INLINE-01` and `NG-SEO-01` remain open independently.
+- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority. Refined Chromium owns the current `NG-DARK-01` acceptance boundary: **9 tokens / 142 source uses**. `NG-BODY-01` is browser-effective/stale; `NG-INLINE-01` and `NG-SEO-01` remain open independently.
 
 ### AuditRepo
 
 - PR #148 (`audit/tts-deep-current-head-2026-08-04`) is a disjoint one-file incoming TTS evidence lane.
-- PR #152 (`verify/nagornaya-dark-native-dist-authority-20260804`) is the active authority-correction lane for `NG-DARK-01`; its final diff is bounded to the matrix, this handoff and the paired reverify document.
+- PR #153 (`verify/nagornaya-dark-browser-computed-20260804`) is the active browser-disposition lane; final scope is matrix, handoff and paired reverify only. PR #152 is merged source-authority history.
 
 ## Current counts
 
@@ -62,8 +62,8 @@ Source movement does **not** change canonical AuditRepo counts by itself. AuditR
 
 ## Next meaningful work
 
-1. Merge AuditRepo PR #152 only after exact-head validator, matrix coverage and repository-history forensic checks pass; preserve disjoint lanes.
-2. Use only the native production-like dist residual (19 tokens / 443 uses) for future browser verification, including the three current `bg-stone-100` body routes owned under `NG-DARK-01`; do not repair from PR #150/#151 legacy authority claims.
+1. Merge AuditRepo PR #153 only after exact-head validator, matrix coverage and repository-history forensic checks pass; preserve disjoint lanes.
+2. Future Product repair must target only the refined Chromium residual: **9 tokens / 142 uses**. Do not repair `border-stone-100`, `bg-stone-100` or the eight other browser-readable tokens removed from scope.
 3. `QUAL-P1-06` and narrowed `QUAL-P1-09` remain confirmed Product candidates; `QUAL-P1-02` is closed by Product PR #873 and must not be reimplemented.
 4. Narrow `MAP-P1-20` rather than closing its still-current unversioned static-resource residual.
 5. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence.
