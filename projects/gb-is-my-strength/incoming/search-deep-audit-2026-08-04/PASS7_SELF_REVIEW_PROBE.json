@@ -1,0 +1,632 @@
+{
+  "generatedAt": "2026-08-04T13:27:59.495Z",
+  "checks": [
+    {
+      "id": "M-SEARCH-P1-01",
+      "name": "SEARCH-P1-01 present exactly once in matrix",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hits=1"
+    },
+    {
+      "id": "M-SEARCH-P1-03",
+      "name": "SEARCH-P1-03 present exactly once in matrix",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hits=1"
+    },
+    {
+      "id": "M-SEARCH-P1-04",
+      "name": "SEARCH-P1-04 present exactly once in matrix",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hits=1"
+    },
+    {
+      "id": "M-SEARCH-P2-07",
+      "name": "SEARCH-P2-07 present exactly once in matrix",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hits=1"
+    },
+    {
+      "id": "M-SEARCH-P2-08",
+      "name": "SEARCH-P2-08 present exactly once in matrix",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hits=1"
+    },
+    {
+      "id": "M-SEARCH-P2-09",
+      "name": "SEARCH-P2-09 present exactly once in matrix",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hits=1"
+    },
+    {
+      "id": "M-SEARCH-P2-10",
+      "name": "SEARCH-P2-10 present exactly once in matrix",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hits=1"
+    },
+    {
+      "id": "M-SEARCH-P2-11",
+      "name": "SEARCH-P2-11 present exactly once in matrix",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hits=1"
+    },
+    {
+      "id": "M-SEARCH-P2-12",
+      "name": "SEARCH-P2-12 present exactly once in matrix",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hits=1"
+    },
+    {
+      "id": "M-SEARCH-P3-01",
+      "name": "SEARCH-P3-01 present exactly once in matrix",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hits=1"
+    },
+    {
+      "id": "M-SEARCH-P3-02",
+      "name": "SEARCH-P3-02 present exactly once in matrix",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hits=1"
+    },
+    {
+      "id": "M-SEARCH-P3-03",
+      "name": "SEARCH-P3-03 present exactly once in matrix",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hits=1"
+    },
+    {
+      "id": "E-SEARCH-P1-01-pass2",
+      "name": "SEARCH-P1-01 evidence file pass2 exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS2_DEEPENING.md"
+    },
+    {
+      "id": "E-SEARCH-P1-01-pass2json",
+      "name": "SEARCH-P1-01 evidence file pass2json exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS2_PROBE.json"
+    },
+    {
+      "id": "E-SEARCH-P1-01-revScript",
+      "name": "SEARCH-P1-01 evidence file revScript exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md"
+    },
+    {
+      "id": "E-SEARCH-P1-03-pass3",
+      "name": "SEARCH-P1-03 evidence file pass3 exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md"
+    },
+    {
+      "id": "E-SEARCH-P1-03-pass3json",
+      "name": "SEARCH-P1-03 evidence file pass3json exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/SCRIPTURE_SEARCH_PROBE.json"
+    },
+    {
+      "id": "E-SEARCH-P1-03-revScript",
+      "name": "SEARCH-P1-03 evidence file revScript exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md"
+    },
+    {
+      "id": "E-SEARCH-P1-04-pass3",
+      "name": "SEARCH-P1-04 evidence file pass3 exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md"
+    },
+    {
+      "id": "E-SEARCH-P1-04-pass3json",
+      "name": "SEARCH-P1-04 evidence file pass3json exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/SCRIPTURE_SEARCH_PROBE.json"
+    },
+    {
+      "id": "E-SEARCH-P1-04-revScript",
+      "name": "SEARCH-P1-04 evidence file revScript exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md"
+    },
+    {
+      "id": "E-SEARCH-P2-07-pass3",
+      "name": "SEARCH-P2-07 evidence file pass3 exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md"
+    },
+    {
+      "id": "E-SEARCH-P2-07-pass3json",
+      "name": "SEARCH-P2-07 evidence file pass3json exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/SCRIPTURE_SEARCH_PROBE.json"
+    },
+    {
+      "id": "E-SEARCH-P2-07-revScript",
+      "name": "SEARCH-P2-07 evidence file revScript exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md"
+    },
+    {
+      "id": "E-SEARCH-P2-08-pass3",
+      "name": "SEARCH-P2-08 evidence file pass3 exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md"
+    },
+    {
+      "id": "E-SEARCH-P2-08-pass3json",
+      "name": "SEARCH-P2-08 evidence file pass3json exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/SCRIPTURE_SEARCH_PROBE.json"
+    },
+    {
+      "id": "E-SEARCH-P2-08-revScript",
+      "name": "SEARCH-P2-08 evidence file revScript exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md"
+    },
+    {
+      "id": "E-SEARCH-P2-09-pass4",
+      "name": "SEARCH-P2-09 evidence file pass4 exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS4_SEARCH_CONTRACT_A11Y.md"
+    },
+    {
+      "id": "E-SEARCH-P2-09-pass4json",
+      "name": "SEARCH-P2-09 evidence file pass4json exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS4_CONTRACT_PROBE.json"
+    },
+    {
+      "id": "E-SEARCH-P2-09-revA11y",
+      "name": "SEARCH-P2-09 evidence file revA11y exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-contract-a11y.md"
+    },
+    {
+      "id": "E-SEARCH-P2-10-pass4",
+      "name": "SEARCH-P2-10 evidence file pass4 exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS4_SEARCH_CONTRACT_A11Y.md"
+    },
+    {
+      "id": "E-SEARCH-P2-10-pass4json",
+      "name": "SEARCH-P2-10 evidence file pass4json exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS4_CONTRACT_PROBE.json"
+    },
+    {
+      "id": "E-SEARCH-P2-10-revA11y",
+      "name": "SEARCH-P2-10 evidence file revA11y exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-contract-a11y.md"
+    },
+    {
+      "id": "E-SEARCH-P2-11-pass5",
+      "name": "SEARCH-P2-11 evidence file pass5 exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS5_PREMIUM_NATIVE_AUDIT.md"
+    },
+    {
+      "id": "E-SEARCH-P2-11-pass5json",
+      "name": "SEARCH-P2-11 evidence file pass5json exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS5_PREMIUM_NATIVE_PROBE.json"
+    },
+    {
+      "id": "E-SEARCH-P2-11-revPremium",
+      "name": "SEARCH-P2-11 evidence file revPremium exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-premium-native.md"
+    },
+    {
+      "id": "E-SEARCH-P2-12-pass5",
+      "name": "SEARCH-P2-12 evidence file pass5 exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS5_PREMIUM_NATIVE_AUDIT.md"
+    },
+    {
+      "id": "E-SEARCH-P2-12-pass5json",
+      "name": "SEARCH-P2-12 evidence file pass5json exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS5_PREMIUM_NATIVE_PROBE.json"
+    },
+    {
+      "id": "E-SEARCH-P2-12-revPremium",
+      "name": "SEARCH-P2-12 evidence file revPremium exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-premium-native.md"
+    },
+    {
+      "id": "E-SEARCH-P3-01-pass6",
+      "name": "SEARCH-P3-01 evidence file pass6 exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md"
+    },
+    {
+      "id": "E-SEARCH-P3-01-pass6json",
+      "name": "SEARCH-P3-01 evidence file pass6json exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_PROBE.json"
+    },
+    {
+      "id": "E-SEARCH-P3-01-revPolish",
+      "name": "SEARCH-P3-01 evidence file revPolish exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-polish-discovery.md"
+    },
+    {
+      "id": "E-SEARCH-P3-02-pass6",
+      "name": "SEARCH-P3-02 evidence file pass6 exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md"
+    },
+    {
+      "id": "E-SEARCH-P3-02-pass6json",
+      "name": "SEARCH-P3-02 evidence file pass6json exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_PROBE.json"
+    },
+    {
+      "id": "E-SEARCH-P3-02-revPolish",
+      "name": "SEARCH-P3-02 evidence file revPolish exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-polish-discovery.md"
+    },
+    {
+      "id": "E-SEARCH-P3-03-pass6",
+      "name": "SEARCH-P3-03 evidence file pass6 exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md"
+    },
+    {
+      "id": "E-SEARCH-P3-03-pass6json",
+      "name": "SEARCH-P3-03 evidence file pass6json exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_PROBE.json"
+    },
+    {
+      "id": "E-SEARCH-P3-03-revPolish",
+      "name": "SEARCH-P3-03 evidence file revPolish exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-polish-discovery.md"
+    },
+    {
+      "id": "J-pass2json",
+      "name": "pass2json parses JSON",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "ok"
+    },
+    {
+      "id": "J-pass3json",
+      "name": "pass3json parses JSON",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "ok"
+    },
+    {
+      "id": "J-pass4json",
+      "name": "pass4json parses JSON",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "ok"
+    },
+    {
+      "id": "J-pass5json",
+      "name": "pass5json parses JSON",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "ok"
+    },
+    {
+      "id": "JT-pass5json",
+      "name": "pass5json has checks totals",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "{\"checks\":71,\"passed\":54,\"failed\":16,\"warnings\":1}"
+    },
+    {
+      "id": "J-pass6json",
+      "name": "pass6json parses JSON",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "ok"
+    },
+    {
+      "id": "JT-pass6json",
+      "name": "pass6json has checks totals",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "{\"checks\":58,\"passed\":43,\"failed\":11,\"warnings\":0}"
+    },
+    {
+      "id": "COUNT-P5-50",
+      "name": "pass5 has >=50 checks",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "71"
+    },
+    {
+      "id": "COUNT-P6-50",
+      "name": "pass6 has >=50 checks",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "58"
+    },
+    {
+      "id": "C-P1 открыто",
+      "name": "P1 открыто count matches",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "73"
+    },
+    {
+      "id": "C-P2 открыто",
+      "name": "P2 открыто count matches",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "35"
+    },
+    {
+      "id": "C-P3 открыто",
+      "name": "P3 открыто count matches",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "42"
+    },
+    {
+      "id": "C-Всего открыто",
+      "name": "Всего открыто count matches",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "157"
+    },
+    {
+      "id": "C-canonical",
+      "name": "canonical total statement updated",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "370 statement"
+    },
+    {
+      "id": "N-count",
+      "name": "NEXT_AGENT_PROMPT count updated",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "next counts"
+    },
+    {
+      "id": "RISK-prod-claim",
+      "name": "no unsupported prod-claim overclaim",
+      "pass": true,
+      "severity": "fail",
+      "evidence": "negative/no-claim wording only"
+    },
+    {
+      "id": "RISK-browser-pixel-claim",
+      "name": "no unsupported browser-pixel-claim overclaim",
+      "pass": true,
+      "severity": "fail",
+      "evidence": "negative/no-claim wording only"
+    },
+    {
+      "id": "RISK-all-verses-definitive",
+      "name": "no unsupported all-verses-definitive overclaim",
+      "pass": true,
+      "severity": "fail",
+      "evidence": ""
+    },
+    {
+      "id": "RISK-malware-clean-absolute",
+      "name": "no unsupported malware-clean-absolute overclaim",
+      "pass": true,
+      "severity": "fail",
+      "evidence": ""
+    },
+    {
+      "id": "BOUND-no-prod",
+      "name": "reports explicitly avoid production claim",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "bounded"
+    },
+    {
+      "id": "BOUND-browser",
+      "name": "reports mention browser limitation",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "browser limitation"
+    },
+    {
+      "id": "SEV-SEARCH-P3-01",
+      "name": "SEARCH-P3-01 is only P3",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "manual section check"
+    },
+    {
+      "id": "SEV-SEARCH-P3-02",
+      "name": "SEARCH-P3-02 is only P3",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "manual section check"
+    },
+    {
+      "id": "SEV-SEARCH-P3-03",
+      "name": "SEARCH-P3-03 is only P3",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "manual section check"
+    },
+    {
+      "id": "EC-P1-01-routes",
+      "name": "SEARCH-P1-01 routes in evidence",
+      "pass": true,
+      "severity": "pass",
+      "evidence": ""
+    },
+    {
+      "id": "EC-P1-03-in316",
+      "name": "SEARCH-P1-03 Ин 3:16 in evidence",
+      "pass": true,
+      "severity": "pass",
+      "evidence": ""
+    },
+    {
+      "id": "EC-P1-04-1026",
+      "name": "SEARCH-P1-04 1026 refs in evidence",
+      "pass": true,
+      "severity": "pass",
+      "evidence": ""
+    },
+    {
+      "id": "EC-P2-07-300",
+      "name": "SEARCH-P2-07 300 records in evidence",
+      "pass": true,
+      "severity": "pass",
+      "evidence": ""
+    },
+    {
+      "id": "EC-P2-08-94",
+      "name": "SEARCH-P2-08 legacy 94 refs in evidence",
+      "pass": true,
+      "severity": "pass",
+      "evidence": ""
+    },
+    {
+      "id": "EC-P2-09-q",
+      "name": "SEARCH-P2-09 SearchAction in evidence",
+      "pass": true,
+      "severity": "pass",
+      "evidence": ""
+    },
+    {
+      "id": "EC-P2-10-aria",
+      "name": "SEARCH-P2-10 aria evidence",
+      "pass": true,
+      "severity": "pass",
+      "evidence": ""
+    },
+    {
+      "id": "EC-P2-11-top",
+      "name": "SEARCH-P2-11 top-layer evidence",
+      "pass": true,
+      "severity": "pass",
+      "evidence": ""
+    },
+    {
+      "id": "EC-P2-12-touch",
+      "name": "SEARCH-P2-12 32px evidence",
+      "pass": true,
+      "severity": "pass",
+      "evidence": ""
+    },
+    {
+      "id": "EC-P3-01-labels",
+      "name": "SEARCH-P3-01 labels evidence",
+      "pass": true,
+      "severity": "pass",
+      "evidence": ""
+    },
+    {
+      "id": "EC-P3-02-slice",
+      "name": "SEARCH-P3-02 slice evidence",
+      "pass": true,
+      "severity": "pass",
+      "evidence": ""
+    },
+    {
+      "id": "EC-P3-03-copy",
+      "name": "SEARCH-P3-03 copy evidence",
+      "pass": true,
+      "severity": "pass",
+      "evidence": ""
+    },
+    {
+      "id": "BR-SEARCH-P1-01",
+      "name": "SEARCH-P1-01 browser limitation documented",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "witness matrix"
+    },
+    {
+      "id": "BR-SEARCH-P2-10",
+      "name": "SEARCH-P2-10 browser limitation documented",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "witness matrix"
+    },
+    {
+      "id": "BR-SEARCH-P2-11",
+      "name": "SEARCH-P2-11 browser limitation documented",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "witness matrix"
+    },
+    {
+      "id": "BR-SEARCH-P2-12",
+      "name": "SEARCH-P2-12 browser limitation documented",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "witness matrix"
+    }
+  ],
+  "passed": 88,
+  "failed": 0,
+  "review": {
+    "demotionsRecommended": 0,
+    "wordingCorrectionsRecommended": 1,
+    "notes": [
+      "No matrix count changes recommended by self-review",
+      "Several rows are source/dist confirmed but require browser witnesses for Product closure",
+      "SEARCH-P2-11 is a top-layer risk/source-contract finding, not a proven visual collision in browser"
+    ]
+  }
+}
