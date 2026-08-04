@@ -31,7 +31,7 @@ The aggregate row double-counts those existing owners and has no separately boun
 
 This transaction leaves `NG-INLINE-01`, `NG-STRUCT-01`, `NG-BODY-01`, `NG-TOC-01` and `NG-A11Y-01` open. It performs no Product mutation and makes no production claim.
 
-## Proposed canonical arithmetic
+## Canonical arithmetic applied by this transaction
 
 - Canonical IDs: **358**
 - Closed: **203 → 206**

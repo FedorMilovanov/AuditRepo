@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; Nagornaya semantic-marker false positive and three duplicate visual rows consolidated into open root owners; no Product mutation or current production claim). |
+| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current verifier consolidation; three aggregate Nagornaya rows merged into still-open root owners; no Product mutation or current production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-duplicates.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-aggregate-duplicates.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,13 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (203)
+## ✅ ЗАКРЫТО (206)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| NG-INLINE-02 | ✅ **DUPLICATE / MERGED INTO `NG-INLINE-01` 2026-08-04.** The measured 172 inline `style=` attributes refine the same five-copy “Из библиотеки” inline-style architecture already owned by open P1 root `NG-INLINE-01`; they do not establish another independently repairable cause. No Product mutation or production claim. | `0fbe7d1e` |
+| NG-STRUCT-02 | ✅ **DUPLICATE / MERGED INTO `NG-STRUCT-01` 2026-08-04.** Bare headings, missing wrappers, emoji/SVG drift and the chapter-five `font-sans` subset are already contained by open P1 structural owner `NG-STRUCT-01`. Closing the duplicate does not close the root defect. No Product mutation or production claim. | `0fbe7d1e` |
+| NG-MOBILE-01 | ✅ **AGGREGATE DUPLICATE / MERGED 2026-08-04.** This row contains no independent mobile root cause: body `bg-stone-100` remap is owned by open `NG-BODY-01`; chapter-specific TOC accent by open `NG-TOC-01`; inline hero height/adaptivity by open `NG-A11Y-01`. All owners remain open. No Product mutation or production claim. | `0fbe7d1e` |
 | NG-VIS-05 | ✅ **FALSE-POSITIVE / INTENTIONAL SEMANTIC MARKER 2026-08-04.** Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` explicitly includes `div.reveal` in `js/glossary.js` `proseSelectors`; the class is consumed as a glossary-hydration prose boundary. The canonical row itself states that reveal animation was not planned. Missing animation is therefore not a defect, and removing the marker would weaken the runtime contract. No Product mutation or production claim. | `0fbe7d1e` |
 | NG-VIS-06 | ✅ **DUPLICATE / MERGED INTO `NG-STRUCT-01` 2026-08-04.** The chapter-five `font-sans` heading inconsistency is already a stated subset of open root owner `NG-STRUCT-01`, which covers the same structural/heading regression. Closing this duplicate does not close the root defect. No Product mutation or production claim. | `0fbe7d1e` |
 | NG-VIS-07 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01` 2026-08-04.** Loss of chapter colour identity in dark mode is a manifestation of the same missing per-chapter variable/remap architecture owned by open root finding `NG-DARK-01`. No Product mutation or production claim. | `0fbe7d1e` |
@@ -320,7 +323,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (33)
+## 🟡 P2 — ОТКРЫТО (31)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -350,9 +353,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | D-21 | Глоссарий: dual renderer — `o()` innerHTML vs `l()` textContent → литеральный `<em>` в серверных тултипах; innerHTML из JSON = XSS-поверхность (W5) | arena cycle3 + fable: js/glossary.js, data/glossary.json (55 `<em>`) |
 | ATLAS-D-NAMESPACE-COLLISION | Атлас-трек в `working/atlas/DEBT-REGISTER.md` переиспользует ID D-16..D-19 под визуальные баги листа Авраама, тогда как в матрице эти ID значат SW-baseline/dep. timeout/title-drift. Нужно переименовать в неймспейс `ATLAS-D-*` (или `AV-*`), чтобы не ломать автоматизацию и верификацию. | `incoming/arena-auditor-2026-07-14/2026-07-14/REPORT.md` §1 (ATLAS-D-16-19-NAMESPACE-COLLISION) |
 | NG-DEAD-01 | 🆕 **Нагорная P2:** 15 мёртвых Astro-компонентов (HeaderHero/ArticleBody/PostContent × 5 глав) — ни один не импортируется, артефакты Astro-экстракции. ~450+ строк мёртвого кода. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
-| NG-INLINE-02 | 🆕 **Нагорная P2:** 172 inline `style=` атрибута (19-20 в «Из библиотеки» × 5 + hero + author + bibliography) — не адаптивны к dark, не переопределяются без `!important`. Уточнение NG-INLINE-01. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
 | NG-SEO-01 | 🆕 **Нагорная P2:** SEO-мета несогласованность: (1) `<title>` ≠ `og:title>` — разные формулировки на всех 5 частях; (2) ch.4/5 не имеют `data-pagefind-meta="scripture"`; (3) ch.1/2/3: устаревшая версия «v4.0 · Апрель 2026» в футере, ch.4/5 — без строки версии. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
-| NG-STRUCT-02 | 🆕 **Нагорная P2:** Структурная несогласованность секций — ch.1 имеет SVG иконки + group wrapper + subtitles, ch.2–5 регресс: bare `<h2>` без wrapper, emoji вместо SVG (19 секций), `font-sans` только на 4/10 секций ch.5. Уточнение NG-STRUCT-01. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
 | AR-IDX-JS-02 | **Theme toggle пишет в 3 разных localStorage ключа**: анти-FOUC читает `'theme'` ✓, Astro inline пишет в `'theme'` ✓, `site.js` пишет в `SiteUtils.themeKey` (undefined → `"undefined"`) ✗. Темная тема не сохраняется между сессиями. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-JS-02) |
 | AR-IDX-PERF-01 | **LCP image `decoding="async"`** (надо sync для LCP) + **5 render-blocking CSS** + 12 images (10 lazy). Core Web Vitals. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-PERF-01) |
 | AR-IDX-PERF-02 | **30+ @font-face для INDEX, половина не используется**: Source Sans 3, Noto Sans Greek, Noto Serif Greek не нужны на главной (~450-1500 KB). | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-PERF-02) |
@@ -362,7 +363,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NG-DARK-04 | 🆕 **Нагорная P2:** `bg-rose-50` без dark-ремапа — 26 контейнеров (13 MainShell + 13 Sections) в ch.5 остаются #fff1f2 в тёмной теме. **Подтверждено cycle 4:** `bg-rose-50` ОТСУТСТВУЕТ в blanket `.bg-*-50` группе `mobile-hotfix.css` (перечислены 14 цветов, НО НЕ rose). Решение: per-chapter `var(--ng-accent-soft)`. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §5.2 |
 | NG-DARK-05 | 🆕 **Нагорная P2:** `bg-stone-100/200` без dark-ремапа — 18 контейнеров остаются светлыми. Решение: ремап → `var(--color-surface-alt)`/`var(--color-surface-2)`. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §5.2 |
 
-## 🟢 P3 — ОТКРЫТО (43)
+## 🟢 P3 — ОТКРЫТО (42)
 | NG-VIS-04 | 🆕 **Нагорная P2 (→ NG-TABLE-01):** Табличная перегрузка — 8 секций без текстовых абзацев (ch.2/III/V/IX/X, ch.3/V/VII/VIII, ch.5/III). Только гриды/карточки/таблицы — нет «воздуха». ch.2 имеет 1.5x structured/text ratio. **Контентная правка — требует автора.** Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-TABLE-01 |
 
 | ID | Описание |
@@ -380,7 +381,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NG-CROSS-01 | 🆕 **Нагорная P3:** Кросс-главные цветовые утечки — 20+ экземпляров не-акцентных цветов: ch.2 text-purple-800 (Ipsissima vox), ch.4 text-emerald-700 ×8 (Concursus таблица), ch.5 text-blue-*/bg-emerald-*. Не ломает визуал сейчас, но затрудняет миграцию на CSS vars. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §2.2 |
 | NG-SERIYA-01 | 🆕 **Нагорная P3:** Seriya page без `bg-stone-100` на `<body>` — единственная из 9 nagornaya-страниц без него (есть `nagornaya-series-page`). Нужен `data-chapter` для CSS vars. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §8 |
 | NG-A11Y-01 | 🆕 **Нагорная P3:** Emoji вместо SVG иконок (18 секций: 10 ch.2 + 8 ch.5) — рендеринг зависит от ОС, не масштабируется; ch.2 секция VIII использует `#` вместо emoji; inline hero height `style="height:320px"` не адаптивен. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §4.3 |
-| NG-MOBILE-01 | 🆕 **Нагорная P3:** Мобильные dark-проблемы: body bg-stone-100 не ремапится (→ NG-BODY-01), TOC accent-number без chapter-specific цвета (→ NG-TOC-01), hero image inline height. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §8 |
 | STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |
 | D-3 | 🔄 reverify 07-14 (pass 4): JS total **469101** > 365000 (было 375041 — вырос ~94КБ на atlas/TTS/mobile); **CSS-бюджет БОЛЬШЕ НЕ в норме** — Core CSS **554013** > 425000 (см. NEW-CSS-BUDGET-01). Оба — ⚠️ warning (не блокируют деплой). `audit-pro.js` |
 | D-4 | Magic z-index: `floating-cluster.css:2372/2447/2504/2697/2882`, `mobile-hotfix.css:129` — hardcoded `2102 !important`/`9999 !important` вместо `var(--z-max)`. ⚠️ `--z-*` токены **НЕ ОПРЕДЕЛЕНЫ** в проекте (см. AR-IDX-CSS-01 P1) — фикс D-4 требует определить токены сначала, потом заменить hardcoded. (⚠️ PremiumControls in-flight — согласовать) |
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 203 closed + 155 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 206 closed + 152 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 203 |
+| Закрыто (fixed) | 206 |
 | **P0 открыто** | **0** |
 | P1 открыто | 72 |
-| P2 открыто | 33 |
-| P3 открыто | 43 |
+| P2 открыто | 31 |
+| P3 открыто | 42 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **155** |
+| **Всего открыто (матрица)** | **152** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,13 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-04 — Nagornaya aggregate duplicate consolidation @ current source `0fbe7d1e`
+- Closed `NG-INLINE-02` as DUPLICATE/MERGED into open root owner `NG-INLINE-01`.
+- Closed `NG-STRUCT-02` as DUPLICATE/MERGED into open root owner `NG-STRUCT-01`.
+- Closed `NG-MOBILE-01` as an aggregate duplicate of open owners `NG-BODY-01`, `NG-TOC-01` and `NG-A11Y-01`.
+- All five root owners remain open and no Product repair is claimed.
+- Canonical arithmetic moved from **203 closed / 155 open** to **206 closed / 152 open**; P2 moved **33→31**, P3 **43→42**. No Product mutation or production claim.
 
 ### 2026-08-04 — Nagornaya visual duplicate/false-positive consolidation @ current source `0fbe7d1e`
 - Closed `NG-VIS-05` as FALSE-POSITIVE: current `glossary.js` consumes `div.reveal` as a semantic prose selector and no animation was intended.
