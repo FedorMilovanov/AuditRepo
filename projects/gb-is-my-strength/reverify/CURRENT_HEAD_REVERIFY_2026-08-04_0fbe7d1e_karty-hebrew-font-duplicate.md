@@ -5,6 +5,7 @@
 - Canonical findings: `QUAL-P1-02`, `FONT-P1-01`
 - Current Product anchor: `0fbe7d1ead9ebd1bea867418e254da438ec63329`
 - AuditRepo base: `446f36f48a27b02fb27e185c8f087446c811a609`
+- AuditRepo consolidation lane: PR #141
 - Current production claim: **none**
 
 ## Original claims
