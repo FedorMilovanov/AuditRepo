@@ -7,6 +7,7 @@
 - Exact verified Product PR head: `cf128cc429ccfa1c48fce4638b3f489f8dc27135`
 - Product squash merge: `f9d0120718569c510833dba7a3abd68ce2f6a003`
 - AuditRepo base: `9211b3edd7ca486c1a7457abc24ccdbf99c18d84`
+- AuditRepo closure PR: `#145`
 - Current production claim: **none**
 
 ## Disposition
