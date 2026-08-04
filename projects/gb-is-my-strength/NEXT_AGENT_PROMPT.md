@@ -2,13 +2,13 @@
 
 > **Meaningful handoff only.** The matrix is the durable verified backlog; this file is the single writer for current source head, active owner lanes and the next executable barriers.
 
-**AuditRepo base before this handoff:** `ad1f08679005a54c99522e6c43725a851320a6ab`
+**AuditRepo base before this handoff:** `1445d688e50fb5b7c997ae565e27462e4c6cc1e9`
 **Exact finding-disposition anchor:** `0fbe7d1ead9ebd1bea867418e254da438ec63329`
 **Current Product main:** `0fbe7d1ead9ebd1bea867418e254da438ec63329`
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
 **Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `0fbe7d1e`.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-duplicates.md`
-**Canonical matrix:** **358 IDs = 203 closed + 155 open**.
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-aggregate-duplicates.md`
+**Canonical matrix:** **358 IDs = 206 closed + 152 open**.
 
 ## Source convergence since the disposition anchor
 
@@ -34,7 +34,7 @@ The following Product waves are merged in `main` and must not be reimplemented:
 - `39df9ed0e650cc08f93c14145cb592868f0c80e4` — Avraam duplicate-river root-cause repair: removed the second `waterRipple` Nile and retained one canonical river system;
 - `0fbe7d1ead9ebd1bea867418e254da438ec63329` — current Product main after subsequent independently merged lanes; this handoff uses it only as exact source-state authority and does not infer additional matrix dispositions.
 
-Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 are merged and their dispositions remain bounded. PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #143 closes one Nagornaya semantic-marker false positive and merges three visual duplicates into still-open root owners; it makes no Product mutation or production claim.
+Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #144 merges three additional Nagornaya aggregate rows into still-open root owners; it makes no Product mutation or production claim.
 
 ## Active canonical owner lanes
 
@@ -45,24 +45,24 @@ Source movement does **not** change canonical AuditRepo counts by itself. AuditR
 
 ### AuditRepo
 
-- PR #143 (`verify/nagornaya-duplicate-false-positive-20260804`) is the active canonical consolidation lane for `NG-VIS-05` through `NG-VIS-08`.
+- PR #144 (`verify/nagornaya-aggregate-duplicates-20260804`) is the active canonical consolidation lane for `NG-INLINE-02`, `NG-STRUCT-02` and `NG-MOBILE-01`.
 - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
 
 ## Current counts
 
 - P0: 0
 - P1: 72
-- P2: 33
-- P3: 43
+- P2: 31
+- P3: 42
 - Refactoring: 4
 - AuditRepo: 3
-- Total open: 155
-- Closed: 203
+- Total open: 152
+- Closed: 206
 
 ## Next meaningful work
 
-1. Merge AuditRepo PR #143 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
-2. Re-fetch both repositories and continue current-head harvest; keep `NG-STRUCT-01` and `NG-DARK-01` open until bounded Product repairs exist.
+1. Merge AuditRepo PR #144 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
+2. Re-fetch both repositories and continue current-head harvest; keep all Nagornaya root owners open until bounded Product repairs exist.
 3. `QUAL-P1-02`, `QUAL-P1-06` and narrowed `QUAL-P1-09` remain confirmed Product candidates; do not double-count their subsets.
 4. Narrow `MAP-P1-20` rather than closing its still-current unversioned static-resource residual.
 5. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence.
