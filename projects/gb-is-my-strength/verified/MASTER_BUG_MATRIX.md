@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (`QUAL-P1-02` Hebrew font/RTL root cause fixed by Product PR #873 after exact-head source, Chromium and CI verification; no production claim). |
+| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (current verifier consolidation: `NG-DARK-04/05` merged into still-open root `NG-DARK-01`; no Product mutation, source-fix or production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_qual-p1-02-hebrew-semantics.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-subset-duplicates.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (207)
+## ✅ ЗАКРЫТО (209)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| NG-DARK-04 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01` 2026-08-04.** The 26 `bg-rose-50` containers refine the same missing dark-remap/per-chapter-variable root cause explicitly owned by open `NG-DARK-01`; they do not define an independent repair lane. Current Product `f9d0120718569c510833dba7a3abd68ce2f6a003` still lacks this remap, so the root remains open. No Product mutation or production claim. | `f9d01207` |
+| NG-DARK-05 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01` 2026-08-04.** The 18 `bg-stone-100/200` containers refine the same unmapped Tailwind-class architecture explicitly listed by open `NG-DARK-01`; closing this subset does not claim the containers are fixed. Current Product `f9d0120718569c510833dba7a3abd68ce2f6a003` still lacks the remap. No Product mutation or production claim. | `f9d01207` |
 | QUAL-P1-02 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM+CI VERIFIED 2026-08-04.** Product PR #873 repaired the canonical dynamic Hebrew rendering root cause: `.hw` now uses a Hebrew-capable stack with isolated RTL semantics; rendered Hebrew tokens own `lang="he" dir="rtl"`; Hebrew title boundaries are explicit; Russian transliteration and explanations remain LTR. Exact PR head `cf128cc429ccfa1c48fce4638b3f489f8dc27135` passed all eleven triggered workflows, permanent source audit **44/44**, production-like Chromium `hebrew=ok`, zero browser errors and zero horizontal overflow. Squash merge `f9d0120718569c510833dba7a3abd68ce2f6a003`. No production claim. | `f9d01207` PR#873; exact `cf128cc4` |
 | NG-INLINE-02 | ✅ **DUPLICATE / MERGED INTO `NG-INLINE-01` 2026-08-04.** The measured 172 inline `style=` attributes refine the same five-copy “Из библиотеки” inline-style architecture already owned by open P1 root `NG-INLINE-01`; they do not establish another independently repairable cause. No Product mutation or production claim. | `0fbe7d1e` |
 | NG-STRUCT-02 | ✅ **DUPLICATE / MERGED INTO `NG-STRUCT-01` 2026-08-04.** Bare headings, missing wrappers, emoji/SVG drift and the chapter-five `font-sans` subset are already contained by open P1 structural owner `NG-STRUCT-01`. Closing the duplicate does not close the root defect. No Product mutation or production claim. | `0fbe7d1e` |
@@ -323,7 +325,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (31)
+## 🟡 P2 — ОТКРЫТО (29)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -360,8 +362,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AR-IDX-JS-01 | **Cleanup на `pagehide` не работает на Mobile Safari**: 3 обработчика `pagehide` — на iOS при background не срабатывает. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-JS-01) |
 | AR-IDX-03 | **⌘K хардкод** — на Windows/Linux показывает `⌘K` вместо `Ctrl+K`. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-03) |
 | AR-IDX-09 | **Keyboard shortcut без altKey/shiftKey guard** — `Option+K` или `Ctrl+Shift+K` тоже срабатывают. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-09) |
-| NG-DARK-04 | 🆕 **Нагорная P2:** `bg-rose-50` без dark-ремапа — 26 контейнеров (13 MainShell + 13 Sections) в ch.5 остаются #fff1f2 в тёмной теме. **Подтверждено cycle 4:** `bg-rose-50` ОТСУТСТВУЕТ в blanket `.bg-*-50` группе `mobile-hotfix.css` (перечислены 14 цветов, НО НЕ rose). Решение: per-chapter `var(--ng-accent-soft)`. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §5.2 |
-| NG-DARK-05 | 🆕 **Нагорная P2:** `bg-stone-100/200` без dark-ремапа — 18 контейнеров остаются светлыми. Решение: ремап → `var(--color-surface-alt)`/`var(--color-surface-2)`. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §5.2 |
 
 ## 🟢 P3 — ОТКРЫТО (42)
 | NG-VIS-04 | 🆕 **Нагорная P2 (→ NG-TABLE-01):** Табличная перегрузка — 8 секций без текстовых абзацев (ch.2/III/V/IX/X, ch.3/V/VII/VIII, ch.5/III). Только гриды/карточки/таблицы — нет «воздуха». ch.2 имеет 1.5x structured/text ratio. **Контентная правка — требует автора.** Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-TABLE-01 |
@@ -473,14 +473,14 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 207 |
+| Закрыто (fixed) | 209 |
 | **P0 открыто** | **0** |
 | P1 открыто | 71 |
-| P2 открыто | 31 |
+| P2 открыто | 29 |
 | P3 открыто | 42 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **151** |
+| **Всего открыто (матрица)** | **149** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
