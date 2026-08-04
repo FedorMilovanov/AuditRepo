@@ -60,6 +60,18 @@ jobs:
               raise SystemExit(f'expected 4 run blocks, found {len(blocks)}')
 
           script = '\n\n'.join(blocks) + '\n'
+          trailing_fixes = (
+              ('`af4311d76b617d61eb5061fc4663df28d8f69add`  \'', '`af4311d76b617d61eb5061fc4663df28d8f69add`\''),
+              ('`778a218d9e6dc4c051721fc0f0fe56ee9125c797`  \'', '`778a218d9e6dc4c051721fc0f0fe56ee9125c797`\''),
+              ('`0fbe7d1ead9ebd1bea867418e254da438ec63329`  \'', '`0fbe7d1ead9ebd1bea867418e254da438ec63329`\''),
+              ('`0fbe7d1e`.  \'', '`0fbe7d1e`.\''),
+              ('CURRENT_HEAD_REVERIFY_2026-08-03_778a218d_avraam-skip-contrast.md`  \'', 'CURRENT_HEAD_REVERIFY_2026-08-03_778a218d_avraam-skip-contrast.md`\''),
+          )
+          for old, new in trailing_fixes:
+              if script.count(old) != 1:
+                  raise SystemExit(f'trailing-space patch marker drifted: {old}')
+              script = script.replace(old, new, 1)
+
           script = script.replace(
               'rm .github/workflows/complete-avraam-transaction.yml',
               'rm .github/workflows/complete-avraam-transaction.yml .github/workflows/run-avraam-transaction-from-pr.yml',
