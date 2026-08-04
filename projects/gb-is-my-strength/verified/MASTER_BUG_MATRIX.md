@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; Hebrew font subset duplicate merged into the retained font+RTL owner; no Product mutation or current production claim). |
+| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; Nagornaya semantic-marker false positive and three duplicate visual rows consolidated into open root owners; no Product mutation or current production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-hebrew-font-duplicate.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-duplicates.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,14 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (199)
+## ✅ ЗАКРЫТО (203)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| NG-VIS-05 | ✅ **FALSE-POSITIVE / INTENTIONAL SEMANTIC MARKER 2026-08-04.** Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` explicitly includes `div.reveal` in `js/glossary.js` `proseSelectors`; the class is consumed as a glossary-hydration prose boundary. The canonical row itself states that reveal animation was not planned. Missing animation is therefore not a defect, and removing the marker would weaken the runtime contract. No Product mutation or production claim. | `0fbe7d1e` |
+| NG-VIS-06 | ✅ **DUPLICATE / MERGED INTO `NG-STRUCT-01` 2026-08-04.** The chapter-five `font-sans` heading inconsistency is already a stated subset of open root owner `NG-STRUCT-01`, which covers the same structural/heading regression. Closing this duplicate does not close the root defect. No Product mutation or production claim. | `0fbe7d1e` |
+| NG-VIS-07 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01` 2026-08-04.** Loss of chapter colour identity in dark mode is a manifestation of the same missing per-chapter variable/remap architecture owned by open root finding `NG-DARK-01`. No Product mutation or production claim. | `0fbe7d1e` |
+| NG-VIS-08 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01` 2026-08-04.** Chapter-three hero contrast drift is another manifestation of the incomplete dark-theme remap owned by open root finding `NG-DARK-01`; it has no independent repair lane. No Product mutation or production claim. | `0fbe7d1e` |
 | FONT-P1-01 | ✅ **DUPLICATE / MERGED INTO `QUAL-P1-02` 2026-08-04.** This row is the explicit-font-family subset of the same dynamic Hebrew rendering residual. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` still styles `.me-content .hw` with `Georgia,"Times New Roman",serif`, contains no `dir="rtl"` contract for the dynamic Hebrew panel, and selects `he_deep` for the Hebrew tab. The combined defect remains open only under canonical owner `QUAL-P1-02`; no Product mutation or production claim. | `0fbe7d1e` |
 | QUAL-P2-01 | ✅ **DUPLICATE / MERGED INTO `QUAL-P1-09` 2026-08-04.** This row describes the same holding/noindex route-profile status drift as the narrowed P1 owner. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` disproves the broader “all profiles” wording because the production Avraam profile legitimately uses `production-dist`, while the Shoftim profile still combines `currentStatus: "production-dist"` with an explicit holding/noindex contract. The factual residual remains open only as narrowed `QUAL-P1-09`; no Product mutation or production claim. | `0fbe7d1e` |
 | RIVER-P1-05 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-04.** Product commit `39df9ed0e650cc08f93c14145cb592868f0c80e4` removed the complete second Nile group under `waterRipple`—parallel stem, five arms and glow—while retaining one canonical river system and adding grouped-stroke protection plus a browser water-intersection gate. The historical commit has no attached Actions run, so no CI claim is made. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains the explicit single-system invariant, one Nile stem with five delta arms and the permanent Chromium visual harness. No current production claim. | `39df9ed0` |
@@ -358,12 +362,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NG-DARK-04 | 🆕 **Нагорная P2:** `bg-rose-50` без dark-ремапа — 26 контейнеров (13 MainShell + 13 Sections) в ch.5 остаются #fff1f2 в тёмной теме. **Подтверждено cycle 4:** `bg-rose-50` ОТСУТСТВУЕТ в blanket `.bg-*-50` группе `mobile-hotfix.css` (перечислены 14 цветов, НО НЕ rose). Решение: per-chapter `var(--ng-accent-soft)`. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §5.2 |
 | NG-DARK-05 | 🆕 **Нагорная P2:** `bg-stone-100/200` без dark-ремапа — 18 контейнеров остаются светлыми. Решение: ремап → `var(--color-surface-alt)`/`var(--color-surface-2)`. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §5.2 |
 
-## 🟢 P3 — ОТКРЫТО (47)
+## 🟢 P3 — ОТКРЫТО (43)
 | NG-VIS-04 | 🆕 **Нагорная P2 (→ NG-TABLE-01):** Табличная перегрузка — 8 секций без текстовых абзацев (ch.2/III/V/IX/X, ch.3/V/VII/VIII, ch.5/III). Только гриды/карточки/таблицы — нет «воздуха». ch.2 имеет 1.5x structured/text ratio. **Контентная правка — требует автора.** Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-TABLE-01 |
-| NG-VIS-05 | 🆕 **Нагорная P2 (→ NG-REVEAL-01):** Класс `reveal` — НЕ мёртвый: используется glossary.js для поиска `div.reveal` при гидратации. Анимации нет (и не планировалась) — только семантический маркер. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-REVEAL-01 |
-| NG-VIS-06 | 🆕 **Нагорная P2 (→ NG-FONT-01, объединён с NG-STRUCT-01):** `font-sans` на h2 только в ch.5 — объединено в NG-STRUCT-01. |
-| NG-VIS-07 | 🆕 **Нагорная P2 (→ поглощено NG-DARK-01):** Потеря цветовой идентичности глав в dark — корневая причина: per-chapter CSS vars (NG-DARK-01) автоматически решает это. |
-| NG-VIS-08 | 🆕 **Нагорная P2 (→ поглощено NG-DARK-01):** Контраст-дрейф ch.3 hero — корневая причина та же: NG-DARK-01 решает через правильные ремапы. |
 
 | ID | Описание |
 |---|---|
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 199 closed + 159 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 203 closed + 155 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 199 |
+| Закрыто (fixed) | 203 |
 | **P0 открыто** | **0** |
 | P1 открыто | 72 |
 | P2 открыто | 33 |
-| P3 открыто | 47 |
+| P3 открыто | 43 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **159** |
+| **Всего открыто (матрица)** | **155** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,13 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-04 — Nagornaya visual duplicate/false-positive consolidation @ current source `0fbe7d1e`
+- Closed `NG-VIS-05` as FALSE-POSITIVE: current `glossary.js` consumes `div.reveal` as a semantic prose selector and no animation was intended.
+- Closed `NG-VIS-06` as DUPLICATE/MERGED into open root owner `NG-STRUCT-01`.
+- Closed `NG-VIS-07` and `NG-VIS-08` as DUPLICATE/MERGED into open root owner `NG-DARK-01`.
+- Root structural/dark findings remain open; `NG-VIS-04` is untouched.
+- Canonical arithmetic moved from **199 closed / 159 open** to **203 closed / 155 open**; P3 moved from **47** to **43**. No Product mutation or production claim.
 
 ### 2026-08-04 — Karty Hebrew font duplicate consolidation @ current source `0fbe7d1e`
 - Retained `QUAL-P1-02` as CONFIRMED-CURRENT canonical owner for the combined explicit Hebrew font and RTL direction residual.
