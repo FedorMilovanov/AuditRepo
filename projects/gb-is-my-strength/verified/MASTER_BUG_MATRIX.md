@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; story-schema implementation merge `424b09b25fc9d4bace3938f4d44f430be8cc7e4b`; exact green PR head `12aa744e10c05c134adc951f01cb5e78ef25de65`; no current production claim). |
+| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; duplicate-river implementation commit `39df9ed0e650cc08f93c14145cb592868f0c80e4`; source-only disposition, no current production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-story-id-schema.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_avraam-river-duplicate.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (195)
+## ✅ ЗАКРЫТО (197)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| RIVER-P1-05 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-04.** Product commit `39df9ed0e650cc08f93c14145cb592868f0c80e4` removed the complete second Nile group under `waterRipple`—parallel stem, five arms and glow—while retaining one canonical river system and adding grouped-stroke protection plus a browser water-intersection gate. The historical commit has no attached Actions run, so no CI claim is made. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains the explicit single-system invariant, one Nile stem with five delta arms and the permanent Chromium visual harness. No current production claim. | `39df9ed0` |
+| DRAW-P1-02 | ✅ **DUPLICATE / MERGED INTO `RIVER-P1-05` 2026-08-04.** This row described the same obsolete duplicate river channels and the same visible doubled-line root cause as `RIVER-P1-05`; there is no second independently repairable defect. The shared source repair is commit `39df9ed0e650cc08f93c14145cb592868f0c80e4`, retained on current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329`. Separate river/filter/shoreline findings remain open. No current production claim. | `39df9ed0` |
 | QUAL-P1-07 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #666 aligned canonical Karty story identifiers with the runtime/deep-link vocabulary: internal IDs now use `^[a-z0-9_-]+$`, public `meta.id` remains hyphen-only, no published identifier or URL was renamed, and the permanent guard validates every current `karty/*/route.json`. Exact Product head `12aa744e10c05c134adc951f01cb5e78ef25de65` merged as `424b09b25fc9d4bace3938f4d44f430be8cc7e4b` after four green workflows. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains the schema and all-route guard. No current production claim. | `424b09b2` PR#666; current `0fbe7d1e` |
 | AR-IDX-01 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #675 restored canonical Home alternates for `hreflang="ru"` and `hreflang="x-default"`, both targeting `https://gospod-bog.ru/`, and added parsed production-like assertions. Exact PR head `404db8d14087d29522e56f190717d6224e8e3bfb` merged as `0131f8b9d6c717f85a8990700b72b09b575219a4` after nine green workflows. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains both links and the fail-closed assertions. No current production claim. | `0131f8b9` PR#675; current `0fbe7d1e` |
 | AR-IDX-02 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #675 restored WebSite `SearchAction`, the canonical `https://gospod-bog.ru/?q={search_term_string}` EntryPoint and `required name=search_term_string`, with permanent production-like assertions. Exact PR head `404db8d14087d29522e56f190717d6224e8e3bfb` merged as `0131f8b9d6c717f85a8990700b72b09b575219a4` after nine green workflows. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains the complete contract. No current production claim. | `0131f8b9` PR#675; current `0fbe7d1e` |
@@ -230,7 +232,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (75)
+## 🟠 P1 — ОТКРЫТО (73)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -270,14 +272,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 | RIVER-P1-02 | 🆕 **Karty P1:** В `<defs>` файла `karty/_engine/base-geo.svg` отсутствует определение фильтра `id="waterRipple"`, хотя фильтр вызывается 4 раза | verified-source (32ae0d7d) |
 | RIVER-P1-03 | 🆕 **Karty P1:** `stroke-linecap="round"` при ширине рек 3..5px выдвигает полукруглый закругленный торец на 2.5px за конечные координаты, из-за чего река вылетает в море | verified-source (32ae0d7d) |
 | RIVER-P1-04 | 🆕 **Karty P1:** Вызов `getTotalLength()` до завершения компоновки DOM возвращает `0`, принуждая `stroke-dasharray="0"` и мгновенный проскок анимации через берег | verified-source (32ae0d7d) |
-| RIVER-P1-05 | 🆕 **Karty P1:** Дублирование линий русел рек в `base-geo.svg` под `waterRipple` создаёт эффект «сдвоенной линии» у берегов | verified-source (32ae0d7d) |
 | QUAL-P1-01 | 🆕 **Karty P1:** 15 контролов карты не соответствуют стандарту WCAG AAA 44px (`.me-back` 36px, `.me-story-chip` 36px, `.me-arch-more` 32px, `.me-panel__resize` 12px) | verified-source (32ae0d7d) |
 | QUAL-P1-02 | 🆕 **Karty P1:** Динамический иврит (244+ слов) не имеет явного `font-family: "Noto Serif Hebrew"` и `dir="rtl"`, вызывая визуальные искажения шрифта | verified-source (32ae0d7d) |
 | QUAL-P1-03 | 🆕 **Karty P1:** 39 библейских цитат диапазона стихов в движковых картах используют ASCII дефисы `-` вместо типографского тире `–` | verified-source (32ae0d7d) |
 | QUAL-P1-05 | 🆕 **Karty P1:** 16 обработчиков событий `wheel`, `touchstart`, `touchmove`, `mousemove` не имеют флага `{ passive: true }`, вызывая задержки скролла на mobile | verified-source (32ae0d7d) |
 | QUAL-P1-06 | 🆕 **Karty P1:** 58 таймеров `setTimeout/rAF` работают без привязки к lifecycle cleanup, вызывая выполнении кода после уничтожения карты | verified-source (32ae0d7d) |
 | DRAW-P1-01 | 🆕 **Karty P1:** Фиксированный сдвиг подписей на 12px в окне 100x16px в `map-engine.js` не решает коллизии подписей в плотных кластерах | verified-source (32ae0d7d) |
-| DRAW-P1-02 | 🆕 **Karty P1:** Дублирующие наложения устаревших русел рек в `base-geo.svg` поверх морских штрихов создают видимый эффект сдвоенной линии | verified-source (32ae0d7d) |
 | DRAW-P1-03 | 🆕 **Karty P1:** Отсутствует система архитектурных символов и иконок карт — все места рендерятся простыми плоскими кружками `r=4.5` | verified-source (32ae0d7d) |
 | QUAL-P1-08 | 🆕 **Karty P1:** 8 holding-карт используют универсальную заглушку OpenGraph `og-karty-1200x630.webp`, лишая превью карт собственного визуала | verified-source (32ae0d7d) |
 | QUAL-P1-09 | 🆕 **Karty P1:** Все профили `data/route-profiles/karty-*.json` указывают `currentStatus: "production-dist"`, создавая рассинхрон с `route.json` | verified-source (32ae0d7d) |
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 195 closed + 163 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 197 closed + 161 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 195 |
+| Закрыто (fixed) | 197 |
 | **P0 открыто** | **0** |
-| P1 открыто | 75 |
+| P1 открыто | 73 |
 | P2 открыто | 34 |
 | P3 открыто | 47 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **163** |
+| **Всего открыто (матрица)** | **161** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-04 — Avraam duplicate-river closure @ current source `0fbe7d1e`
+- Closed `RIVER-P1-05` as FIXED-CURRENT and `DRAW-P1-02` as DUPLICATE/MERGED into the same root cause.
+- Product commit `39df9ed0e650cc08f93c14145cb592868f0c80e4` removed the complete second Nile group under `waterRipple` rather than masking it; current source retains one canonical Nile system and the permanent Chromium visual harness.
+- The historical implementation commit has no attached Actions run, so this is a direct source disposition with no CI or production claim.
+- Canonical arithmetic moved from **195 closed / 163 open** to **197 closed / 161 open**; P1 moved from **75** to **73**.
 
 ### 2026-08-04 — Karty story-ID schema closure @ current source `0fbe7d1e`
 - Closed `QUAL-P1-07` as FIXED-CURRENT.

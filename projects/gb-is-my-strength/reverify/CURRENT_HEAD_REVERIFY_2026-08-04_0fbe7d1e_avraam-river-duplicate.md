@@ -48,7 +48,7 @@ The doubled-river claim is not reproducible in the current source representation
 
 This closure covers only duplicate river-channel rendering. It does not close separate findings about shoreline displacement, missing filter definitions, rounded line caps, animation timing, route-water intersection, general river cartography or deployment of current Product `main`.
 
-## Proposed canonical arithmetic
+## Canonical arithmetic applied by this transaction
 
 - Canonical IDs: **358**
 - Closed: **195 → 197**
