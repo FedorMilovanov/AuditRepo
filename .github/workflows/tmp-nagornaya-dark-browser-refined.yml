@@ -1,0 +1,84 @@
+name: Refined Nagornaya dark Chromium evidence
+
+on:
+  pull_request:
+    branches: [main]
+    types: [synchronize]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nagornaya-dark-refined-pr-153
+  cancel-in-progress: false
+
+jobs:
+  measure:
+    if: github.event.pull_request.number == 153
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    steps:
+      - name: Checkout exact AuditRepo branch
+        uses: actions/checkout@v4
+        with:
+          ref: verify/nagornaya-dark-browser-computed-20260804
+          fetch-depth: 0
+
+      - name: Guard exact AuditRepo base
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "850429a299a6118db85811602fdb661b81b2296f"
+          git merge-base --is-ancestor origin/main HEAD
+
+      - name: Checkout exact Product source
+        uses: actions/checkout@v4
+        with:
+          repository: FedorMilovanov/gb-is-my-strength
+          ref: f9d0120718569c510833dba7a3abd68ce2f6a003
+          path: _product
+          persist-credentials: false
+
+      - name: Set up Node 22.12
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: npm
+          cache-dependency-path: _product/package-lock.json
+
+      - name: Build exact native dist
+        working-directory: _product
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci
+          npx playwright install --with-deps chromium
+          npm run nagornaya:visual-parity:audit
+          npm run strangler:build:production-like
+
+      - name: Run refined computed-style matrix
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8090 --directory _product/dist > "${RUNNER_TEMP}/nagornaya-http.log" 2>&1 &
+          server_pid=$!
+          trap 'kill ${server_pid} 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:8090/nagornaya/ >/dev/null && break
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8090/nagornaya/ >/dev/null
+          NODE_PATH="${GITHUB_WORKSPACE}/_product/node_modules" \
+            AUDIT_BASE="http://127.0.0.1:8090" \
+            BROWSER_RESULT="${GITHUB_WORKSPACE}/_browser-refined.json" \
+            PRODUCT_SHA="f9d0120718569c510833dba7a3abd68ce2f6a003" \
+            node .github/tmp/nagornaya_dark_browser_refined.js
+
+      - name: Upload refined evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: nagornaya-dark-browser-refined
+          path: _browser-refined.json
+          if-no-files-found: error
+          retention-days: 30
