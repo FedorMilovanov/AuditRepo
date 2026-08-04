@@ -1,0 +1,206 @@
+name: Complete Nagornaya aggregate duplicate consolidation
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: complete-nagornaya-aggregate-pr-144
+  cancel-in-progress: false
+
+jobs:
+  complete:
+    if: github.event.pull_request.number == 144
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout verifier branch
+        uses: actions/checkout@v4
+        with:
+          ref: verify/nagornaya-aggregate-duplicates-20260804
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Synchronize current AuditRepo main
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main --prune
+          git merge --no-edit origin/main
+
+      - name: Apply bounded canonical transaction
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          next_path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          reverify_path = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-aggregate-duplicates.md')
+
+          matrix = matrix_path.read_text(encoding='utf-8')
+          closed_marker = """## ✅ ЗАКРЫТО (203)
+
+          | ID | Описание | Коммит |
+          |---|---|---|
+          """
+          closed_rows = """## ✅ ЗАКРЫТО (206)
+
+          | ID | Описание | Коммит |
+          |---|---|---|
+          | NG-INLINE-02 | ✅ **DUPLICATE / MERGED INTO `NG-INLINE-01` 2026-08-04.** The measured 172 inline `style=` attributes refine the same five-copy “Из библиотеки” inline-style architecture already owned by open P1 root `NG-INLINE-01`; they do not establish another independently repairable cause. No Product mutation or production claim. | `0fbe7d1e` |
+          | NG-STRUCT-02 | ✅ **DUPLICATE / MERGED INTO `NG-STRUCT-01` 2026-08-04.** Bare headings, missing wrappers, emoji/SVG drift and the chapter-five `font-sans` subset are already contained by open P1 structural owner `NG-STRUCT-01`. Closing the duplicate does not close the root defect. No Product mutation or production claim. | `0fbe7d1e` |
+          | NG-MOBILE-01 | ✅ **AGGREGATE DUPLICATE / MERGED 2026-08-04.** This row contains no independent mobile root cause: body `bg-stone-100` remap is owned by open `NG-BODY-01`; chapter-specific TOC accent by open `NG-TOC-01`; inline hero height/adaptivity by open `NG-A11Y-01`. All owners remain open. No Product mutation or production claim. | `0fbe7d1e` |
+          """
+          if matrix.count(closed_marker) != 1:
+              raise SystemExit('closed section marker drifted')
+          matrix = matrix.replace(closed_marker, closed_rows, 1)
+
+          open_rows = (
+              '| NG-INLINE-02 | 🆕 **Нагорная P2:** 172 inline `style=` атрибута (19-20 в «Из библиотеки» × 5 + hero + author + bibliography) — не адаптивны к dark, не переопределяются без `!important`. Уточнение NG-INLINE-01. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |\n',
+              '| NG-STRUCT-02 | 🆕 **Нагорная P2:** Структурная несогласованность секций — ch.1 имеет SVG иконки + group wrapper + subtitles, ch.2–5 регресс: bare `<h2>` без wrapper, emoji вместо SVG (19 секций), `font-sans` только на 4/10 секций ch.5. Уточнение NG-STRUCT-01. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |\n',
+              '| NG-MOBILE-01 | 🆕 **Нагорная P3:** Мобильные dark-проблемы: body bg-stone-100 не ремапится (→ NG-BODY-01), TOC accent-number без chapter-specific цвета (→ NG-TOC-01), hero image inline height. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE4_2026-07-14.md` §8 |\n',
+          )
+          for row in open_rows:
+              if matrix.count(row) != 1:
+                  raise SystemExit(f'Nagornaya aggregate row drifted: {row[:30]}')
+              matrix = matrix.replace(row, '', 1)
+
+          replacements = {
+              '## 🟡 P2 — ОТКРЫТО (33)': '## 🟡 P2 — ОТКРЫТО (31)',
+              '## 🟢 P3 — ОТКРЫТО (43)': '## 🟢 P3 — ОТКРЫТО (42)',
+              '| Закрыто (fixed) | 203 |': '| Закрыто (fixed) | 206 |',
+              '| P2 открыто | 33 |': '| P2 открыто | 31 |',
+              '| P3 открыто | 43 |': '| P3 открыто | 42 |',
+              '| **Всего открыто (матрица)** | **155** |': '| **Всего открыто (матрица)** | **152** |',
+              '| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; Nagornaya semantic-marker false positive and three duplicate visual rows consolidated into open root owners; no Product mutation or current production claim). |': '| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current verifier consolidation; three aggregate Nagornaya rows merged into still-open root owners; no Product mutation or current production claim). |',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-duplicates.md` |': '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-aggregate-duplicates.md` |',
+          }
+          for old, new in replacements.items():
+              if matrix.count(old) != 1:
+                  raise SystemExit(f'matrix marker drifted: {old}')
+              matrix = matrix.replace(old, new, 1)
+
+          stats_pattern = r'## Статистика \(обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 203 closed \+ 155 open\)'
+          stats_replacement = '## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 206 closed + 152 open)'
+          matrix, count = re.subn(stats_pattern, stats_replacement, matrix, count=1)
+          if count != 1:
+              raise SystemExit('matrix statistics heading drifted')
+
+          session_marker = '## Session log (append-only)\n\n'
+          session_entry = """## Session log (append-only)
+
+          ### 2026-08-04 — Nagornaya aggregate duplicate consolidation @ current source `0fbe7d1e`
+          - Closed `NG-INLINE-02` as DUPLICATE/MERGED into open root owner `NG-INLINE-01`.
+          - Closed `NG-STRUCT-02` as DUPLICATE/MERGED into open root owner `NG-STRUCT-01`.
+          - Closed `NG-MOBILE-01` as an aggregate duplicate of open owners `NG-BODY-01`, `NG-TOC-01` and `NG-A11Y-01`.
+          - All five root owners remain open and no Product repair is claimed.
+          - Canonical arithmetic moved from **203 closed / 155 open** to **206 closed / 152 open**; P2 moved **33→31**, P3 **43→42**. No Product mutation or production claim.
+
+          """
+          if matrix.count(session_marker) != 1:
+              raise SystemExit('session log marker drifted')
+          matrix = matrix.replace(session_marker, session_entry, 1)
+          for finding in ('NG-INLINE-02','NG-STRUCT-02','NG-MOBILE-01'):
+              if matrix.count(f'| {finding} |') != 1:
+                  raise SystemExit(f'canonical ID multiplicity drift: {finding}')
+          matrix_path.write_text(matrix, encoding='utf-8')
+
+          nxt = next_path.read_text(encoding='utf-8')
+          next_replacements = {
+              '**AuditRepo base before this handoff:** `ad1f08679005a54c99522e6c43725a851320a6ab`': '**AuditRepo base before this handoff:** `1445d688e50fb5b7c997ae565e27462e4c6cc1e9`',
+              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-duplicates.md`': '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-aggregate-duplicates.md`',
+              '**Canonical matrix:** **358 IDs = 203 closed + 155 open**.': '**Canonical matrix:** **358 IDs = 206 closed + 152 open**.',
+              '- P2: 33': '- P2: 31',
+              '- P3: 43': '- P3: 42',
+              '- Total open: 155': '- Total open: 152',
+              '- Closed: 203': '- Closed: 206',
+          }
+          for old, new in next_replacements.items():
+              if nxt.count(old) != 1:
+                  raise SystemExit(f'NEXT marker drifted: {old}')
+              nxt = nxt.replace(old, new, 1)
+
+          old_boundary = 'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 are merged and their dispositions remain bounded. PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #143 closes one Nagornaya semantic-marker false positive and merges three visual duplicates into still-open root owners; it makes no Product mutation or production claim.'
+          new_boundary = 'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #144 merges three additional Nagornaya aggregate rows into still-open root owners; it makes no Product mutation or production claim.'
+          if nxt.count(old_boundary) != 1:
+              raise SystemExit('NEXT source-boundary marker drifted')
+          nxt = nxt.replace(old_boundary, new_boundary, 1)
+
+          old_audit = """### AuditRepo
+
+          - PR #143 (`verify/nagornaya-duplicate-false-positive-20260804`) is the active canonical consolidation lane for `NG-VIS-05` through `NG-VIS-08`.
+          - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
+          """
+          new_audit = """### AuditRepo
+
+          - PR #144 (`verify/nagornaya-aggregate-duplicates-20260804`) is the active canonical consolidation lane for `NG-INLINE-02`, `NG-STRUCT-02` and `NG-MOBILE-01`.
+          - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
+          """
+          if nxt.count(old_audit) != 1:
+              raise SystemExit('NEXT AuditRepo block drifted')
+          nxt = nxt.replace(old_audit, new_audit, 1)
+
+          next_section = """## Next meaningful work
+
+          1. Merge AuditRepo PR #144 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
+          2. Re-fetch both repositories and continue current-head harvest; keep all Nagornaya root owners open until bounded Product repairs exist.
+          3. `QUAL-P1-02`, `QUAL-P1-06` and narrowed `QUAL-P1-09` remain confirmed Product candidates; do not double-count their subsets.
+          4. Narrow `MAP-P1-20` rather than closing its still-current unversioned static-resource residual.
+          5. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence.
+          """
+          section_marker = '## Next meaningful work\n'
+          if nxt.count(section_marker) != 1:
+              raise SystemExit('NEXT next-work section drifted')
+          nxt = nxt[:nxt.index(section_marker)] + next_section
+          next_path.write_text(nxt, encoding='utf-8')
+
+          reverify = reverify_path.read_text(encoding='utf-8')
+          required = (
+              '### `NG-INLINE-02` — duplicate / merged into `NG-INLINE-01`',
+              '### `NG-STRUCT-02` — duplicate / merged into `NG-STRUCT-01`',
+              '### `NG-MOBILE-01` — aggregate duplicate / merged into existing owners',
+              '## Proposed canonical arithmetic',
+          )
+          for marker in required:
+              if reverify.count(marker) != 1:
+                  raise SystemExit(f'reverify marker drifted: {marker}')
+          reverify = reverify.replace('## Proposed canonical arithmetic', '## Canonical arithmetic applied by this transaction', 1)
+          reverify_path.write_text(reverify, encoding='utf-8')
+          PY
+
+          rm .github/workflows/complete-nagornaya-aggregate-duplicates.yml
+
+      - name: Validate bounded transaction
+        run: |
+          set -euo pipefail
+          git diff --check
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 -m py_compile \
+            scripts/check_matrix_coverage.py \
+            scripts/matrix_coverage_lib.py \
+            scripts/matrix_coverage_contexts.py \
+            scripts/matrix_coverage_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p "${RUNNER_TEMP}/matrix-coverage"
+          python3 scripts/check_matrix_coverage.py --verbose --json-out "${RUNNER_TEMP}/matrix-coverage/report.json"
+
+      - name: Commit canonical transaction and remove bootstrap
+        run: |
+          set -euo pipefail
+          git status --short
+          git add \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-aggregate-duplicates.md \
+            .github/workflows/complete-nagornaya-aggregate-duplicates.yml
+          git diff --cached --check
+          git commit -m "audit(gb): merge Nagornaya aggregate duplicate rows"
+          git push origin HEAD:verify/nagornaya-aggregate-duplicates-20260804
