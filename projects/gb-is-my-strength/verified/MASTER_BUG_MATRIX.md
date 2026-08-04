@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; route-profile status residual narrowed and duplicate merged; no Product mutation or current production claim). |
+| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; Hebrew font subset duplicate merged into the retained font+RTL owner; no Product mutation or current production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-profile-status-duplicate.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-hebrew-font-duplicate.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (198)
+## ✅ ЗАКРЫТО (199)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| FONT-P1-01 | ✅ **DUPLICATE / MERGED INTO `QUAL-P1-02` 2026-08-04.** This row is the explicit-font-family subset of the same dynamic Hebrew rendering residual. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` still styles `.me-content .hw` with `Georgia,"Times New Roman",serif`, contains no `dir="rtl"` contract for the dynamic Hebrew panel, and selects `he_deep` for the Hebrew tab. The combined defect remains open only under canonical owner `QUAL-P1-02`; no Product mutation or production claim. | `0fbe7d1e` |
 | QUAL-P2-01 | ✅ **DUPLICATE / MERGED INTO `QUAL-P1-09` 2026-08-04.** This row describes the same holding/noindex route-profile status drift as the narrowed P1 owner. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` disproves the broader “all profiles” wording because the production Avraam profile legitimately uses `production-dist`, while the Shoftim profile still combines `currentStatus: "production-dist"` with an explicit holding/noindex contract. The factual residual remains open only as narrowed `QUAL-P1-09`; no Product mutation or production claim. | `0fbe7d1e` |
 | RIVER-P1-05 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-04.** Product commit `39df9ed0e650cc08f93c14145cb592868f0c80e4` removed the complete second Nile group under `waterRipple`—parallel stem, five arms and glow—while retaining one canonical river system and adding grouped-stroke protection plus a browser water-intersection gate. The historical commit has no attached Actions run, so no CI claim is made. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains the explicit single-system invariant, one Nile stem with five delta arms and the permanent Chromium visual harness. No current production claim. | `39df9ed0` |
 | DRAW-P1-02 | ✅ **DUPLICATE / MERGED INTO `RIVER-P1-05` 2026-08-04.** This row described the same obsolete duplicate river channels and the same visible doubled-line root cause as `RIVER-P1-05`; there is no second independently repairable defect. The shared source repair is commit `39df9ed0e650cc08f93c14145cb592868f0c80e4`, retained on current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329`. Separate river/filter/shoreline findings remain open. No current production claim. | `39df9ed0` |
@@ -233,7 +234,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (73)
+## 🟠 P1 — ОТКРЫТО (72)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -274,7 +275,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | RIVER-P1-03 | 🆕 **Karty P1:** `stroke-linecap="round"` при ширине рек 3..5px выдвигает полукруглый закругленный торец на 2.5px за конечные координаты, из-за чего река вылетает в море | verified-source (32ae0d7d) |
 | RIVER-P1-04 | 🆕 **Karty P1:** Вызов `getTotalLength()` до завершения компоновки DOM возвращает `0`, принуждая `stroke-dasharray="0"` и мгновенный проскок анимации через берег | verified-source (32ae0d7d) |
 | QUAL-P1-01 | 🆕 **Karty P1:** 15 контролов карты не соответствуют стандарту WCAG AAA 44px (`.me-back` 36px, `.me-story-chip` 36px, `.me-arch-more` 32px, `.me-panel__resize` 12px) | verified-source (32ae0d7d) |
-| QUAL-P1-02 | 🆕 **Karty P1:** Динамический иврит (244+ слов) не имеет явного `font-family: "Noto Serif Hebrew"` и `dir="rtl"`, вызывая визуальные искажения шрифта | verified-source (32ae0d7d) |
+| QUAL-P1-02 | 🔴 **CONFIRMED-CURRENT / CANONICAL OWNER 2026-08-04:** Динамический Hebrew tab по-прежнему использует `.hw { font-family: Georgia,"Times New Roman",serif }`, не имеет `dir="rtl"` на rendered Hebrew boundary и получает данные из `he_deep`. Один bounded Product repair должен одновременно исправить Hebrew-capable font stack и RTL semantics; font-only duplicate `FONT-P1-01` merged сюда. | current source `0fbe7d1e`; `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-hebrew-font-duplicate.md` |
 | QUAL-P1-03 | 🆕 **Karty P1:** 39 библейских цитат диапазона стихов в движковых картах используют ASCII дефисы `-` вместо типографского тире `–` | verified-source (32ae0d7d) |
 | QUAL-P1-05 | 🆕 **Karty P1:** 16 обработчиков событий `wheel`, `touchstart`, `touchmove`, `mousemove` не имеют флага `{ passive: true }`, вызывая задержки скролла на mobile | verified-source (32ae0d7d) |
 | QUAL-P1-06 | 🆕 **Karty P1:** 58 таймеров `setTimeout/rAF` работают без привязки к lifecycle cleanup, вызывая выполнении кода после уничтожения карты | verified-source (32ae0d7d) |
@@ -288,7 +289,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | ARCH-P1-01 | 🆕 **Karty P1:** Раскол архитектуры движков: пергаментный стиль и символика изолированы в Node-скрипте `sheet-engine.js`, а браузерный `map-engine.js` рендерит тёмную схему | verified-source (32ae0d7d) |
 | SVG-P1-01 | 🆕 **Karty P1:** Экспортированные SVG-файлы (`images/atlas-export/*.svg`) содержат неэкранированные `&nbsp;`, ломающие XML-парсеры | verified-source (32ae0d7d) |
 | TEXT-P1-01 | 🆕 **Karty P1:** Моноширинный расчёт ширины плашки подписи (`length * 0.6 * 10`) в `map-engine.js:1550` приводит к обрезке широких букв (`Ш`, `Ж`, `ת`, `ש`) | verified-source (32ae0d7d) |
-| FONT-P1-01 | 🆕 **Karty P1:** Выпадение ивритских слов в системный sans-serif из-за объявления `font-family: Georgia, "Times New Roman"` в `.hw` (`map-engine.js:463`) вместо `Noto Serif Hebrew` | verified-source (32ae0d7d) |
 | MINI-P1-01 | 🆕 **Karty P1:** Миникарта (`.me-minimap`) не содержит векторов географии (суша/моря), показывая точки над пустым чёрным прямоугольником, и перезаписывает `flyTo` | verified-source (32ae0d7d) |
 | WAYP-P1-01 | 🆕 **Karty P1:** Подписи точек археологии рендерятся 7px серым текстом без подложек и плашек, накладываясь на линии рельефа | verified-source (32ae0d7d) |
 | SIG-P1-01 | 🆕 **Karty P1:** Оверлеи кампаний (`water-split`, `hanukkah-lights`) используют жесткие пиксельные смещения (`origin.x - 74`), искажаясь при смене масштаба | verified-source (32ae0d7d) |
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 198 closed + 160 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 199 closed + 159 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 198 |
+| Закрыто (fixed) | 199 |
 | **P0 открыто** | **0** |
-| P1 открыто | 73 |
+| P1 открыто | 72 |
 | P2 открыто | 33 |
 | P3 открыто | 47 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **160** |
+| **Всего открыто (матрица)** | **159** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-04 — Karty Hebrew font duplicate consolidation @ current source `0fbe7d1e`
+- Retained `QUAL-P1-02` as CONFIRMED-CURRENT canonical owner for the combined explicit Hebrew font and RTL direction residual.
+- Closed `FONT-P1-01` as DUPLICATE/MERGED because it is only the font-family subset of the same defect.
+- Current engine still uses Georgia/Times for `.hw`, has no `dir="rtl"` contract and selects `he_deep` for the Hebrew tab.
+- Canonical arithmetic moved from **198 closed / 160 open** to **199 closed / 159 open**; P1 moved from **73** to **72**. No Product mutation or production claim.
 
 ### 2026-08-04 — Karty route-profile status duplicate narrowing @ current source `0fbe7d1e`
 - Narrowed `QUAL-P1-09`: the current residual is eight holding/noindex Karty profiles still declaring `currentStatus: "production-dist"`; the broader claim that all Karty profiles are wrong is disproved by the legitimate production Avraam profile.

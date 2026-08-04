@@ -38,7 +38,7 @@ Close this row as the exact font-family subset of the retained canonical owner. 
 
 This transaction does not claim the Hebrew rendering defect is fixed, choose the final font-loading strategy, alter translated Russian text, or establish deployment of current Product `main`. The retained P1 row still requires a bounded Product implementation and runtime semantics check.
 
-## Proposed canonical arithmetic
+## Canonical arithmetic applied by this transaction
 
 - Canonical IDs: **358**
 - Closed: **198 → 199**
