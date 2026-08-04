@@ -37,7 +37,7 @@ Close the P2 row as an exact duplicate of the narrowed P1 residual. No Product m
 
 This transaction does not decide the replacement status vocabulary, mutate route profiles, claim every holding route has identical metadata, or establish deployment of current Product `main`. The retained P1 row remains repair-ready only after the canonical status owner and required migration/profile validators are identified.
 
-## Proposed canonical arithmetic
+## Canonical arithmetic applied by this transaction
 
 - Canonical IDs: **358**
 - Closed: **197 → 198**

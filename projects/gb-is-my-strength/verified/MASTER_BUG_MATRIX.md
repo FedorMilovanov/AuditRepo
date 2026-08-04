@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; duplicate-river implementation commit `39df9ed0e650cc08f93c14145cb592868f0c80e4`; source-only disposition, no current production claim). |
+| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; route-profile status residual narrowed and duplicate merged; no Product mutation or current production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_avraam-river-duplicate.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-profile-status-duplicate.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (197)
+## ✅ ЗАКРЫТО (198)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| QUAL-P2-01 | ✅ **DUPLICATE / MERGED INTO `QUAL-P1-09` 2026-08-04.** This row describes the same holding/noindex route-profile status drift as the narrowed P1 owner. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` disproves the broader “all profiles” wording because the production Avraam profile legitimately uses `production-dist`, while the Shoftim profile still combines `currentStatus: "production-dist"` with an explicit holding/noindex contract. The factual residual remains open only as narrowed `QUAL-P1-09`; no Product mutation or production claim. | `0fbe7d1e` |
 | RIVER-P1-05 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-04.** Product commit `39df9ed0e650cc08f93c14145cb592868f0c80e4` removed the complete second Nile group under `waterRipple`—parallel stem, five arms and glow—while retaining one canonical river system and adding grouped-stroke protection plus a browser water-intersection gate. The historical commit has no attached Actions run, so no CI claim is made. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains the explicit single-system invariant, one Nile stem with five delta arms and the permanent Chromium visual harness. No current production claim. | `39df9ed0` |
 | DRAW-P1-02 | ✅ **DUPLICATE / MERGED INTO `RIVER-P1-05` 2026-08-04.** This row described the same obsolete duplicate river channels and the same visible doubled-line root cause as `RIVER-P1-05`; there is no second independently repairable defect. The shared source repair is commit `39df9ed0e650cc08f93c14145cb592868f0c80e4`, retained on current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329`. Separate river/filter/shoreline findings remain open. No current production claim. | `39df9ed0` |
 | QUAL-P1-07 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #666 aligned canonical Karty story identifiers with the runtime/deep-link vocabulary: internal IDs now use `^[a-z0-9_-]+$`, public `meta.id` remains hyphen-only, no published identifier or URL was renamed, and the permanent guard validates every current `karty/*/route.json`. Exact Product head `12aa744e10c05c134adc951f01cb5e78ef25de65` merged as `424b09b25fc9d4bace3938f4d44f430be8cc7e4b` after four green workflows. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains the schema and all-route guard. No current production claim. | `424b09b2` PR#666; current `0fbe7d1e` |
@@ -280,7 +281,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | DRAW-P1-01 | 🆕 **Karty P1:** Фиксированный сдвиг подписей на 12px в окне 100x16px в `map-engine.js` не решает коллизии подписей в плотных кластерах | verified-source (32ae0d7d) |
 | DRAW-P1-03 | 🆕 **Karty P1:** Отсутствует система архитектурных символов и иконок карт — все места рендерятся простыми плоскими кружками `r=4.5` | verified-source (32ae0d7d) |
 | QUAL-P1-08 | 🆕 **Karty P1:** 8 holding-карт используют универсальную заглушку OpenGraph `og-karty-1200x630.webp`, лишая превью карт собственного визуала | verified-source (32ae0d7d) |
-| QUAL-P1-09 | 🆕 **Karty P1:** Все профили `data/route-profiles/karty-*.json` указывают `currentStatus: "production-dist"`, создавая рассинхрон с `route.json` | verified-source (32ae0d7d) |
+| QUAL-P1-09 | ⚠️ **PARTIAL / NARROWED 2026-08-04:** Не все `production-dist` значения ошибочны; фактический остаток — восемь holding/noindex Karty-профилей всё ещё объявляют `currentStatus: "production-dist"` вопреки собственной непроизводственной publication-семантике. Требуется определить канонический status owner и обновить профили вместе с validators. | current source `0fbe7d1e`; `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-profile-status-duplicate.md` |
 | BASE-P1-01 | 🆕 **Karty P1:** Базовые векторные подложки (`base-geo.svg`, `mediterranean.svg`, `urheimat.svg`): пустой `<defs>` и 18 отсутствующих ID-линковок (символы гор `#hill`, `#peak`, `#peak-snow`, путь подписи `#canaanRidge`, градиенты `#landG`, `#seaG`), вызывающие сбой заливок суши и невидимость хребтов | verified-source (32ae0d7d) |
 | BASE-P1-02 | 🆕 **Karty P1:** Принудительное `opacity="0.5"` на контейнере `me-base-geo` в `map-engine.js:2612`, обесцвечивающее рельеф местности | verified-source (32ae0d7d) |
 | BASE-P1-03 | 🆕 **Karty P1:** Угольно-чёрная заливка суши (`#22241f`) и 6 слоев анимированного звёздного неба в `avraam/base.svg`, заслоняющие рельеф и маркеры | verified-source (32ae0d7d) |
@@ -315,7 +316,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (34)
+## 🟡 P2 — ОТКРЫТО (33)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -327,7 +328,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | MAP-P2-02 | 🆕 **Karty P2:** `preload route.json` вызывает предупреждение браузера о несоответствии credentials и создаёт двойной сетевой запрос | verified-browser (c2c339708252) |
 | ENGINE-P2-03 | 🆕 **Karty P2:** Безусловная искусственная задержка загрузки (600 мс) скрывает уже полученные данные карты | verified-source (32ae0d7d) |
 | ENGINE-P2-04 | 🆕 **Karty P2:** Тосты и уведомления о смене сюжета не имеют `role="status"` и `aria-live`, оставаясь невидимыми для скринридеров | verified-source (32ae0d7d) |
-| QUAL-P2-01 | 🆕 **Karty P2:** Профили маршрутов 8 holding-карт в `data/route-profiles/karty-*.json` указывают `currentStatus: "production-dist"`, вызывая дрейф статусов | verified-source (32ae0d7d) |
 | QUAL-P2-02 | 🆕 **Karty P2:** Черновой лист `nachalo/route.json` не содержит обязательных полей `stories`, `meta.id`, `meta.era`, `meta.stats`, не проходя Ajv валидацию | verified-source (32ae0d7d) |
 | QUAL-P2-04 | 🆕 **Karty P2:** `renderMarkers()` уничтожает и заново создаёт 54+ SVG-узлов при каждом вызове, вызывая нагрузки на GC и сброс состояния слоёв | verified-source (32ae0d7d) |
 
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 197 closed + 161 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 198 closed + 160 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 197 |
+| Закрыто (fixed) | 198 |
 | **P0 открыто** | **0** |
 | P1 открыто | 73 |
-| P2 открыто | 34 |
+| P2 открыто | 33 |
 | P3 открыто | 47 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **161** |
+| **Всего открыто (матрица)** | **160** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-04 — Karty route-profile status duplicate narrowing @ current source `0fbe7d1e`
+- Narrowed `QUAL-P1-09`: the current residual is eight holding/noindex Karty profiles still declaring `currentStatus: "production-dist"`; the broader claim that all Karty profiles are wrong is disproved by the legitimate production Avraam profile.
+- Closed `QUAL-P2-01` as DUPLICATE/MERGED into the narrowed P1 owner.
+- Current Shoftim profile combines `production-dist` with an explicit holding/noindex reason, proving the residual without choosing a replacement vocabulary.
+- Canonical arithmetic moved from **197 closed / 161 open** to **198 closed / 160 open**; P2 moved from **34** to **33**. P1 remains **73**. No Product mutation or production claim.
 
 ### 2026-08-04 — Avraam duplicate-river closure @ current source `0fbe7d1e`
 - Closed `RIVER-P1-05` as FIXED-CURRENT and `DRAW-P1-02` as DUPLICATE/MERGED into the same root cause.
