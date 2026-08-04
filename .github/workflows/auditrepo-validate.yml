@@ -103,3 +103,37 @@ jobs:
             reports/repository-history-forensic-audit.md
           if-no-files-found: error
           retention-days: 30
+
+  reconcile-pr156-readonly:
+    if: github.event_name == 'pull_request' && github.head_ref == 'ci/run-reconcile-pr156-readonly'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Checkout trusted helper from current main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Set up Node 22.12
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+      - name: Copy helper outside the mutable worktree
+        run: cp scripts/reconcile_pr156_artifact.py "${RUNNER_TEMP}/reconcile_pr156_artifact.py"
+      - name: Build and validate exact reconciled tree
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 "${RUNNER_TEMP}/reconcile_pr156_artifact.py"
+      - name: Upload exact reconciliation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr156-reconciliation-${{ github.run_id }}
+          path: /tmp/reconcile-output/**
+          if-no-files-found: error
+          retention-days: 3
