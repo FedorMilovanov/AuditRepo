@@ -2,13 +2,13 @@
 
 > **Meaningful handoff only.** The matrix is the durable verified backlog; this file is the single writer for current source head, active owner lanes and the next executable barriers.
 
-**AuditRepo base before this handoff:** `1445d688e50fb5b7c997ae565e27462e4c6cc1e9`
-**Exact finding-disposition anchor:** `0fbe7d1ead9ebd1bea867418e254da438ec63329`
-**Current Product main:** `0fbe7d1ead9ebd1bea867418e254da438ec63329`
+**AuditRepo base before this handoff:** `9211b3edd7ca486c1a7457abc24ccdbf99c18d84`
+**Exact finding-disposition anchor:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
+**Current Product main:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
-**Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `0fbe7d1e`.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-aggregate-duplicates.md`
-**Canonical matrix:** **358 IDs = 206 closed + 152 open**.
+**Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `f9d01207`.
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_qual-p1-02-hebrew-semantics.md`
+**Canonical matrix:** **358 IDs = 207 closed + 151 open**.
 
 ## Source convergence since the disposition anchor
 
@@ -33,36 +33,37 @@ The following Product waves are merged in `main` and must not be reimplemented:
 - `424b09b25fc9d4bace3938f4d44f430be8cc7e4b` — Karty story-ID schema alignment from PR #666: underscore-bearing internal IDs, hyphen-only public route IDs and an all-route permanent guard;
 - `39df9ed0e650cc08f93c14145cb592868f0c80e4` — Avraam duplicate-river root-cause repair: removed the second `waterRipple` Nile and retained one canonical river system;
 - `0fbe7d1ead9ebd1bea867418e254da438ec63329` — current Product main after subsequent independently merged lanes; this handoff uses it only as exact source-state authority and does not infer additional matrix dispositions.
+- `f9d0120718569c510833dba7a3abd68ce2f6a003` — Product PR #873 bounded `QUAL-P1-02` repair: Hebrew-capable font stack, isolated RTL token semantics, explicit Hebrew title boundaries and permanent source/Chromium witnesses; exact PR head `cf128cc429ccfa1c48fce4638b3f489f8dc27135` passed 11/11 workflows.
 
-Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #144 merges three additional Nagornaya aggregate rows into still-open root owners; it makes no Product mutation or production claim.
+Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143–#144 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. Product PR #873 is merged and supplies the exact source/Chromium/CI evidence for closing `QUAL-P1-02`; AuditRepo PR #145 records only that disposition and makes no Product mutation or production claim.
 
 ## Active canonical owner lanes
 
 ### Product repository
 
-- No open Product PR was observed at exact state capture for this transaction.
-- Product `main@0fbe7d1ead9ebd1bea867418e254da438ec63329` is source authority only; the last exact production authority remains separate.
+- Product PR #875 (`lane/system-tts-deep-audit-2026-08-04`) is an unrelated TTS diagnostic lane touching `scripts/tts-engine-lifecycle-browser-test.js`; it does not overlap this Karty closure.
+- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` is source authority for `QUAL-P1-02`; the last exact production authority remains separate.
 
 ### AuditRepo
 
-- PR #144 (`verify/nagornaya-aggregate-duplicates-20260804`) is the active canonical consolidation lane for `NG-INLINE-02`, `NG-STRUCT-02` and `NG-MOBILE-01`.
+- PR #145 (`verify/qual-p1-02-hebrew-closure-20260804`) is the active canonical closure lane for `QUAL-P1-02`.
 - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
 
 ## Current counts
 
 - P0: 0
-- P1: 72
+- P1: 71
 - P2: 31
 - P3: 42
 - Refactoring: 4
 - AuditRepo: 3
-- Total open: 152
-- Closed: 206
+- Total open: 151
+- Closed: 207
 
 ## Next meaningful work
 
-1. Merge AuditRepo PR #144 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
+1. Merge AuditRepo PR #145 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
 2. Re-fetch both repositories and continue current-head harvest; keep all Nagornaya root owners open until bounded Product repairs exist.
-3. `QUAL-P1-02`, `QUAL-P1-06` and narrowed `QUAL-P1-09` remain confirmed Product candidates; do not double-count their subsets.
+3. `QUAL-P1-06` and narrowed `QUAL-P1-09` remain confirmed Product candidates; `QUAL-P1-02` is closed by Product PR #873 and must not be reimplemented.
 4. Narrow `MAP-P1-20` rather than closing its still-current unversioned static-resource residual.
 5. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence.
