@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   complete:
-    if: github.event.pull_request.number == 136 && github.event.pull_request.head.sha == github.sha
+    if: github.event.pull_request.number == 136
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -138,7 +138,7 @@ jobs:
           2. Re-fetch both repositories and choose the next independent current P1 cluster against one exact Product anchor; close only fixed/stale/false/duplicate findings or narrow a factual residual.
           3. Obtain a separate same-SHA deployment/live witness when making a production claim; source/PR green at `0fbe7d1e` is not production authority.
           4. Preserve Single-Writer-Per-Fact: counts/statuses only in `verified/MASTER_BUG_MATRIX.md`; current source/deploy/next-step truth only here.
-          5. Do not turn noncanonical visual polish or historical reports into repair-ready rows without current-head verification.
+          5. Do not turn noncanonical visual polish or historical reports into new repair-ready matrix rows without current-head verification.
           """
           new_next = """## Next meaningful work
 
@@ -146,7 +146,7 @@ jobs:
           2. Re-fetch both repositories and continue the current-head harvest before opening any Product repair lane.
           3. Obtain a separate same-SHA deployment/live witness when making a production claim; source/PR green at `0fbe7d1e` is not production authority.
           4. Preserve Single-Writer-Per-Fact: counts/statuses only in `verified/MASTER_BUG_MATRIX.md`; current source/deploy/next-step truth only here.
-          5. Do not turn noncanonical visual polish or historical reports into repair-ready rows without current-head verification.
+          5. Do not turn noncanonical visual polish or historical reports into new repair-ready matrix rows without current-head verification.
           """
           if nxt.count(old_next) != 1:
               raise SystemExit('NEXT next-work block drifted')
