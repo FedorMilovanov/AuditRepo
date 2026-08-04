@@ -1,0 +1,196 @@
+name: Complete editorial projection closure
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: complete-editorial-projection-pr-136
+  cancel-in-progress: false
+
+jobs:
+  complete:
+    if: github.event.pull_request.number == 136 && github.event.pull_request.head.sha == github.sha
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout verifier branch
+        uses: actions/checkout@v4
+        with:
+          ref: verify/editorial-projection-51-closure-20260804
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Synchronize current AuditRepo main
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main --prune
+          git merge --no-edit origin/main
+
+      - name: Apply bounded canonical transaction
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          next_path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          reverify_path = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_editorial-projection-51.md')
+
+          matrix = matrix_path.read_text(encoding='utf-8')
+
+          closed_marker = """## ✅ ЗАКРЫТО (191)
+
+          | ID | Описание | Коммит |
+          |---|---|---|
+          """
+          closed_rows = """## ✅ ЗАКРЫТО (192)
+
+          | ID | Описание | Коммит |
+          |---|---|---|
+          | EDITORIAL-PROJECTION-51-DRIFT | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #442 restored exactly 27 unauthorized `editorialPublishedAt` changes while retaining all 51 proven RSS/Search projection observations, review statuses, modification dates, provenance and source boundary. It added permanent preservation and frozen/observed diff contracts; issue #217 closed in merge `f7e426996fd41a23ca720299a8ef1ce7f1c0952f`. At current Product anchor `0fbe7d1ead9ebd1bea867418e254da438ec63329`, workflow blob `00caeeaecff5a70d22ccbfa1263aefd5ef637640` and preservation-test blob `0c7a733df4c6b661fdffd377e7f0d5b4c3bc9708` are identical to exact green head `7de20ed77e60ec05bb91322ac03800a3d9860410`, where Editorial Metadata v3 run `30679631914` succeeded. Historical same-SHA deployment witness `30300756799` belongs to `f7e42699`; no current production claim. | `f7e42699` PR#442; run `30679631914`; current `0fbe7d1e` |
+          """
+          if matrix.count(closed_marker) != 1:
+              raise SystemExit('closed section marker drifted')
+          matrix = matrix.replace(closed_marker, closed_rows, 1)
+
+          open_row = '| EDITORIAL-PROJECTION-51-DRIFT | Projection-only Search/RSS observations must not overwrite canonical editorial dates. Reconcile the 51-field diff by field class and retain human editorial authority; do not add a generic writer merely to make the workflow green. | source issue #217; `reverify/MULTIAGENT_CONVERGENCE_2026-07-25_d94b5488.md` |\n'
+          if matrix.count(open_row) != 1:
+              raise SystemExit('editorial open row drifted')
+          matrix = matrix.replace(open_row, '', 1)
+
+          replacements = {
+              '## 🟠 P1 — ОТКРЫТО (79)': '## 🟠 P1 — ОТКРЫТО (78)',
+              '| Закрыто (fixed) | 191 |': '| Закрыто (fixed) | 192 |',
+              '| P1 открыто | 79 |': '| P1 открыто | 78 |',
+              '| **Всего открыто (матрица)** | **167** |': '| **Всего открыто (матрица)** | **166** |',
+              '## Статистика (обновлено 2026-08-04: disposition anchor `778a218d`; last exact production `abf1edba`; 358 canonical = 191 closed + 167 open)': '## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 192 closed + 166 open)',
+              '| Source verification anchor | `778a218d9e6dc4c051721fc0f0fe56ee9125c797` (source/main merge of PR #812; exact verified PR head `3bd7f8a47bab65f08de45d81707cff2f6233cc55`; no production claim). |': '| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; fixed implementation merge `f7e426996fd41a23ca720299a8ef1ce7f1c0952f`; exact green preservation/workflow head `7de20ed77e60ec05bb91322ac03800a3d9860410`; no current production claim). |',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-03_778a218d_avraam-skip-contrast.md` |': '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_editorial-projection-51.md` |',
+          }
+          for old, new in replacements.items():
+              if matrix.count(old) != 1:
+                  raise SystemExit(f'matrix marker drifted: {old}')
+              matrix = matrix.replace(old, new, 1)
+
+          session_marker = '## Session log (append-only)\n\n'
+          session_entry = """## Session log (append-only)
+
+          ### 2026-08-04 — editorial projection-only drift closure @ current source `0fbe7d1e`
+          - Closed `EDITORIAL-PROJECTION-51-DRIFT` as FIXED-CURRENT and architecture-superseded.
+          - Product PR #442 / merge `f7e426996fd41a23ca720299a8ef1ce7f1c0952f` restored 27 unauthorized editorial dates while retaining all 51 proven projection observations and added permanent preservation/diff contracts.
+          - Current source retains the exact workflow and preservation-test blobs that passed Editorial Metadata v3 run `30679631914` on exact head `7de20ed77e60ec05bb91322ac03800a3d9860410`.
+          - Historical deployment run `30300756799` belongs to `f7e42699`; current Product `0fbe7d1e` has no same-SHA production claim.
+          - Canonical arithmetic moved from **191 closed / 167 open** to **192 closed / 166 open**; P1 moved from **79** to **78**.
+
+          """
+          if matrix.count(session_marker) != 1:
+              raise SystemExit('session log marker drifted')
+          matrix = matrix.replace(session_marker, session_entry, 1)
+
+          if open_row in matrix or matrix.count('| EDITORIAL-PROJECTION-51-DRIFT |') != 1:
+              raise SystemExit('canonical editorial ID multiplicity drift')
+          matrix_path.write_text(matrix, encoding='utf-8')
+
+          nxt = next_path.read_text(encoding='utf-8')
+          next_replacements = {
+              '**AuditRepo base before this handoff:** `af4311d76b617d61eb5061fc4663df28d8f69add`': '**AuditRepo base before this handoff:** `ac44c0546c7d637455466dff34828a8c025126e4`',
+              '**Exact finding-disposition anchor:** `778a218d9e6dc4c051721fc0f0fe56ee9125c797`': '**Exact finding-disposition anchor:** `0fbe7d1ead9ebd1bea867418e254da438ec63329`',
+              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-03_778a218d_avraam-skip-contrast.md`': '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_editorial-projection-51.md`',
+              '**Canonical matrix:** **358 IDs = 191 closed + 167 open**.': '**Canonical matrix:** **358 IDs = 192 closed + 166 open**.',
+              '- P1: 79': '- P1: 78',
+              '- Total open: 167': '- Total open: 166',
+              '- Closed: 191': '- Closed: 192',
+          }
+          for old, new in next_replacements.items():
+              if nxt.count(old) != 1:
+                  raise SystemExit(f'NEXT marker drifted: {old}')
+              nxt = nxt.replace(old, new, 1)
+
+          old_boundary = 'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PR #132 now applies the bounded two-row disposition supported by source PR #812: `A11Y-P1-02` is FIXED-CURRENT and `A11Y-P1-03` is STALE-ON-CURRENT-HEAD. Later Product movement through `0fbe7d1e` does not silently broaden either closure, and no production claim is made.'
+          new_boundary = 'Source movement does **not** change canonical AuditRepo counts by itself. PR #132 is merged and its two Avraam dispositions remain bounded. AuditRepo PR #136 applies one additional current-head closure: `EDITORIAL-PROJECTION-51-DRIFT` is fixed by Product PR #442 and retained by the approval-gated editorial metadata architecture at `0fbe7d1e`. Historical deployment evidence for `f7e42699` does not establish current production.'
+          if nxt.count(old_boundary) != 1:
+              raise SystemExit('NEXT source-boundary marker drifted')
+          nxt = nxt.replace(old_boundary, new_boundary, 1)
+
+          old_audit = """### AuditRepo
+
+          - PR #132 (`verify/avraam-a11y-02-03-clean-20260803`) is the active canonical closure lane for `A11Y-P1-02` and `A11Y-P1-03`.
+          - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
+          """
+          new_audit = """### AuditRepo
+
+          - PR #136 (`verify/editorial-projection-51-closure-20260804`) is the active canonical closure lane for `EDITORIAL-PROJECTION-51-DRIFT`.
+          - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
+          """
+          if nxt.count(old_audit) != 1:
+              raise SystemExit('NEXT AuditRepo block drifted')
+          nxt = nxt.replace(old_audit, new_audit, 1)
+
+          old_next = """## Next meaningful work
+
+          1. Merge AuditRepo PR #132 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
+          2. Re-fetch both repositories and choose the next independent current P1 cluster against one exact Product anchor; close only fixed/stale/false/duplicate findings or narrow a factual residual.
+          3. Obtain a separate same-SHA deployment/live witness when making a production claim; source/PR green at `0fbe7d1e` is not production authority.
+          4. Preserve Single-Writer-Per-Fact: counts/statuses only in `verified/MASTER_BUG_MATRIX.md`; current source/deploy/next-step truth only here.
+          5. Do not turn noncanonical visual polish or historical reports into repair-ready rows without current-head verification.
+          """
+          new_next = """## Next meaningful work
+
+          1. Merge AuditRepo PR #136 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
+          2. Re-fetch both repositories and continue the current-head harvest before opening any Product repair lane.
+          3. Obtain a separate same-SHA deployment/live witness when making a production claim; source/PR green at `0fbe7d1e` is not production authority.
+          4. Preserve Single-Writer-Per-Fact: counts/statuses only in `verified/MASTER_BUG_MATRIX.md`; current source/deploy/next-step truth only here.
+          5. Do not turn noncanonical visual polish or historical reports into repair-ready rows without current-head verification.
+          """
+          if nxt.count(old_next) != 1:
+              raise SystemExit('NEXT next-work block drifted')
+          nxt = nxt.replace(old_next, new_next, 1)
+          next_path.write_text(nxt, encoding='utf-8')
+
+          reverify = reverify_path.read_text(encoding='utf-8')
+          old_heading = '## Proposed canonical arithmetic'
+          new_heading = '## Canonical arithmetic applied by this transaction'
+          if reverify.count(old_heading) != 1:
+              raise SystemExit('reverify arithmetic marker drifted')
+          reverify = reverify.replace(old_heading, new_heading, 1)
+          reverify_path.write_text(reverify, encoding='utf-8')
+          PY
+
+          rm .github/workflows/complete-editorial-projection-closure.yml
+
+      - name: Validate bounded transaction
+        run: |
+          set -euo pipefail
+          git diff --check
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 -m py_compile \
+            scripts/check_matrix_coverage.py \
+            scripts/matrix_coverage_lib.py \
+            scripts/matrix_coverage_contexts.py \
+            scripts/matrix_coverage_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p "${RUNNER_TEMP}/matrix-coverage"
+          python3 scripts/check_matrix_coverage.py \
+            --verbose \
+            --json-out "${RUNNER_TEMP}/matrix-coverage/report.json"
+
+      - name: Commit canonical closure and remove bootstrap
+        run: |
+          set -euo pipefail
+          git status --short
+          git add \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_editorial-projection-51.md \
+            .github/workflows/complete-editorial-projection-closure.yml
+          git diff --cached --check
+          git commit -m "audit(gb): close editorial projection-only drift"
+          git push origin HEAD:verify/editorial-projection-51-closure-20260804
