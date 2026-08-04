@@ -5,7 +5,7 @@
 - Canonical finding: `NG-DARK-01`
 - Product anchor: `f9d0120718569c510833dba7a3abd68ce2f6a003`
 - AuditRepo base: `a1ae62a06a803824d4dd828bbd06a4cead3dd1b1`
-- Closure/narrowing lane: AuditRepo PR #151
+- Narrowing lane: AuditRepo PR #151
 - Product mutation: **none**
 - Browser/live-production claim: **none**
 - TTS scope: **excluded**
@@ -24,153 +24,84 @@ The fail-closed scan selected **9** current legacy Nagornaya routes by the seman
 - `nagornaya/nakhodki/index.html`
 - `nagornaya/seriya/index.html`
 
-It extracted **114 distinct static color utility tokens / 2947 uses** from their markup, resolved every local stylesheet linked by each page, and matched each token only against a dark-context selector in CSS actually loaded by the route.
+The scan extracted **114 distinct static color utility tokens / 2947 uses**, resolved every local stylesheet linked by each page, and matched each token only against dark-context selectors in CSS actually loaded by that route.
 
-- Fully covered now: **65 tokens / 2408 uses**.
-- Still fully uncovered: **49 tokens**.
-- Partially covered across using routes: **0 tokens**.
-- Current residual: **49 tokens / 539 uses**.
+Across the complete ambient inventory:
 
-The current linked CSS covers, among others, `text-stone-500` (296×), `text-stone-700` (283×), `text-stone-800` (275×), `text-stone-600` (259×), `text-stone-400` (254×), `text-stone-300` (219×), `border-stone-200` (131×), `bg-stone-50` (79×), `text-emerald-800` (68×), `text-amber-600` (46×), `bg-emerald-100` (41×), `bg-emerald-50` (41×), `bg-amber-50` (35×), `border-amber-100` (27×), и ещё 51. Therefore the historical “54 classes all missing; remaps only in `mobile-hotfix.css`” wording is stale. In particular, `bg-stone-100` and `bg-rose-50` are governed by linked dark selectors in `css/nagornaya-mobile-toc.css`.
+- **65 tokens / 2408 uses** have an explicit linked dark-context rule;
+- **49 tokens / 539 uses** have no explicit linked dark-context selector;
+- no token is only partially covered across the routes where it is used.
 
-The reproducible current residual is: `border-stone-100` (167×), `text-blue-600` (41×), `text-rose-600` (41×), `text-amber-400` (40×), `text-purple-600` (40×), `bg-stone-900` (30×), `border-amber-400` (21×), `bg-amber-600` (17×), `text-emerald-600` (15×), `bg-stone-800` (13×), `text-purple-700` (12×), `text-red-500` (12×), `text-stone-100` (9×), `border-rose-100` (7×), и ещё 35.
+Absence of a dedicated dark selector is not automatically a visual defect. Some ambient tokens intentionally describe already-dark sidebar or control surfaces. Therefore the canonical disposition does **not** promote all 49 tokens into `NG-DARK-01`.
 
-### Current residual inventory
+## Historical-claim boundary
 
-| Utility token | Uses | Routes | Dark coverage | Linked rule files |
-|---|---:|---:|---|---|
-| `border-stone-100` | 167 | 8 | missing on 8/8 route(s) | — |
-| `text-blue-600` | 41 | 2 | missing on 2/2 route(s) | — |
-| `text-rose-600` | 41 | 1 | missing on 1/1 route(s) | — |
-| `text-amber-400` | 40 | 8 | missing on 8/8 route(s) | — |
-| `text-purple-600` | 40 | 1 | missing on 1/1 route(s) | — |
-| `bg-stone-900` | 30 | 8 | missing on 8/8 route(s) | — |
-| `border-amber-400` | 21 | 3 | missing on 3/3 route(s) | — |
-| `bg-amber-600` | 17 | 8 | missing on 8/8 route(s) | — |
-| `text-emerald-600` | 15 | 4 | missing on 4/4 route(s) | — |
-| `bg-stone-800` | 13 | 8 | missing on 8/8 route(s) | — |
-| `text-purple-700` | 12 | 1 | missing on 1/1 route(s) | — |
-| `text-red-500` | 12 | 4 | missing on 4/4 route(s) | — |
-| `text-stone-100` | 9 | 8 | missing on 8/8 route(s) | — |
-| `border-rose-100` | 7 | 1 | missing on 1/1 route(s) | — |
-| `border-rose-400` | 7 | 1 | missing on 1/1 route(s) | — |
-| `text-amber-500` | 6 | 2 | missing on 2/2 route(s) | — |
-| `border-stone-600` | 5 | 1 | missing on 1/1 route(s) | — |
-| `text-orange-800` | 5 | 2 | missing on 2/2 route(s) | — |
-| `border-stone-300` | 4 | 3 | missing on 3/3 route(s) | — |
-| `text-emerald-500` | 4 | 1 | missing on 1/1 route(s) | — |
-| `text-orange-500` | 4 | 1 | missing on 1/1 route(s) | — |
-| `text-stone-200` | 4 | 1 | missing on 1/1 route(s) | — |
-| `border-emerald-400` | 3 | 1 | missing on 1/1 route(s) | — |
-| `text-teal-600` | 3 | 1 | missing on 1/1 route(s) | — |
-| `text-teal-700` | 3 | 1 | missing on 1/1 route(s) | — |
-| `bg-purple-600` | 2 | 2 | missing on 2/2 route(s) | — |
-| `bg-stone-200` | 2 | 2 | missing on 2/2 route(s) | — |
-| `bg-blue-600` | 1 | 1 | missing on 1/1 route(s) | — |
-| `bg-emerald-600` | 1 | 1 | missing on 1/1 route(s) | — |
-| `bg-emerald-700` | 1 | 1 | missing on 1/1 route(s) | — |
-| `bg-emerald-800` | 1 | 1 | missing on 1/1 route(s) | — |
-| `bg-purple-800` | 1 | 1 | missing on 1/1 route(s) | — |
-| `bg-rose-600` | 1 | 1 | missing on 1/1 route(s) | — |
-| `border-amber-300` | 1 | 1 | missing on 1/1 route(s) | — |
-| `border-amber-500` | 1 | 1 | missing on 1/1 route(s) | — |
-| `border-blue-500` | 1 | 1 | missing on 1/1 route(s) | — |
-| `border-emerald-500` | 1 | 1 | missing on 1/1 route(s) | — |
-| `border-red-500` | 1 | 1 | missing on 1/1 route(s) | — |
-| `border-rose-200` | 1 | 1 | missing on 1/1 route(s) | — |
-| `text-amber-300` | 1 | 1 | missing on 1/1 route(s) | — |
-| `text-indigo-200` | 1 | 1 | missing on 1/1 route(s) | — |
-| `text-indigo-300` | 1 | 1 | missing on 1/1 route(s) | — |
-| `text-orange-700` | 1 | 1 | missing on 1/1 route(s) | — |
-| `text-purple-950` | 1 | 1 | missing on 1/1 route(s) | — |
-| `text-red-600` | 1 | 1 | missing on 1/1 route(s) | — |
-| `text-rose-200` | 1 | 1 | missing on 1/1 route(s) | — |
-| `text-rose-700` | 1 | 1 | missing on 1/1 route(s) | — |
-| `text-teal-200` | 1 | 1 | missing on 1/1 route(s) | — |
-| `text-teal-300` | 1 | 1 | missing on 1/1 route(s) | — |
+The July row specifically claimed these families were unremapped:
 
-### Current covered inventory
+- `text-{accent}-600`;
+- `text-{accent}-700`;
+- `text-amber-800`;
+- `border-stone-100`;
+- `bg-rose-50`;
+- `bg-stone-100` and `bg-stone-200`.
 
-| Utility token | Uses | Routes | Dark coverage | Linked rule files |
-|---|---:|---:|---|---|
-| `text-stone-500` | 296 | 9 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `text-stone-700` | 283 | 9 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `text-stone-800` | 275 | 9 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `text-stone-600` | 259 | 8 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `text-stone-400` | 254 | 8 | covered on every using route | `css/nagornaya-mobile-toc.css` |
-| `text-stone-300` | 219 | 8 | covered on every using route | `css/nagornaya-mobile-toc.css` |
-| `border-stone-200` | 131 | 9 | covered on every using route | `css/mobile-hotfix.css` |
-| `bg-stone-50` | 79 | 7 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `text-emerald-800` | 68 | 6 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `text-amber-600` | 46 | 7 | covered on every using route | `css/nagornaya-mobile-toc.css` |
-| `bg-emerald-100` | 41 | 3 | covered on every using route | `css/mobile-hotfix.css` |
-| `bg-emerald-50` | 41 | 5 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `bg-amber-50` | 35 | 6 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `border-amber-100` | 27 | 5 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-blue-800` | 25 | 5 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `text-blue-700` | 23 | 3 | covered on every using route | `css/nagornaya-mobile-toc.css` |
-| `border-emerald-300` | 21 | 3 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-stone-700` | 19 | 8 | covered on every using route | `css/nagornaya-mobile-toc.css` |
-| `bg-stone-100` | 18 | 8 | covered on every using route | `css/nagornaya-mobile-toc.css` |
-| `text-emerald-700` | 15 | 3 | covered on every using route | `css/nagornaya-mobile-toc.css` |
-| `text-stone-900` | 15 | 8 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `bg-rose-50` | 13 | 1 | covered on every using route | `css/nagornaya-mobile-toc.css` |
-| `text-red-800` | 13 | 4 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `bg-blue-100` | 12 | 4 | covered on every using route | `css/mobile-hotfix.css` |
-| `bg-red-50` | 11 | 6 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `text-amber-800` | 11 | 3 | covered on every using route | `css/nagornaya-mobile-toc.css` |
-| `bg-blue-50` | 10 | 5 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-emerald-100` | 10 | 2 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-amber-700` | 10 | 5 | covered on every using route | `css/nagornaya-mobile-toc.css` |
-| `border-red-100` | 9 | 3 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-rose-800` | 9 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-emerald-200` | 8 | 3 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-amber-200` | 8 | 8 | covered on every using route | `css/mobile-hotfix.css` |
-| `bg-purple-50` | 7 | 2 | covered on every using route | `css/mobile-hotfix.css` |
-| `bg-orange-50` | 6 | 2 | covered on every using route | `css/mobile-hotfix.css`, `css/nagornaya-mobile-toc.css` |
-| `border-blue-200` | 6 | 4 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-orange-200` | 6 | 2 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-amber-200` | 5 | 5 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-purple-900` | 5 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-blue-100` | 4 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-orange-100` | 4 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-purple-100` | 4 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-red-200` | 4 | 4 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-purple-300` | 4 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-red-700` | 4 | 3 | covered on every using route | `css/nagornaya-mobile-toc.css` |
-| `bg-amber-100` | 3 | 2 | covered on every using route | `css/mobile-hotfix.css` |
-| `bg-emerald-200` | 3 | 2 | covered on every using route | `css/mobile-hotfix.css` |
-| `bg-red-100` | 3 | 2 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-blue-300` | 3 | 2 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-purple-200` | 3 | 2 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-purple-800` | 3 | 3 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-blue-900` | 2 | 2 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-emerald-200` | 2 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-emerald-900` | 2 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `bg-indigo-100` | 1 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `bg-orange-100` | 1 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `bg-purple-100` | 1 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `bg-teal-100` | 1 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `bg-teal-50` | 1 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-red-300` | 1 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `border-teal-200` | 1 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-amber-900` | 1 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-indigo-800` | 1 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-purple-200` | 1 | 1 | covered on every using route | `css/mobile-hotfix.css` |
-| `text-teal-800` | 1 | 1 | covered on every using route | `css/mobile-hotfix.css` |
+Exactly **20 currently used tokens / 467 uses** fall inside that historical boundary.
+
+### Historical tokens now covered
+
+| Utility token | Uses | Routes | Effective linked dark owner |
+|---|---:|---:|---|
+| `text-amber-600` | 46 | 7 | `css/nagornaya-mobile-toc.css` |
+| `text-blue-700` | 23 | 3 | `css/nagornaya-mobile-toc.css` |
+| `bg-stone-100` | 18 | 8 | `css/nagornaya-mobile-toc.css` |
+| `text-emerald-700` | 15 | 3 | `css/nagornaya-mobile-toc.css` |
+| `bg-rose-50` | 13 | 1 | `css/nagornaya-mobile-toc.css` |
+| `text-amber-800` | 11 | 3 | `css/nagornaya-mobile-toc.css` |
+| `text-amber-700` | 10 | 5 | `css/nagornaya-mobile-toc.css` |
+| `text-red-700` | 4 | 3 | `css/nagornaya-mobile-toc.css` |
+
+These **8 tokens / 140 uses** disprove the broad claim that every listed family remains unremapped and that all dark treatment lives only in `mobile-hotfix.css`. In particular:
+
+- body and content `bg-stone-100` are covered;
+- `bg-rose-50` is covered;
+- `text-amber-800` is covered;
+- several 600/700 accent levels are covered.
+
+### Canonical current residual
+
+The following **12 tokens / 327 uses** are both inside the historical claim and still lack an explicit linked dark-context selector:
+
+| Utility token | Uses | Routes using token | Current direct dark rule |
+|---|---:|---:|---|
+| `border-stone-100` | 167 | 8 | none found |
+| `text-blue-600` | 41 | 2 | none found |
+| `text-rose-600` | 41 | 1 | none found |
+| `text-purple-600` | 40 | 1 | none found |
+| `text-emerald-600` | 15 | 4 | none found |
+| `text-purple-700` | 12 | 1 | none found |
+| `text-teal-600` | 3 | 1 | none found |
+| `text-teal-700` | 3 | 1 | none found |
+| `bg-stone-200` | 2 | 2 | none found |
+| `text-orange-700` | 1 | 1 | none found |
+| `text-red-600` | 1 | 1 | none found |
+| `text-rose-700` | 1 | 1 | none found |
+
+This is the only source-level residual retained under `NG-DARK-01` by this transaction.
+
+The other **37 tokens / 212 uses** without a direct dark selector are outside the historical row. They are not silently added to the canonical bug. A future browser/computed-style or owner review may classify them separately, but this source-only lane makes no visual-failure claim for them.
 
 ## Disposition
 
-`NG-DARK-01` remains **OPEN / CURRENT**, but is narrowed to the exact residual inventory above.
+`NG-DARK-01` remains **OPEN / CURRENT**, narrowed from the stale “54 classes” statement to **12 historically in-scope tokens / 327 uses**.
 
-This transaction removes fixed/stale subsets from the canonical wording without pretending that the broader dark-theme debt is repaired. Future Product work must use the generated residual table as its acceptance boundary instead of the July count or an assumption that all accent utilities lack dark treatment.
+Future Product work must verify computed appearance and repair only this bounded set, preferably through linked semantic/chapter variables or explicit governed remaps. It must not recreate fixed `NG-BODY-01`, reopen duplicate rows, or treat every ambient utility without its own selector as broken.
 
-Closed rows `NG-DARK-04` and `NG-DARK-05` remain closed as historical duplicate consolidations. Their old current-source explanations are reconciled: `bg-rose-50` and body `bg-stone-100` now have effective linked remaps; any still-uncovered token is owned only by this narrowed root.
+Closed rows `NG-DARK-04` and `NG-DARK-05` remain closed as historical duplicate consolidations. Their old current-source explanations are reconciled: `bg-rose-50` and `bg-stone-100` now have effective linked remaps; `bg-stone-200`, where still used, remains represented only by the narrowed root.
 
 ## Evidence boundary
 
-- exact Product source only;
+- exact Product source and route-linked CSS only;
 - no Product mutation;
-- no browser, deployed-SHA or live-production claim;
+- no browser, computed-style, deployed-SHA or live-production claim;
 - no TTS inspection or modification;
-- canonical arithmetic is unchanged at **358 = 213 closed + 145 open**, P1 **70**.
+- canonical arithmetic remains **358 = 213 closed + 145 open**, P1 **70**.
