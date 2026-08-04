@@ -1,0 +1,245 @@
+name: Reconcile search audit with current main
+
+on:
+  push:
+    branches:
+      - arena/019fccbd-auditrepo
+    paths:
+      - .github/workflows/reconcile-search-audit.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: reconcile-search-audit-156
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: arena/019fccbd-auditrepo
+
+      - name: Guard exact transaction anchors
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected_parent=f34bc0ebc53cb85fae380cbf65477052e57c7041
+          expected_main=919c212ea0afe404afa076b450dfb4331f68d9ed
+          test "$(git rev-parse HEAD^)" = "$expected_parent"
+          git fetch origin main --prune
+          test "$(git rev-parse origin/main)" = "$expected_main"
+
+      - name: Merge main and reconcile canonical single-writer files
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected_parent=f34bc0ebc53cb85fae380cbf65477052e57c7041
+          matrix=projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          handoff=projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+
+          git show "$expected_parent:$matrix" > /tmp/search-matrix.md
+          git show "$expected_parent:$handoff" > /tmp/search-handoff.md
+          git show origin/main:"$matrix" > /tmp/main-matrix.md
+          git show origin/main:"$handoff" > /tmp/main-handoff.md
+
+          git merge --no-commit --no-ff origin/main || true
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          handoff_path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          main_matrix = Path('/tmp/main-matrix.md').read_text(encoding='utf-8')
+          search_matrix = Path('/tmp/search-matrix.md').read_text(encoding='utf-8')
+          main_handoff = Path('/tmp/main-handoff.md').read_text(encoding='utf-8')
+
+          p1_ids = ['SEARCH-P1-01', 'SEARCH-P1-03', 'SEARCH-P1-04']
+          p2_ids = ['SEARCH-P2-07', 'SEARCH-P2-08', 'SEARCH-P2-09', 'SEARCH-P2-10', 'SEARCH-P2-11', 'SEARCH-P2-12']
+          p3_ids = ['SEARCH-P3-01', 'SEARCH-P3-02', 'SEARCH-P3-03']
+          all_ids = p1_ids + p2_ids + p3_ids
+
+          search_lines = search_matrix.splitlines()
+          def extract_row(fid: str) -> str:
+              prefix = f'| {fid} |'
+              matches = [line for line in search_lines if line.startswith(prefix)]
+              if len(matches) != 1:
+                  raise SystemExit(f'{fid}: expected one source row, got {len(matches)}')
+              return matches[0]
+
+          rows = {fid: extract_row(fid) for fid in all_ids}
+          text = main_matrix
+          for fid in all_ids:
+              if re.search(rf'^\| {re.escape(fid)} \|', text, re.M):
+                  raise SystemExit(f'{fid}: already exists in current main')
+
+          text = re.sub(
+              r'^\| Last reverify \|.*$',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-untested-reduction.md` (search audit latest; Nagornaya browser authority remains `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-browser.md`). |',
+              text,
+              count=1,
+              flags=re.M,
+          )
+
+          p1_old = '## 🟠 P1 — ОТКРЫТО (69)'
+          p1_new = '## 🟠 P1 — ОТКРЫТО (72)'
+          if p1_old not in text:
+              raise SystemExit('current-main P1 heading drift')
+          text = text.replace(p1_old, p1_new, 1)
+          p1_anchor = p1_new + '\n\n| ID | Описание | Witnesses |\n|---|---|---|\n'
+          text = text.replace(p1_anchor, p1_anchor + '\n'.join(rows[x] for x in p1_ids) + '\n', 1)
+
+          p2_old = '## 🟡 P2 — ОТКРЫТО (26)'
+          p2_new = '## 🟡 P2 — ОТКРЫТО (32)'
+          if p2_old not in text:
+              raise SystemExit('current-main P2 heading drift')
+          text = text.replace(p2_old, p2_new, 1)
+          p2_anchor = p2_new + '\n\n| ID | Описание | Witnesses |\n|---|---|---|\n'
+          text = text.replace(p2_anchor, p2_anchor + '\n'.join(rows[x] for x in p2_ids) + '\n', 1)
+
+          p3_old = '## 🟢 P3 — ОТКРЫТО (37)'
+          p3_new = '## 🟢 P3 — ОТКРЫТО (40)'
+          if p3_old not in text:
+              raise SystemExit('current-main P3 heading drift')
+          text = text.replace(p3_old + '\n', p3_new + '\n' + '\n'.join(rows[x] for x in p3_ids) + '\n', 1)
+
+          text = re.sub(
+              r'^## Статистика \(обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 219 closed \+ 139 open\)$',
+              '## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 370 canonical = 219 closed + 151 open)',
+              text,
+              count=1,
+              flags=re.M,
+          )
+          replacements = {
+              '| P1 открыто | 69 |': '| P1 открыто | 72 |',
+              '| P2 открыто | 26 |': '| P2 открыто | 32 |',
+              '| P3 открыто | 37 |': '| P3 открыто | 40 |',
+              '| **Всего открыто (матрица)** | **139** |': '| **Всего открыто (матрица)** | **151** |',
+          }
+          for old, new in replacements.items():
+              if old not in text:
+                  raise SystemExit(f'matrix statistic drift: {old}')
+              text = text.replace(old, new, 1)
+
+          marker = '### 2026-08-04 — search / Scripture audit intake promoted to matrix'
+          if marker in text:
+              raise SystemExit('search session log already present in main')
+          pos = search_matrix.find(marker)
+          if pos < 0:
+              raise SystemExit('search session log marker missing')
+          session = search_matrix[pos:].strip()
+          session = session.replace('P1 `70 → 73`, P2 `29 → 31`, total open `145 → 150`, closed unchanged `213`',
+                                    'P1 `69 → 72`, P2 `26 → 28`, total open `139 → 144`, closed unchanged `219`')
+          session = session.replace('P2 `31 → 33`, total open `150 → 152`, closed unchanged `213`',
+                                    'P2 `28 → 30`, total open `144 → 146`, closed unchanged `219`')
+          session = session.replace('P2 `33 → 35`, total open `152 → 154`, closed unchanged `213`',
+                                    'P2 `30 → 32`, total open `146 → 148`, closed unchanged `219`')
+          session = session.replace('P3 `39 → 42`, total open `154 → 157`, closed unchanged `213`',
+                                    'P3 `37 → 40`, total open `148 → 151`, closed unchanged `219`')
+          text = text.rstrip() + '\n\n' + session + '\n'
+
+          for fid in all_ids:
+              if len(re.findall(rf'^\| {re.escape(fid)} \|', text, re.M)) != 1:
+                  raise SystemExit(f'{fid}: merged row multiplicity failure')
+          if '## ✅ ЗАКРЫТО (219)' not in text:
+              raise SystemExit('closed-count regression')
+          if '370 canonical = 219 closed + 151 open' not in text:
+              raise SystemExit('canonical arithmetic missing')
+          matrix_path.write_text(text, encoding='utf-8')
+
+          h = main_handoff
+          h = re.sub(
+              r'^\*\*Current reverify:\*\*.*$',
+              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-untested-reduction.md` (latest search reduction; matrix movement: `...search-polish-discovery.md`; refined Nagornaya authority: `...nagornaya-dark-browser.md`).',
+              h,
+              count=1,
+              flags=re.M,
+          )
+          h = re.sub(r'^\*\*Canonical matrix:\*\*.*$', '**Canonical matrix:** **370 IDs = 219 closed + 151 open**.', h, count=1, flags=re.M)
+
+          convergence_key = 'Source movement does **not** change canonical AuditRepo counts by itself.'
+          idx = h.find(convergence_key)
+          if idx < 0:
+              raise SystemExit('handoff convergence paragraph missing')
+          para_end = h.find('\n\n', idx)
+          if para_end < 0:
+              raise SystemExit('handoff convergence paragraph end missing')
+          paragraph = h[idx:para_end]
+          if 'twelve verified current-source search/Scripture rows' not in paragraph:
+              paragraph += ' This transaction adds twelve verified current-source search/Scripture rows without Product mutation, same-SHA production claim or browser-pixel claim.'
+              h = h[:idx] + paragraph + h[para_end:]
+
+          active_start = h.index('## Active canonical owner lanes')
+          counts_start = h.index('## Current counts', active_start)
+          active = '''## Active canonical owner lanes
+
+### Product repository
+
+- Product PR #885 (`fix/nagornaya-dark-refined-repair-20260804`) is the bounded non-TTS `NG-DARK-01` repair owner for the refined **9 tokens / 142 uses** Chromium boundary. It is draft until exact-head checks, final diff and review-thread gates pass.
+- Product PRs #875/#876 are disjoint TTS audit/repair lanes and must not be modified or absorbed by search/Nagornaya work.
+- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority; no same-SHA production claim exists for it.
+
+### AuditRepo
+
+- PR #148 is the disjoint TTS evidence lane and remains untouched.
+- This transaction, PR #156 (`arena/019fccbd-auditrepo`), promotes twelve search/Scripture findings plus evidence, reverifies and bounded repair plans while preserving the six current-main closure dispositions.
+
+'''
+          h = h[:active_start] + active + h[counts_start:]
+
+          counts_start = h.index('## Current counts')
+          next_header = h.index('## Wave A closure this handoff', counts_start)
+          counts = '''## Current counts
+
+- P0: 0
+- P1: 72
+- P2: 32
+- P3: 40
+- Refactoring: 4
+- AuditRepo: 3
+- Total open: 151
+- Closed: 219
+
+'''
+          h = h[:counts_start] + counts + h[next_header:]
+
+          next_start = h.index('## Next meaningful work')
+          next_text = '''## Next meaningful work
+
+1. Merge AuditRepo PR #156 only after exact-head validator, matrix coverage, repository-history forensic, final-diff and review-thread gates pass.
+2. Then finish Product PR #885 against only the refined `NG-DARK-01` boundary (**9 tokens / 142 uses**), run exact-head browser/build/static gates, merge safely, and close it in a separate AuditRepo transaction.
+3. After the Nagornaya closure, start the bounded search repair sequence with `SEARCH-P1-03`/`SEARCH-P1-04`: truthful Scripture-tab semantics plus a generated `BibleRef → pages/anchors/context/topics` site-occurrence index. Use `working/SEARCH_SCRIPTURE_REPAIR_PLAN_2026-08-04.md` and `working/SEARCH_SCRIPTURE_INDEX_CONTRACT_SPEC_2026-08-04.md`.
+4. Preserve `SEARCH-SCRIPTURE-BROKEN` as historically closed; the new rows own higher-standard exact-reference/site-occurrence/corpus defects.
+5. `SEARCH-P1-01`, `SEARCH-P2-09`–`12`, `QUAL-P1-06`, narrowed `QUAL-P1-09`, and `MAP-P1-20` remain independent candidates; perform collision pre-flight before mutation.
+6. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence. TTS lanes remain excluded.
+'''
+          h = h[:next_start] + next_text
+          handoff_path.write_text(h, encoding='utf-8')
+          PY
+
+          git add "$matrix" "$handoff"
+          git rm .github/workflows/reconcile-search-audit.yml
+          git status --short
+          git diff --cached --check
+
+      - name: Validate exact reconciled tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/check_matrix_coverage.py
+          node scripts/repository_history_forensic_audit.mjs
+
+      - name: Commit and push self-cleaned reconciliation
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git commit -m "audit(search): reconcile promotion with current canonical main"
+          git push origin HEAD:arena/019fccbd-auditrepo
