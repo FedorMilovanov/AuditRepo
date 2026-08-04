@@ -1,0 +1,90 @@
+name: Reconcile Nagornaya native duplicate wording
+
+on:
+  pull_request:
+    branches: [main]
+    types: [synchronize]
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    if: >-
+      github.event.pull_request.number == 152 &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'verify/nagornaya-dark-native-dist-authority-20260804'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: verify/nagornaya-dark-native-dist-authority-20260804
+          fetch-depth: 0
+
+      - name: Reconcile canonical duplicate owners
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "0142b93de01160b77eda71cb9fd2f72fd8a4fbdc"
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          reverify_path = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md')
+          matrix = matrix_path.read_text(encoding='utf-8')
+          reverify = reverify_path.read_text(encoding='utf-8')
+
+          rows = {
+            'NG-DARK-04': '| NG-DARK-04 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01`; NATIVE-DIST AUTHORITY RECONCILED 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` passed the native route contract and production-like build. Built output contains 13 `bg-rose-50` uses and route-linked CSS covers the token on every using native route. The row remains closed because it has no independent repair owner; PR #151 legacy-shadow counts are superseded. No Product mutation, browser, production or TTS claim. | `f9d01207` native dist |',
+            'NG-DARK-05': '| NG-DARK-05 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01`; NATIVE-DIST AUTHORITY RECONCILED 2026-08-04.** Exact built native output at Product `f9d0120718569c510833dba7a3abd68ce2f6a003` retains 13 `bg-stone-100` uses without complete direct dark coverage, including three body owners, and 2 `bg-stone-200` uses in the same residual. The former PR #151 statement that current `bg-stone-100` is covered is superseded. This aggregate row remains closed so the current stone subset has one repair owner only: open `NG-DARK-01`. No Product mutation, browser, production or TTS claim. | `f9d01207` native dist |',
+            'NG-MOBILE-01': '| NG-MOBILE-01 | ✅ **AGGREGATE DUPLICATE / MERGED; CURRENT OWNER LINKS RECONCILED 2026-08-04.** This row contains no independent mobile root cause: the current native `bg-stone-100` body subset is represented by closed duplicate `NG-BODY-01` but owned exclusively by open root `NG-DARK-01`; chapter-specific TOC accent remains owned by open `NG-TOC-01`; inline hero height/adaptivity remains owned by open `NG-A11Y-01`. All three repair owners remain open. No Product mutation, browser, production or TTS claim. | `f9d01207` native dist |',
+          }
+          for finding, replacement in rows.items():
+              pattern = re.compile(rf'(?m)^\| {re.escape(finding)} \|.*$')
+              matches = pattern.findall(matrix)
+              if len(matches) != 1:
+                  raise SystemExit(f'{finding}: expected one row, found {len(matches)}')
+              matrix = pattern.sub(replacement, matrix, count=1)
+
+          old = 'Missing direct coverage is still a source-level obligation, not proof of a visual contrast failure. Future browser verification must operate on native production-like output and classify the 19-token set before Product mutation.'
+          new = old + '\n\nClosed cross-reference rows are aligned to the same authority: `NG-DARK-04` remains a covered duplicate; `NG-DARK-05` keeps current `bg-stone-100/200` only under root `NG-DARK-01`; `NG-MOBILE-01` points its body subset to that root rather than treating closed `NG-BODY-01` as a second open owner.'
+          if reverify.count(old) != 1:
+              raise SystemExit('reverify insertion marker drift')
+          reverify = reverify.replace(old, new, 1)
+
+          if '## ✅ ЗАКРЫТО (213)' not in matrix or '## 🟠 P1 — ОТКРЫТО (70)' not in matrix:
+              raise SystemExit('canonical counters changed')
+          matrix_path.write_text(matrix, encoding='utf-8')
+          reverify_path.write_text(reverify, encoding='utf-8')
+          PY
+          rm -f .github/workflows/tmp-reconcile-nagornaya-native-duplicates.yml
+
+      - name: Validate and commit self-cleaned correction
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
+          printf '%s\n' \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md > "${changed_file}"
+          export AUDITREPO_CHANGED_PATHS_FILE="${changed_file}"
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p reports/matrix-coverage
+          python3 scripts/check_matrix_coverage.py --verbose --json-out reports/matrix-coverage/report.json
+          rm -rf reports/matrix-coverage
+          test "$(git diff --name-only | sort)" = "$(printf '%s\n' \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md | sort)"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            .github/workflows/tmp-reconcile-nagornaya-native-duplicates.yml
+          git commit -m 'audit(gb): reconcile Nagornaya native duplicate owners'
+          git push origin HEAD:verify/nagornaya-dark-native-dist-authority-20260804
