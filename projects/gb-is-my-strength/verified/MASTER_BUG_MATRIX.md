@@ -13,7 +13,7 @@
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-c-control-plane.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-d-map-gates.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,7 +21,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (216)
+## ✅ ЗАКРЫТО (217)
 
 | ID | Описание | Коммит |
 |---|---|---|
@@ -152,6 +152,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | D-22 | Favorites/izbrannoe: `f.path`→href без проверки схемы (само-XSS) + protocol-relative `//host` в image — **уже исправлено другим агентом** (`/^\/(?!\/)/` + protocol-allowlist на оба рендерера); стро́ка висела в P2 open по инерции, снята при quick-fix reverify 2026-07-08 | `365de50` |
 | D-21 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` `js/glossary.js` contains **0** `innerHTML`. Detail rendering is unified in a single `render()` → `inline()` allowlist parser that builds only `<em>`/`</em>` DOM nodes via `createElement`/`createTextNode` for both the runtime and the server `.gterm` upgrade path, so the literal-`<em>` inconsistency and the innerHTML-from-JSON XSS surface no longer exist. Commit `d93039866` (#683, glossary detail trust boundary) is an ancestor of the exact head. `data/glossary.json` retains 55 `<em>` markers, now rendered safely as real `<em>` nodes. No Product mutation, browser, production or TTS claim. | `d9303986` (#683); `365de50` (D-21 origin) |
 | D-8 | ✅ **STALE-ON-CURRENT-HEAD / FIXED 2026-08-04.** Exact `f9d01207` `.github/workflows/deploy.yml` `push.paths` is now `['**']` (all files), introduced by the build-once release PR #370 / `cd4b7706` (already closed as `CI-BUILD-VALIDATION-DUPLICATION`). Doc-only `*.md` changes therefore **do** trigger deploy readiness, so the historical «paths не включает `*.md`» exclusion claim is obsolete. No Product mutation or production claim. | `cd4b7706` PR#370; `f9d01207` |
+| GATE-P1-01 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Exact `f9d01207`: `maps:validate` (`validate-map-routes.js`) now enforces stages[] non-empty, duplicate place/story ids, finite + SVG-range-bounded coordinates (x −250..2200, y −250..1600), stage membership, signature records, photos src/alt, and route meta; `smoke:maps` (`map-browser-smoke.js`) is a real Playwright witness capturing `console` errors + `pageerror` (JS crashes), asserting route visual, signature, story flyTo, sci tab, keyboard, Hebrew, overflow and map width, and fails on any problem. The historical «false-green maps:validate/smoke:maps» claim is therefore not reproducible on the exact head. No Product mutation, browser, production or TTS claim. | `f9d01207` |
 | P0-CRASH-001 | `r is not defined` (highlights.js) | `bced1c69` |
 | P0-CRASH-002 | `tt is not defined` (site.js) | `ffc763bc` |
 | P0-FC-REC | Бесконечная рекурсия FC controller | `ca6a25a8` |
@@ -330,7 +331,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (28)
+## 🟡 P2 — ОТКРЫТО (27)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -338,7 +339,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | REG-001 | 🟡 **Hosting/security-header decision.** GitHub Pages live responses expose HSTS but no response-level CSP, X-Frame-Options, Referrer-Policy or Permissions-Policy. Closing requires a proxy/hosting decision or explicit by-design acceptance. | `reverify/CURRENT_OPEN_EVIDENCE_2026-07-23_a73f609f.md` |
 | AVRAAM-P2-01 | 🆕 **Karty P2:** Тяжёлый payload Авраама (~824KB, 1540 DOM, 1103 SVG, 60 GSAP animations) + дублирующий fetch route.json | verified-browser (c2c339708252) |
 | HUB-P2-01 | 🆕 **Karty P2:** Превью Авраама с запечённым текстом, 138px пустой зазор на wide desktop, QA-термины на паблике, скрытый `/karty/ishod/` индексируется | verified-browser (c2c339708252) |
-| GATE-P1-01 | 🆕 **Karty P2:** `maps:validate` и `smoke:maps` пропускают ложные зелёные состояния (не проверяют stages, duplicate coords, JS crashes, bounds) | verified-source (c2c339708252) |
 | MAP-P2-02 | 🆕 **Karty P2:** `preload route.json` вызывает предупреждение браузера о несоответствии credentials и создаёт двойной сетевой запрос | verified-browser (c2c339708252) |
 | ENGINE-P2-03 | 🆕 **Karty P2:** Безусловная искусственная задержка загрузки (600 мс) скрывает уже полученные данные карты | verified-source (32ae0d7d) |
 | ENGINE-P2-04 | 🆕 **Karty P2:** Тосты и уведомления о смене сюжета не имеют `role="status"` и `aria-live`, оставаясь невидимыми для скринридеров | verified-source (32ae0d7d) |
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 216 closed + 142 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 217 closed + 141 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 216 |
+| Закрыто (fixed) | 217 |
 | **P0 открыто** | **0** |
 | P1 открыто | 69 |
-| P2 открыто | 28 |
+| P2 открыто | 27 |
 | P3 открыто | 38 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **142** |
+| **Всего открыто (матрица)** | **141** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -501,6 +501,10 @@ _История сессий (HEAD-переходы, что влито) — в �
 - Re-confirmed still-open (no count change): `D-1` (deploy `concurrency.group: pages` vs indexnow `metadata-indexnow-diagnostics-${{ github.ref }}` still disjoint), `TTS-DL-UNZIP-SYNC` (`fflate.unzipSync` at `vosk-tts-engine.js:375`), `TTS-DL-NO-TABLOCK` (no `navigator.locks`/`BroadcastChannel`), `RIVER-P1-02` (`url(#waterRipple)` used 4× with no `id="waterRipple"` def), `PERF-P1-01` (`feTurbulence` ×5 in `avraam/base.svg`), `REG-P1-01` (no `regions` handling), `QUAL-P1-08` (generic `og-karty-1200x630.webp` stub), `AR-IDX-10` (Astro home CSP has jsdelivr+huggingface, legacy home CSP does not), `NF-GATE-IZ5-STALE`/`GATE-MARKER-DATA-DRIFT` (gates hardcode forbidden `«Часть 1 из 5»` while the rail derives count from `romanItems.length` = renders `из 3`), `NEW-SAVE-QUOTE-TIMER-RACE`, `NG-DEAD-01` (`NagornayaChastN{ArticleBody,HeaderHero,PostContent}` have 0 import refs), `TEXT-P1-01` (`length*fontSize*0.6` at `map-engine.js:2179`), `DATA-P1-03`.
 - Canonical arithmetic moved from **215 closed / 143 open** to **216 closed / 142 open**; P3 moved from **39** to **38**. No Product mutation or production claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-c-control-plane.md`.
 
+### 2026-08-04 — Wave D map-gate supersession @ exact Product `f9d01207`
+- Closed `GATE-P1-01` as FIXED-CURRENT / SOURCE+CI VERIFIED: `maps:validate` (`validate-map-routes.js`) now enforces stages/duplicate ids/coordinate bounds/stage membership/signature/meta, and `smoke:maps` (`map-browser-smoke.js`) is a real Playwright witness capturing console/page errors (JS crashes) and asserting route visual/signature/story/sci/keyboard/Hebrew/overflow/mapW. The historical false-green gate claim is not reproducible on the exact head.
+- Re-confirmed still-open (no count change): `D-20` is in the historical auditor log (not a counted canonical row); `SEARCH-MANIFEST-QUALITY` slug/image parts remain a P3 minor (manifest is now registry-derived, 74 items, image on 70/74).
+- Canonical arithmetic moved from **216 closed / 142 open** to **217 closed / 141 open**; P2 moved from **28** to **27**. No Product mutation or production claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-d-map-gates.md`.
 
 ### 2026-08-04 — Wave B glossary trust-boundary closure @ exact Product `f9d01207`
 - Closed `D-21` as FIXED-CURRENT / SOURCE VERIFIED: exact `js/glossary.js` contains **0** `innerHTML`; the single `render()`/`inline()` allowlist parser builds only `<em>` nodes via `createElement`/`createTextNode` for both runtime and server `.gterm` upgrade paths, removing both the literal-`<em>` inconsistency and the innerHTML-from-JSON XSS surface. Commit `d93039866` (#683, detail trust boundary) is an ancestor of the head.
