@@ -42,7 +42,7 @@ Source movement does **not** change canonical AuditRepo counts by itself. AuditR
 ### Product repository
 
 - Product PR #875 (`lane/system-tts-deep-audit-2026-08-04`) is an unrelated TTS diagnostic lane; it does not overlap this verifier-only Nagornaya transaction.
-- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority. `NG-BODY-01` is fixed-current; `NG-DARK-01` remains open only for the generated 49-token / 539-use residual. `NG-INLINE-01` and `NG-SEO-01` remain open current root owners.
+- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority. `NG-BODY-01` is fixed-current; `NG-DARK-01` remains open only for the generated **12-token / 327-use historically in-scope residual**. `NG-INLINE-01` and `NG-SEO-01` remain open current root owners.
 
 ### AuditRepo
 
@@ -63,7 +63,7 @@ Source movement does **not** change canonical AuditRepo counts by itself. AuditR
 ## Next meaningful work
 
 1. Merge AuditRepo PR #151 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head; preserve all disjoint lanes.
-2. Use only the generated 49-token `NG-DARK-01` residual for a future bounded Product repair; do not recreate fixed `NG-BODY-01` or retired duplicate wording. Keep `NG-INLINE-01` and `NG-SEO-01` open independently.
+2. Use only the generated **12-token / 327-use historical-scope `NG-DARK-01` residual** for future browser verification or a bounded Product repair; do not recreate fixed `NG-BODY-01`, promote the 37 out-of-scope ambient tokens without evidence, or restore retired duplicate wording. Keep `NG-INLINE-01` and `NG-SEO-01` open independently.
 3. `QUAL-P1-06` and narrowed `QUAL-P1-09` remain confirmed Product candidates; `QUAL-P1-02` is closed by Product PR #873 and must not be reimplemented.
 4. Narrow `MAP-P1-20` rather than closing its still-current unversioned static-resource residual.
 5. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence.
