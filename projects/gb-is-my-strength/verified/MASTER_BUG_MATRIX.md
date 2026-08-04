@@ -21,7 +21,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (217)
+## ✅ ЗАКРЫТО (218)
 
 | ID | Описание | Коммит |
 |---|---|---|
@@ -153,6 +153,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | D-21 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` `js/glossary.js` contains **0** `innerHTML`. Detail rendering is unified in a single `render()` → `inline()` allowlist parser that builds only `<em>`/`</em>` DOM nodes via `createElement`/`createTextNode` for both the runtime and the server `.gterm` upgrade path, so the literal-`<em>` inconsistency and the innerHTML-from-JSON XSS surface no longer exist. Commit `d93039866` (#683, glossary detail trust boundary) is an ancestor of the exact head. `data/glossary.json` retains 55 `<em>` markers, now rendered safely as real `<em>` nodes. No Product mutation, browser, production or TTS claim. | `d9303986` (#683); `365de50` (D-21 origin) |
 | D-8 | ✅ **STALE-ON-CURRENT-HEAD / FIXED 2026-08-04.** Exact `f9d01207` `.github/workflows/deploy.yml` `push.paths` is now `['**']` (all files), introduced by the build-once release PR #370 / `cd4b7706` (already closed as `CI-BUILD-VALIDATION-DUPLICATION`). Doc-only `*.md` changes therefore **do** trigger deploy readiness, so the historical «paths не включает `*.md`» exclusion claim is obsolete. No Product mutation or production claim. | `cd4b7706` PR#370; `f9d01207` |
 | GATE-P1-01 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Exact `f9d01207`: `maps:validate` (`validate-map-routes.js`) now enforces stages[] non-empty, duplicate place/story ids, finite + SVG-range-bounded coordinates (x −250..2200, y −250..1600), stage membership, signature records, photos src/alt, and route meta; `smoke:maps` (`map-browser-smoke.js`) is a real Playwright witness capturing `console` errors + `pageerror` (JS crashes), asserting route visual, signature, story flyTo, sci tab, keyboard, Hebrew, overflow and map width, and fails on any problem. The historical «false-green maps:validate/smoke:maps» claim is therefore not reproducible on the exact head. No Product mutation, browser, production or TTS claim. | `f9d01207` |
+| HUB-AUDIT-COUNT-DRIFT | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-04.** Exact `f9d01207`: `validate-map-routes.js` `hasGovernedAuditPendingDesign()` derives the Karty hub audit/published counts from the governed inventory (`getKartyHubInventory`, `karty-hub-inventory.cjs`) which computes `auditSlugs = routeSlugs.filter(!publishedSet.has)`, so the count is generated from `route.json` publication statuses as the row recommended. The check uses `sameStringSet(missingIds, inventory.auditSlugs)` and asserts rendered `audit.data`/`audit.visible` equal `inventory.auditCount`, removing the hardcoded exact-integer `== missingCount` drift that broke on the 11th map. Fix commit `efaf2a51b` (#669, "derive audit count from route inventory"). No Product mutation or production claim. | `efaf2a51` PR#669 |
 | P0-CRASH-001 | `r is not defined` (highlights.js) | `bced1c69` |
 | P0-CRASH-002 | `tt is not defined` (site.js) | `ffc763bc` |
 | P0-FC-REC | Бесконечная рекурсия FC controller | `ca6a25a8` |
@@ -331,7 +332,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (27)
+## 🟡 P2 — ОТКРЫТО (26)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -351,7 +352,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | TTS-DL-UNZIP-SYNC | `fflate.unzipSync` по полному ~280 МБ архиву на main thread (vosk-tts-engine.js:107-108) — разовый фриз при фоновой прогревке. Не дизайн. Fix: async `unzip()` в Worker | V12 W1-CI-44, verified |
 | TTS-DL-NO-TABLOCK | Нет межвкладочного лока: `_voskWarmupStarted` — page-local, `navigator.locks`/`BroadcastChannel` отсутствуют → 2 вкладки всё ещё могут качать модель дважды. Consent UX закрыт PR #177, но cross-tab ownership остаётся самостоятельным P2 runtime-долгом. | V12 W1-CI-39, verified; PR#177 residual |
 | AUDIT-P2-WORKFLOWS-CHECK-GAP | `check-workflows.js` не проверяет deploy `if:` условия — `|| failure` не ловится; шире: строковые regex вместо YAML-топологии (см. SUPER_AUDIT W1) | АУДИТ 1.4 + fable 07-06 |
-| HUB-AUDIT-COUNT-DRIFT | 🆕 2026-07-14: `hasAuditPendingDesign()` в `validate-map-routes.js` требует exact integer «на аудите» == missingCount. Добавление `nachalo` (11-я карта, 10 missing) при стате «9» роняет весь `maps:validate`/deploy. Fix: генерировать счётчик из publication statuses route.json. | verified-source, mechanism of DEP-BLOCK-MAPS-VALIDATE |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
 | D-1 | `concurrency: cancel-in-progress: true` now on BOTH workflows (was `false` on indexnow — **partial fix** reverify 07-14); groups still separate (`pages` vs `metadata-indexnow-readiness-*`) → deploy and indexnow can still race. **P2→P3** | arena 07-06 + fable; reverify 07-14 verified-source `2ca2af3` |
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 217 closed + 141 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 218 closed + 140 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 217 |
+| Закрыто (fixed) | 218 |
 | **P0 открыто** | **0** |
 | P1 открыто | 69 |
-| P2 открыто | 27 |
+| P2 открыто | 26 |
 | P3 открыто | 38 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **141** |
+| **Всего открыто (матрица)** | **140** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-04 — Wave E Karty hub audit-count supersession @ exact Product `f9d01207`
+- Closed `HUB-AUDIT-COUNT-DRIFT` as FIXED-CURRENT / SOURCE VERIFIED: `validate-map-routes.js` `hasGovernedAuditPendingDesign()` derives the hub audit/published counts from the governed inventory (`getKartyHubInventory`), computing `auditSlugs = routeSlugs.filter(!publishedSet.has)` from `route.json` publication statuses (PR #669 / `efaf2a51b`), and asserts rendered counts equal `inventory.auditCount`, removing the hardcoded `== missingCount` integer drift that broke on the 11th map.
+- Re-confirmed still-open (no count change): `AR-IDX-07` (home h1 `tabindex=-1`, skip-link to `#main-content` not h1), `AR-IDX-CSS-02` (`.home-v20{overflow-x:hidden}` still clips absolute `.h-scripture-bg`), `AR-IDX-CSS-03` (`h-reveal:not(.h-in){animation:h-reveal-fallback 0s 3s forwards}` 3s fallback still present).
+- Canonical arithmetic moved from **217 closed / 141 open** to **218 closed / 140 open**; P2 moved from **27** to **26**. No Product mutation or production claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-e-karty-hub.md`.
 
 ### 2026-08-04 — Nagornaya refined Chromium dark-theme narrowing @ `f9d01207`
 - Refined production-like Chromium measured all nine native routes at desktop/mobile and light/dark: 36/36 observations, zero meaningful errors.

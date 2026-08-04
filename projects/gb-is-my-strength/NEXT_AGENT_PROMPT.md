@@ -7,8 +7,8 @@
 **Current Product main:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
 **Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `f9d01207`.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-d-map-gates.md`
-**Canonical matrix:** **358 IDs = 217 closed + 141 open**.
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-e-karty-hub.md`
+**Canonical matrix:** **358 IDs = 218 closed + 140 open**.
 
 ## Source convergence since the disposition anchor
 
@@ -53,12 +53,12 @@ Source movement does **not** change canonical AuditRepo counts by itself. AuditR
 
 - P0: 0
 - P1: 69
-- P2: 27
+- P2: 26
 - P3: 38
 - Refactoring: 4
 - AuditRepo: 3
-- Total open: 141
-- Closed: 217
+- Total open: 140
+- Closed: 218
 
 ## Wave A closure this handoff
 
