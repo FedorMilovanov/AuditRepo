@@ -77,6 +77,19 @@ jobs:
           module.changed_from_base = exact_inventory
           module.apply()
 
+          matrix = module.MATRIX.read_text(encoding="utf-8")
+          summary_replacements = [
+              ("| Закрыто (fixed) | 222 |", "| Закрыто (fixed) | 223 |", "fixed summary"),
+              ("| P2 открыто | 33 |", "| P2 открыто | 32 |", "P2 summary"),
+              ("| **Всего открыто (матрица)** | **149** |", "| **Всего открыто (матрица)** | **148** |", "total-open summary"),
+          ]
+          for old, new, label in summary_replacements:
+              count = matrix.count(old)
+              if count != 1:
+                  raise SystemExit(f"{label}: expected one match, found {count}")
+              matrix = matrix.replace(old, new, 1)
+          module.MATRIX.write_text(matrix, encoding="utf-8")
+
       - name: Prepare exact changed-path authority
         shell: bash
         run: |
