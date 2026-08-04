@@ -47,7 +47,35 @@ jobs:
         run: python3 -m py_compile .github/tmp/search_p2_08_closure.py
 
       - name: Apply exact three-owner SSOT transaction
-        run: python3 .github/tmp/search_p2_08_closure.py apply
+        shell: python
+        run: |
+          import importlib.util
+          import subprocess
+
+          spec = importlib.util.spec_from_file_location(
+              "search_p2_08_closure",
+              ".github/tmp/search_p2_08_closure.py",
+          )
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+
+          def exact_inventory():
+              tracked = subprocess.run(
+                  ["git", "diff", "--name-only", module.BASE_SHA, "--"],
+                  check=True,
+                  text=True,
+                  capture_output=True,
+              ).stdout.splitlines()
+              untracked = subprocess.run(
+                  ["git", "ls-files", "--others", "--exclude-standard"],
+                  check=True,
+                  text=True,
+                  capture_output=True,
+              ).stdout.splitlines()
+              return set(filter(None, tracked + untracked))
+
+          module.changed_from_base = exact_inventory
+          module.apply()
 
       - name: Prepare exact changed-path authority
         shell: bash
@@ -97,4 +125,32 @@ jobs:
           find . -type d -name __pycache__ -prune -exec rm -rf {} +
 
       - name: Self-clean and publish exact three-file head
-        run: python3 .github/tmp/search_p2_08_closure.py finalize
+        shell: python
+        run: |
+          import importlib.util
+          import subprocess
+
+          spec = importlib.util.spec_from_file_location(
+              "search_p2_08_closure",
+              ".github/tmp/search_p2_08_closure.py",
+          )
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+
+          def exact_inventory():
+              tracked = subprocess.run(
+                  ["git", "diff", "--name-only", module.BASE_SHA, "--"],
+                  check=True,
+                  text=True,
+                  capture_output=True,
+              ).stdout.splitlines()
+              untracked = subprocess.run(
+                  ["git", "ls-files", "--others", "--exclude-standard"],
+                  check=True,
+                  text=True,
+                  capture_output=True,
+              ).stdout.splitlines()
+              return set(filter(None, tracked + untracked))
+
+          module.changed_from_base = exact_inventory
+          module.finalize()
