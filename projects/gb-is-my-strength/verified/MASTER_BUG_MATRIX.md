@@ -13,7 +13,7 @@
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-browser.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-c-control-plane.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,11 +21,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (213)
+## ✅ ЗАКРЫТО (216)
 
 | ID | Описание | Коммит |
 |---|---|---|
 | NG-BODY-01 | ✅ **STALE VISUAL SUBSET + DUPLICATE / MERGED INTO `NG-DARK-01`; SOURCE+CHROMIUM VERIFIED 2026-08-04.** Exact native source `f9d0120718569c510833dba7a3abd68ce2f6a003` still contains `bg-stone-100` on `/nagornaya/`, `/nagornaya/istochniki/` and `/nagornaya/nakhodki/`, but refined Chromium run `30908030497` proves the effective dark body cascade is correct across all nine routes, both viewports: `bg-stone-100` is classified `effective-body-cascade-covered`, with no light island or contrast failure. PR #150/#152 source-only wording is superseded by browser truth. The historical subset remains closed and creates no Product repair obligation. No Product mutation, production or TTS claim. | `f9d01207` run `30908030497` artifact `8892026949` |
+| NG-CSS-01 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01` 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` source scan confirms the architecture-level claim: `nagornaya/tw.min.css` (34,079 bytes) still has **0** `html.dark` selectors, so dark coverage must be supplied externally. The row is the architecture statement of the exact defect already owned by open root `NG-DARK-01` (Tailwind output without dark variants) and has no independently repairable surface; it is closed to keep one repair owner, matching the NG-VIS-07/08, NG-DARK-04/05 precedent. The original 07-14 attribution that dark remaps live *only* in `mobile-hotfix.css` is superseded: the current `.bg-stone-100`/`.bg-stone-50` dark remap is served by `css/nagornaya-mobile-toc.css`, while `mobile-hotfix.css` retains 67 `!important` hacks. `NG-DARK-01` itself stays open. No Product mutation, browser, production or TTS claim. | `f9d01207` |
 | NG-VIS-12 | ✅ **OVERSTATED-CURRENT + DUPLICATE / MERGED INTO `NG-SEO-01` 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` source scan found the stale `v4.0 · Апрель 2026` literal only on chapter parts 1–3, not all five. That exact 1–3 stale / 4–5 absent footer-version residual is already owned by open `NG-SEO-01`, which also retains title and Pagefind metadata drift. No Product mutation, source-fix or production claim. | `f9d01207` |
 | NG-VIS-09 | ✅ **DUPLICATE / MERGED INTO `NG-INLINE-01` 2026-08-04.** The same “Из библиотеки” inline-style implementation, dark-theme failure and five-file duplication are already owned by open P1 root `NG-INLINE-01`. Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` source scan confirmed the current repeated inline blocks. No Product mutation, source-fix or production claim. | `f9d01207` |
 | NG-VIS-11 | ✅ **DUPLICATE / MERGED INTO `NG-INLINE-01` 2026-08-04.** Hardcoded `#b8882a` and `#8a7968` are direct subsets of the exact inline palette already listed by open root `NG-INLINE-01`. Current Product source scan confirmed both values in the repeated blocks; closing the subset does not claim a fix. No Product mutation or production claim. | `f9d01207` |
@@ -149,6 +150,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AUDIT-P2-MATRIX-DRIFT | **ЗАКРЫТ стеком `native-source-contract-v1` (r323, deploy green `fc4b6326`).** `route-migration-matrix.json` больше не расходится с ownership/sitemap — он **производный**: материализуется из `page-ownership.json` + `route-profiles/*` движком `effective-route-registry.js`, cross-validation через registry-driven чекеры (`route-profile-contract-audit`/`route-migration-matrix-contract-audit`/`content-source-provenance-audit`, `migration:metadata:check:strict`). ⚠️ При интеграции лейны сами уронили секцию `/karty/*` (david/isus вместо 11 реальных, 8 переименованных потеряны) — поймано новым контрактом, исправлено регенерацией (`sync-route-migration-matrix --write`). | `e679362` gb-main |
 | TTS-OUTCOME-TELEMETRY | success/selected-engine телеметрия добавлена: `reportTtsOutcome()` шлёт `tts_engine_selected {engine}` при старте воспроизведения — теперь видно долю Vosk vs Web Speech (её отсутствие и прятало CSP-инцидент). Fire-and-forget, не влияет на playback | `a459ff3` |
 | D-22 | Favorites/izbrannoe: `f.path`→href без проверки схемы (само-XSS) + protocol-relative `//host` в image — **уже исправлено другим агентом** (`/^\/(?!\/)/` + protocol-allowlist на оба рендерера); стро́ка висела в P2 open по инерции, снята при quick-fix reverify 2026-07-08 | `365de50` |
+| D-21 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` `js/glossary.js` contains **0** `innerHTML`. Detail rendering is unified in a single `render()` → `inline()` allowlist parser that builds only `<em>`/`</em>` DOM nodes via `createElement`/`createTextNode` for both the runtime and the server `.gterm` upgrade path, so the literal-`<em>` inconsistency and the innerHTML-from-JSON XSS surface no longer exist. Commit `d93039866` (#683, glossary detail trust boundary) is an ancestor of the exact head. `data/glossary.json` retains 55 `<em>` markers, now rendered safely as real `<em>` nodes. No Product mutation, browser, production or TTS claim. | `d9303986` (#683); `365de50` (D-21 origin) |
+| D-8 | ✅ **STALE-ON-CURRENT-HEAD / FIXED 2026-08-04.** Exact `f9d01207` `.github/workflows/deploy.yml` `push.paths` is now `['**']` (all files), introduced by the build-once release PR #370 / `cd4b7706` (already closed as `CI-BUILD-VALIDATION-DUPLICATION`). Doc-only `*.md` changes therefore **do** trigger deploy readiness, so the historical «paths не включает `*.md`» exclusion claim is obsolete. No Product mutation or production claim. | `cd4b7706` PR#370; `f9d01207` |
 | P0-CRASH-001 | `r is not defined` (highlights.js) | `bced1c69` |
 | P0-CRASH-002 | `tt is not defined` (site.js) | `ffc763bc` |
 | P0-FC-REC | Бесконечная рекурсия FC controller | `ca6a25a8` |
@@ -248,7 +251,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (70)
+## 🟠 P1 — ОТКРЫТО (69)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -277,7 +280,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | ASTRO-P1-05 | 🆕 **Karty P1:** Статический root (`avraam-app.js`) и deploy build (`AvraamMap.astro`) отдают две абсолютно разные реализации рендерера | verified-source (32ae0d7d) |
 | MAP-P1-18 | 🆕 **Karty P1:** Модальное окно галереи всегда загружает thumbnail 320px и не поддерживает свайпы на touch-экранах | verified-browser (c2c339708252) |
 | MAP-P1-19 | 🆕 **Karty P1:** Мобильный landscape (844×390) переключается в desktop-панель, уводя заголовок и крестик закрытия на -357px за верх экрана | verified-browser (c2c339708252) |
-| MAP-P1-20 | 🆕 **Karty P1:** Service Worker кэширует неверсионированные скрипты и JSON карт с политикой `cacheFirst`, создавая риск вечных устаревших ресурсов | verified-source (32ae0d7d) |
+| MAP-P1-20 | ⚠️ **PARTIAL / NARROWED 2026-08-04:** Exact `f9d01207` `sw.js` fetch-handler inspection narrows the claim. Karty `route.json` is fetched as `fetch('route.json')` with no version but does **not** match any SW branch (not `/data/*.json`, not static/image/html), so it is **not** SW-cached — the "JSON карт cacheFirst" half is stale. The real residual is the unversioned engine asset: `map-engine.js` is loaded as `<script src="../_engine/map-engine.js">` (no `?v=`) in `karty/*/index.html` and `IshodMap.astro`/`AvraamMap.astro`; it matches `isStaticAsset` (`.js`), is `!isRevisioned` (no `v` param), so the handler uses `cacheFirst(request, CACHE_STATIC)` — a permanent-stale risk for that one engine file. Repair owner: give `map-engine.js` a canonical `?v=` cache-bust revision (and register it in the cache-bust/ALLOWED_JS owners). No Product mutation or production claim. | `f9d01207`; `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-b-glossary-closure.md` |
 | GATE-P1-03 | 🆕 **Karty P1:** `atlas:gate` постоянно красный на регрессии waypoints/chars Авраама, пока schema-гейты ошибочно остаются зелёными | verified-ci (32ae0d7d) |
 | DATA-P1-03 | 🆕 **Karty P1:** Дизайн-токены эпох `route.meta.era` не читаются рантаймом и не меняют палитру карты | verified-source (32ae0d7d) |
 | DATA-P1-04 | 🆕 **Karty P1:** Полностью отсутствует semantic zoom/LOD — шрифты подписей масштабируются до 1.5px на mobile zoom-out и 40px на desktop zoom-in | verified-browser (c2c339708252) |
@@ -321,14 +324,13 @@ _История сессий (HEAD-переходы, что влито) — в �
 | DATA-P2-01 | 🆕 **Karty P2:** Полное отсутствие описаний кривых путей `stages[].paths` у 10 из 11 карт в репозитории | verified-source (32ae0d7d) |
 |---|---|---|
 | BUG-PERF-001 | addEventListener без removeEventListener: 339 add / 25 remove по всем js/ (294/16 в 5 файлах) | 2 witnesses + пересчёт 07-05 |
-| NG-CSS-01 | 🆕 **Нагорная P1:** `tw.min.css` без dark-вариантов — 0 `html.dark` селекторов в 34KB Tailwind-выходе для нагорной. Все dark-ремапы живут исключительно на `!important` хаках `mobile-hotfix.css`. Архитектурная причина NG-DARK-01. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
 | GENEALOGY-ATLAS-V1-SHIPPED-NOT-PROD | 🆕 Атлас родословий v1 **в main** (AGENTS §13, `data/genealogy/v2/build/atlas-interactive.html`, owner milestone 07-14) но **не на проде** из-за PROD-STALE-DEPLOY-RED. Delivery risk, не дефект движка. | milestone intake + verified-ci |
 
 > P0/P1-класса системные находки (транзакция релиза, петля дат, SW-ключи, XSS-поверхности, Bible-корпус) ведутся в `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W6) и переносятся сюда по мере закрытия.
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (29)
+## 🟡 P2 — ОТКРЫТО (28)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -355,7 +357,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | D-1 | `concurrency: cancel-in-progress: true` now on BOTH workflows (was `false` on indexnow — **partial fix** reverify 07-14); groups still separate (`pages` vs `metadata-indexnow-readiness-*`) → deploy and indexnow can still race. **P2→P3** | arena 07-06 + fable; reverify 07-14 verified-source `2ca2af3` |
 | D-2 | css-layer-validator: заголовок обещает проверку порядка @layer, код проверяет только необъявленные слои; порог <50% против цели ≥80%; валидирует только site.css. **2026-07-14:** ceiling breach 210>202 → linked **DEP-BLOCK-CSS-IMPORTANT-CEILING** (P0 while blocking) | arena cycle2 + reverify 07-14 |
 | D-19 | `<title>` ≠ `og:title`/`twitter:title`/JSON-LD headline на 2 кастомных PageHead (antisovetov, rimlyanam-7): 4 независимых литерала мимо Seo.astro. 🔧 **rimlyanam-7 половина ЗАКРЫТА** (title→канонический, контент-сессия 2026-07-11); antisovetov половина остаётся | arena cycle2; `validate:all` |
-| D-21 | Глоссарий: dual renderer — `o()` innerHTML vs `l()` textContent → литеральный `<em>` в серверных тултипах; innerHTML из JSON = XSS-поверхность (W5) | arena cycle3 + fable: js/glossary.js, data/glossary.json (55 `<em>`) |
 | ATLAS-D-NAMESPACE-COLLISION | Атлас-трек в `working/atlas/DEBT-REGISTER.md` переиспользует ID D-16..D-19 под визуальные баги листа Авраама, тогда как в матрице эти ID значат SW-baseline/dep. timeout/title-drift. Нужно переименовать в неймспейс `ATLAS-D-*` (или `AV-*`), чтобы не ломать автоматизацию и верификацию. | `incoming/arena-auditor-2026-07-14/2026-07-14/REPORT.md` §1 (ATLAS-D-16-19-NAMESPACE-COLLISION) |
 | NG-DEAD-01 | 🆕 **Нагорная P2:** 15 мёртвых Astro-компонентов (HeaderHero/ArticleBody/PostContent × 5 глав) — ни один не импортируется, артефакты Astro-экстракции. ~450+ строк мёртвого кода. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
 | NG-SEO-01 | 🆕 **Нагорная P2:** SEO-мета несогласованность: (1) `<title>` ≠ `og:title>` — разные формулировки на всех 5 частях; (2) ch.4/5 не имеют `data-pagefind-meta="scripture"`; (3) ch.1/2/3: устаревшая версия «v4.0 · Апрель 2026» в футере, ch.4/5 — без строки версии. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |
@@ -366,7 +367,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AR-IDX-03 | **⌘K хардкод** — на Windows/Linux показывает `⌘K` вместо `Ctrl+K`. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-03) |
 | AR-IDX-09 | **Keyboard shortcut без altKey/shiftKey guard** — `Option+K` или `Ctrl+Shift+K` тоже срабатывают. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-09) |
 
-## 🟢 P3 — ОТКРЫТО (39)
+## 🟢 P3 — ОТКРЫТО (38)
 | NG-VIS-04 | 🆕 **Нагорная P2 (→ NG-TABLE-01):** Табличная перегрузка — 8 секций без текстовых абзацев (ch.2/III/V/IX/X, ch.3/V/VII/VIII, ch.5/III). Только гриды/карточки/таблицы — нет «воздуха». ch.2 имеет 1.5x structured/text ratio. **Контентная правка — требует автора.** Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-TABLE-01 |
 
 | ID | Описание |
@@ -376,7 +377,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AUDIT-JS-ESCAPER-DUP-X5 | 🆕 **5 копий HTML-эскейпера (CSS/JS continued pass 6, reverify @ `21624a3`).** `js/site.js` содержит `function tt()` **×3** (три IIFE; две — цепочки `.replace()`, одна — вариант через lookup-таблицу `/[&<>"]/g`; вывод тот же, код разный) + `h()` в `highlights.js` + `F()` в `search.js` = **5 копий**. `js/site-utils.js` (дом общих утилит) эскейпера **не имеет** → каждый файл катит свой. Риск: копии дрейфуют — класс, породивший D-21 (рассинхрон эскейпинга глоссария). Fix: вынести один эскейпер в `SiteUtils` и ссылаться (дедуп 5→1). | verified-source (grep + AST) |
 | GATE-MARKER-DATA-DRIFT | 🆕 Системный риск: захардкоженные строки/значения в гейтах 4 раза за 05.07 расходились с работой параллельных лейнов (маркер pastor-series, зеркало timestamps, двойник precache-проверки audit-pro↔dist-publication-audit, label chast-2). Рекомендация: (а) выносить маркеры/списки в data/*.json рядом с контентом; (б) дедуплицировать двойные проверки через общий модуль (по образцу cache-bust-assets.js) | хроника 4 инцидентов 05.07 |
 | NEW-CSS-BUDGET-01 | 🔄 reverify 07-14: конкретика — `audit-pro` ⚠️ «Core CSS total **554013** bytes exceeds budget **425000**» (+30% над бюджетом; site.css 291КБ + floating-cluster 192КБ + home 82КБ доминируют). Не блокирует деплой, но постоянный warning. Кандидат: аудит мёртвых правил (см. AUDIT-CSS-DEAD-KEYFRAMES-TOKENS) + разбор дублей селекторов (floating-cluster 77, home 102 по AST) |
-| NEW-OG-SIZE-PARAM | seo-audit.js hardcoded OG size check, нет per-route allowlist |
+| NEW-OG-SIZE-PARAM | ⚠️ **PARTIAL / NARROWED 2026-08-04:** `seo-audit.js` no longer has a single hardcoded OG size: it validates against a shared approved-profiles allowlist (`APPROVED_SOCIAL_IMAGE_PROFILES` = 1200×630, 1200×675) added by PR #636 / `52892a60e` (`sitemap-image-projection.js`). The original «hardcoded size check» half is superseded, but the allowlist is **global/shared, not per-route**, so the per-route customisation residual remains. No Product mutation or production claim. |
 | AUDIT-P3-OG-LCP-MISMATCH | 4 routes: og:image ≠ LCP image |
 | BUG-011 | 23 unique breakpoints, 768px collision |
 | NEW-72 | SVG dedup micro-optimization (~1.9KB) |
@@ -388,7 +389,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | D-3 | 🔄 reverify 07-14 (pass 4): JS total **469101** > 365000 (было 375041 — вырос ~94КБ на atlas/TTS/mobile); **CSS-бюджет БОЛЬШЕ НЕ в норме** — Core CSS **554013** > 425000 (см. NEW-CSS-BUDGET-01). Оба — ⚠️ warning (не блокируют деплой). `audit-pro.js` |
 | D-4 | Magic z-index: `floating-cluster.css:2372/2447/2504/2697/2882`, `mobile-hotfix.css:129` — hardcoded `2102 !important`/`9999 !important` вместо `var(--z-max)`. ⚠️ `--z-*` токены **НЕ ОПРЕДЕЛЕНЫ** в проекте (см. AR-IDX-CSS-01 P1) — фикс D-4 требует определить токены сначала, потом заменить hardcoded. (⚠️ PremiumControls in-flight — согласовать) |
 | D-7 | ⬇️ Downgraded (reverify 2026-07-08): строка 3 `PremiumControlAnchor.astro` — репо-**относительная** ссылка на doc (`AuditRepo/projects/.../PremiumControls/README.md §1`), а не абсолютный внутренний путь/секрет → фактически безобидно. Косметика: убрать ссылку при случае |
-| D-8 | `deploy.yml paths:` не включает `*.md` (doc-only не триггерит деплой; by-design пока Markdown не публичный вход, см. SUPER_AUDIT W4) |
 | NF-DEAD-ENHANCE-SHIM | 🆕 reverify 07-09: `enhanceGillMobileBarMarkup` мёртв для прода (bail :986 — все prod-страницы уже v4); тело (988-1047) строит `.mobile-btoc-meter`/`.mobile-icon-row`, чей CSS удалён `30bf3f5c`. Автор отложил в follow-up. `floating-cluster-controller.js:973-1048`. verified-source |
 | NF-SPEEDSLOT-4TH-COPY | 🆕 reverify 07-09: дедуп speed-slot 3-из-4 — `GillSeriesRail.astro:209` держит собственный inline `initGillRailSpeedSlot`, не импортит `_shared/speedSlot.ts` (как 2 мобильных бара + HermenevtikaRail). Рефактор-мелочь. verified-source |
 | NF-GATE-IZ5-STALE | 🆕 reverify 07-09 (инстанс GATE-MARKER-DATA-DRIFT): гейты хардкодят запрещённый маркер «Часть 1 из 5» (`premium-controls-rollout-audit.js:210`, `gill-v16-mobile-play-smoke.js:253`), но части теперь рендерят «из 3» → guard проходит вакуумно, пропустит будущий miscount. Fix идёт вместе с выносом счётчиков в data/. verified-source |
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 213 closed + 145 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 216 closed + 142 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 213 |
+| Закрыто (fixed) | 216 |
 | **P0 открыто** | **0** |
-| P1 открыто | 70 |
-| P2 открыто | 29 |
-| P3 открыто | 39 |
+| P1 открыто | 69 |
+| P2 открыто | 28 |
+| P3 открыто | 38 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **145** |
+| **Всего открыто (матрица)** | **142** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -494,6 +494,25 @@ _История сессий (HEAD-переходы, что влито) — в �
 - Narrowed `NG-DARK-01` from 19 source candidates / 443 uses to 9 browser-confirmed tokens / 142 uses.
 - Removed `border-stone-100`, `bg-stone-100` and eight readable accent tokens from Product repair scope; reconciled `NG-BODY-01`, `NG-DARK-05` and `NG-MOBILE-01` without changing counts.
 - Exact run `30908030497`, artifact `8892026949`, digest `sha256:ff3896b0c208b4e385552dd2b1646149b1e441de3fb495cb7d9f08d7697c0b43`. No Product mutation, production or TTS claim.
+
+### 2026-08-04 — Wave C control-plane / SEO supersession @ exact Product `f9d01207`
+- Closed `D-8` as STALE-ON-CURRENT-HEAD / FIXED: `.github/workflows/deploy.yml` `push.paths` is now `['**']` (build-once PR #370 / `cd4b7706`), so doc-only `*.md` changes DO trigger deploy readiness; the historical «paths excludes `*.md`» claim is obsolete.
+- Narrowed `NEW-OG-SIZE-PARAM`: `seo-audit.js` now validates against a shared approved-profiles allowlist (`APPROVED_SOCIAL_IMAGE_PROFILES` = 1200×630 / 1200×675, PR #636 / `52892a60e`), superseding the single hardcoded-size half; the allowlist is global, not per-route, so the per-route customisation residual remains.
+- Re-confirmed still-open (no count change): `D-1` (deploy `concurrency.group: pages` vs indexnow `metadata-indexnow-diagnostics-${{ github.ref }}` still disjoint), `TTS-DL-UNZIP-SYNC` (`fflate.unzipSync` at `vosk-tts-engine.js:375`), `TTS-DL-NO-TABLOCK` (no `navigator.locks`/`BroadcastChannel`), `RIVER-P1-02` (`url(#waterRipple)` used 4× with no `id="waterRipple"` def), `PERF-P1-01` (`feTurbulence` ×5 in `avraam/base.svg`), `REG-P1-01` (no `regions` handling), `QUAL-P1-08` (generic `og-karty-1200x630.webp` stub), `AR-IDX-10` (Astro home CSP has jsdelivr+huggingface, legacy home CSP does not), `NF-GATE-IZ5-STALE`/`GATE-MARKER-DATA-DRIFT` (gates hardcode forbidden `«Часть 1 из 5»` while the rail derives count from `romanItems.length` = renders `из 3`), `NEW-SAVE-QUOTE-TIMER-RACE`, `NG-DEAD-01` (`NagornayaChastN{ArticleBody,HeaderHero,PostContent}` have 0 import refs), `TEXT-P1-01` (`length*fontSize*0.6` at `map-engine.js:2179`), `DATA-P1-03`.
+- Canonical arithmetic moved from **215 closed / 143 open** to **216 closed / 142 open**; P3 moved from **39** to **38**. No Product mutation or production claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-c-control-plane.md`.
+
+
+### 2026-08-04 — Wave B glossary trust-boundary closure @ exact Product `f9d01207`
+- Closed `D-21` as FIXED-CURRENT / SOURCE VERIFIED: exact `js/glossary.js` contains **0** `innerHTML`; the single `render()`/`inline()` allowlist parser builds only `<em>` nodes via `createElement`/`createTextNode` for both runtime and server `.gterm` upgrade paths, removing both the literal-`<em>` inconsistency and the innerHTML-from-JSON XSS surface. Commit `d93039866` (#683, detail trust boundary) is an ancestor of the head.
+- Re-confirmed still-open (no count change): `D-2` (validator still single-file `css/site.css`, order check now present and `--ceiling=200` wired), `D-19` antisovetov half (title keeps `| Господь Бог` suffix, og:title does not), `AR-IDX-JS-02` (theme persistence now canonical `gb:reader-preferences:v1` via `reader-preferences.js`; legacy `theme` key is read as a fallback, so the `"undefined"`-key write defect is resolved but the multi-writer surface remains), `NG-TOC-01` (`--ng-toc-accent-2` token is now defined in `nagornaya-mobile-toc.css` but the amber fallback remains in `mobile-hotfix.css`), `AR-IDX-03/09` (search ⌘K/guard residual).
+- Canonical arithmetic moved from **214 closed / 144 open** to **215 closed / 143 open**; P2 moved from **29** to **28**. No Product mutation or production claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-b-glossary-closure.md`.
+- Narrowed `MAP-P1-20` to its actual residual: `route.json` is no longer SW-cached (matches no fetch-handler branch), so the "JSON карт cacheFirst" half is stale; the live residual is the unversioned `map-engine.js` engine asset (`<script src="../_engine/map-engine.js">`, no `?v=`) which matches `isStaticAsset` and is served `cacheFirst`. Repair owner: version that one engine file via cache-bust. No Product mutation or production claim.
+
+
+### 2026-08-04 — Wave A source-cluster reverify @ exact Product `f9d01207`
+- Closed `NG-CSS-01` as DUPLICATE/MERGED into open root `NG-DARK-01`: `nagornaya/tw.min.css` (34,079 bytes) still has 0 `html.dark` selectors, and the row is the architecture-level statement of the exact defect already owned by `NG-DARK-01`; the 07-14 attribution "all dark remaps live only in `mobile-hotfix.css`" is superseded by the current `nagornaya-mobile-toc.css` remap owner.
+- Re-confirmed CONFIRMED-CURRENT (no count change): `CI-WORKFLOW-PROLIFERATION` (now 42 workflows), `S-SEC-01`, `QUAL-P1-05`, `QUAL-P1-06`, `MAP-P1-12`, `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS`, `AUDIT-CSS-GBFLOATER-DUP-MEDIA`, `AR-IDX-04/05/06/08/09`, `NEW-HARDTEXTS-CSP-MISSING-HFCDN`, `D-1`, `NG-SERIYA-01`, `D-4` (premise partially resolved: `--z-*` tokens now defined), `AUDIT-P2-WORKFLOWS-CHECK-GAP`.
+- Canonical arithmetic moved from **213 closed / 145 open** to **214 closed / 144 open**; P1 moved from **70** to **69**. No Product mutation or production claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-a-source-cluster.md`.
 
 ### 2026-08-04 — Nagornaya aggregate duplicate consolidation @ current source `0fbe7d1e`
 - Closed `NG-INLINE-02` as DUPLICATE/MERGED into open root owner `NG-INLINE-01`.
