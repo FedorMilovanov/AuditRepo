@@ -6,7 +6,7 @@
 - Source repo: `FedorMilovanov/gb-is-my-strength`
 - Target source SHA: `f9d0120718569c510833dba7a3abd68ce2f6a003` or newer clean `main`
 - Date: 2026-08-04
-- Audit rows included: `SEARCH-P1-03`, `SEARCH-P1-04`, `SEARCH-P2-07`, `SEARCH-P2-08`
+- Audit rows included: `SEARCH-P1-03`, `SEARCH-P1-04`, `SEARCH-P2-07`, `SEARCH-P2-08`, `SEARCH-P2-09`, `SEARCH-P2-10`
 - Related but separable: `SEARCH-P1-01` global command palette route-surface gap
 
 ## Core rule
@@ -33,6 +33,12 @@ The existing closed row `SEARCH-SCRIPTURE-BROKEN` must remain closed for its his
    - same-chapter/range lookup second;
    - manifest/Pagefind fallback third;
    - no unrelated page-level `scripture` metadata matches presented as exact hits.
+4. Implement or remove the WebSite `SearchAction` target:
+   - if kept, `/?q=...` must open/prefill/run search or render an honest static fallback;
+   - if not implemented, remove/narrow the JSON-LD `SearchAction` until a real target exists.
+5. Normalize command-palette ARIA to one pattern:
+   - complete combobox/listbox with `aria-activedescendant` and stable option ids; or
+   - command-menu buttons/links with roving focus and no fake `role=option`.
 
 ## Route-level fixes next
 

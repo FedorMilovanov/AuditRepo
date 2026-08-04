@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-08-04T13:03:46.246Z",
+  "head": "f9d0120718569c510833dba7a3abd68ce2f6a003",
+  "qHandlerEvidence": {
+    "SearchAction": [
+      {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://gospod-bog.ru/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    ],
+    "codeOccurrences": {
+      "js/search.js": [
+        "q="
+      ],
+      "src/components/home/HomePageHead.astro": [
+        "search_term_string",
+        "?q=",
+        "q="
+      ],
+      "src/components/home/HomePageChrome.astro": [],
+      "src/components/home/HomeSearchA11yGuard.astro": [],
+      "dist/index.html": [
+        "search_term_string",
+        "?q=",
+        "q="
+      ]
+    },
+    "searchJsReadsLocationSearch": false,
+    "homeRuntimeReadsLocationSearch": false
+  },
+  "a11y": {
+    "hasDialog": true,
+    "inputMarkup": "<input class=\"cp-input\" type=\"text\" placeholder=\"Поиск по статьям, Писанию…\" autocomplete=\"off\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"false\" aria-label=\"Поиск\" aria-autocomplete=\"list\" aria-controls=\"cp-listbox\">",
+    "listMarkup": "<div class=\"cp-list\" id=\"cp-listbox\" role=\"listbox\" aria-label=\"Результаты поиска\">",
+    "itemRoleOption": true,
+    "itemIsButton": true,
+    "hasCombobox": false,
+    "hasAriaExpanded": false,
+    "hasAriaActivedescendant": false,
+    "optionStableId": false,
+    "activeManagementSnippets": [
+      "aria-selected",
+      "aria-selected",
+      "aria-selected",
+      "aria-selected",
+      "aria-selected",
+      "data-idx",
+      "role=\"option\"",
+      "aria-selected",
+      "is-active",
+      "aria-selected",
+      "is-active",
+      "is-active",
+      "aria-selected",
+      "role=\"option\""
+    ]
+  },
+  "resultLimit": {
+    "pagefindSlice10": true,
+    "manifestSlice12": true,
+    "showMore": false,
+    "statusTextSnippet": "T.textContent=t.length+\" рез.\""
+  },
+  "copyLink": {
+    "hardcodedOrigin": true,
+    "snippet": "https://gospod-bog.ru\"+(e.url||\"\");function i(){h&&h.isConnected&&(h.innerHTML=b+\" Скопировано\",clear"
+  },
+  "safeUrl": {
+    "functionSnippet": "function safeUrl(e){var s=String(e||\"\").trim();return/^(javascript|data|vbscript|blob):/i.test(s)?\"#\":s||\"#\"}function N(e){return String(e||\"\").toLowerCase().replace(/ё/g,\"е\").replace(/[«»\"'.,;!?:()\\[\\]{}–—-]/g,\" \").replace(/\\s+/g,\" \").tri",
+    "blocksProtocolRelative": false,
+    "manifestProtocolRelativeItems": []
+  }
+}
