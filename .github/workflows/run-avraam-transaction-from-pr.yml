@@ -72,6 +72,28 @@ jobs:
                   raise SystemExit(f'trailing-space patch marker drifted: {old}')
               script = script.replace(old, new, 1)
 
+          status_patch_marker = 'PY\n\nrm .github/workflows/complete-avraam-transaction.yml'
+          status_patch = """PY
+          python3 - <<'PY_STATUS'
+          from pathlib import Path
+          path = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-03_778a218d_avraam-skip-contrast.md')
+          text = path.read_text(encoding='utf-8')
+          replacements = {
+              '### `A11Y-P1-02` — FIXED-CURRENT': '### `A11Y-P1-02` — fixed-current',
+              '### `A11Y-P1-03` — STALE-ON-CURRENT-HEAD': '### `A11Y-P1-03` — stale-on-current-head',
+          }
+          for old, new in replacements.items():
+              if text.count(old) != 1:
+                  raise SystemExit(f'reverify status marker drifted: {old}')
+              text = text.replace(old, new, 1)
+          path.write_text(text, encoding='utf-8')
+          PY_STATUS
+
+          rm .github/workflows/complete-avraam-transaction.yml"""
+          if script.count(status_patch_marker) != 1:
+              raise SystemExit('status patch insertion marker drifted')
+          script = script.replace(status_patch_marker, status_patch, 1)
+
           script = script.replace(
               'rm .github/workflows/complete-avraam-transaction.yml',
               'rm .github/workflows/complete-avraam-transaction.yml .github/workflows/run-avraam-transaction-from-pr.yml',
