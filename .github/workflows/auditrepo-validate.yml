@@ -126,6 +126,10 @@ jobs:
           node-version: '22.12.0'
       - name: Copy helper outside the mutable worktree
         run: cp scripts/reconcile_pr156_artifact.py "${RUNNER_TEMP}/reconcile_pr156_artifact.py"
+      - name: Configure disposable merge identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Build and validate exact reconciled tree
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
