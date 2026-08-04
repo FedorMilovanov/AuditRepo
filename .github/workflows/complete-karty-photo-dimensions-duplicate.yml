@@ -1,0 +1,201 @@
+name: Complete Karty photo dimension duplicate closure
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: complete-karty-photo-dimensions-pr-142
+  cancel-in-progress: false
+
+jobs:
+  complete:
+    if: github.event.pull_request.number == 142
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout verifier branch
+        uses: actions/checkout@v4
+        with:
+          ref: verify/karty-photo-dimensions-duplicate-20260804
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Synchronize current AuditRepo main
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main --prune
+          git merge --no-edit origin/main
+
+      - name: Apply bounded canonical transaction
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          next_path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          reverify_path = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-photo-dimensions-duplicate.md')
+
+          matrix = matrix_path.read_text(encoding='utf-8')
+
+          closed_marker = """## ✅ ЗАКРЫТО (199)
+
+          | ID | Описание | Коммит |
+          |---|---|---|
+          """
+          closed_rows = """## ✅ ЗАКРЫТО (200)
+
+          | ID | Описание | Коммит |
+          |---|---|---|
+          | MAP-P1-24 | ✅ **DUPLICATE / MERGED INTO `QUAL-P1-06` 2026-08-04.** This row describes the same 122 Karty photo objects and the same missing intrinsic `width`/`height` fields as the retained canonical CLS owner. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` still contains Avraam photo records with `src`, `thumb`, `alt`, `credit` and related metadata but no intrinsic dimensions. The defect remains open only under `QUAL-P1-06`; no Product mutation or production claim. | `0fbe7d1e` |
+          """
+          if matrix.count(closed_marker) != 1:
+              raise SystemExit('closed section marker drifted')
+          matrix = matrix.replace(closed_marker, closed_rows, 1)
+
+          old_owner = '| QUAL-P1-06 | 🆕 **Karty P1:** 122 фотографии по всем route.json не имеют width/height — вызывая layout shift и измеримый CLS при on-demand загрузке | verified-source (32ae0d7d) |\n'
+          new_owner = '| QUAL-P1-06 | 🔴 **CONFIRMED-CURRENT / CANONICAL OWNER 2026-08-04:** Karty photo records still expose `src`, `thumb`, `alt`, `credit` and other metadata without intrinsic `width`/`height` or an equivalent validated aspect-ratio contract. One bounded Product lane must update the complete dataset/schema/renderer and verify layout stability; duplicate `MAP-P1-24` merged here. | current source `0fbe7d1e`; `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-photo-dimensions-duplicate.md` |\n'
+          if matrix.count(old_owner) != 1:
+              raise SystemExit('QUAL-P1-06 row drifted')
+          matrix = matrix.replace(old_owner, new_owner, 1)
+
+          duplicate_row = '| MAP-P1-24 | 🆕 **Karty P1:** Все 122 фотографии в 9 `route.json` не имеют `width`/`height`; карта полагается только на CSS sizing, создавая риск layout shift при lazy-load | verified-source (32ae0d7d) |\n'
+          if matrix.count(duplicate_row) != 1:
+              raise SystemExit('MAP-P1-24 row drifted')
+          matrix = matrix.replace(duplicate_row, '', 1)
+
+          replacements = {
+              '## 🟠 P1 — ОТКРЫТО (72)': '## 🟠 P1 — ОТКРЫТО (71)',
+              '| Закрыто (fixed) | 199 |': '| Закрыто (fixed) | 200 |',
+              '| P1 открыто | 72 |': '| P1 открыто | 71 |',
+              '| **Всего открыто (матрица)** | **159** |': '| **Всего открыто (матрица)** | **158** |',
+              '| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; Hebrew font subset duplicate merged into the retained font+RTL owner; no Product mutation or current production claim). |': '| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; photo-dimension duplicate merged into the retained layout-stability owner; no Product mutation or current production claim). |',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-hebrew-font-duplicate.md` |': '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-photo-dimensions-duplicate.md` |',
+          }
+          for old, new in replacements.items():
+              if matrix.count(old) != 1:
+                  raise SystemExit(f'matrix marker drifted: {old}')
+              matrix = matrix.replace(old, new, 1)
+
+          stats_pattern = r'## Статистика \(обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 199 closed \+ 159 open\)'
+          stats_replacement = '## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 200 closed + 158 open)'
+          matrix, count = re.subn(stats_pattern, stats_replacement, matrix, count=1)
+          if count != 1:
+              raise SystemExit('matrix statistics heading drifted')
+
+          session_marker = '## Session log (append-only)\n\n'
+          session_entry = """## Session log (append-only)
+
+          ### 2026-08-04 — Karty photo-dimension duplicate consolidation @ current source `0fbe7d1e`
+          - Retained `QUAL-P1-06` as CONFIRMED-CURRENT canonical owner for the complete intrinsic-dimension/layout-stability residual.
+          - Closed `MAP-P1-24` as DUPLICATE/MERGED because it describes the same 122 photo records and the same missing fields.
+          - Current Avraam photo objects still omit `width`/`height`; this verifier transaction does not claim a measured current CLS value.
+          - Canonical arithmetic moved from **199 closed / 159 open** to **200 closed / 158 open**; P1 moved from **72** to **71**. No Product mutation or production claim.
+
+          """
+          if matrix.count(session_marker) != 1:
+              raise SystemExit('session log marker drifted')
+          matrix = matrix.replace(session_marker, session_entry, 1)
+
+          if matrix.count('| QUAL-P1-06 |') != 1 or matrix.count('| MAP-P1-24 |') != 1:
+              raise SystemExit('canonical photo ID multiplicity drift')
+          matrix_path.write_text(matrix, encoding='utf-8')
+
+          nxt = next_path.read_text(encoding='utf-8')
+          next_replacements = {
+              '**AuditRepo base before this handoff:** `446f36f48a27b02fb27e185c8f087446c811a609`': '**AuditRepo base before this handoff:** `ad1f08679005a54c99522e6c43725a851320a6ab`',
+              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-hebrew-font-duplicate.md`': '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-photo-dimensions-duplicate.md`',
+              '**Canonical matrix:** **358 IDs = 199 closed + 159 open**.': '**Canonical matrix:** **358 IDs = 200 closed + 158 open**.',
+              '- P1: 72': '- P1: 71',
+              '- Total open: 159': '- Total open: 158',
+              '- Closed: 199': '- Closed: 200',
+          }
+          for old, new in next_replacements.items():
+              if nxt.count(old) != 1:
+                  raise SystemExit(f'NEXT marker drifted: {old}')
+              nxt = nxt.replace(old, new, 1)
+
+          old_boundary = 'Source movement does **not** change canonical AuditRepo counts by itself. PR #132, PR #136, PR #137, PR #138, PR #139 and PR #140 are merged and their dispositions remain bounded. AuditRepo PR #141 retains `QUAL-P1-02` as the current Hebrew font+RTL owner and merges duplicate `FONT-P1-01`; it makes no Product mutation or production claim.'
+          new_boundary = 'Source movement does **not** change canonical AuditRepo counts by itself. PR #132, PR #136, PR #137, PR #138, PR #139, PR #140 and PR #141 are merged and their dispositions remain bounded. AuditRepo PR #142 retains `QUAL-P1-06` as the current photo layout-stability owner and merges duplicate `MAP-P1-24`; it makes no Product mutation or production claim.'
+          if nxt.count(old_boundary) != 1:
+              raise SystemExit('NEXT source-boundary marker drifted')
+          nxt = nxt.replace(old_boundary, new_boundary, 1)
+
+          old_audit = """### AuditRepo
+
+          - PR #141 (`verify/karty-hebrew-font-duplicate-20260804`) is the active canonical duplicate-consolidation lane for `QUAL-P1-02` and duplicate `FONT-P1-01`.
+          - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
+          """
+          new_audit = """### AuditRepo
+
+          - PR #142 (`verify/karty-photo-dimensions-duplicate-20260804`) is the active canonical duplicate-consolidation lane for `QUAL-P1-06` and duplicate `MAP-P1-24`.
+          - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
+          """
+          if nxt.count(old_audit) != 1:
+              raise SystemExit('NEXT AuditRepo block drifted')
+          nxt = nxt.replace(old_audit, new_audit, 1)
+
+          next_section = """## Next meaningful work
+
+          1. Merge AuditRepo PR #142 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
+          2. Re-fetch both repositories and continue current-head harvest; `QUAL-P1-06` remains a confirmed Product candidate requiring complete data/schema/renderer coverage and a layout-stability witness.
+          3. `QUAL-P1-02` remains a confirmed Product candidate requiring font and RTL runtime semantics in one bounded lane.
+          4. `QUAL-P1-09` remains open until the canonical holding-profile status and validators are defined.
+          5. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence.
+          """
+          section_marker = '## Next meaningful work\n'
+          if nxt.count(section_marker) != 1:
+              raise SystemExit('NEXT next-work section drifted')
+          nxt = nxt[:nxt.index(section_marker)] + next_section
+          next_path.write_text(nxt, encoding='utf-8')
+
+          reverify = reverify_path.read_text(encoding='utf-8')
+          required = (
+              '### `QUAL-P1-06` — confirmed-current / canonical owner',
+              '### `MAP-P1-24` — duplicate / merged into `QUAL-P1-06`',
+              '## Proposed canonical arithmetic',
+          )
+          for marker in required:
+              if reverify.count(marker) != 1:
+                  raise SystemExit(f'reverify marker drifted: {marker}')
+          reverify = reverify.replace('## Proposed canonical arithmetic', '## Canonical arithmetic applied by this transaction', 1)
+          reverify_path.write_text(reverify, encoding='utf-8')
+          PY
+
+          rm .github/workflows/complete-karty-photo-dimensions-duplicate.yml
+
+      - name: Validate bounded transaction
+        run: |
+          set -euo pipefail
+          git diff --check
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 -m py_compile \
+            scripts/check_matrix_coverage.py \
+            scripts/matrix_coverage_lib.py \
+            scripts/matrix_coverage_contexts.py \
+            scripts/matrix_coverage_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p "${RUNNER_TEMP}/matrix-coverage"
+          python3 scripts/check_matrix_coverage.py --verbose --json-out "${RUNNER_TEMP}/matrix-coverage/report.json"
+
+      - name: Commit canonical transaction and remove bootstrap
+        run: |
+          set -euo pipefail
+          git status --short
+          git add \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-photo-dimensions-duplicate.md \
+            .github/workflows/complete-karty-photo-dimensions-duplicate.yml
+          git diff --cached --check
+          git commit -m "audit(gb): merge duplicate photo dimension finding"
+          git push origin HEAD:verify/karty-photo-dimensions-duplicate-20260804
