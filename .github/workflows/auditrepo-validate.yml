@@ -103,3 +103,85 @@ jobs:
             reports/repository-history-forensic-audit.md
           if-no-files-found: error
           retention-days: 30
+
+  reconcile-product-wave-closures:
+    if: github.event_name == 'pull_request' && github.head_ref == 'reconcile/product-wave-closures-20260804'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - name: Checkout exact reconciliation branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Guard exact AuditRepo base and owner blobs
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "549b0d070a16a2cdb6a72fa91e5448fe6c02834e"
+          git merge-base --is-ancestor origin/main HEAD
+          test "$(git rev-parse HEAD:projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md)" = "22a892a3da6b3d64851ca6c9e66819acd1ad6e93"
+          test "$(git rev-parse HEAD:projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md)" = "35308e38bb24b10012e221ea1b6bc5e8dc9e73e0"
+          test "$(git rev-parse HEAD:scripts/reconcile_product_wave_closures_20260804.py)" = "439eea1be1969f876906ac8787b8f45b076b23d3"
+          test "$(git rev-parse HEAD:.github/workflows/auditrepo-validate.yml)" != "e390868339ee5b35c6517e736628fb3b8f7bf9ab"
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Set up Node 22.12
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+      - name: Apply exact SSOT reconciliation
+        run: python3 scripts/reconcile_product_wave_closures_20260804.py --write
+      - name: Restore trusted control plane and self-clean
+        run: |
+          set -euo pipefail
+          git checkout origin/main -- .github/workflows/auditrepo-validate.yml
+          rm -f scripts/reconcile_product_wave_closures_20260804.py
+          git diff --check origin/main
+          git diff --name-only origin/main | sort > "${RUNNER_TEMP}/changed.txt"
+          cat "${RUNNER_TEMP}/changed.txt"
+          cat > "${RUNNER_TEMP}/expected.txt" <<'EOF'
+          projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+          projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_83875378_product-wave-closures.md
+          projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          EOF
+          sort -o "${RUNNER_TEMP}/expected.txt" "${RUNNER_TEMP}/expected.txt"
+          diff -u "${RUNNER_TEMP}/expected.txt" "${RUNNER_TEMP}/changed.txt"
+      - name: Validate exact candidate tree
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
+          git diff --name-only origin/main > "${changed_file}"
+          export AUDITREPO_CHANGED_PATHS_FILE="${changed_file}"
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 -m py_compile scripts/check_matrix_coverage.py scripts/matrix_coverage_lib.py scripts/matrix_coverage_contexts.py scripts/matrix_coverage_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p reports/matrix-coverage
+          python3 scripts/check_matrix_coverage.py --verbose --json-out reports/matrix-coverage/report.json
+          python3 scripts/matrix_coverage_contexts.py --json-out reports/matrix-coverage/contexts.json --markdown-out reports/matrix-coverage/contexts.md
+          node --check scripts/repository_history_forensic_audit.mjs
+          node scripts/repository_history_forensic_audit.mjs --strict
+      - name: Verify candidate remains bounded
+        run: |
+          set -euo pipefail
+          git diff --check origin/main
+          git diff --name-only origin/main | sort > "${RUNNER_TEMP}/changed-after.txt"
+          diff -u "${RUNNER_TEMP}/expected.txt" "${RUNNER_TEMP}/changed-after.txt"
+      - name: Commit clean permanent reconciliation
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --quiet && { echo 'No reconciliation generated'; exit 1; }
+          git commit -m 'audit: reconcile Product wave closures'
+          git push origin "HEAD:${{ github.head_ref }}"
