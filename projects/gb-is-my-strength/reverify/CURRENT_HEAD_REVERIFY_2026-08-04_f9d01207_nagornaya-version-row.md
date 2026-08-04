@@ -12,7 +12,17 @@
 
 The closure transaction performs a fail-closed scan of Product exact SHA `f9d0120718569c510833dba7a3abd68ce2f6a003` for the literal footer version `v4.0 · Апрель 2026`. It will commit only when the current chapter set is exactly parts 1, 2 and 3, matching the more precise open owner `NG-SEO-01` and disproving the P3 row's “all five parts” formulation.
 
-{{CURRENT_SOURCE_SCAN}}
+- Exact source scan found **9** matching files and the chapter set **{1, 2, 3}**:
+  - `nagornaya/chast-1/index.html`
+  - `nagornaya/chast-2/index.html`
+  - `nagornaya/chast-3/index.html`
+  - `src/components/nagornaya/chast-1/NagornayaChast1MainShell.astro`
+  - `src/components/nagornaya/chast-1/NagornayaChast1SectionX.astro`
+  - `src/components/nagornaya/chast-2/NagornayaChast2MainShell.astro`
+  - `src/components/nagornaya/chast-2/NagornayaChast2SectionX.astro`
+  - `src/components/nagornaya/chast-3/NagornayaChast3MainShell.astro`
+  - `src/components/nagornaya/chast-3/NagornayaChast3SectionX.astro`
+- No matching source file belongs to chapter 4 or chapter 5.
 
 ## Disposition
 

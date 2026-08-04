@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (exact Product source scan plus verifier consolidation: `NG-VIS-09/11` merged into still-open root `NG-INLINE-01`; no Product mutation, source-fix or production claim). |
+| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (exact Product footer-version scan: overstated `NG-VIS-12` merged into still-open owner `NG-SEO-01`; no Product mutation, source-fix or production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-library-inline-duplicates.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (211)
+## ✅ ЗАКРЫТО (212)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| NG-VIS-12 | ✅ **OVERSTATED-CURRENT + DUPLICATE / MERGED INTO `NG-SEO-01` 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` source scan found the stale `v4.0 · Апрель 2026` literal only on chapter parts 1–3, not all five. That exact 1–3 stale / 4–5 absent footer-version residual is already owned by open `NG-SEO-01`, which also retains title and Pagefind metadata drift. No Product mutation, source-fix or production claim. | `f9d01207` |
 | NG-VIS-09 | ✅ **DUPLICATE / MERGED INTO `NG-INLINE-01` 2026-08-04.** The same “Из библиотеки” inline-style implementation, dark-theme failure and five-file duplication are already owned by open P1 root `NG-INLINE-01`. Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` source scan confirmed the current repeated inline blocks. No Product mutation, source-fix or production claim. | `f9d01207` |
 | NG-VIS-11 | ✅ **DUPLICATE / MERGED INTO `NG-INLINE-01` 2026-08-04.** Hardcoded `#b8882a` and `#8a7968` are direct subsets of the exact inline palette already listed by open root `NG-INLINE-01`. Current Product source scan confirmed both values in the repeated blocks; closing the subset does not claim a fix. No Product mutation or production claim. | `f9d01207` |
 | NG-DARK-04 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01` 2026-08-04.** The 26 `bg-rose-50` containers refine the same missing dark-remap/per-chapter-variable root cause explicitly owned by open `NG-DARK-01`; they do not define an independent repair lane. Current Product `f9d0120718569c510833dba7a3abd68ce2f6a003` still lacks this remap, so the root remains open. No Product mutation or production claim. | `f9d01207` |
@@ -365,7 +366,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AR-IDX-03 | **⌘K хардкод** — на Windows/Linux показывает `⌘K` вместо `Ctrl+K`. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-03) |
 | AR-IDX-09 | **Keyboard shortcut без altKey/shiftKey guard** — `Option+K` или `Ctrl+Shift+K` тоже срабатывают. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-09) |
 
-## 🟢 P3 — ОТКРЫТО (40)
+## 🟢 P3 — ОТКРЫТО (39)
 | NG-VIS-04 | 🆕 **Нагорная P2 (→ NG-TABLE-01):** Табличная перегрузка — 8 секций без текстовых абзацев (ch.2/III/V/IX/X, ch.3/V/VII/VIII, ch.5/III). Только гриды/карточки/таблицы — нет «воздуха». ch.2 имеет 1.5x structured/text ratio. **Контентная правка — требует автора.** Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-TABLE-01 |
 
 | ID | Описание |
@@ -394,7 +395,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NF-STRANGLER-BAR-DRIFT | 🆕 reverify 07-09 (конкретика STRANGLER-HYGIENE): корневой legacy-HTML Гилла = старый 1-уровневый мобильный бар (`#mobTocBtn`, без `__label`) vs v4 в astro. Production-dist → не отдаётся, но дрейфует. verified-source |
 | NEW-HARDTEXTS-CSP-MISSING-HFCDN | 🆕 reverify 07-09: `hard-texts/index.astro:122` connect-src без `*.aws.cdn.hf.co` (единственный astro-файл без него из 37). Инертно — на hard-texts нет кнопки Listen; выровнять для консистентности. verified-source |
 | NG-VIS-10 | 🆕 **Нагорная P3:** Библиография не использует ref-*/ref-card систему site.css (ad-hoc markup). Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` |
-| NG-VIS-12 | 🆕 **Нагорная P3:** Устаревшая версия «v4.0 · Апрель 2026» в футере всех 5 частей. Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` |
 | NEW-HIGHLIGHTS-NO-REINIT-GUARD | 🆕 reverify 07-09 *(suspected)*: `highlights.js` IIFE без re-init guard — двойной `<script>`-include продублирует FAB + глобальные mouseup/keydown/scroll/resize. Низкий риск (статический include). |
 | NEW-SAVE-QUOTE-TIMER-RACE | 🆕 reverify 07-09 *(suspected)*: кнопка «Сохранить цитату» инжектится одноразовым таймером 500ms (`highlights.js le()`); если `#selection-share-popup` не в DOM на +500ms — не добавляется и не ретраится. Зависит от порядка init. |
 | NG-DARK-01 | 🆕 **Нагорная P1 (корневая):** 54 Tailwind-класса без dark-ремапа — `text-{accent}-600` (165×), `text-{accent}-700` (75×), `text-amber-800` (7×), `border-stone-100` (52×), `bg-rose-50` (13×), `bg-stone-100/200` (5×). Текущий ремап в `mobile-hotfix.css` покрывает только -800/-900 уровни; -500/-600/-700 не покрыты → невидимый текст и потеря идентичности глав. **Профессиональное решение:** per-chapter CSS custom properties (`--ng-accent`/`--ng-accent-soft`) + `data-chapter="N"` на body → одно решение закрывает 8 багов. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` |
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 211 closed + 147 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 212 closed + 146 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 211 |
+| Закрыто (fixed) | 212 |
 | **P0 открыто** | **0** |
 | P1 открыто | 71 |
 | P2 открыто | 29 |
-| P3 открыто | 40 |
+| P3 открыто | 39 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **147** |
+| **Всего открыто (матрица)** | **146** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
