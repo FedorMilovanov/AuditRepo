@@ -3,34 +3,42 @@
 - Date: 2026-08-04
 - Source repository: `FedorMilovanov/gb-is-my-strength`
 - Canonical finding: `NG-BODY-01`
-- Open root owner: `NG-DARK-01`
+- Remaining broad owner: `NG-DARK-01`
 - Current Product anchor: `f9d0120718569c510833dba7a3abd68ce2f6a003`
 - AuditRepo base: `f59571e6690e695a7fcf5d1a4da71c33fb6401aa`
-- Recovery status: corrected source+Chromium executor armed for the next synchronize run
 - Current production claim: **none**
 
-## Current source boundary
+## Current source evidence
 
-The closure transaction performs a fail-closed scan of Product exact SHA `f9d0120718569c510833dba7a3abd68ce2f6a003`. It requires current Nagornaya source surfaces where the page `<body>` owns `bg-stone-100`, and it requires the shared dark-theme owner `css/mobile-hotfix.css` to still lack a dark-context `.bg-stone-100` remap.
+Exact source scan found **8** current legacy Nagornaya routes whose `<body>` carries both `nagornaya-page` and `bg-stone-100`, and every file links `css/nagornaya-mobile-toc.css`:
 
-{{CURRENT_SOURCE_SCAN}}
+  - `nagornaya/chast-1/index.html`
+  - `nagornaya/chast-2/index.html`
+  - `nagornaya/chast-3/index.html`
+  - `nagornaya/chast-4/index.html`
+  - `nagornaya/chast-5/index.html`
+  - `nagornaya/index.html`
+  - `nagornaya/istochniki/index.html`
+  - `nagornaya/nakhodki/index.html`
 
-This witness confirms that the body-background defect remains current. The transaction therefore does not close or narrow `NG-DARK-01`.
+The linked stylesheet contains the specific selector group `html.dark body.nagornaya-page .bg-stone-100,html.dark body.nagornaya-page .bg-stone-50` with `background-color: var(--color-surface-muted) !important`.
+
+This is a deterministic effective-cascade fix for the historical body claim: the dark selector includes `html.dark`, `body.nagornaya-page` and `.bg-stone-100`, uses `!important`, and is loaded by every current legacy body surface. It overrides the lower-specificity Tailwind `.bg-stone-100` light declaration.
 
 ## Disposition
 
-`NG-BODY-01` is **DUPLICATE / MERGED INTO `NG-DARK-01`**.
+`NG-BODY-01` is **FIXED-CURRENT / SOURCE VERIFIED**.
 
-The P1 body row describes the `bg-stone-100` body instance of the same missing Tailwind dark-remap architecture already explicitly owned by the root finding. `NG-DARK-01` names `bg-stone-100/200` among its affected classes and defines the same per-chapter CSS-variable/remap repair boundary. Keeping both rows open would double-count one root cause without creating another independently mergeable Product lane.
+The historical row is stale on the current Product anchor. The dark body remap exists in the dedicated Nagornaya stylesheet; the old statement inspected only `mobile-hotfix.css` and therefore missed the actual owner file.
 
-Closing the subset does not claim that the light body background is fixed. `NG-DARK-01` remains open and must retain the body instance within its repair acceptance criteria.
+`NG-DARK-01` is not closed by this transaction because it covers a broader class-remap architecture. Its next current-head reverify must remove the fixed body `bg-stone-100` subset and establish the actual remaining classes before any Product mutation.
 
 ## Evidence boundary
 
-- no Product mutation;
-- no source-fix claim;
-- no production claim;
-- no change to the open root owner's repair requirements.
+- no Product mutation in this AuditRepo transaction;
+- current exact-source and effective-cascade verification only;
+- no browser, live-production or deployed-SHA claim;
+- no disposition for the remaining `NG-DARK-01` classes.
 
 ## Canonical arithmetic for the AuditRepo transaction
 
