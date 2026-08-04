@@ -10,7 +10,7 @@
 
 ## Dispositions
 
-### `A11Y-P1-02` — FIXED-CURRENT
+### `A11Y-P1-02` — fixed-current
 
 The historical reading-order defect is repaired. The full sr-only projection still precedes the interactive map, but one route-owned focus-reveal skip link now precedes that projection and targets the programmatically focusable `#stage` owner.
 
@@ -27,7 +27,7 @@ Exact Chromium Dossier run `30807589787`, artifact `8853648893`, digest `sha256:
 
 The final Reference Baseline keeps the skip link out of only the two generic offscreen-control arrays while it is unfocused. Dedicated focus-order, focused geometry and activation evidence remains fail-closed in the Dossier witness; no other offscreen control is exempted.
 
-### `A11Y-P1-03` — STALE-ON-CURRENT-HEAD
+### `A11Y-P1-03` — stale-on-current-head
 
 The historical browser claim that archaeological metadata renders at `2.15:1` is not reproducible on the exact verified source head. The Dossier witness samples the actual browser-composited foreground through ancestor backgrounds instead of inferring contrast from a stale CSS token.
 
@@ -60,7 +60,7 @@ All 12 triggered workflows on `3bd7f8a47bab65f08de45d81707cff2f6233cc55` succeed
 
 The Reference Baseline covered seven viewports. Every result recorded `fatal=null`, verification failures `0`, offscreen labels `0`, label overlaps `0`, undersized controls `0`, offscreen fixed controls `0`, console errors `0` and failed requests `0`. The intentional unfocused skip-link state is counted separately as `focusOnlySkipControls=1`.
 
-## Canonical arithmetic for the pending matrix transaction
+## Canonical arithmetic applied by this transaction
 
 - Canonical IDs: **358**
 - Closed: **189 → 191**
