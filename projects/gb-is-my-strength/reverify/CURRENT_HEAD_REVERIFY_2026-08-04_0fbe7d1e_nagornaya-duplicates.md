@@ -5,6 +5,7 @@
 - Canonical findings: `NG-VIS-05`, `NG-VIS-06`, `NG-VIS-07`, `NG-VIS-08`
 - Current Product anchor: `0fbe7d1ead9ebd1bea867418e254da438ec63329`
 - AuditRepo base: `ad1f08679005a54c99522e6c43725a851320a6ab`
+- AuditRepo consolidation lane: PR #143
 - Current production claim: **none**
 
 ## Current evidence
