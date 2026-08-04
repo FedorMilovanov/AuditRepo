@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (native production-like source + refined Chromium: `NG-DARK-01` narrowed from 19 source-residual tokens / 443 uses to **9 browser-confirmed tokens / 142 uses**; 10 tokens / 301 uses are readable/effectively governed; no Product mutation, production or TTS claim). |
+| Source verification anchor | `83875378a31436e235f1296f13d22c816b2945df` (Product closure wave: `NG-DARK-01` merged as `7118ad80`; truthful Scripture-suggestion S0 `SEARCH-P1-03` merged as `83875378`; separate WebKit TOC nondeterminism remains open; no production or TTS claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-untested-reduction.md` (latest search reduction; refined Nagornaya browser authority remains `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-browser.md`). |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_83875378_product-wave-closures.md` (Product PR #887/#890 closure reconciliation and separate WebKit TOC CI finding). |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (219)
+## ✅ ЗАКРЫТО (221)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| NG-DARK-01 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM+CI VERIFIED 2026-08-04.** Product PR #887 replaced the refined nine-token / 142-use dark residual with higher-specificity unlayered selectors in `css/nagornaya-mobile-toc.css`, without adding any `!important`: the governed count remains exactly **134**. Its permanent production-like Chromium witness covered 9 Nagornaya routes × 3 viewports and passed **384/384** assertions; build, Pagefind/offline/SW contracts, visual parity, runtime interactive audit and the full static-publication barrier passed before squash merge `7118ad80c3474112f203c2c3b8df7cdc44de0a84`. The predecessor #885 is superseded; its eight extra `!important` declarations and blanket CSP suppression were intentionally not retained. A separate nondeterministic WebKit TOC harness finding remains open. No production deployment or TTS/Vosk claim. | `7118ad80` PR#887; Chromium 384/384 |
+| SEARCH-P1-03 | ✅ **FIXED-CURRENT / SOURCE+PAGEFIND+CHROMIUM+CI VERIFIED 2026-08-04.** Product PR #890 closed only the misleading exact-Bible S0: public wording now says `Ссылки` / `Ссылки в материалах`, the UI no longer promises a word/full-Scripture search, and the four public suggestions (`Иер 17:9`, `Рим 7:14–25`, `1 Тим 3`, `Тит 1`) are parsed by the canonical 66-book resolver and required to own exact `data/search-manifest.json` records. Old unsupported suggestions and labels are permanently forbidden. Exact head `0c20368ff0e4f90c992784530d15c9c7d722e0dd` passed executor run `30931175556` job `92065964404`: bounded clean diff, production-like build, strict Pagefind inventory, real browser discovery queries, SW deploy-switch audits and full `validate:static-publication`; squash merge `83875378a31436e235f1296f13d22c816b2945df`. `SEARCH-P1-04`, `SEARCH-P2-07` and `SEARCH-P2-08` remain open. No production deployment or TTS/Vosk claim. | `83875378` PR#890; run `30931175556` |
 | NG-BODY-01 | ✅ **STALE VISUAL SUBSET + DUPLICATE / MERGED INTO `NG-DARK-01`; SOURCE+CHROMIUM VERIFIED 2026-08-04.** Exact native source `f9d0120718569c510833dba7a3abd68ce2f6a003` still contains `bg-stone-100` on `/nagornaya/`, `/nagornaya/istochniki/` and `/nagornaya/nakhodki/`, but refined Chromium run `30908030497` proves the effective dark body cascade is correct across all nine routes, both viewports: `bg-stone-100` is classified `effective-body-cascade-covered`, with no light island or contrast failure. PR #150/#152 source-only wording is superseded by browser truth. The historical subset remains closed and creates no Product repair obligation. No Product mutation, production or TTS claim. | `f9d01207` run `30908030497` artifact `8892026949` |
 | NG-CSS-01 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01` 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` source scan confirms the architecture-level claim: `nagornaya/tw.min.css` (34,079 bytes) still has **0** `html.dark` selectors, so dark coverage must be supplied externally. The row is the architecture statement of the exact defect already owned by open root `NG-DARK-01` (Tailwind output without dark variants) and has no independently repairable surface; it is closed to keep one repair owner, matching the NG-VIS-07/08, NG-DARK-04/05 precedent. The original 07-14 attribution that dark remaps live *only* in `mobile-hotfix.css` is superseded: the current `.bg-stone-100`/`.bg-stone-50` dark remap is served by `css/nagornaya-mobile-toc.css`, while `mobile-hotfix.css` retains 67 `!important` hacks. `NG-DARK-01` itself stays open. No Product mutation, browser, production or TTS claim. | `f9d01207` |
 | NG-VIS-12 | ✅ **OVERSTATED-CURRENT + DUPLICATE / MERGED INTO `NG-SEO-01` 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` source scan found the stale `v4.0 · Апрель 2026` literal only on chapter parts 1–3, not all five. That exact 1–3 stale / 4–5 absent footer-version residual is already owned by open `NG-SEO-01`, which also retains title and Pagefind metadata drift. No Product mutation, source-fix or production claim. | `f9d01207` |
@@ -255,12 +257,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (72)
+## 🟠 P1 — ОТКРЫТО (71)
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | SEARCH-P1-01 | 🆕 **Search P1:** глобальный command-palette поиск отсутствует на публичных searchable tool/app routes `/karty/avraam/`, `/karty/ishod/`, `/konfessii/russkij-baptizm/`, `/map/`. Эти routes indexable и имеют `searchManifestPolicy=include`, Pagefind/поиск могут вести на них, но на самих страницах нет unified `Ctrl+K`/`GBSearch` surface; `/map/` имеет только локальный atlas-search. No Product mutation/browser/production claim. | `incoming/search-deep-audit-2026-08-04/PASS2_DEEPENING.md`; `PASS2_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md` |
-| SEARCH-P1-03 | 🆕 **Search Scripture P1:** вкладка `Писание` ложно выглядит как точный поиск по стихам, но фактически работает как Pagefind/manifest filter без exact Bible resolver. Hard-coded suggestions (`Ин 3:16`, `Мф 5:3`, `Рим 8:28`, `Иер 17:9`) не подкреплены canonical corpus records; exact-ref queries дают пустые/нерелевантные/широкие page-level matches. No Product mutation/browser/production claim. | `incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md`; `SCRIPTURE_SEARCH_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md` |
 | SEARCH-P1-04 | 🆕 **Search Scripture P1:** сайт содержит значительно больше видимых библейских ссылок, чем структурно знает поиск: dist-scan извлёк ~1026 parseable visible Bible refs, но search-manifest имеет только 16 scripture items, Pagefind meta — 30 entries, canonical corpus покрывает только 151 extracted refs. Нет единой матрицы `BibleRef → pages/anchors/context/topics`. No Product mutation/browser/production claim. | `incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md`; `SCRIPTURE_SEARCH_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md` |
 | CI-WORKFLOW-PROLIFERATION | Control plane expanded from the earlier 19-workflow baseline to roughly 26 permanent workflows with repeated heavy setup/build/test sections. Capability inventory and convergence are required before adding workflows. | current control-plane artifacts; forensic delta 2026-07-25 |
 | S-T-01 | 🟡 **ЧАСТИЧНО 2026-07-14**: чекер серий + orphan-scan + legacy-selector-ban теперь видят .astro/.mdx; полный route-level паритет гейтов для Astro-мира — остаётся. | Auditor 2026-07-14 |
@@ -337,10 +338,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (32)
+## 🟡 P2 — ОТКРЫТО (33)
 
 | ID | Описание | Witnesses |
 |---|---|---|
+| CI-WEBKIT-TOC-NONDETERMINISTIC | 🆕 **CI/WebKit P2 — nondeterministic public-surface TOC readiness.** During exact-head validation of Product PR #887, the same two WebKit TOC assertions failed first on `/articles/krajne-li-isporcheno-serdce/` and then, on a bounded rerun with the same unchanged product tree, on `/baptisty-rossii/goneniya-i-sovest/`. Neither route was in the Nagornaya diff; the permanent Nagornaya Chromium contract, visual parity and runtime audit were green. The migration of the failure between unchanged routes proves a harness/readiness nondeterminism rather than a `NG-DARK-01` regression. Repair must stabilize deterministic TOC readiness/waits without weakening assertions or absorbing unrelated product scopes. No production or TTS/Vosk claim. | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_83875378_product-wave-closures.md`; Product PR#887 |
 | SEARCH-P2-07 | 🆕 **Search Scripture P2:** canonical Bible registry has 66 books, but the current canonical corpus has only 300 records and 24 registry books without populated corpus files; `bible-reference-contract --strict` passes with 197 warnings, so this is governed sparse-corpus debt rather than a gate failure. Needed before claiming full Bible verse search/preview. | `incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md`; `SCRIPTURE_SEARCH_PROBE.json`; `node scripts/bible-reference-contract.mjs --strict` |
 | SEARCH-P2-08 | 🆕 **Search Scripture P2:** legacy `data/verses.json` and canonical `data/bible/**` authority drift: 94 legacy refs; 51 have no canonical record and 38 differ from canonical text. Public search suggestions must not mix these authorities without reconciliation/projection. | `incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md`; `SCRIPTURE_SEARCH_PROBE.json`; `node scripts/bible-reference-contract.mjs --strict` |
 | SEARCH-P2-09 | 🆕 **Search contract P2:** Home JSON-LD advertises WebSite `SearchAction` target `https://gospod-bog.ru/?q={search_term_string}`, but current runtime/source has no `?q=` handler (`js/search.js`, `HomePageChrome.astro`, `HomeSearchA11yGuard.astro` do not read `location.search`/`URLSearchParams`). SearchAction target therefore lands on ordinary home, not a search-results state. | `incoming/search-deep-audit-2026-08-04/PASS4_SEARCH_CONTRACT_A11Y.md`; `PASS4_CONTRACT_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-contract-a11y.md` |
@@ -378,7 +380,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AR-IDX-03 | **⌘K хардкод** — на Windows/Linux показывает `⌘K` вместо `Ctrl+K`. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-03) |
 | AR-IDX-09 | **Keyboard shortcut без altKey/shiftKey guard** — `Option+K` или `Ctrl+Shift+K` тоже срабатывают. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-09) |
 
-## 🟢 P3 — ОТКРЫТО (40)
+## 🟢 P3 — ОТКРЫТО (39)
 | SEARCH-P3-01 | 🆕 **Search polish P3:** labels/shortcut wording for search triggers are inconsistent across route families (`Поиск`, `Поиск и разделы сайта`, `Поиск (Ctrl+K)`, `Открыть поиск по материалам сайта`), and shared `search.js` injected fallback still uses Mac-centric `Поиск ⌘K`. Needs one platform-aware label helper / route-family guard. Evidence: `incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md`; `PASS6_POLISH_DISCOVERY_PROBE.json`. |
 | SEARCH-P3-02 | 🆕 **Search discovery P3:** Pagefind branch hard-caps visible results at 10 and manifest fallback at 12 with no raw-total disclosure or `Показать ещё`; raw corpus counts for common queries exceed the visible cap. Evidence: `incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md`; `PASS6_POLISH_DISCOVERY_PROBE.json`. |
 | SEARCH-P3-03 | 🆕 **Search copy-link P3:** preview copy action hard-codes `https://gospod-bog.ru` as origin while the UI label remains generic `Скопировать ссылку`; either label canonical behavior or use current-origin URL. Evidence: `incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md`; `PASS6_POLISH_DISCOVERY_PROBE.json`. |
@@ -410,7 +412,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | NG-VIS-10 | 🆕 **Нагорная P3:** Библиография не использует ref-*/ref-card систему site.css (ad-hoc markup). Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` |
 | NEW-HIGHLIGHTS-NO-REINIT-GUARD | 🆕 reverify 07-09 *(suspected)*: `highlights.js` IIFE без re-init guard — двойной `<script>`-include продублирует FAB + глобальные mouseup/keydown/scroll/resize. Низкий риск (статический include). |
 | NEW-SAVE-QUOTE-TIMER-RACE | 🆕 reverify 07-09 *(suspected)*: кнопка «Сохранить цитату» инжектится одноразовым таймером 500ms (`highlights.js le()`); если `#selection-share-popup` не в DOM на +500ms — не добавляется и не ретраится. Зависит от порядка init. |
-| NG-DARK-01 | 🟠 **CURRENT / BROWSER-CONFIRMED NATIVE DARK RESIDUAL 2026-08-04: 9 TOKENS / 142 SOURCE USES.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` passed the permanent nine-route native Astro contract and production-like build. Refined Chromium run `30908030497` covered 9 routes × desktop/mobile × light/dark = 36 observations with zero meaningful runtime/overflow errors. Confirmed textual failures: `text-blue-600` (41 source uses; 8/10 refined textual samples; minimum 3.40:1; icon/graphic samples pass 3:1), `text-rose-600` (41; 4/4; 3.74:1; emoji excluded), `text-purple-600` (40; 4/4; 3.27:1; graphic samples pass 3:1), `text-purple-700` (12; 24/24; 2.52:1), `text-teal-700` (3; 6/6; 3.21:1), `text-orange-700` (1; 2/2; 3.40:1), `text-red-600` (1; 2/2; 3.64:1), `text-rose-700` (1; 2/2; 2.84:1). `bg-stone-200` (2 source uses) produces four light-island observations; emoji-only question tiles are not scored as ordinary text. Ten source-residual tokens / 301 uses are not promoted because they are remapped/readable, static-but-readable, effectively body-covered, or an unproven subtle decorative border. Repair only this confirmed set and add a permanent computed-style gate. No Product mutation, live-production or TTS claim. | `f9d01207` run `30908030497`; artifact `8892026949` |
 | NG-STRUCT-01 | 🆕 **Нагорная P1:** Сломанная структура заголовков секций — ch.2/SectionX, ch.5/SectionI–IV/X не имеют `<div class="group mb-6 mt-12">` обёртки (нет иконки, подзаголовка, отступа). Регресс Astro-миграции. + Emoji вместо SVG (19 секций ch.2/ch.5) + `font-sans` на h2 (4× ch.5). Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` |
 | NG-INLINE-01 | 🆕 **Нагорная P1:** «Из библиотеки» блок — inline `color:#1c1410`/`#8a7968`/`#b8882a`/`background:#faf8f5` на всех 5 частях, дублирование 5×. CSS override не пробивает inline `style=`. **Решение:** Astro-компонент `NagornayaLibraryLinks.astro` + Tailwind + CSS vars. Evidence: `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-INLINE-01 |
 | AR-IDX-04 | Ссылка «★ Избранное» в десктопном навбаре Astro потеряла класс `h-nav-fav` (legacy имеет). | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 |
@@ -482,18 +483,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 370 canonical = 219 closed + 151 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `83875378`; last exact production `abf1edba`; 371 canonical = 221 closed + 150 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 219 |
+| Закрыто (fixed) | 221 |
 | **P0 открыто** | **0** |
-| P1 открыто | 72 |
-| P2 открыто | 32 |
-| P3 открыто | 40 |
+| P1 открыто | 71 |
+| P2 открыто | 33 |
+| P3 открыто | 39 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **151** |
+| **Всего открыто (матрица)** | **150** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -501,6 +502,14 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-04 — Product Nagornaya + truthful Scripture S0 closure reconciliation
+
+- Closed `NG-DARK-01` from Product PR #887 / merge `7118ad80c3474112f203c2c3b8df7cdc44de0a84`: cascade-safe dark remaps, **134** governed `!important`, permanent 9-route × 3-viewport Chromium **384/384**, full build/static/runtime evidence. PR #885 is superseded and its broader repair was not retained.
+- Closed `SEARCH-P1-03` from Product PR #890 / merge `83875378a31436e235f1296f13d22c816b2945df`: truthful `Ссылки в материалах` semantics and four exact manifest-backed suggestions governed by the canonical 66-book resolver. Exact executor head `0c20368ff0e4f90c992784530d15c9c7d722e0dd`, run `30931175556`, job `92065964404` passed production-like, Pagefind/browser/SW and full static-publication barriers.
+- Added open P2 `CI-WEBKIT-TOC-NONDETERMINISTIC` after identical WebKit TOC assertions migrated between two unchanged, unrelated routes on bounded reruns. This is a separate harness/readiness owner, not a Nagornaya regression.
+- `SEARCH-P1-04`, `SEARCH-P2-07` and `SEARCH-P2-08` remain open. No production deployment or TTS/Vosk claim.
+- Canonical arithmetic: total `370 → 371`, closed `219 → 221`, open `151 → 150`; P1 `72 → 71`, P2 `32 → 33`, P3 `40 → 39`.
 
 ### 2026-08-04 — Wave E Karty hub audit-count supersession @ exact Product `f9d01207`
 - Closed `HUB-AUDIT-COUNT-DRIFT` as FIXED-CURRENT / SOURCE VERIFIED: `validate-map-routes.js` `hasGovernedAuditPendingDesign()` derives the hub audit/published counts from the governed inventory (`getKartyHubInventory`), computing `auditSlugs = routeSlugs.filter(!publishedSet.has)` from `route.json` publication statuses (PR #669 / `efaf2a51b`), and asserts rendered counts equal `inventory.auditCount`, removing the hardcoded `== missingCount` integer drift that broke on the 11th map.
