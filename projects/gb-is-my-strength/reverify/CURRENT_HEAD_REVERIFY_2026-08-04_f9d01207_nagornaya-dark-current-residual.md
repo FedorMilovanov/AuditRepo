@@ -9,6 +9,7 @@
 - Product mutation: **none**
 - Browser/live-production claim: **none**
 - TTS scope: **excluded**
+- Manual classification review: **completed; 37 ambient tokens excluded from the canonical owner**
 
 ## Exact current-source inventory
 
