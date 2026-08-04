@@ -2,3 +2,4 @@ PR #153 refined Chromium canonicalization trigger.
 Product f9d0120718569c510833dba7a3abd68ce2f6a003.
 AuditRepo base 850429a299a6118db85811602fdb661b81b2296f.
 Authority: run 30908030497, artifact 8892026949.
+Finalize bounded three-file canonical transaction.
