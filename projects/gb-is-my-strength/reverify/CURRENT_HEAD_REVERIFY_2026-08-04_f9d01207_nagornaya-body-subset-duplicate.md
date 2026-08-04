@@ -6,6 +6,7 @@
 - Open root owner: `NG-DARK-01`
 - Current Product anchor: `f9d0120718569c510833dba7a3abd68ce2f6a003`
 - AuditRepo base: `f59571e6690e695a7fcf5d1a4da71c33fb6401aa`
+- Recovery status: corrected source+Chromium executor armed for the next synchronize run
 - Current production claim: **none**
 
 ## Current source boundary
