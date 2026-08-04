@@ -1,4 +1,4 @@
-name: Complete Nagornaya body subset consolidation
+name: Complete Nagornaya body fixed-current disposition
 
 on:
   pull_request:
@@ -28,12 +28,19 @@ jobs:
           path: _product
           fetch-depth: 1
 
+      - name: Set up Node 22.23.1
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.1
+          cache: npm
+          cache-dependency-path: _product/package-lock.json
+
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Verify immutable bases and current Product residual
+      - name: Verify immutable bases and source-level fix
         shell: bash
         run: |
           git fetch origin main
@@ -42,191 +49,239 @@ jobs:
           test "$(git -C _product rev-parse HEAD)" = "f9d0120718569c510833dba7a3abd68ce2f6a003"
           python3 - <<'PY'
           from pathlib import Path
+          import json
           import re
 
           product = Path('_product')
-          reverify = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md')
-          allowed = {'.html', '.astro', '.mdx'}
-          ignored = {'.git', 'node_modules', 'dist', 'archive', 'reports'}
           body_pattern = re.compile(
-              r'<body\b[^>]*\bclass\s*=\s*["\'][^"\']*\bbg-stone-100\b[^"\']*["\']',
+              r'<body\b[^>]*\bclass\s*=\s*["\'][^"\']*\bnagornaya-page\b[^"\']*\bbg-stone-100\b[^"\']*["\']|'
+              r'<body\b[^>]*\bclass\s*=\s*["\'][^"\']*\bbg-stone-100\b[^"\']*\bnagornaya-page\b[^"\']*["\']',
               re.IGNORECASE | re.DOTALL,
           )
-          body_matches = []
-          for root in (product / 'nagornaya', product / 'src'):
-              if not root.exists():
+          link_pattern = re.compile(r'<link\b[^>]*href=["\'][^"\']*nagornaya-mobile-toc\.css[^"\']*["\'][^>]*>', re.IGNORECASE)
+          body_files = []
+          routes = []
+          for path in (product / 'nagornaya').rglob('index.html'):
+              text = path.read_text(encoding='utf-8')
+              if not body_pattern.search(text):
                   continue
-              for path in root.rglob('*'):
-                  if not path.is_file() or path.suffix.lower() not in allowed:
-                      continue
-                  if any(part in ignored for part in path.parts):
-                      continue
-                  try:
-                      text = path.read_text(encoding='utf-8')
-                  except (OSError, UnicodeDecodeError):
-                      continue
-                  if body_pattern.search(text):
-                      body_matches.append(path.relative_to(product).as_posix())
+              rel = path.relative_to(product).as_posix()
+              if not link_pattern.search(text):
+                  raise SystemExit(f'body source lacks nagornaya-mobile-toc stylesheet link: {rel}')
+              body_files.append(rel)
+              routes.append('/' + rel.removesuffix('index.html'))
 
-          body_matches = sorted(set(body_matches))
-          if not body_matches:
-              raise SystemExit('no current Nagornaya body bg-stone-100 source found')
+          body_files = sorted(set(body_files))
+          routes = sorted(set(routes))
+          if len(body_files) < 5:
+              raise SystemExit(f'expected at least five linked legacy Nagornaya body sources, found {len(body_files)}: {body_files}')
 
-          dark_remaps = []
-          dark_context = re.compile(r'(?:html\.dark|(?:^|[\s,>+~])\.dark(?:[\s.#:[>+~]|$)|\[data-theme\s*=\s*["\']?dark)', re.IGNORECASE)
-          stone_selector = re.compile(r'\.bg-stone-100(?![\w-])', re.IGNORECASE)
-          rule_pattern = re.compile(r'([^{}]+)\{[^{}]*\}', re.DOTALL)
-          for path in product.rglob('*.css'):
-              if any(part in ignored for part in path.parts):
-                  continue
-              try:
-                  css = path.read_text(encoding='utf-8')
-              except (OSError, UnicodeDecodeError):
-                  continue
-              css = re.sub(r'/\*.*?\*/', '', css, flags=re.DOTALL)
-              for match in rule_pattern.finditer(css):
-                  selectors = match.group(1)
-                  if stone_selector.search(selectors) and dark_context.search(selectors):
-                      dark_remaps.append({
-                          'path': path.relative_to(product).as_posix(),
-                          'selector': ' '.join(selectors.split())[:240],
-                      })
+          css_path = product / 'css/nagornaya-mobile-toc.css'
+          css = re.sub(r'/\*.*?\*/', '', css_path.read_text(encoding='utf-8'), flags=re.DOTALL)
+          rule_pattern = re.compile(r'([^{}]+)\{([^{}]*)\}', re.DOTALL)
+          matching_rules = []
+          for match in rule_pattern.finditer(css):
+              selectors = ' '.join(match.group(1).split())
+              declarations = ' '.join(match.group(2).split())
+              if (
+                  'html.dark body.nagornaya-page .bg-stone-100' in selectors
+                  and re.search(r'background-color\s*:\s*var\(--color-surface-muted\)\s*!important', declarations, re.IGNORECASE)
+              ):
+                  matching_rules.append({'selectors': selectors, 'declarations': declarations})
+          if len(matching_rules) != 1:
+              raise SystemExit(f'expected one effective body bg-stone-100 dark rule, found {len(matching_rules)}: {matching_rules}')
 
-          if dark_remaps:
-              raise SystemExit(f'current dark-context bg-stone-100 remap exists: {dark_remaps}')
-
-          mobile_hotfix = product / 'css/mobile-hotfix.css'
-          if not mobile_hotfix.exists():
-              raise SystemExit('css/mobile-hotfix.css missing')
-          hotfix_text = re.sub(r'/\*.*?\*/', '', mobile_hotfix.read_text(encoding='utf-8'), flags=re.DOTALL)
-          if '.bg-stone-50' not in hotfix_text:
-              raise SystemExit('expected current bg-stone-50 remap marker missing')
-
-          doc = reverify.read_text(encoding='utf-8')
-          marker = '{{CURRENT_SOURCE_SCAN}}'
-          if doc.count(marker) != 1:
-              raise SystemExit('source scan placeholder must exist exactly once')
-          inventory = [
-              f'- Exact source scan found **{len(body_matches)}** current Nagornaya files whose `<body>` class contains `bg-stone-100`:',
-              *[f'  - `{path}`' for path in body_matches],
-              '- A comment-stripped selector scan of all current Product CSS found **0** dark-context `.bg-stone-100` remap rules.',
-              '- `css/mobile-hotfix.css` still contains the adjacent `.bg-stone-50` remap marker, confirming the missing `-100` level is a current residual rather than a missing owner file.',
-          ]
-          reverify.write_text(doc.replace(marker, '\n'.join(inventory), 1), encoding='utf-8')
+          Path('/tmp/nagornaya-body-source.json').write_text(json.dumps({
+              'body_files': body_files,
+              'routes': routes,
+              'rule': matching_rules[0],
+          }, ensure_ascii=False, indent=2), encoding='utf-8')
           PY
-          rm -rf _product
 
-      - name: Apply bounded canonical transaction
+      - name: Install Product dependencies and Chromium
+        shell: bash
+        run: |
+          npm --prefix _product ci --ignore-scripts
+          cd _product
+          npx playwright install --with-deps chromium
+
+      - name: Verify computed dark body background on every legacy route
+        shell: bash
+        run: |
+          python3 -m http.server 8090 --directory _product > /tmp/nagornaya-body-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:8090/nagornaya/chast-1/ >/dev/null; then break; fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:8090/nagornaya/chast-1/ >/dev/null
+          cd _product
+          node - <<'NODE'
+          const fs = require('fs');
+          const { chromium } = require('playwright');
+          const source = JSON.parse(fs.readFileSync('/tmp/nagornaya-body-source.json', 'utf8'));
+          const BASE = 'http://127.0.0.1:8090';
+          (async () => {
+            const browser = await chromium.launch();
+            const results = [];
+            try {
+              for (const route of source.routes) {
+                const context = await browser.newContext({ viewport: { width: 1366, height: 900 } });
+                const page = await context.newPage();
+                const errors = [];
+                page.on('pageerror', error => errors.push(`PAGEERROR: ${error.message}`));
+                page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+                await page.route('**/*', requestRoute => {
+                  const url = requestRoute.request().url();
+                  if (url.startsWith(BASE) || url.startsWith('data:') || url.startsWith('blob:')) requestRoute.continue();
+                  else requestRoute.abort();
+                });
+                await page.addInitScript(() => { try { localStorage.setItem('theme', 'dark'); } catch (_) {} });
+                await page.goto(BASE + route, { waitUntil: 'domcontentloaded', timeout: 30000 });
+                const result = await page.evaluate(async () => {
+                  document.documentElement.classList.add('dark');
+                  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+                  const body = document.body;
+                  const link = document.querySelector('link[href*="nagornaya-mobile-toc.css"]');
+                  const probe = document.createElement('div');
+                  probe.style.cssText = 'position:absolute;left:-9999px;background-color:var(--color-surface-muted);';
+                  document.body.appendChild(probe);
+                  const payload = {
+                    bodyClass: body.className,
+                    stylesheetHref: link?.href || '',
+                    stylesheetLoaded: Boolean(link?.sheet),
+                    htmlDark: document.documentElement.classList.contains('dark'),
+                    bodyBackground: getComputedStyle(body).backgroundColor,
+                    expectedMutedBackground: getComputedStyle(probe).backgroundColor,
+                  };
+                  probe.remove();
+                  return payload;
+                });
+                result.route = route;
+                result.errors = errors;
+                result.ok = result.bodyClass.includes('nagornaya-page')
+                  && result.bodyClass.includes('bg-stone-100')
+                  && result.stylesheetHref.includes('nagornaya-mobile-toc.css')
+                  && result.stylesheetLoaded
+                  && result.htmlDark
+                  && result.bodyBackground === result.expectedMutedBackground
+                  && result.bodyBackground !== 'rgb(245, 245, 244)'
+                  && errors.length === 0;
+                results.push(result);
+                await context.close();
+              }
+            } finally { await browser.close(); }
+            fs.writeFileSync('/tmp/nagornaya-body-browser.json', JSON.stringify(results, null, 2));
+            console.log(JSON.stringify(results, null, 2));
+            if (results.some(result => !result.ok)) process.exit(1);
+          })().catch(error => { console.error(error); process.exit(1); });
+          NODE
+
+      - name: Write fixed-current evidence and canonical transaction
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import json
 
+          source = json.loads(Path('/tmp/nagornaya-body-source.json').read_text(encoding='utf-8'))
+          browser = json.loads(Path('/tmp/nagornaya-body-browser.json').read_text(encoding='utf-8'))
+          reverify_path = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md')
           matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
           handoff_path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          body_lines = '\n'.join(f'  - `{path}`' for path in source['body_files'])
+          browser_lines = '\n'.join(
+              f"  - `{row['route']}` — body `{row['bodyBackground']}`, expected muted `{row['expectedMutedBackground']}`, stylesheet loaded, errors `{len(row['errors'])}`"
+              for row in browser
+          )
+          reverify_path.write_text(f'''# CURRENT HEAD REVERIFY — Nagornaya body dark-remap subset
+
+- Date: 2026-08-04
+- Source repository: `FedorMilovanov/gb-is-my-strength`
+- Canonical finding: `NG-BODY-01`
+- Remaining broad owner: `NG-DARK-01`
+- Current Product anchor: `f9d0120718569c510833dba7a3abd68ce2f6a003`
+- AuditRepo base: `f59571e6690e695a7fcf5d1a4da71c33fb6401aa`
+- Current production claim: **none**
+
+## Current source and browser evidence
+
+Exact source scan found **{len(source['body_files'])}** current legacy Nagornaya routes whose `<body>` carries both `nagornaya-page` and `bg-stone-100`, and every file links `css/nagornaya-mobile-toc.css`:
+
+{body_lines}
+
+The loaded stylesheet contains the specific dark rule `{source['rule']['selectors']}` with `background-color: var(--color-surface-muted) !important`.
+
+Production-like local Chromium verified every discovered route after forcing `html.dark`:
+
+{browser_lines}
+
+For every route the computed body background exactly equalled the computed `--color-surface-muted` probe, did not equal the historical light `rgb(245, 245, 244)`, and produced zero page/console errors.
+
+## Disposition
+
+`NG-BODY-01` is **FIXED-CURRENT / SOURCE+CHROMIUM VERIFIED**.
+
+The historical row is stale on the current Product anchor: the dark body remap exists in the dedicated Nagornaya stylesheet, that stylesheet is linked on every scanned legacy page, and Chromium proves the effective cascade. The old statement that only `bg-stone-50` is remapped in `mobile-hotfix.css` looked at the wrong owner file and no longer describes runtime behavior.
+
+`NG-DARK-01` is not closed by this transaction because it covers a broader class-remap architecture. However, its future current-head reverify must remove the now-fixed body `bg-stone-100` subset from the residual instead of treating it as an acceptance failure.
+
+## Evidence boundary
+
+- no Product mutation in this AuditRepo transaction;
+- current source and production-like browser verification only;
+- no live-production or deployed-SHA claim;
+- no disposition for the remaining `NG-DARK-01` classes.
+
+## Canonical arithmetic for the AuditRepo transaction
+
+- Canonical IDs: **358**
+- Closed: **212 → 213**
+- Open: **146 → 145**
+- P0: 0
+- P1: **71 → 70**
+- P2: 29
+- P3: 39
+- Refactoring: 4
+- AuditRepo: 3
+
+The total remains `358 = 213 + 145`.
+''', encoding='utf-8')
+
           matrix = matrix_path.read_text(encoding='utf-8')
           handoff = handoff_path.read_text(encoding='utf-8')
-
           def replace_once(text, old, new, label):
               count = text.count(old)
-              if count != 1:
-                  raise SystemExit(f'{label}: expected one marker, found {count}')
+              if count != 1: raise SystemExit(f'{label}: expected one marker, found {count}')
               return text.replace(old, new, 1)
 
           open_row = '| NG-BODY-01 | 🆕 **Нагорная P1:** `bg-stone-100` на `<body>` не ремапится в dark — body фон остаётся светло-серым `#f5f5f4` в тёмной теме. `.bg-stone-100` (0,1,0) > `body` (0,0,1). `mobile-hotfix.css` ремапит `bg-stone-50` но **НЕ `bg-stone-100`**. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |\n'
-          closed_row = '| NG-BODY-01 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01` 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` source scan confirmed current Nagornaya body surfaces still use `bg-stone-100`, while a comment-stripped scan of all current CSS found no dark-context `.bg-stone-100` remap. The body instance is already explicitly included in open root `NG-DARK-01` (`bg-stone-100/200`) and shares its per-chapter remap architecture. Closing the subset does not claim a fix. No Product mutation or production claim. | `f9d01207` |\n'
-
-          matrix = replace_once(
-              matrix,
-              '| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (exact Product footer-version scan: overstated `NG-VIS-12` merged into still-open owner `NG-SEO-01`; no Product mutation, source-fix or production claim). |',
-              '| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (exact Product body/CSS scan: `NG-BODY-01` merged into still-open root `NG-DARK-01`; no Product mutation, source-fix or production claim). |',
-              'matrix source anchor',
-          )
-          matrix = replace_once(
-              matrix,
-              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md` |',
-              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md` |',
-              'matrix reverify',
-          )
+          closed_row = '| NG-BODY-01 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM VERIFIED 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` has the effective rule `html.dark body.nagornaya-page .bg-stone-100 { background-color: var(--color-surface-muted) !important; }` in linked `css/nagornaya-mobile-toc.css`. A fail-closed scan found the stylesheet on every current legacy Nagornaya body surface, and production-like Chromium verified computed body background equals `--color-surface-muted`, differs from historical light `#f5f5f4`, with zero browser errors. The old row inspected the wrong owner CSS file. Broad `NG-DARK-01` remains open but must exclude this fixed subset. No live-production claim. | `f9d01207` source+Chromium |\n'
+          matrix = replace_once(matrix, '| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (exact Product footer-version scan: overstated `NG-VIS-12` merged into still-open owner `NG-SEO-01`; no Product mutation, source-fix or production claim). |', '| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (exact Product source plus production-like Chromium: `NG-BODY-01` is fixed-current; broad `NG-DARK-01` remains open pending current-residual narrowing; no live-production claim). |', 'matrix source anchor')
+          matrix = replace_once(matrix, '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md` |', '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md` |', 'matrix reverify')
           matrix = replace_once(matrix, '## ✅ ЗАКРЫТО (212)', '## ✅ ЗАКРЫТО (213)', 'closed heading')
-          matrix = replace_once(
-              matrix,
-              '| ID | Описание | Коммит |\n|---|---|---|\n| NG-VIS-12 |',
-              '| ID | Описание | Коммит |\n|---|---|---|\n' + closed_row + '| NG-VIS-12 |',
-              'closed row insertion',
-          )
-          matrix = replace_once(matrix, open_row, '', 'open NG-BODY-01 row')
+          matrix = replace_once(matrix, '| ID | Описание | Коммит |\n|---|---|---|\n| NG-VIS-12 |', '| ID | Описание | Коммит |\n|---|---|---|\n' + closed_row + '| NG-VIS-12 |', 'closed insertion')
+          matrix = replace_once(matrix, open_row, '', 'open row')
           matrix = replace_once(matrix, '## 🟠 P1 — ОТКРЫТО (71)', '## 🟠 P1 — ОТКРЫТО (70)', 'P1 heading')
-          matrix = replace_once(
-              matrix,
-              '## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 212 closed + 146 open)',
-              '## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 213 closed + 145 open)',
-              'statistics narrative',
-          )
+          matrix = replace_once(matrix, '## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 212 closed + 146 open)', '## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 213 closed + 145 open)', 'stats')
           matrix = replace_once(matrix, '| Закрыто (fixed) | 212 |', '| Закрыто (fixed) | 213 |', 'fixed summary')
           matrix = replace_once(matrix, '| P1 открыто | 71 |', '| P1 открыто | 70 |', 'P1 summary')
-          matrix = replace_once(
-              matrix,
-              '| **Всего открыто (матрица)** | **146** |',
-              '| **Всего открыто (матрица)** | **145** |',
-              'total-open summary',
-          )
+          matrix = replace_once(matrix, '| **Всего открыто (матрица)** | **146** |', '| **Всего открыто (матрица)** | **145** |', 'open summary')
 
-          handoff = replace_once(
-              handoff,
-              '**AuditRepo base before this handoff:** `17c84848808b63a1910b0d50c8e2553aac0ee4e4`',
-              '**AuditRepo base before this handoff:** `f59571e6690e695a7fcf5d1a4da71c33fb6401aa`',
-              'handoff AuditRepo base',
-          )
-          handoff = replace_once(
-              handoff,
-              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md`',
-              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md`',
-              'handoff reverify',
-          )
-          handoff = replace_once(
-              handoff,
-              '**Canonical matrix:** **358 IDs = 212 closed + 146 open**.',
-              '**Canonical matrix:** **358 IDs = 213 closed + 145 open**.',
-              'handoff arithmetic',
-          )
-          handoff = replace_once(
-              handoff,
-              'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143–#147 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #149 classifies overstated `NG-VIS-12` and merges it into still-open `NG-SEO-01` after an exact Product source scan; it makes no Product mutation, source-fix or production claim.',
-              'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141, #143–#147 and #149 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #150 merges `NG-BODY-01` into still-open root `NG-DARK-01` after an exact Product body/CSS scan; it makes no Product mutation, source-fix or production claim.',
-              'handoff source movement',
-          )
-          handoff = replace_once(
-              handoff,
-              '- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority; `NG-DARK-01`, `NG-INLINE-01` and `NG-SEO-01` remain open current root owners.',
-              '- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority; `NG-DARK-01`, `NG-INLINE-01` and `NG-SEO-01` remain open current root owners. The body `bg-stone-100` instance remains an acceptance criterion of `NG-DARK-01`.',
-              'handoff Product owners',
-          )
-          handoff = replace_once(
-              handoff,
-              '- PR #148 (`audit/tts-deep-current-head-2026-08-04`) is a disjoint one-file incoming TTS evidence lane.\n- PR #149 (`verify/nagornaya-version-row-disposition-20260804`) is the active canonical disposition lane for `NG-VIS-12`; its final diff is bounded to the matrix, this handoff and the paired reverify document.',
-              '- PR #148 (`audit/tts-deep-current-head-2026-08-04`) is a disjoint one-file incoming TTS evidence lane.\n- PR #150 (`verify/nagornaya-body-subset-duplicate-20260804`) is the active canonical duplicate-consolidation lane for `NG-BODY-01`; its final diff is bounded to the matrix, this handoff and the paired reverify document.',
-              'handoff AuditRepo owners',
-          )
+          handoff = replace_once(handoff, '**AuditRepo base before this handoff:** `17c84848808b63a1910b0d50c8e2553aac0ee4e4`', '**AuditRepo base before this handoff:** `f59571e6690e695a7fcf5d1a4da71c33fb6401aa`', 'handoff base')
+          handoff = replace_once(handoff, '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md`', '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md`', 'handoff reverify')
+          handoff = replace_once(handoff, '**Canonical matrix:** **358 IDs = 212 closed + 146 open**.', '**Canonical matrix:** **358 IDs = 213 closed + 145 open**.', 'handoff arithmetic')
+          handoff = replace_once(handoff, 'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143–#147 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #149 classifies overstated `NG-VIS-12` and merges it into still-open `NG-SEO-01` after an exact Product source scan; it makes no Product mutation, source-fix or production claim.', 'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141, #143–#147 and #149 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #150 closes `NG-BODY-01` as fixed-current after exact source and production-like Chromium cascade verification; it makes no Product mutation or live-production claim.', 'handoff movement')
+          handoff = replace_once(handoff, '- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority; `NG-DARK-01`, `NG-INLINE-01` and `NG-SEO-01` remain open current root owners.', '- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority. `NG-BODY-01` is fixed-current; `NG-DARK-01` remains open only for a freshly narrowed residual. `NG-INLINE-01` and `NG-SEO-01` remain open current root owners.', 'handoff Product')
+          handoff = replace_once(handoff, '- PR #148 (`audit/tts-deep-current-head-2026-08-04`) is a disjoint one-file incoming TTS evidence lane.\n- PR #149 (`verify/nagornaya-version-row-disposition-20260804`) is the active canonical disposition lane for `NG-VIS-12`; its final diff is bounded to the matrix, this handoff and the paired reverify document.', '- PR #148 (`audit/tts-deep-current-head-2026-08-04`) is a disjoint one-file incoming TTS evidence lane.\n- PR #150 (`verify/nagornaya-body-subset-duplicate-20260804`) is the active canonical fixed-current lane for `NG-BODY-01`; its final diff is bounded to the matrix, this handoff and the paired reverify document.', 'handoff owners')
           handoff = replace_once(handoff, '- P1: 71', '- P1: 70', 'handoff P1')
           handoff = replace_once(handoff, '- Total open: 146', '- Total open: 145', 'handoff open')
           handoff = replace_once(handoff, '- Closed: 212', '- Closed: 213', 'handoff closed')
-          handoff = replace_once(
-              handoff,
-              '1. Merge AuditRepo PR #149 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head; preserve disjoint PR #148.\n2. Keep `NG-SEO-01` open for its exact 1–3 stale / 4–5 absent version residual plus title/Pagefind drift; do not recreate `NG-VIS-12`. Keep `NG-INLINE-01` and `NG-DARK-01` open independently.',
-              '1. Merge AuditRepo PR #150 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head; preserve disjoint PR #148.\n2. Keep `NG-DARK-01` open until a bounded Product repair covers the body `bg-stone-100` and remaining class remaps; do not recreate `NG-BODY-01`. Keep `NG-INLINE-01` and `NG-SEO-01` open independently.',
-              'handoff next work',
-          )
-
-          if matrix.count('| NG-BODY-01 |') != 1:
-              raise SystemExit('NG-BODY-01 must exist exactly once after consolidation')
-          if matrix.count('| NG-DARK-01 |') != 1:
-              raise SystemExit('NG-DARK-01 must remain open exactly once')
-          if '## ✅ ЗАКРЫТО (213)' not in matrix or '## 🟠 P1 — ОТКРЫТО (70)' not in matrix:
-              raise SystemExit('matrix headings were not updated')
-          if '**358 IDs = 213 closed + 145 open**' not in handoff:
-              raise SystemExit('handoff arithmetic missing')
-
+          handoff = replace_once(handoff, '1. Merge AuditRepo PR #149 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head; preserve disjoint PR #148.\n2. Keep `NG-SEO-01` open for its exact 1–3 stale / 4–5 absent version residual plus title/Pagefind drift; do not recreate `NG-VIS-12`. Keep `NG-INLINE-01` and `NG-DARK-01` open independently.', '1. Merge AuditRepo PR #150 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head; preserve disjoint PR #148.\n2. Reverify and narrow `NG-DARK-01` against current CSS before any Product mutation; exclude fixed `NG-BODY-01` and do not recreate it. Keep `NG-INLINE-01` and `NG-SEO-01` open independently.', 'handoff next')
+          if matrix.count('| NG-BODY-01 |') != 1 or matrix.count('| NG-DARK-01 |') != 1: raise SystemExit('body/root cardinality failure')
+          if '## ✅ ЗАКРЫТО (213)' not in matrix or '## 🟠 P1 — ОТКРЫТО (70)' not in matrix: raise SystemExit('heading failure')
+          if '**358 IDs = 213 closed + 145 open**' not in handoff: raise SystemExit('handoff arithmetic failure')
           matrix_path.write_text(matrix, encoding='utf-8')
           handoff_path.write_text(handoff, encoding='utf-8')
           PY
@@ -234,43 +289,29 @@ jobs:
       - name: Validate bounded transaction
         shell: bash
         run: |
-          ! grep -R '{{CURRENT_SOURCE_SCAN}}' projects/gb-is-my-strength
+          rm -rf _product
           git diff --check
           changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
-          printf '%s\n' \
-            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
-            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md \
-            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
-            > "${changed_file}"
+          printf '%s\n' projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md > "${changed_file}"
           export AUDITREPO_CHANGED_PATHS_FILE="${changed_file}"
           python3 scripts/check_auditrepo_structure.py
           python3 scripts/validate_audit_repo.py
           python3 scripts/validate_audit_repo_regression_test.py
-          python3 -m py_compile \
-            scripts/check_matrix_coverage.py \
-            scripts/matrix_coverage_lib.py \
-            scripts/matrix_coverage_contexts.py \
-            scripts/matrix_coverage_regression_test.py
+          python3 -m py_compile scripts/check_matrix_coverage.py scripts/matrix_coverage_lib.py scripts/matrix_coverage_contexts.py scripts/matrix_coverage_regression_test.py
           python3 scripts/matrix_coverage_regression_test.py
           mkdir -p reports/matrix-coverage
           python3 scripts/check_matrix_coverage.py --verbose --json-out reports/matrix-coverage/report.json
-          python3 scripts/matrix_coverage_contexts.py \
-            --json-out reports/matrix-coverage/contexts.json \
-            --markdown-out reports/matrix-coverage/contexts.md
+          python3 scripts/matrix_coverage_contexts.py --json-out reports/matrix-coverage/contexts.json --markdown-out reports/matrix-coverage/contexts.md
 
-      - name: Commit canonical consolidation and remove executor
+      - name: Commit canonical closure and remove temporary automation
         shell: bash
         run: |
           rm .github/workflows/nagornaya-body-subset-duplicate.yml
+          rm .github/workflows/nagornaya-body-fixed-recovery.yml
           rm -rf reports/matrix-coverage
           git diff --check
-          git status --short
-          git add \
-            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
-            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md \
-            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
-            .github/workflows/nagornaya-body-subset-duplicate.yml
+          git add projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md .github/workflows/nagornaya-body-subset-duplicate.yml .github/workflows/nagornaya-body-fixed-recovery.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "audit(gb): merge Nagornaya body subset duplicate"
+          git commit -m "audit(gb): close Nagornaya body dark-remap finding"
           git push origin HEAD:verify/nagornaya-body-subset-duplicate-20260804
