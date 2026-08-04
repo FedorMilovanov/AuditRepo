@@ -39,12 +39,12 @@ The native-dist source boundary was **19 tokens / 443 uses**. Refined Chromium c
 | `text-purple-600` | 40 | 3.27:1 | 4 / 4 textual samples fail; graphics pass 3:1 |
 | `text-purple-700` | 12 | 2.52:1 | 24 / 24 textual samples fail |
 | `text-teal-700` | 3 | 3.21:1 | 6 / 6 textual samples fail |
-| `bg-stone-200` | 2 | 1.05:1 | 4 / 4 text samples fail and 4 light islands are present |
+| `bg-stone-200` | 2 | — | 4 light islands; emoji-only tiles excluded from text scoring |
 | `text-orange-700` | 1 | 3.40:1 | 2 / 2 textual samples fail |
 | `text-red-600` | 1 | 3.64:1 | 2 / 2 textual samples fail |
 | `text-rose-700` | 1 | 2.84:1 | 2 / 2 textual samples fail |
 
-`bg-stone-200` is both a contrast failure and a confirmed light island. The other eight are text-contrast failures. This is the only accepted Product-repair boundary from this lane.
+`bg-stone-200` is a confirmed light island; the other eight are text-contrast failures. This is the only accepted Product-repair boundary from this lane.
 
 ## Removed from the repair boundary
 
