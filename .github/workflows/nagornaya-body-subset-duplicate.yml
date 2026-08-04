@@ -1,0 +1,276 @@
+name: Complete Nagornaya body subset consolidation
+
+on:
+  pull_request:
+    types: [synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  complete:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'verify/nagornaya-body-subset-duplicate-20260804'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout canonical verifier branch
+        uses: actions/checkout@v4
+        with:
+          ref: verify/nagornaya-body-subset-duplicate-20260804
+          fetch-depth: 0
+
+      - name: Checkout exact Product source
+        uses: actions/checkout@v4
+        with:
+          repository: FedorMilovanov/gb-is-my-strength
+          ref: f9d0120718569c510833dba7a3abd68ce2f6a003
+          path: _product
+          fetch-depth: 1
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify immutable bases and current Product residual
+        shell: bash
+        run: |
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "f59571e6690e695a7fcf5d1a4da71c33fb6401aa"
+          git merge-base --is-ancestor origin/main HEAD
+          test "$(git -C _product rev-parse HEAD)" = "f9d0120718569c510833dba7a3abd68ce2f6a003"
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          product = Path('_product')
+          reverify = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md')
+          allowed = {'.html', '.astro', '.mdx'}
+          ignored = {'.git', 'node_modules', 'dist', 'archive', 'reports'}
+          body_pattern = re.compile(
+              r'<body\b[^>]*\bclass\s*=\s*["\'][^"\']*\bbg-stone-100\b[^"\']*["\']',
+              re.IGNORECASE | re.DOTALL,
+          )
+          body_matches = []
+          for root in (product / 'nagornaya', product / 'src'):
+              if not root.exists():
+                  continue
+              for path in root.rglob('*'):
+                  if not path.is_file() or path.suffix.lower() not in allowed:
+                      continue
+                  if any(part in ignored for part in path.parts):
+                      continue
+                  try:
+                      text = path.read_text(encoding='utf-8')
+                  except (OSError, UnicodeDecodeError):
+                      continue
+                  if body_pattern.search(text):
+                      body_matches.append(path.relative_to(product).as_posix())
+
+          body_matches = sorted(set(body_matches))
+          if not body_matches:
+              raise SystemExit('no current Nagornaya body bg-stone-100 source found')
+
+          dark_remaps = []
+          dark_context = re.compile(r'(?:html\.dark|(?:^|[\s,>+~])\.dark(?:[\s.#:[>+~]|$)|\[data-theme\s*=\s*["\']?dark)', re.IGNORECASE)
+          stone_selector = re.compile(r'\.bg-stone-100(?![\w-])', re.IGNORECASE)
+          rule_pattern = re.compile(r'([^{}]+)\{[^{}]*\}', re.DOTALL)
+          for path in product.rglob('*.css'):
+              if any(part in ignored for part in path.parts):
+                  continue
+              try:
+                  css = path.read_text(encoding='utf-8')
+              except (OSError, UnicodeDecodeError):
+                  continue
+              css = re.sub(r'/\*.*?\*/', '', css, flags=re.DOTALL)
+              for match in rule_pattern.finditer(css):
+                  selectors = match.group(1)
+                  if stone_selector.search(selectors) and dark_context.search(selectors):
+                      dark_remaps.append({
+                          'path': path.relative_to(product).as_posix(),
+                          'selector': ' '.join(selectors.split())[:240],
+                      })
+
+          if dark_remaps:
+              raise SystemExit(f'current dark-context bg-stone-100 remap exists: {dark_remaps}')
+
+          mobile_hotfix = product / 'css/mobile-hotfix.css'
+          if not mobile_hotfix.exists():
+              raise SystemExit('css/mobile-hotfix.css missing')
+          hotfix_text = re.sub(r'/\*.*?\*/', '', mobile_hotfix.read_text(encoding='utf-8'), flags=re.DOTALL)
+          if '.bg-stone-50' not in hotfix_text:
+              raise SystemExit('expected current bg-stone-50 remap marker missing')
+
+          doc = reverify.read_text(encoding='utf-8')
+          marker = '{{CURRENT_SOURCE_SCAN}}'
+          if doc.count(marker) != 1:
+              raise SystemExit('source scan placeholder must exist exactly once')
+          inventory = [
+              f'- Exact source scan found **{len(body_matches)}** current Nagornaya files whose `<body>` class contains `bg-stone-100`:',
+              *[f'  - `{path}`' for path in body_matches],
+              '- A comment-stripped selector scan of all current Product CSS found **0** dark-context `.bg-stone-100` remap rules.',
+              '- `css/mobile-hotfix.css` still contains the adjacent `.bg-stone-50` remap marker, confirming the missing `-100` level is a current residual rather than a missing owner file.',
+          ]
+          reverify.write_text(doc.replace(marker, '\n'.join(inventory), 1), encoding='utf-8')
+          PY
+          rm -rf _product
+
+      - name: Apply bounded canonical transaction
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          handoff_path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          matrix = matrix_path.read_text(encoding='utf-8')
+          handoff = handoff_path.read_text(encoding='utf-8')
+
+          def replace_once(text, old, new, label):
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected one marker, found {count}')
+              return text.replace(old, new, 1)
+
+          open_row = '| NG-BODY-01 | 🆕 **Нагорная P1:** `bg-stone-100` на `<body>` не ремапится в dark — body фон остаётся светло-серым `#f5f5f4` в тёмной теме. `.bg-stone-100` (0,1,0) > `body` (0,0,1). `mobile-hotfix.css` ремапит `bg-stone-50` но **НЕ `bg-stone-100`**. Evidence: `evidence/NAGORNAYA_DEEP_AUDIT_CYCLE3_2026-07-14.md` | arena-auditor cycle 3 |\n'
+          closed_row = '| NG-BODY-01 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01` 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` source scan confirmed current Nagornaya body surfaces still use `bg-stone-100`, while a comment-stripped scan of all current CSS found no dark-context `.bg-stone-100` remap. The body instance is already explicitly included in open root `NG-DARK-01` (`bg-stone-100/200`) and shares its per-chapter remap architecture. Closing the subset does not claim a fix. No Product mutation or production claim. | `f9d01207` |\n'
+
+          matrix = replace_once(
+              matrix,
+              '| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (exact Product footer-version scan: overstated `NG-VIS-12` merged into still-open owner `NG-SEO-01`; no Product mutation, source-fix or production claim). |',
+              '| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (exact Product body/CSS scan: `NG-BODY-01` merged into still-open root `NG-DARK-01`; no Product mutation, source-fix or production claim). |',
+              'matrix source anchor',
+          )
+          matrix = replace_once(
+              matrix,
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md` |',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md` |',
+              'matrix reverify',
+          )
+          matrix = replace_once(matrix, '## ✅ ЗАКРЫТО (212)', '## ✅ ЗАКРЫТО (213)', 'closed heading')
+          matrix = replace_once(
+              matrix,
+              '| ID | Описание | Коммит |\n|---|---|---|\n| NG-VIS-12 |',
+              '| ID | Описание | Коммит |\n|---|---|---|\n' + closed_row + '| NG-VIS-12 |',
+              'closed row insertion',
+          )
+          matrix = replace_once(matrix, open_row, '', 'open NG-BODY-01 row')
+          matrix = replace_once(matrix, '## 🟠 P1 — ОТКРЫТО (71)', '## 🟠 P1 — ОТКРЫТО (70)', 'P1 heading')
+          matrix = replace_once(
+              matrix,
+              '## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 212 closed + 146 open)',
+              '## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 213 closed + 145 open)',
+              'statistics narrative',
+          )
+          matrix = replace_once(matrix, '| Закрыто (fixed) | 212 |', '| Закрыто (fixed) | 213 |', 'fixed summary')
+          matrix = replace_once(matrix, '| P1 открыто | 71 |', '| P1 открыто | 70 |', 'P1 summary')
+          matrix = replace_once(
+              matrix,
+              '| **Всего открыто (матрица)** | **146** |',
+              '| **Всего открыто (матрица)** | **145** |',
+              'total-open summary',
+          )
+
+          handoff = replace_once(
+              handoff,
+              '**AuditRepo base before this handoff:** `17c84848808b63a1910b0d50c8e2553aac0ee4e4`',
+              '**AuditRepo base before this handoff:** `f59571e6690e695a7fcf5d1a4da71c33fb6401aa`',
+              'handoff AuditRepo base',
+          )
+          handoff = replace_once(
+              handoff,
+              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-version-row.md`',
+              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md`',
+              'handoff reverify',
+          )
+          handoff = replace_once(
+              handoff,
+              '**Canonical matrix:** **358 IDs = 212 closed + 146 open**.',
+              '**Canonical matrix:** **358 IDs = 213 closed + 145 open**.',
+              'handoff arithmetic',
+          )
+          handoff = replace_once(
+              handoff,
+              'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143–#147 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #149 classifies overstated `NG-VIS-12` and merges it into still-open `NG-SEO-01` after an exact Product source scan; it makes no Product mutation, source-fix or production claim.',
+              'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141, #143–#147 and #149 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #150 merges `NG-BODY-01` into still-open root `NG-DARK-01` after an exact Product body/CSS scan; it makes no Product mutation, source-fix or production claim.',
+              'handoff source movement',
+          )
+          handoff = replace_once(
+              handoff,
+              '- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority; `NG-DARK-01`, `NG-INLINE-01` and `NG-SEO-01` remain open current root owners.',
+              '- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority; `NG-DARK-01`, `NG-INLINE-01` and `NG-SEO-01` remain open current root owners. The body `bg-stone-100` instance remains an acceptance criterion of `NG-DARK-01`.',
+              'handoff Product owners',
+          )
+          handoff = replace_once(
+              handoff,
+              '- PR #148 (`audit/tts-deep-current-head-2026-08-04`) is a disjoint one-file incoming TTS evidence lane.\n- PR #149 (`verify/nagornaya-version-row-disposition-20260804`) is the active canonical disposition lane for `NG-VIS-12`; its final diff is bounded to the matrix, this handoff and the paired reverify document.',
+              '- PR #148 (`audit/tts-deep-current-head-2026-08-04`) is a disjoint one-file incoming TTS evidence lane.\n- PR #150 (`verify/nagornaya-body-subset-duplicate-20260804`) is the active canonical duplicate-consolidation lane for `NG-BODY-01`; its final diff is bounded to the matrix, this handoff and the paired reverify document.',
+              'handoff AuditRepo owners',
+          )
+          handoff = replace_once(handoff, '- P1: 71', '- P1: 70', 'handoff P1')
+          handoff = replace_once(handoff, '- Total open: 146', '- Total open: 145', 'handoff open')
+          handoff = replace_once(handoff, '- Closed: 212', '- Closed: 213', 'handoff closed')
+          handoff = replace_once(
+              handoff,
+              '1. Merge AuditRepo PR #149 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head; preserve disjoint PR #148.\n2. Keep `NG-SEO-01` open for its exact 1–3 stale / 4–5 absent version residual plus title/Pagefind drift; do not recreate `NG-VIS-12`. Keep `NG-INLINE-01` and `NG-DARK-01` open independently.',
+              '1. Merge AuditRepo PR #150 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head; preserve disjoint PR #148.\n2. Keep `NG-DARK-01` open until a bounded Product repair covers the body `bg-stone-100` and remaining class remaps; do not recreate `NG-BODY-01`. Keep `NG-INLINE-01` and `NG-SEO-01` open independently.',
+              'handoff next work',
+          )
+
+          if matrix.count('| NG-BODY-01 |') != 1:
+              raise SystemExit('NG-BODY-01 must exist exactly once after consolidation')
+          if matrix.count('| NG-DARK-01 |') != 1:
+              raise SystemExit('NG-DARK-01 must remain open exactly once')
+          if '## ✅ ЗАКРЫТО (213)' not in matrix or '## 🟠 P1 — ОТКРЫТО (70)' not in matrix:
+              raise SystemExit('matrix headings were not updated')
+          if '**358 IDs = 213 closed + 145 open**' not in handoff:
+              raise SystemExit('handoff arithmetic missing')
+
+          matrix_path.write_text(matrix, encoding='utf-8')
+          handoff_path.write_text(handoff, encoding='utf-8')
+          PY
+
+      - name: Validate bounded transaction
+        shell: bash
+        run: |
+          ! grep -R '{{CURRENT_SOURCE_SCAN}}' projects/gb-is-my-strength
+          git diff --check
+          changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
+          printf '%s\n' \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            > "${changed_file}"
+          export AUDITREPO_CHANGED_PATHS_FILE="${changed_file}"
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 -m py_compile \
+            scripts/check_matrix_coverage.py \
+            scripts/matrix_coverage_lib.py \
+            scripts/matrix_coverage_contexts.py \
+            scripts/matrix_coverage_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p reports/matrix-coverage
+          python3 scripts/check_matrix_coverage.py --verbose --json-out reports/matrix-coverage/report.json
+          python3 scripts/matrix_coverage_contexts.py \
+            --json-out reports/matrix-coverage/contexts.json \
+            --markdown-out reports/matrix-coverage/contexts.md
+
+      - name: Commit canonical consolidation and remove executor
+        shell: bash
+        run: |
+          rm .github/workflows/nagornaya-body-subset-duplicate.yml
+          rm -rf reports/matrix-coverage
+          git diff --check
+          git status --short
+          git add \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-body-subset-duplicate.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            .github/workflows/nagornaya-body-subset-duplicate.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "audit(gb): merge Nagornaya body subset duplicate"
+          git push origin HEAD:verify/nagornaya-body-subset-duplicate-20260804
