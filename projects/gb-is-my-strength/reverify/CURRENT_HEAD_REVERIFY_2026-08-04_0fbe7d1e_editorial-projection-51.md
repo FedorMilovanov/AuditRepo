@@ -46,7 +46,7 @@ Therefore the original 51-field claim is not an open current-head defect. The te
 
 This closure covers only the canonical projection-overwrite claim. It does not approve unresolved editorial dates, close separate `inconsistent-needs-review` records, or claim that current Product `main` is deployed. Later Diotrophes observation reconciliation is a separate bounded transaction and does not reopen this finding.
 
-## Proposed canonical arithmetic
+## Canonical arithmetic applied by this transaction
 
 - Canonical IDs: **358**
 - Closed: **191 → 192**

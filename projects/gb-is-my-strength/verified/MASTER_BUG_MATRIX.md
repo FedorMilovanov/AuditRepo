@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `778a218d9e6dc4c051721fc0f0fe56ee9125c797` (source/main merge of PR #812; exact verified PR head `3bd7f8a47bab65f08de45d81707cff2f6233cc55`; no production claim). |
+| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; fixed implementation merge `f7e426996fd41a23ca720299a8ef1ce7f1c0952f`; exact green preservation/workflow head `7de20ed77e60ec05bb91322ac03800a3d9860410`; no current production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-03_778a218d_avraam-skip-contrast.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_editorial-projection-51.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (191)
+## ✅ ЗАКРЫТО (192)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| EDITORIAL-PROJECTION-51-DRIFT | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #442 restored exactly 27 unauthorized `editorialPublishedAt` changes while retaining all 51 proven RSS/Search projection observations, review statuses, modification dates, provenance and source boundary. It added permanent preservation and frozen/observed diff contracts; issue #217 closed in merge `f7e426996fd41a23ca720299a8ef1ce7f1c0952f`. At current Product anchor `0fbe7d1ead9ebd1bea867418e254da438ec63329`, workflow blob `00caeeaecff5a70d22ccbfa1263aefd5ef637640` and preservation-test blob `0c7a733df4c6b661fdffd377e7f0d5b4c3bc9708` are identical to exact green head `7de20ed77e60ec05bb91322ac03800a3d9860410`, where Editorial Metadata v3 run `30679631914` succeeded. Historical same-SHA deployment witness `30300756799` belongs to `f7e42699`; no current production claim. | `f7e42699` PR#442; run `30679631914`; current `0fbe7d1e` |
 | A11Y-P1-02 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM VERIFIED 2026-08-03.** Source PR #812 added one route-owned focus-reveal skip link before the full sr-only projection and targets the programmatically focusable `#stage` owner. Exact Chromium Dossier run `30807589787` on verified head `3bd7f8a47bab65f08de45d81707cff2f6233cc55` proved first-Tab focus, visible `295.125 × 44` geometry, native activation to `#stage` with hash synchronization, `tabindex="-1"`, and `304/304` expected states; artifact `8853648893`, digest `sha256:54653a134572f2c6885168dacb938c9213c687d0425f7c5ec497876bdd9d7522`. Squash merge `778a218d9e6dc4c051721fc0f0fe56ee9125c797`. No production claim. | `778a218d` PR#812; run `30807589787`; artifact `8853648893` |
 | A11Y-P1-03 | ✅ **STALE-ON-CURRENT-HEAD / SOURCE+CHROMIUM VERIFIED 2026-08-03.** The historical `2.15:1` archaeology-metadata contrast claim is not reproducible on the exact verified source head. The browser-composited Dossier witness sampled `1208` instances through ancestor backgrounds: minimum `5.084:1`, maximum `7.351:1`, invalid samples `0`, against the WCAG AA `4.5:1` threshold. Exact run `30807589787`, artifact `8853648893`, digest `sha256:54653a134572f2c6885168dacb938c9213c687d0425f7c5ec497876bdd9d7522`; source merge `778a218d9e6dc4c051721fc0f0fe56ee9125c797`. This closes only the canonical `2.15:1` claim; no all-route or production claim. | `778a218d` PR#812; run `30807589787`; artifact `8853648893` |
 | A11Y-P1-01 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM VERIFIED 2026-08-03.** Source PR #759 established one page-level heading owner during the visible intro lifecycle: the static page heading remains the sole H1 and the visual intro title is H2. The bounded Chromium accessibility witness run `30771541994` sampled the lifecycle and recorded `maxH1CountDuringIntro=1`; artifact `8840711226`, digest `sha256:bc92b51ebc665585b222bcb56d2298ba2523e7ae16d629f8b694ef0519f95fdc`. Final exact PR head `33a2380d6748da26d64eb33d84ff7e588fd6e508` also passed the 304-state Dossier witness, seven-viewport Reference Baseline, Static Projection, Overlay, Map Keyboard and all source gates before merge `d69268b27bb83fe8741159da59f9c1b038d7d9b9`. No production claim. | `d69268b2` PR#759; runs `30771541994`/`30779633089`/`30779633071` |
@@ -226,12 +227,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (79)
+## 🟠 P1 — ОТКРЫТО (78)
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | CI-WORKFLOW-PROLIFERATION | Control plane expanded from the earlier 19-workflow baseline to roughly 26 permanent workflows with repeated heavy setup/build/test sections. Capability inventory and convergence are required before adding workflows. | current control-plane artifacts; forensic delta 2026-07-25 |
-| EDITORIAL-PROJECTION-51-DRIFT | Projection-only Search/RSS observations must not overwrite canonical editorial dates. Reconcile the 51-field diff by field class and retain human editorial authority; do not add a generic writer merely to make the workflow green. | source issue #217; `reverify/MULTIAGENT_CONVERGENCE_2026-07-25_d94b5488.md` |
 | S-T-01 | 🟡 **ЧАСТИЧНО 2026-07-14**: чекер серий + orphan-scan + legacy-selector-ban теперь видят .astro/.mdx; полный route-level паритет гейтов для Astro-мира — остаётся. | Auditor 2026-07-14 |
 | S-SEC-01 | Blacklist-based HTML Sanitization in enhancements.js (XSS risk) | Auditor 2026-07-14 |
 | MAP-P1-01 | 🆕 **Karty P1:** Tour mode показывает подпись I этапа для III этапа, анимирует stage dot не по `sid` и сразу вызывает `flyTo(nextPlace)` до остановки | verified-browser (c2c339708252) |
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `778a218d`; last exact production `abf1edba`; 358 canonical = 191 closed + 167 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 192 closed + 166 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 191 |
+| Закрыто (fixed) | 192 |
 | **P0 открыто** | **0** |
-| P1 открыто | 79 |
+| P1 открыто | 78 |
 | P2 открыто | 34 |
 | P3 открыто | 47 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **167** |
+| **Всего открыто (матрица)** | **166** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,13 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-04 — editorial projection-only drift closure @ current source `0fbe7d1e`
+- Closed `EDITORIAL-PROJECTION-51-DRIFT` as FIXED-CURRENT and architecture-superseded.
+- Product PR #442 / merge `f7e426996fd41a23ca720299a8ef1ce7f1c0952f` restored 27 unauthorized editorial dates while retaining all 51 proven projection observations and added permanent preservation/diff contracts.
+- Current source retains the exact workflow and preservation-test blobs that passed Editorial Metadata v3 run `30679631914` on exact head `7de20ed77e60ec05bb91322ac03800a3d9860410`.
+- Historical deployment run `30300756799` belongs to `f7e42699`; current Product `0fbe7d1e` has no same-SHA production claim.
+- Canonical arithmetic moved from **191 closed / 167 open** to **192 closed / 166 open**; P1 moved from **79** to **78**.
 
 ### 2026-08-04 — Avraam skip navigation and contrast disposition @ source merge `778a218d`
 - Source PR #812 merged exact verified head `3bd7f8a47bab65f08de45d81707cff2f6233cc55` as `778a218d9e6dc4c051721fc0f0fe56ee9125c797`.
