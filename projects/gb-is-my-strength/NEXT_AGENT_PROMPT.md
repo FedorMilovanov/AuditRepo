@@ -2,13 +2,13 @@
 
 > **Meaningful handoff only.** The matrix is the durable verified backlog; this file is the single writer for current source head, active owner lanes and the next executable barriers.
 
-**AuditRepo base before this handoff:** `9211b3edd7ca486c1a7457abc24ccdbf99c18d84`
+**AuditRepo base before this handoff:** `92bd5457c391604507147694a826791cb0c061d2`
 **Exact finding-disposition anchor:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
 **Current Product main:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
 **Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `f9d01207`.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_qual-p1-02-hebrew-semantics.md`
-**Canonical matrix:** **358 IDs = 207 closed + 151 open**.
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-subset-duplicates.md`
+**Canonical matrix:** **358 IDs = 209 closed + 149 open**.
 
 ## Source convergence since the disposition anchor
 
@@ -35,35 +35,35 @@ The following Product waves are merged in `main` and must not be reimplemented:
 - `0fbe7d1ead9ebd1bea867418e254da438ec63329` — current Product main after subsequent independently merged lanes; this handoff uses it only as exact source-state authority and does not infer additional matrix dispositions.
 - `f9d0120718569c510833dba7a3abd68ce2f6a003` — Product PR #873 bounded `QUAL-P1-02` repair: Hebrew-capable font stack, isolated RTL token semantics, explicit Hebrew title boundaries and permanent source/Chromium witnesses; exact PR head `cf128cc429ccfa1c48fce4638b3f489f8dc27135` passed 11/11 workflows.
 
-Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143–#144 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. Product PR #873 is merged and supplies the exact source/Chromium/CI evidence for closing `QUAL-P1-02`; AuditRepo PR #145 records only that disposition and makes no Product mutation or production claim.
+Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141 and #143–#145 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #146 merges `NG-DARK-04/05` into still-open root `NG-DARK-01`; it makes no Product mutation, source-fix or production claim.
 
 ## Active canonical owner lanes
 
 ### Product repository
 
-- Product PR #875 (`lane/system-tts-deep-audit-2026-08-04`) is an unrelated TTS diagnostic lane touching `scripts/tts-engine-lifecycle-browser-test.js`; it does not overlap this Karty closure.
-- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` is source authority for `QUAL-P1-02`; the last exact production authority remains separate.
+- Product PR #875 (`lane/system-tts-deep-audit-2026-08-04`) is an unrelated TTS diagnostic lane; it does not overlap this verifier-only Nagornaya transaction.
+- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority; `NG-DARK-01` is still open because the relevant remaps are absent.
 
 ### AuditRepo
 
-- PR #145 (`verify/qual-p1-02-hebrew-closure-20260804`) is the active canonical closure lane for `QUAL-P1-02`.
+- PR #146 (`verify/nagornaya-dark-subset-duplicates-20260804`) is the active canonical duplicate-consolidation lane for `NG-DARK-04/05`.
 - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
 
 ## Current counts
 
 - P0: 0
 - P1: 71
-- P2: 31
+- P2: 29
 - P3: 42
 - Refactoring: 4
 - AuditRepo: 3
-- Total open: 151
-- Closed: 207
+- Total open: 149
+- Closed: 209
 
 ## Next meaningful work
 
-1. Merge AuditRepo PR #145 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
-2. Re-fetch both repositories and continue current-head harvest; keep all Nagornaya root owners open until bounded Product repairs exist.
+1. Merge AuditRepo PR #146 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
+2. Keep `NG-DARK-01` open until a bounded Product repair implements the missing per-chapter dark remaps; do not recreate `NG-DARK-04/05` as separate owners.
 3. `QUAL-P1-06` and narrowed `QUAL-P1-09` remain confirmed Product candidates; `QUAL-P1-02` is closed by Product PR #873 and must not be reimplemented.
 4. Narrow `MAP-P1-20` rather than closing its still-current unversioned static-resource residual.
 5. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence.
