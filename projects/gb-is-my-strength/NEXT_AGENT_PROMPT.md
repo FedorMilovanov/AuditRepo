@@ -7,8 +7,8 @@
 **Current Product main:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
 **Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `f9d01207`.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-browser.md`
-**Canonical matrix:** **358 IDs = 213 closed + 145 open**.
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-e-karty-hub.md`
+**Canonical matrix:** **358 IDs = 218 closed + 140 open**.
 
 ## Source convergence since the disposition anchor
 
@@ -52,18 +52,30 @@ Source movement does **not** change canonical AuditRepo counts by itself. AuditR
 ## Current counts
 
 - P0: 0
-- P1: 70
-- P2: 29
-- P3: 39
+- P1: 69
+- P2: 26
+- P3: 38
 - Refactoring: 4
 - AuditRepo: 3
-- Total open: 145
-- Closed: 213
+- Total open: 140
+- Closed: 218
+
+## Wave A closure this handoff
+
+`NG-CSS-01` was closed as DUPLICATE/MERGED into open root `NG-DARK-01` after an exact-HEAD source reverify at `f9d01207`: `nagornaya/tw.min.css` (34,079 bytes) still has 0 `html.dark` selectors and the row is the architecture-level statement of `NG-DARK-01`'s defect. The original `mobile-hotfix.css`-only attribution is superseded by the current `nagornaya-mobile-toc.css` dark-remap owner. P1 70→69, closed 213→214, open 145→144. No Product mutation, browser, production or TTS claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-a-source-cluster.md`.
+
+## Wave B closure this handoff
+
+`D-21` was closed as FIXED-CURRENT / SOURCE VERIFIED at `f9d01207`: `js/glossary.js` contains **0** `innerHTML` and the unified `render()`/`inline()` allowlist parser builds only `<em>` nodes via `createElement`/`createTextNode` for both render paths, removing the dual-renderer literal-`<em>` inconsistency and the innerHTML-from-JSON XSS surface (commit `d9303986` #683 is an ancestor). P2 29→28, closed 214→215, open 144→143. `MAP-P1-20` was narrowed: `route.json` is no longer SW-cached (matches no fetch-handler branch), so only the unversioned `map-engine.js` `cacheFirst` residual remains (repair = give that one engine file a `?v=` revision). No Product mutation, browser, production or TTS claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-b-glossary-closure.md`.
+
+## Wave C closure this handoff
+
+`D-8` was closed as STALE-ON-CURRENT-HEAD / FIXED at `f9d01207`: `deploy.yml` `push.paths` is now `['**']` (build-once PR #370), so doc-only `*.md` changes DO trigger deploy readiness. `NEW-OG-SIZE-PARAM` was narrowed: `seo-audit.js` now validates against a shared approved-profiles allowlist (1200×630 / 1200×675, PR #636), superseding the hardcoded-size half, but the allowlist is global, not per-route. P3 39→38, closed 215→216, open 143→142. No Product mutation, browser, production or TTS claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-c-control-plane.md`.
 
 ## Next meaningful work
 
-1. Merge AuditRepo PR #153 only after exact-head validator, matrix coverage and repository-history forensic checks pass; preserve disjoint lanes.
-2. Future Product repair must target only the refined Chromium residual: **9 tokens / 142 uses**. Do not repair `border-stone-100`, `bg-stone-100` or the eight other browser-readable tokens removed from scope.
+1. Merge AuditRepo PR #154 after exact-head validator, matrix coverage and repository-history forensic checks pass; preserve disjoint lanes. PR #153 (Nagornaya Chromium narrowing) is already merged in `main`.
+2. Future Product repair must target only the refined Chromium residual: **9 tokens / 142 uses** (PR #153 authority). Do not repair `border-stone-100`, `bg-stone-100` or the eight other browser-readable tokens removed from scope; do not repair from PR #150/#151 legacy authority claims. `NG-CSS-01` is closed into that root and must not be reimplemented.
 3. `QUAL-P1-06` and narrowed `QUAL-P1-09` remain confirmed Product candidates; `QUAL-P1-02` is closed by Product PR #873 and must not be reimplemented.
 4. Narrow `MAP-P1-20` rather than closing its still-current unversioned static-resource residual.
 5. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence.
