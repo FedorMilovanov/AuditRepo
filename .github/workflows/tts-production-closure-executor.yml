@@ -1,0 +1,92 @@
+name: TTS Production Closure Executor
+
+on:
+  push:
+    branches:
+      - lane/tts-production-closure-20260805
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auditrepo-tts-production-closure-20260805
+  cancel-in-progress: true
+
+jobs:
+  reconcile:
+    if: github.repository == 'FedorMilovanov/AuditRepo' && github.ref == 'refs/heads/lane/tts-production-closure-20260805'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact closure branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: lane/tts-production-closure-20260805
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Assert exact lane and clean transport
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = "lane/tts-production-closure-20260805"
+          test "$(git status --porcelain)" = ""
+          test -f scripts/tts_production_closure_executor.py
+          test -f .github/workflows/tts-production-closure-executor.yml
+
+      - name: Align executor with release-manifest TTS schema
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/tts_production_closure_executor.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''    required_tts_keys = {"controller", "engine", "worker", "noticeCss"}\n    if not required_tts_keys.issubset(tts):\n        fail(f"live manifest TTS extension missing keys: {sorted(required_tts_keys - set(tts))}")\n'''
+          new = '''    assets = tts.get("assets")\n    if not isinstance(assets, dict):\n        fail("live manifest TTS assets are missing")\n    required_tts_keys = {"controller", "engine", "worker", "noticeCss", "serviceWorker"}\n    if not required_tts_keys.issubset(assets):\n        fail(f"live manifest TTS extension missing asset keys: {sorted(required_tts_keys - set(assets))}")\n    if tts.get("lazyNoPrecache") != ["css/tts-download-notice.css", "js/vosk-tts-engine.js", "js/vosk-tts-worker.js"]:\n        fail("live manifest TTS lazy-no-precache contract drifted")\n'''
+          if text.count(old) != 1:
+              raise SystemExit('executor schema patch did not match exactly once')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+          python3 -m py_compile scripts/tts_production_closure_executor.py
+
+      - name: Verify production evidence and write canonical closure
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/tts_production_closure_executor.py
+
+      - name: Validate AuditRepo structure and matrix transaction
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          git diff --check
+          test "$(grep -c '^| TTS-DL-UNZIP-SYNC |' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md)" = "1"
+          test "$(grep -c '^| TTS-DL-NO-TABLOCK |' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md)" = "1"
+          grep -F '## ✅ ЗАКРЫТО (225)' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -F '## 🟡 P2 — ОТКРЫТО (30)' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -F '| **Всего открыто (матрица)** | **146** |' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+
+      - name: Remove temporary control plane and commit exact result
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/tts-production-closure-executor.yml
+          git rm scripts/tts_production_closure_executor.py
+          test ! -e .github/workflows/tts-production-closure-executor.yml
+          test ! -e scripts/tts_production_closure_executor.py
+          git add projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          git add projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+          git add projects/gb-is-my-strength/incoming/tts-deep-current-head-audit-2026-08-04/CLOSURE.md
+          git add projects/gb-is-my-strength/incoming/tts-deep-current-head-audit-2026-08-04/FINAL-VALIDATION.md
+          git add projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_38b25703_tts-production-closure.md
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo 'No canonical closure diff produced' >&2
+            exit 1
+          fi
+          git commit -m 'audit(tts): close delivery runtime on production'
+          git push origin HEAD:lane/tts-production-closure-20260805
