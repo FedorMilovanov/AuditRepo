@@ -79,6 +79,7 @@ jobs:
           python3 scripts/check_matrix_coverage.py --verbose --json-out reports/matrix-coverage/report.json
           rm -rf reports/matrix-coverage
           test "$(git diff --name-only | sort)" = "$(printf '%s\n' \
+            .github/workflows/tmp-reconcile-nagornaya-native-duplicates.yml \
             projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md \
             projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md | sort)"
           git config user.name 'github-actions[bot]'
