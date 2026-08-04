@@ -1,0 +1,520 @@
+{
+  "generatedAt": "2026-08-04T13:09:18.408Z",
+  "head": "f9d0120718569c510833dba7a3abd68ce2f6a003",
+  "totals": {
+    "checks": 71,
+    "passed": 54,
+    "failed": 16,
+    "warnings": 1
+  },
+  "missingGlobal": [
+    "/karty/avraam/",
+    "/karty/ishod/",
+    "/konfessii/russkij-baptizm/",
+    "/map/"
+  ],
+  "missingTrigger": [
+    "/hard-texts/",
+    "/karty/",
+    "/konfessii/"
+  ],
+  "checks": [
+    {
+      "id": "A01",
+      "name": "command-palette CSS exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "29526 bytes"
+    },
+    {
+      "id": "A02",
+      "name": "search.js exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "32189 bytes"
+    },
+    {
+      "id": "A03",
+      "name": "Pagefind entry exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "dist/pagefind/pagefind-entry.json"
+    },
+    {
+      "id": "A04",
+      "name": "search manifest exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "74 items"
+    },
+    {
+      "id": "A05",
+      "name": "manifest URL duplicates absent",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "url set size"
+    },
+    {
+      "id": "A06",
+      "name": "manifest ID duplicates absent",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "id set size"
+    },
+    {
+      "id": "A07",
+      "name": "manifest required fields present",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "id/title/url/type"
+    },
+    {
+      "id": "A08",
+      "name": "manifest blocks bad protocols currently",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "current corpus"
+    },
+    {
+      "id": "A09",
+      "name": "manifest has no protocol-relative URLs currently",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "current corpus"
+    },
+    {
+      "id": "A10",
+      "name": "all local manifest URLs exist in dist",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "dist route files"
+    },
+    {
+      "id": "R01",
+      "name": "all public searchable routes have global search asset",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "/karty/avraam/, /karty/ishod/, /konfessii/russkij-baptizm/, /map/"
+    },
+    {
+      "id": "R02",
+      "name": "all routes with search asset have visible/static trigger",
+      "pass": false,
+      "severity": "warn",
+      "evidence": "/hard-texts/, /karty/, /konfessii/"
+    },
+    {
+      "id": "R03",
+      "name": "home has static search button",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "dist/index.html"
+    },
+    {
+      "id": "R04",
+      "name": "home has command-palette CSS",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "dist/index.html"
+    },
+    {
+      "id": "R05",
+      "name": "home has search lazy/runtime path",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "dist/index.html"
+    },
+    {
+      "id": "C01",
+      "name": "CSS defines light variables",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "--cp-bg"
+    },
+    {
+      "id": "C02",
+      "name": "CSS defines dark variables",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "html.dark"
+    },
+    {
+      "id": "C03",
+      "name": "reduced-motion branch exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "media query"
+    },
+    {
+      "id": "C04",
+      "name": "coarse pointer branch exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "media query"
+    },
+    {
+      "id": "C05",
+      "name": "safe-area insets used",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "safe areas"
+    },
+    {
+      "id": "C06",
+      "name": "mobile <=480 layout exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "mobile"
+    },
+    {
+      "id": "C07",
+      "name": "tablet/mobile preview column hidden",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "preview hidden"
+    },
+    {
+      "id": "C08",
+      "name": "overscroll contained",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "overscroll"
+    },
+    {
+      "id": "C09",
+      "name": "scroll lock exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "scroll lock"
+    },
+    {
+      "id": "C10",
+      "name": "backdrop blur has fallback background",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "blur+background"
+    },
+    {
+      "id": "C11",
+      "name": "cp-clear has 44px touch min",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "cp-clear"
+    },
+    {
+      "id": "C12",
+      "name": "cp-item has 44px touch min",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "cp-item"
+    },
+    {
+      "id": "C13",
+      "name": "scope chips meet 44px touch min",
+      "pass": false,
+      "severity": "fail",
+      "evidence": ".cp-scope-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;min-height:32px"
+    },
+    {
+      "id": "C14",
+      "name": "nav search icon has explicit 44px min in shared CSS",
+      "pass": false,
+      "severity": "fail",
+      "evidence": ".gb-nav-search-icon{background:0 0;border:none;box-shadow:none;cursor:pointer;padding:2px;border-radius:0;color:var(--h-muted,#78716c);display:inline-flex;align-items:center;justif"
+    },
+    {
+      "id": "C15",
+      "name": "search button has compact mobile rule",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "gb-search-btn mobile"
+    },
+    {
+      "id": "C16",
+      "name": "cp item focus-visible style exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "focus-visible"
+    },
+    {
+      "id": "C17",
+      "name": "scope chip focus-visible style exists",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "no .cp-scope-chip:focus-visible"
+    },
+    {
+      "id": "C18",
+      "name": "preview button focus-visible style exists",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "no .cp-preview-btn:focus-visible"
+    },
+    {
+      "id": "C19",
+      "name": "dialog z-index uses token fallback",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "var(--z-modal,10000)"
+    },
+    {
+      "id": "C20",
+      "name": "search overlay top-layer is above known floating tooltips",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "known z-index values above search fallback 10000: 99999, 2147482500, 2147482600, 2147483000, 2147483100, 2147483200"
+    },
+    {
+      "id": "J01",
+      "name": "dialog role set",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "role dialog"
+    },
+    {
+      "id": "J02",
+      "name": "aria-modal set",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "aria-modal"
+    },
+    {
+      "id": "J03",
+      "name": "dialog has label",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "aria-label"
+    },
+    {
+      "id": "J04",
+      "name": "input controls listbox",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "aria-controls"
+    },
+    {
+      "id": "J05",
+      "name": "listbox role present",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "role listbox"
+    },
+    {
+      "id": "J06",
+      "name": "option role present",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "role option"
+    },
+    {
+      "id": "J07",
+      "name": "result option is rendered as button",
+      "pass": true,
+      "severity": "warn",
+      "evidence": "button role=option"
+    },
+    {
+      "id": "J08",
+      "name": "combobox role present",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "missing role=combobox"
+    },
+    {
+      "id": "J09",
+      "name": "aria-expanded managed for search input/dialog",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "missing aria-expanded in search.js"
+    },
+    {
+      "id": "J10",
+      "name": "aria-activedescendant managed",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "missing aria-activedescendant"
+    },
+    {
+      "id": "J11",
+      "name": "stable option ids managed",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "no stable option ids"
+    },
+    {
+      "id": "J12",
+      "name": "Escape closes dialog",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "Escape handlers"
+    },
+    {
+      "id": "J13",
+      "name": "backdrop click closes dialog",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "backdrop close"
+    },
+    {
+      "id": "J14",
+      "name": "base dialog has visible close button distinct from clear",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "base search markup has clear button only"
+    },
+    {
+      "id": "J15",
+      "name": "Tab handling exists on input",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "input keydown Tab"
+    },
+    {
+      "id": "J16",
+      "name": "Tab trapping handled at document/dialog level",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "Tab handler scoped to input only"
+    },
+    {
+      "id": "J17",
+      "name": "Ctrl/Cmd+K shortcut exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "shortcut"
+    },
+    {
+      "id": "J18",
+      "name": "delegated search click selectors exist",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "delegated selectors"
+    },
+    {
+      "id": "J19",
+      "name": "duplicate boot guard exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "boot guard"
+    },
+    {
+      "id": "J20",
+      "name": "localStorage wrapped in try/catch",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "history safe"
+    },
+    {
+      "id": "J21",
+      "name": "no eval",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "no eval"
+    },
+    {
+      "id": "J22",
+      "name": "no new Function",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "no new Function"
+    },
+    {
+      "id": "J23",
+      "name": "no document.write",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "no document.write"
+    },
+    {
+      "id": "J24",
+      "name": "safeUrl blocks major script protocols",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "safeUrl protocols"
+    },
+    {
+      "id": "J25",
+      "name": "safeUrl blocks protocol-relative URLs",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "function safeUrl(e){var s=String(e||\"\").trim();return/^(javascript|data|vbscript|blob):/i.test(s)?\"#\":s||\"#\"}function N(e){return String(e||\"\").toLowerCase().replace(/ё/g,\"е\").rep"
+    },
+    {
+      "id": "J26",
+      "name": "SearchAction q parameter implemented by runtime",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "no runtime query handler"
+    },
+    {
+      "id": "J27",
+      "name": "Pagefind load timeout exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "timeout"
+    },
+    {
+      "id": "J28",
+      "name": "manifest load retry exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "retry"
+    },
+    {
+      "id": "J29",
+      "name": "Pagefind HEAD no-store probe exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "HEAD no-store"
+    },
+    {
+      "id": "J30",
+      "name": "Pagefind results expose show-more path",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "no show more"
+    },
+    {
+      "id": "Q01",
+      "name": "query Код да Винчи ranks Kod article first",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "{\"count\":4,\"url\":\"/articles/kod-da-vinchi/\",\"title\":\"«Код да Винчи»: блестящий триллер или историческая подмена?\",\"scripture\":\"\"}"
+    },
+    {
+      "id": "Q02",
+      "name": "query Иер 17:9 ranks expected article first",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "{\"count\":9,\"url\":\"/articles/krajne-li-isporcheno-serdce/\",\"title\":\"Крайне ли испорчено сердце верующего?\",\"scripture\":\"Иер 17:9\"}"
+    },
+    {
+      "id": "Q03",
+      "name": "query Мф 5:3 ranks Nagornaya part first",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "{\"count\":14,\"url\":\"/nagornaya/chast-1/\",\"title\":\"Два текста, один Иисус\",\"scripture\":\"Мф 5–7, Лк 6\"}"
+    },
+    {
+      "id": "Q04",
+      "name": "query карта авраама finds Avraam route",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "{\"count\":5,\"url\":\"/karty/avraam/\",\"title\":\"Путь Авраама — интерактивная карта. От Ура Халдейского до горы Мория: 22 объекта — 19 маршрутных мест и 3 контекстные точки; 8 этапов; 5 сюжетов; археология; хронология 175 лет.\",\"scripture\":\"\"}"
+    },
+    {
+      "id": "Q05",
+      "name": "query русский баптизм finds baptizm route",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "{\"count\":9,\"url\":\"/konfessii/russkij-baptizm/\",\"title\":\"Карта Русского Баптизма — интерактивная 3D-история движения от истоков к современности\",\"scripture\":\"\"}"
+    },
+    {
+      "id": "Q06",
+      "name": "query Ин 3:16 returns exact John 3:16 occurrence",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "{\"count\":8,\"url\":\"/articles/dzhon-gill-chast-4-ekzeget/\",\"title\":\"Джон Гилл (1697–1771). Часть III: Экзегет\",\"scripture\":\"\"}"
+    }
+  ]
+}

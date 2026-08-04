@@ -13,7 +13,7 @@
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-d-map-gates.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-untested-reduction.md` (latest search reduction; refined Nagornaya browser authority remains `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-browser.md`). |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -255,10 +255,13 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (69)
+## 🟠 P1 — ОТКРЫТО (72)
 
 | ID | Описание | Witnesses |
 |---|---|---|
+| SEARCH-P1-01 | 🆕 **Search P1:** глобальный command-palette поиск отсутствует на публичных searchable tool/app routes `/karty/avraam/`, `/karty/ishod/`, `/konfessii/russkij-baptizm/`, `/map/`. Эти routes indexable и имеют `searchManifestPolicy=include`, Pagefind/поиск могут вести на них, но на самих страницах нет unified `Ctrl+K`/`GBSearch` surface; `/map/` имеет только локальный atlas-search. No Product mutation/browser/production claim. | `incoming/search-deep-audit-2026-08-04/PASS2_DEEPENING.md`; `PASS2_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md` |
+| SEARCH-P1-03 | 🆕 **Search Scripture P1:** вкладка `Писание` ложно выглядит как точный поиск по стихам, но фактически работает как Pagefind/manifest filter без exact Bible resolver. Hard-coded suggestions (`Ин 3:16`, `Мф 5:3`, `Рим 8:28`, `Иер 17:9`) не подкреплены canonical corpus records; exact-ref queries дают пустые/нерелевантные/широкие page-level matches. No Product mutation/browser/production claim. | `incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md`; `SCRIPTURE_SEARCH_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md` |
+| SEARCH-P1-04 | 🆕 **Search Scripture P1:** сайт содержит значительно больше видимых библейских ссылок, чем структурно знает поиск: dist-scan извлёк ~1026 parseable visible Bible refs, но search-manifest имеет только 16 scripture items, Pagefind meta — 30 entries, canonical corpus покрывает только 151 extracted refs. Нет единой матрицы `BibleRef → pages/anchors/context/topics`. No Product mutation/browser/production claim. | `incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md`; `SCRIPTURE_SEARCH_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md` |
 | CI-WORKFLOW-PROLIFERATION | Control plane expanded from the earlier 19-workflow baseline to roughly 26 permanent workflows with repeated heavy setup/build/test sections. Capability inventory and convergence are required before adding workflows. | current control-plane artifacts; forensic delta 2026-07-25 |
 | S-T-01 | 🟡 **ЧАСТИЧНО 2026-07-14**: чекер серий + orphan-scan + legacy-selector-ban теперь видят .astro/.mdx; полный route-level паритет гейтов для Astro-мира — остаётся. | Auditor 2026-07-14 |
 | S-SEC-01 | Blacklist-based HTML Sanitization in enhancements.js (XSS risk) | Auditor 2026-07-14 |
@@ -334,10 +337,16 @@ _История сессий (HEAD-переходы, что влито) — в �
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (26)
+## 🟡 P2 — ОТКРЫТО (32)
 
 | ID | Описание | Witnesses |
 |---|---|---|
+| SEARCH-P2-07 | 🆕 **Search Scripture P2:** canonical Bible registry has 66 books, but the current canonical corpus has only 300 records and 24 registry books without populated corpus files; `bible-reference-contract --strict` passes with 197 warnings, so this is governed sparse-corpus debt rather than a gate failure. Needed before claiming full Bible verse search/preview. | `incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md`; `SCRIPTURE_SEARCH_PROBE.json`; `node scripts/bible-reference-contract.mjs --strict` |
+| SEARCH-P2-08 | 🆕 **Search Scripture P2:** legacy `data/verses.json` and canonical `data/bible/**` authority drift: 94 legacy refs; 51 have no canonical record and 38 differ from canonical text. Public search suggestions must not mix these authorities without reconciliation/projection. | `incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md`; `SCRIPTURE_SEARCH_PROBE.json`; `node scripts/bible-reference-contract.mjs --strict` |
+| SEARCH-P2-09 | 🆕 **Search contract P2:** Home JSON-LD advertises WebSite `SearchAction` target `https://gospod-bog.ru/?q={search_term_string}`, but current runtime/source has no `?q=` handler (`js/search.js`, `HomePageChrome.astro`, `HomeSearchA11yGuard.astro` do not read `location.search`/`URLSearchParams`). SearchAction target therefore lands on ordinary home, not a search-results state. | `incoming/search-deep-audit-2026-08-04/PASS4_SEARCH_CONTRACT_A11Y.md`; `PASS4_CONTRACT_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-contract-a11y.md` |
+| SEARCH-P2-10 | 🆕 **Search a11y P2:** command-palette markup mixes listbox/options and buttons without a complete combobox/listbox contract: no `role=combobox`, no `aria-expanded`, no `aria-activedescendant`, no stable option ids; active result is visual `.is-active`/`aria-selected` only. Keyboard behavior exists, but AT announcement model is unreliable. | `incoming/search-deep-audit-2026-08-04/PASS4_SEARCH_CONTRACT_A11Y.md`; `PASS4_CONTRACT_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-contract-a11y.md` |
+| SEARCH-P2-11 | 🆕 **Search premium P2:** command palette is not a complete top-layer modal: shared base markup has no visible close button distinct from clear-input, Tab trapping is scoped to the input only, and `.cp-backdrop` fallback `z-index:10000` is below known floating layers (`99999`, `2147482500+`). This is a source/CSS top-layer contract risk that can allow focus/overlay conflicts; an actual visible overlay collision still requires browser witness before closure/reclassification. | `incoming/search-deep-audit-2026-08-04/PASS5_PREMIUM_NATIVE_AUDIT.md`; `PASS5_PREMIUM_NATIVE_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-premium-native.md`; self-review `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-audit-self-review.md` |
+| SEARCH-P2-12 | 🆕 **Search premium P2:** shared search touch/focus affordances are below premium/native standard: `.cp-scope-chip` uses `min-height:32px`, shared `.gb-nav-search-icon` has no explicit 44px hitbox, and focus-visible rules are missing for some interactive controls (`.cp-scope-chip`, preview buttons in probe). | `incoming/search-deep-audit-2026-08-04/PASS5_PREMIUM_NATIVE_AUDIT.md`; `PASS5_PREMIUM_NATIVE_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-premium-native.md` |
 | GENESIS6-ACTIVATION-OWNER-GAP | Exact Research provenance is now pinned by PR #348, but canonical Genesis 6 MDX/routes remain absent or draft/noindex. Issue #287 is archived/not-planned transport history and cannot own activation; no fresh-main product finalizer exists. Closing requires one normal reviewable product PR with shared series chrome, exact-head Astro/build/Chromium/WebKit, rights/source and publication-state evidence. | PR #348; issue #287 archived; `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_9407cc92_genesis-provenance.md` |
 | REG-001 | 🟡 **Hosting/security-header decision.** GitHub Pages live responses expose HSTS but no response-level CSP, X-Frame-Options, Referrer-Policy or Permissions-Policy. Closing requires a proxy/hosting decision or explicit by-design acceptance. | `reverify/CURRENT_OPEN_EVIDENCE_2026-07-23_a73f609f.md` |
 | AVRAAM-P2-01 | 🆕 **Karty P2:** Тяжёлый payload Авраама (~824KB, 1540 DOM, 1103 SVG, 60 GSAP animations) + дублирующий fetch route.json | verified-browser (c2c339708252) |
@@ -369,7 +378,10 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AR-IDX-03 | **⌘K хардкод** — на Windows/Linux показывает `⌘K` вместо `Ctrl+K`. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-03) |
 | AR-IDX-09 | **Keyboard shortcut без altKey/shiftKey guard** — `Option+K` или `Ctrl+Shift+K` тоже срабатывают. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-09) |
 
-## 🟢 P3 — ОТКРЫТО (37)
+## 🟢 P3 — ОТКРЫТО (40)
+| SEARCH-P3-01 | 🆕 **Search polish P3:** labels/shortcut wording for search triggers are inconsistent across route families (`Поиск`, `Поиск и разделы сайта`, `Поиск (Ctrl+K)`, `Открыть поиск по материалам сайта`), and shared `search.js` injected fallback still uses Mac-centric `Поиск ⌘K`. Needs one platform-aware label helper / route-family guard. Evidence: `incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md`; `PASS6_POLISH_DISCOVERY_PROBE.json`. |
+| SEARCH-P3-02 | 🆕 **Search discovery P3:** Pagefind branch hard-caps visible results at 10 and manifest fallback at 12 with no raw-total disclosure or `Показать ещё`; raw corpus counts for common queries exceed the visible cap. Evidence: `incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md`; `PASS6_POLISH_DISCOVERY_PROBE.json`. |
+| SEARCH-P3-03 | 🆕 **Search copy-link P3:** preview copy action hard-codes `https://gospod-bog.ru` as origin while the UI label remains generic `Скопировать ссылку`; either label canonical behavior or use current-origin URL. Evidence: `incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md`; `PASS6_POLISH_DISCOVERY_PROBE.json`. |
 | NG-VIS-04 | 🆕 **Нагорная P2 (→ NG-TABLE-01):** Табличная перегрузка — 8 секций без текстовых абзацев (ch.2/III/V/IX/X, ch.3/V/VII/VIII, ch.5/III). Только гриды/карточки/таблицы — нет «воздуха». ch.2 имеет 1.5x structured/text ratio. **Контентная правка — требует автора.** Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-TABLE-01 |
 
 | ID | Описание |
@@ -470,18 +482,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 219 closed + 139 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 370 canonical = 219 closed + 151 open)
 
 | Категория | Количество |
 |---|---|
 | Закрыто (fixed) | 219 |
 | **P0 открыто** | **0** |
-| P1 открыто | 69 |
-| P2 открыто | 26 |
-| P3 открыто | 37 |
+| P1 открыто | 72 |
+| P2 открыто | 32 |
+| P3 открыто | 40 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **139** |
+| **Всего открыто (матрица)** | **151** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -1153,3 +1165,43 @@ D-23 (P1, deploy-блокирующая регрессия) — 🟠→✅ **RES
 - Moved `RESEARCH-AUTHORITY-MANIFEST-MISSING` from open P2 to closed after exact Research SHA/manifest/ledger/bundle/rights pinning and successful provenance, Shared and Visual gates.
 - Preserved `GENESIS6-ACTIVATION-OWNER-GAP`: #348 changed no route, MDX, theme, CSS or publication state; `draft-noindex` remains mandatory and issue #287 remains archived transport history.
 - Closed count 159 → 160; P2 open count 37 → 36. Active source PR owner at capture: #365 (test-only homepage lifecycle evidence); no Genesis activation owner existed.
+
+### 2026-08-04 — search / Scripture audit intake promoted to matrix
+
+- Added incoming total-search evidence lane `incoming/search-deep-audit-2026-08-04/` and repair plan `working/SEARCH_SCRIPTURE_REPAIR_PLAN_2026-08-04.md` against Product `f9d0120718569c510833dba7a3abd68ce2f6a003`.
+- Promoted five verified current-head findings: `SEARCH-P1-01`, `SEARCH-P1-03`, `SEARCH-P1-04`, `SEARCH-P2-07`, `SEARCH-P2-08`.
+- Prior closed `SEARCH-SCRIPTURE-BROKEN` remains closed for its historical scope; the new rows are second-order exact-reference/site-occurrence/corpus-governance defects, not a rollback of that closure.
+- Count impact after pass 3: P1 `69 → 72`, P2 `26 → 28`, total open `139 → 144`, closed unchanged `219`, total IDs `358 → 363`. No Product mutation, same-SHA production claim or browser pixel claim.
+
+
+### 2026-08-04 — search contract/a11y addendum
+
+- Added `PASS4_SEARCH_CONTRACT_A11Y.md` and `PASS4_CONTRACT_PROBE.json` to the active search audit intake.
+- Promoted `SEARCH-P2-09` (unimplemented WebSite `SearchAction` `/?q=` target) and `SEARCH-P2-10` (mixed/incomplete command-palette ARIA listbox/combobox pattern).
+- Count impact: P2 `28 → 30`, total open `144 → 146`, closed unchanged `219`, total IDs `363 → 365`. No Product mutation, same-SHA production claim or browser pixel claim.
+
+
+### 2026-08-04 — search premium/native 71-check addendum
+
+- Added `PASS5_PREMIUM_NATIVE_AUDIT.md` and `PASS5_PREMIUM_NATIVE_PROBE.json`; the harness executed 71 checks (54 pass, 16 fail, 1 warning) across dist/assets/CSS/JS/manifest/Pagefind.
+- Promoted `SEARCH-P2-11` (incomplete top-layer modal / focus trap / close affordance) and `SEARCH-P2-12` (touch/focus affordance gaps below premium-native standard).
+- Count impact: P2 `30 → 32`, total open `146 → 148`, closed unchanged `219`, total IDs `365 → 367`. No Product mutation, same-SHA production claim or browser pixel claim.
+
+
+### 2026-08-04 — search polish/discovery 58-check addendum
+
+- Added `PASS6_POLISH_DISCOVERY_AUDIT.md` and `PASS6_POLISH_DISCOVERY_PROBE.json`; the harness executed 58 checks (43 pass, 11 fail, 0 warnings) across trigger labels, copy behavior, result caps, CSS, manifest and Pagefind raw counts.
+- Promoted `SEARCH-P3-01` (trigger/shortcut label inconsistency), `SEARCH-P3-02` (no result-depth disclosure/show-more), and `SEARCH-P3-03` (hard-coded production copy-link origin without canonical wording).
+- Count impact: P3 `37 → 40`, total open `148 → 151`, closed unchanged `219`, total IDs `367 → 370`. No Product mutation, same-SHA production claim or browser pixel claim.
+
+### 2026-08-04 — search audit self-review / anti-bloat pass
+
+- Added `PASS7_SELF_REVIEW.md` and `PASS7_SELF_REVIEW_PROBE.json`; self-review executed 88 checks over row uniqueness, evidence presence, JSON parseability, counter sync, overclaim guards and browser-witness boundaries.
+- Result: 88/88 pass after two false-positive string hits were recognized as explicit negative wording (`no same-SHA production claim`, `no browser pixel claim`).
+- No demotions/removals/count changes recommended. Clarified `SEARCH-P2-11` as a source/CSS top-layer contract risk, not a browser-proven visual collision.
+
+### 2026-08-04 — search untested-surface reduction pass
+
+- Added `PASS8_UNTESTED_SURFACES_REDUCTION.md` and `PASS8_UNTESTED_SURFACES_REDUCTION_PROBE.json`; the harness executed 61 checks (55 pass, 0 fail, 5 warnings) using jsdom, Pagefind API, malicious manifest fuzzing, static CSS/SW/source checks, route policy inventory, dependency artifact and the 44-link external reference inventory.
+- Reduced the broad remaining unknown list to five areas requiring real browser/owner input: browser pixel/visual witness, AX/screen-reader witness, real mobile keyboard/safe-area, offline runtime click-through, and owner decisions.
+- No new rows or count movement: existing rows already own the material warnings.

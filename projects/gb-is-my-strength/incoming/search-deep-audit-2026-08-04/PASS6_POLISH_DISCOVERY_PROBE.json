@@ -1,0 +1,427 @@
+{
+  "generatedAt": "2026-08-04T13:17:35.079Z",
+  "head": "f9d0120718569c510833dba7a3abd68ce2f6a003",
+  "totals": {
+    "checks": 58,
+    "passed": 43,
+    "failed": 11,
+    "warnings": 0
+  },
+  "info": {
+    "triggerCount": 59,
+    "triggerLabels": [
+      "Поиск",
+      "Поиск и разделы сайта",
+      "Поиск (Ctrl+K)",
+      "Открыть поиск по материалам сайта"
+    ]
+  },
+  "checks": [
+    {
+      "id": "L01",
+      "name": "search trigger inventory non-empty",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "59"
+    },
+    {
+      "id": "L02",
+      "name": "search trigger labels are consistent",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "[\"Поиск\",\"Поиск и разделы сайта\",\"Поиск (Ctrl+K)\",\"Открыть поиск по материалам сайта\"]"
+    },
+    {
+      "id": "L03",
+      "name": "shortcut labels use neutral Ctrl/⌘ or platform-adaptive contract",
+      "pass": true,
+      "severity": "fail",
+      "evidence": "[\"Поиск\",\"Поиск и разделы сайта\",\"Поиск (Ctrl+K)\",\"Открыть поиск по материалам сайта\"]"
+    },
+    {
+      "id": "L04",
+      "name": "all search triggers have aria-label or text",
+      "pass": false,
+      "severity": "pass",
+      "evidence": "labels/text/title present"
+    },
+    {
+      "id": "L05",
+      "name": "all icon-only search triggers have aria-label",
+      "pass": false,
+      "severity": "pass",
+      "evidence": "icon-only labels"
+    },
+    {
+      "id": "L06",
+      "name": "search.js injected trigger title is Cmd-only",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "search.js injects title Поиск ⌘K"
+    },
+    {
+      "id": "L07",
+      "name": "home trigger label includes shortcut",
+      "pass": false,
+      "severity": "pass",
+      "evidence": "home"
+    },
+    {
+      "id": "L08",
+      "name": "mobile menu open-search button counted separately",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "home mobile nav"
+    },
+    {
+      "id": "L09",
+      "name": "data-action=open-search is delegated by search.js",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "not in search.js delegated selectors"
+    },
+    {
+      "id": "L10",
+      "name": "trigger selector includes all route-specific search attributes found",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "selectors"
+    },
+    {
+      "id": "P01",
+      "name": "preview copy link does not hard-code production origin",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "https://gospod-bog.ru\"+(e.url||\"\");function i(){h&&h.isConnected&&(h.innerHTML=b+\" Скопировано\",clearTimeout(O),O=setTimeout(function(){h&&h."
+    },
+    {
+      "id": "P02",
+      "name": "copy button label says canonical if hard-coded production origin",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "label remains Скопировать ссылку"
+    },
+    {
+      "id": "P03",
+      "name": "copy fallback has execCommand copy",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "fallback"
+    },
+    {
+      "id": "P04",
+      "name": "copy uses SiteUtils.copyText when available",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "SiteUtils.copyText"
+    },
+    {
+      "id": "P05",
+      "name": "copied feedback exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "Скопировано"
+    },
+    {
+      "id": "D01",
+      "name": "Pagefind branch does not hard cap at 10 without expansion",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "results.slice(0,10), no show-more"
+    },
+    {
+      "id": "D02",
+      "name": "manifest branch does not hard cap at 12 without expansion",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "slice(0,12), no show-more"
+    },
+    {
+      "id": "D03",
+      "name": "status exposes result count",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "N рез."
+    },
+    {
+      "id": "D04",
+      "name": "status exposes raw Pagefind total, not just rendered count",
+      "pass": true,
+      "severity": "fail",
+      "evidence": "only rendered group count shown"
+    },
+    {
+      "id": "D05",
+      "name": "empty state suggestions exist",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "empty suggestions"
+    },
+    {
+      "id": "D06",
+      "name": "empty state suggestions are governed externally, not hard-coded runtime array",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "var se hard-coded"
+    },
+    {
+      "id": "D07",
+      "name": "scripture suggestions are governed externally, not hard-coded runtime array",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "hard-coded scripture suggestions"
+    },
+    {
+      "id": "D08",
+      "name": "placeholder avoids overclaiming Scripture exact search",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "Поиск по статьям, Писанию…"
+    },
+    {
+      "id": "S01",
+      "name": "CSS uses color-mix premium layering",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "color-mix"
+    },
+    {
+      "id": "S02",
+      "name": "CSS has hover state for cp-item",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "hover"
+    },
+    {
+      "id": "S03",
+      "name": "CSS disables hover transforms on coarse pointers",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "coarse pointer"
+    },
+    {
+      "id": "S04",
+      "name": "CSS has active row visual marker",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "active marker"
+    },
+    {
+      "id": "S05",
+      "name": "CSS has mark highlight styling",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "highlight"
+    },
+    {
+      "id": "S06",
+      "name": "CSS has dark mark styling",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "dark highlight"
+    },
+    {
+      "id": "S07",
+      "name": "CSS has custom scrollbars",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "scrollbars"
+    },
+    {
+      "id": "S08",
+      "name": "CSS has backdrop/dim layers",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "layers"
+    },
+    {
+      "id": "S09",
+      "name": "CSS has animation settled will-change cleanup",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "will-change cleanup"
+    },
+    {
+      "id": "S10",
+      "name": "CSS has mobile 100dvh logic",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "100dvh"
+    },
+    {
+      "id": "S11",
+      "name": "CSS avoids excessive !important in command palette",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "7"
+    },
+    {
+      "id": "S12",
+      "name": "CSS command palette size under 80KB",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "29526"
+    },
+    {
+      "id": "M01",
+      "name": "manifest images all root-relative if present",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "images"
+    },
+    {
+      "id": "M02",
+      "name": "manifest article/series readTime present",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "readTime"
+    },
+    {
+      "id": "M03",
+      "name": "manifest featured count not empty",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "18"
+    },
+    {
+      "id": "M04",
+      "name": "manifest has section on all items",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "section"
+    },
+    {
+      "id": "M05",
+      "name": "manifest has creator on all article/series items",
+      "pass": false,
+      "severity": "pass",
+      "evidence": "author/editor"
+    },
+    {
+      "id": "M06",
+      "name": "manifest has scripture on at least half article/series items",
+      "pass": false,
+      "severity": "fail",
+      "evidence": "13/63"
+    },
+    {
+      "id": "I01",
+      "name": "clear button resets value",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "clear"
+    },
+    {
+      "id": "I02",
+      "name": "scope chips update aria-selected",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "scope aria-selected"
+    },
+    {
+      "id": "I03",
+      "name": "history clear exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "clear history"
+    },
+    {
+      "id": "I04",
+      "name": "recent history limited",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "history 6"
+    },
+    {
+      "id": "I05",
+      "name": "debounce input exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "180ms debounce"
+    },
+    {
+      "id": "I06",
+      "name": "query minimum length is documented in behavior",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "min 2"
+    },
+    {
+      "id": "I07",
+      "name": "single-character Bible refs are impossible due min length?",
+      "pass": true,
+      "severity": "info",
+      "evidence": "n/a"
+    },
+    {
+      "id": "I08",
+      "name": "Enter opens active item",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "Enter"
+    },
+    {
+      "id": "I09",
+      "name": "Home/End navigation exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "Home/End"
+    },
+    {
+      "id": "I10",
+      "name": "PageUp/PageDown navigation exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "PageUp/Down"
+    },
+    {
+      "id": "I11",
+      "name": "copy link safeUrl used for preview href",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "safeUrl preview href"
+    },
+    {
+      "id": "I12",
+      "name": "Le navigation uses raw article.url without safeUrl",
+      "pass": true,
+      "severity": "fail",
+      "evidence": "Le() assigns raw article.url"
+    },
+    {
+      "id": "I13",
+      "name": "current manifest has no bad article URLs for Le risk",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "current corpus safe"
+    },
+    {
+      "id": "Q01",
+      "name": "raw Pagefind count for сердце exceeds visible cap",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "40"
+    },
+    {
+      "id": "Q02",
+      "name": "raw Pagefind count for благодать exceeds visible cap",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "40"
+    },
+    {
+      "id": "Q03",
+      "name": "raw Pagefind count for Бытие 6 exceeds visible cap",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "54"
+    },
+    {
+      "id": "Q04",
+      "name": "raw Pagefind count for Павел exceeds visible cap",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "22"
+    }
+  ]
+}

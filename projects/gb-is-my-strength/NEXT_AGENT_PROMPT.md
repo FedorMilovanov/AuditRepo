@@ -7,8 +7,8 @@
 **Current Product main:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
 **Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `f9d01207`.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-f-gill-rail.md`
-**Canonical matrix:** **358 IDs = 219 closed + 139 open**.
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-untested-reduction.md` (latest search reduction; matrix movement: `...search-polish-discovery.md`; refined Nagornaya authority: `...nagornaya-dark-browser.md`).
+**Canonical matrix:** **370 IDs = 219 closed + 151 open**.
 
 ## Source convergence since the disposition anchor
 
@@ -35,29 +35,30 @@ The following Product waves are merged in `main` and must not be reimplemented:
 - `0fbe7d1ead9ebd1bea867418e254da438ec63329` — current Product main after subsequent independently merged lanes; this handoff uses it only as exact source-state authority and does not infer additional matrix dispositions.
 - `f9d0120718569c510833dba7a3abd68ce2f6a003` — Product PR #873 bounded `QUAL-P1-02` repair: Hebrew-capable font stack, isolated RTL token semantics, explicit Hebrew title boundaries and permanent source/Chromium witnesses; exact PR head `cf128cc429ccfa1c48fce4638b3f489f8dc27135` passed 11/11 workflows.
 
-Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PR #152 is merged and established native-dist source authority. AuditRepo PR #153 adds refined Chromium truth and narrows `NG-DARK-01` to 9 browser-confirmed tokens / 142 uses; counts remain unchanged. Neither lane mutates Product, touches TTS, or claims production.
+Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PR #152 is merged and established native-dist source authority. AuditRepo PR #153 adds refined Chromium truth and narrows `NG-DARK-01` to 9 browser-confirmed tokens / 142 uses; counts remain unchanged. Neither lane mutates Product, touches TTS, or claims production. This reconciliation adds twelve verified current-source search/Scripture rows without Product mutation, same-SHA production claim or browser-pixel claim.
 
 ## Active canonical owner lanes
 
 ### Product repository
 
-- Product PR #875 (`lane/system-tts-deep-audit-2026-08-04`) is an unrelated TTS diagnostic lane; it does not overlap this verifier-only Nagornaya transaction.
-- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority. Refined Chromium owns the current `NG-DARK-01` acceptance boundary: **9 tokens / 142 source uses**. `NG-BODY-01` is browser-effective/stale; `NG-INLINE-01` and `NG-SEO-01` remain open independently.
+- Product PR #885 (`fix/nagornaya-dark-refined-repair-20260804`) is the bounded non-TTS `NG-DARK-01` repair owner for the refined **9 tokens / 142 uses** Chromium boundary. It remains draft until exact-head checks, final diff and review-thread gates pass.
+- Product PRs #875/#876 are disjoint TTS audit/repair lanes and must not be modified or absorbed by search/Nagornaya work.
+- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority; no same-SHA production claim exists for it.
 
 ### AuditRepo
 
-- PR #148 (`audit/tts-deep-current-head-2026-08-04`) is a disjoint one-file incoming TTS evidence lane.
-- PR #153 (`verify/nagornaya-dark-browser-computed-20260804`) is the active browser-disposition lane; final scope is matrix, handoff and paired reverify only. PR #152 is merged source-authority history.
+- PR #148 is the disjoint TTS evidence lane and remains untouched.
+- PR #156 (`arena/019fccbd-auditrepo`) promotes twelve search/Scripture findings plus evidence, reverifies and bounded repair plans while preserving all six current-main closure dispositions.
 
 ## Current counts
 
 - P0: 0
-- P1: 69
-- P2: 26
-- P3: 37
+- P1: 72
+- P2: 32
+- P3: 40
 - Refactoring: 4
 - AuditRepo: 3
-- Total open: 139
+- Total open: 151
 - Closed: 219
 
 ## Wave A closure this handoff
@@ -74,8 +75,9 @@ Source movement does **not** change canonical AuditRepo counts by itself. AuditR
 
 ## Next meaningful work
 
-1. Merge AuditRepo PR #154 after exact-head validator, matrix coverage and repository-history forensic checks pass; preserve disjoint lanes. PR #153 (Nagornaya Chromium narrowing) is already merged in `main`.
-2. Future Product repair must target only the refined Chromium residual: **9 tokens / 142 uses** (PR #153 authority). Do not repair `border-stone-100`, `bg-stone-100` or the eight other browser-readable tokens removed from scope; do not repair from PR #150/#151 legacy authority claims. `NG-CSS-01` is closed into that root and must not be reimplemented.
-3. `QUAL-P1-06` and narrowed `QUAL-P1-09` remain confirmed Product candidates; `QUAL-P1-02` is closed by Product PR #873 and must not be reimplemented.
-4. Narrow `MAP-P1-20` rather than closing its still-current unversioned static-resource residual.
-5. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence.
+1. Merge AuditRepo PR #156 only after exact-head validator, matrix coverage, repository-history forensic, final-diff and review-thread gates pass.
+2. Then finish Product PR #885 against only the refined `NG-DARK-01` boundary (**9 tokens / 142 uses**), run exact-head browser/build/static gates, merge safely, and close it in a separate AuditRepo transaction.
+3. After the Nagornaya closure, start the bounded search repair sequence with `SEARCH-P1-03`/`SEARCH-P1-04`: truthful Scripture-tab semantics plus a generated `BibleRef → pages/anchors/context/topics` site-occurrence index. Use `working/SEARCH_SCRIPTURE_REPAIR_PLAN_2026-08-04.md` and `working/SEARCH_SCRIPTURE_INDEX_CONTRACT_SPEC_2026-08-04.md`.
+4. Preserve `SEARCH-SCRIPTURE-BROKEN` as historically closed; the new rows own higher-standard exact-reference/site-occurrence/corpus defects.
+5. `SEARCH-P1-01`, `SEARCH-P2-09`–`12`, `QUAL-P1-06`, narrowed `QUAL-P1-09`, and `MAP-P1-20` remain independent candidates; perform collision pre-flight before mutation.
+6. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence. TTS lanes remain excluded.
