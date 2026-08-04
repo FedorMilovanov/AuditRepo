@@ -1,0 +1,189 @@
+name: Complete Karty story ID schema closure
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: complete-karty-story-schema-pr-138
+  cancel-in-progress: false
+
+jobs:
+  complete:
+    if: github.event.pull_request.number == 138
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout verifier branch
+        uses: actions/checkout@v4
+        with:
+          ref: verify/karty-story-id-schema-closure-20260804
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Synchronize current AuditRepo main
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main --prune
+          git merge --no-edit origin/main
+
+      - name: Apply bounded canonical transaction
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          next_path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          reverify_path = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-story-id-schema.md')
+
+          matrix = matrix_path.read_text(encoding='utf-8')
+          closed_marker = """## ✅ ЗАКРЫТО (194)
+
+          | ID | Описание | Коммит |
+          |---|---|---|
+          """
+          closed_rows = """## ✅ ЗАКРЫТО (195)
+
+          | ID | Описание | Коммит |
+          |---|---|---|
+          | QUAL-P1-07 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #666 aligned canonical Karty story identifiers with the runtime/deep-link vocabulary: internal IDs now use `^[a-z0-9_-]+$`, public `meta.id` remains hyphen-only, no published identifier or URL was renamed, and the permanent guard validates every current `karty/*/route.json`. Exact Product head `12aa744e10c05c134adc951f01cb5e78ef25de65` merged as `424b09b25fc9d4bace3938f4d44f430be8cc7e4b` after four green workflows. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains the schema and all-route guard. No current production claim. | `424b09b2` PR#666; current `0fbe7d1e` |
+          """
+          if matrix.count(closed_marker) != 1:
+              raise SystemExit('closed section marker drifted')
+          matrix = matrix.replace(closed_marker, closed_rows, 1)
+
+          open_row = '| QUAL-P1-07 | 🆕 **Karty P1:** Идентификаторы сюжетов в `early-church`, `melachim` и `revelation` используют подчёркивание `_` вместо дефиса `-`, ломая Ajv 2020-12 схему | verified-source (32ae0d7d) |\n'
+          if matrix.count(open_row) != 1:
+              raise SystemExit('QUAL-P1-07 open row drifted')
+          matrix = matrix.replace(open_row, '', 1)
+
+          replacements = {
+              '## 🟠 P1 — ОТКРЫТО (76)': '## 🟠 P1 — ОТКРЫТО (75)',
+              '| Закрыто (fixed) | 194 |': '| Закрыто (fixed) | 195 |',
+              '| P1 открыто | 76 |': '| P1 открыто | 75 |',
+              '| **Всего открыто (матрица)** | **164** |': '| **Всего открыто (матрица)** | **163** |',
+              '## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 194 closed + 164 open)': '## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 195 closed + 163 open)',
+              '| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; Home discovery implementation merge `0131f8b9d6c717f85a8990700b72b09b575219a4`; exact green PR head `404db8d14087d29522e56f190717d6224e8e3bfb`; no current production claim). |': '| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; story-schema implementation merge `424b09b25fc9d4bace3938f4d44f430be8cc7e4b`; exact green PR head `12aa744e10c05c134adc951f01cb5e78ef25de65`; no current production claim). |',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_home-discovery-metadata.md` |': '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-story-id-schema.md` |',
+          }
+          for old, new in replacements.items():
+              if matrix.count(old) != 1:
+                  raise SystemExit(f'matrix marker drifted: {old}')
+              matrix = matrix.replace(old, new, 1)
+
+          session_marker = '## Session log (append-only)\n\n'
+          session_entry = """## Session log (append-only)
+
+          ### 2026-08-04 — Karty story-ID schema closure @ current source `0fbe7d1e`
+          - Closed `QUAL-P1-07` as FIXED-CURRENT.
+          - Product PR #666 / merge `424b09b25fc9d4bace3938f4d44f430be8cc7e4b` aligned internal story/filter identifiers with the canonical schema while preserving hyphen-only public route IDs.
+          - Exact Product head `12aa744e10c05c134adc951f01cb5e78ef25de65` passed four triggered workflows; current source retains the exact schema and all-route regression guard.
+          - Canonical arithmetic moved from **194 closed / 164 open** to **195 closed / 163 open**; P1 moved from **76** to **75**. No current production claim.
+
+          """
+          if matrix.count(session_marker) != 1:
+              raise SystemExit('session log marker drifted')
+          matrix = matrix.replace(session_marker, session_entry, 1)
+          if matrix.count('| QUAL-P1-07 |') != 1:
+              raise SystemExit('QUAL-P1-07 canonical multiplicity drift')
+          matrix_path.write_text(matrix, encoding='utf-8')
+
+          nxt = next_path.read_text(encoding='utf-8')
+          next_replacements = {
+              '**AuditRepo base before this handoff:** `1d8fb7f2e00d76010afab5d5e808bfa4cf687958`': '**AuditRepo base before this handoff:** `8f5ebdd7e2ee1f56887110e74373c74761ccc01b`',
+              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_home-discovery-metadata.md`': '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-story-id-schema.md`',
+              '**Canonical matrix:** **358 IDs = 194 closed + 164 open**.': '**Canonical matrix:** **358 IDs = 195 closed + 163 open**.',
+              '- P1: 76': '- P1: 75',
+              '- Total open: 164': '- Total open: 163',
+              '- Closed: 194': '- Closed: 195',
+          }
+          for old, new in next_replacements.items():
+              if nxt.count(old) != 1:
+                  raise SystemExit(f'NEXT marker drifted: {old}')
+              nxt = nxt.replace(old, new, 1)
+
+          current_source_line = '- `0fbe7d1ead9ebd1bea867418e254da438ec63329` — current Product main after subsequent independently merged lanes; this handoff uses it only as exact source-state authority and does not infer additional matrix dispositions.\n'
+          story_line = '- `424b09b25fc9d4bace3938f4d44f430be8cc7e4b` — Karty story-ID schema alignment from PR #666: underscore-bearing internal IDs, hyphen-only public route IDs and an all-route permanent guard;\n'
+          if nxt.count(current_source_line) != 1:
+              raise SystemExit('NEXT current source line drifted')
+          nxt = nxt.replace(current_source_line, story_line + current_source_line, 1)
+
+          old_boundary = 'Source movement does **not** change canonical AuditRepo counts by itself. PR #132 and PR #136 are merged and their dispositions remain bounded. AuditRepo PR #137 applies two additional current-head closures: `AR-IDX-01` and `AR-IDX-02` are fixed by Product PR #675 and retained with permanent Home discovery assertions at `0fbe7d1e`. No current production claim is made.'
+          new_boundary = 'Source movement does **not** change canonical AuditRepo counts by itself. PR #132, PR #136 and PR #137 are merged and their dispositions remain bounded. AuditRepo PR #138 applies one additional current-head closure: `QUAL-P1-07` is fixed by Product PR #666 and retained by the canonical story-ID schema plus all-route guard at `0fbe7d1e`. No current production claim is made.'
+          if nxt.count(old_boundary) != 1:
+              raise SystemExit('NEXT source-boundary marker drifted')
+          nxt = nxt.replace(old_boundary, new_boundary, 1)
+
+          old_audit = """### AuditRepo
+
+          - PR #137 (`verify/home-discovery-metadata-closure-20260804`) is the active canonical closure lane for `AR-IDX-01` and `AR-IDX-02`.
+          - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
+          """
+          new_audit = """### AuditRepo
+
+          - PR #138 (`verify/karty-story-id-schema-closure-20260804`) is the active canonical closure lane for `QUAL-P1-07`.
+          - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
+          """
+          if nxt.count(old_audit) != 1:
+              raise SystemExit('NEXT AuditRepo block drifted')
+          nxt = nxt.replace(old_audit, new_audit, 1)
+
+          next_section = """## Next meaningful work
+
+          1. Merge AuditRepo PR #138 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
+          2. Re-fetch both repositories and continue the current-head harvest before opening any Product repair lane.
+          3. Obtain a separate same-SHA deployment/live witness when making a production claim; source/PR green at `0fbe7d1e` is not production authority.
+          4. Preserve Single-Writer-Per-Fact: counts/statuses only in `verified/MASTER_BUG_MATRIX.md`; current source/deploy/next-step truth only here.
+          5. Do not turn noncanonical visual polish or historical reports into new repair-ready matrix rows without current-head verification.
+          """
+          section_marker = '## Next meaningful work\n'
+          if nxt.count(section_marker) != 1:
+              raise SystemExit('NEXT next-work section drifted')
+          nxt = nxt[:nxt.index(section_marker)] + next_section
+          next_path.write_text(nxt, encoding='utf-8')
+
+          reverify = reverify_path.read_text(encoding='utf-8')
+          if reverify.count('### `QUAL-P1-07` — fixed-current') != 1:
+              raise SystemExit('reverify disposition marker drifted')
+          if reverify.count('## Proposed canonical arithmetic') != 1:
+              raise SystemExit('reverify arithmetic marker drifted')
+          reverify = reverify.replace('## Proposed canonical arithmetic', '## Canonical arithmetic applied by this transaction', 1)
+          reverify_path.write_text(reverify, encoding='utf-8')
+          PY
+
+          rm .github/workflows/complete-karty-story-id-schema-closure.yml
+
+      - name: Validate bounded transaction
+        run: |
+          set -euo pipefail
+          git diff --check
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 -m py_compile \
+            scripts/check_matrix_coverage.py \
+            scripts/matrix_coverage_lib.py \
+            scripts/matrix_coverage_contexts.py \
+            scripts/matrix_coverage_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p "${RUNNER_TEMP}/matrix-coverage"
+          python3 scripts/check_matrix_coverage.py --verbose --json-out "${RUNNER_TEMP}/matrix-coverage/report.json"
+
+      - name: Commit canonical closure and remove bootstrap
+        run: |
+          set -euo pipefail
+          git status --short
+          git add \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-story-id-schema.md \
+            .github/workflows/complete-karty-story-id-schema-closure.yml
+          git diff --cached --check
+          git commit -m "audit(gb): close Karty story ID schema mismatch"
+          git push origin HEAD:verify/karty-story-id-schema-closure-20260804
