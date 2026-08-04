@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current verifier consolidation; three aggregate Nagornaya rows merged into still-open root owners; no Product mutation or current production claim). |
+| Source verification anchor | `f9d0120718569c510833dba7a3abd68ce2f6a003` (`QUAL-P1-02` Hebrew font/RTL root cause fixed by Product PR #873 after exact-head source, Chromium and CI verification; no production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_nagornaya-aggregate-duplicates.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_qual-p1-02-hebrew-semantics.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (206)
+## ✅ ЗАКРЫТО (207)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| QUAL-P1-02 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM+CI VERIFIED 2026-08-04.** Product PR #873 repaired the canonical dynamic Hebrew rendering root cause: `.hw` now uses a Hebrew-capable stack with isolated RTL semantics; rendered Hebrew tokens own `lang="he" dir="rtl"`; Hebrew title boundaries are explicit; Russian transliteration and explanations remain LTR. Exact PR head `cf128cc429ccfa1c48fce4638b3f489f8dc27135` passed all eleven triggered workflows, permanent source audit **44/44**, production-like Chromium `hebrew=ok`, zero browser errors and zero horizontal overflow. Squash merge `f9d0120718569c510833dba7a3abd68ce2f6a003`. No production claim. | `f9d01207` PR#873; exact `cf128cc4` |
 | NG-INLINE-02 | ✅ **DUPLICATE / MERGED INTO `NG-INLINE-01` 2026-08-04.** The measured 172 inline `style=` attributes refine the same five-copy “Из библиотеки” inline-style architecture already owned by open P1 root `NG-INLINE-01`; they do not establish another independently repairable cause. No Product mutation or production claim. | `0fbe7d1e` |
 | NG-STRUCT-02 | ✅ **DUPLICATE / MERGED INTO `NG-STRUCT-01` 2026-08-04.** Bare headings, missing wrappers, emoji/SVG drift and the chapter-five `font-sans` subset are already contained by open P1 structural owner `NG-STRUCT-01`. Closing the duplicate does not close the root defect. No Product mutation or production claim. | `0fbe7d1e` |
 | NG-MOBILE-01 | ✅ **AGGREGATE DUPLICATE / MERGED 2026-08-04.** This row contains no independent mobile root cause: body `bg-stone-100` remap is owned by open `NG-BODY-01`; chapter-specific TOC accent by open `NG-TOC-01`; inline hero height/adaptivity by open `NG-A11Y-01`. All owners remain open. No Product mutation or production claim. | `0fbe7d1e` |
@@ -241,7 +242,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (72)
+## 🟠 P1 — ОТКРЫТО (71)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -282,7 +283,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | RIVER-P1-03 | 🆕 **Karty P1:** `stroke-linecap="round"` при ширине рек 3..5px выдвигает полукруглый закругленный торец на 2.5px за конечные координаты, из-за чего река вылетает в море | verified-source (32ae0d7d) |
 | RIVER-P1-04 | 🆕 **Karty P1:** Вызов `getTotalLength()` до завершения компоновки DOM возвращает `0`, принуждая `stroke-dasharray="0"` и мгновенный проскок анимации через берег | verified-source (32ae0d7d) |
 | QUAL-P1-01 | 🆕 **Karty P1:** 15 контролов карты не соответствуют стандарту WCAG AAA 44px (`.me-back` 36px, `.me-story-chip` 36px, `.me-arch-more` 32px, `.me-panel__resize` 12px) | verified-source (32ae0d7d) |
-| QUAL-P1-02 | 🔴 **CONFIRMED-CURRENT / CANONICAL OWNER 2026-08-04:** Динамический Hebrew tab по-прежнему использует `.hw { font-family: Georgia,"Times New Roman",serif }`, не имеет `dir="rtl"` на rendered Hebrew boundary и получает данные из `he_deep`. Один bounded Product repair должен одновременно исправить Hebrew-capable font stack и RTL semantics; font-only duplicate `FONT-P1-01` merged сюда. | current source `0fbe7d1e`; `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-hebrew-font-duplicate.md` |
 | QUAL-P1-03 | 🆕 **Karty P1:** 39 библейских цитат диапазона стихов в движковых картах используют ASCII дефисы `-` вместо типографского тире `–` | verified-source (32ae0d7d) |
 | QUAL-P1-05 | 🆕 **Karty P1:** 16 обработчиков событий `wheel`, `touchstart`, `touchmove`, `mousemove` не имеют флага `{ passive: true }`, вызывая задержки скролла на mobile | verified-source (32ae0d7d) |
 | QUAL-P1-06 | 🆕 **Karty P1:** 58 таймеров `setTimeout/rAF` работают без привязки к lifecycle cleanup, вызывая выполнении кода после уничтожения карты | verified-source (32ae0d7d) |
@@ -473,14 +473,14 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 206 |
+| Закрыто (fixed) | 207 |
 | **P0 открыто** | **0** |
-| P1 открыто | 72 |
+| P1 открыто | 71 |
 | P2 открыто | 31 |
 | P3 открыто | 42 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **152** |
+| **Всего открыто (матрица)** | **151** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
