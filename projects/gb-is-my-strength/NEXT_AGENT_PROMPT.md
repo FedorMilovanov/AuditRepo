@@ -2,13 +2,13 @@
 
 > **Meaningful handoff only.** The matrix is the durable verified backlog; this file is the single writer for current source head, active owner lanes and the next executable barriers.
 
-**AuditRepo base before this handoff:** `da25e2c53388c6639e0add7b01e7521cb82a146e`
+**AuditRepo base before this handoff:** `446f36f48a27b02fb27e185c8f087446c811a609`
 **Exact finding-disposition anchor:** `0fbe7d1ead9ebd1bea867418e254da438ec63329`
 **Current Product main:** `0fbe7d1ead9ebd1bea867418e254da438ec63329`
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
 **Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `0fbe7d1e`.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-profile-status-duplicate.md`
-**Canonical matrix:** **358 IDs = 198 closed + 160 open**.
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-hebrew-font-duplicate.md`
+**Canonical matrix:** **358 IDs = 199 closed + 159 open**.
 
 ## Source convergence since the disposition anchor
 
@@ -34,7 +34,7 @@ The following Product waves are merged in `main` and must not be reimplemented:
 - `39df9ed0e650cc08f93c14145cb592868f0c80e4` — Avraam duplicate-river root-cause repair: removed the second `waterRipple` Nile and retained one canonical river system;
 - `0fbe7d1ead9ebd1bea867418e254da438ec63329` — current Product main after subsequent independently merged lanes; this handoff uses it only as exact source-state authority and does not infer additional matrix dispositions.
 
-Source movement does **not** change canonical AuditRepo counts by itself. PR #132, PR #136, PR #137, PR #138 and PR #139 are merged and their dispositions remain bounded. AuditRepo PR #140 narrows `QUAL-P1-09` to the factual holding/noindex profile residual and merges duplicate `QUAL-P2-01`; it makes no Product mutation or production claim.
+Source movement does **not** change canonical AuditRepo counts by itself. PR #132, PR #136, PR #137, PR #138, PR #139 and PR #140 are merged and their dispositions remain bounded. AuditRepo PR #141 retains `QUAL-P1-02` as the current Hebrew font+RTL owner and merges duplicate `FONT-P1-01`; it makes no Product mutation or production claim.
 
 ## Active canonical owner lanes
 
@@ -45,24 +45,24 @@ Source movement does **not** change canonical AuditRepo counts by itself. PR #13
 
 ### AuditRepo
 
-- PR #140 (`verify/karty-profile-status-duplicate-20260804`) is the active canonical narrowing lane for `QUAL-P1-09` and duplicate `QUAL-P2-01`.
+- PR #141 (`verify/karty-hebrew-font-duplicate-20260804`) is the active canonical duplicate-consolidation lane for `QUAL-P1-02` and duplicate `FONT-P1-01`.
 - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
 
 ## Current counts
 
 - P0: 0
-- P1: 73
+- P1: 72
 - P2: 33
 - P3: 47
 - Refactoring: 4
 - AuditRepo: 3
-- Total open: 160
-- Closed: 198
+- Total open: 159
+- Closed: 199
 
 ## Next meaningful work
 
-1. Merge AuditRepo PR #140 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
-2. Re-fetch both repositories and continue current-head harvest; `QUAL-P1-09` remains open until one bounded Product lane defines the canonical holding-profile status and updates validators.
-3. Narrow `MAP-P1-20` rather than closing its still-current unversioned static-resource residual.
-4. Obtain a separate same-SHA deployment/live witness when making a production claim; source evidence at `0fbe7d1e` is not production authority.
-5. Preserve Single-Writer-Per-Fact: counts/statuses only in `verified/MASTER_BUG_MATRIX.md`; current source/deploy/next-step truth only here.
+1. Merge AuditRepo PR #141 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
+2. Re-fetch both repositories and continue current-head harvest; `QUAL-P1-02` remains a confirmed repair-ready Product candidate requiring font and RTL runtime semantics in one bounded lane.
+3. `QUAL-P1-09` remains open until one bounded Product lane defines the canonical holding-profile status and updates validators.
+4. Narrow `MAP-P1-20` rather than closing its still-current unversioned static-resource residual.
+5. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence.
