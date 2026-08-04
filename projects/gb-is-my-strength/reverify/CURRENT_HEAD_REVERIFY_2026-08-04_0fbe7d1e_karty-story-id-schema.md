@@ -5,6 +5,7 @@
 - Canonical finding: `QUAL-P1-07`
 - Current Product anchor: `0fbe7d1ead9ebd1bea867418e254da438ec63329`
 - AuditRepo base: `8f5ebdd7e2ee1f56887110e74373c74761ccc01b`
+- AuditRepo closure lane: PR #138
 - Current production claim: **none**
 
 ## Original claim
