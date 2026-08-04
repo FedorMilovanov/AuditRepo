@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; Home discovery implementation merge `0131f8b9d6c717f85a8990700b72b09b575219a4`; exact green PR head `404db8d14087d29522e56f190717d6224e8e3bfb`; no current production claim). |
+| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; story-schema implementation merge `424b09b25fc9d4bace3938f4d44f430be8cc7e4b`; exact green PR head `12aa744e10c05c134adc951f01cb5e78ef25de65`; no current production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_home-discovery-metadata.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-story-id-schema.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (194)
+## ✅ ЗАКРЫТО (195)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| QUAL-P1-07 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #666 aligned canonical Karty story identifiers with the runtime/deep-link vocabulary: internal IDs now use `^[a-z0-9_-]+$`, public `meta.id` remains hyphen-only, no published identifier or URL was renamed, and the permanent guard validates every current `karty/*/route.json`. Exact Product head `12aa744e10c05c134adc951f01cb5e78ef25de65` merged as `424b09b25fc9d4bace3938f4d44f430be8cc7e4b` after four green workflows. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains the schema and all-route guard. No current production claim. | `424b09b2` PR#666; current `0fbe7d1e` |
 | AR-IDX-01 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #675 restored canonical Home alternates for `hreflang="ru"` and `hreflang="x-default"`, both targeting `https://gospod-bog.ru/`, and added parsed production-like assertions. Exact PR head `404db8d14087d29522e56f190717d6224e8e3bfb` merged as `0131f8b9d6c717f85a8990700b72b09b575219a4` after nine green workflows. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains both links and the fail-closed assertions. No current production claim. | `0131f8b9` PR#675; current `0fbe7d1e` |
 | AR-IDX-02 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #675 restored WebSite `SearchAction`, the canonical `https://gospod-bog.ru/?q={search_term_string}` EntryPoint and `required name=search_term_string`, with permanent production-like assertions. Exact PR head `404db8d14087d29522e56f190717d6224e8e3bfb` merged as `0131f8b9d6c717f85a8990700b72b09b575219a4` after nine green workflows. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` retains the complete contract. No current production claim. | `0131f8b9` PR#675; current `0fbe7d1e` |
 | EDITORIAL-PROJECTION-51-DRIFT | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Product PR #442 restored exactly 27 unauthorized `editorialPublishedAt` changes while retaining all 51 proven RSS/Search projection observations, review statuses, modification dates, provenance and source boundary. It added permanent preservation and frozen/observed diff contracts; issue #217 closed in merge `f7e426996fd41a23ca720299a8ef1ce7f1c0952f`. At current Product anchor `0fbe7d1ead9ebd1bea867418e254da438ec63329`, workflow blob `00caeeaecff5a70d22ccbfa1263aefd5ef637640` and preservation-test blob `0c7a733df4c6b661fdffd377e7f0d5b4c3bc9708` are identical to exact green head `7de20ed77e60ec05bb91322ac03800a3d9860410`, where Editorial Metadata v3 run `30679631914` succeeded. Historical same-SHA deployment witness `30300756799` belongs to `f7e42699`; no current production claim. | `f7e42699` PR#442; run `30679631914`; current `0fbe7d1e` |
@@ -229,7 +230,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (76)
+## 🟠 P1 — ОТКРЫТО (75)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -275,7 +276,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | QUAL-P1-03 | 🆕 **Karty P1:** 39 библейских цитат диапазона стихов в движковых картах используют ASCII дефисы `-` вместо типографского тире `–` | verified-source (32ae0d7d) |
 | QUAL-P1-05 | 🆕 **Karty P1:** 16 обработчиков событий `wheel`, `touchstart`, `touchmove`, `mousemove` не имеют флага `{ passive: true }`, вызывая задержки скролла на mobile | verified-source (32ae0d7d) |
 | QUAL-P1-06 | 🆕 **Karty P1:** 58 таймеров `setTimeout/rAF` работают без привязки к lifecycle cleanup, вызывая выполнении кода после уничтожения карты | verified-source (32ae0d7d) |
-| QUAL-P1-07 | 🆕 **Karty P1:** Идентификаторы сюжетов в `early-church`, `melachim` и `revelation` используют подчёркивание `_` вместо дефиса `-`, ломая Ajv 2020-12 схему | verified-source (32ae0d7d) |
 | DRAW-P1-01 | 🆕 **Karty P1:** Фиксированный сдвиг подписей на 12px в окне 100x16px в `map-engine.js` не решает коллизии подписей в плотных кластерах | verified-source (32ae0d7d) |
 | DRAW-P1-02 | 🆕 **Karty P1:** Дублирующие наложения устаревших русел рек в `base-geo.svg` поверх морских штрихов создают видимый эффект сдвоенной линии | verified-source (32ae0d7d) |
 | DRAW-P1-03 | 🆕 **Karty P1:** Отсутствует система архитектурных символов и иконок карт — все места рендерятся простыми плоскими кружками `r=4.5` | verified-source (32ae0d7d) |
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 194 closed + 164 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 195 closed + 163 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 194 |
+| Закрыто (fixed) | 195 |
 | **P0 открыто** | **0** |
-| P1 открыто | 76 |
+| P1 открыто | 75 |
 | P2 открыто | 34 |
 | P3 открыто | 47 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **164** |
+| **Всего открыто (матрица)** | **163** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-04 — Karty story-ID schema closure @ current source `0fbe7d1e`
+- Closed `QUAL-P1-07` as FIXED-CURRENT.
+- Product PR #666 / merge `424b09b25fc9d4bace3938f4d44f430be8cc7e4b` aligned internal story/filter identifiers with the canonical schema while preserving hyphen-only public route IDs.
+- Exact Product head `12aa744e10c05c134adc951f01cb5e78ef25de65` passed four triggered workflows; current source retains the exact schema and all-route regression guard.
+- Canonical arithmetic moved from **194 closed / 164 open** to **195 closed / 163 open**; P1 moved from **76** to **75**. No current production claim.
 
 ### 2026-08-04 — Home discovery metadata parity closure @ current source `0fbe7d1e`
 - Closed `AR-IDX-01` and `AR-IDX-02` as FIXED-CURRENT.
