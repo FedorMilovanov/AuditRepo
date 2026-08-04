@@ -1,0 +1,79 @@
+name: Recover editorial projection closure
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: recover-editorial-projection-pr-136
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    if: github.event.pull_request.number == 136
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout verifier branch
+        uses: actions/checkout@v4
+        with:
+          ref: verify/editorial-projection-51-closure-20260804
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Execute corrected bounded transaction
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          source_path = Path('.github/workflows/complete-editorial-projection-closure.yml')
+          source = source_path.read_text(encoding='utf-8')
+          old = '5. Do not turn noncanonical visual polish or historical reports into new repair-ready matrix rows without current-head verification.'
+          new = '5. Do not turn noncanonical visual polish or historical reports into repair-ready rows without current-head verification.'
+          if source.count(old) != 1:
+              raise SystemExit('expected one stale handoff marker')
+          source = source.replace(old, new, 1)
+
+          lines = source.splitlines()
+          blocks = []
+          i = 0
+          while i < len(lines):
+              line = lines[i]
+              if line.strip() != 'run: |':
+                  i += 1
+                  continue
+              run_indent = len(line) - len(line.lstrip())
+              content_indent = run_indent + 2
+              i += 1
+              block = []
+              while i < len(lines):
+                  current = lines[i]
+                  if current.strip() and len(current) - len(current.lstrip()) <= run_indent:
+                      break
+                  block.append(current[content_indent:] if current.strip() else '')
+                  i += 1
+              blocks.append('\n'.join(block).rstrip())
+
+          if len(blocks) != 4:
+              raise SystemExit(f'expected 4 run blocks, found {len(blocks)}')
+
+          script = '\n\n'.join(blocks) + '\n'
+          script = script.replace(
+              'rm .github/workflows/complete-editorial-projection-closure.yml',
+              'rm .github/workflows/complete-editorial-projection-closure.yml .github/workflows/run-editorial-projection-closure-recovery.yml',
+              1,
+          )
+          script = script.replace(
+              '            .github/workflows/complete-editorial-projection-closure.yml\n',
+              '            .github/workflows/complete-editorial-projection-closure.yml \\\n            .github/workflows/run-editorial-projection-closure-recovery.yml\n',
+              1,
+          )
+          runner = Path('/tmp/recover-editorial-projection-closure.sh')
+          runner.write_text('#!/usr/bin/env bash\nset -euo pipefail\n' + script, encoding='utf-8')
+          runner.chmod(0o700)
+          PY
+          /tmp/recover-editorial-projection-closure.sh
