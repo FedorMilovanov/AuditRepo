@@ -5,6 +5,7 @@
 - Canonical findings: `RIVER-P1-05`, `DRAW-P1-02`
 - Current Product anchor: `0fbe7d1ead9ebd1bea867418e254da438ec63329`
 - AuditRepo base: `d7daa52214ac6995bb4789a33634ff9cb86a6ccc`
+- AuditRepo closure lane: PR #139
 - Current production claim: **none**
 
 ## Original claims
