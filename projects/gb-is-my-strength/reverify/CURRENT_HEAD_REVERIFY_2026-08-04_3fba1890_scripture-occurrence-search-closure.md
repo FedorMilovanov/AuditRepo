@@ -29,6 +29,11 @@ The former audit observation (~1026 visible references versus tiny manifest/corp
 - Search revision moved `f48e4610 → 6061911b`; SW cache moved to v196.
 - Final Product diff contained **63 inventoried files**: seven permanent runtime/SW owners plus 56 versioned search references. Temporary workflow/helper files and TTS/Vosk paths were absent.
 
+## AuditRepo transaction evidence
+
+- Self-clean reconciliation run `30945651477`, job `92114844599`, passed structure validation, regression tests, matrix coverage and strict repository-history forensic before writing clean head `fc1d9596227d6157bc641602692e66dd52b17498`.
+- The final AuditRepo PR diff is bounded to the canonical matrix, `NEXT_AGENT_PROMPT.md` and this reverify; temporary workflow/helper files are absent.
+
 ## Boundaries retained
 
 - `SEARCH-P2-07` remains open: 66-book registry coverage is not equivalent to a complete authoritative/licensed verse corpus.
