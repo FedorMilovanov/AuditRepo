@@ -6,6 +6,7 @@
 - Open owner: `NG-SEO-01`
 - Current Product anchor: `f9d0120718569c510833dba7a3abd68ce2f6a003`
 - AuditRepo base: `17c84848808b63a1910b0d50c8e2553aac0ee4e4`
+- AuditRepo disposition PR: `#149`
 - Current production claim: **none**
 
 ## Current source boundary
