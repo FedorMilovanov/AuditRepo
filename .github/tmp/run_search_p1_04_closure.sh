@@ -13,7 +13,7 @@ TEMP_WORKFLOW=".github/workflows/tmp-search-p1-04-closure.yml"
 # Exact SSOT base and owner guards.
 git fetch --no-tags origin main
 test "$(git rev-parse origin/main)" = "${BASE_SHA}"
-git rev-list HEAD | grep -qx "${BASE_SHA}"
+git merge-base --is-ancestor "${BASE_SHA}" HEAD
 test "$(git rev-parse HEAD:${MATRIX})" = "b11c88bd4ebd8b878eb2126f1e5ad36a40c774c5"
 test "$(git rev-parse HEAD:${NEXT})" = "ba6877110c43b1cf70a95ce927bd8ca0ff9cf735"
 test "$(git rev-parse HEAD:${HELPER})" = "2f74af437c0c9a7dca0f322f3a57c193fba6431f"
