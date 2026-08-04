@@ -141,6 +141,7 @@ jobs:
         shell: python
         run: |
           import importlib.util
+          import os
           import subprocess
 
           spec = importlib.util.spec_from_file_location(
@@ -150,20 +151,37 @@ jobs:
           module = importlib.util.module_from_spec(spec)
           spec.loader.exec_module(module)
 
-          def exact_inventory():
-              tracked = subprocess.run(
-                  ["git", "diff", "--name-only", module.BASE_SHA, "--"],
-                  check=True,
-                  text=True,
-                  capture_output=True,
-              ).stdout.splitlines()
-              untracked = subprocess.run(
-                  ["git", "ls-files", "--others", "--exclude-standard"],
-                  check=True,
-                  text=True,
-                  capture_output=True,
-              ).stdout.splitlines()
-              return set(filter(None, tracked + untracked))
+          def command(*args):
+              return subprocess.run(args, check=True, text=True, capture_output=True)
 
-          module.changed_from_base = exact_inventory
-          module.finalize()
+          def names(*args):
+              return set(filter(None, command(*args).stdout.splitlines()))
+
+          tracked = names("git", "diff", "--name-only", module.BASE_SHA, "--")
+          untracked = names("git", "ls-files", "--others", "--exclude-standard")
+          prefinal = tracked | untracked
+          expected_prefinal = module.PERMANENT | module.TEMPORARY
+          if prefinal != expected_prefinal:
+              raise SystemExit(f"unexpected pre-finalize scope: {sorted(prefinal)}")
+
+          module.HELPER.unlink(missing_ok=False)
+          module.WORKFLOW.unlink(missing_ok=False)
+          command("git", "add", "-A")
+
+          staged_vs_head = names("git", "diff", "--cached", "--name-only")
+          expected_operations = module.PERMANENT | module.TEMPORARY
+          if staged_vs_head != expected_operations:
+              raise SystemExit(f"unexpected staged operations: {sorted(staged_vs_head)}")
+
+          final_vs_base = names("git", "diff", "--cached", "--name-only", module.BASE_SHA)
+          if final_vs_base != module.PERMANENT:
+              raise SystemExit(f"final tree is not exactly three SSOT files: {sorted(final_vs_base)}")
+
+          command("git", "config", "user.name", "github-actions[bot]")
+          command("git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com")
+          command("git", "commit", "-m", "audit(search): close SEARCH-P2-08")
+          head_ref = os.environ.get("HEAD_REF", "").strip()
+          if not head_ref:
+              raise SystemExit("HEAD_REF is required")
+          command("git", "push", "origin", f"HEAD:{head_ref}")
+          print(f"Published clean three-file SSOT head to {head_ref}.")
