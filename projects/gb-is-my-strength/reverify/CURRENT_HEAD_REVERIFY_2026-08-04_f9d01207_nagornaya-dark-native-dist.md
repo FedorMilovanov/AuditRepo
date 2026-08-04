@@ -9,6 +9,7 @@
 - Authority-correction lane: AuditRepo PR #152
 - Native build/reconciliation run: `30904405771`
 - Cross-reference reconciliation run: `30905041570`
+- Trusted exact-head scope: matrix + handoff + this paired reverify only
 - Product mutation: **none**
 - Browser/live-production claim: **none**
 - TTS scope: **excluded**
