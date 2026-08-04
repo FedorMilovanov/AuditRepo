@@ -1,0 +1,403 @@
+name: Complete Nagornaya native-dist authority correction
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nagornaya-native-dist-authority-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  complete:
+    if: >-
+      github.event.pull_request.number == 152 &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'verify/nagornaya-dark-native-dist-authority-20260804'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact AuditRepo branch
+        uses: actions/checkout@v4
+        with:
+          ref: verify/nagornaya-dark-native-dist-authority-20260804
+          fetch-depth: 0
+
+      - name: Guard canonical base
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "0142b93de01160b77eda71cb9fd2f72fd8a4fbdc"
+          git merge-base --is-ancestor origin/main HEAD
+
+      - name: Checkout exact Product source
+        uses: actions/checkout@v4
+        with:
+          repository: FedorMilovanov/gb-is-my-strength
+          ref: f9d0120718569c510833dba7a3abd68ce2f6a003
+          path: .source-product
+          persist-credentials: false
+
+      - name: Set up Node 22.12
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: npm
+          cache-dependency-path: .source-product/package-lock.json
+
+      - name: Install exact Product dependencies
+        working-directory: .source-product
+        run: npm ci
+
+      - name: Prove native Nagornaya ownership
+        working-directory: .source-product
+        run: npm run nagornaya:visual-parity:audit
+
+      - name: Build production-like native dist
+        working-directory: .source-product
+        run: npm run strangler:build:production-like
+
+      - name: Generate native-dist canonical correction
+        shell: bash
+        env:
+          PRODUCT_SHA: f9d0120718569c510833dba7a3abd68ce2f6a003
+          AUDIT_BASE: 0142b93de01160b77eda71cb9fd2f72fd8a4fbdc
+          PR_NUMBER: '152'
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from __future__ import annotations
+          import html
+          import os
+          import re
+          from collections import Counter, defaultdict
+          from pathlib import Path
+
+          root = Path.cwd()
+          product = root / '.source-product'
+          dist = product / 'dist'
+          product_sha = os.environ['PRODUCT_SHA']
+          audit_base = os.environ['AUDIT_BASE']
+          run_id = os.environ['GITHUB_RUN_ID']
+
+          routes = [
+              ('/nagornaya/', 'nagornaya/index.html'),
+              ('/nagornaya/chast-1/', 'nagornaya/chast-1/index.html'),
+              ('/nagornaya/chast-2/', 'nagornaya/chast-2/index.html'),
+              ('/nagornaya/chast-3/', 'nagornaya/chast-3/index.html'),
+              ('/nagornaya/chast-4/', 'nagornaya/chast-4/index.html'),
+              ('/nagornaya/chast-5/', 'nagornaya/chast-5/index.html'),
+              ('/nagornaya/seriya/', 'nagornaya/seriya/index.html'),
+              ('/nagornaya/istochniki/', 'nagornaya/istochniki/index.html'),
+              ('/nagornaya/nakhodki/', 'nagornaya/nakhodki/index.html'),
+          ]
+          color_token = re.compile(r'^(?:bg|text|border)-(?:amber|blue|emerald|indigo|orange|purple|red|rose|stone|teal)-(?:50|100|200|300|400|500|600|700|800|900|950)$')
+          historical = re.compile(r'^(?:text-(?:amber|blue|emerald|indigo|orange|purple|red|rose|teal)-(?:600|700)|text-amber-800|border-stone-100|bg-rose-50|bg-stone-(?:100|200))$')
+          class_attr = re.compile(r'class\s*=\s*(["\'])(.*?)\1', re.I | re.S)
+          css_link = re.compile(r'<link\b[^>]*\brel\s*=\s*(["\'])stylesheet\1[^>]*\bhref\s*=\s*(["\'])(.*?)\2|<link\b[^>]*\bhref\s*=\s*(["\'])(.*?)\4[^>]*\brel\s*=\s*(["\'])stylesheet\6', re.I | re.S)
+
+          def strip_comments(css: str) -> str:
+              return re.sub(r'/\*.*?\*/', '', css, flags=re.S)
+
+          def blocks(text: str, inherited_dark: bool = False):
+              text = strip_comments(text)
+              i = 0
+              n = len(text)
+              while i < n:
+                  open_i = text.find('{', i)
+                  if open_i < 0:
+                      return
+                  header = text[i:open_i].strip()
+                  depth = 1
+                  j = open_i + 1
+                  quote = None
+                  escape = False
+                  while j < n and depth:
+                      ch = text[j]
+                      if quote:
+                          if escape:
+                              escape = False
+                          elif ch == '\\':
+                              escape = True
+                          elif ch == quote:
+                              quote = None
+                      else:
+                          if ch in "\"'":
+                              quote = ch
+                          elif ch == '{':
+                              depth += 1
+                          elif ch == '}':
+                              depth -= 1
+                      j += 1
+                  if depth:
+                      raise SystemExit('unbalanced CSS while scanning native dist')
+                  body = text[open_i + 1:j - 1]
+                  low = header.lower()
+                  if header.startswith('@'):
+                      nested_dark = inherited_dark or ('prefers-color-scheme' in low and 'dark' in low)
+                      if header.startswith(('@media', '@supports', '@layer', '@container', '@scope')):
+                          yield from blocks(body, nested_dark)
+                  else:
+                      direct_dark = inherited_dark or bool(re.search(r'(^|[\s,:>+~])(?:html|body)?\.dark(?:[\s,:>+~]|$)|\[data-(?:theme|color-scheme)=["\']?dark', header, re.I))
+                      yield header, direct_dark
+                      if '{' in body:
+                          yield from blocks(body, direct_dark)
+                  i = j
+
+          def token_in_selector(selector: str, token: str) -> bool:
+              return bool(re.search(r'(?<![A-Za-z0-9_-])\.' + re.escape(token) + r'(?![A-Za-z0-9_-])', selector))
+
+          css_cache: dict[Path, list[tuple[str, bool]]] = {}
+          route_tokens: dict[str, Counter[str]] = {}
+          route_css: dict[str, list[Path]] = {}
+          all_uses = Counter()
+
+          for public, rel in routes:
+              file = dist / rel
+              if not file.is_file():
+                  raise SystemExit(f'missing native dist route: {file}')
+              doc = file.read_text(encoding='utf-8')
+              if '<body' not in doc or 'nagornaya-page' not in doc:
+                  raise SystemExit(f'native dist marker absent: {public}')
+              tokens = Counter()
+              for match in class_attr.finditer(doc):
+                  value = html.unescape(match.group(2))
+                  for token in value.split():
+                      if color_token.fullmatch(token):
+                          tokens[token] += 1
+                          all_uses[token] += 1
+              if not tokens:
+                  raise SystemExit(f'no color utilities found in native dist: {public}')
+              styles = []
+              for match in css_link.finditer(doc):
+                  href = match.group(3) or match.group(5) or ''
+                  href = html.unescape(href).split('?', 1)[0].split('#', 1)[0]
+                  if not href.startswith('/') or href.startswith('//'):
+                      continue
+                  target = dist / href.lstrip('/')
+                  if not target.is_file():
+                      raise SystemExit(f'linked local CSS missing for {public}: {href}')
+                  styles.append(target)
+                  if target not in css_cache:
+                      css_cache[target] = list(blocks(target.read_text(encoding='utf-8')))
+              if not styles:
+                  raise SystemExit(f'no linked local stylesheets found: {public}')
+              route_tokens[public] = tokens
+              route_css[public] = styles
+
+          def covered_on_route(token: str, public: str) -> tuple[bool, list[str]]:
+              owners = []
+              for css in route_css[public]:
+                  for selector, dark in css_cache[css]:
+                      if dark and token_in_selector(selector, token):
+                          owners.append(css.relative_to(dist).as_posix())
+                          break
+              return bool(owners), sorted(set(owners))
+
+          historical_tokens = sorted(t for t in all_uses if historical.fullmatch(t))
+          if not historical_tokens:
+              raise SystemExit('historical boundary is empty on native dist')
+
+          covered = []
+          residual = []
+          token_routes = {}
+          token_owners = {}
+          for token in historical_tokens:
+              using = [r for r, counts in route_tokens.items() if counts[token]]
+              checks = [covered_on_route(token, r) for r in using]
+              token_routes[token] = using
+              token_owners[token] = sorted({owner for ok, owners in checks for owner in owners})
+              record = (token, all_uses[token], len(using), token_owners[token])
+              if all(ok for ok, _ in checks):
+                  covered.append(record)
+              else:
+                  residual.append(record)
+
+          if not residual:
+              raise SystemExit('native-dist historical residual unexpectedly empty; requires separate closure review')
+
+          ambient_missing = []
+          for token in sorted(all_uses):
+              if token in historical_tokens:
+                  continue
+              using = [r for r, counts in route_tokens.items() if counts[token]]
+              if not all(covered_on_route(token, r)[0] for r in using):
+                  ambient_missing.append((token, all_uses[token]))
+
+          hist_uses = sum(all_uses[t] for t in historical_tokens)
+          covered_uses = sum(row[1] for row in covered)
+          residual_uses = sum(row[1] for row in residual)
+          ambient_missing_uses = sum(v for _, v in ambient_missing)
+
+          def table(rows, owner=True):
+              if owner:
+                  out = ['| Utility token | Uses | Routes | Effective linked dark owner |', '|---|---:|---:|---|']
+                  for token, uses, count, owners in sorted(rows, key=lambda x: (-x[1], x[0])):
+                      label = ', '.join(f'`{x}`' for x in owners) if owners else 'none found'
+                      out.append(f'| `{token}` | {uses} | {count} | {label} |')
+              else:
+                  out = ['| Utility token | Uses | Routes | Direct linked dark rule |', '|---|---:|---:|---|']
+                  for token, uses, count, owners in sorted(rows, key=lambda x: (-x[1], x[0])):
+                      label = ', '.join(f'`{x}`' for x in owners) if owners else 'none found'
+                      out.append(f'| `{token}` | {uses} | {count} | {label} |')
+              return '\n'.join(out)
+
+          residual_names = ', '.join(f'`{r[0]}` ({r[1]}×)' for r in sorted(residual, key=lambda x: (-x[1], x[0])))
+          route_lines = '\n'.join(f'- `{public}` → `dist/{rel}`' for public, rel in routes)
+          reverify = f'''# CURRENT HEAD REVERIFY — Nagornaya native/dist dark-theme authority correction
+
+- Date: 2026-08-04
+- Source repository: `FedorMilovanov/gb-is-my-strength`
+- Canonical finding: `NG-DARK-01`
+- Product anchor: `{product_sha}`
+- AuditRepo base: `{audit_base}`
+- Correction lane: AuditRepo PR #152
+- Exact executor run: `{run_id}`
+- Product mutation: **none**
+- Browser/computed-style/live-production claim: **none**
+- TTS scope: **excluded**
+
+## Why PR #151 required correction
+
+Merged AuditRepo PR #151 correctly rejected the stale July-wide wording and correctly warned that a missing selector is not automatically a visual defect. However, its inventory read the committed legacy shadow HTML. Current repository authority and the permanent `nagornaya:visual-parity:audit` declare all nine public Nagornaya routes **100% native Astro**. Therefore PR #151 is superseded only as the source-surface authority for exact token counts.
+
+This correction ran `npm ci`, `npm run nagornaya:visual-parity:audit`, and `npm run strangler:build:production-like` on exact Product `{product_sha}`, then inspected the built native documents and every local stylesheet actually linked by each document.
+
+## Native production-like route set
+
+{route_lines}
+
+The build inventory contains **{len(all_uses)} distinct ambient color utility tokens / {sum(all_uses.values())} uses**.
+
+## Historical-claim boundary
+
+The canonical July row named `text-{{accent}}-600`, `text-{{accent}}-700`, `text-amber-800`, `border-stone-100`, `bg-rose-50`, and `bg-stone-100/200`. The native dist currently uses **{len(historical_tokens)} tokens / {hist_uses} uses** inside that exact boundary.
+
+### Historical tokens now covered
+
+{table(covered)}
+
+These **{len(covered)} tokens / {covered_uses} uses** have an explicit dark-context selector in CSS linked by every native route that uses the token.
+
+### Canonical native-dist source residual
+
+{table(residual, owner=False)}
+
+The bounded native-dist source residual is **{len(residual)} tokens / {residual_uses} uses**: {residual_names}.
+
+The other **{len(ambient_missing)} ambient tokens / {ambient_missing_uses} uses** without complete direct-selector coverage are outside the historical row and are not silently promoted to defects. A future browser/computed-style or owner review must classify them separately.
+
+## Disposition
+
+`NG-DARK-01` remains **OPEN / CURRENT**, but its authority is now the production-like native Astro `dist`, not legacy shadows. Future browser verification or Product repair must stay inside the {len(residual)}-token / {residual_uses}-use boundary above and must not recreate fixed `NG-BODY-01`, reopen duplicate rows, or treat every ambient token without a dedicated selector as broken.
+
+Closed duplicate rows `NG-DARK-04` and `NG-DARK-05` remain closed; their current wording is reconciled to this native-dist result.
+
+## Evidence boundary
+
+- exact native Astro production-like build and linked CSS only;
+- no Product mutation;
+- no browser computed-style, screenshot, deployed-SHA or live-production claim;
+- no TTS inspection or modification;
+- canonical arithmetic remains **358 = 213 closed + 145 open**, P1 **70**.
+'''
+
+          reverify_path = root / 'projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md'
+          reverify_path.write_text(reverify, encoding='utf-8')
+
+          matrix_path = root / 'projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md'
+          matrix = matrix_path.read_text(encoding='utf-8')
+          matrix = re.sub(
+              r'^\| Source verification anchor \|.*$',
+              f'| Source verification anchor | `{product_sha}` (native Astro production-like `dist` authority: `NG-DARK-01` narrowed to {len(residual)} historical tokens / {residual_uses} uses; PR #151 legacy-shadow counts superseded; no Product mutation, browser, production or TTS claim). |',
+              matrix, flags=re.M)
+          matrix = re.sub(
+              r'^\| Last reverify \|.*$',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md` |',
+              matrix, flags=re.M)
+          row = f'| NG-DARK-01 | ⚠️ **CURRENT / NATIVE-DIST AUTHORITY CORRECTED 2026-08-04:** Exact Product `{product_sha}` passed the permanent nine-route native Astro ownership audit and a production-like build. Built `dist/nagornaya/**/index.html` plus route-linked CSS contain {len(historical_tokens)} historically in-scope tokens / {hist_uses} uses; {len(covered)} tokens / {covered_uses} uses have complete explicit dark-context coverage. The bounded source residual is **{len(residual)} tokens / {residual_uses} uses**: {residual_names}. PR #151 is superseded only for its legacy-shadow token counts; its warning against promoting all ambient no-selector utilities remains valid. Future browser verification or Product repair must stay inside this native-dist boundary. No Product mutation, browser, production or TTS claim. | current source `{product_sha[:8]}`; `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md` |'
+          matrix, n = re.subn(r'^\| NG-DARK-01 \|.*$', row, matrix, count=1, flags=re.M)
+          if n != 1:
+              raise SystemExit('failed to replace NG-DARK-01 row')
+
+          rose_covered = any(r[0] == 'bg-rose-50' for r in covered)
+          stone100_covered = any(r[0] == 'bg-stone-100' for r in covered)
+          stone200_residual = any(r[0] == 'bg-stone-200' for r in residual)
+          dark04 = f'| NG-DARK-04 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01`; NATIVE-DIST WORDING RECONCILED 2026-08-04.** The row remains closed because `bg-rose-50` never defined an independent repair owner. Native production-like `dist` at exact Product `{product_sha}` shows `bg-rose-50` is {"covered on every using route by linked dark CSS" if rose_covered else "retained only inside the narrowed root residual"}. PR #151 legacy-shadow counts are superseded. No Product mutation, browser, production or TTS claim. | `{product_sha[:8]}` native dist |'
+          dark05 = f'| NG-DARK-05 | ✅ **DUPLICATE / MERGED INTO `NG-DARK-01`; NATIVE-DIST WORDING RECONCILED 2026-08-04.** The aggregate stone-background row remains closed. Native production-like `dist` at exact Product `{product_sha}` shows `bg-stone-100` is {"covered on every using route" if stone100_covered else "not proven covered"}; `bg-stone-200` is {"retained only in the narrowed root residual" if stone200_residual else "not part of the current residual"}. PR #151 legacy-shadow counts are superseded. No Product mutation, browser, production or TTS claim. | `{product_sha[:8]}` native dist |'
+          matrix, n4 = re.subn(r'^\| NG-DARK-04 \|.*$', dark04, matrix, count=1, flags=re.M)
+          matrix, n5 = re.subn(r'^\| NG-DARK-05 \|.*$', dark05, matrix, count=1, flags=re.M)
+          if (n4, n5) != (1, 1):
+              raise SystemExit('failed to reconcile duplicate rows')
+          matrix_path.write_text(matrix, encoding='utf-8')
+
+          next_path = root / 'projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md'
+          nxt = next_path.read_text(encoding='utf-8')
+          nxt = re.sub(r'^\*\*AuditRepo base before this handoff:\*\*.*$', f'**AuditRepo base before this handoff:** `{audit_base}`', nxt, flags=re.M)
+          nxt = re.sub(r'^\*\*Current reverify:\*\*.*$', '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md`', nxt, flags=re.M)
+          nxt = re.sub(
+              r'Source movement does \*\*not\*\* change canonical AuditRepo counts by itself\..*?\n\n## Active canonical owner lanes',
+              f'Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PR #151 is merged but its legacy-shadow token counts are superseded by PR #152, which re-establishes `NG-DARK-01` authority from the exact native Astro production-like `dist`. Counts remain unchanged and neither lane makes a Product mutation, browser, production or TTS claim.\n\n## Active canonical owner lanes',
+              nxt, count=1, flags=re.S)
+          nxt = re.sub(
+              r'- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority\..*',
+              f'- Product `main@{product_sha}` remains source authority. `NG-BODY-01` is fixed-current; `NG-DARK-01` remains open only for the native-dist **{len(residual)}-token / {residual_uses}-use historical residual**. `NG-INLINE-01` and `NG-SEO-01` remain open independently.',
+              nxt, count=1)
+          nxt = re.sub(
+              r'- PR #151 \(`verify/nagornaya-dark-current-residual-20260804`\).*',
+              '- PR #152 (`verify/nagornaya-dark-native-dist-authority-20260804`) is the active authority-correction lane; final scope is matrix, handoff and paired reverify only. PR #151 is merged and superseded only for legacy-shadow token counts.',
+              nxt, count=1)
+          nxt = re.sub(
+              r'1\. Merge AuditRepo PR #151.*?\n2\. Use only.*?\n3\.',
+              f'1. Merge AuditRepo PR #152 only after exact-head validator, matrix coverage and repository-history forensic checks pass; preserve all disjoint lanes.\n2. Use only the native-dist **{len(residual)}-token / {residual_uses}-use historical `NG-DARK-01` residual** for browser verification or bounded Product repair; do not use PR #151 legacy-shadow counts, recreate fixed `NG-BODY-01`, or promote ambient tokens without evidence.\n3.',
+              nxt, count=1, flags=re.S)
+          next_path.write_text(nxt, encoding='utf-8')
+
+          for path in (reverify_path, matrix_path, next_path):
+              if '{{NATIVE_DIST_INVENTORY}}' in path.read_text(encoding='utf-8'):
+                  raise SystemExit(f'placeholder remains: {path}')
+          print(f'native-dist authority: historical={len(historical_tokens)}/{hist_uses}, covered={len(covered)}/{covered_uses}, residual={len(residual)}/{residual_uses}, ambient-unclassified={len(ambient_missing)}/{ambient_missing_uses}')
+          PY
+
+      - name: Remove Product checkout and temporary executor
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .source-product
+          rm -f .github/workflows/tmp-nagornaya-native-dist-authority.yml
+
+      - name: Validate bounded canonical transaction
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 scripts/check_matrix_coverage.py --strict
+          test "$(git diff --name-only | sort)" = "$(printf '%s\n' \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md | sort)"
+          grep -q 'ЗАКРЫТО (213)' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -q 'P1 — ОТКРЫТО (70)' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          grep -q 'Всего открыто (матрица).*145' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          ! grep -R -n -E 'TTS-DL-|VOSK|tts-deep' \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md
+
+      - name: Commit self-cleaned canonical correction
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          git diff --cached --quiet && { echo 'No canonical correction generated'; exit 1; }
+          git commit -m 'audit(gb): correct Nagornaya dark authority to native dist'
+          git push origin HEAD:verify/nagornaya-dark-native-dist-authority-20260804
