@@ -29,7 +29,7 @@ The chapter-three hero contrast drift is another manifestation of the same incom
 
 This transaction does not close `NG-STRUCT-01`, `NG-DARK-01`, `NG-VIS-04`, or any other Nagornaya content/theme finding. It performs no Product mutation and makes no production claim.
 
-## Proposed canonical arithmetic
+## Canonical arithmetic applied by this transaction
 
 - Canonical IDs: **358**
 - Closed: **199 → 203**
