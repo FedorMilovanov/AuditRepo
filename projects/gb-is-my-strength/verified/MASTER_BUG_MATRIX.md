@@ -21,7 +21,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (218)
+## ✅ ЗАКРЫТО (219)
 
 | ID | Описание | Коммит |
 |---|---|---|
@@ -154,6 +154,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 | D-8 | ✅ **STALE-ON-CURRENT-HEAD / FIXED 2026-08-04.** Exact `f9d01207` `.github/workflows/deploy.yml` `push.paths` is now `['**']` (all files), introduced by the build-once release PR #370 / `cd4b7706` (already closed as `CI-BUILD-VALIDATION-DUPLICATION`). Doc-only `*.md` changes therefore **do** trigger deploy readiness, so the historical «paths не включает `*.md`» exclusion claim is obsolete. No Product mutation or production claim. | `cd4b7706` PR#370; `f9d01207` |
 | GATE-P1-01 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Exact `f9d01207`: `maps:validate` (`validate-map-routes.js`) now enforces stages[] non-empty, duplicate place/story ids, finite + SVG-range-bounded coordinates (x −250..2200, y −250..1600), stage membership, signature records, photos src/alt, and route meta; `smoke:maps` (`map-browser-smoke.js`) is a real Playwright witness capturing `console` errors + `pageerror` (JS crashes), asserting route visual, signature, story flyTo, sci tab, keyboard, Hebrew, overflow and map width, and fails on any problem. The historical «false-green maps:validate/smoke:maps» claim is therefore not reproducible on the exact head. No Product mutation, browser, production or TTS claim. | `f9d01207` |
 | HUB-AUDIT-COUNT-DRIFT | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-04.** Exact `f9d01207`: `validate-map-routes.js` `hasGovernedAuditPendingDesign()` derives the Karty hub audit/published counts from the governed inventory (`getKartyHubInventory`, `karty-hub-inventory.cjs`) which computes `auditSlugs = routeSlugs.filter(!publishedSet.has)`, so the count is generated from `route.json` publication statuses as the row recommended. The check uses `sameStringSet(missingIds, inventory.auditSlugs)` and asserts rendered `audit.data`/`audit.visible` equal `inventory.auditCount`, removing the hardcoded exact-integer `== missingCount` drift that broke on the 11th map. Fix commit `efaf2a51b` (#669, "derive audit count from route inventory"). No Product mutation or production claim. | `efaf2a51` PR#669 |
+| NF-SPEEDSLOT-4TH-COPY | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-04.** Exact `f9d01207` `GillSeriesRail.astro` no longer contains any inline `initGillRailSpeedSlot` or a speed-slot swap: commit `980c63715` (#72, canonical rail hamburger/search, speed-bloom migration) removed it and the rail now drives the canonical `initPlayExpand()` `.gb-ember-expand` panel (same as single articles). The shared `_shared/speedSlot.ts` is imported only by `HermenevtikaMobileBar.astro`; the Gill **mobile** bar uses a distinct, documented `initGillInlineSpeedRail` mechanism (`data-fc-speed-mode="inline"`), not a copy of `initSpeedSlot`. The named desktop-rail 4th-copy residual is therefore gone. No Product mutation or production claim. | `980c6371` PR#72; `f9d01207` |
+
 | P0-CRASH-001 | `r is not defined` (highlights.js) | `bced1c69` |
 | P0-CRASH-002 | `tt is not defined` (site.js) | `ffc763bc` |
 | P0-FC-REC | Бесконечная рекурсия FC controller | `ca6a25a8` |
@@ -367,7 +369,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AR-IDX-03 | **⌘K хардкод** — на Windows/Linux показывает `⌘K` вместо `Ctrl+K`. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-03) |
 | AR-IDX-09 | **Keyboard shortcut без altKey/shiftKey guard** — `Option+K` или `Ctrl+Shift+K` тоже срабатывают. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-09) |
 
-## 🟢 P3 — ОТКРЫТО (38)
+## 🟢 P3 — ОТКРЫТО (37)
 | NG-VIS-04 | 🆕 **Нагорная P2 (→ NG-TABLE-01):** Табличная перегрузка — 8 секций без текстовых абзацев (ch.2/III/V/IX/X, ch.3/V/VII/VIII, ch.5/III). Только гриды/карточки/таблицы — нет «воздуха». ch.2 имеет 1.5x structured/text ratio. **Контентная правка — требует автора.** Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-TABLE-01 |
 
 | ID | Описание |
@@ -390,7 +392,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | D-4 | Magic z-index: `floating-cluster.css:2372/2447/2504/2697/2882`, `mobile-hotfix.css:129` — hardcoded `2102 !important`/`9999 !important` вместо `var(--z-max)`. ⚠️ `--z-*` токены **НЕ ОПРЕДЕЛЕНЫ** в проекте (см. AR-IDX-CSS-01 P1) — фикс D-4 требует определить токены сначала, потом заменить hardcoded. (⚠️ PremiumControls in-flight — согласовать) |
 | D-7 | ⬇️ Downgraded (reverify 2026-07-08): строка 3 `PremiumControlAnchor.astro` — репо-**относительная** ссылка на doc (`AuditRepo/projects/.../PremiumControls/README.md §1`), а не абсолютный внутренний путь/секрет → фактически безобидно. Косметика: убрать ссылку при случае |
 | NF-DEAD-ENHANCE-SHIM | 🆕 reverify 07-09: `enhanceGillMobileBarMarkup` мёртв для прода (bail :986 — все prod-страницы уже v4); тело (988-1047) строит `.mobile-btoc-meter`/`.mobile-icon-row`, чей CSS удалён `30bf3f5c`. Автор отложил в follow-up. `floating-cluster-controller.js:973-1048`. verified-source |
-| NF-SPEEDSLOT-4TH-COPY | 🆕 reverify 07-09: дедуп speed-slot 3-из-4 — `GillSeriesRail.astro:209` держит собственный inline `initGillRailSpeedSlot`, не импортит `_shared/speedSlot.ts` (как 2 мобильных бара + HermenevtikaRail). Рефактор-мелочь. verified-source |
 | NF-GATE-IZ5-STALE | 🆕 reverify 07-09 (инстанс GATE-MARKER-DATA-DRIFT): гейты хардкодят запрещённый маркер «Часть 1 из 5» (`premium-controls-rollout-audit.js:210`, `gill-v16-mobile-play-smoke.js:253`), но части теперь рендерят «из 3» → guard проходит вакуумно, пропустит будущий miscount. Fix идёт вместе с выносом счётчиков в data/. verified-source |
 | NF-STRANGLER-BAR-DRIFT | 🆕 reverify 07-09 (конкретика STRANGLER-HYGIENE): корневой legacy-HTML Гилла = старый 1-уровневый мобильный бар (`#mobTocBtn`, без `__label`) vs v4 в astro. Production-dist → не отдаётся, но дрейфует. verified-source |
 | NEW-HARDTEXTS-CSP-MISSING-HFCDN | 🆕 reverify 07-09: `hard-texts/index.astro:122` connect-src без `*.aws.cdn.hf.co` (единственный astro-файл без него из 37). Инертно — на hard-texts нет кнопки Listen; выровнять для консистентности. verified-source |
@@ -469,18 +470,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 218 closed + 140 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 358 canonical = 219 closed + 139 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 218 |
+| Закрыто (fixed) | 219 |
 | **P0 открыто** | **0** |
 | P1 открыто | 69 |
 | P2 открыто | 26 |
-| P3 открыто | 38 |
+| P3 открыто | 37 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **140** |
+| **Всего открыто (матрица)** | **139** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -493,6 +494,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 - Closed `HUB-AUDIT-COUNT-DRIFT` as FIXED-CURRENT / SOURCE VERIFIED: `validate-map-routes.js` `hasGovernedAuditPendingDesign()` derives the hub audit/published counts from the governed inventory (`getKartyHubInventory`), computing `auditSlugs = routeSlugs.filter(!publishedSet.has)` from `route.json` publication statuses (PR #669 / `efaf2a51b`), and asserts rendered counts equal `inventory.auditCount`, removing the hardcoded `== missingCount` integer drift that broke on the 11th map.
 - Re-confirmed still-open (no count change): `AR-IDX-07` (home h1 `tabindex=-1`, skip-link to `#main-content` not h1), `AR-IDX-CSS-02` (`.home-v20{overflow-x:hidden}` still clips absolute `.h-scripture-bg`), `AR-IDX-CSS-03` (`h-reveal:not(.h-in){animation:h-reveal-fallback 0s 3s forwards}` 3s fallback still present).
 - Canonical arithmetic moved from **217 closed / 141 open** to **218 closed / 140 open**; P2 moved from **27** to **26**. No Product mutation or production claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-e-karty-hub.md`.
+
+### 2026-08-04 — Wave F Gill rail speed-slot dedup closure @ exact Product `f9d01207`
+- Closed `NF-SPEEDSLOT-4TH-COPY` as FIXED-CURRENT / SOURCE VERIFIED: exact `GillSeriesRail.astro` no longer contains `initGillRailSpeedSlot` or a custom speed-slot swap; commit `980c63715` (#72, speed-bloom migration) removed it and the rail drives the canonical `initPlayExpand()` `.gb-ember-expand` panel. Shared `_shared/speedSlot.ts` is now imported only by `HermenevtikaMobileBar.astro`; the Gill mobile bar uses a distinct documented `initGillInlineSpeedRail` mechanism, not a copy of `initSpeedSlot`.
+- Re-confirmed still-open (no count change): `NF-DEAD-ENHANCE-SHIM` (enhanceGillMobileBarMarkup bail remains), `NF-GATE-IZ5-STALE`/`GATE-MARKER-DATA-DRIFT`, `NF-STRANGLER-BAR-DRIFT`, `D-7` (PremiumControlAnchor repo-relative comment persists), `AUDIT-P2-WORKFLOWS-CHECK-GAP` (regex/capability, no YAML `if:` topology), `AR-IDX-04` (Astro nav still lacks `h-nav-fav`), `QUAL-P1-06` (24 map-engine timers), `RIVER-P1-01/02/03/04` (no `id="waterRipple"` def, `feDisplacementMap` only in comment), `GATE-P1-03`, `DATA-P1-03`.
+- Canonical arithmetic moved from **218 closed / 140 open** to **219 closed / 139 open**; P3 moved from **38** to **37**. No Product mutation or production claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-f-gill-rail.md`.
 
 ### 2026-08-04 — Nagornaya refined Chromium dark-theme narrowing @ `f9d01207`
 - Refined production-like Chromium measured all nine native routes at desktop/mobile and light/dark: 36/36 observations, zero meaningful errors.
