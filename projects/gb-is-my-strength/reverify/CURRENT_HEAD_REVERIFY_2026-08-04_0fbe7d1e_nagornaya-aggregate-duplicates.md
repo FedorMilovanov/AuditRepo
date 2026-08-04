@@ -5,6 +5,7 @@
 - Canonical findings: `NG-INLINE-02`, `NG-STRUCT-02`, `NG-MOBILE-01`
 - Current Product anchor: `0fbe7d1ead9ebd1bea867418e254da438ec63329`
 - AuditRepo base: `1445d688e50fb5b7c997ae565e27462e4c6cc1e9`
+- AuditRepo consolidation lane: PR #144
 - Current production claim: **none**
 
 ## Disposition
