@@ -2,13 +2,13 @@
 
 > **Meaningful handoff only.** The matrix is the durable verified backlog; this file is the single writer for current source head, active owner lanes and the next executable barriers.
 
-**AuditRepo base before this handoff:** `0142b93de01160b77eda71cb9fd2f72fd8a4fbdc`
+**AuditRepo base before this handoff:** `850429a299a6118db85811602fdb661b81b2296f`
 **Exact finding-disposition anchor:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
 **Current Product main:** `f9d0120718569c510833dba7a3abd68ce2f6a003`
 **Last exact production authority:** `abf1edba190280e554dfda085bef9fb6594c896d`  
 **Deployment status:** ⚠️ source/browser verification `!=` production; no same-SHA production claim for `f9d01207`.
-**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-untested-reduction.md` (latest untested-surface reduction, no count change; previous self-review `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-audit-self-review.md`; latest matrix movement remains `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-polish-discovery.md`; prior search reverifies remain `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-premium-native.md`, `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-contract-a11y.md` and `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md`; Nagornaya authority remains `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md`)
-**Canonical matrix:** **370 IDs = 213 closed + 157 open**.
+**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-untested-reduction.md` (latest search reduction; matrix movement: `...search-polish-discovery.md`; refined Nagornaya authority: `...nagornaya-dark-browser.md`).
+**Canonical matrix:** **370 IDs = 219 closed + 151 open**.
 
 ## Source convergence since the disposition anchor
 
@@ -35,37 +35,49 @@ The following Product waves are merged in `main` and must not be reimplemented:
 - `0fbe7d1ead9ebd1bea867418e254da438ec63329` — current Product main after subsequent independently merged lanes; this handoff uses it only as exact source-state authority and does not infer additional matrix dispositions.
 - `f9d0120718569c510833dba7a3abd68ce2f6a003` — Product PR #873 bounded `QUAL-P1-02` repair: Hebrew-capable font stack, isolated RTL token semantics, explicit Hebrew title boundaries and permanent source/Chromium witnesses; exact PR head `cf128cc429ccfa1c48fce4638b3f489f8dc27135` passed 11/11 workflows.
 
-Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PRs #132, #136–#141, #143–#147 and #149–#151 are merged; PR #142 was closed unmerged after its exact-row gate disproved an incorrect duplicate mapping. AuditRepo PR #152 corrects `NG-DARK-01` authority from legacy shadows to native production-like dist. This search/Scripture audit lane adds twelve verified current-source backlog rows only in AuditRepo; it makes no Product mutation, same-SHA production claim or browser pixel claim.
+Source movement does **not** change canonical AuditRepo counts by itself. AuditRepo PR #152 is merged and established native-dist source authority. AuditRepo PR #153 adds refined Chromium truth and narrows `NG-DARK-01` to 9 browser-confirmed tokens / 142 uses; counts remain unchanged. Neither lane mutates Product, touches TTS, or claims production. This reconciliation adds twelve verified current-source search/Scripture rows without Product mutation, same-SHA production claim or browser-pixel claim.
 
 ## Active canonical owner lanes
 
 ### Product repository
 
-- Product PR #875 (`lane/system-tts-deep-audit-2026-08-04`) is an unrelated TTS diagnostic lane; it does not overlap this verifier-only Nagornaya transaction.
-- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority. Native production-like dist, not legacy shadows, owns `NG-DARK-01`: 19 historical-scope tokens / 443 uses lack complete direct dark coverage. `NG-BODY-01` is current on three built body routes but remains closed only as duplicate/merged into this root. `NG-INLINE-01` and `NG-SEO-01` remain open independently.
+- Product PR #885 (`fix/nagornaya-dark-refined-repair-20260804`) is the bounded non-TTS `NG-DARK-01` repair owner for the refined **9 tokens / 142 uses** Chromium boundary. It remains draft until exact-head checks, final diff and review-thread gates pass.
+- Product PRs #875/#876 are disjoint TTS audit/repair lanes and must not be modified or absorbed by search/Nagornaya work.
+- Product `main@f9d0120718569c510833dba7a3abd68ce2f6a003` remains source authority; no same-SHA production claim exists for it.
 
 ### AuditRepo
 
-- PR #148 (`audit/tts-deep-current-head-2026-08-04`) is a disjoint one-file incoming TTS evidence lane.
-- PR #152 (`verify/nagornaya-dark-native-dist-authority-20260804`) is a disjoint authority-correction lane for `NG-DARK-01`; do not mix it with Product repairs.
-- Current AuditRepo branch `arena/019fccbd-auditrepo` carries the search/Scripture audit promotion: incoming reports, `PASS2_PROBE.json`, `SCRIPTURE_SEARCH_PROBE.json`, reverifies `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md` and `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-contract-a11y.md` `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-premium-native.md` and `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-polish-discovery.md`, repair/contract plans, and matrix count movement.
+- PR #148 is the disjoint TTS evidence lane and remains untouched.
+- PR #156 (`arena/019fccbd-auditrepo`) promotes twelve search/Scripture findings plus evidence, reverifies and bounded repair plans while preserving all six current-main closure dispositions.
 
 ## Current counts
 
 - P0: 0
-- P1: 73
-- P2: 35
-- P3: 42
+- P1: 72
+- P2: 32
+- P3: 40
 - Refactoring: 4
 - AuditRepo: 3
-- Total open: 157
-- Closed: 213
+- Total open: 151
+- Closed: 219
+
+## Wave A closure this handoff
+
+`NG-CSS-01` was closed as DUPLICATE/MERGED into open root `NG-DARK-01` after an exact-HEAD source reverify at `f9d01207`: `nagornaya/tw.min.css` (34,079 bytes) still has 0 `html.dark` selectors and the row is the architecture-level statement of `NG-DARK-01`'s defect. The original `mobile-hotfix.css`-only attribution is superseded by the current `nagornaya-mobile-toc.css` dark-remap owner. P1 70→69, closed 213→214, open 145→144. No Product mutation, browser, production or TTS claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-a-source-cluster.md`.
+
+## Wave B closure this handoff
+
+`D-21` was closed as FIXED-CURRENT / SOURCE VERIFIED at `f9d01207`: `js/glossary.js` contains **0** `innerHTML` and the unified `render()`/`inline()` allowlist parser builds only `<em>` nodes via `createElement`/`createTextNode` for both render paths, removing the dual-renderer literal-`<em>` inconsistency and the innerHTML-from-JSON XSS surface (commit `d9303986` #683 is an ancestor). P2 29→28, closed 214→215, open 144→143. `MAP-P1-20` was narrowed: `route.json` is no longer SW-cached (matches no fetch-handler branch), so only the unversioned `map-engine.js` `cacheFirst` residual remains (repair = give that one engine file a `?v=` revision). No Product mutation, browser, production or TTS claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-b-glossary-closure.md`.
+
+## Wave C closure this handoff
+
+`D-8` was closed as STALE-ON-CURRENT-HEAD / FIXED at `f9d01207`: `deploy.yml` `push.paths` is now `['**']` (build-once PR #370), so doc-only `*.md` changes DO trigger deploy readiness. `NEW-OG-SIZE-PARAM` was narrowed: `seo-audit.js` now validates against a shared approved-profiles allowlist (1200×630 / 1200×675, PR #636), superseding the hardcoded-size half, but the allowlist is global, not per-route. P3 39→38, closed 215→216, open 143→142. No Product mutation, browser, production or TTS claim. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_wave-c-control-plane.md`.
 
 ## Next meaningful work
 
-1. For search repairs, start with `SEARCH-P1-03`/`SEARCH-P1-04`: make the Scripture tab truthful and generate a site-occurrence Scripture index before claiming exact Bible search. Use `working/SEARCH_SCRIPTURE_REPAIR_PLAN_2026-08-04.md` and `working/SEARCH_SCRIPTURE_INDEX_CONTRACT_SPEC_2026-08-04.md`.
-2. `SEARCH-P1-01` needs a Product decision/guard: global command palette on every public searchable route, or explicit owner exceptions for local-only app/tool routes. `SEARCH-P2-09` needs either real `/?q=` SearchAction hydration or SearchAction removal/narrowing; `SEARCH-P2-10` needs a single guarded ARIA pattern; `SEARCH-P2-11`/`SEARCH-P2-12` require premium-native modal/touch/focus upgrades (top layer, focus trap, visible close, 44px shared controls). P3 polish rows (`SEARCH-P3-01`/`02`/`03`) should be bundled into the same search UX repair if touching labels/results/copy behavior. Self-review `PASS7_SELF_REVIEW` recommends no demotions, but `SEARCH-P2-11` must remain framed as source/CSS top-layer risk until browser-proven. Pass 8 reduced untested areas to five real-browser/owner-decision buckets; do not add more matrix rows for telemetry/no-JS/dependency observations without stronger owner scope.
-3. Preserve `SEARCH-SCRIPTURE-BROKEN` as historically closed; do not reopen it. The new rows are higher-standard exact-reference/site-occurrence/corpus defects.
-4. Use only the native production-like dist residual (19 tokens / 443 uses) for future `NG-DARK-01` browser verification; do not repair from PR #150/#151 legacy authority claims.
-5. `QUAL-P1-06`, narrowed `QUAL-P1-09`, and `MAP-P1-20` remain confirmed Product candidates.
-6. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence.
+1. Merge AuditRepo PR #156 only after exact-head validator, matrix coverage, repository-history forensic, final-diff and review-thread gates pass.
+2. Then finish Product PR #885 against only the refined `NG-DARK-01` boundary (**9 tokens / 142 uses**), run exact-head browser/build/static gates, merge safely, and close it in a separate AuditRepo transaction.
+3. After the Nagornaya closure, start the bounded search repair sequence with `SEARCH-P1-03`/`SEARCH-P1-04`: truthful Scripture-tab semantics plus a generated `BibleRef → pages/anchors/context/topics` site-occurrence index. Use `working/SEARCH_SCRIPTURE_REPAIR_PLAN_2026-08-04.md` and `working/SEARCH_SCRIPTURE_INDEX_CONTRACT_SPEC_2026-08-04.md`.
+4. Preserve `SEARCH-SCRIPTURE-BROKEN` as historically closed; the new rows own higher-standard exact-reference/site-occurrence/corpus defects.
+5. `SEARCH-P1-01`, `SEARCH-P2-09`–`12`, `QUAL-P1-06`, narrowed `QUAL-P1-09`, and `MAP-P1-20` remain independent candidates; perform collision pre-flight before mutation.
+6. Preserve Single-Writer-Per-Fact and make no production claim without same-SHA live evidence. TTS lanes remain excluded.
