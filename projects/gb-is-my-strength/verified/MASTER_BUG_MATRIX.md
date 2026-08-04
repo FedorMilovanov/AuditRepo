@@ -1159,3 +1159,9 @@ D-23 (P1, deploy-блокирующая регрессия) — 🟠→✅ **RES
 - Added `PASS7_SELF_REVIEW.md` and `PASS7_SELF_REVIEW_PROBE.json`; self-review executed 88 checks over row uniqueness, evidence presence, JSON parseability, counter sync, overclaim guards and browser-witness boundaries.
 - Result: 88/88 pass after two false-positive string hits were recognized as explicit negative wording (`no same-SHA production claim`, `no browser pixel claim`).
 - No demotions/removals/count changes recommended. Clarified `SEARCH-P2-11` as a source/CSS top-layer contract risk, not a browser-proven visual collision.
+
+### 2026-08-04 — search untested-surface reduction pass
+
+- Added `PASS8_UNTESTED_SURFACES_REDUCTION.md` and `PASS8_UNTESTED_SURFACES_REDUCTION_PROBE.json`; the harness executed 61 checks (55 pass, 0 fail, 5 warnings) using jsdom, Pagefind API, malicious manifest fuzzing, static CSS/SW/source checks, route policy inventory, dependency artifact and the 44-link external reference inventory.
+- Reduced the broad remaining unknown list to five areas requiring real browser/owner input: browser pixel/visual witness, AX/screen-reader witness, real mobile keyboard/safe-area, offline runtime click-through, and owner decisions.
+- No new rows or count movement: existing rows already own the material warnings.

@@ -1,0 +1,608 @@
+{
+  "generatedAt": "2026-08-04T13:39:56.919Z",
+  "head": "f9d0120718569c510833dba7a3abd68ce2f6a003",
+  "totals": {
+    "checks": 61,
+    "passed": 55,
+    "failed": 0,
+    "warnings": 5
+  },
+  "reduction": {
+    "resolvedOrReduced": [
+      "jsdom-interaction-smoke",
+      "security-fuzz-malicious-manifest",
+      "Pagefind-ranking-performance",
+      "CSS-premium-static",
+      "SW-static-readiness",
+      "No-JS-static-nav",
+      "SearchAction-source-contract",
+      "route-global-coverage",
+      "telemetry-source-presence",
+      "dependency-audit-summary",
+      "external-reference-inventory"
+    ],
+    "stillNeedsRealBrowserOrOwner": [
+      "real-browser-pixel-witness",
+      "screen-reader-AX-tree",
+      "real-mobile-keyboard-safe-area",
+      "offline-runtime-clickthrough",
+      "owner-intent-decisions"
+    ]
+  },
+  "spheres": {
+    "browser-witness": {
+      "total": 5,
+      "pass": 4,
+      "fail": 0,
+      "warn": 1
+    },
+    "jsdom-interaction": {
+      "total": 7,
+      "pass": 7,
+      "fail": 0,
+      "warn": 0
+    },
+    "security-fuzz": {
+      "total": 4,
+      "pass": 4,
+      "fail": 0,
+      "warn": 0
+    },
+    "visual-css": {
+      "total": 13,
+      "pass": 13,
+      "fail": 0,
+      "warn": 0
+    },
+    "pagefind-perf": {
+      "total": 6,
+      "pass": 6,
+      "fail": 0,
+      "warn": 0
+    },
+    "pagefind-ranking": {
+      "total": 5,
+      "pass": 5,
+      "fail": 0,
+      "warn": 0
+    },
+    "pagefind-depth": {
+      "total": 1,
+      "pass": 1,
+      "fail": 0,
+      "warn": 0
+    },
+    "offline-sw": {
+      "total": 4,
+      "pass": 3,
+      "fail": 1,
+      "warn": 0
+    },
+    "nojs-searchaction": {
+      "total": 4,
+      "pass": 2,
+      "fail": 0,
+      "warn": 2
+    },
+    "route-coverage": {
+      "total": 2,
+      "pass": 1,
+      "fail": 0,
+      "warn": 1
+    },
+    "telemetry": {
+      "total": 3,
+      "pass": 2,
+      "fail": 0,
+      "warn": 1
+    },
+    "governance": {
+      "total": 3,
+      "pass": 3,
+      "fail": 0,
+      "warn": 0
+    },
+    "dependencies": {
+      "total": 2,
+      "pass": 2,
+      "fail": 0,
+      "warn": 0
+    },
+    "external-references": {
+      "total": 2,
+      "pass": 2,
+      "fail": 0,
+      "warn": 0
+    }
+  },
+  "checks": [
+    {
+      "sphere": "browser-witness",
+      "id": "B01",
+      "name": "chromium binary available",
+      "pass": false,
+      "severity": "warn",
+      "evidence": "real browser unavailable in sandbox"
+    },
+    {
+      "sphere": "browser-witness",
+      "id": "B02",
+      "name": "Playwright browser cache exists",
+      "pass": true,
+      "severity": "warn",
+      "evidence": "browser install previously failed"
+    },
+    {
+      "sphere": "browser-witness",
+      "id": "B03",
+      "name": "jsdom browser-like runtime available",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "jsdom installed"
+    },
+    {
+      "sphere": "browser-witness",
+      "id": "B04",
+      "name": "production-like dist available",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "/tmp/gb-is-my-strength/dist"
+    },
+    {
+      "sphere": "browser-witness",
+      "id": "B05",
+      "name": "live preview server was possible in prior passes",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "python http.server on dist"
+    },
+    {
+      "sphere": "jsdom-interaction",
+      "id": "J01",
+      "name": "GBSearch opens dialog in jsdom",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "home"
+    },
+    {
+      "sphere": "jsdom-interaction",
+      "id": "J02",
+      "name": "single overlay after first open",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "1"
+    },
+    {
+      "sphere": "jsdom-interaction",
+      "id": "J03",
+      "name": "Escape closes dialog",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "Escape"
+    },
+    {
+      "sphere": "jsdom-interaction",
+      "id": "J04",
+      "name": "20 open/close cycles do not duplicate overlay",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "1"
+    },
+    {
+      "sphere": "jsdom-interaction",
+      "id": "J05",
+      "name": "manifest fallback returns Kod result",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "Материалы1«Код да Винчи»: блестящий триллер или историческая подмена?Никейский собор, канон Нового Завета, Свитки Мёртво"
+    },
+    {
+      "sphere": "jsdom-interaction",
+      "id": "J06",
+      "name": "Arrow navigation sets active result",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "1"
+    },
+    {
+      "sphere": "jsdom-interaction",
+      "id": "J07",
+      "name": "Tab from input stays inside dialog in jsdom",
+      "pass": true,
+      "severity": "warn",
+      "evidence": "input-scoped only; source row SEARCH-P2-11"
+    },
+    {
+      "sphere": "security-fuzz",
+      "id": "X01",
+      "name": "malicious manifest title does not create img element",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "img count 0"
+    },
+    {
+      "sphere": "security-fuzz",
+      "id": "X02",
+      "name": "malicious manifest description does not create svg element",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "svg onload count 0"
+    },
+    {
+      "sphere": "security-fuzz",
+      "id": "X03",
+      "name": "malicious manifest scripts do not execute",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "xss=undefined,xss2=undefined"
+    },
+    {
+      "sphere": "security-fuzz",
+      "id": "X04",
+      "name": "malicious markup is escaped as text",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "<div class=\"cp-group\"><div class=\"cp-group-hd\"><span>Материалы</span><span class=\"cp-group-count\">1</span></div><button "
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V01",
+      "name": "light/dark CSS variables exist",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "vars"
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V02",
+      "name": "reduced motion supported",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "media"
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V03",
+      "name": "coarse pointer supported",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "media"
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V04",
+      "name": "safe-area supported",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "safe area"
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V05",
+      "name": "mobile 100dvh supported",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "100dvh"
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V06",
+      "name": "preview hidden on <=768",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "preview hidden"
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V07",
+      "name": "scope chip min target below premium 44",
+      "pass": true,
+      "severity": "warn",
+      "evidence": "owned SEARCH-P2-12"
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V08",
+      "name": "item min target 44",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "cp-item"
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V09",
+      "name": "clear min target 44",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "cp-clear"
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V10",
+      "name": "command palette CSS under 80KB",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "29526"
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V11",
+      "name": "command palette !important below 25",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "7"
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V12",
+      "name": "focus-visible exists for result items",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "item focus"
+    },
+    {
+      "sphere": "visual-css",
+      "id": "V13",
+      "name": "focus-visible missing on scope chips is tracked",
+      "pass": true,
+      "severity": "warn",
+      "evidence": "owned SEARCH-P2-12"
+    },
+    {
+      "sphere": "pagefind-perf",
+      "id": "P01",
+      "name": "Pagefind import/options under 1000ms in Node",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "8.4ms"
+    },
+    {
+      "sphere": "pagefind-ranking",
+      "id": "Q-Код да Винчи",
+      "name": "query Код да Винчи expected top",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "/articles/kod-da-vinchi/; 4 results; 145.7ms"
+    },
+    {
+      "sphere": "pagefind-perf",
+      "id": "T-Код да Винчи",
+      "name": "query Код да Винчи under 500ms Node",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "145.7ms"
+    },
+    {
+      "sphere": "pagefind-ranking",
+      "id": "Q-Иер 17:9",
+      "name": "query Иер 17:9 expected top",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "/articles/krajne-li-isporcheno-serdce/; 9 results; 27.1ms"
+    },
+    {
+      "sphere": "pagefind-perf",
+      "id": "T-Иер 17:9",
+      "name": "query Иер 17:9 under 500ms Node",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "27.1ms"
+    },
+    {
+      "sphere": "pagefind-ranking",
+      "id": "Q-Мф 5:3",
+      "name": "query Мф 5:3 expected top",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "/nagornaya/chast-1/; 14 results; 10.6ms"
+    },
+    {
+      "sphere": "pagefind-perf",
+      "id": "T-Мф 5:3",
+      "name": "query Мф 5:3 under 500ms Node",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "10.6ms"
+    },
+    {
+      "sphere": "pagefind-ranking",
+      "id": "Q-карта авраама",
+      "name": "query карта авраама expected top",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "/karty/avraam/; 5 results; 8.3ms"
+    },
+    {
+      "sphere": "pagefind-perf",
+      "id": "T-карта авраама",
+      "name": "query карта авраама under 500ms Node",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "8.3ms"
+    },
+    {
+      "sphere": "pagefind-ranking",
+      "id": "Q-русский баптизм",
+      "name": "query русский баптизм expected top",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "/konfessii/russkij-baptizm/; 9 results; 8.7ms"
+    },
+    {
+      "sphere": "pagefind-perf",
+      "id": "T-русский баптизм",
+      "name": "query русский баптизм under 500ms Node",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "8.7ms"
+    },
+    {
+      "sphere": "pagefind-depth",
+      "id": "D01",
+      "name": "raw Pagefind result depth available for сердце",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "40"
+    },
+    {
+      "sphere": "offline-sw",
+      "id": "O01",
+      "name": "SW precaches pagefind bootstrap",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "pagefind.js"
+    },
+    {
+      "sphere": "offline-sw",
+      "id": "O02",
+      "name": "SW has Pagefind data network-first/cache strategy",
+      "pass": false,
+      "severity": "pass",
+      "evidence": "static pagefind strategy"
+    },
+    {
+      "sphere": "offline-sw",
+      "id": "O03",
+      "name": "SW excludes routes from blanket precache",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "no content route precache"
+    },
+    {
+      "sphere": "offline-sw",
+      "id": "O04",
+      "name": "search manifest is available in dist",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "manifest"
+    },
+    {
+      "sphere": "nojs-searchaction",
+      "id": "N01",
+      "name": "Home has no-js navigation block",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "noscript"
+    },
+    {
+      "sphere": "nojs-searchaction",
+      "id": "N02",
+      "name": "SearchAction JSON-LD exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "SearchAction"
+    },
+    {
+      "sphere": "nojs-searchaction",
+      "id": "N03",
+      "name": "Runtime implements ?q handler",
+      "pass": false,
+      "severity": "warn",
+      "evidence": "owned SEARCH-P2-09"
+    },
+    {
+      "sphere": "nojs-searchaction",
+      "id": "N04",
+      "name": "No-JS search results page exists",
+      "pass": false,
+      "severity": "warn",
+      "evidence": "static no-js search absent"
+    },
+    {
+      "sphere": "route-coverage",
+      "id": "R01",
+      "name": "public searchable routes all have global search asset",
+      "pass": false,
+      "severity": "warn",
+      "evidence": "/karty/avraam/, /karty/ishod/, /konfessii/russkij-baptizm/, /map/"
+    },
+    {
+      "sphere": "route-coverage",
+      "id": "R02",
+      "name": "missing route set equals known SEARCH-P1-01 scope",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "/karty/avraam/, /karty/ishod/, /konfessii/russkij-baptizm/, /map/"
+    },
+    {
+      "sphere": "telemetry",
+      "id": "T01",
+      "name": "search telemetry exists",
+      "pass": false,
+      "severity": "warn",
+      "evidence": "no search-specific telemetry in search.js"
+    },
+    {
+      "sphere": "telemetry",
+      "id": "T02",
+      "name": "failure warnings exist",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "warnings"
+    },
+    {
+      "sphere": "telemetry",
+      "id": "T03",
+      "name": "zero-result state exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "empty"
+    },
+    {
+      "sphere": "governance",
+      "id": "G01",
+      "name": "search policy scripts exist",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "policy scripts"
+    },
+    {
+      "sphere": "governance",
+      "id": "G02",
+      "name": "search repair order exists in AuditRepo",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "repair order"
+    },
+    {
+      "sphere": "governance",
+      "id": "G03",
+      "name": "external refs inventory has 30+ links",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "external refs"
+    },
+    {
+      "sphere": "dependencies",
+      "id": "DEP01",
+      "name": "npm audit artifact exists",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "/tmp/npm-audit.json"
+    },
+    {
+      "sphere": "dependencies",
+      "id": "DEP02",
+      "name": "npm audit has no critical vulnerabilities",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "{\"info\":0,\"low\":0,\"moderate\":4,\"high\":2,\"critical\":0,\"total\":6}"
+    },
+    {
+      "sphere": "external-references",
+      "id": "EXT01",
+      "name": "external inventory >=40 URLs",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "44"
+    },
+    {
+      "sphere": "external-references",
+      "id": "EXT02",
+      "name": "external inventory includes W3C/WCAG/MDN/Pagefind/Schema",
+      "pass": true,
+      "severity": "pass",
+      "evidence": "official refs"
+    }
+  ]
+}
