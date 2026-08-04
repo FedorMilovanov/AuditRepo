@@ -1,0 +1,201 @@
+name: Complete Karty profile status narrowing
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: complete-karty-profile-status-pr-140
+  cancel-in-progress: false
+
+jobs:
+  complete:
+    if: github.event.pull_request.number == 140
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout verifier branch
+        uses: actions/checkout@v4
+        with:
+          ref: verify/karty-profile-status-duplicate-20260804
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Synchronize current AuditRepo main
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main --prune
+          git merge --no-edit origin/main
+
+      - name: Apply bounded canonical transaction
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          matrix_path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          next_path = Path('projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md')
+          reverify_path = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-profile-status-duplicate.md')
+
+          matrix = matrix_path.read_text(encoding='utf-8')
+
+          closed_marker = """## ✅ ЗАКРЫТО (197)
+
+          | ID | Описание | Коммит |
+          |---|---|---|
+          """
+          closed_rows = """## ✅ ЗАКРЫТО (198)
+
+          | ID | Описание | Коммит |
+          |---|---|---|
+          | QUAL-P2-01 | ✅ **DUPLICATE / MERGED INTO `QUAL-P1-09` 2026-08-04.** This row describes the same holding/noindex route-profile status drift as the narrowed P1 owner. Current Product `0fbe7d1ead9ebd1bea867418e254da438ec63329` disproves the broader “all profiles” wording because the production Avraam profile legitimately uses `production-dist`, while the Shoftim profile still combines `currentStatus: \"production-dist\"` with an explicit holding/noindex contract. The factual residual remains open only as narrowed `QUAL-P1-09`; no Product mutation or production claim. | `0fbe7d1e` |
+          """
+          if matrix.count(closed_marker) != 1:
+              raise SystemExit('closed section marker drifted')
+          matrix = matrix.replace(closed_marker, closed_rows, 1)
+
+          old_p1 = '| QUAL-P1-09 | 🆕 **Karty P1:** Все профили `data/route-profiles/karty-*.json` указывают `currentStatus: "production-dist"`, создавая рассинхрон с `route.json` | verified-source (32ae0d7d) |\n'
+          new_p1 = '| QUAL-P1-09 | ⚠️ **PARTIAL / NARROWED 2026-08-04:** Не все `production-dist` значения ошибочны; фактический остаток — восемь holding/noindex Karty-профилей всё ещё объявляют `currentStatus: "production-dist"` вопреки собственной непроизводственной publication-семантике. Требуется определить канонический status owner и обновить профили вместе с validators. | current source `0fbe7d1e`; `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-profile-status-duplicate.md` |\n'
+          if matrix.count(old_p1) != 1:
+              raise SystemExit('QUAL-P1-09 row drifted')
+          matrix = matrix.replace(old_p1, new_p1, 1)
+
+          old_p2 = '| QUAL-P2-01 | 🆕 **Karty P2:** Профили маршрутов 8 holding-карт в `data/route-profiles/karty-*.json` указывают `currentStatus: "production-dist"`, вызывая дрейф статусов | verified-source (32ae0d7d) |\n'
+          if matrix.count(old_p2) != 1:
+              raise SystemExit('QUAL-P2-01 row drifted')
+          matrix = matrix.replace(old_p2, '', 1)
+
+          replacements = {
+              '## 🟡 P2 — ОТКРЫТО (34)': '## 🟡 P2 — ОТКРЫТО (33)',
+              '| Закрыто (fixed) | 197 |': '| Закрыто (fixed) | 198 |',
+              '| P2 открыто | 34 |': '| P2 открыто | 33 |',
+              '| **Всего открыто (матрица)** | **161** |': '| **Всего открыто (матрица)** | **160** |',
+              '| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; duplicate-river implementation commit `39df9ed0e650cc08f93c14145cb592868f0c80e4`; source-only disposition, no current production claim). |': '| Source verification anchor | `0fbe7d1ead9ebd1bea867418e254da438ec63329` (current source reverify; route-profile status residual narrowed and duplicate merged; no Product mutation or current production claim). |',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_avraam-river-duplicate.md` |': '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-profile-status-duplicate.md` |',
+          }
+          for old, new in replacements.items():
+              if matrix.count(old) != 1:
+                  raise SystemExit(f'matrix marker drifted: {old}')
+              matrix = matrix.replace(old, new, 1)
+
+          stats_pattern = r'## Статистика \(обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 197 closed \+ 161 open\)'
+          stats_replacement = '## Статистика (обновлено 2026-08-04: disposition anchor `0fbe7d1e`; last exact production `abf1edba`; 358 canonical = 198 closed + 160 open)'
+          matrix, count = re.subn(stats_pattern, stats_replacement, matrix, count=1)
+          if count != 1:
+              raise SystemExit('matrix statistics heading drifted')
+
+          session_marker = '## Session log (append-only)\n\n'
+          session_entry = """## Session log (append-only)
+
+          ### 2026-08-04 — Karty route-profile status duplicate narrowing @ current source `0fbe7d1e`
+          - Narrowed `QUAL-P1-09`: the current residual is eight holding/noindex Karty profiles still declaring `currentStatus: \"production-dist\"`; the broader claim that all Karty profiles are wrong is disproved by the legitimate production Avraam profile.
+          - Closed `QUAL-P2-01` as DUPLICATE/MERGED into the narrowed P1 owner.
+          - Current Shoftim profile combines `production-dist` with an explicit holding/noindex reason, proving the residual without choosing a replacement vocabulary.
+          - Canonical arithmetic moved from **197 closed / 161 open** to **198 closed / 160 open**; P2 moved from **34** to **33**. P1 remains **73**. No Product mutation or production claim.
+
+          """
+          if matrix.count(session_marker) != 1:
+              raise SystemExit('session log marker drifted')
+          matrix = matrix.replace(session_marker, session_entry, 1)
+
+          if matrix.count('| QUAL-P1-09 |') != 1 or matrix.count('| QUAL-P2-01 |') != 1:
+              raise SystemExit('canonical profile-status ID multiplicity drift')
+          matrix_path.write_text(matrix, encoding='utf-8')
+
+          nxt = next_path.read_text(encoding='utf-8')
+          next_replacements = {
+              '**AuditRepo base before this handoff:** `d7daa52214ac6995bb4789a33634ff9cb86a6ccc`': '**AuditRepo base before this handoff:** `da25e2c53388c6639e0add7b01e7521cb82a146e`',
+              '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_avraam-river-duplicate.md`': '**Current reverify:** `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-profile-status-duplicate.md`',
+              '**Canonical matrix:** **358 IDs = 197 closed + 161 open**.': '**Canonical matrix:** **358 IDs = 198 closed + 160 open**.',
+              '- P2: 34': '- P2: 33',
+              '- Total open: 161': '- Total open: 160',
+              '- Closed: 197': '- Closed: 198',
+          }
+          for old, new in next_replacements.items():
+              if nxt.count(old) != 1:
+                  raise SystemExit(f'NEXT marker drifted: {old}')
+              nxt = nxt.replace(old, new, 1)
+
+          old_boundary = 'Source movement does **not** change canonical AuditRepo counts by itself. PR #132, PR #136, PR #137 and PR #138 are merged and their dispositions remain bounded. AuditRepo PR #139 applies the duplicate-river transaction: `RIVER-P1-05` is fixed on current source and `DRAW-P1-02` is merged as the same root cause. The implementation commit has no attached CI run, and no current production claim is made.'
+          new_boundary = 'Source movement does **not** change canonical AuditRepo counts by itself. PR #132, PR #136, PR #137, PR #138 and PR #139 are merged and their dispositions remain bounded. AuditRepo PR #140 narrows `QUAL-P1-09` to the factual holding/noindex profile residual and merges duplicate `QUAL-P2-01`; it makes no Product mutation or production claim.'
+          if nxt.count(old_boundary) != 1:
+              raise SystemExit('NEXT source-boundary marker drifted')
+          nxt = nxt.replace(old_boundary, new_boundary, 1)
+
+          old_audit = """### AuditRepo
+
+          - PR #139 (`verify/avraam-river-duplicate-closure-20260804`) is the active canonical closure lane for `RIVER-P1-05` and duplicate `DRAW-P1-02`.
+          - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
+          """
+          new_audit = """### AuditRepo
+
+          - PR #140 (`verify/karty-profile-status-duplicate-20260804`) is the active canonical narrowing lane for `QUAL-P1-09` and duplicate `QUAL-P2-01`.
+          - Its final diff is bounded to the matrix, this handoff and the paired reverify document; it must pass exact-head validation before merge.
+          """
+          if nxt.count(old_audit) != 1:
+              raise SystemExit('NEXT AuditRepo block drifted')
+          nxt = nxt.replace(old_audit, new_audit, 1)
+
+          next_section = """## Next meaningful work
+
+          1. Merge AuditRepo PR #140 only after validator, matrix coverage and repository-history forensic checks pass on its exact final head.
+          2. Re-fetch both repositories and continue current-head harvest; `QUAL-P1-09` remains open until one bounded Product lane defines the canonical holding-profile status and updates validators.
+          3. Narrow `MAP-P1-20` rather than closing its still-current unversioned static-resource residual.
+          4. Obtain a separate same-SHA deployment/live witness when making a production claim; source evidence at `0fbe7d1e` is not production authority.
+          5. Preserve Single-Writer-Per-Fact: counts/statuses only in `verified/MASTER_BUG_MATRIX.md`; current source/deploy/next-step truth only here.
+          """
+          section_marker = '## Next meaningful work\n'
+          if nxt.count(section_marker) != 1:
+              raise SystemExit('NEXT next-work section drifted')
+          nxt = nxt[:nxt.index(section_marker)] + next_section
+          next_path.write_text(nxt, encoding='utf-8')
+
+          reverify = reverify_path.read_text(encoding='utf-8')
+          required = (
+              '### `QUAL-P1-09` — partial / narrowed',
+              '### `QUAL-P2-01` — duplicate / merged into `QUAL-P1-09`',
+              '## Proposed canonical arithmetic',
+          )
+          for marker in required:
+              if reverify.count(marker) != 1:
+                  raise SystemExit(f'reverify marker drifted: {marker}')
+          reverify = reverify.replace('## Proposed canonical arithmetic', '## Canonical arithmetic applied by this transaction', 1)
+          reverify_path.write_text(reverify, encoding='utf-8')
+          PY
+
+          rm .github/workflows/complete-karty-profile-status-duplicate.yml
+
+      - name: Validate bounded transaction
+        run: |
+          set -euo pipefail
+          git diff --check
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 -m py_compile \
+            scripts/check_matrix_coverage.py \
+            scripts/matrix_coverage_lib.py \
+            scripts/matrix_coverage_contexts.py \
+            scripts/matrix_coverage_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p "${RUNNER_TEMP}/matrix-coverage"
+          python3 scripts/check_matrix_coverage.py --verbose --json-out "${RUNNER_TEMP}/matrix-coverage/report.json"
+
+      - name: Commit canonical transaction and remove bootstrap
+        run: |
+          set -euo pipefail
+          git status --short
+          git add \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_0fbe7d1e_karty-profile-status-duplicate.md \
+            .github/workflows/complete-karty-profile-status-duplicate.yml
+          git diff --cached --check
+          git commit -m "audit(gb): narrow duplicate Karty profile status drift"
+          git push origin HEAD:verify/karty-profile-status-duplicate-20260804
