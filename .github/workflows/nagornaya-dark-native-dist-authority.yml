@@ -48,7 +48,7 @@ jobs:
           npm run strangler:build:production-like
           npm run nagornaya:visual-parity:audit
 
-      - name: Generate fail-closed native-dist correction
+      - name: Generate and reconcile native-dist authority
         shell: bash
         run: |
           git fetch origin main
@@ -56,9 +56,12 @@ jobs:
           git merge-base --is-ancestor origin/main HEAD
           test "$(git -C _product rev-parse HEAD)" = "f9d0120718569c510833dba7a3abd68ce2f6a003"
           python3 .github/tmp/nagornaya_native_dist.py
+          python3 .github/tmp/nagornaya_native_dist_reconcile.py
           rm -rf _product
           rm -f .github/workflows/nagornaya-dark-native-dist-authority.yml
+          rm -f .github/workflows/nagornaya-dark-native-dist-recovery.yml
           rm -f .github/tmp/nagornaya_native_dist.py
+          rm -f .github/tmp/nagornaya_native_dist_reconcile.py
 
       - name: Validate bounded AuditRepo transaction
         shell: bash
@@ -94,7 +97,9 @@ jobs:
             projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-native-dist.md \
             projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md \
             .github/workflows/nagornaya-dark-native-dist-authority.yml \
-            .github/tmp/nagornaya_native_dist.py
+            .github/workflows/nagornaya-dark-native-dist-recovery.yml \
+            .github/tmp/nagornaya_native_dist.py \
+            .github/tmp/nagornaya_native_dist_reconcile.py
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "audit(gb): correct Nagornaya dark authority to native dist"
