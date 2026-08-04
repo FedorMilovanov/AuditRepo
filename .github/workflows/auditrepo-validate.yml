@@ -170,6 +170,8 @@ jobs:
           python3 scripts/matrix_coverage_contexts.py --json-out reports/matrix-coverage/contexts.json --markdown-out reports/matrix-coverage/contexts.md
           node --check scripts/repository_history_forensic_audit.mjs
           node scripts/repository_history_forensic_audit.mjs --strict
+          rm -rf reports/matrix-coverage
+          rm -f reports/repository-history-forensic-audit.json reports/repository-history-forensic-audit.md
       - name: Verify candidate remains bounded
         run: |
           set -euo pipefail
