@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `d69268b27bb83fe8741159da59f9c1b038d7d9b9` (source/main merge of PR #759; exact verified PR head `33a2380d6748da26d64eb33d84ff7e588fd6e508`; no production claim). |
+| Source verification anchor | `778a218d9e6dc4c051721fc0f0fe56ee9125c797` (source/main merge of PR #812; exact verified PR head `3bd7f8a47bab65f08de45d81707cff2f6233cc55`; no production claim). |
 | Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Closure anchor `3aba5112f0fc37712e027a1ad1d8379debe54377` has no same-SHA production witness and this verifier-only wave makes no production claim. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-03_d69268b2_atlas-a11y-closure.md` |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-03_778a218d_avraam-skip-contrast.md` |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
 
@@ -21,10 +21,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (189)
+## ✅ ЗАКРЫТО (191)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| A11Y-P1-02 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM VERIFIED 2026-08-03.** Source PR #812 added one route-owned focus-reveal skip link before the full sr-only projection and targets the programmatically focusable `#stage` owner. Exact Chromium Dossier run `30807589787` on verified head `3bd7f8a47bab65f08de45d81707cff2f6233cc55` proved first-Tab focus, visible `295.125 × 44` geometry, native activation to `#stage` with hash synchronization, `tabindex="-1"`, and `304/304` expected states; artifact `8853648893`, digest `sha256:54653a134572f2c6885168dacb938c9213c687d0425f7c5ec497876bdd9d7522`. Squash merge `778a218d9e6dc4c051721fc0f0fe56ee9125c797`. No production claim. | `778a218d` PR#812; run `30807589787`; artifact `8853648893` |
+| A11Y-P1-03 | ✅ **STALE-ON-CURRENT-HEAD / SOURCE+CHROMIUM VERIFIED 2026-08-03.** The historical `2.15:1` archaeology-metadata contrast claim is not reproducible on the exact verified source head. The browser-composited Dossier witness sampled `1208` instances through ancestor backgrounds: minimum `5.084:1`, maximum `7.351:1`, invalid samples `0`, against the WCAG AA `4.5:1` threshold. Exact run `30807589787`, artifact `8853648893`, digest `sha256:54653a134572f2c6885168dacb938c9213c687d0425f7c5ec497876bdd9d7522`; source merge `778a218d9e6dc4c051721fc0f0fe56ee9125c797`. This closes only the canonical `2.15:1` claim; no all-route or production claim. | `778a218d` PR#812; run `30807589787`; artifact `8853648893` |
 | A11Y-P1-01 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM VERIFIED 2026-08-03.** Source PR #759 established one page-level heading owner during the visible intro lifecycle: the static page heading remains the sole H1 and the visual intro title is H2. The bounded Chromium accessibility witness run `30771541994` sampled the lifecycle and recorded `maxH1CountDuringIntro=1`; artifact `8840711226`, digest `sha256:bc92b51ebc665585b222bcb56d2298ba2523e7ae16d629f8b694ef0519f95fdc`. Final exact PR head `33a2380d6748da26d64eb33d84ff7e588fd6e508` also passed the 304-state Dossier witness, seven-viewport Reference Baseline, Static Projection, Overlay, Map Keyboard and all source gates before merge `d69268b27bb83fe8741159da59f9c1b038d7d9b9`. No production claim. | `d69268b2` PR#759; runs `30771541994`/`30779633089`/`30779633071` |
 | AVRAAM-P1-04 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM VERIFIED 2026-08-03.** The narrowed residual is repaired in source PR #759: the panel owns a `tablist`/`tab`/`tabpanel` relationship, `aria-selected` state, roving `tabindex`, locally owned Enter/Space activation and Arrow/Home/End focus navigation, so tab keys no longer fall through to global map navigation. Bounded Chromium witness run `30771541994` passed the ARIA pattern, roving focus, Enter, Space, numeric shortcut and ArrowRight while proving that the global tour did not activate. Final exact head `33a2380d6748da26d64eb33d84ff7e588fd6e508` passed Map Keyboard run `30779633059`, Dossier run `30779633089` (`304/304`, zero failures/warnings/errors) and Reference Baseline run `30779633071` before merge `d69268b27bb83fe8741159da59f9c1b038d7d9b9`. No production claim. | `d69268b2` PR#759; runs `30771541994`/`30779633059`/`30779633089` |
 | QUAL-P1-04 | ✅ **STALE-ON-CURRENT-HEAD / SOURCE+CHROMIUM VERIFIED 2026-08-03.** The historical delegated-click regression is not reproducible on exact source/main anchor `1944eb1b5e594d2d6b5eafa5b9889bc60c9aeef5`. Production-like Chromium opened the single-photo Цоар fixture through story `lot`: the visible trigger used the 320px thumbnail while `data-src` owned the 1280px source; the modal contained exactly one open instance and retained the exact `width=1280` URL both immediately and after 700 ms, with no reset to `width=320`. Exact workflow run `30769737659`; artifact `8840166904`, digest `sha256:eef8df91e454721ba6afdc29138e90420a1e0bfb2ee28323046348310214246a`. No production claim. | `1944eb1b` run `30769737659` artifact `8840166904` |
@@ -224,7 +226,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (81)
+## 🟠 P1 — ОТКРЫТО (79)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -261,8 +263,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 | ENGINE-P1-26 | 🆕 **Karty P1:** Поиск подсвечивает точки вне текущего сюжета, но не добавляет на них обработчик клика, делая их некликабельными | verified-browser (c2c339708252) |
 | ENGINE-P1-27 | 🆕 **Karty P1:** Нажатие Escape в модальном окне фотографии одновременно закрывает родительскую панель места | verified-browser (c2c339708252) |
 | ENGINE-P1-29 | 🆕 **Karty P1:** Двойной клик по маркеру принудительно приближает камеру до `w=450` без учёта границ сюжета, обрезая соседние места | verified-source (32ae0d7d) |
-| A11Y-P1-02 | 🆕 **Karty P1:** Текстовая sr-only версия Авраама расположена до интерактивной карты в порядке чтения без skip link | verified-source (32ae0d7d) |
-| A11Y-P1-03 | 🆕 **Karty P1:** Мелкий текст метаданных археологии (`rgba(154,162,174,.4)`) имеет контраст 2.15:1, не проходя WCAG AA (минимум 4.5:1) | verified-browser (c2c339708252) |
 | RIVER-P1-01 | 🆕 **Karty P1:** `#waterRipple` `feDisplacementMap scale="7"` деформирует береговую линию на ±7px, отрывая статичные устья рек (Киссон, Иордан, дельта Нила) от берега | verified-source (32ae0d7d) |
 | RIVER-P1-02 | 🆕 **Karty P1:** В `<defs>` файла `karty/_engine/base-geo.svg` отсутствует определение фильтра `id="waterRipple"`, хотя фильтр вызывается 4 раза | verified-source (32ae0d7d) |
 | RIVER-P1-03 | 🆕 **Karty P1:** `stroke-linecap="round"` при ширине рек 3..5px выдвигает полукруглый закругленный торец на 2.5px за конечные координаты, из-за чего река вылетает в море | verified-source (32ae0d7d) |
@@ -469,18 +469,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-03: source `1944eb1b`; last exact production `abf1edba`; 358 canonical = 187 closed + 171 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `778a218d`; last exact production `abf1edba`; 358 canonical = 191 closed + 167 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 189 |
+| Закрыто (fixed) | 191 |
 | **P0 открыто** | **0** |
-| P1 открыто | 81 |
+| P1 открыто | 79 |
 | P2 открыто | 34 |
 | P3 открыто | 47 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **169** |
+| **Всего открыто (матрица)** | **167** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -488,6 +488,13 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log (append-only)
+
+### 2026-08-04 — Avraam skip navigation and contrast disposition @ source merge `778a218d`
+- Source PR #812 merged exact verified head `3bd7f8a47bab65f08de45d81707cff2f6233cc55` as `778a218d9e6dc4c051721fc0f0fe56ee9125c797`.
+- Closed `A11Y-P1-02` as FIXED-CURRENT: exact Chromium Dossier run `30807589787` proved one focus-reveal skip link, first-Tab focus, visible `295.125 × 44` geometry, native activation to programmatically focusable `#stage`, and `304/304` expected states.
+- Closed `A11Y-P1-03` as STALE-ON-CURRENT-HEAD: `1208` browser-composited contrast samples had minimum `5.084:1`, maximum `7.351:1`, and zero invalid samples against the `4.5:1` threshold.
+- Exact evidence artifact `8853648893`, digest `sha256:54653a134572f2c6885168dacb938c9213c687d0425f7c5ec497876bdd9d7522`; Reference Baseline artifact `8853899070`, digest `sha256:6a407a7c5e142d1939ec57b20ae2bfa69be0243c6c00c4667343a75cbf70d2a4`.
+- Canonical arithmetic moved from **189 closed / 169 open** to **191 closed / 167 open**; P1 moved from **81** to **79**. No production claim.
 
 ### 2026-08-03 — Atlas accessibility closure @ source merge `d69268b2`
 - Source PR #759 merged exact verified head `33a2380d6748da26d64eb33d84ff7e588fd6e508` as `d69268b27bb83fe8741159da59f9c1b038d7d9b9`.
