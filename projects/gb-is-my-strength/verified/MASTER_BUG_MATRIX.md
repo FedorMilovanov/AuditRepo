@@ -375,7 +375,10 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AR-IDX-03 | **⌘K хардкод** — на Windows/Linux показывает `⌘K` вместо `Ctrl+K`. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-03) |
 | AR-IDX-09 | **Keyboard shortcut без altKey/shiftKey guard** — `Option+K` или `Ctrl+Shift+K` тоже срабатывают. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-09) |
 
-## 🟢 P3 — ОТКРЫТО (39)
+## 🟢 P3 — ОТКРЫТО (42)
+| SEARCH-P3-01 | 🆕 **Search polish P3:** labels/shortcut wording for search triggers are inconsistent across route families (`Поиск`, `Поиск и разделы сайта`, `Поиск (Ctrl+K)`, `Открыть поиск по материалам сайта`), and shared `search.js` injected fallback still uses Mac-centric `Поиск ⌘K`. Needs one platform-aware label helper / route-family guard. Evidence: `incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md`; `PASS6_POLISH_DISCOVERY_PROBE.json`. |
+| SEARCH-P3-02 | 🆕 **Search discovery P3:** Pagefind branch hard-caps visible results at 10 and manifest fallback at 12 with no raw-total disclosure or `Показать ещё`; raw corpus counts for common queries exceed the visible cap. Evidence: `incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md`; `PASS6_POLISH_DISCOVERY_PROBE.json`. |
+| SEARCH-P3-03 | 🆕 **Search copy-link P3:** preview copy action hard-codes `https://gospod-bog.ru` as origin while the UI label remains generic `Скопировать ссылку`; either label canonical behavior or use current-origin URL. Evidence: `incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md`; `PASS6_POLISH_DISCOVERY_PROBE.json`. |
 | NG-VIS-04 | 🆕 **Нагорная P2 (→ NG-TABLE-01):** Табличная перегрузка — 8 секций без текстовых абзацев (ch.2/III/V/IX/X, ch.3/V/VII/VIII, ch.5/III). Только гриды/карточки/таблицы — нет «воздуха». ch.2 имеет 1.5x structured/text ratio. **Контентная правка — требует автора.** Evidence: `evidence/NAGORNAYA_VISUAL_AUDIT_2026-07-14.md` + `evidence/NAGORNAYA_DEEP_DARK_THEME_AUDIT_2026-07-14.md` §NG-TABLE-01 |
 
 | ID | Описание |
@@ -478,7 +481,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 367 canonical = 213 closed + 154 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 370 canonical = 213 closed + 157 open)
 
 | Категория | Количество |
 |---|---|
@@ -486,10 +489,10 @@ _История сессий (HEAD-переходы, что влито) — в �
 | **P0 открыто** | **0** |
 | P1 открыто | 73 |
 | P2 открыто | 35 |
-| P3 открыто | 39 |
+| P3 открыто | 42 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **154** |
+| **Всего открыто (матрица)** | **157** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -1143,3 +1146,10 @@ D-23 (P1, deploy-блокирующая регрессия) — 🟠→✅ **RES
 - Added `PASS5_PREMIUM_NATIVE_AUDIT.md` and `PASS5_PREMIUM_NATIVE_PROBE.json`; the harness executed 71 checks (54 pass, 16 fail, 1 warning) across dist/assets/CSS/JS/manifest/Pagefind.
 - Promoted `SEARCH-P2-11` (incomplete top-layer modal / focus trap / close affordance) and `SEARCH-P2-12` (touch/focus affordance gaps below premium-native standard).
 - Count impact: P2 `33 → 35`, total open `152 → 154`, closed unchanged `213`, total IDs `365 → 367`. No Product mutation, same-SHA production claim or browser pixel claim.
+
+
+### 2026-08-04 — search polish/discovery 58-check addendum
+
+- Added `PASS6_POLISH_DISCOVERY_AUDIT.md` and `PASS6_POLISH_DISCOVERY_PROBE.json`; the harness executed 58 checks (43 pass, 11 fail, 0 warnings) across trigger labels, copy behavior, result caps, CSS, manifest and Pagefind raw counts.
+- Promoted `SEARCH-P3-01` (trigger/shortcut label inconsistency), `SEARCH-P3-02` (no result-depth disclosure/show-more), and `SEARCH-P3-03` (hard-coded production copy-link origin without canonical wording).
+- Count impact: P3 `39 → 42`, total open `154 → 157`, closed unchanged `213`, total IDs `367 → 370`. No Product mutation, same-SHA production claim or browser pixel claim.

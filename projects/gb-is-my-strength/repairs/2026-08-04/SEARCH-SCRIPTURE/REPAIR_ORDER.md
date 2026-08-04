@@ -6,7 +6,7 @@
 - Source repo: `FedorMilovanov/gb-is-my-strength`
 - Target source SHA: `f9d0120718569c510833dba7a3abd68ce2f6a003` or newer clean `main`
 - Date: 2026-08-04
-- Audit rows included: `SEARCH-P1-03`, `SEARCH-P1-04`, `SEARCH-P2-07`, `SEARCH-P2-08`, `SEARCH-P2-09`, `SEARCH-P2-10`, `SEARCH-P2-11`, `SEARCH-P2-12`
+- Audit rows included: `SEARCH-P1-03`, `SEARCH-P1-04`, `SEARCH-P2-07`, `SEARCH-P2-08`, `SEARCH-P2-09`, `SEARCH-P2-10`, `SEARCH-P2-11`, `SEARCH-P2-12`, `SEARCH-P3-01`, `SEARCH-P3-02`, `SEARCH-P3-03`
 - Related but separable: `SEARCH-P1-01` global command palette route-surface gap
 
 ## Core rule
@@ -46,6 +46,10 @@ The existing closed row `SEARCH-SCRIPTURE-BROKEN` must remain closed for its his
 7. Upgrade shared touch/focus affordances:
    - 44px hitboxes for scope chips and search trigger on coarse pointers;
    - explicit `:focus-visible` for all actionable search controls.
+8. Polish discovery/copy behavior while search files are open:
+   - route trigger labels use one platform-aware shortcut helper;
+   - result lists disclose raw total or support `Показать ещё`;
+   - preview copy-link origin behavior and label are aligned (canonical vs current-origin).
 
 ## Route-level fixes next
 
