@@ -6,6 +6,7 @@
 - Open root owner: `NG-INLINE-01`
 - Current Product anchor: `f9d0120718569c510833dba7a3abd68ce2f6a003`
 - AuditRepo base: `5a5a21f09d58572f2860e2807d0e7d8454eb9aea`
+- AuditRepo consolidation PR: `#147`
 - Current production claim: **none**
 
 ## Current source boundary
