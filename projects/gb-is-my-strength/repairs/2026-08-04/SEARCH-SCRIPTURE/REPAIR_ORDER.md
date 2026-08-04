@@ -6,7 +6,7 @@
 - Source repo: `FedorMilovanov/gb-is-my-strength`
 - Target source SHA: `f9d0120718569c510833dba7a3abd68ce2f6a003` or newer clean `main`
 - Date: 2026-08-04
-- Audit rows included: `SEARCH-P1-03`, `SEARCH-P1-04`, `SEARCH-P2-07`, `SEARCH-P2-08`, `SEARCH-P2-09`, `SEARCH-P2-10`
+- Audit rows included: `SEARCH-P1-03`, `SEARCH-P1-04`, `SEARCH-P2-07`, `SEARCH-P2-08`, `SEARCH-P2-09`, `SEARCH-P2-10`, `SEARCH-P2-11`, `SEARCH-P2-12`
 - Related but separable: `SEARCH-P1-01` global command palette route-surface gap
 
 ## Core rule
@@ -39,6 +39,13 @@ The existing closed row `SEARCH-SCRIPTURE-BROKEN` must remain closed for its his
 5. Normalize command-palette ARIA to one pattern:
    - complete combobox/listbox with `aria-activedescendant` and stable option ids; or
    - command-menu buttons/links with roving focus and no fake `role=option`.
+6. Upgrade the command palette to a true premium top-layer modal:
+   - shared visible close button;
+   - dialog/document-level focus trap;
+   - governed z-index token above lower floating overlays, or explicit closing of lower overlays on open.
+7. Upgrade shared touch/focus affordances:
+   - 44px hitboxes for scope chips and search trigger on coarse pointers;
+   - explicit `:focus-visible` for all actionable search controls.
 
 ## Route-level fixes next
 

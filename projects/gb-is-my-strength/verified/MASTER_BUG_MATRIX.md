@@ -331,7 +331,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (33)
+## 🟡 P2 — ОТКРЫТО (35)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -339,6 +339,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 | SEARCH-P2-08 | 🆕 **Search Scripture P2:** legacy `data/verses.json` and canonical `data/bible/**` authority drift: 94 legacy refs; 51 have no canonical record and 38 differ from canonical text. Public search suggestions must not mix these authorities without reconciliation/projection. | `incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md`; `SCRIPTURE_SEARCH_PROBE.json`; `node scripts/bible-reference-contract.mjs --strict` |
 | SEARCH-P2-09 | 🆕 **Search contract P2:** Home JSON-LD advertises WebSite `SearchAction` target `https://gospod-bog.ru/?q={search_term_string}`, but current runtime/source has no `?q=` handler (`js/search.js`, `HomePageChrome.astro`, `HomeSearchA11yGuard.astro` do not read `location.search`/`URLSearchParams`). SearchAction target therefore lands on ordinary home, not a search-results state. | `incoming/search-deep-audit-2026-08-04/PASS4_SEARCH_CONTRACT_A11Y.md`; `PASS4_CONTRACT_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-contract-a11y.md` |
 | SEARCH-P2-10 | 🆕 **Search a11y P2:** command-palette markup mixes listbox/options and buttons without a complete combobox/listbox contract: no `role=combobox`, no `aria-expanded`, no `aria-activedescendant`, no stable option ids; active result is visual `.is-active`/`aria-selected` only. Keyboard behavior exists, but AT announcement model is unreliable. | `incoming/search-deep-audit-2026-08-04/PASS4_SEARCH_CONTRACT_A11Y.md`; `PASS4_CONTRACT_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-contract-a11y.md` |
+| SEARCH-P2-11 | 🆕 **Search premium P2:** command palette is not a complete top-layer modal: shared base markup has no visible close button distinct from clear-input, Tab trapping is scoped to the input only, and `.cp-backdrop` fallback `z-index:10000` is below known floating layers (`99999`, `2147482500+`). This can make search feel non-native and allow focus/overlay conflicts. | `incoming/search-deep-audit-2026-08-04/PASS5_PREMIUM_NATIVE_AUDIT.md`; `PASS5_PREMIUM_NATIVE_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-premium-native.md` |
+| SEARCH-P2-12 | 🆕 **Search premium P2:** shared search touch/focus affordances are below premium/native standard: `.cp-scope-chip` uses `min-height:32px`, shared `.gb-nav-search-icon` has no explicit 44px hitbox, and focus-visible rules are missing for some interactive controls (`.cp-scope-chip`, preview buttons in probe). | `incoming/search-deep-audit-2026-08-04/PASS5_PREMIUM_NATIVE_AUDIT.md`; `PASS5_PREMIUM_NATIVE_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-premium-native.md` |
 | GENESIS6-ACTIVATION-OWNER-GAP | Exact Research provenance is now pinned by PR #348, but canonical Genesis 6 MDX/routes remain absent or draft/noindex. Issue #287 is archived/not-planned transport history and cannot own activation; no fresh-main product finalizer exists. Closing requires one normal reviewable product PR with shared series chrome, exact-head Astro/build/Chromium/WebKit, rights/source and publication-state evidence. | PR #348; issue #287 archived; `reverify/CURRENT_HEAD_REVERIFY_2026-07-25_9407cc92_genesis-provenance.md` |
 | REG-001 | 🟡 **Hosting/security-header decision.** GitHub Pages live responses expose HSTS but no response-level CSP, X-Frame-Options, Referrer-Policy or Permissions-Policy. Closing requires a proxy/hosting decision or explicit by-design acceptance. | `reverify/CURRENT_OPEN_EVIDENCE_2026-07-23_a73f609f.md` |
 | AVRAAM-P2-01 | 🆕 **Karty P2:** Тяжёлый payload Авраама (~824KB, 1540 DOM, 1103 SVG, 60 GSAP animations) + дублирующий fetch route.json | verified-browser (c2c339708252) |
@@ -476,18 +478,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 365 canonical = 213 closed + 152 open)
+## Статистика (обновлено 2026-08-04: disposition anchor `f9d01207`; last exact production `abf1edba`; 367 canonical = 213 closed + 154 open)
 
 | Категория | Количество |
 |---|---|
 | Закрыто (fixed) | 213 |
 | **P0 открыто** | **0** |
 | P1 открыто | 73 |
-| P2 открыто | 33 |
+| P2 открыто | 35 |
 | P3 открыто | 39 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **152** |
+| **Всего открыто (матрица)** | **154** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -1134,3 +1136,10 @@ D-23 (P1, deploy-блокирующая регрессия) — 🟠→✅ **RES
 - Added `PASS4_SEARCH_CONTRACT_A11Y.md` and `PASS4_CONTRACT_PROBE.json` to the active search audit intake.
 - Promoted `SEARCH-P2-09` (unimplemented WebSite `SearchAction` `/?q=` target) and `SEARCH-P2-10` (mixed/incomplete command-palette ARIA listbox/combobox pattern).
 - Count impact: P2 `31 → 33`, total open `150 → 152`, closed unchanged `213`, total IDs `363 → 365`. No Product mutation, same-SHA production claim or browser pixel claim.
+
+
+### 2026-08-04 — search premium/native 71-check addendum
+
+- Added `PASS5_PREMIUM_NATIVE_AUDIT.md` and `PASS5_PREMIUM_NATIVE_PROBE.json`; the harness executed 71 checks (54 pass, 16 fail, 1 warning) across dist/assets/CSS/JS/manifest/Pagefind.
+- Promoted `SEARCH-P2-11` (incomplete top-layer modal / focus trap / close affordance) and `SEARCH-P2-12` (touch/focus affordance gaps below premium-native standard).
+- Count impact: P2 `33 → 35`, total open `152 → 154`, closed unchanged `213`, total IDs `365 → 367`. No Product mutation, same-SHA production claim or browser pixel claim.
