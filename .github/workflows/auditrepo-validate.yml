@@ -143,7 +143,7 @@ jobs:
           git checkout origin/main -- .github/workflows/auditrepo-validate.yml
           rm -f scripts/reconcile_product_wave_closures_20260804.py
           git diff --check origin/main
-          git diff --name-only origin/main | sort > "${RUNNER_TEMP}/changed.txt"
+          { git diff --name-only origin/main; git ls-files --others --exclude-standard; } | sort -u > "${RUNNER_TEMP}/changed.txt"
           cat "${RUNNER_TEMP}/changed.txt"
           cat > "${RUNNER_TEMP}/expected.txt" <<'EOF'
           projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
@@ -158,7 +158,7 @@ jobs:
         run: |
           set -euo pipefail
           changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
-          git diff --name-only origin/main > "${changed_file}"
+          { git diff --name-only origin/main; git ls-files --others --exclude-standard; } | sort -u > "${changed_file}"
           export AUDITREPO_CHANGED_PATHS_FILE="${changed_file}"
           python3 scripts/check_auditrepo_structure.py
           python3 scripts/validate_audit_repo.py
@@ -174,7 +174,7 @@ jobs:
         run: |
           set -euo pipefail
           git diff --check origin/main
-          git diff --name-only origin/main | sort > "${RUNNER_TEMP}/changed-after.txt"
+          { git diff --name-only origin/main; git ls-files --others --exclude-standard; } | sort -u > "${RUNNER_TEMP}/changed-after.txt"
           diff -u "${RUNNER_TEMP}/expected.txt" "${RUNNER_TEMP}/changed-after.txt"
       - name: Commit clean permanent reconciliation
         run: |
