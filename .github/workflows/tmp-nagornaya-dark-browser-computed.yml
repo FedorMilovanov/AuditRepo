@@ -8,7 +8,7 @@ on:
       - synchronize
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: nagornaya-dark-browser-pr-153
@@ -50,17 +50,75 @@ jobs:
           cache-dependency-path: _product/package-lock.json
 
       - name: Build and measure exact native output
+        id: measure
         shell: bash
-        run: bash .github/tmp/nagornaya_dark_browser_executor.sh run
+        run: |
+          set +e
+          bash .github/tmp/nagornaya_dark_browser_executor.sh run
+          status=$?
+          set -e
+          test -s _browser-result.json
+          echo "harness_status=${status}" >> "$GITHUB_OUTPUT"
+
+      - name: Classify browser error stream
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          from collections import Counter
+          import json
+          import re
+
+          source = Path('_browser-result.json')
+          data = json.loads(source.read_text(encoding='utf-8'))
+          if data.get('observationCount') != 36:
+              raise SystemExit(f"expected 36 observations, got {data.get('observationCount')}")
+
+          def normalize(message: str) -> str:
+              value = message
+              value = re.sub(r'^(desktop|mobile) (light|dark) /[^:]+: ', '', value)
+              value = re.sub(r'https?://127\.0\.0\.1:8090/[^ )]+', '<local-url>', value)
+              value = re.sub(r'\b\d+px\b', '<px>', value)
+              return value[:500]
+
+          counts = Counter(normalize(item) for item in data.get('errors', []))
+          summary = {
+              'observationCount': data.get('observationCount'),
+              'errorCount': len(data.get('errors', [])),
+              'uniqueErrorCount': len(counts),
+              'harnessStatus': '${{ steps.measure.outputs.harness_status }}',
+              'errorsByMessage': [
+                  {'count': count, 'message': message}
+                  for message, count in counts.most_common()
+              ],
+              'verdicts': {
+                  token: item['verdict']
+                  for token, item in data.get('classification', {}).items()
+              },
+          }
+          Path('_browser-error-summary.json').write_text(
+              json.dumps(summary, ensure_ascii=False, indent=2),
+              encoding='utf-8',
+          )
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
 
       - name: Upload raw browser evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: nagornaya-dark-browser-evidence
-          path: _browser-result.json
+          path: |
+            _browser-result.json
+            _browser-error-summary.json
           if-no-files-found: error
           retention-days: 30
 
-      - name: Validate, self-clean and commit evidence
+      - name: Keep lane fail-closed
         shell: bash
-        run: bash .github/tmp/nagornaya_dark_browser_executor.sh finalize
+        run: |
+          set -euo pipefail
+          test -s _browser-result.json
+          test -s _browser-error-summary.json
+          echo "Evidence captured; canonical files intentionally unchanged pending error review."
