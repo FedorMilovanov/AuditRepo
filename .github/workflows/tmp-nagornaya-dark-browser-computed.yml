@@ -1,0 +1,238 @@
+name: Complete Nagornaya dark Chromium classification
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nagornaya-dark-browser-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  classify:
+    if: >-
+      github.event.pull_request.number == 153 &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'verify/nagornaya-dark-browser-computed-20260804'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    steps:
+      - name: Checkout exact AuditRepo branch
+        uses: actions/checkout@v4
+        with:
+          ref: verify/nagornaya-dark-browser-computed-20260804
+          fetch-depth: 0
+
+      - name: Guard canonical AuditRepo base
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "850429a299a6118db85811602fdb661b81b2296f"
+          git merge-base --is-ancestor origin/main HEAD
+
+      - name: Checkout exact Product source
+        uses: actions/checkout@v4
+        with:
+          repository: FedorMilovanov/gb-is-my-strength
+          ref: f9d0120718569c510833dba7a3abd68ce2f6a003
+          path: _product
+          persist-credentials: false
+
+      - name: Set up Node 22.12
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: npm
+          cache-dependency-path: _product/package-lock.json
+
+      - name: Install exact Product dependencies and Chromium
+        working-directory: _product
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Build authoritative native Product dist
+        working-directory: _product
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run nagornaya:visual-parity:audit
+          npm run strangler:build:production-like
+
+      - name: Run exact Chromium computed-style matrix
+        shell: bash
+        env:
+          AUDIT_BASE: http://127.0.0.1:8090
+          BROWSER_RESULT: _browser-result.json
+          PRODUCT_SHA: f9d0120718569c510833dba7a3abd68ce2f6a003
+          NODE_PATH: ${{ github.workspace }}/_product/node_modules
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8090 --directory _product/dist > "${RUNNER_TEMP}/nagornaya-http.log" 2>&1 &
+          server_pid=$!
+          trap 'kill ${server_pid} 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8090/nagornaya/ >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8090/nagornaya/ >/dev/null
+          node .github/tmp/nagornaya_dark_browser.js
+
+      - name: Materialize browser evidence document
+        shell: bash
+        env:
+          PRODUCT_SHA: f9d0120718569c510833dba7a3abd68ce2f6a003
+          AUDIT_BASE_SHA: 850429a299a6118db85811602fdb661b81b2296f
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          import os
+
+          data = json.loads(Path('_browser-result.json').read_text(encoding='utf-8'))
+          if data['errors']:
+              raise SystemExit('browser harness returned errors: ' + '; '.join(data['errors'][:10]))
+          if data['observationCount'] != 36:
+              raise SystemExit(f"expected 36 route/theme/viewport observations, got {data['observationCount']}")
+
+          order = data['tokens']
+          verdict_counts = {}
+          for token in order:
+              verdict = data['classification'][token]['verdict']
+              verdict_counts[verdict] = verdict_counts.get(verdict, 0) + 1
+
+          def number(value):
+              return '—' if value is None else f'{value:.2f}'
+
+          rows = []
+          for token in order:
+              item = data['classification'][token]
+              rows.append(
+                  f"| `{token}` | {item['verdict']} | {item['darkVisible']} | "
+                  f"{number(item['darkMinTextContrast'])} | {item['darkTextFailures']} | "
+                  f"{number(item['darkMinBorderContrast'])} | {item['darkLightIslands']} | "
+                  f"{'yes' if item['propertyChangesAcrossTheme'] else 'no'} |"
+              )
+
+          body_rows = []
+          for obs in data['observations']:
+              if obs['theme'] != 'dark':
+                  continue
+              body = obs['body']
+              body_rows.append(
+                  f"| `{obs['route']}` | {obs['viewport']} | `{body['background']}` | "
+                  f"{body['backgroundRgb']} | {body['luminance']:.3f} |"
+              )
+
+          confirmed = [token for token in order if data['classification'][token]['verdict'].startswith('confirmed-')]
+          readable = [token for token in order if data['classification'][token]['verdict'] in {'browser-readable', 'theme-static-but-readable', 'effective-body-cascade-covered'}]
+          invisible = [token for token in order if data['classification'][token]['verdict'] == 'not-visible-in-dark-fixtures']
+
+          verdict_summary = ', '.join(f'`{key}`={value}' for key, value in sorted(verdict_counts.items()))
+          confirmed_text = ', '.join(f'`{token}`' for token in confirmed) if confirmed else 'none'
+          readable_text = ', '.join(f'`{token}`' for token in readable) if readable else 'none'
+          invisible_text = ', '.join(f'`{token}`' for token in invisible) if invisible else 'none'
+
+          document = f'''# CURRENT HEAD REVERIFY — Nagornaya dark-theme browser/computed-style verification
+
+- Date: 2026-08-04
+- Product anchor: `{os.environ['PRODUCT_SHA']}`
+- AuditRepo base: `{os.environ['AUDIT_BASE_SHA']}`
+- Browser evidence lane: AuditRepo PR #153
+- Exact workflow run: `{os.environ['GITHUB_RUN_ID']}`
+- Canonical owner: `NG-DARK-01`
+- Input boundary: 19 tokens / 443 uses from native production-like dist
+- Product mutation: **none**
+- TTS scope: **excluded**
+- Production claim: **none**
+
+## Method
+
+The exact Product SHA passed the permanent nine-route native Astro contract and `strangler:build:production-like`. Headless Chromium then loaded all nine built routes at desktop `1440×900` and mobile `390×844`, in explicit light and dark themes: **36 independent route/theme/viewport observations**.
+
+For every visible element carrying one of the 19 source-residual utility tokens, the harness recorded computed foreground/background/border values, effective ancestor background, body surface, light-vs-dark property changes and WCAG contrast. Normal text used a `4.5:1` threshold; large/bold text used `3:1`. Borders were only classified as near-invisible below the deliberately conservative `1.3:1` threshold. A light background was classified as a light island only when its luminance exceeded `0.65` over a parent below `0.35`.
+
+Missing a dedicated selector was **not** treated as a browser defect by itself.
+
+## Harness integrity
+
+- Observations: **{data['observationCount']} / 36**.
+- Browser/page/overflow errors: **{len(data['errors'])}**.
+- Verdict distribution: {verdict_summary}.
+- Confirmed browser failures: {confirmed_text}.
+- Browser-readable/effective tokens: {readable_text}.
+- Not visible in dark fixtures: {invisible_text}.
+
+## Token-level results
+
+| Token | Browser verdict | Dark visible samples | Min dark text contrast | Dark text failures | Min dark border contrast | Dark light-islands | Property changes across theme |
+|---|---|---:|---:|---:|---:|---:|---|
+{chr(10).join(rows)}
+
+## Dark body surfaces
+
+| Route | Viewport | Computed background | RGB | Luminance |
+|---|---|---|---|---:|
+{chr(10).join(body_rows)}
+
+## Evidence boundary
+
+This is browser/computed-style evidence on production-like native output, not a Product repair or live-production witness. The raw machine evidence is attached to workflow run `{os.environ['GITHUB_RUN_ID']}` as artifact `nagornaya-dark-browser-evidence`.
+
+Canonical matrix and handoff are intentionally unchanged in this first pass. The next commit must manually review these measurements, distinguish confirmed failures from readable/static design choices, and only then narrow or preserve `NG-DARK-01`.
+'''
+          target = Path('projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-browser.md')
+          target.write_text(document, encoding='utf-8')
+          print(verdict_summary)
+          PY
+
+      - name: Upload raw browser evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: nagornaya-dark-browser-evidence
+          path: _browser-result.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Self-clean and validate AuditRepo evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf _product _browser-result.json
+          rm -f .github/tmp/nagornaya_dark_browser.js
+          rm -f .github/workflows/tmp-nagornaya-dark-browser-computed.yml
+          git diff --check
+          changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
+          printf '%s\n' projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-browser.md > "${changed_file}"
+          export AUDITREPO_CHANGED_PATHS_FILE="${changed_file}"
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p reports/matrix-coverage
+          python3 scripts/check_matrix_coverage.py --verbose --json-out reports/matrix-coverage/report.json
+          rm -rf reports/matrix-coverage
+          test "$(git diff --name-only | sort)" = "$(printf '%s\n' \
+            .github/tmp/nagornaya_dark_browser.js \
+            .github/workflows/tmp-nagornaya-dark-browser-computed.yml \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-browser.md | sort)"
+
+      - name: Commit exact browser evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .github/tmp/nagornaya_dark_browser.js \
+            .github/workflows/tmp-nagornaya-dark-browser-computed.yml \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_nagornaya-dark-browser.md
+          git commit -m 'evidence(gb): record Nagornaya dark Chromium matrix'
+          git push origin HEAD:verify/nagornaya-dark-browser-computed-20260804
