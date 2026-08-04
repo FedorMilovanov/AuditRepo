@@ -5,6 +5,7 @@
 - Canonical findings: `AR-IDX-01`, `AR-IDX-02`
 - Current Product anchor: `0fbe7d1ead9ebd1bea867418e254da438ec63329`
 - AuditRepo base: `1d8fb7f2e00d76010afab5d5e808bfa4cf687958`
+- AuditRepo closure lane: PR #137
 - Current production claim: **none**
 
 ## Original claims
