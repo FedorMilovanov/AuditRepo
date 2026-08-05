@@ -7,7 +7,7 @@
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
 | `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | Astro static site (gospod-bog.ru), strangler-миграция. **Старт: [`projects/gb-is-my-strength/DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md).** HEAD/счётчики/статус намеренно НЕ дублируются здесь (правило Single-Writer-Per-Fact, `CLEANUP_RETENTION_POLICY.md` §8) — они в матрице + `NEXT_AGENT_PROMPT.md`. |
-| `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | W0–W2 закрыты на production `main@a248abd`; W3 community scaling активна. Старт: [`projects/the-legendary-poet/README.md`](projects/the-legendary-poet/README.md). |
+| `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | W0–W3 закрыты на production `main@4544bb3`; W4 workflow/performance consolidation активна. Старт: [`projects/the-legendary-poet/README.md`](projects/the-legendary-poet/README.md). |
 
 ## Status glossary
 
@@ -36,12 +36,13 @@
 
 Проект имеет статус `active`. Текущая verified production точка:
 
-- source `main@a248abd54007bd839ffc149b9195dc4e79dc5dd3`;
+- source `main@4544bb387108a98641313267beafe29deb71ee81`;
 - W0 machine-checked project truth — source #303;
 - committed discovery integrity и Safari readiness — source #305;
 - W1 zero-loss Article retirement / single Essay model — source #308;
 - W2 immutable essay publication — source #311;
-- финальный exact W2 head `8eaeaa4abc7f80eb6b96de0657df0b3e255d96d3` прошёл Content model, Project contracts, CI, catalog, все Yesenin/Duncan publication gates, brand, routes и Manual Browser QA 4/4.
+- W3 target-scoped community scaling — source #316;
+- финальный exact W3 head `a810a2a9bdcf9a150c73d4adea703e95ae6bd71a` прошёл Project contracts, Content model, CI, catalog, Yesenin publication/browser gates, brand, routes, Manual Browser QA 4/4 и отдельный Android/iPhone Community scaling mobile contract.
 
 Точка входа:
 
@@ -49,13 +50,13 @@
 
 Последняя verified-запись:
 
-➡️ **[`projects/the-legendary-poet/verified/IMMUTABLE_ESSAY_PUBLICATION_2026-08-05.md`](projects/the-legendary-poet/verified/IMMUTABLE_ESSAY_PUBLICATION_2026-08-05.md)**
+➡️ **[`projects/the-legendary-poet/verified/COMMUNITY_SCALING_2026-08-05.md`](projects/the-legendary-poet/verified/COMMUNITY_SCALING_2026-08-05.md)**
 
 Последний exact-HEAD reverify:
 
-➡️ **[`projects/the-legendary-poet/reverify/REVERIFY_a248abd_2026-08-05.md`](projects/the-legendary-poet/reverify/REVERIFY_a248abd_2026-08-05.md)**
+➡️ **[`projects/the-legendary-poet/reverify/REVERIFY_4544bb3_2026-08-05.md`](projects/the-legendary-poet/reverify/REVERIFY_4544bb3_2026-08-05.md)**
 
-Working matrix и wave plan фиксируют W3 как `active-current`; W4–W6 остаются открытыми. Предыдущие marathon, Playwright, system/content и source-library evidence-линии не перезаписаны.
+Working matrix и wave plan фиксируют W4 workflow/performance consolidation как `active-current`; W5–W6 остаются открытыми. Предыдущие marathon, Playwright, system/content, W2 и source-library evidence-линии не перезаписаны.
 
 ## How to add a new project
 
