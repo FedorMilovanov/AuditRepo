@@ -5,7 +5,116 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
+  favorite-store-closure:
+    if: >-
+      github.event_name == 'pull_request' &&
+      contains(github.event.pull_request.labels.*.name, 'autofix') &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'audit/favorite-store-source-closure-20260805' &&
+      contains(github.event.pull_request.body, 'audit-favorite-store-closure-authorized-20260805-v1')
+    permissions:
+      contents: write
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Prove exact input identity
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+
+      - name: Write exact matrix closure
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          text = path.read_text(encoding='utf-8')
+
+          old_source = "| Source verification anchor | `92c4939c62bda365c1531c31d150c3988d8cfa47` (current merged Product source after ReaderProjection PR #990; exact final head `fdc3a90e9f4b8728698fd4d21f2afae3880f8525` passed 15/15 workflow groups, including source 68/68, browser 144/144, tooltip handoff 19/19 and full Runtime Interactive; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |"
+          new_source = "| Source verification anchor | `d0647b71b557c17e408c09712fcd8c3ab05ba257` (current merged Product source after Favorite Store PR #1061; exact final head `845ad48409fc3c8a2fa7056f4b84e005e652318e` passed 25/25 workflow groups, including Favorite source 65/65, Chromium 138/138, ReaderProjection 68/68 + 144/144 + 19/19, full Runtime Interactive and all surrounding gates; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |"
+          old_reverify = "| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_92c4939c_readerprojection-source-closure.md` (Product PR #990, exact head `fdc3a90e`, squash merge `92c4939c`; merged source and exact-head Chromium/CI closure, no new production claim). |"
+          new_reverify = "| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_d0647b71_favorite-store-source-closure.md` (Product PR #1061, exact head `845ad484`, squash merge `d0647b71`; merged source and exact-head Chromium/CI closure, no new production claim). |"
+
+          for old, label in ((old_source, 'source anchor'), (old_reverify, 'last reverify')):
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label} exact anchor count must be 1, got {count}')
+
+          text = text.replace(old_source, new_source).replace(old_reverify, new_reverify)
+          marker = '### 2026-08-05 — Favorite Store source closure @ merged Product `d0647b71`'
+          if marker in text:
+              raise SystemExit('Favorite Store closure entry already exists')
+
+          entry = r'''
+
+### 2026-08-05 — Favorite Store source closure @ merged Product `d0647b71`
+- Source-closed the independently bounded favorites metadata/store, save-state/label synchronization and unsafe legacy image migration clusters from Product umbrella #61.
+- Product PR #1061 exact final head `845ad48409fc3c8a2fa7056f4b84e005e652318e` passed all 25 applicable workflow groups: Favorite source **65/65**, Chromium **138/138**, ReaderProjection **68/68 + 144/144 + 19/19**, full Runtime Interactive, Route Registry Chromium/WebKit, Shared Files, Metadata, Visual, TTS, Overlay, Print, Native/Source Authority and surrounding gates.
+- Squash merge `d0647b71b557c17e408c09712fcd8c3ab05ba257`; full exact-head and merged-main Git trees are identical at `50867ca6fed0033efc2784dee8a969c22481f0a5`, proving all 49/49 merged blobs.
+- Favorite artifact `8943367668`, digest `sha256:c15e92c25bfc127cac2824ac5aa679be383e3bb916e3d9fa3dfa9bd385822628`; Runtime artifact `8943966044`, digest `sha256:529375d76ddf5ba4fabf1ef65e824e277cf9873aff73c3856a3077569c691022`.
+- These were umbrella/intake clusters without canonical matrix IDs, so arithmetic remains **371 = 226 closed + 145 open**. No new production/live claim.
+- Product #61 remains open only for independently reverified controls/accessibility and popup/radiogroup semantics; ReaderProjection and Favorite Store must not be reopened without new exact-current evidence.
+'''
+          path.write_text(text.rstrip() + entry + '\n', encoding='utf-8')
+          PY
+
+      - name: Validate exact closure
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin main
+          changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
+          git diff --name-only origin/main > "$changed_file"
+          cat "$changed_file"
+          echo "AUDITREPO_CHANGED_PATHS_FILE=$changed_file" >> "$GITHUB_ENV"
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          python3 scripts/check_matrix_coverage.py --verbose
+          git diff --check
+
+      - name: Restore control plane and enforce durable boundary
+        run: |
+          set -euo pipefail
+          git checkout origin/main -- .github/workflows/auditrepo-validate.yml
+          git rm .github/workflows/favorite-store-closure-transaction.yml
+          git diff --name-only origin/main | sort > /tmp/final-paths.txt
+          cat /tmp/final-paths.txt
+          cat > /tmp/expected-paths.txt <<'EOF'
+          projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+          projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_d0647b71_favorite-store-source-closure.md
+          projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          EOF
+          diff -u /tmp/expected-paths.txt /tmp/final-paths.txt
+
+      - name: Commit and push exact PR branch
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -euo pipefail
+          remote_sha="$(git ls-remote origin "refs/heads/$HEAD_REF" | awk '{print $1}')"
+          test "$remote_sha" = "$EXPECTED_SHA"
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add .github/workflows/auditrepo-validate.yml \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_d0647b71_favorite-store-source-closure.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          git commit -m "audit(reader): record Favorite Store source closure"
+          git push origin "HEAD:$HEAD_REF"
+
   validate:
     runs-on: ubuntu-latest
     steps:
