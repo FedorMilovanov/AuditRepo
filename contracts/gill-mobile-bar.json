@@ -1,0 +1,25 @@
+{
+  "id": "gill-mobile-bar",
+  "source": "docs/design-references/current/gill-mobile-bar.html",
+  "requiredTokens": [
+    "data-gill-v16",
+    "__label",
+    "toc-part-item",
+    "mobile-toc-btn",
+    "toc-sheet__handle",
+    "toc-sheet__head",
+    "toc-sheet__list"
+  ],
+  "requiredOrder": ["toc-sheet__handle", "toc-sheet__head", "toc-sheet__list"],
+  "forbiddenTokens": ["hm-", "gbs2-"],
+  "routes": [
+    "gill-part-1",
+    "gill-part-2",
+    "gill-part-3",
+    "gill-part-4",
+    "gill-spravochnik",
+    "hermenevtika"
+  ],
+  "mode": "1:1 REPLICA",
+  "note": "Контракт создаётся агентом из СВОЕГО мокапа в момент старта задачи. Не пустая форма, а чек-лист, наполненный классами мокапа."
+}
