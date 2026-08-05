@@ -1,0 +1,13 @@
+{
+  "id": "favorite-store-canonical",
+  "source": "docs/design-references/current/favorite-store.html",
+  "component": "favorite-store",
+  "searchPaths": ["src/runtime"],
+  "requiredTokens": ["GBFavoriteStore", "schemaVersion", "category"],
+  "partialTokens": ["section", "overrides"],
+  "requiredOrder": [],
+  "forbiddenTokens": [],
+  "routes": ["izbrannoe", "*"],
+  "mode": "1:1 REPLICA (закрыто PR #1061 2026-08-05)",
+  "note": "Canonical Favorite Store — добавлен PR #1061 (49 файлов, +1202/−345): src/runtime/favorite-store.js (339 строк), version-гейт GBFavoriteStore, category/section из route-metadata, izbrannoe/index.astro переписан (220 строк). Это закрывает пункт 3 umbrella #61 (favorites metadata/store). Матрица AuditRepo ещё не обновлена — контракт фиксирует, чтобы не откатилось."
+}

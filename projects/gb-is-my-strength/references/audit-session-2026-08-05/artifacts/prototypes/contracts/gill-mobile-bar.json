@@ -1,0 +1,22 @@
+{
+  "id": "gill-mobile-bar",
+  "source": "docs/design-references/current/gill-mobile-bar.html",
+  "component": "GillSeriesMobileBar",
+  "requiredTokens": [
+    "data-gill-v16",
+    "__label",
+    "mobile-bottom-bar"
+  ],
+  "partialTokens": [
+    "toc-part-item",
+    "mobile-toc-btn",
+    "toc-sheet__handle",
+    "toc-sheet__head",
+    "toc-sheet__list"
+  ],
+  "requiredOrder": [],
+  "forbiddenTokens": ["gbs2-tocscroll"],
+  "routes": ["gill-part-1", "gill-part-2", "gill-part-3", "gill-part-4", "gill-spravochnik"],
+  "mode": "1:1 REPLICA (ядро v4) + ADAPTIVE (TOC-шит → gbs2, требует owner-решения)",
+  "note": "Ядро контракта v4 (data-gill-v16, __label, mobile-bottom-bar) перенесено — PRESENT 3/3. Структура TOC-шита (toc-part-item/toc-sheet_*) заменена на gbs2-tocscroll — НЕ 1:1, требует решения владельца: вернуть legacy-шит или зафиксировать ADAPTIVE-разрешение. Порядок токенов не критичен (это JS-хуки, не DOM-порядок)."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "tts-lazy-chunk",
+  "source": "docs/design-references/current/tts-reader.html",
+  "component": "floating-cluster-controller",
+  "searchPaths": ["js"],
+  "requiredTokens": ["gb-ember-expand", "warmVoskInBackground", "SharedWorker"],
+  "partialTokens": ["resolveTtsEngine", "speak"],
+  "requiredOrder": [],
+  "forbiddenTokens": [],
+  "routes": ["articles", "gill-part-1", "gill-part-2", "gill-part-3", "gill-part-4"],
+  "mode": "LAZY-CHUNK (цель разгрузки)",
+  "note": "TTS-рантайм (floating-cluster-controller.js 120КБ) должен грузиться ТОЛЬКО на long-form роутах. Контракт фиксирует: (1) наличие канонических токенов (SharedWorker, warmVosk), (2) что на каталогах/лендингах TTS-чанк НЕ грузится (negative test — вне этого контракта). Это НЕ тест на каждый PR, а цель разгрузки."
+}

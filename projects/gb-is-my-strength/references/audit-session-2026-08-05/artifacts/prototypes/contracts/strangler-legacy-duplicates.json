@@ -1,0 +1,13 @@
+{
+  "id": "strangler-legacy-duplicates",
+  "source": "docs/design-references/current/strangler-layout.html",
+  "component": "legacy-html",
+  "searchPaths": ["."],
+  "requiredTokens": [],
+  "partialTokens": [],
+  "requiredOrder": [],
+  "forbiddenTokens": [],
+  "routes": ["*"],
+  "mode": "COUNTER-CONTRACT (не тест, а инвентаризация)",
+  "note": "Цель: считать legacy index.html (вне src/) vs Astro pages. На 2026-08-05 (3a05a1e7): 54 legacy index.html vs 83 Astro pages. НЕ закрывать STRANGLER-HYGIENE без полного рекурсивного подсчёта. Контракт не требует токенов — он документирует, что проверка дублей обязана быть рекурсивной (find по подпапкам), а не только *.html в корне."
+}

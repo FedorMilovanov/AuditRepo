@@ -1,0 +1,15 @@
+{
+  "id": "home-sacred-scripture-bg",
+  "source": "docs/design-references/current/home-sacred-bg.html",
+  "component": "HomeAmbientPhrases",
+  "requiredTokens": [
+    "h-ambient-native",
+    "h-ambient-word"
+  ],
+  "partialTokens": ["h-ambient-word--hebrew", "h-ambient-word--greek", "h-ambient-word--latin"],
+  "requiredOrder": [],
+  "forbiddenTokens": [],
+  "routes": ["index"],
+  "mode": "1:1 REPLICA — ПЕРЕПИСАНО В ASTRO (v2, 2026-08-05)",
+  "note": "КОРРЕКЦИЯ: фича НЕ мертва. Astro-реализация использует h-ambient-* классы (HomeAmbientPhrases.astro + scoped-стили в HomePageChromeStyles.astro) — совпадают. НО: legacy CSS .h-phrase* (6 классов в home.css) остался МЁРТВЫМ — двойной нейминг = дрейф. Действие: удалить мёртвый .h-phrase* из home.css (или зафиксировать как удалённый), не трогая h-ambient-*."
+}
