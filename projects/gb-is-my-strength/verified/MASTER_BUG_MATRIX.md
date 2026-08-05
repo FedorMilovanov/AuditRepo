@@ -521,7 +521,14 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ## Session log
 
-### 2026-08-05 — ReaderProjection source closure @ merged Product `92c4939c`
+### 2026-08-05 — Favorite Store source closure @ merged Product `d0647b71` + D-22 image drift (self-audit)
+
+- **#61 item 3 source-closed:** Product PR #1061 / merge `d0647b71b557c17e408c09712fcd8c3ab05ba257` added `src/runtime/favorite-store.js` (SCHEMA_VERSION=1, `routeId`/`category`/`section` from route metadata, `GBFavoriteStore` version gate) and rewrote `izbrannoe/index.astro` + `Favorites.astro`. This closes umbrella #61 item 3 (save/favorite metadata → canonical route metadata/store contract). #61 remains open only for items 1-2 (AT exposure of speed/search, radiogroup roving). Handoff updated in `NEXT_AGENT_PROMPT.md`. No production/live claim. Contract `favorite-store-canonical` PASS 3/3.
+- **D-22 partial regression found (self-audit):** the same PR #1061 rewrote the two files where D-22 was closed. href-guard (`normalizePath`) is preserved and XSS-safe (javascript:/data:/vbscript://evil → block). But `normalizeImage` (favorite-store.js:40-50) checks only `protocol`, NOT `origin` — `//evil.com/x.png` and `https://evil.com/x.png` pass into `background-image`. This drifts from the closed D-22 contract (same-origin `/...` only) and contradicts PR #1061's "fail-closed ... clears unsafe values" claim. Not XSS (background-image), but an exfiltration/drift vector. Recommendation: add `url.origin === location.origin` to `normalizeImage`. Row stays closed with note (or reclassify as PARTIAL) — verifier decision.
+- **Counter updates from self-audit:** BUG-PERF-001 now 369/31 (was 368/31); CI-WORKFLOW-PROLIFERATION now 51 workflows (favorite-store.yml added). AR-IDX-05 "3 versions" confirmed (10+11+2); the 20 `version: 1` hits are JSON-LD fields, not SITE_CONFIG.version.
+- Canonical arithmetic: **unchanged** (371 = 226 closed + 145 open) — #61 items are intake scopes, not canonical rows; no row moved.
+
+
 
 - Recorded merged-source closure for the two confirmed-current ReaderProjection intake clusters from AuditRepo PR #169; historical incoming remains immutable.
 - Product exact final head `fdc3a90e9f4b8728698fd4d21f2afae3880f8525` passed 15/15 workflow groups, including source 68/68, browser 144/144, tooltip handoff 19/19 at `1280×850`, full Runtime Interactive and Visual Parity.
