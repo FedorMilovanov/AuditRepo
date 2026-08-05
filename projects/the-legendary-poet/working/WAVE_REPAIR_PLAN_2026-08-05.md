@@ -1,16 +1,24 @@
 # Wave repair plan — The Legendary Poet
 
+Current source production baseline: `e06bdfc42ada0a6111f0cde6e39dd7f48204f2c8`.
+
 ## W0 — system truth and governance — COMPLETE
 
-Source PR #303 merged as production `69e5d3931bc1d1af635efeaf98c76cf36ce30f41`. Machine contract, live workflow path integrity, current documentation authority, agent concurrency rules, Node 24 baseline and UTC daily content are now production contracts.
+Source PR #303 merged as production `69e5d3931bc1d1af635efeaf98c76cf36ce30f41`. Machine contract, live workflow path integrity, current documentation authority, agent concurrency rules, Node 24 baseline and UTC daily content are production contracts.
 
-## W1 — content-model unification — ACTIVE
+## Inter-wave closure — discovery integrity and Safari readiness — COMPLETE
 
-Source PR #306. Preserve five exact hidden legacy drafts with SHA-256, remove `Article`/`Poet.articles` runtime and exports atomically, retain compatibility redirects and add a permanent one-engine validator. Temporary executor files are forbidden from the final head.
+Source PR #305 merged as production `44a36bdb97e22827b2026e5622b79a6908d7af03`. Committed sitemap/feed freshness is enforced inside `check:content`, and Safari brand-source QA waits for the official route-loading shell before requiring real raster placements.
 
-## W2 — immutable essay publication
+## W1 — content-model unification — COMPLETE
 
-Replace post-import mutation with a readonly builder shared by page, search, sitemap, feed and validators.
+The parallel agent's durable Article-retirement work was integrated without rewriting its branch. Stale-base PR #306 was superseded through integration-only #307 and production PR #308.
+
+Production `e06bdfc42ada0a6111f0cde6e39dd7f48204f2c8` now has one live longform model (`Essay`), five zero-loss legacy draft archives with bounded SHA-256, retained redirects and a permanent content-model contract in both the targeted Node 24 workflow and repository-wide `check:content`.
+
+## W2 — immutable essay publication — NEXT
+
+Replace post-import mutation with a readonly builder shared by page, search, sitemap, feed and validators. Start only from current production or a later reconciled main. Preserve generated output parity and require exact-head browser verification.
 
 ## W3 — community scaling
 
