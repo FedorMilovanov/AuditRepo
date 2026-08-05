@@ -147,7 +147,7 @@ jobs:
       - name: Verify production evidence and write canonical closure
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 scripts/tts_production_closure_executor.py
+        run: GITHUB_REF_NAME='' python3 scripts/tts_production_closure_executor.py
       - name: Validate exact closure transaction
         shell: bash
         run: |
