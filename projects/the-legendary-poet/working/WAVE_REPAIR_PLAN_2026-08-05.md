@@ -1,90 +1,68 @@
 # Wave repair plan — The Legendary Poet
 
-Current source production baseline: `d03f09188cd0360c6c984ed93d03b1432913332c`.
+Current verified source production baseline: `db6bc3ea8997f78d1370a05e2736cf20645c80dd`.
 
-## W0 — system truth and governance — COMPLETE
+Exact promotion evidence:
 
-Source PR #303 merged as production `69e5d3931bc1d1af635efeaf98c76cf36ce30f41`. Machine contract, live workflow path integrity, current documentation authority, agent concurrency rules, Node 24 baseline and UTC daily content are production contracts.
+- [`verification/PREMIUM_READER_AND_CURRENT_TRUTH_2026-08-05.md`](../verification/PREMIUM_READER_AND_CURRENT_TRUTH_2026-08-05.md)
+- [`verified/PREMIUM_READER_AND_CURRENT_TRUTH_2026-08-05.md`](../verified/PREMIUM_READER_AND_CURRENT_TRUTH_2026-08-05.md)
+- [`reverify/REVERIFY_db6bc3e_2026-08-05.md`](../reverify/REVERIFY_db6bc3e_2026-08-05.md)
 
-## Inter-wave closure — discovery integrity and Safari readiness — COMPLETE
+## Closed source waves
 
-Source PR #305 merged as production `44a36bdb97e22827b2026e5622b79a6908d7af03`. Committed sitemap/feed freshness is enforced inside `check:content`, and Safari brand-source QA waits for the official route-loading shell before requiring real raster placements.
+| Wave | State | Production authority |
+|---|---|---|
+| W0 — machine-checked system truth | COMPLETE | source #303 → `69e5d3931bc1d1af635efeaf98c76cf36ce30f41` |
+| Discovery integrity / Safari readiness | COMPLETE | source #305 → `44a36bdb97e22827b2026e5622b79a6908d7af03` |
+| W1 — one public Essay model | COMPLETE | source #308 → `e06bdfc42ada0a6111f0cde6e39dd7f48204f2c8` |
+| W2 — immutable essay publication | COMPLETE | source #311 → `a248abd54007bd839ffc149b9195dc4e79dc5dd3` |
+| W3 — target-scoped community scaling | COMPLETE | source #316 → `4544bb387108a98641313267beafe29deb71ee81` |
+| W4 — workflow/performance consolidation | COMPLETE | source #318 → `a11f6faff984cd599539e04696717c6fb336329b` |
+| W3 current-production hardening | COMPLETE | source #317 → `d03f09188cd0360c6c984ed93d03b1432913332c` |
+| W5 — premium reader certification | COMPLETE | exact head `0536547e178fb091de1a76c85aecec4409478975`; source #322 → `6f13600ba88f08123c8c1b817ffdc0ca3dec0bc0` |
+| Post-W5 architecture-truth reconciliation | COMPLETE | exact head `c73cdcb35d30091264db5bf8c1db1c2b0cd46135`; source #325 → current production `db6bc3ea8997f78d1370a05e2736cf20645c80dd` |
 
-## W1 — content-model unification — COMPLETE
+W5 exact-head Manual Browser QA run `31043346336` passed four of four jobs. The current-truth exact head passed Project contracts, CI, route, brand and Manual Browser QA run `31045021380`, four of four jobs.
 
-The parallel agent's durable Article-retirement work was integrated without rewriting its branch. Stale-base PR #306 was superseded through integration-only #307 and production PR #308.
+## W6 — branch and artifact retirement — ACTIVE
 
-Production `e06bdfc42ada0a6111f0cde6e39dd7f48204f2c8` established one live longform model (`Essay`), five zero-loss legacy draft archives with bounded SHA-256, retained redirects and a permanent content-model contract in both the targeted Node 24 workflow and repository-wide `check:content`.
+Root cause ID: `TLP-CLEAN-001`.
 
-## W2 — immutable essay publication — COMPLETE
+Required closure outcomes:
 
-Source agent PR #309 and collision PR #310 were closed as evidence; neither was merged. A one-commit production integration was rebuilt directly on current main and merged through source PR #311 as `a248abd54007bd839ffc149b9195dc4e79dc5dd3`.
+1. classify every remaining TLP source and AuditRepo ref by exact head and successor;
+2. never merge Arena, trigger or deeply diverged work branches wholesale;
+3. assign every unique path one explicit outcome: represented, extract, archive pointer, reject, or owner decision;
+4. preserve byte-level historical evidence before retirement where the canonical repository does not already contain it;
+5. keep unresolved media rights and source-acquisition gaps blocked instead of upgrading them by inference;
+6. rebuild selective extraction on the current source production and repeat the exact-head source matrix;
+7. record final source merge SHA and current-production reverify before any deletion claim;
+8. physically delete only through an authorized delete-ref operation; inventory or force-moving a ref is not deletion.
 
-Current production publishes all eight essays through one clone → explicit override → derived `readTime` → deep-freeze boundary. Stable `id`/`slug` cannot be overridden, the catalog is frozen and rejects duplicates, Yesenin Part II is constructed without mutating its authoring export, and its specialized validator resolves the canonical catalog object only.
+Current owned lanes:
 
-The permanent contract imports and snapshots every raw authoring module before dynamically evaluating the catalog, then proves unchanged raw JSON, distinct raw/published identities, deep freeze, stable catalog lookup, derived reading time and no public-consumer bypass. The existing Content model workflow was extended instead of adding another workflow.
+- source draft #324, rebuilt as one commit `6146e6f5da81c7904fd1bb135c22a409f3e12719` on `main@db6bc3e`, selective verified-media extraction only;
+- AuditRepo draft #185, path inventory, trigger/successor maps, W4-A archive and Arena/deep-branch barriers;
+- canonical branch disposition in [`BRANCH_DISPOSITION_2026-08-05.md`](BRANCH_DISPOSITION_2026-08-05.md).
 
-Exact tested source head `8eaeaa4abc7f80eb6b96de0657df0b3e255d96d3` passed all 13 PR workflows. Manual Browser QA passed 4/4: Chromium/Android/base iPhone Safari, premium desktop, critical iPhone and independent WebKit home reveal/routes.
+Promotion barrier: source #324 must pass the full current exact-head matrix and merge; AuditRepo #185 must then be rebuilt from current AuditRepo main, reconcile final production identity and pass `AuditRepo Validate` before promotion.
 
-## W3 — community scaling — COMPLETE
+## Governance lane — ACTIVE OWNER DECISION
 
-Source #312 was closed unmerged after a stronger parallel implementation appeared. Source #313 became the durable working lane and fixed the global-corpus architecture, then final production #316 was created directly from exact #313 head `f85aba5803ecc5643b39a5ee4081da86e0174997` and added only the missing Android/iPhone request-topology and failed remote-helpful persistence proof.
+Root cause ID: `TLP-GOV-001`.
 
-Production `4544bb387108a98641313267beafe29deb71ee81` established all eight W3 outcomes:
-
-1. generic application startup performs zero community reads;
-2. detail targets load one aggregate summary and a bounded first comment page;
-3. comments use stable `(created_at DESC, id DESC)` cursor pagination without equal-timestamp gaps or duplicates;
-4. the ratings leaderboard reads aggregate rows for known poet ids only and never downloads raw rating rows or comment bodies;
-5. public remote corpora remain ephemeral and are not written wholesale to localStorage;
-6. optimistic writes, outbox retry, offline state, cooldowns, helpful votes, cross-tab notification and storage-failure honesty remain intact;
-7. schema rollout is additive, with a bounded detail-target fallback and a fail-closed leaderboard when aggregate infrastructure is unavailable;
-8. repository validators, desktop Manual Browser QA and permanent Android/iPhone topology prove request boundaries and remote-helpful outbox behavior.
-
-A follow-up parallel review found three narrower production boundaries. Source #317 preserved the first server baseline across repeated edits of one pending rating, made poem quick navigation remote-passive, deferred compact poem-panel reads until explicit activation, repaired invalid device UUIDs and discarded malformed/mismatched outbox operations before retry. Exact head `253376bd8107471e1641027d892ac5207c18f73a` passed the complete matrix and Manual Browser QA 4/4; production is now `d03f09188cd0360c6c984ed93d03b1432913332c`.
-
-## W4 — workflow and performance consolidation — COMPLETE
-
-Source #318 closed both W4 rows without deleting acceptance coverage.
-
-Production `a11f6faff984cd599539e04696717c6fb336329b`, retained by current `d03f09188cd0360c6c984ed93d03b1432913332c`, now enforces:
-
-1. a recorded baseline of one `612.81 KiB` entry asset, one `488.82 KiB` shared asset, 14 lazy route chunks, `1597.1 KiB` total JavaScript and `244.8 KiB` total CSS;
-2. a `665,000` byte production-entry ceiling and the same ceiling for every emitted JavaScript asset;
-3. `1,800,000` total JavaScript and `300,000` total CSS ceilings;
-4. explicit raw-byte budgets for all 14 named route modules, each required to remain a distinct lazy dynamic entry outside the eager graph;
-5. a machine-readable `dist/build-budget-report.json` retained by CI;
-6. four repository-owned composite actions for Node/dependencies, deterministic build tools, locked Playwright browser installation and preview readiness;
-7. shared primitives in CI and all four Manual Browser jobs;
-8. retirement of the duplicate community mobile workflow only after Android topology moved into core QA and iPhone topology moved into fresh-process WebKit;
-9. dependency-free workflow consolidation and shared-action-aware browser-runtime validators;
-10. preservation of all previous route, content, community, brand, interaction, premium and critical-iPhone acceptance contours.
-
-Exact tested head `6bd27851f7bdd834e4fffaf5afca3e8a2102a4f6` passed the complete source matrix. Manual Browser QA passed 4/4. Pages was skipped by the normal PR condition.
-
-## W5 — premium browser certification — ACTIVE
-
-W5 owns reader-outcome synthesis, not another architecture rewrite.
-
-Required outcomes:
-
-1. define representative reader journeys across home, poet, poem, article, music, ratings and archive surfaces;
-2. certify production-like Chromium and WebKit on desktop and mobile viewports;
-3. cover keyboard-only operation, focus order, dialogs/lightboxes, reduced motion and forced colors where supported;
-4. cover blocked or unavailable storage, offline/failed community writes and degraded network behavior without dishonest success UI;
-5. verify first viewport, navigation continuity, longform readability, audio controls and community activation as user outcomes rather than only implementation tokens;
-6. reuse existing build/browser primitives and exact-head identity; adding a duplicate runner is forbidden unless an independent process boundary is proven necessary;
-7. preserve current budgets and all W0–W4 gates;
-8. run the complete exact-head source matrix and Manual Browser QA 4/4 before promotion.
-
-## W6 — branch/artifact retirement
-
-Selective extraction from the deeply diverged work branch, Arena archive pointers, trigger deletion and dormant candidate retirement review.
+The source package remains private and no public-source licence may be inferred. Closure requires one isolated source PR that records package identity, supported Node engine, non-publishing/release authority and an explicit licensing disposition, with package/lock/document parity machine-checked.
 
 ## W7 — closure discipline
 
-After every source merge: exact tested head, merge SHA, current-production reverify, matrix transition and next-agent prompt from current truth.
+After every source merge:
+
+1. record exact tested head and successful required workflows;
+2. record expected-head-protected squash merge SHA;
+3. reverify the resulting current source `main`;
+4. update matrix, registry, wave plan and branch disposition from that exact production truth;
+5. merge AuditRepo only from current main with `behind=0` and successful `AuditRepo Validate`.
 
 ## Non-mixing rule
 
-One wave owns one root-cause family. Do not combine community backend, content migration, brand art and branch deletion in one PR merely to make the diff look "massive". Scale is achieved by shared ownership layers and complete affected-surface closure, not by unrelated file count.
+One source PR owns one root-cause family. Scale comes from shared contracts and complete affected-surface closure, not from combining unrelated content, backend, brand, governance and branch-deletion work into one diff.
