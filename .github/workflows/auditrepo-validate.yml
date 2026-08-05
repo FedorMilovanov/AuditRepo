@@ -174,3 +174,87 @@ jobs:
             projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
           if-no-files-found: error
           retention-days: 7
+
+  search-p2-09-publish-clean:
+    needs: search-p2-09-artifact
+    if: github.event_name == 'pull_request' && github.head_ref == 'audit/search-p2-09-artifact-compute-20260805' && needs.search-p2-09-artifact.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout exact clean AuditRepo main
+        uses: actions/checkout@v4
+        with:
+          ref: 7a2d3f7c683e7f821302df13878d057a3aad0b06
+          fetch-depth: 0
+      - name: Assert live main and absent final ref
+        run: |
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "7a2d3f7c683e7f821302df13878d057a3aad0b06"
+          if git ls-remote --exit-code origin refs/heads/audit/search-p2-09-closure-final-20260805; then
+            echo 'final ref already exists' >&2
+            exit 1
+          fi
+      - name: Download verified reconciled artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: search-p2-09-reconciled-files-${{ github.run_id }}
+          path: ${{ runner.temp }}/search-p2-09-payload
+      - name: Verify exact artifact digests
+        run: |
+          cd "${RUNNER_TEMP}/search-p2-09-payload"
+          printf '%s  %s\n' \
+            'd0654e90cd9e487d403d18d771d8b92387bdf71f95991caf7b9f1c733307000d' 'NEXT_AGENT_PROMPT.md' \
+            '322d404e015713394afb984164798d5a55868db6ea8a93c03333653c12fef9af' 'reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md' \
+            '2b22b3fdd00aa44f1716cf18e42a6f0f6d5c0379a872425bd049af638645c2d9' 'verified/MASTER_BUG_MATRIX.md' \
+            | sha256sum --check --strict
+      - name: Set up Node 22.12
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply artifact to clean main tree
+        run: |
+          cp "${RUNNER_TEMP}/search-p2-09-payload/NEXT_AGENT_PROMPT.md" projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+          cp "${RUNNER_TEMP}/search-p2-09-payload/verified/MASTER_BUG_MATRIX.md" projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          cp "${RUNNER_TEMP}/search-p2-09-payload/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md" projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md
+      - name: Validate clean permanent tree
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
+          { git diff --name-only; git ls-files --others --exclude-standard; } | sort -u > "${changed_file}"
+          echo "AUDITREPO_CHANGED_PATHS_FILE=${changed_file}" >> "${GITHUB_ENV}"
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p reports/matrix-coverage
+          python3 scripts/check_matrix_coverage.py --verbose --json-out reports/matrix-coverage/report.json
+          python3 scripts/matrix_coverage_contexts.py --json-out reports/matrix-coverage/contexts.json --markdown-out reports/matrix-coverage/contexts.md
+          node scripts/repository_history_forensic_audit.mjs --strict
+          rm -rf reports/matrix-coverage reports/repository-history-forensic-audit.json reports/repository-history-forensic-audit.md
+          git diff --check
+      - name: Verify exact three-file final diff
+        run: |
+          expected="$(printf '%s\n' \
+            'projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md' \
+            'projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md' \
+            'projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')"
+          actual="$({ git diff --name-only --diff-filter=ACMR; git ls-files --others --exclude-standard; } | sort -u)"
+          test "${actual}" = "${expected}"
+      - name: Commit and publish clean final ref
+        run: |
+          git switch -c audit/search-p2-09-closure-final-20260805
+          git config user.name "audit-search-reconciler"
+          git config user.email "audit-search-reconciler@users.noreply.github.com"
+          git add \
+            projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md \
+            projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md \
+            projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+          git commit -m "audit(search): close SEARCH-P2-09"
+          git push origin HEAD:refs/heads/audit/search-p2-09-closure-final-20260805
