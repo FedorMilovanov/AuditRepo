@@ -1,6 +1,6 @@
 # Remote branch disposition — The Legendary Poet
 
-Current production: `a248abd54007bd839ffc149b9195dc4e79dc5dd3`.
+Current production: `4544bb387108a98641313267beafe29deb71ee81`.
 
 | Branch / class | Graph result | Disposition |
 |---|---|---|
@@ -19,6 +19,11 @@ Current production: `a248abd54007bd839ffc149b9195dc4e79dc5dd3`.
 | `audit/immutable-essay-publication-w2-20260805` | first W2 implementation, source #309 | closed unmerged after overlap; evidence incorporated into #311 |
 | `audit/immutable-essay-publication-20260805` | parallel W2 implementation, source #310 | closed unmerged after overlap; strongest invariants incorporated into #311 |
 | `integration/immutable-essay-publication-w2-20260805` | single W2 production integration, source #311 | squash-merged as production `a248abd`; evidence-only after merge |
+| `audit/community-scaling-w3-20260805` | first W3 implementation, source #312 | closed unmerged after stronger parallel lane appeared; evidence-only, never merge separately |
+| `audit/community-target-scaling-w3-20260805` | parallel W3 working lane, source #313 | closed unmerged; exact durable head `f85aba58` was used as the base of final production #316 |
+| `integration/community-target-scaling-w3-final-20260805` | non-production exact-head transfer through #314 | superseded integration history; no production merge and no separate re-merge |
+| source #315 transfer lane | second non-production transfer collided only in Git history | closed unmerged; no code loss; replaced by fresh exact-head final integration branch |
+| `integration/community-scaling-w3-final2-20260805` | final W3 production lane, source #316 | squash-merged as production `4544bb3`; evidence-only after merge |
 
 ## Retirement barrier
 
