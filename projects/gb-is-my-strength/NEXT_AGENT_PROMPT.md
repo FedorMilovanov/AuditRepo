@@ -44,8 +44,9 @@
 Product umbrella #61 intentionally remains open only for independent work:
 
 1. remove any still-confirmed inactive speed/search controls from Tab/accessibility exposure;
-2. complete any still-confirmed radiogroup roving keyboard model and popup semantics;
-3. move save/favorite metadata to the canonical route metadata/store contract.
+2. complete any still-confirmed radiogroup roving keyboard model and popup semantics.
+
+**Closed 2026-08-05:** item 3 (save/favorite metadata → canonical route metadata/store contract) is source-closed by Product PR #1061 / merge `d0647b71` — `src/runtime/favorite-store.js` (SCHEMA_VERSION=1, `routeId`/`category`/`section` from route metadata, `GBFavoriteStore` version gate), `izbrannoe/index.astro` rewritten. No production/live claim. Contract `favorite-store-canonical` PASS 3/3.
 
 Do not reopen ReaderProjection without new exact-current evidence.
 
