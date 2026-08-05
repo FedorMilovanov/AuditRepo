@@ -3,16 +3,17 @@
 - Source repo: `FedorMilovanov/TheLegendaryPoet`
 - Production URL: https://thelegendarypoet.ru
 - Main branch: `main`
-- Current verified source SHA: `a248abd54007bd839ffc149b9195dc4e79dc5dd3`
+- Current verified source SHA: `4544bb387108a98641313267beafe29deb71ee81`
 - Current status: `active`
-- Latest closed wave: `2026-08-05 W2 immutable essay publication`
-- Active repair wave: `W3 community scaling`
+- Latest closed wave: `2026-08-05 W3 community scaling`
+- Active repair wave: `W4 workflow and performance consolidation`
 
 ## Start here
 
-- Latest verified current truth: [`verified/IMMUTABLE_ESSAY_PUBLICATION_2026-08-05.md`](verified/IMMUTABLE_ESSAY_PUBLICATION_2026-08-05.md)
-- Latest promotion verification: [`verification/IMMUTABLE_ESSAY_PUBLICATION_2026-08-05.md`](verification/IMMUTABLE_ESSAY_PUBLICATION_2026-08-05.md)
-- Latest exact source-HEAD proof: [`reverify/REVERIFY_a248abd_2026-08-05.md`](reverify/REVERIFY_a248abd_2026-08-05.md)
+- Latest verified current truth: [`verified/COMMUNITY_SCALING_2026-08-05.md`](verified/COMMUNITY_SCALING_2026-08-05.md)
+- Latest promotion verification: [`verification/COMMUNITY_SCALING_2026-08-05.md`](verification/COMMUNITY_SCALING_2026-08-05.md)
+- Latest exact source-HEAD proof: [`reverify/REVERIFY_4544bb3_2026-08-05.md`](reverify/REVERIFY_4544bb3_2026-08-05.md)
+- Previous W2 closure: [`verified/IMMUTABLE_ESSAY_PUBLICATION_2026-08-05.md`](verified/IMMUTABLE_ESSAY_PUBLICATION_2026-08-05.md)
 - Previous system/content closure: [`verified/SYSTEM_AND_CONTENT_WAVES_2026-08-05.md`](verified/SYSTEM_AND_CONTENT_WAVES_2026-08-05.md)
 - Working root-cause matrix: [`working/MASTER_BUG_MATRIX_2026-08-05.md`](working/MASTER_BUG_MATRIX_2026-08-05.md)
 - Working wave plan: [`working/WAVE_REPAIR_PLAN_2026-08-05.md`](working/WAVE_REPAIR_PLAN_2026-08-05.md)
@@ -24,16 +25,17 @@
 
 ## Current truth
 
-Source production contains four verified architecture lines:
+Source production contains five verified architecture lines:
 
 1. PR `#303` established machine-checked project truth, live workflow paths, Node 24 and deterministic UTC daily content.
 2. PR `#305` enforced committed sitemap/feed freshness and removed a Safari route-loading race from brand-source QA.
 3. PR `#308` retired the hidden Article model with zero-loss archival and one live Essay model.
-4. PR `#311` closed W2 by publishing all eight canonical essays through one clone/override/derived-read-time/deep-freeze boundary.
+4. PR `#311` published all eight canonical essays through one clone/override/derived-read-time/deep-freeze boundary.
+5. PR `#316` removed global community hydration, introduced target/aggregate reads with stable comment cursors, bounded v3 persistence/outbox and permanent desktop/Android/iPhone request-topology proof.
 
-Current source `main@a248abd54007bd839ffc149b9195dc4e79dc5dd3` no longer mutates imported essay authoring modules. Stable `id`/`slug`, duplicate guards, raw-authoring snapshots, canonical consumer enforcement and repository-wide immutable-publication validation are production contracts. The final W2 head passed the complete exact-head matrix including Manual Browser QA 4/4.
+Current source `main@4544bb387108a98641313267beafe29deb71ee81` performs zero community reads during generic application startup. Detail surfaces use target aggregates and bounded cursor comments, `/ratings` uses aggregate poet rows only, public remote corpora remain ephemeral, and offline writes remain bounded and retryable. The final W3 head passed the complete exact-head matrix including Manual Browser QA 4/4 and the dedicated Android/iPhone Community scaling mobile contract.
 
-W3 is active-current, not fixed. It owns removal of generic-startup community reads, target-scoped aggregate loading, bounded cursor comments, aggregate-only leaderboard data, bounded persistence, preserved offline/outbox semantics, additive backend rollout and exact browser request-topology evidence. W4–W6 remain separate later lanes.
+W4 is active-current. It owns reusable workflow/build/browser primitives and explicit bundle/chunk budgets without deleting route/content/browser acceptance coverage. W5–W6 remain separate later lanes.
 
 ## Folder meaning
 
