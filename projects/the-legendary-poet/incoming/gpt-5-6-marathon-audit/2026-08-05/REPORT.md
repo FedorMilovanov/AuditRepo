@@ -6,169 +6,126 @@
 - Source repo: `FedorMilovanov/TheLegendaryPoet`
 - Agent: `gpt-5-6-marathon-audit`
 - Date: `2026-08-05`
-- Mode: `free-intake / multi-branch synthesis / implementation verification`
 - Audited base: `85c4303dc683abc6e201ea707a0b4d6f5f19f82c`
 - Integration branch: `agent/marathon-audit-integration-20260805`
 - Integration PR: `#286`
-- Current audited head: `33e539ea3d4fb33b37bb23a360f06c2137856a55`
-- Production status at intake time: `not merged`
+- Final audited head: `25cfa99e7b20af4d1c78b3ed1c7fd219878f8a81`
+- Production squash merge: `e06d75970cf1262f4dab5bfd941e45328f07f747`
+- Production status: `merged into main`
 
 ## 1. Branch reconciliation
 
 ### `arena/019fcf77-thelegendarypoet`
 
-- Disposition: `selected as broad integration base, then repaired`.
-- Useful scope:
-  - reader-facing source honesty;
-  - computed reading time and Russian typography;
-  - search cleanup;
-  - removal of the dead article engine;
-  - hover/compositor corrections.
-- Rejected regression:
-  - full longform article data had entered the startup search path and enlarged the entry bundle to roughly `1,135 KiB`.
-- Resolution:
-  - generated lightweight article search index;
-  - final measured entry bundle on the audited head: about `650.75 KiB`, below the enforced `700 KiB` limit.
+Disposition: broad integration base, then repaired. Retained source-honesty, reading-time, typography, search, dead-engine removal and compositor work. Its startup-bundle regression was rejected: the full longform corpus had entered the command-palette path and pushed the entry chunk to roughly `1,135 KiB`. A generated lightweight search index reduced the verified entry to about `650.92 KiB`, below the enforced `700 KiB` ceiling.
 
 ### `arena/019fcf76-thelegendarypoet`
 
-- Disposition: `selective port only`.
-- Retained unique changes:
-  - explicit evidence boundary for NYPL archival descriptions;
-  - inline citation tooltips and bibliography anchors;
-  - safe browser-storage access;
-  - one live route registry;
-  - deterministic brand-materialization fallback;
-  - additional content/build validators.
-- Not merged wholesale because it overlapped the broader branch and would have reintroduced conflicts and duplicate architecture.
+Disposition: selective port only. Retained the NYPL evidence boundary, inline citation tooltips and bibliography anchors, safe browser storage, one live route registry, deterministic brand materialization fallback and additional validators. It was not merged wholesale because it overlapped the broader branch and would have reintroduced conflicts and duplicate architecture.
 
 ### `work/local-images-playwright-wtoc`
 
-- Disposition: `not merged`.
-- Reason: old and deeply diverged history.
-- Reused concept only: a stable non-transforming pointer hit surface around the transformed visual plane.
+Disposition: not merged. Its history was old and deeply diverged. Only the independently verified design principle of a stable non-transforming pointer hit surface around the transformed visual plane was reused.
 
 ### Temporary trigger branches and PRs
 
-- PRs used only to trigger or isolate checks were closed without merge.
-- No temporary workflow, QA output or trigger-only code is part of the integration tree.
+Temporary PRs used to isolate or trigger checks were closed without merge. One-off workflow files, QA output and trigger-only code are absent from production.
 
-## 2. Confirmed findings and implemented repairs
+## 2. Verified repair set
 
-### TLP-MARATHON-01 — Technical evidence language leaked into reader copy
+### TLP-MARATHON-01 — Reader copy exposed technical evidence language
 
-- Original symptoms: `item-level`, `finding aid`, SHA/PDF framing and repository-style provenance language appeared in article-facing content.
-- Repair:
-  - reader copy rewritten in normal editorial language;
-  - NYPL archival descriptions bounded as maps for further search, not as read primary evidence;
-  - publication links no longer point to fabricated repository ledgers.
-- Evidence angle: `source + content validators + browser rendering`.
-- Status at audited head: `fixed-on-integration-head`.
+Reader-facing content was cleared of `item-level`, `finding aid`, SHA/PDF framing and repository-style provenance leakage. NYPL archival descriptions now act as maps for further search, not as claims that underlying primary documents were read. Publication cards no longer use fabricated repository-ledger links.
+
+Status: `closed-production`.
 
 ### TLP-MARATHON-02 — Citation interaction and ordering were brittle
 
-- Repair:
-  - citation numbers are ordered and non-breaking;
-  - hover/focus tooltip is immediate;
-  - citations link to expandable bibliography cards;
-  - focused article acceptance checks 64 unique targets and 64 expanded HTTPS source links.
-- Status at audited head: `fixed-on-integration-head`.
+Citation markers are ordered, non-breaking, keyboard-focusable and backed by immediate tooltips and bibliography anchors. The focused article acceptance expands and checks 64 unique citation targets and 64 HTTPS source links.
 
-### TLP-MARATHON-03 — Search imported the full essay corpus into startup code
+Status: `closed-production`.
 
-- Repair:
-  - generated `essaySearchIndex.generated.ts` contains lightweight searchable metadata;
-  - generator and validator enforce freshness and shape;
-  - longform article bodies remain route-split.
-- Measured result: startup entry about `650.75 KiB`, enforced ceiling `700 KiB`.
-- Status at audited head: `fixed-on-integration-head`.
+### TLP-MARATHON-03 — Search imported full essays into startup code
+
+The command palette now consumes generated lightweight article metadata. Longform bodies remain route-split; generator and validator enforce search-index freshness and shape.
+
+Status: `closed-production`.
 
 ### TLP-MARATHON-04 — Duplicate route architecture could drift
 
-- Original symptom: shadow `routeModules.tsx` coexisted with the active route system.
-- Repair:
-  - duplicate registry removed;
-  - one live lazy registry remains;
-  - app-shell validator checks 14 lazy routes and route integrity.
-- Status at audited head: `fixed-on-integration-head`.
+The shadow `routeModules.tsx` registry was removed. One live lazy registry remains, and app-shell/route validators check the 14-route contract.
+
+Status: `closed-production`.
 
 ### TLP-MARATHON-05 — Browser storage failures could break UI paths
 
-- Repair: safe storage wrapper applied to theme, analytics consent, community identity, favorites/audio state and related browser-only access.
-- Contract: blocked or unavailable storage degrades persistence, not rendering.
-- Status at audited head: `fixed-on-integration-head`.
+Theme, analytics consent, community identity, favorites/audio state and related browser-only persistence use a safe storage wrapper. Blocked storage degrades persistence rather than rendering.
+
+Status: `closed-production`.
 
 ### TLP-MARATHON-06 — Tilt interaction accumulated transition work and risked paint instability
 
-- Repair:
-  - pointer handlers live on a stable outer hit surface;
-  - only the inner visual plane transforms;
-  - live pointer tracking has no CSS transition backlog;
-  - settle transition applies after pointer exit;
-  - nested `preserve-3d` removed;
-  - Chromium checks that the article title remains painted during live 3D movement.
-- Status at audited head: `fixed-on-integration-head`.
+Pointer handlers now live on a stable outer hit surface; only the inner plane transforms. Live tracking has no CSS transition backlog, settle transition applies after exit, and nested `preserve-3d` was removed. Chromium checks that the article title remains painted during movement.
 
-### TLP-MARATHON-07 — Dependency graph required a current supported router line
+Status: `closed-production`.
 
-- Repair:
-  - application imports migrated from `react-router-dom` to direct `react-router`;
-  - `react-router 8.3.0`;
-  - `react` and `react-dom 19.2.8`;
-  - `vite 7.3.6`;
-  - compatible build/type packages and explicit safe transitive overrides.
-- Dedicated evidence:
-  - run `30971293287`, job `92195972276`;
-  - production and full lockfile audit: `0 vulnerabilities`;
-  - validators, typecheck, build, prerender, route and browser checks passed.
-- Status at audited head: `fixed-on-integration-head`.
+### TLP-MARATHON-07 — Dependency graph required a supported router line
 
-## 3. QA findings that were not product regressions
+Application imports moved from `react-router-dom` to direct `react-router`. Production contains `react`/`react-dom 19.2.8`, `react-router 8.3.0`, `vite 7.3.6` and explicit safe transitive overrides. Dedicated production and full lockfile audits reported zero vulnerabilities.
 
-### TLP-QA-01 — Yesenin Part I text locator assumed a specific DOM element
+Status: `closed-production`.
 
-- The article accessibility snapshot contained the required paragraph in Chromium, Android Chrome and iPhone WebKit.
-- The failed test first used global text matching, then assumed the accessibility paragraph was a literal `<p>`.
-- Final contract scopes `toContainText` to the semantic `article` reader surface.
-- This still proves the reader-visible evidence boundary without coupling to internal component tags.
-- Status: `QA contract corrected; final workflow evidence pending at intake time`.
+## 3. QA defects separated from product defects
 
-### TLP-QA-02 — Fine-pointer tests were scheduled in touch-only projects
+### TLP-QA-01 — Yesenin Part I assertion was coupled to locator internals
 
-- Android and iPhone profiles intentionally disable pointer tilt.
-- Two tests specifically require fine pointer movement and therefore belong to the desktop Chromium project.
-- Playwright project filters now express that capability boundary explicitly; touch behavior remains covered by mobile tests.
-- Status: `QA capability matrix corrected; final workflow evidence pending at intake time`.
+The article contained the required reader-visible statements in Chromium, Android Chrome and iPhone WebKit. The test first assumed global text uniqueness, then a literal `<p>`, then Playwright locator text normalization. The final contract reads the semantic article `innerText`, normalizes only Unicode whitespace and requires both complete statements. This preserves the content gate without coupling it to component tags.
 
-## 4. Verification evidence completed before the final PR matrix
+Status: `closed-production`; final run `30989767467` succeeded.
 
-### Full integration wave
+### TLP-QA-02 — Fine-pointer assertions ran in touch projects
 
-- Run: `30969918518`
-- Job: `92191816076`
-- Result: repository gates, production build/prerender and focused article/hover Chromium checks passed.
+Android and iPhone intentionally disable pointer tilt. Two fine-pointer-only assertions now run only in desktop Chromium; touch behavior remains covered by mobile tests.
+
+Status: `closed-production`; final Manual Browser QA run `30989767291` succeeded.
+
+## 4. Evidence
+
+### Dedicated integration wave
+
+- Run `30969918518`, job `92191816076` — repository gates, production build/prerender and focused article/hover Chromium passed.
 
 ### Security and Router 8 wave
 
-- Run: `30971293287`
-- Job: `92195972276`
-- Result: dependency selection, full and production audits, validators, TypeScript, build/output, prerender/SEO, routes, articles, tilt and focused Chromium interactions passed.
+- Run `30971293287`, job `92195972276` — dependency selection, production/full audit, validators, TypeScript, build/output, prerender/SEO, routes, articles, tilt and focused Chromium interactions passed.
 
-## 5. Current-head gate rule
+### Final exact-head PR matrix
 
-No finding in this raw intake is promoted to `fixed-current` or `closed-production` until all of the following are true:
+Exact tested head: `25cfa99e7b20af4d1c78b3ed1c7fd219878f8a81`.
 
-1. standard PR workflows pass on exact head `33e539ea3d4fb33b37bb23a360f06c2137856a55`;
-2. PR `#286` is squash-merged without head drift;
-3. the resulting `main` merge SHA is recorded in `verification/`, `verified/` and `reverify/`;
-4. AuditRepo validates and merges its own closure package.
+- `30989767599` — CI — success
+- `30989767362` — Site route integrity audit — success
+- `30989767318` — Articles catalog acceptance — success
+- `30989767467` — Yesenin Part I browser acceptance — success
+- `30989768212` — Yesenin Part I safe publication — success
+- `30989767486` — Yesenin Part II safe publication — success
+- `30989767485` — Yesenin Duncan safe publication — success
+- `30989767985` — Brand raster QA — success
+- `30989767787` — Brand deep reference and motion audit — success
+- `30989767291` — Manual Browser QA — success; all four jobs succeeded
+- `30989767003` — Request Pages deployment — skipped as expected for the PR event
 
-## 6. Residual observations
+### Merge evidence
 
-- The isolated workflow command that temporarily installs Playwright `1.54.1` can print audit warnings for that temporary runner-only graph. This is not the committed project lockfile, whose dedicated production and full audits are zero. It remains workflow-harness debt, not evidence of a shipped application dependency.
-- Literary-style validation may continue to report allowed source-facing terms such as `PDF`, `NYPL` or institutional-description language in bibliography/policy contexts; those warnings must not be confused with reader-copy leakage.
-- Original Arena branches remain historical evidence. The integration PR, not a direct wholesale merge of each branch, is the controlled repair unit.
+- PR `FedorMilovanov/TheLegendaryPoet#286`
+- Merge method: squash
+- Merge guard: expected head `25cfa99e7b20af4d1c78b3ed1c7fd219878f8a81`
+- Production `main` SHA: `e06d75970cf1262f4dab5bfd941e45328f07f747`
+- Main was re-read after merge: production `package.json` and the corrected Yesenin browser contract are present.
 
-## 7. Notes for verifier
+## 5. Residual observations
 
-Use the exact source merge SHA and final standard workflow run IDs when promoting this package. Do not reuse the percentage stated in closed PR `#135`: that PR had no merged repository changes and is not current-head evidence. The governed source-library intake from merged PR `#104` remains a separate evidence line and is not replaced by this repair wave.
+- The Manual Browser workflow temporarily installs Playwright `1.54.1` with `--no-save --no-package-lock`; warnings from that runner-only graph are not the committed lockfile. The committed production and full audits are zero. This remains workflow-harness debt, not shipped dependency debt.
+- Literary-style validation may still report allowed bibliography/policy terms such as `PDF`, `NYPL` or institutional-description language. Those warnings are not reader-copy leakage.
+- Original Arena branches remain historical evidence. Production truth is the squash merge above, not a wholesale merge of every historical branch.
+- Closed AuditRepo PR `#135` had no merged file changes; its percentage is not current-head evidence. The governed source-library intake from merged PR `#104` remains a separate evidence line.
