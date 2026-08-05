@@ -1,0 +1,12 @@
+{
+  "id": "search-command-palette-a11y",
+  "source": "docs/design-references/current/search-palette.html",
+  "component": "search.js",
+  "requiredTokens": ["role=\"combobox\"", "aria-activedescendant", "cp-close", "gb-nav-search-icon"],
+  "partialTokens": ["aria-expanded", "cp-scope-chip"],
+  "requiredOrder": ["cp-close", "cp-scope-chip"],
+  "forbiddenTokens": [],
+  "routes": ["*"],
+  "mode": "1:1 REPLICA (закрыто PR #1039)",
+  "note": "PR #1039 добавил combobox/aria-activedescendant/cp-close/44px. Контракт фиксирует это как обязательное, чтобы не откатилось."
+}

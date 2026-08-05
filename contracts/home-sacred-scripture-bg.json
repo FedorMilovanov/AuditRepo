@@ -1,0 +1,11 @@
+{
+  "id": "home-sacred-scripture-bg",
+  "source": "docs/design-references/current/home-sacred-bg.html",
+  "component": "HomeAmbientPhrases",
+  "requiredTokens": ["hScriptureBg", "h-scripture-bg", "h-phrase"],
+  "requiredOrder": ["hScriptureBg", "h-phrase"],
+  "forbiddenTokens": [],
+  "routes": ["index"],
+  "mode": "1:1 REPLICA",
+  "note": "Фича фоновых библейских фраз. Сейчас JS-генератор (enhancements.js) и CSS (home.css .h-phrase) живы, но контейнер #hScriptureBg НЕ перенесён в Astro → фича мертва молча. Контракт требует контейнер."
+}
