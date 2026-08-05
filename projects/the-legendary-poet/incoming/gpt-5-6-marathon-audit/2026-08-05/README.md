@@ -7,7 +7,7 @@
 - Mode: `free-intake / multi-branch synthesis / source-build-browser evidence`
 - Audited base: `main@85c4303dc683abc6e201ea707a0b4d6f5f19f82c`
 - Integration PR: `FedorMilovanov/TheLegendaryPoet#286`
-- Audited integration head: `33e539ea3d4fb33b37bb23a360f06c2137856a55`
+- Final audited integration head: `25cfa99e7b20af4d1c78b3ed1c7fd219878f8a81`
 - Production merge: `pending at intake time`
 
 ## Scope
