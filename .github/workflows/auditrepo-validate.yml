@@ -6,79 +6,100 @@ on:
   pull_request:
 
 jobs:
-  tts-production-closure:
-    if: github.event_name == 'pull_request' && github.event.pull_request.number == 167 && github.head_ref == 'lane/tts-production-closure-20260805'
+  validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    permissions:
-      contents: write
-      pull-requests: read
     steps:
-      - name: Checkout exact closure branch
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          ref: lane/tts-production-closure-20260805
-          fetch-depth: 0
-          persist-credentials: true
+          fetch-depth: 2
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Assert exact lane and transport files
-        shell: bash
+      - name: Check structure
+        run: python3 scripts/check_auditrepo_structure.py
+      - name: Capture changed paths for intake ratchet
         run: |
-          set -euo pipefail
-          test "$GITHUB_HEAD_REF" = "lane/tts-production-closure-20260805"
-          test "$(git status --porcelain)" = ""
-          test -f scripts/tts_production_closure_executor.py
-          test -f .github/workflows/auditrepo-validate.yml
-      - name: Align executor with release-manifest TTS schema
-        shell: bash
+          changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
+          if git rev-parse HEAD^1 >/dev/null 2>&1; then
+            git diff --name-only HEAD^1 HEAD > "${changed_file}"
+          else
+            git diff-tree --no-commit-id --name-only -r HEAD > "${changed_file}"
+          fi
+          cat "${changed_file}"
+          echo "AUDITREPO_CHANGED_PATHS_FILE=${changed_file}" >> "${GITHUB_ENV}"
+      - name: Validate repo rules
+        run: python3 scripts/validate_audit_repo.py
+      - name: Test validator report-content regressions
+        run: python3 scripts/validate_audit_repo_regression_test.py
+
+  matrix-coverage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test matrix coverage control plane
         run: |
-          set -euo pipefail
-          python3 - <<'PY'
-          from pathlib import Path
-          path = Path('scripts/tts_production_closure_executor.py')
-          text = path.read_text(encoding='utf-8')
-          old = '''    required_tts_keys = {"controller", "engine", "worker", "noticeCss"}\n    if not required_tts_keys.issubset(tts):\n        fail(f"live manifest TTS extension missing keys: {sorted(required_tts_keys - set(tts))}")\n'''
-          new = '''    assets = tts.get("assets")\n    if not isinstance(assets, dict):\n        fail("live manifest TTS assets are missing")\n    required_tts_keys = {"controller", "engine", "worker", "noticeCss", "serviceWorker"}\n    if not required_tts_keys.issubset(assets):\n        fail(f"live manifest TTS extension missing asset keys: {sorted(required_tts_keys - set(assets))}")\n    if tts.get("lazyNoPrecache") != ["css/tts-download-notice.css", "js/vosk-tts-engine.js", "js/vosk-tts-worker.js"]:\n        fail("live manifest TTS lazy-no-precache contract drifted")\n'''
-          if text.count(old) != 1:
-              raise SystemExit('executor schema patch did not match exactly once')
-          path.write_text(text.replace(old, new, 1), encoding='utf-8')
-          PY
-          python3 -m py_compile scripts/tts_production_closure_executor.py
-      - name: Verify production evidence and write canonical closure
+          python3 -m py_compile \
+            scripts/check_matrix_coverage.py \
+            scripts/matrix_coverage_lib.py \
+            scripts/matrix_coverage_contexts.py \
+            scripts/matrix_coverage_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+      - name: Enforce matrix evidence coverage
+        run: |
+          set -o pipefail
+          mkdir -p reports/matrix-coverage
+          python3 scripts/check_matrix_coverage.py \
+            --verbose \
+            --json-out reports/matrix-coverage/report.json \
+            | tee reports/matrix-coverage/report.log
+          python3 scripts/matrix_coverage_contexts.py \
+            --json-out reports/matrix-coverage/contexts.json \
+            --markdown-out reports/matrix-coverage/contexts.md
+      - name: Upload matrix coverage diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: matrix-coverage-${{ github.run_id }}
+          path: reports/matrix-coverage/**
+          if-no-files-found: error
+          retention-days: 14
+
+  repository-history-forensic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Checkout exact head with complete history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Node 22.12
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+      - name: Validate script and disposition ledger
+        run: |
+          node --check scripts/repository_history_forensic_audit.mjs
+          node -e "JSON.parse(require('node:fs').readFileSync('projects/gb-is-my-strength/verified/closed-unmerged-pr-dispositions.json', 'utf8'))"
+      - name: Inventory every branch and closed PR head
         env:
-          GH_TOKEN: ${{ github.token }}
-        run: GITHUB_REF_NAME='' python3 scripts/tts_production_closure_executor.py
-      - name: Validate exact closure transaction
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 scripts/check_auditrepo_structure.py
-          python3 scripts/validate_audit_repo.py
-          git diff --check
-          test "$(grep -c '^| TTS-DL-UNZIP-SYNC |' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md)" = "1"
-          test "$(grep -c '^| TTS-DL-NO-TABLOCK |' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md)" = "1"
-          grep -F '## ✅ ЗАКРЫТО (225)' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-          grep -F '## 🟡 P2 — ОТКРЫТО (30)' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-          grep -F '| **Всего открыто (матрица)** | **146** |' projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-      - name: Restore trusted workflow and commit permanent result
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch --no-tags origin '+main:refs/remotes/origin/main'
-          git show origin/main:.github/workflows/auditrepo-validate.yml > .github/workflows/auditrepo-validate.yml
-          git rm -f scripts/tts_production_closure_executor.py
-          test ! -e scripts/tts_production_closure_executor.py
-          git add .github/workflows/auditrepo-validate.yml
-          git add projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-          git add projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
-          git add projects/gb-is-my-strength/incoming/tts-deep-current-head-audit-2026-08-04/CLOSURE.md
-          git add projects/gb-is-my-strength/incoming/tts-deep-current-head-audit-2026-08-04/FINAL-VALIDATION.md
-          git add projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_38b25703_tts-production-closure.md
-          git diff --cached --check
-          git diff --cached --quiet && { echo 'No permanent closure diff produced' >&2; exit 1; }
-          git commit -m 'audit(tts): close delivery runtime on production'
-          git push origin HEAD:lane/tts-production-closure-20260805
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/repository_history_forensic_audit.mjs --strict
+      - name: Verify tracked tree is unchanged
+        run: git diff --exit-code
+      - name: Upload forensic inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: auditrepo-history-forensic-${{ github.run_id }}
+          path: |
+            reports/repository-history-forensic-audit.json
+            reports/repository-history-forensic-audit.md
+          if-no-files-found: error
+          retention-days: 30
