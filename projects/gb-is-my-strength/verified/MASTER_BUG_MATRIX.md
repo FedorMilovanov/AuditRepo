@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `b3768b45de4f9b5abcc39236ee94b7cfe6c55281` (current merged Product source for `SEARCH-P2-09`; exact PR head `ca045325458df820cf98f746e15bb7ab051ef826` passed 12/12 workflow groups; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |
+| Source verification anchor | `92c4939c62bda365c1531c31d150c3988d8cfa47` (current merged Product source after ReaderProjection PR #990; exact final head `fdc3a90e9f4b8728698fd4d21f2afae3880f8525` passed 15/15 workflow groups, including source 68/68, browser 144/144, tooltip handoff 19/19 and full Runtime Interactive; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |
 | Deploy | ✅ **EXACT PRODUCTION AUTHORITY.** Run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate `38b257030afb7cfa8a7b1128f8c86539fd36dec0:30960174778-1`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`, transport artifact `8912983035` digest `sha256:e7784d18a33e256da4da52a2d0d0a46d5587fb5c6659602047c6be7d8b71108e`. Readiness job `92162173520`, unchanged Gill mobile PlayEmber smoke, immutable candidate verification/upload, promotion job `92165278471`, Pages deployment, generic live contract and live TTS extension all passed. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md` (Product PR #968, exact head `ca045325`, squash merge `b3768b45`; merged source and exact-head Chromium/WebKit/CI closure, no new production claim). |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_92c4939c_readerprojection-source-closure.md` (Product PR #990, exact head `fdc3a90e`, squash merge `92c4939c`; merged source and exact-head Chromium/CI closure, no new production claim). |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current exact production authority is run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`. The matrix is a durable verified backlog; later source movement does not silently reopen or close rows without a new applicable reverify.
 
@@ -448,13 +448,21 @@ _История сессий (HEAD-переходы, что влито) — в �
 ## Примечания
 
 
+### 2026-08-05 — ReaderProjection merged-source closure @ Product `92c4939c`
+- Source-closed the confirmed-current shared ReaderProjection API/policy and TTS vs speakable/summary/search/print/current-section convergence clusters from immutable intake PR #169.
+- Product PR #990 exact final head `fdc3a90e9f4b8728698fd4d21f2afae3880f8525` passed all 15 triggered workflow groups: source **68/68**, browser **144/144**, exact `1280×850` tooltip handoff **19/19**, full Runtime Interactive, Visual Parity, TTS, Print, Native Source and surrounding gates.
+- Guarded squash merge `92c4939c62bda365c1531c31d150c3988d8cfa47`; all six merged blobs equal the tested final head.
+- Reader artifact `8931327913`, digest `sha256:2132049535f2f01788b63e3fcee0d3b0ce5edef766158d19d0c49b41b5d5d596`; Runtime artifact `8931715596`, digest `sha256:ad88586ec84c1fb20b3a6519041b337daf71e2ba42a00a9d38b88fef41be0747`.
+- These were intake clusters without canonical matrix IDs, so arithmetic remains **371 = 226 closed + 145 open**. No new production/live claim.
+- Product #61 remains open only for independently reverified controls/accessibility, popup/radiogroup and favorites metadata/store scopes.
+
 ### 2026-08-05 — TTS production closure @ exact Product `38b25703`
 - Closed `TTS-DL-UNZIP-SYNC` and `TTS-DL-NO-TABLOCK` from Product core PR #876 / merge `0d60315d37efd5b47c76795f8167e99398a5b7e3` plus final PlayEmber PR #929 / merge `e63dbf7d2a925501587df81ff5fb84b816e4e95f`.
 - Real-model evidence retained: worker-owned acquisition/extraction/IDB/ORT/inference, maximum UI gap **32.7 ms**, exactly one model acquisition and follower/shared reuse; all 19 core workflow groups passed.
 - Exact production authority: Pages run `30960174778` attempt `1`, release/control `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate `38b257030afb7cfa8a7b1128f8c86539fd36dec0:30960174778-1`, digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`.
 - Readiness job `92162173520` passed the unchanged Gill mobile PlayEmber smoke and immutable candidate barrier; promotion job `92165278471` passed exact candidate identity, Pages deploy, generic live release and live TTS extension.
 - Live evidence artifacts: generic `8912993840`, TTS `8912994737`; deployed TTS routes and versioned assets/hash/CSP/SW boundaries passed.
-- Product issue #474 recovered; #61 remains open only for independent non-TTS ReaderProjection/speakable-search, accessibility slot/radiogroup, popup semantics and save-store scope.
+- Product issue #474 recovered; ReaderProjection/speakable-search convergence is source-closed by PR #990, while #61 remains open only for independently reverified accessibility slot/radiogroup, popup semantics and save-store scope.
 - Canonical arithmetic: total remains **371**; closed `223 → 225`, open `148 → 146`, P2 `32 → 30`.
 
 ### Дубликаты (объединены):
@@ -493,7 +501,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-05: source anchor `b3768b45`; production anchor `38b25703`; exact production run `30960174778`; 371 canonical = 226 closed + 145 open)
+## Статистика (обновлено 2026-08-05: source anchor `92c4939c`; production anchor `38b25703`; exact production run `30960174778`; 371 canonical = 226 closed + 145 open)
 
 | Категория | Количество |
 |---|---|
@@ -512,6 +520,15 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log
+
+### 2026-08-05 — ReaderProjection source closure @ merged Product `92c4939c`
+
+- Recorded merged-source closure for the two confirmed-current ReaderProjection intake clusters from AuditRepo PR #169; historical incoming remains immutable.
+- Product exact final head `fdc3a90e9f4b8728698fd4d21f2afae3880f8525` passed 15/15 workflow groups, including source 68/68, browser 144/144, tooltip handoff 19/19 at `1280×850`, full Runtime Interactive and Visual Parity.
+- Guarded squash merge `92c4939c62bda365c1531c31d150c3988d8cfa47`; all six merged blobs equal the tested head. Reader artifact `8931327913`; Runtime artifact `8931715596`.
+- Canonical matrix IDs and arithmetic do not move because the closed items were intake clusters, not canonical rows: **371 total = 226 closed + 145 open**.
+- Production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`; no live/deployment claim.
+- Product canonical lane was auto-deleted after merge; the historical transport ref is content-identical to merged source with ahead 0 / behind 0 / files 0.
 
 ### 2026-08-05 — Home SearchAction P2 closure @ merged Product `b3768b45`
 
