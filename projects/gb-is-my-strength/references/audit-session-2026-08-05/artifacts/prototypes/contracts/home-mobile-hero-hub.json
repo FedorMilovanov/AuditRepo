@@ -1,0 +1,16 @@
+{
+  "id": "home-mobile-hero-hub",
+  "source": "docs/design-references/current/home-mobile-hero-hub.html",
+  "component": "HomeHeroSection",
+  "requiredTokens": [
+    "h-mobile-hero-hub",
+    "h-mobile-hero-hub__stat",
+    "h-mobile-hero-hub__meta"
+  ],
+  "partialTokens": ["h-mobile-hero-hub__kicker", "h-mobile-hero-hub__action"],
+  "requiredOrder": ["h-mobile-hero-hub__meta", "h-mobile-hero-hub__stat"],
+  "forbiddenTokens": [],
+  "routes": ["index"],
+  "mode": "1:1 REPLICA (частично)",
+  "note": "Мобильный hero-hub главной. legacy имел 12 вхождений h-mobile-hero-hub-*; в Astro осталось ~3 (__stat, __meta). Проверить, не потеряны ли __kicker/__action."
+}
