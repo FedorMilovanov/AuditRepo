@@ -1,6 +1,6 @@
 # Wave repair plan — The Legendary Poet
 
-Current source production baseline: `e06bdfc42ada0a6111f0cde6e39dd7f48204f2c8`.
+Current source production baseline: `a248abd54007bd839ffc149b9195dc4e79dc5dd3`.
 
 ## W0 — system truth and governance — COMPLETE
 
@@ -14,15 +14,17 @@ Source PR #305 merged as production `44a36bdb97e22827b2026e5622b79a6908d7af03`. 
 
 The parallel agent's durable Article-retirement work was integrated without rewriting its branch. Stale-base PR #306 was superseded through integration-only #307 and production PR #308.
 
-Production `e06bdfc42ada0a6111f0cde6e39dd7f48204f2c8` now has one live longform model (`Essay`), five zero-loss legacy draft archives with bounded SHA-256, retained redirects and a permanent content-model contract in both the targeted Node 24 workflow and repository-wide `check:content`.
+Production now has one live longform model (`Essay`), five zero-loss legacy draft archives with bounded SHA-256, retained redirects and a permanent content-model contract.
 
-## W2 — immutable essay publication — NEXT
+## W2 — immutable essay publication — COMPLETE
 
-Replace post-import mutation with a readonly builder shared by page, search, sitemap, feed and validators. Start only from current production or a later reconciled main. Preserve generated output parity and require exact-head browser verification.
+Overlapping proposals #309 and #310 were closed unmerged and reconciled through the single production integration PR #311.
 
-## W3 — community scaling
+Production `a248abd54007bd839ffc149b9195dc4e79dc5dd3` publishes all eight canonical essays through one clone/override/derived-read-time/deep-freeze boundary. Stable identity, duplicate guards, untouched raw authoring modules, canonical consumer routing and permanent immutable-publication validation are now production contracts.
 
-Replace global full-corpus startup hydration with target-scoped aggregates and cursor-paginated comments.
+## W3 — community scaling — NEXT
+
+Replace global full-corpus startup hydration with target-scoped aggregates and cursor-paginated comments. Preserve local/offline behavior, optimistic writes, failure recovery and existing reader-visible rating/comment outcomes. Start only from current production or a later explicitly reconciled main.
 
 ## W4 — workflow and performance consolidation
 
