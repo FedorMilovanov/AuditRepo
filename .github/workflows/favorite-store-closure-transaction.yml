@@ -1,8 +1,9 @@
+# Registered on the PR before this synchronize trigger.
 name: Favorite Store Closure Transaction
 
 on:
   pull_request:
-    types: [labeled]
+    types: [labeled, synchronize]
 
 permissions:
   contents: read
@@ -14,7 +15,7 @@ concurrency:
 jobs:
   close:
     if: >-
-      github.event.label.name == 'autofix' &&
+      contains(github.event.pull_request.labels.*.name, 'autofix') &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.head.ref == 'audit/favorite-store-source-closure-20260805' &&
       contains(github.event.pull_request.body, 'audit-favorite-store-closure-authorized-20260805-v1')
