@@ -1,0 +1,13 @@
+{
+  "id": "baptist-3d-app",
+  "source": "docs/design-references/current/baptist-3d-app.html",
+  "component": "russkij-baptizm/_app/index.html",
+  "searchPaths": ["konfessii/russkij-baptizm/_app"],
+  "requiredTokens": ["new Function", "app.js", "app.css"],
+  "partialTokens": ["<script", "<link"],
+  "requiredOrder": [],
+  "forbiddenTokens": [],
+  "routes": ["russkij-baptizm"],
+  "mode": "SPLIT_REQUIRED (мастер-план §12)",
+  "note": "3D-приложение: 2 245 854 B raw (2.25 MiB), new Function присутствует. Цель: _app/index.html < 50 KiB raw, JS/CSS внешние hashed. Контракт фиксирует: пока app.js/app.css НЕ внешние и файл > 50 KiB — SPLIT не выполнен. Это НЕ тест, а цель разгрузки."
+}
