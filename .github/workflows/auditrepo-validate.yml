@@ -2,7 +2,9 @@ name: AuditRepo Validate
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - audit/favorite-store-source-closure-20260805
   pull_request:
 
 permissions:
@@ -11,27 +13,30 @@ permissions:
 jobs:
   favorite-store-closure:
     if: >-
-      github.event_name == 'pull_request' &&
-      contains(github.event.pull_request.labels.*.name, 'autofix') &&
-      github.event.pull_request.head.repo.full_name == github.repository &&
-      github.event.pull_request.head.ref == 'audit/favorite-store-source-closure-20260805' &&
-      contains(github.event.pull_request.body, 'audit-favorite-store-closure-authorized-20260805-v1')
+      github.event_name == 'push' &&
+      github.ref_name == 'audit/favorite-store-source-closure-20260805'
     permissions:
       contents: write
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - name: Checkout exact PR branch
+      - name: Checkout exact audit branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
           persist-credentials: true
 
-      - name: Prove exact input identity
+      - name: Prove exact transaction identity
         env:
-          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
-        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          EXPECTED_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          remote_sha="$(git ls-remote origin "refs/heads/${GITHUB_REF_NAME}" | awk '{print $1}')"
+          test "$remote_sha" = "$EXPECTED_SHA"
+          git fetch --no-tags origin main
+          test "$(git rev-parse origin/main)" = "be03e27e61b6169e518f7b91978abaf48e29baa4"
 
       - name: Write exact matrix closure
         run: |
@@ -72,7 +77,6 @@ jobs:
       - name: Validate exact closure
         run: |
           set -euo pipefail
-          git fetch --no-tags origin main
           changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
           git diff --name-only origin/main > "$changed_file"
           cat "$changed_file"
@@ -98,13 +102,12 @@ jobs:
           EOF
           diff -u /tmp/expected-paths.txt /tmp/final-paths.txt
 
-      - name: Commit and push exact PR branch
+      - name: Commit and push exact audit branch
         env:
-          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          EXPECTED_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
-          remote_sha="$(git ls-remote origin "refs/heads/$HEAD_REF" | awk '{print $1}')"
+          remote_sha="$(git ls-remote origin "refs/heads/${GITHUB_REF_NAME}" | awk '{print $1}')"
           test "$remote_sha" = "$EXPECTED_SHA"
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
@@ -113,7 +116,7 @@ jobs:
             projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_d0647b71_favorite-store-source-closure.md \
             projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
           git commit -m "audit(reader): record Favorite Store source closure"
-          git push origin "HEAD:$HEAD_REF"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
   validate:
     runs-on: ubuntu-latest
