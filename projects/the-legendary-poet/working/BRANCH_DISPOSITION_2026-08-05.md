@@ -1,40 +1,37 @@
 # Remote branch disposition — The Legendary Poet
 
-Current production: `d03f09188cd0360c6c984ed93d03b1432913332c`.
+Current verified source production: `db6bc3ea8997f78d1370a05e2736cf20645c80dd`.
 
-| Branch / class | Graph result | Disposition |
+This is the canonical class-level disposition. Exact per-ref PR/head/successor evidence is owned by AuditRepo draft #185 under the `W6_*_MAP_2026-08-05.md` working ledgers.
+
+| Branch / class | Current disposition | Retirement barrier |
 |---|---|---|
-| `arena/019fcf76-thelegendarypoet` | diverged, old merge base; selective value already used in #286 | evidence-only; no merge; delete after archive pointer |
-| `arena/019fcf77-thelegendarypoet` | diverged; broad integration source of #286 | evidence-only; no merge; delete after archive pointer |
-| `agent/marathon-audit-trigger*` | temporary one-shot runners/markers | never merge; batch delete after this ledger is verified |
-| `agent/marathon-clean-security-trigger-20260805` | temporary verification trigger | never merge; delete |
-| `agent/marathon-dependency-trigger*` | temporary dependency verification | superseded by #286/#302; never merge; delete |
-| `agent/marathon-router8-*trigger*` | temporary router migration verification | superseded by production Router 8; never merge; delete |
-| `work/local-images-playwright-wtoc` | deeply diverged, 787 ahead / 739 behind in audit snapshot | do not merge. Extract unique research/provenance/media/E2E artifacts by path and current-head relevance, then archive/delete |
-| `audit/system-contract-wave1-20260805` | source #303 merged to production `69e5d39` | evidence-only after merge; do not re-merge |
-| `audit/discovery-artifact-contract-20260805` / source #304 | old-base discovery proposal | closed unmerged; superseded by fresh-base #305 |
-| `audit/discovery-artifact-contract-v2-20260805` | source #305 merged to production `44a36bd` | evidence-only after merge; do not re-merge |
-| `audit/content-model-unification-wave2-20260805` | stale parallel W1 branch | source #306 closed superseded; durable content integrated and hardened by #308; no separate merge |
-| `integration/content-model-after-discovery-20260805` | W1 integration branch, source #307 then #308 | production content merged as `e06bdfc`; evidence-only after merge |
-| `audit/immutable-essay-publication-w2-20260805` | first W2 implementation, source #309 | closed unmerged after overlap; evidence incorporated into #311 |
-| `audit/immutable-essay-publication-20260805` | parallel W2 implementation, source #310 | closed unmerged after overlap; strongest invariants incorporated into #311 |
-| `integration/immutable-essay-publication-w2-20260805` | single W2 production integration, source #311 | squash-merged as production `a248abd`; evidence-only after merge |
-| `audit/community-scaling-w3-20260805` | first W3 implementation, source #312 | closed unmerged after stronger parallel lane appeared; evidence-only, never merge separately |
-| `audit/community-target-scaling-w3-20260805` | parallel W3 working lane, source #313 | closed unmerged; exact durable head `f85aba58` was used as the base of final production #316 |
-| `integration/community-target-scaling-w3-final-20260805` | non-production exact-head transfer through #314 | superseded integration history; no production merge and no separate re-merge |
-| source #315 transfer lane | second non-production transfer collided only in Git history | closed unmerged; no code loss; replaced by fresh exact-head final integration branch |
-| `integration/community-scaling-w3-final2-20260805` | final W3 production lane, source #316 | squash-merged as production `4544bb3`; evidence-only after merge |
-| `audit/workflow-performance-w4-20260805` | W4 workflow/budget lane, source #318 | exact head `6bd27851` passed full matrix; squash-merged as production `a11f6fa`; evidence-only after merge |
-| `fix/community-w3-production-hardening-20260805` | parallel W3 hardening on W4 production, source #317 | exact head `253376bd` passed full matrix; squash-merged as current production `d03f091`; evidence-only after merge |
-| `integration/community-w3-hardening-production-20260805` / source #319 | exact-SHA integration opened during the #317 merge race | closed unmerged as redundant after `d03f091` was confirmed; never re-merge |
+| `agent/marathon-audit-trigger*`, clean/security/dependency/router trigger refs | `RETIRE_READY` after exact mapping to closed one-shot PRs #287–301 | physical delete-ref operation only; never merge or force-move as a substitute |
+| W0–W4 audit/integration source refs | `RETIRE_READY` where draft #185 records the exact production successor | retain PR and production SHA pointer |
+| W5 source evidence refs from #320/#321 | `RETIRE_READY` after production #322 / `6f13600` | retain evidence-only PR pointer; never re-merge |
+| `integration/premium-reader-certification-w5-20260805` | production successor #322 / `6f13600` | delete after final W6/AuditRepo closure records exact head and successor |
+| retired architecture-truth refs #323/#325 | #323 superseded; #325 production successor `db6bc3e` | preserve both PR dispositions; delete stale refs only after final ledger promotion |
+| `arena/019fcf76-thelegendarypoet` | `HOLD_EXTRACTION` | three unique audit documents must be physically archived in AuditRepo, not represented only by cross-repository blob SHA |
+| `arena/019fcf77-thelegendarypoet` | `HOLD_EXTRACTION` | same archive barrier; runtime implementation is superseded and must not be merged |
+| `work/local-images-playwright-wtoc` | `HOLD_PATH_LEDGER`; deeply diverged | every unique research/provenance/media/E2E path requires represented/extract/archive/reject/owner-decision status |
+| `extract/w6-verified-media-provenance-20260805` / source #324 | active W6 selective extraction; rebuilt head `6146e6f5da81c7904fd1bb135c22a409f3e12719` on current production | full exact-head source matrix, expected-head squash merge and final production reverify |
+| AuditRepo TLP W2/W3/W4 historical refs | `RETIRE_READY` only where draft #185 records canonical successor or archived W4-A evidence | merge final #185 first; do not touch unrelated Search/TTS/Avraam/project refs |
+| `audit/tlp-w6-branch-artifact-inventory-20260805` / AuditRepo #185 | active W6 evidence owner | rebuild from current AuditRepo main after final source merge; pass `AuditRepo Validate`; then promote |
 
-## Retirement barrier
+## Deep-branch path outcomes
 
-Before deletion of the deeply diverged work branch, record:
+Every path unique to `work/local-images-playwright-wtoc` must receive exactly one status:
 
-- research/provenance files absent from production;
-- approved or rejected image binaries and their hashes;
-- E2E tests whose user outcomes are not covered on main;
-- explicit decision for every unique path: extract, archive pointer, or reject as stale.
+- `REPRESENTED_CURRENT` — current production or canonical research already contains equivalent or stronger material;
+- `EXTRACT` — durable unique value must be selectively moved into a current-head source PR;
+- `ARCHIVE_POINTER` — historical evidence remains external but has a durable exact ref/blob/PR pointer and is not needed at runtime;
+- `REJECT_STALE` — implementation or claim is obsolete, unsafe or contradicted by current production;
+- `OWNER_DECISION` — rights, publication or product policy cannot be decided by an agent.
 
-Trigger branches require no code extraction when their PR body and diff prove one-shot infrastructure only. Merged or superseded audit/integration branches require an archive pointer to their PR and production merge before deletion.
+The verified-media extraction accepts only two independently supported Mayakovsky records. The remaining 28 PR77 candidates remain unresolved; hash acquisition is not publication authorization.
+
+## Deletion truth rule
+
+A branch is not deleted merely because it is merged, classified, closed, force-moved or absent from a PR list. Closure evidence may say `RETIRE_READY`, but physical deletion requires an API/UI operation that deletes `refs/heads/<name>` and a subsequent branch inventory proving the ref is absent.
+
+The connected GitHub capability used for this audit does not expose delete-ref. Therefore final W6 promotion may classify and prepare all refs, but must not falsely state that physical deletion occurred unless an authorized external deletion operation is actually performed and reverified.
