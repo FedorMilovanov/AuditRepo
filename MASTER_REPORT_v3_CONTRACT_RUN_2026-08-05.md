@@ -46,3 +46,23 @@ node scripts/diff-canonical.mjs --component GillSeriesMobileBar
 ---
 
 *Документ — untracked; будет добавлен в ветку коммитом.*
+
+---
+
+## 6. ОБНОВЛЕНИЕ v3.1 — 6 контрактов, полный прогон
+
+Добавлены контракты: home-mobile-hero-hub, karty-minimap (с searchPaths), nagornaya-mobile-bar. diff-canonical v2.1: поддержка searchPaths + js/ + svg.
+
+| Контракт | Результат | Вывод |
+|---|---|---|
+| gill-mobile-bar | PASS 3/3 | ядро v4 ок |
+| home-mobile-hero-hub | PASS 3/3 | hero-hub перенесён |
+| home-sacred-scripture-bg | **FAIL 0/3** | фича мертва (#hScriptureBg нет) |
+| karty-minimap | PASS 2/2 | minimap жив в рантайме |
+| nagornaya-mobile-bar | **FAIL 1/4** | btoc-структура НЕ перенесена (ADAPTIVE, ждёт owner) |
+| search-command-palette-a11y | PASS 4/4 | PR #1039 держится |
+
+**Новые находки (машиной):**
+- **nagornaya-mobile-bar FAIL**: `btoc-panel`/`btoc-link`/`btoc-nav` = 0 вхождений в Astro src/ → мобильный TOC Нагорной переписан, не перенесён (NG-TOC-01/NG-STRUCT-01 подтверждены).
+- home-mobile-hero-hub PASS — но legacy имел 12 вхождений, в Astro 3 (__kicker/__action под вопросом).
+- karty-minimap PASS — но это рантайм; строка MINI-P1-01 (без географии) остаётся.

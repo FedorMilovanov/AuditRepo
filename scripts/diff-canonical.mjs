@@ -31,23 +31,24 @@ function loadContracts() {
     .filter(Boolean);
 }
 
-function allSourceFiles() {
+function allSourceFiles(extraPaths) {
   const out = [];
   const walk = (dir) => {
     if (!existsSync(dir)) return;
     for (const e of readdirSync(dir, { withFileTypes: true })) {
       const p = join(dir, e.name);
       if (e.isDirectory()) walk(p);
-      else if (/(\.astro|\.ts|\.html|\.js)$/.test(e.name)) out.push(p);
+      else if (/(\.astro|\.ts|\.html|\.js|\.svg)$/.test(e.name)) out.push(p);
     }
   };
   walk(SRC_DIR);
   if (existsSync(JS_DIR)) walk(JS_DIR);
+  for (const ep of extraPaths || []) { const d = join(ROOT, ep); if (existsSync(d)) walk(d); }
   return out;
 }
 
 function collectFor(contract) {
-  const files = allSourceFiles();
+  const files = allSourceFiles(contract.searchPaths);
   let matched;
   if (contract.component) {
     matched = files.filter((f) => f.includes(contract.component) || f.includes(contract.component.replace(/-/g, '_')));

@@ -1,0 +1,16 @@
+{
+  "id": "karty-minimap",
+  "source": "docs/design-references/current/karty-minimap.html",
+  "component": "map-engine",
+  "searchPaths": ["karty/_engine"],
+  "requiredTokens": [
+    "me-minimap",
+    "me-mm-dots"
+  ],
+  "partialTokens": ["me-mm-rect"],
+  "requiredOrder": ["me-mm-dots", "me-mm-rect"],
+  "forbiddenTokens": [],
+  "routes": ["karty"],
+  "mode": "1:1 REPLICA (рантайм)",
+  "note": "Миникарта Karty — живёт в map-engine.js (рантайм), не в Astro. Контракт проверяет наличие minimap-токенов. Строка MINI-P1-01: миникарта без географии (только точки) — контракт фиксирует наличие, не качество."
+}
