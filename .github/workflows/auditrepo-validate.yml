@@ -105,7 +105,7 @@ jobs:
           retention-days: 30
 
   search-p2-09-reconcile:
-    if: github.event_name == 'pull_request' && github.event.pull_request.number == 170 && github.event.pull_request.head.ref == 'audit/search-p2-09-closure-20260805'
+    if: github.event_name == 'pull_request' && github.head_ref == 'audit/search-p2-09-closure-20260805'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     permissions:
