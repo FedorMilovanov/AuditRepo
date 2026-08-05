@@ -22,6 +22,8 @@ Source agent PR #309 and collision PR #310 were closed as evidence; neither was 
 
 Current production publishes all eight essays through one clone → explicit override → derived `readTime` → deep-freeze boundary. Stable `id`/`slug` cannot be overridden, the catalog is frozen and rejects duplicates, Yesenin Part II is constructed without mutating its authoring export, and its specialized validator resolves the canonical catalog object only.
 
+The permanent contract imports and snapshots every raw authoring module before dynamically evaluating the catalog, then proves unchanged raw JSON, distinct raw/published identities, deep freeze, stable catalog lookup, derived reading time and no public-consumer bypass. The existing Content model workflow was extended instead of adding another workflow.
+
 Exact tested source head `8eaeaa4abc7f80eb6b96de0657df0b3e255d96d3` passed all 13 PR workflows. Manual Browser QA passed 4/4: Chromium/Android/base iPhone Safari, premium desktop, critical iPhone and independent WebKit home reveal/routes.
 
 ## W3 — community scaling — COMPLETE
