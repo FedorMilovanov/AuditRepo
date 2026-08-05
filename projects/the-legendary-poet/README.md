@@ -3,16 +3,17 @@
 - Source repo: `FedorMilovanov/TheLegendaryPoet`
 - Production URL: https://thelegendarypoet.ru
 - Main branch: `main`
-- Current verified source SHA: `e06bdfc42ada0a6111f0cde6e39dd7f48204f2c8`
+- Current verified source SHA: `a248abd54007bd839ffc149b9195dc4e79dc5dd3`
 - Current status: `active`
-- Latest closed wave: `2026-08-05 system truth, discovery integrity and content-model unification`
-- Next repair wave: `W2 immutable essay publication`
+- Latest closed wave: `2026-08-05 W2 immutable essay publication`
+- Next repair wave: `W3 community scaling`
 
 ## Start here
 
-- Latest verified current truth: [`verified/SYSTEM_AND_CONTENT_WAVES_2026-08-05.md`](verified/SYSTEM_AND_CONTENT_WAVES_2026-08-05.md)
-- Latest promotion verification: [`verification/SYSTEM_AND_CONTENT_WAVES_2026-08-05.md`](verification/SYSTEM_AND_CONTENT_WAVES_2026-08-05.md)
-- Latest exact source-HEAD proof: [`reverify/REVERIFY_e06bdfc_2026-08-05.md`](reverify/REVERIFY_e06bdfc_2026-08-05.md)
+- Latest verified current truth: [`verified/IMMUTABLE_ESSAY_PUBLICATION_2026-08-05.md`](verified/IMMUTABLE_ESSAY_PUBLICATION_2026-08-05.md)
+- Latest promotion verification: [`verification/IMMUTABLE_ESSAY_PUBLICATION_2026-08-05.md`](verification/IMMUTABLE_ESSAY_PUBLICATION_2026-08-05.md)
+- Latest exact source-HEAD proof: [`reverify/REVERIFY_a248abd_2026-08-05.md`](reverify/REVERIFY_a248abd_2026-08-05.md)
+- Previous system/content closure: [`verified/SYSTEM_AND_CONTENT_WAVES_2026-08-05.md`](verified/SYSTEM_AND_CONTENT_WAVES_2026-08-05.md)
 - Working root-cause matrix: [`working/MASTER_BUG_MATRIX_2026-08-05.md`](working/MASTER_BUG_MATRIX_2026-08-05.md)
 - Working wave plan: [`working/WAVE_REPAIR_PLAN_2026-08-05.md`](working/WAVE_REPAIR_PLAN_2026-08-05.md)
 - Branch disposition: [`working/BRANCH_DISPOSITION_2026-08-05.md`](working/BRANCH_DISPOSITION_2026-08-05.md)
@@ -23,15 +24,16 @@
 
 ## Current truth
 
-Source production advanced through three verified lines:
+Source production now contains four verified architecture lines:
 
 1. PR `#303` established machine-checked project truth, live workflow paths, Node 24 and deterministic UTC daily content.
 2. PR `#305` enforced committed sitemap/feed freshness and removed a Safari route-loading race from brand-source QA.
-3. PR `#308` integrated the parallel agent's zero-loss Article retirement on top of current production without rewriting its branch.
+3. PR `#308` retired the hidden Article model with zero-loss archival and one live Essay model.
+4. PR `#311` closed W2 by publishing all eight canonical essays through one clone/override/derived-read-time/deep-freeze boundary.
 
-Current source `main@e06bdfc42ada0a6111f0cde6e39dd7f48204f2c8` has one live longform model (`Essay`), five bounded legacy draft archives outside runtime, retained compatibility redirects, repository-wide discovery and content-model validators, and a full green exact-head source matrix including Manual Browser QA 4/4.
+Current source `main@a248abd54007bd839ffc149b9195dc4e79dc5dd3` no longer mutates imported essay authoring modules. Stable `id`/`slug`, duplicate guards, raw-authoring snapshots, canonical consumer enforcement and repository-wide immutable-publication validation are production contracts. The final W2 head passed the complete exact-head matrix including Manual Browser QA 4/4.
 
-W2–W6 remain open. The next implementation lane is immutable essay publication; community scaling, workflow/performance consolidation, broader premium certification and branch retirement remain separate later lanes.
+W3–W6 remain open. The next implementation lane is target-scoped community loading and cursor-paginated comments; workflow/performance consolidation, broader premium certification and branch retirement remain separate later lanes.
 
 ## Folder meaning
 
