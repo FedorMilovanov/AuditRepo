@@ -1,37 +1,61 @@
 # Remote branch disposition — The Legendary Poet
 
-Current verified source production: `db6bc3ea8997f78d1370a05e2736cf20645c80dd`.
+Current verified source production: `ccbdebc5e47d275561de9ec78f181e388e4a4e1a`.
 
-This is the canonical class-level disposition. Exact per-ref PR/head/successor evidence is owned by AuditRepo draft #185 under the `W6_*_MAP_2026-08-05.md` working ledgers.
+This is the canonical class-level disposition. Exact per-ref identities, successors and path outcomes are in the `W6_*_2026-08-05` ledgers and machine manifest introduced by AuditRepo #185.
 
-| Branch / class | Current disposition | Retirement barrier |
+| Branch / class | Current disposition | Durable evidence / remaining barrier |
 |---|---|---|
-| `agent/marathon-audit-trigger*`, clean/security/dependency/router trigger refs | `RETIRE_READY` after exact mapping to closed one-shot PRs #287–301 | physical delete-ref operation only; never merge or force-move as a substitute |
-| W0–W4 audit/integration source refs | `RETIRE_READY` where draft #185 records the exact production successor | retain PR and production SHA pointer |
-| W5 source evidence refs from #320/#321 | `RETIRE_READY` after production #322 / `6f13600` | retain evidence-only PR pointer; never re-merge |
-| `integration/premium-reader-certification-w5-20260805` | production successor #322 / `6f13600` | delete after final W6/AuditRepo closure records exact head and successor |
-| retired architecture-truth refs #323/#325 | #323 superseded; #325 production successor `db6bc3e` | preserve both PR dispositions; delete stale refs only after final ledger promotion |
-| `arena/019fcf76-thelegendarypoet` | `HOLD_EXTRACTION` | three unique audit documents must be physically archived in AuditRepo, not represented only by cross-repository blob SHA |
-| `arena/019fcf77-thelegendarypoet` | `HOLD_EXTRACTION` | same archive barrier; runtime implementation is superseded and must not be merged |
-| `work/local-images-playwright-wtoc` | `HOLD_PATH_LEDGER`; deeply diverged | every unique research/provenance/media/E2E path requires represented/extract/archive/reject/owner-decision status |
-| `extract/w6-verified-media-provenance-20260805` / source #324 | active W6 selective extraction; rebuilt head `6146e6f5da81c7904fd1bb135c22a409f3e12719` on current production | full exact-head source matrix, expected-head squash merge and final production reverify |
-| AuditRepo TLP W2/W3/W4 historical refs | `RETIRE_READY` only where draft #185 records canonical successor or archived W4-A evidence | merge final #185 first; do not touch unrelated Search/TTS/Avraam/project refs |
-| `audit/tlp-w6-branch-artifact-inventory-20260805` / AuditRepo #185 | active W6 evidence owner | rebuild from current AuditRepo main after final source merge; pass `AuditRepo Validate`; then promote |
+| 15 `agent/marathon-*trigger*` refs | `RETIRE_READY` | exact PR/head map #287–301; one-shot transport only; actual delete-ref required |
+| 8 W0–W4 audit/integration refs | `RETIRE_READY` | exact production successors through `d03f091` and later current production |
+| 2 W5 evidence refs #320/#321 | `RETIRE_READY` | synthesized into exact W5 head `0536547`, production `6f13600`; never re-merge |
+| `agent/current-state-truth-contract-20260805` | `RETIRE_READY` | superseded #323; durable rebuild #325 → `db6bc3e` |
+| `arena/019fcf76-thelegendarypoet` | `RETIRE_READY` | two unique documents byte-identically archived in AuditRepo; old runtime superseded |
+| `arena/019fcf77-thelegendarypoet` | `RETIRE_READY` | one unique document byte-identically archived in AuditRepo; old runtime superseded |
+| `work/local-images-playwright-wtoc` | `RETIRE_READY` | every path family classified; C03/C08 extracted by source #324; all remaining bytes/history preserved at identical archive ref `archive/deep-research-local-images-20260724@909df9f...` |
+| `archive/deep-research-local-images-20260724` | `INTENTIONAL_RETAIN` | exact forensic/research archive; not a production merge candidate and not in deletion set |
+| source #324 branch | auto-deleted after expected-head merge | verified-media extraction production `17d0017`; no remaining ref |
+| source #326 branch | auto-deleted after expected-head merge | governance production/current source `ccbdebc`; no remaining ref |
+| 3 old TLP AuditRepo closure refs | `RETIRE_READY_AFTER_PR185_MERGE` | W2/W3/W4 successors and W4-A byte archive recorded; actual delete-ref required |
+| `audit/tlp-w6-branch-artifact-inventory-20260805` / AuditRepo #185 | active final evidence owner | expected to auto-delete after merge; does not substitute for deletion of the 32 manifest refs |
+
+## Exact deletion set
+
+Machine-readable authority:
+
+`working/W6_PHYSICAL_REF_DELETION_MANIFEST_2026-08-05.json`
+
+It lists:
+
+- 29 source refs to delete;
+- 3 AuditRepo TLP refs to delete after #185 merge;
+- source `main` and exact deep-research archive ref to retain;
+- expected heads where known and mandatory requery where not pinned;
+- final branch-absence postcondition.
 
 ## Deep-branch path outcomes
 
-Every path unique to `work/local-images-playwright-wtoc` must receive exactly one status:
+Every path unique to `work/local-images-playwright-wtoc` is owned by the ordered family rules in `W6_EXTRACTION_LEDGER_STAGE1_2026-08-05.md`:
 
-- `REPRESENTED_CURRENT` — current production or canonical research already contains equivalent or stronger material;
-- `EXTRACT` — durable unique value must be selectively moved into a current-head source PR;
-- `ARCHIVE_POINTER` — historical evidence remains external but has a durable exact ref/blob/PR pointer and is not needed at runtime;
-- `REJECT_STALE` — implementation or claim is obsolete, unsafe or contradicted by current production;
-- `OWNER_DECISION` — rights, publication or product policy cannot be decided by an agent.
+- `EXTRACTED_CURRENT`;
+- `REPRESENTED_CURRENT`;
+- `ARCHIVE_REF_CURRENT_BACKLOG`;
+- `ARCHIVE_ONLY_REJECT_LIVE`;
+- `REPRESENTED_OR_OBSOLETE`;
+- `OWNER_DECISION_ARCHIVED`;
+- fallback `ARCHIVE_POINTER_ONLY`.
 
-The verified-media extraction accepts only two independently supported Mayakovsky records. The remaining 28 PR77 candidates remain unresolved; hash acquisition is not publication authorization.
+The first matching family owns each path. Only two PR77 media decisions are accepted in production; 28 candidates remain blocked. The archive ref grants no rights and closes no research issue.
 
-## Deletion truth rule
+## Physical deletion truth
 
-A branch is not deleted merely because it is merged, classified, closed, force-moved or absent from a PR list. Closure evidence may say `RETIRE_READY`, but physical deletion requires an API/UI operation that deletes `refs/heads/<name>` and a subsequent branch inventory proving the ref is absent.
+A branch is not deleted merely because it is merged, classified, closed, force-moved or listed as `RETIRE_READY`.
 
-The connected GitHub capability used for this audit does not expose delete-ref. Therefore final W6 promotion may classify and prepare all refs, but must not falsely state that physical deletion occurred unless an authorized external deletion operation is actually performed and reverified.
+Closure requires:
+
+1. actual deletion of `refs/heads/<name>` for every manifest target;
+2. source and AuditRepo branch re-list;
+3. proof that all 32 targets are absent and retained refs remain;
+4. one final source/AuditRepo truth transition removing `TLP-CLEAN-001`.
+
+The connected GitHub capability does not expose delete-ref and the environment has no working GitHub network path for CLI. Force-moving refs is forbidden. Therefore W6 remains `active-current` solely for this external repository-maintenance operation.
