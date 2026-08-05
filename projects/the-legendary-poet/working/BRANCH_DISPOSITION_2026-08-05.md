@@ -1,6 +1,6 @@
 # Remote branch disposition — The Legendary Poet
 
-Baseline production: `19598947c20cd2dd94abd232fbf6fb8a05c3575a`.
+Current production: `e06bdfc42ada0a6111f0cde6e39dd7f48204f2c8`.
 
 | Branch / class | Graph result | Disposition |
 |---|---|---|
@@ -11,7 +11,11 @@ Baseline production: `19598947c20cd2dd94abd232fbf6fb8a05c3575a`.
 | `agent/marathon-dependency-trigger*` | temporary dependency verification | superseded by #286/#302; never merge; delete |
 | `agent/marathon-router8-*trigger*` | temporary router migration verification | superseded by production Router 8; never merge; delete |
 | `work/local-images-playwright-wtoc` | deeply diverged, 787 ahead / 739 behind in audit snapshot | do not merge. Extract unique research/provenance/media/E2E artifacts by path and current-head relevance, then archive/delete |
-| `audit/system-contract-wave1-20260805` | current source repair branch | draft #303; normal PR lifecycle |
+| `audit/system-contract-wave1-20260805` | source #303 merged to production `69e5d39` | evidence-only after merge; do not re-merge |
+| `audit/discovery-artifact-contract-20260805` / source #304 | old-base discovery proposal | closed unmerged; superseded by fresh-base #305 |
+| `audit/discovery-artifact-contract-v2-20260805` | source #305 merged to production `44a36bd` | evidence-only after merge; do not re-merge |
+| `audit/content-model-unification-wave2-20260805` | parallel agent branch independently reconstructed after production integration; one ahead / one behind final main from merge base `44a36bd` | source #306 closed superseded; same 25-file durable surface already integrated and hardened by #308; no separate merge |
+| `integration/content-model-after-discovery-20260805` | current-main integration branch, source #307 then #308 | production content merged as `e06bdfc`; evidence-only after merge |
 
 ## Retirement barrier
 
@@ -22,4 +26,4 @@ Before deletion of the deeply diverged work branch, record:
 - E2E tests whose user outcomes are not covered on main;
 - explicit decision for every unique path: extract, archive pointer, or reject as stale.
 
-Trigger branches require no code extraction when their PR body and diff prove one-shot infrastructure only.
+Trigger branches require no code extraction when their PR body and diff prove one-shot infrastructure only. Merged or superseded audit/integration branches require an archive pointer to their PR and production merge before deletion.
