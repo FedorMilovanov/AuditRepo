@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `38b257030afb7cfa8a7b1128f8c86539fd36dec0` (production-deployed Product descendant containing core TTS PR #876 and final PlayEmber PR #929; two TTS P2 delivery/runtime rows closed with exact source, real-model, CI, immutable candidate and live evidence). |
+| Source verification anchor | `b3768b45de4f9b5abcc39236ee94b7cfe6c55281` (current merged Product source for `SEARCH-P2-09`; exact PR head `ca045325458df820cf98f746e15bb7ab051ef826` passed 12/12 workflow groups; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |
 | Deploy | ✅ **EXACT PRODUCTION AUTHORITY.** Run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate `38b257030afb7cfa8a7b1128f8c86539fd36dec0:30960174778-1`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`, transport artifact `8912983035` digest `sha256:e7784d18a33e256da4da52a2d0d0a46d5587fb5c6659602047c6be7d8b71108e`. Readiness job `92162173520`, unchanged Gill mobile PlayEmber smoke, immutable candidate verification/upload, promotion job `92165278471`, Pages deployment, generic live contract and live TTS extension all passed. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_38b25703_tts-production-closure.md` (core TTS #876 + final PlayEmber #929 + exact Pages/live closure; Product issue #61 remains open for non-TTS ReaderProjection/search/accessibility/save scope). |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md` (Product PR #968, exact head `ca045325`, squash merge `b3768b45`; merged source and exact-head Chromium/WebKit/CI closure, no new production claim). |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current exact production authority is run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`. The matrix is a durable verified backlog; later source movement does not silently reopen or close rows without a new applicable reverify.
 
@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (225)
+## ✅ ЗАКРЫТО (226)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| SEARCH-P2-09 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-05.** Product PR #968 / squash merge `b3768b45de4f9b5abcc39236ee94b7cfe6c55281` makes the advertised WebSite `SearchAction` target `/?q={search_term_string}` open and query the existing canonical Home command palette. The bounded adapter reads only `q`, collapses whitespace, trims and caps at 160 characters, no-ops for absent/blank input, then uses the existing `gb:openSearch` and canonical input-event contracts without duplicating ranking, Pagefind/fallback, rendering, history, navigation or modal ownership. Exact head `ca045325458df820cf98f746e15bb7ab051ef826` passed all 12 triggered workflow groups, including the permanent Chromium/WebKit desktop/mobile SearchAction witness, Runtime Interactive Audit, Visual Parity, Route Registry, Native Source, Deploy Candidate and deterministic Scripture-index read-only checks. Merged-main compare `c159526e272812371be614a2fa95e0b149fbbe20...b3768b45de4f9b5abcc39236ee94b7cfe6c55281` is exactly one commit and the same three Product files. No production deployment claim. | `b3768b45` PR#968; exact head `ca045325` |
 | TTS-DL-UNZIP-SYNC | ✅ **FIXED-CURRENT / SOURCE+REAL-MODEL+CI+PRODUCTION-LIVE VERIFIED 2026-08-05.** Product PR #876 moved the ~280 MB model acquisition, integrity verification, archive extraction, IndexedDB persistence, ORT session creation and inference off the main thread into the governed worker boundary; current `vosk-tts-engine.js` selects `SharedWorker` first and a dedicated-worker fallback, and the real-model witness bounded the maximum UI gap at **32.7 ms**. Final PR #929 added the unchanged canonical Gill PlayEmber smoke as a permanent PR gate and repaired the trailing synthetic-click deploy blocker. Pages run `30960174778` deployed descendant `38b257030afb7cfa8a7b1128f8c86539fd36dec0`; readiness job `92162173520`, Gill smoke, immutable candidate verification/upload, promotion job `92165278471`, generic live contract and live TTS extension all passed. | `0d60315d` PR#876; `e63dbf7d` PR#929; deploy `30960174778` |
 | TTS-DL-NO-TABLOCK | ✅ **FIXED-CURRENT / SHARED-OWNER+MULTITAB+CI+PRODUCTION-LIVE VERIFIED 2026-08-05.** Product PR #876 replaced page-local duplicate ownership with one SharedWorker-first model/session owner and deterministic follower reuse; the real-model and multitab contracts proved exactly one acquisition with follower/shared reuse while preserving the bounded dedicated-worker fallback. All 19 exact-head workflow groups passed before merge `0d60315d37efd5b47c76795f8167e99398a5b7e3`. Final PR #929/merge `e63dbf7d2a925501587df81ff5fb84b816e4e95f` closed the remaining Gill mobile deploy blocker without weakening assertions. The deployed live TTS witness on run `30960174778` verified the versioned controller/engine/worker assets, required CSP directives, exact asset hashes and `lazyTtsPrecache: false` on Gill and Antisovetov routes. | `0d60315d` PR#876; `e63dbf7d` PR#929; live artifact `8912994737` |
 | NG-DARK-01 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM+CI VERIFIED 2026-08-04.** Product PR #887 replaced the refined nine-token / 142-use dark residual with higher-specificity unlayered selectors in `css/nagornaya-mobile-toc.css`, without adding any `!important`: the governed count remains exactly **134**. Its permanent production-like Chromium witness covered 9 Nagornaya routes × 3 viewports and passed **384/384** assertions; build, Pagefind/offline/SW contracts, visual parity, runtime interactive audit and the full static-publication barrier passed before squash merge `7118ad80c3474112f203c2c3b8df7cdc44de0a84`. The predecessor #885 is superseded; its eight extra `!important` declarations and blanket CSP suppression were intentionally not retained. A separate nondeterministic WebKit TOC harness finding remains open. No production deployment or TTS/Vosk claim. | `7118ad80` PR#887; Chromium 384/384 |
@@ -341,13 +342,12 @@ _История сессий (HEAD-переходы, что влито) — в �
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (30)
+## 🟡 P2 — ОТКРЫТО (29)
 
 | ID | Описание | Witnesses |
 |---|---|---|
 | CI-WEBKIT-TOC-NONDETERMINISTIC | 🆕 **CI/WebKit P2 — nondeterministic public-surface TOC readiness.** During exact-head validation of Product PR #887, the same two WebKit TOC assertions failed first on `/articles/krajne-li-isporcheno-serdce/` and then, on a bounded rerun with the same unchanged product tree, on `/baptisty-rossii/goneniya-i-sovest/`. Neither route was in the Nagornaya diff; the permanent Nagornaya Chromium contract, visual parity and runtime audit were green. The migration of the failure between unchanged routes proves a harness/readiness nondeterminism rather than a `NG-DARK-01` regression. Repair must stabilize deterministic TOC readiness/waits without weakening assertions or absorbing unrelated product scopes. No production or TTS/Vosk claim. | `reverify/CURRENT_HEAD_REVERIFY_2026-08-04_83875378_product-wave-closures.md`; Product PR#887 |
 | SEARCH-P2-07 | 🆕 **Search Scripture P2:** canonical Bible registry has 66 books, but the current canonical corpus has only 300 records and 24 registry books without populated corpus files; `bible-reference-contract --strict` passes with 197 warnings, so this is governed sparse-corpus debt rather than a gate failure. Needed before claiming full Bible verse search/preview. | `incoming/search-deep-audit-2026-08-04/PASS3_SCRIPTURE_SEARCH.md`; `SCRIPTURE_SEARCH_PROBE.json`; `node scripts/bible-reference-contract.mjs --strict` |
-| SEARCH-P2-09 | 🆕 **Search contract P2:** Home JSON-LD advertises WebSite `SearchAction` target `https://gospod-bog.ru/?q={search_term_string}`, but current runtime/source has no `?q=` handler (`js/search.js`, `HomePageChrome.astro`, `HomeSearchA11yGuard.astro` do not read `location.search`/`URLSearchParams`). SearchAction target therefore lands on ordinary home, not a search-results state. | `incoming/search-deep-audit-2026-08-04/PASS4_SEARCH_CONTRACT_A11Y.md`; `PASS4_CONTRACT_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-contract-a11y.md` |
 | SEARCH-P2-10 | 🆕 **Search a11y P2:** command-palette markup mixes listbox/options and buttons without a complete combobox/listbox contract: no `role=combobox`, no `aria-expanded`, no `aria-activedescendant`, no stable option ids; active result is visual `.is-active`/`aria-selected` only. Keyboard behavior exists, but AT announcement model is unreliable. | `incoming/search-deep-audit-2026-08-04/PASS4_SEARCH_CONTRACT_A11Y.md`; `PASS4_CONTRACT_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-contract-a11y.md` |
 | SEARCH-P2-11 | 🆕 **Search premium P2:** command palette is not a complete top-layer modal: shared base markup has no visible close button distinct from clear-input, Tab trapping is scoped to the input only, and `.cp-backdrop` fallback `z-index:10000` is below known floating layers (`99999`, `2147482500+`). This is a source/CSS top-layer contract risk that can allow focus/overlay conflicts; an actual visible overlay collision still requires browser witness before closure/reclassification. | `incoming/search-deep-audit-2026-08-04/PASS5_PREMIUM_NATIVE_AUDIT.md`; `PASS5_PREMIUM_NATIVE_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-premium-native.md`; self-review `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-audit-self-review.md` |
 | SEARCH-P2-12 | 🆕 **Search premium P2:** shared search touch/focus affordances are below premium/native standard: `.cp-scope-chip` uses `min-height:32px`, shared `.gb-nav-search-icon` has no explicit 44px hitbox, and focus-visible rules are missing for some interactive controls (`.cp-scope-chip`, preview buttons in probe). | `incoming/search-deep-audit-2026-08-04/PASS5_PREMIUM_NATIVE_AUDIT.md`; `PASS5_PREMIUM_NATIVE_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-premium-native.md` |
@@ -493,25 +493,34 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-05: source/deploy anchor `38b25703`; exact production run `30960174778`; 371 canonical = 225 closed + 146 open)
+## Статистика (обновлено 2026-08-05: source anchor `b3768b45`; production anchor `38b25703`; exact production run `30960174778`; 371 canonical = 226 closed + 145 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 225 |
+| Закрыто (fixed) | 226 |
 | **P0 открыто** | **0** |
 | P1 открыто | 70 |
-| P2 открыто | 30 |
+| P2 открыто | 29 |
 | P3 открыто | 39 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **146** |
+| **Всего открыто (матрица)** | **145** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
 
 ---
 
-## Session log (append-only)
+## Session log
+
+### 2026-08-05 — Home SearchAction P2 closure @ merged Product `b3768b45`
+
+- Closed `SEARCH-P2-09` from Product PR #968 / squash merge `b3768b45de4f9b5abcc39236ee94b7cfe6c55281`.
+- Exact tested head `ca045325458df820cf98f746e15bb7ab051ef826` passed all 12 triggered workflow groups; the permanent Home SearchAction contract passed Chromium and WebKit on desktop and mobile, including query normalization, one canonical dialog, result presence without rank coupling, input focus, truthful trigger/dialog ARIA, empty/unrelated query no-op behavior, URL retention, geometry, no page/console errors and read-only validation.
+- Merged-main compare from `c159526e272812371be614a2fa95e0b149fbbe20` to `b3768b45de4f9b5abcc39236ee94b7cfe6c55281` is exactly one commit and three files: `.github/workflows/home-search-action-contract.yml`, `scripts/home-search-action-browser-contract.mjs`, and `src/pages/index.astro`.
+- No search ranking, Pagefind, manifest, Scripture corpus, CSS, cache, service-worker, generated HTML, production deployment or TTS/Vosk claim.
+- Canonical arithmetic: total remains **371**; closed `225 → 226`, open `146 → 145`, P2 `30 → 29`.
+
 
 ### 2026-08-04 — Scripture occurrence search P1 closure
 
