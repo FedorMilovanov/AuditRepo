@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `92c4939c62bda365c1531c31d150c3988d8cfa47` (current merged Product source after ReaderProjection PR #990; exact final head `fdc3a90e9f4b8728698fd4d21f2afae3880f8525` passed 15/15 workflow groups, including source 68/68, browser 144/144, tooltip handoff 19/19 and full Runtime Interactive; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |
+| Source verification anchor | `d0647b71b557c17e408c09712fcd8c3ab05ba257` (current merged Product source after Favorite Store PR #1061; exact final head `845ad48409fc3c8a2fa7056f4b84e005e652318e` passed 25/25 applicable workflow groups, including source 65/65, Chromium 138/138, Reader Projection, full Runtime Interactive, TTS, Overlay, Route Registry Chromium/WebKit, Visual and Shared Files; nine checked functional/control blobs equal the tested head; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |
 | Deploy | ✅ **EXACT PRODUCTION AUTHORITY.** Run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate `38b257030afb7cfa8a7b1128f8c86539fd36dec0:30960174778-1`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`, transport artifact `8912983035` digest `sha256:e7784d18a33e256da4da52a2d0d0a46d5587fb5c6659602047c6be7d8b71108e`. Readiness job `92162173520`, unchanged Gill mobile PlayEmber smoke, immutable candidate verification/upload, promotion job `92165278471`, Pages deployment, generic live contract and live TTS extension all passed. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_92c4939c_readerprojection-source-closure.md` (Product PR #990, exact head `fdc3a90e`, squash merge `92c4939c`; merged source and exact-head Chromium/CI closure, no new production claim). |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_d0647b71_favorite-store-source-closure.md` (Product PR #1061, exact head `845ad484`, guarded squash merge `d0647b71`; merged-source, Chromium and exact-head CI closure, no new production claim and no matrix arithmetic change). |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current exact production authority is run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`. The matrix is a durable verified backlog; later source movement does not silently reopen or close rows without a new applicable reverify.
 
@@ -1268,4 +1268,13 @@ D-23 (P1, deploy-блокирующая регрессия) — 🟠→✅ **RES
 - Exact head passed all 23 triggered Product workflows; final diff 125 permanent files, `+267/-339`, no TTS/Vosk paths.
 - `SEARCH-P2-07` remains open; no corpus-completeness, rights, production deployment or TTS/Vosk claim.
 - Canonical arithmetic: total remains **371**; closed `222 → 223`, open `149 → 148`, P2 `33 → 32`.
+
+### 2026-08-05 — Favorite Store source closure `d0647b71`
+
+- Product PR #1061 was guarded-squash merged as `d0647b71b557c17e408c09712fcd8c3ab05ba257` from exact tested head `845ad48409fc3c8a2fa7056f4b84e005e652318e` after **25/25** applicable workflow groups passed.
+- Canonical `window.GBFavoriteStore` v1 now owns favorites storage, migration, canonical route metadata, mutations, events, lifecycle and save-button synchronization; Home and `/izbrannoe/` consume that owner without direct favorite-localStorage ownership.
+- Permanent evidence: Favorite Store run `31037316037`, job `92412574991`, source **65/65**, Chromium **138/138**, artifact `8943367668`, digest `sha256:c15e92c25bfc127cac2824ac5aa679be383e3bb916e3d9fa3dfa9bd385822628`; Runtime Interactive run `31037316184` also passed.
+- Nine functional/control blobs checked on merged `main` equal the tested-head blobs, and the Product branch was auto-deleted.
+- This scope has no canonical matrix ID, so arithmetic remains **371 = 226 closed + 145 open**. Production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0` / run `30960174778` attempt `1`.
+- Product issue #61 remains open only for independently reverified inactive-control exposure and radiogroup/popup semantics; ReaderProjection and Favorite Store source ownership must not be reopened without new exact-current evidence.
 
