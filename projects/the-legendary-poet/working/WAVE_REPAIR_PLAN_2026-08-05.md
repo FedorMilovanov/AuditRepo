@@ -1,6 +1,6 @@
 # Wave repair plan — The Legendary Poet
 
-Current source production baseline: `4544bb387108a98641313267beafe29deb71ee81`.
+Current source production baseline: `d03f09188cd0360c6c984ed93d03b1432913332c`.
 
 ## W0 — system truth and governance — COMPLETE
 
@@ -30,7 +30,7 @@ Exact tested source head `8eaeaa4abc7f80eb6b96de0657df0b3e255d96d3` passed all 1
 
 Source #312 was closed unmerged after a stronger parallel implementation appeared. Source #313 became the durable working lane and fixed the global-corpus architecture, then final production #316 was created directly from exact #313 head `f85aba5803ecc5643b39a5ee4081da86e0174997` and added only the missing Android/iPhone request-topology and failed remote-helpful persistence proof.
 
-Production `4544bb387108a98641313267beafe29deb71ee81` now enforces all eight W3 outcomes:
+Production `4544bb387108a98641313267beafe29deb71ee81` established all eight W3 outcomes:
 
 1. generic application startup performs zero community reads;
 2. detail targets load one aggregate summary and a bounded first comment page;
@@ -39,27 +39,43 @@ Production `4544bb387108a98641313267beafe29deb71ee81` now enforces all eight W3 
 5. public remote corpora remain ephemeral and are not written wholesale to localStorage;
 6. optimistic writes, outbox retry, offline state, cooldowns, helpful votes, cross-tab notification and storage-failure honesty remain intact;
 7. schema rollout is additive, with a bounded detail-target fallback and a fail-closed leaderboard when aggregate infrastructure is unavailable;
-8. repository validators, desktop Manual Browser QA and a permanent exact-head Android/iPhone workflow prove the request topology and remote-helpful outbox contract.
+8. repository validators, desktop Manual Browser QA and permanent Android/iPhone topology prove request boundaries and remote-helpful outbox behavior.
 
-Exact tested head `a810a2a9bdcf9a150c73d4adea703e95ae6bd71a` passed Project contracts, Content model, CI, catalog, route integrity, Yesenin publication/browser gates, both brand lines, Manual Browser QA 4/4 and Community scaling mobile contract. Pages was skipped by the normal PR condition.
+A follow-up parallel review found three narrower production boundaries. Source #317 preserved the first server baseline across repeated edits of one pending rating, made poem quick navigation remote-passive, deferred compact poem-panel reads until explicit activation, repaired invalid device UUIDs and discarded malformed/mismatched outbox operations before retry. Exact head `253376bd8107471e1641027d892ac5207c18f73a` passed the complete matrix and Manual Browser QA 4/4; production is now `d03f09188cd0360c6c984ed93d03b1432913332c`.
 
-## W4 — workflow and performance consolidation — ACTIVE
+## W4 — workflow and performance consolidation — COMPLETE
 
-W4 owns two linked current findings: repeated exact-checkout/setup/build/browser workflow primitives and limited entry/chunk budget margin.
+Source #318 closed both W4 rows without deleting acceptance coverage.
+
+Production `a11f6faff984cd599539e04696717c6fb336329b`, retained by current `d03f09188cd0360c6c984ed93d03b1432913332c`, now enforces:
+
+1. a recorded baseline of one `612.81 KiB` entry asset, one `488.82 KiB` shared asset, 14 lazy route chunks, `1597.1 KiB` total JavaScript and `244.8 KiB` total CSS;
+2. a `665,000` byte production-entry ceiling and the same ceiling for every emitted JavaScript asset;
+3. `1,800,000` total JavaScript and `300,000` total CSS ceilings;
+4. explicit raw-byte budgets for all 14 named route modules, each required to remain a distinct lazy dynamic entry outside the eager graph;
+5. a machine-readable `dist/build-budget-report.json` retained by CI;
+6. four repository-owned composite actions for Node/dependencies, deterministic build tools, locked Playwright browser installation and preview readiness;
+7. shared primitives in CI and all four Manual Browser jobs;
+8. retirement of the duplicate community mobile workflow only after Android topology moved into core QA and iPhone topology moved into fresh-process WebKit;
+9. dependency-free workflow consolidation and shared-action-aware browser-runtime validators;
+10. preservation of all previous route, content, community, brand, interaction, premium and critical-iPhone acceptance contours.
+
+Exact tested head `6bd27851f7bdd834e4fffaf5afca3e8a2102a4f6` passed the complete source matrix. Manual Browser QA passed 4/4. Pages was skipped by the normal PR condition.
+
+## W5 — premium browser certification — ACTIVE
+
+W5 owns reader-outcome synthesis, not another architecture rewrite.
 
 Required outcomes:
 
-1. inventory duplicated setup, deterministic asset, build, preview and browser-install blocks before changing workflow structure;
-2. introduce reusable primitives only where exact-head identity, artifacts, timeouts and failure visibility remain equivalent or stronger;
-3. preserve every route/content/brand/community/browser acceptance contour; consolidation by deleting checks is forbidden;
-4. record current production entry and route-chunk measurements before setting budgets;
-5. enforce an entry ceiling and route-specific chunk budgets with explicit exceptions rather than one opaque total-size number;
-6. keep content, community backend behavior, brand art and branch retirement outside W4;
-7. run the complete exact-head source matrix and Manual Browser QA 4/4 before promotion.
-
-## W5 — premium browser certification
-
-Production-like Chromium/WebKit, desktop/mobile, keyboard, reduced motion, blocked storage/network and real reader tasks.
+1. define representative reader journeys across home, poet, poem, article, music, ratings and archive surfaces;
+2. certify production-like Chromium and WebKit on desktop and mobile viewports;
+3. cover keyboard-only operation, focus order, dialogs/lightboxes, reduced motion and forced colors where supported;
+4. cover blocked or unavailable storage, offline/failed community writes and degraded network behavior without dishonest success UI;
+5. verify first viewport, navigation continuity, longform readability, audio controls and community activation as user outcomes rather than only implementation tokens;
+6. reuse existing build/browser primitives and exact-head identity; adding a duplicate runner is forbidden unless an independent process boundary is proven necessary;
+7. preserve current budgets and all W0–W4 gates;
+8. run the complete exact-head source matrix and Manual Browser QA 4/4 before promotion.
 
 ## W6 — branch/artifact retirement
 
