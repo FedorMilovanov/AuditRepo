@@ -103,3 +103,70 @@ jobs:
             reports/repository-history-forensic-audit.md
           if-no-files-found: error
           retention-days: 30
+
+  search-p2-09-reconcile:
+    if: github.event_name == 'pull_request' && github.event.pull_request.number == 170 && github.event.pull_request.head.ref == 'audit/search-p2-09-closure-20260805'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - name: Checkout exact reconciliation branch
+        uses: actions/checkout@v4
+        with:
+          ref: audit/search-p2-09-closure-20260805
+          fetch-depth: 0
+      - name: Set up Node 22.12
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply exact SEARCH-P2-09 reconciliation
+        run: node scripts/reconcile-search-p2-09.mjs
+      - name: Capture changed paths for validator ratchet
+        run: |
+          changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
+          git diff --name-only > "${changed_file}"
+          cat "${changed_file}"
+          echo "AUDITREPO_CHANGED_PATHS_FILE=${changed_file}" >> "${GITHUB_ENV}"
+      - name: Validate exact reconciled tree
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p reports/matrix-coverage
+          python3 scripts/check_matrix_coverage.py --verbose --json-out reports/matrix-coverage/report.json
+          python3 scripts/matrix_coverage_contexts.py --json-out reports/matrix-coverage/contexts.json --markdown-out reports/matrix-coverage/contexts.md
+          node scripts/repository_history_forensic_audit.mjs --strict
+      - name: Restore canonical workflow and remove temporary control plane
+        run: |
+          git show cc180c5632fa12b25c035ac5abd2bfb6097316a1:.github/workflows/auditrepo-validate.yml > .github/workflows/auditrepo-validate.yml
+          git rm .github/workflows/reconcile-search-p2-09.yml
+          git rm scripts/reconcile-search-p2-09.mjs
+      - name: Verify exact permanent change set
+        run: |
+          expected="$(cat <<'EOF'
+projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
+projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md
+projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
+EOF
+)"
+          actual="$(git diff --name-only --diff-filter=ACMR | sort)"
+          deleted="$(git diff --name-only --diff-filter=D | sort)"
+          test "${actual}" = "${expected}"
+          test "${deleted}" = $'.github/workflows/reconcile-search-p2-09.yml\nscripts/reconcile-search-p2-09.mjs'
+          git diff --check
+      - name: Commit self-clean permanent reconciliation
+        run: |
+          git config user.name "audit-search-reconciler"
+          git config user.email "audit-search-reconciler@users.noreply.github.com"
+          git add -A
+          git commit -m "audit(search): close SEARCH-P2-09"
+          git push origin "HEAD:audit/search-p2-09-closure-20260805"
