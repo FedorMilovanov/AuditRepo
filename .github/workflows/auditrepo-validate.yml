@@ -146,7 +146,7 @@ jobs:
       - name: Validate computed tree
         run: |
           changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
-          git diff --name-only > "${changed_file}"
+          { git diff --name-only; git ls-files --others --exclude-standard; } | sort -u > "${changed_file}"
           echo "AUDITREPO_CHANGED_PATHS_FILE=${changed_file}" >> "${GITHUB_ENV}"
           python3 scripts/check_auditrepo_structure.py
           python3 scripts/validate_audit_repo.py
@@ -162,7 +162,7 @@ jobs:
             'projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md' \
             'projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md' \
             'projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')"
-          actual="$(git diff --name-only --diff-filter=ACMR | sort)"
+          actual="$({ git diff --name-only --diff-filter=ACMR; git ls-files --others --exclude-standard; } | sort -u)"
           test "${actual}" = "${expected}"
       - name: Upload exact reconciled files
         uses: actions/upload-artifact@v4
