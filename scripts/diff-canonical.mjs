@@ -51,7 +51,12 @@ function collectFor(contract) {
   const files = allSourceFiles(contract.searchPaths);
   let matched;
   if (contract.component) {
+    // component-файлы + (если задан searchPaths) файлы из этих каталогов
     matched = files.filter((f) => f.includes(contract.component) || f.includes(contract.component.replace(/-/g, '_')));
+    if (contract.searchPaths && contract.searchPaths.length) {
+      const extra = allSourceFiles(contract.searchPaths);
+      for (const f of extra) if (!matched.includes(f)) matched.push(f);
+    }
   } else {
     matched = files.filter((f) => (contract.routes || []).some((r) => f.includes(r) || f.includes(r.replace(/-/g, '_'))));
   }
