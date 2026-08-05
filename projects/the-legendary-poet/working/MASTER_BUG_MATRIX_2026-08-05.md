@@ -2,7 +2,7 @@
 
 **Matrix type:** working synthesis, with fixed rows backed by exact source production.  
 **Initial audit baseline:** `FedorMilovanov/TheLegendaryPoet main@19598947c20cd2dd94abd232fbf6fb8a05c3575a`.  
-**Current production after W0 + discovery/Safari + W1 + W2 + W3:** `4544bb387108a98641313267beafe29deb71ee81`.
+**Current production after W0 + discovery/Safari + W1 + W2 + W3 + W4 + W3 hardening:** `d03f09188cd0360c6c984ed93d03b1432913332c`.
 
 | ID | Sev | Working status | Root cause | Repair lane | Evidence / closure barrier |
 |---|---|---|---|---|---|
@@ -15,10 +15,10 @@
 | TLP-QA-002 | P2 | fixed-current | Safari brand-source audit enumerated placements before the route-loading shell settled. | Inter-wave / source #305 | official readiness wait + real raster count; exact Manual Browser QA 4/4 |
 | TLP-ARCH-001 | P1 | fixed-current | Dead Article model remained beside live Essay model. | W1 / source #308 | 5 drafts archived with SHA-256, runtime schema/export removed, redirects retained, content-model gate, production `e06bdfc` |
 | TLP-ARCH-002 | P2 | fixed-current | Essay publication mutated imported authoring objects and wrote derived metadata in place. | W2 / source #311 | exact head `8eaeaa4`; clone/override/derived-read-time/deep-freeze boundary; raw-before-index snapshot validator; all 13 PR workflows successful; Manual Browser QA 4/4; production `a248abd` |
-| TLP-COMM-001 | P1 | fixed-current | Generic startup hydrated and persisted the complete public ratings/comments corpus before target filtering or leaderboard aggregation. | W3 / source #316 | exact head `a810a2a9`; zero startup reads; target aggregates; stable bounded comment cursors; aggregate-only leaderboard; v3 bounded local state/outbox; desktop + Android + iPhone topology; Manual Browser QA 4/4; production `4544bb3` |
-| TLP-PERF-001 | P2 | active-current | Entry bundle has limited margin below hard ceiling and no explicit per-route chunk budget. | W4 | preserve current route behavior while adding exact production measurements and enforceable chunk/entry budgets |
-| TLP-CI-001 | P2 | active-current | Repeated workflow setup/build/browser primitives create drift and runner cost. | W4 | reusable exact-checkout primitives with all route/content/browser acceptance retained |
-| TLP-QA-001 | P2 | needs-browser-synthesis | Strong implementation contracts need broader reader-outcome synthesis. | W5 | cross-browser production-like task matrix |
+| TLP-COMM-001 | P1 | fixed-current | Generic startup hydrated and persisted the complete public ratings/comments corpus before target filtering or leaderboard aggregation; follow-up review found unstable pending-rating baselines, poet-detail N+1 reads and poison persisted identities. | W3 / source #316 + hardening #317 | scaling head `a810a2a9`, production `4544bb3`; hardening head `253376bd`, production `d03f091`; zero startup reads, target aggregates/cursors, bounded v3 state/outbox, stable pending baselines, passive poem navigation, user-activated panels, poison-safe identity/outbox recovery, desktop/Android/iPhone topology and Manual Browser QA 4/4 |
+| TLP-PERF-001 | P2 | fixed-current | Entry bundle had limited margin below a broad ceiling and no explicit per-route chunk budget. | W4 / source #318 | exact head `6bd27851`; one entry + 14 lazy-route budgets, per-asset and total JS/CSS ceilings, `build-budget-report.json`, full matrix success, production `a11f6fa`, retained by current `d03f091` |
+| TLP-CI-001 | P2 | fixed-current | Repeated workflow setup/build/browser primitives created drift and runner cost. | W4 / source #318 | four repository composite actions, duplicate community runner retired without losing Android/iPhone topology, workflow/browser-runtime contracts, Manual Browser QA 4/4, production `a11f6fa`, retained by current `d03f091` |
+| TLP-QA-001 | P2 | active-current | Strong implementation contracts need broader reader-outcome synthesis under production-like failure and accessibility conditions. | W5 | cross-browser desktop/mobile, keyboard, reduced motion, blocked storage/network and representative reader tasks; no reduction of existing exact-head gates |
 | TLP-CLEAN-001 | P2 | confirmed-current | Old branches and dormant candidates lack retirement classification. | W6 | extraction ledger, archive pointers, zero unclassified remote branches |
 | TLP-GOV-001 | P2 | owner-decision | Generic package identity, engine/license/release policy unresolved. | Separate governance | explicit owner decision; agents must not invent license/version |
 
@@ -26,6 +26,6 @@
 
 - A source PR does not change a row to `fixed-current` until exact tested head, merge SHA and current-source presence are recorded.
 - Page-specific symptoms must be linked to one matrix root cause instead of receiving duplicate canonical IDs.
-- Closed source #286, #302, #303, #305, #308, #311 and #316 waves remain separately attributable even when a later production SHA contains all repairs.
+- Closed source #286, #302, #303, #305, #308, #311, #316, #318 and #317 waves remain separately attributable even when a later production SHA contains all repairs.
 - `active-current` means the root cause is confirmed on current production and owns the next isolated source lane; it does not imply partial closure.
 - Working statuses are synthesis decisions; canonical verified state is recorded under `verified/` and `reverify/`.
