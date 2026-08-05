@@ -7,7 +7,7 @@
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
 | `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | Astro static site (gospod-bog.ru), strangler-миграция. **Старт: [`projects/gb-is-my-strength/DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md).** HEAD/счётчики/статус намеренно НЕ дублируются здесь (правило Single-Writer-Per-Fact, `CLEANUP_RETENTION_POLICY.md` §8) — они в матрице + `NEXT_AGENT_PROMPT.md`. |
-| `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | Марафонская repair-волна закрыта на production `main@e06d759`; source/library intake сохранён отдельной линией. Старт: [`projects/the-legendary-poet/README.md`](projects/the-legendary-poet/README.md). |
+| `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | Browser-runtime debt закрыт на production `main@1959894`; предыдущая marathon repair-волна и source/library intake сохранены отдельными evidence-линиями. Старт: [`projects/the-legendary-poet/README.md`](projects/the-legendary-poet/README.md). |
 
 ## Status glossary
 
@@ -34,25 +34,25 @@
 
 ## the-legendary-poet — текущая правда
 
-Проект переведён из `intake-only` в `active` после первой полной verified repair-волны.
-Source PR `FedorMilovanov/TheLegendaryPoet#286` прошёл точную PR-матрицу на head
-`25cfa99e7b20af4d1c78b3ed1c7fd219878f8a81` и был squash-merged в production
-`main@e06d75970cf1262f4dab5bfd941e45328f07f747`.
+Проект имеет статус `active`. После первой полной verified repair-волны source PR
+`FedorMilovanov/TheLegendaryPoet#302` закрыл оставшийся browser-harness drift:
+точный head `40eba88a027d6d78dd04ac0dcefb8272d888063f` прошёл полную матрицу и был
+squash-merged в production `main@19598947c20cd2dd94abd232fbf6fb8a05c3575a`.
 
 Точка входа:
 
 ➡️ **[`projects/the-legendary-poet/README.md`](projects/the-legendary-poet/README.md)**
 
-Каноническая verified-запись:
+Последняя verified-запись:
 
-➡️ **[`projects/the-legendary-poet/verified/START_HERE_2026-08-05.md`](projects/the-legendary-poet/verified/START_HERE_2026-08-05.md)**
+➡️ **[`projects/the-legendary-poet/verified/PLAYWRIGHT_RUNTIME_LOCK_2026-08-05.md`](projects/the-legendary-poet/verified/PLAYWRIGHT_RUNTIME_LOCK_2026-08-05.md)**
 
-Exact-HEAD reverify:
+Последний exact-HEAD reverify:
 
-➡️ **[`projects/the-legendary-poet/reverify/REVERIFY_e06d759_2026-08-05.md`](projects/the-legendary-poet/reverify/REVERIFY_e06d759_2026-08-05.md)**
+➡️ **[`projects/the-legendary-poet/reverify/REVERIFY_1959894_2026-08-05.md`](projects/the-legendary-poet/reverify/REVERIFY_1959894_2026-08-05.md)**
 
-Governed source-library intake остаётся отдельным доказательным пакетом и не заменён
-repair-закрытием.
+Предыдущая marathon repair-волна и governed source-library intake остаются отдельными
+историческими доказательными пакетами и не перезаписываются этим закрытием.
 
 ## How to add a new project
 
