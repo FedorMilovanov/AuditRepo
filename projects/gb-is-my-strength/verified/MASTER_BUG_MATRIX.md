@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `3a05a1e79bcd7061e9b9c3f98ed3953ae2e8d0c0` (current Product source after Home Hebrew mirror stabilization; the intervening `d0647b71...3a05a1e7` delta is one commit and only `data/scripture-search-index.json`, `scripts/home-browser-contract.mjs` and `src/components/home/HomeSections/Quote.astro`; Search modal owners from PR #1039 exact head `375d8f72836f8bf3ae92c5f04ac73da73b631609` remain byte-identical: `js/search.js` `7b279d1a8c092ae473d3db9129ee14652cb7ee69`, `css/command-palette.css` `758247d1dd41a626cabeafa5048636f8181be07a`, browser contract `50e52e488800d7c7bdc3875083e4a7b4a4975c17` and workflow `252539d5d1810612cc5c8a4aaa007e7461102e40`; exact head passed 27/27 applicable workflow groups and Chromium/WebKit Search Modal 4/4; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |
+| Source verification anchor | `3a05a1e79bcd7061e9b9c3f98ed3953ae2e8d0c0` (current Product source; Reader controls PR #988 exact head `18f130fe91e6d25ae44ceb897daa362ba3187518` / merge `c159526e272812371be614a2fa95e0b149fbbe20` is retained: runtime blob `49360065b2c8270f8de6d5cad919fd1c24fa8502`, browser contract `ae34d8bc16088101bfed4fc8fc72ce6c608124b3`, workflow `db655c838a24f025f1aa4c87ada7edf9bcf10dfb`; current ReaderActionsRuntime blob `1a5fd1b6321477328416973a2e199d427a15e262` retains the additive controls import; exact head passed 14/14 groups and Chromium 85/85; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |
 | Deploy | ✅ **EXACT PRODUCTION AUTHORITY.** Run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate `38b257030afb7cfa8a7b1128f8c86539fd36dec0:30960174778-1`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`, transport artifact `8912983035` digest `sha256:e7784d18a33e256da4da52a2d0d0a46d5587fb5c6659602047c6be7d8b71108e`. Readiness job `92162173520`, unchanged Gill mobile PlayEmber smoke, immutable candidate verification/upload, promotion job `92165278471`, Pages deployment, generic live contract and live TTS extension all passed. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_3a05a1e7_search-p2-10-12-closure.md` (Product PR #1039, exact head `375d8f72`, squash merge `007c2d3c`, current-source owner blobs verified on `3a05a1e7` after an intervening Home-only three-file delta; SEARCH-P2-10/11/12 source+Chromium+WebKit+CI closure, no new production claim). |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_3a05a1e7_reader-controls-source-closure.md` (Product PR #988, exact head `18f130fe`, squash merge `c159526e`; inactive-control exposure plus radiogroup/focus/popup semantics are merged-source+Chromium+CI verified on exact-current retained owners; no new production claim). |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current exact production authority is run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`. The matrix is a durable verified backlog; later source movement does not silently reopen or close rows without a new applicable reverify.
 
@@ -520,6 +520,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log
+
+- **2026-08-05 — Reader controls accessibility source closure.** Product PR #988 exact head `18f130fe91e6d25ae44ceb897daa362ba3187518` passed 14/14 applicable workflow groups; Reader Controls run `30972484056` / job `92199627173` passed production-like build and Chromium **85/85** with zero page errors, then guarded squash merged as `c159526e272812371be614a2fa95e0b149fbbe20`. Current Product `3a05a1e7` retains the three permanent owner blobs and the additive ReaderActionsRuntime import. The umbrella controls/accessibility and radiogroup/popup intake scopes are source-closed without changing matrix arithmetic or production authority. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_3a05a1e7_reader-controls-source-closure.md`.
 
 ### 2026-08-05 — ReaderProjection source closure @ merged Product `92c4939c`
 
