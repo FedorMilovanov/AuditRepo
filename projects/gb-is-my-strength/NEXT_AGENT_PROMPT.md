@@ -2,7 +2,7 @@
 
 ## Exact authority
 
-- AuditRepo base incorporated before this transaction: `0d864179db7b537dad3891806be5541adccf1919`.
+- AuditRepo base incorporated before this transaction: `174fc803ad478d924d86420edd71cbba3f82bf5f`.
 - Product current source anchor: `3a05a1e79bcd7061e9b9c3f98ed3953ae2e8d0c0` (Home Hebrew mirror stabilization; Favorite Store remains the retained merge `d0647b71b557c17e408c09712fcd8c3ab05ba257`; no new production deployment claim).
 - Product production anchor remains: `38b257030afb7cfa8a7b1128f8c86539fd36dec0`.
 - Favorite Store exact tested head: `845ad48409fc3c8a2fa7056f4b84e005e652318e`.
@@ -12,7 +12,7 @@
 - Final PlayEmber merge: `e63dbf7d2a925501587df81ff5fb84b816e4e95f` (PR #929).
 - Exact production authority: run `30960174778` attempt `1`, readiness job `92162173520`, promotion job `92165278471`.
 - Candidate: `38b257030afb7cfa8a7b1128f8c86539fd36dec0:30960174778-1`; digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`.
-- Canonical reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_3a05a1e7_search-p2-10-12-closure.md`.
+- Canonical reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_3a05a1e7_reader-controls-source-closure.md`.
 
 ## Canonical matrix
 
@@ -41,6 +41,15 @@
 - All nine functional/control blobs checked at merge equal the exact tested-head blobs; current Product `3a05a1e79bcd7061e9b9c3f98ed3953ae2e8d0c0` is one descendant commit and its exact diff from `d0647b71b557c17e408c09712fcd8c3ab05ba257` is limited to `data/scripture-search-index.json`, `scripts/home-browser-contract.mjs` and `src/components/home/HomeSections/Quote.astro`, so no Favorite Store owner drift was imported. The canonical Product branch was auto-deleted.
 - No BookmarkEngine, ReaderState, ReaderProjection, Search behavior, TTS/Vosk, route-content or visual-redesign ownership was imported by this lane.
 
+## Reader controls accessibility evidence retained
+
+- Product PR #988 exact tested head `18f130fe91e6d25ae44ceb897daa362ba3187518` / guarded squash merge `c159526e272812371be614a2fa95e0b149fbbe20` source-closes the remaining controls/accessibility cluster.
+- Exact head passed **14/14** applicable workflow groups.
+- Reader Controls run `30972484056`, job `92199627173`: exact identity, production-like build and Chromium **85/85 PASS** across five route/viewport cases, with zero uncaught page errors.
+- Artifact `8917086074`; digest `sha256:02ca8c71b194bd82f4cdf698b9dd5ec40258770ef8d378a4face4c31def72070`.
+- Exact-current Product retains runtime blob `49360065b2c8270f8de6d5cad919fd1c24fa8502`, browser-contract blob `ae34d8bc16088101bfed4fc8fc72ce6c608124b3` and workflow blob `db655c838a24f025f1aa4c87ada7edf9bcf10dfb`. Current `ReaderActionsRuntime.astro` blob `1a5fd1b6321477328416973a2e199d427a15e262` retains the controls import while composing later ReaderProjection and Favorite Store imports.
+- No ReaderProjection, Favorite Store, TTS/Vosk, Search, route-content or visual-redesign ownership is reopened. No production/live claim is imported.
+
 ## ReaderProjection evidence retained
 
 - Reader Projection run `31008123138`, job `92313063354`: exact identity PASS, source **68/68**, browser **144/144**, tooltip handoff **19/19** at `1280×850`.
@@ -53,14 +62,15 @@
 - Generic live artifact `8912993840` and TTS live artifact `8912994737` remain authoritative for the deployed candidate.
 - Product issue #474 remains closed.
 
-## Remaining Reader controls boundary
+## Reader controls disposition
 
-Product umbrella #61 intentionally remains open only for independently reverified work:
+Product PR #988 source-closes the remaining independently verified controls cluster:
 
-1. remove any still-confirmed inactive speed/search controls from Tab/accessibility exposure;
-2. complete any still-confirmed radiogroup roving keyboard model and popup semantics.
+- inactive speed/search rails are removed from Tab/accessibility exposure through truthful `aria-hidden` and `inert` ownership;
+- roving radiogroup keyboard behavior, focus return and truthful popup semantics are covered by the permanent Chromium contract;
+- exact-current Product retains the runtime, contract and workflow blobs plus the additive `ReaderActionsRuntime.astro` import.
 
-Do not reopen ReaderProjection or Favorite Store metadata/store ownership without new exact-current evidence.
+Umbrella #61 has no remaining source scope under its current verified boundary and may be closed as merged-source complete. No production/live claim is made. Reopen only on fresh exact-current evidence.
 
 ## Next bounded search lanes retained
 
