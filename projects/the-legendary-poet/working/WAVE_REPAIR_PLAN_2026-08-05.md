@@ -1,12 +1,12 @@
 # Wave repair plan — The Legendary Poet
 
-## W0 — system truth and governance
+## W0 — system truth and governance — COMPLETE
 
-Owner: source PR #303. Machine contract, workflow path integrity, current docs, agent concurrency rules and UTC daily content.
+Source PR #303 merged as production `69e5d3931bc1d1af635efeaf98c76cf36ce30f41`. Machine contract, live workflow path integrity, current documentation authority, agent concurrency rules, Node 24 baseline and UTC daily content are now production contracts.
 
-## W1 — content-model unification
+## W1 — content-model unification — ACTIVE
 
-Inventory and migrate unique legacy Article content, then remove Article/Poet.articles as one atomic source lane.
+Source PR #306. Preserve five exact hidden legacy drafts with SHA-256, remove `Article`/`Poet.articles` runtime and exports atomically, retain compatibility redirects and add a permanent one-engine validator. Temporary executor files are forbidden from the final head.
 
 ## W2 — immutable essay publication
 
