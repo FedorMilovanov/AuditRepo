@@ -1,6 +1,6 @@
 # Remote branch disposition — The Legendary Poet
 
-Current production: `e06bdfc42ada0a6111f0cde6e39dd7f48204f2c8`.
+Current production: `a248abd54007bd839ffc149b9195dc4e79dc5dd3`.
 
 | Branch / class | Graph result | Disposition |
 |---|---|---|
@@ -14,8 +14,11 @@ Current production: `e06bdfc42ada0a6111f0cde6e39dd7f48204f2c8`.
 | `audit/system-contract-wave1-20260805` | source #303 merged to production `69e5d39` | evidence-only after merge; do not re-merge |
 | `audit/discovery-artifact-contract-20260805` / source #304 | old-base discovery proposal | closed unmerged; superseded by fresh-base #305 |
 | `audit/discovery-artifact-contract-v2-20260805` | source #305 merged to production `44a36bd` | evidence-only after merge; do not re-merge |
-| `audit/content-model-unification-wave2-20260805` | parallel agent branch independently reconstructed after production integration; one ahead / one behind final main from merge base `44a36bd` | source #306 closed superseded; same 25-file durable surface already integrated and hardened by #308; no separate merge |
-| `integration/content-model-after-discovery-20260805` | current-main integration branch, source #307 then #308 | production content merged as `e06bdfc`; evidence-only after merge |
+| `audit/content-model-unification-wave2-20260805` | stale parallel W1 branch | source #306 closed superseded; durable content integrated and hardened by #308; no separate merge |
+| `integration/content-model-after-discovery-20260805` | W1 integration branch, source #307 then #308 | production content merged as `e06bdfc`; evidence-only after merge |
+| `audit/immutable-essay-publication-w2-20260805` | first W2 implementation, source #309 | closed unmerged after overlap; evidence incorporated into #311 |
+| `audit/immutable-essay-publication-20260805` | parallel W2 implementation, source #310 | closed unmerged after overlap; strongest invariants incorporated into #311 |
+| `integration/immutable-essay-publication-w2-20260805` | single W2 production integration, source #311 | squash-merged as production `a248abd`; evidence-only after merge |
 
 ## Retirement barrier
 
