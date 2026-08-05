@@ -1,6 +1,6 @@
 # Remote branch disposition — The Legendary Poet
 
-Current production: `4544bb387108a98641313267beafe29deb71ee81`.
+Current production: `d03f09188cd0360c6c984ed93d03b1432913332c`.
 
 | Branch / class | Graph result | Disposition |
 |---|---|---|
@@ -24,6 +24,9 @@ Current production: `4544bb387108a98641313267beafe29deb71ee81`.
 | `integration/community-target-scaling-w3-final-20260805` | non-production exact-head transfer through #314 | superseded integration history; no production merge and no separate re-merge |
 | source #315 transfer lane | second non-production transfer collided only in Git history | closed unmerged; no code loss; replaced by fresh exact-head final integration branch |
 | `integration/community-scaling-w3-final2-20260805` | final W3 production lane, source #316 | squash-merged as production `4544bb3`; evidence-only after merge |
+| `audit/workflow-performance-w4-20260805` | W4 workflow/budget lane, source #318 | exact head `6bd27851` passed full matrix; squash-merged as production `a11f6fa`; evidence-only after merge |
+| `fix/community-w3-production-hardening-20260805` | parallel W3 hardening on W4 production, source #317 | exact head `253376bd` passed full matrix; squash-merged as current production `d03f091`; evidence-only after merge |
+| `integration/community-w3-hardening-production-20260805` / source #319 | exact-SHA integration opened during the #317 merge race | closed unmerged as redundant after `d03f091` was confirmed; never re-merge |
 
 ## Retirement barrier
 
