@@ -9,22 +9,24 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `b8882bf04a178d7a1d798a0377083ba57d29ce8a` (Product PR #901 legacy verse authority closure: `SEARCH-P2-08` fixed-current; `SEARCH-P2-07` remains open; no production or TTS/Vosk claim). |
-| Deploy | ⚠️ **FINDING-DISPOSITION ANCHOR ≠ PRODUCTION.** Last exact production authority remains run `30669840189` attempt `1`, release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, candidate `abf1edba190280e554dfda085bef9fb6594c896d:30669840189-1`, release digest `sha256:9ae50fc99476af4822181889ac9d3a802138e06265d5ac09d80133f64563d50a`. Product source/disposition anchor `b8882bf04a178d7a1d798a0377083ba57d29ce8a` has no same-SHA production witness; this closure makes no production claim. |
+| Source verification anchor | `38b257030afb7cfa8a7b1128f8c86539fd36dec0` (production-deployed Product descendant containing core TTS PR #876 and final PlayEmber PR #929; two TTS P2 delivery/runtime rows closed with exact source, real-model, CI, immutable candidate and live evidence). |
+| Deploy | ✅ **EXACT PRODUCTION AUTHORITY.** Run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate `38b257030afb7cfa8a7b1128f8c86539fd36dec0:30960174778-1`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`, transport artifact `8912983035` digest `sha256:e7784d18a33e256da4da52a2d0d0a46d5587fb5c6659602047c6be7d8b71108e`. Readiness job `92162173520`, unchanged Gill mobile PlayEmber smoke, immutable candidate verification/upload, promotion job `92165278471`, Pages deployment, generic live contract and live TTS extension all passed. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b8882bf0_legacy-verse-authority-closure.md` (Product PR #901 legacy authority removal; `SEARCH-P2-07` remains open). |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_38b25703_tts-production-closure.md` (core TTS #876 + final PlayEmber #929 + exact Pages/live closure; Product issue #61 remains open for non-TTS ReaderProjection/search/accessibility/save scope). |
 
-⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Exact finding-disposition anchor for closure wave V1 = `3aba5112f0fc37712e027a1ad1d8379debe54377`; last exact production authority remains `abf1edba190280e554dfda085bef9fb6594c896d`. The matrix is a durable verified backlog, not per-commit telemetry. Fifteen findings are closed because their claims are fixed or stale on the selected anchor; later source movement does not silently reopen or close rows without a new applicable reverify. Active source PR #680 remains outside this AuditRepo-only lane. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-02_3aba5112_fixed-source-wave-v1.md`.
+⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current exact production authority is run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`. The matrix is a durable verified backlog; later source movement does not silently reopen or close rows without a new applicable reverify.
 
 _История сессий (HEAD-переходы, что влито) — в разделе `## Session log` внизу файла, append-only._
 
 ---
 
-## ✅ ЗАКРЫТО (223)
+## ✅ ЗАКРЫТО (225)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| TTS-DL-UNZIP-SYNC | ✅ **FIXED-CURRENT / SOURCE+REAL-MODEL+CI+PRODUCTION-LIVE VERIFIED 2026-08-05.** Product PR #876 moved the ~280 MB model acquisition, integrity verification, archive extraction, IndexedDB persistence, ORT session creation and inference off the main thread into the governed worker boundary; current `vosk-tts-engine.js` selects `SharedWorker` first and a dedicated-worker fallback, and the real-model witness bounded the maximum UI gap at **32.7 ms**. Final PR #929 added the unchanged canonical Gill PlayEmber smoke as a permanent PR gate and repaired the trailing synthetic-click deploy blocker. Pages run `30960174778` deployed descendant `38b257030afb7cfa8a7b1128f8c86539fd36dec0`; readiness job `92162173520`, Gill smoke, immutable candidate verification/upload, promotion job `92165278471`, generic live contract and live TTS extension all passed. | `0d60315d` PR#876; `e63dbf7d` PR#929; deploy `30960174778` |
+| TTS-DL-NO-TABLOCK | ✅ **FIXED-CURRENT / SHARED-OWNER+MULTITAB+CI+PRODUCTION-LIVE VERIFIED 2026-08-05.** Product PR #876 replaced page-local duplicate ownership with one SharedWorker-first model/session owner and deterministic follower reuse; the real-model and multitab contracts proved exactly one acquisition with follower/shared reuse while preserving the bounded dedicated-worker fallback. All 19 exact-head workflow groups passed before merge `0d60315d37efd5b47c76795f8167e99398a5b7e3`. Final PR #929/merge `e63dbf7d2a925501587df81ff5fb84b816e4e95f` closed the remaining Gill mobile deploy blocker without weakening assertions. The deployed live TTS witness on run `30960174778` verified the versioned controller/engine/worker assets, required CSP directives, exact asset hashes and `lazyTtsPrecache: false` on Gill and Antisovetov routes. | `0d60315d` PR#876; `e63dbf7d` PR#929; live artifact `8912994737` |
 | NG-DARK-01 | ✅ **FIXED-CURRENT / SOURCE+CHROMIUM+CI VERIFIED 2026-08-04.** Product PR #887 replaced the refined nine-token / 142-use dark residual with higher-specificity unlayered selectors in `css/nagornaya-mobile-toc.css`, without adding any `!important`: the governed count remains exactly **134**. Its permanent production-like Chromium witness covered 9 Nagornaya routes × 3 viewports and passed **384/384** assertions; build, Pagefind/offline/SW contracts, visual parity, runtime interactive audit and the full static-publication barrier passed before squash merge `7118ad80c3474112f203c2c3b8df7cdc44de0a84`. The predecessor #885 is superseded; its eight extra `!important` declarations and blanket CSP suppression were intentionally not retained. A separate nondeterministic WebKit TOC harness finding remains open. No production deployment or TTS/Vosk claim. | `7118ad80` PR#887; Chromium 384/384 |
 | SEARCH-P1-03 | ✅ **FIXED-CURRENT / SOURCE+PAGEFIND+CHROMIUM+CI VERIFIED 2026-08-04.** Product PR #890 closed only the misleading exact-Bible S0: public wording now says `Ссылки` / `Ссылки в материалах`, the UI no longer promises a word/full-Scripture search, and the four public suggestions (`Иер 17:9`, `Рим 7:14–25`, `1 Тим 3`, `Тит 1`) are parsed by the canonical 66-book resolver and required to own exact `data/search-manifest.json` records. Old unsupported suggestions and labels are permanently forbidden. Exact head `0c20368ff0e4f90c992784530d15c9c7d722e0dd` passed executor run `30931175556` job `92065964404`: bounded clean diff, production-like build, strict Pagefind inventory, real browser discovery queries, SW deploy-switch audits and full `validate:static-publication`; squash merge `83875378a31436e235f1296f13d22c816b2945df`. `SEARCH-P2-07` and `SEARCH-P2-08` remain open. No production deployment or TTS/Vosk claim. | `83875378` PR#890; run `30931175556` |
 | SEARCH-P1-04 | ✅ **FIXED-CURRENT / SOURCE+PAGEFIND+CHROMIUM+CI VERIFIED 2026-08-04.** Product S1 PR #895 / merge `5fc06fc0c4a9a7c60f849619129890df70089b57` introduced the deterministic source-owned Scripture occurrence index. Its exact contract, which supersedes the inaccurate `296/1492/73/154` prose in that merge message, records **980 canonical references, 2355 visible-source occurrences across 73 indexed routes and 148 curated-text records**; production-like dist witnessed occurrences on 59 routes while preserving anchors, context, provenance and `canonicalText: null` where text authority is absent. Product S2 PR #899 / exact head `5f3962cec5e2c39a133fa56fb0661ac344df972a` renders exact occurrence results before Pagefind, lazy-loads the index once, preserves metadata/Pagefind fallback plus preview/keyboard/Enter navigation, and synchronizes search revision `f48e4610 → 6061911b` with SW cache v196. Self-clean executor run `30942911632`, job `92105570343`, and permanent exact-head Scripture index/runtime, Shared Files, Node, Metadata, Search policy, Native Source and publication checks passed before squash merge `3fba1890c23bd30d748f4d948a8919625d0ddf47`. `SEARCH-P2-07` and `SEARCH-P2-08` remain open. No production deployment or TTS/Vosk claim. | `5fc06fc0` PR#895 + `3fba1890` PR#899; runs `30939693713`, `30942911632`, `30943911786` |
@@ -339,7 +341,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 >
 > ℹ️ **V12-исследование доставки TTS (GPT-5.5, 2026-07-08):** фактическая точность о текущем коде подтверждена построчно; но большая архитектура (OPFS data/control plane, 11-статусная generation state machine, chunk-manifest+resumable Range, versioned rollback, split-file, 8 CI-уровней) **осознанно отклонена как несоразмерная** одной модели ~280 МБ, меняющейся ~раз в год. Оставлено 3 реальных пункта (1 P1 UX-решение + 2 не-дизайн улучшения — unzip в Worker, пин ревизии URL). §48-49 (SW не должен кэшировать модель) — код УЖЕ корректен. Полный разбор: `incoming/tts-delivery-architecture-verification-2026-07-08/REPORT.md`.
 
-## 🟡 P2 — ОТКРЫТО (32)
+## 🟡 P2 — ОТКРЫТО (30)
 
 | ID | Описание | Witnesses |
 |---|---|---|
@@ -362,8 +364,6 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 
 |---|---|---|
-| TTS-DL-UNZIP-SYNC | `fflate.unzipSync` по полному ~280 МБ архиву на main thread (vosk-tts-engine.js:107-108) — разовый фриз при фоновой прогревке. Не дизайн. Fix: async `unzip()` в Worker | V12 W1-CI-44, verified |
-| TTS-DL-NO-TABLOCK | Нет межвкладочного лока: `_voskWarmupStarted` — page-local, `navigator.locks`/`BroadcastChannel` отсутствуют → 2 вкладки всё ещё могут качать модель дважды. Consent UX закрыт PR #177, но cross-tab ownership остаётся самостоятельным P2 runtime-долгом. | V12 W1-CI-39, verified; PR#177 residual |
 | AUDIT-P2-WORKFLOWS-CHECK-GAP | `check-workflows.js` не проверяет deploy `if:` условия — `|| failure` не ловится; шире: строковые regex вместо YAML-топологии (см. SUPER_AUDIT W1) | АУДИТ 1.4 + fable 07-06 |
 | BUG-SEO-001 | IndexNow submit до реальной доступности на CDN | Pass 65 |
 | NEW-CANONICAL-IZBRANNOE-01-GAP | canonicalSanityGuard не ловит relative canonical на noindex routes (tooling gap) | Pass 65 |
@@ -447,6 +447,16 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ## Примечания
 
+
+### 2026-08-05 — TTS production closure @ exact Product `38b25703`
+- Closed `TTS-DL-UNZIP-SYNC` and `TTS-DL-NO-TABLOCK` from Product core PR #876 / merge `0d60315d37efd5b47c76795f8167e99398a5b7e3` plus final PlayEmber PR #929 / merge `e63dbf7d2a925501587df81ff5fb84b816e4e95f`.
+- Real-model evidence retained: worker-owned acquisition/extraction/IDB/ORT/inference, maximum UI gap **32.7 ms**, exactly one model acquisition and follower/shared reuse; all 19 core workflow groups passed.
+- Exact production authority: Pages run `30960174778` attempt `1`, release/control `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate `38b257030afb7cfa8a7b1128f8c86539fd36dec0:30960174778-1`, digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`.
+- Readiness job `92162173520` passed the unchanged Gill mobile PlayEmber smoke and immutable candidate barrier; promotion job `92165278471` passed exact candidate identity, Pages deploy, generic live release and live TTS extension.
+- Live evidence artifacts: generic `8912993840`, TTS `8912994737`; deployed TTS routes and versioned assets/hash/CSP/SW boundaries passed.
+- Product issue #474 recovered; #61 remains open only for independent non-TTS ReaderProjection/speakable-search, accessibility slot/radiogroup, popup semantics and save-store scope.
+- Canonical arithmetic: total remains **371**; closed `223 → 225`, open `148 → 146`, P2 `32 → 30`.
+
 ### Дубликаты (объединены):
 - **BUG-ARCH-001** = **AUDIT-P2-SW-PRECACHE-4** (одна суть: SW precache содержит lazy assets). Оставлено оба ID для обратной совместимости с reverify-документами.
 - **NEW-CACHE-BUST-ASTRO** закрыто (`6499d42e`), но **AUDIT-P3-SEARCH-LAZY-CONFIRMED** и **AUDIT-P2-SW-PRECACHE-4** описывают ту же тему SW/lazy — не дубликаты, разные root causes.
@@ -483,18 +493,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-04: disposition anchor `3fba1890`; last exact production `abf1edba`; 371 canonical = 222 closed + 149 open)
+## Статистика (обновлено 2026-08-05: source/deploy anchor `38b25703`; exact production run `30960174778`; 371 canonical = 225 closed + 146 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 223 |
+| Закрыто (fixed) | 225 |
 | **P0 открыто** | **0** |
 | P1 открыто | 70 |
-| P2 открыто | 32 |
+| P2 открыто | 30 |
 | P3 открыто | 39 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **148** |
+| **Всего открыто (матрица)** | **146** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
