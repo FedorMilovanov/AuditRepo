@@ -2,34 +2,44 @@
 
 ## Exact authority
 
-- AuditRepo rollback/base before this transaction: `c5d729375165a9690046e11401965249505d21a3`.
-- Current Product source/disposition anchor: `b8882bf04a178d7a1d798a0377083ba57d29ce8a` (PR #901).
-- Product exact closure head: `c99af2f104194d022e7f55092af6ad35e561de7b`; squash merge: `b8882bf04a178d7a1d798a0377083ba57d29ce8a`.
-- Last exact production authority is unchanged: release/control SHA `abf1edba190280e554dfda085bef9fb6594c896d`, deploy run `30669840189` attempt `1`. Do not treat the Product source anchor as deployed.
-- Canonical reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b8882bf0_legacy-verse-authority-closure.md`.
+- AuditRepo base incorporated before this transaction: `75f6aa9a11fa46c02bfe03272f52dec5f5eead15`.
+- Product source and production anchor: `38b257030afb7cfa8a7b1128f8c86539fd36dec0`.
+- Core TTS merge: `0d60315d37efd5b47c76795f8167e99398a5b7e3` (PR #876).
+- Final PlayEmber merge: `e63dbf7d2a925501587df81ff5fb84b816e4e95f` (PR #929).
+- Exact production authority: run `30960174778` attempt `1`, readiness job `92162173520`, promotion job `92165278471`.
+- Candidate: `38b257030afb7cfa8a7b1128f8c86539fd36dec0:30960174778-1`; digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`.
+- Canonical reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_38b25703_tts-production-closure.md`.
 
 ## Canonical matrix
 
-- **371 total = 223 closed + 148 open**.
-- Open severity counts: P0 `0`, P1 `70`, P2 `32`, P3 `39`, refactoring `4`, AuditRepo `3`.
-- `SEARCH-P2-08` is closed: the deprecated legacy verse authority and dead `.gbx-verse` runtime/CSS were removed; strict and adversarial contracts now fail closed on reintroduction.
-- `SEARCH-P2-07` remains open: the corpus is sparse and cannot be truthfully closed without an authoritative/licensed source plus rights/provenance.
+- **371 total = 225 closed + 146 open**.
+- Open severity counts: P0 `0`, P1 `70`, P2 `30`, P3 `39`, refactoring `4`, AuditRepo `3`.
+- `TTS-DL-UNZIP-SYNC` is closed: model acquisition/extraction/IDB/ORT/inference are worker-owned and production-live verified.
+- `TTS-DL-NO-TABLOCK` is closed: SharedWorker-first single ownership and follower reuse passed real-model/multitab and production-live evidence.
+- `SEARCH-P2-08` remains closed from Product PR #901; `SEARCH-P2-07` remains open pending authoritative/licensed corpus plus rights/provenance.
 
-## Product evidence retained
+## Production evidence retained
 
-- Product PR #901 deleted the 94-entry `data/verses.json` authority instead of copying disputed legacy text into `data/bible/**`.
-- The dead `.gbx-verse` fetch runtime and matching CSS were removed atomically; governed `.bref > .btip` plus `data/bible/**` remain the sole current Bible text/tooltip authority.
-- Original self-clean executor: run `30949083337`, job `92126343999`.
-- Permanent exact-head Bible contract: run `30959007910`, job `92158545297`; full Runtime `30959007826`; Deploy Candidate `30959007936`; Route Registry `30959007945`.
-- Exact head `c99af2f104194d022e7f55092af6ad35e561de7b` passed all 23 triggered workflows before squash merge `b8882bf04a178d7a1d798a0377083ba57d29ce8a`.
-- Final Product diff: 125 permanent files, `+267/-339`; revision synchronization accounts for the broad count; no TTS/Vosk paths.
+- Readiness passed the unchanged canonical Gill mobile PlayEmber smoke and immutable candidate barrier.
+- Generic live artifact `8912993840` and TTS live artifact `8912994737` both passed.
+- Live TTS evidence verified Gill and Antisovetov routes, versioned controller/engine/worker/CSS, exact hashes, CSP and `lazyTtsPrecache: false`.
+- Product issue #474 recovered and is closed.
 
-## Next bounded search lanes
+## Remaining Reader controls boundary
+
+Product umbrella #61 intentionally remains open for independent work:
+
+1. unify ReaderProjection with speakable/search/summary/print policy;
+2. remove inactive speed/search controls from Tab/accessibility exposure;
+3. complete the radiogroup roving keyboard model and popup semantics;
+4. move save/favorite metadata to the canonical route metadata/store contract.
+
+## Next bounded search lanes retained
 
 1. `SEARCH-P2-09`: implement the advertised `/?q={search_term_string}` SearchAction target as a real search-open/query state.
-2. `SEARCH-P2-10`, `SEARCH-P2-11`, `SEARCH-P2-12`: complete AT/modal/touch contracts with browser evidence and without weakening existing keyboard/fallback behavior.
-3. `SEARCH-P1-01`: extend the unified command palette to the remaining searchable app/tool routes.
-4. `SEARCH-P2-07`: proceed only after authoritative/licensed corpus and rights/provenance evidence; do not infer completeness from the 66-book registry.
+2. `SEARCH-P2-10`, `SEARCH-P2-11`, `SEARCH-P2-12`: complete AT/modal/touch contracts with browser evidence.
+3. `SEARCH-P1-01`: extend the unified command palette to remaining searchable app/tool routes.
+4. `SEARCH-P2-07`: proceed only with authoritative/licensed corpus and rights/provenance evidence.
 5. Search P3 polish rows.
 
-No active Product mutation lane is owned by this AuditRepo closure transaction. Re-read live Product `main` and source-owner blobs before opening the next lane.
+Re-read live Product `main`, the current deployment pointer and source-owner blobs before opening a new mutation lane.
