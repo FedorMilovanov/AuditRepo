@@ -7,7 +7,7 @@
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
 | `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | Astro static site (gospod-bog.ru), strangler-миграция. **Старт: [`projects/gb-is-my-strength/DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md).** HEAD/счётчики/статус намеренно НЕ дублируются здесь (правило Single-Writer-Per-Fact, `CLEANUP_RETENTION_POLICY.md` §8) — они в матрице + `NEXT_AGENT_PROMPT.md`. |
-| `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **intake-only** | Первый governed intake фиксирует строгий 40-PDF корпус русской литературы, права, provenance, SHA-256, визуальную проверку и границы между Research/сайтом/частным архивом. Старт: [`projects/the-legendary-poet/README.md`](projects/the-legendary-poet/README.md). |
+| `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | Марафонская repair-волна закрыта на production `main@e06d759`; source/library intake сохранён отдельной линией. Старт: [`projects/the-legendary-poet/README.md`](projects/the-legendary-poet/README.md). |
 
 ## Status glossary
 
@@ -32,19 +32,27 @@
 `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` (системный бэклог, волны W1–W10),
 `PremiumControls/README.md` (in-flight зона владельца).
 
-## the-legendary-poet — текущий intake
+## the-legendary-poet — текущая правда
 
-Проект пока имеет статус `intake-only`: создана структура и один evidence-пакет по
-источникам. Он не создаёт каноническую bug-матрицу и не разрешает production-правки
-без отдельной верификации.
+Проект переведён из `intake-only` в `active` после первой полной verified repair-волны.
+Source PR `FedorMilovanov/TheLegendaryPoet#286` прошёл точную PR-матрицу на head
+`25cfa99e7b20af4d1c78b3ed1c7fd219878f8a81` и был squash-merged в production
+`main@e06d75970cf1262f4dab5bfd941e45328f07f747`.
 
 Точка входа:
 
 ➡️ **[`projects/the-legendary-poet/README.md`](projects/the-legendary-poet/README.md)**
 
-Первый отчёт:
+Каноническая verified-запись:
 
-➡️ **[`projects/the-legendary-poet/incoming/gpt-5-6-source-library/2026-07-30/REPORT.md`](projects/the-legendary-poet/incoming/gpt-5-6-source-library/2026-07-30/REPORT.md)**
+➡️ **[`projects/the-legendary-poet/verified/START_HERE_2026-08-05.md`](projects/the-legendary-poet/verified/START_HERE_2026-08-05.md)**
+
+Exact-HEAD reverify:
+
+➡️ **[`projects/the-legendary-poet/reverify/REVERIFY_e06d759_2026-08-05.md`](projects/the-legendary-poet/reverify/REVERIFY_e06d759_2026-08-05.md)**
+
+Governed source-library intake остаётся отдельным доказательным пакетом и не заменён
+repair-закрытием.
 
 ## How to add a new project
 
