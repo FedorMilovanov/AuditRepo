@@ -7,7 +7,7 @@
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
 | `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | Astro static site (gospod-bog.ru), strangler-миграция. **Старт: [`projects/gb-is-my-strength/DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md).** HEAD/счётчики/статус намеренно НЕ дублируются здесь (правило Single-Writer-Per-Fact, `CLEANUP_RETENTION_POLICY.md` §8) — они в матрице + `NEXT_AGENT_PROMPT.md`. |
-| `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | W0–W4 закрыты на production `main@d03f091`; W5 premium browser certification активна. Старт: [`projects/the-legendary-poet/README.md`](projects/the-legendary-poet/README.md). |
+| `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | W0–W5 закрыты на production `main@db6bc3e`; W6 branch/artifact retirement активна. Старт: [`projects/the-legendary-poet/README.md`](projects/the-legendary-poet/README.md). |
 
 ## Status glossary
 
@@ -36,7 +36,7 @@
 
 Проект имеет статус `active`. Текущая verified production точка:
 
-- source `main@d03f09188cd0360c6c984ed93d03b1432913332c`;
+- source `main@db6bc3ea8997f78d1370a05e2736cf20645c80dd`;
 - W0 machine-checked project truth — source #303;
 - committed discovery integrity и Safari readiness — source #305;
 - W1 zero-loss Article retirement / single Essay model — source #308;
@@ -44,8 +44,10 @@
 - W3 target-scoped community scaling — source #316;
 - W4 workflow/performance consolidation — source #318;
 - W3 current-production hardening — source #317;
-- финальный exact W4 head `6bd27851f7bdd834e4fffaf5afca3e8a2102a4f6` прошёл Project contracts, Content model, CI, catalog, Yesenin publication/browser gates, brand, routes и Manual Browser QA 4/4;
-- последующий exact hardening head `253376bd8107471e1641027d892ac5207c18f73a` прошёл ту же полную матрицу и сохранил W4-контракты.
+- W5 premium reader certification and archive honesty — source #322, production `6f13600`;
+- post-W5 machine-checked current architecture truth — source #325, current production `db6bc3e`;
+- exact W5 head `0536547e178fb091de1a76c85aecec4409478975` прошёл полный source matrix и Manual Browser QA 4/4;
+- exact truth head `c73cdcb35d30091264db5bf8c1db1c2b0cd46135` прошёл Project contracts, CI, route, brand и Manual Browser QA 4/4.
 
 Точка входа:
 
@@ -53,13 +55,13 @@
 
 Последняя verified-запись:
 
-➡️ **[`projects/the-legendary-poet/verified/WORKFLOW_PERFORMANCE_CONSOLIDATION_2026-08-05.md`](projects/the-legendary-poet/verified/WORKFLOW_PERFORMANCE_CONSOLIDATION_2026-08-05.md)**
+➡️ **[`projects/the-legendary-poet/verified/PREMIUM_READER_AND_CURRENT_TRUTH_2026-08-05.md`](projects/the-legendary-poet/verified/PREMIUM_READER_AND_CURRENT_TRUTH_2026-08-05.md)**
 
 Последний exact-HEAD reverify:
 
-➡️ **[`projects/the-legendary-poet/reverify/REVERIFY_d03f091_2026-08-05.md`](projects/the-legendary-poet/reverify/REVERIFY_d03f091_2026-08-05.md)**
+➡️ **[`projects/the-legendary-poet/reverify/REVERIFY_db6bc3e_2026-08-05.md`](projects/the-legendary-poet/reverify/REVERIFY_db6bc3e_2026-08-05.md)**
 
-Working matrix и wave plan фиксируют W5 premium browser certification как `active-current`; W6 остаётся открытой. Предыдущие marathon, Playwright, system/content, W2, W3 и source-library evidence-линии не перезаписаны.
+Working matrix и wave plan фиксируют W6 branch/artifact retirement как `active-current`; owner-governance остаётся отдельным решением. Draft AuditRepo #185 владеет W6-инвентарём и не является closure-доказательством до fresh-base reconciliation.
 
 ## How to add a new project
 
