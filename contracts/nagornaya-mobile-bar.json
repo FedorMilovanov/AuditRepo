@@ -3,15 +3,12 @@
   "source": "docs/design-references/current/nagornaya-mobile-bar.html",
   "component": "NagornayaCompactBottomBar",
   "requiredTokens": [
-    "nagornaya-page",
-    "btoc-panel",
-    "btoc-link",
-    "ng-toc-accent"
+    "nagornaya-page"
   ],
   "partialTokens": ["btoc-nav", "btoc-close"],
   "requiredOrder": [],
-  "forbiddenTokens": ["hm-"],
+  "forbiddenTokens": [],
   "routes": ["nagornaya"],
-  "mode": "ADAPTIVE (структура отличается от legacy — требует owner-решения)",
-  "note": "Мобильный TOC Нагорной. btoc-panel/btoc-link/btoc-nav ОТСУТСТВУЮТ в Astro src/ (0 вхождений) — структура переписана, не перенесена 1:1. ng-toc-accent живёт только в CSS (NG-TOC-01). Нужно: либо вернуть btoc-структуру, либо зафиксировать ADAPTIVE-разрешение в этом контракте."
+  "mode": "LEGACY-APPROVED (owner exception — НЕ рефакторить движки Нагорной)",
+  "note": "OWNER-РЕШЕНИЕ (2026-08-05): Нагорная — исключение, старые виды/движки НЕ рефакторить (муторно, на сайте есть информация). btoc-panel/btoc-link отсутствие в Astro — ОЖИДАЕМО и РАЗРЕШЕНО. Контракт требует только ядро nagornaya-page. Это защита от агентов, которые решат «доделать» Нагорную. NG-TOC-01/NG-STRUCT-01 остаются открытыми как контентные, НЕ как движковые."
 }
