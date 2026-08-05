@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "generatedOn": "2026-08-05",
+  "truthRule": "Entries are retirement-ready only. Physical deletion must use delete-ref and be followed by an absence inventory. Force-moving refs is forbidden.",
+  "retain": [
+    {
+      "repository": "FedorMilovanov/TheLegendaryPoet",
+      "branch": "main",
+      "reason": "production authority"
+    },
+    {
+      "repository": "FedorMilovanov/TheLegendaryPoet",
+      "branch": "archive/deep-research-local-images-20260724",
+      "expectedHead": "909df9f73b8d9be6faa58cbee767603954e3fb17",
+      "reason": "intentional exact archive of the deeply diverged research branch"
+    }
+  ],
+  "deleteAfterPr185Merge": [
+    {
+      "repository": "FedorMilovanov/TheLegendaryPoet",
+      "branches": [
+        { "name": "agent/marathon-audit-trigger-20260805", "expectedHead": "76b8ccd23a33bf5741719c6aa9e90a91940a59a7" },
+        { "name": "agent/marathon-audit-trigger2-20260805", "expectedHead": "06545dda727503c1ce4a71bb93b51777f739f959" },
+        { "name": "agent/marathon-audit-trigger3-20260805", "expectedHead": "5f93f24f76714896e29eaa08efa84cf402e4db7e" },
+        { "name": "agent/marathon-audit-trigger4-20260805", "expectedHead": "c6b970902664b72f5473d7596b17983177574f06" },
+        { "name": "agent/marathon-audit-trigger5-20260805", "expectedHead": "f4a0a718a82926a40256ae5ab02c61b672da4a4c" },
+        { "name": "agent/marathon-audit-trigger6-20260805", "expectedHead": "6be2422c40eadec003ac6e761c78efc637e61d2c" },
+        { "name": "agent/marathon-audit-trigger7-20260805", "expectedHead": "f449c6e72f3865c1aa8a851f5991a049d72ca994" },
+        { "name": "agent/marathon-audit-trigger8-20260805", "expectedHead": "705c91da514e7e34dbfa935c29f4d1c1e57a3664" },
+        { "name": "agent/marathon-clean-security-trigger-20260805", "expectedHead": "9da460da562d8b296d15b7875f738fbc3ce47dda" },
+        { "name": "agent/marathon-dependency-trigger-20260805", "expectedHead": "eefba29f2cc63819f18e45c54ffb16d5b2280115" },
+        { "name": "agent/marathon-dependency-trigger2-20260805", "expectedHead": "7b01bdc799b9c099b78fda220b3f2036681de7aa" },
+        { "name": "agent/marathon-router8-trigger-20260805", "expectedHead": "00f1805a3cb4f2d82e095c90b9e8bf5753e3335d" },
+        { "name": "agent/marathon-router8-direct-trigger-20260805", "expectedHead": "97497b04840916786db216b912d5bcdfff1b8ce4" },
+        { "name": "agent/marathon-router8-react-compatible-trigger-20260805", "expectedHead": "13f67afb159b6d40c637b76fc3cab1010463d4cf" },
+        { "name": "agent/marathon-router8-semver-trigger-20260805", "expectedHead": "f962fcd01baa76683ea958b5f898db175b7d7490" },
+        { "name": "audit/discovery-artifact-contract-20260805", "expectedHead": "27e006a8f30f3d9e4298d42341f233db27b5ef66" },
+        { "name": "audit/content-model-unification-wave2-20260805", "expectedHead": "53e7168aaf5b6c6351a7e45658666f1de52f3ec9" },
+        { "name": "audit/immutable-essay-publication-w2-20260805", "expectedHead": "2d11c8e6075c6463bf27bd0de8df73b493b17341" },
+        { "name": "audit/immutable-essay-publication-20260805", "expectedHead": "d076373e8adfd3f5730d5ccb01ece87d5959f375" },
+        { "name": "audit/community-scaling-w3-20260805", "expectedHead": "76ea1768278571497459ced5b97f0ef2bb5c7052" },
+        { "name": "audit/community-target-scaling-w3-20260805", "expectedHead": "f85aba5803ecc5643b39a5ee4081da86e0174997" },
+        { "name": "integration/community-target-scaling-w3-final-20260805", "expectedHead": null, "mustRequeryHead": true },
+        { "name": "integration/community-w3-hardening-production-20260805", "expectedHead": "253376bd8107471e1641027d892ac5207c18f73a" },
+        { "name": "audit/premium-browser-certification-w5-20260805", "expectedHead": "e3991b71eb2c7b5056961b2b458ac9feed00058f" },
+        { "name": "audit/premium-reader-journeys-w5-20260805", "expectedHead": "2dbb10b20b4b0f3abe963e59109133d60aa3bb98" },
+        { "name": "agent/current-state-truth-contract-20260805", "expectedHead": "6c9cf17871bcaec3aeb9718a3c573d215be65552" },
+        { "name": "arena/019fcf76-thelegendarypoet", "expectedHead": null, "mustRequeryHead": true },
+        { "name": "arena/019fcf77-thelegendarypoet", "expectedHead": null, "mustRequeryHead": true },
+        { "name": "work/local-images-playwright-wtoc", "expectedHead": "909df9f73b8d9be6faa58cbee767603954e3fb17" }
+      ]
+    },
+    {
+      "repository": "FedorMilovanov/AuditRepo",
+      "branches": [
+        { "name": "audit/tlp-w2-immutable-publication-closure-20260805", "expectedHead": "640bfccaebf42835c9688df6a48cda7c6e6a7f2c" },
+        { "name": "audit/tlp-w3-hardening-w4-closure-20260805", "expectedHead": null, "mustRequeryHead": true },
+        { "name": "audit/tlp-w4a-closure-20260805", "expectedHead": null, "mustRequeryHead": true }
+      ]
+    }
+  ],
+  "expectedCounts": {
+    "sourceRefsToDelete": 29,
+    "auditRepoRefsToDelete": 3,
+    "totalRefsToDelete": 32
+  },
+  "postcondition": {
+    "sourceMustRetain": ["main", "archive/deep-research-local-images-20260724"],
+    "auditRepoMustRetain": ["main"],
+    "allListedDeleteRefsMustBeAbsent": true
+  }
+}

@@ -2,11 +2,11 @@
 
 Current verified source production baseline: `ccbdebc5e47d275561de9ec78f181e388e4a4e1a`.
 
-Latest exact promotion evidence:
+Latest exact source evidence:
 
-- [`verification/GOVERNANCE_RELEASE_CONTRACT_2026-08-05.md`](../verification/GOVERNANCE_RELEASE_CONTRACT_2026-08-05.md)
-- [`verified/GOVERNANCE_RELEASE_CONTRACT_2026-08-05.md`](../verified/GOVERNANCE_RELEASE_CONTRACT_2026-08-05.md)
 - [`reverify/REVERIFY_ccbdebc_2026-08-05.md`](../reverify/REVERIFY_ccbdebc_2026-08-05.md)
+- [`verified/GOVERNANCE_RELEASE_CONTRACT_2026-08-05.md`](../verified/GOVERNANCE_RELEASE_CONTRACT_2026-08-05.md)
+- [`verified/W6_RETIREMENT_PREPARATION_2026-08-05.md`](../verified/W6_RETIREMENT_PREPARATION_2026-08-05.md)
 
 ## Closed source waves
 
@@ -20,45 +20,50 @@ Latest exact promotion evidence:
 | W4 — workflow/performance consolidation | COMPLETE | source #318 → `a11f6faff984cd599539e04696717c6fb336329b` |
 | W3 current-production hardening | COMPLETE | source #317 → `d03f09188cd0360c6c984ed93d03b1432913332c` |
 | W5 — premium reader certification | COMPLETE | exact head `0536547e178fb091de1a76c85aecec4409478975`; source #322 → `6f13600ba88f08123c8c1b817ffdc0ca3dec0bc0` |
-| Post-W5 architecture-truth reconciliation | COMPLETE | exact head `c73cdcb35d30091264db5bf8c1db1c2b0cd46135`; source #325 → `db6bc3ea8997f78d1370a05e2736cf20645c80dd` |
+| Post-W5 architecture truth | COMPLETE | exact head `c73cdcb35d30091264db5bf8c1db1c2b0cd46135`; source #325 → `db6bc3ea8997f78d1370a05e2736cf20645c80dd` |
 | W6 selective verified-media extraction | COMPLETE | exact head `6146e6f5da81c7904fd1bb135c22a409f3e12719`; source #324 → `17d0017bdb4347bea4f12a7cd1c4f30d67e8fb97` |
 | Governance package/release contract | COMPLETE | exact head `e3a1a877ebb14eb2e163b14995ded592cf553909`; source #326 → current production `ccbdebc5e47d275561de9ec78f181e388e4a4e1a` |
 
 Source #324 and #326 each passed all triggered current-head workflows and Manual Browser QA 4/4 before expected-head squash merge.
 
-## W6 — physical branch retirement — ACTIVE FINAL BARRIER
+## W6 evidence and preparation — VERIFIED
+
+AuditRepo #185 owns the verified preparation package:
+
+1. exact 15-trigger ref map;
+2. exact 11 completed/superseded source successor map;
+3. three byte-identical Arena evidence files and stale archive boundary;
+4. full deep-branch ordered path-family disposition;
+5. exact retained archive ref `archive/deep-research-local-images-20260724@909df9f...`;
+6. source #324 exact tests and production successor;
+7. W4-A unique evidence archive;
+8. TLP-only AuditRepo ref map;
+9. machine deletion manifest for 29 source + 3 AuditRepo refs;
+10. final source/AuditRepo branch counts and delete-ref postcondition.
+
+The inventory is rebuilt from post-governance AuditRepo main and must pass `AuditRepo Validate` on one unchanged head before expected-head merge.
+
+## W6 physical branch retirement — ACTIVE FINAL BARRIER
 
 Root cause ID: `TLP-CLEAN-001`.
 
-Completed evidence/extraction outcomes:
+Only these operations remain:
 
-1. all 15 temporary trigger refs mapped to exact PR/head;
-2. all surviving completed/W5/truth refs mapped to exact production successors;
-3. two Arena branches have three unique audit documents physically archived byte-identically in AuditRepo;
-4. the deeply diverged work branch has an identical retained archive ref at `archive/deep-research-local-images-20260724@909df9f...`;
-5. every deep-branch path family has one ordered outcome: current, extracted, archive, obsolete or owner decision;
-6. C03/C08 verified metadata and exact PR77 ledgers merged through source #324; 28 candidates remain blocked;
-7. W4-A unique route-budget/browser evidence is preserved under `archive/stale/`;
-8. machine-readable manifest lists 29 source and 3 AuditRepo stale refs;
-9. AuditRepo #185 is rebuilt from current main and passes Validate before final promotion.
+1. delete the 32 manifest refs through an authorized delete-ref API/UI operation;
+2. retain source `main` and `archive/deep-research-local-images-20260724`;
+3. retain AuditRepo `main` and unrelated project/archive refs;
+4. re-list both repositories and prove all targets absent;
+5. remove `TLP-CLEAN-001` from source and AuditRepo current truth in one final exact-head cycle.
 
-Remaining closure operation:
-
-- use a real delete-ref capability to delete the 32 listed refs;
-- retain source `main` and `archive/deep-research-local-images-20260724`;
-- retain AuditRepo `main` and unrelated project/archive refs;
-- re-list both repositories and prove all targets absent;
-- then remove `TLP-CLEAN-001` from source/AuditRepo open truth in one final exact-head source and evidence cycle.
-
-The connected GitHub capability does not expose delete-ref. Force-moving a branch, closing a PR or recording `RETIRE_READY` is not a substitute.
+The connected GitHub capability does not expose delete-ref. Inventory, `RETIRE_READY`, branch closure and force-moving refs do not satisfy this operation.
 
 ## W7 — closure discipline
 
 After every source merge:
 
 1. record exact tested head and required successful workflows;
-2. record expected-head-protected squash merge SHA;
-3. reverify resulting source `main`;
+2. record expected-head-protected squash SHA;
+3. reverify source `main`;
 4. update matrix, registry, wave plan and branch disposition;
 5. merge AuditRepo only from current main with `behind=0` and successful Validate.
 

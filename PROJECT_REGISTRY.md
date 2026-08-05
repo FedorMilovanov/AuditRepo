@@ -7,7 +7,7 @@
 | Project folder | Source repo | Status | Notes |
 |---|---|---|---|
 | `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | Astro static site (gospod-bog.ru), strangler-миграция. **Старт: [`projects/gb-is-my-strength/DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md).** HEAD/счётчики/статус намеренно НЕ дублируются здесь (правило Single-Writer-Per-Fact, `CLEANUP_RETENTION_POLICY.md` §8) — они в матрице + `NEXT_AGENT_PROMPT.md`. |
-| `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | W0–W5, W6 selective source extraction и governance закрыты на production `main@ccbdebc`; физический W6 ref retirement остаётся активным. Старт: [`projects/the-legendary-poet/README.md`](projects/the-legendary-poet/README.md). |
+| `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | Source architecture, W0–W6 extraction и governance закрыты на `main@ccbdebc`; W6 retirement preparation verified, остаётся физическое удаление 32 refs. Старт: [`projects/the-legendary-poet/README.md`](projects/the-legendary-poet/README.md). |
 
 ## Status glossary
 
@@ -48,7 +48,7 @@
 - post-W5 machine-checked current architecture truth — source #325;
 - W6 verified Mayakovsky media/provenance extraction — source #324, production `17d0017`;
 - private package/engine/release/licensing governance — source #326, current production `ccbdebc`;
-- exact governance head `e3a1a877ebb14eb2e163b14995ded592cf553909` прошёл полный source matrix и Manual Browser QA 4/4.
+- W6 branch/artifact classification, Arena archive, deep-history preservation and deletion manifest — AuditRepo #185.
 
 Точка входа:
 
@@ -56,13 +56,13 @@
 
 Последняя verified-запись:
 
-➡️ **[`projects/the-legendary-poet/verified/GOVERNANCE_RELEASE_CONTRACT_2026-08-05.md`](projects/the-legendary-poet/verified/GOVERNANCE_RELEASE_CONTRACT_2026-08-05.md)**
+➡️ **[`projects/the-legendary-poet/verified/W6_RETIREMENT_PREPARATION_2026-08-05.md`](projects/the-legendary-poet/verified/W6_RETIREMENT_PREPARATION_2026-08-05.md)**
 
-Последний exact-HEAD reverify:
+Последний exact source-HEAD reverify:
 
 ➡️ **[`projects/the-legendary-poet/reverify/REVERIFY_ccbdebc_2026-08-05.md`](projects/the-legendary-poet/reverify/REVERIFY_ccbdebc_2026-08-05.md)**
 
-Working matrix фиксирует только `TLP-CLEAN-001` как `active-current`: source extraction, Arena archive, deep-history preservation и deletion manifest готовы, но 32 stale refs ещё требуют настоящей delete-ref операции и последующей проверки отсутствия. Draft AuditRepo #185 владеет этой последней доказательной линией.
+Working matrix фиксирует только `TLP-CLEAN-001` как `active-current`. Все кодовые, evidence и path-classification барьеры выполнены; 29 source и 3 AuditRepo stale refs ещё требуют настоящей delete-ref операции и последующей проверки отсутствия. Connected capability не предоставляет удаление refs, поэтому отсутствие этого шага не маскируется формулировкой «закрыто».
 
 ## How to add a new project
 
