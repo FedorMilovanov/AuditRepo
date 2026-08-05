@@ -183,19 +183,24 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout exact clean AuditRepo main
+      - name: Checkout live AuditRepo main
         uses: actions/checkout@v4
         with:
-          ref: 7a2d3f7c683e7f821302df13878d057a3aad0b06
+          ref: main
           fetch-depth: 0
-      - name: Assert live main and absent final ref
+      - name: Assert non-overlap live main and absent final ref
         run: |
           git fetch origin main
-          test "$(git rev-parse origin/main)" = "7a2d3f7c683e7f821302df13878d057a3aad0b06"
+          LIVE_MAIN="$(git rev-parse origin/main)"
+          test "$(git rev-parse HEAD)" = "${LIVE_MAIN}"
+          test "$(git hash-object projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md)" = "80dc321cb2cc816b445831b637078e24b54e9df7"
+          test "$(git hash-object projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md)" = "36313f78fea85fcebfd5ee3f11931699228b7f71"
+          test ! -e projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md
           if git ls-remote --exit-code origin refs/heads/audit/search-p2-09-closure-final-20260805; then
             echo 'final ref already exists' >&2
             exit 1
           fi
+          echo "LIVE_MAIN=${LIVE_MAIN}" >> "${GITHUB_ENV}"
       - name: Download verified reconciled artifact
         uses: actions/download-artifact@v4
         with:
@@ -217,11 +222,27 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Apply artifact to clean main tree
+      - name: Apply artifact to clean live-main tree
         run: |
           cp "${RUNNER_TEMP}/search-p2-09-payload/NEXT_AGENT_PROMPT.md" projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
           cp "${RUNNER_TEMP}/search-p2-09-payload/verified/MASTER_BUG_MATRIX.md" projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
           cp "${RUNNER_TEMP}/search-p2-09-payload/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md" projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const from = '7a2d3f7c683e7f821302df13878d057a3aad0b06';
+          const to = process.env.LIVE_MAIN;
+          for (const file of [
+            'projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md',
+            'projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md',
+          ]) {
+            const source = fs.readFileSync(file, 'utf8');
+            const first = source.indexOf(from);
+            if (first < 0 || source.indexOf(from, first + from.length) >= 0) {
+              throw new Error(`expected exactly one prior AuditRepo base in ${file}`);
+            }
+            fs.writeFileSync(file, source.slice(0, first) + to + source.slice(first + from.length));
+          }
+          NODE
       - name: Validate clean permanent tree
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -249,6 +270,8 @@ jobs:
           test "${actual}" = "${expected}"
       - name: Commit and publish clean final ref
         run: |
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "${LIVE_MAIN}"
           git switch -c audit/search-p2-09-closure-final-20260805
           git config user.name "audit-search-reconciler"
           git config user.email "audit-search-reconciler@users.noreply.github.com"
