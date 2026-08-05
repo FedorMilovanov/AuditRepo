@@ -158,12 +158,10 @@ jobs:
           git diff --check
       - name: Verify exact computed file set
         run: |
-          expected="$(cat <<'EOF'
-projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md
-projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md
-projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md
-EOF
-)"
+          expected="$(printf '%s\n' \
+            'projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md' \
+            'projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_b3768b45_searchaction-closure.md' \
+            'projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')"
           actual="$(git diff --name-only --diff-filter=ACMR | sort)"
           test "${actual}" = "${expected}"
       - name: Upload exact reconciled files
