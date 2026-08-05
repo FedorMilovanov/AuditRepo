@@ -1,6 +1,6 @@
 # Wave repair plan — The Legendary Poet
 
-Current source production baseline: `a248abd54007bd839ffc149b9195dc4e79dc5dd3`.
+Current source production baseline: `4544bb387108a98641313267beafe29deb71ee81`.
 
 ## W0 — system truth and governance — COMPLETE
 
@@ -22,35 +22,38 @@ Source agent PR #309 and collision PR #310 were closed as evidence; neither was 
 
 Current production publishes all eight essays through one clone → explicit override → derived `readTime` → deep-freeze boundary. Stable `id`/`slug` cannot be overridden, the catalog is frozen and rejects duplicates, Yesenin Part II is constructed without mutating its authoring export, and its specialized validator resolves the canonical catalog object only.
 
-The permanent contract imports and snapshots every raw authoring module before dynamically evaluating the catalog, then proves unchanged raw JSON, distinct raw/published identities, deep freeze, stable catalog lookup, derived reading time and no public-consumer bypass. The existing Content model workflow was extended instead of adding another workflow.
-
 Exact tested source head `8eaeaa4abc7f80eb6b96de0657df0b3e255d96d3` passed all 13 PR workflows. Manual Browser QA passed 4/4: Chromium/Android/base iPhone Safari, premium desktop, critical iPhone and independent WebKit home reveal/routes.
 
-## W3 — community scaling — ACTIVE
+## W3 — community scaling — COMPLETE
 
-Confirmed current root cause:
+Source #312 was closed unmerged after a stronger parallel implementation appeared. Source #313 became the durable working lane and fixed the global-corpus architecture, then final production #316 was created directly from exact #313 head `f85aba5803ecc5643b39a5ee4081da86e0174997` and added only the missing Android/iPhone request-topology and failed remote-helpful persistence proof.
 
-- `App` unconditionally calls global remote hydration during generic startup;
-- the remote client can page through up to 20,000 rating rows and 20,000 comment rows;
-- the resulting global corpus is persisted locally;
-- target stores and the leaderboard filter or aggregate only after that wholesale download.
-
-W3 owns one isolated source lane with these required outcomes:
+Production `4544bb387108a98641313267beafe29deb71ee81` now enforces all eight W3 outcomes:
 
 1. generic application startup performs zero community reads;
-2. a detail target loads only its aggregate summary and a bounded first comment page;
-3. comments use stable cursor pagination with no duplicates or gaps under equal timestamps;
-4. the ratings leaderboard reads aggregate rows only and never downloads comment bodies;
-5. remote corpora are not written wholesale to localStorage;
-6. optimistic writes, outbox retry, offline state, cooldowns, helpful votes and cross-tab notification remain intact;
-7. existing schema rollout is additive, with a bounded target-only fallback until aggregate infrastructure is deployed;
-8. static validators and browser request-topology tests prove the contract on the exact head.
+2. detail targets load one aggregate summary and a bounded first comment page;
+3. comments use stable `(created_at DESC, id DESC)` cursor pagination without equal-timestamp gaps or duplicates;
+4. the ratings leaderboard reads aggregate rows for known poet ids only and never downloads raw rating rows or comment bodies;
+5. public remote corpora remain ephemeral and are not written wholesale to localStorage;
+6. optimistic writes, outbox retry, offline state, cooldowns, helpful votes, cross-tab notification and storage-failure honesty remain intact;
+7. schema rollout is additive, with a bounded detail-target fallback and a fail-closed leaderboard when aggregate infrastructure is unavailable;
+8. repository validators, desktop Manual Browser QA and a permanent exact-head Android/iPhone workflow prove the request topology and remote-helpful outbox contract.
 
-Do not mix W3 with W4 workflow consolidation, content changes, brand work or branch retirement.
+Exact tested head `a810a2a9bdcf9a150c73d4adea703e95ae6bd71a` passed Project contracts, Content model, CI, catalog, route integrity, Yesenin publication/browser gates, both brand lines, Manual Browser QA 4/4 and Community scaling mobile contract. Pages was skipped by the normal PR condition.
 
-## W4 — workflow and performance consolidation
+## W4 — workflow and performance consolidation — ACTIVE
 
-Create reusable setup/build/browser primitives while preserving route/content-specific acceptance; establish chunk budgets.
+W4 owns two linked current findings: repeated exact-checkout/setup/build/browser workflow primitives and limited entry/chunk budget margin.
+
+Required outcomes:
+
+1. inventory duplicated setup, deterministic asset, build, preview and browser-install blocks before changing workflow structure;
+2. introduce reusable primitives only where exact-head identity, artifacts, timeouts and failure visibility remain equivalent or stronger;
+3. preserve every route/content/brand/community/browser acceptance contour; consolidation by deleting checks is forbidden;
+4. record current production entry and route-chunk measurements before setting budgets;
+5. enforce an entry ceiling and route-specific chunk budgets with explicit exceptions rather than one opaque total-size number;
+6. keep content, community backend behavior, brand art and branch retirement outside W4;
+7. run the complete exact-head source matrix and Manual Browser QA 4/4 before promotion.
 
 ## W5 — premium browser certification
 
