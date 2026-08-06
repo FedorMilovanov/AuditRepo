@@ -1,0 +1,115 @@
+name: Strangler Inventory Matrix Writer
+
+on:
+  push:
+    branches:
+      - audit/strangler-inventory-truth-20260806
+    paths:
+      - .github/workflows/strangler-inventory-matrix-writer.yml
+
+permissions:
+  contents: write
+
+jobs:
+  write-canonical-matrix:
+    if: github.event.head_commit.message != 'audit(gb): record measured strangler inventory truth'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: audit/strangler-inventory-truth-20260806
+          fetch-depth: 0
+
+      - name: Apply exact canonical transaction
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md')
+          text = path.read_text(encoding='utf-8')
+
+          for marker in [
+              '51 public index files / 4,026,027 bytes',
+              'CURRENT_HEAD_REVERIFY_2026-08-06_76737eef_strangler-duplicate-inventory.md',
+          ]:
+              if marker in text:
+                  raise SystemExit(f'already present: {marker}')
+
+          def replace_once(old, new):
+              global text
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'expected exactly one occurrence of {old!r}, got {count}')
+              text = text.replace(old, new, 1)
+
+          def sub_once(pattern, replacement):
+              global text
+              text, count = re.subn(pattern, replacement, text, count=1, flags=re.MULTILINE)
+              if count != 1:
+                  raise SystemExit(f'expected one regex match for {pattern!r}, got {count}')
+
+          sub_once(
+              r'^\| Source verification anchor \|.*$',
+              '| Source verification anchor | `76737eefe16a0feb2fdf729c805d17b5cdcdc376` (current Product source; strangler inventory PR #1082 exact tested head `e15afda5681ce4e2f0a713e6e7f0ca2afbb0efae` measured **52 public index files = 51 Astro native shadows / 4,026,027 bytes + 1 explicit built-app / 2,245,854 bytes**, with **0 unowned**; inventory remains advisory and production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |'
+          )
+          sub_once(
+              r'^\| Last reverify \|.*$',
+              '| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-06_76737eef_strangler-duplicate-inventory.md` (Product PR #1082 / merge `76737eef`; exact ownership-derived duplicate inventory, active parity-reference boundary and zero deletion-ready shadows; no production claim). |'
+          )
+
+          replace_once(
+              '| R-007 | **Recursive strangler duplicate inventory and bounded retirement.** Count legacy `index.html` vs native owners recursively, classify true duplicates vs intentional independent/`legacy-preserve` surfaces, then remove only proven bounded duplicates. Inventory counts never block unrelated Product work. |',
+              '| R-007 | ⚠️ **MEASURED / OPEN 2026-08-06.** Product PR #1082 added a deterministic ownership-derived inventory: **52 public `index.html` = 51 Astro `native-shadow` files / 4,026,027 bytes + 1 explicit built-app / 2,245,854 bytes; unowned = 0**. The built app `/konfessii/russkij-baptizm/_app/` is intentionally independent. Current `legacy-shadow-wrapper-audit.js` actively uses every one of the 51 Astro shadows for canonical, metadata/H1, noindex, structural-marker and reader-text parity, so current deletion-ready count is **0**. Next bounded lane must migrate parity/reference authority for one route or family before deleting its shadow. Counts remain advisory. |'
+          )
+          replace_once(
+              '| STRANGLER-HYGIENE | 50/53 Astro-маршрутов имеют дублирующийся legacy HTML в корне репо (работает корректно через page-ownership, но техдолг). |',
+              '| STRANGLER-HYGIENE | ⚠️ **MEASURED / NARROWED 2026-08-06:** exact Product `76737eef` inventory finds **51 Astro-owned committed shadows among 52 public index files**, not the stale approximate `50/53`. All 51 are currently active inputs to `legacy-shadow-wrapper-audit.js`, so they are governed parity references rather than deletion-ready junk; maintenance drift/storage debt remains until parity authority is migrated route-by-route. |'
+          )
+
+          notes_anchor = '## Примечания\n\n'
+          session = (
+              '### 2026-08-06 — Measured strangler inventory @ Product `76737eef`\n'
+              '- Product PR #1082 / exact head `e15afda5` added a dependency-free advisory inventory to the existing Shared Files Guard.\n'
+              '- Exact result: **52 public index files = 51 Astro shadows / 4,026,027 bytes + 1 built app / 2,245,854 bytes; unowned 0**.\n'
+              '- The Baptists 3D `_app` is explicitly `built-app` / `copy-as-built-asset` and is not a removable legacy duplicate.\n'
+              '- All 51 Astro shadows remain active `legacy-shadow-wrapper-audit.js` evidence; direct deletion would reduce canonical/noindex/text-parity coverage.\n'
+              '- `R-007` and `STRANGLER-HYGIENE` remain open but are now measured and repair-ready. Arithmetic stays **376 = 231 closed + 145 open**. Production authority is unchanged.\n\n'
+          )
+          replace_once(notes_anchor, notes_anchor + session)
+
+          sub_once(
+              r'^## Статистика \(обновлено 2026-08-06: source anchor `3d907194`;',
+              '## Статистика (обновлено 2026-08-06: source anchor `76737eef`;'
+          )
+
+          for marker in [
+              '`76737eefe16a0feb2fdf729c805d17b5cdcdc376`',
+              'CURRENT_HEAD_REVERIFY_2026-08-06_76737eef_strangler-duplicate-inventory.md',
+              '| R-007 | ⚠️ **MEASURED / OPEN 2026-08-06.**',
+              '| STRANGLER-HYGIENE | ⚠️ **MEASURED / NARROWED 2026-08-06:**',
+              '376 = 231 closed + 145 open',
+          ]:
+              if marker not in text:
+                  raise SystemExit(f'postcondition missing: {marker}')
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+          rm .github/workflows/strangler-inventory-matrix-writer.yml
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/check_auditrepo_structure.py
+          git diff --check
+
+      - name: Commit canonical result and self-delete writer
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "arena-agent"
+          git config user.email "297053741+arena-agent@users.noreply.github.com"
+          git add projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md .github/workflows/strangler-inventory-matrix-writer.yml
+          git commit -m "audit(gb): record measured strangler inventory truth"
+          git push origin HEAD:audit/strangler-inventory-truth-20260806
