@@ -21,15 +21,7 @@ AuditRepo не требует закрывать список сверху вн�
 
 ## Candidate lanes from current evidence corpus
 
-### 1. Home footer geometry signal
-
-- Source: repeated Home audit signal historically recorded as `HOME-P3-FOOTER-EDGE-CONSOLE`.
-- First question: есть ли реальный visible defect, или contract слишком чувствителен к допустимой геометрии?
-- Suggested mode: narrow visual verification.
-- Do not assume clipping before screenshots/measurement.
-- Possible outcomes: local P3 fix / contract correction / invalid signal / not-worth-fixing.
-
-### 2. Baptists 3D measured split
+### 1. Baptists 3D measured split
 
 - Historical theme: `R-005`.
 - Verified measurement at Product exact head `e15afda5681ce4e2f0a713e6e7f0ca2afbb0efae`: `_app/index.html` is **2,245,854 bytes**.
@@ -39,7 +31,7 @@ AuditRepo не требует закрывать список сверху вн�
 - Do not split the one-line app by guessed anchors or introduce a global blocking size gate.
 - Possible outcomes: bounded extraction / park / accepted current cost.
 
-### 3. Route-scoped TTS loading
+### 2. Route-scoped TTS loading
 
 - Historical theme: `R-006`.
 - First question: какие long-form routes действительно требуют governed TTS runtime.
@@ -47,7 +39,7 @@ AuditRepo не требует закрывать список сверху вн�
 - Goal: avoid loading cost on unrelated catalogs/landings if evidence supports it.
 - Possible outcomes: systemic owner improvement / no material benefit / park.
 
-### 4. Strangler parity-authority migration before retirement
+### 3. Strangler parity-authority migration before retirement
 
 - Theme: `ST-STRANGLER`; detailed wave: `verification/2026-08-06-strangler-inventory-wave/REPORT.md`.
 - Verified inventory: **52 public indexes = 51 Astro shadows + 1 independent built app; unowned 0**.
@@ -58,7 +50,7 @@ AuditRepo не требует закрывать список сверху вн�
 - Do not weaken text ratios, canonical/noindex checks or route markers merely to reduce file count.
 - Possible outcomes: one bounded retirement / park / accepted duplication / better system design.
 
-### 5. Bible corpus acquisition and import proof
+### 4. Bible corpus acquisition and import proof
 
 - Historical owner: `SEARCH-P2-07`; detailed rights wave: `verification/2026-08-06-bible-corpus-rights-wave/REPORT.md`.
 - Research authority: PR #149 / merge `d52ea9d54dd2c2488223d25f5f6cefd263c23328`.
@@ -88,4 +80,4 @@ Do not copy full run IDs, global HEAD or all historical proofs here.
 
 ## Last queue change
 
-2026-08-06 Bible corpus rights/provenance wave: replaced the unbounded corpus-search question with one exact acquisition/import gate. No Product mutation, matrix movement or publication approval follows from this queue refinement.
+2026-08-06 Product PR #1079 closed the repeated Home footer geometry signal through a real mobile safe inset and passed the unchanged Chromium/WebKit assertion. The completed P3 signal was removed from the optional queue; no global matrix recount or Product-head mirror was added.
