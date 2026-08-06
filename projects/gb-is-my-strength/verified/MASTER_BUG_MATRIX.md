@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `3a05a1e79bcd7061e9b9c3f98ed3953ae2e8d0c0` (current Product source; Reader controls PR #988 exact head `18f130fe91e6d25ae44ceb897daa362ba3187518` / merge `c159526e272812371be614a2fa95e0b149fbbe20` is retained: runtime blob `49360065b2c8270f8de6d5cad919fd1c24fa8502`, browser contract `ae34d8bc16088101bfed4fc8fc72ce6c608124b3`, workflow `db655c838a24f025f1aa4c87ada7edf9bcf10dfb`; current ReaderActionsRuntime blob `1a5fd1b6321477328416973a2e199d427a15e262` retains the additive controls import; exact head passed 14/14 groups and Chromium 85/85; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |
+| Source verification anchor | `8a51db9a2df74fa615a3eaca698144302e47e332` (current Product source; Search app-route PR #1067 exact tested head `6ba805c61a3fa2ebc1890de11ac823894dc7fcff` passed 17/17 workflow groups, Search Modal core 4/4 plus strict-native app surfaces 16/16, and Avraam dossier 304/304; core Search JS/CSS/browser blobs remain retained while workflow `79d7e34925811528d02e9c1c8e8360adec3cb9f3` is the tested successor; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |
 | Deploy | ✅ **EXACT PRODUCTION AUTHORITY.** Run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate `38b257030afb7cfa8a7b1128f8c86539fd36dec0:30960174778-1`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`, transport artifact `8912983035` digest `sha256:e7784d18a33e256da4da52a2d0d0a46d5587fb5c6659602047c6be7d8b71108e`. Readiness job `92162173520`, unchanged Gill mobile PlayEmber smoke, immutable candidate verification/upload, promotion job `92165278471`, Pages deployment, generic live contract and live TTS extension all passed. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_3a05a1e7_reader-controls-source-closure.md` (Product PR #988, exact head `18f130fe`, squash merge `c159526e`; inactive-control exposure plus radiogroup/focus/popup semantics are merged-source+Chromium+CI verified on exact-current retained owners; no new production claim). |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-06_8a51db9a_search-p1-01-source-closure.md` (Product PR #1067, exact head `6ba805c6`, guarded squash merge `8a51db9a`; strict-native app routes now expose the unified command palette with Chromium/WebKit, local-search, iframe and skip-link regressions covered; no new production claim). |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current exact production authority is run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`. The matrix is a durable verified backlog; later source movement does not silently reopen or close rows without a new applicable reverify.
 
@@ -21,13 +21,14 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (229)
+## ✅ ЗАКРЫТО (230)
 
 | ID | Описание | Коммит |
 |---|---|---|
-| SEARCH-P2-10 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-05.** Product PR #1039 establishes a complete input-owned combobox/listbox contract: `role=combobox`, truthful `aria-expanded`, stable option IDs, synchronized `aria-activedescendant`/`aria-selected`, semantically correct options and retained input focus while keyboard navigation changes the active result. Exact head `375d8f72836f8bf3ae92c5f04ac73da73b631609` passed all 27 applicable workflow groups; the permanent Search Modal contract passed Chromium and WebKit desktop/mobile **4/4**. Current Product `3a05a1e79bcd7061e9b9c3f98ed3953ae2e8d0c0` retains the exact `js/search.js` blob `7b279d1a8c092ae473d3db9129ee14652cb7ee69`. No production deployment claim. | `007c2d3c` PR#1039; exact head `375d8f72` |
-| SEARCH-P2-11 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-05.** Product PR #1039 makes the command palette a governed top-layer modal with a distinct visible close control, dialog-wide cyclic Tab/Shift+Tab trapping, Escape/backdrop close, deterministic focus restoration, shared scroll locking and a layer above known floating controls. Exact-head Chromium/WebKit Search Modal contract passed **4/4** and all 27 applicable workflow groups passed. Current Product retains exact blobs `js/search.js`=`7b279d1a8c092ae473d3db9129ee14652cb7ee69` and `css/command-palette.css`=`758247d1dd41a626cabeafa5048636f8181be07a`. No production deployment claim. | `007c2d3c` PR#1039; exact head `375d8f72` |
-| SEARCH-P2-12 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-05.** Product PR #1039 raises shared scope chips, close/clear controls, result rows, preview actions and navigation search affordances to explicit 44px touch targets and adds governed `:focus-visible` treatment without hover-only dependence. The permanent browser contract validated desktop/mobile Chromium and WebKit **4/4**; all 27 exact-head workflow groups passed. Current Product retains exact CSS blob `758247d1dd41a626cabeafa5048636f8181be07a`, browser-contract blob `50e52e488800d7c7bdc3875083e4a7b4a4975c17` and workflow blob `252539d5d1810612cc5c8a4aaa007e7461102e40`. No production deployment claim. | `007c2d3c` PR#1039; exact head `375d8f72` |
+| SEARCH-P1-01 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-06.** Product PR #1067 exposes the existing unified command palette on the four indexable strict-native app/tool routes `/karty/avraam/`, `/karty/ishod/`, `/konfessii/russkij-baptizm/` and `/map/` while retaining MapEngine place search, Atlas-local search, Baptism iframe ownership and the no-`site.css`/no-`site.js` boundary. Exact tested head `6ba805c61a3fa2ebc1890de11ac823894dc7fcff` passed **17/17** workflow groups. Search Modal run `31057748363` passed core **4/4** and app surfaces **16/16** across Chromium/WebKit and mobile/desktop; Avraam Dossier run `31057748436` passed **304/304** states after preserving the native skip-link as the first Tab target. Guarded squash merge `8a51db9a2df74fa615a3eaca698144302e47e332`; no production deployment claim. | `8a51db9a` PR#1067; exact head `6ba805c6` |
+| SEARCH-P2-10 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-05.** Product PR #1039 establishes the complete input-owned combobox/listbox contract. Exact head `375d8f72836f8bf3ae92c5f04ac73da73b631609` passed all 27 applicable workflow groups and the core Chromium/WebKit desktop/mobile contract **4/4**. Current Product `8a51db9a2df74fa615a3eaca698144302e47e332` retains exact `js/search.js` blob `7b279d1a8c092ae473d3db9129ee14652cb7ee69`; PR #1067 extends route availability without reopening ranking or combobox ownership. No production deployment claim. | `007c2d3c` PR#1039; exact head `375d8f72` |
+| SEARCH-P2-11 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-05.** Product PR #1039 governs the command palette top layer, focus trap, close paths, focus restoration and scroll locking. Exact-head core Chromium/WebKit contract passed **4/4** and all 27 workflow groups passed. Current Product `8a51db9a2df74fa615a3eaca698144302e47e332` retains exact `js/search.js` blob `7b279d1a8c092ae473d3db9129ee14652cb7ee69` and CSS blob `758247d1dd41a626cabeafa5048636f8181be07a`; PR #1067 only exposes that governed surface on additional strict-native routes. No production deployment claim. | `007c2d3c` PR#1039; exact head `375d8f72` |
+| SEARCH-P2-12 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-05.** Product PR #1039 establishes 44px touch targets and governed focus-visible treatment. Current Product `8a51db9a2df74fa615a3eaca698144302e47e332` retains exact CSS blob `758247d1dd41a626cabeafa5048636f8181be07a` and core browser-contract blob `50e52e488800d7c7bdc3875083e4a7b4a4975c17`; the old workflow blob `252539d5d1810612cc5c8a4aaa007e7461102e40` is intentionally superseded by tested workflow `79d7e34925811528d02e9c1c8e8360adec3cb9f3`, which keeps the core contract and adds app-route coverage. No production deployment claim. | `007c2d3c` PR#1039; exact head `375d8f72` |
 | SEARCH-P2-09 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-05.** Product PR #968 / squash merge `b3768b45de4f9b5abcc39236ee94b7cfe6c55281` makes the advertised WebSite `SearchAction` target `/?q={search_term_string}` open and query the existing canonical Home command palette. The bounded adapter reads only `q`, collapses whitespace, trims and caps at 160 characters, no-ops for absent/blank input, then uses the existing `gb:openSearch` and canonical input-event contracts without duplicating ranking, Pagefind/fallback, rendering, history, navigation or modal ownership. Exact head `ca045325458df820cf98f746e15bb7ab051ef826` passed all 12 triggered workflow groups, including the permanent Chromium/WebKit desktop/mobile SearchAction witness, Runtime Interactive Audit, Visual Parity, Route Registry, Native Source, Deploy Candidate and deterministic Scripture-index read-only checks. Merged-main compare `c159526e272812371be614a2fa95e0b149fbbe20...b3768b45de4f9b5abcc39236ee94b7cfe6c55281` is exactly one commit and the same three Product files. No production deployment claim. | `b3768b45` PR#968; exact head `ca045325` |
 | TTS-DL-UNZIP-SYNC | ✅ **FIXED-CURRENT / SOURCE+REAL-MODEL+CI+PRODUCTION-LIVE VERIFIED 2026-08-05.** Product PR #876 moved the ~280 MB model acquisition, integrity verification, archive extraction, IndexedDB persistence, ORT session creation and inference off the main thread into the governed worker boundary; current `vosk-tts-engine.js` selects `SharedWorker` first and a dedicated-worker fallback, and the real-model witness bounded the maximum UI gap at **32.7 ms**. Final PR #929 added the unchanged canonical Gill PlayEmber smoke as a permanent PR gate and repaired the trailing synthetic-click deploy blocker. Pages run `30960174778` deployed descendant `38b257030afb7cfa8a7b1128f8c86539fd36dec0`; readiness job `92162173520`, Gill smoke, immutable candidate verification/upload, promotion job `92165278471`, generic live contract and live TTS extension all passed. | `0d60315d` PR#876; `e63dbf7d` PR#929; deploy `30960174778` |
 | TTS-DL-NO-TABLOCK | ✅ **FIXED-CURRENT / SHARED-OWNER+MULTITAB+CI+PRODUCTION-LIVE VERIFIED 2026-08-05.** Product PR #876 replaced page-local duplicate ownership with one SharedWorker-first model/session owner and deterministic follower reuse; the real-model and multitab contracts proved exactly one acquisition with follower/shared reuse while preserving the bounded dedicated-worker fallback. All 19 exact-head workflow groups passed before merge `0d60315d37efd5b47c76795f8167e99398a5b7e3`. Final PR #929/merge `e63dbf7d2a925501587df81ff5fb84b816e4e95f` closed the remaining Gill mobile deploy blocker without weakening assertions. The deployed live TTS witness on run `30960174778` verified the versioned controller/engine/worker assets, required CSP directives, exact asset hashes and `lazyTtsPrecache: false` on Gill and Antisovetov routes. | `0d60315d` PR#876; `e63dbf7d` PR#929; live artifact `8912994737` |
@@ -265,11 +266,10 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## 🟠 P1 — ОТКРЫТО (70)
+## 🟠 P1 — ОТКРЫТО (69)
 
 | ID | Описание | Witnesses |
 |---|---|---|
-| SEARCH-P1-01 | 🆕 **Search P1:** глобальный command-palette поиск отсутствует на публичных searchable tool/app routes `/karty/avraam/`, `/karty/ishod/`, `/konfessii/russkij-baptizm/`, `/map/`. Эти routes indexable и имеют `searchManifestPolicy=include`, Pagefind/поиск могут вести на них, но на самих страницах нет unified `Ctrl+K`/`GBSearch` surface; `/map/` имеет только локальный atlas-search. No Product mutation/browser/production claim. | `incoming/search-deep-audit-2026-08-04/PASS2_DEEPENING.md`; `PASS2_PROBE.json`; reverify `CURRENT_HEAD_REVERIFY_2026-08-04_f9d01207_search-scripture-current.md` |
 | CI-WORKFLOW-PROLIFERATION | Control plane expanded from the earlier 19-workflow baseline to roughly 26 permanent workflows with repeated heavy setup/build/test sections. Capability inventory and convergence are required before adding workflows. | current control-plane artifacts; forensic delta 2026-07-25 |
 | S-T-01 | 🟡 **ЧАСТИЧНО 2026-07-14**: чекер серий + orphan-scan + legacy-selector-ban теперь видят .astro/.mdx; полный route-level паритет гейтов для Astro-мира — остаётся. | Auditor 2026-07-14 |
 | S-SEC-01 | Blacklist-based HTML Sanitization in enhancements.js (XSS risk) | Auditor 2026-07-14 |
@@ -501,18 +501,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-05: source anchor `3a05a1e7`; production anchor `38b25703`; exact production run `30960174778`; 371 canonical = 229 closed + 142 open)
+## Статистика (обновлено 2026-08-06: source anchor `8a51db9a`; production anchor `38b25703`; exact production run `30960174778`; 371 canonical = 230 closed + 141 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 229 |
+| Закрыто (fixed) | 230 |
 | **P0 открыто** | **0** |
-| P1 открыто | 70 |
+| P1 открыто | 69 |
 | P2 открыто | 26 |
 | P3 открыто | 39 |
 | Рефакторинг | 4 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **142** |
+| **Всего открыто (матрица)** | **141** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
@@ -520,6 +520,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Session log
+
+- **2026-08-06 — SEARCH-P1-01 strict-native app search closure.** Product PR #1067 exact head `6ba805c61a3fa2ebc1890de11ac823894dc7fcff` passed 17/17 applicable workflow groups before guarded squash merge `8a51db9a2df74fa615a3eaca698144302e47e332`. Search Modal run `31057748363` passed core 4/4 plus app surfaces 16/16 across four routes, two viewports and Chromium/WebKit; Avraam Dossier run `31057748436` passed 304/304 states with skip-link-first keyboard order retained. Local MapEngine/Atlas search, Baptism iframe and strict-native boundaries remain intact. Canonical arithmetic becomes **371 = 230 closed + 141 open**, P1 becomes **69**; production authority remains unchanged. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-06_8a51db9a_search-p1-01-source-closure.md`.
 
 - **2026-08-05 — Reader controls accessibility source closure.** Product PR #988 exact head `18f130fe91e6d25ae44ceb897daa362ba3187518` passed 14/14 applicable workflow groups; Reader Controls run `30972484056` / job `92199627173` passed production-like build and Chromium **85/85** with zero page errors, then guarded squash merged as `c159526e272812371be614a2fa95e0b149fbbe20`. Current Product `3a05a1e7` retains the three permanent owner blobs and the additive ReaderActionsRuntime import. The umbrella controls/accessibility and radiogroup/popup intake scopes are source-closed without changing matrix arithmetic or production authority. Evidence: `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_3a05a1e7_reader-controls-source-closure.md`.
 
