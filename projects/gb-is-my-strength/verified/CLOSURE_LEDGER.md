@@ -81,3 +81,19 @@ This entry records the governance change only. It does not claim that the reform
 - Regression witness: Research `Repository authority integrity` run `31097491083` on exact head `be5354b92aa4ab1de6d9483c7b93740e2ff6ab34`; Research merge `d52ea9d54dd2c2488223d25f5f6cefd263c23328`.
 - Live evidence: not required and not claimed.
 - Detailed evidence: `../verification/2026-08-06-bible-corpus-rights-wave/REPORT.md`.
+
+## 2026-08-06 — Search platform labels and Home footer closure
+
+- Scope: `SEARCH-P3-01`, the repeated `HOME-P3-FOOTER-EDGE-CONSOLE` signal, and the obsolete predecessor transport recorded in Product PR #1074.
+- Inputs: current Product command-palette owner, exact Chromium/WebKit browser evidence, Product control-plane policy and the Home responsive geometry contract.
+- Result:
+  - closed-by-fix: global Search triggers now expose exact `Ctrl+K` on Windows and `⌘+K` on Apple platforms through the existing `js/search.js` owner;
+  - closed-by-fix: the Home footer has a real mobile viewport inset of at least 20 px, including safe-area insets, while the existing 17 px assertion remains unchanged;
+  - absorbed-by-system-fix: duplicate Home/App platform-label helpers were removed in favour of the existing global owner;
+  - rejected architecture: no separate global trigger-label runtime, no global `MutationObserver`, no Search writer inside the Glossary workflow and no surviving temporary write capability;
+  - predecessor disposition: Product PR #1074 closed as superseded and its `autofix` label was removed; its branch was not deleted;
+  - remaining independent: none for `SEARCH-P3-01` or the Home footer geometry signal.
+- Product evidence: PR #1079, exact tested head `0bbeb51f93ae364d1f05721e7180e612d2b57f90`, merge `a55a03851506945ef61bb753efe58205d231a807`.
+- Regression witness: all 25 exact-head pull-request workflows passed, including Search Modal, Shared Files Guard, Source Authority, Route Registry Chromium/WebKit surfaces, Runtime Interactive Audit, Home Chromium/WebKit interaction/lifecycle/A13 and Visual Parity policy.
+- Live evidence: not required and not claimed.
+- Detailed evidence: Product PR #1079 body and exact-head workflow evidence; no separate reverify document required.
