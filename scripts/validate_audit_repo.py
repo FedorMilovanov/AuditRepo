@@ -20,6 +20,17 @@ ALLOWED_ROOT_MD = {
     'CONCURRENT_EDIT_PROTOCOL.md',
 }
 
+ANCHOR_LABEL_RE = re.compile(
+    r'^(?:-\s*)?(?:Audited anchor(?:\s*\([^)]*\))?|Evidence anchor|Observed on anchor|'
+    r'Source commit(?:s)?|Artifact(?: identity)?|Live snapshot):\s*(?P<value>.+?)\s*$',
+    re.IGNORECASE,
+)
+PLACEHOLDER_VALUE_RE = re.compile(
+    r'^(?:<[^>]*>|TBD|TODO|N/?A|NONE|UNKNOWN|NOT SET|SHA / ARTIFACT / LIVE SNAPSHOT)$',
+    re.IGNORECASE,
+)
+FINDING_ID_BODY = r'[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+'
+
 
 def fail(msg, errors):
     errors.append(msg)
@@ -54,55 +65,91 @@ def intake_was_changed(date_dir, changed_paths):
     return any(path == prefix[:-1] or path.startswith(prefix) for path in changed_paths)
 
 
-def report_has_real_evidence(report_file):
-    """Reject untouched scaffolds while accepting the report styles used in the repo."""
-    rtxt = report_file.read_text(encoding='utf-8', errors='ignore')
-    has_real_severity = bool(re.search(
-        r'^(?:-\s*)?(?:- Severity:|\*\*Severity:\*\*)[ \t]*(P0|P1|P2|P3)\b',
-        rtxt, re.MULTILINE))
-    has_real_kind = bool(re.search(
-        r'^(?:-\s*)?(?:Kind|Evidence type|Suggested impact):[ \t]*\S+',
-        rtxt, re.MULTILINE | re.IGNORECASE))
-    has_real_title = bool(re.search(
-        r'^(?:-\s*)?(?:- Title:|\*\*Title:\*\*)[ \t]*\S+',
-        rtxt, re.MULTILINE))
-    has_real_heading = bool(re.search(
-        r'^###\s+(?!Finding\b|Observation\b|Confirm\b|Challenge\b|Merge proposal\b|Comment on Finding\b)(?!<)(.+\S)',
-        rtxt, re.MULTILINE))
-    has_real_content = bool(re.search(
-        r'^\s*(?:-\s+|\*\*[^*]+:\*\*\s*)(?:Description|Evidence|Evidence type|My evidence|Observed on SHA|'
-        r'Observed on anchor|Source file|Route/files|Root cause|Possible mechanism|Target report|'
-        r'Current HEAD evidence|Why same root cause|Limitations of this method|User/operator impact)',
-        rtxt, re.MULTILINE | re.IGNORECASE))
-    has_bug_table = bool(re.search(
-        r'^\|\s*(?:BUG|NEW|AUDIT|SEC|SEARCH|UI|AR|R|REG|PC|CSP|CI)-?[A-Z0-9._-]*\s*\|',
-        rtxt, re.MULTILINE))
-    has_issue_id = bool(re.search(
-        r'\b(?:BUG|NEW|AUDIT|SEC|SEARCH|UI|AR|R|REG|PC|CSP|CI)-[A-Z0-9._-]+\b',
-        rtxt))
-    return any((
-        has_real_severity,
-        has_real_kind,
-        has_real_title,
-        has_real_heading,
-        has_real_content,
-        has_bug_table,
-        has_issue_id,
-    ))
+def concrete_value(value):
+    value = value.strip().strip('`').strip()
+    if not value or PLACEHOLDER_VALUE_RE.fullmatch(value):
+        return False
+    if re.fullmatch(r'[A-Za-z0-9_-]+(?:\s*/\s*[A-Za-z0-9_-]+){2,}', value):
+        return False
+    return bool(re.search(r'[A-Za-z0-9А-Яа-яЁё]', value))
 
 
-def has_concrete_evidence_anchor(text):
-    """Accept SHA, artifact/live URL, or an explicit non-placeholder audited anchor."""
+def has_explicit_evidence_anchor(text):
+    """Require a concrete value on an anchor-labelled line for new/changed intake."""
+    for raw_line in text.splitlines():
+        normalized = raw_line.replace('**', '').replace('__', '').strip()
+        match = ANCHOR_LABEL_RE.match(normalized)
+        if match and concrete_value(match.group('value')):
+            return True
+    return False
+
+
+def has_legacy_evidence_anchor(text):
+    """Compatibility fallback for untouched historical intake only."""
+    if has_explicit_evidence_anchor(text):
+        return True
     if re.search(r'\b[0-9a-f]{7,40}\b', text):
         return True
     if re.search(r'https?://\S+', text):
         return True
-    anchor_patterns = [
-        r'^(?:-\s*)?Audited anchor(?: \([^\n:]+\))?:\s*(?!<|TBD\b|TODO\b|N/?A\b)\S+',
-        r'^(?:-\s*)?Evidence anchor:\s*(?!<|TBD\b|TODO\b|N/?A\b)\S+',
+    return bool(re.search(
         r'^##\s+(?:Source commit|Source commits|Artifact|Live snapshot)\b',
-    ]
-    return any(re.search(pattern, text, re.MULTILINE | re.IGNORECASE) for pattern in anchor_patterns)
+        text,
+        re.MULTILINE | re.IGNORECASE,
+    ))
+
+
+def report_has_real_evidence(report_file):
+    """Reject untouched scaffolds while accepting established and historical report styles."""
+    rtxt = report_file.read_text(encoding='utf-8', errors='ignore')
+
+    has_real_title = bool(re.search(
+        r'^(?:-\s*)?(?:- Title:|\*\*Title:\*\*)[ \t]*(?!<|TBD\b|TODO\b|N/?A\b)\S.+$',
+        rtxt,
+        re.MULTILINE | re.IGNORECASE,
+    ))
+    has_real_heading = bool(re.search(
+        r'^###\s+(?!Finding\b|Observation\b|Confirm\b|Challenge\b|Merge proposal\b|'
+        r'Comment on Finding\b)(?!.*<[^>]+>)(.+\S)',
+        rtxt,
+        re.MULTILINE | re.IGNORECASE,
+    ))
+    has_real_content = bool(re.search(
+        r'^\s*(?:-\s+)?(?:\*\*)?(?:Description|Evidence|My evidence|Actual|Expected|'
+        r'Observed on SHA|Observed on anchor|Source file|Route/files|Root cause|Possible mechanism|'
+        r'Target report|Current HEAD evidence|Why same root cause|Limitations of this method|'
+        r'User/operator impact)(?:\*\*)?:\s*(?!<|TBD\b|TODO\b|N/?A\b)\S.+$',
+        rtxt,
+        re.MULTILINE | re.IGNORECASE,
+    ))
+    has_finding_table = bool(re.search(
+        rf'^\|\s*{FINDING_ID_BODY}\s*\|',
+        rtxt,
+        re.MULTILINE,
+    ))
+    has_finding_id = bool(re.search(
+        rf'(?<![A-Z0-9-]){FINDING_ID_BODY}(?![A-Z0-9-])',
+        rtxt,
+    ))
+    has_evidence_index = bool(re.search(
+        r'^\s*\d+\.\s+`[^`\n]+\.md`\s+[—-]\s+\S.+$',
+        rtxt,
+        re.MULTILINE,
+    ))
+    has_summary_prose = bool(re.search(
+        r'^##\s+Summary\b[^\n]*\n(?:\s*\n)*(?:[-*]\s+\S.+|(?!(?:#|<!--|---))\S.{20,})$',
+        rtxt,
+        re.MULTILINE | re.IGNORECASE,
+    ))
+    return any((
+        has_real_title,
+        has_real_heading,
+        has_real_content,
+        has_finding_table,
+        has_finding_id,
+        has_evidence_index,
+        has_summary_prose,
+    ))
 
 
 def validate_matrix_summary(proj, errors):
@@ -158,12 +205,10 @@ errors = []
 changed_paths = load_changed_paths()
 legacy_empty_reports = []
 
-# Root hygiene: .md-файлы по allow-list
 for p in ROOT.glob('*.md'):
     if p.name not in ALLOWED_ROOT_MD:
         fail(f'unexpected root markdown file: {p.name}', errors)
 
-# Root directory/file allow-list.
 ALLOWED_ROOT_DIRS = {
     '.git', '.github', 'projects', 'scripts', 'verification', 'references',
     '_OWNER_DOWNLOADS',
@@ -176,22 +221,17 @@ for p in ROOT.iterdir():
     elif p.suffix != '.md' and p.name not in ALLOWED_ROOT_FILES:
         fail(f'unexpected root file: {p.name}', errors)
 
-# Required roots
 for required in ['README.md', 'AUDITREPO_OPERATING_MODEL.md', 'PROJECT_REGISTRY.md', 'projects', 'scripts']:
     if not (ROOT / required).exists():
         fail(f'missing required root path: {required}', errors)
 
-# Project checks
 for proj in project_dirs():
     for rel in ['README.md', 'PROJECT_META.yml', 'incoming', 'working', 'verification', 'verified', 'repairs', 'reverify', 'archive']:
         if not (proj / rel).exists():
             fail(f'{proj.name}: missing {rel}', errors)
 
-    # Transitional legacy matrix integrity. This can be retired when a project
-    # completes its active-backlog/closure-ledger migration.
     validate_matrix_summary(proj, errors)
 
-    # Intake structure
     incoming = proj / 'incoming'
     for date_dir in incoming.glob('*/*'):
         if not date_dir.is_dir():
@@ -202,6 +242,7 @@ for proj in project_dirs():
         readme = date_dir / 'README.md'
         report = date_dir / 'REPORT.md'
         identity_file = readme if readme.exists() else report
+        changed_intake = intake_was_changed(date_dir, changed_paths)
         if not identity_file.exists():
             fail(f'{proj.name}: intake folder missing README.md or REPORT.md: {date_dir}', errors)
         else:
@@ -218,15 +259,20 @@ for proj in project_dirs():
             ]
             if not any(m in txt for m in markers):
                 fail(f'{proj.name}: intake identity file missing recognizable identity markers: {identity_file}', errors)
-            if not has_concrete_evidence_anchor(txt):
+
+            has_anchor = (
+                has_explicit_evidence_anchor(txt)
+                if changed_intake
+                else has_legacy_evidence_anchor(txt)
+            )
+            if not has_anchor:
+                requirement = 'explicit labelled evidence anchor' if changed_intake else 'concrete evidence anchor'
                 fail(
-                    f'{proj.name}: intake identity file has no concrete evidence anchor '
-                    f'(SHA, artifact/live URL, or explicit Audited anchor required): {identity_file}',
+                    f'{proj.name}: intake identity file has no {requirement} '
+                    f'(SHA, artifact identity or live snapshot required): {identity_file}',
                     errors,
                 )
 
-        # REPORT content is an independent invariant. New or modified empty
-        # scaffolds are blocking; historical debt remains visible but staged.
         report_file = date_dir / 'REPORT.md'
         if report_file.exists() and not report_has_real_evidence(report_file):
             comments_dir = date_dir / 'comments'
@@ -237,14 +283,13 @@ for proj in project_dirs():
             if has_comments:
                 print(f'  WARNING: {proj.name}: REPORT.md appears empty template,'
                       f' but evidence found in comments/: {report_file}')
-            elif intake_was_changed(date_dir, changed_paths):
+            elif changed_intake:
                 fail(f'{proj.name}: REPORT.md appears empty template'
                      f' (no real observation/evidence content)'
                      f' and no evidence in comments/: {report_file}', errors)
             else:
                 legacy_empty_reports.append(report_file)
 
-    # Working + verified + verification should contain at least one README.
     if not (proj / 'working' / 'README.md').exists():
         fail(f'{proj.name}: working missing README.md', errors)
     if not (proj / 'verified' / 'README.md').exists():

@@ -60,7 +60,8 @@ def build_fixture(root: Path) -> Path:
     intake = project / 'incoming' / 'validator-regression' / '2026-07-25'
     write(
         intake / 'README.md',
-        '# Report intake\n\n## Meta\n- Agent: validator-regression\n- Source commit: 9fcfb6c27d4b1b0d9189e3ee9a83c433bd4c3d95\n',
+        '# Report intake\n\n## Meta\n- Agent: validator-regression\n'
+        '- Audited anchor (SHA / artifact / live snapshot): 9fcfb6c27d4b1b0d9189e3ee9a83c433bd4c3d95\n',
     )
     return intake
 
@@ -91,22 +92,25 @@ def main() -> int:
         root = Path(raw)
         intake = build_fixture(root)
 
-        # A concrete evidence anchor in README must not allow an untouched
-        # REPORT scaffold to bypass the independent report-content invariant.
         write(
             intake / 'REPORT.md',
-            '# Agent Audit Report\n\n## Meta\n- Project: fixture-project\n\n## 1. New observations\n'
-            '### Observation `<temp-id>`\n- Title:\n- Kind:\n',
+            '# Agent Audit Report\n\n## Meta\n- Project: fixture-project\n\n'
+            '## 1. New observations\n\n'
+            '### Observation `<temp-id>`\n\n'
+            '- Title:\n'
+            '- Kind: defect / risk / improvement / system-theme / audit-harness / owner-decision\n'
+            '- Suggested impact: critical / high / medium / low / unknown\n'
+            '- Evidence type: verified-source / verified-build / verified-artifact / verified-browser / verified-live\n'
+            '- Evidence:\n',
         )
         empty = run_validator(root)
-        require(empty.returncode == 1, 'anchor-bearing empty REPORT.md unexpectedly passed', empty)
+        require(empty.returncode == 1, 'option-filled empty REPORT.md unexpectedly passed', empty)
         require(
             'REPORT.md appears empty template' in empty.stdout,
             'empty-report failure did not identify the report-content invariant',
             empty,
         )
 
-        # A real structured observation should pass the same minimal repository.
         write(
             intake / 'REPORT.md',
             '# Agent Audit Report\n\n## Meta\n- Project: fixture-project\n\n## 1. New observations\n'
@@ -120,16 +124,55 @@ def main() -> int:
         require(valid.returncode == 0, 'real observation failed validator', valid)
         require('AUDITREPO VALIDATION: PASS' in valid.stdout, 'PASS marker missing', valid)
 
-        # Proportional anchors may be artifact/live snapshots rather than Git SHAs.
+        write(
+            intake / 'REPORT.md',
+            '# Historical progress note\n\n'
+            '## Findings matrix\n\n'
+            '| ID | Severity | Title | Status |\n'
+            '|---|---|---|---|\n'
+            '| GENEALOGY-PROGRESS-2026-07-17 | P3 / INFO | Curated evidence grew | historical evidence |\n',
+        )
+        generic_table = run_validator(root)
+        require(generic_table.returncode == 0, 'generic historical finding table failed validator', generic_table)
+
+        write(
+            intake / 'REPORT.md',
+            '# Historical intake index\n\n'
+            'Severity: mixed. Source HEAD `14a49be8`.\n\n'
+            '1. `AUDIT_cycle1.md` — first evidence package.\n'
+            '2. `AUDIT_cycle2.md` — second evidence package.\n',
+        )
+        evidence_index = run_validator(root)
+        require(evidence_index.returncode == 0, 'historical evidence index failed validator', evidence_index)
+
+        write(
+            intake / 'REPORT.md',
+            '# Agent Audit Report\n\n## 1. New observations\n'
+            '### AUDIT-VALIDATOR-REGRESSION\n- Evidence: retained for anchor tests\n',
+        )
+
         write(
             intake / 'README.md',
             '# Report intake\n\n## Meta\n- Agent: validator-regression\n'
-            '- Audited anchor (SHA / artifact / live snapshot): https://example.invalid/artifacts/fixture-123\n',
+            '- Audited anchor (SHA / artifact / live snapshot): artifact fixture-123 digest sha256:abc123\n',
         )
         non_sha_anchor = run_validator(root)
         require(non_sha_anchor.returncode == 0, 'explicit non-SHA evidence anchor failed validator', non_sha_anchor)
 
-        # Missing concrete anchor must still fail.
+        write(
+            intake / 'README.md',
+            '# Report intake\n\n## Meta\n- Agent: validator-regression\n'
+            '- Source repo: https://example.invalid/project\n'
+            '- Audited anchor (SHA / artifact / live snapshot):\n',
+        )
+        unrelated_url = run_validator(root)
+        require(unrelated_url.returncode == 1, 'unrelated URL unexpectedly satisfied evidence anchor', unrelated_url)
+        require(
+            'no explicit labelled evidence anchor' in unrelated_url.stdout,
+            'unrelated-URL failure did not identify the strict anchor invariant',
+            unrelated_url,
+        )
+
         write(
             intake / 'README.md',
             '# Report intake\n\n## Meta\n- Agent: validator-regression\n'
@@ -138,18 +181,17 @@ def main() -> int:
         missing_anchor = run_validator(root)
         require(missing_anchor.returncode == 1, 'placeholder evidence anchor unexpectedly passed', missing_anchor)
         require(
-            'no concrete evidence anchor' in missing_anchor.stdout,
+            'no explicit labelled evidence anchor' in missing_anchor.stdout,
             'missing-anchor failure did not identify the evidence-anchor invariant',
             missing_anchor,
         )
 
         write(
             intake / 'README.md',
-            '# Report intake\n\n## Meta\n- Agent: validator-regression\n- Source commit: 9fcfb6c27d4b1b0d9189e3ee9a83c433bd4c3d95\n',
+            '# Report intake\n\n## Meta\n- Agent: validator-regression\n'
+            '- Source commit: 9fcfb6c27d4b1b0d9189e3ee9a83c433bd4c3d95\n',
         )
 
-        # Canonical heading and statistics counters must remain identical during
-        # the legacy matrix transition.
         matrix_path = root / 'projects' / 'fixture-project' / 'verified' / 'MASTER_BUG_MATRIX.md'
         matrix_text = matrix_path.read_text(encoding='utf-8')
         matrix_path.write_text(matrix_text.replace('| Закрыто (fixed) | 1 |', '| Закрыто (fixed) | 9 |'), encoding='utf-8')

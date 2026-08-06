@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import argparse
+import os
+import re
+import sys
 
 ROOT = Path(__file__).resolve().parent.parent
 PROJECTS = ROOT / 'projects'
+SAFE_COMPONENT_RE = re.compile(r'^[A-Za-z0-9._-]+$')
+RESERVED_PATH_COMPONENTS = {'.', '..'}
 
 README_TEMPLATE = """# {project}
 
@@ -93,15 +98,31 @@ rules:
   closure_ledger_path: verified/CLOSURE_LEDGER.md
 """
 
-FOLDER_README = """# {name}
-
-This folder is part of the AuditRepo evidence/synthesis lifecycle. See `../DOC_MAP.md` and the root operating model for its role.
-"""
-
 VERIFIED_README = """# Verified
 
 Store durable classifications, active guidance, system themes and compact closure history here. Do not mirror every source-repository HEAD.
+
+See [`../DOC_MAP.md`](../DOC_MAP.md).
 """
+
+
+def safe_component(value: str) -> bool:
+    if value not in RESERVED_PATH_COMPONENTS and SAFE_COMPONENT_RE.fullmatch(value):
+        return True
+    print(
+        f'ERROR: project must be a safe name using only letters, numbers, dot, underscore or hyphen: {value!r}',
+        file=sys.stderr,
+    )
+    return False
+
+
+def folder_readme(name: str, folder: Path, project_dir: Path) -> str:
+    doc_map = os.path.relpath(project_dir / 'DOC_MAP.md', folder).replace(os.sep, '/')
+    return (
+        f'# {name}\n\n'
+        'This folder is part of the AuditRepo evidence/synthesis lifecycle. '
+        f'See [`{doc_map}`]({doc_map}) and the root operating model for its role.\n'
+    )
 
 
 def main() -> int:
@@ -111,7 +132,17 @@ def main() -> int:
     parser.add_argument('--production-url', default='(not set)')
     args = parser.parse_args()
 
+    if not safe_component(args.project):
+        return 1
+
     project_dir = PROJECTS / args.project
+    if project_dir.exists():
+        print(
+            f'ERROR: project already exists and will not be overwritten: {project_dir}',
+            file=sys.stderr,
+        )
+        return 1
+
     folders = {
         'incoming': project_dir / 'incoming',
         'working': project_dir / 'working',
@@ -126,9 +157,8 @@ def main() -> int:
         'archive-accepted-risk': project_dir / 'archive' / 'accepted-risk',
     }
 
-    project_dir.mkdir(parents=True, exist_ok=True)
     for directory in folders.values():
-        directory.mkdir(parents=True, exist_ok=True)
+        directory.mkdir(parents=True, exist_ok=False)
 
     values = {
         'project': args.project,
@@ -142,7 +172,7 @@ def main() -> int:
     (project_dir / 'PROJECT_META.yml').write_text(PROJECT_META_TEMPLATE.format(**values), encoding='utf-8')
 
     for name, folder in folders.items():
-        readme = VERIFIED_README if name == 'verified' else FOLDER_README.format(name=name)
+        readme = VERIFIED_README if name == 'verified' else folder_readme(name, folder, project_dir)
         (folder / 'README.md').write_text(readme, encoding='utf-8')
 
     (folders['verified'] / 'SYSTEM_THEMES.md').write_text(
