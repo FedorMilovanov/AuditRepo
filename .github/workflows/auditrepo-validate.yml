@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -12,13 +15,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Check structure
-        run: python3 scripts/check_auditrepo_structure.py
-      - name: Capture changed paths for intake ratchet
+
+      - name: Capture changed paths
+        shell: bash
         run: |
+          set -euo pipefail
           changed_file="${RUNNER_TEMP}/auditrepo-changed-paths.txt"
           if git rev-parse HEAD^1 >/dev/null 2>&1; then
             git diff --name-only HEAD^1 HEAD > "${changed_file}"
@@ -27,31 +32,33 @@ jobs:
           fi
           cat "${changed_file}"
           echo "AUDITREPO_CHANGED_PATHS_FILE=${changed_file}" >> "${GITHUB_ENV}"
-      - name: Validate repo rules
+
+          if grep -Eq '(^|/)MASTER_BUG_MATRIX\.md$|(^|/)finding-aliases\.json$|^scripts/(check_matrix_coverage|matrix_coverage_)|^\.github/workflows/auditrepo-deep-audit\.yml$' "${changed_file}"; then
+            echo "RUN_MATRIX_COVERAGE=1" >> "${GITHUB_ENV}"
+          else
+            echo "RUN_MATRIX_COVERAGE=0" >> "${GITHUB_ENV}"
+          fi
+
+      - name: Check structure
+        run: python3 scripts/check_auditrepo_structure.py
+
+      - name: Validate repository rules
         run: python3 scripts/validate_audit_repo.py
-      - name: Test validator report-content regressions
+
+      - name: Test validator regressions
         run: python3 scripts/validate_audit_repo_regression_test.py
 
-  matrix-coverage:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Test matrix coverage control plane
+      - name: Validate matrix/evidence owners when changed
+        if: env.RUN_MATRIX_COVERAGE == '1'
+        shell: bash
         run: |
+          set -euo pipefail
           python3 -m py_compile \
             scripts/check_matrix_coverage.py \
             scripts/matrix_coverage_lib.py \
             scripts/matrix_coverage_contexts.py \
             scripts/matrix_coverage_regression_test.py
           python3 scripts/matrix_coverage_regression_test.py
-      - name: Enforce matrix evidence coverage
-        run: |
-          set -o pipefail
           mkdir -p reports/matrix-coverage
           python3 scripts/check_matrix_coverage.py \
             --verbose \
@@ -60,7 +67,9 @@ jobs:
           python3 scripts/matrix_coverage_contexts.py \
             --json-out reports/matrix-coverage/contexts.json \
             --markdown-out reports/matrix-coverage/contexts.md
-      - name: Upload matrix coverage diagnostics
+
+      - name: Upload matrix diagnostics when produced
+        if: always() && env.RUN_MATRIX_COVERAGE == '1'
         uses: actions/upload-artifact@v4
         with:
           name: matrix-coverage-${{ github.run_id }}
@@ -68,38 +77,9 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-  repository-history-forensic:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    permissions:
-      contents: read
-      pull-requests: read
-    steps:
-      - name: Checkout exact head with complete history
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Set up Node 22.12
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.12.0'
-      - name: Validate script and disposition ledger
-        run: |
-          node --check scripts/repository_history_forensic_audit.mjs
-          node -e "JSON.parse(require('node:fs').readFileSync('projects/gb-is-my-strength/verified/closed-unmerged-pr-dispositions.json', 'utf8'))"
-      - name: Inventory every branch and closed PR head
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/repository_history_forensic_audit.mjs --strict
-      - name: Verify tracked tree is unchanged
+      - name: Verify clean tracked tree
         run: git diff --exit-code
-      - name: Upload forensic inventory
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: auditrepo-history-forensic-${{ github.run_id }}
-          path: |
-            reports/repository-history-forensic-audit.json
-            reports/repository-history-forensic-audit.md
-          if-no-files-found: error
-          retention-days: 30
+
+# Full matrix/evidence coverage and repository-history forensic are intentionally
+# periodic/manual in auditrepo-deep-audit.yml. Ordinary documentation and intake
+# PRs should not pay for a complete live branch/closed-PR inventory.
