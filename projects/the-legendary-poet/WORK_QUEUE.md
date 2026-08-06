@@ -10,7 +10,8 @@ Media verification ведётся по одному кандидату:
 
 - C01: `caption-verified / rights-blocked / no Product change`;
 - C02: `caption-corroborated / primary-object-unverified / rights-blocked / no Product change`;
-- C04: `caption-corroborated / early-publication-cited / stronger-rights-rationale / source-page-unverified / no Product change`.
+- C04: `caption-corroborated / early-publication-cited / stronger-rights-rationale / source-page-unverified / no Product change`;
+- C05: `caption-repeated / original-source-unavailable / independent-object-unverified / rights-blocked / no Product change`.
 
 ## Candidate lanes
 
@@ -86,11 +87,40 @@ Media verification ведётся по одному кандидату:
   5. keep C04 parked and unpublished.
 - Until the source page and explicit editorial rights decision are recorded, C04 must not enter the production media manifest.
 
+#### C05 — `Mayakovsky 1917 a.jpg`
+
+- Verification result: `caption-repeated / original-source-unavailable / independent-object-unverified / rights-blocked / no Product change`.
+- Exact Product/Commons identity: 396 × 601 JPEG, 28,507 bytes, unknown author, year field 1917, Product SHA-256 `131b1f7f629ec3b23641639e072367001d31c8ed77bfb5b973801ada09e9fa51`.
+- Current Commons source points to `fplib.ru/id/gallery/majakovskij_photo/`; that source could not be fetched through the available path.
+- The wording `В.В. Маяковский 1917 год` is repeated by PICRYL/GetArchive and a user-contributed retro-photo page, but those records derive from Commons or repeat its dimensions and supply no independent object provenance.
+- Evidence limitation:
+  - no primary museum/archive exact-object record was found in the bounded wave;
+  - no inspectable publication page or accession history was obtained;
+  - the 1917 date is therefore recorded as source metadata, not independently verified object dating.
+- Rights blocker:
+  - Commons uses generic `PD-old`;
+  - the page explicitly says a United States public-domain tag is missing;
+  - photographer identity and original publication history are unknown;
+  - derivative public-domain aggregators do not cure those missing predicates.
+- Not supportable at the current threshold:
+  - shooting location;
+  - more precise date;
+  - photographer attribution;
+  - primary collection ownership/accession;
+  - final publication authorization.
+- Owner choices:
+  1. recover an archived copy of the original FPLIB gallery with source context;
+  2. locate a primary museum/archive object record or early printed publication;
+  3. establish a reviewed jurisdiction-specific public-domain rationale;
+  4. obtain permission or a separately rights-safe replacement;
+  5. keep C05 parked and unpublished.
+- Until independent caption/object evidence and publication authority are recorded, C05 must not enter the production media manifest.
+
 #### Remaining candidates
 
 - First question: для какого одного следующего изображения существует authoritative source, publication permission/licence and accurate attribution?
 - Required angles: source/provenance witness + rights/owner decision; visual similarity или наличие файла в истории недостаточны.
-- Possible outcomes: approve one bounded candidate / caption-verified but rights-blocked / caption-corroborated but primary-object-unverified / early-publication-cited but page-unverified / reject / replace / park / owner-decision.
+- Possible outcomes: approve one bounded candidate / caption-verified but rights-blocked / caption-corroborated but primary-object-unverified / early-publication-cited but page-unverified / original-source-unavailable / reject / replace / park / owner-decision.
 
 ### 2. Release-specific live witness
 
