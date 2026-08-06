@@ -102,3 +102,19 @@ Append-only журнал компактных результатов verificatio
 - Owner outcomes: recover FPLIB archive / primary object or early publication / reviewed PD decision / permission or replacement / park.
 - Live evidence: not required; this was a source-lineage, caption and rights verification.
 - Detailed evidence: `../verification/2026-08-06-c05-source-rights-wave/REPORT.md`.
+
+## 2026-08-06 — C06 caption/object verified, early publication and rights predicate remain unresolved
+
+- Scope: one bounded media candidate, `C06 / Mayakovsky 1918.jpg`.
+- Result:
+  - verified-at-anchor: exact Commons identity, Product SHA-256, 316 × 401 dimensions, 32,218 bytes, 1918 and unknown-author metadata;
+  - caption/object-verified: same composition authenticated through State Mayakovsky Museum as Vladimir Mayakovsky in Catherine Park, Moscow, 1918, unknown photographer;
+  - same-object confirmed: tree, cane, coat, hat, bow tie, birches and pond match;
+  - source-lineage-unavailable: old RSL URL cited by Commons could not be inspected;
+  - early-publication-unverified: no pre-1931 publication page or catalogue statement obtained;
+  - rights-rationale-predicate-unverified: `PD-Russia-expired` gives Russia/US pre-1931 routes, but publication predicate remains unproved;
+  - no Product mutation and no production-media acceptance.
+- Evidence angles: Product provenance ledger + Commons current record/licensing + State Mayakovsky Museum-backed Russia-in-Photo object + Culture.ru corroboration + manual visual comparison + RSL source availability check.
+- Owner outcomes: recover RSL source / pre-1931 publication / museum accession / reviewed PD decision / permission or replacement / park.
+- Live evidence: not required; this was object, caption, publication-history and rights verification.
+- Detailed evidence: `../verification/2026-08-06-c06-object-publication-rights-wave/REPORT.md`.
