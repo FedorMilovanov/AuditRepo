@@ -120,9 +120,28 @@
 - Detailed final evidence: `../verification/2026-08-06-mayakovsky-media-final-batch/REPORT.md`.
 - Historical bounded evidence remains in the C01, C02, C04, C05, C06 and C07 reports and is not superseded as evidence-at-anchor.
 
+## ST-TLP-SCROLL-OWNERSHIP — Native document movement
+
+- Status: `active-work` in source PR #334.
+- User-visible manifestation: intermittent wheel-scroll stalls and viscous catch-up in the middle of downward movement.
+- Common mechanism: the desktop app shell globally replaced ordinary document scrolling with Lenis smooth-wheel interpolation advanced by a permanent JavaScript RAF; fixed decorative text and scroll-to-top visibility added document-scroll subscriptions on the same latency-sensitive path.
+- Prior-corpus boundary: W0–W7 covered reader outcomes, routes, browser evidence and performance budgets, but the permanent scroll validator protected anchor geometry rather than continuous ordinary wheel ownership.
+- Selected system outcome:
+  - wheel, trackpad and touch document movement return to the browser;
+  - route restoration, hash geometry and the explicit scroll-to-top command remain application-owned;
+  - decorative fixed typography has no document-scroll subscription;
+  - scroll-to-top visibility uses one passive listener with RAF coalescing;
+  - the scroll runtime contract rejects global JS scrollers, wheel interception, perpetual scroll RAF and decorative frame subscribers.
+- Current source anchor: PR #334 exact head `1add78cbc4be86e59e2d1a07f9090d72213c9f3b`; base includes the completed Mayakovsky media merge `dd2df7be196d81d5212b43a08616f782af2fecf6`.
+- Closure requirement: exact-head full CI, route integrity, brand/motion audit, Manual Browser QA 4/4 and merge without losing the independent media base.
+- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md`.
+- Reverify trigger: global document smooth scrolling, wheel/touch cancellation, new perpetual document-scroll RAF ownership, route/overlay ownership change or a concrete mid-gesture browser stall.
+
 ## ST-TLP-AUDIT-HARNESS — Class-level evidence without control-plane duplication
 
-- Status: `active governance theme`.
-- Historical manifestations: stale string-literal validators, soft-404 expectations, boolean archive assumptions and exact-authority documentation drift.
-- System outcome: validators test machine contracts and user-visible invariants; AuditRepo stores proportional evidence instead of mirroring every source commit.
-- Reverify trigger: a guard measures implementation text rather than meaningful contract behavior, or documentation work becomes larger than the selected repair.
+- Status: `active governance theme`; one exact-prose manifestation is under repair in source PR #334.
+- Historical manifestations: stale string-literal validators, soft-404 expectations, boolean archive assumptions, exact-authority documentation drift and a literary-style validator that required 21 exact historical sentence fragments instead of the facts and qualifications those sentences represented.
+- System outcome: validators test machine contracts and user-visible or semantic invariants; AuditRepo stores proportional evidence instead of mirroring every source commit. For poet portraits, named semantic boundaries accept a bounded set of equivalent witnesses while service scaffolding is rejected directly.
+- Current witness: source PR #334 converts frozen poet prose markers to semantic invariants and rejects visible formulas such as `честный портрет`, `редактору достаточно`, `не приукрашиваем` and `не умаляем`.
+- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md`.
+- Reverify trigger: a guard measures implementation text rather than meaningful contract behavior, a content validator blocks a legitimate rewrite without loss of meaning, or documentation work becomes larger than the selected repair.
