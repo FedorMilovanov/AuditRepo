@@ -17,6 +17,7 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 REPORT_TEMPLATE_PATH = ROOT / 'projects' / '_templates' / 'AGENT_REPORT_TEMPLATE.md'
 SAFE_COMPONENT_RE = re.compile(r'^[A-Za-z0-9._-]+$')
+RESERVED_PATH_COMPONENTS = {'.', '..'}
 
 
 README_TEMPLATE = """# Intake — {project} — {agent} — {date}
@@ -147,10 +148,10 @@ def fill_report_template(project: str, agent: str, date: str) -> str:
 
 
 def safe_component(value: str, label: str) -> bool:
-    if SAFE_COMPONENT_RE.fullmatch(value):
+    if value not in RESERVED_PATH_COMPONENTS and SAFE_COMPONENT_RE.fullmatch(value):
         return True
     print(
-        f'ERROR: {label} must contain only letters, numbers, dot, underscore or hyphen: {value!r}',
+        f'ERROR: {label} must be a safe name using only letters, numbers, dot, underscore or hyphen: {value!r}',
         file=sys.stderr,
     )
     return False
