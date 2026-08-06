@@ -32,9 +32,11 @@ AuditRepo не требует закрывать список сверху вн�
 ### 2. Baptists 3D measured split
 
 - Historical theme: `R-005`.
-- First question: текущий raw HTML/JS/CSS вес и реальная runtime стоимость.
+- Verified measurement at Product exact head `e15afda5681ce4e2f0a713e6e7f0ca2afbb0efae`: `_app/index.html` is **2,245,854 bytes**.
+- Ownership: explicit `built-app` / `copy-as-built-asset`; it is not a strangler duplicate.
+- First question: can complete source/dependency boundaries be obtained and split without changing iframe/strict-native-app behavior?
 - Suggested mode: measurement-first improvement.
-- Do not introduce a global blocking size gate before implementation evidence.
+- Do not split the one-line app by guessed anchors or introduce a global blocking size gate.
 - Possible outcomes: bounded extraction / park / accepted current cost.
 
 ### 3. Route-scoped TTS loading
@@ -45,12 +47,16 @@ AuditRepo не требует закрывать список сверху вн�
 - Goal: avoid loading cost on unrelated catalogs/landings if evidence supports it.
 - Possible outcomes: systemic owner improvement / no material benefit / park.
 
-### 4. Recursive strangler duplicate inventory
+### 4. Strangler parity-authority migration before retirement
 
-- Historical theme: `R-007`.
-- First question: какие legacy/native pairs являются реальными duplicates, а какие intentional independent or legacy-preserve surfaces.
-- Suggested mode: non-blocking inventory and clustering.
-- Possible outcomes: bounded retirement wave / system theme refinement / no action.
+- Theme: `ST-STRANGLER`; detailed wave: `verification/2026-08-06-strangler-inventory-wave/REPORT.md`.
+- Verified inventory: **52 public indexes = 51 Astro shadows + 1 independent built app; unowned 0**.
+- Current deletion-ready count: **0**, because `legacy-shadow-wrapper-audit.js` actively consumes all 51 shadows.
+- First question: for which one small route or tightly related family can parity evidence be moved to another named immutable owner with equal coverage?
+- Suggested mode: route-family verification/retirement wave.
+- Required sequence: consumer inventory → replacement parity authority → source/dist/browser evidence → bounded deletion → rerun inventory.
+- Do not weaken text ratios, canonical/noindex checks or route markers merely to reduce file count.
+- Possible outcomes: one bounded retirement / park / accepted duplication / better system design.
 
 ### 5. Search corpus rights/provenance
 
@@ -77,4 +83,4 @@ Do not copy full run IDs, global HEAD or all historical proofs here.
 
 ## Last queue change
 
-Operating-model reform: converted the former exact-authority handoff into an optional owner-controlled queue. No finding status or Product claim is changed by this document.
+2026-08-06 strangler verification wave: replaced the approximate duplicate-count question with the measured parity-authority migration question. No Product deletion or production claim follows from this queue refinement.
