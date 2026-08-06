@@ -1,14 +1,21 @@
-# Verification
+# Verification — gb-is-my-strength
 
-This folder should contain only **active verification doctrine** and **current-head deep dives** that still influence repair or status decisions.
+`verification/` contains **meaningful decision records**, not a mandatory current-HEAD file for every finding.
 
-## Current core
-- `CANONICAL_VERIFIER_NOTE_2026-06-27_current-head-status-flips-and-second-order-defects.md`
-- `WORKFLOW_PARITY_DEEP_DIVE_2026-06-27.md`
-- `IZBRANNOE_COMPLETION_DEEP_DIVE_2026-06-27.md`
-- `GILL_GUARD_ARCHITECTURE_PREFLIGHT_2026-06-27.md`
-- long-lived protocols such as verification levels / recheck / retirement / tri-witness
+Use it when:
 
-## Archived on 2026-06-27
-Superseded dashboards, old START_HERE, and one-off correction notes were moved to:
-- `archive/2026-06-27-verification/`
+- independent evidence angles materially conflict;
+- a large cluster needs a canonical duplicate/root-cause decision;
+- a security, rights, production or data-loss conclusion needs stronger review;
+- a system fix claims to absorb many historical symptoms;
+- an old persuasive audit is being narrowed or invalidated in a way worth preserving.
+
+Do not use it merely because Product `main` moved or because an ordinary local fix needs a routine check.
+
+Historical deep dives remain evidence on their recorded anchors. Their filenames may contain `current-head`; that wording describes the original session, not an obligation to keep them current forever.
+
+When a conflict is resolved:
+
+- keep the decisive evidence;
+- record the disposition in the active finding/system theme/closure ledger;
+- archive superseded coordination documents when they no longer guide work.
