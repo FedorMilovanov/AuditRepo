@@ -47,11 +47,15 @@
 
 ## ST-STRANGLER — Legacy/native duplication and retirement
 
-- Status: `candidate` (`R-007` evidence family).
-- Historical manifestations: parallel legacy HTML and native Astro ownership, copied assets, route-specific preservation exceptions.
-- System question: что является true duplicate, а что intentional `legacy-preserve` or independent app surface?
-- Better-than-local outcome: recursive inventory, explicit classification and bounded retirement.
-- Inventory counts are advisory, not global blockers.
+- Status: `evidence-rich`; current inventory is verified at Product exact head `e15afda5681ce4e2f0a713e6e7f0ca2afbb0efae`.
+- Exact manifestation at that anchor: **52 public `index.html` = 51 Astro native shadows / 4,026,027 bytes + 1 explicit built app / 2,245,854 bytes; unowned = 0**.
+- Important exception: `/konfessii/russkij-baptizm/_app/` is `built-app` / `copy-as-built-asset`, not a removable legacy duplicate.
+- Common mechanism: current `legacy-shadow-wrapper-audit.js` uses every committed Astro shadow as canonical/noindex/structure/text parity evidence, so source duplication and verification authority are coupled.
+- Current deletion-ready count at the verified anchor: **0**.
+- System question: how can parity/reference authority be moved to a named immutable owner before a legacy shadow is retired?
+- Better-than-local outcome: route-family evidence migration followed by bounded deletion and inventory reduction, without weakening parity coverage.
+- Inventory counts remain advisory; reverify the selected route/family before work.
+- Detailed evidence: `../verification/2026-08-06-strangler-inventory-wave/REPORT.md`.
 
 ## ST-PERFORMANCE — Measured route-scoped loading
 
