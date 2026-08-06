@@ -61,7 +61,7 @@ jobs:
                 exit 1
               fi
               current_main="${GITHUB_SHA}"
-              mapfile -t requests < <(
+              mapfile -t changed_requests < <(
                 git diff --name-only --diff-filter=AM "${BEFORE_SHA}" "${GITHUB_SHA}" -- \
                   'references/ref-retirement/requests/*.json'
               )
@@ -76,7 +76,7 @@ jobs:
                 exit 1
               fi
               current_main="${BASE_SHA}"
-              mapfile -t requests < <(
+              mapfile -t changed_requests < <(
                 git diff --name-only --diff-filter=AM "${BASE_SHA}" "${HEAD_SHA}" -- \
                   'references/ref-retirement/requests/*.json'
               )
@@ -87,9 +87,31 @@ jobs:
               ;;
           esac
 
+          mapfile -t wrappers < <(
+            python3 - "${changed_requests[@]}" <<'PY'
+          import json
+          import sys
+
+          for filename in sys.argv[1:]:
+              with open(filename, encoding='utf-8') as source:
+                  payload = json.load(source)
+              if payload.get('requestRef'):
+                  print(filename)
+          PY
+          )
+
+          if [[ "${#wrappers[@]}" -eq 1 ]]; then
+            requests=("${wrappers[0]}")
+          elif [[ "${#wrappers[@]}" -eq 0 && "${#changed_requests[@]}" -eq 1 ]]; then
+            requests=("${changed_requests[0]}")
+          else
+            requests=()
+          fi
+
           if [[ "${#requests[@]}" -ne 1 ]]; then
-            printf 'Expected exactly one added/modified retirement request, found %s\n' "${#requests[@]}" >&2
-            printf '%s\n' "${requests[@]}" >&2
+            printf 'Expected one wrapper or one direct request, found %s\n' "${#requests[@]}" >&2
+            printf 'Changed request files:\n%s\n' "${changed_requests[*]:-none}" >&2
+            printf 'Wrapper files:\n%s\n' "${wrappers[*]:-none}" >&2
             exit 1
           fi
 
