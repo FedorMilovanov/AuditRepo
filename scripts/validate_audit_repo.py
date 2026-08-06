@@ -11,6 +11,7 @@ STRICT_REPORT_CONTENT = os.environ.get('AUDITREPO_STRICT_REPORT_CONTENT') == '1'
 CHANGED_PATHS_FILE = os.environ.get('AUDITREPO_CHANGED_PATHS_FILE', '').strip()
 ALLOWED_ROOT_MD = {
     'README.md',
+    'AUDITREPO_OPERATING_MODEL.md',
     'PROJECT_REGISTRY.md',
     'CONTRIBUTING.md',
     'CLEANUP_RETENTION_POLICY.md',
@@ -59,16 +60,20 @@ def report_has_real_evidence(report_file):
     has_real_severity = bool(re.search(
         r'^(?:-\s*)?(?:- Severity:|\*\*Severity:\*\*)[ \t]*(P0|P1|P2|P3)\b',
         rtxt, re.MULTILINE))
+    has_real_kind = bool(re.search(
+        r'^(?:-\s*)?(?:Kind|Evidence type|Suggested impact):[ \t]*\S+',
+        rtxt, re.MULTILINE | re.IGNORECASE))
     has_real_title = bool(re.search(
         r'^(?:-\s*)?(?:- Title:|\*\*Title:\*\*)[ \t]*\S+',
         rtxt, re.MULTILINE))
     has_real_heading = bool(re.search(
-        r'^###\s+(?!Finding\b|Confirm\b|Challenge\b|Merge proposal\b|Comment on Finding\b)(?!<)(.+\S)',
+        r'^###\s+(?!Finding\b|Observation\b|Confirm\b|Challenge\b|Merge proposal\b|Comment on Finding\b)(?!<)(.+\S)',
         rtxt, re.MULTILINE))
     has_real_content = bool(re.search(
-        r'^\s*(?:-\s+|\*\*[^*]+:\*\*\s*)(?:Description|Evidence|My evidence|Observed on SHA|Source file|'
-        r'Route/files|Root cause|Target report|Current HEAD evidence|Why same root cause)',
-        rtxt, re.MULTILINE))
+        r'^\s*(?:-\s+|\*\*[^*]+:\*\*\s*)(?:Description|Evidence|Evidence type|My evidence|Observed on SHA|'
+        r'Observed on anchor|Source file|Route/files|Root cause|Possible mechanism|Target report|'
+        r'Current HEAD evidence|Why same root cause|Limitations of this method|User/operator impact)',
+        rtxt, re.MULTILINE | re.IGNORECASE))
     has_bug_table = bool(re.search(
         r'^\|\s*(?:BUG|NEW|AUDIT|SEC|SEARCH|UI|AR|R|REG|PC|CSP|CI)-?[A-Z0-9._-]*\s*\|',
         rtxt, re.MULTILINE))
@@ -77,6 +82,7 @@ def report_has_real_evidence(report_file):
         rtxt))
     return any((
         has_real_severity,
+        has_real_kind,
         has_real_title,
         has_real_heading,
         has_real_content,
@@ -85,8 +91,22 @@ def report_has_real_evidence(report_file):
     ))
 
 
+def has_concrete_evidence_anchor(text):
+    """Accept SHA, artifact/live URL, or an explicit non-placeholder audited anchor."""
+    if re.search(r'\b[0-9a-f]{7,40}\b', text):
+        return True
+    if re.search(r'https?://\S+', text):
+        return True
+    anchor_patterns = [
+        r'^(?:-\s*)?Audited anchor(?: \([^\n:]+\))?:\s*(?!<|TBD\b|TODO\b|N/?A\b)\S+',
+        r'^(?:-\s*)?Evidence anchor:\s*(?!<|TBD\b|TODO\b|N/?A\b)\S+',
+        r'^##\s+(?:Source commit|Source commits|Artifact|Live snapshot)\b',
+    ]
+    return any(re.search(pattern, text, re.MULTILINE | re.IGNORECASE) for pattern in anchor_patterns)
+
+
 def validate_matrix_summary(proj, errors):
-    """Fail closed when canonical section counters and summary statistics diverge."""
+    """Fail closed when legacy matrix section counters and summary statistics diverge."""
     matrix = proj / 'verified' / 'MASTER_BUG_MATRIX.md'
     if not matrix.is_file():
         return
@@ -143,9 +163,7 @@ for p in ROOT.glob('*.md'):
     if p.name not in ALLOWED_ROOT_MD:
         fail(f'unexpected root markdown file: {p.name}', errors)
 
-# AR-006: allow-list КОРНЕВЫХ ДИРЕКТОРИЙ и не-.md файлов — до этого валидатор
-# молча пропускал мусор уровня корня (прецедент: verification/atlas/ с 27 PNG).
-# verification/ и references/ узаконены: их используют atlas-трек и UI-канон.
+# Root directory/file allow-list.
 ALLOWED_ROOT_DIRS = {
     '.git', '.github', 'projects', 'scripts', 'verification', 'references',
     '_OWNER_DOWNLOADS',
@@ -159,7 +177,7 @@ for p in ROOT.iterdir():
         fail(f'unexpected root file: {p.name}', errors)
 
 # Required roots
-for required in ['README.md', 'PROJECT_REGISTRY.md', 'projects', 'scripts']:
+for required in ['README.md', 'AUDITREPO_OPERATING_MODEL.md', 'PROJECT_REGISTRY.md', 'projects', 'scripts']:
     if not (ROOT / required).exists():
         fail(f'missing required root path: {required}', errors)
 
@@ -169,6 +187,8 @@ for proj in project_dirs():
         if not (proj / rel).exists():
             fail(f'{proj.name}: missing {rel}', errors)
 
+    # Transitional legacy matrix integrity. This can be retired when a project
+    # completes its active-backlog/closure-ledger migration.
     validate_matrix_summary(proj, errors)
 
     # Intake structure
@@ -190,7 +210,7 @@ for proj in project_dirs():
                 '## Agent', '## Identity', '## Agent identity',
                 'Агент:', '- Agent:', 'Role:', 'Arena Agent',
                 'intake', 'интейк', 'Independent audit pass',
-                '# Agent Work Report', '# PremiumControls', '# Report',
+                '# Agent Work Report', '# Agent Audit Report', '# PremiumControls', '# Report',
                 '## Meta', '**Имя агента:**', '**Аудитор:**',
                 '**Проект:**', '**Project:**', '**Дата',
                 '## Source commit', '## Source commits',
@@ -198,13 +218,15 @@ for proj in project_dirs():
             ]
             if not any(m in txt for m in markers):
                 fail(f'{proj.name}: intake identity file missing recognizable identity markers: {identity_file}', errors)
-            # SHA-first principle: an intake must reference a concrete commit SHA.
-            if not re.search(r'\b[0-9a-f]{7,40}\b', txt):
-                fail(f'{proj.name}: intake identity file has no commit SHA (SHA-first evidence required): {identity_file}', errors)
+            if not has_concrete_evidence_anchor(txt):
+                fail(
+                    f'{proj.name}: intake identity file has no concrete evidence anchor '
+                    f'(SHA, artifact/live URL, or explicit Audited anchor required): {identity_file}',
+                    errors,
+                )
 
-        # REPORT content is an independent invariant. Previously this entire block
-        # was accidentally nested under the missing-SHA branch, allowing any
-        # SHA-bearing empty scaffold to pass validation.
+        # REPORT content is an independent invariant. New or modified empty
+        # scaffolds are blocking; historical debt remains visible but staged.
         report_file = date_dir / 'REPORT.md'
         if report_file.exists() and not report_has_real_evidence(report_file):
             comments_dir = date_dir / 'comments'
@@ -217,7 +239,7 @@ for proj in project_dirs():
                       f' but evidence found in comments/: {report_file}')
             elif intake_was_changed(date_dir, changed_paths):
                 fail(f'{proj.name}: REPORT.md appears empty template'
-                     f' (no real severity/title/findings)'
+                     f' (no real observation/evidence content)'
                      f' and no evidence in comments/: {report_file}', errors)
             else:
                 legacy_empty_reports.append(report_file)
