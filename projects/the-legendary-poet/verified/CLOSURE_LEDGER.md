@@ -118,3 +118,19 @@ Append-only журнал компактных результатов verificatio
 - Owner outcomes: recover RSL source / pre-1931 publication / museum accession / reviewed PD decision / permission or replacement / park.
 - Live evidence: not required; this was object, caption, publication-history and rights verification.
 - Detailed evidence: `../verification/2026-08-06-c06-object-publication-rights-wave/REPORT.md`.
+
+## 2026-08-06 — C07 pre-1931 source volume verified, exact RSL pages remain unavailable
+
+- Scope: one bounded media candidate, `C07 / Mayakovsky 1925.jpg`.
+- Result:
+  - verified-at-anchor: exact Commons identity, Product SHA-256, 534 × 709 dimensions, 123,055 bytes, 1925 and unknown-author metadata;
+  - caption/date-corroborated: later scholarly volume 1 preserves `В. Маяковский. Фото 1925 г.` and modern exact-composition reproductions identify the same desk/newspapers portrait;
+  - publication-volume-verified: FEB bibliography records volume 1 of the ten-volume collected works as GIZ, Moscow–Leningrad, 1928, 360 pages;
+  - exact-pages-unavailable: Commons cites RSL volume page 7 for the reproduction and index page 377 for the date, but neither page was directly fetched in the bounded wave;
+  - primary-object-unverified: photographer, shooting location, accession and physical print provenance remain unknown;
+  - rights-rationale-partially-supported: `PD-Russia-expired` has a verified pre-1931 volume context, but exact-page identity and Product editorial approval remain unresolved;
+  - no Product mutation and no production-media acceptance.
+- Evidence angles: Product provenance ledger + Commons current record/licensing + FEB bibliography + later scholarly illustration caption + exact composition inspection + RSL page availability check.
+- Owner outcomes: recover RSL pages 7/377 / preserve page artifacts and visual match / primary object or photographer / reviewed PD decision / permission or replacement / park.
+- Live evidence: not required; this was caption, bibliography, exact-page and rights verification.
+- Detailed evidence: `../verification/2026-08-06-c07-publication-volume-wave/REPORT.md`.
