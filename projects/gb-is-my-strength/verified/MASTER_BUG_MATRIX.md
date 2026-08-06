@@ -9,11 +9,11 @@
 
 | Поле | Значение |
 |---|---|
-| Source verification anchor | `8a51db9a2df74fa615a3eaca698144302e47e332` (current Product source; Search app-route PR #1067 exact tested head `6ba805c61a3fa2ebc1890de11ac823894dc7fcff` passed 17/17 workflow groups, Search Modal core 4/4 plus strict-native app surfaces 16/16, and Avraam dossier 304/304; core Search JS/CSS/browser blobs remain retained while workflow `79d7e34925811528d02e9c1c8e8360adec3cb9f3` is the tested successor; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |
+| Source verification anchor | `3d907194d81eee1227a4fc9ad6f037773d19a1ec` (current Product source; reference-transfer governance PR #1076 exact tested head `c4cb9c3ce08d7b331c5c6275e91e6e11c944c7ba` established explicit exact/adaptive/native/legacy/performance/inventory modes, a 6/8 blocking-contract budget, advisory defaults and no automatic HTML-token harvesting; Favorite Store source **65/65** + Chromium **138/138** passed; production authority remains `38b257030afb7cfa8a7b1128f8c86539fd36dec0`). |
 | Deploy | ✅ **EXACT PRODUCTION AUTHORITY.** Run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate `38b257030afb7cfa8a7b1128f8c86539fd36dec0:30960174778-1`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`, transport artifact `8912983035` digest `sha256:e7784d18a33e256da4da52a2d0d0a46d5587fb5c6659602047c6be7d8b71108e`. Readiness job `92162173520`, unchanged Gill mobile PlayEmber smoke, immutable candidate verification/upload, promotion job `92165278471`, Pages deployment, generic live contract and live TTS extension all passed. |
 | Системный бэклог | `SUPER_AUDIT_2026-07-06_14a49be8.md` — волны W1–W10, **вне счётчиков матрицы**; W1 still empirically blocking |
 | Консолидация | 2026-07-05 (из монолита → `archive/2026-07-04-stale-matrix/MASTER_BUG_MATRIX_FULL_2026-07-03.md`) |
-| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-06_8a51db9a_search-p1-01-source-closure.md` (Product PR #1067, exact head `6ba805c6`, guarded squash merge `8a51db9a`; strict-native app routes now expose the unified command palette with Chromium/WebKit, local-search, iframe and skip-link regressions covered; no new production claim). |
+| Last reverify | `reverify/CURRENT_HEAD_REVERIFY_2026-08-06_3d907194_reference-transfer-governance.md` (Product PR #1076 / merge `3d907194`; bounded reference-transfer governance, D-22 current image-origin repair, three measured non-blocking unload lanes and repeated out-of-lane Home footer P3 evidence; no new production claim). |
 
 ⚠️ Deploy-формулировки в исторических строках ниже сохраняют состояние соответствующей даты. Current exact production authority is run `30960174778` attempt `1`, release/control SHA `38b257030afb7cfa8a7b1128f8c86539fd36dec0`, candidate digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`. The matrix is a durable verified backlog; later source movement does not silently reopen or close rows without a new applicable reverify.
 
@@ -21,10 +21,11 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## ✅ ЗАКРЫТО (230)
+## ✅ ЗАКРЫТО (231)
 
 | ID | Описание | Коммит |
 |---|---|---|
+| REFERENCE-TRANSFER-GOVERNANCE | ✅ **FIXED-CURRENT / MERGED-SYSTEM+SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-06.** Product PR #1076 converts the useful Agent Arena reference research into one proportional system instead of a mega-gate: explicit `exact-replica`, `adaptive-approved`, `native-contract`, `legacy-preserve`, `performance-target` and `inventory` modes; immutable snapshot + SHA-256 + named owners + bounded structure/order + desktop/mobile review for any real 1:1 claim; current registry **10 = 6 blocking + 4 non-blocking** with hard maximum **8** blocking contracts, **3** delegated guards and **12** required/forbidden markers per file; new contracts start advisory, automatic HTML token harvesting is disabled, performance/inventory cannot block, and existing route/browser/visual owners are reused through `owner:ui-guard` without a new workflow. Exact head `c4cb9c3` passed Shared Files, Favorite Store, Visual Parity, Metadata, Deploy Candidate, Glossary and dedicated Home Chromium/WebKit witnesses before squash merge `3d907194`; no production claim. | `3d907194` PR#1076; exact head `c4cb9c3` |
 | SEARCH-P1-01 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-06.** Product PR #1067 exposes the existing unified command palette on the four indexable strict-native app/tool routes `/karty/avraam/`, `/karty/ishod/`, `/konfessii/russkij-baptizm/` and `/map/` while retaining MapEngine place search, Atlas-local search, Baptism iframe ownership and the no-`site.css`/no-`site.js` boundary. Exact tested head `6ba805c61a3fa2ebc1890de11ac823894dc7fcff` passed **17/17** workflow groups. Search Modal run `31057748363` passed core **4/4** and app surfaces **16/16** across Chromium/WebKit and mobile/desktop; Avraam Dossier run `31057748436` passed **304/304** states after preserving the native skip-link as the first Tab target. Guarded squash merge `8a51db9a2df74fa615a3eaca698144302e47e332`; no production deployment claim. | `8a51db9a` PR#1067; exact head `6ba805c6` |
 | SEARCH-P2-10 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-05.** Product PR #1039 establishes the complete input-owned combobox/listbox contract. Exact head `375d8f72836f8bf3ae92c5f04ac73da73b631609` passed all 27 applicable workflow groups and the core Chromium/WebKit desktop/mobile contract **4/4**. Current Product `8a51db9a2df74fa615a3eaca698144302e47e332` retains exact `js/search.js` blob `7b279d1a8c092ae473d3db9129ee14652cb7ee69`; PR #1067 extends route availability without reopening ranking or combobox ownership. No production deployment claim. | `007c2d3c` PR#1039; exact head `375d8f72` |
 | SEARCH-P2-11 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-05.** Product PR #1039 governs the command palette top layer, focus trap, close paths, focus restoration and scroll locking. Exact-head core Chromium/WebKit contract passed **4/4** and all 27 workflow groups passed. Current Product `8a51db9a2df74fa615a3eaca698144302e47e332` retains exact `js/search.js` blob `7b279d1a8c092ae473d3db9129ee14652cb7ee69` and CSS blob `758247d1dd41a626cabeafa5048636f8181be07a`; PR #1067 only exposes that governed surface on additional strict-native routes. No production deployment claim. | `007c2d3c` PR#1039; exact head `375d8f72` |
@@ -160,7 +161,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | KARTY-Q-BUG-P0 | 🆕 **Запись задним числом** (был фикс, не было строки в матрице → дрейф): `ReferenceError: q is not defined`, `karty/_engine/map-engine.js` — `q` использовалась вне scope её `setTimeout` при показе счётчика совпадений; крешила поиск на проде `/karty/ishod/` и любом map-engine-маршруте. Найдено Playwright-ground-truth (статический karty-audit ошибочно писал «нет q-бага»). Проверено 2026-07-09: `q` теперь в scope на строке 866, комментарий документирует фикс. | `f7e9696` → merge `763271b3` |
 | AUDIT-P2-MATRIX-DRIFT | **ЗАКРЫТ стеком `native-source-contract-v1` (r323, deploy green `fc4b6326`).** `route-migration-matrix.json` больше не расходится с ownership/sitemap — он **производный**: материализуется из `page-ownership.json` + `route-profiles/*` движком `effective-route-registry.js`, cross-validation через registry-driven чекеры (`route-profile-contract-audit`/`route-migration-matrix-contract-audit`/`content-source-provenance-audit`, `migration:metadata:check:strict`). ⚠️ При интеграции лейны сами уронили секцию `/karty/*` (david/isus вместо 11 реальных, 8 переименованных потеряны) — поймано новым контрактом, исправлено регенерацией (`sync-route-migration-matrix --write`). | `e679362` gb-main |
 | TTS-OUTCOME-TELEMETRY | success/selected-engine телеметрия добавлена: `reportTtsOutcome()` шлёт `tts_engine_selected {engine}` при старте воспроизведения — теперь видно долю Vosk vs Web Speech (её отсутствие и прятало CSP-инцидент). Fire-and-forget, не влияет на playback | `a459ff3` |
-| D-22 | Favorites/izbrannoe: `f.path`→href без проверки схемы (само-XSS) + protocol-relative `//host` в image — **уже исправлено другим агентом** (`/^\/(?!\/)/` + protocol-allowlist на оба рендерера); стро́ка висела в P2 open по инерции, снята при quick-fix reverify 2026-07-08 | `365de50` |
+| D-22 | ✅ **FIXED-CURRENT / MERGED-SOURCE+CHROMIUM+CI VERIFIED 2026-08-06.** Historical favorite-link scheme/XSS half remained fixed. Agent Arena correctly found the narrower current image-origin residual after #1061: canonical `normalizeImage()` accepted cross-origin HTTP(S)/protocol-relative values because it checked protocol but not origin. Product PR #1076 now requires `url.origin === location.origin`, preserving valid same-origin absolute/root-relative images and rejecting cross-origin HTTP(S), protocol-relative, `data:`, `javascript:` and malformed values. Exact head `c4cb9c3` passed Favorite Store source **65/65** and Chromium **138/138**; artifact `8951868661`, digest `sha256:ab2c22aed02bef0da1d622102634d421ab60af0d9aa2d1d71ab8ca3da3036949`; squash merge `3d907194`. No production/live claim. | `365de50` origin; `3d907194` PR#1076 |
 | D-21 | ✅ **FIXED-CURRENT / SOURCE VERIFIED 2026-08-04.** Exact Product `f9d0120718569c510833dba7a3abd68ce2f6a003` `js/glossary.js` contains **0** `innerHTML`. Detail rendering is unified in a single `render()` → `inline()` allowlist parser that builds only `<em>`/`</em>` DOM nodes via `createElement`/`createTextNode` for both the runtime and the server `.gterm` upgrade path, so the literal-`<em>` inconsistency and the innerHTML-from-JSON XSS surface no longer exist. Commit `d93039866` (#683, glossary detail trust boundary) is an ancestor of the exact head. `data/glossary.json` retains 55 `<em>` markers, now rendered safely as real `<em>` nodes. No Product mutation, browser, production or TTS claim. | `d9303986` (#683); `365de50` (D-21 origin) |
 | D-8 | ✅ **STALE-ON-CURRENT-HEAD / FIXED 2026-08-04.** Exact `f9d01207` `.github/workflows/deploy.yml` `push.paths` is now `['**']` (all files), introduced by the build-once release PR #370 / `cd4b7706` (already closed as `CI-BUILD-VALIDATION-DUPLICATION`). Doc-only `*.md` changes therefore **do** trigger deploy readiness, so the historical «paths не включает `*.md`» exclusion claim is obsolete. No Product mutation or production claim. | `cd4b7706` PR#370; `f9d01207` |
 | GATE-P1-01 | ✅ **FIXED-CURRENT / SOURCE+CI VERIFIED 2026-08-04.** Exact `f9d01207`: `maps:validate` (`validate-map-routes.js`) now enforces stages[] non-empty, duplicate place/story ids, finite + SVG-range-bounded coordinates (x −250..2200, y −250..1600), stage membership, signature records, photos src/alt, and route meta; `smoke:maps` (`map-browser-smoke.js`) is a real Playwright witness capturing `console` errors + `pageerror` (JS crashes), asserting route visual, signature, story flyTo, sci tab, keyboard, Hebrew, overflow and map width, and fails on any problem. The historical «false-green maps:validate/smoke:maps» claim is therefore not reproducible on the exact head. No Product mutation, browser, production or TTS claim. | `f9d01207` |
@@ -380,7 +381,8 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AR-IDX-03 | **⌘K хардкод** — на Windows/Linux показывает `⌘K` вместо `Ctrl+K`. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-03) |
 | AR-IDX-09 | **Keyboard shortcut без altKey/shiftKey guard** — `Option+K` или `Ctrl+Shift+K` тоже срабатывают. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 (AR-IDX-09) |
 
-## 🟢 P3 — ОТКРЫТО (39)
+## 🟢 P3 — ОТКРЫТО (40)
+| HOME-P3-FOOTER-EDGE-CONSOLE | ⚠️ **CONFIRMED-CURRENT / BROWSER-EVIDENCE 2026-08-06.** Runtime Interactive Audit run `31060246529` reproduced twice on exact Product head `c4cb9c3` the separate Home Design console contract message `[home-footer-contract] footer touches a viewport edge`. The broad interactive audit passed 43 pages and all covered interaction families before this step; the dedicated Home Chromium/WebKit production-like job on the same SHA passed; PR #1076 changed no footer, shared layout or CSS. Open a bounded Home visual lane to inspect exact geometry/screenshots. Do not claim visible clipping without that evidence, weaken the contract, or mix the repair into unrelated SYSTEM work. | exact-head runtime attempts 2+3; reverify `3d907194_reference-transfer-governance` |
 | SEARCH-P3-01 | 🆕 **Search polish P3:** labels/shortcut wording for search triggers are inconsistent across route families (`Поиск`, `Поиск и разделы сайта`, `Поиск (Ctrl+K)`, `Открыть поиск по материалам сайта`), and shared `search.js` injected fallback still uses Mac-centric `Поиск ⌘K`. Needs one platform-aware label helper / route-family guard. Evidence: `incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md`; `PASS6_POLISH_DISCOVERY_PROBE.json`. |
 | SEARCH-P3-02 | 🆕 **Search discovery P3:** Pagefind branch hard-caps visible results at 10 and manifest fallback at 12 with no raw-total disclosure or `Показать ещё`; raw corpus counts for common queries exceed the visible cap. Evidence: `incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md`; `PASS6_POLISH_DISCOVERY_PROBE.json`. |
 | SEARCH-P3-03 | 🆕 **Search copy-link P3:** preview copy action hard-codes `https://gospod-bog.ru` as origin while the UI label remains generic `Скопировать ссылку`; either label canonical behavior or use current-origin URL. Evidence: `incoming/search-deep-audit-2026-08-04/PASS6_POLISH_DISCOVERY_AUDIT.md`; `PASS6_POLISH_DISCOVERY_PROBE.json`. |
@@ -424,7 +426,7 @@ _История сессий (HEAD-переходы, что влито) — в �
 | AR-IDX-CSS-02 | `.home-v20 { overflow-x:hidden }` клиппит абсолютный `.h-scripture-bg` (фоновые цитаты). | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 |
 | AR-IDX-CSS-03 | `.h-reveal:not(.h-in)` — 3s fallback анимация: если IntersectionObserver не сработал, юзер ждёт 3 сек. | `incoming/arena-auditor-index/2026-07-14/REPORT.md` §1 |
 
-## 🔵 P3 — РЕФАКТОРИНГ (4)
+## 🔵 P3 — РЕФАКТОРИНГ (7)
 
 | ID | Описание |
 |---|---|
@@ -432,6 +434,9 @@ _История сессий (HEAD-переходы, что влито) — в �
 | R-002 | enhancements.js монолит ~48KB |
 | R-003 | Нет source maps |
 | R-004 | Нет type="module"/tree-shaking |
+| R-005 | **Baptists 3D measured split.** Measure before/after and preserve strict-native-app behavior; target `_app/index.html < 50 KiB` raw plus external hashed JS/CSS only in a bounded implementation lane. Until behavioral and bundle evidence exists, this remains a non-blocking `performance-target`, not a global size gate. |
+| R-006 | **Route-scoped governed TTS loading.** Prove long-form route ownership and before/after bundles, then keep catalogs/unrelated landings from paying the TTS runtime cost. No blocking bundle threshold before the implementation and browser evidence exist. |
+| R-007 | **Recursive strangler duplicate inventory and bounded retirement.** Count legacy `index.html` vs native owners recursively, classify true duplicates vs intentional independent/`legacy-preserve` surfaces, then remove only proven bounded duplicates. Inventory counts never block unrelated Product work. |
 
 ## 🟣 AUDITREPO (3)
 
@@ -446,6 +451,13 @@ _История сессий (HEAD-переходы, что влито) — в �
 ---
 
 ## Примечания
+
+### 2026-08-06 — Reference-transfer governance and D-22 repair @ Product `3d907194`
+- Closed `REFERENCE-TRANSFER-GOVERNANCE` as one proportional system: explicit transfer modes, real 1:1 snapshot/digest evidence, 6/8 current blocking budget, advisory defaults, no automatic token harvesting and no duplicate workflow.
+- Updated historical `D-22` with the current same-origin image repair and exact source **65/65** + Chromium **138/138** evidence.
+- Added non-blocking measured unload lanes `R-005` (Baptists 3D split), `R-006` (route-scoped TTS) and `R-007` (recursive duplicate inventory/retirement).
+- Added `HOME-P3-FOOTER-EDGE-CONSOLE` after two exact-head browser reproductions; kept it out of the unrelated SYSTEM repair.
+- Canonical arithmetic: **376 = 231 closed + 145 open**; open P0 `0`, P1 `69`, P2 `26`, P3 `40`, refactoring `7`, AuditRepo `3`. Production authority unchanged.
 
 
 ### 2026-08-05 — ReaderProjection merged-source closure @ Product `92c4939c`
@@ -501,18 +513,18 @@ _История сессий (HEAD-переходы, что влито) — в �
 
 ---
 
-## Статистика (обновлено 2026-08-06: source anchor `8a51db9a`; production anchor `38b25703`; exact production run `30960174778`; 371 canonical = 230 closed + 141 open)
+## Статистика (обновлено 2026-08-06: source anchor `3d907194`; production anchor `38b25703`; exact production run `30960174778`; 376 canonical = 231 closed + 145 open)
 
 | Категория | Количество |
 |---|---|
-| Закрыто (fixed) | 230 |
+| Закрыто (fixed) | 231 |
 | **P0 открыто** | **0** |
 | P1 открыто | 69 |
 | P2 открыто | 26 |
-| P3 открыто | 39 |
-| Рефакторинг | 4 |
+| P3 открыто | 40 |
+| Рефакторинг | 7 |
 | AuditRepo | 3 |
-| **Всего открыто (матрица)** | **141** |
+| **Всего открыто (матрица)** | **145** |
 | Системный бэклог вне матрицы | см. `SUPER_AUDIT_2026-07-06_14a49be8.md` (волны W1–W10; **W1 on fire**) |
 | False positives отклонено | 5 |
 | Passes processed | 100+ (reverify 2026-07-22 @ 2b67ee8f; Nagornaya source/PDF verification added) |
