@@ -1,101 +1,39 @@
-# Verifier Synthesis
+# Verification Wave Synthesis
 
 ## Meta
+
 - Date:
 - Verifier:
 - Project:
 - Source repo:
-- Current HEAD:
+- Wave purpose:
+- Selected current-check anchor(s):
+- Scope:
+- Explicit exclusions:
+
+> This document classifies a selected package. It is not a promise to keep the whole AuditRepo synchronized with every future source commit.
+
+---
 
 ## Inputs reviewed
 
-| Agent | Path | Audited SHA | Scope | Findings | Confirmations | Challenges | Proposals |
-|-------|------|-------------|-------|----------|---------------|------------|-----------|
-| ... | incoming/... | ... | ... | N | N | N | N |
+| Agent/report | Audited anchor | Scope | Evidence angles | Findings/claims |
+|---|---|---|---|---|
+| ... | ... | ... | source/browser/... | ... |
 
 ---
 
-## Bug Canonicalization
+## Executive result
 
-### New findings → canonical IDs
-| Temp ID | Canonical ID | Title | Severity | Verification level |
-|---------|--------------|-------|----------|-------------------|
+| Input count | Current local | Systemic roots | Duplicate symptoms | Stale | Invalid/audit drift | Parked/risk accepted | Owner decisions |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| ... | ... | ... | ... | ... | ... | ... | ... |
 
-### Confirmations incorporated
-| Finding | Confirmed by | Evidence | Status |
-|---------|-------------|---------|--------|
+### What changed in our understanding
 
----
-
-## Evidence Merge
-
-- Weak + strong evidence combined:
-- Cross-agent corroboration:
-
----
-
-## Challenge Resolution
-
-### Resolved (confirmed / false-positive / stale)
-| Challenge | Resolution | Evidence |
-|-----------|-----------|---------|
-
-### Unresolved → Conflict registry entry
-| Challenge | Agent A | Agent B | Conflict ID |
-|-----------|---------|---------|-------------|
-
----
-
-## Duplicate / Merge Decisions
-
-| Finding A | Finding B | Decision | Canonical |
-|-----------|-----------|---------|-----------|
-
----
-
-## Severity Changes
-
-| Bug | Old | New | Evidence |
-|-----|-----|-----|----------|
-
----
-
-## Verification Ladder Status
-
-### L0 — Raw / Suspected (needs more work)
 - ...
 
-### L1 — Peer-reviewed (one agent confirmed/challenged)
-- ...
-
-### L2 — Confirmed on SHA (2 agents or direct evidence)
-- ...
-
-### L3 — Confirmed Current (reverified on HEAD)
-- ...
-
-### L4 — Repair Ready (confirmed + evidence + lane)
-- ...
-
-### Stale / Fixed on current HEAD
-- ...
-
-### False Positives
-- ...
-
----
-
-## Repair Lane Grouping
-
-| Lane | Bug IDs | Count | Why together |
-|------|---------|-------|-------------|
-| lane/system-p0-fix | PS-01, P0-6 | 2 | Shared fc-controller IIFE + CI cascade |
-| lane/cache-busting | P0-10, P0-7, P0-8, P1-12 | 4 | Cache-busting asymmetry |
-| ... | ... | ... | ... |
-
----
-
-## Repair Order
+### Highest-value next actions
 
 1. ...
 2. ...
@@ -103,4 +41,107 @@
 
 ---
 
-## Notes for Implementation Agent
+## 1. Current local findings
+
+| Finding | Impact | Evidence angles | Current-check anchor | Suggested lane | Minimum closure proof |
+|---|---|---|---|---|---|
+| ... | ... | ... | ... | ... | ... |
+
+---
+
+## 2. Systemic root causes
+
+### System root `<id/name>`
+
+- Symptoms absorbed or related:
+- Shared mechanism:
+- Surface evidence:
+- Mechanism evidence:
+- Lifecycle evidence:
+- Why local patches are insufficient:
+- Proposed common owner/process/contract:
+- Representative cases:
+- Exceptions:
+- Findings that may close as `absorbed-by-system-fix`:
+
+---
+
+## 3. Duplicate and merge decisions
+
+| Finding | Canonical owner/root | Decision | Reason |
+|---|---|---|---|
+| ... | ... | duplicate-symptom / keep-independent | ... |
+
+---
+
+## 4. Stale, invalid and audit-drift
+
+| Finding | Result | Decisive evidence | Historical value retained |
+|---|---|---|---|
+| ... | stale / invalid / wrong-build / audit-drift | ... | ... |
+
+---
+
+## 5. Parked, accepted risk and not worth fixing
+
+| Finding/theme | Result | Impact | Cost/risk | Revisit trigger |
+|---|---|---|---|---|
+| ... | parked / accepted-risk / not-worth-fixing | ... | ... | ... |
+
+---
+
+## 6. Owner decisions
+
+| Decision | Options | Trade-offs | Recommended default |
+|---|---|---|---|
+| ... | ... | ... | ... |
+
+---
+
+## 7. Repair lane options
+
+| Lane | Findings/themes | Expected benefit | Scope | Required witnesses | Live required? |
+|---|---|---|---|---|---|
+| ... | ... | ... | ... | ... | yes/no |
+
+The owner may choose one lane, several lanes or none. This synthesis does not create an automatic obligation to repair every verified finding.
+
+---
+
+## 8. Verification sufficiency
+
+For each promoted conclusion, explain why the evidence is proportionate.
+
+- Critical/high-risk conclusions:
+- Ordinary local findings:
+- Visual/P3 findings:
+- Systemic roots:
+- Negative findings:
+
+Do not count repeated agents as independent angles when they used the same method and source.
+
+---
+
+## 9. Canonical updates
+
+Update only materially affected facts:
+
+- Active backlog changes:
+- System themes changes:
+- Work queue changes:
+- Closure ledger entries:
+- Significant reverify document needed? yes/no and why:
+
+No global Product HEAD sync is required unless the project explicitly selected a new current-check anchor for an active wave.
+
+---
+
+## 10. Closure summary
+
+- Closed by local fix:
+- Absorbed by system fix:
+- Stale/invalid:
+- Parked/accepted risk:
+- Still independent and active:
+- Regression witnesses added:
+- Live evidence obtained or explicitly unnecessary:

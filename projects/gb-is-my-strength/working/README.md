@@ -1,13 +1,26 @@
 # Working — gb-is-my-strength
 
-This folder is intentionally kept as a lightweight active working layer so `scripts/validate_audit_repo.py` can verify the canonical AuditRepo structure.
+`working/` is the temporary synthesis layer.
 
-Historical/stale working documents were demoted to `archive/2026-07-03-stale-working/` during cleanup. Do not restore old competing matrices here. Current operational truth is:
+Use it for:
 
-- `../NEXT_AGENT_PROMPT.md`
-- `../verified/MASTER_BUG_MATRIX.md`
-- current-head evidence under `../reverify/`
+- verification-wave drafts;
+- duplicate maps;
+- root-cause clustering;
+- route/package triage;
+- value/cost comparisons;
+- repair-lane options;
+- unresolved package-level questions.
 
-Use this folder only for genuinely active synthesis drafts that are not ready for `verified/`.
+A working document is allowed to be incomplete, exploratory or later disproved. It should name its evidence anchors and limitations, but it does not need to stay synchronized with every future Product HEAD.
 
-Current branch reconciliation research: [`BRANCH_RESEARCH_RECONCILIATION_2026-07-20.md`](./BRANCH_RESEARCH_RECONCILIATION_2026-07-20.md). It is a content-based review of the six remote branches not contained in `main`; it does not promote any stale prototype finding to verified truth.
+When a wave finishes:
+
+- durable classifications move into the active backlog/system themes;
+- compact outcomes go to the closure ledger;
+- disputed decisions go to `verification/` when needed;
+- superseded drafts move to `archive/`.
+
+Do not restore parallel “current truth” matrices here. Do not use this folder as a permanent handoff mirror.
+
+Historical branch reconciliation research remains evidence on its recorded anchor and should be re-read only when a related branch/owner question is selected.

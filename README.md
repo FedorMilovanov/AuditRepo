@@ -1,421 +1,174 @@
 # AuditRepo
 
-Центральный репозиторий для **мультиагентных аудитов, баг-репортов и верификационных прогонов**.
+Центральный репозиторий для **мультиагентных аудитов, доказательств, причинного анализа и вариантов улучшения**.
 
-Идея:
-- много агентов (десятки независимых pass'ов, см. `PROJECT_REGISTRY.md`) прогоняют проект;
-- каждый складывает свои отчёты в `incoming/`;
-- сильный верификатор собирает сводную матрицу багов;
-- после этого implementation-агент чинит уже **подтверждённые** баги.
+Здесь можно проводить десятки независимых проходов по одному проекту, складывать сырые отчёты, подтверждать и опровергать находки, объединять симптомы в системные причины и выбирать любую удобную глубину исправления.
+
+Главный контракт: [`AUDITREPO_OPERATING_MODEL.md`](AUDITREPO_OPERATING_MODEL.md).
+
+```text
+many audit passes
+→ evidence corpus
+→ verification wave when useful
+→ root-cause synthesis
+→ owner-selected repair scope
+→ proportional closure
+```
+
+## Чего AuditRepo не делает
+
+AuditRepo не является второй копией source-репозитория. Он не обязан после каждого Product-коммита:
+
+- переписывать глобальный current HEAD;
+- синхронизировать deploy SHA и run IDs во всех документах;
+- доказывать сохранность каждого старого исправления;
+- создавать отдельный reverify и closure PR для каждой строки;
+- инвентаризировать все ветки и закрытые PR на каждом обычном изменении Markdown.
+
+Product-репозиторий владеет текущим кодом, ветками, CI и deploy. AuditRepo владеет накопленными наблюдениями, evidence anchors, причинными моделями, очередью выбранных работ и историей решений.
 
 ---
 
-## ⚠️ ВАЖНО: прочитай это перед началом работы
+## Перед аудитом
 
-> **Перед тем как начать аудит или верификацию, ОБЯЗАТЕЛЬНО прочитай
-> [`SANDBOX-ENV-2026-06-21.md`](SANDBOX-ENV-2026-06-21.md).**
->
-> Это технический паспорт среды Arena (E2B / Firecracker microVM), который сбережёт
-> время и предотвратит ложные находки. В нём задокументировано проверенным путём:
->
-> - **Версии и обходные пути** — например, по умолчанию Node 20, но проектам на
->   Astro 6 нужен **Node 22.12.0+** (одна строка `wget` для исправления);
->   `dist/`, `node_modules/`, Playwright **не переживают** между сессиями.
-> - **Что работает, а что нет** — `npm ci` быстрее `install`; `edit_file` иногда
->   падает на крупных блоках (используй `sed`/`python3`); `read_file` файлов >500KB
->   может упасть; использование временного git-токена в чате — нормальная практика для push.
-> - **Speed/quality gate discipline** — НЕ гоняй полный `validate:static-publication`
->   после каждой мелкой правки (2 CPU / ~2 GB RAM); используй цикл быстрых проверок
->   + финальный барьер перед коммитом.
-> - **Vision/изображения** — способность видеть скриншоты зависит от **модели**, а не
->   от платформы. Обходные пути: OCR (tesseract), PIL-анализ, Playwright + pixelmatch.
-> - **Build-mode trap** (критично для gb-is-my-strength) — production-артефакт — это
->   **strangler-build** (`astro build` + `copy-legacy-to-dist.js`), а НЕ plain
->   `astro build`. Проверяй на production-like dist, иначе получишь ложные «404 / файл
->   не существует» (как в C-08).
->
-> Незнание этих фактов — основная причина ложных срабатываний и неверных root causes.
+Прочитай [`SANDBOX-ENV-2026-06-21.md`](SANDBOX-ENV-2026-06-21.md), чтобы не создавать ложные находки из-за неверной версии Node, неправильного build mode, отсутствующего `dist/`, ограничений vision или особенностей Arena.
+
+Для `gb-is-my-strength` production-like результат строится strangler-цепочкой, а не одним `astro build`.
 
 ---
 
 ## Структура
 
-```
-audit-repo/
-├── README.md                      ← этот файл
-├── SANDBOX-ENV-2026-06-21.md      ← ⚠️ ЧИТАТЬ ПЕРВЫМ: паспорт среды Arena (Node, gates, vision, build-mode)
-├── PROJECT_REGISTRY.md            ← список проектов и статусы
+```text
+AuditRepo/
+├── AUDITREPO_OPERATING_MODEL.md   ← назначение, статусы, волны, пропорциональность
+├── README.md                       ← быстрый старт
+├── CONTRIBUTING.md                 ← практический workflow агентов
+├── MULTI_WITNESS_VERIFICATION_PROTOCOL.md
+├── CLEANUP_RETENTION_POLICY.md
+├── PROJECT_REGISTRY.md
 ├── scripts/
-│   ├── check_auditrepo_structure.py   ← базовая проверка структуры (subset)
-│   ├── validate_audit_repo.py         ← строгая проверка структуры/intake
-│   ├── scaffold_intake.py             ← создать intake-папку агента
-│   ├── scaffold_project.py            ← создать новый проект
-│   ├── scaffold_reverify.py           ← создать reverify-файл под SHA
-│   └── scaffold_retirement_review.py  ← создать retirement-review
 └── projects/
     ├── _templates/
-    │   ├── AGENT_REPORT_TEMPLATE.md
-    │   ├── VERIFIER_SYNTHESIS_TEMPLATE.md
-    │   └── COMMENT_TEMPLATE.md
     └── <project>/
-        README.md                  ← правила конкретного проекта
-        incoming/                  ← сырые отчёты агентов (НЕ редактировать)
-          <agent-name>/
-            <YYYY-MM-DD>/
-              README.md            ← meta: agent, SHA, mode, scope
-              REPORT.md            ← универсальный отчёт (см. ниже)
-              comments/            ← комментарии к чужим находкам
-              proposals/           ← предложения status/severity/merge/repair-lane
-              evidence/            ← доказательства (логи, скрины, grep output)
-              artifacts/           ← патчи, сниппеты кода, trace output
-        working/                   ← сводные промежуточные документы
-        verified/                  ← финальные проверенные ledgers и repair orders
-        verification/
-          conflicts/               ← конфликты между агентами (C-01, C-02, ...)
+        ├── README.md               ← стабильная ориентация проекта
+        ├── DOC_MAP.md              ← кто каким фактом владеет
+        ├── WORK_QUEUE.md           ← необязательная выбранная очередь
+        ├── incoming/               ← сырые неизменяемые проходы
+        ├── working/                ← временные синтезы и verification waves
+        ├── verification/           ← конфликты и решения
+        ├── verified/               ← активный backlog, system themes, closures
+        ├── reverify/               ← только существенные перепроверки
+        └── archive/                ← история
 ```
 
 ---
 
 ## Freedom with Evidence
 
-**Роли назначать не нужно.** Любой агент свободен делать полезную работу. Но свобода не превращается в хаос, потому что все действия проходят через многоуровневую верификацию.
+Любой агент может:
 
-### Any agent MAY
+- найти новый дефект или улучшение;
+- подтвердить или оспорить чужое наблюдение;
+- предложить duplicate/merge/split;
+- найти более глубокую root cause;
+- классифицировать finding как stale, invalid, parked или not-worth-fixing;
+- предложить локальную или системную repair lane;
+- провести пакетную verification wave.
 
-- найти и описать новый баг;
-- прочитать отчёты других агентов;
-- подтвердить чужой баг своим evidence;
-- оспорить чужой баг (`challenge`);
-- сказать «это stale на current HEAD»;
-- сказать «это false positive»;
-- предложить merge duplicates (объединить баги с общей root cause);
-- предложить split одного большого бага на несколько;
-- предложить severity raise / downgrade;
-- предложить repair lane;
-- предложить repair order;
-- сделать recheck на current HEAD;
-- оставить комментарии к любым находкам и ledger.
+Агент не должен:
 
-### Any agent MUST NOT
-
-- редактировать чужой incoming report;
-- удалять чужую находку;
-- напрямую менять canonical status в verified ledger;
-- чинить source repo из raw/suspected findings;
-- объявлять repair-ready без current-head evidence;
-- стирать конфликт вместо помещения его в `verification/conflicts/`.
-
-**Все свободные действия — evidence-based. Утверждение без SHA и доказательства не попадает в canonical ledger.**
+- переписывать чужой `incoming`;
+- превращать сырую гипотезу в обязательную Product-работу;
+- считать движение общего `main` автоматической причиной обновлять AuditRepo;
+- заявлять live/security/rights вывод без соответствующего evidence;
+- создавать тяжёлую control-plane цепочку ради простой документационной правки.
 
 ---
 
-## Multi-Level Verification Ladder
+## Evidence model
 
-Статус бага определяется не прихотью одного агента, а evidence threshold:
+Важны независимые **углы доказательства**, а не количество агентов:
 
-| Level | Status | Condition |
-|-------|--------|-----------|
-| **L0** | `raw` / `suspected` | Один агент нашёл. Не чинить. |
-| **L1** | `peer-reviewed` | Второй агент оставил confirm / challenge / comment. |
-| **L2** | `confirmed-on-sha` | 2 независимых подтверждения ИЛИ 1 прямое source/build/browser evidence. |
-| **L3** | `confirmed-current` / `stale-on-current-head` / `fixed-current` / `needs-manual-check` | Сверили на актуальном HEAD source repo. |
-| **L4** | `repair-ready` | confirmed-current + evidence + target SHA + route/file scope + repair lane + not-stale check. |
+- surface;
+- source;
+- artifact;
+- browser;
+- lifecycle;
+- history.
 
-Только L4 → implementation-agent может чинить.
+Один сильный production-like browser witness может быть достаточнее трёх одинаковых grep-проходов. Усиленный барьер нужен для security, rights, data loss, release identity и production incidents; обычный P2 не должен проходить слепой многоступенчатый ритуал.
 
-### Правила движения статусов
-
-**Promote to `confirmed-current`:** см. `MULTI_WITNESS_VERIFICATION_PROTOCOL.md` (этот
-документ — авторитетный по количеству свидетелей). Кратко:
-- 3 независимых свидетеля с разных ракурсов, ИЛИ
-- 1 сильное browser-воспроизведение на production-like dist (с явной пометкой), ИЛИ
-- для более низкорисковых случаев — 2 независимых агента ИЛИ 1 прямое
-  source/build/browser evidence на current HEAD (обязательно с явной меткой угла свидетеля:
-  `verified-source` / `verified-build` / `verified-browser` / `verified-production-like-dist`).
-
-> Внимание: пороги в этом README и в `MULTI_WITNESS_VERIFICATION_PROTOCOL.md` сведены к
-> единому знаменателю — `MULTI_WITNESS` является источником истины по числу свидетелей.
-> Ранее README допускал `confirmed-current` при 2 агентах, что противоречило MULTI_WITNESS
-> (3 свидетеля). Используйте усиленный барьер.
-
-**Move to `disputed`:**
-- Любой агент даёт конкретное contradictory evidence.
-
-**Move to `stale` / `fixed-current`:**
-- current HEAD check показывает, что баг не воспроизводится, ИЛИ source file изменился и original repro не применяется, ИЛИ 2 agents independently mark not reproducible on current HEAD.
-
-**Move to `false-positive`:**
-- Исходная finding основана на неверном grep / старом artifact / wrong route / wrong build. Verifier документирует why.
-
-**Move to `repair-ready`:**
-- status = confirmed-current + has evidence + has target/current SHA + has route/file scope + has repair lane + has not-stale check.
+Подробно: [`MULTI_WITNESS_VERIFICATION_PROTOCOL.md`](MULTI_WITNESS_VERIFICATION_PROTOCOL.md).
 
 ---
 
-## Proposal Status Lifecycle
+## Official input rule
 
-Любое предложение агента получает свой статус:
+Официальный audit input живёт здесь:
 
-```
-proposal-open → proposal-supported → proposal-accepted → (bug moves)
-proposal-open → proposal-conflicted → resolved in conflicts/
-proposal-open → proposal-rejected
-proposal-open → proposal-superseded (новое предложение заменило)
+```text
+projects/<project>/incoming/<agent>/<YYYY-MM-DD>/
 ```
 
-Пример:
-```
-Agent A: "P0-2 empty CSS" — raw
-Agent B: proposal false-positive — proposal-open
-Agent C: confirms false-positive with current HEAD evidence — proposal-supported
-Verifier: proposal-accepted → P0-2 moved to false-positive/fixed-current
-```
+Минимально:
 
----
-
-## Universal REPORT.md Structure
-
-Каждый агент пишет не только «новые баги», а **свободный рабочий пакет** секциями:
-
-```md
-# Agent Work Report
-
-## Meta
-- Project:
-- Source repo:
-- Agent:
-- Date:
-- Audited branch:
-- Audited SHA:
-- Current HEAD:
-- Mode: free-intake
-
-## 1. New Findings
-### <temp-id>
-- Title:
-- Severity: P0/P1/P2/P3
-- Route/files:
-- Evidence: (command + output)
-- Confidence: high/medium/low
-- Suggested repair lane:
-
-## 2. Confirmations of Existing Findings
-### Confirm <target-id>
-- Target report:
-- Target finding:
-- My evidence: (grep / screenshot / build output)
-- Same bug / related / stronger root cause:
-- Recommended status:
-
-## 3. Challenges / Disputes
-### Challenge <target-id>
-- Target report:
-- Target finding:
-- Reason for challenge:
-- Current HEAD evidence:
-- Recommended status: disputed / stale-on-current-head / false-positive / downgrade
-
-## 4. Duplicate / Merge Proposals
-### Merge proposal
-- Finding A:
-- Finding B:
-- Why same root cause:
-- Canonical ID suggestion:
-
-## 5. Severity Proposals
-- Target bug:
-- Current severity:
-- Proposed severity:
-- Evidence:
-
-## 6. Repair Lane Suggestions
-- Bug IDs:
-- Lane:
-- Why together:
-- What must NOT be mixed:
-
-## 7. Reverify Notes
-- Bug:
-- Current HEAD:
-- Result: confirmed-current / stale / fixed / disputed
-- Evidence:
-
-## 8. Notes for Verifier
+```text
+README.md   ← кто, что, на каком evidence anchor и в какой среде проверял
+REPORT.md   ← наблюдения, доказательства, ограничения и выводы
 ```
 
-Один агент может одновременно: найти 3 новых бага, подтвердить 2 чужих, оспорить 1, предложить merge 4 дублей и предложить repair order. Это нормально.
+Создание intake:
 
----
-
-## Comment Format (No Direct Edit)
-
-Агент не редактирует чужой файл. Он создаёт свой комментарий:
-
-```
-projects/<project>/incoming/<agent>/<date>/comments/
-  comment-on-<other-agent>-<finding-id>.md
-```
-
-Шаблон:
-
-```md
-# Comment on Finding
-
-- Target report: incoming/<other-agent>/<date>/REPORT.md
-- Target finding ID: <id>
-- Comment type: confirm / challenge / stale / duplicate / severity-change / evidence-addition
-- My audited SHA: <sha>
-- Evidence: (command + output)
-- Summary: <one paragraph>
-- Recommended action: <status change / proposal / note for verifier>
-```
-
----
-
-## Conflict Registry
-
-Если агенты расходятся — не решать сразу. Создавать:
-
-```
-projects/<project>/verification/conflicts/
-  CONFLICT_REGISTRY_<date>.md
-```
-
-Формат записи:
-
-```md
-## C-07 — P0-2 floating-cluster.css empty vs not empty
-
-- Agent A says: empty file
-- Agent B says: current HEAD has 1869 lines / 68KB
-- Evidence A:
-- Evidence B:
-- Current status: resolved / unresolved
-- Resolution:
-- Canonical action:
-```
-
-**Конфликт — это не провал. Это нормальный слой верификации.**
-
----
-
-## SHA-First Principle
-
-```
-A bug without SHA is not repair-ready.
-A bug without evidence is not confirmed.
-A bug confirmed on old SHA must be reverified before implementation.
-```
-
-AuditRepo — это не source repo. Это слой координации и доказательств.
-
-## Multi-witness principle
-
-A strong bug should ideally have 2–3 witnesses from different angles:
-- source witness
-- artifact witness
-- browser witness
-- optional history/regression witness
-
-See:
-- `MULTI_WITNESS_VERIFICATION_PROTOCOL.md`
-- `CLEANUP_RETENTION_POLICY.md`
-
----
-
-## Quick Start
-
-### 0. ⚠️ Прочитай паспорт среды
 ```bash
-cat SANDBOX-ENV-2026-06-21.md   # или открой в редакторе: версии, gates, vision, build-mode
-```
-Без этого — высок риск ложных находок (неправильная версия Node, plain-astro-build
-вместо strangler, попытка «увидеть» скриншот без vision и т.д.).
-
-### 1. Найди проект
-```bash
-cat PROJECT_REGISTRY.md
+python3 scripts/scaffold_intake.py <project> <agent-name> <YYYY-MM-DD>
 ```
 
-### 2. Создай intake
-```bash
-python3 scripts/scaffold_intake.py gb-is-my-strength my-agent-name 2026-06-25
-```
-
-> Примечание: старая документация ссылалась на `scripts/auditrepo.py`, которого не
-> существует. Рабочий scaffold-скрипт — `scaffold_intake.py` (плюс `scaffold_project.py`,
-> `scaffold_reverify.py`, `scaffold_retirement_review.py`).
-
-Создаётся папка:
-```
-projects/gb-is-my-strength/incoming/my-agent-name/2026-06-25/
-  README.md   ← meta: agent, SHA, mode, scope
-  REPORT.md   ← универсальный отчёт (секции 1-8)
-```
-
-### 3. Работай свободно
-- New findings → секция 1
-- Confirmations → секция 2
-- Challenges → секция 3
-- Merge proposals → секция 4
-- Severity proposals → секция 5
-- Repair lane suggestions → секция 6
-- Reverify notes → секция 7
-
-### 4. Комментарии к чужим находкам
-```bash
-# НЕ редактируй чужой файл
-# Создай свой comment в comments/
-```
-
-### 5. Предложения по статусу / severity
-```bash
-# Создай proposal в proposals/
-```
-
-### 6. Конфликты
-```bash
-# Если не согласен с чужим выводом — создай запись в verification/conflicts/
-```
+Raw reports сохраняются как evidence. Они не обязаны быть current truth и не редактируются задним числом.
 
 ---
 
-## Жёсткое правило
+## Verification wave
 
-```
-If a report is not inside projects/<project>/incoming/<agent>/<YYYY-MM-DD>/,
-it is not an official audit input.
-```
+Верификатор может взять любой пакет находок и классифицировать его одним проходом:
 
-Отчёты вне project-scoped intake-папки — неофициальные. Игнорируются до нормального intake.
+- `current-local`;
+- `systemic-root`;
+- `duplicate-symptom`;
+- `stale`;
+- `invalid`;
+- `parked`;
+- `not-worth-fixing`;
+- `owner-decision`.
+
+Один verification PR может обработать десятки строк. Один системный fix может поглотить множество симптомов. Один мелкий finding можно закрыть отдельно. Размер волны выбирает владелец.
 
 ---
 
-## Workflow Summary
+## Implementation handoff
 
-| Phase | Agent | Writes to | Document |
-|-------|-------|-----------|----------|
-| Audit | any | `incoming/<agent>/<date>/REPORT.md` | секции 1-8 |
-| Audit | any | `incoming/<agent>/<date>/comments/` | comment-on-*.md |
-| Audit | any | `incoming/<agent>/<date>/proposals/` | proposal-*.md |
-| Conflict | any | `verification/conflicts/` | CONFLICT_REGISTRY_*.md |
-| Synthesis | verifier | `working/` | VERIFIER_SYNTHESIS_*.md |
-| Canonical | verifier | `verified/` | UNIFIED_BUG_LEDGER_*.md, repair-order-*.md |
-| Implementation | repair-agent | — | source repo (только verified/ + repair-ready) |
+Перед Product-изменением implementation-agent:
+
+1. читает verified synthesis и релевантное raw evidence;
+2. проверяет **только выбранную поверхность** на актуальной версии Product;
+3. решает, это локальный дефект или системная причина;
+4. запускает проверки, которые способны упасть от конкретного diff;
+5. после merge фиксирует минимальный честный disposition.
+
+Старый verified finding — полезная отправная точка, но не автоматическое разрешение менять сегодняшний Product.
+
+---
+
+## Автоматические проверки
+
+Обычный AuditRepo PR проходит лёгкую структурную проверку. Глубокая matrix coverage и branch/closed-PR forensic выполняются по расписанию, вручную или когда меняются их собственные governance-файлы.
+
+AuditRepo не должен сам производить больше служебной работы, чем обнаруженная проблема.
 
 ---
 
 ## Проекты
 
-Сейчас активен:
-- `projects/gb-is-my-strength/` — gospod-bog.ru (актуальные счётчики open/closed —
-  см. `PROJECT_REGISTRY.md`; они меняются каждую волну и здесь не хардкодятся).
+Список проектов: [`PROJECT_REGISTRY.md`](PROJECT_REGISTRY.md).
 
-Позже можно добавлять другие проекты тем же способом. (feat(auditrepo): add Governed Freedom Model — README, templates, scaffold)
-
----
-
-## 📥 Скачать последние отчёты (для owner)
-Свежие отчёты по Floating Cluster / Hermeneutics / Gill и требования owner — в `_OWNER_DOWNLOADS/`:
-- ZIP: [`_OWNER_DOWNLOADS/gb-floating-cluster-LATEST-REPORTS-2026-06-27.zip`](_OWNER_DOWNLOADS/gb-floating-cluster-LATEST-REPORTS-2026-06-27.zip)
-- Описание и требования: [`_OWNER_DOWNLOADS/README.md`](_OWNER_DOWNLOADS/README.md)
+Для `gb-is-my-strength` начни с [`projects/gb-is-my-strength/DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md).

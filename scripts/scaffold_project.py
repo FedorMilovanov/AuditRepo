@@ -7,20 +7,71 @@ PROJECTS = ROOT / 'projects'
 
 README_TEMPLATE = """# {project}
 
+AuditRepo project for `{source_repo}`.
+
 - Source repo: `{source_repo}`
 - Production URL: {production_url}
-- Main branch: `main`
-- Current status: `intake-only`
 
-## Folder meaning
+Current source HEAD, branches, CI and deploy remain owned by the source repository and are checked when a work package is selected.
 
-- `incoming/` — raw agent reports
-- `working/` — synthesis in progress
-- `verification/` — cross-reference between multiple intake flows
-- `verified/` — final confirmed docs
-- `repairs/` — implementation tracking
-- `reverify/` — current HEAD truth after source repo moves
-- `archive/` — historical / stale / fixed snapshots
+## Start
+
+1. `DOC_MAP.md`
+2. `WORK_QUEUE.md`
+3. `verified/SYSTEM_THEMES.md`
+4. `incoming/`
+
+Repository model: `../../AUDITREPO_OPERATING_MODEL.md`.
+"""
+
+DOC_MAP_TEMPLATE = """# DOC MAP — {project}
+
+| Fact | Owner |
+|---|---|
+| Current code, branches, CI, deploy | source repository `{source_repo}` |
+| Raw evidence | `incoming/<agent>/<date>/` |
+| Temporary synthesis | `working/` |
+| Optional selected work | `WORK_QUEUE.md` |
+| Systemic root themes | `verified/SYSTEM_THEMES.md` |
+| Compact wave outcomes | `verified/CLOSURE_LEDGER.md` |
+| Significant conflicts | `verification/` |
+| Significant current checks | `reverify/` |
+| Historical material | `archive/` |
+
+A source HEAD movement alone does not require an AuditRepo update.
+"""
+
+WORK_QUEUE_TEMPLATE = """# Optional Work Queue — {project}
+
+This queue is owner-controlled. It may be empty, reordered or replaced without changing the status of the evidence corpus.
+
+## Candidate lanes
+
+<!-- Add selected questions, expected value, first narrow verification and possible outcomes. -->
+"""
+
+SYSTEM_THEMES_TEMPLATE = """# System Themes — {project}
+
+System themes group recurring symptoms by shared mechanism. They are not automatically current bugs; revalidate a theme when the owner selects it for work.
+
+<!-- Add themes with manifestations, mechanism, class-level outcome and recheck trigger. -->
+"""
+
+CLOSURE_LEDGER_TEMPLATE = """# Closure Ledger — {project}
+
+Append compact verification/repair wave outcomes here.
+
+## Entry format
+
+```md
+## YYYY-MM-DD — title
+- Scope:
+- Result: closed / absorbed / stale-invalid / parked-risk / remaining
+- Source-repo evidence:
+- Regression witness:
+- Live evidence: required+obtained / not required / not claimed
+- Detailed evidence: optional
+```
 """
 
 PROJECT_META_TEMPLATE = """project_id: {project}
@@ -37,24 +88,28 @@ rules:
   verified_path: verified/
   repairs_path: repairs/
   reverify_path: reverify/
+  work_queue_path: WORK_QUEUE.md
+  system_themes_path: verified/SYSTEM_THEMES.md
+  closure_ledger_path: verified/CLOSURE_LEDGER.md
 """
 
-GENERIC_README = """# {name}
+FOLDER_README = """# {name}
 
-Эта папка создана для `{name}`.
+This folder is part of the AuditRepo evidence/synthesis lifecycle. See `../DOC_MAP.md` and the root operating model for its role.
 """
 
-PLACEHOLDER = """# Placeholder
+VERIFIED_README = """# Verified
 
-Эта папка создана, но ещё не заполнена итоговыми документами.
+Store durable classifications, active guidance, system themes and compact closure history here. Do not mirror every source-repository HEAD.
 """
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument('project')
-    ap.add_argument('--source-repo', required=True)
-    ap.add_argument('--production-url', default='(not set)')
-    args = ap.parse_args()
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description='Create a project using the proportional AuditRepo model.')
+    parser.add_argument('project')
+    parser.add_argument('--source-repo', required=True)
+    parser.add_argument('--production-url', default='(not set)')
+    args = parser.parse_args()
 
     project_dir = PROJECTS / args.project
     folders = {
@@ -65,40 +120,41 @@ def main():
         'repairs': project_dir / 'repairs',
         'reverify': project_dir / 'reverify',
         'archive': project_dir / 'archive',
-        'archive-fixed': project_dir / 'archive' / 'fixed',
+        'archive-closed': project_dir / 'archive' / 'closed',
         'archive-stale': project_dir / 'archive' / 'stale',
-        'archive-false-positive': project_dir / 'archive' / 'false-positive',
+        'archive-invalid': project_dir / 'archive' / 'invalid',
+        'archive-accepted-risk': project_dir / 'archive' / 'accepted-risk',
     }
 
     project_dir.mkdir(parents=True, exist_ok=True)
-    for d in folders.values():
-        d.mkdir(parents=True, exist_ok=True)
+    for directory in folders.values():
+        directory.mkdir(parents=True, exist_ok=True)
 
-    (project_dir / 'README.md').write_text(
-        README_TEMPLATE.format(
-            project=args.project,
-            source_repo=args.source_repo,
-            production_url=args.production_url,
-        ),
-        encoding='utf-8'
-    )
-    (project_dir / 'PROJECT_META.yml').write_text(
-        PROJECT_META_TEMPLATE.format(
-            project=args.project,
-            source_repo=args.source_repo,
-            production_url=args.production_url,
-        ),
-        encoding='utf-8'
-    )
+    values = {
+        'project': args.project,
+        'source_repo': args.source_repo,
+        'production_url': args.production_url,
+    }
+
+    (project_dir / 'README.md').write_text(README_TEMPLATE.format(**values), encoding='utf-8')
+    (project_dir / 'DOC_MAP.md').write_text(DOC_MAP_TEMPLATE.format(**values), encoding='utf-8')
+    (project_dir / 'WORK_QUEUE.md').write_text(WORK_QUEUE_TEMPLATE.format(**values), encoding='utf-8')
+    (project_dir / 'PROJECT_META.yml').write_text(PROJECT_META_TEMPLATE.format(**values), encoding='utf-8')
 
     for name, folder in folders.items():
-        if name == 'verified':
-            (folder / 'README.md').write_text(GENERIC_README.format(name=name), encoding='utf-8')
-            (folder / 'PLACEHOLDER.md').write_text(PLACEHOLDER, encoding='utf-8')
-        else:
-            (folder / 'README.md').write_text(GENERIC_README.format(name=name), encoding='utf-8')
+        readme = VERIFIED_README if name == 'verified' else FOLDER_README.format(name=name)
+        (folder / 'README.md').write_text(readme, encoding='utf-8')
+
+    (folders['verified'] / 'SYSTEM_THEMES.md').write_text(
+        SYSTEM_THEMES_TEMPLATE.format(**values), encoding='utf-8'
+    )
+    (folders['verified'] / 'CLOSURE_LEDGER.md').write_text(
+        CLOSURE_LEDGER_TEMPLATE.format(**values), encoding='utf-8'
+    )
 
     print(f'Created project scaffold: {project_dir}')
+    return 0
+
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(main())

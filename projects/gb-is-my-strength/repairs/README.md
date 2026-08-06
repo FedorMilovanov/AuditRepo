@@ -1,18 +1,27 @@
-# Repairs
+# Repairs — gb-is-my-strength
 
-Сюда складываются документы implementation-agent'ов.
+`repairs/` may hold implementation plans or repair summaries when they are useful beyond the Product PR itself.
 
-Пример структуры:
+Example:
 
 ```text
 repairs/
-  2026-06-25/
-    GB-P0-RUNTIME-001/
+  2026-08-06/
+    <lane-name>/
       PLAN.md
       PATCH_SUMMARY.md
       VERIFICATION.md
 ```
 
-Правило:
-- implementation docs не должны жить в `incoming/`
-- verified bug ledger не должен переписываться implementation-agent'ом напрямую без reverify
+Rules:
+
+- implementation code lives in the Product repository, not here;
+- raw audit evidence remains in `incoming/`;
+- a repair begins only after the selected current surface is checked;
+- the agent should decide local vs systemic scope before mutation;
+- live evidence is required only when the closure claim is live/production;
+- one permanent Product regression witness is preferable to repeated AuditRepo exact-head proofs;
+- after merge, update AuditRepo in the smallest honest form: active disposition, system theme and/or compact closure-ledger entry;
+- a separate reverify document is optional and reserved for significant decisions.
+
+A repair plan may conclude `parked`, `accepted-risk`, `not-worth-fixing` or `owner-decision` without Product mutation.
