@@ -70,8 +70,8 @@
     },
     "54": {
       "category": "superseded",
-      "replacementPrs": [56],
-      "note": "Temporary-workflow diagnostic repair was rebuilt as clean PR #56."
+      "replacementPrs": [58],
+      "note": "Temporary-workflow diagnostic repair was first rebuilt as PR #56, then carried to the merged current-base canonical successor PR #58."
     },
     "56": {
       "category": "superseded",
@@ -171,7 +171,7 @@
     "199": {
       "category": "superseded",
       "replacementPrs": [200],
-      "note": "W7 evidence tree was rebuilt byte-identically from a fresh base and merged through PR #200."
+      "note": "W7 evidence tree was rebuilt byte-identically from a fresh base and merged as PR #200."
     }
   }
 }
