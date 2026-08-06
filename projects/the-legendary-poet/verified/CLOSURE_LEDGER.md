@@ -134,3 +134,26 @@ Append-only журнал компактных результатов verificatio
 - Owner outcomes: recover RSL pages 7/377 / preserve page artifacts and visual match / primary object or photographer / reviewed PD decision / permission or replacement / park.
 - Live evidence: not required; this was caption, bibliography, exact-page and rights verification.
 - Detailed evidence: `../verification/2026-08-06-c07-publication-volume-wave/REPORT.md`.
+
+## 2026-08-06 — Mayakovsky 30-candidate media family closed in one final batch
+
+- Scope: source issue #77 and the complete C01–C30 media decision family.
+- Result:
+  - exact original identity and hashes remain complete for `30/30` candidates;
+  - accepted active: `5` — C03, C08, C10, C11, C16;
+  - verified reserve: `1` — C15;
+  - explicit terminal exclusions: `24`;
+  - unresolved candidates: `0`;
+  - new Product image binaries: `0`;
+  - no remaining automatic C09–C30 verification queue.
+- New accepted active decisions:
+  - C10: State Mayakovsky Museum exact group/leaflet witness, Moscow 1912, documented February 1913 publication, unknown photographer preserved;
+  - C11: State Catalogue / State Mayakovsky Museum exact source lineage, Tina Modotti, Mayakovsky and Francisco Moreno, Mexico City 1925;
+  - C16: Arzamas exact reproduction credited to the State Mayakovsky Museum, Osip Brik, Moscow 1927.
+- Reserve decision: C15 has sufficient evidence but no current essay block uses the exact source, so no decorative active key was created.
+- Exclusion classes: `excluded-rights`, `excluded-provenance`, `excluded-scope`; every excluded candidate has a machine-readable candidate-specific reason.
+- Product evidence: source PR #333, exact tested head `b9a4bc7dd3dc2c14160e3b551497465eab82753c`, squash merge `dd2df7be196d81d5212b43a08616f782af2fecf6`.
+- Regression witness: Project contracts, Content model contract, CI, Articles catalog on Chromium/Android/iPhone, 35+ URL route audit, brand deep audit and Manual Browser QA 4/4.
+- Issue outcome: source issue #77 closed as `completed`.
+- Reopen only for materially new primary evidence, permission/licence, jurisdiction-specific rights evidence, changed editorial need or a change to the active registry/coverage contract.
+- Detailed evidence: `../verification/2026-08-06-mayakovsky-media-final-batch/REPORT.md`.
