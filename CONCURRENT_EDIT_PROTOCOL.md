@@ -1,93 +1,148 @@
 # Concurrent Edit Protocol — AuditRepo
 
-> Проблема: когда ≥2 агента правят `MASTER_BUG_MATRIX.md` одновременно,
-> `git merge` не ловит логические конфликты (у обоих валидный markdown,
-> но один работал по stale checkout → перезаписывает чужие правки).
->
-> Дата: 2026-07-14. Инцидент: `9b8054d` (arena-auditor Cycle 4) → 
-> `f900cd9` (arena-auditor-index INDEX audit) — потеряны 3 баг-строки +
-> 4 уточнения формулировок + session log.
+AuditRepo receives parallel agent work. The goal is to preserve evidence and avoid logical overwrites **without** forcing every agent into a global exact-HEAD synchronization ritual.
 
-## Правило 1: Pull → Read → Edit → Pull → Push (обязательно)
+## Core rule
 
-```
-git pull --rebase origin main          # 1. Подтянуть актуальное
-# 2. Прочитать файл ПОСЛЕ pull — не по старой копии
-# 3. Отредактировать
-git pull --rebase origin main          # 4. ЕЩЁ РАЗ подтянуть перед push
-git push origin main                   # 5. Запушить
+```text
+separate branches
++ clear file/fact ownership
++ narrow diffs
++ current-base check before merge
 ```
 
-Если между шагами 3 и 4 кто-то запушил — rebase на шаге 4 обнаружит
-конфликт и заставит разрешить вручную.
-
-## Правило 2: Разделение зон ответственности (Zone Ownership)
-
-MASTER_BUG_MATRIX.md — один файл, но **зоны не пересекаются**:
-
-| Агент | Зона-префикс | Что может править |
-|---|---|---|
-| arena-auditor | `NG-*` | Нагорная проповедь баги |
-| arena-auditor-index | `AR-IDX-*` | INDEX-страница баги |
-| arena-auditor-css | `AR-CSS-*` | CSS-аудит баги |
-| Любой | Общие секции | Статистика, Session log — **только APPEND** |
-
-**Append-only для общих секций:** новая session log запись добавляется
-ВНИЗ (append), никогда не удаляется чужая. Статистика пересчитывается
-с учётом ВСЕХ строк в файле.
-
-## Правило 3: Никогда не переписывать чужую строку целиком
-
-Если нужно уточнить чужой баг (например, добавить evidence-ссылку):
-- **Добавить** к существующей строке, не заменять её
-- Формат: `дополнение (arena-auditor cycle N)`
-
-Нельзя заменять `«13 контейнеров»` → `«5 контейнеров»` — это откат.
-Можно только `«13 контейнеров (уточнено: 26 — arena-auditor cycle 4)»`.
-
-## Правило 4: Идемпотентный патч вместо перезаписи блока
-
-Вместо:
-```python
-# ПЛОХО — перезаписывает весь блок P3, убивая чужие правки
-content = content.replace(old_p3_block, new_p3_block)
-```
-
-Делать:
-```python
-# ХОРОШО — точечная вставка после конкретного якоря
-content = content.replace(
-    '| EXISTING-LAST-ROW |', 
-    '| EXISTING-LAST-ROW |\n| NEW-ROW |'
-)
-```
-
-Или вставлять **перед** уникальным якорем (ID баг-строки уникален).
-
-## Правило 5: Integrity check после pull
-
-После каждого `git pull --rebase` — проверить, что твои данные на месте:
-
-```bash
-# Проверить, что все мои баг-строки существуют
-grep -c "NG-TOC-01\|NG-CROSS-01\|NG-SERIYA-01" MASTER_BUG_MATRIX.md
-# Ожидаем: ≥1 для каждого ID
-# Если 0 — кто-то затёр, восстанавливай до push
-```
-
-## Правило 6: Session log — append-only, хронологический порядок
-
-- Новая запись добавляется **сразу после** `## Session log` заголовка
-- Никогда не удаляется чужая запись
-- Никогда не перемещается чужая запись
-
-## При обнаружении потери данных
-
-1. `git diff HEAD~1 -- MASTER_BUG_MATRIX.md` — увидеть что пропало
-2. Восстановить из `HEAD~1` конкретные строки
-3. Закоммитить с пометкой `fix: восстановить X после перезаписи`
-4. Push
+Do not push ordinary agent work directly to `main`.
 
 ---
 
-*Этот документ — часть AuditRepo governance. Добавлять в DOC_MAP.md.*
+## 1. Prefer separate layers over one shared file
+
+Parallel work should normally land in different paths:
+
+- raw agent work → `incoming/<agent>/<date>/`;
+- package synthesis → a new file under `working/`;
+- systemic themes → `verified/SYSTEM_THEMES.md`;
+- selected priorities → `WORK_QUEUE.md`;
+- compact completion → `verified/CLOSURE_LEDGER.md`.
+
+Do not edit `MASTER_BUG_MATRIX.md` merely to record every intermediate observation or Product HEAD movement.
+
+---
+
+## 2. Branch and PR discipline
+
+For a mutation:
+
+1. start a branch from current AuditRepo `main`;
+2. state the project and fact class owned by the branch;
+3. avoid files already owned by an open competing PR;
+4. update/rebase from current `main` before merge;
+5. merge with a narrow reviewed diff.
+
+An unrelated movement of Product `main` is not an AuditRepo branch conflict. Only AuditRepo content overlap and materially changed evidence matter here.
+
+---
+
+## 3. Fact ownership
+
+Each volatile fact should have one owner file.
+
+Examples for `gb-is-my-strength`:
+
+| Fact | Owner |
+|---|---|
+| raw observation | original intake report |
+| optional selected work | `WORK_QUEUE.md` |
+| system root model | `verified/SYSTEM_THEMES.md` |
+| active finding disposition | active matrix/backlog |
+| compact wave result | `verified/CLOSURE_LEDGER.md` |
+| current Product code/deploy | Product repository |
+
+If another file needs the fact, link instead of restating it.
+
+---
+
+## 4. Matrix edits are exceptional and narrow
+
+The historical matrix is a transitional monolith. When it must change:
+
+- own explicit finding IDs or one bounded section;
+- do not rewrite unrelated rows;
+- do not replace the full file from a stale local snapshot;
+- preserve all existing IDs and dispositions outside scope;
+- recalculate legacy counts only when matrix rows actually move;
+- prefer one package transaction for a verification wave over one PR per row.
+
+A large system fix may update a cluster in one pass and record absorbed IDs compactly.
+
+---
+
+## 5. Append-only history
+
+For closure or wave history:
+
+- append a new dated entry;
+- do not rewrite older entries to make them sound current;
+- correct an old conclusion with a new explicit superseding entry;
+- keep original evidence discoverable.
+
+History witnesses an anchor; it does not need constant freshness edits.
+
+---
+
+## 6. Conflict handling
+
+A real conflict exists when branches:
+
+- change the same finding disposition differently;
+- claim different canonical owners for one symptom;
+- edit the same queue/system-theme decision incompatibly;
+- replace or remove evidence another branch still needs.
+
+Resolve by:
+
+1. preserving both evidence packages;
+2. identifying the exact disputed fact;
+3. selecting one verifier disposition or recording an unresolved conflict;
+4. avoiding broad “take ours/theirs” replacement of governance files.
+
+---
+
+## 7. No write-capable reconciliation control plane
+
+Do not create temporary GitHub Actions writers, compute-only PRs, self-clean publishers or cleanup PR chains for ordinary Markdown reconciliation.
+
+Use:
+
+- a normal branch;
+- current-base merge/rebase;
+- narrow file updates;
+- ordinary CI;
+- squash merge when desired.
+
+Deep branch forensic is periodic/manual and should not be used as a substitute for simple concurrent-edit discipline.
+
+---
+
+## 8. Before merge checklist
+
+- current AuditRepo base checked;
+- no overlapping open PR owner;
+- diff contains only intended fact classes;
+- raw evidence was not rewritten;
+- old historical claims were not silently altered;
+- Product HEAD/deploy facts were not copied unnecessarily;
+- validators pass;
+- the documentation transaction is not larger than the decision it records.
+
+---
+
+## Data-loss recovery
+
+If an AuditRepo merge actually loses content:
+
+1. identify the last commit containing the evidence;
+2. restore only the missing files/rows;
+3. record the incident and root cause;
+4. improve file ownership or split the monolith;
+5. do not add a permanent global exact-history gate unless the risk justifies its cost.
