@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "requestId": "auditrepo-ref-retirement-2026-08-06",
   "execute": true,
+  "executionNonce": 2,
   "preparedOnMain": "8d6b66101870221d530897898508ce837602717e",
   "sourceBranch": "maintenance/auditrepo-ref-retirement-20260806",
   "retainedRefs": [
