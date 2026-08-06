@@ -87,3 +87,18 @@ Append-only журнал компактных результатов verificatio
 - Owner outcomes: exact newspaper page / primary object record / reviewed PD decision / permission or replacement / park.
 - Live evidence: not required; this was a provenance, publication-history and rights verification.
 - Detailed evidence: `../verification/2026-08-06-c04-publication-rights-wave/REPORT.md`.
+
+## 2026-08-06 — C05 source lineage and publication rights remain unverified
+
+- Scope: one bounded media candidate, `C05 / Mayakovsky 1917 a.jpg`.
+- Result:
+  - verified-at-anchor: exact Commons file identity, Product acquisition hash, 396 × 601 dimensions, 28,507 bytes, year field 1917 and unknown author metadata;
+  - original-source-unavailable: the cited FPLIB gallery could not be fetched through the available path;
+  - caption-repeated-not-independent: PICRYL/GetArchive and a retro-photo page repeat the 1917 caption but inherit Commons or provide no primary object evidence;
+  - independent-object-unverified: no museum/archive exact-object record, accession history or inspectable early publication was obtained;
+  - rights-blocked: generic `PD-old` lacks a United States public-domain tag and the factual publication/creator predicates remain unknown;
+  - no Product mutation and no production-media acceptance.
+- Evidence angles: Product provenance ledger + Commons description/history/licensing + dead-source check + derivative-republication classification.
+- Owner outcomes: recover FPLIB archive / primary object or early publication / reviewed PD decision / permission or replacement / park.
+- Live evidence: not required; this was a source-lineage, caption and rights verification.
+- Detailed evidence: `../verification/2026-08-06-c05-source-rights-wave/REPORT.md`.
