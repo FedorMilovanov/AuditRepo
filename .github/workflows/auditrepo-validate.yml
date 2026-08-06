@@ -43,6 +43,12 @@ jobs:
             echo "RUN_MATRIX_COVERAGE=0" >> "${GITHUB_ENV}"
           fi
 
+          if grep -Eq '^references/ref-retirement/results/|^scripts/repository_history_forensic_audit\.mjs$|^projects/gb-is-my-strength/verified/closed-unmerged-pr-dispositions\.json$' "${changed_file}"; then
+            echo "RUN_REF_FORENSIC=1" >> "${GITHUB_ENV}"
+          else
+            echo "RUN_REF_FORENSIC=0" >> "${GITHUB_ENV}"
+          fi
+
       - name: Compile core Python tools
         run: |
           python3 -m py_compile \
@@ -68,6 +74,44 @@ jobs:
 
       - name: Test ref-retirement regressions
         run: python3 scripts/retire_reviewed_refs_regression_test.py
+
+      - name: Validate retirement result history
+        if: env.RUN_REF_FORENSIC == '1'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/repository_history_forensic_audit.mjs --strict
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(
+              Path('reports/repository-history-forensic-audit.json').read_text(encoding='utf-8')
+          )
+          summary = report['summary']
+          required_zero = (
+              'inaccessibleClosedHeads',
+              'manualReviewCandidates',
+              'unexplainedRemoteBranches',
+          )
+          failures = {key: summary[key] for key in required_zero if summary[key] != 0}
+          if failures:
+              raise SystemExit(f'ref-retirement forensic debt remains: {failures}')
+          print(json.dumps(summary, indent=2))
+          PY
+
+      - name: Upload ref-retirement forensic diagnostics
+        if: always() && env.RUN_REF_FORENSIC == '1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ref-retirement-forensic-${{ github.run_id }}
+          path: |
+            reports/repository-history-forensic-audit.json
+            reports/repository-history-forensic-audit.md
+          if-no-files-found: error
+          retention-days: 30
 
       - name: Validate matrix/evidence owners when changed
         if: env.RUN_MATRIX_COVERAGE == '1'
@@ -103,4 +147,5 @@ jobs:
 
 # Full matrix/evidence coverage and repository-history forensic are intentionally
 # periodic/manual in auditrepo-deep-audit.yml. Ordinary documentation and intake
-# PRs should not pay for a complete live branch/closed-PR inventory.
+# PRs should not pay for a complete live branch/closed-PR inventory. A retirement
+# result is the exception: it must prove the final remote Git graph immediately.
