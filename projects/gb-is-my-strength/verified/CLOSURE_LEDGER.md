@@ -50,3 +50,18 @@ Do not copy every workflow run, later blob SHA or unrelated current HEAD into th
 - Live evidence: not applicable.
 
 This entry records the governance change only. It does not claim that the reform PR has merged until GitHub shows the final merge.
+
+## 2026-08-06 — Strangler inventory verification wave
+
+- Scope: `ST-STRANGLER`, historical `R-007` and `STRANGLER-HYGIENE` evidence family.
+- Inputs: Product ownership manifest, committed public indexes, current legacy-shadow parity harness.
+- Result:
+  - verified-at-anchor: **52 public indexes = 51 Astro shadows / 4,026,027 bytes + 1 independent built app / 2,245,854 bytes; unowned 0**;
+  - systemic-root: parity/reference authority is coupled to every committed Astro shadow;
+  - invalidated approximation: the old `50/53` wording is not the exact inventory at this anchor;
+  - remaining independent: storage/maintenance duplication remains, but current deletion-ready count is **0**;
+  - owner exception: the Baptists 3D `_app` is explicit built-app ownership and is not a retirement candidate.
+- Product evidence: PR #1082, merge `76737eefe16a0feb2fdf729c805d17b5cdcdc376`, exact tested head `e15afda5681ce4e2f0a713e6e7f0ca2afbb0efae`.
+- Regression witness: dependency-free inventory self-test plus the existing Shared Files Guard integration; `legacy-shadow-wrapper-audit.js` remains unchanged.
+- Live evidence: not required and not claimed.
+- Detailed evidence: `../verification/2026-08-06-strangler-inventory-wave/REPORT.md`.
