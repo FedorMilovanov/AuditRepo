@@ -120,9 +120,30 @@
 - Detailed final evidence: `../verification/2026-08-06-mayakovsky-media-final-batch/REPORT.md`.
 - Historical bounded evidence remains in the C01, C02, C04, C05, C06 and C07 reports and is not superseded as evidence-at-anchor.
 
+## ST-TLP-SCROLL-OWNERSHIP — Native document movement
+
+- Status: `absorbed/closed` by source PR #334.
+- User-visible manifestation: intermittent wheel-scroll stalls and viscous catch-up in the middle of downward movement.
+- Common mechanism: the desktop app shell globally replaced ordinary document scrolling with Lenis smooth-wheel interpolation advanced by a permanent JavaScript RAF; fixed decorative text and scroll-to-top visibility added document-scroll subscriptions on the same latency-sensitive path.
+- Prior-corpus boundary: W0–W7 covered reader outcomes, routes, browser evidence and performance budgets, but the permanent scroll validator protected anchor geometry rather than continuous ordinary wheel ownership.
+- System outcome:
+  - wheel, trackpad and touch document movement belong to the browser on every pointer class;
+  - route restoration, hash geometry and the explicit scroll-to-top command remain application-owned;
+  - decorative fixed typography has no document-scroll subscription;
+  - scroll-to-top visibility uses one passive listener with RAF coalescing;
+  - the scroll runtime and app-shell contracts reject global JS scrollers, wheel interception, perpetual scroll RAF and decorative frame subscribers;
+  - Chromium QA sends six real wheel impulses on a long poet page, requires measurable progress after every impulse and verifies that none is default-prevented.
+- Source anchor: PR #334 exact tested head `774804be169f53581ae85ab4b835be08537c532f`, squash merge `76ef482bedb1722b691ec1f301b403c3a28aad3d`; base includes the completed Mayakovsky media merge `dd2df7be196d81d5212b43a08616f782af2fecf6`.
+- Regression witness: Project contracts, Content model, full CI/build/budgets/prerender/SEO, 35+ route crawl, brand/motion audit and Manual Browser QA 4/4 across Chromium, Android, desktop WebKit and fresh-process iPhone Safari.
+- Residual: the unused `lenis` install-only dependency remains a non-blocking package-cleanup item; runtime import and wheel ownership are already prohibited.
+- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md`.
+- Reverify trigger: global document smooth scrolling, wheel/touch cancellation, new perpetual document-scroll RAF ownership, route/overlay ownership change or a concrete mid-gesture browser stall.
+
 ## ST-TLP-AUDIT-HARNESS — Class-level evidence without control-plane duplication
 
-- Status: `active governance theme`.
-- Historical manifestations: stale string-literal validators, soft-404 expectations, boolean archive assumptions and exact-authority documentation drift.
-- System outcome: validators test machine contracts and user-visible invariants; AuditRepo stores proportional evidence instead of mirroring every source commit.
-- Reverify trigger: a guard measures implementation text rather than meaningful contract behavior, or documentation work becomes larger than the selected repair.
+- Status: `active governance theme`; the exact-prose and Lenis-required manifestations found in PR #334 are `absorbed/closed`.
+- Historical manifestations: stale string-literal validators, soft-404 expectations, boolean archive assumptions, exact-authority documentation drift, a literary-style validator that required 21 exact historical sentence fragments instead of the facts and qualifications those sentences represented, and an app-shell validator that required the global smooth-scroll mechanism behind a reported defect.
+- System outcome: validators test machine contracts and user-visible or semantic invariants; AuditRepo stores proportional evidence instead of mirroring every source commit. Poet portraits use named semantic boundaries with bounded equivalent witnesses while service scaffolding is rejected directly. Scroll validators protect native ownership rather than one library implementation.
+- Closed witness: source PR #334 exact tested head `774804be169f53581ae85ab4b835be08537c532f`, squash merge `76ef482bedb1722b691ec1f301b403c3a28aad3d`.
+- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md`.
+- Reverify trigger: a guard measures implementation text rather than meaningful contract behavior, a content validator blocks a legitimate rewrite without loss of meaning, a runtime validator requires the mechanism behind a user-visible defect, or documentation work becomes larger than the selected repair.
