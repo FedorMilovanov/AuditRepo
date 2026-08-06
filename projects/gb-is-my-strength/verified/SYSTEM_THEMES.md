@@ -67,11 +67,16 @@
 
 ## ST-CONTENT-AUTHORITY — Content, Scripture corpus, rights and provenance
 
-- Status: `evidence-rich`, often `owner-decision`.
+- Status: `evidence-rich / owner-decision`; Bible corpus rights are verified at Research PR #149 / merge `d52ea9d54dd2c2488223d25f5f6cefd263c23328`.
 - Historical manifestations: parallel corpora, non-authoritative text, source/provenance uncertainty, search promises exceeding licensed data.
-- System question: какой corpus/source имеет publication authority and rights?
-- Better-than-local outcome: explicit provenance, licensing boundary and consumer contract.
-- Technical work cannot substitute for an owner/rights decision.
+- Current Bible-corpus result: Product has a governed 66-book registry, but inspected Synodal/Cassian records lack complete `sourceUrl`/`rights` provenance; full-corpus publication remains blocked.
+- Exact accepted candidate: CrossWire `RusSynodal` 1.9.1, whose institutional records identify `Public Domain`; status is only `CANDIDATE_ONLY` because the official archive was not acquired, hashed or mapped in the verification wave.
+- Explicit rejected/blocked alternatives: `RusSynodalLIO` requires downstream permission; Cassian must not be expanded or republished without explicit permission for this Product.
+- System question: какой exact corpus/source has publication authority, immutable acquisition evidence and a complete consumer/import contract?
+- Better-than-local outcome: archive SHA-256, embedded licence/source/book manifest, documented 66-book versification mapping, verse-level import receipt and exact per-record provenance.
+- Technical work cannot substitute for an owner/rights decision, and Research closure cannot authorize Product publication.
+- `SEARCH-P2-07` remains open until acquisition/import/release evidence is complete.
+- Detailed evidence: `../verification/2026-08-06-bible-corpus-rights-wave/REPORT.md`.
 
 ## ST-AUDIT-HARNESS — Audit and contract quality
 
