@@ -25,6 +25,7 @@ def write(path: Path, content: str = '') -> None:
 
 def build_fixture(root: Path) -> Path:
     write(root / 'README.md', '# AuditRepo fixture\n')
+    write(root / 'AUDITREPO_OPERATING_MODEL.md', '# Operating model fixture\n')
     write(root / 'PROJECT_REGISTRY.md', '# Projects\n')
     (root / 'scripts').mkdir(parents=True)
 
@@ -90,34 +91,65 @@ def main() -> int:
         root = Path(raw)
         intake = build_fixture(root)
 
-        # Regression: a concrete SHA in README must not allow an untouched
+        # A concrete evidence anchor in README must not allow an untouched
         # REPORT scaffold to bypass the independent report-content invariant.
         write(
             intake / 'REPORT.md',
-            '# Agent Work Report\n\n## Meta\n- Project: fixture-project\n\n## 1. New Findings\n### <temp-id>\n- Title:\n- Severity:\n',
+            '# Agent Audit Report\n\n## Meta\n- Project: fixture-project\n\n## 1. New observations\n'
+            '### Observation `<temp-id>`\n- Title:\n- Kind:\n',
         )
         empty = run_validator(root)
-        require(empty.returncode == 1, 'SHA-bearing empty REPORT.md unexpectedly passed', empty)
+        require(empty.returncode == 1, 'anchor-bearing empty REPORT.md unexpectedly passed', empty)
         require(
             'REPORT.md appears empty template' in empty.stdout,
             'empty-report failure did not identify the report-content invariant',
             empty,
         )
 
-        # A real structured finding should pass the same minimal repository.
+        # A real structured observation should pass the same minimal repository.
         write(
             intake / 'REPORT.md',
-            '# Agent Work Report\n\n## Meta\n- Project: fixture-project\n\n## 1. New Findings\n'
+            '# Agent Audit Report\n\n## Meta\n- Project: fixture-project\n\n## 1. New observations\n'
             '### AUDIT-VALIDATOR-REGRESSION\n'
             '- Title: Empty report bypass\n'
-            '- Severity: P1\n'
+            '- Kind: audit-harness\n'
+            '- Evidence type: verified-source\n'
             '- Evidence: validator black-box fixture\n',
         )
         valid = run_validator(root)
-        require(valid.returncode == 0, 'real finding failed validator', valid)
+        require(valid.returncode == 0, 'real observation failed validator', valid)
         require('AUDITREPO VALIDATION: PASS' in valid.stdout, 'PASS marker missing', valid)
 
-        # Canonical heading and statistics counters must remain identical.
+        # Proportional anchors may be artifact/live snapshots rather than Git SHAs.
+        write(
+            intake / 'README.md',
+            '# Report intake\n\n## Meta\n- Agent: validator-regression\n'
+            '- Audited anchor (SHA / artifact / live snapshot): https://example.invalid/artifacts/fixture-123\n',
+        )
+        non_sha_anchor = run_validator(root)
+        require(non_sha_anchor.returncode == 0, 'explicit non-SHA evidence anchor failed validator', non_sha_anchor)
+
+        # Missing concrete anchor must still fail.
+        write(
+            intake / 'README.md',
+            '# Report intake\n\n## Meta\n- Agent: validator-regression\n'
+            '- Audited anchor (SHA / artifact / live snapshot): <fill me>\n',
+        )
+        missing_anchor = run_validator(root)
+        require(missing_anchor.returncode == 1, 'placeholder evidence anchor unexpectedly passed', missing_anchor)
+        require(
+            'no concrete evidence anchor' in missing_anchor.stdout,
+            'missing-anchor failure did not identify the evidence-anchor invariant',
+            missing_anchor,
+        )
+
+        write(
+            intake / 'README.md',
+            '# Report intake\n\n## Meta\n- Agent: validator-regression\n- Source commit: 9fcfb6c27d4b1b0d9189e3ee9a83c433bd4c3d95\n',
+        )
+
+        # Canonical heading and statistics counters must remain identical during
+        # the legacy matrix transition.
         matrix_path = root / 'projects' / 'fixture-project' / 'verified' / 'MASTER_BUG_MATRIX.md'
         matrix_text = matrix_path.read_text(encoding='utf-8')
         matrix_path.write_text(matrix_text.replace('| Закрыто (fixed) | 1 |', '| Закрыто (fixed) | 9 |'), encoding='utf-8')
