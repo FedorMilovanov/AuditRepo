@@ -1,198 +1,161 @@
 #!/usr/bin/env python3
-"""
-Scaffold a new agent intake folder in AuditRepo.
+"""Scaffold a new multi-agent audit intake folder.
 
 Usage:
     python3 scripts/scaffold_intake.py <project> <agent> <YYYY-MM-DD>
 
-Creates:
-    projects/<project>/incoming/<agent>/<YYYY-MM-DD>/
-        README.md      ← meta, identity, status rules
-        REPORT.md      ← universal 8-section report (findings, confirmations, challenges, ...)
-        comments/      ← comments on other agents' findings (comment-on-*.md)
-        proposals/     ← proposals: status/severity/merge/repair-lane (proposal-*.md)
-        evidence/      ← grep output, logs, traces
-        artifacts/     ← patches, snippets, screenshots
-        commands.log   ← audit commands used
+The generated report uses the canonical Agent Audit Report template. An intake
+records the evidence anchor actually inspected; it is not rewritten when the
+source repository later moves.
 """
 from pathlib import Path
 import argparse
 import sys
 
 ROOT = Path(__file__).resolve().parent.parent
+REPORT_TEMPLATE_PATH = ROOT / 'projects' / '_templates' / 'AGENT_REPORT_TEMPLATE.md'
 
 
 README_TEMPLATE = """# Intake — {project} — {agent} — {date}
 
 ## Identity
+
 - Project: {project}
 - Agent: {agent}
 - Date: {date}
-- Audited branch:
-- Audited SHA:
-- Current source HEAD at start:
+- Audited branch/ref:
+- Audited anchor (SHA / artifact / live snapshot):
 - Environment:
-- Build mode:
+- Build mode: source / build / production-like dist / live
 - Browser / device if used:
 
 ## Scope
+
 - Routes checked:
-- Files checked:
+- Owners/files checked:
 - Systems checked:
-- Out of scope:
+- Explicit exclusions:
 
 ## Files in this folder
 
-- `REPORT.md`      — универсальный рабочий пакет (sections 1-8)
-- `comments/`      — комментарии к чужим находкам (comment-on-*.md)
-- `proposals/`     — предложения статуса/severity/merge/repair (proposal-*.md)
-- `evidence/`      — grep output, logs, трассы
-- `artifacts/`     — патчи, сниппеты, скрины
-- `commands.log`   — команды аудита
+- `REPORT.md` — observations, evidence, root-cause clusters and recommendations;
+- `comments/` — comments on other findings;
+- `proposals/` — optional classification/priority/root-cause proposals;
+- `evidence/` — logs, screenshots and command output;
+- `artifacts/` — traces, patches and machine-readable output;
+- `commands.log` — commands used during the pass.
 
-## Freedom with Evidence
+## Evidence rule
 
-Любой агент свободен: искать баги, подтверждать, оспаривать, предлагать
-merge/split/severity/repair-lane, делать recheck на current HEAD.
+The anchor records what this pass actually inspected. It may be a Git SHA, an
+artifact identity or a concrete live snapshot URL. Do not update this intake
+merely because the source repository later moved.
 
-Но: все действия — evidence-based. Утверждение без SHA и доказательства
-не попадает в canonical ledger.
+## Allowed intake language
 
-## Status rules
+Use `raw`, `candidate`, `reproduced-by-agent` and explicit evidence labels such as
+`verified-source`, `verified-build`, `verified-browser` or `verified-live`.
 
-Allowed here: raw, suspected, reproduced-by-agent (L0), peer-reviewed (L1)
-NOT allowed here (need verifier): repair-ready, fixed-current, confirmed-current (L2+) without 2+ agents or direct evidence
+Durable classifications belong to a verifier synthesis or accepted ledger decision.
 
-## Proposal statuses
+## Operating model
 
-proposal-open → proposal-supported → proposal-accepted (bug moves)
-proposal-open → proposal-conflicted → resolved in conflicts/
-proposal-open → proposal-rejected
-proposal-open → proposal-superseded
+See `../../../../AUDITREPO_OPERATING_MODEL.md` from the repository root.
 """
 
 
-REPORT_TEMPLATE = """# Agent Audit Report
+SAMPLE_COMMENT = """# Comment on Finding
 
-## Meta
+## Identity
+
 - Project: {project}
-- Source repo:
-- Agent: {agent}
+- Comment by: {agent}
 - Date: {date}
-- Audited branch:
-- Audited SHA:
-- Current HEAD at start:
-- Current HEAD at end:
-- Environment:
-- Build mode: source / dist / production-like dist
-- Browser / device if used:
+- Target report: incoming/<other-agent>/<date>/REPORT.md
+- Target finding ID:
+- Evidence anchor:
 
----
+## Comment type
 
-## 1. New Findings
+confirm / challenge / stale / invalid / duplicate / root-cause / priority / evidence-addition
 
-### Finding <temp-id>
-- Title:
-- Severity: P0 / P1 / P2 / P3
-- Route(s):
-- Source file(s):
-- Observed on SHA:
-- Repro steps:
-- Expected:
-- Actual:
-- Evidence: (command + output)
-- Confidence: high / medium / low
-- Verification level: L0 (one agent) / L2 (two agents or direct evidence)
-- Suggested repair lane:
-- Do not mix with:
+## Evidence angle
 
----
+source / artifact / browser / lifecycle / history
 
-## 2. Confirmations of Existing Findings
+## Evidence
 
-### Confirm <target-id>
-- Target report: incoming/<agent>/<date>/REPORT.md
-- Target finding:
-- My evidence:
-- Same bug / related / stronger root cause:
-- Recommended status:
+```text
+<paste evidence here>
+```
 
----
+## Summary
 
-## 3. Challenges / Disputes
+## Recommended classification or action
 
-### Challenge <target-id>
-- Target report: incoming/<agent>/<date>/REPORT.md
-- Target finding:
-- Reason for challenge:
-- Current HEAD evidence:
-- Recommended status: disputed / stale-on-current-head / false-positive / downgrade
-
----
-
-## 4. Duplicate / Merge Proposals
-
-### Merge proposal
-- Finding A:
-- Finding B:
-- Why same root cause:
-- Canonical ID suggestion:
-
----
-
-## 5. Severity Proposals
-
-- Target bug:
-- Current severity:
-- Proposed severity:
-- Evidence:
-
----
-
-## 6. Repair Lane Suggestions
-
-- Bug IDs:
-- Lane:
-- Why together:
-- What must NOT be mixed:
-
----
-
-## 7. Reverify Notes
-
-- Bug:
-- Current HEAD:
-- Result: confirmed-current / stale / fixed / disputed
-- Evidence:
-
----
-
-## 8. Notes for Verifier
-
----
-
-## Proposal statuses
-
-proposal-open → proposal-supported → proposal-accepted (bug moves)
-proposal-open → proposal-conflicted → resolved in conflicts/
-proposal-open → proposal-rejected
-proposal-open → proposal-superseded
+- Result:
+- Reason:
+- Notes for verifier:
 """
 
 
-def main():
-    ap = argparse.ArgumentParser(
+SAMPLE_PROPOSAL = """# Proposal
+
+## Identity
+
+- Project: {project}
+- Proposed by: {agent}
+- Date: {date}
+- Target finding ID(s):
+- Proposal type: classification / merge / split / systemic-root / work-queue / owner-decision
+
+## Current understanding
+
+## Proposed change
+
+## Evidence
+
+```text
+<paste evidence here>
+```
+
+## Value / cost / risk
+
+## Possible outcomes
+
+fix-now / verify-first / system-lane / park / accepted-risk / not-worth-fixing / owner-decision
+"""
+
+
+def fill_report_template(project: str, agent: str, date: str) -> str:
+    if not REPORT_TEMPLATE_PATH.is_file():
+        raise FileNotFoundError(f'missing report template: {REPORT_TEMPLATE_PATH}')
+    text = REPORT_TEMPLATE_PATH.read_text(encoding='utf-8')
+    replacements = [
+        ('- Project:\n', f'- Project: {project}\n'),
+        ('- Agent:\n', f'- Agent: {agent}\n'),
+        ('- Date:\n', f'- Date: {date}\n'),
+    ]
+    for before, after in replacements:
+        if before not in text:
+            raise ValueError(f'report template missing expected marker: {before.strip()}')
+        text = text.replace(before, after, 1)
+    return text
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
         description='Scaffold a new agent intake folder in AuditRepo.'
     )
-    ap.add_argument('project', help='Project name (e.g. gb-is-my-strength)')
-    ap.add_argument('agent', help='Agent identifier (e.g. my-agent-name)')
-    ap.add_argument('date', help='Date in YYYY-MM-DD format')
-    args = ap.parse_args()
+    parser.add_argument('project', help='Project name, for example gb-is-my-strength')
+    parser.add_argument('agent', help='Stable agent identifier')
+    parser.add_argument('date', help='Date in YYYY-MM-DD format')
+    args = parser.parse_args()
 
     project_root = ROOT / 'projects' / args.project
     if not project_root.exists():
         print(f'ERROR: project not found: {project_root}', file=sys.stderr)
-        sys.exit(1)
+        return 1
 
     intake = project_root / 'incoming' / args.agent / args.date
     comments = intake / 'comments'
@@ -208,85 +171,32 @@ def main():
 
     (intake / 'README.md').write_text(
         README_TEMPLATE.format(project=args.project, agent=args.agent, date=args.date),
-        encoding='utf-8'
+        encoding='utf-8',
     )
     (intake / 'REPORT.md').write_text(
-        REPORT_TEMPLATE.format(project=args.project, agent=args.agent, date=args.date),
-        encoding='utf-8'
+        fill_report_template(args.project, args.agent, args.date),
+        encoding='utf-8',
     )
     (intake / 'commands.log').touch()
 
-    # Write sample comment and proposal files
-    sample_comment = """# Comment on Finding
-
-## Identity
-- Project: {project}
-- Comment by: {agent}
-- Date: {date}
-- Target report: incoming/<other-agent>/<date>/REPORT.md
-- Target finding ID:
-- Audited SHA:
-
-## Comment type
-
-confirm / challenge / stale / duplicate / severity-change / evidence-addition / repair-lane-proposal
-
-## Evidence
-```
-<!-- paste grep / screenshot / build output here -->
-```
-
-## Summary
-<!-- one paragraph -->
-
-## Recommended action
-- Status change:
-- Proposal status: proposal-open / proposal-supported / proposal-conflicted
-- Conflict registry entry: YES / NO
-- Notes for verifier:
-""".format(project=args.project, agent=args.agent, date=args.date)
-
-    sample_proposal = """# Proposal
-
-## Identity
-- Project: {project}
-- Proposed by: {agent}
-- Date: {date}
-- Target finding ID(s):
-- Proposal type: status-change / severity-change / merge / split / repair-lane
-
-## Current state
-<!-- what the bug status/severity is now -->
-
-## Proposed change
-<!-- what you propose -->
-
-## Evidence
-```
-<!-- proof for the proposal -->
-```
-
-## Why this matters
-<!-- one paragraph -->
-
-## Proposal status: proposal-open
-""".format(project=args.project, agent=args.agent, date=args.date)
-
     (comments / 'comment-on-OTHER-AGENT-BUG-ID.md').write_text(
-        sample_comment, encoding='utf-8'
+        SAMPLE_COMMENT.format(project=args.project, agent=args.agent, date=args.date),
+        encoding='utf-8',
     )
     (proposals / 'proposal-TARGET-BUG-ID.md').write_text(
-        sample_proposal, encoding='utf-8'
+        SAMPLE_PROPOSAL.format(project=args.project, agent=args.agent, date=args.date),
+        encoding='utf-8',
     )
 
     print('Created:')
-    for p in [intake, comments, proposals, evidence, artifacts]:
-        print(f'  {p}/')
-    for f in ['README.md', 'REPORT.md', 'commands.log']:
-        print(f'  {intake / f}')
+    for path in [intake, comments, proposals, evidence, artifacts]:
+        print(f'  {path}/')
+    for filename in ['README.md', 'REPORT.md', 'commands.log']:
+        print(f'  {intake / filename}')
     print(f'  {comments / "comment-on-OTHER-AGENT-BUG-ID.md"}  ← SAMPLE')
     print(f'  {proposals / "proposal-TARGET-BUG-ID.md"}        ← SAMPLE')
+    return 0
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(main())
