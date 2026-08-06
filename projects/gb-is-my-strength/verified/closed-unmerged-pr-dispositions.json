@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "sourceReport": "projects/gb-is-my-strength/verified/CLOSED_UNMERGED_PR_FORENSIC_2026-07-24.md",
-  "recordedAt": "2026-07-24",
+  "recordedAt": "2026-08-06",
   "pullRequests": {
     "3": {
       "category": "archived",
@@ -57,6 +57,121 @@
       "category": "diagnostic",
       "landedCommits": ["a62ed7e3f73016a90123624cea737caa36784e76"],
       "note": "Final validation marker for the cleaned 5636 transaction boundary."
+    },
+    "52": {
+      "category": "superseded",
+      "replacementPrs": [59],
+      "note": "Marathon R3 evidence blobs were preserved by clean one-commit PR #59 after main advanced."
+    },
+    "53": {
+      "category": "superseded",
+      "replacementPrs": [58],
+      "note": "Failed temporary matrix materializer was replaced by the current-source atomic diagnostic repair in PR #58."
+    },
+    "54": {
+      "category": "superseded",
+      "replacementPrs": [56],
+      "note": "Temporary-workflow diagnostic repair was rebuilt as clean PR #56."
+    },
+    "56": {
+      "category": "superseded",
+      "replacementPrs": [58],
+      "note": "Clean diagnostic repair was superseded when main advanced; PR #58 owns the current-base result."
+    },
+    "57": {
+      "category": "superseded",
+      "replacementPrs": [60],
+      "note": "Blocking matrix evidence-integrity change was carried by clean one-commit PR #60."
+    },
+    "65": {
+      "category": "superseded",
+      "replacementPrs": [66],
+      "note": "Older source reconciliation would regress newer authority; merged PR #66 owns the successor state."
+    },
+    "70": {
+      "category": "superseded",
+      "replacementPrs": [71],
+      "note": "The complete clean provenance/home-residual transaction landed through PR #71."
+    },
+    "72": {
+      "category": "superseded",
+      "replacementPrs": [71],
+      "note": "Duplicate authority after merged PR #71; branch was reset and no alternative SSOT remained."
+    },
+    "73": {
+      "category": "diagnostic",
+      "note": "Read-only SSOT export carrier; artifact completed, branch was repointed to main, and no audit fact changed."
+    },
+    "109": {
+      "category": "superseded",
+      "note": "Exact-SHA Baptist reconciliation became stale after source advanced; the branch contained only a temporary writer and was explicitly barred from merge."
+    },
+    "131": {
+      "category": "superseded",
+      "replacementPrs": [132],
+      "note": "Incorrect/stale-base Avraam verifier branch was replaced by clean PR #132 with no lost canonical mutation."
+    },
+    "135": {
+      "category": "diagnostic",
+      "note": "External Arena audit suggestion was closed without canonical AuditRepo promotion; source changes and brand approval remained outside this repository."
+    },
+    "142": {
+      "category": "diagnostic",
+      "note": "Verifier drift-gate rejected an incorrect duplicate mapping before matrix or Product mutation; temporary draft evidence is non-canonical."
+    },
+    "148": {
+      "category": "superseded",
+      "replacementPrs": [168],
+      "note": "Pre-deployment TTS package was preserved and completed by the clean production-evidence successor PR #168."
+    },
+    "159": {
+      "category": "diagnostic",
+      "note": "Read-only trigger for PR #156 reconciliation artifact; marker branch was never a merge candidate."
+    },
+    "167": {
+      "category": "superseded",
+      "replacementPrs": [168],
+      "note": "Verified transport branch was replaced by clean one-commit PR #168 because workflow history required approval."
+    },
+    "170": {
+      "category": "superseded",
+      "replacementPrs": [176],
+      "note": "First SEARCH-P2-09 self-clean executor was replaced by the clean final closure PR #176."
+    },
+    "172": {
+      "category": "superseded",
+      "replacementPrs": [176],
+      "note": "Reused-ref SEARCH-P2-09 executor was replaced by fresh-ref and ultimately clean final PR #176."
+    },
+    "173": {
+      "category": "superseded",
+      "replacementPrs": [176],
+      "note": "Fresh-ref transport branch was superseded by clean final SEARCH-P2-09 PR #176."
+    },
+    "174": {
+      "category": "diagnostic",
+      "replacementPrs": [176],
+      "note": "Read-only compute carrier produced reconciliation artifacts; clean PR #176 owns the accepted result."
+    },
+    "180": {
+      "category": "superseded",
+      "replacementPrs": [181],
+      "note": "W2 closure was rebuilt from current main after parallel movement and merged through PR #181."
+    },
+    "187": {
+      "category": "superseded",
+      "replacementPrs": [186],
+      "note": "Favorite Store writer/trigger branch was explicitly closed in favor of merged clean PR #186."
+    },
+    "197": {
+      "category": "superseded",
+      "replacementPrs": [198],
+      "note": "Pre-v2 strangler writer branch was replaced by proportional evidence wave PR #198."
+    },
+    "199": {
+      "category": "superseded",
+      "replacementPrs": [200],
+      "note": "W7 evidence tree was rebuilt byte-identically from a fresh base and merged through PR #200."
     }
   }
 }

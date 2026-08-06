@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 1,
+  "requestId": "auditrepo-ref-retirement-2026-08-06",
+  "execute": true,
+  "preparedOnMain": "8d6b66101870221d530897898508ce837602717e",
+  "sourceBranch": "maintenance/auditrepo-ref-retirement-20260806",
+  "retainedRefs": [
+    {
+      "branch": "main",
+      "required": true,
+      "reason": "Default branch and current repository authority."
+    },
+    {
+      "branch": "archive/forensic-pr-3-vosk-tts-report-2026-07-24",
+      "required": true,
+      "reason": "Intentional exact forensic archive for PR #3."
+    },
+    {
+      "branch": "archive/legacy-diverged-heads-20260801",
+      "required": true,
+      "reason": "Intentional historical recovery archive."
+    },
+    {
+      "branch": "verification/gb-search-p3-01-closure-20260806",
+      "required": false,
+      "reason": "Fresh one-commit work branch observed ahead of main during cleanup; not classified as garbage."
+    }
+  ],
+  "targets": [
+    {
+      "branch": "arena/019fb9c9-auditrepo",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "arena/019fca62-auditrepo",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "arena/019fca63-auditrepo",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "arena/019fca65-auditrepo",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "arena/019fccab-auditrepo",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "audit/atlas-a11y-closure-20260803",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; merged closure is already reachable."
+    },
+    {
+      "branch": "audit/search-p2-09-artifact-compute-20260805",
+      "mode": "ancestor",
+      "expectedHead": "7ea061ab50b3de9ac5002e655a4e68d79449bf80",
+      "reason": "Pure ancestor of main; SEARCH-P2-09 final closure landed through PR #176."
+    },
+    {
+      "branch": "audit/search-p2-09-clean-executor-20260805",
+      "mode": "ancestor",
+      "expectedHead": "7ea061ab50b3de9ac5002e655a4e68d79449bf80",
+      "reason": "Pure ancestor of main; SEARCH-P2-09 final closure landed through PR #176."
+    },
+    {
+      "branch": "audit/search-p2-09-closure-20260805",
+      "mode": "ancestor",
+      "expectedHead": "7ea061ab50b3de9ac5002e655a4e68d79449bf80",
+      "reason": "Pure ancestor of main; SEARCH-P2-09 final closure landed through PR #176."
+    },
+    {
+      "branch": "audit/search-p2-09-closure-exec2-20260805",
+      "mode": "ancestor",
+      "expectedHead": "7ea061ab50b3de9ac5002e655a4e68d79449bf80",
+      "reason": "Pure ancestor of main; SEARCH-P2-09 final closure landed through PR #176."
+    },
+    {
+      "branch": "audit/tts-deep-current-head-2026-08-04",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "ci/reconcile-pr156-pr-trigger-20260804",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "ci/run-reconcile-pr156-readonly",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "ci/run-reconcile-pr156",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "ci/trusted-reconcile-pr156-20260804",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "lane/tts-production-closure-20260805",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "verifier/close-avraam-skip-contrast-20260803",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "verify/avraam-a11y-02-03-20260803",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "verify/karty-photo-dimensions-duplicate-20260804",
+      "mode": "ancestor",
+      "expectedHead": "c104d4d238a0df199fb85eac552485e904d840fa",
+      "reason": "Pure ancestor of main; ahead=0 and no unique files."
+    },
+    {
+      "branch": "agent/auditrepo-v2-hardening-20260806",
+      "mode": "superseded",
+      "expectedHead": "7efb0e08360a203362415f945cd6f9e237607085",
+      "comparisonBase": "8d6b66101870221d530897898508ce837602717e",
+      "expectedAhead": 16,
+      "replacementPullRequests": [200, 201],
+      "allowedChangedPaths": [
+        "projects/the-legendary-poet/DOC_MAP.md",
+        "projects/the-legendary-poet/PROJECT_META.yml",
+        "projects/the-legendary-poet/README.md",
+        "projects/the-legendary-poet/WORK_QUEUE.md",
+        "projects/the-legendary-poet/repairs/README.md",
+        "projects/the-legendary-poet/reverify/README.md",
+        "projects/the-legendary-poet/verification/README.md",
+        "projects/the-legendary-poet/verified/CLOSURE_LEDGER.md",
+        "projects/the-legendary-poet/verified/README.md",
+        "projects/the-legendary-poet/verified/SYSTEM_THEMES.md",
+        "projects/the-legendary-poet/working/README.md",
+        "scripts/scaffold_intake.py",
+        "scripts/scaffold_project.py",
+        "scripts/scaffold_regression_test.py",
+        "scripts/validate_audit_repo.py",
+        "scripts/validate_audit_repo_regression_test.py"
+      ],
+      "reason": "Abandoned first rebuild; semantic TLP migration and hardening landed through PRs #200 and #201."
+    },
+    {
+      "branch": "audit/favorite-store-source-closure-20260805",
+      "mode": "superseded",
+      "expectedHead": "181634b027f4fea0422e46292e7c56226bef7da0",
+      "comparisonBase": "8d6b66101870221d530897898508ce837602717e",
+      "expectedAhead": 7,
+      "replacementPullRequests": [186],
+      "allowedChangedPaths": [
+        ".github/workflows/auditrepo-validate.yml",
+        ".github/workflows/favorite-store-closure-transaction.yml",
+        "projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md",
+        "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-05_d0647b71_favorite-store-source-closure.md"
+      ],
+      "reason": "Closed PR #187 was superseded by merged clean PR #186; remaining unique change is a temporary trigger workflow."
+    },
+    {
+      "branch": "audit/strangler-inventory-truth-20260806",
+      "mode": "superseded",
+      "expectedHead": "d260ce686aefd88b5d9c43e19aef60bf668e7854",
+      "comparisonBase": "8d6b66101870221d530897898508ce837602717e",
+      "expectedAhead": 4,
+      "replacementPullRequests": [198],
+      "allowedChangedPaths": [
+        ".github/workflows/strangler-inventory-matrix-writer.yml",
+        "projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md",
+        "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-08-06_76737eef_strangler-duplicate-inventory.md"
+      ],
+      "reason": "Pre-v2 writer branch; measured evidence was preserved by merged proportional wave PR #198."
+    },
+    {
+      "branch": "verification/tlp-w7-operating-model-wave-20260806",
+      "mode": "superseded",
+      "expectedHead": "ed2982fb0bba40fe10e7cd4c5da3f3fd8efe4c41",
+      "comparisonBase": "8d6b66101870221d530897898508ce837602717e",
+      "expectedAhead": 1,
+      "replacementPullRequests": [200],
+      "allowedChangedPaths": [
+        "PROJECT_REGISTRY.md",
+        "projects/the-legendary-poet/DOC_MAP.md",
+        "projects/the-legendary-poet/README.md",
+        "projects/the-legendary-poet/WORK_QUEUE.md",
+        "projects/the-legendary-poet/verification/2026-08-06-w7-route-runtime-wave/REPORT.md",
+        "projects/the-legendary-poet/verified/CLOSURE_LEDGER.md",
+        "projects/the-legendary-poet/verified/SYSTEM_THEMES.md"
+      ],
+      "reason": "PR #199 was rebuilt byte-identically from a fresh base and merged as PR #200."
+    }
+  ]
+}
