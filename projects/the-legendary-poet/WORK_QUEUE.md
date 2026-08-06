@@ -12,7 +12,8 @@ Media verification ведётся по одному кандидату:
 - C02: `caption-corroborated / primary-object-unverified / rights-blocked / no Product change`;
 - C04: `caption-corroborated / early-publication-cited / stronger-rights-rationale / source-page-unverified / no Product change`;
 - C05: `caption-repeated / original-source-unavailable / independent-object-unverified / rights-blocked / no Product change`;
-- C06: `caption/object-verified / early-publication-unverified / rights-rationale-predicate-unverified / no Product change`.
+- C06: `caption/object-verified / early-publication-unverified / rights-rationale-predicate-unverified / no Product change`;
+- C07: `caption/date-corroborated / pre-1931-volume-verified / exact-source-pages-unavailable / no Product change`.
 
 ## Candidate lanes
 
@@ -142,11 +143,34 @@ Media verification ведётся по одному кандидату:
   6. keep C06 parked and unpublished.
 - Until early publication and explicit editorial authority are evidenced, C06 must not enter the production media manifest.
 
+#### C07 — `Mayakovsky 1925.jpg`
+
+- Verification result: `caption/date-corroborated / pre-1931-volume-verified / exact-source-pages-unavailable / no Product change`.
+- Exact Product/Commons identity: 534 × 709 JPEG, 123,055 bytes, unknown author, year field 1925, Product SHA-256 `525b3401270dd2b365ae3020e7647936395f8cc4259a15da41fa4db22f322700`.
+- Exact visual subject: Mayakovsky leans against an editorial desk with newspapers/proofs, wearing a light suit and striped tie.
+- Commons links the exact reproduction to RSL document `01005404100`, volume 1, page 7, and links the 1925 dating to official index document `01005408088`, page 377.
+- Independent bibliographic witness: FEB records volume 1 of the ten-volume collected works as GIZ, Moscow–Leningrad, 1928, 360 pages; later scholarly volume 1 repeats the caption `В. Маяковский. Фото 1925 г.`.
+- Evidence limitation:
+  - the two decisive RSL viewer pages could not be fetched through the available path;
+  - the 1928 volume is bibliographically verified, but exact page-7 visual identity and page-377 wording are not directly preserved in this wave;
+  - primary object/collection provenance, photographer and shooting location remain unknown.
+- Rights position:
+  - `PD-Russia-expired` has a materially supported pre-1931 volume predicate;
+  - exact-page publication and dating still need direct artifact verification before Product approval.
+- Owner choices:
+  1. recover RSL volume page 7 and index page 377;
+  2. preserve page artifacts and confirm the exact visual match;
+  3. locate primary object/collection provenance or photographer attribution;
+  4. record a reviewed jurisdiction-specific public-domain decision;
+  5. obtain permission or a rights-safe replacement;
+  6. keep C07 parked and unpublished.
+- Until exact pages and explicit editorial authority are recorded, C07 must not enter the production media manifest.
+
 #### Remaining candidates
 
 - First question: для какого одного следующего изображения существует authoritative source, publication permission/licence and accurate attribution?
 - Required angles: source/provenance witness + rights/owner decision; visual similarity или наличие файла в истории недостаточны.
-- Possible outcomes: approve one bounded candidate / caption-verified but rights-blocked / caption-corroborated but primary-object-unverified / caption-object-verified but early-publication-unverified / early-publication-cited but page-unverified / original-source-unavailable / reject / replace / park / owner-decision.
+- Possible outcomes: approve one bounded candidate / caption-verified but rights-blocked / caption-corroborated but primary-object-unverified / caption-object-verified but early-publication-unverified / pre-1931-volume-verified but exact-pages-unavailable / early-publication-cited but page-unverified / original-source-unavailable / reject / replace / park / owner-decision.
 
 ### 2. Release-specific live witness
 
