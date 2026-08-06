@@ -77,7 +77,10 @@ def main() -> int:
 
         project_readme = (project / 'README.md').read_text(encoding='utf-8')
         require('Current source HEAD' in project_readme, 'stable source-authority boundary missing')
-        require('not duplicated here' in project_readme, 'HEAD decoupling wording missing')
+        require(
+            'remain owned by the source repository' in project_readme,
+            'HEAD decoupling wording missing',
+        )
 
         intake_scaffold.ROOT = root
         intake_scaffold.REPORT_TEMPLATE_PATH = (
