@@ -75,23 +75,26 @@
   - C01 has independent primary object/caption support for `Владимир Маяковский; Москва; 1910; неизвестный фотограф`, but remains `rights-blocked` and unpublished;
   - C02 has exact-file identity and corroborated `Владимир Маяковский; 1912; неизвестный фотограф`; a commercial Fine Art Images/Heritage record attributes the portrait to the State Mayakovsky Museum collection, but a primary exact-object museum record remains unverified and publication remains rights-blocked;
   - C04 has exact-file identity, a long-standing `Владимир Маяковский; 1915; неизвестный фотограф` caption, cited 1940 publication and a materially stronger Commons Russia/US PD rationale, but the exact early-publication page and primary object provenance remain unverified;
-  - C05 has exact-file/hash identity and repeated `Маяковский; 1917; неизвестный фотограф` metadata, but the cited FPLIB source is unavailable, no independent exact-object witness was found and `PD-old` lacks a United States rationale.
-- C01–C05 demonstrate the layers that this theme must preserve:
+  - C05 has exact-file/hash identity and repeated `Маяковский; 1917; неизвестный фотограф` metadata, but the cited FPLIB source is unavailable, no independent exact-object witness was found and `PD-old` lacks a United States rationale;
+  - C06 has exact-file/hash identity and a primary museum-backed exact-object caption for `Владимир Маяковский; Екатерининский парк; Москва; 1918; неизвестный фотограф`, but the cited RSL source is unavailable and no inspectable pre-1931 publication proves the factual predicate behind `PD-Russia-expired`.
+- C01–C06 demonstrate the layers that this theme must preserve:
   1. exact Commons file identity and hashes;
   2. historical caption corroboration independent of derivative mirrors;
   3. primary object/collection provenance;
   4. original/early publication evidence with inspectable page context;
   5. jurisdiction-appropriate publication authority.
 - A dead source link or repeated derivative caption is evidence of lineage, not independent verification.
+- A creation date, even when independently verified by a primary museum source, is not an original-publication date.
 - A strong result in one layer does not satisfy the others. Commons metadata, published caption evidence, primary institutional object evidence, commercial collection metadata, early-publication pages and permission/licence evidence must remain separate fields.
 - A Commons public-domain template can be strong evidence for a legal rationale, but it does not replace verification of the factual predicates on which that rationale depends or the Product's explicit editorial decision.
 - Better-than-local outcome: one explicit provenance/rights record per selected asset and a rights-safe publication boundary.
-- Technical availability, visual resemblance, archive presence, catalogue listing, repeated caption, newspaper citation or PD template alone does not authorize publication.
+- Technical availability, visual resemblance, archive presence, catalogue listing, repeated caption, museum object record, newspaper citation or PD template alone does not authorize publication.
 - Detailed evidence:
   - `../verification/2026-08-06-c01-caption-rights-wave/REPORT.md`;
   - `../verification/2026-08-06-c02-caption-rights-wave/REPORT.md`;
   - `../verification/2026-08-06-c04-publication-rights-wave/REPORT.md`;
-  - `../verification/2026-08-06-c05-source-rights-wave/REPORT.md`.
+  - `../verification/2026-08-06-c05-source-rights-wave/REPORT.md`;
+  - `../verification/2026-08-06-c06-object-publication-rights-wave/REPORT.md`.
 
 ## ST-TLP-AUDIT-HARNESS — Class-level evidence without control-plane duplication
 

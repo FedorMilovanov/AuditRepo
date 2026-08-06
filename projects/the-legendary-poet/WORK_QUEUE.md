@@ -11,7 +11,8 @@ Media verification ведётся по одному кандидату:
 - C01: `caption-verified / rights-blocked / no Product change`;
 - C02: `caption-corroborated / primary-object-unverified / rights-blocked / no Product change`;
 - C04: `caption-corroborated / early-publication-cited / stronger-rights-rationale / source-page-unverified / no Product change`;
-- C05: `caption-repeated / original-source-unavailable / independent-object-unverified / rights-blocked / no Product change`.
+- C05: `caption-repeated / original-source-unavailable / independent-object-unverified / rights-blocked / no Product change`;
+- C06: `caption/object-verified / early-publication-unverified / rights-rationale-predicate-unverified / no Product change`.
 
 ## Candidate lanes
 
@@ -116,11 +117,36 @@ Media verification ведётся по одному кандидату:
   5. keep C05 parked and unpublished.
 - Until independent caption/object evidence and publication authority are recorded, C05 must not enter the production media manifest.
 
+#### C06 — `Mayakovsky 1918.jpg`
+
+- Verification result: `caption/object-verified / early-publication-unverified / rights-rationale-predicate-unverified / no Product change`.
+- Exact Product/Commons identity: 316 × 401 JPEG, 32,218 bytes, unknown author, year field 1918, Product SHA-256 `6f01b2d971f1be0a49dc65c61a5ba02563a880cf2882f58c68ebc09398518b67`.
+- Independent primary witness: `History of Russia in Photographs` identifies the same tree/cane/pond composition as `Владимир Маяковский в Екатерининском парке`, Moscow, 1918, unknown author, from the State Mayakovsky Museum.
+- Culture.ru independently repeats the same museum-backed person/place/year caption.
+- Supportable caption scope: Владимир Маяковский в Екатерининском парке; Москва; 1918 год; фотограф неизвестен.
+- Evidence limitation:
+  - the old Russian State Library source URL cited by Commons is currently unavailable through the inspected path;
+  - no inspectable pre-1931 publication page, issue, book plate or catalogue statement establishing first publication was obtained;
+  - museum object/caption evidence proves creation context, not publication date;
+  - accession number, physical dimensions and acquisition history remain unverified.
+- Rights position:
+  - Commons `PD-Russia-expired` states Russian and United States pre-1931 publication routes;
+  - this is stronger than generic `PD-old`, but the decisive early-publication predicate is not independently proved for the exact reproduction;
+  - the Product editorial gate therefore remains unresolved.
+- Owner choices:
+  1. recover and preserve the cited RSL page with its exact source context;
+  2. locate an inspectable pre-1931 publication or primary catalogue publication statement;
+  3. obtain the museum accession/object record if available;
+  4. record a reviewed jurisdiction-specific public-domain decision;
+  5. obtain permission or a separately rights-safe reproduction;
+  6. keep C06 parked and unpublished.
+- Until early publication and explicit editorial authority are evidenced, C06 must not enter the production media manifest.
+
 #### Remaining candidates
 
 - First question: для какого одного следующего изображения существует authoritative source, publication permission/licence and accurate attribution?
 - Required angles: source/provenance witness + rights/owner decision; visual similarity или наличие файла в истории недостаточны.
-- Possible outcomes: approve one bounded candidate / caption-verified but rights-blocked / caption-corroborated but primary-object-unverified / early-publication-cited but page-unverified / original-source-unavailable / reject / replace / park / owner-decision.
+- Possible outcomes: approve one bounded candidate / caption-verified but rights-blocked / caption-corroborated but primary-object-unverified / caption-object-verified but early-publication-unverified / early-publication-cited but page-unverified / original-source-unavailable / reject / replace / park / owner-decision.
 
 ### 2. Release-specific live witness
 
