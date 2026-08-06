@@ -1,7 +1,0 @@
-{
-  "schemaVersion": 1,
-  "execute": true,
-  "requestRef": "2026-08-06-auditrepo-branch-cleanup.json",
-  "executionChannel": "GitHub server-side auto-merge push",
-  "reason": "Execute the unchanged 23-ref request after ordinary validation through the exact source branch named by the original request."
-}
