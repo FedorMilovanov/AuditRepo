@@ -92,8 +92,6 @@ def main() -> int:
         root = Path(raw)
         intake = build_fixture(root)
 
-        # A concrete evidence anchor in README must not allow an untouched
-        # report scaffold to bypass the independent report-content invariant.
         write(
             intake / 'REPORT.md',
             '# Agent Audit Report\n\n## Meta\n- Project: fixture-project\n\n'
@@ -113,7 +111,6 @@ def main() -> int:
             empty,
         )
 
-        # A real structured observation should pass the same minimal repository.
         write(
             intake / 'REPORT.md',
             '# Agent Audit Report\n\n## Meta\n- Project: fixture-project\n\n## 1. New observations\n'
@@ -127,7 +124,33 @@ def main() -> int:
         require(valid.returncode == 0, 'real observation failed validator', valid)
         require('AUDITREPO VALIDATION: PASS' in valid.stdout, 'PASS marker missing', valid)
 
-        # Proportional anchors may be artifact/live snapshots rather than Git SHAs.
+        write(
+            intake / 'REPORT.md',
+            '# Historical progress note\n\n'
+            '## Findings matrix\n\n'
+            '| ID | Severity | Title | Status |\n'
+            '|---|---|---|---|\n'
+            '| GENEALOGY-PROGRESS-2026-07-17 | P3 / INFO | Curated evidence grew | historical evidence |\n',
+        )
+        generic_table = run_validator(root)
+        require(generic_table.returncode == 0, 'generic historical finding table failed validator', generic_table)
+
+        write(
+            intake / 'REPORT.md',
+            '# Historical intake index\n\n'
+            'Severity: mixed. Source HEAD `14a49be8`.\n\n'
+            '1. `AUDIT_cycle1.md` — first evidence package.\n'
+            '2. `AUDIT_cycle2.md` — second evidence package.\n',
+        )
+        evidence_index = run_validator(root)
+        require(evidence_index.returncode == 0, 'historical evidence index failed validator', evidence_index)
+
+        write(
+            intake / 'REPORT.md',
+            '# Agent Audit Report\n\n## 1. New observations\n'
+            '### AUDIT-VALIDATOR-REGRESSION\n- Evidence: retained for anchor tests\n',
+        )
+
         write(
             intake / 'README.md',
             '# Report intake\n\n## Meta\n- Agent: validator-regression\n'
@@ -136,7 +159,6 @@ def main() -> int:
         non_sha_anchor = run_validator(root)
         require(non_sha_anchor.returncode == 0, 'explicit non-SHA evidence anchor failed validator', non_sha_anchor)
 
-        # An unrelated URL elsewhere in the identity file must not satisfy a blank anchor.
         write(
             intake / 'README.md',
             '# Report intake\n\n## Meta\n- Agent: validator-regression\n'
@@ -151,7 +173,6 @@ def main() -> int:
             unrelated_url,
         )
 
-        # Placeholder anchors must fail even when correctly labelled.
         write(
             intake / 'README.md',
             '# Report intake\n\n## Meta\n- Agent: validator-regression\n'
