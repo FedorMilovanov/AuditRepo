@@ -72,16 +72,17 @@
 - Current bounded result:
   - two candidates are accepted in Product through explicit decisions;
   - all 28 remaining candidates are still publication-unresolved;
-  - C01 has primary object/caption support for `Владимир Маяковский; Москва; 1910; неизвестный фотограф`, but remains rights-blocked;
-  - C02 has corroborated `Владимир Маяковский; 1912; неизвестный фотограф` and commercial museum attribution, but lacks primary exact-object provenance and remains rights-blocked;
+  - C01 has independent primary object/caption support for `Владимир Маяковский; Москва; 1910; неизвестный фотограф`, but remains `rights-blocked` and unpublished;
+  - C02 has exact-file identity and corroborated `Владимир Маяковский; 1912; неизвестный фотограф`; a commercial Fine Art Images/Heritage record attributes the portrait to the State Mayakovsky Museum collection, but a primary exact-object museum record remains unverified and publication remains rights-blocked;
   - C04 has exact-file identity, a long-standing `Владимир Маяковский; 1915; неизвестный фотограф` caption, cited 1940 publication and a materially stronger Commons Russia/US PD rationale, but the exact early-publication page and primary object provenance remain unverified.
-- The candidate waves demonstrate five layers that must stay separate:
+- C01–C04 demonstrate the layers that this theme must preserve:
   1. exact Commons file identity and hashes;
   2. historical caption corroboration;
   3. primary object/collection provenance;
   4. original/early publication evidence with inspectable page context;
-  5. jurisdiction-appropriate publication authority and explicit editorial decision.
-- A Commons template may be strong evidence for a legal rationale, but it does not replace verification of the factual predicates on which that rationale depends.
+  5. jurisdiction-appropriate publication authority.
+- A strong result in one layer does not satisfy the others. Commons metadata, published caption evidence, primary institutional object evidence, commercial collection metadata, early-publication pages and permission/licence evidence must remain separate fields.
+- A Commons public-domain template can be strong evidence for a legal rationale, but it does not replace verification of the factual predicates on which that rationale depends or the Product's explicit editorial decision.
 - Better-than-local outcome: one explicit provenance/rights record per selected asset and a rights-safe publication boundary.
 - Technical availability, visual resemblance, archive presence, catalogue listing, newspaper citation or PD template alone does not authorize publication.
 - Detailed evidence:
