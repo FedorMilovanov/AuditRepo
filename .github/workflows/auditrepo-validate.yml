@@ -45,7 +45,8 @@ jobs:
             scripts/validate_audit_repo.py \
             scripts/validate_audit_repo_regression_test.py \
             scripts/scaffold_intake.py \
-            scripts/scaffold_project.py
+            scripts/scaffold_project.py \
+            scripts/scaffold_regression_test.py
 
       - name: Check structure
         run: python3 scripts/check_auditrepo_structure.py
@@ -55,6 +56,9 @@ jobs:
 
       - name: Test validator regressions
         run: python3 scripts/validate_audit_repo_regression_test.py
+
+      - name: Test scaffold regressions
+        run: python3 scripts/scaffold_regression_test.py
 
       - name: Validate matrix/evidence owners when changed
         if: env.RUN_MATRIX_COVERAGE == '1'
