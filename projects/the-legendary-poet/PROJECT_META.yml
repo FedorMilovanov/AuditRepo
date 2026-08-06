@@ -12,3 +12,6 @@ rules:
   verified_path: verified/
   repairs_path: repairs/
   reverify_path: reverify/
+  work_queue_path: WORK_QUEUE.md
+  system_themes_path: verified/SYSTEM_THEMES.md
+  closure_ledger_path: verified/CLOSURE_LEDGER.md
