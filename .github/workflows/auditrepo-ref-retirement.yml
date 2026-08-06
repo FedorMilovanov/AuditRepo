@@ -1,0 +1,415 @@
+name: AuditRepo Ref Retirement
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'references/ref-retirement/requests/*.json'
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: auditrepo-ref-retirement
+  cancel-in-progress: false
+
+jobs:
+  retire-reviewed-refs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Select exactly one merged request
+        id: request
+        shell: bash
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_REF_NAME}" != "main" ]]; then
+            echo "Ref-retirement requests may execute only from main" >&2
+            exit 1
+          fi
+
+          mapfile -t requests < <(
+            git diff --name-only --diff-filter=AM "${BEFORE_SHA}" "${GITHUB_SHA}" -- \
+              'references/ref-retirement/requests/*.json'
+          )
+          if [[ "${#requests[@]}" -ne 1 ]]; then
+            printf 'Expected exactly one added/modified retirement request, found %s\n' "${#requests[@]}" >&2
+            printf '%s\n' "${requests[@]}" >&2
+            exit 1
+          fi
+          request_path="${requests[0]}"
+          test -f "${request_path}"
+          echo "request_path=${request_path}" >> "${GITHUB_OUTPUT}"
+          echo "Selected ${request_path}"
+
+      - name: Compile and validate repository before mutation
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile \
+            scripts/check_auditrepo_structure.py \
+            scripts/validate_audit_repo.py \
+            scripts/validate_audit_repo_regression_test.py \
+            scripts/scaffold_intake.py \
+            scripts/scaffold_project.py \
+            scripts/scaffold_regression_test.py
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/validate_audit_repo_regression_test.py
+          python3 scripts/scaffold_regression_test.py
+          node scripts/repository_history_forensic_audit.mjs --strict
+
+      - name: Preflight, retire and verify reviewed refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUEST_PATH: ${{ steps.request.outputs.request_path }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+
+          repository = os.environ['GITHUB_REPOSITORY']
+          owner = repository.split('/', 1)[0]
+          request_path = Path(os.environ['REQUEST_PATH'])
+          output_path = Path('reports/ref-retirement') / f'{request_path.stem}-evidence.json'
+          output_path.parent.mkdir(parents=True, exist_ok=True)
+          token = os.environ['GH_TOKEN']
+          current_main = os.environ['GITHUB_SHA']
+
+          headers = {
+              'Accept': 'application/vnd.github+json',
+              'Authorization': f'Bearer {token}',
+              'X-GitHub-Api-Version': '2022-11-28',
+              'User-Agent': 'auditrepo-ref-retirement',
+          }
+
+          evidence = {
+              'repository': repository,
+              'requestPath': str(request_path),
+              'runId': os.environ['GITHUB_RUN_ID'],
+              'runAttempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'triggeringMain': current_main,
+              'preflight': [],
+              'deleted': [],
+              'alreadyAbsent': [],
+              'finalBranches': [],
+              'status': 'started',
+          }
+
+          def write_evidence():
+              output_path.write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
+
+          def request(method, api_path, *, allow=(200,)):
+              req = urllib.request.Request(
+                  f'https://api.github.com{api_path}',
+                  method=method,
+                  headers=headers,
+              )
+              try:
+                  with urllib.request.urlopen(req) as response:
+                      raw = response.read()
+                      payload = json.loads(raw) if raw else None
+                      if response.status not in allow:
+                          raise RuntimeError(f'{method} {api_path}: unexpected HTTP {response.status}')
+                      return response.status, payload
+              except urllib.error.HTTPError as error:
+                  raw = error.read().decode('utf-8', errors='replace')
+                  if error.code in allow:
+                      return error.code, raw
+                  raise RuntimeError(f'{method} {api_path}: HTTP {error.code}: {raw[:500]}') from error
+
+          def list_paged(api_path):
+              items = []
+              page = 1
+              while True:
+                  separator = '&' if '?' in api_path else '?'
+                  _, batch = request('GET', f'{api_path}{separator}per_page=100&page={page}')
+                  if not isinstance(batch, list):
+                      raise RuntimeError(f'Expected list from {api_path}')
+                  items.extend(batch)
+                  if len(batch) < 100:
+                      return items
+                  page += 1
+
+          def ref_path(branch, plural=False):
+              encoded = urllib.parse.quote(f'heads/{branch}', safe='')
+              noun = 'refs' if plural else 'ref'
+              return f'/repos/{repository}/git/{noun}/{encoded}'
+
+          def get_ref(branch):
+              status, payload = request('GET', ref_path(branch), allow=(200, 404))
+              if status == 404:
+                  return None
+              return payload['object']['sha']
+
+          def compare(base, head):
+              encoded_base = urllib.parse.quote(base, safe='')
+              encoded_head = urllib.parse.quote(head, safe='')
+              _, payload = request(
+                  'GET',
+                  f'/repos/{repository}/compare/{encoded_base}...{encoded_head}',
+              )
+              return payload
+
+          def merged_pr(number):
+              _, pr = request('GET', f'/repos/{repository}/pulls/{number}')
+              if not pr.get('merged_at'):
+                  raise RuntimeError(f'replacement PR #{number} is not merged')
+              return {
+                  'number': number,
+                  'mergeCommit': pr.get('merge_commit_sha'),
+                  'mergedAt': pr.get('merged_at'),
+              }
+
+          try:
+              manifest = json.loads(request_path.read_text(encoding='utf-8'))
+              if manifest.get('schemaVersion') != 1 or manifest.get('execute') is not True:
+                  raise RuntimeError('Unsupported or disabled ref-retirement request')
+              if os.environ['GITHUB_REF_NAME'] != 'main':
+                  raise RuntimeError('Execution ref is not main')
+
+              prepared = manifest.get('preparedOnMain')
+              lineage = compare(prepared, current_main)
+              if lineage.get('behind_by') != 0 or lineage.get('status') not in {'ahead', 'identical'}:
+                  raise RuntimeError(
+                      f'triggering main is not a descendant of preparedOnMain {prepared}: '
+                      f'{lineage.get("status")}'
+                  )
+
+              targets = manifest.get('targets') or []
+              names = [item.get('branch') for item in targets]
+              if not targets or len(names) != len(set(names)) or any(not name for name in names):
+                  raise RuntimeError('Target list must be non-empty with unique branch names')
+
+              retained = manifest.get('retainedRefs') or []
+              retained_names = {item['branch'] for item in retained}
+              source_branch = manifest.get('sourceBranch')
+              if not source_branch:
+                  raise RuntimeError('sourceBranch is required')
+
+              for name in names:
+                  if name == 'main' or name.startswith('archive/'):
+                      raise RuntimeError(f'protected branch entered target list: {name}')
+                  if name in retained_names or name == source_branch:
+                      raise RuntimeError(f'retained/source branch entered target list: {name}')
+
+              open_prs = list_paged(f'/repos/{repository}/pulls?state=open')
+              open_heads = {
+                  pr['head']['ref']
+                  for pr in open_prs
+                  if pr.get('head', {}).get('repo', {}).get('full_name') == repository
+              }
+              overlap = sorted(set(names).intersection(open_heads))
+              if overlap:
+                  raise RuntimeError(f'targets still own open PRs: {overlap}')
+
+              for item in targets:
+                  branch = item['branch']
+                  actual = get_ref(branch)
+                  expected = item.get('expectedHead')
+                  if actual is None:
+                      raise RuntimeError(f'target branch is already absent before reviewed execution: {branch}')
+                  if actual != expected:
+                      raise RuntimeError(
+                          f'head mismatch for {branch}: expected {expected}, found {actual}'
+                      )
+
+                  record = {
+                      'branch': branch,
+                      'mode': item.get('mode'),
+                      'head': actual,
+                      'reason': item.get('reason'),
+                  }
+                  mode = item.get('mode')
+                  if mode == 'ancestor':
+                      relation = compare(current_main, actual)
+                      if relation.get('ahead_by') != 0:
+                          raise RuntimeError(
+                              f'{branch} is no longer a pure ancestor: ahead_by={relation.get("ahead_by")}'
+                          )
+                      record['mainRelation'] = {
+                          'status': relation.get('status'),
+                          'aheadBy': relation.get('ahead_by'),
+                          'behindBy': relation.get('behind_by'),
+                      }
+                  elif mode == 'superseded':
+                      base = item.get('comparisonBase')
+                      base_lineage = compare(base, current_main)
+                      if base_lineage.get('behind_by') != 0:
+                          raise RuntimeError(f'comparisonBase {base} is not an ancestor of current main')
+                      relation = compare(base, actual)
+                      if relation.get('ahead_by') != item.get('expectedAhead'):
+                          raise RuntimeError(
+                              f'{branch} ahead count drifted: expected {item.get("expectedAhead")}, '
+                              f'found {relation.get("ahead_by")}'
+                          )
+                      actual_paths = sorted(file['filename'] for file in relation.get('files', []))
+                      expected_paths = sorted(item.get('allowedChangedPaths') or [])
+                      if actual_paths != expected_paths:
+                          raise RuntimeError(
+                              f'{branch} changed-path set drifted: expected {expected_paths}, found {actual_paths}'
+                          )
+                      record['replacementPullRequests'] = [
+                          merged_pr(number) for number in item.get('replacementPullRequests') or []
+                      ]
+                      if not record['replacementPullRequests']:
+                          raise RuntimeError(f'{branch} has no merged replacement PR')
+                      record['comparison'] = {
+                          'base': base,
+                          'aheadBy': relation.get('ahead_by'),
+                          'behindBy': relation.get('behind_by'),
+                          'changedPaths': actual_paths,
+                      }
+                  else:
+                      raise RuntimeError(f'unsupported target mode for {branch}: {mode}')
+
+                  evidence['preflight'].append(record)
+
+              evidence['status'] = 'preflight-passed'
+              write_evidence()
+
+              for record in evidence['preflight']:
+                  branch = record['branch']
+                  status, _ = request('DELETE', ref_path(branch, plural=True), allow=(204,))
+                  if status != 204:
+                      raise RuntimeError(f'deletion returned {status} for {branch}')
+                  evidence['deleted'].append({'branch': branch, 'head': record['head']})
+                  write_evidence()
+
+              source_head = get_ref(source_branch)
+              if source_head is None:
+                  evidence['alreadyAbsent'].append(source_branch)
+              else:
+                  encoded_head = urllib.parse.quote(f'{owner}:{source_branch}', safe='')
+                  prs = list_paged(f'/repos/{repository}/pulls?state=all&head={encoded_head}')
+                  if any(pr.get('state') == 'open' for pr in prs):
+                      raise RuntimeError(f'source branch still owns an open PR: {source_branch}')
+                  matching_merged = [
+                      pr for pr in prs
+                      if pr.get('merged_at') and pr.get('head', {}).get('sha') == source_head
+                  ]
+                  if not matching_merged:
+                      raise RuntimeError(
+                          f'source branch head {source_head} is not the exact head of a merged PR'
+                      )
+                  request('DELETE', ref_path(source_branch, plural=True), allow=(204,))
+                  evidence['deleted'].append({
+                      'branch': source_branch,
+                      'head': source_head,
+                      'mode': 'merged-maintenance-source',
+                      'pullRequests': [pr['number'] for pr in matching_merged],
+                  })
+
+              for branch in names + [source_branch]:
+                  if get_ref(branch) is not None:
+                      raise RuntimeError(f'absence verification failed for {branch}')
+
+              branches = list_paged(f'/repos/{repository}/branches')
+              final_names = sorted(branch['name'] for branch in branches)
+              current_open_prs = list_paged(f'/repos/{repository}/pulls?state=open')
+              current_open_heads = {
+                  pr['head']['ref']
+                  for pr in current_open_prs
+                  if pr.get('head', {}).get('repo', {}).get('full_name') == repository
+              }
+              allowed = retained_names | current_open_heads
+              unexpected = sorted(set(final_names) - allowed)
+              missing_required = sorted(
+                  item['branch'] for item in retained
+                  if item.get('required') and item['branch'] not in final_names
+              )
+              if unexpected:
+                  raise RuntimeError(f'unreviewed remote branches remain: {unexpected}')
+              if missing_required:
+                  raise RuntimeError(f'required retained refs disappeared: {missing_required}')
+
+              evidence['finalBranches'] = final_names
+              evidence['openPullRequestHeads'] = sorted(current_open_heads)
+              evidence['status'] = 'deleted-and-live-verified'
+              write_evidence()
+          except Exception as error:
+              evidence['status'] = 'failed'
+              evidence['error'] = str(error)
+              write_evidence()
+              raise
+          PY
+
+      - name: Run post-retirement deep audit
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check_auditrepo_structure.py
+          python3 scripts/validate_audit_repo.py
+          python3 scripts/matrix_coverage_regression_test.py
+          mkdir -p reports/matrix-coverage
+          python3 scripts/check_matrix_coverage.py \
+            --verbose \
+            --json-out reports/matrix-coverage/report.json \
+            | tee reports/matrix-coverage/report.log
+          python3 scripts/matrix_coverage_contexts.py \
+            --json-out reports/matrix-coverage/contexts.json \
+            --markdown-out reports/matrix-coverage/contexts.md
+          node scripts/repository_history_forensic_audit.mjs --strict
+
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(
+              Path('reports/repository-history-forensic-audit.json').read_text(encoding='utf-8')
+          )
+          summary = report['summary']
+          if summary['inaccessibleClosedHeads'] != 0:
+              raise SystemExit(f'inaccessible closed PR heads remain: {summary["inaccessibleClosedHeads"]}')
+          if summary['manualReviewCandidates'] != 0:
+              raise SystemExit(f'manual closed-PR candidates remain: {summary["manualReviewCandidates"]}')
+
+          allowed_unexplained = {'verification/gb-search-p3-01-closure-20260806'}
+          unexplained = {
+              branch['name'].removeprefix('origin/')
+              for branch in report['branches']
+              if branch['reconciliation'] in {
+                  'orphan-branch', 'closed-parked-pr-head', 'closed-unclassified-pr-head'
+              }
+          }
+          unexpected = sorted(unexplained - allowed_unexplained)
+          if unexpected:
+              raise SystemExit(f'unexpected unexplained refs remain: {unexpected}')
+          print(json.dumps(summary, indent=2))
+          PY
+
+      - name: Verify clean tracked tree
+        run: git diff --exit-code
+
+      - name: Upload retirement and deep-audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: auditrepo-ref-retirement-${{ github.run_id }}
+          path: |
+            reports/ref-retirement/**
+            reports/matrix-coverage/**
+            reports/repository-history-forensic-audit.json
+            reports/repository-history-forensic-audit.md
+          if-no-files-found: warn
+          retention-days: 90
