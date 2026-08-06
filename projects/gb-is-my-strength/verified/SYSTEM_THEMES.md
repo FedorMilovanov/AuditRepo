@@ -59,11 +59,14 @@
 
 ## ST-PERFORMANCE — Measured route-scoped loading
 
-- Status: `candidate` (`R-005`, `R-006`).
-- Historical manifestations: large inline Baptists app surface, TTS runtime loaded beyond governed routes, monolithic legacy bundles.
-- System question: где measurement proves user-visible or operational cost?
-- Better-than-local outcome: route-scoped extraction/loading with before/after evidence.
-- Do not create bundle thresholds before useful implementation evidence.
+- Status: `candidate` for measured current evidence, chiefly historical `R-005`.
+- Historical manifestations: large inline Baptists app surface, formerly main-thread TTS/model ownership, monolithic legacy bundles.
+- Current TTS result: historical `R-006` is `absorbed-by-system-fix` at Product anchor `a55a03851506945ef61bb753efe58205d231a807`; representative unrelated Home/strict-native app routes do not mount Reader TTS, eligible pages expose a real PLAY capability, and heavy Vosk model work remains lazy and Worker-owned.
+- No current measurement shows user-visible or operational harm from the remaining lightweight reader bootstrap on eligible pages.
+- System question: где direct measurement proves user-visible or operational cost that remains independent after current owner/lazy-loading repairs?
+- Better-than-local outcome: route-scoped extraction/loading only where before/after evidence demonstrates useful benefit.
+- Do not create bundle thresholds before useful implementation evidence, and do not reopen generic `R-006` without a concrete route/request regression.
+- Detailed TTS evidence: `../verification/2026-08-06-r006-tts-loading-wave/REPORT.md`.
 
 ## ST-CONTENT-AUTHORITY — Content, Scripture corpus, rights and provenance
 

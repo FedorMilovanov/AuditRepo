@@ -111,3 +111,19 @@ This entry records the governance change only. It does not claim that the reform
 - Regression witness: PR #201 exact head `e1a2b2f565888b92a256da8cfea5644874fe1e4f`; AuditRepo Validate run `31098233305` passed compilation, structure, repository rules, validator regressions, scaffold regressions and clean-tree checks.
 - Live evidence: not applicable and not claimed.
 - Detailed evidence: `../verification/2026-08-06-auditrepo-maintenance-consolidation/REPORT.md`.
+
+## 2026-08-06 — Route-scoped TTS loading absorbed by the current reader architecture
+
+- Scope: historical `R-006` under `ST-PERFORMANCE` and `ST-RUNTIME-OWNERSHIP`.
+- Inputs: current Product reader owner, representative unrelated native routes, Vosk document/Worker boundary, permanent TTS contracts and Product PR #876 evidence.
+- Result:
+  - absorbed-by-system-fix: unrelated representative Home/strict-native app routes do not mount `ReaderActionsRuntime`;
+  - intended inclusion: `/baptisty-rossii/` mounts the runtime because it exposes a real PLAY control and speakable article body;
+  - lazy heavy boundary: a plain page open does not create the Worker or request the model; user playback selects system speech and only then warms Vosk in the background;
+  - worker ownership: model download, integrity verification, extraction, IndexedDB, ONNX preparation and synthesis remain outside the document main thread;
+  - no measured residual: no current evidence demonstrates user-visible or operational harm from the lightweight bootstrap on eligible reader pages;
+  - remaining independent: `R-005` and any future concrete route/request regression with direct measurement.
+- Product evidence: current anchor `a55a03851506945ef61bb753efe58205d231a807`; no Product mutation. System repair PR #876 merged as `0d60315d37efd5b47c76795f8167e99398a5b7e3`.
+- Regression witness: PR #876 exact tested head `4f42dc9b1da39cdc3d6d70360d0535a4418d8a8e` proved 56 routes × desktop/mobile = 112/112, exactly one 280,394,098-byte model request, Worker reuse and a 32.7 ms maximum UI heartbeat gap; current consent contract rejects heavyweight document-client ownership and premature Worker-start regressions.
+- Live evidence: not required and not claimed.
+- Detailed evidence: `../verification/2026-08-06-r006-tts-loading-wave/REPORT.md`.
