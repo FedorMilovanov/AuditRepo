@@ -121,7 +121,10 @@ jobs:
           python3 scripts/validate_audit_repo_regression_test.py
           python3 scripts/scaffold_regression_test.py
           python3 scripts/retire_reviewed_refs_regression_test.py
-          node scripts/repository_history_forensic_audit.mjs --strict
+          # Reviewed retirement targets may intentionally remain unreconciled
+          # until the engine verifies and deletes them. Preserve the report,
+          # but reserve strict zero-debt enforcement for the post-delete pass.
+          node scripts/repository_history_forensic_audit.mjs
 
       - name: Preflight, retire and live-verify reviewed refs
         env:
