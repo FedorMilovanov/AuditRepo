@@ -159,11 +159,14 @@ def safe_component(value: str, label: str) -> bool:
 
 def valid_date(value: str) -> bool:
     try:
-        datetime.strptime(value, '%Y-%m-%d')
-        return True
+        parsed = datetime.strptime(value, '%Y-%m-%d')
     except ValueError:
         print(f'ERROR: date must be a real YYYY-MM-DD value: {value!r}', file=sys.stderr)
         return False
+    if parsed.strftime('%Y-%m-%d') != value:
+        print(f'ERROR: date must use zero-padded YYYY-MM-DD format: {value!r}', file=sys.stderr)
+        return False
+    return True
 
 
 def main() -> int:

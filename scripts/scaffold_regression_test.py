@@ -170,6 +170,17 @@ def main() -> int:
             ) == 1,
             'invalid calendar date unexpectedly passed',
         )
+        require(
+            run_main(
+                intake_scaffold,
+                ['scaffold_intake.py', 'fixture-project', 'fixture-agent-2', '2026-8-6'],
+            ) == 1,
+            'non-zero-padded date unexpectedly passed',
+        )
+        require(
+            not (project / 'incoming' / 'fixture-agent-2').exists(),
+            'rejected date created a partial intake path',
+        )
 
     print('AUDITREPO SCAFFOLD REGRESSION: PASS')
     return 0
