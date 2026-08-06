@@ -72,15 +72,19 @@
 - Current bounded result:
   - two candidates are accepted in Product through explicit decisions;
   - all 28 remaining candidates are still publication-unresolved;
-  - within that unresolved set, C01 now has independent object/caption support for `Владимир Маяковский; Москва; 1910; неизвестный фотограф`, but remains `rights-blocked` and unpublished.
-- C01 demonstrates the recurring split that this theme must preserve:
+  - C01 has independent primary object/caption support for `Владимир Маяковский; Москва; 1910; неизвестный фотограф`, but remains `rights-blocked` and unpublished;
+  - C02 has exact-file identity and corroborated `Владимир Маяковский; 1912; неизвестный фотограф`; a commercial Fine Art Images/Heritage record attributes the portrait to the State Mayakovsky Museum collection, but a primary exact-object museum record remains unverified and publication remains rights-blocked.
+- C01 and C02 demonstrate the layers that this theme must preserve:
   1. exact Commons file identity and hashes;
-  2. independent historical caption/object provenance;
-  3. jurisdiction-appropriate publication authority.
-- A strong result in one layer does not satisfy the other two. Commons metadata, institutional caption evidence and permission/licence evidence must remain separate fields.
+  2. historical caption corroboration;
+  3. primary object/collection provenance;
+  4. jurisdiction-appropriate publication authority.
+- A strong result in one layer does not satisfy the others. Commons metadata, published caption evidence, primary institutional object evidence, commercial collection metadata and permission/licence evidence must remain separate fields.
 - Better-than-local outcome: one explicit provenance/rights record per selected asset and a rights-safe publication boundary.
-- Technical availability, visual resemblance, an archive presence or an institutional reproduction do not by themselves authorize publication.
-- Detailed C01 evidence: `../verification/2026-08-06-c01-caption-rights-wave/REPORT.md`.
+- Technical availability, visual resemblance, an archive presence, a commercial image listing or an institutional reproduction do not by themselves authorize publication.
+- Detailed evidence:
+  - `../verification/2026-08-06-c01-caption-rights-wave/REPORT.md`;
+  - `../verification/2026-08-06-c02-caption-rights-wave/REPORT.md`.
 
 ## ST-TLP-AUDIT-HARNESS — Class-level evidence without control-plane duplication
 
