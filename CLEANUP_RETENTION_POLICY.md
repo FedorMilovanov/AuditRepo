@@ -1,198 +1,206 @@
 # Cleanup / Retention Policy
 
-AuditRepo must not become a junk drawer. It should preserve evidence **without letting stale material pretend to be current truth**.
+AuditRepo must preserve useful evidence without turning history into permanent operational burden.
 
----
-
-## 1. Principle
+## Principle
 
 ```text
 Keep raw evidence.
-Promote only verified truth.
-Downgrade stale truth before deleting anything.
-Archive, do not silently erase.
+Promote only useful synthesis.
+Do not pretend old evidence is current truth.
+Archive completed working material.
+Do not synchronize documentation merely because Product HEAD moved.
 ```
 
 ---
 
-## 2. Folder roles in cleanup terms
+## Folder roles
 
 ### `incoming/`
-- raw evidence
-- never rewritten as final truth
-- should not be deleted just because a later synthesis exists
-- can be archived if superseded and safely indexed elsewhere
+
+- raw reports and artifacts;
+- immutable provenance;
+- never silently rewritten;
+- may be moved into a dated archive package only when paths remain indexed and discoverable.
 
 ### `working/`
-- temporary synthesis layer
-- can become noisy fastest
-- should be periodically pruned into:
-  - `verified/` (if canonical)
-  - `archive/stale/` (if superseded)
+
+- temporary verification waves;
+- duplicate maps;
+- root-cause clustering;
+- prioritization drafts;
+- should be archived after a wave is completed or superseded.
 
 ### `verification/`
-- dispute-resolution layer
-- keep while there are active contradictions
-- once contradictions are resolved, older dispute docs can move to `archive/stale/`
+
+- meaningful conflicts and disputed dispositions;
+- system-level decisions;
+- not required for every ordinary finding.
 
 ### `verified/`
-- only current canonical handoff docs
-- if a new ledger supersedes an old one, the old one should move to `archive/stale/` or `archive/fixed/`, not sit beside the canonical one forever without a note
 
-### `repairs/`
-- implementation tracking
-- after fixes are reverified, old repair plans can move to `archive/fixed/`
+- active backlog;
+- system themes;
+- owner decisions;
+- compact closure history;
+- one current entrypoint per fact class.
 
 ### `reverify/`
-- truth against current source HEAD
-- this folder is what prevents `verified/` from silently going stale
+
+- significant current checks selected for work or disposition;
+- not a chronological mirror of every Product commit;
+- no document is required merely because unrelated `main` moved.
+
+### `archive/`
+
+- resolved working documents;
+- superseded syntheses;
+- historical verified packages;
+- detailed closure evidence no longer needed in the active layer.
 
 ---
 
-## 3. Anti-clutter rules
+## Event-driven staleness
 
-## 3.1 One canonical entrypoint per layer
+A finding becomes a recheck candidate when there is a **material trigger**:
 
-Every active project should have:
-- `working/START_HERE_<date>.md`
-- `verification/START_HERE_<date>.md`
-- `verified/START_HERE_<date>.md`
+1. its evidence-critical owner changed;
+2. a newer browser/build/source witness contradicts it;
+3. the route shell or build method relevant to the claim changed;
+4. it was selected for repair;
+5. a system fix may have absorbed it;
+6. the owner is deciding whether to close, park or accept the risk.
 
-These entrypoints should say:
-- what is canonical,
-- what is supporting,
-- what is historical only.
+The following are not enough by themselves:
 
-## 3.2 Old docs are not deleted first; they are demoted first
+- global Product HEAD moved;
+- an unrelated PR merged;
+- a file received a new blob SHA because of independent content;
+- time passed;
+- a branch list changed.
 
-Before removing a claim from active use, do this sequence:
-
-```text
-confirmed-current
-→ suspected-stale
-→ reverified
-→ fixed-current / false-positive / stale-on-current-head
-→ archive
-```
-
-## 3.3 `verified/` should not accumulate parallel truths forever
-
-If there are multiple ledgers in `verified/`, one of them must be named or declared as the current canonical handoff.
-
-If not, the verifier should create/update:
-- `verified/START_HERE_<date>.md`
-- `working/CANONICAL_DOC_STATUS_<date>.md`
-
-## 3.4 `working/` should not become a graveyard
-
-Working docs are useful while synthesis is active. Once a document is:
-- fully superseded,
-- merged into a canonical matrix,
-- or disproven by reverify,
-
-it should move to:
-- `archive/stale/` or
-- `archive/false-positive/`
-
-with a short index note.
+Do not open a reverify transaction without a question that the reverify will answer.
 
 ---
 
-## 4. Staleness rules
+## Active vs historical truth
 
-A verified bug becomes a **stale candidate** when any of the following is true:
+Every document must clearly belong to one role:
 
-1. source repo HEAD moved significantly after the bug was verified;
-2. another verifier reports contradictory evidence on newer SHA;
-3. build method changed (e.g. source-only finding vs production-like artifact finding);
-4. route shell changed and old audit assumptions no longer map 1:1 to live UI.
+- **raw evidence**;
+- **working synthesis**;
+- **active guidance**;
+- **historical closure**.
 
-When this happens, do **not** delete the bug. Mark it:
+Historical documents may contain accurate statements about their anchors. They must not be presented as automatically current.
 
-```text
-suspected-stale
-```
-
-and open a reverify document.
+A large old audit is a source of hypotheses and causal models, not an obligation to keep every sentence synchronized forever.
 
 ---
 
-## 5. Archive buckets
+## Single Writer Per Fact
 
-### `archive/fixed/`
-Use when:
-- bug was once real,
-- later reverified as fixed-current,
-- useful to retain historical trail.
+A volatile fact should have one owner only.
 
-### `archive/stale/`
-Use when:
-- document is superseded,
-- not false, but no longer canonical,
-- or tied to old SHA / old route shell / old artifact.
-
-### `archive/false-positive/`
-Use when:
-- claim was carefully rechecked,
-- and determined to be false, misleading, or audit/tool drift.
-
----
-
-## 6. Minimum cleanup cadence
-
-For active projects with many agents:
-- after every major intake wave,
-- after every major verified ledger update,
-- after every big source-repo repair wave.
-
-Recommended output:
-- one `reverify/` doc per meaningful source HEAD change,
-- one update to `START_HERE` / canonical status,
-- one archive move if older docs are clearly superseded.
-
----
-
-## 7. Never do this
-
-- never silently delete raw incoming evidence
-- never overwrite another agent’s intake folder to “clean it up”
-- never mark a bug false-positive without explicit recheck record
-- never leave multiple verified ledgers without naming which one is canonical
-
----
-
-## 8. Single-Writer-Per-Fact (anti-drift, added 2026-07-09)
-
-The root cause of doc drift is **the same fact written in several files**. When the
-current source HEAD, open/closed counts, or project status live in the matrix header
-*and* the registry *and* the README *and* the handoff prompt, every update must touch
-all four — and in practice one or two get missed, so the surfaces disagree (this was
-finding **AR-014**).
-
-Rule:
-
-```text
-Every volatile fact has exactly ONE owner file.
-Every other document links to it — it never restates it.
-```
-
-Per-project ownership is declared in that project's `DOC_MAP.md`. The general split:
-
-| Fact class | Single owner |
+| Fact class | Preferred owner |
 |---|---|
-| Bug status / severity / counts | `verified/MASTER_BUG_MATRIX.md` |
-| Current source HEAD, deploy state, "what next" | `NEXT_AGENT_PROMPT.md` |
-| System backlog + wave plan | the project's `SUPER_AUDIT_*.md` |
-| Stable project shape (tech, freeze zones, reading order) | project `README.md` |
-| Which projects exist | root `PROJECT_REGISTRY.md` |
+| Raw observation | original `incoming/` report |
+| Current selected work | project `WORK_QUEUE.md` |
+| Active local backlog | project verified matrix/backlog |
+| Systemic root themes | project `verified/SYSTEM_THEMES.md` |
+| Closure summary | project `verified/CLOSURE_LEDGER.md` |
+| Current Product code/deploy/branches | source repository, not AuditRepo |
+| Project inventory | root `PROJECT_REGISTRY.md` |
 
-Consequences:
+AuditRepo documents may link to Product evidence. They should not duplicate current Product HEAD/deploy facts across README, matrix, registry, handoff and reverify files.
 
-- A **matrix header is a status block, not a changelog.** One line for current HEAD +
-  deploy. Per-session narrative goes to an append-only `## Session log` section at the
-  bottom of the matrix (or a `reverify/` doc), never accreted into the masthead.
-- The registry and README **must not** restate HEAD/counts. If they need one, they link.
-- Closing a session updates **two** files (matrix + handoff prompt), not five.
+---
 
-Before adding a fact to a doc, ask: *does another file already own this?* If yes, link.
+## Matrix transition
 
+Some existing projects contain a monolithic matrix with both hundreds of closed rows and active findings. Do not perform risky bulk rewrites merely to satisfy the new shape.
+
+Transition gradually:
+
+1. freeze verbose growth of the closed section;
+2. create/use a compact closure ledger for new waves;
+3. move completed clusters in batches during dedicated consolidation waves;
+4. keep immutable links to original evidence;
+5. generate counters where possible instead of copying them manually.
+
+Until a project completes migration, its `DOC_MAP.md` must state which legacy file still owns historical rows.
+
+---
+
+## Cleanup cadence
+
+### After a verification/repair wave
+
+- archive superseded working synthesis;
+- update active backlog only for material dispositions;
+- append a compact wave result;
+- update `WORK_QUEUE.md` only if owner-selected priorities changed.
+
+### Periodically or manually
+
+- run full matrix/evidence coverage;
+- run branch/closed-PR forensic;
+- detect broken links and orphan evidence;
+- archive stale control-plane documents;
+- review whether system themes still help prioritization.
+
+These deep checks are not required on every ordinary PR.
+
+---
+
+## Closed material
+
+A closed finding should retain enough provenance to answer:
+
+- what was observed;
+- what disposition was chosen;
+- what Product PR/system measure addressed it;
+- what regression witness protects the result;
+- whether live evidence was or was not required.
+
+It does not need to repeat every workflow run, every later blob SHA and every subsequent unrelated HEAD.
+
+---
+
+## Archive buckets
+
+Suggested buckets:
+
+- `archive/closed/` — real findings addressed or absorbed;
+- `archive/stale/` — no longer applicable formulations;
+- `archive/invalid/` — false positives, wrong build, audit drift;
+- `archive/superseded/` — old syntheses replaced by a better one;
+- `archive/accepted-risk/` — known issues intentionally not repaired.
+
+Exact folder names may vary by project; the disposition must remain discoverable.
+
+---
+
+## Never do this
+
+- never silently delete raw evidence;
+- never rewrite another agent’s intake;
+- never mark a disputed claim invalid without recording the decisive evidence;
+- never keep several documents claiming to be the same current authority;
+- never make every Product merge trigger a documentation sync;
+- never create temporary write-capable CI merely to edit Markdown;
+- never require deep branch forensic for unrelated content changes;
+- never keep verbose closure data in the active backlog just to preserve history.
+
+---
+
+## Success condition
+
+AuditRepo is healthy when:
+
+- it can absorb many new audit passes cheaply;
+- useful evidence remains findable;
+- active guidance is short enough to understand;
+- old material does not masquerade as current truth;
+- verification can be deep when needed and light when obvious;
+- the repository helps Product work instead of becoming a second Product to maintain.
