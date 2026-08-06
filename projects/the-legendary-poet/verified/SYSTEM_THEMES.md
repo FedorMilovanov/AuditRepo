@@ -67,38 +67,58 @@
 
 ## ST-TLP-MEDIA-PROVENANCE — Publication authority for images
 
-- Status: `evidence-rich`, `owner-decision`.
-- Historical manifestations: archived candidates with incomplete source, attribution or publication-rights evidence.
-- Current bounded result:
-  - two candidates are accepted in Product through explicit decisions;
-  - all 28 remaining candidates are still publication-unresolved;
-  - C01 has independent primary object/caption support for `Владимир Маяковский; Москва; 1910; неизвестный фотограф`, but remains `rights-blocked` and unpublished;
-  - C02 has exact-file identity and corroborated `Владимир Маяковский; 1912; неизвестный фотограф`; a commercial Fine Art Images/Heritage record attributes the portrait to the State Mayakovsky Museum collection, but a primary exact-object museum record remains unverified and publication remains rights-blocked;
-  - C04 has exact-file identity, a long-standing `Владимир Маяковский; 1915; неизвестный фотограф` caption, cited 1940 publication and a materially stronger Commons Russia/US PD rationale, but the exact early-publication page and primary object provenance remain unverified;
-  - C05 has exact-file/hash identity and repeated `Маяковский; 1917; неизвестный фотограф` metadata, but the cited FPLIB source is unavailable, no independent exact-object witness was found and `PD-old` lacks a United States rationale;
-  - C06 has exact-file/hash identity and a primary museum-backed exact-object caption for `Владимир Маяковский; Екатерининский парк; Москва; 1918; неизвестный фотограф`, but the cited RSL source is unavailable and no inspectable pre-1931 publication proves the factual predicate behind `PD-Russia-expired`;
-  - C07 has exact-file/hash identity, corroborated `Владимир Маяковский; 1925; неизвестный фотограф`, a bibliographically verified 1928 source volume and specific RSL reproduction/index page citations, but both decisive pages remain unavailable for direct inspection and primary object provenance is unknown.
-- C01–C07 demonstrate the layers that this theme must preserve:
-  1. exact Commons file identity and hashes;
-  2. historical caption corroboration independent of derivative mirrors;
+- Status: `absorbed/closed for the 30-candidate Mayakovsky set`.
+- Historical manifestations: archived candidates with exact file identity but incomplete caption, object, publication or rights evidence; repeated derivative metadata was at risk of becoming publication authority by analogy.
+- System outcome:
+  - source issue #77 completed and closed;
+  - exact originals and hashes remain `30/30`;
+  - accepted active: `5` — C03, C08, C10, C11, C16;
+  - verified reserve: `1` — C15;
+  - explicit terminal exclusions: `24`;
+  - unresolved candidates: `0`;
+  - source PR #333 exact tested head `b9a4bc7dd3dc2c14160e3b551497465eab82753c`;
+  - source squash merge `dd2df7be196d81d5212b43a08616f782af2fecf6`.
+- Active publication mechanism:
+  - `verifiedEssayMedia.ts` owns five stable media records;
+  - each active record must resolve exactly one current archive block;
+  - stale pre-verification source/caption metadata must resolve zero blocks;
+  - no image binary was added by the final batch.
+- Accepted additions from the final batch:
+  - C10: State Mayakovsky Museum exact group/leaflet witness, Moscow 1912 and documented February 1913 publication, unknown photographer preserved;
+  - C11: State Catalogue / State Mayakovsky Museum object lineage, Tina Modotti, Mayakovsky and Francisco Moreno, Mexico City 1925;
+  - C16: Arzamas exact reproduction credited to the State Mayakovsky Museum, Osip Brik, Moscow 1927.
+- Reserve boundary:
+  - C15 has sufficient evidence for a future bounded use but no current essay block uses the exact source, so it has no decorative active key.
+- Exclusion boundary:
+  - `excluded-rights` means useful caption/object/publication evidence exists but the Product's required rights predicate is incomplete;
+  - `excluded-provenance` means exact object/source/creator/date/publication lineage is insufficient;
+  - `excluded-scope` means current editorial need does not justify publication while evidence remains incomplete;
+  - exclusion is a terminal Product decision for current scope, not an instruction to continue automatic waves.
+- Durable evidence model preserved by C01–C30:
+  1. exact original identity and hashes;
+  2. independent caption evidence;
   3. primary object/collection provenance;
   4. bibliographic publication identity;
-  5. exact original/early publication page with inspectable image context;
-  6. jurisdiction-appropriate publication authority.
-- A dead source link or repeated derivative caption is evidence of lineage, not independent verification.
-- A creation date, even when independently verified by a primary museum source, is not an original-publication date.
-- A verified pre-1931 volume does not prove that an unavailable cited page contains the exact acquired reproduction; volume-level and page-level evidence must remain separate.
-- A strong result in one layer does not satisfy the others. Commons metadata, published caption evidence, primary institutional object evidence, commercial collection metadata, bibliography, early-publication pages and permission/licence evidence must remain separate fields.
-- A Commons public-domain template can be strong evidence for a legal rationale, but it does not replace verification of the factual predicates on which that rationale depends or the Product's explicit editorial decision.
-- Better-than-local outcome: one explicit provenance/rights record per selected asset and a rights-safe publication boundary.
-- Technical availability, visual resemblance, archive presence, catalogue listing, repeated caption, museum object record, bibliography, newspaper citation or PD template alone does not authorize publication.
-- Detailed evidence:
-  - `../verification/2026-08-06-c01-caption-rights-wave/REPORT.md`;
-  - `../verification/2026-08-06-c02-caption-rights-wave/REPORT.md`;
-  - `../verification/2026-08-06-c04-publication-rights-wave/REPORT.md`;
-  - `../verification/2026-08-06-c05-source-rights-wave/REPORT.md`;
-  - `../verification/2026-08-06-c06-object-publication-rights-wave/REPORT.md`;
-  - `../verification/2026-08-06-c07-publication-volume-wave/REPORT.md`.
+  5. exact early-publication page/context;
+  6. creator and location uncertainty;
+  7. jurisdiction-appropriate rights rationale;
+  8. explicit Product decision and active runtime coverage.
+- Regression witness:
+  - Project contracts and Content model contract;
+  - full CI/typecheck/build/budgets/prerender/SEO;
+  - Articles catalog on Chromium, Android and iPhone;
+  - route crawl across 35+ URLs;
+  - brand deep audit;
+  - Manual Browser QA 4/4 including desktop WebKit and fresh-process iPhone Safari.
+- Reverify trigger:
+  - materially new primary object/publication evidence;
+  - explicit permission or licence;
+  - reviewable jurisdiction-specific rights evidence;
+  - changed editorial need for C15 or an excluded candidate;
+  - change to the active media registry or exact-one coverage contract.
+- A Commons metadata edit, derivative mirror, filename, visual resemblance or repeated caption alone is not a reverify trigger.
+- Detailed final evidence: `../verification/2026-08-06-mayakovsky-media-final-batch/REPORT.md`.
+- Historical bounded evidence remains in the C01, C02, C04, C05, C06 and C07 reports and is not superseded as evidence-at-anchor.
 
 ## ST-TLP-AUDIT-HARNESS — Class-level evidence without control-plane duplication
 
