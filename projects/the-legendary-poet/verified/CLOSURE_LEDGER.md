@@ -72,3 +72,18 @@ Append-only журнал компактных результатов verificatio
 - Owner outcomes: primary museum object record / stronger public-domain rationale / permission / replacement / park.
 - Live evidence: not required; this was a provenance and rights verification.
 - Detailed evidence: `../verification/2026-08-06-c02-caption-rights-wave/REPORT.md`.
+
+## 2026-08-06 — C04 early publication and stronger PD rationale remain incomplete
+
+- Scope: one bounded media candidate, `C04 / Mayakovsky 1915.jpg`.
+- Result:
+  - verified-at-anchor: Commons file identity, Product acquisition hash, byte size, current dimensions and unknown creator metadata;
+  - caption-corroborated: the portrait is published as Vladimir Mayakovsky, 1915, in the collected-works plate lineage;
+  - early-publication-cited: the current Commons record cites `Курская правда`, №86, 14 April 1940, and the Kursk regional library confirms the April 1940 archive exists;
+  - source-page-unverified: the exact newspaper page/image context was not directly obtained in the bounded wave;
+  - stronger-rights-rationale: Commons `PD-Russia-1996` states Russian and United States URAA reasoning, but the factual publication predicates and Product editorial decision still require verification;
+  - no Product mutation and no production-media acceptance.
+- Evidence angles: Product provenance ledger + current/historical Commons metadata + 1955 collected-works illustration list + Kursk library digitized-newspaper archive + exact image inspection.
+- Owner outcomes: exact newspaper page / primary object record / reviewed PD decision / permission or replacement / park.
+- Live evidence: not required; this was a provenance, publication-history and rights verification.
+- Detailed evidence: `../verification/2026-08-06-c04-publication-rights-wave/REPORT.md`.
