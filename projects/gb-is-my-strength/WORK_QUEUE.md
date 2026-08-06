@@ -58,12 +58,17 @@ AuditRepo не требует закрывать список сверху вн�
 - Do not weaken text ratios, canonical/noindex checks or route markers merely to reduce file count.
 - Possible outcomes: one bounded retirement / park / accepted duplication / better system design.
 
-### 5. Search corpus rights/provenance
+### 5. Bible corpus acquisition and import proof
 
-- Historical owner: `SEARCH-P2-07` and related research.
-- First question: существует ли authoritative/licensed corpus with explicit provenance suitable for publication/search.
-- Suggested mode: owner/research decision before Product mutation.
-- Possible outcomes: proceed / owner-decision / accepted limitation.
+- Historical owner: `SEARCH-P2-07`; detailed rights wave: `verification/2026-08-06-bible-corpus-rights-wave/REPORT.md`.
+- Research authority: PR #149 / merge `d52ea9d54dd2c2488223d25f5f6cefd263c23328`.
+- Verified decision: exact CrossWire `RusSynodal` 1.9.1 is `CANDIDATE_ONLY`; `RusSynodalLIO` is permission-controlled; Cassian must not be expanded or republished without explicit permission.
+- Remaining holds: official archive not acquired or hashed; book manifest, versification and 66-book Product mapping are not verified; current Product records lack complete `sourceUrl`/`rights` provenance.
+- First question: can the exact official archive be acquired, hashed and mapped without mixing translations or weakening existing canonical-record evidence?
+- Suggested mode: bounded acquisition/import transaction, not another broad web search.
+- Required sequence: exact archive bytes → SHA-256 → embedded licence/source/book manifest → 66-book mapping → verse-level comparison/import receipt → Product source/dist/browser evidence.
+- `SEARCH-P2-07` remains open until the complete import and publication boundary are proved.
+- Possible outcomes: proceed with exact `RusSynodal` import / obtain separate Cassian permission / choose another licensed corpus / park the full-corpus promise.
 
 ---
 
@@ -83,4 +88,4 @@ Do not copy full run IDs, global HEAD or all historical proofs here.
 
 ## Last queue change
 
-2026-08-06 strangler verification wave: replaced the approximate duplicate-count question with the measured parity-authority migration question. No Product deletion or production claim follows from this queue refinement.
+2026-08-06 Bible corpus rights/provenance wave: replaced the unbounded corpus-search question with one exact acquisition/import gate. No Product mutation, matrix movement or publication approval follows from this queue refinement.
