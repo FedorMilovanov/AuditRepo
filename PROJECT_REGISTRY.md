@@ -9,7 +9,7 @@ Registry хранит только стабильную ориентацию. Т
 | Project folder | Source repo | Status | Start here |
 |---|---|---|---|
 | `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | [`DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md) |
-| `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | [`README.md`](projects/the-legendary-poet/README.md) |
+| `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | [`DOC_MAP.md`](projects/the-legendary-poet/DOC_MAP.md) |
 
 ## Status glossary
 
