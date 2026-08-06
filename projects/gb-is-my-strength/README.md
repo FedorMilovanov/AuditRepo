@@ -1,79 +1,90 @@
 # gb-is-my-strength / gospod-bog.ru
 
-**Status:** 🟢 active. Текущий HEAD / deploy / «что дальше» живут в [`NEXT_AGENT_PROMPT.md`](./NEXT_AGENT_PROMPT.md); не дублируем их здесь, чтобы не дрейфовали.
-**Старт и карта документов:** [`DOC_MAP.md`](./DOC_MAP.md). Открыто/закрыто — в `verified/MASTER_BUG_MATRIX.md`.
-_(Этот README намеренно не хранит HEAD/счётчики/механизм текущего deploy-стопа — правило Single-Writer-Per-Fact.)_
+Активный AuditRepo-проект для `FedorMilovanov/gb-is-my-strength`.
 
-## Quick facts
+## Start
 
-- Source: `FedorMilovanov/gb-is-my-strength`
-- Production: `https://gospod-bog.ru` (GitHub Pages, деплой из `dist/` strangler-сборки)
-- Tech: Astro + strangler pattern (root legacy HTML + Astro dist), Pagefind, SW PWA
-- In-flight зоны владельца: PremiumControls/Gill (freeze), глоссарий + Библия-тултипы
+1. [`DOC_MAP.md`](./DOC_MAP.md) — где какой тип информации.
+2. [`WORK_QUEUE.md`](./WORK_QUEUE.md) — необязательные выбранные направления.
+3. [`verified/SYSTEM_THEMES.md`](./verified/SYSTEM_THEMES.md) — повторяющиеся классы причин.
+4. [`verified/MASTER_BUG_MATRIX.md`](./verified/MASTER_BUG_MATRIX.md) — существующий finding registry и исторические closures.
+5. [`verified/CLOSURE_LEDGER.md`](./verified/CLOSURE_LEDGER.md) — компактные результаты новых волн.
+6. `incoming/` — исходные audit reports и evidence.
 
-## Порядок чтения (текущая правда)
+Общая модель: [`../../AUDITREPO_OPERATING_MODEL.md`](../../AUDITREPO_OPERATING_MODEL.md).
 
-1. `verified/MASTER_BUG_MATRIX.md` — канон точечных багов (открыто/закрыто + счётчики живут только здесь).
-2. `verified/SUPER_AUDIT_2026-07-06_14a49be8.md` — канон системного бэклога: верифицированные находки (CI/даты/SW/security/Bible/семантика), опровергнутые старые формулировки (§1), план волн W0–W10 (§3).
-3. `working/GILL_CONTENT_RESEARCH_MATRIX_2026-07-09.md` — карта content/research-аудита серии Джона Гилла (480 evidence IDs, вне канонических счётчиков).
-4. `NEXT_AGENT_PROMPT.md` — handoff и правила для следующего агента.
-5. `PremiumControls/README.md` — контракт in-flight зоны (owner).
-6. Сырые доказательства: `incoming/fable-super-audit/2026-07-06/REPORT.md`, `incoming/arena-auditor/2026-07-06/`, `incoming/gpt-5-5-gill-content-research-audit/2026-07-09/REPORT.md`.
+---
 
-## Правила проекта (сжатие)
+## Stable project facts
 
-- SHA-first; один сабсистем на PR; закрытие только с fixture+fix+gates+witness.
-- Паритет Astro↔legacy ≠ правда контента; зелёный шаг workflow ≠ доказательство.
-- `[skip ci]` bot-HEAD не считается проверенным сам по себе.
-- Старые audit-доки (в `archive/`) — только evidence, не текущая правда.
-- Gill master-аудит — mixed-status corpus: direct findings, Research-only defects, disputed interpretations и HOLD нельзя без verifier превращать в один список repair-ready багов.
+- Source repository: `FedorMilovanov/gb-is-my-strength`.
+- Public site: `gospod-bog.ru`.
+- Architecture: Astro + strangler pattern with native routes and preserved legacy/static surfaces.
+- Production-like verification must use the project’s actual strangler build path; plain `astro build` can create false findings.
+- The project includes route-level applications, article/reader surfaces, search, maps, PWA/offline behavior and shared runtimes.
 
-## История
+Current Product HEAD, open PRs, branch ownership, workflow status and deploy identity are read from the Product repository when work begins. They are intentionally not duplicated here.
 
-Прежние статус-баннеры этого README (Pass 23, REG-001/REG-002, HEAD `e458581`) устарели:
-REG-волна закрыта, актуальная история — в матрице и `archive/`.
+---
 
-**2026-07-09 — Gill content/research intake (GPT-5.5).** Проведён cumulative source/content-аудит пяти Gill routes и отдела `FedorMilovanov/Research/Джон Гилл/00–42` на source HEAD `08d9fd1` (functional `f5e000e`) и Research HEAD `58e1ea5`. Evidence corpus: 480 IDs, из них 75 P0/P0–P1 candidates и 101 явный HOLD/needs-source item. Созданы governed intake, working matrix и proposal на umbrella-интеграцию в canonical ledger; counters `verified/MASTER_BUG_MATRIX.md` намеренно не изменены до verifier synthesis. Full-master integrity manifest: `incoming/gpt-5-5-gill-content-research-audit/2026-07-09/artifacts/MASTER_ARTIFACT_MANIFEST.md`.
+## What AuditRepo is for in this project
 
-**TTS-трек (не входит в W0–W10, отдельная линия работы, HEAD этого трека
-на 2026-07-07: `e6f6628`, новее `14a49be8` выше — требует сверки с
-основным каноном при следующем проходе):** Web Speech → vosk-tts (Apache
-2.0, VITS+BERT), прямые пуши в `main` с явного разрешения пользователя,
-4 раунда фиксов (D-23 регрессия деплоя, `ALLOWED_JS` gate, реально
-неработавший из-за отсутствия CORS у `alphacephei.com` фетч модели —
-перевезли на Hugging Face, подтверждено живым тестом из браузера).
-Полная история: `incoming/vosk-tts-integration-2026-07-06/REPORT.md`.
-Аудит качества голоса/фичи: `incoming/tts-quality-audit-2026-07-07/REPORT.md`
-(из этого списка реально сделано: голос по умолчанию, версия кэша,
-телеметрия, чанкинг, нормализация текста — сроки/века/сокращения).
+- accumulate many independent audit passes;
+- preserve source/build/browser/live evidence on explicit anchors;
+- compare and challenge findings;
+- find duplicates and systemic roots;
+- choose any convenient repair scope;
+- record owner decisions, parked items and accepted risks;
+- retain a useful history without maintaining a second Product control plane.
 
-**2026-07-08 — чистка за "Arena Agent" + 2 реальных фикса:** сторонний
-проход того же трека закоммитил раздутый (10 773 строки, "продолжай"-
-зацикливание) `audit/AUDIT_TTS_2026-07-08.md` **прямо в `gb-is-my-strength`**
-(не в этот репо) двумя коммитами (`6fe1049`, `fe390d3`), причём сообщения
-коммитов утверждают несуществующую работу (`git show --stat` на `6fe1049`
-показывает единственный изменённый файл — сам аудит-документ, а не
-заявленный пропатченный smoke-тест с `--real-tts`). Файл удалён из
-`gb-is-my-strength` (`4b26455`). Первые ~170 строк документа (разделы 1–8)
-оказались точными и попали в реальную работу: добавлена SHA-256-проверка
-целостности модели (P0 из прошлого аудита) + досинхронизирован отставший
-`gb-vosk-tts`. Полная разборка: `incoming/tts-quality-audit-2026-07-08-arena-agent-cleanup/REPORT.md`.
+---
 
-**2026-07-08 — CSP-фикс Xet-CDN + верификация V10/V12-исследований (GPT-5.5).**
-(1) Найден **детерминированный CSP-дефект**, блокировавший холодную загрузку
-модели после переезда на HF: CSP `connect-src` разрешал `huggingface.co`, но
-реальные байты отдаёт редирект на `*.aws.cdn.hf.co` — браузер блокировал
-именно редирект-цель. **Точная историческая доля затронутых сессий неизвестна**
-(нет success/selected-engine телеметрии — только `vosk_tts_failed`), поэтому
-«Vosk ни разу не работал» — правдоподобно, но строго не доказуемо (поправка из
-V10 §4). Fix `932230d` (`https://*.aws.cdn.hf.co` в 37 CSP-компонентов +
-dist-fallback), деплой `47a5e89` зелёный. (2) Верифицированы **два** документа
-GPT-5.5: **V12** (доставка модели: OPFS/resume/multi-tab/rollback) и **V10**
-(широкий CI/CD: размножение сборок, functional-vs-bot SHA, release-транзакция,
-render truth, SW, z-index). Факты о текущем коде в обоих подтверждены
-построчно; крупная перестройка осознанно отклонена как несоразмерная. Находки
-V10 `W1-CI-24…30`: TTS/CSP-часть уже закрыта (`932230d`); системные —
-дубликаты матрицы (`D-1` concurrency, `D-4` z-index, SW-drift); реально новое —
-typed outcome-телеметрия + пин ревизии URL. Разбор: `incoming/tts-delivery-
-architecture-verification-2026-07-08/REPORT.md`. К внедрению: 1 UX-решение
-владельца (неявная загрузка 280 МБ) + 2 не-дизайн улучшения.
+## Work styles
+
+### Broad audit intake
+
+Agents may perform many passes over different surfaces and add raw reports without waiting for a global synthesis.
+
+### Verification wave
+
+A verifier can take any package, check the relevant current Product surfaces and classify it into local findings, systemic roots, duplicates, stale/invalid items, parked work and owner decisions.
+
+### Local closure
+
+One small item may be repaired and closed with a compact ledger entry.
+
+### System closure
+
+One common owner/process/contract may absorb many historical symptoms. Representative evidence and a class-level guard are preferred over individually replaying every old scenario.
+
+### No-fix disposition
+
+A real issue may be parked, accepted or marked not worth fixing when the cost/risk is disproportionate.
+
+---
+
+## Important boundaries
+
+- Raw reports are evidence, not automatic Product authority.
+- Old SHA-specific findings are not automatically stale and are not automatically current.
+- Before implementation, verify the selected evidence-critical surface only.
+- Do not open AuditRepo sync work solely because Product `main` moved.
+- Do not claim production/live behavior without production/live evidence.
+- Do not convert content/rights decisions into purely technical fixes.
+- Do not create a documentation transaction larger than the actual repair.
+
+---
+
+## Current transition
+
+The project has a large historical `MASTER_BUG_MATRIX.md` with closed and open rows, manual counts and former `current/fixed-current` terminology.
+
+The reform does not mass-rewrite that corpus. Instead:
+
+- new governance is defined by the operating model;
+- new work is selected through `WORK_QUEUE.md`;
+- systemic understanding grows in `SYSTEM_THEMES.md`;
+- new wave results are summarized in `CLOSURE_LEDGER.md`;
+- old matrix material is consolidated gradually when useful.
+
+This gives AuditRepo room to keep learning without forcing constant Product-state synchronization.
