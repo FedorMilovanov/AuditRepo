@@ -57,3 +57,18 @@ Append-only журнал компактных результатов verificatio
 - Owner outcomes: strengthen public-domain rationale / obtain permission / replace / park.
 - Live evidence: not required; this was a provenance and rights verification.
 - Detailed evidence: `../verification/2026-08-06-c01-caption-rights-wave/REPORT.md`.
+
+## 2026-08-06 — C02 caption corroborated, primary object and rights remain blocked
+
+- Scope: one bounded media candidate, `C02 / Mayakovsky 1912.jpg`.
+- Result:
+  - verified-at-anchor: Commons file identity, Product acquisition hash, byte size, dimensions and unknown creator metadata;
+  - caption-corroborated: the portrait is repeatedly identified as Vladimir Mayakovsky in 1912, including a Fine Art Images/Heritage commercial catalogue entry for the exact composition;
+  - collection-attribution-commercial: that entry places the portrait in the State Mayakovsky Museum collection, but a primary museum exact-object record was not obtained;
+  - narrowed: no shooting location, exact date, photographer or accession history is promoted;
+  - rights-blocked: Commons `PD-old` lacks a United States public-domain tag and original publication history is not established; commercial reproduction metadata is not a free-use grant;
+  - no Product mutation and no production-media acceptance.
+- Evidence angles: Product provenance ledger + Commons/FEB metadata + Fine Art Images/Heritage exact-composition catalogue + published collected-works caption + manual visual comparison.
+- Owner outcomes: primary museum object record / stronger public-domain rationale / permission / replacement / park.
+- Live evidence: not required; this was a provenance and rights verification.
+- Detailed evidence: `../verification/2026-08-06-c02-caption-rights-wave/REPORT.md`.
