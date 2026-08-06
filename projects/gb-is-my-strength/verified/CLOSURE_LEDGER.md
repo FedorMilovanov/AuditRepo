@@ -65,3 +65,19 @@ This entry records the governance change only. It does not claim that the reform
 - Regression witness: dependency-free inventory self-test plus the existing Shared Files Guard integration; `legacy-shadow-wrapper-audit.js` remains unchanged.
 - Live evidence: not required and not claimed.
 - Detailed evidence: `../verification/2026-08-06-strangler-inventory-wave/REPORT.md`.
+
+## 2026-08-06 — Bible corpus rights and provenance verification wave
+
+- Scope: `ST-CONTENT-AUTHORITY` / `SEARCH-P2-07`.
+- Inputs: current Product Bible owners plus Research PR #149 rights/provenance authority and machine ledger.
+- Result:
+  - verified candidate: exact CrossWire `RusSynodal` 1.9.1 is `CANDIDATE_ONLY` because institutional records identify `Public Domain`;
+  - archive hold: official raw endpoint is known, but archive bytes, SHA-256, embedded configuration, book manifest and Product mapping were not obtained;
+  - rejected shortcut: `RusSynodalLIO` is copyrighted and its CrossWire permission is not a general downstream licence;
+  - rights hold: Cassian remains permission-controlled and cannot be expanded or republished from open-web copies;
+  - remaining independent: exact acquisition, 66-book/versification mapping, verse-level comparison/import, complete per-record provenance and Product release evidence;
+  - finding state: `SEARCH-P2-07` remains open; matrix arithmetic is unchanged.
+- Product evidence: no Product mutation; evidence anchor `76737eefe16a0feb2fdf729c805d17b5cdcdc376`.
+- Regression witness: Research `Repository authority integrity` run `31097491083` on exact head `be5354b92aa4ab1de6d9483c7b93740e2ff6ab34`; Research merge `d52ea9d54dd2c2488223d25f5f6cefd263c23328`.
+- Live evidence: not required and not claimed.
+- Detailed evidence: `../verification/2026-08-06-bible-corpus-rights-wave/REPORT.md`.
