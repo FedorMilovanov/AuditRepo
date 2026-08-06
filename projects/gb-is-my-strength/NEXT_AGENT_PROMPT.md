@@ -2,8 +2,8 @@
 
 ## Exact authority
 
-- AuditRepo base incorporated before this transaction: `174fc803ad478d924d86420edd71cbba3f82bf5f`.
-- Product current source anchor: `3a05a1e79bcd7061e9b9c3f98ed3953ae2e8d0c0` (Home Hebrew mirror stabilization; Favorite Store remains the retained merge `d0647b71b557c17e408c09712fcd8c3ab05ba257`; no new production deployment claim).
+- AuditRepo base incorporated before this transaction: `11ede94e316416ea0818c3a90a08101ea77ca9f5`.
+- Product current source anchor: `8a51db9a2df74fa615a3eaca698144302e47e332` (Search app-route PR #1067 guarded-squash merged from exact tested head `6ba805c61a3fa2ebc1890de11ac823894dc7fcff`; Home Hebrew mirror and Favorite Store closures remain retained; no new production deployment claim).
 - Product production anchor remains: `38b257030afb7cfa8a7b1128f8c86539fd36dec0`.
 - Favorite Store exact tested head: `845ad48409fc3c8a2fa7056f4b84e005e652318e`.
 - Favorite Store squash merge: `d0647b71b557c17e408c09712fcd8c3ab05ba257`.
@@ -12,23 +12,32 @@
 - Final PlayEmber merge: `e63dbf7d2a925501587df81ff5fb84b816e4e95f` (PR #929).
 - Exact production authority: run `30960174778` attempt `1`, readiness job `92162173520`, promotion job `92165278471`.
 - Candidate: `38b257030afb7cfa8a7b1128f8c86539fd36dec0:30960174778-1`; digest `sha256:973369f7753f89b9a4fae4d19f523f89aa2a50808a0d11cbe8448e79b793c9ef`.
-- Canonical reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-08-05_3a05a1e7_reader-controls-source-closure.md`.
+- Canonical reverify: `reverify/CURRENT_HEAD_REVERIFY_2026-08-06_8a51db9a_search-p1-01-source-closure.md`.
 
 ## Canonical matrix
 
-- **371 total = 229 closed + 142 open**.
-- Open severity counts: P0 `0`, P1 `70`, P2 `26`, P3 `39`, refactoring `4`, AuditRepo `3`.
+- **371 total = 230 closed + 141 open**.
+- Open severity counts: P0 `0`, P1 `69`, P2 `26`, P3 `39`, refactoring `4`, AuditRepo `3`.
 - ReaderProjection shared API/policy and TTS/speakable/summary/search/print/current-section convergence remain source-closed by Product PR #990.
 - Favorite Store metadata/storage/migration/button-synchronization and Home/`/izbrannoe/` consumers are source-closed by Product PR #1061. These were intake/umbrella scopes without canonical matrix IDs, so counts do not move.
 - `TTS-DL-UNZIP-SYNC` and `TTS-DL-NO-TABLOCK` remain closed with their retained production-live evidence.
-- `SEARCH-P2-08` remains closed from Product PR #901; `SEARCH-P2-09` remains closed from Product PR #968; `SEARCH-P2-10`, `SEARCH-P2-11` and `SEARCH-P2-12` are closed from Product PR #1039; `SEARCH-P2-07` remains open pending authoritative/licensed corpus plus rights/provenance.
+- `SEARCH-P1-01` is closed from Product PR #1067; `SEARCH-P2-08` remains closed from Product PR #901; `SEARCH-P2-09` remains closed from Product PR #968; `SEARCH-P2-10`, `SEARCH-P2-11` and `SEARCH-P2-12` remain closed from Product PR #1039; `SEARCH-P2-07` remains open pending authoritative/licensed corpus plus rights/provenance.
+
+## Strict-native app search evidence retained
+
+- Product PR #1067 exact tested head `6ba805c61a3fa2ebc1890de11ac823894dc7fcff` / guarded squash merge `8a51db9a2df74fa615a3eaca698144302e47e332` closes `SEARCH-P1-01` on `/karty/avraam/`, `/karty/ishod/`, `/konfessii/russkij-baptizm/` and `/map/`.
+- Exact head passed **17/17** applicable workflow groups. Search Modal run `31057748363`, job `92478849364` passed core **4/4** plus strict-native app surfaces **16/16** across four routes, mobile/desktop and Chromium/WebKit.
+- Search artifact `8951059736`; digest `sha256:30554964738021c187823e0c8929eda78e667da2e5187a3e2780c20820fd5237`.
+- Avraam Dossier run `31057748436`, job `92478860318` passed desktop/mobile **304/304** states after preserving the native map skip-link as the first Tab target; no timeout or assertion was weakened. Artifact `8951016813`; digest `sha256:0b4ee4838db3b6589b09acb3531d74fd8d376ddcc5b4c0cbe8d0854b6c4c4080`.
+- Current merged owner blobs include `AppSearchSurface.astro` `5e58156d2fa4ace528d88b9ef91eee8e08ad93a4`, source contract `08efc5e359476fa399c434f56e2ebc1bb6571762`, browser contract `88ff097c3ea7c4200a182127da971b69deda3bb6` and extended Search workflow `79d7e34925811528d02e9c1c8e8360adec3cb9f3`.
+- Local MapEngine place search, Atlas-local search, Baptism iframe ownership and strict-native no-`site.css`/no-`site.js` boundaries remain intact. No production/live claim is imported.
 
 ## Search modal evidence retained
 
 - Product PR #1039 exact tested head `375d8f72836f8bf3ae92c5f04ac73da73b631609` / squash merge `007c2d3c50b9ada78a7f4ee709ea493d1ec20d3a` closes `SEARCH-P2-10`, `SEARCH-P2-11` and `SEARCH-P2-12`.
 - Exact head passed **27/27** applicable workflow groups; Search Modal run `31027159573`, job `92378451169` passed Chromium+WebKit desktop/mobile **4/4**.
 - Search Modal artifact `8939878899`; digest `sha256:b0ade209c287616da358bc13e596455d2306a9c7ce7ead627eedd23d04d7c10d`.
-- Exact-current Product `3a05a1e79bcd7061e9b9c3f98ed3953ae2e8d0c0` retains the tested owner blobs: `js/search.js` `7b279d1a8c092ae473d3db9129ee14652cb7ee69`; `css/command-palette.css` `758247d1dd41a626cabeafa5048636f8181be07a`; browser contract `50e52e488800d7c7bdc3875083e4a7b4a4975c17`; workflow `252539d5d1810612cc5c8a4aaa007e7461102e40`.
+- Exact-current Product `8a51db9a2df74fa615a3eaca698144302e47e332` retains the PR #1039 core owner blobs: `js/search.js` `7b279d1a8c092ae473d3db9129ee14652cb7ee69`, `css/command-palette.css` `758247d1dd41a626cabeafa5048636f8181be07a` and core browser contract `50e52e488800d7c7bdc3875083e4a7b4a4975c17`. The former workflow blob `252539d5d1810612cc5c8a4aaa007e7461102e40` is intentionally superseded by tested merged workflow blob `79d7e34925811528d02e9c1c8e8360adec3cb9f3`, which preserves the core contract and adds strict-native app coverage.
 - No production/live claim is imported by this closure.
 
 ## Favorite Store evidence retained
@@ -38,7 +47,7 @@
 - Favorite Store artifact `8943367668`; digest `sha256:c15e92c25bfc127cac2824ac5aa679be383e3bb916e3d9fa3dfa9bd385822628`.
 - Runtime Interactive run `31037316184` passed Home Chromium/WebKit and the full interactive audit; runtime artifact `8943966044`, digest `sha256:529375d76ddf5ba4fabf1ef65e824e277cf9873aff73c3856a3077569c691022`.
 - Reader Projection, TTS consent/polish, Overlay Runtime, Route Registry Chromium/WebKit, Visual Parity, Shared Files, Native Source and all other applicable exact-head workflow groups passed.
-- All nine functional/control blobs checked at merge equal the exact tested-head blobs; current Product `3a05a1e79bcd7061e9b9c3f98ed3953ae2e8d0c0` is one descendant commit and its exact diff from `d0647b71b557c17e408c09712fcd8c3ab05ba257` is limited to `data/scripture-search-index.json`, `scripts/home-browser-contract.mjs` and `src/components/home/HomeSections/Quote.astro`, so no Favorite Store owner drift was imported. The canonical Product branch was auto-deleted.
+- All nine Favorite Store functional/control blobs checked at merge equal the exact tested-head blobs; later Home Hebrew-mirror and Search app-route commits through current Product `8a51db9a2df74fa615a3eaca698144302e47e332` do not touch those nine owners. The canonical Favorite Store branch was auto-deleted.
 - No BookmarkEngine, ReaderState, ReaderProjection, Search behavior, TTS/Vosk, route-content or visual-redesign ownership was imported by this lane.
 
 ## Reader controls accessibility evidence retained
@@ -74,8 +83,7 @@ Umbrella #61 has no remaining source scope under its current verified boundary a
 
 ## Next bounded search lanes retained
 
-1. `SEARCH-P1-01`: exact-current reverify, then extend the unified command palette only to remaining genuinely searchable app/tool routes not already covered by PR #1039.
-2. `SEARCH-P2-07`: proceed only with authoritative/licensed corpus and rights/provenance evidence.
-3. Search P3 polish rows after functional owners.
+1. `SEARCH-P2-07`: proceed only with authoritative/licensed corpus and rights/provenance evidence.
+2. Search P3 polish rows after functional owners.
 
 Before opening any Product mutation lane, re-read live Product `main`, current open PR/branch ownership, the deployment pointer and source-owner blobs. Complete and clean one bounded lane before starting another.
