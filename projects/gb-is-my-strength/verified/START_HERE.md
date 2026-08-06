@@ -1,27 +1,98 @@
-# 📋 OWNER ACTION SUMMARY — gospod-bog.ru
+# Owner Start Here — gb-is-my-strength AuditRepo
 
-> Owner-facing дайджест. Карта документов: [`../DOC_MAP.md`](../DOC_MAP.md).
-> Каноны: [`MASTER_BUG_MATRIX.md`](./MASTER_BUG_MATRIX.md) (точечные баги + **живые счётчики**) +
-> [`SUPER_AUDIT_2026-07-06_14a49be8.md`](./SUPER_AUDIT_2026-07-06_14a49be8.md) (системный бэклог + план).
-> Текущий HEAD/deploy — в [`../NEXT_AGENT_PROMPT.md`](../NEXT_AGENT_PROMPT.md).
+## What this repository gives you
+
+AuditRepo is a growing evidence library and reasoning layer for `gb-is-my-strength`.
+
+It can contain many independent passes, including reports that later prove stale, duplicate or wrong. That is useful: raw evidence shows how conclusions were reached and how audit methods improved.
+
+The purpose is not to maintain a second exact copy of Product status. The purpose is to help answer:
+
+- What has been observed before?
+- What evidence supports or contradicts it?
+- Which symptoms share one root cause?
+- What is worth verifying now?
+- Should we fix locally, improve a system, park it or accept the risk?
 
 ---
 
-## Общая картина
+## The four useful views
 
-Счётчики открыто/закрыто **намеренно не дублируются здесь** (дрейфовали) — смотри таблицу
-«Статистика» внизу `MASTER_BUG_MATRIX.md`. Кратко: точечные баги — в матрице; системный
-бэклог (~70 находок: транзакция релиза, петля дат, SW-кэш, XSS-поверхности, Bible-корпус,
-семантические гейты) — в SUPER_AUDIT, закрывается волнами **W1–W10** (W0 выполнена 2026-07-06).
+### 1. Possible work
 
-## Что важно владельцу (5 пунктов)
+[`../WORK_QUEUE.md`](../WORK_QUEUE.md)
 
-1. **Прод актуален** (main задеплоен), но релизный конвейер не гарантирует, что валидированный, собранный и задеплоенный SHA — один и тот же; PR#45→#48 показали «merge-first, repair-later». Первая волна W1 чинит именно это.
-2. **Даты статей на проде технические**: массовый `modified_time 2026-07-06 02:10` — от bot-коммита, не от редакционных правок. Волна W2 вводит явные publishedAt/updatedAt.
-3. **Глоссарий/квизы/избранное рендерят HTML из данных без санитайзера** — при доверенных данных это работает, но это главная security-поверхность (W5). Координируется с вашей текущей работой по глоссарию.
-4. **Bible-хранилище (45 файлов)**: текст местами НЕ дословно синодальный, источник указан циркулярно («выверено в статье»), потребителей в коде нет, а файлы уже публикуются на прод. Волна W6 — заморозка издания + валидатор, до раскатки тултипов.
-5. **Ваши in-flight зоны (PremiumControls, глоссарий) агентами не трогаются** без вашего решения — зафиксировано в NEXT_AGENT_PROMPT и SUPER_AUDIT §4.
+An optional owner-controlled queue. It may contain a few questions, many questions or none.
 
-## Решений владельца сейчас НЕ требуется
+### 2. Systemic causes
 
-Прежние 2 dispute (BUG-SW-BASELINE-DRIFT, SEARCH-SCRIPTURE-BROKEN) закрыты: baseline v189 синхронизирован (PR#48), поиск «Писание» починен (PR#36).
+[`SYSTEM_THEMES.md`](./SYSTEM_THEMES.md)
+
+Recurring classes such as release identity, runtime ownership, strangler duplication, content authority and audit-harness quality.
+
+### 3. Finding registry
+
+[`MASTER_BUG_MATRIX.md`](./MASTER_BUG_MATRIX.md)
+
+The historical registry. It still contains both active and many closed rows from the earlier exact-authority model. Use it as evidence/index, not as an obligation to keep all 376 rows globally current.
+
+### 4. Completed waves
+
+[`CLOSURE_LEDGER.md`](./CLOSURE_LEDGER.md)
+
+Compact summaries of what a wave fixed, absorbed, rejected, parked or left independent.
+
+---
+
+## How to request work
+
+You can choose any scope:
+
+```text
+“Verify these 50 findings and find deeper causes.”
+“Fix only this visible bug.”
+“Take the TTS performance theme.”
+“Close everything this system fix absorbs.”
+“Do a fresh broad audit and add evidence only.”
+“Decide what is not worth fixing.”
+```
+
+The process should adapt to the request. AuditRepo no longer requires one fixed close-every-row sequence.
+
+---
+
+## What happens before a fix
+
+The agent should:
+
+1. read relevant historical evidence;
+2. inspect the selected current Product surface directly;
+3. identify local vs systemic cause;
+4. choose proportionate evidence;
+5. avoid overlapping active Product work;
+6. explain when no fix or owner decision is better.
+
+There is no preliminary requirement to synchronize every AuditRepo document with the latest Product HEAD.
+
+---
+
+## What a good result looks like
+
+A good wave may reduce fifty claims to:
+
+- several current local defects;
+- a few systemic roots;
+- duplicates absorbed into those roots;
+- stale or invalid claims;
+- low-value parked work;
+- owner decisions.
+
+The value is clearer causality and better choices, not a larger count of “verified bugs”.
+
+---
+
+## Current transition
+
+The large historical matrix remains intact so no evidence is lost. New work uses the lighter operating model, optional queue, system themes and compact closure ledger. Old rows can be consolidated gradually in dedicated waves.
+
+Canonical repository model: [`../../../AUDITREPO_OPERATING_MODEL.md`](../../../AUDITREPO_OPERATING_MODEL.md).
