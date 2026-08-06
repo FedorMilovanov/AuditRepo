@@ -72,6 +72,7 @@ jobs:
           closed_header = '## ✅ ЗАКРЫТО (231)\n\n| ID | Описание | Коммит |\n|---|---|---|\n'
           closed_row = (
               '| REFERENCE-TRANSFER-GOVERNANCE | ✅ **FIXED-CURRENT / MERGED-SYSTEM+SOURCE+CHROMIUM+WEBKIT+CI VERIFIED 2026-08-06.** Product PR #1076 converts the useful Agent Arena reference research into one proportional system instead of a mega-gate: explicit `exact-replica`, `adaptive-approved`, `native-contract`, `legacy-preserve`, `performance-target` and `inventory` modes; immutable snapshot + SHA-256 + named owners + bounded structure/order + desktop/mobile review for any real 1:1 claim; current registry **10 = 6 blocking + 4 non-blocking** with hard maximum **8** blocking contracts, **3** delegated guards and **12** required/forbidden markers per file; new contracts start advisory, automatic HTML token harvesting is disabled, performance/inventory cannot block, and existing route/browser/visual owners are reused through `owner:ui-guard` without a new workflow. Exact head `c4cb9c3` passed Shared Files, Favorite Store, Visual Parity, Metadata, Deploy Candidate, Glossary and dedicated Home Chromium/WebKit witnesses before squash merge `3d907194`; no production claim. | `3d907194` PR#1076; exact head `c4cb9c3` |\n'
+          )
           replace_once(closed_header, closed_header + closed_row)
 
           sub_once(
@@ -83,6 +84,7 @@ jobs:
           p3_heading = '## 🟢 P3 — ОТКРЫТО (40)\n'
           p3_row = (
               '| HOME-P3-FOOTER-EDGE-CONSOLE | ⚠️ **CONFIRMED-CURRENT / BROWSER-EVIDENCE 2026-08-06.** Runtime Interactive Audit run `31060246529` reproduced twice on exact Product head `c4cb9c3` the separate Home Design console contract message `[home-footer-contract] footer touches a viewport edge`. The broad interactive audit passed 43 pages and all covered interaction families before this step; the dedicated Home Chromium/WebKit production-like job on the same SHA passed; PR #1076 changed no footer, shared layout or CSS. Open a bounded Home visual lane to inspect exact geometry/screenshots. Do not claim visible clipping without that evidence, weaken the contract, or mix the repair into unrelated SYSTEM work. | exact-head runtime attempts 2+3; reverify `3d907194_reference-transfer-governance` |\n'
+          )
           replace_once(p3_heading, p3_heading + p3_row)
 
           replace_once('## 🔵 P3 — РЕФАКТОРИНГ (4)', '## 🔵 P3 — РЕФАКТОРИНГ (7)')
