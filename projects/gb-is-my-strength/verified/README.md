@@ -1,19 +1,50 @@
-# Verified
+# Verified — gb-is-my-strength
 
-Здесь живёт только **текущая каноническая правда**. Всё историческое — в `../archive/`.
+`verified/` contains durable classifications and active guidance. It is not a mirror of every current Product commit.
 
-## Текущий канонический набор (source HEAD — см. `MASTER_BUG_MATRIX.md`)
+## Current set
 
-- `MASTER_BUG_MATRIX.md` — канон точечных багов (единый HEAD, счётчики пересобраны, D-строки arena влиты).
-- `SUPER_AUDIT_2026-07-06_14a49be8.md` — канон системного бэклога: верифицированные находки, опровергнутые формулировки, план волн W0–W10, правила закрытия.
-- `START_HERE.md` — сводка для владельца (регенерируется при каждой волне).
+- [`MASTER_BUG_MATRIX.md`](./MASTER_BUG_MATRIX.md) — existing finding registry and legacy closed-row corpus. Transitional monolith; preserve while migrating gradually.
+- [`SYSTEM_THEMES.md`](./SYSTEM_THEMES.md) — recurring root-cause classes and system questions.
+- [`CLOSURE_LEDGER.md`](./CLOSURE_LEDGER.md) — compact append-only results of new waves and meaningful closures.
+- [`START_HERE.md`](./START_HERE.md) — owner-facing explanation of how to use this layer.
+- `SUPER_AUDIT_2026-07-06_14a49be8.md` — rich historical system diagnosis on its recorded anchor; source of hypotheses, not automatically current truth.
 
-## Примечания
+Other verified documents may remain as specifications or evidence. Their anchor and role must be explicit.
 
-- `PLAYEMBER_INTERACTION_SPEC_2026-06-27.md` — спека PlayEmber; зона PremiumControls in-flight у владельца, спеку сверять с текущим source перед использованием.
-- Устаревшие доки (`ACTION_PLAN`, `CURRENT_HEAD_CANONICAL_LEDGER_2026-06-27`, `REPAIR_ORDER_DELTA_2026-06-27`, `DEFINITIVE_PREMIUMCONTROLS_FINAL_HANDOFF_2026-06-27`) перенесены в `../archive/2026-07-06-stale-verified/` (2026-07-06).
+---
 
-## Правило
+## What belongs here
 
-Один канонический документ на слой. Новые находки — через `incoming/` → матрица/SUPER_AUDIT,
-не параллельными «current»-доками. Исторические/superseded файлы не живут в корне этой папки.
+- active local findings;
+- verified-at-anchor classifications;
+- systemic root themes;
+- owner decisions;
+- parked/accepted-risk dispositions;
+- compact closure summaries;
+- stable specifications that still have a named purpose.
+
+## What does not belong here
+
+- raw observations;
+- per-session scratch notes;
+- copied current Product HEAD/deploy facts;
+- a new “current truth” document after every merge;
+- verbose repetition of workflow runs already preserved in Product PRs;
+- temporary control-plane instructions.
+
+---
+
+## Transition rule
+
+The existing matrix has hundreds of closed rows and manually repeated counts. Do not rewrite it wholesale during unrelated work.
+
+Future waves should:
+
+1. update only material finding dispositions;
+2. prefer `SYSTEM_THEMES.md` for causal understanding;
+3. prefer `CLOSURE_LEDGER.md` for compact history;
+4. consolidate old closed clusters in dedicated batches;
+5. keep original evidence discoverable.
+
+The goal is a short active backlog and a rich historical corpus, not a permanently synchronized second Product repository.
