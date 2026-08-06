@@ -97,3 +97,17 @@ This entry records the governance change only. It does not claim that the reform
 - Regression witness: all 25 exact-head pull-request workflows passed, including Search Modal, Shared Files Guard, Source Authority, Route Registry Chromium/WebKit surfaces, Runtime Interactive Audit, Home Chromium/WebKit interaction/lifecycle/A13 and Visual Parity policy.
 - Live evidence: not required and not claimed.
 - Detailed evidence: Product PR #1079 body and exact-head workflow evidence; no separate reverify document required.
+
+## 2026-08-06 — AuditRepo maintenance backlog consolidation
+
+- Scope: historical `AR-001`, `AR-004` and `AR-005` under the broader `ST-AUDIT-HARNESS` quality theme.
+- Inputs: AuditRepo operating-model PR #196, validator/intake hardening PR #201 and the current proportional verification/reverify policy.
+- Result:
+  - closed-by-fix: `AR-001` — validator/scaffold hardening now blocks overwrite, traversal, invalid dates, placeholder anchors and template-only reports, with black-box regressions and same-PR concurrency cancellation;
+  - absorbed-by-system-fix: `AR-004` — the useful verification goal is now owned by package waves, independent evidence angles, lightweight ordinary-PR checks and periodic/manual deep forensic rather than one mandatory protocol automator;
+  - stale/retired: `AR-005` — blanket reverify automation is intentionally not a current invariant; narrow current checks and separate reverify documents are created only when selected evidence or risk justifies them;
+  - remaining independent: `ST-AUDIT-HARNESS` stays active as a quality lens, and any future concrete false-green/false-red or evidence-integrity defect must be opened as its own bounded finding.
+- Product evidence: no Product mutation; AuditRepo PR #196 merged as `1fd204f0f7c76ead6dc7ab22b2a7feb46c0fc297`, PR #201 merged as `a0e49cec76173911b9cb489173d7729e5617a8e1`.
+- Regression witness: PR #201 exact head `e1a2b2f565888b92a256da8cfea5644874fe1e4f`; AuditRepo Validate run `31098233305` passed compilation, structure, repository rules, validator regressions, scaffold regressions and clean-tree checks.
+- Live evidence: not applicable and not claimed.
+- Detailed evidence: `../verification/2026-08-06-auditrepo-maintenance-consolidation/REPORT.md`.
