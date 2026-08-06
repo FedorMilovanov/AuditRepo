@@ -8,6 +8,7 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 PROJECTS = ROOT / 'projects'
 SAFE_COMPONENT_RE = re.compile(r'^[A-Za-z0-9._-]+$')
+RESERVED_PATH_COMPONENTS = {'.', '..'}
 
 README_TEMPLATE = """# {project}
 
@@ -106,10 +107,10 @@ See [`../DOC_MAP.md`](../DOC_MAP.md).
 
 
 def safe_component(value: str) -> bool:
-    if SAFE_COMPONENT_RE.fullmatch(value):
+    if value not in RESERVED_PATH_COMPONENTS and SAFE_COMPONENT_RE.fullmatch(value):
         return True
     print(
-        f'ERROR: project must contain only letters, numbers, dot, underscore or hyphen: {value!r}',
+        f'ERROR: project must be a safe name using only letters, numbers, dot, underscore or hyphen: {value!r}',
         file=sys.stderr,
     )
     return False
