@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "execute": true,
+  "requestRef": "2026-08-06-auditrepo-branch-cleanup.json",
+  "executionChannel": "same-repository pull_request label execute-ref-retirement",
+  "reason": "The original reviewed request merged safely, but its newly introduced push workflow was not dispatched. This wrapper starts the unchanged pinned request through the permanent label-gated channel."
+}
