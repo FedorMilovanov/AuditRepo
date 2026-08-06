@@ -93,6 +93,20 @@ def main() -> int:
             sentinel.read_text(encoding='utf-8') == original_project_readme,
             'failed project scaffold mutated existing project files',
         )
+        require(
+            run_main(
+                project_scaffold,
+                ['scaffold_project.py', '..', '--source-repo', 'example/escape'],
+            ) == 1,
+            'reserved dot-dot project unexpectedly passed',
+        )
+        require(
+            run_main(
+                project_scaffold,
+                ['scaffold_project.py', '.', '--source-repo', 'example/current'],
+            ) == 1,
+            'reserved dot project unexpectedly passed',
+        )
 
         intake_scaffold.ROOT = root
         intake_scaffold.REPORT_TEMPLATE_PATH = (
@@ -134,6 +148,20 @@ def main() -> int:
                 ['scaffold_intake.py', 'fixture-project', '../escape', '2026-08-06'],
             ) == 1,
             'unsafe agent path unexpectedly passed',
+        )
+        require(
+            run_main(
+                intake_scaffold,
+                ['scaffold_intake.py', 'fixture-project', '..', '2026-08-06'],
+            ) == 1,
+            'reserved dot-dot agent unexpectedly passed',
+        )
+        require(
+            run_main(
+                intake_scaffold,
+                ['scaffold_intake.py', 'fixture-project', '.', '2026-08-06'],
+            ) == 1,
+            'reserved dot agent unexpectedly passed',
         )
         require(
             run_main(
