@@ -60,7 +60,7 @@ Durable classifications belong to a verifier synthesis or accepted ledger decisi
 
 ## Operating model
 
-See `../../../../AUDITREPO_OPERATING_MODEL.md` from the repository root.
+See [`AUDITREPO_OPERATING_MODEL.md`](../../../../../AUDITREPO_OPERATING_MODEL.md).
 """
 
 
