@@ -69,9 +69,18 @@
 
 - Status: `evidence-rich`, `owner-decision`.
 - Historical manifestations: archived candidates with incomplete source, attribution or publication-rights evidence.
-- Current bounded result: two verified decisions were accepted; 28 candidates remain unresolved and are not implicitly approved.
+- Current bounded result:
+  - two candidates are accepted in Product through explicit decisions;
+  - all 28 remaining candidates are still publication-unresolved;
+  - within that unresolved set, C01 now has independent object/caption support for `Владимир Маяковский; Москва; 1910; неизвестный фотограф`, but remains `rights-blocked` and unpublished.
+- C01 demonstrates the recurring split that this theme must preserve:
+  1. exact Commons file identity and hashes;
+  2. independent historical caption/object provenance;
+  3. jurisdiction-appropriate publication authority.
+- A strong result in one layer does not satisfy the other two. Commons metadata, institutional caption evidence and permission/licence evidence must remain separate fields.
 - Better-than-local outcome: one explicit provenance/rights record per selected asset and a rights-safe publication boundary.
-- Technical availability, visual resemblance or archive presence do not satisfy this decision.
+- Technical availability, visual resemblance, an archive presence or an institutional reproduction do not by themselves authorize publication.
+- Detailed C01 evidence: `../verification/2026-08-06-c01-caption-rights-wave/REPORT.md`.
 
 ## ST-TLP-AUDIT-HARNESS — Class-level evidence without control-plane duplication
 
