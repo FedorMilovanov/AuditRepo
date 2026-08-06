@@ -29,6 +29,7 @@ PLACEHOLDER_VALUE_RE = re.compile(
     r'^(?:<[^>]*>|TBD|TODO|N/?A|NONE|UNKNOWN|NOT SET|SHA / ARTIFACT / LIVE SNAPSHOT)$',
     re.IGNORECASE,
 )
+FINDING_ID_BODY = r'[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+'
 
 
 def fail(msg, errors):
@@ -68,7 +69,6 @@ def concrete_value(value):
     value = value.strip().strip('`').strip()
     if not value or PLACEHOLDER_VALUE_RE.fullmatch(value):
         return False
-    # Option lists belong to the template and do not prove that an agent supplied data.
     if re.fullmatch(r'[A-Za-z0-9_-]+(?:\s*/\s*[A-Za-z0-9_-]+){2,}', value):
         return False
     return bool(re.search(r'[A-Za-z0-9А-Яа-яЁё]', value))
@@ -100,7 +100,7 @@ def has_legacy_evidence_anchor(text):
 
 
 def report_has_real_evidence(report_file):
-    """Reject untouched scaffolds while accepting established report styles."""
+    """Reject untouched scaffolds while accepting established and historical report styles."""
     rtxt = report_file.read_text(encoding='utf-8', errors='ignore')
 
     has_real_title = bool(re.search(
@@ -122,21 +122,33 @@ def report_has_real_evidence(report_file):
         rtxt,
         re.MULTILINE | re.IGNORECASE,
     ))
-    has_bug_table = bool(re.search(
-        r'^\|\s*(?:BUG|NEW|AUDIT|SEC|SEARCH|UI|AR|R|REG|PC|CSP|CI)-?[A-Z0-9._-]*\s*\|',
+    has_finding_table = bool(re.search(
+        rf'^\|\s*{FINDING_ID_BODY}\s*\|',
         rtxt,
         re.MULTILINE,
     ))
-    has_issue_id = bool(re.search(
-        r'\b(?:BUG|NEW|AUDIT|SEC|SEARCH|UI|AR|R|REG|PC|CSP|CI)-[A-Z0-9._-]+\b',
+    has_finding_id = bool(re.search(
+        rf'(?<![A-Z0-9-]){FINDING_ID_BODY}(?![A-Z0-9-])',
         rtxt,
+    ))
+    has_evidence_index = bool(re.search(
+        r'^\s*\d+\.\s+`[^`\n]+\.md`\s+[—-]\s+\S.+$',
+        rtxt,
+        re.MULTILINE,
+    ))
+    has_summary_prose = bool(re.search(
+        r'^##\s+Summary\b[^\n]*\n(?:\s*\n)*(?:[-*]\s+\S.+|(?!(?:#|<!--|---))\S.{20,})$',
+        rtxt,
+        re.MULTILINE | re.IGNORECASE,
     ))
     return any((
         has_real_title,
         has_real_heading,
         has_real_content,
-        has_bug_table,
-        has_issue_id,
+        has_finding_table,
+        has_finding_id,
+        has_evidence_index,
+        has_summary_prose,
     ))
 
 
