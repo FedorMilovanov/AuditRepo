@@ -9,11 +9,14 @@ records the evidence anchor actually inspected; it is not rewritten when the
 source repository later moves.
 """
 from pathlib import Path
+from datetime import datetime
 import argparse
+import re
 import sys
 
 ROOT = Path(__file__).resolve().parent.parent
 REPORT_TEMPLATE_PATH = ROOT / 'projects' / '_templates' / 'AGENT_REPORT_TEMPLATE.md'
+SAFE_COMPONENT_RE = re.compile(r'^[A-Za-z0-9._-]+$')
 
 
 README_TEMPLATE = """# Intake — {project} — {agent} — {date}
@@ -143,6 +146,25 @@ def fill_report_template(project: str, agent: str, date: str) -> str:
     return text
 
 
+def safe_component(value: str, label: str) -> bool:
+    if SAFE_COMPONENT_RE.fullmatch(value):
+        return True
+    print(
+        f'ERROR: {label} must contain only letters, numbers, dot, underscore or hyphen: {value!r}',
+        file=sys.stderr,
+    )
+    return False
+
+
+def valid_date(value: str) -> bool:
+    try:
+        datetime.strptime(value, '%Y-%m-%d')
+        return True
+    except ValueError:
+        print(f'ERROR: date must be a real YYYY-MM-DD value: {value!r}', file=sys.stderr)
+        return False
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description='Scaffold a new agent intake folder in AuditRepo.'
@@ -152,22 +174,35 @@ def main() -> int:
     parser.add_argument('date', help='Date in YYYY-MM-DD format')
     args = parser.parse_args()
 
+    if not safe_component(args.project, 'project'):
+        return 1
+    if not safe_component(args.agent, 'agent'):
+        return 1
+    if not valid_date(args.date):
+        return 1
+
     project_root = ROOT / 'projects' / args.project
-    if not project_root.exists():
+    if not project_root.is_dir():
         print(f'ERROR: project not found: {project_root}', file=sys.stderr)
         return 1
 
     intake = project_root / 'incoming' / args.agent / args.date
+    if intake.exists():
+        print(
+            f'ERROR: intake already exists and will not be overwritten: {intake}',
+            file=sys.stderr,
+        )
+        return 1
+
     comments = intake / 'comments'
     proposals = intake / 'proposals'
     evidence = intake / 'evidence'
     artifacts = intake / 'artifacts'
 
-    intake.mkdir(parents=True, exist_ok=True)
-    comments.mkdir(exist_ok=True)
-    proposals.mkdir(exist_ok=True)
-    evidence.mkdir(exist_ok=True)
-    artifacts.mkdir(exist_ok=True)
+    comments.mkdir(parents=True)
+    proposals.mkdir()
+    evidence.mkdir()
+    artifacts.mkdir()
 
     (intake / 'README.md').write_text(
         README_TEMPLATE.format(project=args.project, agent=args.agent, date=args.date),

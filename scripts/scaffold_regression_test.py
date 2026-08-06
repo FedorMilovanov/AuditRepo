@@ -47,20 +47,15 @@ def main() -> int:
 
         project_scaffold.ROOT = root
         project_scaffold.PROJECTS = projects
-        require(
-            run_main(
-                project_scaffold,
-                [
-                    'scaffold_project.py',
-                    'fixture-project',
-                    '--source-repo',
-                    'example/fixture',
-                    '--production-url',
-                    'https://example.invalid',
-                ],
-            ) == 0,
-            'project scaffold failed',
-        )
+        project_args = [
+            'scaffold_project.py',
+            'fixture-project',
+            '--source-repo',
+            'example/fixture',
+            '--production-url',
+            'https://example.invalid',
+        ]
+        require(run_main(project_scaffold, project_args) == 0, 'project scaffold failed')
 
         project = projects / 'fixture-project'
         required_project_files = [
@@ -82,21 +77,35 @@ def main() -> int:
             'HEAD decoupling wording missing',
         )
 
+        nested_archive_readme = (project / 'archive' / 'closed' / 'README.md').read_text(encoding='utf-8')
+        require(
+            '[`../../DOC_MAP.md`](../../DOC_MAP.md)' in nested_archive_readme,
+            'nested archive README points to the wrong DOC_MAP path',
+        )
+
+        sentinel = project / 'README.md'
+        original_project_readme = sentinel.read_text(encoding='utf-8')
+        require(
+            run_main(project_scaffold, project_args) == 1,
+            'existing project was unexpectedly overwritten',
+        )
+        require(
+            sentinel.read_text(encoding='utf-8') == original_project_readme,
+            'failed project scaffold mutated existing project files',
+        )
+
         intake_scaffold.ROOT = root
         intake_scaffold.REPORT_TEMPLATE_PATH = (
             REPO_ROOT / 'projects' / '_templates' / 'AGENT_REPORT_TEMPLATE.md'
         )
-        require(
-            run_main(
-                intake_scaffold,
-                ['scaffold_intake.py', 'fixture-project', 'fixture-agent', '2026-08-06'],
-            ) == 0,
-            'intake scaffold failed',
-        )
+        intake_args = ['scaffold_intake.py', 'fixture-project', 'fixture-agent', '2026-08-06']
+        require(run_main(intake_scaffold, intake_args) == 0, 'intake scaffold failed')
 
         intake = project / 'incoming' / 'fixture-agent' / '2026-08-06'
-        readme = (intake / 'README.md').read_text(encoding='utf-8')
-        report = (intake / 'REPORT.md').read_text(encoding='utf-8')
+        readme_path = intake / 'README.md'
+        report_path = intake / 'REPORT.md'
+        readme = readme_path.read_text(encoding='utf-8')
+        report = report_path.read_text(encoding='utf-8')
 
         require(
             '- Audited anchor (SHA / artifact / live snapshot):' in readme,
@@ -108,6 +117,31 @@ def main() -> int:
         require('- Project: fixture-project' in report, 'project placeholder was not filled')
         require('- Agent: fixture-agent' in report, 'agent placeholder was not filled')
         require('- Date: 2026-08-06' in report, 'date placeholder was not filled')
+
+        report_path.write_text(report + '\nSENTINEL-EVIDENCE\n', encoding='utf-8')
+        require(
+            run_main(intake_scaffold, intake_args) == 1,
+            'existing intake was unexpectedly overwritten',
+        )
+        require(
+            'SENTINEL-EVIDENCE' in report_path.read_text(encoding='utf-8'),
+            'failed intake scaffold destroyed existing evidence',
+        )
+
+        require(
+            run_main(
+                intake_scaffold,
+                ['scaffold_intake.py', 'fixture-project', '../escape', '2026-08-06'],
+            ) == 1,
+            'unsafe agent path unexpectedly passed',
+        )
+        require(
+            run_main(
+                intake_scaffold,
+                ['scaffold_intake.py', 'fixture-project', 'fixture-agent-2', '2026-02-31'],
+            ) == 1,
+            'invalid calendar date unexpectedly passed',
+        )
 
     print('AUDITREPO SCAFFOLD REGRESSION: PASS')
     return 0
