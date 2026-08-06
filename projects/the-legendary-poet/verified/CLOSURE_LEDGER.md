@@ -43,3 +43,17 @@ Append-only журнал компактных результатов verificatio
 - Product evidence: no Product mutation.
 - Regression witness: ordinary AuditRepo validation on the migration PR.
 - Live evidence: not applicable.
+
+## 2026-08-06 — C01 caption verified, publication rights remain blocked
+
+- Scope: one bounded media candidate, `C01 / Mayakovsky 1910.jpg`.
+- Result:
+  - verified-at-anchor: Commons file identity, existing local hashes and dimensions;
+  - caption-verified: the same photograph is documented by the State Mayakovsky Museum collection as Vladimir Mayakovsky in Moscow, 1910;
+  - narrowed: photographer remains unknown; exact day `1 February` and the object-level phrase `student of the Stroganov School` are not promoted;
+  - rights-blocked: `PD-old` on Commons lacks a United States public-domain tag and the original publication history is not established;
+  - no Product mutation and no production-media acceptance.
+- Evidence angles: Product provenance ledger + Commons description/licensing + museum object record + RIA archive metadata + manual visual comparison of the exact composition.
+- Owner outcomes: strengthen public-domain rationale / obtain permission / replace / park.
+- Live evidence: not required; this was a provenance and rights verification.
+- Detailed evidence: `../verification/2026-08-06-c01-caption-rights-wave/REPORT.md`.
