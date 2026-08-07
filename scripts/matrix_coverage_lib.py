@@ -3,7 +3,7 @@
 
 The engine treats a project's MASTER as the compact active work registry.
 Historical evidence may remain in incoming/verification/reverify/legacy/archive,
-but retired IDs do not need to remain as closed rows in MASTER.
+but retired/evidence-only IDs do not need to remain in MASTER or an alias ledger.
 """
 
 from __future__ import annotations
@@ -32,7 +32,6 @@ WITNESS_RE = re.compile(
     re.IGNORECASE,
 )
 
-# New compact active-work schema.
 ACTIVE_SECTION_MARKERS = (
     "CURRENT DEFECTS",
     "NARROWED RESIDUALS",
@@ -41,8 +40,6 @@ ACTIVE_SECTION_MARKERS = (
     "NECESSARY IMPROVEMENTS",
     "VERIFIED IMPROVEMENTS",
 )
-
-# Compatibility with older project matrices during migration.
 LEGACY_OPEN_SECTION_MARKERS = ("ОТКРЫТО", "РЕФАКТОРИНГ", "AUDITREPO")
 LEGACY_CLOSED_SECTION_MARKERS = ("ЗАКРЫТО",)
 HEADER_IDS = {"ID", "Поле", "Категория", "Статус"}
@@ -95,7 +92,6 @@ def section_kind(section: str) -> str | None:
 
 
 def section_declared_count(section: str) -> int | None:
-    # Supports both old "(12)" and compact "— 12" section headings.
     match = re.search(r"(?:\((\d+)\)|[—–-]\s*(\d+))\s*$", section)
     if not match:
         return None
@@ -211,15 +207,12 @@ def matrix_integrity_problems(
             )
 
         def count_marker(marker: str) -> int:
-            return sum(
-                count
-                for sec, count in actual_counts.items()
-                if marker in sec.upper()
-            )
+            return sum(count for sec, count in actual_counts.items() if marker in sec.upper())
 
         expected_state = {
             "Active work units": sum(1 for row in matrix_rows.values() if section_kind(row.section) == "open"),
             "Direct current defects": count_marker("CURRENT DEFECTS"),
+            "Verified necessary improvements": count_marker("NECESSARY IMPROVEMENTS"),
             "Narrowed residuals": count_marker("NARROWED RESIDUALS"),
             "System verification lanes": count_marker("SYSTEM VERIFICATION LANES"),
             "Owner decisions": count_marker("OWNER DECISIONS"),
@@ -435,7 +428,11 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
         aliases_path, set(matrix_rows), historical_ids
     )
     known_ids = set(matrix_rows) | set(registry) | historical_ids | ignored_tokens
-    canonical_families |= {finding_id.split("-", 1)[0] for finding_id in known_ids if is_finding_id(finding_id)}
+    canonical_families |= {
+        finding_id.split("-", 1)[0]
+        for finding_id in known_ids
+        if is_finding_id(finding_id)
+    }
 
     evidence_paths: list[pathlib.Path] = []
     for directory_name in ("reverify", "verification", "incoming", "working"):
@@ -462,7 +459,6 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
     problems: list[str] = matrix_integrity_problems(matrix_text, matrix_rows)
     historical_only: list[str] = []
     direct_witnessed: list[str] = []
-    unregistered_evidence: list[dict[str, object]] = []
 
     for finding_id in sorted(open_ids):
         row = matrix_rows[finding_id]
@@ -483,21 +479,17 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
             f"ORPHAN-ACTIVE-WORK: {finding_id} has no explicit current evidence ID/path/verified-* witness"
         )
 
-    # Reverify is intentionally strict about explicit IDs, but a retired ID is valid
-    # when legacy preserves its disposition. It does not need to stay in MASTER.
-    for path, text in evidence.items():
-        if "reverify" not in path.parts:
-            continue
-        details = structured_id_occurrences(text, known_ids, canonical_families)
-        relative = str(path.relative_to(project))
-        for finding_id, occurrence in details.items():
-            if finding_id in matrix_rows or finding_id in registry or finding_id in ignored_tokens or finding_id in historical_ids:
-                continue
-            first_line = occurrence["lines"][0] if occurrence["lines"] else "?"
-            problems.append(
-                f"UNREGISTERED-EVIDENCE: reverify explicitly registers {finding_id} at {relative}:{first_line} but it is absent from MASTER/registry/legacy"
-            )
-            unregistered_evidence.append({"id": finding_id, "occurrences": evidence_details.get(finding_id, [])})
+    # Evidence is intentionally allowed to outlive active work. Hundreds of old
+    # reverify IDs must not force rows back into MASTER or create a permanent alias
+    # registry. Keep them visible as evidence-only diagnostics, but non-blocking.
+    evidence_only_ids = sorted(
+        finding_id
+        for finding_id in evidence_occurrences
+        if finding_id not in matrix_rows
+        and finding_id not in registry
+        and finding_id not in ignored_tokens
+        and finding_id not in historical_ids
+    )
 
     return {
         "matrixIds": len(matrix_rows),
@@ -512,11 +504,12 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
         "ignoredTokens": len(ignored_tokens),
         "directWitnessedOpenRows": len(direct_witnessed),
         "historicalOnlyOpenRows": len(historical_only),
+        "evidenceOnlyIds": len(evidence_only_ids),
+        "evidenceOnlyIdList": evidence_only_ids,
         "problems": len(problems),
         "problemKinds": dict(collections.Counter(item.split(":", 1)[0] for item in problems)),
         "directWitnessedIds": direct_witnessed,
         "historicalOnlyIds": historical_only,
-        "unregisteredEvidence": unregistered_evidence,
         "diagnostics": problems,
     }
 
@@ -544,7 +537,7 @@ def main(argv: list[str] | None = None) -> int:
         "legacy/archive ids: {historicalIds}; registry: {registryIds} "
         "(aliases: {aliasIds}, informational: {informational}, retired: {retired}, "
         "false-positive: {false_positive}); direct witnesses: {directWitnessedOpenRows}; "
-        "historical-only active: {historicalOnlyOpenRows}".format(
+        "historical-only active: {historicalOnlyOpenRows}; evidence-only ids: {evidenceOnlyIds}".format(
             **report,
             informational=counts["informational"],
             retired=counts["retired"],
@@ -556,6 +549,8 @@ def main(argv: list[str] | None = None) -> int:
             print("direct-witnessed:", ", ".join(report["directWitnessedIds"]))
         if report["historicalOnlyIds"]:
             print("historical-only-active:", ", ".join(report["historicalOnlyIds"]))
+        if report["evidenceOnlyIdList"]:
+            print("evidence-only (non-blocking):", ", ".join(report["evidenceOnlyIdList"]))
 
     if args.json_out:
         output = pathlib.Path(args.json_out)
