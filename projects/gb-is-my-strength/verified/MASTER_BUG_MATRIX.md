@@ -4,16 +4,16 @@
 > Несмотря на историческое имя файла, это не только баги: здесь живут текущие дефекты, доказанно нужные внедрения/улучшения, системные verification/implementation packages, residuals и owner decisions.
 > Решено / stale / duplicate / absorbed / invalid / superseded → убрать из MASTER в той же wave; полезный контекст остаётся в `../legacy/`.
 
-Current wave evidence: `verification/2026-08-07-ishod-basemap-closure/REPORT.md`.
+Current wave evidence: `verification/2026-08-07-map-p1-20-sw-freshness-closure/REPORT.md`.
 
 ## Current state
 
 | Поле | Значение |
 |---|---|
-| Product verification anchor | `c42d0d585133e8fea8dfdd43bec851740eedc9e8` |
-| Wave | Ishod basemap closure, 2026-08-07 |
-| Active work units | **23** |
-| Direct current defects | **13** |
+| Product verification anchor | `c99f15b102494282a41d31f90838b9856475bb1b` |
+| Wave | MAP-P1-20 SW freshness closure, 2026-08-07 |
+| Active work units | **22** |
+| Direct current defects | **12** |
 | Verified necessary improvements | **4** |
 | Narrowed residuals | **0** |
 | System verification lanes | **2** |
@@ -24,7 +24,7 @@ Current wave evidence: `verification/2026-08-07-ishod-basemap-closure/REPORT.md`
 
 ---
 
-## CURRENT DEFECTS — 13
+## CURRENT DEFECTS — 12
 
 | ID | Current problem | Boundary / evidence |
 |---|---|---|
@@ -39,7 +39,6 @@ Current wave evidence: `verification/2026-08-07-ishod-basemap-closure/REPORT.md`
 | `ENGINE-P2-04` | Story/toast notifications не имеют доказанного canonical live-region/status owner. | Current Karty a11y defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `AR-IDX-09` | Global Search shortcut принимает modified `Ctrl/⌘+K`, не исключая `Alt`/`Shift`. | Existing Search owner only. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-13` | `prefers-reduced-motion` гасит CSS transitions/animations, но current `flyTo()` всё равно всегда запускает duration-based `requestAnimationFrame` viewBox animation; zoom/reset/tour paths могут сохранять существенное движение. | Current a11y defect in public Karty motion owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `MAP-P1-20` | Current Ishod map loads `../_engine/map-engine.js` без revision; SW классифицирует unversioned `.js` как static asset и обслуживает его cache-first. | Current stale-engine/cache invalidation defect; route.json half of old claim is retired. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `NG-INLINE-01` | Current public Part I `MainShell` still hardcodes the `Из библиотеки` block with inline `#faf8f5`, `#1c1410`, `#8a7968`, `#b8882a` backgrounds/text/borders. Inline ownership bypasses the Nagornaya dark/theme token system and repeats presentation inside article markup instead of a shared themed component. | Current `NagornayaChast1MainShell.astro`; exact public native route imports that MainShell. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 
 ---
@@ -93,6 +92,7 @@ Not extra work units; current Product owners that constrain the matrix:
 
 Recently merged/closed before or at the current Product anchor:
 
+- #1153 — moved the unversioned shared Karty MapEngine to network-first Service Worker runtime caching with latest-cache offline fallback; squash-merged as Product `c99f15b1...`. `MAP-P1-20` is retired by `verification/2026-08-07-map-p1-20-sw-freshness-closure/REPORT.md`;
 - #1149 — restored the strict-native Ishod geographic basemap with a route-owned replacement and targeted browser contract; squash-merged as Product `c42d0d58...`. `MAP-P1-10` and `BASE-P1-01` are retired by `verification/2026-08-07-ishod-basemap-closure/REPORT.md`;
 - #1150 — Home adaptive manuscript marginalia placement; merged as Product `c5627043...` before the final #1149 exact-head refresh;
 - #1147 — permanent tooltip/standalone-reader regression guards; merged as Product `ae9d026f...` before the final #1149 exact-head refresh;
