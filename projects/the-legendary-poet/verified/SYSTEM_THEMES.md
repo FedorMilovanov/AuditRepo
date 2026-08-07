@@ -18,6 +18,22 @@
 - System outcome: one Essay publication boundary with clone/override/derived-read-time/deep-freeze semantics and zero-loss archival.
 - Reverify trigger: material change to essay schema, publication registry or renderer ownership.
 
+## ST-TLP-POET-SOURCE-AUTHORITY — Canonical poet modules own reader-facing portrait prose
+
+- Status: `absorbed/closed` by source PR #336.
+- Historical manifestation: the canonical ten poet modules still contained pre-rewrite `moralPortrait` / `authorCommentary` values while a central `editorialPortraitOverrides.ts` layer replaced those fields for publication.
+- Common mechanism: two source owners existed for the same reader-facing editorial fields, so inspecting one poet module did not reveal the exact prose delivered by the catalog.
+- System outcome:
+  - all ten canonical poet modules own their final portrait and conclusion prose directly;
+  - `editorialPortraitOverrides.ts` is deleted;
+  - `library/index.ts` publishes the imported poet objects directly with no clone, map, override or mutation layer;
+  - `validate-poet-authority.ts` requires direct identity and exactly one source owner for the editorial fields;
+  - the complete Pasternak record is preserved while only its two intended editorial fields changed.
+- Source anchor: PR #336 exact tested head `8e22188f98b9eaa39bab044794a7852e9b746f8d`, squash merge `dc37961cf64de5400e622d9c3d202634ed135100`.
+- Regression witness: Project contracts, Content model, full CI/build/budgets/prerender/SEO, route/catalog/Yesenin/brand gates and Manual Browser QA 4/4.
+- Detailed evidence: `../verification/2026-08-07-canonical-poet-authority-wave/REPORT.md`.
+- Reverify trigger: any publication-time poet override, clone/mutation boundary, duplicate editorial-field ownership or catalog identity drift.
+
 ## ST-TLP-COMMUNITY-OWNERSHIP — Target-scoped community state
 
 - Status: `absorbed/closed` by W3 and hardening.
@@ -141,9 +157,11 @@
 
 ## ST-TLP-AUDIT-HARNESS — Class-level evidence without control-plane duplication
 
-- Status: `active governance theme`; the exact-prose and Lenis-required manifestations found in PR #334 are `absorbed/closed`.
-- Historical manifestations: stale string-literal validators, soft-404 expectations, boolean archive assumptions, exact-authority documentation drift, a literary-style validator that required 21 exact historical sentence fragments instead of the facts and qualifications those sentences represented, and an app-shell validator that required the global smooth-scroll mechanism behind a reported defect.
-- System outcome: validators test machine contracts and user-visible or semantic invariants; AuditRepo stores proportional evidence instead of mirroring every source commit. Poet portraits use named semantic boundaries with bounded equivalent witnesses while service scaffolding is rejected directly. Scroll validators protect native ownership rather than one library implementation.
-- Closed witness: source PR #334 exact tested head `774804be169f53581ae85ab4b835be08537c532f`, squash merge `76ef482bedb1722b691ec1f301b403c3a28aad3d`.
-- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md`.
-- Reverify trigger: a guard measures implementation text rather than meaningful contract behavior, a content validator blocks a legitimate rewrite without loss of meaning, a runtime validator requires the mechanism behind a user-visible defect, or documentation work becomes larger than the selected repair.
+- Status: `active governance theme`; the exact-prose, Lenis-required and grammatical-exact-string manifestations found in PRs #334/#336 are `absorbed/closed`.
+- Historical manifestations: stale string-literal validators, soft-404 expectations, boolean archive assumptions, exact-authority documentation drift, a literary-style validator that first required historical sentence fragments instead of their facts and qualifications, an app-shell validator that required the global smooth-scroll mechanism behind a reported defect, and later semantic-label checks still implemented by case-sensitive exact substring matching.
+- System outcome: validators test machine contracts and user-visible or semantic invariants; AuditRepo stores proportional evidence instead of mirroring every source commit. Poet portrait boundaries permit bounded grammatical form changes through normalized, clause-local semantic witnesses while short negative particles remain meaning-bearing. Service scaffolding is rejected directly. Scroll validators protect native ownership rather than one library implementation.
+- Closed witnesses:
+  - source PR #334 exact tested head `774804be169f53581ae85ab4b835be08537c532f`, squash merge `76ef482bedb1722b691ec1f301b403c3a28aad3d`;
+  - source PR #336 exact tested head `8e22188f98b9eaa39bab044794a7852e9b746f8d`, squash merge `dc37961cf64de5400e622d9c3d202634ed135100`.
+- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md` and `../verification/2026-08-07-canonical-poet-authority-wave/REPORT.md`.
+- Reverify trigger: a guard measures implementation text rather than meaningful contract behavior, a content validator blocks a legitimate rewrite without loss of meaning, a semantic matcher loses negative meaning or accepts tokens scattered across unrelated passages, a runtime validator requires the mechanism behind a user-visible defect, or documentation work becomes larger than the selected repair.
