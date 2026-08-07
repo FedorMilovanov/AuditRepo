@@ -157,13 +157,21 @@
 
 ## ST-TLP-AUDIT-HARNESS — Class-level evidence without control-plane duplication
 
-- Status: `active-work candidate` for one bounded current manifestation, `TLP-AUDIT-003` / Product #340; exact-prose, Lenis-required and grammatical-exact-string manifestations from PRs #334/#336 remain `absorbed/closed`.
-- Historical manifestations: stale string-literal validators, soft-404 expectations, boolean archive assumptions, exact-authority documentation drift, a literary-style validator that first required historical sentence fragments instead of their facts and qualifications, an app-shell validator that required the global smooth-scroll mechanism behind a reported defect, and later semantic-label checks implemented by case-sensitive exact substring matching.
-- Current selected manifestation: high-risk app-shell/document-scroll guards still depend on literal source spelling for some contracts, creating false-failure risk for equivalent refactors and false-pass risk for syntactically different implementations of forbidden behavior.
-- System outcome already achieved: validators test machine contracts and user-visible or semantic invariants; AuditRepo stores proportional evidence instead of mirroring every source commit. Poet portrait boundaries permit bounded grammatical form changes through normalized, clause-local semantic witnesses while short negative particles remain meaning-bearing. Service scaffolding is rejected directly. Scroll validators protect native ownership rather than one library implementation.
-- Current repair boundary: harden only the selected literal-source guards with executable behavior tests or bounded AST/semantic structure checks; prove equivalent syntax passes and materially forbidden behavior fails; do not rewrite Product runtime solely to satisfy the harness.
+- Status: `absorbed/closed` for the selected current manifestations through source PR #345. Future concrete harness defects require independent current-head reverification before becoming active work.
+- Historical manifestations: stale string-literal validators, soft-404 expectations, boolean archive assumptions, exact-authority documentation drift, a literary-style validator that first required historical sentence fragments instead of their facts and qualifications, an app-shell validator that required the global smooth-scroll mechanism behind a reported defect, semantic-label checks implemented by case-sensitive exact substring matching, and high-risk app-shell/document-scroll guards that still depended on selected literal source spellings.
+- System outcome:
+  - validators prefer machine contracts and user-visible or semantic invariants over frozen implementation prose;
+  - poet portrait boundaries permit bounded grammatical form changes through normalized, clause-local semantic witnesses while short negative particles remain meaning-bearing;
+  - service scaffolding is rejected directly;
+  - scroll validators protect native ownership rather than one library implementation;
+  - selected high-risk app-shell/document-scroll source-structure checks now use one bounded TypeScript-AST helper that accepts equivalent extracted syntax while rejecting alternate forbidden operations;
+  - object option analysis follows JavaScript left-to-right, last-write-wins spread precedence;
+  - const alias/shorthand resolution respects lexical scope instead of one global binding map;
+  - mutation fixtures cover equivalent passive/focus forms, unsafe passive values/spreads, wheel interception, bracket-form `preventDefault`, dynamic Lenis import aliases and lexical shadowing.
 - Closed witnesses:
   - source PR #334 exact tested head `774804be169f53581ae85ab4b835be08537c532f`, squash merge `76ef482bedb1722b691ec1f301b403c3a28aad3d`;
-  - source PR #336 exact tested head `8e22188f98b9eaa39bab044794a7852e9b746f8d`, squash merge `dc37961cf64de5400e622d9c3d202634ed135100`.
-- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md`, `../verification/2026-08-07-canonical-poet-authority-wave/REPORT.md`, and source issue #340 for the selected current manifestation.
-- Reverify trigger: a guard measures implementation text rather than meaningful contract behavior, a content validator blocks a legitimate rewrite without loss of meaning, a semantic matcher loses negative meaning or accepts tokens scattered across unrelated passages, a runtime validator requires the mechanism behind a user-visible defect, or documentation work becomes larger than the selected repair.
+  - source PR #336 exact tested head `8e22188f98b9eaa39bab044794a7852e9b746f8d`, squash merge `dc37961cf64de5400e622d9c3d202634ed135100`;
+  - source PR #345 exact tested head `c7b1c9e8dfe26028d1d52852f3e1db20ba2b6407`, squash merge `b6f731263211208a31de1e36ed7830d7a46ffa87`.
+- PR #345 regression witness: full CI/check/build/typecheck/SEO, Project contracts, route integrity, brand audit and Manual Browser QA 4/4 across Chromium/Android, desktop WebKit and fresh-process iPhone Safari.
+- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md`, `../verification/2026-08-07-canonical-poet-authority-wave/REPORT.md`, and `../verification/2026-08-07-audit-harness-semantic-closure/REPORT.md`.
+- Reverify trigger: a current guard demonstrably measures implementation text rather than meaningful contract behavior, a content validator blocks a legitimate rewrite without loss of meaning, a semantic matcher loses negative meaning or accepts tokens scattered across unrelated passages, a runtime validator requires the mechanism behind a user-visible defect, or a new AST/semantic helper produces a reproducible false pass/failure. Source movement or historical matrix presence alone is not a trigger.
