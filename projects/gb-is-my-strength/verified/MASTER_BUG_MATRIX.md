@@ -4,18 +4,18 @@
 > Несмотря на историческое имя файла, это не только баги: здесь живут текущие дефекты, доказанно нужные внедрения/улучшения, системные verification/implementation packages, residuals и owner decisions.
 > Решено / stale / duplicate / absorbed / invalid / superseded → убрать из MASTER в той же wave; полезный контекст остаётся в `../legacy/`.
 
-Current wave evidence: `verification/2026-08-07-map-p1-20-sw-freshness-closure/REPORT.md`.
+Current wave evidence: `verification/2026-08-07-mapengine-v058-closure/REPORT.md`.
 
 ## Current state
 
 | Поле | Значение |
 |---|---|
-| Product verification anchor | `c99f15b102494282a41d31f90838b9856475bb1b` |
-| Wave | MAP-P1-20 SW freshness closure, 2026-08-07 |
-| Active work units | **22** |
-| Direct current defects | **12** |
+| Product verification anchor | `9745939e95dbbcf7cae81b9e36c1e2d79fb1135e` |
+| Wave | MapEngine v0.58 closure, 2026-08-07 |
+| Active work units | **14** |
+| Direct current defects | **3** |
 | Verified necessary improvements | **4** |
-| Narrowed residuals | **0** |
+| Narrowed residuals | **1** |
 | System verification lanes | **2** |
 | Owner decisions | **4** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
@@ -24,21 +24,12 @@ Current wave evidence: `verification/2026-08-07-map-p1-20-sw-freshness-closure/R
 
 ---
 
-## CURRENT DEFECTS — 12
+## CURRENT DEFECTS — 3
 
 | ID | Current problem | Boundary / evidence |
 |---|---|---|
 | `S-SEC-01` | `js/enhancements.js` всё ещё использует fixed blacklist/attribute-stripping HTML sanitizer design. | SYSTEM shared-runtime/security lane; adversarial fixtures required. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `AUDIT-P2-WORKFLOWS-CHECK-GAP` | Current release evidence lifecycle can lose the forensic report needed to explain an early live-verifier failure: both live verifiers perform strict preflight assertions / candidate verification before creating their JSON report, while `deploy.yml` uploads generic/TTS evidence with bare `if: always()`. An early generic failure can leave no generic report, skip the TTS verifier under normal success semantics, and then run artifact-upload steps against missing files. | Current release files are unchanged by Product `e678b6c8 → d8a2d184`; exact repair owner is active Product PR #1092. Do not duplicate its Product lane. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `MAP-P1-01` | Tour вычисляет реальный `sid`, но caption/progress всё ещё индексируют `route.stages[tourStepIdx]` и `data-stage=tourStepIdx`. Для story с non-zero `stage_ids` caption/highlight therefore drift from the authored stage. | Current reachable MapEngine keyboard/API tour state defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `MAP-P1-11` | Scale bar всё ещё выводит pixel scale из `cfg.W0 / view.w`, а не из реальной rendered canvas width. | Current public MapEngine geometry defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `MAP-P1-18` | Single-photo cards carry `data-src=ph.src`, but multi-photo gallery images render `ph.thumb||ph.src` without full-source/index metadata. Delegated modal open therefore receives the thumbnail and never initializes `photoCurrentPlace/photoCurrentIdx`, so modal swipe cannot advance the multi-photo set. | Current public multi-photo gallery/modal defect; Avraam has multi-photo content. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `WAYP-P1-01` | Current verified-waypoint labels are rendered as `font-size="7"` map units at opacity `.4`, without a label background and without `data-screen-anchor`. On Avraam main/mobile authored view widths this resolves to only a few CSS pixels, making the archaeological waypoint names effectively unreadable. | Current public Karty waypoint readability defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `ENGINE-P1-26` | Search iterates all rendered markers and can brighten a matching marker outside the active story, but marker interactivity is gated by `inStory`; search can therefore visually “find” a place the user cannot click/open in the current story state. | Current public MapEngine search/story ownership defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `ENGINE-P2-03` | Canonical routes fetch/resolve `route.json` before calling `MapEngine.createMap()`, yet `createMap()` unconditionally adds a loading overlay and removes it only after a fixed 600ms timer. Already-available map content is deliberately hidden for ~600ms on every initialization. | Current artificial loading-delay defect on strict-native maps. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `ENGINE-P2-04` | Story/toast notifications не имеют доказанного canonical live-region/status owner. | Current Karty a11y defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `AR-IDX-09` | Global Search shortcut принимает modified `Ctrl/⌘+K`, не исключая `Alt`/`Shift`. | Existing Search owner only. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `MAP-P1-13` | `prefers-reduced-motion` гасит CSS transitions/animations, но current `flyTo()` всё равно всегда запускает duration-based `requestAnimationFrame` viewBox animation; zoom/reset/tour paths могут сохранять существенное движение. | Current a11y defect in public Karty motion owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `AR-IDX-09` | Global Search shortcut принимает modified `Ctrl/⌘+K`, не исключая `Alt`/`Shift`. Current reverify on Product `9745939e...` confirms the same condition in both the bootstrap and loaded-runtime shortcut listeners in `js/search.js`. | Existing Search owner only; repair both listeners and add one permanent shortcut contract rather than patching one path. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `NG-INLINE-01` | Current public Part I `MainShell` still hardcodes the `Из библиотеки` block with inline `#faf8f5`, `#1c1410`, `#8a7968`, `#b8882a` backgrounds/text/borders. Inline ownership bypasses the Nagornaya dark/theme token system and repeats presentation inside article markup instead of a shared themed component. | Current `NagornayaChast1MainShell.astro`; exact public native route imports that MainShell. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 
 ---
@@ -47,16 +38,18 @@ Current wave evidence: `verification/2026-08-07-map-p1-20-sw-freshness-closure/R
 
 | ID | Needed implementation | Why it is active work / evidence |
 |---|---|---|
-| `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS` | Narrowed current CSS ownership cleanup: keep one canonical `@keyframes fx-breathe` definition and one canonical mobile `.gb-floater` rule instead of duplicate same-owner definitions in shared CSS. | Product delta to `d8a2d184` is Home-footer-only, so the current shared CSS witness is unchanged. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `AUDIT-JS-ESCAPER-DUP-X5` | Add one canonical shared HTML-escaping primitive (appropriate shared utility owner) and migrate the five current local copies instead of maintaining security-sensitive escaping independently across modules. | Product delta to `d8a2d184` is Home-footer-only; current `site.js` 3 + `highlights.js` 1 + `search.js` 1 / `site-utils.js` 0 witness is unchanged. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS` | Narrowed current CSS ownership cleanup: keep one canonical `@keyframes fx-breathe` definition and one canonical mobile `.gb-floater` rule instead of duplicate same-owner definitions in shared CSS. | Product delta through current MapEngine/Home waves does not own this shared-CSS cleanup. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `AUDIT-JS-ESCAPER-DUP-X5` | Add one canonical shared HTML-escaping primitive (appropriate shared utility owner) and migrate the five current local copies instead of maintaining security-sensitive escaping independently across modules. | Product delta through current MapEngine/Home waves does not own this shared-JS consolidation. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SEARCH-P3-02` | Add truthful result-total / continuation (`Показать ещё`, pagination or equivalent) instead of silently exposing only Pagefind 10 / fallback 12. | Current corpus can return more matches than the user can reach. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `AR-IDX-05` | Consolidate Home/shared cache/version identity so `SITE_CONFIG.version` and asset `?v=` revisions do not remain parallel manual authorities. | Verified ownership debt with stale-cache/regression potential; coordinate with active legacy/reference owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `AR-IDX-05` | Consolidate Home/shared cache/version identity so `SITE_CONFIG.version` and asset `?v=` revisions do not remain parallel manual authorities. | Verified ownership debt with stale-cache/regression potential; coordinate with current shared owners. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 
 ---
 
-## NARROWED RESIDUALS — 0
+## NARROWED RESIDUALS — 1
 
-No residual-only row remains. A future partial closure should use this section only while an independently actionable remainder really exists.
+| ID | Current residual | Closure boundary / evidence |
+|---|---|---|
+| `AUDIT-P2-WORKFLOWS-CHECK-GAP` | The source/control-plane lifecycle defect was repaired and merged through Product `#1156`; it is no longer correct to describe `#1092` as an active Product owner. Final closure is withheld only because a successful current post-merge production witness for the repaired generic + TTS evidence lifecycle has not yet been established in this wave. | Verify a canonical push-to-main release/deploy run on a current merged SHA with generic and TTS live evidence bound to the same release/run/candidate and terminal `PASS`/complete state. Do not infer absence or success from the PR-only commit-run endpoint. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 
 ---
 
@@ -67,7 +60,7 @@ No residual-only row remains. A future partial closure should use this section o
 | ID | Verified work package | Next boundary / evidence |
 |---|---|---|
 | `SYS-KARTY-HOLDING-PUBLICATION-READINESS` | One publication-readiness package for the currently held map routes. The public hub/HoldingPage contract requires initial viewport, label collision, desktop/mobile layout, controls, route readability and overall visual quality before return. Route/schema readiness (Shoftim stages, Early Church overlap, Shvatim regions, draft route completeness) is checked in the same activation transaction. Historical sheet-engine decoration/style wishes are not requirements by themselves. | Current browser/screenshots + `maps:validate`/route-owner evidence per candidate immediately before activation. Promote only concrete blockers that remain independently actionable outside that activation transaction. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `SYS-STRANGLER-RETIREMENT` | Finish immutable identity, classification and replacement-parity authority for the remaining legacy/native-shadow surface before any bounded physical retirement. Current #1090 is intentionally narrow: after its expected two-blocker repair, **29 native shadows remain unclassified and 52 readiness blockers remain; physical move/delete stays unauthorized**. Historical `ASTRO-P1-05` / `NF-DEAD-ENHANCE-SHIM` are context inside this owner, not independent runtime bugs. | Product PR #1090 is the current collision owner. Completion requires the readiness owner to reach an authorized physical-retirement state (classification/identity/parity blockers cleared or explicitly dispositioned); no parallel deletion/migration lane. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `SYS-STRANGLER-RETIREMENT` | Finish immutable identity, classification and replacement-parity authority for the remaining legacy/native-shadow surface before any bounded physical retirement. Historical `ASTRO-P1-05` / `NF-DEAD-ENHANCE-SHIM` remain context inside this owner, not independent runtime bugs. | Product `#1162` is the current bounded collision owner for the legacy-reference inventory/`/about/` identity sub-repair and the stale hard-coded resolver-count contract exposed by predecessor `#1090`. Even after that bounded repair, physical retirement remains unauthorized until the remaining classification/parity/readiness blockers are cleared or explicitly dispositioned. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 
 ---
 
@@ -86,27 +79,16 @@ No residual-only row remains. A future partial closure should use this section o
 
 Not extra work units; current Product owners that constrain the matrix:
 
-- #1092 — exact release/live-evidence lifecycle repair for `AUDIT-P2-WORKFLOWS-CHECK-GAP`.
-- #1090 — legacy-reference identity/inventory/retirement readiness; 29 native shadows / 52 blockers remain after its intended narrow repair.
-- #1097 — dependent tooltip/layout regression guards.
+- `#1162` — clean current-main SYSTEM successor for the bounded legacy-reference identity/inventory repair; predecessor `#1090` is closed superseded and preserved for forensic history.
 
-Recently merged/closed before or at the current Product anchor:
+Recently merged/closed current-wave context:
 
-- #1153 — moved the unversioned shared Karty MapEngine to network-first Service Worker runtime caching with latest-cache offline fallback; squash-merged as Product `c99f15b1...`. `MAP-P1-20` is retired by `verification/2026-08-07-map-p1-20-sw-freshness-closure/REPORT.md`;
-- #1149 — restored the strict-native Ishod geographic basemap with a route-owned replacement and targeted browser contract; squash-merged as Product `c42d0d58...`. `MAP-P1-10` and `BASE-P1-01` are retired by `verification/2026-08-07-ishod-basemap-closure/REPORT.md`;
-- #1150 — Home adaptive manuscript marginalia placement; merged as Product `c5627043...` before the final #1149 exact-head refresh;
-- #1147 — permanent tooltip/standalone-reader regression guards; merged as Product `ae9d026f...` before the final #1149 exact-head refresh;
-- #1145 — Home footer settled-frame geometry contract; merged as Product `61d0c9e3...`;
-- #1142 — removed the 15 zero-consumer Nagornaya extraction artifacts; squash-merged as Product `def95cc7...`. `NG-DEAD-01` is retired from MASTER by `verification/2026-08-07-ng-dead-extraction-closure/REPORT.md`;
-- #1140 — standalone Reader/KodDaVinchi geometry owner cleanup; merged as Product `b8085fed...` immediately before #1142 and is path-disjoint from the Nagornaya cleanup;
-- #1138 — CSS layer validator contract repair for `D-2`; squash-merged as Product `f4cfb865...`. `D-2` is retired from MASTER by `verification/2026-08-07-d2-css-layer-validator-closure/REPORT.md`;
-- #1130 — diagnostic ReaderSettings proof lane; closed without merge and no longer an in-flight owner;
-- #1129 — Home footer settled-frame contract;
-- #1120 — Home live-release geometry evidence boundary;
-- #1095 — ReaderRail/ReaderSettings desktop layout geometry;
-- #1093 — shared tooltip runtime / Hermenevtika popup repair;
-- #1096 — Reader Projection workflow linkage;
-- #1104 — interactive-tooltip physical-pointer audit-harness correction.
+- `#1161` — shared MapEngine v0.58 correctness repair; exact head `5bb8ab7d...` passed 18/18 registered workflow groups and squash-merged as Product `9745939e...`. Eight MapEngine rows are retired by `verification/2026-08-07-mapengine-v058-closure/REPORT.md`;
+- `#1158` — superseded MapEngine predecessor, closed without merge after clean successor `#1161` proved the exact ten-file current-main scope;
+- `#1156` — release/live-evidence lifecycle source repair merged; production-witness residual remains separately open above;
+- `#1154` — Home marginalia disclosure polish merged as Product `c6465de7...`;
+- `#1153` — unversioned shared Karty MapEngine moved to network-first Service Worker runtime caching with latest-cache offline fallback; `MAP-P1-20` remains retired by `verification/2026-08-07-map-p1-20-sw-freshness-closure/REPORT.md`;
+- `#1149` — strict-native Ishod geographic basemap replacement; `MAP-P1-10` and `BASE-P1-01` remain retired by `verification/2026-08-07-ishod-basemap-closure/REPORT.md`.
 
 ---
 
