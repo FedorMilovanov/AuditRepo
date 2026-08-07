@@ -2,7 +2,7 @@
 
 Эта очередь показывает owner-selected направления. Перед любой source mutation нужно заново проверить актуальный source owner, open PRs и применимое evidence.
 
-## Current selection — browser payload resilience closure
+## Current selection — fresh current-head verification
 
 Owner-selected operating order:
 
@@ -10,18 +10,9 @@ Owner-selected operating order:
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **1** (`P2=1`).
+Current verified engineering rows: **0**.
 
-### 1. Product #351 / TLP-RESILIENCE-001 — isolate essay browser payload failures
-
-- Status: `verified-current / repair-ready / P2` on Product `main@4affe36ab3a63b7759144d7342406ffed439c02c`.
-- Root cause: the post-#350 browser adapter memoizes rejected catalog/body promises for the document lifetime, while `HomePage` consumes the catalog at route scope even though it only needs the essay count.
-- User outcome: one delayed/transient `catalog.json` failure can suspend/error the whole homepage, and a transient catalog/body failure cannot be retried through SPA navigation because the same rejected promise is returned until full reload.
-- Scope: `browserEssayData.ts`, a bounded homepage-local Suspense/fallback boundary, and deterministic failure→retry regression coverage. Do not restore eager full-corpus browser imports or raise bundle budgets.
-- Required closure: successful promises remain single-flight cached; rejected catalog and slug promises are evicted; homepage Hero/static content remains available when catalog is delayed/failed; same-document retry succeeds after transient failure; target-scoped request topology from #350 remains intact; full Product check/build/route/browser matrix green on one exact head.
-- Detailed evidence: `verification/2026-08-07-essay-browser-resilience/REPORT.md`.
-
-### 2. Fresh current-head bug hunting — after #351 closes
+### 1. New bug hunting — only from current-head evidence
 
 Continue the current-head pass instead of replaying the historical matrix. Prioritize surfaces where user-visible regressions can escape static contracts:
 
@@ -35,9 +26,22 @@ Continue the current-head pass instead of replaying the historical matrix. Prior
 
 A new finding enters `verified/MASTER_BUG_MATRIX.md` only after current-head reproduction and root-cause evidence. Duplicate symptoms are clustered under one root cause.
 
-Do not reopen #335, #340, W0–W7, the native-scroll repair or canonical poet authority merely because a fresh audit touches adjacent code.
+Do not reopen #335, #340, #351, W0–W7, the native-scroll repair or canonical poet authority merely because a fresh audit touches adjacent code.
 
 ## Closed current-scope families
+
+### TLP-RESILIENCE-001 / Product #351 — browser essay payload recovery
+
+Closed by Product PR #353, exact tested head `c72ca2bd54b9a3ed18b116e2530e17691517054d`, squash merge `67d614bc186b52c408ad6cef4c84cf57d4e78a45`.
+
+- Rejected browser payloads no longer cause permanent same-document poisoning or automatic same-visit retry loops: retry eligibility is bound to a genuinely new React Router navigation key.
+- Home localizes catalog failure to the research-count statistic while Hero/static content remains available.
+- Articles catalog acceptance passed 18/18 across Chromium/Android/iPhone and proves no automatic request #2 before navigation, later SPA recovery, successful payload caching and `documentRequests === 1`.
+- Full Product CI/build/route and Manual Browser QA 4/4 passed on the exact tested head.
+- The old one-off WebKit reveal flake did not reproduce and no timing workaround was added.
+- Detailed evidence: `verification/2026-08-07-essay-browser-resilience/REPORT.md` and `verification/2026-08-07-essay-browser-resilience/CLOSURE.md`.
+
+Future payload failures require independent current reproduction; this closure does not assert that every future network or Suspense defect is impossible.
 
 ### TLP-DEPS-001 / Product #335 — dead Lenis install dependency
 
@@ -46,7 +50,7 @@ Closed by Product PR #348, exact tested head `43527c7a7932f17fcba599ff4df270c243
 - The residual direct `lenis` dependency and lock entry were removed after runtime scrolling had already returned to native browser ownership.
 - The repair stayed bounded to package-manager ownership; it did not reopen scroll runtime, routes, validators or content.
 - Exact-head Product evidence recorded CI, project contracts, route audit, brand/content publication gates and Manual Browser QA 4/4.
-- Current Product `main` after the essay-performance merge preserves both changes: generated browser-data scripts are present while Lenis remains absent.
+- Current Product source preserves generated browser-data scripts while Lenis remains absent.
 - Detailed AuditRepo evidence: `verification/2026-08-07-lenis-dependency-closure/REPORT.md`.
 
 Future scroll or dependency findings require independent current reproduction; this closure is not a blanket claim that no future scrolling or package defect can exist.
