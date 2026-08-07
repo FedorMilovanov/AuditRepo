@@ -72,7 +72,7 @@ No residual-only row remains. A future partial closure should use this section o
 | ID | Verified work package | Next boundary / evidence |
 |---|---|---|
 | `SYS-KARTY-HOLDING-PUBLICATION-READINESS` | One publication-readiness package for the currently held map routes. The public hub/HoldingPage contract requires initial viewport, label collision, desktop/mobile layout, controls, route readability and overall visual quality before return. Route/schema readiness (Shoftim stages, Early Church overlap, Shvatim regions, draft route completeness) is checked in the same activation transaction. Historical sheet-engine decoration/style wishes are not requirements by themselves. | Current browser/screenshots + `maps:validate`/route-owner evidence per candidate immediately before activation. Promote only concrete blockers that remain independently actionable outside that activation transaction. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `SYS-STRANGLER-RETIREMENT` | Legacy/reference parity-authority migration and eventual bounded retirement. The old `NF-DEAD-ENHANCE-SHIM` is not a shared-runtime bug: current code explicitly identifies it as a legacy shim and bails on canonical v4 markup. | Follow current Product PR #1090 owner; no parallel retirement lane. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `SYS-STRANGLER-RETIREMENT` | Finish immutable identity, classification and replacement-parity authority for the remaining legacy/native-shadow surface before any bounded physical retirement. Current #1090 is intentionally narrow: after its expected two-blocker repair, **29 native shadows remain unclassified and 52 readiness blockers remain; physical move/delete stays unauthorized**. Historical `ASTRO-P1-05` / `NF-DEAD-ENHANCE-SHIM` are context inside this owner, not independent runtime bugs. | Product PR #1090 is the current collision owner. Completion requires the readiness owner to reach an authorized physical-retirement state (classification/identity/parity blockers cleared or explicitly dispositioned); no parallel deletion/migration lane. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 
 ---
 
@@ -92,7 +92,7 @@ No residual-only row remains. A future partial closure should use this section o
 Not extra work units; current Product owners that constrain the matrix:
 
 - #1092 — exact release/live-evidence lifecycle repair for `AUDIT-P2-WORKFLOWS-CHECK-GAP`.
-- #1090 — legacy-reference identity/inventory/ledger.
+- #1090 — legacy-reference identity/inventory/retirement readiness; 29 native shadows / 52 blockers remain after its intended narrow repair.
 - #1097 — dependent tooltip/layout regression guards.
 - #1129 — Home footer settled-frame contract; unrelated to roots above.
 - #1130 — ReaderSettings follow-up; unrelated to roots above.
