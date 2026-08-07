@@ -2,7 +2,7 @@
 
 Эта очередь показывает owner-selected направления. Перед любой source mutation нужно заново проверить актуальный source owner, open PRs и применимое evidence.
 
-## Current selection — TLP-AUDIO-002 / Product #360
+## Current selection — fresh current-head verification
 
 Owner-selected operating order:
 
@@ -10,40 +10,34 @@ Owner-selected operating order:
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **1** — one P3 cross-tab protocol resilience root.
+Current verified engineering rows: **0**.
 
-### 1. Repair Product #360 — keep logical ordering outside IEEE-754 precision failure
-
-Current Product anchor: `main@0712a1845d4133953750a32a9df598f6cbeb192e`.
-
-Bounded repair target:
-
-- preserve the deterministic simultaneous-start arbitration introduced by Product #358;
-- reject external numeric claim state that cannot preserve the protocol's ordering invariant;
-- ensure a later explicit local play still outranks an already-seen peer claim at the largest supported timestamp boundary rather than falling back to `instanceId` ordering;
-- prefer an explicit separation of wall-clock timestamp and logical sequence if needed instead of relying on repeated `number + 1` forever;
-- preserve ordinary/legacy sequence-less #358 claims where practical;
-- keep BroadcastChannel and storage fallback on the same comparator;
-- add a deterministic precision-boundary validator witness;
-- add a two-page browser witness that injects an unsafe finite storage claim, proves it cannot pause/poison a healthy player, then proves normal handoff still works;
-- do not add sleeps/debounce, player UI changes, catalog changes, assets or unrelated persistence cleanup.
-
-After Product repair merges and resulting current main is reverified, remove `TLP-AUDIO-002` from the active matrix and return this queue to fresh current-head bug hunting.
+No Product engineering repair lane is currently selected. Resume only from new current-head evidence; do not replay historical matrix rows or convert editorial/research backlog into engineering bugs without an independently reproduced engineering root cause.
 
 ## Closed current-scope families
+
+### TLP-AUDIO-002 / Product #360 — precision-safe cross-tab logical ordering
+
+Closed by Product PR #362, exact tested head `0a9d5c0c2cf5eeb801045ef9c09c1c6ebb3f5621`, squash merge `7fb70a207af2f793afde46b0aee4e59e43d30984`.
+
+- External timestamps are now restricted to nonnegative safe integers instead of every finite JavaScript number.
+- Wall-clock recency and Lamport advancement are separated: equal/future wall timestamps advance an explicit decimal logical `sequence`, compared and incremented as `BigInt` rather than IEEE-754 `number + 1`.
+- Sequence-less #358 claims remain interpretable as sequence zero; ordinary clients still exchange a safe numeric timestamp.
+- Deterministic validation covers unsafe/fractional/negative timestamps, `Number.MAX_SAFE_INTEGER`, arbitrary-precision sequence advancement, legacy compatibility, simultaneous starts, stale/duplicate/self delivery and later explicit replay.
+- Real Chromium browser QA waits for confirmed delivery of an unsafe `2 ** 53` storage claim, proves it cannot pause/poison a healthy player, then proves normal handoff still works; the existing BroadcastChannel and storage fallback A→B→A witnesses remain green.
+- Full exact-head Product CI, contracts, route/brand gates and Manual Browser QA passed before merge.
+- Detailed evidence: `verification/2026-08-07-audio-clock-precision/REPORT.md` and `verification/2026-08-07-audio-clock-precision/CLOSURE.md`.
+
+Future audio protocol findings require independent current reproduction. This closure does not reopen or weaken `TLP-AUDIO-001`.
 
 ### TLP-AUDIO-001 / Product #356 — deterministic simultaneous cross-tab arbitration
 
 Closed by Product PR #358, exact tested head `ab8fd872d65e6c10aef809967bc87bff8a08e72d`, squash merge `7231b2f33deed185a76fc6dd1c336a6d4dad1776`.
 
 - Playback claims use one deterministic total order instead of pausing on every remote `playing` claim.
-- Normal newer logical timestamps win; equal timestamps use a stable `instanceId` tie-break; normal same-millisecond local replay advances beyond already-seen peer time without sleeps/debounces.
 - BroadcastChannel and storage-event fallback use the same arbitration helper.
-- Deterministic validation covers sequential, simultaneous, stale, duplicate, self, tie and normal monotonic-clock semantics; the exact simultaneous model requires exactly one side to yield.
-- Real two-page Chromium QA proves A→B→A handoff through BroadcastChannel and storage fallback.
+- Exact simultaneous ordinary starts leave exactly one winner.
 - Detailed evidence: `verification/2026-08-07-audio-cross-tab-arbitration/REPORT.md` and `verification/2026-08-07-audio-cross-tab-arbitration/CLOSURE.md`.
-
-`TLP-AUDIO-002` is a new independently verified numeric-domain flaw in that protocol. It does not invalidate the closed simultaneous-start root cause or reopen #356.
 
 ### TLP-RESILIENCE-001 / Product #351 — browser essay payload recovery
 
@@ -73,7 +67,7 @@ Closed for current Product scope: 5 active, 1 verified reserve, 24 terminal excl
 
 ### Fresh current-head verification
 
-Resume only after the selected Product #360 lifecycle closes. New findings require independent current-head reproduction and root-cause evidence; do not replay historical rows.
+New findings require independent current-head reproduction and root-cause evidence; do not replay historical rows.
 
 ### Materially new media evidence
 
@@ -85,7 +79,7 @@ Use only for a significant release, DNS/hosting change or concrete production in
 
 ## Editorial / research boundary
 
-Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default. Product #269 remains a source-first editorial lane and is not part of this repair.
+Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default. Product #269 remains a source-first editorial lane outside this engineering queue.
 
 ## Adding a lane
 

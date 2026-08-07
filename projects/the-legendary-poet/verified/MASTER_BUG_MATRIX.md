@@ -19,11 +19,9 @@ No verified-current P1 engineering rows.
 
 No verified-current P2 engineering rows.
 
-## 🟢 P3 — ОТКРЫТО (1)
+## 🟢 P3 — ОТКРЫТО (0)
 
-| ID | Source | Root cause | Current evidence | Repair owner |
-|---|---|---|---|---|
-| `TLP-AUDIO-002` | Product #360 | The #358 cross-tab protocol encodes wall-clock recency and Lamport-style advancement in one JavaScript `number`: peer validation accepts every finite timestamp, but `lastSeen + 1` is not strictly increasing beyond IEEE-754 safe-integer precision. An unsafe finite peer/storage claim can therefore poison the per-tab clock and make a later explicit local play fall back to `instanceId` ordering instead of outranking the already-seen claim. | Product `main@0712a1845d4133953750a32a9df598f6cbeb192e`; `isPlaybackCoordinationClaim` uses `Number.isFinite(timestamp)` and `nextPlaybackClaimTimestamp` uses `safeLastSeen + 1`; deterministic JS witness: `Number.isFinite(2 ** 53) === true` while `(2 ** 53) + 1 === 2 ** 53`. Existing validator covers `NaN` and small integers but no precision boundary. See `../verification/2026-08-07-audio-clock-precision/REPORT.md`. | one bounded Product #360 repair lane after this verification merges |
+No verified-current P3 engineering rows.
 
 ## Summary
 
@@ -33,10 +31,10 @@ No verified-current P2 engineering rows.
 | **P0 открыто** | **0** |
 | P1 открыто | 0 |
 | P2 открыто | 0 |
-| P3 открыто | 1 |
+| P3 открыто | 0 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **1** |
+| **Всего открыто (матрица)** | **0** |
 
 Registered Product architecture lanes: **0**.
 
@@ -44,7 +42,7 @@ Registered Product architecture lanes: **0**.
 
 - Research/source-acquisition/editorial issues such as long-form authoring, archive acquisition, visual-rights review and myth ledgers are not engineering bugs merely because they remain open in the Product issue tracker.
 - The Mayakovsky C01–C30 media family is closed for the current Product scope: 5 active, 1 verified reserve, 24 terminal exclusions, 0 unresolved.
-- W0–W7 architecture/runtime waves, W6 ref retirement, native-scroll repair, canonical poet authority, semantic audit-harness hardening, Lenis install-dependency cleanup, browser-payload resilience and the closed simultaneous cross-tab arbitration repair `TLP-AUDIO-001` are historical closure evidence, not current backlog.
+- W0–W7 architecture/runtime waves, W6 ref retirement, native-scroll repair, canonical poet authority, semantic audit-harness hardening, Lenis install-dependency cleanup, browser-payload resilience, deterministic simultaneous cross-tab arbitration and precision-safe audio logical ordering are historical closure evidence, not current backlog.
 
 ## Lifecycle rule
 
