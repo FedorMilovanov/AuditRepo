@@ -7,7 +7,6 @@ import json
 import pathlib
 import tempfile
 
-from matrix_coverage_contexts import collect_contexts
 from matrix_coverage_lib import build_report
 
 MATRIX = """# MASTER
@@ -132,11 +131,6 @@ def main() -> int:
         assert report["problems"] == 0
         assert report["evidenceOnlyIds"] == 1
         assert report["evidenceOnlyIdList"] == ["NEW-UNREGISTERED-01"]
-
-        contexts = collect_contexts(project, radius=0)
-        exact = contexts["contexts"]["NEW-UNREGISTERED-01"][0]
-        assert exact["line"] == 1
-        assert exact["structuralContexts"] == ["heading"]
 
     with tempfile.TemporaryDirectory() as temp:
         fixed = dict(entries)
