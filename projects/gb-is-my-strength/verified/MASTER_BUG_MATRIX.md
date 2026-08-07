@@ -12,8 +12,8 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 |---|---|
 | Product verification anchor | `9a0db0dc4533cb473abfe57f86e27517f04deea6` |
 | Wave | full-matrix consolidation, 2026-08-07 |
-| Active work units | **29** |
-| Direct current defects | **14** |
+| Active work units | **31** |
+| Direct current defects | **16** |
 | Verified necessary improvements | **4** |
 | Narrowed residuals | **0** |
 | System verification lanes | **7** |
@@ -24,7 +24,7 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 
 ---
 
-## CURRENT DEFECTS — 14
+## CURRENT DEFECTS — 16
 
 | ID | Current problem | Boundary / evidence |
 |---|---|---|
@@ -36,8 +36,10 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 | `MAP-P1-10` | Canonical strict-native Ishod creates MapEngine without `baseGeoUrl`; current MapEngine loads `#me-base-geo` only when `opts.baseGeoUrl` is supplied. The production source therefore renders the shared route/markers without the shared geographic base layer. | Current canonical Ishod basemap integration defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-11` | Scale bar всё ещё выводит pixel scale из `cfg.W0 / view.w`, а не из реальной rendered canvas width. | `karty/_engine/**` SYSTEM owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-18` | Narrowed current residual: single-photo cards carry `data-src=ph.src`, but multi-photo gallery images render `ph.thumb||ph.src` without full-source/index metadata. Delegated modal open therefore receives the thumbnail and never initializes `photoCurrentPlace/photoCurrentIdx`, so modal swipe cannot advance the multi-photo set. | Current multi-photo gallery/modal defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `WAYP-P1-01` | Current verified-waypoint labels are rendered as `font-size="7"` map units at opacity `.4`, without a label background and without `data-screen-anchor`. On Avraam main/mobile authored view widths this resolves to only a few CSS pixels, making the archaeological waypoint names effectively unreadable. | Current Karty waypoint readability defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SIG-P1-01` | Signature overlays всё ещё используют fixed map-unit offsets (`origin.x - 74` и подобные). | Karty geometry SYSTEM owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `ENGINE-P1-26` | Search iterates all rendered markers and can brighten a matching marker outside the active story, but marker interactivity is gated by `inStory`; search can therefore visually “find” a place the user cannot click/open in the current story state. | Current MapEngine search/story ownership defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `ENGINE-P2-03` | Canonical routes fetch/resolve `route.json` before calling `MapEngine.createMap()`, yet `createMap()` unconditionally adds a loading overlay and removes it only after a fixed 600ms timer. Already-available map content is therefore deliberately hidden for ~600ms on every initialization. | Current artificial loading-delay defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `ENGINE-P2-04` | Story/toast notifications не имеют доказанного canonical live-region/status owner. | Karty a11y SYSTEM owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `AR-IDX-09` | Global Search shortcut принимает modified `Ctrl/⌘+K`, не исключая `Alt`/`Shift`. | Existing Search owner only. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-13` | `prefers-reduced-motion` гасит CSS transitions/animations, но current `flyTo()` всё равно всегда запускает duration-based `requestAnimationFrame` viewBox animation; zoom/reset/tour paths могут сохранять существенное движение. | Current a11y defect in Karty motion owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
@@ -68,7 +70,7 @@ No residual-only row remains. A future partial closure should use this section o
 
 | ID | Verified work package | Next boundary / evidence |
 |---|---|---|
-| `SYS-KARTY-RUNTIME-GEOMETRY` | Reverify only still-unclassified interaction/viewport/panel/marker/LOD symptoms after major MapEngine changes. Current-local `MAP-P1-01`, `MAP-P1-02`, `MAP-P1-07`, `MAP-P1-10`, `MAP-P1-18`, `ENGINE-P1-26` and fixed/stale symptoms documented in legacy are no longer hidden inside this package. | Representative current source + browser wave; retire fixed symptoms and split only independently current roots. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `SYS-KARTY-RUNTIME-GEOMETRY` | Reverify only still-unclassified interaction/viewport/panel/marker/LOD symptoms after major MapEngine changes. Current-local `MAP-P1-01`, `MAP-P1-02`, `MAP-P1-07`, `MAP-P1-10`, `MAP-P1-18`, `WAYP-P1-01`, `ENGINE-P1-26`, `ENGINE-P2-03` and fixed/stale symptoms documented in legacy are no longer hidden inside this package. | Representative current source + browser wave; retire fixed symptoms and split only independently current roots. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-KARTY-DATA-PROJECTION` | Reverify only still-unclassified route/schema/base-geo/generated-artifact claims. `MAP-P1-03` and `REG-P1-01` are now independent current work units. | Verify current data/schema/base owners together before Product mutation. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-KARTY-VISUAL-LANGUAGE` | Visual/data-quality package where old P1 wording mixes correctness and quality targets. | Current screenshots + owner/value review; retain only genuinely necessary improvements. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-AUDIT-CONTROL-PLANE` | Audit/workflow false-green/false-red and duplicated/incorrect proof boundaries; also owns any remaining noindex/canonical harness gap after the `/izbrannoe/` source fix. | Coordinate with current Product control-plane owners; #1092/#1097 remain active and #1120 touches release geometry evidence. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
