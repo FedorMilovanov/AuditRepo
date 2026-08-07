@@ -138,7 +138,7 @@
 
 ## ST-TLP-SCROLL-OWNERSHIP — Native document movement
 
-- Status: `absorbed/closed` by source PR #334.
+- Status: `absorbed/closed` by source PR #334; install-only cleanup is separately selected as `TLP-DEPS-001` / Product #335.
 - User-visible manifestation: intermittent wheel-scroll stalls and viscous catch-up in the middle of downward movement.
 - Common mechanism: the desktop app shell globally replaced ordinary document scrolling with Lenis smooth-wheel interpolation advanced by a permanent JavaScript RAF; fixed decorative text and scroll-to-top visibility added document-scroll subscriptions on the same latency-sensitive path.
 - Prior-corpus boundary: W0–W7 covered reader outcomes, routes, browser evidence and performance budgets, but the permanent scroll validator protected anchor geometry rather than continuous ordinary wheel ownership.
@@ -151,17 +151,19 @@
   - Chromium QA sends six real wheel impulses on a long poet page, requires measurable progress after every impulse and verifies that none is default-prevented.
 - Source anchor: PR #334 exact tested head `774804be169f53581ae85ab4b835be08537c532f`, squash merge `76ef482bedb1722b691ec1f301b403c3a28aad3d`; base includes the completed Mayakovsky media merge `dd2df7be196d81d5212b43a08616f782af2fecf6`.
 - Regression witness: Project contracts, Content model, full CI/build/budgets/prerender/SEO, 35+ route crawl, brand/motion audit and Manual Browser QA 4/4 across Chromium, Android, desktop WebKit and fresh-process iPhone Safari.
-- Residual: the unused `lenis` install-only dependency remains a non-blocking package-cleanup item; runtime import and wheel ownership are already prohibited.
+- Current selected residual: Product #335 removes the unused `lenis` package/lock ownership only. Runtime import and wheel ownership remain prohibited and are not reopened by that cleanup.
 - Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md`.
 - Reverify trigger: global document smooth scrolling, wheel/touch cancellation, new perpetual document-scroll RAF ownership, route/overlay ownership change or a concrete mid-gesture browser stall.
 
 ## ST-TLP-AUDIT-HARNESS — Class-level evidence without control-plane duplication
 
-- Status: `active governance theme`; the exact-prose, Lenis-required and grammatical-exact-string manifestations found in PRs #334/#336 are `absorbed/closed`.
-- Historical manifestations: stale string-literal validators, soft-404 expectations, boolean archive assumptions, exact-authority documentation drift, a literary-style validator that first required historical sentence fragments instead of their facts and qualifications, an app-shell validator that required the global smooth-scroll mechanism behind a reported defect, and later semantic-label checks still implemented by case-sensitive exact substring matching.
-- System outcome: validators test machine contracts and user-visible or semantic invariants; AuditRepo stores proportional evidence instead of mirroring every source commit. Poet portrait boundaries permit bounded grammatical form changes through normalized, clause-local semantic witnesses while short negative particles remain meaning-bearing. Service scaffolding is rejected directly. Scroll validators protect native ownership rather than one library implementation.
+- Status: `active-work candidate` for one bounded current manifestation, `TLP-AUDIT-003` / Product #340; exact-prose, Lenis-required and grammatical-exact-string manifestations from PRs #334/#336 remain `absorbed/closed`.
+- Historical manifestations: stale string-literal validators, soft-404 expectations, boolean archive assumptions, exact-authority documentation drift, a literary-style validator that first required historical sentence fragments instead of their facts and qualifications, an app-shell validator that required the global smooth-scroll mechanism behind a reported defect, and later semantic-label checks implemented by case-sensitive exact substring matching.
+- Current selected manifestation: high-risk app-shell/document-scroll guards still depend on literal source spelling for some contracts, creating false-failure risk for equivalent refactors and false-pass risk for syntactically different implementations of forbidden behavior.
+- System outcome already achieved: validators test machine contracts and user-visible or semantic invariants; AuditRepo stores proportional evidence instead of mirroring every source commit. Poet portrait boundaries permit bounded grammatical form changes through normalized, clause-local semantic witnesses while short negative particles remain meaning-bearing. Service scaffolding is rejected directly. Scroll validators protect native ownership rather than one library implementation.
+- Current repair boundary: harden only the selected literal-source guards with executable behavior tests or bounded AST/semantic structure checks; prove equivalent syntax passes and materially forbidden behavior fails; do not rewrite Product runtime solely to satisfy the harness.
 - Closed witnesses:
   - source PR #334 exact tested head `774804be169f53581ae85ab4b835be08537c532f`, squash merge `76ef482bedb1722b691ec1f301b403c3a28aad3d`;
   - source PR #336 exact tested head `8e22188f98b9eaa39bab044794a7852e9b746f8d`, squash merge `dc37961cf64de5400e622d9c3d202634ed135100`.
-- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md` and `../verification/2026-08-07-canonical-poet-authority-wave/REPORT.md`.
+- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md`, `../verification/2026-08-07-canonical-poet-authority-wave/REPORT.md`, and source issue #340 for the selected current manifestation.
 - Reverify trigger: a guard measures implementation text rather than meaningful contract behavior, a content validator blocks a legitimate rewrite without loss of meaning, a semantic matcher loses negative meaning or accepts tokens scattered across unrelated passages, a runtime validator requires the mechanism behind a user-visible defect, or documentation work becomes larger than the selected repair.
