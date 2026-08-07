@@ -12,11 +12,11 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 |---|---|
 | Product verification anchor | `9a0db0dc4533cb473abfe57f86e27517f04deea6` |
 | Wave | full-matrix consolidation, 2026-08-07 |
-| Active work units | **25** |
+| Active work units | **26** |
 | Direct current defects | **13** |
-| Verified necessary improvements | **3** |
+| Verified necessary improvements | **5** |
 | Narrowed residuals | **0** |
-| System verification lanes | **5** |
+| System verification lanes | **4** |
 | Owner decisions | **4** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
@@ -44,11 +44,13 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 
 ---
 
-## VERIFIED NECESSARY IMPROVEMENTS — 3
+## VERIFIED NECESSARY IMPROVEMENTS — 5
 
 | ID | Needed implementation | Why it is active work / evidence |
 |---|---|---|
 | `NG-DEAD-01` | Remove the 15 unused `NagornayaChastN{HeaderHero,ArticleBody,PostContent}` extraction artifacts, or deliberately restore them as the actual canonical componentization boundary; do not keep both the monolithic MainShell owner and a zero-consumer extracted family. | Exact `0fbe7d1e` verification recorded 0 import refs; Product delta to current `9a0db0dc` did not change these components, the five MainShells or canonical part routes. Current Part I/Part V edge files still exist, while all five canonical routes import `NagornayaChastNMainShell`. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS` | Narrowed current CSS ownership cleanup: keep one canonical `@keyframes fx-breathe` definition and one canonical mobile `.gb-floater` rule instead of duplicate same-owner definitions in shared CSS. | Current `site.css` still defines `@keyframes fx-breathe` twice with different bodies; current `floating-cluster.css` still repeats the mobile `.gb-floater` owner in two `@media (max-width:899px)` blocks. The historical “33 dead custom props” claim is not carried forward. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `AUDIT-JS-ESCAPER-DUP-X5` | Add one canonical shared HTML-escaping primitive (appropriate shared utility owner) and migrate the five current local copies instead of maintaining security-sensitive escaping independently across modules. | Current `site.js` contains three local `tt(...)` HTML escapers, `highlights.js` has local `h(...)`, `search.js` has local `F(...)`; current `site-utils.js` has no HTML-escape owner. This is exact 5→1 ownership dedupe, not a generic refactor wish. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SEARCH-P3-02` | Add truthful result-total / continuation (`Показать ещё`, pagination or equivalent) instead of silently exposing only Pagefind 10 / fallback 12. | Current corpus can return more matches than the user can reach. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `AR-IDX-05` | Consolidate Home/shared cache/version identity so `SITE_CONFIG.version` and asset `?v=` revisions do not remain parallel manual authorities. | Verified ownership debt with stale-cache/regression potential; coordinate with active legacy/reference owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 
@@ -60,7 +62,7 @@ No residual-only row remains. A future partial closure should use this section o
 
 ---
 
-## SYSTEM VERIFICATION LANES — 5
+## SYSTEM VERIFICATION LANES — 4
 
 Одна строка = один текущий verification/implementation package/root, а не десятки исторических симптомов. Старые symptom-ID mapping находится в `../legacy/MATRIX_CLEANUP_2026-08-07.md`.
 
@@ -69,8 +71,7 @@ No residual-only row remains. A future partial closure should use this section o
 | `SYS-KARTY-DATA-PROJECTION` | Holding-map publication readiness plus the shared data/base dependency needed by active Ishod repair. Shoftim/Early Church/Shvatim currently publish `KartyHoldingPage`, so route-data/overlap/region/signature issues are not mislabeled as public runtime defects. Shared `base-geo.svg` must also gain coherent self-contained defs/ID ownership before it can safely become Ishod's basemap. | Reverify/repair as one bounded publication-readiness/data package; promote only an independently current root. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-KARTY-VISUAL-LANGUAGE` | Explicit holding-map visual publication-readiness owner. The public hub and `KartyHoldingPage` require manual verification of initial viewport, label collision, desktop/mobile layout, controls, route readability and overall visual quality before a map returns. Old sheet-engine decoration/aesthetic rows are not requirements by themselves. | Current screenshots/browser review of holding candidates against the published readiness contract; fix only concrete blockers, retire taste-only historical symptoms. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-AUDIT-CONTROL-PLANE` | Audit/workflow false-green/false-red and duplicated/incorrect proof boundaries; also owns any remaining noindex/canonical harness gap after the `/izbrannoe/` source fix. | Coordinate with current Product control-plane owners; #1092/#1097 remain active and #1120 touches release geometry evidence. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `SYS-SHARED-CSS-RUNTIME-HYGIENE` | Shared CSS/runtime dead/duplicate owner cleanup and a11y hygiene. | Reverify after active reader layout/regression owners settle. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `SYS-STRANGLER-RETIREMENT` | Legacy/reference parity-authority migration and eventual bounded retirement. | Follow Product PR #1090 owner; no parallel retirement lane. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `SYS-STRANGLER-RETIREMENT` | Legacy/reference parity-authority migration and eventual bounded retirement. The old `NF-DEAD-ENHANCE-SHIM` is not a shared-runtime bug: current code explicitly identifies it as a legacy shim and bails on canonical v4 markup. | Follow Product PR #1090 owner; no parallel retirement lane. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 
 ---
 
