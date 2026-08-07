@@ -1,132 +1,92 @@
 # DOC MAP — gb-is-my-strength
 
-Эта карта объясняет, где искать evidence и кто каким типом факта владеет.
+Where each kind of evidence and work status belongs.
 
-Главная модель AuditRepo: [`../../AUDITREPO_OPERATING_MODEL.md`](../../AUDITREPO_OPERATING_MODEL.md).
+Canonical model: [`../../AUDITREPO_OPERATING_MODEL.md`](../../AUDITREPO_OPERATING_MODEL.md).
 
 ## Owner directive
 
-AuditRepo для `gb-is-my-strength` — не зеркало каждого Product HEAD. Он хранит накопленные аудиты, проверенные на своих anchors, системные темы и выбранные направления.
+AuditRepo is an evidence/verification workspace, not a Product mirror and not a closed-bug museum inside the active matrix.
 
 ```text
-collect many passes
-→ verify a selected package
-→ deduplicate symptoms
-→ identify local vs systemic work
-→ close any owner-selected scope
+collect evidence
+→ verify / reverify selected claims
+→ identify genuinely needed current work
+→ deduplicate into useful work units
+→ keep those units in MASTER
+→ implement / decide
+→ verify result
+→ move solved/superseded material to legacy
 ```
-
-Новый Product commit не требует отдельной authority-sync транзакции.
-
----
 
 ## Fact ownership
 
 | Fact | Owner | Notes |
 |---|---|---|
-| Current Product code, HEAD, open PRs, branches, CI and deploy | `FedorMilovanov/gb-is-my-strength` | проверять непосредственно перед Product work; не копировать постоянно сюда |
-| Raw observations and evidence | `incoming/<agent>/<date>/` | immutable anchor-specific reports |
-| Temporary verification-wave synthesis | `working/` | не current truth навсегда |
-| Active local findings and legacy historical rows | `verified/MASTER_BUG_MATRIX.md` | transitional monolith; do not grow verbose closure ritual |
-| Systemic root themes | `verified/SYSTEM_THEMES.md` | classes of causes; revalidate when selected |
-| Owner-selected optional priorities | `WORK_QUEUE.md` | may contain 0, 1 or many lanes; not an obligation |
-| Compact wave/closure history | `verified/CLOSURE_LEDGER.md` | new proportional summaries; legacy closures remain discoverable in matrix/archive |
-| Meaningful conflicts | `verification/` | only when a real decision is disputed |
-| Significant current checks | `reverify/` | only when needed for work/disposition |
-| Historical/superseded material | `archive/` | evidence, not active guidance |
-| Stable project orientation | `README.md` | no volatile HEAD/counts |
+| Current Product code, HEAD, open PRs, branches, CI and deploy | `FedorMilovanov/gb-is-my-strength` | inspect immediately before Product work |
+| Raw observations and anchor-specific evidence | `incoming/<agent>/<date>/` | evidence; not automatic current truth |
+| Current/package verification | `verification/` | multi-witness or package synthesis when useful |
+| Significant re-verification | `reverify/` | current applicability, conflict or high-risk recheck |
+| **Active verified necessary work** | `verified/MASTER_BUG_MATRIX.md` | one working matrix; bugs + necessary improvements + system work + decisions |
+| Reusable root-cause context | `verified/SYSTEM_THEMES.md` | context, not automatically active work |
+| Optional non-mandatory improvements | `WORK_QUEUE.md` | performance/refactor/polish candidates; not a second matrix |
+| Retired/superseded/closed material | `legacy/` | searchable reference, never an active backlog |
+| Older raw historical collections | `archive/` | evidence/archive only |
+| Stable project orientation | `README.md` | no volatile global HEAD mirror |
 
----
+## MASTER ownership
 
-## Start here by goal
+MASTER is the single work notebook. A row belongs there when current evidence supports a real next action or owner decision, including:
 
-| Goal | Read |
-|---|---|
-| Understand how AuditRepo now works | `../../AUDITREPO_OPERATING_MODEL.md` |
-| Add a new audit pass | `incoming/` + `../../projects/_templates/AGENT_REPORT_TEMPLATE.md` |
-| See possible next work | `WORK_QUEUE.md` |
-| Understand recurring root causes | `verified/SYSTEM_THEMES.md` |
-| Inspect current/legacy finding registry | `verified/MASTER_BUG_MATRIX.md` |
-| Review recent wave outcomes | `verified/CLOSURE_LEDGER.md` |
-| Investigate old evidence | `incoming/`, `reverify/`, `archive/` |
+- current defect;
+- verified necessary implementation/improvement;
+- system/root-cause repair;
+- required migration/retirement;
+- narrowed residual;
+- owner decision blocking implementation.
 
-`NEXT_AGENT_PROMPT.md` remains only as a compatibility pointer for older agents. It is no longer a global exact-authority mirror.
+A row leaves MASTER immediately after a verified `fixed`, `absorbed`, `stale`, `duplicate`, `invalid`, `accepted/not-planned` or `not-worth-fixing` disposition.
 
----
+If many historical symptoms have one current root, MASTER keeps one `SYS-*` row. The old IDs may be listed in the retirement note in `legacy/`, not kept as separate active rows.
 
-## Finding lifecycle
+## Evidence rule
 
-```text
-incoming observation
-→ candidate
-→ verified-at-anchor when evidence supports it
-→ selected-for-current-check only when owner chooses work
-→ current-local / systemic-root / duplicate / stale / invalid / parked / decision
-→ proportional repair or disposition
-```
+Before adding/retaining active work:
 
-Movement of global Product `main` does not silently reopen, close or stale rows.
+1. read historical evidence;
+2. inspect current Product owner/surface;
+3. collect evidence proportional to risk;
+4. for high-risk work use independent witness angles as appropriate: source, artifact, browser, live, lifecycle/history;
+5. check open Product PRs/branches for ownership collisions;
+6. distinguish mandatory work from optional improvement.
 
----
+A historical `verified-at-anchor` claim is useful evidence, but not an automatic permit to edit current Product.
 
-## Verification-wave rule
+## Optional work
 
-A wave may process any number of findings. It should prefer one package-level synthesis over dozens of one-row PRs.
+Useful but not-yet-mandatory performance/refactor/polish ideas live in `WORK_QUEUE.md`. If later measurement/current evidence proves the work genuinely necessary, promote the **current formulation** to MASTER. Do not carry speculative backlog into MASTER merely because an old report mentioned it.
 
-Expected outputs:
+## Legacy rule
 
-- current local defects;
-- systemic root causes;
-- duplicates;
-- stale/invalid/audit-drift;
-- parked or accepted risk;
-- owner decisions;
-- a short optional work queue.
+Legacy is intentionally retained so old evidence can be consulted if a regression, dispute or forensic need appears. It is not routinely deleted, but it is also never a queue. Anything revived from legacy needs a new current applicability check before returning to MASTER.
 
-The owner may close a single item, a cluster, a systemic root or the entire wave.
+Git history remains the full-fidelity history; legacy should be useful and compact rather than copying every old table verbatim.
 
----
+## Continuous matrix hygiene
 
-## Proportional closure
+At the end of every repair/consolidation wave:
 
-Update only what materially changed:
+1. remove solved/obsolete rows from MASTER;
+2. collapse duplicate symptoms into current roots;
+3. move optional ideas to Work Queue;
+4. preserve only useful retirement mapping/context in legacy;
+5. keep MASTER small enough to answer “what do we actually need to do now?”.
 
-1. active finding classification, if needed;
-2. `SYSTEM_THEMES.md`, if causal understanding changed;
-3. `WORK_QUEUE.md`, if selected priorities changed;
-4. one compact `CLOSURE_LEDGER.md` entry for a completed wave or meaningful local closure;
-5. a separate `reverify/` document only for disputed, systemic, security/live/rights or historically valuable evidence.
+## Collision rule
 
-Do not update README, registry, matrix masthead and handoff merely to copy a new Product SHA.
+Before Product work:
 
----
-
-## Matrix transition
-
-`MASTER_BUG_MATRIX.md` currently includes hundreds of historical closed rows and manually repeated counts. It remains intact during this reform to avoid risky mass rewriting.
-
-From this point:
-
-- do not add global HEAD synchronization solely for freshness;
-- prefer compact closure summaries;
-- consolidate old closed rows in future dedicated waves;
-- separate defects, improvements, refactoring and AuditRepo maintenance conceptually;
-- treat the matrix’s old `current/fixed-current` language as historical terminology tied to its evidence.
-
----
-
-## Minimal session ritual
-
-At the start of Product work:
-
-1. choose a finding or system theme;
-2. read its evidence;
-3. inspect current Product owner and overlapping PRs;
-4. verify the selected surface only;
-5. choose local/system/park/decision.
-
-At the end:
-
-1. preserve Product evidence in Product;
-2. record only the material AuditRepo disposition;
-3. do not create a documentation control plane larger than the repair.
+1. inspect current Product open PRs/branches;
+2. identify the owner/shared files;
+3. do not create a competing SYSTEM lane;
+4. if an active owner already covers the root, attach/sequence the matrix work to that owner instead.
