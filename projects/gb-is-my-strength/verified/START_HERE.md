@@ -1,98 +1,54 @@
 # Owner Start Here — gb-is-my-strength AuditRepo
 
-## What this repository gives you
+AuditRepo is the evidence and verification workspace for `gb-is-my-strength`.
 
-AuditRepo is a growing evidence library and reasoning layer for `gb-is-my-strength`.
+## One active matrix
 
-It can contain many independent passes, including reports that later prove stale, duplicate or wrong. That is useful: raw evidence shows how conclusions were reached and how audit methods improved.
+[`MASTER_BUG_MATRIX.md`](./MASTER_BUG_MATRIX.md) is the **single active work matrix**. Despite the historical filename, it is not limited to bugs. It contains only verified work that still needs action:
 
-The purpose is not to maintain a second exact copy of Product status. The purpose is to help answer:
+- current defects;
+- genuinely necessary implementations or improvements;
+- system/root-cause work;
+- narrowed residuals;
+- owner decisions that block real work.
 
-- What has been observed before?
-- What evidence supports or contradicts it?
-- Which symptoms share one root cause?
-- What is worth verifying now?
-- Should we fix locally, improve a system, park it or accept the risk?
+MASTER is a working notebook, not project history. Solved, stale, duplicate, absorbed, invalid or abandoned rows are removed in the same closure/consolidation wave.
 
----
-
-## The four useful views
-
-### 1. Possible work
-
-[`../WORK_QUEUE.md`](../WORK_QUEUE.md)
-
-An optional owner-controlled queue. It may contain a few questions, many questions or none.
-
-### 2. Systemic causes
-
-[`SYSTEM_THEMES.md`](./SYSTEM_THEMES.md)
-
-Recurring classes such as release identity, runtime ownership, strangler duplication, content authority and audit-harness quality.
-
-### 3. Finding registry
-
-[`MASTER_BUG_MATRIX.md`](./MASTER_BUG_MATRIX.md)
-
-The historical registry. It still contains both active and many closed rows from the earlier exact-authority model. Use it as evidence/index, not as an obligation to keep all 376 rows globally current.
-
-### 4. Completed waves
-
-[`CLOSURE_LEDGER.md`](./CLOSURE_LEDGER.md)
-
-Compact summaries of what a wave fixed, absorbed, rejected, parked or left independent.
-
----
-
-## How to request work
-
-You can choose any scope:
+## Evidence flow
 
 ```text
-“Verify these 50 findings and find deeper causes.”
-“Fix only this visible bug.”
-“Take the TTS performance theme.”
-“Close everything this system fix absorbs.”
-“Do a fresh broad audit and add evidence only.”
-“Decide what is not worth fixing.”
+raw audit evidence
+→ verification / re-verification
+→ enough independent witnesses for the risk
+→ compact current work in MASTER
+→ implementation / owner decision
+→ result verification
+→ remove from MASTER
+→ legacy when useful
 ```
 
-The process should adapt to the request. AuditRepo no longer requires one fixed close-every-row sequence.
+Evidence lives in `incoming/`, `verification/` and `reverify/`. High-risk security, rights, release or data-loss conclusions should use multiple independent evidence angles. Ordinary local work may need only one strong current witness plus a clear mechanism.
 
----
+## Necessary improvements are valid work
 
-## What happens before a fix
+A MASTER row does not need to describe something visibly broken. A verified implementation/improvement belongs there when evidence shows it is genuinely needed to remove a current risk, complete a required capability, finish a migration, improve a system owner, or satisfy a real product requirement. Speculative refactors and taste-only polish do not.
 
-The agent should:
+## Optional work
 
-1. read relevant historical evidence;
-2. inspect the selected current Product surface directly;
-3. identify local vs systemic cause;
-4. choose proportionate evidence;
-5. avoid overlapping active Product work;
-6. explain when no fix or owner decision is better.
+[`../WORK_QUEUE.md`](../WORK_QUEUE.md) is for useful measurement-first performance work, refactors and polish that are not yet mandatory verified work. It is not a second bug matrix.
 
-There is no preliminary requirement to synchronize every AuditRepo document with the latest Product HEAD.
+## System themes
 
----
+[`SYSTEM_THEMES.md`](./SYSTEM_THEMES.md) is causal context. A theme becomes active work only after a current verification wave selects it. When many symptoms share one root, MASTER should contain one `SYS-*` work unit rather than dozens of symptom rows.
 
-## What a good result looks like
+## Legacy
 
-A good wave may reduce fifty claims to:
+`../legacy/` is the retirement/reference area. Finished, stale, duplicate and superseded material may be preserved there so a future regression or dispute can be investigated. Legacy is never an active backlog: anything taken from it must first be re-verified against current Product.
 
-- several current local defects;
-- a few systemic roots;
-- duplicates absorbed into those roots;
-- stale or invalid claims;
-- low-value parked work;
-- owner decisions.
+## Continuous cleanup
 
-The value is clearer causality and better choices, not a larger count of “verified bugs”.
+The matrix is cleaned continuously. Solve → verify → remove. If 30 historical claims reduce to one current root, MASTER keeps one root. Git and evidence retain the old detail; MASTER stays small enough to drive actual work.
 
----
+Before any Product edit, inspect current Product HEAD, open PRs/branches and owner surfaces so a new lane does not collide with work already in flight.
 
-## Current transition
-
-The large historical matrix remains intact so no evidence is lost. New work uses the lighter operating model, optional queue, system themes and compact closure ledger. Old rows can be consolidated gradually in dedicated waves.
-
-Canonical repository model: [`../../../AUDITREPO_OPERATING_MODEL.md`](../../../AUDITREPO_OPERATING_MODEL.md).
+Canonical rules: [`../../../AUDITREPO_OPERATING_MODEL.md`](../../../AUDITREPO_OPERATING_MODEL.md).
