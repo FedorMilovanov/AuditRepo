@@ -81,7 +81,7 @@ def write_project(
         encoding="utf-8",
     )
     (project / "reverify" / "unknown.md").write_text(
-        "# NEW-UNREGISTERED-01 — exact finding\n", encoding="utf-8"
+        "# NEW-UNREGISTERED-01 — historical evidence-only finding\n", encoding="utf-8"
     )
     return project
 
@@ -129,13 +129,9 @@ def main() -> int:
             "informational": 1,
             "false-positive": 1,
         }
-        assert report["problemKinds"] == {"UNREGISTERED-EVIDENCE": 1}
-        unresolved = report["unregisteredEvidence"]
-        assert unresolved[0]["id"] == "NEW-UNREGISTERED-01"
-        occurrence = unresolved[0]["occurrences"][0]
-        assert occurrence["file"] == "reverify/unknown.md"
-        assert occurrence["lines"] == [1]
-        assert occurrence["contexts"] == ["heading"]
+        assert report["problems"] == 0
+        assert report["evidenceOnlyIds"] == 1
+        assert report["evidenceOnlyIdList"] == ["NEW-UNREGISTERED-01"]
 
         contexts = collect_contexts(project, radius=0)
         exact = contexts["contexts"]["NEW-UNREGISTERED-01"][0]
@@ -152,6 +148,7 @@ def main() -> int:
         report = build_report(project)
         assert report["problems"] == 0
         assert report["registryIds"] == 5
+        assert report["evidenceOnlyIds"] == 0
 
     with tempfile.TemporaryDirectory() as temp:
         broken = dict(entries)
@@ -174,9 +171,6 @@ def main() -> int:
         expect_value_error(project, "must use a reasoned registry entry")
 
     with tempfile.TemporaryDirectory() as temp:
-        # Keep the alias target (`OPEN-ONE`) canonical while corrupting another
-        # row, so this fixture reaches matrix-integrity diagnostics instead of
-        # failing earlier in alias-target validation.
         malformed = MATRIX.replace("`IMPROVE-ONE`", "`IMPROVE-ONE/TWO`", 1)
         project = write_project(pathlib.Path(temp), entries, matrix=malformed)
         report = build_report(project)
