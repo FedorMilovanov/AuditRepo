@@ -32,6 +32,9 @@ The following historical rows were removed from active work because they are fix
 - `AR-001` — closed by AuditRepo validator/scaffold hardening.
 - `AR-004` — absorbed by operating-model v2 proportional verification waves.
 - `AR-005` — retired blanket-reverify obligation.
+- `BUG-SEO-001` — stale/fixed architecture: current `.github/workflows/indexnow.yml` is a metadata/readiness workflow and does not perform the historical pre-CDN IndexNow submission; production build/candidate/Pages promotion is owned separately by `deploy.yml`.
+- `NEW-CANONICAL-IZBRANNOE-01-GAP` — route defect was fixed by Product `563e85f3`; current `/izbrannoe/` source emits an absolute SITE-owned canonical and is a registered strict-native noindex production route. Any remaining generic noindex/canonical harness question is absorbed into `SYS-AUDIT-CONTROL-PLANE`, not an independent SEO row.
+- `AR-IDX-10` — legacy/Astro CSP parity is not an independent current route defect under explicit native/reference ownership; any actual current security-header problem needs its own current witness, while legacy/reference divergence belongs to `SYS-STRANGLER-RETIREMENT`.
 
 ## Historical symptom rows collapsed into current system lanes
 
@@ -40,18 +43,17 @@ These are not closed claims; their **old per-symptom formulations are retired** 
 - `SYS-KARTY-RUNTIME-GEOMETRY`: `MAP-P1-01`, `MAP-P1-02`, `MAP-P1-04`, `MAP-P1-05`, `MAP-P1-07`, `MAP-P1-08`, `MAP-P1-10`, `MAP-P1-12`, `AVRAAM-P1-01`, `AVRAAM-P1-02`, `AVRAAM-P1-03`, `AVRAAM-P1-05`, `ASTRO-P1-01`, `MAP-P1-18`, `MAP-P1-19`, `DATA-P1-04`, `ENGINE-P1-26`, `ENGINE-P1-27`, `ENGINE-P1-29`, `QUAL-P1-01`, `QUAL-P1-05`, `QUAL-P1-06`, `DRAW-P1-01`, `TEXT-P1-01`, `WAYP-P1-01`, `PERF-P1-01`, `UI-P1-01`, `LOD-P1-01`, `AVRAAM-P2-01`, `MAP-P2-02`, `ENGINE-P2-03`, `QUAL-P2-04`.
 - `SYS-KARTY-DATA-PROJECTION`: `MAP-P1-03`, `KARTY-DATA-P1-01`, `ASTRO-P1-05`, `GATE-P1-03`, `DATA-P1-03`, `RIVER-P1-01`, `RIVER-P1-02`, `RIVER-P1-03`, `RIVER-P1-04`, `BASE-P1-01`, `BASE-P1-02`, `BASE-P1-03`, `SVG-P1-01`, `REG-P1-01`, `ROUTE-P1-01`, `BASE-P2-01`, `DATA-P2-01`, `QUAL-P2-02`.
 - `SYS-KARTY-VISUAL-LANGUAGE`: `QUAL-P1-03`, `DRAW-P1-03`, `QUAL-P1-08`, `ARCH-P1-01`, `RELIEF-P1-01`, `GLYPH-P1-01`, `GRAT-P1-01`, `SEA-P1-01`, `ORN-P1-01`, `HALO-P1-01`, `MEDIA-P1-01`, `HUB-P2-01`.
-- `SYS-AUDIT-CONTROL-PLANE`: `CI-WORKFLOW-PROLIFERATION`, `S-T-01`, `AUDIT-P2-WORKFLOWS-CHECK-GAP`, `D-2`, `GATE-MARKER-DATA-DRIFT`, `BUG-011`, `NF-GATE-IZ5-STALE`.
-- `SYS-SEO-RELEASE-SURFACES`: `BUG-SEO-001`, `NEW-CANONICAL-IZBRANNOE-01-GAP`, `AR-IDX-10`.
+- `SYS-AUDIT-CONTROL-PLANE`: `CI-WORKFLOW-PROLIFERATION`, `S-T-01`, `AUDIT-P2-WORKFLOWS-CHECK-GAP`, `D-2`, `GATE-MARKER-DATA-DRIFT`, `BUG-011`, `NF-GATE-IZ5-STALE`; any residual noindex/canonical harness question from retired `NEW-CANONICAL-IZBRANNOE-01-GAP` also belongs here.
 - `SYS-NAGORNAYA-MIGRATION`: `NG-DEAD-01`, `NG-SEO-01`, `NG-TOC-01`, `NG-CROSS-01`, `NG-SERIYA-01`, `NG-A11Y-01`, `NG-VIS-10`, `NG-STRUCT-01`, `NG-INLINE-01`.
 - `SYS-SHARED-CSS-RUNTIME-HYGIENE`: `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS`, `AUDIT-CSS-GBFLOATER-DUP-MEDIA`, `AUDIT-JS-ESCAPER-DUP-X5`, `D-4`, `NF-DEAD-ENHANCE-SHIM`, `AR-IDX-A11Y-01`.
-- `SYS-STRANGLER-RETIREMENT`: historical `R-007` plus duplicate shadow-drift symptom rows.
+- `SYS-STRANGLER-RETIREMENT`: historical `R-007`, duplicate shadow-drift symptoms, and legacy/reference ownership context formerly represented by `AR-IDX-10`.
 
 ## Non-defect improvements removed from MASTER
 
-These were not thrown away; they belong to optional work/measurement, not the bug matrix:
+These were not thrown away; they belong to optional work/measurement, not the active matrix:
 
 `AR-IDX-PERF-01`, `AR-IDX-PERF-02`, `AR-IDX-JS-01`, `NEW-CSS-BUDGET-01`, `AUDIT-P3-OG-LCP-MISMATCH`, `D-3`, `AR-IDX-07`, `AR-IDX-08`, `AR-IDX-CSS-03`, `R-001`, `R-002`, `R-003`, `R-004`, `R-005`.
 
 ## Policy established by this cleanup
 
-MASTER stays small. A solved or obsolete row leaves MASTER in the same wave. If many historical symptoms reduce to one current root, MASTER keeps the root, not every symptom. Legacy is a retirement sink, not a second backlog and not a place agents should work from.
+MASTER stays small. A solved or obsolete row leaves MASTER in the same wave. If many historical symptoms reduce to one current root, MASTER keeps the root, not every symptom. Legacy is a retirement/reference sink, not a second backlog. It remains available for future regressions and forensic lookup.
