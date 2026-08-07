@@ -4,17 +4,17 @@
 > Несмотря на историческое имя файла, это не только баги: здесь живут текущие дефекты, доказанно нужные внедрения/улучшения, системные verification/implementation packages, residuals и owner decisions.
 > Решено / stale / duplicate / absorbed / invalid / superseded → убрать из MASTER в той же wave; полезный контекст остаётся в `../legacy/`.
 
-Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT.md`.
+Current wave evidence: `verification/2026-08-07-d2-css-layer-validator-closure/REPORT.md`.
 
 ## Current state
 
 | Поле | Значение |
 |---|---|
-| Product verification anchor | `d8a2d184b241eec19765729b80f092067230d8e5` |
-| Wave | full-matrix consolidation, 2026-08-07 |
-| Active work units | **27** |
+| Product verification anchor | `f4cfb8653551ed8459aba1bfcf65f03e27fdfbb2` |
+| Wave | D-2 CSS layer validator closure, 2026-08-07 |
+| Active work units | **26** |
 | Direct current defects | **14** |
-| Verified necessary improvements | **7** |
+| Verified necessary improvements | **6** |
 | Narrowed residuals | **0** |
 | System verification lanes | **2** |
 | Owner decisions | **4** |
@@ -45,12 +45,11 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 
 ---
 
-## VERIFIED NECESSARY IMPROVEMENTS — 7
+## VERIFIED NECESSARY IMPROVEMENTS — 6
 
 | ID | Needed implementation | Why it is active work / evidence |
 |---|---|---|
 | `BASE-P1-01` | Provide one valid canonical geographic base asset for the public Ishod repair: either make shared `karty/_engine/base-geo.svg` self-contained or replace it with an explicitly owned equivalent. Do not wire the current broken shared asset into `MAP-P1-10`. | Current shared `base-geo.svg` has an empty `<defs>` yet references `url(#landG)`, `url(#seaG)`, `url(#soft)` and `<use>` targets such as `#hill`, `#peak`, `#peak-snow`; current MapEngine defs do not supply those foreign IDs. This is a material dependency of the active public Ishod basemap defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `D-2` | Make `css-layer-validator.js` enforce the architecture it advertises: compare actual `@layer` block order against the declared order and make the layered-coverage threshold semantics truthful (today the output says target ≥80% while only `<50%` becomes a warning and no 80% contract exists). | Current Product delta `e678b6c8 → d8a2d184` changes only Home footer source, so this validator witness is unchanged. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `NG-DEAD-01` | Remove the 15 unused `NagornayaChastN{HeaderHero,ArticleBody,PostContent}` extraction artifacts, or deliberately restore them as the actual canonical componentization boundary; do not keep both the monolithic MainShell owner and a zero-consumer extracted family. | Exact `0fbe7d1e` verification recorded 0 import refs; Product deltas through current anchor did not change these components, the five MainShells or canonical part routes. Current Part I/Part V edge files still exist, while all five canonical routes import `NagornayaChastNMainShell`. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS` | Narrowed current CSS ownership cleanup: keep one canonical `@keyframes fx-breathe` definition and one canonical mobile `.gb-floater` rule instead of duplicate same-owner definitions in shared CSS. | Product delta to `d8a2d184` is Home-footer-only, so the current shared CSS witness is unchanged. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `AUDIT-JS-ESCAPER-DUP-X5` | Add one canonical shared HTML-escaping primitive (appropriate shared utility owner) and migrate the five current local copies instead of maintaining security-sensitive escaping independently across modules. | Product delta to `d8a2d184` is Home-footer-only; current `site.js` 3 + `highlights.js` 1 + `search.js` 1 / `site-utils.js` 0 witness is unchanged. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
@@ -94,11 +93,12 @@ Not extra work units; current Product owners that constrain the matrix:
 - #1092 — exact release/live-evidence lifecycle repair for `AUDIT-P2-WORKFLOWS-CHECK-GAP`.
 - #1090 — legacy-reference identity/inventory/retirement readiness; 29 native shadows / 52 blockers remain after its intended narrow repair.
 - #1097 — dependent tooltip/layout regression guards.
-- #1130 — ReaderSettings follow-up; unrelated to roots above.
 
-Recently merged into or before the current Product anchor:
+Recently merged/closed before or at the current Product anchor:
 
-- #1129 — Home footer settled-frame contract; merged as Product `d8a2d184...`, the only delta from previous anchor;
+- #1138 — CSS layer validator contract repair for `D-2`; squash-merged as Product `f4cfb865...`. `D-2` is retired from MASTER by `verification/2026-08-07-d2-css-layer-validator-closure/REPORT.md`;
+- #1130 — diagnostic ReaderSettings proof lane; closed without merge and no longer an in-flight owner;
+- #1129 — Home footer settled-frame contract;
 - #1120 — Home live-release geometry evidence boundary;
 - #1095 — ReaderRail/ReaderSettings desktop layout geometry;
 - #1093 — shared tooltip runtime / Hermenevtika popup repair;
