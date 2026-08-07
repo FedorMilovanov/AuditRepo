@@ -2,7 +2,7 @@
 
 Эта очередь показывает owner-selected направления. Перед любой source mutation нужно заново проверить актуальный source owner, open PRs и применимое evidence.
 
-## Current selection — bug closure marathon
+## Current selection — fresh current-head verification
 
 Owner-selected operating order:
 
@@ -10,15 +10,9 @@ Owner-selected operating order:
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-### 1. Product #335 / TLP-DEPS-001 — remove dead Lenis dependency
+Current verified engineering rows: **0**.
 
-- Status: `verified-current / repair-ready / P3`.
-- Scope: exactly `package.json` + `package-lock.json` unless new evidence disproves the bounded graph.
-- Important prior verification: the naive npm 10.9.2 lock-only operation caused unrelated metadata churn and was rejected; the accepted repair must remain structure-preserving and minimal.
-- Required closure: deterministic manifest/lock diff, package install validation, native-scroll/browser runtime guards, full check/build, exact-head PR evidence, merge, then AuditRepo closure and row removal.
-- This does **not** reopen the closed P1 native-scroll defect.
-
-### 2. New bug hunting — only after #335 closes
+### 1. New bug hunting — only from current-head evidence
 
 Run a fresh current-head verification pass instead of replaying the historical matrix. Prioritize surfaces where user-visible regressions can escape static contracts:
 
@@ -32,7 +26,21 @@ Run a fresh current-head verification pass instead of replaying the historical m
 
 A new finding enters `verified/MASTER_BUG_MATRIX.md` only after current-head reproduction and root-cause evidence. Duplicate symptoms are clustered under one root cause.
 
+Do not reopen #335, #340, W0–W7, the native-scroll repair or canonical poet authority merely because a fresh audit touches adjacent code.
+
 ## Closed current-scope families
+
+### TLP-DEPS-001 / Product #335 — dead Lenis install dependency
+
+Closed by Product PR #348, exact tested head `43527c7a7932f17fcba599ff4df270c243ba69a6`, squash merge `3a8d5fe3a6f729e8a583a3a8c7e6881ec31b5214`.
+
+- The residual direct `lenis` dependency and lock entry were removed after runtime scrolling had already returned to native browser ownership.
+- The repair stayed bounded to package-manager ownership; it did not reopen scroll runtime, routes, validators or content.
+- Exact-head Product evidence recorded CI, project contracts, route audit, brand/content publication gates and Manual Browser QA 4/4.
+- Current Product `main` after the concurrent essay-performance merge preserves both changes: new browser-data scripts are present while Lenis remains absent.
+- Detailed AuditRepo evidence: `verification/2026-08-07-lenis-dependency-closure/REPORT.md`.
+
+Future scroll or dependency findings require independent current reproduction; this closure is not a blanket claim that no future scrolling or package defect can exist.
 
 ### TLP-AUDIT-003 / Product #340 — semantic runtime guard hardening
 
