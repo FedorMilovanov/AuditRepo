@@ -4,17 +4,17 @@
 > Несмотря на историческое имя файла, это не только баги: здесь живут текущие дефекты, доказанно нужные внедрения/улучшения, системные verification/implementation packages, residuals и owner decisions.
 > Решено / stale / duplicate / absorbed / invalid / superseded → убрать из MASTER в той же wave; полезный контекст остаётся в `../legacy/`.
 
-Current wave evidence: `verification/2026-08-07-ng-dead-extraction-closure/REPORT.md`.
+Current wave evidence: `verification/2026-08-07-ishod-basemap-closure/REPORT.md`.
 
 ## Current state
 
 | Поле | Значение |
 |---|---|
-| Product verification anchor | `def95cc7c004cbf2e60b4c8272cb6880235435f6` |
-| Wave | NG-DEAD-01 extraction cleanup closure, 2026-08-07 |
-| Active work units | **25** |
-| Direct current defects | **14** |
-| Verified necessary improvements | **5** |
+| Product verification anchor | `c42d0d585133e8fea8dfdd43bec851740eedc9e8` |
+| Wave | Ishod basemap closure, 2026-08-07 |
+| Active work units | **23** |
+| Direct current defects | **13** |
+| Verified necessary improvements | **4** |
 | Narrowed residuals | **0** |
 | System verification lanes | **2** |
 | Owner decisions | **4** |
@@ -24,14 +24,13 @@ Current wave evidence: `verification/2026-08-07-ng-dead-extraction-closure/REPOR
 
 ---
 
-## CURRENT DEFECTS — 14
+## CURRENT DEFECTS — 13
 
 | ID | Current problem | Boundary / evidence |
 |---|---|---|
 | `S-SEC-01` | `js/enhancements.js` всё ещё использует fixed blacklist/attribute-stripping HTML sanitizer design. | SYSTEM shared-runtime/security lane; adversarial fixtures required. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `AUDIT-P2-WORKFLOWS-CHECK-GAP` | Current release evidence lifecycle can lose the forensic report needed to explain an early live-verifier failure: both live verifiers perform strict preflight assertions / candidate verification before creating their JSON report, while `deploy.yml` uploads generic/TTS evidence with bare `if: always()`. An early generic failure can leave no generic report, skip the TTS verifier under normal success semantics, and then run artifact-upload steps against missing files. | Current release files are unchanged by Product `e678b6c8 → d8a2d184`; exact repair owner is active Product PR #1092. Do not duplicate its Product lane. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-01` | Tour вычисляет реальный `sid`, но caption/progress всё ещё индексируют `route.stages[tourStepIdx]` и `data-stage=tourStepIdx`. Для story с non-zero `stage_ids` caption/highlight therefore drift from the authored stage. | Current reachable MapEngine keyboard/API tour state defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `MAP-P1-10` | Canonical strict-native Ishod creates MapEngine without `baseGeoUrl`; current MapEngine loads `#me-base-geo` only when `opts.baseGeoUrl` is supplied. The public map therefore renders route/markers without a geographic base layer. | Current canonical Ishod basemap integration defect. `BASE-P1-01` is the required shared-asset dependency before wiring a base layer. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-11` | Scale bar всё ещё выводит pixel scale из `cfg.W0 / view.w`, а не из реальной rendered canvas width. | Current public MapEngine geometry defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-18` | Single-photo cards carry `data-src=ph.src`, but multi-photo gallery images render `ph.thumb||ph.src` without full-source/index metadata. Delegated modal open therefore receives the thumbnail and never initializes `photoCurrentPlace/photoCurrentIdx`, so modal swipe cannot advance the multi-photo set. | Current public multi-photo gallery/modal defect; Avraam has multi-photo content. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `WAYP-P1-01` | Current verified-waypoint labels are rendered as `font-size="7"` map units at opacity `.4`, without a label background and without `data-screen-anchor`. On Avraam main/mobile authored view widths this resolves to only a few CSS pixels, making the archaeological waypoint names effectively unreadable. | Current public Karty waypoint readability defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
@@ -45,11 +44,10 @@ Current wave evidence: `verification/2026-08-07-ng-dead-extraction-closure/REPOR
 
 ---
 
-## VERIFIED NECESSARY IMPROVEMENTS — 5
+## VERIFIED NECESSARY IMPROVEMENTS — 4
 
 | ID | Needed implementation | Why it is active work / evidence |
 |---|---|---|
-| `BASE-P1-01` | Provide one valid canonical geographic base asset for the public Ishod repair: either make shared `karty/_engine/base-geo.svg` self-contained or replace it with an explicitly owned equivalent. Do not wire the current broken shared asset into `MAP-P1-10`. | Current shared `base-geo.svg` has an empty `<defs>` yet references `url(#landG)`, `url(#seaG)`, `url(#soft)` and `<use>` targets such as `#hill`, `#peak`, `#peak-snow`; current MapEngine defs do not supply those foreign IDs. This is a material dependency of the active public Ishod basemap defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS` | Narrowed current CSS ownership cleanup: keep one canonical `@keyframes fx-breathe` definition and one canonical mobile `.gb-floater` rule instead of duplicate same-owner definitions in shared CSS. | Product delta to `d8a2d184` is Home-footer-only, so the current shared CSS witness is unchanged. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `AUDIT-JS-ESCAPER-DUP-X5` | Add one canonical shared HTML-escaping primitive (appropriate shared utility owner) and migrate the five current local copies instead of maintaining security-sensitive escaping independently across modules. | Product delta to `d8a2d184` is Home-footer-only; current `site.js` 3 + `highlights.js` 1 + `search.js` 1 / `site-utils.js` 0 witness is unchanged. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SEARCH-P3-02` | Add truthful result-total / continuation (`Показать ещё`, pagination or equivalent) instead of silently exposing only Pagefind 10 / fallback 12. | Current corpus can return more matches than the user can reach. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
@@ -95,6 +93,10 @@ Not extra work units; current Product owners that constrain the matrix:
 
 Recently merged/closed before or at the current Product anchor:
 
+- #1149 — restored the strict-native Ishod geographic basemap with a route-owned replacement and targeted browser contract; squash-merged as Product `c42d0d58...`. `MAP-P1-10` and `BASE-P1-01` are retired by `verification/2026-08-07-ishod-basemap-closure/REPORT.md`;
+- #1150 — Home adaptive manuscript marginalia placement; merged as Product `c5627043...` before the final #1149 exact-head refresh;
+- #1147 — permanent tooltip/standalone-reader regression guards; merged as Product `ae9d026f...` before the final #1149 exact-head refresh;
+- #1145 — Home footer settled-frame geometry contract; merged as Product `61d0c9e3...`;
 - #1142 — removed the 15 zero-consumer Nagornaya extraction artifacts; squash-merged as Product `def95cc7...`. `NG-DEAD-01` is retired from MASTER by `verification/2026-08-07-ng-dead-extraction-closure/REPORT.md`;
 - #1140 — standalone Reader/KodDaVinchi geometry owner cleanup; merged as Product `b8085fed...` immediately before #1142 and is path-disjoint from the Nagornaya cleanup;
 - #1138 — CSS layer validator contract repair for `D-2`; squash-merged as Product `f4cfb865...`. `D-2` is retired from MASTER by `verification/2026-08-07-d2-css-layer-validator-closure/REPORT.md`;
