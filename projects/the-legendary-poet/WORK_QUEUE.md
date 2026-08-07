@@ -2,7 +2,7 @@
 
 Эта очередь показывает owner-selected направления. Перед любой source mutation нужно заново проверить актуальный source owner, open PRs и применимое evidence.
 
-## Current selection — TLP-AUDIO-001 / Product #356
+## Current selection — fresh current-head verification
 
 Owner-selected operating order:
 
@@ -10,27 +10,25 @@ Owner-selected operating order:
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **1** — one P3 concurrency root.
+Current verified engineering rows: **0**.
 
-### 1. Repair Product #356 — deterministic cross-tab audio arbitration
-
-Current Product anchor: `main@67d614bc186b52c408ad6cef4c84cf57d4e78a45`.
-
-Bounded repair target:
-
-- preserve the persistent one-audio-engine-per-tab design;
-- preserve BroadcastChannel + storage fallback;
-- give `playing` claims a deterministic total order so simultaneous starts leave exactly one winner rather than allowing both tabs to pause;
-- use the existing claim metadata (`timestamp`, `instanceId`) or an equivalent explicit claim structure rather than sleeps/debounces;
-- make newer claims beat stale claims and use a stable tie-break for equal timestamps;
-- keep duplicate/self delivery idempotent;
-- add deterministic arbitration tests and, where practical, a two-page browser witness that proves both transports use the same rule.
-
-Do not mix this lane with music catalog editorial changes, audio assets, player visual redesign, or unrelated persistence cleanup.
-
-After Product repair merges and the resulting current main is reverified, remove `TLP-AUDIO-001` from the active matrix and return this queue to fresh current-head bug hunting.
+No Product engineering repair lane is currently selected. Resume only from new current-head evidence; do not replay historical matrix rows or convert editorial/research backlog into engineering bugs without an independently reproduced engineering root cause.
 
 ## Closed current-scope families
+
+### TLP-AUDIO-001 / Product #356 — deterministic cross-tab audio arbitration
+
+Closed by Product PR #358, exact tested head `ab8fd872d65e6c10aef809967bc87bff8a08e72d`, squash merge `7231b2f33deed185a76fc6dd1c336a6d4dad1776`.
+
+- Playback claims now use one deterministic total order instead of pausing on every remote `playing` claim.
+- Newer logical timestamps win; equal timestamps use a stable `instanceId` tie-break; local replay advances beyond already-seen peer time without sleeps/debounces.
+- BroadcastChannel and storage-event fallback use the same arbitration helper.
+- Deterministic validation covers sequential, simultaneous, stale, duplicate, self, tie and monotonic-clock semantics; the exact simultaneous model requires exactly one side to yield.
+- Real two-page Chromium QA proves A→B→A handoff through BroadcastChannel and repeats the same flow with BroadcastChannel unavailable to exercise the storage fallback.
+- Full exact-head Product CI, contracts, publication/brand/route gates and Manual Browser QA were green before merge.
+- Detailed evidence: `verification/2026-08-07-audio-cross-tab-arbitration/REPORT.md` and `verification/2026-08-07-audio-cross-tab-arbitration/CLOSURE.md`.
+
+Future audio coordination findings require independent current reproduction; this closure does not assert that every future media/session/browser defect is impossible.
 
 ### TLP-RESILIENCE-001 / Product #351 — browser essay payload recovery
 
@@ -73,7 +71,7 @@ Closed for current Product scope: 5 active, 1 verified reserve, 24 terminal excl
 
 ### Fresh current-head verification
 
-Resume only after the selected Product #356 lifecycle closes. New findings require independent current-head reproduction and root-cause evidence; do not replay historical rows.
+New findings require independent current-head reproduction and root-cause evidence; do not replay historical rows.
 
 ### Materially new media evidence
 
