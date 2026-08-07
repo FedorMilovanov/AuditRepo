@@ -28,9 +28,9 @@ MASTER can contain defects, necessary implementations/improvements, system work,
 
 Current active work is **21 work units**:
 
-- **5** current defects;
+- **7** current defects;
 - **3** verified necessary improvements;
-- **2** narrowed residuals;
+- **0** narrowed residuals;
 - **7** system verification / implementation packages;
 - **4** owner decisions.
 
@@ -56,6 +56,8 @@ At the verification anchor these SYSTEM owners are already active:
 - `SIG-P1-01` — current signature renderer still contains fixed map-unit offsets such as `origin.x - 74`.
 - `ENGINE-P2-04` — current Karty story/toast notifications have no proven canonical live-region/status owner.
 - `AR-IDX-09` — current global Search shortcut does not reject Alt/Shift-modified Ctrl/Command+K.
+- `MAP-P1-13` — the old broad marker/panel a11y claim was mostly repaired, but the exact remaining motion bug is now current-confirmed: CSS reduced-motion rules remove transitions/animations while `flyTo()` still unconditionally drives viewBox movement through duration-based `requestAnimationFrame`; zoom/reset/tour callers therefore keep scripted motion for users requesting reduced motion.
+- `MAP-P1-20` — the route.json half of the historical cache claim is stale, but the shared-engine half is current-confirmed: `src/components/karty/ishod/IshodMap.astro` loads `../_engine/map-engine.js` without a revision, `sw.js` classifies `.js` as a static asset, and unversioned static assets use cache-first. A previously cached engine can therefore outlive a Product engine change until SW cache rotation.
 
 ## Verified necessary improvements retained
 
@@ -63,10 +65,9 @@ At the verification anchor these SYSTEM owners are already active:
 - `SEARCH-P3-02` — Pagefind exposes only the first 10 results and fallback 12 even when the corpus has more matches; add truthful continuation/total ownership.
 - `AR-IDX-05` — Home currently carries both numeric `SITE_CONFIG.version` and explicit asset `?v=` revision authorities; consolidate cache/version identity after checking the active legacy/reference owner.
 
-## Narrowed residuals retained
+## Narrowed residuals
 
-- `MAP-P1-13` — original broad marker/panel a11y claim is mostly stale; only reduced-motion / remaining interaction semantics need a bounded current check.
-- `MAP-P1-20` — route.json SW-cache half is stale; current `IshodMap.astro` still loads `../_engine/map-engine.js` without a revision, so the shared engine cache-bust residual remains real.
+None remain in this wave. The two surviving Karty residuals were strong enough under current source/SW evidence to become current defects rather than remain ambiguous partial rows.
 
 ## System packages retained
 
@@ -116,7 +117,7 @@ Retained and collision-owned by Product #1090. Retirement requires replacement p
 
 ## Important retirements established by current evidence
 
-In addition to the first cleanup batch, this wave now removes these old open formulations from MASTER:
+In addition to the first cleanup batch, this wave removes these old open formulations from MASTER:
 
 - `BUG-SEO-001` — current IndexNow workflow is metadata/readiness diagnostics; the historical pre-CDN submit writer race no longer exists.
 - `NEW-CANONICAL-IZBRANNOE-01-GAP` — `/izbrannoe/` current source has an absolute SITE canonical; any generic harness question belongs to audit control plane.
@@ -129,15 +130,23 @@ In addition to the first cleanup batch, this wave now removes these old open for
 
 See `../../legacy/MATRIX_CLEANUP_2026-08-07.md` for retirement mapping.
 
-## Branch forensic
+## Branch forensic completed
 
-Live AuditRepo refs observed at wave start:
+At wave start AuditRepo had `main` plus two intentional `archive/*` refs.
 
-- `main`;
-- `archive/forensic-pr-3-vosk-tts-report-2026-07-24`;
-- `archive/legacy-diverged-heads-20260801`.
+1. `archive/legacy-diverged-heads-20260801` was compared against the consolidation branch. Its only unique current-tree material was six reviewed forensic ledger/receipt files. PR #228 squash-materialized those exact blobs, they were byte/blob checked after merge, and the head branch was auto-deleted by GitHub. The files now live under `../../legacy/branch-forensics/2026-08-01/` rather than as a new root directory.
+2. `archive/forensic-pr-3-vosk-tts-report-2026-07-24` contained one unique 346-line Vosk report plus stale project README history. The README tree entry was aligned to the exact current README blob, PR #229 squash-materialized the report, and the merged report retains exact source blob `97e9472b3019518751cdaa1fc3edb9ff2bed2ba1`. The project README retained its current blob. GitHub auto-deleted the archive head.
 
-The first archive has a unique historical Vosk TTS report plus stale README changes; do not merge it wholesale. The second consists of reviewed branch-forensic ledgers/receipts. Unique evidence must be materialized into normal retained files before either ref is retired.
+After these steps, live AuditRepo branches are only `main` and `agent/gb-full-matrix-consolidation-20260807`. Once PR #227 merges, the remaining working branch is expected to auto-delete as well.
+
+## Validator correction
+
+The first exact-head CI on the consolidated branch exposed two real governance mismatches:
+
+- six forensic ledger files had temporarily landed under an unapproved root `archive-ledgers/`; they were moved byte-identically under project `legacy/branch-forensics/`;
+- `scripts/validate_audit_repo.py` still hard-required the historical fixed/P0/P1/P2/P3/refactoring/AuditRepo counters, directly contradicting the compact MASTER owner model.
+
+The validator now detects compact active-work matrices and delegates their structural/counter invariants to the canonical matrix coverage parser while retaining backward compatibility for older project matrices. `legacy/` is now a required project surface. Black-box regression coverage now proves that compact MASTER accepts verified improvements, rejects active-count drift, and rejects closed rows reintroduced into compact MASTER.
 
 ## Product governance note
 
@@ -148,5 +157,5 @@ Current Product `AGENTS.md` §4.1 still contains the older “durable registry /
 1. complete exact Nagornaya import inventory;
 2. classify the remaining Karty system packages against current engine/runtime;
 3. inspect shared CSS/runtime hygiene after reader owners settle;
-4. materialize unique archive-branch evidence into main/legacy and retire redundant refs when preservation is proved;
-5. validate this AuditRepo branch with the updated compact-matrix coverage contract before merge.
+4. require exact-head AuditRepo CI green and merge PR #227;
+5. continue removing or promoting rows as current evidence resolves each package.
