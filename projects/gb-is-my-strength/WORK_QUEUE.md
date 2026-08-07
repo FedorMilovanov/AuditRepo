@@ -6,6 +6,31 @@ Before starting any lane, re-read current Product owners/open PRs and verify the
 
 ## Selected evidence-backed candidates
 
+### Regression preservation positive-manifest pilots
+
+- For high-value content surfaces, prefer an **Accepted Semantic Manifest** over permanent whole-HTML/word-count or magic-count oracles.
+- Initial GB pilots after `SYS-VALIDATOR-TRUST` closure: Hermenevtika, Gill Part I and Avraam.
+- Candidate manifest units: canonical owner, accepted baseline anchor, meaningful section IDs/roles, source/claim IDs, glossary/Scripture annotations, media/provenance and reader capabilities.
+- Add an explicit surface closure set (`source / route / data / search / dist / live`, with intentional N/A states) so an expected layer cannot disappear into a vacuous PASS.
+- Do not universalize until the pilots prove useful maintenance cost and mutation-kill value.
+- Evidence: `verification/2026-08-07-regression-preservation-wave0/REPORT.md`.
+
+### Exact-head / successor-PR process simplification
+
+- Current Product history shows safe but expensive successor chains where validated payloads are repeatedly rebuilt on newer `main` solely to re-earn exact-head evidence.
+- Preserve the **no stale green** rule.
+- Investigate a synthetic merged-candidate receipt or equivalent bounded mechanism binding `main SHA + head SHA → tested merged tree/candidate digest`, so a current-main race does not automatically require another transport/successor PR when the payload itself is unchanged.
+- This is an operational improvement, **not a current Product correctness defect** unless evidence later proves the process itself caused a wrong merge/release.
+- Avoid adding another permanent workflow before measuring whether existing workflow owners can host the receipt.
+- Evidence: `verification/2026-08-07-regression-preservation-wave0/REPORT.md`.
+
+### Bounded branch archaeology
+
+- Perform one read-only disposition pass over retained `lane/*` / closed-unmerged PRs after validator-trust and semantic-recovery waves.
+- Required disposition set: `MERGED / SUPERSEDED / DIAGNOSTIC_ONLY / REJECTED / UNIQUE_REVIEW`.
+- Manual semantic review only for `UNIQUE_REVIEW`; branch count itself is not a quality metric.
+- Do not turn archaeology into a permanent nightly obligation unless it proves recurring value.
+
 ### Karty runtime performance measurements
 
 - Historical `PERF-P1-01`: current Avraam `base.svg` still contains an indefinite 14-second animated `feTurbulence` / displacement-water effect, but the old “15–20 fps while dragging” number is not a current browser witness. Measure current Chromium/WebKit frame/input behavior before changing the effect. Promote only if current impact is material.
@@ -23,8 +48,7 @@ Before starting any lane, re-read current Product owners/open PRs and verify the
 ### Strangler parity-authority migration
 
 - Current owner family: `SYS-STRANGLER-RETIREMENT` / `ST-STRANGLER`.
-- Existing Product PR #1090 owns legacy reference identity/inventory work.
-- Do not create a parallel retirement lane while that owner is active.
+- Current readiness remains not deletion-ready; do not create a parallel physical-retirement lane.
 - Required sequence remains replacement parity authority → source/dist/browser evidence → bounded deletion.
 
 ### Bible corpus acquisition/import proof
