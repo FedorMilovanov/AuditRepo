@@ -4,17 +4,17 @@
 > Несмотря на историческое имя файла, это не только баги: здесь живут текущие дефекты, доказанно нужные внедрения/улучшения, системные verification/implementation packages, residuals и owner decisions.
 > Решено / stale / duplicate / absorbed / invalid / superseded → убрать из MASTER в той же wave; полезный контекст остаётся в `../legacy/`.
 
-Current wave evidence: `verification/2026-08-07-d2-css-layer-validator-closure/REPORT.md`.
+Current wave evidence: `verification/2026-08-07-ng-dead-extraction-closure/REPORT.md`.
 
 ## Current state
 
 | Поле | Значение |
 |---|---|
-| Product verification anchor | `f4cfb8653551ed8459aba1bfcf65f03e27fdfbb2` |
-| Wave | D-2 CSS layer validator closure, 2026-08-07 |
-| Active work units | **26** |
+| Product verification anchor | `def95cc7c004cbf2e60b4c8272cb6880235435f6` |
+| Wave | NG-DEAD-01 extraction cleanup closure, 2026-08-07 |
+| Active work units | **25** |
 | Direct current defects | **14** |
-| Verified necessary improvements | **6** |
+| Verified necessary improvements | **5** |
 | Narrowed residuals | **0** |
 | System verification lanes | **2** |
 | Owner decisions | **4** |
@@ -45,12 +45,11 @@ Current wave evidence: `verification/2026-08-07-d2-css-layer-validator-closure/R
 
 ---
 
-## VERIFIED NECESSARY IMPROVEMENTS — 6
+## VERIFIED NECESSARY IMPROVEMENTS — 5
 
 | ID | Needed implementation | Why it is active work / evidence |
 |---|---|---|
 | `BASE-P1-01` | Provide one valid canonical geographic base asset for the public Ishod repair: either make shared `karty/_engine/base-geo.svg` self-contained or replace it with an explicitly owned equivalent. Do not wire the current broken shared asset into `MAP-P1-10`. | Current shared `base-geo.svg` has an empty `<defs>` yet references `url(#landG)`, `url(#seaG)`, `url(#soft)` and `<use>` targets such as `#hill`, `#peak`, `#peak-snow`; current MapEngine defs do not supply those foreign IDs. This is a material dependency of the active public Ishod basemap defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `NG-DEAD-01` | Remove the 15 unused `NagornayaChastN{HeaderHero,ArticleBody,PostContent}` extraction artifacts, or deliberately restore them as the actual canonical componentization boundary; do not keep both the monolithic MainShell owner and a zero-consumer extracted family. | Exact `0fbe7d1e` verification recorded 0 import refs; Product deltas through current anchor did not change these components, the five MainShells or canonical part routes. Current Part I/Part V edge files still exist, while all five canonical routes import `NagornayaChastNMainShell`. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS` | Narrowed current CSS ownership cleanup: keep one canonical `@keyframes fx-breathe` definition and one canonical mobile `.gb-floater` rule instead of duplicate same-owner definitions in shared CSS. | Product delta to `d8a2d184` is Home-footer-only, so the current shared CSS witness is unchanged. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `AUDIT-JS-ESCAPER-DUP-X5` | Add one canonical shared HTML-escaping primitive (appropriate shared utility owner) and migrate the five current local copies instead of maintaining security-sensitive escaping independently across modules. | Product delta to `d8a2d184` is Home-footer-only; current `site.js` 3 + `highlights.js` 1 + `search.js` 1 / `site-utils.js` 0 witness is unchanged. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SEARCH-P3-02` | Add truthful result-total / continuation (`Показать ещё`, pagination or equivalent) instead of silently exposing only Pagefind 10 / fallback 12. | Current corpus can return more matches than the user can reach. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
@@ -96,6 +95,8 @@ Not extra work units; current Product owners that constrain the matrix:
 
 Recently merged/closed before or at the current Product anchor:
 
+- #1142 — removed the 15 zero-consumer Nagornaya extraction artifacts; squash-merged as Product `def95cc7...`. `NG-DEAD-01` is retired from MASTER by `verification/2026-08-07-ng-dead-extraction-closure/REPORT.md`;
+- #1140 — standalone Reader/KodDaVinchi geometry owner cleanup; merged as Product `b8085fed...` immediately before #1142 and is path-disjoint from the Nagornaya cleanup;
 - #1138 — CSS layer validator contract repair for `D-2`; squash-merged as Product `f4cfb865...`. `D-2` is retired from MASTER by `verification/2026-08-07-d2-css-layer-validator-closure/REPORT.md`;
 - #1130 — diagnostic ReaderSettings proof lane; closed without merge and no longer an in-flight owner;
 - #1129 — Home footer settled-frame contract;
