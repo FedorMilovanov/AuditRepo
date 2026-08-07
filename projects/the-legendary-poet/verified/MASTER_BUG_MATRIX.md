@@ -19,9 +19,11 @@ No verified-current P1 engineering rows.
 
 No verified-current P2 engineering rows.
 
-## 🟢 P3 — ОТКРЫТО (0)
+## 🟢 P3 — ОТКРЫТО (1)
 
-No verified-current P3 engineering rows.
+| ID | Source | Root cause | Current evidence | Repair owner |
+|---|---|---|---|---|
+| `TLP-AUDIO-001` | Product #356 | Cross-tab audio coordination pauses on any remote `playing` claim but does not arbitrate simultaneous claims, so two tabs that start before peer delivery can pause each other and leave zero active players. | Product `main@67d614bc186b52c408ad6cef4c84cf57d4e78a45`; current provider emits `{instanceId, trackId, timestamp}` yet receiver ignores ordering; original audio-hardening commit explicitly introduced tab coordination; existing music/session/browser QA has no two-tab simultaneous-claim witness. See `../verification/2026-08-07-audio-cross-tab-arbitration/REPORT.md`. | one bounded Product #356 repair lane after this verification merges |
 
 ## Summary
 
@@ -31,10 +33,10 @@ No verified-current P3 engineering rows.
 | **P0 открыто** | **0** |
 | P1 открыто | 0 |
 | P2 открыто | 0 |
-| P3 открыто | 0 |
+| P3 открыто | 1 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **0** |
+| **Всего открыто (матрица)** | **1** |
 
 Registered Product architecture lanes: **0**.
 
