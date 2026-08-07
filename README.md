@@ -1,174 +1,90 @@
 # AuditRepo
 
-Центральный репозиторий для **мультиагентных аудитов, доказательств, причинного анализа и вариантов улучшения**.
+Central repository for **multi-agent audits, evidence, verification, root-cause analysis and verified necessary work**.
 
-Здесь можно проводить десятки независимых проходов по одному проекту, складывать сырые отчёты, подтверждать и опровергать находки, объединять симптомы в системные причины и выбирать любую удобную глубину исправления.
-
-Главный контракт: [`AUDITREPO_OPERATING_MODEL.md`](AUDITREPO_OPERATING_MODEL.md).
+Canonical rules: [`AUDITREPO_OPERATING_MODEL.md`](AUDITREPO_OPERATING_MODEL.md).
 
 ```text
 many audit passes
-→ evidence corpus
-→ verification wave when useful
-→ root-cause synthesis
-→ owner-selected repair scope
-→ proportional closure
+→ evidence
+→ verification / re-verification
+→ deduplicate and find root causes
+→ compact active project MASTER
+→ implement / decide
+→ verify result
+→ retire solved work to legacy
 ```
 
-## Чего AuditRepo не делает
+## Core principle
 
-AuditRepo не является второй копией source-репозитория. Он не обязан после каждого Product-коммита:
+A project MASTER is a **working verification notebook**, not a lifetime bug log.
 
-- переписывать глобальный current HEAD;
-- синхронизировать deploy SHA и run IDs во всех документах;
-- доказывать сохранность каждого старого исправления;
-- создавать отдельный reverify и closure PR для каждой строки;
-- инвентаризировать все ветки и закрытые PR на каждом обычном изменении Markdown.
+It may contain more than defects. Verified necessary work includes:
 
-Product-репозиторий владеет текущим кодом, ветками, CI и deploy. AuditRepo владеет накопленными наблюдениями, evidence anchors, причинными моделями, очередью выбранных работ и историей решений.
+- current bugs;
+- required implementations/improvements;
+- system/root-cause changes;
+- required migrations/retirements;
+- narrowed residuals;
+- owner decisions that block real work.
 
----
+Solved, stale, duplicate, absorbed, invalid or superseded rows leave the active matrix continuously. Useful retirement context can remain in project `legacy/`, and full history remains in Git/evidence.
 
-## Перед аудитом
+`legacy/` is intentionally searchable if something regresses or a past decision must be examined, but it is never an active backlog.
 
-Прочитай [`SANDBOX-ENV-2026-06-21.md`](SANDBOX-ENV-2026-06-21.md), чтобы не создавать ложные находки из-за неверной версии Node, неправильного build mode, отсутствующего `dist/`, ограничений vision или особенностей Arena.
+## Evidence before work
 
-Для `gb-is-my-strength` production-like результат строится strangler-цепочкой, а не одним `astro build`.
+Raw reports are not automatic Product authority. Before a current implementation:
 
----
+1. inspect the current Product owner/surface;
+2. re-use relevant historical evidence;
+3. collect enough independent witnesses for the risk;
+4. distinguish symptoms from shared root causes;
+5. inspect open Product PRs/branches to avoid collisions.
 
-## Структура
+Security, rights, release identity, data loss and production conclusions normally need several independent evidence angles. A normal local issue may need only one strong current witness plus a clear mechanism.
+
+## Optional improvements
+
+Performance ideas, refactors and polish that are useful but not yet proven necessary belong in the project `WORK_QUEUE.md`, not in the active matrix. Once verification proves an improvement is genuinely required, its current formulation may move into MASTER.
+
+## Structure
 
 ```text
 AuditRepo/
-├── AUDITREPO_OPERATING_MODEL.md   ← назначение, статусы, волны, пропорциональность
-├── README.md                       ← быстрый старт
-├── CONTRIBUTING.md                 ← практический workflow агентов
+├── AUDITREPO_OPERATING_MODEL.md
+├── README.md
+├── CONTRIBUTING.md
 ├── MULTI_WITNESS_VERIFICATION_PROTOCOL.md
 ├── CLEANUP_RETENTION_POLICY.md
 ├── PROJECT_REGISTRY.md
 ├── scripts/
 └── projects/
-    ├── _templates/
     └── <project>/
-        ├── README.md               ← стабильная ориентация проекта
-        ├── DOC_MAP.md              ← кто каким фактом владеет
-        ├── WORK_QUEUE.md           ← необязательная выбранная очередь
-        ├── incoming/               ← сырые неизменяемые проходы
-        ├── working/                ← временные синтезы и verification waves
-        ├── verification/           ← конфликты и решения
-        ├── verified/               ← активный backlog, system themes, closures
-        ├── reverify/               ← только существенные перепроверки
-        └── archive/                ← история
+        ├── README.md
+        ├── DOC_MAP.md
+        ├── WORK_QUEUE.md
+        ├── incoming/        ← raw audit evidence
+        ├── working/         ← temporary synthesis
+        ├── verification/    ← package/current verification
+        ├── reverify/        ← significant applicability checks
+        ├── verified/        ← active MASTER + system context
+        ├── legacy/          ← retired searchable reference; not backlog
+        └── archive/         ← older historical collections
 ```
 
----
+## Verification waves
 
-## Freedom with Evidence
+A wave may process 10, 50 or 200 old claims and reduce them to a few current work units. The goal is **not** to maximize the number of rows called verified. The goal is to identify what the project really needs now.
 
-Любой агент может:
+If 30 symptoms are one root cause, keep one current `SYS-*` row. If a finding is solved or no longer applies, remove it from MASTER in the same wave. If an improvement is only optional, move it to Work Queue.
 
-- найти новый дефект или улучшение;
-- подтвердить или оспорить чужое наблюдение;
-- предложить duplicate/merge/split;
-- найти более глубокую root cause;
-- классифицировать finding как stale, invalid, parked или not-worth-fixing;
-- предложить локальную или системную repair lane;
-- провести пакетную verification wave.
+## What AuditRepo does not do
 
-Агент не должен:
+AuditRepo does not maintain a second exact copy of Product HEAD/deploy/CI state and does not preserve all historical closures inside the active matrix. Current Product facts are checked from Product when work begins.
 
-- переписывать чужой `incoming`;
-- превращать сырую гипотезу в обязательную Product-работу;
-- считать движение общего `main` автоматической причиной обновлять AuditRepo;
-- заявлять live/security/rights вывод без соответствующего evidence;
-- создавать тяжёлую control-plane цепочку ради простой документационной правки.
+AuditRepo also should not create a control-plane transaction larger than the problem being investigated.
 
----
+## Projects
 
-## Evidence model
-
-Важны независимые **углы доказательства**, а не количество агентов:
-
-- surface;
-- source;
-- artifact;
-- browser;
-- lifecycle;
-- history.
-
-Один сильный production-like browser witness может быть достаточнее трёх одинаковых grep-проходов. Усиленный барьер нужен для security, rights, data loss, release identity и production incidents; обычный P2 не должен проходить слепой многоступенчатый ритуал.
-
-Подробно: [`MULTI_WITNESS_VERIFICATION_PROTOCOL.md`](MULTI_WITNESS_VERIFICATION_PROTOCOL.md).
-
----
-
-## Official input rule
-
-Официальный audit input живёт здесь:
-
-```text
-projects/<project>/incoming/<agent>/<YYYY-MM-DD>/
-```
-
-Минимально:
-
-```text
-README.md   ← кто, что, на каком evidence anchor и в какой среде проверял
-REPORT.md   ← наблюдения, доказательства, ограничения и выводы
-```
-
-Создание intake:
-
-```bash
-python3 scripts/scaffold_intake.py <project> <agent-name> <YYYY-MM-DD>
-```
-
-Raw reports сохраняются как evidence. Они не обязаны быть current truth и не редактируются задним числом.
-
----
-
-## Verification wave
-
-Верификатор может взять любой пакет находок и классифицировать его одним проходом:
-
-- `current-local`;
-- `systemic-root`;
-- `duplicate-symptom`;
-- `stale`;
-- `invalid`;
-- `parked`;
-- `not-worth-fixing`;
-- `owner-decision`.
-
-Один verification PR может обработать десятки строк. Один системный fix может поглотить множество симптомов. Один мелкий finding можно закрыть отдельно. Размер волны выбирает владелец.
-
----
-
-## Implementation handoff
-
-Перед Product-изменением implementation-agent:
-
-1. читает verified synthesis и релевантное raw evidence;
-2. проверяет **только выбранную поверхность** на актуальной версии Product;
-3. решает, это локальный дефект или системная причина;
-4. запускает проверки, которые способны упасть от конкретного diff;
-5. после merge фиксирует минимальный честный disposition.
-
-Старый verified finding — полезная отправная точка, но не автоматическое разрешение менять сегодняшний Product.
-
----
-
-## Автоматические проверки
-
-Обычный AuditRepo PR проходит лёгкую структурную проверку. Глубокая matrix coverage и branch/closed-PR forensic выполняются по расписанию, вручную или когда меняются их собственные governance-файлы.
-
-AuditRepo не должен сам производить больше служебной работы, чем обнаруженная проблема.
-
----
-
-## Проекты
-
-Список проектов: [`PROJECT_REGISTRY.md`](PROJECT_REGISTRY.md).
-
-Для `gb-is-my-strength` начни с [`projects/gb-is-my-strength/DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md).
+See [`PROJECT_REGISTRY.md`](PROJECT_REGISTRY.md). For `gb-is-my-strength`, start at [`projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`](projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md) and [`projects/gb-is-my-strength/DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md).
