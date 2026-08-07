@@ -10,7 +10,8 @@
 |---|---|---|
 | Current source code, HEAD, open PRs, branches, CI and deploy | `FedorMilovanov/TheLegendaryPoet` | проверять непосредственно перед source work; не копировать постоянно сюда |
 | Raw observations and immutable evidence | `incoming/` | anchor-specific reports; чужие raw reports не переписывать |
-| Temporary synthesis and historical wave planning | `working/` | старые exact-current формулировки являются evidence at anchor |
+| Temporary synthesis and historical wave planning | `working/` | не является постоянным backlog; завершённые synthesis архивируются |
+| Active verified engineering backlog | `verified/MASTER_BUG_MATRIX.md` | только текущие verified инженерные строки; закрытое уходит из active surface |
 | Systemic cause map | `verified/SYSTEM_THEMES.md` | revalidate only when a theme is selected |
 | Optional owner-selected work | `WORK_QUEUE.md` | может быть пустой; не является обязательным backlog |
 | Compact wave/closure history | `verified/CLOSURE_LEDGER.md` | append-only proportional outcomes |
@@ -25,12 +26,15 @@
 |---|---|
 | Understand repository rules | `../../AUDITREPO_OPERATING_MODEL.md` |
 | Understand this project | `README.md` |
-| See possible next work | `WORK_QUEUE.md` |
+| See current verified engineering bugs | `verified/MASTER_BUG_MATRIX.md` |
+| See owner-selected next work | `WORK_QUEUE.md` |
 | Understand recurring mechanisms | `verified/SYSTEM_THEMES.md` |
 | Review recent outcomes | `verified/CLOSURE_LEDGER.md` |
+| Inspect current matrix-consolidation proof | `verification/2026-08-07-matrix-consolidation/REPORT.md` |
 | Inspect W7 route/runtime proof | `verification/2026-08-06-w7-route-runtime-wave/REPORT.md` |
-| Inspect historical root-cause rows | `working/MASTER_BUG_MATRIX_2026-08-05.md` |
-| Inspect W6 branch evidence | `working/W6_*_2026-08-05.*` and prior verification/reverify documents |
+| Inspect historical 2026-08-05 root-cause rows | `archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md` |
+| Inspect the retirement mapping for those rows | `archive/superseded/MATRIX_CLEANUP_2026-08-07.md` |
+| Inspect W6 branch evidence | historical `working/W6_*_2026-08-05.*` and prior verification/reverify documents |
 
 ## Finding lifecycle
 
@@ -41,6 +45,7 @@ observation
 → selected-for-current-check only when useful
 → current-local / systemic-root / duplicate / stale / invalid / parked / owner-decision
 → proportional repair or disposition
+→ removal from active matrix after closure
 ```
 
 Movement of source `main` alone does not reopen or stale historical evidence.
@@ -51,6 +56,7 @@ Movement of source `main` alone does not reopen or stale historical evidence.
 - AuditRepo records why a systemic measure mattered, which evidence angles proved it and what remains independent.
 - Media provenance and publication rights are never inferred from technical availability, an archive ref or an image already present in history.
 - The retained deep-research source branch is forensic/evidence ownership, not a merge candidate.
+- Open editorial/research issues are not engineering-bug rows unless a concrete engineering defect is independently verified.
 
 ## Proportional closure
 
@@ -60,6 +66,7 @@ For a new TLP wave update only what materially changed:
 2. `SYSTEM_THEMES.md` if causal understanding changed;
 3. `WORK_QUEUE.md` if owner-selected options changed;
 4. one compact `CLOSURE_LEDGER.md` entry;
-5. historical matrix only during a dedicated consolidation wave.
+5. `verified/MASTER_BUG_MATRIX.md` when current verified engineering rows are added, closed, parked or reclassified;
+6. historical material only during a dedicated consolidation/retirement wave.
 
 Do not rebuild an exact-authority mirror after every source merge.

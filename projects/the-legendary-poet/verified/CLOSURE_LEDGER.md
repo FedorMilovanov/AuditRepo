@@ -2,7 +2,49 @@
 
 Append-only журнал компактных результатов verification and repair waves.
 
-Исторические closed/current rows остаются в старой working matrix и prior verified documents. Они не переписываются массово в рамках operating-model migration.
+Closed history does not remain in the active engineering matrix. Detailed historical evidence stays discoverable through this ledger, `SYSTEM_THEMES.md`, verification packages and `archive/`.
+
+## 2026-08-07 — active engineering matrix consolidated
+
+- Scope: historical `working/MASTER_BUG_MATRIX_2026-08-05.md`, later TLP closures and current source issues selected for the owner-directed bug marathon.
+- Result:
+  - retired from active surface: all 15 rows in the 2026-08-05 matrix; 14 were already closed in that document and the sole `active-current` row `TLP-CLEAN-001` is now closed by completed W6 physical ref retirement;
+  - preserved: exact historical matrix under `archive/superseded/` plus an explicit row-by-row retirement map;
+  - current verified engineering matrix: 2 rows only — `TLP-DEPS-001` / Product #335 and `TLP-AUDIT-003` / Product #340;
+  - editorial/research/source-acquisition work remains outside the engineering bug matrix unless independently verified as an engineering defect;
+  - Product current branch inventory was rechecked as `main` plus the intentional forensic archive, with zero open Product PRs at selection time;
+  - concurrent AuditRepo PR #227 is scoped to `gb-is-my-strength` and was not touched.
+- Product mutation: none.
+- Product selection anchor: `aca720a329f8a0b90fc82f17a0baad9893d4ac91`.
+- AuditRepo consolidation base: `265ab79cfd83ba805c385846b560878fb5593543`.
+- Detailed evidence: `../verification/2026-08-07-matrix-consolidation/REPORT.md`.
+
+## 2026-08-07 — canonical poet authority and semantic matcher closed
+
+- Scope: `TLP-POET-001` and `TLP-AUDIT-STYLE-002`.
+- Result:
+  - closed-by-fix: all ten canonical poet modules directly own final reader-facing portrait/conclusion prose;
+  - deleted: hidden publication-time editorial override layer;
+  - closed-by-fix: semantic guards tolerate bounded grammatical/case/word-order variation while preserving clause locality and negative meaning;
+  - retained: native document scrolling and coalesced reading-progress fallback.
+- Product evidence: source PR #336, exact tested head `8e22188f98b9eaa39bab044794a7852e9b746f8d`, squash merge `dc37961cf64de5400e622d9c3d202634ed135100`.
+- Regression witness: project/content contracts, poet authority, literary semantics, app shell/interactions, build/budgets/prerender/SEO, route/catalog/Yesenin/brand gates and Manual Browser QA 4/4.
+- Remaining independent: Product #335 dead Lenis dependency cleanup; it does not reopen scroll ownership.
+- Detailed evidence: `../verification/2026-08-07-canonical-poet-authority-wave/REPORT.md`.
+
+## 2026-08-06 — native scroll and first audit-harness manifestations closed
+
+- Scope: `TLP-SCROLL-001`, `TLP-AUDIT-STYLE-001`, `TLP-AUDIT-SCROLL-001`.
+- Result:
+  - closed-by-fix: ordinary wheel/trackpad/touch movement returned to browser-native ownership;
+  - closed-by-fix: decorative scroll-frame subscriptions and global JavaScript scroll interpolation were removed from the latency-sensitive document path;
+  - closed-by-fix: literary validator stopped requiring frozen historical prose;
+  - closed-by-fix: app-shell validator stopped requiring the Lenis mechanism behind the reported stall;
+  - retained: route restoration, fixed-header hash geometry, reduced motion and explicit scroll-to-top ownership.
+- Product evidence: source PR #334, exact tested head `774804be169f53581ae85ab4b835be08537c532f`, squash merge `76ef482bedb1722b691ec1f301b403c3a28aad3d`.
+- Regression witness: real six-impulse Chromium wheel continuity plus full source/build/browser certification and Manual Browser QA 4/4.
+- Remaining independent: install-only `lenis` dependency (#335) and later bounded audit-harness hardening (#340).
+- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md`.
 
 ## 2026-08-06 — W6 physical ref retirement completed
 
