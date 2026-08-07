@@ -10,10 +10,10 @@
 |---|---|
 | Product verification anchor | `87d1a3c26c61e474603b1c68b551fde9163f744a` |
 | Wave | full-matrix consolidation, 2026-08-07 |
-| Active work units | **27** |
+| Active work units | **26** |
 | Direct current defects | **9** |
 | Narrowed residuals | **6** |
-| System verification lanes | **8** |
+| System verification lanes | **7** |
 | Owner decisions | **4** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
@@ -50,7 +50,7 @@
 
 ---
 
-## SYSTEM VERIFICATION LANES — 8
+## SYSTEM VERIFICATION LANES — 7
 
 Одна строка = один текущий пакет/root, а не десятки исторических симптомов. Старые symptom-ID mapping находится в `../legacy/MATRIX_CLEANUP_2026-08-07.md`.
 
@@ -59,9 +59,8 @@
 | `SYS-KARTY-RUNTIME-GEOMETRY` | Current-check interaction/viewport/tour/panel/marker/LOD behavior после многочисленных изменений MapEngine. | Representative source + browser wave; split only independent current roots. |
 | `SYS-KARTY-DATA-PROJECTION` | Route/schema/base-geo/generated-artifact ownership. | Verify current data/schema/base owners together before Product mutation. |
 | `SYS-KARTY-VISUAL-LANGUAGE` | Visual/data-quality package where old P1 wording mixes correctness and quality targets. | Current screenshots + owner/value review; retain only genuinely necessary improvements. |
-| `SYS-AUDIT-CONTROL-PLANE` | Audit/workflow false-green/false-red, duplicated/incorrect proof boundaries. | Wait for/coordinate with active Product release/reader workflow owners. |
-| `SYS-SEO-RELEASE-SURFACES` | Canonical/SEO/release surface claims needing current route/live/tooling evidence. | Reverify after release-control-plane lane settles. |
-| `SYS-NAGORNAYA-MIGRATION` | Nagornaya source/build/browser package: dead code, SEO, ToC, crosslinks, structure, a11y and migration residue. | One bounded current wave; separate technical work from author-sensitive content. |
+| `SYS-AUDIT-CONTROL-PLANE` | Audit/workflow false-green/false-red, duplicated/incorrect proof boundaries; also owns any remaining noindex/canonical harness gap after the `/izbrannoe/` source fix. | Wait for/coordinate with active Product release/reader workflow owners. |
+| `SYS-NAGORNAYA-MIGRATION` | Current residual is narrower than the July package: the five Part I–V routes use `MainShell` again while the extracted `HeaderHero`/`ArticleBody`/`PostContent` component family still exists; Part I also still carries the repeated inline `Из библиотеки` palette/structure. Old scripture/footer SEO symptoms are already fixed. | Exact import inventory for all 15 extracted files; then one bounded delete-or-restore-componentization decision plus shared library-block ownership. |
 | `SYS-SHARED-CSS-RUNTIME-HYGIENE` | Shared CSS/runtime dead/duplicate owner cleanup and a11y hygiene. | Reverify after active reader tooltip/layout owners settle. |
 | `SYS-STRANGLER-RETIREMENT` | Legacy/reference parity-authority migration and eventual bounded retirement. | Follow Product PR #1090 owner; no parallel retirement lane. |
 
