@@ -10,10 +10,10 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 
 | Поле | Значение |
 |---|---|
-| Product verification anchor | `77b15181cf0aed3b1df35637492e8c7f9e905b0c` |
+| Product verification anchor | `9a0db0dc4533cb473abfe57f86e27517f04deea6` |
 | Wave | full-matrix consolidation, 2026-08-07 |
-| Active work units | **26** |
-| Direct current defects | **11** |
+| Active work units | **29** |
+| Direct current defects | **14** |
 | Verified necessary improvements | **4** |
 | Narrowed residuals | **0** |
 | System verification lanes | **7** |
@@ -24,15 +24,18 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 
 ---
 
-## CURRENT DEFECTS — 11
+## CURRENT DEFECTS — 14
 
 | ID | Current problem | Boundary / evidence |
 |---|---|---|
 | `S-SEC-01` | `js/enhancements.js` всё ещё использует fixed blacklist/attribute-stripping HTML sanitizer design. | SYSTEM shared-runtime/security lane; adversarial fixtures required. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `MAP-P1-01` | Tour вычисляет реальный `sid`, но caption/progress всё ещё индексируют `route.stages[tourStepIdx]` и `data-stage=tourStepIdx`. Для story `sinai` с `stage_ids:[2,3]` первый tour step поэтому подписывается/подсвечивается как stage 0, а не stage 2; следующий этап pre-fly запускается до показа следующего caption. | Current MapEngine tour state defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `MAP-P1-02` | Tour доступен через API и Space-key handler, но current public MapEngine не создаёт отдельную touch/click start-tour affordance; search of current Product finds `startTour()` только внутри engine/API. | Current touch discoverability/interaction defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `MAP-P1-03` | Current `karty/shoftim/route.json` объявляет **3** authored stages (`north/south/transjordan`, story `stage_ids` 0–2), но tribal places остаются `stage:0`; current-file checks do not find places assigned to stages 1/2. Stage coloring/filter/tour semantics therefore cannot represent the authored south/transjordan groups. | Current route-data defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `MAP-P1-01` | Tour вычисляет реальный `sid`, но caption/progress всё ещё индексируют `route.stages[tourStepIdx]` и `data-stage=tourStepIdx`. Для story с non-zero `stage_ids` caption/highlight therefore drift from the authored stage. | Current MapEngine tour state defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `MAP-P1-02` | Tour доступен через API и Space-key handler, но current public MapEngine не создаёт отдельную touch/click start-tour affordance; `startTour()` остаётся engine/API capability без discoverable touch owner. | Current touch discoverability/interaction defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `MAP-P1-03` | Current `karty/shoftim/route.json` объявляет **6** stages и story `stage_ids` до 5, но current places остаются `stage:0`; exact current-file search не находит даже `"stage": 1`. Stage coloring/filter/tour therefore cannot represent the authored six-stage Judges route. | Current Shoftim route-data defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `MAP-P1-07` | Current `karty/early-church/route.json` still assigns both `temple_early` and `solomons_porch` the exact coordinate `(624,800)` (with `jerusalem_upper` at `(623,800)`). Current MapEngine gives each interactive marker a transparent hit circle `r=22`, so physical hit targets stack at the same location. | Current route geometry / interaction defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `MAP-P1-10` | Canonical strict-native Ishod creates MapEngine without `baseGeoUrl`; current MapEngine loads `#me-base-geo` only when `opts.baseGeoUrl` is supplied. The production source therefore renders the shared route/markers without the shared geographic base layer. | Current canonical Ishod basemap integration defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-11` | Scale bar всё ещё выводит pixel scale из `cfg.W0 / view.w`, а не из реальной rendered canvas width. | `karty/_engine/**` SYSTEM owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `MAP-P1-18` | Narrowed current residual: single-photo cards carry `data-src=ph.src`, but multi-photo gallery images render `ph.thumb||ph.src` without full-source/index metadata. Delegated modal open therefore receives the thumbnail and never initializes `photoCurrentPlace/photoCurrentIdx`, so modal swipe cannot advance the multi-photo set. | Current multi-photo gallery/modal defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SIG-P1-01` | Signature overlays всё ещё используют fixed map-unit offsets (`origin.x - 74` и подобные). | Karty geometry SYSTEM owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `ENGINE-P1-26` | Search iterates all rendered markers and can brighten a matching marker outside the active story, but marker interactivity is gated by `inStory`; search can therefore visually “find” a place the user cannot click/open in the current story state. | Current MapEngine search/story ownership defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `ENGINE-P2-04` | Story/toast notifications не имеют доказанного canonical live-region/status owner. | Karty a11y SYSTEM owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
@@ -65,10 +68,10 @@ No residual-only row remains. A future partial closure should use this section o
 
 | ID | Verified work package | Next boundary / evidence |
 |---|---|---|
-| `SYS-KARTY-RUNTIME-GEOMETRY` | Reverify only the still-unclassified historical interaction/viewport/panel/marker/LOD symptoms after major MapEngine changes. `MAP-P1-01`, `MAP-P1-02`, `ENGINE-P1-26` and other current-local Karty rows above are no longer hidden inside this package. | Representative source + browser wave; retire fixed symptoms and split only independently current roots. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `SYS-KARTY-RUNTIME-GEOMETRY` | Reverify only still-unclassified interaction/viewport/panel/marker/LOD symptoms after major MapEngine changes. Current-local `MAP-P1-01`, `MAP-P1-02`, `MAP-P1-07`, `MAP-P1-10`, `MAP-P1-18`, `ENGINE-P1-26` and fixed/stale symptoms documented in legacy are no longer hidden inside this package. | Representative current source + browser wave; retire fixed symptoms and split only independently current roots. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-KARTY-DATA-PROJECTION` | Reverify only still-unclassified route/schema/base-geo/generated-artifact claims. `MAP-P1-03` and `REG-P1-01` are now independent current work units. | Verify current data/schema/base owners together before Product mutation. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-KARTY-VISUAL-LANGUAGE` | Visual/data-quality package where old P1 wording mixes correctness and quality targets. | Current screenshots + owner/value review; retain only genuinely necessary improvements. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `SYS-AUDIT-CONTROL-PLANE` | Audit/workflow false-green/false-red and duplicated/incorrect proof boundaries; also owns any remaining noindex/canonical harness gap after the `/izbrannoe/` source fix. | Coordinate with current Product control-plane owners; #1093/#1096 have merged, while #1092/#1097 remain active. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `SYS-AUDIT-CONTROL-PLANE` | Audit/workflow false-green/false-red and duplicated/incorrect proof boundaries; also owns any remaining noindex/canonical harness gap after the `/izbrannoe/` source fix. | Coordinate with current Product control-plane owners; #1092/#1097 remain active and #1120 touches release geometry evidence. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-NAGORNAYA-MIGRATION` | Current residual is narrower than the July package: the five Part I–V routes use `MainShell` again while the extracted `HeaderHero`/`ArticleBody`/`PostContent` component family still exists; Part I also still carries the repeated inline `Из библиотеки` palette/structure. Old scripture/footer SEO symptoms are already fixed. | Exact import inventory for all 15 extracted files; then one bounded delete-or-restore-componentization decision plus shared library-block ownership. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-SHARED-CSS-RUNTIME-HYGIENE` | Shared CSS/runtime dead/duplicate owner cleanup and a11y hygiene. | Reverify after active reader layout/regression owners settle. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-STRANGLER-RETIREMENT` | Legacy/reference parity-authority migration and eventual bounded retirement. | Follow Product PR #1090 owner; no parallel retirement lane. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
@@ -90,13 +93,14 @@ No residual-only row remains. A future partial closure should use this section o
 
 Not extra work units; current Product owners that constrain the matrix:
 
-- #1095 — ReaderRail/ReaderSettings desktop layout geometry.
 - #1097 — dependent tooltip/layout regression guards.
 - #1092 — release/live-evidence control plane.
 - #1090 — legacy-reference identity/inventory/ledger.
+- #1120 — Home/release geometry evidence boundary.
 
-Recently merged into the current Product anchor:
+Recently merged into or before the current Product anchor:
 
+- #1095 — ReaderRail/ReaderSettings desktop layout geometry;
 - #1093 — shared tooltip runtime / Hermenevtika popup repair;
 - #1096 — Reader Projection workflow linkage;
 - #1104 — interactive-tooltip physical-pointer audit-harness correction.
