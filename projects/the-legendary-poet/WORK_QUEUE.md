@@ -2,7 +2,7 @@
 
 Эта очередь показывает owner-selected направления. Перед любой source mutation нужно заново проверить актуальный source owner, open PRs и применимое evidence.
 
-## Current selection — fresh current-head verification
+## Current selection — TLP-AUDIO-001 / Product #356
 
 Owner-selected operating order:
 
@@ -10,23 +10,25 @@ Owner-selected operating order:
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **0**.
+Current verified engineering rows: **1** — one P3 concurrency root.
 
-### 1. New bug hunting — only from current-head evidence
+### 1. Repair Product #356 — deterministic cross-tab audio arbitration
 
-Continue the current-head pass instead of replaying the historical matrix. Prioritize surfaces where user-visible regressions can escape static contracts:
+Current Product anchor: `main@67d614bc186b52c408ad6cef4c84cf57d4e78a45`.
 
-- longform article layout and responsive geometry;
-- popovers/tooltips/lightbox/focus/scroll ownership;
-- Android Chrome, desktop WebKit and process-isolated iPhone Safari;
-- route transitions, NotFound and restoration;
-- archive/community failure states;
-- audio/session chrome;
-- production build/budget regressions.
+Bounded repair target:
 
-A new finding enters `verified/MASTER_BUG_MATRIX.md` only after current-head reproduction and root-cause evidence. Duplicate symptoms are clustered under one root cause.
+- preserve the persistent one-audio-engine-per-tab design;
+- preserve BroadcastChannel + storage fallback;
+- give `playing` claims a deterministic total order so simultaneous starts leave exactly one winner rather than allowing both tabs to pause;
+- use the existing claim metadata (`timestamp`, `instanceId`) or an equivalent explicit claim structure rather than sleeps/debounces;
+- make newer claims beat stale claims and use a stable tie-break for equal timestamps;
+- keep duplicate/self delivery idempotent;
+- add deterministic arbitration tests and, where practical, a two-page browser witness that proves both transports use the same rule.
 
-Do not reopen #335, #340, #351, W0–W7, the native-scroll repair or canonical poet authority merely because a fresh audit touches adjacent code.
+Do not mix this lane with music catalog editorial changes, audio assets, player visual redesign, or unrelated persistence cleanup.
+
+After Product repair merges and the resulting current main is reverified, remove `TLP-AUDIO-001` from the active matrix and return this queue to fresh current-head bug hunting.
 
 ## Closed current-scope families
 
@@ -53,19 +55,11 @@ Closed by Product PR #348, exact tested head `43527c7a7932f17fcba599ff4df270c243
 - Current Product source preserves generated browser-data scripts while Lenis remains absent.
 - Detailed AuditRepo evidence: `verification/2026-08-07-lenis-dependency-closure/REPORT.md`.
 
-Future scroll or dependency findings require independent current reproduction; this closure is not a blanket claim that no future scrolling or package defect can exist.
-
 ### TLP-AUDIT-003 / Product #340 — semantic runtime guard hardening
 
 Closed by Product PR #345, exact tested head `c7b1c9e8dfe26028d1d52852f3e1db20ba2b6407`, squash merge `b6f731263211208a31de1e36ed7830d7a46ffa87`.
 
-- High-risk app-shell/document-scroll guards now use a bounded TypeScript-AST semantic helper instead of relying on exact source spelling for the selected contracts.
-- Mutation coverage accepts equivalent passive/focus syntax and rejects alternate wheel interception, `preventDefault`, global-scroller ownership and unsafe option values.
-- Pre-merge review caught and repaired two harness defects: object-spread precedence now follows JavaScript last-write-wins semantics, and const resolution now respects lexical shadowing.
-- Product runtime behavior was not changed to satisfy the validator.
-- Exact-head evidence: full CI/check/build/typecheck/SEO, Project contracts, route integrity, brand audit and Manual Browser QA 4/4 across Chromium/Android, desktop WebKit and fresh-process iPhone Safari.
-
-Future concrete harness defects are reverified independently; this closure does not convert the system theme into a promise that no future validator bug can exist.
+Future concrete harness defects are reverified independently.
 
 ### W0–W7 architecture/runtime
 
@@ -73,49 +67,26 @@ Closed and protected by permanent regression witnesses. Historical rows are pres
 
 ### Mayakovsky media candidate family
 
-Closed for current Product scope:
-
-- exact originals and hashes: `30/30`;
-- accepted active: `5` — C03, C08, C10, C11, C16;
-- verified reserve: `1` — C15;
-- explicitly excluded: `24`;
-- unresolved: `0`;
-- source issue #77: closed as completed;
-- source merge: `dd2df7be196d81d5212b43a08616f782af2fecf6`.
-
-Previous C01–C07 reports remain historical evidence, not an automatic backlog.
+Closed for current Product scope: 5 active, 1 verified reserve, 24 terminal exclusions, 0 unresolved.
 
 ## Conditional candidate lanes
 
+### Fresh current-head verification
+
+Resume only after the selected Product #356 lifecycle closes. New findings require independent current-head reproduction and root-cause evidence; do not replay historical rows.
+
 ### Materially new media evidence
 
-Reopen one bounded candidate only for materially new evidence such as:
-
-- primary museum/archive exact-object record;
-- inspectable early-publication page;
-- explicit permission or licence;
-- jurisdiction-specific rights evidence;
-- changed editorial need for reserve C15 or an excluded candidate.
-
-A Commons metadata change, derivative mirror, visual resemblance or repetition of an old caption is not enough.
+Reopen one bounded candidate only for materially new evidence such as a primary exact-object record, inspectable early-publication page, explicit permission/licence, jurisdiction-specific rights evidence or changed editorial need.
 
 ### Release-specific live witness
 
-Use only for a significant release, DNS/hosting change or concrete production incident when live evidence is needed for a decision. It is not continuous monitoring and not a standing requirement after every commit.
+Use only for a significant release, DNS/hosting change or concrete production incident when live evidence is needed for a decision.
 
 ## Editorial / research boundary
 
-Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default. They should be selected as editorial/research projects on their own evidence and publication gates.
+Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default.
 
 ## Adding a lane
 
-A useful entry needs:
-
-- concrete question;
-- evidence source;
-- expected user/system benefit;
-- first narrow verification;
-- one current owner;
-- possible outcomes including repair, park, accepted-risk, owner-decision or no action.
-
-Do not copy a global source HEAD, every workflow run or the historical matrix into this file.
+A useful entry needs concrete question, evidence source, expected benefit, first narrow verification, one owner and explicit possible dispositions. Do not copy the historical matrix into this file.
