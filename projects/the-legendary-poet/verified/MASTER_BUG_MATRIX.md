@@ -15,11 +15,9 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 
 No verified-current P1 engineering rows.
 
-## 🟡 P2 — ОТКРЫТО (1)
+## 🟡 P2 — ОТКРЫТО (0)
 
-| ID | Status | Root cause | Source owner | Next gate |
-|---|---|---|---|---|
-| TLP-RESILIENCE-001 | verified-current / repair-ready | Post-#350 browser essay payload integration makes `catalog.json` a route-wide homepage prerequisite even though the home route only needs its count, and caches rejected catalog/body promises for the whole SPA session so transient failures cannot retry without a document reload. | Product issue #351 | Preserve target-scoped generated payloads; localize homepage catalog Suspense/failure ownership; evict rejected catalog/slug promises; add deterministic failure→retry browser witnesses; full Product check/build/route/browser gates on one exact head. |
+No verified-current P2 engineering rows.
 
 ## 🟢 P3 — ОТКРЫТО (0)
 
@@ -32,19 +30,19 @@ No verified-current P3 engineering rows.
 | Закрыто (fixed) | 0 |
 | **P0 открыто** | **0** |
 | P1 открыто | 0 |
-| P2 открыто | 1 |
+| P2 открыто | 0 |
 | P3 открыто | 0 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **1** |
+| **Всего открыто (матрица)** | **0** |
 
-Registered Product architecture lanes: **0**. `TLP-RESILIENCE-001` is a bounded runtime-resilience repair and is not promoted to an architecture lane without separate proof.
+Registered Product architecture lanes: **0**.
 
 ## Explicitly outside this matrix
 
 - Research/source-acquisition/editorial issues such as long-form authoring, archive acquisition, visual-rights review and myth ledgers are not engineering bugs merely because they remain open in the Product issue tracker.
 - The Mayakovsky C01–C30 media family is closed for the current Product scope: 5 active, 1 verified reserve, 24 terminal exclusions, 0 unresolved.
-- W0–W7 architecture/runtime waves, W6 ref retirement, native-scroll repair, canonical poet authority, semantic audit-harness hardening and the completed Lenis install-dependency cleanup are historical closure evidence, not current backlog.
+- W0–W7 architecture/runtime waves, W6 ref retirement, native-scroll repair, canonical poet authority, semantic audit-harness hardening, Lenis install-dependency cleanup and the closed browser-payload resilience repair are historical closure evidence, not current backlog.
 
 ## Lifecycle rule
 
