@@ -22,23 +22,20 @@
       "reason": "Reverify closed the claim: no false-green assertion was introduced."
     },
     "AUDIT-P0-SWBASELINE": {
-      "status": "alias",
-      "canonical": "BUG-SW-BASELINE-DRIFT",
-      "reason": "Same Service Worker baseline-drift root cause."
+      "status": "retired",
+      "reason": "Historical alias of retired canonical BUG-SW-BASELINE-DRIFT; the canonical work is no longer active and does not belong back in MASTER."
     },
     "AUDIT-P2-ACTIONLINT-NOT-WIRED": {
-      "status": "alias",
-      "canonical": "NEW-ACTIONLINT-CI-GAP",
-      "reason": "Reverify explicitly maps the intake ID to the canonical Actionlint CI gap."
+      "status": "retired",
+      "reason": "Historical alias of retired canonical NEW-ACTIONLINT-CI-GAP; current control-plane work is represented only by current SYS owners."
     },
     "AUDIT-P2-AR-STALE": {
       "status": "retired",
       "reason": "Historical AuditRepo lag claim superseded by the current-truth reconciliation and archived intake processing."
     },
     "AUDIT-P2-IXNOW-RETRY": {
-      "status": "alias",
-      "canonical": "BUG-CI-003",
-      "reason": "Same IndexNow retry/silent-failure root cause."
+      "status": "retired",
+      "reason": "Historical alias of retired canonical BUG-CI-003; current IndexNow/release ownership no longer uses this independent row."
     },
     "AUDIT-P2-NODE-REGEX": {
       "status": "false-positive",
@@ -61,9 +58,8 @@
       "reason": "React is actively used and the original claim was rejected by reverify."
     },
     "AUDIT-P3-SEO-HARDCODED-OG": {
-      "status": "alias",
-      "canonical": "NEW-OG-SIZE-PARAM",
-      "reason": "Same hardcoded OpenGraph dimensions audit root cause."
+      "status": "retired",
+      "reason": "Historical alias of NEW-OG-SIZE-PARAM; that canonical formulation was retired in the 2026-08-07 consolidation after configurable social-image ownership was verified."
     },
     "AUDIT-P3-SITEUTILS-WARN": {
       "status": "informational",
@@ -74,18 +70,16 @@
       "reason": "Umbrella intake split into canonical BUG-CLEANUP-002/003/004 decisions; historical row is not independently actionable."
     },
     "AUDIT-P3-SW-PRECACHE-LAZY": {
-      "status": "alias",
-      "canonical": "BUG-ARCH-001",
-      "reason": "Same lazy-assets-in-precache root cause."
+      "status": "retired",
+      "reason": "Historical alias of retired canonical BUG-ARCH-001; no independent active work remains under this alias."
     },
     "BUG-ASTRO-CONFIG-001": {
       "status": "informational",
       "reason": "Reverify downgraded the claim after confirming the Astro React integration is used."
     },
     "CHECK-GAP-DIST-SMOKE": {
-      "status": "alias",
-      "canonical": "NEW-64",
-      "reason": "Same broad production-like runtime smoke prevention gap."
+      "status": "retired",
+      "reason": "Historical alias of retired canonical NEW-64; current runtime/audit work is represented only by current verified owners."
     },
     "CI-CSSLAYER-STALE": {
       "status": "retired",
@@ -96,9 +90,8 @@
       "reason": "Pre-v16 submenu reverify marks the CI finding fixed-current."
     },
     "CI-HIDDEN-SW-PAGEFIND-PRECACHE": {
-      "status": "alias",
-      "canonical": "NEW-66",
-      "reason": "Same Service Worker/Pagefind deploy-switch contract."
+      "status": "retired",
+      "reason": "Historical alias of retired canonical NEW-66; no independent current work remains under this alias."
     },
     "CI-P0-GILL-RUNTIME-REFS": {
       "status": "retired",
@@ -113,9 +106,8 @@
       "reason": "Reverify proved the supposed dead scripts are documented manual QA/migration tools, not deletion-ready dead code."
     },
     "NEW-VOSK-UNZIP-SYNC-JANK": {
-      "status": "alias",
-      "canonical": "TTS-DL-UNZIP-SYNC",
-      "reason": "Reverify explicitly records the Vosk intake name as the canonical synchronous-unzip finding."
+      "status": "retired",
+      "reason": "Historical alias of TTS-DL-UNZIP-SYNC; the canonical TTS work was closed by the Worker-owned architecture and is no longer active."
     },
     "PC-CURRENT": {
       "status": "informational",
@@ -142,14 +134,12 @@
       "reason": "Deep audit verified valid keyframes and clean transitions."
     },
     "SEC-002": {
-      "status": "alias",
-      "canonical": "NEW-SAFEURL-XSS-HARDENING",
-      "reason": "Reverify explicitly identifies SEC-002 as the safeUrl scheme-blocklist hardening finding."
+      "status": "retired",
+      "reason": "Historical alias of retired canonical NEW-SAFEURL-XSS-HARDENING; any current security issue must be verified as its own current work unit."
     },
     "SEO-CANON-P0-01": {
-      "status": "alias",
-      "canonical": "D-1",
-      "reason": "Same cancel-in-progress deployment starvation/concurrency root cause."
+      "status": "retired",
+      "reason": "Historical alias of D-1; D-1 was retired in the 2026-08-07 consolidation because the old deploy/IndexNow writer race no longer exists."
     },
     "SSOT-HEAD-DRIFT-4D": {
       "status": "retired",
@@ -168,9 +158,8 @@
       "reason": "Pre-v16 submenu reverify marks the anchor finding fixed-current."
     },
     "VIS-BAPTISTY-PARITY": {
-      "status": "alias",
-      "canonical": "NEW-65",
-      "reason": "Reverify explicitly closes NEW-65 / VIS-BAPTISTY-PARITY as one visual parity finding."
+      "status": "retired",
+      "reason": "Historical alias of retired canonical NEW-65; visual parity work was already closed and no current independent row remains."
     },
     "CSS-DEAD-004": {
       "status": "retired",
@@ -214,11 +203,11 @@
     },
     "RIGHT-4Q204-OPEN-SCHEMATIC": {
       "status": "informational",
-      "reason": "Research rights-policy evidence label for an open schematic; it is not a product defect and does not belong in the bug matrix."
+      "reason": "Research rights-policy evidence label for an open schematic; it is not a product defect and does not belong in the active matrix."
     },
     "RIGHT-P72-TEXT-LINK-ONLY": {
       "status": "informational",
-      "reason": "Research rights-policy evidence label limiting P72 to a text link; it is not a product defect and does not belong in the bug matrix."
+      "reason": "Research rights-policy evidence label limiting P72 to a text link; it is not a product defect and does not belong in the active matrix."
     }
   },
   "ignoredTokens": []
