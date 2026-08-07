@@ -2,7 +2,7 @@
 
 Эта очередь показывает owner-selected направления. Перед любой source mutation нужно заново проверить актуальный source owner, open PRs и применимое evidence.
 
-## Current selection — fresh current-head verification
+## Current selection — TLP-ARCHIVE-001 / Product #363
 
 Owner-selected operating order:
 
@@ -10,9 +10,25 @@ Owner-selected operating order:
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **0**.
+Current verified engineering rows: **1** — one P3 personal-archive cross-tab convergence root.
 
-No Product engineering repair lane is currently selected. Resume only from new current-head evidence; do not replay historical matrix rows or convert editorial/research backlog into engineering bugs without an independently reproduced engineering root cause.
+### 1. Repair Product #363 — make concurrent favorite mutations converge
+
+Current Product anchor: `main@ab3fbf5f0b680f9457d905b792d693d287628c4a`.
+
+Bounded repair target:
+
+- preserve private browser-only personal archive semantics;
+- preserve current v3 favorites during migration without requiring a user reset;
+- replace whole-snapshot last-writer-wins mutation semantics with a deterministic representation that can merge concurrent cross-tab add/remove operations;
+- define one explicit ordering rule for add/remove conflicts so a stale peer snapshot cannot silently resurrect a newer removal;
+- keep duplicate delivery idempotent and reject malformed/future ordering metadata that could poison convergence;
+- preserve same-tab mutation result truthfulness, storage-write failure handling, library reconciliation, defensive copies and corrupt-state recovery;
+- keep the existing one shared `useSyncExternalStore` subscription / browser `storage` notification model where practical;
+- add deterministic two-reader convergence coverage plus a real two-page browser witness;
+- do not introduce server/account persistence, visual redesign, unrelated audio/community changes or sleeps/debounce as correctness.
+
+After Product repair merges and resulting current main is reverified, remove `TLP-ARCHIVE-001` from the active matrix and return this queue to fresh current-head bug hunting.
 
 ## Closed current-scope families
 
@@ -20,24 +36,11 @@ No Product engineering repair lane is currently selected. Resume only from new c
 
 Closed by Product PR #362, exact tested head `0a9d5c0c2cf5eeb801045ef9c09c1c6ebb3f5621`, squash merge `7fb70a207af2f793afde46b0aee4e59e43d30984`.
 
-- External timestamps are now restricted to nonnegative safe integers instead of every finite JavaScript number.
-- Wall-clock recency and Lamport advancement are separated: equal/future wall timestamps advance an explicit decimal logical `sequence`, compared and incremented as `BigInt` rather than IEEE-754 `number + 1`.
-- Sequence-less #358 claims remain interpretable as sequence zero; ordinary clients still exchange a safe numeric timestamp.
-- Deterministic validation covers unsafe/fractional/negative timestamps, `Number.MAX_SAFE_INTEGER`, arbitrary-precision sequence advancement, legacy compatibility, simultaneous starts, stale/duplicate/self delivery and later explicit replay.
-- Real Chromium browser QA waits for confirmed delivery of an unsafe `2 ** 53` storage claim, proves it cannot pause/poison a healthy player, then proves normal handoff still works; the existing BroadcastChannel and storage fallback A→B→A witnesses remain green.
-- Full exact-head Product CI, contracts, route/brand gates and Manual Browser QA passed before merge.
-- Detailed evidence: `verification/2026-08-07-audio-clock-precision/REPORT.md` and `verification/2026-08-07-audio-clock-precision/CLOSURE.md`.
-
-Future audio protocol findings require independent current reproduction. This closure does not reopen or weaken `TLP-AUDIO-001`.
+Future audio protocol findings require independent current reproduction.
 
 ### TLP-AUDIO-001 / Product #356 — deterministic simultaneous cross-tab arbitration
 
 Closed by Product PR #358, exact tested head `ab8fd872d65e6c10aef809967bc87bff8a08e72d`, squash merge `7231b2f33deed185a76fc6dd1c336a6d4dad1776`.
-
-- Playback claims use one deterministic total order instead of pausing on every remote `playing` claim.
-- BroadcastChannel and storage-event fallback use the same arbitration helper.
-- Exact simultaneous ordinary starts leave exactly one winner.
-- Detailed evidence: `verification/2026-08-07-audio-cross-tab-arbitration/REPORT.md` and `verification/2026-08-07-audio-cross-tab-arbitration/CLOSURE.md`.
 
 ### TLP-RESILIENCE-001 / Product #351 — browser essay payload recovery
 
@@ -67,7 +70,7 @@ Closed for current Product scope: 5 active, 1 verified reserve, 24 terminal excl
 
 ### Fresh current-head verification
 
-New findings require independent current-head reproduction and root-cause evidence; do not replay historical rows.
+Resume only after the selected Product #363 lifecycle closes. New findings require independent current-head reproduction and root-cause evidence; do not replay historical rows.
 
 ### Materially new media evidence
 
@@ -79,7 +82,7 @@ Use only for a significant release, DNS/hosting change or concrete production in
 
 ## Editorial / research boundary
 
-Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default. Product #269 remains a source-first editorial lane outside this engineering queue.
+Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default. Product #269 remains a source-first editorial lane outside this repair.
 
 ## Adding a lane
 

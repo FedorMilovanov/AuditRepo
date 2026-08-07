@@ -19,9 +19,11 @@ No verified-current P1 engineering rows.
 
 No verified-current P2 engineering rows.
 
-## 🟢 P3 — ОТКРЫТО (0)
+## 🟢 P3 — ОТКРЫТО (1)
 
-No verified-current P3 engineering rows.
+| ID | Source | Root cause | Current evidence | Repair owner |
+|---|---|---|---|---|
+| `TLP-ARCHIVE-001` | Product #363 | The personal favorites archive advertises cross-tab synchronization but every mutation is an uncoordinated read-modify-write of the whole `tlp-my-archive:v3` snapshot. Two tabs can read the same old item set and then overwrite each other, silently losing a distinct add or resurrecting/erasing a concurrent remove; `storage` events only notify after the overwrite and cannot recover the lost operation. | Product `main@ab3fbf5f0b680f9457d905b792d693d287628c4a`; `toggleFavoritePoem` and `removeFavoritePoem` derive and replace whole snapshots; `subscribeFavoritePoems` only listens for storage/custom events. Historical hardening commit `c495577144ddd057d424a16f7897534ae37f3d15` explicitly promised cross-tab favorite synchronization. Current validator tests a synthetic matching storage notification but no two-reader convergence. See `../verification/2026-08-07-archive-cross-tab-convergence/REPORT.md`. | one bounded Product #363 repair lane after this verification merges |
 
 ## Summary
 
@@ -31,10 +33,10 @@ No verified-current P3 engineering rows.
 | **P0 открыто** | **0** |
 | P1 открыто | 0 |
 | P2 открыто | 0 |
-| P3 открыто | 0 |
+| P3 открыто | 1 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **0** |
+| **Всего открыто (матрица)** | **1** |
 
 Registered Product architecture lanes: **0**.
 
