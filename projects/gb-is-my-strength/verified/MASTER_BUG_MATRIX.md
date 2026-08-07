@@ -10,9 +10,9 @@
 |---|---|
 | Product verification anchor | `87d1a3c26c61e474603b1c68b551fde9163f744a` |
 | Wave | full-matrix consolidation, 2026-08-07 |
-| Active work units | **23** |
+| Active work units | **22** |
 | Direct current defects | **9** |
-| Narrowed residuals | **3** |
+| Narrowed residuals | **2** |
 | System verification lanes | **7** |
 | Owner decisions | **4** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
@@ -31,19 +31,18 @@
 | `SIG-P1-01` | Signature overlays всё ещё используют fixed map-unit offsets (`origin.x - 74` и подобные). | Karty geometry SYSTEM owner. |
 | `ENGINE-P2-04` | Story/toast notifications не имеют доказанного canonical live-region/status owner. | Karty a11y SYSTEM owner. |
 | `AR-IDX-09` | Global Search shortcut принимает modified `Ctrl/⌘+K`, не исключая `Alt`/`Shift`. | Existing Search owner only. |
-| `SEARCH-P3-02` | Search ограничивает Pagefind 10 результатами / fallback 12 без total/show-more contract. | Existing Search owner only. |
-| `SEARCH-P3-03` | Search copy-preview строит canonical `https://gospod-bog.ru` URL при generic copy-link label. | Search owner: current-origin vs explicitly canonical behavior. |
+| `SEARCH-P3-02` | Search ограничивает Pagefind 10 результатами / fallback 12 без total/show-more contract. | Verified necessary Search discovery improvement: current corpus has more matches than the reachable result set. |
+| `SEARCH-P3-03` | Search copy-preview строит canonical `https://gospod-bog.ru` URL при generic copy-link label. | Recheck whether canonical-copy is intentional Product behavior; if yes retire instead of patching. |
 | `AR-IDX-05` | Home содержит hard-coded `SITE_CONFIG.version` плюс explicit asset `?v=` revisions. | Cache/version ownership; check active legacy/reference lane first. |
 
 ---
 
-## NARROWED RESIDUALS — 3
+## NARROWED RESIDUALS — 2
 
 | ID | Current residual |
 |---|---|
 | `MAP-P1-13` | Marker keyboard semantics уже существенно исправлены; current-check нужен только для reduced-motion / remaining interaction semantics. |
 | `MAP-P1-20` | `route.json` SW-cache half старого claim stale; residual — unversioned shared `map-engine.js` cache-bust ownership. |
-| `QUAL-P1-09` | Residual — holding/noindex route-profile publication-status semantics; проверять profiles + validators одной transaction. |
 
 ---
 
@@ -53,7 +52,7 @@
 
 | ID | Verified work package | Next boundary |
 |---|---|---|
-| `SYS-KARTY-RUNTIME-GEOMETRY` | Current-check interaction/viewport/tour/panel/marker/LOD behavior после многочисленных изменений MapEngine. | Representative source + browser wave; split only independent current roots. |
+| `SYS-KARTY-RUNTIME-GEOMETRY` | Reverify the still-unclassified historical interaction/viewport/tour/panel/marker/LOD set after major MapEngine changes; current-local Karty rows above are excluded from this package. | Representative source + browser wave; split only independent current roots. |
 | `SYS-KARTY-DATA-PROJECTION` | Route/schema/base-geo/generated-artifact ownership. | Verify current data/schema/base owners together before Product mutation. |
 | `SYS-KARTY-VISUAL-LANGUAGE` | Visual/data-quality package where old P1 wording mixes correctness and quality targets. | Current screenshots + owner/value review; retain only genuinely necessary improvements. |
 | `SYS-AUDIT-CONTROL-PLANE` | Audit/workflow false-green/false-red, duplicated/incorrect proof boundaries; also owns any remaining noindex/canonical harness gap after the `/izbrannoe/` source fix. | Wait for/coordinate with active Product release/reader workflow owners. |
