@@ -138,7 +138,7 @@
 
 ## ST-TLP-SCROLL-OWNERSHIP — Native document movement
 
-- Status: `absorbed/closed` by source PR #334; install-only cleanup is separately selected as `TLP-DEPS-001` / Product #335.
+- Status: `absorbed/closed` by source PR #334; the install-only residual `TLP-DEPS-001` / Product #335 is also `closed-by-fix` through source PR #348.
 - User-visible manifestation: intermittent wheel-scroll stalls and viscous catch-up in the middle of downward movement.
 - Common mechanism: the desktop app shell globally replaced ordinary document scrolling with Lenis smooth-wheel interpolation advanced by a permanent JavaScript RAF; fixed decorative text and scroll-to-top visibility added document-scroll subscriptions on the same latency-sensitive path.
 - Prior-corpus boundary: W0–W7 covered reader outcomes, routes, browser evidence and performance budgets, but the permanent scroll validator protected anchor geometry rather than continuous ordinary wheel ownership.
@@ -148,12 +148,15 @@
   - decorative fixed typography has no document-scroll subscription;
   - scroll-to-top visibility uses one passive listener with RAF coalescing;
   - the scroll runtime and app-shell contracts reject global JS scrollers, wheel interception, perpetual scroll RAF and decorative frame subscribers;
-  - Chromium QA sends six real wheel impulses on a long poet page, requires measurable progress after every impulse and verifies that none is default-prevented.
-- Source anchor: PR #334 exact tested head `774804be169f53581ae85ab4b835be08537c532f`, squash merge `76ef482bedb1722b691ec1f301b403c3a28aad3d`; base includes the completed Mayakovsky media merge `dd2df7be196d81d5212b43a08616f782af2fecf6`.
-- Regression witness: Project contracts, Content model, full CI/build/budgets/prerender/SEO, 35+ route crawl, brand/motion audit and Manual Browser QA 4/4 across Chromium, Android, desktop WebKit and fresh-process iPhone Safari.
-- Current selected residual: Product #335 removes the unused `lenis` package/lock ownership only. Runtime import and wheel ownership remain prohibited and are not reopened by that cleanup.
-- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md`.
-- Reverify trigger: global document smooth scrolling, wheel/touch cancellation, new perpetual document-scroll RAF ownership, route/overlay ownership change or a concrete mid-gesture browser stall.
+  - Chromium QA sends six real wheel impulses on a long poet page, requires measurable progress after every impulse and verifies that none is default-prevented;
+  - direct manifest and lock ownership of `lenis` is absent after Product PR #348 and remains absent on current Product main.
+- Source anchors:
+  - native-scroll repair: PR #334 exact tested head `774804be169f53581ae85ab4b835be08537c532f`, squash merge `76ef482bedb1722b691ec1f301b403c3a28aad3d`;
+  - install-only cleanup: PR #348 exact tested head `43527c7a7932f17fcba599ff4df270c243ba69a6`, squash merge `3a8d5fe3a6f729e8a583a3a8c7e6881ec31b5214`.
+- PR #348 repair boundary: exactly `package.json` + `package-lock.json`, with no scroll-runtime, validator, route or content change; the current Product source still has no active `lenis` occurrence.
+- Regression witness: the native-scroll repair retained its original CI/browser evidence, and PR #348 passed exact-head CI, project/content contracts, route audit, brand gates, Yesenin/catalog gates and Manual Browser QA 4/4 before merge.
+- Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md` and `../verification/2026-08-07-lenis-dependency-closure/REPORT.md`.
+- Reverify trigger: global document smooth scrolling, wheel/touch cancellation, new perpetual document-scroll RAF ownership, route/overlay ownership change, a concrete mid-gesture browser stall, or new direct package/runtime ownership that reintroduces the closed global-scroller mechanism.
 
 ## ST-TLP-AUDIT-HARNESS — Class-level evidence without control-plane duplication
 
