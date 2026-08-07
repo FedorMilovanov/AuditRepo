@@ -12,11 +12,11 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 |---|---|
 | Product verification anchor | `9a0db0dc4533cb473abfe57f86e27517f04deea6` |
 | Wave | full-matrix consolidation, 2026-08-07 |
-| Active work units | **24** |
-| Direct current defects | **12** |
-| Verified necessary improvements | **2** |
+| Active work units | **25** |
+| Direct current defects | **13** |
+| Verified necessary improvements | **3** |
 | Narrowed residuals | **0** |
-| System verification lanes | **6** |
+| System verification lanes | **5** |
 | Owner decisions | **4** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
@@ -24,7 +24,7 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 
 ---
 
-## CURRENT DEFECTS — 12
+## CURRENT DEFECTS — 13
 
 | ID | Current problem | Boundary / evidence |
 |---|---|---|
@@ -40,13 +40,15 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 | `AR-IDX-09` | Global Search shortcut принимает modified `Ctrl/⌘+K`, не исключая `Alt`/`Shift`. | Existing Search owner only. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-13` | `prefers-reduced-motion` гасит CSS transitions/animations, но current `flyTo()` всё равно всегда запускает duration-based `requestAnimationFrame` viewBox animation; zoom/reset/tour paths могут сохранять существенное движение. | Current a11y defect in public Karty motion owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-20` | Current Ishod map loads `../_engine/map-engine.js` без revision; SW классифицирует unversioned `.js` как static asset и обслуживает его cache-first. | Current stale-engine/cache invalidation defect; route.json half of old claim is retired. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `NG-INLINE-01` | Current public Part I `MainShell` still hardcodes the `Из библиотеки` block with inline `#faf8f5`, `#1c1410`, `#8a7968`, `#b8882a` backgrounds/text/borders. Inline ownership bypasses the Nagornaya dark/theme token system and repeats presentation inside article markup instead of a shared themed component. | Current `NagornayaChast1MainShell.astro`; exact public native route imports that MainShell. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 
 ---
 
-## VERIFIED NECESSARY IMPROVEMENTS — 2
+## VERIFIED NECESSARY IMPROVEMENTS — 3
 
 | ID | Needed implementation | Why it is active work / evidence |
 |---|---|---|
+| `NG-DEAD-01` | Remove the 15 unused `NagornayaChastN{HeaderHero,ArticleBody,PostContent}` extraction artifacts, or deliberately restore them as the actual canonical componentization boundary; do not keep both the monolithic MainShell owner and a zero-consumer extracted family. | Exact `0fbe7d1e` verification recorded 0 import refs; Product delta to current `9a0db0dc` did not change these components, the five MainShells or canonical part routes. Current Part I/Part V edge files still exist, while all five canonical routes import `NagornayaChastNMainShell`. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SEARCH-P3-02` | Add truthful result-total / continuation (`Показать ещё`, pagination or equivalent) instead of silently exposing only Pagefind 10 / fallback 12. | Current corpus can return more matches than the user can reach. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `AR-IDX-05` | Consolidate Home/shared cache/version identity so `SITE_CONFIG.version` and asset `?v=` revisions do not remain parallel manual authorities. | Verified ownership debt with stale-cache/regression potential; coordinate with active legacy/reference owner. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 
@@ -58,7 +60,7 @@ No residual-only row remains. A future partial closure should use this section o
 
 ---
 
-## SYSTEM VERIFICATION LANES — 6
+## SYSTEM VERIFICATION LANES — 5
 
 Одна строка = один текущий verification/implementation package/root, а не десятки исторических симптомов. Старые symptom-ID mapping находится в `../legacy/MATRIX_CLEANUP_2026-08-07.md`.
 
@@ -67,7 +69,6 @@ No residual-only row remains. A future partial closure should use this section o
 | `SYS-KARTY-DATA-PROJECTION` | Holding-map publication readiness plus the shared data/base dependency needed by active Ishod repair. Shoftim/Early Church/Shvatim currently publish `KartyHoldingPage`, so route-data/overlap/region/signature issues are not mislabeled as public runtime defects. Shared `base-geo.svg` must also gain coherent self-contained defs/ID ownership before it can safely become Ishod's basemap. | Reverify/repair as one bounded publication-readiness/data package; promote only an independently current root. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-KARTY-VISUAL-LANGUAGE` | Explicit holding-map visual publication-readiness owner. The public hub and `KartyHoldingPage` require manual verification of initial viewport, label collision, desktop/mobile layout, controls, route readability and overall visual quality before a map returns. Old sheet-engine decoration/aesthetic rows are not requirements by themselves. | Current screenshots/browser review of holding candidates against the published readiness contract; fix only concrete blockers, retire taste-only historical symptoms. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-AUDIT-CONTROL-PLANE` | Audit/workflow false-green/false-red and duplicated/incorrect proof boundaries; also owns any remaining noindex/canonical harness gap after the `/izbrannoe/` source fix. | Coordinate with current Product control-plane owners; #1092/#1097 remain active and #1120 touches release geometry evidence. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `SYS-NAGORNAYA-MIGRATION` | Current residual is narrower than the July package: the five Part I–V routes use `MainShell` again while the extracted `HeaderHero`/`ArticleBody`/`PostContent` component family still exists; Part I also still carries the repeated inline `Из библиотеки` palette/structure. Old scripture/footer SEO symptoms are already fixed. | Exact import inventory for all 15 extracted files; then one bounded delete-or-restore-componentization decision plus shared library-block ownership. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-SHARED-CSS-RUNTIME-HYGIENE` | Shared CSS/runtime dead/duplicate owner cleanup and a11y hygiene. | Reverify after active reader layout/regression owners settle. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-STRANGLER-RETIREMENT` | Legacy/reference parity-authority migration and eventual bounded retirement. | Follow Product PR #1090 owner; no parallel retirement lane. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 
