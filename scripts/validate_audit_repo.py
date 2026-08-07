@@ -30,6 +30,13 @@ PLACEHOLDER_VALUE_RE = re.compile(
     re.IGNORECASE,
 )
 FINDING_ID_BODY = r'[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+'
+COMPACT_MATRIX_MARKERS = (
+    '## CURRENT DEFECTS',
+    '## VERIFIED NECESSARY IMPROVEMENTS',
+    '## NARROWED RESIDUALS',
+    '## SYSTEM VERIFICATION LANES',
+    '## OWNER DECISIONS',
+)
 
 
 def fail(msg, errors):
@@ -153,13 +160,28 @@ def report_has_real_evidence(report_file):
 
 
 def validate_matrix_summary(proj, errors):
-    """Fail closed when legacy matrix section counters and summary statistics diverge."""
+    """Validate compact active-work matrices; retain legacy counter compatibility."""
     matrix = proj / 'verified' / 'MASTER_BUG_MATRIX.md'
     if not matrix.is_file():
         return
 
     text = matrix.read_text(encoding='utf-8', errors='ignore')
 
+    # Current owner model: MASTER is a compact active-work notebook. Reuse the
+    # canonical coverage parser so the generic validator never forces old closed/
+    # severity counters back into a cleaned matrix.
+    if '## Current state' in text and any(marker in text for marker in COMPACT_MATRIX_MARKERS):
+        try:
+            from matrix_coverage_lib import parse_matrix, matrix_integrity_problems
+            rows, _open_ids, _closed_rows = parse_matrix(text)
+            for problem in matrix_integrity_problems(text, rows):
+                fail(f'{proj.name}: {problem}', errors)
+        except (ImportError, ValueError) as exc:
+            fail(f'{proj.name}: compact matrix validation failed: {exc}', errors)
+        return
+
+    # Compatibility for projects that have not yet migrated from the historical
+    # fixed/P0/P1/P2/P3 counter schema.
     def capture(pattern, label):
         match = re.search(pattern, text, re.MULTILINE)
         if not match:
@@ -226,7 +248,7 @@ for required in ['README.md', 'AUDITREPO_OPERATING_MODEL.md', 'PROJECT_REGISTRY.
         fail(f'missing required root path: {required}', errors)
 
 for proj in project_dirs():
-    for rel in ['README.md', 'PROJECT_META.yml', 'incoming', 'working', 'verification', 'verified', 'repairs', 'reverify', 'archive']:
+    for rel in ['README.md', 'PROJECT_META.yml', 'incoming', 'working', 'verification', 'verified', 'repairs', 'reverify', 'legacy', 'archive']:
         if not (proj / rel).exists():
             fail(f'{proj.name}: missing {rel}', errors)
 

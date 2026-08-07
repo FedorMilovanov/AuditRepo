@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Black-box regressions for matrix registry and evidence coverage semantics."""
+"""Black-box regressions for compact MASTER and evidence coverage semantics."""
 
 from __future__ import annotations
 
@@ -7,35 +7,50 @@ import json
 import pathlib
 import tempfile
 
-from matrix_coverage_contexts import collect_contexts
 from matrix_coverage_lib import build_report
 
-MATRIX = """# matrix
+MATRIX = """# MASTER
 
-## ✅ ЗАКРЫТО (1)
+## Current state
 
-| ID | Описание | Коммит |
-|---|---|---|
-| FIXED-ONE | closed | `abcdef1` |
-
-## P1 — ОТКРЫТО (1)
-
-| ID | Описание | Evidence |
-|---|---|---|
-| OPEN-ONE | open | reverify/known.md |
-
-## Статистика
-
-| Категория | Количество |
+| Поле | Значение |
 |---|---|
-| Закрыто (fixed) | 1 |
-| **P0 открыто** | **0** |
-| P1 открыто | 1 |
-| P2 открыто | 0 |
-| P3 открыто | 0 |
-| Рефакторинг | 0 |
-| AuditRepo | 0 |
-| **Всего открыто (матрица)** | **1** |
+| Active work units | **4** |
+| Direct current defects | **1** |
+| Verified necessary improvements | **1** |
+| Narrowed residuals | **1** |
+| System verification lanes | **1** |
+| Owner decisions | **0** |
+| Closed/stale/duplicate/absorbed rows in MASTER | **0** |
+
+## CURRENT DEFECTS — 1
+
+| ID | Current problem | Evidence |
+|---|---|---|
+| `OPEN-ONE` | current defect | verification/current.md |
+
+## VERIFIED NECESSARY IMPROVEMENTS — 1
+
+| ID | Needed implementation | Evidence |
+|---|---|---|
+| `IMPROVE-ONE` | verified necessary capability | verification/current.md |
+
+## NARROWED RESIDUALS — 1
+
+| ID | Current residual | Evidence |
+|---|---|---|
+| `RESIDUAL-ONE` | bounded remainder | verification/current.md |
+
+## SYSTEM VERIFICATION LANES — 1
+
+| ID | Verified work package | Evidence |
+|---|---|---|
+| `SYS-ROOT-ONE` | shared root package | verification/current.md |
+
+## OWNER DECISIONS — 0
+
+| ID | Missing decision |
+|---|---|
 """
 
 
@@ -46,25 +61,26 @@ def write_project(
     matrix: str = MATRIX,
 ) -> pathlib.Path:
     project = root / "project"
-    for directory in ("verified", "reverify", "incoming", "working", "archive"):
+    for directory in (
+        "verified", "verification", "reverify", "incoming", "working", "legacy", "archive"
+    ):
         (project / directory).mkdir(parents=True, exist_ok=True)
-    (project / "verified" / "MASTER_BUG_MATRIX.md").write_text(
-        matrix, encoding="utf-8"
-    )
+    (project / "verified" / "MASTER_BUG_MATRIX.md").write_text(matrix, encoding="utf-8")
     (project / "verified" / "MATRIX_ID_ALIASES.json").write_text(
         json.dumps(
             {"version": 1, "aliases": entries, "ignoredTokens": ignored or []},
             ensure_ascii=False,
             indent=2,
-        )
-        + "\n",
+        ) + "\n",
         encoding="utf-8",
     )
-    (project / "reverify" / "known.md").write_text(
-        "# OPEN-ONE — witness\n", encoding="utf-8"
+    (project / "verification" / "current.md").write_text(
+        "# Current verification\n\n"
+        "`OPEN-ONE` `IMPROVE-ONE` `RESIDUAL-ONE` `SYS-ROOT-ONE`\n",
+        encoding="utf-8",
     )
     (project / "reverify" / "unknown.md").write_text(
-        "# NEW-UNREGISTERED-01 — exact finding\n", encoding="utf-8"
+        "# NEW-UNREGISTERED-01 — historical evidence-only finding\n", encoding="utf-8"
     )
     return project
 
@@ -87,7 +103,7 @@ def main() -> int:
         },
         "INFO-ONE": {
             "status": "informational",
-            "reason": "Context label, not an active finding.",
+            "reason": "Context label, not active work.",
         },
         "RETIRED-ONE": {
             "status": "retired",
@@ -102,8 +118,8 @@ def main() -> int:
     with tempfile.TemporaryDirectory() as temp:
         project = write_project(pathlib.Path(temp), entries)
         report = build_report(project)
-        assert report["closedRows"] == 1
-        assert report["openRows"] == 1
+        assert report["closedRows"] == 0
+        assert report["openRows"] == 4
         assert report["registryIds"] == 4
         assert report["aliasIds"] == 1
         assert report["registryStatusCounts"] == {
@@ -112,31 +128,21 @@ def main() -> int:
             "informational": 1,
             "false-positive": 1,
         }
-        assert report["problemKinds"] == {"UNREGISTERED-EVIDENCE": 1}
-        unresolved = report["unregisteredEvidence"]
-        assert unresolved[0]["id"] == "NEW-UNREGISTERED-01"
-        occurrence = unresolved[0]["occurrences"][0]
-        assert occurrence["file"] == "reverify/unknown.md"
-        assert occurrence["lines"] == [1]
-        assert occurrence["contexts"] == ["heading"]
-
-        contexts = collect_contexts(project, radius=0)
-        exact = contexts["contexts"]["NEW-UNREGISTERED-01"][0]
-        assert exact["line"] == 1
-        assert exact["structuralContexts"] == ["heading"]
-        assert exact["context"] == "1: # NEW-UNREGISTERED-01 — exact finding"
+        assert report["problems"] == 0
+        assert report["evidenceOnlyIds"] == 1
+        assert report["evidenceOnlyIdList"] == ["NEW-UNREGISTERED-01"]
 
     with tempfile.TemporaryDirectory() as temp:
         fixed = dict(entries)
         fixed["NEW-UNREGISTERED-01"] = {
             "status": "informational",
-            "reason": "Rights-policy label, not a product defect.",
+            "reason": "Test-only evidence label.",
         }
         project = write_project(pathlib.Path(temp), fixed)
         report = build_report(project)
         assert report["problems"] == 0
         assert report["registryIds"] == 5
-        assert report["aliasIds"] == 1
+        assert report["evidenceOnlyIds"] == 0
 
     with tempfile.TemporaryDirectory() as temp:
         broken = dict(entries)
@@ -158,68 +164,61 @@ def main() -> int:
         project = write_project(pathlib.Path(temp), entries, ignored=["HIDDEN-FINDING-01"])
         expect_value_error(project, "must use a reasoned registry entry")
 
-
     with tempfile.TemporaryDirectory() as temp:
-        malformed_matrix = MATRIX.replace(
-            "| FIXED-ONE | closed | `abcdef1` |",
-            "| FIXED-ONE/TWO | closed | `abcdef1` |",
-        )
-        project = write_project(pathlib.Path(temp), entries, matrix=malformed_matrix)
+        malformed = MATRIX.replace("`IMPROVE-ONE`", "`IMPROVE-ONE/TWO`", 1)
+        project = write_project(pathlib.Path(temp), entries, matrix=malformed)
         report = build_report(project)
         assert report["problemKinds"]["NONCANONICAL-MATRIX-ID"] == 1
         assert report["problemKinds"]["SECTION-COUNT-MISMATCH"] == 1
+        # Removing the sole valid improvement row drifts both the total active
+        # count and the dedicated improvement count. The regression must prove
+        # both counters fail closed rather than treating one as redundant.
+        assert report["problemKinds"]["STATE-COUNT-MISMATCH"] == 2
 
     with tempfile.TemporaryDirectory() as temp:
-        closed_in_open = MATRIX.replace(
-            "| OPEN-ONE | open | reverify/known.md |",
-            "| OPEN-ONE | ✅ **CLOSED 2026-08-02** | reverify/known.md |",
+        closed_in_active = MATRIX.replace(
+            "| `OPEN-ONE` | current defect | verification/current.md |",
+            "| `OPEN-ONE` | ✅ **CLOSED 2026-08-07** | verification/current.md |",
         )
-        project = write_project(pathlib.Path(temp), entries, matrix=closed_in_open)
+        project = write_project(pathlib.Path(temp), entries, matrix=closed_in_active)
         report = build_report(project)
-        assert report["problemKinds"]["CLOSED-IN-OPEN"] == 1
+        assert report["problemKinds"]["CLOSED-IN-ACTIVE"] == 1
 
     with tempfile.TemporaryDirectory() as temp:
-        bad_count = MATRIX.replace("## P1 — ОТКРЫТО (1)", "## P1 — ОТКРЫТО (2)")
-        project = write_project(pathlib.Path(temp), entries, matrix=bad_count)
+        bad_section_count = MATRIX.replace("## CURRENT DEFECTS — 1", "## CURRENT DEFECTS — 2")
+        project = write_project(pathlib.Path(temp), entries, matrix=bad_section_count)
         report = build_report(project)
         assert report["problemKinds"]["SECTION-COUNT-MISMATCH"] == 1
 
-
     with tempfile.TemporaryDirectory() as temp:
-        missing_count = MATRIX.replace("## P1 — ОТКРЫТО (1)", "## P1 — ОТКРЫТО")
-        project = write_project(pathlib.Path(temp), entries, matrix=missing_count)
-        report = build_report(project)
-        assert report["problemKinds"]["SECTION-COUNT-MISSING"] == 1
-
-    with tempfile.TemporaryDirectory() as temp:
-        missing_stat = MATRIX.replace("| P1 открыто | 1 |\n", "")
-        project = write_project(pathlib.Path(temp), entries, matrix=missing_stat)
-        report = build_report(project)
-        assert report["problemKinds"]["STAT-ROW-MISSING"] == 1
-
-    with tempfile.TemporaryDirectory() as temp:
-        duplicate_stat = MATRIX.replace(
-            "| P1 открыто | 1 |\n",
-            "| P1 открыто | 1 |\n| P1 открыто | 1 |\n",
+        bad_state_count = MATRIX.replace(
+            "| Active work units | **4** |", "| Active work units | **5** |"
         )
-        project = write_project(pathlib.Path(temp), entries, matrix=duplicate_stat)
+        project = write_project(pathlib.Path(temp), entries, matrix=bad_state_count)
         report = build_report(project)
-        assert report["problemKinds"]["STAT-ROW-DUPLICATE"] == 1
+        assert report["problemKinds"]["STATE-COUNT-MISMATCH"] == 1
 
     with tempfile.TemporaryDirectory() as temp:
-        category_drift = MATRIX.replace("| P1 открыто | 1 |", "| P1 открыто | 0 |")
-        project = write_project(pathlib.Path(temp), entries, matrix=category_drift)
+        missing_state = MATRIX.replace("| System verification lanes | **1** |\n", "")
+        project = write_project(pathlib.Path(temp), entries, matrix=missing_state)
         report = build_report(project)
-        assert report["problemKinds"]["STAT-COUNT-MISMATCH"] == 1
+        assert report["problemKinds"]["STATE-ROW-MISSING"] == 1
 
     with tempfile.TemporaryDirectory() as temp:
-        fixed_without_emoji = MATRIX.replace(
-            "| OPEN-ONE | open | reverify/known.md |",
-            "| OPEN-ONE | **FIXED 2026-08-02** | reverify/known.md |",
+        retired_from_master = MATRIX.replace(
+            "## CURRENT DEFECTS — 1\n\n| ID | Current problem | Evidence |\n|---|---|---|\n"
+            "| `OPEN-ONE` | current defect | verification/current.md |\n",
+            "## CURRENT DEFECTS — 0\n\n| ID | Current problem | Evidence |\n|---|---|---|\n",
+        ).replace("| Active work units | **4** |", "| Active work units | **3** |").replace(
+            "| Direct current defects | **1** |", "| Direct current defects | **0** |"
         )
-        project = write_project(pathlib.Path(temp), entries, matrix=fixed_without_emoji)
+        project = write_project(pathlib.Path(temp), entries, matrix=retired_from_master)
+        (project / "legacy" / "retired.md").write_text(
+            "# Retirement\n\n`OPEN-ONE` — fixed and removed from MASTER.\n", encoding="utf-8"
+        )
         report = build_report(project)
-        assert report["problemKinds"]["CLOSED-IN-OPEN"] == 1
+        assert "OPEN-ONE" not in report["historicalOnlyIds"]
+        assert report["openRows"] == 3
 
     with tempfile.TemporaryDirectory() as temp:
         fixed = dict(entries)
@@ -227,18 +226,15 @@ def main() -> int:
             "status": "informational",
             "reason": "Test-only evidence label.",
         }
-        archived_matrix = MATRIX.replace(
-            "| OPEN-ONE | open | reverify/known.md |",
-            "| OPEN-ONE | open | archive/old.md |",
-        )
-        project = write_project(pathlib.Path(temp), fixed, matrix=archived_matrix)
-        (project / "reverify" / "known.md").unlink()
-        (project / "archive" / "old.md").write_text(
-            "# OPEN-ONE — historical witness\n", encoding="utf-8"
+        project = write_project(pathlib.Path(temp), fixed)
+        (project / "verification" / "current.md").unlink()
+        (project / "legacy" / "old.md").write_text(
+            "# Historical witness\n\n`OPEN-ONE` `IMPROVE-ONE` `RESIDUAL-ONE` `SYS-ROOT-ONE`\n",
+            encoding="utf-8",
         )
         report = build_report(project)
-        assert report["archivedOnlyOpenRows"] == 1
-        assert report["problemKinds"]["ARCHIVED-ONLY-OPEN"] == 1
+        assert report["historicalOnlyOpenRows"] == 4
+        assert report["problemKinds"]["LEGACY-ONLY-ACTIVE"] == 4
 
     with tempfile.TemporaryDirectory() as temp:
         project = write_project(pathlib.Path(temp), entries)

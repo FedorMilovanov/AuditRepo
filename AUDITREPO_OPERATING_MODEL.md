@@ -2,297 +2,237 @@
 
 ## Назначение
 
-AuditRepo — долговременная память мультиагентных аудитов: сюда можно складывать много независимых проходов, сырые наблюдения, логи, скриншоты, гипотезы, опровержения, причинные модели и предложения по улучшению.
+AuditRepo — evidence/reasoning слой для мультиагентной работы: сырые аудиты, anchors, проверки, опровержения, root-cause synthesis и выбранная очередь проблем.
 
-AuditRepo **не является** зеркалом текущего состояния source-репозитория. Он не обязан после каждого Product-коммита переписывать общий HEAD, deploy SHA, список веток, последние workflow run IDs или доказывать заново сохранность всех ранее закрытых исправлений.
+AuditRepo **не является** зеркалом Product и **не является летописью всех когда-либо найденных/закрытых багов в активной матрице**.
 
 Короткая модель:
 
 ```text
 many audit passes
-→ durable evidence corpus
-→ verification wave when useful
-→ deduplication and root-cause synthesis
-→ any owner-selected repair scope
-→ proportional closure
+→ evidence
+→ verification wave
+→ deduplicate / find root cause
+→ compact active MASTER
+→ repair or owner decision
+→ remove solved/stale rows from MASTER
 ```
-
-Владелец может закрывать один мелкий дефект, пакет из пятидесяти находок, системную причину или целую волну. AuditRepo поддерживает этот выбор, а не навязывает один обязательный ритуал.
 
 ---
 
 ## Разделение ответственности
 
-### Source-репозиторий владеет
+### Product владеет
 
-- текущим кодом и его фактическим HEAD;
+- текущим кодом/HEAD;
 - открытыми Product PR и ветками;
-- текущими CI-проверками;
-- текущим build/deploy состоянием;
-- runtime-истиной на актуальной версии.
+- CI/build/deploy/runtime истиной.
 
 ### AuditRepo владеет
 
-- исходными audit reports;
-- доказанными наблюдениями на конкретных anchors;
-- конфликтами и опровержениями;
-- дедупликацией симптомов;
-- root-cause clusters;
-- системными темами и вариантами улучшения;
-- выбранной очередью работ;
-- историей dispositions и закрытий.
+- raw evidence на конкретных anchors;
+- verification/reverify материалом;
+- причинной моделью и дедупликацией;
+- **одной активной problem matrix для каждого проекта**;
+- optional work queue;
+- legacy retirement material, когда он нужен для forensic recovery.
 
-AuditRepo может ссылаться на Product SHA как на **evidence anchor конкретного наблюдения**, но не хранит обязательный глобальный «последний Product HEAD» во всех документах.
+AuditRepo не обязан переписывать глобальный Product HEAD после каждого коммита.
 
 ---
 
-## Долговечная и временная истина
+## Матрица: рабочая очередь, не архив
 
-### `verified-at-anchor`
+`projects/<project>/verified/MASTER_BUG_MATRIX.md` — единственная рабочая матрица проекта.
 
-Наблюдение было доказано на указанном SHA, артефакте, маршруте или production witness. Это долговечный исторический факт и он не исчезает только потому, что `main` ушёл вперёд.
+В MASTER разрешены только:
 
-### `current-confirmed-for-work`
+- `current-local` / current-confirmed defects;
+- narrowed current residuals;
+- current system/root-cause lanes;
+- owner decisions, без которых работа не может продолжиться.
 
-Наблюдение узко перепроверено непосредственно перед выбранной реализацией. Это временный рабочий verdict, а не обещание AuditRepo постоянно сопровождать каждый новый Product commit.
+Не держать в MASTER:
 
-### Когда нужна новая проверка
+- `closed-by-fix`;
+- `absorbed-by-system-fix`;
+- `duplicate-symptom`, если общий root уже имеет строку;
+- `stale`;
+- `invalid`;
+- `not-worth-fixing`;
+- superseded wording;
+- suspected-only claims без current witness;
+- необязательные performance/refactor/polish идеи.
 
-Повторная проверка требуется, когда:
+Закрытое/неактуальное удаляется из MASTER **в той же closure/consolidation wave** и при необходимости кратко уходит в `legacy/`. Подробная старая версия уже остаётся в Git history; не надо копировать её обратно в активную матрицу.
 
-- finding выбран для реализации;
-- materially изменился его evidence-critical owner;
-- изменился build/runtime mechanism, на котором основан finding;
-- появилось конкретное contradictory evidence;
-- finding зависит от live, security, rights, external API или изменчивых данных;
-- нужно принять важное решение о закрытии, объединении или отказе от исправления.
+Если 30 старых symptom-ID объясняются одной текущей системной причиной, MASTER должен содержать **одну** `SYS-*` строку, а не 30 строк ради исторического счётчика.
 
-Простое движение общего `main` само по себе не создаёт AuditRepo-задачу.
+Цель — маленькая матрица, по которой можно принимать решение и работать.
+
+---
+
+## Optional work queue
+
+`WORK_QUEUE.md` — место для полезных, но не являющихся текущими дефектами улучшений:
+
+- measurement-first performance work;
+- refactoring;
+- polish;
+- accepted/parked optimization opportunities.
+
+Очередь может быть пустой. Она не должна превращаться во вторую bug matrix.
 
 ---
 
 ## Жизненный цикл находки
 
-Допустимые состояния:
-
 | Статус | Смысл |
 |---|---|
-| `raw` | сырое наблюдение одного прохода |
-| `candidate` | достаточно конкретно для дальнейшей проверки |
-| `verified-at-anchor` | доказано на зафиксированной поверхности |
-| `selected-for-current-check` | выбрано владельцем или волной для актуальной проверки |
-| `current-local` | существует сейчас и подходит для локального исправления |
-| `systemic-root` | выгоднее устранить общий механизм или процесс |
-| `duplicate-symptom` | симптом уже принадлежит более широкому owner/root cause |
-| `owner-decision` | технических данных недостаточно без решения владельца |
-| `parked` | полезно, но сейчас не приоритет |
-| `accepted-risk` | проблема признана, но риск принят |
-| `not-worth-fixing` | реальна, но стоимость несоразмерна пользе |
-| `stale` | исходная формулировка больше не применима |
-| `invalid` | исходный claim был ложным или основан на неверном методе |
-| `fixing` | выбранная repair lane выполняется |
-| `closed-by-fix` | локальная причина устранена и пропорционально проверена |
-| `absorbed-by-system-fix` | симптом закрыт общей системной мерой |
-| `live-verified` | live evidence действительно требовалось и было получено |
+| `raw` | сырое наблюдение |
+| `candidate` | достаточно конкретно для проверки |
+| `verified-at-anchor` | доказано на историческом anchor |
+| `selected-for-current-check` | выбрано для актуализации |
+| `current-local` | существует сейчас, локально исправимо |
+| `systemic-root` | текущая работа должна идти на уровне общего механизма |
+| `duplicate-symptom` | поглощено общим root cause; убрать из MASTER как отдельную строку |
+| `owner-decision` | требуется решение владельца |
+| `parked` | полезно, но не активный дефект; обычно Work Queue |
+| `accepted-risk` | риск принят; убрать из активной матрицы |
+| `not-worth-fixing` | стоимость несоразмерна; убрать из активной матрицы |
+| `stale` | формулировка больше не применима; убрать |
+| `invalid` | claim ложный/метод неверен; убрать |
+| `fixing` | активная repair lane |
+| `closed-by-fix` | исправлено; убрать |
+| `absorbed-by-system-fix` | закрыто общим механизмом; убрать |
 
-Старые статусы `confirmed-current`, `fixed-current` и `repair-ready` могут сохраняться в исторических документах. Новые документы должны предпочитать модель выше и явно отделять anchor-verification от текущей проверки перед работой.
-
----
-
-## Evidence: качество углов, а не число агентов
-
-Число агентов не является самостоятельной мерой истины. Важны независимые углы:
-
-- **surface witness** — что реально видит или испытывает пользователь;
-- **source witness** — какой код или data owner это создаёт;
-- **artifact witness** — что оказалось в production-like сборке;
-- **browser witness** — реальное runtime-поведение;
-- **lifecycle witness** — почему класс возник, сохранился или повторился;
-- **history witness** — полезная история появления или регрессии.
-
-Пропорциональный барьер:
-
-| Риск | Обычно достаточно |
-|---|---|
-| security, rights, data loss, release identity, production incident | 2–3 независимых угла и точный anchor; live только когда нужен |
-| пользовательский P1 | убедительная browser/artifact репродукция + понятный mechanism |
-| обычный P2 | один сильный direct witness на применимой поверхности |
-| P3 / визуальная полировка | скриншот или измерение + решение о целесообразности |
-| architecture/system theme | несколько проявлений + общий mechanism + ожидаемый класс устранения |
-| audit/test defect | доказательство, что harness измеряет не то или создаёт false result |
-
-Три агента, повторившие одинаковый grep, не сильнее одного качественного browser witness.
+Исторический `verified-at-anchor` не означает `current-local`: перед Product mutation нужна применимая current-check.
 
 ---
 
 ## Verification waves
 
-AuditRepo рассчитан на пакетную работу.
+Одна wave может брать 10, 50 или 200 исторических claims и уменьшать их до нескольких текущих единиц работы.
 
-Одна verification wave может взять 10, 50 или 200 находок и разложить их на:
-
-- `current-local`;
-- `systemic-root`;
-- `duplicate-symptom`;
-- `stale`;
-- `invalid`;
-- `not-worth-fixing`;
-- `owner-decision`;
-- `parked`.
-
-Результат хорошей волны — не максимальное количество «подтверждено», а более короткая и более умная карта причин.
-
-Пример:
+Хороший результат:
 
 ```text
-50 входных findings
-→ 11 актуальных локальных дефектов
-→ 17 симптомов трёх системных причин
-→ 8 stale
-→ 5 invalid/audit-drift
-→ 6 parked
-→ 3 owner decisions
+50 historical claims
+→ 7 current defects
+→ 3 system roots
+→ 2 owner decisions
+→ остальное stale / duplicate / invalid / parked
+→ MASTER содержит только 12 рабочих строк
 ```
 
-После этого владелец может выбрать любую глубину закрытия: один локальный fix, одну системную программу или всю волну.
+Не нужно сохранять 50 строк внутри MASTER ради provenance. Provenance живёт в evidence/Git/legacy, а не в рабочем backlog.
 
 ---
 
 ## Когда объединять в системную причину
 
-Finding переводится в `systemic-root`, если выполняется хотя бы одно:
+Объединять, если:
 
-1. Один механизм объясняет три и более симптома.
-2. Локальный patch оставляет тот же класс риска на других поверхностях.
-3. Дефект уже возвращался после точечного исправления.
-4. Причина находится в ownership, release, build, cache, data model или audit harness.
-5. Несколько команд/владельцев реализуют один и тот же контракт по-разному.
-6. Общий owner/process/contract дешевле сопровождения набора локальных patches.
+1. один механизм объясняет ≥3 симптомов;
+2. локальный patch оставляет тот же класс риска;
+3. дефект уже возвращался;
+4. причина в shared ownership, release/build/cache/data model/audit harness;
+5. один контракт реализован несколькими владельцами;
+6. один общий owner дешевле и надёжнее набора костылей.
 
-После системного исправления не обязательно заново воспроизводить каждый исторический симптом. Нужны:
-
-- доказанный общий mechanism;
-- репрезентативная выборка;
-- class-level regression guard;
-- явный список absorbed findings.
+После объединения старые symptom rows убираются из MASTER; текущая `SYS-*` строка хранит краткий список absorbed historical IDs и конкретный next check.
 
 ---
 
-## Право не исправлять
+## Evidence
 
-AuditRepo — не обязательство исправить всё найденное.
+Важны независимые углы, а не количество агентов:
 
-Реальный finding может получить:
+- surface witness;
+- source witness;
+- artifact witness;
+- browser witness;
+- lifecycle/history witness, когда он действительно помогает объяснить механизм.
 
-- `parked`;
-- `accepted-risk`;
-- `not-worth-fixing`;
-- `owner-decision`.
+Ориентир:
 
-Достаточно кратко зафиксировать влияние, стоимость, риск и причину решения. Это честнее, чем бесконечно держать строку «открытой» только ради идеального нуля.
-
----
-
-## Обновление AuditRepo
-
-AuditRepo обновляется, когда materially меняется:
-
-- classification или disposition;
-- root cause;
-- evidence;
-- приоритет;
-- выбранная work queue;
-- итог verification/repair wave;
-- owner decision;
-- исторически важное закрытие.
-
-AuditRepo **не обновляется** только потому, что:
-
-- Product `main` получил новый commit;
-- появился новый неотносящийся PR;
-- старый owner blob получил новый SHA из-за независимого изменения;
-- нужно переписать глобальный handoff ради актуальности номера run;
-- ранее закрытый баг теоретически мог бы когда-нибудь вернуться.
+- security/rights/data loss/release identity — 2–3 независимых угла;
+- пользовательский P1 — browser/artifact witness + mechanism;
+- P2 — один сильный direct current witness;
+- P3/polish — screenshot/measurement + решение о целесообразности;
+- system root — несколько manifestations + общий mechanism + class-level guard;
+- audit defect — доказательство false-green/false-red или неверной измеряемой границы.
 
 ---
 
-## Reverify-документы
+## Collision rule
 
-Отдельный документ в `reverify/` создаётся только для:
+Перед любой Product lane:
 
-- спорного disposition;
-- существенной коррекции root cause;
-- объединения большого числа findings;
-- security, production, rights или data-loss решения;
-- системной меры;
-- evidence, полезного как самостоятельный инженерный материал.
-
-Обычное закрытие может быть компактной записью со ссылкой на Product PR и постоянный regression witness.
+1. проверить текущие Product open PR/branches;
+2. определить owner и protected/shared files;
+3. не создавать параллельный fix того же SYSTEM owner;
+4. если current owner уже существует — матрица должна ссылаться на него, а не порождать конкурирующую lane.
 
 ---
 
-## Активная матрица и история
+## Branch/PR forensic
 
-Целевая модель:
+Периодически проверять AuditRepo refs и closed/unmerged PRs.
 
-- активная матрица показывает только открытые, parked и owner-decision элементы;
-- системные темы живут отдельно от локальных defects;
-- закрытия записываются компактно в append-only closure ledger;
-- подробные доказательства остаются в `incoming/`, `verification/`, `reverify/` и `archive/`.
+- полезный уникальный материал либо переносится в main/evidence;
+- доказанно поглощённые рабочие refs удаляются;
+- intentional `archive/*` refs можно оставить только когда они действительно являются forensic authority и их удаление потеряет важный контекст;
+- не держать десятки бессмысленных stale branches.
 
-Текущий `MASTER_BUG_MATRIX.md` содержит исторически накопленные закрытые строки. Это переходное наследие, а не причина проводить рискованную массовую перепись. Его освобождение выполняется пакетами во время будущих consolidation waves.
-
-Defects, risks, improvements, refactoring, owner decisions и AuditRepo maintenance не должны складываться в одно число «багов».
+Branch count сам по себе не является целью: цель — отсутствие непонятных и конфликтующих рабочих refs.
 
 ---
 
-## Автоматизация
+## Reverify / verification / legacy
 
-### На каждом обычном PR
-
-- структура;
-- валидность intake;
-- уникальность и форма canonical IDs;
-- отсутствие случайного изменения чужих проектов;
-- `git diff --check`-эквивалентные проверки;
-- глубокая matrix coverage только если изменились matrix/coverage owners.
-
-### Периодически или вручную
-
-- полный matrix/evidence coverage;
-- branch и closed-PR forensic;
-- архивная чистка;
-- поиск потерянных evidence-ссылок;
-- проверка governance drift.
-
-### Не является штатным процессом
-
-- временный write-capable workflow ради Markdown-правки;
-- compute-only PR, затем publisher PR, затем cleanup PR;
-- обязательный self-clean executor;
-- отдельная authority-sync транзакция после каждого Product merge;
-- отдельный reverify-файл на каждую закрытую строку.
+- `verification/` / `reverify/` — доказательства существенных current-check/system/security/rights решений.
+- `legacy/` — retirement sink для того, что убрано из активной работы и иногда ещё нужно для forensic lookup.
+- `legacy/` **не является вторым backlog** и не должен читаться как список задач.
+- Git history уже хранит полные старые версии; не дублировать огромные закрытые таблицы без причины.
 
 ---
 
-## Definition of Done
+## Closure
 
 ### Локальный finding
 
-- применимая текущая поверхность проверена;
+- current surface проверена;
 - mechanism понятен;
-- исправление слито;
-- один постоянный regression witness защищает поведение;
-- live-проверка выполнена только там, где она действительно нужна;
-- AuditRepo получил пропорциональный disposition.
+- fix слит;
+- regression witness есть;
+- строка удалена из MASTER.
 
 ### Системный finding
 
 - доказан общий mechanism;
 - реализован общий owner/process/contract;
-- проверена репрезентативная выборка;
-- защищён класс, а не только один симптом;
-- связанные findings явно отмечены как absorbed, parked или всё ещё независимые.
+- репрезентативные manifestations проверены;
+- class-level guard есть;
+- absorbed symptom rows удалены из MASTER;
+- если независимого остатка нет — `SYS-*` строка тоже удаляется.
+
+### Owner decision
+
+После решения владельца строка либо превращается в конкретную repair lane, либо удаляется как accepted/parked/not-planned.
+
+---
+
+## Automation
+
+Обычный PR: структура, валидность intake, canonical IDs, чужие проекты, diff hygiene; глубокий matrix/evidence forensic — только когда меняются соответствующие owners или запускается consolidation wave.
+
+Не создавать штатно:
+
+- write-capable workflow ради Markdown-правки;
+- отдельную authority-sync транзакцию после каждого Product merge;
+- reverify-файл на каждую мелкую строку;
+- обязательный publisher/cleanup PR-каскад.
 
 ---
 
@@ -300,9 +240,9 @@ Defects, risks, improvements, refactoring, owner decisions и AuditRepo maintena
 
 ```text
 Audit deeply.
-Store evidence durably.
-Verify proportionately when work is selected.
-Fix at the most useful level.
-Close in the smallest honest form.
-Do not turn AuditRepo into a second Product repository.
+Keep evidence where evidence belongs.
+Keep MASTER small and actionable.
+Collapse symptoms into current roots.
+Solved or obsolete means removed from MASTER.
+Do not turn the problem matrix into project biography.
 ```

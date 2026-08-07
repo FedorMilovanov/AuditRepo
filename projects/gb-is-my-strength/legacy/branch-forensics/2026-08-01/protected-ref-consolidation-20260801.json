@@ -1,0 +1,30 @@
+{
+  "repository": "FedorMilovanov/AuditRepo",
+  "previousArchiveAnchor": "2589012b0b08e0faccbe8366f8a86a2e952fe493",
+  "policy": "Unique protected tips are additional parents of the new archive anchor. Contained refs are deleted because main already reaches them.",
+  "preservedTips": [
+    {
+      "formerRefs": [
+        "archive/forensic-pr-3-vosk-tts-2026-07-24",
+        "archive/forensic-pr-3-vosk-tts-report-2026-07-24"
+      ],
+      "sha": "07891373c6c9f488842a9a66e6cfde857ca74bce"
+    },
+    {
+      "formerRefs": [
+        "backup/pr66-pre-clean-f4c60ecb-20260725"
+      ],
+      "sha": "1c91eceb647411d4dfe57262194eff2119659762"
+    }
+  ],
+  "containedRefs": [
+    {
+      "branch": "backup/audit-reconcile-b594ba82-pre-clean-20260725",
+      "sha": "5828d9ef12dfe611e6991d524838455b7f58f62d"
+    },
+    {
+      "branch": "incoming/gpt-5-5-gill-image-restoration-2026-07-09",
+      "sha": "bc179cea89db171db50f3f4090dc3cc91707133c"
+    }
+  ]
+}

@@ -32,7 +32,7 @@ def build_fixture(root: Path) -> Path:
     project = root / 'projects' / 'fixture-project'
     write(project / 'README.md', '# Fixture project\n')
     write(project / 'PROJECT_META.yml', 'name: fixture-project\n')
-    for directory in ('incoming', 'working', 'verification', 'verified', 'repairs', 'reverify', 'archive'):
+    for directory in ('incoming', 'working', 'verification', 'verified', 'repairs', 'reverify', 'legacy', 'archive'):
         (project / directory).mkdir(parents=True, exist_ok=True)
     write(project / 'working' / 'README.md', '# Working\n')
     write(project / 'verification' / 'README.md', '# Verification\n')
@@ -85,6 +85,41 @@ def require(condition: bool, message: str, result: subprocess.CompletedProcess[s
     if result is not None:
         message += f'\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}'
     raise AssertionError(message)
+
+
+def compact_matrix() -> str:
+    return (
+        '# MASTER BUG MATRIX — compact fixture\n\n'
+        '## Current state\n\n'
+        '| Поле | Значение |\n'
+        '|---|---|\n'
+        '| Active work units | **4** |\n'
+        '| Direct current defects | **1** |\n'
+        '| Verified necessary improvements | **1** |\n'
+        '| Narrowed residuals | **0** |\n'
+        '| System verification lanes | **1** |\n'
+        '| Owner decisions | **1** |\n'
+        '| Closed/stale/duplicate/absorbed rows in MASTER | **0** |\n\n'
+        '## CURRENT DEFECTS — 1\n\n'
+        '| ID | Current problem | Boundary |\n'
+        '|---|---|---|\n'
+        '| `FIXTURE-BUG-01` | Current defect. | verification/fixture.md |\n\n'
+        '## VERIFIED NECESSARY IMPROVEMENTS — 1\n\n'
+        '| ID | Needed implementation | Why |\n'
+        '|---|---|---|\n'
+        '| `FIXTURE-IMPROVE-01` | Needed capability. | verification/fixture.md |\n\n'
+        '## NARROWED RESIDUALS — 0\n\n'
+        '| ID | Current residual |\n'
+        '|---|---|\n\n'
+        '## SYSTEM VERIFICATION LANES — 1\n\n'
+        '| ID | Verified work package | Next boundary |\n'
+        '|---|---|---|\n'
+        '| `SYS-FIXTURE-CONTROL` | Shared root. | verification/fixture.md |\n\n'
+        '## OWNER DECISIONS — 1\n\n'
+        '| ID | Missing decision |\n'
+        '|---|---|\n'
+        '| `FIXTURE-DECISION-01` | Owner choice. |\n'
+    )
 
 
 def main() -> int:
@@ -196,25 +231,49 @@ def main() -> int:
         matrix_text = matrix_path.read_text(encoding='utf-8')
         matrix_path.write_text(matrix_text.replace('| Закрыто (fixed) | 1 |', '| Закрыто (fixed) | 9 |'), encoding='utf-8')
         mismatch = run_validator(root)
-        require(mismatch.returncode == 1, 'mismatched matrix counters unexpectedly passed', mismatch)
+        require(mismatch.returncode == 1, 'mismatched legacy matrix counters unexpectedly passed', mismatch)
         require(
             'matrix counter mismatch for fixed' in mismatch.stdout,
-            'matrix mismatch failure did not identify the divergent counter',
+            'legacy matrix mismatch failure did not identify the divergent counter',
             mismatch,
         )
 
         matrix_path.write_text(matrix_text.replace('**11**', '**12**'), encoding='utf-8')
         total_mismatch = run_validator(root)
-        require(total_mismatch.returncode == 1, 'mismatched total-open counter unexpectedly passed', total_mismatch)
+        require(total_mismatch.returncode == 1, 'mismatched legacy total-open counter unexpectedly passed', total_mismatch)
         require(
             'matrix total-open mismatch' in total_mismatch.stdout,
-            'total-open mismatch did not identify arithmetic drift',
+            'legacy total-open mismatch did not identify arithmetic drift',
             total_mismatch,
         )
 
         matrix_path.write_text(matrix_text, encoding='utf-8')
         restored = run_validator(root)
-        require(restored.returncode == 0, 'restored matrix counters failed validator', restored)
+        require(restored.returncode == 0, 'restored legacy matrix counters failed validator', restored)
+
+        # Owner-model regression: compact MASTER is valid without historical
+        # fixed/P0/P1/P2/P3 counters and may contain verified improvements.
+        write(root / 'projects' / 'fixture-project' / 'verification' / 'fixture.md', '# current verification\n')
+        matrix_path.write_text(compact_matrix(), encoding='utf-8')
+        compact = run_validator(root)
+        require(compact.returncode == 0, 'compact active-work matrix failed validator', compact)
+
+        wrong_count = compact_matrix().replace('| Active work units | **4** |', '| Active work units | **5** |')
+        matrix_path.write_text(wrong_count, encoding='utf-8')
+        compact_count = run_validator(root)
+        require(compact_count.returncode == 1, 'compact active-work count drift unexpectedly passed', compact_count)
+        require('STATE-COUNT-MISMATCH' in compact_count.stdout, 'compact count failure was not specific', compact_count)
+
+        closed_in_master = compact_matrix() + (
+            '\n## ✅ ЗАКРЫТО (1)\n\n'
+            '| ID | Description |\n'
+            '|---|---|\n'
+            '| `FIXTURE-CLOSED-01` | historical closure |\n'
+        )
+        matrix_path.write_text(closed_in_master, encoding='utf-8')
+        compact_closed = run_validator(root)
+        require(compact_closed.returncode == 1, 'closed row inside compact MASTER unexpectedly passed', compact_closed)
+        require('ACTIVE-MATRIX-CONTAINS-CLOSED' in compact_closed.stdout, 'closed-row failure was not specific', compact_closed)
 
     print('AUDITREPO VALIDATOR REGRESSION: PASS')
     return 0
