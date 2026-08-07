@@ -14,9 +14,9 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 | Wave | full-matrix consolidation, 2026-08-07 |
 | Active work units | **27** |
 | Direct current defects | **14** |
-| Verified necessary improvements | **6** |
+| Verified necessary improvements | **7** |
 | Narrowed residuals | **0** |
-| System verification lanes | **3** |
+| System verification lanes | **2** |
 | Owner decisions | **4** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
@@ -29,9 +29,9 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 | ID | Current problem | Boundary / evidence |
 |---|---|---|
 | `S-SEC-01` | `js/enhancements.js` всё ещё использует fixed blacklist/attribute-stripping HTML sanitizer design. | SYSTEM shared-runtime/security lane; adversarial fixtures required. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `AUDIT-P2-WORKFLOWS-CHECK-GAP` | Current release evidence lifecycle can lose the very forensic report needed to explain an early live-verifier failure: both live verifiers perform strict preflight assertions / candidate verification before creating their JSON report, while `deploy.yml` uploads generic/TTS evidence with bare `if: always()`. An early generic failure can leave no generic report, skip the TTS verifier under normal success semantics, and then run artifact-upload steps against missing files. | Current main `e678b6c8`; exact repair owner is active Product PR #1092. Do not duplicate its Product lane. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `AUDIT-P2-WORKFLOWS-CHECK-GAP` | Current release evidence lifecycle can lose the forensic report needed to explain an early live-verifier failure: both live verifiers perform strict preflight assertions / candidate verification before creating their JSON report, while `deploy.yml` uploads generic/TTS evidence with bare `if: always()`. An early generic failure can leave no generic report, skip the TTS verifier under normal success semantics, and then run artifact-upload steps against missing files. | Current main `e678b6c8`; exact repair owner is active Product PR #1092. Do not duplicate its Product lane. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-01` | Tour вычисляет реальный `sid`, но caption/progress всё ещё индексируют `route.stages[tourStepIdx]` и `data-stage=tourStepIdx`. Для story с non-zero `stage_ids` caption/highlight therefore drift from the authored stage. | Current reachable MapEngine keyboard/API tour state defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `MAP-P1-10` | Canonical strict-native Ishod creates MapEngine without `baseGeoUrl`; current MapEngine loads `#me-base-geo` only when `opts.baseGeoUrl` is supplied. The public map therefore renders route/markers without a geographic base layer. | Current canonical Ishod basemap integration defect. Shared-basemap broken-reference readiness is coordinated in `SYS-KARTY-DATA-PROJECTION`. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `MAP-P1-10` | Canonical strict-native Ishod creates MapEngine without `baseGeoUrl`; current MapEngine loads `#me-base-geo` only when `opts.baseGeoUrl` is supplied. The public map therefore renders route/markers without a geographic base layer. | Current canonical Ishod basemap integration defect. `BASE-P1-01` is the required shared-asset dependency before wiring a base layer. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-11` | Scale bar всё ещё выводит pixel scale из `cfg.W0 / view.w`, а не из реальной rendered canvas width. | Current public MapEngine geometry defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-18` | Single-photo cards carry `data-src=ph.src`, but multi-photo gallery images render `ph.thumb||ph.src` without full-source/index metadata. Delegated modal open therefore receives the thumbnail and never initializes `photoCurrentPlace/photoCurrentIdx`, so modal swipe cannot advance the multi-photo set. | Current public multi-photo gallery/modal defect; Avraam has multi-photo content. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `WAYP-P1-01` | Current verified-waypoint labels are rendered as `font-size="7"` map units at opacity `.4`, without a label background and without `data-screen-anchor`. On Avraam main/mobile authored view widths this resolves to only a few CSS pixels, making the archaeological waypoint names effectively unreadable. | Current public Karty waypoint readability defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
@@ -45,10 +45,11 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 
 ---
 
-## VERIFIED NECESSARY IMPROVEMENTS — 6
+## VERIFIED NECESSARY IMPROVEMENTS — 7
 
 | ID | Needed implementation | Why it is active work / evidence |
 |---|---|---|
+| `BASE-P1-01` | Provide one valid canonical geographic base asset for the public Ishod repair: either make shared `karty/_engine/base-geo.svg` self-contained or replace it with an explicitly owned equivalent. Do not wire the current broken shared asset into `MAP-P1-10`. | Current shared `base-geo.svg` has an empty `<defs>` yet references `url(#landG)`, `url(#seaG)`, `url(#soft)` and `<use>` targets such as `#hill`, `#peak`, `#peak-snow`; current MapEngine defs do not supply those foreign IDs. This is a material dependency of the active public Ishod basemap defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `D-2` | Make `css-layer-validator.js` enforce the architecture it advertises: compare actual `@layer` block order against the declared order and make the layered-coverage threshold semantics truthful (today the output says target ≥80% while only `<50%` becomes a warning and no 80% contract exists). | Current main source: the validator collects `foundLayers` and checks undeclared names, but never compares their sequence with `declaredLayers`; its header currently claims “All @layer blocks are in the declared order.” `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `NG-DEAD-01` | Remove the 15 unused `NagornayaChastN{HeaderHero,ArticleBody,PostContent}` extraction artifacts, or deliberately restore them as the actual canonical componentization boundary; do not keep both the monolithic MainShell owner and a zero-consumer extracted family. | Exact `0fbe7d1e` verification recorded 0 import refs; Product delta through current anchor did not change these components, the five MainShells or canonical part routes. Current Part I/Part V edge files still exist, while all five canonical routes import `NagornayaChastNMainShell`. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS` | Narrowed current CSS ownership cleanup: keep one canonical `@keyframes fx-breathe` definition and one canonical mobile `.gb-floater` rule instead of duplicate same-owner definitions in shared CSS. | Current `site.css` still defines `@keyframes fx-breathe` twice with different bodies; current `floating-cluster.css` still repeats the mobile `.gb-floater` owner in two `@media (max-width:899px)` blocks. The historical “33 dead custom props” claim is not carried forward. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
@@ -64,14 +65,13 @@ No residual-only row remains. A future partial closure should use this section o
 
 ---
 
-## SYSTEM VERIFICATION LANES — 3
+## SYSTEM VERIFICATION LANES — 2
 
-Одна строка = один текущий verification/implementation package/root, а не десятки исторических симптомов. Старые symptom-ID mapping находится в `../legacy/MATRIX_CLEANUP_2026-08-07.md`.
+Одна строка = один bounded current package/root, а не десятки исторических симптомов. Старые symptom-ID mapping находится в `../legacy/MATRIX_CLEANUP_2026-08-07.md`.
 
 | ID | Verified work package | Next boundary / evidence |
 |---|---|---|
-| `SYS-KARTY-DATA-PROJECTION` | Holding-map publication readiness plus the shared data/base dependency needed by active Ishod repair. Shoftim/Early Church/Shvatim currently publish `KartyHoldingPage`, so route-data/overlap/region/signature issues are not mislabeled as public runtime defects. Shared `base-geo.svg` must also gain coherent self-contained defs/ID ownership before it can safely become Ishod's basemap. | Reverify/repair as one bounded publication-readiness/data package; promote only an independently current root. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `SYS-KARTY-VISUAL-LANGUAGE` | Explicit holding-map visual publication-readiness owner. The public hub and `KartyHoldingPage` require manual verification of initial viewport, label collision, desktop/mobile layout, controls, route readability and overall visual quality before a map returns. Old sheet-engine decoration/aesthetic rows are not requirements by themselves. | Current screenshots/browser review of holding candidates against the published readiness contract; fix only concrete blockers, retire taste-only historical symptoms. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `SYS-KARTY-HOLDING-PUBLICATION-READINESS` | One publication-readiness package for the currently held map routes. The public hub/HoldingPage contract requires initial viewport, label collision, desktop/mobile layout, controls, route readability and overall visual quality before return. Route/schema readiness (Shoftim stages, Early Church overlap, Shvatim regions, draft route completeness) is checked in the same activation transaction. Historical sheet-engine decoration/style wishes are not requirements by themselves. | Current browser/screenshots + `maps:validate`/route-owner evidence per candidate immediately before activation. Promote only concrete blockers that remain independently actionable outside that activation transaction. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-STRANGLER-RETIREMENT` | Legacy/reference parity-authority migration and eventual bounded retirement. The old `NF-DEAD-ENHANCE-SHIM` is not a shared-runtime bug: current code explicitly identifies it as a legacy shim and bails on canonical v4 markup. | Follow current Product PR #1090 owner; no parallel retirement lane. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 
 ---
@@ -94,8 +94,8 @@ Not extra work units; current Product owners that constrain the matrix:
 - #1092 — exact release/live-evidence lifecycle repair for `AUDIT-P2-WORKFLOWS-CHECK-GAP`.
 - #1090 — legacy-reference identity/inventory/ledger.
 - #1097 — dependent tooltip/layout regression guards.
-- #1129 — Home footer settled-frame contract; unrelated to Karty/Nagornaya/control-plane roots above.
-- #1130 — ReaderSettings follow-up; unrelated to these roots.
+- #1129 — Home footer settled-frame contract; unrelated to roots above.
+- #1130 — ReaderSettings follow-up; unrelated to roots above.
 
 Recently merged into or before the current Product anchor:
 
@@ -113,5 +113,6 @@ Recently merged into or before the current Product anchor:
 2. A necessary improvement/implementation may enter MASTER when evidence proves material Product value/requirement/risk reduction; speculative refactor/polish stays in `WORK_QUEUE.md`.
 3. Solve → verify result → remove from MASTER immediately.
 4. Many symptoms with one root → one `SYS-*` row.
-5. Legacy is retained for lookup, but never treated as backlog; revival requires current re-verification.
-6. Before Product edits, inspect current Product HEAD/open PRs/branches and avoid owner/file collisions.
+5. Holding routes are one activation/readiness transaction until a blocker becomes independently current.
+6. Legacy is retained for lookup, but never treated as backlog; revival requires current re-verification.
+7. Before Product edits, inspect current Product HEAD/open PRs/branches and avoid owner/file collisions.
