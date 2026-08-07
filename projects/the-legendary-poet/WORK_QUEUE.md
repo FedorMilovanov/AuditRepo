@@ -18,15 +18,7 @@ Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/
 - Required closure: deterministic manifest/lock diff, package install validation, native-scroll/browser runtime guards, full check/build, exact-head PR evidence, merge, then AuditRepo closure and row removal.
 - This does **not** reopen the closed P1 native-scroll defect.
 
-### 2. Product #340 / TLP-AUDIT-003 — harden literal-source runtime guards
-
-- Status: `verified-current candidate / selected-for-bounded-repair / P3`.
-- Scope: highest-risk app-shell/document-scroll source-literal guards only; no broad validator rewrite.
-- Repair direction: behavior tests where executable; bounded AST/semantic/structural evidence where source structure is necessary; mutation cases must show equivalent syntax passes and materially forbidden behavior fails.
-- Required closure: app-shell, interaction runtime, browser runtime, full check/build and exact-head PR evidence; Browser QA only if implementation touches runtime behavior rather than test harness alone.
-- Do not create a Product architecture lane unless implementation proves architecture ownership is actually required.
-
-### 3. New bug hunting — only after current rows close
+### 2. New bug hunting — only after #335 closes
 
 Run a fresh current-head verification pass instead of replaying the historical matrix. Prioritize surfaces where user-visible regressions can escape static contracts:
 
@@ -41,6 +33,18 @@ Run a fresh current-head verification pass instead of replaying the historical m
 A new finding enters `verified/MASTER_BUG_MATRIX.md` only after current-head reproduction and root-cause evidence. Duplicate symptoms are clustered under one root cause.
 
 ## Closed current-scope families
+
+### TLP-AUDIT-003 / Product #340 — semantic runtime guard hardening
+
+Closed by Product PR #345, exact tested head `c7b1c9e8dfe26028d1d52852f3e1db20ba2b6407`, squash merge `b6f731263211208a31de1e36ed7830d7a46ffa87`.
+
+- High-risk app-shell/document-scroll guards now use a bounded TypeScript-AST semantic helper instead of relying on exact source spelling for the selected contracts.
+- Mutation coverage accepts equivalent passive/focus syntax and rejects alternate wheel interception, `preventDefault`, global-scroller ownership and unsafe option values.
+- Pre-merge review caught and repaired two harness defects: object-spread precedence now follows JavaScript last-write-wins semantics, and const resolution now respects lexical shadowing.
+- Product runtime behavior was not changed to satisfy the validator.
+- Exact-head evidence: full CI/check/build/typecheck/SEO, Project contracts, route integrity, brand audit and Manual Browser QA 4/4 across Chromium/Android, desktop WebKit and fresh-process iPhone Safari.
+
+Future concrete harness defects are reverified independently; this closure does not convert the system theme into a promise that no future validator bug can exist.
 
 ### W0–W7 architecture/runtime
 
