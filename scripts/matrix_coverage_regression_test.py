@@ -170,7 +170,10 @@ def main() -> int:
         report = build_report(project)
         assert report["problemKinds"]["NONCANONICAL-MATRIX-ID"] == 1
         assert report["problemKinds"]["SECTION-COUNT-MISMATCH"] == 1
-        assert report["problemKinds"]["STATE-COUNT-MISMATCH"] == 1
+        # Removing the sole valid improvement row drifts both the total active
+        # count and the dedicated improvement count. The regression must prove
+        # both counters fail closed rather than treating one as redundant.
+        assert report["problemKinds"]["STATE-COUNT-MISMATCH"] == 2
 
     with tempfile.TemporaryDirectory() as temp:
         closed_in_active = MATRIX.replace(
