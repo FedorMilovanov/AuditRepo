@@ -4,14 +4,14 @@
 > Несмотря на историческое имя файла, это не только баги: здесь живут текущие дефекты, доказанно нужные внедрения/улучшения, системные verification/implementation packages и owner decisions.
 > Решено / stale / duplicate / absorbed / invalid / superseded → убрать из MASTER в той же wave; полезный контекст остаётся в `../legacy/` и verification evidence.
 
-Current wave evidence: `verification/2026-08-08-search-owner-closure/REPORT.md`.
+Current wave evidence: `verification/2026-08-08-search-head-strangler-readiness/REPORT.md`.
 
 ## Current state
 
 | Поле | Значение |
 |---|---|
 | Product verification anchor | `67c234924e6973f9c88a22168d911b15c4c6db2a` |
-| Wave | Search SYSTEM owner closure + current handoff, 2026-08-08 |
+| Wave | Exact Search-head Strangler readiness re-read, 2026-08-08 |
 | Active work units | **12** |
 | Direct current defects | **2** |
 | Verified necessary improvements | **4** |
@@ -51,7 +51,7 @@ Current wave evidence: `verification/2026-08-08-search-owner-closure/REPORT.md`.
 | ID | Verified work package | Next boundary / evidence |
 |---|---|---|
 | `SYS-KARTY-HOLDING-PUBLICATION-READINESS` | One publication-readiness package for the currently held map routes. The public hub/HoldingPage contract requires initial viewport, label collision, desktop/mobile layout, controls, route readability and overall visual quality before return. Route/schema readiness (Shoftim stages, Early Church overlap, Shvatim regions, draft route completeness) is checked in the same activation transaction. Historical sheet-engine decoration/style wishes are not requirements by themselves. | Current browser/screenshots + `maps:validate`/route-owner evidence per candidate immediately before activation. Promote only concrete blockers that remain independently actionable outside that activation transaction. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `SYS-STRANGLER-RETIREMENT` | Current authority/identity/parity is clear for the retained legacy/native-shadow surface: route profiles are sole current authority; exact evidence has 53/53 public indexes covered, 53 ledger entries, 52/52 native shadows classification-clear, 0 unknown reference decisions and no integrity/inventory/parity problems. `#1187` made cache-bust authority-aware; final `#1183` projection preserved all 52 reference-only HTML snapshots and current inventory reported 35 dependencies with 7 dependency blockers. | Physical move/delete remains forbidden. Existing readiness root remains **13 mechanical reader repoints + 3 obsolete/remove-or-repoint readers + 7 dependency owner decisions** until a fresh dedicated retirement transaction proves a smaller set and `blockerTotal=0`. `deletionReady=false`, `physicalMoveAuthorized=false`. `verification/2026-08-08-search-owner-closure/REPORT.md` |
+| `SYS-STRANGLER-RETIREMENT` | Current authority/identity/parity is clear for the retained legacy/native-shadow surface: route profiles are sole current authority; exact evidence has 53/53 public indexes covered, 53 ledger entries, 52/52 native shadows classification-clear, 0 unknown reference decisions and no integrity/inventory/parity problems. `#1187` made cache-bust authority-aware; final `#1183` projection preserved all 52 reference-only HTML snapshots. | Exact Product #1183 Shared Files artifact `9011117504` (`sha256:8b3ca43588b5ff3c6e57170ca9879232e86b14364058cde8f9ac6bef214b6e0a`) reports **35 dependency records / 26 blockers**: **16 mechanical reader repoints + 3 obsolete/remove-or-repoint readers + 7 dependency owner decisions**. Unknown dependency impacts, integrity, inventory coverage and parity problems are all `0`. `deletionReady=false`, `physicalMoveAuthorized=false`, verdict `NOT_YET_SAFE_TO_MOVE_OR_DELETE`. `verification/2026-08-08-search-head-strangler-readiness/REPORT.md` |
 
 ---
 
