@@ -1,0 +1,904 @@
+{
+  "repository": "FedorMilovanov/AuditRepo",
+  "mainShaAtArchive": "bc067a1cbaf33ed3cafa72cf6f4e5201056125db",
+  "createdAt": "2026-08-01T15:38:54.055959+00:00",
+  "archiveBranch": "archive/legacy-diverged-heads-20260801",
+  "policy": "Each source tip is an additional parent of the archive anchor; full commit history remains reachable. Original working refs are deleted only after ancestry verification.",
+  "branches": [
+    {
+      "branch": "agent/gill-source-marathon",
+      "ref": "origin/agent/gill-source-marathon",
+      "sha": "9bde7069254b0990c10bd2b068f10d7dae52f1e5",
+      "commitDate": "2026-07-23T01:33:58+03:00",
+      "subject": "audit(gill): register wave 3 research and article implementation",
+      "treeSha": "21b240bcb8add6f01ee2175f9119db751a04a1fe",
+      "ageHours": 232.94,
+      "relation": "diverged",
+      "ahead": 3,
+      "behind": 144,
+      "mergeBase": "3c81ea9529424aadb98c901348a5f96aeb1da9dd",
+      "sameTreeRefs": [],
+      "pullRequests": [
+        {
+          "number": 27,
+          "state": "closed",
+          "draft": true,
+          "mergedAt": null,
+          "closedAt": "2026-07-24T10:23:25Z",
+          "headSha": "9bde7069254b0990c10bd2b068f10d7dae52f1e5",
+          "baseRef": "main",
+          "title": "audit(gill): register 66-volume research and verified production implementation"
+        }
+      ],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "7b3e73a32dcb290a6a1dd13c44ea89129c114807",
+          "date": "2026-07-22T23:42:32+03:00",
+          "subject": "audit(gill): register source marathon and correction PRs"
+        },
+        {
+          "sha": "490f15fe81e59ea1ed03447ac4d610c9e42de8ed",
+          "date": "2026-07-23T00:38:57+03:00",
+          "subject": "audit(gill): register research marathon wave two"
+        },
+        {
+          "sha": "9bde7069254b0990c10bd2b068f10d7dae52f1e5",
+          "date": "2026-07-23T01:33:58+03:00",
+          "subject": "audit(gill): register wave 3 research and article implementation"
+        }
+      ],
+      "files": [
+        {
+          "status": "A",
+          "path": "verified/GILL_SOURCE_MARATHON_2026-07-22.md",
+          "additions": 114,
+          "deletions": 0
+        },
+        {
+          "status": "A",
+          "path": "verified/GILL_SOURCE_MARATHON_WAVE2_2026-07-23.md",
+          "additions": 208,
+          "deletions": 0
+        },
+        {
+          "status": "A",
+          "path": "verified/GILL_SOURCE_MARATHON_WAVE3_2026-07-23.md",
+          "additions": 97,
+          "deletions": 0
+        }
+      ],
+      "fileCount": 3,
+      "topLevelCounts": {
+        "verified": 3
+      },
+      "mainDiffSha256": "69e66798f47199c24c663c2c99532955bb7616a7eb638bc12ca8325beed79353",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": true,
+      "suggestedAction": "REVIEW_UNIQUE_EVIDENCE"
+    },
+    {
+      "branch": "agent/nagornaya-deep-audit-final-2026-07-22",
+      "ref": "origin/agent/nagornaya-deep-audit-final-2026-07-22",
+      "sha": "4b3882e0f4b337c78cdec9b90fdf86649381d011",
+      "commitDate": "2026-07-22T02:03:53+03:00",
+      "subject": "chore(audit): trigger Nagornaya matrix reconciliation",
+      "treeSha": "eeebad1876a7bb2397b219a878b626352bb4937d",
+      "ageHours": 256.44,
+      "relation": "diverged",
+      "ahead": 6,
+      "behind": 179,
+      "mergeBase": "df1dea03c9748cd3dc37652341a707c7194cf6c7",
+      "sameTreeRefs": [],
+      "pullRequests": [],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "6eb96357fa13a48f332baf9006c009b6717b6688",
+          "date": "2026-07-22T01:58:27+03:00",
+          "subject": "audit(nagornaya): add deep-audit intake metadata"
+        },
+        {
+          "sha": "75575ffa4d93bffe5708b1e449947c8ac54ab8a0",
+          "date": "2026-07-22T01:59:53+03:00",
+          "subject": "audit(nagornaya): add verified deep-audit synthesis"
+        },
+        {
+          "sha": "dbd11f4af88f441f68f19487f1e1a4abbfef2e82",
+          "date": "2026-07-22T02:00:30+03:00",
+          "subject": "reverify(gb): record Nagornaya findings on source 2b67ee8f"
+        },
+        {
+          "sha": "1d49fd4468721cda9c93fb3a2b8c5ec002e5741c",
+          "date": "2026-07-22T02:01:22+03:00",
+          "subject": "reconcile(gb): advance handoff to source 2b67ee8f and Nagornaya lanes"
+        },
+        {
+          "sha": "390090d7b761e7ab8f7a9027577a5b860ebb4596",
+          "date": "2026-07-22T02:03:03+03:00",
+          "subject": "audit(nagornaya): stage exact canonical matrix reconciliation"
+        },
+        {
+          "sha": "4b3882e0f4b337c78cdec9b90fdf86649381d011",
+          "date": "2026-07-22T02:03:53+03:00",
+          "subject": "chore(audit): trigger Nagornaya matrix reconciliation"
+        }
+      ],
+      "files": [
+        {
+          "status": "A",
+          "path": ".github/_temp-nagornaya-matrix-trigger",
+          "additions": 1,
+          "deletions": 0
+        },
+        {
+          "status": "M",
+          "path": "projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md",
+          "additions": 128,
+          "deletions": 84
+        },
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/incoming/gpt-5-6-nagornaya-deep-audit/2026-07-22/README.md",
+          "additions": 23,
+          "deletions": 0
+        },
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/incoming/gpt-5-6-nagornaya-deep-audit/2026-07-22/REPORT.md",
+          "additions": 285,
+          "deletions": 0
+        },
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-22_2b67ee8f_nagornaya-deep-audit.md",
+          "additions": 77,
+          "deletions": 0
+        },
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/scripts/_temp_patch_nagornaya_matrix_2026_07_22.py",
+          "additions": 80,
+          "deletions": 0
+        }
+      ],
+      "fileCount": 6,
+      "topLevelCounts": {
+        ".github": 1,
+        "projects": 5
+      },
+      "mainDiffSha256": "d773870bcc16f9603fbd2c6635b8ea4f7411da1643368ff9684d900b7103dfb9",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": false,
+      "suggestedAction": "REVIEW_UNIQUE_MIXED"
+    },
+    {
+      "branch": "audit/_temp-materialize-matrix-e8c41d54",
+      "ref": "origin/audit/_temp-materialize-matrix-e8c41d54",
+      "sha": "2a0bdb8e8a51f1ca8d136ae7ff048813fb73aff3",
+      "commitDate": "2026-07-25T17:52:37Z",
+      "subject": "audit: zero matrix diagnostics at e8c41d54",
+      "treeSha": "8d6ae7883b7d7456eecf48b7392ca8d9daec3282",
+      "ageHours": 165.63,
+      "relation": "diverged",
+      "ahead": 3,
+      "behind": 93,
+      "mergeBase": "7fed0630923e0b1f8dcf0e75e1e8188632848f6b",
+      "sameTreeRefs": [],
+      "pullRequests": [],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "13d27dad9fbe2b078648234757a76fa99a8d8860",
+          "date": "2026-07-25T20:52:09+03:00",
+          "subject": "audit: stage e8c41d54 matrix diagnostic repair"
+        },
+        {
+          "sha": "c3a2b873bd3e0caa70185282e8b07bdce5bf4f59",
+          "date": "2026-07-25T20:52:27+03:00",
+          "subject": "audit: run e8c41d54 matrix diagnostic repair"
+        },
+        {
+          "sha": "2a0bdb8e8a51f1ca8d136ae7ff048813fb73aff3",
+          "date": "2026-07-25T17:52:37Z",
+          "subject": "audit: zero matrix diagnostics at e8c41d54"
+        }
+      ],
+      "files": [
+        {
+          "status": "M",
+          "path": "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md",
+          "additions": 10,
+          "deletions": 7
+        }
+      ],
+      "fileCount": 1,
+      "topLevelCounts": {
+        "projects": 1
+      },
+      "mainDiffSha256": "0886df922fe820fc74625267ed6e06fab3adeb88f3871a8a2fe740d2da80f633",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": true,
+      "suggestedAction": "REVIEW_UNIQUE_EVIDENCE"
+    },
+    {
+      "branch": "audit/_temp-reconcile-f5e29998-20260725",
+      "ref": "origin/audit/_temp-reconcile-f5e29998-20260725",
+      "sha": "6b77c70382f8139635eafee2b7f951cca7fd6c9d",
+      "commitDate": "2026-07-25T18:21:38Z",
+      "subject": "audit: reconcile current head f5e29998 after print closure",
+      "treeSha": "6cd22257934a2abc5aa36c97d76736423e9e861f",
+      "ageHours": 165.14,
+      "relation": "diverged",
+      "ahead": 3,
+      "behind": 90,
+      "mergeBase": "0f478880de4e0bcc61fdf95248faf9e4d827d914",
+      "sameTreeRefs": [],
+      "pullRequests": [],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "eea889e81daff60d9ee12d0d0479c2aa9ed3984b",
+          "date": "2026-07-25T21:21:08+03:00",
+          "subject": "chore(audit): stage f5e29998 reconciliation materializer"
+        },
+        {
+          "sha": "196877605061dc5e88f2c710072d0be45939bb67",
+          "date": "2026-07-25T21:21:26+03:00",
+          "subject": "chore(audit): run guarded f5e29998 reconciliation"
+        },
+        {
+          "sha": "6b77c70382f8139635eafee2b7f951cca7fd6c9d",
+          "date": "2026-07-25T18:21:38Z",
+          "subject": "audit: reconcile current head f5e29998 after print closure"
+        }
+      ],
+      "files": [
+        {
+          "status": "M",
+          "path": "projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md",
+          "additions": 44,
+          "deletions": 39
+        },
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-25_f5e29998_auditor-r4.md",
+          "additions": 75,
+          "deletions": 0
+        },
+        {
+          "status": "M",
+          "path": "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md",
+          "additions": 16,
+          "deletions": 14
+        }
+      ],
+      "fileCount": 3,
+      "topLevelCounts": {
+        "projects": 3
+      },
+      "mainDiffSha256": "a7138bc4c569cae8ebd6280d10535e3a4b6415ac418c22c71ba2e3d1f779f240",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": true,
+      "suggestedAction": "REVIEW_UNIQUE_EVIDENCE"
+    },
+    {
+      "branch": "audit/block-matrix-evidence-integrity-20260725",
+      "ref": "origin/audit/block-matrix-evidence-integrity-20260725",
+      "sha": "cb1e4070a1e632967e656a27a1ed3e7ff21d08da",
+      "commitDate": "2026-07-25T21:01:43+03:00",
+      "subject": "chore(audit): remove one-shot evidence workflow",
+      "treeSha": "82d013b1dbc524cb304d75373dd737dae472b9e4",
+      "ageHours": 165.47,
+      "relation": "diverged",
+      "ahead": 8,
+      "behind": 93,
+      "mergeBase": "7fed0630923e0b1f8dcf0e75e1e8188632848f6b",
+      "sameTreeRefs": [],
+      "pullRequests": [
+        {
+          "number": 57,
+          "state": "closed",
+          "draft": true,
+          "mergedAt": null,
+          "closedAt": "2026-07-25T18:01:28Z",
+          "headSha": "f55766ed436868a4c70908f0c1babd8246e1a563",
+          "baseRef": "main",
+          "title": "fix(audit): make matrix evidence integrity blocking"
+        }
+      ],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "0157e4ec506dcf8235db887829f2d5346279dc2e",
+          "date": "2026-07-25T20:52:53+03:00",
+          "subject": "chore(audit): stage blocking matrix evidence integrity"
+        },
+        {
+          "sha": "4597216128fa53bfb143d15253b2059c939d8cc3",
+          "date": "2026-07-25T20:53:13+03:00",
+          "subject": "chore(audit): run one-shot blocking evidence gate"
+        },
+        {
+          "sha": "7d64bd0bb29f1cc7c79699052233df0adb48bf12",
+          "date": "2026-07-25T20:57:10+03:00",
+          "subject": "fix(audit): serialize one-shot evidence publication"
+        },
+        {
+          "sha": "37afee2df23cc095cfd12d5839d98a0c00086609",
+          "date": "2026-07-25T20:58:33+03:00",
+          "subject": "fix(audit): run one-shot evidence gate on PR synchronization"
+        },
+        {
+          "sha": "dc98738cab68014ea863490d3b01fa55bfc734ca",
+          "date": "2026-07-25T21:00:05+03:00",
+          "subject": "fix(audit): separate workflow mutation from one-shot writer"
+        },
+        {
+          "sha": "f389c76c95ec2e810dfeb98e4cd6bff44faa84b0",
+          "date": "2026-07-25T18:00:19Z",
+          "subject": "fix(audit): repair matrix evidence integrity"
+        },
+        {
+          "sha": "f55766ed436868a4c70908f0c1babd8246e1a563",
+          "date": "2026-07-25T21:01:23+03:00",
+          "subject": "ci(audit): block matrix evidence integrity failures"
+        },
+        {
+          "sha": "cb1e4070a1e632967e656a27a1ed3e7ff21d08da",
+          "date": "2026-07-25T21:01:43+03:00",
+          "subject": "chore(audit): remove one-shot evidence workflow"
+        }
+      ],
+      "files": [
+        {
+          "status": "M",
+          "path": ".github/workflows/auditrepo-validate.yml",
+          "additions": 3,
+          "deletions": 3
+        },
+        {
+          "status": "M",
+          "path": "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md",
+          "additions": 10,
+          "deletions": 7
+        }
+      ],
+      "fileCount": 2,
+      "topLevelCounts": {
+        ".github": 1,
+        "projects": 1
+      },
+      "mainDiffSha256": "a9156852745770b62610172425ddd982e00af9e7a802c3301a348c90ec8e76ce",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": false,
+      "suggestedAction": "REVIEW_UNIQUE_MIXED"
+    },
+    {
+      "branch": "audit/marathon-r3-deep-evidence-20260725",
+      "ref": "origin/audit/marathon-r3-deep-evidence-20260725",
+      "sha": "0a86ff782800a03e3a70774874b97ce3bf67e731",
+      "commitDate": "2026-07-25T20:39:09+03:00",
+      "subject": "audit: record marathon R3 deep findings",
+      "treeSha": "ec2124e9b1e4d60d54df6f2ac177f2da737ec618",
+      "ageHours": 165.85,
+      "relation": "diverged",
+      "ahead": 2,
+      "behind": 94,
+      "mergeBase": "0fa085ea252e824367530e94df0e23b255fae112",
+      "sameTreeRefs": [],
+      "pullRequests": [
+        {
+          "number": 52,
+          "state": "closed",
+          "draft": false,
+          "mergedAt": null,
+          "closedAt": "2026-07-25T17:56:56Z",
+          "headSha": "0a86ff782800a03e3a70774874b97ce3bf67e731",
+          "baseRef": "main",
+          "title": "audit: preserve marathon R3 deep verification evidence"
+        }
+      ],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "13397adae917d37957368c1b2597b2feeba604ea",
+          "date": "2026-07-25T20:37:13+03:00",
+          "subject": "audit: open marathon R3 deep evidence intake"
+        },
+        {
+          "sha": "0a86ff782800a03e3a70774874b97ce3bf67e731",
+          "date": "2026-07-25T20:39:09+03:00",
+          "subject": "audit: record marathon R3 deep findings"
+        }
+      ],
+      "files": [
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/incoming/auditor-brain/2026-07-25-r3/README.md",
+          "additions": 28,
+          "deletions": 0
+        },
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/incoming/auditor-brain/2026-07-25-r3/REPORT.md",
+          "additions": 448,
+          "deletions": 0
+        }
+      ],
+      "fileCount": 2,
+      "topLevelCounts": {
+        "projects": 2
+      },
+      "mainDiffSha256": "4a2ce27e45a576590145d2af95b49d657d9168c6054b4d25cb513be634e73bc5",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": true,
+      "suggestedAction": "REVIEW_UNIQUE_EVIDENCE"
+    },
+    {
+      "branch": "audit/reconcile-853d9bc5-ci-convergence",
+      "ref": "origin/audit/reconcile-853d9bc5-ci-convergence",
+      "sha": "f71e0ad9b34bef7077fa2f071402c9e6ae88a91e",
+      "commitDate": "2026-07-25T19:48:57Z",
+      "subject": "audit: reconcile source 853d9bc5 CI convergence",
+      "treeSha": "f93d384fe44a2def564a1543be1369f283ee25da",
+      "ageHours": 163.69,
+      "relation": "diverged",
+      "ahead": 3,
+      "behind": 86,
+      "mergeBase": "0ab6a0896788d789510152144fa2d7d66c5a44cb",
+      "sameTreeRefs": [],
+      "pullRequests": [],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "c12f2dd6e60040e1ab64f29c3034025abd291fa0",
+          "date": "2026-07-25T22:48:20+03:00",
+          "subject": "chore: stage 853d9bc5 CI convergence reconciliation"
+        },
+        {
+          "sha": "0a9aff5c090e19c18ed115715251a5ad6251f105",
+          "date": "2026-07-25T22:48:44+03:00",
+          "subject": "chore: execute 853d9bc5 CI convergence reconciliation"
+        },
+        {
+          "sha": "f71e0ad9b34bef7077fa2f071402c9e6ae88a91e",
+          "date": "2026-07-25T19:48:57Z",
+          "subject": "audit: reconcile source 853d9bc5 CI convergence"
+        }
+      ],
+      "files": [
+        {
+          "status": "M",
+          "path": "projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md",
+          "additions": 49,
+          "deletions": 100
+        },
+        {
+          "status": "D",
+          "path": "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-25_733ba309_ledger-projection.md",
+          "additions": 0,
+          "deletions": 106
+        },
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-25_853d9bc5_ci-convergence.md",
+          "additions": 72,
+          "deletions": 0
+        },
+        {
+          "status": "M",
+          "path": "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md",
+          "additions": 19,
+          "deletions": 14
+        }
+      ],
+      "fileCount": 4,
+      "topLevelCounts": {
+        "projects": 4
+      },
+      "mainDiffSha256": "ccf9bb78678b9ad71b36c4a33faed02a2b8b2683032c568f809de2c7a654b733",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": true,
+      "suggestedAction": "REVIEW_UNIQUE_EVIDENCE"
+    },
+    {
+      "branch": "audit/reconcile-853d9bc5-ci-convergence-r2",
+      "ref": "origin/audit/reconcile-853d9bc5-ci-convergence-r2",
+      "sha": "36bc4a2735426cfdec03cc8f35f7360d01ebb2f9",
+      "commitDate": "2026-07-25T20:06:55Z",
+      "subject": "audit: reconcile source 853d9bc5 CI convergence",
+      "treeSha": "de4d138092f37b4dc5a21131bfc7ff82efa504b9",
+      "ageHours": 163.39,
+      "relation": "diverged",
+      "ahead": 2,
+      "behind": 81,
+      "mergeBase": "74ad756f5f4a5597d654f80413c505d9e3e4ffc1",
+      "sameTreeRefs": [],
+      "pullRequests": [
+        {
+          "number": 65,
+          "state": "closed",
+          "draft": true,
+          "mergedAt": null,
+          "closedAt": "2026-07-25T20:17:30Z",
+          "headSha": "36bc4a2735426cfdec03cc8f35f7360d01ebb2f9",
+          "baseRef": "main",
+          "title": "[superseded] audit: reconcile source 853d9bc5 CI convergence"
+        }
+      ],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "425ab34d06bf73d65edac068b0aa633555da605f",
+          "date": "2026-07-25T23:06:32+03:00",
+          "subject": "chore: stage 853d9bc5 CI convergence reconciliation"
+        },
+        {
+          "sha": "36bc4a2735426cfdec03cc8f35f7360d01ebb2f9",
+          "date": "2026-07-25T20:06:55Z",
+          "subject": "audit: reconcile source 853d9bc5 CI convergence"
+        }
+      ],
+      "files": [
+        {
+          "status": "M",
+          "path": "projects/gb-is-my-strength/NEXT_AGENT_PROMPT.md",
+          "additions": 45,
+          "deletions": 102
+        },
+        {
+          "status": "D",
+          "path": "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-25_733ba309_ledger-projection.md",
+          "additions": 0,
+          "deletions": 106
+        },
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-07-25_853d9bc5_ci-convergence.md",
+          "additions": 54,
+          "deletions": 0
+        },
+        {
+          "status": "M",
+          "path": "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md",
+          "additions": 18,
+          "deletions": 13
+        }
+      ],
+      "fileCount": 4,
+      "topLevelCounts": {
+        "projects": 4
+      },
+      "mainDiffSha256": "d049dc5ce3df2fe63920412bdaae63dd0b7371ec5495416e51a7d0342708bf7a",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": true,
+      "suggestedAction": "REVIEW_UNIQUE_EVIDENCE"
+    },
+    {
+      "branch": "audit/reconcile-9407cc92-genesis-home-residual-20260725",
+      "ref": "origin/audit/reconcile-9407cc92-genesis-home-residual-20260725",
+      "sha": "df87a7e11e43a85f46b0e4ef95e93649a655c69e",
+      "commitDate": "2026-07-26T01:38:50+03:00",
+      "subject": "chore(audit): materialize counter-home follow-up",
+      "treeSha": "969b376806f0afc9b872916661b313aaded0545c",
+      "ageHours": 160.86,
+      "relation": "diverged",
+      "ahead": 2,
+      "behind": 77,
+      "mergeBase": "7ae396dae5a45a4c9f9b50ed3d190264de8c64da",
+      "sameTreeRefs": [],
+      "pullRequests": [
+        {
+          "number": 70,
+          "state": "closed",
+          "draft": true,
+          "mergedAt": null,
+          "closedAt": "2026-07-25T22:37:00Z",
+          "headSha": "7ae396dae5a45a4c9f9b50ed3d190264de8c64da",
+          "baseRef": "main",
+          "title": "audit: reconcile 9407cc92 provenance and home residual"
+        }
+      ],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "6c50c55312108eb3c40cf234d803210b57ec2b71",
+          "date": "2026-07-26T01:38:18+03:00",
+          "subject": "chore(audit): stage counter and home-residual follow-up"
+        },
+        {
+          "sha": "df87a7e11e43a85f46b0e4ef95e93649a655c69e",
+          "date": "2026-07-26T01:38:50+03:00",
+          "subject": "chore(audit): materialize counter-home follow-up"
+        }
+      ],
+      "files": [
+        {
+          "status": "M",
+          "path": ".github/workflows/auditrepo-validate.yml",
+          "additions": 44,
+          "deletions": 0
+        },
+        {
+          "status": "A",
+          "path": "scripts/_temp_materialize_counter_home_residual.py",
+          "additions": 277,
+          "deletions": 0
+        }
+      ],
+      "fileCount": 2,
+      "topLevelCounts": {
+        ".github": 1,
+        "scripts": 1
+      },
+      "mainDiffSha256": "5687bb0fd1d606774d10bbf81d061d11f351f418b8c235909612b0f9f9fed42c",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": false,
+      "suggestedAction": "REVIEW_UNIQUE_MIXED"
+    },
+    {
+      "branch": "reconcile/production-closure-942a79eb-2026-07-22",
+      "ref": "origin/reconcile/production-closure-942a79eb-2026-07-22",
+      "sha": "b5f21ffeb057fe77b8ae7cb08428c994f5d68b7c",
+      "commitDate": "2026-07-22T13:26:19+03:00",
+      "subject": "ci(audit): trigger production closure reconciliation",
+      "treeSha": "86abb1ca3d7de183675a59dcc08252702d839c9c",
+      "ageHours": 245.06,
+      "relation": "diverged",
+      "ahead": 2,
+      "behind": 176,
+      "mergeBase": "def37a8b075422c1237a5c2e68a2f3fa63a4372d",
+      "sameTreeRefs": [],
+      "pullRequests": [],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "45b7a70b60229091fa27c0f818e6a2845a11c382",
+          "date": "2026-07-22T13:26:08+03:00",
+          "subject": "ci(audit): prepare production closure reconciliation"
+        },
+        {
+          "sha": "b5f21ffeb057fe77b8ae7cb08428c994f5d68b7c",
+          "date": "2026-07-22T13:26:19+03:00",
+          "subject": "ci(audit): trigger production closure reconciliation"
+        }
+      ],
+      "files": [
+        {
+          "status": "A",
+          "path": ".github/_temp-production-closure-trigger",
+          "additions": 1,
+          "deletions": 0
+        },
+        {
+          "status": "A",
+          "path": ".github/workflows/_temp-reconcile-production-closure.yml",
+          "additions": 317,
+          "deletions": 0
+        }
+      ],
+      "fileCount": 2,
+      "topLevelCounts": {
+        ".github": 2
+      },
+      "mainDiffSha256": "6eb578dba4e8d6cd961f2c21bfb51340715a0fa9bda51f89e1b5a5cf0e57bf1c",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": false,
+      "suggestedAction": "REVIEW_UNIQUE_MIXED"
+    },
+    {
+      "branch": "reconcile/reader-r3-75b236ac-2026-07-21",
+      "ref": "origin/reconcile/reader-r3-75b236ac-2026-07-21",
+      "sha": "ae227b00e859200eaa88de1ba85199dd5799d2ad",
+      "commitDate": "2026-07-21T16:13:39+03:00",
+      "subject": "chore(audit): trigger Reader R3 reconciliation",
+      "treeSha": "71ea0189cecbf066cc35252c703efe98741f1c02",
+      "ageHours": 266.28,
+      "relation": "diverged",
+      "ahead": 1,
+      "behind": 192,
+      "mergeBase": "1a91b6630a615df3006dd9409caee17c14d59f07",
+      "sameTreeRefs": [],
+      "pullRequests": [
+        {
+          "number": 16,
+          "state": "closed",
+          "draft": true,
+          "mergedAt": null,
+          "closedAt": "2026-07-21T13:14:16Z",
+          "headSha": "ae227b00e859200eaa88de1ba85199dd5799d2ad",
+          "baseRef": "main",
+          "title": "reconcile(gb): trigger Reader R3 SSOT update"
+        }
+      ],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "ae227b00e859200eaa88de1ba85199dd5799d2ad",
+          "date": "2026-07-21T16:13:39+03:00",
+          "subject": "chore(audit): trigger Reader R3 reconciliation"
+        }
+      ],
+      "files": [
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/reconcile-reader-r3.trigger",
+          "additions": 1,
+          "deletions": 0
+        }
+      ],
+      "fileCount": 1,
+      "topLevelCounts": {
+        "projects": 1
+      },
+      "mainDiffSha256": "c1f73b639298d805afe3382d80ab65964134ebeadaa482d2b30a43cb11297056",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": true,
+      "suggestedAction": "REVIEW_UNIQUE_EVIDENCE"
+    },
+    {
+      "branch": "reconcile/reader-r4-3a715551-2026-07-21",
+      "ref": "origin/reconcile/reader-r4-3a715551-2026-07-21",
+      "sha": "2ad4225efcb2b63150ded6b42a60b106546eff39",
+      "commitDate": "2026-07-21T16:58:37+03:00",
+      "subject": "chore(audit): trigger Reader R4 reconciliation",
+      "treeSha": "7303458ca6f9ca0660ff48bdab9d8fa9747fb90e",
+      "ageHours": 265.53,
+      "relation": "diverged",
+      "ahead": 1,
+      "behind": 190,
+      "mergeBase": "3ddbf28d9c1943ba6a21c16eef503e5d257bf012",
+      "sameTreeRefs": [],
+      "pullRequests": [
+        {
+          "number": 17,
+          "state": "closed",
+          "draft": true,
+          "mergedAt": null,
+          "closedAt": "2026-07-21T14:01:33Z",
+          "headSha": "2ad4225efcb2b63150ded6b42a60b106546eff39",
+          "baseRef": "main",
+          "title": "reconcile(gb): trigger Reader R4 SSOT update"
+        }
+      ],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "2ad4225efcb2b63150ded6b42a60b106546eff39",
+          "date": "2026-07-21T16:58:37+03:00",
+          "subject": "chore(audit): trigger Reader R4 reconciliation"
+        }
+      ],
+      "files": [
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/reconcile-reader-r4.trigger",
+          "additions": 1,
+          "deletions": 0
+        }
+      ],
+      "fileCount": 1,
+      "topLevelCounts": {
+        "projects": 1
+      },
+      "mainDiffSha256": "79549d3df33b9e41eaee4ea1092139e7145872143329d1afe49b502b86958768",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": true,
+      "suggestedAction": "REVIEW_UNIQUE_EVIDENCE"
+    },
+    {
+      "branch": "reconcile/reader-r5-43d8672f-2026-07-21",
+      "ref": "origin/reconcile/reader-r5-43d8672f-2026-07-21",
+      "sha": "0a3347ff7be8fd948f4bfec8e756381a38693195",
+      "commitDate": "2026-07-21T19:48:29+03:00",
+      "subject": "chore(audit): ensure Reader R5 reconciliation event",
+      "treeSha": "8af25de7c133556fbb933b04da5bf9cdd76bf9d6",
+      "ageHours": 262.69,
+      "relation": "diverged",
+      "ahead": 2,
+      "behind": 187,
+      "mergeBase": "9fc740c334018a5136aa9188ed1558c417c35124",
+      "sameTreeRefs": [],
+      "pullRequests": [
+        {
+          "number": 18,
+          "state": "closed",
+          "draft": true,
+          "mergedAt": null,
+          "closedAt": "2026-07-21T16:50:06Z",
+          "headSha": "0a3347ff7be8fd948f4bfec8e756381a38693195",
+          "baseRef": "main",
+          "title": "chore(audit): reconcile Reader R5 source truth"
+        }
+      ],
+      "openPullRequests": [],
+      "exactMergedPullRequests": [],
+      "protectedPrefix": false,
+      "descendants": [],
+      "uniqueCommits": [
+        {
+          "sha": "0ada67423314dd634190b71a366213e07097d1a3",
+          "date": "2026-07-21T19:48:13+03:00",
+          "subject": "chore(audit): trigger Reader R5 reconciliation"
+        },
+        {
+          "sha": "0a3347ff7be8fd948f4bfec8e756381a38693195",
+          "date": "2026-07-21T19:48:29+03:00",
+          "subject": "chore(audit): ensure Reader R5 reconciliation event"
+        }
+      ],
+      "files": [
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/reports/.reader-r5-reconcile-trigger",
+          "additions": 1,
+          "deletions": 0
+        },
+        {
+          "status": "A",
+          "path": "projects/gb-is-my-strength/reports/.reader-r5-reconcile-trigger-2",
+          "additions": 1,
+          "deletions": 0
+        }
+      ],
+      "fileCount": 2,
+      "topLevelCounts": {
+        "projects": 2
+      },
+      "mainDiffSha256": "11b61d14d97906973d8764c9552dcd85b3ec4aa76183b075d7aef4f3309aca44",
+      "workflowOnly": false,
+      "reportOrWorkflowOnly": false,
+      "docsDataOnly": true,
+      "suggestedAction": "REVIEW_UNIQUE_EVIDENCE"
+    }
+  ]
+}
