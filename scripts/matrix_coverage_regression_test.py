@@ -174,7 +174,10 @@ def main() -> int:
         expect_value_error(project, "must use a reasoned registry entry")
 
     with tempfile.TemporaryDirectory() as temp:
-        malformed = MATRIX.replace("`OPEN-ONE`", "`OPEN-ONE/TWO`", 1)
+        # Keep the alias target (`OPEN-ONE`) canonical while corrupting another
+        # row, so this fixture reaches matrix-integrity diagnostics instead of
+        # failing earlier in alias-target validation.
+        malformed = MATRIX.replace("`IMPROVE-ONE`", "`IMPROVE-ONE/TWO`", 1)
         project = write_project(pathlib.Path(temp), entries, matrix=malformed)
         report = build_report(project)
         assert report["problemKinds"]["NONCANONICAL-MATRIX-ID"] == 1
@@ -223,7 +226,6 @@ def main() -> int:
             "# Retirement\n\n`OPEN-ONE` — fixed and removed from MASTER.\n", encoding="utf-8"
         )
         report = build_report(project)
-        # A retired historical ID may live only in legacy; it is no longer active work.
         assert "OPEN-ONE" not in report["historicalOnlyIds"]
         assert report["openRows"] == 3
 
@@ -234,7 +236,6 @@ def main() -> int:
             "reason": "Test-only evidence label.",
         }
         project = write_project(pathlib.Path(temp), fixed)
-        # If active work loses current evidence and only legacy remains, fail loudly.
         (project / "verification" / "current.md").unlink()
         (project / "legacy" / "old.md").write_text(
             "# Historical witness\n\n`OPEN-ONE` `IMPROVE-ONE` `RESIDUAL-ONE` `SYS-ROOT-ONE`\n",
