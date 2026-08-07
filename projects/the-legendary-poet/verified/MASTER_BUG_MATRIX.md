@@ -19,11 +19,9 @@ No verified-current P1 engineering rows.
 
 No verified-current P2 engineering rows.
 
-## 🟢 P3 — ОТКРЫТО (1)
+## 🟢 P3 — ОТКРЫТО (0)
 
-| ID | Source | Root cause | Current evidence | Repair owner |
-|---|---|---|---|---|
-| `TLP-AUDIO-001` | Product #356 | Cross-tab audio coordination pauses on any remote `playing` claim but does not arbitrate simultaneous claims, so two tabs that start before peer delivery can pause each other and leave zero active players. | Product `main@67d614bc186b52c408ad6cef4c84cf57d4e78a45`; current provider emits `{instanceId, trackId, timestamp}` yet receiver ignores ordering; original audio-hardening commit explicitly introduced tab coordination; existing music/session/browser QA has no two-tab simultaneous-claim witness. See `../verification/2026-08-07-audio-cross-tab-arbitration/REPORT.md`. | one bounded Product #356 repair lane after this verification merges |
+No verified-current P3 engineering rows.
 
 ## Summary
 
@@ -33,10 +31,10 @@ No verified-current P2 engineering rows.
 | **P0 открыто** | **0** |
 | P1 открыто | 0 |
 | P2 открыто | 0 |
-| P3 открыто | 1 |
+| P3 открыто | 0 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **1** |
+| **Всего открыто (матрица)** | **0** |
 
 Registered Product architecture lanes: **0**.
 
@@ -44,7 +42,7 @@ Registered Product architecture lanes: **0**.
 
 - Research/source-acquisition/editorial issues such as long-form authoring, archive acquisition, visual-rights review and myth ledgers are not engineering bugs merely because they remain open in the Product issue tracker.
 - The Mayakovsky C01–C30 media family is closed for the current Product scope: 5 active, 1 verified reserve, 24 terminal exclusions, 0 unresolved.
-- W0–W7 architecture/runtime waves, W6 ref retirement, native-scroll repair, canonical poet authority, semantic audit-harness hardening, Lenis install-dependency cleanup and the closed browser-payload resilience repair are historical closure evidence, not current backlog.
+- W0–W7 architecture/runtime waves, W6 ref retirement, native-scroll repair, canonical poet authority, semantic audit-harness hardening, Lenis install-dependency cleanup, browser-payload resilience and deterministic cross-tab audio arbitration are historical closure evidence, not current backlog.
 
 ## Lifecycle rule
 
