@@ -2,7 +2,7 @@
 
 Эта очередь показывает owner-selected направления. Перед любой source mutation нужно заново проверить актуальный source owner, open PRs и применимое evidence.
 
-## Current selection — fresh current-head verification
+## Current selection — TLP-AUDIO-002 / Product #360
 
 Owner-selected operating order:
 
@@ -10,48 +10,50 @@ Owner-selected operating order:
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **0**.
+Current verified engineering rows: **1** — one P3 cross-tab protocol resilience root.
 
-No Product engineering repair lane is currently selected. Resume only from new current-head evidence; do not replay historical matrix rows or convert editorial/research backlog into engineering bugs without an independently reproduced engineering root cause.
+### 1. Repair Product #360 — keep logical ordering outside IEEE-754 precision failure
+
+Current Product anchor: `main@0712a1845d4133953750a32a9df598f6cbeb192e`.
+
+Bounded repair target:
+
+- preserve the deterministic simultaneous-start arbitration introduced by Product #358;
+- reject external numeric claim state that cannot preserve the protocol's ordering invariant;
+- ensure a later explicit local play still outranks an already-seen peer claim at the largest supported timestamp boundary rather than falling back to `instanceId` ordering;
+- prefer an explicit separation of wall-clock timestamp and logical sequence if needed instead of relying on repeated `number + 1` forever;
+- preserve ordinary/legacy sequence-less #358 claims where practical;
+- keep BroadcastChannel and storage fallback on the same comparator;
+- add a deterministic precision-boundary validator witness;
+- add a two-page browser witness that injects an unsafe finite storage claim, proves it cannot pause/poison a healthy player, then proves normal handoff still works;
+- do not add sleeps/debounce, player UI changes, catalog changes, assets or unrelated persistence cleanup.
+
+After Product repair merges and resulting current main is reverified, remove `TLP-AUDIO-002` from the active matrix and return this queue to fresh current-head bug hunting.
 
 ## Closed current-scope families
 
-### TLP-AUDIO-001 / Product #356 — deterministic cross-tab audio arbitration
+### TLP-AUDIO-001 / Product #356 — deterministic simultaneous cross-tab arbitration
 
 Closed by Product PR #358, exact tested head `ab8fd872d65e6c10aef809967bc87bff8a08e72d`, squash merge `7231b2f33deed185a76fc6dd1c336a6d4dad1776`.
 
-- Playback claims now use one deterministic total order instead of pausing on every remote `playing` claim.
-- Newer logical timestamps win; equal timestamps use a stable `instanceId` tie-break; local replay advances beyond already-seen peer time without sleeps/debounces.
+- Playback claims use one deterministic total order instead of pausing on every remote `playing` claim.
+- Normal newer logical timestamps win; equal timestamps use a stable `instanceId` tie-break; normal same-millisecond local replay advances beyond already-seen peer time without sleeps/debounces.
 - BroadcastChannel and storage-event fallback use the same arbitration helper.
-- Deterministic validation covers sequential, simultaneous, stale, duplicate, self, tie and monotonic-clock semantics; the exact simultaneous model requires exactly one side to yield.
-- Real two-page Chromium QA proves A→B→A handoff through BroadcastChannel and repeats the same flow with BroadcastChannel unavailable to exercise the storage fallback.
-- Full exact-head Product CI, contracts, publication/brand/route gates and Manual Browser QA were green before merge.
+- Deterministic validation covers sequential, simultaneous, stale, duplicate, self, tie and normal monotonic-clock semantics; the exact simultaneous model requires exactly one side to yield.
+- Real two-page Chromium QA proves A→B→A handoff through BroadcastChannel and storage fallback.
 - Detailed evidence: `verification/2026-08-07-audio-cross-tab-arbitration/REPORT.md` and `verification/2026-08-07-audio-cross-tab-arbitration/CLOSURE.md`.
 
-Future audio coordination findings require independent current reproduction; this closure does not assert that every future media/session/browser defect is impossible.
+`TLP-AUDIO-002` is a new independently verified numeric-domain flaw in that protocol. It does not invalidate the closed simultaneous-start root cause or reopen #356.
 
 ### TLP-RESILIENCE-001 / Product #351 — browser essay payload recovery
 
 Closed by Product PR #353, exact tested head `c72ca2bd54b9a3ed18b116e2530e17691517054d`, squash merge `67d614bc186b52c408ad6cef4c84cf57d4e78a45`.
 
-- Rejected browser payloads no longer cause permanent same-document poisoning or automatic same-visit retry loops: retry eligibility is bound to a genuinely new React Router navigation key.
-- Home localizes catalog failure to the research-count statistic while Hero/static content remains available.
-- Articles catalog acceptance passed 18/18 across Chromium/Android/iPhone and proves no automatic request #2 before navigation, later SPA recovery, successful payload caching and `documentRequests === 1`.
-- Full Product CI/build/route and Manual Browser QA 4/4 passed on the exact tested head.
-- The old one-off WebKit reveal flake did not reproduce and no timing workaround was added.
-- Detailed evidence: `verification/2026-08-07-essay-browser-resilience/REPORT.md` and `verification/2026-08-07-essay-browser-resilience/CLOSURE.md`.
-
-Future payload failures require independent current reproduction; this closure does not assert that every future network or Suspense defect is impossible.
+Future payload failures require independent current reproduction.
 
 ### TLP-DEPS-001 / Product #335 — dead Lenis install dependency
 
 Closed by Product PR #348, exact tested head `43527c7a7932f17fcba599ff4df270c243ba69a6`, squash merge `3a8d5fe3a6f729e8a583a3a8c7e6881ec31b5214`.
-
-- The residual direct `lenis` dependency and lock entry were removed after runtime scrolling had already returned to native browser ownership.
-- The repair stayed bounded to package-manager ownership; it did not reopen scroll runtime, routes, validators or content.
-- Exact-head Product evidence recorded CI, project contracts, route audit, brand/content publication gates and Manual Browser QA 4/4.
-- Current Product source preserves generated browser-data scripts while Lenis remains absent.
-- Detailed AuditRepo evidence: `verification/2026-08-07-lenis-dependency-closure/REPORT.md`.
 
 ### TLP-AUDIT-003 / Product #340 — semantic runtime guard hardening
 
@@ -71,7 +73,7 @@ Closed for current Product scope: 5 active, 1 verified reserve, 24 terminal excl
 
 ### Fresh current-head verification
 
-New findings require independent current-head reproduction and root-cause evidence; do not replay historical rows.
+Resume only after the selected Product #360 lifecycle closes. New findings require independent current-head reproduction and root-cause evidence; do not replay historical rows.
 
 ### Materially new media evidence
 
@@ -83,7 +85,7 @@ Use only for a significant release, DNS/hosting change or concrete production in
 
 ## Editorial / research boundary
 
-Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default.
+Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default. Product #269 remains a source-first editorial lane and is not part of this repair.
 
 ## Adding a lane
 
