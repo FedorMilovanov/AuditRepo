@@ -11,10 +11,10 @@
 | Product verification anchor | `87d1a3c26c61e474603b1c68b551fde9163f744a` |
 | Wave | full-matrix consolidation, 2026-08-07 |
 | Active work units | **21** |
-| Current defects | **5** |
+| Direct current defects | **5** |
 | Verified necessary improvements | **3** |
 | Narrowed residuals | **2** |
-| System verification / implementation packages | **7** |
+| System verification lanes | **7** |
 | Owner decisions | **4** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
@@ -55,9 +55,9 @@ These are not kept because “something must be called a bug”. They remain bec
 
 ---
 
-## SYSTEM VERIFICATION / IMPLEMENTATION PACKAGES — 7
+## SYSTEM VERIFICATION LANES — 7
 
-Одна строка = один текущий пакет/root, а не десятки исторических симптомов. Старые symptom-ID mapping находится в `../legacy/MATRIX_CLEANUP_2026-08-07.md`.
+Одна строка = один текущий verification/implementation package/root, а не десятки исторических симптомов. Старые symptom-ID mapping находится в `../legacy/MATRIX_CLEANUP_2026-08-07.md`.
 
 | ID | Verified work package | Next boundary |
 |---|---|---|
