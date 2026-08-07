@@ -10,9 +10,9 @@
 |---|---|
 | Product verification anchor | `87d1a3c26c61e474603b1c68b551fde9163f744a` |
 | Wave | full-matrix consolidation, 2026-08-07 |
-| Active work units | **26** |
+| Active work units | **23** |
 | Direct current defects | **9** |
-| Narrowed residuals | **6** |
+| Narrowed residuals | **3** |
 | System verification lanes | **7** |
 | Owner decisions | **4** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
@@ -37,16 +37,13 @@
 
 ---
 
-## NARROWED RESIDUALS — 6
+## NARROWED RESIDUALS — 3
 
 | ID | Current residual |
 |---|---|
 | `MAP-P1-13` | Marker keyboard semantics уже существенно исправлены; current-check нужен только для reduced-motion / remaining interaction semantics. |
 | `MAP-P1-20` | `route.json` SW-cache half старого claim stale; residual — unversioned shared `map-engine.js` cache-bust ownership. |
 | `QUAL-P1-09` | Residual — holding/noindex route-profile publication-status semantics; проверять profiles + validators одной transaction. |
-| `D-1` | Остались cross-workflow deploy/IndexNow race semantics; пересекается с release-control-plane owner. |
-| `D-19` | Rimlyanam half closed; проверить только Antisovetov custom title/OG/Twitter/JSON-LD residual. |
-| `NEW-OG-SIZE-PARAM` | Один hardcoded size уже устранён; residual — global vs route-specific approved social-image profile ownership. |
 
 ---
 
