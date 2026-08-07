@@ -8,8 +8,15 @@ Pre-cleanup MASTER authority is recoverable from Git at AuditRepo `265ab79cfd83b
 
 The following historical rows were removed from active work because they are fixed, stale, duplicate, absorbed, invalid-as-bug, inert, suspected-only or not worth carrying as a bug:
 
+- `MAP-P1-04` — fixed/stale current-source formulation. Desktop search/theme/share boxes no longer geometrically overlap; mobile has separate 44px chrome placement, and the historical timeline/stage chrome is now suppressed by the premium map-first owner.
 - `MAP-P1-06` — absorbed/fixed by current archaeology tab ownership.
+- `MAP-P1-08` — fixed/stale current-source formulation. Search clear now restores opacity from `visiblePlaces()`, and story entrance logic explicitly keeps `data-story-active="0"` markers hidden instead of restoring all markers indiscriminately.
 - `MAP-P1-09` — fixed; current story selection remains map-first instead of auto-opening the first panel.
+- `MAP-P1-12` — fixed/inert. `applyViewBox()` now re-anchors the compass in rendered screen space using view + units-per-pixel, and premium chrome currently hides `#me-compass` entirely.
+- `MAP-P1-19` — fixed/stale source formulation. Current mobile/desktop panel owners bound panel height to the viewport (`calc(100% - safe top)` / `calc(100% - 24px)`) instead of allowing the historical negative-top landscape overflow.
+- `DATA-P1-04` — fixed. Current MapEngine has a semantic-zoom owner (`route.meta.semantic_zoom`, overview/region/detail buckets and density thresholds); the old “semantic zoom completely absent” claim is no longer true.
+- `ENGINE-P1-27` — fixed. Current Escape handler closes an open photo modal and returns before the parent place-panel close path.
+- `QUAL-P1-05` — retired as an overbroad/misclassified performance claim. Current high-frequency listeners that must call `preventDefault` (pinch/wheel) explicitly use `passive:false`, while read-only photo/panel swipe listeners use `passive:true`; “non-passive exists” is not itself a defect.
 - `BUG-PERF-001` — listener-count inequality alone is not evidence of a leak; reopen only with a concrete retained-listener/runtime witness.
 - `GENEALOGY-ATLAS-V1-SHIPPED-NOT-PROD` — stale deploy-state formulation.
 - `CI-WEBKIT-TOC-NONDETERMINISTIC` — closed by Product `a130ca01` readiness repair.
@@ -41,12 +48,25 @@ The following historical rows were removed from active work because they are fix
 - `QUAL-P1-09` — false-positive caused by conflating route artifact status with publication/indexability. `currentStatus: "production-dist"` is the strict route-contract value for a route present in the production-like artifact/runtime registry; holding publication semantics are separately represented by `seo.indexable:false` and its reason. Do not rewrite profiles to make these orthogonal fields duplicate each other.
 - `SEARCH-P3-03` — retired as a false problem statement: “Скопировать ссылку” currently copies the canonical production permalink on `gospod-bog.ru`, which is a truthful stable share target. No current Product requirement or user harm proves current-origin copying would be more correct.
 
-## Historical symptom rows collapsed into current system lanes
+## Current Karty IDs promoted out of system packages
 
-These are not closed claims; their **old per-symptom formulations are retired** because current work is owned at the system level. MASTER now carries only the current `SYS-*` rows.
+These historical IDs were **not retired**: current evidence proved a narrow independently actionable root, so they now live directly in MASTER instead of being hidden in a `SYS-*` package.
 
-- `SYS-KARTY-RUNTIME-GEOMETRY`: `MAP-P1-01`, `MAP-P1-02`, `MAP-P1-04`, `MAP-P1-05`, `MAP-P1-07`, `MAP-P1-08`, `MAP-P1-10`, `MAP-P1-12`, `AVRAAM-P1-01`, `AVRAAM-P1-02`, `AVRAAM-P1-03`, `AVRAAM-P1-05`, `ASTRO-P1-01`, `MAP-P1-18`, `MAP-P1-19`, `DATA-P1-04`, `ENGINE-P1-26`, `ENGINE-P1-27`, `ENGINE-P1-29`, `QUAL-P1-01`, `QUAL-P1-05`, `QUAL-P1-06`, `DRAW-P1-01`, `TEXT-P1-01`, `WAYP-P1-01`, `PERF-P1-01`, `UI-P1-01`, `LOD-P1-01`, `AVRAAM-P2-01`, `MAP-P2-02`, `ENGINE-P2-03`, `QUAL-P2-04`.
-- `SYS-KARTY-DATA-PROJECTION`: `MAP-P1-03`, `KARTY-DATA-P1-01`, `ASTRO-P1-05`, `GATE-P1-03`, `DATA-P1-03`, `RIVER-P1-01`, `RIVER-P1-02`, `RIVER-P1-03`, `RIVER-P1-04`, `BASE-P1-01`, `BASE-P1-02`, `BASE-P1-03`, `SVG-P1-01`, `REG-P1-01`, `ROUTE-P1-01`, `BASE-P2-01`, `DATA-P2-01`, `QUAL-P2-02`.
+- `MAP-P1-01` — current tour stage-id/caption ownership defect.
+- `MAP-P1-02` — current touch/click tour discoverability defect.
+- `MAP-P1-03` — current Shoftim six-stage data assignment defect; the temporary Shvatim/three-stage wording in this consolidation wave was corrected.
+- `MAP-P1-07` — current Early Church exact marker-coordinate overlap.
+- `MAP-P1-10` — narrowed to current canonical Ishod basemap integration: strict-native source does not pass `baseGeoUrl`.
+- `MAP-P1-18` — narrowed to multi-photo modal behavior; single-photo full-source opening is already fixed.
+- `ENGINE-P1-26` — current search/story interaction ownership defect.
+- `REG-P1-01` — promoted as a verified necessary implementation: Shvatim authored territorial polygons currently have no MapEngine projection owner.
+
+## Historical symptom rows still collapsed into current system lanes
+
+These are not closed claims; their **old per-symptom formulations are not repair authority** because current work is owned at the system level until each is reverified. MASTER carries only the current `SYS-*` rows.
+
+- `SYS-KARTY-RUNTIME-GEOMETRY`: `MAP-P1-05`, `AVRAAM-P1-01`, `AVRAAM-P1-02`, `AVRAAM-P1-03`, `AVRAAM-P1-05`, `ASTRO-P1-01`, `ENGINE-P1-29`, `QUAL-P1-01`, `QUAL-P1-06`, `DRAW-P1-01`, `TEXT-P1-01`, `WAYP-P1-01`, `PERF-P1-01`, `UI-P1-01`, `LOD-P1-01`, `AVRAAM-P2-01`, `MAP-P2-02`, `ENGINE-P2-03`, `QUAL-P2-04`.
+- `SYS-KARTY-DATA-PROJECTION`: `KARTY-DATA-P1-01`, `ASTRO-P1-05`, `GATE-P1-03`, `DATA-P1-03`, `RIVER-P1-01`, `RIVER-P1-02`, `RIVER-P1-03`, `RIVER-P1-04`, `BASE-P1-01`, `BASE-P1-02`, `BASE-P1-03`, `SVG-P1-01`, `ROUTE-P1-01`, `BASE-P2-01`, `DATA-P2-01`, `QUAL-P2-02`.
 - `SYS-KARTY-VISUAL-LANGUAGE`: `QUAL-P1-03`, `DRAW-P1-03`, `QUAL-P1-08`, `ARCH-P1-01`, `RELIEF-P1-01`, `GLYPH-P1-01`, `GRAT-P1-01`, `SEA-P1-01`, `ORN-P1-01`, `HALO-P1-01`, `MEDIA-P1-01`, `HUB-P2-01`.
 - `SYS-AUDIT-CONTROL-PLANE`: `CI-WORKFLOW-PROLIFERATION`, `S-T-01`, `AUDIT-P2-WORKFLOWS-CHECK-GAP`, `D-2`, `GATE-MARKER-DATA-DRIFT`, `BUG-011`, `NF-GATE-IZ5-STALE`; any residual noindex/canonical harness question from retired `NEW-CANONICAL-IZBRANNOE-01-GAP` also belongs here.
 - `SYS-NAGORNAYA-MIGRATION`: `NG-DEAD-01`, `NG-SEO-01`, `NG-TOC-01`, `NG-CROSS-01`, `NG-SERIYA-01`, `NG-A11Y-01`, `NG-VIS-10`, `NG-STRUCT-01`, `NG-INLINE-01`.
