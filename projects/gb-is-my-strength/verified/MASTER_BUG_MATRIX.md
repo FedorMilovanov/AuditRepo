@@ -12,11 +12,11 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 |---|---|
 | Product verification anchor | `9a0db0dc4533cb473abfe57f86e27517f04deea6` |
 | Wave | full-matrix consolidation, 2026-08-07 |
-| Active work units | **25** |
+| Active work units | **24** |
 | Direct current defects | **12** |
 | Verified necessary improvements | **2** |
 | Narrowed residuals | **0** |
-| System verification lanes | **7** |
+| System verification lanes | **6** |
 | Owner decisions | **4** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
@@ -32,7 +32,7 @@ Current wave evidence: `verification/2026-08-07-full-matrix-consolidation/REPORT
 | `MAP-P1-01` | Tour вычисляет реальный `sid`, но caption/progress всё ещё индексируют `route.stages[tourStepIdx]` и `data-stage=tourStepIdx`. Для story с non-zero `stage_ids` caption/highlight therefore drift from the authored stage. | Current reachable MapEngine keyboard/API tour state defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-10` | Canonical strict-native Ishod creates MapEngine without `baseGeoUrl`; current MapEngine loads `#me-base-geo` only when `opts.baseGeoUrl` is supplied. The public map therefore renders route/markers without a geographic base layer. | Current canonical Ishod basemap integration defect. Shared-basemap broken-reference readiness is coordinated in `SYS-KARTY-DATA-PROJECTION`. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `MAP-P1-11` | Scale bar всё ещё выводит pixel scale из `cfg.W0 / view.w`, а не из реальной rendered canvas width. | Current public MapEngine geometry defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `MAP-P1-18` | Narrowed current residual: single-photo cards carry `data-src=ph.src`, but multi-photo gallery images render `ph.thumb||ph.src` without full-source/index metadata. Delegated modal open therefore receives the thumbnail and never initializes `photoCurrentPlace/photoCurrentIdx`, so modal swipe cannot advance the multi-photo set. | Current public multi-photo gallery/modal defect; Avraam has multi-photo content. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `MAP-P1-18` | Single-photo cards carry `data-src=ph.src`, but multi-photo gallery images render `ph.thumb||ph.src` without full-source/index metadata. Delegated modal open therefore receives the thumbnail and never initializes `photoCurrentPlace/photoCurrentIdx`, so modal swipe cannot advance the multi-photo set. | Current public multi-photo gallery/modal defect; Avraam has multi-photo content. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `WAYP-P1-01` | Current verified-waypoint labels are rendered as `font-size="7"` map units at opacity `.4`, without a label background and without `data-screen-anchor`. On Avraam main/mobile authored view widths this resolves to only a few CSS pixels, making the archaeological waypoint names effectively unreadable. | Current public Karty waypoint readability defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `ENGINE-P1-26` | Search iterates all rendered markers and can brighten a matching marker outside the active story, but marker interactivity is gated by `inStory`; search can therefore visually “find” a place the user cannot click/open in the current story state. | Current public MapEngine search/story ownership defect. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `ENGINE-P2-03` | Canonical routes fetch/resolve `route.json` before calling `MapEngine.createMap()`, yet `createMap()` unconditionally adds a loading overlay and removes it only after a fixed 600ms timer. Already-available map content is deliberately hidden for ~600ms on every initialization. | Current artificial loading-delay defect on strict-native maps. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
@@ -58,15 +58,14 @@ No residual-only row remains. A future partial closure should use this section o
 
 ---
 
-## SYSTEM VERIFICATION LANES — 7
+## SYSTEM VERIFICATION LANES — 6
 
 Одна строка = один текущий verification/implementation package/root, а не десятки исторических симптомов. Старые symptom-ID mapping находится в `../legacy/MATRIX_CLEANUP_2026-08-07.md`.
 
 | ID | Verified work package | Next boundary / evidence |
 |---|---|---|
-| `SYS-KARTY-RUNTIME-GEOMETRY` | Reverify only still-unclassified **public strict-native** interaction/viewport/panel/marker/LOD symptoms after major MapEngine changes. Current-local direct defects above and fixed/stale/inert symptoms documented in legacy are excluded. | Avraam/Ishod current source + browser wave; retire anything reachable only through removed cinematic/legacy UI. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `SYS-KARTY-DATA-PROJECTION` | Holding-map readiness and shared data/base owners. Shoftim/Early Church/Shvatim currently publish `KartyHoldingPage`, so their route-data/overlap/region/signature issues are not mislabeled as public runtime defects. Shared `base-geo.svg` also needs self-contained defs/ID ownership before it can safely become Ishod's basemap. | Reverify/repair as one publication-readiness package; promote only when a holding route is activated or a root independently blocks an active map repair. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `SYS-KARTY-VISUAL-LANGUAGE` | Visual/data-quality package where old P1 wording mixes correctness and quality targets. | Current screenshots + owner/value review; retain only genuinely necessary improvements. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `SYS-KARTY-DATA-PROJECTION` | Holding-map publication readiness plus the shared data/base dependency needed by active Ishod repair. Shoftim/Early Church/Shvatim currently publish `KartyHoldingPage`, so route-data/overlap/region/signature issues are not mislabeled as public runtime defects. Shared `base-geo.svg` must also gain coherent self-contained defs/ID ownership before it can safely become Ishod's basemap. | Reverify/repair as one bounded publication-readiness/data package; promote only an independently current root. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `SYS-KARTY-VISUAL-LANGUAGE` | Explicit holding-map visual publication-readiness owner. The public hub and `KartyHoldingPage` require manual verification of initial viewport, label collision, desktop/mobile layout, controls, route readability and overall visual quality before a map returns. Old sheet-engine decoration/aesthetic rows are not requirements by themselves. | Current screenshots/browser review of holding candidates against the published readiness contract; fix only concrete blockers, retire taste-only historical symptoms. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-AUDIT-CONTROL-PLANE` | Audit/workflow false-green/false-red and duplicated/incorrect proof boundaries; also owns any remaining noindex/canonical harness gap after the `/izbrannoe/` source fix. | Coordinate with current Product control-plane owners; #1092/#1097 remain active and #1120 touches release geometry evidence. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-NAGORNAYA-MIGRATION` | Current residual is narrower than the July package: the five Part I–V routes use `MainShell` again while the extracted `HeaderHero`/`ArticleBody`/`PostContent` component family still exists; Part I also still carries the repeated inline `Из библиотеки` palette/structure. Old scripture/footer SEO symptoms are already fixed. | Exact import inventory for all 15 extracted files; then one bounded delete-or-restore-componentization decision plus shared library-block ownership. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
 | `SYS-SHARED-CSS-RUNTIME-HYGIENE` | Shared CSS/runtime dead/duplicate owner cleanup and a11y hygiene. | Reverify after active reader layout/regression owners settle. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
