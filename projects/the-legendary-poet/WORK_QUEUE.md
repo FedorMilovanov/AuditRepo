@@ -2,7 +2,7 @@
 
 Эта очередь показывает owner-selected направления. Перед любой source mutation нужно заново проверить актуальный source owner, open PRs и применимое evidence.
 
-## Current selection — fresh current-head verification
+## Current selection — browser payload resilience closure
 
 Owner-selected operating order:
 
@@ -10,11 +10,20 @@ Owner-selected operating order:
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **0**.
+Current verified engineering rows: **1** (`P2=1`).
 
-### 1. New bug hunting — only from current-head evidence
+### 1. Product #351 / TLP-RESILIENCE-001 — isolate essay browser payload failures
 
-Run a fresh current-head verification pass instead of replaying the historical matrix. Prioritize surfaces where user-visible regressions can escape static contracts:
+- Status: `verified-current / repair-ready / P2` on Product `main@4affe36ab3a63b7759144d7342406ffed439c02c`.
+- Root cause: the post-#350 browser adapter memoizes rejected catalog/body promises for the document lifetime, while `HomePage` consumes the catalog at route scope even though it only needs the essay count.
+- User outcome: one delayed/transient `catalog.json` failure can suspend/error the whole homepage, and a transient catalog/body failure cannot be retried through SPA navigation because the same rejected promise is returned until full reload.
+- Scope: `browserEssayData.ts`, a bounded homepage-local Suspense/fallback boundary, and deterministic failure→retry regression coverage. Do not restore eager full-corpus browser imports or raise bundle budgets.
+- Required closure: successful promises remain single-flight cached; rejected catalog and slug promises are evicted; homepage Hero/static content remains available when catalog is delayed/failed; same-document retry succeeds after transient failure; target-scoped request topology from #350 remains intact; full Product check/build/route/browser matrix green on one exact head.
+- Detailed evidence: `verification/2026-08-07-essay-browser-resilience/REPORT.md`.
+
+### 2. Fresh current-head bug hunting — after #351 closes
+
+Continue the current-head pass instead of replaying the historical matrix. Prioritize surfaces where user-visible regressions can escape static contracts:
 
 - longform article layout and responsive geometry;
 - popovers/tooltips/lightbox/focus/scroll ownership;
@@ -37,7 +46,7 @@ Closed by Product PR #348, exact tested head `43527c7a7932f17fcba599ff4df270c243
 - The residual direct `lenis` dependency and lock entry were removed after runtime scrolling had already returned to native browser ownership.
 - The repair stayed bounded to package-manager ownership; it did not reopen scroll runtime, routes, validators or content.
 - Exact-head Product evidence recorded CI, project contracts, route audit, brand/content publication gates and Manual Browser QA 4/4.
-- Current Product `main` after the concurrent essay-performance merge preserves both changes: new browser-data scripts are present while Lenis remains absent.
+- Current Product `main` after the essay-performance merge preserves both changes: generated browser-data scripts are present while Lenis remains absent.
 - Detailed AuditRepo evidence: `verification/2026-08-07-lenis-dependency-closure/REPORT.md`.
 
 Future scroll or dependency findings require independent current reproduction; this closure is not a blanket claim that no future scrolling or package defect can exist.
