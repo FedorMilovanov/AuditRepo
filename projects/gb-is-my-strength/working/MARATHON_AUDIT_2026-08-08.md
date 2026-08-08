@@ -350,3 +350,16 @@ Working 184K (7 files), verification 37M (32 waves), reverify 105, incoming 33 a
 
 Both narrow localized, share manifest downstream → converge BAPT first, then CATALOG.
 
+
+---
+
+## 14. Марафон фаза 16 — IMPROVEMENTS & OWNER deep (10:00 UTC)
+
+`verification/2026-08-08-marathon-improvements-owners-deep/REPORT.md` (105 lines):
+
+- **SEARCH-P3-02:** #1209 `12896c2` behind=0 transport gone, body stale `1f14761a`, 5 semantic owners + hashes, Modal/Scripture SUCCESS but suite non-terminal → body refresh + deterministic projections + exact-head green
+- **AR-IDX-05:** `enhancements-runtime.css`/`highlights-runtime.css` vs `SITE_CONFIG.version` from `ASSET_VERSIONS['js/glossary.js']` mismatch → per-asset authority via `asset-version.js`
+- **AUDIT-JS-ESCAPER-DUP-X5:** 5 escapers (3 site,1 highlights,1 search) → one `site-utils` primitive
+- **SEARCH-P2-07:** Research `d52ea9d` CANDIDATE_ONLY, Agent 06 `c1bab60` queue `PROMOTE=0`/`BLOCKED=7`, RusSynodalLIO blocked, Cassian permission-controlled, Charter S9 vs annex conflict
+- **REG-001:** hosting CSP/X-Frame decision
+- **NG-VIS-04:** Nagornaya prose rewrite editorial
