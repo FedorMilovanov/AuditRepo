@@ -154,3 +154,79 @@ Their predecessors `#1227` and `#1233` are forensic/superseded merge vehicles an
 - Product code was not modified by this audit.
 - Disposable metadata diagnostic `#1237` remains closed unmerged.
 - AuditRepo is the only repository updated by this evidence wave.
+
+---
+
+## Live follow-up — Source trigger merged and manifest writer root localized
+
+This section supersedes moving-head facts above where they conflict with the earlier snapshot.
+
+### Product anchor advanced
+
+`#1245` completed exact-head SUCCESS for Source Authority, Shared Files, Node Toolchain and Metadata, then merged. Current verified Product `main` is therefore:
+
+`11999f6d674e64e6afef590adeb71aeaaf303b3a`
+
+Commit: `ci(source): cover Baptist publication surfaces`.
+
+The permanent Source Authority trigger gap is closed. `BAPT-S12-01` no longer needs trigger coverage as unfinished work; its active residue is Spravochnik source metadata plus deterministic Search/RSS/sitemap convergence and parity verification.
+
+### Exact manifest-writer root
+
+Current `scripts/search-manifest-policy-normalizer.js` already contains the canonical `buildManifestItem()` function that derives route metadata from production-like built HTML:
+
+- `id`, `type`, `url`;
+- `title`, `description`, `section`, `editor`, `image`, `tags`;
+- `publishedTime`, `modifiedTime`, `readTime`.
+
+However, `migrationCandidates()` only emits missing declared include rows or promotion candidates. In `applyMigration()`, an existing row reaches `candidate.alreadyInManifest` and is explicitly skipped. Therefore the canonical writer never reconciles already-present rows.
+
+The permanent test `scripts/search-manifest-policy-normalizer-test.js` reinforces that current behavior: after first insertion, a second `applyMigration()` is expected to report no additions/promotions, but there is no adversarial mutation proving that a stale existing row is repaired or rejected.
+
+`search-index-policy-inventory.js --strict` likewise records manifest membership and only a small manifest field subset for reporting; the actual strict contract is policy/membership/indexability, not PageHead field parity. This is why 67/73 stale rows can coexist with green Search Manifest Policy.
+
+The correct implementation boundary is therefore the existing canonical normalizer, not a second registry and not catalog-local repair. Existing rows should be reconciled from `buildManifestItem()` while preserving fields that are not owned by that derivation, including current editorial/search extras such as `featured`, `priority`, `scripture`, `seriesId`, `seriesPosition`, `author`, `wordCount` where present. Blind row replacement would itself be lossy because `buildManifestItem()` currently defaults `featured=false` and `priority=0.6` and does not emit those extra fields.
+
+### Downstream impact is wider than Search UI/catalog
+
+`rss-feed-normalizer.js` derives RSS entries from `data/search-manifest.json`, including title, description, creator/editor, section and publication/modification dates. `sitemap-policy-normalizer.js` consumes manifest modification dates and, for policy-generated additions, image/title and `featured`/type-driven priority. Therefore existing-row manifest drift is a discovery-chain authority problem, not merely a catalog thumbnail problem.
+
+A safe permanent convergence transaction should therefore:
+
+1. build production-like `dist`;
+2. reconcile PageHead-derived fields on every existing policy-included manifest route while preserving non-derived extras;
+3. add missing eligible rows as today;
+4. regenerate deterministic `feed.xml` and sitemap projection;
+5. fail closed on a deliberately stale existing-row mutation in `search-manifest-policy-normalizer-test.js` or an equivalent permanent parity contract;
+6. prove idempotence after reconciliation;
+7. keep the focused autofix write scope limited to canonical discovery artifacts.
+
+No dedicated open implementation PR for this root was verified at this follow-up.
+
+### #1209 moved again but transport is still not a final candidate
+
+Latest observed `#1209` head at this follow-up:
+
+`c8caefeeba8fef9c1a3cf8973203632f0a12af5a`
+
+The branch is now **behind current main by 2** and still has an 84-file net diff containing both temporary transport files. The latest transport commit narrows the writer to a semantic two-file patch and separates asset projection from that semantic transaction, but the self-writing workflow/script still exist in the current net diff. Its new writer run and most exact-head checks are still queued/pending at this snapshot. Previous exact-head writer-policy failures remain valid forensic evidence, but should not be mislabeled as the conclusion of the newest `c8caefe...` head until those runs finish.
+
+Merge remains blocked until a later exact head has both transport files absent, current `main` contained, bounded semantic/projection diff, refreshed PR record and terminal green exact-head CI.
+
+### #1222 refreshed after #1245
+
+`#1222` has already absorbed `main@11999f6d...` by normal merge commit. Latest observed head:
+
+`22983986fadc50f22fb831a2b956915576448aad`
+
+Net semantic compare remains exactly five intended Strangler files and `behind=0` at that head. Fresh exact-head Source Authority, Shared Files, Route Registry, Deploy, Visual, Metadata and Search Modal were queued when observed; those new runs supersede earlier post-#1238 runs.
+
+### Other ancestry after current main
+
+At `main@11999f6d...`:
+
+- `#1221@0c779df...` is `behind=2` and remains blocked by existing-row manifest convergence;
+- `#1240@f91507fb...` is `behind=2`, still exactly two Back-authority files;
+- `#1246@3cd81b29...` is `behind=2`, still exactly two relation-state files.
+
+All require current-main refresh and fresh exact-head CI before merge authorization.
