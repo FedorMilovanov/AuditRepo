@@ -44,7 +44,7 @@ Closure evidence: `verification/2026-08-08-direct-defects-zero/REPORT.md`.
 | `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS` | Canonicalize two current same-owner CSS duplications: keep one intentional `@keyframes fx-breathe` definition in `css/site.css`, and consolidate the duplicated standalone mobile `.gb-floater` ownership sections in `css/floating-cluster.css` without dropping the unique surrounding single-article/series rules. | Fresh Product re-read on `76ad2f3f...` confirms two different `fx-breathe` definitions and two `@media (max-width: 899px)` standalone `.gb-floater` sections repeating the core mobile geometry/surface declarations. `verification/2026-08-08-direct-defects-zero/REPORT.md` |
 | `AUDIT-JS-ESCAPER-DUP-X5` | Add one appropriate shared HTML-escaping primitive and migrate the five current local escapers instead of maintaining security-sensitive escaping independently. | Fresh current-source re-read confirms **five** separate `& < > \"` HTML escapers: three lexical helpers in `js/site.js`, one in `js/highlights.js`, one in `js/search.js`; `js/site-utils.js` does not yet own a canonical equivalent. Preserve context/equivalence, especially Highlights, during migration. `verification/2026-08-08-direct-defects-zero/REPORT.md` |
 | `SEARCH-P3-02` | Add truthful result-total / continuation (`Показать ещё`, pagination or equivalent) instead of exposing only bounded Pagefind/fallback result slices. | Fresh re-read after Search closure still finds Pagefind limited to 10 and fallback to 12. Search keyboard/runtime ownership itself is already closed by Product `#1183`; do not reopen `AR-IDX-09`. `verification/2026-08-08-direct-defects-zero/REPORT.md` |
-| `AR-IDX-05` | Resolve the remaining `SITE_CONFIG.version` identity surface against per-asset `ASSET_VERSIONS`: prove all current consumers first, then either remove the unused parallel field or give it one explicit owner/meaning. Do not synchronize another number without a consumer. | Fresh re-read: `BaseLayout.astro` writes `runtimeConfig.version = ASSET_VERSIONS['js/glossary.js']`, while current `js/site.js` and `js/glossary.js` do **not** read `SITE_CONFIG.version` / `getConfig('version')`. Full consumer proof is therefore pending; if no current consumer remains, removal is the correct consolidation. `verification/2026-08-08-direct-defects-zero/REPORT.md` |
+| `AR-IDX-05` | Consolidate cache/version identity so runtime CSS loaders do not use one generic `SITE_CONFIG.version` while static/current assets are owned by per-asset `ASSET_VERSIONS`. Give each runtime-loaded CSS asset its own explicit revision authority or remove the generic version bridge. | Fresh current-source census confirms exact consumers: `js/enhancements.js` builds `/css/enhancements-runtime.css?v=` from `window.SITE_CONFIG.version`, and `js/highlights.js` builds `/css/highlights-runtime.css?v=` the same way. `BaseLayout.astro` currently seeds that generic field from `ASSET_VERSIONS['js/glossary.js']`, so the version value is semantically unrelated to the two CSS consumers. `verification/2026-08-08-direct-defects-zero/REPORT.md` |
 
 ---
 
@@ -74,9 +74,9 @@ Closure evidence: `verification/2026-08-08-direct-defects-zero/REPORT.md`.
 
 Not extra work units; current Product owners that constrain the matrix:
 
-- At this reconciliation point Product has **no open PRs**.
-- Direct-defect repair layer is closed: Product `#1195` closed `S-SEC-01`; Product `#1197` closed `NG-INLINE-01`.
-- Before opening the next Product lane, reverify the selected improvement/system item against current Product `main` and current open PR/file ownership. Do not turn the four improvements into one shared refactor wave.
+- At this reconciliation point the direct-defect repair layer is closed: Product `#1195` closed `S-SEC-01`; Product `#1197` closed `NG-INLINE-01`.
+- Product `#1205` is the current scoped owner for `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS`; do not create a competing CSS cleanup lane while it is open.
+- Before opening any other Product lane, reverify the selected improvement/system item against current Product `main` and current open PR/file ownership. Do not turn the four improvements into one shared refactor wave.
 
 Recently merged/closed material current to this reconciliation:
 
