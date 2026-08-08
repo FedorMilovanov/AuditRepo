@@ -12,53 +12,64 @@ Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/
 
 Current verified engineering rows: **0**.
 
-`TLP-HALL-001` is an owner-selected architecture lane, not an engineering bug row. Two bounded source waves are now merged:
+`TLP-HALL-001` is an owner-selected architecture lane, not an engineering bug row. Three bounded source waves are merged:
 
 - foundation: Product PR #373, exact tested head `9c63a500257c1dc01e4df5c4dcecb8bbfd9fd0fb`, resulting Product `main` `9cce8bb386262172a50f0d65d52372e045e4cd43`;
-- Reference Bible: Product PR #374, exact tested head `9a993399749a818fed5ffe9ac9ee2378807aafc2`, resulting Product `main` `cc81858626c8ddcf8e59016231068c45cbb6e246`.
+- Reference Bible: Product PR #374, exact tested head `9a993399749a818fed5ffe9ac9ee2378807aafc2`, resulting Product `main` `cc81858626c8ddcf8e59016231068c45cbb6e246`;
+- metric-greybox tooling/preflight: Product PR #375, exact tested head `4d4c1b8e6c1832dce6eac6a2509d76bce65cc724`, resulting Product `main` `c34debc7ec3cf769261779d763f21f617a3500a2`.
 
 Evidence:
 
 - `verification/2026-08-08-hall-v3-foundation/FOUNDATION.md`;
-- `verification/2026-08-08-hall-v3-reference-bible/REFERENCE_BIBLE.md`.
+- `verification/2026-08-08-hall-v3-reference-bible/REFERENCE_BIBLE.md`;
+- `verification/2026-08-08-hall-v3-greybox-tooling/TOOLING.md`.
 
-### Hall v3 metric-greybox tooling/preflight — current bounded wave
+### Hall v3 H1/H2/H3 neutral metric candidate authoring — current bounded wave
 
-Foundation removed Hall-v2 authority before replacement work. Reference Bible then converted museum/accessibility/conservation research into machine-enforced evidence, three spatial hypotheses and a neutral comparison brief. Production `/hall` remains a lightweight DOM placeholder and no topology winner exists.
+The DCC path is now proven rather than assumed. Exact PR-head CI downloaded and vendor-checksummed Blender 4.5.12 LTS, ran it headlessly, saved/reopened a metre-scale `.blend`, and recorded build hash `84afd5f785f7` with the expected collections/objects, 1.75 m human proxy, zero materials/lights and no render. Production `/hall` remains a lightweight DOM placeholder.
 
 #### Current source witness
 
-- `docs/hall-v3/hall-v3-contract.json` is `phase=referenceBible`; `foundation=completed`, `referenceBible=active`, while `metricGreybox` and every later gate remain blocked.
-- `docs/hall-v3/REFERENCE_BIBLE.md`, `SPATIAL_BRIEF.md` and `reference-bible.json` are current evidence/comparison authority.
-- H1/H2/H3 are explicitly hypotheses rather than approved architecture.
-- topology and camera decisions remain explicit non-decisions; dome, rotunda, four wings, exact era topology, long nave and FPS/free-walk are not current requirements.
-- persistent foundation guards still keep `/hall` isolated from retained Hall-v2 source, Three/R3F runtime and stale public concept art.
-- the active engineering bug matrix remains zero; this is an owner-selected art/architecture production lane, not defect repair.
+- Product `main@c34debc7ec3cf769261779d763f21f617a3500a2` is `phase=metricGreybox`;
+- `foundation=completed`, `referenceBible=completed`, `metricGreybox=active`, all later gates blocked;
+- `greybox-tooling.json` owns the current reproducible Blender 4.5.12 LTS runtime;
+- `greybox-candidates.json` owns H1/H2/H3 comparison equality; all three remain `unbuilt`, `approvedCandidate=null`, `approvedRig=null`;
+- no Hall geometry, `.blend`, GLB or runtime asset is Product source authority yet;
+- no topology, camera rig, material/light system or web control model is approved.
 
-#### Next bounded metric-greybox preflight
+#### Next bounded candidate-authoring transaction
 
-Product #369 owns one tooling/greybox-authority transaction before serious modelling begins:
+Author **all three** materially different candidates from one shared deterministic Blender source and compare them at equal quality:
 
-1. start from fresh Product `main@cc81858626c8ddcf8e59016231068c45cbb6e246` and re-check open source PRs before mutation;
-2. activate `metricGreybox` only in an explicit source transaction: `referenceBible=completed`, `metricGreybox=active`, all later gates still blocked;
-3. pin or otherwise reproducibly identify the Blender runtime used for the shootout; current research suggests Blender 4.5 LTS headless Python as a candidate, but the exact Product contract must be verified against current official tooling before adoption;
-4. add deterministic greybox preflight/validation scripts before authored geometry: scene unit = metre, required collection/object/camera naming, human scale proxy, no materials/effects beyond neutral grey, and no WebGL/Three dependency;
-5. define a machine-readable candidate manifest for H1/H2/H3 with identical required outputs: dimensioned plan, two sections, entry/reveal, orientation, first transition, Pushkin approach/viewing, reverse/exit, three portrait-mobile crops, top-down sightline/occlusion diagram, route length, forced-turn count and visible-next-destination notes;
-6. make candidate equality enforceable: same human proxy, same candidate lens/FOV set, same neutral material/light assumptions and same evidence package; no candidate gets better render quality or extra ornament;
-7. preserve the Reference Bible minimum witnesses: 915 mm one-way clear route, 1525 mm two-way/recommended museum route, approximately 760×1220 mm accessible viewing clearance and 2030 mm headroom;
-8. encode automatic rejection rules before material work: spectacle-only centre, repeated equal bays, hidden unfinished backs/sides, HUD-dependent wayfinding, FPS/free-look dependency, unusable mobile crops, weak object hierarchy or sunk-cost retention;
-9. keep production `/hall` behavior unchanged and keep all generated greybox work offline/source-art only until a later web gate;
-10. do not approve a topology, camera rig, material system, light bake, GLB runtime or Pushkin final exhibit in this preflight transaction.
+1. start from fresh Product `main@c34debc7ec3cf769261779d763f21f617a3500a2`; re-check open source PRs before mutation;
+2. keep `metricGreybox` active and every later gate blocked; this transaction creates comparable evidence but does not choose a winner;
+3. use the already-proven Blender 4.5.12 runtime and metre unit contract;
+4. use one common 1.75 m human proxy and one explicitly provisional common test lens/FOV set for all candidates; lens choice is comparison instrumentation, not Camera Approval;
+5. H1 must genuinely test orientation court + chronological branches; H2 a directed promenade with changing compression/release and focus bays; H3 an asymmetric diagonal/curved trajectory with side focus rooms — do not produce three cosmetic variants of one nave;
+6. use the same simple Pushkin proxy grammar in all three: anchor portrait proxy, small secondary evidence field, controlled-document pocket, clear return/orientation;
+7. generate a dimensioned plan, two sections, six common desktop camera witnesses, at least three equivalent 9:16 mobile crops, top-down route/sightline diagram, route length, forced-turn count and visible-next-destination notes for each candidate;
+8. keep scene geometry neutral grey: no texture/material lookdev, bloom, fog, particles, gold glow or decorative rescue; a neutral workbench/render mode is acceptable only as an evidence camera, not as lookdev;
+9. generated `.blend`, PNG/SVG and evidence JSON belong in Actions artifacts, not committed Product binaries; commit deterministic source scripts/manifests only;
+10. machine-validate accessible route/viewing/headroom minima and equal evidence completeness for all three candidates;
+11. after exact-head candidate generation succeeds, inspect the actual artifact images and metrics adversarially; do not infer a winner from the script or candidate name;
+12. merge the neutral evidence-generation source only if all three packages are comparable; select/reject candidates in a separate decision transaction.
 
-#### Decision target after preflight
+#### Automatic rejection during authoring
 
-- `continue`: tooling and candidate-equality contract are reproducible enough to author the three neutral metric greyboxes;
-- `narrow`: only a smaller Pushkin approach/orientation experiment is sufficiently specified;
-- `park`: reproducible Blender/tooling or evidence production cannot be established without unsafe/manual assumptions;
-- `repeat`: the preflight itself leaks a preferred topology or relies on decorative output rather than metric comparison;
-- `close`: not permitted; `TLP-HALL-001` closes only after the approved Hall is implemented and production-certified.
+- one candidate receives more render polish or a more flattering lens;
+- a candidate relies on ornament/effects to look coherent;
+- route needs FPS/free-look to become understandable;
+- repeated equal niches/bays dominate;
+- intended cameras expose unfinished backs/sides;
+- Pushkin proxy reads as a UI card on a wall rather than an exhibit hierarchy;
+- principal route violates inherited accessibility witnesses;
+- mobile framing requires rebuilding the candidate;
+- central/transition space has no job beyond spectacle;
+- a candidate is retained because more time has already been spent on it.
 
-Do not turn the tooling preflight into a software-infrastructure project. The useful outcome is a small reproducible art-production contract that lets H1/H2/H3 be compared fairly and later reproduced, not a generalized Blender platform.
+#### Decision after this wave
+
+The useful output is **three inspectable offline evidence packages**, not a winner hidden in code. After merge, a separate current-head decision wave may select one candidate or reject all three using the recorded camera/metric evidence. Camera Approval remains a later gate even after topology selection.
 
 ## Closed current-scope families
 
