@@ -12,57 +12,53 @@ Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/
 
 Current verified engineering rows: **0**.
 
-`TLP-HALL-001` is an owner-selected architecture lane, not an engineering bug row. Product source registration is now complete: Hall v3 foundation merged in Product PR #373, exact tested head `9c63a500257c1dc01e4df5c4dcecb8bbfd9fd0fb`, resulting Product `main` `9cce8bb386262172a50f0d65d52372e045e4cd43`.
+`TLP-HALL-001` is an owner-selected architecture lane, not an engineering bug row. Two bounded source waves are now merged:
 
-Foundation evidence: `verification/2026-08-08-hall-v3-foundation/FOUNDATION.md`.
+- foundation: Product PR #373, exact tested head `9c63a500257c1dc01e4df5c4dcecb8bbfd9fd0fb`, resulting Product `main` `9cce8bb386262172a50f0d65d52372e045e4cd43`;
+- Reference Bible: Product PR #374, exact tested head `9a993399749a818fed5ffe9ac9ee2378807aafc2`, resulting Product `main` `cc81858626c8ddcf8e59016231068c45cbb6e246`.
 
-### Hall v3 Reference Bible — current bounded wave
+Evidence:
 
-The foundation wave removed Hall-v2 authority before any replacement scene was authored. Product `main` now keeps `/hall` as a lightweight DOM placeholder, isolates retained Hall-v2 source from current TypeScript/runtime ownership, deletes the stale public concept preview, and machine-blocks every later Hall phase.
+- `verification/2026-08-08-hall-v3-foundation/FOUNDATION.md`;
+- `verification/2026-08-08-hall-v3-reference-bible/REFERENCE_BIBLE.md`.
+
+### Hall v3 metric-greybox tooling/preflight — current bounded wave
+
+Foundation removed Hall-v2 authority before replacement work. Reference Bible then converted museum/accessibility/conservation research into machine-enforced evidence, three spatial hypotheses and a neutral comparison brief. Production `/hall` remains a lightweight DOM placeholder and no topology winner exists.
 
 #### Current source witness
 
-- `docs/hall-v3/hall-v3-contract.json` remains `phase=foundation` with `referenceBible`, `metricGreybox`, `cameraApproval`, `materialLightingExportSpike`, `pushkinVerticalSlice`, `offlineVisualApproval`, `webVerticalSlice` and `fullMuseumScaleOut` blocked.
-- `/hall` is a neutral placeholder and does not import `src/components/hall/*` or Hall Three/R3F runtime.
-- current source/QA guards reject retired temple/pantheon/3D public promises and stale concept references outside legacy evidence.
-- `docs/HALL_RESEARCH.md` and Hall portions of `docs/UPGRADE_NOTES.md` are historical/superseded rather than current technical authority.
-- no Hall portrait/manuscript/facsimile asset is currently rights-approved by the Hall register.
+- `docs/hall-v3/hall-v3-contract.json` is `phase=referenceBible`; `foundation=completed`, `referenceBible=active`, while `metricGreybox` and every later gate remain blocked.
+- `docs/hall-v3/REFERENCE_BIBLE.md`, `SPATIAL_BRIEF.md` and `reference-bible.json` are current evidence/comparison authority.
+- H1/H2/H3 are explicitly hypotheses rather than approved architecture.
+- topology and camera decisions remain explicit non-decisions; dome, rotunda, four wings, exact era topology, long nave and FPS/free-walk are not current requirements.
+- persistent foundation guards still keep `/hall` isolated from retained Hall-v2 source, Three/R3F runtime and stale public concept art.
+- the active engineering bug matrix remains zero; this is an owner-selected art/architecture production lane, not defect repair.
 
-#### Next bounded Reference Bible wave
+#### Next bounded metric-greybox preflight
 
-Product #369 owns one evidence-to-brief transaction before metric Blender geometry begins:
+Product #369 owns one tooling/greybox-authority transaction before serious modelling begins:
 
-1. advance machine phase from `foundation` to `referenceBible`; mark `foundation=completed`, `referenceBible=active`, all later gates still blocked;
-2. convert already collected official museum/accessibility/conservation evidence into one structured `REFERENCE_BIBLE.md` with per-reference `TAKE / AVOID / WHY / SOURCE` entries rather than mood-board links;
-3. create a metric `SPATIAL_BRIEF.md` comparing at least three materially different circulation hypotheses under identical criteria: entrance reveal/orientation, destination sightlines, non-forced route legibility, portrait/document hierarchy, accessibility, mobile/fixed-camera framing and controlled manuscript-light zones;
-4. carry real greybox constraints forward: 915 mm absolute one-way clear route, 1525 mm two-way/recommended museum route, approximately 760×1220 mm accessible viewing clearance and 2030 mm clear headroom, while treating these as minimum witnesses rather than target proportions;
-5. keep dome, rotunda, four wings, exact era topology, FPS/free-walk, long nave and old niche spacing as hypotheses/non-goals rather than requirements;
-6. define fixed camera/viewpoint requirements and a decision matrix for H1/H2/H3 (or better alternatives), but do not author production 3D or activate `metricGreybox` in the same transaction;
-7. preserve object-first 3D + authoritative accessible DOM context as a design requirement; deep biography/source/transcript/visual-description content must not depend on precise WebGL pointing;
-8. record tooling assumptions only as candidates: official Blender 4.5 LTS headless Python is a reproducible greybox-runtime candidate, but it is not permanent Product authority until a later tooling/export spike proves it.
+1. start from fresh Product `main@cc81858626c8ddcf8e59016231068c45cbb6e246` and re-check open source PRs before mutation;
+2. activate `metricGreybox` only in an explicit source transaction: `referenceBible=completed`, `metricGreybox=active`, all later gates still blocked;
+3. pin or otherwise reproducibly identify the Blender runtime used for the shootout; current research suggests Blender 4.5 LTS headless Python as a candidate, but the exact Product contract must be verified against current official tooling before adoption;
+4. add deterministic greybox preflight/validation scripts before authored geometry: scene unit = metre, required collection/object/camera naming, human scale proxy, no materials/effects beyond neutral grey, and no WebGL/Three dependency;
+5. define a machine-readable candidate manifest for H1/H2/H3 with identical required outputs: dimensioned plan, two sections, entry/reveal, orientation, first transition, Pushkin approach/viewing, reverse/exit, three portrait-mobile crops, top-down sightline/occlusion diagram, route length, forced-turn count and visible-next-destination notes;
+6. make candidate equality enforceable: same human proxy, same candidate lens/FOV set, same neutral material/light assumptions and same evidence package; no candidate gets better render quality or extra ornament;
+7. preserve the Reference Bible minimum witnesses: 915 mm one-way clear route, 1525 mm two-way/recommended museum route, approximately 760×1220 mm accessible viewing clearance and 2030 mm headroom;
+8. encode automatic rejection rules before material work: spectacle-only centre, repeated equal bays, hidden unfinished backs/sides, HUD-dependent wayfinding, FPS/free-look dependency, unusable mobile crops, weak object hierarchy or sunk-cost retention;
+9. keep production `/hall` behavior unchanged and keep all generated greybox work offline/source-art only until a later web gate;
+10. do not approve a topology, camera rig, material system, light bake, GLB runtime or Pushkin final exhibit in this preflight transaction.
 
-#### Research already available in Product #369
+#### Decision target after preflight
 
-- Smithsonian/NMAH circulation and accessible exhibition guidance;
-- British Museum Great Court circulation/vista precedent;
-- National Portrait Gallery chronology and portrait-background/light precedent;
-- Met trajectory + focus-gallery/object-first patterns;
-- Louvre controlled-daylight precedent;
-- Canadian Conservation Institute paper-light/exposure guidance;
-- Pushkin museum/corpus/archive exact-object source candidates, still rights-pending where applicable;
-- initial spatial hypotheses H1/H2/H3;
-- legacy forensic extraction matrix separating reusable runtime hygiene from obsolete Hall-v2 product behavior;
-- Blender 4.5 LTS headless/Python tooling candidate.
+- `continue`: tooling and candidate-equality contract are reproducible enough to author the three neutral metric greyboxes;
+- `narrow`: only a smaller Pushkin approach/orientation experiment is sufficiently specified;
+- `park`: reproducible Blender/tooling or evidence production cannot be established without unsafe/manual assumptions;
+- `repeat`: the preflight itself leaks a preferred topology or relies on decorative output rather than metric comparison;
+- `close`: not permitted; `TLP-HALL-001` closes only after the approved Hall is implemented and production-certified.
 
-#### Possible dispositions after Reference Bible
-
-- `continue`: one spatial hypothesis/decision envelope is strong enough to activate `metricGreybox`;
-- `narrow`: references support only a smaller Pushkin-focused gallery/camera experiment before broader museum topology;
-- `park`: rights/source/tooling evidence is insufficient, while production `/hall` remains safely dormant;
-- `repeat`: the comparison is aesthetically attractive but fails route/accessibility/camera/object-hierarchy criteria;
-- `close`: not permitted at this phase; `TLP-HALL-001` closes only after the architecture lane itself is implemented and verified.
-
-Source mutation must start from fresh current Product `main`, remain isolated from unrelated editorial/research work, and pass normal exact-head contract/build/route gates. `metricGreybox` must remain blocked until the Reference Bible source transaction is merged and independently recorded.
+Do not turn the tooling preflight into a software-infrastructure project. The useful outcome is a small reproducible art-production contract that lets H1/H2/H3 be compared fairly and later reproduced, not a generalized Blender platform.
 
 ## Closed current-scope families
 
@@ -135,7 +131,7 @@ Use only for a significant release, DNS/hosting change or concrete production in
 
 ## Editorial / research boundary
 
-Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default. Product #269 remains a source-first editorial lane outside the engineering matrix and outside the Hall foundation source owner.
+Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default. Product #269 remains a source-first editorial lane outside the engineering matrix and outside the Hall architecture source owner.
 
 ## Adding a lane
 
