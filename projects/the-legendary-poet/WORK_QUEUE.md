@@ -12,40 +12,57 @@ Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/
 
 Current verified engineering rows: **0**.
 
-`TLP-HALL-001` is an owner-selected architecture/foundation lane, not an engineering bug row. Product source registration remains pending until the first foundation wave merges.
+`TLP-HALL-001` is an owner-selected architecture lane, not an engineering bug row. Product source registration is now complete: Hall v3 foundation merged in Product PR #373, exact tested head `9c63a500257c1dc01e4df5c4dcecb8bbfd9fd0fb`, resulting Product `main` `9cce8bb386262172a50f0d65d52372e045e4cd43`.
 
-### Hall v3 foundation — retire legacy runtime authority before rebuilding the museum
+Foundation evidence: `verification/2026-08-08-hall-v3-foundation/FOUNDATION.md`.
 
-This lane is independent of the now-closed `TLP-ARCHIVE-001` repair and owns Hall architecture/foundation files only.
+### Hall v3 Reference Bible — current bounded wave
+
+The foundation wave removed Hall-v2 authority before any replacement scene was authored. Product `main` now keeps `/hall` as a lightweight DOM placeholder, isolates retained Hall-v2 source from current TypeScript/runtime ownership, deletes the stale public concept preview, and machine-blocks every later Hall phase.
 
 #### Current source witness
 
-- `/hall` intentionally renders a lightweight placeholder and does not import `src/components/hall/*`; this is the correct production safety boundary while the immersive experience is dormant.
-- The retired Hall v2 implementation nevertheless remains an implicit current contract because `npm run check` still runs `scripts/validate-hall-audio-runtime.ts`, which protects FPS movement, pointer lock, hover whispers, dust animation and rail-camera behavior from the obsolete prototype.
-- `HallPage.tsx` still advertises a specific unapproved target (`Храм Русской Поэзии` with four era wings including Soviet/contemporary) before a Blender greybox/architecture gate has approved the final spatial program.
-- Historical Hall code remains useful forensic/technical evidence but is not visual or product authority for v3.
+- `docs/hall-v3/hall-v3-contract.json` remains `phase=foundation` with `referenceBible`, `metricGreybox`, `cameraApproval`, `materialLightingExportSpike`, `pushkinVerticalSlice`, `offlineVisualApproval`, `webVerticalSlice` and `fullMuseumScaleOut` blocked.
+- `/hall` is a neutral placeholder and does not import `src/components/hall/*` or Hall Three/R3F runtime.
+- current source/QA guards reject retired temple/pantheon/3D public promises and stale concept references outside legacy evidence.
+- `docs/HALL_RESEARCH.md` and Hall portions of `docs/UPGRADE_NOTES.md` are historical/superseded rather than current technical authority.
+- no Hall portrait/manuscript/facsimile asset is currently rights-approved by the Hall register.
 
-#### First bounded foundation wave
+#### Next bounded Reference Bible wave
 
-Product #369 owns one architecture foundation lane before any new 3D scene is authored:
+Product #369 owns one evidence-to-brief transaction before metric Blender geometry begins:
 
-1. register `TLP-HALL-001` in source `docs/CURRENT_STATE.md` and `docs/project-contract.json`;
-2. mark the existing `src/components/hall/*` prototype as legacy/non-authoritative rather than cosmetically repairing it;
-3. remove Hall-v2 FPS/audio/dust behavior from mandatory architecture ownership while preserving unrelated application interaction/audio validators;
-4. replace that hidden legacy authority with a small Hall foundation validator that proves `/hall` stays lightweight and cannot accidentally import the legacy scene;
-5. remove unapproved architecture promises from the public placeholder without publishing a fake replacement concept;
-6. add source/asset/camera/material/lighting/rights/AI/performance/export/visual-acceptance contracts for Hall v3;
-7. define gated production order: annotated references → metric Blender greybox → camera approval → material/lighting/export spike → Pushkin vertical slice → offline visual approval → optimized GLB/KTX2 delivery → minimal web runtime → remaining exhibits;
-8. no new `HallOfPoetsV3.tsx`, JSX architecture, FPS/free-walk baseline, whispers, fake historical objects or effect-driven visual rescue in this wave.
+1. advance machine phase from `foundation` to `referenceBible`; mark `foundation=completed`, `referenceBible=active`, all later gates still blocked;
+2. convert already collected official museum/accessibility/conservation evidence into one structured `REFERENCE_BIBLE.md` with per-reference `TAKE / AVOID / WHY / SOURCE` entries rather than mood-board links;
+3. create a metric `SPATIAL_BRIEF.md` comparing at least three materially different circulation hypotheses under identical criteria: entrance reveal/orientation, destination sightlines, non-forced route legibility, portrait/document hierarchy, accessibility, mobile/fixed-camera framing and controlled manuscript-light zones;
+4. carry real greybox constraints forward: 915 mm absolute one-way clear route, 1525 mm two-way/recommended museum route, approximately 760×1220 mm accessible viewing clearance and 2030 mm clear headroom, while treating these as minimum witnesses rather than target proportions;
+5. keep dome, rotunda, four wings, exact era topology, FPS/free-walk, long nave and old niche spacing as hypotheses/non-goals rather than requirements;
+6. define fixed camera/viewpoint requirements and a decision matrix for H1/H2/H3 (or better alternatives), but do not author production 3D or activate `metricGreybox` in the same transaction;
+7. preserve object-first 3D + authoritative accessible DOM context as a design requirement; deep biography/source/transcript/visual-description content must not depend on precise WebGL pointing;
+8. record tooling assumptions only as candidates: official Blender 4.5 LTS headless Python is a reproducible greybox-runtime candidate, but it is not permanent Product authority until a later tooling/export spike proves it.
 
-#### Possible dispositions after foundation
+#### Research already available in Product #369
 
-- `continue`: foundation contracts are coherent and the next owner-approved work is the Blender/reference phase;
-- `narrow`: a delivery/lightmap/rights constraint forces a smaller vertical slice before architecture scale-out;
-- `park`: visual/source asset production is not ready, while the production placeholder remains safe;
-- `close`: only after the architecture lane itself has been implemented and verified; the foundation wave alone does not close `TLP-HALL-001`.
+- Smithsonian/NMAH circulation and accessible exhibition guidance;
+- British Museum Great Court circulation/vista precedent;
+- National Portrait Gallery chronology and portrait-background/light precedent;
+- Met trajectory + focus-gallery/object-first patterns;
+- Louvre controlled-daylight precedent;
+- Canadian Conservation Institute paper-light/exposure guidance;
+- Pushkin museum/corpus/archive exact-object source candidates, still rights-pending where applicable;
+- initial spatial hypotheses H1/H2/H3;
+- legacy forensic extraction matrix separating reusable runtime hygiene from obsolete Hall-v2 product behavior;
+- Blender 4.5 LTS headless/Python tooling candidate.
 
-Source mutation must start from fresh current Product `main`, remain isolated from unrelated editorial/research work, and pass the normal exact-head source/build/route gates. Final Hall closure evidence belongs in AuditRepo only after the architecture lane itself is complete; the first foundation merge should register the lane in Product source truth rather than falsely close it.
+#### Possible dispositions after Reference Bible
+
+- `continue`: one spatial hypothesis/decision envelope is strong enough to activate `metricGreybox`;
+- `narrow`: references support only a smaller Pushkin-focused gallery/camera experiment before broader museum topology;
+- `park`: rights/source/tooling evidence is insufficient, while production `/hall` remains safely dormant;
+- `repeat`: the comparison is aesthetically attractive but fails route/accessibility/camera/object-hierarchy criteria;
+- `close`: not permitted at this phase; `TLP-HALL-001` closes only after the architecture lane itself is implemented and verified.
+
+Source mutation must start from fresh current Product `main`, remain isolated from unrelated editorial/research work, and pass normal exact-head contract/build/route gates. `metricGreybox` must remain blocked until the Reference Bible source transaction is merged and independently recorded.
 
 ## Closed current-scope families
 
