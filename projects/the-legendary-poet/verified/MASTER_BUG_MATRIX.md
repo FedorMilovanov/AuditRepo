@@ -19,11 +19,9 @@ No verified-current P1 engineering rows.
 
 No verified-current P2 engineering rows.
 
-## 🟢 P3 — ОТКРЫТО (1)
+## 🟢 P3 — ОТКРЫТО (0)
 
-| ID | Source | Root cause | Current evidence | Repair owner |
-|---|---|---|---|---|
-| `TLP-ARCHIVE-001` | Product #363 | The personal favorites archive advertises cross-tab synchronization but every mutation is an uncoordinated read-modify-write of the whole `tlp-my-archive:v3` snapshot. Two tabs can read the same old item set and then overwrite each other, silently losing a distinct add or resurrecting/erasing a concurrent remove; `storage` events only notify after the overwrite and cannot recover the lost operation. | Product `main@ab3fbf5f0b680f9457d905b792d693d287628c4a`; `toggleFavoritePoem` and `removeFavoritePoem` derive and replace whole snapshots; `subscribeFavoritePoems` only listens for storage/custom events. Historical hardening commit `c495577144ddd057d424a16f7897534ae37f3d15` explicitly promised cross-tab favorite synchronization. Current validator tests a synthetic matching storage notification but no two-reader convergence. See `../verification/2026-08-07-archive-cross-tab-convergence/REPORT.md`. | one bounded Product #363 repair lane after this verification merges |
+No verified-current P3 engineering rows.
 
 ## Summary
 
@@ -33,18 +31,19 @@ No verified-current P2 engineering rows.
 | **P0 открыто** | **0** |
 | P1 открыто | 0 |
 | P2 открыто | 0 |
-| P3 открыто | 1 |
+| P3 открыто | 0 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **1** |
+| **Всего открыто (матрица)** | **0** |
 
-Registered Product architecture lanes: **0**.
+Registered Product architecture lanes: **0** — AuditRepo-selected `TLP-HALL-001` / Product #369 is pending source registration by its foundation wave and remains outside the engineering bug matrix.
 
 ## Explicitly outside this matrix
 
+- `TLP-HALL-001` / Product #369 is an owner-selected architecture/foundation lane, not a verified engineering defect row. Its source registration and Hall v3 contracts are separate from this matrix.
 - Research/source-acquisition/editorial issues such as long-form authoring, archive acquisition, visual-rights review and myth ledgers are not engineering bugs merely because they remain open in the Product issue tracker.
 - The Mayakovsky C01–C30 media family is closed for the current Product scope: 5 active, 1 verified reserve, 24 terminal exclusions, 0 unresolved.
-- W0–W7 architecture/runtime waves, W6 ref retirement, native-scroll repair, canonical poet authority, semantic audit-harness hardening, Lenis install-dependency cleanup, browser-payload resilience, deterministic simultaneous cross-tab arbitration and precision-safe audio logical ordering are historical closure evidence, not current backlog.
+- W0–W7 architecture/runtime waves, W6 ref retirement, native-scroll repair, canonical poet authority, semantic audit-harness hardening, Lenis install-dependency cleanup, browser-payload resilience, deterministic simultaneous cross-tab arbitration, precision-safe audio logical ordering and personal-archive cross-tab convergence are historical closure evidence, not current backlog.
 
 ## Lifecycle rule
 

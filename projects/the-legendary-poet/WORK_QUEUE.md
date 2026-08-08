@@ -2,46 +2,30 @@
 
 Эта очередь показывает owner-selected направления. Перед любой source mutation нужно заново проверить актуальный source owner, open PRs и применимое evidence.
 
-## Current selection — TLP-ARCHIVE-001 / Product #363
+## Current selection — TLP-HALL-001 / Product #369
 
 Owner-selected operating order:
 
-`VERIFY → one root cause → one owner/agent → PR → exact-head gates → Browser QA where behavior warrants it → merge → AuditRepo closure → next bug`.
+`VERIFY → one root cause or bounded architecture question → one owner/agent → PR → exact-head gates → Browser QA where behavior warrants it → merge → AuditRepo evidence update → next wave`.
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **1** — one P3 personal-archive cross-tab convergence root.
+Current verified engineering rows: **0**.
 
-### 1. Repair Product #363 — make concurrent favorite mutations converge
+`TLP-HALL-001` is an owner-selected architecture/foundation lane, not an engineering bug row. Product source registration remains pending until the first foundation wave merges.
 
-Current Product anchor: `main@ab3fbf5f0b680f9457d905b792d693d287628c4a`.
+### Hall v3 foundation — retire legacy runtime authority before rebuilding the museum
 
-Bounded repair target:
+This lane is independent of the now-closed `TLP-ARCHIVE-001` repair and owns Hall architecture/foundation files only.
 
-- preserve private browser-only personal archive semantics;
-- preserve current v3 favorites during migration without requiring a user reset;
-- replace whole-snapshot last-writer-wins mutation semantics with a deterministic representation that can merge concurrent cross-tab add/remove operations;
-- define one explicit ordering rule for add/remove conflicts so a stale peer snapshot cannot silently resurrect a newer removal;
-- keep duplicate delivery idempotent and reject malformed/future ordering metadata that could poison convergence;
-- preserve same-tab mutation result truthfulness, storage-write failure handling, library reconciliation, defensive copies and corrupt-state recovery;
-- keep the existing one shared `useSyncExternalStore` subscription / browser `storage` notification model where practical;
-- add deterministic two-reader convergence coverage plus a real two-page browser witness;
-- do not introduce server/account persistence, visual redesign, unrelated audio/community changes or sleeps/debounce as correctness.
-
-After Product repair merges and resulting current main is reverified, remove `TLP-ARCHIVE-001` from the active matrix and return this queue to fresh current-head bug hunting.
-
-## Parallel owner-selected architecture lane — TLP-HALL-001 / Product #369
-
-This lane is independent of `TLP-ARCHIVE-001`: it owns Hall architecture/foundation files and must not touch the personal archive store or its QA surfaces.
-
-### Current source witness
+#### Current source witness
 
 - `/hall` intentionally renders a lightweight placeholder and does not import `src/components/hall/*`; this is the correct production safety boundary while the immersive experience is dormant.
 - The retired Hall v2 implementation nevertheless remains an implicit current contract because `npm run check` still runs `scripts/validate-hall-audio-runtime.ts`, which protects FPS movement, pointer lock, hover whispers, dust animation and rail-camera behavior from the obsolete prototype.
-- `HallPage.tsx` also advertises a specific unapproved target (`Храм Русской Поэзии` with four era wings) before a Blender greybox/architecture gate has approved the final spatial program.
+- `HallPage.tsx` still advertises a specific unapproved target (`Храм Русской Поэзии` with four era wings including Soviet/contemporary) before a Blender greybox/architecture gate has approved the final spatial program.
 - Historical Hall code remains useful forensic/technical evidence but is not visual or product authority for v3.
 
-### First bounded foundation wave
+#### First bounded foundation wave
 
 Product #369 owns one architecture foundation lane before any new 3D scene is authored:
 
@@ -54,16 +38,35 @@ Product #369 owns one architecture foundation lane before any new 3D scene is au
 7. define gated production order: annotated references → metric Blender greybox → camera approval → material/lighting/export spike → Pushkin vertical slice → offline visual approval → optimized GLB/KTX2 delivery → minimal web runtime → remaining exhibits;
 8. no new `HallOfPoetsV3.tsx`, JSX architecture, FPS/free-walk baseline, whispers, fake historical objects or effect-driven visual rescue in this wave.
 
-### Possible dispositions after foundation
+#### Possible dispositions after foundation
 
 - `continue`: foundation contracts are coherent and the next owner-approved work is the Blender/reference phase;
 - `narrow`: a delivery/lightmap/rights constraint forces a smaller vertical slice before architecture scale-out;
 - `park`: visual/source asset production is not ready, while the production placeholder remains safe;
 - `close`: only after the architecture lane itself has been implemented and verified; the foundation wave alone does not close `TLP-HALL-001`.
 
-Source mutation must remain isolated from Product #365 and any other live owner. Final Hall closure evidence belongs in AuditRepo only after the source work is merged and verified.
+Source mutation must start from fresh current Product `main`, remain isolated from unrelated editorial/research work, and pass the normal exact-head source/build/route gates. Final Hall closure evidence belongs in AuditRepo only after the architecture lane itself is complete; the first foundation merge should register the lane in Product source truth rather than falsely close it.
 
 ## Closed current-scope families
+
+### TLP-ARCHIVE-001 / Product #363 — deterministic cross-tab favorites convergence
+
+Closed by Product PR #368, exact tested head `6f9408aceccfae0fbb0abf1993695f000e84ffe0`, squash merge / resulting Product `main` `576ac818d6ca426e5786aba3efc27f8b20abf2bf`.
+
+- favorites now persist as bounded v4 per-poem operations rather than whole-snapshot last-writer-wins state;
+- v3/v2 favorites migrate losslessly before old keys retire;
+- deterministic decimal per-poem generation ordering is independent of wall-clock time;
+- equal-generation add/remove conflicts are removal-wins and later intentional re-add advances generation;
+- storage-event repair merges current physical state with `oldValue` and `newValue`, recovering a distinct operation overwritten by a stale peer write;
+- reconciliation writes removal tombstones so stale tabs cannot resurrect removed-library poems;
+- failed writes, invalid IDs, corrupt state and defensive-copy behavior remain truthful;
+- pure deterministic validation and a real two-tab Chromium witness prove convergence;
+- full exact-head CI, Project contracts, route/brand gates and Manual Browser QA passed before expected-head-protected merge;
+- Product #363 closed automatically and resulting Product `main` was reverified as the merge SHA.
+
+Detailed closure evidence: `verification/2026-08-07-archive-cross-tab-convergence/CLOSURE.md`.
+
+Future archive findings require independent current-head reproduction.
 
 ### TLP-AUDIO-002 / Product #360 — precision-safe cross-tab logical ordering
 
@@ -103,7 +106,7 @@ Closed for current Product scope: 5 active, 1 verified reserve, 24 terminal excl
 
 ### Fresh current-head verification
 
-Resume only after the selected Product #363 lifecycle closes. New findings require independent current-head reproduction and root-cause evidence; do not replay historical rows.
+The active engineering matrix is zero. New engineering findings require independent current-head reproduction and root-cause evidence; do not replay historical rows. Keep this work separate from the owner-selected Hall architecture lane.
 
 ### Materially new media evidence
 
@@ -115,7 +118,7 @@ Use only for a significant release, DNS/hosting change or concrete production in
 
 ## Editorial / research boundary
 
-Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default. Product #269 remains a source-first editorial lane outside this repair.
+Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default. Product #269 remains a source-first editorial lane outside the engineering matrix and outside the Hall foundation source owner.
 
 ## Adding a lane
 
