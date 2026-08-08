@@ -325,3 +325,16 @@ Push `f7f00c8` — 25 files moved (0 insertions), validators PASS.
 
 Это 31-я verification wave 2026-08-08, complements post-S12/census/strangler waves. Доказательство: marathon file hygiene + system root coherence, validators PASS.
 
+
+---
+
+## 12. Марафон фаза 13-14 — SEARCH + HALL deep (09:48 UTC)
+
+Создана `verification/2026-08-08-marathon-search-hall-deep/REPORT.md` (75 lines, 5.4K) — 32-я verification wave:
+
+- **Search:** `SEARCH-P3-02` (#1209) + `SEARCH-P2-07` (d52ea9d) + closed SEARCH-P2-10/11/12 per `search-head-strangler-readiness` (Search #1183 merged `67c2349` 26 blockers). Incoming `search-deep-audit-2026-08-04` 304K still current: SEARCH-P1-01 global palette missing on 13 routes (/karty/avraam/ etc. `searchManifest=include` but no `js/search.js`), SEARCH-P1-02 `Ин 3:16` false promise (hard-coded suggestions without exact hit). Working `SEARCH_*` 3 files: repair plan S0 truthfulness (rename tab, remove suggestions, guard) → S1 generated `data/scripture-search-index.json` → S2 exact-reference-first UI → S3 corpus `SEARCH-P2-07` blocked. Gates PASS (74 pages indexed, 83 routes 0 problems, `npm audit --omit=dev` 0).
+- **Hall TLP:** `TLP-HALL-001` #369 metricGreybox `c34debc7` (Blender 4.5.12 `84afd5f785f7`, H1/H2/H3 unbuilt), next wave author all three neutral candidates. 3 verification waves foundation/reference/tooling PASS. Hall correctly outside 0-row MASTER.
+- **Passes/forensics:** `passes/` 4 MD (gill-calibration, mobile-reconcile etc.) superseded by census 7020→8 — keep historical. `forensics/GENESIS6_ENOCH` 41 refs moved to `main@4c7aaf7` — keep forensic.
+
+Working 184K (7 files), verification 37M (32 waves), reverify 105, incoming 33 agents 17M — all validators PASS.
+
