@@ -120,21 +120,26 @@ The current retained legacy/native-shadow system remains fail-closed at **26 blo
 
 ## Fresh reverify of the four remaining improvements
 
-The direct-defect closure does not retire the four improvement rows, but it narrows two stale descriptions.
+The direct-defect closure does not retire the four improvement rows. Current-source re-read on Product `76ad2f3f...` gives the following exact boundaries.
 
 ### AUDIT-CSS-DEAD-KEYFRAMES-TOKENS
 
-Still current, but the presently proved root is narrower than the historical wording. Current `css/site.css` contains two different `@keyframes fx-breathe` definitions. The old assertion that there are two competing mobile `.gb-floater` visual rules was not reconfirmed: current `.gb-floater` matches observed during this re-read are print/interactive-chrome exclusion lists. Keep the row for canonicalizing `fx-breathe`; do not claim the `.gb-floater` duplicate until independently re-proved.
+Still current. Two same-owner duplication classes are directly confirmed:
+
+- `css/site.css` contains two different `@keyframes fx-breathe` definitions;
+- `css/floating-cluster.css` contains two standalone mobile `@media (max-width: 899px) { .gb-floater ... }` ownership sections repeating the core mobile geometry/surface declarations (`top/left/right/bottom/transform/flex/gap/padding/border/radius/background/backdrop/z-index`).
+
+The cleanup must consolidate only the duplicated owner declarations while preserving unique surrounding behavior such as `body.fc-single-active .article-main` and later series-lite rules.
 
 ### AUDIT-JS-ESCAPER-DUP-X5
 
-Still current, but the historical `X5` count must not be treated as a current invariant. This re-read directly confirmed separate local HTML-escaping implementations in at least:
+Still current, and the historical `X5` count is confirmed as current. Fresh source re-read finds five separate HTML escapers with `& < > \"` intent:
 
-- `js/search.js`;
-- `js/site.js`;
-- `js/highlights.js`.
+- three lexical helpers in `js/site.js`;
+- one helper in `js/highlights.js`;
+- one helper in `js/search.js`.
 
-Before implementation, enumerate the current consumer set and migrate only real current owners to one appropriate shared primitive.
+`js/site-utils.js` does not yet own a canonical equivalent. Before migration, prove loader availability and output/context equivalence for every consumer, especially Highlights; do not replace context-specific escaping blindly.
 
 ### SEARCH-P3-02
 
@@ -142,7 +147,9 @@ Still current. Search still exposes bounded result slices (Pagefind 10 and fallb
 
 ### AR-IDX-05
 
-Still current. `src/lib/asset-version.js` owns per-asset hash revisions while runtime code still consumes `SITE_CONFIG.version` for dynamic resource versioning (for example glossary loading). These remain parallel cache/version identities and should be reconciled in a bounded owner-aware change.
+Still current as an identity-cleanup question, but the earlier consumer claim was too strong. `src/lib/asset-version.js` owns per-asset hashes and `BaseLayout.astro` currently writes `runtimeConfig.version = ASSET_VERSIONS['js/glossary.js']`. Fresh inspection of current `js/site.js` and `js/glossary.js` finds no read of `SITE_CONFIG.version` / `getConfig('version')`.
+
+Therefore the next step is **full consumer proof**, not synchronization of another version number. If no current consumer remains, delete the unused parallel `version` field/legacy constants; if a real consumer remains, give the field one explicit documented meaning and owner.
 
 ---
 
