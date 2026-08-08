@@ -12,64 +12,72 @@ Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/
 
 Current verified engineering rows: **0**.
 
-`TLP-HALL-001` is an owner-selected architecture lane, not an engineering bug row. Three bounded source waves are merged:
+`TLP-HALL-001` is an owner-selected architecture lane, not an engineering bug row. Four bounded Hall source waves are merged:
 
 - foundation: Product PR #373, exact tested head `9c63a500257c1dc01e4df5c4dcecb8bbfd9fd0fb`, resulting Product `main` `9cce8bb386262172a50f0d65d52372e045e4cd43`;
 - Reference Bible: Product PR #374, exact tested head `9a993399749a818fed5ffe9ac9ee2378807aafc2`, resulting Product `main` `cc81858626c8ddcf8e59016231068c45cbb6e246`;
-- metric-greybox tooling/preflight: Product PR #375, exact tested head `4d4c1b8e6c1832dce6eac6a2509d76bce65cc724`, resulting Product `main` `c34debc7ec3cf769261779d763f21f617a3500a2`.
+- metric-greybox tooling/preflight: Product PR #375, exact tested head `4d4c1b8e6c1832dce6eac6a2509d76bce65cc724`, resulting Product `main` `c34debc7ec3cf769261779d763f21f617a3500a2`;
+- neutral H1/H2/H3 candidate authoring: Product PR #376, exact tested head `70aeb9c1aca4414d9cade3cb9cdcfb887b7ea806`, resulting Product `main` `66dabcdcff5fa0fc8ad8fde44544432e4a144e4d`.
 
 Evidence:
 
 - `verification/2026-08-08-hall-v3-foundation/FOUNDATION.md`;
 - `verification/2026-08-08-hall-v3-reference-bible/REFERENCE_BIBLE.md`;
-- `verification/2026-08-08-hall-v3-greybox-tooling/TOOLING.md`.
+- `verification/2026-08-08-hall-v3-greybox-tooling/TOOLING.md`;
+- `verification/2026-08-08-hall-v3-greybox-candidates/CANDIDATES.md`.
 
-### Hall v3 H1/H2/H3 neutral metric candidate authoring — current bounded wave
+### Hall v3 topology select/reject — current bounded wave
 
-The DCC path is now proven rather than assumed. Exact PR-head CI downloaded and vendor-checksummed Blender 4.5.12 LTS, ran it headlessly, saved/reopened a metre-scale `.blend`, and recorded build hash `84afd5f785f7` with the expected collections/objects, 1.75 m human proxy, zero materials/lights and no render. Production `/hall` remains a lightweight DOM placeholder.
+The candidate-authoring transaction is complete. Product source now owns three deterministic, reproducible neutral metric candidates and exact-head generated evidence, but still owns **no approved topology and no approved camera rig**. Production `/hall` remains a lightweight DOM placeholder.
 
 #### Current source witness
 
-- Product `main@c34debc7ec3cf769261779d763f21f617a3500a2` is `phase=metricGreybox`;
-- `foundation=completed`, `referenceBible=completed`, `metricGreybox=active`, all later gates blocked;
-- `greybox-tooling.json` owns the current reproducible Blender 4.5.12 LTS runtime;
-- `greybox-candidates.json` owns H1/H2/H3 comparison equality; all three remain `unbuilt`, `approvedCandidate=null`, `approvedRig=null`;
-- no Hall geometry, `.blend`, GLB or runtime asset is Product source authority yet;
-- no topology, camera rig, material/light system or web control model is approved.
+- Product `main@66dabcdcff5fa0fc8ad8fde44544432e4a144e4d` is `phase=metricGreybox`;
+- `foundation=completed`, `referenceBible=completed`, `metricGreybox=active`; all later gates remain blocked;
+- H1/H2/H3 are all `source-defined` under one common generator/evidence contract;
+- `approvedCandidate=null` and `approvedRig=null`;
+- common `35 mm` is comparison instrumentation only, not Camera Approval;
+- exact-head candidate artifact `9021765090`, digest `sha256:598b2a60df72d9457e9b7620b5b7ea94fb59af8e0db60e11d334fbaaa94e8318`, embeds `tested_commit=70aeb9c1aca4414d9cade3cb9cdcfb887b7ea806`;
+- H1 measures `32.1462 m / 2` forced turns, H2 `53.8854 m / 8`, H3 `37.8327 m / 4`;
+- all 18 certified sightlines and all three Pushkin viewing-clearance witnesses passed;
+- no material/light/export system, final Pushkin exhibit, WebGL runtime or production Hall geometry is approved.
 
-#### Next bounded candidate-authoring transaction
+#### Current evidence reading
 
-Author **all three** materially different candidates from one shared deterministic Blender source and compare them at equal quality:
+- **H1** — strongest route simplicity/orientation benchmark; shortest route and only two forced turns, but the central space risks reading as a generic ceremonial court and provides weaker spatial identity.
+- **H2** — strongest literal promenade/chronological sequence, but pays the largest circulation cost by a wide margin and reads most corridor-like; current neutral evidence does not show enough compensating spatial value for `53.8854 m / 8` turns.
+- **H3** — strongest provisional topology candidate: materially different asymmetric/diagonal spatial identity, changing sightlines and side focus rooms at a moderate `37.8327 m / 4` route cost.
+- Across **all three**, the common 35 mm portrait `pushkinViewing` crop is too close/flat; topology selection must not silently approve the current camera set.
 
-1. start from fresh Product `main@c34debc7ec3cf769261779d763f21f617a3500a2`; re-check open source PRs before mutation;
-2. keep `metricGreybox` active and every later gate blocked; this transaction creates comparable evidence but does not choose a winner;
-3. use the already-proven Blender 4.5.12 runtime and metre unit contract;
-4. use one common 1.75 m human proxy and one explicitly provisional common test lens/FOV set for all candidates; lens choice is comparison instrumentation, not Camera Approval;
-5. H1 must genuinely test orientation court + chronological branches; H2 a directed promenade with changing compression/release and focus bays; H3 an asymmetric diagonal/curved trajectory with side focus rooms — do not produce three cosmetic variants of one nave;
-6. use the same simple Pushkin proxy grammar in all three: anchor portrait proxy, small secondary evidence field, controlled-document pocket, clear return/orientation;
-7. generate a dimensioned plan, two sections, six common desktop camera witnesses, at least three equivalent 9:16 mobile crops, top-down route/sightline diagram, route length, forced-turn count and visible-next-destination notes for each candidate;
-8. keep scene geometry neutral grey: no texture/material lookdev, bloom, fog, particles, gold glow or decorative rescue; a neutral workbench/render mode is acceptable only as an evidence camera, not as lookdev;
-9. generated `.blend`, PNG/SVG and evidence JSON belong in Actions artifacts, not committed Product binaries; commit deterministic source scripts/manifests only;
-10. machine-validate accessible route/viewing/headroom minima and equal evidence completeness for all three candidates;
-11. after exact-head candidate generation succeeds, inspect the actual artifact images and metrics adversarially; do not infer a winner from the script or candidate name;
-12. merge the neutral evidence-generation source only if all three packages are comparable; select/reject candidates in a separate decision transaction.
+#### Next bounded select/reject transaction
 
-#### Automatic rejection during authoring
+Product #369 owns one explicit topology-decision transaction:
 
-- one candidate receives more render polish or a more flattering lens;
-- a candidate relies on ornament/effects to look coherent;
-- route needs FPS/free-look to become understandable;
-- repeated equal niches/bays dominate;
-- intended cameras expose unfinished backs/sides;
-- Pushkin proxy reads as a UI card on a wall rather than an exhibit hierarchy;
-- principal route violates inherited accessibility witnesses;
-- mobile framing requires rebuilding the candidate;
-- central/transition space has no job beyond spectacle;
-- a candidate is retained because more time has already been spent on it.
+1. start from fresh Product `main@66dabcdcff5fa0fc8ad8fde44544432e4a144e4d`; re-check current main, open source PRs and candidate authority before mutation;
+2. consume the merged exact-head candidate evidence without changing geometry merely to make a preferred candidate win;
+3. add a machine-readable decision record with explicit candidate dispositions, evidence, rejected alternatives and non-decisions;
+4. current evidence supports **provisionally selecting H3** as the topology to carry forward;
+5. retain **H1 as reserve/orientation benchmark**, not as a second active production topology;
+6. **reject or park H2** for excessive route/turn cost and corridor character without sufficient neutral-grey compensation;
+7. preserve the candidate source/evidence artifacts for audit; do not delete losing hypotheses merely because a choice is made;
+8. keep `approvedRig=null`; the common 35 mm camera set remains test-only;
+9. if the topology decision is explicit/reproducible, complete `metricGreybox` and activate `cameraApproval` as the next gate;
+10. keep material/light/export, Pushkin final slice, offline finished visual approval, web vertical slice and full scale-out blocked;
+11. keep production `/hall` unchanged and keep Three/R3F/WebGL out of this transaction;
+12. do not alter H3 geometry in the selection PR except for a separately reproduced correctness defect — selection is evidence interpretation, not another design iteration hidden inside the vote.
 
-#### Decision after this wave
+#### Camera Approval target after selection
 
-The useful output is **three inspectable offline evidence packages**, not a winner hidden in code. After merge, a separate current-head decision wave may select one candidate or reject all three using the recorded camera/metric evidence. Camera Approval remains a later gate even after topology selection.
+The next camera wave should operate on the selected topology only and compare camera rigs/lenses under fixed geometry. It must specifically improve Pushkin approach/view framing and 9:16 portrait composition without approving arbitrary free-look/FPS navigation. The 35 mm authoring set remains a benchmark, not a default winner.
+
+#### Decision dispositions
+
+- `advance-H3`: evidence supports H3 provisionally as current topology authority and opens Camera Approval;
+- `reserve-H1`: preserve H1 as a fallback/orientation benchmark;
+- `reject-H2`: retain evidence historically but stop spending current production effort on H2;
+- `reject-all`: permitted if a fresh decision audit finds a disqualifying issue common to the three candidates;
+- `repeat-greybox`: permitted only for a reproduced geometry/evidence defect, not because finished materials are desired;
+- `close`: not permitted; `TLP-HALL-001` remains open through production certification.
 
 ## Closed current-scope families
 
