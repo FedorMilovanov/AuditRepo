@@ -26,7 +26,7 @@
 - Системные темы: [`verified/SYSTEM_THEMES.md`](verified/SYSTEM_THEMES.md)
 - Компактная история волн и закрытий: [`verified/CLOSURE_LEDGER.md`](verified/CLOSURE_LEDGER.md)
 - W7 detailed verification: [`verification/2026-08-06-w7-route-runtime-wave/REPORT.md`](verification/2026-08-06-w7-route-runtime-wave/REPORT.md)
-- Историческая working matrix: [`working/MASTER_BUG_MATRIX_2026-08-05.md`](working/MASTER_BUG_MATRIX_2026-08-05.md)
+- Историческая working matrix: [`archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`](archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md)
 - W6 inventory and deletion evidence: [`working/W6_BRANCH_ARTIFACT_INVENTORY_2026-08-05.md`](working/W6_BRANCH_ARTIFACT_INVENTORY_2026-08-05.md)
 - Historical verified/reverify evidence: `verified/`, `verification/`, `reverify/`, `archive/`
 

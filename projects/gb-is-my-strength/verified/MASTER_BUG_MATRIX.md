@@ -19,11 +19,11 @@ Home/control-plane recheck: [`../verification/2026-08-08-home-main-ci-control-pl
 | Product verification anchor | `11999f6d674e64e6afef590adeb71aeaaf303b3a` |
 | Research authority | `d52ea9d54dd2c2488223d25f5f6cefd263c23328` |
 | Wave | post-S12 live refresh: metadata/discovery convergence + manifest field parity + Search final validation + stable reader census + Strangler truth repair, 2026-08-08 |
-| Active work units | **15** |
+| Active work units | **14** |
 | Direct current defects | **2** |
 | Verified necessary improvements | **3** |
 | Narrowed residuals | **0** |
-| System verification lanes | **7** |
+| System verification lanes | **6** |
 | Owner decisions | **3** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
@@ -54,11 +54,10 @@ Home bytes remain without a new direct regression witness in this wave; temporar
 
 ---
 
-## SYSTEM VERIFICATION LANES — 7
+## SYSTEM VERIFICATION LANES — 6
 
 | ID | Verified work package | Current boundary / owner |
 |---|---|---|
-| `SYS-CURRENT-GOLD-READINESS` | Derived publication-readiness evidence on top of existing route/publication authorities, including human reachability, metadata approval, research/content holds, visual evidence and production witness. | First implementation `#1220` is **merged**. Its earlier regex/hidden-ancestor reachability false-green was repaired with Chromium + JS-off, ancestor/CSS/geometry/nofollow checks and adversarial fixtures. Keep the system root only for subsequent readiness convergence that is independently evidenced; issue `#298` remains visual-golden authority. |
 | `SYS-READER-CONTROL-SEMANTICS` | Unify truthful control→surface/action semantics across standalone and shared series reader engines without merging layouts into one mega-component. | Product issue `#1224` remains authority. `#1240@f91507fb...` is the correct two-file owner for **all 174** shared mobile Back-drift manifestations; `#1246@3cd81b29...` is the two-file relation-state owner covering **64/70** missing `aria-controls` manifestations. Both are `behind=2` from current main and need current-main refresh + fresh exact-head CI. The 887 raw findings from audit-only `#1212` cluster into a small number of shared roots rather than 887 defects: one `GillLearningSheet` conditional `panelQuiz → tabQuiz` orphan (**174** manifestations / 42 routes); shared invalid-list tracks (**100× `gbs2-track` + 3× `hrail-track`**); three undersized-target geometry fingerprints (**100× `mobSpdBadge`, 100× `gbsTocToggle`, 7× `hmSpdBadge`**); six remaining Nagornaya `barSectionBtn` relations; and Nagornaya `barShareBtn` clipping at 390. Footnote identity/projection is tracked separately under `SYS-FOOTNOTE-SEMANTIC-PROJECTION`. The **124 click-failed** manifestations are not Product authority because the census clicks controls sequentially on one mutated DOM without a true fresh-state reset; the 12 runtime errors are also contaminated mainly by local-origin CSP/WebKit audit noise. Dominant shared source blobs are byte-identical between census head and current main, so the static roots remain current. [`CLUSTERING`](../verification/2026-08-08-reader-control-census-root-clustering/REPORT.md) |
 | `SYS-FOOTNOTE-SEMANTIC-PROJECTION` | Make numbered/source footnotes first-class publication notes with one source identity and truthful screen + accessibility + print projections instead of tooltip-only semantics. | Product issue `#1225` is canonical authority. Stable census reports `footnote-name-not-unique` in **14 route/browser/viewport scenes**, but those scenes contain **114** generic-name footnotes on Hermenevtika, **21** on `/articles/kod-da-vinchi/`, and **40** on `/articles/krajne-li-isporcheno-serdce/`. Preserve the completed nested-Bible repair and existing print geometry owner; fix identity/projection systemically and prove deterministic print endnote completeness plus unique marker→note relations rather than route-local label patches. [`REPORT`](../verification/2026-08-08-total-current-gold-audit/REPORT.md) |
 | `SYS-BAPTISTY-PUBLICATION-READINESS` | Series-level readiness program for the ten Baptist routes after independently actionable defects are handled: Research closure, source confidence, media provenance, roadmap realization, diagrams where useful, modern-stat discipline and map/data/live convergence. | Decompose into bounded article/data/media/map lanes; no mega-PR. Current roadmap/media/visual-atlas/Research evidence remains in Current-Gold report. |
