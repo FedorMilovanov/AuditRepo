@@ -32,7 +32,7 @@ This removes the HTML-sanitizer design from a text-only schema field instead of 
 
 ### Permanent adversarial evidence
 
-`script/faq-jsonld-text-contract-test.js` was not introduced as a new workflow owner; the permanent contract is wired into the existing Shared Files Guard.
+`scripts/faq-jsonld-text-contract-test.js` was not introduced as a new workflow owner; the permanent contract is wired into the existing Shared Files Guard.
 
 The fixture executes the real FAQ JSON-LD module and proves:
 
