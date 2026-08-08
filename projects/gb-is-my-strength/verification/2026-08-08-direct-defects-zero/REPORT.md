@@ -131,6 +131,8 @@ Still current. Two same-owner duplication classes are directly confirmed:
 
 The cleanup must consolidate only the duplicated owner declarations while preserving unique surrounding behavior such as `body.fc-single-active .article-main` and later series-lite rules.
 
+Product `#1205` is now the current scoped owner for this improvement; no competing CSS lane should be created while it is open.
+
 ### AUDIT-JS-ESCAPER-DUP-X5
 
 Still current, and the historical `X5` count is confirmed as current. Fresh source re-read finds five separate HTML escapers with `& < > \"` intent:
@@ -147,9 +149,12 @@ Still current. Search still exposes bounded result slices (Pagefind 10 and fallb
 
 ### AR-IDX-05
 
-Still current as an identity-cleanup question, but the earlier consumer claim was too strong. `src/lib/asset-version.js` owns per-asset hashes and `BaseLayout.astro` currently writes `runtimeConfig.version = ASSET_VERSIONS['js/glossary.js']`. Fresh inspection of current `js/site.js` and `js/glossary.js` finds no read of `SITE_CONFIG.version` / `getConfig('version')`.
+Still current, now with exact current consumers. `src/lib/asset-version.js` owns per-asset hashes, while `BaseLayout.astro` seeds generic `runtimeConfig.version` from `ASSET_VERSIONS['js/glossary.js']`. That generic field is then consumed by unrelated runtime CSS loaders:
 
-Therefore the next step is **full consumer proof**, not synchronization of another version number. If no current consumer remains, delete the unused parallel `version` field/legacy constants; if a real consumer remains, give the field one explicit documented meaning and owner.
+- `js/enhancements.js` builds `/css/enhancements-runtime.css?v=` from `window.SITE_CONFIG.version`;
+- `js/highlights.js` builds `/css/highlights-runtime.css?v=` from `window.SITE_CONFIG.version`.
+
+Current `js/site.js` and `js/glossary.js` do not read that generic version. The problem is therefore not a glossary runtime consumer; it is **semantic mismatch of one generic revision value reused for two different CSS assets**. The bounded repair should give each runtime CSS asset its own explicit per-asset revision authority (or otherwise remove the generic bridge) and preserve authority-aware projection rules.
 
 ---
 
