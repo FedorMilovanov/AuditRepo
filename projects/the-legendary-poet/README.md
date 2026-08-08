@@ -27,7 +27,7 @@
 - Компактная история волн и закрытий: [`verified/CLOSURE_LEDGER.md`](verified/CLOSURE_LEDGER.md)
 - W7 detailed verification: [`verification/2026-08-06-w7-route-runtime-wave/REPORT.md`](verification/2026-08-06-w7-route-runtime-wave/REPORT.md)
 - Историческая working matrix: [`archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`](archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md)
-- W6 inventory and deletion evidence: [`working/W6_BRANCH_ARTIFACT_INVENTORY_2026-08-05.md`](working/W6_BRANCH_ARTIFACT_INVENTORY_2026-08-05.md)
+- W6 inventory and deletion evidence: [`archive/stale-working-2026-08-08/W6_BRANCH_ARTIFACT_INVENTORY_2026-08-05.md`](archive/stale-working-2026-08-08/W6_BRANCH_ARTIFACT_INVENTORY_2026-08-05.md)
 - Historical verified/reverify evidence: `verified/`, `verification/`, `reverify/`, `archive/`
 
 ## Historical-document rule
