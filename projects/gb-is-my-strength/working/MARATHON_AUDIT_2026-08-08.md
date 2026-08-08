@@ -363,3 +363,15 @@ Both narrow localized, share manifest downstream → converge BAPT first, then C
 - **SEARCH-P2-07:** Research `d52ea9d` CANDIDATE_ONLY, Agent 06 `c1bab60` queue `PROMOTE=0`/`BLOCKED=7`, RusSynodalLIO blocked, Cassian permission-controlled, Charter S9 vs annex conflict
 - **REG-001:** hosting CSP/X-Frame decision
 - **NG-VIS-04:** Nagornaya prose rewrite editorial
+
+---
+
+## 15. Марафон фаза 17-18 — TLP HALL + CODE-AUDIT deep (10:05 UTC)
+
+`the-legendary-poet/verification/2026-08-08-marathon-hall-next-wave-readiness/REPORT.md` (65 lines):
+
+- `c34debc7` `phase=metricGreybox` 3 waves merged (foundation 9cce8bb + reference cc81858 + tooling 4d4c1b8 `84afd5f785f7` Blender 4.5.12 smoke 390K), H1/H2/H3 `unbuilt`, next wave author all three neutral candidates under equal-quality (shared proxy 1.75m, common lens, 6 desktop +3 mobile crops, neutral grey, artifact only, adversarial inspect). Hall correctly outside 0-row MASTER per DOC_MAP.
+
+`code-audit/verification/2026-08-08-marathon-code-audit-intake/REPORT.md` (45 lines):
+
+- intake-only scaffold, `archive/2026-07-05-stale-intake` 50K already archived, no active MASTER, no debt, `PROJECT_REGISTRY` not listed — intentional, next intake via `scaffold_intake.py`.
