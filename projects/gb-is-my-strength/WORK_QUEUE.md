@@ -12,6 +12,15 @@ Before starting any lane, re-read current Product owners/open PRs and verify the
 - Historical `QUAL-P2-04`: current MapEngine still rebuilds marker/path SVG structures in `renderMarkers()`, but source-level node recreation alone does not prove material GC/jank on the two public strict-native maps. Measure long-task/input/frame impact before refactoring rendering ownership.
 - Do not keep a `SYS-KARTY-RUNTIME-GEOMETRY` lane alive solely for these two measurement questions.
 
+### Home presentation-owner convergence
+
+- Fresh current-source witness at Product `a068decefff4ddd0055da952c84b7a3633d7b43b`: no new reader-visible Home regression was reproduced and the latest main advance (`#1213`) changes no Home file.
+- Mobile Directions presentation currently has two effective cascade owners: `HomeSections/Directions.astro` authors the `<=760px` showcase geometry, then later-rendered `HomeVisualAuditFixes.astro` overrides the same card grid/glyph/padding/type rules.
+- Ambient normal presentation remains distributed across `HomeAmbientPhrases.astro`, `HomeResponsiveContracts.astro` and `HomeAmbientInteraction.astro`; the safe-rail geometry conflict is repaired, but presentation ownership is not fully converged.
+- Localhost-only audit assertions also live inside Product Home components. Moving them into existing browser-contract owners may be part of a future cleanup, but source embedding alone is not a current defect.
+- **Do not promote this cleanup to MASTER without a trigger.** Promote only if a fresh browser regression, false-green contract, recurring owner/file collision, or measured runtime/maintenance failure proves owner convergence independently necessary.
+- Current evidence: `verification/2026-08-08-home-main-ci-control-plane-recheck/REPORT.md`.
+
 ### Baptists 3D measured split
 
 - Historical origin: `R-005`.
@@ -42,7 +51,7 @@ These were removed from MASTER during the 2026-08-07 cleanup because they are pe
 - **Karty runtime measurement:** historical `PERF-P1-01`, `QUAL-P2-04`.
 - **Karty dormant/optional UI:** historical `MINI-P1-01`; public Avraam/Ishod do not enable the minimap.
 - **Karty decorative/cartographic style ideas:** historical glyph/ornament/halo/sea-pattern/sheet-engine style suggestions are not active defects. Holding-map publication still has one explicit visual-readiness owner in MASTER, but it does not mandate any particular decorative implementation.
-- **Home polish/cleanup:** historical `AR-IDX-07`, `AR-IDX-08`, `AR-IDX-CSS-03`.
+- **Home polish/cleanup:** historical `AR-IDX-07`, `AR-IDX-08`, `AR-IDX-CSS-03`; current owner-convergence formulation is recorded above and remains optional until its promotion trigger is met.
 - **Generic refactor wishes:** historical `R-001`, `R-002`, `R-003`, `R-004`.
 - **Measured built-app split:** `R-005`, described above.
 
