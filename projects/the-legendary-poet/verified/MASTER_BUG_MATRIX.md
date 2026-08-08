@@ -1,40 +1,41 @@
-# Active Bug Matrix — The Legendary Poet
+# MASTER BUG MATRIX — the-legendary-poet
 
-**Role:** current verified engineering work only.  
-**Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.  
-**Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.  
-**Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.
+> **Role:** current verified engineering work only.
+> **Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.
+> **Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.
+> **Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.
 
-This file is intentionally short. Closed, absorbed, stale, invalid and superseded findings do not remain here merely to preserve history. The section/count shape below is retained because AuditRepo's shared validator treats `verified/MASTER_BUG_MATRIX.md` as a machine-readable counter surface.
+## Current state
 
-## ✅ ЗАКРЫТО (0)
+| Поле | Значение |
+|---|---|
+| Product verification anchor | `TBD` |
+| Wave | 2026-08-08 matrix consolidation |
+| Active work units | **0** |
+| Direct current defects | **0** |
+| Verified necessary improvements | **0** |
+| Narrowed residuals | **0** |
+| System verification lanes | **0** |
+| Owner decisions | **0** |
+| Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification packages and `archive/`; it is not duplicated into the active matrix.
+## CURRENT DEFECTS
 
-## 🟠 P1 — ОТКРЫТО (0)
+*(No current defects)*
 
-No verified-current P1 engineering rows.
+## VERIFIED NECESSARY IMPROVEMENTS
 
-## 🟡 P2 — ОТКРЫТО (0)
+*(No verified necessary improvements)*
 
-No verified-current P2 engineering rows.
+## SYSTEM VERIFICATION LANES
 
-## 🟢 P3 — ОТКРЫТО (0)
+*(No system verification lanes)*
 
-No verified-current P3 engineering rows.
+## OWNER DECISIONS
 
-## Summary
+*(No pending owner decisions)*
 
-| Категория | Количество |
-|---|---:|
-| Закрыто (fixed) | 0 |
-| **P0 открыто** | **0** |
-| P1 открыто | 0 |
-| P2 открыто | 0 |
-| P3 открыто | 0 |
-| Рефакторинг | 0 |
-| AuditRepo | 0 |
-| **Всего открыто (матрица)** | **0** |
+---
 
 Registered Product architecture lanes: **0** — AuditRepo-selected `TLP-HALL-001` / Product #369 is pending source registration by its foundation wave and remains outside the engineering bug matrix.
 
