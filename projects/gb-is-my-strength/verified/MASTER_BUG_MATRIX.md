@@ -1,74 +1,75 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
-> **SSOT рабочей тетради верифицированной нужной работы `gospod-bog.ru`.**
-> Несмотря на историческое имя файла, это не только баги: здесь живут текущие дефекты, доказанно нужные внедрения/улучшения, системные verification/implementation packages и owner decisions.
-> Решено / stale / duplicate / absorbed / invalid / superseded → убрать из MASTER в той же wave; полезный контекст остаётся в `../legacy/` и verification evidence.
+> **SSOT текущей верифицированной нужной работы `gospod-bog.ru`.** Решённое / stale / duplicate / absorbed / invalid / superseded удаляется из MASTER в той же wave; подробная история остаётся в `verification/` и `legacy/`.
 
-Current closure / main-advance evidence: [`../verification/2026-08-08-bapt-content-truth-closure-main-advance/REPORT.md`](../verification/2026-08-08-bapt-content-truth-closure-main-advance/REPORT.md).  
-Current S12 / in-flight guard recheck: [`../verification/2026-08-08-s12-metadata-and-inflight-guard-recheck/REPORT.md`](../verification/2026-08-08-s12-metadata-and-inflight-guard-recheck/REPORT.md).  
-Current deep-audit evidence: [`../verification/2026-08-08-total-current-gold-audit/REPORT.md`](../verification/2026-08-08-total-current-gold-audit/REPORT.md).  
-Current Home / owner / CI recheck: [`../verification/2026-08-08-home-main-ci-control-plane-recheck/REPORT.md`](../verification/2026-08-08-home-main-ci-control-plane-recheck/REPORT.md).  
-Previous Search/CSS handoff evidence: `../verification/2026-08-08-css-owner-closure-search-handoff/REPORT.md`.
+Current live refresh: [`../verification/2026-08-08-post-current-gold-live-refresh/REPORT.md`](../verification/2026-08-08-post-current-gold-live-refresh/REPORT.md).  
+Current reader-control semantics evidence: [`../verification/2026-08-08-reader-control-semantics-current-root/REPORT.md`](../verification/2026-08-08-reader-control-semantics-current-root/REPORT.md).  
+Current discovery/S12/catalog/Search recheck: [`../verification/2026-08-08-discovery-s12-catalog-search-head-recheck/REPORT.md`](../verification/2026-08-08-discovery-s12-catalog-search-head-recheck/REPORT.md).  
+Current deep-audit evidence: [`../verification/2026-08-08-total-current-gold-audit/REPORT.md`](../verification/2026-08-08-total-current-gold-audit/REPORT.md).
 
 ## Current state
 
 | Поле | Значение |
 |---|---|
-| Product verification anchor | `6d671d0e30bff8da1f7354a00191ab990f17ed12` |
-| Wave | Reader/browser marathon + S12 narrowing + Current-Gold owners, 2026-08-08 |
-| Active work units | **14** |
+| Product verification anchor | `11999f6d674e64e6afef590adeb71aeaaf303b3a` |
+| Research authority | `d52ea9d54dd2c2488223d25f5f6cefd263c23328` |
+| Wave | stable all-reading-route census + S12/source-authority/Search/Strangler control-plane reconciliation, 2026-08-08 |
+| Active work units | **15** |
 | Direct current defects | **2** |
 | Verified necessary improvements | **3** |
-| Narrowed residuals | **1** |
-| System verification lanes | **6** |
+| System verification lanes | **7** |
 | Owner decisions | **3** |
-| Closed/stale/duplicate/absorbed rows in MASTER | **0** |
+| Closed/stale/duplicate rows retained in MASTER | **0** |
 
-До cleanup исторический MASTER показывал 145 open rows. Это не означало 145 нынешних багов: старые симптомы были переверифицированы/сгруппированы, шум и закрытое вынесены из активной рабочей поверхности.
+`CURRENT GOLD` is not an average score and green CI is not equivalent to Gold. Current publication readiness remains derived from Product route/publication authorities + Research/content authority + browser/live evidence; no second manually maintained publication registry is authorized.
 
-Эта wave расширяет проверку от узкого технического defect census к **publication truth + reader complete-process truth**: current Product может быть технически зелёным и одновременно иметь подтверждённый reader-facing content/projection/readiness или control-semantics debt. MASTER по-прежнему хранит только крупные текущие work roots; детальная декомпозиция и evidence находятся в verification reports и Product issues.
+### Browser-marathon calibration boundary
 
-`BAPT-CONTENT-TRUTH-01` удалён из active MASTER после Product `#1217`, merged как `670d82fa5b567813a52886c62c704047f76b4b71`. Exact PR head `e1bbc4746904a5c7639c49146c4d434f74bdb038` прошёл все 5 triggered workflow groups, review threads = 0. QA authority теперь закрывает Q4 как **11** арестованных на документальной опоре Савина/РГАСПИ, Q8 как **1–6 апреля 1884** на Никитине/Степанове + независимом witness начала 1 апреля, а C8 корректно сужен. Public bodies уже совпадали с более сильной authority, поэтому closure потребовал только reconciliation register, а не переписывание reader prose.
+Product audit-only `#1212` stable-identity head `b48982428042df07c8a621bff40b64cb39b61536` completed a dedicated all-reading-route census: **55 routes / 232 scenes / 7020 control observations / 1068 generic clicks**, with 4035 specialized-inline controls handled outside generic geometry/click assertions. Artifact: `article-control-census-31246241912-1`, id `9018812831`, SHA-256 `b63299fc6a173815914a87f04ce4a6836c1effc076ee2a31c4137956b85caf3a`.
 
-`GILL-PROJECTION-01` ранее удалён после Product `#1213`, squash-merged как `a068decefff4ddd0055da952c84b7a3633d7b43b`: canonical Gill sequence восстановлен в обеих `/biografii/` projections, stale «Трилогия» снята, graph ordinal drift устранён, а существующий Gill consistency guard расширен на этот класс расхождения.
-
-Product `#1218` merged как `6d671d0e30bff8da1f7354a00191ab990f17ed12`: reader-facing S12 leak в «Подпольной печати» убран, `сохранены/сохранён локально` `е/ё` false-green закрыт fixture-guard. `BAPT-S12-01` поэтому **сужен**, а не считается полностью закрытым: Spravochnik PageHead всё ещё публикует backstage metadata wording, и текущий `sources:hygiene` body/MDX walker не является доказательством PageHead-чистоты. Этот exact PageHead пока занят Search `#1209` deterministic projection, поэтому остаток sequenced after Search release.
-
-Product advance `a068dece... → 6d671d0e...` не является сам по себе поводом переоценивать Home или другие независимые surfaces. Directions/Ambient presentation-owner convergence остаётся в `WORK_QUEUE.md` без свежего direct regression witness.
+Stable result is **887 manifestations, not 887 Product bugs**. The first full baseline was about 1855 manifestations; after stable control identity repair: `1855 → 887`, `click-failed 374 → 124`. MASTER stores surviving shared roots, not route/viewport symptom counts.
 
 ---
 
 ## CURRENT DEFECTS — 2
 
-| ID | Current defect / required repair | Current evidence / boundary |
+| ID | Required repair | Current evidence / boundary |
 |---|---|---|
-| `BAPT-S12-01` | Закрыть **оставшийся public-metadata S12 residual** и распространить hygiene contract на reader-facing metadata projection без повторного ремонта уже исправленного body. | Product `#1218` merged как `6d671d0e...`: Body rewrite + `сохранены/сохранён локально` `е/ё` guard + fixtures закрыты. Current `BaptistyRossiiSpravochnikPageHead.astro` всё ещё содержит `research-досье и очередь правок 3D-карты` в description/Twitter/OG/JSON-LD. `sources:hygiene` false-green объяснён точно: scanner body/MDX-oriented и не доказывает PageHead metadata. Exact PageHead занят Search `#1209`; не открывать конкурирующий edit. [`REPORT`](../verification/2026-08-08-s12-metadata-and-inflight-guard-recheck/REPORT.md) |
-| `CATALOG-PROJECTION-01` | Сделать `/articles/` правдивой derived projection текущих публикаций/серий вместо ручной копии метаданных; исключить orphan-by-catalog и ручной drift title/time/count. | Hero обещает «Все статьи», а publication grid hand-authored. Current drift уже наблюдаем: Gill представлен неполно как publication set, а ручное время чтения `Римлянам 7` расходится с canonical Heart data (`12` vs `45` минут). Product `#1216` закрыт как `SUPERSEDED_VERIFIED`; чистый bounded successor `#1221` на current main переносит derived catalog, guard, удаление старого manual owner и deterministic Scripture projection. [`REPORT`](../verification/2026-08-08-bapt-content-truth-closure-main-advance/REPORT.md) |
+| `BAPT-S12-01` | Remove the remaining **current public Baptist backstage metadata** at the real source authority and make its deterministic discovery projections converge without weakening S12. | Current route `/baptisty-rossii/spravochnik/` imports `BaptistyRossiiSpravochnikPageHead.astro`; that PageHead still publishes `research-досье и очередь правок 3D-карты` in description, Twitter, OG and Article JSON-LD. Search `#1209` currently owns that PageHead for revision projection, so do not open a competing source edit. `#1238` already removed five known Baptist body/MDX markers and must not be counted as full class closure. Separate guard/retirement ambiguity: old `BaptistyRossiiBody.astro` still contains backstage workspace prose, but current `/baptisty-rossii/` renders clean `BaptistyRossiiBookLanding.astro`; prove old Body authority/retirement before calling it a live-route defect or excluding it from hygiene. |
+| `CATALOG-PROJECTION-01` | Replace the hand-authored `/articles/` publication owner with a truthful derived projection while preserving media, architecture metadata and clean source-derived discovery semantics. | Product `#1221` remains the bounded owner. Its own barrier correctly blocks merge until Search releases Spravochnik source metadata, that source is cleaned once, canonical discovery/Search/RSS projections converge, current main is absorbed and exact-head CI is green. Do not resurrect predecessor-only writer mechanisms or hand-patch generated manifest rows. |
 
 ---
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 3
 
-| ID | Needed implementation | Why it is active work / evidence |
+| ID | Needed implementation | Current boundary |
 |---|---|---|
-| `SEARCH-P3-02` | Give Search one truthful continuation contract across Pagefind, manifest fallback and exact Scripture occurrence paths: expose total vs shown state and deterministic continuation without reopening global shortcut ownership. | Product `#1209` remains the current owner. Latest observed actual head `e06a1abec8a503177ff7bb6b16f94219b72dec27`; against Product `main@6d671d0e...` it is currently `behind=1`, so earlier green exact-head sets remain semantic evidence only until current ancestry/final head is green. `verification/2026-08-08-bapt-content-truth-closure-main-advance/REPORT.md` |
-| `AR-IDX-05` | Replace the generic runtime `SITE_CONFIG.version` bridge with explicit per-asset revision authority for runtime-loaded CSS (or an equivalent injected asset map), then remove the misleading generic bridge when unused. | Canonical hashes already exist for `css/enhancements-runtime.css` and `css/highlights-runtime.css`, but `js/enhancements.js` and `js/highlights.js` version those files with generic `SITE_CONFIG.version`; `BaseLayout.astro` seeds that field from the unrelated `js/glossary.js` hash. `verification/2026-08-08-css-owner-closure-search-handoff/REPORT.md` |
-| `AUDIT-JS-ESCAPER-DUP-X5` | Add one appropriate shared HTML-escaping primitive and migrate the five current local escapers, preserving loader availability and context/output equivalence rather than replacing helpers mechanically. | Fresh current-source re-read confirms five separate `& < > \"` HTML escapers: three lexical helpers in `js/site.js`, one in `js/highlights.js`, one in `js/search.js`; `js/site-utils.js` does not yet own a canonical equivalent. `verification/2026-08-08-direct-defects-zero/REPORT.md` |
+| `SEARCH-P3-02` | One truthful continuation contract across Pagefind, manifest fallback and exact Scripture occurrences: visible total/shown state + deterministic continuation, without reopening global shortcut ownership. | Product `#1209` remains owner. Fresh actual head `da2df5addb6e9bce08327e60d6ba5effef239857`; its PR description still names old exact head `882d904...` / base `1f14761a...`. Against Product `main@11999f6d...`, compare is `ahead=53 / behind=2`. Current red Search Modal and Scripture occurrence checks both abort before browser runtime because cache-bust projection is stale: canonical `js/search.js` revision recalculates to `027c3f4f`, while branch `src/lib/asset-version.js` still records `5bb24c97`; the read-only cache-bust check reports 20 stale projection files. Align canonical projection, absorb current main non-force, refresh exact-head body, then require terminal Search/browser/Shared Files CI. |
+| `AR-IDX-05` | Replace generic runtime `SITE_CONFIG.version` with explicit per-asset revision authority for runtime-loaded CSS, then retire the misleading generic bridge when unused. | `enhancements-runtime.css` / `highlights-runtime.css` have canonical hashes, while loaders still version via generic `SITE_CONFIG.version` seeded from unrelated glossary identity. |
+| `AUDIT-JS-ESCAPER-DUP-X5` | Add one appropriate shared HTML-escaping primitive and migrate the five current local escapers while preserving loader availability and output/context semantics. | Five equivalent HTML escapers remain across `js/site.js`, `js/highlights.js`, `js/search.js`; no canonical shared equivalent yet. Do not combine with Search continuation while `#1209` owns `js/search.js`. |
 
 ---
 
-## SYSTEM VERIFICATION LANES — 6
+## SYSTEM VERIFICATION LANES — 7
 
-Одна строка = один bounded current package/root, а не десятки исторических симптомов. Детальная декомпозиция Current-Gold работ находится в linked REPORT и **не является второй active matrix**.
+One row = one bounded shared root/package, not dozens of route manifestations.
 
-| ID | Verified work package | Next boundary / evidence |
+| ID | Verified work package | Current boundary / evidence |
 |---|---|---|
-| `SYS-READER-CONTROL-SEMANTICS` | Один shared repair root для truthful control→surface behavior across standalone/full-series reader engines: Menu ≠ Search, config-owned Back, valid trigger relations/states, valid list semantics and no duplicate standalone control drift. | Product issue `#1224` — canonical root. Current source proves: standalone ReaderRail hamburger promises site sections but dispatches Search while a separate Search magnifier already exists; shared series mobile Back hardcodes `../../biografii/` instead of `SeriesConfig.railBackHref`; standalone/series TOC lists contain decorative direct children under `<ul>`; standalone/series TOC/Settings relations are incomplete; Baptist `quiz: []` leaves an orphan `panelQuiz aria-labelledby=tabQuiz`; KdV renders duplicate desktop Settings actions. Existing OverlayRuntime remains healthy and must not be replaced. First bounded implementation slice `#1227` extends the existing `reader-controls-a11y.js` owner + its permanent Chromium contract for already-working surfaces; Search/menu extraction waits for `#1209`. Browser census `#1212` remains evidence/guard, not Product repair. |
-| `SYS-FOOTNOTE-SEMANTIC-PROJECTION` | Make numbered/source footnotes first-class publication notes with one source identity and truthful screen + accessibility + print projections, instead of treating the citation body as tooltip-only UI. | Product issue `#1225` — canonical root. Current `reader-projection.js` excludes `.fn-marker/.tooltip` as note UI for reader/TTS projection, while current print CSS explicitly hides `.tooltip` with `display:none!important`; Hermenevtika current source still has many generic `aria-label="Показать сноску"` markers whose citation body exists only inside the tooltip. Preserve completed nested-Bible repair `#53` and existing physical PDF geometry owner; add deterministic print endnote completeness + unique marker→note relations rather than making floating tooltips visible on paper. |
-| `SYS-CURRENT-GOLD-READINESS` | Build a **derived** current-publication readiness layer on top of existing Product authorities, not a new publication registry. It must distinguish source acceptance from live publication and make human discoverability, metadata approval, Research/content holds, visual evidence and production witness explicit. | Product `#1220` is the bounded first implementation owner and is based on current Product lineage. Human-reachability witness is derived from public-surface authority and rendered Chromium/JS-disabled evidence; no second publication registry. Existing Product issue `#298` remains visual-golden authority. [`REPORT`](../verification/2026-08-08-bapt-content-truth-closure-main-advance/REPORT.md) |
-| `SYS-BAPTISTY-PUBLICATION-READINESS` | One series-level readiness program for the 10 Baptist routes **after independently actionable direct defects above are handled**: Research/current-scope closure, source confidence, authentic media provenance, roadmap realization, 2D diagrams where useful, modern-stat as-of discipline and 3D data/build/live convergence. | Current Product roadmap explicitly says the articles are not final and requires depth, local rights-cleared media and map sync; canonical media ledger is still TODO-only; visual atlas entries remain `planned`; Research records source-snapshot 3D corrections not rebuilt into production iframe. Decompose implementation into article/data/media/map lanes; do **not** make one mega-PR. [`REPORT`](../verification/2026-08-08-total-current-gold-audit/REPORT.md) |
-| `SYS-KARTY-HOLDING-PUBLICATION-READINESS` | One publication-readiness package for the currently held map routes. The public hub/HoldingPage contract requires initial viewport, label collision, desktop/mobile layout, controls, route readability and overall visual quality before return. Route/schema readiness (Shoftim stages, Early Church overlap, Shvatim regions, draft route completeness) is checked in the same activation transaction. Historical sheet-engine decoration/style wishes are not requirements by themselves. | Current browser/screenshots + `maps:validate`/route-owner evidence per candidate immediately before activation. Promote only concrete blockers that remain independently actionable outside that activation transaction. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `SYS-STRANGLER-RETIREMENT` | Current authority/identity/parity is clear for the retained legacy/native-shadow surface; storage-location abstraction and remaining dependency blockers are handled through bounded Strangler waves rather than direct legacy deletion. | Product `#1222` is current storage-abstraction Wave A on `main@6d671d0e...`; it changes five intended files and is designed to reduce mechanical blockers without moving/deleting legacy bytes or resolving owner decisions. Merge/deletion remains exact-head evidence gated. `verification/2026-08-08-css-owner-closure-search-handoff/REPORT.md` |
+| `SYS-READER-CONTROL-SEMANTICS` | Truthful control→surface/action semantics across standalone/shared-series readers: Menu ≠ Search, config-owned Back, valid popup/label relations, synchronized state and valid list semantics. | Product issue `#1224` is canonical authority. Stable census proves: **174** broken ARIA references / 42 routes, all `panelQuiz aria-labelledby="tabQuiz"` while `tabQuiz` is absent; source root is conditional quiz trigger + unconditional `panelQuiz` in `GillLearningSheet.astro`. **174** Back-authority manifestations / 42 routes validate config-derived mobile Back. **103** invalid-list manifestations / 50 routes are decorative `gbs2-track`/`hrail-track` spans directly under semantic lists. **70** popup-trigger relation manifestations span all 55 routes. Do not create route issues for these shared roots. `#1240` is the bounded Back successor and `#1246` the bounded relation-state successor; both remain semantically two-file diffs but are `behind=2` after `#1238 + #1245`. Refresh once when merge-ready rather than proliferating successors. |
+| `SYS-FOOTNOTE-SEMANTIC-PROJECTION` | Give numbered/source footnotes one source identity with truthful screen, accessibility and print projections instead of tooltip-only publication semantics. | Product issue `#1225` is canonical authority. Stable census reports 14 affected **scenes**, not 14 notes: Hermenevtika has **114** repeated generic footnote names, Kod Da Vinci **21**, `/articles/krajne-li-isporcheno-serdce/` **40**. Preserve nested-Bible repair and existing print geometry owner; fix identity/projection systemically and prove deterministic print endnote completeness + unique marker→note relations. |
+| `SYS-CURRENT-GOLD-READINESS` | Derived publication-readiness evidence on top of existing authorities: human discoverability, metadata approval, Research/content holds, media/visual evidence and production witness. | First slice `#1220` is merged as Product `1f14761a...`; it is not an active owner. Keep the system root only for subsequent independently evidenced convergence. Issue `#298` remains product-golden authority; consume it instead of opening a second visual-baseline program. |
+| `SYS-BAPTISTY-PUBLICATION-READINESS` | Series-level readiness for the ten Baptist reading routes after independently actionable defects are handled: Research closure, source confidence, authentic media provenance, roadmap realization, diagrams, modern-stat as-of discipline and map/data/live convergence. | Current roadmap still states the articles are not final; media ledger remains effectively TODO-only; visual-atlas entries remain planned; 3D source corrections and production rebuild/live witness remain separate. Decompose by article/data/media/map; no mega-PR. |
+| `SYS-KARTY-HOLDING-PUBLICATION-READINESS` | Publication-readiness transaction for held map routes: viewport, label collision, responsive layout, controls, readability, visual quality and route/schema readiness before activation. | Verify candidate browser/screenshots + `maps:validate`/route ownership immediately before activation. Promote only independently actionable blockers. |
+| `SYS-STRANGLER-RETIREMENT` | Retire/quarantine legacy reference storage only after identity, dependency ownership, inventory/integrity/parity and post-move verification are fail-closed. | Product `#1222` Wave A exact head `22983986fadc50f22fb831a2b956915576448aad` contains current Product `11999f6d...`, exactly five intended files, `behind=0`. Verified result reduces retirement blockers **26 → 21** (11 mechanical + 3 obsolete + 7 owner decisions) without moving/deleting legacy bytes. Current exact-head Shared Files, Deploy Candidate, Metadata, Search Modal and Source Authority are SUCCESS; Visual is in progress and Route Registry queued at this record, so merge barrier is not terminal yet. |
+| `SYS-SOURCE-AUTHORITY-TRIGGER-CLOSURE` | Make Source Authority workflow applicability fail closed against the source surfaces its static-publication validation actually consumes. | Product issue `#1244` is the canonical residual. Merged `#1245` / Product `11999f6d...` fixed the concrete Baptist false-negative by adding `src/content/articles/**` and `src/components/baptisty-rossii/**` to PR/push filters. Full issue DoD remains incomplete because `#1245` intentionally added only four path-filter lines and no adversarial/path-applicability contract. Keep the issue open **narrowed to guard health**: inventory protected roots, assert PR+push applicability, and mutation-test removal of representative roots. Do not reopen the already-fixed Baptist witness. |
+
+### Census layers not yet promoted to Product defects
+
+- **124 click-failed**: concentrated at mobile 390 (`mobPartTocBtn` 49, theme 49, Favorite 18). Stable runner still Escape-resets same-route state rather than fresh-page/fresh-context per control; require isolated replay before Product promotion.
+- **207 undersized target manifestations**: size prefilter only, not 207 WCAG failures. Full SC 2.5.8 verdict requires 24×24 or spacing/exception evaluation; audit owner `#1212` has a calibration handoff to record spacing-circle evidence.
+- **12 runtime-error scenes**: mostly WebKit `interactive-widget` warnings and localhost manifest/CSP noise; isolate the Hermenevtika WebKit `TypeError: Load failed` separately before promotion.
+- Nagornaya `barShareBtn` clipping is visually real in six mobile-390 scenes, but exact markup/runtime ownership must be separated from active Search touches before a new repair owner is opened.
 
 ---
 
@@ -76,59 +77,34 @@ Product advance `a068dece... → 6d671d0e...` не является сам по 
 
 | ID | Missing decision / evidence |
 |---|---|
-| `SEARCH-P2-07` | Exact licensed/provenanced Bible corpus acquisition/import/publication boundary **and policy reconciliation**: Product Charter currently says Synodal by default while the Content Quality annex directs NT Cassian / OT Synodal; Research `d52ea9d...` keeps current corpus fail-closed, Cassian permission-controlled, and CrossWire `RusSynodal` 1.9.1 candidate-only pending exact archive/hash/mapping/import proof. Do not expand permission-unproven corpus before this owner decision. [`REPORT`](../verification/2026-08-08-total-current-gold-audit/REPORT.md) |
-| `REG-001` | Hosting/proxy decision for response-level CSP/X-Frame/Referrer/Permissions headers, or explicit accepted-risk disposition. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `NG-VIS-04` | Author/editor decision whether dense table/card material should be rewritten into more prose/air. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
+| `SEARCH-P2-07` | Exact licensed/provenanced Bible corpus acquisition/import/publication boundary **and policy reconciliation**: Product Charter says Synodal by default while Content Quality directs NT Cassian / OT Synodal. Research `d52ea9d...` remains fail-closed; Cassian permission-controlled; CrossWire `RusSynodal` 1.9.1 candidate-only pending exact archive/hash/mapping/import proof. |
+| `REG-001` | Hosting/proxy decision for response-level CSP / X-Frame / Referrer / Permissions headers, or explicit accepted-risk disposition. |
+| `NG-VIS-04` | Author/editor decision whether dense Nagornaya table/card material should be rewritten into more prose/air. |
 
-`GENESIS6-ACTIVATION-OWNER-GAP` remains retired as **stale/fixed-current**: Product issue `#362` is closed `completed`, and its final lifecycle evidence records `COMPLETED / PRODUCTION WITNESSED / NO OPEN GENESIS PRODUCT DEFECT`. Historical context remains in Product issue history and prior AuditRepo verification; no new Product lane is authorized by this retirement.
+`GENESIS6-ACTIVATION-OWNER-GAP` remains retired as stale/fixed-current: Product issue `#362` is completed and production witnessed; no new Product lane is authorized by that historical row.
 
 ---
 
-## IN FLIGHT — do not collide
+## IN FLIGHT — collision / merge barriers
 
-Not extra work units; current Product owners or existing issue authorities that constrain implementation:
-
-- Product `#1209` remains the owner for `SEARCH-P3-02`, actual head `e06a1abec8a503177ff7bb6b16f94219b72dec27`; against Product `main@6d671d0e...` it is currently `behind=1`. Do not merge from an older green set; refresh ancestry and rerun exact current head.
-- `#1209` also touches `BaptistyRossiiSpravochnikPageHead.astro` for deterministic command-palette cache revision. The file contains the remaining `BAPT-S12-01` metadata leak. Do not open a competing PageHead edit while Search owns the file; sequence/coordinate the S12 metadata repair after release of that exact owner.
-- Product `#1218` is **merged** as `6d671d0e30bff8da1f7354a00191ab990f17ed12`. It closed the S12 body/`е/ё` guard manifestation only; do not keep treating it as an active branch owner and do not claim it closed the Spravochnik PageHead residual.
-- Product `#1216` is **closed unmerged / SUPERSEDED_VERIFIED**. Canonical catalog owner is `#1221`, based on current Product lineage. Do not resurrect predecessor-only workflow writer mutation.
-- Product `#1212` is audit-only current work to add an all-reading-route interaction census. Frozen calibration head `3292f4c36c0225d438e234ba3eb1b3d286c6459d` is now `behind=3` from `main@6d671d0e...`; its in-flight browser run is calibration evidence only. After artifact classification, refresh current-main ancestry non-force and rerun; do not use old-head success/failure as merge authorization.
-- Product `#1227` is the first bounded implementation slice of `SYS-READER-CONTROL-SEMANTICS`; exact head at this wave is `49aa055c1f4f7ff122afb7d0a2db34273d7b5ec2`. It touches only `src/runtime/reader-controls-a11y.js` + its existing permanent Chromium contract, and deliberately leaves Back/menu/list/KdV/inner-accordion residuals open. Do not broaden it into Search/menu extraction or visual redesign.
-- Product `#1220` is the current first implementation owner for `SYS-CURRENT-GOLD-READINESS`. It must remain derived from public-surface authority, not become a second publication registry; no second MASTER row is needed for in-flight harness details.
-- Product `#1222` owns the current Strangler storage-abstraction Wave A. Do not overlap its migration/legacy-reference files from reader/catalog/search work.
-- Product `#1223` is diagnostic-only npm security inventory and **must not merge**; its existence is not a Product dependency/runtime mutation owner.
-- Product issue `#1224` owns the shared reader-control semantic root; issue `#1225` owns footnote publication projection. Old Hermenevtika issue `#54` now has a handoff comment pointing shared residuals to these SYSTEM owners; only fresh route-specific Hermenevtika residuals should remain local to #54.
-- Fresh Home recheck found no new direct defect. Directions/Ambient presentation-owner convergence remains optional in `WORK_QUEUE.md`; do not create a Product `SYS-HOME-*` lane unless its recorded promotion trigger is met.
-- Existing Product issue `#298` already owns the product-golden blind spot. `SYS-CURRENT-GOLD-READINESS` and reader visual work should consume/reference that evidence rather than opening a duplicate visual-baseline program.
-- No separate Product repair lane is authorized merely because this audit decomposes future work; every Product mutation still requires fresh owner/open-PR/current-surface discovery.
-- Do not combine Search continuation, runtime asset identity, JS escaper consolidation, catalog projection, reader-control semantics, footnote projection and Current-Gold tooling into one shared refactor wave.
-
-Recently merged/closed material current to this reconciliation:
-
-- `#1218` — S12 reader-body wording + `е/ё` guard repair; merged Product `6d671d0e...`; S12 row narrowed to metadata residual;
-- `#1217` — Baptist publication-truth reconciliation; merged Product `670d82fa...`; row retired;
-- `#1216` — closed unmerged as `SUPERSEDED_VERIFIED`; clean catalog successor is `#1221`;
-- `#1214` — closed unmerged as `SUPERSEDED_VERIFIED`; body/guard successor was `#1218`;
-- `#1213` — Gill public series projection convergence; Product `a068dece...`;
-- `#1205` — closed duplicate shared CSS owners; Product `21b437cb...`;
-- `#1197` — series-level Nagornaya library theme ownership repair; Product `76ad2f3f...`;
-- `#1195` — FAQ JSON-LD text-only security repair; Product `a2d0ce58...`;
-- `#1183` — global Search shortcut/runtime ownership closure; Product `67c23492...`;
-- `#1193` — Hermenevtika accepted-semantic anchor repair; Product `f3e291b7...`;
-- `#1185` — positive semantic manifests for Hermenevtika + Gill Part I; Product `c9055428...`;
-- Genesis issue `#362` — completed and production witnessed; its former owner-gap row is retired.
+- **Search `#1209`** owns Search continuation and deterministic revision consumers including Spravochnik PageHead. Actual head `da2df5a...`; body/exact-head/base claims stale; branch `behind=2`; current red Search gates are stale cache-bust projection failures before browser runtime. Do not merge or open competing Spravochnik source edit.
+- **Catalog `#1221`** owns derived `/articles/` projection. It is intentionally blocked on clean source-derived Spravochnik discovery metadata after Search releases the source owner, then current-main absorption + fresh exact-head CI.
+- **Strangler `#1222`** is the cleanest current-main-rooted active Product mover at `22983986...`; wait for terminal Visual + Route Registry before merge authorization.
+- **Reader `#1240` / `#1246`** are current semantic successors for Back and relation-state slices; each is `behind=2` only because independent S12/Source-Authority main commits advanced. Their net semantic compares remain two files each. Do not create v3 successors on every main advance; refresh once after the near-term main mover settles.
+- **Audit `#1212`** is evidence/guard only. Stable-identity artifact is authoritative for root classification, but the PR itself is not Product behavior repair.
+- **Baptist S12**: current live landing route renders `BaptistyRossiiBookLanding.astro`, not dirty old `BaptistyRossiiBody.astro`; do not misreport old Body copy as live without import/authority proof. Current direct live S12 blocker is Spravochnik PageHead metadata.
+- **Source Authority issue `#1244`** remains open only for trigger-closure guard health after merged `#1245`; concrete Baptist trigger coverage is fixed.
+- Existing issue `#298` owns product-golden blind spot; issue `#1224` owns reader-control semantics; issue `#1225` owns footnote projection. Do not duplicate them.
 
 ---
 
 ## Hygiene
 
-1. MASTER holds **verified necessary current work**, not only defects.
-2. Detailed audit decomposition belongs in verification evidence; it does **not** become active merely because it has an ID in a report.
-3. A necessary improvement/implementation may enter MASTER when evidence proves material Product value/requirement/risk reduction; speculative refactor/polish stays in `WORK_QUEUE.md`.
-4. Solve → verify result → remove from MASTER immediately.
-5. Many symptoms with one root → one `SYS-*` row.
-6. Holding routes are one activation/readiness transaction until a blocker becomes independently current.
-7. Legacy is retained for lookup, but never treated as backlog; revival requires current re-verification.
-8. Before Product edits, inspect current Product HEAD/open PRs/branches and avoid owner/file collisions.
-9. A moving Product `main` alone is not a reason for AuditRepo authority-sync; update MASTER only when finding disposition, scope, evidence or actionable handoff materially changes.
-10. `CURRENT GOLD` is a derived evidence state, not a manually maintained second SSOT.
+1. MASTER holds verified necessary **current** work; detailed decomposition lives in verification evidence.
+2. Solve → verify result → remove or narrow the MASTER row immediately.
+3. Many symptoms with one shared root → one active row.
+4. Candidate-only defects stay under the owning active root unless independently present on current `main`.
+5. Before Product edits, inspect current Product HEAD/open PRs and avoid owner/file collisions.
+6. A moving Product `main` alone is not a reason to rewrite authority; update when disposition, scope, evidence or actionable handoff materially changes.
+7. `CURRENT GOLD` is derived evidence, never a manually maintained second publication SSOT.
+8. Audit findings can be promoted **or demoted** when stronger route/source/runtime evidence arrives; preserve corrections rather than defending an earlier hypothesis.
