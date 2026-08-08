@@ -263,3 +263,49 @@ many audit passes → evidence → verification wave → deduplicate → compact
 
 *Марафон 2026-08-08 09:39-09:45 UTC — 4 фазы, 15 файлов удалено, 23 перемещено в archive, 1 dedup, 7.7M+ active saved, 0 evidence lost, all validators PASS. Следующий файл — `LEGACY_TRASH_AUDIT` уже содержит P2-P3 рекомендации. Продолжение — по команде или next verification wave.*
 
+
+---
+
+## 9. Марафон фаза 7-9 — выполнено 09:40-09:45 UTC (второй push `f7f00c8`)
+
+### Фаза 7 — audit-session dedup (save 40K active)
+
+`references/audit-session-2026-08-05` содержал 11× MASTER_REPORT (CONTRACTS + v2..v12 = 748 lines). 10 дубликатов `v2..v11` перемещены в `archive/2026-08-05-stale-audit-session-reports/` (52K), оставлены `MASTER_REPORT_2026-08-05_CONTRACTS.md` (153 lines, canonical contracts reference→1:1) + `MASTER_REPORT_v12_CANDIDATES_2026-08-05` (24 lines, latest self-audit 4 candidates). 10 JSON contracts + 2 JS prototypes (`diff-canonical.mjs` false-green, `guard-no-main-junk.mjs` unwired) остаются как evidence-only в `artifacts/prototypes` — not мусор.
+
+### Фаза 8 — reverify delta → archive (save 110K active)
+
+14 файлов `2026-07-05_*` (audit-1-intake, cache-bust, content-parity, gill-scrollspy, pass-91, pre-v16, sec-001) + `2026-07-09` head-delta + `2026-07-14` 2ca2af3b/bd8cb9a0/css-js + `2026-07-19` karty_deep_audit + `2026-07-20` karty_drawing → `archive/2026-07-05-08-stale-reverify-delta/` (132K). Все >30 days, fixed/retired per `MATRIX_ID_ALIASES` (например `AUDIT-CSS-SITECSS-STRUCT-CORRUPTION` retired, `NEW-67` false-positive). Осталось `reverify` 105 файлов (was 135): 60 current `2026-08-*` + 45 intermediate `2026-07-21..08-06`.
+
+### Фаза 9 — prototype hygiene
+
+Добавлен `prototype/README.md` (19 lines): объясняет `assets/` (gill.webp etc.) + `book-engine/v7/` (GBS Book Prototype 139K HTML, three-level hierarchy book→chapter→article→H2/H3, standalone, not Product authority, must reuse SeriesConfig etc.). Ранее `prototype/` не имел README — теперь self-documented.
+
+### Итоговые метрики после фаз 7-9
+
+| Метрика | После фаз 1-6 | После фаз 7-9 | Δ |
+|---|---:|---:|---:|
+| `reverify` files | 120 | 105 | -15 |
+| `references/audit-session` MASTER_REPORT | 11 | 2 | -9 |
+| `evidence files` (coverage) | 419 | 405 | -14 |
+| `historical files` | 567 | 591 | +24 |
+| `evidenceOnlyIds` | 798 | 764 | -34 |
+| `working` | 7 | 7 | 0 |
+| Prototype docs | 0 README | 1 README | +1 |
+| Validation | PASS | PASS | — |
+
+Push `f7f00c8` — 25 files moved (0 insertions), validators PASS.
+
+---
+
+## 10. Что дальше — марафон продолжается
+
+### Следующие витки (P2-P3) — не выполнены, но спланированы
+
+- **P2a:** 6× `incoming/arena-agent-karty-*` 2026-07-07 8.4M → `archive/2026-08-08-stale-incoming-karty` (raw keep, reduce active incoming 25M→17M) — requires owner acknowledgment (raw evidence rule).
+- **P2b:** `references/gb-ui-canon` 5M + `gill-mobile` 5M HTML duplicates → archive older versions (keep v2.9 latest) — 10M saving, but references are forensic retention.
+- **P3:** Doc sync wave — `MATRIX_ID_AND_EVIDENCE_MODEL.md` update to compact `Current state` schema (currently describes only legacy `✅ ЗАКРЫТО/P0-P3`), `CLOSURE_LEDGER` transition note `Historical closed rows пока остаются` → `0`, `PROJECT_META.yml` override documented in `DOC_MAP.md`.
+- **S-CLASS deep retrospective:** `archive/2026-07-14-stale-working-extended/DEEP_AUDIT_S-CLASS_2026-07-14.md` (S-T-01 blind spot audit-pro.js, S-SEC-01 blacklist, S-DATA-01 series desync) — all now retired/absorbed per `MATRIX_CLEANUP_2026-08-07.md` (S-T-01 superseded by Workflow Policy v2, S-SEC-01 sanitizer replaced by plain-text FAQ JSON-LD via `#1195`, S-DATA-01 resolved). Marathon confirms no resurrection needed.
+- **System audit next:** Strangler self-verifier Option B (reclassify ledger), manifest parity reconciler (SYS-?), reader-control census harness fix (124 click).
+
+Марафон не останавливается — каждый следующий виток: `evidence → verification → deduplicate → compact MASTER → legacy → validators PASS`.
+
