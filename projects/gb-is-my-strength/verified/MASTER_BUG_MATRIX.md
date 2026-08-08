@@ -11,10 +11,10 @@ Previous Search/CSS handoff evidence: `../verification/2026-08-08-css-owner-clos
 
 | Поле | Значение |
 |---|---|
-| Product verification anchor | `21b437cb79f7b74a4ad3c68e21ffad2edd8ce458` |
+| Product verification anchor | `a068decefff4ddd0055da952c84b7a3633d7b43b` |
 | Wave | Current-Gold synthesis + publication-truth reverify, 2026-08-08 |
-| Active work units | **14** |
-| Direct current defects | **4** |
+| Active work units | **13** |
+| Direct current defects | **3** |
 | Verified necessary improvements | **3** |
 | Narrowed residuals | **0** |
 | System verification lanes | **4** |
@@ -25,15 +25,16 @@ Previous Search/CSS handoff evidence: `../verification/2026-08-08-css-owner-clos
 
 Эта wave расширяет проверку от узкого технического defect census к **publication truth**: current Product может быть технически зелёным и одновременно иметь подтверждённый reader-facing content/projection/readiness debt. MASTER по-прежнему хранит только крупные текущие work roots; детальная декомпозиция и evidence находятся в Current-Gold REPORT.
 
+`GILL-PROJECTION-01` удалён из active MASTER после Product `#1213`, squash-merged как `a068decefff4ddd0055da952c84b7a3633d7b43b`: canonical Gill sequence восстановлен в обеих `/biografii/` projections, stale «Трилогия» снята, graph ordinal drift устранён, а существующий Gill consistency guard расширен на этот класс расхождения. Exact PR head `a748cb57fe276693019bbdd4ec9db790050a43e9` прошёл все 11 triggered workflow groups; review threads = 0.
+
 ---
 
-## CURRENT DEFECTS — 4
+## CURRENT DEFECTS — 3
 
 | ID | Current defect / required repair | Current evidence / boundary |
 |---|---|---|
 | `BAPT-S12-01` | Убрать reader-facing backstage research leak в «Подпольной печати» и закрыть false-green в `sources:hygiene` для формы `сохранены локально` через `е/ё` normalization или эквивалентный точный guard. | Current Product body снова содержит служебную формулировку о локально сохранённых контрольных выпусках, хотя Charter S12 запрещает такие backstage notes. Existing regex покрывает `сохранён... локально` с `ё` и пропускает current `сохранены локально`. Нужен bounded content + guard repair с mutation на реальную строку. [`REPORT`](../verification/2026-08-08-total-current-gold-audit/REPORT.md) |
 | `BAPT-CONTENT-TRUTH-01` | Свести опубликованные Baptist factual claims с current discrepancy authority: спорные цифры/даты не должны быть сильнее источника; разрешить источник либо квалифицировать public prose и синхронизировать reference/map consumers. | Два current witnesses: `goneniya-i-sovest` публикует **11** арестованных делегатов, пока QA register держит `11 vs 21` открытым; `dva-sezda-1884` публикует exact `1–6 апреля 1884`, пока register требует отдельного подтверждения точной даты. Это один content-truth reconciliation package, не разрешение массово переписывать серию. [`REPORT`](../verification/2026-08-08-total-current-gold-audit/REPORT.md) |
-| `GILL-PROJECTION-01` | Свести все публичные Gill projections к canonical sequence Context → I → II → III «Экзегет» → IV «Наследие» → Reference и расширить существующий consistency guard на публичные prose/catalog projections. | Current `/biografii/` пропускает Part III и продолжает использовать устаревшее «Трилогия»; `data/links-graph.json` семантически меняет местами III/IV в descriptions. Чинить projection root, не одну карточку. [`REPORT`](../verification/2026-08-08-total-current-gold-audit/REPORT.md) |
 | `CATALOG-PROJECTION-01` | Сделать `/articles/` правдивой derived projection текущих публикаций/серий вместо ручной копии метаданных; исключить orphan-by-catalog и ручной drift title/time/count. | Hero обещает «Все статьи», а publication grid hand-authored. Current drift уже наблюдаем: Gill представлен неполно как publication set, а ручное время чтения `Римлянам 7` расходится с canonical Heart data (`12` vs `45` минут). Fix должен читать существующие route/series/metadata authorities, а не создавать новый publication SSOT. [`REPORT`](../verification/2026-08-08-total-current-gold-audit/REPORT.md) |
 
 ---
@@ -77,7 +78,7 @@ Previous Search/CSS handoff evidence: `../verification/2026-08-08-css-owner-clos
 
 Not extra work units; current Product owners or existing issue authorities that constrain implementation:
 
-- Product `#1209` is the current owner for `SEARCH-P3-02` on base `21b437cb...`; at the latest snapshot its exact head was `88d3b3d02cfa85306daaa68ff88b0ad0de3ff70e`. Re-read the actual head immediately before any merge/overlap decision because this candidate has moved during CI hardening.
+- Product `#1209` is the current owner for `SEARCH-P3-02`; re-read the actual exact head immediately before any merge/overlap decision because this candidate has moved repeatedly during CI hardening.
 - Do not overlap `#1209` in Search/shared search assets or its deterministic projection consumers.
 - Existing Product issue `#298` already owns the product-golden blind spot. `SYS-CURRENT-GOLD-READINESS` should consume/reference that evidence rather than opening a duplicate visual-baseline program.
 - Existing Product issue `#54` is a historical Hermenevtika umbrella whose old checklist has been partially/sometimes systemically superseded by later merged work. Reverify current residuals before promoting any new Hermenevtika row.
@@ -86,6 +87,7 @@ Not extra work units; current Product owners or existing issue authorities that 
 
 Recently merged/closed material current to this reconciliation:
 
+- `#1213` — Gill public series projection convergence; Product `a068dece...`;
 - `#1205` — closed duplicate shared CSS owners; Product `21b437cb...`;
 - `#1197` — series-level Nagornaya library theme ownership repair; Product `76ad2f3f...`;
 - `#1195` — FAQ JSON-LD text-only security repair; Product `a2d0ce58...`;
