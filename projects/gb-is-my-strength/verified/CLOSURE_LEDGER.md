@@ -127,3 +127,9 @@ This entry records the governance change only. It does not claim that the reform
 - Regression witness: PR #876 exact tested head `4f42dc9b1da39cdc3d6d70360d0535a4418d8a8e` proved 56 routes × desktop/mobile = 112/112, exactly one 280,394,098-byte model request, Worker reuse and a 32.7 ms maximum UI heartbeat gap; current consent contract rejects heavyweight document-client ownership and premature Worker-start regressions.
 - Live evidence: not required and not claimed.
 - Detailed evidence: `../verification/2026-08-06-r006-tts-loading-wave/REPORT.md`.
+
+## 2026-08-08 — SYS-CURRENT-GOLD-READINESS implementation merged
+- Scope: historical `SYS-CURRENT-GOLD-READINESS` root.
+- Result: Product PR #1220 has merged, successfully implementing the derived publication-readiness evidence and human reachability checks. No independent current residuals remain that justify keeping the `SYS-` lane open without a new regression trigger. The row was removed from the active MASTER matrix.
+- Product evidence: `main@1f14761a7c920e1d224e77d3ccfec8638a1d426c`.
+- Detailed evidence: `../verification/2026-08-08-post-current-gold-live-refresh/REPORT.md`.
