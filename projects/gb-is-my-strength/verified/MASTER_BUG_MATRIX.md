@@ -4,17 +4,17 @@
 > Несмотря на историческое имя файла, это не только баги: здесь живут текущие дефекты, доказанно нужные внедрения/улучшения, системные verification/implementation packages и owner decisions.
 > Решено / stale / duplicate / absorbed / invalid / superseded → убрать из MASTER в той же wave; полезный контекст остаётся в `../legacy/` и verification evidence.
 
-Current wave evidence: `verification/2026-08-08-direct-defects-zero/REPORT.md`.
+Current wave evidence: `verification/2026-08-08-css-owner-closure-search-handoff/REPORT.md`.
 
 ## Current state
 
 | Поле | Значение |
 |---|---|
-| Product verification anchor | `76ad2f3ff814c088eb429d5ec0edd35d5bbe27b0` |
-| Wave | Direct-defect zero reconciliation, 2026-08-08 |
-| Active work units | **10** |
+| Product verification anchor | `21b437cb79f7b74a4ad3c68e21ffad2edd8ce458` |
+| Wave | CSS owner closure + next-wave handoff, 2026-08-08 |
+| Active work units | **9** |
 | Direct current defects | **0** |
-| Verified necessary improvements | **4** |
+| Verified necessary improvements | **3** |
 | Narrowed residuals | **0** |
 | System verification lanes | **2** |
 | Owner decisions | **4** |
@@ -26,25 +26,24 @@ Current wave evidence: `verification/2026-08-08-direct-defects-zero/REPORT.md`.
 
 ## CURRENT DEFECTS — 0
 
-На Product anchor `76ad2f3ff814c088eb429d5ec0edd35d5bbe27b0` подтверждённых direct current defects в MASTER нет.
+На Product anchor `21b437cb79f7b74a4ad3c68e21ffad2edd8ce458` подтверждённых direct current defects в MASTER нет.
 
-Последние две строки закрыты и удалены в этой reconciliation:
+Последние direct-defect closures остаются:
 
 - `S-SEC-01` → Product `#1195`, merged `a2d0ce587a3de2f659747151207c9adce31950cd`;
 - `NG-INLINE-01` → Product `#1197`, merged `76ad2f3ff814c088eb429d5ec0edd35d5bbe27b0`.
 
-Closure evidence: `verification/2026-08-08-direct-defects-zero/REPORT.md`.
+Evidence: `verification/2026-08-08-direct-defects-zero/REPORT.md`.
 
 ---
 
-## VERIFIED NECESSARY IMPROVEMENTS — 4
+## VERIFIED NECESSARY IMPROVEMENTS — 3
 
 | ID | Needed implementation | Why it is active work / evidence |
 |---|---|---|
-| `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS` | Canonicalize two current same-owner CSS duplications: keep one intentional `@keyframes fx-breathe` definition in `css/site.css`, and consolidate the duplicated standalone mobile `.gb-floater` ownership sections in `css/floating-cluster.css` without dropping the unique surrounding single-article/series rules. | Fresh Product re-read on `76ad2f3f...` confirms two different `fx-breathe` definitions and two `@media (max-width: 899px)` standalone `.gb-floater` sections repeating the core mobile geometry/surface declarations. `verification/2026-08-08-direct-defects-zero/REPORT.md` |
-| `AUDIT-JS-ESCAPER-DUP-X5` | Add one appropriate shared HTML-escaping primitive and migrate the five current local escapers instead of maintaining security-sensitive escaping independently. | Fresh current-source re-read confirms **five** separate `& < > \"` HTML escapers: three lexical helpers in `js/site.js`, one in `js/highlights.js`, one in `js/search.js`; `js/site-utils.js` does not yet own a canonical equivalent. Preserve context/equivalence, especially Highlights, during migration. `verification/2026-08-08-direct-defects-zero/REPORT.md` |
-| `SEARCH-P3-02` | Add truthful result-total / continuation (`Показать ещё`, pagination or equivalent) instead of exposing only bounded Pagefind/fallback result slices. | Fresh re-read after Search closure still finds Pagefind limited to 10 and fallback to 12. Search keyboard/runtime ownership itself is already closed by Product `#1183`; do not reopen `AR-IDX-09`. `verification/2026-08-08-direct-defects-zero/REPORT.md` |
-| `AR-IDX-05` | Consolidate cache/version identity so runtime CSS loaders do not use one generic `SITE_CONFIG.version` while static/current assets are owned by per-asset `ASSET_VERSIONS`. Give each runtime-loaded CSS asset its own explicit revision authority or remove the generic version bridge. | Fresh current-source census confirms exact consumers: `js/enhancements.js` builds `/css/enhancements-runtime.css?v=` from `window.SITE_CONFIG.version`, and `js/highlights.js` builds `/css/highlights-runtime.css?v=` the same way. `BaseLayout.astro` currently seeds that generic field from `ASSET_VERSIONS['js/glossary.js']`, so the version value is semantically unrelated to the two CSS consumers. `verification/2026-08-08-direct-defects-zero/REPORT.md` |
+| `SEARCH-P3-02` | Give Search one truthful continuation contract across Pagefind, manifest fallback and exact Scripture occurrence paths: expose total vs shown state and deterministic continuation without reopening global shortcut ownership. | Fresh source audit: Pagefind truncates raw hits with `results.slice(0,10)` **before** hydration/dedupe/scope handling; manifest fallback ranks then slices to 12; exact Scripture dedupes then slices to 12 while its status can expose the larger full occurrence count. Extend the existing Search Modal Contract with >10/>12 fixtures; no new workflow. `verification/2026-08-08-css-owner-closure-search-handoff/REPORT.md` |
+| `AR-IDX-05` | Replace the generic runtime `SITE_CONFIG.version` bridge with explicit per-asset revision authority for runtime-loaded CSS (or an equivalent injected asset map), then remove the misleading generic bridge when unused. | Canonical hashes already exist for `css/enhancements-runtime.css` and `css/highlights-runtime.css`, but `js/enhancements.js` and `js/highlights.js` version those files with generic `SITE_CONFIG.version`; `BaseLayout.astro` seeds that field from the unrelated `js/glossary.js` hash. `verification/2026-08-08-css-owner-closure-search-handoff/REPORT.md` |
+| `AUDIT-JS-ESCAPER-DUP-X5` | Add one appropriate shared HTML-escaping primitive and migrate the five current local escapers, preserving loader availability and context/output equivalence rather than replacing helpers mechanically. | Fresh current-source re-read confirms five separate `& < > \"` HTML escapers: three lexical helpers in `js/site.js`, one in `js/highlights.js`, one in `js/search.js`; `js/site-utils.js` does not yet own a canonical equivalent. `verification/2026-08-08-direct-defects-zero/REPORT.md` |
 
 ---
 
@@ -55,7 +54,7 @@ Closure evidence: `verification/2026-08-08-direct-defects-zero/REPORT.md`.
 | ID | Verified work package | Next boundary / evidence |
 |---|---|---|
 | `SYS-KARTY-HOLDING-PUBLICATION-READINESS` | One publication-readiness package for the currently held map routes. The public hub/HoldingPage contract requires initial viewport, label collision, desktop/mobile layout, controls, route readability and overall visual quality before return. Route/schema readiness (Shoftim stages, Early Church overlap, Shvatim regions, draft route completeness) is checked in the same activation transaction. Historical sheet-engine decoration/style wishes are not requirements by themselves. | Current browser/screenshots + `maps:validate`/route-owner evidence per candidate immediately before activation. Promote only concrete blockers that remain independently actionable outside that activation transaction. `verification/2026-08-07-full-matrix-consolidation/REPORT.md` |
-| `SYS-STRANGLER-RETIREMENT` | Current authority/identity/parity is clear for the retained legacy/native-shadow surface: route profiles are sole current authority; exact evidence has 53/53 public indexes covered, 53 ledger entries, 52/52 native shadows classification-clear, 0 unknown reference decisions and no integrity/inventory/parity problems. `#1187` made cache-bust authority-aware; later Search/security/Nagornaya waves preserved this boundary. | Current evidence remains **35 dependency records / 26 blockers**: **16 mechanical reader repoints + 3 obsolete/remove-or-repoint readers + 7 dependency owner decisions**. Unknown dependency impacts, integrity, inventory coverage and parity problems remain `0`. `deletionReady=false`, `physicalMoveAuthorized=false`, verdict `NOT_YET_SAFE_TO_MOVE_OR_DELETE`. `verification/2026-08-08-search-head-strangler-readiness/REPORT.md`, `verification/2026-08-08-direct-defects-zero/REPORT.md` |
+| `SYS-STRANGLER-RETIREMENT` | Current authority/identity/parity is clear for the retained legacy/native-shadow surface: route profiles are sole current authority; exact evidence has 53/53 public indexes covered, 53 ledger entries, 52/52 native shadows classification-clear, 0 unknown reference decisions and no integrity/inventory/parity problems. | Exact Shared Files artifact on Product `#1205` head `55c20a3f...` reconfirms **35 dependency records / 26 blockers**: **16 mechanical reader repoints + 3 obsolete/remove-or-repoint readers + 7 dependency owner decisions**; unknown dependency impacts/integrity/inventory/parity problems remain `0`; `deletionReady=false`, `physicalMoveAuthorized=false`, verdict `NOT_YET_SAFE_TO_MOVE_OR_DELETE`. `verification/2026-08-08-css-owner-closure-search-handoff/REPORT.md` |
 
 ---
 
@@ -74,21 +73,20 @@ Closure evidence: `verification/2026-08-08-direct-defects-zero/REPORT.md`.
 
 Not extra work units; current Product owners that constrain the matrix:
 
-- At this reconciliation point the direct-defect repair layer is closed: Product `#1195` closed `S-SEC-01`; Product `#1197` closed `NG-INLINE-01`.
-- Product `#1205` is the current scoped owner for `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS`; do not create a competing CSS cleanup lane while it is open.
-- Before opening any other Product lane, reverify the selected improvement/system item against current Product `main` and current open PR/file ownership. Do not turn the four improvements into one shared refactor wave.
+- Product `#1205` closed `AUDIT-CSS-DEAD-KEYFRAMES-TOKENS` and merged as `21b437cb79f7b74a4ad3c68e21ffad2edd8ce458`; that row is removed from MASTER.
+- At this reconciliation point no Product PR is authorized here as owner for `SEARCH-P3-02`, `AR-IDX-05` or `AUDIT-JS-ESCAPER-DUP-X5`; inspect current Product open PRs again immediately before opening the next bounded lane.
+- Do not combine Search continuation, runtime asset identity and JS escaper consolidation into one shared refactor wave.
 
 Recently merged/closed material current to this reconciliation:
 
-- `#1197` — series-level Nagornaya library theme ownership repair across Parts I/II/III/V; exact final head `ae91cbc...` passed all effective registered workflows and merged as Product `76ad2f3ff814c088eb429d5ec0edd35d5bbe27b0`;
-- `#1195` — FAQ JSON-LD answer serialization moved from HTML blacklist/sanitizer design to normalized visible text with adversarial mutation proof; merged as Product `a2d0ce587a3de2f659747151207c9adce31950cd`;
-- `#1183` — closed `AR-IDX-09`: one global Ctrl/Meta+K owner, global Search trigger ownership, forensic/current-runtime corpus split, WebKit single-query behavior, Home non-scrolling fixture and authority-aware asset projection; merged as Product `67c234924e6973f9c88a22168d911b15c4c6db2a`;
-- `#1194` — merged lane-collision guard on `b9734532...`;
-- `#1187` — authority-aware cache-bust/reference-only boundary merged as `b2720eee...`;
-- `#1193` — repaired Hermenevtika accepted-semantic anchor and existing Source Authority / Content Source Truth path ownership; merged as `f3e291b7...`;
-- `#1185` — positive semantic manifests for Hermenevtika + Gill Part I merged as `c9055428...`;
-- `#1178` — Avraam false-green/proxy checks replaced with positive semantic contract and adversarial mutations; merged as `ce5d023b...`;
-- `#1176` — route profiles became sole current legacy/reference authority and content coverage became fail-closed; merged as `778b787f...`.
+- `#1205` — closed duplicate shared CSS owners; same exact final tree traveled through forensic predecessor `#1200 → #1202` and merged only after independent exact-head CI on allowed `fix/` branch; Product `21b437cb...`;
+- `#1197` — series-level Nagornaya library theme ownership repair; Product `76ad2f3f...`;
+- `#1195` — FAQ JSON-LD text-only security repair; Product `a2d0ce58...`;
+- `#1183` — global Search shortcut/runtime ownership closure; Product `67c23492...`;
+- `#1193` — Hermenevtika accepted-semantic anchor repair; Product `f3e291b7...`;
+- `#1185` — positive semantic manifests for Hermenevtika + Gill Part I; Product `c9055428...`;
+- `#1178` — Avraam positive semantic contract/mutations; Product `ce5d023b...`;
+- `#1176` — route profiles sole current legacy/reference authority + fail-closed coverage; Product `778b787f...`.
 
 ---
 
