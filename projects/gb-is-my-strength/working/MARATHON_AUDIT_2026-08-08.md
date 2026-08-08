@@ -309,3 +309,19 @@ Push `f7f00c8` — 25 files moved (0 insertions), validators PASS.
 
 Марафон не останавливается — каждый следующий виток: `evidence → verification → deduplicate → compact MASTER → legacy → validators PASS`.
 
+
+---
+
+## 11. Марафон фаза 10-12 углубления — SYSTEM DEEP DIVE 09:46 UTC
+
+Создана `verification/2026-08-08-marathon-system-deep-dive/REPORT.md` (107 lines, 9.5K) — marathon verification wave covering all 15 active MASTER rows at `11999f6d`:
+
+- 2 direct defects (BAPT-S12 Spravochnik residual + CATALOG 67/73)
+- 3 improvements (SEARCH-P3-02 stale body, AR-IDX-05 per-asset, AUDIT-JS-ESCAPER)
+- 7 system lanes (CURRENT-GOLD merged #1220, READER-CONTROL 7020→8 clusters, FOOTNOTE 14 scenes, BAPTISTY, KARTY-HOLDING, STRANGLER hidden self-verifier 21 blockers false, SOURCE-AUTHORITY guard-health)
+- 3 owner decisions (SEARCH-P2-07 candidate-only, REG-001, NG-VIS-04)
+- Work Queue 4 candidates measurement-first, SYSTEM_THEMES 8 themes
+- Incoming 33 agents 17M, verification 31 waves, reverify 105, S-CLASS retired
+
+Это 31-я verification wave 2026-08-08, complements post-S12/census/strangler waves. Доказательство: marathon file hygiene + system root coherence, validators PASS.
+
