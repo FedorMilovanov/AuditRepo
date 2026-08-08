@@ -34,7 +34,7 @@
 | Inspect W7 route/runtime proof | `verification/2026-08-06-w7-route-runtime-wave/REPORT.md` |
 | Inspect historical 2026-08-05 root-cause rows | `archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md` |
 | Inspect the retirement mapping for those rows | `archive/superseded/MATRIX_CLEANUP_2026-08-07.md` |
-| Inspect W6 branch evidence | historical `working/W6_*_2026-08-05.*` and prior verification/reverify documents |
+| Inspect W6 branch evidence | historical `archive/stale-working-2026-08-08/W6_*_2026-08-05.*` and prior verification/reverify documents |
 
 ## Finding lifecycle
 
