@@ -20,9 +20,10 @@ Home/control-plane recheck: [`../verification/2026-08-08-home-main-ci-control-pl
 | Active work units | **15** |
 | Direct current defects | **2** |
 | Verified necessary improvements | **3** |
+| Narrowed residuals | **0** |
 | System verification lanes | **7** |
 | Owner decisions | **3** |
-| Closed/stale/duplicate rows retained in MASTER | **0** |
+| Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
 Product `#1238` removed the five verified Baptist MDX/body Charter S12 backstage markers. Product `#1245` then completed exact-head Source Authority, Shared Files, Node Toolchain and Metadata SUCCESS and merged as current anchor `11999f6d...`, permanently adding Baptist MDX/body publication paths to the Source Authority trigger. The remaining direct `BAPT-S12-01` scope is Spravochnik metadata/discovery convergence only; neither the fixed body/MDX leaks nor the concrete Baptist trigger witness remain unfinished direct defects.
 
