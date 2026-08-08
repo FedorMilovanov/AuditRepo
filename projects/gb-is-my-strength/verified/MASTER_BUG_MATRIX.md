@@ -5,6 +5,7 @@
 > Решено / stale / duplicate / absorbed / invalid / superseded → убрать из MASTER в той же wave; полезный контекст остаётся в `../legacy/` и verification evidence.
 
 Current deep-audit evidence: [`../verification/2026-08-08-total-current-gold-audit/REPORT.md`](../verification/2026-08-08-total-current-gold-audit/REPORT.md).  
+Current Home / owner / CI recheck: [`../verification/2026-08-08-home-main-ci-control-plane-recheck/REPORT.md`](../verification/2026-08-08-home-main-ci-control-plane-recheck/REPORT.md).  
 Previous Search/CSS handoff evidence: `../verification/2026-08-08-css-owner-closure-search-handoff/REPORT.md`.
 
 ## Current state
@@ -12,7 +13,7 @@ Previous Search/CSS handoff evidence: `../verification/2026-08-08-css-owner-clos
 | Поле | Значение |
 |---|---|
 | Product verification anchor | `a068decefff4ddd0055da952c84b7a3633d7b43b` |
-| Wave | Current-Gold synthesis + publication-truth reverify, 2026-08-08 |
+| Wave | Current-Gold synthesis + publication-truth reverify + Home/control-plane recheck, 2026-08-08 |
 | Active work units | **13** |
 | Direct current defects | **3** |
 | Verified necessary improvements | **3** |
@@ -26,6 +27,8 @@ Previous Search/CSS handoff evidence: `../verification/2026-08-08-css-owner-clos
 Эта wave расширяет проверку от узкого технического defect census к **publication truth**: current Product может быть технически зелёным и одновременно иметь подтверждённый reader-facing content/projection/readiness debt. MASTER по-прежнему хранит только крупные текущие work roots; детальная декомпозиция и evidence находятся в Current-Gold REPORT.
 
 `GILL-PROJECTION-01` удалён из active MASTER после Product `#1213`, squash-merged как `a068decefff4ddd0055da952c84b7a3633d7b43b`: canonical Gill sequence восстановлен в обеих `/biografii/` projections, stale «Трилогия» снята, graph ordinal drift устранён, а существующий Gill consistency guard расширен на этот класс расхождения. Exact PR head `a748cb57fe276693019bbdd4ec9db790050a43e9` прошёл все 11 triggered workflow groups; review threads = 0.
+
+Fresh Home/control-plane recheck на том же Product anchor не добавил нового Home defect: переход `21b437cb... → a068dece...` не меняет Home files; временные `astro.config.dev.mjs` / arena one-shot workflow отсутствуют на current `main`; текущий Directions/Ambient presentation-owner split оставлен в `WORK_QUEUE.md`, пока нет свежего user-visible regression/false-green/owner-collision witness.
 
 ---
 
@@ -78,7 +81,13 @@ Previous Search/CSS handoff evidence: `../verification/2026-08-08-css-owner-clos
 
 Not extra work units; current Product owners or existing issue authorities that constrain implementation:
 
-- Product `#1209` is the current owner for `SEARCH-P3-02`; re-read the actual exact head immediately before any merge/overlap decision because this candidate has moved repeatedly during CI hardening.
+- Product `#1209` is the current owner for `SEARCH-P3-02`. Fresh current-head witness is `2b90612c82cf9df356c11b62d8099521700fd758`; it is based on current `main@a068dece...` (`behind=0`), but its exact-head workflows were still queued/pending/in-progress at the recheck. The PR body names an older candidate SHA, so use actual head/CI, not prose history, for merge authorization.
+- Product `#1214` is the current owner for `BAPT-S12-01`. Head `8cc802cb...` has strong exact-head green evidence, but after `#1213` it is `behind=1`; that earlier green set does not authorize merge against current main without refreshed ancestry/current-head proof.
+- Product `#1217` is the clean current-main successor for `BAPT-CONTENT-TRUTH-01`. Head `e1bbc474...` is based on `a068dece...`; Shared Files + Metadata were green while other workflows were still in flight. Keep the row until terminal exact-head evidence + merge/result verification.
+- Product `#1216` is the current owner for `CATALOG-PROJECTION-01`, but head `a76f9872...` is `behind=1` and non-mergeable at the recheck. Returned workflow runs are `action_required`; the inspected Shared Files run has zero jobs, so this is not a test failure but is also **not green CI**. Its actual changed-file list includes `.github/workflows/scripture-occurrence-index-contract.yml` and `data/scripture-search-index.json`, broader than the PR prose claim that no workflow changes. Reconcile ancestry, authorization and stated-vs-actual diff boundary before merge.
+- Product `#1212` is audit-only current work to add an all-reading-route interaction census; it is not a Home repair owner. Head `3292f4c...` is currently `behind=1`; some control-plane checks were green while Runtime Interactive remained queued. Treat its browser evidence as guard work, not current-main repair authorization.
+- Fresh Home recheck found no new direct defect and no temporary writer/config residue on current `main`. Directions/Ambient presentation-owner convergence remains optional in `WORK_QUEUE.md`; do not create a Product `SYS-HOME-*` lane unless its recorded promotion trigger is met.
+- Old Home/writer refs still exist, but sampled refs are ancestry-diverged and retain unique branch commits. Do not delete them by name; first prove unique material is absorbed/useless per branch-forensic policy.
 - Do not overlap `#1209` in Search/shared search assets or its deterministic projection consumers.
 - Existing Product issue `#298` already owns the product-golden blind spot. `SYS-CURRENT-GOLD-READINESS` should consume/reference that evidence rather than opening a duplicate visual-baseline program.
 - Existing Product issue `#54` is a historical Hermenevtika umbrella whose old checklist has been partially/sometimes systemically superseded by later merged work. Reverify current residuals before promoting any new Hermenevtika row.
