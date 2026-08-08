@@ -4,7 +4,19 @@ Status: canonical governance contract for `MASTER_BUG_MATRIX.md`, `scripts/check
 
 ## Canonical findings
 
-A canonical finding is a stable ID in the first column of one of the active matrix tables:
+A canonical finding is a stable ID in the first column of one of the active matrix tables.
+
+**Compact schema (gb-is-my-strength, current):**
+
+- `CURRENT DEFECTS — n`;
+- `VERIFIED NECESSARY IMPROVEMENTS — n` / `NARROWED RESIDUALS — n`;
+- `SYSTEM VERIFICATION LANES — n`;
+- `OWNER DECISIONS — n`;
+- `Current state` summary table with 7 verified counts (Active work units, Direct current defects, Verified necessary improvements, Narrowed residuals, System verification lanes, Owner decisions, Closed/stale/duplicate/absorbed rows in MASTER = 0).
+
+The compact MASTER contains **0 closed rows**; history lives in `legacy/` + `CLOSURE_LEDGER.md` + Git.
+
+**Legacy schema (the-legendary-poet, compatibility):**
 
 - `✅ ЗАКРЫТО`;
 - `P0/P1/P2/P3 — ОТКРЫТО`;

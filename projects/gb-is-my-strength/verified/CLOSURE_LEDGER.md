@@ -4,9 +4,9 @@ Append-only журнал компактных результатов verificatio
 
 Цель — сохранять полезную историю без разрастания активного backlog и без обязательного exact-authority пересказа каждого Product merge.
 
-## Transition note
+## Transition note (updated 2026-08-08 — marathon)
 
-Исторические закрытые строки пока остаются в `MASTER_BUG_MATRIX.md`. Они не переписываются массово в этой реформе. Будущие consolidation waves могут переносить их сюда пакетами с сохранением provenance.
+Исторические закрытые строки **уже удалены** из `MASTER_BUG_MATRIX.md` (compact MASTER содержит 0 closed rows). До 2026-08-07 они оставались per gradual migration, но wave `2026-08-07-full-matrix-consolidation` (145→27) + `MATRIX_CLEANUP_2026-08-07` перенесли их в `legacy/` + `archive/` + `CLOSURE_LEDGER.md`. Текущий MASTER — 15 active, Git хранит полную историю.
 
 Новая запись не обязана сопровождаться отдельным `reverify/` документом. Он нужен только для спорного, системного, security/live/rights или исторически ценного решения.
 
