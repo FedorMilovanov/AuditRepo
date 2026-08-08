@@ -30,6 +30,39 @@ Bounded repair target:
 
 After Product repair merges and resulting current main is reverified, remove `TLP-ARCHIVE-001` from the active matrix and return this queue to fresh current-head bug hunting.
 
+## Parallel owner-selected architecture lane — TLP-HALL-001 / Product #369
+
+This lane is independent of `TLP-ARCHIVE-001`: it owns Hall architecture/foundation files and must not touch the personal archive store or its QA surfaces.
+
+### Current source witness
+
+- `/hall` intentionally renders a lightweight placeholder and does not import `src/components/hall/*`; this is the correct production safety boundary while the immersive experience is dormant.
+- The retired Hall v2 implementation nevertheless remains an implicit current contract because `npm run check` still runs `scripts/validate-hall-audio-runtime.ts`, which protects FPS movement, pointer lock, hover whispers, dust animation and rail-camera behavior from the obsolete prototype.
+- `HallPage.tsx` also advertises a specific unapproved target (`Храм Русской Поэзии` with four era wings) before a Blender greybox/architecture gate has approved the final spatial program.
+- Historical Hall code remains useful forensic/technical evidence but is not visual or product authority for v3.
+
+### First bounded foundation wave
+
+Product #369 owns one architecture foundation lane before any new 3D scene is authored:
+
+1. register `TLP-HALL-001` in source `docs/CURRENT_STATE.md` and `docs/project-contract.json`;
+2. mark the existing `src/components/hall/*` prototype as legacy/non-authoritative rather than cosmetically repairing it;
+3. remove Hall-v2 FPS/audio/dust behavior from mandatory architecture ownership while preserving unrelated application interaction/audio validators;
+4. replace that hidden legacy authority with a small Hall foundation validator that proves `/hall` stays lightweight and cannot accidentally import the legacy scene;
+5. remove unapproved architecture promises from the public placeholder without publishing a fake replacement concept;
+6. add source/asset/camera/material/lighting/rights/AI/performance/export/visual-acceptance contracts for Hall v3;
+7. define gated production order: annotated references → metric Blender greybox → camera approval → material/lighting/export spike → Pushkin vertical slice → offline visual approval → optimized GLB/KTX2 delivery → minimal web runtime → remaining exhibits;
+8. no new `HallOfPoetsV3.tsx`, JSX architecture, FPS/free-walk baseline, whispers, fake historical objects or effect-driven visual rescue in this wave.
+
+### Possible dispositions after foundation
+
+- `continue`: foundation contracts are coherent and the next owner-approved work is the Blender/reference phase;
+- `narrow`: a delivery/lightmap/rights constraint forces a smaller vertical slice before architecture scale-out;
+- `park`: visual/source asset production is not ready, while the production placeholder remains safe;
+- `close`: only after the architecture lane itself has been implemented and verified; the foundation wave alone does not close `TLP-HALL-001`.
+
+Source mutation must remain isolated from Product #365 and any other live owner. Final Hall closure evidence belongs in AuditRepo only after the source work is merged and verified.
+
 ## Closed current-scope families
 
 ### TLP-AUDIO-002 / Product #360 — precision-safe cross-tab logical ordering
