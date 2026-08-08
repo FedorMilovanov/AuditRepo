@@ -12,40 +12,64 @@ Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/
 
 Current verified engineering rows: **0**.
 
-`TLP-HALL-001` is an owner-selected architecture/foundation lane, not an engineering bug row. Product source registration remains pending until the first foundation wave merges.
+`TLP-HALL-001` is an owner-selected architecture lane, not an engineering bug row. Three bounded source waves are merged:
 
-### Hall v3 foundation — retire legacy runtime authority before rebuilding the museum
+- foundation: Product PR #373, exact tested head `9c63a500257c1dc01e4df5c4dcecb8bbfd9fd0fb`, resulting Product `main` `9cce8bb386262172a50f0d65d52372e045e4cd43`;
+- Reference Bible: Product PR #374, exact tested head `9a993399749a818fed5ffe9ac9ee2378807aafc2`, resulting Product `main` `cc81858626c8ddcf8e59016231068c45cbb6e246`;
+- metric-greybox tooling/preflight: Product PR #375, exact tested head `4d4c1b8e6c1832dce6eac6a2509d76bce65cc724`, resulting Product `main` `c34debc7ec3cf769261779d763f21f617a3500a2`.
 
-This lane is independent of the now-closed `TLP-ARCHIVE-001` repair and owns Hall architecture/foundation files only.
+Evidence:
+
+- `verification/2026-08-08-hall-v3-foundation/FOUNDATION.md`;
+- `verification/2026-08-08-hall-v3-reference-bible/REFERENCE_BIBLE.md`;
+- `verification/2026-08-08-hall-v3-greybox-tooling/TOOLING.md`.
+
+### Hall v3 H1/H2/H3 neutral metric candidate authoring — current bounded wave
+
+The DCC path is now proven rather than assumed. Exact PR-head CI downloaded and vendor-checksummed Blender 4.5.12 LTS, ran it headlessly, saved/reopened a metre-scale `.blend`, and recorded build hash `84afd5f785f7` with the expected collections/objects, 1.75 m human proxy, zero materials/lights and no render. Production `/hall` remains a lightweight DOM placeholder.
 
 #### Current source witness
 
-- `/hall` intentionally renders a lightweight placeholder and does not import `src/components/hall/*`; this is the correct production safety boundary while the immersive experience is dormant.
-- The retired Hall v2 implementation nevertheless remains an implicit current contract because `npm run check` still runs `scripts/validate-hall-audio-runtime.ts`, which protects FPS movement, pointer lock, hover whispers, dust animation and rail-camera behavior from the obsolete prototype.
-- `HallPage.tsx` still advertises a specific unapproved target (`Храм Русской Поэзии` with four era wings including Soviet/contemporary) before a Blender greybox/architecture gate has approved the final spatial program.
-- Historical Hall code remains useful forensic/technical evidence but is not visual or product authority for v3.
+- Product `main@c34debc7ec3cf769261779d763f21f617a3500a2` is `phase=metricGreybox`;
+- `foundation=completed`, `referenceBible=completed`, `metricGreybox=active`, all later gates blocked;
+- `greybox-tooling.json` owns the current reproducible Blender 4.5.12 LTS runtime;
+- `greybox-candidates.json` owns H1/H2/H3 comparison equality; all three remain `unbuilt`, `approvedCandidate=null`, `approvedRig=null`;
+- no Hall geometry, `.blend`, GLB or runtime asset is Product source authority yet;
+- no topology, camera rig, material/light system or web control model is approved.
 
-#### First bounded foundation wave
+#### Next bounded candidate-authoring transaction
 
-Product #369 owns one architecture foundation lane before any new 3D scene is authored:
+Author **all three** materially different candidates from one shared deterministic Blender source and compare them at equal quality:
 
-1. register `TLP-HALL-001` in source `docs/CURRENT_STATE.md` and `docs/project-contract.json`;
-2. mark the existing `src/components/hall/*` prototype as legacy/non-authoritative rather than cosmetically repairing it;
-3. remove Hall-v2 FPS/audio/dust behavior from mandatory architecture ownership while preserving unrelated application interaction/audio validators;
-4. replace that hidden legacy authority with a small Hall foundation validator that proves `/hall` stays lightweight and cannot accidentally import the legacy scene;
-5. remove unapproved architecture promises from the public placeholder without publishing a fake replacement concept;
-6. add source/asset/camera/material/lighting/rights/AI/performance/export/visual-acceptance contracts for Hall v3;
-7. define gated production order: annotated references → metric Blender greybox → camera approval → material/lighting/export spike → Pushkin vertical slice → offline visual approval → optimized GLB/KTX2 delivery → minimal web runtime → remaining exhibits;
-8. no new `HallOfPoetsV3.tsx`, JSX architecture, FPS/free-walk baseline, whispers, fake historical objects or effect-driven visual rescue in this wave.
+1. start from fresh Product `main@c34debc7ec3cf769261779d763f21f617a3500a2`; re-check open source PRs before mutation;
+2. keep `metricGreybox` active and every later gate blocked; this transaction creates comparable evidence but does not choose a winner;
+3. use the already-proven Blender 4.5.12 runtime and metre unit contract;
+4. use one common 1.75 m human proxy and one explicitly provisional common test lens/FOV set for all candidates; lens choice is comparison instrumentation, not Camera Approval;
+5. H1 must genuinely test orientation court + chronological branches; H2 a directed promenade with changing compression/release and focus bays; H3 an asymmetric diagonal/curved trajectory with side focus rooms — do not produce three cosmetic variants of one nave;
+6. use the same simple Pushkin proxy grammar in all three: anchor portrait proxy, small secondary evidence field, controlled-document pocket, clear return/orientation;
+7. generate a dimensioned plan, two sections, six common desktop camera witnesses, at least three equivalent 9:16 mobile crops, top-down route/sightline diagram, route length, forced-turn count and visible-next-destination notes for each candidate;
+8. keep scene geometry neutral grey: no texture/material lookdev, bloom, fog, particles, gold glow or decorative rescue; a neutral workbench/render mode is acceptable only as an evidence camera, not as lookdev;
+9. generated `.blend`, PNG/SVG and evidence JSON belong in Actions artifacts, not committed Product binaries; commit deterministic source scripts/manifests only;
+10. machine-validate accessible route/viewing/headroom minima and equal evidence completeness for all three candidates;
+11. after exact-head candidate generation succeeds, inspect the actual artifact images and metrics adversarially; do not infer a winner from the script or candidate name;
+12. merge the neutral evidence-generation source only if all three packages are comparable; select/reject candidates in a separate decision transaction.
 
-#### Possible dispositions after foundation
+#### Automatic rejection during authoring
 
-- `continue`: foundation contracts are coherent and the next owner-approved work is the Blender/reference phase;
-- `narrow`: a delivery/lightmap/rights constraint forces a smaller vertical slice before architecture scale-out;
-- `park`: visual/source asset production is not ready, while the production placeholder remains safe;
-- `close`: only after the architecture lane itself has been implemented and verified; the foundation wave alone does not close `TLP-HALL-001`.
+- one candidate receives more render polish or a more flattering lens;
+- a candidate relies on ornament/effects to look coherent;
+- route needs FPS/free-look to become understandable;
+- repeated equal niches/bays dominate;
+- intended cameras expose unfinished backs/sides;
+- Pushkin proxy reads as a UI card on a wall rather than an exhibit hierarchy;
+- principal route violates inherited accessibility witnesses;
+- mobile framing requires rebuilding the candidate;
+- central/transition space has no job beyond spectacle;
+- a candidate is retained because more time has already been spent on it.
 
-Source mutation must start from fresh current Product `main`, remain isolated from unrelated editorial/research work, and pass the normal exact-head source/build/route gates. Final Hall closure evidence belongs in AuditRepo only after the architecture lane itself is complete; the first foundation merge should register the lane in Product source truth rather than falsely close it.
+#### Decision after this wave
+
+The useful output is **three inspectable offline evidence packages**, not a winner hidden in code. After merge, a separate current-head decision wave may select one candidate or reject all three using the recorded camera/metric evidence. Camera Approval remains a later gate even after topology selection.
 
 ## Closed current-scope families
 
@@ -118,7 +142,7 @@ Use only for a significant release, DNS/hosting change or concrete production in
 
 ## Editorial / research boundary
 
-Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default. Product #269 remains a source-first editorial lane outside the engineering matrix and outside the Hall foundation source owner.
+Open source issues for archive acquisition, documentary research, long-form authoring, visual-rights review and myth ledgers remain legitimate work but are not engineering bug rows by default. Product #269 remains a source-first editorial lane outside the engineering matrix and outside the Hall architecture source owner.
 
 ## Adding a lane
 
