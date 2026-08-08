@@ -989,3 +989,76 @@ The larger programs remain separate:
 - Strangler retirement.
 
 This keeps the active MASTER small while giving every agent one durable place to read the full audit rationale and next boundaries.
+
+---
+
+## 35. Stable census reconciliation addendum
+
+This is a forward reconciliation of the original snapshot above. Detailed root fingerprinting now lives in [`../2026-08-08-reader-control-census-root-clustering/REPORT.md`](../2026-08-08-reader-control-census-root-clustering/REPORT.md); this section records only the CURRENT-GOLD consequences and corrections that should not be lost.
+
+### Stable authority
+
+At this addendum, Product main is `11999f6d674e64e6afef590adeb71aeaaf303b3a`; Research authority remains `d52ea9d54dd2c2488223d25f5f6cefd263c23328`.
+
+Audit-only `#1212@b48982428042df07c8a621bff40b64cb39b61536`, run `31246241912`, artifact `article-control-census-31246241912-1` (id `9018812831`, SHA-256 `b63299fc6a173815914a87f04ce4a6836c1effc076ee2a31c4137956b85caf3a`) covers **55 routes / 232 scenes / 7020 control observations / 1068 generic clicks**.
+
+The stable total is **887 manifestations, not 887 Product bugs**. The earlier full baseline was about 1855; fixing stale-control identity in the harness reduced `1855 → 887` and `click-failed 374 → 124`. The dedicated clustering report then reduced the stable static surface to shared source fingerprints rather than route defects.
+
+### Current reader roots retained in MASTER
+
+The clustering report proves current-main applicability of the shared quiz, rail and mobile-bar source roots by blob identity. `SYS-READER-CONTROL-SEMANTICS` therefore remains one system root under Product issue `#1224`, including:
+
+- 174 conditional `panelQuiz aria-labelledby=tabQuiz` orphans / 42 routes;
+- 174 shared mobile Back-authority manifestations / 42 routes, already assigned to bounded successor `#1240`;
+- 103 invalid semantic-list direct children / 50 routes;
+- 70 missing popup trigger relations, of which `#1246` covers the bounded shared slice and Nagornaya remains separate.
+
+The footnote finding stays a **separate system root**, not merely a sub-item of reader-control runtime: Product issue `#1225` owns `SYS-FOOTNOTE-SEMANTIC-PROJECTION`. The 14 affected browser scenes contain 114 repeated generic-name markers on Hermenevtika, 21 on Kod Da Vinci and 40 on `krajne-li-isporcheno-serdce`. Correct closure is one note identity with truthful screen/accessibility/print projections, not hundreds of route-local label patches.
+
+### Correction: `<24px` census is not yet a WCAG failure verdict
+
+The clustering report's three `<24px` fingerprints are deterministic **geometry observations**, but they must not yet be promoted as deterministic WCAG 2.2 SC 2.5.8 failures solely from width/height.
+
+SC 2.5.8 allows an undersized target when its spacing condition (or another normative exception) is satisfied. Therefore `mobSpdBadge 23×16`, `gbsTocToggle 22×22` and `hmSpdBadge ~20×13` require an upgraded audit classification that measures target centers/bounds and nearest pointer targets:
+
+- `target-size-pass`;
+- `target-size-spacing-pass`;
+- `target-size-review`;
+- `target-size-fail` with the conflicting target witness.
+
+Until that spacing/exception evidence exists, do **not** create 207 accessibility defect manifestations or authorize a Product hit-area repair solely from the size prefilter.
+
+### Dynamic contamination boundary
+
+The clustering report adds stronger proof that the remaining 124 generic click failures are sequence-contaminated: dominant mobile failures occur after prior state-changing controls on the same document, while later controls can succeed again. Fresh page/context or a provably complete reset per control is required before any dynamic click class is promoted.
+
+Likewise, most 12 runtime-error scenes are local-origin/WebKit environment noise. One Hermenevtika WebKit `TypeError: Load failed` still deserves isolated reproduction; the aggregate does not.
+
+### S12 route-owner severity correction
+
+Old `BaptistyRossiiBody.astro` still contains backstage workspace prose, but current `/baptisty-rossii/` renders `BaptistyRossiiBookLanding.astro`, not that Body. The old file is therefore a source-scope/retirement ambiguity until import/runtime/generator authority is proved; it is not currently a proved live landing defect.
+
+The real direct S12 blocker remains `/baptisty-rossii/spravochnik/`, whose current route imports `BaptistyRossiiSpravochnikPageHead.astro`; that PageHead repeats `research-досье и очередь правок 3D-карты` in description/Twitter/OG/Article JSON-LD. Search `#1209` owns the same source file for deterministic revision projection, so S12 metadata repair remains sequenced after Search releases it.
+
+### Discovery authority / catalog consequence
+
+Read-only manifest parity work measured **67/73 existing manifest rows** divergent from built/PageHead metadata in at least one field. This moves `CATALOG-PROJECTION-01` beyond a catalog-only card problem: existing-row reconciliation belongs at the canonical manifest normalizer/source-derived authority layer and must preserve non-derived extras. Direct manifest hand-editing remains the wrong mutation layer.
+
+### Source Authority trigger closure correction
+
+Merged `#1245` fixed the concrete Baptist Source Authority trigger false-negative. Product issue `#1244` nevertheless requested a broader adversarial/path-applicability guard, and `#1245` intentionally changed only path filters. Therefore current classification is:
+
+- concrete Baptist trigger witness: fixed;
+- future false-negative class / trigger-closure guard health: active SYSTEM residual under `#1244`.
+
+### Current control-plane sequence
+
+Search `#1209` must not merge while temporary writer/applicator files survive in its net diff, while current main is not contained, or while its PR record/terminal exact-head evidence is stale. Catalog `#1221` remains downstream of source-converged discovery metadata.
+
+Reader successors `#1240` and `#1246` remain bounded two-file semantic repairs but are behind current main; refresh them once near merge, not on every independent main move.
+
+Strangler `#1222@22983986...` contains current main and preserves the verified blocker reduction `26 → 21`; at the last exact-head check Shared Files, Deploy Candidate, Metadata, Search Modal and Source Authority were SUCCESS while Visual Parity and Route Registry were still non-terminal. Semantic health is promising, but merge authorization remains false until the suite is terminal.
+
+### Governance rule retained from this marathon
+
+A stronger later witness may **promote, narrow or demote** an audit finding. Preserve forensic history, but never defend an earlier count/severity after stronger route/source/browser evidence changes the classification. That is why `1855` became `887`, why the old Baptist landing hypothesis was demoted after route-owner proof, and why `<24px` remains a spacing review rather than an automatic WCAG failure.
