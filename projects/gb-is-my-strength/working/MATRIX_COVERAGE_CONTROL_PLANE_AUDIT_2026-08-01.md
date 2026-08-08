@@ -14,7 +14,6 @@
 A prior agent report claimed:
 
 - commit `bf82d31`;
-- file `projects/gb-is-my-strength/working/SEARCH_QUIZ_DEEP_AUDIT_2026-08-01.md`;
 - unregistered IDs `RIGHT-4Q204-OPEN-SCHEMATIC` and `RIGHT-P72-TEXT-LINK-ONLY`.
 
 Those objects are **not reproducible in the connected GitHub state** audited here:

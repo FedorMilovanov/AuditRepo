@@ -58,3 +58,10 @@ These were removed from MASTER during the 2026-08-07 cleanup because they are pe
 ## Queue hygiene
 
 The queue is optional and may be empty. Do not copy every old audit row here. If an improvement becomes a verified current defect, move the **current formulation** into MASTER; if it is solved, abandoned or superseded, remove it.
+### Quiz Subsystem: Gamification & Pedagogical Architecture
+
+- **Context:** Current quiz components (`GillLearningSheet.astro`, etc.) successfully implement the `elaborative interrogation` principle (showing the `.quiz-explanation` block after answers). Technical bugs (XSS, a11y focus) and content inaccuracies (stating contested claims as facts) are already verified and closed.
+- **Candidate 1 (Persistent Mastery):** Quizzes are currently stateless. Wire the existing, unused CSS classes (`.quiz-mastery`, `.quiz-mastery__seg`) to a new `localStorage` engine (e.g., `gb-quiz-progress-v1`) analogous to the Favorites storage. This allows users to see their progress/streaks across sessions.
+- **Candidate 2 (Confidence Calibration):** The DOM contains a hidden UI meter (`<div class="quiz-calib" id="glsQuizCalib" hidden>`). Unhide and implement the logic to prompt users for their confidence level *before* answering, comparing it to actual correctness to fill the calibration bar.
+- **Candidate 3 (Difficulty Weighting):** Currently, all questions are hardcoded and weighted equally. Expand the quiz JSON schema to support `difficulty: 1|2|3`, granting higher streak points for hard questions and enabling basic question pooling/randomization for replayability.
+- **Status:** These are high-value architectural improvements, not current defects. Do not promote to MASTER without explicit Owner approval to expand the educational scope.
