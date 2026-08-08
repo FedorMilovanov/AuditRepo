@@ -36,11 +36,11 @@ No verified-current P3 engineering rows.
 | AuditRepo | 0 |
 | **Всего открыто (матрица)** | **0** |
 
-Registered Product architecture lanes: **0** — AuditRepo-selected `TLP-HALL-001` / Product #369 is pending source registration by its foundation wave and remains outside the engineering bug matrix.
+Registered Product architecture lanes: **1 outside the defect matrix** — `TLP-HALL-001` / Product #369 is registered in Product source authority and advances through its own staged Hall-v3 gates. It is intentionally excluded from the engineering bug totals above.
 
 ## Explicitly outside this matrix
 
-- `TLP-HALL-001` / Product #369 is an owner-selected architecture/foundation lane, not a verified engineering defect row. Its source registration and Hall v3 contracts are separate from this matrix.
+- `TLP-HALL-001` / Product #369 is an owner-selected architecture lane, not a verified engineering defect row. Its Product source registration and Hall v3 phase contracts are current; its exact production status remains governed by the Product repository and should not be inferred from this zero-defect counter surface.
 - Research/source-acquisition/editorial issues such as long-form authoring, archive acquisition, visual-rights review and myth ledgers are not engineering bugs merely because they remain open in the Product issue tracker.
 - The Mayakovsky C01–C30 media family is closed for the current Product scope: 5 active, 1 verified reserve, 24 terminal exclusions, 0 unresolved.
 - W0–W7 architecture/runtime waves, W6 ref retirement, native-scroll repair, canonical poet authority, semantic audit-harness hardening, Lenis install-dependency cleanup, browser-payload resilience, deterministic simultaneous cross-tab arbitration, precision-safe audio logical ordering and personal-archive cross-tab convergence are historical closure evidence, not current backlog.
