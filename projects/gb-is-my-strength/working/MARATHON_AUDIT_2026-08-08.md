@@ -338,3 +338,15 @@ Push `f7f00c8` — 25 files moved (0 insertions), validators PASS.
 
 Working 184K (7 files), verification 37M (32 waves), reverify 105, incoming 33 agents 17M — all validators PASS.
 
+
+---
+
+## 13. Марафон фаза 15 — DIRECT DEFECTS deep (09:55 UTC)
+
+Создана `verification/2026-08-08-marathon-direct-defects-deep/REPORT.md` (105 lines, 2 direct defects):
+
+- **BAPT-S12-01:** Spravochnik PageHead `research-досье`/`очередь правок 3D-карты` в meta/Twitter/OG/JSON-LD at `11999f6d` (5 MDX/body уже fixed #1238, trigger #1245). Collision: Search #1209 holds same file (hash projections). Guard `sources:hygiene` false-green (excludes `*PageHead.astro`, `е/ё` not normalized for `сохранены локально`). Closure: wait Search release → fix PageHead once → reconcile manifest via `buildManifestItem` → regenerate RSS/sitemap → verify parity → hygiene fixture.
+- **CATALOG-PROJECTION-01:** #1221 `0c779df` behind=2, renders from manifest, but 67/73 divergent (66 title etc., 4 missing image). Root `search-manifest-policy-normalizer.js::alreadyInManifest` skip, strict inventory checks membership not parity. Downstream RSS/sitemap consume manifest. Repair: extend `applyMigration` to reconcile `alreadyInManifest` preserving extras (`featured` etc.), add adversarial test, `ArticlesLibrarySection` convergence. No open PR for reconciler.
+
+Both narrow localized, share manifest downstream → converge BAPT first, then CATALOG.
+
