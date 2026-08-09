@@ -20,7 +20,7 @@ Operating order:
 
 - topology: **H3**;
 - H3 layout fingerprint: `5d5d0ddd8b150aa64afb73a2a3d9e00c6005e99fc935a6d4707a49ecd475fe65`;
-- H3 mesh fingerprint: `b3de770858a423305db8fcab15b405414e66b3d93ab1deaa5b3b35b418777`;
+- H3 mesh fingerprint: `b3de770858a423305db8fcab15b405414e66b3d3de93ab1deaa5b3b35b418777`;
 - guided camera: **R1**, Pushkin position `[8.0,2.5,1.60]`, target `[11.15,5.45,1.95]`, lens `28 mm`;
 - material/light baseline: **L0-minimal-runtime**;
 - surface UV: **UV0**, `1.5 m / UV unit`;
