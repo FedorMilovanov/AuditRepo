@@ -29,23 +29,27 @@ Closed engineering/history outcomes живут в [`verified/CLOSURE_LEDGER.md`]
 
 Most recent bounded Hall transactions:
 
-- #392 — Pushkin acquisition routes and blockers;
-- #393 — actual source-byte identities and independent SHA-256 revalidation;
-- #394 — exact-reproduction rights/credit evidence review and external-boundary disposition;
-- #395 — machine-state handoff repair: canonical rights workflow now says `external-authority-required`, the final rights review is registered as Hall source authority, and completed byte acquisition is no longer advertised as next work;
-- **#396 — Hall workflow trigger integrity: changes to the registered `pushkin-rights-review.json` authority now trigger the existing exact-head Blender/export/browser Hall reproof on both PR and `main` push.**
+- #395 — canonical rights workflow moved to fail-closed `external-authority-required`, final rights review became Hall source authority, and completed byte acquisition stopped being advertised as next work;
+- #396 — changes to the registered `pushkin-rights-review.json` authority now select the existing exact-head Hall Blender/export/browser reproof on PR and `main` push;
+- #397 — every active Pushkin rights/policy/scene/visual/delivery authority consumed by the current rights validator now selects that same Hall DCC reproof on PR and `main` push, with coverage guarded by the existing validator;
+- #398 — the exact Pushkin source-byte workflow now re-downloads/revalidates registered originals on both PR and `main` push, with dual-event/path coverage guarded by the existing acquisition validator;
+- #399 — Hall DCC reproof now also selects on `package-lock.json` and the two executed local Node/Playwright composite-action implementations; the existing post-material validator guards that toolchain coverage;
+- **#400 — Pushkin source-byte evidence is isolated from application dependencies: explicit Node 24 + system `pdfinfo`, no repository `npm ci`/npm/yarn/pnpm install path, while fresh external byte revalidation remains green.**
 
-Product #395 exact tested head: `402ea400c96bfdd094ada3dbd71de2415461644b`.
-Product #396 exact tested head: `a4d1e0124b20ee17de1d0db5f8a1da82c56f56c3`.
-Current verified Product authority after #396: `main@d54eff728ce91505c31d5ed332b1890d3d7a3463`.
+Exact tested heads:
+
+- #397: `234817b1d1d020853d38ed73081395680f60be8a`;
+- #398: `7f13ce4eab923b3b03df31865564eae259a1b1bb`;
+- #399: `f88f8f12a9b164a3f1fb4137e3d16ba5970f1d9e`;
+- #400: `e571e51e2530c2798f9e8bf36f42fd0b022eb881`.
+
+Current verified Product authority after #400: `main@4e9046640d0f070783e60de41afff3ab3c1cb319`.
 
 Recent evidence:
 
-- `verification/2026-08-09-hall-v3-pushkin-acquisition-routes/AUTHORITY.md`;
-- `verification/2026-08-09-hall-v3-pushkin-byte-identity/AUTHORITY.md`;
-- `verification/2026-08-09-hall-v3-pushkin-rights-boundary/AUTHORITY.md`;
 - `verification/2026-08-09-hall-v3-pushkin-external-authority-state/AUTHORITY.md`;
-- `verification/2026-08-09-hall-v3-pushkin-rights-review-trigger-integrity/AUTHORITY.md`.
+- `verification/2026-08-09-hall-v3-pushkin-rights-review-trigger-integrity/AUTHORITY.md`;
+- `verification/2026-08-09-hall-v3-integrity-wave/AUTHORITY.md`.
 
 ## Machine phase
 
@@ -56,7 +60,7 @@ Recent evidence:
 - `webVerticalSlice`: blocked;
 - `fullMuseumScaleOut`: blocked.
 
-No current transaction authorizes production WebGL or documentary media consumption. #395 aligned machine state with the external-authority boundary; #396 repaired workflow coverage only. Neither transaction approved a documentary record or advanced a Hall gate.
+No transaction through #400 authorizes production WebGL or documentary media consumption. #397–#400 harden authority selection, source-byte reproof and DCC reproducibility only; they do not approve documentary records or advance Hall gates.
 
 ## Current documentary truth
 
@@ -120,14 +124,15 @@ Current totals:
 
 **No autonomous Product transaction is selected now.**
 
-Product #395 closed the stale machine-state instruction to repeat completed acquisition. Product #396 closed the remaining workflow wiring gap so the final rights-review authority cannot change without the dedicated Hall DCC/export/browser reproof being selected by the existing path-scoped workflow.
+The current engineering-integrity sweep is closed through Product #400: active Gate-5 authorities select the dedicated Hall DCC reproof, source-byte identity is revalidated on both PR and `main` push, DCC lockfile/local-action changes select reproof, and the byte probe itself is isolated from the application package graph. Do not manufacture another wiring/recheck PR from the same evidence merely to keep the lane active.
 
 A new bounded Product transaction becomes legitimate only after at least one material input appears:
 
 1. explicit owner intended-use/commercial-use/final-credit disposition;
 2. qualified legal or institutional disposition resolving the Kiprensky museum-use question;
 3. real Pushkin House copy-request submission/fulfilment and actual supplied evidence/bytes, or an explicit owner decision to proceed without that optional documentary drawing;
-4. materially new primary rights evidence that changes a current disposition.
+4. materially new primary rights evidence that changes a current disposition;
+5. a newly reproduced engineering defect on the then-current Product head.
 
 After genuine external authority exists, the next Product sequence is: promote only independently approved documentary records → author one source/offline Pushkin exhibit in Blender → measure first-slice delivery/performance → produce required offline visual evidence. That sequence does not authorize later Hall gates by itself.
 
@@ -139,7 +144,8 @@ After genuine external authority exists, the next Product sequence is: promote o
 - final credit/runtime path assigned to a non-approved canonical record;
 - rights-pending documentary media consumed by the Blender exhibit or production manifest;
 - production Three/R3F/WebGL activation before the required gates;
-- promotion of `offlineVisualApproval`, `webVerticalSlice` or `fullMuseumScaleOut` without their own evidence and authority.
+- promotion of `offlineVisualApproval`, `webVerticalSlice` or `fullMuseumScaleOut` without their own evidence and authority;
+- repetitive schema/workflow/recheck PRs without a newly reproduced defect or material external input.
 
 ## What remains outside this sub-lane
 
