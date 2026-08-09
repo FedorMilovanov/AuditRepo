@@ -1,84 +1,89 @@
 # Lot audit — current status index
 
-**Updated:** 2026-08-09 — post-Search / post-visual-parity correction  
-**Latest Product main observed:** `59e99bfa277e5bcc9e1d153644e73a2fa2c92a24`  
-**Active Lot publication:** Product PR `#1339@189dfddbeed537c849dd35b1a92578ead894079d`  
-**Fresh ancestry:** `#1339` is `behind=9`, `ahead=10`, merge base `56972725dbe7aa9c5ecbf0d1efa2e9012e37f019`.
+**Updated:** 2026-08-09 — control reconciliation at Product `main@bc786f4da7b6b3e9924caa046a3ab9ba829330fe`  
+**Product root:** issue **#1295 remains open**  
+**Publication state:** **UNPUBLISHED ON CURRENT MAIN** — `src/pages/articles/lot-i-sodom/index.astro` is absent on the observed main  
+**Old publication PR:** **#1339 closed unmerged / superseded** — historical evidence only, not an active owner  
+**Control report:** [`../2026-08-09-main-bc786-control-reconciliation/REPORT.md`](../2026-08-09-main-bc786-control-reconciliation/REPORT.md)
 
-Current owner/print corrections: [`../2026-08-09-post-search-merge-audit-correction/REPORT.md`](../2026-08-09-post-search-merge-audit-correction/REPORT.md).
+## Current owner truth
 
-## Confirmed current Lot publication/content residuals
+| Surface | Current disposition |
+|---|---|
+| Lot root | Product issue **#1295 open**. Fresh publication successor still required. |
+| Old publication #1339 | **CLOSED UNMERGED / SUPERSEDED**. Do not refresh/merge it; replay only still-valid semantics into a fresh `release/*` successor from live main. |
+| Catalog / human reachability #1348 | **MERGED UPSTREAM**. Do not add a one-off Lot card. |
+| Search role authority #1313 | **MERGED UPSTREAM**. |
+| Scripture occurrence writer #1353 | **MERGED UPSTREAM**. |
+| Shared native quiz parity #1373 | **MERGED UPSTREAM** as `bc786f4d…`. Runtime score-tier/badge/short+full explanation defects are closed systemically. |
+| Lot source resilience #1378 | **ACTIVE BOUNDED OWNER**. Keep source-link repair separate from publication/control-plane work. |
+| Shared standalone footer #1401 | **ACTIVE SHARED OWNER**. Lot should consume it after merge rather than copy shared footer runtime. |
+| Lot Bible corpus #1389 | **CLOSED UNMERGED / RIGHTS-BLOCKED**. Do not use as publication input without new binding rights/provenance evidence. |
+| Avraam Tall el-Hammam #1334 | **ACTIVE SEPARATE ATLAS OWNER**. Do not absorb into Lot. |
 
-| ID | Severity | Current disposition | Correct owner / next proof |
-|---|---|---|---|
-| `LOT-SEO-WEBSITE-01` | P1 release | `CONFIRMED-CURRENT` | #1339: add canonical JSON-LD `#website`; rerun exact-head registry/SEO evidence. |
-| `LOT-HUMAN-REACHABILITY-01` | P1 release | `CONFIRMED-CURRENT / ABSORBED-UPSTREAM` | #1348 is the exhaustive `/articles/` owner, current-main and role-aware; no one-off Lot card. |
-| `LOT-BIBLE-TOOLTIP-01` | P1 content / P2 interaction | `CONFIRMED-CURRENT` | Project required Scripture references through canonical `.bref > .btip` + Bible-data projection and a positive expected-count browser witness. [`SCRIPTURE_TOOLTIP_CONTRACT.md`](SCRIPTURE_TOOLTIP_CONTRACT.md). |
-| `LOT-TOC-MAP-01` | P2 navigation | `CONFIRMED-CURRENT` | Add live H2 `#sec-map-connection` to canonical TOC; full census found no second normal H2 omission. |
-| `LOT-JOURNEY-EGYPT-01` | P2 semantic visual | `CONFIRMED-CURRENT` | Journey SVG must include the narrated Egypt-return sequence before Genesis 13 separation without inventing unknown route geometry. |
-| `LOT-SVG-RESPONSIVE-READABILITY-01` | P2 visual/accessibility | `CONFIRMED-CURRENT` | 390px geometry scales 13-unit semantic labels to ~3.9–4.2 CSS px. Require responsive/scroll-owned semantic presentation and browser geometry witness. [`SVG_RESPONSIVE_READABILITY.md`](SVG_RESPONSIVE_READABILITY.md). |
-| `LOT-MEDIA-REVEAL-PRINT-01` | P2 visual/print | `CONFIRMED-CURRENT / PLACEMENT-READINESS` | `LotFigure` uses hidden-base `.reveal`; `view()` timelines are inactive in paged media and no generic print visibility owner was found. Every accepted figure needs explicit print/PDF visibility proof. [`post-Search correction`](../2026-08-09-post-search-merge-audit-correction/REPORT.md). |
-| `LOT-QUIZ-CONTENT-QUALITY-01` | P2 content | `CONFIRMED-CURRENT` | 6/8 `full` explanations are below explicit 2–4 sentence standard; replace plainly impossible filler distractors. [`QUIZ_CONTENT_QUALITY.md`](QUIZ_CONTENT_QUALITY.md). |
-| `LOT-SEARCH-ROLE-01` | P2 discovery | `MERGED-UPSTREAM / READY-TO-REGENERATE` | #1313 is merged. Refresh #1339 and rematerialize Search/RSS/sitemap canonically; do not keep a Search-writer defect open for Lot. |
-| `LOT-SOURCE-LINKS-01` | P3 source verifiability | `VERIFIED-NECESSARY-IMPROVEMENT` | Add direct primary links for already-cited Jaret/Harris and Boslough/Bruno critiques. |
-| `LOT-NUMAYRA-DATE-01` | P3 source annotation | `PARTIAL/NARROWED` | Linked EDSP page says ~30% extant site excavated 1979–1983, while broader field history includes 1977. Clarify annotation only. [`NUMAYRA_DATE_CORRECTION.md`](NUMAYRA_DATE_CORRECTION.md). |
+## Carry-forward Lot acceptance residuals
 
-All route/content/media/print symptoms remain consolidated under `LOT-PUBLICATION-READINESS-01`, except human reachability under `CATALOG-PROJECTION-01`. Search writer root is merged/retired.
+Because there is no current Lot route, these are **not production-regression claims**. They are verified residuals/requirements from the accepted authoring layer and stale publication witnesses that a fresh successor must either fix or explicitly disprove on current main.
 
-## Shared native quiz defects
-
-The quiz **does render** natively. Product #1365 is closed false-positive. Current shared owner is Product **#1369**:
-
-| ID | Current disposition | Evidence |
+| ID | Class | Fresh-successor requirement |
 |---|---|---|
-| `ARTICLE-QUIZ-SCORE-RANGE-01` | `CONFIRMED-CURRENT / SYSTEMIC-MANIFESTATION` | Native selector assumes `{min,max}` while accepted configs use ordered `min` thresholds; named tiers fall through and badge is ignored. [`NATIVE_QUIZ_SCORE_CONTRACT.md`](NATIVE_QUIZ_SCORE_CONTRACT.md). |
-| `ARTICLE-QUIZ-EXPLANATION-PARITY-01` | `CONFIRMED-CURRENT / SYSTEMIC-MANIFESTATION` | Native feedback uses `short || full`; all 8 Lot questions hide their deeper full explanation. [`NATIVE_QUIZ_EXPLANATION_PARITY.md`](NATIVE_QUIZ_EXPLANATION_PARITY.md). |
+| `LOT-SEO-WEBSITE-01` | release/SEO | Include canonical `#website` JSON-LD and truthful `Article.isPartOf`; prove through current registry/SEO checks. |
+| `LOT-BIBLE-TOOLTIP-01` | content/interaction | Produce positive canonical Bible-reference tooltip projection/witness. Do **not** solve this by reviving rights-blocked #1389. |
+| `LOT-TOC-MAP-01` | navigation | Ensure live H2 `#sec-map-connection` is represented in canonical TOC if the section still exists in the replayed source. |
+| `LOT-JOURNEY-EGYPT-01` | semantic visual | Preserve narrated Egypt → Negev → Bethel/Ai return before Genesis 13 separation; do not invent unknown geometry. |
+| `LOT-SVG-RESPONSIVE-READABILITY-01` | visual/accessibility | Prove semantic labels remain readable on mobile; overflow-free shrinking alone is not sufficient. |
+| `LOT-MEDIA-REVEAL-PRINT-01` | visual/print | Every accepted hidden-base `.reveal` figure needs explicit paged-media visibility proof. |
+| `LOT-QUIZ-CONTENT-QUALITY-01` | content | Improve shallow `full` explanations and plainly impossible filler distractors. This is distinct from the now-merged shared runtime fix #1373. |
+| `LOT-SOURCE-LINKS-01` | source | #1378 owns bounded source-link resilience. |
+| `LOT-NUMAYRA-DATE-01` | source annotation | Keep the narrowed 1977 vs 1979–1983 excavation-history annotation precise; do not over-promote it. |
 
-## Media / illustration readiness
+## Shared native quiz — closed systemic root
 
-Fresh branch census against Product `main@59e99bfa…`:
+The quiz **does render** natively; the old render failure was a false-positive. Product #1373 is now merged and closes the two systemic runtime manifestations previously carried here:
 
-- `lane/lot-media-20260809` — `ahead=0 / behind=1`; still zero unique media bytes;
-- `lane/lot-illustration-placement-20260809` — `ahead=11 / behind=6`, source-only seven-file delta;
-- conceptual families: 14;
-- publication registry rows: **9**;
-- rendered `<LotFigure>` placements: **9**;
-- explicit reserves: 5;
-- #1339 declared final raster gate: **14**.
+- named score tiers/badge presentation now follows the accepted native configuration semantics;
+- short and full teaching explanations are no longer mutually exclusive through `short || full` fallback behavior.
 
-Owner must either deliver/test 14 or explicitly accept/test 9. Evidence must assert exact positive count, and every accepted figure must also be visible in print/PDF despite `.reveal`. [`MEDIA_PLACEMENT_READINESS.md`](MEDIA_PLACEMENT_READINESS.md).
+Only Lot-specific **content quality** remains in this audit package.
 
-Lot-specific OG remains unfinished; generic site OG is not closure.
+## Media / illustration truth
 
-## Expected derived/replay work, not new bugs
+Fresh branch comparison against Product `main@bc786f4d…`:
 
-- Scripture occurrence writer #1353 is merged; stale #1339 derivative must refresh canonically.
-- Search role authority #1313 is merged; stale Lot generated Search/RSS/sitemap must regenerate canonically.
-- `LOT-ANCESTRY-01`: #1339 is **behind=9**; every final check must be re-earned.
-- Avraam Tall el-Hammam remains separate under #1334/#1298.
+- `lane/lot-media-20260809` — **ahead=0 / behind=7**; no unique media bytes;
+- `lane/lot-illustration-placement-20260809` — **ahead=13 / behind=12**, seven-file route-local placement delta;
+- historical source-grounded placement model: 9 mounted figure slots with 5 reserves;
+- old publication acceptance language mentioned 14 families, but there is no current 14-family media payload in Product.
+
+Therefore no current release claim may say “14/14 media ready.” A future media/placement owner must first obtain explicit handoff/fresh ownership, choose a truthful positive acceptance count, add actual responsive assets + Lot-specific OG, and prove that exact count in browser and print/PDF.
+
+## Fresh publication sequence
+
+1. Let active adjacent owners (#1378 source resilience, #1401 shared footer and any other current non-overlapping Product owners) settle or explicitly hand off.
+2. Re-read current Product main/rules/branches; create **one fresh `release/*` Lot publication successor**. Do not reopen #1339.
+3. Replay only still-valid thin route/PageHead/SITE_CONFIG/route-profile/page-ownership/search-policy semantics from historical evidence.
+4. Carry the acceptance residuals above only where current source still reproduces them; close any disproved residual rather than cargo-culting it.
+5. Use canonical writers for Search/RSS/sitemap/Scripture/migration-derived output; never hand-edit generated truth.
+6. Keep #1389 excluded unless binding Research rights/provenance authority changes.
+7. Resolve media/OG with an explicit positive acceptance count.
+8. Run exact-head browser/SEO/source/print/accessibility barriers and obtain post-merge public-route witness before closing #1295.
 
 ## Explicitly closed / not promoted
 
 - `LOT-QUIZ-RENDER-01` — false-positive/closed; native renderer exists.
-- Product #1365 — closed `not_planned`; do not restore/copy legacy `site.js`.
-- `Сигор` vs `Цоар`, hand-written `.gterm` absence and Back-to-home destination — no proved route-contract defect.
-- Pagefind body/meta placement — exact #1339 Search Manifest Policy built/indexed and policy passed; no defect promoted.
-- archaeology `.compare-table` mobile layout — shared block/card CSS + `data-label` contract exists; no defect promoted.
+- `ARTICLE-QUIZ-SCORE-RANGE-01` — **closed upstream through merged #1373**.
+- `ARTICLE-QUIZ-EXPLANATION-PARITY-01` — **closed upstream through merged #1373**.
+- `LOT-HUMAN-REACHABILITY-01` — absorbed by merged #1348; no one-off Lot card.
+- `LOT-SEARCH-ROLE-01` — absorbed by merged #1313; downstream regeneration only.
+- Product #1339 — closed unmerged/superseded; not current release authority.
+- Product #1389 — closed unmerged/rights-blocked; not approved corpus authority.
+- `Сигор` vs `Цоар`, hand-written `.gterm` absence and Back-to-home destination — no proved standalone route-contract defect.
+- Pagefind body/meta placement and archaeology compare-table layout — no standalone defect promoted from prior evidence.
 
-## Factual verification snapshot
+## Factual boundary retained from the audit
 
-- Tall el-Hammam retraction boundary: PASS without overclaim.
-- Deir ‘Ain ‘Abata / Agios Lot late-antique reception boundary: PASS.
-- central Genesis / 2 Peter / Ezekiel / Jude / Moab-Ammon / Ruth-David source boundaries: no material correction from this audit.
-- Numayra remains the single narrowed source-annotation item.
+- Tall el-Hammam retraction boundary: retain the 2025 retraction as a limit on positive airburst evidence, not as proof of an alternative site.
+- Deir ‘Ain ‘Abata / Agios Lot: late-antique reception/local memory, not Bronze Age direct proof.
+- Numayra: keep the single narrowed excavation-date annotation; do not inflate it into a larger factual defect.
 
-## Current upstream Product owners
-
-- #1339 — Lot publication, draft/open, **behind=9**;
-- #1348 — catalog/human reachability, draft/open, current head `e2e6385c…`, current-main based and role-aware;
-- #1334 — Avraam retraction parity, draft/open;
-- #1369 — shared native quiz parity, open issue, no implementation PR at this checkpoint;
-- #1313 — Search role authority, **merged**;
-- #1353 — Scripture occurrence writer, **merged**.
-
-Recheck before Product mutation; AuditRepo evidence does not authorize takeover of another lane.
+Recheck all owner/branch/main facts before Product mutation. AuditRepo evidence preserves the boundary; it does not authorize takeover of another lane.
