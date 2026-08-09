@@ -11,6 +11,13 @@ Current audit chain:
 
 | Поле | Значение |
 |---|---|
+| Active work units | **2** |
+| Direct current defects | **0** |
+| Verified necessary improvements | **0** |
+| Narrowed residuals | **0** |
+| System verification lanes | **2** |
+| Owner decisions | **0** |
+| Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 | Product verification anchor | `main@9e9556a2e0a389b351ea4f0490275128a6eed046` |
 | Current Lot PR exact head | `#1456@e25bee467aa87a2fcb357ad44609bdd4a2ae174a` |
 | Open Product PRs | **1** — `#1456` |
@@ -24,12 +31,12 @@ Major former roots are already closed completed: `#1298`, `#1299`, `#1359`, `#13
 
 ---
 
-## ACTIVE CURRENT STABILIZATION WORK — 2
+## SYSTEM VERIFICATION LANES — 2
 
 | ID | Status | Required terminal outcome | Current owner / evidence boundary |
 |---|---|---|---|
-| `LOT-PUBLICATION-CLOSURE` | `MERGE-READY-CANDIDATE` | Finish the one remaining publication transaction: confirm exact current main / exact 16-file diff / clear review-thread state, move Draft→Ready, guarded merge, then obtain post-merge/live witness for `/articles/lot-i-sodom/` and close `#1295`. | Product `#1456` / `release/lot-publication-20260809-r4`. Exact connector head `e25bee467aa87a2fcb357ad44609bdd4a2ae174a`; current main remains `9e9556a2…`; every one of the 20 observed exact-head workflows is terminal SUCCESS, including Runtime Interactive and Visual Parity. No second Lot lane is allowed. |
-| `SYS-REPOSITORY-CONVERGENCE-CLOSURE` | `systemic-root` | After Lot is actually live, run one final fresh-current-main release/convergence audit, retire current-lane CI residue, prove no release-required orphan work, close `#1403`, and STOP the stabilization wave. | Product `#1403` + Full-Zero reports. Do not promote unrelated old backlog into this finish line. |
+| `LOT-PUBLICATION-CLOSURE` | `MERGE-READY-CANDIDATE` | Finish the one remaining publication transaction: confirm exact current main / exact 16-file diff / clear review-thread state, move Draft→Ready, guarded merge, then obtain post-merge/live witness for `/articles/lot-i-sodom/` and close `#1295`. | Product `#1456` / `release/lot-publication-20260809-r4`. Exact connector head `e25bee467aa87a2fcb357ad44609bdd4a2ae174a`; current main remains `9e9556a2…`; every one of the 20 observed exact-head workflows is terminal SUCCESS, including Runtime Interactive and Visual Parity. Evidence: `verification/2026-08-10-full-zero-wave-03-issue-zeroing/REPORT.md`. No second Lot lane is allowed. |
+| `SYS-REPOSITORY-CONVERGENCE-CLOSURE` | `systemic-root` | After Lot is actually live, run one final fresh-current-main release/convergence audit, retire current-lane CI residue, prove no release-required orphan work, close `#1403`, and STOP the stabilization wave. | Product `#1403` + Full-Zero reports. Evidence: `verification/2026-08-10-full-zero-wave-03-issue-zeroing/REPORT.md`. Do not promote unrelated old backlog into this finish line. |
 
 ---
 
