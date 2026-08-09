@@ -69,6 +69,46 @@ Immediate consumer is catalog successor `#1348`; the same durable writer is inte
 
 Disposition: retain the red exact-head result as useful evidence, but mark the **repair mechanism as `OWNED-UPSTREAM #1353`**. Do not create a temporary Lot-only workflow or manually edit the derivative.
 
+## Semantic visual verification
+
+### `LOT-JOURNEY-EGYPT-01` — P2 semantic figure accuracy — `CONFIRMED-CURRENT`
+
+`LotJourneyDiagram.astro` presents itself as the path of Lot in the Genesis narrative and draws this sequence:
+
+`Ur → Haran → Canaan → Jordan plain → Sodom → Zoar → cave`.
+
+The figure footer also says that the scheme reflects only points directly named by the narrative and does not reconstruct an unknown route between them.
+
+That boundary is currently incomplete: Genesis 13:1 explicitly says that Abram went up **from Egypt** and that **Lot was with him**. The accepted prose also acknowledges that the patriarchal household had passed through Egypt. Egypt is therefore not a speculative route reconstruction; it is an explicitly narrated Lot waypoint between the first Canaan stay and the Genesis 13 separation.
+
+Correct repair boundary:
+
+- add Egypt to the semantic SVG chronology rather than hiding the waypoint in prose only;
+- preserve the diagram's current “no invented route” rule;
+- keep the correction in the existing SVG/component rather than creating another diagram;
+- make the later Lot visual/browser witness assert the expected waypoint labels, so a semantic omission cannot pass merely because the SVG has nonzero dimensions.
+
+Verification authority:
+
+- Genesis 13:1 (“Abram went up from Egypt … and Lot with him”);
+- current `LotJourneyDiagram.astro`, which contains no Egypt node.
+
+This is a content/visual semantic residual, not an archaeological-location opinion.
+
+## CI coverage boundary exposed by fail-fast
+
+The exact `#1339@189dfdd…` Route Registry workflow contains a second useful audit finding about **coverage**, not a new Product UI defect:
+
+- production-like build succeeds;
+- registry contracts succeed;
+- independent Chromium and WebKit public-surface touch/scroll jobs succeed;
+- the main `public-surface-browser-matrix` fails at registry-derived production SEO because `#website` is missing;
+- every later step in that same job — production search policy, full Chromium public surfaces, route semantics, Nagornaya UI, overflow diagnostics — is skipped.
+
+Therefore the current red SEO node is not merely one isolated assertion; it also prevents the principal browser-matrix job from exercising its later assertions on this head. The final Lot publication evidence must rerun the matrix after the JSON-LD repair rather than treating the separate touch/scroll greens as equivalent coverage.
+
+Disposition: `COVERAGE-BLOCKED-BY-CONFIRMED-SEO-FAIL`, not a reason to weaken or reorder the guard just to manufacture green.
+
 ## Current ownership map for Lot-related residuals
 
 | Residual | Current disposition / owner |
@@ -76,6 +116,7 @@ Disposition: retain the red exact-head result as useful evidence, but mark the *
 | Missing JSON-LD `#website` | `CONFIRMED-CURRENT` — route-local publication owner `#1339` |
 | Missing `#sec-map-connection` in canonical TOC | `CONFIRMED-CURRENT` — route-local publication owner `#1339` |
 | Plain Scripture refs / zero Lot `.bref` anchors | `CONFIRMED-CURRENT` — Lot content/publication integration; must use existing Bible-reference contract |
+| Journey SVG omits explicit Egypt waypoint | `CONFIRMED-CURRENT` — semantic visual/content integration |
 | Human orphan `/articles/lot-i-sodom/` | `CONFIRMED-CURRENT / OWNED-UPSTREAM #1348` |
 | Search row loses author role | `CONFIRMED-CURRENT / OWNED-UPSTREAM #1313` |
 | Scripture occurrence derivative stale | `EXPECTED DERIVED REFRESH / OWNER #1353` |
