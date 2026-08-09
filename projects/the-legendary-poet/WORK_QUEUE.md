@@ -12,7 +12,9 @@ Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/
 
 Current verified engineering rows: **0**.
 
-`TLP-HALL-001` is an owner-selected architecture lane, not an engineering bug row. Eight bounded Hall source waves are merged:
+`TLP-HALL-001` is an owner-selected architecture lane, not an engineering bug row.
+
+Eleven bounded Hall Product waves are merged:
 
 - foundation: Product PR #373, exact tested head `9c63a500257c1dc01e4df5c4dcecb8bbfd9fd0fb`, resulting Product `main` `9cce8bb386262172a50f0d65d52372e045e4cd43`;
 - Reference Bible: Product PR #374, exact tested head `9a993399749a818fed5ffe9ac9ee2378807aafc2`, resulting Product `main` `cc81858626c8ddcf8e59016231068c45cbb6e246`;
@@ -21,7 +23,10 @@ Current verified engineering rows: **0**.
 - topology select/reject: Product PR #381, exact tested head `2b0b674e5c1010927f7c50e496b5b33fd6ff781b`, resulting Product `main` `b97c851333c6a78869b78f762b2238b1dcd19fa8`;
 - H3 camera candidate authoring: Product PR #382, exact tested head `7637010ef69248fe05ea37c1a1cf9ee8d2a38193`, resulting Product `main` `779719f88e630acda9dfb84520c913aac239fbf4`;
 - R1 camera decision: Product PR #383, exact tested head `8682789cf78e4e717eba5181246700da09de5c11`, resulting Product `main` `07e23ea3feb79fea9d42f29b192e4e3f046713cc`;
-- camera-gate promotion: Product PR #384, exact tested head `f559a06f51483c4ea2a95795a7dad266940ddd70`, resulting/current Product `main` `a873a427c8dda34bd28baa12d8e34fc110f3268c`.
+- camera-gate promotion: Product PR #384, exact tested head `f559a06f51483c4ea2a95795a7dad266940ddd70`, resulting Product `main` `a873a427c8dda34bd28baa12d8e34fc110f3268c`;
+- representative material/light/export authoring: Product PR #386, exact tested head `c40bb023426785522ab915e89da20865bc364e73`, resulting Product `main` `5f6d6b4538ab40d8195f2e50e63fcbbf7186eeb4`;
+- material evidence-identity repair: Product PR #387, exact tested head `03053de324dcc524aa68ccc69b7a8b5d29280c1c`, resulting Product `main` `d6f695ddd583fbd2b667a5632ac7cc09a321afcc`;
+- material visual-evidence repeat-spike: Product PR #388, exact tested head `600f28efd2aa59b6d31086b64aeb42da7b03a48e`, resulting/current Product `main` `0ce2e17f6eaa8b1af9c87257b20c9967616b8e4b`.
 
 Evidence:
 
@@ -30,70 +35,109 @@ Evidence:
 - `verification/2026-08-08-hall-v3-greybox-tooling/TOOLING.md`;
 - `verification/2026-08-08-hall-v3-greybox-candidates/CANDIDATES.md`;
 - `verification/2026-08-08-hall-v3-topology-selection/SELECTION.md`;
-- `verification/2026-08-09-hall-v3-camera-chain/CAMERA_CHAIN.md`.
+- `verification/2026-08-09-hall-v3-camera-chain/CAMERA_CHAIN.md`;
+- `verification/2026-08-09-hall-v3-material-chain/MATERIAL_CHAIN.md`.
 
-### Hall v3 material / lighting / export spike — current bounded wave
+### Current verified Hall authority
 
-Production source now has exactly one active Hall topology authority (**H3**) and one approved guided camera (**R1**). H1 is retained as topology reserve, H2 is rejected; R3 is camera reserve, R0/R2 are rejected. Production `/hall` remains a lightweight DOM placeholder.
+Product `main@0ce2e17f6eaa8b1af9c87257b20c9967616b8e4b` remains `phase=materialLightingExportSpike`.
 
-#### Current source witness
+Frozen authorities:
 
-- Product `main@a873a427c8dda34bd28baa12d8e34fc110f3268c` is `phase=materialLightingExportSpike`;
-- `foundation=completed`, `referenceBible=completed`, `metricGreybox=completed`, `cameraApproval=completed`;
+- topology: **H3**;
+- H3 layout fingerprint: `5d5d0ddd8b150aa64afb73a2a3d9e00c6005e99fc935a6d4707a49ecd475fe65`;
+- H3 mesh geometry fingerprint: `b3de770858a423305db8fcab15b405414e66b3d3de93ab1deaa5b3b35b418777`;
+- guided camera: **R1** `pushkinViewing`, position `[8.0,2.5,1.60]`, target `[11.15,5.45,1.95]`, lens `28 mm`.
+
+Gate state:
+
+- `foundation=completed`;
+- `referenceBible=completed`;
+- `metricGreybox=completed`;
+- `cameraApproval=completed`;
 - `materialLightingExportSpike=active`;
-- every later Hall gate remains blocked;
-- H3 layout fingerprint remains `5d5d0ddd8b150aa64afb73a2a3d9e00c6005e99fc935a6d4707a49ecd475fe65`;
-- H3 mesh geometry fingerprint remains `b3de770858a423305db8fcab15b405414e66b3d3de93ab1deaa5b3b35b418777`;
-- selected R1 `pushkinViewing`: position `[8.0,2.5,1.60]`, target/destination `[11.15,5.45,1.95]`, lens `28 mm`;
-- production `/hall` still forbids legacy Hall imports, Three/R3F runtime and unapproved concept art.
+- `pushkinVerticalSlice` and every later Hall gate remain blocked.
 
-#### Material-spike problem to solve
+Production `/hall` remains a lightweight DOM placeholder and still forbids production Three/R3F/WebGL activation and unapproved Hall concept assets.
 
-The next gate must prove one **small representative H3 architectural bay** before any full-Hall lookdev. It must answer, with generated and browser-inspectable evidence:
+### Accepted material-chain evidence
 
-1. which material channels own color vs data and how sRGB/non-color handling is preserved from Blender through glTF/Three;
-2. what UV0/UV1 contract is required for the representative bay;
-3. whether static illumination is best delivered as IBL/minimal realtime only, external baked lightmap on UV1, or a more aggressively prebaked static shell;
-4. how raw Blender export is validated and optimized without losing node names, extras, camera authority or UV channels;
-5. what geometry/texture/download/GPU-memory cost the bay actually has;
-6. whether the result remains viable in a browser without activating production `/hall`.
+Authoritative exact material artifact from #388:
 
-#### Next bounded transaction
+- Hall artifact `9036351234`, digest `sha256:dc33af96ba747175794f9f31775c534c224a35645d9943302424459e0bf8cc95`;
+- final raw GLB `200,672 B`, SHA-256 `10da27398d69397b77298e549af0b399eb2edf53ba430bfbb81a7937082fca7e`;
+- optimized GLB `141,896 B`, SHA-256 `810865870e5c240af681eab5aa8765a2fc6de44c69c823c8971a097a973ce089`;
+- raw and optimized Khronos validation: `0 errors / 0 warnings`;
+- raw source-evidence identity is independently resealed and matched;
+- raw→optimized R1 sampled visual delta: meanAbs `0.0047743`, max channel delta `2`, ratio above delta `2` = `0`;
+- UV0 is metre-scaled surface mapping at approximately `1.5 m / UV unit`;
+- UV1 remains separate and preserved for optional static lightmap delivery;
+- normal close A/B meanAbs `1.453125`, changed>2 `25.03%`;
+- roughness medium A/B meanAbs `0.538194`, changed>2 `6.84%`;
+- accepted QA bevel = `15 mm / 3 segments`, object transforms unchanged, evaluated bounds delta `0`.
 
-Product #369 owns one spike-only source transaction:
+Two earlier machine-green visual artifacts are explicitly **not authority**:
 
-1. start from fresh Product `main@a873a427c8dda34bd28baa12d8e34fc110f3268c`; re-check current main, open source PRs and Product #369 comments before mutation;
-2. keep H3 topology and R1 camera immutable; no wall/route/camera fix may be smuggled into lookdev;
-3. create one representative H3 architectural bay only — wall/portal/floor/exhibit proxy scale sufficient to test material, UV, lighting and export behavior;
-4. use no final Pushkin documentary image and no rights-uncleared asset;
-5. prove baseColor/emissive as color textures and normal/roughness/metalness/AO as data textures; reject the old Hall-v2 blanket-sRGB behavior;
-6. reserve UV0 for surface materials and explicitly test UV1 only where static bake/lightmap delivery requires it;
-7. compare a small bounded lighting set rather than committing the whole museum to one strategy before evidence;
-8. export raw glTF/GLB from pinned Blender, validate it, then run one controlled optimization path while proving mandatory node names/extras/UV channels survive;
-9. keep generated `.blend`, raw/optimized GLB, KTX2/lightmap candidates and browser captures as Actions artifacts unless/until a later gate promotes a runtime asset;
-10. measure bytes, meshes, materials, textures, triangles/draw-call proxy and browser viability on the representative bay;
-11. do not add Three/R3F/WebGL to production `/hall`; any browser viewer used in this spike must remain test-only/non-route authority;
-12. if the spike cannot preserve visual/material correctness inside reasonable delivery constraints, change the material/light/export strategy — do not hide the defect with bloom, fog, mirror floors or other post-processing;
-13. only after this spike has a selected delivery contract may `pushkinVerticalSlice` become active.
+- `9036028517` — rejected because the QA camera did not frame the actual wall face and A/B evidence occupied only a narrow strip;
+- `9036170327` — rejected because a hard repeated-texture seam remained visible.
 
-#### Automatic rejection during the spike
+Both defects were corrected before accepted artifact `9036351234`.
 
-- H3 walls/route or R1 camera are changed to make lookdev easier;
-- stone or plaster uses metallic values as a visual cheat;
-- normal/roughness/metalness/AO are treated as sRGB color data;
-- static lighting depends on many realtime shadow-casting lights;
-- a lightmap strategy cannot prove its UV channel/binding contract explicitly;
-- optimization removes required node names/extras/UVs or changes visible geometry unexpectedly;
-- generated output can be considered "good" only with bloom/fog/vignette/particles;
-- one test strategy gets materially better geometry or camera treatment than another;
-- full-Hall texture/light work starts before the representative bay contract is selected;
-- production `/hall` begins loading the spike.
+### Lighting candidate dispositions from evidence
 
-#### Decision dispositions
+#### L0 — minimal runtime lighting
 
-- `approve-spike-contract`: one material/UV/light/export path passes and becomes the basis for the later Pushkin vertical slice;
-- `repeat-spike`: allowed for a reproduced material/export/browser defect while H3/R1 remain frozen;
-- `reopen-camera`: only for a newly reproduced camera defect not caused by material/lookdev work;
+Current status: **eligible for Gate-4 strategy decision**.
+
+- mean display luma `0.18037`;
+- dark-sample ratio `0.39366`;
+- GPU texture residency `1,398,096 B`;
+- material close/medium evidence passes;
+- no external lightmap payload is required;
+- preserves H3/R1 and the proven raw→optimized transport chain.
+
+#### L1 — external UV1 lightmap
+
+Current status: **reserve strategy / current bake rejected**.
+
+- mean display luma `0.06554 < 0.08`;
+- dark-sample ratio `0.96832`;
+- GPU texture residency `1,791,312 B`;
+- incremental lightmap residency `393,216 B` on the representative bay;
+- UV1/lightmap transport itself is technically proven, but the current bake is visually too dark and may not be selected as active delivery.
+
+Do not brighten or post-process L1 merely to pass a gate. A future L1 repeat-spike is justified only by a concrete vertical-slice need or explicit owner choice.
+
+## Next bounded transaction — Gate-4 material/light/export decision
+
+The next Product #369 transaction is a **decision wave**, not another open-ended material authoring wave.
+
+Before mutation:
+
+1. start from fresh Product `main@0ce2e17f6eaa8b1af9c87257b20c9967616b8e4b` and re-check open Product PRs/branches plus current #369 comments;
+2. keep H3 topology, R1 camera and production `/hall` immutable;
+3. re-read the accepted exact artifact and `MATERIAL_CHAIN.md`; do not use the two rejected artifacts as authority.
+
+Decision question:
+
+> Which already-proven material/UV/light/export contract should become the basis for the first Pushkin vertical slice?
+
+Default evidence-backed recommendation:
+
+- select **L0 minimal runtime lighting** as the initial active lighting delivery;
+- approve UV0 for surface material mapping;
+- preserve UV1 as an explicit optional/reserve static-lightmap channel;
+- approve the pinned Blender `4.5.12` → Khronos → preservation-safe `gltfpack@1.2.0` → Khronos transport chain;
+- preserve explicit tangent, names/extras/camera/UV0/UV1 and raw-evidence identity guards;
+- keep current L1 as `reserve / rejected-current-bake` rather than delaying the first Pushkin slice;
+- do **not** promote the deterministic proof textures or 15 mm QA bevel as final museum art assets by accident; they are evidence inputs unless the decision document explicitly narrows what becomes delivery authority;
+- keep `pushkinVerticalSlice` blocked during the decision PR itself unless the established Hall gate model explicitly combines decision + promotion. Prefer a separate promotion transaction if prior topology/camera precedent is followed.
+
+Possible dispositions:
+
+- `approve-spike-contract`: select the evidence-backed delivery contract, then perform the required separate gate promotion if the repository model requires it;
+- `repeat-spike`: only for a newly reproduced material/export/browser defect or an explicit requirement to repair L1 before the Pushkin slice;
+- `reopen-camera`: only for a newly reproduced camera defect independent of lookdev;
 - `reopen-topology`: only for a newly reproduced spatial defect that cannot be solved without geometry change;
 - `close`: not permitted; `TLP-HALL-001` remains open through Pushkin slice, offline/web approval and production certification.
 
@@ -157,4 +201,4 @@ Open source issues for archive acquisition, documentary research, long-form auth
 
 ## Adding a lane
 
-A useful entry needs concrete question, evidence source, expected benefit, first narrow verification, one owner and explicit possible dispositions. Do not copy the historical matrix into this file.
+A useful entry needs concrete question, evidence source, expected benefit, first narrow verification, one owner и explicit possible dispositions. Do not copy the historical matrix into this file.
