@@ -46,12 +46,13 @@
 ## ST-STRANGLER — legacy/native duplication and retirement
 
 - Status: `active-work` via `SYS-STRANGLER-RETIREMENT`.
-- Current Product anchor observed in the 2026-08-09 consolidation: `3a0f21b0ec01e423a2625becf13f600a07a6ddb5` (#1362).
-- Current truthful readiness reported by the active retirement program: **13 blockers**.
-- Current next bounded owner: Product #1364, which must make the six Gill claim legacy surfaces resolver-backed and fail closed at 6/6; expected arithmetic **13 → 12** with 53 references / 36 dependencies / 7 owner-decision blockers otherwise stable.
+- Current Product anchor observed after the reconciliation race-check: `1b05bf1f99f45d9dcf22e453f28dff2a68a304fa` (merged #1364).
+- Merged #1364 advanced truthful retirement readiness **13 → 12** by making all six Gill claim legacy surfaces resolver-backed and fail closed at 6/6.
+- Current next bounded owner: Product **#1367**, which resolves production visual-parity retained-reference reads through ledger authority and permanently executes the named production visual-parity contract in its existing workflow; expected arithmetic **12 → 11**.
+- #1367 reports the expected post-merge classes as 1 mechanical (`gill-reading-time`, currently owned inside #1348), 3 obsolete legacy audits and 7 owner-decision blockers.
 - The old hidden self-verifier arithmetic defect is closed by #1270; do not add a hidden +1 to current readiness.
 - Core invariant: logical retained-reference identity is immutable while physical storage is resolved through the central active/quarantine authority; ambiguity/missing authority fails closed.
-- **Physical move/delete remains unauthorized** until readiness explicitly permits it. Historical 26→21→20→19→18→17… counts are forensic history, not current planning numbers.
+- **Physical move/delete remains unauthorized** until readiness explicitly permits it. Historical 26→21→20→19→18→17→… counts are forensic history, not current planning numbers.
 
 ## ST-PERFORMANCE — measured route-scoped loading
 
@@ -73,14 +74,15 @@
 
 - Status: `active-work`.
 - Existing-row Search reconciliation is **closed**: merged #1254 refined the writer-owned baseline to 46 rows and converged it 46→0 without seizing editor/tags/dates/priority authority.
-- Current writer root is `SEARCH-MANIFEST-NEW-ROW-ROLE-AUTHORITY` / #1261/#1313: new rows must preserve distinct author/editor/translator roles.
-- Current downstream catalog root is `CATALOG-PROJECTION-01` / #1348: `/articles/` membership should derive from existing Search + publication ownership, not another hand-maintained card registry.
+- Current writer root is `SEARCH-MANIFEST-NEW-ROW-ROLE-AUTHORITY` / #1261/#1313: new rows must preserve distinct author/editor/translator roles. The branch has already absorbed current `main@1b05bf1f…` at the latest census.
+- Current downstream catalog root is `CATALOG-PROJECTION-01` / #1348: `/articles/` membership should derive from existing Search + publication ownership, not another hand-maintained card registry. After #1364 moved main, #1348 is one ancestry commit behind and must refresh before final proof.
 - Lot human reachability and Lot generated role drift are symptoms absorbed by these owners, not reasons for one-off route hacks.
 
 ## ST-VISUAL-TRUTH — migration parity vs product regression
 
 - Status: `active-work` through `SYS-PRODUCT-VISUAL-GOLDENS` / Product #298.
 - Current legacy↔dist pixel parity proves projection equivalence, not preservation of an owner-approved product state; common-mode deletion can remain green.
+- Separately, Strangler #1367 is a storage-authority repair for the **existing** visual-parity production contract. It does not close the product-golden blind spot and must not be described as doing so.
 - Better-than-local outcome: immutable owner-approved route/state goldens selected from public capability authority; ordinary PR CI read-only; explicit/manual update transaction with old/new digests and exact source SHA.
 - Print/PDF correctness remains a separate semantic/physical contract, not a screenshot substitute.
 
@@ -89,7 +91,7 @@
 - Status: `active governance theme`; current mandatory instances exist in MASTER.
 - Historical manifestations: wrong build mode, stale shell assumptions, grep overstatement, fragile geometry thresholds, false-green/false-red harnesses, stale exact-head evidence.
 - Current concrete roots:
-  - `SYS-MAP-SCALE-RESIZE-WITNESS` / #1363: fixed 120ms wait sampled a `.3s` scale-line transition; bounded convergence must preserve the same runtime invariant.
+  - `SYS-MAP-SCALE-RESIZE-WITNESS` / #1363: fixed 120ms wait sampled a `.3s` scale-line transition; bounded convergence must preserve the same runtime invariant. After #1364 moved main the branch is one ancestry commit behind, so prior greens are not merge authority.
   - `SYS-HOME-DESIGN-SEARCH-SETTLED` / #1299: Home Design uses a non-canonical settled-state heuristic and lacks useful timeout diagnostics while canonical Search Modal can remain green.
   - #1212 remains the all-reading-route reader-control census; confirmed Product reds should repair Product, not be deleted from the census merely to make audit CI green.
 - Better-than-local outcome: measure meaningful behavior with stable observable state and proportionate cost; distinguish harness defect from Product defect before mutation.
