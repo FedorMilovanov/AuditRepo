@@ -23,7 +23,7 @@ Current Lot audit: [`../verification/2026-08-09-lot-publication-current-audit/CU
 | Owner decisions | **3** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-Current Product owner set remains multi-lane, but #1373 is now merged and is no longer an active owner. Relevant current owners include #1401, #1395, #1393, #1389, #1378, #1363, #1339, #1334 and stale audit-only #1212. Independent Baptist media audit #1402 does not by itself establish a new MASTER defect. Duplicate Baptist roadmap PRs #1391 and #1400 remain closed unmerged; #1395 is the sole current roadmap owner. Protected readable/owner-ui branches already reserve the next two Strangler blockers. No second Home-settled, MapScale, Lot-source, Baptist-roadmap or Avraam owner should be opened.
+Current Product owner set remains multi-lane, but #1373 is merged and is no longer an active owner. Relevant current owners include #1401, #1395, #1393, #1378, #1363, #1334 and stale audit-only #1212. Independent Baptist media audit #1402 does not by itself establish a new MASTER defect. Historical Lot publication #1339 is closed superseded, and rights-blocked Bible corpus #1389 is closed unmerged; neither is a current Product owner. The unresolved Bible authorization remains owner decision `SEARCH-P2-07`. Duplicate Baptist roadmap PRs #1391 and #1400 remain closed unmerged; #1395 is the sole current roadmap owner. Protected readable/owner-ui branches already reserve the next two Strangler blockers. No second Home-settled, MapScale, Lot-source, Baptist-roadmap or Avraam owner should be opened.
 
 ---
 
@@ -31,7 +31,7 @@ Current Product owner set remains multi-lane, but #1373 is now merged and is no 
 
 | ID | Required repair | Current evidence / owner boundary |
 |---|---|---|
-| `LOT-PUBLICATION-READINESS-01` | Finish the strict-native Lot publication transaction without weakening route/source/browser/print/contracts or bypassing current rights/projection authorities. | Product issue **#1295**; old publication #1339 remains stale and must be replayed from current main rather than merged as-is. Catalog #1348, Search role authority #1313 and shared native quiz parity #1373 are merged. Lot source resilience remains #1378; shared standalone-footer ownership remains #1401. New central Bible data PR #1389 is **not publication-authorized** under current Research rights decision and must not be used to force Lot enrichment. Fresh publication must regenerate Search/RSS/sitemap/Scripture only through canonical writers. Evidence: [`CURRENT_STATUS`](../verification/2026-08-09-lot-publication-current-audit/CURRENT_STATUS.md) + [`current reconciliation`](../verification/2026-08-09-main-bc78-control-reconciliation/REPORT.md). |
+| `LOT-PUBLICATION-READINESS-01` | Finish the strict-native Lot publication transaction without weakening route/source/browser/print/contracts or bypassing current rights/projection authorities. | Product issue **#1295** remains the publication root. Old publication #1339 is **closed unmerged / superseded** and must not be merged as-is. Catalog #1348, Search role authority #1313 and shared native quiz parity #1373 are merged. Lot source resilience remains #1378; shared standalone-footer ownership remains #1401. Rights-blocked Bible corpus PR #1389 is also **closed unmerged**; its unresolved authorization boundary remains owner decision `SEARCH-P2-07`, not an active implementation lane. Fresh Lot publication must be replayed from current main and regenerate Search/RSS/sitemap/Scripture only through canonical writers. Evidence: [`CURRENT_STATUS`](../verification/2026-08-09-lot-publication-current-audit/CURRENT_STATUS.md) + [`current reconciliation`](../verification/2026-08-09-main-bc78-control-reconciliation/REPORT.md). |
 | `AVRAAM-HAMMAM-RETRACTION-PARITY` | Make every Avraam/Tall el-Hammam reader projection reflect the 2025 retraction boundary without turning retraction into proof of another Sodom identification. | Product issue **#1298**, draft PR **#1334** owns the Avraam source/runtime/route/audit boundary. Current branch is one Product-main commit behind and therefore requires ancestry refresh before exact-head merge authority. Keep Atlas-owned and separate from Lot publication. |
 
 ---
@@ -66,7 +66,7 @@ No standalone current row. Narrow Lot annotations stay inside `LOT-PUBLICATION-R
 
 | ID | Missing decision / evidence |
 |---|---|
-| `SEARCH-P2-07` | Exact licensed/provenanced Bible corpus acquisition/import/publication boundary. Binding Research `d52ea9d5…` remains fail-closed. Draft #1389 conflicts with that authority: new Cassian records are permission-controlled, and new `bible.by` Synodal bytes cannot self-assert publication-grade Public Domain provenance under the current exact-source decision. Audit blocker comment **5232286767** requires Research/AuditRepo evidence before Product corpus expansion; green technical CI is insufficient. |
+| `SEARCH-P2-07` | Exact licensed/provenanced Bible corpus acquisition/import/publication boundary. Binding Research `d52ea9d5…` remains fail-closed. Product #1389 attempted the blocked Lot corpus expansion but is now **closed unmerged**; its Cassian permission boundary and `bible.by` Synodal publication-grade provenance problem remain evidence, not an active Product implementation. Research/AuditRepo authority must resolve the exact-source publication boundary before any replacement corpus lane is opened; green technical CI alone is insufficient. |
 | `REG-001` | Hosting/proxy decision for response-level CSP / X-Frame / Referrer / Permissions headers, or explicit accepted-risk disposition. |
 | `NG-VIS-04` | Author/editor decision whether dense Nagornaya table/card material should be rewritten into more prose/air. |
 
@@ -75,7 +75,7 @@ No standalone current row. Narrow Lot annotations stay inside `LOT-PUBLICATION-R
 ## Consolidation / collision order
 
 1. Do not recreate catalog/Search-role/Gill-reading-time/native-quiz owners; those roots are merged.
-2. Lot publication must be replayed from current main. #1378 owns source resilience and is currently `behind=0`; #1401 owns shared standalone-footer extraction and currently needs a one-commit ancestry refresh. #1373 quiz parity is already merged and is no longer an open Lot dependency. #1389 is rights-blocked and must not be treated as an approved Lot dependency.
+2. Lot publication must be replayed from current main. #1378 owns source resilience and is currently `behind=0`; #1401 owns shared standalone-footer extraction and currently needs a one-commit ancestry refresh. #1373 quiz parity is already merged. #1339 is closed superseded, so no stale publication PR may be revived. #1389 is closed unmerged; Bible corpus authorization remains `SEARCH-P2-07` and no replacement data lane should open before that decision.
 3. Strangler current truth is **3**. #1395 is the only Baptist roadmap owner and is already current-main ancestry-clean after #1404; do not merge it until its exact-head queued gates become terminal green. Protected readable/owner-ui branches reserve the next two blockers and must refresh from the resulting fresh main serially rather than spawning competing lanes.
 4. #1393 is the only Home Search settled-state owner. Its transient invalidation race has been repaired in the current semantic diff; do not open another #1299 code lane. Refresh ancestry and re-earn exact-head evidence.
 5. #1212 remains the stale audit-only reader census; replace/calibrate it cleanly later, not via empty r2 branch.
@@ -94,4 +94,6 @@ No standalone current row. Narrow Lot annotations stay inside `LOT-PUBLICATION-R
 - Product #1381 Gill reading-time ledger reconciliation — merged.
 - Product #1386 audit-pro ledger reconciliation — merged; Strangler current truth is 3.
 - Product #1373 native quiz parity — merged at `bc786f4d…`; removed from active system lanes.
+- Product #1339 Lot publication snapshot — closed unmerged / superseded; publication root #1295 remains.
+- Product #1389 Lot Bible corpus candidate — closed unmerged / rights-blocked; owner decision `SEARCH-P2-07` remains.
 - Duplicate Baptist roadmap PRs #1391 and #1400 — closed unmerged; #1395 is sole owner.
