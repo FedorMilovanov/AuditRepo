@@ -37,8 +37,8 @@
 
 - Status: `active-work` where MASTER names a current root.
 - Current concrete roots include:
-  - `SYS-ARTICLE-QUIZ-NATIVE-PARITY`: native quiz migration changed accepted score-tier and explanation semantics; repair belongs to shared renderer/schema, not Lot-only code.
-  - `SYS-READER-CONTROL-SEMANTICS`: shared reader control→surface/action semantics + class-level census.
+  - `SYS-ARTICLE-QUIZ-NATIVE-PARITY` / Product #1369: native quiz migration changed accepted score-tier and explanation semantics; both regressions were reverified on `main@3c7b3c19…`; repair belongs to shared renderer/schema, not Lot-only code.
+  - `SYS-READER-CONTROL-SEMANTICS` / Product #1224: shared reader control→surface/action semantics + class-level census. Bounded slices #1258/#1259/#1267 are merged, but the wider Definition of Done remains open and #1212 remains the audit/census owner.
   - `SYS-FOOTNOTE-SEMANTIC-PROJECTION`: one publication-note identity projected truthfully to screen/accessibility/print.
 - Historical manifestations such as duplicate TTS/favorites/search owners are not automatically reopened; many were already absorbed by shared owners.
 - Better-than-local outcome: canonical owner APIs/data contracts with representative route regression proofs.
@@ -46,9 +46,10 @@
 ## ST-STRANGLER — legacy/native duplication and retirement
 
 - Status: `active-work` via `SYS-STRANGLER-RETIREMENT`.
-- Current Product anchor observed after the reconciliation race-check: `1b05bf1f99f45d9dcf22e453f28dff2a68a304fa` (merged #1364).
+- Latest Product main observed during this consolidation: `3c7b3c199dcf3d2464f38a55550d730a3279c171` (merged reader #1267). The reader merge does not change retirement arithmetic.
 - Merged #1364 advanced truthful retirement readiness **13 → 12** by making all six Gill claim legacy surfaces resolver-backed and fail closed at 6/6.
-- Current next bounded owner: Product **#1367**, which resolves production visual-parity retained-reference reads through ledger authority and permanently executes the named production visual-parity contract in its existing workflow; expected arithmetic **12 → 11**.
+- Current next bounded owner: Product **#1367@590c06d…**, which resolves production visual-parity retained-reference reads through ledger authority and permanently executes the named production visual-parity contract in its existing workflow; expected arithmetic **12 → 11**.
+- Fresh compare from current Product main shows #1367 **behind=1** after #1267; prior exact-head greens are historical until ancestry refresh.
 - #1367 reports the expected post-merge classes as 1 mechanical (`gill-reading-time`, currently owned inside #1348), 3 obsolete legacy audits and 7 owner-decision blockers.
 - The old hidden self-verifier arithmetic defect is closed by #1270; do not add a hidden +1 to current readiness.
 - Core invariant: logical retained-reference identity is immutable while physical storage is resolved through the central active/quarantine authority; ambiguity/missing authority fails closed.
@@ -74,8 +75,8 @@
 
 - Status: `active-work`.
 - Existing-row Search reconciliation is **closed**: merged #1254 refined the writer-owned baseline to 46 rows and converged it 46→0 without seizing editor/tags/dates/priority authority.
-- Current writer root is `SEARCH-MANIFEST-NEW-ROW-ROLE-AUTHORITY` / #1261/#1313: new rows must preserve distinct author/editor/translator roles. The branch has already absorbed current `main@1b05bf1f…` at the latest census.
-- Current downstream catalog root is `CATALOG-PROJECTION-01` / #1348: `/articles/` membership should derive from existing Search + publication ownership, not another hand-maintained card registry. After #1364 moved main, #1348 is one ancestry commit behind and must refresh before final proof.
+- Current writer root is `SEARCH-MANIFEST-NEW-ROW-ROLE-AUTHORITY` / #1261/#1313: new rows must preserve distinct author/editor/translator roles. Fresh compare from Product `main@3c7b3c19…` shows #1313 **behind=1** after the reader merge, while its semantic diff remains the intended three Search files.
+- Current downstream catalog root is `CATALOG-PROJECTION-01` / #1348: `/articles/` membership should derive from existing Search + publication ownership, not another hand-maintained card registry. It is now **behind=2** from current main and must wait for #1313, absorb that authority, then re-earn exact-head proof.
 - Lot human reachability and Lot generated role drift are symptoms absorbed by these owners, not reasons for one-off route hacks.
 
 ## ST-VISUAL-TRUTH — migration parity vs product regression
@@ -91,7 +92,7 @@
 - Status: `active governance theme`; current mandatory instances exist in MASTER.
 - Historical manifestations: wrong build mode, stale shell assumptions, grep overstatement, fragile geometry thresholds, false-green/false-red harnesses, stale exact-head evidence.
 - Current concrete roots:
-  - `SYS-MAP-SCALE-RESIZE-WITNESS` / #1363: fixed 120ms wait sampled a `.3s` scale-line transition; bounded convergence must preserve the same runtime invariant. After #1364 moved main the branch is one ancestry commit behind, so prior greens are not merge authority.
+  - `SYS-MAP-SCALE-RESIZE-WITNESS` / #1363: fixed 120ms wait sampled a `.3s` scale-line transition; bounded convergence must preserve the same runtime invariant. Current branch is **behind=2** after #1364 + #1267, so prior greens are not merge authority.
   - `SYS-HOME-DESIGN-SEARCH-SETTLED` / #1299: Home Design uses a non-canonical settled-state heuristic and lacks useful timeout diagnostics while canonical Search Modal can remain green.
   - #1212 remains the all-reading-route reader-control census; confirmed Product reds should repair Product, not be deleted from the census merely to make audit CI green.
 - Better-than-local outcome: measure meaningful behavior with stable observable state and proportionate cost; distinguish harness defect from Product defect before mutation.
