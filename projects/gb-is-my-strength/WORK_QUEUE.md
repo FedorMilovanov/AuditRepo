@@ -46,9 +46,10 @@ Before starting any lane, inspect current Product `main`, open PRs/branches and 
 
 ## Active work that must **not** be duplicated here
 
-- `SYS-STRANGLER-RETIREMENT` is active MASTER work. Product #1364 is merged and current readiness is **12**; #1367 owns the next bounded visual-parity reference-storage slice with expected **12 → 11**. Do not keep a second optional “Strangler parity migration” queue item and do not resurrect historical #1090 as a current owner.
-- Lot publication/readiness is active MASTER work and has its own current AuditRepo evidence package.
-- Search new-row role authority, catalog projection, reader semantics, footnote projection, Source Authority trigger closure, product visual goldens, Avraam retraction parity and the two current audit-harness roots are all active MASTER work, not optional queue candidates.
+- `SYS-STRANGLER-RETIREMENT` is active MASTER work. Product #1364 is merged, truthful readiness is **12**, and current replay owner is **#1371** with expected **12 → 11**. #1367/#1370 are superseded history; do not resurrect historical #1090 or either replay as a second owner.
+- Lot publication/readiness is active MASTER work and has its own current AuditRepo evidence package, including the paged-media `.reveal` residual.
+- Search new-row role authority **#1313 is merged** and is no longer an active lane. Current discovery/catalog implementation work is #1348; stale Lot derived Search/RSS/sitemap is replay work after #1339 refresh.
+- Catalog projection, native quiz parity (#1369), reader semantics, footnote projection, Source Authority trigger closure, product visual goldens, Avraam retraction parity and current audit-harness roots are all active MASTER work, not optional queue candidates.
 
 ## Parked non-defect improvement families
 
