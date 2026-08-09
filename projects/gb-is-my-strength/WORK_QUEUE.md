@@ -46,7 +46,7 @@ Before starting any lane, inspect current Product `main`, open PRs/branches and 
 
 ## Active work that must **not** be duplicated here
 
-- `SYS-STRANGLER-RETIREMENT` is active MASTER work. Current Product line reports truthful readiness 13 and #1364 owns the next bounded mechanical reader slice with expected 13 → 12. Do not keep a second optional “Strangler parity migration” queue item and do not resurrect historical #1090 as a current owner.
+- `SYS-STRANGLER-RETIREMENT` is active MASTER work. Product #1364 is merged and current readiness is **12**; #1367 owns the next bounded visual-parity reference-storage slice with expected **12 → 11**. Do not keep a second optional “Strangler parity migration” queue item and do not resurrect historical #1090 as a current owner.
 - Lot publication/readiness is active MASTER work and has its own current AuditRepo evidence package.
 - Search new-row role authority, catalog projection, reader semantics, footnote projection, Source Authority trigger closure, product visual goldens, Avraam retraction parity and the two current audit-harness roots are all active MASTER work, not optional queue candidates.
 
