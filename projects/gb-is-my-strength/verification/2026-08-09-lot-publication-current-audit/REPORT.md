@@ -38,6 +38,13 @@ Because Product is moving concurrently, every repair/merge claim below must be r
 | `LOT-SEO-WEBSITE-01` | P1 release blocker | `CONFIRMED-CURRENT` | Exact `#1339@189dfdd...` Route Registry Validators run `31286625171` fails registry-driven dist SEO with `articles/lot-i-sodom/index.html: JSON-LD @graph lacks #website node`. Direct source read confirms `LotPageHead.astro` has `Organization`, `Article`, and `BreadcrumbList` nodes but no canonical `WebSite` node. | Keep in publication owner `#1339`; add the existing site `WebSite` graph node (`https://gospod-bog.ru/#website`) consistently with known-good PageHead contracts, then rerun exact-head Route Registry / dist JSON-LD gates. Do not weaken `seo-audit.js`. |
 | `LOT-HUMAN-REACHABILITY-01` | P1 release blocker | `CONFIRMED-CURRENT / OWNED` | Exact `#1339@189dfdd...` Deploy Candidate run `31286625059` builds the route, Pagefind and publication artifact successfully, then fails `human-reachability-audit.js`: `Human-orphan reading routes: /articles/lot-i-sodom/`, `55/56`. | Product `#1348` is now the canonical systemic repair: make `/articles/` exhaustive from Search Manifest + page ownership. Do **not** add a one-off Lot card/link. After `#1348` lands, refresh `#1339` and re-run the reachability witness. |
 | `LOT-TOC-MAP-01` | P2 reader navigation | `CONFIRMED-CURRENT` | Merged `LotSectionArchaeology.astro` contains the normal H2 `<h2 id="sec-map-connection">Связь с картой Авраама на сайте</h2>`. Current `#1339` `LOT_TOC` jumps from `#sec-zoar-tradition` directly to `#sec-how-to-read`; `#sec-map-connection` is absent. | Route-local publication owner `#1339`: include the live H2 in the canonical TOC, then exercise the link in the planned Lot browser witness. |
+| `LOT-BIBLE-TOOLTIP-01` | P2 reader interaction / vacuous-gate risk | `CONFIRMED-CURRENT` | Accepted Lot prose contains many Scripture references as plain text (`Быт 11:27–32`, `Быт 12:4–5`, `2 Пет 2:6–9`, etc.), but no Lot source match for canonical `<button class="bref" data-ref="…">`. `AGENTS-REFERENCE.md` defines `.bref > .btip` as the canonical Bible-reference runtime component. `site.js` only hydrates already-existing `.bref[data-ref]` nodes and creates `.btip` children for them; it does not detect or wrap plain Scripture text. Therefore a browser loop described as checking “all Bible tooltips” can currently pass vacuously with zero Lot Bible tooltip anchors. | Route/content owner must project intended Scripture references through the existing `bref` contract without inventing a new tooltip type or JS parser. Add a **positive-count** Lot browser assertion (not just `forEach(existing)`) so zero Bible refs fails when the article contract expects them. |
+
+### Verified quality improvements
+
+| ID | Priority | Disposition | Evidence / boundary |
+|---|---|---|---|
+| `LOT-SOURCE-LINKS-01` | P3 source verifiability | `VERIFIED-NECESSARY-IMPROVEMENT` | Sources 6 and 7 name Jaret/Harris (2022) and Boslough/Bruno (2025), the two Scientific Reports critiques directly material to the Tall el-Hammam retraction boundary, but expose no clickable DOI/article link. Both primary journal pages are available. `EDITORIAL-SOURCE-POLICY.md` requires strong/disputed/date/event claims to be directly checkable against primary/official sources where possible. | Add direct DOI/Nature links to the existing bibliography entries; no prose/theology change and no new source registry required. This is not a release blocker by itself. |
 
 ### Current required work that is not a new semantic bug
 
@@ -91,6 +98,16 @@ This means the route exists technically but cannot be reached through the curren
 
 The omission does not require pixel interpretation. A live H2 exists in the accepted article source and the route-local TOC omits exactly that destination. The later browser marathon should become the regression witness, not the first place where the defect is discovered.
 
+### 4. Bible-tooltip absence is not repaired by runtime hydration
+
+The repository has exactly one canonical Bible-reference interaction shape: `.bref > .btip`. The runtime does two things for existing `.bref[data-ref]` anchors: it resolves tooltip content (from `#bibleRefs`, `data-tip`, `title` or the fallback label) and installs the shared tooltip controller. It does **not** scan prose for `Быт`, `2 Пет`, `Иуд`, etc. and convert text into interactive references.
+
+The accepted Lot authoring source currently uses plain Scripture strings throughout. That means the planned browser requirement “exercise every Bible tooltip” needs a positive existence requirement or it can report success without exercising the feature at all. The fix belongs in semantic article markup / existing Bible-reference projection, not in another global parser.
+
+### 5. Scientific-source linkability is below the project's own source standard
+
+The bibliography correctly names the two scientific critiques, but for a reader verifying the exact disputed claim, plain citation text forces a second manual search. The project source policy expressly prioritizes primary/official links and says a direct link is especially needed for disputed evaluations, dates, publications, events and chronology. Adding the two existing primary DOI/article targets is a bounded source-verifiability improvement; it does not change the article's argument.
+
 ---
 
 ## Content / factual verification
@@ -110,6 +127,8 @@ Primary authority:
 
 - Nature / *Scientific Reports* retraction note: https://www.nature.com/articles/s41598-025-99265-5
 - retracted 2021 article record: https://www.nature.com/articles/s41598-021-97778-3
+- Jaret & Harris 2022 critique: https://doi.org/10.1038/s41598-022-08216-x
+- Boslough & Bruno 2025 critique: https://doi.org/10.1038/s41598-025-98362-9
 
 Disposition: `VERIFIED-PASS`.
 
@@ -175,18 +194,20 @@ The quiz explanation says Jude 7 emphasizes sexual immorality while the body giv
 
 | Surface | Current audit verdict |
 |---|---|
-| Authoring/body source | `PASS WITH ONE TOC PUBLICATION RESIDUAL` |
+| Authoring/body source | `PASS ON FACTUAL CORE; TOC + BIBLE-REFERENCE INTERACTION RESIDUALS` |
 | Tall el-Hammam factual boundary | `PASS` |
 | Deir ‘Ain ‘Abata factual boundary | `PASS` |
 | Numayra suspected date issue | `FALSE-POSITIVE` |
+| Scientific critique direct links | `P3 IMPROVEMENT — TWO PRIMARY LINKS MISSING` |
 | Route generation/build | `PASS ON #1339 HEAD` |
 | JSON-LD registry SEO | `FAIL — #website missing` |
 | Human reachability | `FAIL — Lot is orphan 55/56` |
+| Bible-reference tooltip contract | `FAIL — PLAIN SCRIPTURE TEXT; ZERO LOT BREF MARKUP VERIFIED` |
 | Scripture occurrence projection | `FAIL — canonical derived index stale` |
 | Catalog root cause | `OWNED BY #1348` |
 | Lot-specific OG | `NOT IMPLEMENTED YET` |
 | 14 responsive illustration families in Product | `NOT IMPLEMENTED YET` |
-| Lot browser marathon Chromium/WebKit × 390/412/1024/1366 × day/dark | `NOT YET EVIDENCED` |
+| Lot browser marathon Chromium/WebKit × 390/412/1024/1366 × day/dark | `NOT YET EVIDENCED; MUST ASSERT NONZERO EXPECTED TOOLTIP COUNTS` |
 | Current-main ancestry | `FAIL FOR MERGE AUTHORITY — #1339 behind=1` |
 | Production/live witness | `NOT CLAIMED / NOT YET APPLICABLE` |
 
@@ -196,12 +217,14 @@ The quiz explanation says Jude 7 emphasizes sexual immorality while the body giv
 
 1. Let `#1348` finish the exhaustive catalog/reachability owner; do not create a manual Lot-only catalog patch.
 2. In `#1339`, fix the missing JSON-LD `#website` node and `#sec-map-connection` TOC entry without weakening shared audits.
-3. Refresh the publication branch from the then-current `main`; previous greens become historical only.
-4. Let the canonical Scripture occurrence writer materialize the required derivative if exact-head check still requests it.
-5. Land the bounded Lot media transaction: 14 visual families at honest 600/900/1200 WebP + dedicated 1200×630 OG, with no duplicate unsuffixed 1200 aliases.
-6. Run the promised Lot browser witness across Chromium/WebKit, four widths and day/dark, including every TOC target, tooltips, quiz, both semantic SVGs, comparison table and all raster families.
-7. Require `behind=0`, terminal applicable exact-head CI and clean review state.
-8. Only after merge require an independent production/live witness; source merge is not production proof.
+3. Restore/project the intended Lot Scripture references through the existing `.bref > .btip` contract and make the Lot browser witness require a positive expected Bible-tooltip count.
+4. Add direct primary links for the two Scientific Reports critiques already named in Sources 6–7.
+5. Refresh the publication branch from the then-current `main`; previous greens become historical only.
+6. Let the canonical Scripture occurrence writer materialize the required derivative if exact-head check still requests it.
+7. Land the bounded Lot media transaction: 14 visual families at honest 600/900/1200 WebP + dedicated 1200×630 OG, with no duplicate unsuffixed 1200 aliases.
+8. Run the promised Lot browser witness across Chromium/WebKit, four widths and day/dark, including every TOC target, expected nonzero tooltip families, quiz, both semantic SVGs, comparison table and all raster families.
+9. Require `behind=0`, terminal applicable exact-head CI and clean review state.
+10. Only after merge require an independent production/live witness; source merge is not production proof.
 
 ---
 
