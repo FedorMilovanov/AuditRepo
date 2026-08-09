@@ -10,13 +10,9 @@ Closed engineering/history outcomes живут в [`verified/CLOSURE_LEDGER.md`]
 
 ## Current selection — TLP-HALL-001 / Product #369
 
-Operating order:
+`TLP-HALL-001` remains an owner-selected architecture lane, not an engineering bug row. The overall Hall lane remains open until the Pushkin slice, offline/web visual approval and production certification are complete.
 
-`VERIFY → one bounded question → one owner → PR → exact-head gates → Browser QA where warranted → merge → AuditRepo checkpoint → next wave`.
-
-`TLP-HALL-001` is an owner-selected architecture lane, not an engineering bug row. It remains open until the Pushkin slice, offline/web visual approval and production certification are complete.
-
-### Frozen authority
+### Frozen Hall authority
 
 - topology: **H3**;
 - H3 layout fingerprint: `5d5d0ddd8b150aa64afb73a2a3d9e00c6005e99fc935a6d4707a49ecd475fe65`;
@@ -24,26 +20,26 @@ Operating order:
 - guided camera: **R1**, Pushkin position `[8.0,2.5,1.60]`, target `[11.15,5.45,1.95]`, lens `28 mm`;
 - material/light baseline: **L0-minimal-runtime**;
 - surface UV: **UV0**, `1.5 m / UV unit`;
-- UV1: optional static-bake reserve;
+- UV1: optional reserve;
 - current L1 bake: rejected;
 - production texture encoding: deferred until measured on the real Pushkin slice;
 - production `/hall`: lightweight placeholder; production Three/R3F/WebGL blocked.
 
-## Current Product authority
+## Current verified Product authority
 
-Most recent verified Hall transactions:
+Most recent bounded Hall transactions:
 
-- #391 — Pushkin rights-first source authority;
 - #392 — Pushkin acquisition routes and blockers;
-- **#393 — Pushkin source-byte identity proof**.
+- #393 — actual source-byte identities and independent SHA-256 revalidation;
+- **#394 — exact-reproduction rights/credit evidence review and external-boundary disposition**.
 
-Current verified Product authority after #393: `main@68afe7f7bb2438b2bb87d7b93817b9450d22cf2f`.
+Current verified Product authority after #394: `main@dcbc7f07392075ddbf7d0bf784b0a38dbb556632`.
 
 Recent evidence:
 
-- `verification/2026-08-09-hall-v3-pushkin-rights/AUTHORITY.md`;
 - `verification/2026-08-09-hall-v3-pushkin-acquisition-routes/AUTHORITY.md`;
-- `verification/2026-08-09-hall-v3-pushkin-byte-identity/AUTHORITY.md`.
+- `verification/2026-08-09-hall-v3-pushkin-byte-identity/AUTHORITY.md`;
+- `verification/2026-08-09-hall-v3-pushkin-rights-boundary/AUTHORITY.md`.
 
 ## Machine phase
 
@@ -55,103 +51,89 @@ Recent evidence:
 
 No current transaction authorizes production WebGL or documentary media consumption.
 
-## Current documentary/acquisition truth
+## Current documentary truth
 
-The autonomous source-byte question is now resolved for the two registered Commons originals. Product owns exact evidence-backed byte identities and independently revalidates them against freshly downloaded bytes.
+Autonomous acquisition and evidence review are complete to the currently available boundary.
 
 ### Kiprensky 1827 portrait
 
+- exact source SHA-256: `sha256:316d5f366a46f23cd0a181e570f2d09a6b0d12bc368dab18fdb394b8b8b8bf4b`;
+- actual byte identity: 10,862,180 bytes, 3455 × 4000 JPEG;
 - object provenance: source-verified;
-- exact Commons original JPEG: acquired/verified in isolated Actions evidence;
-- dimensions: `3455 × 4000`;
-- byte count: `10,862,180`;
-- source SHA-256: `sha256:316d5f366a46f23cd0a181e570f2d09a6b0d12bc368dab18fdb394b8b8b8bf4b`;
+- canonical reproduction/intended-use status: rights-pending;
+- review disposition: **human-legal-owner-decision-required**;
 - final credit: unset;
-- reproduction/intended-use: rights-pending;
 - runtime path: unset;
 - production eligible: false.
+
+Remaining external decision: actual intended commercial/non-commercial and Russia-facing use context, Tretyakov/Russian museum-use treatment where applicable, and final credit acceptance.
 
 ### `Eugene Onegin`, 1833 edition
 
-- RSL record `01003570012`;
+- exact source SHA-256: `sha256:d629c10943cbf6428eabb194ee5c17c1b763c27108a2238eaf72fadb275643e5`;
+- actual byte identity: 5,433,794 bytes, 324-page PDF;
 - object provenance: source-verified;
-- exact Commons original PDF: acquired/verified in isolated Actions evidence;
-- pages: `324`;
-- byte count: `5,433,794`;
-- source SHA-256: `sha256:d629c10943cbf6428eabb194ee5c17c1b763c27108a2238eaf72fadb275643e5`;
+- canonical reproduction/intended-use status: rights-pending;
+- review disposition: **copyright-evidence-strong-owner-production-disposition-required**;
 - final credit: unset;
-- reproduction/intended-use: rights-pending;
+- production derivative/page/crop: unset;
 - runtime path: unset;
 - production eligible: false.
 
-### Pushkin House drawing/manuscript candidate
+Remaining owner decision: intended Hall use, exact documentary presentation/derivative versus source-only treatment, and final credit/source-chain acceptance.
+
+### Pushkin House manuscript candidate
 
 - asset: `pushkin-house-onegin-self-portrait-1824`;
 - archive cipher: `Ф. 244, оп. 12, ед. хр. 6`;
 - object provenance: source-verified;
-- digital copy: institutional copy request required;
-- request status: not-submitted;
-- source SHA-256/runtime path: unset;
+- institutional copy request: required;
+- request status: `not-submitted`;
+- source hash/runtime path: unset;
 - rights/intended use: pending;
 - production eligible: false.
 
+This is a genuine human/institutional dependency. The agent may preserve the blocker but may not fabricate submission, fulfilment, permission or approval.
+
 ### Weak mirror
 
-`pushkin-onegin-autograph-weak-mirror` remains blocked / do-not-acquire as negative-control evidence.
+`pushkin-onegin-autograph-weak-mirror` remains blocked / do-not-acquire negative-control evidence.
 
 Current totals:
 
 - approved documentary assets: **0**;
 - exact acquired-byte hashes: **2**;
+- final credits: **0**;
+- documentary runtime paths: **0**;
 - production manifest allowed: **false**;
 - documentary Blender media consumption allowed: **false**;
 - production WebGL allowed: **false**.
 
-## Next bounded transaction — exact-reproduction credit and rights disposition
+## Current disposition — waiting external authority
 
-Do **not** open another acquisition/hash wave. Do **not** start documentary Blender media consumption or WebGL.
+**No autonomous Product transaction is selected now.**
 
-Next owner-selected question:
+The documentary-rights sub-lane has reached its logical agent boundary. Do not create another schema, acquisition, research or “recheck” PR from the same evidence simply to keep the lane active.
 
-> For the two exact hashed Commons reproductions now fixed by SHA-256, can final credit and intended-use/reproduction-rights disposition be independently established strongly enough to satisfy the canonical `approved` contract, or does either record require a genuine human/legal/institutional decision that must remain external?
+A new bounded Product transaction becomes legitimate only after at least one material input appears:
 
-### Required order
+1. explicit owner intended-use/commercial-use/final-credit disposition;
+2. qualified legal or institutional disposition resolving the Kiprensky museum-use question;
+3. real Pushkin House copy-request submission/fulfilment and actual supplied evidence/bytes;
+4. materially new primary rights evidence that changes a current disposition.
 
-1. Fresh Product/main + ownership check.
-2. Keep exact object provenance, byte identity and reproduction/intended-use rights as separate evidence layers.
-3. Re-evaluate rights only for the exact hashed reproduction now fixed by SHA-256; do not reason from an abstract artwork/book alone.
-4. Resolve final credit only where the exact reproduction/source chain supports it.
-5. Re-check jurisdiction/institution-specific constraints relevant to intended Hall publication.
-6. Treat public-domain age, Commons availability/badges and successful download as evidence inputs, not automatic global/commercial approval.
-7. Promote a record to `approved` only if source identity, exact byte hash, reproduction/intended-use rights, final credit and runtime-path prerequisites are genuinely satisfied.
-8. If a real owner/legal/institutional decision is required, preserve that blocker and stop at the human boundary.
-9. AuditRepo checkpoint after any substantial Product merge.
+### Automatic rejection
 
-### May do
+- agent-promoted `approved` based only on public-domain age, Commons availability, source hash or the existing review;
+- repeating the same rights search and calling it new authority;
+- fabricated legal advice, museum permission, owner intent or archive request;
+- final credit/runtime path assigned to a non-approved canonical record;
+- rights-pending documentary media consumed by the Blender exhibit or production manifest;
+- production Three/R3F/WebGL activation before the required gates;
+- promotion of `offlineVisualApproval`, `webVerticalSlice` or `fullMuseumScaleOut` without their own evidence and authority.
 
-- exact-reproduction rights/credit research tied to the two frozen hashes;
-- independently supported credit-line resolution;
-- jurisdiction/institution-specific disposition evidence;
-- explicit `rights-pending`/human-decision outcomes where approval cannot be established;
-- promote only genuinely complete canonical records.
+## What remains outside this sub-lane
 
-### May not do
+The overall Hall architecture lane is not closed. Once genuine external documentary authority exists, the next bounded work may resume with canonical approval/governance and then the actual offline Pushkin exhibit. Until then, documentary media consumption is blocked rather than substituted with invented evidence.
 
-- infer approval solely from source age, Commons publication or successful byte acquisition;
-- fabricate legal advice, institutional permission or owner intent;
-- fabricate/submit the Pushkin House copy request;
-- assign runtime paths to non-approved records;
-- place rights-pending media into the production manifest;
-- start documentary Blender authoring that consumes those media;
-- activate production Three/R3F/WebGL;
-- advance `offlineVisualApproval`, `webVerticalSlice` or `fullMuseumScaleOut`.
-
-## External/human boundary
-
-The Pushkin House copy request remains a genuine human/institutional dependency. The agent may preserve the exact object/cipher and request requirement, but a real researcher/request identity and intended-use decision must come from the owner/human process. Until then, that record remains source-verified / rights-pending / not-submitted.
-
-The two hashed Commons reproductions may also remain rights-pending if exact intended-use approval cannot be established without owner/legal judgement. A technical byte identity is not authority to invent that judgement.
-
-## Conditional lanes
-
-Fresh engineering findings require current-head reproduction and root-cause evidence; the engineering matrix remains zero. Editorial/archive research remains legitimate but is not an engineering bug row and must not be mixed into the Hall source owner without a bounded question.
+Fresh engineering findings still require current-head reproduction and root-cause evidence; the engineering matrix remains zero. Editorial work outside this Hall documentary source owner remains separate.
