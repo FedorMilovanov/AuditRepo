@@ -21,7 +21,7 @@ Recovered disposition history from AuditRepo #264 is preserved in the dated 2026
 | Owner decisions | **3** |
 | Closed/stale/duplicate rows intentionally retained in MASTER | **0** |
 
-The current Product open-PR census at this wave contains exactly seven active PR owners: **#1364, #1363, #1348, #1339, #1334, #1313, #1267, #1212** — eight PRs total because #1267/#1212 share the same reader SYSTEM root. Every current open PR is represented below either directly or through its owning SYSTEM row; no duplicate symptom row is required.
+The current Product census contains **8 open PRs mapped to 7 active work roots**: **#1364, #1363, #1348, #1339, #1334, #1313, #1267, #1212**. PRs #1267 and #1212 intentionally share the same reader SYSTEM root. Every current open PR is represented below either directly or through its owning SYSTEM row; no duplicate symptom row is required.
 
 ---
 
