@@ -32,17 +32,20 @@ Most recent bounded Hall transactions:
 - #392 — Pushkin acquisition routes and blockers;
 - #393 — actual source-byte identities and independent SHA-256 revalidation;
 - #394 — exact-reproduction rights/credit evidence review and external-boundary disposition;
-- **#395 — machine-state handoff repair: canonical rights workflow now says `external-authority-required`, the final rights review is registered as Hall source authority, and completed byte acquisition is no longer advertised as next work.**
+- #395 — machine-state handoff repair: canonical rights workflow now says `external-authority-required`, the final rights review is registered as Hall source authority, and completed byte acquisition is no longer advertised as next work;
+- **#396 — Hall workflow trigger integrity: changes to the registered `pushkin-rights-review.json` authority now trigger the existing exact-head Blender/export/browser Hall reproof on both PR and `main` push.**
 
 Product #395 exact tested head: `402ea400c96bfdd094ada3dbd71de2415461644b`.
-Current verified Product authority after #395: `main@a9dab5be4a616178f553a2bb967ef327a26f0a76`.
+Product #396 exact tested head: `a4d1e0124b20ee17de1d0db5f8a1da82c56f56c3`.
+Current verified Product authority after #396: `main@d54eff728ce91505c31d5ed332b1890d3d7a3463`.
 
 Recent evidence:
 
 - `verification/2026-08-09-hall-v3-pushkin-acquisition-routes/AUTHORITY.md`;
 - `verification/2026-08-09-hall-v3-pushkin-byte-identity/AUTHORITY.md`;
 - `verification/2026-08-09-hall-v3-pushkin-rights-boundary/AUTHORITY.md`;
-- `verification/2026-08-09-hall-v3-pushkin-external-authority-state/AUTHORITY.md`.
+- `verification/2026-08-09-hall-v3-pushkin-external-authority-state/AUTHORITY.md`;
+- `verification/2026-08-09-hall-v3-pushkin-rights-review-trigger-integrity/AUTHORITY.md`.
 
 ## Machine phase
 
@@ -53,7 +56,7 @@ Recent evidence:
 - `webVerticalSlice`: blocked;
 - `fullMuseumScaleOut`: blocked.
 
-No current transaction authorizes production WebGL or documentary media consumption. #395 changed workflow truth only; it did not approve a documentary record or advance a Hall gate.
+No current transaction authorizes production WebGL or documentary media consumption. #395 aligned machine state with the external-authority boundary; #396 repaired workflow coverage only. Neither transaction approved a documentary record or advanced a Hall gate.
 
 ## Current documentary truth
 
@@ -117,7 +120,7 @@ Current totals:
 
 **No autonomous Product transaction is selected now.**
 
-Product #395 closes a machine-state inconsistency; it does not create a new rights/research lane. The repository now itself prevents the stale instruction to reacquire already-verified source bytes from masquerading as next work.
+Product #395 closed the stale machine-state instruction to repeat completed acquisition. Product #396 closed the remaining workflow wiring gap so the final rights-review authority cannot change without the dedicated Hall DCC/export/browser reproof being selected by the existing path-scoped workflow.
 
 A new bounded Product transaction becomes legitimate only after at least one material input appears:
 
