@@ -2,6 +2,8 @@
 
 Системные темы — причинная карта из многих audit passes. Это **не второй backlog**: обязательная текущая работа живёт только в `MASTER_BUG_MATRIX.md`; перед Product mutation любой owner/anchor перепроверяется.
 
+Current reconciliation: [`../verification/2026-08-09-main-bc786-control-reconciliation/REPORT.md`](../verification/2026-08-09-main-bc786-control-reconciliation/REPORT.md).
+
 ## Status model
 
 - `evidence-rich` — много исторического evidence;
@@ -13,10 +15,11 @@
 
 ## ST-RELEASE — release identity and publication transaction
 
-- Status: `evidence-rich`.
-- Lot #1339 is now nine commits behind Product `main@59e99bfa…`; old greens are historical.
-- Search role authority is merged; stale Lot Search/RSS/sitemap is downstream regeneration, not an open writer root.
-- Lot semantic media now also has a paged-output requirement: screen `view()` reveal is not print/PDF visibility authority.
+- Status: `active-work` through Lot root #1295.
+- Product `main@bc786f4d…` has no Lot route file. Old #1339 is closed unmerged/superseded and cannot be treated as release authority.
+- A future Lot publication transaction must start as a fresh `release/*` successor from live main after adjacent owner lanes settle.
+- Search role authority, catalog projection and Scripture occurrence writer are merged; their outputs are canonical downstream regeneration, not hand-authored Lot owners.
+- Exact-head browser/SEO/source/print/accessibility proof plus post-merge public witness remains required for any production claim.
 
 ## ST-EDITORIAL — editorial dates and generated metadata ownership
 
@@ -30,59 +33,64 @@
 
 ## ST-RUNTIME-OWNERSHIP — shared runtime ownership
 
-- Status: `active-work` where MASTER names a root.
-- `SYS-ARTICLE-QUIZ-NATIVE-PARITY` / #1369: native renderer exists; #1365 is closed false-positive. Real work is score-tier/explanation/badge parity.
-- `SYS-READER-CONTROL-SEMANTICS` / #1224 + census #1212; bounded #1258/#1259/#1267 merged.
-- `SYS-FOOTNOTE-SEMANTIC-PROJECTION` / #1225.
+- Status: `active-work` only where MASTER names a live root.
+- Native article quiz score-tier/badge/short+full explanation parity is **absorbed/closed** through merged Product #1373 (`bc786f4d…`). Do not keep `SYS-ARTICLE-QUIZ-NATIVE-PARITY` as active work.
+- `SYS-READER-CONTROL-SEMANTICS` / #1224 remains active; #1258/#1259/#1267 are merged.
+- `SYS-FOOTNOTE-SEMANTIC-PROJECTION` / #1225 remains active.
+- Shared standalone footer extraction #1401 is an active bounded owner adjacent to Lot; Lot should consume the shared owner after it lands rather than duplicate it.
 
 ## ST-STRANGLER — legacy/native duplication and retirement
 
 - Status: `active-work`.
-- Current Product anchor: `59e99bfa277e5bcc9e1d153644e73a2fa2c92a24` — merged #1371.
-- Truthful readiness is now **11**.
-- #1367/#1370/#1371 are replay/merge history, not current owners.
-- Remaining known classes: 1 mechanical `gill-reading-time` reader inside #1348, 3 obsolete legacy-audit readers, 7 owner decisions.
+- Current merged Product anchor: `bc786f4da7b6b3e9924caa046a3ab9ba829330fe`.
+- Truthful **merged** dependency readiness is **3 blockers** after #1386.
+- #1395 is sole Baptist roadmap owner. Its current exact Shared evidence already proves **32 dependencies / 2 blockers** and `NOT_YET_SAFE_TO_MOVE_OR_DELETE; blockers=2`, but it remains draft until terminal exact-head gates and merge.
+- Protected `agent/readable-audit-reference-authority-20260809` contains real storage-aware work (`ahead=2/behind=2` against current main); do not duplicate.
+- Protected `agent/owner-ui-reference-authority-20260809` contains real storage-aware work (`ahead=1/behind=2`); do not duplicate.
+- `agent/legacy-inventory-storage-authority-20260809` is currently `ahead=0`; the hidden inventory self-owner move-safety repair is **not implemented**.
+- Dependency `blockers=0` will therefore be necessary but not sufficient. Before any physical quarantine, the inventory owner must resolve immutable reference bytes through canonical storage authority and pass a non-destructive quarantine dry-run.
 - Physical move/delete remains unauthorized.
 
 ## ST-PERFORMANCE — measured route-scoped loading
 
 - Status: `candidate / measurement-first`.
 - Baptists built app and Karty effects remain WORK_QUEUE measurement questions unless current evidence promotes them.
+- #1402 is read-only Baptist historical media coverage audit; it does not itself authorize Product repair.
 
 ## ST-CONTENT-AUTHORITY — content, Scripture corpus, rights and provenance
 
 - Status: `evidence-rich / owner-decision`.
-- Binding Bible corpus-rights authority remains Research `d52ea9d54dd2c2488223d25f5f6cefd263c23328` (#149).
+- Binding Bible corpus-rights authority remains Research `d52ea9d54dd2c2488223d25f5f6cefd263c23328`.
+- Closed-unmerged #1389 is explicitly rights-blocked and cannot be used as Lot publication input.
 - Full-corpus publication remains fail-closed pending exact archive/licence/mapping/import evidence.
 
 ## ST-DISCOVERY-AUTHORITY — Search/catalog role and membership projection
 
-- Status: `active-work downstream only`.
-- Existing-row Search reconciliation #1254 is closed (46→0).
-- New-row Search role authority #1313 is **merged**; editor is no longer synthesized from meta-author.
-- Active remaining root is `CATALOG-PROJECTION-01` / #1348. Current head `e2e6385c…` is current-main based; source already contains role-aware author/editor/translator formatting + fail-closed fixtures.
-- #1348's remaining barrier is exact-head catalog/publication proof and the final known mechanical `gill-reading-time` Strangler reader.
-- Lot human reachability is absorbed by #1348; stale Lot discovery projection is replay work after publication refresh.
+- Status: `absorbed upstream; downstream regeneration only` for current Lot concerns.
+- Existing-row Search reconciliation and new-row Search role authority are merged.
+- Catalog/human-reachability #1348 is merged; do not recreate a one-off Lot card.
+- A fresh Lot publication successor must regenerate Search/RSS/sitemap/Scripture through canonical writers on its exact head.
 
 ## ST-VISUAL-TRUTH — migration parity vs product regression
 
-- Status: `active-work` through #298 product goldens.
-- Merged #1371 repaired retained-reference source resolution for the existing migration-parity contract; it does not close product-golden common-mode blind spot.
-- Lot `LOT-MEDIA-REVEAL-PRINT-01` is a route publication/print residual: hidden-base `.reveal` is screen-driven by `view()` timeline, but paged media needs a distinct visibility owner.
-- Print/PDF correctness remains a separate semantic/physical projection contract.
+- Status: `active-work` through #298 product goldens plus route-specific acceptance roots.
+- Reference-storage migration-parity repairs do not close product-golden common-mode blind spot.
+- Lot semantic SVG mobile readability and paged-media `.reveal` visibility remain route publication acceptance requirements unless freshly disproved/fixed.
+- Lot media truth is not “14 ready”: `lane/lot-media-20260809` has no unique bytes; the old placement branch has real source work but is ancestry-diverged and needs explicit handoff/fresh acceptance before use.
 
 ## ST-AUDIT-HARNESS — audit and contract quality
 
 - Status: `active governance theme`.
-- `SYS-MAP-SCALE-RESIZE-WITNESS` / #1363: replace fixed 120ms transition-frame sample with bounded convergence, preserving ≤2.5px invariant.
-- `SYS-HOME-DESIGN-SEARCH-SETTLED` / #1299.
-- #1212 all-reading-route control census; real Product reds should repair Product, not weaken audit.
+- `SYS-MAP-SCALE-RESIZE-WITNESS` / #1363: one final current-main refresh after the Strangler mini-wave, then exact 3/3.
+- `SYS-HOME-DESIGN-SEARCH-SETTLED` / #1299 / #1393: preserve its sole owner and repair the transient settled-state witness in-lane.
+- #1212 all-reading-route control census remains stale audit evidence, not a license to weaken Product assertions.
+- The legacy inventory self-owner is now explicitly part of move-safety: retirement arithmetic must not declare a physical quarantine safe while its own immutable-byte audit still depends on one hard-coded storage location.
 
 ## ST-SOURCE-GUARD-CLOSURE — validator strength and trigger applicability
 
 - Status: `active-work` through #1244.
-- Concrete Baptist trigger gaps improved by #1245/#1260; remaining DoD is authority-derived PR+push applicability with adversarial protected-source mutations.
+- Concrete Baptist trigger gaps improved historically; remaining DoD is authority-derived PR+push applicability with adversarial protected-source mutations.
 
 ## Adding or changing a theme
 
-Current repair belongs in MASTER; optional/measurement-first work in WORK_QUEUE; closed work leaves active rows while provenance stays in verification/Git.
+Current repair belongs in MASTER; optional/measurement-first work in WORK_QUEUE; closed work leaves active rows while provenance stays in verification/Git. A Product main SHA change alone is not a reason to rewrite themes; disposition/evidence/owner changes are.
