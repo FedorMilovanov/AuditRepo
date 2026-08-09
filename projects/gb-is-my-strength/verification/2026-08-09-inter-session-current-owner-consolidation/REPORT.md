@@ -33,8 +33,6 @@ Open Product owners observed after `#1313` merged:
 
 `#1313` and `#1267` are merged and must no longer appear as active repair rows.
 
-No open PR/branch was found for standalone Quiz extraction at the latest check; Product issue `#1365` is therefore the current SYSTEM owner rather than a competing implementation branch.
-
 ## Strangler truth
 
 Merged `#1364` exact-head Shared Files evidence proves:
@@ -47,7 +45,7 @@ Merged `#1364` exact-head Shared Files evidence proves:
 - retirement readiness self-test remains quarantine-aware and ambiguity fail-closed;
 - global readiness is `NOT_YET_SAFE_TO_MOVE_OR_DELETE; blockers=12`.
 
-Therefore the current main-level retirement count is **12**, not the obsolete counts and hidden-self-verifier wording retained in the old MASTER.
+Therefore the current main-level retirement count is **12**, not obsolete historical counts.
 
 Open `#1370` is the next bounded Strangler owner. Its semantic diff is exactly four files and is intended to remove one additional mechanical reader (`12 → 11`) by moving production visual parity onto the retained-reference resolver. On its pre-`#1313` exact head, Shared/Metadata/Node were green while Visual and Deploy were still running. Because `#1313` subsequently moved main, `#1370` must refresh and obtain a new exact-head barrier; its earlier green is semantic evidence only.
 
@@ -55,17 +53,17 @@ Open `#1370` is the next bounded Strangler owner. Its semantic diff is exactly f
 
 Merged `#1267` closes the conditional Gill Learning quiz relation defect: no-quiz configurations no longer render `panelQuiz aria-labelledby=tabQuiz` without the corresponding tab.
 
-This does **not** close SYSTEM issue `#1224`. Remaining current reader-control classes include shared list semantics, target-size/spacing follow-up, remaining Nagornaya control relation/clipping work, and the audit-only all-route census health boundary.
+This does **not** close SYSTEM issue `#1224`. Remaining reader-control work stays consolidated there rather than reopening merged slices.
 
-`#1212` remains an audit-only owner. Its historic 887 raw manifestations are not 887 Product defects. In particular, the 124 click failures remain sequence-contaminated until the harness gives each control a fresh/reproducible starting state, and the mixed runtime-error scenes contain localhost/WebKit noise. Do not weaken static assertions merely to obtain green.
+`#1212` remains an audit-only owner. Its historic 887 raw manifestations are not 887 Product defects. In particular, the 124 click failures remain sequence-contaminated until the harness gives each control a fresh/reproducible starting state, and mixed runtime-error scenes contain localhost/WebKit noise. Do not weaken static assertions merely to obtain green.
 
 Footnote publication semantics remain separately owned by issue `#1225`.
 
 ## Search role authority — closed upstream root
 
-`#1313` is now merged in current main. New Search Manifest rows must derive role presence from structured Article/ScholarlyArticle authority and no longer synthesize `editor` from `<meta name=author>`.
+`#1313` is merged in current main. New Search Manifest rows derive role presence from structured Article/ScholarlyArticle authority and no longer synthesize `editor` from `<meta name=author>`.
 
-This changes downstream sequencing:
+Downstream consequences:
 
 - `#1348` must refresh from current main and make catalog attribution role-aware (`author`, `translator`, `editor`) without synthesizing editor from author;
 - stale generated Lot Search/RSS/sitemap state in `#1339` cannot be final authority and must be regenerated after refresh using the canonical writer;
@@ -90,29 +88,38 @@ Issue `#1295` remains the canonical Lot publication root; `#1339` is the current
 
 Known current dependencies/boundaries:
 
-1. Search new-row role authority is now merged; `#1339` must refresh and regenerate Search/RSS/sitemap from the new authority.
+1. Search new-row role authority is merged; `#1339` must refresh and regenerate Search/RSS/sitemap from the new authority.
 2. Human reachability must come from exhaustive catalog owner `#1348`, not a one-off Lot link.
 3. `LotSectionArchaeology.astro` has a real `#sec-map-connection` H2 that must be represented in `lotToc.ts` by the publication owner.
 4. PageHead JSON-LD should use the existing canonical `#website` WebSite graph node pattern rather than inventing a second schema convention.
-5. Product issue `#1365` is a real standalone runtime dependency: Lot has 8 canonical quiz questions and `#quizPlaceholder`, but the existing Quiz v3.5 renderer still lives inside `js/site.js`, while the standalone footer intentionally does not load that monolith. Do not restore all of `site.js` only for Lot and do not copy the quiz engine route-locally.
-6. Lot media/browser publication evidence remains a separate bounded lane.
+5. Lot media/browser publication evidence remains a separate bounded lane.
+6. Native quiz rendering already exists; the valid shared quiz dependency is semantic parity issue `#1369`, not missing rendering.
 
 The Lot route is not yet a current-main public defect; these are publication-readiness requirements before the route may be claimed ready.
 
-## Standalone quiz SYSTEM root
+## Native article quiz correction — #1365 retired, #1369 current
 
-Issue `#1365` is current and ownerless at implementation level.
+An earlier pass incorrectly inferred that Lot would not render because `KodDaVinchiPageFooter.astro` intentionally omits legacy `js/site.js`. That inference was incomplete.
 
-Current source evidence:
+Fresh exact-source verification on current main proves the native chain:
 
-- Quiz data contract is present in `SITE_CONFIG.quiz.questions`;
-- `LotSectionQuiz.astro` intentionally provides only a placeholder;
-- the full renderer, result/review/persistence/share/bonus behavior is embedded in minified `js/site.js` together with many unrelated legacy owners;
-- standalone footer/runtime inventory intentionally excludes `js/site.js`.
+`SITE_CONFIG.quiz → ReaderActionsRuntime.astro → src/runtime/article-interactions.js → src/runtime/article-quiz.js → #quizPlaceholder`.
 
-A safe repair must transfer the existing renderer into one shared standalone-capable runtime owner and have old/new consumers delegate to it. Blind minified-string extraction, loading the monolith only for Lot, or creating a second route-local quiz engine are not acceptable.
+Evidence:
 
-No implementation PR should be created until a source-first extraction boundary is identified.
+- `ReaderActionsRuntime.astro` imports `../../runtime/article-interactions.js`;
+- `article-interactions.js` imports `{ installArticleQuiz } from './article-quiz.js'` and calls it during install;
+- `article-quiz.js` consumes `window.SITE_CONFIG.quiz.questions`, finds `#quizPlaceholder`, and materializes the native launch/questions/result UI.
+
+Therefore Product issue `#1365` has been closed `not_planned` as an audit false positive. Do not restore/copy legacy `site.js` and do not create a second renderer.
+
+The real current SYSTEM root is Product issue `#1369` (`SYS-ARTICLE-QUIZ-NATIVE-PARITY`):
+
+1. native result selection assumes `{min,max}` ranges while accepted configs such as Lot use ordered `min` thresholds, causing named score tiers to fall through;
+2. structured feedback uses `short || full`, suppressing distinct full teaching explanation whenever `short` exists;
+3. configured result badge projection also requires explicit disposition/regression coverage.
+
+Repair belongs at the shared native renderer/schema layer, not in Lot PageHead data.
 
 ## Avraam Tall el-Hammam current defect
 
@@ -136,21 +143,14 @@ Exact pre-current-main head `9f85b76a...` has terminal SUCCESS for Route Registr
 
 ## Source Authority trigger closure
 
-Issue `#1244` remains open. The concrete Baptist path-filter false negative was repaired earlier, but the class-level requirement remains: workflow applicability should be derived/fail-closed against the publication source surfaces consumed by static-publication validation, with adversarial PR/push path witnesses. Keep this as one SYSTEM control-plane root, not one path issue per article family.
+Issue `#1244` remains open. The concrete Baptist path-filter false negative was repaired earlier, but the class-level requirement remains: workflow applicability should be derived/fail-closed against publication source surfaces consumed by static-publication validation, with adversarial PR/push path witnesses.
 
 ## Product-golden visual blind spot
 
-Issue `#298` remains open and independent from migration visual parity. `#1370` improves the retained-reference source path of migration parity; it does **not** replace owner-approved immutable product-state goldens. Keep these two claims separate.
+Issue `#298` remains open and independent from migration visual parity. `#1370` improves retained-reference source resolution for migration parity; it does **not** replace owner-approved immutable product-state goldens.
 
 ## Current disposition
 
-Solved/stale rows that must leave active AuditRepo MASTER in this consolidation wave include old wording for:
+Solved/stale items removed from current planning include old Baptist S12 ownership, merged Search role authority, merged reader slices and historical Strangler blocker wording.
 
-- `BAPT-S12-01` / old #1253 ownership;
-- merged Search continuation / Search new-row authority;
-- old Back/relation successors already merged;
-- old `#1222` self-verifier blocker wording and obsolete Strangler counts;
-- merged `#1267` quiz-panel manifestation as a separate active defect;
-- historical #1240/#1246/#1257/#1270 etc. merge vehicles.
-
-Current work should be represented by compact roots only: Avraam retraction parity, catalog projection, Lot publication readiness, standalone Quiz runtime, reader-control semantics, footnote projection, Strangler retirement (12 blockers, #1370 next), Source Authority trigger closure, product goldens, Map-scale witness, plus still-current owner decisions.
+Current compact roots are represented by the current AuditRepo MASTER/reconciliation package. This report contributes only the later `#1313` merge delta, current Strangler count/owner state, and the correction retiring false-positive `#1365` in favor of verified native-quiz parity root `#1369`.
