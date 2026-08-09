@@ -2,28 +2,28 @@
 
 > **SSOT текущей верифицированной нужной работы `gospod-bog.ru`.** Это рабочая очередь, не архив. Решённое / stale / duplicate / absorbed / invalid / superseded удаляется из MASTER в той же consolidation wave; provenance остаётся в `verification/`, `legacy/` и Git history.
 
-Current live reconciliation: [`../verification/2026-08-09-main-8080-owner-collision-rights-reconciliation/REPORT.md`](../verification/2026-08-09-main-8080-owner-collision-rights-reconciliation/REPORT.md).  
-Previous follow-up: [`../verification/2026-08-09-main-706c-strangler4-quiz-style-followup/REPORT.md`](../verification/2026-08-09-main-706c-strangler4-quiz-style-followup/REPORT.md).  
+Current live reconciliation: [`../verification/2026-08-09-main-bc78-control-reconciliation/REPORT.md`](../verification/2026-08-09-main-bc78-control-reconciliation/REPORT.md).  
+Previous reconciliation: [`../verification/2026-08-09-main-8080-owner-collision-rights-reconciliation/REPORT.md`](../verification/2026-08-09-main-8080-owner-collision-rights-reconciliation/REPORT.md).  
 Current Lot audit: [`../verification/2026-08-09-lot-publication-current-audit/CURRENT_STATUS.md`](../verification/2026-08-09-lot-publication-current-audit/CURRENT_STATUS.md).
 
 ## Current state
 
 | Поле | Значение |
 |---|---|
-| Product verification anchor | `80800f6adca2f5af0da97cafda2214985d8c9b50` |
-| AuditRepo correction evidence | `7285147c908a4c3e7ec941ca7931db6692d45c09` |
+| Product verification anchor | `bc786f4da7b6b3e9924caa046a3ab9ba829330fe` |
+| AuditRepo correction evidence | `4e1fc59206b36453c573a80dc4445330a79d1f16` |
 | Research current head observed | `09b6e1cb2468c72d220a299d9e4cc9af86a09756` |
 | Bible-rights decision authority | `d52ea9d54dd2c2488223d25f5f6cefd263c23328` |
-| Wave | Strangler-3 / owner-collision / rights-boundary reconciliation, 2026-08-09 |
-| Active work units | **13** |
+| Wave | Quiz closure / current-owner control reconciliation, 2026-08-09 |
+| Active work units | **12** |
 | Direct current defects | **2** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
-| System verification lanes | **8** |
+| System verification lanes | **7** |
 | Owner decisions | **3** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-Current active owner set is larger than the earlier six-PR snapshot because new bounded lanes were opened after `706c38ca…`. Relevant current owners include #1401, #1395, #1393, #1389, #1378, #1373, #1363, #1339, #1334 and stale audit-only #1212. Duplicate Baptist roadmap PRs #1391 and #1400 were explicitly closed unmerged; #1395 remains the sole current roadmap owner. No second Home-settled, quiz, MapScale, Lot-source or Avraam owner should be opened.
+Current Product owner set remains multi-lane, but #1373 is now merged and is no longer an active owner. Relevant current owners include #1401, #1395, #1393, #1389, #1378, #1363, #1339, #1334 and stale audit-only #1212. Independent Baptist media audit #1402 does not by itself establish a new MASTER defect. Duplicate Baptist roadmap PRs #1391 and #1400 remain closed unmerged; #1395 is the sole current roadmap owner. Protected readable/owner-ui branches already reserve the next two Strangler blockers. No second Home-settled, MapScale, Lot-source, Baptist-roadmap or Avraam owner should be opened.
 
 ---
 
@@ -31,8 +31,8 @@ Current active owner set is larger than the earlier six-PR snapshot because new 
 
 | ID | Required repair | Current evidence / owner boundary |
 |---|---|---|
-| `LOT-PUBLICATION-READINESS-01` | Finish the strict-native Lot publication transaction without weakening route/source/browser/print/contracts or bypassing current rights/projection authorities. | Product issue **#1295**; old publication #1339 remains stale and must be replayed from current main rather than merged as-is. Catalog #1348 and Search role authority #1313 are merged. Shared quiz parity is #1369/#1373; Lot source resilience is #1378; shared standalone-footer ownership is #1401. New central Bible data PR #1389 is **not publication-authorized** under current Research rights decision and must not be used to force Lot enrichment. Fresh publication must regenerate Search/RSS/sitemap/Scripture only through canonical writers. Evidence: [`CURRENT_STATUS`](../verification/2026-08-09-lot-publication-current-audit/CURRENT_STATUS.md) + [`live reconciliation`](../verification/2026-08-09-main-8080-owner-collision-rights-reconciliation/REPORT.md). |
-| `AVRAAM-HAMMAM-RETRACTION-PARITY` | Make every Avraam/Tall el-Hammam reader projection reflect the 2025 retraction boundary without turning retraction into proof of another Sodom identification. | Product issue **#1298**, draft PR **#1334** owns `AvraamMap.astro` + `avraam-map-audit.js`. Remaining narrowed route-data defect is `route.scientific_variants.hammam[0]`, whose Bunch 2021 citation/note still lacks the explicit retraction boundary already present in the sibling Sodom variant. Keep Atlas-owned and separate from Lot publication. |
+| `LOT-PUBLICATION-READINESS-01` | Finish the strict-native Lot publication transaction without weakening route/source/browser/print/contracts or bypassing current rights/projection authorities. | Product issue **#1295**; old publication #1339 remains stale and must be replayed from current main rather than merged as-is. Catalog #1348, Search role authority #1313 and shared native quiz parity #1373 are merged. Lot source resilience remains #1378; shared standalone-footer ownership remains #1401. New central Bible data PR #1389 is **not publication-authorized** under current Research rights decision and must not be used to force Lot enrichment. Fresh publication must regenerate Search/RSS/sitemap/Scripture only through canonical writers. Evidence: [`CURRENT_STATUS`](../verification/2026-08-09-lot-publication-current-audit/CURRENT_STATUS.md) + [`current reconciliation`](../verification/2026-08-09-main-bc78-control-reconciliation/REPORT.md). |
+| `AVRAAM-HAMMAM-RETRACTION-PARITY` | Make every Avraam/Tall el-Hammam reader projection reflect the 2025 retraction boundary without turning retraction into proof of another Sodom identification. | Product issue **#1298**, draft PR **#1334** owns the Avraam source/runtime/route/audit boundary. Current branch is one Product-main commit behind and therefore requires ancestry refresh before exact-head merge authority. Keep Atlas-owned and separate from Lot publication. |
 
 ---
 
@@ -44,22 +44,21 @@ No standalone current row. Historical `AR-IDX-05` and `AUDIT-JS-ESCAPER-DUP-X5` 
 
 ## NARROWED RESIDUALS — 0
 
-No standalone current row. Narrow Lot annotations stay inside `LOT-PUBLICATION-READINESS-01`; the remaining Hammam variant stays inside the Avraam defect root.
+No standalone current row. Narrow Lot annotations stay inside `LOT-PUBLICATION-READINESS-01`; the remaining Hammam work stays inside the Avraam defect root.
 
 ---
 
-## SYSTEM VERIFICATION LANES — 8
+## SYSTEM VERIFICATION LANES — 7
 
 | ID | Verified work package | Current boundary / owner |
 |---|---|---|
-| `SYS-ARTICLE-QUIZ-NATIVE-PARITY` | Restore accepted native article quiz score/result/explanation semantics at the shared renderer/schema layer. | Product issue **#1369**, draft PR **#1373@4d162639…**. Issue #1365 is closed false-positive: native rendering already exists through the shared native runtime; never restore/copy legacy `site.js`. The earlier presentation-owner mismatch is now repaired correctly: runtime carries both semantic and canonical presentation classes (`quiz-result-badge quiz-score-badge`, `quiz-explanation--short quiz-explanation-short`, `quiz-explanation--full quiz-explanation-full`) and the real-route witness asserts class/text parity. Fresh current-head state: SUCCESS Node, Shared, Deploy, Native Source, Metadata; Runtime/Visual in progress and Glossary queued at observation time. Only the final exact head may authorize Ready/merge. [`REPORT`](../verification/2026-08-09-main-8080-owner-collision-rights-reconciliation/REPORT.md) |
 | `SYS-READER-CONTROL-SEMANTICS` | Enforce truthful control→surface/action semantics across standalone/shared readers with one class-level browser census. | Product issue **#1224** remains root; #1258/#1259/#1267 are merged. Audit-only #1212 remains stale and needs a clean current-main successor/calibration without weakening static findings or reintroducing sequence-contaminated click evidence. Empty/stale `agent/system-article-control-census-20260808-r2` contains no unique work. |
 | `SYS-FOOTNOTE-SEMANTIC-PROJECTION` | Make numbered/source footnotes first-class publication notes with one identity and truthful screen/accessibility/print projections. | Product issue **#1225** remains open. Closure must preserve popup UX while adding unique trigger↔note semantics and deterministic print note completeness. |
 | `SYS-SOURCE-AUTHORITY-TRIGGER-CLOSURE` | Make Source Authority workflow applicability fail closed against the complete static-publication source surface. | Product issue **#1244** remains open. Concrete Baptist paths were repaired, but SYSTEM DoD remains authority-derived PR+push applicability with adversarial mutations rather than ad-hoc path lists. |
-| `SYS-STRANGLER-RETIREMENT` | Retire/quarantine retained references only through logical storage authority with truthful blocker arithmetic and no physical move/delete before authorization. | Current merged readiness is **3 blockers** after #1386. Remaining: `scripts/baptisty-roadmap-audit.js`, `scripts/readable-audit.js`, `scripts/owner-ui-regression-guard.js`. #1395 is sole Baptist-roadmap owner after duplicate #1391/#1400 were closed; it targets `3→2` but must derive the route from canonical `series.baseUrl` while keeping `status=production-dist` + `routeRole=reading` (handoff **5232290489**). Protected active branches already own later readable and owner-ui repairs; do not duplicate them. Physical move/delete remains unauthorized. [`REPORT`](../verification/2026-08-09-main-8080-owner-collision-rights-reconciliation/REPORT.md) |
-| `SYS-HOME-DESIGN-SEARCH-SETTLED` | Make Home Design Audit Pro wait on observable canonical Search state and emit diagnostic state on timeout. | Product issue **#1299**, draft **#1393** is now the sole owner. Correct direction: remove heading taxonomy, preserve 15 s bound and expected-title/selection/activeDescendant checks. Current implementation has a transient-observation race: it samples invalidation in a separate round-trip after `input.fill()` and requires `loading=false`, although valid Search may enter loading after the 180 ms debounce before that sample. Handoff **5232272255** requires deterministic synchronous invalidation evidence (or equivalent) without Product Search mutation or timeout widening. |
+| `SYS-STRANGLER-RETIREMENT` | Retire/quarantine retained references only through logical storage authority with truthful blocker arithmetic and no physical move/delete before authorization. | Current merged Product truth at `bc786f4d…` remains **3 blockers**: `scripts/baptisty-roadmap-audit.js`, `scripts/readable-audit.js`, `scripts/owner-ui-regression-guard.js`. #1395 is the sole Baptist-roadmap owner; merged transport #1404 brought its head to `6a2c14f2…`, `behind=0`. Current diff correctly derives publication routes from canonical `series.baseUrl`, reuses `buildPublicSurfaceRegistry()`, requires `production-dist + reading`, removes only the Baptist ledger dependency (`33→32`, `3→2`) and adds direct execution in existing Shared. No assertion weakening was found, but current exact-head Metadata/Deploy/Node/Shared/Visual runs are still queued, so #1395 is not merge-authorized yet. Protected existing branches own later readable and owner-ui repairs; do not duplicate them. Physical move/delete remains unauthorized. [`REPORT`](../verification/2026-08-09-main-bc78-control-reconciliation/REPORT.md) |
+| `SYS-HOME-DESIGN-SEARCH-SETTLED` | Make Home Design Audit Pro wait on observable canonical Search state and emit diagnostic state on timeout. | Product issue **#1299**, draft **#1393** remains the sole owner. The previously reported transient invalidation-observation race is repaired in the current semantic diff: the harness now arms an `input` listener before `fill()`/rapid typing, captures the synchronous post-runtime invalidated state, allows legitimate `loading=true`, then separately waits for exact settled query/title/selection/`aria-activedescendant` state under the unchanged 15 s bound. Remaining barrier is ancestry/evidence, not another design repair: current #1393 is `behind=2` and must absorb current main normally, then earn fresh exact-head CI. [`REPORT`](../verification/2026-08-09-main-bc78-control-reconciliation/REPORT.md) |
 | `SYS-PRODUCT-VISUAL-GOLDENS` | Add owner-approved product goldens that detect common-mode regressions beyond legacy↔dist migration parity. | Product issue **#298** remains open P1. Current visual/reference-storage repairs do not close immutable product-state golden blind spot. |
-| `SYS-MAP-SCALE-RESIZE-WITNESS` | Make Map scale resize browser witness measure settled runtime geometry rather than an intermediate transition frame. | Draft **#1363** remains a one-file harness repair. Current semantic/final-tested head `d91af55e…` earned terminal SUCCESS for Shared, Metadata and full Route Registry, including Chromium + WebKit surfaces. Product main then advanced one unrelated ledger commit through #1386, so `d91af55e…` is now ancestry-stale but semantically proven. Because #1395 plus protected readable/owner-ui owners are the next expected retirement main movements and none touches this test file, defer one final ancestry refresh until that mini-wave settles; then rerun exact-head 3/3 once and merge if race/reviews stay clean. |
+| `SYS-MAP-SCALE-RESIZE-WITNESS` | Make Map scale resize browser witness measure settled runtime geometry rather than an intermediate transition frame. | Draft **#1363** remains a one-file harness repair. Semantic/final-tested head `d91af55e…` previously earned terminal SUCCESS for Shared, Metadata and full Route Registry, including Chromium + WebKit surfaces. Product main has since advanced through #1386 and merged quiz #1373, so this branch is now `behind=2`: old greens remain semantic evidence only. Because the Strangler mini-wave does not touch this test file, defer one final ancestry refresh until that wave settles, then rerun exact-head required checks once and merge only if race/reviews stay clean. |
 
 ---
 
@@ -75,14 +74,15 @@ No standalone current row. Narrow Lot annotations stay inside `LOT-PUBLICATION-R
 
 ## Consolidation / collision order
 
-1. Do not recreate catalog/Search-role/Gill-reading-time owners; those roots are merged.
-2. Lot publication must be replayed from current main. #1378 owns source resilience, #1401 owns shared standalone-footer extraction, #1373 owns native quiz parity. #1389 is rights-blocked and must not be treated as an approved Lot dependency.
-3. Strangler current truth is **3**. #1395 is the only Baptist roadmap owner; #1391/#1400 are closed duplicates. Protected readable/owner-ui branches already reserve the next two blockers. Do not open competing lanes.
-4. #1393 is the only Home Search settled-state owner; correct its transient invalidation witness rather than opening another #1299 branch.
+1. Do not recreate catalog/Search-role/Gill-reading-time/native-quiz owners; those roots are merged.
+2. Lot publication must be replayed from current main. #1378 owns source resilience and is currently `behind=0`; #1401 owns shared standalone-footer extraction and currently needs a one-commit ancestry refresh. #1373 quiz parity is already merged and is no longer an open Lot dependency. #1389 is rights-blocked and must not be treated as an approved Lot dependency.
+3. Strangler current truth is **3**. #1395 is the only Baptist roadmap owner and is already current-main ancestry-clean after #1404; do not merge it until its exact-head queued gates become terminal green. Protected readable/owner-ui branches reserve the next two blockers and must refresh from the resulting fresh main serially rather than spawning competing lanes.
+4. #1393 is the only Home Search settled-state owner. Its transient invalidation race has been repaired in the current semantic diff; do not open another #1299 code lane. Refresh ancestry and re-earn exact-head evidence.
 5. #1212 remains the stale audit-only reader census; replace/calibrate it cleanly later, not via empty r2 branch.
-6. #1334 stays Atlas-owned; Lot must not absorb it.
-7. #1363 is semantically fully proven; avoid ancestry churn while the remaining Strangler mini-wave is actively moving main. One final current-main refresh + exact 3/3 rerun is sufficient before merge.
-8. Any Product/AuditRepo main movement invalidates final exact-head merge authority for affected lanes.
+6. #1334 stays Atlas-owned; Lot must not absorb it. Current branch needs normal ancestry refresh before merge authority.
+7. #1363 remains semantically proven but ancestry-stale (`behind=2`); avoid repeated churn while Strangler is moving main, then perform one final current-main refresh + exact required rerun.
+8. Independent #1402 Baptist media coverage audit is evidence work, not a license to create another Product/ledger owner while #1395 owns Shared/Strangler scope.
+9. Any Product/AuditRepo main movement invalidates final exact-head merge authority for affected lanes.
 
 ## Retired in recent waves
 
@@ -93,4 +93,5 @@ No standalone current row. Narrow Lot annotations stay inside `LOT-PUBLICATION-R
 - Product #1365 — closed false-positive.
 - Product #1381 Gill reading-time ledger reconciliation — merged.
 - Product #1386 audit-pro ledger reconciliation — merged; Strangler current truth is 3.
+- Product #1373 native quiz parity — merged at `bc786f4d…`; removed from active system lanes.
 - Duplicate Baptist roadmap PRs #1391 and #1400 — closed unmerged; #1395 is sole owner.
