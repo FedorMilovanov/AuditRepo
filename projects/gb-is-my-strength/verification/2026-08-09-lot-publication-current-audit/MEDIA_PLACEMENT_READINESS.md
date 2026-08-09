@@ -1,33 +1,31 @@
 # Lot media / placement readiness audit — 2026-08-09
 
-## Finding
+## Findings
 
-`LOT-MEDIA-PLACEMENT-01` — **release-readiness mismatch / in-flight implementation gap** — `CONFIRMED-CURRENT`, **not a shipped Product regression**.
+1. `LOT-MEDIA-PLACEMENT-01` — release-readiness mismatch / in-flight implementation gap — `CONFIRMED-CURRENT`, not a shipped Product regression.
+2. `LOT-MEDIA-REVEAL-PRINT-01` — P2 visual/print readiness defect in the current placement implementation — `CONFIRMED-CURRENT`.
 
-The active Lot publication PR #1339 declares a final media barrier of **14 verified visual families**, each with honest `600/900/1200` WebP variants, plus a dedicated 1200×630 OG, and a browser witness that checks **all 14 raster illustrations**.
+The active Lot publication PR #1339 still declares a final media barrier of **14 verified visual families**, each with honest `600/900/1200` WebP variants, a dedicated 1200×630 OG and browser evidence over all 14 raster illustrations.
 
-The active placement work has now progressed to a coherent **9 registered / 9 rendered** figure set, but the dedicated media branch still carries no unique bytes and the publication PR still declares 14 visible raster figures. The mismatch is therefore narrower than the earlier 6-placement snapshot but remains release-relevant.
+Current placement source instead has a coherent **9 registered / 9 rendered** set plus five explicit reserves. The dedicated media branch still has no unique media bytes. Every current placement figure also inherits hidden-base `.reveal` without a print visibility override, while its screen `view()` timeline is inactive in paged media.
 
 ## Exact current Product anchors
 
-Latest Product main observed during this refresh:
+Latest Product main observed:
 
-- `3c7b3c199dcf3d2464f38a55550d730a3279c171` — merged reader #1267.
+- `59e99bfa277e5bcc9e1d153644e73a2fa2c92a24` — merged Strangler visual-parity storage #1371.
 
-Current Lot-related branch state against that main:
+Current Lot branch state:
 
-- `lane/lot-media-20260809` — **identical to current main**: `ahead=0`, `behind=0`; no unique media-byte delta;
-- `lane/lot-illustration-placement-20260809` — `ahead=11`, `behind=4`; semantic compare contains seven Lot source files and no raster assets;
-- `lane/lot-source-polish-20260809` — stale historical branch, `ahead=1`, `behind=36`, no open PR; not treated as current publication authority;
-- active publication owner remains PR #1339 / `release/lot-publication-20260809-r2`, itself `behind=7` from current Product main.
+- `lane/lot-media-20260809` — `ahead=0 / behind=1`; still zero unique media-byte delta;
+- `lane/lot-illustration-placement-20260809` — `ahead=11 / behind=6`; seven Lot Astro/TS files and no raster assets;
+- publication #1339 — `behind=9 / ahead=10`.
 
-The placement branch is separate parallel work; this AuditRepo pass remains read-only toward it.
+This AuditRepo pass remains read-only toward those parallel Product branches.
 
-## What the placement branch actually contains
+## Placement contract and count
 
-### Shared figure component
-
-`LotFigure.astro` defines the expected canonical asset family shape:
+`LotFigure.astro` declares:
 
 ```text
 /images/articles/lot/<name>-600w.webp
@@ -35,13 +33,9 @@ The placement branch is separate parallel work; this AuditRepo pass remains read
 /images/articles/lot/<name>-1200w.webp
 ```
 
-with width descriptors, a 1200×675 intrinsic fallback and metadata-driven alt/caption.
+with width-descriptor `srcset`, 1200×675 intrinsic fallback, lazy decoding and metadata-driven alt/caption.
 
-That structure is compatible with the stated 16:9 media contract **if** the eventual bytes have truthful dimensions/ratios and all declared paths resolve.
-
-### Registry count: 9 publication metadata rows
-
-Current `lotFigures.ts` declares exactly nine publication names:
+Nine publication registry entries:
 
 1. `lot-two-roads`
 2. `lot-jordan-plain`
@@ -53,7 +47,7 @@ Current `lotFigures.ts` declares exactly nine publication names:
 8. `lot-ruth-naomi`
 9. `lot-remember-wife`
 
-The same file explicitly names five conceptual families that are deliberately **kept out / reserve**:
+Five explicit reserves:
 
 - `lot-abraham-smoke`
 - `lot-moab-settlement`
@@ -61,82 +55,98 @@ The same file explicitly names five conceptual families that are deliberately **
 - `lot-gen19-judges19`
 - `lot-ruth-boaz`
 
-Thus the conceptual set is still 14, but the current editorial placement contract encoded in source is nine visible families plus five reserves.
+Source census finds exactly nine rendered `<LotFigure>` placements: 1 Orientation + 1 Choice/Rescue + 4 Sodom + 2 Aftermath + 1 Reading.
 
-### Actual rendered placement count: 9
+The placement source therefore encodes **9 visible + 5 reserve**, while #1339 still promises 14 visible raster figures.
 
-A fresh source census of every modified placement section now finds **one `<LotFigure>` for every registry entry**:
+## Asset bytes
 
-- `LotSectionOrientation.astro`: `lot-two-roads` — 1;
-- `LotSectionChoiceAndRescue.astro`: `lot-jordan-plain` — 1;
-- `LotSectionSodom.astro`: `lot-sodom-gate`, `lot-sodom-crowd`, `lot-judgment`, `lot-wife-back` — 4;
-- `LotSectionAftermath.astro`: `lot-cave`, `lot-ruth-naomi` — 2;
-- `LotSectionReading.astro`: `lot-remember-wife` — 1.
+`lane/lot-media-20260809` has no unique commits relative to its merge base and remains one current-main commit behind only because unrelated #1371 merged. It still contributes no Lot raster assets.
 
-Total: **9 registry rows / 9 rendered placements**.
+The placement branch adds source only, not `public/images/articles/lot/*.webp`. Thus mounted source contracts do not themselves supply the 27 responsive bytes required for nine published families.
 
-This supersedes the earlier in-flight snapshot that reported only six placements. That older count was truthful for an earlier branch state but is no longer current.
+## Count closure boundary
 
-## Asset-byte state
+Two legitimate end states:
 
-The dedicated `lane/lot-media-20260809` now points exactly at current Product main and still has **zero unique media delta**.
+### A. Keep 14-visible acceptance
 
-The placement branch's seven-file semantic compare contains only Astro/TS source and no `public/images/articles/lot/*.webp` paths. Therefore the nine mounted figure contracts still do not bring their own 27 responsive raster bytes (9 × 600/900/1200) into that branch.
+- promote all five reserves into reviewed publication placements;
+- create 42 responsive in-article WebPs + dedicated OG;
+- browser/print-test exactly 14.
 
-Disposition: placement semantics have caught up to their nine-row registry, but the referenced media byte families are still not present through the dedicated media lane/current main. This is expected for split in-flight work, but it is not publication-ready evidence.
+### B. Accept 9-visible editorial density
 
-## Why the declared gate and current plan still disagree
+- explicitly change publication acceptance to 9;
+- create 27 responsive in-article WebPs + dedicated OG;
+- assert `expectedLotFigures === 9`;
+- keep five reserves outside delivered-media counts.
 
-#1339 still says final browser evidence must exercise **all 14 raster illustrations**.
+A browser loop over whatever happens to exist is not acceptance evidence.
 
-Current placement source intentionally publishes **9** and explicitly reserves **5**.
+## `LOT-MEDIA-REVEAL-PRINT-01`
 
-There are two legitimate end states, but one must be selected explicitly:
+Current component:
 
-### A. Preserve the 14-visible-image publication contract
+```astro
+<figure class="article-img reveal" data-lot-figure={name}>
+```
 
-- promote all five reserve families into reviewed publication metadata/placement;
-- create all 42 responsive WebP variants + dedicated OG;
-- browser-test exactly 14 rendered figures.
+Shared normal style:
 
-### B. Accept the current 9-visible-image editorial contract
+```css
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+}
+```
 
-If nine figures is the intended reading density:
+Supporting screen engines reveal through scroll-driven `animation-timeline:view()`. `prefers-reduced-motion` separately forces content visible.
 
-- owner changes #1339/final checklist from 14 to **9** visible raster figures;
-- generate exactly 27 in-article responsive WebPs for those nine families, plus dedicated OG;
-- browser witness asserts `expectedLotFigures === 9`, not merely “iterate whatever exists”;
-- the five reserve concepts remain reserves and are not counted as delivered publication media.
+This finding does **not** claim normal supporting screen browsers hide the figures.
 
-What is **not** acceptable is to leave #1339 claiming 14 while source intentionally renders nine and a browser loop silently passes over only those nine.
+Paged media differs:
 
-## Correct closure checks
+- W3C Scroll-driven Animations Level 1 §3.2: view progress timelines referencing the document viewport are inactive in paged media: https://www.w3.org/TR/scroll-animations-1/
+- CSSWG current editor draft: if no scrollable ancestor exists, e.g. print media, `ViewTimeline` is inactive: https://drafts.csswg.org/scroll-animations-1/
+- Web Animations Level 1: inactive timeline time is unresolved: https://www.w3.org/TR/web-animations-1/
 
-For final media/placement closure require:
+Current shared print CSS has no generic `.reveal` visibility override, and native/enhancements runtime has no generic controller adding `.revealed` to Lot figures.
 
-1. declared expected visible figure count equals actual DOM `[data-lot-figure]` count;
-2. declared published asset-family count equals registry count;
-3. every published registry family has exactly the required 600/900/1200 bytes;
-4. no `<source srcset>` or fallback `src` points to a missing file;
-5. file dimensions, intrinsic ratio, `naturalWidth`, `currentSrc` and responsive selection are checked at 390/412/1024/1366;
-6. every `alt` and `figcaption` preserves the exact evidence boundary of the scene;
-7. reserve/unpublished families are not counted as delivered merely because a prompt or generated candidate exists;
-8. dedicated Lot OG is verified separately from in-article figures;
-9. placement/media/publication branches are refreshed to then-current main and exact-head checks are rerun;
-10. final browser evidence asserts a **positive exact expected count**, never a vacuous DOM iteration.
+Thus the screen reveal timeline cannot be print/PDF visibility authority while the underlying author style remains `opacity:0`.
+
+Correct closure preserves the screen reveal while making semantic media printable, e.g. a shared print equivalent of `opacity:1; transform:none; animation:none`, or equivalent component ownership. Add a print/PDF witness asserting every accepted `[data-lot-figure]` is nontransparent/visible in paged output.
+
+A broader unsupported-scroll-animation screen fallback remains a separate possible audit topic and is not promoted without an engine witness.
+
+## Final closure checks
+
+Require:
+
+1. declared visible count equals actual DOM count;
+2. registry count equals intended published families;
+3. each published family has exactly 600/900/1200 bytes;
+4. every `srcset`/fallback resolves;
+5. dimensions, ratio, `naturalWidth`, `currentSrc`, responsive selection, alt/caption are verified at 390/412/1024/1366;
+6. reserves are not counted as delivered;
+7. Lot-specific OG verified separately;
+8. screen witness asserts exact positive count;
+9. print/PDF witness asserts the same accepted figures are visible/nontransparent;
+10. all Lot branches are replayed onto then-current main before final proof.
 
 ## Current truthful status
 
 ```text
-Product main: 3c7b3c199dcf3d2464f38a55550d730a3279c171
-media branch: identical to main; 0 unique media-byte delta
-placement branch: ahead=11 / behind=4
-conceptual families named: 14
-publication registry rows: 9
-actual rendered figure placements: 9
-explicit reserve / kept-out families: 5
-publication PR declared final raster count: 14
+Product main: 59e99bfa277e5bcc9e1d153644e73a2fa2c92a24
+media branch: ahead=0 / behind=1; 0 unique media-byte delta
+placement branch: ahead=11 / behind=6
+conceptual families: 14
+registry rows: 9
+rendered placements: 9
+explicit reserves: 5
+#1339 declared raster count: 14
+print reveal contract: NOT CLOSED
 status: IN-FLIGHT / NOT RELEASE-READY
 ```
 
-Final disposition remains `CONFIRMED-CURRENT READINESS MISMATCH`, not a production defect and not permission to take over the active placement/media work.
+Neither finding authorizes takeover of active Product media/placement work.

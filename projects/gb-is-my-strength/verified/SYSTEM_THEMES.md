@@ -1,108 +1,88 @@
 # System Themes — gb-is-my-strength
 
-Системные темы — причинная карта из многих audit passes. Это **не второй backlog**: обязательная текущая работа живёт только в `MASTER_BUG_MATRIX.md`, а каждая тема перед Product mutation заново проверяется на текущем коде/owner.
+Системные темы — причинная карта из многих audit passes. Это **не второй backlog**: обязательная текущая работа живёт только в `MASTER_BUG_MATRIX.md`; перед Product mutation любой owner/anchor перепроверяется.
 
 ## Status model
 
-- `evidence-rich` — много исторического evidence и проявлений;
-- `candidate` — правдоподобная тема, нужен selected current-check;
-- `active-work` — текущий MASTER/владелец уже подтверждён;
-- `absorbed/closed` — общий mechanism репрезентативно устранён;
-- `parked` — известна, но сейчас не обязательна;
-- `retired` — больше не полезна как активная причинная модель.
+- `evidence-rich` — много исторического evidence;
+- `candidate` — нужна selected current verification;
+- `active-work` — текущий MASTER/owner подтверждён;
+- `absorbed/closed` — механизм репрезентативно закрыт;
+- `parked` — не обязательная текущая работа;
+- `retired` — больше не полезная активная модель.
 
 ## ST-RELEASE — release identity and publication transaction
 
 - Status: `evidence-rich`.
-- Historical manifestations: validated/built/deployed SHA ambiguity, dirty generated source, overlapping writers, deploy recovery loops, notification drift.
-- Current useful question: существует ли один воспроизводимый candidate identity from validation through publication, and does every generated projection come from its declared writer?
-- Current Lot publication is a live example of why stale green cannot be merge authority: route registration, derived Search/Scripture/catalog/media/browser evidence must be re-earned after ancestry movement.
-- Do not infer a site-wide release defect merely because one draft is behind main.
+- Lot #1339 is now nine commits behind Product `main@59e99bfa…`; old greens are historical.
+- Search role authority is merged; stale Lot Search/RSS/sitemap is downstream regeneration, not an open writer root.
+- Lot semantic media now also has a paged-output requirement: screen `view()` reveal is not print/PDF visibility authority.
 
 ## ST-EDITORIAL — editorial dates and generated metadata ownership
 
 - Status: `evidence-rich; major control-plane gap closed`.
-- Editorial Metadata v3 remains the date authority separated from technical/build timestamps.
-- The verified pre-merge freeze gap (`#1272`) is **closed/completed**: the existing PR Deploy Candidate path now runs the canonical freeze audit against the already-built production-like candidate; push-main release freeze remains a separate final boundary.
-- Future work under this theme requires a new current drift/ownership witness; do not keep #1272 or its implementation as active work.
+- Editorial Metadata v3 remains date authority; pre-merge freeze #1272 is closed/completed.
 
 ## ST-CACHE — service worker, asset revisions and offline truth
 
-- Status: `evidence-rich`; substantial repairs already exist, residuals require narrow current verification.
-- Historical manifestations: unversioned/versioned mismatch, stale HTML, cache baseline drift, offline route ambiguity.
-- Current optional reverify candidate `AR-IDX-05` moved to WORK_QUEUE because the 2026-08-09 consolidation wave did not re-establish a current defect.
-- Better-than-local outcome remains one truthful revision/cache authority per loaded asset and route-scoped offline contract.
+- Status: `evidence-rich`; residuals require narrow re-verification.
+- Historical `AR-IDX-05` remains in WORK_QUEUE as reverify-before-promotion.
 
 ## ST-RUNTIME-OWNERSHIP — shared runtime ownership
 
-- Status: `active-work` where MASTER names a current root.
-- Current concrete roots include:
-  - `SYS-ARTICLE-QUIZ-NATIVE-PARITY` / Product #1369: native quiz migration changed accepted score-tier and explanation semantics; both regressions were reverified on `main@3c7b3c19…`; repair belongs to shared renderer/schema, not Lot-only code.
-  - `SYS-READER-CONTROL-SEMANTICS` / Product #1224: shared reader control→surface/action semantics + class-level census. Bounded slices #1258/#1259/#1267 are merged, but the wider Definition of Done remains open and #1212 remains the audit/census owner.
-  - `SYS-FOOTNOTE-SEMANTIC-PROJECTION`: one publication-note identity projected truthfully to screen/accessibility/print.
-- Historical manifestations such as duplicate TTS/favorites/search owners are not automatically reopened; many were already absorbed by shared owners.
-- Better-than-local outcome: canonical owner APIs/data contracts with representative route regression proofs.
+- Status: `active-work` where MASTER names a root.
+- `SYS-ARTICLE-QUIZ-NATIVE-PARITY` / #1369: native renderer exists; #1365 is closed false-positive. Real work is score-tier/explanation/badge parity.
+- `SYS-READER-CONTROL-SEMANTICS` / #1224 + census #1212; bounded #1258/#1259/#1267 merged.
+- `SYS-FOOTNOTE-SEMANTIC-PROJECTION` / #1225.
 
 ## ST-STRANGLER — legacy/native duplication and retirement
 
-- Status: `active-work` via `SYS-STRANGLER-RETIREMENT`.
-- Latest Product main observed during this consolidation: `3c7b3c199dcf3d2464f38a55550d730a3279c171` (merged reader #1267). The reader merge does not change retirement arithmetic.
-- Merged #1364 advanced truthful retirement readiness **13 → 12** by making all six Gill claim legacy surfaces resolver-backed and fail closed at 6/6.
-- Current next bounded owner: Product **#1367@590c06d…**, which resolves production visual-parity retained-reference reads through ledger authority and permanently executes the named production visual-parity contract in its existing workflow; expected arithmetic **12 → 11**.
-- Fresh compare from current Product main shows #1367 **behind=1** after #1267; prior exact-head greens are historical until ancestry refresh.
-- #1367 reports the expected post-merge classes as 1 mechanical (`gill-reading-time`, currently owned inside #1348), 3 obsolete legacy audits and 7 owner-decision blockers.
-- The old hidden self-verifier arithmetic defect is closed by #1270; do not add a hidden +1 to current readiness.
-- Core invariant: logical retained-reference identity is immutable while physical storage is resolved through the central active/quarantine authority; ambiguity/missing authority fails closed.
-- **Physical move/delete remains unauthorized** until readiness explicitly permits it. Historical 26→21→20→19→18→17→… counts are forensic history, not current planning numbers.
+- Status: `active-work`.
+- Current Product anchor: `59e99bfa277e5bcc9e1d153644e73a2fa2c92a24` — merged #1371.
+- Truthful readiness is now **11**.
+- #1367/#1370/#1371 are replay/merge history, not current owners.
+- Remaining known classes: 1 mechanical `gill-reading-time` reader inside #1348, 3 obsolete legacy-audit readers, 7 owner decisions.
+- Physical move/delete remains unauthorized.
 
 ## ST-PERFORMANCE — measured route-scoped loading
 
 - Status: `candidate / measurement-first`.
-- Historical TTS heavy-model work was absorbed into lazy Worker-owned behavior; do not reopen generic TTS loading without a route/request regression.
-- Baptists built app and Karty rendering effects remain measurement questions in WORK_QUEUE, not automatic MASTER rows.
-- System question: where does direct current measurement prove user-visible/operational cost that remains after current owner/lazy-loading repairs?
+- Baptists built app and Karty effects remain WORK_QUEUE measurement questions unless current evidence promotes them.
 
 ## ST-CONTENT-AUTHORITY — content, Scripture corpus, rights and provenance
 
 - Status: `evidence-rich / owner-decision`.
-- Research current head has advanced in unrelated Heart work, but the binding Bible-corpus rights/provenance decision remains Research merge `d52ea9d54dd2c2488223d25f5f6cefd263c23328` (#149).
-- Product has a governed 66-book registry, but full-corpus publication remains fail-closed until exact source acquisition/provenance is complete.
-- CrossWire `RusSynodal` 1.9.1 remains candidate-only pending archive SHA-256, embedded licence/source/book manifest, 66-book/versification mapping and verse-level import receipt.
-- `RusSynodalLIO` requires downstream permission; Cassian must not be expanded/republished without explicit permission.
-- MASTER owner-decision `SEARCH-P2-07` remains the actionable boundary.
+- Binding Bible corpus-rights authority remains Research `d52ea9d54dd2c2488223d25f5f6cefd263c23328` (#149).
+- Full-corpus publication remains fail-closed pending exact archive/licence/mapping/import evidence.
 
 ## ST-DISCOVERY-AUTHORITY — Search/catalog role and membership projection
 
-- Status: `active-work`.
-- Existing-row Search reconciliation is **closed**: merged #1254 refined the writer-owned baseline to 46 rows and converged it 46→0 without seizing editor/tags/dates/priority authority.
-- Current writer root is `SEARCH-MANIFEST-NEW-ROW-ROLE-AUTHORITY` / #1261/#1313: new rows must preserve distinct author/editor/translator roles. Fresh compare from Product `main@3c7b3c19…` shows #1313 **behind=1** after the reader merge, while its semantic diff remains the intended three Search files.
-- Current downstream catalog root is `CATALOG-PROJECTION-01` / #1348: `/articles/` membership should derive from existing Search + publication ownership, not another hand-maintained card registry. It is now **behind=2** from current main and must wait for #1313, absorb that authority, then re-earn exact-head proof.
-- Lot human reachability and Lot generated role drift are symptoms absorbed by these owners, not reasons for one-off route hacks.
+- Status: `active-work downstream only`.
+- Existing-row Search reconciliation #1254 is closed (46→0).
+- New-row Search role authority #1313 is **merged**; editor is no longer synthesized from meta-author.
+- Active remaining root is `CATALOG-PROJECTION-01` / #1348. Current head `e2e6385c…` is current-main based; source already contains role-aware author/editor/translator formatting + fail-closed fixtures.
+- #1348's remaining barrier is exact-head catalog/publication proof and the final known mechanical `gill-reading-time` Strangler reader.
+- Lot human reachability is absorbed by #1348; stale Lot discovery projection is replay work after publication refresh.
 
 ## ST-VISUAL-TRUTH — migration parity vs product regression
 
-- Status: `active-work` through `SYS-PRODUCT-VISUAL-GOLDENS` / Product #298.
-- Current legacy↔dist pixel parity proves projection equivalence, not preservation of an owner-approved product state; common-mode deletion can remain green.
-- Separately, Strangler #1367 is a storage-authority repair for the **existing** visual-parity production contract. It does not close the product-golden blind spot and must not be described as doing so.
-- Better-than-local outcome: immutable owner-approved route/state goldens selected from public capability authority; ordinary PR CI read-only; explicit/manual update transaction with old/new digests and exact source SHA.
-- Print/PDF correctness remains a separate semantic/physical contract, not a screenshot substitute.
+- Status: `active-work` through #298 product goldens.
+- Merged #1371 repaired retained-reference source resolution for the existing migration-parity contract; it does not close product-golden common-mode blind spot.
+- Lot `LOT-MEDIA-REVEAL-PRINT-01` is a route publication/print residual: hidden-base `.reveal` is screen-driven by `view()` timeline, but paged media needs a distinct visibility owner.
+- Print/PDF correctness remains a separate semantic/physical projection contract.
 
 ## ST-AUDIT-HARNESS — audit and contract quality
 
-- Status: `active governance theme`; current mandatory instances exist in MASTER.
-- Historical manifestations: wrong build mode, stale shell assumptions, grep overstatement, fragile geometry thresholds, false-green/false-red harnesses, stale exact-head evidence.
-- Current concrete roots:
-  - `SYS-MAP-SCALE-RESIZE-WITNESS` / #1363: fixed 120ms wait sampled a `.3s` scale-line transition; bounded convergence must preserve the same runtime invariant. Current branch is **behind=2** after #1364 + #1267, so prior greens are not merge authority.
-  - `SYS-HOME-DESIGN-SEARCH-SETTLED` / #1299: Home Design uses a non-canonical settled-state heuristic and lacks useful timeout diagnostics while canonical Search Modal can remain green.
-  - #1212 remains the all-reading-route reader-control census; confirmed Product reds should repair Product, not be deleted from the census merely to make audit CI green.
-- Better-than-local outcome: measure meaningful behavior with stable observable state and proportionate cost; distinguish harness defect from Product defect before mutation.
+- Status: `active governance theme`.
+- `SYS-MAP-SCALE-RESIZE-WITNESS` / #1363: replace fixed 120ms transition-frame sample with bounded convergence, preserving ≤2.5px invariant.
+- `SYS-HOME-DESIGN-SEARCH-SETTLED` / #1299.
+- #1212 all-reading-route control census; real Product reds should repair Product, not weaken audit.
 
 ## ST-SOURCE-GUARD-CLOSURE — validator strength and trigger applicability
 
-- Status: `active-work` through `SYS-SOURCE-AUTHORITY-TRIGGER-CLOSURE` / Product #1244.
-- Concrete Baptist trigger gaps were improved by merged #1245/#1260, including an independent internal `_app/index.html` leak witness.
-- Remaining SYSTEM question is broader than those paths: can applicability be derived/tested from the actual static-publication source authority so representative protected mutations trigger on PR **and** push without an ad-hoc path list drifting again?
+- Status: `active-work` through #1244.
+- Concrete Baptist trigger gaps improved by #1245/#1260; remaining DoD is authority-derived PR+push applicability with adversarial protected-source mutations.
 
 ## Adding or changing a theme
 
-A theme should contain a shared mechanism or several related manifestations, a better class-level outcome, known exceptions and a trigger for current verification. Do not turn every broad idea into a blocking program. If a current repair is selected, represent it in MASTER; if it is optional/measurement-first, put it in WORK_QUEUE; if closed, remove it from active rows while keeping useful provenance in verification/Git.
+Current repair belongs in MASTER; optional/measurement-first work in WORK_QUEUE; closed work leaves active rows while provenance stays in verification/Git.
