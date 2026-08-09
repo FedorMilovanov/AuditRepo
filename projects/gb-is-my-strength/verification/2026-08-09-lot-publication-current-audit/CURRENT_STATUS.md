@@ -2,9 +2,9 @@
 
 **Updated:** 2026-08-09 — current MASTER consolidation  
 **AuditRepo preserved evidence base:** `a8283267ae0810b8d8c91c3dd7981dd001a1da06`  
-**Latest Product main observed:** `3a0f21b0ec01e423a2625becf13f600a07a6ddb5`  
+**Latest Product main observed:** `1b05bf1f99f45d9dcf22e453f28dff2a68a304fa`  
 **Active Lot publication:** Product PR `#1339@189dfddbeed537c849dd35b1a92578ead894079d`  
-**Fresh ancestry:** `#1339` is `behind=5`, `ahead=10`, merge base `56972725dbe7aa9c5ecbf0d1efa2e9012e37f019`.
+**Fresh ancestry:** `#1339` is `behind=6`, `ahead=10`, merge base `56972725dbe7aa9c5ecbf0d1efa2e9012e37f019`.
 
 This file is the compact entrypoint for the dated Lot audit evidence in this directory. Product current-head verification remains authoritative for code/CI/ownership; the active AuditRepo work root is now `LOT-PUBLICATION-READINESS-01` in `verified/MASTER_BUG_MATRIX.md`.
 
@@ -43,7 +43,7 @@ Active MASTER collapses both manifestations into **`SYS-ARTICLE-QUIZ-NATIVE-PARI
 | `LOT-MEDIA-PLACEMENT-01` | `IN-FLIGHT / NOT RELEASE-READY`. At the last bounded media audit: 14 conceptual families, 9 metadata rows, 6 actual `<LotFigure>` placements, and no unique media-byte delta in `lane/lot-media-20260809`. Publication #1339 still declares a final 14-raster gate. See [`MEDIA_PLACEMENT_READINESS.md`](MEDIA_PLACEMENT_READINESS.md). |
 | Lot-specific OG | `NOT IMPLEMENTED / MEDIA GATE` at the last audit; do not count generic site OG as closure. |
 | Scripture occurrence derivative | Writer mechanism is merged to Product main via #1353. Treat the old #1339 red as `READY-TO-REVERIFY` after fresh ancestry/canonical autofix, not as a manual JSON-edit task. |
-| `LOT-ANCESTRY-01` | `MERGE-BARRIER`: #1339 is currently behind 5 from observed Product main. Every final check must be re-earned after refresh. |
+| `LOT-ANCESTRY-01` | `MERGE-BARRIER`: #1339 is currently behind 6 from observed Product main. Every final check must be re-earned after refresh. |
 | Avraam/Tall el-Hammam parity | `OWNED-UPSTREAM #1334/#1298`; active MASTER keeps it separately as `AVRAAM-HAMMAM-RETRACTION-PARITY`. |
 
 ## Explicitly closed / disproved
@@ -82,11 +82,11 @@ Not promoted: known-good standalone article patterns also use the home Back dest
 
 ## Current upstream Product owners
 
-At the consolidation census:
+At the latest consolidation census:
 
 - #1339 — Lot publication, draft/open;
-- #1348 — exhaustive Articles catalog/human reachability, draft/open;
-- #1313 — Search new-row author/editor/translator authority, draft/open;
+- #1348 — exhaustive Articles catalog/human reachability, draft/open and one ancestry commit behind current Product main after #1364;
+- #1313 — Search new-row author/editor/translator authority, draft/open and already refreshed onto `main@1b05bf1f…`;
 - #1334 — Avraam Tall el-Hammam retraction parity, draft/open;
 - #1353 — Scripture occurrence writer, **merged**.
 
@@ -104,4 +104,4 @@ Current promotion mapping:
 - two shared native quiz manifestations → `SYS-ARTICLE-QUIZ-NATIVE-PARITY`;
 - Avraam retraction parity → `AVRAAM-HAMMAM-RETRACTION-PARITY`.
 
-This keeps the detailed evidence here while preventing the global MASTER from becoming a duplicate Lot symptom list.
+The unrelated #1364 Strangler merge only advanced the Product ancestry anchor and retirement program; it did not invalidate the Lot defect mechanisms above. This keeps the detailed evidence here while preventing the global MASTER from becoming a duplicate Lot symptom list.
