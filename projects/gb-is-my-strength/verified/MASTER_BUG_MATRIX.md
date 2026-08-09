@@ -17,16 +17,18 @@ Recovered disposition history from AuditRepo #264 is preserved in the dated 2026
 | Bible-rights decision authority | `d52ea9d54dd2c2488223d25f5f6cefd263c23328` |
 | Wave | current-owner reconciliation + Lot publication audit + Strangler retirement + reader/audit-harness roots, 2026-08-09 |
 | Active work units | **15** |
-| Current bounded/content defects | **2** |
-| System/root-cause work units | **10** |
+| Direct current defects | **2** |
+| Verified necessary improvements | **0** |
+| Narrowed residuals | **0** |
+| System verification lanes | **10** |
 | Owner decisions | **3** |
-| Closed/stale/duplicate rows intentionally retained in MASTER | **0** |
+| Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
 The current Product census contains **8 open PRs mapped to 7 active work roots**: **#1367, #1363, #1348, #1339, #1334, #1313, #1267, #1212**. PRs #1267 and #1212 intentionally share the same reader SYSTEM root. Every current open PR is represented below either directly or through its owning SYSTEM row; no duplicate symptom row is required.
 
 ---
 
-## CURRENT BOUNDED / CONTENT DEFECTS — 2
+## CURRENT DEFECTS — 2
 
 | ID | Required repair | Current evidence / owner boundary |
 |---|---|---|
@@ -35,9 +37,21 @@ The current Product census contains **8 open PRs mapped to 7 active work roots**
 
 ---
 
-## SYSTEM / ROOT-CAUSE WORK — 10
+## VERIFIED NECESSARY IMPROVEMENTS — 0
 
-| ID | Required system outcome | Current boundary / owner |
+No standalone current row. Historical `AR-IDX-05` and `AUDIT-JS-ESCAPER-DUP-X5` were not freshly reverified in this wave and are now explicit reverify-before-promotion candidates in `WORK_QUEUE.md`, not mandatory defects.
+
+---
+
+## NARROWED RESIDUALS — 0
+
+No standalone current row. The narrowed Numayra source-annotation nuance remains evidence inside the consolidated `LOT-PUBLICATION-READINESS-01` transaction rather than inflating MASTER with a second Lot symptom row.
+
+---
+
+## SYSTEM VERIFICATION LANES — 10
+
+| ID | Verified work package | Current boundary / owner |
 |---|---|---|
 | `CATALOG-PROJECTION-01` | Replace the hand-maintained `/articles/` membership/metadata owner with an exhaustive projection from existing publication/discovery authority, preserving truthful author/editor/translator roles. | Clean successor **#1348@ac48467d…** owns the catalog source/audits plus deterministic Scripture derivative and remains intentionally downstream of #1313. Fresh compare after #1364 merged shows **behind=1** with unchanged six-file semantic delta; final authority must be re-earned after refresh. This root absorbs Lot human-orphan `55/56`; no one-off Lot card. Old #1221/#1305 are historical predecessors, not owners. |
 | `SEARCH-MANIFEST-NEW-ROW-ROLE-AUTHORITY` | Make newly materialized Search rows preserve distinct author/editor/translator authority and never infer editor from meta-author. | Product issue **#1261**, draft PR **#1313@7a8ef56d…**. Regression-first proof demonstrated old `author=undefined` / synthesized editor behavior. The branch has already absorbed `main@1b05bf1f…`; after merge #1348 and #1339 must absorb the new authority and rematerialize derived projections canonically. |
