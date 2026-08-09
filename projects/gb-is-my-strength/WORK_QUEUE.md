@@ -1,60 +1,68 @@
 # Optional Work Queue — gb-is-my-strength
 
-This file is for **optional improvements and measurement-first work**, not confirmed bugs. `verified/MASTER_BUG_MATRIX.md` remains the only active problem matrix.
+This file is for **optional improvements, measurement-first work and reverify-before-promotion candidates**, not confirmed current bugs. `verified/MASTER_BUG_MATRIX.md` is the only active problem matrix.
 
-Before starting any lane, re-read current Product owners/open PRs and verify the selected surface.
+Before starting any lane, inspect current Product `main`, open PRs/branches and the selected owner. Historical wording alone never authorizes a Product mutation.
 
 ## Selected evidence-backed candidates
 
 ### Karty runtime performance measurements
 
-- Historical `PERF-P1-01`: current Avraam `base.svg` still contains an indefinite 14-second animated `feTurbulence` / displacement-water effect, but the old “15–20 fps while dragging” number is not a current browser witness. Measure current Chromium/WebKit frame/input behavior before changing the effect. Promote only if current impact is material.
-- Historical `QUAL-P2-04`: current MapEngine still rebuilds marker/path SVG structures in `renderMarkers()`, but source-level node recreation alone does not prove material GC/jank on the two public strict-native maps. Measure long-task/input/frame impact before refactoring rendering ownership.
-- Do not keep a `SYS-KARTY-RUNTIME-GEOMETRY` lane alive solely for these two measurement questions.
+- Historical `PERF-P1-01`: Avraam `base.svg` has used an indefinite animated `feTurbulence` / displacement-water effect, but the old “15–20 fps while dragging” observation is not a current browser witness. Measure current Chromium/WebKit frame/input behavior before changing it.
+- Historical `QUAL-P2-04`: MapEngine has rebuilt marker/path SVG structures in `renderMarkers()`, but source-level recreation does not prove material GC/jank. Measure long tasks/input/frame impact before refactoring rendering ownership.
+- Do not confuse this optional performance work with current `SYS-MAP-SCALE-RESIZE-WITNESS`: Product #1363 is a confirmed **test-harness convergence defect**, not evidence that MapEngine runtime is slow or geometrically wrong.
 
 ### Home presentation-owner convergence
 
-- Fresh current-source witness at Product `a068decefff4ddd0055da952c84b7a3633d7b43b`: no new reader-visible Home regression was reproduced and the latest main advance (`#1213`) changes no Home file.
-- Mobile Directions presentation currently has two effective cascade owners: `HomeSections/Directions.astro` authors the `<=760px` showcase geometry, then later-rendered `HomeVisualAuditFixes.astro` overrides the same card grid/glyph/padding/type rules.
-- Ambient normal presentation remains distributed across `HomeAmbientPhrases.astro`, `HomeResponsiveContracts.astro` and `HomeAmbientInteraction.astro`; the safe-rail geometry conflict is repaired, but presentation ownership is not fully converged.
-- Localhost-only audit assertions also live inside Product Home components. Moving them into existing browser-contract owners may be part of a future cleanup, but source embedding alone is not a current defect.
-- **Do not promote this cleanup to MASTER without a trigger.** Promote only if a fresh browser regression, false-green contract, recurring owner/file collision, or measured runtime/maintenance failure proves owner convergence independently necessary.
-- Current evidence: `verification/2026-08-08-home-main-ci-control-plane-recheck/REPORT.md`.
+- Earlier audit found multiple cascade/presentation owners around Directions and Ambient surfaces, but no current reader-visible regression was proved from ownership distribution alone.
+- Keep this parked until a fresh browser regression, false-green contract, recurring collision or measured maintenance/runtime failure proves convergence independently necessary.
+- Current mandatory Home audit-harness work, if still applicable, is separately represented in MASTER as `SYS-HOME-DESIGN-SEARCH-SETTLED` / Product #1299.
 
 ### Baptists 3D measured split
 
 - Historical origin: `R-005`.
-- Last verified size at the recorded anchor: `_app/index.html` 2,245,854 bytes.
-- It is an explicit built app, not a strangler duplicate.
-- Start only with real source/dependency boundaries and before/after measurement.
-- Possible result: bounded extraction, park, or accepted current cost.
+- Last recorded `_app/index.html` size was 2,245,854 bytes.
+- It is an explicit built app, **not** a removable strangler duplicate.
+- Start only with real source/dependency boundaries and before/after measurement; valid outcomes include bounded extraction, park or accepted current cost.
 
-### Strangler parity-authority migration
+### Runtime asset revision authority — reverify before promotion
 
-- Current owner family: `SYS-STRANGLER-RETIREMENT` / `ST-STRANGLER`.
-- Existing Product PR #1090 owns legacy reference identity/inventory work.
-- Do not create a parallel retirement lane while that owner is active.
-- Required sequence remains replacement parity authority → source/dist/browser evidence → bounded deletion.
+- Historical `AR-IDX-05` previously observed runtime-loaded CSS versioning through a generic `SITE_CONFIG.version` bridge while individual runtime assets already had their own revision identities.
+- This 2026-08-09 consolidation wave did **not** reverify the current loader/cache graph and found no active Product owner for it.
+- Recheck current runtime-loaded asset URLs, service-worker/cache revision owners and failure behavior before deciding whether a current defect still exists. Promote only a fresh formulation with a concrete stale-cache/version witness.
+
+### Shared JS escaping primitive — reverify before promotion
+
+- Historical `AUDIT-JS-ESCAPER-DUP-X5` observed several local equivalent HTML escaping helpers across shared JS.
+- Duplication alone is not a current defect. Before promotion, re-count current implementations and prove either inconsistent escaping semantics, a security/correctness divergence, or repeated maintenance failure that one shared primitive would actually close.
+- If current implementations are safe and context-specific, retire the historical wish instead of refactoring for symmetry.
 
 ### Bible corpus acquisition/import proof
 
-- Current decision row: `SEARCH-P2-07`.
-- Exact CrossWire `RusSynodal` 1.9.1 remains candidate-only until archive bytes, SHA-256, licence/source/book manifest, 66-book mapping and verse-level import receipt are proved.
+- Current owner-decision row remains `SEARCH-P2-07` in MASTER.
+- Binding rights/provenance decision is Research merge `d52ea9d54dd2c2488223d25f5f6cefd263c23328`; later Research Heart work does not supersede that corpus decision.
+- CrossWire `RusSynodal` 1.9.1 remains candidate-only until archive bytes, SHA-256, licence/source/book manifest, 66-book mapping and verse-level import receipt are proved.
 - `RusSynodalLIO` and Cassian restrictions are not bypassable technical problems.
+
+## Active work that must **not** be duplicated here
+
+- `SYS-STRANGLER-RETIREMENT` is active MASTER work. Current Product line reports truthful readiness 13 and #1364 owns the next bounded mechanical reader slice with expected 13 → 12. Do not keep a second optional “Strangler parity migration” queue item and do not resurrect historical #1090 as a current owner.
+- Lot publication/readiness is active MASTER work and has its own current AuditRepo evidence package.
+- Search new-row role authority, catalog projection, reader semantics, footnote projection, Source Authority trigger closure, product visual goldens, Avraam retraction parity and the two current audit-harness roots are all active MASTER work, not optional queue candidates.
 
 ## Parked non-defect improvement families
 
-These were removed from MASTER during the 2026-08-07 cleanup because they are performance/refactor/polish questions without a current defect witness. They should return to MASTER only if measurement proves an independently actionable problem.
+These remain historical performance/refactor/polish questions unless a current measurement or failure promotes them:
 
-- **Home/runtime performance:** historical `AR-IDX-PERF-01`, `AR-IDX-PERF-02`, `AR-IDX-JS-01`.
-- **CSS/JS budget measurements:** historical `NEW-CSS-BUDGET-01`, `D-3`, `AUDIT-P3-OG-LCP-MISMATCH`.
-- **Karty runtime measurement:** historical `PERF-P1-01`, `QUAL-P2-04`.
-- **Karty dormant/optional UI:** historical `MINI-P1-01`; public Avraam/Ishod do not enable the minimap.
-- **Karty decorative/cartographic style ideas:** historical glyph/ornament/halo/sea-pattern/sheet-engine style suggestions are not active defects. Holding-map publication still has one explicit visual-readiness owner in MASTER, but it does not mandate any particular decorative implementation.
-- **Home polish/cleanup:** historical `AR-IDX-07`, `AR-IDX-08`, `AR-IDX-CSS-03`; current owner-convergence formulation is recorded above and remains optional until its promotion trigger is met.
-- **Generic refactor wishes:** historical `R-001`, `R-002`, `R-003`, `R-004`.
-- **Measured built-app split:** `R-005`, described above.
+- Home/runtime performance: `AR-IDX-PERF-01`, `AR-IDX-PERF-02`, `AR-IDX-JS-01`.
+- CSS/JS budget measurements: `NEW-CSS-BUDGET-01`, `D-3`, `AUDIT-P3-OG-LCP-MISMATCH`.
+- Karty runtime measurement: `PERF-P1-01`, `QUAL-P2-04`.
+- Karty dormant/optional UI: `MINI-P1-01`.
+- Decorative/cartographic style ideas: glyph/ornament/halo/sea-pattern/sheet-engine suggestions.
+- Home polish/cleanup: `AR-IDX-07`, `AR-IDX-08`, `AR-IDX-CSS-03`.
+- Generic refactor wishes: `R-001`, `R-002`, `R-003`, `R-004`.
+- Measured built-app split: `R-005`.
 
 ## Queue hygiene
 
-The queue is optional and may be empty. Do not copy every old audit row here. If an improvement becomes a verified current defect, move the **current formulation** into MASTER; if it is solved, abandoned or superseded, remove it.
+The queue may be empty. Do not copy old audit rows here merely to retain history; history already lives in verification/Git. If a candidate becomes a verified current defect, move the **current formulation** into MASTER. If it is disproved, solved, superseded or not worth doing, remove it.
