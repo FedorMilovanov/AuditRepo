@@ -33,17 +33,17 @@ Operating order:
 
 Most recent verified Hall transactions:
 
-- #390 — material-to-Pushkin gate promotion;
 - #391 — Pushkin rights-first source authority;
-- **#392 — Pushkin acquisition routes and blockers**.
+- #392 — Pushkin acquisition routes and blockers;
+- **#393 — Pushkin source-byte identity proof**.
 
-Current verified Product authority after #392: `main@01572b3485d9b6c9a9e371b0eeddf22265741261`.
+Current verified Product authority after #393: `main@68afe7f7bb2438b2bb87d7b93817b9450d22cf2f`.
 
 Recent evidence:
 
-- `verification/2026-08-09-hall-v3-material-promotion/PROMOTION.md`;
 - `verification/2026-08-09-hall-v3-pushkin-rights/AUTHORITY.md`;
-- `verification/2026-08-09-hall-v3-pushkin-acquisition-routes/AUTHORITY.md`.
+- `verification/2026-08-09-hall-v3-pushkin-acquisition-routes/AUTHORITY.md`;
+- `verification/2026-08-09-hall-v3-pushkin-byte-identity/AUTHORITY.md`.
 
 ## Machine phase
 
@@ -57,27 +57,31 @@ No current transaction authorizes production WebGL or documentary media consumpt
 
 ## Current documentary/acquisition truth
 
-Product now owns canonical rights, slice and acquisition authorities plus independent validators. The acquisition guard runs in `npm check`, CI, Project Contracts and before Blender download in the Hall workflow.
+The autonomous source-byte question is now resolved for the two registered Commons originals. Product owns exact evidence-backed byte identities and independently revalidates them against freshly downloaded bytes.
 
 ### Kiprensky 1827 portrait
 
 - object provenance: source-verified;
-- exact remote original JPEG route: registered;
-- actual bytes: not acquired;
-- source SHA-256: unset;
+- exact Commons original JPEG: acquired/verified in isolated Actions evidence;
+- dimensions: `3455 × 4000`;
+- byte count: `10,862,180`;
+- source SHA-256: `sha256:316d5f366a46f23cd0a181e570f2d09a6b0d12bc368dab18fdb394b8b8b8bf4b`;
 - final credit: unset;
 - reproduction/intended-use: rights-pending;
+- runtime path: unset;
 - production eligible: false.
 
 ### `Eugene Onegin`, 1833 edition
 
 - RSL record `01003570012`;
 - object provenance: source-verified;
-- exact remote original PDF route: registered;
-- actual bytes: not acquired;
-- source SHA-256: unset;
+- exact Commons original PDF: acquired/verified in isolated Actions evidence;
+- pages: `324`;
+- byte count: `5,433,794`;
+- source SHA-256: `sha256:d629c10943cbf6428eabb194ee5c17c1b763c27108a2238eaf72fadb275643e5`;
 - final credit: unset;
 - reproduction/intended-use: rights-pending;
+- runtime path: unset;
 - production eligible: false.
 
 ### Pushkin House drawing/manuscript candidate
@@ -98,51 +102,55 @@ Product now owns canonical rights, slice and acquisition authorities plus indepe
 Current totals:
 
 - approved documentary assets: **0**;
-- exact acquired-byte hashes: **0**;
-- production manifest allowed: **false**.
+- exact acquired-byte hashes: **2**;
+- production manifest allowed: **false**;
+- documentary Blender media consumption allowed: **false**;
+- production WebGL allowed: **false**.
 
-## Next bounded transaction — actual byte materialization evidence
+## Next bounded transaction — exact-reproduction credit and rights disposition
 
-Do **not** open another rights-schema-only wave and do **not** start the Blender documentary exhibit or WebGL.
+Do **not** open another acquisition/hash wave. Do **not** start documentary Blender media consumption or WebGL.
 
 Next owner-selected question:
 
-> Can the two already-registered Commons originals be materialized in a reproducible isolated GitHub runner, verified as the expected JPEG/PDF and SHA-256 hashed from the actual downloaded bytes while all rights/approval state remains unchanged?
+> For the two exact hashed Commons reproductions now fixed by SHA-256, can final credit and intended-use/reproduction-rights disposition be independently established strongly enough to satisfy the canonical `approved` contract, or does either record require a genuine human/legal/institutional decision that must remain external?
 
 ### Required order
 
 1. Fresh Product/main + ownership check.
-2. Add the smallest possible exact-head acquisition-evidence job/script; do not mutate runtime.
-3. Fetch only the two already-registered original URLs.
-4. Fail closed on HTTP errors, redirects to non-file content or HTML/error bodies.
-5. Verify file identity (JPEG/PDF; expected dimensions/page count where practical), byte count and SHA-256 from the actual bytes.
-6. Upload machine-readable evidence; do not commit media merely to get a hash.
-7. Only after the evidence run succeeds, use a separate exact-head source mutation to register the observed byte identities.
-8. Keep rights/intended-use pending unless independently resolved; byte acquisition is not rights approval.
-9. AuditRepo checkpoint after any substantial merge.
+2. Keep exact object provenance, byte identity and reproduction/intended-use rights as separate evidence layers.
+3. Re-evaluate rights only for the exact hashed reproduction now fixed by SHA-256; do not reason from an abstract artwork/book alone.
+4. Resolve final credit only where the exact reproduction/source chain supports it.
+5. Re-check jurisdiction/institution-specific constraints relevant to intended Hall publication.
+6. Treat public-domain age, Commons availability/badges and successful download as evidence inputs, not automatic global/commercial approval.
+7. Promote a record to `approved` only if source identity, exact byte hash, reproduction/intended-use rights, final credit and runtime-path prerequisites are genuinely satisfied.
+8. If a real owner/legal/institutional decision is required, preserve that blocker and stop at the human boundary.
+9. AuditRepo checkpoint after any substantial Product merge.
 
 ### May do
 
-- isolated acquisition-evidence script/workflow;
-- actual download and SHA-256 of the registered Commons originals;
-- exact MIME/file-identity and size/page/dimension checks;
-- evidence artifact/log suitable for independent review;
-- later canonical hash registration based only on that evidence.
+- exact-reproduction rights/credit research tied to the two frozen hashes;
+- independently supported credit-line resolution;
+- jurisdiction/institution-specific disposition evidence;
+- explicit `rights-pending`/human-decision outcomes where approval cannot be established;
+- promote only genuinely complete canonical records.
 
 ### May not do
 
-- use a metadata checksum as source-file SHA-256;
-- infer publication approval from successful download or Commons metadata alone;
-- fabricate final credit/legal disposition;
-- fabricate or submit the Pushkin House institutional request;
-- put rights-pending media into the production manifest;
-- begin documentary Blender authoring with those media;
+- infer approval solely from source age, Commons publication or successful byte acquisition;
+- fabricate legal advice, institutional permission or owner intent;
+- fabricate/submit the Pushkin House copy request;
+- assign runtime paths to non-approved records;
+- place rights-pending media into the production manifest;
+- start documentary Blender authoring that consumes those media;
 - activate production Three/R3F/WebGL;
 - advance `offlineVisualApproval`, `webVerticalSlice` or `fullMuseumScaleOut`.
 
 ## External/human boundary
 
-The Pushkin House copy request is a genuine human/institutional dependency. The agent may preserve the exact object/cipher and request requirement, but a real researcher/request identity and intended-use decision must come from the owner/human process. Until then, that record remains source-verified / rights-pending / not-submitted.
+The Pushkin House copy request remains a genuine human/institutional dependency. The agent may preserve the exact object/cipher and request requirement, but a real researcher/request identity and intended-use decision must come from the owner/human process. Until then, that record remains source-verified / rights-pending / not-submitted.
+
+The two hashed Commons reproductions may also remain rights-pending if exact intended-use approval cannot be established without owner/legal judgement. A technical byte identity is not authority to invent that judgement.
 
 ## Conditional lanes
 
