@@ -2,11 +2,11 @@
 
 **Updated:** 2026-08-09 — current MASTER consolidation  
 **AuditRepo preserved evidence base:** `a8283267ae0810b8d8c91c3dd7981dd001a1da06`  
-**Latest Product main observed:** `1b05bf1f99f45d9dcf22e453f28dff2a68a304fa`  
+**Latest Product main observed:** `3c7b3c199dcf3d2464f38a55550d730a3279c171`  
 **Active Lot publication:** Product PR `#1339@189dfddbeed537c849dd35b1a92578ead894079d`  
-**Fresh ancestry:** `#1339` is `behind=6`, `ahead=10`, merge base `56972725dbe7aa9c5ecbf0d1efa2e9012e37f019`.
+**Fresh ancestry:** `#1339` is `behind=7`, `ahead=10`, merge base `56972725dbe7aa9c5ecbf0d1efa2e9012e37f019`.
 
-This file is the compact entrypoint for the dated Lot audit evidence in this directory. Product current-head verification remains authoritative for code/CI/ownership; the active AuditRepo work root is now `LOT-PUBLICATION-READINESS-01` in `verified/MASTER_BUG_MATRIX.md`.
+This file is the compact entrypoint for the dated Lot audit evidence in this directory. Product current-head verification remains authoritative for code/CI/ownership; the active AuditRepo work root is `LOT-PUBLICATION-READINESS-01` in `verified/MASTER_BUG_MATRIX.md`.
 
 ## Confirmed current Lot publication/content residuals
 
@@ -27,14 +27,14 @@ These route/content symptoms are consolidated in active MASTER as **`LOT-PUBLICA
 
 ## Shared native-runtime defects discovered through Lot
 
-These are **not** route-local Lot hacks. They affect the shared native article quiz contract.
+These are **not** route-local Lot hacks. They affect the shared native article quiz contract and were reverified directly on current Product `main@3c7b3c19…` after merged reader #1267.
 
-| ID | Severity | Current disposition | Evidence |
+| ID | Severity | Current disposition | Evidence / owner |
 |---|---|---|---|
-| `ARTICLE-QUIZ-SCORE-RANGE-01` | P2 shared runtime | `CONFIRMED-CURRENT / SYSTEMIC-MANIFESTATION` | Native result selector requires `{min,max}` but accepted configs use ordered `min` thresholds; Lot's four named tiers can never match and always fall back to generic `N из 8`. Configured `badge` is also ignored. See [`NATIVE_QUIZ_SCORE_CONTRACT.md`](NATIVE_QUIZ_SCORE_CONTRACT.md). |
-| `ARTICLE-QUIZ-EXPLANATION-PARITY-01` | P2 shared runtime | `CONFIRMED-CURRENT / SYSTEMIC-MANIFESTATION` | Native renderer uses `short || full`; accepted legacy behavior displays short plus distinct full teaching layer. All 8 Lot questions currently hide `full`. See [`NATIVE_QUIZ_EXPLANATION_PARITY.md`](NATIVE_QUIZ_EXPLANATION_PARITY.md). |
+| `ARTICLE-QUIZ-SCORE-RANGE-01` | P2 shared runtime | `CONFIRMED-CURRENT / SYSTEMIC-MANIFESTATION` | Current native result selector still requires `{min,max}` while accepted configs use ordered `min` thresholds; Lot's four named tiers cannot match and fall back to generic `N из 8`; configured `badge` is also ignored. Product issue **#1369** owns the shared repair. See [`NATIVE_QUIZ_SCORE_CONTRACT.md`](NATIVE_QUIZ_SCORE_CONTRACT.md). |
+| `ARTICLE-QUIZ-EXPLANATION-PARITY-01` | P2 shared runtime | `CONFIRMED-CURRENT / SYSTEMIC-MANIFESTATION` | Current native renderer still uses `short || full`; accepted legacy behavior displays short plus distinct full teaching layer. All 8 Lot questions hide `full`. Product issue **#1369** owns the shared repair. See [`NATIVE_QUIZ_EXPLANATION_PARITY.md`](NATIVE_QUIZ_EXPLANATION_PARITY.md). |
 
-Active MASTER collapses both manifestations into **`SYS-ARTICLE-QUIZ-NATIVE-PARITY`** so the repair cannot devolve into two Lot-only patches.
+Active MASTER collapses both manifestations into **`SYS-ARTICLE-QUIZ-NATIVE-PARITY`**. Product #1369 explicitly forbids hiding the shared defect with Lot-only `max` fields or by deleting `short` explanations.
 
 ## Required/in-flight work that is not a shipped regression
 
@@ -43,7 +43,7 @@ Active MASTER collapses both manifestations into **`SYS-ARTICLE-QUIZ-NATIVE-PARI
 | `LOT-MEDIA-PLACEMENT-01` | `IN-FLIGHT / NOT RELEASE-READY`. At the last bounded media audit: 14 conceptual families, 9 metadata rows, 6 actual `<LotFigure>` placements, and no unique media-byte delta in `lane/lot-media-20260809`. Publication #1339 still declares a final 14-raster gate. See [`MEDIA_PLACEMENT_READINESS.md`](MEDIA_PLACEMENT_READINESS.md). |
 | Lot-specific OG | `NOT IMPLEMENTED / MEDIA GATE` at the last audit; do not count generic site OG as closure. |
 | Scripture occurrence derivative | Writer mechanism is merged to Product main via #1353. Treat the old #1339 red as `READY-TO-REVERIFY` after fresh ancestry/canonical autofix, not as a manual JSON-edit task. |
-| `LOT-ANCESTRY-01` | `MERGE-BARRIER`: #1339 is currently behind 6 from observed Product main. Every final check must be re-earned after refresh. |
+| `LOT-ANCESTRY-01` | `MERGE-BARRIER`: #1339 is currently behind 7 from observed Product main. Every final check must be re-earned after refresh. |
 | Avraam/Tall el-Hammam parity | `OWNED-UPSTREAM #1334/#1298`; active MASTER keeps it separately as `AVRAAM-HAMMAM-RETRACTION-PARITY`. |
 
 ## Explicitly closed / disproved
@@ -54,7 +54,7 @@ Do **not** reopen “Lot quiz data is not rendered.” The complete native chain
 
 `lotQuiz.ts → LotPageHead/SITE_CONFIG → ReaderActionsRuntime → article-interactions.js → article-quiz.js → #quizPlaceholder`.
 
-The original missing-renderer audit was corrected in [`QUIZ_RUNTIME_FINDING.md`](QUIZ_RUNTIME_FINDING.md). The real current quiz problems are the shared score-range/explanation-parity root plus route content quality.
+The original missing-renderer audit was corrected in [`QUIZ_RUNTIME_FINDING.md`](QUIZ_RUNTIME_FINDING.md). Current Product #1369 concerns semantic parity **after render**, not missing rendering.
 
 ### `Сигор` vs `Цоар`
 
@@ -84,10 +84,11 @@ Not promoted: known-good standalone article patterns also use the home Back dest
 
 At the latest consolidation census:
 
-- #1339 — Lot publication, draft/open;
-- #1348 — exhaustive Articles catalog/human reachability, draft/open and one ancestry commit behind current Product main after #1364;
-- #1313 — Search new-row author/editor/translator authority, draft/open and already refreshed onto `main@1b05bf1f…`;
+- #1339 — Lot publication, draft/open, **behind=7**;
+- #1348 — exhaustive Articles catalog/human reachability, draft/open, **behind=2** and deliberately downstream of #1313;
+- #1313 — Search new-row author/editor/translator authority, draft/open, **behind=1** after merged #1267;
 - #1334 — Avraam Tall el-Hammam retraction parity, draft/open;
+- #1369 — shared native quiz parity, open issue with no implementation PR at this checkpoint;
 - #1353 — Scripture occurrence writer, **merged**.
 
 Recheck all of these before any new Product mutation. An AuditRepo evidence row is not permission to continue another owner's active lane.
@@ -101,7 +102,7 @@ Current promotion mapping:
 - route/content/media/SEO/TOC/Scripture-markup/SVG/source residuals → `LOT-PUBLICATION-READINESS-01`;
 - human reachability → `CATALOG-PROJECTION-01`;
 - Search author/editor/translator drift → `SEARCH-MANIFEST-NEW-ROW-ROLE-AUTHORITY`;
-- two shared native quiz manifestations → `SYS-ARTICLE-QUIZ-NATIVE-PARITY`;
+- two shared native quiz manifestations → `SYS-ARTICLE-QUIZ-NATIVE-PARITY` / Product #1369;
 - Avraam retraction parity → `AVRAAM-HAMMAM-RETRACTION-PARITY`.
 
-The unrelated #1364 Strangler merge only advanced the Product ancestry anchor and retirement program; it did not invalidate the Lot defect mechanisms above. This keeps the detailed evidence here while preventing the global MASTER from becoming a duplicate Lot symptom list.
+The unrelated #1364 Strangler and #1267 reader merges advanced Product ancestry but did not invalidate the Lot defect mechanisms above. This keeps the detailed evidence here while preventing the global MASTER from becoming a duplicate Lot symptom list.
