@@ -31,29 +31,33 @@ Most recent bounded Hall transactions:
 
 - #392 — Pushkin acquisition routes and blockers;
 - #393 — actual source-byte identities and independent SHA-256 revalidation;
-- **#394 — exact-reproduction rights/credit evidence review and external-boundary disposition**.
+- #394 — exact-reproduction rights/credit evidence review and external-boundary disposition;
+- **#395 — machine-state handoff repair: canonical rights workflow now says `external-authority-required`, the final rights review is registered as Hall source authority, and completed byte acquisition is no longer advertised as next work.**
 
-Current verified Product authority after #394: `main@dcbc7f07392075ddbf7d0bf784b0a38dbb556632`.
+Product #395 exact tested head: `402ea400c96bfdd094ada3dbd71de2415461644b`.
+Current verified Product authority after #395: `main@a9dab5be4a616178f553a2bb967ef327a26f0a76`.
 
 Recent evidence:
 
 - `verification/2026-08-09-hall-v3-pushkin-acquisition-routes/AUTHORITY.md`;
 - `verification/2026-08-09-hall-v3-pushkin-byte-identity/AUTHORITY.md`;
-- `verification/2026-08-09-hall-v3-pushkin-rights-boundary/AUTHORITY.md`.
+- `verification/2026-08-09-hall-v3-pushkin-rights-boundary/AUTHORITY.md`;
+- `verification/2026-08-09-hall-v3-pushkin-external-authority-state/AUTHORITY.md`.
 
 ## Machine phase
 
 `pushkinVerticalSlice` remains the only active Hall gate.
 
+- canonical Pushkin rights workflow state: **`external-authority-required`**;
 - `offlineVisualApproval`: blocked;
 - `webVerticalSlice`: blocked;
 - `fullMuseumScaleOut`: blocked.
 
-No current transaction authorizes production WebGL or documentary media consumption.
+No current transaction authorizes production WebGL or documentary media consumption. #395 changed workflow truth only; it did not approve a documentary record or advance a Hall gate.
 
 ## Current documentary truth
 
-Autonomous acquisition and evidence review are complete to the currently available boundary.
+Autonomous byte acquisition and evidence review are complete to the currently available boundary.
 
 ### Kiprensky 1827 portrait
 
@@ -113,19 +117,21 @@ Current totals:
 
 **No autonomous Product transaction is selected now.**
 
-The documentary-rights sub-lane has reached its logical agent boundary. Do not create another schema, acquisition, research or “recheck” PR from the same evidence simply to keep the lane active.
+Product #395 closes a machine-state inconsistency; it does not create a new rights/research lane. The repository now itself prevents the stale instruction to reacquire already-verified source bytes from masquerading as next work.
 
 A new bounded Product transaction becomes legitimate only after at least one material input appears:
 
 1. explicit owner intended-use/commercial-use/final-credit disposition;
 2. qualified legal or institutional disposition resolving the Kiprensky museum-use question;
-3. real Pushkin House copy-request submission/fulfilment and actual supplied evidence/bytes;
+3. real Pushkin House copy-request submission/fulfilment and actual supplied evidence/bytes, or an explicit owner decision to proceed without that optional documentary drawing;
 4. materially new primary rights evidence that changes a current disposition.
+
+After genuine external authority exists, the next Product sequence is: promote only independently approved documentary records → author one source/offline Pushkin exhibit in Blender → measure first-slice delivery/performance → produce required offline visual evidence. That sequence does not authorize later Hall gates by itself.
 
 ### Automatic rejection
 
 - agent-promoted `approved` based only on public-domain age, Commons availability, source hash or the existing review;
-- repeating the same rights search and calling it new authority;
+- repeating the same acquisition/rights search and calling it new authority;
 - fabricated legal advice, museum permission, owner intent or archive request;
 - final credit/runtime path assigned to a non-approved canonical record;
 - rights-pending documentary media consumed by the Blender exhibit or production manifest;
