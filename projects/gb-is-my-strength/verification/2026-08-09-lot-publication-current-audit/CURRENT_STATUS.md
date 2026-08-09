@@ -40,7 +40,7 @@ Active MASTER collapses both manifestations into **`SYS-ARTICLE-QUIZ-NATIVE-PARI
 
 | ID / surface | Current disposition |
 |---|---|
-| `LOT-MEDIA-PLACEMENT-01` | `IN-FLIGHT / NOT RELEASE-READY`. At the last bounded media audit: 14 conceptual families, 9 metadata rows, 6 actual `<LotFigure>` placements, and no unique media-byte delta in `lane/lot-media-20260809`. Publication #1339 still declares a final 14-raster gate. See [`MEDIA_PLACEMENT_READINESS.md`](MEDIA_PLACEMENT_READINESS.md). |
+| `LOT-MEDIA-PLACEMENT-01` | `IN-FLIGHT / NOT RELEASE-READY`. Fresh branch census: 14 conceptual families; **9 publication registry rows / 9 actual `<LotFigure>` placements**; five explicit reserve/kept-out families. `lane/lot-media-20260809` is now **identical to current main** and still contributes zero unique media bytes. `lane/lot-illustration-placement-20260809` is `ahead=11 / behind=4`. Publication #1339 still declares a final **14-raster** browser gate, so owner must either publish 14 or explicitly change the accepted visible count to 9; the browser witness must assert the exact positive count. See [`MEDIA_PLACEMENT_READINESS.md`](MEDIA_PLACEMENT_READINESS.md). |
 | Lot-specific OG | `NOT IMPLEMENTED / MEDIA GATE` at the last audit; do not count generic site OG as closure. |
 | Scripture occurrence derivative | Writer mechanism is merged to Product main via #1353. Treat the old #1339 red as `READY-TO-REVERIFY` after fresh ancestry/canonical autofix, not as a manual JSON-edit task. |
 | `LOT-ANCESTRY-01` | `MERGE-BARRIER`: #1339 is currently behind 7 from observed Product main. Every final check must be re-earned after refresh. |
