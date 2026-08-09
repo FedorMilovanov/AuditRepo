@@ -6,7 +6,7 @@ Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/
 
 Current verified engineering rows: **0**.
 
-Closed engineering/history outcomes живут в [`verified/CLOSURE_LEDGER.md`](verified/CLOSURE_LEDGER.md), verification packages и Git history; эта очередь не должна дублировать их.
+Closed engineering/history outcomes живут в [`verified/CLOSURE_LEDGER.md`](verified/CLOSURE_LEDGER.md), verification packages и Git history; эта очередь не должна превращаться в биографию проекта.
 
 ## Current selection — TLP-HALL-001 / Product #369
 
@@ -23,126 +23,113 @@ Owner-selected operating order:
 - H3 mesh geometry fingerprint: `b3de770858a423305db8fcab15b405414e66b3d3de93ab1deaa5b3b35b418777`;
 - approved guided camera: **R1**;
 - R1 Pushkin viewing camera: position `[8.0,2.5,1.60]`, target `[11.15,5.45,1.95]`, lens `28 mm`;
-- selected material lighting baseline: **L0-minimal-runtime**;
-- surface UV authority: **UV0**, metre-scaled at `1.5 m / UV unit` in accepted evidence;
-- static-bake reserve: **UV1**, `reserved-not-required`;
+- selected material baseline: **L0-minimal-runtime**;
+- surface UV authority: **UV0**, accepted at `1.5 m / UV unit`;
+- static-bake reserve: **UV1**, optional / not required;
 - current **L1 external-lightmap bake remains rejected**;
 - production texture encoding remains deferred to the Pushkin vertical slice;
-- production `/hall`: lightweight DOM placeholder; Three/R3F/WebGL activation remains forbidden until a later gate explicitly promotes it.
+- production `/hall` remains the lightweight DOM placeholder; production Three/R3F/WebGL is still blocked.
 
 ### Merged bounded source chain
 
-- foundation — Product #373;
-- Reference Bible — #374;
-- metric-greybox tooling — #375;
-- neutral H1/H2/H3 candidates — #376;
-- topology decision — #381;
-- H3 camera candidates — #382;
-- R1 decision — #383;
-- camera-gate promotion — #384;
-- material/light/export authoring spike — #386;
-- final raw-GLB evidence identity repair — #387;
+Foundation through camera/material evidence and decisions are verified in the dated Hall verification packages. Most recent source transactions:
+
+- material/light/export authoring spike — Product #386;
+- raw-GLB evidence identity repair — #387;
 - material visual-acceptance repeat-spike — #388;
-- Gate-4 material delivery decision — **#389**.
+- Gate-4 material delivery decision — #389;
+- **material-to-Pushkin gate promotion — #390**.
 
-Current verified Product authority after #389: `main@022c25b84aa3e4228fff3fbff6f4cef11e2d36c7`.
+Current verified Product authority after #390: `main@7337c61b07709b04ecb947491d1d59b499b81ceb`.
 
-Detailed evidence:
+Detailed recent evidence:
 
-- `verification/2026-08-08-hall-v3-foundation/FOUNDATION.md`;
-- `verification/2026-08-08-hall-v3-reference-bible/REFERENCE_BIBLE.md`;
-- `verification/2026-08-08-hall-v3-greybox-tooling/TOOLING.md`;
-- `verification/2026-08-08-hall-v3-greybox-candidates/CANDIDATES.md`;
-- `verification/2026-08-08-hall-v3-topology-selection/SELECTION.md`;
-- `verification/2026-08-09-hall-v3-camera-chain/CAMERA_CHAIN.md`;
 - `verification/2026-08-09-hall-v3-material-chain/MATERIAL_CHAIN.md`;
-- `verification/2026-08-09-hall-v3-material-decision/DECISION.md`.
+- `verification/2026-08-09-hall-v3-material-decision/DECISION.md`;
+- `verification/2026-08-09-hall-v3-material-promotion/PROMOTION.md`.
 
-## Current Gate-4 decision state
+## Current machine phase — Pushkin vertical slice active
 
-Product #389 merged on exact tested head `6a843479987b1022da562f342bbe9e61ff1214fc` with resulting Product `main@022c25b84aa3e4228fff3fbff6f4cef11e2d36c7`.
+Product #390 merged on exact tested head `68087a457295f4d08bdf774101d61ff83f0566a6` with resulting Product `main@7337c61b07709b04ecb947491d1d59b499b81ceb`.
 
-Selected delivery contract:
+Gate state now:
 
-1. **Lighting** — `L0-minimal-runtime` for the Pushkin vertical-slice baseline; no mandatory external lightmap and zero realtime shadow lights in the proved baseline.
-2. **Rejected current bake** — `L1-external-lightmap` stays `reject-current-bake`; UV1 transport remains technically available, but this bake may not be reused as approved.
-3. **UV strategy** — UV0 owns surface materials; UV1 remains a separate optional static-bake channel.
-4. **Optimizer** — `gltfpack@1.2.0` with `-cc -kn -km -ke -kv -vpf`, Khronos validation before and after, and preservation of names/materials/extras/UV0/UV1/tangents/camera/poetId/metric scale.
-5. **Texture semantics** — baseColor=sRGB color; normal/roughness=Non-Color data; explicit tangents; stone metallic `0`; any future lightmap remains linear on UV1.
-6. **Production texture encoding** — explicitly deferred to the Pushkin slice. QA 256px PNG proof maps are not production assets; KTX2 is not an approved default yet.
+- `materialLightingExportSpike`: **completed**;
+- `pushkinVerticalSlice`: **active**;
+- `offlineVisualApproval`: blocked;
+- `webVerticalSlice`: blocked;
+- `fullMuseumScaleOut`: blocked.
 
-Accepted evidence identity remains the #388 artifact:
+The promotion added no Pushkin documentary assets, production textures or runtime Hall assets.
 
-- artifact `9036351234`, digest `sha256:dc33af96ba747175794f9f31775c534c224a35645d9943302424459e0bf8cc95`;
-- accepted evidence head `600f28efd2aa59b6d31086b64aeb42da7b03a48e`;
-- raw GLB `200,672 B`, SHA-256 `10da27398d69397b77298e549af0b399eb2edf53ba430bfbb81a7937082fca7e`;
-- optimized GLB `141,896 B`, SHA-256 `810865870e5c240af681eab5aa8765a2fc6de44c69c823c8971a097a973ce089`;
-- raw/optimized Khronos `0 errors / 0 warnings`;
-- final raw source-evidence identity matched.
+The persistent post-material authority preserves H3/R1/L0/UV0, keeps UV1 optional, keeps the current L1 bake rejected and leaves production texture encoding undecided until measured on the first slice.
 
-Measured candidate cost preserved by decision:
+### Reproof model after #390
 
-- L0 GPU texture residency `1,398,096 B`;
-- current L1 GPU texture residency `1,791,312 B`;
-- incremental L1 lightmap **GPU resident** bytes `393,216 B`.
+Historical accepted #388 GLB SHA values remain frozen provenance of the manually accepted artifact. Independent future Blender reproof must **not** pretend full-file raw GLB bytes are deterministic when Blender floating UV/tangent payloads can vary slightly.
 
-The wording matters: `393,216 B` is GPU residency, not download/file size.
+Required independent reproof is structural/semantic and browser-backed:
 
-## Next bounded transaction — Gate-4 promotion only
+- frozen H3/R1 source fingerprints;
+- exact stable source textures/lightmaps/lookdev evidence;
+- raw source-evidence self-identity;
+- exact structural/schema contract;
+- Khronos `0 errors / 0 warnings` before and after optimization;
+- preservation-safe `gltfpack@1.2.0` transport;
+- accepted L0 / rejected L1 browser dispositions and GPU-cost semantics;
+- material-response and raw↔optimized visual thresholds.
 
-The next Product #369 mutation is a **separate gate-promotion transaction**:
+Promotion artifact authority and forensic details are in `verification/2026-08-09-hall-v3-material-promotion/PROMOTION.md`.
 
-`materialLightingExportSpike → pushkinVerticalSlice`
+## Next bounded transaction — Pushkin rights/provenance + source/offline exhibit
 
-Required state transition:
+Do **not** start from final React/Three/WebGL code.
 
-- `phase`: `materialLightingExportSpike` → `pushkinVerticalSlice`;
-- `gates.materialLightingExportSpike`: `active` → `completed`;
-- `gates.pushkinVerticalSlice`: `blocked` → `active`;
-- `offlineVisualApproval`, `webVerticalSlice` and `fullMuseumScaleOut` remain blocked.
+The next owner-selected question is:
 
-The promotion must pin the merged #389 material decision authority and preserve all current freezes.
+> Which exact Pushkin documentary assets can be independently identified **and** publication-approved, and what is the smallest one-exhibit source/offline package that proves the Pushkin vertical slice on frozen H3/R1/L0 without advancing later gates?
 
-### Promotion PR may do
+### Required ordering
 
-- add a dedicated material-gate promotion authority record;
-- add/extend persistent post-material authority validation;
-- update the machine Hall contract for exactly the one gate transition above;
-- update `CURRENT_STATE.md` / Hall README to the new machine phase;
-- wire the promotion validator through normal check, CI, Project Contracts and Hall DCC workflow.
+1. **Asset/object identity** — exact portrait/manuscript/object identity, institution/archive source, object ID/call number where available.
+2. **Separate reproduction-rights basis** — a museum/catalogue page may establish object provenance but does not automatically license its digital image.
+3. **Rights register** — each documentary asset needs source identity, rights status/basis, credit, source-file hash, runtime path and verification status.
+4. Only **`approved`** documentary records may enter a production Hall manifest. `candidate`, `source-verified` and `rights-pending` assets remain non-shipping evidence.
+5. Build one complete Pushkin exhibit **source/offline first** on frozen H3/R1/L0. React/Three must not become the modeller.
+6. Produce fixed-still / close-material / desktop-mobile framing and offline-camera evidence before WebGL integration.
+7. Measure production texture encoding and first-slice transfer/GPU/frame-time budgets on the actual bounded slice rather than guessing them in advance.
 
-### Promotion PR may not do
+### This wave may do
 
-- add or author Pushkin portrait/document assets;
-- activate production Three/R3F/WebGL or replace the `/hall` placeholder;
-- change H3 geometry or R1 camera;
+- add a machine-readable Pushkin rights/provenance manifest and validator;
+- register candidate assets with exact object provenance and separate reuse-rights evidence;
+- promote only independently verified records to `approved`;
+- create one bounded Pushkin exhibit source/offline assembly;
+- retain L0 baseline and UV0 surface authority while testing near-final materials;
+- compare candidate production texture encodings on the first slice with measured evidence;
+- generate 8–12 fixed stills, close crops, desktop/mobile framing and a short offline camera sequence for later visual review;
+- establish first-slice asset/transfer/GPU/frame-time budgets.
+
+### This wave may not do
+
+- infer reuse rights from age, public visibility, Git history, Drive/archive presence or a museum description page;
+- put rights-pending media into a production Hall manifest;
+- use AI-generated imagery as a historical manuscript, signature, facsimile or museum object;
+- redesign H3 or R1;
+- silently reuse the rejected current L1 bake as approved;
 - start full-Hall lookdev;
-- brighten/select the rejected current L1 bake;
-- invent final production texture encoding;
-- combine gate promotion with Pushkin slice authoring.
+- activate production Three/R3F/WebGL or replace `/hall` placeholder before offline approval;
+- promote `offlineVisualApproval`, `webVerticalSlice` or `fullMuseumScaleOut` in the acquisition/source-authoring transaction.
 
-### Automatic rejection for promotion
+### Automatic rejection
 
-- decision and promotion authority are collapsed or candidate material evidence is rewritten;
-- `pushkinVerticalSlice` authoring begins inside the promotion PR;
-- later Hall gates are advanced;
-- production Hall runtime is activated;
-- current L1 is silently reclassified as approved;
-- H3/R1 or accepted material evidence blobs drift without a new prior-gate transaction.
-
-## Immediately after promotion — Pushkin slice blocker ordering
-
-Do not start the first Pushkin exhibit from final browser/runtime code.
-
-The first slice wave must respect the existing Hall policies:
-
-1. **rights/provenance first for documentary hero assets** — `RIGHTS_REGISTER.md` requires explicit source identity, rights basis, credit and verification; only `approved` documentary assets may enter the production Hall manifest;
-2. current Product search shows no completed Pushkin Hall rights record yet, so portrait/document acquisition and rights verification is an early blocker, not a late cleanup step;
-3. AI-generated editorial imagery may not impersonate a historical facsimile, signature, manuscript or museum object;
-4. source architecture/exhibit assembly remains Blender authority; React/Three must not become the modeller;
-5. Pushkin visual acceptance requires central architecture + portal transition + one complete exhibit, rights-cleared media, near-final materials, selected L0 delivery, certified cameras, 8–12 fixed stills, close material crops, desktop/mobile framing, a 20–30 s offline camera sequence, no-effects baseline and raw-vs-optimized comparison;
-6. WebGL integration does not begin if the offline sequence is not compelling;
-7. the first web slice will be the place to set real Hall transfer/texture/frame-time budgets and to measure final production texture encoding rather than guessing it now.
+- object provenance and reproduction rights are collapsed into one unsupported claim;
+- an unidentified but attractive portrait is treated as museum-grade hero media;
+- a source record has no exact file/hash/credit/rights basis but is marked approved;
+- AI reconstruction is presented as documentary evidence;
+- source/offline exhibit quality is rescued by bloom/fog/particles instead of geometry/material/light quality;
+- WebGL integration starts before rights-cleared offline evidence is compelling;
+- H3/R1/L0 authority drifts without reopening the relevant earlier gate.
 
 ## Conditional candidate lanes
 
