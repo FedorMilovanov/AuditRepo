@@ -4,134 +4,233 @@ Date: 2026-08-11
 Mode: **fresh live-state / exact-current authority / no Product mutation**
 Disposition: **FINAL-ZERO NOT AUTHORIZED**
 
-This pass re-checks current Product truth instead of trusting historical audit rows, PR descriptions or transient green jobs. The Product is under an active terminal transaction, so exact SHA authority is recorded wherever a claim depends on it.
+This pass deliberately re-checks live Product truth instead of trusting historical audit rows, PR descriptions, commit messages or broad workflow conclusions. The Product was moving under an active terminal transaction while the pass ran, so findings are separated into exact-current Product defects, exact-head repair evidence, transactional/control-plane blockers, and measurement-only candidates.
 
-## SSOT authority
+## 1. Final authority observed in this pass
 
-Current AuditRepo `verified/MASTER_BUG_MATRIX.md` contains only three active work units:
+Latest Product `main` observed repeatedly at the end of the pass:
 
-- `V12-READER-LINEAR-TEXT-POLLUTION` — direct current defect;
-- `V07-ATLAS-FOCUS-STATE` — direct current defect;
-- `FINAL-ZERO-AUDIT` — system lane blocked on Product convergence.
+`be8d439aec1e18f268d247967c70a0c318b1dabd` — `chore(terminal): trigger existing direct final proof`.
 
-The compact MASTER is directionally correct. This pass found no basis to resurrect already-terminal historical roots merely because old CI issues or branches still exist.
+The earlier intermediate authorities (`bc44fd6`, `fd3bc71`, `1cfe85ad`) are historical within this same audit. Any later Product commit must be re-opened before a MASTER row is closed.
 
-## Product authority moved during the pass
+Fresh Product control-plane census at the end of the pass:
 
-`main` advanced through multiple terminal commits while this audit was running. The latest observed authority for this report is:
+- **4 open PRs**: #1598, #1594, #1585, #1584;
+- **8 remote branches total**: `main` + 7 non-main;
+- current `main@be8d439` still has ordinary release/control-plane failures caused by asset-revision drift;
+- temporary terminal workflow helpers are still physically present on the audited main tree.
 
-`1cfe85ad387df2d598f055ea8834ca4e907732a3` — `chore(terminal): start direct self-cleaning final proof`.
+Therefore current main is not a terminal release authority.
 
-Any later automatic terminal commit must be re-audited before a MASTER row is closed.
+## 2. SSOT reconciliation result
 
-## V12 terminal false-green path — CONFIRMED / BLOCKING
+The AuditRepo MASTER started this pass with only V12, V07 and FINAL-ZERO. Fresh current-main inspection proved four additional direct residual roots that the compact MASTER had not yet represented.
 
-### Current main still has the known Pagefind metadata-capture defect
+The reconciled MASTER now contains:
 
-At the audited current main, `scripts/project-reader-linear-text-to-dist.mjs` still emits projected metadata using `data-pagefind-meta="KEY"` while storing the value in the `content` attribute.
+1. `V12-READER-LINEAR-TEXT-POLLUTION` — P3;
+2. `V07-ATLAS-FOCUS-STATE` — P2;
+3. `V13-HERM-CHROME-OWNERSHIP` — P2;
+4. `V13-SITE-MENU-NATIVE-FAILSAFE` — P3;
+5. `V14-SEARCH-SCOPE-TAB-SEMANTICS` — P3;
+6. `V14-SW-TOAST-A11Y` — P3;
+7. `FINAL-ZERO-AUDIT` — blocked system lane.
 
-The already-developed repair uses the Pagefind attribute-capture form `data-pagefind-meta="KEY[content]"` and preserves the original value in `content`.
+Thus the current active count is **7 = 6 direct current defects + 1 system lane**.
 
-That stronger implementation exists on preserved branch `agent/reader-linear-meta-content-20260810` at closed-unmerged PR #1568 (`a796f135a88a9c1a6cbddf03bc5a2c15007c0c6c`). PR #1568 explicitly records the same root cause: a plain metadata key does not capture the meta element's `content` attribute; the key must declare `[content]`.
+No old terminal root was resurrected merely because an old issue, branch or log still exists.
 
-### The stronger V12 witness exists but is absent from current main
+## 3. V12 terminal false-green path — CONFIRMED / BLOCKING
 
-PR #1568 also strengthens `scripts/reader-linear-text-projection-browser-test.mjs` so it:
+### Exact current-main defect
 
-- inspects raw projected metadata before browser normalization;
-- requires the projected Pagefind spec to capture `content` and requires a non-empty value;
-- requires all five Krajne metadata fields to survive;
-- repeats the metadata assertions in browser DOM;
-- retains Chromium + WebKit, no-JS semantic projection, Pagefind and visible glossary checks.
+At `main@be8d439`, `scripts/project-reader-linear-text-to-dist.mjs` still projects metadata by putting the value in a `<meta content="…">` attribute while leaving `data-pagefind-meta` as a plain key.
 
-Current main does not contain that strengthened contract.
+The already-developed correct repair uses Pagefind attribute capture (`KEY[content]`) and exists on preserved closed-unmerged PR #1568, branch `agent/reader-linear-meta-content-20260810`, head `a796f135a88a9c1a6cbddf03bc5a2c15007c0c6c`.
 
-### Current terminal proof does not include the V12 repair
+### Current witness is too weak
 
-The current direct-final transaction states that it will close both V07 and V12, but its bounded Product materialization only addresses the remaining Atlas focus handoff and generated revisions. It then runs the current reader witness. It does not port the #1568 projector repair or the strengthened #1568 reader witness.
+The current `reader-linear-text-projection-browser-test.mjs` checks that Pagefind exposes a non-empty image metadata field but does not prove that the original projected Krajne metadata values survived. PR #1568 contains the stronger witness that verifies raw projected specs and all five Krajne fields before and after browser parsing.
 
-Therefore there is a proven false-green route: a terminal run can report V12 success while the known metadata-capture defect remains in the Product tree.
+### Terminal false-green path
 
-### V12 disposition
+The temporary direct-final transaction says it will close V07 and V12, but the audited terminal payload only materializes the Atlas focus change plus generated revisions before running the weaker current reader witness. It does **not** port the #1568 V12 projector repair and stronger witness.
 
-`V12-READER-LINEAR-TEXT-POLLUTION` **must remain active** even if the current terminal transaction becomes green, unless a fresh final-main check proves all of the following:
+Therefore a terminal run can become green and write a commit whose message says V12 is closed while the known metadata-capture defect remains. Commit naming is not accepted as closure evidence.
 
-- projected metadata uses a correct Pagefind attribute-capture contract;
-- original metadata values are asserted rather than only the existence of fallback metadata;
-- Krajne preserves image, author, readTime, category and scripture values;
-- Krajne + Hermenevtika + an independent reader owner retain semantic boundaries and no raw metadata prefix/glued auxiliary prose;
-- Chromium + WebKit permanent witness passes on the exact final main SHA.
+### Required V12 closure
 
-## V07 Atlas focus lifecycle — STILL ACTIVE AT CURRENT SNAPSHOT
+- correct Pagefind attribute-capture semantics in final main;
+- original metadata values asserted, not fallback existence;
+- Krajne image/author/readTime/category/scripture all preserved;
+- Krajne + Hermenevtika + one independent reader owner retain clean semantic text boundaries;
+- Chromium + WebKit permanent proof green on exact final main.
 
-The current permanent Atlas contract is materially stronger than the original Wave 07 witness:
+## 4. V07 Atlas focus state — CONFIRMED CURRENT / P2
 
-- Chromium + WebKit;
-- widths 390, 680, 681, 980, 981, 1440;
-- closed detail/drawer inert and semantic-hidden assertions;
-- activeElement safety against BODY/HTML/hidden/unrendered surfaces;
-- drawer open/group close/Escape;
-- detail close/related replacement/detail Escape;
-- desktop List→Graph focus transfer;
-- history and breakpoint resize transitions.
+At `main@be8d439`, the remaining focus handoff still selects the close-button object before its fallback in a single expression. If that object exists but cannot accept focus in the current transition state, the fallback is never attempted.
 
-The remaining current source at the audited terminal head still uses one focus call where the close-button object is selected before the fallback target. If the close control exists but cannot accept focus at that exact moment, the fallback is not attempted. The terminal transaction proposes a bounded repair with a real fallback/retry path.
+The permanent Atlas contract is now substantially stronger than the original Wave 07 witness: Chromium + WebKit; 390/680/681/980/981/1440; closed drawer/detail semantic hiding; activeElement safety; drawer close/group selection/Escape; detail close/related replacement; List→Graph; history and resize transitions.
 
-At the audited snapshot that repair had not yet materialized into the #1598 Product source. V07 therefore remains active until the actual repair exists on current main and the exact Chromium/WebKit contract passes there.
+A bounded repair exists in the terminal transaction, but at the audited current main it had not yet materialized into `src/runtime/atlas-runtime.js`.
 
-The proposed witness change from requiring the close button specifically to requiring a meaningful focus target inside the open sidebar is acceptable only while existing checks continue to reject BODY, hidden, inert, unrendered or offscreen focus.
+V07 remains open until the actual repair exists on final main and the permanent exact-SHA browser contract passes there.
 
-## Temporary control-plane transaction — FINAL-ZERO BLOCKER, NOT A NEW DIRECT ROOT
+## 5. V13 Hermenevtika chrome ownership — CONFIRMED CURRENT / P2
 
-The terminal sequence temporarily places self-cleaning write-capable workflow helpers on `main`. Existing permanent workflow-policy checks reject those helpers while they are physically present.
+Current main simultaneously contains:
 
-The transaction is intended to remove all temporary helpers and restore the permanent Atlas workflow before its final tested tree is accepted. Treat this as a **transactional system blocker**, not automatically a third direct Product defect.
+- dedicated `HermenevtikaMobileBar` as the mobile/tablet owner through 1199px;
+- the generic `SingleArticleCluster` without a Hermenevtika-specific non-rendering rule in the same breakpoint range.
 
-FINAL-ZERO requires the final main tree to contain no terminal helper residue and to pass the normal permanent control-plane checks.
+This creates competing control owners below 1200 and leaves the dynamically docked saved-quotes/highlights FAB susceptible to standalone dimensions/offset/animation behavior after docking.
 
-## Hermenevtika SYSTEM lane — evidence strong; fresh-main replay still required
+Product PR #1585 contains a bounded repair. Its independent exact-head `Hermenevtika Chromium WebKit chrome contract` succeeded on head `57c4a83df2d70a0977a36633321dfd589cd5bafe`. Retained evidence records 84/84 PASS across Chromium + WebKit, Hermenevtika + `/articles/lot-i-sodom/`, widths 390/412/899/900/1199/1200/1440, ownership, overflow, seeded saved-quotes docking, focus and animation state.
 
-Artifact inspected: `hermenevtika-mobile-chrome-31434712840-1` from PR #1585.
+Manual inspection of retained 390/900/1199/1200 screenshots found no obvious clipping or fixed-bar collision on the repaired head.
 
-The durable contract records 84/84 passes across:
+This proves the repair payload, not current Product closure: #1585 is still a stale-base draft and current main lacks the Product CSS repair.
 
-- Chromium + WebKit;
-- Hermenevtika and `/articles/lot-i-sodom/`;
-- widths 390, 412, 899, 900, 1199, 1200, 1440;
-- horizontal overflow;
-- mobile top/bottom ownership through 1199;
-- desktop floater/rail ownership from 1200;
-- saved-quote/share docking and disabled docked animation.
+Detailed report: `verification/2026-08-11-hermenevtika-mobile-chrome-current/REPORT.md`.
 
-Manual inspection of saved screenshots at 390/900/1199/1200 found no obvious horizontal clipping or bottom-bar content collision. The 1199→1200 owner switch is abrupt by design but visually coherent in the captured state.
+## 6. V13 Site Sections Menu native fail-safe — CONFIRMED CURRENT FAIL-SAFE / P3
 
-This evidence does not authorize direct merge of the stale-base draft. #1585 still requires replay from the final current main after terminal cleanup.
+This is not a reopening of the closed #1558 normal menu-ownership root.
 
-## Narrow-tablet coverage — MEASUREMENT/COVERAGE GAP, NOT A CONFIRMED DEFECT
+On current main the rich shared menu is semantically marked closed, but the panel/backdrop do not have native `hidden`, and the rich chevron SVG markup lacks native fallback bounds/fill/stroke attributes. `inert` prevents interaction; it does not make a surface non-rendering. The closed rich owner therefore still depends on authored presentation to stay visually absent.
 
-The Hermenevtika visual contract covers 899/900 but not the requested narrow-tablet cluster 761/768/800/820/860.
+PR #1584 contains the bounded three-file repair: native hidden lifecycle, bounded SVG fallback, runtime fail-safe and registry-derived Chromium/WebKit no-CSS contract.
 
-The shared `standalone-reader-layout-guard.mjs` does cover 768, plus 390/1199/1200/1280/1366/1440/1920, for Hermenevtika and Kod Da Vinci, but only in Chromium.
+Its browser job did not run to completion because unrelated branch-level control-plane/generated checks stopped the pipeline first. Therefore the classification is precise:
 
-Therefore:
+- current native fail-safe source defect: confirmed;
+- normal CSS-loaded production visually broken: not claimed;
+- repaired browser lifecycle: must be re-proved on fresh final main.
 
-- 768 has durable reader-layout evidence;
-- 761/800/820/860 do not yet have an equivalent fresh cross-browser geometry witness;
-- absence of a test is not itself proof of a Product bug.
+Detailed report: `verification/2026-08-11-site-menu-native-failsafe-current/REPORT.md`.
 
-Keep this outside MASTER until an actual geometry/focus/overlap failure is measured.
+## 7. V14 Search scope ARIA/keyboard semantics — CONFIRMED CURRENT A11Y / P3
 
-## Tooltip accessibility relation — REVERIFY CANDIDATE
+Current Search exposes the four scope filters (`Все`, `Статьи`, `Ссылки`, `Авторы`) as `role="tablist"` + `role="tab"` controls with `aria-selected`.
 
-Current canonical `src/runtime/article-tooltips.js` still owns glossary, footnote and scripture-reference triggers, makes non-native triggers focusable and uses `aria-expanded`. It also reparents active popup content into a floating owner and later restores it.
+But current `js/search.js` does not implement the widget model it advertises:
 
-The canonical owner still has no `aria-describedby` relation. This remains a legitimate accessibility-tree/AT candidate, especially for footnote/scripture relations after reparenting. It is **not promoted as a direct defect without an actual AX/AT witness**.
+- no Left/Right scope-tab movement;
+- no Home/End scope-tab movement;
+- no roving tabindex where only the active tab is the Tab entry point;
+- all four native buttons remain ordinary sequential Tab stops;
+- no associated tabpanel relationship exists because the controls are actually filters over one result surface.
 
-## Search/TTS performance — MEASUREMENT FIRST
+The existing Chromium/WebKit cold-bootstrap test proves Ctrl/Meta+K, opener/focus and Escape behavior, but does not cover scope-widget semantics.
 
-No new current regression was proved in this pass for Search query→first-result latency or TTS click→first-audible latency. Both remain measurement-first work. Existing state-machine tests do not justify inventing latency budgets from source inspection alone.
+The terminal repair must either implement a truthful actual Tabs pattern or remove the misleading tab roles and expose the filters as an appropriate single-select control group.
 
-## Remote branch cemetery is not terminal
+Detailed report: `verification/2026-08-11-search-scope-tab-semantics-current/REPORT.md`.
+
+## 8. V14 Service Worker toast accessibility — CONFIRMED CURRENT A11Y / P3
+
+Current `js/sw-register.js` creates the offline/update notification as a plain `div`.
+
+For passive notices it has no explicit status/live-region semantics. For an update requiring reload it makes the same div visually clickable via class + click listener, but it does not make the action a native button, sequentially focusable command, or Enter/Space-operable widget. `sw-toast.css` only adds pointer styling.
+
+This is an accessibility defect in the notification interaction layer, not a service-worker caching defect.
+
+The correct terminal shape is a real live status owner plus a real reload button (or complete equivalent button semantics) with keyboard operation and cleanup proof in Chromium + WebKit.
+
+Detailed report: `verification/2026-08-11-sw-toast-accessibility-current/REPORT.md`.
+
+## 9. Public route/SEO audit — the suspicious #1584 red was NOT a route defect
+
+The broad #1584 Route Registry Validators issue looked suspicious because its failed step is named `Public surface, sitemap, RSS, SEO and policy mutations`. Exact job-log inspection disproved a route/SEO root.
+
+On exact head `9a8d71a5cbd546b8880072132f1d869d0ae2cf55`, the route/SEO layer passed:
+
+- 84 production Astro routes covered by the effective migration registry;
+- 84 route-profile contracts;
+- 85 public surfaces represented in the registry;
+- 75 indexable sitemap routes;
+- 58 canonical RSS items;
+- sitemap/feed/search policy consistency;
+- 2631 local/internal references valid;
+- one H1 per content page;
+- no duplicate IDs;
+- all images have alt;
+- canonical and JSON-LD checks;
+- no mixed-content URLs;
+- every `_blank` link carries `noopener`;
+- user zoom remains allowed;
+- reduced-motion coverage exists for timed-motion files;
+- SW manifest/precache/source basics passed.
+
+The single failing error was an **audit size ratchet**: `js/glossary.js` measured 12,457 bytes against a 12,000-byte hard cap on that branch.
+
+That hard-cap breach is not promoted to MASTER from this evidence alone because:
+
+- it is a quality/performance ratchet rather than a demonstrated reader-visible failure;
+- `js/glossary.js` changed again between #1584 and current main;
+- no exact-current `be8d439` audit-pro execution was obtained in this pass.
+
+It remains reverify-before-promotion / budget work.
+
+The previous historical 75-route full-release census remains a useful regression baseline but is **not** falsely presented as exact-current certification: 35 Product commits elapsed between that earlier release authority and this pass, including multiple runtime/chrome/route-owner repairs. Final zero still requires a fresh complete route/build census from the final settled main SHA.
+
+## 10. PWA/cache — no new cache architecture defect proved
+
+Current `sw.js` continues to use the intended network-first behavior for HTML/data and explicit bypasses for Range/audio/video/TTS/model/Vosk-style paths. No current evidence in this pass proved audio/TTS poisoning, broken range behavior or an offline cache root.
+
+Only the SW notification accessibility layer was promoted.
+
+## 11. Search modal closed-state — no new hidden-overlay root proved
+
+Current command-palette CSS keeps the base backdrop non-rendering until open, includes safe-area padding and suppresses the entrance animation under reduced motion. No separate closed-overlay visibility/focus root was proved here.
+
+## 12. Tooltip AT relation — standards-backed risk, held outside MASTER pending AX witness
+
+The canonical article tooltip owner makes glossary/footnote/scripture triggers focusable, tracks `aria-expanded`, and reparents the active popup into a floating body-level owner.
+
+The canonical owner itself does not establish `aria-describedby`/`aria-controls`. Legacy glossary hydration establishes a tooltip relationship for glossary terms, leaving footnote/scripture relation parity uncertain after reparenting.
+
+This is a real programmatic-relationship gap candidate, but this audit does **not** invent an NVDA/VoiceOver failure without an actual AX/AT witness. Obtain Chromium accessibility-tree and practical AT evidence before promotion.
+
+## 13. Narrow-tablet coverage — measurement gap, not defect
+
+Current durable evidence covers:
+
+- Hermenevtika: 390/412/899/900/1199/1200/1440 in Chromium + WebKit on the repair head;
+- shared standalone reader layout: 390/768/1199/1200/1280/1366/1440/1920 in Chromium.
+
+The specific 761/800/820/860 cluster lacks equivalent fresh cross-browser geometry/focus/overlap evidence. Missing coverage is not itself a Product bug; keep it measurement-first until a real failure is observed.
+
+## 14. Search/TTS perceived performance — measurement first
+
+No material current latency regression was proved for Search query→first-visible-result or TTS click→first-audible. Existing state-machine contracts are strong but do not measure the missing timing milestones. Do not invent latency budgets.
+
+## 15. Dependency/security signal — not promoted without reachability proof
+
+A stale-base CI install emitted dependency advisories, but this pass did not establish exact current advisory IDs, dependency paths or production reachability. It is not legitimate to convert an npm summary count into a claim of exploitable site vulnerabilities.
+
+The route audit did independently pass its current source security hygiene checks for repository-path leakage/eval, mixed content, `_blank`/noopener and untrusted-source `innerHTML` assignment patterns on the audited branch. This is useful evidence but not a substitute for a current dependency advisory graph.
+
+## 16. Open PR disposition
+
+### #1598 — terminal frozen-scope proof
+
+Still open. It cannot authorize V12 closure because the audited terminal payload omits the known #1568 metadata-capture repair/stronger witness. It also remains affected by generated revision/control-plane turbulence.
+
+### #1594 — Search scripture witness settlement
+
+This is a test/witness correction only; it changes `home-design-audit-pro.mjs` and does not change Product Search/Pagefind runtime behavior. Treat it as CI witness cleanup requiring fresh-main reconciliation, not a direct Product defect.
+
+### #1585 — Hermenevtika chrome ownership
+
+Real Product repair with strong exact-head cross-browser evidence, but stale base. Replay/rebase from settled final main, rerun, merge, then exact-main reverify.
+
+### #1584 — Site menu native fail-safe
+
+Real Product fail-safe repair, but stale base and its browser contract has not yet completed due independent CI blockers. Replay from settled final main and obtain the planned no-CSS Chromium/WebKit witness before merge.
+
+## 17. Branch cemetery — NOT terminal
 
 Fresh remote branch census contains exactly 8 branches:
 
@@ -144,49 +243,56 @@ Fresh remote branch census contains exactly 8 branches:
 - `agent/krajne-schema-image-dimensions-20260810`;
 - `agent/krajne-schema-image-dimensions-v2-20260810`.
 
-Disposition:
+`agent/reader-linear-meta-content-20260810` is **KEEP** until its unique V12 repair and stronger witness are safely ported.
 
-- terminal/search/SYSTEM branches remain active transaction owners;
-- `agent/reader-linear-meta-content-20260810` must be preserved until its unique V12 repair/witness is safely ported to final main;
-- the two older Krajne branches survive although the successful Krajne repair landed through later PR #1564/v3. They are delete candidates only after a final unique-diff/commit check.
+The two older Krajne branches are delete candidates only after explicit unique-tail/diff confirmation because the successful Krajne schema repair later landed through PR #1564/v3. Do not delete from name/age alone.
 
-FINAL-ZERO requires every surviving non-main branch to have an explicit KEEP reason or be physically absent.
+## 18. CI issue cemetery — NOT terminal
 
-## CI issue cemetery is not terminal
+The fresh issue census contains a mixture of:
 
-Fresh issue census still contains many open lifecycle issues spanning current main failures, #1598, stale main Runtime/Native Source failures, stale-base SYSTEM PRs #1584/#1585, #1594, closed/merged PR identities such as #1568/#1569, and retired Atlas branch identities.
+- current main revision failures (#739/#474/#499);
+- #1598 revision failures (#1600/#1599);
+- active stale-base #1584/#1585/#1594 identities;
+- older main Runtime/Native Source identities;
+- issues belonging to merged #1569;
+- issues belonging to closed-unmerged #1568;
+- issues for an Atlas branch no longer present in the fresh remote branch census.
 
-These issues are evidence, but their open state must not resurrect historical Product roots. FINAL-ZERO requires terminal disposition: current identities close through a newer successful run; retired identities close as retired/not-planned without falsely claiming recovery.
+Open lifecycle issues are evidence; they are not allowed to resurrect solved Product defects. Final zero requires current identities to recover or be explained and retired identities to close as retired/not-planned without falsely claiming recovery.
 
-## AuditRepo WORK_QUEUE SSOT drift — DOCUMENTATION CLEANUP REQUIRED
+## 19. AuditRepo SSOT cleanup performed
 
-`WORK_QUEUE.md` correctly states that MASTER is the only active problem matrix, but lower sections still claim historical families such as `SYS-STRANGLER-RETIREMENT`, Lot publication and old Search owner-decision rows are currently active in MASTER. That contradicts the fresh MASTER with only V12/V07/FINAL-ZERO.
+This pass corrected `WORK_QUEUE.md` so historical Strangler/Lot/Search-owner rows are no longer described as active MASTER work. Optional queue items are explicitly measurement/reverify-only.
 
-This is AuditRepo documentation drift, not a Product defect. It should be cleaned so parallel agents do not reopen completed work from stale prose.
+Because the surgical pass subsequently discovered four more direct current roots, the active-authority snapshot in `WORK_QUEUE.md` must be kept synchronized with the final reconciled MASTER; the MASTER itself remains authoritative if a snapshot ever drifts.
 
-## Surgical disposition
+## 20. Current surgical disposition
 
-### Confirmed direct Product roots
+### Confirmed direct current Product roots — 6
 
-1. `V12-READER-LINEAR-TEXT-POLLUTION` — **OPEN; terminal false-green path proven.**
-2. `V07-ATLAS-FOCUS-STATE` — **OPEN at audited snapshot; proposed final repair not yet materialized in current source.**
+- `V12-READER-LINEAR-TEXT-POLLUTION` — P3;
+- `V07-ATLAS-FOCUS-STATE` — P2;
+- `V13-HERM-CHROME-OWNERSHIP` — P2;
+- `V13-SITE-MENU-NATIVE-FAILSAFE` — P3;
+- `V14-SEARCH-SCOPE-TAB-SEMANTICS` — P3;
+- `V14-SW-TOAST-A11Y` — P3.
 
-### Transaction/system blockers
+### System blocker — 1
 
-- temporary terminal helpers must disappear and normal control-plane checks must pass on final main;
-- #1594, #1584 and #1585 require fresh-main reconciliation after terminal transaction;
-- branch and CI-issue cemetery must reach terminal dispositions;
-- AuditRepo `WORK_QUEUE.md` stale active-work prose must be reconciled with MASTER.
+- `FINAL-ZERO-AUDIT` — blocked until direct repairs, normal CI, PRs, branch cemetery and issue cemetery are terminal.
 
 ### Held outside MASTER pending evidence
 
-- 761/800/820/860 narrow-tablet cross-browser geometry;
+- 761/800/820/860 cross-browser reader geometry;
 - tooltip trigger↔popup AX/AT relation;
 - Search first-result latency;
-- TTS first-audible latency.
+- TTS first-audible latency;
+- current glossary bundle budget after exact-current measurement;
+- exact current dependency advisory/reachability graph.
 
 ## FINAL-ZERO gate
 
 **FAIL / NOT AUTHORIZED.**
 
-Do not reduce MASTER to zero merely because a terminal workflow or commit message says V07/V12 closed. Re-open exact final main and prove Product code, permanent tests, normal CI, open PR count, issue cemetery and branch cemetery from that SHA.
+Do not reduce MASTER to zero merely because a temporary workflow, broad green label or commit message says the final roots are closed. Re-open the exact final main and prove Product code, permanent tests, full route/build surface, normal CI, open PR count, issue cemetery and branch cemetery from the same final SHA.
