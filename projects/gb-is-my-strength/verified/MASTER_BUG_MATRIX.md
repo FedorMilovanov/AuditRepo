@@ -3,6 +3,7 @@
 > **SSOT текущей верифицированной нужной работы `gospod-bog.ru`.** Это рабочая очередь, не архив. Решённое / stale / duplicate / absorbed / invalid / superseded не остаётся активным в MASTER; provenance хранится в `verification/`, GitHub issues/PR и Git history.
 
 Latest current-lane revalidation:
+- [`../verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md`](../verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md)
 - [`../verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md`](../verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md)
 
 Prior Full-Zero control chain:
@@ -16,8 +17,8 @@ Prior Full-Zero control chain:
 
 | Field | Count |
 |---|---:|
-| Active work units | 2 |
-| Direct current defects | 0 |
+| Active work units | 4 |
+| Direct current defects | 2 |
 | Verified necessary improvements | 0 |
 | Narrowed residuals | 0 |
 | System verification lanes | 2 |
@@ -25,6 +26,13 @@ Prior Full-Zero control chain:
 | Closed/stale/duplicate/absorbed rows in MASTER | 0 |
 
 Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. Those completed umbrellas are intentionally absent from active rows below.
+
+## DIRECT CURRENT DEFECTS — 2
+
+| ID | Status | Current evidence | Required terminal outcome |
+|---|---|---|---|
+| `V05-ROD-VIEWPORT` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md` | Repair the genealogy world-coordinate/fit contract so initial load and canonical Fit View expose a meaningful canonical person set on narrow mobile and desktop. Preserve a permanent Chromium + WebKit browser guard that fails when 143 mounted nodes produce an empty useful viewport. |
+| `V05-ROD-SPLIT-A11Y` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md` | Give the full-canvas Matthew/Luke comparison truthful focus/dismissal lifecycle: focus enters the active surface, covered controls are not the next Tab targets, Escape dismisses, and close returns focus to the opener; preserve mobile + desktop Chromium/WebKit keyboard guard. |
 
 ## SYSTEM VERIFICATION LANES — 2
 
