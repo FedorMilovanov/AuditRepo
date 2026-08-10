@@ -30,7 +30,7 @@ Dependabot #1538 is terminal merged-green with residual NONE. The assigned norma
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
-| `BRANCH-CI-CEMETERY` | `ACTIVE / PHYSICAL EXECUTION` | `verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md`; classification inputs: `verification/2026-08-10-full-zero-wave-11R-reader-branch-cemetery/REPORT.md`, `verification/2026-08-10-full-zero-wave-11S-search-home-branch-cemetery/REPORT.md`, `verification/2026-08-10-full-zero-wave-11L-legacy-reference-branch-cemetery/REPORT.md`, `verification/2026-08-10-full-zero-wave-11M-content-misc-branch-cemetery/REPORT.md` | Physically retire only the reviewed SAFE DELETE refs; re-list absence; terminally disposition associated CI-lifecycle identities; preserve and name any intentional KEEP refs. Classification alone is not closure. |
+| `BRANCH-CI-CEMETERY` | `ACTIVE / PHYSICAL EXECUTION` | `verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md` | Physically retire only the reviewed SAFE DELETE refs; re-list absence; terminally disposition associated CI-lifecycle identities; preserve and name any intentional KEEP refs. Classification alone is not closure. |
 | `FINAL-ZERO-AUDIT` | `BLOCKED ON BRANCH-CI-CEMETERY` | `verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md` | After cemetery execution terminates, run one fresh-main census/audit. PASS only with open PR=0, no unexplained live red, no orphan required work, terminal branch/issue dispositions, current main green and MASTER=0. Then STOP. |
 
 ## Execution boundaries
