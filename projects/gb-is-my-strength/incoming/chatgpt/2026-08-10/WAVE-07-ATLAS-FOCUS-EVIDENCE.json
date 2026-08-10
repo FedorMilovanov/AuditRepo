@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "productSha": "29770e1c7a99478ce7dc2a01abec206ac1daa69b",
+  "releaseRun": 31379283849,
+  "releaseArtifact": 9059689652,
+  "surface": "/map/",
+  "browser": "Chromium",
+  "transport": "exact release HTML/CSS/atlas-runtime/compiled relations; CSP and unrelated external resources removed; exact compiled-data request locally fulfilled",
+  "viewports": {
+    "390x844": {
+      "runtimeNodes": 42,
+      "initialViewBox": "0 0 620 1180",
+      "listSwitchVisible": false,
+      "detailCloseAfter": {
+        "activeElement": "#atlasDetailClose",
+        "detailOpen": false,
+        "y": 884,
+        "viewportHeight": 844
+      },
+      "relatedNodeAfter": {
+        "activeElement": "BODY",
+        "detailOpen": true
+      },
+      "themeAfterAutoClose": {
+        "activeElement": "theme button: Джон Гилл",
+        "sidebarOpen": false,
+        "x": -351.14
+      },
+      "filterCloseAfter": {
+        "activeElement": "#atlasFilterClose",
+        "sidebarOpen": false,
+        "x": -37.73
+      }
+    },
+    "680x900": {
+      "runtimeNodes": 42,
+      "initialViewBox": "0 0 620 1180",
+      "listSwitchVisible": false,
+      "relatedNodeAfter": "BODY",
+      "detailCloseAfter": "#atlasDetailClose remains focused below viewport",
+      "themeAfterAutoClose": "theme button remains focused in offscreen sidebar"
+    },
+    "681x900": {
+      "runtimeNodes": 42,
+      "initialViewBox": "0 0 1600 1000",
+      "listSwitchVisible": false,
+      "relatedNodeAfter": "BODY",
+      "detailCloseAfter": "#atlasDetailClose remains focused below viewport",
+      "themeAfterAutoClose": "theme button remains focused in offscreen sidebar"
+    },
+    "1440x1000": {
+      "runtimeNodes": 42,
+      "initialViewBox": "0 0 1600 1000",
+      "listSwitchVisible": true,
+      "detailCloseAfter": {
+        "activeElement": "#atlasDetailClose",
+        "detailOpen": false
+      },
+      "relatedNodeAfter": {
+        "activeElement": "BODY",
+        "detailOpen": true
+      },
+      "listToGraphAfter": {
+        "activeElement": "BODY",
+        "graphVisible": true,
+        "listHidden": true,
+        "detailOpen": true
+      }
+    }
+  },
+  "initialMobileTabSequence": [
+    {"tab": 5, "control": "#atlasFilterClose", "x": -80.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 6, "control": "Все материалы", "x": -355.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 7, "control": "Джон Гилл", "x": -355.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 8, "control": "Нагорная проповедь", "x": -355.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 9, "control": "Биографии служителей", "x": -355.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 10, "control": "Баптисты России", "x": -355.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 11, "control": "Трудные тексты", "x": -355.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 12, "control": "Библейские карты", "x": -355.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 13, "control": "Практическое служение", "x": -355.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 14, "control": "Отдельные исследования", "x": -355.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 15, "control": "relation checkbox 1", "x": -347.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 16, "control": "relation checkbox 2", "x": -347.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 17, "control": "relation checkbox 3", "x": -347.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 18, "control": "relation checkbox 4", "x": -347.55, "closedSidebar": true, "semanticallyHidden": false},
+    {"tab": 24, "control": "#atlasDetailClose", "y": 884, "viewportHeight": 844, "closedDetail": true, "semanticallyHidden": false}
+  ],
+  "negativeControls": {
+    "nodeArrowNavigation": "PASS",
+    "nodeEnterOpen": "PASS",
+    "nodeEscapeCloseAndKeepNodeFocus": "PASS",
+    "searchAriaActiveDescendant": "PASS"
+  },
+  "ciBlindSpot": "atlas-browser-contract and atlas-state-browser-contract validate geometry/data/state via click/tap but do not assert activeElement, offscreen closed-control tab order, focus restore after subtree replacement, or inertness of closed mobile drawers/sheets"
+}
