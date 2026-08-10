@@ -99,5 +99,3 @@ Byte identity, source visibility or public-domain age не превращают�
 **No autonomous Hall Product transaction is selected now.**
 
 Не создавать повторные schema/workflow/recheck PR только ради ощущения движения. Не продвигать documentary rights, offline visual approval, WebGL или scale-out без нового authority/evidence.
-
-Separate non-Hall Product findings remain separate. In particular Product #405 is a bounded README/CI documentation-consistency correction and does not reopen a Hall architecture lane or become an AuditRepo engineering row merely by existing.
