@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "kind": "chatgpt-exact-release-browser-evidence",
+  "productSha": "29770e1c7a99478ce7dc2a01abec206ac1daa69b",
+  "deployRunId": 31379283849,
+  "releaseCandidateArtifact": {
+    "id": 9059689652,
+    "name": "pages-release-candidate-31379283849-1",
+    "candidateBytes": 86924625,
+    "files": 1178
+  },
+  "browser": "Chromium",
+  "transportBoundary": "exact built candidate modules/styles/fonts embedded into audit-only document because direct DNS/loopback/file origins are blocked; Product logic unchanged",
+  "genealogyNodesMounted": 143,
+  "initialViewport": [
+    {
+      "viewport": [390, 844],
+      "initialVisiblePersonNodes": 0,
+      "after2300msVisiblePersonNodes": 0,
+      "initialTransform": "translate(-1234.25px, -3462.1px) scale(0.55)",
+      "afterFitVisiblePersonNodes": 0,
+      "afterFitTransform": "translate(-1105px, -3109px) scale(0.5)",
+      "afterEightZoomOutVisiblePersonNodes": 0,
+      "afterSearchAdamVisiblePersonNodes": 4,
+      "afterSearchAdamIds": ["adam", "eve", "cain", "abel"]
+    },
+    {
+      "viewport": [1440, 1000],
+      "initialVisiblePersonNodes": 0,
+      "after2300msVisiblePersonNodes": 0,
+      "initialTransform": "translate(-709.25px, -3384.1px) scale(0.55)",
+      "afterFitVisiblePersonNodes": 0,
+      "afterFitTransform": "translate(-580px, -3031px) scale(0.5)",
+      "afterEightZoomOutVisiblePersonNodes": 0,
+      "afterSearchAdamVisiblePersonNodes": 10
+    }
+  ],
+  "splitView": {
+    "testedWidths": [320, 390, 768, 1024, 1440],
+    "focusAfterOpen": "underlying opener remains focused",
+    "focusAfterTab": "underlying tour button",
+    "existsAfterEscape": true,
+    "focusAfterExplicitClose": "BODY",
+    "focusableInsideOverlay": ["close comparison"],
+    "underlyingFocusableControlsRemainReachable": true
+  },
+  "naturalMaxScrollGeometry": [
+    {
+      "viewport": [390, 844],
+      "settledFromMs": 800,
+      "scrollY": 1060,
+      "scrollMax": 1060,
+      "host": {"y": 126.9, "height": 717.4, "bottom": 844.3},
+      "reactFlow": {"y": 127.9, "height": 844, "bottom": 971.9},
+      "controls": {"y": 836.9, "height": 120, "bottom": 956.9},
+      "minimap": {"y": 804.9, "height": 152, "bottom": 956.9},
+      "tts": {"y": 774, "height": 54, "bottom": 828}
+    },
+    {
+      "viewport": [1440, 1000],
+      "settledFromMs": 800,
+      "scrollY": 877,
+      "scrollMax": 877,
+      "host": {"y": 150.3, "height": 850, "bottom": 1000.3},
+      "reactFlow": {"y": 151.3, "height": 1000, "bottom": 1151.3},
+      "controls": {"y": 1016.3, "height": 120, "bottom": 1136.3},
+      "minimap": {"y": 984.3, "height": 152, "bottom": 1136.3},
+      "tts": {"y": 922, "height": 54, "bottom": 976}
+    }
+  ],
+  "reducedMotion": {
+    "mediaMatches": true,
+    "maxComputedAnimationDurationSeconds": 0,
+    "maxComputedTransitionDurationSeconds": 0,
+    "splitViewAnimationDuration": "0s",
+    "disposition": "NO CURRENT DEFECT"
+  },
+  "routeAssetRawBytes": {
+    "/rodosloviye/index.html": 132673,
+    "/_astro/GenealogyTree.DicL-p-O.js": 255804,
+    "/_astro/client.DKjIxE1U.js": 180571,
+    "/_astro/GenealogyTree.DZ0Ws1xk.css": 15288
+  },
+  "limitations": [
+    "direct production-origin navigation blocked in audit container",
+    "WebKit executable not installed in current local Playwright cache",
+    "local hydration timing is not treated as Web Vitals evidence"
+  ]
+}
