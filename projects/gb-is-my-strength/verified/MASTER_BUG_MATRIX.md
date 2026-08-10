@@ -3,6 +3,7 @@
 > **SSOT текущей верифицированной нужной работы `gospod-bog.ru`.** Это рабочая очередь, не архив. Решённое / stale / duplicate / absorbed / invalid / superseded не остаётся активным в MASTER; provenance хранится в `verification/`, GitHub issues/PR и Git history.
 
 Latest current-lane revalidation:
+- [`../verification/2026-08-10-wave-07-atlas-focus-state/REPORT.md`](../verification/2026-08-10-wave-07-atlas-focus-state/REPORT.md)
 - [`../verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md`](../verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md)
 - [`../verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md`](../verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md)
 
@@ -17,8 +18,8 @@ Prior Full-Zero control chain:
 
 | Field | Count |
 |---|---:|
-| Active work units | 4 |
-| Direct current defects | 2 |
+| Active work units | 5 |
+| Direct current defects | 3 |
 | Verified necessary improvements | 0 |
 | Narrowed residuals | 0 |
 | System verification lanes | 2 |
@@ -27,10 +28,11 @@ Prior Full-Zero control chain:
 
 Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. Those completed umbrellas are intentionally absent from active rows below.
 
-## DIRECT CURRENT DEFECTS — 2
+## DIRECT CURRENT DEFECTS — 3
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
+| `V07-ATLAS-FOCUS-STATE` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-07-atlas-focus-state/REPORT.md` | Repair Atlas focus-state ownership so closed off-canvas drawer/detail controls are not sequentially focusable and every transition that hides/replaces the active element has a deterministic surviving focus destination. Cover drawer close/group selection, detail close/related-node replacement, List→Graph, Escape/history/resize at 390/680/681/1440 with activeElement + hidden/offscreen-region assertions; include WebKit in permanent CI. |
 | `V05-ROD-VIEWPORT` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md` | Repair the genealogy world-coordinate/fit contract so initial load and canonical Fit View expose a meaningful canonical person set on narrow mobile and desktop. Preserve a permanent Chromium + WebKit browser guard that fails when 143 mounted nodes produce an empty useful viewport. |
 | `V05-ROD-SPLIT-A11Y` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md` | Give the full-canvas Matthew/Luke comparison truthful focus/dismissal lifecycle: focus enters the active surface, covered controls are not the next Tab targets, Escape dismisses, and close returns focus to the opener; preserve mobile + desktop Chromium/WebKit keyboard guard. |
 
