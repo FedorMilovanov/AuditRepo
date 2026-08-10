@@ -3,6 +3,7 @@
 > **SSOT текущей верифицированной нужной работы `gospod-bog.ru`.** Это рабочая очередь, не архив. Решённое / stale / duplicate / absorbed / invalid / superseded не остаётся активным в MASTER; provenance хранится в `verification/`, GitHub issues/PR и Git history.
 
 Latest current-lane revalidation:
+- [`../verification/2026-08-10-wave-12-reader-linear-text-current/REPORT.md`](../verification/2026-08-10-wave-12-reader-linear-text-current/REPORT.md)
 - [`../verification/2026-08-10-wave-12-search-bootstrap-current/REPORT.md`](../verification/2026-08-10-wave-12-search-bootstrap-current/REPORT.md)
 - [`../verification/2026-08-10-wave-09-krajne-schema-image-current/REPORT.md`](../verification/2026-08-10-wave-09-krajne-schema-image-current/REPORT.md)
 - [`../verification/2026-08-10-wave-11-hardtexts-start-book-current/REPORT.md`](../verification/2026-08-10-wave-11-hardtexts-start-book-current/REPORT.md)
@@ -26,8 +27,8 @@ Prior Full-Zero control chain:
 
 | Field | Count |
 |---|---:|
-| Active work units | 13 |
-| Direct current defects | 11 |
+| Active work units | 14 |
+| Direct current defects | 12 |
 | Verified necessary improvements | 0 |
 | Narrowed residuals | 0 |
 | System verification lanes | 2 |
@@ -36,10 +37,11 @@ Prior Full-Zero control chain:
 
 Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. Those completed umbrellas are intentionally absent from active rows below.
 
-## DIRECT CURRENT DEFECTS — 11
+## DIRECT CURRENT DEFECTS — 12
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
+| `V12-READER-LINEAR-TEXT-POLLUTION` | `CONFIRMED-CURRENT / P3` | `verification/2026-08-10-wave-12-reader-linear-text-current/REPORT.md` | Preserve rich reader metadata/tooltips while separating auxiliary strings from primary article text projection: no raw local-image/Pagefind metadata prefix, no glossary/footnote/scripture popup text collapsing directly into surrounding prose, and permanent built-output text-projection witnesses across Krajne, Hermenevtika and another independent reader owner without regressing tooltip/citation/accessibility behavior. |
 | `V12-SEARCH-COLD-BOOTSTRAP` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-12-search-bootstrap-current/REPORT.md` | Establish one deterministic search-entry owner so cold `/articles/`, `/biografii/` and `/pastor-series/` expose the appropriate visible/focusable search affordance and `Ctrl/⌘+K` opens the command palette before any prior search click; give Pastor Series a truthful mobile search entry; preserve full-runtime search/focus behavior and add permanent Chromium + WebKit cold-bootstrap guards without stacking competing owners. |
 | `V09-KRAJNE-SCHEMA-IMAGE-DIMENSIONS` | `CONFIRMED-CURRENT / P3` | `verification/2026-08-10-wave-09-krajne-schema-image-current/REPORT.md` | Correct Krajne Article JSON-LD so the declared dimensions for `og-krajne-isporcheno.webp` match the current 1200×630 published binary/OG projection, and add a schema/media contract that validates local ImageObject dimensions against actual image headers or one canonical media authority rather than another hardcoded size table. |
 | `V11-HARDTEXTS-START-BOOK` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-11-hardtexts-start-book-current/REPORT.md` | Align the HardTexts book-start affordance with the canonical first published series item: if it remains labelled `Начать книгу` / `Начать чтение книги`, start at the current `n=0` Prologue; if editorial intent is deliberately Chapter I, label the action truthfully. Derive/compare CTA target and label from current series authority so book-entry semantics cannot silently drift. |
