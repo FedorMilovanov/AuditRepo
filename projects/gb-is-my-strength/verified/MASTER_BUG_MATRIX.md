@@ -3,6 +3,7 @@
 > **SSOT текущей верифицированной нужной работы `gospod-bog.ru`.** Это рабочая очередь, не архив. Решённое / stale / duplicate / absorbed / invalid / superseded не остаётся активным в MASTER; provenance хранится в `verification/`, GitHub issues/PR и Git history.
 
 Latest current-lane revalidation:
+- [`../verification/2026-08-10-wave-15-konfessii-reduced-motion-terminal/REPORT.md`](../verification/2026-08-10-wave-15-konfessii-reduced-motion-terminal/REPORT.md)
 - [`../verification/2026-08-10-terminal-rodosloviye-two-root-repair/REPORT.md`](../verification/2026-08-10-terminal-rodosloviye-two-root-repair/REPORT.md)
 - [`../verification/2026-08-10-wave-13-branch-ci-cemetery-terminal/REPORT.md`](../verification/2026-08-10-wave-13-branch-ci-cemetery-terminal/REPORT.md)
 - [`../verification/2026-08-10-wave-12-reader-linear-text-current/REPORT.md`](../verification/2026-08-10-wave-12-reader-linear-text-current/REPORT.md)
@@ -29,17 +30,17 @@ Prior Full-Zero control chain:
 
 | Field | Count |
 |---|---:|
-| Active work units | 11 |
-| Direct current defects | 10 |
+| Active work units | 10 |
+| Direct current defects | 9 |
 | Verified necessary improvements | 0 |
 | Narrowed residuals | 0 |
 | System verification lanes | 1 |
 | Owner decisions | 0 |
 | Closed/stale/duplicate/absorbed rows in MASTER | 0 |
 
-Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. The reviewed 98-ref historical branch cemetery is now physically absent from the live remote with no surviving retired-identity lifecycle issues; that completed system lane is intentionally absent from active rows below.
+Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. The reviewed 98-ref historical branch cemetery is now physically absent from the live remote with no surviving retired-identity lifecycle issues; that completed system lane is intentionally absent from active rows below. `V09-KONFESSII-AUTOMOTION` is terminal merged-green through Product PR #1552 and is intentionally absent from active rows.
 
-## DIRECT CURRENT DEFECTS — 10
+## DIRECT CURRENT DEFECTS — 9
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
@@ -50,7 +51,6 @@ Dependabot #1538 is terminal merged-green with residual NONE. The assigned norma
 | `V11-PAGEFIND-LANDING-BODY` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-11-pagefind-landing-current-index/REPORT.md` | Expand the landing Pagefind-body contract so substantive visible main/card content on Hard Texts, Pastor Series and Biografii is searchable as part of the organizing landing without pulling in unrelated global chrome. Preserve exact hero/title positives and add built-index guards where representative current card terms return both the child article and the organizing landing. |
 | `V11-LEGACY-MOBILE-NAV-STATE` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-11-legacy-mobile-nav-current-runtime/REPORT.md` | Converge the shared legacy `.h-mobile-nav` owner so its open state remains recognized by the global overlay/scroll-lock authority for its full lifetime, close/Escape restores opener focus when the menu owned focus, and mobile primary navigation has a truthful no-JS fallback. Preserve current-release browser guards on Hard Texts, Pastor Series and Biografii for >3.2s lock retention, focus restoration where applicable and JavaScript-disabled navigation availability. |
 | `V10-READER-SPEEDRAIL-SSR-FOCUS` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-10-reader-speedrail-ssr-focus/REPORT.md` | Repair the shared ReaderChrome server/pre-hydration speed-rail state so an `aria-hidden` rail never exposes its six speed buttons to sequential focus before runtime activation. Preserve the current hydrated roving-radio behavior, add no-JS/pre-hydration 390px browser witnesses across representative Articles/Hard Texts/Baptists routes, and add a full-family built-output contract preventing hidden speed controls from regressing. |
-| `V09-KONFESSII-AUTOMOTION` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-09-konfessii-reduced-motion/REPORT.md` | Establish one Konfessii motion policy so non-essential automatic live-card shimmer/pulse and the JS shimmer timer are suppressed under `prefers-reduced-motion: reduce` or otherwise satisfy an equivalent user-control contract. Preserve browser coverage that compares computed/timed behavior under reduced and normal motion preferences. |
 | `V08-MAPENGINE-INTRO-FOCUS` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-08-mapengine-intro-focus/REPORT.md` | Repair shared MapEngine Intro focus ownership so controls covered by the Intro are not sequentially focusable, focus enters the visible Intro/primary action deterministically, and dismissal lands on a meaningful surviving map owner instead of `BODY`. Preserve narrow-mobile + desktop Chromium/WebKit regression coverage for initial Tab order and dismissal focus. |
 | `V07-ATLAS-FOCUS-STATE` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-07-atlas-focus-state/REPORT.md` | Repair Atlas focus-state ownership so closed off-canvas drawer/detail controls are not sequentially focusable and every transition that hides/replaces the active element has a deterministic surviving focus destination. Cover drawer close/group selection, detail close/related-node replacement, List→Graph, Escape/history/resize at 390/680/681/1440 with activeElement + hidden/offscreen-region assertions; include WebKit in permanent CI. |
 
