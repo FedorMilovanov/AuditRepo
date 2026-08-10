@@ -38,8 +38,20 @@ Before starting any lane, inspect current Product `main`, open PRs/branches and 
 ### Tooltip trigger↔popup accessibility-tree relation
 
 - Current canonical article-tooltip owner still uses focusability/`role=button`/`aria-expanded` and reparents open popup content into a floating owner.
-- The same canonical owner does not currently establish `aria-describedby`; glossary has had legacy relation behavior elsewhere, so footnote/scripture parity remains uncertain.
-- Obtain a real Chromium accessibility-tree and, where practical, NVDA/VoiceOver-equivalent witness before promotion. Source shape alone is not enough to claim an AT defect.
+- The same canonical owner does not currently establish `aria-describedby`; glossary has legacy relationship behavior elsewhere, so footnote/scripture parity remains uncertain.
+- Obtain a real Chromium accessibility-tree and, where practical, NVDA/VoiceOver-equivalent witness before promotion. Source shape alone is not enough to claim an AT failure.
+
+### Glossary JS bundle ratchet reverify
+
+- Exact #1584 Route Registry Validators head `9a8d71a5cbd546b8880072132f1d869d0ae2cf55` passed the route/sitemap/RSS/SEO/security surface and failed only because `js/glossary.js` measured 12,457 bytes against the audit's 12,000-byte hard cap.
+- `js/glossary.js` changed again between that head and later current main, so the old number is not current authority.
+- Re-run the same size audit on settled current main before promotion. Treat this as quality/performance ratchet work unless a reader-visible latency/download regression is measured.
+
+### Dependency advisory/reachability reverify
+
+- A stale-base CI install emitted an advisory summary, but the surgical pass did not establish exact current advisory IDs, dependency paths or production reachability.
+- Obtain a current dependency graph/advisory report and classify dev-only/build-only/runtime reachability before any security defect is opened.
+- Do not convert an advisory count into an exploitability claim.
 
 ### Owner-approved Product golden roadmap — moved from Product #298
 
@@ -102,7 +114,7 @@ Before starting any lane, inspect current Product `main`, open PRs/branches and 
 
 ### Bible corpus acquisition/import proof
 
-- Historical owner-decision provenance included `SEARCH-P2-07`; it is **not a current MASTER row** as of the 2026-08-11 surgical reconciliation.
+- Historical owner-decision provenance included `SEARCH-P2-07`; it is not a current MASTER row.
 - Binding Research decision is `d52ea9d54dd2c2488223d25f5f6cefd263c23328` unless explicitly superseded by newer rights authority.
 - Closed-unmerged Product #1389 remains a rights-blocked attempt, not approved corpus evidence.
 - CrossWire `RusSynodal` 1.9.1 remains candidate-only pending exact archive SHA-256, licence/source/book manifest, 66-book mapping and verse-level import receipt.
@@ -110,13 +122,19 @@ Before starting any lane, inspect current Product `main`, open PRs/branches and 
 
 ## Active work that must **not** be duplicated here
 
-The current active authority lives only in `verified/MASTER_BUG_MATRIX.md`. At the 2026-08-11 reconciliation snapshot it contains:
+The current active authority lives only in `verified/MASTER_BUG_MATRIX.md`. At the end of the 2026-08-11 surgical reconciliation the active rows are:
 
 - `V12-READER-LINEAR-TEXT-POLLUTION`;
 - `V07-ATLAS-FOCUS-STATE`;
+- `V13-HERM-CHROME-OWNERSHIP`;
+- `V13-SITE-MENU-NATIVE-FAILSAFE`;
+- `V14-SEARCH-SCOPE-TAB-SEMANTICS`;
+- `V14-SW-TOAST-A11Y`;
 - `FINAL-ZERO-AUDIT`.
 
-Do not reopen historical Strangler, Lot, Source Authority, Avraam, Home Search, MapScale, genealogy, mobile-nav, speed-rail or other completed families from older prose. If MASTER changes later, read the fresh file rather than copying this snapshot forward.
+This list is only a convenience snapshot. **Always read the fresh MASTER before starting work**; if it differs, MASTER wins.
+
+Do not reopen historical Strangler, Lot, Source Authority, Avraam, Home Search, MapScale, genealogy, legacy mobile-nav, speed-rail or other completed families from older prose without fresh current-main evidence.
 
 ## Parked non-defect improvement families
 
