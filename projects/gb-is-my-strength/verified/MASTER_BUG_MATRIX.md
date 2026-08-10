@@ -3,6 +3,7 @@
 > **SSOT текущей верифицированной нужной работы `gospod-bog.ru`.** Это рабочая очередь, не архив. Решённое / stale / duplicate / absorbed / invalid / superseded не остаётся активным в MASTER; provenance хранится в `verification/`, GitHub issues/PR и Git history.
 
 Latest current-lane revalidation:
+- [`../verification/2026-08-10-wave-13-branch-ci-cemetery-terminal/REPORT.md`](../verification/2026-08-10-wave-13-branch-ci-cemetery-terminal/REPORT.md)
 - [`../verification/2026-08-10-wave-12-reader-linear-text-current/REPORT.md`](../verification/2026-08-10-wave-12-reader-linear-text-current/REPORT.md)
 - [`../verification/2026-08-10-wave-12-search-bootstrap-current/REPORT.md`](../verification/2026-08-10-wave-12-search-bootstrap-current/REPORT.md)
 - [`../verification/2026-08-10-wave-09-krajne-schema-image-current/REPORT.md`](../verification/2026-08-10-wave-09-krajne-schema-image-current/REPORT.md)
@@ -27,15 +28,15 @@ Prior Full-Zero control chain:
 
 | Field | Count |
 |---|---:|
-| Active work units | 14 |
+| Active work units | 13 |
 | Direct current defects | 12 |
 | Verified necessary improvements | 0 |
 | Narrowed residuals | 0 |
-| System verification lanes | 2 |
+| System verification lanes | 1 |
 | Owner decisions | 0 |
 | Closed/stale/duplicate/absorbed rows in MASTER | 0 |
 
-Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. Those completed umbrellas are intentionally absent from active rows below.
+Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. The reviewed 98-ref historical branch cemetery is now physically absent from the live remote with no surviving retired-identity lifecycle issues; that completed system lane is intentionally absent from active rows below.
 
 ## DIRECT CURRENT DEFECTS — 12
 
@@ -51,15 +52,14 @@ Dependabot #1538 is terminal merged-green with residual NONE. The assigned norma
 | `V09-KONFESSII-AUTOMOTION` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-09-konfessii-reduced-motion/REPORT.md` | Establish one Konfessii motion policy so non-essential automatic live-card shimmer/pulse and the JS shimmer timer are suppressed under `prefers-reduced-motion: reduce` or otherwise satisfy an equivalent user-control contract. Preserve browser coverage that compares computed/timed behavior under reduced and normal motion preferences. |
 | `V08-MAPENGINE-INTRO-FOCUS` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-08-mapengine-intro-focus/REPORT.md` | Repair shared MapEngine Intro focus ownership so controls covered by the Intro are not sequentially focusable, focus enters the visible Intro/primary action deterministically, and dismissal lands on a meaningful surviving map owner instead of `BODY`. Preserve narrow-mobile + desktop Chromium/WebKit regression coverage for initial Tab order and dismissal focus. |
 | `V07-ATLAS-FOCUS-STATE` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-07-atlas-focus-state/REPORT.md` | Repair Atlas focus-state ownership so closed off-canvas drawer/detail controls are not sequentially focusable and every transition that hides/replaces the active element has a deterministic surviving focus destination. Cover drawer close/group selection, detail close/related-node replacement, List→Graph, Escape/history/resize at 390/680/681/1440 with activeElement + hidden/offscreen-region assertions; include WebKit in permanent CI. |
-| `V05-ROD-VIEWPORT` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md` | Repair the genealogy world-coordinate/fit contract so initial load and canonical Fit View expose a meaningful canonical person set on narrow mobile and desktop. Preserve a permanent Chromium + WebKit browser guard that fails when 143 mounted nodes produce an empty useful viewport. |
+| `V05-ROD-VIEWPORT` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md` | Repair the genealogy world-coordinate/fit contract so initial load and canonical Fit View expose a meaningful canonical person set on narrow mobile and desktop. Preserve a permanent Chromium + WebKit browser guard that derives mounted person count from the canonical genealogy dataset and fails when the mounted graph produces an empty useful viewport. |
 | `V05-ROD-SPLIT-A11Y` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md` | Give the full-canvas Matthew/Luke comparison truthful focus/dismissal lifecycle: focus enters the active surface, covered controls are not the next Tab targets, Escape dismisses, and close returns focus to the opener; preserve mobile + desktop Chromium/WebKit keyboard guard. |
 
-## SYSTEM VERIFICATION LANES — 2
+## SYSTEM VERIFICATION LANES — 1
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
-| `BRANCH-CI-CEMETERY` | `ACTIVE / PHYSICAL EXECUTION` | `verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md` | Physically retire only the reviewed SAFE DELETE refs; re-list absence; terminally disposition associated CI-lifecycle identities; preserve and name any intentional KEEP refs. Classification alone is not closure. |
-| `FINAL-ZERO-AUDIT` | `BLOCKED ON BRANCH-CI-CEMETERY` | `verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md` | After cemetery execution terminates, run one fresh-main census/audit. PASS only with open PR=0, no unexplained live red, no orphan required work, terminal branch/issue dispositions, current main green and MASTER=0. Then STOP. |
+| `FINAL-ZERO-AUDIT` | `BLOCKED ON CURRENT PRODUCT WORK` | `verification/2026-08-10-wave-13-branch-ci-cemetery-terminal/REPORT.md` | After all direct current defects and active Product PRs reach terminal disposition, run one fresh-main census/audit. PASS only with open PR=0, no unexplained live red, no orphan required work, terminal branch/issue dispositions, current main green and MASTER=0. Then STOP. |
 
 ## Execution boundaries
 
