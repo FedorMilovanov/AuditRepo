@@ -18,10 +18,10 @@ Previous Full-Zero chain:
 | Post-history-rewrite anchor | `b8c92eda3af96158dbee4ba53803e90c30cce31c` |
 | Semantic commits after rewrite anchor | **2** — SYSTEM C + SYSTEM D only |
 | Open Product PRs | **1** — Dependabot `#1538`, currently RED |
-| Remote heads | **99 total** |
+| Remote heads | **100 total** |
 | Canonical main heads | **1** |
 | Current dependency-candidate heads | **1** |
-| Other historical/non-main heads | **97** |
+| Other historical/non-main heads | **98** |
 | `transport/*` | **0** |
 | history-image diagnostic branch | **0** |
 | Proven current Product regressions on `main` | **0** |
@@ -48,7 +48,7 @@ Closed/currently verified roots include:
 | ID | Status | Required terminal outcome |
 |---|---|---|
 | `DEP-1538-DISPOSITION` | `ACTIVE / RED CANDIDATE` | Open Dependabot #1538 (`@dagrejs/dagre 3.0.0→3.1.0`, `astro 7.1.6→7.2.0`) must end as exact-head GREEN+MERGED or explicitly CLOSED-NOT-MERGED. Current exact head has failing Route Registry, Deploy Candidate, Native Source and Runtime Interactive. Never merge red merely for zero. |
-| `BRANCH-CI-CEMETERY` | `ACTIVE / FORENSIC` | Classify the 97 historical non-main refs by bounded families; delete only with successor/tree/unique-tail proof. Close automated CI-failure issues for identities proven retired/deleted without falsely claiming CI recovery. |
+| `BRANCH-CI-CEMETERY` | `ACTIVE / FORENSIC` | Classify the 98 historical non-main refs by bounded families; delete only with successor/tree/unique-tail proof. Close automated CI-failure issues for identities proven retired/deleted without falsely claiming CI recovery. |
 | `NON-CI-ISSUE-ZEROING` | `ACTIVE / VERIFY` | Terminally disposition `#54`, `#1244`, `#1242`, `#1243`, `#298`, `#1360`. Repair only a freshly proven current defect. Preserve future work in AuditRepo queue/roadmap before closing GitHub backlog items if strict open-issue zero is desired. |
 | `FINAL-ZERO-AUDIT` | `BLOCKED ON ABOVE 3` | After dependency + branch/CI + non-CI issue lanes terminate, run one sole fresh-main census/audit. PASS only with open PR=0, no unexplained live red, no orphan required work, terminal branch dispositions, terminal issue dispositions, current main green, MASTER=0. Then STOP. |
 
@@ -81,16 +81,18 @@ These failures describe the dependency candidate, **not current main**.
 
 ## BRANCH / CI CEMETERY
 
-Fresh branch census = **99 remote heads**:
+Fresh branch census after Dependabot creation = **100 remote heads**:
 
 - `main`;
 - Dependabot #1538 head;
-- 97 historical/non-main refs.
+- 98 historical/non-main refs.
 
 Confirmed absent after cleanup/history rewrite:
 
 - all `transport/*` refs;
 - `audit/history-image-bloat-20260810`.
+
+The history-cleanup owner observed 99 heads at closure; the later Dependabot branch accounts for the current +1.
 
 Many surviving historical refs emitted fresh Shared Files failures when refs were rewritten/pushed during cleanup. Their CI issues are lifecycle evidence for those identities, not automatically Product bugs.
 
