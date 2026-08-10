@@ -3,6 +3,7 @@
 > **SSOT текущей верифицированной нужной работы `gospod-bog.ru`.** Это рабочая очередь, не архив. Решённое / stale / duplicate / absorbed / invalid / superseded не остаётся активным в MASTER; provenance хранится в `verification/`, GitHub issues/PR и Git history.
 
 Latest current-lane revalidation:
+- [`../verification/2026-08-10-wave-11-pagefind-landing-current-index/REPORT.md`](../verification/2026-08-10-wave-11-pagefind-landing-current-index/REPORT.md)
 - [`../verification/2026-08-10-wave-11-legacy-mobile-nav-current-runtime/REPORT.md`](../verification/2026-08-10-wave-11-legacy-mobile-nav-current-runtime/REPORT.md)
 - [`../verification/2026-08-10-wave-10-reader-speedrail-ssr-focus/REPORT.md`](../verification/2026-08-10-wave-10-reader-speedrail-ssr-focus/REPORT.md)
 - [`../verification/2026-08-10-wave-09-konfessii-reduced-motion/REPORT.md`](../verification/2026-08-10-wave-09-konfessii-reduced-motion/REPORT.md)
@@ -22,8 +23,8 @@ Prior Full-Zero control chain:
 
 | Field | Count |
 |---|---:|
-| Active work units | 9 |
-| Direct current defects | 7 |
+| Active work units | 10 |
+| Direct current defects | 8 |
 | Verified necessary improvements | 0 |
 | Narrowed residuals | 0 |
 | System verification lanes | 2 |
@@ -32,10 +33,11 @@ Prior Full-Zero control chain:
 
 Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. Those completed umbrellas are intentionally absent from active rows below.
 
-## DIRECT CURRENT DEFECTS — 7
+## DIRECT CURRENT DEFECTS — 8
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
+| `V11-PAGEFIND-LANDING-BODY` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-11-pagefind-landing-current-index/REPORT.md` | Expand the landing Pagefind-body contract so substantive visible main/card content on Hard Texts, Pastor Series and Biografii is searchable as part of the organizing landing without pulling in unrelated global chrome. Preserve exact hero/title positives and add built-index guards where representative current card terms return both the child article and the organizing landing. |
 | `V11-LEGACY-MOBILE-NAV-STATE` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-11-legacy-mobile-nav-current-runtime/REPORT.md` | Converge the shared legacy `.h-mobile-nav` owner so its open state remains recognized by the global overlay/scroll-lock authority for its full lifetime, close/Escape restores opener focus when the menu owned focus, and mobile primary navigation has a truthful no-JS fallback. Preserve current-release browser guards on Hard Texts, Pastor Series and Biografii for >3.2s lock retention, focus restoration where applicable and JavaScript-disabled navigation availability. |
 | `V10-READER-SPEEDRAIL-SSR-FOCUS` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-10-reader-speedrail-ssr-focus/REPORT.md` | Repair the shared ReaderChrome server/pre-hydration speed-rail state so an `aria-hidden` rail never exposes its six speed buttons to sequential focus before runtime activation. Preserve the current hydrated roving-radio behavior, add no-JS/pre-hydration 390px browser witnesses across representative Articles/Hard Texts/Baptists routes, and add a full-family built-output contract preventing hidden speed controls from regressing. |
 | `V09-KONFESSII-AUTOMOTION` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-09-konfessii-reduced-motion/REPORT.md` | Establish one Konfessii motion policy so non-essential automatic live-card shimmer/pulse and the JS shimmer timer are suppressed under `prefers-reduced-motion: reduce` or otherwise satisfy an equivalent user-control contract. Preserve browser coverage that compares computed/timed behavior under reduced and normal motion preferences. |
