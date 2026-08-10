@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "productSha": "29770e1c7a99478ce7dc2a01abec206ac1daa69b",
+  "releaseRun": 31379283849,
+  "releaseArtifact": 9059689652,
+  "sharedOwner": "src/components/article-pilots/gill-series/GillSeriesMobileBar.astro",
+  "affectedExactReleaseRoutes": 48,
+  "rail": {
+    "selector": ".mobile-speedrail[aria-hidden=\"true\"]",
+    "buttonCountPerRoute": 6,
+    "serverButtonTabindex": [null, null, null, null, null, null],
+    "labels": ["0.8×", "1×", "1.25×", "1.5×", "1.75×", "2×"]
+  },
+  "noJsSequentialWitnesses": {
+    "/articles/krajne-li-isporcheno-serdce/": ["0.8× hidden", "1× hidden", "1.25× hidden", "1.5× hidden", "1.75× hidden", "2× hidden", "visible Play"],
+    "/baptisty-rossii/noch-na-kure/": ["0.8× hidden", "1× hidden", "1.25× hidden", "1.5× hidden", "1.75× hidden", "2× hidden", "visible Play"],
+    "/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/": ["0.8× hidden", "1× hidden", "1.25× hidden", "1.5× hidden", "1.75× hidden", "2× hidden", "visible Play"]
+  },
+  "hydratedNegativeControl": {
+    "rovingTabindex": true,
+    "arrowKeys": true,
+    "homeEnd": true,
+    "enterSpace": true,
+    "ariaCheckedSync": true
+  },
+  "ciBlindSpot": "gill-v16-mobile-play-smoke clicks hydrated speed buttons directly and does not inspect server tabindex / no-JS sequential focus / aria-hidden descendants"
+}
