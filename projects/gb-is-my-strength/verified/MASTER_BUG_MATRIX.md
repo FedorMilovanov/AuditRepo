@@ -6,6 +6,7 @@ Latest current-lane revalidation:
 - [`../verification/2026-08-11-total-surgical-audit-current/REPORT.md`](../verification/2026-08-11-total-surgical-audit-current/REPORT.md)
 - [`../verification/2026-08-11-hermenevtika-mobile-chrome-current/REPORT.md`](../verification/2026-08-11-hermenevtika-mobile-chrome-current/REPORT.md)
 - [`../verification/2026-08-11-site-menu-native-failsafe-current/REPORT.md`](../verification/2026-08-11-site-menu-native-failsafe-current/REPORT.md)
+- [`../verification/2026-08-11-search-scope-tab-semantics-current/REPORT.md`](../verification/2026-08-11-search-scope-tab-semantics-current/REPORT.md)
 - [`../verification/2026-08-10-terminal-site-sections-menu-system-repair/REPORT.md`](../verification/2026-08-10-terminal-site-sections-menu-system-repair/REPORT.md)
 - [`../verification/2026-08-10-terminal-mapengine-intro-focus-repair/REPORT.md`](../verification/2026-08-10-terminal-mapengine-intro-focus-repair/REPORT.md)
 - [`../verification/2026-08-10-terminal-krajne-schema-image-dimensions/REPORT.md`](../verification/2026-08-10-terminal-krajne-schema-image-dimensions/REPORT.md)
@@ -32,17 +33,17 @@ Prior Full-Zero control chain:
 
 | Field | Count |
 |---|---:|
-| Active work units | 5 |
-| Direct current defects | 4 |
+| Active work units | 6 |
+| Direct current defects | 5 |
 | Verified necessary improvements | 0 |
 | Narrowed residuals | 0 |
 | System verification lanes | 1 |
 | Owner decisions | 0 |
 | Closed/stale/duplicate/absorbed rows in MASTER | 0 |
 
-Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. The reviewed 98-ref historical branch cemetery is physically absent from the live remote with no surviving retired-identity lifecycle issues. `V09-KONFESSII-AUTOMOTION`, `V11-HARDTEXTS-START-BOOK`, `V12-SEARCH-COLD-BOOTSTRAP`, `V11-PAGEFIND-LANDING-BODY`, `V10-READER-SPEEDRAIL-SSR-FOCUS`, `V09-KRAJNE-SCHEMA-IMAGE-DIMENSIONS` and `V08-MAPENGINE-INTRO-FOCUS` are terminal merged-green through their recorded Product PRs and are intentionally absent from active rows. `V11-LEGACY-MOBILE-NAV-STATE` is terminally absorbed by the full-site Site Sections Menu SYSTEM repair in Product PR #1558 (`e13e49c63857a823383ba864553cf815cc527c1e`), with residual NONE. The new `V13-SITE-MENU-NATIVE-FAILSAFE` is intentionally a separate later residual: native closed-state rendering safety if authored CSS/runtime presentation is unavailable, not a reopening of the #1558 ownership root. The prior Hermenevtika Wave 12B closure was a bibliographic-title residual and does not cover the later responsive chrome ownership defect now tracked as `V13-HERM-CHROME-OWNERSHIP`.
+Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. The reviewed 98-ref historical branch cemetery is physically absent from the live remote with no surviving retired-identity lifecycle issues. `V09-KONFESSII-AUTOMOTION`, `V11-HARDTEXTS-START-BOOK`, `V12-SEARCH-COLD-BOOTSTRAP`, `V11-PAGEFIND-LANDING-BODY`, `V10-READER-SPEEDRAIL-SSR-FOCUS`, `V09-KRAJNE-SCHEMA-IMAGE-DIMENSIONS` and `V08-MAPENGINE-INTRO-FOCUS` are terminal merged-green through their recorded Product PRs and are intentionally absent from active rows. `V11-LEGACY-MOBILE-NAV-STATE` is terminally absorbed by the full-site Site Sections Menu SYSTEM repair in Product PR #1558 (`e13e49c63857a823383ba864553cf815cc527c1e`), with residual NONE. The new `V13-SITE-MENU-NATIVE-FAILSAFE` is intentionally a separate later residual: native closed-state rendering safety if authored CSS/runtime presentation is unavailable, not a reopening of the #1558 ownership root. The prior Hermenevtika Wave 12B closure was a bibliographic-title residual and does not cover the later responsive chrome ownership defect now tracked as `V13-HERM-CHROME-OWNERSHIP`. `V14-SEARCH-SCOPE-TAB-SEMANTICS` is independent of the already-closed cold-bootstrap root: cold loading/opening works, while the current scope-control ARIA/keyboard model remains semantically inconsistent.
 
-## DIRECT CURRENT DEFECTS — 4
+## DIRECT CURRENT DEFECTS — 5
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
@@ -50,6 +51,7 @@ Dependabot #1538 is terminal merged-green with residual NONE. The assigned norma
 | `V07-ATLAS-FOCUS-STATE` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-07-atlas-focus-state/REPORT.md`; `verification/2026-08-11-total-surgical-audit-current/REPORT.md` | Repair Atlas focus-state ownership so closed off-canvas drawer/detail controls are not sequentially focusable and every transition that hides/replaces the active element has a deterministic surviving focus destination. Cover drawer close/group selection, detail close/related-node replacement, List→Graph, Escape/history/resize at 390/680/681/1440 with activeElement + hidden/offscreen-region assertions; include WebKit in permanent CI. |
 | `V13-HERM-CHROME-OWNERSHIP` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-11-hermenevtika-mobile-chrome-current/REPORT.md`; Product PR #1585 exact-head Hermenevtika Chromium+WebKit job | Restore single-owner Hermenevtika chrome: generic standalone floater must be non-rendering through 1199 while dedicated mobile/tablet bars own that window, and desktop ownership resumes from 1200. Seed saved quotes and keep the docked Highlights control at the canonical 36×36 geometry without stale offsets or floating-FAB bump animation. Rebase/replay from fresh main, preserve Chromium+WebKit 390/412/899/900/1199/1200/1440 + independent control-route proof, merge, then rerun on resulting current main. |
 | `V13-SITE-MENU-NATIVE-FAILSAFE` | `CONFIRMED-CURRENT-FAILSAFE / P3` | `verification/2026-08-11-site-menu-native-failsafe-current/REPORT.md`; Product PR #1584 source contract | Make the shared rich Site Sections Menu natively non-rendering while closed even if authored CSS is unavailable: panel/backdrop native hidden state, panel inert/ARIA state, bounded non-filled SVG geometry, and runtime native-close lifecycle. Fresh-main Chromium+WebKit proof must remove authored styles in-browser, verify mobile closed state before any viewport fallback, open/close safely, restore opener focus on Escape/backdrop close, and cover registry-derived production routes. |
+| `V14-SEARCH-SCOPE-TAB-SEMANTICS` | `CONFIRMED-CURRENT-A11Y / P3` | `verification/2026-08-11-search-scope-tab-semantics-current/REPORT.md` | Make Search scope controls expose a truthful keyboard/ARIA model. Either implement a real horizontal tab pattern with associated content, roving focus and Left/Right/Home/End behavior, or replace misleading `tablist/tab` roles with an appropriate single-select filter model. Preserve cold bootstrap, listbox navigation and selected-state announcement; add Chromium+WebKit keyboard regression proof. |
 
 ## SYSTEM VERIFICATION LANES — 1
 
