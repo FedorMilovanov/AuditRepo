@@ -3,6 +3,7 @@
 > **SSOT текущей верифицированной нужной работы `gospod-bog.ru`.** Это рабочая очередь, не архив. Решённое / stale / duplicate / absorbed / invalid / superseded не остаётся активным в MASTER; provenance хранится в `verification/`, GitHub issues/PR и Git history.
 
 Latest current-lane revalidation:
+- [`../verification/2026-08-10-wave-09-konfessii-reduced-motion/REPORT.md`](../verification/2026-08-10-wave-09-konfessii-reduced-motion/REPORT.md)
 - [`../verification/2026-08-10-wave-08-mapengine-intro-focus/REPORT.md`](../verification/2026-08-10-wave-08-mapengine-intro-focus/REPORT.md)
 - [`../verification/2026-08-10-wave-07-atlas-focus-state/REPORT.md`](../verification/2026-08-10-wave-07-atlas-focus-state/REPORT.md)
 - [`../verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md`](../verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md)
@@ -19,8 +20,8 @@ Prior Full-Zero control chain:
 
 | Field | Count |
 |---|---:|
-| Active work units | 6 |
-| Direct current defects | 4 |
+| Active work units | 7 |
+| Direct current defects | 5 |
 | Verified necessary improvements | 0 |
 | Narrowed residuals | 0 |
 | System verification lanes | 2 |
@@ -29,10 +30,11 @@ Prior Full-Zero control chain:
 
 Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. Those completed umbrellas are intentionally absent from active rows below.
 
-## DIRECT CURRENT DEFECTS — 4
+## DIRECT CURRENT DEFECTS — 5
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
+| `V09-KONFESSII-AUTOMOTION` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-09-konfessii-reduced-motion/REPORT.md` | Establish one Konfessii motion policy so non-essential automatic live-card shimmer/pulse and the JS shimmer timer are suppressed under `prefers-reduced-motion: reduce` or otherwise satisfy an equivalent user-control contract. Preserve browser coverage that compares computed/timed behavior under reduced and normal motion preferences. |
 | `V08-MAPENGINE-INTRO-FOCUS` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-08-mapengine-intro-focus/REPORT.md` | Repair shared MapEngine Intro focus ownership so controls covered by the Intro are not sequentially focusable, focus enters the visible Intro/primary action deterministically, and dismissal lands on a meaningful surviving map owner instead of `BODY`. Preserve narrow-mobile + desktop Chromium/WebKit regression coverage for initial Tab order and dismissal focus. |
 | `V07-ATLAS-FOCUS-STATE` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-07-atlas-focus-state/REPORT.md` | Repair Atlas focus-state ownership so closed off-canvas drawer/detail controls are not sequentially focusable and every transition that hides/replaces the active element has a deterministic surviving focus destination. Cover drawer close/group selection, detail close/related-node replacement, List→Graph, Escape/history/resize at 390/680/681/1440 with activeElement + hidden/offscreen-region assertions; include WebKit in permanent CI. |
 | `V05-ROD-VIEWPORT` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md` | Repair the genealogy world-coordinate/fit contract so initial load and canonical Fit View expose a meaningful canonical person set on narrow mobile and desktop. Preserve a permanent Chromium + WebKit browser guard that fails when 143 mounted nodes produce an empty useful viewport. |
