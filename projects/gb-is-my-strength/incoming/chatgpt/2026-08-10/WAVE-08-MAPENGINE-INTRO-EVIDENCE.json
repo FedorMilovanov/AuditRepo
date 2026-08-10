@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "productSha": "29770e1c7a99478ce7dc2a01abec206ac1daa69b",
+  "releaseRun": 31379283849,
+  "releaseArtifact": 9059689652,
+  "surface": "/karty/ishod/",
+  "engine": "karty/_engine/map-engine.js",
+  "browser": "Chromium",
+  "transport": "exact published route HTML + shared MapEngine JS + route/authority/base-SVG assets; Intro code path is independent of SiteUtils/OverlayRuntime",
+  "introTabOrder": {
+    "390x844": [
+      "Выход из Египта",
+      "Синайский период",
+      "40 лет странствий",
+      "map search",
+      "theme",
+      "share",
+      "zoom +",
+      "zoom -",
+      "center",
+      "measure",
+      "layers",
+      "Начать изучение"
+    ],
+    "1440x1000": [
+      "Выход из Египта",
+      "Синайский период",
+      "40 лет странствий",
+      "map search",
+      "theme",
+      "share",
+      "zoom +",
+      "zoom -",
+      "center",
+      "measure",
+      "layers",
+      "Начать изучение"
+    ]
+  },
+  "coveredUnderlyingTabStopsBeforeIntroCta": 11,
+  "dismissal": {
+    "before": "BUTTON.me-intro__btn",
+    "after": "BODY"
+  },
+  "storyTabsCandidate": {
+    "count": 4,
+    "selectedTabExplicitTabindex": null,
+    "arrowRightChangesFocus": false,
+    "tabMovesToUnselectedTab": true
+  },
+  "stageDotsCandidate": {
+    "count": 6,
+    "tag": "DIV",
+    "role": null,
+    "tabindex": null,
+    "pointerClickHandler": true
+  },
+  "overlaySemanticCandidate": {
+    "placePanel": {"role": null, "ariaModal": null, "accessibleContainerName": null},
+    "photoModal": {"role": null, "ariaModal": null, "accessibleContainerName": null},
+    "behavioralOwner": "openSpecialOverlay / OverlayRuntime"
+  },
+  "ciBlindSpot": "map-browser-smoke and map-mobile-smoke do not exercise initial Intro sequential Tab order or focus after Intro dismissal"
+}
