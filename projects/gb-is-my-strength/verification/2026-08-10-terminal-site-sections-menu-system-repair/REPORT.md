@@ -13,9 +13,8 @@ This closure covers the bottom-left/site hamburger contract at the shared owner 
 - Merged to `main`: `e13e49c63857a823383ba864553cf815cc527c1e`.
 - Merge predecessor on Product main: `5329e31b713257e0678914d1f4c1827bf2511327`.
 - Final PR head before squash merge: `226ccda6c19833a85bd29eaaea4537b89b547c9e`.
-- Fully browser-proven content-equivalent head: `8d8dbc1bacf89bfa76732f2ecee495d859589a9f`.
 
-The final PR head and the fully proven head compare with no net file differences. The intervening branch commits were control-plane refresh/cleanup history only. The merge `5329e31b... -> e13e49c6...` adds exactly the site-menu repair/guard file set; the two Product-main commits that landed after the original proof were non-overlapping Krajne-schema and MapEngine-Intro work.
+The final PR head itself completed the permanent full browser contract successfully. The squash merge `5329e31b... -> e13e49c6...` adds exactly the site-menu repair/guard file set. The Product-main work that landed while the lane was active was non-overlapping Krajne-schema and MapEngine-Intro work.
 
 ## Root causes closed
 
@@ -60,16 +59,20 @@ Current merged `main` directly contains `SiteSectionsMenuRuntime -> OverlayRunti
 
 Dedicated workflow: `Site Sections Menu Contract`.
 
-Exact green proof before merge:
+Final exact-head green proof:
 
-- run: `31424192324`;
-- artifact: `9077022490`;
-- exact proven branch head: `8d8dbc1bacf89bfa76732f2ecee495d859589a9f`;
+- run: `31426908908`;
+- artifact: `9078006355`;
+- artifact head SHA: `226ccda6c19833a85bd29eaaea4537b89b547c9e`;
+- workflow `Checkout exact tested commit`: PASS;
+- workflow `Prove commit identity`: PASS;
+- production-like build: PASS;
 - canonical menu route census: **57** registry-derived production routes;
 - behavior/accessibility assertions: **1152/1152 PASS**;
 - visual geometry assertions: **762/762 PASS**;
 - engines: **Chromium + WebKit**;
-- failures: **0**.
+- failures: **0**;
+- screenshot artifact upload: PASS.
 
 The contract proves class-level invariants rather than one screenshot:
 
@@ -81,7 +84,7 @@ The contract proves class-level invariants rather than one screenshot:
 - menu/card/chevron/SVG geometry stays bounded in the viewport;
 - screenshots are retained for Home, Articles, Biografii, Hard Texts, Pastor Series, Nagornaya Series, a standalone reader, Gill reader, an independent flat-series reader and a book-series reader.
 
-The final pre-merge tree is content-equivalent to the exact green head, and merged-main source/diff integration was re-read after squash merge. The available connector does not enumerate push-triggered Actions runs by commit SHA, so no unobserved push-run status is asserted here.
+After the exact-head proof finished, merged-main source and the `5329e31b... -> e13e49c6...` integration diff were re-read: the canonical runtime is present on `main`, the obsolete reader visual owner is absent, and the squash merge introduces the proven site-menu lane without an independent overlapping Product-main mutation.
 
 ## Terminal determination
 
@@ -89,4 +92,4 @@ The final pre-merge tree is content-equivalent to the exact green head, and merg
 
 Residual for this root: **NONE**.
 
-Per AuditRepo operating model, the solved row must leave `MASTER_BUG_MATRIX.md`; provenance remains here, in Product PR #1558, its exact browser artifact, and Git history.
+Per AuditRepo operating model, the solved row has left `MASTER_BUG_MATRIX.md`; provenance remains here, in Product PR #1558, the exact browser artifact, and Git history.
