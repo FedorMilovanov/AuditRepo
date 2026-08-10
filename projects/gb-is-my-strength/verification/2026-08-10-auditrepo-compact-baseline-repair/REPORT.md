@@ -59,12 +59,12 @@ Therefore the umbrella `NON-CI-ISSUE-ZEROING` is no longer active work and must 
 
 ### `BRANCH-CI-CEMETERY` — remains active
 
-Forensic classification is already durable across four disjoint reports:
+Forensic classification is already durable across four disjoint **repository-root** AuditRepo reports (these intentionally predate the project-scoped verification convention used by this repair):
 
-- `verification/2026-08-10-full-zero-wave-11R-reader-branch-cemetery/REPORT.md`
-- `verification/2026-08-10-full-zero-wave-11S-search-home-branch-cemetery/REPORT.md`
-- `verification/2026-08-10-full-zero-wave-11L-legacy-reference-branch-cemetery/REPORT.md`
-- `verification/2026-08-10-full-zero-wave-11M-content-misc-branch-cemetery/REPORT.md`
+- root `/verification/2026-08-10-full-zero-wave-11R-reader-branch-cemetery/REPORT.md`
+- root `/verification/2026-08-10-full-zero-wave-11S-search-home-branch-cemetery/REPORT.md`
+- root `/verification/2026-08-10-full-zero-wave-11L-legacy-reference-branch-cemetery/REPORT.md`
+- root `/verification/2026-08-10-full-zero-wave-11M-content-misc-branch-cemetery/REPORT.md`
 
 Those reports establish the reviewed SAFE DELETE classification family. Classification is not physical execution.
 
@@ -116,6 +116,6 @@ The README records agent/project/date identity and anchors the existing raw Wave
 This repair intentionally exercises both layers:
 
 - ordinary AuditRepo repository validation must recognize the compact matrix schema and the restored intake identity;
-- matrix/evidence coverage must parse exactly two active IDs and require their explicit verification-path witnesses.
+- matrix/evidence coverage must parse exactly two active IDs and require their explicit project-scoped verification witness.
 
 The repair is complete only when both layers pass on the exact maintenance PR head.
