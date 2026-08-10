@@ -2,41 +2,41 @@
 
 > **SSOT текущей верифицированной нужной работы `gospod-bog.ru`.** Это рабочая очередь, не архив. Решённое / stale / duplicate / absorbed / invalid / superseded не остаётся активным в MASTER; provenance хранится в `verification/`, GitHub issues/PR и Git history.
 
-Latest control audit:
-- [`../verification/2026-08-10-full-zero-wave-10-post-rewrite-system-abcd-audit/REPORT.md`](../verification/2026-08-10-full-zero-wave-10-post-rewrite-system-abcd-audit/REPORT.md)
+Latest current-lane revalidation:
+- [`../verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md`](../verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md)
 
-Previous Full-Zero chain:
-- [`../verification/2026-08-10-full-zero-wave-01/REPORT.md`](../verification/2026-08-10-full-zero-wave-01/REPORT.md)
-- [`../verification/2026-08-10-full-zero-wave-02-branch-forensic/REPORT.md`](../verification/2026-08-10-full-zero-wave-02-branch-forensic/REPORT.md)
-- [`../verification/2026-08-10-full-zero-wave-03-issue-zeroing/REPORT.md`](../verification/2026-08-10-full-zero-wave-03-issue-zeroing/REPORT.md)
+Prior Full-Zero control chain:
+- [`../verification/2026-08-10-full-zero-wave-10-post-rewrite-system-abcd-audit/REPORT.md`](../verification/2026-08-10-full-zero-wave-10-post-rewrite-system-abcd-audit/REPORT.md)
+- [`../verification/2026-08-10-full-zero-wave-11-dependabot-1538/REPORT.md`](../verification/2026-08-10-full-zero-wave-11-dependabot-1538/REPORT.md)
+- [`../verification/2026-08-10-full-zero-wave-11I-non-ci-issue-zeroing/REPORT.md`](../verification/2026-08-10-full-zero-wave-11I-non-ci-issue-zeroing/REPORT.md)
+- [`../verification/2026-08-10-full-zero-wave-12B-hermenevtika-final-residual/REPORT.md`](../verification/2026-08-10-full-zero-wave-12B-hermenevtika-final-residual/REPORT.md)
+- [`../verification/2026-08-10-full-zero-wave-12C-source-authority-trigger-closure/REPORT.md`](../verification/2026-08-10-full-zero-wave-12C-source-authority-trigger-closure/REPORT.md)
 
 ## Current state
 
 | Field | Count |
 |---|---:|
-| Active work units | 4 |
+| Active work units | 2 |
 | Direct current defects | 0 |
 | Verified necessary improvements | 0 |
 | Narrowed residuals | 0 |
-| System verification lanes | 4 |
+| System verification lanes | 2 |
 | Owner decisions | 0 |
 | Closed/stale/duplicate/absorbed rows in MASTER | 0 |
 
-The current Full-Zero program has four active verification/closure lanes. Historical closed roots, branch inventories, exact prior Product SHAs and completed-wave narratives remain in the linked verification packages and Git history instead of being duplicated into this active matrix.
+Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. Those completed umbrellas are intentionally absent from active rows below.
 
-## SYSTEM VERIFICATION LANES — 4
+## SYSTEM VERIFICATION LANES — 2
 
-| ID | Status | Required terminal outcome |
-|---|---|---|
-| `DEP-1538-DISPOSITION` | `ACTIVE / RED CANDIDATE` | Open Dependabot #1538 (`@dagrejs/dagre 3.0.0→3.1.0`, `astro 7.1.6→7.2.0`) must end as exact-head GREEN+MERGED or explicitly CLOSED-NOT-MERGED. Never merge red merely for zero. |
-| `BRANCH-CI-CEMETERY` | `ACTIVE / FORENSIC` | Classify the historical non-main refs by bounded families; delete only with successor/tree/unique-tail proof. Close automated CI-failure issues only for identities proven retired/deleted without falsely claiming CI recovery. |
-| `NON-CI-ISSUE-ZEROING` | `ACTIVE / VERIFY` | Terminally disposition the remaining non-CI issue family. Repair only a freshly proven current defect. Preserve future work in AuditRepo queue/roadmap before closing GitHub backlog items when strict open-issue zero is desired. |
-| `FINAL-ZERO-AUDIT` | `BLOCKED ON ABOVE 3` | After dependency + branch/CI + non-CI lanes terminate, run one sole fresh-main census/audit. PASS only with open PR=0, no unexplained live red, no orphan required work, terminal branch dispositions, terminal issue dispositions, current main green, MASTER=0. Then STOP. |
+| ID | Status | Current evidence | Required terminal outcome |
+|---|---|---|---|
+| `BRANCH-CI-CEMETERY` | `ACTIVE / PHYSICAL EXECUTION` | `verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md`; classification inputs: `verification/2026-08-10-full-zero-wave-11R-reader-branch-cemetery/REPORT.md`, `verification/2026-08-10-full-zero-wave-11S-search-home-branch-cemetery/REPORT.md`, `verification/2026-08-10-full-zero-wave-11L-legacy-reference-branch-cemetery/REPORT.md`, `verification/2026-08-10-full-zero-wave-11M-content-misc-branch-cemetery/REPORT.md` | Physically retire only the reviewed SAFE DELETE refs; re-list absence; terminally disposition associated CI-lifecycle identities; preserve and name any intentional KEEP refs. Classification alone is not closure. |
+| `FINAL-ZERO-AUDIT` | `BLOCKED ON BRANCH-CI-CEMETERY` | `verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md` | After cemetery execution terminates, run one fresh-main census/audit. PASS only with open PR=0, no unexplained live red, no orphan required work, terminal branch/issue dispositions, current main green and MASTER=0. Then STOP. |
 
 ## Execution boundaries
 
 - Do not reopen completed roots without fresh current-main evidence.
-- Do not delete branches by name or age alone; require successor/tree/unique-tail disposition.
+- Do not delete branches by name or age alone; require the reviewed successor/tree/unique-tail disposition.
 - Do not rerun ancient CI merely to color historical refs green.
 - Future/optional work belongs in `WORK_QUEUE.md` or roadmap, not this active defect matrix.
 - Current Product HEAD, open PRs, branch census and CI identity are re-read from Product at execution time rather than copied here as durable truth.
