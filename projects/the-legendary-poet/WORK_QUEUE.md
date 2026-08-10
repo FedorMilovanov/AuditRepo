@@ -1,18 +1,32 @@
 # Optional Work Queue — the-legendary-poet
 
-Эта очередь содержит только owner-selected направления, которые ещё требуют решения или следующей bounded wave. Перед любой Product mutation заново проверять current Product `main`, open PR/branches, owner и применимое evidence.
+Эта очередь содержит только направления, которые реально требуют нового owner-selected решения или следующей bounded wave. Закрытая история живёт в `verified/CLOSURE_LEDGER.md`, verification packages и Git history; очередь не должна становиться биографией проекта.
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
 Current verified engineering rows: **0**.
 
-Closed engineering/history outcomes живут в [`verified/CLOSURE_LEDGER.md`](verified/CLOSURE_LEDGER.md), verification packages и Git history; эта очередь не должна превращаться в биографию проекта.
+## Current architecture selection
 
-## Current selection — TLP-HALL-001 / Product #369
+**None.**
 
-`TLP-HALL-001` remains an owner-selected architecture lane, not an engineering bug row. The overall Hall lane remains open until the Pushkin slice, offline/web visual approval and production certification are complete.
+`TLP-HALL-001` / Product #369 больше не является открытой architecture lane.
 
-## Frozen Hall authority
+Terminal Hall closure evidence:
+
+- [`verification/2026-08-10-hall-v3-root-closure/CLOSURE.md`](verification/2026-08-10-hall-v3-root-closure/CLOSURE.md);
+- Product #404 exact tested head `9e86c83526506d4ef8f376ccab2df7bc69b88a90`;
+- Product #404 resulting `main@058e3a7532d8b0b286a39e4036c725aceda40b17`;
+- Product #369: `closed / completed`;
+- Product `architecture.openLaneIds=[]`;
+- Hall `architectureLaneOpen=false`;
+- Hall `autonomousProductTransactionSelected=false`.
+
+## Frozen Hall safety authority after #369 closure
+
+Закрытие root-а не означает, что production-музей или WebGL уже выпущены.
+
+Сохраняются:
 
 - topology: **H3**;
 - H3 layout fingerprint: `5d5d0ddd8b150aa64afb73a2a3d9e00c6005e99fc935a6d4707a49ecd475fe65`;
@@ -22,151 +36,68 @@ Closed engineering/history outcomes живут в [`verified/CLOSURE_LEDGER.md`]
 - surface UV: **UV0**, `1.5 m / UV unit`;
 - UV1: optional reserve;
 - current L1 bake: rejected;
-- production texture encoding: deferred until measured on the real Pushkin slice;
-- production `/hall`: lightweight placeholder; production Three/R3F/WebGL blocked.
+- production `/hall`: lightweight placeholder;
+- production Three/R3F/WebGL: blocked;
+- rights-pending documentary production media: blocked.
 
-## Current verified Product authority
+Machine stage intentionally remains `pushkinVerticalSlice` as a **frozen fail-closed staging gate**:
 
-The current engineering-integrity and browser-evidence sweep is closed through Product **#401**.
-
-Recent bounded transactions:
-
-- #397 — active Pushkin rights/policy/scene/visual/delivery authorities consumed by the current rights validator select the existing exact-head Hall Blender/export/browser reproof on PR and `main` push;
-- #398 — exact Pushkin source-byte evidence re-downloads/revalidates registered originals on both PR and `main` push;
-- #399 — Hall DCC reproof selects on `package-lock.json` and the executed local Node/Playwright composite-action implementations;
-- #400 — Pushkin source-byte evidence runs on explicit Node 24 + system `pdfinfo` without repository application dependency installation;
-- **#401 — independent Playwright audit closed two Safari evidence defects: `/hall` is now included in fresh-process iPhone/WebKit route certification, and isolated Safari route evidence waits for both the first-document `.page-wipe` and the `Загрузка страницы` Suspense shell to be hidden before a route can be accepted. Diagnostics fail closed when either surface remains visible.**
-
-Exact tested heads:
-
-- #397: `234817b1d1d020853d38ed73081395680f60be8a`;
-- #398: `7f13ce4eab923b3b03df31865564eae259a1b1bb`;
-- #399: `f88f8f12a9b164a3f1fb4137e3d16ba5970f1d9e`;
-- #400: `e571e51e2530c2798f9e8bf36f42fd0b022eb881`;
-- #401: `9849edc9790d3c1dbf2482262c24b75da42dd6b2`.
-
-Current verified Product authority after #401: `main@5ae4841dbe0e9f586a08fde7efce75d867e88858`.
-
-Relevant verification:
-
-- `verification/2026-08-09-hall-v3-pushkin-external-authority-state/AUTHORITY.md`;
-- `verification/2026-08-09-hall-v3-pushkin-rights-review-trigger-integrity/AUTHORITY.md`;
-- `verification/2026-08-09-hall-v3-integrity-wave/AUTHORITY.md`;
-- `verification/2026-08-10-hall-v3-playwright-audit/AUTHORITY.md`.
-
-## Playwright/browser truth after #401
-
-The post-#400 audit did not rely on workflow names alone. It inspected committed Playwright configuration, workflow wiring, exact-head jobs, generated JSON evidence and PNG screenshots.
-
-Verified browser-runtime facts:
-
-- `@playwright/test` is exact-pinned at `1.61.1` and the committed lockfile is authoritative;
-- browser installation uses the locked Playwright CLI through the shared action;
-- CI browser runs are single-worker/fail-on-flaky under the committed configuration;
-- production Vite build/preview is exercised rather than a dev-server-only surface;
-- desktop Chromium and Pixel 7 already certified `/hall` through the deep-route suite;
-- #401 adds fresh-process iPhone Safari `/hall` certification;
-- Safari route acceptance now waits for real visual readiness rather than accepting the persistent app shell while the intro wipe or Suspense loading shell is still visible;
-- final exact-head Manual Browser QA run `31339089644` is terminal success in all four jobs: core Chromium/Android + base Safari, WebKit route/home, premium iPhone critical and premium home;
-- final WebKit evidence artifact `9045352641` (`sha256:5f0299a0541b7fbddcbeb9ab73199e846fcef407537ee2eca568ee80b6c16f98`) contains settled real route screenshots; Hall visibly shows the actual production placeholder instead of the brand/loading surface;
-- final route diagnostics for Hall/About/Archive/NotFound/Articles/Music/Poets/Ratings record `pageWipeVisible=false`, `routeLoadingVisible=false`, zero horizontal overflow and clean page/console/local-request runtime errors.
-
-Do not reuse pre-#401 Safari screenshots as proof of settled route content: the audit demonstrated that some earlier route screenshots could be captured under the first-document brand wipe while still passing geometry/runtime assertions.
-
-## Machine phase
-
-`pushkinVerticalSlice` remains the only active Hall gate.
-
-- canonical Pushkin rights workflow state: **`external-authority-required`**;
+- `foundation`: completed;
+- `referenceBible`: completed;
+- `metricGreybox`: completed;
+- `cameraApproval`: completed;
+- `materialLightingExportSpike`: completed;
+- `pushkinVerticalSlice`: active staging state;
 - `offlineVisualApproval`: blocked;
 - `webVerticalSlice`: blocked;
 - `fullMuseumScaleOut`: blocked.
 
-No transaction through #401 authorizes production WebGL or documentary media consumption. #401 changes browser evidence quality only; it does **not** approve documentary records, modify H3/R1/L0/UV0, or advance a Hall gate.
+`active` здесь описывает machine gate, а не открытую GitHub architecture lane и не разрешение на автономную реализацию.
 
-## Documentary truth
+## Terminal autonomous Hall milestone
 
-Autonomous byte acquisition and evidence review remain complete to the currently available boundary.
+Product #403 завершил текущую автономно допустимую source/offline Pushkin slice работу:
 
-### Kiprensky 1827 portrait
+- exact tested head: `653ed65c102c09c39803193d95addf8aef739a34`;
+- resulting Product main: `256dd19f1e39eef341ca260a4d8c72e1b6f19d73`;
+- source-based Pushkin offline exhibit generated;
+- exact documentary source bytes bound to SHA identities;
+- raw and optimized GLB validation green;
+- authored 24-second walkthrough generated and ffprobe-verified;
+- measured first-slice offline budget report generated and permanently validated;
+- original `budgetReportRequired` false-green gap closed.
 
-- exact source SHA-256: `sha256:316d5f366a46f23cd0a181e570f2d09a6b0d12bc368dab18fdb394b8b8b8bf4b`;
-- actual byte identity: 10,862,180 bytes, 3455 × 4000 JPEG;
-- object provenance: source-verified;
-- reproduction/intended-use status: rights-pending;
-- review disposition: **human-legal-owner-decision-required**;
-- final credit/runtime path: unset;
-- production eligible: false.
+Product #404 повторно воспроизвёл защищённый Hall pipeline на closure head и затем вывел исторический umbrella root из `openLaneIds` без promotion будущих gates.
 
-Remaining external decision: actual intended commercial/non-commercial and Russia-facing use context, Tretyakov/Russian museum-use treatment where applicable, and final credit acceptance.
-
-### `Eugene Onegin`, 1833 edition
-
-- exact source SHA-256: `sha256:d629c10943cbf6428eabb194ee5c17c1b763c27108a2238eaf72fadb275643e5`;
-- actual byte identity: 5,433,794 bytes, 324-page PDF;
-- object provenance: source-verified;
-- reproduction/intended-use status: rights-pending;
-- review disposition: **copyright-evidence-strong-owner-production-disposition-required**;
-- final credit / production derivative/page/crop / runtime path: unset;
-- production eligible: false.
-
-Remaining owner decision: intended Hall use, exact documentary presentation/derivative versus source-only treatment, and final credit/source-chain acceptance.
-
-### Pushkin House manuscript candidate
-
-- asset: `pushkin-house-onegin-self-portrait-1824`;
-- archive cipher: `Ф. 244, оп. 12, ед. хр. 6`;
-- object provenance: source-verified;
-- institutional copy request: required;
-- request status: `not-submitted`;
-- source hash/runtime path: unset;
-- rights/intended use: pending;
-- production eligible: false.
-
-This remains a genuine human/institutional dependency. An agent may preserve the blocker but may not fabricate submission, fulfilment, permission or approval.
-
-Current totals:
+## Current documentary boundary
 
 - approved documentary assets: **0**;
 - exact acquired-byte hashes: **2**;
-- final credits: **0**;
-- documentary runtime paths: **0**;
+- final production credits: **0**;
+- documentary production runtime paths: **0**;
 - production manifest allowed: **false**;
-- documentary Blender media consumption allowed: **false**;
-- production WebGL allowed: **false**.
+- production WebGL allowed: **false**;
+- human owner `offlineVisualApproval`: still required.
 
-## Current disposition — waiting external authority
+Byte identity, source visibility or public-domain age не превращаются автоматически в owner/legal production approval.
 
-**No autonomous Product transaction is selected now.**
+## When future Hall work becomes selectable
 
-The independent audit found and closed the only reproduced Hall-adjacent browser-evidence defects discovered on the then-current head. DCC regeneration, H3/R1/L0 authority, raw/optimized GLB/Khronos evidence, source-byte identities, route budget/dependency boundary and rights/gate machine state otherwise remained consistent with canonical authority.
+Новая Hall transaction допустима только при материальном новом входе, например:
 
-Do not manufacture another workflow/schema/recheck PR from the same evidence merely to keep the lane active.
+1. explicit owner intended-use / final-credit / documentary-production disposition;
+2. qualified legal or institutional evidence, реально меняющее rights disposition;
+3. фактическая institutional copy-request submission/fulfilment или owner decision продолжать без optional Pushkin House drawing;
+4. explicit human owner `offlineVisualApproval` accepted offline evidence;
+5. новый воспроизведённый engineering defect на тогдашнем Product `main`;
+6. после необходимых предыдущих gates — measured browser/runtime evidence, достаточное для bounded `webVerticalSlice` transaction.
 
-A new bounded Product transaction becomes legitimate only after at least one material input appears:
+При таком входе создаётся **новый bounded Product issue/lane** для конкретного перехода. #369 не переоткрывается как вечный umbrella только потому, что долгосрочный музей ещё не завершён.
 
-1. explicit owner intended-use/commercial-use/final-credit disposition;
-2. qualified legal or institutional disposition resolving the Kiprensky museum-use question;
-3. real Pushkin House copy-request submission/fulfilment and actual supplied evidence/bytes, or an explicit owner decision to proceed without that optional documentary drawing;
-4. materially new primary rights evidence that changes a current disposition;
-5. a newly reproduced engineering defect on the then-current Product head.
+## Current disposition
 
-After genuine external authority exists, the next Product sequence is: promote only independently approved documentary records → author one source/offline Pushkin exhibit in Blender → measure first-slice delivery/performance → produce required offline visual evidence. That sequence does not authorize later Hall gates by itself.
+**No autonomous Hall Product transaction is selected now.**
 
-### Automatic rejection
+Не создавать повторные schema/workflow/recheck PR только ради ощущения движения. Не продвигать documentary rights, offline visual approval, WebGL или scale-out без нового authority/evidence.
 
-- agent-promoted `approved` based only on public-domain age, Commons availability, source hash or the existing review;
-- repeating the same acquisition/rights search and calling it new authority;
-- fabricated legal advice, museum permission, owner intent or archive request;
-- final credit/runtime path assigned to a non-approved canonical record;
-- rights-pending documentary media consumed by the Blender exhibit or production manifest;
-- production Three/R3F/WebGL activation before the required gates;
-- promotion of `offlineVisualApproval`, `webVerticalSlice` or `fullMuseumScaleOut` without their own evidence and authority;
-- repetitive schema/workflow/recheck PRs without a newly reproduced defect or material external input;
-- browser acceptance based only on a green workflow status without checking that visual evidence represents settled route content.
-
-## What remains
-
-The overall Hall architecture lane is not closed. Once genuine external documentary authority exists, the next bounded work may resume with canonical approval/governance and then the actual offline Pushkin exhibit. Until then, documentary media consumption is blocked rather than substituted with invented evidence.
-
-Fresh engineering findings still require current-head reproduction and root-cause evidence; the engineering matrix remains zero. Editorial work outside this Hall documentary source owner remains separate.
+Separate non-Hall Product findings remain separate. In particular Product #405 is a bounded README/CI documentation-consistency correction and does not reopen a Hall architecture lane or become an AuditRepo engineering row merely by existing.
