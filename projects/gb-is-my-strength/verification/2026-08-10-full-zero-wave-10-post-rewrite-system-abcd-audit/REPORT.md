@@ -10,7 +10,7 @@ The major stabilization and post-stabilization repair chain is genuinely converg
 
 `757946da67287354b819737813c0a47095f2d759`
 
-However repository **full zero is not yet true** because one new Dependabot PR is open/red, 98 non-main refs remain (97 historical + the Dependabot head), many lifecycle CI issues are attached to historical refs, and a small non-CI backlog still needs terminal disposition.
+However repository **full zero is not yet true** because one new Dependabot PR is open/red, 99 non-main refs now exist (98 historical + the Dependabot head), many lifecycle CI issues are attached to historical refs, and a small non-CI backlog still needs terminal disposition.
 
 This report resets the finish line. No previously completed root is to be reopened without fresh current-main evidence.
 
@@ -27,7 +27,7 @@ Post-history-rewrite anchor `b8c92eda3af96158dbee4ba53803e90c30cce31c` is exactl
 
 No unrelated Product commit exists between the rewritten anchor and current main.
 
-Historical-image cleanup control receipt supplied by the cleanup owner records 510 historical-only image blobs removed, owner-managed history materially reduced, current main tree preserved, recovery durable, temporary diagnostic PR #1460 closed unmerged, `transport/*` eliminated, and the temporary history-image workflow surface absent from Product main. The current branch census is consistent with the reported 99 remote heads.
+Historical-image cleanup control receipt supplied by the cleanup owner records 510 historical-only image blobs removed, owner-managed history materially reduced, current main tree preserved, recovery durable, temporary diagnostic PR #1460 closed unmerged, `transport/*` eliminated, and the temporary history-image workflow surface absent from Product main. That cleanup owner observed 99 remote heads at closure; a later Dependabot branch was then created, so the current live census is 100 heads.
 
 Permanent operational rule after the rewrite: never push from a stale pre-rewrite clone/worktree. Fresh clone or full rewritten-ref resynchronization is mandatory.
 
@@ -131,20 +131,20 @@ Never merge the red dependency candidate merely to reach issue/PR zero.
 
 ## 4. Branch census after rewrite
 
-Fresh remote branch enumeration returned exactly **99 heads total**.
+Fresh remote branch enumeration after Dependabot creation returned exactly **100 heads total**.
 
 That means:
 
 - 1 canonical `main`;
 - 1 current Dependabot head for #1538;
-- 97 other surviving historical/non-main refs.
+- 98 other surviving historical/non-main refs.
 
 Confirmed absent:
 
 - all `transport/*` refs;
 - `audit/history-image-bloat-20260810`.
 
-The surviving 97 historical refs are still a substantial cemetery. Many were rewritten/pushed during the history operation and therefore emitted fresh Shared Files failure notifications even though the branches are historical. These failures must be retired together with their branch identities, not interpreted automatically as fresh Product regressions.
+The surviving 98 historical refs are still a substantial cemetery. Many were rewritten/pushed during the history operation and therefore emitted fresh Shared Files failure notifications even though the branches are historical. These failures must be retired together with their branch identities, not interpreted automatically as fresh Product regressions.
 
 No branch may be deleted by name alone. Each bounded family must use successor/PR/tree/unique-tail evidence. After a branch is proven retired and removed, its automated CI-failure issues should be closed as lifecycle-retired/not-planned rather than falsely described as CI recovery.
 
