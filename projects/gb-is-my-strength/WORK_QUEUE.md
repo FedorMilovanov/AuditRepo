@@ -22,6 +22,25 @@ Before starting any lane, inspect current Product `main`, open PRs/branches and 
 - Establish Chromium/WebKit baselines on the production-like Search contract and actual corpus shape before choosing any budget. Do not invent a threshold from guesswork.
 - If measurement later proves material latency, design a truthful progressive strategy that preserves complete/deduped result semantics; never restore hidden pre-hydration truncation merely for speed.
 
+### TTS click-to-first-audible latency measurement
+
+- Current reader/TTS browser coverage proves play/pause/resume, boundary progression, speed recreation, pagehide cancellation and mobile geometry, but it does not record a true utterance `onstart` / first-audible timestamp.
+- Measurement-first roadmap: separately record click→UI state, click→`speechSynthesis.speak()` invocation, click→utterance `onstart`/first-audible, and worker/model readiness→playback for cold, warm and consent-gated paths.
+- Run representative Chromium + WebKit desktop/mobile samples and report p50/p95/worst with route identity before defining any latency budget.
+- Do not classify perceived slowness as a Product defect without a current measured failure.
+
+### Reader narrow-tablet geometry witness
+
+- 2026-08-11 surgical reverify: the Hermenevtika cross-browser chrome contract covers 390/412/899/900/1199/1200/1440; the shared standalone reader layout guard covers 768 plus 390/1199/1200/1280/1366/1440/1920 in Chromium.
+- Remaining evidence gap: 761/800/820/860 do not yet have an equivalent fresh cross-browser geometry/focus/overlap witness.
+- This is coverage work, **not a confirmed layout defect**. Promote only if an exact built/browser witness shows overflow, clipping, focus loss, unreadably narrow measure or fixed/sticky collision.
+
+### Tooltip trigger↔popup accessibility-tree relation
+
+- Current canonical article-tooltip owner still uses focusability/`role=button`/`aria-expanded` and reparents open popup content into a floating owner.
+- The same canonical owner does not currently establish `aria-describedby`; glossary has had legacy relation behavior elsewhere, so footnote/scripture parity remains uncertain.
+- Obtain a real Chromium accessibility-tree and, where practical, NVDA/VoiceOver-equivalent witness before promotion. Source shape alone is not enough to claim an AT defect.
+
 ### Owner-approved Product golden roadmap — moved from Product #298
 
 - Provenance: Product issue `#298`; AuditRepo historical findings `VISUAL-COMMON-MODE-BLINDNESS` and `VISUAL-ROUTE-COVERAGE-NARROW`.
@@ -50,19 +69,19 @@ Before starting any lane, inspect current Product `main`, open PRs/branches and 
 - Captions must distinguish direct evidence from contextual illustration. Fact-bearing maps/diagrams remain semantic or source-verified; generated imagery must not carry unverifiable historical facts.
 - Permanent ledger guard requirement: no Baptist production evidence marker without a resolving local file + HTTPS provenance + allowed license + MASTER SHA-256 + `PUBLISHED / VERIFIED` ledger row; rendered articles must not silently fall back to an untracked placeholder.
 - Final future browser requirement: Chromium + WebKit, mobile/desktop, day/dark; affected images have nonzero `naturalWidth`, correct `currentSrc/srcset`, no clipping/overflow, truthful alt/caption, and no broken placeholder.
-- When eventually scheduled, claim bounded media slices one at a time and recheck active Search/Scripture/Gill/Lot/Baptist owners first.
+- When eventually scheduled, claim bounded media slices one at a time and recheck current active owners first.
 
 ### Karty runtime performance measurements
 
 - Historical `PERF-P1-01`: measure current Chromium/WebKit frame/input behavior before changing the Avraam animated water effect.
 - Historical `QUAL-P2-04`: MapEngine source-level node recreation does not by itself prove material GC/jank; measure long tasks/input/frame impact first.
-- Do not confuse either item with current `SYS-MAP-SCALE-RESIZE-WITNESS` / #1363, which is a confirmed test-harness convergence defect.
+- Older MapScale witness work is historical/terminal under the current MASTER. Reverify current owners before opening any new map-performance lane.
 
 ### Home presentation-owner convergence
 
 - Earlier audit found multiple presentation owners, but no current reader-visible regression was proved from ownership distribution alone.
 - Keep parked until a fresh browser regression, false-green contract, recurring collision or measured failure proves convergence necessary.
-- Current mandatory Home harness work remains `SYS-HOME-DESIGN-SEARCH-SETTLED` / #1299 in MASTER.
+- Historical Home/Search harness rows are not current MASTER authority; inspect current main and MASTER before scheduling anything here.
 
 ### Baptists 3D measured split
 
@@ -83,18 +102,21 @@ Before starting any lane, inspect current Product `main`, open PRs/branches and 
 
 ### Bible corpus acquisition/import proof
 
-- Current owner-decision row remains `SEARCH-P2-07` in MASTER.
-- Binding Research decision is `d52ea9d54dd2c2488223d25f5f6cefd263c23328`.
-- Closed-unmerged Product #1389 is a rights-blocked attempt, not approved corpus evidence.
+- Historical owner-decision provenance included `SEARCH-P2-07`; it is **not a current MASTER row** as of the 2026-08-11 surgical reconciliation.
+- Binding Research decision is `d52ea9d54dd2c2488223d25f5f6cefd263c23328` unless explicitly superseded by newer rights authority.
+- Closed-unmerged Product #1389 remains a rights-blocked attempt, not approved corpus evidence.
 - CrossWire `RusSynodal` 1.9.1 remains candidate-only pending exact archive SHA-256, licence/source/book manifest, 66-book mapping and verse-level import receipt.
 - `RusSynodalLIO` and Cassian restrictions remain binding until superseded by explicit rights authority.
 
 ## Active work that must **not** be duplicated here
 
-- `SYS-STRANGLER-RETIREMENT` is active MASTER work. Merged truth at Product `bc786f4d…` is **3 blockers**. #1395 is the sole Baptist-roadmap owner and its candidate exact-head Shared run proves **2**; that number becomes merged truth only after #1395 itself lands. Protected readable and owner-ui branches already contain unique work and must be refreshed by their owners, not duplicated.
-- The inventory move-safety repair is also **not optional** after dependency blockers reach zero: the reserved inventory branch currently has `ahead=0`, so a later bounded storage-authority owner must be established before any physical quarantine. This requirement is tracked in SYSTEM_THEMES/current verification rather than promoted as a separate optional refactor.
-- Lot publication/readiness is active MASTER work. #1339 is closed superseded, #1373 is merged, #1389 is rights-blocked, #1378 owns source resilience and #1401 owns shared footer extraction. No optional Lot publication lane should be opened here.
-- Reader semantics, footnote projection, Source Authority trigger closure, Avraam retraction parity, Home Search settled-state and MapScale witness are active MASTER work.
+The current active authority lives only in `verified/MASTER_BUG_MATRIX.md`. At the 2026-08-11 reconciliation snapshot it contains:
+
+- `V12-READER-LINEAR-TEXT-POLLUTION`;
+- `V07-ATLAS-FOCUS-STATE`;
+- `FINAL-ZERO-AUDIT`.
+
+Do not reopen historical Strangler, Lot, Source Authority, Avraam, Home Search, MapScale, genealogy, mobile-nav, speed-rail or other completed families from older prose. If MASTER changes later, read the fresh file rather than copying this snapshot forward.
 
 ## Parked non-defect improvement families
 
