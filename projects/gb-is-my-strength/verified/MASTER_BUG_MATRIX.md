@@ -3,6 +3,7 @@
 > **SSOT текущей верифицированной нужной работы `gospod-bog.ru`.** Это рабочая очередь, не архив. Решённое / stale / duplicate / absorbed / invalid / superseded не остаётся активным в MASTER; provenance хранится в `verification/`, GitHub issues/PR и Git history.
 
 Latest current-lane revalidation:
+- [`../verification/2026-08-10-terminal-site-sections-menu-system-repair/REPORT.md`](../verification/2026-08-10-terminal-site-sections-menu-system-repair/REPORT.md)
 - [`../verification/2026-08-10-terminal-mapengine-intro-focus-repair/REPORT.md`](../verification/2026-08-10-terminal-mapengine-intro-focus-repair/REPORT.md)
 - [`../verification/2026-08-10-terminal-krajne-schema-image-dimensions/REPORT.md`](../verification/2026-08-10-terminal-krajne-schema-image-dimensions/REPORT.md)
 - [`../verification/2026-08-10-terminal-reader-speedrail-ssr-focus-repair/REPORT.md`](../verification/2026-08-10-terminal-reader-speedrail-ssr-focus-repair/REPORT.md)
@@ -15,7 +16,6 @@ Latest current-lane revalidation:
 - [`../verification/2026-08-10-wave-12-reader-linear-text-current/REPORT.md`](../verification/2026-08-10-wave-12-reader-linear-text-current/REPORT.md)
 - [`../verification/2026-08-10-wave-11-legacy-mobile-nav-current-runtime/REPORT.md`](../verification/2026-08-10-wave-11-legacy-mobile-nav-current-runtime/REPORT.md)
 - [`../verification/2026-08-10-wave-07-atlas-focus-state/REPORT.md`](../verification/2026-08-10-wave-07-atlas-focus-state/REPORT.md)
-- [`../verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md`](../verification/2026-08-10-wave-05-rodosloviye-current-browser/REPORT.md)
 - [`../verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md`](../verification/2026-08-10-auditrepo-compact-baseline-repair/REPORT.md)
 
 Prior Full-Zero control chain:
@@ -29,22 +29,21 @@ Prior Full-Zero control chain:
 
 | Field | Count |
 |---|---:|
-| Active work units | 4 |
-| Direct current defects | 3 |
+| Active work units | 3 |
+| Direct current defects | 2 |
 | Verified necessary improvements | 0 |
 | Narrowed residuals | 0 |
 | System verification lanes | 1 |
 | Owner decisions | 0 |
 | Closed/stale/duplicate/absorbed rows in MASTER | 0 |
 
-Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. The reviewed 98-ref historical branch cemetery is now physically absent from the live remote with no surviving retired-identity lifecycle issues; that completed system lane is intentionally absent from active rows below. `V09-KONFESSII-AUTOMOTION` is terminal merged-green through Product PR #1552 and is intentionally absent from active rows. `V11-HARDTEXTS-START-BOOK` is terminal merged-green through Product PR #1551 and is intentionally absent from active rows. `V12-SEARCH-COLD-BOOTSTRAP` is terminal merged-green through Product PR #1554 and is intentionally absent from active rows. `V11-PAGEFIND-LANDING-BODY` is terminal merged-green through Product PR #1555 and is intentionally absent from active rows. `V10-READER-SPEEDRAIL-SSR-FOCUS` is terminal merged-green through Product PR #1553 and is intentionally absent from active rows. `V09-KRAJNE-SCHEMA-IMAGE-DIMENSIONS` is terminal merged-green through Product PR #1564 and is intentionally absent from active rows. `V08-MAPENGINE-INTRO-FOCUS` is terminal merged-green through Product PR #1562 and is intentionally absent from active rows.
+Dependabot #1538 is terminal merged-green with residual NONE. The assigned normal non-CI issue family is terminal: #54 and #1244 are closed/completed; #1242, #1243, #298 and #1360 are closed/not-planned after future work preservation. The reviewed 98-ref historical branch cemetery is physically absent from the live remote with no surviving retired-identity lifecycle issues. `V09-KONFESSII-AUTOMOTION`, `V11-HARDTEXTS-START-BOOK`, `V12-SEARCH-COLD-BOOTSTRAP`, `V11-PAGEFIND-LANDING-BODY`, `V10-READER-SPEEDRAIL-SSR-FOCUS`, `V09-KRAJNE-SCHEMA-IMAGE-DIMENSIONS` and `V08-MAPENGINE-INTRO-FOCUS` are terminal merged-green through their recorded Product PRs and are intentionally absent from active rows. `V11-LEGACY-MOBILE-NAV-STATE` is terminally absorbed by the full-site Site Sections Menu SYSTEM repair in Product PR #1558 (`e13e49c63857a823383ba864553cf815cc527c1e`), with residual NONE, and is likewise absent from active rows.
 
-## DIRECT CURRENT DEFECTS — 3
+## DIRECT CURRENT DEFECTS — 2
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
 | `V12-READER-LINEAR-TEXT-POLLUTION` | `CONFIRMED-CURRENT / P3` | `verification/2026-08-10-wave-12-reader-linear-text-current/REPORT.md` | Preserve rich reader metadata/tooltips while separating auxiliary strings from primary article text projection: no raw local-image/Pagefind metadata prefix, no glossary/footnote/scripture popup text collapsing directly into surrounding prose, and permanent built-output text-projection witnesses across Krajne, Hermenevtika and another independent reader owner without regressing tooltip/citation/accessibility behavior. |
-| `V11-LEGACY-MOBILE-NAV-STATE` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-11-legacy-mobile-nav-current-runtime/REPORT.md` | Converge the shared legacy `.h-mobile-nav` owner so its open state remains recognized by the global overlay/scroll-lock authority for its full lifetime, close/Escape restores opener focus when the menu owned focus, and mobile primary navigation has a truthful no-JS fallback. Preserve current-release browser guards on Hard Texts, Pastor Series and Biografii for >3.2s lock retention, focus restoration where applicable and JavaScript-disabled navigation availability. |
 | `V07-ATLAS-FOCUS-STATE` | `CONFIRMED-CURRENT / P2` | `verification/2026-08-10-wave-07-atlas-focus-state/REPORT.md` | Repair Atlas focus-state ownership so closed off-canvas drawer/detail controls are not sequentially focusable and every transition that hides/replaces the active element has a deterministic surviving focus destination. Cover drawer close/group selection, detail close/related-node replacement, List→Graph, Escape/history/resize at 390/680/681/1440 with activeElement + hidden/offscreen-region assertions; include WebKit in permanent CI. |
 
 ## SYSTEM VERIFICATION LANES — 1
