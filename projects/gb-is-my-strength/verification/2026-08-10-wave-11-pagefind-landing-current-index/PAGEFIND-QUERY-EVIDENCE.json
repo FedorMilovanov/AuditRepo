@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "productSha": "29770e1c7a99478ce7dc2a01abec206ac1daa69b",
+  "releaseRun": 31379283849,
+  "releaseArtifact": 9059689652,
+  "pagefindVersion": "1.5.2",
+  "index": "exact published dist/pagefind",
+  "queries": [
+    {
+      "surface": "/pastor-series/",
+      "kind": "main-only",
+      "query": "Диотрефы нашего времени",
+      "landingPresent": false,
+      "leadingResults": ["/articles/diotrefy-nashego-vremeni/", "/articles/20-antisovetov-pastoru/"]
+    },
+    {
+      "surface": "/pastor-series/",
+      "kind": "main-only",
+      "query": "Анатомия манипуляции",
+      "landingPresent": false,
+      "leadingResults": ["/articles/20-antisovetov-pastoru/"]
+    },
+    {
+      "surface": "/pastor-series/",
+      "kind": "hero-positive-control",
+      "query": "Тёмная сторона кафедры",
+      "landingPresent": true,
+      "landingRank": 1
+    },
+    {
+      "surface": "/hard-texts/",
+      "kind": "main-only",
+      "query": "Римлянам 7: верующий, неверующий или человек под законом",
+      "landingPresent": false,
+      "leadingResults": ["/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/", "/articles/krajne-li-isporcheno-serdce/", "/articles/dzhon-gill-chast-4-ekzeget/"]
+    },
+    {
+      "surface": "/hard-texts/",
+      "kind": "main-only",
+      "query": "Крайне ли испорчено моё сердце",
+      "landingPresent": false,
+      "leadingResults": ["/articles/krajne-li-isporcheno-serdce/", "/articles/chto-bibliya-nazyvaet-serdcem/"]
+    },
+    {
+      "surface": "/hard-texts/",
+      "kind": "hero-positive-control",
+      "query": "Тайны человеческого сердца",
+      "landingPresent": true,
+      "landingRank": 1
+    },
+    {
+      "surface": "/biografii/",
+      "kind": "main-only",
+      "query": "Человек — детство, призвание, семья",
+      "landingPresent": false,
+      "leadingResults": ["/articles/dzhon-gill-chast-1-chelovek/", "/articles/dzhon-gill-spravochnik/", "/articles/dzhon-gill-chast-4-ekzeget/"]
+    },
+    {
+      "surface": "/biografii/",
+      "kind": "main-only",
+      "query": "Исторический контекст — диссентеры, Саутварк, книги",
+      "landingPresent": false,
+      "leadingResults": ["/articles/dzhon-gill-istoricheskiy-kontekst/", "/articles/dzhon-gill-chast-1-chelovek/", "/articles/dzhon-gill-spravochnik/"]
+    },
+    {
+      "surface": "/biografii/",
+      "kind": "hero-positive-control",
+      "query": "Биографии служителей",
+      "landingPresent": true,
+      "landingRank": 1
+    }
+  ],
+  "mechanism": "These route families mark their hero as data-pagefind-body while substantive landing main/card content is outside that body boundary. Positive controls prove the landing itself is indexed; main-only card terms fail to associate the landing with its own substantive content."
+}
