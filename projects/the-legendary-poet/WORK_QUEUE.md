@@ -4,7 +4,16 @@
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **2** — `TLP-COMM-ABUSE-001` (P1) and `TLP-COMM-ACK-001` (P2). These are active defects owned by the MASTER matrix, not optional queue items.
+Current verified engineering rows: **4** — `TLP-COMM-ABUSE-001` (P1), `TLP-COMM-DELIVERY-001` (P2), `TLP-COMM-ORDER-001` (P2), `TLP-COMM-A11Y-001` (P2). These are active defects owned by the MASTER matrix, not optional queue items.
+
+## Optional community product-quality opportunities — not current defect rows
+
+These are useful owner-selected improvements after/alongside the active repair roots; they must not be promoted to MASTER without a fresh defect witness.
+
+- **Production shared-backend canary:** if shared comments/ratings are a required product promise, make configuration/reachability/write-capability observable with a dedicated non-destructive health contract rather than inferring it from optional repository variables.
+- **Moderation/reporting workflow:** keep guest comments registration-free, but consider a reader `Пожаловаться` action, documented moderation states/reasons and an operator path that does not require direct database surgery for routine abuse handling.
+- **Repeat-commenter convenience:** remember the last nickname locally after a durable submission; keep anonymous posting available and do not turn nickname persistence into account registration.
+- **Lower first-comment friction:** keep one sensible comment-kind default and consider moving kind selection behind an optional `Тип комментария` disclosure so the primary path stays optional name → text → submit.
 
 ## Current architecture selection
 
