@@ -16,8 +16,8 @@
 - W0–W7 системные архитектурные и runtime-линии закрыты на своих точных evidence anchors.
 - W6 physical ref retirement завершён; намеренно сохранён только forensic/research archive ref.
 - W7 устранил дублирование route ownership через один machine contract и добавил class-level regression evidence для redirects, NotFound, focus ownership, essay validation и честных archive outcomes.
-- На current source подтверждены активные community engineering roots; их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **5 rows — 1 P1 + 4 P2**.
-- Product repair lane для этих community roots пока не выбран; AuditRepo фиксирует evidence/root causes и не создаёт параллельную implementation authority сам по себе.
+- На current source подтверждены активные engineering roots в community, theme/runtime accessibility, discovery metadata, semantic reader text, authoring ID contract и audit harness. Их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **12 rows — 1 P1 + 11 P2**.
+- Product repair lane для этих current roots пока не выбран; AuditRepo фиксирует evidence/root causes и не создаёт параллельную implementation authority сам по себе.
 - Hall #369 terminally closed; frozen Hall safety/evidence остаётся исторической authority, но не текущей architecture lane.
 - Неподтверждённые media candidates, source acquisition, attribution и rights остаются отдельной owner/editorial decision family; техническое закрытие архитектуры не даёт прав на публикацию.
 
@@ -26,7 +26,8 @@
 - Документная карта и fact ownership: [`DOC_MAP.md`](DOC_MAP.md)
 - **Текущие verified engineering bugs:** [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md)
 - Возможные, но необязательные направления: [`WORK_QUEUE.md`](WORK_QUEUE.md)
-- Последний community current-check: [`verification/2026-08-11-community-reconciliation-readstate-current/REPORT.md`](verification/2026-08-11-community-reconciliation-readstate-current/REPORT.md)
+- **Последний current-check:** [`verification/2026-08-12-cross-surface-runtime-authority-current/REPORT.md`](verification/2026-08-12-cross-surface-runtime-authority-current/REPORT.md)
+- Последний community reconciliation/read-state check: [`verification/2026-08-11-community-reconciliation-readstate-current/REPORT.md`](verification/2026-08-11-community-reconciliation-readstate-current/REPORT.md)
 - Предыдущие community current-checks: [`verification/2026-08-11-community-write-integrity-current/REPORT.md`](verification/2026-08-11-community-write-integrity-current/REPORT.md), [`verification/2026-08-11-community-delivery-ranking-a11y-current/REPORT.md`](verification/2026-08-11-community-delivery-ranking-a11y-current/REPORT.md)
 - Системные темы: [`verified/SYSTEM_THEMES.md`](verified/SYSTEM_THEMES.md)
 - Компактная история волн и закрытий: [`verified/CLOSURE_LEDGER.md`](verified/CLOSURE_LEDGER.md)
