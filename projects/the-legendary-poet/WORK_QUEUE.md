@@ -4,7 +4,7 @@
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **14 — 1 P1 + 13 P2**. The active IDs and terminal outcomes are owned only by the MASTER matrix; this optional queue does not duplicate them. No Product repair lane is selected yet.
+Current verified engineering rows: **15 — 1 P1 + 14 P2**. The active IDs and terminal outcomes are owned only by the MASTER matrix; this optional queue does not duplicate them. No Product repair lane is selected yet.
 
 ## Optional community product-quality opportunities — not current defect rows
 
@@ -20,6 +20,7 @@ These are useful owner-selected improvements after/alongside the active repair r
 
 - **Reader-visible update provenance:** article data can carry `dateModified`; decide whether substantial updates should additionally render an explicit `Обновлено` label in the reader UI rather than remaining machine metadata only.
 - **Command Palette scope copy:** the Footer exposes archive/policy destinations that the palette index does not; consider narrowing `поиск и все разделы` wording or deliberately expanding the palette index. This is not a navigation dead-end.
+- **Canonical poet portrait provenance:** the current `Poet` contract has generic `photo` / optional `coverImage` fields without kind/source/credit metadata. Do not promote this to a defect without exact asset-origin evidence, but consider adding provenance fields if the owner wants every canonical portrait classified independently of current origin. Longform visual provenance remains Product #270 territory.
 
 ## Current architecture selection
 
