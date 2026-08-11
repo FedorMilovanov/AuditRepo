@@ -4,7 +4,7 @@
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **12 — 1 P1 + 11 P2**. The active IDs and terminal outcomes are owned only by the MASTER matrix; this optional queue does not duplicate them. No Product repair lane is selected yet.
+Current verified engineering rows: **14 — 1 P1 + 13 P2**. The active IDs and terminal outcomes are owned only by the MASTER matrix; this optional queue does not duplicate them. No Product repair lane is selected yet.
 
 ## Optional community product-quality opportunities — not current defect rows
 
