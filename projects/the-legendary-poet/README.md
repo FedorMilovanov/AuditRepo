@@ -16,7 +16,7 @@
 - W0–W7 системные архитектурные и runtime-линии закрыты на своих точных evidence anchors.
 - W6 physical ref retirement завершён; намеренно сохранён только forensic/research archive ref.
 - W7 устранил дублирование route ownership через один machine contract и добавил class-level regression evidence для redirects, NotFound, focus ownership, essay validation и честных archive outcomes.
-- На current source подтверждены активные engineering roots в community, theme/runtime accessibility, discovery metadata, semantic reader text, authoring ID contract, audit harness, audio-session convergence, analytics consent state и rating-source authority. Их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **15 rows — 1 P1 + 14 P2**.
+- На current source подтверждены активные engineering roots в community, theme/runtime accessibility, discovery metadata, semantic reader text, authoring ID contract, audit harness, audio-session convergence, analytics consent/route state и rating-source authority. Их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **16 rows — 1 P1 + 14 P2 + 1 P3**.
 - Product repair lane для этих current roots пока не выбран; AuditRepo фиксирует evidence/root causes и не создаёт параллельную implementation authority сам по себе.
 - Hall #369 terminally closed; frozen Hall safety/evidence остаётся исторической authority, но не текущей architecture lane.
 - Неподтверждённые media candidates, source acquisition, attribution и rights остаются отдельной owner/editorial decision family; техническое закрытие архитектуры не даёт прав на публикацию.
@@ -26,7 +26,8 @@
 - Документная карта и fact ownership: [`DOC_MAP.md`](DOC_MAP.md)
 - **Текущие verified engineering bugs:** [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md)
 - Возможные, но необязательные направления: [`WORK_QUEUE.md`](WORK_QUEUE.md)
-- **Последний current-check:** [`verification/2026-08-12-audio-interaction-a11y-current/REPORT.md`](verification/2026-08-12-audio-interaction-a11y-current/REPORT.md)
+- **Последний current-check:** [`verification/2026-08-12-analytics-route-settlement-current/REPORT.md`](verification/2026-08-12-analytics-route-settlement-current/REPORT.md)
+- Audio interaction accessibility: [`verification/2026-08-12-audio-interaction-a11y-current/REPORT.md`](verification/2026-08-12-audio-interaction-a11y-current/REPORT.md)
 - Rating source / portrait provenance: [`verification/2026-08-12-rating-source-provenance-current/REPORT.md`](verification/2026-08-12-rating-source-provenance-current/REPORT.md)
 - Browser state convergence: [`verification/2026-08-12-browser-state-convergence-current/REPORT.md`](verification/2026-08-12-browser-state-convergence-current/REPORT.md)
 - Cross-surface runtime wave: [`verification/2026-08-12-cross-surface-runtime-authority-current/REPORT.md`](verification/2026-08-12-cross-surface-runtime-authority-current/REPORT.md)
