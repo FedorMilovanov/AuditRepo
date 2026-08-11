@@ -4,7 +4,7 @@
 **Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.  
 **Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.  
 **Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.  
-**Latest current verification:** `../verification/2026-08-12-browser-state-convergence-current/REPORT.md`.
+**Latest current verification:** `../verification/2026-08-12-rating-source-provenance-current/REPORT.md`.
 
 This file is intentionally short. Closed, absorbed, stale, invalid and superseded findings do not remain here merely to preserve history. The section/count shape below is retained because AuditRepo's shared validator treats `verified/MASTER_BUG_MATRIX.md` as a machine-readable counter surface.
 
@@ -18,7 +18,7 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 |---|---|---|---|
 | `TLP-COMM-ABUSE-001` | `CONFIRMED-CURRENT / PUBLIC-INTEGRITY / P1` | `../verification/2026-08-11-community-write-integrity-current/REPORT.md`; `../verification/2026-08-12-cross-surface-runtime-authority-current/REPORT.md`; Product `main@d59cceccb0c49af59b1be38d4c547a6240b3005a`: caller-controlled `voter_id` remains the public uniqueness/rate-limit authority, fresh tabs can bootstrap different first-use UUIDs, and public RPCs validate target syntax rather than canonical published target membership | Put community writes behind a trusted server-side boundary that does not trust caller-rotatable UUIDs: server-verified challenge/session/throttle plus canonical-target validation, preserve DB uniqueness as defense in depth, and add rotated-UUID burst plus simultaneous-clean-tab identity regressions without requiring account registration. |
 
-## 🟡 P2 — ОТКРЫТО (13)
+## 🟡 P2 — ОТКРЫТО (14)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
@@ -35,6 +35,7 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 | `TLP-AUTHORING-ID-001` | `CONFIRMED-CURRENT / AUTHORING-RELEASE-CONTRACT / P2` | `../verification/2026-08-12-cross-surface-runtime-authority-current/REPORT.md`; documented `new-poet` scaffolding can derive Cyrillic/noncanonical ids and asset paths that render through authoring/router layers but violate the ASCII community target contract, after which UI misdiagnoses the failure as blocked browser storage | Make poet/poem/route/community/asset identity one validated release contract with deterministic ASCII-kebab transliteration, align scaffold and guide output, report the real validation cause, and add a Cyrillic-author fixture that passes the full identity/asset/community preflight. |
 | `TLP-AUDIO-SESSION-001` | `CONFIRMED-CURRENT / PERSISTENCE-CONVERGENCE / DATA-LOSS / P2` | `../verification/2026-08-12-browser-state-convergence-current/REPORT.md`; `/archive` promises browser-tab synchronization, but `tlp-audio-session:v2` uses whole-snapshot read/clone/write, Provider listens only to playback-coordination storage, and a stale tab can later replace `completedTrackIds` and erase a completion persisted by another tab | Give audio session state a conflict-safe cross-document merge/version contract, subscribe mounted audio/archive state to accepted session changes, preserve independent per-track progress/completion writes, and add two-page regressions proving X+Y completions/positions survive stale sequential writers while audible playback still has one winner. |
 | `TLP-ANALYTICS-CONSENT-001` | `CONFIRMED-CURRENT / PRIVACY-CONSENT / STATE-AUTHORITY / P2` | `../verification/2026-08-12-browser-state-convergence-current/REPORT.md`; first startup is correctly grant-gated, but consent changes do not converge through storage events and a later `denied` decision has no Product revocation/teardown path for already initialized analytics; blocked-storage grant also hides the banner while the tracker re-reads no effective consent | Make consent one browser-wide observable state, reconcile stale tabs, make later `denied` authoritative over already-started providers through supported revoke/disable/teardown behavior, expose effective vs persisted consent honestly under storage failure, and add instrumented two-tab `null→granted→denied` regressions proving no further Product/provider tracking after denial. |
+| `TLP-RATING-SOURCE-001` | `CONFIRMED-CURRENT / DATA-PRESENTATION / SOURCE-AUTHORITY / P2` | `../verification/2026-08-12-rating-source-provenance-current/REPORT.md`; `/ratings` defines `poet.rating` as editorial `/10` and community aggregates as reader `/5`, but PoetCard/InfoCard show the editorial value as an unlabeled Star beside reader social proof, while the default reader-sort comparator uses editorial rating as the final tie-break and therefore editorially orders all zero-vote rows into numbered reader places | Carry rating source/scale with the value: label or retire static badges, make poem static score ownership explicit, keep default reader ranking dependent only on reader-owned inputs, present unrated poets as unranked/separate tail, and add tests proving editorial score changes cannot move reader `Место` for zero-vote or exact-reader-tie rows. |
 
 ## 🟢 P3 — ОТКРЫТО (0)
 
@@ -47,18 +48,19 @@ No verified-current P3 engineering rows.
 | Закрыто (fixed) | 0 |
 | **P0 открыто** | **0** |
 | P1 открыто | 1 |
-| P2 открыто | 13 |
+| P2 открыто | 14 |
 | P3 открыто | 0 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **14** |
+| **Всего открыто (матрица)** | **15** |
 
 Current architecture selection: **none**. Hall #369 is terminally closed and remains historical/frozen safety authority, not a current Product lane or defect row; see `../WORK_QUEUE.md` and its terminal Hall closure evidence.
 
 ## Explicitly outside this matrix
 
 - Production Supabase variable values are deployment-side state and were not readable from repository source during the 2026-08-11/12 audit. The deploy workflow injects them optionally and the UI exposes local-vs-shared mode; inability to prove their current values is an evidence boundary, not an additional active defect row.
-- Privacy wording around the pseudonymous community browser UUID/local queue, reader-visible article update labels and broader Command Palette coverage remain product/editorial transparency or polish unless a stronger required contract is selected; they are not additional engineering rows in this wave. Analytics consent convergence/revocation is independent and is active as `TLP-ANALYTICS-CONSENT-001`.
+- Canonical poet portraits currently have only generic `photo`/`coverImage` fields and no provenance kind/source/credit contract. The available current source/issue evidence does not prove that the deployed `/images/<poet>.jpg` files are generated/reconstructed assets, so absence of metadata alone is not promoted as a current mislabeling defect. Product #270 separately owns longform visual provenance.
+- Privacy wording around the pseudonymous community browser UUID/local queue, reader-visible article update labels and broader Command Palette coverage remain product/editorial transparency or polish unless a stronger required contract is selected; they are not additional engineering rows. Analytics consent convergence/revocation is independent and active as `TLP-ANALYTICS-CONSENT-001`.
 - Research/source-acquisition/editorial issues such as long-form authoring, archive acquisition, visual-rights review and myth ledgers are not engineering bugs merely because they remain open in the Product issue tracker.
 - The Mayakovsky C01–C30 media family is closed for the current Product scope: 5 active, 1 verified reserve, 24 terminal exclusions, 0 unresolved.
 - W0–W7 architecture/runtime waves, W6 ref retirement, native-scroll repair, canonical poet authority, historical semantic audit-harness hardening, Lenis install-dependency cleanup, browser-payload resilience, deterministic audio cross-tab playback arbitration, precision-safe audio logical ordering and personal-archive cross-tab convergence are historical closure evidence, not current backlog. New `TLP-AUDIO-SESSION-001` concerns the independent persisted session key/state, not the closed playback-claim arbitration protocol. New `TLP-AUDIT-004` is based on distinct current false-green witnesses and does not resurrect old symptom rows.
