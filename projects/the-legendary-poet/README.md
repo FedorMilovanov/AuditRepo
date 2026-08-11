@@ -15,10 +15,10 @@
 
 - W0–W7 системные архитектурные и runtime-линии закрыты на своих точных evidence anchors.
 - W6 physical ref retirement завершён; намеренно сохранён только forensic/research archive ref.
-- На current source подтверждены активные engineering roots в community, theme/runtime accessibility/contrast/motion, discovery metadata, semantic reader text/progress, authoring release contract, audit harness, audio session/release/completion integrity, analytics consent/route state, rating source/method/URL authority, production legacy-route hosting, primary/secondary data containment, global search authority и Home initial-media delivery. Их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **27 rows — 1 P1 + 21 P2 + 5 P3**.
+- На current source подтверждены активные engineering roots в community, theme/runtime accessibility/contrast/motion/status, discovery metadata, semantic reader text/progress, authoring release contract, audit harness, audio session/release/completion integrity, analytics consent/route state, rating source/method/URL authority, production legacy-route hosting, primary/secondary data containment, global search authority, Home initial-media delivery и persistent shell visual ownership. Их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **30 rows — 1 P1 + 21 P2 + 8 P3**.
 - Product repair lane для этих current roots пока не выбран; AuditRepo фиксирует evidence/root causes и не создаёт параллельную implementation authority сам по себе.
 - Current community SQL source корректно включает RLS/revokes/public views без `voter_id`; deployed Supabase state остаётся отдельной evidence boundary.
-- Breadcrumb current semantics and shared image-lightbox dialog ownership were rechecked as correct. Sampled published essay image blocks explicitly classify their media kind; missing-kind→`archive` remains a fail-closed authoring guard gap, not a current mislabel claim.
+- Negative evidence закреплено: Breadcrumb current semantics, shared image-lightbox dialog ownership, community form labels/help, RatingStars keyboard radiogroup semantics, inspected external-link hygiene and React-escaped comment text are not current roots; sampled published essay images explicitly classify `kind`.
 - Hall #369 terminally closed; frozen Hall safety/evidence остаётся исторической authority, но не текущей architecture lane.
 
 ## Navigation
@@ -26,7 +26,13 @@
 - Документная карта и fact ownership: [`DOC_MAP.md`](DOC_MAP.md)
 - **Текущие verified engineering bugs:** [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md)
 - Возможные, но необязательные направления: [`WORK_QUEUE.md`](WORK_QUEUE.md)
-- **Последний current-check:** [`verification/2026-08-12-reader-interaction-media-kind-current/REPORT.md`](verification/2026-08-12-reader-interaction-media-kind-current/REPORT.md)
+- **Последний current-check:** [`verification/2026-08-12-shell-noise-ownership-current/REPORT.md`](verification/2026-08-12-shell-noise-ownership-current/REPORT.md)
+- Community comment text fidelity: [`verification/2026-08-12-community-comment-text-fidelity-current/REPORT.md`](verification/2026-08-12-community-comment-text-fidelity-current/REPORT.md)
+- Analytics consent control: [`verification/2026-08-12-analytics-consent-control-current/REPORT.md`](verification/2026-08-12-analytics-consent-control-current/REPORT.md)
+- Form/security/non-text contrast: [`verification/2026-08-12-form-security-nontext-contrast-current/REPORT.md`](verification/2026-08-12-form-security-nontext-contrast-current/REPORT.md)
+- Analytics query/pageview semantics: [`verification/2026-08-12-analytics-query-pageview-current/REPORT.md`](verification/2026-08-12-analytics-query-pageview-current/REPORT.md)
+- Poets status messages: [`verification/2026-08-12-poets-status-message-current/REPORT.md`](verification/2026-08-12-poets-status-message-current/REPORT.md)
+- Reader interaction / media-kind boundaries: [`verification/2026-08-12-reader-interaction-media-kind-current/REPORT.md`](verification/2026-08-12-reader-interaction-media-kind-current/REPORT.md)
 - Reduced-motion CSS animation: [`verification/2026-08-12-reduced-motion-css-animation-current/REPORT.md`](verification/2026-08-12-reduced-motion-css-animation-current/REPORT.md)
 - Authoring provenance / community SQL security: [`verification/2026-08-12-authoring-provenance-community-security-current/REPORT.md`](verification/2026-08-12-authoring-provenance-community-security-current/REPORT.md)
 - SEO error / hydration parity: [`verification/2026-08-12-seo-error-hydration-parity-current/REPORT.md`](verification/2026-08-12-seo-error-hydration-parity-current/REPORT.md)
