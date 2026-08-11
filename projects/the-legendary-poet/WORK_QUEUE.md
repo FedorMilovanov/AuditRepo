@@ -4,7 +4,7 @@
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **5** — `TLP-COMM-ABUSE-001` (P1), `TLP-COMM-DELIVERY-001` (P2), `TLP-COMM-ORDER-001` (P2), `TLP-COMM-A11Y-001` (P2), `TLP-COMM-READSTATE-001` (P2). These are active defects owned by the MASTER matrix, not optional queue items. No Product repair lane is selected yet.
+Current verified engineering rows: **12 — 1 P1 + 11 P2**. The active IDs and terminal outcomes are owned only by the MASTER matrix; this optional queue does not duplicate them. No Product repair lane is selected yet.
 
 ## Optional community product-quality opportunities — not current defect rows
 
@@ -14,6 +14,12 @@ These are useful owner-selected improvements after/alongside the active repair r
 - **Moderation/reporting workflow:** keep guest comments registration-free, but consider a reader `Пожаловаться` action, documented moderation states/reasons and an operator path that does not require direct database surgery for routine abuse handling.
 - **Repeat-commenter convenience:** remember the last nickname locally after a durable submission; keep anonymous posting available and do not turn nickname persistence into account registration.
 - **Lower first-comment friction:** keep one sensible comment-kind default and consider moving kind selection behind an optional `Тип комментария` disclosure so the primary path stays optional name → text → submit.
+- **Community privacy transparency:** if the owner wants the privacy page to describe implementation details more precisely, explain the stable pseudonymous browser UUID and local pending outbox without presenting them as an account/profile.
+
+## Optional editorial/discovery product decisions — not current defect rows
+
+- **Reader-visible update provenance:** article data can carry `dateModified`; decide whether substantial updates should additionally render an explicit `Обновлено` label in the reader UI rather than remaining machine metadata only.
+- **Command Palette scope copy:** the Footer exposes archive/policy destinations that the palette index does not; consider narrowing `поиск и все разделы` wording or deliberately expanding the palette index. This is not a navigation dead-end.
 
 ## Current architecture selection
 
