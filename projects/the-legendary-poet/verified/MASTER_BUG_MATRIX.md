@@ -4,7 +4,7 @@
 **Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.  
 **Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.  
 **Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.  
-**Latest current verification:** `../verification/2026-08-12-home-media-archive-focus-current/REPORT.md`.
+**Latest current verification:** `../verification/2026-08-12-seo-error-hydration-parity-current/REPORT.md`.
 
 This file is intentionally short. Closed, absorbed, stale, invalid and superseded findings do not remain here merely to preserve history. The section/count shape below is retained because AuditRepo's shared validator treats `verified/MASTER_BUG_MATRIX.md` as a machine-readable counter surface.
 
@@ -18,7 +18,7 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 |---|---|---|---|
 | `TLP-COMM-ABUSE-001` | `CONFIRMED-CURRENT / PUBLIC-INTEGRITY / P1` | Caller-controlled community identity remains public uniqueness/rate-limit authority; fresh tabs can bootstrap different UUIDs and target membership is not server-canonical | Put writes behind trusted server-side anti-abuse/target authority; retain DB uniqueness defense and adversarial concurrency/rotated-ID proof without mandatory registration. |
 
-## 🟡 P2 — ОТКРЫТО (20)
+## 🟡 P2 — ОТКРЫТО (21)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
@@ -27,11 +27,12 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 | `TLP-COMM-A11Y-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / P2` | Mutation outcomes lack reusable live-status semantics; sort state partly visual-only | Reusable live-status owner, programmatic state and cross-browser accessibility proof. |
 | `TLP-COMM-READSTATE-001` | `CONFIRMED-CURRENT / READ-STATE-TRUTH / P2` | Failed/unresolved reads can appear as genuine empty/zero | Explicit loading/error/ready-empty/ready-data states; preserve prior loaded data on failure. |
 | `TLP-COMM-TARGET-001` | `CONFIRMED-CURRENT / DATA-INTEGRITY / TARGET-STATE / P2` | Dirty editor state can survive detail A→B while mutation closures now target B | Key/reset/prompt state by target identity and certify dirty-draft navigation. |
-| `TLP-THEME-001` | `CONFIRMED-CURRENT / SYSTEMIC / THEME-OWNERSHIP / P2` | Light token ownership incomplete; prepaint/chrome/cross-tab theme state drift | Semantic tokens, prepaint apply, metadata sync, cross-tab convergence and contrast certification. |
+| `TLP-THEME-001` | `CONFIRMED-CURRENT / SYSTEMIC / THEME-OWNERSHIP / P2` | Light token ownership incomplete; prepaint/chrome/cross-tab theme state drift | Semantic tokens, prepaint apply, metadata sync, cross-tab convergence and light-theme contrast certification. |
 | `TLP-A11Y-RUNTIME-001` | `CONFIRMED-CURRENT / SYSTEMIC / FOCUS-NAV-SEMANTICS / P2` | Command/listbox focus, hidden tabbable chrome, same-path/immersive focus, nested main, invisible audio seek, mobile fixed chrome, scroll-only anchors, disappearing ScrollToTop focus and archive row removal lack one interaction authority | One nav/focus/dialog/hash/hidden-chrome/collection-mutation contract, visible seek focus, stable focus handoffs and delayed-target settlement with Chromium + WebKit proof. |
-| `TLP-DISCOVERY-001` | `CONFIRMED-CURRENT / SYSTEMIC / MACHINE-METADATA-OWNERSHIP / P2` | Sitemap/OG modification facts drift and IndexNow submits whole inventory per deploy | One route/change metadata authority deriving sitemap/prerender/runtime/IndexNow with parity/delta proof. |
+| `TLP-A11Y-CONTRAST-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / DARK-CONTRAST / SYSTEMIC / P2` | `../verification/2026-08-12-dark-contrast-current/REPORT.md`; functional 10–14px text/control labels across Footer, Archive, Ratings and Community use 24–40% foreground opacity on near-black surfaces, a range that cannot meet normal-text 4.5:1 even with pure white | Replace arbitrary low-opacity functional text with semantic readable text/control tokens; certify actual computed foreground/background contrast in dark and light themes while retaining low contrast only for genuinely non-informational decoration. |
+| `TLP-DISCOVERY-001` | `CONFIRMED-CURRENT / SYSTEMIC / MACHINE-METADATA-OWNERSHIP / P2` | Sitemap/OG/change facts drift; IndexNow submits whole inventory per deploy; `../verification/2026-08-12-seo-error-hydration-parity-current/REPORT.md` proves static 404 removes canonical/og:url while hydrated NotFound recreates them and route-error fallback can inherit previous head | One route/change metadata state machine for ready/noindex/not-found/loading/error/redirect states, deriving sitemap/prerender/runtime/IndexNow with direct-vs-hydrated and failure-state parity proof. |
 | `TLP-READER-TEXT-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / SEMANTIC-TEXT / P2` | Animated poem words are sole DOM text with CSS-only spacing and `select-none` | Exact canonical selectable text layer separated from visual animation; DOM/copy/a11y proof. |
-| `TLP-AUDIT-004` | `CONFIRMED-CURRENT / AUDIT-HARNESS / FALSE-GREEN / P2` | QA still has proxy/preview gaps across theme/hash/community/SEO/cross-tab/consent/audio/analytics/release/redirect/discovery/secondary/search/statistics/progress/URL-state/completion/home-media/archive-focus behavior | Replace with exact outcome regressions including initial Home media request/byte budgets and keyboard deletion focus continuity. |
+| `TLP-AUDIT-004` | `CONFIRMED-CURRENT / AUDIT-HARNESS / FALSE-GREEN / P2` | QA still has proxy/preview gaps across theme/hash/community/SEO/cross-tab/consent/audio/analytics/release/redirect/discovery/secondary/search/statistics/progress/URL-state/completion/home-media/archive-focus/contrast and hydrated error-head behavior | Replace with exact outcome regressions, including computed contrast, initial Home media budgets, collection focus continuity and static-vs-hydrated/error SEO parity. |
 | `TLP-AUTHORING-ID-001` | `CONFIRMED-CURRENT / AUTHORING-RELEASE-CONTRACT / P2` | Scaffold/guide/validators disagree on IDs/files/required fields/assets/community constraints | One validated ASCII-kebab producer/consumer identity contract with aligned guide/scaffold/CI fixtures. |
 | `TLP-AUDIO-SESSION-001` | `CONFIRMED-CURRENT / PERSISTENCE-CONVERGENCE / DATA-LOSS / P2` | Whole-snapshot session writes can erase cross-tab progress/completion despite tab-sync promise | Conflict-safe merge/version semantics, session-key subscription and two-page convergence proof. |
 | `TLP-ANALYTICS-CONSENT-001` | `CONFIRMED-CURRENT / PRIVACY-CONSENT / STATE-AUTHORITY / P2` | Consent initially gates correctly but later cross-tab deny has no active-provider revocation | Browser-wide observable consent, authoritative revoke/disable and grant→deny cessation proof. |
@@ -50,7 +51,7 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 | `TLP-ANALYTICS-ROUTE-001` | `CONFIRMED-CURRENT / ANALYTICS-DATA-QUALITY / ROUTE-LIFECYCLE / P3` | New URL can be emitted with previous title before destination SEO settles | Emit from settled route lifecycle and certify delayed-route path/title truth. |
 | `TLP-READING-PROGRESS-001` | `CONFIRMED-CURRENT / READER-SEMANTICS / PROGRESS-BOUNDARY / P3` | Root scroll/document height extends reading progress through sources/community/footer | Own progress by explicit article boundaries and prove 100% at article end despite long post-article tail. |
 | `TLP-AUDIO-COMPLETION-001` | `CONFIRMED-CURRENT / AUDIO-SEMANTICS / COMPLETION-TRUTH / P3` | Any timeupdate at ≥97% persists categorical completion, including seek-to-97%, while Archive renders 100% and `Прослушано полностью` | Align producer and reader semantics: actual completion must require an honest end/natural-near-end contract, or rename the 97% heuristic; certify seek-to-97% vs native ended behavior. |
-| `TLP-HOME-MEDIA-PERF-001` | `CONFIRMED-CURRENT / PERFORMANCE / INITIAL-MEDIA / P3` | `../verification/2026-08-12-home-media-archive-focus-current/REPORT.md`; all six Home hero portraits are `loading=eager`, current files total 880,330 bytes, no responsive `srcset` is supplied, and build budgets cover JS/CSS rather than initial raster transfer | Define the true critical hero request set, defer noncritical portraits, ship responsive image candidates and add mobile/desktop initial-media request+byte budgets without changing the six-poet visual concept unless owner-selected. |
+| `TLP-HOME-MEDIA-PERF-001` | `CONFIRMED-CURRENT / PERFORMANCE / INITIAL-MEDIA / P3` | All six Home hero portraits are eager, current files total 880,330 bytes, no responsive `srcset` is supplied, and build budgets cover JS/CSS rather than initial raster transfer | Define critical hero request set, defer noncritical portraits, ship responsive candidates and add mobile/desktop initial-media request+byte budgets. |
 
 ## Summary
 
@@ -59,11 +60,11 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 | Закрыто (fixed) | 0 |
 | **P0 открыто** | **0** |
 | P1 открыто | 1 |
-| P2 открыто | 20 |
+| P2 открыто | 21 |
 | P3 открыто | 4 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **25** |
+| **Всего открыто (матрица)** | **26** |
 
 Current architecture selection: **none**. Hall #369 remains terminally closed and historical/frozen safety authority, not a current Product lane.
 
@@ -73,7 +74,7 @@ Current architecture selection: **none**. Hall #369 remains terminally closed an
 - Canonical poet portraits lack generic provenance fields, but current evidence does not prove deployed portrait bytes are reconstructions; Product #270 owns longform visual provenance.
 - No current future-dated published release was found; the permissive date guard alone is not promoted.
 - Music workflow supports replacing a master under its stable release record while session state is keyed only by track id. This is a latent version-identity invariant; no current master-replacement witness was established, so it is not another active row.
-- `AudioPlayerProvider` sits above the lower app/route ErrorBoundaries, but no normal current provider-level render throw witness was established; topology alone is not promoted.
+- `AudioPlayerProvider` sits above lower ErrorBoundaries, but no normal current provider-level render throw witness was established; topology alone is not promoted.
 - Legacy redirect finding is source/platform-contract confirmed, not direct observation of every live custom-domain response.
 - Research/editorial work, Hall and W0–W7 historical closures are not current engineering rows merely because long-term work remains.
 
