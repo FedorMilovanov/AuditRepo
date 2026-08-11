@@ -58,7 +58,7 @@ Machine stage intentionally remains `pushkinVerticalSlice` as a **frozen fail-cl
 
 Product #403 завершил текущую автономно допустимую source/offline Pushkin slice работу:
 
-- exact tested head: `653ed65c102c09c39803193ddcbe3c0f58ef3fd`;
+- exact tested head: `653ed65c102c09c39803193d95addf8aef739a34`;
 - resulting Product main: `256dd19f1e39eef341ca260a4d8c72e1b6f19d73`;
 - source-based Pushkin offline exhibit generated;
 - exact documentary source bytes bound to SHA identities;
