@@ -4,7 +4,7 @@
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **4** — `TLP-COMM-ABUSE-001` (P1), `TLP-COMM-DELIVERY-001` (P2), `TLP-COMM-ORDER-001` (P2), `TLP-COMM-A11Y-001` (P2). These are active defects owned by the MASTER matrix, not optional queue items.
+Current verified engineering rows: **5** — `TLP-COMM-ABUSE-001` (P1), `TLP-COMM-DELIVERY-001` (P2), `TLP-COMM-ORDER-001` (P2), `TLP-COMM-A11Y-001` (P2), `TLP-COMM-READSTATE-001` (P2). These are active defects owned by the MASTER matrix, not optional queue items. No Product repair lane is selected yet.
 
 ## Optional community product-quality opportunities — not current defect rows
 
