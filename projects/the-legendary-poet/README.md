@@ -15,19 +15,20 @@
 
 - W0–W7 системные архитектурные и runtime-линии закрыты на своих точных evidence anchors.
 - W6 physical ref retirement завершён; намеренно сохранён только forensic/research archive ref.
-- W7 устранил дублирование route ownership через один machine contract и добавил class-level regression evidence для redirects, NotFound, focus ownership, essay validation и честных archive outcomes.
-- На current source подтверждены активные engineering roots в community, theme/runtime accessibility/contrast, discovery metadata, semantic reader text/progress, authoring identity+portrait release contract, audit harness, audio session/release/completion integrity, analytics consent/route state, rating source/method/URL authority, production legacy-route hosting, primary/secondary data containment, global search authority и Home initial-media delivery. Их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **26 rows — 1 P1 + 21 P2 + 4 P3**.
+- На current source подтверждены активные engineering roots в community, theme/runtime accessibility/contrast/motion, discovery metadata, semantic reader text/progress, authoring release contract, audit harness, audio session/release/completion integrity, analytics consent/route state, rating source/method/URL authority, production legacy-route hosting, primary/secondary data containment, global search authority и Home initial-media delivery. Их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **27 rows — 1 P1 + 21 P2 + 5 P3**.
 - Product repair lane для этих current roots пока не выбран; AuditRepo фиксирует evidence/root causes и не создаёт параллельную implementation authority сам по себе.
-- Current community SQL source корректно включает RLS/revokes/public views без `voter_id`; deployed Supabase state остаётся отдельной evidence boundary, а не поводом выдумывать дыру.
+- Current community SQL source корректно включает RLS/revokes/public views без `voter_id`; deployed Supabase state остаётся отдельной evidence boundary.
+- Breadcrumb current semantics and shared image-lightbox dialog ownership were rechecked as correct. Sampled published essay image blocks explicitly classify their media kind; missing-kind→`archive` remains a fail-closed authoring guard gap, not a current mislabel claim.
 - Hall #369 terminally closed; frozen Hall safety/evidence остаётся исторической authority, но не текущей architecture lane.
-- Неподтверждённые media candidates, source acquisition, attribution и rights остаются отдельной owner/editorial decision family; техническое закрытие архитектуры не даёт прав на публикацию.
 
 ## Navigation
 
 - Документная карта и fact ownership: [`DOC_MAP.md`](DOC_MAP.md)
 - **Текущие verified engineering bugs:** [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md)
 - Возможные, но необязательные направления: [`WORK_QUEUE.md`](WORK_QUEUE.md)
-- **Последний current-check:** [`verification/2026-08-12-authoring-provenance-community-security-current/REPORT.md`](verification/2026-08-12-authoring-provenance-community-security-current/REPORT.md)
+- **Последний current-check:** [`verification/2026-08-12-reader-interaction-media-kind-current/REPORT.md`](verification/2026-08-12-reader-interaction-media-kind-current/REPORT.md)
+- Reduced-motion CSS animation: [`verification/2026-08-12-reduced-motion-css-animation-current/REPORT.md`](verification/2026-08-12-reduced-motion-css-animation-current/REPORT.md)
+- Authoring provenance / community SQL security: [`verification/2026-08-12-authoring-provenance-community-security-current/REPORT.md`](verification/2026-08-12-authoring-provenance-community-security-current/REPORT.md)
 - SEO error / hydration parity: [`verification/2026-08-12-seo-error-hydration-parity-current/REPORT.md`](verification/2026-08-12-seo-error-hydration-parity-current/REPORT.md)
 - Dark-theme contrast: [`verification/2026-08-12-dark-contrast-current/REPORT.md`](verification/2026-08-12-dark-contrast-current/REPORT.md)
 - Home media / archive focus: [`verification/2026-08-12-home-media-archive-focus-current/REPORT.md`](verification/2026-08-12-home-media-archive-focus-current/REPORT.md)
@@ -41,13 +42,9 @@
 - Rating source / portrait provenance: [`verification/2026-08-12-rating-source-provenance-current/REPORT.md`](verification/2026-08-12-rating-source-provenance-current/REPORT.md)
 - Browser state convergence: [`verification/2026-08-12-browser-state-convergence-current/REPORT.md`](verification/2026-08-12-browser-state-convergence-current/REPORT.md)
 - Cross-surface runtime wave: [`verification/2026-08-12-cross-surface-runtime-authority-current/REPORT.md`](verification/2026-08-12-cross-surface-runtime-authority-current/REPORT.md)
-- Последний community reconciliation/read-state check: [`verification/2026-08-11-community-reconciliation-readstate-current/REPORT.md`](verification/2026-08-11-community-reconciliation-readstate-current/REPORT.md)
-- Предыдущие community current-checks: [`verification/2026-08-11-community-write-integrity-current/REPORT.md`](verification/2026-08-11-community-write-integrity-current/REPORT.md), [`verification/2026-08-11-community-delivery-ranking-a11y-current/REPORT.md`](verification/2026-08-11-community-delivery-ranking-a11y-current/REPORT.md)
+- Community reconciliation/read-state: [`verification/2026-08-11-community-reconciliation-readstate-current/REPORT.md`](verification/2026-08-11-community-reconciliation-readstate-current/REPORT.md)
 - Системные темы: [`verified/SYSTEM_THEMES.md`](verified/SYSTEM_THEMES.md)
 - Компактная история волн и закрытий: [`verified/CLOSURE_LEDGER.md`](verified/CLOSURE_LEDGER.md)
-- W7 detailed verification: [`verification/2026-08-06-w7-route-runtime-wave/REPORT.md`](verification/2026-08-06-w7-route-runtime-wave/REPORT.md)
-- Историческая working matrix: [`working/MASTER_BUG_MATRIX_2026-08-05.md`](working/MASTER_BUG_MATRIX_2026-08-05.md)
-- W6 inventory and deletion evidence: [`working/W6_BRANCH_ARTIFACT_INVENTORY_2026-08-05.md`](working/W6_BRANCH_ARTIFACT_INVENTORY_2026-08-05.md)
 - Historical verified/reverify evidence: `verified/`, `verification/`, `reverify/`, `archive/`
 
 ## Historical-document rule
