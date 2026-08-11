@@ -4,7 +4,7 @@
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **24 — 1 P1 + 20 P2 + 3 P3**. The active IDs and terminal outcomes are owned only by the MASTER matrix; this optional queue does not duplicate them. No Product repair lane is selected yet.
+Current verified engineering rows: **26 — 1 P1 + 21 P2 + 4 P3**. The active IDs and terminal outcomes are owned only by the MASTER matrix; this optional queue does not duplicate them. No Product repair lane is selected yet.
 
 ## Optional community product-quality opportunities — not current defect rows
 
@@ -19,8 +19,8 @@ These are useful owner-selected improvements after/alongside the active repair r
 ## Optional editorial/discovery product decisions — not current defect rows
 
 - **Reader-visible update provenance:** article data can carry `dateModified`; decide whether substantial updates should additionally render an explicit `Обновлено` label in the reader UI rather than remaining machine metadata only.
-- **Command Palette scope copy:** the Footer exposes archive/policy destinations that the palette index does not; consider narrowing `поиск и все разделы` wording or deliberately expanding the palette index. This is not a navigation dead-end.
-- **Canonical poet portrait provenance:** the current `Poet` contract has generic `photo` / optional `coverImage` fields without kind/source/credit metadata. Do not promote this to a defect without exact asset-origin evidence, but consider adding provenance fields if the owner wants every canonical portrait classified independently of current origin. Longform visual provenance remains Product #270 territory.
+- **Command Palette scope copy:** Footer exposes archive/policy destinations that the palette index does not; the active `TLP-SEARCH-001` now owns the engineering mismatch, while final product wording versus index expansion remains an owner choice.
+- **Canonical poet portrait provenance:** current canonical portraits are not proven to be reconstructions; do not relabel them by inference. The active authoring contract now owns future portrait existence/provenance gating, while Product #270 remains longform visual provenance territory.
 
 ## Current architecture selection
 
