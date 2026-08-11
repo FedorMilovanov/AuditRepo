@@ -3,7 +3,7 @@
 Date: 2026-08-11  
 Product: `FedorMilovanov/TheLegendaryPoet`  
 Audited source: `main@d59cceccb0c49af59b1be38d4c547a6240b3005a`  
-Scope: post-delivery reconciliation, moderation visibility, simultaneous cross-tab persistence, first-load/read failures, summary consumers, rating dimension contract and privacy/moderation boundary.
+Scope: post-delivery reconciliation, moderation visibility, simultaneous cross-tab persistence, first-load/read failures, summary consumers, ratings hub, rating dimension contract and privacy/moderation boundary.
 
 ## Current-source / collision check
 
@@ -11,7 +11,7 @@ The Product `main` head remains `d59cceccb0c49af59b1be38d4c547a6240b3005a` durin
 
 ## Result
 
-This continuation does not reopen W3 target-scoped community scaling. W3's bounded read topology remains intact. It does, however, expose two additional current state-truth problems and strengthens the already-active delivery root.
+This continuation does not reopen W3 target-scoped community scaling. W3's bounded read topology remains intact. It does, however, exposes additional current state-truth problems and strengthens the already-active delivery root.
 
 ### Existing active roots retained
 
@@ -86,12 +86,18 @@ If the aggregate request fails while comments succeed, the local/empty aggregate
 
 `PoetCommunitySummary` subscribes in `summary` mode but does not render `summaryPhase` or `error`. Before the remote summary arrives, and permanently after a failed summary request, it renders `0 оценок`, `0 мнений`, `Пока мало данных` and empty dimension bars. Those are valid ready-empty values, so a backend failure becomes indistinguishable from genuinely having no community data.
 
+#### RatingsPage / leaderboard
+
+`communityLeaderboardStore` has an explicit `phase: idle | loading | ready | error`, but when remote mode is enabled and no remote aggregate has arrived, `buildAggregates()` fills every known poet with an empty aggregate. On a failed leaderboard fetch, the store preserves `phase='error'` but those zero aggregates remain the numeric source for `RatingsPage`.
+
+`RatingsPage` does show an unavailable/offline badge through the shared sync state, yet the same render also produces real-looking metric cards such as `0` reader votes, `0` comments, `0` rated poets and highlight copy such as `Ждём голоса`. A failed read is therefore simultaneously labelled unavailable and rendered as genuine zero participation.
+
 ### Product impact
 
 - temporary backend/read failure can erase visible social proof rather than showing unavailable/loading;
-- readers may conclude that a poet or article has no participation when the data simply failed to load;
-- the same page can display mutually contradictory `unavailable` and `no comments` states;
-- monitoring and screenshots can capture false-zero states as if they were real product data.
+- readers may conclude that a poet, article or the whole ranking has no participation when the data simply failed to load;
+- the same page can display mutually contradictory `unavailable` and `no comments / zero votes` states;
+- monitoring, screenshots and manual QA can capture false-zero states as if they were real product data.
 
 ### Required terminal outcome
 
@@ -99,8 +105,9 @@ If the aggregate request fails while comments succeed, the local/empty aggregate
 2. Never render zero/empty copy from an unresolved or failed remote read.
 3. `CommentList` must receive/read a first-page phase and render unavailable/retry separately from true empty.
 4. `PoetCommunitySummary` must expose loading and error semantics instead of coercing both to zeros.
-5. Preserve already-loaded comments during pagination failure; do not regress the current retryable progressive list.
-6. Add Chromium + WebKit browser cases for summary failure, initial-comments failure, aggregate-fails/comments-succeed and genuine ready-empty.
+5. `RatingsPage` must gate numeric totals/highlights on leaderboard readiness instead of presenting synthetic empty aggregates as actual zeros during loading/error.
+6. Preserve already-loaded comments/aggregates during retryable later failures where truthful stale-data presentation is possible.
+7. Add Chromium + WebKit browser cases for summary failure, initial-comments failure, aggregate-fails/comments-succeed, leaderboard failure/loading and genuine ready-empty.
 
 ## Rating-dimension contract — checked, no defect
 
@@ -123,6 +130,10 @@ The public privacy page tells users to contact the project about deletion of sub
 
 The concrete engineering defect is narrower: once the backend has hidden a row, the client must honor that authoritative public state and not resurrect its old local mirror.
 
+## Live-production evidence boundary
+
+A direct public runtime fetch was attempted during this audit, but the available web retrieval path could not establish a usable witness for `thelegendarypoet.ru`; no production pass/fail claim is made from that attempt. Production Supabase configuration/write capability therefore remains bounded by the earlier canary recommendation rather than inferred from source or search-index visibility.
+
 ## Audit disposition
 
 - Keep `TLP-COMM-ABUSE-001`, `TLP-COMM-ORDER-001`, and `TLP-COMM-A11Y-001` unchanged.
@@ -131,6 +142,6 @@ The concrete engineering defect is narrower: once the backend has hidden a row, 
   - authoritative moderation visibility;
   - lossless simultaneous cross-tab persistence;
   - existing typed error/retry/backoff/rate-limit/acknowledgement work.
-- Add `TLP-COMM-READSTATE-001` as one independent P2 root.
-- Active engineering rows become **5 total: 1 P1 + 4 P2**.
-- Do not create separate symptom rows for `hidden comment still visible`, `1 из 0`, or `two-tab lost outbox`; they are absorbed by the delivery/reconciliation root.
+- Add `TLP-COMM-READSTATE-001` as one independent P2 root with `CommunityPanel`, `PoetCommunitySummary` and `/ratings` as class-level manifestations.
+- Active engineering rows remain **5 total: 1 P1 + 4 P2**.
+- Do not create separate symptom rows for `hidden comment still visible`, `1 из 0`, `two-tab lost outbox` or `ratings page zeros while unavailable`; they are absorbed by the delivery or read-state roots above.
