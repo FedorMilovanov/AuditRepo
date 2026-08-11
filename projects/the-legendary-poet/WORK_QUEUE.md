@@ -4,7 +4,7 @@
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **27 — 1 P1 + 21 P2 + 5 P3**. The active IDs and terminal outcomes are owned only by the MASTER matrix; this optional queue does not duplicate them. No Product repair lane is selected yet.
+Current verified engineering rows: **30 — 1 P1 + 21 P2 + 8 P3**. The active IDs and terminal outcomes are owned only by the MASTER matrix; this optional queue does not duplicate them. No Product repair lane is selected yet.
 
 ## Optional community product-quality opportunities — not current defect rows
 
@@ -22,6 +22,7 @@ These are useful owner-selected improvements after/alongside the active repair r
 - **Command Palette scope copy:** Footer exposes archive/policy destinations that the palette index does not; active `TLP-SEARCH-001` owns the engineering mismatch, while final wording versus index expansion remains an owner choice.
 - **Canonical poet portrait provenance:** current canonical portraits are not proven reconstructions; do not relabel by inference. Active authoring contract owns future portrait existence/provenance gating; Product #270 remains longform visual provenance territory.
 - **Essay image-kind hardening:** sampled current published image blocks explicitly classify `kind`, so no current mislabel was promoted. Future authoring should make missing `kind` fail closed rather than renderer-defaulting it to `archive`.
+- **Consent copy/placement:** active `TLP-ANALYTICS-CONSENT-001` owns the engineering need for a reopenable preference control; the final wording and whether that entry lives in Privacy, Footer, or a dedicated settings surface is an owner product choice.
 
 ## Current architecture selection
 
