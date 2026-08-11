@@ -16,8 +16,9 @@
 - W0–W7 системные архитектурные и runtime-линии закрыты на своих точных evidence anchors.
 - W6 physical ref retirement завершён; намеренно сохранён только forensic/research archive ref.
 - W7 устранил дублирование route ownership через один machine contract и добавил class-level regression evidence для redirects, NotFound, focus ownership, essay validation и честных archive outcomes.
-- На current source подтверждены активные engineering roots в community, theme/runtime accessibility, discovery metadata, semantic reader text/progress, authoring ID contract, audit harness, audio session/release/completion integrity, analytics consent/route state, rating source/method/URL authority, production legacy-route hosting, primary/secondary data containment и global search authority. Их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **24 rows — 1 P1 + 20 P2 + 3 P3**.
+- На current source подтверждены активные engineering roots в community, theme/runtime accessibility/contrast, discovery metadata, semantic reader text/progress, authoring identity+portrait release contract, audit harness, audio session/release/completion integrity, analytics consent/route state, rating source/method/URL authority, production legacy-route hosting, primary/secondary data containment, global search authority и Home initial-media delivery. Их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **26 rows — 1 P1 + 21 P2 + 4 P3**.
 - Product repair lane для этих current roots пока не выбран; AuditRepo фиксирует evidence/root causes и не создаёт параллельную implementation authority сам по себе.
+- Current community SQL source корректно включает RLS/revokes/public views без `voter_id`; deployed Supabase state остаётся отдельной evidence boundary, а не поводом выдумывать дыру.
 - Hall #369 terminally closed; frozen Hall safety/evidence остаётся исторической authority, но не текущей architecture lane.
 - Неподтверждённые media candidates, source acquisition, attribution и rights остаются отдельной owner/editorial decision family; техническое закрытие архитектуры не даёт прав на публикацию.
 
@@ -26,7 +27,11 @@
 - Документная карта и fact ownership: [`DOC_MAP.md`](DOC_MAP.md)
 - **Текущие verified engineering bugs:** [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md)
 - Возможные, но необязательные направления: [`WORK_QUEUE.md`](WORK_QUEUE.md)
-- **Последний current-check:** [`verification/2026-08-12-audio-completion-semantics-current/REPORT.md`](verification/2026-08-12-audio-completion-semantics-current/REPORT.md)
+- **Последний current-check:** [`verification/2026-08-12-authoring-provenance-community-security-current/REPORT.md`](verification/2026-08-12-authoring-provenance-community-security-current/REPORT.md)
+- SEO error / hydration parity: [`verification/2026-08-12-seo-error-hydration-parity-current/REPORT.md`](verification/2026-08-12-seo-error-hydration-parity-current/REPORT.md)
+- Dark-theme contrast: [`verification/2026-08-12-dark-contrast-current/REPORT.md`](verification/2026-08-12-dark-contrast-current/REPORT.md)
+- Home media / archive focus: [`verification/2026-08-12-home-media-archive-focus-current/REPORT.md`](verification/2026-08-12-home-media-archive-focus-current/REPORT.md)
+- Audio completion semantics: [`verification/2026-08-12-audio-completion-semantics-current/REPORT.md`](verification/2026-08-12-audio-completion-semantics-current/REPORT.md)
 - URL state / hash focus: [`verification/2026-08-12-urlstate-hash-focus-current/REPORT.md`](verification/2026-08-12-urlstate-hash-focus-current/REPORT.md)
 - Rating method / reading progress: [`verification/2026-08-12-rating-method-reading-progress-current/REPORT.md`](verification/2026-08-12-rating-method-reading-progress-current/REPORT.md)
 - Primary readiness / search authority: [`verification/2026-08-12-primary-readiness-search-authority-current/REPORT.md`](verification/2026-08-12-primary-readiness-search-authority-current/REPORT.md)
