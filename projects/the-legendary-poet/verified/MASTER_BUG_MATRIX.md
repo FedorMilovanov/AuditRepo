@@ -4,7 +4,7 @@
 **Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.  
 **Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.  
 **Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.  
-**Latest current verification:** `../verification/2026-08-12-audio-completion-semantics-current/REPORT.md`.
+**Latest current verification:** `../verification/2026-08-12-home-media-archive-focus-current/REPORT.md`.
 
 This file is intentionally short. Closed, absorbed, stale, invalid and superseded findings do not remain here merely to preserve history. The section/count shape below is retained because AuditRepo's shared validator treats `verified/MASTER_BUG_MATRIX.md` as a machine-readable counter surface.
 
@@ -28,10 +28,10 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 | `TLP-COMM-READSTATE-001` | `CONFIRMED-CURRENT / READ-STATE-TRUTH / P2` | Failed/unresolved reads can appear as genuine empty/zero | Explicit loading/error/ready-empty/ready-data states; preserve prior loaded data on failure. |
 | `TLP-COMM-TARGET-001` | `CONFIRMED-CURRENT / DATA-INTEGRITY / TARGET-STATE / P2` | Dirty editor state can survive detail A→B while mutation closures now target B | Key/reset/prompt state by target identity and certify dirty-draft navigation. |
 | `TLP-THEME-001` | `CONFIRMED-CURRENT / SYSTEMIC / THEME-OWNERSHIP / P2` | Light token ownership incomplete; prepaint/chrome/cross-tab theme state drift | Semantic tokens, prepaint apply, metadata sync, cross-tab convergence and contrast certification. |
-| `TLP-A11Y-RUNTIME-001` | `CONFIRMED-CURRENT / SYSTEMIC / FOCUS-NAV-SEMANTICS / P2` | Command/listbox focus, hidden tabbable chrome, same-path/immersive focus, nested main, invisible audio seek, mobile fixed chrome, scroll-only anchors and disappearing ScrollToTop focus lack one interaction authority | One nav/focus/dialog/hash/hidden-chrome contract, visible seek focus, stable focus handoffs and delayed-target settlement with Chromium + WebKit proof. |
+| `TLP-A11Y-RUNTIME-001` | `CONFIRMED-CURRENT / SYSTEMIC / FOCUS-NAV-SEMANTICS / P2` | Command/listbox focus, hidden tabbable chrome, same-path/immersive focus, nested main, invisible audio seek, mobile fixed chrome, scroll-only anchors, disappearing ScrollToTop focus and archive row removal lack one interaction authority | One nav/focus/dialog/hash/hidden-chrome/collection-mutation contract, visible seek focus, stable focus handoffs and delayed-target settlement with Chromium + WebKit proof. |
 | `TLP-DISCOVERY-001` | `CONFIRMED-CURRENT / SYSTEMIC / MACHINE-METADATA-OWNERSHIP / P2` | Sitemap/OG modification facts drift and IndexNow submits whole inventory per deploy | One route/change metadata authority deriving sitemap/prerender/runtime/IndexNow with parity/delta proof. |
 | `TLP-READER-TEXT-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / SEMANTIC-TEXT / P2` | Animated poem words are sole DOM text with CSS-only spacing and `select-none` | Exact canonical selectable text layer separated from visual animation; DOM/copy/a11y proof. |
-| `TLP-AUDIT-004` | `CONFIRMED-CURRENT / AUDIT-HARNESS / FALSE-GREEN / P2` | QA still has proxy/preview gaps across theme/hash/community/SEO/cross-tab/consent/audio/analytics/release/redirect/discovery/secondary/search/statistics/progress/URL-state/completion behavior | Replace with exact outcome regressions including Back/Forward URL parity, hash+viewport+focus settlement and seek-vs-ended completion truth. |
+| `TLP-AUDIT-004` | `CONFIRMED-CURRENT / AUDIT-HARNESS / FALSE-GREEN / P2` | QA still has proxy/preview gaps across theme/hash/community/SEO/cross-tab/consent/audio/analytics/release/redirect/discovery/secondary/search/statistics/progress/URL-state/completion/home-media/archive-focus behavior | Replace with exact outcome regressions including initial Home media request/byte budgets and keyboard deletion focus continuity. |
 | `TLP-AUTHORING-ID-001` | `CONFIRMED-CURRENT / AUTHORING-RELEASE-CONTRACT / P2` | Scaffold/guide/validators disagree on IDs/files/required fields/assets/community constraints | One validated ASCII-kebab producer/consumer identity contract with aligned guide/scaffold/CI fixtures. |
 | `TLP-AUDIO-SESSION-001` | `CONFIRMED-CURRENT / PERSISTENCE-CONVERGENCE / DATA-LOSS / P2` | Whole-snapshot session writes can erase cross-tab progress/completion despite tab-sync promise | Conflict-safe merge/version semantics, session-key subscription and two-page convergence proof. |
 | `TLP-ANALYTICS-CONSENT-001` | `CONFIRMED-CURRENT / PRIVACY-CONSENT / STATE-AUTHORITY / P2` | Consent initially gates correctly but later cross-tab deny has no active-provider revocation | Browser-wide observable consent, authoritative revoke/disable and grant→deny cessation proof. |
@@ -43,13 +43,14 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 | `TLP-RATING-METHOD-001` | `CONFIRMED-CURRENT / METHODOLOGY / SAMPLE-SIZE-TRUTH / P2` | Self-derived prior lets 1×5.0 outrank 20×4.5 despite explicit one-vote protection claim; dimension leaders also lack sample gate | Transparent confidence/sample methodology with copy/code agreement and adversarial sparse-sample regressions. |
 | `TLP-RATING-URLSTATE-001` | `CONFIRMED-CURRENT / URL-STATE / BIDIRECTIONAL-AUTHORITY / P2` | `/ratings` copies query/tag/sort/rated params into local state only at mount then writes state→URL | URL as canonical filter state, sanitize on read and certify direct query load, clean-navigation reset and Back/Forward parity. |
 
-## 🟢 P3 — ОТКРЫТО (3)
+## 🟢 P3 — ОТКРЫТО (4)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
 | `TLP-ANALYTICS-ROUTE-001` | `CONFIRMED-CURRENT / ANALYTICS-DATA-QUALITY / ROUTE-LIFECYCLE / P3` | New URL can be emitted with previous title before destination SEO settles | Emit from settled route lifecycle and certify delayed-route path/title truth. |
 | `TLP-READING-PROGRESS-001` | `CONFIRMED-CURRENT / READER-SEMANTICS / PROGRESS-BOUNDARY / P3` | Root scroll/document height extends reading progress through sources/community/footer | Own progress by explicit article boundaries and prove 100% at article end despite long post-article tail. |
-| `TLP-AUDIO-COMPLETION-001` | `CONFIRMED-CURRENT / AUDIO-SEMANTICS / COMPLETION-TRUTH / P3` | `../verification/2026-08-12-audio-completion-semantics-current/REPORT.md`; any timeupdate at ≥97% persists categorical completion, including seek-to-97%, while Archive renders 100% and `Прослушано полностью` | Align producer and reader semantics: actual completion must require an honest end/natural-near-end contract, or rename the 97% heuristic; certify seek-to-97% vs native ended behavior. |
+| `TLP-AUDIO-COMPLETION-001` | `CONFIRMED-CURRENT / AUDIO-SEMANTICS / COMPLETION-TRUTH / P3` | Any timeupdate at ≥97% persists categorical completion, including seek-to-97%, while Archive renders 100% and `Прослушано полностью` | Align producer and reader semantics: actual completion must require an honest end/natural-near-end contract, or rename the 97% heuristic; certify seek-to-97% vs native ended behavior. |
+| `TLP-HOME-MEDIA-PERF-001` | `CONFIRMED-CURRENT / PERFORMANCE / INITIAL-MEDIA / P3` | `../verification/2026-08-12-home-media-archive-focus-current/REPORT.md`; all six Home hero portraits are `loading=eager`, current files total 880,330 bytes, no responsive `srcset` is supplied, and build budgets cover JS/CSS rather than initial raster transfer | Define the true critical hero request set, defer noncritical portraits, ship responsive image candidates and add mobile/desktop initial-media request+byte budgets without changing the six-poet visual concept unless owner-selected. |
 
 ## Summary
 
@@ -59,10 +60,10 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 | **P0 открыто** | **0** |
 | P1 открыто | 1 |
 | P2 открыто | 20 |
-| P3 открыто | 3 |
+| P3 открыто | 4 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **24** |
+| **Всего открыто (матрица)** | **25** |
 
 Current architecture selection: **none**. Hall #369 remains terminally closed and historical/frozen safety authority, not a current Product lane.
 
@@ -72,6 +73,7 @@ Current architecture selection: **none**. Hall #369 remains terminally closed an
 - Canonical poet portraits lack generic provenance fields, but current evidence does not prove deployed portrait bytes are reconstructions; Product #270 owns longform visual provenance.
 - No current future-dated published release was found; the permissive date guard alone is not promoted.
 - Music workflow supports replacing a master under its stable release record while session state is keyed only by track id. This is a latent version-identity invariant; no current master-replacement witness was established, so it is not another active row.
+- `AudioPlayerProvider` sits above the lower app/route ErrorBoundaries, but no normal current provider-level render throw witness was established; topology alone is not promoted.
 - Legacy redirect finding is source/platform-contract confirmed, not direct observation of every live custom-domain response.
 - Research/editorial work, Hall and W0–W7 historical closures are not current engineering rows merely because long-term work remains.
 
