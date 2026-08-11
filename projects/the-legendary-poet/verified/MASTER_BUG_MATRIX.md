@@ -41,11 +41,10 @@ No verified-current P3 engineering rows.
 | AuditRepo | 0 |
 | **Всего открыто (матрица)** | **2** |
 
-Registered Product architecture lanes: **1 outside the defect matrix** — `TLP-HALL-001` / Product #369 is registered in Product source authority and advances through its own staged Hall-v3 gates. It is intentionally excluded from the engineering bug totals above.
+Current architecture selection: **none**. Hall #369 is terminally closed and remains historical/frozen safety authority, not a current Product lane or defect row; see `../WORK_QUEUE.md` and its terminal Hall closure evidence.
 
 ## Explicitly outside this matrix
 
-- `TLP-HALL-001` / Product #369 is an owner-selected architecture lane, not a verified engineering defect row. Its Product source registration and Hall v3 phase contracts are current; its exact production status remains governed by the Product repository and should not be inferred from this defect counter surface.
 - Production Supabase variable values are deployment-side state and were not readable from repository source during the 2026-08-11 audit. The deploy workflow injects them optionally and the UI exposes local-vs-shared mode; inability to prove their current values is an evidence boundary, not an additional active defect row.
 - Research/source-acquisition/editorial issues such as long-form authoring, archive acquisition, visual-rights review and myth ledgers are not engineering bugs merely because they remain open in the Product issue tracker.
 - The Mayakovsky C01–C30 media family is closed for the current Product scope: 5 active, 1 verified reserve, 24 terminal exclusions, 0 unresolved.
