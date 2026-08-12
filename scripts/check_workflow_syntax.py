@@ -20,6 +20,8 @@ ACTION_PATH = re.compile(
     r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*$"
 )
 DOCKER_DIGEST = re.compile(r"^docker://[^@\s]+@sha256:[0-9a-fA-F]{64}$")
+STRICT_HISTORY_COMMAND = "repository_history_forensic_audit.mjs --strict"
+FETCH_DEPTH = re.compile(r"(?m)^\s+fetch-depth:\s*['\"]?([^'\"\s#]+)")
 
 
 def verify_vendor(
@@ -107,6 +109,20 @@ def immutable_uses_error(value: str) -> str | None:
     return "external uses must be pinned to a full 40-hex commit SHA"
 
 
+def strict_history_checkout_error(text: str) -> str | None:
+    """Reject shallow checkouts in workflows that make ancestry claims."""
+    if STRICT_HISTORY_COMMAND not in text:
+        return None
+    depths = FETCH_DEPTH.findall(text)
+    if depths and all(depth == "0" for depth in depths):
+        return None
+    observed = ", ".join(depths) if depths else "missing"
+    return (
+        "strict repository-history audit requires every checkout fetch-depth to be 0; "
+        f"observed {observed}"
+    )
+
+
 def inspect_node(path: Path, node: object, errors: list[str]) -> None:
     if isinstance(node, MappingNode):
         seen: dict[str, object] = {}
@@ -167,6 +183,9 @@ def check_workflow_file(path: Path) -> list[str]:
         errors.append(f"{location(path, jobs_values[0])}: jobs must be a non-empty mapping")
 
     inspect_node(path, root, errors)
+    history_problem = strict_history_checkout_error(text)
+    if history_problem:
+        errors.append(f"{path}: {history_problem}")
     return errors
 
 

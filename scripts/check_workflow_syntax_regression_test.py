@@ -4,7 +4,12 @@ import json
 from pathlib import Path
 import tempfile
 
-from check_workflow_syntax import check_workflow_file, immutable_uses_error, verify_vendor
+from check_workflow_syntax import (
+    check_workflow_file,
+    immutable_uses_error,
+    strict_history_checkout_error,
+    verify_vendor,
+)
 
 
 PIN = "1" * 40
@@ -85,6 +90,41 @@ this line escaped the run block
         write_fixture(root, "duplicate-jobs.yml", "name: duplicate\non: push\njobs: {a: {}}\njobs: {b: {}}\n"),
         "duplicate mapping key 'jobs'",
     )
+    expect_fail(
+        write_fixture(
+            root,
+            "shallow-strict-history.yml",
+            """name: shallow strict history
+on: push
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@1111111111111111111111111111111111111111
+        with:
+          fetch-depth: 2
+      - run: node scripts/repository_history_forensic_audit.mjs --strict
+""",
+        ),
+        "requires every checkout fetch-depth to be 0",
+    )
+    expect_pass(
+        write_fixture(
+            root,
+            "full-strict-history.yml",
+            """name: full strict history
+on: push
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@1111111111111111111111111111111111111111
+        with:
+          fetch-depth: 0
+      - run: node scripts/repository_history_forensic_audit.mjs --strict
+""",
+        )
+    )
 
     vendor = root / "vendor"
     vendor.mkdir()
@@ -111,5 +151,9 @@ assert immutable_uses_error(f"actions/checkout@{PIN}") is None
 assert immutable_uses_error("./.github/actions/local") is None
 assert immutable_uses_error("actions/checkout@v4") is not None
 assert immutable_uses_error("docker://alpine:latest") is not None
+assert strict_history_checkout_error("run: node audit.mjs") is None
+assert strict_history_checkout_error(
+    "  fetch-depth: 0\nrun: node scripts/repository_history_forensic_audit.mjs --strict\n"
+) is None
 
 print("AUDITREPO WORKFLOW PREFLIGHT REGRESSION: PASS")

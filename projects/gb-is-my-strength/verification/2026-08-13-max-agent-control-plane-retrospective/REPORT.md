@@ -235,6 +235,34 @@ check must represent applicability and final-head terminal state.
 
 This decision concerns automation, not manual approval of every small bug.
 
+### PR #305 admission feedback — live negative control
+
+The first natural exact-head admission run supplied new control-plane evidence
+without changing Product:
+
+- AuditRepo PR #305 head `84b08d6cdd304b5ecd39246b5de0abbab27241d2`,
+  tree `bdf190e236a364c12a7c1803df8c6883abb0a103`;
+- Workflow Preflight `31648775397` passed, proving the new YAML/immutable-pin
+  barrier created and completed a real job;
+- AuditRepo Validate `31648775252` failed in `Validate retirement result
+  history`, while structure, workflow preflight, repository rules, validator,
+  scaffold and ref-retirement regressions all passed first.
+
+The forensic artifact proved that the validator checked a PR merge ref after
+`actions/checkout` with `fetch-depth: 2`. Old, valid landed commits therefore
+appeared not to be ancestors of `origin/main`, and ten old main-ancestor refs
+appeared to be orphan branches. The same report correctly classified all six
+new exact-SHA archive/source pairs and the open PR head. This is a shallow-clone
+oracle defect, not Product drift and not ten newly discovered semantic branches.
+
+The bounded follow-up switches the strict-history workflow to full history,
+adds an offline mutation fixture that rejects any strict-history workflow with
+a shallow or missing fetch depth, and prevents diagnostic artifact upload from
+adding a second misleading failure after an earlier semantic stop. Retirement
+requires a fresh natural exact-head Validate run with zero inaccessible,
+manual-review and unexplained counters; no rerun of `31648775252` is evidence
+for the changed head.
+
 ## 7. Parked candidates — not active MASTER work
 
 These are evidence-backed but lower-priority control-plane improvements. They
