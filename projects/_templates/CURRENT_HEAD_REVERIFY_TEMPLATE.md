@@ -4,8 +4,11 @@
 - Project:
 - Source repo:
 - Current HEAD SHA:
+- Current tree/event when relevant:
 - Date:
 - Verifier:
+- Signal class:
+- Semantic owner and overlap check:
 
 ## Compared against
 - verified ledger:
@@ -14,9 +17,9 @@
 
 ## Status changes
 
-| Bug ID | Previous status | Current status | Evidence |
-|---|---|---|---|
-| EXAMPLE | confirmed-on-sha | fixed-current | browser + production-like dist |
+| Work ID | Previous status | Proof state | Current status | W1–W6 evidence used | Claim boundary |
+|---|---|---|---|---|---|
+| EXAMPLE | confirmed-on-sha | PASS / FAIL / UNPROVEN / N/A | fixed-current | W2 + W3 + W4 | exact current artifact/browser only |
 
 ## Buckets
 - still-confirmed

@@ -4,9 +4,9 @@ Append-only журнал компактных результатов verificatio
 
 Цель — сохранять полезную историю без разрастания активного backlog и без обязательного exact-authority пересказа каждого Product merge.
 
-## Transition note
+## Current authority note
 
-Исторические закрытые строки пока остаются в `MASTER_BUG_MATRIX.md`. Они не переписываются массово в этой реформе. Будущие consolidation waves могут переносить их сюда пакетами с сохранением provenance.
+`MASTER_BUG_MATRIX.md` хранит только текущую верифицированную нужную работу и не содержит закрытых исторических строк. Этот ledger, verification/evidence, `legacy/` и Git history сохраняют provenance закрытий. Новая запись здесь не возвращает work unit в MASTER без свежей admission-проверки.
 
 Новая запись не обязана сопровождаться отдельным `reverify/` документом. Он нужен только для спорного, системного, security/live/rights или исторически ценного решения.
 

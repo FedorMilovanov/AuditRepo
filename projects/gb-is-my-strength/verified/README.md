@@ -4,7 +4,7 @@
 
 ## Current set
 
-- [`MASTER_BUG_MATRIX.md`](./MASTER_BUG_MATRIX.md) — existing finding registry and legacy closed-row corpus. Transitional monolith; preserve while migrating gradually.
+- [`MASTER_BUG_MATRIX.md`](./MASTER_BUG_MATRIX.md) — sole compact registry of current verified necessary work. It may be empty and contains no closed rows.
 - [`SYSTEM_THEMES.md`](./SYSTEM_THEMES.md) — recurring root-cause classes and system questions.
 - [`CLOSURE_LEDGER.md`](./CLOSURE_LEDGER.md) — compact append-only results of new waves and meaningful closures.
 - [`START_HERE.md`](./START_HERE.md) — owner-facing explanation of how to use this layer.
@@ -35,16 +35,14 @@ Other verified documents may remain as specifications or evidence. Their anchor 
 
 ---
 
-## Transition rule
-
-The existing matrix has hundreds of closed rows and manually repeated counts. Do not rewrite it wholesale during unrelated work.
+## Admission and closure rule
 
 Future waves should:
 
-1. update only material finding dispositions;
-2. prefer `SYSTEM_THEMES.md` for causal understanding;
-3. prefer `CLOSURE_LEDGER.md` for compact history;
-4. consolidate old closed clusters in dedicated batches;
-5. keep original evidence discoverable.
+1. classify the signal as Product, harness, control-plane, environment or historical;
+2. name the exact anchor, proof state, claim boundary, preservation boundary and semantic owner;
+3. admit only current defects, verified necessary improvements, narrowed residuals, system verification lanes or owner decisions;
+4. remove solved, stale, duplicate, absorbed and superseded rows in the same closure transaction;
+5. preserve history in `CLOSURE_LEDGER.md`, verification/evidence, `legacy/` when needed, and Git history.
 
-The goal is a short active backlog and a rich historical corpus, not a permanently synchronized second Product repository.
+The goal is a short active backlog and a rich historical corpus, not a permanently synchronized second Product repository. A Product commit, CI signal or agent suggestion alone does not require an AuditRepo update.

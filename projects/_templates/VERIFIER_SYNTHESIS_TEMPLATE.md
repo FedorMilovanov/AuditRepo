@@ -10,6 +10,9 @@
 - Selected current-check anchor(s):
 - Scope:
 - Explicit exclusions:
+- Signal classes represented:
+- Exact Product / artifact / event anchors:
+- Semantic owners and overlap check:
 
 > This document classifies a selected package. It is not a promise to keep the whole AuditRepo synchronized with every future source commit.
 
@@ -43,9 +46,9 @@
 
 ## 1. Current local findings
 
-| Finding | Impact | Evidence angles | Current-check anchor | Suggested lane | Minimum closure proof |
-|---|---|---|---|---|---|
-| ... | ... | ... | ... | ... | ... |
+| Finding | Signal class | Proof state | Evidence angles | Current-check anchor | Claim boundary | Suggested lane | Minimum closure proof |
+|---|---|---|---|---|---|---|---|
+| ... | Product/harness/... | PASS/FAIL/UNPROVEN/N/A | ... | ... | ... | ... | ... |
 
 ---
 
@@ -133,6 +136,7 @@ Update only materially affected facts:
 - Significant reverify document needed? yes/no and why:
 
 No global Product HEAD sync is required unless the project explicitly selected a new current-check anchor for an active wave.
+Only current defects, verified necessary improvements, narrowed residuals, system verification lanes and owner decisions may enter MASTER. A signal or historical finding alone is not admission.
 
 ---
 

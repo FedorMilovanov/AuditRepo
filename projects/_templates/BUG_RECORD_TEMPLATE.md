@@ -8,6 +8,8 @@
 - Severity:
 - Category:
 - Status:
+- Signal class: Product / harness / control-plane / environment / historical
+- Proof state: PASS / FAIL / UNPROVEN / N/A
 
 ## Scope
 - Route(s):
@@ -15,6 +17,11 @@
 - Observed on SHA:
 - Verified on SHA:
 - Current HEAD status:
+- Exact tree/event when relevant:
+- Claim boundary:
+- Preservation boundary:
+- Semantic owner:
+- Overlapping active owner/PR/branch check:
 
 ## Reproduction
 - Build mode:
@@ -32,3 +39,5 @@
 - Duplicate of:
 - Do not mix with:
 - Suggested repair lane:
+- Required exact-head checks:
+- Merge admission enforced: yes / no / unknown

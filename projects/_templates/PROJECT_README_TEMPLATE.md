@@ -5,11 +5,16 @@
 - Main branch:
 - Current status:
 
+Current Product/CI/deploy truth remains in the source repository. AuditRepo records evidence at exact anchors and does not mirror every HEAD.
+
 ## Folder meaning
 
 - `incoming/` — raw agent reports
 - `working/` — synthesis in progress
-- `verified/` — final confirmed docs
+- `verified/MASTER_BUG_MATRIX.md` — sole compact current-work registry
+- `verified/` — durable classification, themes and closure ledger
+- `verification/` / `reverify/` — selected significant checks
+- `legacy/` / `archive/` — retired or historical lookup material, never a second backlog
 
 ## Project-specific notes
 
