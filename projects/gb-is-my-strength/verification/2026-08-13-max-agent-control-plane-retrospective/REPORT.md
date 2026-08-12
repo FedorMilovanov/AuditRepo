@@ -128,7 +128,7 @@ in `verified/MASTER_BUG_MATRIX.md`.
 
 ### `SYS-AUDITREPO-HISTORY-FORENSIC-DRIFT` — current defect
 
-Current facts:
+Base-state facts on AuditRepo `0d9b9b8…`:
 
 - `closed-unmerged-pr-dispositions.json` says PR #3 is archived at
   `archive/forensic-pr-3-vosk-tts-report-2026-07-24`;
@@ -138,19 +138,43 @@ Current facts:
   is byte-identical to current `main`;
 - current strict mode does not itself fail all non-zero summary debt.
 
-Bounded closure:
+A fresh 2026-08-13 live inventory found six current orphan refs, rather than
+the two printed by the older 2026-08-09 Deep Audit. Each contains either unique
+branch-only evidence or a mixed stale/current transaction and therefore must
+not be whole-merged or deleted blindly.
 
-1. decide the honest durable authority for PR #3; do not recreate an archive
-   branch unless unique evidence actually requires it;
-2. reconcile the disposition ledger and current ref truth;
-3. make strict mode fail on the declared zero summary invariants;
-4. add regressions for each non-zero counter;
-5. obtain exact-head and then natural Deep Audit success with zero required
+| Source ref | Exact SHA | Verified preservation ref |
+|---|---|---|
+| `arena/019fe0b5-auditrepo` | `11ab74f3c396c2f17539cd9b770c91c3b1e89b6f` | `archive/forensic-arena-019fe0b5-auditrepo-2026-08-13` |
+| `arena/019fe0c4-auditrepo` | `9239885f8ba8dfc84a4125339bc408c899b495c5` | `archive/forensic-arena-019fe0c4-auditrepo-2026-08-13` |
+| `audit/gb-control-reconciliation-bc786-20260809` | `08692b0eadea72ea10d50ed97faa6e6ec837d5e9` | `archive/forensic-gb-control-reconciliation-bc786-20260809` |
+| `audit/tlp-hall-001-material-chain` | `70cf0c4f3c860afd877fb4010eb9c26a2d7120ed` | `archive/forensic-tlp-hall-001-material-chain-20260809` |
+| `audit/tlp-hall-001-material-chain-current` | `efb906714a670335d1d050ecf88bba562abab45e` | `archive/forensic-tlp-hall-001-material-chain-current-20260809` |
+| `audit/tlp-hall-material-chain-20260809` | `cbc19abd10c322d5811d8d884212f82b4f252833` | `archive/forensic-tlp-hall-material-chain-20260809` |
+
+All six archive refs were created and read back at the exact SHA. The source
+refs were intentionally retained: preservation was proved before any cleanup,
+and this transaction does not use deletion as a substitute for disposition.
+The separate TheLegendaryPoet repository was not opened or changed.
+
+Bounded implementation in this transaction:
+
+1. classify PR #3 as `superseded` through landed commit `1b12007f…`; the exact
+   REPORT blob landed byte-identically, while the mutable README head is not
+   current merge authority;
+2. reconcile non-archive source refs only while a distinct `archive/*` ref
+   resolves to the same exact SHA, and print the pair in the forensic report;
+3. make strict mode fail on every non-zero or malformed declared summary
+   invariant;
+4. add regressions for zero, each non-zero counter, invalid counters, exact-SHA
+   archive pairing and archive mismatch;
+5. require configured landed commits to be ancestors of current `origin/main`;
+6. obtain exact-head and then natural Deep Audit success with zero required
    counters.
 
 ### `SYS-AUDITREPO-WORKFLOW-PREFLIGHT` — verified necessary improvement
 
-Minimum robust design:
+Bounded implementation in this transaction:
 
 - a separate always-created PR/push workflow, independent of the workflow it
   checks;
@@ -173,8 +197,8 @@ preflight.
 
 ### `SYS-AUDITREPO-POLICY-MIGRATION` — verified necessary improvement
 
-The compact/admission model is implemented in part, but active authoring sources
-still teach earlier rules:
+On base `0d9b9b8…`, the compact/admission model was implemented in part, but
+active authoring sources still taught earlier rules:
 
 - `verified/README.md` calls MASTER a transitional monolith with hundreds of
   closed rows;
@@ -190,9 +214,11 @@ still teach earlier rules:
 - report/repair templates do not consistently require signal class, proof
   state, claim boundary, preservation boundary and semantic owner.
 
-Retirement is one bounded policy transaction: align these active sources and
-their scaffold/regression fixtures, then prove a newly scaffolded project passes
-the canonical validator without manual schema repair.
+This transaction aligns those active sources and their scaffold/regression
+fixtures. Its black-box regression creates a new project with `legacy/`, a
+canonical zero MASTER, proportional W1–W6 metadata and the four-state proof
+model, then runs the canonical repository validator without manual schema
+repair. Retirement still requires exact-head validation after publication.
 
 ### `SYS-MAIN-ADMISSION-ENFORCEMENT` — owner decision
 
