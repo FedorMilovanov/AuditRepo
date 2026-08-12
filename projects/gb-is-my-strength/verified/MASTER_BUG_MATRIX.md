@@ -5,22 +5,29 @@
 Current forensic/admission model:
 - [`FORENSIC_CONTROL_PLANE_AUDIT_2026-08-11.md`](./FORENSIC_CONTROL_PLANE_AUDIT_2026-08-11.md)
 
+Latest terminal control-plane evidence:
+- [`CONTROL_PLANE_FINAL_CLOSURE_2026-08-12.md`](./CONTROL_PLANE_FINAL_CLOSURE_2026-08-12.md)
+
 Operating authority:
 - [`../../../AUDITREPO_OPERATING_MODEL.md`](../../../AUDITREPO_OPERATING_MODEL.md)
 
-## Live verification stamp — 2026-08-11
+## Live verification stamp — 2026-08-12
 
 | Field | Observed current value |
 |---|---|
-| Product `main` | `998cd60759c535af0f542c31d5fc8e2948440c02` |
+| Product `main` | `64bb04bda2b228ef23c20214199b67b987c1eb94` |
+| Product tree | `ecff634b31252cd2bed2f9906e2ad4c3056cbd41` |
 | Product open PRs | **0** |
+| Product open issues | **0** |
+| Open `ci-failure` issues | **0** |
 | Admitted current Product defects | **0** |
 | Active Product implementation lanes represented here | **0** |
 | Active SYSTEM repair lanes represented here | **0** |
 | Owner decisions blocking admitted Product work | **0** |
-| Unadmitted assurance signals tracked below | **1** — Product #474 |
+| Unadmitted assurance signals requiring action | **0** |
+| In-progress / queued `main` workflows at terminal census | **0 / 0** |
 
-This stamp is evidence for this consolidation only. It is **not** a promise that AuditRepo will mirror every later Product move.
+This stamp records the terminal 2026-08-12 control-plane closure only. It is **not** a promise that AuditRepo will mirror every later Product move.
 
 ## ACTIVE CURRENT WORK — 0
 
@@ -28,21 +35,55 @@ There is currently **no admitted Product defect or SYSTEM repair root** in MASTE
 
 ```text
 Product implementation queue = 0
+SYSTEM repair queue = 0
 ```
 
 No branch, successor, transport PR, writer, terminal verifier or new Product issue is authorized by this empty matrix.
 
-## UNADMITTED ASSURANCE SIGNALS — NOT PRODUCT WORK
+## UNADMITTED ASSURANCE SIGNALS — 0
 
-| Signal | Class | Exact current evidence | Admission status | Allowed next action |
-|---|---|---|---|---|
-| Product #474 — `Deploy to GitHub Pages` | `ASSURANCE / CI` | run `31513310584`, attempt 2, exact SHA `998cd60759c535af0f542c31d5fc8e2948440c02`; failed job `Build and validate immutable release candidate`; step 27 `Gill mobile reference layout audit` | `UNADMITTED` — failed proof step is known, current Product mechanism is **not yet established by the lifecycle issue itself** | If this signal must be handled, perform bounded attribution: exact assertion → workflow definition at SHA → inputs/environment/artifact/reference → PRODUCT vs HARNESS vs CONTROL-PLANE vs ENVIRONMENT. **Do not create Product mutation work before admission.** |
+There is no current unadmitted assurance signal requiring action.
 
-The GitHub lifecycle issue may carry a `bug`/`ci-failure` label and still remain unadmitted in this matrix. The notifier is a signal owner, not automatic Product root-cause authority.
+Historical Product #474 (`Deploy to GitHub Pages`) completed bounded attribution and terminal disposition during the 2026-08-12 Gill/control-plane marathon. It is now closed/completed and is not an active matrix row. Exact production and recovery evidence is recorded in [`CONTROL_PLANE_FINAL_CLOSURE_2026-08-12.md`](./CONTROL_PLANE_FINAL_CLOSURE_2026-08-12.md).
+
+A future GitHub lifecycle issue may carry a `bug`/`ci-failure` label and still remain unadmitted in this matrix. The notifier is a signal owner, not automatic Product root-cause authority.
 
 ## RECENTLY RETIRED FROM ACTIVE MASTER
 
 These are recorded here only to explain the consolidation; they are **not active rows**.
+
+### Product #474 / Gill production-readiness assurance lane — RESOLVED / REMOVED
+
+The historical failed production signal was not promoted blindly from lifecycle metadata. The lane retained exact production Gill evidence, attributed the observed transport tuples, preserved hard-fail behavior for unrelated failures, and then proved the repaired oracle on fresh candidate and natural production runs.
+
+Terminal evidence includes:
+
+- PR #1668 — retained production Gill readiness evidence and release-pipeline contract coverage;
+- failed natural Deploy `31621730184` — exact retained `hdrc.yandex.net / GET / xhr / net::ERR_ABORTED` evidence;
+- PR #1669 — exact bounded HDRC transport diagnostic classification, with unrelated host/path/method/resource/error negatives preserved;
+- candidate `31625050462` — Gill 24 expected / 24 cases / 24 completed / 24 exercised / 0 failures;
+- natural production Deploy `31626546011`, attempt 1 — SUCCESS;
+- final Product main after #1667: `64bb04bda2b228ef23c20214199b67b987c1eb94`;
+- final natural Deploy `31636750081`, attempt 1 — SUCCESS, including readiness, production Gill, Pages promotion, generic live witness, TTS witness and IndexNow;
+- Product #474 — closed/completed;
+- terminal Product census — 0 open PRs, 0 open issues, 0 open `ci-failure` issues.
+
+Detailed evidence: [`CONTROL_PLANE_FINAL_CLOSURE_2026-08-12.md`](./CONTROL_PLANE_FINAL_CLOSURE_2026-08-12.md).
+
+### Shared Files Guard lifecycle applicability — RESOLVED / REMOVED
+
+Product PR #1667 repaired the closed-PR lifecycle applicability boundary without weakening active open-PR diff authority. Current `main` was merged into the existing PR branch by an ordinary merge commit; the PR diff remained exactly the two owned files. Fresh exact-head checks were all green before one final merge.
+
+Natural main evidence on `64bb04bda2b228ef23c20214199b67b987c1eb94`:
+
+- Metadata `31636750134` — SUCCESS;
+- Shared Files Guard `31636749988` — SUCCESS;
+- Source Authority `31636750093` — SUCCESS;
+- Node Toolchain `31636750010`, attempt 2 after one bounded failed-jobs rerun — SUCCESS with no code/config/dependency change;
+- Deploy `31636750081`, attempt 1 — SUCCESS;
+- Deployment Witness Ledger `31638307040` — SUCCESS.
+
+No current SYSTEM repair lane remains from this owner.
 
 ### `V14-SEARCH-SCOPE-TAB-SEMANTICS` — CLOSED / REMOVED
 
@@ -59,9 +100,7 @@ The old MASTER statement that Search was the sole direct current Product defect 
 
 ### Dependency-security #1652 — MERGED / REMOVED
 
-Current Product main is merge `998cd60759c535af0f542c31d5fc8e2948440c02`, `security(deps): eliminate current npm advisories (#1652)`.
-
-A merged security transaction does not remain in MASTER merely to preserve history.
+The security transaction `security(deps): eliminate current npm advisories (#1652)` merged before the final control-plane closure. A merged security transaction does not remain in MASTER merely to preserve history.
 
 ### `FINAL-ZERO-AUDIT` — RETIRED AS A PERMANENT SYSTEM ROOT
 
@@ -76,7 +115,7 @@ Do not recreate this row merely because:
 - a closed historical issue still exists in Git history;
 - MASTER has zero admitted rows.
 
-Global repository stillness is not the normal terminal invariant.
+Global repository stillness is not the normal terminal invariant. The 2026-08-12 Product-zero census is evidence for one closure point, not a permanent requirement that every future repository moment remain globally still.
 
 ## ADMISSION GATE
 
@@ -103,6 +142,7 @@ main moved ≠ transport PR required
 ## PROOF / CONTROL-PLANE BOUNDARIES
 
 - Same-tree pass/fail contradiction → **PROOF SUSPECT first**; compare exact workflow/event/inputs/environment/artifacts/assertion before mutating Product.
+- A bounded rerun may prove recovery only when explicitly authorized; a recovered identical tree without code/config/dependency change is evidence against inventing a Product mechanism from the first red check.
 - Surrogate metrics may ratchet/guard but cannot be sole semantic oracle.
 - Mass edits require target proof **and preservation proof** outside the intended mutation set.
 - SYSTEM work should declare semantic ownership domain in addition to allowed files.
@@ -126,20 +166,19 @@ Full evidence and historical examples: [`FORENSIC_CONTROL_PLANE_AUDIT_2026-08-11
 
 ## TERMINAL STATE
 
-The current Product mutation state is:
+The current Product mutation state at the 2026-08-12 terminal census is:
 
 ```text
 ADMITTED PRODUCT WORK = 0
+ACTIVE SYSTEM REPAIR = 0
 OPEN PRODUCT PR = 0
-UNADMITTED ASSURANCE SIGNAL = #474
+OPEN PRODUCT ISSUE = 0
+OPEN CI-FAILURE ISSUE = 0
+UNADMITTED ASSURANCE SIGNAL REQUIRING ACTION = 0
+IN-PROGRESS MAIN WORKFLOW = 0
+QUEUED MAIN WORKFLOW = 0
+→ PRODUCT ZERO
 → NO CURRENT PRODUCT MUTATION REQUIRED
-```
-
-For #474, the only justified work from this matrix is **bounded assurance attribution if/when that signal requires handling**. If attribution resolves it as harness/control-plane/environment/stale reference, or the lifecycle closes on a newer successful run, and no separate current Product mechanism is admitted:
-
-```text
-NO CURRENT ACTION REQUIRED
-→ STOP
 ```
 
 `STOP` is a valid successful outcome. It must not automatically trigger another audit wave, successor, transport PR, global synchronization pass, branch census campaign, new guard, or terminal writer merely to keep work moving.

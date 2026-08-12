@@ -127,3 +127,19 @@ This entry records the governance change only. It does not claim that the reform
 - Regression witness: PR #876 exact tested head `4f42dc9b1da39cdc3d6d70360d0535a4418d8a8e` proved 56 routes × desktop/mobile = 112/112, exactly one 280,394,098-byte model request, Worker reuse and a 32.7 ms maximum UI heartbeat gap; current consent contract rejects heavyweight document-client ownership and premature Worker-start regressions.
 - Live evidence: not required and not claimed.
 - Detailed evidence: `../verification/2026-08-06-r006-tts-loading-wave/REPORT.md`.
+
+## 2026-08-12 — Gill / Shared Files control-plane marathon terminal closure
+
+- Scope: Product #474 assurance signal, Gill production-readiness oracle/evidence, Shared Files Guard closed-PR lifecycle applicability, post-merge Node Toolchain recovery and final Product-zero census.
+- Inputs: Product PRs #1668, #1669 and #1667; exact candidate/main workflow evidence; retained Gill production evidence; final zero census.
+- Result:
+  - closed-by-fix: Gill production-readiness evidence is retained and the exact known optional HDRC transport outcomes are classified without wildcarding unrelated failures;
+  - closed-by-fix: Shared Files Guard classifies explicitly closed PR lifecycle events N/A before live merge-ref authority, while open PR and push behavior remain applicable/fail-closed;
+  - recovered-proof: Node Toolchain `31636750010` failed attempt 1 only at workflow lint and passed attempt 2 after exactly one effective failed-jobs rerun on the identical Product SHA, with no code/config/dependency change;
+  - live release: Deploy `31636750081`, attempt 1, completed readiness, production Gill, Pages promotion, generic live witness, TTS witness and IndexNow successfully;
+  - terminal census: Product `main` `64bb04bda2b228ef23c20214199b67b987c1eb94`; open PRs 0; open issues 0; open `ci-failure` issues 0; in-progress/queued main workflows 0/0;
+  - remaining independent: none from these assurance/SYSTEM lanes.
+- Product evidence: #1668 merge `1fe119c732aa3486fd384b65e6d9e638328c0676`; #1669 merge `74f11005f6c44e6989fa72661b4bd9965368230b`; #1667 final merge `64bb04bda2b228ef23c20214199b67b987c1eb94`.
+- Regression witness: exact-head #1667 admission checks all green; final main Metadata `31636750134`, Shared Files Guard `31636749988`, Source Authority `31636750093`, Node Toolchain attempt 2 `31636750010`, Deploy attempt 1 `31636750081`, Deployment Witness Ledger `31638307040` all SUCCESS.
+- Live evidence: required and obtained through successful Pages promotion plus generic live and TTS witnesses in Deploy `31636750081`.
+- Detailed evidence: `./CONTROL_PLANE_FINAL_CLOSURE_2026-08-12.md`.
