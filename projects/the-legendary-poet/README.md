@@ -2,7 +2,7 @@
 
 - Source repo: `FedorMilovanov/TheLegendaryPoet`
 - Production URL: https://thelegendarypoet.ru
-- AuditRepo status: `active` evidence project
+- AuditRepo status: `audit-complete-at-anchor / repair-pending`
 - Start here: [`DOC_MAP.md`](DOC_MAP.md)
 
 ## Purpose
@@ -13,6 +13,7 @@
 
 ## Durable synthesis
 
+- Current autonomous audit marathon закрыт как `AUDIT-COMPLETE-AT-ANCHOR` на Product `main` `d59cceccb0c49af59b1be38d4c547a6240b3005a`; 30 verified Product roots остаются repair-pending, а не falsely closed. См. [`verification/2026-08-12-audit-marathon-closeout/REPORT.md`](verification/2026-08-12-audit-marathon-closeout/REPORT.md).
 - W0–W7 системные архитектурные и runtime-линии закрыты на своих точных evidence anchors.
 - W6 physical ref retirement завершён; намеренно сохранён только forensic/research archive ref.
 - На current source подтверждены активные engineering roots в community, theme/runtime accessibility/contrast/motion/status, discovery metadata, semantic reader text/progress, authoring release contract, audit harness, audio session/release/completion integrity, analytics consent/route state, rating source/method/URL authority, production legacy-route hosting, primary/secondary data containment, global search authority, Home initial-media delivery и persistent shell visual ownership. Их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **30 rows — 1 P1 + 21 P2 + 8 P3**.
@@ -26,7 +27,8 @@
 - Документная карта и fact ownership: [`DOC_MAP.md`](DOC_MAP.md)
 - **Текущие verified engineering bugs:** [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md)
 - Возможные, но необязательные направления: [`WORK_QUEUE.md`](WORK_QUEUE.md)
-- **Последний current-check:** [`verification/2026-08-12-shell-noise-ownership-current/REPORT.md`](verification/2026-08-12-shell-noise-ownership-current/REPORT.md)
+- **Audit marathon closeout:** [`verification/2026-08-12-audit-marathon-closeout/REPORT.md`](verification/2026-08-12-audit-marathon-closeout/REPORT.md)
+- Last defect-producing current check before closeout: [`verification/2026-08-12-shell-noise-ownership-current/REPORT.md`](verification/2026-08-12-shell-noise-ownership-current/REPORT.md)
 - Community comment text fidelity: [`verification/2026-08-12-community-comment-text-fidelity-current/REPORT.md`](verification/2026-08-12-community-comment-text-fidelity-current/REPORT.md)
 - Analytics consent control: [`verification/2026-08-12-analytics-consent-control-current/REPORT.md`](verification/2026-08-12-analytics-consent-control-current/REPORT.md)
 - Form/security/non-text contrast: [`verification/2026-08-12-form-security-nontext-contrast-current/REPORT.md`](verification/2026-08-12-form-security-nontext-contrast-current/REPORT.md)
