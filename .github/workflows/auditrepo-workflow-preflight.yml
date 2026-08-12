@@ -1,0 +1,34 @@
+name: AuditRepo Workflow Preflight
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: auditrepo-workflow-preflight-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+
+      - name: Check workflow syntax, shape and action pins
+        run: |
+          python3 -m py_compile \
+            scripts/check_workflow_syntax.py \
+            scripts/check_workflow_syntax_regression_test.py
+          python3 scripts/check_workflow_syntax_regression_test.py
+          python3 scripts/check_workflow_syntax.py
+
+      - name: Verify clean tracked tree
+        run: git diff --exit-code

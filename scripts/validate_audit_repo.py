@@ -235,7 +235,7 @@ ALLOWED_ROOT_DIRS = {
     '.git', '.github', 'projects', 'scripts', 'verification', 'references',
     '_OWNER_DOWNLOADS',
 }
-ALLOWED_ROOT_FILES = {'.gitignore'}
+ALLOWED_ROOT_FILES = {'.gitattributes', '.gitignore'}
 for p in ROOT.iterdir():
     if p.is_dir():
         if p.name not in ALLOWED_ROOT_DIRS:
