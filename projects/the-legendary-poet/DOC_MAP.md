@@ -9,6 +9,7 @@
 | Fact | Owner | Notes |
 |---|---|---|
 | Current source code, HEAD, open PRs, branches, CI and deploy | `FedorMilovanov/TheLegendaryPoet` | проверять непосредственно перед source work; не копировать постоянно сюда |
+| Current audit-marathon disposition | `verification/2026-08-12-audit-marathon-closeout/REPORT.md` | `AUDIT-COMPLETE-AT-ANCHOR`; 30 Product roots remain repair-pending, not fixed |
 | Raw observations and immutable evidence | `incoming/` | anchor-specific reports; чужие raw reports не переписывать |
 | Temporary synthesis and historical wave planning | `working/` | не является постоянным backlog; завершённые synthesis архивируются |
 | Active verified engineering backlog | `verified/MASTER_BUG_MATRIX.md` | только текущие verified инженерные строки; закрытое уходит из active surface |
@@ -26,6 +27,7 @@
 |---|---|
 | Understand repository rules | `../../AUDITREPO_OPERATING_MODEL.md` |
 | Understand this project | `README.md` |
+| See whether broad auditing is still active | `verification/2026-08-12-audit-marathon-closeout/REPORT.md` |
 | See current verified engineering bugs | `verified/MASTER_BUG_MATRIX.md` |
 | See owner-selected next work | `WORK_QUEUE.md` |
 | Understand recurring mechanisms | `verified/SYSTEM_THEMES.md` |
@@ -57,6 +59,7 @@ Movement of source `main` alone does not reopen or stale historical evidence.
 - Media provenance and publication rights are never inferred from technical availability, an archive ref or an image already present in history.
 - The retained deep-research source branch is forensic/evidence ownership, not a merge candidate.
 - Open editorial/research issues are not engineering-bug rows unless a concrete engineering defect is independently verified.
+- A non-empty current bug matrix does not by itself reopen a completed broad audit; future auditing requires a useful reopen trigger from the closeout report.
 
 ## Proportional closure
 
