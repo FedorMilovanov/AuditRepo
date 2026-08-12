@@ -56,7 +56,7 @@ Before adding/retaining active work:
 1. read historical evidence;
 2. inspect current Product owner/surface;
 3. collect evidence proportional to risk;
-4. for high-risk work use independent witness angles as appropriate: source, artifact, browser, live, lifecycle/history;
+4. use proportional independent W1–W6 angles as appropriate: surface, source, artifact, browser/runtime, lifecycle/root cause and history;
 5. check open Product PRs/branches for ownership collisions;
 6. distinguish mandatory work from optional improvement.
 

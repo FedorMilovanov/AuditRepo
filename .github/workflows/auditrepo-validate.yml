@@ -16,11 +16,14 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          fetch-depth: 2
+          # Strict history validation proves ancestry for old landed commits and
+          # classifies every remote branch. A shallow clone produces false
+          # non-ancestor/orphan findings.
+          fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.12'
 
@@ -43,7 +46,7 @@ jobs:
             echo "RUN_MATRIX_COVERAGE=0" >> "${GITHUB_ENV}"
           fi
 
-          if grep -Eq '^references/ref-retirement/results/|^scripts/repository_history_forensic_audit\.mjs$|^projects/gb-is-my-strength/verified/closed-unmerged-pr-dispositions\.json$' "${changed_file}"; then
+          if grep -Eq '^references/ref-retirement/results/|^scripts/repository_history_forensic_audit(_regression_test)?\.mjs$|^projects/gb-is-my-strength/verified/closed-unmerged-pr-dispositions\.json$' "${changed_file}"; then
             echo "RUN_REF_FORENSIC=1" >> "${GITHUB_ENV}"
           else
             echo "RUN_REF_FORENSIC=0" >> "${GITHUB_ENV}"
@@ -52,6 +55,8 @@ jobs:
       - name: Compile core Python tools
         run: |
           python3 -m py_compile \
+            scripts/check_workflow_syntax.py \
+            scripts/check_workflow_syntax_regression_test.py \
             scripts/validate_audit_repo.py \
             scripts/validate_audit_repo_regression_test.py \
             scripts/scaffold_intake.py \
@@ -62,6 +67,11 @@ jobs:
 
       - name: Check structure
         run: python3 scripts/check_auditrepo_structure.py
+
+      - name: Validate workflow syntax and immutable action pins
+        run: |
+          python3 scripts/check_workflow_syntax_regression_test.py
+          python3 scripts/check_workflow_syntax.py
 
       - name: Validate repository rules
         run: python3 scripts/validate_audit_repo.py
@@ -82,6 +92,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          node scripts/repository_history_forensic_audit_regression_test.mjs
           node scripts/repository_history_forensic_audit.mjs --strict
           python3 - <<'PY'
           import json
@@ -104,27 +115,31 @@ jobs:
 
       - name: Upload ref-retirement forensic diagnostics
         if: always() && env.RUN_REF_FORENSIC == '1'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: ref-retirement-forensic-${{ github.run_id }}
           path: |
             reports/repository-history-forensic-audit.json
             reports/repository-history-forensic-audit.md
-          if-no-files-found: error
+          # The semantic validation step owns failure. Artifact absence must not
+          # add a second, misleading failure when setup ended early.
+          if-no-files-found: warn
           retention-days: 30
 
       - name: Validate matrix/evidence owners when changed
-        if: env.RUN_MATRIX_COVERAGE == '1'
+        id: matrix_coverage
+        if: always() && !cancelled() && env.RUN_MATRIX_COVERAGE == '1'
         shell: bash
         run: |
           set -euo pipefail
+          mkdir -p reports/matrix-coverage
+          printf 'matrix coverage started\n' > reports/matrix-coverage/status.txt
           python3 -m py_compile \
             scripts/check_matrix_coverage.py \
             scripts/matrix_coverage_lib.py \
             scripts/matrix_coverage_contexts.py \
             scripts/matrix_coverage_regression_test.py
           python3 scripts/matrix_coverage_regression_test.py
-          mkdir -p reports/matrix-coverage
           python3 scripts/check_matrix_coverage.py \
             --verbose \
             --json-out reports/matrix-coverage/report.json \
@@ -132,14 +147,15 @@ jobs:
           python3 scripts/matrix_coverage_contexts.py \
             --json-out reports/matrix-coverage/contexts.json \
             --markdown-out reports/matrix-coverage/contexts.md
+          printf 'matrix coverage completed\n' > reports/matrix-coverage/status.txt
 
       - name: Upload matrix diagnostics when produced
-        if: always() && env.RUN_MATRIX_COVERAGE == '1'
-        uses: actions/upload-artifact@v4
+        if: always() && env.RUN_MATRIX_COVERAGE == '1' && steps.matrix_coverage.outcome != 'skipped'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: matrix-coverage-${{ github.run_id }}
           path: reports/matrix-coverage/**
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 14
 
       - name: Verify clean tracked tree

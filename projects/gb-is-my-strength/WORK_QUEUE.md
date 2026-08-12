@@ -120,19 +120,9 @@ Before starting any lane, inspect current Product `main`, open PRs/branches and 
 - CrossWire `RusSynodal` 1.9.1 remains candidate-only pending exact archive SHA-256, licence/source/book manifest, 66-book mapping and verse-level import receipt.
 - `RusSynodalLIO` and Cassian restrictions remain binding until superseded by explicit rights authority.
 
-## Active work that must **not** be duplicated here
+## Current-work boundary
 
-The current active authority lives only in `verified/MASTER_BUG_MATRIX.md`. At the end of the 2026-08-11 surgical reconciliation the active rows are:
-
-- `V12-READER-LINEAR-TEXT-POLLUTION`;
-- `V07-ATLAS-FOCUS-STATE`;
-- `V13-HERM-CHROME-OWNERSHIP`;
-- `V13-SITE-MENU-NATIVE-FAILSAFE`;
-- `V14-SEARCH-SCOPE-TAB-SEMANTICS`;
-- `V14-SW-TOAST-A11Y`;
-- `FINAL-ZERO-AUDIT`.
-
-This list is only a convenience snapshot. **Always read the fresh MASTER before starting work**; if it differs, MASTER wins.
+Current active authority lives only in `verified/MASTER_BUG_MATRIX.md`. This queue deliberately carries no copied snapshot of MASTER IDs: a duplicated list becomes stale and can resurrect already closed work. Always read fresh MASTER and current Product ownership before starting a lane.
 
 Do not reopen historical Strangler, Lot, Source Authority, Avraam, Home Search, MapScale, genealogy, legacy mobile-nav, speed-rail or other completed families from older prose without fresh current-main evidence.
 

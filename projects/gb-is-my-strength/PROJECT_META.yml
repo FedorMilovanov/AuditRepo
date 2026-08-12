@@ -12,12 +12,14 @@ rules:
   verified_path: verified/
   repairs_path: repairs/
   reverify_path: reverify/
+  active_matrix_path: verified/MASTER_BUG_MATRIX.md
+  legacy_path: legacy/
 
 required_for_intake:
   - project
   - source_repo
-  - audited_sha
-  - branch
+  - audited_anchor
+  - branch_or_event_context
   - agent
   - date
   - environment
@@ -37,13 +39,26 @@ allowed_report_types:
   - witness-matrix
 
 verification:
-  minimum_witnesses_for_confirmed_current: 2
-  preferred_witnesses_for_repair_ready: 3
-  trust_order:
-    - verified-production-like-dist
-    - verified-browser
-    - verified-build
-    - verified-source
+  witness_model: proportional-independent-angles
+  proof_states:
+    - PASS
+    - FAIL
+    - UNPROVEN
+    - N/A
+  witness_types:
+    - W1-surface
+    - W2-source
+    - W3-artifact
+    - W4-browser-runtime
+    - W5-lifecycle-root-cause
+    - W6-history
+  required_admission_fields:
+    - signal-class
+    - exact-anchor
+    - proof-state
+    - claim-boundary
+    - preservation-boundary
+    - semantic-owner
   retirement_flow:
     - suspected-stale
     - rechecked

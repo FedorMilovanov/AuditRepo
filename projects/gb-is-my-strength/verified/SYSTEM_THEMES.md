@@ -1,98 +1,90 @@
 # System Themes — gb-is-my-strength
 
-Системные темы — причинная карта из многих audit passes. Это **не второй backlog**: обязательная текущая работа живёт только в `MASTER_BUG_MATRIX.md`; перед Product mutation любой owner/anchor перепроверяется.
-
-Current control reconciliation: [`../verification/2026-08-09-main-bc78-control-reconciliation/REPORT.md`](../verification/2026-08-09-main-bc78-control-reconciliation/REPORT.md).  
-Current Lot/inventory follow-up: [`../verification/2026-08-09-main-bc78-lot-inventory-followup/REPORT.md`](../verification/2026-08-09-main-bc78-lot-inventory-followup/REPORT.md).
+Системные темы — причинная карта из многих audit passes. Это **не второй backlog** и не authority на Product mutation. Обязательная текущая работа живёт только в [`MASTER_BUG_MATRIX.md`](./MASTER_BUG_MATRIX.md); перед любой lane перепроверяются свежие Product owner, anchor, PR/branch overlap и применимые checks.
 
 ## Status model
 
-- `evidence-rich` — много исторического evidence;
-- `candidate` — нужна selected current verification;
-- `active-work` — текущий MASTER/owner подтверждён;
+- `evidence-rich` — исторический механизм хорошо задокументирован;
+- `candidate` — нужна выбранная current verification;
+- `active-work` — допустимо только при ссылке на существующий canonical MASTER row;
 - `absorbed/closed` — механизм репрезентативно закрыт;
 - `parked` — не обязательная текущая работа;
 - `retired` — больше не полезная активная модель.
 
+Ни один старый PR, SHA, issue или branch reservation сам по себе не поддерживает `active-work`. Точные прежние состояния остаются в verification, closure ledger и Git history.
+
 ## ST-RELEASE — release identity and publication transaction
 
-- Status: `active-work` through Lot root #1295.
-- Product `main@bc786f4d…` has no Lot route file. Old #1339 is closed unmerged/superseded and cannot be release authority.
-- A future Lot publication transaction must start as one fresh `release/*` successor from live main after adjacent owner lanes settle.
-- Search role authority, catalog projection and Scripture occurrence writer are merged; their outputs are downstream canonical regeneration, not hand-authored Lot owners.
-- Exact-head browser/SEO/source/print/accessibility proof plus post-merge public witness remains required for any production claim.
+- Status: `evidence-rich / reverify-on-demand`.
+- Theme: source, candidate, publication and live state are different authorities. A green lane proves only its declared dimension.
+- Recheck trigger: a newly admitted release/publication work unit or a current production incident.
 
 ## ST-EDITORIAL — editorial dates and generated metadata ownership
 
-- Status: `evidence-rich; major control-plane gap closed`.
-- Editorial Metadata v3 remains date authority; pre-merge freeze #1272 is closed/completed.
+- Status: `evidence-rich`.
+- Theme: editorial authority, generated metadata and release-time freeze must have one declared ownership chain.
+- Recheck trigger: a current mismatch or an admitted change to the producer/freeze contract.
 
 ## ST-CACHE — service worker, asset revisions and offline truth
 
-- Status: `evidence-rich`; residuals require narrow re-verification.
-- Historical `AR-IDX-05` remains in WORK_QUEUE as reverify-before-promotion.
+- Status: `evidence-rich / candidate`.
+- Theme: asset revision ownership, runtime cache identity and offline behavior must be verified together when a relevant signal is selected.
+- Recheck trigger: reproducible stale asset/offline failure or a current verified necessary improvement.
 
 ## ST-RUNTIME-OWNERSHIP — shared runtime ownership
 
-- Status: `active-work` only where MASTER names a live root.
-- Native article quiz score-tier/badge/short+full explanation parity is **absorbed/closed** through merged Product #1373 (`bc786f4d…`). Do not keep `SYS-ARTICLE-QUIZ-NATIVE-PARITY` as active work.
-- `SYS-READER-CONTROL-SEMANTICS` / #1224 remains active; #1258/#1259/#1267 are merged.
-- `SYS-FOOTNOTE-SEMANTIC-PROJECTION` / #1225 remains active.
-- Shared standalone footer extraction #1401 is an active bounded owner adjacent to Lot; Lot should consume the shared owner after it lands rather than duplicate it.
+- Status: `evidence-rich`.
+- Theme: file isolation does not prevent collisions in shared overlay, focus, reader, navigation or lifecycle owners.
+- Recheck trigger: several manifestations share one live owner, or an exact current browser/runtime witness proves a collision.
 
 ## ST-STRANGLER — legacy/native duplication and retirement
 
-- Status: `active-work`.
-- Current merged Product anchor: `bc786f4da7b6b3e9924caa046a3ab9ba829330fe`.
-- Truthful **merged** dependency readiness is **3 blockers** after #1386.
-- #1395 is sole Baptist roadmap owner. Its current exact Shared evidence proves **32 dependencies / 2 blockers** and `NOT_YET_SAFE_TO_MOVE_OR_DELETE; blockers=2`; that remains candidate-head evidence until #1395 lands.
-- Protected `agent/readable-audit-reference-authority-20260809` contains real storage-aware work (`ahead=2/behind=2` against current main); do not duplicate.
-- Protected `agent/owner-ui-reference-authority-20260809` contains real storage-aware work (`ahead=1/behind=2`); do not duplicate.
-- `agent/legacy-inventory-storage-authority-20260809` is **ahead=0/behind=1**; its name is reservation history, not an implementation.
-- The inventory audit excludes itself from dependency discovery while immutable byte checks still resolve current references from physical root `legacyPath` storage. Therefore dependency `blockers=0` is necessary but **not sufficient** to authorize physical quarantine.
-- After the counted reader blockers reach zero, a bounded inventory storage-authority slice must preserve immutable SHA/text/H1/H2 checks while resolving through canonical legacy-reference storage authority, then pass a non-destructive quarantine dry-run.
-- Physical move/delete remains unauthorized.
+- Status: `evidence-rich / reverify-before-mutation`.
+- Theme: counted dependency zero is necessary but not sufficient for physical move/delete; immutable content, storage authority and representative runtime behavior must survive.
+- Recheck trigger: a fresh retirement candidate with a non-destructive dry-run and positive preservation witnesses.
 
 ## ST-PERFORMANCE — measured route-scoped loading
 
 - Status: `candidate / measurement-first`.
-- Baptists built app and Karty effects remain WORK_QUEUE measurement questions unless current evidence promotes them.
-- #1402 is read-only Baptist historical media coverage audit; it does not itself authorize Product repair.
+- Theme: source shape or bundle size alone is not a material performance defect. Measure representative runtime impact before promotion.
+- Recheck trigger: a current budget failure or reproducible user-visible cost.
 
 ## ST-CONTENT-AUTHORITY — content, Scripture corpus, rights and provenance
 
-- Status: `evidence-rich / owner-decision`.
-- Binding Bible corpus-rights authority remains Research `d52ea9d54dd2c2488223d25f5f6cefd263c23328`.
-- Closed-unmerged #1389 is rights-blocked and cannot be used as Lot publication input.
-- Full-corpus publication remains fail-closed pending exact archive/licence/mapping/import evidence.
+- Status: `evidence-rich / owner-decision when admitted`.
+- Theme: content existence, publication rights, provenance and rendered truth are separate required authorities.
+- Recheck trigger: a selected corpus/media publication decision with exact source/licence/import evidence.
 
-## ST-DISCOVERY-AUTHORITY — Search/catalog role and membership projection
+## ST-DISCOVERY-AUTHORITY — Search/catalog membership projection
 
-- Status: `absorbed upstream; downstream regeneration only` for current Lot concerns.
-- Existing-row Search reconciliation and new-row Search role authority are merged.
-- Catalog/human-reachability #1348 is merged; do not recreate a one-off Lot card.
-- A fresh Lot publication successor must regenerate Search/RSS/sitemap/Scripture through canonical writers on its exact head.
+- Status: `evidence-rich`.
+- Theme: public membership, search role, catalog, sitemap/RSS and generated indexes must be derived from canonical owners rather than hand-maintained per-route copies.
+- Recheck trigger: a current projection mismatch or an admitted publication transaction.
 
-## ST-VISUAL-TRUTH — migration parity vs product regression
+## ST-VISUAL-TRUTH — migration parity versus product regression
 
-- Status: `active-work` through #298 product goldens plus route-specific acceptance roots.
-- Reference-storage migration-parity repairs do not close product-golden common-mode blind spot.
-- Lot semantic SVG mobile readability and paged-media `.reveal` visibility remain fresh-successor acceptance requirements unless current evidence disproves/fixes them.
-- Lot media truth is not “14 ready”: `lane/lot-media-20260809` has no unique bytes; the old placement branch has a real seven-file source delta but is ancestry-diverged. A future owner needs explicit handoff, actual responsive assets + Lot-specific OG and a positive rendered-count witness in browser and print/PDF.
+- Status: `parked / owner-value decision` unless MASTER says otherwise.
+- Theme: legacy↔dist parity proves migration equivalence, not owner-approved product truth; browser, accessibility, search and publication claims remain dimension-scoped.
+- Recheck trigger: an owner-approved golden program or a current route-specific visual/runtime defect.
 
-## ST-AUDIT-HARNESS — audit and contract quality
+## ST-AUDIT-HARNESS — oracle and evidence quality
 
-- Status: `active governance theme`.
-- `SYS-MAP-SCALE-RESIZE-WITNESS` / #1363: one final current-main refresh after the Strangler mini-wave, then exact required rerun.
-- `SYS-HOME-DESIGN-SEARCH-SETTLED` / #1299 / #1393: preserve its sole owner and current repaired semantics; remaining work is fresh ancestry/evidence.
-- #1212 all-reading-route control census remains stale audit evidence, not a license to weaken Product assertions.
-- Legacy inventory self-owner is explicitly part of move-safety: retirement arithmetic must not declare a physical quarantine safe while its own immutable-byte audit is hard-coupled to one storage location.
+- Status: `evidence-rich / current only through exact MASTER rows`.
+- Theme: `UNPROVEN != PASS`; locators and structural surrogates are not semantics; same-tree contradictory outcomes require event/environment investigation; temporary writers are not terminal proof.
+- Recheck trigger: a reproducible false green/false red, evidence-integrity defect or current control-plane admission.
 
 ## ST-SOURCE-GUARD-CLOSURE — validator strength and trigger applicability
 
-- Status: `active-work` through #1244.
-- Concrete Baptist trigger gaps improved historically; remaining DoD is authority-derived PR+push applicability with adversarial protected-source mutations.
+- Status: `evidence-rich / reverify-on-change`.
+- Theme: a guard must prove both its semantic invariant and its applicability on the event/final head that matters. A check that is absent, skipped or unable to start is not a pass.
+- Recheck trigger: a source/guard workflow change, a lifecycle mismatch or a newly admitted enforcement decision.
 
 ## Adding or changing a theme
 
-Current repair belongs in MASTER; optional/measurement-first work in WORK_QUEUE; closed work leaves active rows while provenance stays in verification/Git. A Product main SHA change alone is not a reason to rewrite themes; disposition/evidence/owner changes are.
+1. Record signal class, exact anchor/event and proof state.
+2. State the claim boundary and what the witness does not prove.
+3. Name the semantic owner and overlapping active work.
+4. Put current repair only in MASTER after admission; put optional/measurement-first work in WORK_QUEUE.
+5. Remove closed work from MASTER while retaining provenance in evidence/ledger/Git.
+
+A Product main SHA change alone is not a reason to rewrite themes or synchronize AuditRepo.

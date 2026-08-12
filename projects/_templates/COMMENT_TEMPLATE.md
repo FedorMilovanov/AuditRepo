@@ -6,7 +6,11 @@
 - Date:
 - Target report: `incoming/<agent>/<date>/REPORT.md`
 - Target finding ID:
-- Audited SHA:
+- Audited anchor (SHA / artifact / live snapshot):
+- Signal class: Product / harness / control-plane / environment / historical
+- Proof state: PASS / FAIL / UNPROVEN / N/A
+- Claim boundary:
+- Semantic owner / overlap check:
 
 ## Comment type
 

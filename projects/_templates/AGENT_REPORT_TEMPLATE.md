@@ -13,6 +13,12 @@
 - Browser / device if used:
 - Scope:
 - Explicit exclusions:
+- Signal class: Product / harness / control-plane / environment / historical
+- Proof state: PASS / FAIL / UNPROVEN / N/A
+- Claim boundary:
+- Preservation boundary:
+- Semantic owner:
+- Overlapping active owner/PR/branch check:
 
 > The anchor records what this pass actually inspected. Do not update this report merely because the source repository later moved.
 
@@ -36,6 +42,8 @@
 - Limitations of this method:
 - Possible mechanism:
 - Related existing findings:
+- Applicability: why this witness applies to the named anchor/event/surface
+- What this evidence does **not** prove:
 
 ---
 
@@ -113,6 +121,8 @@ For findings that may enter a work queue:
 - Do not mix with:
 - Minimum regression witness:
 - Is live evidence actually required? yes / no / unknown
+- Required exact-head checks:
+- Is merge admission machine-enforced? yes / no / unknown
 
 ---
 

@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import importlib.util
+import os
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 
@@ -17,7 +19,12 @@ def load_module(name: str, path: Path):
     if spec is None or spec.loader is None:
         raise RuntimeError(f'cannot load {path}')
     module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    sys.modules[name] = module
+    try:
+        spec.loader.exec_module(module)
+    except Exception:
+        sys.modules.pop(name, None)
+        raise
     return module
 
 
@@ -66,6 +73,8 @@ def main() -> int:
             project / 'verified' / 'README.md',
             project / 'verified' / 'SYSTEM_THEMES.md',
             project / 'verified' / 'CLOSURE_LEDGER.md',
+            project / 'verified' / 'MASTER_BUG_MATRIX.md',
+            project / 'legacy' / 'README.md',
         ]
         for path in required_project_files:
             require(path.is_file(), f'project scaffold missing {path.relative_to(root)}')
@@ -75,6 +84,40 @@ def main() -> int:
         require(
             'remain owned by the source repository' in project_readme,
             'HEAD decoupling wording missing',
+        )
+        require(
+            'verified/MASTER_BUG_MATRIX.md' in project_readme,
+            'compact active matrix is missing from project start order',
+        )
+
+        matrix = (project / 'verified' / 'MASTER_BUG_MATRIX.md').read_text(encoding='utf-8')
+        matrix_lib = load_module('auditrepo_matrix_coverage_lib', HERE / 'matrix_coverage_lib.py')
+        rows, open_ids, closed_rows = matrix_lib.parse_matrix(matrix)
+        require(not rows and not open_ids and not closed_rows, 'new compact matrix is not zero')
+        require(
+            not matrix_lib.matrix_integrity_problems(matrix, rows),
+            'new compact matrix violates canonical counters or sections',
+        )
+
+        project_meta = (project / 'PROJECT_META.yml').read_text(encoding='utf-8')
+        require('active_matrix_path: verified/MASTER_BUG_MATRIX.md' in project_meta, 'matrix owner missing from project metadata')
+        require('witness_model: proportional-independent-angles' in project_meta, 'proportional witness model missing')
+        require('W6-history' in project_meta, 'W1-W6 witness model is incomplete')
+        require('proof_states: [PASS, FAIL, UNPROVEN, N/A]' in project_meta, 'four-state proof model missing')
+
+        for root_document in ('README.md', 'AUDITREPO_OPERATING_MODEL.md', 'PROJECT_REGISTRY.md'):
+            (root / root_document).write_text(f'# {root_document}\n', encoding='utf-8')
+        (root / 'scripts').mkdir()
+        validator = subprocess.run(
+            [sys.executable, str(HERE / 'validate_audit_repo.py')],
+            env={**os.environ, 'AUDITREPO_ROOT': str(root)},
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        require(
+            validator.returncode == 0,
+            f'new project fails canonical repository validator:\n{validator.stdout}\n{validator.stderr}',
         )
 
         nested_archive_readme = (project / 'archive' / 'closed' / 'README.md').read_text(encoding='utf-8')
@@ -128,6 +171,11 @@ def main() -> int:
         require('Current source HEAD at start' not in readme, 'obsolete HEAD mirror field returned')
         require('## 4. Root-cause clusters' in report, 'root-cause report section missing')
         require('## 5. Value and cost assessment' in report, 'value/cost section missing')
+        require('- Signal class:' in report, 'signal-class field missing')
+        require('- Proof state:' in report, 'proof-state field missing')
+        require('- Claim boundary:' in report, 'claim-boundary field missing')
+        require('- Preservation boundary:' in report, 'preservation-boundary field missing')
+        require('- Semantic owner:' in report, 'semantic-owner field missing')
         require('- Project: fixture-project' in report, 'project placeholder was not filled')
         require('- Agent: fixture-agent' in report, 'agent placeholder was not filled')
         require('- Date: 2026-08-06' in report, 'date placeholder was not filled')

@@ -1,21 +1,15 @@
 # Repair Order Template
 
-## Shared runtime fixes first
-1.
-2.
+## Admitted work units
 
-## Route-level fixes next
-1.
-2.
+| Order | Canonical ID | Signal class | Semantic owner | Exact anchor | Dependency / reason |
+|---:|---|---|---|---|---|
+| 1 |  |  |  |  |  |
 
-## Metadata / content fixes
-1.
-2.
-
-## Tooling / audit drift cleanup
-1.
-2.
+Order by shared mechanism, dependency and risk. Do not infer priority from file location or historical severity alone.
 
 ## Notes
 - what can be fixed in parallel
 - what must wait for shared runtime stabilization
+- which files are different but semantic owners overlap
+- required preservation and exact-head witnesses
