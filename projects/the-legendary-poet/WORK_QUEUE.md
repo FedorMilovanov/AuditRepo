@@ -6,6 +6,14 @@ Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/
 
 Current verified engineering rows: **30 — 1 P1 + 21 P2 + 8 P3**. The active IDs and terminal outcomes are owned only by the MASTER matrix; this optional queue does not duplicate them. No Product repair lane is selected yet.
 
+## Audit marathon disposition
+
+**Current autonomous audit queue: CLOSED AT PRODUCT `d59cceccb0c49af59b1be38d4c547a6240b3005a`.**
+
+The 30 active rows are verified Product repair roots, not unfinished audit waves. Do not start another broad audit against the unchanged Product head just because rows remain open. Reopen auditing only on a materially changed relevant surface, a concrete contradictory live/browser witness, new deployed/backend evidence, an owner-selected unanswered surface, or future repair verification.
+
+Closeout evidence: [`verification/2026-08-12-audit-marathon-closeout/REPORT.md`](verification/2026-08-12-audit-marathon-closeout/REPORT.md).
+
 ## Optional community product-quality opportunities — not current defect rows
 
 These are useful owner-selected improvements after/alongside the active repair roots; they must not be promoted to MASTER without a fresh defect witness.
@@ -34,6 +42,6 @@ Terminal Hall evidence remains under `verification/2026-08-10-hall-v3-root-closu
 
 ## Current disposition
 
-**No autonomous Hall Product transaction is selected now.**
+**No autonomous Product transaction is selected now.**
 
-Не создавать повторные schema/workflow/recheck PR только ради ощущения движения. Не продвигать documentary rights, offline visual approval, WebGL или scale-out без нового authority/evidence.
+Не создавать повторные schema/workflow/recheck PR или новые broad-audit waves только ради ощущения движения. Не продвигать documentary rights, offline visual approval, WebGL, scale-out или Product repair без нового owner-selected действия/evidence.
