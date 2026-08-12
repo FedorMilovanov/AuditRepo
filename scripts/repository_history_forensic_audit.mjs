@@ -2,14 +2,16 @@
 /**
  * Read-only forensic inventory for AuditRepo Git refs and pull-request heads.
  *
- * The permanent reviewed dispositions live in
+ * The permanent reviewed PR dispositions live in
  * projects/gb-is-my-strength/verified/closed-unmerged-pr-dispositions.json.
- * New branches and PRs are still discovered from the live Git graph and GitHub API.
+ * Branch recoverability is proved by exact-SHA archive refs discovered from the
+ * live Git graph. New branches and PRs are still discovered from the live Git
+ * graph and GitHub API.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPORTS = path.join(ROOT, 'reports');
@@ -22,6 +24,24 @@ const TOKEN = process.env.GITHUB_TOKEN || '';
 const API = process.env.GITHUB_API_URL || 'https://api.github.com';
 const STRICT = process.argv.includes('--strict');
 const problems = [];
+
+export const STRICT_ZERO_SUMMARY_KEYS = Object.freeze([
+  'inaccessibleClosedHeads',
+  'manualReviewCandidates',
+  'unexplainedRemoteBranches',
+]);
+
+export function strictSummaryProblems(summary) {
+  return STRICT_ZERO_SUMMARY_KEYS.flatMap((key) => {
+    const value = summary?.[key];
+    if (!Number.isInteger(value) || value < 0) {
+      return [`Strict history summary ${key} must be a non-negative integer; observed ${String(value)}`];
+    }
+    return value === 0
+      ? []
+      : [`Strict history summary requires ${key}=0; observed ${value}`];
+  });
+}
 
 function git(args, { allowFailure = false } = {}) {
   const result = spawnSync('git', args, { cwd: ROOT, encoding: 'utf8' });
@@ -129,6 +149,31 @@ function associatedPrSnapshot(pr, closedByNumber) {
   };
 }
 
+export function reconcileBranch(branch, archivedRefsBySha = new Map()) {
+  const archiveRefs = [...(archivedRefsBySha.get(branch.sha) || [])]
+    .filter((name) => name !== branch.name)
+    .sort();
+
+  let reconciliation = 'orphan-branch';
+  if (branch.name === 'origin/main') reconciliation = 'main';
+  else if (branch.name.startsWith('origin/archive/')) reconciliation = 'archived-recovery-branch';
+  else if (branch.mergedIntoMain) reconciliation = 'git-ancestor-of-main';
+  else if (branch.associatedPrs.some((pr) => pr.mergedAt)) reconciliation = 'merged-pr-head-squash-or-rebase';
+  else if (branch.associatedPrs.some((pr) => pr.state === 'open')) reconciliation = 'open-pr-head';
+  else if (branch.associatedPrs.some((pr) => pr.category === 'superseded')) reconciliation = 'closed-superseded-pr-head';
+  else if (branch.associatedPrs.some((pr) => pr.category === 'diagnostic')) reconciliation = 'closed-diagnostic-pr-head';
+  else if (branch.associatedPrs.some((pr) => pr.category === 'prototype')) reconciliation = 'closed-prototype-pr-head';
+  else if (branch.associatedPrs.some((pr) => pr.category === 'archived')) reconciliation = 'closed-archived-pr-head';
+  else if (archiveRefs.length) reconciliation = 'archived-source-ref';
+  else if (branch.associatedPrs.some((pr) => pr.category === 'parked')) reconciliation = 'closed-parked-pr-head';
+  else if (branch.associatedPrs.length) reconciliation = 'closed-unclassified-pr-head';
+  else if (/(?:trigger|materializ|diagnostic|verification|reconcile|_temp|temp-)/i.test(`${branch.name} ${branch.subject || ''}`)) {
+    reconciliation = 'diagnostic-transaction-branch';
+  }
+
+  return { reconciliation, archiveRefs };
+}
+
 function branchInventory(prs, closedByNumber) {
   const byHeadRef = new Map();
   const byHeadSha = new Map();
@@ -153,12 +198,21 @@ function branchInventory(prs, closedByNumber) {
     'refs/remotes/origin',
   ]).stdout.split(/\r?\n/).filter(Boolean);
 
-  return rows
+  const branches = rows
     .map((row) => {
       const [name, sha, committedAt, ...subjectParts] = row.split('\t');
       return { name, sha, committedAt, subject: subjectParts.join('\t') };
     })
-    .filter((branch) => branch.name !== 'origin/HEAD')
+    .filter((branch) => branch.name !== 'origin/HEAD');
+
+  const archivedRefsBySha = new Map();
+  for (const branch of branches.filter((item) => item.name.startsWith('origin/archive/'))) {
+    const refs = archivedRefsBySha.get(branch.sha) || [];
+    refs.push(branch.name);
+    archivedRefsBySha.set(branch.sha, refs);
+  }
+
+  return branches
     .map((branch) => {
       const mergedIntoMain = git(['merge-base', '--is-ancestor', branch.sha, 'origin/main'], { allowFailure: true }).status === 0;
       const counts = git(['rev-list', '--left-right', '--count', `origin/main...${branch.sha}`], { allowFailure: true });
@@ -174,23 +228,20 @@ function branchInventory(prs, closedByNumber) {
         .map((pr) => associatedPrSnapshot(pr, closedByNumber))
         .sort((a, b) => b.number - a.number);
 
-      let reconciliation = 'orphan-branch';
-      if (branch.name === 'origin/main') reconciliation = 'main';
-      else if (branch.name.startsWith('origin/archive/')) reconciliation = 'archived-recovery-branch';
-      else if (mergedIntoMain) reconciliation = 'git-ancestor-of-main';
-      else if (associatedPrs.some((pr) => pr.mergedAt)) reconciliation = 'merged-pr-head-squash-or-rebase';
-      else if (associatedPrs.some((pr) => pr.state === 'open')) reconciliation = 'open-pr-head';
-      else if (associatedPrs.some((pr) => pr.category === 'superseded')) reconciliation = 'closed-superseded-pr-head';
-      else if (associatedPrs.some((pr) => pr.category === 'diagnostic')) reconciliation = 'closed-diagnostic-pr-head';
-      else if (associatedPrs.some((pr) => pr.category === 'prototype')) reconciliation = 'closed-prototype-pr-head';
-      else if (associatedPrs.some((pr) => pr.category === 'archived')) reconciliation = 'closed-archived-pr-head';
-      else if (associatedPrs.some((pr) => pr.category === 'parked')) reconciliation = 'closed-parked-pr-head';
-      else if (associatedPrs.length) reconciliation = 'closed-unclassified-pr-head';
-      else if (/(?:trigger|materializ|diagnostic|verification|reconcile|_temp|temp-)/i.test(`${branch.name} ${branch.subject || ''}`)) {
-        reconciliation = 'diagnostic-transaction-branch';
-      }
+      const { reconciliation, archiveRefs } = reconcileBranch(
+        { ...branch, mergedIntoMain, associatedPrs },
+        archivedRefsBySha,
+      );
 
-      return { ...branch, mergedIntoMain, mainOnly, branchOnly, reconciliation, associatedPrs };
+      return {
+        ...branch,
+        mergedIntoMain,
+        mainOnly,
+        branchOnly,
+        reconciliation,
+        archiveRefs,
+        associatedPrs,
+      };
     })
     .sort((a, b) => a.name.localeCompare(b.name));
 }
@@ -291,6 +342,8 @@ function validateLedger(ledger, prsByNumber, closedUnmerged) {
     for (const commit of disposition.landedCommits || []) {
       if (git(['cat-file', '-e', `${commit}^{commit}`], { allowFailure: true }).status !== 0) {
         problems.push(`PR #${number}: configured landed commit ${commit} is not present in fetched history`);
+      } else if (git(['merge-base', '--is-ancestor', commit, 'origin/main'], { allowFailure: true }).status !== 0) {
+        problems.push(`PR #${number}: configured landed commit ${commit} is not an ancestor of origin/main`);
       }
     }
     if (disposition.archiveRef) {
@@ -302,8 +355,13 @@ function validateLedger(ledger, prsByNumber, closedUnmerged) {
 }
 
 function markdown(report) {
+  const archiveRows = report.branches
+    .filter((branch) => branch.reconciliation === 'archived-source-ref')
+    .flatMap((branch) => branch.archiveRefs.map((archiveRef) =>
+      `| \`${branch.name}\` | \`${archiveRef}\` | \`${branch.sha}\` |`,
+    ));
   const branchRows = report.branches
-    .filter((branch) => branch.name !== 'origin/main' && !['git-ancestor-of-main', 'merged-pr-head-squash-or-rebase', 'archived-recovery-branch'].includes(branch.reconciliation))
+    .filter((branch) => branch.name !== 'origin/main' && !['git-ancestor-of-main', 'merged-pr-head-squash-or-rebase', 'archived-recovery-branch', 'archived-source-ref'].includes(branch.reconciliation))
     .map((branch) => `| \`${branch.name}\` | ${branch.reconciliation} | ${branch.branchOnly ?? '?'} | ${branch.mainOnly ?? '?'} | ${branch.associatedPrs.map((pr) => `#${pr.number}`).join(', ') || '—'} |`);
   const prRows = report.closedUnmerged.map((pr) =>
     `| #${pr.number} | ${pr.category} | ${pr.ledgerDisposition ? 'yes' : 'no'} | ${pr.headAccessible ? 'yes' : '**NO**'} | ${pr.missingIntroducedPaths.length} | ${pr.referencedPullRequests.filter((item) => item.mergedAt).map((item) => `#${item.number}`).join(', ') || '—'} | ${pr.reviewPriority} | ${pr.title.replace(/\|/g, '\\|')} |`,
@@ -321,6 +379,7 @@ function markdown(report) {
     `- Remote branches: ${report.summary.remoteBranches}`,
     `- Reconciled merged refs: ${report.summary.reconciledMergedBranches}`,
     `- Archived recovery refs: ${report.summary.archivedRecoveryBranches}`,
+    `- Source refs preserved at an exact-SHA archive ref: ${report.summary.archivedSourceBranches}`,
     `- Open PR refs: ${report.summary.openPrBranches}`,
     `- Explained closed/transaction refs: ${report.summary.explainedClosedBranches}`,
     `- Orphan or unclassified refs: ${report.summary.unexplainedRemoteBranches}`,
@@ -328,6 +387,12 @@ function markdown(report) {
     `- Closed without merge: ${report.summary.closedUnmergedPrs}`,
     `- Inaccessible closed heads: ${report.summary.inaccessibleClosedHeads}`,
     `- Manual review candidates: ${report.summary.manualReviewCandidates}`,
+    '',
+    '## Exact-SHA archive preservation',
+    '',
+    '| Source ref | Archive ref | Exact SHA |',
+    '|---|---|---|',
+    ...(archiveRows.length ? archiveRows : ['| — | — | — |']),
     '',
     '## Remote refs not fully reconciled by ancestry/archive/open-or-reviewed PR',
     '',
@@ -348,6 +413,7 @@ function markdown(report) {
     '## Interpretation boundary',
     '',
     '- Reachable head SHA proves pushed work is recoverable; it does not prove the work should be merged.',
+    '- An archived source ref is reconciled only while a distinct `origin/archive/*` ref resolves to the same exact commit SHA.',
     '- The reviewed disposition ledger is traceable to the immutable closed-unmerged report and is validated against current PR/commit/ref state.',
     '- Commits that were never pushed cannot be found by a remote forensic audit.',
     '- This report does not advance source or production authority.',
@@ -374,26 +440,30 @@ async function main() {
     'closed-archived-pr-head',
     'diagnostic-transaction-branch',
   ]);
+  const summary = {
+    remoteBranches: branches.length,
+    reconciledMergedBranches: branches.filter((branch) => reconciledMerged.has(branch.reconciliation)).length,
+    archivedRecoveryBranches: branches.filter((branch) => branch.reconciliation === 'archived-recovery-branch').length,
+    archivedSourceBranches: branches.filter((branch) => branch.reconciliation === 'archived-source-ref').length,
+    openPrBranches: branches.filter((branch) => branch.reconciliation === 'open-pr-head').length,
+    explainedClosedBranches: branches.filter((branch) => explainedClosed.has(branch.reconciliation)).length,
+    unexplainedRemoteBranches: branches.filter((branch) => ['orphan-branch', 'closed-parked-pr-head', 'closed-unclassified-pr-head'].includes(branch.reconciliation)).length,
+    pullRequests: prs.length,
+    mergedPrs: prs.filter((pr) => Boolean(pr.merged_at)).length,
+    closedUnmergedPrs: closedUnmerged.length,
+    openPrs: prs.filter((pr) => pr.state === 'open').length,
+    inaccessibleClosedHeads: closedUnmerged.filter((pr) => !pr.headAccessible).length,
+    missingIntroducedPaths: closedUnmerged.reduce((sum, pr) => sum + pr.missingIntroducedPaths.length, 0),
+    manualReviewCandidates: closedUnmerged.filter((pr) => pr.reviewPriority > 0).length,
+  };
+  if (STRICT) problems.push(...strictSummaryProblems(summary));
+
   const report = {
     generatedAt: new Date().toISOString(),
     repository: REPOSITORY,
     mainSha,
     dispositionLedger: path.relative(ROOT, LEDGER_PATH),
-    summary: {
-      remoteBranches: branches.length,
-      reconciledMergedBranches: branches.filter((branch) => reconciledMerged.has(branch.reconciliation)).length,
-      archivedRecoveryBranches: branches.filter((branch) => branch.reconciliation === 'archived-recovery-branch').length,
-      openPrBranches: branches.filter((branch) => branch.reconciliation === 'open-pr-head').length,
-      explainedClosedBranches: branches.filter((branch) => explainedClosed.has(branch.reconciliation)).length,
-      unexplainedRemoteBranches: branches.filter((branch) => ['orphan-branch', 'closed-parked-pr-head', 'closed-unclassified-pr-head'].includes(branch.reconciliation)).length,
-      pullRequests: prs.length,
-      mergedPrs: prs.filter((pr) => Boolean(pr.merged_at)).length,
-      closedUnmergedPrs: closedUnmerged.length,
-      openPrs: prs.filter((pr) => pr.state === 'open').length,
-      inaccessibleClosedHeads: closedUnmerged.filter((pr) => !pr.headAccessible).length,
-      missingIntroducedPaths: closedUnmerged.reduce((sum, pr) => sum + pr.missingIntroducedPaths.length, 0),
-      manualReviewCandidates: closedUnmerged.filter((pr) => pr.reviewPriority > 0).length,
-    },
+    summary,
     branches,
     openPullRequests: prs.filter((pr) => pr.state === 'open').map((pr) => ({
       number: pr.number,
@@ -418,7 +488,10 @@ async function main() {
   console.log('✅ AuditRepo repository history forensic inventory completed');
 }
 
-main().catch((error) => {
-  console.error(error.stack || error.message);
-  process.exit(1);
-});
+const invokedPath = process.argv[1] ? pathToFileURL(path.resolve(process.argv[1])).href : null;
+if (invokedPath === import.meta.url) {
+  main().catch((error) => {
+    console.error(error.stack || error.message);
+    process.exit(1);
+  });
+}

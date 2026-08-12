@@ -43,7 +43,7 @@ jobs:
             echo "RUN_MATRIX_COVERAGE=0" >> "${GITHUB_ENV}"
           fi
 
-          if grep -Eq '^references/ref-retirement/results/|^scripts/repository_history_forensic_audit\.mjs$|^projects/gb-is-my-strength/verified/closed-unmerged-pr-dispositions\.json$' "${changed_file}"; then
+          if grep -Eq '^references/ref-retirement/results/|^scripts/repository_history_forensic_audit(_regression_test)?\.mjs$|^projects/gb-is-my-strength/verified/closed-unmerged-pr-dispositions\.json$' "${changed_file}"; then
             echo "RUN_REF_FORENSIC=1" >> "${GITHUB_ENV}"
           else
             echo "RUN_REF_FORENSIC=0" >> "${GITHUB_ENV}"
@@ -82,6 +82,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          node scripts/repository_history_forensic_audit_regression_test.mjs
           node scripts/repository_history_forensic_audit.mjs --strict
           python3 - <<'PY'
           import json

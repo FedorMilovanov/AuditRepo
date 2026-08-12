@@ -4,9 +4,9 @@
   "recordedAt": "2026-08-06",
   "pullRequests": {
     "3": {
-      "category": "archived",
-      "archiveRef": "archive/forensic-pr-3-vosk-tts-report-2026-07-24",
-      "note": "Vosk runtime remains in the source repository; this exact AuditRepo head is retained as implementation/report provenance."
+      "category": "superseded",
+      "landedCommits": ["1b12007f78a114eb71f55b85fc9cf5f2fced08f7"],
+      "note": "The exact REPORT blob landed byte-identically through commit 1b12007f; README is a mutable current owner and the stale PR head is not merge authority."
     },
     "6": {
       "category": "superseded",

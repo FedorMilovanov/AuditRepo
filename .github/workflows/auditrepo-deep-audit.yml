@@ -70,6 +70,8 @@ jobs:
       - name: Validate forensic owners
         run: |
           node --check scripts/repository_history_forensic_audit.mjs
+          node --check scripts/repository_history_forensic_audit_regression_test.mjs
+          node scripts/repository_history_forensic_audit_regression_test.mjs
           node -e "JSON.parse(require('node:fs').readFileSync('projects/gb-is-my-strength/verified/closed-unmerged-pr-dispositions.json', 'utf8'))"
 
       - name: Inventory branches and closed unmerged PRs
