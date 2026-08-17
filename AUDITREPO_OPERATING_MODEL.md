@@ -198,6 +198,35 @@ Branch count сам по себе не является целью: цель —
 
 ---
 
+## Terminal attestation и freshness
+
+`PRODUCT ZERO`, `AUDIT ZERO`, `CONTROL-PLANE ZERO` и сходные terminal-формулы — **не вечные свойства проекта**, а evidence-bound снимки конкретного состояния.
+
+Terminal attestation должна явно фиксировать минимум:
+
+- `attested_at` — момент проверки;
+- Product `main` SHA, к которому относится code/CI witness;
+- момент проверки открытых Product PR/issues;
+- состояние релевантных scheduled/hard gates;
+- Research HEAD, если вывод опирается на Research authority;
+- внешнюю evidence/date boundary, если вывод зависит от живой ссылки, production/API, прав/лицензии или ответа третьей стороны;
+- AuditRepo HEAD/PR, которым attestation записана.
+
+Terminal claim становится `STALE` и **не может использоваться как current admission witness**, если после attestation произошло хотя бы одно материальное событие:
+
+1. Product `main` продвинулся так, что затронут проверяемый owner/contract;
+2. появился новый current-confirmed defect или красный hard gate;
+3. scheduled hard gate, production/API или другая внешняя проверка стала красной/недоступной;
+4. Research authority продвинулась в области, на которую опирался вывод;
+5. истекла, изменилась или была опровергнута существенная внешняя evidence;
+6. изменились admission/ruleset/branch-protection условия, на которых строился control-plane вывод.
+
+`STALE` не означает автоматически «есть баг»: это означает только, что прежний `ZERO` больше нельзя цитировать как доказательство текущего нуля. Нужна свежая current-check на изменившейся границе; неизменившиеся независимые evidence не обязаны перепроверяться без причины.
+
+MASTER не обязан обновляться после каждого Product коммита, но если в нём видимо напечатан terminal `ZERO`, который уже опровергнут свежим current witness, такой текст должен быть помечен stale или заменён в ближайшей текущей consolidation wave.
+
+---
+
 ## Closure
 
 ### Локальный finding
