@@ -15,19 +15,18 @@ Operating authority:
 
 | Поле | Значение |
 |---|---|
-| Active work units | **8** |
-| Direct current defects | **2** |
+| Active work units | **7** |
+| Direct current defects | **1** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **4** |
 | System verification lanes | **1** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-## CURRENT DEFECTS — 2
+## CURRENT DEFECTS — 1
 
 | ID | Current problem | Boundary |
 |---|---|---|
-| `P1-15/16` | GBS2 UI components lack runtime ID hooks (`id="gbs2Toc"`, `id="gbs2Ring"`, `gbs2Pct`, `gbs2Meta`), causing the mobile TOC pane to remain empty and scroll progress to fail. | `src/layouts/SeriesArticleLayout.astro` |
 | `D-19` | `AntisovetovPageHead.astro` `<title>` suffix is malformed (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
