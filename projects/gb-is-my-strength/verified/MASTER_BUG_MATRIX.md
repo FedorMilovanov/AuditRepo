@@ -15,45 +15,51 @@ Operating authority:
 
 | Поле | Значение |
 |---|---|
-| Active work units | **13** |
-| Direct current defects | **1** |
+| Active work units | **12** |
+| Direct current defects | **3** |
 | Verified necessary improvements | **0** |
-| Narrowed residuals | **11** |
-| System verification lanes | **0** |
-| Owner decisions | **1** |
+| Narrowed residuals | **5** |
+| System verification lanes | **2** |
+| Owner decisions | **2** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-## CURRENT DEFECTS — 1
+## CURRENT DEFECTS — 3
 
 | ID | Current problem | Boundary |
 |---|---|---|
-| `D-19` | `AntisovetovPageHead.astro` `<title>` suffix is malformed. Confirmed current 2026-07-17 on 5 pages (Antisovetov, Kod Da Vinchi, Diotrefy, Pastor Series Home, Nagornaya Series Home). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
+| `D-19` | Brand title suffix is truncated to `| Господь Бог` instead of `| Господь Бог — Сила Моя`. verified-live + verified-source at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`: 5 of 76 indexable routes (`/articles/20-antisovetov-pastoru/`, `/articles/kod-da-vinchi/`, `/articles/diotrefy-nashego-vremeni/`, `/nagornaya/`, `/pastor-series/`) against 50 routes carrying the canonical suffix. **This is a reintroduced regression, not a fresh typo:** Product `79e59b64` repaired the suffix and Product `23352ca2` reverted it five hours later with the commit message and `Writer-Lease:` trailer emitted by the `headline-autofix` job. Root owner is `SYS-BRAND-TITLE-AUTHORITY`; a page-only edit will be rewritten again. Lineage: `incoming/bugverifikator/2026-07-17/REPORT.md`; pass-2 mechanism in AuditRepo PR #328. | Page owners `AntisovetovPageHead.astro`, `KodDaVinchiPageHead.astro`, `DiotrophesPageHead.astro`, `NagornayaIndexPageHead.astro`, `PastorSeriesPageHead.astro`. Product branch `agent/antisovetov-title-suffix-20260818` already owns the Antisovetov page edit — reference it instead of starting a parallel lane; close only together with `SYS-BRAND-TITLE-AUTHORITY`. |
+| `SEARCH-MANIFEST-TITLE-SUFFIX` | `data/search-manifest.json` keeps the site name inside item titles: verified-source + verified-live at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`, 14 of 76 records carry the brand while 62 do not. `js/search.js` renders `item.title` in search results and `scripts/rss-feed-normalizer.js` re-emits it, so live `feed.xml` ships 7 of 58 item titles with a brand suffix (6 full, 1 truncated) while `feed-pastor-series.xml` publishes the same Diotrephes article with a clean title — two published feeds contradict each other about one article. Evidence: AuditRepo PR #328. | `data/search-manifest.json` plus the manifest normalizer (`scripts/search-manifest-policy-normalizer.js`); channel-level branding already exists in `<channel><title>`, so item titles must carry the article title only. Close with a rebuilt manifest, a regenerated `feed.xml` and a normalizer guard. |
+| `GENESIS6-TITLE-BRAND` | `/hard-texts/genesis-6/` publishes `Бытие 6, Енох, Иуда и Пётр — исследовательская серия` with no brand token while all seven sibling `/hard-texts/*` routes carry `| Господь Бог — Сила Моя`. The page is `robots: index, follow`, so this is not an intentional holding-page exclusion. verified-live at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`. Evidence: AuditRepo PR #328. | MDX frontmatter title for that entry plus the `Genesis6ArticlePage.astro` head owner; smallest possible edit, no route or slug change. |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
 | ID | Needed implementation | Why |
 |---|---|---|
 
-## NARROWED RESIDUALS — 11
+## NARROWED RESIDUALS — 5
 
 | ID | Current residual |
 |---|---|
 | `HTML-BTN-TYPE` | JS-driven interactive buttons (`themeToggle`, `hMobileMenuBtn`) in `HardTextsPageChrome` are missing `type="button"`. Verified current in `HardTextsPageChrome` (all buttons), `AboutPageChrome` (#themeToggle) and `NagornayaChast1PageChrome` (#menuBtn). |
 | `AR-IDX-JS-02` | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
 | `D-2` | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
-| `A11Y-OG-META-MALFORMED` | `og:title` in articles (Antisovetov, Kod Da Vinchi, etc.) shares the `D-19` malformed suffix (`| Господь Бог` instead of full brand). Verified current 2026-07-17. |
-| `A11Y-SEARCH-MODAL-MISSING` | `gbSearchBtn` present in multiple shell layouts but corresponding modal container (#searchModal or similar) is missing from static HTML source, relying entirely on unproven JS injection. |
+| `A11Y-OG-META-MALFORMED` | **Narrowed after live re-measurement — the previous wording was wrong.** verified-live at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`: `og:title` on `/articles/20-antisovetov-pastoru/` and `/articles/kod-da-vinchi/` carries **no** brand token at all, so those two named examples do not share the `D-19` suffix. Only 2 of 76 routes really publish a truncated brand inside `og:title` — `/articles/diotrefy-nashego-vremeni/` and `/pastor-series/` — and the other 12 brand-bearing `og:title` values use the canonical full form. Residual scope is those two routes, both already inside the `D-19` page set. Evidence: AuditRepo PR #328. |
+| `A11Y-SEARCH-MODAL-MISSING` | **Re-scoped: the injection is no longer "unproven".** verified-source at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`: `js/search.js` builds the palette itself — `document.createElement("div")` with `className="cp-backdrop"`, `role="dialog"`, `aria-modal="true"`, `aria-label="Поиск по сайту"` — and every `.cp-backdrop` occurrence in served homepage HTML sits inside guard scripts rather than static DOM, so lazy injection is the designed contract, not a missing container. What stays genuinely unproven is runtime behaviour: no browser witness exists for focus trap, restore-focus on close, or the injected dialog's computed accessible name. Evidence: AuditRepo PR #328. |
 
-## SYSTEM VERIFICATION LANES — 0
+## SYSTEM VERIFICATION LANES — 2
 
 | ID | Verified work package | Next boundary |
 |---|---|---|
+| `SYS-BRAND-TITLE-AUTHORITY` | Four authorities disagree about the brand suffix and the machine one wins. `scripts/article-headline-contract.js:16` hard-codes `titleSuffix: ' | Господь Бог'`; the `headline-autofix` job in `.github/workflows/indexnow.yml` runs it with `--write`, commits `fix(metadata): normalize canonical article headline` and force-pushes — which is exactly how Product `23352ca2` reverted the `D-19` repair made by Product `79e59b64`. Meanwhile `data/editorial-metadata.json` and `data/public-content-baseline.json` both record the full suffix for the affected routes, and 47 of 52 brand-bearing titles in `src/` use it. verified-source + verified-lifecycle at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`. This lane explains `D-19`, `A11Y-OG-META-MALFORMED` and `SEARCH-MANIFEST-TITLE-SUFFIX`; a local page patch leaves the same class of risk, and the defect has already returned once. Evidence: AuditRepo PR #328. | One writing owner for the brand token. Minimum: correct `titleSuffix` in `scripts/article-headline-contract.js` (one line, disjoint from the Product branch that owns the page edit), then verify that `--write` repairs drift in the canonical direction. Do not close while any page in the `D-19` set still ships the truncated form. |
+| `SYS-PUBLICATION-GATE-TITLE-BLIND` | The publication contract cannot see production titles. `npm run contract:compare` (inside `validate:static-publication`, `deploy.yml`) extracts from the **repo root**, but `migration/page-ownership.json` marks 85 of 86 routes `owner: astro, status: production-dist` and `scripts/copy-legacy-to-dist.js` → `shouldSkipLegacyFile()` skips exactly those legacy files, so the gate measures HTML that is never published: 5 of 43 baseline pages already differ between the legacy root file and the live bytes. The dist-scoped `contract:compare:dist` does read the shipped tree, but runs without `--strict-title`, and `scripts/compare-url-contract.js` downgrades `title changed` to a warning in that mode. Separately, `scripts/editorial-metadata-registry.js --check` validates only the registry's own shape and never compares a record with its declared `metadataSource`. verified-source at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`. This is why the `D-19` class shipped and survived. Evidence: AuditRepo PR #328. | Point the publication comparison at `dist` and pass `--strict-title` there, or document explicitly why title drift may ship as a warning; and make the registry check compare each recorded `title` against its `metadataSource`. Harness-only lane: no content or route change. |
 
-## OWNER DECISIONS — 1
+## OWNER DECISIONS — 2
 
 | ID | Missing decision |
 |---|---|
 | `SYS-MAIN-ADMISSION-ENFORCEMENT` | Product, AuditRepo **and Research** `main` remain unprotected and required status-check enforcement is off. Research is authority-bearing input to Product admission/freshness, so omitting it from this decision would leave an uncontrolled authority path. Choose required always-created PR checks with a documented emergency bypass, or explicitly accept/document post-push red risk. This is a governance owner choice, not a current Product defect or a current release blocker, and this row does not authorize settings mutation or a workflow workaround pretending to be branch protection. Evidence: `verification/2026-08-13-max-agent-control-plane-retrospective/REPORT.md` plus `verification/2026-08-17-terminal-attestation-stale-research-hard-gate/REPORT.md`. |
+
+| `EDITORIAL-REGISTRY-FREEZE` | All 43 records in `data/editorial-metadata.json` sit at `reviewStatus: "inconsistent-needs-review"` (`provenance: production-like-dist-migration-freeze`), while `projectDist()` in `scripts/lib/editorial-metadata-v3.js` projects only `approved` records — so the v3 editorial-metadata projection, its workflow and its guard currently move **zero** records into `dist`. verified-source + verified-live at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`: 10 routes already publish a `dateModified` that disagrees with the registry (registry `2026-06-12` vs live `2026-07-09` on nine routes; `2026-07-11` vs `2026-07-30` on `/articles/tma-na-serdce/`). Either the freeze is deliberate — and then the registry must stop being cited as a converging authority — or the records need owner review so projection can resume. An agent cannot pick this. Evidence: AuditRepo PR #328. |
 
 ## Freshness-bound terminal attestation — 2026-08-17 — **STALE**
 
