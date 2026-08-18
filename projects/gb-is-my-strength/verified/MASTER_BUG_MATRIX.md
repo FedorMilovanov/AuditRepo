@@ -15,11 +15,11 @@ Operating authority:
 
 | Поле | Значение |
 |---|---|
-| Active work units | **6** |
+| Active work units | **5** |
 | Direct current defects | **1** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **3** |
-| System verification lanes | **1** |
+| System verification lanes | **0** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
@@ -27,14 +27,14 @@ Operating authority:
 
 | ID | Current problem | Boundary |
 |---|---|---|
-| `D-19` | `AntisovetovPageHead.astro` `<title>` suffix is malformed (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
+| `D-19` | `AntisovetovPageHead.astro` `<title>` suffix is malformed. Confirmed current 2026-07-17 on multiple articles (Antisovetov, Kod Da Vinchi, Diotrefy). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
 | ID | Needed implementation | Why |
 |---|---|---|
 
-## NARROWED RESIDUALS — 4
+## NARROWED RESIDUALS — 3
 
 | ID | Current residual |
 |---|---|
@@ -42,11 +42,10 @@ Operating authority:
 | `AR-IDX-JS-02` | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
 | `D-2` | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
 
-## SYSTEM VERIFICATION LANES — 1
+## SYSTEM VERIFICATION LANES — 0
 
 | ID | Verified work package | Next boundary |
 |---|---|---|
-| `SYS-RESEARCH-SOURCE-AUDIT-HARD-GATE` | Research scheduled `Total cross-repo source audit` run `31996510796` failed on Research `main` `8d6e5bc3f303d0a6a2d1a15969e042907f3387db` before any substantive source-audit step executed. Job `95289017759` failed closed during hash-locked dependency installation; compile, deterministic/refined audits, dead-source classification, baseline enforcement and evidence upload were skipped. This red hard gate existed before AuditRepo #309 emitted its present-tense terminal attestation, so that terminal witness is stale. Evidence: `verification/2026-08-17-terminal-attestation-stale-research-hard-gate/REPORT.md`. | Do **not** duplicate the active Research repair: branch `agent/source-audit-lock-recovery-20260817` already advanced to `9eb87807a33a8e7cebfa4589710063b29d155a9d` and is treated as another agent's owner. Close this lane only after an exact-head repair is integrated without weakening fail-closed controls, a then-current Research-main source-audit run is green **and actually executes the substantive audit/evidence steps**, and AuditRepo performs a fresh cross-repo reconciliation before reissuing any terminal `ZERO`. |
 
 ## OWNER DECISIONS — 1
 
