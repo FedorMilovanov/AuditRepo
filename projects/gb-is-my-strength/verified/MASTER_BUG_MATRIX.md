@@ -15,18 +15,19 @@ Operating authority:
 
 | Поле | Значение |
 |---|---|
-| Active work units | **5** |
-| Direct current defects | **1** |
+| Active work units | **7** |
+| Direct current defects | **3** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **2** |
 | System verification lanes | **1** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-## CURRENT DEFECTS — 2
+## CURRENT DEFECTS — 3
 | ID | Current problem | Boundary |
 |---|---|---|
-| `D-19` [CLOSED: 79e59b64] | `AntisovetovPageHead.astro` `<title>` suffix is malformed (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
+| `D-20` [CANDIDATE] | `GillContextPageHead.astro` missing title suffix entirely (no `| Господь Бог — Сила Моя`). | `src/components/article-pilots/gill-context/GillContextPageHead.astro` |
+| `D-21` [CANDIDATE] | `KodDaVinchiPageHead.astro` uses short suffix (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/kod-da-vinchi/KodDaVinchiPageHead.astro` |)
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
