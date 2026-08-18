@@ -15,10 +15,10 @@ Operating authority:
 
 | Поле | Значение |
 |---|---|
-| Active work units | **10** |
+| Active work units | **13** |
 | Direct current defects | **1** |
 | Verified necessary improvements | **0** |
-| Narrowed residuals | **8** |
+| Narrowed residuals | **11** |
 | System verification lanes | **0** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
@@ -34,7 +34,7 @@ Operating authority:
 | ID | Needed implementation | Why |
 |---|---|---|
 
-## NARROWED RESIDUALS — 8
+## NARROWED RESIDUALS — 11
 
 | ID | Current residual |
 |---|---|
