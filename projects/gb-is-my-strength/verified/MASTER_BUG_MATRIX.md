@@ -41,9 +41,9 @@ Operating authority:
 | `AR-IDX-JS-02` [VERIFIED] | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
 | `D-2` [VERIFIED] | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
 | `P1-14` [CLOSED: 666ec132] | Metadata fan-out asymmetry: `series-chapter` (Nagornaya) is ignored by audit scripts. | `scripts/lib/editorial-metadata.js` |
-| `P1-13` | Multi-surface metadata drift: MDX frontmatter vs Registry JSON vs RSS dates are out of sync. | `data/editorial-metadata.json` |
-| `GBS2-WIRING-01` | `SeriesArticleLayout.astro` is orphan/unused by active series pages. | `src/layouts/SeriesArticleLayout.astro` |
-| `GBS2-WIRING-02` | Hardcoded series paths in `SeriesArticleLayout.astro` prevent reusability. | `src/layouts/SeriesArticleLayout.astro` |
+| `P1-13` [CLOSED] | Multi-surface metadata drift: MDX frontmatter vs Registry JSON vs RSS dates are out of sync. | `data/editorial-metadata.json` |
+| `GBS2-WIRING-01` [CLOSED] | `SeriesArticleLayout.astro` is orphan/unused by active series pages. | `src/layouts/SeriesArticleLayout.astro` |
+| `GBS2-WIRING-02` [CLOSED] | Hardcoded series paths in `SeriesArticleLayout.astro` prevent reusability. | `src/layouts/SeriesArticleLayout.astro` |
 
 ## SYSTEM VERIFICATION LANES — 1
 
