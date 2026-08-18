@@ -15,39 +15,45 @@ Operating authority:
 
 | Поле | Значение |
 |---|---|
-| Active work units | **7** |
-| Direct current defects | **1** |
+| Active work units | **12** |
+| Direct current defects | **6** |
 | Verified necessary improvements | **0** |
-| Narrowed residuals | **4** |
-| System verification lanes | **1** |
+| Narrowed residuals | **2** |
+| System verification lanes | **3** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-## CURRENT DEFECTS — 1
+## CURRENT DEFECTS — 6
 
 | ID | Current problem | Boundary |
 |---|---|---|
-| `D-19` | `AntisovetovPageHead.astro` `<title>` suffix is malformed (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
+| `D-20` | `GillContextPageHead.astro` currently omits the canonical `| Господь Бог — Сила Моя` title suffix. Current-check: Product `3b6bac3904331176023fb7517f131c8c9360bbc5`. | `src/components/article-pilots/gill-context/GillContextPageHead.astro`; close with source + built title/SEO witness. |
+| `D-21` | `KodDaVinchiPageHead.astro` currently uses the shortened `| Господь Бог` title suffix instead of `| Господь Бог — Сила Моя`. Current-check: Product `3b6bac3904331176023fb7517f131c8c9360bbc5`. | `src/components/article-pilots/kod-da-vinchi/KodDaVinchiPageHead.astro`; close with source + built title/SEO witness. |
+| `D-22` | Seven current external source links on `/articles/lot-i-sodom/` use `target="_blank" rel="noopener"` without explicit `noreferrer`; G23 checks only `noopener` and therefore cannot protect the requested privacy contract. `noopener` is present, so reverse tabnabbing is not claimed. Evidence: [`2026-07-17-arena-pr317-322-synthesis`](../verification/2026-07-17-arena-pr317-322-synthesis/REPORT.md), AuditRepo PR #319. | `src/components/article-pilots/lot/LotSectionSources.astro` + canonical external-new-tab guard; preserve seven citations and add order-independent mutation coverage. |
+| `D-23` | Current `/map/` composition emits two document `main` elements: interactive `atlas-main` and no-JS `atlas-noscript`. Source, production-like dist and live HTML agree. Evidence: [`2026-07-17-arena-pr317-322-synthesis`](../verification/2026-07-17-arena-pr317-322-synthesis/REPORT.md), AuditRepo PR #320. | `AtlasBody.astro` / `AtlasNoScriptFallback.astro`; retain graph and complete no-JS material list while establishing one final main owner. |
+| `D-24` | Current `/biografii/` recent-material shelf exposes six H3 card titles directly after H1 because visible “Последние добавленные материалы” is a styled `div`, not the H2 section owner. Later era shelves already use H2→H3. Evidence: [`2026-07-17-arena-pr317-322-synthesis`](../verification/2026-07-17-arena-pr317-322-synthesis/REPORT.md), AuditRepo PR #321. | `BiografiiRecentSection.astro`; semantic-only H2/`aria-labelledby` repair with visual parity. |
+| `D-25` | Shared `GillLearningSheet` article-search input has no persistent accessible name: its wrapping label contains only an `aria-hidden` SVG and the input relies on placeholder text. One shared source projects to 48 current dist routes and representative live Heart/Gill/Enoch surfaces. Evidence: [`2026-07-17-arena-pr317-322-synthesis`](../verification/2026-07-17-arena-pr317-322-synthesis/REPORT.md), AuditRepo PR #322. | `src/components/article-pilots/gill-series/GillLearningSheet.astro`; one shared repair, computed-name witness while typing, representative family smoke. |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
 | ID | Needed implementation | Why |
 |---|---|---|
 
-## NARROWED RESIDUALS — 4
+## NARROWED RESIDUALS — 2
 
 | ID | Current residual |
 |---|---|
-| `A11Y-NO-SCRIPT-ARIA` | `AtlasNoScriptFallback.astro` `<main>` has `aria-labelledby="atlasPageTitle"`, but the target ID is in `AtlasBody.astro` which might be hidden or skipped, breaking the accessible name calculation in fallback mode. |
-| `HTML-BTN-TYPE` | JS-driven interactive buttons (`themeToggle`, `hMobileMenuBtn`) in multiple shell components (`HardTextsPageChrome`, `PastorSeriesPageChrome`, etc.) are missing `type="button"`, risking accidental submit behavior. |
 | `AR-IDX-JS-02` | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
 | `D-2` | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
 
-## SYSTEM VERIFICATION LANES — 1
+## SYSTEM VERIFICATION LANES — 3
 
 | ID | Verified work package | Next boundary |
 |---|---|---|
 | `SYS-RESEARCH-SOURCE-AUDIT-HARD-GATE` | Research scheduled `Total cross-repo source audit` run `31996510796` failed on Research `main` `8d6e5bc3f303d0a6a2d1a15969e042907f3387db` before any substantive source-audit step executed. Job `95289017759` failed closed during hash-locked dependency installation; compile, deterministic/refined audits, dead-source classification, baseline enforcement and evidence upload were skipped. This red hard gate existed before AuditRepo #309 emitted its present-tense terminal attestation, so that terminal witness is stale. Evidence: `verification/2026-08-17-terminal-attestation-stale-research-hard-gate/REPORT.md`. | Do **not** duplicate the active Research repair: branch `agent/source-audit-lock-recovery-20260817` already advanced to `9eb87807a33a8e7cebfa4589710063b29d155a9d` and is treated as another agent's owner. Close this lane only after an exact-head repair is integrated without weakening fail-closed controls, a then-current Research-main source-audit run is green **and actually executes the substantive audit/evidence steps**, and AuditRepo performs a fresh cross-repo reconciliation before reissuing any terminal `ZERO`. |
+| `SYS-AUDIT-ROOT-OWNERSHIP` | Current `npm run schema:rich-results:audit` is ownership-blind: on Product `3b6bac3904331176023fb7517f131c8c9360bbc5` it still fails four Krajne image-dimension checks against reference-only root HTML, while current Astro-owned dist/live publication uses correct `1200×630`. This does not reopen the repaired historical Product defect. Evidence: [`2026-07-17-arena-pr317-322-synthesis`](../verification/2026-07-17-arena-pr317-322-synthesis/REPORT.md), AuditRepo PR #317. | Define current owner semantics, make root/reference audit ownership-aware or explicitly separate reference parity, and prove with adversarial reference-only fixtures; do not patch only the Krajne symptom. |
+| `SYS-CSS-PRESENCE-ADMISSION` | Current `dist:css-parity` recognizes legacy named CSS/inline style but rejects valid resolvable Astro `/_astro/*.css`, false-reding strict-native `/app/`; exact release admission omits the stale gate. Evidence: [`2026-07-17-arena-pr317-322-synthesis`](../verification/2026-07-17-arena-pr317-322-synthesis/REPORT.md), AuditRepo PR #318. | First implement truthful asset-resolving CSS-owner detection with missing/empty/utility-only mutations; then make the corrected check an always-created deploy admission witness. Do not whitelist `/app/`. |
+
 
 ## OWNER DECISIONS — 1
 
@@ -97,3 +103,4 @@ NO RIGHTS-BASED FULL-CORPUS PRODUCT MUTATION AUTHORIZED
 ```
 
 Future signals must pass the normal admission gate from fresh current Product evidence before they enter MASTER.
+| `D-NEW-01` | Potential query reflection without sanitization in `index.astro` search script. | `src/pages/index.astro` |
