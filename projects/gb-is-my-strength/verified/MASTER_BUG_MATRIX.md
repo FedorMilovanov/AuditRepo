@@ -15,10 +15,10 @@ Operating authority:
 
 | Поле | Значение |
 |---|---|
-| Active work units | **8** |
+| Active work units | **7** |
 | Direct current defects | **1** |
 | Verified necessary improvements | **0** |
-| Narrowed residuals | **5** |
+| Narrowed residuals | **4** |
 | System verification lanes | **1** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
@@ -34,11 +34,10 @@ Operating authority:
 | ID | Needed implementation | Why |
 |---|---|---|
 
-## NARROWED RESIDUALS — 5
+## NARROWED RESIDUALS — 4
 
 | ID | Current residual |
 |---|---|
-| `SEARCH-LAZY-DRIFT` | The search lazy-loader inline script in `BaseLayout.astro` contains a typo (`window.GBSearch.open&&window.GBSearch.open()`) which deviates from the canonical snippet used in all other chromes. |
 | `A11Y-NO-SCRIPT-ARIA` | `AtlasNoScriptFallback.astro` `<main>` has `aria-labelledby="atlasPageTitle"`, but the target ID is in `AtlasBody.astro` which might be hidden or skipped, breaking the accessible name calculation in fallback mode. |
 | `HTML-BTN-TYPE` | JS-driven interactive buttons (`themeToggle`, `hMobileMenuBtn`) in multiple shell components (`HardTextsPageChrome`, `PastorSeriesPageChrome`, `AboutPageChrome`, `NagornayaSeriyaPageChrome`) are missing `type="button"`, risking accidental submit behavior. |
 | `AR-IDX-JS-02` | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
