@@ -27,7 +27,7 @@ Operating authority:
 
 | ID | Current problem | Boundary |
 |---|---|---|
-| `D-19` | `AntisovetovPageHead.astro` `<title>` suffix is malformed. Confirmed current 2026-07-17 on multiple articles (Antisovetov, Kod Da Vinchi, Diotrefy). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
+| `D-19` | `AntisovetovPageHead.astro` `<title>` suffix is malformed. Confirmed current 2026-07-17 on 5 pages (Antisovetov, Kod Da Vinchi, Diotrefy, Pastor Series Home, Nagornaya Series Home). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
@@ -38,7 +38,7 @@ Operating authority:
 
 | ID | Current residual |
 |---|---|
-| `HTML-BTN-TYPE` | JS-driven interactive buttons (`themeToggle`, `hMobileMenuBtn`) in `HardTextsPageChrome` are missing `type="button"`. (Partial fix verified for Home/About/Nagornaya). |
+| `HTML-BTN-TYPE` | JS-driven interactive buttons (`themeToggle`, `hMobileMenuBtn`) in `HardTextsPageChrome` are missing `type="button"`. Verified current in `HardTextsPageChrome` (all buttons), `AboutPageChrome` (#themeToggle) and `NagornayaChast1PageChrome` (#menuBtn). |
 | `AR-IDX-JS-02` | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
 | `D-2` | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
 
