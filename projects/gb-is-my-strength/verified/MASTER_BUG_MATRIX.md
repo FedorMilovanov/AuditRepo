@@ -26,8 +26,9 @@ Operating authority:
 ## CURRENT DEFECTS — 3
 | ID | Current problem | Boundary |
 |---|---|---|
+| `D-19` [VERIFIED] | `AntisovetovPageHead.astro` `<title>` suffix is malformed (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
 | `D-20` [CANDIDATE] | `GillContextPageHead.astro` missing title suffix entirely (no `| Господь Бог — Сила Моя`). | `src/components/article-pilots/gill-context/GillContextPageHead.astro` |
-| `D-21` [CANDIDATE] | `KodDaVinchiPageHead.astro` uses short suffix (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/kod-da-vinchi/KodDaVinchiPageHead.astro` |)
+| `D-21` [CANDIDATE] | `KodDaVinchiPageHead.astro` uses short suffix (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/kod-da-vinchi/KodDaVinchiPageHead.astro` |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
