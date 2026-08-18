@@ -1,0 +1,22 @@
+# route-profile-contract-audit.js @ a2ef67da
+  ❌ /articles/strah-bozhij-rabskij-ili-synovnij/: production Astro route missing matrix entry
+  ❌ /articles/strah-bozhij-rabskij-ili-synovnij/: missing route-migration-matrix entry
+  ❌ /articles/svoboda-vo-hriste/: production Astro route missing matrix entry
+  ❌ /articles/svoboda-vo-hriste/: missing route-migration-matrix entry
+  ❌ /articles/tma-na-serdce/: production Astro route missing matrix entry
+  ❌ /articles/tma-na-serdce/: missing route-migration-matrix entry
+  ❌ /hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/: production Astro route missing matrix entry
+  ❌ /hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/: missing route-migration-matrix entry
+  ❌ /hard-texts/blagovestie-mertvym-1-petra-4-5-6/: production Astro route missing matrix entry
+  ❌ /hard-texts/blagovestie-mertvym-1-petra-4-5-6/: missing route-migration-matrix entry
+  ❌ /hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/: production Astro route missing matrix entry
+  ❌ /hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/: missing route-migration-matrix entry
+  ❌ /hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/: production Astro route missing matrix entry
+  ❌ /hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/: missing route-migration-matrix entry
+  ❌ /hard-texts/genesis-6/: production Astro route missing matrix entry
+  ❌ /hard-texts/genesis-6/: missing route-migration-matrix entry
+  ❌ /hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/: production Astro route missing matrix entry
+  ❌ /hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/: missing route-migration-matrix entry
+  ❌ /hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/: production Astro route missing matrix entry
+  ❌ /hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/: missing route-migration-matrix entry
+EXIT=1
