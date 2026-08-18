@@ -11,43 +11,51 @@ Latest historical terminal control-plane evidence:
 Operating authority:
 - [`../../../AUDITREPO_OPERATING_MODEL.md`](../../../AUDITREPO_OPERATING_MODEL.md)
 
+Latest current reverify:
+- [`../verification/2026-08-17-arena-current-head-reverify-gbs/REPORT.md`](../verification/2026-08-17-arena-current-head-reverify-gbs/REPORT.md) (Product `main` `3b6bac3904331176023fb7517f131c8c9360bbc5`)
+
 ## Current state
 
 | Поле | Значение |
 |---|---|
-| Active work units | **7** |
-| Direct current defects | **1** |
+| Active work units | **6** |
+| Direct current defects | **0** |
 | Verified necessary improvements | **0** |
-| Narrowed residuals | **4** |
-| System verification lanes | **1** |
+| Narrowed residuals | **3** |
+| System verification lanes | **2** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-## CURRENT DEFECTS — 1
+## CURRENT DEFECTS — 0
 
 | ID | Current problem | Boundary |
 |---|---|---|
-| `D-19` | `AntisovetovPageHead.astro` `<title>` suffix is malformed (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
 | ID | Needed implementation | Why |
 |---|---|---|
 
-## NARROWED RESIDUALS — 4
+## NARROWED RESIDUALS — 3
 
 | ID | Current residual |
 |---|---|
-| `A11Y-NO-SCRIPT-ARIA` | `AtlasNoScriptFallback.astro` `<main>` has `aria-labelledby="atlasPageTitle"`, but the target ID is in `AtlasBody.astro` which might be hidden or skipped, breaking the accessible name calculation in fallback mode. |
-| `HTML-BTN-TYPE` | JS-driven interactive buttons (`themeToggle`, `hMobileMenuBtn`) in multiple shell components (`HardTextsPageChrome`, `PastorSeriesPageChrome`, `AboutPageChrome`, `NagornayaSeriyaPageChrome`) are missing `type="button"`, risking accidental submit behavior. |
-| `AR-IDX-JS-02` | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
-| `D-2` | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
+| `A11Y-NO-SCRIPT-ARIA` | `AtlasBody.astro` (`<main class="atlas-main">`) and `AtlasNoScriptFallback.astro` (`<main class="atlas-noscript">`) both render a `<main>` landmark on `/map` (`src/pages/map/index.astro`), exposing two `role=main` landmarks in one document. The original "title hidden/skipped" framing is invalid: `#atlasPageTitle` is server-rendered, not `hidden`, and not hidden by the noscript CSS. The residual keeps the ID and points at the real, reframed mechanism (one `main` per document). Needs a real browser/AT landmark-count check on `/map` with JS disabled. |
+| `HTML-BTN-TYPE` | `themeToggle`, `hMobileMenuBtn` (and `hScrollTop`) in `HardTextsPageChrome`, `PastorSeriesPageChrome`, `AboutPageChrome`, `NagornayaSeriyaPageChrome` are missing `type="button"`. On HEAD `3b6bac3` the originally-stated "accidental submit" mechanism is **not supported**: none of the four shell components contain a `<form>`, and the buttons are siblings of `<slot/>`, not descendants of a slotted form. This is defensive hardening against a future form-in-shell path, not a current defect. Park candidate for `WORK_QUEUE.md` if a future form lands inside these shells. |
+| `D-2` | `css:layer:validate` (`package.json`) runs `node scripts/css-layer-validator.js css/site.css --ceiling=200`; the validator processes exactly one file (`args.find(a => !a.startsWith('--'))`). `css/home.css` (113 KB) and `css/floating-cluster.css` (236 KB) bypass the @layer-contract / brace-balance / `!important`-ceiling guard despite being shipped CSS in the `validate:static-publication` chain. |
 
-## SYSTEM VERIFICATION LANES — 1
+## SYSTEM VERIFICATION LANES — 2
 
 | ID | Verified work package | Next boundary |
 |---|---|---|
 | `SYS-RESEARCH-SOURCE-AUDIT-HARD-GATE` | Research scheduled `Total cross-repo source audit` run `31996510796` failed on Research `main` `8d6e5bc3f303d0a6a2d1a15969e042907f3387db` before any substantive source-audit step executed. Job `95289017759` failed closed during hash-locked dependency installation; compile, deterministic/refined audits, dead-source classification, baseline enforcement and evidence upload were skipped. This red hard gate existed before AuditRepo #309 emitted its present-tense terminal attestation, so that terminal witness is stale. Evidence: `verification/2026-08-17-terminal-attestation-stale-research-hard-gate/REPORT.md`. | Do **not** duplicate the active Research repair: branch `agent/source-audit-lock-recovery-20260817` already advanced to `9eb87807a33a8e7cebfa4589710063b29d155a9d` and is treated as another agent's owner. Close this lane only after an exact-head repair is integrated without weakening fail-closed controls, a then-current Research-main source-audit run is green **and actually executes the substantive audit/evidence steps**, and AuditRepo performs a fresh cross-repo reconciliation before reissuing any terminal `ZERO`. |
+| `SYS-THEME-KEY-MULTIWRITER` | The `localStorage["theme"]` key has no single owner. At Product `main` `3b6bac3` >=4 writers across 3 files write it: `js/enhancements.js` (setTheme -> `SiteUtils.themeKey ? ... : "theme"`, with `SiteUtils.themeKey === "theme"` set in `js/site.js`), `js/reader-preferences.js` (`safeSet('theme', ...)`), and two writers in `js/site.js` (the themeToggle controller `o(e)` and an inline `SiteUtils.themeKey` writer). Each derives state independently and only some fire `theme:changed` / handle cross-tab `storage` parity, so persisted value and dispatched events differ across entry points. Absorbs the previous `AR-IDX-JS-02` symptom. Evidence: `verification/2026-08-17-arena-current-head-reverify-gbs/REPORT.md`. | One canonical theme-state module (natural owner: the `reader-preferences.js` controller); every other caller uses a single `setTheme/getTheme` and does not touch `localStorage["theme"]` or `document.documentElement.classList` directly. Cross-tab parity handled in one place. Close only after one owner, no stray `"theme"` literals outside it, and cross-tab `storage` parity is preserved with a regression witness. |
+
+## Closure in this wave
+
+- `D-19` -> `closed-by-fix`: Product commit `79e59b64e9` "fix(seo): restore canonical title suffix (D-19)" at `2026-08-18T06:49:00Z`; HEAD `3b6bac3` shows full `<title>20 антисоветов, как пастору разрушить своё служение | Господь Бог — Сила Моя</title>`. Row removed from active MASTER; closure note only — full history remains in Git.
+- `AR-IDX-JS-02` -> `absorbed-by-system-fix`: now a symptom of `SYS-THEME-KEY-MULTIWRITER`. Row removed from active residuals; absorbed under the new system lane. Fully retires when the system lane closes.
+
 
 ## OWNER DECISIONS — 1
 
