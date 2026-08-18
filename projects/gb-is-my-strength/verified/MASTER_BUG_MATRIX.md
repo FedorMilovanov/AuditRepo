@@ -15,10 +15,10 @@ Operating authority:
 
 | Поле | Значение |
 |---|---|
-| Active work units | **5** |
+| Active work units | **7** |
 | Direct current defects | **1** |
 | Verified necessary improvements | **0** |
-| Narrowed residuals | **3** |
+| Narrowed residuals | **5** |
 | System verification lanes | **0** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
@@ -34,13 +34,15 @@ Operating authority:
 | ID | Needed implementation | Why |
 |---|---|---|
 
-## NARROWED RESIDUALS — 3
+## NARROWED RESIDUALS — 5
 
 | ID | Current residual |
 |---|---|
 | `HTML-BTN-TYPE` | JS-driven interactive buttons (`themeToggle`, `hMobileMenuBtn`) in `HardTextsPageChrome` are missing `type="button"`. Verified current in `HardTextsPageChrome` (all buttons), `AboutPageChrome` (#themeToggle) and `NagornayaChast1PageChrome` (#menuBtn). |
 | `AR-IDX-JS-02` | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
 | `D-2` | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
+| `A11Y-OG-META-MALFORMED` | `og:title` in articles (Antisovetov, Kod Da Vinchi, etc.) shares the `D-19` malformed suffix (`| Господь Бог` instead of full brand). Verified current 2026-07-17. |
+| `A11Y-SEARCH-MODAL-MISSING` | `gbSearchBtn` present in multiple shell layouts but corresponding modal container (#searchModal or similar) is missing from static HTML source, relying entirely on unproven JS injection. |
 
 ## SYSTEM VERIFICATION LANES — 0
 
