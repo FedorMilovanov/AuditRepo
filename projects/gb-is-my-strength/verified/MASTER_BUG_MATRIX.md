@@ -23,8 +23,7 @@ Operating authority:
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-## CURRENT DEFECTS — 1
-
+## CURRENT DEFECTS — 2
 | ID | Current problem | Boundary |
 |---|---|---|
 | `D-19` [VERIFIED] | `AntisovetovPageHead.astro` `<title>` suffix is malformed (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
@@ -38,8 +37,8 @@ Operating authority:
 
 | ID | Current residual |
 |---|---|
-| `AR-IDX-JS-02` | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
-| `D-2` | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
+| `AR-IDX-JS-02` [VERIFIED] | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
+| `D-2` [VERIFIED] | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
 
 ## SYSTEM VERIFICATION LANES — 1
 
@@ -95,3 +94,4 @@ NO RIGHTS-BASED FULL-CORPUS PRODUCT MUTATION AUTHORIZED
 ```
 
 Future signals must pass the normal admission gate from fresh current Product evidence before they enter MASTER.
+| `D-NEW-01` | Potential query reflection without sanitization in `index.astro` search script. | `src/pages/index.astro` |
