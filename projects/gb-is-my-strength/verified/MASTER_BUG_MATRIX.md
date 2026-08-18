@@ -15,28 +15,31 @@ Operating authority:
 
 | Поле | Значение |
 |---|---|
-| Active work units | **2** |
-| Direct current defects | **0** |
+| Active work units | **5** |
+| Direct current defects | **1** |
 | Verified necessary improvements | **0** |
-| Narrowed residuals | **0** |
+| Narrowed residuals | **2** |
 | System verification lanes | **1** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-## CURRENT DEFECTS — 0
+## CURRENT DEFECTS — 1
 
 | ID | Current problem | Boundary |
 |---|---|---|
+| `D-19` | `AntisovetovPageHead.astro` `<title>` suffix is malformed (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
 | ID | Needed implementation | Why |
 |---|---|---|
 
-## NARROWED RESIDUALS — 0
+## NARROWED RESIDUALS — 2
 
 | ID | Current residual |
-|---|---|---|
+|---|---|
+| `AR-IDX-JS-02` | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
+| `D-2` | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
 
 ## SYSTEM VERIFICATION LANES — 1
 
