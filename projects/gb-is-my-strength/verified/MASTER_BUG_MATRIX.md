@@ -16,34 +16,32 @@ Operating authority:
 | Поле | Значение |
 |---|---|
 | Active work units | **7** |
-| Direct current defects | **3** |
+| Direct current defects | **1** |
 | Verified necessary improvements | **0** |
-| Narrowed residuals | **2** |
+| Narrowed residuals | **4** |
 | System verification lanes | **1** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-## CURRENT DEFECTS — 3
+## CURRENT DEFECTS — 1
+
 | ID | Current problem | Boundary |
 |---|---|---|
-| `D-19` [CLOSED: 79e59b64] | `AntisovetovPageHead.astro` `<title>` suffix is malformed (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
-| `D-20` [CANDIDATE] | `GillContextPageHead.astro` missing title suffix entirely (no `| Господь Бог — Сила Моя`). | `src/components/article-pilots/gill-context/GillContextPageHead.astro` |
-| `D-21` [CANDIDATE] | `KodDaVinchiPageHead.astro` uses short suffix (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/kod-da-vinchi/KodDaVinchiPageHead.astro` |
+| `D-19` | `AntisovetovPageHead.astro` `<title>` suffix is malformed (`| Господь Бог` instead of full `| Господь Бог — Сила Моя`). | `src/components/article-pilots/antisovetov/AntisovetovPageHead.astro` |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
 | ID | Needed implementation | Why |
 |---|---|---|
 
-## NARROWED RESIDUALS — 6
+## NARROWED RESIDUALS — 4
+
 | ID | Current residual |
 |---|---|
-| `AR-IDX-JS-02` [VERIFIED] | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
-| `D-2` [VERIFIED] | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
-| `P1-14` [CLOSED: 666ec132] | Metadata fan-out asymmetry: `series-chapter` (Nagornaya) is ignored by audit scripts. | `scripts/lib/editorial-metadata.js` |
-| `P1-13` [CLOSED] | Multi-surface metadata drift: MDX frontmatter vs Registry JSON vs RSS dates are out of sync. | `data/editorial-metadata.json` |
-| `GBS2-WIRING-01` [CLOSED] | `SeriesArticleLayout.astro` is orphan/unused by active series pages. | `src/layouts/SeriesArticleLayout.astro` |
-| `GBS2-WIRING-02` [CLOSED] | Hardcoded series paths in `SeriesArticleLayout.astro` prevent reusability. | `src/layouts/SeriesArticleLayout.astro` |
+| `A11Y-NO-SCRIPT-ARIA` | `AtlasNoScriptFallback.astro` `<main>` has `aria-labelledby="atlasPageTitle"`, but the target ID is in `AtlasBody.astro` which might be hidden or skipped, breaking the accessible name calculation in fallback mode. |
+| `HTML-BTN-TYPE` | JS-driven interactive buttons (`themeToggle`, `hMobileMenuBtn`) in multiple shell components (`HardTextsPageChrome`, `PastorSeriesPageChrome`, etc.) are missing `type="button"`, risking accidental submit behavior. |
+| `AR-IDX-JS-02` | Legacy runtime scripts (`js/enhancements.js`) still write to the legacy `theme` localStorage key, maintaining a multi-writer surface despite canonical owner in `reader-preferences.js`. |
+| `D-2` | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
 
 ## SYSTEM VERIFICATION LANES — 1
 
@@ -99,4 +97,3 @@ NO RIGHTS-BASED FULL-CORPUS PRODUCT MUTATION AUTHORIZED
 ```
 
 Future signals must pass the normal admission gate from fresh current Product evidence before they enter MASTER.
-| `D-NEW-01` | Potential query reflection without sanitization in `index.astro` search script. | `src/pages/index.astro` |
