@@ -15,13 +15,15 @@ Operating authority:
 
 | Поле | Значение |
 |---|---|
-| Active work units | **13** |
+| Active work units | **12** |
 | Direct current defects | **1** |
 | Verified necessary improvements | **0** |
-| Narrowed residuals | **11** |
+| Narrowed residuals | **10** |
 | System verification lanes | **0** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
+
+> **Re-admission wave — 2026-07-17 (bugverfikator, AuditRepo `main` HEAD `f2751126`).** Six findings previously "admitted" by direct-to-`main` commits `86e4400a` / `8ef37c99` had their counters raised but their row bodies silently dropped, leaving `main` red on `auditrepo-validate` (`SECTION-COUNT-MISMATCH`, `STATE-COUNT-MISMATCH`). See `incoming/bugverfikator/2026-07-17/REPORT_matrix_integrity.md`. Five are re-admitted below as **`current-confirmed`** against Product `main` `485db8c25287fa9bd2f53a5356885f02e4b81f4b` (verified-source witnesses on `sw.js`, `scripts/css-layer-validator.js`, `src/components/biografii/BiografiiRecentSection.astro`, `sitemap.xml` + home nav). The sixth, `A11Y-LANG-MISSING`, is **not** re-admitted to MASTER: its only witness is a SHA-less live report and a source recheck at `485db8c` did not locate the Greek/Hebrew text in home/biografii `.astro` sources, so it is a `candidate` that must stay in `incoming/`/`verification/` and be browser/live-reverified before any promotion (operating model: suspected-only claims without a current witness do not stay in MASTER); its evidence report `verified/verification/2026-07-17-a11y-lang-missing/REPORT.md` remains on disk. The two `css-layer-validator.js` findings share an owner with `D-2`; absorption into one validator-hardening lane is deferred until a class-level guard is owned.
 
 ## CURRENT DEFECTS — 1
 
@@ -34,7 +36,7 @@ Operating authority:
 | ID | Needed implementation | Why |
 |---|---|---|
 
-## NARROWED RESIDUALS — 11
+## NARROWED RESIDUALS — 10
 
 | ID | Current residual |
 |---|---|
@@ -43,6 +45,11 @@ Operating authority:
 | `D-2` | `css:layer:validate` script only validates `css/site.css`, bypassing layer validations for `css/home.css` and `css/floating-cluster.css`. |
 | `A11Y-OG-META-MALFORMED` | `og:title` in articles (Antisovetov, Kod Da Vinchi, etc.) shares the `D-19` malformed suffix (`| Господь Бог` instead of full brand). Verified current 2026-07-17. |
 | `A11Y-SEARCH-MODAL-MISSING` | `gbSearchBtn` present in multiple shell layouts but corresponding modal container (#searchModal or similar) is missing from static HTML source, relying entirely on unproven JS injection. |
+| `BUG-SW-MISSING-PRECACHE` | **current-confirmed.** verified-source at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`: `sw.js` precaches 11 of 13 structural CSS files in `css/`; the two missing are `/css/series-manuscript.css` and `/css/tts-download-notice.css`. Pages relying on those sheets get a degraded offline experience / broken layout when served from the service-worker cache with no network. |
+| `BUG-CSS-VAL-COMMENT-SENSITIVITY` | **current-confirmed (audit-tooling defect).** verified-source at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`: `scripts/css-layer-validator.js` runs `orderRegex` / `blockRegex` on raw `fs.readFileSync(file,'utf8')` with **no comment stripping**, so a commented-out `/* @layer base; */` is still matched and can produce a false pass for the layer-order check. Shares the `css-layer-validator.js` owner with `D-2`; absorption into a single validator-hardening lane is deferred until owned. |
+| `BUG-CSS-VAL-ANONYMOUS-LAYER-BYPASS` | **current-confirmed (audit-tooling defect, latent).** verified-source at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`: `blockRegex = /@layer\s+(NAME)\s*\{/g` requires a named layer, so spec-valid anonymous `@layer { … }` blocks are never collected, leaving an architectural bypass for layer-order / ratio enforcement. No concrete in-repo anonymous-layer abuse witness exists yet, so promotion to a hard enforcement gap needs an adversarial case. Shares the `css-layer-validator.js` owner with `D-2`. |
+| `BUG-PATH-RESOLVE-DOTS` | **current-confirmed.** verified-source + runtime at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`: `src/components/biografii/BiografiiRecentSection.astro` emits 12 `../`-relative paths (e.g. `src="../images/og-dzhon-gill-istoricheskiy-kontekst.jpg"`, `href="../articles/dzhon-gill-chast-1-chelovek/"`) intended for a subdirectory page; root-relative `/images/…` / `/articles/…` or Astro asset imports are required. Confirmed live at `https://gospod-bog.ru/biografii/`. |
+| `SEO-ORPHAN-PAGE` | **current-confirmed.** verified-source at Product `485db8c25287fa9bd2f53a5356885f02e4b81f4b`: `/baptisty-rossii/` is present in `sitemap.xml` (indexable) but has no internal link from `src/pages/index.astro` or `src/layouts/BaseLayout.astro` navigation/footer, making it an orphan for home-starting users and costing internal link equity. |
 
 ## SYSTEM VERIFICATION LANES — 0
 
