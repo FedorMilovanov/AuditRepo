@@ -1,0 +1,18 @@
+# Normalized command log
+
+Product anchor and overlap census via GitHub public pages/API.
+Downloaded Product/AuditRepo main snapshots and verified anchor.
+Installed exact npm dependencies and Playwright browser/system dependencies.
+node scripts/astro-cli.mjs build                                  # PASS, 85 pages
+node scripts/copy-legacy-to-dist.js --omit-build-only             # PASS
+GB_BUILD_INSTANT=2026-08-19T00:30:04Z node scripts/astro-cache-bust-postbuild.js # PASS, 89 HTML
+node scripts/dist-smoke-audit.js --no-build --production-like     # PASS
+npm run overlay:browser:all                                       # PASS
+Custom sitemap metadata/text live parity crawl                    # PASS, 76/76 equal
+Custom generated HTML integrity scan                              # PASS for links/assets/fragments/IDs/alts
+Axe WCAG A/AA representative Chromium scan                        # FAIL: admitted rules in evidence/axe-summary.md
+Custom local/live Atlas accessibility-tree witness                # FAIL: two Atlas contracts
+Custom live Gill responsive table census                          # FAIL: 9 overflowing nonfocusable regions
+AuditRepo exact-mechanism grep and MASTER census                   # no canonical duplicates found
+python3 scripts/validate_audit_repo.py                             # run after package assembly
+python3 scripts/check_matrix_coverage.py                           # run after package assembly
