@@ -128,6 +128,37 @@ Remote GitHub run status was not used as a witness because the unauthenticated A
 4. Production dependency audit returned zero known vulnerabilities.
 5. A literal internal route/asset scan found no unresolved normal source URL after accounting for the generated Atlas runtime owner.
 
+## Continuation pass after initial intake
+
+A production-like artifact was subsequently assembled without the environment-blocked Astro typecheck wrapper:
+
+1. `node scripts/astro-cli.mjs build` — PASS;
+2. `node scripts/copy-legacy-to-dist.js --omit-build-only` — PASS;
+3. `GB_BUILD_INSTANT=2026-08-19T00:30:04Z node scripts/astro-cache-bust-postbuild.js` — PASS.
+
+The following artifact/source contracts passed:
+
+- `dist:jsonld:audit`;
+- `schema:rich-results:audit:dist` (warnings only for optional Article images);
+- `page-ownership:dist:production-like`;
+- `dist-publication-audit.js --forbid-dev`;
+- `sw:dist:audit`;
+- `article:qa`, `readable-audit`, `editorial:lint`;
+- strict migration metadata, route ownership and native runtime taxonomy;
+- content parity/coverage, Gill claims and Gill Pagefind checks;
+- repository control-plane audit.
+
+A full literal scan of 89 generated HTML documents found no missing normal internal route, asset, or fragment target, no duplicate IDs, and no unsafe `_blank` relation. Four initially flagged Atlas checkboxes are nested in visible `<label>` elements and therefore were rejected as false positives.
+
+Additional red/noisy signals were dispositioned rather than promoted:
+
+- root-only `schema:rich-results:audit` sees stale `900×600` data in a reference-only legacy Krajne page; production `dist` has the corrected `1200×630` owner and passes — not current Product work;
+- `mdx:structure:audit` warns on the quoted frontmatter tag `"4Q204"` because its glue regex spans YAML frontmatter; non-blocking validator noise, no reader defect shown;
+- three BnF links reported `ENOTFOUND` only because this sandbox cannot resolve `*.bnf.fr`; independent rendered fetches reached all three valid records;
+- browser suites could not launch because the sandbox lacks `libglib-2.0.so.0`; no browser failure was attributed to Product.
+
+No second current defect met the evidence bar in this continuation pass. `DATA-CONSISTENCY-PUBLIC-ASSET-RESOLUTION` remains the only newly admitted work unit; this avoids inflating MASTER with warnings and environment artifacts.
+
 ## Suggested verification next step
 
 A second agent should reproduce `npm run data:consistency` from a real Git checkout of `cb3681e`, inspect the exact current heads/files of PRs `#1721` and `#1722`, and verify a negative fixture. If unchanged and unowned, promote one compact work unit rather than six symptom rows.
