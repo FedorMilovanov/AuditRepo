@@ -6,6 +6,7 @@
 - Signal class: Product runtime ownership + audit-harness false-green
 - Proof state: current-source + normative algorithm witness; unrestricted browser lifecycle capture not available in this environment
 - Audited anchor: Product `main` `bcb41e57d7f9c011ac597c51a240fba19152a908`
+- Freshness note: Product later advanced to `01894214765d7ab6e51a7eea1fb7f239c6591af8` only through `scripts/css-layer-validator.js`; none of the SW/version owners in this report changed.
 - Product mutation: none
 - MASTER mutation: none
 - Suggested themes: `ST-CACHE`, `ST-AUDIT-HARNESS`, `ST-SOURCE-GUARD-CLOSURE`
@@ -38,6 +39,28 @@ Therefore a client can register, for the **same scope `/` and same deployed `sw.
 
 This makes route metadata participate in root Service Worker identity.
 
+## Current blast radius
+
+A corrected static import-graph census over the current-equivalent source tree inspected all **85** Astro route entries and counted only actual `<script ... src="...sw-register.js...">` carriers (not mere string mentions in registries/helpers).
+
+Result:
+
+- **67 / 85** Astro route entries actually load `sw-register.js`;
+- **0 / 67** have two SW-registration script owners in the same route graph — duplicate registration is **not** the defect;
+- those 67 route graphs resolve to at least **five** root-worker script identities in the same Product release:
+
+| SW-registering route graphs | Source-graph `SITE_CONFIG.version` | Resulting worker URL from `sw-register.js` |
+|---:|---|---|
+| 22 | `1781282355` | `/sw.js?v=1781282355` |
+| 19 | `1` | `/sw.js?v=1` |
+| 10 | `1778943682` | `/sw.js?v=1778943682` |
+| 2 | `20260802` | `/sw.js?v=20260802` |
+| 14 | no `SITE_CONFIG.version` definition found in the route import graph | `/sw.js` via the runtime fallback, absent another earlier global writer |
+
+The no-version group includes current series/native and other routes such as Antisovetov and several Nagornaya/Genesis-6 surfaces. The claim is deliberately bounded to the static source graph: if a host/runtime outside that graph writes `window.SITE_CONFIG` earlier, that would need a separate witness. No such shared release-global writer was found in this pass.
+
+This census upgrades the scope from “three inconsistent pages” to a **release-identity fragmentation class across most Astro routes** while simultaneously disproving a nearby hypothesis (two registration scripts on one page).
+
 ## Why query-only differences are semantically material
 
 The current Service Workers specification states that `register(scriptURL, options)` creates or updates the registration for a scope. In the Register algorithm, the existing-registration fast path requires the incoming job script URL to equal the newest worker script URL. If that equality does not hold, the algorithm proceeds to Update.
@@ -51,7 +74,7 @@ Primary authority:
 - Update resource identity: current lines around 2812–2817
 - new worker → Install: current lines around 2859–2884
 
-The query component is part of the script URL, so the three URLs above are distinct Service Worker script URLs.
+The query component is part of the script URL, so the identities above are distinct Service Worker script URLs.
 
 ## Product consequence from current source
 
@@ -133,6 +156,7 @@ At recording time there is no open Product PR found for `service worker` or `sw`
 
 - No measured production frequency or performance budget failure.
 - No claim that every route sets a distinct version.
+- No duplicate-SW-registration claim: the corrected census found zero route graphs with two actual `sw-register.js` script carriers.
 - No claim that Pagefind freshness is the same defect.
 - No claim that a single registration call with a stable URL is problematic.
 - No Product mutation is authorized by this evidence file alone.
