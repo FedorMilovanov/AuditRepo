@@ -143,3 +143,25 @@ This entry records the governance change only. It does not claim that the reform
 - Regression witness: exact-head #1667 admission checks all green; final main Metadata `31636750134`, Shared Files Guard `31636749988`, Source Authority `31636750093`, Node Toolchain attempt 2 `31636750010`, Deploy attempt 1 `31636750081`, Deployment Witness Ledger `31638307040` all SUCCESS.
 - Live evidence: required and obtained through successful Pages promotion plus generic live and TTS witnesses in Deploy `31636750081`.
 - Detailed evidence: `./CONTROL_PLANE_FINAL_CLOSURE_2026-08-12.md`.
+
+
+## 2026-08-19 — Post-advance reverify + consolidation wave (485db8c → cb3681e)
+
+- Scope: all 13 current defects + 1 improvement + 2 system lanes in `MASTER_BUG_MATRIX.md`, re-checked after Product `main` advanced 14 commits (485db8c → cb3681e).
+- Inputs: `incoming/bugverifikator/2026-08-19/` (REPORT + 5 EVIDENCE + 6 COMMENT + VERIFIER_SYNTHESIS); arena-agent surface-pass-4/5/6 findings (anchor 485db8c); existing comment-* corpus.
+- Current-check anchors: Product `main` HEAD `cb3681e` (committed 2026-08-19T00:30Z) source tree; live HTTP fetch of `/app/`, `/rodosloviye/`, `/articles/lot-i-sodom/`, `/articles/dzhon-gill-chast-3-nasledie/`, `/articles/dzhon-gill-chast-4-ekzeget/`; committed production-like artifacts (`articles/dzhon-gill-chast-3-nasledie/index.html`, `…/chast-4-ekzeget/index.html`, `rodosloviye/index.html`, `articles/20-antisovetov-pastoru/index.html`); Product branch census.
+- Result:
+  - closed-by-fix: `ANCESTOR-TRACING-INCOMPLETE` — `computeFocusLineage` on cb3681e walks `father ?? mother` + BFS queue (the originally proposed fix is live); multiparent lane `b84aa56`.
+  - stale: `UI-DUPLICATE-SEARCH-BUTTONS` — `ui/Header` only on BaseLayout pages, `ReaderPreferencesHead` only on {/articles/,/biografii/,/pastor-series/}; disjoint; absent in committed artifact; search lane reworked (`e6972ea`).
+  - invalid: `ARTICLE-LAYOUT-SERIES-HARDCODE` — carrier `ArticleLayout.astro` is orphaned (zero `src/` importers); symptom not in production artifact.
+  - invalid-as-framed: `METADATA-FUTURE-DATED` — 2026-08-17 is in the past vs repo effective today ≈2026-08-19; the original "future" claim used a shell clock (2026-07-17) contradicting repo material timestamps. Literal-date concern parked in WORK_QUEUE.
+  - absorbed-by-system-fix (symptom): `SECURITY-CSP-INCONSISTENCY` — one mechanism (per-head hand-written CSP) explains the 4 `img-src` variants; absorbed into `FRAGMENTED-SECURITY-OWNERSHIP` (kept in MASTER only as the named manifestation).
+  - reworded/narrowed: `MOBILE-CHROME-REGISTRY-GAPS` → Genesis-6 article pages lack a mobile bar (pastor-series covered via SeriesReaderChrome); moved to Narrowed residuals + owner-decision. `SECURITY-CSP-GAPS` → BaseLayout pages (`/hard-texts/genesis-6/`, `/izbrannoe/`) in source; `/app/`+`/rodosloviye/` already CSP in live/artifact (source-vs-artifact divergence noted).
+  - re-anchored root + impact: `SERIES-ORDER-INDEX-MISMATCH` → root `gillSeriesData.ts` `GILL_SERIES_ITEMS` (not dead `site.ts` `SERIES_ORDER`); impact low → medium; confirmed source + live + artifact.
+  - pending: `ARTICLE-AUTHOR-HARDCODED` shares the dead `ArticleLayout` carrier — pending live-carrier re-check before staying.
+  - parked: `TRACE-GOLDEN-PATH-PERF` remains optional in WORK_QUEUE (not necessary-current).
+  - remaining independent and active: `RODOSLOVIYE-OG-IMAGE`, `SERIES-ORDER-INDEX-MISMATCH`, `ARTICLE-AUTHOR-HARDCODED` (pending), `GENEALOGY-NO-ERROR-BOUNDARY`, `GENEALOGY-ID-INVALID-SPACE`, `EDITORIAL-LABEL-INCONSISTENCY`, `SECURITY-CSP-GAPS` (narrowed); system lanes `METADATA-SSOT-PROLIFERATION`, `FRAGMENTED-SECURITY-OWNERSHIP`; owner decision `MOBILECHROME-GENESIS6-BAR-DECISION`.
+- Product evidence: no Product mutation by this agent. Existing owner lane `agent/antisovetov-title-suffix-20260818` (60ed203) already owns the antisovetov title-suffix symptom (D-19); not re-filed, no competing lane created.
+- Regression witness: no Product change, so no new regression suite; dispositions rest on cb3681e source + live + committed-artifact angles. A fresh `astro:build` green run remains the owner's closure witness for any future repair lane.
+- Live evidence: obtained for `RODOSLOVIYE-OG-IMAGE` and `SERIES-ORDER-INDEX-MISMATCH` (HTTP meta + nav cards); explicitly unnecessary for `GENEALOGY-ID-INVALID-SPACE` (data/source claim) and the dead-carrier invalidations (usage census suffices); not obtained for `GENEALOGY-NO-ERROR-BOUNDARY` (flagged needs runtime) and `SECURITY-CSP-GAPS` on `/hard-texts/genesis-6/`+`/izbrannoe/` (flagged needs live fetch).
+- Detailed evidence: `../incoming/bugverifikator/2026-08-19/REPORT.md`, `…/EVIDENCE_*.md`, `…/COMMENT_*.md`, `…/VERIFIER_SYNTHESIS_gb-is-my-strength_2026-08-19.md`.

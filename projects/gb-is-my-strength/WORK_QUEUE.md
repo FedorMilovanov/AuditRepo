@@ -136,6 +136,11 @@ Do not reopen historical Strangler, Lot, Source Authority, Avraam, Home Search, 
 - Home polish/cleanup: `AR-IDX-07`, `AR-IDX-08`, `AR-IDX-CSS-03`.
 - Generic refactor wishes: `R-001`, `R-002`, `R-003`, `R-004`.
 - Measured built-app split: `R-005`.
+- 2026-08-19 wave parked items (from invalid/narrowed dispositions, not current defects):
+  - `/app/` literal publication date — derive `publishedTime`/`modifiedTime` from build/release time instead of a hard-coded literal, so a future release cannot ship another misaligned date. (From `METADATA-FUTURE-DATED`, invalid as future-dated on cb3681e; parked as a structural cleanliness item.)
+  - ReaderPreferencesHead guard — have the dynamic search-button injector bail if any `.gb-nav-search-icon` already exists, hardening against a future regression of the now-stale `UI-DUPLICATE-SEARCH-BUTTONS` overlap (Header re-wired onto a `searchOpenerRoutes` page).
+  - `ArticleLayout.astro` / `SeriesArticleLayout.astro` orphan cleanup — delete the dead layouts (or re-wire as the future unified article layout if that plan is active) so audits stop reading them as live carriers. (From `ARTICLE-LAYOUT-SERIES-HARDCODE` invalid + `ARTICLE-AUTHOR-HARDCODED` pending re-check.)
+  - `TRACE-GOLDEN-PATH-PERF` — refactor `traceGoldenPath` to a Map for O(1) lookups (already listed conceptually; optional, not necessary-current until a measurable scale need).
 
 ## Queue hygiene
 
