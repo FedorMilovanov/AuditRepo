@@ -5,42 +5,75 @@
 - Project: `gb-is-my-strength`
 - Source repo: `FedorMilovanov/gb-is-my-strength`
 - Agent: `ChatGPT GPT-5.6 Sol`
-- Date: 2026-08-19
-- Audited anchor: Product `main` `bcb41e57d7f9c011ac597c51a240fba19152a908`
-- Freshness boundary: Product later advanced to `01894214765d7ab6e51a7eea1fb7f239c6591af8` only through `scripts/css-layer-validator.js`; the owners examined in this intake were unchanged.
-- Local source snapshot: user-provided `gb-is-my-strength-main (13).zip`, equivalent to Product `d99bd866de090023eac39d1aa648feb63ff45d52` for the owners examined here; `d99bd866… → bcb41e57…` changes only `.github/workflows/notify-on-failure.yml` and `scripts/dist-css-parity-audit.js`.
+- Primary audited Product anchor: `bcb41e57d7f9c011ac597c51a240fba19152a908`
+- Exact-current reverify boundary: Product `main` `01894214765d7ab6e51a7eea1fb7f239c6591af8`
+- Product movement across those anchors touched CSS-layer admission, not the runtime/search/SW/TTS owners retained below.
 - AuditRepo base: `6aae4f35a7f308d364f924bc41ea9796e99dd34f`
-- Report type: `forensic-audit` / `audit-harness` / `search-representation` / `security-owner-layer` / `service-worker-lifecycle` / `runtime-migration` / `tts-sharedworker-lifecycle`
 - Product mutation: none
 - MASTER mutation: none
 
-## Files
+## Evidence files
 
 | File | Role |
 |---|---|
-| `REPORT.md` | Evidence, root-cause synthesis, collision/currentness boundaries and verifier disposition for the Scripture-context and historical button-audit oracle failures. |
-| `SCRIPTURE_OCCURRENCE_ANCHOR_FALSE_WITNESS.md` | Second manifestation under the same Scripture work unit: producer and dist verifier both mistake `data-note-id` for real `id`, so 13 current exact occurrences carry four non-existent fragment targets while the browser contract checks only index↔href agreement. Also proves the same attribute-boundary false-green adversarially in the hard `series:facade:guard`. |
-| `SECURITY_NOSNIFF_OWNER_LAYER.md` | Standards-grounded challenge to treating `X-Content-Type-Options` as an HTML-head pragma; separates confirmed owner-layer defect from the still-unmeasured live response-header state. |
-| `SW_SCRIPTURL_ROUTE_VERSION_CHURN.md` | SW lifecycle manifestation A: route-local `SITE_CONFIG.version` changes one root worker's script URL; corrected census: 67 SW-registering Astro routes, zero duplicate registration carriers, at least five worker identities in one release. |
-| `SW_CACHE_TRANSACTION_GENERATION_GAP.md` | SW lifecycle manifestation B: failed successor install deletes `CACHE_STATIC` under a cache namespace that is not guaranteed generation-isolated; current source guard calls that shared name “staging”, while the browser rollback test proves only clean first-install failure and oldVersion→currentVersion updates. |
-| `BROWSER_MATRIX_ZERO_WORKER_FAILOPEN.md` | Reproduces malformed worker-count env values collapsing both all-public-route browser matrices to zero workers and a vacuous `0/0 PASS`; distinguishes latent harness fail-open from the currently safe literal CI inputs. |
-| `ANTISOVETOV_STRATEGIC_MAP_RUNTIME_ORPHAN.md` | Detailed manifestation evidence: Antisovetov retains 39 strategic-map triggers + 36 data records after the only functional owner was removed during series migration. |
-| `ARTICLE_ENHANCEMENTS_PARTIAL_MIGRATION_ROOT.md` | System synthesis (filename retained for link stability; title broadened to `ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT`): series-native migration removed broad legacy owners without re-homing all retained capabilities — strategic map, 17 FAQ accordions, enabled heading-anchor copy controls on at least eight series-native heads, and six reversible flip cards on Gill/Krajne surfaces. |
-| `ARTICLE_CAPABILITY_CI_ARTIFACT_WITNESS.md` | Exact-head Product CI witness from `f93567ce…`: Shared Files/Source Authority/Deploy Candidate/Metadata all succeeded; Gill browser artifact executed 24/24 layout cases + TTS/play scenarios, but has zero checks for strategic-map/FAQ/heading-anchor/flip-card capabilities. |
-| `ARTICLE_CAPABILITY_MIGRATION_CONTROL_PLANE_GAP.md` | Process-root evidence: strict-native taxonomy proves legacy transport removal and Gill guard correctly forbids duplicate legacy owners, but neither requires a complete semantic capability map. Closure needs `legacy transport = 0` + `retained capabilities complete` + `exactly one owner`. |
-| `ARTICLE_INTERACTIVE_AUDIT_SCOPE_WITNESS.md` | Current workflow witness: production-like Playwright audit really runs for article-pilot changes and exercises Gill/Krajne series chrome, but its semantic matrix is rail/TOC/navigation/theme/search/media/quiz/glossary rather than the retained capability families above. |
-| `THEME_MULTIWRITER_CURRENT_REVERIFY.md` | Negative current reverify: legacy `theme` writes are coordinated compatibility bridges around `gb:reader-preferences:v1`, protected by same-document/cross-tab reconciliation and a wired Shared Files regression. Recommends retiring `AR-IDX-JS-02-MULTIWRITER` as a current conflict; cleanup can move to Work Queue. |
-| `GENEALOGY_ISLAND_FAULT_BOUNDARY_REVERIFY.md` | Reframes `GENEALOGY-NO-ERROR-BOUNDARY`: client-only React tree has no local fallback/recovery inside an 85vh/min-650px island, but native static page content survives. Keep as island fault-containment, not whole-page blanking or reproduced crash. |
-| `TTS_SHAREDWORKER_CLIENT_LIFECYCLE.md` | Seventh work unit: SharedWorker load membership is not retired on standard MessagePort close; a disappeared tab can remain a stale waiter and prevent the last live user's cancel action from aborting the shared ~280 MB model fetch until delayed pruning. |
-| `TTS_SHAREDWORKER_SPEECH_DISCONNECT_WITNESS.md` | Second manifestation under work unit 7: disconnect cleanup does not cancel client-owned queued/running synthesis jobs; abandoned inference can remain in the one global `synthQueue` and delay a surviving tab. |
-| `CURRENT_MASTER_DISPOSITION_2026-08-20.md` | Verifier reduction pass over all 13 current MASTER rows at Product `01894214…`: recommends keep/narrow/absorb/retire dispositions so seven new forensic units do not mechanically become “13+7”. |
+| `REPORT.md` | Initial forensic synthesis for Scripture representation/oracle and historical button-audit completeness. |
+| `SCRIPTURE_OCCURRENCE_ANCHOR_FALSE_WITNESS.md` | Current false-fragment manifestation: `data-note-id` accepted as `id`; 13 occurrences / 12 reference labels / 4 false fragment values; producer/verifier common-mode. |
+| `SECURITY_NOSNIFF_OWNER_LAYER.md` | Separates CSP HTML/meta ownership from transport `X-Content-Type-Options`; no fabricated live missing-header claim. |
+| `SW_SCRIPTURL_ROUTE_VERSION_CHURN.md` | Corrected semantic SW registration census and identity manifestation. **70/85** Astro routes register; **0** duplicate owners; **0** bare worker URLs; five current script identities: `1`×25, `1781282355`×22, `1778943682`×19, `20260802`×2, `c7f8b6e9`×2. Supersedes the earlier literal-tag `67/85` / bare×7 census. |
+| `SW_CACHE_TRANSACTION_GENERATION_GAP.md` | SW transaction manifestation: failed successor install can delete a cache namespace still owned by the active worker because cache generation is not isolated from worker generation. |
+| `BROWSER_MATRIX_ZERO_WORKER_FAILOPEN.md` | Malformed worker-count env can collapse all-public browser matrices to zero workers and a vacuous `0/0 PASS`; current workflow literals remain valid. |
+| `ANTISOVETOV_STRATEGIC_MAP_RUNTIME_ORPHAN.md` | Detailed strategic-map manifestation retained under the article migration root. |
+| `ARTICLE_ENHANCEMENTS_PARTIAL_MIGRATION_ROOT.md` | System root: strict-native transport removal lacked semantic capability-completeness; strategic map, FAQ, heading anchors and reversible cards lost owners. |
+| `ARTICLE_CAPABILITY_CI_ARTIFACT_WITNESS.md` | Exact-head Product CI artifact genuinely exercises Gill chrome/TTS but not retained legacy-capability families. |
+| `ARTICLE_CAPABILITY_MIGRATION_CONTROL_PLANE_GAP.md` | Explains why strict-native guards can pass while behavior is incomplete: they prove legacy removal, not capability parity/cardinality. |
+| `ARTICLE_INTERACTIVE_AUDIT_SCOPE_WITNESS.md` | Production-like Playwright audit is real but has a narrower semantic matrix than the missing capability families. |
+| `THEME_MULTIWRITER_CURRENT_REVERIFY.md` | Negative reverify: legacy `theme` writes are a coordinated compatibility bridge around canonical ReaderPreferences; recommends retiring the old multiwriter conflict row. |
+| `GENEALOGY_ISLAND_FAULT_BOUNDARY_REVERIFY.md` | Narrows genealogy resilience issue to the client-only interactive island; static page content survives outside it. |
+| `TTS_SHAREDWORKER_CLIENT_LIFECYCLE.md` | SharedWorker disconnect does not promptly retire a disappeared model-load waiter; last live cancel can fail to abort the shared ~280 MB fetch. |
+| `TTS_SHAREDWORKER_SPEECH_DISCONNECT_WITNESS.md` | Same TTS root, second manifestation: abandoned closed-client synthesis can remain in the single global synthesis queue. |
+| `CURRENT_MASTER_DISPOSITION_2026-08-20.md` | Verifier reduction pass over the 13 old MASTER rows: keep/narrow/absorb/retire rather than mechanically adding new rows. |
+| `BUTTON_RUNTIME_GENERATED_SURFACE_WITNESS.md` | Strengthens button-audit work unit: Astro+TSX corrected scope is 49 missing-type literals; JS runtime generates 26 more, so literal DOM-producing source surface is at least 75 / 25 files. This is audit completeness, not 75 Product submit bugs. |
+| `CURRENT_MASTER_EXACT_REVERIFY_01894214.md` | Exact-current reverify of retained old manifestations plus negative checks on fragments/ARIA/search-manifest identity. |
 
-## One-line outcome
+## Seven forensic work units
 
-Seven forensic work units are recorded without opening a Product repair lane: (1) the Exact Scripture occurrence system has a shared representation/oracle root — reader contexts can expose raw source syntax, and a second common-mode bug currently stores 13 exact occurrences with four `data-note-id` values falsely accepted as HTML anchors, while producer/dist/browser checks all remain green on narrower surrogates; (2) the historical `SITEWIDE-BTN-TYPE-AUDIT` declared an exhaustive 543-file / 47-instance result even though two missing-type TSX buttons already existed at that exact anchor and were omitted from the claimed complete list; (3) the security model conflates CSP's valid HTML pragma carrier with `X-Content-Type-Options`, which is a response-header property and therefore cannot be closed by unifying page `<head>` markup; (4) the root Service Worker lacks one generation authority — route-local page versions produce at least five worker script identities across 67 SW-registering Astro routes, lifecycle UI treats any update/install as a site release, and failed successor install cleanup can delete a shared `CACHE_STATIC` cache because generation isolation is assumed rather than proved; (5) malformed nonnumeric worker env values can make both public-surface browser matrices execute zero cases and still report success because their terminal oracle checks only `failures.length`, not execution completeness; (6) the series-native migration correctly removed broad legacy owners to prevent duplicate ownership but lacked a capability-completeness contract, leaving four retained feature families without owners: Antisovetov strategic-map popovers, Antisovetov/Krajne FAQ accordions, enabled heading-anchor copy controls across series-native heads, and reversible flip cards on Gill/Krajne; (7) enhanced-voice SharedWorker has no authoritative client-disconnect owner, so a closed page can remain a stale model-load waiter and can also leave client-owned synthesis work in the global queue. Exact-head green Product CI independently proves its declared chrome/TTS scopes but does not exercise the missing capability/disconnect scenarios.
+1. **`SCRIPTURE-OCCURRENCE-REPRESENTATION-ORACLE`** — exact-search context and fragment identity are derived through lossy/raw-source representations. Current false fragments: **13 occurrences / 12 labels / 4 values**. Producer/dist/browser oracles share narrower surrogates and can green together.
+2. **`SITEWIDE-BTN-TYPE-AUDIT-FALSE-COMPLETENESS`** — the historical “543 files / 47 instances / exhaustive” claim is not complete. Declared Astro/TSX scope is **49**; inclusion of literal runtime-generated controls raises the observable literal source surface to at least **75**. This is audit-evidence integrity; current default-submit behavior remains latent because prior live evidence found no type-less buttons inside forms.
+3. **`SECURITY-NOSNIFF-OWNER-LAYER-MISMATCH`** — many source heads express `nosniff` as an HTML pragma, but transport header ownership is a different enforcement layer. No live vulnerability claim without response-header measurement.
+4. **`SW-ROOT-GENERATION-AUTHORITY`** — corrected semantic census: **70/85** Astro routes register one root SW under **five** route-dependent script identities (`1`×25, `1781282355`×22, `1778943682`×19, `20260802`×2, `c7f8b6e9`×2). There are **0** duplicate registration owners and **0** current bare `/sw.js` registering routes. The same root also lacks safe generation-isolated cache rollback for failed successors.
+5. **`BROWSER-MATRIX-ZERO-WORKER-FAILOPEN`** — malformed worker env can execute zero browser cases yet report success; ordinary CI currently passes safe literals.
+6. **`ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT`** — strict-native migration removed broad legacy owners correctly but did not prove retained capability completeness: strategic map (39 triggers / 36 payloads), FAQ (17 buttons), enabled heading-anchor copy controls across at least 8 series-native heads, and 6 reversible cards currently lack their former owner/replacement.
+7. **`TTS-SHAREDWORKER-CLIENT-LIFECYCLE`** — no authoritative normal-disconnect owner. A disappeared client can remain a model-load waiter and can also leave its synthesis work in the global queue.
 
-Two additional current reverifies intentionally **reduce** rather than expand active work: `AR-IDX-JS-02-MULTIWRITER` is now best treated as a coordinated compatibility bridge rather than a demonstrated conflict, while `GENEALOGY-NO-ERROR-BOUNDARY` should remain but be narrowed to the client-only interactive island rather than whole-page failure. `CURRENT_MASTER_DISPOSITION_2026-08-20.md` applies the same reduction logic to all 13 active rows.
+## Current reverifies that reduce old MASTER work
 
-## Collision boundary
+- **`AR-IDX-JS-02-MULTIWRITER`** — recommend retire/absorb as a current conflict. Canonical `gb:reader-preferences:v1` owns truth; legacy `theme` is a deliberate compatibility mirror with same-document reconciliation, Sepia-safe cross-tab handling and wired regression coverage.
+- **`GENEALOGY-NO-ERROR-BOUNDARY`** — keep but narrow to interactive-island fault containment; do not describe the entire page as blank.
+- Security direct CSP rows should be absorbed under one `FRAGMENTED-SECURITY-OWNERSHIP` system root while retaining separate CSP-meta and transport-header enforcement owners.
+- Button Product/residual counting should not rely on the disproved `47` exhaustive census.
 
-Current Product work includes an active `/app/` preview lane that owns `data/scripture-search-index.json`; this intake therefore records evidence only and does not regenerate or repair that generated owner. Concurrent AuditRepo PRs own MASTER/matrix consolidation, so this branch deliberately uses a unique incoming path and does not edit governance rows. No open Product PR was found for `service worker` / `sw`, `antisovetov`, the shared legacy-capability migration, or TTS at the corresponding finding boundaries. The browser-matrix finding does not claim ordinary CI is currently bypassed: the current workflow passes explicit valid literals `GB_MATRIX_WORKERS="4"` and `GB_CROSS_BROWSER_WORKERS="2"`. The nosniff evidence deliberately stops before declaring a live vulnerability: actual deployed response headers still need an external/network witness.
+## Important negative/correction boundaries
+
+- **SW census self-correction:** earlier evidence said `67/85` + `bare /sw.js ×7`. That scanner missed indirect `BaseLayout` registration and mis-associated config ownership. Correct current result is **70/85**, **five identities**, **bare ×0**. The root remains; the blast-radius evidence is corrected.
+- Series `.reveal` remains readable through the `body.gbs-world .reveal` fallback.
+- Reader/TTS/share/bookmark canonical owners exist; old Krajne back-to-top is intentionally hidden in series mode.
+- Search async cancellation/state machine showed no stale-result resurrection.
+- PWA manifest identity/icons are internally consistent.
+- Current literal same-page fragments: 77 checked, 0 missing targets across 85 Astro route graphs.
+- Current literal ARIA relationships: 924 references checked (`aria-labelledby`, `aria-controls`, `label for`, `aria-describedby`), 0 missing literal targets.
+- 380 current `_blank` source links all include `noopener`; no opener-isolation gap.
+- No current CSP-blocked runtime origin found.
+- No XSS claim from dirty exact-search context; runtime escapes it.
+- ReaderState route identity/progress migration reverify found 48 series routes and 0 legacy key collision groups.
+- Tooltip trigger↔popup AT relationship remains parked pending accessibility-tree/AT witness.
+
+## Collision / evidence boundary
+
+- Product PR #1752 owns `data/scripture-search-index.json`; this branch does not regenerate or repair it.
+- No competing Product repair lane was found for SW, article capability migration or TTS at the recorded boundaries.
+- Concurrent AuditRepo MASTER/matrix PRs are untouched; all material stays under this unique incoming path.
+- Local browser navigation is administratively blocked. A local production-like build is also environment-blocked by incomplete snapshot `node_modules` (`astro` package missing); neither environment failure is treated as Product evidence.
+
+## CI boundary
+
+An earlier exact head (`33c37304…`) reached terminal success in both `AuditRepo Validate` and `AuditRepo Workflow Preflight`. Subsequent evidence corrections/additions invalidate that as **latest-head** admission. Only terminal runs on the final exact branch head may be called green.
