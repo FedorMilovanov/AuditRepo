@@ -5,7 +5,7 @@
 - Project: `gb-is-my-strength`
 - Source repo: `FedorMilovanov/gb-is-my-strength`
 - Agent: `ChatGPT GPT-5.6 Sol`
-- Primary audited Product anchor: `bcb41e57d7f9c011ac597c51a240fba19152a908`
+- Audited anchor: Product `main` `bcb41e57d7f9c011ac597c51a240fba19152a908`
 - Exact-current reverify boundary: Product `main` `01894214765d7ab6e51a7eea1fb7f239c6591af8`
 - Product movement across those anchors touched CSS-layer admission, not the runtime/search/SW/TTS owners retained below.
 - AuditRepo base: `6aae4f35a7f308d364f924bc41ea9796e99dd34f`
