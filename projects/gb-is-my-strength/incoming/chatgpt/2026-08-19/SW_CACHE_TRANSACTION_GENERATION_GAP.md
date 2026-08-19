@@ -4,21 +4,21 @@
 
 - Project: `gb-is-my-strength`
 - Signal class: current Service Worker lifecycle/resilience defect + audit common-mode gap
-- Disposition: second manifestation under the existing SW lifecycle/revision work unit; do **not** create a separate Product lane solely for this file
+- Disposition: second manifestation under `SW-ROOT-GENERATION-AUTHORITY`; do **not** create a separate Product lane solely for this file
 - Current Product boundary: `01894214765d7ab6e51a7eea1fb7f239c6591af8`
 - Product mutation: none
 - MASTER mutation: none
 
 ## Finding
 
-The current Service Worker install path treats `CACHE_STATIC` as though it were a generation-isolated staging cache, but the cache name is derived only from the long-lived `CACHE_VERSION`:
+The current Service Worker install path treats `CACHE_STATIC` as though it were generation-isolated staging state, but the cache name is derived only from the long-lived source literal:
 
 ```js
 const CACHE_VERSION = 'gb-v197-bible-legacy-authority-20260804';
 const CACHE_STATIC = `${CACHE_VERSION}-static`;
 ```
 
-Install uses that cache directly:
+Install populates that cache directly and deletes it on any precache failure:
 
 ```js
 const cache = await caches.open(CACHE_STATIC);
@@ -31,105 +31,61 @@ try {
 await self.skipWaiting();
 ```
 
-So the failure rollback is safe only if an installing successor uses a cache namespace different from the currently active worker's static cache.
+That rollback is safe only when an installing successor uses a cache namespace distinct from the currently active worker's static cache.
 
-Current architecture does not guarantee that property. `CACHE_VERSION` remains v197 while Product source/worker registration identity can change independently, including through the route-dependent `sw.js?v=...` identities documented in `SW_SCRIPTURL_ROUTE_VERSION_CHURN.md`.
-
-If a successor Service Worker is installed while using the **same `CACHE_STATIC` name** as the controlling worker and one precache request fails, the catch branch deletes the shared named cache. The successor then becomes redundant/fails installation, but the previously active worker remains the controller with its static fallback cache removed.
-
-This is a generation-isolation violation:
+Current architecture does not guarantee that property. `CACHE_VERSION` remains `v197` while the root worker can enter update/install lifecycle independently of that cache name. The companion corrected semantic census in `SW_SCRIPTURL_ROUTE_VERSION_CHURN.md` shows **70/85** Astro routes register one root scope under **five** distinct script URLs in the same release:
 
 ```text
-active worker generation A ─┐
-                           ├─ same CACHE_STATIC name
-installing generation B ───┘
-          ↓
-B precache failure
-          ↓
-caches.delete(CACHE_STATIC)
-          ↓
-B fails, A remains active
-          ↓
-A's static cache was also deleted
+/sw.js?v=1                   x25
+/sw.js?v=1781282355          x22
+/sw.js?v=1778943682          x19
+/sw.js?v=20260802            x2
+/sw.js?v=c7f8b6e9            x2
 ```
 
-The issue is not that a failed worker activates — it does not. The issue is that failed staging work mutates/deletes state owned by the still-active generation.
+There are no current bare `/sw.js` registering routes and no duplicate registration owners on one route; those older census claims were corrected after resolving indirect `BaseLayout` ownership.
+
+A scriptURL change can cause a successor update/install while `CACHE_VERSION` remains unchanged. If that successor's precache fails, its catch deletes the same named `CACHE_STATIC` cache that the still-active controller uses.
+
+```text
+active worker generation A ----┐
+                               ├-- same CACHE_STATIC name
+installing generation B -------┘
+             |
+B precache failure
+             |
+caches.delete(CACHE_STATIC)
+             |
+B fails/redundant, A remains active
+             |
+A's static fallback cache was also removed
+```
+
+The defect is not failed-worker activation. The defect is **failed staging work mutating/deleting active-generation state**.
 
 ## Current readiness guard encodes the unsafe assumption
 
-`scripts/sw-dist-readiness-audit.js` explicitly requires this source shape and labels it:
+`scripts/sw-dist-readiness-audit.js` requires the `caches.delete(CACHE_STATIC) ... throw error` shape and labels it failed **staging cache cleanup**.
 
-```text
-failed staging cache cleanup before rethrow
-```
+But the guard proves only that source `CACHE_VERSION` matches the migration baseline; it does not prove that `CACHE_STATIC` belongs only to the installing generation.
 
-via a regex that demands:
-
-```js
-caches.delete(CACHE_STATIC)
-...
-throw error
-```
-
-The guard therefore treats `CACHE_STATIC` as “staging” without proving generation isolation.
-
-It separately validates only that the source `CACHE_VERSION` matches `migration/sw-cache-version-baseline.json`.
-
-Current baseline remains:
-
-```json
-{
-  "captured": "2026-08-04",
-  "lastReviewedDistProductionCacheVersion": "gb-v192-reader-state-20260724",
-  "currentDistProductionCacheVersion": "gb-v197-bible-legacy-authority-20260804",
-  "currentExpectedCacheVersion": "gb-v197-bible-legacy-authority-20260804"
-}
-```
-
-The optional/deploy-switch “cache bump” check only rejects the worker when current version equals the old `lastReviewedDistProductionCacheVersion` (v192). It does **not** establish that every successor worker/update after v197 receives a fresh cache namespace.
-
-No repository writer was found that advances `lastReviewedDistProductionCacheVersion` after each successful deployment. The file is an historical cutover baseline, not a per-release generation ledger.
+Current baseline remains an historical cutover relationship (`v192 -> v197`), not a per-successful-release generation ledger. The deploy-switch check can continue to say a bump exists relative to v192 even after multiple later release/update paths reuse v197.
 
 ## Browser contract proves a different, safer model
 
-Current `scripts/sw-offline-browser-test.mjs` contains two relevant scenarios.
+Current `scripts/sw-offline-browser-test.mjs` contains two useful scenarios that do not close this case.
 
 ### Forced partial-precache failure
 
-The test starts a **fresh browser context** with no active worker/controller, forces `/css/site.css` to return 503, registers the worker and asserts:
+The test starts from a fresh context with no active controller, forces a precache asset failure, and asserts the worker becomes redundant and the current-version cache disappears.
 
-```text
-worker state = redundant
-active = false
-controller = false
-no cache name starting with currentVersion exists
-```
+That proves a failed **first install** cannot activate. It does not prove a failed successor preserves an already-active worker using the same cache name.
 
-It records:
+### Release update
 
-```text
-partial precache failure cannot activate — worker redundant; staged cache removed
-```
+The test deliberately replaces the source `CACHE_VERSION` for the old worker with `oldVersion`, then serves the new worker with `currentVersion` and verifies old-version caches retire after a successful update.
 
-This proves a failed *first install* cannot activate. It does not prove a failed successor preserves an already-active generation using the same cache name.
-
-### Release update scenario
-
-The test then intentionally creates generation isolation that current source does not inherently provide:
-
-- server `state.release='old'` serves `sw.js` after replacing `currentVersion` with `oldVersion`;
-- the old worker therefore owns `${oldVersion}-static`;
-- server switches to new source with `currentVersion`;
-- `registration.update()` installs the new generation;
-- test asserts all oldVersion caches are deleted and `${currentVersion}-static` exists.
-
-It reports:
-
-```text
-release update over old cache — old caches removed; new route response survives offline
-```
-
-That is a valid test for:
+That proves the safe model:
 
 ```text
 old generation cache name != new generation cache name
@@ -142,49 +98,39 @@ old generation cache name == new generation cache name
 + successor install fails
 ```
 
-which is precisely the current risk boundary when `CACHE_VERSION` is reused.
+which is the current generation-isolation gap.
 
-## Interaction with route-dependent SW script identity
+## System root relationship
 
-The companion SW finding proves that 67 current Astro route graphs can register one root scope under at least five distinct script URLs in the same release because `SITE_CONFIG.version` is route-local.
+The two SW manifestations belong together:
 
-Under Service Worker registration/update semantics, a changed script URL can cause a new update/install lifecycle even if the worker body is otherwise identical.
+1. **Identity fragmentation:** route-local `SITE_CONFIG.version` creates five script URLs for one root registration in one release.
+2. **Transaction non-isolation:** failed successor install can delete a cache namespace still owned by the active worker because cache generation is not tied safely to worker generation.
 
-That fragmentation increases the number of lifecycle transitions that can encounter this non-generation-isolated install transaction. The two manifestations therefore belong under one broader root:
-
-```text
-root-scoped SW lifecycle has no single release/generation authority
-```
-
-Manifestation 1: route-local page metadata changes Service Worker script identity.
-
-Manifestation 2: cache transaction rollback assumes a generation-isolated cache name that current source does not guarantee.
+Together they show that the root-scoped SW lifecycle has no single release/generation authority.
 
 ## Durable closure boundary
 
-Do not close this merely by removing the catch cleanup or by bumping one literal once.
+A systemic repair should guarantee:
 
-A systemic SW lifecycle repair should guarantee:
-
-1. One release/generation authority owns the root worker script identity.
-2. Installing generation B never mutates/deletes cache namespace still owned by active generation A.
-3. Precache population is staged under a generation-specific name; activation performs the ownership switch/retirement only after full success.
-4. Failed successor install leaves active worker + active caches byte-for-byte/entry-for-entry usable.
-5. Browser contract adds an adversarial sequence:
-   - install and control with generation A;
-   - populate/verify A static fallback;
-   - request successor B;
-   - force one B precache asset failure;
-   - assert B is redundant/not active;
-   - assert A remains controller;
-   - assert A's static cache and offline fallback remain present and functional;
-   - then allow B to install successfully and assert one clean generation transition.
-6. The readiness source guard must prove generation separation instead of requiring `caches.delete(CACHE_STATIC)` and labeling the shared name “staging.”
-7. Keep the existing all-or-nothing precache intent and no-partial-activation rule.
+1. One release authority owns the root worker identity.
+2. Installing generation B cannot mutate/delete cache namespace owned by active generation A.
+3. Precache population is staged under a generation-specific namespace; ownership switch/old-cache retirement occurs only after complete success.
+4. Failed successor install leaves active worker + active caches usable.
+5. Browser contract adds the missing adversarial sequence:
+   - install/control generation A;
+   - verify A static/offline cache;
+   - request successor B with the production-equivalent same-cache collision condition;
+   - force one B precache failure;
+   - assert B fails, A remains controller, and A cache/offline fallback survives;
+   - then permit a valid B and prove one clean transition.
+6. Readiness guard proves generation separation instead of merely requiring deletion of a cache it calls “staging”.
+7. Keep fail-closed all-or-nothing precache intent.
 
 ## What this report does not claim
 
-- No claim that a failed successor install was captured on production.
-- No claim that `cache.addAll` should become fail-open; it should remain fail-closed.
-- No claim that the currently active worker becomes redundant on successor failure; the risk is shared cache state deletion while the old worker remains active.
-- No need for a separate work unit from `SW-SCRIPTURL-ROUTE-VERSION-CHURN`; both are manifestations of missing root-worker generation authority.
+- No production failed-successor incident was captured.
+- No claim `cache.addAll` should become fail-open.
+- No claim the active worker itself becomes redundant on successor failure.
+- No separate work unit from the SW identity finding.
+- No Product mutation is authorized by this evidence file.
