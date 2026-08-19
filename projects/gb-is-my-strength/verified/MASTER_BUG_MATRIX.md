@@ -8,23 +8,22 @@
 
 | Field | Value |
 |---|---|
-| Active work units | **17** |
-| Direct current defects | **8** |
+| Active work units | **16** |
+| Direct current defects | **7** |
 | Verified necessary improvements | **1** |
 | Narrowed residuals | **4** |
 | System verification lanes | **3** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Row arithmetic: 8 defects + 1 improvement + 4 residuals + 3 system lanes + 1 owner decision = 17 active rows. Within these, `ARTICLE-AUTHOR-HARDCODED` is pending a live-carrier re-check (see its row), and `SECURITY-CSP-INCONSISTENCY` is kept in CURRENT DEFECTS only as the named absorbed manifestation of `FRAGMENTED-SECURITY-OWNERSHIP` (its real owner is the system lane). `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` and is intentionally **not** an active MASTER row.
+> Row arithmetic: 7 defects + 1 improvement + 4 residuals + 3 system lanes + 1 owner decision = 16 active rows. Within these, `SECURITY-CSP-INCONSISTENCY` is kept in CURRENT DEFECTS only as the named absorbed manifestation of `FRAGMENTED-SECURITY-OWNERSHIP` (its real owner is the system lane). `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` and is intentionally **not** an active MASTER row.
 
-## CURRENT DEFECTS — 8
+## CURRENT DEFECTS — 7
 
 | ID | Current problem | Boundary |
 |---|---|---|
 | `RODOSLOVIYE-OG-IMAGE` | `/rodosloviye/` head uses the `/karty/` OG/Twitter image (`og-karty-1200x630.webp`) while `og:image:alt` describes родословие; asset and context disagree. Confirmed source + live + committed artifact (3 angles). | HEAD cb3681e |
 | `SERIES-ORDER-INDEX-MISMATCH` | Gill series inverts Part 3/Part 4: `gillSeriesData.ts` `GILL_SERIES_ITEMS` orders `part4` before `part3` and labels part4 `III` / part3 `IV`; live + artifact show distorted in-series nav (part4→next part3). Impact medium. **Root is `gillSeriesData.ts`, not `site.ts` `SERIES_ORDER` (dead code).** | HEAD cb3681e |
-| `ARTICLE-AUTHOR-HARDCODED` | Author/translation logic hard-coded to a single author literal. Filed against `ArticleLayout.astro`, which is orphaned on cb3681e — **pending live-carrier re-check** before this stays; if no live carrier, move to invalid. | HEAD cb3681e (pending re-check) |
 | `GENEALOGY-NO-ERROR-BOUNDARY` | `GenealogyTree.tsx` React island has no `ErrorBoundary`; a runtime throw yields a blank/uncerrored surface. Source-only (no runtime crash reproduced yet). | HEAD cb3681e |
 | `GENEALOGY-ID-INVALID-SPACE` | Leading space in ID `" lud_shem"` in `data/genealogy/genealogy.json` (L1395) + matching ref in Shem `children` (L403); `byId` Map keyed by exact id. Space is currently self-consistent (id↔ref) so latent, not a visible break today; graph-integrity invariant violated. Impact medium-low. | HEAD cb3681e |
 | `EDITORIAL-LABEL-INCONSISTENCY` | `Header.astro` nav label for `/hard-texts/` is "Разбор заблуждений" while `site.ts` `SECTION_META['hard-texts']` canonical label is "Трудные тексты". | HEAD cb3681e |
@@ -53,7 +52,7 @@
 | ID | Verified work package | Next boundary |
 |---|---|---|
 | `SITEWIDE-BTN-TYPE-AUDIT` | Full sitewide scan completed at cb3681e (543 `src/` files): **20 files, 47 `<button>` elements missing `type=`**. Patterns verified: FAQ accordion ×14 across 3 article Body components; genealogy/rail/nav controls ×12 (GenealogyTree.tsx, GillSeriesRail, GillPartTocOverlay); mobile-menu-btn ×11 (NagornayaChrome ×7 copy-paste cluster + HardTexts + PastorSeries + NagornayaSeriya); theme-toggle ×7; scroll-top ×2; back-nav ×1. Evidence: `incoming/2026-07-17-sitewide-btn-type-evidence.md`. Full instance list: `verification/2026-07-17-sitewide-btn-type-audit.md`. | Add `type="button"` to all 47 instances; re-run full scan at fix anchor; zero hits. Retire lane on clean pass. |
-| `METADATA-SSOT-PROLIFERATION` | Centralize metadata (series labels, author roles, nav labels) from layout/nav hardcode into `site.ts` SSOT consumed by all layouts/nav. Feeds `SERIES-ORDER-INDEX-MISMATCH` (data), `EDITORIAL-LABEL-INCONSISTENCY`, `ARTICLE-AUTHOR-HARDCODED` (if kept). Note: the original `ArticleLayout.seriesNames` carrier is dead code on cb3681e — the live series engine is `seriesConfig.ts`/`gillSeriesData.ts`. | Verify removal of hardcode + that the active series engine and Header read the SSOT. |
+| `METADATA-SSOT-PROLIFERATION` | Centralize metadata (series labels, author roles, nav labels) from layout/nav hardcode into `site.ts` SSOT consumed by all layouts/nav. Feeds `SERIES-ORDER-INDEX-MISMATCH` (data), `EDITORIAL-LABEL-INCONSISTENCY`. Note: the original `ArticleLayout.seriesNames` carrier is dead code on cb3681e — the live series engine is `seriesConfig.ts`/`gillSeriesData.ts`. | Verify removal of hardcode + that the active series engine and Header read the SSOT. |
 | `FRAGMENTED-SECURITY-OWNERSHIP` | Centralize CSP generation into one unified security head emitting CSP + `X-Content-Type-Options` consistently; shared `img-src` allowlist; cover the BaseLayout CSP-less surfaces in source. Absorbs `SECURITY-CSP-INCONSISTENCY` and the narrowed `SECURITY-CSP-GAPS`. | Unified security head; source-vs-live CSP divergence closed. |
 
 ## OWNER DECISIONS — 1
@@ -62,7 +61,9 @@
 |---|---|
 | `MOBILECHROME-GENESIS6-BAR-DECISION` | Do Genesis-6 article pages require a mobile bottom bar? (a) wire `Genesis6ArticlePage` to a mobile bar → convert `MOBILE-CHROME-REGISTRY-GAPS` to a repair lane; (b) leave as plain long-form reader pages → drop the residual as accepted. Owner value/editorial decision; blocks whether the residual becomes work. Evidence: `incoming/bugverifikator/2026-08-19/COMMENT_pass4_MOBILECHROME-REGISTRY-GAPS.md`, `incoming/bugverifikator/2026-08-19/REPORT.md`. |
 
-## Removed in this wave (provenance in CLOSURE_LEDGER.md + incoming/bugverifikator/2026-08-19/)
+## Removed in this wave
+- `ARTICLE-AUTHOR-HARDCODED` — invalid: `ArticleLayout.astro` is orphaned dead code at cb3681e; zero `src/pages/` files import it. No live defect. Evidence: `incoming/2026-07-17-arena-agent-audit-pass-wave4.md`.
+ (provenance in CLOSURE_LEDGER.md + incoming/bugverifikator/2026-08-19/)
 
 - `ANCESTOR-TRACING-INCOMPLETE` — stale (closed-by-fix, multiparent lane; live code matches the originally proposed fix).
 - `UI-DUPLICATE-SEARCH-BUTTONS` — stale (Header and ReaderPreferencesHead on disjoint route sets on cb3681e; absent in committed artifact; search lane reworked).
