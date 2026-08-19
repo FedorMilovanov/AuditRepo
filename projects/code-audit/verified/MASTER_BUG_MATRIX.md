@@ -6,7 +6,7 @@
 
 | Field | Value |
 |---|---|
-| Active work units | **4** |
+| Active work units | **3** |
 | Direct current defects | **2** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
