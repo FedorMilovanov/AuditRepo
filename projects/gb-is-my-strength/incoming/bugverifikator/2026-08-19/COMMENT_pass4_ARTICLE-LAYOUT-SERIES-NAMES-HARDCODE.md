@@ -4,7 +4,7 @@
 - Project: gb-is-my-strength
 - Comment by: bugverifikator
 - Date: 2026-08-19
-- Target report: `incoming/2026-07-17-arena-agent-surface-pass-4.md`
+- Target report: `incoming/2026-08-19-arena-agent-surface-pass-4.md`
 - Target finding ID: `ARTICLE-LAYOUT-SERIES-NAMES-HARDCODE` (MASTER alias `ARTICLE-LAYOUT-SERIES-HARDCODE`)
 - Audited anchor (SHA / artifact / live snapshot): Product `main` HEAD `cb3681e`; full-tree census of `src/**/*.{astro,ts,tsx,js}`
 - Signal class: Product

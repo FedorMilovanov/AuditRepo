@@ -4,7 +4,7 @@
 - Project: gb-is-my-strength
 - Comment by: bugverifikator
 - Date: 2026-08-19
-- Target report: `incoming/2026-07-17-arena-agent-surface-pass-5.md`
+- Target report: `incoming/2026-08-19-arena-agent-surface-pass-5.md`
 - Target finding ID: `ANCESTOR-TRACING-INCOMPLETE`
 - Audited anchor (SHA / artifact / live snapshot): Product `main` HEAD `cb3681e` (committed 2026-08-19T00:30Z); source witness of `src/components/genealogy/layout.ts`
 - Signal class: Product

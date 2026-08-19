@@ -4,7 +4,7 @@
 - Project: gb-is-my-strength
 - Comment by: bugverifikator
 - Date: 2026-08-19
-- Target report: `incoming/2026-07-17-arena-agent-surface-pass-6.md`
+- Target report: `incoming/2026-08-19-arena-agent-surface-pass-6.md`
 - Target finding ID: `UI-DUPLICATE-SEARCH-BUTTONS`
 - Audited anchor (SHA / artifact / live snapshot): Product `main` HEAD `cb3681e`; full-tree census of `ui/Header` importers + `ReaderPreferencesHead` route gating
 - Signal class: Product
@@ -37,7 +37,7 @@
 ```
 
 ## Summary
-The duplicate cannot be reproduced on cb3681e with the stated mechanism. `Header.astro`'s static `#hCpBtnNav` now lives only on BaseLayout pages (`/hard-texts/genesis-6/`, `/izbrannoe/`), while `ReaderPreferencesHead` injects `#gbSearchBtn` only on `{/articles/, /biografii/, /pastor-series/}` — disjoint sets, so no page renders both search icons. The `/articles/`, `/biografii/`, `/pastor-series/` landings render their own navbar (no static search button) plus the single injected one. The search lane was reworked between the report's 485db8c anchor and cb3681e (see `e6972ea` and the search-merged commits), retiring the overlap. (My own earlier `2026-07-17-comment-ui-duplicate-search.md` confirmed the duplicate on 485db8c — that confirmation is now itself stale on cb3681e.)
+The duplicate cannot be reproduced on cb3681e with the stated mechanism. `Header.astro`'s static `#hCpBtnNav` now lives only on BaseLayout pages (`/hard-texts/genesis-6/`, `/izbrannoe/`), while `ReaderPreferencesHead` injects `#gbSearchBtn` only on `{/articles/, /biografii/, /pastor-series/}` — disjoint sets, so no page renders both search icons. The `/articles/`, `/biografii/`, `/pastor-series/` landings render their own navbar (no static search button) plus the single injected one. The search lane was reworked between the report's 485db8c anchor and cb3681e (see `e6972ea` and the search-merged commits), retiring the overlap. (My own earlier `2026-08-19-comment-ui-duplicate-search.md` confirmed the duplicate on 485db8c — that confirmation is now itself stale on cb3681e.)
 
 ## Recommended action
 - Status change: `UI-DUPLICATE-SEARCH-BUTTONS` → **stale**; remove from MASTER in the next consolidation wave.

@@ -4,7 +4,7 @@
 - Project: gb-is-my-strength
 - Comment by: bugverifikator
 - Date: 2026-08-19
-- Target report: `incoming/2026-07-17-arena-agent-surface-pass-5.md`
+- Target report: `incoming/2026-08-19-arena-agent-surface-pass-5.md`
 - Target finding ID: `SERIES-ORDER-INDEX-MISMATCH`
 - Audited anchor (SHA / artifact / live snapshot): Product `main` HEAD `cb3681e`; source witness of `src/components/article-pilots/gill-series/gillSeriesData.ts`; live HTTP fetch of `https://gospod-bog.ru/articles/dzhon-gill-chast-3-nasledie/` and `…/dzhon-gill-chast-4-ekzeget/` on 2026-08-19
 - Signal class: Product

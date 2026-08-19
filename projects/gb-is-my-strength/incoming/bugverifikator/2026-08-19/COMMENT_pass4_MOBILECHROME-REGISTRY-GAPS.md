@@ -4,7 +4,7 @@
 - Project: gb-is-my-strength
 - Comment by: bugverifikator
 - Date: 2026-08-19
-- Target report: `incoming/2026-07-17-arena-agent-surface-pass-4.md`
+- Target report: `incoming/2026-08-19-arena-agent-surface-pass-4.md`
 - Target finding ID: `MOBILECHROME-REGISTRY-GAPS` (MASTER alias `MOBILE-CHROME-REGISTRY-GAPS`)
 - Audited anchor (SHA / artifact / live snapshot): Product `main` HEAD `cb3681e`; source census of how each surface mounts its mobile bar (`SeriesReaderChrome`, `GillSeriesChrome`, `Genesis6ArticlePage`, `MobileChromePage`, `mobileChromeRegistry.ts`)
 - Signal class: Product

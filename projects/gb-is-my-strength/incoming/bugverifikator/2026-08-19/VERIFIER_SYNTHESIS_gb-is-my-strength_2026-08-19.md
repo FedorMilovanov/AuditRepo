@@ -22,11 +22,11 @@
 
 | Agent/report | Audited anchor | Scope | Evidence angles | Findings/claims |
 |---|---|---|---|---|
-| arena-agent surface-pass-4 (`incoming/2026-07-17-arena-agent-surface-pass-4.md`) | 485db8c | rodosloviye OG, ArticleLayout series map, GenealogyTree boundary, sitemap, mobile registry | source | RODOSLOVIYE-OG-IMAGE, ARTICLE-LAYOUT-SERIES-NAMES-HARDCODE, GENEALOGY-NO-ERROR-BOUNDARY, MOBILECHROME-REGISTRY-GAPS, … |
+| arena-agent surface-pass-4 (`incoming/2026-08-19-arena-agent-surface-pass-4.md`) | 485db8c | rodosloviye OG, ArticleLayout series map, GenealogyTree boundary, sitemap, mobile registry | source | RODOSLOVIYE-OG-IMAGE, ARTICLE-LAYOUT-SERIES-NAMES-HARDCODE, GENEALOGY-NO-ERROR-BOUNDARY, MOBILECHROME-REGISTRY-GAPS, … |
 | arena-agent surface-pass-5 (`…surface-pass-5.md`) | 485db8c | series order, ancestor tracing, golden-path perf, author hardcode | source | SERIES-ORDER-INDEX-MISMATCH, ANCESTOR-TRACING-INCOMPLETE, TRACE-GOLDEN-PATH-INEFFICIENT, ARTICLE-AUTHOR-HARDCODED |
 | arena-agent surface-pass-6 (`…surface-pass-6.md`) | 485db8c | genealogy ID space, duplicate search, future-dated meta, CSP gaps | source | GENEALOGY-ID-INVALID-SPACE, UI-DUPLICATE-SEARCH-BUTTONS, METADATA-FUTURE-DATED, SECURITY-CSP-GAPS, SECURITY-CSP-INCONSISTENCY |
-| existing comment-* corpus (`incoming/2026-07-17-comment-*.md`, incl. bugverifikator's own) | 485db8c | confirmations of the above | source | confirms/extends the pass-4/5/6 claims |
-| bugverifikator 2026-07-17 first pass (`incoming/bugverifikator/2026-07-17/REPORT.md`) | a2ef67da5 (then 485db8c framing) | title suffix D-19 + candidates | source | D-19 re-verified, D-20/D-21 candidates |
+| existing comment-* corpus (`incoming/2026-08-19-comment-*.md`, incl. bugverifikator's own) | 485db8c | confirmations of the above | source | confirms/extends the pass-4/5/6 claims |
+| bugverifikator 2026-08-19 first pass (`incoming/bugverifikator/2026-08-19/REPORT.md`) | a2ef67da5 (then 485db8c framing) | title suffix D-19 + candidates | source | D-19 re-verified, D-20/D-21 candidates |
 | bugverifikator 2026-08-19 reverify (`incoming/bugverifikator/2026-08-19/REPORT.md` + EVIDENCE_* + COMMENT_*) | cb3681e + live | all active MASTER rows | source + live + lifecycle | reverify + corrections (this wave) |
 
 ---
@@ -72,7 +72,7 @@
 | `ANCESTOR-TRACING-INCOMPLETE` | stale (closed-by-fix) | `computeFocusLineage` on cb3681e walks `father ?? mother` + BFS queue (the report's own proposed fix is now live); multiparent lane `b84aa56` | one-line legacy note: closed by multiparent lane; not reproducible on cb3681e |
 | `UI-DUPLICATE-SEARCH-BUTTONS` | stale | `ui/Header` only on BaseLayout pages; `ReaderPreferencesHead` only on {/articles/,/biografii/,/pastor-series/}; disjoint on cb3681e; search lane reworked (e6972ea) | one-line legacy note; mark bugverifikator's 485db8c confirmation stale too |
 | `ARTICLE-LAYOUT-SERIES-NAMES-HARDCODE` | invalid (dead-code carrier) | `ArticleLayout.astro` zero `src/` importers on cb3681e (only docs/**); symptom not in production | retain as caution: verify carrier *usage*, not just contents; same carrier as ARTICLE-AUTHOR-HARDCODED |
-| `METADATA-FUTURE-DATED` | invalid as framed (audit-drift: clock vs repository time) | repo effective today ≈2026-08-19 (cb3681e date); `2026-08-17` is 2 days in the past, not future; the report's "today 2026-07-17" contradicts repo timestamps | retain as rule: freshness dispositions use repo material timestamps, not a contradictory shell clock. Literal-date concern → Work Queue |
+| `METADATA-FUTURE-DATED` | invalid as framed (audit-drift: clock vs repository time) | repo effective today ≈2026-08-19 (cb3681e date); `2026-08-17` is 2 days in the past, not future; the report's "today 2026-08-19" contradicts repo timestamps | retain as rule: freshness dispositions use repo material timestamps, not a contradictory shell clock. Literal-date concern → Work Queue |
 | `MOBILECHROME-REGISTRY-GAPS` (original wording) | invalid-as-worded → narrowed (see §1) | pastor-series covered via SeriesReaderChrome; narrowed residual = Genesis-6 article pages | retain the registry-is-not-SSOT-for-static-mounts note |
 
 ## 5. Parked, accepted risk and not worth fixing

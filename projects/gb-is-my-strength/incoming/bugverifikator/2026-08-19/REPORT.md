@@ -30,7 +30,7 @@
 
 ## 0a. Temporal-context note (important for stale/future dispositions)
 
-The agent shell clock reports 2026-07-17, but the repository's own material timestamps place "now" at **≈ 2026-08-19**:
+The agent shell clock reports 2026-08-19, but the repository's own material timestamps place "now" at **≈ 2026-08-19**:
 - Product `main` HEAD cb3681e was committed `2026-08-19T00:30:04Z`.
 - Four open Product branches carry commits dated `2026-08-18`/`2026-08-19`.
 - AuditRepo `main` latest commit is dated ~`2026-08-18` ("incoming: confirm TLP-SHELL-DUPLICATE-NOISE finding", 1 hour before the page snapshot).
@@ -163,7 +163,7 @@ This wave re-tests all 13 current defects + 1 improvement + 2 system lanes and r
   - `src/pages/app/index.astro` cb3681e L11-12: `publishedTime = '2026-08-17T00:00:00+03:00'`.
   - Live `https://gospod-bog.ru/app/` returns `article:published_time = 2026-08-17T00:00:00+03:00` and JSON-LD `datePublished = 2026-08-17`.
 - Recommended result: **invalid / stale-as-framed**. Against the repository's effective "today" (≈2026-08-19), `2026-08-17` is two days **in the past**, not in the future. The future-dating defect no longer holds on the current temporal boundary. The date string itself is still a fixed literal (not derived from build/release time), so a *separate* lower-priority observation could be "publication dates are hard-coded literals rather than release-derived" — but that is a parked/Work-Queue concern, not the active future-dated defect.
-- Note: an earlier draft of this very report used the agent shell clock (2026-07-17) and wrongly kept this as current-local. Corrected here after the temporal-context witness. This is an `audit-drift` example: a clock that disagrees with repository evidence must not drive freshness disposition.
+- Note: an earlier draft of this very report used the agent shell clock (2026-08-19) and wrongly kept this as current-local. Corrected here after the temporal-context witness. This is an `audit-drift` example: a clock that disagrees with repository evidence must not drive freshness disposition.
 
 ### Challenge `ANCESTOR-TRACING-INCOMPLETE`  — stale
 
@@ -202,7 +202,7 @@ This wave re-tests all 13 current defects + 1 improvement + 2 system lanes and r
 
 ### Note on the antisovetov title-suffix symptom (D-19) — not a MASTER row, but collision-relevant
 
-This agent's prior pass (REPORT.md, 2026-07-17) re-verified D-19 (antisovetov short title `| Господь Бог` instead of `| Господь Бог — Сила Моя`). On cb3681e it is still present (`AntisovetovPageHead.astro` L16). However, open branch `agent/antisovetov-title-suffix-20260818` (60ed203, `fix(antisovetov): restore canonical title suffix`) is an **existing owner repair lane** for exactly this symptom. Per Operating Model collision rule, no competing lane is opened here; a future consolidation wave should reference that owner lane rather than re-filing the symptom.
+This agent's prior pass (REPORT.md, 2026-08-19) re-verified D-19 (antisovetov short title `| Господь Бог` instead of `| Господь Бог — Сила Моя`). On cb3681e it is still present (`AntisovetovPageHead.astro` L16). However, open branch `agent/antisovetov-title-suffix-20260818` (60ed203, `fix(antisovetov): restore canonical title suffix`) is an **existing owner repair lane** for exactly this symptom. Per Operating Model collision rule, no competing lane is opened here; a future consolidation wave should reference that owner lane rather than re-filing the symptom.
 
 ---
 
