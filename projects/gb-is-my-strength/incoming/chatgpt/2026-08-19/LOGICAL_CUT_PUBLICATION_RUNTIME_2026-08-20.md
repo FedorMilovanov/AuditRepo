@@ -33,11 +33,39 @@ This is the stronger systemic owner for the old `SW-PWA-FRESHNESS` residual. Ver
 
 Companion evidence: `SW_REVISIONED_CANONICAL_DOWNGRADE.md`.
 
+### Lazy runtime loader failure state is an eighth independent root
+
+Two separate canonical/shared resource loaders violate the same retry invariant:
+
+```text
+failed acquisition -> settled failed state -> later explicit retry may start a fresh acquisition
+```
+
+#### Search manifestation
+
+`MobileChromePage` sets both `__gbSearchLoading=true` and `__gbSearchBootRequested=true` before appending `search.js`. On `script.onerror` it clears only `__gbSearchLoading`. Every later Search action is blocked by:
+
+```js
+if (w.__gbSearchLoading || w.__gbSearchBootRequested) return;
+```
+
+while no ready `GBSearch` owner exists. `/karty/` and `/konfessii/` have this adapter as their only Search script loader in the current route graph, so a transient first script failure can leave Search non-retryable until reload.
+
+Companion evidence: `SEARCH_LAZY_LOADER_FAILURE_STATE.md`.
+
+#### TTS manifestation
+
+`ReaderActionsRuntime` preloads the current revisioned `vosk-tts-engine.js`. Later `reader-tts.js::ensureVoskScript()` finds an existing script element and adds `load/error` listeners to it. If the preload already reached terminal `error` before this later call, no event is replayed and no new request is started. `engineScriptPromise` can therefore remain pending indefinitely; `warmPromise` then remains pending too, and explicit retry returns the same pending state rather than creating a new acquisition.
+
+Companion evidence: `TTS_ENGINE_SCRIPT_FAILURE_STATE.md`.
+
+These are different implementations but one lifecycle root: resource existence/request intent is being mistaken for a retryable/observable terminal state.
+
 ## Semantic corrections made in this wave
 
-### SW registration census corrected again by semantic ownership
+### SW registration census corrected by semantic ownership
 
-The earlier static scanner said 67/85 registration routes and seven bare `/sw.js` identities. That was wrong because it missed generic runtime-array registration through `BaseLayout` and associated `SITE_CONFIG` ownership too syntactically.
+An earlier static scanner said 67/85 registration routes and seven bare `/sw.js` identities. That was wrong because it missed generic runtime-array registration through `BaseLayout` and associated `SITE_CONFIG` ownership too syntactically.
 
 Correct current semantic census:
 
@@ -53,11 +81,13 @@ Correct current semantic census:
 
 The root finding survives; only the evidence model/count was corrected. Structural AuditRepo CI passing the old report was never treated as semantic proof.
 
-### Historical button audit boundary is broader than Astro/TSX
+### Source-surface audits are broader than the historical scanners
 
-The old sitewide audit claimed an exhaustive `543 files / 47 instances` result. Reproduction of its declared Astro/TSX scope yields 49 missing-type literal buttons, and runtime HTML generators add another 26 literal missing-type buttons in `search.js`, `highlights.js` and `site.js`.
+The old sitewide button audit claimed an exhaustive `543 files / 47 instances` result. Reproduction of its declared Astro/TSX scope yields 49 missing-type literal buttons, and runtime HTML generators add another 26 literal missing-type buttons in `search.js`, `highlights.js` and `site.js`.
 
-So the minimum literal DOM-producing surface is **75 missing-type buttons across 25 source files**. This remains an audit-evidence-integrity finding, not a claim of 75 submit bugs: previous live evidence did not find type-less buttons inside forms.
+So the minimum literal DOM-producing surface is **75 missing-type buttons across 25 source files**. This remains audit-evidence integrity, not a claim of 75 submit bugs: previous live evidence did not find type-less buttons inside forms.
+
+A separate asset-revision census checked **536** current local `?v=` literals: **534 byte-exact / 2 stale**. The two stale literals are inside runtime JS, which current `cache-bust.js` does not scan as an internal URL-constructor corpus. This evidence is therefore grouped under `SOURCE-SURFACE-AUDIT-FALSE-COMPLETENESS`, not promoted into a normal-path TTS outage.
 
 ## Exact-current reverify of old direct manifestations
 
@@ -88,9 +118,11 @@ Additional current negative controls:
 - 924 literal ARIA relationship references (`aria-controls`, `aria-labelledby`, `aria-describedby`, `label[for]`): **0 missing literal targets**;
 - canonical/robots/sitemap indexability relationships: no new contradiction found;
 - current Web App Manifest identity/scope/icons remain internally consistent;
-- no duplicate Yandex Metrika init owner was found on a route graph (coverage itself remains a policy/observability decision, not admitted as a Product defect).
+- no duplicate Yandex Metrika init owner was found on a route graph (coverage itself remains a policy/observability decision, not admitted as a Product defect);
+- ReaderState route identity reverify found 48 series routes and 0 legacy-key collision groups;
+- current Search async result-generation cancellation did not show stale-result resurrection; the new Search finding is script acquisition failure/retry, not query-result cancellation.
 
-## Final active candidate closed as cleanup, not a work unit
+## Final stale-asset candidate closed as cleanup, not another work unit
 
 A byte-exact revision census found only two stale revision literals among 536 current local revisioned references:
 
@@ -103,24 +135,27 @@ floating-cluster-controller.js
 These strings are real drift but are **not a current independent runtime owner** under present Astro composition:
 
 - 57 Astro route graphs that actually mount `floating-cluster-controller.js` also mount `ReaderActionsRuntime`;
-- canonical ReaderActionsRuntime preloads the current Vosk engine and capture-claims TTS action/keyboard ownership;
+- canonical ReaderActionsRuntime preloads the current Vosk engine and capture-claims normal play/keyboard paths;
 - the legacy controller does not autonomously start Vosk warmup on page initialization;
 - its fallback status path delegates to `window.VoskTTSEngine.showStatus` when the canonical engine exists.
 
-Disposition: Work Queue cleanup / remove dead compatibility revision literals. Do not create an eighth Product work unit from these two strings.
+Disposition: Work Queue cleanup / source-surface guard evidence. Do not create a ninth Product work unit from these two strings.
+
+This does **not** weaken the TTS manifestation in work unit 8: that finding concerns the canonical current Vosk preload itself reaching terminal error before the later loader observes it.
 
 ## Logical stopping point
 
-No eighth independent SYSTEM root was proved in this wave.
+The evidence package should stop at **eight forensic work units** and proceed to verifier synthesis rather than continue enumerating lower-value static smells:
 
-The evidence package should therefore stop at **seven forensic work units** and proceed to verifier synthesis rather than continue enumerating lower-value static smells:
+1. `SCRIPTURE-OCCURRENCE-REPRESENTATION-ORACLE`;
+2. `SOURCE-SURFACE-AUDIT-FALSE-COMPLETENESS`;
+3. `SECURITY-NOSNIFF-OWNER-LAYER-MISMATCH`;
+4. `SW-ROOT-GENERATION-AUTHORITY` — three manifestations: route-dependent identity, non-isolated rollback, cross-generation canonical downgrade;
+5. `BROWSER-MATRIX-ZERO-WORKER-FAILOPEN`;
+6. `ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT`;
+7. `TTS-SHAREDWORKER-CLIENT-LIFECYCLE`;
+8. `LAZY-RUNTIME-LOADER-FAILURE-STATE` — Search and canonical TTS manifestations.
 
-1. Scripture occurrence representation/oracle;
-2. sitewide button-audit false completeness;
-3. nosniff security owner-layer mismatch;
-4. root Service Worker generation authority (three manifestations);
-5. browser-matrix zero-worker vacuous success;
-6. article legacy-capability partial migration;
-7. TTS SharedWorker client lifecycle.
+The audit also contains reduction evidence for old MASTER rows. Verifier should synthesize/absorb first instead of mechanically adding eight rows to the old matrix.
 
-The current audit has also generated reduction evidence for old MASTER rows, so verifier should synthesize/absorb before admitting new rows. This is the intended checkpoint for the next audit wave.
+This is the causal checkpoint for the next audit wave.
