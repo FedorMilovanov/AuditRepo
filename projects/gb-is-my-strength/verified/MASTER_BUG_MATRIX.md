@@ -10,13 +10,13 @@
 |---|---|
 | Active work units | **16** |
 | Direct current defects | **7** |
-| Verified necessary improvements | **1** |
-| Narrowed residuals | **4** |
+| Verified necessary improvements | **0** |
+| Narrowed residuals | **5** |
 | System verification lanes | **3** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Row arithmetic: 7 defects + 1 improvement + 4 residuals + 3 system lanes + 1 owner decision = 16 active rows. Within these, `SECURITY-CSP-INCONSISTENCY` is kept in CURRENT DEFECTS only as the named absorbed manifestation of `FRAGMENTED-SECURITY-OWNERSHIP` (its real owner is the system lane). `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` and is intentionally **not** an active MASTER row.
+> Row arithmetic: 7 defects + 0 improvements + 5 residuals + 3 system lanes + 1 owner decision = 16 active rows. Within these, `SECURITY-CSP-INCONSISTENCY` is kept in CURRENT DEFECTS only as the named absorbed manifestation of `FRAGMENTED-SECURITY-OWNERSHIP` (its real owner is the system lane). `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` and is intentionally **not** an active MASTER row.
 
 ## CURRENT DEFECTS — 7
 
@@ -31,17 +31,17 @@
 | `SECURITY-CSP-GAPS` | Reworded/narrowed: source-confirmed CSP-less surfaces are BaseLayout pages `/hard-texts/genesis-6/` and `/izbrannoe/`. `/app/` and `/rodosloviye/` are CSP-less in cb3681e source but **CSP-present in live + committed artifact** (source-vs-artifact divergence) — do not cite them as live gaps. Article pilots all have CSP. | HEAD cb3681e |
 
 
-## VERIFIED NECESSARY IMPROVEMENTS — 1
+## VERIFIED NECESSARY IMPROVEMENTS — 0
 
 | ID | Required improvement | Boundary |
 |---|---|---|
-| `SW-PWA-FRESHNESS` | Add revision tracking for runtime scripts in `sw.js`. Currently `cacheFirst` without `?v=` prevents updates to `reader-preferences.js` without manual SW version bump. | HEAD cb3681e |
 
 
-## NARROWED RESIDUALS — 4
+## NARROWED RESIDUALS — 5
 
 | ID | Current residual | Boundary |
 |---|---|---|
+| `SW-PWA-FRESHNESS` | **Narrowed:** pages using `assetUrl()` (all Astro components via `ReaderPreferencesHead`) emit `?v=<hash>` URLs → `isRevisioned()` → `revisionedStaticNetworkFirst` (network-first). Original broad claim partially mitigated. **Residual:** bare precache entry `/js/reader-preferences.js` at sw.js L44 has no `?v=`; if hit unversioned (old SW, direct nav, legacy page) → `cacheFirst` stale. Fix: remove bare precache entry or stamp `?v=` at build time. Evidence: `incoming/2026-07-17-arena-agent-audit-pass-wave5.md`. | HEAD cb3681e |
 | `MOBILE-CHROME-REGISTRY-GAPS` | Narrowed: pastor-series articles are covered via `SeriesReaderChrome → GillSeriesChrome → GillSeriesMobileBar` (static mount). Residual = Genesis-6 article pages (`/hard-texts/enoh-…`, `/kniga-enoha-…`, `/mozhno-li-doveryat-1-enohu-…`) render via `Genesis6ArticlePage` and mount no mobile bottom bar. Whether a bar is required there is the owner decision below. | HEAD cb3681e |
 | `AR-IDX-JS-02-MULTIWRITER` | Multi-writer surface for theme persistence. `enhancements.js` and `site.js` write to legacy `theme` key, conflicting with canonical `reader-preferences.js` owner. | HEAD cb3681e |
 | `MISSING-BUTTON-TYPE` | **Full sitewide scan verified (543 files):** 20 files, 47 `<button>` elements without `type=` in `src/**/*.astro` and `src/**/*.tsx`. Patterns: FAQ accordion ×14 (KodDaVinchi, Hermenevtika, Krajne bodies), genealogy/rail/nav controls ×12 (GenealogyTree.tsx, GillSeriesRail, GillPartTocOverlay), mobile-menu-btn ×11 (NagornayaChrome ×7 copy-paste cluster, HardTexts, PastorSeries, NagornayaSeriya), theme-toggle ×7, scroll-top ×2, back-nav ×1. Evidence: `incoming/2026-07-17-sitewide-btn-type-evidence.md`; full instance list: `verification/2026-07-17-sitewide-btn-type-audit.md`. | HEAD cb3681e |
