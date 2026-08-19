@@ -6,7 +6,7 @@
 - Source repo: `FedorMilovanov/gb-is-my-strength`
 - Agent: `ChatGPT GPT-5.6 Sol`
 - Date: 2026-08-19
-- Audited Product anchor: `bcb41e57d7f9c011ac597c51a240fba19152a908`
+- Audited anchor: Product `main` `bcb41e57d7f9c011ac597c51a240fba19152a908`
 - Local source snapshot: user-provided `gb-is-my-strength-main (13).zip`, equivalent to Product `d99bd866de090023eac39d1aa648feb63ff45d52` for the owners examined here; `d99bd866… → bcb41e57…` changes only `.github/workflows/notify-on-failure.yml` and `scripts/dist-css-parity-audit.js`.
 - AuditRepo base: `6aae4f35a7f308d364f924bc41ea9796e99dd34f`
 - Report type: `forensic-audit` / `audit-harness` / `search-representation` / `security-owner-layer`
