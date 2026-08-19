@@ -1,0 +1,28 @@
+total scripts: 342
+executed in CI (direct or via npm chain): 269
+never executed: 73
+
+== cited in workflow files (path trigger etc) but NEVER executed: 23
+   scripts/article-native-contract-audit.js
+   scripts/atlas-browser-contract.mjs
+   scripts/cache-bust-assets.js
+   scripts/check-engine-contracts.js
+   scripts/check-relations.mjs
+   scripts/content-source-provenance-audit.js
+   scripts/diotrophes-wave12-release-contract.mjs
+   scripts/home-design-audit-pro.mjs
+   scripts/home-responsive-evidence-contract.mjs
+   scripts/install-effective-route-registry.js
+   scripts/interactive-audit.js
+   scripts/live-release-contract.mjs
+   scripts/map-engine-correctness-browser-test.mjs
+   scripts/project-relations-to-dist.mjs
+   scripts/record-deployment-witness.cjs
+   scripts/relationship-panel-browser-contract.mjs
+   scripts/release-candidate-lib.mjs
+   scripts/route-migration-matrix-contract-audit.js
+   scripts/route-profile-contract-audit.js
+   scripts/tts-live-deployment-contract.mjs
+   scripts/update-meta.js
+   scripts/verify-release-candidate.mjs
+   scripts/write-deployment-provenance.mjs
