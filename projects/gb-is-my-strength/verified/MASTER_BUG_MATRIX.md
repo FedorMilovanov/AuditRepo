@@ -1,64 +1,81 @@
 # MASTER BUG MATRIX — gb-is-my-strength
 
-> Single source of truth for current verified necessary work.
-> Not a history table; not a mirror of every Product signal.
-> Anchor: Product HEAD `cb3681e1a85b5f8919c9dc537f812a842bbe9235` (2026-08-19)
-> Evidence base: Wave 1 (2026-07-17), Wave 2 (2026-07-17), Arena Agent audit pass (2026-07-17), incoming AR-IDX-JS-02.
-> Prior wave anchor: 485db8c25287fa9bd2f53a5356885f02e4b81f4b — re-check required where noted.
-
----
+> SSOT for current verified necessary work only. This is not a history table or a mirror of every source-repository signal.
+>
+> Re-anchored to Product `main` **cb3681e** (2026-08-19) by the 2026-08-19 post-advance reverify wave. Rows previously anchored at `485db8c` were re-checked against cb3681e + live + committed production artifacts. Closed/stale/invalid/absorbed rows were removed in the same consolidation wave; their provenance lives in `CLOSURE_LEDGER.md`, `verification/`, `incoming/bugverifikator/2026-08-19/` and Git history.
 
 ## Current state
 
 | Field | Value |
 |---|---|
-| Active work units | **9** |
-| Direct current defects | **6** |
-| Verified necessary improvements | **0** |
-| Narrowed residuals | **2** |
-| System verification lanes | **1** |
-| Owner decisions | **0** |
+| Active work units | **16** |
+| Direct current defects | **8** |
+| Verified necessary improvements | **1** |
+| Narrowed residuals | **4** |
+| System verification lanes | **2** |
+| Owner decisions | **1** |
+| Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
----
+> Row arithmetic: 8 defects + 1 improvement + 4 residuals + 2 system lanes + 1 owner decision = 16 active rows. Within these, `ARTICLE-AUTHOR-HARDCODED` is pending a live-carrier re-check (see its row), and `SECURITY-CSP-INCONSISTENCY` is kept in CURRENT DEFECTS only as the named absorbed manifestation of `FRAGMENTED-SECURITY-OWNERSHIP` (its real owner is the system lane). `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` and is intentionally **not** an active MASTER row.
 
-## CURRENT DEFECTS — 6
+## CURRENT DEFECTS — 8
 
-| ID | Current problem | Boundary | Evidence | Min closure proof |
-|---|---|---|---|---|
-| `GENEALOGY-ID-INVALID-SPACE` | JSON ID ` lud_shem` has a leading space. Any automated processing, lookup or filter on `persons[].id` silently breaks for this node. Map key and all cross-references diverge. | HEAD cb3681e / `data/genealogy/genealogy.json` | Wave 2 source-read; FAIL | All IDs match `^[a-z_][a-z0-9_]*$`; no leading/trailing whitespace; cross-refs updated |
-| `SITE-TS-SERIES-ORDER` | `SERIES_ORDER['dzhon-gill']` lists `chast-4-ekzeget` before `chast-3-nasledie`. Manual ordering error causes incorrect «next article» navigation and canonical series rendering. | HEAD cb3681e / `src/data/site.ts` lines ~35–41 | Wave 1 source-read; confirmed at current HEAD | `chast-3-nasledie` appears before `chast-4-ekzeget` in the array; regression test passes |
-| `RODOSLOVIYE-OG-IMAGE` | `RodosloviyePageHead.astro` serves `og:image = /images/og-karty-1200x630.webp` — the karty (maps) image, not a genealogy-specific image. Wrong OG thumbnail on all rodosloviye shares. | HEAD cb3681e / `src/components/rodosloviye/RodosloviyePageHead.astro` | Wave 1 source-read; confirmed at current HEAD | Correct rodosloviye OG image path served; distinct from karty image |
-| `APP-OG-TYPE-MISMATCH` | `src/pages/app/index.astro` sets `og:type = "website"` but also emits `article:published_time` and `article:modified_time` properties, which are valid only for `og:type = "article"`. Parsers may discard or misinterpret the article timestamps. | HEAD cb3681e / `src/pages/app/index.astro` | Arena Agent audit pass + Wave 2; confirmed at current HEAD | Either remove `article:*` meta tags or change `og:type` to `"article"` consistently |
-| `APP-POSTDATED-METADATA` | `publishedTime` and `modifiedTime` in `app/index.astro` are hardcoded to `2026-08-17T00:00:00+03:00`. As of Product HEAD date (2026-08-19) this is in the past, but the file was only committed at HEAD (2026-08-19). If the page was live before 2026-08-17 the date is back-dated; if not, the date is accurate. **Requires owner verification.** | HEAD cb3681e / `src/pages/app/index.astro` | Wave 2; confirmed text present at HEAD | Owner confirms actual first-live date; metadata matches reality |
-| `HTML-BTN-TYPE-MISSING` | Multiple `<button>` elements across the codebase (confirmed: `PastorSeriesPageChrome.astro` and others) omit `type="button"`. In forms this causes accidental form submission; outside forms it is an HTML conformance defect and an accessibility smell (implicit `type="submit"`). | HEAD cb3681e (system-wide) | Arena Agent pass 6, incoming pass; confirmed in PastorSeriesPageChrome | All interactive non-submit `<button>` elements carry explicit `type="button"` |
+| ID | Current problem | Boundary |
+|---|---|---|
+| `RODOSLOVIYE-OG-IMAGE` | `/rodosloviye/` head uses the `/karty/` OG/Twitter image (`og-karty-1200x630.webp`) while `og:image:alt` describes родословие; asset and context disagree. Confirmed source + live + committed artifact (3 angles). | HEAD cb3681e |
+| `SERIES-ORDER-INDEX-MISMATCH` | Gill series inverts Part 3/Part 4: `gillSeriesData.ts` `GILL_SERIES_ITEMS` orders `part4` before `part3` and labels part4 `III` / part3 `IV`; live + artifact show distorted in-series nav (part4→next part3). Impact medium. **Root is `gillSeriesData.ts`, not `site.ts` `SERIES_ORDER` (dead code).** | HEAD cb3681e |
+| `ARTICLE-AUTHOR-HARDCODED` | Author/translation logic hard-coded to a single author literal. Filed against `ArticleLayout.astro`, which is orphaned on cb3681e — **pending live-carrier re-check** before this stays; if no live carrier, move to invalid. | HEAD cb3681e (pending re-check) |
+| `GENEALOGY-NO-ERROR-BOUNDARY` | `GenealogyTree.tsx` React island has no `ErrorBoundary`; a runtime throw yields a blank/uncerrored surface. Source-only (no runtime crash reproduced yet). | HEAD cb3681e |
+| `GENEALOGY-ID-INVALID-SPACE` | Leading space in ID `" lud_shem"` in `data/genealogy/genealogy.json` (L1395) + matching ref in Shem `children` (L403); `byId` Map keyed by exact id. Space is currently self-consistent (id↔ref) so latent, not a visible break today; graph-integrity invariant violated. Impact medium-low. | HEAD cb3681e |
+| `EDITORIAL-LABEL-INCONSISTENCY` | `Header.astro` nav label for `/hard-texts/` is "Разбор заблуждений" while `site.ts` `SECTION_META['hard-texts']` canonical label is "Трудные тексты". | HEAD cb3681e |
+| `SECURITY-CSP-INCONSISTENCY` | 4 distinct `img-src` variants coexist across 61 CSP-bearing heads; fragmentation of per-head hand-written CSP. **Absorbed symptom of `FRAGMENTED-SECURITY-OWNERSHIP`** (kept here only as the named manifestation; `'self'` already covers same-origin `gospod-bog.ru`, so no proven image breakage — defect is inconsistency, not a functional break). | HEAD cb3681e |
+| `SECURITY-CSP-GAPS` | Reworded/narrowed: source-confirmed CSP-less surfaces are BaseLayout pages `/hard-texts/genesis-6/` and `/izbrannoe/`. `/app/` and `/rodosloviye/` are CSP-less in cb3681e source but **CSP-present in live + committed artifact** (source-vs-artifact divergence) — do not cite them as live gaps. Article pilots all have CSP. | HEAD cb3681e |
 
----
+## VERIFIED NECESSARY IMPROVEMENTS — 0
 
-## NARROWED RESIDUALS — 2
+| ID | Needed implementation | Why |
+|---|---|---|
 
-| ID | Current residual | Evidence anchor | Next step |
-|---|---|---|---|
-| `AR-IDX-JS-02-THEME-MULTIWRITER` | `js/enhancements.js` writes `localStorage` theme via fallback `"theme"` key (`SiteUtils.themeKey \|\| "theme"`). `js/site.js` may contain similar fallback. Canonical owner is `gb:reader-preferences:v1` in `reader-preferences.js`. Co-existence creates multi-writer surface: whichever script runs last wins, potentially overriding canonical preference. | HEAD cb3681e (confirmed in enhancements.js) | Strip legacy `localStorage.setItem` theme writes from `enhancements.js` and `site.js`; delegate entirely to `reader-preferences.js` |
-| `GENEALOGY-LINEAGE-ANCESTOR-TRACE` | `computeFocusLineage` in `layout.ts` traces ancestors strictly via `father` (and `mother` only for `jesus`). All other persons follow only the paternal line upward. Maternal ancestors are silently excluded from the focus lineage set, causing the filter to miss entire branches when a non-Jesus node is selected. | HEAD cb3681e / `src/components/genealogy/layout.ts` | Extend ancestor trace to follow both `father` and `mother` for every node, not only `jesus`; verify focus filter completeness |
+_None currently admitted. `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` (optional, not proven necessary-current)._
 
----
 
-## SYSTEM VERIFICATION LANES — 1
+## VERIFIED NECESSARY IMPROVEMENTS — 1
 
-| ID | Verified work package | Scope | Next boundary |
-|---|---|---|---|
-| `SITEWIDE-BTN-TYPE-AUDIT` | Full audit of all `.astro` and `.tsx` components for `<button>` elements missing `type` attribute. `PastorSeriesPageChrome.astro` is a confirmed instance. Theme-toggle and search buttons are the most common pattern. | All `src/components/**/*.astro`, `src/components/**/*.tsx` | Pass over all component files; enumerate each instance; produce fix list |
+| ID | Required improvement | Boundary |
+|---|---|---|
+| `SW-PWA-FRESHNESS` | Add revision tracking for runtime scripts in `sw.js`. Currently `cacheFirst` without `?v=` prevents updates to `reader-preferences.js` without manual SW version bump. | HEAD cb3681e |
 
----
+## NARROWED RESIDUALS — 4
 
-## OWNER DECISIONS — 0
+| ID | Current residual |
+|---|---|
+| `MOBILE-CHROME-REGISTRY-GAPS` | Narrowed: pastor-series articles are covered via `SeriesReaderChrome → GillSeriesChrome → GillSeriesMobileBar` (static mount). Residual = Genesis-6 article pages (`/hard-texts/enoh-…`, `/kniga-enoha-…`, `/mozhno-li-doveryat-1-enohu-…`) render via `Genesis6ArticlePage` and mount no mobile bottom bar. Whether a bar is required there is the owner decision below. |
+| `AR-IDX-JS-02-MULTIWRITER` | Multi-writer surface for theme persistence. `enhancements.js` and `site.js` write to legacy `theme` key, conflicting with canonical `reader-preferences.js` owner. | HEAD cb3681e |
+| `MISSING-BUTTON-TYPE` | Interactive buttons (`themeToggle`, `hMobileMenuBtn`, etc.) in Astro components lack `type="button"`, causing default `submit` behavior risks. | HEAD cb3681e |
+| `SEARCH-LAZY-LOADER-DRIFT` | Structural inconsistency in `BaseLayout.astro` search loader snippet vs other pages; complicates global maintenance. | HEAD cb3681e |
+
+## SYSTEM VERIFICATION LANES — 2
+
+| ID | Verified work package | Next boundary |
+|---|---|---|
+| `METADATA-SSOT-PROLIFERATION` | Centralize metadata (series labels, author roles, nav labels) from layout/nav hardcode into `site.ts` SSOT consumed by all layouts/nav. Feeds `SERIES-ORDER-INDEX-MISMATCH` (data), `EDITORIAL-LABEL-INCONSISTENCY`, `ARTICLE-AUTHOR-HARDCODED` (if kept). Note: the original `ArticleLayout.seriesNames` carrier is dead code on cb3681e — the live series engine is `seriesConfig.ts`/`gillSeriesData.ts`. | Verify removal of hardcode + that the active series engine and Header read the SSOT. |
+| `FRAGMENTED-SECURITY-OWNERSHIP` | Centralize CSP generation into one unified security head emitting CSP + `X-Content-Type-Options` consistently; shared `img-src` allowlist; cover the BaseLayout CSP-less surfaces in source. Absorbs `SECURITY-CSP-INCONSISTENCY` and the narrowed `SECURITY-CSP-GAPS`. | Unified security head; source-vs-live CSP divergence closed. |
+
+## OWNER DECISIONS — 1
 
 | ID | Missing decision |
 |---|---|
+| `MOBILECHROME-GENESIS6-BAR-DECISION` | Do Genesis-6 article pages require a mobile bottom bar? (a) wire `Genesis6ArticlePage` to a mobile bar → convert `MOBILE-CHROME-REGISTRY-GAPS` to a repair lane; (b) leave as plain long-form reader pages → drop the residual as accepted. Owner value/editorial decision; blocks whether the residual becomes work. Evidence: `incoming/bugverifikator/2026-08-19/COMMENT_pass4_MOBILECHROME-REGISTRY-GAPS.md`, `incoming/bugverifikator/2026-08-19/REPORT.md`. |
 
----
+## Removed in this wave (provenance in CLOSURE_LEDGER.md + incoming/bugverifikator/2026-08-19/)
+
+- `ANCESTOR-TRACING-INCOMPLETE` — stale (closed-by-fix, multiparent lane; live code matches the originally proposed fix).
+- `UI-DUPLICATE-SEARCH-BUTTONS` — stale (Header and ReaderPreferencesHead on disjoint route sets on cb3681e; absent in committed artifact; search lane reworked).
+- `ARTICLE-LAYOUT-SERIES-HARDCODE` — invalid (dead-code carrier `ArticleLayout.astro`; zero `src/` importers; symptom not in production artifact).
+- `METADATA-FUTURE-DATED` — invalid as framed (2026-08-17 is in the past vs the repository's effective today ≈2026-08-19; the original "future" claim relied on a shell clock contradicting repo material timestamps). Literal-date concern parked in `WORK_QUEUE.md`.
 
 ## Terminal disposition
 
-Admit a row only after signal classification, exact-anchor applicability, current necessity and ownership are established.
-Remove solved, stale, duplicate, absorbed and superseded rows in the same closure transaction.
+The matrix may be empty. Admit a row only after signal classification, exact-anchor applicability, current necessity and ownership are established. Remove solved, stale, duplicate, absorbed and superseded rows in the same closure transaction. This wave re-anchored all retained rows to cb3681e; a later Product `main` advance requires a fresh current-check before any retained row is cited as current admission witness.
+
+
