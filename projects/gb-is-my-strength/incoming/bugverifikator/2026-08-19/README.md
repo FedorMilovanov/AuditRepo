@@ -23,6 +23,13 @@
 - `EVIDENCE_GENEALOGY-ID-INVALID-SPACE.md` — source+lifecycle witness for the malformed-ID defect (impact corrected to medium-low / latent)
 - `EVIDENCE_ARTICLE-LAYOUT-SERIES-HARDCODE.md` — **CORRECTION**: carrier `ArticleLayout.astro` is orphaned/dead code on cb3681e → disposition `current-local` → **invalid/stale**
 - `EVIDENCE_SERIES-ORDER-INDEX-MISMATCH.md` — **CORRECTION**: production-active root is `gillSeriesData.ts` (`GILL_SERIES_ITEMS`), not the dead `site.ts` `SERIES_ORDER`; defect confirmed live
+- `COMMENT_pass5_ANCESTOR-TRACING-INCOMPLETE.md` — comment on surface-pass-5: **stale** (closed-by-fix, multiparent lane)
+- `COMMENT_pass5_SERIES-ORDER-INDEX-MISMATCH.md` — comment on surface-pass-5: **challenge** (root relocated to gillSeriesData.ts; impact low→medium)
+- `COMMENT_pass4_ARTICLE-LAYOUT-SERIES-NAMES-HARDCODE.md` — comment on surface-pass-4: **challenge/invalid** (dead-code carrier)
+- `COMMENT_pass4_MOBILECHROME-REGISTRY-GAPS.md` — comment on surface-pass-4: **challenge/narrower** (pastor-series covered via SeriesReaderChrome)
+- `COMMENT_pass6_UI-DUPLICATE-SEARCH-BUTTONS.md` — comment on surface-pass-6: **stale** (disjoint route sets)
+- `COMMENT_pass6_METADATA-FUTURE-DATED.md` — comment on surface-pass-6: **challenge/invalid** (clock-vs-repo-time audit-drift)
+- `VERIFIER_SYNTHESIS_gb-is-my-strength_2026-08-19.md` — **verification wave synthesis** over the whole package: classifies all active rows into keep/stale/invalid/duplicate/parked/owner-decision, gives §9 canonical MASTER updates and §7 repair-lane options. This is the consolidation input.
 
 ## Notes for verifier
 - **Confirmed current-local on cb3681e (+ live):** `RODOSLOVIYE-OG-IMAGE` (source + live — see EVIDENCE + BUG_RECORD), `SERIES-ORDER-INDEX-MISMATCH` (root relocated to `gillSeriesData.ts` — see EVIDENCE), `GENEALOGY-ID-INVALID-SPACE` (source — see EVIDENCE; impact medium-low/latent), `ARTICLE-AUTHOR-HARDCODED`, `GENEALOGY-NO-ERROR-BOUNDARY`, `EDITORIAL-LABEL-INCONSISTENCY`, `SECURITY-CSP-INCONSISTENCY` (reframe as absorbed symptom of `FRAGMENTED-SECURITY-OWNERSHIP`).
