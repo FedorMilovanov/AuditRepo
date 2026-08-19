@@ -31,13 +31,6 @@
 | `SECURITY-CSP-INCONSISTENCY` | 4 distinct `img-src` variants coexist across 61 CSP-bearing heads; fragmentation of per-head hand-written CSP. **Absorbed symptom of `FRAGMENTED-SECURITY-OWNERSHIP`** (kept here only as the named manifestation; `'self'` already covers same-origin `gospod-bog.ru`, so no proven image breakage — defect is inconsistency, not a functional break). | HEAD cb3681e |
 | `SECURITY-CSP-GAPS` | Reworded/narrowed: source-confirmed CSP-less surfaces are BaseLayout pages `/hard-texts/genesis-6/` and `/izbrannoe/`. `/app/` and `/rodosloviye/` are CSP-less in cb3681e source but **CSP-present in live + committed artifact** (source-vs-artifact divergence) — do not cite them as live gaps. Article pilots all have CSP. | HEAD cb3681e |
 
-## VERIFIED NECESSARY IMPROVEMENTS — 0
-
-| ID | Needed implementation | Why |
-|---|---|---|
-
-_None currently admitted. `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` (optional, not proven necessary-current)._
-
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 1
 
@@ -45,11 +38,12 @@ _None currently admitted. `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` 
 |---|---|---|
 | `SW-PWA-FRESHNESS` | Add revision tracking for runtime scripts in `sw.js`. Currently `cacheFirst` without `?v=` prevents updates to `reader-preferences.js` without manual SW version bump. | HEAD cb3681e |
 
+
 ## NARROWED RESIDUALS — 4
 
-| ID | Current residual |
-|---|---|
-| `MOBILE-CHROME-REGISTRY-GAPS` | Narrowed: pastor-series articles are covered via `SeriesReaderChrome → GillSeriesChrome → GillSeriesMobileBar` (static mount). Residual = Genesis-6 article pages (`/hard-texts/enoh-…`, `/kniga-enoha-…`, `/mozhno-li-doveryat-1-enohu-…`) render via `Genesis6ArticlePage` and mount no mobile bottom bar. Whether a bar is required there is the owner decision below. |
+| ID | Current residual | Boundary |
+|---|---|---|
+| `MOBILE-CHROME-REGISTRY-GAPS` | Narrowed: pastor-series articles are covered via `SeriesReaderChrome → GillSeriesChrome → GillSeriesMobileBar` (static mount). Residual = Genesis-6 article pages (`/hard-texts/enoh-…`, `/kniga-enoha-…`, `/mozhno-li-doveryat-1-enohu-…`) render via `Genesis6ArticlePage` and mount no mobile bottom bar. Whether a bar is required there is the owner decision below. | HEAD cb3681e |
 | `AR-IDX-JS-02-MULTIWRITER` | Multi-writer surface for theme persistence. `enhancements.js` and `site.js` write to legacy `theme` key, conflicting with canonical `reader-preferences.js` owner. | HEAD cb3681e |
 | `MISSING-BUTTON-TYPE` | Interactive buttons (`themeToggle`, `hMobileMenuBtn`, etc.) in Astro components lack `type="button"`, causing default `submit` behavior risks. | HEAD cb3681e |
 | `SEARCH-LAZY-LOADER-DRIFT` | Structural inconsistency in `BaseLayout.astro` search loader snippet vs other pages; complicates global maintenance. | HEAD cb3681e |
