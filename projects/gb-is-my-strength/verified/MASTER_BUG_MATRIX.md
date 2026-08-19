@@ -8,15 +8,15 @@
 
 | Field | Value |
 |---|---|
-| Active work units | **16** |
+| Active work units | **17** |
 | Direct current defects | **8** |
 | Verified necessary improvements | **1** |
 | Narrowed residuals | **4** |
-| System verification lanes | **2** |
+| System verification lanes | **3** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Row arithmetic: 8 defects + 1 improvement + 4 residuals + 2 system lanes + 1 owner decision = 16 active rows. Within these, `ARTICLE-AUTHOR-HARDCODED` is pending a live-carrier re-check (see its row), and `SECURITY-CSP-INCONSISTENCY` is kept in CURRENT DEFECTS only as the named absorbed manifestation of `FRAGMENTED-SECURITY-OWNERSHIP` (its real owner is the system lane). `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` and is intentionally **not** an active MASTER row.
+> Row arithmetic: 8 defects + 1 improvement + 4 residuals + 3 system lanes + 1 owner decision = 17 active rows. Within these, `ARTICLE-AUTHOR-HARDCODED` is pending a live-carrier re-check (see its row), and `SECURITY-CSP-INCONSISTENCY` is kept in CURRENT DEFECTS only as the named absorbed manifestation of `FRAGMENTED-SECURITY-OWNERSHIP` (its real owner is the system lane). `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` and is intentionally **not** an active MASTER row.
 
 ## CURRENT DEFECTS — 8
 
@@ -48,10 +48,11 @@
 | `MISSING-BUTTON-TYPE` | **Full sitewide scan verified (543 files):** 20 files, 47 `<button>` elements without `type=` in `src/**/*.astro` and `src/**/*.tsx`. Patterns: FAQ accordion ×14 (KodDaVinchi, Hermenevtika, Krajne bodies), genealogy/rail/nav controls ×12 (GenealogyTree.tsx, GillSeriesRail, GillPartTocOverlay), mobile-menu-btn ×11 (NagornayaChrome ×7 copy-paste cluster, HardTexts, PastorSeries, NagornayaSeriya), theme-toggle ×7, scroll-top ×2, back-nav ×1. Evidence: `incoming/2026-07-17-sitewide-btn-type-evidence.md`; full instance list: `verification/2026-07-17-sitewide-btn-type-audit.md`. | HEAD cb3681e |
 | `SEARCH-LAZY-LOADER-DRIFT` | Structural inconsistency in `BaseLayout.astro` search loader snippet vs other pages; complicates global maintenance. | HEAD cb3681e |
 
-## SYSTEM VERIFICATION LANES — 2
+## SYSTEM VERIFICATION LANES — 3
 
 | ID | Verified work package | Next boundary |
 |---|---|---|
+| `SITEWIDE-BTN-TYPE-AUDIT` | Full sitewide scan completed at cb3681e (543 `src/` files): **20 files, 47 `<button>` elements missing `type=`**. Patterns verified: FAQ accordion ×14 across 3 article Body components; genealogy/rail/nav controls ×12 (GenealogyTree.tsx, GillSeriesRail, GillPartTocOverlay); mobile-menu-btn ×11 (NagornayaChrome ×7 copy-paste cluster + HardTexts + PastorSeries + NagornayaSeriya); theme-toggle ×7; scroll-top ×2; back-nav ×1. Evidence: `incoming/2026-07-17-sitewide-btn-type-evidence.md`. Full instance list: `verification/2026-07-17-sitewide-btn-type-audit.md`. | Add `type="button"` to all 47 instances; re-run full scan at fix anchor; zero hits. Retire lane on clean pass. |
 | `METADATA-SSOT-PROLIFERATION` | Centralize metadata (series labels, author roles, nav labels) from layout/nav hardcode into `site.ts` SSOT consumed by all layouts/nav. Feeds `SERIES-ORDER-INDEX-MISMATCH` (data), `EDITORIAL-LABEL-INCONSISTENCY`, `ARTICLE-AUTHOR-HARDCODED` (if kept). Note: the original `ArticleLayout.seriesNames` carrier is dead code on cb3681e — the live series engine is `seriesConfig.ts`/`gillSeriesData.ts`. | Verify removal of hardcode + that the active series engine and Header read the SSOT. |
 | `FRAGMENTED-SECURITY-OWNERSHIP` | Centralize CSP generation into one unified security head emitting CSP + `X-Content-Type-Options` consistently; shared `img-src` allowlist; cover the BaseLayout CSP-less surfaces in source. Absorbs `SECURITY-CSP-INCONSISTENCY` and the narrowed `SECURITY-CSP-GAPS`. | Unified security head; source-vs-live CSP divergence closed. |
 
