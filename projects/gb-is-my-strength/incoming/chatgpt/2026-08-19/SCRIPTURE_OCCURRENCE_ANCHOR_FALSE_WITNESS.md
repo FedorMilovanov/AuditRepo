@@ -159,6 +159,46 @@ producer stored it
 → exact navigation still has no DOM target
 ```
 
+## Cross-validator evidence: hard series fragment guard has the same boundary bug
+
+The same HTML-attribute mistake is not confined to Scripture code. `scripts/series-reader-fragment-audit.js` — reusable from `series-reader-facade-regression-test.js`, which is exposed as `npm run series:facade:guard` and executed by Shared Files Guard — builds its target set with:
+
+```js
+for (const match of html.matchAll(/\bid=["']([^"']+)["']/gi)) ids.add(...);
+```
+
+An adversarial fixture containing:
+
+```html
+<div class="gbs2-toc">
+  <a href="#fake">jump</a>
+  <span data-note-id="fake">note</span>
+</div>
+```
+
+and **no** `id="fake"` returns:
+
+```text
+result: PASS
+uniqueFragments: 1
+missing: []
+errors: []
+```
+
+That is a direct current audit-harness false-green: a hard fragment guard accepts a non-existent DOM target solely because the suffix of `data-note-id` satisfies `\bid=`.
+
+A current committed-series corpus sweep found **zero** fragment links presently relying only on this false target set, so this subsection does **not** claim a second current Product navigation defect outside Scripture. Its value is class-level: the same parser error independently exists in another admission guard.
+
+This establishes a broader tooling lesson:
+
+```text
+regex word boundary before attribute name
+≠
+HTML attribute-name boundary
+```
+
+The durable fix should preferably be a shared exact-attribute/DOM parsing primitive rather than one ad hoc regex correction per validator.
+
 ## Root synthesis with the context leak
 
 The companion `REPORT.md` already records `SCRIPTURE-OCCURRENCE-CONTEXT-ORACLE-LEAK`: visible-reference detection runs on a masked source representation, but reader-facing context is reconstructed from raw source and validated only for existence/provenance.
@@ -174,11 +214,13 @@ rendered semantic representation
 For context, raw-source syntax is mistaken for readable rendered prose.
 For anchors, an attribute-name suffix is mistaken for a real fragment owner.
 
-The correct verifier disposition is therefore one systemic Scripture occurrence representation/oracle package, not two independent point fixes.
+The cross-validator series fixture shows that the anchor error is also a reusable audit-tooling primitive defect, not only one bad call site.
+
+The correct verifier disposition is therefore one systemic Scripture occurrence representation/oracle package with an explicit shared HTML-attribute boundary correction, not multiple point fixes.
 
 ## Durable closure boundary
 
-A future owned Product repair should close both manifestations at the semantic representation boundary:
+A future owned Product/harness repair should close both Scripture manifestations and the shared parser class:
 
 1. Parse/derive anchors as actual HTML/JSX/Astro `id` attributes, not a suffix regex.
 2. Prefer a structured visible-text / rendered-structure representation for both context and anchor ownership.
@@ -190,12 +232,14 @@ A future owned Product repair should close both manifestations at the semantic r
    - references adjacent to split markup/template expressions.
 4. The source/index contract must turn red if an anchor exists only as `data-*-id`.
 5. The dist contract must use a DOM/HTML parser or an exact attribute-name boundary, not the same producer regex.
-6. The real browser contract should click/navigate an exact result and assert the URL fragment resolves through `document.getElementById(fragment)` to the intended visible section.
-7. Preserve deterministic index generation, exact-result-first behavior, current dedupe rules and safe-anchor character restrictions.
+6. `series-reader-fragment-audit` must reject `href="#x"` when only `data-*-id="x"` exists.
+7. The real browser contract should click/navigate an exact result and assert the URL fragment resolves through `document.getElementById(fragment)` to the intended visible section.
+8. Preserve deterministic index generation, exact-result-first behavior, current dedupe rules and safe-anchor character restrictions.
 
 ## What this report does not claim
 
 - No claim that all 2429 occurrence anchors are wrong; 13 current records are directly demonstrated.
 - No claim that `data-note-id` itself is invalid markup; it is valid data metadata, just not a fragment target.
-- No need for a separate MASTER row from the context leak; both are manifestations of one Scripture representation/oracle root.
+- No claim that current series pages contain a broken in-page fragment from the series guard defect; the adversarial false-green is a harness witness.
+- No need for a separate MASTER row from the context leak; both Scripture manifestations belong to one representation/oracle root.
 - No unrestricted browser interaction capture is claimed; the missing target follows from stored href construction plus exact current DOM/source identity, and the browser-oracle blind spot is source-proven.
