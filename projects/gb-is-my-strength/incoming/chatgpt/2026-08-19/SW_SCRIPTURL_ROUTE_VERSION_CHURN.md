@@ -4,16 +4,14 @@
 
 - Project: `gb-is-my-strength`
 - Signal class: Product runtime ownership + audit-harness false-green
-- Proof state: current-source + normative algorithm witness; unrestricted browser lifecycle capture not available in this environment
-- Audited anchor: Product `main` `bcb41e57d7f9c011ac597c51a240fba19152a908`
-- Freshness note: Product later advanced to `01894214765d7ab6e51a7eea1fb7f239c6591af8` only through `scripts/css-layer-validator.js`; none of the SW/version owners in this report changed.
+- Current Product boundary: `01894214765d7ab6e51a7eea1fb7f239c6591af8`
 - Product mutation: none
 - MASTER mutation: none
-- Suggested themes: `ST-CACHE`, `ST-AUDIT-HARNESS`, `ST-SOURCE-GUARD-CLOSURE`
+- Parent/system work unit: `SW-ROOT-GENERATION-AUTHORITY`
 
 ## Finding
 
-The root service worker registration uses **page-local `window.SITE_CONFIG.version` as part of the service-worker script URL** while all affected pages register the same root scope `/`:
+The root Service Worker registration uses route-local `window.SITE_CONFIG.version` as part of the worker script URL while all registering pages use one root scope `/`:
 
 ```js
 var siteVersion = window.SITE_CONFIG && window.SITE_CONFIG.version || '';
@@ -21,147 +19,148 @@ var workerUrl = '/sw.js' + (siteVersion ? '?v=' + encodeURIComponent(siteVersion
 navigator.serviceWorker.register(workerUrl, { scope: '/' });
 ```
 
-`SITE_CONFIG.version` is not release-global. Current route families that definitely load `js/sw-register.js` publish incompatible values, for example:
+`SITE_CONFIG.version` is not release-global. Current route families publish incompatible values, so one deployed root worker can be registered under different script URLs merely by navigating between route families.
 
-| Route family | Current source owner | `SITE_CONFIG.version` | SW registration loader |
-|---|---|---:|---|
-| `/` | `src/components/home/HomePageChrome.astro` | `1778943682` | `./js/sw-register.js?v=e61e1210` |
-| `/rodosloviye/` | `src/components/rodosloviye/RodosloviyeBody.astro` | `1` | `/js/sw-register.js?v=e61e1210` |
-| `/baptisty-rossii/` | Baptist PageHead family + book landing | `1781282355` | `../js/sw-register.js?v=e61e1210` |
-
-Therefore a client can register, for the **same scope `/` and same deployed `sw.js` bytes**, different script URLs merely by navigating across route families:
+Examples:
 
 ```text
-/sw.js?v=1778943682
+/                              -> /sw.js?v=1778943682
+/rodosloviye/                  -> /sw.js?v=1
+/baptisty-rossii/              -> /sw.js?v=1781282355
+/articles/diotrefy-nashego-vremeni/ -> /sw.js?v=20260802
+/hard-texts/genesis-6/         -> /sw.js?v=c7f8b6e9
+```
+
+The last value is not a page literal: `BaseLayout.astro` sets `runtimeConfig.version = ASSET_VERSIONS['js/glossary.js']`, currently `c7f8b6e9`, then writes that config into `window.SITE_CONFIG` before its generic runtime-script array registers `js/sw-register.js`.
+
+## Corrected semantic route census
+
+An earlier version of this evidence reported `67/85` registering routes and a seven-route bare `/sw.js` group. That was **wrong** and is explicitly superseded here.
+
+Root cause of the audit error: the first scanner primarily looked for literal `<script ... sw-register.js>` carriers. Current `BaseLayout.astro` registers indirectly:
+
+```js
+const runtimeScripts = [
+  assetUrl('js/site-utils.js'),
+  assetUrl('js/scroll-perf.js'),
+  ...(includeLegacySiteScript ? [assetUrl('js/site.js')] : []),
+  assetUrl('js/sw-register.js'),
+];
+...
+{runtimeScripts.map((src) => <script is:inline defer src={src}></script>)}
+```
+
+A literal-tag scanner can therefore miss a real registration owner. The same earlier pass also inferred “no SITE_CONFIG writer” too mechanically instead of resolving route composition and BaseLayout's hash-derived config.
+
+The corrected census resolves Astro import graphs, excludes mere registry/helper string mentions such as `src/lib/asset-version.js`, recognizes generic runtime arrays as real carriers, and resolves the effective route config owner.
+
+### Final current census
+
+- **85** Astro route entries examined.
+- **70 / 85** have a real `sw-register.js` registration owner.
+- **15 / 85** do not register on first load from their own route graph.
+- **0 / 70** have two real registration owners in the same route graph.
+- **0 / 70** registering routes resolve to bare `/sw.js`.
+- Those 70 routes resolve to exactly **five** root-worker script identities in one Product release:
+
+| Registering route graphs | Effective `SITE_CONFIG.version` | Resulting worker URL |
+|---:|---|---|
+| 25 | `1` | `/sw.js?v=1` |
+| 22 | `1781282355` | `/sw.js?v=1781282355` |
+| 19 | `1778943682` | `/sw.js?v=1778943682` |
+| 2 | `20260802` | `/sw.js?v=20260802` |
+| 2 | `c7f8b6e9` via `ASSET_VERSIONS['js/glossary.js']` | `/sw.js?v=c7f8b6e9` |
+
+The two hash-derived BaseLayout routes are:
+
+```text
+/hard-texts/genesis-6/
+/izbrannoe/
+```
+
+The 15 current non-registering route entries are:
+
+```text
+/app/
+/map/
+/konfessii/
+/konfessii/russkij-baptizm/
+/karty/
+/karty/avraam/
+/karty/early-church/
+/karty/ishod/
+/karty/maccabim/
+/karty/melachim/
+/karty/pavel/
+/karty/revelation/
+/karty/shoftim/
+/karty/shvatim/
+/karty/yeshua/
+```
+
+This non-registration set is recorded as a coverage boundary, not automatically a Product defect: a root-scoped worker previously installed elsewhere can still control these pages, and no route-complete first-entry PWA-registration invariant has been established.
+
+## Why the five URLs are semantically material
+
+For one Service Worker scope, `register(scriptURL, {scope})` compares the incoming worker script URL against the existing newest worker's script URL. A different URL prevents the same-scriptURL fast path and participates in the Update algorithm; script URL inequality is itself update-significant even if fetched bytes are identical.
+
+Therefore query-only differences such as:
+
+```text
 /sw.js?v=1
 /sw.js?v=1781282355
 ```
 
-This makes route metadata participate in root Service Worker identity.
+are not merely cosmetic cache keys. They can create a new update/install lifecycle for the one registration at scope `/`.
 
-## Current blast radius
+## User-visible consequence
 
-A corrected static import-graph census over the current-equivalent source tree inspected all **85** Astro route entries and counted only actual `<script ... src="...sw-register.js...">` carriers (not mere string mentions in registries/helpers).
+`sw-register.js` does not compare a release SHA/cache generation before announcing an update. It reacts to lifecycle signals:
 
-The version extraction was deliberately rerun after an initial parser under-counted JSON-quoted `"version"` properties. The final census accepts quoted and unquoted `SITE_CONFIG.version` literals and separately verifies that no other `SITE_CONFIG` writer exists in each unresolved graph.
+- `updatefound -> installed` with an existing controller -> `Доступно обновление сайта`;
+- `controllerchange` -> `Сайт обновлён`.
 
-Final result:
-
-- **67 / 85** Astro route entries actually load `sw-register.js`;
-- **0 / 67** have two SW-registration script owners in the same route graph — duplicate registration is **not** the defect;
-- those 67 route graphs resolve to at least **five** root-worker script identities in the same Product release:
-
-| SW-registering route graphs | Source-graph `SITE_CONFIG.version` | Resulting worker URL from `sw-register.js` |
-|---:|---|---|
-| 22 | `1781282355` | `/sw.js?v=1781282355` |
-| 19 | `1` | `/sw.js?v=1` |
-| 17 | `1778943682` | `/sw.js?v=1778943682` |
-| 2 | `20260802` | `/sw.js?v=20260802` |
-| 7 | no `SITE_CONFIG` writer found in the route import graph | `/sw.js` via the runtime fallback |
-
-The seven no-writer route graphs include current `lot-i-sodom` plus six Genesis-6 hard-text routes. Other routes initially misclassified as no-version (for example Antisovetov) do in fact carry a quoted `"version": 1778943682`; that earlier count was corrected before verifier admission.
-
-This census upgrades the scope from “three inconsistent pages” to a **release-identity fragmentation class across most Astro routes** while simultaneously disproving two nearby hypotheses:
-
-1. there are not two registration script carriers on one current route graph;
-2. the no-version group is not 14 routes — robust extraction narrows it to seven.
-
-## Why query-only differences are semantically material
-
-The current Service Workers specification states that `register(scriptURL, options)` creates or updates the registration for a scope. In the Register algorithm, the existing-registration fast path requires the incoming job script URL to equal the newest worker script URL. If that equality does not hold, the algorithm proceeds to Update.
-
-In Update, `hasUpdatedResources` is set to true when the newest worker's script URL is not the fetched URL, independently of whether the response body is byte-for-byte identical. When updated resources are true, a new Service Worker is created and the Install algorithm is invoked.
-
-Primary authority:
-
-- Service Workers Nightly: `https://w3c.github.io/ServiceWorker/`
-- Register algorithm: current lines around 2690–2704
-- Update resource identity: current lines around 2812–2817
-- new worker → Install: current lines around 2859–2884
-
-The query component is part of the script URL, so the identities above are distinct Service Worker script URLs.
-
-## Product consequence from current source
-
-The current `sw.js` install/activate policy makes such an update non-trivial:
-
-- `install` opens `CACHE_STATIC`, runs `cache.addAll(PRECACHE_ASSETS)`, then `skipWaiting()`;
-- `activate` deletes obsolete governed caches, calls `clients.claim()`, then broadcasts `GB_SW_ACTIVATED`;
-- `sw-register.js` listens for `registration.updatefound`; when an installing worker reaches `installed` with a pre-existing controller it displays `Доступно обновление сайта`;
-- `controllerchange` can display `Сайт обновлён`.
-
-Thus route-local scriptURL drift can cause update/install work and user-facing update lifecycle signals without a Product release. This report does not quantify frequency or network cost because unrestricted browser navigation is blocked in the audit environment; the mechanism itself is source + specification proven.
+Thus route-local metadata can masquerade as Product release identity and trigger update/install work and update UI even though the deployed `sw.js` body did not represent a new release.
 
 ## Existing guard false-green
 
-The repository already has a guard that explicitly teaches the opposite ownership model.
+`scripts/audit-pro.js` G66 says, in substance, that `SITE_CONFIG.version` is not an actual cache-buster and that route placeholders such as `version: 1` are harmless.
 
-`scripts/audit-pro.js` G66 says:
-
-```text
-INFO only: SITE_CONFIG.version is NOT the actual cache-buster
-(that's done via ?v=hash on URLs). Many articles have version: 1 as
-placeholder and that's fine.
-```
-
-That statement is false for current runtime ownership:
-
-1. `js/sw-register.js` uses `SITE_CONFIG.version` directly in `/sw.js?v=...`;
-2. `js/enhancements.js` uses it in `/css/enhancements-runtime.css?v=...`;
-3. other runtime code also consumes it as a revision value.
-
-For the Service Worker case, it is more than a cache-key cosmetic: it participates in the registration's script URL.
-
-Other existing SW contracts do not close this class:
-
-- `scripts/sw-dist-readiness-audit.js` verifies that `sw-register.js` calls `navigator.serviceWorker.register(workerUrl, { scope: '/' })`, but does not prove that all SW-registering public route families resolve the same `workerUrl` for one release;
-- `scripts/sw-offline-browser-test.mjs` deliberately registers fixed fixture URLs and tests offline/update behavior, but does not navigate between two product pages whose `SITE_CONFIG.version` values differ while the deployed worker bytes stay constant;
-- the existing `SW-PWA-FRESHNESS` MASTER residual concerns unversioned cache requests and is a different mechanism;
-- the parked `PAGEFIND-STATIC-FRESHNESS-MEASUREMENT` concerns Pagefind loader/index freshness and is also distinct.
+That ownership model is false for current runtime because `js/sw-register.js` directly uses the value in the root worker script URL. Existing SW readiness/source checks verify registration mechanics but do not enumerate all registering route graphs and assert one release identity.
 
 ## Root cause
 
 ```text
-page-local SITE_CONFIG.version
-        ↓
-shared sw-register.js treats it as SW script revision
-        ↓
-root scope / receives route-dependent scriptURL
-        ↓
-Service Worker registration algorithm sees URL identity change
-        ↓
-Update → hasUpdatedResources=true → Install
-        ↓
-precache/skipWaiting/claim/updatefound/controllerchange lifecycle
-        ↓
-route navigation can masquerade as a software release
+route-local SITE_CONFIG.version
+        -> shared sw-register.js
+        -> one root scope gets route-dependent scriptURL
+        -> Service Worker update/install semantics see identity change
+        -> precache/skipWaiting/claim + updatefound/controllerchange lifecycle
 ```
 
-The architectural error is **revision-authority conflation**. A page/content metadata field is being used as the release identity of a root-scoped lifecycle owner.
+This is **revision-authority conflation**: page/content metadata is acting as the release identity of a root-scoped lifecycle owner.
 
-## Suggested closure boundary for a future owned Product lane
+## Durable closure boundary
 
-Do not repair this by normalizing the current numeric literals one by one. A durable closure should establish one release-level Service Worker identity authority.
+A future Product repair should establish one release-level root-worker identity authority rather than editing numeric literals route by route:
 
-Minimum properties:
+1. Every route that registers the root SW resolves the same worker script URL for one Product release.
+2. Page-local metadata cannot alter root SW identity.
+3. Real worker release identity changes exactly when intended.
+4. A route-graph/build guard enumerates real registration owners, including indirect/generic runtime arrays, and asserts one resolved identity.
+5. The guard asserts its own route census so a future scan cannot silently shrink coverage.
+6. Browser evidence installs on route family A, navigates to B with different page metadata and identical worker body, and proves no release-update lifecycle occurs; then a real worker release proves one update.
+7. Correct or retire G66's false statement about `SITE_CONFIG.version`.
 
-1. Every current public route that registers the root SW resolves the same SW `scriptURL` for the same Product release.
-2. Page-local metadata/revision values cannot alter root SW identity.
-3. A real worker release changes that identity exactly when intended, or the application relies on byte/update semantics with a stable script URL — but not route-local values.
-4. Add a class-level source/build guard enumerating all SW-registering route families and asserting one resolved root-worker identity.
-5. Add an adversarial browser witness: install on route family A, navigate to route family B with deliberately different page metadata but identical `sw.js`, and assert no Product-update lifecycle (`updatefound`/new install/controller replacement/update toast) occurs; then mutate the real release authority and prove exactly one update occurs.
-6. Preserve offline behavior and real release freshness.
-7. Correct or retire G66's statement that `SITE_CONFIG.version` is not an actual cache-buster/identity input.
+## Audit self-correction boundary
 
-## Collision boundary
-
-At recording time there is no open Product PR found for `service worker` or `sw`. This evidence package still opens no Product repair; it is intended for verifier admission/synthesis first.
+The superseded `67/85` / `bare ×7` census had already passed AuditRepo structural validation. That is intentional evidence about evidence: repository CI can validate report shape and governance without proving the auditor's semantic import-graph model. The correction was made as soon as indirect `BaseLayout` ownership was found.
 
 ## What this report does not claim
 
-- No measured production frequency or performance budget failure.
-- No claim that every route sets a distinct version.
-- No duplicate-SW-registration claim: the corrected census found zero route graphs with two actual `sw-register.js` script carriers.
-- No claim that Pagefind freshness is the same defect.
-- No claim that a single registration call with a stable URL is problematic.
-- No Product mutation is authorized by this evidence file alone.
+- No duplicate registration on a single route: corrected census is **0/70**.
+- No bare `/sw.js` identity among current registering Astro routes: corrected census is **0/70**.
+- No claim that all 15 non-registering routes are broken first-entry PWA surfaces.
+- No measured production frequency/performance budget failure.
+- No Pagefind-freshness equivalence claim.
+- No Product mutation is authorized by this evidence file.
