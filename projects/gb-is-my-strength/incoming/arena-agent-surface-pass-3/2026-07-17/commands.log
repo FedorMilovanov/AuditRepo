@@ -1,0 +1,15 @@
+# Normalized commands
+
+Update Product/AuditRepo public main anchor and current MASTER census.
+Reuse exact production-like dist already built from cb3681e.
+Start local dist server with service workers blocked in browser contexts.
+Run representative axe WCAG A/AA scan at 390x844.
+Run live axe color-contrast audit on https://gospod-bog.ru/baptisty-rossii/ # 28 nodes
+Run live fallback control computed-style census                         # pale rail foreground on light panel
+Inspect floating-cluster-controller.js clone owner.
+Inspect floating-cluster.css fallback panel/control rules.
+Inspect series-samizdat.css effective theme tokens.
+Search AuditRepo for exact selectors, ratios and mechanisms             # no canonical duplicate
+python3 scripts/validate_audit_repo.py                                  # after assembly
+python3 scripts/check_auditrepo_structure.py                            # after assembly
+python3 scripts/check_matrix_coverage.py                                # after assembly

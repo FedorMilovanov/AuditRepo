@@ -1,0 +1,18 @@
+{
+  "project": "gb-is-my-strength",
+  "agent": "arena-agent-surface-pass-3",
+  "productSha": "cb3681e1a85b5f8919c9dc537f812a842bbe9235",
+  "auditRepoBase": "c55b5b5d50b721e06694ca60ecaa4f243f4b1a98",
+  "viewport": "390x844",
+  "theme": "default-light",
+  "excluded": ["data:consistency", "PR#337 findings"],
+  "findings": [
+    "BAPTISTY-MOBILE-FALLBACK-CONTROL-CONTRAST",
+    "BAPTISTY-LANDING-TEXT-CONTRAST"
+  ],
+  "liveAxeContrastNodes": 28,
+  "landingTextNodes": 26,
+  "fallbackFontControlNodes": 2,
+  "minimumObservedRatio": 1.26,
+  "masterMutated": false
+}
