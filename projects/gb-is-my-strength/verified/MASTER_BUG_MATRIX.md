@@ -45,7 +45,7 @@
 |---|---|---|
 | `MOBILE-CHROME-REGISTRY-GAPS` | Narrowed: pastor-series articles are covered via `SeriesReaderChrome → GillSeriesChrome → GillSeriesMobileBar` (static mount). Residual = Genesis-6 article pages (`/hard-texts/enoh-…`, `/kniga-enoha-…`, `/mozhno-li-doveryat-1-enohu-…`) render via `Genesis6ArticlePage` and mount no mobile bottom bar. Whether a bar is required there is the owner decision below. | HEAD cb3681e |
 | `AR-IDX-JS-02-MULTIWRITER` | Multi-writer surface for theme persistence. `enhancements.js` and `site.js` write to legacy `theme` key, conflicting with canonical `reader-preferences.js` owner. | HEAD cb3681e |
-| `MISSING-BUTTON-TYPE` | Interactive buttons (`themeToggle`, `hMobileMenuBtn`, etc.) in Astro components lack `type="button"`, causing default `submit` behavior risks. | HEAD cb3681e |
+| `MISSING-BUTTON-TYPE` | **Full sitewide scan verified (543 files):** 20 files, 47 `<button>` elements without `type=` in `src/**/*.astro` and `src/**/*.tsx`. Patterns: FAQ accordion ×14 (KodDaVinchi, Hermenevtika, Krajne bodies), genealogy/rail/nav controls ×12 (GenealogyTree.tsx, GillSeriesRail, GillPartTocOverlay), mobile-menu-btn ×11 (NagornayaChrome ×7 copy-paste cluster, HardTexts, PastorSeries, NagornayaSeriya), theme-toggle ×7, scroll-top ×2, back-nav ×1. Evidence: `incoming/2026-07-17-sitewide-btn-type-evidence.md`; full instance list: `verification/2026-07-17-sitewide-btn-type-audit.md`. | HEAD cb3681e |
 | `SEARCH-LAZY-LOADER-DRIFT` | Structural inconsistency in `BaseLayout.astro` search loader snippet vs other pages; complicates global maintenance. | HEAD cb3681e |
 
 ## SYSTEM VERIFICATION LANES — 2
