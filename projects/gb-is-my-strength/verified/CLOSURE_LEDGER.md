@@ -165,3 +165,25 @@ This entry records the governance change only. It does not claim that the reform
 - Regression witness: no Product change, so no new regression suite; dispositions rest on cb3681e source + live + committed-artifact angles. A fresh `astro:build` green run remains the owner's closure witness for any future repair lane.
 - Live evidence: obtained for `RODOSLOVIYE-OG-IMAGE` and `SERIES-ORDER-INDEX-MISMATCH` (HTTP meta + nav cards); explicitly unnecessary for `GENEALOGY-ID-INVALID-SPACE` (data/source claim) and the dead-carrier invalidations (usage census suffices); not obtained for `GENEALOGY-NO-ERROR-BOUNDARY` (flagged needs runtime) and `SECURITY-CSP-GAPS` on `/hard-texts/genesis-6/`+`/izbrannoe/` (flagged needs live fetch).
 - Detailed evidence: `../incoming/bugverifikator/2026-08-19/REPORT.md`, `…/EVIDENCE_*.md`, `…/COMMENT_*.md`, `…/VERIFIER_SYNTHESIS_gb-is-my-strength_2026-08-19.md`.
+
+## 2026-08-19-b — arena-bugverifikator MASTER consolidation (SERIES-ORDER / Genesis-6 mobile / genealogy children)
+
+- Scope: consolidation of intake `incoming/arena-bugverifikator/2026-08-19/` (PR #339) into active MASTER; no Product mutation.
+- Inputs:
+  - `incoming/arena-bugverifikator/2026-08-19/REPORT.md`
+  - `COMMENT_SERIES-ORDER-INDEX-MISMATCH.md`
+  - `COMMENT_MOBILE-CHROME-REGISTRY-GAPS.md`
+  - `EVIDENCE_GENEALOGY-CHILDREN-UNRESOLVED.md`
+  - `WITNESS_MATRIX.md`
+  - Product anchor `cb3681e` + live `gospod-bog.ru` (same-day)
+- Result:
+  - accepted-product-state / invalid-as-defect: `SERIES-ORDER-INDEX-MISMATCH` — intentional 2026-07-09 Gill display reorder locked by `scripts/gill-series-data-consistency-audit.js` (`expectedOrder` part4 before part3; roman III/IV match live titles). Removed from MASTER. Optional slug hygiene is Work Queue only, not a defect.
+  - closed-by-fix: `MOBILE-CHROME-REGISTRY-GAPS` — Genesis-6 article pages already mount `SeriesReaderChrome → GillSeriesChrome → GillSeriesMobileBar`; live Enoch/corpus/audit routes carry mobile bottom-bar markers. Removed from MASTER.
+  - decision-resolved / dropped: `MOBILECHROME-GENESIS6-BAR-DECISION` — bar already present; owner choice no longer blocks work. Removed from MASTER.
+  - admitted: `GENEALOGY-CHILDREN-UNRESOLVED` — 59 dangling `children[]` refs (58 unique ids) in `genealogy.json`; runtime silently drops; `_status` overclaims integrity. Added under CURRENT DEFECTS next to other genealogy integrity rows.
+  - reconfirmed retained: `RODOSLOVIYE-OG-IMAGE`, `EDITORIAL-LABEL-INCONSISTENCY`, `GENEALOGY-ID-INVALID-SPACE`, `GENEALOGY-NO-ERROR-BOUNDARY`, CSP pair + `FRAGMENTED-SECURITY-OWNERSHIP`, `SW-PWA-FRESHNESS`, `AR-IDX-JS-02-MULTIWRITER`, `MISSING-BUTTON-TYPE` / `SITEWIDE-BTN-TYPE-AUDIT`, `SEARCH-LAZY-LOADER-DRIFT`, `METADATA-SSOT-PROLIFERATION` (wording updated: no longer lists SERIES-ORDER as a fed defect; notes dead layouts).
+  - MASTER arithmetic after wave: **14** active units (7 defects + 4 residuals + 3 system + 0 owner).
+- Product evidence: no Product mutation; boundary remains Product `main` `cb3681e1a85b5f8919c9dc537f812a842bbe9235`.
+- Regression witness: intake multi-angle package under `incoming/arena-bugverifikator/2026-08-19/`; product Gill consistency audit remains the lock against accidental order «fixes».
+- Live evidence: obtained for OG/nav/Gill titles/Genesis-6 bar markers (2026-08-19 HTTP GET); genealogy children claim is source-only.
+- Detailed evidence: `../incoming/arena-bugverifikator/2026-08-19/REPORT.md`
