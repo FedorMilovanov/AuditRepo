@@ -8,10 +8,10 @@
 
 | Field | Value |
 |---|---|
-| Active work units | **12** |
+| Active work units | **16** |
 | Direct current defects | **8** |
-| Verified necessary improvements | **0** |
-| Narrowed residuals | **1** |
+| Verified necessary improvements | **1** |
+| Narrowed residuals | **4** |
 | System verification lanes | **2** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
@@ -38,11 +38,23 @@
 
 _None currently admitted. `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` (optional, not proven necessary-current)._
 
-## NARROWED RESIDUALS — 1
+## VERIFIED NECESSARY IMPROVEMENTS — 1
 
+| ID | Required improvement | Boundary |
+|---|---|---|
+| `SW-PWA-FRESHNESS` | Add revision tracking for runtime scripts in `sw.js`. Currently `cacheFirst` without `?v=` prevents updates to `reader-preferences.js` without manual SW version bump. | HEAD cb3681e |
+
+## NARROWED RESIDUALS — 4
+
+| ID | Current residual | Boundary |
+|---|---|---|
 | ID | Current residual |
 |---|---|
 | `MOBILE-CHROME-REGISTRY-GAPS` | Narrowed: pastor-series articles are covered via `SeriesReaderChrome → GillSeriesChrome → GillSeriesMobileBar` (static mount). Residual = Genesis-6 article pages (`/hard-texts/enoh-…`, `/kniga-enoha-…`, `/mozhno-li-doveryat-1-enohu-…`) render via `Genesis6ArticlePage` and mount no mobile bottom bar. Whether a bar is required there is the owner decision below. |
+| `AR-IDX-JS-02-MULTIWRITER` | Multi-writer surface for theme persistence. `enhancements.js` and `site.js` write to legacy `theme` key, conflicting with canonical `reader-preferences.js` owner. | HEAD cb3681e |
+| `MISSING-BUTTON-TYPE` | Interactive buttons (`themeToggle`, `hMobileMenuBtn`, etc.) in Astro components lack `type="button"`, causing default `submit` behavior risks. | HEAD cb3681e |
+| `SEARCH-LAZY-LOADER-DRIFT` | Structural inconsistency in `BaseLayout.astro` search loader snippet vs other pages; complicates global maintenance. | HEAD cb3681e |
+
 
 ## SYSTEM VERIFICATION LANES — 2
 
@@ -67,3 +79,4 @@ _None currently admitted. `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` 
 ## Terminal disposition
 
 The matrix may be empty. Admit a row only after signal classification, exact-anchor applicability, current necessity and ownership are established. Remove solved, stale, duplicate, absorbed and superseded rows in the same closure transaction. This wave re-anchored all retained rows to cb3681e; a later Product `main` advance requires a fresh current-check before any retained row is cited as current admission witness.
+
