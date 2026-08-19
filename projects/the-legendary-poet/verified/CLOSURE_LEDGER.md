@@ -199,3 +199,19 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Issue outcome: source issue #77 closed as `completed`.
 - Reopen only for materially new primary evidence, permission/licence, jurisdiction-specific rights evidence, changed editorial need or a change to the active registry/coverage contract.
 - Detailed evidence: `../verification/2026-08-06-mayakovsky-media-final-batch/REPORT.md`.
+
+## 2026-08-19 — arena-bugverifikator: COMM-class reachability witness + hosting redirect measurement
+
+- Scope: boundary re-anchor of the single P1 and an exact live measurement for the hosting redirect row. No row added, closed or removed. No Product mutation.
+- Inputs: `incoming/arena-bugverifikator/2026-08-19/README.md`, `reverify/REVERIFY_d59ccec_2026-08-19_comm-class-reachability.md`; Product `main` `d59ccec`; live `https://thelegendarypoet.ru` (2026-08-19); shipped bundle `/assets/index-CkIy1PrE.js` + 15 lazy chunks.
+- Result:
+  - re-anchored (not closed): `TLP-COMM-ABUSE-001` — the production build ships the community remote disabled (0 occurrences of `supabase` / `apikey` / `rest/v1` / `Bearer` / the three `tlp_*_public` view names across 867 702 bytes of JS; `remoteEnabled` folds to `false` at build time). The public-abuse surface is unreachable on the current live build and returns when the shared backend is enabled, so the authority work must ship as a release gate with it. Product PR #420 owns that lane and was not touched.
+  - conditional-scope note (no wording change needed yet): `TLP-COMM-DELIVERY-001`, `TLP-COMM-ORDER-001`, `TLP-COMM-READSTATE-001`, `TLP-COMM-TARGET-001`, `TLP-COMM-A11Y-001`, `TLP-COMM-TEXT-001` — their client↔server drift parts share the same reachability condition; their local-only parts (validation, cooldown, multi-tab, Unicode fidelity) remain current on this build.
+  - confirmed + measured: `TLP-ROUTE-REDIRECT-001` — 5 of 5 declared legacy aliases answer HTTP 404 on production; the 404 body boots the SPA so humans still land on the target, crawlers do not; `vercel.json` and `public/_redirects` are inert under GitHub Pages.
+  - not misrepresented: the UI states the local mode honestly (`CommunityPanel.tsx:51-56`, `RatingsPage.tsx:188`), so no separate «false promise» defect was admitted.
+  - parked (not MASTER): `RATINGS-PROMISE-VS-CAPABILITY`, `ESSAY-DEAD-COVER-FIELDS` — see `WORK_QUEUE.md`.
+  - negative results recorded in the intake: 29/29 sitemap routes 200; 148/148 same-origin URLs from head/JSON-LD/manifest 200; 0 JSON-LD parse errors; 0 duplicate titles/canonicals; sitemap↔feed↔JSON-LD date parity exact; 3/3 audio files support Range (206); 14/14 route chunks inside `budgetBytes`; no secrets in shipped JS.
+- Product evidence: no Product mutation. Active Product PRs #420 (community authority), #417, #416 (editorial) inspected; no overlap, no competing lane.
+- Regression witness: bundle fingerprint scan and the legacy-alias HTTP table are both reproducible from the intake; enabling the shared backend must re-run both.
+- Live evidence: required and obtained (29 prerendered pages, 5 legacy aliases, 404 path, 3 audio files, 16 JS artifacts).
+- Detailed evidence: `../reverify/REVERIFY_d59ccec_2026-08-19_comm-class-reachability.md`.

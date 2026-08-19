@@ -32,6 +32,11 @@ These are useful owner-selected improvements after/alongside the active repair r
 - **Essay image-kind hardening:** sampled current published image blocks explicitly classify `kind`, so no current mislabel was promoted. Future authoring should make missing `kind` fail closed rather than renderer-defaulting it to `archive`.
 - **Consent copy/placement:** active `TLP-ANALYTICS-CONSENT-001` owns the engineering need for a reopenable preference control; the final wording and whether that entry lives in Privacy, Footer, or a dedicated settings surface is an owner product choice.
 
+## 2026-08-19 parked observations (arena-bugverifikator)
+
+- `RATINGS-PROMISE-VS-CAPABILITY` — `/ratings` is indexed with a description and JSON-LD promising «Сводный читательский рейтинг русских поэтов: оценки, комментарии и прозрачная методика», while the current production build can only show this-browser data (community remote disabled at build time). The page itself is honest in-UI (`RatingsPage.tsx:188`), so this is an indexed-promise vs delivered-capability gap, not a UI defect. Either soften the indexed wording while the shared backend is off, or accept it as a temporary release state — owner call. Re-check when Product PR #420 lands and the backend is enabled.
+- `ESSAY-DEAD-COVER-FIELDS` — `src/data/essays/brikCase.ts:13-14` and `src/data/essays/mayakovskyGromovoy.ts:13-14` still point `cover`/`cardCover` at four `.jpg` files that exist neither in `public/` nor on production (404). They are overridden by the visual layers (`brikCaseVisual.ts:7-8`, `mayakovskyPartTwoVisual.ts`) before export, so `EssayCard.tsx:26` never renders them and no image is broken on the live site. Cleanup only; also worth teaching `validate:covers` to fail on unreachable base values so the next stale path is caught by CI rather than by an audit pass.
+
 ## Current architecture selection
 
 **None.**
