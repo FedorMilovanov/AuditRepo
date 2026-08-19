@@ -1,0 +1,63 @@
+[
+  {
+    "route": "/nagornaya/chast-1/",
+    "http": 200,
+    "regions": [
+      {
+        "index": 0,
+        "clientWidth": 343,
+        "scrollWidth": 384,
+        "overflowX": "auto",
+        "tabIndex": -1,
+        "focusableDescendants": 0
+      },
+      {
+        "index": 1,
+        "clientWidth": 343,
+        "scrollWidth": 384,
+        "overflowX": "auto",
+        "tabIndex": -1,
+        "focusableDescendants": 0
+      },
+      {
+        "index": 2,
+        "clientWidth": 343,
+        "scrollWidth": 384,
+        "overflowX": "auto",
+        "tabIndex": -1,
+        "focusableDescendants": 0
+      }
+    ],
+    "affected": 3
+  },
+  {
+    "route": "/nagornaya/chast-3/",
+    "http": 200,
+    "regions": [
+      {
+        "index": 0,
+        "clientWidth": 343,
+        "scrollWidth": 384,
+        "overflowX": "auto",
+        "tabIndex": -1,
+        "focusableDescendants": 0
+      }
+    ],
+    "affected": 1
+  },
+  {
+    "route": "/nagornaya/chast-4/",
+    "http": 200,
+    "regions": [
+      {
+        "index": 0,
+        "clientWidth": 291,
+        "scrollWidth": 384,
+        "overflowX": "auto",
+        "tabIndex": -1,
+        "focusableDescendants": 0
+      }
+    ],
+    "affected": 1
+  }
+]

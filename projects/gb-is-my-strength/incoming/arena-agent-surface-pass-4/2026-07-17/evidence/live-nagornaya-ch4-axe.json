@@ -1,0 +1,180 @@
+{
+  "http": 200,
+  "route": "/nagornaya/chast-4/",
+  "violations": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "nodes": [
+        {
+          "target": [
+            ".tracking-widest"
+          ],
+          "html": "<div class=\"text-xs text-amber-600 mb-2 font-bold uppercase tracking-widest\">Статья IV</div>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.08 (foreground color: #d97706, background color: #fcfbf9, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(6) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(4) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[1]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(6) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(5) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[2]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(6) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(6) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[24]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".text-\\[16px\\].mb-5.text-stone-700:nth-child(8) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[32]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(9) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(1) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[3]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(9) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(2) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[4]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(11) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(3) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[6]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(11) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(5) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[7]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(11) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(6) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[25]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(13) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(5) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[7]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(13) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(6) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[8]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(15) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(1) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[9]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(15) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(3) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[10]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200.p-6.md\\:p-8:nth-child(15) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(6) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[10]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "article[data-claim-id=\"green-ipsissima-vox-model\"] > .ng-claim-card__series-position > h5"
+          ],
+          "html": "<h5 data-astro-cid-zgzs23fo=\"\">Позиция серии</h5>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 8.3pt (11.04px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200\\/80.p-6.md\\:p-8:nth-child(17) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(3) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[27]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200\\/80.p-6.md\\:p-8:nth-child(19) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(2) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[11]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200\\/80.p-6.md\\:p-8:nth-child(21) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(2) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[12]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200\\/80.p-6.md\\:p-8:nth-child(21) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(4) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[13]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200\\/80.p-6.md\\:p-8:nth-child(21) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(5) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[14]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".border-stone-200\\/80.p-6.md\\:p-8:nth-child(21) > .text-\\[16px\\].mb-5.text-stone-700:nth-child(6) > sup"
+          ],
+          "html": "<sup class=\"text-amber-600 font-bold\">[15]</sup>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "article[data-claim-id=\"thomas-jesus-seminar-critique\"] > .ng-claim-card__series-position > h5"
+          ],
+          "html": "<h5 data-astro-cid-zgzs23fo=\"\">Позиция серии</h5>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 8.3pt (11.04px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".bar-section-label"
+          ],
+          "html": "<span class=\"bar-section-label\">Сейчас читаете</span>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.33 (foreground color: #a1a09e, background color: #f4f2ed, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    }
+  ]
+}
