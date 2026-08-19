@@ -1,0 +1,15 @@
+{
+  "project": "gb-is-my-strength",
+  "agent": "arena-agent-surface-pass-4",
+  "productSha": "cb3681e1a85b5f8919c9dc537f812a842bbe9235",
+  "viewport": "390x844",
+  "findings": [
+    "NAGORNAYA-MOBILE-TABLE-KEYBOARD-SCROLL",
+    "NAGORNAYA-CH4-LIGHT-TEXT-CONTRAST"
+  ],
+  "liveScrollableNonFocusableRegions": 5,
+  "liveContrastNodes": 24,
+  "amberSmallTextFailures": 21,
+  "proposedSharedRoot": "READING-TABLE-KEYBOARD-SCROLL",
+  "masterMutated": false
+}

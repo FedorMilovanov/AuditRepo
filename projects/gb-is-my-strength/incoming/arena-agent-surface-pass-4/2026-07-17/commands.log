@@ -1,0 +1,13 @@
+# Normalized commands
+
+Build/use production-like dist at Product cb3681e.
+Targeted axe structural run on /nagornaya/chast-1/ at 390x844  # 3 scrollable-region-focusable
+Local eight-route .overflow-x-auto census                         # 5 affected on Parts I/III/IV
+Live Chromium census on Parts I/III/IV                            # HTTP 200, 5 affected
+Local targeted color axe on /nagornaya/chast-4/                   # 24 nodes
+Live targeted color axe on /nagornaya/chast-4/                    # HTTP 200, 24 nodes
+Inspect Nagornaya wrapper components and responsive owner.
+Search AuditRepo current/historical exact mechanisms.
+python3 scripts/validate_audit_repo.py                            # after assembly
+python3 scripts/check_auditrepo_structure.py                      # after assembly
+python3 scripts/check_matrix_coverage.py                          # after assembly
