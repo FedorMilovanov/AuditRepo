@@ -27,7 +27,7 @@ navigator.serviceWorker.register(workerUrl, { scope: '/' });
 |---|---|---:|---|
 | `/` | `src/components/home/HomePageChrome.astro` | `1778943682` | `./js/sw-register.js?v=e61e1210` |
 | `/rodosloviye/` | `src/components/rodosloviye/RodosloviyeBody.astro` | `1` | `/js/sw-register.js?v=e61e1210` |
-| `/baptisty-rossii/` | `BaptistyRossiiPageHead.astro` + `BaptistyRossiiBookLanding.astro` | `1781282355` | `../js/sw-register.js?v=e61e1210` |
+| `/baptisty-rossii/` | Baptist PageHead family + book landing | `1781282355` | `../js/sw-register.js?v=e61e1210` |
 
 Therefore a client can register, for the **same scope `/` and same deployed `sw.js` bytes**, different script URLs merely by navigating across route families:
 
@@ -43,7 +43,9 @@ This makes route metadata participate in root Service Worker identity.
 
 A corrected static import-graph census over the current-equivalent source tree inspected all **85** Astro route entries and counted only actual `<script ... src="...sw-register.js...">` carriers (not mere string mentions in registries/helpers).
 
-Result:
+The version extraction was deliberately rerun after an initial parser under-counted JSON-quoted `"version"` properties. The final census accepts quoted and unquoted `SITE_CONFIG.version` literals and separately verifies that no other `SITE_CONFIG` writer exists in each unresolved graph.
+
+Final result:
 
 - **67 / 85** Astro route entries actually load `sw-register.js`;
 - **0 / 67** have two SW-registration script owners in the same route graph — duplicate registration is **not** the defect;
@@ -53,13 +55,16 @@ Result:
 |---:|---|---|
 | 22 | `1781282355` | `/sw.js?v=1781282355` |
 | 19 | `1` | `/sw.js?v=1` |
-| 10 | `1778943682` | `/sw.js?v=1778943682` |
+| 17 | `1778943682` | `/sw.js?v=1778943682` |
 | 2 | `20260802` | `/sw.js?v=20260802` |
-| 14 | no `SITE_CONFIG.version` definition found in the route import graph | `/sw.js` via the runtime fallback, absent another earlier global writer |
+| 7 | no `SITE_CONFIG` writer found in the route import graph | `/sw.js` via the runtime fallback |
 
-The no-version group includes current series/native and other routes such as Antisovetov and several Nagornaya/Genesis-6 surfaces. The claim is deliberately bounded to the static source graph: if a host/runtime outside that graph writes `window.SITE_CONFIG` earlier, that would need a separate witness. No such shared release-global writer was found in this pass.
+The seven no-writer route graphs include current `lot-i-sodom` plus six Genesis-6 hard-text routes. Other routes initially misclassified as no-version (for example Antisovetov) do in fact carry a quoted `"version": 1778943682`; that earlier count was corrected before verifier admission.
 
-This census upgrades the scope from “three inconsistent pages” to a **release-identity fragmentation class across most Astro routes** while simultaneously disproving a nearby hypothesis (two registration scripts on one page).
+This census upgrades the scope from “three inconsistent pages” to a **release-identity fragmentation class across most Astro routes** while simultaneously disproving two nearby hypotheses:
+
+1. there are not two registration script carriers on one current route graph;
+2. the no-version group is not 14 routes — robust extraction narrows it to seven.
 
 ## Why query-only differences are semantically material
 
