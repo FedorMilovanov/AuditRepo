@@ -8,10 +8,10 @@
 
 | Field | Value |
 |---|---|
-| Active work units | **12** |
+| Active work units | **16** |
 | Direct current defects | **8** |
-| Verified necessary improvements | **0** |
-| Narrowed residuals | **1** |
+| Verified necessary improvements | **1** |
+| Narrowed residuals | **4** |
 | System verification lanes | **2** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
@@ -67,4 +67,5 @@ _None currently admitted. `TRACE-GOLDEN-PATH-PERF` is parked in `WORK_QUEUE.md` 
 ## Terminal disposition
 
 The matrix may be empty. Admit a row only after signal classification, exact-anchor applicability, current necessity and ownership are established. Remove solved, stale, duplicate, absorbed and superseded rows in the same closure transaction. This wave re-anchored all retained rows to cb3681e; a later Product `main` advance requires a fresh current-check before any retained row is cited as current admission witness.
+
 
