@@ -1,0 +1,31 @@
+# Commands are normalized; outputs with evidentiary value are preserved under evidence/.
+
+python3 scripts/check_auditrepo_structure.py                         # PASS
+python3 scripts/validate_audit_repo.py                              # PASS
+python3 scripts/check_matrix_coverage.py                            # PASS
+npm ci --ignore-scripts --no-audit --no-fund                        # PASS, 499 packages
+npm run validate                                                    # PASS, 2 warnings
+npm run validate:seo                                                # PASS, 2 warnings
+npm run validate:strict                                             # PASS, 2 warnings
+npm audit --omit=dev --json                                         # PASS, 0 vulnerabilities
+npm run data:consistency                                            # FAIL, 6 false missing images
+npm run migration:metadata:check:strict                             # PASS
+npm run article:qa                                                  # PASS
+npm run readable-audit                                              # PASS
+npm run editorial:lint                                              # PASS
+npm run content:parity                                              # PASS
+npm run content:coverage:audit                                      # PASS
+npm run native:runtime:audit:strict                                 # PASS
+npm run control-plane:audit                                         # PASS
+npm run gill:claims:surface:audit                                   # PASS
+npm run gill:pagefind:audit                                         # PASS
+node scripts/astro-cli.mjs build                                    # PASS
+node scripts/copy-legacy-to-dist.js --omit-build-only               # PASS
+GB_BUILD_INSTANT=2026-08-19T00:30:04Z node scripts/astro-cache-bust-postbuild.js # PASS
+npm run dist:jsonld:audit                                           # PASS
+npm run schema:rich-results:audit:dist                              # PASS with optional-image warnings
+npm run page-ownership:dist:production-like                         # PASS
+node scripts/dist-publication-audit.js --forbid-dev                 # PASS
+npm run sw:dist:audit                                               # PASS
+node scripts/dist-smoke-audit.js --no-build --production-like       # ENV BLOCKED: libglib missing
+npm run workflows:check                                             # ENV INVALID: ZIP/no Git metadata

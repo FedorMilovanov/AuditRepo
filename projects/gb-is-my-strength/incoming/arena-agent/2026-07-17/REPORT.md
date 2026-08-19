@@ -1,164 +1,141 @@
-# Independent audit pass — gb-is-my-strength
+# Agent Audit Report — publication/data ownership pass
 
-## Intake identity
+## Meta
 
+- Project: `gb-is-my-strength`
+- Source repo: `FedorMilovanov/gb-is-my-strength`
 - Agent: `arena-agent`
-- Local audit date: `2026-07-17`
-- Product repository: `FedorMilovanov/gb-is-my-strength`
-- Product anchor observed from GitHub `main`: `cb3681e1a85b5f8919c9dc537f812a842bbe9235`
-- Product ZIP SHA-256: `2d4111a249c44f8b810d7b2c522c80a635f8fe055dac14df18c5153b2001223b`
-- Environment: Linux sandbox, Node `v22.17.0`, npm `10.9.2`, Python `3.12.13`
-- AuditRepo snapshot structure check before intake: `PASS`
-
-> The remote Product/AuditRepo metadata identifies this anchor as `2026-08-19`, later than the local audit clock supplied to this agent. This report preserves both facts rather than rewriting either timestamp.
-
-## Pre-flight and overlap
-
-At the start of the pass, GitHub exposed two open Product PRs:
-
-- `#1722` — `fix(ci): wire aggregate engine contracts into PR guard`, head `475a8f210529b6cdadd0f1dc97d8d4666e7a56e3`;
-- `#1721` — `fix(audit): admit Astro CSS in dist parity guard`, head `d4264572e6e4a0d25667f6dc9babe1de42755d9c`.
-
-Neither title names `scripts/check-data-consistency.js` or search-manifest image resolution. PR `#1722` is nevertheless adjacent CI/guard work and must be re-inspected at exact head before any Product mutation.
-
-The active AuditRepo MASTER was read before this pass. No current row or current intake located by exact mechanism/text search names `search-item-image-missing` or the `public/` asset-resolution mismatch documented below.
+- Date: `2026-07-17`
+- Audited branch/ref: Product `main`
+- Audited anchor: `cb3681e1a85b5f8919c9dc537f812a842bbe9235`
+- Product snapshot digest: `sha256:2d4111a249c44f8b810d7b2c522c80a635f8fe055dac14df18c5153b2001223b`
+- Environment: Linux; Node `v22.17.0`; npm `10.9.2`; Python `3.12.13`
+- Build mode: source + production-like dist + live HTTP
+- Scope: publication validation, search-manifest image ownership, workflow wiring, generated HTML integrity
+- Signal class: audit-harness / control-plane with release impact
+- Proof state: `FAIL` for the named gate; live assets `PASS`; remote run state `UNPROVEN`
+- Claim boundary: deterministic local behavior and source/workflow topology at `cb3681e`; six live URLs at observation time
+- Preservation boundary: do not refresh this report merely because Product HEAD moves
+- Semantic owner: `scripts/check-data-consistency.js` local-image resolver and its declared publication owners
+- Active overlap at intake: Product PR `#1722` is adjacent CI/guard topology; PR `#1721` owns dist CSS admission; neither was treated as authorization to mutate Product
 
 ---
 
-## Confirmed current finding
+## 1. New findings
 
 ### `DATA-CONSISTENCY-PUBLIC-ASSET-RESOLUTION`
 
-**Disposition:** current deterministic validation defect; candidate for verification/promotion, not directly inserted into MASTER by this raw pass.
+- Title: data-consistency gate rejects valid Astro `public/` image owners
+- Kind: audit-harness / control-plane defect
+- Suggested impact: high operational impact; proposed `P1` pending independent checkout/remote-run confirmation
+- Routes: six Genesis 6 hard-text routes listed in `evidence/live-assets.tsv`
+- Owner: `scripts/check-data-consistency.js` image existence resolver
+- Observed on anchor: `cb3681e1a85b5f8919c9dc537f812a842bbe9235`
+- Expected: each same-origin search-manifest image resolves against every declared publication owner; committed `public/` assets pass and a truly absent file fails
+- Actual: `npm run data:consistency` exits `1` with six `search-item-image-missing` errors although all six files are committed under `public/images/articles/genesis6/` and all six public URLs return `200 image/webp`
+- Reproduction: see `evidence/data-consistency-output.txt`
+- Evidence angles:
+  - W1 direct command: deterministic exit `1` and six errors;
+  - W2 source: root-only resolver at `scripts/check-data-consistency.js:116-118`;
+  - W3 artifact/live: six committed `public/` files and six HTTP 200 responses;
+  - W4 lifecycle: required publication aggregate is wired into deploy, candidate and dry-run workflows.
+- Confidence: high for the local defect/mechanism; medium for current remote release impact because exact Actions logs were unavailable
+- Limitation: source arrived as a GitHub ZIP, but this particular command does not require Git metadata and reproduced normally
+- Possible mechanism: `exists(item.image.replace(/^\//, ''))` checks only repository root and omits Astro `public/` projection
+- Applicability: the command, manifest, committed assets, package wiring and workflow files all come from the same exact Product snapshot
+- Does not prove: that a specific authenticated Actions run failed for this reason, or that PR `#1722` has not since changed the lane
 
-**Impact:** the repository's required publication validation is red even though all six reported image assets are committed and publicly served. This creates a false release/CI blocker and trains operators to distrust or bypass a required gate.
-
-### W1 — direct command witness
-
-At exact source anchor, with a clean dependency install:
-
-```text
-$ npm run data:consistency
-
-GB DATA CONSISTENCY AUDIT
-❌ 6 issue(s) { 'search-item-image-missing': 6 }
-- .../angely-pod-mrakom...: /images/articles/genesis6/07-angels-kept-under-darkness.webp
-- .../blagovestie-mertvym...: /images/articles/genesis6/09-gospel-preached-to-the-dead.webp
-- .../duhi-v-temnice...: /images/articles/genesis6/08-spirits-in-prison.webp
-- .../enoh-prorochestvoval...: /images/articles/genesis6/06-enoch-prophesied-and-apostolic-witness.webp
-- .../kniga-enoha-kotoroy-ne-bylo...: /images/articles/genesis6/03-what-is-first-enoch.webp
-- .../mozhno-li-doveryat-1-enohu...: /images/articles/genesis6/04-book-of-watchers.webp
-```
-
-Exit code: `1`.
-
-### W2 — source/mechanism witness
-
-`scripts/check-data-consistency.js:116-118` validates a local image this way:
-
-```js
-if (item.image && isLocalImage(item.image) && !exists(item.image.replace(/^\//, ''))) {
-  fail('search-item-image-missing', `${item.url}: ${item.image}`);
-}
-```
-
-`exists(rel)` resolves only from repository `ROOT`. The six search-manifest URLs intentionally map to Astro public assets under:
-
-```text
-public/images/articles/genesis6/*.webp
-```
-
-They do not exist under legacy root `images/articles/genesis6/`. The checker therefore understands only the legacy root owner and rejects valid Astro `public/` ownership.
-
-Example authority chain:
-
-- `data/search-manifest.json:1380` → `/images/articles/genesis6/07-angels-kept-under-darkness.webp`;
-- committed file → `public/images/articles/genesis6/07-angels-kept-under-darkness.webp`;
-- source series owner → `src/components/article-pilots/_shared/series/genesis6SeriesData.ts:68`.
-
-All six alleged missing names were found under `public/images/articles/genesis6/` in the anchored source snapshot.
-
-### W3 — live/artifact witness
-
-A direct `HEAD` request to every alleged missing public URL returned `200 image/webp`:
-
-| Asset | HTTP | Content-Length |
-|---|---:|---:|
-| `07-angels-kept-under-darkness.webp` | 200 | 35434 |
-| `09-gospel-preached-to-the-dead.webp` | 200 | 30694 |
-| `08-spirits-in-prison.webp` | 200 | 29836 |
-| `06-enoch-prophesied-and-apostolic-witness.webp` | 200 | 43360 |
-| `03-what-is-first-enoch.webp` | 200 | 45888 |
-| `04-book-of-watchers.webp` | 200 | 47504 |
-
-Base URL for each row: `https://gospod-bog.ru/images/articles/genesis6/<asset>`.
-
-This disproves the checker's `missing` conclusion while confirming the production URL contract.
-
-### W4 — lifecycle / required-gate witness
-
-The command is not an optional local helper:
-
-- `package.json` wires `npm run data:consistency` into `validate:static-publication`;
-- `.github/workflows/deploy.yml:101` runs `npm run validate:static-publication`;
-- `.github/workflows/deploy-candidate-contract.yml:82` runs the same required aggregate;
-- `.github/workflows/dist-dry-run.yml:35` runs `npm run ci:check`, which also includes `validate:static-publication`.
-
-Thus the false negative occupies deploy, candidate-contract and dry-run validation topology.
-
-### Root cause and bounded repair lane
-
-The root is not six missing files and must not be repaired by duplicating those assets into legacy root. The checker has an incomplete source-of-truth resolver: it validates URL paths against repository root only and does not admit Astro's `public/` URL projection.
-
-A bounded repair should update the data-consistency asset resolver to accept the declared publication owners (at minimum current root and `public/`), then add both positive and negative fixtures so an actually missing file still fails. Re-run the direct command and the required aggregate. Recheck PR `#1722` immediately before mutation because it is adjacent guard-topology work.
-
-### Confidence
-
-High for the local deterministic defect and mechanism: direct failing command + source owner + six committed files + six live responses + required workflow wiring.
-
-Remote GitHub run status was not used as a witness because the unauthenticated Actions UI did not expose a sufficiently precise run/log mapping for this exact command at this exact anchor.
+Evidence: `evidence/data-consistency-output.txt`, `evidence/source-and-topology-witness.md`, `evidence/live-assets.tsv`.
 
 ---
 
-## Non-findings / environment limitations
+## 2. Confirmations and extensions
 
-1. `npm run workflows:check` threw while trying to read `.gitattributes` through Git file enumeration. The source was obtained as a GitHub ZIP because `git` is unavailable in this sandbox; the extracted tree has no `.git` metadata. This result is environment-induced and is **not** admitted as a Product finding.
-2. `npm run engine:contracts` similarly emitted a Git/module-graph ownership failure in the ZIP environment. It is not admitted without a real Git checkout witness.
-3. `npm run validate` and `npm run validate:seo` passed with zero errors (two pre-existing non-blocking warnings).
-4. Production dependency audit returned zero known vulnerabilities.
-5. A literal internal route/asset scan found no unresolved normal source URL after accounting for the generated Atlas runtime owner.
+### Extension of historical gate evidence
 
-## Continuation pass after initial intake
+Target: `incoming/arena-auditor-2026-07-14/2026-07-14/REPORT.md`, which recorded `npm run data:consistency` PASS at `2ca2af3b`.
 
-A production-like artifact was subsequently assembled without the environment-blocked Astro typecheck wrapper:
+Result: the old PASS is valid only at its historical anchor. At `cb3681e`, the same command is red because newer search-manifest items use Astro `public/` image ownership. This narrows the likely introduction window and shows that the failure is current drift, not evidence that the old report was wrong. Separate comment: `comments/comment-on-arena-auditor-2026-07-14-data-consistency.md`.
+
+### Extension of the cb3681e verifier wave
+
+Target: `incoming/bugverifikator/2026-08-19/VERIFIER_SYNTHESIS_gb-is-my-strength_2026-08-19.md`.
+
+Result: that wave explicitly excluded local build/runtime regression. This package adds a same-anchor harness/control-plane witness without disputing its Product-row dispositions. Separate comment: `comments/comment-on-bugverifikator-2026-08-19-synthesis.md`.
+
+---
+
+## 3. Challenges and negative findings
+
+The following signals were challenged and rejected as Product bugs:
+
+1. `workflows:check` and one engine ownership check require Git enumeration; the ZIP snapshot has no `.git` and the sandbox had no Git executable. Environment-induced, not admitted.
+2. Root-only schema audit sees stale `900×600` data in a reference-only legacy page; production `dist` owns corrected `1200×630` data and passes. Historical/reference signal, not current production work.
+3. `mdx:structure:audit` warns on the quoted YAML tag `"4Q204"`; the glue regex scans frontmatter. Non-blocking harness noise with no reader defect.
+4. Three BnF `ENOTFOUND` results came from sandbox DNS. Independent rendered fetches reached all three records.
+5. Four Atlas checkboxes initially looked unlabelled to a simple ID/`for` scan but are nested in visible `<label>` elements. False positive.
+6. Browser suites could not start because `libglib-2.0.so.0` is absent. No browser failure was attributed to Product.
+
+---
+
+## 4. Duplicate and root-cause merge proposals
+
+- Merge the six `search-item-image-missing` messages into one work unit: `DATA-CONSISTENCY-PUBLIC-ASSET-RESOLUTION`.
+- Do not create route-level rows and do not duplicate assets into legacy root.
+- Root cluster: publication URL → physical owner resolution is fragmented between legacy root and Astro `public/`.
+- Adjacent but not automatically identical: broader metadata/source-of-truth proliferation in MASTER. This finding is a concrete gate defect and should remain independently actionable unless a verifier proves an existing active system lane fully owns its repair and acceptance test.
+
+Proposal: `proposals/proposal-promote-data-consistency-public-asset-resolution.md`.
+
+---
+
+## 5. Severity and value assessment
+
+- Proposed severity: `P1 / high operational`, provisional.
+- User-content impact: none shown; images are live and served.
+- Operational impact: a required publication gate returns a false blocker, encouraging bypass or masking future real missing-file failures.
+- Breadth: one checker, six present symptoms, three workflow entry points.
+- Repair cost: low to medium; owner-aware resolution plus positive/negative regression fixtures.
+- Downgrade condition: if a real Git checkout or current PR head makes the command green, classify this package stale/superseded.
+- Upgrade condition: authenticated workflow evidence shows deploy/candidate runs blocked at this exact check on current main.
+
+---
+
+## 6. Repair-lane proposal
+
+Bounded lane:
+
+1. Recheck Product `main`, PR `#1722`, and current checker owner immediately before mutation.
+2. Teach local image validation to resolve the declared publication owners (at minimum legacy root and Astro `public/`) without weakening external/data URL rules.
+3. Add a positive fixture for a file present only under `public/`.
+4. Add a negative fixture proving a genuinely absent same-origin image still fails.
+5. Run direct `data:consistency`, required publication aggregate, and affected workflow contract tests.
+6. Do not copy the six files into legacy root and do not change reader-facing URLs.
+
+Proposal: `proposals/proposal-owner-aware-image-resolver-repair.md`.
+
+---
+
+## 7. Reverify results
+
+Production-like artifact sequence:
 
 1. `node scripts/astro-cli.mjs build` — PASS;
 2. `node scripts/copy-legacy-to-dist.js --omit-build-only` — PASS;
-3. `GB_BUILD_INSTANT=2026-08-19T00:30:04Z node scripts/astro-cache-bust-postbuild.js` — PASS.
+3. postbuild with the exact technical build instant — PASS.
 
-The following artifact/source contracts passed:
+Passed checks include dist JSON-LD/SEO, production schema, page ownership, publication audit, SW readiness, content parity/coverage, article QA, readability, editorial lint, migration metadata, native runtime taxonomy, Gill claims/Pagefind and repository control-plane integrity.
 
-- `dist:jsonld:audit`;
-- `schema:rich-results:audit:dist` (warnings only for optional Article images);
-- `page-ownership:dist:production-like`;
-- `dist-publication-audit.js --forbid-dev`;
-- `sw:dist:audit`;
-- `article:qa`, `readable-audit`, `editorial:lint`;
-- strict migration metadata, route ownership and native runtime taxonomy;
-- content parity/coverage, Gill claims and Gill Pagefind checks;
-- repository control-plane audit.
+A literal scan of 89 generated HTML documents found no unresolved ordinary internal route/asset/fragment, duplicate ID, missing image `alt`, or unsafe `_blank` relation. These passes do not cancel the pre-publication data-consistency failure: they prove the six assets publish correctly and therefore strengthen the false-negative diagnosis.
 
-A full literal scan of 89 generated HTML documents found no missing normal internal route, asset, or fragment target, no duplicate IDs, and no unsafe `_blank` relation. Four initially flagged Atlas checkboxes are nested in visible `<label>` elements and therefore were rejected as false positives.
+---
 
-Additional red/noisy signals were dispositioned rather than promoted:
+## 8. Notes for verifier
 
-- root-only `schema:rich-results:audit` sees stale `900×600` data in a reference-only legacy Krajne page; production `dist` has the corrected `1200×630` owner and passes — not current Product work;
-- `mdx:structure:audit` warns on the quoted frontmatter tag `"4Q204"` because its glue regex spans YAML frontmatter; non-blocking validator noise, no reader defect shown;
-- three BnF links reported `ENOTFOUND` only because this sandbox cannot resolve `*.bnf.fr`; independent rendered fetches reached all three valid records;
-- browser suites could not launch because the sandbox lacks `libglib-2.0.so.0`; no browser failure was attributed to Product.
-
-No second current defect met the evidence bar in this continuation pass. `DATA-CONSISTENCY-PUBLIC-ASSET-RESOLUTION` remains the only newly admitted work unit; this avoids inflating MASTER with warnings and environment artifacts.
-
-## Suggested verification next step
-
-A second agent should reproduce `npm run data:consistency` from a real Git checkout of `cb3681e`, inspect the exact current heads/files of PRs `#1721` and `#1722`, and verify a negative fixture. If unchanged and unowned, promote one compact work unit rather than six symptom rows.
+- Reproduce from a real Git checkout of exact `cb3681e` or current main.
+- Inspect exact current files of Product PRs `#1721` and `#1722`; title-only overlap evidence is insufficient for mutation authority.
+- Use one compact row, not six symptoms.
+- Require a negative fixture before accepting a resolver expansion.
+- Keep proof labels separate: local gate FAIL, live assets PASS, authenticated remote run UNPROVEN.
+- Suggested disposition after independent reproduction: `current-local / audit-harness / P1`, then remove from active work in the same wave once the gate and negative fixture pass.
+- Provisional synthesis: `VERIFIER_SYNTHESIS.md`.
