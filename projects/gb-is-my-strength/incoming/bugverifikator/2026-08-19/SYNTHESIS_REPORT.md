@@ -1,26 +1,50 @@
-# VERIFIER SYNTHESIS — 2026-07-17 / 2026-08-19
+# Verification Wave Synthesis (Expanded)
 
-**Verifier:** bugverifikator
-**Project:** gb-is-my-strength
-**Status:** Sync Complete
+## Meta
 
-## Summary of Findings (Verified)
+- Date: 2026-08-19
+- Verifier: bugverifikator
+- Project: gb-is-my-strength (gospod-bog.ru)
+- Source repo: FedorMilovanov/gb-is-my-strength
+- Wave purpose: admission of verified residuals and improvements from incoming agent audits into the active MASTER matrix.
+- Selected current-check anchor(s): Product `main` HEAD `cb3681e`.
+- Scope: Verification of AR-IDX-JS-02, SW-PWA-FRESHNESS, MISSING-BUTTON-TYPE, and SEARCH-LAZY-LOADER-DRIFT.
 
-### 1. Multi-writer Theme Persistence (AR-IDX-JS-02)
-Verified on HEAD `cb3681e`. Scripts `js/enhancements.js` and `js/site.js` continue to write to legacy `localStorage` keys, potentially conflicting with the canonical `reader-preferences.js` state.
-- **Action:** Added to `NARROWED RESIDUALS`.
+---
 
-### 2. HTML Robustness: Missing button[type]
-Verified on multiple components (e.g., `HardTextsPageChrome.astro`). Interactive buttons lack explicit `type="button"`.
-- **Action:** Added to `NARROWED RESIDUALS`.
+## Inputs reviewed
 
-### 3. Service Worker Freshness (SW-PWA-FRESHNESS)
-Verified that `sw.js` caches runtime scripts like `reader-preferences.js` via `cacheFirst` without revision parameters in the precache list. This blocks updates unless the global `CACHE_VERSION` is incremented.
-- **Action:** Added to `VERIFIED NECESSARY IMPROVEMENTS`.
+| Agent/report | Audited anchor | Scope | Evidence angles | Findings/claims |
+|---|---|---|---|---|
+| bugverifikator (2026-07-17) | cb3681e | Runtime Ownership | source | `AR-IDX-JS-02` confirmed: `enhancements.js` and `site.js` write to legacy theme key. |
+| bugverifikator (2026-07-17) | cb3681e | Service Worker | source | `SW-PWA-FRESHNESS` confirmed: `sw.js` lacks revisioning for precached runtime. |
+| bugverifikator (2026-07-17) | cb3681e | HTML/Astro | source | `MISSING-BUTTON-TYPE` confirmed: buttons in `HardTextsPageChrome.astro` lack `type="button"`. |
+| bugverifikator (2026-07-17) | cb3681e | Layout/Search | source | `SEARCH-LAZY-LOADER-DRIFT` confirmed: `BaseLayout.astro` has non-canonical loader snippet. |
 
-### 4. Search Loader Drift
-Verified structural inconsistency in `BaseLayout.astro`'s inline search loader.
-- **Action:** Added to `NARROWED RESIDUALS`.
+---
 
-## AuditRepo Update
-`MASTER_BUG_MATRIX.md` updated to reflect 16 active work units.
+## Synthesis & Decision
+
+### 1. Multi-writer Theme Surface (`AR-IDX-JS-02-MULTIWRITER`)
+- **Status:** ADMITTED to MASTER as NARROWED RESIDUAL.
+- **Reasoning:** Even though `reader-preferences.js` is the canonical owner, the presence of active `localStorage.setItem('theme', ...)` calls in legacy-runtime `enhancements.js` and `site.js` creates a verified risk of state drift. This is a narrowed technical debt residual.
+
+### 2. Service Worker Precaching Integrity (`SW-PWA-FRESHNESS`)
+- **Status:** ADMITTED to MASTER as VERIFIED NECESSARY IMPROVEMENT.
+- **Reasoning:** `sw.js` precaches critical scripts using `cacheFirst` logic. Without appending `?v=` (revisioning) to these assets in the `PRECACHE_ASSETS` array, updates to the scripts will not reach users until the global `CACHE_VERSION` is manually bumped. This is a verified architectural gap in the PWA surface.
+
+### 3. Missing button[type] Robustness (`MISSING-BUTTON-TYPE`)
+- **Status:** ADMITTED to MASTER as NARROWED RESIDUAL.
+- **Reasoning:** Multiple buttons in page chromes (e.g., `HardTextsPageChrome.astro`) use native `<button>` without `type="button"`. In some browser contexts, these default to `submit`, risking unwanted reloads if wrapped in future forms or during specific interaction patterns.
+
+### 4. Search Loader Code Drift (`SEARCH-LAZY-LOADER-DRIFT`)
+- **Status:** ADMITTED to MASTER as NARROWED RESIDUAL.
+- **Reasoning:** The inline script in `BaseLayout.astro` uses a slightly different (drifting) pattern for triggering search compared to footer/chrome components. Verified as an inconsistency that blocks clean global search/replace or API updates.
+
+---
+
+## Disposition
+
+- All 4 findings are confirmed on `cb3681e`.
+- `MASTER_BUG_MATRIX.md` updated to reflect new count (16 active rows).
+- Provenance linked to `incoming/bugverifikator/2026-08-19/`.
