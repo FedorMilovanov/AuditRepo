@@ -4,13 +4,18 @@
 **Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.  
 **Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.  
 **Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.  
-**Latest current verification:** `../verification/2026-08-20-community-reconciliation-closure/REPORT.md`.
+**Latest current verification:** `../verification/2026-08-20-theme-contrast-closure/REPORT.md`.
 
 This file is intentionally short. Closed, absorbed, stale, invalid and superseded findings do not remain here merely to preserve history.
 
-## ✅ ЗАКРЫТО (0)
+## ✅ ЗАКРЫТО (2)
 
-Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification packages and `archive/`.
+Closed roots are durable in `CLOSURE_LEDGER.md`, system themes and verification packages. Latest closure: `../verification/2026-08-20-theme-contrast-closure/REPORT.md`.
+
+| ID | Closure evidence |
+|---|---|
+| `TLP-THEME-001` | Product #426 merged; exact-head repository gates and 4/4 Browser QA green. |
+| `TLP-A11Y-CONTRAST-001` | Product #426 merged; computed dark/light contrast regression green, including functional text >=4.5:1 and enabled unselected rating state >=3:1. |
 
 ## 🟠 P1 — ОТКРЫТО (1)
 
@@ -18,13 +23,11 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 |---|---|---|---|
 | `TLP-COMM-ABUSE-001` | `SOURCE-REPAIRED / LIVE-PROOF-PENDING / PUBLIC-INTEGRITY / P1` | Product #420 merged the trusted Cloudflare Worker/D1 authority boundary and Product #422 merged the reconciled client/runtime contract. Source/build gates include fail-closed target authority, signed anonymous actors, network-abuse hashing/budgets and Worker bundle validation. **Terminal production evidence is still absent:** source inspection and dry-run do not prove that the intended D1 schema, required secrets, Turnstile policy, Worker deployment, public client activation and adversarial behavior are live. Closure boundary: `../verification/2026-08-20-community-reconciliation-closure/REPORT.md`. | Deploy and activate the intended Worker + D1 contour; prove `/health` reports ready database/target/writes authority and run live adversarial concurrency, duplicate/idempotency, target-rejection and rotated-identity checks without mandatory registration. |
 
-## 🟡 P2 — ОТКРЫТО (16)
+## 🟡 P2 — ОТКРЫТО (14)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
-| `TLP-THEME-001` | `CONFIRMED-CURRENT / SYSTEMIC / THEME-OWNERSHIP / P2` | Light token ownership incomplete; prepaint/chrome/cross-tab theme state drift | Semantic tokens, prepaint apply, metadata sync, cross-tab convergence and light-theme contrast certification. |
 | `TLP-A11Y-RUNTIME-001` | `CONFIRMED-CURRENT / SYSTEMIC / FOCUS-NAV-SEMANTICS / P2` | Command/listbox focus, hidden tabbable chrome, same-path/immersive focus, invisible audio seek, mobile fixed chrome, scroll-only anchors, disappearing controls, archive row removal and citation destination focus lack one interaction authority; configured consent can sit above registered aria-modal dialogs outside the overlay stack | One nav/focus/dialog/hash/hidden-chrome/collection-mutation contract, visible seek focus, stable focus handoffs, citation destination ownership and environment-aware overlay stacking with Chromium + WebKit proof. |
-| `TLP-A11Y-CONTRAST-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / CONTRAST / SYSTEMIC / P2` | `../verification/2026-08-12-form-security-nontext-contrast-current/REPORT.md`; normal functional text uses low-opacity colors below 4.5:1 on dark surfaces, and enabled unselected RatingStars rely on a dark star graphic as the primary control/state marker without a shared non-text 3:1 contract | Semantic text/control/graphical-state tokens with computed foreground/background and non-text component contrast certification in dark and light themes. |
 | `TLP-DISCOVERY-001` | `CONFIRMED-CURRENT / SYSTEMIC / MACHINE-METADATA-OWNERSHIP / P2` | Sitemap/OG/change facts drift; IndexNow submits whole inventory per deploy; static 404 and hydrated/error head states have incompatible canonical/OG/schema ownership | One route/change metadata state machine for ready/noindex/not-found/loading/error/redirect states deriving sitemap/prerender/runtime/IndexNow with parity/delta proof. |
 | `TLP-READER-TEXT-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / SEMANTIC-TEXT / P2` | Animated poem words are sole DOM text with CSS-only spacing and `select-none` | Exact canonical selectable text layer separated from visual animation; DOM/copy/a11y proof. |
 | `TLP-AUDIT-004` | `CONFIRMED-CURRENT / AUDIT-HARNESS / FALSE-GREEN / P2` | QA has proxy/preview gaps across theme/hash/community/SEO/cross-tab/consent/audio/analytics/release/redirect/discovery/secondary/search/statistics/progress/URL-state/completion/home-media/focus/contrast/SQL privilege/motion/media-kind/status/comment-text/shell-singleton behavior | Replace proxy checks with exact user/release outcomes, including UI-driven consent revoke, non-text contrast, Unicode/comment whitespace fidelity and persistent-shell singleton assertions. |
@@ -55,14 +58,14 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 
 | Категория | Количество |
 |---|---:|
-| Закрыто (fixed) | 0 |
+| Закрыто (fixed) | 2 |
 | **P0 открыто** | **0** |
 | P1 открыто | 1 |
-| P2 открыто | 16 |
+| P2 открыто | 14 |
 | P3 открыто | 7 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **24** |
+| **Всего открыто (матрица)** | **22** |
 
 Current architecture selection: **none**. Hall #369 remains terminally closed and historical/frozen safety authority, not a current Product lane.
 
