@@ -206,3 +206,21 @@ This entry records the governance change only. It does not claim that the reform
 - Regression witness: reproducible scanners in `incoming/arena-bugverifikator/2026-08-19/tools/`; a date-SSOT guard becomes the durable witness once the RSS repair lands.
 - Live evidence: required and obtained — 84 live pages, `feed.xml`, `sitemap.xml`, `sw.js`, `/_astro/index.FPviil9R.css` (2026-08-19).
 - Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-08-19_arena-bugverifikator-6-row-disposition-cb3681e.md`.
+
+## 2026-08-20 — forensic verifier consolidation (#344 → causal MASTER)
+
+- Scope: merged forensic evidence package #344 plus current 13-row MASTER; causal deduplication and current-check only. No Product mutation.
+- Inputs: `incoming/chatgpt/2026-08-19/README.md`, `VERIFIER_SYNTHESIS_TARGET_MATRIX_2026-08-20.md`, supporting witnesses in the same directory, current Product `main` `94b8eaad0951c6b43cf1e55fc6c54b9114329f61`.
+- Result:
+  - retained bounded direct defects: `RODOSLOVIYE-OG-IMAGE`, narrowed `GENEALOGY-NO-ERROR-BOUNDARY`, `APP-MASK-NO-WEBKIT-FALLBACK`;
+  - absorbed: `EDITORIAL-LABEL-INCONSISTENCY` + `RSS-SERIES-DATE-COLLAPSE` → `METADATA-SSOT-PROLIFERATION`;
+  - absorbed: `SECURITY-CSP-INCONSISTENCY` + `SECURITY-CSP-GAPS` + `SECURITY-NOSNIFF-OWNER-LAYER-MISMATCH` → layered `FRAGMENTED-SECURITY-OWNERSHIP`;
+  - superseded/absorbed: `SW-PWA-FRESHNESS` → `SW-ROOT-GENERATION-AUTHORITY`;
+  - retired/replaced: `SITEWIDE-BTN-TYPE-AUDIT`; `MISSING-BUTTON-TYPE` becomes preventive cleanup/evidence under `SOURCE-SURFACE-AUDIT-FALSE-COMPLETENESS`, not a second active Product defect;
+  - retired from active MASTER: `AR-IDX-JS-02-MULTIWRITER`; current canonical ReaderPreferences owner and compatibility bridge are coordinated and regression-covered;
+  - admitted independent system roots: `SCRIPTURE-OCCURRENCE-REPRESENTATION-ORACLE`, `SOURCE-SURFACE-AUDIT-FALSE-COMPLETENESS`, `SW-ROOT-GENERATION-AUTHORITY`, `BROWSER-MATRIX-ZERO-WORKER-FAILOPEN`, `ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT`, `TTS-SHAREDWORKER-CLIENT-LIFECYCLE`, `LAZY-RUNTIME-LOADER-FAILURE-STATE`;
+  - arithmetic after consolidation: **12 independent active units = 3 bounded direct defects + 9 system/root packages**.
+- Product evidence: no Product mutation. Product advanced from the earlier synthesis anchor to `94b8eaad`; the two touched evidence surfaces were rechecked before consolidation. Product #1752 left `/app/` with unprefixed-only `mask-image` and changed `data/scripture-search-index.json` only by adding one `/app/` occurrence (`2429 → 2430`), leaving the previously audited records untouched. Product #1759 changed aggregate engine-contract wiring, not the admitted runtime/parser owners.
+- Regression witness: merged AuditRepo #344 (`45b985737f192f709d7e1ee7324250d0e0986ca1`) plus exact-current source/patch reverify; future closure criteria are encoded in the consolidated MASTER rows.
+- Live evidence: no new live claim required for this documentation consolidation; previous live/artifact witnesses are preserved in their source evidence. No deployed-response `nosniff` absence is claimed without a header witness.
+- Detailed evidence: `../incoming/chatgpt/2026-08-19/VERIFIER_SYNTHESIS_TARGET_MATRIX_2026-08-20.md` and the evidence index beside it.
