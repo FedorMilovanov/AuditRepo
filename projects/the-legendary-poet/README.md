@@ -13,12 +13,13 @@
 
 ## Durable synthesis
 
-- Current autonomous audit marathon закрыт как `AUDIT-COMPLETE-AT-ANCHOR` на Product `main` `d59cceccb0c49af59b1be38d4c547a6240b3005a`; 30 verified Product roots остаются repair-pending, а не falsely closed. См. [`verification/2026-08-12-audit-marathon-closeout/REPORT.md`](verification/2026-08-12-audit-marathon-closeout/REPORT.md).
+- Current autonomous audit marathon закрыт как `AUDIT-COMPLETE-AT-ANCHOR` на Product `main` `d59cceccb0c49af59b1be38d4c547a6240b3005a`; исходные 30 verified Product roots были repair-pending, а не falsely closed. См. [`verification/2026-08-12-audit-marathon-closeout/REPORT.md`](verification/2026-08-12-audit-marathon-closeout/REPORT.md).
+- Community reconciliation wave 2026-08-20 закрыла шесть source/runtime roots через Product #422: delivery, loaded-row ordering, community accessibility status semantics, read-state truth, target-keyed editor state и comment text fidelity. Exact certified head `fdcff48d1d75a3e645fb13b90e22592e4ccf090e` прошёл repository gate и Browser QA 4/4; squash merge на Product `main` — `ccd5f4c614de9a2e1fd5e4d6de62dd138630ae5c`. См. [`verification/2026-08-20-community-reconciliation-closure/REPORT.md`](verification/2026-08-20-community-reconciliation-closure/REPORT.md).
 - W0–W7 системные архитектурные и runtime-линии закрыты на своих точных evidence anchors.
 - W6 physical ref retirement завершён; намеренно сохранён только forensic/research archive ref.
-- На current source подтверждены активные engineering roots в community, theme/runtime accessibility/contrast/motion/status, discovery metadata, semantic reader text/progress, authoring release contract, audit harness, audio session/release/completion integrity, analytics consent/route state, rating source/method/URL authority, production legacy-route hosting, primary/secondary data containment, global search authority, Home initial-media delivery и persistent shell visual ownership. Их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **30 rows — 1 P1 + 21 P2 + 8 P3**.
-- Product repair lane для этих current roots пока не выбран; AuditRepo фиксирует evidence/root causes и не создаёт параллельную implementation authority сам по себе.
-- Current community SQL source корректно включает RLS/revokes/public views без `voter_id`; deployed Supabase state остаётся отдельной evidence boundary.
+- На current source остаются активные engineering roots в production community abuse activation, theme/runtime accessibility/contrast/motion/status, discovery metadata, semantic reader text/progress, authoring release contract, audit harness, audio session/release/completion integrity, analytics consent/route state, rating source/method/URL authority, production legacy-route hosting, primary/secondary data containment, global search authority, Home initial-media delivery и persistent shell visual ownership. Их единственная рабочая очередь — [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md). Текущий счётчик: **24 rows — 1 P1 + 16 P2 + 7 P3**.
+- Community source/runtime lane #422 merged. Остальные current roots не считаются выбранными в одну общую implementation lane без отдельного ownership; AuditRepo фиксирует evidence/root causes и не создаёт параллельную implementation authority сам по себе.
+- Community source теперь использует trusted Cloudflare Worker/D1 authority boundary; production secret values, D1 schema state, Turnstile configuration, Worker activation и live adversarial behavior остаются отдельной evidence boundary. Поэтому `TLP-COMM-ABUSE-001` остаётся P1 до прямого live proof.
 - Negative evidence закреплено: Breadcrumb current semantics, shared image-lightbox dialog ownership, community form labels/help, RatingStars keyboard radiogroup semantics, inspected external-link hygiene and React-escaped comment text are not current roots; sampled published essay images explicitly classify `kind`.
 - Hall #369 terminally closed; frozen Hall safety/evidence остаётся исторической authority, но не текущей architecture lane.
 
@@ -27,6 +28,7 @@
 - Документная карта и fact ownership: [`DOC_MAP.md`](DOC_MAP.md)
 - **Текущие verified engineering bugs:** [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md)
 - Возможные, но необязательные направления: [`WORK_QUEUE.md`](WORK_QUEUE.md)
+- **Community reconciliation closure:** [`verification/2026-08-20-community-reconciliation-closure/REPORT.md`](verification/2026-08-20-community-reconciliation-closure/REPORT.md)
 - **Audit marathon closeout:** [`verification/2026-08-12-audit-marathon-closeout/REPORT.md`](verification/2026-08-12-audit-marathon-closeout/REPORT.md)
 - Last defect-producing current check before closeout: [`verification/2026-08-12-shell-noise-ownership-current/REPORT.md`](verification/2026-08-12-shell-noise-ownership-current/REPORT.md)
 - Community comment text fidelity: [`verification/2026-08-12-community-comment-text-fidelity-current/REPORT.md`](verification/2026-08-12-community-comment-text-fidelity-current/REPORT.md)
