@@ -8,15 +8,17 @@
 
 | Field | Value |
 |---|---|
-| Active independent work units | **12** |
-| Bounded direct defects | **3** |
-| System/root work packages | **9** |
+| Active work units | **12** |
+| Direct current defects | **3** |
+| Verified necessary improvements | **0** |
+| Narrowed residuals | **0** |
+| System verification lanes | **9** |
 | Owner decisions | **0** |
-| Absorbed/retired rows in MASTER | **0** |
+| Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Arithmetic: 3 bounded direct defects + 9 system/root packages = 12 independent repair owners. Named manifestations such as RSS date collapse, CSP variants/gaps, nosniff meta misuse and button-count drift remain closure witnesses under their causal owner; they are not separate active rows.
+> Arithmetic: 3 direct current defects + 0 improvements + 0 residuals + 9 system verification lanes + 0 owner decisions = 12 independent repair owners. Named manifestations such as RSS date collapse, CSP variants/gaps, nosniff meta misuse and button-count drift remain closure witnesses under their causal owner; they are not separate active rows.
 
-## BOUNDED DIRECT DEFECTS — 3
+## CURRENT DEFECTS — 3
 
 | ID | Current problem | Closure boundary |
 |---|---|---|
@@ -24,7 +26,17 @@
 | `GENEALOGY-NO-ERROR-BOUNDARY` | **Narrowed:** the `GenealogyTree` `client:only="react"` interactive island has no local ErrorBoundary/fallback/recovery. Native breadcrumb/H1/summary/prose remain outside the island, so do not claim whole-page blanking. | Add island-local failure containment/recovery and a deterministic crash witness; preserve surrounding native content. |
 | `APP-MASK-NO-WEBKIT-FALLBACK` | `/app/` and Map mask styling use unprefixed `mask-image` without the project-standard `-webkit-mask-image` companion. Exact-current `/app/` source at `94b8eaad` still has the unprefixed-only rule after Product #1752. | Add paired WebKit fallback at shared/current owners and prove generated CSS parity on affected surfaces. |
 
-## SYSTEM / ROOT WORK PACKAGES — 9
+## VERIFIED NECESSARY IMPROVEMENTS — 0
+
+| ID | Required improvement | Closure boundary |
+|---|---|---|
+
+## NARROWED RESIDUALS — 0
+
+| ID | Current residual | Closure boundary |
+|---|---|---|
+
+## SYSTEM VERIFICATION LANES — 9
 
 | ID | Current causal problem | Absorbs / closure boundary |
 |---|---|---|
@@ -37,6 +49,11 @@
 | `BROWSER-MATRIX-ZERO-WORKER-FAILOPEN` | Malformed nonempty browser-worker env values can become `NaN`, create zero runners and report vacuous `0/0 PASS`. Official workflows currently provide valid literals, so this is a latent harness fail-open rather than a claim ordinary CI is bypassed. | Strict positive-integer parsing + nonzero execution-cardinality assertion + adversarial contract for malformed/zero/negative values. |
 | `METADATA-SSOT-PROLIFERATION` | Editorial/publication truth is still projected through multiple authorities. Current manifestations include `/hard-texts/` label divergence and RSS/page editorial-date divergence; route membership itself is currently consistent (sitemap 76/76, curated search manifest 75/75, RSS 58/58). | **Absorbs `EDITORIAL-LABEL-INCONSISTENCY` and `RSS-SERIES-DATE-COLLAPSE`.** One editorial authority feeds Header/page metadata/search-manifest/sitemap/feed; prove value parity and RSS ordering, not merely membership. |
 | `FRAGMENTED-SECURITY-OWNERSHIP` | Security policy ownership is split across page-head CSP/meta/postbuild and transport response headers. Historical CSP variants/gaps are manifestations of the HTML/document layer; `X-Content-Type-Options: nosniff` is a response-header concern and cannot be closed by an HTML meta pragma. | **Absorbs `SECURITY-CSP-INCONSISTENCY`, `SECURITY-CSP-GAPS`, and `SECURITY-NOSNIFF-OWNER-LAYER-MISMATCH`.** Define separate authoritative document-policy and transport-header owners; prove source→artifact/live parity. Do not claim a live missing-nosniff vulnerability without response-header measurement. |
+
+## OWNER DECISIONS — 0
+
+| ID | Missing decision | Closure boundary |
+|---|---|---|
 
 ## Retired / absorbed by the 2026-08-20 consolidation
 
