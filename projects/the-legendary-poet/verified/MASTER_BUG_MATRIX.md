@@ -4,7 +4,7 @@
 **Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.  
 **Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.  
 **Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.  
-**Latest current verification:** `../verification/2026-08-12-shell-noise-ownership-current/REPORT.md`.
+**Latest current verification:** `../verification/2026-08-20-community-reconciliation-closure/REPORT.md`.
 
 This file is intentionally short. Closed, absorbed, stale, invalid and superseded findings do not remain here merely to preserve history.
 
@@ -16,17 +16,12 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
-| `TLP-COMM-ABUSE-001` | `CONFIRMED-FOR-REMOTE-ENABLED-BUILDS / PUBLIC-INTEGRITY / P1` | Caller-controlled community identity remains public uniqueness/rate-limit authority; fresh tabs can bootstrap different UUIDs and target membership is not server-canonical. **Reachability re-anchored 2026-08-19 (arena-bugverifikator):** the production build of `d59ccec` ships the community remote **disabled** — 0 occurrences of `supabase` / `apikey` / `rest/v1` / `Bearer` / `tlp_ratings_public` / `tlp_comments_public` / `tlp_feedback_summary_public` across all 867 702 bytes of shipped JS (entry + 15 lazy chunks), because `remoteEnabled` (`src/utils/communityRemote.ts:26-39`) folds to `false` when `deploy.yml:136-137` injects empty `VITE_SUPABASE_*`. The abuse surface is therefore **not reachable on the current live build**; it returns the moment the shared backend is enabled, so this must ship as a release gate together with the authority work (Product PR #420). UI does not misrepresent the state (`CommunityPanel.tsx:51-56`, `RatingsPage.tsx:188`). Evidence: `reverify/REVERIFY_d59ccec_2026-08-19_comm-class-reachability.md`. | Put writes behind trusted server-side anti-abuse/target authority **before** enabling the shared backend; retain DB uniqueness defense and adversarial concurrency/rotated-ID proof without mandatory registration. |
+| `TLP-COMM-ABUSE-001` | `SOURCE-REPAIRED / LIVE-PROOF-PENDING / PUBLIC-INTEGRITY / P1` | Product #420 merged the trusted Cloudflare Worker/D1 authority boundary and Product #422 merged the reconciled client/runtime contract. Source/build gates include fail-closed target authority, signed anonymous actors, network-abuse hashing/budgets and Worker bundle validation. **Terminal production evidence is still absent:** source inspection and dry-run do not prove that the intended D1 schema, required secrets, Turnstile policy, Worker deployment, public client activation and adversarial behavior are live. Closure boundary: `../verification/2026-08-20-community-reconciliation-closure/REPORT.md`. | Deploy and activate the intended Worker + D1 contour; prove `/health` reports ready database/target/writes authority and run live adversarial concurrency, duplicate/idempotency, target-rejection and rotated-identity checks without mandatory registration. |
 
-## 🟡 P2 — ОТКРЫТО (21)
+## 🟡 P2 — ОТКРЫТО (16)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
-| `TLP-COMM-DELIVERY-001` | `CONFIRMED-CURRENT / DELIVERY-RECONCILIATION / SYSTEMIC / P2` | Retry/validation/cooldown/ACK authority drifts client↔server; local/server moderation truth and multi-tab persisted work can diverge | Typed outcomes, aligned validation/rate limits, bounded retry/startup replay, server-authoritative ACK reconciliation and lossless multi-tab arbitration. |
-| `TLP-COMM-ORDER-001` | `CONFIRMED-CURRENT / DATA-PRESENTATION / P2` | Helpful/kind ordering covers only loaded newest-first subset | Server-supported corpus ordering/filtering or explicitly scoped loaded-row semantics with matching pagination. |
-| `TLP-COMM-A11Y-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / P2` | Mutation outcomes lack reusable live-status semantics; sort state partly visual-only | Reusable live-status owner, programmatic state and cross-browser accessibility proof. |
-| `TLP-COMM-READSTATE-001` | `CONFIRMED-CURRENT / READ-STATE-TRUTH / P2` | Failed/unresolved reads can appear as genuine empty/zero | Explicit loading/error/ready-empty/ready-data states; preserve prior loaded data on failure. |
-| `TLP-COMM-TARGET-001` | `CONFIRMED-CURRENT / DATA-INTEGRITY / TARGET-STATE / P2` | Dirty editor state can survive detail A→B while mutation closures now target B | Key/reset/prompt state by target identity and certify dirty-draft navigation. |
 | `TLP-THEME-001` | `CONFIRMED-CURRENT / SYSTEMIC / THEME-OWNERSHIP / P2` | Light token ownership incomplete; prepaint/chrome/cross-tab theme state drift | Semantic tokens, prepaint apply, metadata sync, cross-tab convergence and light-theme contrast certification. |
 | `TLP-A11Y-RUNTIME-001` | `CONFIRMED-CURRENT / SYSTEMIC / FOCUS-NAV-SEMANTICS / P2` | Command/listbox focus, hidden tabbable chrome, same-path/immersive focus, invisible audio seek, mobile fixed chrome, scroll-only anchors, disappearing controls, archive row removal and citation destination focus lack one interaction authority; configured consent can sit above registered aria-modal dialogs outside the overlay stack | One nav/focus/dialog/hash/hidden-chrome/collection-mutation contract, visible seek focus, stable focus handoffs, citation destination ownership and environment-aware overlay stacking with Chromium + WebKit proof. |
 | `TLP-A11Y-CONTRAST-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / CONTRAST / SYSTEMIC / P2` | `../verification/2026-08-12-form-security-nontext-contrast-current/REPORT.md`; normal functional text uses low-opacity colors below 4.5:1 on dark surfaces, and enabled unselected RatingStars rely on a dark star graphic as the primary control/state marker without a shared non-text 3:1 contract | Semantic text/control/graphical-state tokens with computed foreground/background and non-text component contrast certification in dark and light themes. |
@@ -44,7 +39,7 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 | `TLP-RATING-METHOD-001` | `CONFIRMED-CURRENT / METHODOLOGY / SAMPLE-SIZE-TRUTH / P2` | Self-derived prior lets 1×5.0 outrank 20×4.5 despite explicit one-vote protection claim; dimension leaders also lack sample gate | Transparent confidence/sample methodology with copy/code agreement and adversarial sparse-sample regressions. |
 | `TLP-RATING-URLSTATE-001` | `CONFIRMED-CURRENT / URL-STATE / BIDIRECTIONAL-AUTHORITY / P2` | `/ratings` copies query/tag/sort/rated params into local state only at mount then writes state→URL | URL as canonical filter state, sanitize on read and certify direct query load, clean-navigation reset and Back/Forward parity. |
 
-## 🟢 P3 — ОТКРЫТО (8)
+## 🟢 P3 — ОТКРЫТО (7)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
@@ -54,7 +49,6 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 | `TLP-HOME-MEDIA-PERF-001` | `CONFIRMED-CURRENT / PERFORMANCE / INITIAL-MEDIA / P3` | All six Home hero portraits are eager, current files total 880,330 bytes, no responsive `srcset` is supplied, and build budgets cover JS/CSS rather than initial raster transfer | Define critical hero request set, defer noncritical portraits, ship responsive candidates and add mobile/desktop initial-media request+byte budgets. |
 | `TLP-A11Y-MOTION-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / REDUCED-MOTION / P3` | Framer/Tilt/View Transitions honor reduced motion, but utility CSS animations do not: PoetCard has perpetual decorative pulse and audio surfaces use unguarded pulse/spin | One motion-policy contract across Framer/JS/CSS utilities; suppress non-essential persistent motion under reduce, preserve state meaning and add computed-animation regressions. |
 | `TLP-A11Y-STATUS-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / STATUS-MESSAGES / P3` | `/poets` dynamically updates visible result count/zero-state during search/filter interaction without role/status/live semantics, unlike Music archive | Stable polite status semantics for meaningful result/pending/empty changes while keeping focus in controls; avoid duplicate chatter and certify with accessibility-engine/browser proof. |
-| `TLP-COMM-TEXT-001` | `CONFIRMED-CURRENT / COMMUNITY / TEXT-FIDELITY / P3` | `../verification/2026-08-12-community-comment-text-fidelity-current/REPORT.md`; composer/store/server preserve internal line breaks but `ExpandableText` renders ordinary whitespace-collapsing `<p>`; UTF-16 `slice(0,220)` can also split a surrogate pair/emoji | Preserve plain-text newlines safely, keep React escaping, use Unicode-safe truncation boundaries and add multiline/emoji/markup-literal rendering regressions. |
 | `TLP-SHELL-NOISE-001` | `CONFIRMED-CURRENT / SHELL / VISUAL-PERFORMANCE / P3` | `../verification/2026-08-12-shell-noise-ownership-current/REPORT.md`; `index.html` owns `.noise-bg` outside `#root` and React SiteLayout creates another; both remain fixed full-screen feTurbulence layers at z100 after mount | Give preboot/runtime noise one owner or deterministic handoff so exactly one active layer remains after hydration/navigation, with singleton browser proof. |
 
 ## Summary
@@ -64,17 +58,17 @@ Closed history is owned by `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md`, verification
 | Закрыто (fixed) | 0 |
 | **P0 открыто** | **0** |
 | P1 открыто | 1 |
-| P2 открыто | 21 |
-| P3 открыто | 8 |
+| P2 открыто | 16 |
+| P3 открыто | 7 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **30** |
+| **Всего открыто (матрица)** | **24** |
 
 Current architecture selection: **none**. Hall #369 remains terminally closed and historical/frozen safety authority, not a current Product lane.
 
 ## Explicitly outside this matrix
 
-- Deployment-side Supabase variables and actual deployed database grants are external evidence boundaries; current repository SQL correctly enables RLS/revokes and public views omit `voter_id`.
+- Production Cloudflare/D1 secret values and deployment-console state are external evidence boundaries. Source-side authority is merged, while `TLP-COMM-ABUSE-001` deliberately remains active until `/health` readiness and live adversarial behavior are directly proved.
 - Current canonical poet portrait origin is not inferred; future portrait provenance is owned by the authoring release contract while Product #270 owns longform visual provenance.
 - Current sampled published essay image blocks explicitly classify `kind`; missing-kind→archive remains fail-closed authoring/audit hardening, not a current mislabel claim.
 - Community form labels/help, RatingStars keyboard radiogroup semantics, shared external-link hygiene, Breadcrumb current semantics, ArticleImage dialog ownership and TrackReleaseCard interactive nesting were rechecked as correct; do not reopen them.
