@@ -4,18 +4,19 @@
 **Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.  
 **Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.  
 **Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.  
-**Latest current verification:** `../verification/2026-08-20-theme-contrast-closure/REPORT.md`.
+**Latest current verification:** `../verification/2026-08-24-reader-text-closure/REPORT.md`.
 
 This file is intentionally short. Closed, absorbed, stale, invalid and superseded findings do not remain here merely to preserve history.
 
-## ✅ ЗАКРЫТО (2)
+## ✅ ЗАКРЫТО (3)
 
-Closed roots are durable in `CLOSURE_LEDGER.md`, system themes and verification packages. Latest closure: `../verification/2026-08-20-theme-contrast-closure/REPORT.md`.
+Closed roots are durable in `CLOSURE_LEDGER.md`, system themes and verification packages.
 
 | ID | Closure evidence |
 |---|---|
 | `TLP-THEME-001` | Product #426 merged; exact-head repository gates and 4/4 Browser QA green. |
 | `TLP-A11Y-CONTRAST-001` | Product #426 merged; computed dark/light contrast regression green, including functional text >=4.5:1 and enabled unselected rating state >=3:1. |
+| `TLP-READER-TEXT-001` | Product #427 merged as `96644f9d4f7ba5f1bef8f1ff0d8a8642eb990ad1`; exact-head CI/contracts/route/brand gates and Manual Browser QA #2845 green. Closure evidence: `../verification/2026-08-24-reader-text-closure/REPORT.md`. |
 
 ## 🟠 P1 — ОТКРЫТО (1)
 
@@ -23,20 +24,19 @@ Closed roots are durable in `CLOSURE_LEDGER.md`, system themes and verification 
 |---|---|---|---|
 | `TLP-COMM-ABUSE-001` | `SOURCE-REPAIRED / LIVE-PROOF-PENDING / PUBLIC-INTEGRITY / P1` | Product #420 merged the trusted Cloudflare Worker/D1 authority boundary and Product #422 merged the reconciled client/runtime contract. Source/build gates include fail-closed target authority, signed anonymous actors, network-abuse hashing/budgets and Worker bundle validation. **Terminal production evidence is still absent:** source inspection and dry-run do not prove that the intended D1 schema, required secrets, Turnstile policy, Worker deployment, public client activation and adversarial behavior are live. Closure boundary: `../verification/2026-08-20-community-reconciliation-closure/REPORT.md`. | Deploy and activate the intended Worker + D1 contour; prove `/health` reports ready database/target/writes authority and run live adversarial concurrency, duplicate/idempotency, target-rejection and rotated-identity checks without mandatory registration. |
 
-## 🟡 P2 — ОТКРЫТО (14)
+## 🟡 P2 — ОТКРЫТО (13)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
 | `TLP-A11Y-RUNTIME-001` | `CONFIRMED-CURRENT / SYSTEMIC / FOCUS-NAV-SEMANTICS / P2` | Command/listbox focus, hidden tabbable chrome, same-path/immersive focus, invisible audio seek, mobile fixed chrome, scroll-only anchors, disappearing controls, archive row removal and citation destination focus lack one interaction authority; configured consent can sit above registered aria-modal dialogs outside the overlay stack | One nav/focus/dialog/hash/hidden-chrome/collection-mutation contract, visible seek focus, stable focus handoffs, citation destination ownership and environment-aware overlay stacking with Chromium + WebKit proof. |
 | `TLP-DISCOVERY-001` | `CONFIRMED-CURRENT / SYSTEMIC / MACHINE-METADATA-OWNERSHIP / P2` | Sitemap/OG/change facts drift; IndexNow submits whole inventory per deploy; static 404 and hydrated/error head states have incompatible canonical/OG/schema ownership | One route/change metadata state machine for ready/noindex/not-found/loading/error/redirect states deriving sitemap/prerender/runtime/IndexNow with parity/delta proof. |
-| `TLP-READER-TEXT-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / SEMANTIC-TEXT / P2` | Animated poem words are sole DOM text with CSS-only spacing and `select-none` | Exact canonical selectable text layer separated from visual animation; DOM/copy/a11y proof. |
 | `TLP-AUDIT-004` | `CONFIRMED-CURRENT / AUDIT-HARNESS / FALSE-GREEN / P2` | QA has proxy/preview gaps across theme/hash/community/SEO/cross-tab/consent/audio/analytics/release/redirect/discovery/secondary/search/statistics/progress/URL-state/completion/home-media/focus/contrast/SQL privilege/motion/media-kind/status/comment-text/shell-singleton behavior | Replace proxy checks with exact user/release outcomes, including UI-driven consent revoke, non-text contrast, Unicode/comment whitespace fidelity and persistent-shell singleton assertions. |
 | `TLP-AUTHORING-ID-001` | `CONFIRMED-CURRENT / AUTHORING-RELEASE-CONTRACT / P2` | Scaffold/guide/validators disagree on IDs/files/required fields/assets/community constraints; canonical portrait existence/provenance and authority registration are not one producer gate | One validated producer/consumer release contract covering ASCII-kebab identity, canonical registration, editorial fields, portrait existence/provenance and aligned guide/scaffold/CI fixtures. |
 | `TLP-AUDIO-SESSION-001` | `CONFIRMED-CURRENT / PERSISTENCE-CONVERGENCE / DATA-LOSS / P2` | Whole-snapshot session writes can erase cross-tab progress/completion despite tab-sync promise | Conflict-safe merge/version semantics, session-key subscription and two-page convergence proof. |
-| `TLP-ANALYTICS-CONSENT-001` | `CONFIRMED-CURRENT / PRIVACY-CONSENT / STATE-AUTHORITY / P2` | `../verification/2026-08-12-analytics-consent-control-current/REPORT.md`; consent initially gates correctly but does not converge across tabs, later deny has no active-provider revocation, and normal UI exposes the choice only while consent is unset; PrivacyPage offers no in-app editor beyond deleting site data | Browser-wide observable consent, persistent/reopenable reader control, authoritative provider revoke/enable semantics and complete UI-driven grant→deny/re-grant regression. |
+| `TLP-ANALYTICS-CONSENT-001` | `CONFIRMED-CURRENT / PRIVACY-CONSENT / STATE-AUTHORITY / P2` | Consent initially gates correctly but does not converge across tabs, later deny has no active-provider revocation, and normal UI exposes the choice only while consent is unset; PrivacyPage offers no in-app editor beyond deleting site data | Browser-wide observable consent, persistent/reopenable reader control, authoritative provider revoke/enable semantics and complete UI-driven grant→deny→re-grant regression. |
 | `TLP-RATING-SOURCE-001` | `CONFIRMED-CURRENT / DATA-PRESENTATION / SOURCE-AUTHORITY / P2` | Reader `/5` vs editorial `/10` provenance is lost on badges and editorial score tie-breaks reader ranking | Carry source/scale, remove editorial authority from reader places and separate unrated rows. |
 | `TLP-AUDIO-RELEASE-001` | `CONFIRMED-CURRENT / RELEASE-INTEGRITY / PHYSICAL-ASSET-GATE / P2` | Warning-tolerant production audio check can allow a missing new `published` master when another master is valid | Every published release fails closed on physical asset/signature/SHA in exact production gate. |
-| `TLP-ROUTE-REDIRECT-001` | `CONFIRMED-CURRENT / HOSTING-CONTRACT / LEGACY-ROUTES / P2` | Client-only redirects have no Pages source docs while preview QA assumes successful initial response. **Measured live 2026-08-19:** all **5** declared aliases (`/articles/article-1`, `/articles/article-2`, `/articles/article-3`, `/articles/article-main-1`, `/articles/article-main-2` in `src/routes/route-contract.json`) answer **HTTP 404**; the 404 body does boot the SPA (`<div id="root">` + `/assets/index-CkIy1PrE.js`) so humans still reach the target via `App.tsx:147-149` `<Navigate>`, but crawlers get `404` + `noindex,follow` with no canonical, so no legacy link equity transfers. Repo also carries two routing configs that GitHub Pages ignores: `vercel.json` rewrites and `public/_redirects`. | Real host redirects or materialized alias documents; test built/static-host initial responses and final canonical semantics; retire the two inert hosting configs or document why they stay. |
+| `TLP-ROUTE-REDIRECT-001` | `CONFIRMED-CURRENT / HOSTING-CONTRACT / LEGACY-ROUTES / P2` | Measured live 2026-08-19: all 5 declared aliases answer HTTP 404; the 404 body boots the SPA so humans still reach the target, crawlers get 404 + noindex,follow. `vercel.json` and `public/_redirects` are inert under GitHub Pages | Real host redirects or materialized alias documents; test built/static-host initial responses and final canonical semantics; retire the two inert hosting configs or document why they stay. |
 | `TLP-SECONDARY-DATA-001` | `CONFIRMED-CURRENT / FAILURE-CONTAINMENT / PRIMARY-READINESS / P2` | Essay primary body and PoetDetail can be made route-fatal by optional essay catalog | Primary readiness only from primary data; local containment for catalog/series/RelatedEssays with asymmetric failure tests. |
 | `TLP-SEARCH-001` | `CONFIRMED-CURRENT / SEARCH-INVENTORY / TEXT-AUTHORITY / P2` | Global search/mobile “all sections” omits poems/sections and lacks `ё/е` equivalence | Canonical searchable inventory, poem deep links, truthful section coverage and shared Russian normalization preserving `й`. |
 | `TLP-RATING-METHOD-001` | `CONFIRMED-CURRENT / METHODOLOGY / SAMPLE-SIZE-TRUTH / P2` | Self-derived prior lets 1×5.0 outrank 20×4.5 despite explicit one-vote protection claim; dimension leaders also lack sample gate | Transparent confidence/sample methodology with copy/code agreement and adversarial sparse-sample regressions. |
@@ -48,24 +48,24 @@ Closed roots are durable in `CLOSURE_LEDGER.md`, system themes and verification 
 |---|---|---|---|
 | `TLP-ANALYTICS-ROUTE-001` | `CONFIRMED-CURRENT / ANALYTICS-DATA-QUALITY / ROUTE-LIFECYCLE / P3` | Raw location mutation owns page-view truth: destination path can emit before SEO settles and same-route query/filter keystrokes are also classified as page views | Emit from settled semantic route navigation; classify same-route search/filter state intentionally and prevent per-keystroke page-view series. |
 | `TLP-READING-PROGRESS-001` | `CONFIRMED-CURRENT / READER-SEMANTICS / PROGRESS-BOUNDARY / P3` | Root scroll/document height extends reading progress through sources/community/footer | Own progress by explicit article boundaries and prove 100% at article end despite long post-article tail. |
-| `TLP-AUDIO-COMPLETION-001` | `CONFIRMED-CURRENT / AUDIO-SEMANTICS / COMPLETION-TRUTH / P3` | Any timeupdate at ≥97% persists categorical completion, including seek-to-97%, while Archive renders 100% and `Прослушано полностью` | Align producer and reader semantics or rename the 97% heuristic; certify seek-to-97% vs native ended behavior. |
+| `TLP-AUDIO-COMPLETION-001` | `CONFIRMED-CURRENT / AUDIO-SEMANTICS / COMPLETION-TRUTH / P3` | Any timeupdate at >=97% persists categorical completion, including seek-to-97%, while Archive renders 100% and `Прослушано полностью` | Align producer and reader semantics or rename the 97% heuristic; certify seek-to-97% vs native ended behavior. |
 | `TLP-HOME-MEDIA-PERF-001` | `CONFIRMED-CURRENT / PERFORMANCE / INITIAL-MEDIA / P3` | All six Home hero portraits are eager, current files total 880,330 bytes, no responsive `srcset` is supplied, and build budgets cover JS/CSS rather than initial raster transfer | Define critical hero request set, defer noncritical portraits, ship responsive candidates and add mobile/desktop initial-media request+byte budgets. |
 | `TLP-A11Y-MOTION-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / REDUCED-MOTION / P3` | Framer/Tilt/View Transitions honor reduced motion, but utility CSS animations do not: PoetCard has perpetual decorative pulse and audio surfaces use unguarded pulse/spin | One motion-policy contract across Framer/JS/CSS utilities; suppress non-essential persistent motion under reduce, preserve state meaning and add computed-animation regressions. |
 | `TLP-A11Y-STATUS-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / STATUS-MESSAGES / P3` | `/poets` dynamically updates visible result count/zero-state during search/filter interaction without role/status/live semantics, unlike Music archive | Stable polite status semantics for meaningful result/pending/empty changes while keeping focus in controls; avoid duplicate chatter and certify with accessibility-engine/browser proof. |
-| `TLP-SHELL-NOISE-001` | `CONFIRMED-CURRENT / SHELL / VISUAL-PERFORMANCE / P3` | `../verification/2026-08-12-shell-noise-ownership-current/REPORT.md`; `index.html` owns `.noise-bg` outside `#root` and React SiteLayout creates another; both remain fixed full-screen feTurbulence layers at z100 after mount | Give preboot/runtime noise one owner or deterministic handoff so exactly one active layer remains after hydration/navigation, with singleton browser proof. |
+| `TLP-SHELL-NOISE-001` | `CONFIRMED-CURRENT / SHELL / VISUAL-PERFORMANCE / P3` | Shell noise is owned both by `index.html` and React `SiteLayout`, leaving two fixed full-screen feTurbulence layers at z100 after mount | Give preboot/runtime noise one owner or deterministic handoff so exactly one active layer remains after hydration/navigation, with singleton browser proof. |
 
 ## Summary
 
 | Категория | Количество |
 |---|---:|
-| Закрыто (fixed) | 2 |
+| Закрыто (fixed) | 3 |
 | **P0 открыто** | **0** |
 | P1 открыто | 1 |
-| P2 открыто | 14 |
+| P2 открыто | 13 |
 | P3 открыто | 7 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **22** |
+| **Всего открыто (матрица)** | **21** |
 
 Current architecture selection: **none**. Hall #369 remains terminally closed and historical/frozen safety authority, not a current Product lane.
 
