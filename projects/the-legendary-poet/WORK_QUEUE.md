@@ -4,13 +4,13 @@
 
 Current verified engineering matrix: [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md).
 
-Current verified engineering rows: **30 — 1 P1 + 21 P2 + 8 P3**. The active IDs and terminal outcomes are owned only by the MASTER matrix; this optional queue does not duplicate them. No Product repair lane is selected yet.
+Current verified engineering authority lives only in the MASTER matrix. This optional queue intentionally does **not** copy active row counts or active IDs, because duplicated volatile snapshots become stale and can resurrect already closed work. No Product repair lane is selected here.
 
 ## Audit marathon disposition
 
 **Current autonomous audit queue: CLOSED AT PRODUCT `d59cceccb0c49af59b1be38d4c547a6240b3005a`.**
 
-The 30 active rows are verified Product repair roots, not unfinished audit waves. Do not start another broad audit against the unchanged Product head just because rows remain open. Reopen auditing only on a materially changed relevant surface, a concrete contradictory live/browser witness, new deployed/backend evidence, an owner-selected unanswered surface, or future repair verification.
+Rows that remain active in MASTER are verified Product repair roots, not unfinished audit waves. Do not start another broad audit against the unchanged Product head just because rows remain open. Reopen auditing only on a materially changed relevant surface, a concrete contradictory live/browser witness, new deployed/backend evidence, an owner-selected unanswered surface, or future repair verification.
 
 Closeout evidence: [`verification/2026-08-12-audit-marathon-closeout/REPORT.md`](verification/2026-08-12-audit-marathon-closeout/REPORT.md).
 
