@@ -10,4 +10,4 @@ This folder preserves raw evidence recovered from closed-unmerged AuditRepo PR #
 
 The candidate was resolved before MASTER promotion by Product PR `FedorMilovanov/gb-is-my-strength#1763`. The report remains here as raw historical evidence; it is **not** a current backlog item and must not be re-admitted without a fresh current applicability check.
 
-Forensic PR disposition is recorded in `../../../../verified/closed-unmerged-pr-dispositions.json`.
+Forensic PR disposition is recorded in `projects/gb-is-my-strength/verified/closed-unmerged-pr-dispositions.json`.
