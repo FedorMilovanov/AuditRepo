@@ -117,7 +117,9 @@ jobs:
 
           request_path="${requests[0]}"
           test -f "${request_path}"
-          evidence_path="reports/ref-retirement/$(basename "${request_path}" .json)-evidence.json"
+          evidence_dir="${RUNNER_TEMP}/auditrepo-ref-retirement"
+          mkdir -p "${evidence_dir}"
+          evidence_path="${evidence_dir}/$(basename "${request_path}" .json)-evidence.json"
           echo "request_path=${request_path}" >> "${GITHUB_OUTPUT}"
           echo "current_main_sha=${current_main}" >> "${GITHUB_OUTPUT}"
           echo "evidence_path=${evidence_path}" >> "${GITHUB_OUTPUT}"
@@ -170,6 +172,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # The pre-mutation forensic inventory writes ephemeral diagnostics under
+          # reports/. Remove those generated files before validating repository
+          # structure. Destructive evidence lives in RUNNER_TEMP, outside the tree.
+          rm -rf reports
           python3 scripts/check_auditrepo_structure.py
           python3 scripts/validate_audit_repo.py
           python3 scripts/matrix_coverage_regression_test.py
@@ -221,7 +227,7 @@ jobs:
         with:
           name: auditrepo-ref-retirement-${{ github.run_id }}
           path: |
-            reports/ref-retirement/**
+            ${{ steps.request.outputs.evidence_path }}
             reports/matrix-coverage/**
             reports/repository-history-forensic-audit.json
             reports/repository-history-forensic-audit.md
