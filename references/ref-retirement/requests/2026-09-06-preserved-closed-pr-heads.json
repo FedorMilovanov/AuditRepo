@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "requestId": "auditrepo-ref-retirement-preserved-closed-pr-heads-2026-09-06",
+  "execute": true,
+  "executionNonce": 1,
+  "preparedOnMain": "7c87a465666b2fb205163d1dec2a081489c0c5ee",
+  "sourceBranch": "maintenance/auditrepo-ref-retirement-preserved-prs-20260906",
+  "retainedRefs": [
+    {"branch":"main","required":true,"reason":"Default branch and current repository authority."},
+    {"branch":"agent/arena-bugverifier-orphaned-guard-wiring-20260818","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"agent/arena-home-resume-dead-20260717","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"agent/arena-lot-main-id-verification-20260717","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"agent/arena-master-current-reverify-20260717","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"agent/arena-source-link-concurrency-20260717","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"agent/bugverifikator-brand-title-authority-20260717","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"agent/bugverifikator-master-delta-brand-title-20260717","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"agent/bugverifikator-master-readmit-wave-20260717","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"agent/gb-arena-master-reverify-20260818","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"agent/gb-live-706c-reconciliation-20260809","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"agent/tlp-arena-master-reverify-20260818","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"archive/forensic-arena-019fe0b5-auditrepo-2026-08-13","required":true,"reason":"Intentional exact-SHA forensic archive."},
+    {"branch":"archive/forensic-arena-019fe0c4-auditrepo-2026-08-13","required":true,"reason":"Intentional exact-SHA forensic archive."},
+    {"branch":"archive/forensic-bugverifikator-audit-2026-07-17-2026-09-06","required":true,"reason":"Intentional exact-SHA forensic archive."},
+    {"branch":"archive/forensic-gb-arena-master-reverify-20260717-2026-09-06","required":true,"reason":"Intentional exact-SHA forensic archive."},
+    {"branch":"archive/forensic-gb-control-reconciliation-bc786-20260809","required":true,"reason":"Intentional exact-SHA forensic archive."},
+    {"branch":"archive/forensic-tlp-arena-master-reverify-20260818-2026-09-06","required":true,"reason":"Intentional exact-SHA forensic archive."},
+    {"branch":"archive/forensic-tlp-hall-001-material-chain-20260809","required":true,"reason":"Intentional exact-SHA forensic archive."},
+    {"branch":"archive/forensic-tlp-hall-001-material-chain-current-20260809","required":true,"reason":"Intentional exact-SHA forensic archive."},
+    {"branch":"archive/forensic-tlp-hall-material-chain-20260809","required":true,"reason":"Intentional exact-SHA forensic archive."},
+    {"branch":"arena/biografii-heading-audit-20260717","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"arena/dist-css-parity-audit-20260717","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"arena/gb-atlas-gill-a11y-20260717","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"arena/gb-baptisty-contrast-20260717","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"arena/gb-data-consistency-public-assets-20260717","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"arena/gb-nagornaya-a11y-20260717","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"arena/learning-search-name-audit-20260717","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"arena/lot-noreferrer-audit-20260717","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"arena/map-main-landmark-audit-20260717","required":false,"reason":"Not part of this bounded retirement wave."},
+    {"branch":"arena/pr317-322-verifier-synthesis-20260717","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"arena/019fe0b5-auditrepo","required":false,"reason":"Exact-SHA archive exists; source-ref retirement will be reviewed separately."},
+    {"branch":"arena/019fe0c4-auditrepo","required":false,"reason":"Exact-SHA archive exists; source-ref retirement will be reviewed separately."},
+    {"branch":"arena/2026-08-17-gbs-reverify","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"audit/gb-control-reconciliation-bc786-20260809","required":false,"reason":"Exact-SHA archive exists; source-ref retirement will be reviewed separately."},
+    {"branch":"audit/regression-preservation-wave0-final5-20260807","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"audit/regression-semantic-wave2a-20260807","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"audit/tlp-hall-001-material-chain","required":false,"reason":"Exact-SHA archive exists; source-ref retirement will be reviewed separately."},
+    {"branch":"audit/tlp-hall-001-material-chain-current","required":false,"reason":"Exact-SHA archive exists; source-ref retirement will be reviewed separately."},
+    {"branch":"audit/tlp-hall-001-material-decision","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"audit/tlp-hall-material-chain-20260809","required":false,"reason":"Exact-SHA archive exists; source-ref retirement will be reviewed separately."},
+    {"branch":"bugverifikator-audit-2026-07-17","required":false,"reason":"Exact-SHA archive exists; source-ref retirement will be reviewed separately."},
+    {"branch":"verification/gb-search-ar-idx-09-closure-20260808","required":false,"reason":"Requires separate reviewed disposition."},
+    {"branch":"verification/gb-zero-direct-defects-next-wave-20260808","required":false,"reason":"Diagnostic branch requires separate reviewed disposition."}
+  ],
+  "targets": [
+    {
+      "branch": "arena/schema-root-audit-boundary-20260717",
+      "mode": "superseded",
+      "expectedHead": "405dbb17b1b6445385e49087354b68daeb7e482d",
+      "comparisonBase": "f2751126bc11fde440e17518a910565c94716280",
+      "expectedAhead": 1,
+      "replacementPullRequests": [349],
+      "allowedChangedPaths": [
+        "projects/gb-is-my-strength/incoming/arena/2026-07-17/schema-root-reference-only-false-red.md"
+      ],
+      "reason": "Closed PR #317 was resolved before MASTER promotion; merged AuditRepo #349 preserves the unique raw report at its canonical incoming path."
+    },
+    {
+      "branch": "agent/gb-incoming-comments-20260818",
+      "mode": "superseded",
+      "expectedHead": "9512b6a25f48458ca0059aeaacbd794c44ca4e98",
+      "comparisonBase": "f2751126bc11fde440e17518a910565c94716280",
+      "expectedAhead": 1,
+      "replacementPullRequests": [344, 345, 349],
+      "allowedChangedPaths": [
+        "projects/gb-is-my-strength/incoming/bugverifikator/2026-07-17/comments/COMMENT-arena-agent-2026-08-18-title-suffix-class.md",
+        "projects/gb-is-my-strength/incoming/chatgpt/2026-08-10/comments/COMMENT-arena-agent-2026-08-18-wave07-atlas-focus.md",
+        "projects/gb-is-my-strength/incoming/chatgpt/2026-08-10/comments/COMMENT-arena-agent-2026-08-18-wave08-reader-projection.md"
+      ],
+      "reason": "Closed PR #332 is fully preserved by merged #349; merged #344/#345 own the current forensic synthesis and causal MASTER disposition."
+    }
+  ]
+}
