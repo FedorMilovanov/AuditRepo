@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "sourceReport": "projects/gb-is-my-strength/verified/CLOSED_UNMERGED_PR_FORENSIC_2026-07-24.md",
-  "recordedAt": "2026-08-06",
+  "recordedAt": "2026-09-06",
   "pullRequests": {
     "3": {
       "category": "superseded",
@@ -172,6 +172,16 @@
       "category": "superseded",
       "replacementPrs": [200],
       "note": "W7 evidence tree was rebuilt byte-identically from a fresh base and merged as PR #200."
+    },
+    "317": {
+      "category": "superseded",
+      "replacementPrs": [349],
+      "note": "The candidate was resolved before MASTER promotion by Product PR #1763. Its unique raw intake is preserved at the original canonical incoming path by AuditRepo PR #349, so the closed PR head is no longer required as evidence authority."
+    },
+    "332": {
+      "category": "superseded",
+      "replacementPrs": [344, 345, 349],
+      "note": "The three unique raw comments are preserved at their original canonical incoming paths by AuditRepo PR #349. Later merged forensic synthesis #344 and causal MASTER consolidation #345 own current GB disposition; the closed comment-only PR is not current authority."
     }
   }
 }
