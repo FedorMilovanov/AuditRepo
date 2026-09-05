@@ -5,97 +5,135 @@
   "pullRequests": {
     "3": {
       "category": "superseded",
-      "landedCommits": ["1b12007f78a114eb71f55b85fc9cf5f2fced08f7"],
+      "landedCommits": [
+        "1b12007f78a114eb71f55b85fc9cf5f2fced08f7"
+      ],
       "note": "The exact REPORT blob landed byte-identically through commit 1b12007f; README is a mutable current owner and the stale PR head is not merge authority."
     },
     "6": {
       "category": "superseded",
-      "replacementPrs": [10],
+      "replacementPrs": [
+        10
+      ],
       "note": "Gill V10 intake package was preserved and reconciled by merged AuditRepo PR #10."
     },
     "7": {
       "category": "superseded",
-      "replacementPrs": [10],
+      "replacementPrs": [
+        10
+      ],
       "note": "Hermeneutics intake package was preserved and reconciled by merged AuditRepo PR #10."
     },
     "15": {
       "category": "diagnostic",
-      "landedCommits": ["d84862013e0a8839c04edd0f138a9c731bd2ffb7"],
+      "landedCommits": [
+        "d84862013e0a8839c04edd0f138a9c731bd2ffb7"
+      ],
       "note": "One-shot Reader R1 transaction provenance; workflow was removed after the landed SSOT commit."
     },
     "16": {
       "category": "diagnostic",
-      "landedCommits": ["f94e196e6244a6a9e1492d5d85d0a389f11cdb6d"],
+      "landedCommits": [
+        "f94e196e6244a6a9e1492d5d85d0a389f11cdb6d"
+      ],
       "note": "Reader R3 trigger-only PR; target reconciliation landed directly in main."
     },
     "17": {
       "category": "diagnostic",
-      "landedCommits": ["1b9ff502c2dc19be63b5f58079156f8a727bceaa"],
+      "landedCommits": [
+        "1b9ff502c2dc19be63b5f58079156f8a727bceaa"
+      ],
       "note": "Reader R4 trigger-only PR; target reconciliation landed directly in main."
     },
     "18": {
       "category": "diagnostic",
-      "landedCommits": ["650def0a3a73e3e77dd396bc1d59c70a407e1ee0"],
+      "landedCommits": [
+        "650def0a3a73e3e77dd396bc1d59c70a407e1ee0"
+      ],
       "note": "Reader R5 trigger-only PR; target reconciliation landed directly in main."
     },
     "27": {
       "category": "superseded",
-      "replacementPrs": [34],
+      "replacementPrs": [
+        34
+      ],
       "note": "Stale Gill evidence wave was replaced by the canonical AuditRepo/source/Research closure chain recorded in PR #34."
     },
     "42": {
       "category": "diagnostic",
-      "landedCommits": ["f242ce3758db876dcf239d8b442c72922a9a6104"],
+      "landedCommits": [
+        "f242ce3758db876dcf239d8b442c72922a9a6104"
+      ],
       "note": "Read-only retrigger for the 5636 source-boundary transaction; the final writer was removed."
     },
     "43": {
       "category": "diagnostic",
-      "landedCommits": ["f242ce3758db876dcf239d8b442c72922a9a6104"],
+      "landedCommits": [
+        "f242ce3758db876dcf239d8b442c72922a9a6104"
+      ],
       "note": "Event-only materializer trigger; matrix result landed in main and one-shot workflows were cleaned."
     },
     "44": {
       "category": "diagnostic",
-      "landedCommits": ["a62ed7e3f73016a90123624cea737caa36784e76"],
+      "landedCommits": [
+        "a62ed7e3f73016a90123624cea737caa36784e76"
+      ],
       "note": "Final validation marker for the cleaned 5636 transaction boundary."
     },
     "52": {
       "category": "superseded",
-      "replacementPrs": [59],
+      "replacementPrs": [
+        59
+      ],
       "note": "Marathon R3 evidence blobs were preserved by clean one-commit PR #59 after main advanced."
     },
     "53": {
       "category": "superseded",
-      "replacementPrs": [58],
+      "replacementPrs": [
+        58
+      ],
       "note": "Failed temporary matrix materializer was replaced by the current-source atomic diagnostic repair in PR #58."
     },
     "54": {
       "category": "superseded",
-      "replacementPrs": [58],
+      "replacementPrs": [
+        58
+      ],
       "note": "Temporary-workflow diagnostic repair was first rebuilt as PR #56, then carried to the merged current-base canonical successor PR #58."
     },
     "56": {
       "category": "superseded",
-      "replacementPrs": [58],
+      "replacementPrs": [
+        58
+      ],
       "note": "Clean diagnostic repair was superseded when main advanced; PR #58 owns the current-base result."
     },
     "57": {
       "category": "superseded",
-      "replacementPrs": [60],
+      "replacementPrs": [
+        60
+      ],
       "note": "Blocking matrix evidence-integrity change was carried by clean one-commit PR #60."
     },
     "65": {
       "category": "superseded",
-      "replacementPrs": [66],
+      "replacementPrs": [
+        66
+      ],
       "note": "Older source reconciliation would regress newer authority; merged PR #66 owns the successor state."
     },
     "70": {
       "category": "superseded",
-      "replacementPrs": [71],
+      "replacementPrs": [
+        71
+      ],
       "note": "The complete clean provenance/home-residual transaction landed through PR #71."
     },
     "72": {
       "category": "superseded",
-      "replacementPrs": [71],
+      "replacementPrs": [
+        71
+      ],
       "note": "Duplicate authority after merged PR #71; branch was reset and no alternative SSOT remained."
     },
     "73": {
@@ -108,7 +146,9 @@
     },
     "131": {
       "category": "superseded",
-      "replacementPrs": [132],
+      "replacementPrs": [
+        132
+      ],
       "note": "Incorrect/stale-base Avraam verifier branch was replaced by clean PR #132 with no lost canonical mutation."
     },
     "135": {
@@ -121,7 +161,9 @@
     },
     "148": {
       "category": "superseded",
-      "replacementPrs": [168],
+      "replacementPrs": [
+        168
+      ],
       "note": "Pre-deployment TTS package was preserved and completed by the clean production-evidence successor PR #168."
     },
     "159": {
@@ -130,57 +172,135 @@
     },
     "167": {
       "category": "superseded",
-      "replacementPrs": [168],
+      "replacementPrs": [
+        168
+      ],
       "note": "Verified transport branch was replaced by clean one-commit PR #168 because workflow history required approval."
     },
     "170": {
       "category": "superseded",
-      "replacementPrs": [176],
+      "replacementPrs": [
+        176
+      ],
       "note": "First SEARCH-P2-09 self-clean executor was replaced by the clean final closure PR #176."
     },
     "172": {
       "category": "superseded",
-      "replacementPrs": [176],
+      "replacementPrs": [
+        176
+      ],
       "note": "Reused-ref SEARCH-P2-09 executor was replaced by fresh-ref and ultimately clean final PR #176."
     },
     "173": {
       "category": "superseded",
-      "replacementPrs": [176],
+      "replacementPrs": [
+        176
+      ],
       "note": "Fresh-ref transport branch was superseded by clean final SEARCH-P2-09 PR #176."
     },
     "174": {
       "category": "diagnostic",
-      "replacementPrs": [176],
+      "replacementPrs": [
+        176
+      ],
       "note": "Read-only compute carrier produced reconciliation artifacts; clean PR #176 owns the accepted result."
     },
     "180": {
       "category": "superseded",
-      "replacementPrs": [181],
+      "replacementPrs": [
+        181
+      ],
       "note": "W2 closure was rebuilt from current main after parallel movement and merged through PR #181."
     },
     "187": {
       "category": "superseded",
-      "replacementPrs": [186],
+      "replacementPrs": [
+        186
+      ],
       "note": "Favorite Store writer/trigger branch was explicitly closed in favor of merged clean PR #186."
     },
     "197": {
       "category": "superseded",
-      "replacementPrs": [198],
+      "replacementPrs": [
+        198
+      ],
       "note": "Pre-v2 strangler writer branch was replaced by proportional evidence wave PR #198."
     },
     "199": {
       "category": "superseded",
-      "replacementPrs": [200],
+      "replacementPrs": [
+        200
+      ],
       "note": "W7 evidence tree was rebuilt byte-identically from a fresh base and merged as PR #200."
     },
     "317": {
       "category": "superseded",
-      "replacementPrs": [349],
+      "replacementPrs": [
+        349
+      ],
       "note": "The audit-boundary candidate was resolved before MASTER promotion by Product PR #1763. AuditRepo PR #349 preserved its unique raw intake at the canonical incoming path, so the closed PR head is no longer required as evidence authority."
+    },
+    "318": {
+      "category": "superseded",
+      "replacementPrs": [
+        354
+      ],
+      "landedCommits": [
+        "73fd8ff8e715a1edb488d3c97b07f70850880084"
+      ],
+      "note": "Product PR #1728 fixed the Astro CSS parity false-red and the fix commit bcb41e57d7f9c011ac597c51a240fba19152a908 remains an ancestor of current Product main. AuditRepo PR #354 preserved the raw intake byte-for-byte; the historical open PR is no longer current authority."
+    },
+    "319": {
+      "category": "superseded",
+      "replacementPrs": [
+        354
+      ],
+      "landedCommits": [
+        "73fd8ff8e715a1edb488d3c97b07f70850880084"
+      ],
+      "note": "Product PR #1720 added noreferrer to the Lot source links; merge commit dfbb89eca6b2a31462731488aa8ee18400c5ef04 remains an ancestor of current Product main. AuditRepo PR #354 preserved the raw intake byte-for-byte."
+    },
+    "320": {
+      "category": "superseded",
+      "replacementPrs": [
+        354
+      ],
+      "landedCommits": [
+        "73fd8ff8e715a1edb488d3c97b07f70850880084"
+      ],
+      "note": "Product PR #1709 restored single-main ownership for Atlas; merge commit a08854fc2b6022aa9bf55c1a02c3a02e48a7d0b5 remains an ancestor of current Product main. AuditRepo PR #354 preserved the raw intake byte-for-byte."
+    },
+    "321": {
+      "category": "superseded",
+      "replacementPrs": [
+        354
+      ],
+      "landedCommits": [
+        "73fd8ff8e715a1edb488d3c97b07f70850880084"
+      ],
+      "note": "Product PR #1708 restored the Biografii recent-shelf H2 owner; merge commit 2e0aa93bcf371613fe3e41d756ebf60f7b906a26 remains an ancestor of current Product main. AuditRepo PR #354 preserved the raw intake byte-for-byte."
+    },
+    "322": {
+      "category": "superseded",
+      "replacementPrs": [
+        354
+      ],
+      "landedCommits": [
+        "73fd8ff8e715a1edb488d3c97b07f70850880084"
+      ],
+      "note": "Product PR #1714 named the shared Learning Sheet search input; merge commit 485db8c25287fa9bd2f53a5356885f02e4b81f4b remains an ancestor of current Product main. AuditRepo PR #354 preserved the raw intake byte-for-byte."
+    },
+    "323": {
+      "category": "superseded",
+      "note": "Product PR #1759 repaired and wired the aggregate engine contracts; merge commit 94b8eaad0951c6b43cf1e55fc6c54b9114329f61 remains an ancestor of current Product main. The complete six-file AuditRepo PR head 99b28c3311fcc0e717390cee282c768350beccb5 is preserved losslessly at archive/forensic-engine-contracts-pr323-2026-09-06."
     },
     "332": {
       "category": "superseded",
-      "replacementPrs": [344, 345, 349],
+      "replacementPrs": [
+        344,
+        345,
+        349
+      ],
       "note": "AuditRepo PR #349 preserved all three unique raw comments at their canonical incoming paths. Merged forensic synthesis #344 and causal MASTER consolidation #345 own current GB disposition; the closed comment-only PR is not current authority."
     }
   }
