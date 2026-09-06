@@ -17,8 +17,14 @@ Every target must provide:
 - an exact branch name;
 - the exact expected head SHA;
 - a reviewed classification;
-- either an `ancestor` proof or a `superseded` proof;
-- replacement PRs and an exact changed-path set when the head is not an ancestor of `main`.
+- one supported proof mode:
+  - `ancestor` — the target has `ahead_by=0` relative to current `main`;
+  - `superseded` — a reviewed comparison base remains an ancestor of current `main`, the exact ahead count and changed-path set still match, and at least one named replacement PR is merged;
+  - `archive-preserved` — the target exact head is preserved by a named `archive/*` ref at the identical SHA, and that archive ref is listed in `retainedRefs` with `required: true`;
+- replacement PRs and an exact changed-path set when using `superseded`;
+- an exact `archiveRef` when using `archive-preserved`.
+
+`archive-preserved` never makes an archive ref deletable. The target must still be a non-archive source/working ref; the archive authority itself remains protected and is rechecked before and after deletion.
 
 A later execution wrapper may name one original request through a same-directory `requestRef`. The wrapper contains no branch allowlist and cannot weaken or replace the original proofs.
 
@@ -41,6 +47,8 @@ The engine refuses to delete:
 - a branch whose live SHA changed after review;
 - any target when an unreviewed remote branch has appeared;
 - any target when live `main` differs from the reviewed execution base.
+
+For `archive-preserved`, the engine additionally refuses the target unless the named `archiveRef` is under `archive/`, is a required retained ref, exists live, and resolves to exactly the same SHA as the target immediately before deletion.
 
 It performs a complete preflight before the first DELETE, verifies every target as HTTP 404 afterward, defers an open source branch, prunes local remote refs, reruns repository validation and deep history forensic, and uploads machine-readable evidence.
 
