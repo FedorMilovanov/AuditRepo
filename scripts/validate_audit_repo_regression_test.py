@@ -275,6 +275,36 @@ def main() -> int:
         require(compact_closed.returncode == 1, 'closed row inside compact MASTER unexpectedly passed', compact_closed)
         require('ACTIVE-MATRIX-CONTAINS-CLOSED' in compact_closed.stdout, 'closed-row failure was not specific', compact_closed)
 
+        # A project whose entire governed matrix is deleted is an incomplete
+        # repository state, not a project whose matrix checks are skipped.
+        matrix_path.unlink()
+        missing_matrix = run_validator(root)
+        require(missing_matrix.returncode == 1, 'deleted MASTER_BUG_MATRIX.md unexpectedly passed', missing_matrix)
+        require(
+            'missing verified/MASTER_BUG_MATRIX.md' in missing_matrix.stdout,
+            'missing-matrix failure was not specific',
+            missing_matrix,
+        )
+
+        # Generated CI workspaces (reports/, receipts) must never be able to
+        # poison validation: the root allowlist rejects them, which is exactly
+        # what the ref-retirement workflow relies on when it removes reports/
+        # before re-validating.
+        matrix_path.write_text(compact_matrix(), encoding='utf-8')
+        restored_matrix = run_validator(root)
+        require(restored_matrix.returncode == 0, 'restored fixture unexpectedly failed', restored_matrix)
+
+        generated_reports = root / 'reports' / 'matrix-coverage'
+        generated_reports.mkdir(parents=True)
+        (generated_reports / 'report.json').write_text('{}\n', encoding='utf-8')
+        poisoned = run_validator(root)
+        require(poisoned.returncode == 1, 'generated reports/ directory unexpectedly passed validation', poisoned)
+        require(
+            'unexpected root directory: reports/' in poisoned.stdout,
+            'generated-artifact failure was not specific',
+            poisoned,
+        )
+
     print('AUDITREPO VALIDATOR REGRESSION: PASS')
     return 0
 

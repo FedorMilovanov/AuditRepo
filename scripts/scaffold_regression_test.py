@@ -230,6 +230,117 @@ def main() -> int:
             'rejected date created a partial intake path',
         )
 
+        reverify_scaffold = load_module(
+            'auditrepo_scaffold_reverify', HERE / 'scaffold_reverify.py'
+        )
+        retirement_scaffold = load_module(
+            'auditrepo_scaffold_retirement_review', HERE / 'scaffold_retirement_review.py'
+        )
+        reverify_scaffold.ROOT = root
+        reverify_scaffold.TEMPLATE = (
+            REPO_ROOT / 'projects' / '_templates' / 'CURRENT_HEAD_REVERIFY_TEMPLATE.md'
+        )
+        retirement_scaffold.ROOT = root
+        retirement_scaffold.TEMPLATE = (
+            REPO_ROOT / 'projects' / '_templates' / 'SUSPECTED_RETIREMENT_TEMPLATE.md'
+        )
+
+        reverify_args = ['scaffold_reverify.py', 'fixture-project', '2026-08-06', '1e57c6b']
+        require(run_main(reverify_scaffold, reverify_args) == 0, 'reverify scaffold failed')
+        reverify_file = project / 'reverify' / 'CURRENT_HEAD_REVERIFY_2026-08-06_1e57c6b.md'
+        require(reverify_file.is_file(), 'reverify scaffold did not create the expected file')
+        require(
+            run_main(reverify_scaffold, reverify_args) == 1,
+            'existing reverify file was unexpectedly overwritten',
+        )
+
+        for unsafe_project in ('..', '../..', '.'):
+            require(
+                run_main(
+                    reverify_scaffold,
+                    ['scaffold_reverify.py', unsafe_project, '2026-08-06', '1e57c6b'],
+                ) == 1,
+                f'unsafe reverify project unexpectedly passed: {unsafe_project}',
+            )
+        for unsafe_sha in ('../../escape', 'a/b', '.'):
+            require(
+                run_main(
+                    reverify_scaffold,
+                    ['scaffold_reverify.py', 'fixture-project', '2026-08-06', unsafe_sha],
+                ) == 1,
+                f'unsafe reverify sha unexpectedly passed: {unsafe_sha}',
+            )
+        for invalid_date in ('2026-02-31', '2026-8-6', 'not-a-date'):
+            require(
+                run_main(
+                    reverify_scaffold,
+                    ['scaffold_reverify.py', 'fixture-project', invalid_date, '1e57c6b'],
+                ) == 1,
+                f'invalid reverify date unexpectedly passed: {invalid_date}',
+            )
+        require(
+            run_main(
+                reverify_scaffold,
+                ['scaffold_reverify.py', 'no-such-project', '2026-08-06', '1e57c6b'],
+            ) == 1,
+            'missing project unexpectedly passed reverify scaffold',
+        )
+        require(
+            sorted(path.name for path in (project / 'reverify').iterdir())
+            == ['CURRENT_HEAD_REVERIFY_2026-08-06_1e57c6b.md', 'README.md'],
+            'rejected reverify invocations created stray files',
+        )
+
+        retirement_args = [
+            'scaffold_retirement_review.py',
+            'fixture-project',
+            'FIXTURE-BUG-01',
+            '2026-08-06',
+        ]
+        require(
+            run_main(retirement_scaffold, retirement_args) == 0,
+            'retirement-review scaffold failed',
+        )
+        review_file = (
+            project / 'verification' / 'retirement-reviews'
+            / 'FIXTURE-BUG-01-retirement-review-2026-08-06.md'
+        )
+        require(review_file.is_file(), 'retirement-review scaffold did not create the expected file')
+        require(
+            run_main(retirement_scaffold, retirement_args) == 1,
+            'existing retirement review was unexpectedly overwritten',
+        )
+        for unsafe_bug_id in ('../../escape', 'a/b', '.'):
+            require(
+                run_main(
+                    retirement_scaffold,
+                    ['scaffold_retirement_review.py', 'fixture-project', unsafe_bug_id, '2026-08-06'],
+                ) == 1,
+                f'unsafe retirement bug id unexpectedly passed: {unsafe_bug_id}',
+            )
+        require(
+            run_main(
+                retirement_scaffold,
+                ['scaffold_retirement_review.py', 'fixture-project', 'FIXTURE-BUG-01', '2026-13-99'],
+            ) == 1,
+            'invalid retirement-review date unexpectedly passed',
+        )
+        require(
+            run_main(
+                retirement_scaffold,
+                ['scaffold_retirement_review.py', 'no-such-project', 'FIXTURE-BUG-01', '2026-08-06'],
+            ) == 1,
+            'missing project unexpectedly passed retirement-review scaffold',
+        )
+        require(
+            sorted(
+                path.name
+                for path in (project / 'verification' / 'retirement-reviews').iterdir()
+            )
+            == ['FIXTURE-BUG-01-retirement-review-2026-08-06.md'],
+            'rejected retirement-review invocations created stray files',
+        )
+
     print('AUDITREPO SCAFFOLD REGRESSION: PASS')
     return 0
 

@@ -91,6 +91,92 @@ class FakeClient:
         return 204, None
 
 
+class SupersededFakeClient(FakeClient):
+    """Fake GitHub state for the superseded (non-ancestor) retirement mode."""
+
+    def __init__(
+        self,
+        *,
+        ahead_by: int = 2,
+        extra_changed_path: str | None = None,
+        base_behind_by: int = 0,
+        replacement_merged: bool = True,
+        retirement_error: type[Exception] = RuntimeError,
+    ) -> None:
+        super().__init__()
+        self.ahead_by = ahead_by
+        self.extra_changed_path = extra_changed_path
+        self.base_behind_by = base_behind_by
+        self.replacement_merged = replacement_merged
+        self.retirement_error = retirement_error
+
+    def compare(self, base: str, head: str) -> dict[str, object]:
+        if (base, head) == ("base-sha", "main-sha"):
+            return {
+                "status": "ahead",
+                "ahead_by": 5,
+                "behind_by": self.base_behind_by,
+                "files": [],
+            }
+        if (base, head) == ("base-sha", "old-sha"):
+            files = [{"filename": "references/x.md"}, {"filename": "reports/y.md"}]
+            if self.extra_changed_path:
+                files.append({"filename": self.extra_changed_path})
+            return {
+                "status": "ahead",
+                "ahead_by": self.ahead_by,
+                "behind_by": 0,
+                "files": files,
+            }
+        return super().compare(base, head)
+
+    def merged_pr(self, number: int) -> dict[str, object]:
+        # Mirror the real client: an unmerged replacement raises the engine's
+        # fail-closed retirement error before any destructive call.
+        if not self.replacement_merged:
+            raise self.retirement_error(f"replacement PR #{number} is not merged")
+        return super().merged_pr(number)
+
+
+class MergedSourceFakeClient(FakeClient):
+    """Fake state where the source branch head is an exactly merged PR head."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.open_heads = set()
+
+    def list_paged(self, api_path: str) -> list[dict[str, object]]:
+        if "/pulls?state=all&head=" in api_path:
+            return [
+                {
+                    "number": 12,
+                    "merged_at": "2026-08-06T00:00:00Z",
+                    "head": {"sha": "execution-sha", "ref": "execution-branch"},
+                }
+            ]
+        return super().list_paged(api_path)
+
+
+class MismatchedSourceFakeClient(MergedSourceFakeClient):
+    """Fake state where no merged PR has the source branch head as its head."""
+
+    def list_paged(self, api_path: str) -> list[dict[str, object]]:
+        if "/pulls?state=all&head=" in api_path:
+            return [
+                {
+                    "number": 12,
+                    "merged_at": "2026-08-06T00:00:00Z",
+                    "head": {"sha": "a-different-merged-head-sha", "ref": "execution-branch"},
+                },
+                {
+                    "number": 13,
+                    "merged_at": None,
+                    "head": {"sha": "execution-sha", "ref": "execution-branch"},
+                },
+            ]
+        return super(MergedSourceFakeClient, self).list_paged(api_path)
+
+
 def write_request(root: Path) -> Path:
     request = root / "request.json"
     request.write_text(
@@ -110,6 +196,42 @@ def write_request(root: Path) -> Path:
                         "mode": "ancestor",
                         "expectedHead": "old-sha",
                         "reason": "fixture ancestor",
+                    }
+                ],
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return request
+
+
+def write_superseded_request(root: Path, *, replacements: list[int] | None = None) -> Path:
+    request = root / "superseded-request.json"
+    request.write_text(
+        json.dumps(
+            {
+                "schemaVersion": 1,
+                "execute": True,
+                "preparedOnMain": "prepared-sha",
+                "sourceBranch": "execution-branch",
+                "retainedRefs": [
+                    {"branch": "main", "required": True},
+                    {"branch": "archive/evidence", "required": True},
+                ],
+                "targets": [
+                    {
+                        "branch": "old-work",
+                        "mode": "superseded",
+                        "expectedHead": "old-sha",
+                        "comparisonBase": "base-sha",
+                        "expectedAhead": 2,
+                        "allowedChangedPaths": ["reports/y.md", "references/x.md"],
+                        "replacementPullRequests": (
+                            [7] if replacements is None else replacements
+                        ),
+                        "reason": "fixture superseded by merged PR #7",
                     }
                 ],
             },
@@ -216,6 +338,109 @@ def main() -> int:
                 pass
             else:
                 raise AssertionError(f"invalid wrapper reference passed: {invalid_ref}")
+
+        # Superseded mode: a non-ancestor target may be deleted only while its
+        # comparison base is an ancestor of main, the ahead count, the exact
+        # changed-path set and a merged replacement PR all still match review.
+        superseded_request = write_superseded_request(root)
+
+        superseded_dry = SupersededFakeClient()
+        superseded_dry_evidence = root / "superseded-dry.json"
+        require(
+            run_engine(module, superseded_dry, superseded_request, superseded_dry_evidence, execute=False) == 0,
+            "superseded dry-run failed",
+        )
+        dry = json.loads(superseded_dry_evidence.read_text(encoding="utf-8"))
+        require(dry["status"] == "preflight-passed-dry-run", "superseded dry-run status drifted")
+        require(superseded_dry.delete_calls == [], "superseded dry-run issued DELETE")
+        require("old-work" in superseded_dry.refs, "superseded dry-run mutated target state")
+
+        superseded_execute = SupersededFakeClient()
+        superseded_execute_evidence = root / "superseded-execute.json"
+        require(
+            run_engine(module, superseded_execute, superseded_request, superseded_execute_evidence, execute=True) == 0,
+            "superseded execute fixture failed",
+        )
+        executed = json.loads(superseded_execute_evidence.read_text(encoding="utf-8"))
+        require(executed["status"] == "deleted-and-live-verified", "superseded execute status drifted")
+        require(superseded_execute.delete_calls == ["old-work"], "superseded engine deleted outside the reviewed target")
+        preflight_record = executed["preflight"][0]
+        require(preflight_record["replacementPullRequests"] == [{"number": 7, "mergeCommit": "merged-sha", "mergedAt": "2026-08-06T00:00:00Z"}], "replacement PR evidence missing")
+        require(preflight_record["comparison"]["changedPaths"] == ["references/x.md", "reports/y.md"], "changed-path set was not normalized and sorted")
+        require(preflight_record["comparison"]["aheadBy"] == 2, "superseded ahead-count evidence missing")
+
+        # Every drift shape must fail closed before the first DELETE.
+        drift_shapes = (
+            (SupersededFakeClient(ahead_by=3), "ahead count drifted"),
+            (SupersededFakeClient(extra_changed_path="references/unreviewed.md"), "changed-path set drifted"),
+            (SupersededFakeClient(base_behind_by=1), "not an ancestor of current main"),
+        )
+        for drift_fake, expected_error in drift_shapes:
+            drift_evidence = root / "superseded-drift.json"
+            try:
+                run_engine(module, drift_fake, superseded_request, drift_evidence, execute=True)
+            except module.RetirementError as error:
+                require(expected_error in str(error), f"drift error drifted: {error}")
+            else:
+                raise AssertionError(f"superseded drift unexpectedly passed: {expected_error}")
+            require(drift_fake.delete_calls == [], f"drift shape deleted before failing: {expected_error}")
+
+        no_replacement_request = write_superseded_request(root, replacements=[])
+        no_replacement_fake = SupersededFakeClient()
+        no_replacement_evidence = root / "superseded-no-replacement.json"
+        try:
+            run_engine(module, no_replacement_fake, no_replacement_request, no_replacement_evidence, execute=True)
+        except module.RetirementError as error:
+            require("no merged replacement PR" in str(error), f"missing-replacement error drifted: {error}")
+        else:
+            raise AssertionError("superseded target without replacement PR unexpectedly passed")
+        require(no_replacement_fake.delete_calls == [], "missing replacement still deleted the target")
+
+        unmerged_replacement_request = write_superseded_request(root, replacements=[8])
+        unmerged_replacement_fake = SupersededFakeClient(
+            replacement_merged=False, retirement_error=module.RetirementError
+        )
+        unmerged_replacement_evidence = root / "superseded-unmerged-replacement.json"
+        try:
+            run_engine(module, unmerged_replacement_fake, unmerged_replacement_request, unmerged_replacement_evidence, execute=True)
+        except module.RetirementError as error:
+            require("is not merged" in str(error), f"unmerged-replacement error drifted: {error}")
+        else:
+            raise AssertionError("unmerged replacement PR unexpectedly passed")
+        require(unmerged_replacement_fake.delete_calls == [], "unmerged replacement still deleted the target")
+
+        # A source branch whose exact head is a merged PR head is deleted as
+        # merged maintenance source; a non-matching head must refuse.
+        merged_source_fake = MergedSourceFakeClient()
+        merged_source_evidence = root / "merged-source.json"
+        require(
+            run_engine(module, merged_source_fake, request, merged_source_evidence, execute=True) == 0,
+            "merged-source fixture failed",
+        )
+        merged_source = json.loads(merged_source_evidence.read_text(encoding="utf-8"))
+        require(merged_source["status"] == "deleted-and-live-verified", "merged-source status drifted")
+        require(merged_source_fake.delete_calls == ["old-work", "execution-branch"], "merged-source deletion set drifted")
+        source_deletion = merged_source["deleted"][-1]
+        require(source_deletion["mode"] == "merged-maintenance-source", "merged-source deletion mode missing")
+        require(source_deletion["pullRequests"] == [12], "merged-source PR evidence missing")
+        require("execution-branch" not in merged_source_fake.refs, "merged source branch survived execution")
+
+        # A source branch whose head is not the exact head of a merged PR
+        # (only an older merged head, or an unmerged PR with that head) must
+        # be refused, never deleted.
+        mismatched_fake = MismatchedSourceFakeClient()
+        mismatched_evidence = root / "mismatched-source.json"
+        try:
+            run_engine(module, mismatched_fake, request, mismatched_evidence, execute=True)
+        except module.RetirementError as error:
+            require("is not the exact head" in str(error), f"mismatched-source error drifted: {error}")
+        else:
+            raise AssertionError("mismatched source branch head unexpectedly passed")
+        require(
+            "execution-branch" in mismatched_fake.refs,
+            "mismatched source branch was deleted despite refusing",
+        )
+        require(mismatched_fake.delete_calls == ["old-work"], "mismatched-source run deleted outside the target")
 
     print("AUDITREPO REF RETIREMENT REGRESSION: PASS")
     return 0
