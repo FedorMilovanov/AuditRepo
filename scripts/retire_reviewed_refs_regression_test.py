@@ -266,7 +266,12 @@ def write_archive_preserved_request(
     required: bool = True,
     include_retained: bool = True,
 ) -> Path:
-    request = root / "archive-preserved-request.json"
+    safe_ref = archive_ref.replace("/", "-")
+    request = root / (
+        f"archive-preserved-{safe_ref}-"
+        f"{'required' if required else 'optional'}-"
+        f"{'retained' if include_retained else 'unretained'}.json"
+    )
     retained = [{"branch": "main", "required": True}]
     if include_retained:
         retained.append({"branch": archive_ref, "required": required})
@@ -512,13 +517,19 @@ def main() -> int:
                 "must be a required retained ref",
             ),
             (
-                ArchivePreservedFakeClient(),
-                write_archive_preserved_request(root, archive_ref="not-archive", required=False),
+                ArchivePreservedFakeClient(include_archive=False),
+                write_archive_preserved_request(
+                    root, archive_ref="not-archive", required=False
+                ),
                 "requires one archive/* archiveRef",
             ),
         )
         for archive_fake, archive_bad_request, expected_error in archive_drift_cases:
-            archive_bad_evidence = root / "archive-preserved-drift.json"
+            archive_bad_evidence = root / (
+                "archive-preserved-drift-"
+                + expected_error.replace(" ", "-").replace("/", "-")
+                + ".json"
+            )
             try:
                 run_engine(
                     module,
