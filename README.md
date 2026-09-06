@@ -55,6 +55,7 @@ AuditRepo/
 ├── AUDITREPO_OPERATING_MODEL.md
 ├── README.md
 ├── CONTRIBUTING.md
+├── CONCURRENT_EDIT_PROTOCOL.md
 ├── MULTI_WITNESS_VERIFICATION_PROTOCOL.md
 ├── CLEANUP_RETENTION_POLICY.md
 ├── PROJECT_REGISTRY.md
@@ -68,6 +69,7 @@ AuditRepo/
         ├── working/         ← temporary synthesis
         ├── verification/    ← package/current verification
         ├── reverify/        ← significant applicability checks
+        ├── repairs/         ← owner-selected repair plans/summaries
         ├── verified/        ← active MASTER + system context
         ├── legacy/          ← retired searchable reference; not backlog
         └── archive/         ← older historical collections

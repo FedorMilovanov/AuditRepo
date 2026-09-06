@@ -21,7 +21,7 @@ stop losing them between sessions.
 
 ## How to use
 
-Reconcile **visual 1:1** to the canonical reference (currently v2.7) — same look,
+Reconcile **visual 1:1** to the canonical reference (currently v2.9) — same look,
 no eyeballed "liberties" — while keeping agreed improvements (search as a trailing
 icon, search scoped to the series, no count-chips). When a screen looks off on the
 live site, diff it against the canonical reference here rather than guessing.

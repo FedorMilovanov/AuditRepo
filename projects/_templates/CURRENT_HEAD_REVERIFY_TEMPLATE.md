@@ -19,7 +19,7 @@
 
 | Work ID | Previous status | Proof state | Current status | W1–W6 evidence used | Claim boundary |
 |---|---|---|---|---|---|
-| EXAMPLE | confirmed-on-sha | PASS / FAIL / UNPROVEN / N/A | fixed-current | W2 + W3 + W4 | exact current artifact/browser only |
+| EXAMPLE | verified-at-anchor | PASS / FAIL / UNPROVEN / N/A | fixed-current | W2 + W3 + W4 | exact current artifact/browser only |
 
 ## Buckets
 - still-confirmed

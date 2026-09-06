@@ -62,7 +62,7 @@ A proposal does **not** become active work just because it is technically attrac
 - `raw` — observation/proposal only.
 - `candidate` — concrete enough to verify.
 - `verified-at-anchor` — evidence proved the historical observation/gap on a named surface.
-- `current-confirmed-for-work` — current applicability and necessity were checked before work.
+- `current-confirmed-for-work` — current applicability and necessity were checked before work (the `current-local` state in `AUDITREPO_OPERATING_MODEL.md`).
 - `systemic-root` — several manifestations share a mechanism.
 - `owner-decision` — evidence is sufficient, but the remaining choice is product/editorial/rights/hosting authority.
 - `stale` / `invalid` — remove from active work after the disposition is established.

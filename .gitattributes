@@ -1,1 +1,12 @@
+# Binary evidence media — never EOL/whitespace-normalized
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.zip binary
+*.woff2 binary
+*.pdf binary
+
+# Vendored runtime dependency (preflight parser); excludes whitespace checks
 scripts/vendor/pyyaml_6_0_3/** -whitespace
