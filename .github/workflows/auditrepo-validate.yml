@@ -40,7 +40,7 @@ jobs:
           cat "${changed_file}"
           echo "AUDITREPO_CHANGED_PATHS_FILE=${changed_file}" >> "${GITHUB_ENV}"
 
-          if grep -Eq '(^|/)MASTER_BUG_MATRIX\.md$|(^|/)finding-aliases\.json$|^scripts/(check_matrix_coverage|matrix_coverage_)|^\.github/workflows/auditrepo-deep-audit\.yml$' "${changed_file}"; then
+          if grep -Eq '^projects/[^/_][^/]*/verified/(MASTER_BUG_MATRIX\.md|MATRIX_ID_ALIASES\.json)$|^projects/[^/_][^/]*/(reverify|verification|incoming|working|legacy|archive)/|^scripts/(check_matrix_coverage|matrix_coverage_)|^\.github/workflows/auditrepo-deep-audit\.yml$' "${changed_file}"; then
             echo "RUN_MATRIX_COVERAGE=1" >> "${GITHUB_ENV}"
           else
             echo "RUN_MATRIX_COVERAGE=0" >> "${GITHUB_ENV}"
@@ -62,6 +62,8 @@ jobs:
             scripts/scaffold_intake.py \
             scripts/scaffold_project.py \
             scripts/scaffold_regression_test.py \
+            scripts/scaffold_reverify.py \
+            scripts/scaffold_retirement_review.py \
             scripts/retire_reviewed_refs.py \
             scripts/retire_reviewed_refs_regression_test.py
 
@@ -132,21 +134,51 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p reports/matrix-coverage
-          printf 'matrix coverage started\n' > reports/matrix-coverage/status.txt
           python3 -m py_compile \
             scripts/check_matrix_coverage.py \
             scripts/matrix_coverage_lib.py \
             scripts/matrix_coverage_contexts.py \
             scripts/matrix_coverage_regression_test.py
           python3 scripts/matrix_coverage_regression_test.py
-          python3 scripts/check_matrix_coverage.py \
-            --verbose \
-            --json-out reports/matrix-coverage/report.json \
-            | tee reports/matrix-coverage/report.log
-          python3 scripts/matrix_coverage_contexts.py \
-            --json-out reports/matrix-coverage/contexts.json \
-            --markdown-out reports/matrix-coverage/contexts.md
+
+          # The coverage scope must follow the corpora that actually changed.
+          # Validating only the default project would let a corrupted matrix,
+          # alias registry or evidence corpus in any other project pass green.
+          # The resolver fails closed when a trigger resolves to no corpus.
+          mapfile -t coverage_projects < <(python3 - "${AUDITREPO_CHANGED_PATHS_FILE}" <<'PY'
+          import sys
+
+          sys.path.insert(0, 'scripts')
+          from matrix_coverage_lib import coverage_projects_for_changed_paths
+
+          with open(sys.argv[1], encoding='utf-8') as source:
+              changed = [line.strip() for line in source if line.strip()]
+          for project in coverage_projects_for_changed_paths(changed):
+              print(project)
+          PY
+          )
+          if [[ "${#coverage_projects[@]}" -eq 0 ]]; then
+            echo "No coverage corpus resolved from changed paths; refusing zero-work success" >&2
+            exit 1
+          fi
+          printf 'matrix coverage corpora: %s\n' "${coverage_projects[*]}"
+          mkdir -p reports/matrix-coverage
+          printf 'matrix coverage started\n' > reports/matrix-coverage/status.txt
+
+          for project in "${coverage_projects[@]}"; do
+            echo "::group::Matrix coverage: ${project}"
+            mkdir -p "reports/matrix-coverage/${project}"
+            python3 scripts/check_matrix_coverage.py \
+              --project "projects/${project}" \
+              --verbose \
+              --json-out "reports/matrix-coverage/${project}/report.json" \
+              | tee "reports/matrix-coverage/${project}/report.log"
+            python3 scripts/matrix_coverage_contexts.py \
+              --project "projects/${project}" \
+              --json-out "reports/matrix-coverage/${project}/contexts.json" \
+              --markdown-out "reports/matrix-coverage/${project}/contexts.md"
+            echo "::endgroup::"
+          done
           printf 'matrix coverage completed\n' > reports/matrix-coverage/status.txt
 
       - name: Upload matrix diagnostics when produced
@@ -165,3 +197,10 @@ jobs:
 # periodic/manual in auditrepo-deep-audit.yml. Ordinary documentation and intake
 # PRs should not pay for a complete live branch/closed-PR inventory. A retirement
 # result is the exception: it must prove the final remote Git graph immediately.
+#
+# When coverage does run, its scope is derived from the changed paths: every
+# project whose governed matrix, alias registry or evidence corpus changed is
+# validated against its own corpus, and coverage-engine changes are additionally
+# validated against the canonical gb-is-my-strength corpus. The deep audit keeps
+# its single-corpus smoke scope; extending it to every project is deliberately
+# deferred until existing per-project corpus debt is reconciled.

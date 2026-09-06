@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Emit exact file/line contexts for unresolved matrix evidence IDs."""
+"""Emit exact file/line contexts for unresolved matrix evidence IDs.
+
+Consumes the canonical ``build_report(...)["unregisteredEvidence"]`` entries
+(evidence-only IDs with their exact occurrences). The key is read directly: if
+the coverage report contract drifts, this tool must fail loudly rather than
+silently publish an empty contexts artifact.
+"""
 
 from __future__ import annotations
 
@@ -12,25 +18,30 @@ from matrix_coverage_lib import build_report
 
 def collect_contexts(project: pathlib.Path, radius: int = 2) -> dict[str, object]:
     coverage = build_report(project)
-    unresolved_entries = coverage.get("unregisteredEvidence", [])
+    unresolved_entries = coverage["unregisteredEvidence"]
     unresolved = [entry["id"] for entry in unresolved_entries]
 
     contexts: dict[str, list[dict[str, object]]] = {
         finding_id: [] for finding_id in unresolved
     }
+    lines_by_file: dict[pathlib.Path, list[str]] = {}
     for entry in unresolved_entries:
         finding_id = entry["id"]
-        for occurrence in entry.get("occurrences", []):
+        for occurrence in entry["occurrences"]:
             path = project / str(occurrence["file"])
-            lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
-            for line_no in occurrence.get("lines", []):
+            if path not in lines_by_file:
+                lines_by_file[path] = path.read_text(
+                    encoding="utf-8", errors="ignore"
+                ).splitlines()
+            lines = lines_by_file[path]
+            for line_no in occurrence["lines"]:
                 start = max(0, int(line_no) - radius - 1)
                 end = min(len(lines), int(line_no) + radius)
                 contexts[finding_id].append(
                     {
                         "file": str(occurrence["file"]),
                         "line": int(line_no),
-                        "structuralContexts": occurrence.get("contexts", []),
+                        "structuralContexts": occurrence["contexts"],
                         "context": "\n".join(
                             f"{index + 1}: {lines[index]}"
                             for index in range(start, end)

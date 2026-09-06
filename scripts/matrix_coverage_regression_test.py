@@ -7,7 +7,11 @@ import json
 import pathlib
 import tempfile
 
-from matrix_coverage_lib import build_report
+import matrix_coverage_contexts
+from matrix_coverage_lib import (
+    build_report,
+    coverage_projects_for_changed_paths,
+)
 
 MATRIX = """# MASTER
 
@@ -131,6 +135,25 @@ def main() -> int:
         assert report["problems"] == 0
         assert report["evidenceOnlyIds"] == 1
         assert report["evidenceOnlyIdList"] == ["NEW-UNREGISTERED-01"]
+        # The contexts artifact consumes this contract directly; an empty or
+        # missing key must never pass silently (zero-work success guard).
+        unregistered = report["unregisteredEvidence"]
+        assert [entry["id"] for entry in unregistered] == ["NEW-UNREGISTERED-01"]
+        assert unregistered[0]["occurrences"] == [
+            {"file": "reverify/unknown.md", "contexts": ["heading"], "lines": [1]}
+        ]
+
+    with tempfile.TemporaryDirectory() as temp:
+        project = write_project(pathlib.Path(temp), entries)
+        contexts_report = matrix_coverage_contexts.collect_contexts(project)
+        assert contexts_report["unresolvedIds"] == ["NEW-UNREGISTERED-01"]
+        assert contexts_report["coverageProblems"] == 0
+        occurrence = contexts_report["contexts"]["NEW-UNREGISTERED-01"][0]
+        assert occurrence["file"] == "reverify/unknown.md"
+        assert occurrence["line"] == 1
+        assert occurrence["structuralContexts"] == ["heading"]
+        assert "NEW-UNREGISTERED-01" in occurrence["context"]
+        assert "historical evidence-only finding" in occurrence["context"]
 
     with tempfile.TemporaryDirectory() as temp:
         fixed = dict(entries)
@@ -143,6 +166,10 @@ def main() -> int:
         assert report["problems"] == 0
         assert report["registryIds"] == 5
         assert report["evidenceOnlyIds"] == 0
+        assert report["unregisteredEvidence"] == []
+        assert (
+            matrix_coverage_contexts.collect_contexts(project)["contexts"] == {}
+        )
 
     with tempfile.TemporaryDirectory() as temp:
         broken = dict(entries)
@@ -244,6 +271,56 @@ def main() -> int:
             encoding="utf-8",
         )
         expect_value_error(project, "duplicate JSON key")
+
+    # The CI coverage scope must follow the corpora that actually changed.
+    # A corrupted matrix, alias registry or evidence corpus in any project
+    # must resolve to that project, never silently to the default corpus.
+    with tempfile.TemporaryDirectory() as temp:
+        root = pathlib.Path(temp)
+        write_project(root / "projects", entries)
+        default_corpus = root / "projects" / "gb-is-my-strength" / "verified"
+        default_corpus.mkdir(parents=True)
+        (default_corpus / "MASTER_BUG_MATRIX.md").write_text(
+            "# MASTER\n", encoding="utf-8"
+        )
+
+        def resolve(*paths: str) -> list[str]:
+            return coverage_projects_for_changed_paths(paths, root)
+
+        assert resolve("projects/project/verified/MASTER_BUG_MATRIX.md") == ["project"]
+        assert resolve("projects/project/verified/MATRIX_ID_ALIASES.json") == ["project"]
+        assert resolve("projects/project/incoming/agent/2026-09-06/REPORT.md") == ["project"]
+        assert resolve("projects/project/verification/evidence.md") == ["project"]
+        assert resolve("projects/project/legacy/retired.md") == ["project"]
+        assert resolve("scripts/check_matrix_coverage.py") == ["gb-is-my-strength"]
+        assert resolve("scripts/matrix_coverage_lib.py") == ["gb-is-my-strength"]
+        assert resolve("scripts/matrix_coverage_regression_test.py") == ["gb-is-my-strength"]
+        assert resolve(".github/workflows/auditrepo-deep-audit.yml") == ["gb-is-my-strength"]
+        assert resolve(
+            "scripts/matrix_coverage_contexts.py",
+            "projects/project/reverify/current.md",
+        ) == ["gb-is-my-strength", "project"]
+
+        # A deleted governed registry must stay in scope and fail against its
+        # own corpus instead of being silently dropped.
+        (root / "projects" / "project" / "verified" / "MASTER_BUG_MATRIX.md").unlink()
+        assert resolve("projects/project/verified/MASTER_BUG_MATRIX.md") == ["project"]
+
+        # Template lanes, non-coverage scripts and non-project files must not
+        # resolve; a coverage trigger without a corpus is scope drift.
+        for unrelated in (
+            "projects/_templates/incoming/README_TEMPLATE.md",
+            "scripts/validate_audit_repo.py",
+            "verification/2026-09-06-control-plane/REPORT.md",
+            "references/ref-retirement/results/x.md",
+            "docs/MASTER_BUG_MATRIX.md",
+        ):
+            try:
+                coverage_projects_for_changed_paths([unrelated], root)
+            except ValueError as error:
+                assert "no project corpus" in str(error), (unrelated, str(error))
+            else:
+                raise AssertionError(f"unrelated path unexpectedly resolved: {unrelated}")
 
     print("matrix coverage regression tests: PASS")
     return 0

@@ -252,6 +252,12 @@ for proj in project_dirs():
         if not (proj / rel).exists():
             fail(f'{proj.name}: missing {rel}', errors)
 
+    # Every project owns exactly one active matrix. A project without
+    # verified/MASTER_BUG_MATRIX.md is an incomplete repository state, not a
+    # project whose matrix checks should be silently skipped.
+    if not (proj / 'verified' / 'MASTER_BUG_MATRIX.md').is_file():
+        fail(f'{proj.name}: missing verified/MASTER_BUG_MATRIX.md', errors)
+
     validate_matrix_summary(proj, errors)
 
     incoming = proj / 'incoming'

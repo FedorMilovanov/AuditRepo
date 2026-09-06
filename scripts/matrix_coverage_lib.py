@@ -62,6 +62,75 @@ class RegistryEntry:
     reason: str
 
 
+# A project corpus must re-prove coverage when its governed registry inputs
+# (matrix, alias registry) change, or when its evidence corpus changes, because
+# both sides of the ownership relation can drift.
+PROJECT_COVERAGE_TRIGGER_RE = re.compile(
+    r"^projects/(?P<project>[^/_][^/]*)/(?:"
+    r"verified/(?:MASTER_BUG_MATRIX\.md|MATRIX_ID_ALIASES\.json)"
+    r"|(?:reverify|verification|incoming|working|legacy|archive)/"
+    r")"
+)
+# Coverage-engine changes are regression-tested against the canonical corpus.
+COVERAGE_ENGINE_TRIGGER_RE = re.compile(
+    r"^scripts/(?:check_matrix_coverage|matrix_coverage_)"
+    r"|^\.github/workflows/auditrepo-deep-audit\.yml$"
+)
+DEFAULT_COVERAGE_PROJECT = "gb-is-my-strength"
+SAFE_PROJECT_NAME_RE = re.compile(r"^[A-Za-z0-9._-]+$")
+
+
+def coverage_projects_for_changed_paths(
+    changed_paths: Iterable[str],
+    root: pathlib.Path | str = ".",
+) -> list[str]:
+    """Resolve which project corpora must run coverage for a change set.
+
+    The resolver is the single scope authority for the CI coverage step: a
+    coverage-triggering change must resolve to at least one project corpus.
+    An empty resolution is trigger/scope drift and fails closed instead of
+    producing a zero-work success.
+    """
+    root_path = pathlib.Path(root)
+    projects: set[str] = set()
+    registry_named: set[str] = set()
+    engine_changed = False
+    for raw in changed_paths:
+        path = str(raw).strip().replace("\\", "/")
+        if not path:
+            continue
+        match = PROJECT_COVERAGE_TRIGGER_RE.match(path)
+        if match:
+            project = match.group("project")
+            projects.add(project)
+            if re.search(
+                r"/verified/(?:MASTER_BUG_MATRIX\.md|MATRIX_ID_ALIASES\.json)$", path
+            ):
+                registry_named.add(project)
+        elif COVERAGE_ENGINE_TRIGGER_RE.match(path):
+            engine_changed = True
+
+    if engine_changed:
+        projects.add(DEFAULT_COVERAGE_PROJECT)
+
+    selected: list[str] = []
+    for name in sorted(projects):
+        if name.startswith("_") or not SAFE_PROJECT_NAME_RE.fullmatch(name):
+            continue
+        matrix = root_path / "projects" / name / "verified" / "MASTER_BUG_MATRIX.md"
+        # A deleted/renamed governed registry must still run (and fail) against
+        # its project rather than silently dropping the corpus from scope.
+        if matrix.is_file() or name in registry_named:
+            selected.append(name)
+
+    if not selected:
+        raise ValueError(
+            "coverage-triggering change resolved to no project corpus; "
+            "the trigger pattern and the scope resolver have drifted"
+        )
+    return selected
+
+
 def parse_table_cells(line: str) -> list[str]:
     if not line.startswith("| ") or line.startswith("|---"):
         return []
@@ -490,6 +559,13 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
         and finding_id not in ignored_tokens
         and finding_id not in historical_ids
     )
+    # Exact file/line occurrence context for every evidence-only ID. The contexts
+    # artifact consumes this key directly; it must never silently default to an
+    # empty corpus when the report contract changes.
+    unregistered_evidence = [
+        {"id": finding_id, "occurrences": evidence_details[finding_id]}
+        for finding_id in evidence_only_ids
+    ]
 
     return {
         "matrixIds": len(matrix_rows),
@@ -506,6 +582,7 @@ def build_report(project: pathlib.Path) -> dict[str, object]:
         "historicalOnlyOpenRows": len(historical_only),
         "evidenceOnlyIds": len(evidence_only_ids),
         "evidenceOnlyIdList": evidence_only_ids,
+        "unregisteredEvidence": unregistered_evidence,
         "problems": len(problems),
         "problemKinds": dict(collections.Counter(item.split(":", 1)[0] for item in problems)),
         "directWitnessedIds": direct_witnessed,

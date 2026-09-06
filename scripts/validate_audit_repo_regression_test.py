@@ -275,6 +275,17 @@ def main() -> int:
         require(compact_closed.returncode == 1, 'closed row inside compact MASTER unexpectedly passed', compact_closed)
         require('ACTIVE-MATRIX-CONTAINS-CLOSED' in compact_closed.stdout, 'closed-row failure was not specific', compact_closed)
 
+        # A project whose entire governed matrix is deleted is an incomplete
+        # repository state, not a project whose matrix checks are skipped.
+        matrix_path.unlink()
+        missing_matrix = run_validator(root)
+        require(missing_matrix.returncode == 1, 'deleted MASTER_BUG_MATRIX.md unexpectedly passed', missing_matrix)
+        require(
+            'missing verified/MASTER_BUG_MATRIX.md' in missing_matrix.stdout,
+            'missing-matrix failure was not specific',
+            missing_matrix,
+        )
+
     print('AUDITREPO VALIDATOR REGRESSION: PASS')
     return 0
 
