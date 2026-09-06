@@ -1,0 +1,16 @@
+Anchor: cb3681e1a85b5f8919c9dc537f812a842bbe9235
+Environment: Node v22.17.0 / npm 10.9.2
+Command: npm run data:consistency
+Exit: 1
+
+> gb-is-my-strength@1.6.3 data:consistency
+> node scripts/check-data-consistency.js
+
+GB DATA CONSISTENCY AUDIT
+❌ 6 issue(s) { 'search-item-image-missing': 6 }
+- search-item-image-missing: /hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/: /images/articles/genesis6/07-angels-kept-under-darkness.webp
+- search-item-image-missing: /hard-texts/blagovestie-mertvym-1-petra-4-5-6/: /images/articles/genesis6/09-gospel-preached-to-the-dead.webp
+- search-item-image-missing: /hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/: /images/articles/genesis6/08-spirits-in-prison.webp
+- search-item-image-missing: /hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/: /images/articles/genesis6/06-enoch-prophesied-and-apostolic-witness.webp
+- search-item-image-missing: /hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/: /images/articles/genesis6/03-what-is-first-enoch.webp
+- search-item-image-missing: /hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/: /images/articles/genesis6/04-book-of-watchers.webp
