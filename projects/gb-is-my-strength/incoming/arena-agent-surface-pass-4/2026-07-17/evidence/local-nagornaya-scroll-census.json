@@ -1,0 +1,85 @@
+[
+  {
+    "route": "/nagornaya/chast-1/",
+    "regions": [
+      {
+        "index": 0,
+        "clientWidth": 343,
+        "scrollWidth": 384,
+        "overflowX": "auto",
+        "tabIndex": -1,
+        "focusableDescendants": 0
+      },
+      {
+        "index": 1,
+        "clientWidth": 343,
+        "scrollWidth": 384,
+        "overflowX": "auto",
+        "tabIndex": -1,
+        "focusableDescendants": 0
+      },
+      {
+        "index": 2,
+        "clientWidth": 343,
+        "scrollWidth": 384,
+        "overflowX": "auto",
+        "tabIndex": -1,
+        "focusableDescendants": 0
+      }
+    ],
+    "affected": 3
+  },
+  {
+    "route": "/nagornaya/chast-2/",
+    "regions": [],
+    "affected": 0
+  },
+  {
+    "route": "/nagornaya/chast-3/",
+    "regions": [
+      {
+        "index": 0,
+        "clientWidth": 343,
+        "scrollWidth": 384,
+        "overflowX": "auto",
+        "tabIndex": -1,
+        "focusableDescendants": 0
+      }
+    ],
+    "affected": 1
+  },
+  {
+    "route": "/nagornaya/chast-4/",
+    "regions": [
+      {
+        "index": 0,
+        "clientWidth": 291,
+        "scrollWidth": 384,
+        "overflowX": "auto",
+        "tabIndex": -1,
+        "focusableDescendants": 0
+      }
+    ],
+    "affected": 1
+  },
+  {
+    "route": "/nagornaya/chast-5/",
+    "regions": [],
+    "affected": 0
+  },
+  {
+    "route": "/nagornaya/istochniki/",
+    "regions": [],
+    "affected": 0
+  },
+  {
+    "route": "/nagornaya/nakhodki/",
+    "regions": [],
+    "affected": 0
+  },
+  {
+    "route": "/nagornaya/seriya/",
+    "regions": [],
+    "affected": 0
+  }
+]
