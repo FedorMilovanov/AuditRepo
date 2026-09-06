@@ -25,7 +25,7 @@ jobs:
           python3 scripts/validate_audit_repo.py
           python3 scripts/validate_audit_repo_regression_test.py
 
-      - name: Run full matrix/evidence coverage
+      - name: Run full matrix/evidence coverage for every governed project
         shell: bash
         run: |
           set -euo pipefail
@@ -35,14 +35,48 @@ jobs:
             scripts/matrix_coverage_contexts.py \
             scripts/matrix_coverage_regression_test.py
           python3 scripts/matrix_coverage_regression_test.py
+
+          mapfile -t project_matrices < <(
+            find projects \
+              -mindepth 3 \
+              -maxdepth 3 \
+              -type f \
+              -path 'projects/*/verified/MASTER_BUG_MATRIX.md' \
+              ! -path 'projects/_templates/*' \
+              -print \
+              | LC_ALL=C sort
+          )
+          if [[ "${#project_matrices[@]}" -eq 0 ]]; then
+            echo 'No governed project matrices found; refusing zero-work deep audit' >&2
+            exit 1
+          fi
+
           mkdir -p reports/matrix-coverage
-          python3 scripts/check_matrix_coverage.py \
-            --verbose \
-            --json-out reports/matrix-coverage/report.json \
-            | tee reports/matrix-coverage/report.log
-          python3 scripts/matrix_coverage_contexts.py \
-            --json-out reports/matrix-coverage/contexts.json \
-            --markdown-out reports/matrix-coverage/contexts.md
+          printf '%s\n' "${project_matrices[@]}" > reports/matrix-coverage/projects.txt
+
+          for matrix in "${project_matrices[@]}"; do
+            project="${matrix%/verified/MASTER_BUG_MATRIX.md}"
+            slug="${project#projects/}"
+            case "${slug}" in
+              ''|_*|*/*)
+                echo "Unsafe or template project slug discovered: ${slug}" >&2
+                exit 1
+                ;;
+            esac
+
+            out="reports/matrix-coverage/${slug}"
+            mkdir -p "${out}"
+            echo "=== matrix/evidence coverage: ${project} ==="
+            python3 scripts/check_matrix_coverage.py \
+              --project "${project}" \
+              --verbose \
+              --json-out "${out}/report.json" \
+              | tee "${out}/report.log"
+            python3 scripts/matrix_coverage_contexts.py \
+              --project "${project}" \
+              --json-out "${out}/contexts.json" \
+              --markdown-out "${out}/contexts.md"
+          done
 
       - name: Upload matrix diagnostics
         if: always()
