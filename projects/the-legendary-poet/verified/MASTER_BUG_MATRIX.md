@@ -4,10 +4,10 @@
 **Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.  
 **Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.  
 **Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.  
-**Latest current verification:** `../verification/2026-09-06-audio-release-closure/REPORT.md`.  
+**Latest current verification:** `../verification/2026-09-06-shell-noise-closure/REPORT.md`.  
 **Closure history:** `CLOSURE_LEDGER.md`.  
 **Latest integrity audit:** `../verification/2026-09-06-ssot-matrix-integrity-audit/REPORT.md`.  
-**Latest full-row currency check before this closure:** `../reverify/REVERIFY_57353dc_2026-09-06_active-row-currency.md` — 21/21 were still-confirmed at Product `57353dc`; `TLP-AUDIO-RELEASE-001` has since been closed by Product #433 and removed below.
+**Latest full-row currency check before these closures:** `../reverify/REVERIFY_57353dc_2026-09-06_active-row-currency.md` — 21/21 were still-confirmed at Product `57353dc`; `TLP-AUDIO-RELEASE-001` has since been closed by Product #433 and `TLP-SHELL-NOISE-001` by Product #435, and both are removed below.
 
 This file is intentionally short. Closed, absorbed, stale, invalid and superseded findings do not remain here merely to preserve history.
 
@@ -15,7 +15,7 @@ This file is intentionally short. Closed, absorbed, stale, invalid and supersede
 
 No closed row is retained in this matrix. Solved roots leave the active surface in the same wave that closes them; their durable provenance lives in `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md` and the verification packages.
 
-Most recently retired from here: `TLP-AUDIO-RELEASE-001` (Product #433, verification 2026-09-06), `TLP-THEME-001` and `TLP-A11Y-CONTRAST-001` (Product #426, ledger entry 2026-08-20), and `TLP-READER-TEXT-001` (Product #427, ledger entry 2026-08-24).
+Most recently retired from here: `TLP-SHELL-NOISE-001` (Product #435, verification 2026-09-06), `TLP-AUDIO-RELEASE-001` (Product #433, verification 2026-09-06), `TLP-THEME-001` and `TLP-A11Y-CONTRAST-001` (Product #426, ledger entry 2026-08-20), and `TLP-READER-TEXT-001` (Product #427, ledger entry 2026-08-24).
 
 ## 🟠 P1 — ОТКРЫТО (1)
 
@@ -40,7 +40,7 @@ Most recently retired from here: `TLP-AUDIO-RELEASE-001` (Product #433, verifica
 | `TLP-RATING-METHOD-001` | `CONFIRMED-CURRENT / METHODOLOGY / SAMPLE-SIZE-TRUTH / P2` | Self-derived prior lets 1×5.0 outrank 20×4.5 despite explicit one-vote protection claim; dimension leaders also lack sample gate | Transparent confidence/sample methodology with copy/code agreement and adversarial sparse-sample regressions. |
 | `TLP-RATING-URLSTATE-001` | `CONFIRMED-CURRENT / URL-STATE / BIDIRECTIONAL-AUTHORITY / P2` | `/ratings` copies query/tag/sort/rated params into local state only at mount then writes state→URL | URL as canonical filter state, sanitize on read and certify direct query load, clean-navigation reset and Back/Forward parity. |
 
-## 🟢 P3 — ОТКРЫТО (7)
+## 🟢 P3 — ОТКРЫТО (6)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
@@ -50,7 +50,6 @@ Most recently retired from here: `TLP-AUDIO-RELEASE-001` (Product #433, verifica
 | `TLP-HOME-MEDIA-PERF-001` | `CONFIRMED-CURRENT / PERFORMANCE / INITIAL-MEDIA / P3` | All six Home hero portraits are eager, current files total 880,330 bytes, no responsive `srcset` is supplied, and build budgets cover JS/CSS rather than initial raster transfer | Define critical hero request set, defer noncritical portraits, ship responsive candidates and add mobile/desktop initial-media request+byte budgets. |
 | `TLP-A11Y-MOTION-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / REDUCED-MOTION / P3` | Framer/Tilt/View Transitions honor reduced motion, but utility CSS animations do not: PoetCard has perpetual decorative pulse and audio surfaces use unguarded pulse/spin | One motion-policy contract across Framer/JS/CSS utilities; suppress non-essential persistent motion under reduce, preserve state meaning and add computed-animation regressions. |
 | `TLP-A11Y-STATUS-001` | `CONFIRMED-CURRENT / ACCESSIBILITY / STATUS-MESSAGES / P3` | `/poets` dynamically updates visible result count/zero-state during search/filter interaction without role/status/live semantics, unlike Music archive | Stable polite status semantics for meaningful result/pending/empty changes while keeping focus in controls; avoid duplicate chatter and certify with accessibility-engine/browser proof. |
-| `TLP-SHELL-NOISE-001` | `CONFIRMED-CURRENT / SHELL / VISUAL-PERFORMANCE / P3` | Shell noise is owned both by `index.html` and React `SiteLayout`, leaving two fixed full-screen feTurbulence layers at z100 after mount | Give preboot/runtime noise one owner or deterministic handoff so exactly one active layer remains after hydration/navigation, with singleton browser proof. |
 
 ## Summary
 
@@ -60,10 +59,10 @@ Most recently retired from here: `TLP-AUDIO-RELEASE-001` (Product #433, verifica
 | **P0 открыто** | **0** |
 | P1 открыто | 1 |
 | P2 открыто | 12 |
-| P3 открыто | 7 |
+| P3 открыто | 6 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **20** |
+| **Всего открыто (матрица)** | **19** |
 
 Current architecture selection: **none**. Hall #369 remains terminally closed and historical/frozen safety authority, not a current Product lane.
 
