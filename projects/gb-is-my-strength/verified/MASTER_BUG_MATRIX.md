@@ -2,29 +2,27 @@
 
 > SSOT for current verified necessary work only. This is not a history table or a mirror of every source-repository signal.
 >
-> Consolidated and current-checked against Product `main` **94b8eaad0951c6b43cf1e55fc6c54b9114329f61** (2026-08-20). The causal synthesis is grounded in merged AuditRepo evidence package #344 (`45b985737f192f709d7e1ee7324250d0e0986ca1`). Absorbed, retired and superseded rows live in `CLOSURE_LEDGER.md` and the merged `incoming/chatgpt/2026-08-19/` evidence; they are not duplicated here.
+> The causal system synthesis remains grounded in merged AuditRepo evidence package #344 (`45b985737f192f709d7e1ee7324250d0e0986ca1`) at Product anchor `94b8eaad0951c6b43cf1e55fc6c54b9114329f61` (2026-08-20). On 2026-09-06, the three bounded direct-defect rows were current-checked against Product `main` `f135a5739d2a557f866bb92740cd417fe1d185c2`: two are now closed by merged Product repairs and moved to `CLOSURE_LEDGER.md`; `RODOSLOVIYE-OG-IMAGE` remains current. The nine system verification lanes are intentionally unchanged by this bounded reconciliation and require their own evidence before any future disposition.
 
 ## Current state
 
 | Field | Value |
 |---|---|
-| Active work units | **12** |
-| Direct current defects | **3** |
+| Active work units | **10** |
+| Direct current defects | **1** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
 | System verification lanes | **9** |
 | Owner decisions | **0** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Arithmetic: 3 direct current defects + 0 improvements + 0 residuals + 9 system verification lanes + 0 owner decisions = 12 independent repair owners. Named manifestations such as RSS date collapse, CSP variants/gaps, nosniff meta misuse and button-count drift remain closure witnesses under their causal owner; they are not separate active rows.
+> Arithmetic: 1 direct current defect + 0 improvements + 0 residuals + 9 system verification lanes + 0 owner decisions = 10 independent repair owners. Named manifestations such as RSS date collapse, CSP variants/gaps, nosniff meta misuse and button-count drift remain closure witnesses under their causal owner; they are not separate active rows.
 
-## CURRENT DEFECTS — 3
+## CURRENT DEFECTS — 1
 
 | ID | Current problem | Closure boundary |
 |---|---|---|
-| `RODOSLOVIYE-OG-IMAGE` | `/rodosloviye/` still publishes the Karty OG/Twitter image identity while its alt/context describes genealogy. This is a bounded wrong-public-asset defect independent of the broader metadata-authority package. | Correct page-owned OG/Twitter image identity; source + production artifact/live witness at repair anchor. |
-| `GENEALOGY-NO-ERROR-BOUNDARY` | **Narrowed:** the `GenealogyTree` `client:only="react"` interactive island has no local ErrorBoundary/fallback/recovery. Native breadcrumb/H1/summary/prose remain outside the island, so do not claim whole-page blanking. | Add island-local failure containment/recovery and a deterministic crash witness; preserve surrounding native content. |
-| `APP-MASK-NO-WEBKIT-FALLBACK` | `/app/` and Map mask styling use unprefixed `mask-image` without the project-standard `-webkit-mask-image` companion. Exact-current `/app/` source at `94b8eaad` still has the unprefixed-only rule after Product #1752. | Add paired WebKit fallback at shared/current owners and prove generated CSS parity on affected surfaces. |
+| `RODOSLOVIYE-OG-IMAGE` | `/rodosloviye/` still publishes the Karty OG/Twitter image identity while its alt/context describes genealogy. This is a bounded wrong-public-asset defect independent of the broader metadata-authority package. Current Product inspection found no route-owned genealogy/rodosloviye raster asset suitable for a non-fabricated closure. | Correct page-owned OG/Twitter image identity; source + production artifact/live witness at repair anchor. Do not substitute another unrelated generic OG asset merely to retire the row. |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
@@ -67,6 +65,13 @@ These IDs are intentionally absent from active arithmetic; provenance is appende
 - `SITEWIDE-BTN-TYPE-AUDIT` → retired/replaced by `SOURCE-SURFACE-AUDIT-FALSE-COMPLETENESS`.
 - `AR-IDX-JS-02-MULTIWRITER` → retired from active MASTER: canonical `gb:reader-preferences:v1` owns truth; legacy `theme` is a coordinated compatibility mirror with regression coverage.
 
+## Closed bounded direct defects after the 2026-08-20 consolidation
+
+These IDs are intentionally absent from active arithmetic. Their exact Product repair receipts and current-source witnesses are appended to `CLOSURE_LEDGER.md` by the 2026-09-06 direct-defect reconciliation.
+
+- `GENEALOGY-NO-ERROR-BOUNDARY` → closed by Product PR #1768 / merge `a24956adf4e8f759c07bcb0547539f2582179196`; current `GenealogyTree` owns an island-local error boundary and retry fallback.
+- `APP-MASK-NO-WEBKIT-FALLBACK` → closed by Product PR #1770 / merge `35785842f7cabffaacf3ba60e2c549ad19733f96`; current App and Map mask owners carry paired WebKit/unprefixed declarations.
+
 ## Negative/current boundaries preserved
 
 - SW semantic census: 70/85 Astro routes register the root worker, 0 duplicate registration owners, 0 bare worker URLs, five script identities.
@@ -80,14 +85,14 @@ These IDs are intentionally absent from active arithmetic; provenance is appende
 
 ## Evidence authority
 
-Primary merged package:
+Primary merged causal package:
 
 - `../incoming/chatgpt/2026-08-19/README.md`
 - `../incoming/chatgpt/2026-08-19/VERIFIER_SYNTHESIS_TARGET_MATRIX_2026-08-20.md`
 - supporting forensic witnesses in the same directory
 - AuditRepo evidence merge #344: `45b985737f192f709d7e1ee7324250d0e0986ca1`
 
-Current Product boundary: `94b8eaad0951c6b43cf1e55fc6c54b9114329f61`. Product movement from the previous synthesis anchor touched aggregate engine contracts, Mini App and one generated Scripture occurrence. Exact-current reverify retained the App mask defect; the Scripture index patch added only the new `/app/` occurrence and left the existing parser-generated records untouched.
+System-lane evidence boundary remains Product `94b8eaad0951c6b43cf1e55fc6c54b9114329f61` until each system owner is separately reverified or repaired. Bounded direct-defect current-check boundary is Product `f135a5739d2a557f866bb92740cd417fe1d185c2` (2026-09-06). This reconciliation does not infer closure of any system lane from unrelated Product movement.
 
 ## Terminal disposition
 

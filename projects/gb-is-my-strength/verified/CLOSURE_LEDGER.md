@@ -224,3 +224,17 @@ This entry records the governance change only. It does not claim that the reform
 - Regression witness: merged AuditRepo #344 (`45b985737f192f709d7e1ee7324250d0e0986ca1`) plus exact-current source/patch reverify; future closure criteria are encoded in the consolidated MASTER rows.
 - Live evidence: no new live claim required for this documentation consolidation; previous live/artifact witnesses are preserved in their source evidence. No deployed-response `nosniff` absence is claimed without a header witness.
 - Detailed evidence: `../incoming/chatgpt/2026-08-19/VERIFIER_SYNTHESIS_TARGET_MATRIX_2026-08-20.md` and the evidence index beside it.
+
+## 2026-09-06 — bounded direct-defect current reconciliation
+
+- Scope: the three bounded direct defects retained by the 2026-08-20 causal MASTER: `RODOSLOVIYE-OG-IMAGE`, `GENEALOGY-NO-ERROR-BOUNDARY`, `APP-MASK-NO-WEBKIT-FALLBACK`.
+- Inputs: current Product `main` `f135a5739d2a557f866bb92740cd417fe1d185c2`; Product PR #1768 and merge `a24956adf4e8f759c07bcb0547539f2582179196`; Product PR #1770 and merge `35785842f7cabffaacf3ba60e2c549ad19733f96`; current `src/components/genealogy/GenealogyTree.tsx`, `src/pages/app/index.astro`, `src/components/map/MapStyles.astro`, `src/components/rodosloviye/RodosloviyePageHead.astro`; current Product image inventories.
+- Result:
+  - closed-by-fix: `GENEALOGY-NO-ERROR-BOUNDARY` — Product PR #1768 merged a route-local React error boundary around `GenealogyTreeContent`, with explicit fallback, `role="alert"`, and retry that resets only the interactive island while preserving the native surrounding page.
+  - closed-by-fix: `APP-MASK-NO-WEBKIT-FALLBACK` — Product PR #1770 repaired the App owner; current Product source additionally confirms paired `-webkit-mask-image` / `mask-image` declarations in both `/app/` and the Map mask owners, so the original bounded compatibility defect is no longer current.
+  - remaining independent: `RODOSLOVIYE-OG-IMAGE` — current `RodosloviyePageHead.astro` still points OG/Twitter identity to generic `images/og-karty-1200x630.webp`; no route-owned `rodosloviye`/`genealogy` raster exists in the inspected current image roots. The row remains active rather than substituting an unrelated generic asset or fabricating a closure image.
+  - unchanged/unreverified here: all nine system verification lanes. This bounded reconciliation makes no inference about their current disposition.
+- Product evidence: PR #1768 merged as `a24956adf4e8f759c07bcb0547539f2582179196`; PR #1770 merged as `35785842f7cabffaacf3ba60e2c549ad19733f96`; current direct-defect source witness at Product `f135a5739d2a557f866bb92740cd417fe1d185c2`.
+- Regression witness: current `GenealogyTree` still owns `GenealogyErrorBoundary`; current App and Map CSS still carry paired vendor/unprefixed masks. Historical PR scopes remain narrow (one Product file each at merge), and no unrelated Product mutation is made by this AuditRepo reconciliation.
+- Live evidence: not newly claimed; source/merge evidence is sufficient to remove the two stale direct rows from the current-work SSOT. `RODOSLOVIYE-OG-IMAGE` remains open and therefore receives no false live-closure claim.
+- Detailed evidence: Product PRs #1768 and #1770 plus the current-source witnesses cited above; no separate `reverify/` document required for this bounded stale-row reconciliation.
