@@ -9,7 +9,7 @@
 | Fact | Owner | Notes |
 |---|---|---|
 | Current source code, HEAD, open PRs, branches, CI and deploy | `FedorMilovanov/TheLegendaryPoet` | проверять непосредственно перед source work; не копировать постоянно сюда |
-| Current audit-marathon disposition | `verification/2026-08-12-audit-marathon-closeout/REPORT.md` | `AUDIT-COMPLETE-AT-ANCHOR`; 30 Product roots remain repair-pending, not fixed |
+| Current audit-marathon disposition | `verification/2026-08-12-audit-marathon-closeout/REPORT.md` | `AUDIT-COMPLETE-AT-ANCHOR`; the Product roots it recorded were repair-pending, not fixed. Row inventory has moved since that anchor — read the count from MASTER, never from this map |
 | Raw observations and immutable evidence | `incoming/` | anchor-specific reports; чужие raw reports не переписывать |
 | Temporary synthesis and historical wave planning | `working/` | не является постоянным backlog; завершённые synthesis архивируются |
 | Active verified engineering backlog | `verified/MASTER_BUG_MATRIX.md` | только текущие verified инженерные строки; закрытое уходит из active surface |
@@ -33,6 +33,9 @@
 | Understand recurring mechanisms | `verified/SYSTEM_THEMES.md` |
 | Review recent outcomes | `verified/CLOSURE_LEDGER.md` |
 | Inspect current matrix-consolidation proof | `verification/2026-08-07-matrix-consolidation/REPORT.md` |
+| Inspect the latest SSOT/backlog integrity audit | `verification/2026-09-06-ssot-matrix-integrity-audit/REPORT.md` |
+| Check whether the active rows are still current | `reverify/REVERIFY_57353dc_2026-09-06_active-row-currency.md` |
+| Inspect the most recent Product closures | `verification/2026-08-20-community-reconciliation-closure/REPORT.md`, `verification/2026-08-20-theme-contrast-closure/REPORT.md`, `verification/2026-08-24-reader-text-closure/REPORT.md` |
 | Inspect W7 route/runtime proof | `verification/2026-08-06-w7-route-runtime-wave/REPORT.md` |
 | Inspect historical 2026-08-05 root-cause rows | `archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md` |
 | Inspect the retirement mapping for those rows | `archive/superseded/MATRIX_CLEANUP_2026-08-07.md` |

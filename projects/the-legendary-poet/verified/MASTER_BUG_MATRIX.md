@@ -4,25 +4,24 @@
 **Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.  
 **Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.  
 **Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.  
-**Latest current verification:** `../verification/2026-08-24-reader-text-closure/REPORT.md`.
+**Latest current verification:** `../verification/2026-08-24-reader-text-closure/REPORT.md`.  
+**Closure history:** `CLOSURE_LEDGER.md`.  
+**Latest integrity audit:** `../verification/2026-09-06-ssot-matrix-integrity-audit/REPORT.md`.  
+**Latest currency check (all rows):** `../reverify/REVERIFY_57353dc_2026-09-06_active-row-currency.md` — 21/21 still-confirmed at Product `57353dc`.
 
 This file is intentionally short. Closed, absorbed, stale, invalid and superseded findings do not remain here merely to preserve history.
 
-## ✅ ЗАКРЫТО (3)
+## ✅ ЗАКРЫТО (0)
 
-Closed roots are durable in `CLOSURE_LEDGER.md`, system themes and verification packages.
+No closed row is retained in this matrix. Solved roots leave the active surface in the same wave that closes them; their durable provenance lives in `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md` and the verification packages.
 
-| ID | Closure evidence |
-|---|---|
-| `TLP-THEME-001` | Product #426 merged; exact-head repository gates and 4/4 Browser QA green. |
-| `TLP-A11Y-CONTRAST-001` | Product #426 merged; computed dark/light contrast regression green, including functional text >=4.5:1 and enabled unselected rating state >=3:1. |
-| `TLP-READER-TEXT-001` | Product #427 merged as `96644f9d4f7ba5f1bef8f1ff0d8a8642eb990ad1`; exact-head CI/contracts/route/brand gates and Manual Browser QA #2845 green. Closure evidence: `../verification/2026-08-24-reader-text-closure/REPORT.md`. |
+Most recently retired from here: `TLP-THEME-001` and `TLP-A11Y-CONTRAST-001` (Product #426, ledger entry 2026-08-20) and `TLP-READER-TEXT-001` (Product #427, ledger entry 2026-08-24).
 
 ## 🟠 P1 — ОТКРЫТО (1)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
-| `TLP-COMM-ABUSE-001` | `SOURCE-REPAIRED / LIVE-PROOF-PENDING / PUBLIC-INTEGRITY / P1` | Product #420 merged the trusted Cloudflare Worker/D1 authority boundary and Product #422 merged the reconciled client/runtime contract. Source/build gates include fail-closed target authority, signed anonymous actors, network-abuse hashing/budgets and Worker bundle validation. **Terminal production evidence is still absent:** source inspection and dry-run do not prove that the intended D1 schema, required secrets, Turnstile policy, Worker deployment, public client activation and adversarial behavior are live. Closure boundary: `../verification/2026-08-20-community-reconciliation-closure/REPORT.md`. | Deploy and activate the intended Worker + D1 contour; prove `/health` reports ready database/target/writes authority and run live adversarial concurrency, duplicate/idempotency, target-rejection and rotated-identity checks without mandatory registration. |
+| `TLP-COMM-ABUSE-001` | `SOURCE-REPAIRED / LIVE-PROOF-PENDING / PUBLIC-INTEGRITY / P1` | Product #420 merged the trusted Cloudflare Worker/D1 authority boundary and Product #422 merged the reconciled client/runtime contract. Source/build gates include fail-closed target authority, signed anonymous actors, network-abuse hashing/budgets and Worker bundle validation. **Reachability condition (live witness 2026-09-06 at Product `57353dc`):** `/ratings` renders `Сейчас показаны данные этого браузера; общий backend не подключён`, which is emitted only when `remoteEnabled` is `false`, so the public abuse surface is unreachable on the deployed build and this row is the release gate that binds when the shared backend is enabled — not a claim of a currently exploitable live exposure. **Terminal production evidence is still absent:** source inspection and dry-run do not prove that the intended D1 schema, required secrets, Turnstile policy, Worker deployment, public client activation and adversarial behavior are live. Closure boundary: `../verification/2026-08-20-community-reconciliation-closure/REPORT.md`; current reachability witness: `../reverify/REVERIFY_57353dc_2026-09-06_active-row-currency.md`. | Deploy and activate the intended Worker + D1 contour; prove `/health` reports ready database/target/writes authority and run live adversarial concurrency, duplicate/idempotency, target-rejection and rotated-identity checks without mandatory registration. |
 
 ## 🟡 P2 — ОТКРЫТО (13)
 
@@ -58,7 +57,7 @@ Closed roots are durable in `CLOSURE_LEDGER.md`, system themes and verification 
 
 | Категория | Количество |
 |---|---:|
-| Закрыто (fixed) | 3 |
+| Закрыто (fixed) | 0 |
 | **P0 открыто** | **0** |
 | P1 открыто | 1 |
 | P2 открыто | 13 |

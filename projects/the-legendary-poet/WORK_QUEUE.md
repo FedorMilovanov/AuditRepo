@@ -10,7 +10,9 @@ Current verified engineering authority lives only in the MASTER matrix. This opt
 
 **Current autonomous audit queue: CLOSED AT PRODUCT `d59cceccb0c49af59b1be38d4c547a6240b3005a`.**
 
-Rows that remain active in MASTER are verified Product repair roots, not unfinished audit waves. Do not start another broad audit against the unchanged Product head just because rows remain open. Reopen auditing only on a materially changed relevant surface, a concrete contradictory live/browser witness, new deployed/backend evidence, an owner-selected unanswered surface, or future repair verification.
+Rows that remain active in MASTER are verified Product repair roots, not unfinished audit waves. Do not start another broad audit against an unchanged Product head just because rows remain open. Reopen auditing only on a materially changed relevant surface, a concrete contradictory live/browser witness, new deployed/backend evidence, an owner-selected unanswered surface, or future repair verification.
+
+Product `main` has since advanced past that anchor through the merged repairs recorded in [`verified/CLOSURE_LEDGER.md`](verified/CLOSURE_LEDGER.md), and those repairs were verified individually. That movement is not itself a reopen trigger for the broad audit.
 
 Closeout evidence: [`verification/2026-08-12-audit-marathon-closeout/REPORT.md`](verification/2026-08-12-audit-marathon-closeout/REPORT.md).
 
@@ -36,6 +38,10 @@ These are useful owner-selected improvements after/alongside the active repair r
 
 - `RATINGS-PROMISE-VS-CAPABILITY` — `/ratings` is indexed with a description and JSON-LD promising «Сводный читательский рейтинг русских поэтов: оценки, комментарии и прозрачная методика», while the current production build can only show this-browser data (community remote disabled at build time). The page itself is honest in-UI (`RatingsPage.tsx:188`), so this is an indexed-promise vs delivered-capability gap, not a UI defect. Either soften the indexed wording while the shared backend is off, or accept it as a temporary release state — owner call. Re-check when Product PR #420 lands and the backend is enabled.
 - `ESSAY-DEAD-COVER-FIELDS` — `src/data/essays/brikCase.ts:13-14` and `src/data/essays/mayakovskyGromovoy.ts:13-14` still point `cover`/`cardCover` at four `.jpg` files that exist neither in `public/` nor on production (404). They are overridden by the visual layers (`brikCaseVisual.ts:7-8`, `mayakovskyPartTwoVisual.ts`) before export, so `EssayCard.tsx:26` never renders them and no image is broken on the live site. Cleanup only; also worth teaching `validate:covers` to fail on unreachable base values so the next stale path is caught by CI rather than by an audit pass.
+
+## 2026-09-06 parked observation (SSOT integrity audit)
+
+- `HISTORICAL-POINTER-ROT` — eight backtick-quoted relative paths inside **dated historical snapshots** no longer resolve, because the targets were physically moved by earlier waves rather than deleted. Four `verified/*_2026-08-05.md` snapshots (`COMMUNITY_SCALING`, `IMMUTABLE_ESSAY_PUBLICATION`, `SYSTEM_AND_CONTENT_WAVES`, `WORKFLOW_PERFORMANCE_CONSOLIDATION`) cite a sibling-folder path to `MASTER_BUG_MATRIX_2026-08-05.md` under `working/`, where that file no longer is — it now lives in `archive/superseded/`. The snapshot `archive/stale/w4a-a11f6fa-2026-08-05/WORKFLOW_PERFORMANCE_CONSOLIDATION_VERIFIED_2026-08-05.md` cites four more at the wrong depth: `REVERIFY_a11f6fa_2026-08-05.md` (actually its own sibling), the `verification/` and `working/` copies of the 2026-08-05 consolidation and wave-repair documents. **No current authority is affected** — every current-authority pointer in this project resolves. This was deliberately left unrepaired: rewriting frozen snapshots to chase later physical moves is a larger transaction than the navigation nuisance it fixes, and it edits records of what those waves actually said. Owner call: repair the pointers in place, add a redirect note, or accept the rot as an artifact of the physical-move waves.
 
 ## Current architecture selection
 
