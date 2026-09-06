@@ -1,0 +1,150 @@
+{
+  "anchor": "cb3681e1a85b5f8919c9dc537f812a842bbe9235",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "atlasClosed": {
+    "http": 200,
+    "filterVisible": true,
+    "filterText": "Фильтры",
+    "filterAriaLabel": null,
+    "filterAriaSnapshot": "- button",
+    "namedFilterCount": 0,
+    "filterSpanDisplay": "none",
+    "searchAriaSnapshot": "- searchbox \"Найти материал в Атласе\"",
+    "comboboxCount": 0,
+    "searchboxCount": 1,
+    "searchExpanded": "false",
+    "resultsRole": "listbox"
+  },
+  "atlasResults": {
+    "searchAriaSnapshot": "- searchbox \"Найти материал в Атласе\": Гилл",
+    "expanded": "true",
+    "activeDescendant": "atlasSearchOption-0",
+    "options": 6,
+    "resultsHidden": null
+  },
+  "gill": [
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "tables": [
+        {
+          "index": 0,
+          "clientWidth": 340,
+          "scrollWidth": 356,
+          "overflowX": "auto",
+          "tabIndex": -1,
+          "focusableDescendants": 0
+        },
+        {
+          "index": 1,
+          "clientWidth": 340,
+          "scrollWidth": 340,
+          "overflowX": "auto",
+          "tabIndex": -1,
+          "focusableDescendants": 0
+        }
+      ],
+      "overflowingNonFocusable": 1
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+      "tables": [
+        {
+          "index": 0,
+          "clientWidth": 340,
+          "scrollWidth": 466,
+          "overflowX": "auto",
+          "tabIndex": -1,
+          "focusableDescendants": 0
+        },
+        {
+          "index": 1,
+          "clientWidth": 340,
+          "scrollWidth": 340,
+          "overflowX": "auto",
+          "tabIndex": -1,
+          "focusableDescendants": 0
+        },
+        {
+          "index": 2,
+          "clientWidth": 340,
+          "scrollWidth": 384,
+          "overflowX": "auto",
+          "tabIndex": -1,
+          "focusableDescendants": 0
+        }
+      ],
+      "overflowingNonFocusable": 2
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-3-nasledie/",
+      "tables": [
+        {
+          "index": 0,
+          "clientWidth": 340,
+          "scrollWidth": 485,
+          "overflowX": "auto",
+          "tabIndex": -1,
+          "focusableDescendants": 0
+        },
+        {
+          "index": 1,
+          "clientWidth": 340,
+          "scrollWidth": 340,
+          "overflowX": "auto",
+          "tabIndex": -1,
+          "focusableDescendants": 0
+        }
+      ],
+      "overflowingNonFocusable": 1
+    },
+    {
+      "route": "/articles/dzhon-gill-spravochnik/",
+      "tables": [
+        {
+          "index": 0,
+          "clientWidth": 340,
+          "scrollWidth": 413,
+          "overflowX": "auto",
+          "tabIndex": -1,
+          "focusableDescendants": 0
+        },
+        {
+          "index": 1,
+          "clientWidth": 340,
+          "scrollWidth": 438,
+          "overflowX": "auto",
+          "tabIndex": -1,
+          "focusableDescendants": 0
+        },
+        {
+          "index": 2,
+          "clientWidth": 340,
+          "scrollWidth": 341,
+          "overflowX": "auto",
+          "tabIndex": -1,
+          "focusableDescendants": 0
+        },
+        {
+          "index": 3,
+          "clientWidth": 340,
+          "scrollWidth": 436,
+          "overflowX": "auto",
+          "tabIndex": -1,
+          "focusableDescendants": 0
+        },
+        {
+          "index": 4,
+          "clientWidth": 340,
+          "scrollWidth": 501,
+          "overflowX": "auto",
+          "tabIndex": -1,
+          "focusableDescendants": 0
+        }
+      ],
+      "overflowingNonFocusable": 5
+    }
+  ]
+}

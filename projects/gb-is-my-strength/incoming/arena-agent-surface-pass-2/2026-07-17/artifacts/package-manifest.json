@@ -1,0 +1,18 @@
+{
+  "project": "gb-is-my-strength",
+  "agent": "arena-agent-surface-pass-2",
+  "localDate": "2026-07-17",
+  "productSha": "cb3681e1a85b5f8919c9dc537f812a842bbe9235",
+  "auditRepoBase": "650ab7d61c7086578df3a3d914824ecaeba9ec16",
+  "excludedSurface": "data:consistency",
+  "viewport": "390x844",
+  "findings": [
+    "ATLAS-MOBILE-FILTER-UNNAMED",
+    "ATLAS-SEARCH-COMBOBOX-SEMANTICS",
+    "GILL-MOBILE-TABLE-KEYBOARD-SCROLL"
+  ],
+  "repairLanes": 2,
+  "liveAtlasHttpStatus": 200,
+  "gillOverflowingNonFocusableTables": 9,
+  "masterMutated": false
+}
