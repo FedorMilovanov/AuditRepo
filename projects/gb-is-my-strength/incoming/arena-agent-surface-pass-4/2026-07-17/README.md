@@ -5,7 +5,7 @@
 - Product: `FedorMilovanov/gb-is-my-strength`
 - Agent: `arena-agent-surface-pass-4`
 - Local date: `2026-07-17`
-- Product anchor: `cb3681e1a85b5f8919c9dc537f812a842bbe9235`
+- Audited anchor (SHA): `cb3681e1a85b5f8919c9dc537f812a842bbe9235`
 - Modes: exact source, production-like dist, local/live Chromium + axe
 - Viewport/theme: `390×844`, default light unless stated
 - Exclusions: data-consistency, Atlas/Gill PR #337 findings, Baptist PR #341 findings
