@@ -124,9 +124,14 @@ def coverage_projects_for_changed_paths(
             selected.append(name)
 
     if not selected:
+        detail = (
+            f"; matched but non-coverable project names: {sorted(projects)}"
+            if projects
+            else ""
+        )
         raise ValueError(
-            "coverage-triggering change resolved to no project corpus; "
-            "the trigger pattern and the scope resolver have drifted"
+            "coverage-triggering change resolved to no project corpus"
+            f"{detail}; the trigger pattern and the scope resolver have drifted"
         )
     return selected
 

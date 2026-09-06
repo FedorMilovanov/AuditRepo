@@ -222,3 +222,38 @@ So the control plane green-lit a corpus admission it never inspected. The D2 fix
 ### 8.5 Phase 2 conclusion
 
 No new verified defects. Phase 2 (a) converted the one baseline "not executable" item into a passing live verification, (b) produced executed/git-archaeological proof for D1–D3 (drift dates, phantom-filename proof, the historical false-green commit), and (c) refuted the remaining suspected false-red/false-green paths. The Phase 1 fix set stands as the complete defect list for this lane.
+
+---
+
+## 9. Phase 3 addendum (same session): regression-coverage pins for fail-closed enforcement
+
+Phase 2 self-review surfaced that several **fail-closed enforcement paths had no regression fixtures at all**, including the most dangerous one: the destructive retirement engine's `superseded` mode (non-ancestor branch deletion) was completely untested. Classification: **HARDENING (missing regression coverage)** — the audited code is correct per review and live behavior; the gap was the absence of pins that would catch a future silent weakening. No new code defects.
+
+### 9.1 New regression fixtures (test-only, no behavior change)
+
+- `retire_reviewed_refs_regression_test.py`:
+  - **superseded mode, happy path** (dry-run + execute): comparisonBase-ancestor proof, ahead-count evidence, normalized/sorted changed-path set, merged-replacement evidence, deletion limited to the reviewed target;
+  - **four drift refusals, each proven to fail before the first DELETE**: ahead-count drift, changed-path-set drift, comparisonBase not an ancestor of main, no/none merged replacement PR;
+  - **merged-source deletion**: source branch whose exact head is a merged PR head is deleted as `merged-maintenance-source` with PR evidence;
+  - **mismatched-source refusal**: a source head that is only an older merged head (or an unmerged PR head) is refused and never deleted.
+- `matrix_coverage_regression_test.py`: pins for the three ownership-enforcement primitives — `ORPHAN-ACTIVE-WORK` (active row with no evidence anywhere), `BROKEN-EVIDENCE-PATH` (row references a vanished evidence file; also orphaned), and the `verified-* <sha>` immutable direct-witness acceptance (`directWitnessedIds`, zero problems). Plus a case pinning the improved non-coverable-project-name error.
+- `validate_audit_repo_regression_test.py`: pins that a generated `reports/` directory fails validation (`unexpected root directory: reports/`) — the exact invariant the ref-retirement workflow relies on when it removes generated diagnostics before re-validating.
+- `matrix_coverage_lib.py` (only code change in Phase 3, diagnosability only): the fail-closed scope error now names matched-but-non-coverable project names (e.g. a path with a space, forbidden by the scaffold contract) instead of only reporting trigger/resolver drift.
+
+### 9.2 Mutant proof — every new pin catches its targeted weakening
+
+Each mutant was applied to a scratch copy of `scripts/` and the corresponding suite run against it:
+
+| Mutant (weakening applied to the copy) | Result |
+|---|---|
+| `ORPHAN-ACTIVE-WORK` emission removed | **caught** — `KeyError: 'ORPHAN-ACTIVE-WORK'` |
+| missing-evidence-file problem skipped (`BROKEN-EVIDENCE-PATH`) | **caught** |
+| immutable `verified-*` witness disabled | **caught** (witnessed row becomes orphan → problems ≠ 0) |
+| superseded ahead-count drift check removed | **caught** — "superseded drift unexpectedly passed: ahead count drifted" |
+| superseded changed-path-set drift check removed | **caught** — "superseded drift unexpectedly passed: changed-path set drifted" |
+| merged-source exact-head equality replaced with `True` | **caught** — "mismatched source branch head unexpectedly passed" |
+| `reports/` added to `ALLOWED_ROOT_DIRS` | **caught** — "generated reports/ directory unexpectedly passed validation" |
+
+### 9.3 Phase 3 conclusion
+
+No new defects; the fail-closed semantics that Phases 1–2 depend on (and that D1–D4 unmasked as unenforced) are now pinned by tests that demonstrably fail under targeted weakening. Full battery re-run green after the additions (structure, preflight, validation, all five regression suites, per-project coverage, forensic regression, `py_compile`).

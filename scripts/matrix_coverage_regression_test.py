@@ -211,6 +211,59 @@ def main() -> int:
         report = build_report(project)
         assert report["problemKinds"]["CLOSED-IN-ACTIVE"] == 1
 
+    # The three enforcement primitives of the matrix/evidence ownership
+    # relation must stay pinned: an active row with no evidence anywhere,
+    # a row referencing a vanished evidence file, and a row that carries
+    # its own immutable verified-* witness.
+    with tempfile.TemporaryDirectory() as temp:
+        orphan_active = (
+            MATRIX.replace(
+                "| `OPEN-ONE` | current defect | verification/current.md |",
+                "| `OPEN-ONE` | current defect | verification/current.md |\n"
+                "| `ORPHAN-ONE` | unwitnessed defect | no evidence yet |",
+            )
+            .replace("## CURRENT DEFECTS — 1", "## CURRENT DEFECTS — 2")
+            .replace("| Active work units | **4** |", "| Active work units | **5** |")
+            .replace("| Direct current defects | **1** |", "| Direct current defects | **2** |")
+        )
+        project = write_project(pathlib.Path(temp), entries, matrix=orphan_active)
+        report = build_report(project)
+        assert report["problemKinds"]["ORPHAN-ACTIVE-WORK"] == 1
+        assert "ORPHAN-ONE" not in report["directWitnessedIds"]
+
+    with tempfile.TemporaryDirectory() as temp:
+        broken_reference = (
+            MATRIX.replace(
+                "| `OPEN-ONE` | current defect | verification/current.md |",
+                "| `OPEN-ONE` | current defect | verification/current.md |\n"
+                "| `BROKEN-REF-ONE` | references vanished evidence | verification/missing.md |",
+            )
+            .replace("## CURRENT DEFECTS — 1", "## CURRENT DEFECTS — 2")
+            .replace("| Active work units | **4** |", "| Active work units | **5** |")
+            .replace("| Direct current defects | **1** |", "| Direct current defects | **2** |")
+        )
+        project = write_project(pathlib.Path(temp), entries, matrix=broken_reference)
+        report = build_report(project)
+        assert report["problemKinds"]["BROKEN-EVIDENCE-PATH"] == 1
+        # The broken path cannot witness the row, so the row is also orphaned.
+        assert report["problemKinds"]["ORPHAN-ACTIVE-WORK"] == 1
+
+    with tempfile.TemporaryDirectory() as temp:
+        direct_witness = (
+            MATRIX.replace(
+                "| `OPEN-ONE` | current defect | verification/current.md |",
+                "| `OPEN-ONE` | current defect | verification/current.md |\n"
+                "| `WITNESS-ONE` | directly witnessed defect | verified-source 1a2b3c4d5e6f7a8b |",
+            )
+            .replace("## CURRENT DEFECTS — 1", "## CURRENT DEFECTS — 2")
+            .replace("| Active work units | **4** |", "| Active work units | **5** |")
+            .replace("| Direct current defects | **1** |", "| Direct current defects | **2** |")
+        )
+        project = write_project(pathlib.Path(temp), entries, matrix=direct_witness)
+        report = build_report(project)
+        assert report["problems"] == 0
+        assert report["directWitnessedIds"] == ["WITNESS-ONE"]
+
     with tempfile.TemporaryDirectory() as temp:
         bad_section_count = MATRIX.replace("## CURRENT DEFECTS — 1", "## CURRENT DEFECTS — 2")
         project = write_project(pathlib.Path(temp), entries, matrix=bad_section_count)
@@ -321,6 +374,18 @@ def main() -> int:
                 assert "no project corpus" in str(error), (unrelated, str(error))
             else:
                 raise AssertionError(f"unrelated path unexpectedly resolved: {unrelated}")
+
+        # A matched but non-coverable project name (e.g. a path with a space,
+        # which the scaffold contract forbids) must fail loudly and name it.
+        try:
+            coverage_projects_for_changed_paths(
+                ["projects/bad name/incoming/x.md"], root
+            )
+        except ValueError as error:
+            assert "no project corpus" in str(error)
+            assert "'bad name'" in str(error), str(error)
+        else:
+            raise AssertionError("non-coverable project name unexpectedly resolved")
 
     print("matrix coverage regression tests: PASS")
     return 0
