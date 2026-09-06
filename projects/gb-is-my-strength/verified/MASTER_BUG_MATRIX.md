@@ -2,21 +2,21 @@
 
 > SSOT for current verified necessary work only. This is not a history table or a mirror of every source-repository signal.
 >
-> The causal system synthesis remains grounded in merged AuditRepo evidence package #344 (`45b985737f192f709d7e1ee7324250d0e0986ca1`) at Product anchor `94b8eaad0951c6b43cf1e55fc6c54b9114329f61` (2026-08-20). On 2026-09-06, the three bounded direct-defect rows were current-checked against Product `main` `f135a5739d2a557f866bb92740cd417fe1d185c2`: two are now closed by merged Product repairs and moved to `CLOSURE_LEDGER.md`; `RODOSLOVIYE-OG-IMAGE` remains current. Later the same day, `BROWSER-MATRIX-ZERO-WORKER-FAILOPEN` was separately current-checked against Product `main` `29204573b78f15f4e49455ccc4a63722f033d6bd` and removed after the complete #1798 + #1804 system repair chain. Later the same day, `LAZY-RUNTIME-LOADER-FAILURE-STATE` was closed by the selective Product repair chain #1814 + #1825 at Product `main` `87032f928c4894d8e2945aa1a41a1fe945eb72c5`. The remaining seven system verification lanes are intentionally unchanged and require their own evidence before any future disposition.
+> The causal system synthesis remains grounded in merged AuditRepo evidence package #344 (`45b985737f192f709d7e1ee7324250d0e0986ca1`) at Product anchor `94b8eaad0951c6b43cf1e55fc6c54b9114329f61` (2026-08-20). On 2026-09-06, the three bounded direct-defect rows were current-checked against Product `main` `f135a5739d2a557f866bb92740cd417fe1d185c2`: two are now closed by merged Product repairs and moved to `CLOSURE_LEDGER.md`; `RODOSLOVIYE-OG-IMAGE` remains current. Later the same day, `BROWSER-MATRIX-ZERO-WORKER-FAILOPEN` was separately current-checked against Product `main` `29204573b78f15f4e49455ccc4a63722f033d6bd` and removed after the complete #1798 + #1804 system repair chain. Later the same day, `LAZY-RUNTIME-LOADER-FAILURE-STATE` was closed by the selective Product repair chain #1814 + #1825 at Product `main` `87032f928c4894d8e2945aa1a41a1fe945eb72c5`. On 2026-09-07, `TTS-SHAREDWORKER-CLIENT-LIFECYCLE` was separately closed by Product #1831 at Product `main` `5938394cf4f308f441396c87a3ab5250483a539d`. The remaining six system verification lanes are intentionally unchanged and require their own evidence before any future disposition.
 
 ## Current state
 
 | Field | Value |
 |---|---|
-| Active work units | **8** |
+| Active work units | **7** |
 | Direct current defects | **1** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
-| System verification lanes | **7** |
+| System verification lanes | **6** |
 | Owner decisions | **0** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Arithmetic: 1 direct current defect + 0 improvements + 0 residuals + 7 system verification lanes + 0 owner decisions = 8 independent repair owners. Named manifestations such as RSS date collapse, CSP variants/gaps, nosniff meta misuse and button-count drift remain closure witnesses under their causal owner; they are not separate active rows.
+> Arithmetic: 1 direct current defect + 0 improvements + 0 residuals + 6 system verification lanes + 0 owner decisions = 7 independent repair owners. Named manifestations such as RSS date collapse, CSP variants/gaps, nosniff meta misuse and button-count drift remain closure witnesses under their causal owner; they are not separate active rows.
 
 ## CURRENT DEFECTS — 1
 
@@ -34,12 +34,11 @@
 | ID | Current residual | Closure boundary |
 |---|---|---|
 
-## SYSTEM VERIFICATION LANES — 7
+## SYSTEM VERIFICATION LANES — 6
 
 | ID | Current causal problem | Absorbs / closure boundary |
 |---|---|---|
 | `SW-ROOT-GENERATION-AUTHORITY` | One root Service Worker is registered under five route-dependent script identities in one release; failed successor rollback is not generation-isolated; a revisioned `?v=B` miss can downgrade to bare canonical bytes from controlling generation A. | **Absorbs `SW-PWA-FRESHNESS`.** Establish one release/generation authority; isolate staging/active cache generations; prove A→B offline/update semantics with byte identity rather than only `200/nonempty`. |
-| `TTS-SHAREDWORKER-CLIENT-LIFECYCLE` | Normal MessagePort/document lifetime end has no authoritative client-retirement transaction. A disappeared client can remain a shared model-load waiter and can leave synthesis work in the single global queue. | Disconnect/close owner atomically retires load membership and all speech jobs for that client; browser contract covers in-flight disconnect → last-live cancel and abandoned synthesis. |
 | `ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT` | Strict-native migration proves removal of legacy transport but not retained semantic capability completeness. Current missing-owner families include Antisovetov strategic map, Antisovetov/Krajne FAQ accordion, heading-anchor copy controls and Gill/Krajne reversible cards. | Capability manifest/cardinality invariant: `legacy transport = 0`, every retained capability has exactly one current owner, and production-like browser coverage exercises each family. |
 | `SCRIPTURE-OCCURRENCE-REPRESENTATION-ORACLE` | Exact Scripture Search derives user-visible context/fragment identity through a lossy source representation: raw-source syntax can leak into snippets and `\bid=` can accept `data-note-id=` as a real `id`. Producer/dist/browser oracles share the narrower surrogate. Product #1752 only added one `/app/` occurrence (`2429 → 2430`) and did not rewrite the existing records. | Build context from visible prose/DOM semantics; parse real `id` attributes structurally; independent oracle must prove snippet cleanliness and fragment target existence. |
 | `SOURCE-SURFACE-AUDIT-FALSE-COMPLETENESS` | Multiple guards overstate measured corpus completeness. Historical button audit `47` becomes 49 in its declared Astro/TSX scope and at least 75 when JS-generated controls are included; asset revision audit also misses JS-internal resource constructors (536 checked independently: 534 exact / 2 stale). | **Absorbs the active `MISSING-BUTTON-TYPE` + `SITEWIDE-BTN-TYPE-AUDIT` accounting.** Define DOM/resource-producing source surfaces explicitly; deterministic committed scanners must fail on omitted classes. Typeless-button cleanup is preventive unless a behavioural submit witness appears. |
@@ -90,7 +89,7 @@ Primary merged causal package:
 - supporting forensic witnesses in the same directory
 - AuditRepo evidence merge #344: `45b985737f192f709d7e1ee7324250d0e0986ca1`
 
-The remaining seven system-lane evidence boundaries stay at Product `94b8eaad0951c6b43cf1e55fc6c54b9114329f61` until each owner is separately reverified or repaired. `BROWSER-MATRIX-ZERO-WORKER-FAILOPEN` was separately current-checked and removed at Product `29204573b78f15f4e49455ccc4a63722f033d6bd`; closure evidence is `../reverify/CURRENT_HEAD_REVERIFY_2026-09-06_browser-matrix-zero-worker-closure-29204573.md`. `LAZY-RUNTIME-LOADER-FAILURE-STATE` was separately current-checked and removed at Product `87032f928c4894d8e2945aa1a41a1fe945eb72c5` after Product #1814 + #1825; closure evidence is `../reverify/CURRENT_HEAD_REVERIFY_2026-09-06_lazy-runtime-loader-failure-state-closure-87032f92.md`. Bounded direct-defect current-check boundary is Product `f135a5739d2a557f866bb92740cd417fe1d185c2` (2026-09-06). No closure inference is made for unrelated owners from Product movement.
+The remaining six system-lane evidence boundaries stay at Product `94b8eaad0951c6b43cf1e55fc6c54b9114329f61` until each owner is separately reverified or repaired. `BROWSER-MATRIX-ZERO-WORKER-FAILOPEN` was separately current-checked and removed at Product `29204573b78f15f4e49455ccc4a63722f033d6bd`; closure evidence is `../reverify/CURRENT_HEAD_REVERIFY_2026-09-06_browser-matrix-zero-worker-closure-29204573.md`. `LAZY-RUNTIME-LOADER-FAILURE-STATE` was separately current-checked and removed at Product `87032f928c4894d8e2945aa1a41a1fe945eb72c5` after Product #1814 + #1825; closure evidence is `../reverify/CURRENT_HEAD_REVERIFY_2026-09-06_lazy-runtime-loader-failure-state-closure-87032f92.md`. `TTS-SHAREDWORKER-CLIENT-LIFECYCLE` was separately current-checked and removed at Product `5938394cf4f308f441396c87a3ab5250483a539d` after Product #1831; closure evidence is `../reverify/CURRENT_HEAD_REVERIFY_2026-09-07_tts-sharedworker-client-lifecycle-closure-5938394c.md`. Bounded direct-defect current-check boundary is Product `f135a5739d2a557f866bb92740cd417fe1d185c2` (2026-09-06). No closure inference is made for unrelated owners from Product movement.
 
 ## Terminal disposition
 
