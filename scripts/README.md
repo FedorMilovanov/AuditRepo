@@ -22,7 +22,7 @@ python3 scripts/validate_audit_repo.py
 
 ## scaffold_intake.py
 
-Создаёт полную intake-папку агента со всеми сабфолдерами новой модели:
+Создаёт полную intake-папку агента со всеми сабфолдерами текущей модели:
 
 ```
 projects/<project>/incoming/<agent>/<YYYY-MM-DD>/
@@ -53,8 +53,8 @@ projects/<project>/incoming/<agent>/<YYYY-MM-DD>/
 Агент **НЕ редактирует** чужой файл. Он создаёт свой comment:
 
 ```bash
-# После scaffold создать файл в comments/
-touch projects/gb-is-my-strength/incoming/my-agent/2026-06-25/comments/comment-on-arena-agent-round3-P1-14.md
+# После scaffold создать файл в comments/ (имя = <target-agent>-<target-id>)
+touch projects/gb-is-my-strength/incoming/my-agent/<YYYY-MM-DD>/comments/comment-on-OTHER-AGENT-BUG-ID.md
 ```
 
 Шаблон: `projects/_templates/COMMENT_TEMPLATE.md`
@@ -64,7 +64,7 @@ touch projects/gb-is-my-strength/incoming/my-agent/2026-06-25/comments/comment-o
 Агент создаёт proposals в `proposals/`:
 
 ```bash
-touch projects/gb-is-my-strength/incoming/my-agent/2026-06-25/proposals/proposal-P1-14-severity-up.md
+touch projects/gb-is-my-strength/incoming/my-agent/<YYYY-MM-DD>/proposals/proposal-TARGET-BUG-ID-severity-up.md
 ```
 
 Proposal statuses: proposal-open → proposal-supported → proposal-accepted / proposal-rejected / proposal-conflicted / proposal-superseded

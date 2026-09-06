@@ -121,6 +121,11 @@ levels. — FIXED minimally: each doc now states the equivalence of the other's 
   `verified/` docs and no `_templates`. Corrected.
 - `scripts/README.md` nested `### scaffold_reverify.py` / `### scaffold_retirement_review.py`
   headings inside the `validate_audit_repo.py` section — promoted to `##`.
+- (Round 2) `scripts/README.md` example `touch` commands used the retired ID style `P1-14` and a
+  hard-coded stale date `2026-06-25` — replaced with `<YYYY-MM-DD>` / `<TARGET-ID>` placeholders
+  matching the scaffold's own sample file names.
+- (Round 2) `scripts/README.md` described the intake scaffold as "сабфолдерами новой модели"
+  (stale migration-era wording) — corrected to "текущей модели".
 
 ## 4. Findings — intentional historical terminology (kept)
 
@@ -207,4 +212,36 @@ AUDITREPO VALIDATION: PASS
 AUDITREPO VALIDATOR REGRESSION: PASS
 AUDITREPO SCAFFOLD REGRESSION: PASS
 AUDITREPO WORKFLOW PREFLIGHT: PASS
+```
+
+## 11. Round-2 re-verification (same day, after first PR push)
+
+- **Branch/main sync:** `origin/main` still at `29450bf`; branch `arena/01a0770d-auditrepo`
+  rebased on it, no conflicts. PR #364 OPEN + draft, `mergeable: MERGEABLE`, head = this
+  audit's commit. CI on the head at the time of round 1 push: `preflight` PASS, `validate` PASS.
+- **Link resolution:** all 8 local links in the primary surfaces + templates + `scripts/README.md`
+  resolve; 0 broken. External URLs are not duplicated in these docs.
+- **Stale-term re-grep:** `L0–L4`, `confirmed-on-sha`, `peer-reviewed`, `repair-ready`,
+  «Multi-Level Verification Ladder», `Governed Freedom`, `conflicts/`,
+  `archive/fixed|stale|false-positive/`, "8-секционный" — zero occurrences left in the primary
+  surfaces and templates. Remaining occurrences are confined to `projects/*/archive/**`
+  (intentional historical) as classified in §4.
+- **Additional round-2 fixes:** see §3 (example IDs/date, "новой модели" wording).
+- **Sibling-PR contract check:** Agent 1's #365 (validator/coverage changes) extends CI trigger
+  patterns and regression tests; it does not alter the documented folder contract
+  (`incoming/working/verification/reverify/repairs/verified/legacy/archive`) or MASTER rules, so
+  no part of this report's matrix is invalidated by it. No file overlap with this PR.
+- **SANDBOX-ENV-2026-06-21.md:** dated sandbox/environment passport — classified historical,
+  intentionally retained (consistent with §4).
+- **Full local re-run after round-2 fixes (9 suites):**
+
+```
+AUDITREPO STRUCTURE CHECK: PASS
+AUDITREPO VALIDATION: PASS
+AUDITREPO VALIDATOR REGRESSION: PASS
+AUDITREPO SCAFFOLD REGRESSION: PASS
+AUDITREPO WORKFLOW PREFLIGHT: PASS (+ regression)
+AUDITREPO REF RETIREMENT REGRESSION: PASS
+MATRIX COVERAGE REGRESSION: PASS
+AUDITREPO HISTORY FORENSIC REGRESSION: PASS
 ```
