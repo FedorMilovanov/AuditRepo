@@ -1,0 +1,212 @@
+{
+  "http": 200,
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "htmlClass": null,
+  "violations": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "nodes": [
+        {
+          "target": [
+            ".article-desc"
+          ],
+          "html": "<p class=\"article-desc reveal revealed\"><strong>История Евангелия, свободы и совести.</strong> От ночного крещения на Куре до подпольных типографий и церковной памяти.</p>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".article-desc > strong"
+          ],
+          "html": "<strong>История Евангелия, свободы и совести.</strong>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "time"
+          ],
+          "html": "<time datetime=\"2026-06-13\">13 июня 2026</time>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".h-article-card[href$=\"noch-na-kure/\"] > .h-article-body > .h-article-kicker"
+          ],
+          "html": "<div class=\"h-article-kicker\">Статья 1 · 18 мин</div>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.41 (foreground color: #5d7cb3, background color: #efe7d7, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".h-article-card[href$=\"noch-na-kure/\"] > .h-article-body > .h-article-abstract"
+          ],
+          "html": "<p class=\"h-article-abstract\">1867 · Воронин, Кальвейт и первая община</p>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.9 (foreground color: #78716c, background color: #efe7d7, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "section[aria-labelledby=\"chapter-i\"] > .h-article-list > .h-article-card:nth-child(2) > .h-article-body > .h-article-kicker"
+          ],
+          "html": "<div class=\"h-article-kicker\">Статья 2 · 20 мин</div>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.41 (foreground color: #5d7cb3, background color: #efe7d7, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "section[aria-labelledby=\"chapter-i\"] > .h-article-list > .h-article-card:nth-child(2) > .h-article-body > .h-article-abstract"
+          ],
+          "html": "<p class=\"h-article-abstract\">1867–1870 · Рябошапка, Ратушный, первые крещения</p>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.9 (foreground color: #78716c, background color: #efe7d7, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".h-article-card:nth-child(3) > .h-article-body > .h-article-kicker"
+          ],
+          "html": "<div class=\"h-article-kicker\">Статья 3 · 17 мин</div>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.41 (foreground color: #5d7cb3, background color: #efe7d7, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".h-article-card:nth-child(3) > .h-article-body > .h-article-abstract"
+          ],
+          "html": "<p class=\"h-article-abstract\">1884 · Петербург и Ново-Васильевка</p>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.9 (foreground color: #78716c, background color: #efe7d7, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "section[aria-labelledby=\"chapter-ii\"] > .h-article-list > .h-article-card:nth-child(1) > .h-article-body > .h-article-kicker"
+          ],
+          "html": "<div class=\"h-article-kicker\">Статья 1 · 21 мин</div>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.41 (foreground color: #5d7cb3, background color: #efe7d7, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "section[aria-labelledby=\"chapter-ii\"] > .h-article-list > .h-article-card:nth-child(1) > .h-article-body > .h-article-abstract"
+          ],
+          "html": "<p class=\"h-article-abstract\">1874–1911 · Редсток, Пашков, Проханов</p>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.9 (foreground color: #78716c, background color: #efe7d7, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "section[aria-labelledby=\"chapter-ii\"] > .h-article-list > .h-article-card:nth-child(2) > .h-article-body > .h-article-kicker"
+          ],
+          "html": "<div class=\"h-article-kicker\">Статья 2 · 24 мин</div>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.41 (foreground color: #5d7cb3, background color: #efe7d7, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "section[aria-labelledby=\"chapter-ii\"] > .h-article-list > .h-article-card:nth-child(2) > .h-article-body > .h-article-abstract"
+          ],
+          "html": "<p class=\"h-article-abstract\">1919–1929 · Военный вопрос и гонения</p>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.9 (foreground color: #78716c, background color: #efe7d7, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "section[aria-labelledby=\"chapter-iii\"] > .h-article-list > .h-article-card:nth-child(1) > .h-article-body > .h-article-kicker"
+          ],
+          "html": "<div class=\"h-article-kicker\">Статья 1 · 28 мин</div>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.41 (foreground color: #5d7cb3, background color: #efe7d7, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "section[aria-labelledby=\"chapter-iii\"] > .h-article-list > .h-article-card:nth-child(1) > .h-article-body > .h-article-abstract"
+          ],
+          "html": "<p class=\"h-article-abstract\">1929–1937 · Закон 1929 и репрессии</p>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.9 (foreground color: #78716c, background color: #efe7d7, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".h-article-card[href$=\"vsehib-1944/\"] > .h-article-body > .h-article-kicker"
+          ],
+          "html": "<div class=\"h-article-kicker\">Статья 2 · 26 мин</div>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.41 (foreground color: #5d7cb3, background color: #efe7d7, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".h-article-card[href$=\"vsehib-1944/\"] > .h-article-body > .h-article-abstract"
+          ],
+          "html": "<p class=\"h-article-abstract\">1944 · ВСЕХиБ под надзором</p>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.9 (foreground color: #78716c, background color: #efe7d7, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "section[aria-labelledby=\"chapter-iv\"] > .h-article-list > .h-article-card:nth-child(1) > .h-article-body > .h-article-kicker"
+          ],
+          "html": "<div class=\"h-article-kicker\">Статья 1 · 25 мин</div>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.41 (foreground color: #5d7cb3, background color: #efe7d7, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "section[aria-labelledby=\"chapter-iv\"] > .h-article-list > .h-article-card:nth-child(1) > .h-article-body > .h-article-abstract"
+          ],
+          "html": "<p class=\"h-article-abstract\">1960–1966 · Путь к Совету Церквей</p>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.9 (foreground color: #78716c, background color: #efe7d7, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "section[aria-labelledby=\"chapter-iv\"] > .h-article-list > .h-article-card:nth-child(2) > .h-article-body > .h-article-kicker"
+          ],
+          "html": "<div class=\"h-article-kicker\">Статья 2 · 23 мин</div>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.41 (foreground color: #5d7cb3, background color: #efe7d7, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "section[aria-labelledby=\"chapter-iv\"] > .h-article-list > .h-article-card:nth-child(2) > .h-article-body > .h-article-abstract"
+          ],
+          "html": "<p class=\"h-article-abstract\">1966–1971 · Вестники, «Христианин», узники</p>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.9 (foreground color: #78716c, background color: #efe7d7, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".h-article-card[href$=\"spravochnik/\"] > .h-article-body > .h-article-kicker"
+          ],
+          "html": "<div class=\"h-article-kicker\">Форзац · 27 мин</div>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.41 (foreground color: #5d7cb3, background color: #efe7d7, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".h-article-card[href$=\"spravochnik/\"] > .h-article-body > .h-article-abstract"
+          ],
+          "html": "<p class=\"h-article-abstract\">Люди, даты, документы, источники</p>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.9 (foreground color: #78716c, background color: #efe7d7, font size: 9.4pt (12.5px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "#articleEndShareBtn"
+          ],
+          "html": "<button type=\"button\" class=\"article-end-btn\" id=\"articleEndShareBtn\" aria-label=\"Поделиться статьёй\">",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            "#articleEndPrintBtn"
+          ],
+          "html": "<button type=\"button\" class=\"article-end-btn\" id=\"articleEndPrintBtn\" aria-label=\"Распечатать статью или сохранить как PDF\">",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".sdg"
+          ],
+          "html": "<span class=\"sdg\">Soli Deo Gloria</span>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".gb-mobile-fallback-controls > .gbs2-ctl[data-gbs2-font=\"down\"][aria-label=\"Уменьшить шрифт\"]"
+          ],
+          "html": "<button class=\"gbs2-ctl\" type=\"button\" data-gbs2-font=\"down\" aria-label=\"Уменьшить шрифт\">A−</button>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 1.26 (foreground color: #e7dff0, background color: #fdfcf8, font size: 10.0pt (13.3333px), font weight: bold). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "target": [
+            ".gb-mobile-fallback-controls > .gbs2-ctl[data-gbs2-font=\"up\"][aria-label=\"Увеличить шрифт\"]"
+          ],
+          "html": "<button class=\"gbs2-ctl\" type=\"button\" data-gbs2-font=\"up\" aria-label=\"Увеличить шрифт\">A+</button>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 1.26 (foreground color: #e7dff0, background color: #fdfcf8, font size: 10.0pt (13.3333px), font weight: bold). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    }
+  ]
+}
