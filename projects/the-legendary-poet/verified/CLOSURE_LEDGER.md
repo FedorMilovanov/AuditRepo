@@ -215,3 +215,62 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Regression witness: bundle fingerprint scan and the legacy-alias HTTP table are both reproducible from the intake; enabling the shared backend must re-run both.
 - Live evidence: required and obtained (29 prerendered pages, 5 legacy aliases, 404 path, 3 audio files, 16 JS artifacts).
 - Detailed evidence: `../reverify/REVERIFY_d59ccec_2026-08-19_comm-class-reachability.md`.
+
+## 2026-08-20 — community delivery/reader-state reconciliation closed (six roots)
+
+- Scope: the six source/runtime community roots owned by Product PR #422 — `TLP-COMM-DELIVERY-001`, `TLP-COMM-ORDER-001`, `TLP-COMM-A11Y-001`, `TLP-COMM-READSTATE-001`, `TLP-COMM-TARGET-001`, `TLP-COMM-TEXT-001`.
+- Result:
+  - closed-by-fix: typed `ack`/retryable/permanent-reject delivery outcomes, ACK/reject settlement tombstones, deterministic multi-tab v3 merge, bounded backoff-aware replay, outbox-saturation rejection instead of silent deletion and a client cooldown aligned with the 20-second server contract;
+  - closed-by-fix: truthful loaded-row ordering/filter scope with cursor pagination preserved;
+  - closed-by-fix: durable queue/offline/reconciliation status semantics (`status` / `aria-live="polite"` / atomic) with programmatically exposed sort/filter state;
+  - closed-by-fix: explicit `loading` / `error` / `ready-empty` / `ready-data` read-state ownership so a failed refresh no longer renders a false zero;
+  - closed-by-fix: target-keyed editor/sort/filter state reset on detail A → B transitions;
+  - closed-by-fix: plain-text fidelity — visible internal line breaks, React escaping preserved, no surrogate-pair truncation;
+  - **not closed:** `TLP-COMM-ABUSE-001` stays active; a Worker bundle dry-run is source/build evidence and is not proof of live D1 schema, secrets, Turnstile policy, Worker deployment or public write authority.
+- Product evidence: source PR #422, certified base `b4c8f681b104a07f6c62cab2b3a001b652dd0183`, exact certified head `fdcff48d1d75a3e645fb13b90e22592e4ccf090e`, squash merge `ccd5f4c614de9a2e1fd5e4d6de62dd138630ae5c`.
+- Regression witness: CI run `32386189124` (project/community validators, typecheck, Worker bundle dry-run, production build, budgets, prerender, SEO/discovery) and Manual Browser QA run `32386189104` 4/4 — Chromium + Android 137 passed / 14 skipped, 14 fresh-process base Safari contours, 14/14 WebKit home/reveal contours.
+- Live evidence: not claimed for the P1 activation boundary; explicitly deferred.
+- Matrix disposition at the time: P2 `21 → 16`, P3 `8 → 7`, total active `30 → 24`.
+- Detailed evidence: `../verification/2026-08-20-community-reconciliation-closure/REPORT.md`.
+
+## 2026-08-20 — theme and dark/light contrast authority closed
+
+- Scope: `TLP-THEME-001` and `TLP-A11Y-CONTRAST-001`.
+- Result:
+  - closed-by-fix: theme authority is established before React paint from persisted `tlp-theme-mode`; runtime `data-theme`, `theme-light`, CSS `color-scheme`, `theme-color`, same-document toggles and cross-tab storage events converge through one theme authority, and persistent shell surfaces no longer depend on a dark-only root literal;
+  - closed-by-fix: dark/light semantic functional-text, control, border, graphical-state and focus-offset tokens replaced the prior low-opacity literals in the affected UI; RatingStars uses the shared graphical-state token while keeping its existing keyboard radiogroup contract;
+  - absorbed: the cross-tab stored theme-preference symptom recorded by the 2026-08-12 browser-state wave closed with the same theme owner;
+  - retained boundary: `TLP-COMM-ABUSE-001` is unaffected by this closure.
+- Product evidence: source PR #426, base at creation `3339e85086cfa15e14e97991ca98fb053754026b`, exact certified head `577155827883da20c53b29a0113f4f19dd729c2d`, squash merge `9bf116e61f365c413f67278c21229cdee4727c94`.
+- Regression witness: exact-head Project Contracts, Content Model, Site Route Integrity, Brand Raster, Brand Deep Reference/Motion, CI and Articles Catalog acceptance, plus Manual Browser QA #2823 4/4. The permanent guard is `qa/theme-contrast.spec.mjs`, which certifies computed dark/light contrast on real UI (>=4.5:1 functional text, >=3:1 enabled unselected rating state). An earlier exact-head run failing light-theme comment-help contrast at `1.61:1` was fixed before the certified head and was not waived.
+- Live evidence: not required; repository gates plus browser QA were the required witness.
+- Detailed evidence: `../verification/2026-08-20-theme-contrast-closure/REPORT.md`.
+
+## 2026-08-24 — canonical reader text separated from visual animation
+
+- Scope: `TLP-READER-TEXT-001`.
+- Result:
+  - closed-by-fix: the exact poem source string is retained in a selectable canonical DOM layer; spaces, repeated whitespace and line breaks are real text again;
+  - closed-by-fix: canonical word spans remain the dwell/reading-trail interaction authority while the animated word layer became presentation-only and `aria-hidden="true"`;
+  - closed-by-fix: the former `select-none` ownership was removed from the poem text container.
+- Product evidence: source PR #427, exact certified repair head `3ae2bdcc2b11bd24b2e3b7c8c784b36f13cc9fb4`, squash merge `96644f9d4f7ba5f1bef8f1ff0d8a8642eb990ad1`.
+- Regression witness: Project Contracts, CI including the canonical reader text contract, Site Route Integrity Audit, Brand Raster QA, Brand Deep Reference/Motion Audit and Manual Browser QA #2845 across browser, premium, critical iPhone and WebKit contours. The permanent guard is `qa/reader-text.spec.mjs`; the first failing run used the non-canonical `/poets/esenin` path and was corrected to `/poets/sergei-yesenin`.
+- Live evidence: not required.
+- Detailed evidence: `../verification/2026-08-24-reader-text-closure/REPORT.md`.
+
+## 2026-09-06 — SSOT/backlog integrity audit and active-matrix consolidation
+
+- Scope: AuditRepo control plane for `the-legendary-poet` only — MASTER, closure ledger, system themes, DOC_MAP, project README and WORK_QUEUE. No Product mutation, no raw intake rewrite, no other project touched.
+- Result:
+  - retired from the active surface: the `ЗАКРЫТО` block that still carried `TLP-THEME-001`, `TLP-A11Y-CONTRAST-001` and `TLP-READER-TEXT-001` after their Product repairs merged; the repository rule is that solved rows leave MASTER, and the matrix's own text already claimed their durability lived here;
+  - repaired provenance first: the three 2026-08-20/2026-08-24 closure waves above were missing from this ledger, so they were appended before anything was removed from MASTER;
+  - counter integrity: MASTER headings, the summary table and the total agreed at 21 open rows and stay at 21; the closed counter moved `3 → 0`;
+  - stale duplicated counts corrected: the project README still printed `24 rows — 1 P1 + 16 P2 + 7 P3` and DOC_MAP still described `30 Product roots repair-pending`; both now point at MASTER instead of restating a volatile number;
+  - system themes re-mapped: `ST-TLP-COMMUNITY-OWNERSHIP`, `ST-TLP-ROUTE-AUTHORITY` and `ST-TLP-AUDIT-HARNESS` were marked `absorbed/closed` while current active roots still sit in those classes, so each now records its explicit current residual; a new `candidate` theme `ST-TLP-BROWSER-STATE-CONVERGENCE` records the shared cross-tab mechanism without collapsing rows;
+  - `TLP-COMM-ABUSE-001` kept active and P1, but its row now carries the merged 2026-08-19 reachability witness so the gate reads as a release/activation gate rather than a currently reachable public exposure;
+  - no row was collapsed, reclassified or removed on suspicion: the ratings, audio, accessibility and analytics clusters each retain distinct mechanisms and distinct terminal outcomes, below the systemic-collapse threshold.
+- Current-source verification: `FedorMilovanov/TheLegendaryPoet@main` `57353dcee63123e8e2a86fa83bc964ffa5f29303`. The three closed roots' merges are all ancestors of that head, and their permanent guards `qa/theme-contrast.spec.mjs` and `qa/reader-text.spec.mjs` are present. Eleven of the twenty-one active rows were re-checked directly against that head and all remain current; nothing merged after PR #427 touches an active row (`#428`/`#429` are stale-ref maintenance).
+- Product evidence: no Product mutation. Open Product PRs #430 (research) and #425 (editorial) inspected; neither owns an active engineering root.
+- Regression witness: `check_auditrepo_structure.py`, `validate_audit_repo.py` and the matrix coverage/regression suites.
+- Live evidence: not required; this wave changed no live-dependent claim.
+- Detailed evidence: `../verification/2026-09-06-ssot-matrix-integrity-audit/REPORT.md`.

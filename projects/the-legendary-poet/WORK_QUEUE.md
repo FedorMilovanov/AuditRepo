@@ -10,7 +10,9 @@ Current verified engineering authority lives only in the MASTER matrix. This opt
 
 **Current autonomous audit queue: CLOSED AT PRODUCT `d59cceccb0c49af59b1be38d4c547a6240b3005a`.**
 
-Rows that remain active in MASTER are verified Product repair roots, not unfinished audit waves. Do not start another broad audit against the unchanged Product head just because rows remain open. Reopen auditing only on a materially changed relevant surface, a concrete contradictory live/browser witness, new deployed/backend evidence, an owner-selected unanswered surface, or future repair verification.
+Rows that remain active in MASTER are verified Product repair roots, not unfinished audit waves. Do not start another broad audit against an unchanged Product head just because rows remain open. Reopen auditing only on a materially changed relevant surface, a concrete contradictory live/browser witness, new deployed/backend evidence, an owner-selected unanswered surface, or future repair verification.
+
+Product `main` has since advanced past that anchor through the merged repairs recorded in [`verified/CLOSURE_LEDGER.md`](verified/CLOSURE_LEDGER.md), and those repairs were verified individually. That movement is not itself a reopen trigger for the broad audit.
 
 Closeout evidence: [`verification/2026-08-12-audit-marathon-closeout/REPORT.md`](verification/2026-08-12-audit-marathon-closeout/REPORT.md).
 
