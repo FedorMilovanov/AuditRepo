@@ -233,6 +233,16 @@
       ],
       "note": "W7 evidence tree was rebuilt byte-identically from a fresh base and merged as PR #200."
     },
+    "316": {
+      "category": "superseded",
+      "replacementPrs": [
+        354
+      ],
+      "landedCommits": [
+        "73fd8ff8e715a1edb488d3c97b07f70850880084"
+      ],
+      "note": "The two independent Product mechanisms recorded by this intake are both fixed: Product PR #1719 fixed Source Link Audit invalid-concurrency zero-worker false-greens (merge 1495b102020c0ee7e207713a705f02eea766963d), and Product PR #1798 fixed the Public Surface Browser Matrix malformed-worker 0/0 PASS path (merge 3a331a8c04cae01442c0ebed04e6262892a764ab). AuditRepo PR #354 preserved the #316 raw reports byte-for-byte before closure, so the historical PR head is no longer evidence authority."
+    },
     "317": {
       "category": "superseded",
       "replacementPrs": [
