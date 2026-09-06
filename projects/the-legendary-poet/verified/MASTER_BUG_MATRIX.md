@@ -4,10 +4,10 @@
 **Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.  
 **Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.  
 **Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.  
-**Latest current verification:** `../verification/2026-08-24-reader-text-closure/REPORT.md`.  
+**Latest current verification:** `../verification/2026-09-06-audio-release-closure/REPORT.md`.  
 **Closure history:** `CLOSURE_LEDGER.md`.  
 **Latest integrity audit:** `../verification/2026-09-06-ssot-matrix-integrity-audit/REPORT.md`.  
-**Latest currency check (all rows):** `../reverify/REVERIFY_57353dc_2026-09-06_active-row-currency.md` — 21/21 still-confirmed at Product `57353dc`.
+**Latest full-row currency check before this closure:** `../reverify/REVERIFY_57353dc_2026-09-06_active-row-currency.md` — 21/21 were still-confirmed at Product `57353dc`; `TLP-AUDIO-RELEASE-001` has since been closed by Product #433 and removed below.
 
 This file is intentionally short. Closed, absorbed, stale, invalid and superseded findings do not remain here merely to preserve history.
 
@@ -15,7 +15,7 @@ This file is intentionally short. Closed, absorbed, stale, invalid and supersede
 
 No closed row is retained in this matrix. Solved roots leave the active surface in the same wave that closes them; their durable provenance lives in `CLOSURE_LEDGER.md`, `SYSTEM_THEMES.md` and the verification packages.
 
-Most recently retired from here: `TLP-THEME-001` and `TLP-A11Y-CONTRAST-001` (Product #426, ledger entry 2026-08-20) and `TLP-READER-TEXT-001` (Product #427, ledger entry 2026-08-24).
+Most recently retired from here: `TLP-AUDIO-RELEASE-001` (Product #433, verification 2026-09-06), `TLP-THEME-001` and `TLP-A11Y-CONTRAST-001` (Product #426, ledger entry 2026-08-20), and `TLP-READER-TEXT-001` (Product #427, ledger entry 2026-08-24).
 
 ## 🟠 P1 — ОТКРЫТО (1)
 
@@ -23,7 +23,7 @@ Most recently retired from here: `TLP-THEME-001` and `TLP-A11Y-CONTRAST-001` (Pr
 |---|---|---|---|
 | `TLP-COMM-ABUSE-001` | `SOURCE-REPAIRED / LIVE-PROOF-PENDING / PUBLIC-INTEGRITY / P1` | Product #420 merged the trusted Cloudflare Worker/D1 authority boundary and Product #422 merged the reconciled client/runtime contract. Source/build gates include fail-closed target authority, signed anonymous actors, network-abuse hashing/budgets and Worker bundle validation. **Reachability condition (live witness 2026-09-06 at Product `57353dc`):** `/ratings` renders `Сейчас показаны данные этого браузера; общий backend не подключён`, which is emitted only when `remoteEnabled` is `false`, so the public abuse surface is unreachable on the deployed build and this row is the release gate that binds when the shared backend is enabled — not a claim of a currently exploitable live exposure. **Terminal production evidence is still absent:** source inspection and dry-run do not prove that the intended D1 schema, required secrets, Turnstile policy, Worker deployment, public client activation and adversarial behavior are live. Closure boundary: `../verification/2026-08-20-community-reconciliation-closure/REPORT.md`; current reachability witness: `../reverify/REVERIFY_57353dc_2026-09-06_active-row-currency.md`. | Deploy and activate the intended Worker + D1 contour; prove `/health` reports ready database/target/writes authority and run live adversarial concurrency, duplicate/idempotency, target-rejection and rotated-identity checks without mandatory registration. |
 
-## 🟡 P2 — ОТКРЫТО (13)
+## 🟡 P2 — ОТКРЫТО (12)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
@@ -34,7 +34,6 @@ Most recently retired from here: `TLP-THEME-001` and `TLP-A11Y-CONTRAST-001` (Pr
 | `TLP-AUDIO-SESSION-001` | `CONFIRMED-CURRENT / PERSISTENCE-CONVERGENCE / DATA-LOSS / P2` | Whole-snapshot session writes can erase cross-tab progress/completion despite tab-sync promise | Conflict-safe merge/version semantics, session-key subscription and two-page convergence proof. |
 | `TLP-ANALYTICS-CONSENT-001` | `CONFIRMED-CURRENT / PRIVACY-CONSENT / STATE-AUTHORITY / P2` | Consent initially gates correctly but does not converge across tabs, later deny has no active-provider revocation, and normal UI exposes the choice only while consent is unset; PrivacyPage offers no in-app editor beyond deleting site data | Browser-wide observable consent, persistent/reopenable reader control, authoritative provider revoke/enable semantics and complete UI-driven grant→deny→re-grant regression. |
 | `TLP-RATING-SOURCE-001` | `CONFIRMED-CURRENT / DATA-PRESENTATION / SOURCE-AUTHORITY / P2` | Reader `/5` vs editorial `/10` provenance is lost on badges and editorial score tie-breaks reader ranking | Carry source/scale, remove editorial authority from reader places and separate unrated rows. |
-| `TLP-AUDIO-RELEASE-001` | `CONFIRMED-CURRENT / RELEASE-INTEGRITY / PHYSICAL-ASSET-GATE / P2` | Warning-tolerant production audio check can allow a missing new `published` master when another master is valid | Every published release fails closed on physical asset/signature/SHA in exact production gate. |
 | `TLP-ROUTE-REDIRECT-001` | `CONFIRMED-CURRENT / HOSTING-CONTRACT / LEGACY-ROUTES / P2` | Measured live 2026-08-19: all 5 declared aliases answer HTTP 404; the 404 body boots the SPA so humans still reach the target, crawlers get 404 + noindex,follow. `vercel.json` and `public/_redirects` are inert under GitHub Pages | Real host redirects or materialized alias documents; test built/static-host initial responses and final canonical semantics; retire the two inert hosting configs or document why they stay. |
 | `TLP-SECONDARY-DATA-001` | `CONFIRMED-CURRENT / FAILURE-CONTAINMENT / PRIMARY-READINESS / P2` | Essay primary body and PoetDetail can be made route-fatal by optional essay catalog | Primary readiness only from primary data; local containment for catalog/series/RelatedEssays with asymmetric failure tests. |
 | `TLP-SEARCH-001` | `CONFIRMED-CURRENT / SEARCH-INVENTORY / TEXT-AUTHORITY / P2` | Global search/mobile “all sections” omits poems/sections and lacks `ё/е` equivalence | Canonical searchable inventory, poem deep links, truthful section coverage and shared Russian normalization preserving `й`. |
@@ -60,11 +59,11 @@ Most recently retired from here: `TLP-THEME-001` and `TLP-A11Y-CONTRAST-001` (Pr
 | Закрыто (fixed) | 0 |
 | **P0 открыто** | **0** |
 | P1 открыто | 1 |
-| P2 открыто | 13 |
+| P2 открыто | 12 |
 | P3 открыто | 7 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **21** |
+| **Всего открыто (матрица)** | **20** |
 
 Current architecture selection: **none**. Hall #369 remains terminally closed and historical/frozen safety authority, not a current Product lane.
 
