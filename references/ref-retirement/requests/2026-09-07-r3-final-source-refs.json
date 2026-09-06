@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "requestId": "auditrepo-ref-retirement-r3-final-source-refs-2026-09-07",
+  "execute": true,
+  "executionNonce": 1,
+  "preparedOnMain": "f7d7bac5a20b4b6b7ed1bb5960c83ecb3d127fcc",
+  "sourceBranch": "maintenance/auditrepo-ref-retirement-r3-final-sources-20260907",
+  "retainedRefs": [
+    {"branch":"main","required":true,"reason":"Default branch and current repository authority."},
+    {"branch":"archive/forensic-arena-019fe0b5-auditrepo-2026-08-13","required":true,"reason":"Reviewed forensic archive authority; not a cleanup target."},
+    {"branch":"archive/forensic-arena-019fe0c4-auditrepo-2026-08-13","required":true,"reason":"Reviewed forensic archive authority; not a cleanup target."},
+    {"branch":"archive/forensic-bugverifikator-audit-2026-07-17-2026-09-06","required":true,"reason":"Reviewed forensic archive authority; not a cleanup target."},
+    {"branch":"archive/forensic-engine-contracts-pr323-2026-09-06","required":true,"reason":"Reviewed forensic archive authority; not a cleanup target."},
+    {"branch":"archive/forensic-gb-arena-master-reverify-20260717-2026-09-06","required":true,"reason":"Reviewed forensic archive authority; not a cleanup target."},
+    {"branch":"archive/forensic-gb-control-reconciliation-bc786-20260809","required":true,"reason":"Reviewed forensic archive authority; not a cleanup target."},
+    {"branch":"archive/forensic-tlp-arena-master-reverify-20260818-2026-09-06","required":true,"reason":"Reviewed forensic archive authority; not a cleanup target."},
+    {"branch":"archive/forensic-tlp-hall-001-material-chain-20260809","required":true,"reason":"Reviewed forensic archive authority; not a cleanup target."},
+    {"branch":"archive/forensic-tlp-hall-001-material-chain-current-20260809","required":true,"reason":"Reviewed forensic archive authority; not a cleanup target."},
+    {"branch":"archive/forensic-tlp-hall-material-chain-20260809","required":true,"reason":"Reviewed forensic archive authority; not a cleanup target."},
+    {"branch":"archive/legacy-diverged-heads-20260801","required":true,"reason":"Restored octopus forensic authority; not a cleanup target."}
+  ],
+  "targets": [
+    {
+      "branch":"agent/bugverifikator-master-delta-brand-title-20260717",
+      "mode":"superseded",
+      "expectedHead":"7547fabab486a719f6f9b3cb794adf227c89c32c",
+      "comparisonBase":"f2751126bc11fde440e17518a910565c94716280",
+      "expectedAhead":2,
+      "allowedChangedPaths":[
+        "projects/gb-is-my-strength/incoming/bugverifikator/2026-07-17/README.md",
+        "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
+      ],
+      "replacementPullRequests":[367,338],
+      "reason":"Historical PR #331 was explicitly dispositioned STALE/SUPERSEDED and must not be merged. Merged PR #367 carries the reconciled intake-index authority; merged PR #338 carries the later consolidated MASTER authority."
+    },
+    {
+      "branch":"verification/gb-zero-direct-defects-next-wave-20260808",
+      "mode":"superseded",
+      "expectedHead":"ae25effd426c34d6985cc17b892f70f5aa7906b3",
+      "comparisonBase":"9cb6823ba16e8173a808010766e44bfcd38f90f6",
+      "expectedAhead":2,
+      "allowedChangedPaths":[
+        "projects/gb-is-my-strength/verification/2026-08-08-zero-direct-defects-next-wave/REPORT.md",
+        "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
+      ],
+      "replacementPullRequests":[382,338],
+      "reason":"Merged PR #382 preserves the unique governed verification report byte-for-byte; merged PR #338 carries later consolidated MASTER authority instead of this historical snapshot."
+    }
+  ]
+}
