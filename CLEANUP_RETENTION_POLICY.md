@@ -30,6 +30,10 @@ Package/current verification, conflicts, system decisions and other evidence wor
 
 Significant current applicability checks. Use when a historical claim needs to be proven again before work/disposition; do not mirror every Product commit.
 
+### `repairs/`
+
+Owner-selected implementation plans and repair summaries for selected repair lanes. Implementation code lives in the Product repository; raw evidence stays in `incoming/`.
+
 ### `verified/`
 
 Contains the **single active MASTER**, system context and other current guidance. It must not accumulate giant closed sections.

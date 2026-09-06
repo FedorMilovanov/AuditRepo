@@ -33,7 +33,6 @@
 - stale-on-current-head
 - false-positive
 
-## Archive target
-- archive/fixed/
-- archive/stale/
-- archive/false-positive/
+## Retirement target
+- `legacy/` — compact note why the row left MASTER;
+- `archive/` — only when retiring a whole historical package/collection.

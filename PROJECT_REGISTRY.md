@@ -4,12 +4,13 @@
 
 Registry хранит только стабильную ориентацию. Текущие source HEAD, deploy SHA, counts, открытые PR и выбранные repair lanes живут в соответствующих source-репозиториях и project-scoped документах, а не дублируются здесь.
 
-## Active projects
+## Projects
 
 | Project folder | Source repo | Status | Start here |
 |---|---|---|---|
 | `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | [`DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md) |
 | `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | [`DOC_MAP.md`](projects/the-legendary-poet/DOC_MAP.md) |
+| `projects/code-audit/` | `3stoneBrother/code-audit` | `intake-only` | [`README.md`](projects/code-audit/README.md) |
 
 ## Status glossary
 

@@ -48,6 +48,8 @@ AuditRepo не обязан переписывать глобальный Produc
 В MASTER разрешены только:
 
 - `current-local` / current-confirmed defects;
+- verified necessary implementations/improvements;
+- required migrations/retirements;
 - narrowed current residuals;
 - current system/root-cause lanes;
 - owner decisions, без которых работа не может продолжиться.
@@ -93,7 +95,7 @@ AuditRepo не обязан переписывать глобальный Produc
 | `candidate` | достаточно конкретно для проверки |
 | `verified-at-anchor` | доказано на историческом anchor |
 | `selected-for-current-check` | выбрано для актуализации |
-| `current-local` | существует сейчас, локально исправимо |
+| `current-local` | существует сейчас, локально исправимо (тот же статус в MULTI_WITNESS_VERIFICATION_PROTOCOL.md назван `current-confirmed-for-work`) |
 | `systemic-root` | текущая работа должна идти на уровне общего механизма |
 | `duplicate-symptom` | поглощено общим root cause; убрать из MASTER как отдельную строку |
 | `owner-decision` | требуется решение владельца |

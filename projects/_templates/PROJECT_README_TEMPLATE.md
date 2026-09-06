@@ -14,6 +14,7 @@ Current Product/CI/deploy truth remains in the source repository. AuditRepo reco
 - `verified/MASTER_BUG_MATRIX.md` — sole compact current-work registry
 - `verified/` — durable classification, themes and closure ledger
 - `verification/` / `reverify/` — selected significant checks
+- `repairs/` — owner-selected implementation plans/summaries (code lives in the source repo)
 - `legacy/` / `archive/` — retired or historical lookup material, never a second backlog
 
 ## Project-specific notes
