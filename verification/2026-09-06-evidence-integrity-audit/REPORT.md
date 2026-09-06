@@ -1,5 +1,7 @@
 # Evidence Integrity & Repository Hygiene Audit — AuditRepo (Agent 5 of 5)
 
+> **Round 2 (deepening pass) appended 2026-09-06 — see §10.** All round-1 findings were re-verified and confirmed stable; no round-1 claim required correction.
+
 ## Identity
 
 - **Agent:** Arena Agent 5 / Evidence integrity & repository hygiene audit
@@ -133,6 +135,59 @@ git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objec
   | awk '$1=="blob" && $2>1000000'           # top history blobs (expect only known evidence)
 # secret rescan: high-signal regex families over all blobs + tree + nested zips (see REPORT §3 method)
 ```
+
+## 10. Round 2 — deepening pass (same anchor, same day)
+
+### 10.1 Self-verification of round 1 (all confirmed)
+
+| Claim (round 1) | Re-check | Result |
+|---|---|---|
+| 131/131 PNGs structurally valid | full chunk-walk re-run | **131/131 valid** (unchanged) |
+| research-package manifest 48/48; vendor manifest 18/18 | SHA-256 re-computation | **48/48, 18/18** (unchanged) |
+| 27 duplicate groups / 3.99 MB | full-tree SHA-256 regroup | **27 / 3.99 MB exactly** (unchanged) |
+| ZIPs incl. nested CRC-clean | `testzip` outer + nested | **clean** (unchanged) |
+| Repo self-checks | validate / structure / workflow-preflight / 4 regression suites / history-forensic regression | **all PASS** |
+| New guards are safe | `.gitignore` patterns vs tracked files → 0 matches; `git check-attr` → `binary` set on evidence media, vendor `-whitespace` preserved | **safe** |
+| VIE-01 (missing spec screenshot) | `git log --all -- '*speed-pill-mobile-gbs*'` → empty | **confirmed never committed** |
+| VIE-05 (registry gap) | registry re-read | **confirmed** |
+
+One round-1 statement was **narrowed**: "workflow yml files use only `secrets.GITHUB_TOKEN`" — precise, but the `auditrepo-validate.yml` ref-forensic step actually binds `GITHUB_TOKEN: ${{ github.token }}` (workflow-scoped, still a first-party secret reference, not a hardcoded credential). No security impact; wording corrected here.
+
+### 10.2 Machine-readable integrity (new checks — all PASS)
+
+- **44/44** tracked JSON parse; **9/9** YAML parse (vendored PyYAML); all `scripts/*.py` compile; both `scripts/*.mjs` pass `node --check`.
+- **14/14** scripts referenced by CI workflows exist in the tree — no dead CI→script references.
+- Git-object sanity: 0 symlinks/irregular modes, 0 empty tracked files, 0 case-insensitive filename collisions (safe for macOS/Windows checkouts), 0 non-UTF-8 text files, 0 UTF-8 BOMs.
+- PNG metadata: **0** `tEXt`/`iTXt`/`zTXt` chunks across all 131 witnesses — no author/software metadata leakage.
+- `scripts/check_matrix_coverage.py` (CI-equivalent) run locally: **PASS** — 9 active ids, 647 evidence files, registry 52 entries, 0 problems.
+- The 1.45 MB `.patch` is a genuine `git format-patch` artifact (`From 2f65c2e7…`, 72 diff sections); the 9 `.mdx` files are frontmatter content captures.
+- Long-base64 scan: only the self-contained book-engine prototypes embed one ~63 KB WebP data-URI each (intentional single-file design; decodes to `RIFF…WEBP`). No hidden payloads.
+- HTML internal refs: 53 checked, 8 "broken" — all benign (a captured Cloudflare challenge-script tag, `../../biografii/` links into the *live site* structure inside reference mockups, one JS template-literal regex false positive). No real dead repo-internal HTML references.
+
+### 10.3 Repository growth curve (new)
+
+Tree size per commit (1240 first-parent commits): 0 → 4.5 MB (2026-06-25) → 12.2 MB (06-27) → 76.0 MB (07-14) → 92.3 MB (07-24) → **96.6 MB (HEAD)**. Top single-commit growth events:
+
+| Δ | Date | Commit | What |
+|---|---|---|---|
+| +44.89 MB | 2026-07-14 | `d6586d2e` | `claude-atlas-deep-audit` intake merge — atlas screenshot evidence |
+| +8.35 MB | 2026-07-20 | `f7f55a7e` | branch-evidence reconciliation |
+| +7.33 MB | 2026-07-15 | `ec5aa863` | `ZIP GBS.zip` intake |
+| +6.21 MB | 2026-07-14 | `2d40bb10` | 3-engines architecture docs + references |
+
+Conclusion: weight is **intake-driven** (four events account for ~67 MB of the 96.6 MB), not gradual accumulation drift; no removed binaries were ever re-added. Consistent with the round-1 finding that history contains no large retired blobs.
+
+### 10.4 Provenance deep-dive (new)
+
+- **Atlas 36 MB witness block is fully anchored.** The 27 PNGs were moved same-day on 2026-07-14 (commit `c288edb`) from `incoming/claude-atlas-deep-audit/2026-07-10/verification/atlas/` to `verification/atlas/root-evidence-2026-07-11/`; spot-checked blob `5037eacbe699` is byte-identical before/after (pure rename, no re-capture), the old path is fully removed (no residual duplicate set), and the move is documented in `incoming/arena-auditor-2026-07-14/2026-07-14/REPORT.md:68`.
+- **Intake landing lag** (53 intake dirs; stated session date vs first commit): median **0 days**. Extremes: **four intakes dated 2026-07-17 landed on 2026-09-06 (+51 d)** — `bugverifikator`, `arena`, `arena-source-auditor`, `arena-bugverifier` — plus `chatgpt/2026-08-10` (+27 d). Not a policy violation (raw evidence is welcome whenever it lands), but these packages describe an old Product state (e.g. anchored to source `a2ef67da5`) and **must pass an event-driven applicability re-check before any row is promoted to MASTER** per `CLEANUP_RETENTION_POLICY.md`. Two folders are dated one day *before* their commit (timezone artifact; harmless).
+- **PII scan (text files only): 4 distinct non-noreply email-like values, redacted** — `f***@yandex.ru` (runtime-crawl JSON of the public site — published structured data), `o***@gmail.com` ×2 (`the-legendary-poet` Google-Drive connector audit / ephemera report), `v***@gmail.com` (live-site HTML-validator output), `c***@gmail.commax` (mangled tool output in `PASS2_PROBE.json`). All appear to be content harvested from the audited public surfaces — i.e. evidence *of* the sites, not repo-side leaks. **Retained as raw evidence; no redaction executed** (would rewrite evidence).
+- **Methodology correction (documented for future audits):** the same email regex run over *binary* files (PNG/ZIP bytes) yields ~90 garbage matches (compressed bytes coincidentally matching the pattern). Binary files must be excluded from pattern scans — round-1 scans did exclude them; round-2 confirmed the necessity and the false-positive class.
+- The repo's own live ref-forensics (`repository_history_forensic_audit.mjs --strict`) could not be executed in this sandbox (no GitHub API egress); its offline regression suite passes, and CI runs the strict variant on every `main` push / retirement PR.
+
+### 10.5 Round-2 verdict
+
+**No new defects.** All round-1 issues (VIE-01…06), retention list, and cleanup candidates C-01…C-03 stand unchanged. Round 2 upgraded confidence from "verified once" to "verified twice, independently, including history-level provenance". The only actionable residue remains the owner decisions in §7 and VIE-01/05 dispositions.
 
 ## Limitations
 
