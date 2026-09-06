@@ -34,6 +34,7 @@
 | Review recent outcomes | `verified/CLOSURE_LEDGER.md` |
 | Inspect current matrix-consolidation proof | `verification/2026-08-07-matrix-consolidation/REPORT.md` |
 | Inspect the latest SSOT/backlog integrity audit | `verification/2026-09-06-ssot-matrix-integrity-audit/REPORT.md` |
+| Check whether the active rows are still current | `reverify/REVERIFY_57353dc_2026-09-06_active-row-currency.md` |
 | Inspect the most recent Product closures | `verification/2026-08-20-community-reconciliation-closure/REPORT.md`, `verification/2026-08-20-theme-contrast-closure/REPORT.md`, `verification/2026-08-24-reader-text-closure/REPORT.md` |
 | Inspect W7 route/runtime proof | `verification/2026-08-06-w7-route-runtime-wave/REPORT.md` |
 | Inspect historical 2026-08-05 root-cause rows | `archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md` |

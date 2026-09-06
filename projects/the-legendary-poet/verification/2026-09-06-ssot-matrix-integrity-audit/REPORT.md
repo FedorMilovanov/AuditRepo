@@ -19,8 +19,10 @@ Source facts were read from the source repository, not from AuditRepo prose.
 1. Read the repository rules (`AUDITREPO_OPERATING_MODEL.md`, `CLEANUP_RETENTION_POLICY.md`, `CONCURRENT_EDIT_PROTOCOL.md`) and the project authorities named by `DOC_MAP.md`.
 2. Reconciled MASTER headings, the summary table and the total against the actual rows.
 3. Traced every closed root printed in MASTER back to a merged Product commit, checked that the merge is an ancestor of current Product `main`, and checked that the closure is recorded in `CLOSURE_LEDGER.md`.
-4. Re-checked a representative sample of active rows directly against current Product `main` to separate *current* from *merely historical*.
-5. Checked WORK_QUEUE, README, DOC_MAP and SYSTEM_THEMES for duplicated volatile facts and stale pointers.
+4. Re-checked **every** active row directly against current Product `main` to separate *current* from *merely historical*, recording file/line witnesses in a reverify package.
+5. Re-measured the one live-dependent claim against production rather than re-quoting a witness whose owner had since moved.
+6. Checked WORK_QUEUE, README, DOC_MAP and SYSTEM_THEMES for duplicated volatile facts and stale pointers.
+7. Verified that every relative link and backtick-quoted path in this project resolves (60 markdown links, 34 quoted paths, 0 broken).
 
 ## Findings
 
@@ -104,29 +106,35 @@ Every Product PR merged after the audit-marathon anchor `d59cceccb0c4…` was in
 
 ### F8 — active rows are current, not merely historical
 
-Eleven of the twenty-one rows were re-verified directly against Product `main` `57353dce`:
+**All twenty-one rows** were re-verified against Product `main` `57353dce`. No row was found stale, invalid or historical-only; no row was removed on suspicion. The full row-by-row table with file/line witnesses is the reverify package `../../reverify/REVERIFY_57353dc_2026-09-06_active-row-currency.md`. Representative results:
 
 | Row | Current witness at `57353dce` |
 |---|---|
 | `TLP-SHELL-NOISE-001` | `index.html:92` and `src/App.tsx:125` (inside `function SiteLayout()`) both render `.noise-bg`; no singleton assertion exists in `qa/` |
 | `TLP-HOME-MEDIA-PERF-001` | `HeroPoetWindow.tsx:123` still `loading="eager"` for all six; the six portrait files still total exactly **880,330 bytes**, matching the 2026-08-12 witness byte-for-byte |
 | `TLP-ROUTE-REDIRECT-001` | `route-contract.json` still declares the same 5 aliases; `public/_redirects` is only `/*  /index.html  200` and `vercel.json` only a rewrite — both inert under GitHub Pages |
-| `TLP-A11Y-MOTION-001` | reduced-motion blocks in `src/index.css` cover named utilities only; `PoetCard.tsx:41` keeps an unguarded `animate-pulse`, and 18 `animate-pulse`/`animate-spin` usages remain |
-| `TLP-AUDIO-COMPLETION-001` | `AudioPlayerProvider.tsx:575` still persists completion at `currentTime / duration >= 0.97` |
-| `TLP-RATING-URLSTATE-001` | `RatingsPage.tsx:83-85` still seeds `tag`/`rated`/`query` from `searchParams` in `useState` initialisers (mount-only) |
-| `TLP-READING-PROGRESS-001` | `ReadingProgress.tsx:24` still derives progress from `document.documentElement.scrollHeight` |
-| `TLP-A11Y-STATUS-001` | `PoetsPage.tsx` has no `role="status"` / `aria-live` |
-| `TLP-AUDIO-RELEASE-001` | `validate-audio-assets.ts:82,104,107` still routes a missing master to `warnings` under `allowMissing`; only `errors` exit non-zero |
-| `TLP-SECONDARY-DATA-001` | `EssayPage.tsx:26` still resolves the optional essay catalog with `use(...)` at component top level |
-| `TLP-DISCOVERY-001` | `submit-indexnow.mjs` still submits the whole `sitemap.xml` URL list per deploy |
+| `TLP-A11Y-RUNTIME-001` | `AnalyticsConsent.tsx:55` renders the consent surface `fixed … z-[140]` with no `overlayRuntime`/`useDialogSurface` registration |
+| `TLP-AUTHORING-ID-001` | `scripts/new-poet.ts:44` derives the id with no ASCII-kebab gate and prints only `validate-library.ts`, while `POET_AUTHORING_GUIDE.md:222` names a different list and `check:content` requires ~20 validators |
+| `TLP-RATING-METHOD-001` | `RatingsPage.tsx:33,123` — `PRIOR_WEIGHT = 5` against a self-derived `globalMean`; the live page still promises that one vote cannot take first place |
+| `TLP-SEARCH-001` | `commandItems.ts` indexes sections/poets/essays/tracks but **no poems**; `CommandPalette.tsx:24-27` filters with bare `toLowerCase()` while `ё/е` folding exists only in divergent local helpers |
+| `TLP-AUDIT-004` | `qa/` contains **0** occurrences of `noise-bg` and no UI-driven consent-revoke contour |
 
-No active row was found stale, invalid or historical-only. No row was removed on suspicion.
+Buckets: still-confirmed **21**, fixed-current 0, stale-on-current-head 0, regression 0.
 
 ### F9 — is any owner decision disguised as a confirmed defect?
 
-`TLP-COMM-ABUSE-001` is the only candidate, and the answer is **no — but the row understated its condition**. The row is honestly labelled `SOURCE-REPAIRED / LIVE-PROOF-PENDING`, and two independent authorities (the 2026-08-20 closure report and the 2026-08-19 reverify) explicitly decided it stays open. However the row's evidence column omitted the measured fact that the shipped production build folds `remoteEnabled` to `false`, so the public abuse surface is currently unreachable. Without that clause the row reads as a live exploitable exposure.
+`TLP-COMM-ABUSE-001` is the only candidate, and the answer is **no — but the row understated its condition**. The row is honestly labelled `SOURCE-REPAIRED / LIVE-PROOF-PENDING`, and two independent authorities (the 2026-08-20 closure report and the 2026-08-19 reverify) explicitly decided it stays open. What it omitted is that the public abuse surface is not reachable on the deployed build at all.
 
-Disposition: severity and status unchanged (still P1, still active). The reachability condition and its reverify pointer were added so the row reads as what it is — a release gate that binds when the shared backend is enabled.
+**Self-correction recorded.** An earlier draft of this wave asserted that condition by citing the 2026-08-19 measurement. That measurement was taken at Product anchor `d59ccec` — **before** #420 and #422 merged — so under the operating model's terminal-attestation freshness rule it could not be cited as a current witness for a boundary its own owner had since moved. It was therefore re-measured rather than re-quoted:
+
+- live `https://thelegendarypoet.ru/ratings`, observed 2026-09-06, behind deploy run `33992389166` at head `57353dcee631`;
+- the page renders `Сейчас показаны данные этого браузера; общий backend не подключён`;
+- `RatingsPage.tsx:188` emits that string only for `sync.phase === 'local'`, and `communityLeaderboardStore.ts:63` / `communityStore.ts:661` set that phase from `remoteEnabled`, which `communityConfig.ts` fails closed unless both `VITE_COMMUNITY_API_URL` and a Turnstile path are injected by `deploy.yml:136-137`;
+- had the backend been configured the badge would instead read `Обновляем общую базу читательских оценок…`.
+
+Disposition: severity and status unchanged (still P1, still active — none of the six live activation conditions has been observed). The row now carries the **current** reachability witness so it reads as what it is: a release gate that binds when the shared backend is enabled.
+
+Repository Actions variables are `403` to the issued token, so this rests on the live artifact plus the source mechanism, not on reading configuration directly — the same boundary the 2026-08-19 pass recorded.
 
 No other row converts an owner choice into a defect claim. Where a row offers alternatives (`retire the inert hosting configs or document why they stay`; `align the semantics or rename the 97% heuristic`), the underlying defect is separately measured, and the genuinely optional product decisions already live in `WORK_QUEUE.md`.
 
@@ -138,6 +146,12 @@ The queue explicitly refuses to copy active IDs or counts, and its references to
 
 Fact ownership rows are correct. The map was missing pointers to the three most recent closure packages and to this audit; added. The stale count in the audit-marathon note was corrected (F4).
 
+### F12 — pointer integrity across the project
+
+Every relative markdown link (60) and every backtick-quoted relative path (82) in `projects/the-legendary-poet/**` was resolved. All 60 links resolve. **Every pointer in every current authority resolves**, including the ones this wave added.
+
+Eight quoted paths inside *dated historical snapshots* do not resolve, all for the same reason: earlier waves physically moved the targets instead of deleting them. Four `verified/*_2026-08-05.md` snapshots point at `MASTER_BUG_MATRIX_2026-08-05.md` under `working/`, where it no longer is — it now lives in `archive/superseded/`; the `archive/stale/w4a-a11f6fa-2026-08-05/` snapshot cites four more at the wrong folder depth. Left unrepaired on purpose — rewriting frozen snapshots to chase later physical moves is larger than the problem it fixes and edits the record of what those waves said. Parked as an owner decision in `../../WORK_QUEUE.md` (`HISTORICAL-POINTER-ROT`) with the exact current locations.
+
 ## Transaction
 
 One consolidation transaction, in dependency order:
@@ -148,7 +162,8 @@ One consolidation transaction, in dependency order:
 4. `README.md` — removed the stale duplicated counter, corrected the active-subject list, added the three closure pointers and this report.
 5. `DOC_MAP.md` — removed the stale root count, added current-authority pointers.
 6. `WORK_QUEUE.md` — corrected the "unchanged Product head" phrase.
-7. this report.
+7. `reverify/REVERIFY_57353dc_2026-09-06_active-row-currency.md` — the 21/21 currency table and the live reachability measurement.
+8. this report.
 
 Explicitly **not** done:
 
@@ -164,4 +179,6 @@ Explicitly **not** done:
 
 ## Live evidence
 
-Not required. This wave changed no live-dependent claim; the one live-dependent row (`TLP-COMM-ABUSE-001`) retains its existing measured boundary and was not re-measured.
+Required for exactly one item and obtained: `https://thelegendarypoet.ru/ratings`, observed 2026-09-06, behind deploy run `33992389166` at head `57353dcee631`. It establishes that `remoteEnabled` is `false` on the deployed build. Nothing else in this wave depends on live state.
+
+Not obtained and not claimed: repository Actions variables (`403` to the issued token), Worker `/health`, D1 schema state, Turnstile configuration and adversarial behaviour. Those remain the open activation conditions of `TLP-COMM-ABUSE-001`.
