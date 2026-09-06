@@ -218,7 +218,8 @@ AUDITREPO WORKFLOW PREFLIGHT: PASS
 
 - **Branch/main sync:** `origin/main` still at `29450bf`; branch `arena/01a0770d-auditrepo`
   rebased on it, no conflicts. PR #364 OPEN + draft, `mergeable: MERGEABLE`, head = this
-  audit's commit. CI on the head at the time of round 1 push: `preflight` PASS, `validate` PASS.
+  audit's commits. CI on the round-1 head: `preflight` PASS, `validate` PASS; after the
+  round-2 commit (`31bc794`) CI re-ran: `preflight` PASS, `validate` PASS.
 - **Link resolution:** all 8 local links in the primary surfaces + templates + `scripts/README.md`
   resolve; 0 broken. External URLs are not duplicated in these docs.
 - **Stale-term re-grep:** `L0–L4`, `confirmed-on-sha`, `peer-reviewed`, `repair-ready`,
