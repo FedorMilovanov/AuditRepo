@@ -30,7 +30,7 @@
 | 15 | `python3 -m py_compile scripts/*.py` | PASS (exit 0) |
 | 16 | `git diff --exit-code` | clean (exit 0) |
 
-Not executable offline: `repository_history_forensic_audit.mjs --strict` (needs live GitHub API + remote refs); its pure functions are covered by the node regression test (#13).
+Not executable offline at baseline: `repository_history_forensic_audit.mjs --strict` (needs live GitHub API + full remote refs). **Executed later the same session with full history — see §8: strict PASS on the live remote state.**
 
 ---
 
@@ -171,3 +171,54 @@ Not touched: `projects/**` (all projects, all matrices, WORK_QUEUEs, incoming, e
 ## 7. Exact validation results at the final head
 
 Recorded in the PR body at the final head (all commands re-run after the final rebase/reconcile against `main`): structure check, workflow preflight (+regression), repository validation (+regression), scaffold regression, ref-retirement regression, matrix coverage regression, per-project coverage for `gb-is-my-strength` (green, 1066 evidence-only IDs with contexts) and `the-legendary-poet` (green, 37), `code-audit` documented red (R1), node syntax checks + forensic regression, dispositions JSON parse, `py_compile` of all scripts including the two scaffolders, and `git diff --exit-code` clean.
+
+---
+
+## 8. Phase 2 addendum (same session, follow-up pass on the same PR)
+
+After the first push, the checkout was unshallowed (`git fetch origin --unshallow '+refs/heads/*:refs/remotes/origin/*'`, 1491 commits, 48 remote branches) and the previously-unauditable surfaces were exercised.
+
+### 8.1 Live strict forensic audit — PASS (baseline gap closed)
+
+Executed exactly as the CI step does:
+
+```bash
+export GITHUB_TOKEN=… GITHUB_REPOSITORY=FedorMilovanov/AuditRepo
+node scripts/repository_history_forensic_audit.mjs --strict
+python3 - <<'PY'   # the workflow's own zero-debt enforcement
+import json; from pathlib import Path
+s = json.loads(Path('reports/repository-history-forensic-audit.json').read_text())['summary']
+assert all(s[k] == 0 for k in ('inaccessibleClosedHeads','manualReviewCandidates','unexplainedRemoteBranches'))
+PY
+```
+
+Result on the live remote (2026-09-06): **48 branches, 362 PRs, 60 closed-unmerged PRs; 0 inaccessible closed heads, 0 manual review candidates, 0 unexplained remote branches; strict exit 0; zero-debt check PASS.** Reconciliation breakdown: 1 main, 5 git-ancestor-of-main, 8 open-pr-head, 15 closed-superseded, 1 closed-diagnostic, 10 archived-recovery, 7 archived-source-ref, 1 diagnostic-transaction. The `Validate retirement result history` step and the deep-audit forensic job are therefore verified green against current reality, not just syntactically sound. (Environment note: the audit sandbox intercepts TLS, so Node needed `NODE_EXTRA_CA_CERTS` pointing at the sandbox CA — a sandbox artifact, not a repository defect; GitHub runners reach api.github.com directly.)
+
+### 8.2 Historical instantiation of D2 (the false-green really happened)
+
+Commit `0568fc6` (2026-08-19, *"verified: initialize master bug matrix for code-audit"*, on `origin/main`) changed **exactly one file** — `projects/code-audit/verified/MASTER_BUG_MATRIX.md` — and admitted the `INSECURE-SHELL-INTERACTION` active row that has no evidence anywhere in the corpus. The workflow at that commit already contained the any-project matrix trigger (line 43) and the default-only coverage step (line 143). Verified:
+
+```bash
+git show --stat 0568fc6                                   # 1 file: the code-audit matrix
+git show 0568fc6:.github/workflows/auditrepo-validate.yml # trigger any-project; step runs default project only
+python3 scripts/check_matrix_coverage.py --project projects/code-audit   # exit 1 (orphan row)
+```
+
+So the control plane green-lit a corpus admission it never inspected. The D2 fix makes exactly this change red.
+
+### 8.3 Drift dating (full history)
+
+- **D1:** `d7d5ed4` (2026-08-01, PR #113) introduced the `unregisteredEvidence` contract in both producer and consumer; `c3d6f84` (2026-08-07, PR #227, *"compact master into verified active work"*) removed the key from `matrix_coverage_lib.py` but left `matrix_coverage_contexts.py` reading it with a silent `.get(..., [])` default. The contexts artifact has been an empty no-op for **~1 month of CI runs** (validate on matrix changes, weekly deep audit, ref-retirement post-passes) while reporting success.
+- **D3:** the governed registry `MATRIX_ID_ALIASES.json` was created `419e638` (2026-07-23). The coverage trigger was written `1fd204f` (2026-08-06, PR #196) referencing `finding-aliases.json` — a filename that **has never existed in any commit on any ref** (`git log --all -- '*finding-aliases.json'` is empty), and the real name never appeared in the workflow before this PR's fix. The registry was never trigger-covered from the day the pattern was written.
+
+### 8.4 Additional edges probed in Phase 2 (no new defects)
+
+- **Merge-ref assumptions vs real history:** for the real merge commit `29450bf` (PR #363), `git diff --name-only HEAD^1 HEAD` yields exactly the PR's two files; the root commit `24a1169` correctly falls back to `diff-tree`; squash-shaped commits diff correctly against their single parent. FP1 strengthened from code-reading to executed proof.
+- **Retirement request deletion (push to main):** simulated the exact `Select exactly one reviewed request` bash in a scratch repo where C2 deletes `references/ref-retirement/requests/r1.json` → step exits 1 (`Expected one wrapper or one direct request, found 0`). The `paths:` filter matches deletions, so this is **correct retention-policy enforcement** (requests must be kept permanently), not a false red. A failing `git diff` inside the process substitution (e.g. zero `BEFORE_SHA` after force-push) degenerates to the same loud failure — never to a silent zero.
+- **`crosswire_module_custody.py` (full review):** fail-closed end to end — HTTPS + CrossWire host allowlist re-checked after redirects, 32 MB cap, ZIP CRC validation, zip-slip member guards, exactly-one embedded conf, strict authority field pins, compact CI diagnostic on any exception, no writes outside `--output-dir`. Hardening-only gap: its pure helpers (`_safe_member`, `_parse_sword_conf`, `_normalize_text`) have no offline unit tests (the tool is a live-network verifier by design).
+- **Forensic engine internals:** `reviewPriority` correctly escalates unclassified/parked closed-unmerged PRs without a reviewed ledger disposition into `manualReviewCandidates` (strict-red); `validateLedger` re-proves every ledger entry against live PR state, merged replacements, landed-commit ancestry and archive refs; non-strict mode intentionally only logs (documented in the workflow comment). Observations, not defects: closed-PR classification is keyword-heuristic with the reviewed ledger as authority (documented "Interpretation boundary"), and the disposition ledger path is hardcoded to the gb-is-my-strength lane (future TLP/code-audit retirement waves will need their own reviewed ledger or keyword evidence).
+- **Offline-validation boundary (extends H3):** a matrix row can satisfy the direct-witness rule with any `verified-*` + 7–40-hex token (e.g. `verified-source deadbeef`), and intake anchors accept any concrete labelled value — the validators cannot prove SHA/artifact authenticity offline by design. Current corpora show no abuse; the boundary is the corpus owner's responsibility.
+
+### 8.5 Phase 2 conclusion
+
+No new verified defects. Phase 2 (a) converted the one baseline "not executable" item into a passing live verification, (b) produced executed/git-archaeological proof for D1–D3 (drift dates, phantom-filename proof, the historical false-green commit), and (c) refuted the remaining suspected false-red/false-green paths. The Phase 1 fix set stands as the complete defect list for this lane.
