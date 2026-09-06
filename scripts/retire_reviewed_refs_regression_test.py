@@ -138,6 +138,22 @@ class SupersededFakeClient(FakeClient):
         return super().merged_pr(number)
 
 
+class ArchivePreservedFakeClient(FakeClient):
+    """Fake state where a required archive ref preserves the target exact head."""
+
+    def __init__(
+        self,
+        *,
+        archive_head: str = "old-sha",
+        include_archive: bool = True,
+    ) -> None:
+        super().__init__()
+        if include_archive:
+            self.refs["archive/evidence"] = archive_head
+        else:
+            self.refs.pop("archive/evidence", None)
+
+
 class MergedSourceFakeClient(FakeClient):
     """Fake state where the source branch head is an exactly merged PR head."""
 
@@ -232,6 +248,48 @@ def write_superseded_request(root: Path, *, replacements: list[int] | None = Non
                             [7] if replacements is None else replacements
                         ),
                         "reason": "fixture superseded by merged PR #7",
+                    }
+                ],
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return request
+
+
+def write_archive_preserved_request(
+    root: Path,
+    *,
+    archive_ref: str = "archive/evidence",
+    required: bool = True,
+    include_retained: bool = True,
+) -> Path:
+    safe_ref = archive_ref.replace("/", "-")
+    request = root / (
+        f"archive-preserved-{safe_ref}-"
+        f"{'required' if required else 'optional'}-"
+        f"{'retained' if include_retained else 'unretained'}.json"
+    )
+    retained = [{"branch": "main", "required": True}]
+    if include_retained:
+        retained.append({"branch": archive_ref, "required": required})
+    request.write_text(
+        json.dumps(
+            {
+                "schemaVersion": 1,
+                "execute": True,
+                "preparedOnMain": "prepared-sha",
+                "sourceBranch": "execution-branch",
+                "retainedRefs": retained,
+                "targets": [
+                    {
+                        "branch": "old-work",
+                        "mode": "archive-preserved",
+                        "expectedHead": "old-sha",
+                        "archiveRef": archive_ref,
+                        "reason": "fixture exact head retained under archive ref",
                     }
                 ],
             },
@@ -408,6 +466,88 @@ def main() -> int:
         else:
             raise AssertionError("unmerged replacement PR unexpectedly passed")
         require(unmerged_replacement_fake.delete_calls == [], "unmerged replacement still deleted the target")
+
+        # Archive-preserved mode is allowed only when a required archive/* ref
+        # exists at exactly the target head. The archive itself is never a
+        # target and must survive execution.
+        archive_request = write_archive_preserved_request(root)
+        archive_dry_fake = ArchivePreservedFakeClient()
+        archive_dry_evidence = root / "archive-preserved-dry.json"
+        require(
+            run_engine(module, archive_dry_fake, archive_request, archive_dry_evidence, execute=False) == 0,
+            "archive-preserved dry-run failed",
+        )
+        archive_dry = json.loads(archive_dry_evidence.read_text(encoding="utf-8"))
+        require(archive_dry["status"] == "preflight-passed-dry-run", "archive dry-run status drifted")
+        require(archive_dry_fake.delete_calls == [], "archive dry-run issued DELETE")
+        archive_record = archive_dry["preflight"][0]["archivePreservation"]
+        require(archive_record == {"archiveRef": "archive/evidence", "archiveHead": "old-sha"}, "archive proof evidence drifted")
+
+        archive_execute_fake = ArchivePreservedFakeClient()
+        archive_execute_evidence = root / "archive-preserved-execute.json"
+        require(
+            run_engine(module, archive_execute_fake, archive_request, archive_execute_evidence, execute=True) == 0,
+            "archive-preserved execute fixture failed",
+        )
+        archive_executed = json.loads(archive_execute_evidence.read_text(encoding="utf-8"))
+        require(archive_executed["status"] == "deleted-and-live-verified", "archive execute status drifted")
+        require(archive_execute_fake.delete_calls == ["old-work"], "archive mode deleted outside reviewed source target")
+        require("archive/evidence" in archive_execute_fake.refs, "required archive authority was deleted")
+        require(archive_execute_fake.refs["archive/evidence"] == "old-sha", "archive authority head changed")
+
+        archive_drift_cases = (
+            (
+                ArchivePreservedFakeClient(archive_head="different-sha"),
+                write_archive_preserved_request(root),
+                "archive-preserved head mismatch",
+            ),
+            (
+                ArchivePreservedFakeClient(include_archive=False),
+                write_archive_preserved_request(root),
+                "required retained refs are already absent",
+            ),
+            (
+                ArchivePreservedFakeClient(),
+                write_archive_preserved_request(root, required=False),
+                "must be a required retained ref",
+            ),
+            (
+                ArchivePreservedFakeClient(include_archive=False),
+                write_archive_preserved_request(root, include_retained=False),
+                "must be a required retained ref",
+            ),
+            (
+                ArchivePreservedFakeClient(include_archive=False),
+                write_archive_preserved_request(
+                    root, archive_ref="not-archive", required=False
+                ),
+                "requires one archive/* archiveRef",
+            ),
+        )
+        for archive_fake, archive_bad_request, expected_error in archive_drift_cases:
+            archive_bad_evidence = root / (
+                "archive-preserved-drift-"
+                + expected_error.replace(" ", "-").replace("/", "-")
+                + ".json"
+            )
+            try:
+                run_engine(
+                    module,
+                    archive_fake,
+                    archive_bad_request,
+                    archive_bad_evidence,
+                    execute=True,
+                )
+            except module.RetirementError as error:
+                require(expected_error in str(error), f"archive-preserved error drifted: {error}")
+            else:
+                raise AssertionError(
+                    f"archive-preserved drift unexpectedly passed: {expected_error}"
+                )
+            require(
+                archive_fake.delete_calls == [],
+                f"archive-preserved drift deleted before failing: {expected_error}",
+            )
 
         # A source branch whose exact head is a merged PR head is deleted as
         # merged maintenance source; a non-matching head must refuse.

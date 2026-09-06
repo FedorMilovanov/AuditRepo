@@ -234,6 +234,7 @@ def main() -> int:
 
         retained = manifest.get("retainedRefs") or []
         retained_names = {item["branch"] for item in retained}
+        retained_by_name = {item["branch"]: item for item in retained}
         source_branch = manifest.get("sourceBranch")
         if not source_branch:
             raise RetirementError("sourceBranch is required")
@@ -335,6 +336,35 @@ def main() -> int:
                     "aheadBy": relation.get("ahead_by"),
                     "behindBy": relation.get("behind_by"),
                     "changedPaths": actual_paths,
+                }
+            elif mode == "archive-preserved":
+                archive_ref = item.get("archiveRef")
+                if (
+                    not isinstance(archive_ref, str)
+                    or not archive_ref.startswith("archive/")
+                    or archive_ref == branch
+                ):
+                    raise RetirementError(
+                        f"archive-preserved target {branch} requires one archive/* archiveRef"
+                    )
+                retained_archive = retained_by_name.get(archive_ref)
+                if not retained_archive or retained_archive.get("required") is not True:
+                    raise RetirementError(
+                        f"archive-preserved ref {archive_ref} must be a required retained ref"
+                    )
+                archive_head = client.get_ref(archive_ref)
+                if archive_head is None:
+                    raise RetirementError(
+                        f"archive-preserved ref is missing: {archive_ref}"
+                    )
+                if archive_head != actual:
+                    raise RetirementError(
+                        f"archive-preserved head mismatch for {branch}: "
+                        f"target {actual}, archive {archive_ref} {archive_head}"
+                    )
+                record["archivePreservation"] = {
+                    "archiveRef": archive_ref,
+                    "archiveHead": archive_head,
                 }
             else:
                 raise RetirementError(
