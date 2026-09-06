@@ -257,3 +257,30 @@ Each mutant was applied to a scratch copy of `scripts/` and the corresponding su
 ### 9.3 Phase 3 conclusion
 
 No new defects; the fail-closed semantics that Phases 1–2 depend on (and that D1–D4 unmasked as unenforced) are now pinned by tests that demonstrably fail under targeted weakening. Full battery re-run green after the additions (structure, preflight, validation, all five regression suites, per-project coverage, forensic regression, `py_compile`).
+
+---
+
+## 10. Phase 4 addendum (same session): full independent re-verification of every claim
+
+A re-verification pass over the entire deliverable at the Phase 3 head `8689b29`, executed independently of the original Phase 1–3 runs.
+
+### 10.1 What was re-verified and how
+
+| Claim | Re-verification method | Result |
+|---|---|---|
+| Local battery green | fresh run: structure, preflight, validation, validator/scaffold/retirement/matrix-coverage regressions, node forensic regression, `py_compile`, `git diff --exit-code` | **all PASS**, tree clean |
+| Per-project coverage | `check_matrix_coverage.py` for gb (problems 0, 1066 evidence-only IDs, 1066 unregisteredEvidence entries), the-legendary-poet (problems 0, 37), code-audit (documented R1 red: orphan `INSECURE-SHELL-INTERACTION`, exit 1) | **matches §7** |
+| CI exercised the matrix step on `8689b29` | `gh api …/runs/34040114185/jobs`: step "Validate matrix/evidence owners when changed" = **success** (ran, not skipped); artifact `matrix-coverage-34040114185` 952,261 bytes; retirement steps correctly skipped | **confirmed** |
+| Live strict forensic PASS | re-run of `repository_history_forensic_audit.mjs --strict` against live GitHub | **exit 0**; 48 branches / 362 PRs / 60 closed-unmerged / 0 inaccessible / 0 manual candidates / 0 unexplained — **summary identical to the Phase 2 run** |
+| D1–D6 fixes present as described | grep-level inspection of every fix site on HEAD (resolver, loop, zero-work guard, trigger regex, missing-matrix failure, scaffold validation, compile step) | **all present** |
+| §3 trigger/resolver simulation | re-extraction of the exact trigger regex from the YAML + `coverage_projects_for_changed_paths` over the §3 fixture matrix and this PR's actual 11-file diff | **all rows match §3**; the stray-inbox row now also demonstrates the Phase 3 error detail (names the matched project) |
+| §3 fails-before/passes-after | new tests copied into a pristine `git archive 29450bf` tree and run there | matrix suite: `ImportError: coverage_projects_for_changed_paths`; validator suite: "deleted MASTER_BUG_MATRIX.md unexpectedly passed"; scaffold suite: "existing reverify file was unexpectedly overwritten" — **exactly the §3 failures** |
+| PR state | `main` still `29450bf`; PR #365 draft/open; no comments/reviews; branch exactly 3 commits ahead | **no drift** |
+
+### 10.2 New empirical finding (positive control, no defect)
+
+The strict forensic tool was accidentally re-run against a **shallow** clone (the sandbox had been re-shallowed for storage): it exited 1 with per-PR `ERROR … is not an ancestor of origin/main` for the earliest PRs (#16–#44) instead of silently blessing unprovable ancestry. After `git fetch --unshallow origin main` the same invocation exits 0 with the identical zero-debt summary. This is the failure mode the workflow preflight's `fetch-depth: 0` rule exists to prevent (FP3/FP6) — now **empirically confirmed to fail closed** rather than produce a false green when its history precondition is violated. Classification: **HARDENING confirmation of existing behavior** (no change made; the sandbox precondition was the only problem).
+
+### 10.3 Re-verification conclusion
+
+Every Phase 1–3 claim reproduced exactly on independent re-run; no drift in the repository, the PR, or the CI state; one additional positive control confirming the forensic tool's fail-closed behavior on truncated history. Phase 4 changes are report-only.
