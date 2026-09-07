@@ -1,0 +1,52 @@
+# Recovered v4 mobile owner references
+
+Status: **active acceptance authority / recovered owner reference lineage**  
+Recovery date: **2026-09-07**
+
+These two HTML files were recovered from the project owner's local Downloads directory after AuditRepo issue #374 established that the earlier `speed-pill-mobile-gbs.png` witness was missing at origin and could not be reconstructed or safely substituted.
+
+The recovered files are preserved as byte-identical evidence. Do not edit, regenerate, normalize, or silently replace them.
+
+## Recovered byte identity
+
+| File | Bytes | SHA-256 |
+|---|---:|---|
+| `gb_single_mobile_v4_refined_no_accuracy.html` | 79,913 | `fc95a11c0dd7f64b621aa49ea7be6235dc5241da1f5f833d4f75657280c90821` |
+| `gbs_series_mobile_v4_refined_no_accuracy.html` | 90,773 | `8185c1f07f039ad8ec4f734c7c4c58c36e2e7de8fc3d73758f4117658a4f836d` |
+
+Filesystem-reported local timestamps at recovery:
+
+- `gb_single_mobile_v4_refined_no_accuracy.html`
+  - creation: `2026-07-07T22:58:16.3322170+03:00`
+  - last write: `2026-07-07T22:58:16.6709084+03:00`
+- `gbs_series_mobile_v4_refined_no_accuracy.html`
+  - creation: `2026-07-07T22:58:12.5026435+03:00`
+  - last write: `2026-07-07T22:58:13.0420235+03:00`
+
+The recovery ZIP supplied by the owner to the audit session contained exactly these two files. Its SHA-256 was:
+
+`0fe6cb66452f5c3933fbab2d6726ad8cbbd22030e0c71e3a232fdc4fb8bc9015`
+
+## Independent historical authority chain
+
+The filenames are not being promoted merely because they were found locally. Existing repository history independently identifies this exact v4 lineage as the production-integrated owner authority:
+
+1. `FedorMilovanov/gb-is-my-strength@70de61b2877cb1993027c6c211c5f5eb6b0c8280` states that a real side-by-side screenshot comparison was performed against **`gbs_series_mobile_v4_refined_no_accuracy.html`** in light and dark themes. That same commit records reference-derived geometry/style including the speed badge at `right:-3px; bottom:-2px` and muted secondary bar icons.
+2. The recovered `gbs_series_mobile_v4_refined_no_accuracy.html` itself contains those same signatures (`.play-speed` with `right:-3px;bottom:-2px`, and `.bar-icon-btn` using `color:var(--color-text-muted)`), providing byte/content correlation with the historical reference use.
+3. `FedorMilovanov/gb-is-my-strength@6725f010de50fedfe7e6aafde5249e6e92261158` again explicitly compares the live Gill mobile bottom bar against **`gbs_series_mobile_v4_refined_no_accuracy.html`** in both themes and identifies a hidden 34×34 dual-progress ring regression.
+4. `FedorMilovanov/AuditRepo@55c820601d1957e85c9c925ad4b214580618bcf5` archives later v6 mobile mockups but explicitly records them as **superseded by the `v4-refined-no-accuracy` samples actually integrated into production**.
+
+This is independent provenance sufficient to distinguish the recovered v4 set from reconstructed output or a same-name fabrication.
+
+## Acceptance role
+
+- `gbs_series_mobile_v4_refined_no_accuracy.html` is the authoritative Mobile / GBS / Gill-rail visual acceptance reference for the Play/speed-morph contract.
+- `gb_single_mobile_v4_refined_no_accuracy.html` is the companion single-article/Hermenevtika owner reference from the same recovered v4 set.
+- Desktop authority remains `../screenshots/speed-pill-desktop.png`.
+- The obsolete missing-at-origin `speed-pill-mobile-gbs.png` reference must not be recreated or reintroduced.
+
+For visual comparison, render the appropriate recovered HTML reference at the same target viewport/theme and apply the contract's existing tolerance. This preserves independent acceptance authority without validating the implementation against itself.
+
+## Integrity rule
+
+Any future supersession must preserve provenance and explicitly document the new authority. Do not modify these recovered files in place.

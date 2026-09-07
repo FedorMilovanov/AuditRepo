@@ -1,8 +1,8 @@
 # PlayEmber Speed Morph — UI spec v2.0
 
-Reference images:
+Acceptance references:
 - `../screenshots/speed-pill-desktop.png` — Desktop / single-anchor
-- `../screenshots/speed-pill-mobile-gbs.png` — Mobile / GBS / Gill-rail
+- `../references/gbs_series_mobile_v4_refined_no_accuracy.html` — Mobile / GBS / Gill-rail (recovered owner v4 authority; provenance in `../references/README.md`)
 
 Replaces all chat screenshots, PDF pages, and v16 probe visuals.
 
@@ -147,7 +147,7 @@ Fallback chain:
 - [ ] No "Озвучка ещё не подключена" toast on any click path
 - [ ] Speed persists `gb:audio:rate`, legacy `gbx-tts-rate` read
 - [ ] ARIA attributes coherent at all times
-- [ ] Matches `speed-pill-desktop.png` / `speed-pill-mobile-gbs.png` within 4px
+- [ ] Matches `speed-pill-desktop.png` / `gbs_series_mobile_v4_refined_no_accuracy.html` within 4px at the same viewport/theme
 
 ---
 
