@@ -59,7 +59,14 @@ verification:
     - claim-boundary
     - preservation-boundary
     - semantic-owner
+  current_check_outcomes:
+    - FIXED-CURRENT
+    - STALE-ON-CURRENT-HEAD
+    - FALSE-POSITIVE
+    - DUPLICATE/MERGED
+    - CONFIRMED-CURRENT
+    - PARTIAL/NARROWED
   retirement_flow:
     - suspected-stale
     - rechecked
-    - fixed-current_or_false-positive_or_stale-on-current-head
+    - terminal-disposition-recorded
