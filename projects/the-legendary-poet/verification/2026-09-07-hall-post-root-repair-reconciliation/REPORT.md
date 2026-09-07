@@ -40,19 +40,23 @@ This package reconciles the bounded Hall engineering repair chain completed afte
 
 - Scope: remove the possibility that a historical Hall success could be treated as current PR merge proof after the visual-remediation head changed.
 - Repair: the always-present `merge-certification` aggregate now has a separate conditional Hall visual-remediation lane that waits for and requires the Hall result on the exact PR head while preserving the existing offline-exhibit lane and stable aggregate status.
-- Squash merge/current Product main before the final transport repair: `54b9b9e7729eb08fb25e80579af007ca345a4322`.
-- Disposition: same-head Hall proof is now a fail-closed merge barrier; older successful Hall artifacts remain diagnostic only.
+- Squash merge: `54b9b9e7729eb08fb25e80579af007ca345a4322`.
+- Disposition: same-head Hall proof is a fail-closed merge barrier; older successful Hall artifacts remain diagnostic only.
 
-## Product #444 / PR #447 — redundant UV transport cleanup — pending final merge proof
+## Product #444 / PR #447 — redundant UV transport cleanup — closed
 
 - Reproduced defect: the lookdev candidate carried redundant UV transport beyond authoritative `UV0` on the bounded Pushkin target set.
-- Repair under certification: a post-lookdev cleanup stage retains only authoritative `UV0`, re-saves the candidate blend, re-exports the raw GLB and re-renders all ten fixed stills. A fail-closed validator requires TEXCOORD_0-only lookdev transport and preserves 16/16 explicit tangents.
-- Frozen authority remains unchanged: H3/R1/L0/UV0, documentary bytes, visual acceptance contract and all owner/production gates.
-- Previous exact-head Hall run #13 completed cleanup, raw/optimized Khronos validation, Meshopt, first-slice budget and contact-sheet construction, then hit the job-level 100-minute execution timeout during the authored walkthrough before ffprobe/final evidence upload. This was an incomplete proof, not accepted merge evidence.
-- Execution-budget repair: Hall job timeout is bounded at 130 minutes; render quality, acceptance criteria and evidence semantics are unchanged. Relative to the previous repair head, the effective workflow diff is exactly `timeout-minutes: 100` → `130`.
-- Current exact Product head: `bcb246e158be4d69bd98ec2402f3176234f25e49`.
-- Required final proof: fresh Hall visual-remediation run #15 plus aggregate `merge-certification` run #38 on that same exact head, followed by artifact-level forensic verification and CAS merge.
-- Disposition: **not yet closed** in this report. Final merge SHA and exact-head artifact id must be recorded before the reconciliation can enter the closure ledger.
+- Repair: a post-lookdev cleanup stage retains only authoritative `UV0`, re-saves the candidate blend, re-exports the raw GLB and re-renders all ten fixed stills. A fail-closed validator requires TEXCOORD_0-only lookdev transport and preserves 16/16 explicit tangents.
+- Frozen authority preserved: H3/R1/L0/UV0, documentary bytes, visual acceptance contract and all owner/production gates.
+- Exact certified Product head: `bcb246e158be4d69bd98ec2402f3176234f25e49`.
+- Fresh merge proof: Hall Pushkin visual-remediation run #15 (`34161806722`) and aggregate merge-certification run #38 (`34161806840`) both completed `success` on that same exact head.
+- Exact-head artifact: `hall-pushkin-visual-remediation-bcb246e158be4d69bd98ec2402f3176234f25e49`, artifact id `10034911282`, 56,944,637 bytes, digest `sha256:6a748f8018c25316056d9be0634d0da61216de9392a4284b6e5905cf95318f2b`.
+- Forensic artifact verification: tested-head witness equals the certified SHA; raw and optimized Khronos reports contain 0 errors and 0 warnings; `TEXCOORD_1` is absent from both GLBs; all 16/16 normal-mapped primitives retain explicit `TANGENT`; the 16 redundant UV layers are removed; untouched mesh fingerprint matches before/after; every target geometry fingerprint matches and every world-bounds delta is 0 m.
+- Visual/budget evidence: first-slice budget passes; ten fixed stills and 5x2 contact sheet are present; walkthrough `pushkin-sequence0001-0577.mp4` is present with 577 frames at 24 fps; ffprobe reports duration `24.041667` seconds.
+- Explicit retained info-level overhead: the two documentary base-color planes continue to produce `UNUSED_MESH_TANGENT` infos; no bespoke GLB binary surgery was introduced merely to silence them.
+- Production boundary in artifact evidence remains fail-closed: `productionAsset=false`, `productionManifestAllowed=false`, `productionWebglMayBegin=false`, `offlineVisualApprovalPromoted=false`; documentary production shipping remains blocked.
+- Squash merge: `3df9550e589225777f3511df19d3b57974d54da2`.
+- Issue outcome: Product #444 closed as `completed` by the merge of PR #447.
 
 ## Preserved owner-gated boundary
 
@@ -68,4 +72,4 @@ Across the repair chain:
 
 ## Reconciliation conclusion
 
-The completed post-root waves are legitimate closed engineering/evidence repairs, not evidence that the museum itself is production-complete. The reconciliation remains open solely for Product #444/#447 exact-head proof, merge and final provenance recording. AuditRepo must continue to state that no autonomous Hall architecture transaction is selected.
+The post-root material-response, tangent-portability, browser build-budget evidence, exact-head certification and UV-transport repair waves are now closed with exact Product provenance. They are legitimate engineering/evidence closures, not evidence that the museum itself is production-complete. No autonomous Hall architecture transaction is selected, and all owner/legal/production promotion gates remain explicitly blocked.
