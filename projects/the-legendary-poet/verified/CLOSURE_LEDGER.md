@@ -274,3 +274,20 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Regression witness: `check_auditrepo_structure.py`, `validate_audit_repo.py` and the matrix coverage/regression suites.
 - Live evidence: required for one item and obtained — live `/ratings` on 2026-09-06 (deploy run `33992389166`, head `57353dcee631`) renders the local-mode badge that only `remoteEnabled === false` can produce. Repository Actions variables remain `403`; Worker `/health`, D1 schema, Turnstile config and adversarial behaviour were not obtained and are not claimed.
 - Detailed evidence: `../verification/2026-09-06-ssot-matrix-integrity-audit/REPORT.md` and `../reverify/REVERIFY_57353dc_2026-09-06_active-row-currency.md`.
+
+## 2026-09-08 — Hall post-root repair chain reconciled and closed
+
+- Scope: Product #440/#441 material-response remediation, #442/#443 tangent portability, #445/#446 browser build-budget evidence hardening, #448/#449 exact-head Hall merge certification, and #444/#447 redundant UV transport cleanup.
+- Result:
+  - closed-by-fix: bounded Pushkin exhibit material response now has deterministic bevel/roughness/normal response while preserving H3/R1/L0/UV0 and documentary bytes;
+  - closed-by-fix: all 16 normal-mapped primitives retain explicit tangent accessors in raw and optimized GLBs;
+  - closed-by-evidence-hardening: browser build-budget and exact-head Hall merge certification are fail-closed and cannot reuse historical Hall success after a PR head changes;
+  - closed-by-fix: the 16 redundant UV transports were removed so authoritative lookdev transport is TEXCOORD_0-only; both raw and optimized GLBs contain no TEXCOORD_1 on the candidate meshes;
+  - retained intentionally: two `UNUSED_MESH_TANGENT` infos on documentary base-color planes remain accepted Blender exporter overhead; no bespoke GLB binary surgery was introduced merely to silence info-level output.
+- Product evidence: #441 merge `864a4099f98d2c5087652b22f01cd0573c40ddaa`; #443 merge `f0fd0da0e05079973ceba94bea0e2298fd5e0fa6`; #446 merge `623c7812a5c3060d61a028a2e6c03a34b33b0f28`; #449 merge `54b9b9e7729eb08fb25e80579af007ca345a4322`; #447 exact certified head `bcb246e158be4d69bd98ec2402f3176234f25e49`, squash merge `3df9550e589225777f3511df19d3b57974d54da2`.
+- Exact-head final proof: Hall visual-remediation run #15 (`34161806722`) and aggregate merge-certification run #38 (`34161806840`) both completed success on the #447 head.
+- Final artifact: `hall-pushkin-visual-remediation-bcb246e158be4d69bd98ec2402f3176234f25e49`, artifact id `10034911282`, digest `sha256:6a748f8018c25316056d9be0634d0da61216de9392a4284b6e5905cf95318f2b`.
+- Forensic witness: tested SHA exact; raw + optimized Khronos 0 errors / 0 warnings; 16/16 normal-mapped primitives have `TANGENT`; `TEXCOORD_1` absent in both GLBs; untouched geometry fingerprint matched; all 16 target fingerprints matched and all world-bounds deltas were 0 m; first-slice budget passed; 10 fixed stills + contact sheet present; walkthrough has 577 frames at 24 fps and ffprobe duration `24.041667` seconds.
+- Issue outcome: Product #444 closed as `completed` when PR #447 merged.
+- Preserved boundary: production `/hall` remains placeholder; production asset/manifest/WebGL promotion remain false; documentary production shipping remains blocked; `offlineVisualApproval` remains human-owner-only; no autonomous architecture transaction or full-museum scale-out was authorized.
+- Detailed evidence: `../verification/2026-09-07-hall-post-root-repair-reconciliation/REPORT.md`.
