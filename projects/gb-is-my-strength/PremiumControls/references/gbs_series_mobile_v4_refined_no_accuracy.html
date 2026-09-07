@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bottom-bar + btoc + gb-ember(Play, канон) + скорости-вверх · день/ночь (канон) · repo actions deepened</title>
+<style>
+/* ============ ТОКЕНЫ ТЕМЫ (реальные fallback-значения из css/*.css) ============ */
+:root{
+  --z-overlay-high:3000; --z-sticky:1000; --z-bottom-bar:2000;
+  --color-canvas:#fdfcf9; --color-surface:#ffffff; --color-surface-muted:#f4f2ed;
+  --color-surface-alt:#f5f5f3; --color-text:#1a1a1a; --color-text-primary:#1a1a18;
+  --color-text-secondary:#555555; --color-text-muted:#6a6a6a; --color-text-faint:#888888;
+  --color-border:#e5e2dc; --color-border-strong:#cfc9bd;
+  --color-accent:#7a2e2e; --color-accent-soft:#f6ece8; --color-accent-strong:#5f2323;
+  --color-accent-gold:#b8936a; --color-accent-gold-bright:#d8aa6d;
+  --bg-alt:#f5f5f3;
+  /* реальные easing-токены — css/floating-cluster.css :root */
+  --gb-ease-out:cubic-bezier(.2,.7,.2,1);
+  --gb-ease-spring:cubic-bezier(.34,1.56,.64,1);
+}
+html.dark{
+  --color-canvas:#0e1116; --color-surface:#161a21; --color-surface-muted:#1a1f28;
+  --color-surface-alt:#13171e; --color-text:#e6e1d7; --color-text-primary:#e6e1d7;
+  --color-text-secondary:#9ca3af; --color-text-muted:#9ca3af; --color-text-faint:#6b7280;
+  --color-border:#232830; --color-border-strong:#2f3540;
+  --color-accent:#d4a574; --color-accent-soft:#1f1a13; --color-accent-strong:#e8b878;
+  --bg-alt:#13171e;
+}
+:root{color-scheme:light}
+html.dark{color-scheme:dark}
+
+/* ============ ПОСТОЯННЫЙ bottom-bar (канон из site.css) ============ */
+.bottom-bar{position:absolute;bottom:0;left:0;right:0;z-index:var(--z-bottom-bar);background:var(--color-canvas);border-top:1px solid var(--color-border);padding:0 0 env(safe-area-inset-bottom,0px)}
+.bottom-bar-inner{display:flex;align-items:center;justify-content:space-between;height:54px;padding:0 10px;gap:6px}
+/* круг прогресса чтения — снизу слева, единственный источник % на экране */
+.bar-progress{position:relative;width:36px;height:36px;flex-shrink:0}
+.bar-progress svg{transform:rotate(-90deg);width:36px;height:36px}
+.bar-progress-track{fill:none;stroke:var(--color-border);stroke-width:3}
+.bar-progress-fill{fill:none;stroke:var(--color-accent);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .15s linear}
+.bar-progress-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Source Sans 3',system-ui,sans-serif;font-size:9px;font-weight:700;color:var(--color-accent);pointer-events:none;font-variant-numeric:tabular-nums}
+.bar-section-btn{flex:1;min-width:0;background:0 0;border:none;cursor:pointer;padding:6px 8px;text-align:left;display:flex;flex-direction:column;gap:2px;overflow:hidden}
+.bar-section-label{font-family:'Source Sans 3',system-ui,sans-serif;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-muted);opacity:.6;line-height:1}
+.bar-section-name{font-family:'Source Sans 3',system-ui,sans-serif;font-size:13px;font-weight:600;color:var(--color-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
+.bar-icon-btn{width:38px;height:38px;border:none;background:0 0;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .15s,color .15s;flex-shrink:0;color:var(--color-text-muted);touch-action:manipulation;position:relative}
+/* БАГ (та же семья, что и «ободки вокруг SVG»): :hover ниже раньше не был
+   загорожен media-запросом — на реальном тач-устройстве тап способен
+   «залипающе» вызвать :hover (известная особенность мобильных браузеров:
+   Safari/Chrome на телефоне могут держать :hover-состояние до следующего
+   тапа где-то ещё), и подсветка/кольцо оставались висеть на кнопке до
+   случайного тапа в другое место — выглядит как баг. Профессиональный
+   подход для тач-первого интерфейса: hover-стили в принципе не должны
+   применяться, если у устройства нет мыши/точного указателя — тап должен
+   давать обратную связь только через :active (она гаснет сама, с уходом
+   пальца). Все :hover ниже по файлу так же обёрнуты. */
+@media (hover:hover) and (pointer:fine){
+  .bar-icon-btn:hover{background:var(--color-surface-muted);color:var(--color-text)}
+}
+.bar-icon-btn:active{background:var(--color-border);transition-duration:.08s}
+.bar-icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.bar-icon-btn:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+.bar-divider{width:1px;height:24px;background:var(--color-border);flex-shrink:0}
+/* A−/A+ (канон fbtn.txt: Lora-сериф) */
+.bar-font{width:34px;height:38px;border:none;background:0 0;cursor:pointer;display:grid;place-items:center;border-radius:8px;transition:background .15s,color .15s,opacity .15s;flex-shrink:0;font-family:Lora,Georgia,serif;font-size:16px;font-weight:700;color:var(--color-text-muted);line-height:1}
+@media (hover:hover) and (pointer:fine){
+  .bar-font:hover:not(:disabled){background:var(--color-surface-muted);color:var(--color-accent)}
+}
+.bar-font:active:not(:disabled){background:var(--color-border);transition-duration:.08s}
+.bar-font:disabled{opacity:.3;cursor:default}
+.bar-font:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+
+/* ============ CANON: .gb-theme-toggle — css/floating-cluster.css:217-243 =============
+   Взято 1-в-1 из репозитория (не изобретено): крест-фейд sun/moon через
+   opacity+rotate+scale, БЕЗ View Transitions API — реальный toggleTheme()
+   в js/floating-cluster-controller.js делает простой classList.toggle('dark'),
+   View Transition в реальном коде используется только для переходов между
+   страницами (клик по <a>), не для смены темы. Прежняя версия этого файла
+   ошибочно вызывала document.startViewTransition() на смене темы — этого
+   эффекта не существует на сайте, чинил по замечанию владельца. */
+.gb-theme-toggle{position:relative;overflow:hidden}
+.gb-theme-toggle .theme-icon-sun,
+.gb-theme-toggle .theme-icon-moon{
+  position:absolute;inset:0;display:grid;place-items:center;
+  transition:opacity .32s var(--gb-ease-out),transform .42s var(--gb-ease-spring);
+}
+.gb-theme-toggle .theme-icon-sun{opacity:1;transform:rotate(0) scale(1)}
+.gb-theme-toggle .theme-icon-moon{opacity:0;transform:rotate(-90deg) scale(.5)}
+html.dark .gb-theme-toggle .theme-icon-sun{opacity:0;transform:rotate(90deg) scale(.5)}
+html.dark .gb-theme-toggle .theme-icon-moon{opacity:1;transform:rotate(0) scale(1)}
+.gb-theme-toggle .theme-icon-sun svg,.gb-theme-toggle .theme-icon-moon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+html.dark .bar-icon-btn.is-theme{color:#f5c542}
+
+/* ============ bTOC-OVERLAY (канон) ============ */
+.btoc-overlay{position:absolute;inset:0;z-index:var(--z-overlay-high);display:block;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s}
+.btoc-overlay.open{opacity:1;visibility:visible;pointer-events:auto}
+.btoc-panel{position:absolute;bottom:0;left:0;right:0;background:var(--color-canvas);border-radius:20px 20px 0 0;max-height:78%;overflow:hidden;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1);overscroll-behavior:contain;box-shadow:0 -12px 40px rgba(0,0,0,.18)}
+.btoc-overlay.open .btoc-panel{transform:translateY(0)}
+.btoc-handle{display:flex;justify-content:center;padding:8px 0 2px;flex-shrink:0}
+.btoc-handle::after{content:'';width:36px;height:4px;border-radius:2px;background:var(--color-border)}
+.btoc-header{display:flex;justify-content:space-between;align-items:center;padding:6px 18px 10px;flex-shrink:0}
+.btoc-header-left{display:flex;flex-direction:column;gap:2px}
+.btoc-title{font-family:'Source Sans 3',system-ui,sans-serif;font-size:16px;font-weight:700;color:var(--color-text)}
+.btoc-subtitle{font-family:'Source Sans 3',system-ui,sans-serif;font-size:11px;color:var(--color-text-muted)}
+.btoc-close{width:32px;height:32px;border:none;background:var(--color-surface-muted);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--color-text-muted);transition:background .15s;flex-shrink:0}
+@media (hover:hover) and (pointer:fine){ .btoc-close:hover{background:var(--color-border)} }
+.btoc-close:active{background:var(--color-border);transition-duration:.08s}
+.btoc-progress-row{display:flex;align-items:center;gap:12px;padding:0 18px 10px;flex-shrink:0}
+.btoc-progress-bar-wrap{flex:1;height:4px;background:var(--color-border);border-radius:2px;overflow:hidden}
+.btoc-progress-bar-fill{height:100%;background:var(--color-accent);border-radius:2px;transition:width .15s linear}
+.btoc-progress-pct{font-family:'Source Sans 3',system-ui,sans-serif;font-size:12px;font-weight:700;color:var(--color-accent);min-width:32px;text-align:right}
+.btoc-reading-time{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 18px 10px;flex-shrink:0;font-family:'Source Sans 3',system-ui,sans-serif}
+.btoc-reading-time span{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-muted)}
+.btoc-nav{flex:1;min-height:0;overflow-y:auto;padding:0 0 4px;position:relative;padding-left:4px}
+.btoc-link{display:flex;align-items:center;gap:12px;padding:11px 14px 11px 16px;margin:0 10px 2px 0;text-decoration:none;position:relative;border-left:2px solid var(--color-border);border-radius:0 12px 12px 0;transition:background .18s,border-color .18s;cursor:pointer;color:var(--color-text)}
+@media (hover:hover) and (pointer:fine){ .btoc-link:hover{background:var(--color-surface-alt)} }
+.btoc-link:active{background:var(--color-surface-alt);transition-duration:.08s}
+.btoc-link.active{background:var(--color-surface-muted);border-inline-start-color:var(--color-accent)}
+.btoc-link-num{font-family:'Source Sans 3',system-ui,sans-serif;font-size:10px;font-weight:700;color:var(--color-text-muted);opacity:.5;min-width:18px;text-align:right}
+.btoc-link.active .btoc-link-num{color:var(--color-accent);opacity:1}
+.btoc-link-text{font-family:'Source Sans 3',system-ui,sans-serif;font-size:14px;color:var(--color-text);line-height:1.4;font-feature-settings:"liga" 1,"kern" 1,"calt" 1,"lnum" 1}
+.btoc-link.active .btoc-link-text{color:var(--color-accent);font-weight:600}
+.btoc-link[hidden]{display:none}
+.btoc-footer{padding:9px 14px 13px;flex-shrink:0;border-top:1px solid var(--color-border);margin-top:3px}
+.btoc-share-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:10px 14px;background:var(--bg-alt,#f5f5f3);border:1px solid var(--color-border);border-radius:8px;font-family:'Source Sans 3',system-ui,sans-serif;font-size:13px;font-weight:600;color:var(--color-text-primary,#1a1a18);cursor:pointer;transition:background .15s,border-color .15s}
+@media (hover:hover) and (pointer:fine){ .btoc-share-btn:hover{background:var(--color-border);border-color:var(--color-text-muted)} }
+.btoc-share-btn:active{background:var(--color-border);border-color:var(--color-text-muted);transition-duration:.08s}
+
+/* ============ GBS-АДАПТАЦИЯ: переключатель частей серии (римские цифры) ============
+   Единственное добавление поверх канона из этого файла — сам btoc-panel,
+   topbar, bottom-bar, gb-ember, speed-rail, тема, A-/A+, избранное — НЕ
+   тронуты ни на строку, взяты как есть. Переключатель живёт внутри уже
+   существующей панели «Содержание», использует те же токены/шрифт/радиусы,
+   что и .spd-чипы скорости, чтобы не плодить отдельный визуальный язык. */
+.series-switcher{display:flex;gap:4px;padding:0 18px 10px;flex-shrink:0;overflow-x:auto;scrollbar-width:none}
+.series-switcher::-webkit-scrollbar{display:none}
+.series-chip{flex:0 0 auto;font:700 10.5px/1 'Source Sans 3',system-ui,sans-serif;
+  border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text-muted);
+  padding:6px 10px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s,border-color .15s;
+  white-space:nowrap;-webkit-tap-highlight-color:transparent}
+@media (hover:hover) and (pointer:fine){
+  .series-chip:hover{color:var(--color-text);border-color:var(--color-border-strong)}
+}
+.series-chip:active{transform:scale(.94);transition-duration:.08s}
+.series-chip[aria-selected="true"]{background:var(--color-accent);color:#fff;border-color:var(--color-accent)}
+.series-chip:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+
+/* ============ ВЕРХНЯЯ ПАНЕЛЬ ============ */
+.gb-topbar{position:absolute;top:0;left:0;right:0;z-index:var(--z-sticky);display:flex;align-items:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 11px) 12px 10px;background:color-mix(in srgb,var(--color-canvas) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--color-border)}
+
+/* ============ .gb-icon — 40×40 иконка-кнопка ============
+   Раньше здесь было точное 1-в-1 копирование канона (halo-КОЛЬЦО ::before,
+   только бордер, не заливка) — владелец справедливо спросил: «это же
+   мобильный интерфейс, ободки вокруг SVG нужны, или это только для
+   просмотра мышкой на компе?» Ответ проф. практики touch-first интерфейсов:
+   раз hover физически недостижим на реальном тач-устройстве, а нажатие уже
+   даёт цветную заливку самой иконки — контурное кольцо было лишним
+   «desktop-artifact»-слоем, который на телефоне не нужен вообще, а при
+   просмотре мышкой на компьютере лишь шумит. Заменено на мягкую заливку
+   currentColor (как «state layer» в Material/iOS) — она читается как
+   нативный тап-отклик приложения, а не как debug-контур; hover — по-прежнему
+   строго за (hover:hover) and (pointer:fine), реального тач-устройства
+   вообще не касается. */
+.gb-icon{
+  --icon-stroke:1.7;
+  width:40px;height:40px;display:grid;place-items:center;position:relative;
+  color:var(--color-text);background:transparent;border:0;border-radius:50%;
+  transition:color .2s var(--gb-ease-out);
+  cursor:pointer;flex-shrink:0;transform-origin:center;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+.gb-icon::before{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:currentColor;opacity:0;transform:scale(.6);
+  transition:opacity .18s ease,transform .22s var(--gb-ease-spring);
+  pointer-events:none;
+}
+@media (hover:hover) and (pointer:fine){
+  .gb-icon:hover{color:var(--color-accent)}
+  .gb-icon:hover::before{opacity:.08;transform:scale(1)}
+  html.dark .gb-icon:hover{color:var(--color-accent-strong)}
+}
+.gb-icon:active{color:var(--color-accent);transform:scale(.94);transition:transform .1s ease,color .1s ease}
+.gb-icon:active::before{opacity:.14;transform:scale(1);transition-duration:.08s}
+html.dark .gb-icon:active{color:var(--color-accent-strong)}
+.gb-icon:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
+.gb-icon svg{
+  width:20px;height:20px;stroke:currentColor;fill:none;
+  stroke-width:var(--icon-stroke);stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .32s var(--gb-ease-spring),stroke-width .28s var(--gb-ease-out);
+}
+/* ===== Закладки/Избранное — бинарный тумблер (добавил/не добавил), не
+   счётчик. Раньше висела статичная цифра «3» на иконке — бессмысленная:
+   это не «3 новых уведомления», это ОДНА статья, у которой либо стоит
+   флаг «в избранном», либо нет. Плюс сам toggle .is-on раньше НИЧЕГО не
+   красил (класс менялся, а CSS для него не было) — кнопка выглядела
+   сломанной, нажатие как будто ничего не делало. Взял канонный паттерн
+   .gb-save.is-saved (тот же bounce-подскок, что и в реальном
+   floating-cluster.css): золотая заливка иконки + один пружинный bounce
+   в момент добавления, плюс всплывающий тост снизу — статус виден и без
+   иконки. */
+.gb-icon.is-on{color:var(--color-accent-gold-bright)}
+.gb-icon.is-on svg{fill:var(--color-accent-gold);stroke:var(--color-accent-gold)}
+.gb-icon.is-on.is-bump svg{animation:gb-save-bounce .5s var(--gb-ease-spring)}
+@keyframes gb-save-bounce{0%{transform:scale(1)}40%{transform:scale(1.3)}70%{transform:scale(.92)}100%{transform:scale(1)}}
+html.dark .gb-icon.is-on{color:var(--color-accent-gold-bright)}
+
+/* тост «Добавлено/Убрано из избранного» — тот же канонный .gb-fc-toast:
+   выезжает снизу с лёгким пружинным перелётом, гаснет плавным fade */
+.gb-fc-toast{
+  position:absolute;left:50%;bottom:64px;z-index:calc(var(--z-overlay-high) + 10);
+  transform:translateX(-50%) translateY(14px) scale(.96);
+  padding:9px 14px;border-radius:12px;
+  background:rgba(20,24,31,.94);color:#fff;
+  font-family:'Source Sans 3',system-ui,sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.01em;
+  display:flex;align-items:center;gap:8px;
+  box-shadow:0 12px 32px rgba(0,0,0,.28);
+  opacity:0;pointer-events:none;
+  transition:opacity .25s cubic-bezier(.2,.7,.2,1),transform .34s cubic-bezier(.34,1.56,.64,1);
+  white-space:nowrap;
+}
+.gb-fc-toast.is-open{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+.gb-fc-toast svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;color:var(--color-accent-gold-bright);flex-shrink:0}
+html.dark .gb-fc-toast{background:rgba(245,240,230,.96);color:#161a21}
+
+/* поиск — своя фича этого макета (фильтр по оглавлению), в каноне это
+   отдельная command-palette кнопка; здесь честно оставляем как есть,
+   т.к. это не то, что было отмечено багом */
+.gb-search{flex:1;min-width:0;display:flex;align-items:center;gap:8px;height:40px;background:var(--color-surface-muted);border:1px solid var(--color-border);border-radius:999px;padding:0 14px}
+.gb-search:focus-within{border-color:var(--color-accent);box-shadow:0 0 0 3px var(--color-accent-soft)}
+.gb-search svg{width:16px;height:16px;stroke:var(--color-text-muted);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.gb-search input{flex:1;min-width:0;border:0;background:transparent;outline:0;font-family:'Source Sans 3',system-ui,sans-serif;font-size:14px;color:var(--color-text)}
+.gb-search input::placeholder{color:var(--color-text-faint)}
+
+/* ============ CANON: .gb-ember — css/floating-cluster.css:249-393 (Play) =============
+   Взято 1-в-1: ОДНО кольцо (ring-track тонкий фон 0.4 opacity + ring-progress
+   поверх), а не «трек всегда виден + вторая анимированная дуга поверх» —
+   вот что владелец назвал «нагромождением». В каноне сам SVG-слой
+   (.gb-ember__ring-svg) скрыт (opacity:0), пока data-state==idle, и
+   показывается ТОЛЬКО во время playing/paused/complete. Прогресс — не
+   фейковая петля на 24s, а honest stroke-dashoffset от --p (0..1),
+   которую двигает JS по факту чтения/озвучки — та же переменная, что
+   управляет числом «X%» в левом нижнем углу нижнего бара: один источник
+   правды на оба индикатора, они больше не могут разойтись. */
+.gb-ember{
+  --p:0;--ember-size:46px;--ring-color:var(--color-accent); /* канон-мобиль даёт диапазон 42-46px, берём верх */
+  appearance:none;border:0;position:relative;display:grid;place-items:center;
+  isolation:isolate;cursor:pointer;color:var(--color-text);
+  width:var(--ember-size);height:var(--ember-size);border-radius:50%;
+  background:transparent;
+  transition:transform .32s var(--gb-ease-spring),color .28s var(--gb-ease-out);
+  flex-shrink:0;transform-origin:center;
+}
+/* заливка вместо контурного кольца — тот же довод, что и у .gb-icon выше:
+   тач-первый интерфейс не нуждается в hover-ободке, нужен только опрятный
+   отклик на нажатие. */
+.gb-ember::before{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:var(--ring-color);opacity:0;transform:scale(.6);
+  transition:opacity .18s ease,transform .22s var(--gb-ease-spring);
+  pointer-events:none;
+}
+@media (hover:hover) and (pointer:fine){
+  .gb-ember:hover::before{opacity:.08;transform:scale(1)}
+}
+.gb-ember:active{transform:scale(.94);transition:transform .1s ease}
+.gb-ember:active::before{opacity:.16;transform:scale(1);transition-duration:.08s}
+.gb-ember:focus-visible{outline:2px solid var(--color-accent);outline-offset:4px;border-radius:50%}
+
+.gb-ember__ring-svg{
+  position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;
+  opacity:0;transform:rotate(-90deg);transform-origin:center;
+  transition:opacity .28s var(--gb-ease-out);
+}
+.gb-ember[data-state="playing"] .gb-ember__ring-svg,
+.gb-ember[data-state="paused"] .gb-ember__ring-svg,
+.gb-ember[data-state="complete"] .gb-ember__ring-svg{opacity:1}
+/* idle: кольцо канонично скрыто (opacity:0 по умолчанию выше) — раньше тут
+   была наша добавка, чтобы дать опору дуге-подписи скорости внутри кольца;
+   теперь скорость живёт отдельным бейджем (.play-speed) на самом Play, а
+   не подписью внутри него, так что чистый канон снова уместен без правок. */
+
+.gb-ember__ring-track{fill:none;stroke:var(--color-border);stroke-width:1.5;opacity:.4}
+.gb-ember__ring-progress{
+  fill:none;stroke:var(--ring-color);stroke-width:1.5;stroke-linecap:round;
+  stroke-dasharray:283;
+  stroke-dashoffset:calc(283 - 283 * min(1,max(0,var(--p,0))));
+  transition:stroke-dashoffset .42s cubic-bezier(.4,0,.2,1);
+}
+/* ===== НАША добавка поверх канона: «дышащее» кольцо, пока реально играет =====
+   Владелец: «мягкая анимация, где-то будто толще линия, будто чуть тоньше».
+   В каноне такой анимации нет (там кольцо просто честно показывает прогресс,
+   без «живости») — это осознанное добавление ТОЛЬКО поверх состояния
+   playing, канонная геометрия/математика прогресса (stroke-dashoffset от
+   --p) не тронута ни на пиксель — колеблется только толщина линии. */
+@keyframes gb-ember-breathe{
+  0%,100%{stroke-width:1.4}
+  50%{stroke-width:2.4}
+}
+.gb-ember[data-state="playing"] .gb-ember__ring-progress{
+  animation:gb-ember-breathe 2.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion:reduce){
+  .gb-ember[data-state="playing"] .gb-ember__ring-progress{animation:none}
+}
+
+.gb-ember__glyph{position:relative;z-index:2;width:14px;height:14px;fill:currentColor;transform:translateX(1px)}
+.gb-ember__pause{position:relative;z-index:2;width:14px;height:14px;display:none;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+.gb-ember__check{display:none;position:relative;z-index:2;width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.gb-ember[data-state="playing"] .gb-ember__glyph,
+.gb-ember[data-state="paused"] .gb-ember__glyph,
+.gb-ember[data-state="complete"] .gb-ember__glyph{display:none}
+.gb-ember[data-state="playing"] .gb-ember__pause,
+.gb-ember[data-state="paused"] .gb-ember__pause{display:block}
+.gb-ember[data-state="complete"] .gb-ember__check{display:block}
+.gb-ember[data-state="playing"]{color:var(--ring-color)}
+.gb-ember[data-state="paused"]{color:var(--ring-color)}
+.gb-ember[data-state="complete"]{color:var(--color-accent-gold-bright)}
+html.dark .gb-ember{--ring-color:#eed093;color:#eed093;box-shadow:0 0 14px rgba(216,176,104,.22)}
+
+/* ============ Скорости: рельса подменяет поиск в одном слоте + бейдж на Play ============
+   Взято у более удачного варианта (владелец прислал пример) вместо моей
+   прошлой «блум-пилюли слева от Play» — там был целый букет геометрических
+   багов (пилюля наезжала то на «домик», то на саму Play, требовала скролл
+   с фейдом и т.д.), потому что пилюля и Play пытались жить в одной
+   физической полосе. Этот вариант проще и по конструкции лишён этого
+   класса багов: рельса скоростей занимает МЕСТО ПОИСКА (тот же .gb-slot,
+   просто второй слой поверх, включается/выключается через
+   .gb-topbar.speed-open) — Play при этом не двигается и ни с кем не делит
+   пространство. Выбранная скорость остаётся маленьким бейджем в углу
+   Play — это и есть «оставление скорости на PLAY» из примера. */
+.gb-slot{flex:1;min-width:0;position:relative;height:40px}
+.gb-search,.speed-rail{position:absolute;inset:0;display:flex;align-items:center}
+.gb-search{transition:opacity .25s ease,transform .25s cubic-bezier(.3,1.2,.4,1)}
+.gb-topbar.speed-open .gb-search{opacity:0;transform:translateX(-8px);pointer-events:none}
+.speed-rail{
+  /* БАГ: было justify-content:flex-end — с overflow-x:auto это известная
+     дыра в Chrome (и вообще во flexbox-спеке): контент, вылезающий в
+     СТАРТОВУЮ сторону при flex-end, не считается «переполнением» —
+     scrollWidth оставался равен clientWidth, хотя чипы физически
+     рендерились ЗА пределами рельсы, под «домиком» (там их и ловил
+     pointer-events — реальный клик по «1×» попадал в homeBtn). Overflow
+     корректно клипуется/скроллится только когда лишний контент растёт в
+     ЕСТЕСТВЕННУЮ (стартовую) сторону — переключил на flex-start. */
+  justify-content:flex-start;gap:3px;opacity:0;transform:translateX(12px);
+  transition:opacity .25s ease,transform .25s cubic-bezier(.3,1.2,.4,1);pointer-events:none;
+  overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;
+  -webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+  scroll-snap-type:x proximity;
+  /* мягкая растушёвка по краям НЕ означает «тут больше нечего смотреть» —
+     раньше владелец жаловался, что при 5 чипах «2×» уходил за край и
+     достать его пальцем не получалось (drag на overflow:auto в
+     синтетических touch-событиях ненадёжен, а по факту и вживую
+     подгружал не всегда — заменил на явный pointer-drag ниже в JS,
+     который одинаково работает и мышью, и пальцем). Плюс чипы стали
+     компактнее — при обычной ширине слота (~194px) все 5 чаще всего
+     видны разом БЕЗ скролла вообще, скролл — подстраховка на узких
+     экранах/крупном системном шрифте, а не основной способ выбора. */
+  mask-image:linear-gradient(90deg,transparent 0,#000 8px,#000 calc(100% - 8px),transparent 100%);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8px,#000 calc(100% - 8px),transparent 100%);
+  cursor:grab;
+}
+.speed-rail:active{cursor:grabbing}
+.speed-rail::-webkit-scrollbar{display:none}
+.gb-topbar.speed-open .speed-rail{opacity:1;transform:translateX(0);pointer-events:auto}
+.speed-rail .spd{
+  flex:0 0 auto;font:700 10.5px/1 'Source Sans 3',system-ui,sans-serif;
+  border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text-muted);
+  padding:6px 6px;min-width:0;border-radius:8px;cursor:pointer;
+  transition:background .15s,color .15s,border-color .15s,transform .12s;white-space:nowrap;
+  -webkit-tap-highlight-color:transparent;scroll-snap-align:center;position:relative;
+}
+/* увеличенная зона тапа — визуально компактный чип, но палец не промахивается (WCAG 2.5.5 ~44px) */
+.speed-rail .spd::before{content:'';position:absolute;inset:-7px -1px}
+@media (hover:hover) and (pointer:fine){
+  .speed-rail .spd:hover{color:var(--color-text);border-color:var(--color-border-strong)}
+}
+.speed-rail .spd:active{transform:scale(.92);transition-duration:.08s}
+.speed-rail .spd.on{background:var(--color-accent);color:#fff;border-color:var(--color-accent)}
+.speed-rail .spd.on:active{transform:scale(.92)}
+.speed-rail .spd:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+/* пока рельсу тащат пальцем/мышью — глушим hover/active-переход чипов,
+   чтобы драг не «залипал» на цветовых transition */
+.speed-rail.is-dragging .spd{transition:none}
+.speed-rail.is-dragging{scroll-snap-type:none}
+
+/* Play сидит в собственной ячейке фиксированного размера — бейдж скорости
+   позиционируется от НЕЁ, а не от Play (ember сам вправе scale() на hover/
+   active, and если бы бейдж был вложен в .gb-ember, transform:scale() от
+   :active подхватывал бы и его — дёргало бы бейдж вместе с кругом). */
+.play-wrap{position:relative;flex:0 0 var(--ember-size,46px);width:var(--ember-size,46px);height:var(--ember-size,46px);display:grid;place-items:center}
+.play-speed{
+  /* Бейдж текущей скорости — залит акцентом (бордо), а не светлым canvas.
+     Раньше был светлый фон + приглушённый текст: на светлом баре читался
+     плохо (владелец: «не белым, а таким цветом как на скрине, так лучше
+     видно»). Теперь как выбранный чип — сплошной бордо + белый текст,
+     виден всегда, а не только пока открыта рельса. */
+  appearance:none;position:absolute;right:-3px;bottom:-2px;z-index:4;
+  min-width:25px;height:15px;padding:0 4px;border-radius:999px;
+  border:1px solid var(--color-accent);background:var(--color-accent);color:#fff;
+  font:800 8.5px/13px 'Source Sans 3',system-ui,sans-serif;letter-spacing:.01em;text-align:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.16);cursor:pointer;
+  transition:background .2s,color .2s,border-color .2s,transform .18s,box-shadow .18s;
+}
+/* увеличенная зона тапа — сам бейдж визуально крошечный, палец промахивался бы */
+.play-speed::before{content:'';position:absolute;inset:-9px -7px;border-radius:999px}
+@media (hover:hover) and (pointer:fine){
+  .play-speed:hover{background:var(--color-accent-strong);border-color:var(--color-accent-strong)}
+}
+.play-speed:active{transform:scale(.94)}
+.play-speed:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
+/* пока рельса открыта — бейдж чуть ярче, чтобы связать его с активным чипом */
+.gb-topbar.speed-open .play-speed{background:var(--color-accent-strong);border-color:var(--color-accent-strong);color:#fff}
+html.dark .play-speed{color:#1a1410;box-shadow:0 2px 7px rgba(0,0,0,.34)}
+html.dark .gb-topbar.speed-open .play-speed{color:#1a1410}
+/* лёгкий «бамп» бейджа при выборе новой скорости — вместо целой карусели
+   заезда/выезда достаточно намекнуть, что значение обновилось */
+.play-speed.is-bump{animation:play-speed-bump .28s ease-out}
+@keyframes play-speed-bump{
+  0%,100%{filter:none;box-shadow:none}
+  48%{filter:brightness(1.12);box-shadow:0 0 0 3px var(--color-accent-soft)}
+}45%{transform:scale(1.18) translateY(-1px)}100%{transform:scale(1)}}
+
+/* ============ ОБВЁРТКА ============ */
+*{box-sizing:border-box}
+body{margin:0;background:#15161a;font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:#cfcfd4;-webkit-font-smoothing:antialiased;padding:28px 16px 70px}
+.stage{display:flex;flex-direction:column;align-items:center;gap:18px}
+.legend{max-width:480px;text-align:center}
+.legend h1{font-size:18px;margin:0 0 8px;color:#fff;font-weight:700}
+.legend p{font-size:13px;line-height:1.6;margin:0;color:#9a9aa2}
+.legend code{background:#26272d;color:#e7b878;padding:1px 6px;border-radius:5px;font-size:12px}
+.legend b{color:#d4a574}
+.legend .hint{margin-top:12px;font-size:12px;color:#8e8f98;line-height:1.5}
+.legend .row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.legend button{font-family:inherit;font-size:12.5px;font-weight:600;color:#e7b878;background:#1d1e23;border:1px solid #3a3b44;padding:8px 14px;border-radius:9px;cursor:pointer;transition:.15s}
+.legend button:hover{background:#262830;border-color:#e7b878}
+.phone{position:relative;width:390px;max-width:100%;height:760px;border-radius:44px;background:#000;padding:11px;box-shadow:0 24px 70px rgba(0,0,0,.5),0 0 0 2px #2a2b30,0 0 0 9px #0c0c0e;overflow:hidden}
+.phone .notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:112px;height:25px;background:#000;border-radius:0 0 17px 17px;z-index:60}
+.screen{position:relative;width:100%;height:100%;border-radius:33px;overflow:hidden;background:var(--color-canvas)}
+.faux-art{position:absolute;inset:0;overflow-y:auto;background:var(--color-canvas);color:var(--color-text);font-family:Lora,Georgia,serif;padding:62px 22px 68px;transition:font-size .2s;scroll-behavior:smooth}
+.faux-art::-webkit-scrollbar{width:3px}
+.faux-art::-webkit-scrollbar-thumb{background:var(--color-border-strong);border-radius:2px}
+.faux-art .ln{height:4px;width:38px;background:var(--color-accent);margin:0 0 16px;border-radius:3px}
+.faux-art h1{font-size:23px;line-height:1.18;margin:0 0 8px;color:var(--color-text-primary);font-weight:700}
+.faux-art .byline{font:500 12px/1 'Source Sans 3',system-ui,sans-serif;color:var(--color-text-muted);margin:0 0 18px}
+.faux-art p{font-size:1em;line-height:1.72;margin:0 0 14px;transition:background-color .3s,box-shadow .3s;border-radius:6px}
+/* «текст двигается по мере прослушки» — параграф, который сейчас озвучивается,
+   получает мягкую подсветку; она следует за автоскроллом/наблюдателем ниже,
+   отдельного кода не нужно — переиспользуем существующий IntersectionObserver */
+.faux-art p.is-reading{background:var(--color-accent-soft);box-shadow:inset 3px 0 0 var(--color-accent);padding-left:10px;margin-left:-10px}
+
+/* ===== V4: двойной прогресс без изменения остального bottom-bar ===== */
+.bar-progress.dual-progress{
+  appearance:none;border:0;background:transparent;padding:0;margin:0;
+  width:38px;height:38px;position:relative;display:block;cursor:pointer;color:inherit;
+}
+.bar-progress.dual-progress svg{width:38px;height:38px;transform:rotate(-90deg);overflow:visible}
+.bar-series-track,.bar-series-fill,.bar-progress-track,.bar-progress-fill{fill:none;transform-origin:center}
+.bar-series-track{stroke:var(--color-border);stroke-width:1.55;opacity:.72}
+.bar-series-fill{stroke:var(--color-accent-gold);stroke-width:1.75;stroke-linecap:round;transition:stroke-dashoffset .24s linear}
+.bar-progress.dual-progress .bar-progress-track{stroke-width:2.45;opacity:.8}
+.bar-progress.dual-progress .bar-progress-fill{stroke-width:2.65}
+.bar-progress.dual-progress .bar-progress-text{font-size:8.5px;letter-spacing:-.02em}
+.bar-progress.dual-progress:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;border-radius:50%}
+@media (hover:hover) and (pointer:fine){.bar-progress.dual-progress:hover .bar-series-fill{stroke:var(--color-accent-gold-bright)}}
+html.dark .bar-series-fill{stroke:#b97869}
+
+/* GBS mobile TOC: сохраняем репозиторный RomanNumeral contract (.gb-roman + .gb-series-mark) */
+.series-switcher{scroll-padding-inline:18px}
+.btoc-link-num{
+  min-width:30px;text-align:center;font-family:Lora,Georgia,serif;font-style:italic;
+  font-size:13px;font-weight:700;color:var(--color-accent-gold);opacity:.9;
+}
+.btoc-link.active .btoc-link-num{color:var(--color-accent);opacity:1}
+
+/* ===== Repo-native TOC actions ==========================================
+   В TOC остаются только канонические действия статьи:
+   «Поделиться статьёй» и «Распечатать / PDF».
+
+   Когда site.js уже создал .article-end-actions-wrap, мы клонируем
+   существующие кнопки вместе с их реальными классами и SVG. Поэтому mounted
+   controls не перерисовываются этим прототипом. Собственный спокойный стиль
+   применяется только к текстовому standalone-fallback. */
+.btoc-footer{
+  padding:10px 12px 12px;
+  flex-shrink:0;
+  border-top:1px solid var(--color-border);
+  background:var(--color-canvas);
+  box-shadow:0 -8px 18px color-mix(in srgb,var(--color-canvas) 86%,transparent);
+}
+.btoc-repo-actions{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:8px;
+  align-items:stretch;
+}
+.btoc-repo-actions.is-repo-mounted > *{
+  width:100%;
+  min-width:0;
+  max-width:none;
+  box-sizing:border-box;
+}
+.btoc-repo-actions:not(.is-repo-mounted) > [data-repo-action-fallback]{
+  min-width:0;
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:9px 10px;
+  border:1px solid var(--color-border);
+  border-radius:11px;
+  background:var(--color-surface-muted);
+  color:var(--color-text);
+  font:700 12.5px/1.15 'Source Sans 3',system-ui,sans-serif;
+  text-align:center;
+  cursor:pointer;
+  transition:background .16s ease,border-color .16s ease,color .16s ease;
+}
+.btoc-repo-actions:not(.is-repo-mounted) > [data-repo-action-fallback]:active{
+  background:var(--color-border);
+}
+.btoc-repo-actions:not(.is-repo-mounted) > [data-repo-action-fallback]:focus-visible{
+  outline:2px solid var(--color-accent);
+  outline-offset:2px;
+}
+@media (hover:hover) and (pointer:fine){
+  .btoc-repo-actions:not(.is-repo-mounted) > [data-repo-action-fallback]:hover{
+    border-color:var(--color-border-strong);
+    background:var(--color-border);
+  }
+}
+
+@media print{
+  .gb-topbar,.bottom-bar,.btoc-overlay,.gb-fc-toast,.legend,.controls{display:none!important}
+  body{background:#fff!important;padding:0!important}
+  .phone,.screen,.article-scroll,.faux-art{position:static!important;width:auto!important;height:auto!important;overflow:visible!important;border:0!important;box-shadow:none!important;border-radius:0!important}
+}
+
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="legend">
+    <h1>gb-ember (канон) · скорости в слоте поиска · бейдж на Play</h1>
+    <p>Play — точная копия <code>.gb-ember</code> из репозитория (одно кольцо, честный <code>--p</code>), плюс наша добавка: мягкое «дыхание» толщины линии, пока реально играет. Скорости выезжают на место поиска, выбранная остаётся бейджем на самом Play. Кольцо и процент внизу слева — один источник данных.</p>
+    <div class="hint">👆 Жми ▶ с нуля — статья едет вниз (как будто озвучка) и один раз показывает рельсу скоростей; тап по бейджу на Play открывает её снова в любой момент.</div>
+    <div class="row">
+      <button id="themeBtn">🌙 Сменить тему</button>
+      <button id="tocBtn">📑 Оглавление</button>
+    </div>
+  </div>
+
+  <div class="phone"><div class="notch"></div><div class="screen" id="screen">
+
+    <!-- СТАТЬЯ -->
+    <div class="faux-art" id="fauxArt">
+      <div class="ln"></div>
+      <h1>Джон Гилл. Часть I. Человек</h1>
+      <div class="byline">Кеттеринг → Лондон · ~28 мин чтения</div>
+      <p id="sec-01" data-sec="01">В ноябре 1697 года в семье скромного продавца угля и свечей родился мальчик, которому суждено было стать одним из самых плодовитых богословов XVIII столетия. Никакого университета — только книжная лавка и неутолимая жажда Писания.</p>
+      <p id="sec-03" data-sec="03">«Где ты?» — вопрос из Бытия 3:9, однажды поразивший его сердце, определил всю дальнейшую жизнь и пасторское служение длиной в пятьдесят один год в Хорслидауне. Это обращение стало поворотным моментом: юноша оставил мирские увлечения и посвятил себя изучению Священного Писания день и ночь.</p>
+      <p id="sec-05" data-sec="05">Гилл читал Мишну и Талмуд в подлиннике, сверяя христианское толкование с еврейской экзегетической традицией — подход, редкий для протестантского богослова того времени и вызывавший споры среди современников. Знание древнееврейского он приобрёл самостоятельно, без учителей, по старым фолиантам.</p>
+      <p id="sec-07" data-sec="07">В 1718 году, в возрасте двадцати одного года, он начал проповедовать. А спустя два года, 22 марта 1720-го, был рукоположен и принял приглашение стать пастором баптистской церкви в Хорслидауне, Саутворк. Это служение продлится без малого пятьдесят один год — до самой смерти.</p>
+      <p id="sec-09" data-sec="09">Декларация Козьего Двора 1729 года, принятая церковью под его руководством, стала одним из самых значимых исповеданий веры ранних английских баптистов. В ней утверждались кальвинистские основы, но без впадения в гипер-кальвинизм: Евангелие должно проповедоваться всем без исключения.</p>
+      <p id="sec-11" data-sec="11">Систематическая евангелизация Саутварка — бедного района к югу от Темзы — шла рука об руку с пастырской заботой. Гилл посещал больных, утешал скорбящих, наставлял обращающихся. Его проповеди собирали толпы, жаждущих живого слова посреди социальной тьмы.</p>
+      <p id="sec-13" data-sec="13">За богословом всегда стоял человек глубокой внутренней молитвы. Три личных высказывания, дошедших до нас в записях современников, рисуют портрет кроткого, но твёрдого в убеждениях пастыря: «Моя надежда — не в моих трудах, но в заслугах Христа».</p>
+      <p id="sec-15" data-sec="15">Исторический контекст Саутворка — джиновая лихорадка, правовое бесправие бедняков, эпидемии — делает служение Гилла ещё более значимым. Он был голосом истины, не боясь обличать несправедливость с кафедры.</p>
+      <p id="sec-16" data-sec="16">«Проверь себя»: каким годом датируется рукоположение Гилла? Какой вопрос из Книги Бытия изменил его жизнь? Вспомните название исповедания 1729 года.</p>
+    </div>
+
+    <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+    <div class="gb-topbar" id="topbar">
+      <!-- «домик» назад — канон .gb-icon -->
+      <button class="gb-icon" id="homeBtn" aria-label="На главную" type="button">
+        <svg viewBox="0 0 24 24"><path d="M3 12L12 4l9 8"/><path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/></svg>
+      </button>
+      <!-- слот: поиск по оглавлению ⇄ рельса скоростей (подменяют друг друга в одном месте) -->
+      <div class="gb-slot">
+        <label class="gb-search" for="tocSearch">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="tocSearch" type="text" placeholder="Поиск по разделам…" autocomplete="off">
+        </label>
+        <div class="speed-rail" id="speedRail" role="radiogroup" aria-label="Скорость воспроизведения">
+          <button class="spd" type="button" role="radio" data-speed="0.75" aria-checked="false">0.75×</button>
+          <button class="spd" type="button" role="radio" data-speed="1" aria-checked="false">1×</button>
+          <button class="spd" type="button" role="radio" data-speed="1.25" aria-checked="false">1.25×</button>
+          <button class="spd on" type="button" role="radio" data-speed="1.5" aria-checked="true">1.5×</button>
+          <button class="spd" type="button" role="radio" data-speed="1.75" aria-checked="false">1.75×</button>
+          <button class="spd" type="button" role="radio" data-speed="2" aria-checked="false">2×</button>
+        </div>
+      </div>
+      <!-- PLAY — канон .gb-ember (кольцо/дыхание не тронуты) + отдельный бейдж выбранной скорости -->
+      <span class="play-wrap">
+        <button class="gb-ember" id="playEmber" type="button" data-state="idle" data-fc-action="play"
+                style="--p:0" aria-label="Озвучка" aria-pressed="false">
+          <svg class="gb-ember__ring-svg" viewBox="0 0 100 100" aria-hidden="true">
+            <circle class="gb-ember__ring-track" cx="50" cy="50" r="45"/>
+            <circle class="gb-ember__ring-progress" cx="50" cy="50" r="45"/>
+          </svg>
+          <svg class="gb-ember__glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.8v14.4L18.5 12 7 4.8z"/></svg>
+          <svg class="gb-ember__pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
+          <svg class="gb-ember__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.1L19 7"/></svg>
+        </button>
+        <button class="play-speed" id="playSpeed" type="button" aria-label="Выбрать скорость, сейчас 1.5×">1.5×</button>
+      </span>
+      <!-- Избранное — бинарный тумблер «добавлено / не добавлено», без счётчика -->
+      <button class="gb-icon" id="bookBtn" aria-label="Добавить в избранное" aria-pressed="false" type="button">
+        <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+
+    <!-- ПОСТОЯННЫЙ bottom-bar (всегда висит) -->
+    <div class="bottom-bar" id="bottomBar">
+      <div class="bottom-bar-inner">
+        <!-- круг прогресса чтения — единственное число процентов на экране -->
+        <button class="bar-progress dual-progress" id="dualProgressBtn" type="button" aria-label="Статья 0%, серия 0%">
+          <svg aria-hidden="true" viewBox="0 0 36 36">
+            <circle class="bar-series-track" cx="18" cy="18" r="16"></circle>
+            <circle class="bar-series-fill" id="barSeriesProgressFill" cx="18" cy="18" r="16" stroke-dasharray="100.53" stroke-dashoffset="100.53"></circle>
+            <circle class="bar-progress-track" cx="18" cy="18" r="12.5"></circle>
+            <circle class="bar-progress-fill" cx="18" cy="18" id="barProgressFill" r="12.5" stroke-dasharray="78.54" stroke-dashoffset="78.54"></circle>
+          </svg>
+          <span class="bar-progress-text" id="barProgressText">0%</span>
+        </button>
+        <!-- «Сейчас читаете» -->
+        <button aria-label="Открыть оглавление" class="bar-section-btn" id="barSectionBtn"><span class="bar-section-label">Сейчас читаете</span><span class="bar-section-name" id="barSectionName">Книжная лавка вместо школы</span></button>
+        <span class="bar-divider"></span>
+        <!-- Тема — канон .gb-theme-toggle (реальный crossfade, без View Transition) -->
+        <button class="bar-icon-btn is-theme gb-theme-toggle" id="barThemeBtn" aria-label="Тема" aria-pressed="false" type="button">
+          <span class="theme-icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>
+          <span class="theme-icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span>
+        </button>
+        <!-- A−/A+ (Lora-сериф) -->
+        <button class="bar-font" id="fontMinus" aria-label="Уменьшить шрифт" type="button">A−</button>
+        <button class="bar-font" id="fontPlus" aria-label="Увеличить шрифт" type="button">A+</button>
+        <span class="bar-divider"></span>
+        <!-- Поделиться -->
+        <button class="bar-icon-btn" id="barShareBtn" aria-label="Поделиться" type="button"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>
+      </div>
+    </div>
+
+    <!-- РАСКРЫВАЮЩИЙСЯ btoc -->
+    <div class="btoc-overlay" id="btocOverlay" aria-hidden="true">
+      <div class="btoc-panel" id="btocPanel" role="dialog" aria-modal="true" aria-labelledby="btocTitle">
+        <div class="btoc-handle"></div>
+        <div class="btoc-header"><div class="btoc-header-left"><div class="btoc-title" id="btocTitle">Часть I. Человек</div><div class="btoc-subtitle" id="btocSubtitle">16 разделов</div></div><button aria-label="Закрыть" class="btoc-close" id="btocClose" type="button"><svg aria-hidden="true" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" viewBox="0 0 24 24" width="14"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+        <!-- GBS: переключатель частей серии, единственное добавление к канону этого файла -->
+        <div class="series-switcher" id="seriesSwitcher" role="tablist" aria-label="Части серии «Джон Гилл»">
+          <button class="series-chip" type="button" role="tab" data-part="intro" aria-selected="false">Введ.</button>
+          <button class="series-chip" type="button" role="tab" data-part="I" aria-selected="true">I</button>
+          <button class="series-chip" type="button" role="tab" data-part="II" aria-selected="false">II</button>
+          <button class="series-chip" type="button" role="tab" data-part="III" aria-selected="false">III</button>
+          <button class="series-chip" type="button" role="tab" data-part="ref" aria-selected="false">Справ.</button>
+        </div>
+        <div class="btoc-progress-row"><div class="btoc-progress-bar-wrap"><div class="btoc-progress-bar-fill" id="btocProgressFill" style="width:0%"></div></div><span class="btoc-progress-pct" id="btocProgressPct">0%</span></div>
+        <div class="btoc-reading-time"><span><svg aria-hidden="true" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <span id="btocTotalTime">~28 мин чтения</span></span><span id="btocTimeLeft">Осталось: ~28 мин</span></div>
+        <nav class="btoc-nav" id="btocNav">
+          <a class="btoc-link active" href="#sec-01" data-sec="01" data-name="Ранние годы и формирование характера"><span aria-hidden="true" class="gb-roman gb-series-mark btoc-link-num">I</span><span class="btoc-link-text">Ранние годы и формирование характера</span></a>
+          <a class="btoc-link" href="#sec-03" data-sec="03" data-name="Книжная лавка вместо школы"><span aria-hidden="true" class="gb-roman gb-series-mark btoc-link-num">II</span><span class="btoc-link-text">Книжная лавка вместо школы</span></a>
+          <a class="btoc-link" href="#sec-05" data-sec="05" data-name="Бытие 3:9 — вопрос, изменивший жизнь"><span aria-hidden="true" class="gb-roman gb-series-mark btoc-link-num">III</span><span class="btoc-link-text">Бытие 3:9 — вопрос, изменивший жизнь</span></a>
+          <a class="btoc-link" href="#sec-07" data-sec="07" data-name="Пасторское служение в Хорслидауне"><span aria-hidden="true" class="gb-roman gb-series-mark btoc-link-num">IV</span><span class="btoc-link-text">Пасторское служение в Хорслидауне</span></a>
+          <a class="btoc-link" href="#sec-09" data-sec="09" data-name="Рукоположение и публичная ответственность"><span aria-hidden="true" class="gb-roman gb-series-mark btoc-link-num">V</span><span class="btoc-link-text">Рукоположение и публичная ответственность</span></a>
+          <a class="btoc-link" href="#sec-11" data-sec="11" data-name="Семья и личная дисциплина"><span aria-hidden="true" class="gb-roman gb-series-mark btoc-link-num">VI</span><span class="btoc-link-text">Семья и личная дисциплина</span></a>
+          <a class="btoc-link" href="#sec-13" data-sec="13" data-name="Декларация 1729 года"><span aria-hidden="true" class="gb-roman gb-series-mark btoc-link-num">VII</span><span class="btoc-link-text">Декларация 1729 года</span></a>
+          <a class="btoc-link" href="#sec-15" data-sec="15" data-name="Евангелизация Саутварка"><span aria-hidden="true" class="gb-roman gb-series-mark btoc-link-num">VIII</span><span class="btoc-link-text">Евангелизация Саутварка</span></a>
+          <a class="btoc-link" href="#sec-16" data-sec="16" data-name="Человек за богословом"><span aria-hidden="true" class="gb-roman gb-series-mark btoc-link-num">IX</span><span class="btoc-link-text">Человек за богословом</span></a>
+          <div class="" id="tocEmpty" hidden style="padding:24px;text-align:center;color:var(--color-text-faint);font:500 13px/1.5 'Source Sans 3',system-ui,sans-serif">Ничего не найдено</div>
+        </nav>
+        <div class="btoc-footer">
+          <div class="btoc-repo-actions" id="btocRepoActions" data-gb-toc-actions aria-label="Действия со статьёй">
+            <!-- Standalone fallback без придуманных SVG. В репозитории эти две
+                 кнопки заменяются cloneNode() из .article-end-actions-wrap,
+                 поэтому используются точные существующие иконки и классы. -->
+            <button type="button" data-repo-action-fallback="share">Поделиться статьёй</button>
+            <button type="button" data-repo-action-fallback="print">Распечатать / PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- тост «Добавлено/Убрано из избранного» -->
+    <div class="gb-fc-toast" id="fcToast" role="status" aria-live="polite">
+      <svg id="fcToastIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.1L19 7"/></svg>
+      <span id="fcToastText">Добавлено в избранное</span>
+    </div>
+
+  </div></div>
+</div>
+
+<script>
+(function(){
+  try{
+    var html=document.documentElement,art=document.getElementById('fauxArt'),ov=document.getElementById('btocOverlay'),topbar=document.getElementById('topbar'),homeBtn=document.getElementById('homeBtn');
+
+    /* ============================================================
+       ТЕМА — реальный паттерн js/floating-cluster-controller.js
+       (setTheme/toggleTheme/syncThemeButtons): простой classList.toggle,
+       БЕЗ View Transitions API. Вся анимация — в CSS .gb-theme-toggle
+       (crossfade sun/moon), не в JS. aria-pressed синхронизируется
+       на каждой кнопке с классом .gb-theme-toggle, как в контроллере. */
+    function isDark(){ return html.classList.contains('dark'); }
+    function syncThemeButtons(){
+      var dark=isDark();
+      document.querySelectorAll('.gb-theme-toggle').forEach(function(b){ b.setAttribute('aria-pressed', dark?'true':'false'); });
+      document.getElementById('themeBtn').textContent = dark ? '☀️ Светлая тема' : '🌙 Сменить тему';
+    }
+    function setTheme(dark){ html.classList.toggle('dark', !!dark); syncThemeButtons(); }
+    function toggleTheme(){ setTheme(!isDark()); }
+    document.getElementById('themeBtn').addEventListener('click', toggleTheme);
+    document.getElementById('barThemeBtn').addEventListener('click', toggleTheme);
+
+    /* ---- ПРОГРЕСС ЧТЕНИЯ по скроллу (ручной или во время автопрокрутки) ---- */
+    var fill=document.getElementById('barProgressFill'),seriesFill=document.getElementById('barSeriesProgressFill'),pctEl=document.getElementById('barProgressText'),dualProgressBtn=document.getElementById('dualProgressBtn');
+    var tocFill=document.getElementById('btocProgressFill'),tocPct=document.getElementById('btocProgressPct'),tocLeft=document.getElementById('btocTimeLeft'),tocTotal=document.getElementById('btocTotalTime');
+    var ember=document.getElementById('playEmber');
+    var C=78.54, SERIES_C=100.53;
+    var SERIES_TOTAL_MIN=145, SERIES_DONE_BEFORE_MIN=16, CURRENT_PART_MIN=28;
+    var seriesMaxProgress=(function(){try{return Math.max(0,Math.min(1,parseFloat(localStorage.getItem('gb:series-progress:john-gill'))||0))}catch(_){return 0}})();
+    var links=Array.prototype.slice.call(document.querySelectorAll('.btoc-nav .btoc-link'));
+    var secName=document.getElementById('barSectionName');
+    var ticking=false;
+
+    function currentProgress(){
+      var max=art.scrollHeight-art.clientHeight;
+      return max>0?Math.min(Math.max(art.scrollTop/max,0),1):0;
+    }
+    function renderProgress(p){
+      var pv=Math.round(p*100);
+      fill.style.strokeDashoffset=C*(1-p);pctEl.textContent=pv+'%';
+      var liveSeries=(SERIES_DONE_BEFORE_MIN+CURRENT_PART_MIN*p)/SERIES_TOTAL_MIN;
+      seriesMaxProgress=Math.max(seriesMaxProgress,liveSeries);
+      try{localStorage.setItem('gb:series-progress:john-gill',String(seriesMaxProgress))}catch(_){}
+      if(seriesFill) seriesFill.style.strokeDashoffset=SERIES_C*(1-seriesMaxProgress);
+      if(dualProgressBtn) dualProgressBtn.setAttribute('aria-label','Статья '+pv+'%, серия '+Math.round(seriesMaxProgress*100)+'%');
+      tocFill.style.width=pv+'%';tocPct.textContent=pv+'%';
+      tocLeft.textContent='Осталось: ~'+Math.max(0,Math.round(28-28*p))+' мин';
+      /* тот же --p, что двигает кольцо Play, — единый источник, ring и
+         процент не могут разъехаться */
+      if (ember.dataset.state && ember.dataset.state!=='idle'){
+        ember.style.setProperty('--p', String(p));
+      }
+    }
+    art.addEventListener('scroll',function(){
+      if(ticking)return;ticking=true;
+      requestAnimationFrame(function(){ renderProgress(currentProgress()); ticking=false; });
+    },{passive:true});
+
+    /* ---- текущий раздел + подсветка «читаемого» абзаца ---- */
+    var paras=Array.prototype.slice.call(art.querySelectorAll('[data-sec]'));
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){
+        es.forEach(function(en){
+          if(en.isIntersecting){
+            var sec=en.target.getAttribute('data-sec');
+            var lk=links.filter(function(l){return l.getAttribute('data-sec')===sec});
+            if(lk.length){links.forEach(function(x){x.classList.remove('active')});lk[0].classList.add('active');secName.textContent=lk[0].getAttribute('data-name')}
+            paras.forEach(function(p){p.classList.toggle('is-reading', p===en.target)});
+          }
+        });
+      },{root:art,rootMargin:'0px 0px -60% 0px',threshold:0.1});
+      paras.forEach(function(p){io.observe(p)});
+    }
+
+    /* ---- btoc открыть/закрыть ---- */
+    var tocReturnFocus=null;
+    ov.inert=true;
+    function openTOC(opener){
+      if(ov.classList.contains('open')) return;
+      tocReturnFocus=opener&&opener.nodeType===1?opener:document.activeElement;
+      ov.inert=false;
+      ov.setAttribute('aria-hidden','false');
+      ov.classList.add('open');
+    }
+    function closeTOC(options){
+      if(!ov.classList.contains('open')) return;
+      options=options||{};
+      ov.classList.remove('open');
+      ov.setAttribute('aria-hidden','true');
+      var restore=tocReturnFocus;
+      tocReturnFocus=null;
+      if(options.restoreFocus!==false&&restore&&restore.focus){
+        try{restore.focus({preventScroll:true})}catch(_){try{restore.focus()}catch(__){}}
+      }
+      ov.inert=true;
+    }
+    document.getElementById('btocClose').addEventListener('click',function(){closeTOC()});
+    document.getElementById('barSectionBtn').addEventListener('click',function(){openTOC(this)});
+    document.getElementById('tocBtn').addEventListener('click',function(){openTOC(this)});
+    ov.addEventListener('click',function(e){if(e.target===ov)closeTOC()});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('open'))closeTOC()});
+
+    /* ---- клик по пункту nav ---- */
+    function bindNavLinks(){
+      links=Array.prototype.slice.call(document.querySelectorAll('.btoc-nav .btoc-link'));
+      links.forEach(function(a){a.addEventListener('click',function(e){
+        var sec=a.getAttribute('data-sec');
+        var target=sec?art.querySelector('[data-sec="'+sec+'"]'):null;
+        if(target){
+          e.preventDefault();
+          links.forEach(function(x){x.classList.remove('active')});
+          a.classList.add('active');secName.textContent=a.getAttribute('data-name');
+          closeTOC({restoreFocus:false});
+          art.scrollTo({top:Math.max(0,target.offsetTop-18),behavior:'smooth'});
+        }
+      })});
+    }
+    bindNavLinks();
+
+    /* ============================================================
+       GBS-АДАПТАЦИЯ: переключатель частей серии (римские цифры).
+       Единственная добавка поверх канона этого файла — topbar,
+       bottom-bar, gb-ember, speed-rail, тема, A-/A+, избранное не
+       тронуты. «I» (текущая часть — сам этот фрагмент) хранит
+       реальный живой список разделов и прогресс; остальные части —
+       демо-список для показа структуры (в реальной интеграции это
+       будет переход на страницу нужной части, а не подмена в этом же
+       документе).
+       ============================================================ */
+    var btocNav=document.getElementById('btocNav'), btocTitle=document.getElementById('btocTitle');
+    var CURRENT_PART_SECTIONS=Array.prototype.slice.call(btocNav.querySelectorAll('.btoc-link')).map(function(a){
+      return {num:a.querySelector('.btoc-link-num').textContent.trim(), name:a.querySelector('.btoc-link-text').textContent.trim(), dataName:a.getAttribute('data-name'), sec:a.getAttribute('data-sec')};
+    });
+    var SERIES={
+      intro:{title:'Исторический контекст',minutes:16,sections:[
+        {num:'01',name:'Диссентеры и эпоха',dataName:'Диссентеры и эпоха'},
+        {num:'02',name:'Саутворк до Гилла',dataName:'Саутворк до Гилла'},
+        {num:'03',name:'Религиозная свобода после 1689',dataName:'Религиозная свобода после 1689'}
+      ]},
+      I:{title:'Часть I. Человек',minutes:28,sections:CURRENT_PART_SECTIONS,isCurrent:true}, // 28 = та же цифра, что уже зашита в byline/countdown этой демо-статьи (BASE_DURATION), не выдумываю новую
+      II:{title:'Часть II. Учёный',minutes:39,sections:[
+        {num:'01',name:'Экзегеза и метод толкования',dataName:'Экзегеза и метод толкования'},
+        {num:'02',name:'Иврит без наставника',dataName:'Иврит без наставника'},
+        {num:'03',name:'Девятитомный комментарий',dataName:'Девятитомный комментарий'},
+        {num:'04',name:'Полемика с унитарианами',dataName:'Полемика с унитарианами'},
+        {num:'05',name:'Защита учения о Троице',dataName:'Защита учения о Троице'}
+      ]},
+      III:{title:'Часть III. Наследие',minutes:54,sections:[
+        {num:'01',name:'Смерть и похороны',dataName:'Смерть и похороны'},
+        {num:'02',name:'Богословское влияние',dataName:'Богословское влияние'},
+        {num:'03',name:'Критика и переоценка',dataName:'Критика и переоценка'}
+      ]},
+      ref:{title:'Справочник по Гиллу',minutes:8,sections:[
+        {num:'01',name:'Хронология жизни',dataName:'Хронология жизни'},
+        {num:'02',name:'Труды и издания',dataName:'Труды и издания'}
+      ]}
+    };
+    function renderSeriesPart(id){
+      var part=SERIES[id];
+      btocTitle.textContent=part.title;
+      var romanNums=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI'];
+      var html=part.sections.map(function(s,idx){
+        var secAttr=s.sec?' data-sec="'+s.sec+'" href="#sec-'+s.sec+'"':'';
+        return '<a class="btoc-link"'+secAttr+' data-name="'+s.dataName+'"><span class="btoc-link-num">'+(s.num||romanNums[idx])+'</span><span class="btoc-link-text">'+s.name+'</span></a>';
+      }).join('');
+      btocNav.innerHTML=html+'<div id="tocEmpty" hidden style="padding:24px;text-align:center;color:var(--color-text-faint);font:500 13px/1.5 \'Source Sans 3\',system-ui,sans-serif">Ничего не найдено</div>';
+      bindNavLinks();
+      empty=document.getElementById('tocEmpty'); // #tocEmpty пересоздан вместе с nav — обновляем ссылку, иначе поиск будет прятать несуществующий узел
+      sub.textContent=part.sections.length+' '+plural(part.sections.length);
+      tocTotal.textContent='~'+part.minutes+' мин чтения';
+      if(part.isCurrent){
+        renderProgress(currentProgress());
+        var activeName=secName.textContent;
+        links.forEach(function(a){a.classList.toggle('active', a.getAttribute('data-name')===activeName)});
+      } else {
+        tocFill.style.width='0%';tocPct.textContent='0%';
+        tocLeft.textContent='Осталось: ~'+part.minutes+' мин';
+      }
+      search.value='';empty.hidden=true;
+    }
+    document.getElementById('seriesSwitcher').addEventListener('click',function(e){
+      var chip=e.target.closest('.series-chip'); if(!chip) return;
+      document.querySelectorAll('.series-chip').forEach(function(c){c.setAttribute('aria-selected', c===chip?'true':'false')});
+      renderSeriesPart(chip.getAttribute('data-part'));
+    });
+
+    /* ---- ПОИСК ----
+       БАГ (найден точечным проходом, не было в жалобе владельца): 'input'
+       безусловно звал openTOC() на КАЖДОЕ изменение поля — включая очистку.
+       Если закрыть панель, оставив текст в поле, а потом стереть его,
+       панель сама открывалась обратно без ведома пользователя. Теперь
+       openTOC() зовётся только когда есть реальный запрос — очистка поля
+       больше не форсит открытие. */
+    var search=document.getElementById('tocSearch'),sub=document.getElementById('btocSubtitle'),empty=document.getElementById('tocEmpty');
+    function plural(n){return n===1?'раздел':(n>=2&&n<=4?'раздела':'разделов')}
+    search.addEventListener('input',function(){
+      var q=search.value.trim().toLowerCase(),shown=0;
+      links.forEach(function(a){var hit=!q||a.textContent.toLowerCase().indexOf(q)>-1;a.hidden=!hit;if(hit)shown++});
+      sub.textContent=shown+' '+plural(shown);empty.hidden=shown!==0;
+      if(q) openTOC(search);
+    });
+
+    /* ============================================================
+       PLAY (gb-ember, канон) — состояние + честный --p.
+       Демо «озвучки»: статья автопрокручивается за фиксированное время,
+       имитируя движение текста в такт чтению диктора; это и есть
+       «текст двигается по мере продвижения аудио» из правки — прогресс
+       не рисуется отдельной петлёй, а честно берётся из currentProgress().
+       ============================================================ */
+    var rate=1.5, playing=false, rafId=null, playStartTime=null, playStartScroll=0;
+    var BASE_DURATION=26000; // демо-длительность «озвучки» всей статьи на 1×, мс
+
+    function setEmberState(state, progress){
+      ember.dataset.state=state;
+      if (typeof progress!=='undefined') ember.style.setProperty('--p', String(progress));
+      var label = state==='playing' ? 'Пауза' : state==='paused' ? 'Продолжить озвучку' : state==='complete' ? 'Ещё раз' : 'Озвучка';
+      ember.setAttribute('aria-label', label);
+    }
+    function step(){
+      if(!playing) return;
+      var max=art.scrollHeight-art.clientHeight;
+      var elapsed=performance.now()-playStartTime;
+      var remaining=(BASE_DURATION/rate)*(1-playStartScroll/Math.max(max,1));
+      var t=remaining>0?Math.min(elapsed/remaining,1):1;
+      art.scrollTop=playStartScroll+(max-playStartScroll)*t;
+      renderProgress(currentProgress());
+      setEmberState('playing', currentProgress());
+      if(t>=1){ playing=false; setEmberState('complete',1); return; }
+      rafId=requestAnimationFrame(step);
+    }
+    function startPlayback(){
+      playing=true; playStartTime=performance.now(); playStartScroll=art.scrollTop;
+      setEmberState('playing', currentProgress());
+      step();
+    }
+    function pausePlayback(){
+      playing=false; if(rafId) cancelAnimationFrame(rafId);
+      setEmberState('paused', currentProgress());
+    }
+    function togglePlayback(){ if(playing) pausePlayback(); else startPlayback(); }
+
+    /* ============================================================
+       СКОРОСТИ — рельса подменяет поиск в общем слоте (.gb-slot),
+       выбранная скорость остаётся бейджем на Play (.play-speed).
+       Взято из образца владельца вместо прежней «блум-пилюли слева от
+       Play» — тот вариант делил с Play одну физическую полосу и оттого
+       рождал баги (наезды то на «домик», то на сам Play, нужен был
+       скролл с фейдом). Тут рельса и Play в разных, независимых местах —
+       геометрически наезжать друг на друга им попросту негде.
+       ============================================================ */
+    var speedRail=document.getElementById('speedRail');
+    var playSpeed=document.getElementById('playSpeed');
+    var speedTimer=0;
+
+    /* ---- ТАСКАНИЕ РЕЛЬСЫ ПАЛЬЦЕМ/МЫШЬЮ ----
+       Жалоба владельца: «не всё влезает, невозможно выбрать те [скорости],
+       что ушли за экран» — нативный touch-scroll на overflow-x:auto иногда
+       не подхватывался (в синтетических событиях воспроизвести вообще не
+       удалось — известная слабость нативного touch-скролла внутри мелких
+       вложенных контейнеров рядом с другим скроллящимся контентом).
+       Явный pointer-based drag работает предсказуемо ОДИНАКОВО для мыши
+       (тест/десктоп-просмотр) и пальца (Pointer Events объединяют оба) —
+       никакой зависимости от того, подхватит ли браузер нативный жест.
+       БАГ, который эта же логика внесла (поймал на реальном клике, не
+       на глаз): setPointerCapture() вызывался СРАЗУ на pointerdown, ещё
+       до того, как ясно — это тап или протяжка. После setPointerCapture
+       браузер перенаправляет ПОСЛЕДУЮЩИЙ synthesized click НА ЭЛЕМЕНТ
+       ЗАХВАТА (саму .speed-rail), а не на чип под пальцем — поэтому
+       обычный тап по «2×» вообще переставал долетать до обработчика
+       клика на кнопке. Фикс: захватываем указатель НЕ на pointerdown, а
+       только когда движение действительно превысило порог (значит это
+       точно протяжка, не тап) — обычный тап тогда не трогает
+       setPointerCapture вовсе, и клик долетает до кнопки как обычно. */
+    (function(){
+      var dragging=false, startX=0, startScroll=0, moved=false, pid=null;
+      speedRail.addEventListener('pointerdown',function(e){
+        dragging=true; moved=false; startX=e.clientX; startScroll=speedRail.scrollLeft; pid=e.pointerId;
+      });
+      speedRail.addEventListener('pointermove',function(e){
+        if(!dragging || e.pointerId!==pid) return;
+        var dx=e.clientX-startX;
+        if(!moved && Math.abs(dx)>4){
+          moved=true;
+          speedRail.classList.add('is-dragging');
+          try{ speedRail.setPointerCapture(pid); }catch(_){}
+        }
+        if(moved) speedRail.scrollLeft=startScroll-dx;
+      });
+      function endDrag(e){
+        if(!dragging || (pid!==null && e.pointerId!==pid)) return;
+        dragging=false; pid=null;
+        speedRail.classList.remove('is-dragging');
+      }
+      speedRail.addEventListener('pointerup',endDrag);
+      speedRail.addEventListener('pointercancel',endDrag);
+      /* клик СРАЗУ после драга не должен выбирать скорость под пальцем —
+         это просто отпускание жеста, не намеренный тап */
+      speedRail.addEventListener('click',function(e){ if(moved){ e.stopPropagation(); moved=false; } },true);
+    })();
+    function fmtRate(r){ return String(r).replace(/\.0$/,'')+'×'; }
+    function renderSpeedBadge(bump){
+      playSpeed.textContent=fmtRate(rate);
+      playSpeed.setAttribute('aria-label','Выбрать скорость, сейчас '+playSpeed.textContent);
+      if(bump){ playSpeed.classList.remove('is-bump'); void playSpeed.offsetWidth; playSpeed.classList.add('is-bump'); }
+    }
+    var searchLayer=search.closest('.gb-search')||search;
+    speedRail.inert=true;
+    speedRail.setAttribute('aria-hidden','true');
+    function openSpeeds(autoClose){
+      clearTimeout(speedTimer);
+      topbar.classList.add('speed-open');
+      try{search.blur()}catch(_){}
+      searchLayer.inert=true;
+      searchLayer.setAttribute('aria-hidden','true');
+      speedRail.inert=false;
+      speedRail.setAttribute('aria-hidden','false');
+      var activeChip=speedRail.querySelector('.spd.on');
+      if(activeChip) setTimeout(function(){
+        activeChip.scrollIntoView({block:'nearest',inline:'center',behavior:'auto'});
+      },20);
+      if(autoClose) speedTimer=setTimeout(closeSpeeds,4500);
+    }
+    function closeSpeeds(){
+      clearTimeout(speedTimer);
+      topbar.classList.remove('speed-open');
+      speedRail.inert=true;
+      speedRail.setAttribute('aria-hidden','true');
+      searchLayer.inert=false;
+      searchLayer.setAttribute('aria-hidden','false');
+    }
+    ember.addEventListener('click',function(){
+      if(playing){
+        pausePlayback();
+        closeSpeeds();
+      } else {
+        /* «показать скорости» только на СТАРТ с нуля/заново — при обычном
+           возобновлении после паузы рельса сама не выскакивает (иначе
+           мешала бы, если пользователь просто жмёт play/пауза читая) */
+        var freshStart = ember.dataset.state==='idle' || ember.dataset.state==='complete';
+        startPlayback();
+        if(freshStart) openSpeeds(true); else closeSpeeds();
+      }
+    });
+    playSpeed.addEventListener('click',function(e){
+      e.preventDefault(); e.stopPropagation();
+      topbar.classList.contains('speed-open') ? closeSpeeds() : openSpeeds(false);
+    });
+    document.addEventListener('pointerdown',function(e){
+      if(topbar.classList.contains('speed-open') && !topbar.contains(e.target)) closeSpeeds();
+    },{passive:true});
+    speedRail.querySelectorAll('[data-speed]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        rate=parseFloat(btn.getAttribute('data-speed'));
+        speedRail.querySelectorAll('[data-speed]').forEach(function(b){
+          var on=b===btn; b.classList.toggle('on',on); b.setAttribute('aria-checked',on?'true':'false');
+        });
+        renderSpeedBadge(true);
+        /* Бейдж управляет только скоростью. Выбор скорости из idle/paused
+           не запускает и не возобновляет озвучку. Если TTS уже играет,
+           сохраняем текущую позицию и пересчитываем оставшееся время. */
+        if(playing){
+          playStartTime=performance.now();
+          playStartScroll=art.scrollTop;
+        }
+        if(btn.scrollIntoView) btn.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+        setTimeout(closeSpeeds,220);
+      });
+    });
+    renderSpeedBadge(false);
+    /* тап в поле поиска, пока рельса открыта, — закрываем рельсу, а не
+       накладываем два интерактивных слоя друг на друга */
+    search.addEventListener('focus',function(){ closeSpeeds(); });
+
+    /* ---- домик: закрыть btoc / домой ---- */
+    homeBtn.addEventListener('click',function(){if(ov.classList.contains('open'))closeTOC()});
+
+    /* ---- A−/A+ ---- */
+    var sizes=[14,15,16,18,20],lvl=2,fM=document.getElementById('fontMinus'),fP=document.getElementById('fontPlus');
+    function applyFont(){art.style.fontSize=sizes[lvl]+'px';fM.disabled=lvl===0;fP.disabled=lvl===sizes.length-1}
+    fM.addEventListener('click',function(){if(lvl>0){lvl--;applyFont()}});fP.addEventListener('click',function(){if(lvl<sizes.length-1){lvl++;applyFont()}});
+
+    /* ---- избранное: бинарный тумблер + тост, канонный .gb-fc-toast/bounce ---- */
+    var bookBtn=document.getElementById('bookBtn');
+    var fcToast=document.getElementById('fcToast'), fcToastText=document.getElementById('fcToastText'), fcToastIcon=document.getElementById('fcToastIcon');
+    var fcToastHideTimer=0;
+    function showToast(msg, added){
+      fcToastText.textContent=msg;
+      /* при удалении — та же иконка, но приглушённая (без золота), чтобы
+         тост не выглядел как «снова добавлено» */
+      fcToastIcon.style.color = added ? '' : 'var(--color-text-muted)';
+      fcToast.classList.add('is-open');
+      clearTimeout(fcToastHideTimer);
+      fcToastHideTimer=setTimeout(function(){ fcToast.classList.remove('is-open'); },1800);
+    }
+    bookBtn.addEventListener('click',function(){
+      var on=!bookBtn.classList.contains('is-on');
+      bookBtn.classList.toggle('is-on',on);
+      bookBtn.setAttribute('aria-pressed', on?'true':'false');
+      bookBtn.setAttribute('aria-label', on?'Убрать из избранного':'Добавить в избранное');
+      if(on){
+        bookBtn.classList.remove('is-bump'); void bookBtn.offsetWidth; bookBtn.classList.add('is-bump');
+        showToast('Добавлено в избранное', true);
+      } else {
+        bookBtn.classList.remove('is-bump');
+        showToast('Убрано из избранного', false);
+      }
+    });
+
+    if(dualProgressBtn) dualProgressBtn.addEventListener('click',function(){
+      showToast('Статья '+Math.round(currentProgress()*100)+'% · серия '+Math.round(seriesMaxProgress*100)+'%',false);
+    });
+
+    /* ---- Repo-native article actions ------------------------------------
+       Не дублируем SVG и action logic. Когда канонический site.js создаёт
+       .article-end-actions-wrap, сюда клонируется его точная разметка. Клик
+       проксируется исходной кнопке, поэтому share dialog / print остаются
+       единственным источником истины. */
+    var repoActionsMount=document.getElementById('btocRepoActions');
+    var repoActionsMounted=false;
+
+    function stripCloneIds(root){
+      if(!root) return;
+      if(root.removeAttribute) root.removeAttribute('id');
+      root.querySelectorAll('[id]').forEach(function(el){el.removeAttribute('id')});
+    }
+
+    function mountCanonicalArticleActions(){
+      if(!repoActionsMount||repoActionsMounted) return false;
+      var source=[].slice.call(document.querySelectorAll('.article-end-actions-wrap')).find(function(el){
+        return !el.closest('.btoc-footer');
+      });
+      if(!source) return false;
+      var controls=[].slice.call(source.querySelectorAll('button,a[href]'));
+      if(!controls.length) return false;
+      repoActionsMount.innerHTML='';
+      controls.slice(0,2).forEach(function(original){
+        var clone=original.cloneNode(true);
+        stripCloneIds(clone);
+        clone.setAttribute('data-repo-action-proxy','true');
+        clone.addEventListener('click',function(ev){
+          ev.preventDefault();
+          closeTOC({restoreFocus:false});
+          setTimeout(function(){original.click()},220);
+        });
+        repoActionsMount.appendChild(clone);
+      });
+      repoActionsMount.classList.add('is-repo-mounted');
+      repoActionsMounted=true;
+      return true;
+    }
+
+    function fallbackShare(){
+      var shareCfg={title:document.title,url:location.href};
+      if(window.SiteShare&&typeof window.SiteShare.open==='function'){
+        window.SiteShare.open(null,{dialogTitle:'Поделиться статьёй',title:shareCfg.title,url:shareCfg.url});
+        return;
+      }
+      if(navigator.share){navigator.share(shareCfg).catch(function(){});return;}
+      if(window.SiteUtils&&typeof window.SiteUtils.copyText==='function'){
+        window.SiteUtils.copyText(location.href,function(){showToast('Ссылка скопирована',true)});
+        return;
+      }
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(location.href).then(function(){showToast('Ссылка скопирована',true)}).catch(function(){});
+      }
+    }
+
+    if(repoActionsMount){
+      repoActionsMount.addEventListener('click',function(ev){
+        var fallback=ev.target.closest('[data-repo-action-fallback]');
+        if(!fallback) return;
+        ev.preventDefault();
+        var kind=fallback.getAttribute('data-repo-action-fallback');
+        closeTOC({restoreFocus:false});
+        setTimeout(function(){
+          if(kind==='print') window.print();
+          else fallbackShare();
+        },220);
+      });
+      if(!mountCanonicalArticleActions()){
+        var actionObserver=new MutationObserver(function(){
+          if(mountCanonicalArticleActions()) actionObserver.disconnect();
+        });
+        actionObserver.observe(document.body,{childList:true,subtree:true});
+      }
+    }
+
+
+    syncThemeButtons();
+    renderProgress(currentProgress());
+  }catch(err){if(window.console)console.warn('btoc:',err)}
+})();
+</script>
+</body>
+</html>
