@@ -12,7 +12,7 @@ This is a **pre-merge currency witness**, not terminal reconciliation. Product #
 
 ## Product #466 preflight
 
-At this checkpoint the PR is Ready, mergeable and `behind=0` against `main@060103d…`.
+At this checkpoint the PR is Ready, mergeable and `behind=0` against `main@060103d…`; submitted reviews = 0 and review threads = 0.
 
 Exact-head terminal success already observed:
 
@@ -26,16 +26,48 @@ Exact-head terminal success already observed:
 - Brand deep reference/motion #1927;
 - Manual Browser QA #2963, including fresh-process iPhone Safari.
 
+### Exact Hall web evidence
+
+Hall web artifact `10070020628`, name `hall-web-runtime-proof-196893531faa214a180e6f73fe0a0ce9fa613336`, digest `sha256:89d9c51a34fff086f9ef64d96a3ac27e93495a5c6bd6c8a24cf216b96e80e764` was independently unpacked during this audit.
+
+- embedded tested head = exact `196893531faa214a180e6f73fe0a0ce9fa613336`;
+- every one of the 8 manifest-listed evidence SHA-256 values recomputed successfully;
+- authority = H3 / R1 / `L0-minimal-runtime` / UV0;
+- application/documentary texture sources = 0; renderer texture baseline = 1;
+- isolated proof build = 539,795 B total / 536,071 B JS / 1,871 B CSS;
+- Chromium desktop = WebGL, 19 draw calls, 210 triangles, 28.8 ms first frame;
+- iPhone WebKit = WebGL, 15 draw calls, 162 triangles, 113 ms first frame;
+- forced no-WebGL fallback is explicit on Chromium and WebKit;
+- a real Chromium `WEBGL_lose_context` transition is recorded as `webgl-context-lost` semantic fallback;
+- reduced-motion evidence remains WebGL and advances by deterministic cut rather than animated interpolation.
+
+The production Hall runtime source was additionally read on the same head: it validates H3/R1/L0/UV0 JSON authority, lazy-imports the exact bare `three` specifier, uses a Hall-only Vite adapter exposing a narrow `three/src/Three.js` surface, creates only neutral documentary-excluded proxies, removes resize/context-loss listeners before renderer disposal and keeps guided-camera/fallback semantics explicit.
+
+### Exact Hall offline still-stage evidence
+
+Hall offline run #200 uploaded its pre-walkthrough artifact before the long render:
+
+- artifact `10070550189`;
+- name `hall-pushkin-offline-stills-196893531faa214a180e6f73fe0a0ce9fa613336`;
+- digest `sha256:1225871efb1146000d3ff7460484e7ec7bb6369d9139ae7404f66de33c8ce9a8`;
+- embedded tested head = exact `196893531faa214a180e6f73fe0a0ce9fa613336`;
+- H3 layout/mesh fingerprints, R1, L0, exact documentary source/derivative hashes and all 10 stills are present;
+- raw/optimized Khronos = 0 errors / 0 warnings;
+- measured offline budget remains explicitly non-production: raw GLB 12,541,228 B; optimized GLB 12,520,580 B; 196 triangles; documentary compressed bytes dominate transfer and decoded documentary texture residency is ~62.7 MB;
+- the 5×2 contact sheet was manually inspected and no geometry/composition break was observed.
+
+The canonical offline GLB still reports info-level unused UV attributes. This is **not** a regression of Product #444/#447: that merged contract explicitly scoped UV pruning to the visual-remediation candidate (`candidateOnly=true`, `canonicalGeneratorMayChange=false`). The canonical offline artifact remains a non-shipping evidence asset with 0 Khronos errors/warnings and is not consumed by #466 production WebGL.
+
 Still pending at this checkpoint:
 
-- Hall Pushkin offline exhibit #200 — all source/Blender/still/GLB/Khronos/Meshopt/budget/contact-sheet steps are green; 24-second walkthrough render is still running, followed by ffprobe/final evidence validation/upload;
-- aggregate Merge certification #58 — correctly waiting for the exact-head Hall result.
+- Hall Pushkin offline exhibit #200 — source/Blender/still/GLB/Khronos/Meshopt/budget/contact-sheet steps are green; 24-second walkthrough render is still running, followed by ffprobe/final evidence validation/upload;
+- aggregate Merge certification #58 — web-runtime same-head wait is green, visual-remediation is correctly N/A, and the only active wait is the exact-head offline Hall result.
 
 No merge is admissible until those exact-head gates are terminal-success and the final base/head/review race is rechecked.
 
 ## Row-by-row currency result
 
-The current active matrix contains 18 rows. This preflight independently rechecked their source-side currency instead of inheriting the 2026-09-06 denominator by assumption.
+The current active matrix contained 18 rows before this wave. This preflight independently rechecked their source-side currency instead of inheriting the 2026-09-06 denominator by assumption.
 
 ### P1
 
@@ -52,7 +84,7 @@ The current active matrix contains 18 rows. This preflight independently recheck
 | `TLP-AUDIT-004` | **REMAINS ACTIVE, NARROWED** | Several manifestations now have exact browser contracts (#435 shell singleton, #437 live status, #438 URL state, #439 completion, #460 command/deep-link/blocked-storage consent). The meta-root still covers unresolved proxy-vs-release outcomes across consent revocation, redirects/discovery, secondary failure containment, rating methodology/source, search, progress, home media and motion. |
 | `TLP-AUTHORING-ID-001` | **REMAINS ACTIVE** | `scripts/new-poet.ts` still permits arbitrary Unicode letters in generated IDs, derives a default ID only from surname, writes a camel-like filename from that ID and leaves canonical registry insertion manual. This remains weaker/different from the guide's Latin filename, canonical registration, field/media/provenance release expectations. |
 | `TLP-AUDIO-SESSION-001` | **REMAINS ACTIVE** | `audioSessionStore.ts` v2 still implements `read -> clone whole snapshot -> mutate -> localStorage.setItem`. There is no conflict-safe merge/version protocol or session-key storage subscription, so independent tab writes can erase positions/completions. |
-| `TLP-ANALYTICS-CONSENT-001` | **REMAINS ACTIVE, NARROWED** | #460 added same-tab authority when localStorage is blocked. Current `analytics.ts` still has no cross-tab consent convergence and no teardown/revocation of already started GA/Metрика when consent becomes denied. `AnalyticsConsentBanner` disappears once a choice exists and `/privacy` offers deletion of site data rather than a reopenable in-app editor. |
+| `TLP-ANALYTICS-CONSENT-001` | **REMAINS ACTIVE, NARROWED** | #460 added same-tab authority when localStorage is blocked. Current `analytics.ts` still has no cross-tab consent convergence and no teardown/revocation of already started GA/Метрика when consent becomes denied. `AnalyticsConsentBanner` disappears once a choice exists and `/privacy` offers deletion of site data rather than a reopenable in-app editor. |
 | `TLP-RATING-SOURCE-001` | **REMAINS ACTIVE** | Default reader ranking still uses editorial `poet.rating` as the final tie-break after reader score/vote count. Reader `/5` and editorial `/10` are shown separately in some table cells but source authority is still not fully separated from reader placement semantics. |
 | `TLP-ROUTE-REDIRECT-001` | **REMAINS ACTIVE** | Route contract still declares five legacy aliases and App handles them through client-side `<Navigate>`. No current source evidence materializes host-level/static initial redirects for GitHub Pages. |
 | `TLP-SECONDARY-DATA-001` | **REMAINS ACTIVE** | `PoetDetailPage` renders `RelatedEssays` in the primary route tree; `RelatedEssays` directly `use()`s `getBrowserEssayCatalog(location.key)` without a local failure boundary. An optional essay-catalog failure can therefore still fail the primary poet route. `EssayPage` also directly consumes the catalog for series navigation. |
@@ -72,14 +104,14 @@ The current active matrix contains 18 rows. This preflight independently recheck
 
 ## New truthful denominator if Product #466 merges without changing these sources
 
-Two rows are conclusively stale-after-fix and should leave the active matrix:
+Two rows are conclusively stale-after-fix and have already been removed from the Draft active matrix in this audit wave:
 
 - `TLP-RATING-URLSTATE-001`;
 - `TLP-AUDIO-COMPLETION-001`.
 
 All other 16 rows remain current or externally gated on the evidence above.
 
-Expected post-reconciliation denominator, subject to final verification on the real resulting Product `main`:
+Current Draft denominator, subject only to terminal Hall #466 resulting-main verification:
 
 - P1: **1**;
 - P2: **11**;
@@ -92,7 +124,7 @@ This is not permission to bulk-close systemic rows. Each remaining root retains 
 
 The next source-side work should favor bounded roots with direct behavioral proof before the broader systemic roots:
 
-1. `TLP-A11Y-MOTION-001` — one cross-layer reduced-motion policy with computed-animation browser proof;
+1. `TLP-A11Y-MOTION-001` — one cross-layer reduced-motion policy with computed-animation browser proof; Product #467 is registered but may not start until #466 is merged;
 2. `TLP-READING-PROGRESS-001` — explicit article boundary and 100%-at-article-end browser proof;
 3. `TLP-SECONDARY-DATA-001` — local containment of optional catalog/series/related-essay failures;
 4. `TLP-AUDIO-SESSION-001` — conflict-safe versioned per-field/per-track merge protocol plus two-tab convergence witness.
@@ -105,8 +137,8 @@ After Product #466 is genuinely merged:
 
 1. resolve the exact resulting Product `main` SHA;
 2. re-run the final currency assertions against that SHA;
-3. replace this pre-merge filename/status with final current evidence or add a terminal sibling report;
-4. update `verified/MASTER_BUG_MATRIX.md` to remove only the two closed rows and narrow partial evidence text;
+3. retain this pre-merge report as chronology and add a terminal sibling report bound to the resulting main;
+4. update `verified/MASTER_BUG_MATRIX.md` only to replace pre-merge qualifiers with the final verification report/current Product identity;
 5. append durable closure/provenance to `verified/CLOSURE_LEDGER.md` for #438/#439 and the verified Hall #465/#466 transaction;
 6. run AuditRepo `validate` + `preflight` on the exact final audit head;
 7. merge only with current-base and review debt clean.
