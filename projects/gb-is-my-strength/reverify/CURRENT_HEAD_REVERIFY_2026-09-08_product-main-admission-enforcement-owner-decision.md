@@ -10,12 +10,13 @@ This receipt does not classify branch protection as a Product code defect or rel
 
 - Reverify date: 2026-09-08
 - Product repository: `FedorMilovanov/gb-is-my-strength`
-- Current Product `main`: `b5d89b276a3085161be205f22b56f53ddfc8e6f6`
+- Current Product `main`: `85088dabc96fa66093b75c23aed9d5fe70855325`
+- Current-main movement since the prior receipt: merged Product #1922, a one-line Native Source artifact rerun-identity repair
 - Product branch endpoint: `protected=false`
 - Product branch protection: disabled; required status-check enforcement off
 - Product repository rulesets: `[]`
 - Connected repository permission snapshot: `admin=true`, `maintain=true`, `push=true`
-- Current AuditRepo `main` at this refresh: `994f06130312c31cb68a79ed7512f9f66c598bcc`
+- Current AuditRepo `main` at this refresh: `4bd878c66fd509bb01809c4ce2fdbef0096a3818`
 - AuditRepo `main`: protected, with required `validate` and `preflight`
 
 Therefore the historical multi-repository owner scope remains narrowed: the unresolved owner decision in this project is Product `main` admission enforcement. AuditRepo no longer belongs in the unresolved set because it has native protection and required checks.
@@ -47,7 +48,7 @@ AuditRepo PR #345 (`verify(gb): consolidate MASTER to causal owners`) wholesale-
 
 That rewrite contains no explicit retirement, acceptance, duplicate/absorption target, or closure proof for `SYS-MAIN-ADMISSION-ENFORCEMENT`. The change was therefore not a valid governance disposition; it was an omission caused by changing the matrix taxonomy to Product causal packages.
 
-Fresh Product state at `b5d89b27...` independently demonstrates that the underlying decision remains unresolved.
+Fresh Product state at `85088dab...` independently demonstrates that the underlying decision remains unresolved. The #1922 main movement changed Native Source artifact identity only and did not create server-side admission enforcement.
 
 ## Why repository workflows do not close this owner
 
@@ -55,11 +56,11 @@ Product has extensive fail-closed workflow contracts, and current repair lanes u
 
 A repository workflow file cannot make GitHub reject an unauthorized/direct main update before it lands. Manufacturing a workflow-only surrogate would therefore change the closure condition rather than satisfy it.
 
-## Tool/control boundary — corrected current statement
+## Tool/control boundary — current statement
 
 The connected GitHub repository permission snapshot reports administrator-level repository permission (`admin=true`). The blocker in this session is **not** lack of owner/admin permission on the repository.
 
-The available GitHub connector action surface exposes reads for branch protection/rulesets and ordinary repository/PR/Actions mutations, but it does **not** expose an administration mutation for creating/updating branch protection or repository rulesets. Plugin discovery found no alternate GitHub administration connector providing that missing mutation, and no authenticated browser-control surface is available in this session to perform the Settings UI change.
+The available GitHub connector action surface exposes reads for branch protection/rulesets and ordinary repository/PR/Actions mutations, but it does **not** expose an administration mutation for creating/updating branch protection or repository rulesets. Fresh connector discovery on 2026-09-08 again returned only GET support for protection/rulesets. Plugin discovery found no alternate GitHub administration connector providing that missing mutation, and no authenticated browser-control surface is available in this session to perform the Settings UI change.
 
 Therefore this session can verify and document the native state precisely, but cannot truthfully claim to have configured Product branch protection. Creating a privileged workflow or other repository-side surrogate solely to work around the missing administration surface is not an acceptable closure.
 
