@@ -319,7 +319,7 @@ Closed history does not remain in the active engineering matrix. Detailed histor
   - current active denominator becomes `16 = P1 1 + P2 11 + P3 4`.
 - Product #466 evidence: exact certified head `196893531faa214a180e6f73fe0a0ce9fa613336`, squash merge/resulting `main` `cf78d58f0bef479e77a0265dd14111bc7d0c44db`; tested and resulting trees are both `d3b9b3855e149ba861c2e688497f452e50e8cf6e`.
 - Exact-head final proof: CI #3904, Project Contracts #1015, Hall web runtime proof #14, Hall greybox #351, Hall Pushkin offline #200, Site route integrity #1910, Brand deep reference/motion #1927, Articles #1602, Yesenin #1146, Manual Browser QA #2963 and Merge certification #58 all completed success on the same head; final race check was `behind=0`, zero reviews and zero review threads.
-- Hall artifacts: web runtime artifact `10070020628`, digest `sha256:89d9c51a34fff086f9ef64d96a3ac27e93495a5c6bd6c8a24cf216b96e80e764`; final offline artifact `10073236433`, digest `sha256:8ec100d1aff6766b479253da4e4ff3353700f3ab66ae195bea839ef5772bb06c`; pre-walkthrough still artifact `10070550189`, digest `sha256:1225871efb1146000d3ff7460484e7ec7bb6369d9139ae7404f66de33c8ce9a8`.
+- Hall artifacts: web runtime artifact `10070020628`, digest `sha256:89d9c51a34fff086f9ef64d96a3ac27e93495a5c6bd6c8a24cf216b96e80e764`; final offline artifact `10073236433`, digest `sha256:8ec100d1aff6766b479253da4e4ff3353700f3ab66ae195bea839ef5772bb06c`; pre-walkthrough still artifact `10070550189`, digest `sha256:1225871efb1146000d3ff7460484f66de33c8ce9a8`.
 - Retired-row Product provenance: #438 exact head `b146969b8c80cb9ac67577818df6fc76d39806a4`, merge `283f923f59fe6c5421394bd114b74f4dc174f47c`; #439 exact head `183fbc11fb16c4428058e962a281647fa921c0b2`, merge `41a42bfbf3d8273b9858ef1337ed5c5afcab786e`.
 - Narrowing provenance: #460 exact head `c10f1e2b860e243bdb5ee49d55092dc1e32a0bf8`, merge `344536aec3dccb45762e675fccef27c3ca74c4b9`.
 - Preserved boundary: documentary rights/credits, human `offlineVisualApproval`, rights-pending documentary shipping, full museum scale-out and live Cloudflare Worker/D1 production evidence are not closed by this reconciliation.
@@ -340,3 +340,20 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Final artifact: `manual-browser-core-evidence-2c98a7e184adfdd43e45f1342b1b9e01a222cbab`, artifact id `10075218940`, digest `sha256:ff54236e5f7528ee48d9695f6e5f7adc790e65dbd71795415985954b7ada03f3`.
 - Matrix disposition: P1 stays 1, P2 stays 11, P3 `4 → 3`, total active `16 → 15`.
 - Detailed evidence: `../reverify/REVERIFY_965c8a5_2026-09-08_a11y-motion-closure.md`.
+
+## 2026-09-09 — article-bounded reading progress closed
+
+- Scope: `TLP-READING-PROGRESS-001`, Product #469 / PR #470 only.
+- Result:
+  - closed-by-fix: `ReadingProgress` now uses the existing `EssayPage.articleRef` as its single semantic denominator instead of the root document;
+  - closed-by-contract: document-height ownership and split CSS/JS authority are rejected while passive scroll/resize, article `ResizeObserver` and one RAF-coalesced computation path are required;
+  - closed-by-browser-proof: the longform regression proves 0% at article entry, approximately 50% at the article midpoint, 100% when the article bottom reaches the viewport bottom, and 100% throughout the post-article community/footer tail;
+  - narrowed only: `TLP-AUDIT-004` loses the reading-progress proxy gap but remains active for its other independent audit-harness gaps.
+- Product evidence: base `965c8a5f122eeb9362f5156404bf61c6e977d178`, exact certified head `2565a7383b5cb730c2e6b7ed4c87cacdf71dd5c3`, CAS squash merge/resulting `main` `e4f159063648a6663e165877ef3f75dfcc2c0d09`.
+- Merge integrity: tested and resulting trees are both `281e3fedb264ab56240c5b6ac2a493b80a88bfde`; zero untested source-tree delta entered through squash.
+- Exact-head final proof: CI #3914, Project Contracts #1025, Content Model #785, Site Route Integrity #1920, Brand Deep #1937, Merge Certification #66 and Manual Browser QA #2973 all completed success on the same head; final race check was `behind=0` with zero reviews, zero review threads and no comment debt.
+- Browser witness: Chromium + Android core matrix 154 passed / 14 skipped; base iPhone Safari ran 17 fresh-process contours and all passed; the reading-progress regression passed Chromium, Android Chrome and WebKit reader journeys.
+- Final artifact: `manual-browser-core-evidence-2565a7383b5cb730c2e6b7ed4c87cacdf71dd5c3`, artifact id `10076915318`, size `165132780` bytes, digest `sha256:d38a0da12d5d8db16b9d59a8cf1567f40e4286a079dcecdf17ec5a6136078447`.
+- Issue outcome: Product #469 closed as `completed` when PR #470 merged.
+- Matrix disposition: P1 stays 1, P2 stays 11, P3 `3 → 2`, total active `15 → 14`.
+- Detailed evidence: `../reverify/REVERIFY_e4f1590_2026-09-09_reading-progress-closure.md`.
