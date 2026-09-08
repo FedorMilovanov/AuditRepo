@@ -2,22 +2,23 @@
 
 ## Disposition
 
-`CURRENT OWNER DECISION / re-admitted after consolidation omission`
+`CURRENT OWNER DECISION / native Product admission enforcement still absent`
 
-This receipt does not classify branch protection as a Product code defect or release-runtime defect. It restores a governance owner decision that was previously canonical, remained unresolved, and was silently omitted by a later wholesale MASTER consolidation without an explicit disposition.
+This receipt does not classify branch protection as a Product code defect or release-runtime defect. It preserves the governance owner decision that was previously canonical, remained unresolved, and was silently omitted by the 2026-08-20 wholesale MASTER consolidation without an explicit disposition.
 
 ## Current anchors
 
 - Reverify date: 2026-09-08
 - Product repository: `FedorMilovanov/gb-is-my-strength`
-- Current Product `main`: `c65b83a6588187c71b6e39c720d2b6666b4959c2`
+- Current Product `main`: `b5d89b276a3085161be205f22b56f53ddfc8e6f6`
 - Product branch endpoint: `protected=false`
 - Product branch protection: disabled; required status-check enforcement off
 - Product repository rulesets: `[]`
-- AuditRepo current `main` at re-admission start: `2afb84205cbb14d429c1913b6c89b7fc9998f069`
+- Connected repository permission snapshot: `admin=true`, `maintain=true`, `push=true`
+- Current AuditRepo `main` at this refresh: `994f06130312c31cb68a79ed7512f9f66c598bcc`
 - AuditRepo `main`: protected, with required `validate` and `preflight`
 
-Therefore the historical multi-repository owner scope is narrowed: the current unresolved owner decision in this project is Product `main` admission enforcement. AuditRepo no longer belongs in the unresolved set because it now has native protection and required checks.
+Therefore the historical multi-repository owner scope remains narrowed: the unresolved owner decision in this project is Product `main` admission enforcement. AuditRepo no longer belongs in the unresolved set because it has native protection and required checks.
 
 ## Historical continuity
 
@@ -42,11 +43,11 @@ No later evidence package supplied an accepted-risk decision or native-protectio
 
 ## Consolidation omission
 
-AuditRepo PR #345 (`verify(gb): consolidate MASTER to causal owners`) wholesale-rewrote the active matrix into the 12 Product causal/root packages derived from evidence #344. Its patch changed `Owner decisions` to `0` and left the OWNER DECISIONS table empty.
+AuditRepo PR #345 (`verify(gb): consolidate MASTER to causal owners`) wholesale-rewrote the active matrix into Product causal/root packages derived from evidence #344. Its patch changed `Owner decisions` to `0` and left the OWNER DECISIONS table empty.
 
 That rewrite contains no explicit retirement, acceptance, duplicate/absorption target, or closure proof for `SYS-MAIN-ADMISSION-ENFORCEMENT`. The change was therefore not a valid governance disposition; it was an omission caused by changing the matrix taxonomy to Product causal packages.
 
-The current fresh Product witness independently demonstrates that the underlying decision remains unresolved.
+Fresh Product state at `b5d89b27...` independently demonstrates that the underlying decision remains unresolved.
 
 ## Why repository workflows do not close this owner
 
@@ -54,11 +55,13 @@ Product has extensive fail-closed workflow contracts, and current repair lanes u
 
 A repository workflow file cannot make GitHub reject an unauthorized/direct main update before it lands. Manufacturing a workflow-only surrogate would therefore change the closure condition rather than satisfy it.
 
-## Tool/control boundary
+## Tool/control boundary — corrected current statement
 
-The connected GitHub integration can read branch/ruleset state but exposes no administration write action for branch protection or repository rulesets. Managed installation access in this session excludes the GitHub administration permission required for that settings mutation.
+The connected GitHub repository permission snapshot reports administrator-level repository permission (`admin=true`). The blocker in this session is **not** lack of owner/admin permission on the repository.
 
-Therefore this AuditRepo transaction may truthfully re-admit and precisely scope the decision, but it cannot perform the native Product settings change.
+The available GitHub connector action surface exposes reads for branch protection/rulesets and ordinary repository/PR/Actions mutations, but it does **not** expose an administration mutation for creating/updating branch protection or repository rulesets. Plugin discovery found no alternate GitHub administration connector providing that missing mutation, and no authenticated browser-control surface is available in this session to perform the Settings UI change.
+
+Therefore this session can verify and document the native state precisely, but cannot truthfully claim to have configured Product branch protection. Creating a privileged workflow or other repository-side surrogate solely to work around the missing administration surface is not an acceptable closure.
 
 ## Closure boundary
 
@@ -82,11 +85,11 @@ The repository owner may explicitly decide to accept unprotected-main / post-pus
 
 ## MASTER consequence
 
-Re-admit one owner decision without reopening closed Product repair roots:
+None. The existing arithmetic remains:
 
-- active work units: `1 -> 2`
-- direct current defects: remain `0`
-- system verification lanes: remain `1`
-- owner decisions: `0 -> 1`
+- active work units: `2`
+- direct current defects: `0`
+- system verification lanes: `1` (`FRAGMENTED-SECURITY-OWNERSHIP`)
+- owner decisions: `1` (`SYS-MAIN-ADMISSION-ENFORCEMENT`)
 
-The other active unit remains `FRAGMENTED-SECURITY-OWNERSHIP`. No Security closure is inferred here.
+No closed Product repair root is reopened by this evidence refresh.
