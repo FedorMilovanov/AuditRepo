@@ -105,7 +105,9 @@ Current independent closure/reverify receipts include:
 - `../reverify/CURRENT_HEAD_REVERIFY_2026-09-07_sw-root-generation-authority-closure-d6b1906f.md`
 - `../reverify/CURRENT_HEAD_REVERIFY_2026-09-08_article-legacy-capability-partial-migration-root-closure-3c2def01.md`
 - `../reverify/CURRENT_HEAD_REVERIFY_2026-09-08_metadata-ssot-proliferation-closure-c65b83a6.md`
+- `../reverify/CURRENT_HEAD_REVERIFY_2026-09-08_fragmented-security-ownership-live-blocker-1c1f7046.md`
 - `../reverify/CURRENT_HEAD_REVERIFY_2026-09-08_product-main-admission-enforcement-owner-decision.md`
+- `../reverify/CURRENT_HEAD_REVERIFY_2026-09-08_product-main-admission-required-check-candidates-f17376bd.md`
 
 `FRAGMENTED-SECURITY-OWNERSHIP` is intentionally **not** closed by Metadata, Article or unrelated Product movement. Its repository-side repair remains a Draft Product lane until a real live transport owner emits the required header and exact-head live evidence turns green.
 
