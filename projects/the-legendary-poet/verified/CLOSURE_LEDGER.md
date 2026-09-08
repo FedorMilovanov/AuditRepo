@@ -306,3 +306,21 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Forensic witness: exact tested SHA; build 539,795 bytes / JS 536,071 bytes; Chromium 19 draw calls / 210 triangles / 6.5 ms first frame; WebKit/iPhone 15 draw calls / 162 triangles / 137 ms first frame; application texture sources 0; renderer texture baseline 1; fallback/context-loss/reduced-motion evidence present; manifest hashes matched.
 - Preserved boundary: production `/hall` remains placeholder; production WebGL/Three/R3F activation remains false; documentary rights/credits remain blocked where previously blocked; `offlineVisualApproval`, `webVerticalSlice` and full museum scale-out remain unpromoted.
 - Detailed evidence: `../verification/2026-09-08-hall-web-runtime-proof-reconciliation/REPORT.md`.
+
+## 2026-09-08 — Hall production web slice and active-row currency reconciled
+
+- Scope: Product #465 / PR #466 production H3/R1/L0/UV0 web vertical slice plus stale active-row provenance for `TLP-RATING-URLSTATE-001` and `TLP-AUDIO-COMPLETION-001`; Product #460 is recorded only as narrowing evidence for broader systemic roots.
+- Result:
+  - closed-by-production-promotion: `/hall` now mounts the bounded route-isolated Hall v3 WebGL runtime with H3/R1/L0/UV0 authority, guided camera navigation, deterministic reduced-motion cuts and semantic WebGL unavailable/context-loss fallback;
+  - closed-by-rights-safe implementation: production requests zero documentary/application texture sources and represents rights-pending exhibit positions only with neutral non-facsimile geometry;
+  - closed-by-evidence: exact-head browser runtime, fresh-process iPhone Safari, offline scene/GLB/Khronos/Meshopt/budget/contact-sheet/walkthrough and aggregate same-head merge certification all completed successfully before CAS merge;
+  - retired from active matrix as stale-after-fix: `TLP-RATING-URLSTATE-001` (Product #438) and `TLP-AUDIO-COMPLETION-001` (Product #439);
+  - narrowed but not closed: Product #460 repairs concrete command/deep-link/blocked-storage-consent/community-race manifestations while `TLP-A11Y-RUNTIME-001`, `TLP-ANALYTICS-CONSENT-001` and `TLP-AUDIT-004` retain independent residual acceptance boundaries;
+  - current active denominator becomes `16 = P1 1 + P2 11 + P3 4`.
+- Product #466 evidence: exact certified head `196893531faa214a180e6f73fe0a0ce9fa613336`, squash merge/resulting `main` `cf78d58f0bef479e77a0265dd14111bc7d0c44db`; tested and resulting trees are both `d3b9b3855e149ba861c2e688497f452e50e8cf6e`.
+- Exact-head final proof: CI #3904, Project Contracts #1015, Hall web runtime proof #14, Hall greybox #351, Hall Pushkin offline #200, Site route integrity #1910, Brand deep reference/motion #1927, Articles #1602, Yesenin #1146, Manual Browser QA #2963 and Merge certification #58 all completed success on the same head; final race check was `behind=0`, zero reviews and zero review threads.
+- Hall artifacts: web runtime artifact `10070020628`, digest `sha256:89d9c51a34fff086f9ef64d96a3ac27e93495a5c6bd6c8a24cf216b96e80e764`; final offline artifact `10073236433`, digest `sha256:8ec100d1aff6766b479253da4e4ff3353700f3ab66ae195bea839ef5772bb06c`; pre-walkthrough still artifact `10070550189`, digest `sha256:1225871efb1146000d3ff7460484e7ec7bb6369d9139ae7404f66de33c8ce9a8`.
+- Retired-row Product provenance: #438 exact head `b146969b8c80cb9ac67577818df6fc76d39806a4`, merge `283f923f59fe6c5421394bd114b74f4dc174f47c`; #439 exact head `183fbc11fb16c4428058e962a281647fa921c0b2`, merge `41a42bfbf3d8273b9858ef1337ed5c5afcab786e`.
+- Narrowing provenance: #460 exact head `c10f1e2b860e243bdb5ee49d55092dc1e32a0bf8`, merge `344536aec3dccb45762e675fccef27c3ca74c4b9`.
+- Preserved boundary: documentary rights/credits, human `offlineVisualApproval`, rights-pending documentary shipping, full museum scale-out and live Cloudflare Worker/D1 production evidence are not closed by this reconciliation.
+- Detailed evidence: `../reverify/REVERIFY_cf78d58_2026-09-08_active-row-currency.md`.
