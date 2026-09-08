@@ -121,6 +121,7 @@ No connected control plane in this session can mutate the production response he
 - GitHub connector exposes repository/PR/Actions writes but no Pages arbitrary-response-header mutation;
 - plugin discovery found no connected Cloudflare/CDN edge write owner for this domain;
 - connected Vercel returned `teams=[]`, so there is no verified Vercel project/team scope that could safely own this production domain;
+- the Product branch `lane/security-netlify-transport-owner-20260908` has no pull request and points exactly to historical Product main `c65b83a6588187c71b6e39c720d2b6666b4959c2`; its provider-flavoured branch name is therefore not evidence of an implemented or active transport owner;
 - a blind hosting migration or DNS/proxy insertion is not an admissible bounded Security repair.
 
 ## Closure boundary
