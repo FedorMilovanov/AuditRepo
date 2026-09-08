@@ -15,6 +15,7 @@ This receipt does not classify branch protection as a Product code defect or rel
 - Product branch endpoint: `protected=false`
 - Product branch protection: disabled; required status-check enforcement off
 - Product repository rulesets: `[]`
+- Product owner-tracking issue: #1927 — `governance: enable native main admission enforcement`
 - Current AuditRepo `main` at this refresh: `7d64d9eacd973eeb91506442f8a69d6f7a30662f`
 - AuditRepo `main`: protected, with required `validate` and `preflight`
 
@@ -59,9 +60,13 @@ A repository workflow file cannot make GitHub reject an unauthorized/direct main
 
 The blocker in this session is not a Product code deficiency. The available GitHub connector action surface exposes reads for branch protection/rulesets and ordinary repository/PR/Actions mutations, but it does **not** expose an administration mutation for creating/updating branch protection or repository rulesets. Fresh server reads after Product #1918 again returned `protected=false`, required status-check enforcement `off`, and repository rulesets `[]`.
 
+The owner action is now also tracked directly in Product issue #1927. That issue records the verified always-created required-check candidates (`guard` and `Validate source metadata without building dist`), explicitly excludes path-filtered jobs from global required contexts, and preserves the alternative explicit-risk-acceptance disposition. Creating the issue does **not** itself satisfy native admission enforcement.
+
 Therefore this session can verify and document the native state precisely, but cannot truthfully claim to have configured Product branch protection. Creating a privileged workflow or other repository-side surrogate solely to work around the missing administration surface is not an acceptable closure.
 
 ## Closure boundary
+
+Product tracking issue: #1927 — `governance: enable native main admission enforcement`.
 
 Close `SYS-MAIN-ADMISSION-ENFORCEMENT` only after one of these owner decisions is made and evidenced:
 
