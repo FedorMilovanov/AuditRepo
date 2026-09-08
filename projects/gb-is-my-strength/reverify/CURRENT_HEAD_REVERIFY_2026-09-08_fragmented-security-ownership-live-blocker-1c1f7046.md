@@ -85,16 +85,21 @@ The artifact identity is rerun-safe and independently preserves the current live
 
 ## Exact-head CI snapshot
 
-At this evidence refresh, the following applicable exact-head workflows were already terminal-green on `1c1f7046...`:
+The observed applicable workflow set on exact Security head `1c1f7046...` is now terminal:
 
 - Shared Files Guard — controlling later run **SUCCESS** (an earlier duplicate run was cancelled);
-- Metadata SSOT Closure — **SUCCESS**;
+- Source Authority Contract — **SUCCESS**;
 - Reader Linear Text Projection Contract — **SUCCESS**;
-- Metadata & IndexNow Readiness — **SUCCESS**;
+- Native Source Contract — **SUCCESS**;
 - Node Toolchain Contract — **SUCCESS**;
-- Editorial Metadata v3 — **SUCCESS**.
+- Metadata SSOT Closure — **SUCCESS**;
+- Metadata & IndexNow Readiness — **SUCCESS**;
+- Route Registry Validators — **SUCCESS**;
+- Editorial Metadata v3 — **SUCCESS**;
+- Deploy Candidate Contract — **SUCCESS**;
+- Security Ownership Contract — terminal **FAILURE** solely because its live transport assertion correctly remained fail-closed.
 
-Source Authority Contract, Native Source Contract, Deploy Candidate Contract and Route Registry Validators were still in progress when this receipt was authored. Their state is not promoted to green here. Security Ownership Contract is terminal **FAILURE** solely because its live transport assertion correctly remained fail-closed.
+Thus every non-Security applicable workflow in the observed exact-head run set is terminal-green; the only terminal red is the intended live `X-Content-Type-Options` transport boundary. This promotes no stale or previously in-progress result and does not weaken the Security admission condition.
 
 ## Production transport owner
 
