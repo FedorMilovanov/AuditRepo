@@ -65,7 +65,7 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Result:
   - absorbed-by-system-fix: duplicated Router/lazy/sitemap/QA/budget ownership;
   - closed-by-fix: broad unknown-article soft-404 and stale manual redirect acceptance;
-  - closed-by-fix: missing focus ownership on return to the session-opening path;
+  - closed-by-fix: missing focus ownership on return to the session-opening URL;
   - closed-by-fix: renderer-level hiding of invalid adjacent headings;
   - closed-by-fix: silent archive removal failure and boolean-only mutation expectations;
   - remaining independent: editorial/media provenance decisions.
@@ -319,7 +319,7 @@ Closed history does not remain in the active engineering matrix. Detailed histor
   - current active denominator becomes `16 = P1 1 + P2 11 + P3 4`.
 - Product #466 evidence: exact certified head `196893531faa214a180e6f73fe0a0ce9fa613336`, squash merge/resulting `main` `cf78d58f0bef479e77a0265dd14111bc7d0c44db`; tested and resulting trees are both `d3b9b3855e149ba861c2e688497f452e50e8cf6e`.
 - Exact-head final proof: CI #3904, Project Contracts #1015, Hall web runtime proof #14, Hall greybox #351, Hall Pushkin offline #200, Site route integrity #1910, Brand deep reference/motion #1927, Articles #1602, Yesenin #1146, Manual Browser QA #2963 and Merge certification #58 all completed success on the same head; final race check was `behind=0`, zero reviews and zero review threads.
-- Hall artifacts: web runtime artifact `10070020628`, digest `sha256:89d9c51a34fff086f9ef64d96a3ac27e93495a5c6bd6c8a24cf216b96e80e764`; final offline artifact `10073236433`, digest `sha256:8ec100d1aff6766b479253da4e4ff3353700f3ab66ae195bea839ef5772bb06c`; pre-walkthrough still artifact `10070550189`, digest `sha256:1225871efb1146000d3ff7460484f66de33c8ce9a8`.
+- Hall artifacts: web runtime artifact `10070020628`, digest `sha256:89d9c51a34fff086f9ef64d96a3ac27e93495a5c6bd6c8a24cf216b96e80e764`; final offline artifact `10073236433`, digest `sha256:8ec100d1aff6766b479253da4e4ff3353700f3ab66ae195bea839ef5772bb06c`; pre-walkthrough still artifact `10070550189`, digest `sha256:1225871efb1146000d3ff7460484e7ec7bb6369d9139ae7404f66de33c8ce9a8`.
 - Retired-row Product provenance: #438 exact head `b146969b8c80cb9ac67577818df6fc76d39806a4`, merge `283f923f59fe6c5421394bd114b74f4dc174f47c`; #439 exact head `183fbc11fb16c4428058e962a281647fa921c0b2`, merge `41a42bfbf3d8273b9858ef1337ed5c5afcab786e`.
 - Narrowing provenance: #460 exact head `c10f1e2b860e243bdb5ee49d55092dc1e32a0bf8`, merge `344536aec3dccb45762e675fccef27c3ca74c4b9`.
 - Preserved boundary: documentary rights/credits, human `offlineVisualApproval`, rights-pending documentary shipping, full museum scale-out and live Cloudflare Worker/D1 production evidence are not closed by this reconciliation.
