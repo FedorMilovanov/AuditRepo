@@ -16,7 +16,7 @@ This receipt does not classify branch protection as a Product code defect or rel
 - Product branch protection: disabled; required status-check enforcement off
 - Product repository rulesets: `[]`
 - Product owner-tracking issue: #1927 — `governance: enable native main admission enforcement`
-- Current AuditRepo `main` at this refresh: `7d64d9eacd973eeb91506442f8a69d6f7a30662f`
+- Current AuditRepo `main` at this refresh: `96fb059e96a416c5c2fa1a2db3fe15ca7c5b5218`
 - AuditRepo `main`: protected, with required `validate` and `preflight`
 
 Therefore the historical multi-repository owner scope remains narrowed: the unresolved owner decision in this project is Product `main` admission enforcement. AuditRepo no longer belongs in the unresolved set because it has native protection and required checks.
