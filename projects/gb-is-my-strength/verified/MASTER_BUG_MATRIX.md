@@ -37,7 +37,7 @@
 
 | ID | Current causal problem | Absorbs / closure boundary |
 |---|---|---|
-| `FRAGMENTED-SECURITY-OWNERSHIP` | Security policy ownership is split across page-head CSP/meta/postbuild and transport response headers. Repository-side evidence already proves the document-policy direction; the live origin still requires a real transport owner for `X-Content-Type-Options: nosniff`. HTML meta cannot satisfy this boundary. | **Absorbs `SECURITY-CSP-INCONSISTENCY`, `SECURITY-CSP-GAPS`, and `SECURITY-NOSNIFF-OWNER-LAYER-MISMATCH`.** Define/retain authoritative document-policy and transport-header owners; prove source → production-like artifact → live response parity. Closure requires a measured live `X-Content-Type-Options: nosniff` response header, exact-head Security contract success, current-main synchronization, zero review debt and CAS merge. |
+| `FRAGMENTED-SECURITY-OWNERSHIP` | Security policy ownership is split across page-head CSP/meta/postbuild and transport response headers. Repository-side evidence already proves the document-policy direction; the live origin still requires a real transport owner for `X-Content-Type-Options: nosniff`. HTML meta cannot satisfy this boundary. | **Absorbs `SECURITY-CSP-INCONSISTENCY`, `SECURITY-CSP-GAPS`, and `SECURITY-NOSNIFF-OWNER-LAYER-MISMATCH`.** Define/retain authoritative document-policy and transport-header owners; prove source → production-like artifact → live response parity. Closure requires a measured live `X-Content-Type-Options: nosniff` response header, exact-head Security contract success, current-main synchronization, zero review debt and CAS merge. Product transport-owner tracking issue: `gb-is-my-strength#1928`. |
 
 ## OWNER DECISIONS — 1
 
