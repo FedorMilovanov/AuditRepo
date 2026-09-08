@@ -340,3 +340,20 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Final artifact: `manual-browser-core-evidence-2c98a7e184adfdd43e45f1342b1b9e01a222cbab`, artifact id `10075218940`, digest `sha256:ff54236e5f7528ee48d9695f6e5f7adc790e65dbd71795415985954b7ada03f3`.
 - Matrix disposition: P1 stays 1, P2 stays 11, P3 `4 → 3`, total active `16 → 15`.
 - Detailed evidence: `../reverify/REVERIFY_965c8a5_2026-09-08_a11y-motion-closure.md`.
+
+## 2026-09-09 — article-bounded reading progress closed
+
+- Scope: `TLP-READING-PROGRESS-001`, Product #469 / PR #470 only.
+- Result:
+  - closed-by-fix: `ReadingProgress` now uses the existing `EssayPage.articleRef` as its single semantic denominator instead of the root document;
+  - closed-by-contract: document-height ownership and split CSS/JS authority are rejected while passive scroll/resize, article `ResizeObserver` and one RAF-coalesced computation path are required;
+  - closed-by-browser-proof: the longform regression proves 0% at article entry, approximately 50% at the article midpoint, 100% when the article bottom reaches the viewport bottom, and 100% throughout the post-article community/footer tail;
+  - narrowed only: `TLP-AUDIT-004` loses the reading-progress proxy gap but remains active for its other independent audit-harness gaps.
+- Product evidence: base `965c8a5f122eeb9362f5156404bf61c6e977d178`, exact certified head `2565a7383b5cb730c2e6b7ed4c87cacdf71dd5c3`, CAS squash merge/resulting `main` `e4f159063648a6663e165877ef3f75dfcc2c0d09`.
+- Merge integrity: tested and resulting trees are both `281e3fedb264ab56240c5b6ac2a493b80a88bfde`; zero untested source-tree delta entered through squash.
+- Exact-head final proof: CI #3914, Project Contracts #1025, Content Model #785, Site Route Integrity #1920, Brand Deep #1937, Merge Certification #66 and Manual Browser QA #2973 all completed success on the same head; final race check was `behind=0` with zero reviews, zero review threads and no comment debt.
+- Browser witness: Chromium + Android core matrix 154 passed / 14 skipped; base iPhone Safari ran 17 fresh-process contours and all passed; the reading-progress regression passed Chromium, Android Chrome and WebKit reader journeys.
+- Final artifact: `manual-browser-core-evidence-2565a7383b5cb730c2e6b7ed4c87cacdf71dd5c3`, artifact id `10076915318`, size `165132780` bytes, digest `sha256:d38a0da12d5d8db16b9d59a8cf1567f40e4286a079dcecdf17ec5a6136078447`.
+- Issue outcome: Product #469 closed as `completed` when PR #470 merged.
+- Matrix disposition: P1 stays 1, P2 stays 11, P3 `3 → 2`, total active `15 → 14`.
+- Detailed evidence: `../reverify/REVERIFY_e4f1590_2026-09-09_reading-progress-closure.md`.
