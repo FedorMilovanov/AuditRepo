@@ -4,7 +4,7 @@
 
 `CURRENT / repository-side repair proven on current main; live transport blocker remains`
 
-This receipt supersedes the historical `323e13d6` current-head identity. It does **not** close `FRAGMENTED-SECURITY-OWNERSHIP`; it binds the canonical Product Security owner to the post-#1918 Product main and records a fresh exact-head live measurement.
+This receipt supersedes the historical `323e13d6` current-head identity. It does **not** close `FRAGMENTED-SECURITY-OWNERSHIP`; it binds the canonical Product Security owner to the post-#1918 Product main and records fresh exact-head live measurements.
 
 ## Current Product anchors
 
@@ -14,6 +14,7 @@ This receipt supersedes the historical `323e13d6` current-head identity. It does
 - Main movement: Product #1918, `content(pastor-series): clear Parts II–IX before release`
 - Canonical Security PR: #1917 — `fix(security): close document and transport ownership on current main`
 - Current exact Security head: `1c1f7046cdc0d849ae267c0898150de13140e82e`
+- Product transport-owner tracking issue: #1928 — `security: provide real transport owner for nosniff header`
 - Current PR checked merge ref observed by Actions: `6b65e4105ef5ec10dd0efbaf0de2d1496f4e4581`
 - Synchronization: normal two-parent merge-main; no rebase, force-push or dummy commit
 - Compare against current Product main: `ahead=4`, `behind=0`, merge base = exact current main
@@ -36,7 +37,8 @@ Product #1918 changed pastor-series content/research clearance paths and does no
 Security Ownership Contract:
 
 - run: `34260542256`
-- job: `102177085520`
+- original failing job: `102177085520`
+- latest rerun failing job: `102248198338`
 - source head: `1c1f7046cdc0d849ae267c0898150de13140e82e`
 - checked PR merge ref: `6b65e4105ef5ec10dd0efbaf0de2d1496f4e4581`
 - runner checkout explicitly recorded merge `1c1f7046...` into `f17376bd...`
@@ -57,7 +59,7 @@ Repository/document side:
 - CSP injection/canonicalization = **24/64**;
 - final dist security/asset/Atlas/relation/editorial-metadata/reader/sitemap drift = **0**.
 
-The same exact-head job then executed the live assertion against `https://gospod-bog.ru` and failed only at the HTTP transport boundary:
+Both the original exact-head job and the later rerun then executed the live assertion against `https://gospod-bog.ru` and failed only at the HTTP transport boundary:
 
 ```text
 AssertionError [ERR_ASSERTION]: /: live x-content-type-options header drift
@@ -70,9 +72,9 @@ Required value: `nosniff`.
 
 The live failure occurred after the successful source contract and successful production-like artifact build; no document-CSP assertion failed first.
 
-## Evidence artifact
+## Evidence artifacts
 
-The `always()` evidence upload succeeded after the live failure:
+Original exact-head evidence artifact:
 
 - artifact id: `10069794896`
 - artifact name: `security-ownership-34260542256-1`
@@ -81,11 +83,20 @@ The `always()` evidence upload succeeded after the live failure:
 - created: 2026-09-08T18:04:29Z
 - expiry: 2026-10-08T18:04:29Z
 
-The artifact identity is rerun-safe and independently preserves the current live failure evidence.
+Latest rerun evidence artifact on the **same exact Security head**:
+
+- artifact id: `10078005289`
+- artifact name: `security-ownership-34260542256-2`
+- digest: `sha256:b7e389683ee5a70926ad425c0f82cfbbca8a9e0a669164adecad41eab8384952`
+- size: 681 bytes
+- created: 2026-09-08T21:42:55Z
+- expiry: 2026-10-08T21:42:55Z
+
+The rerun did not move the branch and independently reconfirmed the same live transport failure.
 
 ## Exact-head CI snapshot
 
-The observed applicable workflow set on exact Security head `1c1f7046...` is now terminal:
+The observed applicable workflow set on exact Security head `1c1f7046...` is terminal:
 
 - Shared Files Guard — controlling later run **SUCCESS** (an earlier duplicate run was cancelled);
 - Source Authority Contract — **SUCCESS**;
@@ -116,15 +127,21 @@ The remaining defect is the live HTTP serving boundary. `X-Content-Type-Options`
 
 ## External control boundary — freshly rechecked
 
-No connected control plane in this session can mutate the production response headers for the existing GitHub Pages origin:
+Product issue #1928 now tracks the real owner action explicitly: provide an actual hosting/CDN/reverse-proxy/edge transport layer capable of emitting `X-Content-Type-Options: nosniff`, then prove it live and rerun the Security contract.
+
+Current connected tooling still does **not** provide a verified production edge write owner for this domain:
 
 - GitHub connector exposes repository/PR/Actions writes but no Pages arbitrary-response-header mutation;
-- plugin discovery found no connected Cloudflare/CDN edge write owner for this domain;
-- connected Vercel returned `teams=[]`, so there is no verified Vercel project/team scope that could safely own this production domain;
-- the Product branch `lane/security-netlify-transport-owner-20260908` has no pull request and points exactly to historical Product main `c65b83a6588187c71b6e39c720d2b6666b4959c2`; its provider-flavoured branch name is therefore not evidence of an implemented or active transport owner;
+- DNS Inspector is now connected, but it is a **read-only DNS lookup capability** (A/AAAA/CNAME/MX/TXT/NS/SOA), not a DNS/CDN/edge mutation control plane and therefore cannot itself close the transport owner;
+- connected Vercel previously returned `teams=[]`, so there is no verified Vercel project/team scope that can safely be treated as current production owner;
+- the Product branch `lane/security-netlify-transport-owner-20260908` has no pull request and points exactly to historical Product main `c65b83a6588187c71b6e39c720d2b6666b4959c2`; its provider-flavoured branch name is not evidence of an implemented or active transport owner;
 - a blind hosting migration or DNS/proxy insertion is not an admissible bounded Security repair.
 
+The fact that DNS Inspector is available does not alter this ownership boundary: observation and mutation are distinct capabilities.
+
 ## Closure boundary
+
+Product transport-owner tracking issue: #1928 — `security: provide real transport owner for nosniff header`.
 
 Keep `FRAGMENTED-SECURITY-OWNERSHIP` active until all are true:
 
