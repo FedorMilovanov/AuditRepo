@@ -291,3 +291,18 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Issue outcome: Product #444 closed as `completed` when PR #447 merged.
 - Preserved boundary: production `/hall` remains placeholder; production asset/manifest/WebGL promotion remain false; documentary production shipping remains blocked; `offlineVisualApproval` remains human-owner-only; no autonomous architecture transaction or full-museum scale-out was authorized.
 - Detailed evidence: `../verification/2026-09-07-hall-post-root-repair-reconciliation/REPORT.md`.
+
+## 2026-09-08 — Hall isolated browser/WebGL proof reconciled and closed
+
+- Scope: Product #463 / PR #464 isolated Hall v3 H3/R1/L0/UV0 browser runtime proof.
+- Result:
+  - closed-by-evidence: the frozen H3/R1/L0/UV0 authority now has exact-head real-browser execution evidence in Chromium and WebKit without activating production `/hall`;
+  - closed-by-evidence: guided camera path, deterministic reduced-motion cuts, forced WebGL-unavailable fallback and real context-loss fallback are browser-covered;
+  - retained intentionally: documentary/application texture sources remain exactly 0 while one engine-internal Three/WebGL renderer texture is separately bounded; no documentary media or production asset claim entered the proof;
+  - closed-by-governance-hardening: `merge-certification` has a conditional same-head `hall-web-runtime-proof` lane and failed closed on an earlier red proof head rather than reusing historical success.
+- Product evidence: exact certified head `bfc929c90c25cf2300a119d64d0bc69af2e16814`, PR #464 squash merge `060103d081485074bbf59e1bf16a2bae1a5d6e29`; Product #463 closed as `completed`.
+- Exact-head final proof: CI #3897, Project Contracts #1008, Hall web runtime proof #7, Merge certification #52, Site route integrity #1903, Brand deep reference/motion #1920 and Manual Browser QA #2956 all completed success on the same final head.
+- Final artifact: `hall-web-runtime-proof-bfc929c90c25cf2300a119d64d0bc69af2e16814`, artifact id `10062764612`, digest `sha256:8975524f762bae284e2a54723b2965df40fac8f040545226caeba426588154f2`.
+- Forensic witness: exact tested SHA; build 539,795 bytes / JS 536,071 bytes; Chromium 19 draw calls / 210 triangles / 6.5 ms first frame; WebKit/iPhone 15 draw calls / 162 triangles / 137 ms first frame; application texture sources 0; renderer texture baseline 1; fallback/context-loss/reduced-motion evidence present; manifest hashes matched.
+- Preserved boundary: production `/hall` remains placeholder; production WebGL/Three/R3F activation remains false; documentary rights/credits remain blocked where previously blocked; `offlineVisualApproval`, `webVerticalSlice` and full museum scale-out remain unpromoted.
+- Detailed evidence: `../verification/2026-09-08-hall-web-runtime-proof-reconciliation/REPORT.md`.
