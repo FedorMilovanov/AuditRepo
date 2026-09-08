@@ -324,3 +324,19 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Narrowing provenance: #460 exact head `c10f1e2b860e243bdb5ee49d55092dc1e32a0bf8`, merge `344536aec3dccb45762e675fccef27c3ca74c4b9`.
 - Preserved boundary: documentary rights/credits, human `offlineVisualApproval`, rights-pending documentary shipping, full museum scale-out and live Cloudflare Worker/D1 production evidence are not closed by this reconciliation.
 - Detailed evidence: `../reverify/REVERIFY_cf78d58_2026-09-08_active-row-currency.md`.
+
+## 2026-09-08 — reduced-motion utility authority closed
+
+- Scope: `TLP-A11Y-MOTION-001`, Product #467 / PR #468 only.
+- Result:
+  - closed-by-fix: one final-loaded `src/reduced-motion.css` authority now suppresses canonical persistent Tailwind utility motion (`spin`, `ping`, `pulse`, `bounce`) under `prefers-reduced-motion: reduce` without hiding state semantics or altering normal-motion behavior;
+  - closed-by-contract: `validate:browser-runtime` inventories the full production utility-motion universe and currently binds 18 tokens to the central policy, failing closed if the policy becomes vacuous, incomplete or loses final CSS ownership;
+  - closed-by-browser-proof: `/poets` and `/music` prove computed `animationName: none` under reduce while rating/audio state remains visible and real audio remains playing;
+  - narrowed only: `TLP-AUDIT-004` loses the reduced-motion utility proxy gap but remains active for its other audit-harness gaps; `TLP-A11Y-RUNTIME-001` remains independent.
+- Product evidence: exact certified head `2c98a7e184adfdd43e45f1342b1b9e01a222cbab`, CAS squash merge/resulting `main` `965c8a5f122eeb9362f5156404bf61c6e977d178`.
+- Merge integrity: tested and resulting trees are both `7928505151ebc491044a080c4e199353f845a7ed`; zero untested source-tree delta entered through squash.
+- Exact-head final proof: CI #3912, Project Contracts #1023, Site Route Integrity #1918, Brand Deep #1935, Brand Raster #1097, Articles #1610, Yesenin #1153, Merge Certification #65 and Manual Browser QA #2971 all completed success on the same head; final race check was `behind=0`, zero reviews and zero review threads.
+- Browser witness: Chromium + Android core matrix 152 passed / 14 skipped; base iPhone Safari ran 17 fresh-process contours and all passed, including `poets-status` 2/2 and `audio-completion` 2/2.
+- Final artifact: `manual-browser-core-evidence-2c98a7e184adfdd43e45f1342b1b9e01a222cbab`, artifact id `10075218940`, digest `sha256:ff54236e5f7528ee48d9695f6e5f7adc790e65dbd71795415985954b7ada03f3`.
+- Matrix disposition: P1 stays 1, P2 stays 11, P3 `4 → 3`, total active `16 → 15`.
+- Detailed evidence: `../reverify/REVERIFY_965c8a5_2026-09-08_a11y-motion-closure.md`.
