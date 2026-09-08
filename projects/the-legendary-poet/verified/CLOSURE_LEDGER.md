@@ -65,7 +65,7 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Result:
   - absorbed-by-system-fix: duplicated Router/lazy/sitemap/QA/budget ownership;
   - closed-by-fix: broad unknown-article soft-404 and stale manual redirect acceptance;
-  - closed-by-fix: missing focus ownership on return to the session-opening URL;
+  - closed-by-fix: missing focus ownership on return to the session-opening path;
   - closed-by-fix: renderer-level hiding of invalid adjacent headings;
   - closed-by-fix: silent archive removal failure and boolean-only mutation expectations;
   - remaining independent: editorial/media provenance decisions.
