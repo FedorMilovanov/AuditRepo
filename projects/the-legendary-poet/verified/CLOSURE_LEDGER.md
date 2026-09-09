@@ -357,3 +357,22 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Issue outcome: Product #469 closed as `completed` when PR #470 merged.
 - Matrix disposition: P1 stays 1, P2 stays 11, P3 `3 → 2`, total active `15 → 14`.
 - Detailed evidence: `../reverify/REVERIFY_e4f1590_2026-09-09_reading-progress-closure.md`.
+
+## 2026-09-09 — HOME portrait request/budget authority closed
+
+- Scope: `TLP-HOME-MEDIA-PERF-001`, Product #471 / PR #472 only.
+- Result:
+  - closed-by-fix: only the first two home hero portraits remain eager/high-priority; the other four are withheld until the real browser `window.load` boundary and released on the next animation frame;
+  - closed-by-fix: six authoritative portraits now have real 320w/480w responsive JPEG candidates with the 1000w originals retained as top candidates, while the fallback `src` is bounded to 320w;
+  - closed-by-contract: `validate-home-media-perf.mjs` owns derivative dimensions, critical byte ceilings, source/lifecycle policy, browser-proof wiring and rejects the invalid timing/layout inference mechanisms found during candidate testing;
+  - closed-by-browser-proof: exact request universe, browser-side release ordering, `currentSrc`, full decode and transform-independent layout stability are proven across Chromium, Android Chrome and fresh-process iPhone Safari;
+  - narrowed only: `TLP-AUDIT-004` loses the HOME-media proxy gap but remains active for its other independent audit-harness gaps.
+- Product evidence: base `304771e0b7f22e90c0ec7e36b9d361cb95cba79a`, exact certified head `4d7b9c506dc7d959b770ebb0c00a941b0d684ee6`, CAS squash merge/resulting `main` `11e086ef289e3dc1ab55bff8a6664c78d2cb2761`.
+- Merge integrity: tested and resulting trees are both `132238e81b4a8caf09083b4641aac624fb20427c`; zero untested source-tree delta entered through squash.
+- Exact-head final proof: CI #3931, Project Contracts #1042, Site Route Integrity #1937, Brand Deep #1954, Manual Browser QA #2990 and Merge Certification #80 all completed success on the same head; final race check was `behind=0`, zero reviews and zero review threads.
+- Browser witness: Chromium + Android core matrix `154 passed / 14 skipped / 0 failed`; base iPhone Safari ran 17 fresh-process contours and all passed; all four HOME browser jobs (`browser-qa`, WebKit HOME reveal, premium iPhone critical, premium HOME) completed success.
+- Critical pair budgets: 320w `18,987 B <= 32 KiB`; 480w `37,962 B <= 56 KiB`.
+- Final core artifact: `manual-browser-core-evidence-4d7b9c506dc7d959b770ebb0c00a941b0d684ee6`, artifact id `10100354498`, size `162557589` bytes, digest `sha256:ed1cd8f0e24276722a28e1c12284a519d2e32c1e1ccb27f904c62ddef726caef`.
+- Issue outcome: Product #471 closed as `completed` when PR #472 merged.
+- Matrix disposition: P1 stays 1, P2 stays 11, P3 `2 → 1`, total active `14 → 13`.
+- Detailed evidence: `../reverify/REVERIFY_11e086e_2026-09-09_home-media-closure.md`.
