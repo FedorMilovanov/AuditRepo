@@ -376,3 +376,20 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Issue outcome: Product #471 closed as `completed` when PR #472 merged.
 - Matrix disposition: P1 stays 1, P2 stays 11, P3 `2 → 1`, total active `14 → 13`.
 - Detailed evidence: `../reverify/REVERIFY_11e086e_2026-09-09_home-media-closure.md`.
+
+## 2026-09-09 — optional essay-catalog failure containment closed
+
+- Scope: `TLP-SECONDARY-DATA-001`, Product #475 / PR #476 only.
+- Result:
+  - closed-by-fix: requested essay JSON now owns primary essay readiness without requiring the optional catalog;
+  - closed-by-fix: `RelatedEssays` and essay-series navigation are locally contained fail-soft enrichment and cannot replace a valid primary poet/essay route with route-level failure UI when the catalog fails;
+  - closed-by-contract: `validate:essay-browser-data` rejects renewed primary→catalog dependency, loss of the SPA HTML not-found semantic, or loss of the local containment boundaries;
+  - closed-by-browser-proof: `catalog.json → 503` is forced across Chromium, Pixel 7 Chromium and iPhone Safari while valid poet biography and essay body must remain available;
+  - diagnostic red preserved: candidate `7082451d9a9ae51649f3d00ead01e891401d9019` exposed the existing Vite preview `text/html + 200` unknown-slug fallback; descendant `bd774526...` repaired only that host fallback while real JSON 5xx/malformed/invalid payloads remain fail-closed;
+  - narrowed only: `TLP-AUDIT-004` loses the secondary-data containment proxy gap but remains active for its independent residuals.
+- Product evidence: base `11e086ef289e3dc1ab55bff8a6664c78d2cb2761`, exact certified head `bd77452640676db6c34b4d11ca53b2add2a1186d`, CAS squash merge/resulting `main` `d90b36339f9b09de1f1c592037a363e5ad71f27a`.
+- Merge integrity: tested and resulting trees are both `979d5de3fe1851dab58b30dc5f9097e998d8f691`; zero untested source-tree delta entered through squash.
+- Exact-head final proof: CI #3934, Project Contracts #1045, Content Model #788, Site Route Integrity #1940, Brand Deep #1957, Articles Catalog #1613, Yesenin #1155, Hall web runtime proof #17, Manual Browser QA #2993 and Merge Certification #82 all completed success on the same head; final race check was `behind=0`, reviews=0 and unresolved review threads=0. Pages #2311 was expectedly skipped.
+- Issue outcome: Product #475 closed as `completed` when PR #476 merged.
+- Matrix disposition: P1 stays 1, P2 `11 → 10`, P3 stays 1, total active `13 → 12`.
+- Detailed evidence: `../reverify/REVERIFY_d90b363_2026-09-09_secondary-data-closure.md`.
