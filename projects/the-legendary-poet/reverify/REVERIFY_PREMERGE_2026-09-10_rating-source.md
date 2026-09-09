@@ -1,6 +1,6 @@
 # Pre-merge reverify — TLP-RATING-SOURCE-001
 
-Date: 2026-09-10 (Europe/Paris workflow date is not authoritative; repository transaction uses the Product/Audit SHAs below).
+Recorded: 2026-09-10. Repository SHAs below are the transaction authority; wall-clock labels do not substitute for exact-head identity.
 
 ## Purpose
 
