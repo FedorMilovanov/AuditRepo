@@ -174,7 +174,7 @@ Closed history does not remain in the active engineering matrix. Detailed histor
   - no Product mutation and no production-media acceptance.
 - Evidence angles: Product provenance ledger + Commons current record/licensing + FEB bibliography + later scholarly illustration caption + exact composition inspection + RSL page availability check.
 - Owner outcomes: recover RSL pages 7/377 / preserve page artifacts and visual match / primary object or photographer / reviewed PD decision / permission or replacement / park.
-- Live evidence: not required; this was a caption, bibliography, exact-page and rights verification.
+- Live evidence: not required; this was caption, bibliography, exact-page and rights verification.
 - Detailed evidence: `../verification/2026-08-06-c07-publication-volume-wave/REPORT.md`.
 
 ## 2026-08-06 — Mayakovsky 30-candidate media family closed in one final batch
