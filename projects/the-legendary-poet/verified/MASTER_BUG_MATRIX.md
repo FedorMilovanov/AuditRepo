@@ -23,7 +23,7 @@ Most recently retired from here: `TLP-SEARCH-001` (Product #485 + residual #487,
 |---|---|---|---|
 | `TLP-COMM-ABUSE-001` | `SOURCE-REPAIRED / LIVE-PROOF-PENDING / PUBLIC-INTEGRITY / P1` | Product #420 merged the trusted Cloudflare Worker/D1 authority boundary and Product #422 merged the reconciled client/runtime contract. Source/build gates include fail-closed target authority, signed anonymous actors, network-abuse hashing/budgets and Worker bundle validation. **Reachability condition (live witness 2026-09-06 at Product `57353dc`):** `/ratings` renders `Сейчас показаны данные этого браузера; общий backend не подключён`, which is emitted only when `remoteEnabled` is `false`, so the public abuse surface is unreachable on the deployed build and this row is the release gate that binds when the shared backend is enabled — not a claim of a currently exploitable live exposure. **Terminal production evidence is still absent:** source inspection and dry-run do not prove that the intended D1 schema, required secrets, Turnstile policy, Worker deployment, public client activation and adversarial behavior are live. Closure boundary: `../verification/2026-08-20-community-reconciliation-closure/REPORT.md`; current source currency: `../reverify/REVERIFY_cf78d58_2026-09-08_active-row-currency.md`. | Deploy and activate the intended Worker + D1 contour; prove `/health` reports ready database/target/writes authority and run live adversarial concurrency, duplicate/idempotency, target-rejection and rotated-identity checks without mandatory registration. |
 
-## 🟡 P2 — ОТКРЫТО (7)
+## 🟡 P2 — ОТКРЫТО (6)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
