@@ -448,3 +448,23 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Issue outcome: Product #482 closed as `completed` when PR #483 merged.
 - Matrix disposition: P1 stays 1, P2 `8 → 7`, P3 stays 1, total active `10 → 9`.
 - Detailed evidence: `../reverify/REVERIFY_2f238ed_2026-09-10_audio-session-closure.md`.
+
+## 2026-09-10 — canonical Search inventory, text authority and deep links closed
+
+- Scope: `TLP-SEARCH-001`, Product #484 / PR #485 plus residual Product #486 / PR #487.
+- Result:
+  - closed-by-source-authority: command-search poet, poem, essay, music and static-section records derive from canonical source/route authorities instead of a frozen parallel catalog;
+  - closed-by-deep-link-contract: every canonical poem links to its exact `#poem-*` target and every canonical essay section links to its renderer-owned exact anchor;
+  - closed-by-text-authority: shared Russian normalization treats `ё` and `е` as equivalent while preserving `й` from `и`;
+  - closed-by-generated-parity: the lightweight essay-search index carries canonical section metadata generated through shared `sectionAnchor` ownership without importing the full longform corpus into persistent command UI;
+  - closed-by-fail-closed-proof: validators reject stale/missing/extra route or essay-section metadata and mutation fixtures reject hard-coded inventory;
+  - closed-by-browser-proof: real Command Palette navigation reaches canonical poem and essay-section hashes with fixed-header-safe landing in the required browser matrix;
+  - diagnostic red preserved: residual semantic review after #485 prevented premature Audit closure; #487 then exposed and fixed a rendered-heading case-sensitive browser assertion before terminal certification;
+  - narrowed only: `TLP-AUDIT-004` loses the Search inventory/deep-link proxy gap and remains active for its independent residuals;
+  - preserved boundary: analytics/consent, discovery, redirect, rating methodology, systemic focus and live community-production roots remain independent.
+- Product #485 evidence: base `2f238ed68419bad849841479408d243142f6ddc5`, certified head `ae3d133653fc001825cb6f4648386cca0215c6f3`, squash/resulting `main` `a95cf81098d72a51b3c179a34970640cd609b0cc`; tested/resulting tree `80a2a657e3b6199ac009b483451539a9ee970cbc`.
+- Product #487 evidence: base `a95cf81098d72a51b3c179a34970640cd609b0cc`, certified head `63afb0f32e7e44d70d08d61c5fc9ce03c6e2b0eb`, CAS squash/resulting `main` `a639c83eaceaf5e4228b341f0c6df66d2c17f212`; tested/resulting tree `ec3dbaeec47b2f78d87f248f20b184a051e36230`.
+- Exact-head final proof: #485 — CI #3957, Project Contracts #1068, Site Route #1963, Brand Deep #1980, Manual Browser #3016, Ready Merge Certification #104; #487 — CI #3970, Project Contracts #1081, Content Model #813, Site Route #1976, Brand Deep #1993, Simonov #204, Manual Browser #3029, Merge Certification #117. Pages were expectedly skipped.
+- Issue outcomes: Product #484 and #486 both closed as `completed`.
+- Matrix disposition: P1 stays 1, P2 `7 → 6`, P3 stays 1, total active `9 → 8`.
+- Detailed evidence: `../reverify/REVERIFY_a639c83_2026-09-10_search-closure.md`.
