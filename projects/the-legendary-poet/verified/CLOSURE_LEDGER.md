@@ -158,7 +158,7 @@ Closed history does not remain in the active engineering matrix. Detailed histor
   - no Product mutation and no production-media acceptance.
 - Evidence angles: Product provenance ledger + Commons current record/licensing + State Mayakovsky Museum-backed Russia-in-Photo object + Culture.ru corroboration + manual visual comparison + RSL source availability check.
 - Owner outcomes: recover RSL source / pre-1931 publication / museum accession / reviewed PD decision / permission or replacement / park.
-- Live evidence: not required; this was object, caption, publication-history and rights verification.
+- Live evidence: not required; this was an object, caption, publication-history and rights verification.
 - Detailed evidence: `../verification/2026-08-06-c06-object-publication-rights-wave/REPORT.md`.
 
 ## 2026-08-06 — C07 pre-1931 source volume verified, exact RSL pages remain unavailable
@@ -410,3 +410,21 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Issue outcome: Product #478 closed as `completed` when PR #479 merged.
 - Matrix disposition: P1 stays 1, P2 `10 → 9`, P3 stays 1, total active `12 → 11`.
 - Detailed evidence: `../reverify/REVERIFY_49337c0_2026-09-10_rating-source-closure.md`.
+
+## 2026-09-10 — poet authoring identity/registry/portrait release authority closed
+
+- Scope: `TLP-AUTHORING-ID-001`, Product #480 / PR #481 only.
+- Result:
+  - closed-by-fix: one shared machine contract now owns identifier-safe ASCII-kebab poet identity, deterministic module naming, canonical registry convergence, release fields and portrait provenance;
+  - closed-by-producer-contract: `new-poet.ts` creates only an explicit unreleasable draft and `register-poet.ts` validates collision/content/portrait/provenance before canonical placement;
+  - closed-by-authority-contract: the published catalog is registry-driven and exposes canonical module objects directly without hidden rewrite clones;
+  - closed-by-provenance-contract: existing legacy portrait provenance is frozen to the original ten poet IDs and exact historical boundary/bytes, while future registration cannot inherit the legacy exception;
+  - closed-by-adversarial-proof: Unicode IDs, numeric-leading IDs, reserved module bindings, collisions, registry omission, placeholder year, missing/duplicate provenance, missing portrait bytes, missing local evidence and future legacy provenance all fail closed;
+  - narrowed only: `TLP-AUDIT-004` loses the authoring release-contract proxy gap but remains active for its independent residuals;
+  - preserved boundary: independently owned `TLP-ANALYTICS-ROUTE-001` and all audio/consent/discovery/redirect/search/rating-method roots are untouched.
+- Product evidence: base `49337c0ab502b056ee503995ae0fa0051c693962`, exact certified head `ddd4aaf17a65a324183039638bf8c809da4dd087`, CAS squash merge/resulting `main` `9effb63b1def3190034c1435ded8b54f58c4af36`.
+- Merge integrity: tested and resulting trees are both `9dfdcfb61432ac8a8d3f7261ce148abfdf170efe`; zero untested source-tree delta entered through squash.
+- Exact-head final proof: CI #3946, Project Contracts #1057, Content Model #800, Site Route Integrity #1952, Brand Deep #1969, Simonov source gate #200, Manual Browser QA #3005 and final Ready-triggered Merge Certification #93 all completed success on the same exact head; final race check was `behind=0`, reviews=0 and unresolved review threads=0. Pages #2321 was expectedly skipped.
+- Issue outcome: Product #480 closed as `completed` when PR #481 merged.
+- Matrix disposition: P1 stays 1, P2 `9 → 8`, P3 stays 1, total active `11 → 10`.
+- Detailed evidence: `../reverify/REVERIFY_9effb63_2026-09-10_authoring-id-closure.md`.
