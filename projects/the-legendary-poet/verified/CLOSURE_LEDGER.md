@@ -158,7 +158,7 @@ Closed history does not remain in the active engineering matrix. Detailed histor
   - no Product mutation and no production-media acceptance.
 - Evidence angles: Product provenance ledger + Commons current record/licensing + State Mayakovsky Museum-backed Russia-in-Photo object + Culture.ru corroboration + manual visual comparison + RSL source availability check.
 - Owner outcomes: recover RSL source / pre-1931 publication / museum accession / reviewed PD decision / permission or replacement / park.
-- Live evidence: not required; this was an object, caption, publication-history and rights verification.
+- Live evidence: not required; this was object, caption, publication-history and rights verification.
 - Detailed evidence: `../verification/2026-08-06-c06-object-publication-rights-wave/REPORT.md`.
 
 ## 2026-08-06 — C07 pre-1931 source volume verified, exact RSL pages remain unavailable
@@ -304,7 +304,7 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Exact-head final proof: CI #3897, Project Contracts #1008, Hall web runtime proof #7, Merge certification #52, Site route integrity #1903, Brand deep reference/motion #1920 and Manual Browser QA #2956 all completed success on the same final head.
 - Final artifact: `hall-web-runtime-proof-bfc929c90c25cf2300a119d64d0bc69af2e16814`, artifact id `10062764612`, digest `sha256:8975524f762bae284e2a54723b2965df40fac8f040545226caeba426588154f2`.
 - Forensic witness: exact tested SHA; build 539,795 bytes / JS 536,071 bytes; Chromium 19 draw calls / 210 triangles / 6.5 ms first frame; WebKit/iPhone 15 draw calls / 162 triangles / 137 ms first frame; application texture sources 0; renderer texture baseline 1; fallback/context-loss/reduced-motion evidence present; manifest hashes matched.
-- Preserved boundary: production `/hall` remains placeholder; production WebGL/Three/R3F activation remains false; documentary rights/credits remain blocked where previously blocked; `offlineVisualApproval`, `webVerticalSlice` and full museum scale-out remain unpromoted.
+- Preserved boundary: production `/hall` remains placeholder; production WebGL/Three/R3F activation remains false; documentary rights/credits remain blocked where previously blocked; `offlineVisualApproval`, `webVerticalSlice` and full-museum scale-out remain unpromoted.
 - Detailed evidence: `../verification/2026-09-08-hall-web-runtime-proof-reconciliation/REPORT.md`.
 
 ## 2026-09-08 — Hall production web slice and active-row currency reconciled
