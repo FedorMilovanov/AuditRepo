@@ -468,3 +468,22 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Issue outcomes: Product #484 and #486 both closed as `completed`.
 - Matrix disposition: P1 stays 1, P2 `7 → 6`, P3 stays 1, total active `9 → 8`.
 - Detailed evidence: `../reverify/REVERIFY_a639c83_2026-09-10_search-closure.md`.
+
+## 2026-09-10 — transparent sample-aware reader rating methodology closed
+
+- Scope: `TLP-RATING-METHOD-001`, Product #488 / PR #489.
+- Result:
+  - closed-by-method-authority: the fixed mutable `PRIOR_WEIGHT` / self-derived current global mean no longer owns reader places;
+  - closed-by-sample-contract: overall reader places and dimension leaders share the same explicit minimum qualification of 3 votes;
+  - closed-by-formula-contract: one bounded /5 conservative sample-size index is used for overall and dimension ranking, while raw reader averages remain visible;
+  - closed-by-copy/code parity: reader-facing methodology states the implemented threshold/formula and explicitly does not claim representative statistical sampling;
+  - closed-by-adversarial-proof: under-threshold perfect samples cannot rank, a sparse perfect qualified sample cannot beat a materially larger strong sample merely by being perfect, equal means receive less penalty as n grows, and the index remains within the /5 scale;
+  - preserved authority: editorial /10 ordering remains separate from reader /5 ranking;
+  - narrowed only: `TLP-AUDIT-004` loses the rating-method proxy gap and remains active for independent audit-harness residuals;
+  - preserved boundary: analytics/consent, discovery, redirect, systemic focus, live community-production and analytics-route roots remain independent.
+- Product evidence: base `a639c83eaceaf5e4228b341f0c6df66d2c17f212`, exact certified head `51bca56039185b7680bb686bbda4a94d71ab75f5`, CAS squash/resulting `main` `81b98ca045649b9f73de33c1cd850b7af932fc42`.
+- Merge integrity: tested and resulting trees are both `d7998712f159ea0dcfe5d78d56b73ceb5416fca3`.
+- Exact-head final proof: CI #3972, Project Contracts #1083, Site Route #1978, Brand Deep #1995, Manual Browser QA #3031 and Ready-state Merge Certification #119 all completed success. Pages #2343 was expectedly skipped.
+- Issue outcome: Product #488 closed as `completed` when PR #489 merged.
+- Matrix disposition: P1 stays 1, P2 `6 → 5`, P3 stays 1, total active `8 → 7`.
+- Detailed evidence: `../reverify/REVERIFY_81b98ca_2026-09-10_rating-method-closure.md`.
