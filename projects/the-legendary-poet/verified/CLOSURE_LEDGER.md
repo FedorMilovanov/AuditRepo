@@ -393,3 +393,20 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Issue outcome: Product #475 closed as `completed` when PR #476 merged.
 - Matrix disposition: P1 stays 1, P2 `11 → 10`, P3 stays 1, total active `13 → 12`.
 - Detailed evidence: `../reverify/REVERIFY_d90b363_2026-09-09_secondary-data-closure.md`.
+
+## 2026-09-10 — reader /5 source authority separated from editorial /10
+
+- Scope: `TLP-RATING-SOURCE-001`, Product #478 / PR #479 only.
+- Result:
+  - closed-by-fix: reader ranking and reader places consume reader-only authority and no longer use editorial `poet.rating` as a tie-break;
+  - closed-by-fix: rated reader rows precede unrated rows and unrated rows receive no reader place in reader mode;
+  - closed-by-presentation-contract: reader score/index remain explicitly `/5`, while explicit editorial sort remains a separate `/10` authority;
+  - closed-by-contract: `validate:rating-source` rejects renewed editorial influence over reader places or loss of the source/scale separation;
+  - preserved boundary: `TLP-RATING-METHOD-001` remains independently active; no `PRIOR_WEIGHT`, Bayesian weighting, sample/confidence threshold, sparse-vote methodology or dimension-leader methodology changed;
+  - narrowed only: `TLP-AUDIT-004` loses the rating-source proxy gap but remains active for its independent residuals.
+- Product evidence: base `d90b36339f9b09de1f1c592037a363e5ad71f27a`, exact certified head `e1460d26e4ec0a82db17b552d25556b5299cb44f`, CAS squash merge/resulting `main` `49337c0ab502b056ee503995ae0fa0051c693962`.
+- Merge integrity: tested and resulting trees are both `ca1c5e926c2eebf5c72da68a8c48501dee063786`; zero untested source-tree delta entered through squash.
+- Exact-head final proof: CI #3936, Project Contracts #1047, Content Model #790, Site Route Integrity #1942, Brand Raster #1104, Brand Deep #1959, Articles Catalog #1615, Yesenin Part I #1156, Yesenin Part II #658, Hall greybox #353, Hall web runtime proof #19, Hall Pushkin offline #202, Manual Browser QA #2995 and Merge Certification #83 all completed success on the same head; final race check was `behind=0`, reviews=0 and unresolved review threads=0. Pages #2312 was expectedly skipped.
+- Issue outcome: Product #478 closed as `completed` when PR #479 merged.
+- Matrix disposition: P1 stays 1, P2 `10 → 9`, P3 stays 1, total active `12 → 11`.
+- Detailed evidence: `../reverify/REVERIFY_49337c0_2026-09-10_rating-source-closure.md`.
