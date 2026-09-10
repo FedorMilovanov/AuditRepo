@@ -428,3 +428,23 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Issue outcome: Product #480 closed as `completed` when PR #481 merged.
 - Matrix disposition: P1 stays 1, P2 `9 → 8`, P3 stays 1, total active `11 → 10`.
 - Detailed evidence: `../reverify/REVERIFY_9effb63_2026-09-10_authoring-id-closure.md`.
+
+## 2026-09-10 — audio session persistence/convergence authority closed
+
+- Scope: `TLP-AUDIO-SESSION-001`, Product #482 / PR #483 only.
+- Result:
+  - closed-by-fix: writable whole-session v2 snapshot authority was replaced by versioned per-field/per-track conflict domains, so unrelated tab writes no longer overwrite each other;
+  - closed-by-merge-contract: same-register conflicts have deterministic ordering and stale/out-of-order events converge through anti-entropy; v2/legacy remain migration input only, not a competing write authority;
+  - closed-by-runtime-integration: `AudioPlayerProvider` subscribes to session-register changes so live tabs converge persisted session state;
+  - closed-by-contract: `validate:audio-session` rejects production callers of whole-session/internal replica APIs and binds completion/convergence QA to the v3 register authority;
+  - closed-by-browser-proof: real two-page Chromium/Android convergence and completion behavior pass, with fresh-process iPhone Safari and the rest of Manual Browser QA also terminal green;
+  - diagnostic red preserved: an earlier exact-head browser run caught the old completion QA reading v2 and an ambiguous immersive mute locator; both were fixed before the final certified head and were not waived;
+  - narrowed only: `TLP-AUDIT-004` loses the audio-session convergence proxy gap but remains active for its independent residuals;
+  - preserved boundary: analytics/consent, discovery, redirects, search, rating methodology, systemic focus and live community deployment roots are untouched.
+- Product evidence: base `9effb63b1def3190034c1435ded8b54f58c4af36`, exact certified head `31a3941f51848598adfd26dd8b58be7b5989b32d`, CAS squash merge/resulting `main` `2f238ed68419bad849841479408d243142f6ddc5`.
+- Merge integrity: tested and resulting trees are both `85386ac09745463b728b8b9a28cbb3f68b81453a`; zero untested source-tree delta entered through squash.
+- Exact-head final proof: CI #3954, Project Contracts #1065, Site Route Integrity #1960, Brand Deep #1977, Manual Browser QA #3013 and final Ready-triggered Merge Certification #101 all completed success on the same exact head; final race check was `behind=0`, reviews=0 and unresolved review threads=0. Pages #2328 was expectedly skipped.
+- Browser witness: Chromium/Android core QA passed including the two-page audio-session convergence proof and native completion regression; premium iPhone critical, premium HOME, WebKit HOME reveal and base fresh-process iPhone Safari all completed success.
+- Issue outcome: Product #482 closed as `completed` when PR #483 merged.
+- Matrix disposition: P1 stays 1, P2 `8 → 7`, P3 stays 1, total active `10 → 9`.
+- Detailed evidence: `../reverify/REVERIFY_2f238ed_2026-09-10_audio-session-closure.md`.
