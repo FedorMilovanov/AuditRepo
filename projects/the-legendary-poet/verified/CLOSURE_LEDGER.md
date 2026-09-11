@@ -487,3 +487,25 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Issue outcome: Product #488 closed as `completed` when PR #489 merged.
 - Matrix disposition: P1 stays 1, P2 `6 → 5`, P3 stays 1, total active `8 → 7`.
 - Detailed evidence: `../reverify/REVERIFY_81b98ca_2026-09-10_rating-method-closure.md`.
+
+## 2026-09-11 — GitHub Pages legacy-route hosting contract closed
+
+- Scope: `TLP-ROUTE-REDIRECT-001`, Product #490 / PR #491.
+- Result:
+  - closed-by-single-route-authority: all five legacy aliases derive from `src/routes/route-contract.json`;
+  - closed-by-build-materialization: production build emits explicit alias HTML documents into `dist` rather than depending on hydrated SPA navigation;
+  - closed-by-indexing-contract: alias documents are `noindex,follow` with canonical target and are excluded from the canonical sitemap;
+  - closed-by-navigation-contract: each alias carries immediate meta refresh, `location.replace`, and a readable fallback link to the same target;
+  - closed-by-static-host-proof: the route audit runs against a Pages-like static server and proves the source URL's initial HTTP body is the materialized alias document;
+  - closed-by-final-browser-proof: browser navigation settles on the declared canonical target for every alias;
+  - closed-by-404-contract: unknown routes keep a dedicated truthful HTTP 404 / noindex document;
+  - closed-by-host-authority-cleanup: inert `public/_redirects` and `vercel.json` files were removed because production deploy authority is GitHub Pages;
+  - diagnostic red preserved: the first route-audit attempt proved Vite preview was an invalid proxy for Pages directory-index behavior; the final audit moved to an explicit Pages-like static host rather than weakening the initial-response assertion;
+  - narrowed only: `TLP-AUDIT-004` loses the redirect/hosting proxy gap and remains active for independent residuals;
+  - preserved boundary: A11Y runtime, discovery, analytics consent, live community-production and analytics-route roots remain independent.
+- Product evidence: base `81b98ca045649b9f73de33c1cd850b7af932fc42`, exact certified head `bdb72afc38baaa773657b101963d6865ef9399f5`, CAS squash/resulting `main` `b216e100d51eef951fb7ef170c4e2689d89064bc`.
+- Merge integrity: tested and resulting trees are both `210b2311614c23b59a3c256bb11cc793385579f5`.
+- Exact-head final proof: CI #3978, Project Contracts #1089, Site Route #1984, Brand Deep #2001, Hall web runtime #25, Manual Browser QA #3037 and Ready-state Merge Certification #125 all completed success. Pages #2348 was expectedly skipped.
+- Issue outcome: Product #490 closed as `completed` when PR #491 merged.
+- Matrix disposition: P1 stays 1, P2 `5 → 4`, P3 stays 1, total active `7 → 6`.
+- Detailed evidence: `../reverify/REVERIFY_b216e10_2026-09-11_route-redirect-closure.md`.
