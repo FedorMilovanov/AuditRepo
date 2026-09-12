@@ -262,3 +262,24 @@ This entry records the governance change only. It does not claim that the reform
 - MASTER consequence: **no active arithmetic change**. These were audit/evidence defects discovered and repaired before admission as current Product rows. Current MASTER remains the authority for the three independent active owners already present there; this closure wave does not infer closure of security ownership, main-admission owner decision, or Search control-plane work.
 - Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-12_audit-harness-authority-portability-closure-65b56da4.md`.
 
+## 2026-09-12-b — explicit series-fragment authority closure (#2020 + #2021)
+
+- Scope: follow-up closure wave for a real reader-navigation defect exposed by a new strict artifact witness, plus the audit-harness mode defect that previously made the rendered-fragment check depend on incidental local `dist/` state.
+- System theme: `ST-AUDIT-HARNESS`.
+- Product reconciliation anchor: current Product `main` `81b3cb63013da25cdaa096730b17fbca61023da8`.
+- Result:
+  - closed-by-product-fix: **Baptist series TOC fragment-target drift** — Product #2020 (`fix(baptists): align series TOC fragment targets`), exact certified head `33d81dda61cc598973573a24903ee0cd2aacd351`, merge `7bf6da9fcf9a1be4eae44df8336379fb8f97cbdb`. Canonical `baptistFlatSeriesConfig.ts` had 11 unique TOC targets across `/baptisty-rossii/noch-na-kure/` and `/baptisty-rossii/dva-sezda-1884/` that no longer matched current reader headings. The repair updates the canonical TOC/mobile-section authority to the actual current heading IDs instead of adding duplicate alias anchors.
+  - closed-by-system-fix: **series façade source-vs-dist implicit mode switch** — Product #2021 (`fix(audit): separate series source and dist fragment checks`), exact certified head `f2795d0597f7fe8617c52907569a5779b1a14f03`, merge `81b3cb63013da25cdaa096730b17fbca61023da8`. `series:facade:guard` formerly ran rendered-fragment assertions only when a local `dist/` happened to exist, so clean Shared Files CI silently skipped the artifact proof while stale local artifacts could turn the same source guard red. Default mode is now deterministically source-only; rendered-fragment validation is explicit/fail-closed through `--require-dist`, and the post-build visual parity contract owns that strict witness.
+- Exact-head Product witnesses:
+  - #2020 head `33d81dda61cc598973573a24903ee0cd2aacd351`: Runtime Interactive `34710370175`, Deploy Candidate `34710370247`, Metadata/IndexNow `34710370256`, Shared Files `34710370271`, Metadata SSOT `34710370159`, Native Source `34710370165`, Source Authority `34710370234`, Visual Parity pixel-diff `34710370238`, Route Registry `34710370214` and the remaining triggered contracts — all SUCCESS.
+  - #2021 head `f2795d0597f7fe8617c52907569a5779b1a14f03`: Metadata/IndexNow `34716941209`, Shared Files `34716941193`, Metadata SSOT `34716941202`, Source Authority `34716941224`, Visual Parity pixel-diff `34716941218`, Deploy Candidate `34716941195` — all SUCCESS.
+- Independent/adversarial witnesses:
+  - before #2020, fresh production-like artifact audit reported 11 unique broken same-page targets on two Baptist routes;
+  - after #2020, source mapping is 12/12 and the full rendered fragment audit reports 64 series pages / 1,673 fragment links / 1,015 unique targets / 0 broken;
+  - before #2021, the same façade guard PASSes when `dist` is absent but FAILs against a temporary stale rendered fixture; direct strict fragment audit of that fixture also FAILs;
+  - after #2021, source-only mode PASSes independently of local artifact state, missing strict artifact FAILs closed, broken strict fixture FAILs, repaired fixture PASSes;
+  - on a fresh canonical checkout after #2020, the full post-build Visual Parity Contract executes `series reader façade/fragments: strict dist audit passed` with 64 pages / 1,015 unique targets and then PASSes globally.
+- Worktree portability note: a separate Genesis6 image false-red observed during combined verification was not a Product asset loss. Windows additional worktrees materialize the tracked mode-120000 `images/articles/genesis6` symlink as a plain file, while the canonical assets remain under `public/images/articles/genesis6/`. Product PR #2010 already owns a `public/`-first static-asset resolver; an independent Windows worktree witness on its exact head `5649ef1664cf863c16382ff6d82b13f9d5a621e0` shows `WT_ROOT_CHILD=False`, `WT_PUBLIC_CHILD=True`, and `articles-visual-parity-audit.js` EXIT=0 for all six Genesis6 images. No competing Product lane was created.
+- MASTER consequence: **no active arithmetic change**. Both roots were discovered and repaired before admission as independent current MASTER rows. Existing active owners remain governed by the current MASTER.
+- Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-12_series-fragment-authority-closure-81b3cb63.md`.
+
