@@ -314,3 +314,16 @@ This entry records the governance change only. It does not claim that the reform
 - MASTER consequence: remove `SYS-MAIN-ADMISSION-ENFORCEMENT`; active arithmetic becomes **2 owner decisions / 2 total active work units**.
 - Remaining active owners: `FRAGMENTED-SECURITY-OWNERSHIP`, `GBS-SEARCH-CONTROL-PLANE-001`.
 - Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_product-main-admission-closure.md`.
+
+## 2026-09-13-b — Security transport owner accepted-platform closure
+
+- Scope: retire `FRAGMENTED-SECURITY-OWNERSHIP` after the already-merged release architecture selected direct GitHub Pages and removed Cloudflare from the HTTP/release control plane.
+- Architecture authority: Product #1945 merged the direct Pages + DNS-only topology; the earlier Cloudflare Transform Rules implementation was closed unmerged rather than retained as a hidden transport dependency.
+- Fresh live witness: `/` = 200, `/articles/` = 200, deliberate nonexistent route = 404; all are served by `GitHub.com` / Varnish with HSTS present and `X-Content-Type-Options` absent.
+- DNS witness: apex resolves directly to the four GitHub Pages A records; `www` CNAMEs to `fedormilovanov.github.io`.
+- Product tracking issue #1928 received final disposition comment `5649346125` and was closed `not_planned`.
+- Disposition: **accepted-risk / accepted platform limitation**, not a claim that `nosniff` is implemented.
+- Fake HTML transport pragmas remain invalid and are being retired separately under Product #1937.
+- MASTER consequence: remove `FRAGMENTED-SECURITY-OWNERSHIP`; active arithmetic becomes **1 owner decision / 1 total active work unit**.
+- Remaining active owner: `GBS-SEARCH-CONTROL-PLANE-001` only.
+- Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_security-accepted-platform-limitation.md`.
