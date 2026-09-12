@@ -1,0 +1,25 @@
+project_id: milovi-cake
+display_name: Milovi Cake
+source_repo: FedorMilovanov/Milovi_Cake
+default_branch: main
+production_url: https://milovicake.ru
+audit_repo_project_path: projects/milovi-cake
+
+rules:
+  raw_reports_path: incoming/<agent>/<date>/
+  working_path: working/
+  verification_path: verification/
+  verified_path: verified/
+  repairs_path: repairs/
+  reverify_path: reverify/
+  work_queue_path: WORK_QUEUE.md
+  system_themes_path: verified/SYSTEM_THEMES.md
+  closure_ledger_path: verified/CLOSURE_LEDGER.md
+  active_matrix_path: verified/MASTER_BUG_MATRIX.md
+  legacy_path: legacy/
+
+verification:
+  witness_model: proportional-independent-angles
+  proof_states: [PASS, FAIL, UNPROVEN, N/A]
+  witness_types: [W1-surface, W2-source, W3-artifact, W4-browser-runtime, W5-lifecycle-root-cause, W6-history]
+  required_admission_fields: [signal-class, exact-anchor, proof-state, claim-boundary, preservation-boundary, semantic-owner]
