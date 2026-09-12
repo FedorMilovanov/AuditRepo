@@ -470,7 +470,7 @@ def _occurrence_map(
     details_map: dict[str, list[dict[str, object]]] = collections.defaultdict(list)
     for path, text in documents.items():
         details = structured_id_occurrences(text, known_ids, canonical_families)
-        relative = str(path.relative_to(project))
+        relative = path.relative_to(project).as_posix()
         for finding_id, occurrence in details.items():
             occurrences[finding_id].append(relative)
             details_map[finding_id].append({"file": relative, **occurrence})
