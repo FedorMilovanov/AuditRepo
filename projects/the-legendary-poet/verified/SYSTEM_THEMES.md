@@ -76,6 +76,25 @@ A theme marked `absorbed/closed` closes the **mechanism it names**, not every la
 - Detailed evidence: `../reverify/REVERIFY_71c3ddf_2026-09-12_a11y-runtime-closure.md`.
 - Reverify trigger: focus runtime, hidden navigation behavior, overlay stack/background isolation, archive mutation focus, hash/citation ownership, transparent seek controls or global mini-player motion/layout ownership change.
 
+## ST-TLP-ANALYTICS-CONSENT-AUTHORITY — One revocable browser-wide consent lifecycle
+
+- Status: `absorbed/closed` by Product #504.
+- Historical manifestations: tab-local consent cache did not converge across tabs; later denial did not actively stop initialized analytics providers; the consent banner disappeared after a choice and PrivacyPage had no normal reopenable editor.
+- Common mechanism: persistence, UI state, provider lifecycle and route emission had no single revocable browser-wide consent authority.
+- System outcome:
+  - same-tab application events and cross-tab `storage` events converge one explicit state;
+  - blocked localStorage remains fail-closed without alternate persistence;
+  - PrivacyPage owns persistent allow/disable controls and truthful current-state copy;
+  - Google denial combines Consent Mode `analytics_storage=denied` with the `ga-disable-MEASUREMENT_ID` hard collection switch;
+  - Yandex denial combines `disableYaCounter<ID>` with SPA `destruct`;
+  - re-grant reuses provider script ownership, avoids duplicate Google config and emits one settled current-route page view;
+  - browser QA certifies two-tab grant → deny → denied navigation → SPA re-grant in Chromium and iPhone WebKit.
+- Source anchor: Product #504 exact tested head `20823ba47c6cf0955809cf5adea57c9e5be653c2`, squash/resulting main `3963f2f2da7d6f4ff73d4efd8c23ccf5eca05293`, tested=resulting tree `5831a18e74f2dc6cfe6e9b236e7ddff6e6097cf0`.
+- Regression witness: fail-closed browser-runtime validator plus dedicated analytics QA and resulting-main Manual Browser QA.
+- Current residual: `TLP-ANALYTICS-PROPERTY-001` is external GA4 property/web-stream ownership only; it is not reopened by consent lifecycle changes.
+- Detailed evidence: `../reverify/REVERIFY_3963f2f_2026-09-12_analytics-consent-closure.md`.
+- Reverify trigger: consent storage/event topology, PrivacyPage controls, provider boot/revoke lifecycle or route tracker consent coupling changes.
+
 ## ST-TLP-ROUTE-AUTHORITY — Single machine route/runtime truth
 
 - Status: `absorbed/closed` by W7.
