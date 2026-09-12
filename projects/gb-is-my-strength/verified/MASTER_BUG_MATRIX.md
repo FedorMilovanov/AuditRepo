@@ -2,21 +2,21 @@
 
 > SSOT for current verified necessary work only. This is not a history table or a mirror of every source-repository signal.
 >
-> The causal system synthesis remains grounded in merged AuditRepo evidence package #344 (`45b985737f192f709d7e1ee7324250d0e0986ca1`) at Product anchor `94b8eaad0951c6b43cf1e55fc6c54b9114329f61` (2026-08-20). Subsequent rows are removed from active arithmetic only through bounded current-head reverify / Product repair evidence. On 2026-09-08, `ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT` was closed by Product #1851 / merge `3c2def019b88069d9e48ba866a3c4287b8e8add3`. Later the same day, `METADATA-SSOT-PROLIFERATION` was closed by the complete producer + reversible-review + projection + record-reconciliation chain ending in Product #1916 / merge `c65b83a6588187c71b6e39c720d2b6666b4959c2`. The only remaining Product system verification lane is `FRAGMENTED-SECURITY-OWNERSHIP`. `SYS-MAIN-ADMISSION-ENFORCEMENT` is separately re-admitted as a governance owner decision after current-head verification showed Product `main` remains unprotected and the historical decision had been omitted by the #345 wholesale consolidation without a disposition.
+> The causal system synthesis remains grounded in merged AuditRepo evidence package #344 (`45b985737f192f709d7e1ee7324250d0e0986ca1`) at Product anchor `94b8eaad0951c6b43cf1e55fc6c54b9114329f61` (2026-08-20). Subsequent rows are removed from active arithmetic only through bounded current-head reverify / Product repair evidence. On 2026-09-08, `ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT` was closed by Product #1851 / merge `3c2def019b88069d9e48ba866a3c4287b8e8add3`. Later the same day, `METADATA-SSOT-PROLIFERATION` was closed by the complete producer + reversible-review + projection + record-reconciliation chain ending in Product #1916 / merge `c65b83a6588187c71b6e39c720d2b6666b4959c2`. The only remaining Product system verification lane is `FRAGMENTED-SECURITY-OWNERSHIP`. `SYS-MAIN-ADMISSION-ENFORCEMENT` is separately re-admitted as a governance owner decision after current-head verification showed Product `main` remains unprotected and the historical decision had been omitted by the #345 wholesale consolidation without a disposition. A 2026-09-12 external search-control-plane verification adds `GBS-SEARCH-CONTROL-PLANE-001`: production URL-prefix Search Console is readable, but explicit sitemap submission/discovery is incomplete and the existing domain property is not portable under the current Google authorization because DNS ownership is absent.
 
 ## Current state
 
 | Field | Value |
 |---|---|
-| Active work units | **2** |
+| Active work units | **3** |
 | Direct current defects | **0** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
 | System verification lanes | **1** |
-| Owner decisions | **1** |
+| Owner decisions | **2** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Arithmetic: 0 direct current defects + 0 improvements + 0 residuals + 1 system verification lane + 1 owner decision = **2 independent current owners**. Historical manifestations such as CSP variants/gaps and `nosniff` meta misuse remain closure witnesses under Security; native `main` admission enforcement remains a separate governance decision, not a Product code defect.
+> Arithmetic: 0 direct current defects + 0 improvements + 0 residuals + 1 system verification lane + 2 owner decisions = **3 independent current owners**. Historical manifestations such as CSP variants/gaps and `nosniff` meta misuse remain closure witnesses under Security; native `main` admission enforcement and external Search Console ownership/submission remain separate governance/control-plane decisions, not Product code defects.
 
 ## CURRENT DEFECTS — 0
 
@@ -39,11 +39,13 @@
 |---|---|---|
 | `FRAGMENTED-SECURITY-OWNERSHIP` | Security policy ownership is split across page-head CSP/meta/postbuild and transport response headers. Repository-side evidence already proves the document-policy direction; the live origin still requires a real transport owner for `X-Content-Type-Options: nosniff`. HTML meta cannot satisfy this boundary. | **Absorbs `SECURITY-CSP-INCONSISTENCY`, `SECURITY-CSP-GAPS`, and `SECURITY-NOSNIFF-OWNER-LAYER-MISMATCH`.** Define/retain authoritative document-policy and transport-header owners; prove source → production-like artifact → live response parity. Closure requires a measured live `X-Content-Type-Options: nosniff` response header, exact-head Security contract success, current-main synchronization, zero review debt and CAS merge. Product transport-owner tracking issue: `gb-is-my-strength#1928`. |
 
-## OWNER DECISIONS — 1
+## OWNER DECISIONS — 2
 
 | ID | Missing decision | Closure boundary |
 |---|---|---|
 | `SYS-MAIN-ADMISSION-ENFORCEMENT` | Product `main@f17376bd807cf77ae8c5e62c1d2519c040dae711` is currently `protected=false`, branch-protection enforcement is off and repository rulesets are `[]`. Historical AuditRepo #307/#309/#310/#312 preserved this as a governance owner decision; #345 later set owner decisions to zero without an explicit disposition. AuditRepo `main` is now protected, so the current unresolved scope is Product only. | Prefer native GitHub protection/ruleset for `main` requiring deliberately chosen **always-created** PR admission checks with an intentional emergency/admin bypass policy, then re-read the live settings and prove enforcement. Alternatively the repository owner may explicitly document acceptance of unprotected-main/post-push-red risk. Repository workflows alone do not satisfy this server-side admission boundary. Product tracking issue: `gb-is-my-strength#1927`. Detailed receipt: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-08_product-main-admission-enforcement-owner-decision.md`. |
+
+| `GBS-SEARCH-CONTROL-PLANE-001` | At the 2026-09-12 boundary the readable URL-prefix property `https://gospod-bog.ru/` had no explicitly submitted sitemaps in Search Console while the live site correctly advertised both production sitemaps and self-managed IndexNow was healthy. Full inspection of the 92-URL primary sitemap yielded 36 indexed, 51 unknown and 5 crawled-not-indexed. The separate `sc-domain:gospod-bog.ru` property returned 403 under the connected Google account, and DNS had no Google ownership TXT. Product tracking issue: `gb-is-my-strength#1996`. | Submit the production sitemap(s) in the working URL-prefix property and verify Google fetch/processing. Separately either verify `sc-domain:gospod-bog.ru` with the exact Google DNS TXT at the Cloudflare apex or explicitly retire/ignore that inaccessible property. Re-run URL Inspection after recrawl before attributing the 51 unknown URLs to page-content defects. Detailed receipt: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-12_search-control-plane.md`. |
 
 ## Retired / absorbed by the 2026-08-20 consolidation
 

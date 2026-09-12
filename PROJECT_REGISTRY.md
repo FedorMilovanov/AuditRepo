@@ -10,6 +10,9 @@ Registry хранит только стабильную ориентацию. Т
 |---|---|---|---|
 | `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | [`DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md) |
 | `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | [`DOC_MAP.md`](projects/the-legendary-poet/DOC_MAP.md) |
+| `projects/milovi-cake/` | `FedorMilovanov/Milovi_Cake` | **active** | [`DOC_MAP.md`](projects/milovi-cake/DOC_MAP.md) |
+| `projects/milovi-school/` | `FedorMilovanov/Milovi_School` | **active** | [`DOC_MAP.md`](projects/milovi-school/DOC_MAP.md) |
+| `projects/bible-bot/` | `FedorMilovanov/bible-bot` | **active** | [`DOC_MAP.md`](projects/bible-bot/DOC_MAP.md) |
 | `projects/code-audit/` | `3stoneBrother/code-audit` | `intake-only` | [`README.md`](projects/code-audit/README.md) |
 
 ## Status glossary
