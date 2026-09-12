@@ -283,3 +283,20 @@ This entry records the governance change only. It does not claim that the reform
 - MASTER consequence: **no active arithmetic change**. Both roots were discovered and repaired before admission as independent current MASTER rows. Existing active owners remain governed by the current MASTER.
 - Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-12_series-fragment-authority-closure-81b3cb63.md`.
 
+## 2026-09-12-c — Windows worktree static-asset authority closure (#2010)
+
+- Scope: final follow-up for the Windows additional-worktree false-red observed while verifying Articles catalog media. This was not a Product asset-loss defect: Git tracks `images/articles/genesis6` as mode `120000`, while the canonical assets live under `public/images/articles/genesis6/`.
+- Product repair owner: #2010 (`feat(teen): ship route-specific visual media`) also introduced the shared `scripts/lib/static-public-asset.js` resolver and migrated `articles-visual-parity-audit.js` to repository static-asset authority.
+- Exact certified Product head: `b450cfcbe2be51de5275847f17f21eb1991c6b5d`.
+- Product merge: `06f3e2a985710abe06dcbde76b48231121cc0990`; current Product `main` `81b3cb63013da25cdaa096730b17fbca61023da8` contains that merge.
+- Windows worktree witness on the exact head:
+  - `images/articles/genesis6` materialized as a plain file rather than a usable symlink;
+  - `WT_ROOT_CHILD=False`;
+  - `WT_PUBLIC_CHILD=True`;
+  - the new resolver chose canonical `public/images/articles/genesis6/...` paths;
+  - `articles-visual-parity-audit.js` EXIT=0 and resolved all six Genesis6 catalog images.
+- Exact-head CI: Shared Files `34717515107`, Native Source `34717515083`, Runtime Interactive `34717515087`, Source Authority `34717515111`, Visual Parity pixel-diff `34717515081`, Deploy Candidate `34717515106`, Teen Series Release `34717515104`, plus all other triggered contracts — SUCCESS.
+- Disposition: **FIXED-CURRENT / closed-by-existing-owner-repair**. No competing Product lane was created.
+- MASTER consequence: **no active arithmetic change**. This was an audit/environment portability defect discovered and closed before admission as an independent current Product row.
+- Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-12_static-asset-worktree-portability-closure-06f3e2a9.md`.
+
