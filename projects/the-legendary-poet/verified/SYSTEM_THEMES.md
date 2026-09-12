@@ -59,6 +59,23 @@ A theme marked `absorbed/closed` closes the **mechanism it names**, not every la
 - System outcome: Chromium, Android, desktop WebKit and fresh-process iPhone evidence; structured archive outcomes; observable readiness; preserved visible state on rejected writes.
 - Reverify trigger: archive storage version, focus/runtime shell or longform interaction change.
 
+## ST-TLP-ACCESSIBILITY-RUNTIME — One focus, hidden-chrome and overlay authority
+
+- Status: `absorbed/closed` by Product #502.
+- Historical manifestations: visually hidden chrome remained keyboard/AT reachable; transparent audio seeks had no reliable visible focus owner; citation/hash restoration scrolled without focus transfer; archive mutation could delete the focused control; nested overlays lacked topmost `inert`/`aria-hidden` environment ownership.
+- Common mechanism: accessibility state and focus ownership were distributed across visual CSS, route scrolling, collection mutation and overlay code without one runtime authority.
+- System outcome:
+  - one reusable programmatic-focus helper owns non-native destinations;
+  - reading-mode chrome snapshots/restores exact accessibility state;
+  - citation/hash and archive mutation handoffs are deterministic;
+  - both seek sliders expose painted focus;
+  - overlayRuntime isolates only the topmost environment and restores exact nested state;
+  - mobile browser proof also guards the discovered mini-player Framer Motion/CSS transform ownership conflict and viewport containment.
+- Source anchor: Product #502 exact tested head `094bbbe1afdee4c773d6ac326d7167d4686ac926`, squash/resulting main `71c3ddf76e0be2fe98e94be9dc09beabe3ade58a`, tested=resulting tree `8774076863a259ef555cc84d1487a1e7a8354627`.
+- Regression witness: fail-closed interaction runtime validator plus Chromium/Android and fresh-process iPhone Safari outcomes.
+- Detailed evidence: `../reverify/REVERIFY_71c3ddf_2026-09-12_a11y-runtime-closure.md`.
+- Reverify trigger: focus runtime, hidden navigation behavior, overlay stack/background isolation, archive mutation focus, hash/citation ownership, transparent seek controls or global mini-player motion/layout ownership change.
+
 ## ST-TLP-ROUTE-AUTHORITY — Single machine route/runtime truth
 
 - Status: `absorbed/closed` by W7.
