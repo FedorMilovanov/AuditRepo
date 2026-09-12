@@ -509,3 +509,23 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Issue outcome: Product #490 closed as `completed` when PR #491 merged.
 - Matrix disposition: P1 stays 1, P2 `5 → 4`, P3 stays 1, total active `7 → 6`.
 - Detailed evidence: `../reverify/REVERIFY_b216e10_2026-09-11_route-redirect-closure.md`.
+
+
+## 2026-09-12 — semantic route analytics lifecycle closed
+
+- Scope: `TLP-ANALYTICS-ROUTE-001`, Product PR #501.
+- Result:
+  - closed-by-route-authority: page-view identity no longer includes same-route query/filter mutations;
+  - closed-by-settlement-authority: analytics emission is bound to the lazy route-settlement boundary rather than a sibling effect plus zero-delay timer;
+  - closed-by-metadata-ordering: emitted page titles are read only after the routed page has settled its semantic metadata;
+  - closed-by-deduplication: repeated settlement for the same semantic navigation token cannot emit duplicate page views;
+  - closed-by-provider-outcome: production-build Chromium QA with a QA-only GA Measurement ID inspects real `dataLayer` page-view events, not a mocked tracker call;
+  - closed-by-query-negative-proof: `/ratings?q=...` and same-route sort/filter changes add zero page views;
+  - closed-by-navigation-positive-proof: `/ratings` → `/about?from=...` adds exactly one page view with `page_path=/about`, no query-bearing path authority and settled `document.title`;
+  - preserved boundary: `TLP-ANALYTICS-PROPERTY-001` still owns external GA4 property/web-stream authority; `TLP-ANALYTICS-CONSENT-001` still owns cross-tab/revoke/reopenable consent semantics; Discovery, A11Y runtime, audit-harness and live community-production roots remain independent.
+- Product evidence: base `aa665c011dade44ebdfd7af5d3eaae30d3315aef`, exact certified head `7907c184b28e2b8168596e8aec10a0967277551d`, CAS squash/resulting `main` `8da2447bb5b46f10c92aef2f51e593157e8e096c`.
+- Merge integrity: tested and resulting trees are both `9df5ad59413acdc1fccf937b06c96d9d093d4c8f`.
+- Exact-head final proof: CI `34700183757`, Project Contracts `34700183776`, Content Model `34700183772`, Site Route `34700183761`, Brand Deep `34700183764`, Brand Raster `34700183793`, Articles Catalog `34700183753`, Merge Certification `34700183763` and Manual Browser QA `34700183750` all completed success; dedicated `analytics-route-qa` completed success.
+- Resulting-main proof: CI `34701246818`, Project Contracts `34701246819`, Articles Catalog `34701246820`, Manual Browser QA `34701246821`, Site Route `34701246822`, Brand Raster `34701246823`, Content Model `34701246825`, Brand Deep `34701246829`, GitHub Pages `34701246830` and IndexNow `34701395444` all completed success.
+- Matrix disposition: P1 stays 1, P2 stays 5, P3 `1 → 0`, total active `7 → 6`.
+- Detailed evidence: `../reverify/REVERIFY_8da2447_2026-09-12_analytics-route-closure.md`.
