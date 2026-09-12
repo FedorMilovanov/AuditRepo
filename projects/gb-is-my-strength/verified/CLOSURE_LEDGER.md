@@ -300,3 +300,17 @@ This entry records the governance change only. It does not claim that the reform
 - MASTER consequence: **no active arithmetic change**. This was an audit/environment portability defect discovered and closed before admission as an independent current Product row.
 - Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-12_static-asset-worktree-portability-closure-06f3e2a9.md`.
 
+
+## 2026-09-13-a — Product main native admission enforcement closure
+
+- Scope: close governance owner decision `SYS-MAIN-ADMISSION-ENFORCEMENT` at its actual server-side owner; no Product source-code mutation.
+- Product live anchor during readback: `main@37e89af29ae0b8aaa7a18c82778b504d646e40b4`.
+- Pre-mutation witness: GitHub branch-protection endpoint returned `404 Branch not protected`.
+- Required-check selection was re-verified on current Product PR #2022 exact head `04ea598cd777bf66a18574b0dc97b6ed1fecb5c3`: `guard` SUCCESS and `Validate source metadata without building dist` SUCCESS.
+- Native Product `main` protection was then enabled through the repository owner's authenticated GitHub administration surface.
+- Live readback after mutation: `protected=true`, protection `enabled=true`, strict required checks exactly `guard` + `Validate source metadata without building dist`, enforcement level `everyone`, PR admission enabled with 0 required approvals, conversation resolution enabled, force pushes disabled, deletion disabled.
+- Product issue #1927 received closure comment `5649141006` and was closed as completed.
+- Disposition: **closed-by-native-control-plane-fix**. Workflow/CAS discipline remains defense in depth; it is no longer a substitute for missing server admission enforcement.
+- MASTER consequence: remove `SYS-MAIN-ADMISSION-ENFORCEMENT`; active arithmetic becomes **2 owner decisions / 2 total active work units**.
+- Remaining active owners: `FRAGMENTED-SECURITY-OWNERSHIP`, `GBS-SEARCH-CONTROL-PLANE-001`.
+- Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_product-main-admission-closure.md`.
