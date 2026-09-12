@@ -529,3 +529,23 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Resulting-main proof: CI `34701246818`, Project Contracts `34701246819`, Articles Catalog `34701246820`, Manual Browser QA `34701246821`, Site Route `34701246822`, Brand Raster `34701246823`, Content Model `34701246825`, Brand Deep `34701246829`, GitHub Pages `34701246830` and IndexNow `34701395444` all completed success.
 - Matrix disposition: P1 stays 1, P2 stays 5, P3 `1 → 0`, total active `7 → 6`.
 - Detailed evidence: `../reverify/REVERIFY_8da2447_2026-09-12_analytics-route-closure.md`.
+
+
+## 2026-09-12 — systemic accessibility runtime closed
+
+- Scope: `TLP-A11Y-RUNTIME-001`, Product PR #502.
+- Result:
+  - closed-by-focus-authority: route/hash and mutation focus handoffs use one reusable programmatic focus helper;
+  - closed-by-hidden-chrome-authority: reading-mode chrome snapshots/restores exact `inert` + `aria-hidden` state and cannot retain focus while visually hidden;
+  - closed-by-citation-outcome: longform citation/hash destinations receive deterministic settled focus;
+  - closed-by-mutation-outcome: archive removal hands focus next → previous → stable status fallback;
+  - closed-by-seek-focus: mini-player and immersive transparent range controls have visible painted focus ownership;
+  - closed-by-overlay-stack: the topmost dialog isolates covered branches and nested close transitions restore exact previous accessibility state;
+  - closed-by-mobile-layout-root: browser QA exposed Framer Motion/CSS transform ownership conflict clipping the global mini-player; centering now uses left/right + max-width + margin-inline and permanent viewport/source guards;
+  - preserved boundary: Discovery, Audit harness, Analytics Consent, external GA4 property and live community-production roots remain independent.
+- Product evidence: base `8da2447bb5b46f10c92aef2f51e593157e8e096c`, exact certified head `094bbbe1afdee4c773d6ac326d7167d4686ac926`, CAS squash/resulting `main` `71c3ddf76e0be2fe98e94be9dc09beabe3ade58a`.
+- Merge integrity: tested and resulting trees are both `8774076863a259ef555cc84d1487a1e7a8354627`.
+- Exact-head proof: Project Contracts, CI/source verification, Site Route Integrity, Brand Deep, Merge Certification and Manual Browser QA `34710036455` all completed success; the manual browser contour includes full Chromium/Android and fresh-process iPhone Safari.
+- Resulting-main proof: Project Contracts `34711011413`, Brand Deep `34711011412`, Brand Raster `34711011424`, CI `34711011432`, Site Route `34711011425`, Manual Browser QA `34711011449`, GitHub Pages `34711011477` and IndexNow `34711094239` all completed success.
+- Matrix disposition: P1 stays 1, P2 `5 → 4`, P3 stays 0, total active `6 → 5`.
+- Detailed evidence: `../reverify/REVERIFY_71c3ddf_2026-09-12_a11y-runtime-closure.md`.
