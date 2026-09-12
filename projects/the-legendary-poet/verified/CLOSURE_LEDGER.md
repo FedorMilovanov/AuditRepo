@@ -549,3 +549,25 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Resulting-main proof: Project Contracts `34711011413`, Brand Deep `34711011412`, Brand Raster `34711011424`, CI `34711011432`, Site Route `34711011425`, Manual Browser QA `34711011449`, GitHub Pages `34711011477` and IndexNow `34711094239` all completed success.
 - Matrix disposition: P1 stays 1, P2 `5 → 4`, P3 stays 0, total active `6 → 5`.
 - Detailed evidence: `../reverify/REVERIFY_71c3ddf_2026-09-12_a11y-runtime-closure.md`.
+
+
+## 2026-09-12 — analytics consent lifecycle authority closed
+
+- Scope: `TLP-ANALYTICS-CONSENT-001`, Product PR #504.
+- Result:
+  - closed-by-browser-authority: same-tab consent events and browser `storage` events converge one explicit consent state across open tabs;
+  - closed-by-reader-control: `/privacy` exposes persistent, reopenable allow/disable controls with a live current-state indicator;
+  - closed-by-Google-revoke: denial updates Consent Mode `analytics_storage=denied` and activates `ga-disable-MEASUREMENT_ID`;
+  - closed-by-Yandex-revoke: denial activates `disableYaCounter<ID>` and calls `ym(id, 'destruct')` for an initialized SPA counter;
+  - closed-by-regrant: the same SPA runtime re-enables collection without duplicate provider script nodes or duplicate Google config and emits exactly one current settled-route page view;
+  - closed-by-denied-navigation: semantic navigation while denied emits zero analytics page views;
+  - closed-by-blocked-storage: explicit current-tab consent remains authoritative without cookie/sessionStorage bypass when localStorage is unavailable;
+  - preserved boundary: production Measurement ID/property ownership remains independent as `TLP-ANALYTICS-PROPERTY-001`; Discovery, Audit harness and live community-production roots remain independent.
+- Product evidence: base `71c3ddf76e0be2fe98e94be9dc09beabe3ade58a`, exact certified head `20823ba47c6cf0955809cf5adea57c9e5be653c2`, CAS squash/resulting `main` `3963f2f2da7d6f4ff73d4efd8c23ccf5eca05293`.
+- Merge integrity: tested and resulting trees are both `5831a18e74f2dc6cfe6e9b236e7ddff6e6097cf0`.
+- Exact-head proof: Project Contracts `34712563400`, CI `34712563423`, Site Route `34712563395`, Brand Deep `34712563426`, Brand Raster `34712563396`, Hall runtime `34712563444`, Merge Certification `34712563474`, Yesenin acceptance `34712563417`, Articles acceptance `34712563398` and Manual Browser QA `34712563408` all completed success.
+- Browser lifecycle proof: the dedicated QA-only analytics production build uses fake provider IDs and passes both Chromium and iPhone WebKit with two real tabs across unset → grant → cross-tab deny → denied navigation → SPA re-grant, while preserving the semantic route page-view contract.
+- Resulting-main proof: Project Contracts `34716291754`, CI `34716291509`, Site Route `34716291510`, Brand Deep `34716291462`, Brand Raster `34716291552`, Hall runtime `34716291787`, Articles acceptance `34716291545`, Manual Browser QA `34716291608`, GitHub Pages `34716291547` and IndexNow `34716368955` all completed success.
+- External-property reverify: GSC Wizard and Windsor still expose only GA4 properties `537251354` and `547331637`; an Admin/API-backed `measurement_id + stream_id + stream_name + hostname` query returns only Milovi Cake `G-94ZZ5B8YNY` / stream `14860814056` / `milovicake.ru`, while TLP property `547331637` returns no stream row. Production `G-6NT4248RKK` remains unmapped and was not guessed or rotated.
+- Matrix disposition: P1 stays 1, P2 `4 → 3`, P3 stays 0, total active `5 → 4`.
+- Detailed evidence: `../reverify/REVERIFY_3963f2f_2026-09-12_analytics-consent-closure.md`.
