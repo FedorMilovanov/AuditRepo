@@ -2,21 +2,21 @@
 
 > SSOT for current verified necessary work only. This is not a history table or a mirror of every source-repository signal.
 >
-> The causal system synthesis remains grounded in merged AuditRepo evidence package #344 (`45b985737f192f709d7e1ee7324250d0e0986ca1`) at Product anchor `94b8eaad0951c6b43cf1e55fc6c54b9114329f61` (2026-08-20). Subsequent rows are removed from active arithmetic only through bounded current-head reverify / Product repair evidence. On 2026-09-08, `ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT` was closed by Product #1851 / merge `3c2def019b88069d9e48ba866a3c4287b8e8add3`. Later the same day, `METADATA-SSOT-PROLIFERATION` was closed by the complete producer + reversible-review + projection + record-reconciliation chain ending in Product #1916 / merge `c65b83a6588187c71b6e39c720d2b6666b4959c2`. No current Product system verification lane remains. `FRAGMENTED-SECURITY-OWNERSHIP` is reclassified below as an architectural owner decision: the selected direct-GitHub-Pages topology has no repository-local response-header owner, so the remaining boundary is a hosting/control-plane choice rather than an unfinished Product repair lane. `SYS-MAIN-ADMISSION-ENFORCEMENT` was closed on 2026-09-13 after native GitHub branch protection was enabled and live-read back on Product `main`; server-side PR admission now requires the two previously verified always-created checks. A 2026-09-12 external search-control-plane verification adds `GBS-SEARCH-CONTROL-PLANE-001`: production URL-prefix Search Console is readable, but explicit sitemap submission/discovery is incomplete and the existing domain property is not portable under the current Google authorization because DNS ownership is absent.
+> The causal system synthesis remains grounded in merged AuditRepo evidence package #344 (`45b985737f192f709d7e1ee7324250d0e0986ca1`) at Product anchor `94b8eaad0951c6b43cf1e55fc6c54b9114329f61` (2026-08-20). Subsequent rows are removed from active arithmetic only through bounded current-head reverify / Product repair evidence. On 2026-09-08, `ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT` was closed by Product #1851 / merge `3c2def019b88069d9e48ba866a3c4287b8e8add3`. Later the same day, `METADATA-SSOT-PROLIFERATION` was closed by the complete producer + reversible-review + projection + record-reconciliation chain ending in Product #1916 / merge `c65b83a6588187c71b6e39c720d2b6666b4959c2`. No current Product system verification lane remains. `FRAGMENTED-SECURITY-OWNERSHIP` was retired on 2026-09-13 as accepted platform risk after merged #1945 selected direct GitHub Pages and fresh live remeasure confirmed the header remains unavailable without reintroducing an HTTP edge owner. `SYS-MAIN-ADMISSION-ENFORCEMENT` was closed on 2026-09-13 after native GitHub branch protection was enabled and live-read back on Product `main`; server-side PR admission now requires the two previously verified always-created checks. The external search-control-plane root `GBS-SEARCH-CONTROL-PLANE-001` was closed on 2026-09-13 after authoritative Google Search Console state showed the production primary sitemap submitted and downloaded with 0 errors / 0 warnings; the secondary pastor-series sitemap adds 0 unique URLs, and the inaccessible domain property is non-blocking for the canonical URL-prefix property.
 
 ## Current state
 
 | Field | Value |
 |---|---|
-| Active work units | **2** |
+| Active work units | **0** |
 | Direct current defects | **0** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
 | System verification lanes | **0** |
-| Owner decisions | **2** |
+| Owner decisions | **0** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Arithmetic: 0 direct current defects + 0 improvements + 0 residuals + 0 system verification lanes + 2 owner decisions = **2 independent current owners**. Historical manifestations such as CSP variants/gaps and `nosniff` meta misuse remain evidence under Security; the remaining active boundaries are the explicit security hosting/control-plane choice and external Search Console ownership/submission.
+> Arithmetic: 0 direct current defects + 0 improvements + 0 residuals + 0 system verification lanes + 0 owner decisions = **0 independent current work units**. Security transport is an accepted direct-GitHub-Pages platform limitation; the Search Console discovery boundary is closed by authoritative primary-sitemap submission and successful Google download.
 
 ## CURRENT DEFECTS — 0
 
@@ -38,13 +38,11 @@
 | ID | Current causal problem | Absorbs / closure boundary |
 |---|---|---|
 
-## OWNER DECISIONS — 2
+## OWNER DECISIONS — 0
 
 | ID | Missing decision | Closure boundary |
 |---|---|---|
-| `FRAGMENTED-SECURITY-OWNERSHIP` | 2026-09-13 topology reverify reclassifies this root from a system verification lane to an architectural owner decision. Product `main@9bf46679f3aab3f72d540dc9f344903bc94bf868` publishes directly to GitHub Pages; the apex resolves to GitHub Pages addresses and `www` CNAMEs to `fedormilovanov.github.io`. Live `https://gospod-bog.ru/` and `/articles/` responses are served by `GitHub.com`/Varnish and still omit `X-Content-Type-Options`, transport CSP and Referrer-Policy while HSTS is present. The earlier Cloudflare Transform-rule repair was intentionally closed unmerged when proxying was retired from the chosen release topology, leaving no repository-local response-header owner. | Owner must choose one boundary: **(a)** explicitly accept/document the direct-Pages transport-header limitation and retire this row as accepted risk, or **(b)** introduce a real response-header control plane (for example a proxy/CDN or a hosting platform with header ownership) and then open a bounded repair lane with independent live `X-Content-Type-Options: nosniff` verification. HTML meta remains non-closure. Product tracking issue: `gb-is-my-strength#1928`. Detailed receipt: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_github-pages-transport-owner-decision.md`. |
 
-| `GBS-SEARCH-CONTROL-PLANE-001` | 2026-09-13 reverify keeps this external root current. The readable URL-prefix property `https://gospod-bog.ru/` still has **0 submitted Search Console sitemaps**. Current 90-day GSC performance is **5 clicks / 232 impressions / 2.16% CTR / avg position 6.66**, settled through **2026-09-10**. The tracker remains **92 total / 36 indexed / 56 not indexed / 0 errors / 0 warnings**. `sc-domain:gospod-bog.ru` still returns 403. Bing remains connected with **0 traffic / 0 crawl rows / 0 feeds**. GSC Wizard has no sitemap submit/delete action; Windsor `searchconsole` exposes no write actions; direct browser automation reached the Google login boundary but had no saved Google credentials, so no sitemap state changed. Product tracking issue: `gb-is-my-strength#1996`. | Authenticate into Google Search Console for the working URL-prefix property and explicitly submit `https://gospod-bog.ru/sitemap.xml` and `https://gospod-bog.ru/sitemap-pastor-series.xml`, then re-read the authoritative GSC sitemap list and verify Google processing. Separately either verify `sc-domain:gospod-bog.ru` with the exact Google DNS TXT at the Cloudflare apex or explicitly retire/ignore that inaccessible property. Then re-run URL Inspection after recrawl before promoting page-specific content defects. Do not substitute GSC Wizard metadata, IndexNow or Bing for Google sitemap submission. Detailed receipt: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_search-control-plane-external-auth-blocker.md`. |
 
 ## Retired / absorbed by the 2026-08-20 consolidation
 
@@ -52,7 +50,7 @@ These IDs are intentionally absent from active arithmetic; provenance is retaine
 
 - `EDITORIAL-LABEL-INCONSISTENCY` → absorbed by now-closed `METADATA-SSOT-PROLIFERATION`.
 - `RSS-SERIES-DATE-COLLAPSE` → absorbed by now-closed `METADATA-SSOT-PROLIFERATION`.
-- `SECURITY-CSP-INCONSISTENCY` + `SECURITY-CSP-GAPS` → manifestations of active `FRAGMENTED-SECURITY-OWNERSHIP`.
+- `SECURITY-CSP-INCONSISTENCY` + `SECURITY-CSP-GAPS` → historical manifestations under retired `FRAGMENTED-SECURITY-OWNERSHIP`; the direct-Pages transport limitation is accepted by architecture, while fake HTML transport pragmas remain prohibited.
 - `SW-PWA-FRESHNESS` → superseded by closed `SW-ROOT-GENERATION-AUTHORITY`.
 - `MISSING-BUTTON-TYPE` → preventive cleanup/evidence under closed `SOURCE-SURFACE-AUDIT-FALSE-COMPLETENESS`; not an independent current defect.
 - `SITEWIDE-BTN-TYPE-AUDIT` → retired/replaced by closed `SOURCE-SURFACE-AUDIT-FALSE-COMPLETENESS`.
@@ -73,6 +71,7 @@ These IDs are intentionally absent from active arithmetic. Detailed proof lives 
 - `SW-ROOT-GENERATION-AUTHORITY` → Product #1842 / merge `d6b1906f0d263e23b45355bea0460ee00581bc38`; exact certified head `cb63ba35612c6aa97044656e1ed65e29514e4328`.
 - `ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT` → Product #1851 / merge `3c2def019b88069d9e48ba866a3c4287b8e8add3`; exact certified head `87601539e9fe942c41e6a7e58bc9e34ee0a5d6ef`; detailed receipt `../reverify/CURRENT_HEAD_REVERIFY_2026-09-08_article-legacy-capability-partial-migration-root-closure-3c2def01.md`.
 - `METADATA-SSOT-PROLIFERATION` → complete Product repair chain #1861 + #1901 + #1915 + final #1916 / merge `c65b83a6588187c71b6e39c720d2b6666b4959c2`; exact final certified head `96eebe588afcaa7bc2dbfaab486971c33ed3245e`; Metadata v3 artifact `10063678581`, digest `sha256:b0b64a0c4956b26f29a91f4a44daa21763e024923a43db0a7132069c294045e0`, proves `56 total / 56 approved / 0 blocked` and full approved HTML/Search/Sitemap/RSS projection. Detailed receipt: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-08_metadata-ssot-proliferation-closure-c65b83a6.md`.
+- `GBS-SEARCH-CONTROL-PLANE-001` → closed 2026-09-13: authoritative GSC URL-prefix property now has `https://gospod-bog.ru/sitemap.xml` submitted and downloaded by Google with 0 errors / 0 warnings and 94 submitted web URLs; the 3-URL pastor-series sitemap is fully contained in the primary sitemap and therefore redundant for discovery; `sc-domain:gospod-bog.ru` 403 is a non-blocking duplicate-property access gap. Product #1996 closed completed. Detailed receipt: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_search-control-plane-external-auth-blocker.md`.
 
 ## Negative/current boundaries preserved
 
@@ -110,9 +109,11 @@ Current independent closure/reverify receipts include:
 - `../reverify/CURRENT_HEAD_REVERIFY_2026-09-08_product-main-admission-enforcement-owner-decision.md`
 - `../reverify/CURRENT_HEAD_REVERIFY_2026-09-08_product-main-admission-required-check-candidates-f17376bd.md`
 
-`FRAGMENTED-SECURITY-OWNERSHIP` remains intentionally **not closed**, but current topology evidence reclassifies it as an owner decision rather than a Product system-repair lane. Direct GitHub Pages publication has no repository-local response-header owner in the selected topology; closure now requires either explicit accepted risk or an owner-approved transport/header control plane followed by independent live verification.
+`FRAGMENTED-SECURITY-OWNERSHIP` is closed as **accepted-risk / not-planned** under the selected direct GitHub Pages architecture. The absence of `X-Content-Type-Options: nosniff` is explicitly acknowledged rather than misreported as fixed. Detailed receipt: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_security-accepted-platform-limitation.md`.
 
 `SYS-MAIN-ADMISSION-ENFORCEMENT` is closed and intentionally absent from active arithmetic after native Product branch protection was enabled and live-verified. Detailed receipt: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_product-main-admission-closure.md`.
+
+`GBS-SEARCH-CONTROL-PLANE-001` is closed and intentionally absent from active arithmetic after the production URL-prefix GSC property received the primary sitemap and Google downloaded it successfully. The separate pastor-series sitemap is redundant for discovery because all of its URLs are already in the submitted primary sitemap; the inaccessible domain property is non-blocking. Detailed receipt: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_search-control-plane-external-auth-blocker.md`.
 
 ## Terminal disposition
 
