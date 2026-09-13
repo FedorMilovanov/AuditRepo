@@ -610,3 +610,25 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Matrix disposition: P1 stays 1, P2 `2 → 1`, P3 stays 0, total active `3 → 2`.
 - Detailed evidence: `../reverify/REVERIFY_cff9b0f_2026-09-13_discovery-closure.md`.
 
+
+
+## 2026-09-13 — discovery closure superseded by terminal Pages URL residual
+
+- Scope: integrity correction for `TLP-DISCOVERY-001` after the Product #494 closure entry above.
+- New contradictory witness: GitHub Pages serves deep documents at trailing-slash terminal URLs while the #494 canonical/OG/JSON-LD/sitemap authority still advertised no-slash router paths, creating an avoidable redirect from advertised canonical URLs.
+- Product lane: #507 `fix(discovery): align canonical URLs with terminal Pages routes`, head `9e98a6e4eed68c8438d1edd2dcbe77e7fcd82e7f`.
+- Current gate state: source/route/merge checks are green; terminal browser closure is withheld because the first Manual Browser QA run failed an inherited light-theme textarea focus-contrast assertion and a clean rerun is pending.
+- Integrity rule: the earlier #494 closure is retained as historical provenance for the state/IndexNow work but no longer represents terminal closure of the root.
+- Matrix disposition: P1 stays 1, P2 `1 -> 2`, P3 stays 0, total active `2 -> 3`.
+- Detailed evidence: `../reverify/REVERIFY_cff9b0f_2026-09-13_discovery-terminal-url-residual.md`.
+
+
+## 2026-09-13 — light-theme focus contrast residual opened
+
+- Scope: new current Product root `TLP-A11Y-FOCUS-CONTRAST-001`.
+- Witness: Product #507 Manual Browser QA measured the real keyboard-visible community textarea focus indicator at `1.626282818611112:1` in light theme vs required `>=3:1`.
+- Root cause: the current global translucent bright-cyan focus outline is insufficient against the light `#fffaf0` surface; this CSS is already present on Product `main@cff9b0f`.
+- Repair owner: Product #508, bounded to a theme-aware focus-ring token and the existing global focus rule; no test threshold reduction.
+- Closure boundary: exact-head and resulting-main browser outcomes must pass the unchanged real keyboard contrast assertion.
+- Matrix disposition: P1 stays 1, P2 `2 -> 3`, P3 stays 0, total active `3 -> 4`.
+- Detailed evidence: `../reverify/REVERIFY_cff9b0f_2026-09-13_focus-ring-contrast-residual.md`.
