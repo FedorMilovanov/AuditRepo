@@ -66,7 +66,7 @@ On `main@c7e3e3b4`:
 - Site Route Integrity `34771503628`: success;
 - GitHub Pages `34771503602`: success;
 - IndexNow `34771594535`: success;
-- resulting-main Manual Browser workflow `34771503609` has dedicated `analytics-route-qa`, WebKit HOME, premium HOME and premium iPhone jobs successful; final core browser tail is required green before this AuditRepo PR merges.
+- resulting-main Manual Browser workflow `34771503609` completed success, including `analytics-route-qa`, WebKit HOME, premium HOME, premium iPhone and the final core browser tail.
 
 Fresh post-deploy production ingestion proof used a clean browser context and the real privacy-page consent control:
 
@@ -82,7 +82,7 @@ This is live transport acceptance against the verified owning stream, not a mock
 
 ## Disposition
 
-`TLP-ANALYTICS-PROPERTY-001` is retired once the pending overall resulting-main browser tail for `34771503609` is green.
+`TLP-ANALYTICS-PROPERTY-001` is retired: resulting-main Manual Browser `34771503609` completed success, including the core browser tail.
 
 Matrix movement:
 
