@@ -42,8 +42,8 @@ A theme marked `absorbed/closed` closes the **mechanism it names**, not every la
 - Historical manifestations: global startup hydration, unstable pending baselines, detail N+1 reads, poison persisted identities/outbox rows.
 - System outcome: target/aggregate reads, bounded persistence/outbox and stable recovery contracts.
 - 2026-08-20 extension: Product #422 closed the six delivery/ordering/status/read-state/target/text roots through one typed delivery-and-settlement contract; see the ledger entry `2026-08-20 — community delivery/reader-state reconciliation closed (six roots)`.
-- Current residual: `TLP-COMM-ABUSE-001` — the trusted Worker/D1 authority boundary is merged, but production activation and live adversarial proof are an external evidence boundary; the 2026-08-19 reverify measured the shipped build with the community remote disabled, so this is a release gate, not a reachable live exposure.
-- Reverify trigger: backend topology or persisted-state format change; enabling the shared backend on production.
+- Current residual: `TLP-COMM-ABUSE-001` — Worker/D1 is now live and write-ready in production, and Product #505 merged a fail-closed human-backed live certifier. The only remaining boundary is the real two-profile Turnstile adversarial run; challenge bypass/automation is not acceptable closure evidence.
+- Reverify trigger: backend topology or persisted-state format change, or completion/failure of the human-backed production certifier.
 
 ## ST-TLP-WORKFLOW-PERFORMANCE — Shared CI primitives and measured budgets
 
@@ -104,8 +104,8 @@ A theme marked `absorbed/closed` closes the **mechanism it names**, not every la
 - Representative anchor: source PR #331, tested head `19fd978fcaf7513be93e7222c0caa9f0a5332bda`, squash merge `5cc5ba89ab95d50eb2c31adcade0dd96e13b40d8`.
 - Regression witness: project/content contracts, production build and budgets, three-profile catalog, 35+ URL route crawl and Manual Browser QA 4/4.
 - Detailed evidence: `../verification/2026-08-06-w7-route-runtime-wave/REPORT.md`.
-- Current residual: the closed mechanism is the **in-repository** route contract. Two current roots sit outside it and are not reopened by it — `TLP-ROUTE-REDIRECT-001` (the static-host contract: 5/5 declared aliases measured HTTP 404 on production while `vercel.json` and `public/_redirects` are inert under GitHub Pages) and `TLP-DISCOVERY-001` (the machine-metadata state machine that derives sitemap/prerender/runtime/IndexNow output from route state).
-- Reverify trigger: route-contract schema/consumer change or concrete contradictory runtime evidence.
+- Current residual: none. The static-host redirect contract was closed by Product #491, and the machine discovery-state authority was closed by Product #494 with exact-head/resulting-main browser proof plus a live Pages witness.
+- Reverify trigger: route-contract/discovery-state schema or consumer change, or concrete contradictory production evidence.
 
 ## ST-TLP-RELEASE-GOVERNANCE — Private package and exact-SHA promotion
 
@@ -201,7 +201,7 @@ A theme marked `absorbed/closed` closes the **mechanism it names**, not every la
 
 ## ST-TLP-AUDIT-HARNESS — Class-level evidence without control-plane duplication
 
-- Status: `absorbed/closed` for the selected current manifestations through source PR #345. Future concrete harness defects require independent current-head reverification before becoming active work.
+- Status: `absorbed/closed` for the selected manifestations through source PR #345 and the later residual wave through Product #506. Future concrete harness defects require independent current-head reverification before becoming active work.
 - Historical manifestations: stale string-literal validators, soft-404 expectations, boolean archive assumptions, exact-authority documentation drift, a literary-style validator that first required historical sentence fragments instead of their facts and qualifications, an app-shell validator that required the global smooth-scroll mechanism behind a reported defect, semantic-label checks implemented by case-sensitive exact substring matching, and high-risk app-shell/document-scroll guards that still depended on selected literal source spellings.
 - System outcome:
   - validators prefer machine contracts and user-visible or semantic invariants over frozen implementation prose;
@@ -219,17 +219,17 @@ A theme marked `absorbed/closed` closes the **mechanism it names**, not every la
 - PR #345 regression witness: full CI/check/build/typecheck/SEO, Project contracts, route integrity, brand audit and Manual Browser QA 4/4 across Chromium/Android, desktop WebKit and fresh-process iPhone Safari.
 - Detailed evidence: `../verification/2026-08-06-scroll-editorial-runtime-wave/REPORT.md`, `../verification/2026-08-07-canonical-poet-authority-wave/REPORT.md`, and `../verification/2026-08-07-audit-harness-semantic-closure/REPORT.md`.
 - Reverify trigger: a current guard demonstrably measures implementation text rather than meaningful contract behavior, a content validator blocks a legitimate rewrite without loss of meaning, a semantic matcher loses negative meaning or accepts tokens scattered across unrelated passages, a runtime validator requires the mechanism behind a user-visible defect, or a new AST/semantic helper produces a reproducible false pass/failure. Source movement or historical matrix presence alone is not a trigger.
-- Current residual: `TLP-AUDIT-004` — the PR #345 closure covered the *selected* 2026-08 manifestations; the later current waves independently re-established a false-green class (proxy/preview checks standing in for exact user/release outcomes across theme, hash, community, SEO, cross-tab, consent, audio, analytics, release, redirect, discovery, secondary, search, statistics, progress, URL-state, completion, home-media, focus, contrast, SQL-privilege, motion, media-kind, status, comment-text and shell-singleton behavior). Three of those gaps have since been converted into permanent outcome guards by closure waves — `qa/theme-contrast.spec.mjs`, `qa/reader-text.spec.mjs`, and Product #470's article-bounded reading-progress source/browser contract. Reading-progress denominator behavior is therefore no longer residual audit uncertainty; the other independent proxy/preview gaps remain active.
+- Current residual: none. Product #506 re-ran the remaining current-head false-green surface, fixed the real comment-whitespace defect in both browser persistence and Worker normalization, and replaced hidden-chrome/programmatic-focus proxies with real wheel/pointer/keyboard outcomes. Exact-head and resulting-main Manual Browser QA both passed across Chromium/Android and fresh-process iPhone Safari. Detailed evidence: `../reverify/REVERIFY_54bee43_2026-09-13_audit-harness-closure.md`.
 
 ## ST-TLP-BROWSER-STATE-CONVERGENCE — One owner for cross-tab browser state
 
-- Status: `candidate` — recorded as a shared mechanism, **not** selected and **not** a collapse trigger.
+- Status: `absorbed/closed` for the recorded manifestations; no current active row remains in this theme.
 - Common mechanism: several independent `localStorage` owners persist reader-visible state with mount-time reads and whole-snapshot writes, and no shared contract defines how a second document observes, merges or reconciles a change.
 - Manifestations:
   - closed 2026-08-20 — the stored theme preference converged only inside one document; Product #426 gave it a single pre-paint theme authority that also listens to cross-tab storage events;
-  - current — `TLP-AUDIO-SESSION-001`: whole-snapshot session writes can erase cross-tab progress/completion despite the archive page's explicit tab-sync promise;
-  - current — `TLP-ANALYTICS-CONSENT-001`: a consent decision does not converge across tabs and a later deny has no active-provider revocation;
+  - closed 2026-09-10 — `TLP-AUDIO-SESSION-001`: Product #483 replaced whole-session writes with conflict-safe register ownership and live-tab convergence;
+  - closed 2026-09-12 — `TLP-ANALYTICS-CONSENT-001`: Product #504 added browser-wide consent convergence plus active provider revoke/re-grant;
   - counter-example retained as the reference implementation — `myArchiveStore` already uses an operation/generation/writer model with storage-event repair, so the same reader page combines one conflict-safe store with non-convergent ones.
-- Why this is not collapsed into a `SYS-*` row: only two current symptoms remain after the theme closure, and each carries substantial independent scope (conflict-safe merge/versioning and data-loss semantics for audio; provider revoke/enable semantics and a reopenable reader control for consent). The repository threshold for collapsing symptoms into one systemic root is one mechanism explaining at least three current symptoms.
-- Promotion trigger: a third current non-convergent browser-state owner, or a repair proposal that would create a third independent convergence implementation instead of one shared owner. Promote then; do not merge the two rows before that.
+- Closure boundary: the historical cross-tab symptoms were repaired independently without needing a new `SYS-*` row; no third current symptom was established.
+- Reverify trigger: a new current non-convergent browser-state owner or concrete contradictory multi-tab evidence.
 - Detailed evidence: `../verification/2026-08-12-browser-state-convergence-current/REPORT.md` and the ledger entry `2026-08-20 — theme and dark/light contrast authority closed`.
