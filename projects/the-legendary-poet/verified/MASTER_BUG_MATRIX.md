@@ -23,10 +23,9 @@ Most recently retired from here: `TLP-ANALYTICS-PROPERTY-001` (Product #510, ver
 |---|---|---|---|
 | `TLP-COMM-ABUSE-001` | `LIVE-BACKEND / HUMAN-ADVERSARIAL-PROOF-PENDING / PUBLIC-INTEGRITY / P1` | The trusted Cloudflare Worker/D1 authority is now live in production. Current production evidence: `/ratings` reports the shared database synchronized; Worker `/health` is HTTP 200 with `ok=true`, `database=d1`, `databaseReady=true`, `targetAuthorityReady=true`, `writesReady=true`; live negative checks reject unknown targets (`404 unknown_target`), forged sessions (`401 invalid_session`) and disallowed origins (`403 origin_denied`). Product #505 merged the reviewed human-backed certifier at exact head `a781083d74c2b6eb8f16c7961f36ebcf9d4bed7f`, CAS/resulting main `e5d34db4106533cad17f80ce6c52782330803dff`, identical tree `d4d52ffdfb98d131e57054d2d11fdd6339b2f13a`. The certifier accepts bearer sessions only through hidden local TTY, pins production endpoints, server-authenticates both sessions before cleanup authority, proves concurrency/idempotency/conflict/target rejection and removes only exact certification rows. Product issue #497 remains open only for the two real human Turnstile sessions; automated bypass is deliberately forbidden. | In two fresh normal browser profiles, complete production Turnstile legitimately on the same canonical target and run `npm run operator:community-live -- --target-type poet --target-id alexander-pushkin`. Closure requires the sanitized PASS evidence for two distinct signed sessions, concurrent identical comment convergence, explicit idempotent replay, changed-payload conflict, rotated-identity conflict, unknown-target rejection and successful exact-row cleanup. |
 
-## 🟢 P2 — ОТКРЫТО (0)
+## 🟡 P2 — ОТКРЫТО (0)
 
-| ID | Status | Current evidence | Required terminal outcome |
-|---|---|---|---|
+No active P2 row remains after terminal GA4 stream and live collector proof.
 
 ## 🟢 P3 — ОТКРЫТО (0)
 
