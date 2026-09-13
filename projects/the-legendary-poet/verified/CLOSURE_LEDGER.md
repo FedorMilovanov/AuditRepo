@@ -681,7 +681,7 @@ Closed history does not remain in the active engineering matrix. Detailed histor
   - browser QA normalizes array-like commands and permanently asserts config/page_view command shape without weakening consent or route semantics.
 - Merge integrity: exact head `dfebe307c2ebd63434995b32a2b7848c567ff3dd`, resulting main `c7e3e3b4e4b036307f3f0d05d451109c839e5ef8`, tested/resulting tree `6cc7fddef71c002b8af011e9c839c20c4b052931`.
 - Exact-head proof: CI `34770438254`, Project Contracts `34770438274`, Site Route `34770438261`, Brand Deep `34770438262`, Merge Certification `34770438260`, Manual Browser `34770438252` — success.
-- Resulting-main proof already green at closure preparation: Project Contracts `34771503611`, CI `34771503640`, Brand Deep `34771503618`, Brand Raster `34771503613`, Site Route `34771503628`, Pages `34771503602`, IndexNow `34771594535`, plus dedicated analytics/WebKit/premium jobs in Manual Browser `34771503609`. The AuditRepo closure PR is withheld from merge until that workflow's final core browser tail is green.
+- Resulting-main proof: Project Contracts `34771503611`, CI `34771503640`, Brand Deep `34771503618`, Brand Raster `34771503613`, Site Route `34771503628`, Pages `34771503602`, Manual Browser `34771503609`, IndexNow `34771594535` — all success; Manual Browser includes the final core browser tail plus dedicated analytics/WebKit/premium jobs.
 - Live production ingestion: fresh real consent produced `POST region1.google-analytics.com/g/collect` with `tid=G-6NT4248RKK`, `en=page_view`, response HTTP `204`, followed by `user_engagement`.
 - Product issue #498 closed as completed.
 - Matrix disposition after terminal merge: P1 stays 1, P2 `1 -> 0`, P3 stays 0, total active `2 -> 1`.
