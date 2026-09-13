@@ -301,3 +301,45 @@ The two newly discovered Product mobile overflow defects are closed at source, e
 The related telemetry false-red root is closed without weakening application-network failure semantics.
 
 No current Product defect or system-verification lane is admitted by this wave. The existing MASTER remains authoritative with **2 owner decisions** outside this closure scope.
+
+## 10. Post-closure current-main advance: TEEN-only release `b896774a`
+
+After the original closure receipt was merged, Product `main` advanced by exactly one commit:
+
+- Product PR **#2027** / merge `b896774acb386784d63a2ebb98135f5e9f9467b0`;
+- change theme: TEEN symbolic series artwork/media metadata.
+
+A direct compare from the prior live/current anchor `c0ebdc461b16a33fa6a317a933f6cbab43d78549` to `b896774acb386784d63a2ebb98135f5e9f9467b0` shows changes only in:
+
+- TEEN series WebP assets;
+- `src/components/article-pilots/_shared/series/teenSeriesMedia.ts`;
+- seven TEEN article MDX metadata rows.
+
+No App source, Karty holding-page source, shared/global layout, or Home telemetry classifier file changed.
+
+Current-source re-read at `b896774a...` confirms the repairs remain present:
+
+- App <=980px hero still uses `grid-template-columns: minmax(0, 1fr)`;
+- App <=720px title remains `clamp(40px, 12.5vw, 72px)`;
+- App bridge H2 remains `clamp(27px, 8vw, 34px)`;
+- `KartyHoldingPage.astro` still has `main{...;min-width:0;...}`;
+- Home telemetry classifier still recognizes only `mc.yandex.ru/com` plus exact `hdrc|mdd.yandex.net` transport hosts, with unrelated `api.yandex.net` explicitly asserted fatal.
+
+Deploy workflow run **34725402441** then completed both jobs SUCCESS for `b896774a...`:
+
+- immutable readiness candidate SUCCESS;
+- Pages promotion SUCCESS;
+- generic live release contract SUCCESS;
+- live TTS capability extension SUCCESS;
+- IndexNow step SUCCESS.
+
+Final live `/deployments/current.json` at this addendum proves:
+
+- `releaseSha = b896774acb386784d63a2ebb98135f5e9f9467b0`;
+- `controlPlaneSha = b896774acb386784d63a2ebb98135f5e9f9467b0`;
+- immutable path `/deployments/b896774acb386784d63a2ebb98135f5e9f9467b0/34725402441-1.json`;
+- candidate digest `sha256:3860bb20d93d82594eec895e2c471e9da999e24d7db70c29f510c266c0bf4be7`.
+
+Because the only intervening Product change is TEEN-specific and the repaired owners are byte/source-unchanged, the existing live mobile DOM witness remains applicable to the closed App/Karty roots; no new admission signal reopens either defect.
+
+Concurrency note: AuditRepo PR #450 is a separate owner-decision lane for the GitHub Pages transport-header limitation. It does not touch this receipt and is intentionally not merged or modified by this closure wave.
