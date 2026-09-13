@@ -632,3 +632,36 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Closure boundary: exact-head and resulting-main browser outcomes must pass the unchanged real keyboard contrast assertion.
 - Matrix disposition: P1 stays 1, P2 `2 -> 3`, P3 stays 0, total active `3 -> 4`.
 - Detailed evidence: `../reverify/REVERIFY_cff9b0f_2026-09-13_focus-ring-contrast-residual.md`.
+
+
+## 2026-09-13 — light-theme focus contrast residual closed
+
+- Scope: `TLP-A11Y-FOCUS-CONTRAST-001`, dedicated Product #508 plus integrated Product #507.
+- Result:
+  - closed-by-theme-authority: one `--tlp-focus-ring` token now owns global focus color across dark/light themes;
+  - closed-by-real-keyboard-outcome: the unchanged keyboard-traversal non-text contrast assertion that originally measured `1.626:1` now passes without threshold reduction or programmatic-focus substitution;
+  - closed-by-supersession-integrity: #508 exact head was fully green, but #507 merged first with the identical two-file patch, so #508 was closed unmerged rather than duplicated;
+  - closed-by-resulting-main-browser: `main@d50ea55` Manual Browser QA includes successful Chromium/Android and fresh-process iPhone Safari contours.
+- Product evidence: dedicated exact head `a041d4475c133cc04b039b44f07b21cb615d7a0c`; integrated certified head `b7d179f31304f41df05c98c93e01ae78851f10fd`; resulting main `d50ea5588b0c2de4cbb7071ba3a9c4fd23e11d34`.
+- Merge integrity: integrated tested/resulting trees are both `867565ba01d6cac20c3dd742e3a3bbd7fd81d2c8`.
+- Exact #508 proof: Manual Browser `34747531546`, CI `34747531559`, Project Contracts `34747531535`, Site Route `34747531582`, Brand Deep `34747531540`, Merge Certification `34747531574` — all success.
+- Resulting-main proof: Manual Browser `34760300012`, CI `34760299984`, Pages `34760299947`, Site Route `34760299920`, Brand Deep `34760299928`, Brand Raster `34760299950` — all success.
+- Matrix disposition: P1 stays 1, P2 `3 -> 2`, P3 stays 0, total active `4 -> 3`.
+- Detailed evidence: `../reverify/REVERIFY_d50ea55_2026-09-13_focus-contrast-closure.md`.
+
+## 2026-09-13 — terminal GitHub Pages discovery URL parity closed
+
+- Scope: reopened `TLP-DISCOVERY-001`, Product #507.
+- Result:
+  - closed-by-terminal-public-url-authority: logical SPA paths remain internal while public canonical URLs use the Pages terminal trailing-slash form;
+  - closed-by-metadata-parity: canonical, `og:url` and JSON-LD IDs agree with the terminal production URL;
+  - closed-by-artifact-parity: sitemap, discovery manifest and Atom feed emit terminal URLs;
+  - closed-by-legacy-alias-parity: materialized aliases target terminal URLs and no longer introduce an extra advertised-target redirect;
+  - closed-by-GSC-outcome: the live sitemap-to-GSC exact join improved from 1/31 to 9/31, matching every sitemap URL that currently has settled GSC impressions;
+  - closed-by-resulting-main: Pages, Manual Browser, IndexNow and the source/route contracts are green on `main@d50ea55`.
+- Product evidence: exact certified head `b7d179f31304f41df05c98c93e01ae78851f10fd`; resulting main `d50ea5588b0c2de4cbb7071ba3a9c4fd23e11d34`.
+- Merge integrity: tested/resulting trees are both `867565ba01d6cac20c3dd742e3a3bbd7fd81d2c8`.
+- Exact-head proof: CI `34747534628`, Project Contracts `34747534638`, Content Model `34747534672`, Site Route `34747534679`, Manual Browser `34747534680`, Brand Deep `34747534645`, Hall runtime `34747534666`, Articles `34747534652`, Merge Certification `34747534643` — all success.
+- Resulting-main proof: CI `34760299984`, Hall runtime `34760299957`, Content Model `34760299952`, Brand Raster `34760299950`, Project Contracts `34760299945`, Brand Deep `34760299928`, Articles `34760299926`, Site Route `34760299920`, Pages `34760299947`, Manual Browser `34760300012`, IndexNow `34760510959` — all success.
+- Matrix disposition: P1 stays 1, P2 `2 -> 1`, P3 stays 0, total active `3 -> 2`.
+- Detailed evidence: `../reverify/REVERIFY_d50ea55_2026-09-13_discovery-terminal-url-closure.md`.
