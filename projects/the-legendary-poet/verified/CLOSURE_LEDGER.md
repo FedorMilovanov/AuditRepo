@@ -621,3 +621,14 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Integrity rule: the earlier #494 closure is retained as historical provenance for the state/IndexNow work but no longer represents terminal closure of the root.
 - Matrix disposition: P1 stays 1, P2 `1 -> 2`, P3 stays 0, total active `2 -> 3`.
 - Detailed evidence: `../reverify/REVERIFY_cff9b0f_2026-09-13_discovery-terminal-url-residual.md`.
+
+
+## 2026-09-13 — light-theme focus contrast residual opened
+
+- Scope: new current Product root `TLP-A11Y-FOCUS-CONTRAST-001`.
+- Witness: Product #507 Manual Browser QA measured the real keyboard-visible community textarea focus indicator at `1.626282818611112:1` in light theme vs required `>=3:1`.
+- Root cause: the current global translucent bright-cyan focus outline is insufficient against the light `#fffaf0` surface; this CSS is already present on Product `main@cff9b0f`.
+- Repair owner: Product #508, bounded to a theme-aware focus-ring token and the existing global focus rule; no test threshold reduction.
+- Closure boundary: exact-head and resulting-main browser outcomes must pass the unchanged real keyboard contrast assertion.
+- Matrix disposition: P1 stays 1, P2 `2 -> 3`, P3 stays 0, total active `3 -> 4`.
+- Detailed evidence: `../reverify/REVERIFY_cff9b0f_2026-09-13_focus-ring-contrast-residual.md`.
