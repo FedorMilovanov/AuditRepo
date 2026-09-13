@@ -571,3 +571,42 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - External-property reverify: GSC Wizard and Windsor still expose only GA4 properties `537251354` and `547331637`; an Admin/API-backed `measurement_id + stream_id + stream_name + hostname` query returns only Milovi Cake `G-94ZZ5B8YNY` / stream `14860814056` / `milovicake.ru`, while TLP property `547331637` returns no stream row. Production `G-6NT4248RKK` remains unmapped and was not guessed or rotated.
 - Matrix disposition: P1 stays 1, P2 `4 → 3`, P3 stays 0, total active `5 → 4`.
 - Detailed evidence: `../reverify/REVERIFY_3963f2f_2026-09-12_analytics-consent-closure.md`.
+
+## 2026-09-13 — remaining audit false-green surface closed
+
+- Scope: `TLP-AUDIT-004`, Product PR #506.
+- Result:
+  - closed-by-product-fix: client persistence and Worker mutation validation now share one whitespace-preserving comment-text normalizer;
+  - closed-by-fidelity-proof: repeated spaces, tabs, newlines, Unicode/grapheme content and literal plain-text markup survive UI submit/reload while unsafe controls remain removed;
+  - closed-by-real-focus-proof: contrast checks use keyboard traversal and actual `:focus-visible`, not programmatic `.focus()`;
+  - closed-by-hidden-chrome-proof: the theme control is restored through a real upward wheel before a normal pointer click; no force-click or DOM theme mutation is used;
+  - closed-by-current-head-reproduction: stale PR #496 was not accepted as evidence; the residual was reproduced against modern main and superseded by #506;
+  - preserved boundary: `TLP-COMM-ABUSE-001` and `TLP-ANALYTICS-PROPERTY-001` remain independent.
+- Product evidence: base `e5d34db4106533cad17f80ce6c52782330803dff`, exact certified head `d8b00ec37dd770be4848dc06ce6774ac3bc50b21`, CAS squash/resulting `main` `54bee439734b8a97c08c0f176e9adc74930b1678`.
+- Merge integrity: tested and resulting trees are both `6114fd98313a0e9045dd9a4517f9105e91b19f7f`.
+- Exact-head proof: local hardening/scaling, Worker types, repository typecheck, build, targeted 2/2 and full 44/44 Chromium outcomes all passed; GitHub exact-head Manual Browser QA also completed success.
+- Resulting-main proof: Manual Browser QA `34723604098` completed success including Chromium/Android, fresh-process iPhone Safari, premium iPhone and WebKit HOME.
+- Issue outcome: Product #495 closed after #506/resulting-main proof.
+- Matrix disposition: P1 stays 1, P2 `3 → 2`, P3 stays 0, total active `4 → 3`.
+- Detailed evidence: `../reverify/REVERIFY_54bee43_2026-09-13_audit-harness-closure.md`.
+
+## 2026-09-13 — discovery state / sitemap / IndexNow authority closed
+
+- Scope: `TLP-DISCOVERY-001`, Product issue #493 / PR #494.
+- Result:
+  - closed-by-state-authority: ready/noindex/not-found/loading/error/redirect metadata derives from one route/change state;
+  - closed-by-404-parity: static and hydrated unknown routes retain truthful noindex/no-canonical/no-`og:url` semantics;
+  - closed-by-lastmod-authority: sitemap dates exist only where owned editorial dates exist; coarse pseudo-clocks are removed;
+  - closed-by-delta-authority: deterministic per-canonical fingerprints drive IndexNow added/changed/deleted deltas instead of full-site resubmission;
+  - closed-by-cross-platform-proof: fingerprinting and committed-artifact comparison canonicalize text line endings, and the generator validator executes on Windows and POSIX without `npm.cmd spawnSync` false-reds;
+  - closed-by-browser-proof: Pages-like and browser QA prove stale-head removal, loading, lazy failure/recovery and canonical route outcomes;
+  - closed-by-live-pages-proof: production exposes 31 sitemap URLs with no priority/changefreq, a real HTTP 404 noindex document with no canonical/`og:url`, and the expected `/poets` canonical;
+  - preserved boundary: `TLP-COMM-ABUSE-001` and `TLP-ANALYTICS-PROPERTY-001` remain independent.
+- Product evidence: final base `54bee439734b8a97c08c0f176e9adc74930b1678`, exact certified head `13a2ef33d1683531a849425bd46b2e9130cef2df`, CAS squash/resulting `main` `cff9b0f6cbe986a4d8dc79e22661b331a1207592`.
+- Merge integrity: tested and resulting trees are both `732d7af8deb569cec702f379aeffc04f2b93451d`.
+- Exact-head proof: Project Contracts `34723706271`, Content Model `34723706314`, CI `34723706292`, Site Route `34723706272`, Articles `34723706275`, Brand Deep `34723706274`, Hall runtime `34723706281`, Manual Browser `34723706289`, Merge Certification `34723706305` and Ready-state Merge Certification `34724767616` all completed success.
+- Resulting-main proof: CI `34724841834`, Project Contracts `34724841858`, Content Model `34724841883`, Site Route `34724841856`, Articles `34724841891`, Brand Deep `34724841893`, Brand Raster `34724841905`, Hall runtime `34724841847`, Pages `34724841864`, Manual Browser `34724841850` and IndexNow `34725158319` all completed success.
+- Issue outcome: Product #493 closed automatically when #494 merged.
+- Matrix disposition: P1 stays 1, P2 `2 → 1`, P3 stays 0, total active `3 → 2`.
+- Detailed evidence: `../reverify/REVERIFY_cff9b0f_2026-09-13_discovery-closure.md`.
+
