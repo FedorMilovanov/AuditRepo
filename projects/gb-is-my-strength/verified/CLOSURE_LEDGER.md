@@ -314,3 +314,28 @@ This entry records the governance change only. It does not claim that the reform
 - MASTER consequence: remove `SYS-MAIN-ADMISSION-ENFORCEMENT`; active arithmetic becomes **2 owner decisions / 2 total active work units**.
 - Remaining active owners: `FRAGMENTED-SECURITY-OWNERSHIP`, `GBS-SEARCH-CONTROL-PLANE-001`.
 - Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_product-main-admission-closure.md`.
+
+## 2026-09-13-b — Security transport owner accepted-platform closure
+
+- Scope: retire `FRAGMENTED-SECURITY-OWNERSHIP` after the already-merged release architecture selected direct GitHub Pages and removed Cloudflare from the HTTP/release control plane.
+- Architecture authority: Product #1945 merged the direct Pages + DNS-only topology; the earlier Cloudflare Transform Rules implementation was closed unmerged rather than retained as a hidden transport dependency.
+- Fresh live witness: `/` = 200, `/articles/` = 200, deliberate nonexistent route = 404; all are served by `GitHub.com` / Varnish with HSTS present and `X-Content-Type-Options` absent.
+- DNS witness: apex resolves directly to the four GitHub Pages A records; `www` CNAMEs to `fedormilovanov.github.io`.
+- Product tracking issue #1928 received final disposition comment `5649346125` and was closed `not_planned`.
+- Disposition: **accepted-risk / accepted platform limitation**, not a claim that `nosniff` is implemented.
+- Fake HTML transport pragmas remain invalid and are being retired separately under Product #1937.
+- MASTER consequence: remove `FRAGMENTED-SECURITY-OWNERSHIP`; active arithmetic becomes **1 owner decision / 1 total active work unit**.
+- Remaining active owner: `GBS-SEARCH-CONTROL-PLANE-001` only.
+- Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_security-accepted-platform-limitation.md`.
+
+## 2026-09-13-c — Search control-plane terminal closure
+
+- Scope: retire `GBS-SEARCH-CONTROL-PLANE-001` after authoritative Google Search Console state changed from no submitted sitemap to a healthy production primary-sitemap submission.
+- Authoritative GSC witness: `https://gospod-bog.ru/sitemap.xml` submitted at `2026-09-13T06:50:03.552Z`, downloaded by Google at `2026-09-13T06:50:04.331Z`, **0 errors / 0 warnings**, **94 submitted web URLs**.
+- Secondary-sitemap witness: `sitemap-pastor-series.xml` contains exactly 3 canonical URLs and all 3 already exist in the submitted primary sitemap; a second explicit submission adds **0 unique discovery URLs** and is retired as redundant.
+- Domain-property disposition: `sc-domain:gospod-bog.ru` still returns 403 for the connected account, but the exact canonical production URL-prefix property is readable and operational; domain-property verification is optional account hygiene, not a production blocker.
+- Browser-auth recheck: Google Search Console UI still redirected the automation profile to Google Sign-In because no Google credentials are configured; no state changed through that path. This no longer blocks closure because authoritative GSC already shows the successful primary submission.
+- Product tracking: issue #1996 received final evidence comment `5651805686` and closed `completed`.
+- Product mutation: none.
+- MASTER consequence: remove `GBS-SEARCH-CONTROL-PLANE-001`; active arithmetic becomes **0 owner decisions / 0 total active work units**.
+- Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_search-control-plane-external-auth-blocker.md`.
