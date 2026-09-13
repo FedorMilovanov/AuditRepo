@@ -665,3 +665,24 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Resulting-main proof: CI `34760299984`, Hall runtime `34760299957`, Content Model `34760299952`, Brand Raster `34760299950`, Project Contracts `34760299945`, Brand Deep `34760299928`, Articles `34760299926`, Site Route `34760299920`, Pages `34760299947`, Manual Browser `34760300012`, IndexNow `34760510959` — all success.
 - Matrix disposition: P1 stays 1, P2 `2 -> 1`, P3 stays 0, total active `3 -> 2`.
 - Detailed evidence: `../reverify/REVERIFY_d50ea55_2026-09-13_discovery-terminal-url-closure.md`.
+
+
+## 2026-09-13 — GA4 property / web-stream authority and live ingestion closed
+
+- Scope: `TLP-ANALYTICS-PROPERTY-001`, Product issue #498 / PR #510.
+- Authority:
+  - Google Analytics Admin identifies TLP property `547331637`, stream `Poet`, stream ID `15336366137`, website `https://thelegendarypoet.ru/`, Measurement ID `G-6NT4248RKK`;
+  - this exactly matches production, so no Measurement ID rotation was performed.
+- Root cause:
+  - production consent, script loading and semantic page-view queuing were healthy;
+  - the custom gtag shim queued plain Arrays instead of Google's canonical Arguments object, so commands stayed visible in `dataLayer` without becoming collector requests.
+- Repair:
+  - Product #510 restores `dataLayer.push(arguments)`;
+  - browser QA normalizes array-like commands and permanently asserts config/page_view command shape without weakening consent or route semantics.
+- Merge integrity: exact head `dfebe307c2ebd63434995b32a2b7848c567ff3dd`, resulting main `c7e3e3b4e4b036307f3f0d05d451109c839e5ef8`, tested/resulting tree `6cc7fddef71c002b8af011e9c839c20c4b052931`.
+- Exact-head proof: CI `34770438254`, Project Contracts `34770438274`, Site Route `34770438261`, Brand Deep `34770438262`, Merge Certification `34770438260`, Manual Browser `34770438252` — success.
+- Resulting-main proof already green at closure preparation: Project Contracts `34771503611`, CI `34771503640`, Brand Deep `34771503618`, Brand Raster `34771503613`, Site Route `34771503628`, Pages `34771503602`, IndexNow `34771594535`, plus dedicated analytics/WebKit/premium jobs in Manual Browser `34771503609`. The AuditRepo closure PR is withheld from merge until that workflow's final core browser tail is green.
+- Live production ingestion: fresh real consent produced `POST region1.google-analytics.com/g/collect` with `tid=G-6NT4248RKK`, `en=page_view`, response HTTP `204`, followed by `user_engagement`.
+- Product issue #498 closed as completed.
+- Matrix disposition after terminal merge: P1 stays 1, P2 `1 -> 0`, P3 stays 0, total active `2 -> 1`.
+- Detailed evidence: `../reverify/REVERIFY_c7e3e3b_2026-09-13_ga4-property-closure.md`.
