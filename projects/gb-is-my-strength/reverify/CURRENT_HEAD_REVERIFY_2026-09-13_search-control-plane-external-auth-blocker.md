@@ -144,3 +144,87 @@ Active arithmetic remains unchanged:
 - **3 active work units total**.
 
 No Product code mutation is required or justified by this reverify.
+
+---
+
+# Terminal closure update — 2026-09-13
+
+This section supersedes the earlier active-blocker conclusion above. The prior evidence remains preserved as history.
+
+## Authoritative Google state changed
+
+A fresh authoritative `list_sitemaps` read for the working URL-prefix property `https://gospod-bog.ru/` now returns one real Google Search Console submission:
+
+- path: `https://gospod-bog.ru/sitemap.xml`;
+- last submitted: `2026-09-13T06:50:03.552Z`;
+- last downloaded by Google: `2026-09-13T06:50:04.331Z`;
+- errors: **0**;
+- warnings: **0**;
+- submitted web URLs: **94**.
+
+This is Google Search Console submission state, not GSC Wizard reporting metadata, IndexNow, Bing, robots.txt, or a mere reachable sitemap file.
+
+## Secondary sitemap requirement retired as redundant
+
+The live `https://gospod-bog.ru/sitemap-pastor-series.xml` contains exactly these three canonical production URLs:
+
+1. `https://gospod-bog.ru/pastor-series/`
+2. `https://gospod-bog.ru/articles/20-antisovetov-pastoru/`
+3. `https://gospod-bog.ru/articles/diotrefy-nashego-vremeni/`
+
+A live read of the already-submitted primary `sitemap.xml` shows all three URLs are already present there.
+
+Therefore the secondary sitemap adds **0 unique discovery URLs**. Requiring a second explicit GSC submission is no longer a meaningful closure boundary; it would duplicate URLs already covered by the authoritative submitted primary sitemap.
+
+Robots may continue advertising both sitemap files. That does not create a missing-discovery defect.
+
+## Browser-auth recheck
+
+A fresh user-directed Search Console browser automation attempted to access the Sitemaps UI with browser profile + vault enabled.
+
+It redirected to Google Sign-In and reported no configured Google credentials. No Search Console state was changed.
+
+This authentication limitation no longer blocks production discovery because the primary sitemap has already been submitted through another authenticated path and Google has downloaded it successfully.
+
+## Domain-property disposition
+
+`sc-domain:gospod-bog.ru` still returns Google 403 for the connected account.
+
+This is now classified as a non-blocking duplicate-property access gap rather than an active production owner:
+
+- canonical production is `https://gospod-bog.ru/`;
+- that exact URL-prefix property is readable and operational;
+- its authoritative sitemap state is healthy;
+- no Product code, canonical route, sitemap coverage, or indexing-control action depends on the inaccessible domain property.
+
+Domain-property DNS verification remains optional account hygiene and may be completed later if broader subdomain aggregation is desired. It is not required for the current canonical production origin.
+
+## Product tracking disposition
+
+Product issue `gb-is-my-strength#1996` received final evidence in comment `5651805686` and was closed `completed` on 2026-09-13.
+
+No Product code mutation was required.
+
+## Terminal root disposition
+
+`GBS-SEARCH-CONTROL-PLANE-001` is **closed**.
+
+Closure evidence is now:
+
+- authoritative GSC sitemap submission exists;
+- Google downloaded the sitemap;
+- 0 errors / 0 warnings;
+- primary sitemap covers the entire secondary sitemap URL set;
+- second submission requirement is redundant rather than missing coverage;
+- inaccessible domain property is non-blocking for the canonical production URL-prefix property;
+- Product tracking issue #1996 is closed completed.
+
+No page-specific indexing defect is admitted by this closure. Future Google indexing-selection changes should be evaluated after recrawl against the submitted primary sitemap.
+
+## MASTER consequence
+
+This root should be removed from active MASTER arithmetic in the next non-conflicting MASTER update.
+
+At the time of this receipt update, AuditRepo PR #450 independently owns the same MASTER file to retire `FRAGMENTED-SECURITY-OWNERSHIP` as accepted platform risk. This closure intentionally does **not** modify MASTER or `CLOSURE_LEDGER.md` in parallel with that active lane.
+
+Once #450 lands, the gb-is-my-strength MASTER can be reconciled to **0 active work units** by removing `GBS-SEARCH-CONTROL-PLANE-001` only.
