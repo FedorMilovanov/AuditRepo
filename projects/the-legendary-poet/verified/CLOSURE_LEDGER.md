@@ -665,3 +665,19 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Resulting-main proof: CI `34760299984`, Hall runtime `34760299957`, Content Model `34760299952`, Brand Raster `34760299950`, Project Contracts `34760299945`, Brand Deep `34760299928`, Articles `34760299926`, Site Route `34760299920`, Pages `34760299947`, Manual Browser `34760300012`, IndexNow `34760510959` — all success.
 - Matrix disposition: P1 stays 1, P2 `2 -> 1`, P3 stays 0, total active `3 -> 2`.
 - Detailed evidence: `../reverify/REVERIFY_d50ea55_2026-09-13_discovery-terminal-url-closure.md`.
+
+## 2026-09-13 — GA4 property / live collection authority closed
+
+- Scope: `TLP-ANALYTICS-PROPERTY-001`, Product PR #510 plus authoritative GA4 Admin stream witness.
+- Result:
+  - closed-by-stream-authority: property `547331637` owns web stream `Poet`, stream ID `15336366137`, website `https://thelegendarypoet.ru/`, Measurement ID `G-6NT4248RKK`;
+  - closed-by-production-ID-parity: the verified stream ID exactly matches the production GitHub variable and deployed bundle; no ID rotation was required;
+  - closed-by-root-cause-repair: #510 restored Google's canonical `dataLayer.push(arguments)` command queue instead of plain Arrays;
+  - closed-by-live-collector: a consented production visit emitted `POST https://region1.google-analytics.com/g/collect` with `tid=G-6NT4248RKK`, `en=page_view`, and Google returned HTTP `204`;
+  - closed-by-engagement-followup: production also emitted a subsequent `user_engagement` collector request;
+  - closed-by-resulting-main: CI, Contracts, Route, Brand, Pages, Browser QA and IndexNow are green on resulting `main@c7e3e3b`;
+  - reporting lag is not treated as contradictory evidence because the standard GA4 reporting API is not the realtime transport witness.
+- Product evidence: exact certified head `dfebe307c2ebd63434995b32a2b7848c567ff3dd`; resulting main `c7e3e3b4e4b036307f3f0d05d451109c839e5ef8`.
+- Merge integrity: tested/resulting trees are both `6cc7fddef71c002b8af011e9c839c20c4b052931`.
+- Matrix disposition: P1 stays 1, P2 `1 -> 0`, P3 stays 0, total active `2 -> 1`.
+- Detailed evidence: `../reverify/REVERIFY_c7e3e3b_2026-09-13_analytics-property-closure.md`.
