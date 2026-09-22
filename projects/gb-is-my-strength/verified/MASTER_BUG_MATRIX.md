@@ -33,7 +33,7 @@ Evidence and staged execution: [Wave 0 / recovery program](../verification/2026-
 | ID | Required improvement | Closure boundary |
 |---|---|---|
 | GB-READER-POLISH-CLOSURE | P1, current-local: owner-selected audited Reader work remains open in Product #2136. | Preserve canonical lane; verify final head, merge using expected SHA, validate resulting main and Reader live behavior. [Evidence](../verification/2026-09-22-release-recovery/REPORT.md). |
-| GB-GENEALOGY-EDITORIAL-CLOSURE | P1, current-local: owner-selected editorial evidence work in Product #2137 is not integrated; remaining corpus reviews are not certified. | First verify and merge #2137 on current main; then source-backed batches reduce measured pending names/relations without weakening evidence or exposing raw draft data. [Evidence and limits](../verification/2026-09-22-release-recovery/REPORT.md). |
+| GB-GENEALOGY-EDITORIAL-CLOSURE | P1, current-local: #2137's name-proof helper falsely certifies Езер for Hepher (`hepher--1ch-4-6`); the proposed review-count reduction is not trustworthy. Remaining corpus reviews are not certified. | Repair independent identity proof and add the real negative fixture before rebuilding counts; preserve reviewed and pending relation browser witnesses, then current-main exact-head verification and source-backed editorial batches. [Reproduced counterexample and correction boundary](../verification/2026-09-22-release-recovery/EDITORIAL_PROOF_COUNTEREXAMPLE.md). |
 
 ## NARROWED RESIDUALS — 0
 
