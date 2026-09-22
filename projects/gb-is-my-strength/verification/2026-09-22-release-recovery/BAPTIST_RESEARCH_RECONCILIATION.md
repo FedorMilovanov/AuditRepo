@@ -52,6 +52,12 @@ Immutable Research anchor checked for file 146:
 Historical acquisition is not a current downloadable-file proof, and neither is
 an editorial certification of the full chapter.
 
+Subsequent read-only inspection rendered Bulletin 44 from those exact bytes.
+The title and target paragraph are visible, but the PDF is a modern typeset
+edition; the remaining gate cannot be closed as archival facsimile verification.
+See [BULLETIN_44_VISUAL_RECHECK.md](BULLETIN_44_VISUAL_RECHECK.md) for the narrower
+two-page visual result, corrected printed-page locator and source-class boundary.
+
 ## Source ownership for the next wave
 
 Current Product already has
