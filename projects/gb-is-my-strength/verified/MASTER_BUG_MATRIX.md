@@ -2,41 +2,50 @@
 
 > SSOT for current verified necessary work only. This is not a history table or a mirror of every source-repository signal.
 >
-> The causal system synthesis remains grounded in merged AuditRepo evidence package #344 (`45b985737f192f709d7e1ee7324250d0e0986ca1`) at Product anchor `94b8eaad0951c6b43cf1e55fc6c54b9114329f61` (2026-08-20). Subsequent rows are removed from active arithmetic only through bounded current-head reverify / Product repair evidence. On 2026-09-08, `ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT` was closed by Product #1851 / merge `3c2def019b88069d9e48ba866a3c4287b8e8add3`. Later the same day, `METADATA-SSOT-PROLIFERATION` was closed by the complete producer + reversible-review + projection + record-reconciliation chain ending in Product #1916 / merge `c65b83a6588187c71b6e39c720d2b6666b4959c2`. No current Product system verification lane remains. `FRAGMENTED-SECURITY-OWNERSHIP` was retired on 2026-09-13 as accepted platform risk after merged #1945 selected direct GitHub Pages and fresh live remeasure confirmed the header remains unavailable without reintroducing an HTTP edge owner. `SYS-MAIN-ADMISSION-ENFORCEMENT` was closed on 2026-09-13 after native GitHub branch protection was enabled and live-read back on Product `main`; server-side PR admission now requires the two previously verified always-created checks. The external search-control-plane root `GBS-SEARCH-CONTROL-PLANE-001` was closed on 2026-09-13 after authoritative Google Search Console state showed the production primary sitemap submitted and downloaded with 0 errors / 0 warnings; the secondary pastor-series sitemap adds 0 unique URLs, and the inaccessible domain property is non-blocking for the canonical URL-prefix property.
+> The causal system synthesis remains grounded in merged AuditRepo evidence package #344 (`45b985737f192f709d7e1ee7324250d0e0986ca1`) at Product anchor `94b8eaad0951c6b43cf1e55fc6c54b9114329f61` (2026-08-20). Subsequent rows are removed from active arithmetic only through bounded current-head reverify / Product repair evidence. On 2026-09-08, `ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT` was closed by Product #1851 / merge `3c2def019b88069d9e48ba866a3c4287b8e8add3`. Later the same day, `METADATA-SSOT-PROLIFERATION` was closed by the complete producer + reversible-review + projection + record-reconciliation chain ending in Product #1916 / merge `c65b83a6588187c71b6e39c720d2b6666b4959c2`. At that historical closure, no Product system verification lane remained; this is superseded by the 2026-09-22 current-state admission below. `FRAGMENTED-SECURITY-OWNERSHIP` was retired on 2026-09-13 as accepted platform risk after merged #1945 selected direct GitHub Pages and fresh live remeasure confirmed the header remains unavailable without reintroducing an HTTP edge owner. `SYS-MAIN-ADMISSION-ENFORCEMENT` was closed on 2026-09-13 after native GitHub branch protection was enabled and live-read back on Product `main`; server-side PR admission now requires the two previously verified always-created checks. The external search-control-plane root `GBS-SEARCH-CONTROL-PLANE-001` was closed on 2026-09-13 after authoritative Google Search Console state showed the production primary sitemap submitted and downloaded with 0 errors / 0 warnings; the secondary pastor-series sitemap adds 0 unique URLs, and the inaccessible domain property is non-blocking for the canonical URL-prefix property.
 
 ## Current state
 
+Reverified 2026-09-22. The 2026-09-13 zero is **STALE as a current attestation**.
+This admission records material failed release checks, not mere Product HEAD movement.
+Evidence and staged execution: [Wave 0 / recovery program](../verification/2026-09-22-release-recovery/REPORT.md).
+
+
 | Field | Value |
 |---|---|
-| Active work units | **0** |
+| Active work units | **4** |
 | Direct current defects | **0** |
-| Verified necessary improvements | **0** |
+| Verified necessary improvements | **2** |
 | Narrowed residuals | **0** |
-| System verification lanes | **0** |
+| System verification lanes | **2** |
 | Owner decisions | **0** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Arithmetic: 0 direct current defects + 0 improvements + 0 residuals + 0 system verification lanes + 0 owner decisions = **0 independent current work units**. Security transport is an accepted direct-GitHub-Pages platform limitation; the Search Console discovery boundary is closed by authoritative primary-sitemap submission and successful Google download.
+> Arithmetic: 0 direct current defects + 2 improvements + 0 residuals + 2 system verification lanes + 0 owner decisions = **4 independent current work units**. Release recovery and PR WebKit failure have different observed failure boundaries; neither is evidence that the historical security/Search Console closures were invalid.
 
 ## CURRENT DEFECTS — 0
 
 | ID | Current problem | Closure boundary |
 |---|---|---|
 
-## VERIFIED NECESSARY IMPROVEMENTS — 0
+## VERIFIED NECESSARY IMPROVEMENTS — 2
 
 | ID | Required improvement | Closure boundary |
 |---|---|---|
+| GB-READER-POLISH-CLOSURE | P1, current-local: owner-selected audited Reader work remains open in Product #2136. | Preserve canonical lane; verify final head, merge using expected SHA, validate resulting main and Reader live behavior. [Evidence](../verification/2026-09-22-release-recovery/REPORT.md). |
+| GB-GENEALOGY-EDITORIAL-CLOSURE | P1, current-local: owner-selected editorial evidence work in Product #2137 is not integrated; remaining corpus reviews are not certified. | First verify and merge #2137 on current main; then source-backed batches reduce measured pending names/relations without weakening evidence or exposing raw draft data. [Evidence and limits](../verification/2026-09-22-release-recovery/REPORT.md). |
 
 ## NARROWED RESIDUALS — 0
 
 | ID | Current residual | Closure boundary |
 |---|---|---|
 
-## SYSTEM VERIFICATION LANES — 0
+## SYSTEM VERIFICATION LANES — 2
 
 | ID | Current causal problem | Absorbs / closure boundary |
 |---|---|---|
+| SYS-RELEASE-PRODUCTION-DRIFT | P0, systemic-root: live release is 50 commits behind main; the last main deploy passed genealogy but failed the broad dist smoke on an obsolete genealogy H1 oracle. The same broad smoke is absent from the PR candidate workflow. | Repair oracle and candidate/deploy parity; exact-head candidate green, resulting-main immutable deployment, current.json identity and required live witnesses. [Direct source, CI and live evidence](../verification/2026-09-22-release-recovery/REPORT.md). |
+| SYS-GENEALOGY-WEBKIT-WITNESS | P0, systemic-root: #2139 still fails in legal-relation interaction in a fresh WebKit process at 1440×1000. Root cause is under investigation; long-session accumulation is not established. | Continue the existing #2139 lane under owner instruction; reproduce, fix the demonstrated mechanism, retain all browsers/viewports/assertions, prove negative behavior and final-head full/reduced-motion pass. Do not declare lifecycle isolation alone a fix. [CI evidence](../verification/2026-09-22-release-recovery/REPORT.md). |
 
 ## OWNER DECISIONS — 0
 
