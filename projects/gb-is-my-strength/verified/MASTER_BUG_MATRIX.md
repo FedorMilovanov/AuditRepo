@@ -14,26 +14,26 @@ Evidence and staged execution: [Wave 0 / recovery program](../verification/2026-
 | Field | Value |
 |---|---|
 | Active work units | **4** |
-| Direct current defects | **0** |
-| Verified necessary improvements | **2** |
+| Direct current defects | **1** |
+| Verified necessary improvements | **1** |
 | Narrowed residuals | **0** |
 | System verification lanes | **2** |
 | Owner decisions | **0** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Arithmetic: 0 direct current defects + 2 improvements + 0 residuals + 2 system verification lanes + 0 owner decisions = **4 independent current work units**. Release recovery and PR WebKit failure have different observed failure boundaries; neither is evidence that the historical security/Search Console closures were invalid.
+> Arithmetic: 1 direct current defect + 1 improvement + 0 residuals + 2 system verification lanes + 0 owner decisions = **4 independent current work units**. Release recovery and PR WebKit failure have different observed failure boundaries; neither is evidence that the historical security/Search Console closures were invalid.
 
-## CURRENT DEFECTS — 0
+## CURRENT DEFECTS — 1
 
 | ID | Current problem | Closure boundary |
 |---|---|---|
+| GB-GENEALOGY-EDITORIAL-CLOSURE | P1, CONFIRMED-CURRENT: main maps Matthew’s Joram and Abiud to different namesakes; the original #2137 additionally falsely certifies Hepher as Езер. Bounded repair is submitted at #2137 `573814481…`; raw review debt remains 2825 names / 139 projected relations. | Verify the identity corrections, fail-closed name guard and both relation-status browser witnesses on the final head, then merge and verify publication. Further corpus certification remains source-backed editorial work. [Recheck and repair evidence](../verification/2026-09-22-release-recovery/GENEALOGY_REPAIR_RECHECK.md); [original counterexample](../verification/2026-09-22-release-recovery/EDITORIAL_PROOF_COUNTEREXAMPLE.md). |
 
-## VERIFIED NECESSARY IMPROVEMENTS — 2
+## VERIFIED NECESSARY IMPROVEMENTS — 1
 
 | ID | Required improvement | Closure boundary |
 |---|---|---|
 | GB-READER-POLISH-CLOSURE | P1, current-local: owner-selected audited Reader work remains open in Product #2136. | Preserve canonical lane; verify final head, merge using expected SHA, validate resulting main and Reader live behavior. [Evidence](../verification/2026-09-22-release-recovery/REPORT.md). |
-| GB-GENEALOGY-EDITORIAL-CLOSURE | P1, current-local: #2137's name-proof helper falsely certifies Езер for Hepher (`hepher--1ch-4-6`); the proposed review-count reduction is not trustworthy. Remaining corpus reviews are not certified. | Repair independent identity proof and add the real negative fixture before rebuilding counts; preserve reviewed and pending relation browser witnesses, then current-main exact-head verification and source-backed editorial batches. [Reproduced counterexample and correction boundary](../verification/2026-09-22-release-recovery/EDITORIAL_PROOF_COUNTEREXAMPLE.md). |
 
 ## NARROWED RESIDUALS — 0
 
@@ -44,8 +44,8 @@ Evidence and staged execution: [Wave 0 / recovery program](../verification/2026-
 
 | ID | Current causal problem | Absorbs / closure boundary |
 |---|---|---|
-| SYS-RELEASE-PRODUCTION-DRIFT | P0, systemic-root: live release is 50 commits behind main; the last main deploy passed genealogy but failed the broad dist smoke on an obsolete genealogy H1 oracle. The same broad smoke is absent from the PR candidate workflow. | Repair oracle and candidate/deploy parity; exact-head candidate green, resulting-main immutable deployment, current.json identity and required live witnesses. [Direct source, CI and live evidence](../verification/2026-09-22-release-recovery/REPORT.md). |
-| SYS-GENEALOGY-WEBKIT-WITNESS | P0, systemic-root: #2139 still fails in legal-relation interaction in a fresh WebKit process at 1440×1000. Root cause is under investigation; long-session accumulation is not established. | Continue the existing #2139 lane under owner instruction; reproduce, fix the demonstrated mechanism, retain all browsers/viewports/assertions, prove negative behavior and final-head full/reduced-motion pass. Do not declare lifecycle isolation alone a fix. [CI evidence](../verification/2026-09-22-release-recovery/REPORT.md). |
+| SYS-RELEASE-PRODUCTION-DRIFT | P0, systemic-root: production remains at the previously verified old release; the historical 50-commit drift is not closed. #2140 repairs the obsolete genealogy H1 oracle and candidate/deploy smoke parity; its latest candidate is blocked by the independently reproduced WebKit crash. | Exact-head candidate green, resulting-main immutable deployment, current.json identity and required live witnesses. Include the confirmed genealogy identity repair before publication. [Initial source/CI/live evidence](../verification/2026-09-22-release-recovery/REPORT.md); [material recheck](../verification/2026-09-22-release-recovery/GENEALOGY_REPAIR_RECHECK.md). |
+| SYS-GENEALOGY-WEBKIT-WITNESS | P0, PARTIAL/NARROWED: #2139 merged after exact-head green, but resulting-main deploy and #2140 reproduced native page-crash. Local controlled trials implicate animated grayscale during Joseph→Jesus navigation; one-component repair is submitted as #2141. | Preserve all browser assertions/viewports and negative witnesses; require final-head full/reduced-motion and resulting-main release proof. Isolation alone did not close the root. [Reproducer, rejected hypothesis and repair boundary](../verification/2026-09-22-release-recovery/GENEALOGY_REPAIR_RECHECK.md). |
 
 ## OWNER DECISIONS — 0
 
