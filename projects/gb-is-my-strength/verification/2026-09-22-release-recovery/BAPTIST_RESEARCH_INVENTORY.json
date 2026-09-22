@@ -1,0 +1,1299 @@
+{
+  "schemaVersion": 1,
+  "observedDate": "2026-09-22",
+  "productMain": "6bf5fd7212eaf88ac21d719947f98a1d6f21eb37",
+  "scope": "38 book/*, reconcile/* and authentic-media branches; research/ledger/provenance changed-path filter; not all files or all reachable historical blobs",
+  "branches": [
+    {
+      "branch": "book/ch06-kargel-source-to-claim",
+      "sha": "bba459001b7cd6433f7bd9daff68bc2d4208ebfb",
+      "ahead": 10,
+      "behind": 622,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/85-ch06-kargel-source-to-claim-2026-09-06.md",
+          "branch_blob": "4ca051cf71eacc2d323dad18b48544285142b832",
+          "main_blob": "4ca051cf71eacc2d323dad18b48544285142b832",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/86-ch06-kargel-visual-dossier-2026-09-06.md",
+          "branch_blob": "008ad935fad139e621209a6c8e00d193432a8a59",
+          "main_blob": "008ad935fad139e621209a6c8e00d193432a8a59",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/87-ch06-kargel-1884-novovasilievka-role-closure-2026-09-06.md",
+          "branch_blob": "68d5c033261a6c912b4063f3083a63844f945908",
+          "main_blob": "68d5c033261a6c912b4063f3083a63844f945908",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/88-ch06-kargel-1907-congress-role-closure-2026-09-06.md",
+          "branch_blob": "1c91ac6a877bf9805b389fbf78f769f368f3eda2",
+          "main_blob": "1c91ac6a877bf9805b389fbf78f769f368f3eda2",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/89-ch06-kargel-1913-creed-facsimile-identity-rights-2026-09-06.md",
+          "branch_blob": "abf1f31cb57fae68894e4e7149f96128cfb2ec47",
+          "main_blob": "abf1f31cb57fae68894e4e7149f96128cfb2ec47",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/90-ch06-kargel-1913-theology-claim-matrix-2026-09-06.md",
+          "branch_blob": "676abb7900e0d8ad137e9e79251288b8870549a0",
+          "main_blob": "676abb7900e0d8ad137e9e79251288b8870549a0",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/91-ch06-kargel-baedeker-prison-mission-source-pass-2026-09-06.md",
+          "branch_blob": "e30fb7263878ca68ba6957d1c513ab841933f941",
+          "main_blob": "e30fb7263878ca68ba6957d1c513ab841933f941",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/92-ch06-kargel-1869-baptism-discrepancy-resolution-2026-09-06.md",
+          "branch_blob": "9eb9a4c07d10211630bbd56bd9c7e8b62bbe0bee",
+          "main_blob": "9eb9a4c07d10211630bbd56bd9c7e8b62bbe0bee",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/93-ch06-kargel-dor-status-2026-09-06.md",
+          "branch_blob": "eabe11cc9a0ffb155cc7e4f67ece4023c37d57d8",
+          "main_blob": "eabe11cc9a0ffb155cc7e4f67ece4023c37d57d8",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/ch07-mazaev-prokhanov-research",
+      "sha": "74dcaa9ee9754ab6a14374564013bb7fe88a3f32",
+      "ahead": 18,
+      "behind": 622,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/94-ch07-mazaev-prokhanov-source-to-claim-2026-09-06.md",
+          "branch_blob": "b3ea5cd2eab6443817c499fe07aac522dd5b764f",
+          "main_blob": "b3ea5cd2eab6443817c499fe07aac522dd5b764f",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/95-ch07-mazaev-prokhanov-visual-dossier-2026-09-06.md",
+          "branch_blob": "511170feec868e0fade9ca95a0d07c2bba278c98",
+          "main_blob": "511170feec868e0fade9ca95a0d07c2bba278c98",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/96-ch07-vladikavkaz-1912-date-resolution-2026-09-06.md",
+          "branch_blob": "39947da71e4aa21a0bde578895e6dd55d82b1829",
+          "main_blob": "39947da71e4aa21a0bde578895e6dd55d82b1829",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/97-ch07-baptist-1911-1912-periodical-acquisition-2026-09-06.md",
+          "branch_blob": "4bc1a01e21f461638116acdd11ea530696e2175f",
+          "main_blob": "4bc1a01e21f461638116acdd11ea530696e2175f",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/ch07-mazaev-prokhanov-research-v2",
+      "sha": "2a5687bd647027af4a5f5549f2e394d285b9916e",
+      "ahead": 2,
+      "behind": 999,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/ch07-mazaev-prokhanov-source-to-claim-2026-09-06.md",
+          "branch_blob": "9436cbd341ca6462a9d94caeb9399833ff46b2ff",
+          "main_blob": null,
+          "status": "BRANCH_FILE_ABSENT_FROM_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/ch07-mazaev-prokhanov-visual-dossier-2026-09-06.md",
+          "branch_blob": "e6dd6fb07201cf7ac32de51fb50f6bd10376211b",
+          "main_blob": null,
+          "status": "BRANCH_FILE_ABSENT_FROM_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/ch08-print-republic-research",
+      "sha": "58e34295feb3da6caa602bfcaa047e540211145a",
+      "ahead": 9,
+      "behind": 622,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/100-ch08-periodical-acquisition-and-page-control-2026-09-06.md",
+          "branch_blob": "e67dd75516a9bf0ea4a0e638086c464156814506",
+          "main_blob": "e67dd75516a9bf0ea4a0e638086c464156814506",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/101-ch08-print-republic-qa-resolutions-2026-09-06.md",
+          "branch_blob": "62aad53693d715675b00cb482b51bc8dddf1dd66",
+          "main_blob": "62aad53693d715675b00cb482b51bc8dddf1dd66",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/98-ch08-print-republic-source-to-claim-2026-09-06.md",
+          "branch_blob": "d92272c9eb6f2d8109daef8ceef581ff5e2ac654",
+          "main_blob": "d92272c9eb6f2d8109daef8ceef581ff5e2ac654",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/99-ch08-print-republic-visual-dossier-2026-09-06.md",
+          "branch_blob": "031456da526028d96b8c0564da58d898255d2cf1",
+          "main_blob": "031456da526028d96b8c0564da58d898255d2cf1",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/ch09-fetler-house-gospel-research",
+      "sha": "01229056776ce42766bf3d68ec46f4b272dd9588",
+      "ahead": 5,
+      "behind": 622,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/102-ch09-fetler-house-gospel-source-to-claim-2026-09-06.md",
+          "branch_blob": "cf20484be979d5504a74fdeca3b9bb3889eb997a",
+          "main_blob": "cf20484be979d5504a74fdeca3b9bb3889eb997a",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/103-ch09-fetler-house-gospel-visual-dossier-2026-09-06.md",
+          "branch_blob": "54b56a8cec5731a5299e292145b55ec195308913",
+          "main_blob": "54b56a8cec5731a5299e292145b55ec195308913",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/104-ch09-house-gospel-date-and-calendar-control-2026-09-06.md",
+          "branch_blob": "fa65b91f1524902552abbbbfeb1051c58bce3f2c",
+          "main_blob": "fa65b91f1524902552abbbbfeb1051c58bce3f2c",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/105-ch09-fetler-war-arrest-exile-source-resolution-2026-09-06.md",
+          "branch_blob": "07f775ad1e4aa2bdf4060385d0c081a452140a5f",
+          "main_blob": "07f775ad1e4aa2bdf4060385d0c081a452140a5f",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/ch10-1917-1921-research",
+      "sha": "7e0b5159200ed3fae09f1a528c294b14408bf36a",
+      "ahead": 6,
+      "behind": 622,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/106-ch10-1917-1921-source-to-claim-2026-09-06.md",
+          "branch_blob": "7ea6509e372b7d3bc579617bc9d07d0237d5206d",
+          "main_blob": "7ea6509e372b7d3bc579617bc9d07d0237d5206d",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/107-ch10-1917-1921-visual-dossier-2026-09-06.md",
+          "branch_blob": "cf454c442f45374ab5a61c220ffa47026c1c0c76",
+          "main_blob": "cf454c442f45374ab5a61c220ffa47026c1c0c76",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/108-ch10-1917-1921-date-and-calendar-control-2026-09-06.md",
+          "branch_blob": "f51b9c71aa8514a0ff36b7a895ef4fb734467f6d",
+          "main_blob": "f51b9c71aa8514a0ff36b7a895ef4fb734467f6d",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/109-ch10-conscience-military-duty-and-state-resolution-1918-1921-2026-09-06.md",
+          "branch_blob": "04eb4b27ac3f3bd2dac665dfcaeaf1506d7bc91c",
+          "main_blob": "04eb4b27ac3f3bd2dac665dfcaeaf1506d7bc91c",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/ch11-famine-international-brotherhood-research",
+      "sha": "216b5165e4c85a7130c4e24687805d68f70b1c5d",
+      "ahead": 6,
+      "behind": 622,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/110-ch11-famine-international-brotherhood-source-to-claim-2026-09-06.md",
+          "branch_blob": "6bded891112d986f8147c33f1c1bff412c291cec",
+          "main_blob": "6bded891112d986f8147c33f1c1bff412c291cec",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/111-ch11-famine-international-brotherhood-visual-dossier-2026-09-06.md",
+          "branch_blob": "1b2bee37f9cbd320aa4e9c1c74dd6b72010f68fb",
+          "main_blob": "1b2bee37f9cbd320aa4e9c1c74dd6b72010f68fb",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/112-ch11-international-relief-network-and-source-resolution-2026-09-06.md",
+          "branch_blob": "22487a4be8c8309d4a355847a1d2b9ee09262995",
+          "main_blob": "22487a4be8c8309d4a355847a1d2b9ee09262995",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/113-ch11-wardin-archive-recovery-map-2026-09-06.md",
+          "branch_blob": "cc01de48127884653ae38a2e6c5106b804fdef21",
+          "main_blob": "cc01de48127884653ae38a2e6c5106b804fdef21",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/114-ch11-to-ch12-relief-reconstruction-boundary-2026-09-06.md",
+          "branch_blob": "4b409129dd94b72d516155b130f3156d0e30b4e6",
+          "main_blob": "4b409129dd94b72d516155b130f3156d0e30b4e6",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/ch12-school-bible-failed-unity-research",
+      "sha": "4c6c7ac8364c178f897790d003c3ba0a2d8d1d61",
+      "ahead": 6,
+      "behind": 622,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/115-ch12-school-bible-failed-unity-source-to-claim-2026-09-06.md",
+          "branch_blob": "09749922e01b140c9f44293a0a203e6ea6d6e65d",
+          "main_blob": "09749922e01b140c9f44293a0a203e6ea6d6e65d",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/116-ch12-school-bible-failed-unity-visual-dossier-2026-09-06.md",
+          "branch_blob": "97897e0a4995ebbd598dbab305bd01f9ef4253c1",
+          "main_blob": "97897e0a4995ebbd598dbab305bd01f9ef4253c1",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/117-ch12-joint-to-separate-bible-courses-source-resolution-2026-09-06.md",
+          "branch_blob": "64d1b97434e41dab2ac6486b294eaa0271e8c23e",
+          "main_blob": "64d1b97434e41dab2ac6486b294eaa0271e8c23e",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/118-ch12-bible-and-periodical-publishing-object-audit-2026-09-06.md",
+          "branch_blob": "127d88c4a79166d1bec72efbab443198319262d7",
+          "main_blob": "127d88c4a79166d1bec72efbab443198319262d7",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/119-ch12-1924-bible-course-duration-and-label-resolution-2026-09-06.md",
+          "branch_blob": "9176b4edf9479ff516c7957c9cf247274bc0ccf8",
+          "main_blob": "9176b4edf9479ff516c7957c9cf247274bc0ccf8",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/ch13-conscience-army-state-research",
+      "sha": "143c1685fe4c691fd6c74eb144d1dc6f3cd82626",
+      "ahead": 5,
+      "behind": 607,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/120-ch13-conscience-army-state-source-to-claim-2026-09-06.md",
+          "branch_blob": "deb1049d39c28f3cfc0b993a971399eec8b8c6bb",
+          "main_blob": "deb1049d39c28f3cfc0b993a971399eec8b8c6bb",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/121-ch13-conscience-army-state-visual-dossier-2026-09-06.md",
+          "branch_blob": "e01629aba0b1a5f968c21ff3b413ac712e8aeecb",
+          "main_blob": "e01629aba0b1a5f968c21ff3b413ac712e8aeecb",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/122-ch13-circular-237-and-1925-law-legal-control-2026-09-06.md",
+          "branch_blob": "1c0f3b5b9fc22b5aad5d00f5ef59c24ab361f7e9",
+          "main_blob": "1c0f3b5b9fc22b5aad5d00f5ef59c24ab361f7e9",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/123-ch13-1923-1926-congress-resolution-and-arrest-count-control-2026-09-06.md",
+          "branch_blob": "d95d6a4e7de10b01249dffa248402513d507b077",
+          "main_blob": "d95d6a4e7de10b01249dffa248402513d507b077",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/ch14-1929-law-church-life-research",
+      "sha": "2b35deeb0667190d5a9fcfab87ac8dba39f918b4",
+      "ahead": 7,
+      "behind": 607,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/124-ch14-1929-law-church-life-source-to-claim-2026-09-06.md",
+          "branch_blob": "df989449de953024375d6867f6648a098eb5b4a2",
+          "main_blob": "df989449de953024375d6867f6648a098eb5b4a2",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/125-ch14-1929-law-church-life-visual-dossier-2026-09-06.md",
+          "branch_blob": "820feaff1ffd10f7f85b8afa75d1d842986956a5",
+          "main_blob": "820feaff1ffd10f7f85b8afa75d1d842986956a5",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/126-ch14-1929-law-church-life-legal-control-2026-09-06.md",
+          "branch_blob": "71024e0817c1e75a0bc48a3e6f2b292a49202ce5",
+          "main_blob": "71024e0817c1e75a0bc48a3e6f2b292a49202ce5",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/127-ch14-1929-law-church-life-implementation-response-control-2026-09-06.md",
+          "branch_blob": "aced439e3fe73b732dc634b5b1c63b1448adf093",
+          "main_blob": "aced439e3fe73b732dc634b5b1c63b1448adf093",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/ch15-1930s-unions-great-terror-research",
+      "sha": "223be7bc08e84117b5405104e646d6791164dacf",
+      "ahead": 7,
+      "behind": 607,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/128-ch15-1930s-unions-great-terror-source-to-claim-2026-09-06.md",
+          "branch_blob": "eb615a4d7503eb8a9d89db799c2f001bd7fc38c9",
+          "main_blob": "eb615a4d7503eb8a9d89db799c2f001bd7fc38c9",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/129-ch15-1930s-unions-great-terror-visual-dossier-2026-09-06.md",
+          "branch_blob": "eeb8ff957049fcef76f23385a6c978cf7ad626bf",
+          "main_blob": "eeb8ff957049fcef76f23385a6c978cf7ad626bf",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/130-ch15-1930s-repression-mechanism-case-attribution-control-2026-09-06.md",
+          "branch_blob": "11be67038831f95cdb0c950d6cd21cb6dbff7eda",
+          "main_blob": "11be67038831f95cdb0c950d6cd21cb6dbff7eda",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/131-ch15-regional-survival-novosibirsk-kuksenko-control-2026-09-06.md",
+          "branch_blob": "94fb4b796e69b6fa80db748b4eca082bbd6ae55b",
+          "main_blob": "94fb4b796e69b6fa80db748b4eca082bbd6ae55b",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/ch16-war-1944-union-research",
+      "sha": "808697d7307c7090a5b49a47bf7b0c2888e82a7c",
+      "ahead": 5,
+      "behind": 607,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/132-ch16-war-1944-union-source-to-claim-2026-09-06.md",
+          "branch_blob": "4a92991d69002d7e8ef2a6c135ed07537429e44e",
+          "main_blob": "4a92991d69002d7e8ef2a6c135ed07537429e44e",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/133-ch16-war-1944-union-visual-document-dossier-2026-09-06.md",
+          "branch_blob": "95f2f78ebb57ca96b8dfc6e4cc384894a801ca39",
+          "main_blob": "95f2f78ebb57ca96b8dfc6e4cc384894a801ca39",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/134-ch16-1942-leader-release-state-causality-control-2026-09-06.md",
+          "branch_blob": "313a0f5929c54801bb99e87bdd52be3cb5a17b59",
+          "main_blob": "313a0f5929c54801bb99e87bdd52be3cb5a17b59",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/ch17-vsehb-1945-1959-research",
+      "sha": "d59f1ec3d971bed0d077432a5f742bbb492154f6",
+      "ahead": 0,
+      "behind": 617,
+      "files": []
+    },
+    {
+      "branch": "book/ch20-international-1991-memory-research",
+      "sha": "1ebf772850922ac1b9efd6c8f3b68732467ee481",
+      "ahead": 12,
+      "behind": 607,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/135-ch20-international-voice-1990-1992-memory-source-to-claim-2026-09-06.md",
+          "branch_blob": "eec5adfaf57936efe90be9a2ad8c8ec3dde80442",
+          "main_blob": "eec5adfaf57936efe90be9a2ad8c8ec3dde80442",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/136-ch20-external-archive-emigration-provenance-control-2026-09-06.md",
+          "branch_blob": "c27f4bbfb25d70ce7c1d0e743a809ae08110937a",
+          "main_blob": "c27f4bbfb25d70ce7c1d0e743a809ae08110937a",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/137-ch20-international-voice-memory-visual-archive-dossier-2026-09-06.md",
+          "branch_blob": "869e4820c4d6cee4e02ff7937b3b6b484ce622a8",
+          "main_blob": "869e4820c4d6cee4e02ff7937b3b6b484ce622a8",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/138-ch20-1990-1992-institutional-succession-memory-control-2026-09-06.md",
+          "branch_blob": "5d3ac37737d579c75094af26fcaba50c27933c06",
+          "main_blob": "5d3ac37737d579c75094af26fcaba50c27933c06",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/139-ch20-vins-1976-1979-international-diplomacy-testimony-control-2026-09-06.md",
+          "branch_blob": "8235ce11eb692f0815d334b93940cf9f7491f12e",
+          "main_blob": "8235ce11eb692f0815d334b93940cf9f7491f12e",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/140-ch20-eaf-charter-1992-congress-date-conflict-control-2026-09-06.md",
+          "branch_blob": "4587ae544a24d1e3ac284b8925aee1d8cc29979d",
+          "main_blob": "4587ae544a24d1e3ac284b8925aee1d8cc29979d",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/141-ch20-vins-citizenship-1979-1990-legal-instrument-control-2026-09-06.md",
+          "branch_blob": "4cd4c2b1a28869490183727efcc487834ece6cf9",
+          "main_blob": "4cd4c2b1a28869490183727efcc487834ece6cf9",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/142-ch20-international-representation-1980-formation-control-2026-09-06.md",
+          "branch_blob": "1f4043c78d557751f845be4384a477a983853396",
+          "main_blob": "1f4043c78d557751f845be4384a477a983853396",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/143-ch20-rehabilitation-memory-person-level-control-2026-09-06.md",
+          "branch_blob": "da19f57e59f60ab6be679b460593af8c4e54d2b6",
+          "main_blob": "da19f57e59f60ab6be679b460593af8c4e54d2b6",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/144-ch20-kc22-registered-baptist-counterarchive-control-2026-09-06.md",
+          "branch_blob": "692257d10dd4603856354708fa8b309b23332438",
+          "main_blob": "692257d10dd4603856354708fa8b309b23332438",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/145-ch20-kc29-vins-csce-translation-chain-control-2026-09-06.md",
+          "branch_blob": "91bb7acbd74fda0811694d08c1eb26bb7747205a",
+          "main_blob": "91bb7acbd74fda0811694d08c1eb26bb7747205a",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/iniciativnaya-gruppa-golden-chapter",
+      "sha": "fe5a5d253b3838726027fad04892c11008285500",
+      "ahead": 6,
+      "behind": 588,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/12-iniciativnaya-gruppa-golden-chapter-source-to-claim-2026-09-06.md",
+          "branch_blob": "b321e4f6bb48062a2ce64b77a4bceb793cb09a49",
+          "main_blob": "b321e4f6bb48062a2ce64b77a4bceb793cb09a49",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/13-iniciativnaya-gruppa-visual-dossier-2026-09-06.md",
+          "branch_blob": "5516e7399ae422b35afdbb7c2c857e79c43f3ab4",
+          "main_blob": "5516e7399ae422b35afdbb7c2c857e79c43f3ab4",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/18-iniciativnaya-gruppa-1962-orgkomitet-document-recovery-2026-09-06.md",
+          "branch_blob": "4b2c0af9b5ee635666f27016ae7fef359377f1aa",
+          "main_blob": "4b2c0af9b5ee635666f27016ae7fef359377f1aa",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/19-iniciativnaya-gruppa-1962-orgkomitet-archival-citation-chain-2026-09-06.md",
+          "branch_blob": "6a4b77568784c256b77a1bd8311fe6151d02f098",
+          "main_blob": "6a4b77568784c256b77a1bd8311fe6151d02f098",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "book/podpolnaya-pechat-golden-chapter",
+      "sha": "af4bb4f2a521dcb85cf186094ec697cfa4efedcb",
+      "ahead": 5,
+      "behind": 622,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/14-podpolnaya-pechat-golden-chapter-source-to-claim-2026-09-06.md",
+          "branch_blob": "c3f98d4e8a884f0fc9038c96c948393e38e49ff7",
+          "main_blob": "c3f98d4e8a884f0fc9038c96c948393e38e49ff7",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/15-podpolnaya-pechat-visual-dossier-2026-09-06.md",
+          "branch_blob": "1245a2d7cf176bc16dfbf57192f8e4845094b0a6",
+          "main_blob": "1245a2d7cf176bc16dfbf57192f8e4845094b0a6",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/16-podpolnaya-pechat-bulletin-44-pdf-verification-2026-09-06.md",
+          "branch_blob": "88149eeb30584e374f596c63c4defd0d91cb0725",
+          "main_blob": "51e245cd945f270b343e9108e5ceb85cab6afb78",
+          "status": "CURRENT_FILE_DIFFERS_REVIEW"
+        }
+      ]
+    },
+    {
+      "branch": "book/vsehib-1944-golden-chapter",
+      "sha": "d3f209c90d6e5c8adc0741a8569863039dbccd43",
+      "ahead": 4,
+      "behind": 588,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/10-vsehib-1944-golden-chapter-source-to-claim-2026-09-06.md",
+          "branch_blob": "7e0b21cfae5996953d474b0ea602815040493d5f",
+          "main_blob": "7e0b21cfae5996953d474b0ea602815040493d5f",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/11-vsehib-1944-visual-dossier-2026-09-06.md",
+          "branch_blob": "b4a503033c537647d968da7db46cd931fcd8466d",
+          "main_blob": "b4a503033c537647d968da7db46cd931fcd8466d",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/12-vsehib-1944-brotherly-vestnik-1945-01-acquisition-gap-2026-09-06.md",
+          "branch_blob": "14c04591316f88505bbb0efcd05aa5a7cad155f6",
+          "main_blob": "14c04591316f88505bbb0efcd05aa5a7cad155f6",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "feat/baptist-authentic-media-composition-20260912",
+      "sha": "320866f994f4372c90e84f97c368bffb1ed942a7",
+      "ahead": 2,
+      "behind": 167,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/media-ledger.md",
+          "branch_blob": "f5a8e0d46cf98573fb98f9161f65b425289dd1e6",
+          "main_blob": "f5a8e0d46cf98573fb98f9161f65b425289dd1e6",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/bulletin-relatives-1972.jpg",
+          "branch_blob": "d0f14c3e7078b5c6b706f262aba92d4f1b572048",
+          "main_blob": "d0f14c3e7078b5c6b706f262aba92d4f1b572048",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/bulletin-relatives-1981.jpg",
+          "branch_blob": "5f28bf95d00a07739408d965f093196dc22f474f",
+          "main_blob": "5f28bf95d00a07739408d965f093196dc22f474f",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/initiative-letter-1961.jpg",
+          "branch_blob": "52703bcd75ae45dd00cec3c5e6d27e23716c4dcc",
+          "main_blob": "52703bcd75ae45dd00cec3c5e6d27e23716c4dcc",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/kalveit.jpg",
+          "branch_blob": "360c449ef87531ed7465943a444565670402c91e",
+          "main_blob": "360c449ef87531ed7465943a444565670402c91e",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/kargel-ivan.jpg",
+          "branch_blob": "7bad748a91e05e3da527ba6985778af4148dd81e",
+          "main_blob": "7bad748a91e05e3da527ba6985778af4148dd81e",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/kryuchkov-vins-trial-1966.jpg",
+          "branch_blob": "72ad08994bc78de697ef30f5b41847ab65e3d6cf",
+          "main_blob": "72ad08994bc78de697ef30f5b41847ab65e3d6cf",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/pashkov-vasily.jpg",
+          "branch_blob": "ae1d1c5a270c0dd411b8ea17034182c52783ab72",
+          "main_blob": "ae1d1c5a270c0dd411b8ea17034182c52783ab72",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/prokhanov-young.png",
+          "branch_blob": "245f1b06952b85abce1f450611cc04d0520152db",
+          "main_blob": "245f1b06952b85abce1f450611cc04d0520152db",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/ratushny-mikhail.jpg",
+          "branch_blob": "85d876206f37effc42fa1fca3cac7fb3f51c39a4",
+          "main_blob": "85d876206f37effc42fa1fca3cac7fb3f51c39a4",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/ratushny-pavlov-lisitsin.jpg",
+          "branch_blob": "0cd1e7509d932efb54cb0914a30be04d169f95eb",
+          "main_blob": "0cd1e7509d932efb54cb0914a30be04d169f95eb",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/vestnik-spaseniya-1965.jpg",
+          "branch_blob": "95f47d3f1f97c05b921aad4d801c649e9cc9f20a",
+          "main_blob": "95f47d3f1f97c05b921aad4d801c649e9cc9f20a",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/vladivostok-appeal-1961.jpg",
+          "branch_blob": "86dd9b7a1f490be4d7b5ec310f081b37b50d3a94",
+          "main_blob": "86dd9b7a1f490be4d7b5ec310f081b37b50d3a94",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/voronin-nikita.jpg",
+          "branch_blob": "6b5614bc1e90fead71ea2e893f6a3e883ca5caaa",
+          "main_blob": "6b5614bc1e90fead71ea2e893f6a3e883ca5caaa",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/vsehb-august-1945.png",
+          "branch_blob": "fc462c9ba22befe8d5e5ca5f394d064748b92cd2",
+          "main_blob": "fc462c9ba22befe8d5e5ca5f394d064748b92cd2",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/raw-media/commons/wieler-family-before-1889.jpg",
+          "branch_blob": "7d36dbcb9749678f6ab4426c81df8fc6a5932b1d",
+          "main_blob": "7d36dbcb9749678f6ab4426c81df8fc6a5932b1d",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/baptisty-book-status-20260911",
+      "sha": "4c247491304e52af50d6b3c5696cc9015362d49c",
+      "ahead": 1,
+      "behind": 498,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/148-book-production-reconciliation-status-2026-09-11.md",
+          "branch_blob": "fb6bcfe438071672c8e010eab2f36c4db4ab071b",
+          "main_blob": null,
+          "status": "BRANCH_FILE_ABSENT_FROM_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/baptisty-media-recovery-20260911",
+      "sha": "a85cd926d3ee58a3f5cf49b7a98a034b84bdab05",
+      "ahead": 1,
+      "behind": 498,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/147-media-container-recovery-status-2026-09-11.md",
+          "branch_blob": "184de2c577bb8ccfd1714d497768bb210fbd5aee",
+          "main_blob": null,
+          "status": "BRANCH_FILE_ABSENT_FROM_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch01-pre-baptist-origins-research-20260911",
+      "sha": "a22513308d5d0d798d9ca40289b6a7038f16c697",
+      "ahead": 3,
+      "behind": 502,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/146-ch01-pre-baptist-origins-authority-reconciliation-2026-09-11.md",
+          "branch_blob": "d3272f65e70795f5e0a6c811f2cd9a6c3bf025a3",
+          "main_blob": null,
+          "status": "BRANCH_FILE_ABSENT_FROM_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch06-kargel-research-20260911",
+      "sha": "d4e2b4e50ac65bd311ceb2764bbb6a85335a8b14",
+      "ahead": 11,
+      "behind": 513,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/85-ch06-kargel-source-to-claim-2026-09-06.md",
+          "branch_blob": "4ca051cf71eacc2d323dad18b48544285142b832",
+          "main_blob": "4ca051cf71eacc2d323dad18b48544285142b832",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/86-ch06-kargel-visual-dossier-2026-09-06.md",
+          "branch_blob": "008ad935fad139e621209a6c8e00d193432a8a59",
+          "main_blob": "008ad935fad139e621209a6c8e00d193432a8a59",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/87-ch06-kargel-1884-novovasilievka-role-closure-2026-09-06.md",
+          "branch_blob": "68d5c033261a6c912b4063f3083a63844f945908",
+          "main_blob": "68d5c033261a6c912b4063f3083a63844f945908",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/88-ch06-kargel-1907-congress-role-closure-2026-09-06.md",
+          "branch_blob": "1c91ac6a877bf9805b389fbf78f769f368f3eda2",
+          "main_blob": "1c91ac6a877bf9805b389fbf78f769f368f3eda2",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/89-ch06-kargel-1913-creed-facsimile-identity-rights-2026-09-06.md",
+          "branch_blob": "abf1f31cb57fae68894e4e7149f96128cfb2ec47",
+          "main_blob": "abf1f31cb57fae68894e4e7149f96128cfb2ec47",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/90-ch06-kargel-1913-theology-claim-matrix-2026-09-06.md",
+          "branch_blob": "676abb7900e0d8ad137e9e79251288b8870549a0",
+          "main_blob": "676abb7900e0d8ad137e9e79251288b8870549a0",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/91-ch06-kargel-baedeker-prison-mission-source-pass-2026-09-06.md",
+          "branch_blob": "e30fb7263878ca68ba6957d1c513ab841933f941",
+          "main_blob": "e30fb7263878ca68ba6957d1c513ab841933f941",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/92-ch06-kargel-1869-baptism-discrepancy-resolution-2026-09-06.md",
+          "branch_blob": "9eb9a4c07d10211630bbd56bd9c7e8b62bbe0bee",
+          "main_blob": "9eb9a4c07d10211630bbd56bd9c7e8b62bbe0bee",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/93-ch06-kargel-dor-status-2026-09-06.md",
+          "branch_blob": "eabe11cc9a0ffb155cc7e4f67ece4023c37d57d8",
+          "main_blob": "eabe11cc9a0ffb155cc7e4f67ece4023c37d57d8",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch07-mazaev-prokhanov-research-20260911",
+      "sha": "94abbd7b8d023b4e651c525520e944a228eb4613",
+      "ahead": 19,
+      "behind": 513,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/94-ch07-mazaev-prokhanov-source-to-claim-2026-09-06.md",
+          "branch_blob": "b3ea5cd2eab6443817c499fe07aac522dd5b764f",
+          "main_blob": "b3ea5cd2eab6443817c499fe07aac522dd5b764f",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/95-ch07-mazaev-prokhanov-visual-dossier-2026-09-06.md",
+          "branch_blob": "511170feec868e0fade9ca95a0d07c2bba278c98",
+          "main_blob": "511170feec868e0fade9ca95a0d07c2bba278c98",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/96-ch07-vladikavkaz-1912-date-resolution-2026-09-06.md",
+          "branch_blob": "39947da71e4aa21a0bde578895e6dd55d82b1829",
+          "main_blob": "39947da71e4aa21a0bde578895e6dd55d82b1829",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/97-ch07-baptist-1911-1912-periodical-acquisition-2026-09-06.md",
+          "branch_blob": "4bc1a01e21f461638116acdd11ea530696e2175f",
+          "main_blob": "4bc1a01e21f461638116acdd11ea530696e2175f",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch08-print-republic-research-20260911",
+      "sha": "b2a7fbd7fb3a329ba0b5abceddefd0fb6d2b48f1",
+      "ahead": 10,
+      "behind": 513,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/100-ch08-periodical-acquisition-and-page-control-2026-09-06.md",
+          "branch_blob": "e67dd75516a9bf0ea4a0e638086c464156814506",
+          "main_blob": "e67dd75516a9bf0ea4a0e638086c464156814506",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/101-ch08-print-republic-qa-resolutions-2026-09-06.md",
+          "branch_blob": "62aad53693d715675b00cb482b51bc8dddf1dd66",
+          "main_blob": "62aad53693d715675b00cb482b51bc8dddf1dd66",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/98-ch08-print-republic-source-to-claim-2026-09-06.md",
+          "branch_blob": "d92272c9eb6f2d8109daef8ceef581ff5e2ac654",
+          "main_blob": "d92272c9eb6f2d8109daef8ceef581ff5e2ac654",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/99-ch08-print-republic-visual-dossier-2026-09-06.md",
+          "branch_blob": "031456da526028d96b8c0564da58d898255d2cf1",
+          "main_blob": "031456da526028d96b8c0564da58d898255d2cf1",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch09-fetler-house-gospel-research-20260911",
+      "sha": "79b5265ad363e0c7db6ba9ebd066afcc0cde6a92",
+      "ahead": 6,
+      "behind": 513,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/102-ch09-fetler-house-gospel-source-to-claim-2026-09-06.md",
+          "branch_blob": "cf20484be979d5504a74fdeca3b9bb3889eb997a",
+          "main_blob": "cf20484be979d5504a74fdeca3b9bb3889eb997a",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/103-ch09-fetler-house-gospel-visual-dossier-2026-09-06.md",
+          "branch_blob": "54b56a8cec5731a5299e292145b55ec195308913",
+          "main_blob": "54b56a8cec5731a5299e292145b55ec195308913",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/104-ch09-house-gospel-date-and-calendar-control-2026-09-06.md",
+          "branch_blob": "fa65b91f1524902552abbbbfeb1051c58bce3f2c",
+          "main_blob": "fa65b91f1524902552abbbbfeb1051c58bce3f2c",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/105-ch09-fetler-war-arrest-exile-source-resolution-2026-09-06.md",
+          "branch_blob": "07f775ad1e4aa2bdf4060385d0c081a452140a5f",
+          "main_blob": "07f775ad1e4aa2bdf4060385d0c081a452140a5f",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch10-1917-1921-research-20260911",
+      "sha": "43f15e206d0ea3ab003f4b121c0cab802b59311f",
+      "ahead": 7,
+      "behind": 513,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/106-ch10-1917-1921-source-to-claim-2026-09-06.md",
+          "branch_blob": "7ea6509e372b7d3bc579617bc9d07d0237d5206d",
+          "main_blob": "7ea6509e372b7d3bc579617bc9d07d0237d5206d",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/107-ch10-1917-1921-visual-dossier-2026-09-06.md",
+          "branch_blob": "cf454c442f45374ab5a61c220ffa47026c1c0c76",
+          "main_blob": "cf454c442f45374ab5a61c220ffa47026c1c0c76",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/108-ch10-1917-1921-date-and-calendar-control-2026-09-06.md",
+          "branch_blob": "f51b9c71aa8514a0ff36b7a895ef4fb734467f6d",
+          "main_blob": "f51b9c71aa8514a0ff36b7a895ef4fb734467f6d",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/109-ch10-conscience-military-duty-and-state-resolution-1918-1921-2026-09-06.md",
+          "branch_blob": "04eb4b27ac3f3bd2dac665dfcaeaf1506d7bc91c",
+          "main_blob": "04eb4b27ac3f3bd2dac665dfcaeaf1506d7bc91c",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch11-famine-international-brotherhood-research-20260911",
+      "sha": "7ec892cce9d2ea4186919515697d8ea1628622c3",
+      "ahead": 7,
+      "behind": 513,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/110-ch11-famine-international-brotherhood-source-to-claim-2026-09-06.md",
+          "branch_blob": "6bded891112d986f8147c33f1c1bff412c291cec",
+          "main_blob": "6bded891112d986f8147c33f1c1bff412c291cec",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/111-ch11-famine-international-brotherhood-visual-dossier-2026-09-06.md",
+          "branch_blob": "1b2bee37f9cbd320aa4e9c1c74dd6b72010f68fb",
+          "main_blob": "1b2bee37f9cbd320aa4e9c1c74dd6b72010f68fb",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/112-ch11-international-relief-network-and-source-resolution-2026-09-06.md",
+          "branch_blob": "22487a4be8c8309d4a355847a1d2b9ee09262995",
+          "main_blob": "22487a4be8c8309d4a355847a1d2b9ee09262995",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/113-ch11-wardin-archive-recovery-map-2026-09-06.md",
+          "branch_blob": "cc01de48127884653ae38a2e6c5106b804fdef21",
+          "main_blob": "cc01de48127884653ae38a2e6c5106b804fdef21",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/114-ch11-to-ch12-relief-reconstruction-boundary-2026-09-06.md",
+          "branch_blob": "4b409129dd94b72d516155b130f3156d0e30b4e6",
+          "main_blob": "4b409129dd94b72d516155b130f3156d0e30b4e6",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch12-school-bible-failed-unity-research-20260911",
+      "sha": "2c70bbd37603074ebea77d2d4422469ba2492d08",
+      "ahead": 7,
+      "behind": 513,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/115-ch12-school-bible-failed-unity-source-to-claim-2026-09-06.md",
+          "branch_blob": "09749922e01b140c9f44293a0a203e6ea6d6e65d",
+          "main_blob": "09749922e01b140c9f44293a0a203e6ea6d6e65d",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/116-ch12-school-bible-failed-unity-visual-dossier-2026-09-06.md",
+          "branch_blob": "97897e0a4995ebbd598dbab305bd01f9ef4253c1",
+          "main_blob": "97897e0a4995ebbd598dbab305bd01f9ef4253c1",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/117-ch12-joint-to-separate-bible-courses-source-resolution-2026-09-06.md",
+          "branch_blob": "64d1b97434e41dab2ac6486b294eaa0271e8c23e",
+          "main_blob": "64d1b97434e41dab2ac6486b294eaa0271e8c23e",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/118-ch12-bible-and-periodical-publishing-object-audit-2026-09-06.md",
+          "branch_blob": "127d88c4a79166d1bec72efbab443198319262d7",
+          "main_blob": "127d88c4a79166d1bec72efbab443198319262d7",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/119-ch12-1924-bible-course-duration-and-label-resolution-2026-09-06.md",
+          "branch_blob": "9176b4edf9479ff516c7957c9cf247274bc0ccf8",
+          "main_blob": "9176b4edf9479ff516c7957c9cf247274bc0ccf8",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch13-conscience-army-state-research-20260911",
+      "sha": "673af6d1210512ebe2f936002082c215df601cca",
+      "ahead": 6,
+      "behind": 513,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/120-ch13-conscience-army-state-source-to-claim-2026-09-06.md",
+          "branch_blob": "deb1049d39c28f3cfc0b993a971399eec8b8c6bb",
+          "main_blob": "deb1049d39c28f3cfc0b993a971399eec8b8c6bb",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/121-ch13-conscience-army-state-visual-dossier-2026-09-06.md",
+          "branch_blob": "e01629aba0b1a5f968c21ff3b413ac712e8aeecb",
+          "main_blob": "e01629aba0b1a5f968c21ff3b413ac712e8aeecb",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/122-ch13-circular-237-and-1925-law-legal-control-2026-09-06.md",
+          "branch_blob": "1c0f3b5b9fc22b5aad5d00f5ef59c24ab361f7e9",
+          "main_blob": "1c0f3b5b9fc22b5aad5d00f5ef59c24ab361f7e9",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/123-ch13-1923-1926-congress-resolution-and-arrest-count-control-2026-09-06.md",
+          "branch_blob": "d95d6a4e7de10b01249dffa248402513d507b077",
+          "main_blob": "d95d6a4e7de10b01249dffa248402513d507b077",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch14-1929-law-church-life-research-20260911",
+      "sha": "95537773650b06f74e115dc7477a11f10e8fac6c",
+      "ahead": 8,
+      "behind": 513,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/124-ch14-1929-law-church-life-source-to-claim-2026-09-06.md",
+          "branch_blob": "df989449de953024375d6867f6648a098eb5b4a2",
+          "main_blob": "df989449de953024375d6867f6648a098eb5b4a2",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/125-ch14-1929-law-church-life-visual-dossier-2026-09-06.md",
+          "branch_blob": "820feaff1ffd10f7f85b8afa75d1d842986956a5",
+          "main_blob": "820feaff1ffd10f7f85b8afa75d1d842986956a5",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/126-ch14-1929-law-church-life-legal-control-2026-09-06.md",
+          "branch_blob": "71024e0817c1e75a0bc48a3e6f2b292a49202ce5",
+          "main_blob": "71024e0817c1e75a0bc48a3e6f2b292a49202ce5",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/127-ch14-1929-law-church-life-implementation-response-control-2026-09-06.md",
+          "branch_blob": "aced439e3fe73b732dc634b5b1c63b1448adf093",
+          "main_blob": "aced439e3fe73b732dc634b5b1c63b1448adf093",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch14-1929-law-church-life-research-20260911-g2",
+      "sha": "286c9cf741f6605f37f3bd095b408c680787053d",
+      "ahead": 4,
+      "behind": 440,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/124-ch14-1929-law-church-life-source-to-claim-2026-09-06.md",
+          "branch_blob": "df989449de953024375d6867f6648a098eb5b4a2",
+          "main_blob": "df989449de953024375d6867f6648a098eb5b4a2",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/125-ch14-1929-law-church-life-visual-dossier-2026-09-06.md",
+          "branch_blob": "820feaff1ffd10f7f85b8afa75d1d842986956a5",
+          "main_blob": "820feaff1ffd10f7f85b8afa75d1d842986956a5",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/126-ch14-1929-law-church-life-legal-control-2026-09-06.md",
+          "branch_blob": "71024e0817c1e75a0bc48a3e6f2b292a49202ce5",
+          "main_blob": "71024e0817c1e75a0bc48a3e6f2b292a49202ce5",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/127-ch14-1929-law-church-life-implementation-response-control-2026-09-06.md",
+          "branch_blob": "aced439e3fe73b732dc634b5b1c63b1448adf093",
+          "main_blob": "aced439e3fe73b732dc634b5b1c63b1448adf093",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch14-1929-law-church-life-research-20260911-g3",
+      "sha": "bd7f6a6afb860a8a64e47b412fb90f970a9d971a",
+      "ahead": 4,
+      "behind": 439,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/124-ch14-1929-law-church-life-source-to-claim-2026-09-06.md",
+          "branch_blob": "df989449de953024375d6867f6648a098eb5b4a2",
+          "main_blob": "df989449de953024375d6867f6648a098eb5b4a2",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/125-ch14-1929-law-church-life-visual-dossier-2026-09-06.md",
+          "branch_blob": "820feaff1ffd10f7f85b8afa75d1d842986956a5",
+          "main_blob": "820feaff1ffd10f7f85b8afa75d1d842986956a5",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/126-ch14-1929-law-church-life-legal-control-2026-09-06.md",
+          "branch_blob": "71024e0817c1e75a0bc48a3e6f2b292a49202ce5",
+          "main_blob": "71024e0817c1e75a0bc48a3e6f2b292a49202ce5",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/127-ch14-1929-law-church-life-implementation-response-control-2026-09-06.md",
+          "branch_blob": "aced439e3fe73b732dc634b5b1c63b1448adf093",
+          "main_blob": "aced439e3fe73b732dc634b5b1c63b1448adf093",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch15-1930s-unions-great-terror-research-20260911",
+      "sha": "8857372311c405c7b2bba32b5ee1154b992af9a2",
+      "ahead": 8,
+      "behind": 513,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/128-ch15-1930s-unions-great-terror-source-to-claim-2026-09-06.md",
+          "branch_blob": "eb615a4d7503eb8a9d89db799c2f001bd7fc38c9",
+          "main_blob": "eb615a4d7503eb8a9d89db799c2f001bd7fc38c9",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/129-ch15-1930s-unions-great-terror-visual-dossier-2026-09-06.md",
+          "branch_blob": "eeb8ff957049fcef76f23385a6c978cf7ad626bf",
+          "main_blob": "eeb8ff957049fcef76f23385a6c978cf7ad626bf",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/130-ch15-1930s-repression-mechanism-case-attribution-control-2026-09-06.md",
+          "branch_blob": "11be67038831f95cdb0c950d6cd21cb6dbff7eda",
+          "main_blob": "11be67038831f95cdb0c950d6cd21cb6dbff7eda",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/131-ch15-regional-survival-novosibirsk-kuksenko-control-2026-09-06.md",
+          "branch_blob": "94fb4b796e69b6fa80db748b4eca082bbd6ae55b",
+          "main_blob": "94fb4b796e69b6fa80db748b4eca082bbd6ae55b",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch15-1930s-unions-great-terror-research-20260911-g2",
+      "sha": "398b60fbc450073d69157c7a0ad2a54ea6881553",
+      "ahead": 4,
+      "behind": 432,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/128-ch15-1930s-unions-great-terror-source-to-claim-2026-09-06.md",
+          "branch_blob": "eb615a4d7503eb8a9d89db799c2f001bd7fc38c9",
+          "main_blob": "eb615a4d7503eb8a9d89db799c2f001bd7fc38c9",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/129-ch15-1930s-unions-great-terror-visual-dossier-2026-09-06.md",
+          "branch_blob": "eeb8ff957049fcef76f23385a6c978cf7ad626bf",
+          "main_blob": "eeb8ff957049fcef76f23385a6c978cf7ad626bf",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/130-ch15-1930s-repression-mechanism-case-attribution-control-2026-09-06.md",
+          "branch_blob": "11be67038831f95cdb0c950d6cd21cb6dbff7eda",
+          "main_blob": "11be67038831f95cdb0c950d6cd21cb6dbff7eda",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/131-ch15-regional-survival-novosibirsk-kuksenko-control-2026-09-06.md",
+          "branch_blob": "94fb4b796e69b6fa80db748b4eca082bbd6ae55b",
+          "main_blob": "94fb4b796e69b6fa80db748b4eca082bbd6ae55b",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch16-war-1944-union-research-20260911",
+      "sha": "1fd49598e05e6e4f2d8dda4af601bbd0240dbab5",
+      "ahead": 6,
+      "behind": 513,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/132-ch16-war-1944-union-source-to-claim-2026-09-06.md",
+          "branch_blob": "4a92991d69002d7e8ef2a6c135ed07537429e44e",
+          "main_blob": "4a92991d69002d7e8ef2a6c135ed07537429e44e",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/133-ch16-war-1944-union-visual-document-dossier-2026-09-06.md",
+          "branch_blob": "95f2f78ebb57ca96b8dfc6e4cc384894a801ca39",
+          "main_blob": "95f2f78ebb57ca96b8dfc6e4cc384894a801ca39",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/134-ch16-1942-leader-release-state-causality-control-2026-09-06.md",
+          "branch_blob": "313a0f5929c54801bb99e87bdd52be3cb5a17b59",
+          "main_blob": "313a0f5929c54801bb99e87bdd52be3cb5a17b59",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/ch20-international-1991-memory-research-20260911",
+      "sha": "013164d403ac46294243c61a4444b94175a03dda",
+      "ahead": 13,
+      "behind": 513,
+      "files": [
+        {
+          "path": "baptisty-rossii/research/135-ch20-international-voice-1990-1992-memory-source-to-claim-2026-09-06.md",
+          "branch_blob": "eec5adfaf57936efe90be9a2ad8c8ec3dde80442",
+          "main_blob": "eec5adfaf57936efe90be9a2ad8c8ec3dde80442",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/136-ch20-external-archive-emigration-provenance-control-2026-09-06.md",
+          "branch_blob": "c27f4bbfb25d70ce7c1d0e743a809ae08110937a",
+          "main_blob": "c27f4bbfb25d70ce7c1d0e743a809ae08110937a",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/137-ch20-international-voice-memory-visual-archive-dossier-2026-09-06.md",
+          "branch_blob": "869e4820c4d6cee4e02ff7937b3b6b484ce622a8",
+          "main_blob": "869e4820c4d6cee4e02ff7937b3b6b484ce622a8",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/138-ch20-1990-1992-institutional-succession-memory-control-2026-09-06.md",
+          "branch_blob": "5d3ac37737d579c75094af26fcaba50c27933c06",
+          "main_blob": "5d3ac37737d579c75094af26fcaba50c27933c06",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/139-ch20-vins-1976-1979-international-diplomacy-testimony-control-2026-09-06.md",
+          "branch_blob": "8235ce11eb692f0815d334b93940cf9f7491f12e",
+          "main_blob": "8235ce11eb692f0815d334b93940cf9f7491f12e",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/140-ch20-eaf-charter-1992-congress-date-conflict-control-2026-09-06.md",
+          "branch_blob": "4587ae544a24d1e3ac284b8925aee1d8cc29979d",
+          "main_blob": "4587ae544a24d1e3ac284b8925aee1d8cc29979d",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/141-ch20-vins-citizenship-1979-1990-legal-instrument-control-2026-09-06.md",
+          "branch_blob": "4cd4c2b1a28869490183727efcc487834ece6cf9",
+          "main_blob": "4cd4c2b1a28869490183727efcc487834ece6cf9",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/142-ch20-international-representation-1980-formation-control-2026-09-06.md",
+          "branch_blob": "1f4043c78d557751f845be4384a477a983853396",
+          "main_blob": "1f4043c78d557751f845be4384a477a983853396",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/143-ch20-rehabilitation-memory-person-level-control-2026-09-06.md",
+          "branch_blob": "da19f57e59f60ab6be679b460593af8c4e54d2b6",
+          "main_blob": "da19f57e59f60ab6be679b460593af8c4e54d2b6",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/144-ch20-kc22-registered-baptist-counterarchive-control-2026-09-06.md",
+          "branch_blob": "692257d10dd4603856354708fa8b309b23332438",
+          "main_blob": "692257d10dd4603856354708fa8b309b23332438",
+          "status": "IDENTICAL_IN_MAIN"
+        },
+        {
+          "path": "baptisty-rossii/research/145-ch20-kc29-vins-csce-translation-chain-control-2026-09-06.md",
+          "branch_blob": "91bb7acbd74fda0811694d08c1eb26bb7747205a",
+          "main_blob": "91bb7acbd74fda0811694d08c1eb26bb7747205a",
+          "status": "IDENTICAL_IN_MAIN"
+        }
+      ]
+    },
+    {
+      "branch": "reconcile/security-baptist-kura-nosniff-meta-20260911",
+      "sha": "740f48b1d8b970f6309e4a937161b6749922cf86",
+      "ahead": 7,
+      "behind": 513,
+      "files": []
+    },
+    {
+      "branch": "reconcile/security-gill-nosniff-meta-20260911",
+      "sha": "26dc370830c07c2fba7f8633ae215fa26d0dd724",
+      "ahead": 2,
+      "behind": 513,
+      "files": []
+    }
+  ]
+}
