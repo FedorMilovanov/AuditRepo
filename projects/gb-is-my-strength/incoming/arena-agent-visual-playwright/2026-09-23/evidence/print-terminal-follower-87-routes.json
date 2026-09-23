@@ -1,0 +1,765 @@
+[
+ {
+  "r": "/",
+  "scr": 31,
+  "lost": 1,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/about/",
+  "scr": 23,
+  "lost": 2,
+  "terminal": 2,
+  "secs": [
+   "-",
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/",
+  "scr": 166,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/articles/20-antisovetov-pastoru/",
+  "scr": 364,
+  "lost": 2,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/articles/anatomiya-padeniya-pyat-stadiy/",
+  "scr": 134,
+  "lost": 1,
+  "terminal": 1,
+  "secs": [
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/",
+  "scr": 127,
+  "lost": 1,
+  "terminal": 1,
+  "secs": [
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/chto-bibliya-nazyvaet-serdcem/",
+  "scr": 70,
+  "lost": 9,
+  "terminal": 9,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/diotrefy-nashego-vremeni/",
+  "scr": 198,
+  "lost": 47,
+  "terminal": 1,
+  "secs": [
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/dzhon-gill-chast-1-chelovek/",
+  "scr": 91,
+  "lost": 1,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/articles/dzhon-gill-chast-2-uchenyi/",
+  "scr": 126,
+  "lost": 1,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/articles/dzhon-gill-chast-3-nasledie/",
+  "scr": 151,
+  "lost": 4,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/articles/dzhon-gill-chast-4-ekzeget/",
+  "scr": 73,
+  "lost": 5,
+  "terminal": 4,
+  "secs": [
+   "sec-primary-source-apparatus"
+  ]
+ },
+ {
+  "r": "/articles/dzhon-gill-istoricheskiy-kontekst/",
+  "scr": 110,
+  "lost": 1,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/articles/dzhon-gill-spravochnik/",
+  "scr": 56,
+  "lost": 1,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "scr": 214,
+  "lost": 8,
+  "terminal": 7,
+  "secs": [
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/kak-hranit-serdce/",
+  "scr": 47,
+  "lost": 10,
+  "terminal": 10,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/kak-menyaetsya-serdce/",
+  "scr": 51,
+  "lost": 9,
+  "terminal": 9,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/kod-da-vinchi/",
+  "scr": 175,
+  "lost": 18,
+  "terminal": 6,
+  "secs": [
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/kogda-uhodit-kogda-ostavatsya/",
+  "scr": 143,
+  "lost": 1,
+  "terminal": 1,
+  "secs": [
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "scr": 199,
+  "lost": 9,
+  "terminal": 6,
+  "secs": [
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/lot-i-sodom/",
+  "scr": 87,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/articles/myslennaya-zhizn-serdca/",
+  "scr": 55,
+  "lost": 10,
+  "terminal": 10,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/",
+  "scr": 168,
+  "lost": 1,
+  "terminal": 1,
+  "secs": [
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/novoe-serdce/",
+  "scr": 56,
+  "lost": 9,
+  "terminal": 9,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/osvobozhdennoe-serdce/",
+  "scr": 46,
+  "lost": 10,
+  "terminal": 10,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/podrostok-za-kadrom-chto-delat-tserkvi/",
+  "scr": 337,
+  "lost": 4,
+  "terminal": 3,
+  "secs": [
+   "teen-correction-boundary",
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/podrostok-za-kadrom-dvoynaya-zhizn/",
+  "scr": 217,
+  "lost": 4,
+  "terminal": 3,
+  "secs": [
+   "teen-correction-boundary",
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/",
+  "scr": 402,
+  "lost": 3,
+  "terminal": 3,
+  "secs": [
+   "teen-correction-boundary",
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/priznaki-zdorovoy-cerkvi/",
+  "scr": 168,
+  "lost": 1,
+  "terminal": 1,
+  "secs": [
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/religioznoe-serdce/",
+  "scr": 44,
+  "lost": 11,
+  "terminal": 11,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/",
+  "scr": 96,
+  "lost": 11,
+  "terminal": 11,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "-",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/sem-tipov-razlichenie-uchiteley/",
+  "scr": 60,
+  "lost": 1,
+  "terminal": 1,
+  "secs": [
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/serdce-hrista-k-nemoshchnym/",
+  "scr": 85,
+  "lost": 11,
+  "terminal": 11,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/serdce-i-duh/",
+  "scr": 69,
+  "lost": 9,
+  "terminal": 9,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/serdce-i-iskushenie/",
+  "scr": 57,
+  "lost": 10,
+  "terminal": 10,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/serdce-i-sokrovishche/",
+  "scr": 44,
+  "lost": 10,
+  "terminal": 10,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/serdce-i-telo/",
+  "scr": 45,
+  "lost": 9,
+  "terminal": 9,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/serdce-i-yazyk/",
+  "scr": 54,
+  "lost": 9,
+  "terminal": 9,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/serdce-ne-v-odinochku/",
+  "scr": 49,
+  "lost": 10,
+  "terminal": 10,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/serdce-pod-skorbyu/",
+  "scr": 46,
+  "lost": 10,
+  "terminal": 10,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/serdce-spravochnik/",
+  "scr": 109,
+  "lost": 11,
+  "terminal": 11,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/skrytye-idoly-serdca/",
+  "scr": 52,
+  "lost": 10,
+  "terminal": 10,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/",
+  "scr": 475,
+  "lost": 3,
+  "terminal": 3,
+  "secs": [
+   "teen-correction-boundary",
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/sovest-vnutrenniy-sud/",
+  "scr": 68,
+  "lost": 11,
+  "terminal": 11,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/starye-dorozhki-serdca/",
+  "scr": 60,
+  "lost": 10,
+  "terminal": 10,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/strah-bozhij-rabskij-ili-synovnij/",
+  "scr": 44,
+  "lost": 9,
+  "terminal": 9,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/svoboda-vo-hriste/",
+  "scr": 43,
+  "lost": 9,
+  "terminal": 9,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/teksty-pisaniya-kotorymi-manipuliruyut/",
+  "scr": 112,
+  "lost": 1,
+  "terminal": 1,
+  "secs": [
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/tma-na-serdce/",
+  "scr": 82,
+  "lost": 14,
+  "terminal": 14,
+  "secs": [
+   "istochniki",
+   "gb-accuracy-block",
+   "related-articles"
+  ]
+ },
+ {
+  "r": "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/",
+  "scr": 150,
+  "lost": 1,
+  "terminal": 1,
+  "secs": [
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/",
+  "scr": 565,
+  "lost": 4,
+  "terminal": 3,
+  "secs": [
+   "teen-correction-boundary",
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/",
+  "scr": 439,
+  "lost": 3,
+  "terminal": 3,
+  "secs": [
+   "teen-correction-boundary",
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/",
+  "scr": 421,
+  "lost": 3,
+  "terminal": 3,
+  "secs": [
+   "teen-correction-boundary",
+   "gb-accuracy-block"
+  ]
+ },
+ {
+  "r": "/baptisty-rossii/",
+  "scr": 36,
+  "lost": 2,
+  "terminal": 2,
+  "secs": [
+   "-"
+  ]
+ },
+ {
+  "r": "/baptisty-rossii/dva-sezda-1884/",
+  "scr": 56,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/baptisty-rossii/goneniya-i-sovest/",
+  "scr": 82,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/baptisty-rossii/iniciativnaya-gruppa/",
+  "scr": 79,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/baptisty-rossii/noch-na-kure/",
+  "scr": 80,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/baptisty-rossii/peterburgskaya-liniya/",
+  "scr": 83,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/baptisty-rossii/podpolnaya-pechat/",
+  "scr": 77,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/baptisty-rossii/sovetskaya-noch/",
+  "scr": 73,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/baptisty-rossii/spravochnik/",
+  "scr": 170,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/baptisty-rossii/vsehib-1944/",
+  "scr": 64,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/baptisty-rossii/yuzhnaya-shtunda/",
+  "scr": 64,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/biografii/",
+  "scr": 32,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/hard-texts/",
+  "scr": 13,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/",
+  "scr": 162,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/hard-texts/blagovestie-mertvym-1-petra-4-5-6/",
+  "scr": 169,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/",
+  "scr": 198,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/",
+  "scr": 112,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/hard-texts/genesis-6/",
+  "scr": 27,
+  "lost": 14,
+  "terminal": 14,
+  "secs": [
+   "genesis6-catalog"
+  ]
+ },
+ {
+  "r": "/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/",
+  "scr": 309,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/",
+  "scr": 334,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/izbrannoe/",
+  "scr": 1,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/journal/",
+  "scr": 9,
+  "lost": 3,
+  "terminal": 3,
+  "secs": [
+   "journal-section"
+  ]
+ },
+ {
+  "r": "/journal/dossiers/g3/",
+  "scr": 57,
+  "lost": 1,
+  "terminal": 1,
+  "secs": [
+   "finance"
+  ]
+ },
+ {
+  "r": "/nagornaya/",
+  "scr": 9,
+  "lost": 1,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/nagornaya/chast-1/",
+  "scr": 70,
+  "lost": 1,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/nagornaya/chast-2/",
+  "scr": 86,
+  "lost": 2,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/nagornaya/chast-3/",
+  "scr": 55,
+  "lost": 1,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/nagornaya/chast-4/",
+  "scr": 116,
+  "lost": 2,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/nagornaya/chast-5/",
+  "scr": 93,
+  "lost": 1,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/nagornaya/istochniki/",
+  "scr": 13,
+  "lost": 1,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/nagornaya/nakhodki/",
+  "scr": 18,
+  "lost": 1,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/nagornaya/seriya/",
+  "scr": 32,
+  "lost": 1,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/pastor-series/",
+  "scr": 25,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ },
+ {
+  "r": "/podrostok-za-kadrom/",
+  "scr": 6,
+  "lost": 0,
+  "terminal": 0,
+  "secs": []
+ }
+]

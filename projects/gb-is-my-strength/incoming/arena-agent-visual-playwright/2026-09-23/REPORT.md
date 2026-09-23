@@ -184,3 +184,74 @@ MASTER в этом проходе **не менялся**: по протокол
 | VIS-04 | owner-decision (иллюстрация) | — |
 
 MASTER по-прежнему **не изменён**. Для admission нужны: (1) current-check на exact Product head перед repair, (2) решение владельца, какие кандидаты принимать. Самые сильные доказательства (W2 source + W4 runtime + механизм) у KBD-01, KBD-03, VIS-01, A11Y-06.
+
+---
+
+# Wave 3 — печать, тёмная тема, перекрытие фиксированной шапкой, расширение KBD-01
+
+Тот же anchor `d0e04a9c`, та же сборка. Скрипты: `evidence/printall.mjs`, `evidence/dark.mjs`, `evidence/under.mjs`, `evidence/trap2.mjs`.
+
+## PRINT-01 — печать скрывает источники, «сообщить об ошибке» и связанные материалы на 48 из 87 маршрутов с контентом — `candidate`, высокая уверенность, **сильнейшая находка аудита**
+
+- **W4:** `emulateMedia('print')` + `beforeprint`, затем сравнение абзацев/`li`, видимых на экране и в печати. Из 87 маршрутов (без карт, app, konfessii, rodosloviye) у **48** появляются абзацы с `display:none !important` через `[data-print-terminal-follower]` (`evidence/print-terminal-follower-87-routes.json`).
+  - Все 24 статьи серии «Тайны сердца» + справочник: целиком пропадает `section#istochniki` (Писание, лексика, первоисточники, перевод). 9–14 абзацев на статью.
+  - Почти во всех статьях: `aside.gb-accuracy-block` («Богословскую или техническую — напишите, исправим»).
+  - Серия «Подросток за кадром» (7 статей): `teen-correction-boundary`, то есть редакционная граница коррекции и контакты.
+  - Гилл ч.4: `sec-primary-source-apparatus` (аппарат первоисточников). `/journal/dossiers/g3/`: абзац раздела `finance`. `/hard-texts/genesis-6/`: 14 карточек каталога.
+- Наглядно: `evidence/sources-screen.png` (экран) против `evidence/sources-print.png` (печать). Остаются только заголовок «Источники и сверка» и «Soli Deo Gloria ✝».
+- **W2:** `js/reader-preferences-head.js`
+  - ≈448–477: для «хвоста» (`.article-end-sdg-wrap` и т.п.) ищется `previousSemanticFlow`. Это последний узел с `[data-print-flow]` или **`[data-print-keep-next]`** до хвоста. В «Сердце» это `<h2>Источники и сверка</h2>` (heading помечен keep-next). `createClosingGroup` **переносит h2 и хвост** в новый `div.gb-print-closing-group` сразу за h2.
+  - ≈385–400: `markTerminalRegion(группа)` помечает **каждый узел документа, который идёт после группы**, атрибутом `data-print-terminal-follower`. После переноса абзацы источников оказываются после группы.
+  - ≈179: `html body [data-print-terminal-follower] { display: none !important; }`.
+- **Механизм (W5):** closing-group склеивает хвост не с последним *контентным* блоком, а с последним *помеченным*, то есть с заголовком секции, и выдёргивает его из секции. Всё, что было между этим заголовком и хвостом, объявляется «после терминала» и скрывается. Гарантия «ничего после Soli Deo Gloria» реализована удалением, а не проверкой, что после хвоста ничего нет. `hasMeaningfulFollowingContent` проверяет, что идёт после *хвоста*, но не то, что оказывается после *группы* после переноса.
+- **Тестовый пробел:** `scripts/engine-sweep.mjs` ≈612–640 только **считает** `terminalFollowers` и проверяет break-свойства. Скрытие видимого на экране текста не проверяется. Гейт print-stability проходит зелёным.
+- **Эффект:** распечатка / «Сохранить как PDF» богословской статьи выходит без раздела источников, при том что `sources:hygiene`, `content:sources:check` и Metadata SSOT требуют этот раздел. Для исследовательского проекта это прямое противоречие замыслу.
+- **Граница:** проверено в Chromium. Логика рантайма JS не зависит от движка, поэтому WebKit/Firefox, скорее всего, ведут себя так же, но это не проверено. Кандидат в MASTER как `SYS-PRINT-TERMINAL-REGION` (один root на все 48 маршрутов).
+
+## THEME-01 — хаб `/hard-texts/genesis-6/` в тёмной теме: заголовок и лид почти невидимы — `candidate`, высокая уверенность
+
+- **W4:** при `html.dark` цвет `h1` = `rgb(75,53,36)` (`#4b3524`, светлый токен) на тёмном фоне hero `rgba(30,23,17,.96)`. axe: 59 узлов, минимум 1.36:1 (`evidence/genesis6-hub-dark-mobile.png`).
+- **W2:** `css/series-manuscript.css`: тёмные токены `--manuscript-ink*` определены только в `html.dark body[data-series-theme="manuscript"]` (строка 41), а тёмный фон hero задан безусловно через `html.dark .genesis6-hub__hero` (строка 378). У всех 6 статей серии на `<body>` стоит `data-series-theme="manuscript"`, у хаба — только `<body class="genesis6-hub-page">`.
+- **Механизм:** на хабе темнеет фон, а цвет текста остаётся светлым. Небольшое исправление: атрибут на body хаба или добавить `.genesis6-hub-page` в селектор тёмных токенов.
+
+## LAYOUT-01 — фиксированная шапка перекрывает хлебные крошки — `candidate`
+
+- **W4** (`elementFromPoint` возвращает шапку в центре крошек), 104×2 маршрута:
+  - `/hard-texts/genesis-6/`, desktop и mobile: `header.astro-header.h-navbar` (fixed, 0–58px) поверх `nav.genesis6-hub__breadcrumb` (32–57px); на mobile логотип наезжает на «Главная / Трудные тексты» (`evidence/genesis6-header-breadcrumb-overlap-mobile.png`).
+  - Mobile `/articles/lot-i-sodom/`, `/articles/kod-da-vinchi/`, `/articles/hermenevticheskaya-otsenka-…/`: шапка `header.hmtop` (0–62px) закрывает `nav.breadcrumb` («Главная › Статьи › Лот» проступает под полем «Поиск по разделам…», см. `shots/m_articles_lot-i-sodom_.png` из wave 1).
+- Два владельца: хаб genesis-6 (свой layout) и общий шаблон `hmtop` (3 статьи). На остальных 98 маршрутах коллизии нет.
+
+## KBD-01 — расширение
+
+Ловушка клавиатуры подтверждена на **всех 5** частях «Нагорной» (`chast-1…5`). На `istochniki/nakhodki/seriya` и в других сериях её нет. Граница — только `NagornayaCompactBottomBar` + `floating-cluster-controller.js`.
+
+## THEME-02 — прочий контраст в тёмной теме (mobile, 20 маршрутов) — `raw`
+
+- 12 из 20 маршрутов чистые (0 нарушений).
+- Повторяющийся шаблон: белый текст на `#d4a574` (2.22:1): `#quizLaunch`, `.author-card-icon`, kicker'ы Гилла, `/articles/kod-da-vinchi/` `.ehrman-label/.ctw-sub`. Единый токен «accent-fill + white ink» — кандидат в triage «token contrast» вместе с A11Y-08.
+- `/journal/`: `.journal-kicker` `#7a2e2e` на `#131217` (2.0:1). Светлый акцент не переопределён для тёмной темы.
+- `/nagornaya/chast-1/`: `#9ca3af` на `#797a7d` (1.69:1) в блоках Tailwind `text-stone-*` (legacy-оверрайды `mobile-hotfix.css`).
+- `/izbrannoe/`: `.izbrannoe-cta` `#d4a574` на `#d97a6c` (1.35:1).
+
+## Печать — прочее
+
+- `/articles/20-antisovetov-pastoru/`: FAQ-аккордеон печатается как кнопки `Q1…Q6`. Раскрыты ли ответы, не проверено (**UNPROVEN**).
+- `/nagornaya/chast-1/`: в печати видна кнопка «Открыть меню».
+
+## Обновлённая сводка (волны 1–3)
+
+| Приоритет | ID | Класс | Owner |
+|---|---|---|---|
+| 1 | **PRINT-01** | `SYS-candidate`, 48 маршрутов, контент исчезает | `js/reader-preferences-head.js` + тест `engine-sweep.mjs` |
+| 2 | **KBD-01+02** | `SYS-candidate`, WCAG A (ловушка клавиатуры) | `floating-cluster-controller.js` |
+| 3 | THEME-01 | local defect | `genesis-6` body / `series-manuscript.css` |
+| 3 | KBD-03 | local defect | `css/mobile-hotfix.css` |
+| 3 | VIS-01 | local defect | `karty/avraam/index.astro` |
+| 3 | A11Y-06 | local + editorial | `AntisovetovBody.astro` |
+| 4 | LAYOUT-01 | 2 local owners | genesis-6 hub, шаблон `hmtop` |
+| 4 | A11Y-07 | small, live UNPROVEN | `404.html` |
+| triage | A11Y-05/08, THEME-02 | token contrast / target size | design tokens |
+| owner | A11Y-09, VIS-04 | — | genealogy, иллюстрации |
+| check | VIS-02, VIS-03 | CI/live-скриншот | — |
+
+MASTER по-прежнему не изменён.
