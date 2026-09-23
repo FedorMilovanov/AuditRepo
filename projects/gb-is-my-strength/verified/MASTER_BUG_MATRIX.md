@@ -6,52 +6,74 @@
 
 ## Current state
 
-Reverified 2026-09-22. The 2026-09-13 zero is **STALE as a current attestation**.
-This admission records material failed release checks, not mere Product HEAD movement.
-Evidence and staged execution: [Wave 0 / recovery program](../verification/2026-09-22-release-recovery/REPORT.md).
+Reverified 2026-09-24 against Product main and live production.
 
+The four work units admitted on 2026-09-22 are now **verified closed**:
+
+- `SYS-GENEALOGY-WEBKIT-WITNESS` — closed by the merged WebKit harness/isolation work plus the demonstrated filter-transition root repair (#2139 + #2141); full Chromium/WebKit/Firefox and reduced-motion genealogy release gates passed on resulting main.
+- `SYS-RELEASE-PRODUCTION-DRIFT` — closed by #2140 plus successful immutable Pages promotions; production is no longer on the stale `a9ab116f...` release.
+- `GB-READER-POLISH-CLOSURE` — #2136 merged after 42/42 exact-head workflows passed and was independently published/live-verified.
+- `GB-GENEALOGY-EDITORIAL-CLOSURE` — the unsafe 1608-name auto-certification was rejected; the corrected fail-closed #2137 passed 11/11 exact-head workflows, merged, and its resulting main was published with full browser/reduced-motion proof.
+
+Current Product/live identity:
+
+- Product main: `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`
+- live `deployments/current.json.releaseSha`: `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`
+- immutable release: `/deployments/d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b/35927303479-1.json`
+- release candidate + promotion workflow: run `35927303479`, both jobs PASS
+- generic live contract and live TTS extension: PASS
+
+Detailed execution evidence remains in [the release-recovery program](../verification/2026-09-22-release-recovery/REPORT.md).
 
 | Field | Value |
 |---|---|
-| Active work units | **4** |
-| Direct current defects | **1** |
-| Verified necessary improvements | **1** |
+| Active work units | **0** |
+| Direct current defects | **0** |
+| Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
-| System verification lanes | **2** |
+| System verification lanes | **0** |
 | Owner decisions | **0** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Arithmetic: 1 direct current defect + 1 improvement + 0 residuals + 2 system verification lanes + 0 owner decisions = **4 independent current work units**. Release recovery and PR WebKit failure have different observed failure boundaries; neither is evidence that the historical security/Search Console closures were invalid.
+> Arithmetic: 0 + 0 + 0 + 0 + 0 = **0 current MASTER work units**.
+>
+> **Important boundary:** MASTER=0 means there is no presently admitted defect/system/decision work unit. It does **not** mean the whole product/research program is complete. Editorial certification, Baptist research/publication, maps, rights/external gates, measurement-first quality work and branch retirement are tracked separately in [PROGRAM_CLOSURE_MATRIX.md](../PROGRAM_CLOSURE_MATRIX.md). Optional/non-mandatory quality candidates remain in [WORK_QUEUE.md](../WORK_QUEUE.md).
 
-## CURRENT DEFECTS — 1
+## CURRENT DEFECTS — 0
 
 | ID | Current problem | Closure boundary |
 |---|---|---|
-| GB-GENEALOGY-EDITORIAL-CLOSURE | P1, CONFIRMED-CURRENT: main maps Matthew’s Joram and Abiud to different namesakes; the original #2137 additionally falsely certifies Hepher as Езер. Bounded repair is submitted at #2137 `573814481…`; raw review debt remains 2825 names / 139 projected relations. | Verify the identity corrections, fail-closed name guard and both relation-status browser witnesses on the final head, then merge and verify publication. Further corpus certification remains source-backed editorial work. [Recheck and repair evidence](../verification/2026-09-22-release-recovery/GENEALOGY_REPAIR_RECHECK.md); [original counterexample](../verification/2026-09-22-release-recovery/EDITORIAL_PROOF_COUNTEREXAMPLE.md). |
 
-## VERIFIED NECESSARY IMPROVEMENTS — 1
+## VERIFIED NECESSARY IMPROVEMENTS — 0
 
 | ID | Required improvement | Closure boundary |
 |---|---|---|
-| GB-READER-POLISH-CLOSURE | P1, current-local: owner-selected audited Reader work remains open in Product #2136. | Preserve canonical lane; verify final head, merge using expected SHA, validate resulting main and Reader live behavior. [Evidence](../verification/2026-09-22-release-recovery/REPORT.md). |
 
 ## NARROWED RESIDUALS — 0
 
 | ID | Current residual | Closure boundary |
 |---|---|---|
 
-## SYSTEM VERIFICATION LANES — 2
+## SYSTEM VERIFICATION LANES — 0
 
 | ID | Current causal problem | Absorbs / closure boundary |
 |---|---|---|
-| SYS-RELEASE-PRODUCTION-DRIFT | P0, systemic-root: production remains at the previously verified old release; the historical 50-commit drift is not closed. #2140 repairs the obsolete genealogy H1 oracle and candidate/deploy smoke parity; its latest candidate is blocked by the independently reproduced WebKit crash. | Exact-head candidate green, resulting-main immutable deployment, current.json identity and required live witnesses. Include the confirmed genealogy identity repair before publication. [Initial source/CI/live evidence](../verification/2026-09-22-release-recovery/REPORT.md); [material recheck](../verification/2026-09-22-release-recovery/GENEALOGY_REPAIR_RECHECK.md). |
-| SYS-GENEALOGY-WEBKIT-WITNESS | P0, PARTIAL/NARROWED: #2139 merged after exact-head green, but resulting-main deploy and #2140 reproduced native page-crash. Local controlled trials implicate animated grayscale during Joseph→Jesus navigation; one-component repair is submitted as #2141. | Preserve all browser assertions/viewports and negative witnesses; require final-head full/reduced-motion and resulting-main release proof. Isolation alone did not close the root. [Reproducer, rejected hypothesis and repair boundary](../verification/2026-09-22-release-recovery/GENEALOGY_REPAIR_RECHECK.md). |
 
 ## OWNER DECISIONS — 0
 
 | ID | Missing decision | Closure boundary |
 |---|---|---|
 
+## 2026-09-22 → 2026-09-24 closure receipts
+
+| Former active ID | Product proof | Live/result proof | Disposition |
+|---|---|---|---|
+| `SYS-GENEALOGY-WEBKIT-WITNESS` | #2139 merged; #2141 merge `15a2e533...`; root repair preserved assertions and negative witnesses | full genealogy Chromium/WebKit/Firefox + reduced-motion gates PASS on release runs `35796264804` and `35927303479` | **VERIFIED_CLOSED** |
+| `SYS-RELEASE-PRODUCTION-DRIFT` | #2140 merge `d9cbcdb1...`; immutable candidate PASS | live moved `a9ab116f...` → `d9cbcdb1...` → `335ff0c3...` → `d0e04a9c...` with exact release identity | **VERIFIED_CLOSED** |
+| `GB-READER-POLISH-CLOSURE` | #2136 exact head `a3d06ef5...`: 42/42 workflows PASS; CAS merge `335ff0c3...` | Pages run `35834660414` PASS; live releaseSha `335ff0c3...` before the next deliberate release | **VERIFIED_CLOSED** |
+| `GB-GENEALOGY-EDITORIAL-CLOSURE` | corrected #2137 exact head `9f6edc25...`: 11/11 workflows PASS; CAS merge `d0e04a9c...` | run `35927303479` candidate + promotion PASS; live releaseSha `d0e04a9c...` | **VERIFIED_CLOSED** |
+
+The corrected #2137 deliberately leaves the raw corpus `phase1-draft`. Its truthful remaining editorial debt is **2825 Russian-name reviews** and **139 relation-evidence reviews**; that is a product/editorial completion program, not a current runtime defect. The publishable projection remains the only runtime authority.
 
 ## Retired / absorbed by the 2026-08-20 consolidation
 
