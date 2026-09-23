@@ -143,3 +143,47 @@ surfaces. No blanket rebase or bulk merge of old research branches.
   this as a Product regression or claim a local browser pass.
 - Required hosted browser checks remain the merge barrier. No Product code,
   merge, deployment, external message or branch deletion is claimed by Wave 0.
+
+
+## Closure addendum — 2026-09-24
+
+The 2026-09-22 four-unit recovery stack reached terminal proof without weakening the release matrix.
+
+### Product closure chain
+
+| Stage | Exact proof |
+|---|---|
+| WebKit lifecycle/harness | #2139 merged; later resulting-main release gates retained all browser/viewports and negative witnesses |
+| Native WebKit filter crash | #2141 exact repair head `731fe3596cd5da04ac353e4f2804d24cde53149b`; merge `15a2e533420a2f3c5ac8806f55249496357dad59` |
+| Release smoke parity | #2140 exact head `716fba9bb0a3746c820858f447effb857da02e52`; merge `d9cbcdb19d0507494a277d0766a5596687335112` |
+| Stable-main recovery | run `35796264804`: candidate + promotion PASS; live releaseSha `d9cbcdb19d0507494a277d0766a5596687335112` |
+| Reader | #2136 exact head `a3d06ef54484298e8dcc22ef99d0266072e28663`: 42/42 workflow PASS; merge `335ff0c3cea2127b8a3ed9509cc98ed87b47a867`; run `35834660414` PASS and live exact |
+| Safe genealogy editorial integration | #2137 exact head `9f6edc2529fbc70c87e215795ca4fcbb8c401943`: 11/11 workflow PASS; merge `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b` |
+| Final resulting-main release | run `35927303479`: immutable candidate PASS; full Chromium/WebKit/Firefox genealogy matrix PASS; reduced-motion PASS; promotion PASS; generic live + TTS PASS |
+| Final live identity | `deployments/current.json.releaseSha = d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`; immutable path `/deployments/d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b/35927303479-1.json` |
+
+### Editorial safety correction
+
+The earlier #2137 proposal to reduce Russian-name review from 2825 to 1217 by automatically certifying 1608 extracted names was **not admitted**. A real Hepher/Хефер counterexample demonstrated that extraction confidence is not identity proof.
+
+The merged safe implementation therefore preserves:
+- raw corpus: 3056 persons / 2053 edges / 982 isolated;
+- raw status: `phase1-draft`, not runtime;
+- Russian-name review pending: **2825**;
+- publishable persons: 154;
+- publishable relations: 181;
+- relation evidence: **42 reviewed / 139 pending**;
+- direct-Scripture relations: 41.
+
+Exact CI triage remains prioritization-only and records `autoApprove=false` for every pending review.
+
+### Program boundary after recovery
+
+The four 2026-09-22 MASTER units are now closed. That does not close the broader product/editorial program. Remaining work is governed by `PROGRAM_CLOSURE_MATRIX.md`:
+- genealogy editorial corpus;
+- Baptist source/chapter/media program, including Drive inventory and stale-branch salvage;
+- nine audit maps;
+- external rights/provider gates;
+- measurement-first quality/dependency review and repository retirement.
+
+This separation prevents a future MASTER=0 from being misread as whole-project completion.
