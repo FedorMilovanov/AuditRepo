@@ -27,7 +27,8 @@ collect evidence
 | Raw observations and anchor-specific evidence | `incoming/<agent>/<date>/` | evidence; not automatic current truth |
 | Current/package verification | `verification/` | multi-witness or package synthesis when useful |
 | Significant re-verification | `reverify/` | current applicability, conflict or high-risk recheck |
-| **Active verified necessary work** | `verified/MASTER_BUG_MATRIX.md` | one working matrix; bugs + necessary improvements + system work + decisions |
+| **Active verified necessary work** | `verified/MASTER_BUG_MATRIX.md` | one working matrix; current defects + necessary improvements + system work + decisions; `0` does not imply program completion |
+| **Program completion roadmap** | `PROGRAM_CLOSURE_MATRIX.md` | editorial/research/publication/rights/retirement waves required for whole-project closure; not a defect matrix |
 | Reusable root-cause context | `verified/SYSTEM_THEMES.md` | context, not automatically active work |
 | Optional non-mandatory improvements | `WORK_QUEUE.md` | performance/refactor/polish candidates; not a second matrix |
 | Retired/superseded/closed material | `legacy/` | searchable reference, never an active backlog |
@@ -35,6 +36,9 @@ collect evidence
 | Stable project orientation | `README.md` | no volatile global HEAD mirror |
 
 ## MASTER ownership
+
+`MASTER_BUG_MATRIX.md` and `PROGRAM_CLOSURE_MATRIX.md` answer different questions. MASTER owns currently admitted defects/system/improvements/decisions. PROGRAM owns the broader finite completion program. Never infer whole-project completion from MASTER arithmetic alone.
+
 
 MASTER is the single work notebook. A row belongs there when current evidence supports a real next action or owner decision, including:
 
