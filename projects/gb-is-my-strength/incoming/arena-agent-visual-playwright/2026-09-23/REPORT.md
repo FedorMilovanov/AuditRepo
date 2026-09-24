@@ -301,3 +301,47 @@ MASTER по-прежнему не изменён.
 - Новый объединённый root **`/app/` hero/section typography** = VIS-02 + REFLOW-01.
 - Новый local: REFLOW-02 (логотип на 320).
 - MASTER не изменён.
+
+---
+
+# Wave 5 — тёмная тема на всех 104 маршрутах, квиз
+
+Песочница перезапускалась ещё раз. Product `main` = `d0e04a9c`, сборка восстановлена той же цепочкой. Скрипты: `evidence/dark-all.mjs`, `evidence/quiz-dark.mjs`, `evidence/darkshot.mjs`. Данные: `evidence/dark-axe-104-routes.json`, `evidence/quiz-dark-24-routes.txt`.
+
+## QUIZ-01 — в тёмной теме квиз нечитаем: светлый текст на светлой карточке — `candidate`, высокая уверенность, **23 маршрута**
+
+- **W4:** квиз открыт на каждой из 24 страниц с `.quiz-wrapper` (через `#quizLaunch` или inline). Сломан на **23**: фон карточки `rgba(255,253,248,.92)`, текст `rgb(230,225,215)`, контраст около 1.08:1. Это все статьи «Тёмной стороны кафедры», Гилл ч.1–4 + справочник, «Код да Винчи», «Лот», герменевтика, «Диотрефы» и **все 5 частей «Нагорной»**. На `krajne-li-isporcheno-serdce` квиз не открылся (NOTSHOWN), граница не проверена.
+- Evidence: `evidence/diotrefy-dark-invisible-text.png`, `evidence/quiz-dark-chast-2.png`, `evidence/quiz-dark-20-antisovetov-pastoru.png`, `evidence/quiz-dark-dzhon-gill-chast-2-uchenyi.png`.
+- **W2:** `src/runtime/article-interactions.css:102–110`: `.quiz-wrapper { background: var(--surface, var(--card-bg, rgb(255 253 248 / 92%))) }`. На всех этих страницах ни `--surface`, ни `--card-bg` не определены (computed `""`), поэтому срабатывает светлый fallback. Текст при этом наследует тёмнотемный `--color-text` `#e6e1d7`. Тёмного оверрайда для `.quiz-wrapper` в CSS нет.
+- **Механизм (W5):** общий компонент ссылается на токены, которые не входят в канонический набор токенов сайта (`--color-surface` и т.д.). Один root, одна правка в одном файле: взять `--color-surface` или добавить `html.dark` вариант.
+- **Предложение:** `SYS-candidate` (общий runtime-компонент × 23 маршрута).
+
+## QUIZ-02 — квиз выводит HTML-разметку как текст — `candidate`, высокая уверенность
+
+- **W4:** `/nagornaya/chast-2/`, вопрос 1: на экране буквально «Что означает термин `<em>concursus</em>` в классическом консервативном богословии?» (видно на `evidence/quiz-dark-chast-2.png`).
+- **W2:** `src/runtime/article-quiz.js` ≈103–140: `title.textContent = question.question`, `button.textContent = option`, `shortExplanation/fullExplanation.textContent`. А в данных квизов (JSON в `*PageHead.astro`) есть inline-разметка `<em>`, `<span class=\"…\">`.
+- **Охват (W3, статический разбор dist):** поля `question`/`options` с разметкой — 9 страниц, около 20 полей: «Код да Винчи» (4), Гилл ч.2/3/4, герменевтика (2), «Крайне ли испорчено сердце» (3), «Нагорная» ч.2/4/5. Поля объяснений `short`/`full` с разметкой — до 30 (antisovetov, «Нагорная» ч.2/4/5). Это верхняя оценка: часть `short`/`full` может относиться к JSON подсказок, а не квиза.
+- **Решение за владельцем:** либо данные — plain text (убрать теги), либо рантайм рендерит ограниченный безопасный набор тегов (`em/strong/span.lang`). Молча включать `innerHTML` нельзя: это CSP/XSS-поверхность.
+
+## THEME-03 — прочий контраст в тёмной теме по всем 104 маршрутам (mobile)
+
+- 59 из 104 маршрутов с нарушениями, у 56 есть узлы <3:1. Сгруппировано:
+  - **quiz-launch** `#quizLaunch`: белый на `#d4a574`, 2.22:1, около 20 статей. Токен accent-fill + white (как THEME-02).
+  - `/hard-texts/genesis-6/`: 59 узлов, минимум 1.36. Это THEME-01 (хаб без `data-series-theme`), подтверждено и на карточках каталога.
+  - `/journal/dossiers/g3/` (58 узлов, 30 из них <3) и `/journal/` (10): kicker/label `#7a2e2e` на `#0e1116`, 2.0:1 (`evidence/g3-dossier-dark-kicker.png`). Светлый акцент журнала не переопределён для тёмной темы. Local owner — журнал.
+  - «Нагорная» ч.1–5 (15–42 узла): `#9ca3af` на `#797a7d` (1.69) и `#7c2d12` на `#292524` (1.61) в Tailwind-блоках источников и claim-карточках ч.4 (`evidence/nagornaya-ch4-dark-claim-card.png`). Legacy Tailwind + неполные оверрайды в `mobile-hotfix.css`.
+- Во всех 104 случаях тема применилась (`html.dark` = true), отказов переключения нет.
+
+## Обновлённая приоритизация (волны 1–5)
+
+| # | ID | Охват | Owner |
+|---|---|---|---|
+| 1 | PRINT-01 | 48 маршрутов, пропадает контент (4 свидетеля) | `js/reader-preferences-head.js` |
+| 2 | **QUIZ-01** | 23 маршрута, квиз нечитаем в dark | `src/runtime/article-interactions.css` |
+| 3 | KBD-01+02 | 5 частей «Нагорной» (trap), статьи | `floating-cluster-controller.js` |
+| 4 | QUIZ-02 | 9+ страниц, разметка как текст | `article-quiz.js` + данные квизов (решение владельца) |
+| 5 | THEME-01, KBD-03, VIS-01, A11Y-06, REFLOW-02 | local | см. выше |
+| 6 | LAYOUT-01, A11Y-07, `/app/` typography (VIS-02+REFLOW-01) | local | см. выше |
+| triage | A11Y-05/08, THEME-02/03 | token contrast / target size / журнал / Tailwind «Нагорной» | tokens |
+
+MASTER не изменён.
