@@ -1,0 +1,10 @@
+import {chromium} from '/tmp/gb/node_modules/playwright/index.mjs';
+const E=process.argv[2];
+const b=await chromium.launch({executablePath:'/tmp/chromium',args:['--no-sandbox','--no-zygote']});
+const c=await b.newContext({viewport:{width:390,height:844},serviceWorkers:'block'});
+let p=await c.newPage();await p.goto('http://127.0.0.1:8080/articles/dzhon-gill-chast-1-chelovek/');await p.waitForTimeout(300);
+await p.locator('#quizLaunch').click();await p.locator('.quiz-option').nth(1).click();await p.waitForTimeout(300);
+const w=p.locator('.quiz-wrapper:visible');await w.scrollIntoViewIfNeeded();await w.screenshot({path:E+'/quiz-stuck-gill-1.png'});
+p=await c.newPage();await p.goto('http://127.0.0.1:8080/articles/diotrefy-nashego-vremeni/');await p.waitForTimeout(400);
+console.log(await p.evaluate(()=>{const w=document.querySelector('.quiz-wrapper');return {html:w.outerHTML.slice(0,600),btns:[...w.querySelectorAll('button')].map(b=>b.className+':'+b.textContent.trim().slice(0,30)+':'+getComputedStyle(b).display)}}));
+await b.close();
