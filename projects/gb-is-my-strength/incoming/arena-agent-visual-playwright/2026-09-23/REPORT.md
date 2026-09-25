@@ -394,7 +394,7 @@ MASTER не изменён.
 
 # Wave 7 — поиск end-to-end
 
-Скрипты: `evidence/search.mjs` (mobile 390 и desktop 1366, главная), `evidence/artsearch.mjs` (точки входа в поиск на типах страниц), `evidence/lotsearch.mjs`. Лог: `evidence/search-e2e.txt` (частично, см. ниже). Скриншоты: `evidence/search-mobile.png`, `evidence/search-desktop.png`, `evidence/search-lot-article-local.png`.
+Скрипты: `evidence/search.mjs` (mobile 390 и desktop 1366, главная), `evidence/artsearch.mjs` (точки входа в поиск на типах страниц), `evidence/lotsearch.mjs`. Текстовый лог не сохранён (скрипт упал на финальной записи после всех проверок); результаты зафиксированы ниже. Скриншоты: `evidence/search-mobile.png`, `evidence/search-desktop.png`, `evidence/search-lot-article-local.png`.
 
 ## Работает (проверено)
 
@@ -421,5 +421,60 @@ MASTER не изменён.
 ## Не баг (артефакт окружения)
 
 - Console CSP: `img-src` блокирует `https://gospod-bog.ru/favicon*.png`. Иконки заданы абсолютными URL продакшн-хоста. На `gospod-bog.ru` это `'self'`, на локальном `127.0.0.1` — чужой origin. В проде не воспроизводится (live-сайт недоступен из песочницы, `UNPROVEN`).
+
+MASTER не изменён.
+
+---
+
+# Wave 8 — reduced-motion, избранное, шапка на планшете
+
+Песочница сбросилась в третий раз. Product `main` = `d0e04a9c` пересобран той же цепочкой (`npm ci` → `strangler:build:production-like` → `pagefind:build:dist`, все гейты сборки зелёные), 104 маршрута из `dist/`.
+
+## HDR-01 — на планшете (768px) шапка выталкивает поиск и переключатель темы за экран — `candidate`, высокая уверенность
+
+- **W4:** 768×800, скан всех 104 маршрутов (`evidence/header-overflow.mjs` → `evidence/header-overflow-104x3.json`). Элементы шапки с `right > innerWidth` на **7 маршрутах**:
+  - `/`: «Карты»@782, «Каталог»@857, «Поиск по всему сайту»@925, «Переключить тему»@957
+  - `/izbrannoe/`: «Избранное»@804, «Поиск»@848, «Тема»@880
+  - `/articles/`, `/biografii/`, `/pastor-series/`: поиск и тема
+  - `/hard-texts/`, `/nagornaya/seriya/`: тема
+- `html{overflow-x:clip}` прячет переполнение (`scrollWidth` в норме), поэтому контролы просто **недоступны для нажатия**, а горизонтальной прокрутки нет.
+- Визуально: главная обрезает пункт меню на «КАРТ…» (`evidence/home-768-header-overflow.png`).
+- На 320px то же на `/biografii/` и `/izbrannoe/` (кнопка темы @356, «Открыть меню»). На 390px — 0.
+- **W5:** десктопная навигация шапки включается раньше, чем в неё помещается полный набор пунктов. Брейкпоинт или сворачивание пунктов нужно подстроить под диапазон 768–~960px. Local owner — компонент шапки хабов (`astro-header` / home nav). Предложение: `LOCAL-candidate`, приоритет высокий для планшетов (iPad portrait = 768/810/820).
+- Не проверено: 810/820/1024. Граница диапазона — `UNPROVEN`.
+
+## MOTION-01 — `scroll-behavior:smooth` игнорирует `prefers-reduced-motion` — `candidate`, средняя уверенность
+
+- **W4:** `reducedMotion:'reduce'`, 104 маршрута (`evidence/reduced-motion.mjs` → `evidence/reduced-motion-104.json`). `getComputedStyle(html).scrollBehavior === 'smooth'` на **81** маршруте.
+- **W2:** `css/site.css` (строка 2 и в `@layer`): `html{scroll-behavior:smooth}` без `@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`. Для сравнения, `_astro/index.Bgg_omAc.css` и `GenealogyTree.css` такой guard имеют, то есть в репо это непоследовательность.
+- Эффект: прыжки по оглавлению и якорям анимируются у пользователей с вестибулярными нарушениями (WCAG 2.3.3 AAA, но это системная настройка ОС, которую сайт в других местах уважает).
+- Fix: одна строка в `css/site.css`. Проверить также JS `scrollIntoView({behavior:'smooth'})`: не сканировалось, `UNPROVEN`.
+
+## MOTION-02 — `/konfessii/russkij-baptizm/_app/` анимирует всё при reduced-motion — `candidate`, средняя уверенность
+
+- **W4:** при `reduce` идут 7 WAAPI-анимаций входа (620–950 мс) на h1, подзаголовках, сетке и **бесконечная** пульсация 2600 мс на `DIV.absolute inset-0 -z-10 rounded-full blur`.
+- **W2:** в бандле есть CSS-guard `prefers-reduced-motion:reduce{*{animation-duration:.001ms!important…}}`, но анимации идут через framer-motion (WAAPI/JS: `reducedMotionConfig`, `useReducedMotion` в бандле), и CSS их не касается. `MotionConfig reducedMotion="user"` по результату не действует.
+- Local owner — встроенное приложение «Русский баптизм».
+
+## Избранное — работает (проверено)
+
+- Статья → `button[aria-label="Добавить в Избранное"][aria-pressed=false]` → клик → `aria-pressed=true`, «Убрать из Избранного», live-toast «Добавлено в Избранное», запись `gb-favorites` в localStorage. Проверено на lot-i-sodom, Гилл ч.1, «Нагорная» ч.1.
+- `/izbrannoe/` показывает «3 статьи», «Убрать» удаляет карточку. `pageerror` = 0. Evidence: `evidence/favorites.mjs`, `evidence/favorites-e2e.json`, `evidence/izbrannoe-after-4-saves.png`.
+- На хабе `/hard-texts/genesis-6/` кнопка «Избранное» — это ссылка на страницу избранного, не переключатель. Хаб не добавить в избранное; похоже на задумку, triage.
+
+## Не баг локально — пустые обложки в /izbrannoe/
+
+- Карточки рендерят `izbrannoe-card__img--empty` (градиент). Причина: `src/runtime/favorite-store.js:41–52` `normalizeImage` отбрасывает картинку с другого origin, а `og:image` абсолютный на `https://gospod-bog.ru/…`, т.е. на `127.0.0.1` это чужой origin. На проде совпадёт.
+- **Остаток:** у `/articles/dzhon-gill-chast-1-chelovek/` `og:image` пустой (проверено в dist), так что его карточка будет пустой и на проде. Low, triage. Зеркала вроде `www.` / github.io тоже дадут пустые обложки: `UNPROVEN`.
+
+## Приоритеты после волны 8
+
+1. PRINT-01
+2. QUIZ-03
+3. QUIZ-01
+4. KBD-01/02
+5. **HDR-01**
+6. QUIZ-02
+7. MOTION-01/02 и остальное local
 
 MASTER не изменён.

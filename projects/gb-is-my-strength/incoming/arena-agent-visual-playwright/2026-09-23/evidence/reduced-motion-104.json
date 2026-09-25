@@ -1,0 +1,537 @@
+{
+ "/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/about/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/20-antisovetov-pastoru/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/anatomiya-padeniya-pyat-stadiy/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/chto-bibliya-nazyvaet-serdcem/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/diotrefy-nashego-vremeni/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/dzhon-gill-chast-1-chelovek/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/dzhon-gill-chast-2-uchenyi/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/dzhon-gill-chast-3-nasledie/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/dzhon-gill-chast-4-ekzeget/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/dzhon-gill-istoricheskiy-kontekst/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/dzhon-gill-spravochnik/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/kak-hranit-serdce/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/kak-menyaetsya-serdce/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/kod-da-vinchi/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/kogda-uhodit-kogda-ostavatsya/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/krajne-li-isporcheno-serdce/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/lot-i-sodom/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/myslennaya-zhizn-serdca/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/novoe-serdce/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/osvobozhdennoe-serdce/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/podrostok-za-kadrom-chto-delat-tserkvi/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/podrostok-za-kadrom-dvoynaya-zhizn/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/priznaki-zdorovoy-cerkvi/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/religioznoe-serdce/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/sem-tipov-razlichenie-uchiteley/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/serdce-hrista-k-nemoshchnym/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/serdce-i-duh/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/serdce-i-iskushenie/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/serdce-i-sokrovishche/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/serdce-i-telo/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/serdce-i-yazyk/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/serdce-ne-v-odinochku/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/serdce-pod-skorbyu/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/serdce-spravochnik/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/skrytye-idoly-serdca/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/sovest-vnutrenniy-sud/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/starye-dorozhki-serdca/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/strah-bozhij-rabskij-ili-synovnij/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/svoboda-vo-hriste/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/teksty-pisaniya-kotorymi-manipuliruyut/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/tma-na-serdce/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/baptisty-rossii/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/baptisty-rossii/dva-sezda-1884/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/baptisty-rossii/goneniya-i-sovest/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/baptisty-rossii/iniciativnaya-gruppa/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/baptisty-rossii/noch-na-kure/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/baptisty-rossii/peterburgskaya-liniya/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/baptisty-rossii/podpolnaya-pechat/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/baptisty-rossii/sovetskaya-noch/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/baptisty-rossii/spravochnik/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/baptisty-rossii/vsehib-1944/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/baptisty-rossii/yuzhnaya-shtunda/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/biografii/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/hard-texts/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/hard-texts/blagovestie-mertvym-1-petra-4-5-6/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/hard-texts/genesis-6/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/izbrannoe/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/journal/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/journal/dossiers/g3/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/karty/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/konfessii/russkij-baptizm/_app/": {
+  "run": [
+   {
+    "n": "Animation",
+    "dur": 950,
+    "iter": 1,
+    "el": "DIV.relative h-20 w-16 sm:h-[96px] sm:w-20"
+   },
+   {
+    "n": "Animation",
+    "dur": 720,
+    "iter": 1,
+    "el": "H1.mb-7 font-black tracking-tighter"
+   },
+   {
+    "n": "Animation",
+    "dur": 650,
+    "iter": 1,
+    "el": "P.mb-3 text-xl font-light tracking-wide"
+   },
+   {
+    "n": "Animation",
+    "dur": 650,
+    "iter": 1,
+    "el": "P.mx-auto mb-16 max-w-lg text-[13px] leadi"
+   },
+   {
+    "n": "Animation",
+    "dur": 620,
+    "iter": 1,
+    "el": "DIV.mx-auto mb-16 grid max-w-2xl grid-cols-2"
+   },
+   {
+    "n": "Animation",
+    "dur": 700,
+    "iter": 1,
+    "el": "DIV.flex flex-col items-center gap-4"
+   },
+   {
+    "n": "Animation",
+    "dur": 2600,
+    "iter": null,
+    "el": "DIV.absolute inset-0 -z-10 rounded-full blur"
+   }
+  ],
+  "smooth": "auto",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/nagornaya/seriya/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/pastor-series/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/podrostok-za-kadrom/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ },
+ "/rodosloviye/": {
+  "run": [],
+  "smooth": "smooth",
+  "vids": 0,
+  "motionAttr": "system"
+ }
+}
