@@ -528,3 +528,27 @@ MASTER не изменён.
 - Перед временем чтения стоит эмодзи `⏱` (U+23F1) в byline, 49 страниц. В песочнице без emoji-шрифта это «тофу». На реальных устройствах, вероятно, отрисуется. Стилистически это единственный эмодзи среди SVG-иконок шапки: `observation`.
 
 MASTER не изменён.
+
+---
+
+# Wave 10 — целостность ссылок и ресурсов, общий корень HDR-01
+
+## Ссылки и ресурсы — чисто (проверено)
+
+- **Статически** (`evidence/static-links.py`, весь `dist`, 104 страницы): мёртвых внутренних ссылок **0**, отсутствующих ресурсов (`img/link/script/source/iframe`) **0**, мёртвых якорей (`#id` на той же и чужой странице) **0**. Абсолютные `https://gospod-bog.ru/…` нормализованы к локальным путям.
+- **Рантайм** (`evidence/runtime-network.mjs` → `evidence/runtime-network-104.json`, 390px, прокрутка всей страницы для lazy-load): HTTP 4xx/5xx с собственного origin **0**, `pageerror` **0**.
+- Вывод: это поле надёжно закрыто гейтами репо. Повторять не нужно.
+
+## Observation — «Код да Винчи» хотлинкает 10 изображений с Wikimedia
+
+- `/articles/kod-da-vinchi/`: 10 `<img>` с `commons.wikimedia.org/wiki/Special:Redirect/file/…` и `upload.wikimedia.org/…`. CSP страницы явно разрешает эти хосты (у других статей их нет в `img-src`), значит решение осознанное.
+- В офлайн-песочнице все 10 = `naturalWidth 0`, это не находка.
+- Риск для владельца: доступность и скорость внешнего хоста, смешанные `/thumb/<hash>/` пути (хрупкие, в `docs/ABRAHAM-ARCHAEOLOGY-RESEARCH-2026-06-13.md` проект сам рекомендует `Special:FilePath`), нет локального fallback. Triage only.
+
+## HDR-01 — общий корень найден
+
+- `src/components/ui/Header.astro` (шапка хабов `/articles/`, `/biografii/`, `/pastor-series/`, `/hard-texts/`, `/izbrannoe/` …) рендерит `<header class="astro-header h-navbar">` и `<ul class="h-nav-links">`. Это те же классы, что на главной, поэтому она подчиняется тем же правилам `css/home.css`: скрытие ≤760px и в 761–1100px только `gap/font-size`.
+- `/izbrannoe/` дополнительно переопределяет порог: `src/pages/izbrannoe/index.astro:203–205` (`.astro-header__nav{flex:1}` + скрытие только ≤720px). Поэтому он ломается уже на 320px (кнопка темы @356) и на 721–760px.
+- Итог W5: **один root** — брейкпоинт `h-nav-links` в `css/home.css`, общий для главной и `Header.astro`, плюс локальный дубль-оверрайд в `izbrannoe`. Предложение: `SYS-candidate` (общий компонент × ≥7 маршрутов × планшет/landscape). Fix: скрывать nav или переносить в overflow-меню до ~1024px, либо измерять место (container query на `.h-navbar`). Regression: скриншот-гейт шапки на 768/820/844×390.
+
+MASTER не изменён.
