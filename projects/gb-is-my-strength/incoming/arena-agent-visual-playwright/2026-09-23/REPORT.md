@@ -12,6 +12,26 @@
 | report_type | browser-audit + visual-audit |
 | live witness | **UNPROVEN** — `gospod-bog.ru` из песочницы недоступен (TLS `SSL_ERROR_SYSCALL`), live-проверки нет |
 
+## Сводка по волнам 1–13 (обновляется; детали — в разделах волн ниже)
+
+Все пункты имеют статус `candidate` для triage Codex/владельца. MASTER агентом не менялся.
+
+| приоритет | ID | суть | охват | root / owner | волна |
+|---|---|---|---|---|---|
+| 1 | PRINT-01 | печать скрывает контент (источники, блоки точности, финальные секции) | 48/87 маршрутов | `js/reader-preferences-head.js` (closing-group / terminal region) | 3–4 |
+| 2 | QUIZ-03 | квиз непроходим: «Следующий вопрос» `display:none` | 15 маршрутов | legacy `css/floating-cluster.css:4062` `[data-gill-v16] .quiz-next` vs `article-quiz.js` | 6 |
+| 3 | QUIZ-01 | квиз в dark: светлый текст на светлой карточке | 23 маршрута | `src/runtime/article-interactions.css:102` (неопределённые `--surface/--card-bg`) | 5 |
+| 4 | KBD-01/02 | keyboard trap в радиогруппе скорости; невидимые фокусируемые кнопки | 5 частей «Нагорной» + статьи | `js/floating-cluster-controller.js` | 2–3 |
+| 5 | HDR-01 | шапка выталкивает поиск/тему за экран (iPad portrait, phone landscape) | ≥7 хабов | `css/home.css` брейкпоинт `.h-nav-links` + `ui/Header.astro`; `izbrannoe` оверрайд | 8–10 |
+| 6 | QUIZ-02 | HTML-разметка квиза выводится как текст | 9+ страниц | `article-quiz.js` `textContent` vs данные с `<em>/<span>` (решение владельца) | 5–6 |
+| 7 | THEME-01 | hub genesis-6 без `data-series-theme`, dark title 1.36:1 | 1 хаб | `css/series-manuscript.css` | 3 |
+| 8 | FONT-01 | `/karty/` без `fonts.css`: fallback-шрифт, h1 рвётся посреди слова | 1 хаб | `karty/KartyPageHead.astro:33–35` | 12 |
+| 9 | KBD-03, VIS-01, A11Y-06, A11Y-07, REFLOW-02, LAYOUT-01 | outline:0, потеря h1 на карте, двойной tooltip, 404 относительные ассеты, логотип 320px, header над breadcrumbs | local | см. разделы | 1–4 |
+| 10 | MAPS-01, SEARCH-01, MOTION-01/02, TTS-01, QUIZ-04 | ishod-сирота; нет глобального поиска в «Нагорной» mobile; smooth scroll при reduce; framer-motion; обрезанные скорости; итог квиза «Нагорной» | local | см. разделы | 7–12 |
+| triage | A11Y-05/08/09/10, THEME-02/03, PERF-01, SHARE-01, TTS-02, SEARCH-02 | контраст/таргеты/заголовки/preload/косметика | разное | tokens / local | 1–12 |
+
+**Отозвано агентом:** Wave 8 «Гилл ч.1 без og:image» (ложное срабатывание grep, Wave 11). **Чистые области:** ссылки/ресурсы/якоря (0), runtime 4xx/pageerror (0), мета/canonical/og/alt (0), избранное, поиск, озвучка/share, заглушки карт.
+
 ## Покрытие
 
 - 104 dist-маршрута × 2 viewport (1440×900 desktop, 390×844 mobile touch DPR2) = 208 загрузок страниц со скриншотами.
@@ -627,5 +647,29 @@ MASTER не изменён.
 
 - `/rodosloviye/`: React Flow рендерится (mobile 390×528, desktop 1351×595). Клик по узлу даёт фокус на `react-flow__node`, ошибок 0. A11Y-09 (149 div с aria-label без роли) из Wave 2 остаётся в силе.
 - `/app/`: загрузка без ошибок. Системный шрифтовой стек (`ui-sans-serif`) без web-fonts — по дизайну.
+
+MASTER не изменён.
+
+---
+
+# Wave 13 — сноски и подсказки на мобильном
+
+Скрипты: `evidence/tooltips-mobile.mjs` (широкий скан, 320/390, до 5 триггеров на страницу), `evidence/tooltip-verify.mjs`, `evidence/tooltip-sheet-state.mjs`, `evidence/corner-artifact-check.mjs`. Данные: `evidence/tooltips-mobile.json`.
+
+## Результат — работает; широкий скан дал ложные срабатывания
+
+- Первичный скан (76 тапов, 10 маршрутов с видимыми триггерами) показал «4 за экраном, 34 не закрылись, 42 без попапа». Точечная проверка это **опровергла как артефакт детектора**: на мобильном все `[role=tooltip]` (40 на `krajne-li-isporcheno-serdce`) постоянно имеют `visibility:visible; display:block; opacity:1` и «запаркованы» `position:fixed` под нижним краем через `transform: translateY(…)`. Детектор считал их видимыми.
+- Реальное поведение (`evidence/tooltip-krajne-after-tap-390.png`): тап по `.fn-marker` → `aria-expanded=true`, в видимую область выезжает **ровно один** нижний лист со сноской (Calvin J. *Commentary on Jeremiah* …), текст целиком, ссылка кликабельна. Корректно.
+- Маршруты без попапа в скане (`/nagornaya/*` `.tooltip-trigger`, `20-antisovetov` `.map-trigger`) используют другой механизм (inline / карта). Отдельно не верифицировались: `UNPROVEN`, не находка.
+
+## A11Y-11 — закрытые листы сносок не скрыты от вспомогательных технологий — `candidate`, low, UNPROVEN impact
+
+- **W4:** на `krajne-li-isporcheno-serdce` у 40 закрытых `[role=tooltip]` `aria-hidden` = 0, `inert` = 0, `hidden` = 0. Скрыты только геометрически (transform за край viewport).
+- У маркеров `aria-describedby` указывает на концевую сноску `note-end-…`, так что описание доступно и без листов.
+- Риск: в режиме чтения скринридера 40 дублирующих текстов сносок могут озвучиваться в конце документа. Не проверено реальным AT (Playwright 1.62 без `accessibility.snapshot`). Fix при подтверждении: `hidden`/`inert` на закрытом листе.
+
+## Не находка
+
+- Серый квадрат в левом верхнем углу на нескольких мобильных скриншотах: `elementFromPoint(8,8)` на 104 маршрутах после прокрутки не находит мелкого элемента. Артефакт снимка.
 
 MASTER не изменён.

@@ -1,0 +1,1060 @@
+[
+ {
+  "w": 320,
+  "r": "/articles/20-antisovetov-pastoru/",
+  "kind": "fn-marker fn-marker--dove map-trigger",
+  "txt": "",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/20-antisovetov-pastoru/",
+  "kind": "fn-marker fn-marker--dove map-trigger",
+  "txt": "",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/20-antisovetov-pastoru/",
+  "kind": "fn-marker fn-marker--dove map-trigger",
+  "txt": "",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/20-antisovetov-pastoru/",
+  "kind": "fn-marker fn-marker--dove map-trigger",
+  "txt": "",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/20-antisovetov-pastoru/",
+  "kind": "fn-marker fn-marker--dove map-trigger",
+  "txt": "",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/dzhon-gill-chast-1-chelovek/",
+  "kind": "fn-marker fn-marker--dove",
+  "txt": "⟦сноска: Риппон на титуль",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/dzhon-gill-chast-2-uchenyi/",
+  "kind": "fn-marker fn-marker--dove",
+  "txt": "⟦сноска: Richard A. Mulle",
+  "pop": {
+   "cls": "tooltip",
+   "role": "tooltip",
+   "l": 37,
+   "r": 283,
+   "t": 659,
+   "b": 900,
+   "vw": 320,
+   "vh": 740,
+   "out": true,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/dzhon-gill-chast-2-uchenyi/",
+  "kind": "fn-marker fn-marker--dove",
+  "txt": "⟦сноска: Gill J. Expositi",
+  "pop": {
+   "cls": "tooltip",
+   "role": "tooltip",
+   "l": 37,
+   "r": 283,
+   "t": 379,
+   "b": 555,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/dzhon-gill-chast-2-uchenyi/",
+  "kind": "fn-marker fn-marker--dove",
+  "txt": "⟦сноска: Gill J. A Body o",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/dzhon-gill-chast-2-uchenyi/",
+  "kind": "fn-marker fn-marker--dove",
+  "txt": "⟦сноска: Gill J. A Body o",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "kind": "fn-marker fn-trans fn-marker--dove",
+  "txt": "⟦сноска: Перев.: греч. ὀρ",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 497,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "kind": "fn-marker",
+  "txt": "76 ⟦сноска: Thomas; Moo. ",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 563,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "kind": "fn-marker",
+  "txt": "81 ⟦сноска: Beale.⟧",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 674,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "kind": "fn-marker",
+  "txt": "25 ⟦сноска: Goldsworthy, ",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 652,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "kind": "fn-marker",
+  "txt": "114 ⟦сноска: James A. Bor",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 652,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/kod-da-vinchi/",
+  "kind": "fn-marker",
+  "txt": "1 ⟦сноска: CNN Sunday Mor",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 453,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/kod-da-vinchi/",
+  "kind": "fn-marker",
+  "txt": "23 ⟦сноска: Ириней Лионск",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 563,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/kod-da-vinchi/",
+  "kind": "fn-marker",
+  "txt": "7 ⟦сноска: Иосиф Флавий, ",
+  "pop": {
+   "cls": "tooltip",
+   "role": "tooltip",
+   "l": 38,
+   "r": 282,
+   "t": -410,
+   "b": 27,
+   "vw": 320,
+   "vh": 740,
+   "out": true,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/kod-da-vinchi/",
+  "kind": "fn-marker",
+  "txt": "16 ⟦сноска: NASSCAL e-Cla",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 541,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/kod-da-vinchi/",
+  "kind": "fn-marker",
+  "txt": "24 ⟦сноска: Тертуллиан, П",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 386,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "kind": "fn-marker",
+  "txt": "1 ⟦сноска: Calvin J. Comm",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 608,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "kind": "fn-marker",
+  "txt": "33 ⟦сноска: Grudem W. Sys",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 608,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "kind": "fn-marker",
+  "txt": "36 ⟦сноска: Clarkson D. S",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 608,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "kind": "fn-marker",
+  "txt": "31 ⟦сноска: Hodge C. Syst",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 608,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "kind": "fn-marker",
+  "txt": "26 ⟦сноска: Owen J. Of In",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 320,
+   "t": 608,
+   "b": 740,
+   "vw": 320,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/nagornaya/chast-1/",
+  "kind": "tooltip-trigger",
+  "txt": "разрушении Закона",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/nagornaya/chast-1/",
+  "kind": "tooltip-trigger",
+  "txt": "«Блажен (μακάριος) означа",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/nagornaya/chast-1/",
+  "kind": "tooltip-trigger",
+  "txt": "многогранное свидетельств",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/nagornaya/chast-1/",
+  "kind": "tooltip-trigger",
+  "txt": "послушание",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/nagornaya/chast-2/",
+  "kind": "tooltip-trigger",
+  "txt": "органического вдохновения",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/nagornaya/chast-2/",
+  "kind": "tooltip-trigger",
+  "txt": "свидетельствах очевидцев",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/nagornaya/chast-2/",
+  "kind": "tooltip-trigger",
+  "txt": "Ipsissima vox",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/nagornaya/chast-3/",
+  "kind": "tooltip-trigger",
+  "txt": "«протекающим диспенсацион",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/nagornaya/chast-3/",
+  "kind": "tooltip-trigger",
+  "txt": "Великое поручение",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/nagornaya/chast-4/",
+  "kind": "tooltip-trigger",
+  "txt": "The Master's Seminary",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/nagornaya/chast-4/",
+  "kind": "tooltip-trigger",
+  "txt": "Р. Ч. Спраул",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 320,
+  "r": "/nagornaya/chast-4/",
+  "kind": "tooltip-trigger",
+  "txt": "Вульгаты",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/20-antisovetov-pastoru/",
+  "kind": "fn-marker fn-marker--dove map-trigger",
+  "txt": "",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/20-antisovetov-pastoru/",
+  "kind": "fn-marker fn-marker--dove map-trigger",
+  "txt": "",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/20-antisovetov-pastoru/",
+  "kind": "fn-marker fn-marker--dove map-trigger",
+  "txt": "",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/20-antisovetov-pastoru/",
+  "kind": "fn-marker fn-marker--dove map-trigger",
+  "txt": "",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/20-antisovetov-pastoru/",
+  "kind": "fn-marker fn-marker--dove map-trigger",
+  "txt": "",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/dzhon-gill-chast-1-chelovek/",
+  "kind": "fn-marker fn-marker--dove",
+  "txt": "⟦сноска: Риппон на титуль",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/dzhon-gill-chast-2-uchenyi/",
+  "kind": "fn-marker fn-marker--dove",
+  "txt": "⟦сноска: Richard A. Mulle",
+  "pop": {
+   "cls": "tooltip",
+   "role": "tooltip",
+   "l": 40,
+   "r": 350,
+   "t": 608,
+   "b": 784,
+   "vw": 390,
+   "vh": 740,
+   "out": true,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/dzhon-gill-chast-2-uchenyi/",
+  "kind": "fn-marker fn-marker--dove",
+  "txt": "⟦сноска: Gill J. A Body o",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/dzhon-gill-chast-2-uchenyi/",
+  "kind": "fn-marker fn-marker--dove",
+  "txt": "⟦сноска: Gill J. A Body o",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/dzhon-gill-chast-2-uchenyi/",
+  "kind": "fn-marker fn-marker--dove",
+  "txt": "⟦сноска: Gill J. Expositi",
+  "pop": {
+   "cls": "tooltip",
+   "role": "tooltip",
+   "l": 40,
+   "r": 350,
+   "t": 404,
+   "b": 559,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "kind": "fn-marker fn-trans fn-marker--dove",
+  "txt": "⟦сноска: Перев.: греч. ὀρ",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 519,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "kind": "fn-marker",
+  "txt": "106 ⟦сноска: Longman. Вме",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 409,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "kind": "fn-marker",
+  "txt": "20 ⟦сноска: Murray, “Davi",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 630,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "kind": "fn-marker",
+  "txt": "8 ⟦сноска: Greidanus, Pre",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 674,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "kind": "fn-marker",
+  "txt": "114 ⟦сноска: James A. Bor",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 652,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/kod-da-vinchi/",
+  "kind": "fn-marker",
+  "txt": "1 ⟦сноска: CNN Sunday Mor",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 519,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/kod-da-vinchi/",
+  "kind": "fn-marker",
+  "txt": "11 ⟦сноска: Иустин Мучени",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 674,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/kod-da-vinchi/",
+  "kind": "fn-marker",
+  "txt": "7 ⟦сноска: Иосиф Флавий, ",
+  "pop": {
+   "cls": "tooltip",
+   "role": "tooltip",
+   "l": 41,
+   "r": 349,
+   "t": -172,
+   "b": 156,
+   "vw": 390,
+   "vh": 740,
+   "out": true,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/kod-da-vinchi/",
+  "kind": "fn-marker",
+  "txt": "17 ⟦сноска: Encyclopaedia",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 652,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/kod-da-vinchi/",
+  "kind": "fn-marker",
+  "txt": "24 ⟦сноска: Тертуллиан, П",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 453,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "kind": "fn-marker",
+  "txt": "1 ⟦сноска: Calvin J. Comm",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 630,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "kind": "fn-marker",
+  "txt": "25 ⟦сноска: Ср. Murray J.",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 630,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "kind": "fn-marker",
+  "txt": "14 ⟦сноска: Ср. John Owen",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 630,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "kind": "fn-marker",
+  "txt": "32 ⟦сноска: Hodge C. Syst",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 630,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "kind": "fn-marker",
+  "txt": "26 ⟦сноска: Owen J. Of In",
+  "pop": {
+   "cls": "tooltip gb-floating-tip is-open",
+   "role": "tooltip",
+   "l": 0,
+   "r": 390,
+   "t": 630,
+   "b": 740,
+   "vw": 390,
+   "vh": 740,
+   "out": false,
+   "scrollable": false
+  },
+  "closed": false,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-1/",
+  "kind": "tooltip-trigger",
+  "txt": "разрушении Закона",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-1/",
+  "kind": "tooltip-trigger",
+  "txt": "πληρόω",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-1/",
+  "kind": "tooltip-trigger",
+  "txt": "Абнер Чау",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-1/",
+  "kind": "tooltip-trigger",
+  "txt": "Роберт Гандри",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-1/",
+  "kind": "tooltip-trigger",
+  "txt": "послушание",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-2/",
+  "kind": "tooltip-trigger",
+  "txt": "органического вдохновения",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-2/",
+  "kind": "tooltip-trigger",
+  "txt": "свидетельствах очевидцев",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-2/",
+  "kind": "tooltip-trigger",
+  "txt": "Ipsissima vox",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-3/",
+  "kind": "tooltip-trigger",
+  "txt": "«протекающим диспенсацион",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-3/",
+  "kind": "tooltip-trigger",
+  "txt": "Великое поручение",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-4/",
+  "kind": "tooltip-trigger",
+  "txt": "The Master's Seminary",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-4/",
+  "kind": "tooltip-trigger",
+  "txt": "Б. Б. Уорфилд",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-4/",
+  "kind": "tooltip-trigger",
+  "txt": "Чикагское заявление о биб",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ },
+ {
+  "w": 390,
+  "r": "/nagornaya/chast-4/",
+  "kind": "tooltip-trigger",
+  "txt": "Вульгаты",
+  "pop": null,
+  "closed": null,
+  "nav": null
+ }
+]
