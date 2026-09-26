@@ -1,0 +1,446 @@
+[
+ {
+  "v": "m",
+  "r": "/karty/",
+  "big": [],
+  "nInter": 0,
+  "sw": 390,
+  "vw": 390,
+  "h1": "Библейские карты",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "m",
+  "r": "/karty/avraam/",
+  "big": [
+   {
+    "t": "BODY.has-app-search-map",
+    "w": 390,
+    "h": 844,
+    "top": 0
+   },
+   {
+    "t": "SECTION.me-map me-map--route",
+    "w": 390,
+    "h": 844,
+    "top": 0
+   },
+   {
+    "t": "svg.",
+    "w": 390,
+    "h": 844,
+    "top": 0
+   }
+  ],
+  "nInter": 55,
+  "sw": 390,
+  "vw": 390,
+  "h1": null,
+  "click": {
+   "before": 6,
+   "after": {
+    "n": 6,
+    "focus": "SECTION.me-map me-map--route"
+   },
+   "esc": 1
+  },
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "m",
+  "r": "/karty/early-church/",
+  "big": [],
+  "nInter": 0,
+  "sw": 390,
+  "vw": 390,
+  "h1": "Ранняя Церковь · Деяния 1–12",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "m",
+  "r": "/karty/ishod/",
+  "big": [
+   {
+    "t": "BODY.has-app-search-map",
+    "w": 390,
+    "h": 844,
+    "top": 0
+   },
+   {
+    "t": "SECTION.me-map me-map--route",
+    "w": 390,
+    "h": 844,
+    "top": 0
+   },
+   {
+    "t": "svg.",
+    "w": 390,
+    "h": 844,
+    "top": 0
+   }
+  ],
+  "nInter": 36,
+  "sw": 390,
+  "vw": 390,
+  "h1": "Исход из Египта — интерактивная карта. М",
+  "click": {
+   "before": 6,
+   "after": {
+    "n": 6,
+    "focus": "BODY.has-app-search-map"
+   },
+   "esc": 1
+  },
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "m",
+  "r": "/karty/maccabim/",
+  "big": [],
+  "nInter": 0,
+  "sw": 390,
+  "vw": 390,
+  "h1": "Межзаветный период · Маккавеи",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "m",
+  "r": "/karty/melachim/",
+  "big": [],
+  "nInter": 0,
+  "sw": 390,
+  "vw": 390,
+  "h1": "Царства Израиля и Иуды",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "m",
+  "r": "/karty/pavel/",
+  "big": [],
+  "nInter": 0,
+  "sw": 390,
+  "vw": 390,
+  "h1": "Миссионерские путешествия Павла",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "m",
+  "r": "/karty/revelation/",
+  "big": [],
+  "nInter": 0,
+  "sw": 390,
+  "vw": 390,
+  "h1": "7 Церквей Откровения",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "m",
+  "r": "/karty/shoftim/",
+  "big": [],
+  "nInter": 0,
+  "sw": 390,
+  "vw": 390,
+  "h1": "Эпоха Судей",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "m",
+  "r": "/karty/shvatim/",
+  "big": [],
+  "nInter": 0,
+  "sw": 390,
+  "vw": 390,
+  "h1": "12 Колен Израиля",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "m",
+  "r": "/karty/yeshua/",
+  "big": [],
+  "nInter": 0,
+  "sw": 390,
+  "vw": 390,
+  "h1": "Жизнь Иисуса Христа",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "m",
+  "r": "/rodosloviye/",
+  "big": [
+   {
+    "t": "svg.react-flow__background",
+    "w": 390,
+    "h": 528,
+    "top": 3228
+   }
+  ],
+  "nInter": 0,
+  "sw": 390,
+  "vw": 390,
+  "h1": "От Адама до Христа",
+  "click": {
+   "before": 2,
+   "after": {
+    "n": 2,
+    "focus": "DIV.react-flow__node react-flow__n"
+   },
+   "esc": 1
+  },
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "m",
+  "r": "/app/",
+  "big": [],
+  "nInter": 0,
+  "sw": 390,
+  "vw": 390,
+  "h1": "Читайте глубже. Проверяйте себя. Возвращ",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/karty/",
+  "big": [],
+  "nInter": 0,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": "Библейские карты",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/karty/avraam/",
+  "big": [
+   {
+    "t": "BODY.has-app-search-map",
+    "w": 1366,
+    "h": 900,
+    "top": 0
+   },
+   {
+    "t": "SECTION.me-map me-map--route",
+    "w": 1366,
+    "h": 900,
+    "top": 0
+   },
+   {
+    "t": "svg.",
+    "w": 1366,
+    "h": 900,
+    "top": 0
+   }
+  ],
+  "nInter": 56,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": null,
+  "click": {
+   "before": 6,
+   "after": {
+    "n": 6,
+    "focus": "BUTTON.me-story-chip me-story-chip--a"
+   },
+   "esc": 1
+  },
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/karty/early-church/",
+  "big": [],
+  "nInter": 0,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": "Ранняя Церковь · Деяния 1–12",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/karty/ishod/",
+  "big": [
+   {
+    "t": "BODY.has-app-search-map",
+    "w": 1366,
+    "h": 900,
+    "top": 0
+   },
+   {
+    "t": "SECTION.me-map me-map--route",
+    "w": 1366,
+    "h": 900,
+    "top": 0
+   },
+   {
+    "t": "svg.",
+    "w": 1366,
+    "h": 900,
+    "top": 0
+   }
+  ],
+  "nInter": 37,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": "Исход из Египта — интерактивная карта. М",
+  "click": {
+   "before": 6,
+   "after": {
+    "n": 6,
+    "focus": "BUTTON.me-story-chip me-story-chip--a"
+   },
+   "esc": 1
+  },
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/karty/maccabim/",
+  "big": [],
+  "nInter": 0,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": "Межзаветный период · Маккавеи",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/karty/melachim/",
+  "big": [],
+  "nInter": 0,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": "Царства Израиля и Иуды",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/karty/pavel/",
+  "big": [],
+  "nInter": 0,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": "Миссионерские путешествия Павла",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/karty/revelation/",
+  "big": [],
+  "nInter": 0,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": "7 Церквей Откровения",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/karty/shoftim/",
+  "big": [],
+  "nInter": 0,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": "Эпоха Судей",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/karty/shvatim/",
+  "big": [],
+  "nInter": 0,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": "12 Колен Израиля",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/karty/yeshua/",
+  "big": [],
+  "nInter": 0,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": "Жизнь Иисуса Христа",
+  "click": null,
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/rodosloviye/",
+  "big": [
+   {
+    "t": "svg.react-flow__background",
+    "w": 1351,
+    "h": 595,
+    "top": 1969
+   }
+  ],
+  "nInter": 0,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": "От Адама до Христа",
+  "click": {
+   "before": 2,
+   "after": {
+    "n": 2,
+    "focus": "DIV.react-flow__node react-flow__n"
+   },
+   "esc": 1
+  },
+  "errs": [],
+  "fail": []
+ },
+ {
+  "v": "d",
+  "r": "/app/",
+  "big": [],
+  "nInter": 0,
+  "sw": 1366,
+  "vw": 1366,
+  "h1": "Читайте глубже. Проверяйте себя. Возвращ",
+  "click": null,
+  "errs": [],
+  "fail": []
+ }
+]

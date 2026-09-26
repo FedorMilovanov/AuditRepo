@@ -587,3 +587,45 @@ MASTER не изменён.
 - Навигация по заголовкам в скринридере покажет «дыру» в структуре. Fix — `h2`/`h3` или `p` со стилем. Local owner: карточки Гилла и flip-card «Кода». WCAG 1.3.1 best practice, не блокер.
 
 MASTER не изменён.
+
+---
+
+# Wave 12 — карты, родословие, /app/, загрузка шрифтов
+
+Окружение восстановлено после сброса. Скрипты: `evidence/maps-e2e.mjs` (13 маршрутов × mobile 390 / desktop 1366: ошибки, отрисовка, клик по маркеру, Esc), `evidence/fonts-runtime.mjs` (104 маршрута: `document.fonts`, неиспользованные preload), `evidence/karty-h1.mjs`. Данные: `evidence/maps-e2e.json`, `evidence/fonts-runtime-104.json`. Скриншоты: `evidence/maps/*.png`.
+
+## FONT-01 — хаб /karty/ рендерится без фирменных шрифтов — `candidate`, высокая уверенность
+
+- **W4:** на `/karty/` computed `font-family` h1 = `"Playfair Display", Georgia, serif`, текста — `Source Sans 3`. При этом `document.fonts` = **0 объявленных FontFace** (на статьях 9), рендерится fallback. Chrome пишет «preloaded using link preload but not used» для обоих woff2.
+- **W2:** `src/components/karty/KartyPageHead.astro:33–35`: `preload` для `playfairdisplay-cyrillic-700.woff2` и `sourcesans3-cyrillic-400.woff2` + `site.css`, но **нет `<link rel="stylesheet" href="…/fonts/fonts.css">`**, где лежат `@font-face`. Для сравнения, заглушки `/karty/pavel/` и др. и все статьи `fonts.css` подключают.
+- **Видимый эффект:** h1 «Библейские карты» (38.4px, `overflow-wrap:anywhere`) рвётся посреди слова: «Библейски / е карты» на 320–430px (`evidence/maps/m-karty.png`). Метрики fallback-шрифта шире Playfair. В песочнице fallback = DejaVu Serif, на устройствах будет Georgia. Разрыв на реальном устройстве — `UNPROVEN`, но отсутствие фирменного шрифта детерминировано.
+- Fix: одна строка в `KartyPageHead.astro`. Отдельно стоит заменить `overflow-wrap:anywhere` на h1 на `hyphens:auto`/`balance`, чтобы короткие заголовки не рвались.
+
+## PERF-01 — неиспользуемые preload шрифтов — `candidate`, low
+
+- `/karty/avraam/`, `/karty/ishod/`: preload 2 woff2 при системном стеке (`Segoe UI…`), declared 0.
+- `/konfessii/`, `/konfessii/russkij-baptizm/`: preload 1 woff2, declared 0.
+- Ещё 19 страниц (все `/baptisty-rossii/*`, «Нагорная» ч.1–5, Гилл-справочник, «Герменевтика»): 1 preload не используется в первые 3.5 с (`sourcesans3-cyrillic-400` ×4, `lora-cyrillic-400`, прочие без URL в сообщении).
+- Лишние 20–40 КБ на старте, конкурируют с критическими ресурсами. Triage.
+
+## Карты — состояние витрины согласовано (проверено)
+
+- Интерактивны только `/karty/avraam/` и `/karty/ishod/`. Клик по маркеру, фокус, Esc без ошибок, `pageerror` = 0, горизонтального переполнения нет (390 и 1366).
+- 8 карт (`early-church`, `maccabim`, `melachim`, `pavel`, `revelation`, `shoftim`, `shvatim`, `yeshua`) — осознанные заглушки `data-content-status="temporary-placeholder"`: `noindex, follow`, нет в sitemap, 0 входящих ссылок (`evidence/maps/m-karty-pavel.png`). Согласовано.
+
+## MAPS-01 — /karty/ishod/ опубликована, но сирота и не учтена витриной — `candidate`, medium
+
+- Хаб `/karty/` говорит «**1** карта открыта · **9** на аудите» и ссылается только на `./avraam/`.
+- Но `/karty/ishod/` — полноценная интерактивная карта с `robots=index, follow`, есть в `sitemap.xml`, canonical на себя. Во всём `dist` на неё **0 входящих ссылок**.
+- Противоречие: либо ishod готова (тогда хаб должен её показывать, счётчик «2 открыто»), либо она на аудите (тогда `noindex` и вне sitemap, как остальные 8). Статус витрины «управляется метаданными самой карты» (текст заглушки), значит расходятся метаданные ishod и манифест хаба. Решение владельца.
+
+## Observation — тексты заглушек карт
+
+- Пользовательский текст: «Визуальный аудит карт», «…обязательного owner review», «Статус витрины управляется метаданными самой карты». Внутренний процессный жаргон (плюс англицизм) на публичной странице. Страницы `noindex` и без входящих ссылок, риск низкий. Triage «непримиримость/полировка».
+
+## /rodosloviye/ и /app/ — без замечаний в этой волне
+
+- `/rodosloviye/`: React Flow рендерится (mobile 390×528, desktop 1351×595). Клик по узлу даёт фокус на `react-flow__node`, ошибок 0. A11Y-09 (149 div с aria-label без роли) из Wave 2 остаётся в силе.
+- `/app/`: загрузка без ошибок. Системный шрифтовой стек (`ui-sans-serif`) без web-fonts — по дизайну.
+
+MASTER не изменён.
