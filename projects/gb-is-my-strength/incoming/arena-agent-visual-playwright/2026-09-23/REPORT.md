@@ -12,7 +12,7 @@
 | report_type | browser-audit + visual-audit |
 | live witness | **UNPROVEN** — `gospod-bog.ru` из песочницы недоступен (TLS `SSL_ERROR_SYSCALL`), live-проверки нет |
 
-## Сводка по волнам 1–13 (обновляется; детали — в разделах волн ниже)
+## Сводка по волнам 1–14 (обновляется; детали — в разделах волн ниже)
 
 Все пункты имеют статус `candidate` для triage Codex/владельца. MASTER агентом не менялся.
 
@@ -23,6 +23,7 @@
 | 3 | QUIZ-01 | квиз в dark: светлый текст на светлой карточке | 23 маршрута | `src/runtime/article-interactions.css:102` (неопределённые `--surface/--card-bg`) | 5 |
 | 4 | KBD-01/02 | keyboard trap в радиогруппе скорости; невидимые фокусируемые кнопки | 5 частей «Нагорной» + статьи | `js/floating-cluster-controller.js` | 2–3 |
 | 5 | HDR-01 | шапка выталкивает поиск/тему за экран (iPad portrait, phone landscape) | ≥7 хабов | `css/home.css` брейкпоинт `.h-nav-links` + `ui/Header.astro`; `izbrannoe` оверрайд | 8–10 |
+| 5b | **TIP-01** | 40 подсказок-глоссариев «Нагорной» ч.1–4 мертвы: выглядят как подсказка (пунктир, `cursor:help`), не открываются ни тапом, ни hover, ни с клавиатуры | 4 маршрута | `[data-tooltip]` обслуживает только legacy `js/site.js`, который «Нагорная» не грузит | 14 |
 | 6 | QUIZ-02 | HTML-разметка квиза выводится как текст | 9+ страниц | `article-quiz.js` `textContent` vs данные с `<em>/<span>` (решение владельца) | 5–6 |
 | 7 | THEME-01 | hub genesis-6 без `data-series-theme`, dark title 1.36:1 | 1 хаб | `css/series-manuscript.css` | 3 |
 | 8 | FONT-01 | `/karty/` без `fonts.css`: fallback-шрифт, h1 рвётся посреди слова | 1 хаб | `karty/KartyPageHead.astro:33–35` | 12 |
@@ -671,5 +672,32 @@ MASTER не изменён.
 ## Не находка
 
 - Серый квадрат в левом верхнем углу на нескольких мобильных скриншотах: `elementFromPoint(8,8)` на 104 маршрутах после прокрутки не находит мелкого элемента. Артефакт снимка.
+
+MASTER не изменён.
+
+---
+
+# Wave 14 — подсказки «Нагорной», strategic map «20 антисоветов», клавиатура на десктопе
+
+Скрипты: `evidence/tooltips-nagornaya-keyboard.mjs`, `evidence/tooltips-nagornaya-antisovetov.mjs`, `evidence/data-tooltip-scan.mjs`. Данные: `evidence/data-tooltip-scan-104.json`. Скриншоты: `evidence/tip14-*.png`.
+
+## TIP-01 — глоссарные подсказки «Нагорной» не работают вообще — `candidate`, высокая уверенность
+
+- **W4:** на 104 маршрутах элементы `[data-tooltip]` есть только на «Нагорной»: ч.1 — 10, ч.2 — 4, ч.3 — 2, ч.4 — 24, **итого 40**. Из них «готовых» (`data-gb-tooltip-ready`, `aria-describedby`, `tabindex≥0` или `role`) — **0**.
+- Mobile 390: тап по `.tooltip-trigger` ничего не показывает. Desktop 1366: hover — ничего, фокус невозможен (`tabIndex=-1`, нет роли), `::before/::after` = `none`.
+- При этом триггер **выглядит интерактивным**: `border-bottom: dotted`, `cursor: help` (`css/site.css` `.tooltip-trigger`). Для читателя это ложное обещание.
+- Содержимое недоступно никак: «Отмена или нарушение Божьего закона», «Греч. pleroo — 'наполнить до краёв'…», «Латинский термин… (concursus)», «The Master's Seminary (TMS) — евангельская семинария…» и т.д.
+- **W2:** разметка в `src/components/nagornaya/chast-{1..4}/*.astro`: `<span class="tooltip-trigger" data-tooltip="…">`. Обработчик `[data-tooltip]` есть только в legacy `js/site.js`. Скрипты «Нагорной» (`reader-preferences*`, `reader-state`, `site-utils`, `scroll-perf`, `glossary`, `highlights`, `nagornaya-*`, `enhancements`, `bookmark-engine`) его не содержат. `js/glossary.js` обслуживает только `.gterm/.gtip`. Канонический article-tooltip owner (WORK_QUEUE:40) работает с `.fn-marker`. Для `[data-tooltip]` владельца нет.
+- **W5:** «Нагорная» мигрировала с `site.js`, контракт `data-tooltip` потерян. Родственно QUIZ-03 (legacy-контракт без владельца после миграции). Fix: перевести 40 триггеров на канонический tooltip owner (или `.gterm`) либо вернуть обработчик. Regression-гейт: «каждый `.tooltip-trigger`/`[data-tooltip]` имеет рантайм-владельца».
+- Связь с Wave 2 A11Y-08: пунктирные триггеры без роли там не учитывались. Отдельная находка.
+
+## Проверено — работает
+
+- **«20 антисоветов», `.map-trigger` (38 шт.):** тап (mobile) → нижний `role=dialog` 390×275 с блоками «Семейное равновесие…». Клик (desktop) → поповер 544×369 рядом с маркером. `Esc` закрывает, **фокус возвращается на маркер**. Ложный «no popup» в Wave 13 объясняется другим классом (`.gb-strategic-map-popover`) и нулевым размером части пустых маркеров (например, `data-tip=39`), которые Playwright считает невидимыми.
+- **«Код да Винчи», `.fn-marker`:** mobile tap → нижний лист, desktop hover → подсказка, фокус с клавиатуры → подсказка, Enter → подсказка, Esc → закрыто. Эталонное поведение.
+
+## Observation — невидимые маркеры в «20 антисоветах»
+
+- Часть `.map-trigger` (например, `data-tip="39"`) имеет нулевой бокс, но `tabindex=0` и `role=button`. Это та же модель, что KBD-02: фокусируемый невидимый элемент. Охват не посчитан, `UNPROVEN`.
 
 MASTER не изменён.

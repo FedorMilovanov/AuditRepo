@@ -1,0 +1,30 @@
+{
+ "/nagornaya/chast-1/": {
+  "n": 10,
+  "ready": 0,
+  "sample": "Отмена или нарушение Божьего закона",
+  "cls": "tooltip-trigger",
+  "hoverShows": false
+ },
+ "/nagornaya/chast-2/": {
+  "n": 4,
+  "ready": 0,
+  "sample": "Латинский термин, описывающий совместное действие ",
+  "cls": "tooltip-trigger",
+  "hoverShows": false
+ },
+ "/nagornaya/chast-3/": {
+  "n": 2,
+  "ready": 0,
+  "sample": "Тот, кто сохраняет различие между Израилем и Церко",
+  "cls": "tooltip-trigger",
+  "hoverShows": false
+ },
+ "/nagornaya/chast-4/": {
+  "n": 24,
+  "ready": 0,
+  "sample": "The Master's Seminary (TMS) — евангельская семинар",
+  "cls": "tooltip-trigger",
+  "hoverShows": false
+ }
+}
