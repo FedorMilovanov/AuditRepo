@@ -1,0 +1,25 @@
+BROKEN launched /articles/20-antisovetov-pastoru/                        {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":716}
+BROKEN launched /articles/anatomiya-padeniya-pyat-stadiy/                {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":805}
+BROKEN launched /articles/cerkovnaya-disciplina-vlast-granicy-zashchita/ {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":602}
+BROKEN inline   /articles/diotrefy-nashego-vremeni/                      {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":354}
+BROKEN launched /articles/dzhon-gill-chast-1-chelovek/                   {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":554}
+BROKEN launched /articles/dzhon-gill-chast-2-uchenyi/                    {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":651}
+BROKEN launched /articles/dzhon-gill-chast-3-nasledie/                   {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":663}
+BROKEN launched /articles/dzhon-gill-chast-4-ekzeget/                    {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":780}
+BROKEN launched /articles/dzhon-gill-spravochnik/                        {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":485}
+BROKEN launched /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/ {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":886}
+BROKEN launched /articles/kod-da-vinchi/                                 {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":380}
+BROKEN launched /articles/kogda-uhodit-kogda-ostavatsya/                 {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":598}
+NOTSHOWN launched /articles/krajne-li-isporcheno-serdce/                   null
+BROKEN launched /articles/lot-i-sodom/                                   {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":517}
+BROKEN launched /articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/ {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":707}
+BROKEN launched /articles/priznaki-zdorovoy-cerkvi/                      {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":578}
+BROKEN launched /articles/sem-tipov-razlichenie-uchiteley/               {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":622}
+BROKEN launched /articles/teksty-pisaniya-kotorymi-manipuliruyut/        {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":386}
+BROKEN launched /articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/      {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":586}
+BROKEN launched /nagornaya/chast-1/                                      {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":490}
+BROKEN launched /nagornaya/chast-2/                                      {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":443}
+BROKEN launched /nagornaya/chast-3/                                      {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":396}
+BROKEN launched /nagornaya/chast-4/                                      {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":513}
+BROKEN launched /nagornaya/chast-5/                                      {"bg":"rgba(255, 253, 248, 0.92)","fg":"rgb(230, 225, 215)","h":395}
+QUIZ ROUTES 24 BROKEN 23

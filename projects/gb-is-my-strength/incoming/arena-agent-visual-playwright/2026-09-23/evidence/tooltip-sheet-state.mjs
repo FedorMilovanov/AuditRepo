@@ -1,0 +1,13 @@
+import {chromium} from '/tmp/gb/node_modules/playwright/index.mjs';
+const b=await chromium.launch({executablePath:'/tmp/chromium',args:['--no-sandbox','--no-zygote']});
+const c=await b.newContext({viewport:{width:390,height:740},serviceWorkers:'block',isMobile:true,hasTouch:true});const p=await c.newPage();
+await p.goto('http://127.0.0.1:8080/articles/krajne-li-isporcheno-serdce/');await p.waitForTimeout(600);
+const info=()=>p.evaluate(()=>{const t=[...document.querySelectorAll('[role=tooltip]')];const inView=t.filter(e=>{const R=e.getBoundingClientRect();return R.bottom>0&&R.top<innerHeight&&R.width>0&&getComputedStyle(e).visibility!=='hidden'});
+ const s=t[0]&&getComputedStyle(t[0]);return {n:t.length,ariaHidden:t.filter(e=>e.closest('[aria-hidden=true]')||e.hidden||e.getAttribute('aria-hidden')==='true').length,inert:t.filter(e=>e.closest('[inert]')).length,inView:inView.map(e=>e.textContent.trim().slice(0,30)),sample:s&&{vis:s.visibility,disp:s.display,op:s.opacity,tr:s.transform,top:s.top,cv:s.contentVisibility},expanded:[...document.querySelectorAll('[aria-expanded=true].fn-marker')].length,describedby:document.querySelector('.fn-marker')?.getAttribute('aria-describedby')}});
+console.log('before',JSON.stringify(await info()));
+const m=p.locator('.fn-marker').first();await m.scrollIntoViewIfNeeded();await m.tap();await p.waitForTimeout(700);
+console.log('after tap',JSON.stringify(await info()));
+await p.screenshot({path:process.argv[2]+'/tooltip-krajne-after-tap-390.png'});
+const snap=await p.accessibility.snapshot({interestingOnly:true}).catch(()=>null);
+const flat=[];const walk=n=>{if(!n)return;if(n.role==='tooltip')flat.push(n.name?.slice(0,30));(n.children||[]).forEach(walk)};walk(snap);console.log('tooltips in a11y tree:',flat.length);
+await b.close();

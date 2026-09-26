@@ -1,0 +1,861 @@
+{
+ "color-contrast": {
+  "impact": "serious",
+  "help": "Elements must meet minimum color contrast ratio thresholds",
+  "pages": {
+   "/about/": [
+    {
+     "t": "cite",
+     "s": "Element has insufficient color contrast of 2.42 (foreground color: #a5a4a3, background color: #fdfcf9, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/articles/": [
+    {
+     "t": ".h-hero-tagline",
+     "s": "Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 7.5pt (10px), font weight:"
+    },
+    {
+     "t": ".h-hero-desc",
+     "s": "Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 14.6pt (19.52px), font wei"
+    },
+    {
+     "t": "#hLibraryLabel",
+     "s": "Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 8.6pt (11.5px), font weigh"
+    }
+   ],
+   "/articles/20-antisovetov-pastoru/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/articles/anatomiya-padeniya-pyat-stadiy/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/articles/dzhon-gill-chast-1-chelovek/": [
+    {
+     "t": ".gill-card:nth-child(2) > .gill-card__kicker",
+     "s": "Element has insufficient color contrast of 3.24 (foreground color: #8d8d8b, background color: #fdfcfb, font size: 8.4pt (11.2px), font weigh"
+    },
+    {
+     "t": "#gill-search-p-003",
+     "s": "Element has insufficient color contrast of 4.01 (foreground color: #7e7d7b, background color: #fdfcfb, font size: 9.6pt (12.8px), font weigh"
+    },
+    {
+     "t": ".gill-card:nth-child(2) > .gill-card__time",
+     "s": "Element has insufficient color contrast of 3.24 (foreground color: #8d8d8b, background color: #fdfcfb, font size: 8.4pt (11.2px), font weigh"
+    }
+   ],
+   "/articles/dzhon-gill-chast-2-uchenyi/": [
+    {
+     "t": "#gill-search-p-002",
+     "s": "Element has insufficient color contrast of 4.01 (foreground color: #7e7d7b, background color: #fdfcfb, font size: 9.6pt (12.8px), font weigh"
+    },
+    {
+     "t": ".gill-card:nth-child(1) > .gill-card__time",
+     "s": "Element has insufficient color contrast of 3.24 (foreground color: #8d8d8b, background color: #fdfcfb, font size: 8.4pt (11.2px), font weigh"
+    },
+    {
+     "t": ".gill-card:nth-child(3) > .gill-card__kicker",
+     "s": "Element has insufficient color contrast of 3.24 (foreground color: #8d8d8b, background color: #fdfcfb, font size: 8.4pt (11.2px), font weigh"
+    }
+   ],
+   "/articles/dzhon-gill-chast-3-nasledie/": [
+    {
+     "t": "#gill-search-p-002",
+     "s": "Element has insufficient color contrast of 4.01 (foreground color: #7e7d7b, background color: #fdfcfb, font size: 9.6pt (12.8px), font weigh"
+    },
+    {
+     "t": ".gill-card:nth-child(1) > .gill-card__time",
+     "s": "Element has insufficient color contrast of 3.24 (foreground color: #8d8d8b, background color: #fdfcfb, font size: 8.4pt (11.2px), font weigh"
+    },
+    {
+     "t": ".gill-card:nth-child(2) > .gill-card__kicker",
+     "s": "Element has insufficient color contrast of 3.24 (foreground color: #8d8d8b, background color: #fdfcfb, font size: 8.4pt (11.2px), font weigh"
+    }
+   ],
+   "/articles/dzhon-gill-chast-4-ekzeget/": [
+    {
+     "t": "#gill-search-p-002",
+     "s": "Element has insufficient color contrast of 4.01 (foreground color: #7e7d7b, background color: #fdfcfb, font size: 9.6pt (12.8px), font weigh"
+    },
+    {
+     "t": ".gill-card:nth-child(1) > .gill-card__time",
+     "s": "Element has insufficient color contrast of 3.24 (foreground color: #8d8d8b, background color: #fdfcfb, font size: 8.4pt (11.2px), font weigh"
+    },
+    {
+     "t": ".gill-card:nth-child(2) > .gill-card__kicker",
+     "s": "Element has insufficient color contrast of 3.24 (foreground color: #8d8d8b, background color: #fdfcfb, font size: 8.4pt (11.2px), font weigh"
+    }
+   ],
+   "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/": [
+    {
+     "t": ".article-byline__updated",
+     "s": "Element has insufficient color contrast of 3.15 (foreground color: #8f8f8e, background color: #fdfcf9, font size: 7.8pt (10.4px), font weigh"
+    },
+    {
+     "t": ".article-updated",
+     "s": "Element has insufficient color contrast of 3.15 (foreground color: #8f8f8e, background color: #fdfcf9, font size: 7.8pt (10.4px), font weigh"
+    }
+   ],
+   "/articles/kod-da-vinchi/": [
+    {
+     "t": ".article-byline__updated",
+     "s": "Element has insufficient color contrast of 3.15 (foreground color: #8f8f8e, background color: #fdfcf9, font size: 7.8pt (10.4px), font weigh"
+    },
+    {
+     "t": ".article-updated",
+     "s": "Element has insufficient color contrast of 3.15 (foreground color: #8f8f8e, background color: #fdfcf9, font size: 7.8pt (10.4px), font weigh"
+    },
+    {
+     "t": ".error-flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=",
+     "s": "Element has insufficient color contrast of 3.3 (foreground color: #c0705a, background color: #fdf0ee, font size: 7.5pt (10px), font weight: "
+    }
+   ],
+   "/articles/kogda-uhodit-kogda-ostavatsya/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/articles/krajne-li-isporcheno-serdce/": [
+    {
+     "t": ".article-byline__updated",
+     "s": "Element has insufficient color contrast of 3.15 (foreground color: #8f8f8e, background color: #fdfcf9, font size: 7.8pt (10.4px), font weigh"
+    },
+    {
+     "t": ".article-updated",
+     "s": "Element has insufficient color contrast of 3.15 (foreground color: #8f8f8e, background color: #fdfcf9, font size: 7.8pt (10.4px), font weigh"
+    },
+    {
+     "t": "#gill-search-p-132",
+     "s": "Element has insufficient color contrast of 1.05 (foreground color: #fff8e6, background color: #ffffff, font size: 12.8pt (17px), font weight"
+    }
+   ],
+   "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/articles/priznaki-zdorovoy-cerkvi/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/articles/sem-tipov-razlichenie-uchiteley/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/articles/teksty-pisaniya-kotorymi-manipuliruyut/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/baptisty-rossii/": [
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.24 (foreground color: #dacecb, background color: #efe7d7, font size: 117.0pt (156px), font weig"
+    },
+    {
+     "t": ".article-desc",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight"
+    },
+    {
+     "t": ".article-desc > strong",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight"
+    }
+   ],
+   "/baptisty-rossii/dva-sezda-1884/": [
+    {
+     "t": ".article-desc",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight"
+    },
+    {
+     "t": "time",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".sdg",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 10.5pt (14px), font weight"
+    }
+   ],
+   "/baptisty-rossii/goneniya-i-sovest/": [
+    {
+     "t": ".article-desc",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight"
+    },
+    {
+     "t": "time",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".sdg",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 10.5pt (14px), font weight"
+    }
+   ],
+   "/baptisty-rossii/iniciativnaya-gruppa/": [
+    {
+     "t": ".article-desc",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight"
+    },
+    {
+     "t": "time",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".sdg",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 10.5pt (14px), font weight"
+    }
+   ],
+   "/baptisty-rossii/noch-na-kure/": [
+    {
+     "t": ".article-desc",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight"
+    },
+    {
+     "t": "time",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".sdg",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 10.5pt (14px), font weight"
+    }
+   ],
+   "/baptisty-rossii/peterburgskaya-liniya/": [
+    {
+     "t": ".article-desc",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight"
+    },
+    {
+     "t": "time[datetime=\"2026-06-04T00:00:00+03:00\"]",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".article-updated",
+     "s": "Element has insufficient color contrast of 2.83 (foreground color: #8b8985, background color: #efe7d7, font size: 7.8pt (10.4px), font weigh"
+    }
+   ],
+   "/baptisty-rossii/podpolnaya-pechat/": [
+    {
+     "t": ".article-desc",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight"
+    },
+    {
+     "t": "time",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".sdg",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 10.5pt (14px), font weight"
+    }
+   ],
+   "/baptisty-rossii/sovetskaya-noch/": [
+    {
+     "t": ".article-desc",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight"
+    },
+    {
+     "t": "time",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".article-figure > figcaption",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.0pt (12px), font weight:"
+    }
+   ],
+   "/baptisty-rossii/spravochnik/": [
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.22 (foreground color: #dbd0cc, background color: #efe7d7, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": ".article-desc",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight"
+    },
+    {
+     "t": "time",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight:"
+    }
+   ],
+   "/baptisty-rossii/vsehib-1944/": [
+    {
+     "t": ".article-desc",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight"
+    },
+    {
+     "t": "time",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".sdg",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 10.5pt (14px), font weight"
+    }
+   ],
+   "/baptisty-rossii/yuzhnaya-shtunda/": [
+    {
+     "t": ".article-desc",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 12.0pt (16px), font weight"
+    },
+    {
+     "t": "time",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".sdg",
+     "s": "Element has insufficient color contrast of 4.39 (foreground color: #6a6a6a, background color: #efe7d7, font size: 10.5pt (14px), font weight"
+    }
+   ],
+   "/biografii/": [
+    {
+     "t": ".h-hero-tagline",
+     "s": "Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 7.5pt (10px), font weight:"
+    },
+    {
+     "t": ".h-hero-desc",
+     "s": "Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 14.6pt (19.52px), font wei"
+    },
+    {
+     "t": "#dzhon-gill-series > .h-articles-group > .h-article-list > li:nth-child(1) > .h-article-ca",
+     "s": "Element has insufficient color contrast of 3.61 (foreground color: #6080ba, background color: #f7f4ee, font size: 7.5pt (10px), font weight:"
+    }
+   ],
+   "/hard-texts/": [
+    {
+     "t": ".h-hero-tagline",
+     "s": "Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 7.5pt (10px), font weight:"
+    },
+    {
+     "t": ".h-hero-desc",
+     "s": "Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 14.6pt (19.52px), font wei"
+    },
+    {
+     "t": "#seriesLabel",
+     "s": "Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 8.6pt (11.5px), font weigh"
+    }
+   ],
+   "/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/hard-texts/blagovestie-mertvym-1-petra-4-5-6/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/hard-texts/genesis-6/": [
+    {
+     "t": ".gbx-backlinks:nth-child(3) > .gbx-backlinks__title",
+     "s": "Element has insufficient color contrast of 2.91 (foreground color: #8a5353, background color: #b4b3b1, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbx-backlinks:nth-child(3) > .gbx-backlinks__grid > .gbx-backlinks__link:nth-child(1)",
+     "s": "Element has insufficient color contrast of 2.71 (foreground color: #4b6dab, background color: #bcbcbe, font size: 10.5pt (14px), font weight"
+    },
+    {
+     "t": ".gbx-backlinks:nth-child(3) > .gbx-backlinks__grid > .gbx-backlinks__link:nth-child(1) > s",
+     "s": "Element has insufficient color contrast of 2.05 (foreground color: #818182, background color: #bcbcbe, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/": [
+    {
+     "t": "#gbs2Pct",
+     "s": "Element has insufficient color contrast of 3.42 (foreground color: #eadac7, background color: #9a6a2f, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".gbs2-kinetic",
+     "s": "Element has insufficient color contrast of 1.11 (foreground color: #f4efe8, background color: #fdfcf9, font size: 90.7pt (120.96px), font we"
+    },
+    {
+     "t": "#gill-search-p-001",
+     "s": "Element has insufficient color contrast of 4.24 (foreground color: #9a6a2f, background color: #f7f3ed, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/izbrannoe/": [
+    {
+     "t": "li:nth-child(1) > a[href$=\"articles/\"]",
+     "s": "Element has insufficient color contrast of 2.33 (foreground color: #9ca3af, background color: #f8f5f0, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": "li:nth-child(2) > a[href$=\"app/\"]",
+     "s": "Element has insufficient color contrast of 2.33 (foreground color: #9ca3af, background color: #f8f5f0, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": "a[href$=\"biografii/\"]",
+     "s": "Element has insufficient color contrast of 2.33 (foreground color: #9ca3af, background color: #f8f5f0, font size: 9.8pt (13px), font weight:"
+    }
+   ],
+   "/journal/dossiers/g3/": [
+    {
+     "t": ".boundary-box > .claim-ref",
+     "s": "Element has insufficient color contrast of 4.29 (foreground color: #8a6b59, background color: #f5f0ed, font size: 7.5pt (10px), font weight:"
+    }
+   ],
+   "/konfessii/": [
+    {
+     "t": ".crumb",
+     "s": "Element has insufficient color contrast of 4.14 (foreground color: #6c737e, background color: #070a10, font size: 8.3pt (11px), font weight:"
+    },
+    {
+     "t": ".he",
+     "s": "Element has insufficient color contrast of 4.26 (foreground color: #83734a, background color: #070a10, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": "footer",
+     "s": "Element has insufficient color contrast of 3.36 (foreground color: #5e6570, background color: #070a10, font size: 8.3pt (11px), font weight:"
+    }
+   ],
+   "/konfessii/russkij-baptizm/": [
+    {
+     "t": ".crumb",
+     "s": "Element has insufficient color contrast of 2.91 (foreground color: #5e5a54, background color: #08080e, font size: 7.9pt (10.5px), font weigh"
+    },
+    {
+     "t": "a[href=\"/\"]",
+     "s": "Element has insufficient color contrast of 4.37 (foreground color: #7a756e, background color: #08080e, font size: 7.9pt (10.5px), font weigh"
+    },
+    {
+     "t": ".crumb > a[href$=\"konfessii/\"]",
+     "s": "Element has insufficient color contrast of 4.37 (foreground color: #7a756e, background color: #08080e, font size: 7.9pt (10.5px), font weigh"
+    }
+   ],
+   "/nagornaya/": [
+    {
+     "t": ".bg-amber-600.py-2\\.5[href$=\"nagornaya/\"] > div > .text-sm.leading-tight.font-semibold",
+     "s": "Element has insufficient color contrast of 3.18 (foreground color: #ffffff, background color: #d97706, font size: 10.5pt (14px), font weight"
+    },
+    {
+     "t": ".text-amber-200",
+     "s": "Element has insufficient color contrast of 2.55 (foreground color: #fde68a, background color: #d97706, font size: 9.0pt (12px), font weight:"
+    },
+    {
+     "t": ".py-2\\.5.hover\\:bg-stone-800[href$=\"chast-1/\"] > div > .text-stone-500.leading-tight.text-",
+     "s": "Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight:"
+    }
+   ],
+   "/nagornaya/chast-1/": [
+    {
+     "t": "#nagFontDec",
+     "s": "Element has insufficient color contrast of 3.28 (foreground color: #6a6a6a, background color: #cec9c1, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": "#nagFontInc",
+     "s": "Element has insufficient color contrast of 3.28 (foreground color: #6a6a6a, background color: #cec9c1, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".px-3.py-2\\.5[href$=\"nagornaya/\"] > div > .leading-tight.text-stone-500.text-xs",
+     "s": "Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight:"
+    }
+   ],
+   "/nagornaya/chast-2/": [
+    {
+     "t": "#nagFontDec",
+     "s": "Element has insufficient color contrast of 3.28 (foreground color: #6a6a6a, background color: #cec9c1, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": "#nagFontInc",
+     "s": "Element has insufficient color contrast of 3.28 (foreground color: #6a6a6a, background color: #cec9c1, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".px-3.py-2\\.5[href$=\"nagornaya/\"] > div > .leading-tight.text-stone-500.text-xs",
+     "s": "Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight:"
+    }
+   ],
+   "/nagornaya/chast-3/": [
+    {
+     "t": "#nagFontDec",
+     "s": "Element has insufficient color contrast of 3.28 (foreground color: #6a6a6a, background color: #cec9c1, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": "#nagFontInc",
+     "s": "Element has insufficient color contrast of 3.28 (foreground color: #6a6a6a, background color: #cec9c1, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".px-3.py-2\\.5[href$=\"nagornaya/\"] > div > .leading-tight.text-stone-500.text-xs",
+     "s": "Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight:"
+    }
+   ],
+   "/nagornaya/chast-4/": [
+    {
+     "t": "#nagFontDec",
+     "s": "Element has insufficient color contrast of 3.28 (foreground color: #6a6a6a, background color: #cec9c1, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": "#nagFontInc",
+     "s": "Element has insufficient color contrast of 3.28 (foreground color: #6a6a6a, background color: #cec9c1, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".px-3.py-2\\.5[href$=\"nagornaya/\"] > div > .leading-tight.text-stone-500.text-xs",
+     "s": "Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight:"
+    }
+   ],
+   "/nagornaya/chast-5/": [
+    {
+     "t": "#nagFontDec",
+     "s": "Element has insufficient color contrast of 3.28 (foreground color: #6a6a6a, background color: #cec9c1, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": "#nagFontInc",
+     "s": "Element has insufficient color contrast of 3.28 (foreground color: #6a6a6a, background color: #cec9c1, font size: 9.8pt (13px), font weight:"
+    },
+    {
+     "t": ".px-3.py-2\\.5[href$=\"nagornaya/\"] > div > .leading-tight.text-xs.text-stone-500",
+     "s": "Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight:"
+    }
+   ],
+   "/nagornaya/istochniki/": [
+    {
+     "t": ".py-2\\.5.hover\\:bg-stone-800[href$=\"nagornaya/\"] > div > .leading-tight.text-stone-500.tex",
+     "s": "Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight:"
+    },
+    {
+     "t": ".py-2\\.5.hover\\:bg-stone-800[href$=\"chast-1/\"] > div > .leading-tight.text-stone-500.text-",
+     "s": "Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight:"
+    },
+    {
+     "t": ".py-2\\.5.hover\\:bg-stone-800[href$=\"chast-2/\"] > div > .leading-tight.text-stone-500.text-",
+     "s": "Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight:"
+    }
+   ],
+   "/nagornaya/nakhodki/": [
+    {
+     "t": ".px-3.py-2\\.5[href$=\"nagornaya/\"] > div > .text-stone-500.leading-tight.text-xs",
+     "s": "Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight:"
+    },
+    {
+     "t": ".px-3.py-2\\.5[href$=\"chast-1/\"] > div > .text-stone-500.leading-tight.text-xs",
+     "s": "Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight:"
+    },
+    {
+     "t": ".px-3.py-2\\.5[href$=\"chast-2/\"] > div > .text-stone-500.leading-tight.text-xs",
+     "s": "Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight:"
+    }
+   ],
+   "/nagornaya/seriya/": [
+    {
+     "t": "a[href$=\"chast-1/\"] > .h-article-body > .h-article-kicker",
+     "s": "Element has insufficient color contrast of 3.68 (foreground color: #6181bb, background color: #faf8f4, font size: 7.5pt (10px), font weight:"
+    },
+    {
+     "t": "a[href$=\"chast-2/\"] > .h-article-body > .h-article-kicker",
+     "s": "Element has insufficient color contrast of 3.68 (foreground color: #6181bb, background color: #faf8f4, font size: 7.5pt (10px), font weight:"
+    },
+    {
+     "t": "a[href$=\"chast-3/\"] > .h-article-body > .h-article-kicker",
+     "s": "Element has insufficient color contrast of 3.68 (foreground color: #6181bb, background color: #faf8f4, font size: 7.5pt (10px), font weight:"
+    }
+   ],
+   "/pastor-series/": [
+    {
+     "t": ".h-hero-tagline",
+     "s": "Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 7.5pt (10px), font weight:"
+    },
+    {
+     "t": ".h-hero-desc",
+     "s": "Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 14.6pt (19.52px), font wei"
+    },
+    {
+     "t": "#seriesLabel",
+     "s": "Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 8.6pt (11.5px), font weigh"
+    }
+   ]
+  },
+  "total": 891
+ },
+ "nested-interactive": {
+  "impact": "serious",
+  "help": "Interactive controls must not be nested",
+  "pages": {
+   "/articles/20-antisovetov-pastoru/": [
+    {
+     "t": "span[data-tip=\"43\"]",
+     "s": "Element has focusable descendants"
+    }
+   ],
+   "/articles/dzhon-gill-chast-1-chelovek/": [
+    {
+     "t": "#note-ref-articles-dzhon-gill-chast-1-chelovek-note-26bf1dbddece",
+     "s": "Element has focusable descendants"
+    }
+   ],
+   "/articles/dzhon-gill-chast-3-nasledie/": [
+    {
+     "t": ".flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"nativ",
+     "s": "Element has focusable descendants"
+    },
+    {
+     "t": ".flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"nativ",
+     "s": "Element has focusable descendants"
+    },
+    {
+     "t": ".flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"nativ",
+     "s": "Element has focusable descendants"
+    }
+   ],
+   "/articles/krajne-li-isporcheno-serdce/": [
+    {
+     "t": "#note-ref-articles-krajne-li-isporcheno-serdce-note-da893fdc4e1c",
+     "s": "Element has focusable descendants"
+    },
+    {
+     "t": "#note-ref-articles-krajne-li-isporcheno-serdce-note-7b2111707a9a",
+     "s": "Element has focusable descendants"
+    },
+    {
+     "t": "#note-ref-articles-krajne-li-isporcheno-serdce-note-534c05590532",
+     "s": "Element has focusable descendants"
+    }
+   ]
+  },
+  "total": 12
+ },
+ "link-in-text-block": {
+  "impact": "serious",
+  "help": "Links must be distinguishable without relying on color",
+  "pages": {
+   "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/": [
+    {
+     "t": "p:nth-child(3) > a[rel=\"noopener noreferrer\"][target=\"_blank\"]",
+     "s": "The link has insufficient color contrast of 1.45:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1f4ea3, surrounding text"
+    }
+   ],
+   "/journal/dossiers/g3/": [
+    {
+     "t": ".authority-note > a",
+     "s": "The link has insufficient color contrast of 1.71:1 with the surrounding text. (Minimum contrast is 3:1, link text: #7a2e2e, surrounding text"
+    }
+   ],
+   "/konfessii/": [
+    {
+     "t": "footer > a[href=\"/\"]",
+     "s": "The link has insufficient color contrast of 2.28:1 with the surrounding text. (Minimum contrast is 3:1, link text: #9aa2ae, surrounding text"
+    },
+    {
+     "t": "a[href$=\"karty/\"]",
+     "s": "The link has insufficient color contrast of 2.28:1 with the surrounding text. (Minimum contrast is 3:1, link text: #9aa2ae, surrounding text"
+    },
+    {
+     "t": "a[href$=\"articles/\"]",
+     "s": "The link has insufficient color contrast of 2.28:1 with the surrounding text. (Minimum contrast is 3:1, link text: #9aa2ae, surrounding text"
+    }
+   ],
+   "/nagornaya/chast-1/": [
+    {
+     "t": ".gap-1\\.5.items-start.flex:nth-child(5) > .flex-1 > a[rel=\"noopener\"][target=\"_blank\"]",
+     "s": "The link has insufficient color contrast of 1.63:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1f4ea3, surrounding text"
+    },
+    {
+     "t": ".gap-1\\.5.items-start.flex:nth-child(6) > .flex-1 > a[rel=\"noopener\"][target=\"_blank\"]",
+     "s": "The link has insufficient color contrast of 1.63:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1f4ea3, surrounding text"
+    },
+    {
+     "t": ".gap-1\\.5.items-start.flex:nth-child(7) > .flex-1 > a[rel=\"noopener\"][target=\"_blank\"]",
+     "s": "The link has insufficient color contrast of 1.63:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1f4ea3, surrounding text"
+    }
+   ],
+   "/nagornaya/chast-3/": [
+    {
+     "t": ".gap-1\\.5.items-start.mb-2:nth-child(6) > .flex-1.font-mono > a[rel=\"noopener\"][target=\"_b",
+     "s": "The link has insufficient color contrast of 1.63:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1f4ea3, surrounding text"
+    },
+    {
+     "t": ".gap-1\\.5.items-start.mb-2:nth-child(13) > .flex-1.font-mono > a[rel=\"noopener\"][target=\"_",
+     "s": "The link has insufficient color contrast of 1.63:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1f4ea3, surrounding text"
+    },
+    {
+     "t": ".gap-1\\.5.items-start.mb-2:nth-child(15) > .flex-1.font-mono > a[rel=\"noopener\"][target=\"_",
+     "s": "The link has insufficient color contrast of 1.63:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1f4ea3, surrounding text"
+    }
+   ],
+   "/nagornaya/chast-5/": [
+    {
+     "t": ".gap-1\\.5.items-start.flex:nth-child(1) > .flex-1.text-stone-500 > a[rel=\"noopener\"][targe",
+     "s": "The link has insufficient color contrast of 1.63:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1f4ea3, surrounding text"
+    },
+    {
+     "t": ".gap-1\\.5.items-start.flex:nth-child(2) > .flex-1.text-stone-500 > a[rel=\"noopener\"][targe",
+     "s": "The link has insufficient color contrast of 1.63:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1f4ea3, surrounding text"
+    },
+    {
+     "t": ".gap-1\\.5.items-start.flex:nth-child(3) > .flex-1.text-stone-500 > a[rel=\"noopener\"][targe",
+     "s": "The link has insufficient color contrast of 1.63:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1f4ea3, surrounding text"
+    }
+   ]
+  },
+  "total": 19
+ },
+ "scrollable-region-focusable": {
+  "impact": "serious",
+  "help": "Scrollable region must have keyboard access",
+  "pages": {
+   "/articles/kod-da-vinchi/": [
+    {
+     "t": ".ctw-body",
+     "s": "Element should have focusable content"
+    }
+   ]
+  },
+  "total": 1
+ },
+ "aria-prohibited-attr": {
+  "impact": "serious",
+  "help": "Elements must only use permitted ARIA attributes",
+  "pages": {
+   "/rodosloviye/": [
+    {
+     "t": "div[data-id=\"eve\"]",
+     "s": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+    },
+    {
+     "t": "div[data-id=\"cain\"]",
+     "s": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+    },
+    {
+     "t": "div[data-id=\"abel\"]",
+     "s": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+    }
+   ]
+  },
+  "total": 149
+ }
+}

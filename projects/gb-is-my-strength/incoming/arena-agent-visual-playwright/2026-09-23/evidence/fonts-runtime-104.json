@@ -1,0 +1,277 @@
+{
+ "/app/": {
+  "declared": 0,
+  "missing": [
+   "ui-sans-serif"
+  ],
+  "want": [
+   "Georgia",
+   "ui-sans-serif"
+  ],
+  "unusedPreload": []
+ },
+ "/articles/dzhon-gill-spravochnik/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Lora",
+   "Source Sans 3"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Lora",
+   "Source Sans 3"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/baptisty-rossii/dva-sezda-1884/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Playfair Display",
+   "Source Sans 3",
+   "Lora"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/baptisty-rossii/goneniya-i-sovest/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Playfair Display",
+   "Source Sans 3",
+   "Lora"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/baptisty-rossii/iniciativnaya-gruppa/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Playfair Display",
+   "Source Sans 3",
+   "Lora"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/baptisty-rossii/noch-na-kure/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Playfair Display",
+   "Source Sans 3",
+   "Lora"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/baptisty-rossii/peterburgskaya-liniya/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Playfair Display",
+   "Source Sans 3",
+   "Lora"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/baptisty-rossii/podpolnaya-pechat/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Playfair Display",
+   "Source Sans 3",
+   "Lora"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/baptisty-rossii/sovetskaya-noch/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Playfair Display",
+   "Source Sans 3",
+   "Lora"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/baptisty-rossii/spravochnik/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Playfair Display",
+   "Source Sans 3",
+   "Lora"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/baptisty-rossii/vsehib-1944/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Playfair Display",
+   "Source Sans 3",
+   "Lora"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/baptisty-rossii/yuzhnaya-shtunda/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Playfair Display",
+   "Source Sans 3",
+   "Lora"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/karty/": {
+  "declared": 0,
+  "missing": [
+   "Playfair Display",
+   "Source Sans 3"
+  ],
+  "want": [
+   "Playfair Display",
+   "Source Sans 3"
+  ],
+  "unusedPreload": [
+   "fonts/SourceSans3/sourcesans3-cyrillic-400.woff2",
+   "fonts/PlayfairDisplay/playfairdisplay-cyrillic-700.woff2"
+  ]
+ },
+ "/karty/avraam/": {
+  "declared": 0,
+  "missing": [
+   "Segoe UI"
+  ],
+  "want": [
+   "Segoe UI"
+  ],
+  "unusedPreload": [
+   null,
+   "fonts/SourceSans3/sourcesans3-cyrillic-400.woff2"
+  ]
+ },
+ "/karty/ishod/": {
+  "declared": 0,
+  "missing": [
+   "Segoe UI"
+  ],
+  "want": [
+   "Segoe UI",
+   "Georgia"
+  ],
+  "unusedPreload": [
+   null,
+   "fonts/SourceSans3/sourcesans3-cyrillic-400.woff2"
+  ]
+ },
+ "/konfessii/": {
+  "declared": 0,
+  "missing": [
+   "Segoe UI"
+  ],
+  "want": [
+   "Georgia",
+   "Segoe UI"
+  ],
+  "unusedPreload": [
+   "fonts/Lora/lora-cyrillic-400.woff2"
+  ]
+ },
+ "/konfessii/russkij-baptizm/": {
+  "declared": 0,
+  "missing": [
+   "Segoe UI"
+  ],
+  "want": [
+   "Segoe UI"
+  ],
+  "unusedPreload": [
+   "fonts/SourceSans3/sourcesans3-cyrillic-400.woff2"
+  ]
+ },
+ "/nagornaya/chast-1/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Lora",
+   "Source Sans 3"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/nagornaya/chast-2/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Lora",
+   "Source Sans 3"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/nagornaya/chast-3/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Lora",
+   "Source Sans 3"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/nagornaya/chast-4/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Lora",
+   "Source Sans 3"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ },
+ "/nagornaya/chast-5/": {
+  "declared": 9,
+  "missing": [],
+  "want": [
+   "Lora",
+   "Source Sans 3"
+  ],
+  "unusedPreload": [
+   null
+  ]
+ }
+}
