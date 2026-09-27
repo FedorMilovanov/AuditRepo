@@ -26,6 +26,8 @@
 | 6 | QUIZ-02 | HTML-разметка квиза выводится как текст | 9+ страниц | `article-quiz.js` `textContent` vs данные с `<em>/<span>` (решение владельца) | 5–6 |
 | 7 | THEME-01 | hub genesis-6 без `data-series-theme`, dark title 1.36:1 | 1 хаб | `css/series-manuscript.css` | 3 |
 | 8 | FONT-01 | `/karty/` без `fonts.css`: fallback-шрифт, h1 рвётся посреди слова | 1 хаб | `karty/KartyPageHead.astro:33–35` | 12 |
+| 8b | FC-01, FC-02 | High Contrast: пропадает гамбургер «Нагорной» (8 маршрутов); фокус без outline (главная 15/25) | 8+ маршрутов | `bg-white` div-полоски; box-shadow-фокус + KBD-03 | 16 |
+| 8c | READER-01, READER-02, READER-03 | Reader settings: Nagornaya partial scaling, measure without effect, justify rivers |
 | 9 | KBD-03, VIS-01, A11Y-06, A11Y-07, REFLOW-02, LAYOUT-01 | outline:0, потеря h1 на карте, двойной tooltip, 404 относительные ассеты, логотип 320px, header над breadcrumbs | local | см. разделы | 1–4 |
 | 10 | MAPS-01, SEARCH-01, MOTION-01/02, TTS-01, QUIZ-04 | ishod-сирота; нет глобального поиска в «Нагорной» mobile; smooth scroll при reduce; framer-motion; обрезанные скорости; итог квиза «Нагорной» | local | см. разделы | 7–12 |
 | triage | A11Y-05/08/09/10, THEME-02/03, PERF-01, SHARE-01, TTS-02, SEARCH-02 | контраст/таргеты/заголовки/preload/косметика | разное | tokens / local | 1–12 |
@@ -745,3 +747,31 @@ MASTER не изменён.
 - Остальные icon-only кнопки на 104 маршрутах используют SVG `currentColor` или текст. Невидимых не найдено, кроме FC-01 и одного пустого `fn-marker` на `20-antisovetov` (нулевого размера, см. Wave 14).
 
 MASTER не изменён.
+
+---
+
+## Wave 17 — Reader preferences at extremes (font scale 1.25, measure wide, 104 routes × 390/1366)
+
+Method: `localStorage['gb:font-scale']=1.25` + `gb:gill-measure:v1/gb:hm-measure:v1=wide` via init script (the same keys `js/reader-preferences-head.js` reads; `--gb-reader-font-scale` confirmed `1.25` on every route). Scripts: `evidence/reader-prefs-extremes.mjs`, `reader-font-scale.mjs`, `reader-scale-roots.mjs`, `reader-nagornaya-scale.mjs`; data `reader-*-104.json`, `reader-*.txt`.
+
+**No regressions found:**
+- The page does not overflow horizontally, and no new element sticks out past the viewport at max settings, on any of the 104 routes at either width.
+- On all 71 article routes the font scale applies to the body prose via `[data-reader-root] .article-body` (`css/reader-preferences.css:113–118`). No nested roots, so nothing is scaled twice.
+- Retraction: my first pass ("76 routes ignore scale") measured the first long `<p>`, which was often a card or lead. The corrected probe uses the longest body paragraph. Only the corrected numbers above are valid.
+
+### READER-01 (medium) — Nagornaya scales text unevenly: 47 of 151 long paragraphs ignore the setting
+- Nagornaya has no `[data-reader-root]` or `.article-body`. It applies its own scaling: `text-[16px]` paragraphs go 16→22.5px (×1.41, although the setting says ×1.25).
+- Paragraphs styled with `text-xs`, `text-sm`, `leading-relaxed text-justify` and some `text-[16px] … mb-5` ones stay at 12–14px (47/151 across ch.1–5). With text at maximum, a 22.5px paragraph sits next to a 12px one: the reader asked for larger text and got the small print unchanged. Class breakdown is in `reader-nagornaya-scale.txt`.
+- Standard: the shared reader contract (header comment in `reader-preferences.css`: "Adapters opt their article root into these variables") — Nagornaya never opts in.
+- Fix: put `data-reader-root` and `.article-body` on the chapter root, or scale the Nagornaya prose tokens with `calc(… * var(--gb-reader-font-scale))` instead of the fixed Tailwind sizes.
+
+### READER-02 (low, unpolished) — the "measure" setting (narrow/normal/wide) has no visible effect on 96 of 99 prose routes at 1366px
+- The width of the prose paragraph stays the same with `wide` as with `normal`. It only changes on 3 routes (e.g. `lot-i-sodom` 800→928px).
+- The setting is offered in the UI, but most templates cap width with their own `max-width` instead of `var(--gb-reader-measure)`.
+
+### READER-03 (low, unpolished) — justified text without hyphenation at 390px + scale 1.25
+- Screenshot `evidence/reader17-nagornaya-mixed-scale.png` (Nagornaya ch.4): with `text-justify` at ~13 characters per line, the gaps between words take up half the line ("возможен    в    отдельных").
+- No `hyphens:auto` is found for this prose.
+- Fix: `text-align:left` below ~480px or at scale >1.1, or `hyphens:auto` (`lang="ru"` is set).
+
+Not re-checked here: `textMode=plain` (it is a `data-reader-text-mode` attribute; no layout breakage seen in a spot check). The 18 routes that ignore the scale are hubs, karty, `/rodosloviye/` and `/about/`: these are not reader articles and arguably out of scope, so they are not raised as a bug.

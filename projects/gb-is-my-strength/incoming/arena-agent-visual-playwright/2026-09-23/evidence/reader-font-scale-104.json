@@ -1,0 +1,1234 @@
+{
+ "/": {
+  "base": {
+   "fs": 18.441,
+   "cls": "h-about-text",
+   "len": 221
+  },
+  "max": {
+   "fs": 18.441,
+   "cls": "h-about-text",
+   "len": 221
+  }
+ },
+ "/about/": {
+  "base": {
+   "fs": 18,
+   "cls": "about-page",
+   "len": 2136
+  },
+  "max": {
+   "fs": 18,
+   "cls": "about-page",
+   "len": 2136
+  }
+ },
+ "/app/": {
+  "base": {
+   "fs": 14,
+   "cls": "app-copy",
+   "len": 190
+  },
+  "max": {
+   "fs": 14,
+   "cls": "app-copy",
+   "len": 190
+  }
+ },
+ "/articles/": {
+  "base": {
+   "fs": 18,
+   "cls": "h-section-desc",
+   "len": 138
+  },
+  "max": {
+   "fs": 18,
+   "cls": "h-section-desc",
+   "len": 138
+  }
+ },
+ "/articles/20-antisovetov-pastoru/": {
+  "base": {
+   "fs": 18,
+   "cls": "mb-6",
+   "len": 1662
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "mb-6",
+   "len": 1662
+  }
+ },
+ "/articles/anatomiya-padeniya-pyat-stadiy/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose",
+   "len": 1097
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose",
+   "len": 1097
+  }
+ },
+ "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose",
+   "len": 1998
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose",
+   "len": 1998
+  }
+ },
+ "/articles/chto-bibliya-nazyvaet-serdcem/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 3349
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 3349
+  }
+ },
+ "/articles/diotrefy-nashego-vremeni/": {
+  "base": {
+   "fs": 18,
+   "cls": "drop-cap",
+   "len": 1336
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "drop-cap",
+   "len": 1336
+  }
+ },
+ "/articles/dzhon-gill-chast-1-chelovek/": {
+  "base": {
+   "fs": 18,
+   "cls": "reveal",
+   "len": 2450
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "reveal",
+   "len": 2450
+  }
+ },
+ "/articles/dzhon-gill-chast-2-uchenyi/": {
+  "base": {
+   "fs": 18,
+   "cls": "reveal",
+   "len": 3794
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "reveal",
+   "len": 3794
+  }
+ },
+ "/articles/dzhon-gill-chast-3-nasledie/": {
+  "base": {
+   "fs": 18,
+   "cls": "reveal",
+   "len": 2474
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "reveal",
+   "len": 2474
+  }
+ },
+ "/articles/dzhon-gill-chast-4-ekzeget/": {
+  "base": {
+   "fs": 18,
+   "cls": "reveal",
+   "len": 4639
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "reveal",
+   "len": 4639
+  }
+ },
+ "/articles/dzhon-gill-istoricheskiy-kontekst/": {
+  "base": {
+   "fs": 18,
+   "cls": "reveal",
+   "len": 2182
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "reveal",
+   "len": 2182
+  }
+ },
+ "/articles/dzhon-gill-spravochnik/": {
+  "base": {
+   "fs": 18,
+   "cls": "reveal",
+   "len": 948
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "reveal",
+   "len": 948
+  }
+ },
+ "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 3895
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 3895
+  }
+ },
+ "/articles/kak-hranit-serdce/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1511
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1511
+  }
+ },
+ "/articles/kak-menyaetsya-serdce/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1281
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1281
+  }
+ },
+ "/articles/kod-da-vinchi/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 2422
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 2422
+  }
+ },
+ "/articles/kogda-uhodit-kogda-ostavatsya/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose",
+   "len": 1029
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose",
+   "len": 1029
+  }
+ },
+ "/articles/krajne-li-isporcheno-serdce/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 4342
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 4342
+  }
+ },
+ "/articles/lot-i-sodom/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 1409
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 1409
+  }
+ },
+ "/articles/myslennaya-zhizn-serdca/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 2121
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 2121
+  }
+ },
+ "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose",
+   "len": 944
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose",
+   "len": 944
+  }
+ },
+ "/articles/novoe-serdce/": {
+  "base": {
+   "fs": 18,
+   "cls": "sources-block",
+   "len": 2197
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "sources-block",
+   "len": 2197
+  }
+ },
+ "/articles/osvobozhdennoe-serdce/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1806
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1806
+  }
+ },
+ "/articles/podrostok-za-kadrom-chto-delat-tserkvi/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 1077
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 1077
+  }
+ },
+ "/articles/podrostok-za-kadrom-dvoynaya-zhizn/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 1266
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 1266
+  }
+ },
+ "/articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 1850
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 1850
+  }
+ },
+ "/articles/priznaki-zdorovoy-cerkvi/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose",
+   "len": 1184
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose",
+   "len": 1184
+  }
+ },
+ "/articles/religioznoe-serdce/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1788
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1788
+  }
+ },
+ "/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/": {
+  "base": {
+   "fs": 18,
+   "cls": "sources-block",
+   "len": 2338
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "sources-block",
+   "len": 2338
+  }
+ },
+ "/articles/sem-tipov-razlichenie-uchiteley/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose",
+   "len": 2565
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose",
+   "len": 2565
+  }
+ },
+ "/articles/serdce-hrista-k-nemoshchnym/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 2269
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 2269
+  }
+ },
+ "/articles/serdce-i-duh/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 2807
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 2807
+  }
+ },
+ "/articles/serdce-i-iskushenie/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1204
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1204
+  }
+ },
+ "/articles/serdce-i-sokrovishche/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1485
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1485
+  }
+ },
+ "/articles/serdce-i-telo/": {
+  "base": {
+   "fs": 18,
+   "cls": "sources-block",
+   "len": 1514
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "sources-block",
+   "len": 1514
+  }
+ },
+ "/articles/serdce-i-yazyk/": {
+  "base": {
+   "fs": 18,
+   "cls": "sources-block",
+   "len": 1960
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "sources-block",
+   "len": 1960
+  }
+ },
+ "/articles/serdce-ne-v-odinochku/": {
+  "base": {
+   "fs": 18,
+   "cls": "sources-block",
+   "len": 1504
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "sources-block",
+   "len": 1504
+  }
+ },
+ "/articles/serdce-pod-skorbyu/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1226
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1226
+  }
+ },
+ "/articles/serdce-spravochnik/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1172
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1172
+  }
+ },
+ "/articles/skrytye-idoly-serdca/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1647
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1647
+  }
+ },
+ "/articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 1026
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 1026
+  }
+ },
+ "/articles/sovest-vnutrenniy-sud/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1823
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1823
+  }
+ },
+ "/articles/starye-dorozhki-serdca/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1618
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1618
+  }
+ },
+ "/articles/strah-bozhij-rabskij-ili-synovnij/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 2607
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 2607
+  }
+ },
+ "/articles/svoboda-vo-hriste/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1358
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1358
+  }
+ },
+ "/articles/teksty-pisaniya-kotorymi-manipuliruyut/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose",
+   "len": 1271
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose",
+   "len": 1271
+  }
+ },
+ "/articles/tma-na-serdce/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 1484
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-main",
+   "len": 1484
+  }
+ },
+ "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose",
+   "len": 1130
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose",
+   "len": 1130
+  }
+ },
+ "/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 1114
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 1114
+  }
+ },
+ "/articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 850
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 850
+  }
+ },
+ "/articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 1421
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose teen-series-prose",
+   "len": 1421
+  }
+ },
+ "/baptisty-rossii/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 1078
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 1078
+  }
+ },
+ "/baptisty-rossii/dva-sezda-1884/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 1588
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 1588
+  }
+ },
+ "/baptisty-rossii/goneniya-i-sovest/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 1371
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 1371
+  }
+ },
+ "/baptisty-rossii/iniciativnaya-gruppa/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 1751
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 1751
+  }
+ },
+ "/baptisty-rossii/noch-na-kure/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 1341
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 1341
+  }
+ },
+ "/baptisty-rossii/peterburgskaya-liniya/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 1433
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 1433
+  }
+ },
+ "/baptisty-rossii/podpolnaya-pechat/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 977
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 977
+  }
+ },
+ "/baptisty-rossii/sovetskaya-noch/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 1155
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 1155
+  }
+ },
+ "/baptisty-rossii/spravochnik/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 1689
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 1689
+  }
+ },
+ "/baptisty-rossii/vsehib-1944/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 1129
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 1129
+  }
+ },
+ "/baptisty-rossii/yuzhnaya-shtunda/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-body",
+   "len": 2715
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "article-body",
+   "len": 2715
+  }
+ },
+ "/biografii/": {
+  "base": {
+   "fs": 18,
+   "cls": "bio-stub__text",
+   "len": 122
+  },
+  "max": {
+   "fs": 18,
+   "cls": "bio-stub__text",
+   "len": 122
+  }
+ },
+ "/hard-texts/": {
+  "base": {
+   "fs": 11.5,
+   "cls": "h-section-label",
+   "len": 12
+  },
+  "max": {
+   "fs": 11.5,
+   "cls": "h-section-label",
+   "len": 12
+  }
+ },
+ "/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose",
+   "len": 1037
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose",
+   "len": 1037
+  }
+ },
+ "/hard-texts/blagovestie-mertvym-1-petra-4-5-6/": {
+  "base": {
+   "fs": 17.46,
+   "cls": "genesis6-prose",
+   "len": 799
+  },
+  "max": {
+   "fs": 21.825,
+   "cls": "genesis6-prose",
+   "len": 799
+  }
+ },
+ "/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose",
+   "len": 965
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose",
+   "len": 965
+  }
+ },
+ "/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-prose",
+   "len": 1104
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "genesis6-prose",
+   "len": 1104
+  }
+ },
+ "/hard-texts/genesis-6/": {
+  "base": {
+   "fs": 18,
+   "cls": "genesis6-method__grid",
+   "len": 81
+  },
+  "max": {
+   "fs": 18,
+   "cls": "genesis6-method__grid",
+   "len": 81
+  }
+ },
+ "/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/": {
+  "base": {
+   "fs": 18,
+   "cls": "footnotes",
+   "len": 1124
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "footnotes",
+   "len": 1124
+  }
+ },
+ "/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/": {
+  "base": {
+   "fs": 18,
+   "cls": "footnotes",
+   "len": 1121
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "footnotes",
+   "len": 1121
+  }
+ },
+ "/izbrannoe/": {
+  "base": {
+   "fs": 14.5,
+   "cls": "izbrannoe-empty-hint",
+   "len": 77
+  },
+  "max": {
+   "fs": 14.5,
+   "cls": "izbrannoe-empty-hint",
+   "len": 77
+  }
+ },
+ "/journal/": {
+  "base": {
+   "fs": 14,
+   "cls": "no-placeholder-note",
+   "len": 122
+  },
+  "max": {
+   "fs": 14,
+   "cls": "no-placeholder-note",
+   "len": 122
+  }
+ },
+ "/journal/dossiers/g3/": {
+  "base": {
+   "fs": 17,
+   "cls": "prose",
+   "len": 417
+  },
+  "max": {
+   "fs": 17,
+   "cls": "prose",
+   "len": 417
+  }
+ },
+ "/karty/": {
+  "base": {
+   "fs": 14,
+   "cls": "karty-note",
+   "len": 213
+  },
+  "max": {
+   "fs": 14,
+   "cls": "karty-note",
+   "len": 213
+  }
+ },
+ "/karty/avraam/": {
+  "base": {
+   "fs": 13,
+   "cls": "me-intro__sub",
+   "len": 49
+  },
+  "max": {
+   "fs": 13,
+   "cls": "me-intro__sub",
+   "len": 49
+  }
+ },
+ "/karty/early-church/": {
+  "base": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  },
+  "max": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  }
+ },
+ "/karty/ishod/": {
+  "base": {
+   "fs": 13,
+   "cls": "me-intro__sub",
+   "len": 32
+  },
+  "max": {
+   "fs": 13,
+   "cls": "me-intro__sub",
+   "len": 32
+  }
+ },
+ "/karty/maccabim/": {
+  "base": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  },
+  "max": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  }
+ },
+ "/karty/melachim/": {
+  "base": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  },
+  "max": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  }
+ },
+ "/karty/pavel/": {
+  "base": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  },
+  "max": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  }
+ },
+ "/karty/revelation/": {
+  "base": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  },
+  "max": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  }
+ },
+ "/karty/shoftim/": {
+  "base": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  },
+  "max": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  }
+ },
+ "/karty/shvatim/": {
+  "base": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  },
+  "max": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  }
+ },
+ "/karty/yeshua/": {
+  "base": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  },
+  "max": {
+   "fs": 18,
+   "cls": "",
+   "len": 222
+  }
+ },
+ "/konfessii/": {
+  "base": {
+   "fs": 14,
+   "cls": "intro",
+   "len": 398
+  },
+  "max": {
+   "fs": 14,
+   "cls": "intro",
+   "len": 398
+  }
+ },
+ "/konfessii/russkij-baptizm/": {
+  "base": null,
+  "max": null
+ },
+ "/konfessii/russkij-baptizm/_app/": {
+  "base": {
+   "fs": 13,
+   "cls": "text-[0.8125rem] leading-[1.65] opacity-",
+   "len": 210
+  },
+  "max": {
+   "fs": 13,
+   "cls": "text-[0.8125rem] leading-[1.65] opacity-",
+   "len": 210
+  }
+ },
+ "/map/": {
+  "base": null,
+  "max": null
+ },
+ "/nagornaya/": {
+  "base": {
+   "fs": 14,
+   "cls": "text-stone-400 text-sm max-w-xl mb-6",
+   "len": 190
+  },
+  "max": {
+   "fs": 14,
+   "cls": "text-stone-400 text-sm max-w-xl mb-6",
+   "len": 190
+  }
+ },
+ "/nagornaya/chast-1/": {
+  "base": {
+   "fs": 14,
+   "cls": "text-stone-700 text-[16px] leading-relax",
+   "len": 2301
+  },
+  "max": {
+   "fs": 14,
+   "cls": "text-stone-700 text-[16px] leading-relax",
+   "len": 2301
+  }
+ },
+ "/nagornaya/chast-2/": {
+  "base": {
+   "fs": 16,
+   "cls": "text-stone-700 text-[16px] leading-relax",
+   "len": 671
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "text-stone-700 text-[16px] leading-relax",
+   "len": 671
+  }
+ },
+ "/nagornaya/chast-3/": {
+  "base": {
+   "fs": 16,
+   "cls": "text-stone-700 text-[16px] leading-relax",
+   "len": 3334
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "text-stone-700 text-[16px] leading-relax",
+   "len": 3334
+  }
+ },
+ "/nagornaya/chast-4/": {
+  "base": {
+   "fs": 16,
+   "cls": "text-stone-700 text-[16px] leading-relax",
+   "len": 2819
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "text-stone-700 text-[16px] leading-relax",
+   "len": 2819
+  }
+ },
+ "/nagornaya/chast-5/": {
+  "base": {
+   "fs": 16,
+   "cls": "text-stone-700 text-[16px] leading-relax",
+   "len": 1908
+  },
+  "max": {
+   "fs": 22.5,
+   "cls": "text-stone-700 text-[16px] leading-relax",
+   "len": 1908
+  }
+ },
+ "/nagornaya/istochniki/": {
+  "base": {
+   "fs": 16,
+   "cls": "text-indigo-200",
+   "len": 136
+  },
+  "max": {
+   "fs": 16,
+   "cls": "text-indigo-200",
+   "len": 136
+  }
+ },
+ "/nagornaya/nakhodki/": {
+  "base": {
+   "fs": 16,
+   "cls": "text-teal-200",
+   "len": 67
+  },
+  "max": {
+   "fs": 16,
+   "cls": "text-teal-200",
+   "len": 67
+  }
+ },
+ "/nagornaya/seriya/": {
+  "base": {
+   "fs": 18,
+   "cls": "h-section h-reveal",
+   "len": 356
+  },
+  "max": {
+   "fs": 18,
+   "cls": "h-section h-reveal",
+   "len": 356
+  }
+ },
+ "/pastor-series/": {
+  "base": {
+   "fs": 11.5,
+   "cls": "h-section-label",
+   "len": 15
+  },
+  "max": {
+   "fs": 11.5,
+   "cls": "h-section-label",
+   "len": 15
+  }
+ },
+ "/podrostok-za-kadrom/": {
+  "base": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 276
+  },
+  "max": {
+   "fs": 18,
+   "cls": "article-main",
+   "len": 276
+  }
+ },
+ "/rodosloviye/": {
+  "base": {
+   "fs": 16,
+   "cls": "genealogy-methodology__intro",
+   "len": 206
+  },
+  "max": {
+   "fs": 16,
+   "cls": "genealogy-methodology__intro",
+   "len": 206
+  }
+ }
+}

@@ -1,0 +1,3750 @@
+{
+ "m": {
+  "/": {
+   "base": {
+    "fs": 15.5,
+    "pw": 350,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 15.5,
+    "pw": 350,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/about/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/app/": {
+   "base": {
+    "fs": 17,
+    "pw": 366,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 17,
+    "pw": 366,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/": {
+   "base": {
+    "fs": 16.35,
+    "pw": 255,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16.35,
+    "pw": 255,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/20-antisovetov-pastoru/": {
+   "base": {
+    "fs": 13,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/anatomiya-padeniya-pyat-stadiy/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/chto-bibliya-nazyvaet-serdcem/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/diotrefy-nashego-vremeni/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/dzhon-gill-chast-1-chelovek/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/dzhon-gill-chast-2-uchenyi/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/dzhon-gill-chast-3-nasledie/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/dzhon-gill-chast-4-ekzeget/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/dzhon-gill-istoricheskiy-kontekst/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/dzhon-gill-spravochnik/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/": {
+   "base": {
+    "fs": 14,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 327,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/kak-hranit-serdce/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/kak-menyaetsya-serdce/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/kod-da-vinchi/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/kogda-uhodit-kogda-ostavatsya/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/krajne-li-isporcheno-serdce/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/lot-i-sodom/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 327,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/myslennaya-zhizn-serdca/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/novoe-serdce/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/osvobozhdennoe-serdce/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/podrostok-za-kadrom-chto-delat-tserkvi/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/podrostok-za-kadrom-dvoynaya-zhizn/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/priznaki-zdorovoy-cerkvi/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/religioznoe-serdce/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/sem-tipov-razlichenie-uchiteley/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-hrista-k-nemoshchnym/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-i-duh/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-i-iskushenie/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-i-sokrovishche/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-i-telo/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-i-yazyk/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-ne-v-odinochku/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-pod-skorbyu/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-spravochnik/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/skrytye-idoly-serdca/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/sovest-vnutrenniy-sud/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/starye-dorozhki-serdca/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/strah-bozhij-rabskij-ili-synovnij/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/svoboda-vo-hriste/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/teksty-pisaniya-kotorymi-manipuliruyut/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/tma-na-serdce/": {
+   "base": {
+    "fs": 13,
+    "pw": 288,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 319,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/dva-sezda-1884/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/goneniya-i-sovest/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/iniciativnaya-gruppa/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/noch-na-kure/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/peterburgskaya-liniya/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/podpolnaya-pechat/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/sovetskaya-noch/": {
+   "base": {
+    "fs": 14,
+    "pw": 223,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 254,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/spravochnik/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/vsehib-1944/": {
+   "base": {
+    "fs": 14,
+    "pw": 223,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 254,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/yuzhnaya-shtunda/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/biografii/": {
+   "base": {
+    "fs": 12.5,
+    "pw": 139,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 12.5,
+    "pw": 139,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/": {
+   "base": {
+    "fs": 12.5,
+    "pw": 195,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 12.5,
+    "pw": 195,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/blagovestie-mertvym-1-petra-4-5-6/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/genesis-6/": {
+   "base": {
+    "fs": 17,
+    "pw": 298,
+    "sw": 375,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 17,
+    "pw": 298,
+    "sw": 375,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 342,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/izbrannoe/": {
+   "base": {
+    "fs": null,
+    "pw": null,
+    "sw": 375,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": null,
+    "pw": null,
+    "sw": 375,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/journal/": {
+   "base": {
+    "fs": 20,
+    "pw": 339,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 339,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/journal/dossiers/g3/": {
+   "base": {
+    "fs": 19,
+    "pw": 339,
+    "sw": 390,
+    "vw": 390,
+    "over": 5,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 19,
+    "pw": 339,
+    "sw": 390,
+    "vw": 390,
+    "over": 5,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/": {
+   "base": {
+    "fs": 16.64,
+    "pw": 249,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16.64,
+    "pw": 249,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/avraam/": {
+   "base": {
+    "fs": null,
+    "pw": null,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": null,
+    "pw": null,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/early-church/": {
+   "base": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/ishod/": {
+   "base": {
+    "fs": null,
+    "pw": null,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": null,
+    "pw": null,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/maccabim/": {
+   "base": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/melachim/": {
+   "base": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/pavel/": {
+   "base": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/revelation/": {
+   "base": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/shoftim/": {
+   "base": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/shvatim/": {
+   "base": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/yeshua/": {
+   "base": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 276,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/konfessii/": {
+   "base": {
+    "fs": 12.5,
+    "pw": 317,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 12.5,
+    "pw": 317,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/konfessii/russkij-baptizm/": {
+   "base": {
+    "fs": null,
+    "pw": null,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": null,
+    "pw": null,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/konfessii/russkij-baptizm/_app/": {
+   "base": {
+    "fs": 15.2,
+    "pw": 358,
+    "sw": 390,
+    "vw": 390,
+    "over": 34,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 15.2,
+    "pw": 358,
+    "sw": 390,
+    "vw": 390,
+    "over": 33,
+    "scaleVar": "1.25"
+   }
+  },
+  "/map/": {
+   "base": {
+    "fs": null,
+    "pw": null,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": null,
+    "pw": null,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/": {
+   "base": {
+    "fs": 14,
+    "pw": 279,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 279,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/chast-1/": {
+   "base": {
+    "fs": 13,
+    "pw": 278,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 278,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/chast-2/": {
+   "base": {
+    "fs": 13,
+    "pw": 278,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 278,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/chast-3/": {
+   "base": {
+    "fs": 13,
+    "pw": 278,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 278,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/chast-4/": {
+   "base": {
+    "fs": 13,
+    "pw": 278,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 278,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/chast-5/": {
+   "base": {
+    "fs": 13,
+    "pw": 278,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 278,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/istochniki/": {
+   "base": {
+    "fs": 13,
+    "pw": 268,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 268,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/nakhodki/": {
+   "base": {
+    "fs": 13,
+    "pw": 268,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 268,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/seriya/": {
+   "base": {
+    "fs": 16.35,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16.35,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/pastor-series/": {
+   "base": {
+    "fs": 12.5,
+    "pw": 195,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 12.5,
+    "pw": 195,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/podrostok-za-kadrom/": {
+   "base": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 311,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/rodosloviye/": {
+   "base": {
+    "fs": 17,
+    "pw": 305,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 17,
+    "pw": 305,
+    "sw": 390,
+    "vw": 390,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  }
+ },
+ "d": {
+  "/": {
+   "base": {
+    "fs": 19.52,
+    "pw": 710,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 19.52,
+    "pw": 710,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/about/": {
+   "base": {
+    "fs": 16,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/app/": {
+   "base": {
+    "fs": 20,
+    "pw": 558,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 20,
+    "pw": 558,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/": {
+   "base": {
+    "fs": 19.52,
+    "pw": 716,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 19.52,
+    "pw": 716,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/20-antisovetov-pastoru/": {
+   "base": {
+    "fs": 13,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 13,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/anatomiya-padeniya-pyat-stadiy/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/chto-bibliya-nazyvaet-serdcem/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/diotrefy-nashego-vremeni/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/dzhon-gill-chast-1-chelovek/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/dzhon-gill-chast-2-uchenyi/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/dzhon-gill-chast-3-nasledie/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/dzhon-gill-chast-4-ekzeget/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/dzhon-gill-istoricheskiy-kontekst/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/dzhon-gill-spravochnik/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/": {
+   "base": {
+    "fs": 14,
+    "pw": 848,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 942,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/kak-hranit-serdce/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/kak-menyaetsya-serdce/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/kod-da-vinchi/": {
+   "base": {
+    "fs": 16,
+    "pw": 848,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 942,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/kogda-uhodit-kogda-ostavatsya/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/krajne-li-isporcheno-serdce/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/lot-i-sodom/": {
+   "base": {
+    "fs": 18,
+    "pw": 800,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 928,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/myslennaya-zhizn-serdca/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/novoe-serdce/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/osvobozhdennoe-serdce/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/podrostok-za-kadrom-chto-delat-tserkvi/": {
+   "base": {
+    "fs": 18,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/podrostok-za-kadrom-dvoynaya-zhizn/": {
+   "base": {
+    "fs": 18,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/": {
+   "base": {
+    "fs": 18,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/priznaki-zdorovoy-cerkvi/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/religioznoe-serdce/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/sem-tipov-razlichenie-uchiteley/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-hrista-k-nemoshchnym/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-i-duh/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-i-iskushenie/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-i-sokrovishche/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-i-telo/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-i-yazyk/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-ne-v-odinochku/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-pod-skorbyu/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/serdce-spravochnik/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/skrytye-idoly-serdca/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/": {
+   "base": {
+    "fs": 18,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/sovest-vnutrenniy-sud/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/starye-dorozhki-serdca/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/strah-bozhij-rabskij-ili-synovnij/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/svoboda-vo-hriste/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/teksty-pisaniya-kotorymi-manipuliruyut/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/tma-na-serdce/": {
+   "base": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 709,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/": {
+   "base": {
+    "fs": 18,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/": {
+   "base": {
+    "fs": 18,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/": {
+   "base": {
+    "fs": 18,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 772,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/": {
+   "base": {
+    "fs": 16,
+    "pw": 594,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 594,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/dva-sezda-1884/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/goneniya-i-sovest/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/iniciativnaya-gruppa/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/noch-na-kure/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/peterburgskaya-liniya/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/podpolnaya-pechat/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/sovetskaya-noch/": {
+   "base": {
+    "fs": 14,
+    "pw": 636,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 636,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/spravochnik/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/vsehib-1944/": {
+   "base": {
+    "fs": 14,
+    "pw": 636,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 636,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/baptisty-rossii/yuzhnaya-shtunda/": {
+   "base": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 16,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/biografii/": {
+   "base": {
+    "fs": 15,
+    "pw": 564,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 15,
+    "pw": 564,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/": {
+   "base": {
+    "fs": 15,
+    "pw": 588,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 15,
+    "pw": 588,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/blagovestie-mertvym-1-petra-4-5-6/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/genesis-6/": {
+   "base": {
+    "fs": 23,
+    "pw": 531,
+    "sw": 1351,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 23,
+    "pw": 531,
+    "sw": 1351,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/": {
+   "base": {
+    "fs": 18,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 22.5,
+    "pw": 736,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/izbrannoe/": {
+   "base": {
+    "fs": null,
+    "pw": null,
+    "sw": 1351,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": null,
+    "pw": null,
+    "sw": 1351,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/journal/": {
+   "base": {
+    "fs": 29,
+    "pw": 800,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 29,
+    "pw": 800,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/journal/dossiers/g3/": {
+   "base": {
+    "fs": 27,
+    "pw": 840,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 27,
+    "pw": 840,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/": {
+   "base": {
+    "fs": 21.12,
+    "pw": 338,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 21.12,
+    "pw": 338,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/avraam/": {
+   "base": {
+    "fs": null,
+    "pw": null,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": null,
+    "pw": null,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/early-church/": {
+   "base": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/ishod/": {
+   "base": {
+    "fs": null,
+    "pw": null,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": null,
+    "pw": null,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/maccabim/": {
+   "base": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/melachim/": {
+   "base": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/pavel/": {
+   "base": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/revelation/": {
+   "base": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/shoftim/": {
+   "base": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/shvatim/": {
+   "base": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/karty/yeshua/": {
+   "base": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 646,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/konfessii/": {
+   "base": {
+    "fs": 12.5,
+    "pw": 305,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 12.5,
+    "pw": 305,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/konfessii/russkij-baptizm/": {
+   "base": {
+    "fs": null,
+    "pw": null,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": null,
+    "pw": null,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/konfessii/russkij-baptizm/_app/": {
+   "base": {
+    "fs": 18,
+    "pw": 672,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 1,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 672,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 1,
+    "scaleVar": "1.25"
+   }
+  },
+  "/map/": {
+   "base": {
+    "fs": null,
+    "pw": null,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": null,
+    "pw": null,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/": {
+   "base": {
+    "fs": 14,
+    "pw": 576,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 576,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/chast-1/": {
+   "base": {
+    "fs": 14,
+    "pw": 675,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 675,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/chast-2/": {
+   "base": {
+    "fs": 14,
+    "pw": 675,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 675,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/chast-3/": {
+   "base": {
+    "fs": 14,
+    "pw": 675,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 675,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/chast-4/": {
+   "base": {
+    "fs": 14,
+    "pw": 675,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 675,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/chast-5/": {
+   "base": {
+    "fs": 14,
+    "pw": 675,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 675,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/istochniki/": {
+   "base": {
+    "fs": 14,
+    "pw": 757,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 757,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/nakhodki/": {
+   "base": {
+    "fs": 14,
+    "pw": 757,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 14,
+    "pw": 757,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/nagornaya/seriya/": {
+   "base": {
+    "fs": 19.52,
+    "pw": 580,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 19.52,
+    "pw": 580,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/pastor-series/": {
+   "base": {
+    "fs": 15,
+    "pw": 588,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 15,
+    "pw": 588,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/podrostok-za-kadrom/": {
+   "base": {
+    "fs": 18,
+    "pw": 594,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 18,
+    "pw": 594,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  },
+  "/rodosloviye/": {
+   "base": {
+    "fs": 21,
+    "pw": 574,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1"
+   },
+   "max": {
+    "fs": 21,
+    "pw": 574,
+    "sw": 1366,
+    "vw": 1366,
+    "over": 0,
+    "scaleVar": "1.25"
+   }
+  }
+ }
+}
