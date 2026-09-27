@@ -710,3 +710,38 @@ MASTER не изменён.
 - Косметика: текст расходится — «Перейти к содержанию» (статьи, rodosloviye) и «Перейти к содержимому» (хабы, «Нагорная», Гилл).
 
 MASTER не изменён.
+
+---
+
+# Wave 16 — режим принудительных цветов (Windows High Contrast / `forced-colors: active`)
+
+Скрипты: `evidence/forced-colors.mjs` (104 × desktop/mobile, `forcedColors:'active'`, `matchMedia` подтверждён = true), `evidence/forced-colors-verify.mjs`, `evidence/forced-colors-focus.mjs`. Данные: `evidence/forced-colors-104.json`. Скриншоты: `evidence/fc-*.png`.
+
+## FC-01 — в режиме высокого контраста исчезает кнопка меню «Нагорной» — `candidate`, medium
+
+- **W4:** mobile 390, 8 маршрутов «Нагорной» (`/nagornaya/`, ч.1–5, …): `button[aria-label="Открыть меню"]` визуально пуст. `evidence/fc-nagornaya-menu-fc.png` (пусто) против `evidence/fc-nagornaya-menu-normal.png` (тёмная плашка с тремя полосками).
+- **W2:** иконка-гамбургер — три `<div class="bar h-0.5 bg-white">` без текста, SVG и рамки. В forced-colors фоновые цвета заменяются системным `Canvas`, полоски пропадают, у кнопки нет border. Это единственная кнопка входа в меню «Нагорной» на мобильном.
+- Fix: SVG с `currentColor`, либо `@media (forced-colors:active){ .bar{ background: CanvasText } }`, либо `border` у кнопки.
+
+## FC-02 — фокус невидим в режиме высокого контраста — `candidate`, medium (связано с KBD-03)
+
+- **W4:** 25 первых Tab-стопов в `forced-colors`, элементы без `outline`:
+
+| маршрут | viewport | без outline |
+|---|---|---|
+| `/` | desktop | **15/25**: `gb-nav-search-icon`, `theme-toggle` (outline `0px`), `h-sacred-word` («יְהוִה — показать…») и др. |
+| `/nagornaya/chast-1/` | mobile | **13/24**: `abbr.gterm`, `a.heading-anchor` … |
+| `/articles/lot-i-sodom/` | mobile | 4/22: `input`, `heading-anchor`, `gterm` |
+| `lot-i-sodom`, `kod-da-vinchi` | desktop | 0/25 |
+
+- Механизм: в обычном режиме индикатор фокуса у этих элементов (если есть) держится на `box-shadow`/фоне, которые forced-colors не рисует. На mobile дополнительно действует `outline:0!important` из `css/mobile-hotfix.css` (KBD-03). Без outline в HCM фокус не виден вообще (WCAG 2.4.7).
+- Fix вместе с KBD-03: `outline: 2px solid transparent` в дополнение к `box-shadow` (в forced-colors прозрачный outline становится видимым системным цветом). Это стандартный приём.
+
+## Проверено — без проблем в forced-colors
+
+- Иконки-голуби сносок (`::before` с `background-image` data-URI SVG) остаются видимыми (`evidence/fc-antisovetov-dove-fc.png`).
+- Чекбоксы и поиск `/map/` нативные (`appearance:auto`), в HCM корректны. Сигнал скана был ложным.
+- `forced-color-adjust:none` в проекте не используется: авторских исключений нет.
+- Остальные icon-only кнопки на 104 маршрутах используют SVG `currentColor` или текст. Невидимых не найдено, кроме FC-01 и одного пустого `fn-marker` на `20-antisovetov` (нулевого размера, см. Wave 14).
+
+MASTER не изменён.
