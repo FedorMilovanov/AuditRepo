@@ -27,7 +27,7 @@
 | 7 | THEME-01 | hub genesis-6 без `data-series-theme`, dark title 1.36:1 | 1 хаб | `css/series-manuscript.css` | 3 |
 | 8 | FONT-01 | `/karty/` без `fonts.css`: fallback-шрифт, h1 рвётся посреди слова | 1 хаб | `karty/KartyPageHead.astro:33–35` | 12 |
 | 8b | FC-01, FC-02 | High Contrast: пропадает гамбургер «Нагорной» (8 маршрутов); фокус без outline (главная 15/25) | 8+ маршрутов | `bg-white` div-полоски; box-shadow-фокус + KBD-03 | 16 |
-| 8c | READER-01, READER-02, READER-03 | Reader settings: Nagornaya partial scaling, measure without effect, justify rivers |
+| 8c | READER-01, READER-02, READER-03 | Настройки чтения: «Нагорная» масштабирует текст частично (47/151 абзацев остаются 12–14px), ширина колонки не действует на 96/99, «реки» при выключке по ширине |
 | 9 | KBD-03, VIS-01, A11Y-06, A11Y-07, REFLOW-02, LAYOUT-01 | outline:0, потеря h1 на карте, двойной tooltip, 404 относительные ассеты, логотип 320px, header над breadcrumbs | local | см. разделы | 1–4 |
 | 10 | MAPS-01, SEARCH-01, MOTION-01/02, TTS-01, QUIZ-04 | ishod-сирота; нет глобального поиска в «Нагорной» mobile; smooth scroll при reduce; framer-motion; обрезанные скорости; итог квиза «Нагорной» | local | см. разделы | 7–12 |
 | triage | A11Y-05/08/09/10, THEME-02/03, PERF-01, SHARE-01, TTS-02, SEARCH-02 | контраст/таргеты/заголовки/preload/косметика | разное | tokens / local | 1–12 |
