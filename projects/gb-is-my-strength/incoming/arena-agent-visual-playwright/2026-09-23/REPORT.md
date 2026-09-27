@@ -28,6 +28,7 @@
 | 8 | FONT-01 | `/karty/` без `fonts.css`: fallback-шрифт, h1 рвётся посреди слова | 1 хаб | `karty/KartyPageHead.astro:33–35` | 12 |
 | 8b | FC-01, FC-02 | High Contrast: пропадает гамбургер «Нагорной» (8 маршрутов); фокус без outline (главная 15/25) | 8+ маршрутов | `bg-white` div-полоски; box-shadow-фокус + KBD-03 | 16 |
 | 8c | READER-01, READER-02, READER-03 | Настройки чтения: «Нагорная» масштабирует текст частично (47/151 абзацев остаются 12–14px), ширина колонки не действует на 96/99, «реки» при выключке по ширине |
+| 8d | HDR-02, HDR-03, HDR-04, MAPS-02 | Шапка на 1024–1280: переключатель темы невидим на genesis-6 (1.06:1), кнопки поиска и темы налезают друг на друга на 12px, крошки под шапкой, плавающие кнопки поверх заставки карты |
 | 9 | KBD-03, VIS-01, A11Y-06, A11Y-07, REFLOW-02, LAYOUT-01 | outline:0, потеря h1 на карте, двойной tooltip, 404 относительные ассеты, логотип 320px, header над breadcrumbs | local | см. разделы | 1–4 |
 | 10 | MAPS-01, SEARCH-01, MOTION-01/02, TTS-01, QUIZ-04 | ishod-сирота; нет глобального поиска в «Нагорной» mobile; smooth scroll при reduce; framer-motion; обрезанные скорости; итог квиза «Нагорной» | local | см. разделы | 7–12 |
 | triage | A11Y-05/08/09/10, THEME-02/03, PERF-01, SHARE-01, TTS-02, SEARCH-02 | контраст/таргеты/заголовки/preload/косметика | разное | tokens / local | 1–12 |
@@ -775,3 +776,34 @@ Method: `localStorage['gb:font-scale']=1.25` + `gb:gill-measure:v1/gb:hm-measure
 - Fix: `text-align:left` below ~480px or at scale >1.1, or `hyphens:auto` (`lang="ru"` is set).
 
 Not re-checked here: `textMode=plain` (it is a `data-reader-text-mode` attribute; no layout breakage seen in a spot check). The 18 routes that ignore the scale are hubs, karty, `/rodosloviye/` and `/about/`: these are not reader articles and arguably out of scope, so they are not raised as a bug.
+
+---
+
+## Wave 18 — Mid-range widths 1024 / 1112 / 1180 / 1280 (104 routes)
+
+Scripts: `evidence/midwidths-sweep.mjs` (data `w18-midwidths-104.json`), `theme-toggle-contrast.mjs` (`theme-toggle-contrast.txt`). All screenshots were re-taken 2 s after load (`*settled.png`), so these are steady-state layouts, not animations.
+
+**Clean:** at all four widths there is 0 horizontal overflow and no header control off-screen. HDR-01 (768px) does not reappear in the 1024–1280 range.
+- Exception: on `/app/` the h1 is clipped (right edge 490–612px). This is already covered by VIS-02.
+
+### HDR-02 (medium) — the theme toggle is invisible on `/hard-texts/genesis-6/`, poor on `/`
+- On the dark `astro-header h-navbar` the moon icon has `color/stroke: rgb(26,26,26)`. Measured icon/background contrast is **1.06:1**, i.e. the control can't be seen at all (`w18-hdr-_hard_texts_genesis_6_1280.png`, `w18-_hard_texts_genesis_6_settled.png`).
+- On `/` it is 2.24:1, below the 3:1 WCAG 1.4.11 threshold for non-text elements.
+- Cause: the page has a dark header while the site theme is light, and the toggle takes the light-theme ink colour.
+- In the same header, the "app" and "bookmark" buttons are bright white 44px squares. The neighbouring search and theme icons are bare, so these two look out of style (unpolished).
+
+### HDR-03 (low) — the search and theme-toggle hit areas overlap by 12px
+- Search `gb-nav-search-icon` spans x 1037–1081 and `.theme-toggle` spans 1069–1113 (1280px, genesis-6).
+- The same happens on `/izbrannoe/` and `/` at every width tested, 1024–1440.
+- A tap or click in the shared 12px strip goes to whichever element is on top. On touch laptops this is a mis-tap.
+- Fix: `gap` instead of negative margins.
+
+### HDR-04 (low) — breadcrumbs sit under the fixed header
+- `/hard-texts/genesis-6/`: the breadcrumb spans y 32–57 and the fixed header spans 0–58, at every width (1024 and 1440 tested). "Главная / Трудные тексты / Бытие 6" is squeezed right under the site title.
+- `/articles/lot-i-sodom/` at 1024: the `hmtop` bar (0–62) covers the breadcrumb (43–67); only a faint strip of it peeks out below (`w18-_articles_lot_i_sodom_settled.png`).
+- At 1440 lot-i-sodom is fine, so the header's offset breakpoint is wrong somewhere between.
+
+### MAPS-02 (low) — the floating buttons sit above the `/karty/ishod/` intro screen
+- The intro `me-intro__bg` (rgba(7,10,16,.95)) darkens the whole page, including the map's own header. But the floating "Приложение" and "Поиск" buttons stay bright on top of it, in the corner, next to the dimmed native controls of the map (`w18-karty-ishod-intro-1024.png`).
+- This is the z-index of the floating cluster, which does not respect route overlays.
+- The screenshot also shows the serif fallback font (FONT-01 confirmed on another route).
