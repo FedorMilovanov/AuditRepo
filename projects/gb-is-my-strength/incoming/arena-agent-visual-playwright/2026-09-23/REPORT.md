@@ -12,7 +12,7 @@
 | report_type | browser-audit + visual-audit |
 | live witness | **UNPROVEN** — `gospod-bog.ru` из песочницы недоступен (TLS `SSL_ERROR_SYSCALL`), live-проверки нет |
 
-## Сводка по волнам 1–14 (обновляется; детали — в разделах волн ниже)
+## Сводка по волнам 1–13 (обновляется; детали — в разделах волн ниже)
 
 Все пункты имеют статус `candidate` для triage Codex/владельца. MASTER агентом не менялся.
 
@@ -21,9 +21,8 @@
 | 1 | PRINT-01 | печать скрывает контент (источники, блоки точности, финальные секции) | 48/87 маршрутов | `js/reader-preferences-head.js` (closing-group / terminal region) | 3–4 |
 | 2 | QUIZ-03 | квиз непроходим: «Следующий вопрос» `display:none` | 15 маршрутов | legacy `css/floating-cluster.css:4062` `[data-gill-v16] .quiz-next` vs `article-quiz.js` | 6 |
 | 3 | QUIZ-01 | квиз в dark: светлый текст на светлой карточке | 23 маршрута | `src/runtime/article-interactions.css:102` (неопределённые `--surface/--card-bg`) | 5 |
-| 4 | KBD-01/02 | keyboard trap в радиогруппе скорости; невидимые фокусируемые кнопки | 5 частей «Нагорной» + статьи | `js/floating-cluster-controller.js` | 2–3 |
+| 4 | KBD-01/02 | keyboard trap в радиогруппе скорости; невидимые фокусируемые кнопки (**KBD-02 посчитан в Wave 15: 72 маршрута × 5 кнопок скорости на desktop**) | 72 маршрута | `js/floating-cluster-controller.js` | 2–3 |
 | 5 | HDR-01 | шапка выталкивает поиск/тему за экран (iPad portrait, phone landscape) | ≥7 хабов | `css/home.css` брейкпоинт `.h-nav-links` + `ui/Header.astro`; `izbrannoe` оверрайд | 8–10 |
-| 5b | **TIP-01** | 40 подсказок-глоссариев «Нагорной» ч.1–4 мертвы: выглядят как подсказка (пунктир, `cursor:help`), не открываются ни тапом, ни hover, ни с клавиатуры | 4 маршрута | `[data-tooltip]` обслуживает только legacy `js/site.js`, который «Нагорная» не грузит | 14 |
 | 6 | QUIZ-02 | HTML-разметка квиза выводится как текст | 9+ страниц | `article-quiz.js` `textContent` vs данные с `<em>/<span>` (решение владельца) | 5–6 |
 | 7 | THEME-01 | hub genesis-6 без `data-series-theme`, dark title 1.36:1 | 1 хаб | `css/series-manuscript.css` | 3 |
 | 8 | FONT-01 | `/karty/` без `fonts.css`: fallback-шрифт, h1 рвётся посреди слова | 1 хаб | `karty/KartyPageHead.astro:33–35` | 12 |
@@ -677,27 +676,37 @@ MASTER не изменён.
 
 ---
 
-# Wave 14 — подсказки «Нагорной», strategic map «20 антисоветов», клавиатура на десктопе
+# Wave 15 — невидимые фокусируемые элементы, skip-link, путь Tab до контента
 
-Скрипты: `evidence/tooltips-nagornaya-keyboard.mjs`, `evidence/tooltips-nagornaya-antisovetov.mjs`, `evidence/data-tooltip-scan.mjs`. Данные: `evidence/data-tooltip-scan-104.json`. Скриншоты: `evidence/tip14-*.png`.
+Песочница сбросилась в пятый раз. Добавлен воспроизводимый bootstrap `evidence/rebuild-env.sh` (git sync → clone/build Product → Chromium → routes). Скрипты: `evidence/focus-invisible-skip.mjs` (104 × desktop/mobile), `evidence/focus-followup.mjs`, `evidence/skip-link-check.mjs`, `evidence/mobile-chrome-hidden.mjs`, `evidence/rodosloviye-tab-order.mjs`. Данные: `evidence/focus-invisible-skip-104.json`.
 
-## TIP-01 — глоссарные подсказки «Нагорной» не работают вообще — `candidate`, высокая уверенность
+Критерий «невидимый фокусируемый»: `tabIndex ≥ 0`, не `disabled/inert/hidden/aria-hidden`, предки видимы, но бокс < 2px или `opacity:0`. Исключены `clip`/`clip-path` и `sr-only/skip`.
 
-- **W4:** на 104 маршрутах элементы `[data-tooltip]` есть только на «Нагорной»: ч.1 — 10, ч.2 — 4, ч.3 — 2, ч.4 — 24, **итого 40**. Из них «готовых» (`data-gb-tooltip-ready`, `aria-describedby`, `tabindex≥0` или `role`) — **0**.
-- Mobile 390: тап по `.tooltip-trigger` ничего не показывает. Desktop 1366: hover — ничего, фокус невозможен (`tabIndex=-1`, нет роли), `::before/::after` = `none`.
-- При этом триггер **выглядит интерактивным**: `border-bottom: dotted`, `cursor: help` (`css/site.css` `.tooltip-trigger`). Для читателя это ложное обещание.
-- Содержимое недоступно никак: «Отмена или нарушение Божьего закона», «Греч. pleroo — 'наполнить до краёв'…», «Латинский термин… (concursus)», «The Master's Seminary (TMS) — евангельская семинария…» и т.д.
-- **W2:** разметка в `src/components/nagornaya/chast-{1..4}/*.astro`: `<span class="tooltip-trigger" data-tooltip="…">`. Обработчик `[data-tooltip]` есть только в legacy `js/site.js`. Скрипты «Нагорной» (`reader-preferences*`, `reader-state`, `site-utils`, `scroll-perf`, `glossary`, `highlights`, `nagornaya-*`, `enhancements`, `bookmark-engine`) его не содержат. `js/glossary.js` обслуживает только `.gterm/.gtip`. Канонический article-tooltip owner (WORK_QUEUE:40) работает с `.fn-marker`. Для `[data-tooltip]` владельца нет.
-- **W5:** «Нагорная» мигрировала с `site.js`, контракт `data-tooltip` потерян. Родственно QUIZ-03 (legacy-контракт без владельца после миграции). Fix: перевести 40 триггеров на канонический tooltip owner (или `.gterm`) либо вернуть обработчик. Regression-гейт: «каждый `.tooltip-trigger`/`[data-tooltip]` имеет рантайм-владельца».
-- Связь с Wave 2 A11Y-08: пунктирные триггеры без роли там не учитывались. Отдельная находка.
+## KBD-02 — посчитан: 5 невидимых кнопок скорости на 72 маршрутах — усиление находки Wave 2
 
-## Проверено — работает
+- **Desktop 1366:** 84/104 маршрутов имеют невидимые фокусируемые элементы, всего 417. Основная масса — `BUTTON.gb-ember-expand__btn` «Скорость 1× / 1.25× / 1.5× / 1.75× / 2×»: **72 маршрута × 5 = 360 невидимых табстопов**. Плюс «Остановить озвучку» на 6 маршрутах (`/baptisty-rossii/*`).
+- **Mobile 390:** 18/104, 87 элементов (кнопки скорости только на 6 маршрутах `/baptisty-rossii/*`).
+- Tab-путь на `lot-i-sodom` (первые 46 стопов): 4 body-level, 1 `gb-ember`, **5 невидимых `gb-ember-expand__btn`**, 1 `hrail-back`, 22 пункта `hrail-toc`, 4 `hrail-bottom-btn`, 2 breadcrumbs, и только потом `main`. На 74 из 104 маршрутов до первого элемента в `main` 43–48 нажатий Tab.
+- Root тот же, что KBD-01/02: свёрнутый speed-expander не снимает кнопки из tab-order (нужно `hidden`/`inert`/`tabindex=-1` в свёрнутом состоянии). Владелец — floating cluster / ember controller.
 
-- **«20 антисоветов», `.map-trigger` (38 шт.):** тап (mobile) → нижний `role=dialog` 390×275 с блоками «Семейное равновесие…». Клик (desktop) → поповер 544×369 рядом с маркером. `Esc` закрывает, **фокус возвращается на маркер**. Ложный «no popup» в Wave 13 объясняется другим классом (`.gb-strategic-map-popover`) и нулевым размером части пустых маркеров (например, `data-tip=39`), которые Playwright считает невидимыми.
-- **«Код да Винчи», `.fn-marker`:** mobile tap → нижний лист, desktop hover → подсказка, фокус с клавиатуры → подсказка, Enter → подсказка, Esc → закрыто. Эталонное поведение.
+## A11Y-12 — якоря заголовков и «Наверх» получают фокус, оставаясь невидимыми — `candidate`, medium
 
-## Observation — невидимые маркеры в «20 антисоветах»
+- `A.heading-anchor` «Скопировать ссылку на раздел»: 11 маршрутов, 39 элементов (главная и др.). **При фокусе остаются `opacity:0`, бокс 0×0, outline `none`.** Пользователь клавиатуры попадает в «пустоту». Правило раскрытия, видимо, только `:hover`.
+- `BUTTON.h-scroll-top` «Наверх»: 6 маршрутов, при фокусе `opacity:0` (показывается только после прокрутки).
+- WCAG 2.4.7 (Focus Visible). Fix: `:focus-visible { opacity:1 }` для обоих.
 
-- Часть `.map-trigger` (например, `data-tip="39"`) имеет нулевой бокс, но `tabindex=0` и `role=button`. Это та же модель, что KBD-02: фокусируемый невидимый элемент. Охват не посчитан, `UNPROVEN`.
+## A11Y-13 — скрытая мобильная панель `mcp` фокусируема и стоит перед skip-link — `candidate`, low/medium
+
+- **W4:** на 9 хабах (`/articles/`, `/biografii/`, `/hard-texts/`, `/hard-texts/genesis-6/`, `/journal/`, `/journal/dossiers/g3/`, `/karty/`, `/konfessii/`, `/rodosloviye/`) мобильная панель «Назад / На главную / Поиск» при `scrollY=0` стоит на `top:-51`. Это по дизайну: выезжает, когда прячется основной navbar (`evidence/mcp-hidden-at-top-articles.png`, наверху видна основная шапка).
+- Но её 3 кнопки остаются в tab-order и **идут первыми, до skip-link**: на `/rodosloviye/` mobile Tab 1–3 = невидимые `mcp-icon`/`mcp-search` (top −51), Tab 4 = skip-link.
+- **W2:** `src/components/article-pilots/_shared/MobileChromePage.astro:66–84` (`.mcp-top{transform:translateY(-110%)}`, `.is-shown` → 0) + скрипт `sync()` ≈193–205 переключает `is-shown` только по скроллу. Обработчика `focusin` нет, `inert` в скрытом состоянии нет.
+- Fix: `inert` на скрытой панели или показ по `focusin`. Skip-link поставить первым в DOM.
+
+## Skip-link — работает (проверено; частичная коррекция промежуточного замера)
+
+- Есть на 86/104 маршрутах, битых целей 0. После фокуса и завершения transition (≈900 мс) виден на `top:20`, z-index 10001, не перекрыт (desktop и mobile, 7 маршрутов). Enter переносит фокус в `main` (следующий Tab — breadcrumbs внутри `main`).
+- Промежуточный замер сразу после Tab показывал `top:-37`: это был снимок **во время** анимации, а не баг. Скриншот удалён, заменён `evidence/skip-link-focused-{d,m}.png`.
+- **Нет skip-link (18):** `/app/`, `/hard-texts/genesis-6/`, `/izbrannoe/`, `/journal/`, `/journal/dossiers/g3/`, `/karty/` и 9 подстраниц карт, `/konfessii/`, `/konfessii/russkij-baptizm/_app/`, `/map/`. Для хабов с длинной шапкой это low. Triage.
+- Косметика: текст расходится — «Перейти к содержанию» (статьи, rodosloviye) и «Перейти к содержимому» (хабы, «Нагорная», Гилл).
 
 MASTER не изменён.
