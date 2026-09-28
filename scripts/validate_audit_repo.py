@@ -82,12 +82,18 @@ def concrete_value(value):
 
 
 def has_explicit_evidence_anchor(text):
-    """Require a concrete value on an anchor-labelled line for new/changed intake."""
+    """Require a concrete value on an anchor-labelled line or table row."""
     for raw_line in text.splitlines():
         normalized = raw_line.replace('**', '').replace('__', '').strip()
         match = ANCHOR_LABEL_RE.match(normalized)
         if match and concrete_value(match.group('value')):
             return True
+        cells = [cell.strip() for cell in normalized.strip('|').split('|')]
+        if len(cells) >= 2:
+            label = cells[0].replace('_', ' ')
+            table_match = ANCHOR_LABEL_RE.match(f'{label}: {cells[1]}')
+            if table_match and concrete_value(table_match.group('value')):
+                return True
     return False
 
 
@@ -285,7 +291,19 @@ for proj in project_dirs():
                 '## Source commit', '## Source commits',
                 '## Gates', '## Fixes',
             ]
-            if not any(m in txt for m in markers):
+            # Accept a complete, explicitly labelled Markdown metadata table as
+            # an identity block too. Some audit reports lead with this compact
+            # format rather than the older prose headings; require the full
+            # project/source/agent/date/anchor set so a stray word cannot satisfy
+            # the intake identity contract.
+            metadata_fields = {
+                field.strip().lower()
+                for field in re.findall(r'^\|\s*([^|]+?)\s*\|', txt, re.MULTILINE)
+            }
+            structured_identity = {
+                'project', 'source_repo', 'agent', 'date', 'audited_anchor',
+            }.issubset(metadata_fields)
+            if not any(m in txt for m in markers) and not structured_identity:
                 fail(f'{proj.name}: intake identity file missing recognizable identity markers: {identity_file}', errors)
 
             has_anchor = (
