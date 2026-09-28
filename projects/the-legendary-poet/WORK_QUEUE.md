@@ -29,10 +29,10 @@ These are useful owner-selected improvements after/alongside the active repair r
 ## Optional editorial/discovery product decisions — not current defect rows
 
 - **Reader-visible update provenance:** article data can carry `dateModified`; decide whether substantial updates should additionally render an explicit `Обновлено` label in the reader UI rather than remaining machine metadata only.
-- **Command Palette scope copy:** Footer exposes archive/policy destinations that the palette index does not; active `TLP-SEARCH-001` owns the engineering mismatch, while final wording versus index expansion remains an owner choice.
-- **Canonical poet portrait provenance:** current canonical portraits are not proven reconstructions; do not relabel by inference. Active authoring contract owns future portrait existence/provenance gating; Product #270 remains longform visual provenance territory.
+- **Command Palette scope copy:** Footer exposes archive/policy destinations that the palette index does not; the engineering Search root is closed, while final wording versus index expansion remains an optional owner choice.
+- **Canonical poet portrait provenance:** current canonical portraits are not proven reconstructions; do not relabel by inference. The authoring release contract is closed for its engineering scope; future portrait existence/provenance gating remains an owner/content boundary, and Product #270 remains longform visual provenance territory.
 - **Essay image-kind hardening:** sampled current published image blocks explicitly classify `kind`, so no current mislabel was promoted. Future authoring should make missing `kind` fail closed rather than renderer-defaulting it to `archive`.
-- **Consent copy/placement:** active `TLP-ANALYTICS-CONSENT-001` owns the engineering need for a reopenable preference control; the final wording and whether that entry lives in Privacy, Footer, or a dedicated settings surface is an owner product choice.
+- **Consent copy/placement:** the analytics-consent engineering root is closed with a reopenable preference control; final wording and whether that entry lives in Privacy, Footer, or a dedicated settings surface remains an optional owner product choice.
 
 ## 2026-08-19 parked observations (arena-bugverifikator)
 
