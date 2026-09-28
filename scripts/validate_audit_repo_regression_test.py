@@ -159,6 +159,48 @@ def main() -> int:
         require(valid.returncode == 0, 'real observation failed validator', valid)
         require('AUDITREPO VALIDATION: PASS' in valid.stdout, 'PASS marker missing', valid)
 
+        # Fully labelled metadata tables are an accepted identity format, but
+        # only when they carry the complete project/source/agent/date/anchor
+        # field set. This matches compact audit-intake reports without relaxing
+        # the evidence-anchor requirement.
+        structured_readme = (
+            '# Visual / Playwright audit — fixture-project\n\n'
+            '| Field | Value |\n|---|---|\n'
+            '| project | fixture-project |\n'
+            '| source_repo | Example/fixture-project |\n'
+            '| audited_anchor | `9fcfb6c27d4b1b0d9189e3ee9a83c433bd4c3d95` |\n'
+            '| agent | arena-agent |\n'
+            '| date | 2026-07-25 |\n'
+        )
+        write(intake / 'README.md', structured_readme)
+        structured_identity = run_validator(root)
+        require(
+            structured_identity.returncode == 0,
+            'complete labelled metadata table failed intake identity validation',
+            structured_identity,
+        )
+
+        write(
+            intake / 'README.md',
+            structured_readme.replace('| agent | arena-agent |\n', ''),
+        )
+        incomplete_identity = run_validator(root)
+        require(
+            incomplete_identity.returncode == 1,
+            'incomplete metadata table unexpectedly satisfied intake identity',
+            incomplete_identity,
+        )
+        require(
+            'missing recognizable identity markers' in incomplete_identity.stdout,
+            'incomplete metadata table failure was not specific',
+            incomplete_identity,
+        )
+        write(
+            intake / 'README.md',
+            '# Report intake\n\n## Meta\n- Agent: validator-regression\n'
+            '- Audited anchor (SHA / artifact / live snapshot): 9fcfb6c27d4b1b0d9189e3ee9a83c433bd4c3d95\n',
+        )
+
         write(
             intake / 'REPORT.md',
             '# Historical progress note\n\n'
