@@ -1,0 +1,407 @@
+[
+ {
+  "r": "/articles/20-antisovetov-pastoru/",
+  "issues": [
+   "q1: literal-markup",
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-correct",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 10",
+   "title": "По какому критерию статья различает здоровое использование пастырского авторитета и духовное насилие над совестью?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/anatomiya-padeniya-pyat-stadiy/",
+  "issues": [
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-incorrect",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 8",
+   "title": "Что модель пяти стадий утверждает — и чего она не утверждает?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/",
+  "issues": [
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-incorrect",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 8",
+   "title": "Откуда, по Части V, происходит пастырская власть?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/diotrefy-nashego-vremeni/",
+  "issues": [
+   "no-result"
+  ],
+  "q": 0,
+  "errs": [],
+  "result": {
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/dzhon-gill-chast-1-chelovek/",
+  "issues": [
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-incorrect",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 4",
+   "title": "Что, согласно рассказу дровосека Чеймберса в мемуарах Риппона, добавил проходивший мимо незнакомец, когда Эдвард Гилл объявил о рождении сына?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/dzhon-gill-chast-2-uchenyi/",
+  "issues": [
+   "q1: literal-markup",
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-incorrect",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 4",
+   "title": "Почему, по собственному признанию Уильяма Уистона, тот отказался идти слушать проповедь Гилла в 1748 году?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/dzhon-gill-chast-3-nasledie/",
+  "issues": [
+   "q1: literal-markup",
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-incorrect",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 4",
+   "title": "Как, по оценке историка Майкла Хайкина, <span class=\"gterm\" data-term=\"polemic\" data-term-title=\"Полемика\">полемика</span> Гилла сказалась на Джоне Уэсли?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/dzhon-gill-chast-4-ekzeget/",
+  "issues": [
+   "q1: literal-markup",
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-incorrect",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 4",
+   "title": "Как Гилл понимал «меру» или «правило веры» (<span class=\"gterm\" data-term=\"analogia-fidei\" data-term-title=\"Analogia fidei\">analogia fidei</span>) из Рим 12:6 — в отличие от более распространённого реформатского понимания (например, у Луиса Беркхофа)?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/dzhon-gill-spravochnik/",
+  "issues": [
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-incorrect",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 4",
+   "title": "Какой труд Гилла стал полной догматико-практической систематикой?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "issues": [],
+  "q": 10,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-next",
+  "result": {
+   "t": "Результат: 1 из 10",
+   "title": "Начало положено",
+   "desc": "Герменевтические вопросы сложны. Прочитайте ещё раз, особенно разделы об оценке и исключениях.",
+   "focus": "BODY.gbs-paper gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/kod-da-vinchi/",
+  "issues": [
+   "q2: literal-markup",
+   "q3: literal-markup",
+   "q4: literal-markup",
+   "q6: literal-markup"
+  ],
+  "q": 10,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-next",
+  "result": {
+   "t": "Результат: 2 из 10",
+   "title": "Агент Лэнгдона",
+   "desc": "Роберт Лэнгдон был бы рад вашей компании. Но прежде чем идти в Лувр — перечитайте разделы про Никею и Наг-Хаммади.",
+   "focus": "BODY.gbs-paper gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/kogda-uhodit-kogda-ostavatsya/",
+  "issues": [
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-incorrect",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 8",
+   "title": "Какие две «канавы» названы в начале Части VI?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "issues": [
+   "q1: literal-markup",
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-correct",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 12",
+   "title": "Что означает еврейское слово <em>ʿāqōb</em> (עָקֹב) в Иер. 17:9?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/lot-i-sodom/",
+  "issues": [],
+  "q": 8,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-next",
+  "result": {
+   "t": "Результат: 4 из 8",
+   "title": "Нужно перечитать",
+   "desc": "Вернитесь к разделам о выборе Лота, 2 Петра и археологических границах.",
+   "focus": "BODY.gbs-paper lot-page gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/",
+  "issues": [
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-incorrect",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 8",
+   "title": "Почему «Несовершенный человек в несовершенной церкви» — последняя часть серии?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/priznaki-zdorovoy-cerkvi/",
+  "issues": [
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-correct",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 8",
+   "title": "Что означает «здоровая — не значит идеальная»?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/sem-tipov-razlichenie-uchiteley/",
+  "issues": [
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-correct",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 8",
+   "title": "От чего прежде всего защищает инструмент из семи категорий?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/teksty-pisaniya-kotorymi-manipuliruyut/",
+  "issues": [
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-incorrect",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 8",
+   "title": "Сколько операций над текстом выделено в Части III?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/",
+  "issues": [
+   "STUCK q1: .quiz-next display:none"
+  ],
+  "q": 1,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-option is-incorrect",
+  "stuck": true,
+  "result": {
+   "t": "Вопрос 1 из 8",
+   "title": "Какова исходная точка всякого разговора о пастырской власти в Части VII?",
+   "desc": "",
+   "focus": "BODY.gbs-world gb-cluster-series-active gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/nagornaya/chast-1/",
+  "issues": [
+   "result-title-fallback"
+  ],
+  "q": 3,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-next",
+  "result": {
+   "t": "Результат: 1 из 3",
+   "title": "1 из 3",
+   "desc": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+   "focus": "BODY.nagornaya-page bg-stone-900 text-stone-900 antialiased has-bottom-bar gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/nagornaya/chast-2/",
+  "issues": [
+   "q1: literal-markup",
+   "q2: literal-markup",
+   "result-title-fallback"
+  ],
+  "q": 4,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-next",
+  "result": {
+   "t": "Результат: 1 из 4",
+   "title": "1 из 4",
+   "desc": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+   "focus": "BODY.nagornaya-page bg-stone-900 text-stone-900 antialiased has-bottom-bar gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/nagornaya/chast-3/",
+  "issues": [
+   "result-title-fallback"
+  ],
+  "q": 3,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-next",
+  "result": {
+   "t": "Результат: 1 из 3",
+   "title": "1 из 3",
+   "desc": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+   "focus": "BODY.nagornaya-page nagornaya-chast-3-page bg-stone-900 text-stone-900 antialiased has-bottom-bar gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/nagornaya/chast-4/",
+  "issues": [
+   "q1: literal-markup",
+   "q3: literal-markup",
+   "q5: literal-markup",
+   "result-title-fallback"
+  ],
+  "q": 5,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-next",
+  "result": {
+   "t": "Результат: 2 из 5",
+   "title": "2 из 5",
+   "desc": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+   "focus": "BODY.nagornaya-page bg-stone-900 text-stone-900 antialiased has-bottom-bar gb-cluster-single-active"
+  }
+ },
+ {
+  "r": "/nagornaya/chast-5/",
+  "issues": [
+   "q2: literal-markup",
+   "result-title-fallback"
+  ],
+  "q": 4,
+  "errs": [],
+  "live": true,
+  "focusAfter": "quiz-next",
+  "result": {
+   "t": "Результат: 0 из 4",
+   "title": "0 из 4",
+   "desc": "Вернитесь к отмеченным разделам и попробуйте ещё раз.",
+   "focus": "BODY.nagornaya-page bg-stone-900 text-stone-900 antialiased has-bottom-bar gb-cluster-single-active"
+  }
+ }
+]

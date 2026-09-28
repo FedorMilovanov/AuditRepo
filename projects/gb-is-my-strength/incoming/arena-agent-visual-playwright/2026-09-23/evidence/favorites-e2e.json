@@ -1,0 +1,96 @@
+{
+ "/articles/lot-i-sodom/": {
+  "found": true,
+  "before": {
+   "l": "Добавить в Избранное",
+   "pressed": "false",
+   "t": ""
+  },
+  "after": {
+   "l": "Убрать из Избранного",
+   "pressed": "true",
+   "t": ""
+  },
+  "toast": "Продолжить чтениеРаздел статьиВы остановились примерно на 42%ПродолжитьСначала | Продолжить чтениеРаздел статьиВы остано",
+  "ls": [
+   "gb-favorites=[{\"schemaVersion\":1,\"path\":\"/articles/lot-i-sodom\",\"routeId\":\"lot-i-sodom\",\"type\":\"article\",\"category\":\"Экзегеза\",\"secti",
+   "bookmark-cleanup:gb-strength=1790320016931"
+  ],
+  "errs": []
+ },
+ "/articles/dzhon-gill-chast-1-chelovek/": {
+  "found": true,
+  "before": {
+   "l": "Добавить в Избранное",
+   "pressed": "false",
+   "t": ""
+  },
+  "after": {
+   "l": "Убрать из Избранного",
+   "pressed": "true",
+   "t": ""
+  },
+  "toast": "Введите минимум 2 символа | Ссылка на раздел скопирована | Добавлено в Избранное",
+  "ls": [
+   "gb-favorites=[{\"schemaVersion\":1,\"path\":\"/articles/dzhon-gill-chast-1-chelovek\",\"routeId\":\"dzhon-gill-1697-1771\",\"type\":\"article\",\"ca",
+   "bookmark-cleanup:gb-strength=1790320016931"
+  ],
+  "errs": []
+ },
+ "/nagornaya/chast-1/": {
+  "found": true,
+  "before": {
+   "l": "Добавить в Избранное",
+   "pressed": "false",
+   "t": ""
+  },
+  "after": {
+   "l": "Убрать из Избранного",
+   "pressed": "true",
+   "t": ""
+  },
+  "toast": "Ссылка на раздел скопирована | Добавлено в Избранное",
+  "ls": [
+   "gb-favorites=[{\"schemaVersion\":1,\"path\":\"/nagornaya/chast-1\",\"routeId\":\"nagornaya-chast-1\",\"type\":\"article\",\"category\":\"Нагорная проп",
+   "bookmark-cleanup:gb-strength=1790320016931"
+  ],
+  "errs": []
+ },
+ "/hard-texts/genesis-6/": {
+  "found": true,
+  "before": {
+   "l": "Избранное",
+   "pressed": null,
+   "t": ""
+  },
+  "after": {
+   "l": "Избранное",
+   "pressed": null,
+   "t": ""
+  },
+  "toast": "Ссылка на раздел скопирована",
+  "ls": [
+   "gb-favorites=[{\"schemaVersion\":1,\"path\":\"/nagornaya/chast-1\",\"routeId\":\"nagornaya-chast-1\",\"type\":\"article\",\"category\":\"Нагорная проп",
+   "bookmark-cleanup:gb-strength=1790320016931"
+  ],
+  "errs": []
+ },
+ "izbrannoe": {
+  "h1": "Избранное",
+  "links": [
+   "/articles/",
+   "/nagornaya/chast-1/",
+   "/nagornaya/chast-1/",
+   "/nagornaya/chast-1/",
+   "/articles/dzhon-gill-chast-1-chelovek/",
+   "/articles/dzhon-gill-chast-1-chelovek/",
+   "/articles/dzhon-gill-chast-1-chelovek/",
+   "/articles/lot-i-sodom/",
+   "/articles/lot-i-sodom/",
+   "/articles/lot-i-sodom/"
+  ],
+  "empty": false
+ },
+ "removeBtn": 1,
+ "afterRemove": 7
+}

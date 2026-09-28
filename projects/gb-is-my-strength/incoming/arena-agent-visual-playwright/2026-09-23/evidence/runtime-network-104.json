@@ -1,0 +1,36 @@
+{
+ "http4xx": {},
+ "brokenImages": {
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Great_Isaiah_Scroll.jpg?width=900": [
+   "/articles/kod-da-vinchi/"
+  ],
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Evangelio_de_Felipe_%C2%B7_Codex_II%2C_3_%C2%B7_Biblioteca_Copta_de_Nag_Hammadi.png?width=900": [
+   "/articles/kod-da-vinchi/"
+  ],
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nicaea_icon.jpg?width=800": [
+   "/articles/kod-da-vinchi/"
+  ],
+  "https://upload.wikimedia.org/wikipedia/commons/1/1b/Muratorian_Fragment.jpg": [
+   "/articles/kod-da-vinchi/"
+  ],
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Manchester%2C_John_Rylands_Library_Ms_Greek_P_457_%28Papyrus_52%29_recto_John_18%2C_31-33.jpg/960px-Manchester%2C_John_Rylands_Library_Ms_Greek_P_457_%28Papyrus_52%29_recto_John_18%2C_31-33.jpg": [
+   "/articles/kod-da-vinchi/"
+  ],
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/The_cave_of_Qumran_place_of_the_dead_Sea_Scrolls.JPG?width=600": [
+   "/articles/kod-da-vinchi/"
+  ],
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/El_Evangelio_de_Tom%C3%A1s-Gospel_of_Thomas-_Codex_II_Manuscritos_de_Nag_Hammadi-The_Nag_Hammadi_manuscripts.png?width=600": [
+   "/articles/kod-da-vinchi/"
+  ],
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Leonardo_da_Vinci_%281452-1519%29_-_The_Last_Supper_%281495-1498%29.jpg?width=1200": [
+   "/articles/kod-da-vinchi/"
+  ],
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Leonardo_da_Vinci_-_Saint_John_the_Baptist_C2RMF_retouched.jpg?width=480": [
+   "/articles/kod-da-vinchi/"
+  ],
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Leonardo_da_Vinci_-_Angelo_Incarnato.jpg?width=480": [
+   "/articles/kod-da-vinchi/"
+  ]
+ },
+ "pageErrors": {}
+}

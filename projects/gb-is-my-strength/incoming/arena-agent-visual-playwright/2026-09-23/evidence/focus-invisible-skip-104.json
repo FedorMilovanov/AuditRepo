@@ -1,0 +1,2692 @@
+{
+ "d": {
+  "/": {
+   "total": 50,
+   "invisible": 11,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 5,
+    "A.h-home-route.h-reveal": 5,
+    "BUTTON.h-scroll-top \"Наверх\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 12
+  },
+  "/about/": {
+   "total": 30,
+   "invisible": 5,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 5
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 3
+  },
+  "/app/": {
+   "total": 9,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 2
+  },
+  "/articles/": {
+   "total": 99,
+   "invisible": 1,
+   "grp": {
+    "BUTTON.h-scroll-top \"Наверх\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 10
+  },
+  "/articles/20-antisovetov-pastoru/": {
+   "total": 202,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 43
+  },
+  "/articles/anatomiya-padeniya-pyat-stadiy/": {
+   "total": 95,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 43
+  },
+  "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/": {
+   "total": 97,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 45
+  },
+  "/articles/chto-bibliya-nazyvaet-serdcem/": {
+   "total": 97,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 44
+  },
+  "/articles/diotrefy-nashego-vremeni/": {
+   "total": 220,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 48
+  },
+  "/articles/dzhon-gill-chast-1-chelovek/": {
+   "total": 137,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 40
+  },
+  "/articles/dzhon-gill-chast-2-uchenyi/": {
+   "total": 169,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 31
+  },
+  "/articles/dzhon-gill-chast-3-nasledie/": {
+   "total": 169,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 41
+  },
+  "/articles/dzhon-gill-chast-4-ekzeget/": {
+   "total": 133,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 39
+  },
+  "/articles/dzhon-gill-istoricheskiy-kontekst/": {
+   "total": 157,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 35
+  },
+  "/articles/dzhon-gill-spravochnik/": {
+   "total": 111,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 34
+  },
+  "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/": {
+   "total": 561,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержанию",
+    "href": "#content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/kak-hranit-serdce/": {
+   "total": 80,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 41
+  },
+  "/articles/kak-menyaetsya-serdce/": {
+   "total": 76,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 40
+  },
+  "/articles/kod-da-vinchi/": {
+   "total": 208,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержанию",
+    "href": "#content",
+    "target": true
+   },
+   "tabToContent": 37
+  },
+  "/articles/kogda-uhodit-kogda-ostavatsya/": {
+   "total": 114,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 46
+  },
+  "/articles/krajne-li-isporcheno-serdce/": {
+   "total": 268,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 44
+  },
+  "/articles/lot-i-sodom/": {
+   "total": 97,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержанию",
+    "href": "#content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/myslennaya-zhizn-serdca/": {
+   "total": 80,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 41
+  },
+  "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/": {
+   "total": 99,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 50
+  },
+  "/articles/novoe-serdce/": {
+   "total": 94,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 42
+  },
+  "/articles/osvobozhdennoe-serdce/": {
+   "total": 75,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 37
+  },
+  "/articles/podrostok-za-kadrom-chto-delat-tserkvi/": {
+   "total": 116,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 36
+  },
+  "/articles/podrostok-za-kadrom-dvoynaya-zhizn/": {
+   "total": 99,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 35
+  },
+  "/articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/": {
+   "total": 121,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 36
+  },
+  "/articles/priznaki-zdorovoy-cerkvi/": {
+   "total": 92,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 50
+  },
+  "/articles/religioznoe-serdce/": {
+   "total": 72,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 38
+  },
+  "/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/": {
+   "total": 102,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 42
+  },
+  "/articles/sem-tipov-razlichenie-uchiteley/": {
+   "total": 79,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 39
+  },
+  "/articles/serdce-hrista-k-nemoshchnym/": {
+   "total": 104,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 43
+  },
+  "/articles/serdce-i-duh/": {
+   "total": 94,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 41
+  },
+  "/articles/serdce-i-iskushenie/": {
+   "total": 72,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 40
+  },
+  "/articles/serdce-i-sokrovishche/": {
+   "total": 73,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 40
+  },
+  "/articles/serdce-i-telo/": {
+   "total": 79,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 41
+  },
+  "/articles/serdce-i-yazyk/": {
+   "total": 80,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 41
+  },
+  "/articles/serdce-ne-v-odinochku/": {
+   "total": 73,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 39
+  },
+  "/articles/serdce-pod-skorbyu/": {
+   "total": 75,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 40
+  },
+  "/articles/serdce-spravochnik/": {
+   "total": 72,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 35
+  },
+  "/articles/skrytye-idoly-serdca/": {
+   "total": 74,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 40
+  },
+  "/articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/": {
+   "total": 133,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 37
+  },
+  "/articles/sovest-vnutrenniy-sud/": {
+   "total": 75,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 41
+  },
+  "/articles/starye-dorozhki-serdca/": {
+   "total": 80,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 42
+  },
+  "/articles/strah-bozhij-rabskij-ili-synovnij/": {
+   "total": 70,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 38
+  },
+  "/articles/svoboda-vo-hriste/": {
+   "total": 77,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 41
+  },
+  "/articles/teksty-pisaniya-kotorymi-manipuliruyut/": {
+   "total": 93,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 42
+  },
+  "/articles/tma-na-serdce/": {
+   "total": 91,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 42
+  },
+  "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/": {
+   "total": 102,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 50
+  },
+  "/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/": {
+   "total": 146,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 38
+  },
+  "/articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/": {
+   "total": 104,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 37
+  },
+  "/articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/": {
+   "total": 95,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 36
+  },
+  "/baptisty-rossii/": {
+   "total": 64,
+   "invisible": 6,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1,
+    "BUTTON.gb-ember-expand__btn.gb-ember-expand__stop \"Остановить озвучку\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/baptisty-rossii/dva-sezda-1884/": {
+   "total": 70,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 32
+  },
+  "/baptisty-rossii/goneniya-i-sovest/": {
+   "total": 84,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 37
+  },
+  "/baptisty-rossii/iniciativnaya-gruppa/": {
+   "total": 92,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 37
+  },
+  "/baptisty-rossii/noch-na-kure/": {
+   "total": 70,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 32
+  },
+  "/baptisty-rossii/peterburgskaya-liniya/": {
+   "total": 79,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 35
+  },
+  "/baptisty-rossii/podpolnaya-pechat/": {
+   "total": 90,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 38
+  },
+  "/baptisty-rossii/sovetskaya-noch/": {
+   "total": 86,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 37
+  },
+  "/baptisty-rossii/spravochnik/": {
+   "total": 100,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 33
+  },
+  "/baptisty-rossii/vsehib-1944/": {
+   "total": 83,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 39
+  },
+  "/baptisty-rossii/yuzhnaya-shtunda/": {
+   "total": 80,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 31
+  },
+  "/biografii/": {
+   "total": 49,
+   "invisible": 8,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 7,
+    "BUTTON.h-scroll-top \"Наверх\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 11
+  },
+  "/hard-texts/": {
+   "total": 31,
+   "invisible": 2,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 1,
+    "BUTTON.h-scroll-top \"Наверх\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 11
+  },
+  "/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/": {
+   "total": 116,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 37
+  },
+  "/hard-texts/blagovestie-mertvym-1-petra-4-5-6/": {
+   "total": 96,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 36
+  },
+  "/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/": {
+   "total": 131,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 39
+  },
+  "/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/": {
+   "total": 99,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 37
+  },
+  "/hard-texts/genesis-6/": {
+   "total": 31,
+   "invisible": 2,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 2
+   },
+   "skip": null,
+   "tabToContent": 14
+  },
+  "/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/": {
+   "total": 194,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 32
+  },
+  "/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/": {
+   "total": 161,
+   "invisible": 5,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 32
+  },
+  "/izbrannoe/": {
+   "total": 13,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 12
+  },
+  "/journal/": {
+   "total": 8,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 3
+  },
+  "/journal/dossiers/g3/": {
+   "total": 18,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 14
+  },
+  "/karty/": {
+   "total": 6,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 3
+  },
+  "/karty/avraam/": {
+   "total": 4,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к интерактивной карте",
+    "href": "#stage",
+    "target": true
+   },
+   "tabToContent": 5
+  },
+  "/karty/early-church/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 1
+  },
+  "/karty/ishod/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 4
+  },
+  "/karty/maccabim/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 1
+  },
+  "/karty/melachim/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 1
+  },
+  "/karty/pavel/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 1
+  },
+  "/karty/revelation/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 1
+  },
+  "/karty/shoftim/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 1
+  },
+  "/karty/shvatim/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 1
+  },
+  "/karty/yeshua/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 1
+  },
+  "/konfessii/": {
+   "total": 9,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 3
+  },
+  "/konfessii/russkij-baptizm/": {
+   "total": 8,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к интерактивной карте",
+    "href": "#appframe",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/konfessii/russkij-baptizm/_app/": {
+   "total": 109,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 13
+  },
+  "/map/": {
+   "total": 27,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": 21
+  },
+  "/nagornaya/": {
+   "total": 38,
+   "invisible": 2,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 2
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 14
+  },
+  "/nagornaya/chast-1/": {
+   "total": 74,
+   "invisible": 6,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1,
+    "BUTTON.gb-ember-expand__btn.gb-ember-expand__stop \"Остановить озвучку\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/chast-2/": {
+   "total": 70,
+   "invisible": 6,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1,
+    "BUTTON.gb-ember-expand__btn.gb-ember-expand__stop \"Остановить озвучку\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/chast-3/": {
+   "total": 74,
+   "invisible": 6,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1,
+    "BUTTON.gb-ember-expand__btn.gb-ember-expand__stop \"Остановить озвучку\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/chast-4/": {
+   "total": 90,
+   "invisible": 6,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1,
+    "BUTTON.gb-ember-expand__btn.gb-ember-expand__stop \"Остановить озвучку\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/chast-5/": {
+   "total": 96,
+   "invisible": 6,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1,
+    "BUTTON.gb-ember-expand__btn.gb-ember-expand__stop \"Остановить озвучку\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/istochniki/": {
+   "total": 53,
+   "invisible": 9,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 9
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 11
+  },
+  "/nagornaya/nakhodki/": {
+   "total": 44,
+   "invisible": 4,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 4
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 12
+  },
+  "/nagornaya/seriya/": {
+   "total": 24,
+   "invisible": 2,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 1,
+    "BUTTON.h-scroll-top \"Наверх\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 10
+  },
+  "/pastor-series/": {
+   "total": 30,
+   "invisible": 2,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 1,
+    "BUTTON.h-scroll-top \"Наверх\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 12
+  },
+  "/podrostok-za-kadrom/": {
+   "total": 9,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 3
+  },
+  "/rodosloviye/": {
+   "total": 38,
+   "invisible": 3,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 2,
+    "g.react-flow__edge.react-flow__edge-smoothstep \"Давид — Иисус Христос: че\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержанию",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": 3
+  }
+ },
+ "m": {
+  "/": {
+   "total": 50,
+   "invisible": 11,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 5,
+    "A.h-home-route.h-reveal": 5,
+    "BUTTON.h-scroll-top \"Наверх\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/about/": {
+   "total": 30,
+   "invisible": 5,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 5
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/app/": {
+   "total": 9,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/articles/": {
+   "total": 99,
+   "invisible": 1,
+   "grp": {
+    "BUTTON.h-scroll-top \"Наверх\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/20-antisovetov-pastoru/": {
+   "total": 202,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/anatomiya-padeniya-pyat-stadiy/": {
+   "total": 95,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/": {
+   "total": 97,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/chto-bibliya-nazyvaet-serdcem/": {
+   "total": 97,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/diotrefy-nashego-vremeni/": {
+   "total": 220,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/dzhon-gill-chast-1-chelovek/": {
+   "total": 137,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/dzhon-gill-chast-2-uchenyi/": {
+   "total": 169,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/dzhon-gill-chast-3-nasledie/": {
+   "total": 169,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/dzhon-gill-chast-4-ekzeget/": {
+   "total": 133,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/dzhon-gill-istoricheskiy-kontekst/": {
+   "total": 157,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/dzhon-gill-spravochnik/": {
+   "total": 111,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/": {
+   "total": 561,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержанию",
+    "href": "#content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/kak-hranit-serdce/": {
+   "total": 80,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/kak-menyaetsya-serdce/": {
+   "total": 76,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/kod-da-vinchi/": {
+   "total": 208,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержанию",
+    "href": "#content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/kogda-uhodit-kogda-ostavatsya/": {
+   "total": 114,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/krajne-li-isporcheno-serdce/": {
+   "total": 268,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/lot-i-sodom/": {
+   "total": 98,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержанию",
+    "href": "#content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/myslennaya-zhizn-serdca/": {
+   "total": 80,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/": {
+   "total": 99,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/novoe-serdce/": {
+   "total": 94,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/osvobozhdennoe-serdce/": {
+   "total": 75,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/podrostok-za-kadrom-chto-delat-tserkvi/": {
+   "total": 116,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/podrostok-za-kadrom-dvoynaya-zhizn/": {
+   "total": 99,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/": {
+   "total": 121,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/priznaki-zdorovoy-cerkvi/": {
+   "total": 92,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/religioznoe-serdce/": {
+   "total": 72,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/": {
+   "total": 102,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/sem-tipov-razlichenie-uchiteley/": {
+   "total": 79,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/serdce-hrista-k-nemoshchnym/": {
+   "total": 104,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/serdce-i-duh/": {
+   "total": 94,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/serdce-i-iskushenie/": {
+   "total": 72,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/serdce-i-sokrovishche/": {
+   "total": 73,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/serdce-i-telo/": {
+   "total": 79,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/serdce-i-yazyk/": {
+   "total": 80,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/serdce-ne-v-odinochku/": {
+   "total": 73,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/serdce-pod-skorbyu/": {
+   "total": 75,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/serdce-spravochnik/": {
+   "total": 72,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/skrytye-idoly-serdca/": {
+   "total": 74,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/": {
+   "total": 133,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/sovest-vnutrenniy-sud/": {
+   "total": 75,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/starye-dorozhki-serdca/": {
+   "total": 80,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/strah-bozhij-rabskij-ili-synovnij/": {
+   "total": 70,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/svoboda-vo-hriste/": {
+   "total": 77,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/teksty-pisaniya-kotorymi-manipuliruyut/": {
+   "total": 93,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/tma-na-serdce/": {
+   "total": 91,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/": {
+   "total": 102,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/": {
+   "total": 146,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/": {
+   "total": 104,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/": {
+   "total": 95,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/baptisty-rossii/": {
+   "total": 79,
+   "invisible": 6,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1,
+    "BUTTON.gb-ember-expand__btn.gb-ember-expand__stop \"Остановить озвучку\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/baptisty-rossii/dva-sezda-1884/": {
+   "total": 70,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/baptisty-rossii/goneniya-i-sovest/": {
+   "total": 84,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/baptisty-rossii/iniciativnaya-gruppa/": {
+   "total": 92,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/baptisty-rossii/noch-na-kure/": {
+   "total": 70,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/baptisty-rossii/peterburgskaya-liniya/": {
+   "total": 79,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/baptisty-rossii/podpolnaya-pechat/": {
+   "total": 90,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/baptisty-rossii/sovetskaya-noch/": {
+   "total": 86,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/baptisty-rossii/spravochnik/": {
+   "total": 100,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/baptisty-rossii/vsehib-1944/": {
+   "total": 83,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/baptisty-rossii/yuzhnaya-shtunda/": {
+   "total": 80,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/biografii/": {
+   "total": 49,
+   "invisible": 8,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 7,
+    "BUTTON.h-scroll-top \"Наверх\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/hard-texts/": {
+   "total": 31,
+   "invisible": 2,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 1,
+    "BUTTON.h-scroll-top \"Наверх\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/": {
+   "total": 116,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/hard-texts/blagovestie-mertvym-1-petra-4-5-6/": {
+   "total": 96,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/": {
+   "total": 131,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/": {
+   "total": 99,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/hard-texts/genesis-6/": {
+   "total": 31,
+   "invisible": 2,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 2
+   },
+   "skip": null,
+   "tabToContent": null
+  },
+  "/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/": {
+   "total": 194,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/": {
+   "total": 161,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/izbrannoe/": {
+   "total": 13,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/journal/": {
+   "total": 8,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/journal/dossiers/g3/": {
+   "total": 18,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/karty/": {
+   "total": 6,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/karty/avraam/": {
+   "total": 4,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к интерактивной карте",
+    "href": "#stage",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/karty/early-church/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/karty/ishod/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/karty/maccabim/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/karty/melachim/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/karty/pavel/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/karty/revelation/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/karty/shoftim/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/karty/shvatim/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/karty/yeshua/": {
+   "total": 3,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/konfessii/": {
+   "total": 9,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/konfessii/russkij-baptizm/": {
+   "total": 8,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к интерактивной карте",
+    "href": "#appframe",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/konfessii/russkij-baptizm/_app/": {
+   "total": 109,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/map/": {
+   "total": 13,
+   "invisible": 0,
+   "grp": {},
+   "skip": null,
+   "tabToContent": null
+  },
+  "/nagornaya/": {
+   "total": 38,
+   "invisible": 2,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 2
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/chast-1/": {
+   "total": 93,
+   "invisible": 6,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1,
+    "BUTTON.gb-ember-expand__btn.gb-ember-expand__stop \"Остановить озвучку\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/chast-2/": {
+   "total": 89,
+   "invisible": 6,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1,
+    "BUTTON.gb-ember-expand__btn.gb-ember-expand__stop \"Остановить озвучку\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/chast-3/": {
+   "total": 93,
+   "invisible": 6,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1,
+    "BUTTON.gb-ember-expand__btn.gb-ember-expand__stop \"Остановить озвучку\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/chast-4/": {
+   "total": 109,
+   "invisible": 6,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1,
+    "BUTTON.gb-ember-expand__btn.gb-ember-expand__stop \"Остановить озвучку\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/chast-5/": {
+   "total": 115,
+   "invisible": 6,
+   "grp": {
+    "BUTTON.gb-ember-expand__btn.is-active \"Скорость 1×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.25×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.5×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 1.75×\"": 1,
+    "BUTTON.gb-ember-expand__btn \"Скорость 2×\"": 1,
+    "BUTTON.gb-ember-expand__btn.gb-ember-expand__stop \"Остановить озвучку\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/istochniki/": {
+   "total": 53,
+   "invisible": 9,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 9
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/nakhodki/": {
+   "total": 44,
+   "invisible": 4,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 4
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/nagornaya/seriya/": {
+   "total": 24,
+   "invisible": 2,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 1,
+    "BUTTON.h-scroll-top \"Наверх\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/pastor-series/": {
+   "total": 30,
+   "invisible": 2,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 1,
+    "BUTTON.h-scroll-top \"Наверх\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/podrostok-za-kadrom/": {
+   "total": 9,
+   "invisible": 0,
+   "grp": {},
+   "skip": {
+    "txt": "Перейти к содержимому",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  },
+  "/rodosloviye/": {
+   "total": 38,
+   "invisible": 3,
+   "grp": {
+    "A.heading-anchor \"Скопировать ссылку на раз\"": 2,
+    "g.react-flow__edge.react-flow__edge-smoothstep \"Давид — Иисус Христос: че\"": 1
+   },
+   "skip": {
+    "txt": "Перейти к содержанию",
+    "href": "#main-content",
+    "target": true
+   },
+   "tabToContent": null
+  }
+ }
+}

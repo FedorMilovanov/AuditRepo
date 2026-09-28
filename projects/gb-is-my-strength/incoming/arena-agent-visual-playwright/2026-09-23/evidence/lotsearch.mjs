@@ -1,0 +1,11 @@
+import {chromium} from '/tmp/gb/node_modules/playwright/index.mjs';
+const b=await chromium.launch({executablePath:'/tmp/chromium',args:['--no-sandbox','--no-zygote']});
+const c=await b.newContext({viewport:{width:390,height:844},serviceWorkers:'block',isMobile:true,hasTouch:true});const p=await c.newPage();
+await p.goto('http://127.0.0.1:8080/articles/lot-i-sodom/');await p.waitForTimeout(500);
+console.log(await p.evaluate(()=>{const l=document.querySelector('.hm-slot-search');return l.outerHTML.slice(0,400)}));
+const i=p.locator('.hm-slot-search input');await i.click();await i.type('Содом',{delay:30});await p.waitForTimeout(1200);
+console.log('Содом ->',await p.evaluate(()=>document.body.innerText.match(/Ничего не найдено|\d+ (совпад|результ)[^\n]{0,30}/)?.[0]));
+await i.fill('');await i.type('Гилл',{delay:30});await p.waitForTimeout(1200);
+console.log('Гилл ->',await p.evaluate(()=>document.body.innerText.match(/Ничего не найдено[^\n]{0,80}|\d+ (совпад|результ)[^\n]{0,30}/)?.[0]));
+await p.screenshot({path:process.argv[2]+'/search-lot-article-local.png'});
+await b.close();

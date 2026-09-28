@@ -1,0 +1,21 @@
+320 / {"sw":320,"W":320,"over":[],"clipped":["A.h-nav-logo«Господь Бог — Сила» 156>152","A.h-home-route h-reveal«01ТекстыСтатьиЭкзе» 329>244","A.h-home-route h-reveal«02По порядкуСерииЦ» 299>244"]}
+320 /app/ {"sw":327,"W":320,"over":["P.app-section-kicker«Учебный цикл» r=327","H2.«Не механический те» r=327","H3.«Читайте» r=327"],"clipped":[]}
+320 /baptisty-rossii/ {"sw":320,"W":320,"over":["BUTTON.gb-ember-expand__btn«1.75×» r=345"],"clipped":[]}
+320 /hard-texts/ {"sw":320,"W":320,"over":["SPAN.gbs2-tl-era«Глава III» r=347","SPAN.gbs2-tl-era«Глава IV» r=447"],"clipped":[]}
+320 /journal/dossiers/g3/ {"sw":320,"W":320,"over":["A.«Управление» r=383"],"clipped":[]}
+== mode 320 routes with issues 5 / 104
+spacing / {"sw":320,"W":320,"over":[],"clipped":["A.h-nav-logo«Господь Бог — Сила» 170>152","A.h-home-route h-reveal«01ТекстыСтатьиЭкзе» 329>244","A.h-home-route h-reveal«02По порядкуСерииЦ» 299>244"]}
+spacing /app/ {"sw":410,"W":320,"over":["P.app-section-kicker«Учебный цикл» r=410","H2.«Не механический те» r=410","H3.«Читайте» r=410"],"clipped":[]}
+spacing /articles/ {"sw":320,"W":320,"over":[],"clipped":["A.h-nav-logo«Господь Бог — Сила» 218>208"]}
+spacing /baptisty-rossii/ {"sw":320,"W":320,"over":["BUTTON.gb-ember-expand__btn«1.75×» r=345"],"clipped":[]}
+spacing /hard-texts/ {"sw":320,"W":320,"over":["SPAN.gbs2-tl-era«Глава III» r=347","SPAN.gbs2-tl-era«Глава IV» r=447"],"clipped":["A.h-nav-logo«Господь Бог — Сила» 218>208"]}
+spacing /journal/dossiers/g3/ {"sw":320,"W":320,"over":["A.«Управление» r=430","DIV.module-label«01 · Обзор» r=368","H2.«Главный вывод» r=368"],"clipped":[]}
+spacing /karty/maccabim/ {"sw":342,"W":320,"over":[],"clipped":[]}
+spacing /karty/pavel/ {"sw":379,"W":320,"over":[],"clipped":[]}
+spacing /konfessii/russkij-baptizm/_app/ {"sw":320,"W":320,"over":[],"clipped":["BUTTON.bento-card ml-10 w-[calc(100«1917Революция — кр» 249>242"]}
+spacing /nagornaya/chast-1/ {"sw":320,"W":320,"over":["SPAN.font-mono text-xs text-stone«Мф 5:27–30» r=335"],"clipped":[]}
+spacing /nagornaya/seriya/ {"sw":320,"W":320,"over":[],"clipped":["A.h-nav-logo«Господь Бог — Сила» 218>208"]}
+spacing /pastor-series/ {"sw":320,"W":320,"over":[],"clipped":["A.h-nav-logo«Господь Бог — Сила» 218>208"]}
+spacing /podrostok-za-kadrom/ {"sw":320,"W":320,"over":[],"clipped":["A.teen-series-card«CШаг 6 из 7 · 35 м» 276>244"]}
+spacing /rodosloviye/ {"sw":320,"W":320,"over":["BUTTON.«Прочие» r=361"],"clipped":[]}
+== mode spacing routes with issues 14 / 104

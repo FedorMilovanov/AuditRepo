@@ -1,0 +1,17 @@
+Nagornaya long paragraphs 151 NOT scaled 47
+{
+  'text-stone-700 text-[16px] leading-relaxed mb-5 te': 14,
+  'text-stone-700 text-xs leading-relaxed mb-3': 2,
+  'text-stone-700 text-xs leading-relaxed': 1,
+  'text-stone-700 text-xs leading-relaxed mb-2': 1,
+  'leading-relaxed': 2,
+  'text-stone-700 text-sm leading-relaxed mb-3': 4,
+  'text-stone-700 text-sm leading-relaxed': 5,
+  'text-stone-300 text-sm leading-relaxed mb-4': 3,
+  'text-stone-700 text-[16px] leading-relaxed mb-6 te': 1,
+  'text-stone-500 text-sm font-medium ml-14': 1,
+  'text-stone-500 text-sm font-medium ml-14 font-sans': 2,
+  'text-stone-700 text-xs leading-relaxed text-justif': 6,
+  'text-stone-700 text-sm text-justify leading-relaxe': 2,
+  'leading-relaxed text-justify mb-3': 3
+}

@@ -1,0 +1,227 @@
+{
+ "/": {
+  "noFocus": [
+   "Поиск по всему сайту",
+   "Переключить тему",
+   "01\nТЕКСТЫ\nСтатьи\nЭкзегеза, богословие, п",
+   "02\nПО ПОРЯДКУ\nСерии\nЦельные исследования",
+   "03\nЛЮДИ\nБиографии\nСлужители, реформаторы",
+   "04\nПРОСТРАНСТВО\nКарты\nМаршруты, события,"
+  ],
+  "hidden": [
+   "Перейти к содержимому [offscreen]",
+   "Скопировать ссылку на раздел [invisible]",
+   "01\nТЕКСТЫ\nСтатьи\nЭкзегеза, богословие, п [invisible]",
+   "02\nПО ПОРЯДКУ\nСерии\nЦельные исследования [invisible]",
+   "03\nЛЮДИ\nБиографии\nСлужители, реформаторы [invisible]",
+   "04\nПРОСТРАНСТВО\nКарты\nМаршруты, события, [invisible]"
+  ],
+  "trap": false,
+  "skip": "Перейти к содержимому"
+ },
+ "/articles/": {
+  "noFocus": [
+   "Поиск по всему сайту",
+   "Переключить тему"
+  ],
+  "hidden": [
+   "Перейти к содержимому [offscreen]",
+   "Джон Гилл (1697–1771) — биографическая с [offscreen]",
+   "Тёмная сторона кафедры — пастырская влас [offscreen]",
+   "Баптисты России — История Евангелия, сво [offscreen]",
+   "Биографии служителей — христианское насл [offscreen]",
+   "Нагорная проповедь — полная серия\n89 мин [offscreen]"
+  ],
+  "trap": false,
+  "skip": "Перейти к содержимому"
+ },
+ "/articles/kod-da-vinchi/": {
+  "noFocus": [
+   "Показать сноску 1",
+   "Приорат Сиона"
+  ],
+  "hidden": [
+   "Перейти к содержанию [offscreen]",
+   "Скорость 1× [invisible]",
+   "Скорость 1.25× [invisible]",
+   "Скорость 1.5× [invisible]",
+   "Скорость 1.75× [invisible]",
+   "Скорость 2× [invisible]"
+  ],
+  "trap": false,
+  "skip": "Перейти к содержанию"
+ },
+ "/articles/dzhon-gill-chast-1-chelovek/": {
+  "noFocus": [],
+  "hidden": [
+   "Перейти к содержимому [offscreen]",
+   "Скорость 1× [invisible]",
+   "Скорость 1.25× [invisible]",
+   "Скорость 1.5× [invisible]",
+   "Скорость 1.75× [invisible]",
+   "Скорость 2× [invisible]"
+  ],
+  "trap": false,
+  "skip": "Перейти к содержимому"
+ },
+ "/articles/serdce-i-telo/": {
+  "noFocus": [],
+  "hidden": [
+   "Перейти к содержимому [offscreen]",
+   "Скорость 1× [invisible]",
+   "Скорость 1.25× [invisible]",
+   "Скорость 1.5× [invisible]",
+   "Скорость 1.75× [invisible]",
+   "Скорость 2× [invisible]"
+  ],
+  "trap": false,
+  "skip": "Перейти к содержимому"
+ },
+ "/nagornaya/chast-1/": {
+  "noFocus": [],
+  "hidden": [
+   "Скорость 1× [invisible]",
+   "Скорость 1.25× [invisible]",
+   "Скорость 1.5× [invisible]",
+   "Скорость 1.75× [invisible]",
+   "Скорость 2× [invisible]",
+   "Остановить озвучку [invisible]"
+  ],
+  "trap": true,
+  "skip": "Перейти к содержимому"
+ },
+ "/baptisty-rossii/": {
+  "noFocus": [],
+  "hidden": [
+   "Перейти к содержимому [offscreen]",
+   "Скорость 1× [invisible]",
+   "Скорость 1.25× [invisible]",
+   "Скорость 1.5× [invisible]",
+   "Скорость 1.75× [invisible]",
+   "Скорость 2× [invisible]"
+  ],
+  "trap": false,
+  "skip": "Перейти к содержимому"
+ },
+ "/hard-texts/genesis-6/": {
+  "noFocus": [
+   "Поиск (Ctrl+K)",
+   "Переключить тему"
+  ],
+  "hidden": [
+   "Скопировать ссылку на раздел [invisible]",
+   "Римлянам 7: верующий, неверующий или чел [offscreen]",
+   "Крайне ли испорчено сердце верующего?\nТа [offscreen]",
+   "ПОСМОТРЕТЬ НА КАРТЕ СВЯЗЕЙ [offscreen]",
+   "VI\n\nОПУБЛИКОВАНО · 19 МИН\n\nЕнох пророчес [offscreen]",
+   "VI-A\n\nЭКСКУРС · 38 МИН\n\nКак возник корпу [offscreen]"
+  ],
+  "trap": false,
+  "skip": "Господь Бог — Сила Моя"
+ },
+ "/karty/": {
+  "noFocus": [],
+  "hidden": [],
+  "trap": true,
+  "skip": "← ГЛАВНАЯ"
+ },
+ "/karty/pavel/": {
+  "noFocus": [],
+  "hidden": [],
+  "trap": true,
+  "skip": "Приложение"
+ },
+ "/konfessii/": {
+  "noFocus": [],
+  "hidden": [],
+  "trap": true,
+  "skip": "На главную"
+ },
+ "/rodosloviye/": {
+  "noFocus": [
+   "Адам — Ной: через 8 скрытых персон",
+   "Ной — Авраам: через 9 скрытых персон",
+   "Авраам — Давид: через 12 скрытых персон",
+   "Давид — Иисус Христос: через 41 скрытых "
+  ],
+  "hidden": [
+   "Перейти к содержанию [offscreen]",
+   "Скопировать ссылку на раздел [invisible]",
+   "Открыть древо → [offscreen]",
+   "К сравнению → [offscreen]",
+   "Понять статусы → [offscreen]",
+   "Поиск по имени [offscreen]"
+  ],
+  "trap": false,
+  "skip": "Перейти к содержанию"
+ },
+ "/izbrannoe/": {
+  "noFocus": [
+   "Поиск (Ctrl+K)",
+   "Переключить тему"
+  ],
+  "hidden": [],
+  "trap": false,
+  "skip": "Господь Бог — Сила Моя"
+ },
+ "/about/": {
+  "noFocus": [
+   "Закрыть подсказку"
+  ],
+  "hidden": [
+   "Перейти к содержимому [offscreen]",
+   "Скопировать ссылку на раздел [invisible]",
+   "YouTube\n@fedormilovanov [offscreen]",
+   "Rutube\n/channel/1876662 [offscreen]",
+   "Telegram\n@lordchrist [offscreen]",
+   "ВКонтакте\n/the_lord_god_is_my_strength [offscreen]"
+  ],
+  "trap": true,
+  "skip": "Перейти к содержимому"
+ },
+ "/biografii/": {
+  "noFocus": [],
+  "hidden": [
+   "Перейти к содержимому [offscreen]",
+   "Скопировать ссылку на раздел [invisible]",
+   "РЕФОРМАТСКОЕ БОГОСЛОВИЕ · XVIII В. · КОН [offscreen]",
+   "РЕФОРМАТСКОЕ БОГОСЛОВИЕ · XVIII В. · СЕР [offscreen]",
+   "РЕФОРМАТСКОЕ БОГОСЛОВИЕ · XVIII В. · СПР [offscreen]",
+   "РЕФОРМАТСКОЕ БОГОСЛОВИЕ · XVIII В. · ЧАС [offscreen]"
+  ],
+  "trap": true,
+  "skip": "Перейти к содержимому"
+ },
+ "/map/": {
+  "noFocus": [
+   "Сбросить",
+   "Джон Гилл: исторический контекст. Джон Г"
+  ],
+  "hidden": [],
+  "trap": true,
+  "skip": "Вернуться на главную"
+ },
+ "/journal/": {
+  "noFocus": [],
+  "hidden": [
+   "Досье · 2019–2026\n\nЧто установлено докум [offscreen]",
+   "На главную [offscreen]",
+   "Богословские статьи [offscreen]"
+  ],
+  "trap": true,
+  "skip": "Господь Бог — Сила Моя"
+ },
+ "/app/": {
+  "noFocus": [],
+  "hidden": [
+   "Открыть тренажёр\n↗ [offscreen]",
+   "@milovanovaibot [offscreen]",
+   "Читать исследование → [offscreen]",
+   "Проверить главу ↗ [offscreen]",
+   "Открыть Библейский тренажёр\n↗ [offscreen]",
+   "Вернуться в библиотеку [offscreen]"
+  ],
+  "trap": true,
+  "skip": "Господь Бог — Сила Моя — на главную"
+ }
+}

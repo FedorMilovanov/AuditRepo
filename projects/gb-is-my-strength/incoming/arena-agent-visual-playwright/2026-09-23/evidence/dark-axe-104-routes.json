@@ -1,0 +1,915 @@
+[
+ {
+  "r": "/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/about/",
+  "dark": true,
+  "n": 1,
+  "severe": 0,
+  "worst": [
+   "3.41 #636972/#0e1116 cite"
+  ]
+ },
+ {
+  "r": "/app/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/20-antisovetov-pastoru/",
+  "dark": true,
+  "n": 3,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/articles/anatomiya-padeniya-pyat-stadiy/",
+  "dark": true,
+  "n": 3,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/",
+  "dark": true,
+  "n": 3,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/articles/chto-bibliya-nazyvaet-serdcem/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/diotrefy-nashego-vremeni/",
+  "dark": true,
+  "n": 2,
+  "severe": 2,
+  "worst": [
+   "1.08 #e6e1d7/#eceae6 #gill-search-p-210",
+   "1.08 #e6e1d7/#eceae6 #gill-search-p-211"
+  ]
+ },
+ {
+  "r": "/articles/dzhon-gill-chast-1-chelovek/",
+  "dark": true,
+  "n": 13,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.6 #6b7280/#161a21 div[lang=\"ru\"]:nth-child(20)"
+  ]
+ },
+ {
+  "r": "/articles/dzhon-gill-chast-2-uchenyi/",
+  "dark": true,
+  "n": 10,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.47 #7d838d/#191c22 #gill-search-p-002"
+  ]
+ },
+ {
+  "r": "/articles/dzhon-gill-chast-3-nasledie/",
+  "dark": true,
+  "n": 13,
+  "severe": 3,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "2.92 #646a77/#212226 .manuscript-quote-source > span"
+  ]
+ },
+ {
+  "r": "/articles/dzhon-gill-chast-4-ekzeget/",
+  "dark": true,
+  "n": 10,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.47 #7d838d/#191c22 #gill-search-p-002"
+  ]
+ },
+ {
+  "r": "/articles/dzhon-gill-istoricheskiy-kontekst/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/articles/dzhon-gill-spravochnik/",
+  "dark": true,
+  "n": 2,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "dark": true,
+  "n": 2,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/articles/kak-hranit-serdce/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/kak-menyaetsya-serdce/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/kod-da-vinchi/",
+  "dark": true,
+  "n": 12,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.41 #6b7280/#1a1f28 .ctw-sub"
+  ]
+ },
+ {
+  "r": "/articles/kogda-uhodit-kogda-ostavatsya/",
+  "dark": true,
+  "n": 3,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/articles/krajne-li-isporcheno-serdce/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/articles/lot-i-sodom/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch"
+  ]
+ },
+ {
+  "r": "/articles/myslennaya-zhizn-serdca/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/",
+  "dark": true,
+  "n": 3,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/articles/novoe-serdce/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/osvobozhdennoe-serdce/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/podrostok-za-kadrom-chto-delat-tserkvi/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/articles/podrostok-za-kadrom-dvoynaya-zhizn/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/articles/priznaki-zdorovoy-cerkvi/",
+  "dark": true,
+  "n": 3,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/articles/religioznoe-serdce/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/sem-tipov-razlichenie-uchiteley/",
+  "dark": true,
+  "n": 3,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/articles/serdce-hrista-k-nemoshchnym/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/serdce-i-duh/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/serdce-i-iskushenie/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/serdce-i-sokrovishche/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/serdce-i-telo/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/serdce-i-yazyk/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/serdce-ne-v-odinochku/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/serdce-pod-skorbyu/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/serdce-spravochnik/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/skrytye-idoly-serdca/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/articles/sovest-vnutrenniy-sud/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/starye-dorozhki-serdca/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/strah-bozhij-rabskij-ili-synovnij/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/svoboda-vo-hriste/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/teksty-pisaniya-kotorymi-manipuliruyut/",
+  "dark": true,
+  "n": 3,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/articles/tma-na-serdce/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/",
+  "dark": true,
+  "n": 3,
+  "severe": 2,
+  "worst": [
+   "2.22 #ffffff/#d4a574 #quizLaunch",
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/baptisty-rossii/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/baptisty-rossii/dva-sezda-1884/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.75 #736c83/#0e1218 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/baptisty-rossii/goneniya-i-sovest/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.75 #736c83/#0e1218 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/baptisty-rossii/iniciativnaya-gruppa/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.75 #736c83/#0e1218 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/baptisty-rossii/noch-na-kure/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.75 #736c83/#0e1218 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/baptisty-rossii/peterburgskaya-liniya/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.75 #736c83/#0e1218 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/baptisty-rossii/podpolnaya-pechat/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/baptisty-rossii/sovetskaya-noch/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.75 #736c83/#0e1218 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/baptisty-rossii/spravochnik/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.75 #736c83/#0e1218 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/baptisty-rossii/vsehib-1944/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.75 #736c83/#0e1218 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/baptisty-rossii/yuzhnaya-shtunda/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.75 #736c83/#0e1218 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/biografii/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/hard-texts/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/hard-texts/blagovestie-mertvym-1-petra-4-5-6/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/hard-texts/genesis-6/",
+  "dark": true,
+  "n": 59,
+  "severe": 41,
+  "worst": [
+   "1.36 #3c2c1f/#171513 article:nth-child(1) > .genesis6-card__copy > h3",
+   "1.36 #3c2c1f/#171513 article:nth-child(2) > .genesis6-card__copy > h3",
+   "1.36 #3c2c1f/#171513 article:nth-child(3) > .genesis6-card__copy > h3"
+  ]
+ },
+ {
+  "r": "/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "4.32 #837766/#0d1117 .mobile-btoc-section__label"
+  ]
+ },
+ {
+  "r": "/izbrannoe/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "1.35 #d4a574/#d97a6c .izbrannoe-cta"
+  ]
+ },
+ {
+  "r": "/journal/",
+  "dark": true,
+  "n": 10,
+  "severe": 10,
+  "worst": [
+   "2 #7a2e2e/#131217 .lead-label",
+   "2 #7a2e2e/#131217 .read-link",
+   "2.03 #7a2e2e/#0e1116 .journal-kicker"
+  ]
+ },
+ {
+  "r": "/journal/dossiers/g3/",
+  "dark": true,
+  "n": 58,
+  "severe": 30,
+  "worst": [
+   "2.03 #7a2e2e/#0e1116 .kicker",
+   "2.03 #7a2e2e/#0e1116 .authority-note > a",
+   "2.03 #7a2e2e/#0e1116 #overview > .module-label"
+  ]
+ },
+ {
+  "r": "/karty/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/karty/avraam/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/karty/early-church/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/karty/ishod/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/karty/maccabim/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/karty/melachim/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/karty/pavel/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/karty/revelation/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/karty/shoftim/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/karty/shvatim/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/karty/yeshua/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/konfessii/",
+  "dark": true,
+  "n": 3,
+  "severe": 0,
+  "worst": [
+   "3.36 #5e6570/#070a10 footer",
+   "4.14 #6c737e/#070a10 .crumb",
+   "4.26 #83734a/#070a10 .he"
+  ]
+ },
+ {
+  "r": "/konfessii/russkij-baptizm/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/konfessii/russkij-baptizm/_app/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/map/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/nagornaya/",
+  "dark": true,
+  "n": 1,
+  "severe": 0,
+  "worst": [
+   "3.13 #756f6a/#29231d .bar-section-label"
+  ]
+ },
+ {
+  "r": "/nagornaya/chast-1/",
+  "dark": true,
+  "n": 17,
+  "severe": 15,
+  "worst": [
+   "1.69 #9ca3af/#797a7d .mt-3.font-mono.text-stone-400",
+   "1.69 #9ca3af/#797a7d .article-updated",
+   "1.69 #9ca3af/#797a7d time"
+  ]
+ },
+ {
+  "r": "/nagornaya/chast-2/",
+  "dark": true,
+  "n": 42,
+  "severe": 16,
+  "worst": [
+   "1.61 #7c2d12/#292524 a[rel=\"noopener noreferrer\"][data-astro-cid-zgzs23fo=\"\"]",
+   "1.69 #9ca3af/#797a7d .font-mono.mt-3.text-stone-400",
+   "1.69 #9ca3af/#797a7d .article-updated"
+  ]
+ },
+ {
+  "r": "/nagornaya/chast-3/",
+  "dark": true,
+  "n": 15,
+  "severe": 14,
+  "worst": [
+   "1.69 #9ca3af/#797a7d .mt-3",
+   "1.69 #9ca3af/#797a7d .article-updated",
+   "1.69 #9ca3af/#797a7d time"
+  ]
+ },
+ {
+  "r": "/nagornaya/chast-4/",
+  "dark": true,
+  "n": 39,
+  "severe": 22,
+  "worst": [
+   "1.61 #7c2d12/#292524 article[data-claim-id=\"green-ipsissima-vox-model\"] > .ng-claim-card__g",
+   "1.61 #7c2d12/#292524 article[data-claim-id=\"thomas-jesus-seminar-critique\"] > .ng-claim-car",
+   "1.69 #9ca3af/#797a7d .mt-3"
+  ]
+ },
+ {
+  "r": "/nagornaya/chast-5/",
+  "dark": true,
+  "n": 29,
+  "severe": 23,
+  "worst": [
+   "1.69 #9ca3af/#797a7d .mt-3.font-mono.text-stone-400",
+   "1.69 #9ca3af/#797a7d .article-updated",
+   "1.69 #9ca3af/#797a7d time"
+  ]
+ },
+ {
+  "r": "/nagornaya/istochniki/",
+  "dark": true,
+  "n": 2,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.55 #8a7968/#efece8 .seg-pct"
+  ]
+ },
+ {
+  "r": "/nagornaya/nakhodki/",
+  "dark": true,
+  "n": 3,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon",
+   "3.13 #756f6a/#29231d .bar-section-label",
+   "3.55 #8a7968/#efece8 .seg-pct"
+  ]
+ },
+ {
+  "r": "/nagornaya/seriya/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/pastor-series/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ },
+ {
+  "r": "/podrostok-za-kadrom/",
+  "dark": true,
+  "n": 1,
+  "severe": 1,
+  "worst": [
+   "2.22 #ffffff/#d4a574 .author-card-icon"
+  ]
+ },
+ {
+  "r": "/rodosloviye/",
+  "dark": true,
+  "n": 0,
+  "severe": 0,
+  "worst": []
+ }
+]
