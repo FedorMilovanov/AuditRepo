@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "requestId": "auditrepo-ref-retirement-orphan-closure-wave-2026-09-28",
+  "execute": true,
+  "executionNonce": 1,
+  "preparedOnMain": "ec0feaa7ead178681d9635f54dae6a607eac814f",
+  "sourceBranch": "arena/01a0e578-auditrepo",
+  "retainedRefs": [
+    {
+      "branch": "main",
+      "required": true,
+      "reason": "Default branch and current repository authority."
+    },
+    {
+      "branch": "archive/forensic-gb-source-surface-closure-20260907",
+      "required": true,
+      "reason": "Required archive-preserved authority created for this wave; preserves the exact head dc509dc21b67fde280b127c23ed719186d6c4e30 of the retired gb source-surface closure branch."
+    },
+    {
+      "branch": "archive/forensic-arena-019fe0b5-auditrepo-2026-08-13",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-arena-019fe0c4-auditrepo-2026-08-13",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-bugverifikator-audit-2026-07-17-2026-09-06",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-engine-contracts-pr323-2026-09-06",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-gb-arena-master-reverify-20260717-2026-09-06",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-gb-control-reconciliation-bc786-20260809",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-tlp-arena-master-reverify-20260818-2026-09-06",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-tlp-hall-001-material-chain-20260809",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-tlp-hall-001-material-chain-current-20260809",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-tlp-hall-material-chain-20260809",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/legacy-diverged-heads-20260801",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "audit/gb-security-accepted-20260913",
+      "required": false,
+      "reason": "Explained closed-superseded PR head; outside this wave."
+    },
+    {
+      "branch": "audit/gb-security-accepted-final-20260913",
+      "required": false,
+      "reason": "Explained closed-superseded PR head; outside this wave."
+    },
+    {
+      "branch": "audit/tlp-analytics-property-terminal-20260913",
+      "required": false,
+      "reason": "Explained closed-superseded PR head; outside this wave."
+    },
+    {
+      "branch": "closure/tlp-audit-discovery-final-20260913",
+      "required": false,
+      "reason": "Explained closed-superseded PR head; outside this wave."
+    },
+    {
+      "branch": "closure/tlp-audit-discovery-final2-20260913",
+      "required": false,
+      "reason": "Explained closed-superseded PR head; outside this wave."
+    },
+    {
+      "branch": "reconcile/article-capability-closure-20260908",
+      "required": false,
+      "reason": "Explained closed-superseded PR head; outside this wave."
+    },
+    {
+      "branch": "reconcile/metadata-ssot-closure-20260908-v2",
+      "required": false,
+      "reason": "Explained closed-superseded PR head; outside this wave."
+    },
+    {
+      "branch": "reconcile/metadata-ssot-closure-20260908-v3",
+      "required": false,
+      "reason": "Explained closed-superseded PR head; outside this wave."
+    },
+    {
+      "branch": "audit/tlp-audit004-evidence-20260913",
+      "required": false,
+      "reason": "Pure ancestor of current main; outside this wave."
+    },
+    {
+      "branch": "audit/tlp-discovery-evidence-20260913",
+      "required": false,
+      "reason": "Pure ancestor of current main; outside this wave."
+    },
+    {
+      "branch": "arena/01a0d074-auditrepo",
+      "required": false,
+      "reason": "Head of open PR #468; dynamically protected by the engine and outside this wave."
+    }
+  ],
+  "targets": [
+    {
+      "branch": "closure/tlp-audit-discovery-20260913",
+      "mode": "superseded",
+      "expectedHead": "0846fa17197131050882c5065c46035fe6ad08e0",
+      "comparisonBase": "8dd7be24fd6e23fb9dc29d5ae7ae2865332e224d",
+      "expectedAhead": 5,
+      "replacementPullRequests": [
+        458
+      ],
+      "allowedChangedPaths": [
+        "projects/the-legendary-poet/reverify/REVERIFY_54bee43_2026-09-13_audit-harness-closure.md",
+        "projects/the-legendary-poet/reverify/REVERIFY_cff9b0f_2026-09-13_discovery-closure.md",
+        "projects/the-legendary-poet/verified/CLOSURE_LEDGER.md",
+        "projects/the-legendary-poet/verified/MASTER_BUG_MATRIX.md",
+        "projects/the-legendary-poet/verified/SYSTEM_THEMES.md"
+      ],
+      "reason": "Abandoned first TLP audit/discovery closure lane. Its two evidence reverifies landed byte-identical in main through merged PR #458 (merge 816f0521a84d368a6a28b2c72af98f3adeab860e): REVERIFY_54bee43 blob 3b5f79556ecadbce708daa95b7a248c229689445 and REVERIFY_cff9b0f blob 5a30ec990ee95241cfd6397c70a2b549d7e426c8 are identical in both trees. The three remaining changed files are mutable current owners that main has since advanced beyond the branch state."
+    },
+    {
+      "branch": "repair/gb-source-surface-audit-completeness-closure-20260907",
+      "mode": "archive-preserved",
+      "expectedHead": "dc509dc21b67fde280b127c23ed719186d6c4e30",
+      "archiveRef": "archive/forensic-gb-source-surface-closure-20260907",
+      "reason": "Closed SOURCE-SURFACE-AUDIT-FALSE-COMPLETENESS lane whose 114-line reverify evidence bound to Product main fc2e4570edd9bcc9ffb0588b0bb4f31299ecfb6b never landed in main. The closure conclusion itself is already recorded in current gb MASTER (Product #1829 / merge 4750b649eab5ad749c8b84f11fc064370b42225f); the raw evidence is preserved at the exact head under the required archive authority."
+    }
+  ]
+}
