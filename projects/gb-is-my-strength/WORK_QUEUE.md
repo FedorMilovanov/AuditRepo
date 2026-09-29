@@ -6,6 +6,14 @@ Before starting any lane, inspect current Product `main`, open PRs/branches and 
 
 ## Selected evidence-backed candidates
 
+## 2026-09-30 series/editorial presentation candidates (not current defects)
+
+- **Gill stable URLs versus visible part numbers:** `dzhon-gill-chast-3-nasledie` has a Part IV title, while `dzhon-gill-chast-4-ekzeget` has a Part III title. The source mismatch is real, but changing established permalinks without an owner decision could cause regressions. Verify canonical/redirect/navigation intent before any optional cleanup.
+- **Catalog presentation:** `/nagornaya/` and `/nagornaya/seriya/` are distinct native pages but both appear as 89-minute series cards; decide whether the reader benefits from both. Two card titles include the SEO suffix `| Господь Бог` because catalog renders source `title`. Review title-field convention before editing either source or card renderer. Shared series art for «Диотрефы» is not independently a defect.
+- **Hard-texts taxonomy clarity:** `section: "hard-texts"` for the Genesis 6 family and `series: "hard-texts"` for the heart book coexist. The Genesis 6 hub is intentionally excluded from `search-manifest.json` and included in Pagefind by route policy. Reconsider names only after a demonstrable reader navigation failure or explicit editorial decision.
+- Evidence/dispositions: `incoming/arena-incompleteness-auditor/2026-09-30/REPORT.md`, Product main `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`.
+
+
 ### Search continuation fixture fail-closed hardening — moved from Product #1242
 
 - Provenance: Product issue `#1242`, created from final audit of Search continuation lane `#1209`; historical exact candidate `882d90422e3e0f3703c9a339fbe7e21a54500e89`, Search Modal run `31246406392`.

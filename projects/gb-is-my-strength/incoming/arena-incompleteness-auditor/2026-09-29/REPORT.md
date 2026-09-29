@@ -1,5 +1,7 @@
 # Incompleteness audit — series, articles and editorial roadmap (2026-09-29)
 
+> **Historical intake, superseded for admission by the 2026-09-30 correction.** Several rows below were retracted after inspecting explicit Product search-policy and page-intent contracts. Use `../2026-09-30/REPORT.md` and the current MASTER for decisions, not the "ADMITTED" labels in this original intake.
+
 Scope requested by the owner: find what is **unfinished, suspended or abandoned** across series,
 articles and the rest of the project, and admit the quality findings into the active matrices per
 `AUDITREPO_OPERATING_MODEL.md`.

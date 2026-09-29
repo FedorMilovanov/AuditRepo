@@ -62,3 +62,27 @@ Classify the remaining 195 non-main refs (with ahead/behind and unique-file rece
 the source-link gate's failing evidence from a working log channel, and verify live routes and
 Pagefind coverage before asserting an orphaned series. No branch deletion or Product changes were
 attempted.
+
+## Conservative matrix correction — policy versus defect
+
+Source anchor unchanged: `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`.
+On this follow-up, six additional 2026-09-29 entries were triaged out of MASTER:
+
+| Former ID | Disposition and exact counter-witness |
+|---|---|
+| `GBS-GENESIS6-MISSING-FROM-SEARCH-MANIFEST` | **Invalid as filed.** `data/route-search-policy.json` explicitly gives `/hard-texts/genesis-6/` `searchManifestPolicy: "exclude"` and `pagefindPolicy: "include"`; `scripts/search-manifest-policy-normalizer-core.js` seeds this exact deliberate landing policy from `data/series.json`. Missing manifest entry is not a publication defect. Actual Pagefind index contents were not browser-verified. |
+| `SYS-CONTENT-TAXONOMY-NAMESPACE-OVERLOAD` | **Not demonstrated as a necessary system repair.** Its asserted catalog orphan was the invalid Genesis 6 row above. Shared `hard-texts` section/series naming may be confusing but is not proof of a broken route or required migration. Re-admit only after a concrete reader failure with independent witnesses. |
+| `GBS-DIOTREFY-OG-IMAGE-DUPLICATE` | **Unproved placeholder hypothesis.** `src/components/article-pilots/diotrophes/DiotrophesPageHead.astro` deliberately sets the same image in `og:image` and `twitter:image`; its OG alt explicitly calls it a *visual of the «Тёмная сторона кафедры» series*. Shared art is not necessarily a defect. A possible mismatch between OG alt and Twitter alt is a separate claim requiring image inspection. |
+| `GBS-SERIES-MANIFEST-DUPLICATE-NAGORNAYA` | **No necessary fix demonstrated.** The two URLs have distinct native page components (`src/pages/nagornaya/index.astro` and `src/pages/nagornaya/seriya/index.astro`), so equal 89-minute summaries and art do not establish duplicate routes. Catalog presentation can be reviewed as optional polish after owner intent is established. |
+| `GBS-GILL-SLUG-PART-NUMBER-INVERSION` | **Verified historical URL mismatch, not automatically mandatory.** Frontmatter slugs `chast-3-nasledie`/`chast-4-ekzeget` carry displayed parts IV/III; changing stable permalinks without owner approval could do harm. Park for editorial decision; do not assume a redirect is required. |
+| `GBS-MANIFEST-TITLE-BRAND-SUFFIX-LEAK` | **Observed cosmetics, not a proved completion blocker.** Two catalog cards include `| Господь Бог` in their title; the source titles are intentionally suffixed for SEO, and the catalog copies them. Optional title/presentation policy review rather than MASTER defect. |
+
+**Narrowing of retained time-label row:** The 24 heart MDX members' frontmatter times sum to 719
+minutes and `/articles/` renders the book as a series with `2 мин`. `scripts/check-data-consistency.js`
+only asserts aggregate time for known Nagornaya/Gill/pastor landing routes, not `/hard-texts/`;
+thus the previous assertion that a universal series total contract was *proven* by the Baptists
+control was too strong. `2 мин` may correctly describe reading the landing page. The actionable
+question is which duration a reader expects a «Серия» card to convey. It is retained only with
+that explicit qualification, not a demand to replace metadata with 719 automatically.
+
+No Product code was changed, and no previously unseen bug has been admitted in this correction.
