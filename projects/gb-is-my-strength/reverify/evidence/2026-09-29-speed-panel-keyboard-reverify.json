@@ -1,0 +1,356 @@
+{
+  "browser": "153.0.8010.0",
+  "tests": [
+    {
+      "route": "/nagornaya/chast-1/",
+      "focusedOpener": {
+        "emberCount": 1,
+        "ember": {
+          "id": "",
+          "ariaExpanded": "true",
+          "rect": {
+            "x": 159.36000061035156,
+            "y": 117.36000061035156,
+            "w": 33.279998779296875,
+            "h": 33.279998779296875
+          }
+        },
+        "panelFound": true,
+        "panelClass": "gb-ember-expand is-open",
+        "panelRole": "radiogroup",
+        "panelAriaHidden": null,
+        "panelInert": false,
+        "open": true,
+        "buttons": [
+          {
+            "text": "1×",
+            "label": "Скорость 1×",
+            "role": "radio",
+            "tabIndex": 0,
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          {
+            "text": "1.25×",
+            "label": "Скорость 1.25×",
+            "role": "radio",
+            "tabIndex": 0,
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          {
+            "text": "1.5×",
+            "label": "Скорость 1.5×",
+            "role": "radio",
+            "tabIndex": 0,
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          {
+            "text": "1.75×",
+            "label": "Скорость 1.75×",
+            "role": "radio",
+            "tabIndex": 0,
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          {
+            "text": "2×",
+            "label": "Скорость 2×",
+            "role": "radio",
+            "tabIndex": 0,
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          {
+            "text": "■",
+            "label": "Остановить озвучку",
+            "role": null,
+            "tabIndex": 0,
+            "opacity": "1",
+            "visibility": "visible"
+          }
+        ]
+      },
+      "trap": {
+        "fromFirstShiftTab": {
+          "inside": true,
+          "text": "■",
+          "label": "Остановить озвучку"
+        },
+        "fromLastTab": {
+          "inside": true,
+          "text": "1×",
+          "label": "Скорость 1×"
+        }
+      }
+    },
+    {
+      "route": "/nagornaya/chast-3/",
+      "focusedOpener": {
+        "emberCount": 1,
+        "ember": {
+          "id": "",
+          "ariaExpanded": "true",
+          "rect": {
+            "x": 159.36000061035156,
+            "y": 117.36000061035156,
+            "w": 33.279998779296875,
+            "h": 33.279998779296875
+          }
+        },
+        "panelFound": true,
+        "panelClass": "gb-ember-expand is-open",
+        "panelRole": "radiogroup",
+        "panelAriaHidden": null,
+        "panelInert": false,
+        "open": true,
+        "buttons": [
+          {
+            "text": "1×",
+            "label": "Скорость 1×",
+            "role": "radio",
+            "tabIndex": 0,
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          {
+            "text": "1.25×",
+            "label": "Скорость 1.25×",
+            "role": "radio",
+            "tabIndex": 0,
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          {
+            "text": "1.5×",
+            "label": "Скорость 1.5×",
+            "role": "radio",
+            "tabIndex": 0,
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          {
+            "text": "1.75×",
+            "label": "Скорость 1.75×",
+            "role": "radio",
+            "tabIndex": 0,
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          {
+            "text": "2×",
+            "label": "Скорость 2×",
+            "role": "radio",
+            "tabIndex": 0,
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          {
+            "text": "■",
+            "label": "Остановить озвучку",
+            "role": null,
+            "tabIndex": 0,
+            "opacity": "1",
+            "visibility": "visible"
+          }
+        ]
+      },
+      "trap": {
+        "fromFirstShiftTab": {
+          "inside": true,
+          "text": "■",
+          "label": "Остановить озвучку"
+        },
+        "fromLastTab": {
+          "inside": true,
+          "text": "1×",
+          "label": "Скорость 1×"
+        }
+      }
+    },
+    {
+      "route": "/articles/serdce-i-telo/",
+      "closedPanelHiddenFocus": {
+        "count": 6,
+        "infos": [
+          {
+            "label": "Скорость 1×",
+            "text": "1×",
+            "tabIndex": 0,
+            "opacity": "0",
+            "visibility": "visible",
+            "rect": {
+              "x": 1157.7808837890625,
+              "y": 92.94999694824219,
+              "w": 50.641357421875,
+              "h": 22.100006103515625
+            },
+            "panelOpacity": "0",
+            "panelClass": "gb-ember-expand",
+            "hiddenAncestor": false,
+            "ariaHidden": []
+          },
+          {
+            "label": "Скорость 1.25×",
+            "text": "1.25×",
+            "tabIndex": 0,
+            "opacity": "0",
+            "visibility": "visible",
+            "rect": {
+              "x": 1157.7808837890625,
+              "y": 118.94999694824219,
+              "w": 50.641357421875,
+              "h": 22.100006103515625
+            },
+            "panelOpacity": "0",
+            "panelClass": "gb-ember-expand",
+            "hiddenAncestor": false,
+            "ariaHidden": []
+          },
+          {
+            "label": "Скорость 1.5×",
+            "text": "1.5×",
+            "tabIndex": 0,
+            "opacity": "0",
+            "visibility": "visible",
+            "rect": {
+              "x": 1157.7808837890625,
+              "y": 144.9499969482422,
+              "w": 50.641357421875,
+              "h": 22.100006103515625
+            },
+            "panelOpacity": "0",
+            "panelClass": "gb-ember-expand",
+            "hiddenAncestor": false,
+            "ariaHidden": []
+          },
+          {
+            "label": "Скорость 1.75×",
+            "text": "1.75×",
+            "tabIndex": 0,
+            "opacity": "0",
+            "visibility": "visible",
+            "rect": {
+              "x": 1157.7808837890625,
+              "y": 170.9499969482422,
+              "w": 50.641357421875,
+              "h": 22.099990844726562
+            },
+            "panelOpacity": "0",
+            "panelClass": "gb-ember-expand",
+            "hiddenAncestor": false,
+            "ariaHidden": []
+          },
+          {
+            "label": "Скорость 2×",
+            "text": "2×",
+            "tabIndex": 0,
+            "opacity": "0",
+            "visibility": "visible",
+            "rect": {
+              "x": 1157.7808837890625,
+              "y": 196.9499969482422,
+              "w": 50.641357421875,
+              "h": 22.100006103515625
+            },
+            "panelOpacity": "0",
+            "panelClass": "gb-ember-expand",
+            "hiddenAncestor": false,
+            "ariaHidden": []
+          },
+          {
+            "label": "Остановить озвучку",
+            "text": "■",
+            "tabIndex": 0,
+            "opacity": "0",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0
+            },
+            "panelOpacity": "0",
+            "panelClass": "gb-ember-expand",
+            "hiddenAncestor": false,
+            "ariaHidden": []
+          }
+        ],
+        "tabOrderIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "firstIndex": 32,
+        "tabStops": [
+          {
+            "label": "Скорость 1×",
+            "tag": "BUTTON",
+            "tabIndex": 0
+          },
+          {
+            "label": "Скорость 1.25×",
+            "tag": "BUTTON",
+            "tabIndex": 0
+          },
+          {
+            "label": "Скорость 1.5×",
+            "tag": "BUTTON",
+            "tabIndex": 0
+          },
+          {
+            "label": "Скорость 1.75×",
+            "tag": "BUTTON",
+            "tabIndex": 0
+          },
+          {
+            "label": "Скорость 2×",
+            "tag": "BUTTON",
+            "tabIndex": 0
+          },
+          {
+            "label": "Остановить озвучку",
+            "tag": "BUTTON",
+            "tabIndex": 0
+          }
+        ]
+      },
+      "actualSequentialTabReached": [
+        {
+          "label": "Скорость 1×",
+          "opacity": "0",
+          "tag": "BUTTON"
+        },
+        {
+          "label": "Скорость 1.25×",
+          "opacity": "0",
+          "tag": "BUTTON"
+        },
+        {
+          "label": "Скорость 1.5×",
+          "opacity": "0",
+          "tag": "BUTTON"
+        },
+        {
+          "label": "Скорость 1.75×",
+          "opacity": "0",
+          "tag": "BUTTON"
+        },
+        {
+          "label": "Скорость 2×",
+          "opacity": "0",
+          "tag": "BUTTON"
+        },
+        {
+          "label": "Скорость 1×",
+          "opacity": "0.286953",
+          "tag": "BUTTON"
+        }
+      ]
+    }
+  ]
+}

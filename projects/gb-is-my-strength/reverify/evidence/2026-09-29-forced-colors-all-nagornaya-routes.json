@@ -1,0 +1,291 @@
+{
+  "browser": "153.0.8010.0",
+  "/nagornaya/": {
+    "found": true,
+    "forcedColors": true,
+    "button": {
+      "bg": "rgb(255, 255, 255)",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "borderColor": "rgb(0, 0, 0)",
+      "w": 36,
+      "h": 30
+    },
+    "bars": [
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      }
+    ],
+    "expanded": "true"
+  },
+  "/nagornaya/chast-1/": {
+    "found": true,
+    "forcedColors": true,
+    "button": {
+      "bg": "rgb(255, 255, 255)",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "borderColor": "rgb(0, 0, 0)",
+      "w": 36,
+      "h": 30
+    },
+    "bars": [
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      }
+    ],
+    "expanded": "true"
+  },
+  "/nagornaya/chast-2/": {
+    "found": true,
+    "forcedColors": true,
+    "button": {
+      "bg": "rgb(255, 255, 255)",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "borderColor": "rgb(0, 0, 0)",
+      "w": 36,
+      "h": 30
+    },
+    "bars": [
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      }
+    ],
+    "expanded": "true"
+  },
+  "/nagornaya/chast-3/": {
+    "found": true,
+    "forcedColors": true,
+    "button": {
+      "bg": "rgb(255, 255, 255)",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "borderColor": "rgb(0, 0, 0)",
+      "w": 36,
+      "h": 30
+    },
+    "bars": [
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      }
+    ],
+    "expanded": "true"
+  },
+  "/nagornaya/chast-4/": {
+    "found": true,
+    "forcedColors": true,
+    "button": {
+      "bg": "rgb(255, 255, 255)",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "borderColor": "rgb(0, 0, 0)",
+      "w": 36,
+      "h": 30
+    },
+    "bars": [
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      }
+    ],
+    "expanded": "true"
+  },
+  "/nagornaya/chast-5/": {
+    "found": true,
+    "forcedColors": true,
+    "button": {
+      "bg": "rgb(255, 255, 255)",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "borderColor": "rgb(0, 0, 0)",
+      "w": 36,
+      "h": 30
+    },
+    "bars": [
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      }
+    ],
+    "expanded": "true"
+  },
+  "/nagornaya/istochniki/": {
+    "found": true,
+    "forcedColors": true,
+    "button": {
+      "bg": "rgb(255, 255, 255)",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "borderColor": "rgb(0, 0, 0)",
+      "w": 36,
+      "h": 30
+    },
+    "bars": [
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      }
+    ],
+    "expanded": "true"
+  },
+  "/nagornaya/nakhodki/": {
+    "found": true,
+    "forcedColors": true,
+    "button": {
+      "bg": "rgb(255, 255, 255)",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "borderColor": "rgb(0, 0, 0)",
+      "w": 36,
+      "h": 30
+    },
+    "bars": [
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "w": 20,
+          "h": 2
+        }
+      }
+    ],
+    "expanded": "true"
+  }
+}

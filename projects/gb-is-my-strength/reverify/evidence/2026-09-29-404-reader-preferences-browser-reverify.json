@@ -1,0 +1,254 @@
+{
+  "browser": "153.0.8010.0",
+  "productSha": "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+  "server": "local dist with GitHub-Pages-style 404.html fallback; missing resources receive 404.html body and text/html MIME; not live-host browser test",
+  "scenarios": [
+    {
+      "path": "/missing-page.html",
+      "storedTheme": "light",
+      "documentStatus": 404,
+      "state": {
+        "url": "/missing-page.html",
+        "themeAttr": "light",
+        "boot": "light",
+        "bg": "rgb(253, 252, 249)",
+        "readerCssRuleCount": 15,
+        "readerCssLinkElementPresent": true,
+        "readerCssLoaded": true
+      },
+      "readerAssetResponses": [
+        {
+          "path": "/js/reader-preferences-head.js",
+          "status": 200,
+          "contentType": "application/javascript"
+        },
+        {
+          "path": "/css/reader-preferences.css",
+          "status": 200,
+          "contentType": "text/css"
+        },
+        {
+          "path": "/js/reader-preferences.js",
+          "status": 200,
+          "contentType": "application/javascript"
+        }
+      ]
+    },
+    {
+      "path": "/missing-page.html",
+      "storedTheme": "dark",
+      "documentStatus": 404,
+      "state": {
+        "url": "/missing-page.html",
+        "themeAttr": "dark",
+        "boot": "dark",
+        "bg": "rgb(14, 17, 22)",
+        "readerCssRuleCount": 15,
+        "readerCssLinkElementPresent": true,
+        "readerCssLoaded": true
+      },
+      "readerAssetResponses": [
+        {
+          "path": "/js/reader-preferences-head.js",
+          "status": 200,
+          "contentType": "application/javascript"
+        },
+        {
+          "path": "/css/reader-preferences.css",
+          "status": 200,
+          "contentType": "text/css"
+        },
+        {
+          "path": "/js/reader-preferences.js",
+          "status": 200,
+          "contentType": "application/javascript"
+        }
+      ]
+    },
+    {
+      "path": "/missing-page.html",
+      "storedTheme": "sepia",
+      "documentStatus": 404,
+      "state": {
+        "url": "/missing-page.html",
+        "themeAttr": "sepia",
+        "boot": "sepia",
+        "bg": "rgb(238, 227, 200)",
+        "readerCssRuleCount": 15,
+        "readerCssLinkElementPresent": true,
+        "readerCssLoaded": true
+      },
+      "readerAssetResponses": [
+        {
+          "path": "/js/reader-preferences-head.js",
+          "status": 200,
+          "contentType": "application/javascript"
+        },
+        {
+          "path": "/css/reader-preferences.css",
+          "status": 200,
+          "contentType": "text/css"
+        },
+        {
+          "path": "/js/reader-preferences.js",
+          "status": 200,
+          "contentType": "application/javascript"
+        }
+      ]
+    },
+    {
+      "path": "/articles/kod-da-vinchi/nope/deeper/",
+      "storedTheme": "sepia",
+      "documentStatus": 404,
+      "state": {
+        "url": "/articles/kod-da-vinchi/nope/deeper/",
+        "themeAttr": null,
+        "boot": null,
+        "bg": "rgb(253, 252, 249)",
+        "readerCssRuleCount": 0,
+        "readerCssLinkElementPresent": true,
+        "readerCssLoaded": false
+      },
+      "readerAssetResponses": [
+        {
+          "path": "/articles/kod-da-vinchi/nope/deeper/js/reader-preferences-head.js",
+          "status": 404,
+          "contentType": "text/html"
+        },
+        {
+          "path": "/articles/kod-da-vinchi/nope/deeper/css/reader-preferences.css",
+          "status": 404,
+          "contentType": "text/html"
+        },
+        {
+          "path": "/articles/kod-da-vinchi/nope/deeper/js/reader-preferences.js",
+          "status": 404,
+          "contentType": "text/html"
+        }
+      ]
+    },
+    {
+      "path": "/articles/nope/",
+      "storedTheme": "sepia",
+      "documentStatus": 404,
+      "state": {
+        "url": "/articles/nope/",
+        "themeAttr": null,
+        "boot": null,
+        "bg": "rgb(253, 252, 249)",
+        "readerCssRuleCount": 0,
+        "readerCssLinkElementPresent": true,
+        "readerCssLoaded": false
+      },
+      "readerAssetResponses": [
+        {
+          "path": "/articles/nope/js/reader-preferences-head.js",
+          "status": 404,
+          "contentType": "text/html"
+        },
+        {
+          "path": "/articles/nope/css/reader-preferences.css",
+          "status": 404,
+          "contentType": "text/html"
+        },
+        {
+          "path": "/articles/nope/js/reader-preferences.js",
+          "status": 404,
+          "contentType": "text/html"
+        }
+      ]
+    }
+  ],
+  "serverRequests": [
+    {
+      "path": "/js/reader-preferences-head.js",
+      "status": 200,
+      "contentType": "application/javascript",
+      "servedFile": "js/reader-preferences-head.js"
+    },
+    {
+      "path": "/css/reader-preferences.css",
+      "status": 200,
+      "contentType": "text/css",
+      "servedFile": "css/reader-preferences.css"
+    },
+    {
+      "path": "/js/reader-preferences.js",
+      "status": 200,
+      "contentType": "application/javascript",
+      "servedFile": "js/reader-preferences.js"
+    },
+    {
+      "path": "/js/reader-preferences-head.js",
+      "status": 200,
+      "contentType": "application/javascript",
+      "servedFile": "js/reader-preferences-head.js"
+    },
+    {
+      "path": "/css/reader-preferences.css",
+      "status": 200,
+      "contentType": "text/css",
+      "servedFile": "css/reader-preferences.css"
+    },
+    {
+      "path": "/js/reader-preferences.js",
+      "status": 200,
+      "contentType": "application/javascript",
+      "servedFile": "js/reader-preferences.js"
+    },
+    {
+      "path": "/js/reader-preferences-head.js",
+      "status": 200,
+      "contentType": "application/javascript",
+      "servedFile": "js/reader-preferences-head.js"
+    },
+    {
+      "path": "/css/reader-preferences.css",
+      "status": 200,
+      "contentType": "text/css",
+      "servedFile": "css/reader-preferences.css"
+    },
+    {
+      "path": "/js/reader-preferences.js",
+      "status": 200,
+      "contentType": "application/javascript",
+      "servedFile": "js/reader-preferences.js"
+    },
+    {
+      "path": "/articles/kod-da-vinchi/nope/deeper/js/reader-preferences-head.js",
+      "status": 404,
+      "contentType": "text/html",
+      "servedFile": "404.html"
+    },
+    {
+      "path": "/articles/kod-da-vinchi/nope/deeper/css/reader-preferences.css",
+      "status": 404,
+      "contentType": "text/html",
+      "servedFile": "404.html"
+    },
+    {
+      "path": "/articles/kod-da-vinchi/nope/deeper/js/reader-preferences.js",
+      "status": 404,
+      "contentType": "text/html",
+      "servedFile": "404.html"
+    },
+    {
+      "path": "/articles/nope/js/reader-preferences-head.js",
+      "status": 404,
+      "contentType": "text/html",
+      "servedFile": "404.html"
+    },
+    {
+      "path": "/articles/nope/css/reader-preferences.css",
+      "status": 404,
+      "contentType": "text/html",
+      "servedFile": "404.html"
+    },
+    {
+      "path": "/articles/nope/js/reader-preferences.js",
+      "status": 404,
+      "contentType": "text/html",
+      "servedFile": "404.html"
+    }
+  ]
+}

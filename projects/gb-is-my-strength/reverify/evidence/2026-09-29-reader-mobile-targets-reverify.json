@@ -1,0 +1,148 @@
+{
+  "browser": "153.0.8010.0",
+  "routes": [
+    {
+      "route": "/articles/kod-da-vinchi/",
+      "found": true,
+      "badge": {
+        "x": 312.7,
+        "y": 39,
+        "w": 20.3,
+        "h": 13,
+        "cx": 322.9,
+        "cy": 45.5
+      },
+      "play": {
+        "x": 292,
+        "y": 12,
+        "w": 38,
+        "h": 38,
+        "cx": 311,
+        "cy": 31
+      },
+      "pseudo": {
+        "inset": "-4px -3px",
+        "width": "24.2812px",
+        "height": "19px"
+      },
+      "accessibleName": "Выбрать скорость, сейчас 1×",
+      "tabIndex": 0,
+      "centerIsInsidePlay": true,
+      "radius12ToPlayRect": 0,
+      "expandedBefore": "false",
+      "railBefore": {
+        "hidden": false,
+        "display": "flex"
+      },
+      "hitTest": {
+        "id": "hmSpdBadge",
+        "cls": "hm-spdbadge"
+      },
+      "expandedAfter": "true",
+      "railAfter": {
+        "hidden": false,
+        "display": "flex"
+      }
+    },
+    {
+      "route": "/articles/lot-i-sodom/",
+      "found": true,
+      "badge": {
+        "x": 312.7,
+        "y": 39,
+        "w": 20.3,
+        "h": 13,
+        "cx": 322.9,
+        "cy": 45.5
+      },
+      "play": {
+        "x": 292,
+        "y": 12,
+        "w": 38,
+        "h": 38,
+        "cx": 311,
+        "cy": 31
+      },
+      "pseudo": {
+        "inset": "-4px -3px",
+        "width": "24.2812px",
+        "height": "19px"
+      },
+      "accessibleName": "Выбрать скорость, сейчас 1×",
+      "tabIndex": 0,
+      "centerIsInsidePlay": true,
+      "radius12ToPlayRect": 0,
+      "expandedBefore": "false",
+      "railBefore": {
+        "hidden": false,
+        "display": "flex"
+      },
+      "hitTest": {
+        "id": "hmSpdBadge",
+        "cls": "hm-spdbadge"
+      },
+      "expandedAfter": "true",
+      "railAfter": {
+        "hidden": false,
+        "display": "flex"
+      }
+    },
+    {
+      "route": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+      "found": true,
+      "badge": {
+        "x": 312.7,
+        "y": 39,
+        "w": 20.3,
+        "h": 13,
+        "cx": 322.9,
+        "cy": 45.5
+      },
+      "play": {
+        "x": 292,
+        "y": 12,
+        "w": 38,
+        "h": 38,
+        "cx": 311,
+        "cy": 31
+      },
+      "pseudo": {
+        "inset": "-4px -3px",
+        "width": "24.2812px",
+        "height": "19px"
+      },
+      "accessibleName": "Выбрать скорость, сейчас 1×",
+      "tabIndex": 0,
+      "centerIsInsidePlay": true,
+      "radius12ToPlayRect": 0,
+      "expandedBefore": "false",
+      "railBefore": {
+        "hidden": false,
+        "display": "flex"
+      },
+      "hitTest": {
+        "id": "hmSpdBadge",
+        "cls": "hm-spdbadge"
+      },
+      "expandedAfter": "true",
+      "railAfter": {
+        "hidden": false,
+        "display": "flex"
+      }
+    }
+  ],
+  "nagornayaTocButtons": [
+    {
+      "label": "Открыть оглавление",
+      "text": "СЕЙЧАС ЧИТАЕТЕ\nКоротко",
+      "rect": {
+        "x": 26,
+        "y": 786,
+        "w": 84,
+        "h": 44
+      },
+      "tabIndex": 0,
+      "cls": "bar-section-btn"
+    }
+  ]
+}

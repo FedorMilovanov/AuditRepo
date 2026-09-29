@@ -1,0 +1,116 @@
+{
+  "productSha": "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+  "browser": "Chromium 153.0.8010.0",
+  "viewport": "390x844; isMobile=true; hasTouch=true",
+  "storageKey": "gb:font-scale",
+  "scalesCompared": [
+    1,
+    1.25
+  ],
+  "selector": "visible main p with textContent.length > 300, matched by DOM order",
+  "chapterTotals": [
+    {
+      "chapter": 1,
+      "paragraphs": 17,
+      "changed": 3,
+      "unchanged": 14,
+      "mainPx": [
+        16,
+        20
+      ]
+    },
+    {
+      "chapter": 2,
+      "paragraphs": 15,
+      "changed": 9,
+      "unchanged": 6,
+      "mainPx": [
+        16,
+        20
+      ]
+    },
+    {
+      "chapter": 3,
+      "paragraphs": 15,
+      "changed": 11,
+      "unchanged": 4,
+      "mainPx": [
+        16,
+        20
+      ]
+    },
+    {
+      "chapter": 4,
+      "paragraphs": 56,
+      "changed": 52,
+      "unchanged": 4,
+      "mainPx": [
+        16,
+        20
+      ]
+    },
+    {
+      "chapter": 5,
+      "paragraphs": 48,
+      "changed": 29,
+      "unchanged": 19,
+      "mainPx": [
+        16,
+        20
+      ]
+    }
+  ],
+  "totals": {
+    "paragraphs": 151,
+    "changed": 104,
+    "unchanged": 47
+  },
+  "unchangedClasses": {
+    "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify": 14,
+    "text-stone-700 text-xs leading-relaxed mb-3": 2,
+    "text-stone-700 text-xs leading-relaxed": 1,
+    "text-stone-700 text-xs leading-relaxed mb-2": 1,
+    "leading-relaxed": 2,
+    "text-stone-700 text-sm leading-relaxed mb-3": 4,
+    "text-stone-700 text-sm leading-relaxed": 5,
+    "text-stone-300 text-sm leading-relaxed mb-4": 3,
+    "text-stone-700 text-[16px] leading-relaxed mb-6 text-justify": 1,
+    "text-stone-500 text-sm font-medium ml-14": 1,
+    "text-stone-500 text-sm font-medium ml-14 font-sans": 2,
+    "text-stone-700 text-xs leading-relaxed text-justify": 6,
+    "text-stone-700 text-sm text-justify leading-relaxed": 2,
+    "leading-relaxed text-justify mb-3": 3
+  },
+  "currentContentEvidence": [
+    {
+      "chapter": 1,
+      "basePx": 14,
+      "scaledPx": 14,
+      "class": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+      "textExcerpt": "Один из ключевых литературных приёмов здесь — inclusio (лат. «включение», «обрамление»).",
+      "immediateParentClass": "bg-white border border-stone-200 rounded-xl p-5 shadow-sm mb-4 text-sm text-stone-700",
+      "immediateParentBasePx": 14,
+      "immediateParentScaledPx": 14,
+      "outerContentWrapperBasePx": 16,
+      "outerContentWrapperScaledPx": 20,
+      "mainBasePx": 16,
+      "mainScaledPx": 20
+    },
+    {
+      "chapter": 2,
+      "basePx": 14,
+      "scaledPx": 14,
+      "class": "text-stone-700 text-sm leading-relaxed mb-3",
+      "textExcerpt": "Ф. Дэвид Фарнелл в фундаментальной статье «Как взгляды на богодухновенность повлияли на дискуссии о синоптической проблеме..."
+    },
+    {
+      "chapter": 3,
+      "basePx": 14,
+      "scaledPx": 14,
+      "class": "text-stone-700 text-sm leading-relaxed",
+      "textExcerpt": "Нельзя карикатурировать всю Dallas-традицию. Даже C. I. Scofield допускал «прекрасное..."
+    }
+  ],
+  "sampledLongTextStone700Unchanged": 36,
+  "interpretationBoundary": "47/151 is a current aggregate, not an assertion that every caption/reference should scale. Narrow admitted evidence is that long main-color prose remains fixed, including 14 visible text-[16px] paragraphs at 14px when main changes 16px to 20px."
+}

@@ -1,0 +1,880 @@
+{
+  "browser": "153.0.8010.0",
+  "productSha": "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+  "provenance": "Fresh Playwright against local production-like dist of exact Product SHA; live-host browser navigation remains unavailable.",
+  "cases": [
+    {
+      "kind": "home-desktop",
+      "route": "/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "baselineInert": [
+        "div#hMobileNav.h-mobile-nav"
+      ],
+      "initial": {
+        "searchReady": false,
+        "buttons": [
+          {
+            "id": "gbSearchBtn",
+            "cls": "gb-nav-search-icon",
+            "label": "Поиск по всему сайту",
+            "visible": true,
+            "rect": {
+              "x": 1152.8,
+              "y": 12.5,
+              "w": 44,
+              "h": 44
+            }
+          }
+        ]
+      },
+      "pageErrors": [],
+      "ctrlK": {
+        "opened": true,
+        "inputFocused": true
+      },
+      "ctrlKClose": {
+        "closed": true,
+        "focusId": "gbSearchBtn",
+        "focusClass": "gb-nav-search-icon"
+      },
+      "tabStopsToTrigger": 10,
+      "open": {
+        "role": "dialog",
+        "ariaModal": "true",
+        "ariaLabel": "Поиск по сайту",
+        "ariaHidden": "false",
+        "inputFocused": true,
+        "closeCount": 2,
+        "closeButtons": [
+          {
+            "class": "cp-close",
+            "rect": {
+              "x": 675.3,
+              "y": 101.9,
+              "w": 43.1,
+              "h": 43.1
+            },
+            "background": "rgb(244, 242, 237)",
+            "border": "1px solid rgba(0, 0, 0, 0)"
+          },
+          {
+            "class": "cp-home-close",
+            "rect": {
+              "x": 731.1,
+              "y": 101.9,
+              "w": 43.1,
+              "h": 43.1
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "1px solid rgba(0, 0, 0, 0)"
+          }
+        ],
+        "inertSiblings": 22,
+        "bodyOverflow": "hidden",
+        "htmlOverflow": "hidden"
+      },
+      "shiftTabFirst": {
+        "inside": true,
+        "tag": "BUTTON",
+        "cls": "cp-preview-btn secondary",
+        "aria": null,
+        "text": "Скопировать ссылку"
+      },
+      "tabContainment": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "allTabStopsInside": true,
+      "results": {
+        "query": "Лот",
+        "count": 6,
+        "first": [
+          "Римлянам 7: верующий, неверующий или человек под законом?",
+          "Лот: праведник у ворот Содома",
+          "Сердце и тело: члены как орудия, комфорт и аппетиты",
+          "Сердце Христа: образ Отца, Спаситель врагов, сила немощным"
+        ],
+        "active": "cp-option-0"
+      },
+      "arrowNavigation": {
+        "active": "cp-option-1",
+        "selected": "Лот: праведник у ворот Содома"
+      },
+      "articleScope": {
+        "activeScope": "СТАТЬИ",
+        "count": 6
+      },
+      "escapeClose": {
+        "closed": true,
+        "focusId": "gbSearchBtn",
+        "focusClass": "gb-nav-search-icon",
+        "inert": [
+          "div#hMobileNav.h-mobile-nav",
+          "div#gbCommandPalette.cp-backdrop"
+        ],
+        "bodyStyle": "",
+        "htmlStyle": ""
+      },
+      "pointerClose": {
+        "closed": true,
+        "focusId": "gbSearchBtn",
+        "focusClass": "gb-nav-search-icon",
+        "inert": [
+          "div#hMobileNav.h-mobile-nav",
+          "div#gbCommandPalette.cp-backdrop"
+        ],
+        "bodyStyle": "",
+        "htmlStyle": ""
+      }
+    },
+    {
+      "kind": "listing-desktop",
+      "route": "/articles/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "baselineInert": [],
+      "initial": {
+        "searchReady": false,
+        "buttons": [
+          {
+            "id": "gbSearchBtn",
+            "cls": "gb-nav-search-icon",
+            "label": "Поиск по всему сайту",
+            "visible": true,
+            "rect": {
+              "x": 1036,
+              "y": 6.5,
+              "w": 44,
+              "h": 44
+            }
+          },
+          {
+            "id": "",
+            "cls": "mcp-search",
+            "label": "Открыть поиск по сайту",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0
+            }
+          }
+        ]
+      },
+      "pageErrors": [],
+      "ctrlK": {
+        "opened": true,
+        "inputFocused": true
+      },
+      "ctrlKClose": {
+        "closed": true,
+        "focusId": "",
+        "focusClass": "articles-index-page"
+      },
+      "tabStopsToTrigger": 8,
+      "open": {
+        "role": "dialog",
+        "ariaModal": "true",
+        "ariaLabel": "Поиск по сайту",
+        "ariaHidden": "false",
+        "inputFocused": true,
+        "closeCount": 1,
+        "closeButtons": [
+          {
+            "class": "cp-close",
+            "rect": {
+              "x": 731.1,
+              "y": 111.3,
+              "w": 43.1,
+              "h": 43.1
+            },
+            "background": "rgb(244, 242, 237)",
+            "border": "1px solid rgba(0, 0, 0, 0)"
+          }
+        ],
+        "inertSiblings": 17,
+        "bodyOverflow": "hidden",
+        "htmlOverflow": "hidden"
+      },
+      "shiftTabFirst": {
+        "inside": true,
+        "tag": "BUTTON",
+        "cls": "cp-preview-btn secondary",
+        "aria": null,
+        "text": "Скопировать ссылку"
+      },
+      "tabContainment": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "allTabStopsInside": true,
+      "escapeClose": {
+        "closed": true,
+        "focusId": "gbSearchBtn",
+        "focusClass": "gb-nav-search-icon",
+        "inert": [
+          "div#.cp-backdrop"
+        ],
+        "bodyStyle": "",
+        "htmlStyle": ""
+      },
+      "pointerClose": {
+        "closed": true,
+        "focusId": "gbSearchBtn",
+        "focusClass": "gb-nav-search-icon",
+        "inert": [
+          "div#.cp-backdrop"
+        ],
+        "bodyStyle": "",
+        "htmlStyle": ""
+      }
+    },
+    {
+      "kind": "home-mobile",
+      "route": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "baselineInert": [
+        "div#hMobileNav.h-mobile-nav"
+      ],
+      "initial": {
+        "searchReady": false,
+        "buttons": [
+          {
+            "id": "gbSearchBtn",
+            "cls": "gb-nav-search-icon",
+            "label": "Поиск по всему сайту",
+            "visible": true,
+            "rect": {
+              "x": 250,
+              "y": 8.5,
+              "w": 44,
+              "h": 44
+            }
+          }
+        ]
+      },
+      "pageErrors": [],
+      "open": {
+        "role": "dialog",
+        "ariaModal": "true",
+        "ariaLabel": "Поиск по сайту",
+        "ariaHidden": "false",
+        "inputFocused": true,
+        "closeCount": 2,
+        "closeButtons": [
+          {
+            "class": "cp-close",
+            "rect": {
+              "x": 273.4,
+              "y": 15.6,
+              "w": 43.1,
+              "h": 43.1
+            },
+            "background": "rgb(244, 242, 237)",
+            "border": "1px solid rgba(0, 0, 0, 0)"
+          },
+          {
+            "class": "cp-home-close",
+            "rect": {
+              "x": 326.3,
+              "y": 15.6,
+              "w": 43.1,
+              "h": 43.1
+            },
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "1px solid rgba(0, 0, 0, 0)"
+          }
+        ],
+        "inertSiblings": 22,
+        "bodyOverflow": "hidden",
+        "htmlOverflow": "hidden"
+      },
+      "escapeClose": {
+        "closed": true,
+        "focusId": "gbSearchBtn",
+        "focusClass": "gb-nav-search-icon",
+        "inert": [
+          "div#hMobileNav.h-mobile-nav",
+          "div#gbCommandPalette.cp-backdrop"
+        ],
+        "bodyStyle": "",
+        "htmlStyle": ""
+      },
+      "pointerClose": {
+        "closed": true,
+        "focusId": "gbSearchBtn",
+        "focusClass": "gb-nav-search-icon",
+        "inert": [
+          "div#hMobileNav.h-mobile-nav",
+          "div#gbCommandPalette.cp-backdrop"
+        ],
+        "bodyStyle": "",
+        "htmlStyle": ""
+      }
+    },
+    {
+      "kind": "listing-mobile",
+      "route": "/articles/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "baselineInert": [],
+      "initial": {
+        "searchReady": false,
+        "buttons": [
+          {
+            "id": "gbSearchBtn",
+            "cls": "gb-nav-search-icon",
+            "label": "Поиск по всему сайту",
+            "visible": true,
+            "rect": {
+              "x": 266,
+              "y": 6.5,
+              "w": 44,
+              "h": 44
+            }
+          },
+          {
+            "id": "",
+            "cls": "mcp-search",
+            "label": "Открыть поиск по сайту",
+            "visible": true,
+            "rect": {
+              "x": 98,
+              "y": -51.3,
+              "w": 282,
+              "h": 38
+            }
+          }
+        ]
+      },
+      "pageErrors": [],
+      "open": {
+        "role": "dialog",
+        "ariaModal": "true",
+        "ariaLabel": "Поиск по сайту",
+        "ariaHidden": "false",
+        "inputFocused": true,
+        "closeCount": 1,
+        "closeButtons": [
+          {
+            "class": "cp-close",
+            "rect": {
+              "x": 318.5,
+              "y": 20.8,
+              "w": 43.1,
+              "h": 43.1
+            },
+            "background": "rgb(244, 242, 237)",
+            "border": "1px solid rgba(0, 0, 0, 0)"
+          }
+        ],
+        "inertSiblings": 17,
+        "bodyOverflow": "hidden",
+        "htmlOverflow": "hidden"
+      },
+      "escapeClose": {
+        "closed": true,
+        "focusId": "gbSearchBtn",
+        "focusClass": "gb-nav-search-icon",
+        "inert": [
+          "div#.cp-backdrop"
+        ],
+        "bodyStyle": "",
+        "htmlStyle": ""
+      },
+      "pointerClose": {
+        "closed": true,
+        "focusId": "gbSearchBtn",
+        "focusClass": "gb-nav-search-icon",
+        "inert": [
+          "div#.cp-backdrop"
+        ],
+        "bodyStyle": "",
+        "htmlStyle": ""
+      }
+    },
+    {
+      "kind": "map-mobile",
+      "route": "/karty/avraam/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "baselineInert": [],
+      "initial": {
+        "searchReady": false,
+        "buttons": [
+          {
+            "id": "gbSearchBtn",
+            "cls": "gb-app-search gb-app-search--map-engine",
+            "label": "Поиск по всему сайту (Ctrl+K)",
+            "visible": true,
+            "rect": {
+              "x": 338,
+              "y": 112,
+              "w": 44,
+              "h": 44
+            }
+          }
+        ]
+      },
+      "pageErrors": [],
+      "open": {
+        "role": "dialog",
+        "ariaModal": "true",
+        "ariaLabel": "Поиск по сайту",
+        "ariaHidden": "false",
+        "inputFocused": true,
+        "closeCount": 1,
+        "closeButtons": [
+          {
+            "class": "cp-close",
+            "rect": {
+              "x": 318.5,
+              "y": 14.5,
+              "w": 43.1,
+              "h": 43.1
+            },
+            "background": "rgb(244, 242, 237)",
+            "border": "1px solid rgba(0, 0, 0, 0)"
+          }
+        ],
+        "inertSiblings": 6,
+        "bodyOverflow": "hidden",
+        "htmlOverflow": "hidden"
+      },
+      "escapeClose": {
+        "closed": true,
+        "focusId": "gbSearchBtn",
+        "focusClass": "gb-app-search gb-app-search--map-engine",
+        "inert": [
+          "div#.cp-backdrop"
+        ],
+        "bodyStyle": "hidden",
+        "htmlStyle": ""
+      },
+      "pointerClose": {
+        "closed": true,
+        "focusId": "gbSearchBtn",
+        "focusClass": "gb-app-search gb-app-search--map-engine",
+        "inert": [
+          "div#.cp-backdrop"
+        ],
+        "bodyStyle": "hidden",
+        "htmlStyle": ""
+      }
+    },
+    {
+      "kind": "header-dead-desktop",
+      "route": "/hard-texts/genesis-6/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "status": 200,
+      "baselineInert": [
+        "div#selection-share-popup."
+      ],
+      "initial": {
+        "searchReady": false,
+        "buttons": [
+          {
+            "id": "hCpBtnNav",
+            "cls": "gb-nav-search-icon",
+            "label": "Поиск (Ctrl+K)",
+            "visible": true,
+            "rect": {
+              "x": 1036.5,
+              "y": 6.5,
+              "w": 44,
+              "h": 44
+            }
+          },
+          {
+            "id": "",
+            "cls": "mcp-search",
+            "label": "Открыть поиск по сайту",
+            "visible": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0
+            }
+          }
+        ]
+      },
+      "pageErrors": [],
+      "ctrlKOpened": false,
+      "primaryHeaderClickOpened": false,
+      "searchJsRequestsAfterPrimaryActions": []
+    },
+    {
+      "kind": "header-dead-mobile",
+      "route": "/hard-texts/genesis-6/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "baselineInert": [
+        "div#selection-share-popup."
+      ],
+      "initial": {
+        "searchReady": false,
+        "buttons": [
+          {
+            "id": "hCpBtnNav",
+            "cls": "gb-nav-search-icon",
+            "label": "Поиск (Ctrl+K)",
+            "visible": true,
+            "rect": {
+              "x": 290.5,
+              "y": 6.5,
+              "w": 44,
+              "h": 44
+            }
+          },
+          {
+            "id": "",
+            "cls": "mcp-search",
+            "label": "Открыть поиск по сайту",
+            "visible": true,
+            "rect": {
+              "x": 98,
+              "y": -51.3,
+              "w": 267,
+              "h": 38
+            }
+          }
+        ]
+      },
+      "pageErrors": [],
+      "ctrlKOpened": false,
+      "primaryHeaderClickOpened": false,
+      "searchJsRequestsAfterPrimaryActions": [],
+      "mobileAlternative": {
+        "label": "Открыть поиск по сайту",
+        "visible": true,
+        "rect": {
+          "x": 98,
+          "y": 7,
+          "w": 267,
+          "h": 38
+        },
+        "scrollY": 300,
+        "opensPalette": true,
+        "searchReady": true
+      }
+    },
+    {
+      "kind": "header-dead-favorites",
+      "route": "/izbrannoe/",
+      "viewport": {
+        "width": 1280,
+        "height": 844
+      },
+      "status": 200,
+      "initial": {
+        "ready": false,
+        "button": {
+          "id": "hCpBtnNav",
+          "label": "Поиск (Ctrl+K)",
+          "visible": true,
+          "rect": {
+            "x": 1027.234375,
+            "y": 6.5,
+            "width": 44,
+            "height": 44
+          }
+        }
+      },
+      "ctrlKOpened": false,
+      "headerClickOpened": false,
+      "searchJsRequests": [],
+      "pageErrors": []
+    }
+  ],
+  "mobileTouchEmulation": {
+    "description": "Real Playwright touchscreen.tap interactions in Chromium mobile emulation (isMobile/hasTouch true), distinct from responsive viewport plus locator.click cases above.",
+    "runs": [
+      {
+        "route": "/",
+        "device": {
+          "isMobile": true,
+          "hasTouch": true,
+          "width": 390,
+          "height": 844
+        },
+        "triggerFound": true,
+        "trigger": {
+          "id": "gbSearchBtn",
+          "label": "Поиск по всему сайту",
+          "rect": {
+            "x": 250,
+            "y": 8.5,
+            "w": 44,
+            "h": 44
+          }
+        },
+        "openedAfterTouch": true,
+        "searchReady": true,
+        "pageErrors": [],
+        "closeTarget": {
+          "x": 275,
+          "y": 17.5,
+          "width": 44,
+          "height": 44
+        },
+        "afterClose": {
+          "closed": true,
+          "focusId": "gbSearchBtn",
+          "focusClass": "gb-nav-search-icon"
+        }
+      },
+      {
+        "route": "/articles/",
+        "device": {
+          "isMobile": true,
+          "hasTouch": true,
+          "width": 390,
+          "height": 844
+        },
+        "triggerFound": true,
+        "trigger": {
+          "id": "gbSearchBtn",
+          "label": "Поиск по всему сайту",
+          "rect": {
+            "x": 262.8,
+            "y": 6.5,
+            "w": 44,
+            "h": 44
+          }
+        },
+        "openedAfterTouch": true,
+        "searchReady": true,
+        "pageErrors": [],
+        "closeTarget": {
+          "x": 321,
+          "y": 23,
+          "width": 44,
+          "height": 44
+        },
+        "afterClose": {
+          "closed": true,
+          "focusId": "gbSearchBtn",
+          "focusClass": "gb-nav-search-icon"
+        }
+      },
+      {
+        "route": "/karty/avraam/",
+        "device": {
+          "isMobile": true,
+          "hasTouch": true,
+          "width": 390,
+          "height": 844
+        },
+        "triggerFound": true,
+        "trigger": {
+          "id": "gbSearchBtn",
+          "label": "Поиск по всему сайту (Ctrl+K)",
+          "rect": {
+            "x": 338,
+            "y": 112,
+            "w": 44,
+            "h": 44
+          }
+        },
+        "openedAfterTouch": true,
+        "searchReady": true,
+        "pageErrors": [],
+        "closeTarget": {
+          "x": 321,
+          "y": 23,
+          "width": 44,
+          "height": 44
+        },
+        "afterClose": {
+          "closed": true,
+          "focusId": "gbSearchBtn",
+          "focusClass": "gb-app-search gb-app-search--map-engine"
+        }
+      },
+      {
+        "route": "/hard-texts/genesis-6/",
+        "device": {
+          "isMobile": true,
+          "hasTouch": true,
+          "width": 390,
+          "height": 844
+        },
+        "triggerFound": true,
+        "trigger": {
+          "id": "hCpBtnNav",
+          "label": "Поиск (Ctrl+K)",
+          "rect": {
+            "x": 342,
+            "y": 6.5,
+            "w": 44,
+            "h": 44
+          }
+        },
+        "openedAfterTouch": false,
+        "searchReady": false,
+        "pageErrors": []
+      }
+    ]
+  },
+  "homeDuplicateCloseVerification": {
+    "runs": [
+      {
+        "width": 1280,
+        "height": 900,
+        "closeButtons": [
+          {
+            "class": "cp-close",
+            "ariaLabel": "Закрыть поиск",
+            "tabIndex": 0,
+            "visible": true,
+            "rect": {
+              "x": 676,
+              "y": 103.5,
+              "width": 44,
+              "height": 44
+            }
+          },
+          {
+            "class": "cp-home-close",
+            "ariaLabel": "Закрыть поиск",
+            "tabIndex": 0,
+            "visible": true,
+            "rect": {
+              "x": 733,
+              "y": 103.5,
+              "width": 44,
+              "height": 44
+            }
+          }
+        ],
+        "tabSequence": [
+          {
+            "inside": true,
+            "class": "cp-close",
+            "ariaLabel": "Закрыть поиск",
+            "text": ""
+          },
+          {
+            "inside": true,
+            "class": "cp-home-close",
+            "ariaLabel": "Закрыть поиск",
+            "text": ""
+          },
+          {
+            "inside": true,
+            "class": "cp-scope-chip active",
+            "ariaLabel": null,
+            "text": "ВСЕ"
+          }
+        ],
+        "afterHomeCloseClick": {
+          "closed": true,
+          "focusId": "gbSearchBtn"
+        }
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "closeButtons": [
+          {
+            "class": "cp-close",
+            "ariaLabel": "Закрыть поиск",
+            "tabIndex": 0,
+            "visible": true,
+            "rect": {
+              "x": 275,
+              "y": 17.5,
+              "width": 44,
+              "height": 44
+            }
+          },
+          {
+            "class": "cp-home-close",
+            "ariaLabel": "Закрыть поиск",
+            "tabIndex": 0,
+            "visible": true,
+            "rect": {
+              "x": 329,
+              "y": 17.5,
+              "width": 44,
+              "height": 44
+            }
+          }
+        ],
+        "tabSequence": [
+          {
+            "inside": true,
+            "class": "cp-close",
+            "ariaLabel": "Закрыть поиск",
+            "text": ""
+          },
+          {
+            "inside": true,
+            "class": "cp-home-close",
+            "ariaLabel": "Закрыть поиск",
+            "text": ""
+          },
+          {
+            "inside": true,
+            "class": "cp-scope-chip active",
+            "ariaLabel": null,
+            "text": "ВСЕ"
+          }
+        ],
+        "afterHomeCloseClick": {
+          "closed": true,
+          "focusId": "gbSearchBtn"
+        }
+      }
+    ]
+  }
+}

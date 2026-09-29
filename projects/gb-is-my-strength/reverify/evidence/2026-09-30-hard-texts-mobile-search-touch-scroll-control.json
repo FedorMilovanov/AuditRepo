@@ -1,0 +1,158 @@
+{
+  "productSha": "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+  "browser": "Chromium 153.0.8010.0",
+  "provenance": "Fresh Playwright exact-SHA local production-like dist; /hard-texts/ at 390x844; CDP touch event pipeline, five-move touch scroll followed by one touch tap; not physical-device or live-host testing.",
+  "route": "/hard-texts/",
+  "width": 390,
+  "height": 844,
+  "touchScroll": {
+    "start": {
+      "x": 190,
+      "y": 700
+    },
+    "moveY": [
+      600,
+      500,
+      400,
+      300,
+      200
+    ],
+    "id": 1
+  },
+  "afterTouchScroll": {
+    "scrollY": 485,
+    "mobileChromeShown": true,
+    "navbarClass": "h-navbar scrolled nav-hidden",
+    "searchBox": {
+      "x": 98,
+      "y": 7,
+      "right": 380,
+      "bottom": 45
+    },
+    "loader": {
+      "loading": false,
+      "bootRequested": null,
+      "openAfterLoad": null,
+      "ready": false
+    },
+    "dialogClass": null,
+    "inputFocused": false
+  },
+  "searchTap": {
+    "point": {
+      "x": 239,
+      "y": 26
+    },
+    "id": 2,
+    "opened": true
+  },
+  "afterTap": {
+    "scrollY": 0,
+    "mobileChromeShown": true,
+    "navbarClass": "h-navbar",
+    "searchBox": {
+      "x": 98,
+      "y": 7,
+      "right": 380,
+      "bottom": 45
+    },
+    "loader": {
+      "loading": false,
+      "bootRequested": true,
+      "openAfterLoad": false,
+      "ready": true
+    },
+    "dialogClass": "cp-backdrop is-open",
+    "inputFocused": true
+  },
+  "trace": [
+    {
+      "type": "touchstart",
+      "target": "P",
+      "class": "h-hero-desc",
+      "pointerType": null,
+      "detail": 0,
+      "defaultPrevented": false
+    },
+    {
+      "type": "touchend",
+      "target": "P",
+      "class": "h-hero-desc",
+      "pointerType": null,
+      "detail": 0,
+      "defaultPrevented": false
+    },
+    {
+      "type": "touchstart",
+      "target": "SPAN",
+      "class": "",
+      "pointerType": null,
+      "detail": 0,
+      "defaultPrevented": false
+    },
+    {
+      "type": "touchend",
+      "target": "SPAN",
+      "class": "",
+      "pointerType": null,
+      "detail": 0,
+      "defaultPrevented": false
+    },
+    {
+      "type": "click",
+      "target": "SPAN",
+      "class": "",
+      "pointerType": "touch",
+      "detail": 1,
+      "defaultPrevented": false
+    }
+  ],
+  "requests": [
+    {
+      "event": "request",
+      "url": "http://127.0.0.1:44205/css/command-palette.css?v=3b88813f"
+    },
+    {
+      "event": "response",
+      "status": 200,
+      "url": "http://127.0.0.1:44205/css/command-palette.css?v=3b88813f"
+    },
+    {
+      "event": "request",
+      "url": "http://127.0.0.1:44205/js/search.js?v=106d65f6"
+    },
+    {
+      "event": "response",
+      "status": 200,
+      "url": "http://127.0.0.1:44205/js/search.js?v=106d65f6"
+    },
+    {
+      "event": "request",
+      "url": "http://127.0.0.1:44205/js/search.js?v=106d65f6"
+    },
+    {
+      "event": "response",
+      "status": 200,
+      "url": "http://127.0.0.1:44205/js/search.js?v=106d65f6"
+    },
+    {
+      "event": "request",
+      "url": "http://127.0.0.1:44205/data/search-manifest.json"
+    },
+    {
+      "event": "request",
+      "url": "http://127.0.0.1:44205/data/search-manifest.json"
+    },
+    {
+      "event": "response",
+      "status": 200,
+      "url": "http://127.0.0.1:44205/data/search-manifest.json"
+    },
+    {
+      "event": "response",
+      "status": 200,
+      "url": "http://127.0.0.1:44205/data/search-manifest.json"
+    }
+  ],
+  "pageErrors": []
+}

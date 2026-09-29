@@ -1,0 +1,67 @@
+{
+  "productSha": "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+  "browser": "Chromium 153.0.8010.0",
+  "provenance": "Fresh Playwright against exact-SHA local production-like dist; actual visible-anchor same-origin navigation then trusted touchscreen Back tap on nine MobileChrome routes at 390px and 320px. Local only, not live-host or physical-device testing.",
+  "visits": 18,
+  "routes": [
+    "/articles/",
+    "/biografii/",
+    "/hard-texts/",
+    "/hard-texts/genesis-6/",
+    "/journal/",
+    "/journal/dossiers/g3/",
+    "/karty/",
+    "/konfessii/",
+    "/rodosloviye/"
+  ],
+  "widths": [
+    390,
+    320
+  ],
+  "assertionCount": 54,
+  "passed": 54,
+  "failed": 0,
+  "records": [
+    {"route":"/articles/","width":390,"expectedSource":"/","before":{"path":"/articles/","referrer":"/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/","passed":true},
+    {"route":"/articles/","width":320,"expectedSource":"/","before":{"path":"/articles/","referrer":"/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/","passed":true},
+    {"route":"/biografii/","width":390,"expectedSource":"/articles/","before":{"path":"/biografii/","referrer":"/articles/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/articles/","passed":true},
+    {"route":"/biografii/","width":320,"expectedSource":"/articles/","before":{"path":"/biografii/","referrer":"/articles/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/articles/","passed":true},
+    {"route":"/hard-texts/","width":390,"expectedSource":"/articles/","before":{"path":"/hard-texts/","referrer":"/articles/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/articles/","passed":true},
+    {"route":"/hard-texts/","width":320,"expectedSource":"/articles/","before":{"path":"/hard-texts/","referrer":"/articles/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/articles/","passed":true},
+    {"route":"/hard-texts/genesis-6/","width":390,"expectedSource":"/hard-texts/","before":{"path":"/hard-texts/genesis-6/","referrer":"/hard-texts/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/hard-texts/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/hard-texts/","passed":true},
+    {"route":"/hard-texts/genesis-6/","width":320,"expectedSource":"/hard-texts/","before":{"path":"/hard-texts/genesis-6/","referrer":"/hard-texts/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/hard-texts/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/hard-texts/","passed":true},
+    {"route":"/journal/","width":390,"expectedSource":"/articles/","before":{"path":"/journal/","referrer":"/articles/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/articles/","passed":true},
+    {"route":"/journal/","width":320,"expectedSource":"/articles/","before":{"path":"/journal/","referrer":"/articles/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/articles/","passed":true},
+    {"route":"/journal/dossiers/g3/","width":390,"expectedSource":"/journal/","before":{"path":"/journal/dossiers/g3/","referrer":"/journal/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/journal/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/journal/","passed":true},
+    {"route":"/journal/dossiers/g3/","width":320,"expectedSource":"/journal/","before":{"path":"/journal/dossiers/g3/","referrer":"/journal/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/journal/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/journal/","passed":true},
+    {"route":"/karty/","width":390,"expectedSource":"/articles/","before":{"path":"/karty/","referrer":"/articles/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/articles/","passed":true},
+    {"route":"/karty/","width":320,"expectedSource":"/articles/","before":{"path":"/karty/","referrer":"/articles/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/articles/","passed":true},
+    {"route":"/konfessii/","width":390,"expectedSource":"/articles/","before":{"path":"/konfessii/","referrer":"/articles/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/articles/","passed":true},
+    {"route":"/konfessii/","width":320,"expectedSource":"/articles/","before":{"path":"/konfessii/","referrer":"/articles/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/articles/","passed":true},
+    {"route":"/rodosloviye/","width":390,"expectedSource":"/articles/","before":{"path":"/rodosloviye/","referrer":"/articles/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/articles/","passed":true},
+    {"route":"/rodosloviye/","width":320,"expectedSource":"/articles/","before":{"path":"/rodosloviye/","referrer":"/articles/","historyLength":3},"backControl":{"tag":"BUTTON","type":"button","label":"Назад","backHref":"/","tabIndex":0,"shown":true,"rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38}},"finalPath":"/articles/","passed":true}
+  ],
+  "assertionSummary": {
+    "total": 54,
+    "passed": 54,
+    "failed": 0,
+    "byCheck": {
+      "real anchor navigation establishes expected same-origin history/referrer": {
+        "total": 18,
+        "passed": 18,
+        "failed": 0
+      },
+      "Back control is semantically correct and visible": {
+        "total": 18,
+        "passed": 18,
+        "failed": 0
+      },
+      "one trusted touch returns to the actual prior same-origin route": {
+        "total": 18,
+        "passed": 18,
+        "failed": 0
+      }
+    }
+  },
+  "evidenceNote": "All 18 real same-origin navigation traces and per-run outcomes retained; ephemeral local origins and duplicated assertion observations omitted."
+}

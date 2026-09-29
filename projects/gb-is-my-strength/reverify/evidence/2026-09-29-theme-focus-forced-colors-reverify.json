@@ -1,0 +1,107 @@
+{
+  "browser": "153.0.8010.0",
+  "productSha": "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+  "source": "local production-like dist; forcedColors active; not live-host navigation",
+  "checks": [
+    {
+      "route": "/",
+      "found": 1,
+      "tabReached": true,
+      "tabStops": 11,
+      "focused": {
+        "focusVisible": true,
+        "outline": "rgba(5, 0, 73, 0.8) none 0px",
+        "outlineStyle": "none",
+        "outlineColor": "rgba(5, 0, 73, 0.8)",
+        "outlineWidth": "0px",
+        "boxShadow": "none",
+        "border": "0px none rgba(5, 0, 73, 0.8)",
+        "backgroundColor": "rgba(255, 255, 255, 0)",
+        "color": "rgb(0, 0, 0)",
+        "iconStroke": "rgb(0, 0, 0)",
+        "forcedColorsMatch": true,
+        "rect": {
+          "x": 1184.8125,
+          "y": 12.5,
+          "width": 44,
+          "height": 44
+        }
+      }
+    },
+    {
+      "route": "/articles/",
+      "found": 1,
+      "tabReached": true,
+      "tabStops": 9,
+      "focused": {
+        "focusVisible": true,
+        "outline": "rgba(5, 0, 73, 0.8) none 0px",
+        "outlineStyle": "none",
+        "outlineColor": "rgba(5, 0, 73, 0.8)",
+        "outlineWidth": "0px",
+        "boxShadow": "none",
+        "border": "0px none rgba(5, 0, 73, 0.8)",
+        "backgroundColor": "rgba(255, 255, 255, 0)",
+        "color": "rgb(0, 0, 0)",
+        "iconStroke": "rgb(0, 0, 0)",
+        "forcedColorsMatch": true,
+        "rect": {
+          "x": 1068,
+          "y": 6.5,
+          "width": 44,
+          "height": 44
+        }
+      }
+    },
+    {
+      "route": "/hard-texts/genesis-6/",
+      "found": 1,
+      "tabReached": true,
+      "tabStops": 11,
+      "focused": {
+        "focusVisible": true,
+        "outline": "rgba(5, 0, 73, 0.8) none 0px",
+        "outlineStyle": "none",
+        "outlineColor": "rgba(5, 0, 73, 0.8)",
+        "outlineWidth": "0px",
+        "boxShadow": "none",
+        "border": "0px none rgba(5, 0, 73, 0.8)",
+        "backgroundColor": "rgba(255, 255, 255, 0)",
+        "color": "rgb(0, 0, 0)",
+        "iconStroke": "rgb(0, 0, 0)",
+        "forcedColorsMatch": true,
+        "rect": {
+          "x": 1068.5,
+          "y": 6.5,
+          "width": 44,
+          "height": 44
+        }
+      }
+    },
+    {
+      "route": "/izbrannoe/",
+      "found": 1,
+      "tabReached": true,
+      "tabStops": 11,
+      "focused": {
+        "focusVisible": true,
+        "outline": "rgba(5, 0, 73, 0.8) none 0px",
+        "outlineStyle": "none",
+        "outlineColor": "rgba(5, 0, 73, 0.8)",
+        "outlineWidth": "0px",
+        "boxShadow": "none",
+        "border": "0px none rgba(5, 0, 73, 0.8)",
+        "backgroundColor": "rgba(255, 255, 255, 0)",
+        "color": "rgb(0, 0, 0)",
+        "iconStroke": "rgb(0, 0, 0)",
+        "forcedColorsMatch": true,
+        "rect": {
+          "x": 1059.234375,
+          "y": 6.5,
+          "width": 44,
+          "height": 44
+        }
+      }
+    }
+  ]
+}
