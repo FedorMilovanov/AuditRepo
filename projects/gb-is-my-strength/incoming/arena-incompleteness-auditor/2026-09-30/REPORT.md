@@ -86,3 +86,39 @@ question is which duration a reader expects a «Серия» card to convey. It 
 that explicit qualification, not a demand to replace metadata with 719 automatically.
 
 No Product code was changed, and no previously unseen bug has been admitted in this correction.
+
+## Full branch divergence inventory (2026-09-30; read-only)
+
+After the targeted sample above, all **204 non-main branches** returned by the paginated GitHub
+branches endpoint were compared to `main` via `GET /repos/FedorMilovanov/gb-is-my-strength/compare/main...<branch>`.
+The independent per-ref results are preserved in
+`evidence/branch-compare-main-2026-09-30.csv` (branch name, GitHub status, ahead, behind,
+count of compare API's listed changed files). There were **zero API failures**:
+
+| Compare relationship to main | Branches | What this proves (and does not prove) |
+|---|---:|---|
+| `behind` (ahead = 0) | **35** | no unique commits vs main; **retirement candidate only**, not an approved deletion or proof of editorial equivalence |
+| `diverged` | **166** | unique commits and missing main commits; content/code disposition requires review; do not merge wholesale |
+| `ahead` (behind = 0) | **3** | content/apostasy, current Dependabot, genealogy direct-name PR heads; not automatically publication-ready |
+| **Total** | **204** | main excluded; all rows received a compare response |
+
+The three ahead-only branches are
+`content/apostasy-bible-study` (1 ahead),
+`dependabot/npm_and_yarn/npm-non-major-92ac384687` (1 ahead), and
+`genealogy/editorial-direct-name-batch-20260924` (3 ahead).
+The fourth open PR, #2142 (`reconcile/baptist-ch01-authority-salvage-20260924`), is **diverged**:
+1 ahead / 5 behind and affects one research file.
+
+The two document paths on `lane/journal-editorial-architecture-20260907`'s compare are
+`research/JOURNAL_EDITORIAL_ARCHITECTURE_2026-09-07.md` and
+`research/JOURNAL_NATIVE_UI_CONTRACT_2026-09-07.md` (2 ahead / 921 behind).
+The media-composition branch is 2 ahead / 189 behind; its compare lists 47 changed paths,
+including `baptisty-rossii/research/media-ledger.md` and raw historical images.
+These are **compare-derived candidate contents**, not proof of usable rights or material absent
+from all forms on main. Salvage requires source/rights receipts.
+
+The per-branch inventory is a measurement artifact, **not** a second active bug matrix. Each
+of the 35 `ahead=0` refs still requires explicit MERGED / SUPERSEDED / SALVAGED /
+REJECTED-ARCHIVED owner disposition per PROGRAM Wave 8 before deletion; the 166 diverged refs
+need unique-commit/file review, and the three ahead-only refs follow PR/CI gates. No branches
+were deleted, merged or renamed in this pass.
