@@ -6,6 +6,14 @@
 
 Reverified 2026-09-24 after Product release `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`.
 
+**2026-09-29 incompleteness re-measure (arena-incompleteness-auditor).** Product `main` is still
+`d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`, so no wave changed state because of a release. Waves 5B
+and 6 were re-measured against source/artifact and live surface; Wave 8's Dependabot reference was
+found stale. Waves 4 and 8 branch/genealogy counts were **not** re-measured (the pass had no network
+egress for `gh`), so the 2825 / 139 and 203 / 202 figures remain carried forward from 2026-09-24 and
+must not be cited as current. Evidence:
+`incoming/arena-incompleteness-auditor/2026-09-29/REPORT.md`.
+
 ## Program state
 
 | Wave | Program | State | Current measured boundary | Exit |
@@ -16,10 +24,10 @@ Reverified 2026-09-24 after Product release `d0e04a9c7ac78082f44ad70c4b1e3bbf50b
 | 3 | Genealogy engineering / safe editorial integration | **VERIFIED_CLOSED** | corrected #2137 merged as `d0e04a9c...`; candidate and promotion run `35927303479` PASS | exact build/projection/browser/live proof |
 | 4 | Genealogy editorial corpus | **OPEN** | raw 3056 persons / 2053 edges / 982 isolated; RU review **2825**; publishable relation evidence **42 reviewed / 139 pending** | source-backed manual certification in deterministic batches; raw corpus remains fail-closed until Phase-1 exit criteria |
 | 5A | Baptists Git + Drive source inventory | **IN_PROGRESS** | stale chapter research families remain hundreds of commits behind; Drive course/archive traversal begun; current Baptist Chapter 1 salvage PR #2142 exists | every unique research family and relevant Drive source has disposition, source tier, claim/page mapping and rights boundary |
-| 5B | Baptists chapter/media publication | **OPEN** | many chapter dossiers exist but are not uniformly BOOK-READY; authentic-media branch still contains unique ledger/assets | fresh current-main chapter slices, claim ledger, media provenance/rights/hash, content/browser proof |
-| 6 | Biblical maps | **OPEN** | production: **1 open / 9 on audit / 0 drafts on showcase**; three stale MapEngine families retain unique code | every audit map explicitly PUBLISHED or RETIRED after data, mobile/desktop, labels, controls, a11y/perf and owner visual review |
+| 5B | Baptists chapter/media publication | **OPEN** | measured 2026-09-29: **10** content files (`section: "baptisty-rossii"`) = 9 articles + 1 reference; live book index shows 4 главы / 9 статей / 1 форзац against a stated **17–20 article** target, and Глава V (эмиграция, диаспора, возврат архивов, после 1991) is explicitly not created. `data/baptisty-rossii-expansion-roadmap.json` declares a **20-chapter architecture with all 20 `status: "planned"`**, including 8 chapters whose articles are already published (see `GBS-BAPTISTS-ROADMAP-STATUS-STALE`) → remaining chapters require chapter-level publication decisions; article count is not a chapter count. Many chapter dossiers exist but are not uniformly BOOK-READY; authentic-media branch still contains unique ledger/assets | fresh current-main chapter slices, claim ledger, media provenance/rights/hash, content/browser proof |
+| 6 | Biblical maps | **OPEN** | production: **1 open / 9 on audit / 0 drafts on showcase** — re-measured live on `/karty/` 2026-09-29, unchanged since 2026-09-24, so nine maps remain suspended in audit; three stale MapEngine families retain unique code | every audit map explicitly PUBLISHED or RETIRED after data, mobile/desktop, labels, controls, a11y/perf and owner visual review |
 | 7 | Bible corpus / rights / external integrations | **PARTIAL / BLOCKED_EXTERNAL** | #1944 obsolete Cloudflare dependency is closed; #1753 and #1812 retain exact provider/legal boundaries | actionable engineering debt zero; unresolved provider/human/legal items explicitly BLOCKED_EXTERNAL, never inferred as permission |
-| 8 | Measurement quality + dependencies + repository retirement | **OPEN** | measurement-first queue remains; Dependabot #2138 is 1 ahead / 22 behind; **203 branches total / 202 non-main** at latest count | measure before budgets; reverify dependency reachability; classify every remaining branch MERGED/SUPERSEDED/SALVAGED/REJECTED before deletion; final source/CI/live/AuditRepo recheck |
+| 8 | Measurement quality + dependencies + repository retirement | **OPEN** | measurement-first queue remains; the 2026-09-24 Dependabot **#2138** reference is **stale** — #2138 is no longer open and the current Dependabot PR is **#2144** (2026-09-28), so the ahead/behind figures below are unverified; **203 branches total / 202 non-main** at the 2026-09-24 count, not re-measured 2026-09-29 | measure before budgets; reverify dependency reachability; classify every remaining branch MERGED/SUPERSEDED/SALVAGED/REJECTED before deletion; final source/CI/live/AuditRepo recheck |
 
 ## Wave 4 — evidence-first genealogy batches
 
