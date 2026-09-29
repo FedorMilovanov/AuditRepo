@@ -9,9 +9,8 @@ Reverified 2026-09-24 after Product release `d0e04a9c7ac78082f44ad70c4b1e3bbf50b
 **2026-09-29 incompleteness re-measure (arena-incompleteness-auditor).** Product `main` is still
 `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`, so no wave changed state because of a release. Waves 5B
 and 6 were re-measured against source/artifact and live surface; Wave 8's Dependabot reference was
-found stale. Waves 4 and 8 branch/genealogy counts were **not** re-measured (the pass had no network
-egress for `gh`), so the 2825 / 139 and 203 / 202 figures remain carried forward from 2026-09-24 and
-must not be cited as current. Evidence:
+found stale. Wave 4 genealogy counts were **not** re-measured: 2825 / 139 remain carried forward.
+A follow-up on 2026-09-30 used authenticated GitHub API to re-measure Wave 8: **205 branches total / 204 non-main**; targeted branch compares below. The earlier 203 / 202 was the 2026-09-24 count, not current. Evidence:
 `incoming/arena-incompleteness-auditor/2026-09-29/REPORT.md`.
 
 ## Program state
@@ -24,10 +23,10 @@ must not be cited as current. Evidence:
 | 3 | Genealogy engineering / safe editorial integration | **VERIFIED_CLOSED** | corrected #2137 merged as `d0e04a9c...`; candidate and promotion run `35927303479` PASS | exact build/projection/browser/live proof |
 | 4 | Genealogy editorial corpus | **OPEN** | raw 3056 persons / 2053 edges / 982 isolated; RU review **2825**; publishable relation evidence **42 reviewed / 139 pending** | source-backed manual certification in deterministic batches; raw corpus remains fail-closed until Phase-1 exit criteria |
 | 5A | Baptists Git + Drive source inventory | **IN_PROGRESS** | stale chapter research families remain hundreds of commits behind; Drive course/archive traversal begun; current Baptist Chapter 1 salvage PR #2142 exists | every unique research family and relevant Drive source has disposition, source tier, claim/page mapping and rights boundary |
-| 5B | Baptists chapter/media publication | **OPEN** | measured 2026-09-29: **10** content files (`section: "baptisty-rossii"`) = 9 articles + 1 reference; live book index shows 4 главы / 9 статей / 1 форзац against a stated **17–20 article** target, and Глава V (эмиграция, диаспора, возврат архивов, после 1991) is explicitly not created. `data/baptisty-rossii-expansion-roadmap.json` declares a **20-chapter architecture with all 20 `status: "planned"`**, including 8 chapters whose articles are already published (see `GBS-BAPTISTS-ROADMAP-STATUS-STALE`) → remaining chapters require chapter-level publication decisions; article count is not a chapter count. Many chapter dossiers exist but are not uniformly BOOK-READY; authentic-media branch still contains unique ledger/assets | fresh current-main chapter slices, claim ledger, media provenance/rights/hash, content/browser proof |
+| 5B | Baptists chapter/media publication | **OPEN** | measured 2026-09-29: **10** content files (`section: "baptisty-rossii"`) = 9 articles + 1 reference; live book index shows 4 главы / 9 статей / 1 форзац against a stated **17–20 article** target, and Глава V (эмиграция, диаспора, возврат архивов, после 1991) is explicitly not created. `data/baptisty-rossii-expansion-roadmap.json` declares a **20-chapter architecture with all 20 `status: "planned"`**, representing a **future five-part architecture** distinct from the current nine published articles; `scripts/baptisty-roadmap-audit.js` requires future chapters to stay `planned` until a dedicated publication lane promotes them. The book remains incomplete, but `planned` is not itself a status defect. Many chapter dossiers exist but are not uniformly BOOK-READY; authentic-media branch still contains unique ledger/assets | fresh current-main chapter slices, claim ledger, media provenance/rights/hash, content/browser proof |
 | 6 | Biblical maps | **OPEN** | production: **1 open / 9 on audit / 0 drafts on showcase** — re-measured live on `/karty/` 2026-09-29, unchanged since 2026-09-24, so nine maps remain suspended in audit; three stale MapEngine families retain unique code | every audit map explicitly PUBLISHED or RETIRED after data, mobile/desktop, labels, controls, a11y/perf and owner visual review |
 | 7 | Bible corpus / rights / external integrations | **PARTIAL / BLOCKED_EXTERNAL** | #1944 obsolete Cloudflare dependency is closed; #1753 and #1812 retain exact provider/legal boundaries | actionable engineering debt zero; unresolved provider/human/legal items explicitly BLOCKED_EXTERNAL, never inferred as permission |
-| 8 | Measurement quality + dependencies + repository retirement | **OPEN** | measurement-first queue remains; the 2026-09-24 Dependabot **#2138** reference is **stale** — #2138 is no longer open and the current Dependabot PR is **#2144** (2026-09-28), so the ahead/behind figures below are unverified; **203 branches total / 202 non-main** at the 2026-09-24 count, not re-measured 2026-09-29 | measure before budgets; reverify dependency reachability; classify every remaining branch MERGED/SUPERSEDED/SALVAGED/REJECTED before deletion; final source/CI/live/AuditRepo recheck |
+| 8 | Measurement quality + dependencies + repository retirement | **OPEN** | measurement-first queue remains; the 2026-09-24 Dependabot **#2138** reference is **stale** — #2138 is no longer open and the current Dependabot PR is **#2144** (2026-09-28), so the ahead/behind figures below are unverified; **205 branches total / 204 non-main**, re-measured 2026-09-30 via paginated GitHub branches API; no full 204-branch disposition yet | measure before budgets; reverify dependency reachability; classify every remaining branch MERGED/SUPERSEDED/SALVAGED/REJECTED before deletion; final source/CI/live/AuditRepo recheck |
 
 ## Wave 4 — evidence-first genealogy batches
 
@@ -57,11 +56,12 @@ Recommended bounded editorial sequence remains: messianic spine → Matthew → 
 
 Do **not** merge ancient `book/*` or `reconcile/*` branches as wholes. Their useful content is research evidence, not a current codebase.
 
-Fresh examples from the 2026-09-24 sweep:
+Fresh examples from the 2026-09-24 sweep (selected 2026-09-30 compares below):
 - `book/ch06-kargel-source-to-claim`: 10 ahead / ~644 behind;
 - `book/ch07-mazaev-prokhanov-research`: 18 ahead / ~644 behind;
 - chapters 8–16 and 20 likewise retain narrow research dossiers while hundreds behind;
-- `book/ch17-vsehb-1945-1959-research`: 0 ahead — absorbed candidate;
+- `book/ch17-vsehb-1945-1959-research`: **0 ahead / 639 behind** on 2026-09-30 — absorbed candidate, still needs an explicit retirement receipt;
+- `book/ch07-mazaev-prokhanov-research-v2`: **2 ahead / 1021 behind** on 2026-09-30 — additional chapter 7 branch absent from the 2026-09-24 examples; disposition needed;
 - `feat/baptist-authentic-media-composition-20260912`: 2 ahead / ~189 behind, with unique media ledger/assets;
 - #2142 is a current narrow Chapter-1 authority-reconciliation salvage and must remain research-only until its own publication gates are satisfied.
 
@@ -69,7 +69,7 @@ Google Drive is a **source reservoir**, not automatic authority. Folder traversa
 
 ## Wave 6 — maps boundary
 
-Live `/karty/` truth on 2026-09-24 remains:
+Live `/karty/` truth re-measured 2026-09-29:
 - 1 published/open map;
 - 9 maps on audit;
 - 0 drafts shown as finished.
@@ -79,7 +79,7 @@ Stale MapEngine branches remain forensic inputs, not merge candidates:
 - `refactor/map-engine-route-bootstrap`;
 - `refactor/map-engine-shared-bootstrap-v2`.
 
-Reverify each idea against current main and reimplement only what is still necessary.
+Fresh 2026-09-30 compares: `fix/map-engine-capability-runtime-v1` **3 ahead / 126 behind**; `refactor/map-engine-route-bootstrap` **27 ahead / 165 behind**; `refactor/map-engine-shared-bootstrap-v2` **11 ahead / 132 behind**. Reverify each idea against current main and reimplement only what is still necessary.
 
 ## Wave 7 — external-gate semantics
 
@@ -102,7 +102,7 @@ Every non-main branch must end in one of:
 3. **SALVAGED** — useful content moved through a fresh current-main lane with receipt;
 4. **REJECTED / ARCHIVED** — explicitly reviewed and intentionally not retained.
 
-Known easy retirement candidates after a final compare include Journal foundation/production-promotion branches with `ahead=0`. `lane/journal-editorial-architecture` still retains two unique research documents and must be salvaged or explicitly archived first.
+Known easy retirement candidates after a final compare include Journal foundation/production-promotion branches with `ahead=0`. `lane/journal-editorial-architecture-20260907` (the actual current ref; the old unsuffixed name returns 404) is **2 ahead / 921 behind** as of 2026-09-30 and retains two unique research documents and must be salvaged or explicitly archived first.
 
 ## Terminal project definition
 

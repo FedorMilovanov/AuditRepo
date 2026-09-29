@@ -166,27 +166,15 @@ sandbox has no egress, so the *live* inbound-link state is **not witnessed**. Re
 `/articles/` and `/hard-texts/`, and confirm whether Pagefind indexing covers the route even though
 the manifest omits it.
 
-### 7. `GBS-BAPTISTS-ROADMAP-STATUS-STALE` — P2
+### 7. RETRACTED 2026-09-30 — `GBS-BAPTISTS-ROADMAP-STATUS-STALE`
 
-`data/baptisty-rossii-expansion-roadmap.json` declares a `targetArchitecture` of **20 chapters, all
-20 `status: "planned"`** — including chapters whose articles are already published and live:
-
-| roadmap ch. | title | corresponding published article |
-|---|---|---|
-| 2 | Ночь на Куре | `noch-na-kure.mdx` |
-| 3 | Южная штунда | `yuzhnaya-shtunda.mdx` |
-| 4 | 1884–1885: две развилки | `dva-sezda-1884.mdx` |
-| 5 | Петербургское пробуждение | `peterburgskaya-liniya.mdx` |
-| 13 | Совесть, армия и государство | `goneniya-i-sovest.mdx` |
-| 14 | 1929: закон | `sovetskaya-noch.mdx` |
-| 16 | Война и 1944 | `vsehib-1944.mdx` |
-| 19 | Подпольная церковь | `podpolnaya-pechat.mdx` |
-
-The same file also carries `legacyResearchBinding.status = "legacy-review-required"` and
-`productConfidenceAxis.status = "not-yet-centralized"`.
-
-The roadmap is the machine-readable measure of book completion, and it has never advanced past
-`planned`. Any tooling or audit that reads it will report 0 % done on a book with 9 live articles.
+The 20 `planned` chapters are an intentionally **future** five-part architecture, not the status of
+the current nine published articles. `currentPublishedSurface` separately records nine articles,
+one reference and four current book chapters. `principle` says that planning does not create a route;
+`scripts/baptisty-roadmap-audit.js` explicitly rejects any future chapter status other than
+`planned` until a dedicated publication lane promotes it. The initial analogy between published
+article titles and planned future chapter titles was invalid. Removed from MASTER; the actual
+publication gap stays in PROGRAM Wave 5B.
 
 ## ADMITTED — system lane
 
@@ -227,7 +215,7 @@ in the same wave, not carried forward.
 
 | Programme | Measured boundary (2026-09-29) |
 |---|---|
-| Baptists book (Wave 5B) | 10 content files = 9 articles + 1 reference. Live `/baptisty-rossii/` shows 4 главы / 9 статей / 1 форзац and states a **17–20 article** target; Глава V (эмиграция, диаспора, возврат архивов, после 1991) is explicitly not created. Roadmap declares **20 chapters, 20 `planned`**. → chapter-level publication decisions remain open; 9 articles cannot be subtracted from 20 chapters. |
+| Baptists book (Wave 5B) | 10 content files = 9 articles + 1 reference. Live `/baptisty-rossii/` shows 4 главы / 9 статей / 1 форзац and states a **17–20 article** target; Глава V (эмиграция, диаспора, возврат архивов, после 1991) is explicitly not created. Roadmap declares **20 chapters, 20 `planned`**. → 20 future chapters remain planned by design, while the current book is separately measured as 9 articles plus 1 reference. |
 | Biblical maps (Wave 6) | Live `/karty/` re-measured: **1 открыта / 9 на аудите / 0 черновиков** — unchanged since 2026-09-24. Nine maps remain suspended in audit. |
 | Genealogy (Wave 4) | Not re-measured. Only indirect movement witnessed: PR #2143 open. The 2825 / 139 figures are carried forward from 2026-09-24 and are **not** re-verified here. |
 | Branch retirement (Wave 8) | Not re-measured. Requires `gh`/egress, unavailable in this pass. |
