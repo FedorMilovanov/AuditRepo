@@ -4,7 +4,7 @@
 - Pass date: 2026-09-29
 - Project: `FedorMilovanov/gb-is-my-strength` (gospod-bog.ru)
 - AuditRepo anchor at pass start: `01a271488454b7e914a5e9641919d3414f36ece6` (main, PR #474 merge)
-- Product anchor: `main` = `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b` (2026-09-23T22:15:20Z, merge PR #2137)
+- Audited anchor: Product `main` = `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b` (2026-09-23T22:15:20Z, merge PR #2137)
 - Product clone used for source inspection: exact `d0e04a9c` working tree
 - Status: raw evidence + bounded current-check. **No independent defect admitted in this pass.**
 
