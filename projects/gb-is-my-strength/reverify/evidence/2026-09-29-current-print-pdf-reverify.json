@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-29",
+  "product": "FedorMilovanov/gb-is-my-strength",
+  "productSha": "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+  "browser": "Playwright Chromium 153.0.8010.0",
+  "source": "local production-like dist built from exact Product SHA; not a live-host print run",
+  "pdfOptions": {
+    "format": "A4",
+    "printBackground": true,
+    "preferCSSPageSize": true
+  },
+  "extractor": "pypdf 6.19.0",
+  "textMatching": "whitespace-normalized PDF text extraction",
+  "cases": [
+    {
+      "route": "/articles/serdce-i-telo/",
+      "screenTarget": "Рим. 6:12",
+      "screenContainsTarget": true,
+      "screenOccurrences": 1,
+      "pdfContainsTarget": false,
+      "pdfPages": 8,
+      "pdfBytes": 169153
+    },
+    {
+      "route": "/articles/tma-na-serdce/",
+      "screenTarget": "Быт. 1:31; 3:16",
+      "screenContainsTarget": true,
+      "screenOccurrences": 1,
+      "pdfContainsTarget": false,
+      "pdfPages": 15,
+      "pdfBytes": 222535
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-4-ekzeget/",
+      "screenTarget": "Macritchie",
+      "screenContainsTarget": true,
+      "screenOccurrences": 1,
+      "pdfContainsTarget": false,
+      "pdfPages": 17,
+      "pdfBytes": 1402267
+    },
+    {
+      "route": "/articles/podrostok-za-kadrom-dvoynaya-zhizn/",
+      "screenTarget": "Контакты ниже",
+      "screenContainsTarget": true,
+      "screenOccurrences": 1,
+      "pdfContainsTarget": false,
+      "pdfPages": 21,
+      "pdfBytes": 978583
+    },
+    {
+      "route": "/articles/lot-i-sodom/",
+      "screenTarget": "Лота легко",
+      "screenContainsTarget": true,
+      "screenOccurrences": 3,
+      "pdfContainsTarget": true,
+      "pdfPages": 24,
+      "pdfBytes": 7392190
+    }
+  ],
+  "disposition": "Fresh local PDF extraction reproduces all four previously individually verified omissions and preserves the control phrase on the control route. The historical 48/87 route count was not repeated."
+}

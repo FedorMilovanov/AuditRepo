@@ -1,0 +1,521 @@
+{
+  "productSha": "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+  "browser": "Chromium 153.0.8010.0",
+  "provenance": "Fresh Playwright against exact-SHA local production-like dist; /hard-texts/ at 390px and 320px mobile widths; trusted touchscreen tap contrasted with mouse click and keyboard Enter controls; local static server, not live host or physical device.",
+  "route": "/hard-texts/",
+  "widths": [
+    390,
+    320
+  ],
+  "visits": 6,
+  "records": [
+    {
+      "width": 390,
+      "method": "touch",
+      "pre": {
+        "scrollY": 480,
+        "barShown": true,
+        "gbSearchExists": false,
+        "gbSearchReady": null,
+        "gbSearchLoading": null,
+        "gbSearchBootRequested": null,
+        "openAfterLoad": null,
+        "loadState": null,
+        "searchScriptUrls": [],
+        "dialogClass": null,
+        "inputFocused": false,
+        "activeClass": ""
+      },
+      "afterFirstTap": {
+        "scrollY": 480,
+        "barShown": true,
+        "gbSearchExists": true,
+        "gbSearchReady": false,
+        "gbSearchLoading": false,
+        "gbSearchBootRequested": null,
+        "openAfterLoad": true,
+        "loadState": "idle",
+        "searchScriptUrls": [
+          "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        ],
+        "dialogClass": null,
+        "inputFocused": false,
+        "activeClass": "mcp-search"
+      },
+      "traceAfterFirstTap": [
+        {
+          "event": "touchstart-capture",
+          "target": "SPAN",
+          "class": "",
+          "loading": null,
+          "boot": null,
+          "openAfterLoad": null
+        },
+        {
+          "event": "click-capture",
+          "pointerType": "touch",
+          "detail": 1,
+          "trusted": true,
+          "loading": true,
+          "boot": null,
+          "openAfterLoad": null,
+          "gbSearchReady": null
+        },
+        {
+          "event": "touchstart-after-bubble",
+          "loading": true,
+          "boot": null,
+          "openAfterLoad": true,
+          "gbSearchReady": null
+        }
+      ],
+      "afterSecondTap": {
+        "scrollY": 0,
+        "barShown": true,
+        "gbSearchExists": true,
+        "gbSearchReady": true,
+        "gbSearchLoading": false,
+        "gbSearchBootRequested": true,
+        "openAfterLoad": false,
+        "loadState": "ready",
+        "searchScriptUrls": [
+          "http://127.0.0.1:43259/js/search.js?v=106d65f6",
+          "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        ],
+        "dialogClass": "cp-backdrop is-open",
+        "inputFocused": true,
+        "activeClass": "cp-input"
+      },
+      "secondTapOpened": true,
+      "requests": [
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/css/command-palette.css?v=3b88813f"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/css/command-palette.css?v=3b88813f"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "method": "mouse",
+      "pre": {
+        "scrollY": 480,
+        "barShown": true,
+        "gbSearchExists": false,
+        "gbSearchReady": null,
+        "gbSearchLoading": null,
+        "gbSearchBootRequested": null,
+        "openAfterLoad": null,
+        "loadState": null,
+        "searchScriptUrls": [],
+        "dialogClass": null,
+        "inputFocused": false,
+        "activeClass": ""
+      },
+      "after": {
+        "scrollY": 0,
+        "barShown": true,
+        "gbSearchExists": true,
+        "gbSearchReady": true,
+        "gbSearchLoading": false,
+        "gbSearchBootRequested": true,
+        "openAfterLoad": false,
+        "loadState": "ready",
+        "searchScriptUrls": [
+          "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        ],
+        "dialogClass": "cp-backdrop is-open",
+        "inputFocused": true,
+        "activeClass": "cp-input"
+      },
+      "opened": true,
+      "requests": [
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "method": "enter",
+      "pre": {
+        "scrollY": 480,
+        "barShown": true,
+        "gbSearchExists": false,
+        "gbSearchReady": null,
+        "gbSearchLoading": null,
+        "gbSearchBootRequested": null,
+        "openAfterLoad": null,
+        "loadState": null,
+        "searchScriptUrls": [],
+        "dialogClass": null,
+        "inputFocused": false,
+        "activeClass": ""
+      },
+      "after": {
+        "scrollY": 0,
+        "barShown": true,
+        "gbSearchExists": true,
+        "gbSearchReady": true,
+        "gbSearchLoading": false,
+        "gbSearchBootRequested": true,
+        "openAfterLoad": false,
+        "loadState": "ready",
+        "searchScriptUrls": [
+          "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        ],
+        "dialogClass": "cp-backdrop is-open",
+        "inputFocused": true,
+        "activeClass": "cp-input"
+      },
+      "opened": true,
+      "requests": [
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "method": "touch",
+      "pre": {
+        "scrollY": 480,
+        "barShown": true,
+        "gbSearchExists": false,
+        "gbSearchReady": null,
+        "gbSearchLoading": null,
+        "gbSearchBootRequested": null,
+        "openAfterLoad": null,
+        "loadState": null,
+        "searchScriptUrls": [],
+        "dialogClass": null,
+        "inputFocused": false,
+        "activeClass": ""
+      },
+      "afterFirstTap": {
+        "scrollY": 480,
+        "barShown": true,
+        "gbSearchExists": true,
+        "gbSearchReady": false,
+        "gbSearchLoading": false,
+        "gbSearchBootRequested": null,
+        "openAfterLoad": true,
+        "loadState": "idle",
+        "searchScriptUrls": [
+          "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        ],
+        "dialogClass": null,
+        "inputFocused": false,
+        "activeClass": "mcp-search"
+      },
+      "traceAfterFirstTap": [
+        {
+          "event": "touchstart-capture",
+          "target": "SPAN",
+          "class": "",
+          "loading": null,
+          "boot": null,
+          "openAfterLoad": null
+        },
+        {
+          "event": "click-capture",
+          "pointerType": "touch",
+          "detail": 1,
+          "trusted": true,
+          "loading": true,
+          "boot": null,
+          "openAfterLoad": null,
+          "gbSearchReady": null
+        },
+        {
+          "event": "touchstart-after-bubble",
+          "loading": true,
+          "boot": null,
+          "openAfterLoad": true,
+          "gbSearchReady": null
+        }
+      ],
+      "afterSecondTap": {
+        "scrollY": 0,
+        "barShown": true,
+        "gbSearchExists": true,
+        "gbSearchReady": true,
+        "gbSearchLoading": false,
+        "gbSearchBootRequested": true,
+        "openAfterLoad": false,
+        "loadState": "ready",
+        "searchScriptUrls": [
+          "http://127.0.0.1:43259/js/search.js?v=106d65f6",
+          "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        ],
+        "dialogClass": "cp-backdrop is-open",
+        "inputFocused": true,
+        "activeClass": "cp-input"
+      },
+      "secondTapOpened": true,
+      "requests": [
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/css/command-palette.css?v=3b88813f"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/css/command-palette.css?v=3b88813f"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "method": "mouse",
+      "pre": {
+        "scrollY": 480,
+        "barShown": true,
+        "gbSearchExists": false,
+        "gbSearchReady": null,
+        "gbSearchLoading": null,
+        "gbSearchBootRequested": null,
+        "openAfterLoad": null,
+        "loadState": null,
+        "searchScriptUrls": [],
+        "dialogClass": null,
+        "inputFocused": false,
+        "activeClass": ""
+      },
+      "after": {
+        "scrollY": 0,
+        "barShown": true,
+        "gbSearchExists": true,
+        "gbSearchReady": true,
+        "gbSearchLoading": false,
+        "gbSearchBootRequested": true,
+        "openAfterLoad": false,
+        "loadState": "ready",
+        "searchScriptUrls": [
+          "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        ],
+        "dialogClass": "cp-backdrop is-open",
+        "inputFocused": true,
+        "activeClass": "cp-input"
+      },
+      "opened": true,
+      "requests": [
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "method": "enter",
+      "pre": {
+        "scrollY": 480,
+        "barShown": true,
+        "gbSearchExists": false,
+        "gbSearchReady": null,
+        "gbSearchLoading": null,
+        "gbSearchBootRequested": null,
+        "openAfterLoad": null,
+        "loadState": null,
+        "searchScriptUrls": [],
+        "dialogClass": null,
+        "inputFocused": false,
+        "activeClass": ""
+      },
+      "after": {
+        "scrollY": 0,
+        "barShown": true,
+        "gbSearchExists": true,
+        "gbSearchReady": true,
+        "gbSearchLoading": false,
+        "gbSearchBootRequested": true,
+        "openAfterLoad": false,
+        "loadState": "ready",
+        "searchScriptUrls": [
+          "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        ],
+        "dialogClass": "cp-backdrop is-open",
+        "inputFocused": true,
+        "activeClass": "cp-input"
+      },
+      "opened": true,
+      "requests": [
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/js/search.js?v=106d65f6"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "request",
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        },
+        {
+          "type": "response",
+          "status": 200,
+          "url": "http://127.0.0.1:43259/data/search-manifest.json"
+        }
+      ]
+    }
+  ]
+}

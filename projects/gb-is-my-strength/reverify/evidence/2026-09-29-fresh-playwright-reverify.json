@@ -1,0 +1,595 @@
+{
+  "browser": "153.0.8010.0",
+  "forcedColors_none": {
+    "active": false,
+    "button": {
+      "background": "rgb(41, 37, 36)",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "borderColor": "rgb(229, 231, 235)",
+      "rect": {
+        "x": 338,
+        "y": 15,
+        "w": 36,
+        "h": 30
+      }
+    },
+    "bars": [
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "x": 346,
+          "y": 23,
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "x": 346,
+          "y": 29,
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "x": 346,
+          "y": 35,
+          "w": 20,
+          "h": 2
+        }
+      }
+    ]
+  },
+  "forcedColors_active": {
+    "active": true,
+    "button": {
+      "background": "rgb(255, 255, 255)",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "borderColor": "rgb(0, 0, 0)",
+      "rect": {
+        "x": 338,
+        "y": 15,
+        "w": 36,
+        "h": 30
+      }
+    },
+    "bars": [
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "x": 346,
+          "y": 23,
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "x": 346,
+          "y": 29,
+          "w": 20,
+          "h": 2
+        }
+      },
+      {
+        "bg": "rgb(255, 255, 255)",
+        "rect": {
+          "x": 346,
+          "y": 35,
+          "w": 20,
+          "h": 2
+        }
+      }
+    ],
+    "menuExpanded": "true",
+    "menuClass": "lg:hidden fixed inset-0 z-40 bg-stone-900 pt-16 overflow-y-auto"
+  },
+  "overlap": [
+    {
+      "route": "/",
+      "width": 1024,
+      "search": [
+        923.453125,
+        12.5,
+        44,
+        44
+      ],
+      "theme": [
+        955.453125,
+        12.5,
+        44,
+        44
+      ],
+      "overlap": 12,
+      "hit": "theme"
+    },
+    {
+      "route": "/",
+      "width": 1280,
+      "search": [
+        1152.8125,
+        12.5,
+        44,
+        44
+      ],
+      "theme": [
+        1184.8125,
+        12.5,
+        44,
+        44
+      ],
+      "overlap": 12,
+      "hit": "theme"
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "search": [
+        1275,
+        12.5,
+        44,
+        44
+      ],
+      "theme": [
+        1307,
+        12.5,
+        44,
+        44
+      ],
+      "overlap": 12,
+      "hit": "theme"
+    },
+    {
+      "route": "/izbrannoe/",
+      "width": 1024,
+      "search": [
+        869,
+        6.5,
+        44,
+        44
+      ],
+      "theme": [
+        901,
+        6.5,
+        44,
+        44
+      ],
+      "overlap": 12,
+      "hit": "theme"
+    },
+    {
+      "route": "/izbrannoe/",
+      "width": 1280,
+      "search": [
+        1027.234375,
+        6.5,
+        44,
+        44
+      ],
+      "theme": [
+        1059.234375,
+        6.5,
+        44,
+        44
+      ],
+      "overlap": 12,
+      "hit": "theme"
+    },
+    {
+      "route": "/izbrannoe/",
+      "width": 1440,
+      "search": [
+        1107.234375,
+        6.5,
+        44,
+        44
+      ],
+      "theme": [
+        1139.234375,
+        6.5,
+        44,
+        44
+      ],
+      "overlap": 12,
+      "hit": "theme"
+    },
+    {
+      "route": "/hard-texts/genesis-6/",
+      "width": 1024,
+      "search": [
+        908.5,
+        6.5,
+        44,
+        44
+      ],
+      "theme": [
+        940.5,
+        6.5,
+        44,
+        44
+      ],
+      "overlap": 12,
+      "hit": "theme"
+    },
+    {
+      "route": "/hard-texts/genesis-6/",
+      "width": 1280,
+      "search": [
+        1036.5,
+        6.5,
+        44,
+        44
+      ],
+      "theme": [
+        1068.5,
+        6.5,
+        44,
+        44
+      ],
+      "overlap": 12,
+      "hit": "theme"
+    },
+    {
+      "route": "/hard-texts/genesis-6/",
+      "width": 1440,
+      "search": [
+        1116.5,
+        6.5,
+        44,
+        44
+      ],
+      "theme": [
+        1148.5,
+        6.5,
+        44,
+        44
+      ],
+      "overlap": 12,
+      "hit": "theme"
+    }
+  ],
+  "mobileTab": [
+    {
+      "tag": "BUTTON",
+      "id": "mcpBackBtn",
+      "cls": "mcp-icon",
+      "label": "Назад",
+      "top": -51,
+      "opacity": "1"
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "cls": "mcp-icon",
+      "label": "На главную",
+      "top": -51,
+      "opacity": "1"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "cls": "mcp-search",
+      "label": "Поиск по сайту…",
+      "top": -51,
+      "opacity": "1"
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "cls": "skip-link",
+      "label": "Перейти к содержанию",
+      "top": -37,
+      "opacity": "1"
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "cls": "breadcrumb__link",
+      "label": "Главная",
+      "top": 27,
+      "opacity": "1"
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "cls": "btn btn-primary",
+      "label": "Исследовать атлас",
+      "top": 398,
+      "opacity": "1"
+    }
+  ],
+  "scrollTopFocus": {
+    "found": true,
+    "tabStops": 95,
+    "opacity": "0",
+    "outline": "rgb(122, 46, 46) solid 2px",
+    "focusVisible": true,
+    "rect": [
+      1291.75,
+      841.75,
+      42.5,
+      42.5
+    ]
+  },
+  "headingAnchor": {
+    "count": 13,
+    "tabOrderIndex": 2,
+    "tabStops": 3,
+    "box": {
+      "x": 181.984375,
+      "y": 1564.109375,
+      "width": 44,
+      "height": 44
+    },
+    "state": {
+      "focusVisible": true,
+      "opacity": "0.485231",
+      "outline": "rgb(26, 26, 26) none 3px"
+    }
+  },
+  "readerScale": [
+    {
+      "chapter": 1,
+      "total": 17,
+      "unchanged": 14,
+      "changed": 3,
+      "unchangedExamples": [
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "Один из ключевых литературных приёмов здесь — inclusio (лат. «включение», «обрамление"
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "Сначала зафиксируем различия Матфея и Луки без преждевременного объяснения их происхо"
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "Раздел, известный как «антитезыШесть речений Нагорной проповеди «вы слышали… а Я гово"
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "Богословское значение этого блока огромно. Христос переносит фокус с внешнего акта на"
+        }
+      ],
+      "changedExamples": [
+        {
+          "base": 16,
+          "scaled": 20,
+          "ratio": 1.25,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "Нагорная проповедь — это не просто известнейший этический текст Нового ЗаветаВторая ч"
+        },
+        {
+          "base": 16,
+          "scaled": 20,
+          "ratio": 1.25,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "Такой порядок принципиален. Пока мы не увидим, что содержится в Матфея 5–7 и Луки 6:1"
+        }
+      ],
+      "main1": "16px",
+      "main125": "20px"
+    },
+    {
+      "chapter": 2,
+      "total": 15,
+      "unchanged": 6,
+      "changed": 9,
+      "unchangedExamples": [
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-sm leading-relaxed mb-3",
+          "text": "Ф. Дэвид Фарнелл в фундаментальной статье «Как взгляды на богодухновенность повлияли "
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-sm leading-relaxed mb-3",
+          "text": "Фарнелл приходит к двум резким выводам о критической традиции, из которой выросли мно"
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-sm leading-relaxed",
+          "text": "Это объясняет, почему Семинария Мастерс упорно защищает independence view. Но для чес"
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "Вопрос о том, насколько дословно евангелисты цитируют Иисуса, является лакмусовой бум"
+        }
+      ],
+      "changedExamples": [
+        {
+          "base": 16,
+          "scaled": 20,
+          "ratio": 1.25,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "В Части I мы увидели, что Матфей и Лука передают одно и то же учение Иисуса с различн"
+        },
+        {
+          "base": 16,
+          "scaled": 20,
+          "ratio": 1.25,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "Когда мы приступаем к изучению того, как Нагорная проповедь была зафиксирована в текс"
+        }
+      ],
+      "main1": "16px",
+      "main125": "20px"
+    },
+    {
+      "chapter": 3,
+      "total": 15,
+      "unchanged": 4,
+      "changed": 11,
+      "unchangedExamples": [
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-sm leading-relaxed",
+          "text": "Нельзя карикатурировать всю Dallas-традицию. Даже C. I. Scofield допускал «прекрасное"
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-sm leading-relaxed",
+          "text": "В трактате The Hermeneutics of the Biblical Writers (2018) Абнер Чау помогает увидеть"
+        },
+        {
+          "base": 16,
+          "scaled": 16,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-6 text-justify",
+          "text": "Иисус не говорит Своим посланникам: «Идите и учите народы соблюдать Мои будущие откро"
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-sm leading-relaxed",
+          "text": "Потому что Иисус уже на горе говорил как Владыка вселенной, Который будет судить живы"
+        }
+      ],
+      "changedExamples": [
+        {
+          "base": 16,
+          "scaled": 20,
+          "ratio": 1.25,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-6 text-justify",
+          "text": "Разобравшись с содержанием (Часть I) и — что особенно важно — с методологией записи Е"
+        },
+        {
+          "base": 16,
+          "scaled": 20,
+          "ratio": 1.25,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-6 text-justify",
+          "text": "Исторически ученики Иисуса были иудеями, жившими до Креста, до Воскресения и до Пятид"
+        }
+      ],
+      "main1": "16px",
+      "main125": "20px"
+    },
+    {
+      "chapter": 4,
+      "total": 56,
+      "unchanged": 4,
+      "changed": 52,
+      "unchangedExamples": [
+        {
+          "base": 12,
+          "scaled": 12,
+          "cls": "text-stone-500 text-sm font-medium ml-14",
+          "text": "ЭкзегезаВнимательное извлечение из текста того смысла, который в нём действительно за"
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "Вместо того чтобы извиняться за различия между Матфеем и Лукой и судорожно пытаться «"
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "Четыре одинаковых отчёта — это всего лишь одно свидетельство, повторенное четырежды. "
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "Златоустовский аргумент остаётся полезным: полное механическое совпадение могло бы вы"
+        }
+      ],
+      "changedExamples": [
+        {
+          "base": 16,
+          "scaled": 20,
+          "ratio": 1.25,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "После первых трёх частей вопрос становится неизбежным: почему мы вообще вправе доверя"
+        },
+        {
+          "base": 16,
+          "scaled": 20,
+          "ratio": 1.25,
+          "cls": "text-stone-700 text-[16px] leading-relaxed mb-5 text-justify",
+          "text": "Сложность вопроса реальна. Иисус, вероятно, часто учил на арамейском, хотя греческий "
+        }
+      ],
+      "main1": "16px",
+      "main125": "20px"
+    },
+    {
+      "chapter": 5,
+      "total": 48,
+      "unchanged": 19,
+      "changed": 29,
+      "unchangedExamples": [
+        {
+          "base": 12,
+          "scaled": 12,
+          "cls": "text-stone-500 text-sm font-medium ml-14 font-sans",
+          "text": "John MacArthur, GTY #2222: Мф 5:20 как герменевтическийДисциплина о том, как правильн"
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-sm leading-relaxed mb-3",
+          "text": "В книге The Beatitudes: The Only Way to Happiness (Moody, 1998) МакАртур формулирует "
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-sm leading-relaxed mb-3",
+          "text": "«Я скажу это прямо здесь, и вы увидите это по мере нашего движения: несчастье — это к"
+        },
+        {
+          "base": 14,
+          "scaled": 14,
+          "cls": "text-stone-700 text-sm leading-relaxed",
+          "text": "Этот парадокс — не риторический приём. Это онтологическая структура Царства, перевёрн"
+        }
+      ],
+      "changedExamples": [
+        {
+          "base": 16,
+          "scaled": 20,
+          "ratio": 1.25,
+          "cls": "",
+          "text": "Пятая часть подводит серию к кульминации. Мы уже рассмотрели, что говорит Нагорная пр"
+        },
+        {
+          "base": 16,
+          "scaled": 20,
+          "ratio": 1.25,
+          "cls": "",
+          "text": "Здесь ошибка особенно дорого стоит. Если читать Мф 5–7 как лестницу заслуг, человек п"
+        }
+      ],
+      "main1": "16px",
+      "main125": "20px"
+    }
+  ],
+  "headerOverlapMouseClick": {
+    "route": "/",
+    "width": 1280,
+    "point": "center of the shared 12px overlap",
+    "actualMouseClickCapturedAs": "themeToggle",
+    "implication": "search button cannot receive an activation from this shared strip"
+  }
+}

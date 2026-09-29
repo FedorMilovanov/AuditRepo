@@ -1,0 +1,837 @@
+{
+  "productSha": "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+  "browser": "Chromium 153.0.8010.0",
+  "provenance": "Fresh Playwright against exact-SHA local production-like dist; mobile emulation 390x844. Wheel cases use discrete 120px Playwright mouse-wheel inputs; touch cases use CDP Input.dispatchTouchEvent start/move/end native touch pipeline. Not live-host or physical-device testing.",
+  "routes": [
+    "/articles/",
+    "/biografii/",
+    "/hard-texts/"
+  ],
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "settleMsAfterWheel": 700,
+  "touchGestureMoves": 5,
+  "visits": 6,
+  "assertionCount": 30,
+  "passed": 24,
+  "failed": 6,
+  "wheel": {
+    "assertionCount": 18,
+    "passed": 12,
+    "failed": 6,
+    "records": [
+      {
+        "route": "/articles/",
+        "states": [
+          {
+            "stage": "initial",
+            "scrollY": 0,
+            "navbarClass": "h-navbar",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-down-1",
+            "scrollY": 120,
+            "navbarClass": "h-navbar scrolled",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-down-2",
+            "scrollY": 240,
+            "navbarClass": "h-navbar scrolled",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-down-3",
+            "scrollY": 360,
+            "navbarClass": "h-navbar scrolled nav-hidden",
+            "navbarHidden": true,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-down-4",
+            "scrollY": 480,
+            "navbarClass": "h-navbar scrolled nav-hidden",
+            "navbarHidden": true,
+            "mobileChromeShown": true,
+            "barRect": {
+              "x": 0,
+              "y": 0,
+              "right": 390,
+              "bottom": 53,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-up-1",
+            "scrollY": 360,
+            "navbarClass": "h-navbar scrolled",
+            "navbarHidden": false,
+            "mobileChromeShown": true,
+            "barRect": {
+              "x": 0,
+              "y": 0,
+              "right": 390,
+              "bottom": 53,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-up-2",
+            "scrollY": 240,
+            "navbarClass": "h-navbar scrolled",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          }
+        ],
+        "assertions": [
+          {
+            "name": "third 120px wheel hides the native navbar",
+            "ok": true
+          },
+          {
+            "name": "MobileChrome synchronizes on the threshold-crossing wheel",
+            "ok": false,
+            "observed": {
+              "shown": false,
+              "barRect": {
+                "x": 0,
+                "y": -58.3,
+                "right": 390,
+                "bottom": -5.3,
+                "width": 390,
+                "height": 53
+              }
+            }
+          },
+          {
+            "name": "fourth wheel shows MobileChrome with all controls visible",
+            "ok": true
+          },
+          {
+            "name": "first upward wheel restores the native navbar",
+            "ok": true
+          },
+          {
+            "name": "MobileChrome synchronizes on that same upward wheel",
+            "ok": false,
+            "observed": {
+              "shown": true,
+              "barRect": {
+                "x": 0,
+                "y": 0,
+                "right": 390,
+                "bottom": 53,
+                "width": 390,
+                "height": 53
+              }
+            }
+          },
+          {
+            "name": "second upward wheel hides MobileChrome",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "route": "/biografii/",
+        "states": [
+          {
+            "stage": "initial",
+            "scrollY": 0,
+            "navbarClass": "h-navbar",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-down-1",
+            "scrollY": 120,
+            "navbarClass": "h-navbar scrolled",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-down-2",
+            "scrollY": 240,
+            "navbarClass": "h-navbar scrolled",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-down-3",
+            "scrollY": 360,
+            "navbarClass": "h-navbar scrolled nav-hidden",
+            "navbarHidden": true,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-down-4",
+            "scrollY": 480,
+            "navbarClass": "h-navbar scrolled nav-hidden",
+            "navbarHidden": true,
+            "mobileChromeShown": true,
+            "barRect": {
+              "x": 0,
+              "y": 0,
+              "right": 390,
+              "bottom": 53,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-up-1",
+            "scrollY": 360,
+            "navbarClass": "h-navbar scrolled",
+            "navbarHidden": false,
+            "mobileChromeShown": true,
+            "barRect": {
+              "x": 0,
+              "y": 0,
+              "right": 390,
+              "bottom": 53,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-up-2",
+            "scrollY": 240,
+            "navbarClass": "h-navbar scrolled",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          }
+        ],
+        "assertions": [
+          {
+            "name": "third 120px wheel hides the native navbar",
+            "ok": true
+          },
+          {
+            "name": "MobileChrome synchronizes on the threshold-crossing wheel",
+            "ok": false,
+            "observed": {
+              "shown": false,
+              "barRect": {
+                "x": 0,
+                "y": -58.3,
+                "right": 390,
+                "bottom": -5.3,
+                "width": 390,
+                "height": 53
+              }
+            }
+          },
+          {
+            "name": "fourth wheel shows MobileChrome with all controls visible",
+            "ok": true
+          },
+          {
+            "name": "first upward wheel restores the native navbar",
+            "ok": true
+          },
+          {
+            "name": "MobileChrome synchronizes on that same upward wheel",
+            "ok": false,
+            "observed": {
+              "shown": true,
+              "barRect": {
+                "x": 0,
+                "y": 0,
+                "right": 390,
+                "bottom": 53,
+                "width": 390,
+                "height": 53
+              }
+            }
+          },
+          {
+            "name": "second upward wheel hides MobileChrome",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "route": "/hard-texts/",
+        "states": [
+          {
+            "stage": "initial",
+            "scrollY": 0,
+            "navbarClass": "h-navbar",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-down-1",
+            "scrollY": 120,
+            "navbarClass": "h-navbar scrolled",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-down-2",
+            "scrollY": 240,
+            "navbarClass": "h-navbar scrolled",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-down-3",
+            "scrollY": 360,
+            "navbarClass": "h-navbar scrolled nav-hidden",
+            "navbarHidden": true,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-down-4",
+            "scrollY": 480,
+            "navbarClass": "h-navbar scrolled nav-hidden",
+            "navbarHidden": true,
+            "mobileChromeShown": true,
+            "barRect": {
+              "x": 0,
+              "y": 0,
+              "right": 390,
+              "bottom": 53,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-up-1",
+            "scrollY": 360,
+            "navbarClass": "h-navbar scrolled",
+            "navbarHidden": false,
+            "mobileChromeShown": true,
+            "barRect": {
+              "x": 0,
+              "y": 0,
+              "right": 390,
+              "bottom": 53,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "wheel-up-2",
+            "scrollY": 240,
+            "navbarClass": "h-navbar scrolled",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          }
+        ],
+        "assertions": [
+          {
+            "name": "third 120px wheel hides the native navbar",
+            "ok": true
+          },
+          {
+            "name": "MobileChrome synchronizes on the threshold-crossing wheel",
+            "ok": false,
+            "observed": {
+              "shown": false,
+              "barRect": {
+                "x": 0,
+                "y": -58.3,
+                "right": 390,
+                "bottom": -5.3,
+                "width": 390,
+                "height": 53
+              }
+            }
+          },
+          {
+            "name": "fourth wheel shows MobileChrome with all controls visible",
+            "ok": true
+          },
+          {
+            "name": "first upward wheel restores the native navbar",
+            "ok": true
+          },
+          {
+            "name": "MobileChrome synchronizes on that same upward wheel",
+            "ok": false,
+            "observed": {
+              "shown": true,
+              "barRect": {
+                "x": 0,
+                "y": 0,
+                "right": 390,
+                "bottom": 53,
+                "width": 390,
+                "height": 53
+              }
+            }
+          },
+          {
+            "name": "second upward wheel hides MobileChrome",
+            "ok": true
+          }
+        ]
+      }
+    ],
+    "assertionSummary": {
+      "total": 18,
+      "passed": 12,
+      "failed": 6
+    }
+  },
+  "touch": {
+    "assertionCount": 12,
+    "passed": 12,
+    "failed": 0,
+    "records": [
+      {
+        "route": "/articles/",
+        "states": [
+          {
+            "stage": "initial",
+            "scrollY": 0,
+            "navbarClass": "h-navbar",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "touch-down",
+            "scrollY": 485,
+            "navbarClass": "h-navbar scrolled nav-hidden",
+            "navbarHidden": true,
+            "mobileChromeShown": true,
+            "barRect": {
+              "x": 0,
+              "y": 0,
+              "right": 390,
+              "bottom": 53,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "touch-up",
+            "scrollY": 0,
+            "navbarClass": "h-navbar",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          }
+        ],
+        "visibleControls": [
+          {
+            "selector": "#mcpBackBtn",
+            "name": "Назад",
+            "rect": {
+              "x": 10,
+              "y": 7,
+              "right": 48,
+              "bottom": 45,
+              "width": 38,
+              "height": 38
+            }
+          },
+          {
+            "selector": ".mcp-top .mcp-icon[href]",
+            "name": "На главную",
+            "rect": {
+              "x": 54,
+              "y": 7,
+              "right": 92,
+              "bottom": 45,
+              "width": 38,
+              "height": 38
+            }
+          },
+          {
+            "selector": ".mcp-search",
+            "name": "Открыть поиск по сайту",
+            "rect": {
+              "x": 98,
+              "y": 7,
+              "right": 380,
+              "bottom": 45,
+              "width": 282,
+              "height": 38
+            }
+          }
+        ],
+        "assertions": [
+          {
+            "name": "downward touch gesture hides navbar and shows MobileChrome",
+            "ok": true
+          },
+          {
+            "name": "all MobileChrome controls are visible after downward touch",
+            "ok": true
+          },
+          {
+            "name": "upward touch gesture restores navbar and hides MobileChrome",
+            "ok": true
+          },
+          {
+            "name": "MobileChrome controls leave the viewport after upward touch",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "route": "/biografii/",
+        "states": [
+          {
+            "stage": "initial",
+            "scrollY": 0,
+            "navbarClass": "h-navbar",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "touch-down",
+            "scrollY": 485,
+            "navbarClass": "h-navbar scrolled nav-hidden",
+            "navbarHidden": true,
+            "mobileChromeShown": true,
+            "barRect": {
+              "x": 0,
+              "y": 0,
+              "right": 390,
+              "bottom": 53,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "touch-up",
+            "scrollY": 0,
+            "navbarClass": "h-navbar",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          }
+        ],
+        "visibleControls": [
+          {
+            "selector": "#mcpBackBtn",
+            "name": "Назад",
+            "rect": {
+              "x": 10,
+              "y": 7,
+              "right": 48,
+              "bottom": 45,
+              "width": 38,
+              "height": 38
+            }
+          },
+          {
+            "selector": ".mcp-top .mcp-icon[href]",
+            "name": "На главную",
+            "rect": {
+              "x": 54,
+              "y": 7,
+              "right": 92,
+              "bottom": 45,
+              "width": 38,
+              "height": 38
+            }
+          },
+          {
+            "selector": ".mcp-search",
+            "name": "Открыть поиск по сайту",
+            "rect": {
+              "x": 98,
+              "y": 7,
+              "right": 380,
+              "bottom": 45,
+              "width": 282,
+              "height": 38
+            }
+          }
+        ],
+        "assertions": [
+          {
+            "name": "downward touch gesture hides navbar and shows MobileChrome",
+            "ok": true
+          },
+          {
+            "name": "all MobileChrome controls are visible after downward touch",
+            "ok": true
+          },
+          {
+            "name": "upward touch gesture restores navbar and hides MobileChrome",
+            "ok": true
+          },
+          {
+            "name": "MobileChrome controls leave the viewport after upward touch",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "route": "/hard-texts/",
+        "states": [
+          {
+            "stage": "initial",
+            "scrollY": 0,
+            "navbarClass": "h-navbar",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "touch-down",
+            "scrollY": 485,
+            "navbarClass": "h-navbar scrolled nav-hidden",
+            "navbarHidden": true,
+            "mobileChromeShown": true,
+            "barRect": {
+              "x": 0,
+              "y": 0,
+              "right": 390,
+              "bottom": 53,
+              "width": 390,
+              "height": 53
+            }
+          },
+          {
+            "stage": "touch-up",
+            "scrollY": 0,
+            "navbarClass": "h-navbar",
+            "navbarHidden": false,
+            "mobileChromeShown": false,
+            "barRect": {
+              "x": 0,
+              "y": -58.3,
+              "right": 390,
+              "bottom": -5.3,
+              "width": 390,
+              "height": 53
+            }
+          }
+        ],
+        "visibleControls": [
+          {
+            "selector": "#mcpBackBtn",
+            "name": "Назад",
+            "rect": {
+              "x": 10,
+              "y": 7,
+              "right": 48,
+              "bottom": 45,
+              "width": 38,
+              "height": 38
+            }
+          },
+          {
+            "selector": ".mcp-top .mcp-icon[href]",
+            "name": "На главную",
+            "rect": {
+              "x": 54,
+              "y": 7,
+              "right": 92,
+              "bottom": 45,
+              "width": 38,
+              "height": 38
+            }
+          },
+          {
+            "selector": ".mcp-search",
+            "name": "Открыть поиск по сайту",
+            "rect": {
+              "x": 98,
+              "y": 7,
+              "right": 380,
+              "bottom": 45,
+              "width": 282,
+              "height": 38
+            }
+          }
+        ],
+        "assertions": [
+          {
+            "name": "downward touch gesture hides navbar and shows MobileChrome",
+            "ok": true
+          },
+          {
+            "name": "all MobileChrome controls are visible after downward touch",
+            "ok": true
+          },
+          {
+            "name": "upward touch gesture restores navbar and hides MobileChrome",
+            "ok": true
+          },
+          {
+            "name": "MobileChrome controls leave the viewport after upward touch",
+            "ok": true
+          }
+        ]
+      }
+    ],
+    "assertionSummary": {
+      "total": 12,
+      "passed": 12,
+      "failed": 0
+    }
+  },
+  "evidenceNote": "Wheel and touch state transitions, all 30 assertion outcomes including six wheel failures, and visible touch-control geometry are retained; repeated offscreen toolbar rectangles were removed."
+}

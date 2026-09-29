@@ -1,0 +1,250 @@
+{
+  "browser": "153.0.8010.0",
+  "themeContrast": [
+    {
+      "route": "/hard-texts/genesis-6/",
+      "rect": {
+        "x": 1068.5,
+        "y": 6.5,
+        "w": 44,
+        "h": 44
+      },
+      "stroke": "rgb(26, 26, 26)",
+      "color": "rgb(0, 0, 0)",
+      "bg": [
+        {
+          "tag": "BODY",
+          "cls": "genesis6-hub-page",
+          "bg": "rgb(14, 17, 22)"
+        },
+        {
+          "tag": "HTML",
+          "cls": "",
+          "bg": "rgb(14, 17, 22)"
+        }
+      ],
+      "sampleBackground": [
+        19,
+        20,
+        24
+      ],
+      "foregroundComposite": [
+        26,
+        26,
+        26
+      ],
+      "contrast": 1.06
+    },
+    {
+      "route": "/",
+      "rect": {
+        "x": 1184.8125,
+        "y": 12.5,
+        "w": 44,
+        "h": 44
+      },
+      "stroke": "color(srgb 0.364706 0.419608 0.431373 / 0.88)",
+      "color": "color(srgb 0.364706 0.419608 0.431373 / 0.88)",
+      "bg": [
+        {
+          "tag": "BODY",
+          "cls": "home-page",
+          "bg": "rgb(243, 239, 230)"
+        }
+      ],
+      "sampleBackground": [
+        243,
+        239,
+        230
+      ],
+      "foregroundComposite": [
+        111,
+        123,
+        124
+      ],
+      "contrast": 3.81
+    }
+  ],
+  "readerTargets": {
+    "anchorCount": 21,
+    "anchorSizes": [
+      "44x44"
+    ],
+    "badge": {
+      "rect": {
+        "x": 312.7,
+        "y": 39,
+        "w": 20.3,
+        "h": 13,
+        "cx": 322.9,
+        "cy": 45.5
+      },
+      "before": {
+        "content": "\"\"",
+        "inset": "-4px -3px",
+        "width": "24.2812px",
+        "height": "19px"
+      },
+      "tabIndex": 0,
+      "label": "Выбрать скорость, сейчас 1×"
+    },
+    "play": {
+      "x": 292,
+      "y": 12,
+      "w": 38,
+      "h": 38,
+      "cx": 311,
+      "cy": 31
+    },
+    "rail": {
+      "rect": {
+        "x": 68,
+        "y": 12,
+        "w": 226,
+        "h": 38,
+        "cx": 181,
+        "cy": 31
+      },
+      "hidden": false,
+      "display": "flex"
+    },
+    "chips": [
+      {
+        "text": "1×",
+        "rect": {
+          "x": 68,
+          "y": 18.8,
+          "w": 34.1,
+          "h": 24.5,
+          "cx": 85.1,
+          "cy": 31
+        },
+        "gapToNext": null
+      },
+      {
+        "text": "1.25×",
+        "rect": {
+          "x": 105.1,
+          "y": 18.8,
+          "w": 52.7,
+          "h": 24.5,
+          "cx": 131.5,
+          "cy": 31
+        },
+        "gapToNext": null
+      },
+      {
+        "text": "1.5×",
+        "rect": {
+          "x": 160.8,
+          "y": 18.8,
+          "w": 45.4,
+          "h": 24.5,
+          "cx": 183.5,
+          "cy": 31
+        },
+        "gapToNext": null
+      },
+      {
+        "text": "1.75×",
+        "rect": {
+          "x": 209.2,
+          "y": 18.8,
+          "w": 52.7,
+          "h": 24.5,
+          "cx": 235.6,
+          "cy": 31
+        },
+        "gapToNext": null
+      },
+      {
+        "text": "2×",
+        "rect": {
+          "x": 265,
+          "y": 18.8,
+          "w": 34.1,
+          "h": 24.5,
+          "cx": 282,
+          "cy": 31
+        },
+        "gapToNext": null
+      }
+    ],
+    "railAfterBadge": {
+      "hidden": false,
+      "display": "flex",
+      "railRect": {
+        "x": 60,
+        "y": 12,
+        "w": 226,
+        "h": 38,
+        "cx": 173,
+        "cy": 31
+      },
+      "chips": [
+        {
+          "text": "1×",
+          "rect": {
+            "x": 60,
+            "y": 18.8,
+            "w": 34.1,
+            "h": 24.5,
+            "cx": 77.1,
+            "cy": 31
+          }
+        },
+        {
+          "text": "1.25×",
+          "rect": {
+            "x": 97.1,
+            "y": 18.8,
+            "w": 52.7,
+            "h": 24.5,
+            "cx": 123.5,
+            "cy": 31
+          }
+        },
+        {
+          "text": "1.5×",
+          "rect": {
+            "x": 152.8,
+            "y": 18.8,
+            "w": 45.4,
+            "h": 24.5,
+            "cx": 175.5,
+            "cy": 31
+          }
+        },
+        {
+          "text": "1.75×",
+          "rect": {
+            "x": 201.2,
+            "y": 18.8,
+            "w": 52.7,
+            "h": 24.5,
+            "cx": 227.6,
+            "cy": 31
+          }
+        },
+        {
+          "text": "2×",
+          "rect": {
+            "x": 257,
+            "y": 18.8,
+            "w": 34.1,
+            "h": 24.5,
+            "cx": 274,
+            "cy": 31
+          }
+        }
+      ],
+      "badge": {
+        "tabIndex": 0,
+        "expanded": "true"
+      }
+    }
+  },
+  "nagornayaTargets": {
+    "found": false
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "productSha": "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+  "browser": "Chromium 153.0.8010.0",
+  "provenance": "Fresh Playwright against exact-SHA local production-like dist; actual Playwright mouse-wheel input, not window.scrollTo; 390x844 mobile-emulation contexts; not a live-host run or touch-gesture emulation.",
+  "routes": [
+    "/articles/",
+    "/biografii/",
+    "/hard-texts/"
+  ],
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "wheelSequence": [
+    600,
+    80,
+    -600,
+    -80
+  ],
+  "settleMsAfterEachWheel": 700,
+  "visits": 3,
+  "assertionCount": 18,
+  "passed": 12,
+  "failed": 6,
+  "assertions": [
+    {"route":"/articles/","name":"one downward wheel hides the native navbar","ok":true,"observed":{"scrollY":600,"navbarClass":"h-navbar scrolled nav-hidden"}},
+    {"route":"/articles/","name":"MobileChrome synchronizes on that same downward wheel","ok":false,"observed":{"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}}},
+    {"route":"/articles/","name":"a subsequent downward wheel reveals MobileChrome and all three controls","ok":true,"observed":{"mobileChromeShown":true,"controls":[{"selector":"#mcpBackBtn","accessibleName":"Назад","rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38},"tabIndex":0},{"selector":".mcp-top .mcp-icon[href]","accessibleName":"На главную","rect":{"x":54,"y":7,"right":92,"bottom":45,"width":38,"height":38},"tabIndex":0},{"selector":".mcp-search","accessibleName":"Открыть поиск по сайту","rect":{"x":98,"y":7,"right":380,"bottom":45,"width":282,"height":38},"tabIndex":0}]}},
+    {"route":"/articles/","name":"one upward wheel restores the native navbar","ok":true,"observed":{"scrollY":80,"navbarClass":"h-navbar scrolled"}},
+    {"route":"/articles/","name":"MobileChrome synchronizes on that same upward wheel","ok":false,"observed":{"mobileChromeShown":true,"barRect":{"x":0,"y":0,"right":390,"bottom":53,"width":390,"height":53}}},
+    {"route":"/articles/","name":"a subsequent upward wheel hides MobileChrome","ok":true,"observed":{"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}}},
+    {"route":"/biografii/","name":"one downward wheel hides the native navbar","ok":true,"observed":{"scrollY":600,"navbarClass":"h-navbar scrolled nav-hidden"}},
+    {"route":"/biografii/","name":"MobileChrome synchronizes on that same downward wheel","ok":false,"observed":{"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}}},
+    {"route":"/biografii/","name":"a subsequent downward wheel reveals MobileChrome and all three controls","ok":true,"observed":{"mobileChromeShown":true,"controls":[{"selector":"#mcpBackBtn","accessibleName":"Назад","rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38},"tabIndex":0},{"selector":".mcp-top .mcp-icon[href]","accessibleName":"На главную","rect":{"x":54,"y":7,"right":92,"bottom":45,"width":38,"height":38},"tabIndex":0},{"selector":".mcp-search","accessibleName":"Открыть поиск по сайту","rect":{"x":98,"y":7,"right":380,"bottom":45,"width":282,"height":38},"tabIndex":0}]}},
+    {"route":"/biografii/","name":"one upward wheel restores the native navbar","ok":true,"observed":{"scrollY":80,"navbarClass":"h-navbar scrolled"}},
+    {"route":"/biografii/","name":"MobileChrome synchronizes on that same upward wheel","ok":false,"observed":{"mobileChromeShown":true,"barRect":{"x":0,"y":0,"right":390,"bottom":53,"width":390,"height":53}}},
+    {"route":"/biografii/","name":"a subsequent upward wheel hides MobileChrome","ok":true,"observed":{"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}}},
+    {"route":"/hard-texts/","name":"one downward wheel hides the native navbar","ok":true,"observed":{"scrollY":600,"navbarClass":"h-navbar scrolled nav-hidden"}},
+    {"route":"/hard-texts/","name":"MobileChrome synchronizes on that same downward wheel","ok":false,"observed":{"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}}},
+    {"route":"/hard-texts/","name":"a subsequent downward wheel reveals MobileChrome and all three controls","ok":true,"observed":{"mobileChromeShown":true,"controls":[{"selector":"#mcpBackBtn","accessibleName":"Назад","rect":{"x":10,"y":7,"right":48,"bottom":45,"width":38,"height":38},"tabIndex":0},{"selector":".mcp-top .mcp-icon[href]","accessibleName":"На главную","rect":{"x":54,"y":7,"right":92,"bottom":45,"width":38,"height":38},"tabIndex":0},{"selector":".mcp-search","accessibleName":"Открыть поиск по сайту","rect":{"x":98,"y":7,"right":380,"bottom":45,"width":282,"height":38},"tabIndex":0}]}},
+    {"route":"/hard-texts/","name":"one upward wheel restores the native navbar","ok":true,"observed":{"scrollY":80,"navbarClass":"h-navbar scrolled"}},
+    {"route":"/hard-texts/","name":"MobileChrome synchronizes on that same upward wheel","ok":false,"observed":{"mobileChromeShown":true,"barRect":{"x":0,"y":0,"right":390,"bottom":53,"width":390,"height":53}}},
+    {"route":"/hard-texts/","name":"a subsequent upward wheel hides MobileChrome","ok":true,"observed":{"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}}}
+  ],
+  "records": [
+    {"route":"/articles/","states":{"initial":{"scrollY":0,"navbarClass":"h-navbar","navbarHidden":false,"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}},"afterOneDownWheel":{"scrollY":600,"navbarClass":"h-navbar scrolled nav-hidden","navbarHidden":true,"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}},"afterSecondDownWheel":{"scrollY":680,"navbarClass":"h-navbar scrolled nav-hidden","navbarHidden":true,"mobileChromeShown":true,"barRect":{"x":0,"y":0,"right":390,"bottom":53,"width":390,"height":53}},"afterOneUpWheel":{"scrollY":80,"navbarClass":"h-navbar scrolled","navbarHidden":false,"mobileChromeShown":true,"barRect":{"x":0,"y":0,"right":390,"bottom":53,"width":390,"height":53}},"afterSecondUpWheel":{"scrollY":0,"navbarClass":"h-navbar","navbarHidden":false,"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}}}},
+    {"route":"/biografii/","states":{"initial":{"scrollY":0,"navbarClass":"h-navbar","navbarHidden":false,"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}},"afterOneDownWheel":{"scrollY":600,"navbarClass":"h-navbar scrolled nav-hidden","navbarHidden":true,"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}},"afterSecondDownWheel":{"scrollY":680,"navbarClass":"h-navbar scrolled nav-hidden","navbarHidden":true,"mobileChromeShown":true,"barRect":{"x":0,"y":0,"right":390,"bottom":53,"width":390,"height":53}},"afterOneUpWheel":{"scrollY":80,"navbarClass":"h-navbar scrolled","navbarHidden":false,"mobileChromeShown":true,"barRect":{"x":0,"y":0,"right":390,"bottom":53,"width":390,"height":53}},"afterSecondUpWheel":{"scrollY":0,"navbarClass":"h-navbar","navbarHidden":false,"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}}}},
+    {"route":"/hard-texts/","states":{"initial":{"scrollY":0,"navbarClass":"h-navbar","navbarHidden":false,"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}},"afterOneDownWheel":{"scrollY":600,"navbarClass":"h-navbar scrolled nav-hidden","navbarHidden":true,"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}},"afterSecondDownWheel":{"scrollY":680,"navbarClass":"h-navbar scrolled nav-hidden","navbarHidden":true,"mobileChromeShown":true,"barRect":{"x":0,"y":0,"right":390,"bottom":53,"width":390,"height":53}},"afterOneUpWheel":{"scrollY":80,"navbarClass":"h-navbar scrolled","navbarHidden":false,"mobileChromeShown":true,"barRect":{"x":0,"y":0,"right":390,"bottom":53,"width":390,"height":53}},"afterSecondUpWheel":{"scrollY":0,"navbarClass":"h-navbar","navbarHidden":false,"mobileChromeShown":false,"barRect":{"x":0,"y":-58.3,"right":390,"bottom":-5.3,"width":390,"height":53}}}}
+  ],
+  "evidenceNote": "All three route timelines, 18 check outcomes, and exact stale-state observations retained; duplicated control rectangles were removed."
+}

@@ -1,0 +1,211 @@
+{
+  "browser": "153.0.8010.0",
+  "productSha": "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+  "source": "local production-like dist; CSS color pair evaluated on exact-SHA build; dark alpha text composited over nearest opaque ancestor background; not live-host navigation",
+  "tests": [
+    {
+      "route": "/nagornaya/chast-1/",
+      "theme": "light",
+      "qualifyingVisibleSourceLinks": 6,
+      "target": {
+        "index": 0,
+        "count": 6,
+        "text": "The Spiritual Credibility Gap (Matthew 5:33–37)",
+        "href": "https://www.gty.org/library/sermons-library/2222/the-spiritual-credibility-gap",
+        "linkColor": "rgb(31, 78, 163)",
+        "parentTextColor": "rgb(120, 113, 108)",
+        "decoration": "none",
+        "background": "rgb(245, 245, 244)",
+        "surfaceClass": "bg-stone-100 border border-stone-300 rounded-2xl p-6 mt-10",
+        "parentClass": "space-y-2 font-mono text-xs text-stone-500 leading-relaxed",
+        "effectiveParentTextColor": [
+          120,
+          113,
+          108
+        ],
+        "linkToAdjacentTextContrast": 1.64
+      },
+      "focus": {
+        "focusVisible": true,
+        "color": "rgb(31, 78, 163)",
+        "decoration": "none",
+        "outline": "rgb(122, 46, 46) solid 2px"
+      },
+      "hover": {
+        "color": "rgb(122, 46, 46)",
+        "decoration": "none",
+        "outline": "rgb(122, 46, 46) solid 2px"
+      }
+    },
+    {
+      "route": "/nagornaya/chast-3/",
+      "theme": "light",
+      "qualifyingVisibleSourceLinks": 4,
+      "target": {
+        "index": 0,
+        "count": 4,
+        "text": "«The Dispensational View of the Davidic Kingdom»",
+        "href": "https://tms.edu/wp-content/uploads/2021/09/tmsj7h.pdf",
+        "linkColor": "rgb(31, 78, 163)",
+        "parentTextColor": "rgb(120, 113, 108)",
+        "decoration": "none",
+        "background": "rgb(245, 245, 244)",
+        "surfaceClass": "bg-stone-100 border border-stone-300 rounded-3xl p-8 mt-16",
+        "parentClass": "text-xs text-stone-500 leading-relaxed mb-2 flex items-start gap-1.5",
+        "effectiveParentTextColor": [
+          120,
+          113,
+          108
+        ],
+        "linkToAdjacentTextContrast": 1.64
+      },
+      "focus": {
+        "focusVisible": true,
+        "color": "rgb(31, 78, 163)",
+        "decoration": "none",
+        "outline": "rgb(122, 46, 46) solid 2px"
+      },
+      "hover": {
+        "color": "rgb(122, 46, 46)",
+        "decoration": "none",
+        "outline": "rgb(122, 46, 46) solid 2px"
+      }
+    },
+    {
+      "route": "/nagornaya/chast-5/",
+      "theme": "light",
+      "qualifyingVisibleSourceLinks": 10,
+      "target": {
+        "index": 0,
+        "count": 10,
+        "text": "The Spiritual Credibility Gap (Matthew 5:33–37)",
+        "href": "https://www.gty.org/library/sermons-library/2222/the-spiritual-credibility-gap",
+        "linkColor": "rgb(31, 78, 163)",
+        "parentTextColor": "rgb(120, 113, 108)",
+        "decoration": "none",
+        "background": "rgb(245, 245, 244)",
+        "surfaceClass": "bg-stone-100 border border-stone-300 rounded-2xl p-6 mt-10",
+        "parentClass": "flex-1 text-stone-500",
+        "effectiveParentTextColor": [
+          120,
+          113,
+          108
+        ],
+        "linkToAdjacentTextContrast": 1.64
+      },
+      "focus": {
+        "focusVisible": true,
+        "color": "rgb(31, 78, 163)",
+        "decoration": "none",
+        "outline": "rgb(122, 46, 46) solid 2px"
+      },
+      "hover": {
+        "color": "rgb(122, 46, 46)",
+        "decoration": "none",
+        "outline": "rgb(122, 46, 46) solid 2px"
+      }
+    },
+    {
+      "route": "/nagornaya/chast-1/",
+      "theme": "dark",
+      "qualifyingVisibleSourceLinks": 6,
+      "target": {
+        "index": 0,
+        "count": 6,
+        "text": "The Spiritual Credibility Gap (Matthew 5:33–37)",
+        "href": "https://www.gty.org/library/sermons-library/2222/the-spiritual-credibility-gap",
+        "linkColor": "rgb(212, 165, 116)",
+        "parentTextColor": "rgba(238, 231, 220, 0.78)",
+        "decoration": "none",
+        "background": "rgb(22, 26, 33)",
+        "surfaceClass": "bg-stone-100 border border-stone-300 rounded-2xl p-6 mt-10",
+        "parentClass": "space-y-2 font-mono text-xs text-stone-500 leading-relaxed",
+        "effectiveParentTextColor": [
+          190.48,
+          185.9,
+          178.86
+        ],
+        "linkToAdjacentTextContrast": 1.15
+      },
+      "focus": {
+        "focusVisible": true,
+        "color": "rgb(212, 165, 116)",
+        "decoration": "none",
+        "outline": "rgb(212, 165, 116) solid 2px"
+      },
+      "hover": {
+        "color": "rgb(212, 165, 116)",
+        "decoration": "none",
+        "outline": "rgb(212, 165, 116) solid 2px"
+      }
+    },
+    {
+      "route": "/nagornaya/chast-3/",
+      "theme": "dark",
+      "qualifyingVisibleSourceLinks": 4,
+      "target": {
+        "index": 0,
+        "count": 4,
+        "text": "«The Dispensational View of the Davidic Kingdom»",
+        "href": "https://tms.edu/wp-content/uploads/2021/09/tmsj7h.pdf",
+        "linkColor": "rgb(212, 165, 116)",
+        "parentTextColor": "rgba(238, 231, 220, 0.78)",
+        "decoration": "none",
+        "background": "rgb(22, 26, 33)",
+        "surfaceClass": "bg-stone-100 border border-stone-300 rounded-3xl p-8 mt-16",
+        "parentClass": "text-xs text-stone-500 leading-relaxed mb-2 flex items-start gap-1.5",
+        "effectiveParentTextColor": [
+          190.48,
+          185.9,
+          178.86
+        ],
+        "linkToAdjacentTextContrast": 1.15
+      },
+      "focus": {
+        "focusVisible": true,
+        "color": "rgb(212, 165, 116)",
+        "decoration": "none",
+        "outline": "rgb(212, 165, 116) solid 2px"
+      },
+      "hover": {
+        "color": "rgb(212, 165, 116)",
+        "decoration": "none",
+        "outline": "rgb(212, 165, 116) solid 2px"
+      }
+    },
+    {
+      "route": "/nagornaya/chast-5/",
+      "theme": "dark",
+      "qualifyingVisibleSourceLinks": 10,
+      "target": {
+        "index": 0,
+        "count": 10,
+        "text": "The Spiritual Credibility Gap (Matthew 5:33–37)",
+        "href": "https://www.gty.org/library/sermons-library/2222/the-spiritual-credibility-gap",
+        "linkColor": "rgb(212, 165, 116)",
+        "parentTextColor": "rgba(238, 231, 220, 0.78)",
+        "decoration": "none",
+        "background": "rgb(22, 26, 33)",
+        "surfaceClass": "bg-stone-100 border border-stone-300 rounded-2xl p-6 mt-10",
+        "parentClass": "flex-1 text-stone-500",
+        "effectiveParentTextColor": [
+          190.48,
+          185.9,
+          178.86
+        ],
+        "linkToAdjacentTextContrast": 1.15
+      },
+      "focus": {
+        "focusVisible": true,
+        "color": "rgb(212, 165, 116)",
+        "decoration": "none",
+        "outline": "rgb(212, 165, 116) solid 2px"
+      },
+      "hover": {
+        "color": "rgb(212, 165, 116)",
+        "decoration": "none",
+        "outline": "rgb(212, 165, 116) solid 2px"
+      }
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "browser": "153.0.8010.0",
+  "themeFocus": [
+    {
+      "route": "/",
+      "found": true,
+      "tabReached": true,
+      "tabStop": 11,
+      "styles": {
+        "focusVisible": true,
+        "outline": "oklab(0.517099 -0.0149147 -0.00934401 / 0.88) none 0px",
+        "boxShadow": "none",
+        "border": "0px none oklab(0.517099 -0.0149147 -0.00934401 / 0.88)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "oklab(0.517099 -0.0149147 -0.00934401 / 0.88)",
+        "iconStroke": "oklab(0.517099 -0.0149147 -0.00934401 / 0.88)",
+        "rect": {
+          "x": 1184.8125,
+          "y": 12.5,
+          "w": 44,
+          "h": 44
+        }
+      }
+    },
+    {
+      "route": "/articles/",
+      "found": true,
+      "tabReached": true,
+      "tabStop": 9,
+      "styles": {
+        "focusVisible": true,
+        "outline": "rgb(0, 0, 0) none 0px",
+        "boxShadow": "none",
+        "border": "0px none rgb(0, 0, 0)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "iconStroke": "rgb(26, 26, 26)",
+        "rect": {
+          "x": 1068,
+          "y": 6.5,
+          "w": 44,
+          "h": 44
+        }
+      }
+    },
+    {
+      "route": "/hard-texts/genesis-6/",
+      "found": true,
+      "tabReached": true,
+      "tabStop": 11,
+      "styles": {
+        "focusVisible": true,
+        "outline": "rgb(0, 0, 0) none 0px",
+        "boxShadow": "none",
+        "border": "0px none rgb(0, 0, 0)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "iconStroke": "rgb(26, 26, 26)",
+        "rect": {
+          "x": 1068.5,
+          "y": 6.5,
+          "w": 44,
+          "h": 44
+        }
+      }
+    },
+    {
+      "route": "/izbrannoe/",
+      "found": true,
+      "tabReached": true,
+      "tabStop": 11,
+      "styles": {
+        "focusVisible": true,
+        "outline": "rgb(0, 0, 0) none 0px",
+        "boxShadow": "none",
+        "border": "0px none rgb(0, 0, 0)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "iconStroke": "rgb(26, 26, 26)",
+        "rect": {
+          "x": 1059.234375,
+          "y": 6.5,
+          "w": 44,
+          "h": 44
+        }
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "width": 641,
+      "found": true,
+      "viewport": 641,
+      "body": {
+        "clientWidth": 484,
+        "scrollWidth": 605,
+        "scrollLeft": 0,
+        "overflowX": "auto",
+        "tabIndex": -1,
+        "activeAfterProgrammaticFocus": true,
+        "rect": {
+          "x": 71.140625,
+          "y": 13333.421875,
+          "w": 483.71875,
+          "h": 307.78125
+        }
+      },
+      "track": {
+        "clientWidth": 580,
+        "scrollWidth": 605,
+        "rect": {
+          "w": 580
+        }
+      },
+      "focusableDescendants": 0
+    },
+    {
+      "width": 640,
+      "found": true,
+      "viewport": 640,
+      "body": {
+        "clientWidth": 483,
+        "scrollWidth": 500,
+        "scrollLeft": 0,
+        "overflowX": "hidden",
+        "tabIndex": -1,
+        "activeAfterProgrammaticFocus": false,
+        "rect": {
+          "x": 71.09375,
+          "y": 13330.984375,
+          "w": 482.796875,
+          "h": 309.140625
+        }
+      },
+      "track": {
+        "clientWidth": 483,
+        "scrollWidth": 500,
+        "rect": {
+          "w": 482.796875
+        }
+      },
+      "focusableDescendants": 0
+    }
+  ]
+}

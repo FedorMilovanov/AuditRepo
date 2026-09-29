@@ -1,0 +1,164 @@
+{
+  "browser": "153.0.8010.0",
+  "productSha": "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+  "source": "local production-like dist; exact-SHA; not live-host browser navigation",
+  "route": "/articles/20-antisovetov-pastoru/",
+  "tests": [
+    {
+      "theme": "light",
+      "launchFound": true,
+      "panel": {
+        "background": "rgba(255, 253, 248, 0.92)",
+        "color": "rgb(26, 26, 26)",
+        "baseAncestors": [
+          {
+            "tag": "DIV",
+            "cls": "gb-quiz-host",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "ARTICLE",
+            "cls": "article-body",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "MAIN",
+            "cls": "",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "cls": "page-wrap",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "cls": "gbs2-world gbs2-tbhidden",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "BODY",
+            "cls": "gbs-world gb-cluster-series-active gb-cluster-single-active",
+            "background": "rgb(253, 252, 249)"
+          }
+        ],
+        "effectiveBg": [
+          254.84,
+          252.92,
+          248.08
+        ],
+        "rect": {
+          "x": 397.109375,
+          "y": 454.4375,
+          "w": 654.875,
+          "h": 601.5
+        }
+      },
+      "question": {
+        "text": "По какому критерию статья различает здоровое использование пастырского авторитета и духовное насилие над совестью?",
+        "color": "rgb(26, 26, 26)",
+        "opacity": "1",
+        "background": "rgba(0, 0, 0, 0)",
+        "decoration": "none",
+        "contrastAgainstPanel": 17.11
+      },
+      "progress": {
+        "text": "ВОПРОС 1 ИЗ 10",
+        "color": "rgb(26, 26, 26)",
+        "opacity": "0.65",
+        "background": "rgba(0, 0, 0, 0)",
+        "decoration": "none",
+        "note": "opacity 0.65; this evidence reports computed foreground and opacity but does not calculate its blended contrast"
+      },
+      "option": {
+        "text": "Здоровое использование авторитета наставляет совесть в соответствии с Писанием; духовное насилие манипулирует совестью для личной выгоды пастора",
+        "color": "rgb(26, 26, 26)",
+        "opacity": "1",
+        "background": "rgba(0, 0, 0, 0)",
+        "decoration": "none",
+        "contrastAgainstPanel": 17.11
+      },
+      "launchText": "Начать проверку",
+      "themeAttr": "light",
+      "open": true
+    },
+    {
+      "theme": "dark",
+      "launchFound": true,
+      "panel": {
+        "background": "rgba(255, 253, 248, 0.92)",
+        "color": "rgb(230, 225, 215)",
+        "baseAncestors": [
+          {
+            "tag": "DIV",
+            "cls": "gb-quiz-host",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "ARTICLE",
+            "cls": "article-body",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "MAIN",
+            "cls": "",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "cls": "page-wrap",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "cls": "gbs2-world gbs2-tbhidden",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "BODY",
+            "cls": "gbs-world gb-cluster-series-active gb-cluster-single-active",
+            "background": "rgb(14, 17, 22)"
+          }
+        ],
+        "effectiveBg": [
+          235.72,
+          234.12,
+          229.92
+        ],
+        "rect": {
+          "x": 397.109375,
+          "y": 454.4375,
+          "w": 654.875,
+          "h": 601.5
+        }
+      },
+      "question": {
+        "text": "По какому критерию статья различает здоровое использование пастырского авторитета и духовное насилие над совестью?",
+        "color": "rgb(230, 225, 215)",
+        "opacity": "1",
+        "background": "rgba(0, 0, 0, 0)",
+        "decoration": "none",
+        "contrastAgainstPanel": 1.08
+      },
+      "progress": {
+        "text": "ВОПРОС 1 ИЗ 10",
+        "color": "rgb(230, 225, 215)",
+        "opacity": "0.65",
+        "background": "rgba(0, 0, 0, 0)",
+        "decoration": "none",
+        "note": "opacity 0.65; this evidence reports computed foreground and opacity but does not calculate its blended contrast"
+      },
+      "option": {
+        "text": "Здоровое использование авторитета наставляет совесть в соответствии с Писанием; духовное насилие манипулирует совестью для личной выгоды пастора",
+        "color": "rgb(230, 225, 215)",
+        "opacity": "1",
+        "background": "rgba(0, 0, 0, 0)",
+        "decoration": "none",
+        "contrastAgainstPanel": 1.08
+      },
+      "launchText": "Начать проверку",
+      "themeAttr": "dark",
+      "open": true
+    }
+  ]
+}
