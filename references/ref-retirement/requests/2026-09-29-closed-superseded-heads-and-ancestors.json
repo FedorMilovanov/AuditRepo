@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "requestId": "auditrepo-ref-retirement-closed-superseded-heads-and-ancestors-2026-09-29",
+  "execute": true,
+  "executionNonce": 1,
+  "preparedOnMain": "38cd473263d2f4646afaba4f438cefa6411ca4b3",
+  "sourceBranch": "arena/01a0ee50-auditrepo",
+  "retainedRefs": [
+    {
+      "branch": "main",
+      "required": true,
+      "reason": "Default branch and current repository authority."
+    },
+    {
+      "branch": "archive/forensic-arena-019fe0b5-auditrepo-2026-08-13",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-arena-019fe0c4-auditrepo-2026-08-13",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-bugverifikator-audit-2026-07-17-2026-09-06",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-engine-contracts-pr323-2026-09-06",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-gb-arena-master-reverify-20260717-2026-09-06",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-gb-control-reconciliation-bc786-20260809",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-gb-source-surface-closure-20260907",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-tlp-arena-master-reverify-20260818-2026-09-06",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-tlp-hall-001-material-chain-20260809",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-tlp-hall-001-material-chain-current-20260809",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/forensic-tlp-hall-material-chain-20260809",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    },
+    {
+      "branch": "archive/legacy-diverged-heads-20260801",
+      "required": true,
+      "reason": "Intentional forensic archive authority; protected and outside this wave."
+    }
+  ],
+  "targets": [
+    {
+      "branch": "audit/tlp-audit004-evidence-20260913",
+      "mode": "ancestor",
+      "expectedHead": "44ee4bb22678ce9965e18c7e1490d5bd2e7d0c52",
+      "reason": "Pure ancestor of current main: GitHub compare main...44ee4bb2 reports status behind, ahead_by=0, so the ref owns no commit or file that main lacks. It is a duplicate ref at the same head as audit/tlp-discovery-evidence-20260913, has never had a pull request, and its only content is the shared history already contained in main."
+    },
+    {
+      "branch": "audit/tlp-discovery-evidence-20260913",
+      "mode": "ancestor",
+      "expectedHead": "44ee4bb22678ce9965e18c7e1490d5bd2e7d0c52",
+      "reason": "Pure ancestor of current main: GitHub compare main...44ee4bb2 reports status behind, ahead_by=0, so the ref owns no commit or file that main lacks. It is a duplicate ref at the same head as audit/tlp-audit004-evidence-20260913, has never had a pull request, and its only content is the shared history already contained in main."
+    },
+    {
+      "branch": "audit/gb-security-accepted-20260913",
+      "mode": "superseded",
+      "expectedHead": "f65925225a043881265e4ae9910221eda672246d",
+      "comparisonBase": "14749c0a9016a26c3f27e3084f7622dd877e111d",
+      "expectedAhead": 3,
+      "replacementPullRequests": [
+        457
+      ],
+      "allowedChangedPaths": [
+        "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-09-13_security-accepted-platform-limitation.md",
+        "projects/gb-is-my-strength/verified/CLOSURE_LEDGER.md",
+        "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
+      ],
+      "reason": "Closed unmerged PR #450 (security transport owner retired as accepted risk). The lane's only new file, the security accepted-platform-limitation reverify, is byte-identical in main (blob dd4cef20990d04109d2a5f9444f6b8c4fe1054ff) and landed through merged PR #457 (merge d1e9207d474dee16d46eeb531636fd4a0b101089). All 11 non-blank lines this branch added to gb CLOSURE_LEDGER.md are present verbatim in main's copy, and the 8 lines added to gb MASTER_BUG_MATRIX.md contain no identifier absent from main's copy; current main MASTER records FRAGMENTED-SECURITY-OWNERSHIP as closed accepted-risk / not-planned. Sibling ref audit/gb-security-accepted-final-20260913 points at the identical SHA. The closed PR head stays reachable through refs/pull/450/head."
+    },
+    {
+      "branch": "audit/gb-security-accepted-final-20260913",
+      "mode": "superseded",
+      "expectedHead": "f65925225a043881265e4ae9910221eda672246d",
+      "comparisonBase": "14749c0a9016a26c3f27e3084f7622dd877e111d",
+      "expectedAhead": 3,
+      "replacementPullRequests": [
+        457
+      ],
+      "allowedChangedPaths": [
+        "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-09-13_security-accepted-platform-limitation.md",
+        "projects/gb-is-my-strength/verified/CLOSURE_LEDGER.md",
+        "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
+      ],
+      "reason": "Closed unmerged PR #456 (security transport owner retired as accepted risk). The lane's only new file, the security accepted-platform-limitation reverify, is byte-identical in main (blob dd4cef20990d04109d2a5f9444f6b8c4fe1054ff) and landed through merged PR #457 (merge d1e9207d474dee16d46eeb531636fd4a0b101089). All 11 non-blank lines this branch added to gb CLOSURE_LEDGER.md are present verbatim in main's copy, and the 8 lines added to gb MASTER_BUG_MATRIX.md contain no identifier absent from main's copy; current main MASTER records FRAGMENTED-SECURITY-OWNERSHIP as closed accepted-risk / not-planned. Sibling ref audit/gb-security-accepted-20260913 points at the identical SHA. The closed PR head stays reachable through refs/pull/456/head."
+    },
+    {
+      "branch": "audit/tlp-analytics-property-terminal-20260913",
+      "mode": "superseded",
+      "expectedHead": "dd854683468233756533ac8c56dc2d210031c752",
+      "comparisonBase": "9b03bb8e49d31b6deccecb2627572e9bf6f2387f",
+      "expectedAhead": 3,
+      "replacementPullRequests": [
+        461
+      ],
+      "allowedChangedPaths": [
+        "projects/the-legendary-poet/reverify/REVERIFY_c7e3e3b_2026-09-13_analytics-property-closure.md",
+        "projects/the-legendary-poet/verified/CLOSURE_LEDGER.md",
+        "projects/the-legendary-poet/verified/MASTER_BUG_MATRIX.md"
+      ],
+      "reason": "Closed unmerged PR #462, a terminal re-statement of the GA4 property closure that merged PR #461 (merge c6fb8e4e1eaa0a914b60118668adf90423aaa7c4) had already landed. This is the one reviewed target whose new file has no same-named counterpart in main: REVERIFY_c7e3e3b_2026-09-13_analytics-property-closure.md is a reworded duplicate of main's REVERIFY_c7e3e3b_2026-09-13_ga4-property-closure.md for the same root TLP-ANALYTICS-PROPERTY-001 and the same Product PR #510. A token-level comparison finds one identifier absent from main's counterpart, the short form c7e3e3b (main carries the full 40-hex commit), and the GA4 property, stream and Measurement IDs all appear in main's receipt. Across the branch's ledger and MASTER additions the only identifiers absent from main's copies of those files are that short form and the property ID 547331637, which main's receipt records; main MASTER lists the root as retired. The closed PR head stays reachable through refs/pull/462/head."
+    },
+    {
+      "branch": "closure/tlp-audit-discovery-final-20260913",
+      "mode": "superseded",
+      "expectedHead": "afdf7a5ad80e6d9f4e2874e3c9008995ca1086ea",
+      "comparisonBase": "44ee4bb22678ce9965e18c7e1490d5bd2e7d0c52",
+      "expectedAhead": 5,
+      "replacementPullRequests": [
+        458
+      ],
+      "allowedChangedPaths": [
+        "projects/the-legendary-poet/reverify/REVERIFY_54bee43_2026-09-13_audit-harness-closure.md",
+        "projects/the-legendary-poet/reverify/REVERIFY_cff9b0f_2026-09-13_discovery-closure.md",
+        "projects/the-legendary-poet/verified/CLOSURE_LEDGER.md",
+        "projects/the-legendary-poet/verified/MASTER_BUG_MATRIX.md",
+        "projects/the-legendary-poet/verified/SYSTEM_THEMES.md"
+      ],
+      "reason": "Closed unmerged PR #453, an abandoned retry of the TLP audit/discovery closure lane. Its two reverifies landed byte-identical in main through merged PR #458 (merge 816f0521a84d368a6a28b2c72af98f3adeab860e): REVERIFY_54bee43 blob 3b5f79556ecadbce708daa95b7a248c229689445, REVERIFY_cff9b0f blob 5a30ec990ee95241cfd6397c70a2b549d7e426c8, and SYSTEM_THEMES.md blob ea2d8c5f41be65dc56e2beacf0ee943d931cb54d are identical in both trees. Every non-blank line this branch added to the TLP CLOSURE_LEDGER.md is present verbatim in main's copy; the 9 lines added to MASTER_BUG_MATRIX.md are point-in-time status prose that main has since advanced beyond, with no identifier absent from main's copy. Sibling retry ref closure/tlp-audit-discovery-final2-20260913 is reviewed in this same wave. The closed PR head stays reachable through refs/pull/453/head."
+    },
+    {
+      "branch": "closure/tlp-audit-discovery-final2-20260913",
+      "mode": "superseded",
+      "expectedHead": "cfb84515cb688aafad261d2e72943f239493a2f8",
+      "comparisonBase": "dc81095c524a5d75bf75593c3c9792296fc57a7b",
+      "expectedAhead": 5,
+      "replacementPullRequests": [
+        458
+      ],
+      "allowedChangedPaths": [
+        "projects/the-legendary-poet/reverify/REVERIFY_54bee43_2026-09-13_audit-harness-closure.md",
+        "projects/the-legendary-poet/reverify/REVERIFY_cff9b0f_2026-09-13_discovery-closure.md",
+        "projects/the-legendary-poet/verified/CLOSURE_LEDGER.md",
+        "projects/the-legendary-poet/verified/MASTER_BUG_MATRIX.md",
+        "projects/the-legendary-poet/verified/SYSTEM_THEMES.md"
+      ],
+      "reason": "Closed unmerged PR #455, an abandoned retry of the TLP audit/discovery closure lane. Its two reverifies landed byte-identical in main through merged PR #458 (merge 816f0521a84d368a6a28b2c72af98f3adeab860e): REVERIFY_54bee43 blob 3b5f79556ecadbce708daa95b7a248c229689445, REVERIFY_cff9b0f blob 5a30ec990ee95241cfd6397c70a2b549d7e426c8, and SYSTEM_THEMES.md blob ea2d8c5f41be65dc56e2beacf0ee943d931cb54d are identical in both trees. Every non-blank line this branch added to the TLP CLOSURE_LEDGER.md is present verbatim in main's copy; the 9 lines added to MASTER_BUG_MATRIX.md are point-in-time status prose that main has since advanced beyond, with no identifier absent from main's copy. Sibling retry ref closure/tlp-audit-discovery-final-20260913 is reviewed in this same wave. The closed PR head stays reachable through refs/pull/455/head."
+    },
+    {
+      "branch": "reconcile/article-capability-closure-20260908",
+      "mode": "superseded",
+      "expectedHead": "8a5136040ad90f607fa9b13be1c674d17644e90d",
+      "comparisonBase": "93827f298a620cbc89390ad8136f4734ace86f20",
+      "expectedAhead": 2,
+      "replacementPullRequests": [
+        395
+      ],
+      "allowedChangedPaths": [
+        "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-09-08_article-legacy-capability-partial-migration-root-closure-3c2def01.md",
+        "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
+      ],
+      "reason": "Closed unmerged PR #394, first attempt at the ARTICLE-LEGACY-CAPABILITY-PARTIAL-MIGRATION-ROOT closure; the same closure landed through merged PR #395 (merge 219410524d92278947044e5409eb3686f85c55ab). Main holds a reworded receipt at the identical path (introduced by commit 3726e16 in #395). Token-level comparison finds only the short forms 3c2def01 and 87601539 absent from main's receipt, which carries the full 40-hex forms of both Product commits. The three Product-main witness SHAs in this branch's MASTER paragraph (d3759918, f135a573, fc2e4570) are point-in-time witnesses and each appears elsewhere in main. The closed PR head stays reachable through refs/pull/394/head."
+    },
+    {
+      "branch": "reconcile/metadata-ssot-closure-20260908-v2",
+      "mode": "superseded",
+      "expectedHead": "677d5397b273373d0d37abb519dc5ed7e3a068ac",
+      "comparisonBase": "219410524d92278947044e5409eb3686f85c55ab",
+      "expectedAhead": 2,
+      "replacementPullRequests": [
+        398
+      ],
+      "allowedChangedPaths": [
+        "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-09-08_metadata-ssot-proliferation-closure-c65b83a6.md",
+        "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
+      ],
+      "reason": "Closed unmerged PR #400 (v3 sibling attempt) at the METADATA-SSOT-PROLIFERATION closure; the closure landed through merged PR #398 (merge 2afb84205cbb14d429c1913b6c89b7fc9998f069), which introduced main's receipt at the identical path (commit 71713a1). Token-level comparison finds one identifier in this branch's receipt absent from main's copy: a prose mention of Product PR #1873 inside the cumulative closure sentence; the producer, review-overlay, projection and reconciliation PRs #1861, #1901, #1915 and #1916 are recorded in main. That mention remains recoverable from the closed PR head via refs/pull/400/head. The three Product-main witness SHAs in this branch's MASTER paragraph (d3759918, f135a573, fc2e4570) are point-in-time witnesses and each appears elsewhere in main."
+    },
+    {
+      "branch": "reconcile/metadata-ssot-closure-20260908-v3",
+      "mode": "superseded",
+      "expectedHead": "fd8bca94df100cc8504dbe705ed2019ec6522506",
+      "comparisonBase": "27df6d7d2d451df4602e7d7a6a3478b11e073911",
+      "expectedAhead": 1,
+      "replacementPullRequests": [
+        398
+      ],
+      "allowedChangedPaths": [
+        "projects/gb-is-my-strength/reverify/CURRENT_HEAD_REVERIFY_2026-09-08_metadata-ssot-proliferation-closure-c65b83a6.md",
+        "projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md"
+      ],
+      "reason": "Closed unmerged PR #401 (v2 sibling attempt) at the METADATA-SSOT-PROLIFERATION closure; the closure landed through merged PR #398 (merge 2afb84205cbb14d429c1913b6c89b7fc9998f069), which introduced main's receipt at the identical path (commit 71713a1). Token-level comparison finds one identifier in this branch's receipt absent from main's copy: a prose mention of Product PR #1873 inside the cumulative closure sentence; the producer, review-overlay, projection and reconciliation PRs #1861, #1901, #1915 and #1916 are recorded in main. That mention remains recoverable from the closed PR head via refs/pull/401/head. The three Product-main witness SHAs in this branch's MASTER paragraph (d3759918, f135a573, fc2e4570) are point-in-time witnesses and each appears elsewhere in main."
+    }
+  ]
+}
