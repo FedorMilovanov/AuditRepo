@@ -69,19 +69,19 @@ Detailed execution evidence remains in [the release-recovery program](../verific
 
 | Field | Value |
 |---|---|
-| Active work units | **29** |
-| Direct current defects | **27** |
+| Active work units | **30** |
+| Direct current defects | **28** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
 | System verification lanes | **1** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Arithmetic: 27 + 0 + 0 + 1 + 1 = **29 current MASTER work units**.
+> Arithmetic: 28 + 0 + 0 + 1 + 1 = **30 current MASTER work units**.
 >
 > **Important boundary:** this count covers only currently admitted necessary defect/system/decision work units. It does **not** mean the whole product/research program is complete. Editorial certification, Baptist research/publication, maps, rights/external gates, measurement-first quality work and branch retirement are tracked separately in [PROGRAM_CLOSURE_MATRIX.md](../PROGRAM_CLOSURE_MATRIX.md). Optional/non-mandatory quality candidates remain in [WORK_QUEUE.md](../WORK_QUEUE.md).
 
-## CURRENT DEFECTS — 27
+## CURRENT DEFECTS — 28
 
 | ID | Current problem | Closure boundary |
 |---|---|---|
@@ -115,6 +115,8 @@ Detailed execution evidence remains in [the release-recovery program](../verific
 | `GBS-BAPTISTS-DELYAKOV-DIRECT-QUOTE-UNVERIFIED` | Product main `5e76c6ec...` exposes the same attributed exact Delyakov speech («Он — немец, ты — русский, а я — сириец») in **two** production routes: `BaptistyRossiiNochNaKureBody.astro:75` and `BaptistyRossiiSpravochnikBody.astro:49`. The first route's own bibliography requires a page-level locator for strong direct quotations; the 1935 autobiography scan was not acquired in historical Product research, and the acquired later Sinichkin text-layer remains `VISUAL_PENDING / NOT_QUOTE_READY`. No exact original-page quotation proof was found. This does **not** assert that the utterance was never spoken. | Existing unmerged Product PR #2146 head `602632ff...` paraphrases **both** occurrences and retains the quote HOLD. Coordinate with its owner; do not open a competing fix. Close only after a current-base exact-head merge and resulting-main verification of both routes (or independently verified original page/rights allowing direct speech). Evidence: `../incoming/arena-incompleteness-auditor/2026-09-30/BAPTISTS_RECOVERY_MULTILAYER.md`. |
 
 | `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS` | Product main `5e76c6ec...` contains literal ASCII question-mark replacements in headings, labels, explanatory text and alt/source strings in **nine** published Baptist article body components (not the series hub or `SovetskayaNoch`). Example: `BaptistyRossiiSpravochnikBody.astro` has `eyebrow="???????? ?????"`; the `BaptistyEvidenceJourney` component renders these props directly and the production-owned `/baptisty-rossii/spravochnik/` page imports that body. These are actual source bytes, not a terminal encoding artifact; the unmerged #2146 head sampled at `daf5f920...` still has the same damaged strings. No remote live browser claim. | Recover owner-approved original Russian strings (including image alt, citation captions and broken source URLs), not machine-guessed text; verify all nine production routes on resulting Product main with built HTML/browser text and link/alt checks, prevent recurrence with a narrow content guard. Coordinate with #2146 owner where touched files overlap; do not mistake its byline/quotation changes for this repair. Evidence and exact component census: `../incoming/arena-incompleteness-auditor/2026-09-30/BAPTISTS_GARBLED_VISIBLE_COPY_AND_DATES.md`. |
+
+| `GBS-BAPTISTS-BYLINE-PUBLICATION-DATE-DIVERGENCE` | Product main `5e76c6ec...`: eight production Baptist article bylines display only June 13 although their editorial metadata and PageHead publication dates are earlier (June 1–9) and modification date is June 13. A ninth, `/baptisty-rossii/spravochnik/`, shows June 14, matching neither registry publication June 10 nor modification June 13. Control `/baptisty-rossii/peterburgskaya-liniya/` labels separate published June 4 / «Обновлено» August 20 matching its metadata. Four of the eight June-13 routes have matching publication/updated pairs proposed in **unmerged** #2146; five inconsistent bylines remain outside that repair. | Reconcile editor-approved publication/change history and the reader-facing byline with authoritative metadata for the nine routes, especially Spravochnik’s unaccounted June 14; coordinate the four overlapping routes with #2146 owner. Resulting-main build/browser checks must compare displayed labels, `<time datetime>`, canonical metadata/JSON-LD across all ten routes and guard against silent date drift. Do not simply relabel Spravochnik without checking whether June 14 was a real edit. Source census and control: `../incoming/arena-incompleteness-auditor/2026-09-30/BAPTISTS_GARBLED_VISIBLE_COPY_AND_DATES.md`. |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
