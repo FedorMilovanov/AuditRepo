@@ -1,0 +1,497 @@
+[
+ {
+  "route": "/articles/20-antisovetov-pastoru/",
+  "datetime": "2026-05-12T21:00:00.000Z",
+  "label": "13 мая 2026",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 5, 12) msk=(2026, 5, 13)",
+  "file": "dist/articles/20-antisovetov-pastoru/index.html"
+ },
+ {
+  "route": "/articles/anatomiya-padeniya-pyat-stadiy/",
+  "datetime": "2026-09-08T21:00:00.000Z",
+  "label": "9 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 8) msk=(2026, 9, 9)",
+  "file": "dist/articles/anatomiya-padeniya-pyat-stadiy/index.html"
+ },
+ {
+  "route": "/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/",
+  "datetime": "2026-09-08T21:00:00.000Z",
+  "label": "9 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 8) msk=(2026, 9, 9)",
+  "file": "dist/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/index.html"
+ },
+ {
+  "route": "/articles/diotrefy-nashego-vremeni/",
+  "datetime": "2026-08-01T21:00:00.000Z",
+  "label": "2 августа 2026",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 8, 1) msk=(2026, 8, 2)",
+  "file": "dist/articles/diotrefy-nashego-vremeni/index.html"
+ },
+ {
+  "route": "/articles/dzhon-gill-istoricheskiy-kontekst/",
+  "datetime": "2026-06-01T17:17:32.000Z",
+  "label": "1 июня 2026",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 6, 1) msk=(2026, 6, 1)",
+  "file": "dist/articles/dzhon-gill-istoricheskiy-kontekst/index.html"
+ },
+ {
+  "route": "/articles/dzhon-gill-spravochnik/",
+  "datetime": "2026-06-01T17:17:32.000Z",
+  "label": "1 июня 2026",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 6, 1) msk=(2026, 6, 1)",
+  "file": "dist/articles/dzhon-gill-spravochnik/index.html"
+ },
+ {
+  "route": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "datetime": "2026-04-12T21:00:00.000Z",
+  "label": "13 апреля 2026",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 4, 12) msk=(2026, 4, 13)",
+  "file": "dist/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/index.html"
+ },
+ {
+  "route": "/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "datetime": "2026-09-06T16:26:46.000Z",
+  "label": "9 мая 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 9, 6) msk=(2026, 9, 6)",
+  "file": "dist/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/index.html"
+ },
+ {
+  "route": "/articles/kod-da-vinchi/",
+  "datetime": "2026-03-31T21:00:00.000Z",
+  "label": "1 апреля 2026",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 3, 31) msk=(2026, 4, 1)",
+  "file": "dist/articles/kod-da-vinchi/index.html"
+ },
+ {
+  "route": "/articles/kod-da-vinchi/",
+  "datetime": "2026-07-05T09:14:15.000Z",
+  "label": "9 мая 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 7, 5) msk=(2026, 7, 5)",
+  "file": "dist/articles/kod-da-vinchi/index.html"
+ },
+ {
+  "route": "/articles/kogda-uhodit-kogda-ostavatsya/",
+  "datetime": "2026-09-08T21:00:00.000Z",
+  "label": "9 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 8) msk=(2026, 9, 9)",
+  "file": "dist/articles/kogda-uhodit-kogda-ostavatsya/index.html"
+ },
+ {
+  "route": "/articles/krajne-li-isporcheno-serdce/",
+  "datetime": "2026-03-31T21:00:00.000Z",
+  "label": "1 апреля 2026",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 3, 31) msk=(2026, 4, 1)",
+  "file": "dist/articles/krajne-li-isporcheno-serdce/index.html"
+ },
+ {
+  "route": "/articles/krajne-li-isporcheno-serdce/",
+  "datetime": "2026-07-05T13:45:56.000Z",
+  "label": "4 июня 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 7, 5) msk=(2026, 7, 5)",
+  "file": "dist/articles/krajne-li-isporcheno-serdce/index.html"
+ },
+ {
+  "route": "/articles/lot-i-sodom/",
+  "datetime": "2026-08-08T21:00:00.000Z",
+  "label": "9 августа 2026",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 8, 8) msk=(2026, 8, 9)",
+  "file": "dist/articles/lot-i-sodom/index.html"
+ },
+ {
+  "route": "/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/",
+  "datetime": "2026-09-08T21:00:00.000Z",
+  "label": "9 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 8) msk=(2026, 9, 9)",
+  "file": "dist/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/index.html"
+ },
+ {
+  "route": "/articles/podrostok-za-kadrom-chto-delat-tserkvi/",
+  "datetime": "2026-09-09T21:00:00.000Z",
+  "label": "10 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 9) msk=(2026, 9, 10)",
+  "file": "dist/articles/podrostok-za-kadrom-chto-delat-tserkvi/index.html"
+ },
+ {
+  "route": "/articles/podrostok-za-kadrom-dvoynaya-zhizn/",
+  "datetime": "2026-09-09T21:00:00.000Z",
+  "label": "10 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 9) msk=(2026, 9, 10)",
+  "file": "dist/articles/podrostok-za-kadrom-dvoynaya-zhizn/index.html"
+ },
+ {
+  "route": "/articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/",
+  "datetime": "2026-09-09T21:00:00.000Z",
+  "label": "10 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 9) msk=(2026, 9, 10)",
+  "file": "dist/articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/index.html"
+ },
+ {
+  "route": "/articles/priznaki-zdorovoy-cerkvi/",
+  "datetime": "2026-09-08T21:00:00.000Z",
+  "label": "9 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 8) msk=(2026, 9, 9)",
+  "file": "dist/articles/priznaki-zdorovoy-cerkvi/index.html"
+ },
+ {
+  "route": "/articles/sem-tipov-razlichenie-uchiteley/",
+  "datetime": "2026-09-08T21:00:00.000Z",
+  "label": "9 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 8) msk=(2026, 9, 9)",
+  "file": "dist/articles/sem-tipov-razlichenie-uchiteley/index.html"
+ },
+ {
+  "route": "/articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/",
+  "datetime": "2026-09-09T21:00:00.000Z",
+  "label": "10 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 9) msk=(2026, 9, 10)",
+  "file": "dist/articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/index.html"
+ },
+ {
+  "route": "/articles/teksty-pisaniya-kotorymi-manipuliruyut/",
+  "datetime": "2026-09-08T21:00:00.000Z",
+  "label": "9 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 8) msk=(2026, 9, 9)",
+  "file": "dist/articles/teksty-pisaniya-kotorymi-manipuliruyut/index.html"
+ },
+ {
+  "route": "/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/",
+  "datetime": "2026-09-08T21:00:00.000Z",
+  "label": "9 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 8) msk=(2026, 9, 9)",
+  "file": "dist/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/index.html"
+ },
+ {
+  "route": "/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/",
+  "datetime": "2026-09-09T21:00:00.000Z",
+  "label": "10 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 9) msk=(2026, 9, 10)",
+  "file": "dist/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/index.html"
+ },
+ {
+  "route": "/articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/",
+  "datetime": "2026-09-09T21:00:00.000Z",
+  "label": "10 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 9) msk=(2026, 9, 10)",
+  "file": "dist/articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/index.html"
+ },
+ {
+  "route": "/articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/",
+  "datetime": "2026-09-09T21:00:00.000Z",
+  "label": "10 сентября 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 9, 9) msk=(2026, 9, 10)",
+  "file": "dist/articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/index.html"
+ },
+ {
+  "route": "/baptisty-rossii/dva-sezda-1884/",
+  "datetime": "2026-06-03T00:00:00+03:00",
+  "label": "13 июня 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 6, 2) msk=(2026, 6, 3)",
+  "file": "dist/baptisty-rossii/dva-sezda-1884/index.html"
+ },
+ {
+  "route": "/baptisty-rossii/goneniya-i-sovest/",
+  "datetime": "2026-06-05T00:00:00+03:00",
+  "label": "13 июня 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 6, 4) msk=(2026, 6, 5)",
+  "file": "dist/baptisty-rossii/goneniya-i-sovest/index.html"
+ },
+ {
+  "route": "/baptisty-rossii/",
+  "datetime": "2026-06-13",
+  "label": "13 июня 2026",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 6, 13) msk=(2026, 6, 13)",
+  "file": "dist/baptisty-rossii/index.html"
+ },
+ {
+  "route": "/baptisty-rossii/iniciativnaya-gruppa/",
+  "datetime": "2026-06-08T00:00:00+03:00",
+  "label": "13 июня 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 6, 7) msk=(2026, 6, 8)",
+  "file": "dist/baptisty-rossii/iniciativnaya-gruppa/index.html"
+ },
+ {
+  "route": "/baptisty-rossii/noch-na-kure/",
+  "datetime": "2026-06-01T00:00:00+03:00",
+  "label": "13 июня 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 5, 31) msk=(2026, 6, 1)",
+  "file": "dist/baptisty-rossii/noch-na-kure/index.html"
+ },
+ {
+  "route": "/baptisty-rossii/peterburgskaya-liniya/",
+  "datetime": "2026-06-04T00:00:00+03:00",
+  "label": "4 июня 2026",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 6, 3) msk=(2026, 6, 4)",
+  "file": "dist/baptisty-rossii/peterburgskaya-liniya/index.html"
+ },
+ {
+  "route": "/baptisty-rossii/peterburgskaya-liniya/",
+  "datetime": "2026-08-20T00:00:00+03:00",
+  "label": "20 августа 2026",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 8, 19) msk=(2026, 8, 20)",
+  "file": "dist/baptisty-rossii/peterburgskaya-liniya/index.html"
+ },
+ {
+  "route": "/baptisty-rossii/podpolnaya-pechat/",
+  "datetime": "2026-06-09T00:00:00+03:00",
+  "label": "13 июня 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 6, 8) msk=(2026, 6, 9)",
+  "file": "dist/baptisty-rossii/podpolnaya-pechat/index.html"
+ },
+ {
+  "route": "/baptisty-rossii/sovetskaya-noch/",
+  "datetime": "2026-06-06T00:00:00+03:00",
+  "label": "13 июня 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 6, 5) msk=(2026, 6, 6)",
+  "file": "dist/baptisty-rossii/sovetskaya-noch/index.html"
+ },
+ {
+  "route": "/baptisty-rossii/spravochnik/",
+  "datetime": "2026-06-10T00:00:00+03:00",
+  "label": "14 июня 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 6, 9) msk=(2026, 6, 10)",
+  "file": "dist/baptisty-rossii/spravochnik/index.html"
+ },
+ {
+  "route": "/baptisty-rossii/vsehib-1944/",
+  "datetime": "2026-06-07T00:00:00+03:00",
+  "label": "13 июня 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 6, 6) msk=(2026, 6, 7)",
+  "file": "dist/baptisty-rossii/vsehib-1944/index.html"
+ },
+ {
+  "route": "/baptisty-rossii/yuzhnaya-shtunda/",
+  "datetime": "2026-06-02T00:00:00+03:00",
+  "label": "13 июня 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 6, 1) msk=(2026, 6, 2)",
+  "file": "dist/baptisty-rossii/yuzhnaya-shtunda/index.html"
+ },
+ {
+  "route": "/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/",
+  "datetime": "2026-07-28T21:00:00.000Z",
+  "label": "29 июля 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 7, 28) msk=(2026, 7, 29)",
+  "file": "dist/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/index.html"
+ },
+ {
+  "route": "/hard-texts/blagovestie-mertvym-1-petra-4-5-6/",
+  "datetime": "2026-07-28T21:00:00.000Z",
+  "label": "29 июля 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 7, 28) msk=(2026, 7, 29)",
+  "file": "dist/hard-texts/blagovestie-mertvym-1-petra-4-5-6/index.html"
+ },
+ {
+  "route": "/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/",
+  "datetime": "2026-07-28T21:00:00.000Z",
+  "label": "29 июля 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 7, 28) msk=(2026, 7, 29)",
+  "file": "dist/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/index.html"
+ },
+ {
+  "route": "/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/",
+  "datetime": "2026-07-28T21:00:00.000Z",
+  "label": "29 июля 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 7, 28) msk=(2026, 7, 29)",
+  "file": "dist/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/index.html"
+ },
+ {
+  "route": "/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/",
+  "datetime": "2026-07-28T21:00:00.000Z",
+  "label": "29 июля 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 7, 28) msk=(2026, 7, 29)",
+  "file": "dist/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/index.html"
+ },
+ {
+  "route": "/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/",
+  "datetime": "2026-07-28T21:00:00.000Z",
+  "label": "29 июля 2026 г.",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 7, 28) msk=(2026, 7, 29)",
+  "file": "dist/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/index.html"
+ },
+ {
+  "route": "/journal/dossiers/g3/",
+  "datetime": "2019-06-06",
+  "label": "6 июня 2019",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2019, 6, 6) msk=(2019, 6, 6)",
+  "file": "dist/journal/dossiers/g3/index.html"
+ },
+ {
+  "route": "/journal/dossiers/g3/",
+  "datetime": "2025-05-08",
+  "label": "8–12 мая 2025",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2025, 5, 8) msk=(2025, 5, 8)",
+  "file": "dist/journal/dossiers/g3/index.html"
+ },
+ {
+  "route": "/journal/dossiers/g3/",
+  "datetime": "2025-07-09",
+  "label": "9 июля 2025",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2025, 7, 9) msk=(2025, 7, 9)",
+  "file": "dist/journal/dossiers/g3/index.html"
+ },
+ {
+  "route": "/journal/dossiers/g3/",
+  "datetime": "2026-07-21",
+  "label": "21 июля 2026",
+  "label_kind": "full",
+  "verdict": "OK",
+  "detail": "utc=(2026, 7, 21) msk=(2026, 7, 21)",
+  "file": "dist/journal/dossiers/g3/index.html"
+ },
+ {
+  "route": "/journal/dossiers/g3/",
+  "datetime": "2026-08",
+  "label": "август 2026",
+  "label_kind": "unparsed",
+  "verdict": "DATETIME-UNPARSED",
+  "detail": "",
+  "file": "dist/journal/dossiers/g3/index.html"
+ },
+ {
+  "route": "/journal/dossiers/g3/",
+  "datetime": "2026-09",
+  "label": "сентябрь 2026",
+  "label_kind": "unparsed",
+  "verdict": "DATETIME-UNPARSED",
+  "detail": "",
+  "file": "dist/journal/dossiers/g3/index.html"
+ },
+ {
+  "route": "/nagornaya/chast-1/",
+  "datetime": "2026-07-22T21:48:34.000Z",
+  "label": "1 мая 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 7, 22) msk=(2026, 7, 23)",
+  "file": "dist/nagornaya/chast-1/index.html"
+ },
+ {
+  "route": "/nagornaya/chast-2/",
+  "datetime": "2026-07-22T21:48:34.000Z",
+  "label": "1 мая 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 7, 22) msk=(2026, 7, 23)",
+  "file": "dist/nagornaya/chast-2/index.html"
+ },
+ {
+  "route": "/nagornaya/chast-3/",
+  "datetime": "2026-07-05T18:09:08.000Z",
+  "label": "1 мая 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 7, 5) msk=(2026, 7, 5)",
+  "file": "dist/nagornaya/chast-3/index.html"
+ },
+ {
+  "route": "/nagornaya/chast-4/",
+  "datetime": "2026-07-22T21:48:34.000Z",
+  "label": "1 мая 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 7, 22) msk=(2026, 7, 23)",
+  "file": "dist/nagornaya/chast-4/index.html"
+ },
+ {
+  "route": "/nagornaya/chast-5/",
+  "datetime": "2026-07-22T11:13:44.000Z",
+  "label": "1 мая 2026",
+  "label_kind": "full",
+  "verdict": "REAL-MISMATCH",
+  "detail": "utc=(2026, 7, 22) msk=(2026, 7, 22)",
+  "file": "dist/nagornaya/chast-5/index.html"
+ }
+]

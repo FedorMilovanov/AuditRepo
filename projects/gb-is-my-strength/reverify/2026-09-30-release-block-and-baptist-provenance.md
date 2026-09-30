@@ -39,15 +39,21 @@ Production therefore has not advanced past `d0e04a9c` and does not contain the L
 Local clone at `d586aa63` with `npm ci` (sandbox node v22.22.3, npm 10.9.8; workflow pins
 22.23.1). `npm run validate:static-publication` (the exact command behind the failing step
 `Static publication source gates` in `.github/workflows/deploy.yml:148` and
-`deploy-candidate-contract.yml:118`) was run step by step: **47 of 48 steps pass; the single
-failing step is `node scripts/audit-pro.js`**, whose only error is:
+`deploy-candidate-contract.yml:118`) was run step by step: **the script has 41 top-level `&&` commands; 40 exit 0 and the single failing
+command is #24, `node scripts/audit-pro.js`**, whose only error is:
 
 ```text
 ❌ sitemap contract: missing canonical indexable production route: /articles/steven-lawson-samoobman-i-publichnyy-golos/
 ❌ AUDIT FAILED — fix errors before deploy
 ```
 
-Machine receipts: `/tmp/chain2.txt` (full chain run), `/tmp/gb-product/audit/audit-pro-2026-09-30T20-50-03-182Z.md`.
+Machine receipts: the step count originally recorded in this section did not match the script and is
+withdrawn — it is recomputed and preserved in
+[`evidence/2026-09-30-validate-static-publication-command-list.txt`](./evidence/2026-09-30-validate-static-publication-command-list.txt)
+and [`evidence/2026-09-30-release-block-repro-receipt.txt`](./evidence/2026-09-30-release-block-repro-receipt.txt)
+(step-by-step run, all 41 commands, exit codes). The earlier `/tmp/chain2.txt` and
+`/tmp/gb-product/audit/audit-pro-2026-09-30T20-50-03-182Z.md` files did not survive the session.
+Superseding analysis: [`2026-09-30-step-count-correction-and-dateline-projection.md`](./2026-09-30-step-count-correction-and-dateline-projection.md).
 The same gate is red on PR #2150's own head `89e76794` (worktree `/tmp/gb2150`, log
 `/tmp/audit2150.txt`) — so #2150 as it stands does **not** unblock the release.
 

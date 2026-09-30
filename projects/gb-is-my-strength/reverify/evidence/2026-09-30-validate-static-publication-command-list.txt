@@ -1,0 +1,50 @@
+# validate:static-publication — enumerated top-level commands
+product_repo=FedorMilovanov/gb-is-my-strength
+head_sha=d586aa63f02b569cfe050a63cc9078c044375d8d
+package_json_blob_sha=812497795d8a3c5c7a2beb6224b2f9492354dfdf (identical via contents API and local clone)
+counting_rule=split the script string on '&&' and count top-level commands; nested npm scripts are NOT expanded
+count=41
+failing_command_index=24 (node scripts/audit-pro.js) — see 2026-09-30-release-block-repro-receipt.txt
+note=the step count recorded in the earlier 2026-09-30 documents does not match this script at this SHA and is withdrawn; this list is the authoritative enumeration
+
+  1. npm run validate:all
+  2. npm run owner:ui-guard
+  3. npm run about:visual-parity:audit
+  4. npm run biografii:visual-parity:audit
+  5. npm run hard-texts:visual-parity:audit
+  6. npm run pastor-series:visual-parity:audit
+  7. npm run articles:visual-parity:audit
+  8. npm run gill:context:visual-parity:audit
+  9. npm run gill:spravochnik:visual-parity:audit
+ 10. npm run konfessii:visual-parity:audit
+ 11. npm run karty:visual-parity:audit
+ 12. npm run baptisty-rossii:visual-parity:audit
+ 13. npm run home:visual-parity:audit
+ 14. npm run nagornaya:visual-parity:audit
+ 15. npm run catalogs:visual-parity:audit
+ 16. npm run baptisty:roadmap:audit
+ 17. npm run baptisty:visual-atlas:audit
+ 18. npm run baptisty:authentic-media:audit
+ 19. npm run maps:validate
+ 20. npm run page-ownership:check
+ 21. npm run avraam:audit
+ 22. npm run tokens:check
+ 23. npm run css:layer:validate
+ 24. node scripts/audit-pro.js
+ 25. npm run content:parity
+ 26. npm run sources:hygiene
+ 27. npm run article:qa
+ 28. npm run readable-audit
+ 29. npm run editorial:lint
+ 30. npm run gill:reading-time:audit
+ 31. npm run gill:pagefind:audit
+ 32. npm run gill:series:data:consistency:audit
+ 33. npm run gill:claims:surface:audit
+ 34. npm run data:consistency
+ 35. npm run content:guard
+ 36. npm run astro:audit:article-mdx:strict
+ 37. npm run astro:audit:baptisty-series
+ 38. npm run mdx:structure:audit
+ 39. npm run contract:compare
+ 40. npm run migration:metadata:check:strict
+ 41. npm run sw:dist:audit

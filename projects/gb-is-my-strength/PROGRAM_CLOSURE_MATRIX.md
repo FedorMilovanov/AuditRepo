@@ -18,8 +18,10 @@ A follow-up on 2026-09-30 used authenticated GitHub API to re-measure Wave 8: **
 `deployments/current.json.releaseSha` is still `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`
 (run `35927303479`) and every main push since the PR #2148 merge (`23bd8567`, 2026-09-30T11:00:41Z)
 fails `Deploy to GitHub Pages` at the step `Static publication source gates`. Locally reproduced on
-`d586aa63`: 47 of 48 `validate:static-publication` steps pass and only `node scripts/audit-pro.js`
-fails, with the single error `sitemap contract: missing canonical indexable production route:
+`d586aa63`: `validate:static-publication` has **41** top-level `&&` commands (counting rule: split the
+script string, do not expand nested `npm run` calls; `package.json` blob
+`812497795d8a3c5c7a2beb6224b2f9492354dfdf`). Run one by one, **40 exit 0** and only command **#24**,
+`node scripts/audit-pro.js`, fails, with the single error `sitemap contract: missing canonical indexable production route:
 /articles/steven-lawson-samoobman-i-publichnyy-golos/` — a strict-native route registered as
 `production-dist` but absent from `data/route-search-policy.json`, `data/search-manifest.json`,
 `sitemap.xml` and `feed.xml`. The sanctioned normalizer writers report "no changes required"
@@ -49,12 +51,36 @@ between it and the registry/JSON-LD `2026-06-10` is an owner decision.
 | 3 | Genealogy engineering / safe editorial integration | **VERIFIED_CLOSED** | corrected #2137 merged as `d0e04a9c...`; candidate and promotion run `35927303479` PASS | exact build/projection/browser/live proof |
 | 4 | Genealogy editorial corpus | **OPEN** | raw 3056 persons / 2053 edges / 982 isolated; RU review **2825**; publishable relation evidence **42 reviewed / 139 pending** | source-backed manual certification in deterministic batches; raw corpus remains fail-closed until Phase-1 exit criteria |
 | 5A | Baptists Git + Drive source inventory | **IN_PROGRESS** | stale chapter research families remain hundreds of commits behind; Drive course/archive traversal begun; current Baptist Chapter 1 salvage PR #2142 exists | every unique research family and relevant Drive source has disposition, source tier, claim/page mapping and rights boundary |
-| 5B | Baptists chapter/media publication | **OPEN** | measured 2026-09-29: **10** content files (`section: "baptisty-rossii"`) = 9 articles + 1 reference; live book index shows 4 главы / 9 статей / 1 форзац against a stated **17–20 article** target, and Глава V (эмиграция, диаспора, возврат архивов, после 1991) is explicitly not created. `data/baptisty-rossii-expansion-roadmap.json` declares a **20-chapter architecture with all 20 `status: "planned"`**, representing a **future five-part architecture** distinct from the current nine published articles; `scripts/baptisty-roadmap-audit.js` requires future chapters to stay `planned` until a dedicated publication lane promotes them. The book remains incomplete, but `planned` is not itself a status defect. Many chapter dossiers exist but are not uniformly BOOK-READY; the former authentic-media branch was deleted after cleanup; 33 media-related file blobs on its recorded head match current main exactly (content/rights readiness remains a separate gate); the merged Lawson publication (#2148) and its catalog follow-up (#2150, unmerged) are **not live** because the release path is blocked, and the nine bodies' `????` copy loss is live-rendered with no in-repo approved original | fresh current-main chapter slices, claim ledger, media provenance/rights/hash, content/browser proof |
+| 5B | Baptists chapter/media publication | **OPEN** | measured 2026-09-29: **10** content files (`section: "baptisty-rossii"`) = 9 articles + 1 reference; live book index shows 4 главы / 9 статей / 1 форзац against a stated **17–20 article** target, and Глава V (эмиграция, диаспора, возврат архивов, после 1991) is explicitly not created. `data/baptisty-rossii-expansion-roadmap.json` declares a **20-chapter architecture with all 20 `status: "planned"`**, representing a **future five-part architecture** distinct from the current nine published articles; `scripts/baptisty-roadmap-audit.js` requires future chapters to stay `planned` until a dedicated publication lane promotes them. The book remains incomplete, but `planned` is not itself a status defect. Many chapter dossiers exist but are not uniformly BOOK-READY; the former authentic-media branch was deleted after cleanup; 33 media-related file blobs on its recorded head match current main exactly (content/rights readiness remains a separate gate); the merged Lawson publication (#2148) and its catalog follow-up (#2150, unmerged) are **not live** because the release path is blocked, and the nine bodies' `????` copy loss is live-rendered with no in-repo approved original. **2026-09-30 third pass (artifact-level):** production-like builds of Product main `d586aa63` **and** of the live release SHA `d0e04a9c` give byte-identical damaged counts per route (built pages: Spravochnik 506, Podpolnaya 471, Iniciativnaya 314, Peterburgskaya 239, Goneniya 183, Yuzhnaya 135, Noch 124, Vsehib 105, DvaSezda 91; hub and `sovetskaya-noch` 0), and live `/baptisty-rossii/spravochnik/` still renders the damaged cards verbatim including inside link text — the loss is not a terminal artifact and is not fixed on either head. Byline dates are narrowed: at main five routes still carry an update-day label in the publication slot while four repaired routes plus `peterburgskaya-liniya` show the correct two-slot shape; at the live SHA all nine article routes still render the single pre-repair label, so the repairs are main-only while the release is blocked. The `spravochnik` label choice («14 июня» authored in `b051fd76` vs registry `publishedAt` 2026-06-10) remains an **owner decision** | fresh current-main chapter slices, claim ledger, media provenance/rights/hash, content/browser proof |
 | 6 | Biblical maps | **OPEN** | production: **1 open / 9 on audit / 0 drafts on showcase** — re-measured live on `/karty/` 2026-09-29, unchanged since 2026-09-24, so nine maps remain suspended in audit; three stale MapEngine families retain unique code | every audit map explicitly PUBLISHED or RETIRED after data, mobile/desktop, labels, controls, a11y/perf and owner visual review |
 | 7 | Bible corpus / rights / external integrations | **PARTIAL / BLOCKED_EXTERNAL** | #1944 obsolete Cloudflare dependency is closed; #1753 and #1812 retain exact provider/legal boundaries. Separately, the scheduled `Source Link Audit` on `main` is still red (latest: push run `36771339167` at `0adb8c36`, scheduled run `36403875153` at `d0e04a9c`) and remains **unclassified**: local reproduction in this sandbox is inadmissible (435 links → 423 transport warnings + 12 TLS-interception hard errors, all environment artifacts) and job logs/artifacts are unreachable (blob egress denied) | actionable engineering debt zero; unresolved provider/human/legal items explicitly BLOCKED_EXTERNAL, never inferred as permission; the source-link gate still needs one classification run from an egress-capable environment |
-| 8 | Measurement quality + dependencies + repository retirement | **OPEN** | measurement-first queue remains; the 2026-09-24 Dependabot **#2138** reference is **stale** — #2138 is no longer open and the current Dependabot PR is **#2144** (2026-09-28), so the ahead/behind figures below are unverified; **205 branches total / 204 non-main**, re-measured 2026-09-30; full 204-ref compare inventory: **35 behind-only / 166 diverged / 3 ahead-only**; no branch disposition or deletion yet | measure before budgets; reverify dependency reachability; classify every remaining branch MERGED/SUPERSEDED/SALVAGED/REJECTED before deletion; final source/CI/live/AuditRepo recheck |
+| 8 | Measurement quality + dependencies + repository retirement | **OPEN** | measurement-first queue remains; the 2026-09-24 Dependabot **#2138** reference is **stale** — #2138 is no longer open and the current Dependabot PR is **#2144** (2026-09-28), so the ahead/behind figures below are unverified; **37 branches total / 36 non-main**, re-measured 2026-09-30 (third pass; supersedes 205/204, 44/43 and 36/35 recorded earlier the same day — the count moves as cleanup proceeds, so classify against the dated snapshot); full 204-ref compare inventory from the earlier census: **35 behind-only / 166 diverged / 3 ahead-only**; no branch disposition or deletion yet. Open Product PRs at the third-pass sample, each recomputed at its own head: #2153 docs-only `c671491f` (no red, no repair), #2150 Lawson catalog `89e76794` (11 red, 37 behind), #2145 apostasy `994b8735` (4 red, other agent's lane), #2144 Dependabot `892977fd` (20 red), #2143 genealogy draft `acd4ace4` (no red), #2142 Baptist salvage `71a4f529` (no red, research-only) | measure before budgets; reverify dependency reachability; classify every remaining branch MERGED/SUPERSEDED/SALVAGED/REJECTED before deletion; final source/CI/live/AuditRepo recheck |
 
 **2026-09-30 Baptist publication correction:** two *already published* routes attribute the same Delyakov phrase as exact speech while the primary-page locator is not quote-ready. This is an admitted **single two-route MASTER defect** `GBS-BAPTISTS-DELYAKOV-DIRECT-QUOTE-UNVERIFIED`, not a newly missing chapter; unmerged Product #2146 already paraphrases both. Separate Chapter 1 #2142 remains research-only / NOT BOOK-READY: 4/4 sampled canonical/duplicate Drive links redirect to Google sign-in anonymously even though historical acquisition SHA receipts exist. #2146 no longer contains the four redundant editorial-metadata supplements; its own branch-prefix shared-files guard remains red independently of the four date pairs that match base registry. Boundaries and exact SHAs: `incoming/arena-incompleteness-auditor/2026-09-30/BAPTISTS_RECOVERY_MULTILAYER.md`.
+
+**2026-09-30 third pass — measurement corrections and the dateline class disposition.** Four
+corrections apply to this program's own numbers, all recomputed from source rather than carried
+forward: (1) the release-gate step count is **41 top-level commands** in
+`validate:static-publication` at `d586aa63` (`package.json` blob `812497795d8a3c5c7a2beb6224b2f9492354dfdf`),
+**40 exit 0 / 1 fails** at command #24 `node scripts/audit-pro.js`; the figure recorded earlier the
+same day is withdrawn everywhere it appeared. (2) All 26 source anchors of the active MASTER were
+re-checked at `d586aa63`: 24 verbatim, 2 superseded expressions (`GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING`
+→ `body.home-page .mobile-controls > button:focus-visible` + `css/mobile-hotfix.css:12`;
+`GBS-H-SCROLL-TOP-INVISIBLE-FOCUS` → `(window.scrollY || window.pageYOffset) > 500`), **0 rows closed
+and 0 rows newly fixed**. (3) A site-wide dateline candidate (17 routes whose human label and
+`datetime` name different days) was investigated and **rejected**: it is the owner-approved
+exact-instant reconciliation of 2026-09-08, pinned by
+`scripts/editorial-metadata-v3-approval-gate-test.js:102`; it is recorded as a negative boundary so
+it is never re-filed. (4) One narrow row survived that rejection and is admitted in MASTER:
+`GBS-NAGORNAYA-PUBLISHED-DATELINE-CARRIES-MODIFIED-INSTANT` — five Nagornaya chapters author
+`<p class="article-updated …">Опубликовано: <time …>` so the sanctioned projector writes the
+approved **modification** instant into a dateline that says "published", contradicting the same
+page's JSON-LD `datePublished`; measured on builds of both main and the live SHA. Program-level
+boundary for this pass: **no browser ran** (Playwright Chromium download fails with `ECONNRESET` in
+this sandbox), and the HTML→text retrieval tool cannot read `<time>` element text — it surfaces the
+hidden Pagefind spans instead — so live byline labels are witnessed from exact-SHA builds, while
+ordinary live text (the `????` copy loss) is witnessed from the live site directly. Full analysis:
+`reverify/2026-09-30-step-count-correction-and-dateline-projection.md`.
 
 ## Wave 4 — evidence-first genealogy batches
 
@@ -173,6 +199,14 @@ Current examples:
 Silence is not permission; API access is not redistribution permission; one edition/article grant is not a blanket grant.
 
 ## Wave 8 — retirement rule
+
+**2026-09-30 third-pass branch census (current):** the paginated branches endpoint returns
+**37 total / 36 non-main** at Product main `d586aa63f02b569cfe050a63cc9078c044375d8d`; six of them
+are open PR heads (#2153, #2150, #2145, #2144, #2143, #2142) and four are Lawson-active
+(`fix/lawson-premium-polish-20260930`, `publication/lawson-release-hardening-20260930`,
+`publication/steven-lawson-final-20260930`, plus its `tmp-…-fixup` twin). Machine receipt:
+`reverify/evidence/2026-09-30-branch-census.txt`. The Lawson release decision is under
+owner-directed stand-down in this pass, so those branches are counted, not classified or retired.
 
 **2026-09-30 latest branch-count measurement (later the same day):** paginated branches endpoint
 returns **36 total / 35 non-main** (five of them are open PR heads: #2150, #2145, #2144, #2143,

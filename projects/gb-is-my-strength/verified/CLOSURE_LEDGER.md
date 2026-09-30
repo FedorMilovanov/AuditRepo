@@ -339,3 +339,34 @@ This entry records the governance change only. It does not claim that the reform
 - Product mutation: none.
 - MASTER consequence: remove `GBS-SEARCH-CONTROL-PLANE-001`; active arithmetic becomes **0 owner decisions / 0 total active work units**.
 - Detailed evidence: `../reverify/CURRENT_HEAD_REVERIFY_2026-09-13_search-control-plane-external-auth-blocker.md`.
+
+## 2026-09-30 — release-gate step-count correction, MASTER anchor sweep, rejected dateline candidate
+
+- Scope: measurement truth of the release-gate reproduction + currency of every active MASTER source anchor + disposition of a site-wide dateline candidate.
+- Inputs: `SYS-STRICT-NATIVE-PUBLICATION-COMPLETION`, all 25 current defect rows, `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS`, `GBS-BAPTISTS-BYLINE-PUBLICATION-DATE-DIVERGENCE`, `GBS-OPEN-CONTENT-PR-DISPOSITION`; Product main `d586aa63f02b569cfe050a63cc9078c044375d8d`; live release `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`.
+- Result:
+  - closed-by-fix: none (no Product mutation in this pass).
+  - corrected-in-place: the `validate:static-publication` step count — recomputed from `package.json` blob `812497795d8a3c5c7a2beb6224b2f9492354dfdf` as **41 top-level `&&` commands, 40 exit 0, 1 fails at command #24 (`node scripts/audit-pro.js`)**; the earlier same-day figure is withdrawn from MASTER (2 sites), PROGRAM, the earlier reverify doc and the intake trace, and is not repeated anywhere.
+  - stale/invalid: the 17-route "human label contradicts `datetime`" candidate — **rejected** as the owner-approved exact-instant reconciliation of 2026-09-08 (`data/editorial-metadata-review-decisions/*-reconciliation-20260908.json`, approved-only projection, shape pinned by `scripts/editorial-metadata-v3-approval-gate-test.js:102`); recorded as a MASTER negative boundary so it is never re-filed.
+  - re-anchored (row stays current, quoted expression superseded): `GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING` (`body.home-page .mobile-controls > button:focus-visible` + `css/mobile-hotfix.css:12` via `HomePageHead.astro:158`) and `GBS-H-SCROLL-TOP-INVISIBLE-FOCUS` (`(window.scrollY || window.pageYOffset) > 500`). 24 of 26 anchors confirmed verbatim; 0 rows closed, 0 rows found already fixed.
+  - narrowed: `GBS-BAPTISTS-BYLINE-PUBLICATION-DATE-DIVERGENCE` — five routes at main carry an update-day label in the publication slot (four repaired routes + `peterburgskaya-liniya` are correct); all nine article routes still render the single pre-repair label at the live SHA, so the repairs are main-only; `projectVisibleDateline` rewrites the attribute only, so the fix is component authoring plus the owner's `spravochnik` label choice («14 июня» vs `publishedAt` 2026-06-10).
+  - refreshed: `GBS-OPEN-CONTENT-PR-DISPOSITION` with six open PR heads and their gate states; branch census **37 total / 36 non-main**.
+  - parked: the Lawson release-block decision — owner-directed stand-down (another effort is handling Lawson); measured, receipts preserved, no work taken. PR #2145 (apostasy) left untouched as another agent's lane.
+- Product evidence: no Product mutation. Local receipts: two `strangler:build:production-like` builds (main and live SHA, both exit 0), 41-command step-by-step run, PR/branch/CI rollups by exact head.
+- Regression witness: preserved in-repo receipts replacing the `/tmp` files lost with the previous session (`../reverify/evidence/2026-09-30-release-block-repro-receipt.txt`, `…-validate-static-publication-command-list.txt`, `…-master-source-anchor-currency.{txt,json}`, `…-pr-gates-by-head.txt`, `…-branch-census.txt`); AuditRepo validators re-run at this pass's head.
+- Live evidence: required for the copy-loss witness and obtained (live `/baptisty-rossii/spravochnik/` renders the damaged cards verbatim, including inside link text); **not claimed** for live byline labels — the HTML→text retrieval used earlier drops `<time>` element text and surfaces the hidden Pagefind spans (control-proven on `/articles/kod-da-vinchi/`), so labels are witnessed from exact-SHA builds instead. No browser ran (Chromium install fails with `ECONNRESET` in this sandbox).
+- Detailed evidence: `../reverify/2026-09-30-step-count-correction-and-dateline-projection.md`, `../reverify/evidence/2026-09-30-live-fetch-time-element-boundary.txt`, `../reverify/evidence/2026-09-30-baptist-dates-main-vs-live-sha.txt`, `../incoming/arena-incompleteness-auditor/2026-09-30/STEP_COUNT_CORRECTION_AND_DATELINE_DISPOSITION.md`.
+
+## 2026-09-30-b — admitted: Nagornaya «Опубликовано» dateline carries the modification instant
+
+- Scope: one narrow, previously unrecorded defect admitted after the dateline class above was traced to its owner.
+- Inputs: new MASTER row `GBS-NAGORNAYA-PUBLISHED-DATELINE-CARRIES-MODIFIED-INSTANT`; `/nagornaya/chast-1/` … `/chast-5/`.
+- Result:
+  - admitted as current: the components author `<p class="article-updated …">Опубликовано: <time datetime="2026-05-01">1 мая 2026</time></p>` (10 files: `NagornayaChast{1..5}MainShell.astro` + `…SectionSummary.astro`); `scripts/lib/editorial-metadata-v3.js` → `projectVisibleDateline` selects by that class alone, so the built page attaches the approved **modification** instant (`2026-07-22T21:48:34.000Z` chast-1/2/4, `2026-07-05T18:09:08.000Z` chast-3, `2026-07-22T11:13:44.000Z` chast-5) to a sentence that says "published", while the same page's JSON-LD `datePublished` and `article:published_time` are `2026-04-30T21:00:00.000Z`.
+  - control: `/articles/kod-da-vinchi/`, whose `article-updated` element's own label *is* the modified date — the approved shape asserted by the gate test.
+  - guard gap recorded: `scripts/editorial-dateline-contract-test.js` governs `class="editorial-dateline"` markup only and never inspects `article-updated` datelines; no gate asserts published-slot label ↔ `publishedAt` agreement.
+  - MASTER consequence: 25 → **26** current defects; arithmetic 26 + 0 + 0 + 2 + 1 = **29 work units**.
+- Product evidence: no Product mutation. Reproduced on production-like builds of Product main `d586aa63` **and** of the live release SHA `d0e04a9c` (both exit 0), so the shape ships.
+- Regression witness: none exists yet — the closure boundary requires a class-level guard that fails when a `<time>` inside an `article-updated` container is introduced by «Опубликовано», or when the projected field disagrees with the dateline's wording and label.
+- Live evidence: not required for admission (artifact-proven at the live SHA); no browser claim. If the owner judges the wording intentional, the disposition is accepted-risk and the row leaves MASTER.
+- Detailed evidence: `../reverify/2026-09-30-step-count-correction-and-dateline-projection.md` §4, `../reverify/evidence/2026-09-30-dateline-projection-scan-main.json`.

@@ -1,0 +1,44 @@
+# Product branch census (paginated GET /repos/FedorMilovanov/gb-is-my-strength/branches)
+measured_utc=2026-09-30T21:35Z
+product_main=d586aa63f02b569cfe050a63cc9078c044375d8d
+total=37  non_main=36
+supersedes=36 total/35 non-main (2026-09-30 earlier), 44/43 (2026-09-30 later lifecycle recheck), 205/204 (2026-09-30 pre-cleanup census)
+open_pr_head_branches=arena/01a0f415-gb-is-my-strength (#2153), fix/lawson-premium-polish-20260930 or publication/* (#2150 head 89e76794), content/apostasy-bible-study (#2145), dependabot/npm_and_yarn/npm-non-major-92ac384687 (#2144), genealogy/editorial-direct-name-batch-20260924 (#2143), reconcile/baptist-ch01-authority-salvage-20260924 (#2142)
+
+agent/antisovetov-title-suffix-20260818
+agent/app-integration-zero-debt-20260820
+agent/bible-app-deep-playwright-audit-20260819
+agent/bible-app-deep-playwright-r2-20260819
+arena/01a0a1b2-gb-is-my-strength
+arena/01a0a1b4-gb-is-my-strength
+arena/01a0a1ce-gb-is-my-strength
+arena/01a0f415-gb-is-my-strength
+audit/baptisty-total-production-audit-20260911
+book/ch07-mazaev-prokhanov-research-v2
+codex/baptisty-spravochnik-evidence-language
+content/apostasy-bible-study
+dependabot/npm_and_yarn/npm-non-major-92ac384687
+deps/npm-non-major-20260906-r2
+fix/genealogy-relation-confidence-localization
+fix/lawson-premium-polish-20260930
+fix/npm-non-major-security-20260907
+fix/serdce-i-duh-mdx-em-20260930
+fix/series-taxonomy-projection-20260911
+genealogy/editorial-direct-name-batch-20260924
+lane/baptisty-book-production-status-20260906
+lane/metadata-reconcile-tma-pr518-20260908
+lane/metadata-review-decision-rimlyanam7-20260908
+lane/metadata-standalone-three-reconciliation-20260908
+lane/teen-core-content-clearance-20260908
+main
+noop
+noop2
+publication/lawson-release-hardening-20260930
+publication/steven-lawson-final-20260930
+publication/steven-lawson-final-20260930-tmp
+reconcile/baptist-ch01-authority-salvage-20260924
+reconcile/baptisty-book-status-20260911
+reconcile/baptisty-media-recovery-20260911
+reconcile/ch01-pre-baptist-origins-research-20260911
+repair/antisovetov-title-suffix-20260906
+repair/source-surface-audit-completeness-20260906

@@ -1,0 +1,94 @@
+# Receipt — npm run validate:static-publication, run command by command
+# Preserved copy of the local run; the original /tmp logs do not survive sessions.
+# Counting rule: top-level '&&'-joined commands of the script string in package.json
+# (no expansion of nested npm scripts). package.json blob 812497795d8a3c5c7a2beb6224b2f9492354dfdf.
+# Captured by: arena-incompleteness-auditor, AuditRepo branch arena/01a0f435-auditrepo.
+
+# validate:static-publication step-by-step receipt
+repo=/tmp/gb-product
+head_sha=d586aa63f02b569cfe050a63cc9078c044375d8d
+node=v22.22.3 npm=10.9.8
+started_utc=2026-09-30T21:32:22Z
+top_level_commands=41
+worktree_dirty_before=0
+
+[1/41] rc=0 dur=2s cmd=npm run validate:all
+[2/41] rc=0 dur=1s cmd=npm run owner:ui-guard
+[3/41] rc=0 dur=0s cmd=npm run about:visual-parity:audit
+[4/41] rc=0 dur=0s cmd=npm run biografii:visual-parity:audit
+[5/41] rc=0 dur=0s cmd=npm run hard-texts:visual-parity:audit
+[6/41] rc=0 dur=0s cmd=npm run pastor-series:visual-parity:audit
+[7/41] rc=0 dur=0s cmd=npm run articles:visual-parity:audit
+[8/41] rc=0 dur=1s cmd=npm run gill:context:visual-parity:audit
+[9/41] rc=0 dur=0s cmd=npm run gill:spravochnik:visual-parity:audit
+[10/41] rc=0 dur=0s cmd=npm run konfessii:visual-parity:audit
+[11/41] rc=0 dur=0s cmd=npm run karty:visual-parity:audit
+[12/41] rc=0 dur=0s cmd=npm run baptisty-rossii:visual-parity:audit
+[13/41] rc=0 dur=1s cmd=npm run home:visual-parity:audit
+[14/41] rc=0 dur=0s cmd=npm run nagornaya:visual-parity:audit
+[15/41] rc=0 dur=0s cmd=npm run catalogs:visual-parity:audit
+[16/41] rc=0 dur=1s cmd=npm run baptisty:roadmap:audit
+[17/41] rc=0 dur=0s cmd=npm run baptisty:visual-atlas:audit
+[18/41] rc=0 dur=0s cmd=npm run baptisty:authentic-media:audit
+[19/41] rc=0 dur=0s cmd=npm run maps:validate
+[20/41] rc=0 dur=0s cmd=npm run page-ownership:check
+[21/41] rc=0 dur=1s cmd=npm run avraam:audit
+[22/41] rc=0 dur=0s cmd=npm run tokens:check
+[23/41] rc=0 dur=0s cmd=npm run css:layer:validate
+[24/41] rc=1 dur=6s cmd=node scripts/audit-pro.js
+--- last 25 lines ---
+❌ sitemap contract: missing canonical indexable production route: /articles/steven-lawson-samoobman-i-publichnyy-golos/
+
+── INFO ──
+ℹ️ Production HTML corpus: 104 routes = 52 committed source shadows + 52 dist-only routes delegated to mandatory production contracts
+ℹ️ Registered non-production root HTML excluded from public source checks: /konfessii/russkij-baptizm/_app/
+ℹ️ Gzip wire size: CSS 177381 bytes, JS 175191 bytes, total 352572 bytes
+ℹ️ Route-scoped CSS: css/home.css, css/nagornaya-mobile-toc.css, nagornaya/tw.min.css = 170002 bytes
+ℹ️ CSS dead vars: 25 unused (acceptable; clean when convenient)
+ℹ️ SITE_CONFIG.version uses placeholder (1) on 1 pages — fine but could be Unix timestamp
+ℹ️ SVG dedup opportunity: 16 icon patterns shared across ≥5 files
+ℹ️ color-mix() usage: 243 occurrences (Safari ≥ 15.2 supports; older browsers need fallback)
+ℹ️ CSS dead-class heuristic: 182 possibly-unused (runtime state classes excluded; manual review)
+ℹ️ AGENTS.md changelog: 0 rows (under 100, healthy)
+ℹ️ og:image differs from LCP-priority image (consider aligning for social-share consistency):
+  - articles/20-antisovetov-pastoru/index.html: og:image=og-20-antisovetov-pastoru, but LCP-priority images are: mirror
+  - articles/kod-da-vinchi/index.html: og:image=og-kod-da-vinchi, but LCP-priority images are: hero-kod-da-vinchi
+  - articles/krajne-li-isporcheno-serdce/index.html: og:image=og-krajne-isporcheno, but LCP-priority images are: ieremia-judea-fall
+  - index.html: og:image=og-preview-1200x630, but LCP-priority images are: og-nagornaya-propoved
+  - pastor-series/index.html: og:image=og-hero, but LCP-priority images are: hero-main
+ℹ️ AGENTS.md: latest row has no machine-readable "NN passed" claim
+
+❌ AUDIT FAILED — fix errors before deploy
+══════════════════════════════════════════════════════════════════════════════
+
+Report saved: audit/audit-pro-2026-09-30T21-32-35-080Z.md
+--- error lines ---
+7:Summary: ✅ 165 passed · ⚠️ 7 warnings · ❌ 1 errors · ℹ️ 12 info
+200:── ERRORS (1) ──
+201:❌ sitemap contract: missing canonical indexable production route: /articles/steven-lawson-samoobman-i-publichnyy-golos/
+222:❌ AUDIT FAILED — fix errors before deploy
+---
+[25/41] rc=0 dur=0s cmd=npm run content:parity
+[26/41] rc=0 dur=1s cmd=npm run sources:hygiene
+[27/41] rc=0 dur=0s cmd=npm run article:qa
+[28/41] rc=0 dur=2s cmd=npm run readable-audit
+[29/41] rc=0 dur=0s cmd=npm run editorial:lint
+[30/41] rc=0 dur=0s cmd=npm run gill:reading-time:audit
+[31/41] rc=0 dur=1s cmd=npm run gill:pagefind:audit
+[32/41] rc=0 dur=0s cmd=npm run gill:series:data:consistency:audit
+[33/41] rc=0 dur=0s cmd=npm run gill:claims:surface:audit
+[34/41] rc=0 dur=0s cmd=npm run data:consistency
+[35/41] rc=0 dur=0s cmd=npm run content:guard
+[36/41] rc=0 dur=127s cmd=npm run astro:audit:article-mdx:strict
+[37/41] rc=0 dur=134s cmd=npm run astro:audit:baptisty-series
+[38/41] rc=0 dur=0s cmd=npm run mdx:structure:audit
+[39/41] rc=0 dur=0s cmd=npm run contract:compare
+[40/41] rc=0 dur=4s cmd=npm run migration:metadata:check:strict
+[41/41] rc=0 dur=1s cmd=npm run sw:dist:audit
+
+finished_utc=2026-09-30T21:37:05Z
+RESULT: total=41 ok=40 fail=1
+failing_commands= 24:node scripts/audit-pro.js
+worktree_dirty_after=0
+--- worktree diff introduced by the run (paths) ---
+CHAIN_DONE
