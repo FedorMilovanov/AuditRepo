@@ -69,8 +69,8 @@ Detailed execution evidence remains in [the release-recovery program](../verific
 
 | Field | Value |
 |---|---|
-| Active work units | **26** |
-| Direct current defects | **24** |
+| Active work units | **27** |
+| Direct current defects | **25** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
 | System verification lanes | **1** |
@@ -81,7 +81,7 @@ Detailed execution evidence remains in [the release-recovery program](../verific
 >
 > **Important boundary:** this count covers only currently admitted necessary defect/system/decision work units. It does **not** mean the whole product/research program is complete. Editorial certification, Baptist research/publication, maps, rights/external gates, measurement-first quality work and branch retirement are tracked separately in [PROGRAM_CLOSURE_MATRIX.md](../PROGRAM_CLOSURE_MATRIX.md). Optional/non-mandatory quality candidates remain in [WORK_QUEUE.md](../WORK_QUEUE.md).
 
-## CURRENT DEFECTS — 24
+## CURRENT DEFECTS — 25
 
 | ID | Current problem | Closure boundary |
 |---|---|---|
@@ -109,6 +109,8 @@ Detailed execution evidence remains in [the release-recovery program](../verific
 | `GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED` | On `/articles/kod-da-vinchi/`, `/articles/lot-i-sodom/` and `/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/` at mobile width, the focusable speed-selection badge measures 20.3×13px; its `::before` target is only 24.3×19px and overlaps the neighboring 38×38 Play target, so the 24px spacing exception cannot apply. A touch at the badge center opens the speed rail. | Enlarge the badge to at least 24×24 CSS pixels and separate its hit area from Play. Resulting-main touch/keyboard proof covers all three routes, speed selection, independent Play activation, expanded/focus states and light/dark appearance. Details: `../reverify/2026-09-29-current-reader-mobile-speed-target.md`. |
 | `GBS-404-RELATIVE-READER-PREFERENCES-ASSETS` | The root `404.html` uses relative URLs for its reader-preference bootstrap, CSS, and runtime. On a nested missing path, live Page routing retains that path, so all three requests resolve under the missing directory and return the 404 page instead of the assets; canonical stored preferences (notably Sepia) consequently fail to bootstrap/style on those not-found pages. A fresh exact-SHA local Pages-style browser emulation reproduced this on two nested 404s; a root-level 404 correctly loads/applies Light/Dark/Sepia. | Root all three references; resulting-main/live proof covers root and at least two nested 404s, confirms the three assets load from the root and stored Light/Dark/Sepia state is applied, and preserves recovery/canonical behavior. Details: `../reverify/2026-09-29-current-404-relative-reader-preferences-assets.md`. |
 | `GBS-SERIES-MANIFEST-HEART-READTIME-UNDERSTATED` | The published `/articles/` series card for «Тайны человеческого сердца — книга статей» displays **2 мин** from `data/search-manifest.json`, although the book contains 24 published MDX members (sum of their `readingTime` fields: **719 мин**). The same catalog displays series totals for Nagornaya (89), Gill (239), pastor series (157), Baptists (229), and teen series (264). **Boundary:** `2` may correctly describe time to read the *landing page*, and the data consistency guard does not require an aggregate for this particular book. The defect is the ambiguous reader-facing «Серия · 2 мин» label, not a proved violation of a universal data contract. | Clarify the card label as landing-page time or give the card the full-book total from an authoritative book-series config; do not blindly overwrite SEO or reading-time metadata. Verify the intended semantics with owner and resulting-main catalog proof, while leaving individual article times untouched. Details: `incoming/arena-incompleteness-auditor/2026-09-30/REPORT.md`. |
+
+| `GBS-ARTICLES-CATALOG-STRICT-NATIVE-OMISSION` | Product main `5e76c6ec...` publishes `/articles/steven-lawson-samoobman-i-publichnyy-golos/` (`migration/page-ownership.json`: `production-dist`; MDX `draft: false`, `noindex: false`), but the route is absent from `data/search-manifest.json`. `ArticlesLibrarySection.astro` builds its article cards *only* from manifest items filtered by production ownership, so this published strict-native article cannot appear as a card in `/articles/` on this source anchor. This is **catalog discoverability**, not proof that its direct route or site search is broken. | Existing Product PR #2150 owns a proposed source-to-catalog projection (head `89e76794...`, unmerged as sampled 2026-09-30); do not launch competing repair. Verify attribution, duplicate handling, route ownership, catalog/browser projection and exact-head CI; remove this row only after resulting-main proof. Evidence: `../incoming/arena-incompleteness-auditor/2026-09-30/CONTENT_CATALOG_RECHECK.md`. |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 

@@ -52,6 +52,8 @@ Pending relation evidence: **139**:
 
 Recommended bounded editorial sequence remains: messianic spine → Matthew → Luke → patriarchs → Judah/David → Levites → tribes → women → nations → remaining source batches. Each batch must reduce measured debt without weakening admission.
 
+**Later 2026-09-30 Product recheck:** Product main advanced to `5e76c6ec81f3c192510c70e49a3deba64fb676c2` with a published Steven Lawson MDX route; `/articles/` source still projects only the legacy manifest and omits this route. This specific new catalog discoverability defect is admitted in MASTER as `GBS-ARTICLES-CATALOG-STRICT-NATIVE-OMISSION`, with unmerged Product #2150 already owning the proposed repair. Older corpus counts and the previous "only series-catalog defect" wording below apply to the explicitly dated `d0e04a9c...` snapshot, not the advanced main. Details: `incoming/arena-incompleteness-auditor/2026-09-30/CONTENT_CATALOG_RECHECK.md`.
+
 ## Published series versus unfinished content (2026-09-30)
 
 Do not infer content debt from an old plan alone. Product main at `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b` reports all registered parts of Nagornaya (5), Gill (6), pastor core (9), teen series (7) and Genesis 6 (6) as `published`; every listed part has a `production-dist` page-ownership entry. The heart-book config has 24 MDX members (`draft: false`) and its canonical current 4/22/2 structure; the old “6 live / 18 draft” roadmap is explicitly **superseded**, not current completion debt. This is source/ownership proof only, not an independent live browser recheck or certification of every article claim.
