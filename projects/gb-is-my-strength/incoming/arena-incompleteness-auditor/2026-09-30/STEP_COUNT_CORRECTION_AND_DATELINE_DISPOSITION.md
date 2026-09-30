@@ -228,7 +228,7 @@ any Product PR. Branch census: **37 total / 36 non-main**
   currency txt+json, dateline scan, two time-label scans, Baptist dates at both SHAs, live-fetch
   boundary, PR gates, branch census, program currency, two artifact witnesses).
 - `reverify/2026-09-30-release-block-and-baptist-provenance.md` and
-  `incoming/…/2026-09-30/RELEASE_GATE_AND_BAPTIST_TRACE.md`: step count corrected in place with a
+  [`RELEASE_GATE_AND_BAPTIST_TRACE.md`](./RELEASE_GATE_AND_BAPTIST_TRACE.md): step count corrected in place with a
   marker; the `/tmp` receipt references replaced by preserved in-repo receipts.
 - `verified/CLOSURE_LEDGER.md`: two entries (correction + rejected candidate; admitted row).
 - No Product code was changed. No closure was claimed for the release block.

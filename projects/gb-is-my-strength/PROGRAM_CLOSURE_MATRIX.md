@@ -30,7 +30,7 @@ script string, do not expand nested `npm run` calls; `package.json` blob
 required. This is tracked in MASTER as `SYS-STRICT-NATIVE-PUBLICATION-COMPLETION`. Consequences for
 this matrix: the Lawson/Chapter-1 publication lane (#2148, #2150) is not live, Baptist date/byline
 repairs merged into `main` are not shipped, and two terminal conditions below are currently
-**false**. Evidence: `../reverify/2026-09-30-release-block-and-baptist-provenance.md`.
+**false**. Evidence: `reverify/2026-09-30-release-block-and-baptist-provenance.md`.
 
 **2026-09-30 Baptist provenance correction.** The `????` visible-copy loss in nine published
 Baptist article bodies entered already corrupted in `059b3024` (PR #2028, 2026-09-13), is

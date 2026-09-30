@@ -77,4 +77,4 @@
 - No Product PR was merged, closed, or modified; #2145 remains with its owning agent.
 
 Full evidence, commands, run IDs and boundary notes:
-`../../reverify/2026-09-30-release-block-and-baptist-provenance.md`.
+`../../../reverify/2026-09-30-release-block-and-baptist-provenance.md`.
