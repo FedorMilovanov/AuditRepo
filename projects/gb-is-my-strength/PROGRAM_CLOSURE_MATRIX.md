@@ -52,6 +52,8 @@ Pending relation evidence: **139**:
 
 Recommended bounded editorial sequence remains: messianic spine → Matthew → Luke → patriarchs → Judah/David → Levites → tribes → women → nations → remaining source batches. Each batch must reduce measured debt without weakening admission.
 
+**64-file corpus control (same Product main; Research `d418894a...`):** 128 per-file shell assertions and 192 route/index cross-checks confirmed 64 published MDX routes with page ownership and route sources; the single search-manifest omission remains the already-admitted Lawson catalog row. Research `STEVE_LAWSON/CURRENT.md` supersedes the dated V4 queue: V6 publication-ready-with-guardrails, external archive acquisition active but not an automatic publication blocker. Details: `incoming/arena-incompleteness-auditor/2026-09-30/CORPUS_AND_LAWSON_RECHECK.md`.
+
 **Later 2026-09-30 Product recheck:** Product main advanced to `5e76c6ec81f3c192510c70e49a3deba64fb676c2` with a published Steven Lawson MDX route; `/articles/` source still projects only the legacy manifest and omits this route. This specific new catalog discoverability defect is admitted in MASTER as `GBS-ARTICLES-CATALOG-STRICT-NATIVE-OMISSION`, with unmerged Product #2150 already owning the proposed repair. Older corpus counts and the previous "only series-catalog defect" wording below apply to the explicitly dated `d0e04a9c...` snapshot, not the advanced main. Details: `incoming/arena-incompleteness-auditor/2026-09-30/CONTENT_CATALOG_RECHECK.md`.
 
 ## Published series versus unfinished content (2026-09-30)
