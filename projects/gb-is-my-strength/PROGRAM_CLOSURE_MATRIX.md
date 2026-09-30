@@ -124,6 +124,9 @@ Fresh 2026-09-30 compares: `fix/map-engine-capability-runtime-v1` **3 ahead / 12
 
 ## Wave 7 — external-gate semantics
 
+**2026-09-30 current-source corpus census:** the 66-book *registry* has 42 local book files and 300 sparse keyed records, but Product's rights/publication resolver admits **0/300**; the search index has 1,216 references, 148 canonical text fields, **0 approved**. The Scripture route projection explicitly checks eligibility, so raw local text must not be treated as publishable Bible tooltips or a complete licensed 66-book corpus. Research's CrossWire `RusSynodal` 1.9.1 is an acquisition candidate, not an approved Product import; #1753's free-only/per-edition/provider gates still control. This is a quantified intentionally held capability, not a newly found bypass. Evidence: `incoming/arena-incompleteness-auditor/2026-09-30/BIBLE_CORPUS_AND_G3_CLAIM_RECHECK.md`.
+
+
 `BLOCKED_EXTERNAL` is a valid terminal engineering disposition when code is already fail-closed and the missing fact is a provider/rights/human decision.
 
 Current examples:
