@@ -131,6 +131,9 @@ Silence is not permission; API access is not redistribution permission; one edit
 
 ## Wave 8 — retirement rule
 
+**2026-09-30 later lifecycle recheck (after the 205-ref census):** GitHub's paginated branches endpoint now lists **44 total / 43 non-main**; Product `main` is still `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`. Open PR #2146 (`92a90a84732f25826bdcd0843a5799521dacfd7b`) reports **162 remote refs deleted outside the PR**, with a proposed 162-ref disposition register and four recovery units on its *unmerged* head. The previous 205/204 census and 204-ref compare below are historical pre-cleanup snapshots, **not the current remaining-branch backlog**. The 44 observed count includes the newly created #2146 head; its claimed 162 deletion classes have not been independently checked against the historical SHA register in this pass. Do not mark Wave 8 closed: review register/recovery content, retain the still-live refs by disposition, pass exact-head gates, merge or explicitly close #2146, then remeasure branches and Product main. See `incoming/arena-incompleteness-auditor/2026-09-30/BRANCH_LIFECYCLE_RECHECK.md`.
+
+
 The 2026-09-30 full read-only branch compare is recorded in `incoming/arena-incompleteness-auditor/2026-09-30/REPORT.md` and its `evidence/branch-compare-main-2026-09-30.csv`: 35 behind-only, 166 diverged, 3 ahead-only; 0 API failures. **This is measurement, not classification or authorization to delete.** The 35 zero-ahead refs need explicit retirement dispositions, and the 166 diverged refs need unique-content review.
 
 A branch with unique commits is never deleted merely for age.
