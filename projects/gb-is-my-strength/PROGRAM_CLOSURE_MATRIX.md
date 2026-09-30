@@ -52,6 +52,19 @@ Pending relation evidence: **139**:
 
 Recommended bounded editorial sequence remains: messianic spine → Matthew → Luke → patriarchs → Judah/David → Levites → tribes → women → nations → remaining source batches. Each batch must reduce measured debt without weakening admission.
 
+## Published series versus unfinished content (2026-09-30)
+
+Do not infer content debt from an old plan alone. Product main at `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b` reports all registered parts of Nagornaya (5), Gill (6), pastor core (9), teen series (7) and Genesis 6 (6) as `published`; every listed part has a `production-dist` page-ownership entry. The heart-book config has 24 MDX members (`draft: false`) and its canonical current 4/22/2 structure; the old “6 live / 18 draft” roadmap is explicitly **superseded**, not current completion debt. This is source/ownership proof only, not an independent live browser recheck or certification of every article claim.
+
+| Content lane | Published authority | Incomplete work / explicit boundary | Next admissible decision |
+|---|---|---|---|
+| Baptists current book | 4 chapters, 9 articles + 1 reference; 229 min. `docs/BAPTISTY-ROSSII-EDITORIAL-ARCHITECTURE.md` §§2–3. | Chapter II is overloaded (seven *candidate* split/research slices: Petersburg people, Mazaev/Prokhanov, print republic, 1917–21, relief 1921–24, College Fund/school, conscience); III has five candidate split/research slices (enemy narrative, 1929 law, Terror, war pivot, 1944); IV has four candidate slices (1960 documents, prisoners/families, periodicals, underground print). The numbered slices are **not** counts of missing URLs; they overlap published cores and have different evidence readiness. | Admit a new route only for an independent question with source-to-claim matrix, page/object provenance and rights; don't split a published monolith solely to meet a target count. |
+| Baptists future book | `docs/BAPTISTY-ROSSII-BOOK-AUTHORITY-V2.md`: 5 future parts / 20 future chapters; all `planned` deliberately. | Chapter V diaspora/archives/post-1991 intentionally deferred; missing physical sources and media rights block unconditional publication. **Do not** subtract current 9 articles from the future 20-chapter architecture. | Source retrieval, claim and media bridge, explicit publication decision; no empty chapter routes. |
+| Journal | `/journal/` and `/journal/dossiers/g3/` are `production-dist` on this SHA. | A 2026-09-09 research note still says `NO_PUBLIC_ROUTE`, but predates these two routes. Its proposed IA (`news`, `documents`, etc.) is not automatically a six-route release promise. | Owner confirms whether any further journalism category is a current mandatory program before creating a wave or a route. |
+| Other named series | Nagornaya 5/5; Gill 6/6; pastor core 9/9; teen 7/7; Genesis 6 6/6 registered published parts; heart book 24 MDX members and canonical book config. | No source-backed missing *registered* part was found in this pass. A published part may still have separate MASTER quality defects; “registered” is not proof of editorial perfection. | Do not invent uncompleted chapters from stale research documents. |
+
+Detailed slice/source ledger and negative checks: `incoming/arena-incompleteness-auditor/2026-09-30/REPORT.md`, section “Product-content completion pass”.
+
 ## Wave 5 — Baptist salvage boundary
 
 Do **not** merge ancient `book/*` or `reconcile/*` branches as wholes. Their useful content is research evidence, not a current codebase.
