@@ -3,7 +3,12 @@
 Checked 2026-09-30 (later pass, after AuditRepo #477). Product `main`
 `d586aa63f02b569cfe050a63cc9078c044375d8d`; live release `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`
 (`/deployments/d0e04a9c.../35927303479-1.json`, digest `sha256:6bc57487...`); Research `main`
-`3d990d840e5708fdc517250031481f8cfafa77de`.
+`3d990d840e5708fdc517250031481f8cfafa77de` at the time of the read.
+
+> Freshness note (same day, later): the apostasy agent advanced Research `main` to
+> `1876c38fa3749438d5c82f6895e65803c2e262bc` (P1 exact-locator closures continue). That does not
+> change the facts below (Product-side release block and Baptist provenance); it only shows that
+> the apostasy lane is active and remains owned by its agent.
 
 Evidence tiers used below: **source** (exact-SHA files), **artifact/build** (local
 production-like build of `d586aa63` in `/tmp/gb-product`), **CI** (GitHub Actions metadata via

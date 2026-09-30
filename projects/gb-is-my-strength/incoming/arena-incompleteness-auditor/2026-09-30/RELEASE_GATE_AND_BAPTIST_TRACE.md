@@ -7,7 +7,8 @@
 - Date: 2026-09-30
 - Evidence anchor: Product `main` `d586aa63f02b569cfe050a63cc9078c044375d8d`; live release
   `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b` (`/deployments/d0e04a9c.../35927303479-1.json`);
-  Research `main` `3d990d840e5708fdc517250031481f8cfafa77de`
+  Research `main` `3d990d840e5708fdc517250031481f8cfafa77de` (the apostasy lane later advanced to
+  `1876c38f...` — same day, does not change these findings)
 - Evidence tier: verified-source (exact-SHA files), verified-artifact (local production-like
   build of `d586aa63` + full `validate:static-publication` chain run), verified-CI (Actions
   runs/jobs API), live HTTP retrieval. No browser rendering. No Product mutation.
