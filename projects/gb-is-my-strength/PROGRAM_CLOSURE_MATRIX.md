@@ -77,10 +77,18 @@ it is never re-filed. (4) One narrow row survived that rejection and is admitted
 `<p class="article-updated …">Опубликовано: <time …>` so the sanctioned projector writes the
 approved **modification** instant into a dateline that says "published", contradicting the same
 page's JSON-LD `datePublished`; measured on builds of both main and the live SHA. Program-level
-boundary for this pass: **no browser ran** (Playwright Chromium download fails with `ECONNRESET` in
-this sandbox), and the HTML→text retrieval tool cannot read `<time>` element text — it surfaces the
-hidden Pagefind spans instead — so live byline labels are witnessed from exact-SHA builds, while
-ordinary live text (the `????` copy loss) is witnessed from the live site directly. Program currency was also re-derived rather than carried forward: the article corpus is **64** MDX files at main vs **63** at the live SHA (the +1 is the blocked Lawson route), Wave 4 genealogy counts and the 42/139 relation-evidence split were re-read from `data/genealogy/v2/**`, Wave 5B diagram rights and the 31/31 primary-source dossiers were re-checked, and the Wave 6 showcase was re-measured live on 2026-09-30. Receipt: `reverify/evidence/2026-09-30-program-currency-remeasure.txt`. Full analysis:
+boundary for this pass: **no browser ran in that pass** (Playwright's own Chromium download fails with
+`ECONNRESET` in this sandbox), and the HTML→text retrieval tool cannot read `<time>` element text — it
+surfaces the hidden Pagefind spans instead — so live byline labels are witnessed from exact-SHA builds,
+while ordinary live text (the `????` copy loss) is witnessed from the live site directly.
+**Superseded on the browser tier — 2026-10-01:** a browser does run in this sandbox. `@sparticuz/chromium`
+(the npm tarball ships the headless binary) plus `playwright-core` launch once `libnspr4`/`libnss3`/
+`libnssutil3` are built from `mozilla/nspr` and `nss-dev/nss` (ninja/gyp from PyPI), because every apt
+mirror and every Playwright browser CDN is blocked here; the recipe and the eleven-section result are in
+`reverify/evidence/2026-10-01-fresh-browser-pass-at-anchor.txt`. The live host still has no network route
+from the sandbox (`curl https://gb-is-my-strength.ru` → `000`), so this browser tier is exact-SHA local
+build, not live-site: the public-page / byte-access / historical-SHA / visual-verification distinctions
+above are unchanged, and only the "no browser" half of the boundary is retired. Program currency was also re-derived rather than carried forward: the article corpus is **64** MDX files at main vs **63** at the live SHA (the +1 is the blocked Lawson route), Wave 4 genealogy counts and the 42/139 relation-evidence split were re-read from `data/genealogy/v2/**`, Wave 5B diagram rights and the 31/31 primary-source dossiers were re-checked, and the Wave 6 showcase was re-measured live on 2026-09-30. Receipt: `reverify/evidence/2026-09-30-program-currency-remeasure.txt`. Full analysis:
 `reverify/2026-09-30-step-count-correction-and-dateline-projection.md`.
 
 ## Wave 4 — evidence-first genealogy batches
