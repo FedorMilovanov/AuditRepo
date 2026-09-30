@@ -65,6 +65,14 @@ Do not infer content debt from an old plan alone. Product main at `d0e04a9c7ac78
 
 Detailed slice/source ledger and negative checks: `incoming/arena-incompleteness-auditor/2026-09-30/REPORT.md`, section “Product-content completion pass”.
 
+## Research and public Drive cross-check (2026-09-30)
+
+Research `main` `0d4d897fe1180f791b433dce1c61b306efaec51e` was read against Product `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`. In `TEEN_DOUBLE_LIFE`, the historical handoff still calls the seven core/adult pieces draft lanes, but Product's current publication contract and routes show 7/7 published. Research `188` specialized companions are an **owner-selection pool**, not automatically owed new articles; its `299` late-lane audit recommends Product compression and preflight, not limitless new modules. Current Companion A already contains the guarded Israel analogy, blocked-contact and modern-economy questions required by Research `303`. No missing core part was admitted from this cross-check.
+
+For «Бытие 6 / Енох / ангелы», Product pins an exact Research authority bundle and records six published routes plus later site acceptance; earlier Research Article-8 and 6A/6B `HOLD` decisions must not be mistaken for current publication state without applying their supersession/acceptance chain. This cross-check **does not certify all theological claims**: a claim-level Research-main-to-pinned-delta and live article reading would be separate work. Evidence: `incoming/arena-incompleteness-auditor/2026-09-30/REPORT.md` (“Cross-repo content evidence”).
+
+A public Drive appendix object `https://drive.google.com/file/d/1bx53uaNT1X0pOTZXIlZNNmOJarjE1U8j/view` was accessible to an unauthenticated page fetch (455 MB 7z, virus-scan warning). **Neither archive bytes nor pages were downloaded/reverified**. The old Denis Samarin intermediary URL recorded in Product's source ledger currently yields 404, while the direct Drive link remains reachable; recheck a replacement source-ledger URL before changing citations. This is not a verified live-reader broken link. The full private Drive MASTER was not accessible; no assertion about its completeness follows.
+
 ## Wave 5 — Baptist salvage boundary
 
 Do **not** merge ancient `book/*` or `reconcile/*` branches as wholes. Their useful content is research evidence, not a current codebase.
