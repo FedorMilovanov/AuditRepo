@@ -188,3 +188,17 @@ found by a direct `drive.google.com` / `docs.google.com` URL scan. This does **n
 underlying Research lacked Drive-based sources or that other project folders are public.
 Additional Drive review requires the actual folder/file URL or an authorized public index;
 never infer access from an old note or request credentials.
+
+### Focused teen safety-transfer negative control
+
+Research `TEEN_DOUBLE_LIFE/300_PRODUCT_READINESS_TRANSFER_MATRIX...` requires core Part II/III
+anti-retaliation, a safe reporting recipient (who may not be a parent), caution with another
+minor's family, changing/recanted disclosures, no leading reconstruction and uncertainty
+around account names/screenshots. A **targeted source check**, not an exhaustive editorial
+certification, found the relevant safeguards in Product's
+`podrostok-za-kadrom-roditelyam-posle-razoblacheniya.mdx` (around lines 319,
+355–357, 410–414, 810–814) and
+`podrostok-za-kadrom-chto-delat-tserkvi.mdx` (around lines 473–481, 729–739).
+So those particular Research items must **not** be listed as untransferred just because the
+2026-09-08 Research handoff described old draft PRs. Fresh Product browser rendering and
+line-level accuracy remain unverified.
