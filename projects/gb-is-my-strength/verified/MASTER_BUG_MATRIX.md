@@ -69,19 +69,19 @@ Detailed execution evidence remains in [the release-recovery program](../verific
 
 | Field | Value |
 |---|---|
-| Active work units | **28** |
-| Direct current defects | **26** |
+| Active work units | **29** |
+| Direct current defects | **27** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
 | System verification lanes | **1** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Arithmetic: 24 + 0 + 0 + 1 + 1 = **26 current MASTER work units**.
+> Arithmetic: 27 + 0 + 0 + 1 + 1 = **29 current MASTER work units**.
 >
 > **Important boundary:** this count covers only currently admitted necessary defect/system/decision work units. It does **not** mean the whole product/research program is complete. Editorial certification, Baptist research/publication, maps, rights/external gates, measurement-first quality work and branch retirement are tracked separately in [PROGRAM_CLOSURE_MATRIX.md](../PROGRAM_CLOSURE_MATRIX.md). Optional/non-mandatory quality candidates remain in [WORK_QUEUE.md](../WORK_QUEUE.md).
 
-## CURRENT DEFECTS — 26
+## CURRENT DEFECTS — 27
 
 | ID | Current problem | Closure boundary |
 |---|---|---|
@@ -113,6 +113,8 @@ Detailed execution evidence remains in [the release-recovery program](../verific
 | `GBS-ARTICLES-CATALOG-STRICT-NATIVE-OMISSION` | Product main `5e76c6ec...` publishes `/articles/steven-lawson-samoobman-i-publichnyy-golos/` (`migration/page-ownership.json`: `production-dist`; MDX `draft: false`, `noindex: false`), but the route is absent from `data/search-manifest.json`. `ArticlesLibrarySection.astro` builds its article cards *only* from manifest items filtered by production ownership, so this published strict-native article cannot appear as a card in `/articles/` on this source anchor. This is **catalog discoverability**, not proof that its direct route or site search is broken. | Existing Product PR #2150 owns a proposed source-to-catalog projection (head `89e76794...`, unmerged as sampled 2026-09-30); do not launch competing repair. Verify attribution, duplicate handling, route ownership, catalog/browser projection and exact-head CI; remove this row only after resulting-main proof. Evidence: `../incoming/arena-incompleteness-auditor/2026-09-30/CONTENT_CATALOG_RECHECK.md`. |
 
 | `GBS-BAPTISTS-DELYAKOV-DIRECT-QUOTE-UNVERIFIED` | Product main `5e76c6ec...` exposes the same attributed exact Delyakov speech («Он — немец, ты — русский, а я — сириец») in **two** production routes: `BaptistyRossiiNochNaKureBody.astro:75` and `BaptistyRossiiSpravochnikBody.astro:49`. The first route's own bibliography requires a page-level locator for strong direct quotations; the 1935 autobiography scan was not acquired in historical Product research, and the acquired later Sinichkin text-layer remains `VISUAL_PENDING / NOT_QUOTE_READY`. No exact original-page quotation proof was found. This does **not** assert that the utterance was never spoken. | Existing unmerged Product PR #2146 head `602632ff...` paraphrases **both** occurrences and retains the quote HOLD. Coordinate with its owner; do not open a competing fix. Close only after a current-base exact-head merge and resulting-main verification of both routes (or independently verified original page/rights allowing direct speech). Evidence: `../incoming/arena-incompleteness-auditor/2026-09-30/BAPTISTS_RECOVERY_MULTILAYER.md`. |
+
+| `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS` | Product main `5e76c6ec...` contains literal ASCII question-mark replacements in headings, labels, explanatory text and alt/source strings in **nine** published Baptist article body components (not the series hub or `SovetskayaNoch`). Example: `BaptistyRossiiSpravochnikBody.astro` has `eyebrow="???????? ?????"`; the `BaptistyEvidenceJourney` component renders these props directly and the production-owned `/baptisty-rossii/spravochnik/` page imports that body. These are actual source bytes, not a terminal encoding artifact; the unmerged #2146 head sampled at `daf5f920...` still has the same damaged strings. No remote live browser claim. | Recover owner-approved original Russian strings (including image alt, citation captions and broken source URLs), not machine-guessed text; verify all nine production routes on resulting Product main with built HTML/browser text and link/alt checks, prevent recurrence with a narrow content guard. Coordinate with #2146 owner where touched files overlap; do not mistake its byline/quotation changes for this repair. Evidence and exact component census: `../incoming/arena-incompleteness-auditor/2026-09-30/BAPTISTS_GARBLED_VISIBLE_COPY_AND_DATES.md`. |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
