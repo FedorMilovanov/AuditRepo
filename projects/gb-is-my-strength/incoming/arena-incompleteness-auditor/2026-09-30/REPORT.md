@@ -202,3 +202,23 @@ certification, found the relevant safeguards in Product's
 So those particular Research items must **not** be listed as untransferred just because the
 2026-09-08 Research handoff described old draft PRs. Fresh Product browser rendering and
 line-level accuracy remain unverified.
+
+## Additional Research-series scope: apostasy, 1 Cor 11, women's service (2026-09-30)
+
+Product main `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`; Research main
+`0d4d897fe1180f791b433dce1c61b306efaec51e`. Research materials may be newer than
+an open Product PR; neither a proposed Research architecture nor a passing *subset* of CI
+is publication authority by itself. Checked Product open PR heads/routes before classification.
+
+| Item | Research authority | Product/current witness | Matrix disposition |
+|---|---|---|---|
+| «Отступничество и стойкость веры» | `apostasy/25_PUBLICATION_READINESS_AND_CLAIM_LEDGER_2026-09-30.md`: `CURRENT WORKING CONTROL / RESEARCH-ONLY / PUBLICATION_HOLD`; six mandatory articles + optional Jude + hub described by `14_PRODUCT_SERIES_BLUEPRINT_V2_2026-09-30.md` (`PROPOSAL / DO NOT IMPLEMENT`). Zero articles currently marked `PUBLICATION-CANDIDATE`; per-article P0 source/locator and alternative-view holds remain. | Product `main` does not contain the proposed article route. Open PR **#2145**, exact head `994b8735f79383c860ee6502ed36a9bcd9531886` (2026-09-28), adds **one** 319-line `src/content/articles/otstuplenie-ot-very-iuda-evreyam-6.mdx`. Frontmatter `draft: false`, `noindex: false`, `series: "hard-texts"`, `section: "hard-texts"`, `related: []`, `publishedAt: 2026-09-28`; `hard-texts` is the existing heart-book series key, not this proposed apostasy series. The PR predates the 2026-09-30 Research architecture, and four listed PR checks fail: production-like build, native-source, production-like-contract, registry-contracts. Causes not extracted from failed logs. | **Concrete unmerged publication collision / owner decision** under existing `GBS-OPEN-CONTENT-PR-DISPOSITION`, not a current live Product defect. Do **not** merge/index #2145 as written. Decide salvage-as-draft with correct taxonomy and source-to-claim gate vs close/supersede after Research item-level approval; no automatic six-route creation. Re-run checks on exact revised PR head. |
+| «1 Коринфянам 11:2–16» | `СЕРИЯ 1 КОРИНФЯНАМ 11/00_README_AND_MASTER_AUTHORITY_INDEX.md`: `SERIES-OPENED / FOUNDATION-STAGE / RESEARCH-ONLY / NOT-FOR-PUSH / HOLD`; explicitly says not to transfer to site in this research stage. Preliminary positions on `κεφαλή`, external covering and 11:10 “because of angels” remain open/contested. | No matching published route in Product `src/pages` or content files found by targeted route/name scan. | **Explicit research hold, not a dropped Product chapter.** Publication would require a later owner decision and evidence gates; particularly do not promote the minority Genesis 6 watcher analogy at 1 Cor 11:10 into a settled claim. |
+| «Роль женщины в церкви» | `СЕРИЯ ЖЕНЩИНЫ В СЛУЖЕНИИ/00_MASTER_INDEX_AND_SERIES_STRUCTURE.md`: separate 5-part foundation, `PLANNED / DEFERRED-GOAL / RESEARCH-ONLY / PUBLICATION_HOLD`, explicitly to be opened after 1 Cor 11 or a new owner decision. | No corresponding published Product series route found by targeted route/name scan. | **Deliberately deferred, not abandoned/unfulfilled publication promise.** Keep research as optional future programme; do not create an empty five-part series or interpret the Research plan as five broken URLs. |
+
+The PR #2145 conflict is unusually important because `draft: false` / `noindex: false` would
+make it publication-ready *if* a later integrator also completes route/registry wiring; the
+current PR has failing checks and is **not merged**. Its misuse of the existing `hard-texts`
+series key is a *proposed* metadata collision, not evidence that the live heart-book members
+have already changed. The Research blueprint itself is a proposal, not an instruction to
+implement six articles now. No Product code was modified.

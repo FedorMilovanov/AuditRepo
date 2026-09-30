@@ -73,6 +73,16 @@ For «Бытие 6 / Енох / ангелы», Product pins an exact Research a
 
 A public Drive appendix object `https://drive.google.com/file/d/1bx53uaNT1X0pOTZXIlZNNmOJarjE1U8j/view` was accessible to an unauthenticated page fetch (455 MB 7z, virus-scan warning). **Neither archive bytes nor pages were downloaded/reverified**. The old Denis Samarin intermediary URL recorded in Product's source ledger currently yields 404, while the direct Drive link remains reachable; recheck a replacement source-ledger URL before changing citations. This is not a verified live-reader broken link. The full private Drive MASTER was not accessible; no assertion about its completeness follows.
 
+## Research-only series versus unmerged publication collision (2026-09-30)
+
+| Proposed material | Research status (Research main `0d4d897fe1180f791b433dce1c61b306efaec51e`) | Product witness | Required disposition |
+|---|---|---|---|
+| «Отступничество и стойкость веры» | `apostasy/25_PUBLICATION_READINESS_AND_CLAIM_LEDGER_2026-09-30.md`: `PUBLICATION_HOLD`; no item is `PUBLICATION-CANDIDATE`. `apostasy/14_PRODUCT_SERIES_BLUEPRINT_V2_2026-09-30.md` proposes a hub + 6 separate pieces + conditional Jude and explicitly says `DO NOT IMPLEMENT`. | Product `main` has no article yet, but open **#2145** at `994b8735...` proposes one 319-line MDX combining Judas/Hebrews/whole Bible with `draft: false`, `noindex: false`, `series: "hard-texts"` (currently the heart-book key), `related: []`. Four PR checks are failing; failure mechanisms not extracted. | **Do not merge/index #2145 as written.** Owner decides park/close or salvage into a correctly scoped draft after Research source-to-claim and publication approval; avoid misfiling it in the heart book. Covered by existing MASTER owner-decision row `GBS-OPEN-CONTENT-PR-DISPOSITION`, not an extra defect. |
+| «1 Коринфянам 11:2–16» | `СЕРИЯ 1 КОРИНФЯНАМ 11/00_README_AND_MASTER_AUTHORITY_INDEX.md`: `RESEARCH-ONLY / NOT-FOR-PUSH / HOLD`, interpretive questions not settled. | No matching published Product route found by targeted route scan. | Preserve the explicit research-only status; absence from Product is **intentional**, not a missing published chapter. |
+| «Роль женщины в церкви» | `СЕРИЯ ЖЕНЩИНЫ В СЛУЖЕНИИ/00_MASTER_INDEX_AND_SERIES_STRUCTURE.md`: 5-part foundation, `DEFERRED-GOAL / RESEARCH-ONLY / PUBLICATION_HOLD`, pending completion of 1 Cor 11 or owner decision. | No matching published Product series route found by targeted route scan. | Future owner-selection pool, not five empty routes to generate. |
+
+Exact file/head/check witnesses and claim limits: `incoming/arena-incompleteness-auditor/2026-09-30/REPORT.md`, “Additional Research-series scope”.
+
 ## Wave 5 — Baptist salvage boundary
 
 Do **not** merge ancient `book/*` or `reconcile/*` branches as wholes. Their useful content is research evidence, not a current codebase.
