@@ -108,6 +108,9 @@ Google Drive is a **source reservoir**, not automatic authority. Folder traversa
 
 ## Wave 6 — maps boundary
 
+**2026-09-30 source-classified roster (11 route records, not just the hub counter):** `avraam` is `ready + featured`; `ishod` is `ready + withheld` (**already indexable/sitemap/Pagefind and a `production-dist` route**, but off the curated map hub); eight other routes are `temporary-placeholder + withheld`; `nachalo` is `draft + withheld` and awaits its G9 owner. Hence the hub's 1 open / 9 on audit / 0 drafts on showcase must not be paraphrased as “only one indexable map” or “nine maps are all noindex”: it counts showcase exposure, not the separate publication flag. Preserve the intentional two-axis status, audit the eight holding routes and the draft, and obtain explicit visual/owner review before *showcase* promotion. See `incoming/arena-incompleteness-auditor/2026-09-30/MAPS_TWO_AXIS_PUBLICATION_RECHECK.md`.
+
+
 Live `/karty/` truth re-measured 2026-09-29:
 - 1 published/open map;
 - 9 maps on audit;
