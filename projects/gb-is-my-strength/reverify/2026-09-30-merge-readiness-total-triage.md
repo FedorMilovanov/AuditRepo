@@ -1,5 +1,7 @@
 # Merge-readiness recheck: AuditRepo incompleteness wave
 
+> **Superseded current-state warning (later 2026-09-30):** Product main advanced to `d586aa63...`; the Gill build blocker below was resolved and the direct Delyakov quote was removed. Four date pairs were repaired; five remain. Use `2026-09-30-post-product-merge-reconciliation.md` and the current MASTER for active status. This document retains the earlier exact-anchor failure evidence only.
+
 2026-09-30. AuditRepo branch `arena/01a0ef6d-auditrepo` against base `336dacff3978ca9bdb41ace63f148e9a75eb988b`. Product `main` anchor `5e76c6ec81f3c192510c70e49a3deba64fb676c2`; Research `main` `02ac1f86fa053ec26acd63b9acbc84293a59a872`. Scope: entire *new* AuditRepo patch, all 30 active MASTER rows for table/count/reference integrity, and a new current Product build/source witness. **Not a fresh 30-row live-browser reexecution or a Research archive-wide reinspection.** Earlier exact-SHA browser witnesses remain dated and must not be represented as newly rerun.
 
 ## Retraction to avoid a speculative mandatory defect
