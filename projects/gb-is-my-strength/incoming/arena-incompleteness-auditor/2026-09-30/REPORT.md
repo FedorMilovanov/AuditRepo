@@ -222,3 +222,45 @@ current PR has failing checks and is **not merged**. Its misuse of the existing 
 series key is a *proposed* metadata collision, not evidence that the live heart-book members
 have already changed. The Research blueprint itself is a proposal, not an instruction to
 implement six articles now. No Product code was modified.
+
+## Owner coordination + accessible Drive MASTER + atlas negative control
+
+**Owner update (2026-09-30):** the owner confirms that another agent is actively developing the
+apostasy content. This audit **does not take over PR #2145, submit changes, request a merge or
+prescribe the other agent's implementation**. The Research↔PR discrepancy recorded above is a
+read-only *handoff witness* for that agent at the stated SHAs, not a new competing work lane.
+Its PR/Research heads must be re-read before any publication decision; an in-flight agent can
+resolve the discrepancy after this snapshot.
+
+The Research current Baptist archive authority
+`RUSSIAN_BAPTISTS_ARCHIVE/00_CURRENT_AUTHORITY_2026-08-02.md` points to a Google Sheets MASTER:
+`https://docs.google.com/spreadsheets/d/1y9d_7bWAEsz8iYdMuRrtb6onDYEXLQx5PgT95oYNsSM/edit`.
+An unauthenticated proxied page fetch on 2026-09-30 returned the **00 Dashboard** contents via
+`/gviz/tq?tqx=out:html` (no Google login prompt). This is an accessible public INDEX, **not**
+evidence that each underlying Drive file is anonymously downloadable or a fresh physical
+SHA/rights check. Dashboard rows have audit dates **2026-07-30/31** and Research authority is
+dated **2026-08-02**; numbers below are those dated-source statuses, not current counts.
+
+| Archive source family | Google Dashboard / Research authority witness (dated) | Editorial closure boundary |
+|---|---|---|
+| Archive-wide | Dashboard: 130 PDFs already in archive, **390 PDF download queue**; 2,841 original photos, 786 uncaptained, 2,031 tagged article-ready | The queue is not 390 proven missing *article citations*; reconcile current IDs/statuses, provenance, captions and rights before any publication claim. |
+| «Слово истины» 1918 | Dashboard / Research `MASTER_STATUS_2026-07-31.md`: **3/8 physical issue objects** in Drive; unacquired five objects are #1, #2, #3–4, #5–6, #7–8 | Relevant to proposed chapter-II print-republic article; a known bibliographic issue is not a verified physical quote. Sent requests are not obtained scans. |
+| «Братский листок» 1906–1910 | Research: 60 nominal, 22 local, 38 nonlocal; 8 positions have unknown *contents*, 15 Telegram attachments metadata-only; an eight-position BAN request prepared, not sent (dated 2026-07/08) | Relevant to proposed chapter-IV periodical/print split; protect `NOT_LOCAL` versus `NOT_EXISTING` versus `NO_FACSIMILE`. A Telegram filename does not provide article text. |
+| «Баптист» 1909 #20 | Dashboard notes Commons DJVU found but not yet transferred into Drive (July status). The older local tally 23/24 therefore is NOT equivalent to no open digital copy. | Verify whether now acquired/hashed; do not call the issue “lost” from old `23/24 local`. |
+| Sinichkin on Voronin | Research authority: Drive ID `1yH-oxjymaDJi4g5Els8xpRiqKFgWDD7V`, `TEXT_LAYER_PRESENT / VISUAL_PENDING / NOT_QUOTE_READY` as of Aug 2. Unauthenticated fetch of this *file link* on 2026-09-30 redirects to a **Google sign-in page**. | Public Sheets index accessibility does not grant the file. No page-level/quote-ready claim or new missing-article defect from this access attempt; owner would need a public share or alternate permitted source. |
+| Shilov / Moscow 1923 modern typed PDFs | Research authority Aug 2: **DERIVATIVE_TRANSCRIPTION / NOT_ARCHIVAL_FACSIMILE / PRIMARY_QUOTE_NOT_APPROVED**; archival original not identified | Do not promote derivative text to primary quotation or archival facsimile even if a PDF is obtained. |
+
+A Drive snapshot *folder* referenced on the Dashboard (`1W8egf7QYGqBxKee_YgvGldxhcNyfTJRa`)
+redirects to **Google sign-in** when fetched anonymously. Only the sheet Dashboard and the
+previously verified 455 MB Valkewich appendix public landing have been shown accessible;
+this is **not** a full Drive traversal. No Google credential was requested or stored.
+
+**Atlas false-positive guard:** Research
+`БИБЛЕЙСКИЙ АТЛАС/00_CURRENT_AUTHORITY_2026-08-02.md` correctly says Pihahiroth research
+resolved the geographical issue as three uncertainty corridors, and as of that document
+Product implementation was still required. Product main now contains
+`karty/ishod/pihahiroth-authority.json`, `src/components/karty/ishod/IshodMap.astro`
+rendering three corridors, hidden precise point, and caveat “точное место не установлено”.
+Thus the August Research *implementation-required* statement cannot be copied into current
+PROGRAM as a fresh missing feature. The Ishod map remains inside Wave 6's 9-on-audit
+publication boundary; this source read is not a runtime/visual acceptance of the map.
