@@ -100,14 +100,16 @@ The public Google Sheets [Baptists MASTER Dashboard](https://docs.google.com/spr
 
 Do **not** merge ancient `book/*` or `reconcile/*` branches as wholes. Their useful content is research evidence, not a current codebase.
 
-Fresh examples from the 2026-09-24 sweep (selected 2026-09-30 compares below):
+**Historical pre-cleanup examples only** (selected 2026-09-30 compares below; do not treat deleted refs as current salvage work):
 - `book/ch06-kargel-source-to-claim`: 10 ahead / ~644 behind;
 - `book/ch07-mazaev-prokhanov-research`: 18 ahead / ~644 behind;
 - chapters 8–16 and 20 likewise retain narrow research dossiers while hundreds behind;
 - `book/ch17-vsehb-1945-1959-research`: **0 ahead / 639 behind** on 2026-09-30 — absorbed candidate, still needs an explicit retirement receipt;
-- `book/ch07-mazaev-prokhanov-research-v2`: **2 ahead / 1021 behind** on 2026-09-30 — additional chapter 7 branch absent from the 2026-09-24 examples; disposition needed;
+- `book/ch07-mazaev-prokhanov-research-v2`: still **live**, now **2 ahead / 1051 behind** against main `5e76c6ec...`; two unique branch-only 292/403-line research dossiers, not BOOK-READY, need content/object-ID reconciliation with current main `94-`/`95-` dossiers and explicit disposition;
 - `feat/baptist-authentic-media-composition-20260912`: **historical pre-cleanup** 2 ahead / ~189 behind; the ref is now deleted. Its recorded head `320866f994f4...` has 33 media-related file blobs (`media-ledger`, research/raw images, historical images, media audit scripts) identical to Product main `5e76c6ec...`; do not request their salvage again. This blob check does **not** certify media rights or all branch files. Evidence: `incoming/arena-incompleteness-auditor/2026-09-30/MEDIA_BRANCH_RECHECK.md`.
 - #2142 is a current narrow Chapter-1 authority-reconciliation salvage and must remain research-only until its own publication gates are satisfied.
+
+**Deleted-head content negative control (2026-09-30):** the `book/ch06-...` and original `book/ch07-...` refs above were deleted outside the still-unmerged #2146; on their recorded heads, 160/161 and 155/156 `baptisty-rossii/research/` file blobs respectively already match current main. The sole changed research path in each is a media ledger that evolved on main. This narrow check prevents double-salvage of those research files, not wholesale approval of every deleted branch. The retained `-v2` branch remains separate. See `incoming/arena-incompleteness-auditor/2026-09-30/DELETED_BOOK_BRANCHES_AND_RETAINED_CH07.md`.
 
 Google Drive is a **source reservoir**, not automatic authority. Folder traversal found the `НББС/СПБХУ` course/session archive and historically useful pastor-course material. Seminary notes and later works (for example A. Gurtayev’s 2014 book) are contextual/bibliographic leads unless they independently qualify as the required source type. Historical claims should still resolve to primary or strong scholarly evidence and exact page/object provenance.
 
@@ -159,7 +161,7 @@ Every non-main branch must end in one of:
 3. **SALVAGED** — useful content moved through a fresh current-main lane with receipt;
 4. **REJECTED / ARCHIVED** — explicitly reviewed and intentionally not retained.
 
-Known easy retirement candidates after a final compare include Journal foundation/production-promotion branches with `ahead=0`. `lane/journal-editorial-architecture-20260907` (the actual current ref; the old unsuffixed name returns 404) is **2 ahead / 921 behind** as of 2026-09-30 and retains two unique research documents and must be salvaged or explicitly archived first.
+**Post-cleanup correction (later 2026-09-30):** the old Journal foundation refs and `lane/journal-editorial-architecture-20260907` are absent from the current 44-ref list; #2146’s disposition register records the latter deleted at `c20728ef3b85` as `SUPERSEDED_VERIFIED`. Its two 2026-09-07 research files are not byte-identical to the newer 2026-09-09 journal architecture/UI documents on Product main. Do not demand salvage from a no-longer-existing ref or equate textual difference with a mandatory publication route; journal content remains governed by current Product and the bounded G3 handoff. Evidence: `incoming/arena-incompleteness-auditor/2026-09-30/JOURNAL_DELETED_REF_RECHECK.md`.
 
 ## Terminal project definition
 
