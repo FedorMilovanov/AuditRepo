@@ -103,3 +103,18 @@ boundary=source-level only; not a browser, build or live witness
   [CONFIRMED] Lawson route ABSENT from sitemap.xml (expect absent, hits=0) 
   [CONFIRMED] Lawson route ABSENT from feed.xml (expect absent, hits=0) 
 
+## Coverage summary (added by the third pass)
+
+units_walked=28 of 28 active MASTER units at head d586aa63
+  source-anchored units checked here: 27 (25 current defects + 2 system lanes)
+  anchor assertions: 45 -> CONFIRMED 43, NOT-CONFIRMED 2
+  lifecycle-only unit (no source anchor): GBS-OPEN-CONTENT-PR-DISPOSITION, re-measured from the
+    open-PR rollups -> 2026-09-30-pr-gates-by-head.txt
+NOT-CONFIRMED detail (defect behaviour unchanged, quoted expression superseded):
+  GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING: the documented home.css ':focus-visible' outline for
+    .theme-toggle is not present; the current focusable target is
+    'body.home-page .mobile-controls > button:focus-visible' and css/mobile-hotfix.css:12 carries
+    'outline:0 !important' (sheet loaded from src/components/landing/HomePageHead.astro:158).
+  GBS-H-SCROLL-TOP-INVISIBLE-FOCUS: the reveal test is '(window.scrollY || window.pageYOffset) > 500'
+    in js/site.js, not a bare 'window.scrollY > 500'.
+outcome: 0 rows closed, 0 rows deleted, 0 rows archived, 0 rows found already fixed.

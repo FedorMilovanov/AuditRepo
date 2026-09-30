@@ -19,7 +19,8 @@ narrow residual that survived that rejection.
   [`evidence/2026-09-30-baptist-dates-main-vs-live-sha.txt`](./evidence/2026-09-30-baptist-dates-main-vs-live-sha.txt),
   [`evidence/2026-09-30-live-fetch-time-element-boundary.txt`](./evidence/2026-09-30-live-fetch-time-element-boundary.txt),
   [`evidence/2026-09-30-pr-gates-by-head.txt`](./evidence/2026-09-30-pr-gates-by-head.txt),
-  [`evidence/2026-09-30-branch-census.txt`](./evidence/2026-09-30-branch-census.txt)
+  [`evidence/2026-09-30-branch-census.txt`](./evidence/2026-09-30-branch-census.txt),
+  [`evidence/2026-09-30-program-currency-remeasure.txt`](./evidence/2026-09-30-program-currency-remeasure.txt)
 
 ## 1. Withdrawn figure: the release-gate step count
 
@@ -55,12 +56,14 @@ instruction of 2026-09-30 the Lawson release decision is **not** worked in this 
 owner-directed effort is already on it; this pass only keeps the measurement true and preserves the
 receipt.
 
-## 2. Source-anchor currency sweep of the active MASTER
+## 2. Source-anchor currency sweep — all 28 active MASTER units walked
 
-All 26 source anchors quoted by the 25 current defects plus the two system lanes were re-checked
-against Product main `d586aa63`. Result: **24 of 26 anchors confirmed verbatim**; two anchors are
-quoted with a selector/expression that does not exist in the current source, although the defect
-behaviour itself is unchanged.
+Coverage: the 25 current defects and the 2 system lanes are source-anchored (**27 units**, checked
+by **45 anchor assertions** against a worktree at Product main `d586aa63`); the 28th unit,
+`GBS-OPEN-CONTENT-PR-DISPOSITION`, has no source anchor and was re-measured from the lifecycle
+rollups in §6 instead. Result: **43 of 45 assertions confirmed verbatim**; two are quoted with a
+selector/expression that no longer matches the source, although the defect behaviour itself is
+unchanged. **No unit was closed, deleted or found already fixed**, and no unit needed archiving.
 
 | row | anchor as documented | current source | verdict |
 | --- | --- | --- | --- |
@@ -204,6 +207,31 @@ Lawson-active branches are `fix/lawson-premium-polish-20260930`,
 `publication/lawson-release-hardening-20260930`, `publication/steven-lawson-final-20260930` (plus
 its `tmp-…-fixup` twin) — noted for the SYS-STRICT lane collision risk only; the lane itself is
 under owner-directed stand-down.
+
+## 7b. PROGRAM currency re-derived (Direction 4)
+
+Rather than carrying the previous numbers forward, the program facts that are measurable at this
+head were re-read (receipt: `evidence/2026-09-30-program-currency-remeasure.txt`):
+
+- **Articles/books axis:** `src/content/articles/*.mdx` is **64** files at main vs **63** at the live
+  SHA; the +1 is the blocked Lawson route, so the corpus grew on main only.
+- **Wave 4 genealogy:** raw layer 3056 persons / 2053 edges / 982 isolated, RU review queue **2825**,
+  raw status `phase1-draft — НЕ подключать в рантайм до exit-критериев Phase 1`; publishable layer is a
+  closed curated subset (154 of 3056, `partial-by-design`) with 181 relations and relation evidence
+  **42 reviewed / 139 pending** — the PROGRAM figures re-derived from
+  `data/genealogy/v2/publishable/meta.json`, not assumed. Rights: derived dataset **CC BY 4.0**
+  (attribution STEPBible.org / Tyndale House Cambridge); Synodal text public domain.
+- **Wave 5B image rights / primary-source access:** 10 diagrams, all `status: production`, all 10
+  local SVG assets present, policy forbids remote SVG / external raster / AI historical photos; all
+  **31** referenced source dossiers exist under `baptisty-rossii/research/` (byte access in Product,
+  not public routes).
+- **Wave 6 maps:** live `/karty/` re-measured 2026-09-30 — **1 open / 9 on audit / 0 drafts**,
+  unchanged since 2026-09-24; data readiness 10 maps / 132 places / 153 photos / 23 verified
+  waypoints. The 10-in-data vs 1-on-showcase gap is the audit gap, not a defect.
+
+Not re-measured: Wave 5A research families (needs the Research repo and Drive traversal), Wave 7
+external provider/legal items and the red scheduled `Source Link Audit` (job logs unreachable; local
+reproduction inadmissible in this sandbox), and any visual verification (no browser).
 
 ## 8. Resulting AuditRepo changes
 

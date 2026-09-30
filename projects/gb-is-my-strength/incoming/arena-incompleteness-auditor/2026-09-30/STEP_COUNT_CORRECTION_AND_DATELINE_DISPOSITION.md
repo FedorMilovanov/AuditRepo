@@ -43,10 +43,12 @@ step-by-step exit codes:
 [`../../../reverify/evidence/2026-09-30-release-block-repro-receipt.txt`](../../../reverify/evidence/2026-09-30-release-block-repro-receipt.txt).
 Both replace receipts that previously existed only in `/tmp` and were lost with the session.
 
-## 3. MASTER anchor currency sweep — 0 rows closed, 0 rows newly fixed
+## 3. MASTER currency sweep — all 28 units walked, 0 closed, 0 newly fixed
 
-All 26 source anchors of the active MASTER were re-checked at `d586aa63`: **24 confirmed verbatim**;
-two rows quote an expression that no longer matches the source, while the defect itself is
+All 28 active MASTER units were walked at `d586aa63`: the 25 defects and 2 system lanes are
+source-anchored (**27 units**, **45 anchor assertions** — **43 verbatim**), and the 28th unit
+(`GBS-OPEN-CONTENT-PR-DISPOSITION`) is lifecycle-only and was re-measured from the PR rollups in
+§6. Two rows quote an expression that no longer matches the source, while the defect itself is
 unchanged and stays current:
 
 - `GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING` — the focusable target is
@@ -158,8 +160,16 @@ any Product PR. Branch census: **37 total / 36 non-main**
   one new row; the Baptist byline row narrowed with both-SHA artifact evidence; two anchor
   expressions made precise; the owner-decision row refreshed with six PR heads; the SYS-STRICT lane
   given its step count and lane-collision/stand-down note; one negative boundary added.
-- `PROGRAM_CLOSURE_MATRIX.md`: step count corrected; Wave 5B artifact measurement; Wave 8 census
-  37/36 and PR rollups; dated third-pass note.
+- `PROGRAM_CLOSURE_MATRIX.md`: step count corrected; Wave 4 genealogy counts and the 42/139
+  relation-evidence split re-derived from `data/genealogy/v2/**` (raw layer still
+  `phase1-draft — НЕ подключать в рантайм`, publishable layer a closed 154-person curated subset,
+  rights CC BY 4.0 with STEPBible attribution); Wave 5B artifact measurement plus image rights
+  (10/10 production diagrams, all local SVG assets present, no remote SVG / external raster / AI
+  photos allowed) and primary-source access (31/31 referenced dossiers byte-accessible under
+  `baptisty-rossii/research/`, not public routes); Wave 6 re-measured live on 2026-09-30 (1 open /
+  9 on audit / 0 drafts) with its inventory baseline; Wave 8 census 37/36 and PR rollups; article
+  corpus 64 at main vs 63 at the live SHA; dated third-pass note. Receipt:
+  `../../../reverify/evidence/2026-09-30-program-currency-remeasure.txt`.
 - `reverify/2026-09-30-step-count-correction-and-dateline-projection.md` + ten receipts in
   `reverify/evidence/`.
 - `reverify/2026-09-30-release-block-and-baptist-provenance.md` and
