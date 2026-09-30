@@ -3,6 +3,7 @@
 - Project: bible-bot
 - Agent: arena-incompleteness-auditor
 - Date: 2026-09-30
+- Evidence anchor: Product `6283b0005000a6b2e661bc73a453ef5ddd6e766e`; Research `d418894aca6cc84898e0ae97bbd2b3fa93827c5e`
 - Product anchor: `6283b0005000a6b2e661bc73a453ef5ddd6e766e`
 - Research anchor: `d418894aca6cc84898e0ae97bbd2b3fa93827c5e`
 - Evidence: source-only read; no live deployment proof.
