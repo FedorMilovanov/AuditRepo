@@ -6,6 +6,12 @@
 
 ## Current state
 
+> **Post-merge Product recheck — 2026-09-30.** Product main `d586aa63...`: Gill metadata-only build blocker and unverified Delyakov direct quotation closed; four Baptist date pairs now repaired, five remain; nine components still have literal question-mark copy loss. AuditRepo evidence-only PR #477 must use this resulting-main snapshot, not the earlier pre-merge row arithmetic. Details: `../reverify/2026-09-30-post-product-merge-reconciliation.md`.
+
+> **2026-09-30 correction and retirement re-measure.** `GBS-BAPTISTS-ROADMAP-STATUS-STALE` was removed as **invalid**: `targetArchitecture` is a future planning graph, and `scripts/baptisty-roadmap-audit.js` deliberately requires `status: "planned"` until publication. The book publication gap remains in PROGRAM Wave 5B. Product branch census via paginated GitHub API is now **205 total / 204 non-main** (the prior 203 / 202 was dated 2026-09-24). Targeted compare receipts and the 63-file MDX draft census are in `incoming/arena-incompleteness-auditor/2026-09-30/REPORT.md`. No full branch retirement or source-link gate classification is claimed.
+
+> **Incompleteness pass — 2026-09-29, reconciled 2026-09-30.** Product `main` = `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`. The six-card heart shelf and 4/22/2 counters are intentional; later policy checks also refuted an asserted missing Genesis 6 manifest entry. The earlier series-catalog heart-book time-label candidate was subsequently retired from mandatory work after its reader-facing contract could not be established (see 2026-09-30 merge-readiness triage); other editorial completion work remains in PROGRAM Wave 5B/6/8. Full negative/disposition evidence: `incoming/arena-incompleteness-auditor/2026-09-30/REPORT.md`. No build or browser proof is claimed by this pass.
+
 > **Fresh Playwright current-main reverify — 2026-09-29.** With Chromium 153 on a local production-like build of Product SHA `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b` (also the current live release/control-plane SHA), forced-colors testing reproduced the blank Nagornaya menu on all eight routes; 12px search/theme overlap was measured on all three routes at 1024/1280/1440; `/articles/` reaches an invisible opacity-zero `#hScrollTop` at Tab stop 95; and `/rodosloviye/` begins with three offscreen mobile-chrome focus stops. Follow-up browser probes also reproduced both manifestations in the single reader-speed keyboard system lane, confirmed absent theme-toggle focus indicators on four layouts in normal and forced-colors modes, confirmed the Da Vinci timeline's unfocusable horizontal overflow at 641px (mouse-wheel scrolling works; the 640px mobile reflow was visually inspected), and remeasured Nagornaya bibliography-link distinction on three chapters in both reader themes. Product code was not changed. This is local exact-SHA browser evidence, not a remote live-site browser run. Consolidated results: `../reverify/2026-09-29-fresh-browser-wave.md`.
 >
 > **Fresh universal-search audit — 2026-09-29.** Exact-SHA local browser tests passed core command-palette search, keyboard containment, focus restoration and mobile open/close on Home, article listing and Abraham map. They also reproduced two bounded defects: the shared Header search action/advertised `Ctrl+K` is inert on `/hard-texts/genesis-6/` and `/izbrannoe/` desktop, and Home inserts a duplicate same-name close button. Admitted as `GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED` and `GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS`; details and limits: `../reverify/2026-09-29-current-universal-search.md`. This is local exact-SHA browser evidence, not live-host navigation; Product code was not changed.
@@ -65,19 +71,19 @@ Detailed execution evidence remains in [the release-recovery program](../verific
 
 | Field | Value |
 |---|---|
-| Active work units | **24** |
-| Direct current defects | **23** |
+| Active work units | **28** |
+| Direct current defects | **26** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
 | System verification lanes | **1** |
-| Owner decisions | **0** |
+| Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Arithmetic: 23 + 0 + 0 + 1 + 0 = **24 current MASTER work units**.
+> Arithmetic: 26 + 0 + 0 + 1 + 1 = **28 current MASTER work units**.
 >
 > **Important boundary:** this count covers only currently admitted necessary defect/system/decision work units. It does **not** mean the whole product/research program is complete. Editorial certification, Baptist research/publication, maps, rights/external gates, measurement-first quality work and branch retirement are tracked separately in [PROGRAM_CLOSURE_MATRIX.md](../PROGRAM_CLOSURE_MATRIX.md). Optional/non-mandatory quality candidates remain in [WORK_QUEUE.md](../WORK_QUEUE.md).
 
-## CURRENT DEFECTS — 23
+## CURRENT DEFECTS — 26
 
 | ID | Current problem | Closure boundary |
 |---|---|---|
@@ -105,6 +111,13 @@ Detailed execution evidence remains in [the release-recovery program](../verific
 | `GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED` | On `/articles/kod-da-vinchi/`, `/articles/lot-i-sodom/` and `/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/` at mobile width, the focusable speed-selection badge measures 20.3×13px; its `::before` target is only 24.3×19px and overlaps the neighboring 38×38 Play target, so the 24px spacing exception cannot apply. A touch at the badge center opens the speed rail. | Enlarge the badge to at least 24×24 CSS pixels and separate its hit area from Play. Resulting-main touch/keyboard proof covers all three routes, speed selection, independent Play activation, expanded/focus states and light/dark appearance. Details: `../reverify/2026-09-29-current-reader-mobile-speed-target.md`. |
 | `GBS-404-RELATIVE-READER-PREFERENCES-ASSETS` | The root `404.html` uses relative URLs for its reader-preference bootstrap, CSS, and runtime. On a nested missing path, live Page routing retains that path, so all three requests resolve under the missing directory and return the 404 page instead of the assets; canonical stored preferences (notably Sepia) consequently fail to bootstrap/style on those not-found pages. A fresh exact-SHA local Pages-style browser emulation reproduced this on two nested 404s; a root-level 404 correctly loads/applies Light/Dark/Sepia. | Root all three references; resulting-main/live proof covers root and at least two nested 404s, confirms the three assets load from the root and stored Light/Dark/Sepia state is applied, and preserves recovery/canonical behavior. Details: `../reverify/2026-09-29-current-404-relative-reader-preferences-assets.md`. |
 
+| `GBS-ARTICLES-CATALOG-STRICT-NATIVE-OMISSION` | Product main `5e76c6ec...` publishes `/articles/steven-lawson-samoobman-i-publichnyy-golos/` (`migration/page-ownership.json`: `production-dist`; MDX `draft: false`, `noindex: false`), but the route is absent from `data/search-manifest.json`. `ArticlesLibrarySection.astro` builds its article cards *only* from manifest items filtered by production ownership, so this published strict-native article cannot appear as a card in `/articles/` on this source anchor. This is **catalog discoverability**, not proof that its direct route or site search is broken. | Existing Product PR #2150 owns a proposed source-to-catalog projection (head `89e76794...`, unmerged as sampled 2026-09-30); do not launch competing repair. Verify attribution, duplicate handling, route ownership, catalog/browser projection and exact-head CI; remove this row only after resulting-main proof. Evidence: `../incoming/arena-incompleteness-auditor/2026-09-30/CONTENT_CATALOG_RECHECK.md`. |
+
+
+| `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS` | Product main `5e76c6ec...` contains literal ASCII question-mark replacements in headings, labels, explanatory text and alt/source strings in **nine** published Baptist article body components (not the series hub or `SovetskayaNoch`). Example: `BaptistyRossiiSpravochnikBody.astro` has `eyebrow="???????? ?????"`; the `BaptistyEvidenceJourney` component renders these props directly and the production-owned `/baptisty-rossii/spravochnik/` page imports that body. These are actual source bytes, not a terminal encoding artifact; merged #2146 and subsequent Product main `d586aa63...` still have the damaged strings. No remote live browser claim. | Recover owner-approved original Russian strings (including image alt, citation captions and broken source URLs), not machine-guessed text; verify all nine production routes on resulting Product main with built HTML/browser text and link/alt checks, prevent recurrence with a narrow content guard. Merged #2146 addressed distinct quotation/byline work, not this copy loss; verify against resulting main and prevent recurrence. Evidence and exact component census: `../incoming/arena-incompleteness-auditor/2026-09-30/BAPTISTS_GARBLED_VISIBLE_COPY_AND_DATES.md`. |
+
+| `GBS-BAPTISTS-BYLINE-PUBLICATION-DATE-DIVERGENCE` | Product main `d586aa63...` has **five** remaining production Baptist article byline divergences. `iniciativnaya-gruppa`, `podpolnaya-pechat`, `sovetskaya-noch`, `vsehib-1944` display only modified June 13, omitting registry publication June 8/9/6/7; `/spravochnik/` shows June 14, matching neither registry publication June 10 nor modified June 13. The four other affected routes were repaired by merged #2146; `peterburgskaya-liniya` remains the two-date control. | Reconcile authoritative event history for the five remaining routes, particularly Spravochnik June 14. On resulting Product main compare visible labels, `<time datetime>`, metadata and JSON-LD; do not erase legitimate editorial history by mechanically applying the registry before review. Current-head receipt: `../reverify/2026-09-30-post-product-merge-reconciliation.md`. |
+
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 
 | ID | Required improvement | Closure boundary |
@@ -121,10 +134,11 @@ Detailed execution evidence remains in [the release-recovery program](../verific
 |---|---|---|
 | `SYS-READER-SPEED-KEYBOARD-MODEL` | Shared `floating-cluster-controller.js` speed-panel state does not reconcile visual collapse with keyboard/accessibility state: closed opacity-zero controls remain focusable, and the open non-modal radiogroup traps Tab at its first/last controls. | Absorbs `KBD-01` (freshly reproduced Tab trap on two Nagornaya routes) + `KBD-02` (freshly reproduced five hidden speed-button Tab stops on one article route; historical route scan counted 72 desktop routes and six mobile routes). Close only after resulting-main browser proof removes collapsed controls from Tab/AT navigation, implements valid radio-group navigation with Tab exit both ways and Escape focus restoration, preserves stop-action semantics, and verifies affected route families plus playback/pointer/touch regressions. Fresh browser evidence is a focused confirmation, not a rerun of the full archived route scan. Details: `../reverify/2026-09-29-current-reader-speed-keyboard-model.md`. |
 
-## OWNER DECISIONS — 0
+## OWNER DECISIONS — 1
 
 | ID | Missing decision | Closure boundary |
 |---|---|---|
+| `GBS-OPEN-CONTENT-PR-DISPOSITION` | Product #2146 (branch-cleanup recoveries) and #2151 (Gill metadata-only MDX repair) merged on 2026-09-30; #2152 records branch-cleanup disposition. Five other PRs remained open at the later sample: #2150 (Lawson catalog), #2145 (apostasy), #2144 (deps), #2143 (genealogy), #2142 (Baptist research). An earlier #2138 dependency reference was stale. Research main `02ac1f86...` closes apostasy H1–H6 architecture but keeps `PUBLICATION_HOLD` pending P1/locators; the active agent owns that lane. | Obtain explicit MERGE / CLOSE / SUPERSEDED / PARKED decisions for each still-open PR on its latest head and required publication gates; do not count already merged #2146/#2151 as pending or treat their old red PR CI as current Product main state. #2142 remains research-only without its separate book admission; coordinate apostasy #2145 with its active agent. Current merged-head receipt: `../reverify/2026-09-30-post-product-merge-reconciliation.md`; earlier boundaries: `incoming/arena-incompleteness-auditor/2026-09-30/REPORT.md`. |
 
 ## 2026-09-22 → 2026-09-24 closure receipts
 
