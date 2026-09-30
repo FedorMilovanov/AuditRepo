@@ -114,7 +114,51 @@ NOT-CONFIRMED detail (defect behaviour unchanged, quoted expression superseded):
   GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING: the documented home.css ':focus-visible' outline for
     .theme-toggle is not present; the current focusable target is
     'body.home-page .mobile-controls > button:focus-visible' and css/mobile-hotfix.css:12 carries
-    'outline:0 !important' (sheet loaded from src/components/landing/HomePageHead.astro:158).
+    'outline:0 !important' (sheet loaded from src/components/home/HomePageHead.astro:158).
   GBS-H-SCROLL-TOP-INVISIBLE-FOCUS: the reveal test is '(window.scrollY || window.pageYOffset) > 500'
     in js/site.js, not a bare 'window.scrollY > 500'.
 outcome: 0 rows closed, 0 rows deleted, 0 rows archived, 0 rows found already fixed.
+
+## Post-sweep manual refinement (three CONFIRMED verdicts were too loose)
+
+The sweep ran one regex per documented anchor. Manual review of the three weakest verdicts:
+
+1. GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP — the assertion that matched was
+   'margin-right:-12px' at css/mobile-hotfix.css:12 (correct), but a legacy citation of
+   'css/header-mobile.css:284' / '.hCpBtnIcon' does NOT exist at d586aa63: no such file in css/
+   and no such class anywhere in the repository. Re-identified anchors:
+     css/mobile-hotfix.css:12  .mobile-controls .gb-nav-search-icon{margin-right:-12px!important}
+     css/mobile-hotfix.css     .mobile-controls{gap:0!important}
+     css/mobile-hotfix.css     .bar-icon-btn,.btoc-close,.cp-close-btn,.gb-nav-search-icon,.h-cp-btn,
+                               .h-mobile-menu-btn,.mobile-controls .theme-toggle,.mobile-nav-close,
+                               .sd-close{min-width:44px!important;min-height:44px!important;width:44px
+                               !important;height:44px!important;...}
+     src/components/ui/Header.astro:31  <button id="hCpBtnNav" class="gb-nav-search-icon" ...>
+   => the 12px overlap is derivable from shipped CSS without a layout engine.
+
+2. GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED — the pattern 'speed-badge|speed[^{]*badge'
+   matched a CSS COMMENT at css/floating-cluster.css:3869 ("Persistent speed badge on the Play
+   ember (inline-rail mode)"); no '--herm-badge-*' token exists at this head. Re-identified anchors:
+     src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro:69   <button class="hm-spdbadge" id="hmSpdBadge" aria-label="Выбрать скорость, сейчас 1×">1×</button>
+     src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro:236  .hm-spdbadge{position:absolute;right:-3px;bottom:-2px;z-index:2;min-width:18px;height:13px;padding:0 3px;border-radius:999px;...}
+     src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro:240  .hm-spdbadge::before{content:'';position:absolute;inset:-4px -3px}
+   Compliant in-repo control (repair precedent):
+     css/floating-cluster.css  [data-gill-v16] .mobile-spdbadge{min-width:24px;height:24px;padding:2px 4px 0;...}
+
+3. GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS — '-webkit-text-fill-color:transparent' occurs
+   0 times in css/*.css at this head (only '-webkit-text-fill-color: currentColor !important' in
+   src/components/article-pilots/gill-series/GillSeriesResponsiveStyles.astro:148,166), so the
+   alternation confirmed only 'background-clip:text' (6 declarations). Real mechanism, from the
+   built artifact:
+     <button id="menuBtn" aria-label="Открыть меню" aria-controls="mobileMenu" aria-expanded="false"
+             class="p-2 rounded-lg bg-stone-800 hover:bg-stone-700 transition-colors">
+       <div class="w-5 space-y-1"><div class="bar h-0.5 bg-white transition-all"></div> x3
+   => three bars painted only by the utility background class, no SVG/text/border fallback.
+   The only '@media (forced-colors:active)' block in css/*.css (css/site.css) covers .fn-marker,
+   .theme-toggle svg, .quiz-option.correct/.wrong, .btoc-link.active and
+   .article-reading-progress-fill — it does NOT cover #menuBtn or .bar.
+
+Verdict after refinement: all three defects remain CONFIRMED at d586aa63; only the quoted anchors
+changed. 0 rows closed, 0 deleted, 0 archived, 0 found already fixed.
+Artifact-level re-proof of these and nine further rows on builds of BOTH d586aa63 and the live
+release SHA d0e04a9c: 2026-09-30-artifact-witness-main.txt, 2026-09-30-artifact-witness-live-sha.txt.

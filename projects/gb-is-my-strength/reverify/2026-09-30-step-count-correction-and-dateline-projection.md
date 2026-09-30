@@ -20,7 +20,9 @@ narrow residual that survived that rejection.
   [`evidence/2026-09-30-live-fetch-time-element-boundary.txt`](./evidence/2026-09-30-live-fetch-time-element-boundary.txt),
   [`evidence/2026-09-30-pr-gates-by-head.txt`](./evidence/2026-09-30-pr-gates-by-head.txt),
   [`evidence/2026-09-30-branch-census.txt`](./evidence/2026-09-30-branch-census.txt),
-  [`evidence/2026-09-30-program-currency-remeasure.txt`](./evidence/2026-09-30-program-currency-remeasure.txt)
+  [`evidence/2026-09-30-program-currency-remeasure.txt`](./evidence/2026-09-30-program-currency-remeasure.txt),
+  [`evidence/2026-09-30-artifact-witness-main.txt`](./evidence/2026-09-30-artifact-witness-main.txt),
+  [`evidence/2026-09-30-artifact-witness-live-sha.txt`](./evidence/2026-09-30-artifact-witness-live-sha.txt)
 
 ## 1. Withdrawn figure: the release-gate step count
 
@@ -67,19 +69,25 @@ unchanged. **No unit was closed, deleted or found already fixed**, and no unit n
 
 | row | anchor as documented | current source | verdict |
 | --- | --- | --- | --- |
-| `GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING` | `:focus-visible { outline: 2px solid #10b981 }` | the focusable target is `body.home-page .mobile-controls > button`; `css/mobile-hotfix.css:12` sets `outline:0 !important` and is loaded from `src/components/landing/HomePageHead.astro:158` | defect CONFIRMED, anchor expression superseded |
+| `GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING` | `:focus-visible { outline: 2px solid #10b981 }` | the focusable target is `body.home-page .mobile-controls > button`; `css/mobile-hotfix.css:12` sets `outline:0 !important` and is loaded from `src/components/home/HomePageHead.astro:158` | defect CONFIRMED, anchor expression superseded |
 | `GBS-H-SCROLL-TOP-INVISIBLE-FOCUS` | `window.scrollY > 500` | `(window.scrollY \|\| window.pageYOffset) > 500` | defect CONFIRMED, anchor expression superseded |
-| `GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP` | `css/header-mobile.css:284`, `.hCpBtnIcon` 42×42 | present verbatim | CONFIRMED |
+| `GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP` | (a legacy citation of `css/header-mobile.css:284` / `.hCpBtnIcon` — **neither exists at this head**; that file and class are absent from the repository) | `css/mobile-hotfix.css:12` `.mobile-controls .gb-nav-search-icon{margin-right:-12px!important}`; same sheet `.mobile-controls{gap:0!important}` and the 44×44 rule covering `.gb-nav-search-icon` + `.mobile-controls .theme-toggle`; the search button is `#hCpBtnNav.gb-nav-search-icon` (`src/components/ui/Header.astro:31`) | defect CONFIRMED, anchors re-identified (§5b derives the 12px overlap statically) |
 | `GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED` | `#hCpBtnNav` has no handler | `src/components/ui/Header.astro:31` renders `#hCpBtnNav` with no listener anywhere in the eagerly loaded path; the only binding is `js/search.js` `Se()`, which renames the node to `gbSearchBtn` and attaches the handlers — and `search.js` is loaded only on demand by the inline bootstrap in `src/layouts/BaseLayout.astro` (`__gbSearchSrc`) | CONFIRMED |
 | `GBS-NAGORNAYA-READER-FONT-SCALE-INCOMPLETE` | `.article-body p{font-size:var(--font-size)}` | present; `data-font-scale` is set on `documentElement` | CONFIRMED |
-| `GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS` | `-webkit-text-fill-color:transparent` + `background-clip:text` | present, no forced-colors override | CONFIRMED |
-| `GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED` | `--herm-badge-pad-y:0.3rem` etc. | present | CONFIRMED |
+| `GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS` | `-webkit-text-fill-color:transparent` + `background-clip:text` | **`-webkit-text-fill-color:transparent` occurs 0 times in `css/*.css` at this head** — the sweep's assertion was too loose. Real mechanism: the built button is `<button id="menuBtn" aria-label="Открыть меню" …>` containing three `<div class="bar h-0.5 bg-white">` bars painted only by a utility background class, no SVG/text/border; the single `@media (forced-colors:active)` block in `css/site.css` covers `.fn-marker`, `.theme-toggle svg`, `.quiz-option.*`, `.btoc-link.active`, `.article-reading-progress-fill` and **not** `#menuBtn`/`.bar` | defect CONFIRMED, mechanism corrected |
+| `GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED` | `--herm-badge-pad-y:0.3rem` etc. (no such token exists at this head; the sweep's `speed[^{]*badge` pattern matched a **CSS comment** in `css/floating-cluster.css:3869`) | real anchors: `src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro:236` `.hm-spdbadge{min-width:18px;height:13px;padding:0 3px}` and `:240` `.hm-spdbadge::before{inset:-4px -3px}` on button `#hmSpdBadge`; compliant in-repo control `css/floating-cluster.css` `[data-gill-v16] .mobile-spdbadge{min-width:24px;height:24px}` | defect CONFIRMED, anchors re-identified + repair precedent found |
 | `GBS-404-RELATIVE-READER-PREFERENCES-ASSETS` | `404.html` uses `css/reader-preferences.css`, `js/reader-preferences-head.js` | present | CONFIRMED |
 | `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS` | `????` runs in Baptist bodies | present in source and in both built artifacts (§4, §5) | CONFIRMED |
 | remaining 17 anchors | — | present verbatim at the cited files/lines | CONFIRMED |
 
-Machine receipt: `evidence/2026-09-30-master-source-anchor-currency.{txt,json}`. No current
-defect was closed by this sweep, and no defect was found to be already fixed.
+Machine receipt: `evidence/2026-09-30-master-source-anchor-currency.{txt,json}`, whose coverage
+summary records the same three refinements. Honest note on method: the sweep used one regex per
+documented anchor, and three of its CONFIRMED verdicts were loose — a legacy citation that no longer
+exists (`header-mobile.css`/`.hCpBtnIcon`), a pattern that matched a CSS comment
+(`speed[^{]*badge`), and an alternation that confirmed only one of two claimed declarations
+(`-webkit-text-fill-color:transparent`). All three were re-derived by hand above; in each case the
+**defect itself is confirmed**, only the quoted anchor changed. No current defect was closed by this
+sweep, and no defect was found to be already fixed.
 
 ## 3. Rejected candidate: "17 routes publish a label that contradicts their `datetime`"
 
@@ -184,6 +192,39 @@ an owner decision on `spravochnik` («14 июня» authored vs `publishedAt` 20
    byte for byte on three routes. This is stronger than the previous source-only comparison but is
    not a byte-identity proof of the deployed file.
 4. Both builds succeeded: `strangler:build:production-like` exit 0 at `d586aa63` and at `d0e04a9c`.
+
+## 5b. Artifact witnesses at both SHAs (the substitute for the unavailable browser)
+
+Because no browser could run (§5), every current row that is decidable from built output was
+re-proven on **two** production-like builds — Product main `d586aa63` and the live release SHA
+`d0e04a9c`. The two receipts differ only in `head_sha` and in one page count (main has the extra
+Lawson page), so **each witness below holds for the live release as well as for main**.
+
+| row | artifact witness (identical at both SHAs) |
+| --- | --- |
+| `GBS-BASELAYOUT-MISSING-SKIP-LINK`, `GBS-JOURNAL-MISSING-SKIP-LINK` | `/izbrannoe/`, `/hard-texts/genesis-6/`, `/journal/`, `/journal/dossiers/g3/`: skip-link anchors/text = **0**, `<main>` present **without `id`** on all four |
+| `GBS-404-RELATIVE-READER-PREFERENCES-ASSETS` | built `404.html`: **3 of 3** reader-preference references relative (`css/reader-preferences.css?v=…`, `js/reader-preferences-head.js?v=…`, `js/reader-preferences.js?v=…`) |
+| `GBS-QUIZ-DARK-SURFACE-LOW-CONTRAST` | `.quiz-wrapper{background:var(--color-surface-muted)}`; WCAG math on shipped tokens: dark ink `#e6e1d7` over every light surface token = **1.16–1.30:1** (AA needs 4.5:1), while the same ink over the dark-theme tokens = 12.7–14.5:1 |
+| `GBS-QUIZ-NEXT-HIDDEN-GILL-V16` | shipped `.quiz-next-btn{display:none}` and **no `.is-visible` rule for it anywhere** (`is-visible` exists only in `floating-cluster.css` and `tts-download-notice.css`, for other components) — the runtime's reveal class has no styling counterpart; 63 built routes carry `[data-gill-v16]`, 9 of them with a quiz payload |
+| `GBS-QUIZ-LITERAL-MARKUP` | parsing `window.SITE_CONFIG` in every built route (7 strict-JSON blobs + a raw-text fallback over 80 JS-literal blobs) finds literal `<em>`/`<span>` inside quiz strings on **9 routes** (antisovetov 14 strings, Nagornaya chast-2/4/5, Gill chast-2/3/4, kod-da-vinchi, krajne-li) — an independent corroboration of the row's "9+ routes"; `js/bookmark-engine.js` uses `.textContent=` twice and `.innerHTML=` **never** |
+| `GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP` | `margin-right:-12px!important` on `.gb-nav-search-icon` + `.mobile-controls{gap:0!important}` + both targets forced to 44×44 ⇒ the 12px shared strip is derivable from shipped CSS alone |
+| `GBS-NAGORNAYA-SOURCE-LINKS-COLOR-ONLY` | base rule `a{color:#1f4ea3;text-decoration:none}`; of the 10 `text-decoration:underline` declarations in `css/*.css` **none** targets a Nagornaya source/bibliography selector; built chapters carry 31–37 links with no inline underline |
+| `GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED` | `.hm-spdbadge{min-width:18px;height:13px}` + `::before{inset:-4px -3px}` shipped on all three named routes (`#hmSpdBadge` present, `mobile-spdbadge` absent), against the compliant in-repo control `[data-gill-v16] .mobile-spdbadge{min-width:24px;height:24px}` |
+| `GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING` | `.theme-toggle…:focus-visible` rules in `css/*.css`: **0**; `home.css` has one `.mobile-controls > button:focus-visible` rule; `css/mobile-hotfix.css` (loaded by `src/components/home/HomePageHead.astro:158` and listed in `src/layouts/BaseLayout.astro:129`) applies `outline:0!important` to the same controls |
+| `GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS` | built `#menuBtn` contains three `div.bar.h-0.5.bg-white` bars, **0** SVG/border fallbacks; the only forced-colors block (`css/site.css`) does not mention `#menuBtn`/`.bar`; 9 built `/nagornaya/**` pages (hub + 8) |
+| `GBS-H-SCROLL-TOP-INVISIBLE-FOCUS` | shipped `.h-scroll-top{…opacity:0…}` with reveal only via `.h-scroll-top.visible`; runtime test `(window.scrollY\|\|window.pageYOffset)>500`; no focus-driven reveal |
+| `GBS-KOD-DA-VINCHI-TIMELINE-KEYBOARD-SCROLL` | `#canonTimeline .ctw-body{overflow-x:auto}` + `.ctw-track{min-width:580px}` shipped; the built tags are `<div class="ctw-body">` / `<div class="ctw-track">` with **no `tabindex` and no `role`** |
+| `GBS-ANTISOVETOV-NESTED-MAP-TRIGGERS` | true DOM parse of the built page: 39 `role="button"[tabindex="0"]` triggers, exactly **1** nested inside another — tip **19**, matching the row |
+
+Rows that remain **browser/runtime-only** (stated, not skipped): `GBS-AVRAAM-MAP-HEADING-LOST-ON-READY`
+(ready-state observer), the three `GBS-MOBILE-CHROME-*` rows (visibility/navbar sync/touch race),
+`GBS-PRINT-TERMINAL-REGION-HIDES-CONTENT` (`data-print-keep-next` appears on **0** built routes —
+it is applied at runtime), `GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS` (built `/` contains «Закрыть
+поиск» once; the second control is created at runtime), `GBS-GENESIS6-THEME-TOGGLE-LOW-CONTRAST`
+(needs composited colors) and `GBS-NAGORNAYA-READER-FONT-SCALE-INCOMPLETE` (needs preference
+application). Their earlier browser receipts stand; none was promoted or re-dated here.
+
+Receipts: `evidence/2026-09-30-artifact-witness-main.txt`, `evidence/2026-09-30-artifact-witness-live-sha.txt`.
 
 ## 6. Open Product PR rollups, recomputed at each exact head
 

@@ -1,0 +1,116 @@
+# ARTIFACT witness — live release SHA
+head_sha=d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b
+dist built by: npm run strangler:build:production-like (exit 0)
+boundary=built artifact only. NOT a browser run, NOT a live retrieval, NOT visual verification.
+
+## GBS-BASELAYOUT-MISSING-SKIP-LINK / GBS-JOURNAL-MISSING-SKIP-LINK
+  /izbrannoe/: skip-link anchors/text=0  <main>=1  <main> with id=0
+  /hard-texts/genesis-6/: skip-link anchors/text=0  <main>=1  <main> with id=0
+  /journal/: skip-link anchors/text=0  <main>=1  <main> with id=0
+  /journal/dossiers/g3/: skip-link anchors/text=0  <main>=1  <main> with id=0
+
+## GBS-404-RELATIVE-READER-PREFERENCES-ASSETS
+  RELATIVE      css/reader-preferences.css?v=b740c21f
+  RELATIVE      js/reader-preferences-head.js?v=78fb2ef8
+  RELATIVE      js/reader-preferences.js?v=e26f05a8
+  relative 3 of 3 -> nested 404s resolve them under the missing directory
+
+## GBS-QUIZ-DARK-SURFACE-LOW-CONTRAST (static WCAG math on shipped tokens)
+  o-box,.quiz-wrapper,.quote-box,.warn-box { transition:background-color .25s ease,border-color .25s ease }
+  .quiz-wrapper { background:var(--color-surface-muted);border:1px solid var(--color-border);border-radius:8px;padding }
+  dark-theme ink --color-text=#e6e1d7; AA normal text needs 4.50:1
+  --color-surface-muted: light #f4f2ed -> 1.16:1 FAIL   dark #161a21 -> 13.39:1 pass
+  --color-surface-alt: light #f5f5f3 -> 1.19:1 FAIL   dark #13171e -> 13.79:1 pass
+  --color-surface-2: light #f7f4f0 -> 1.19:1 FAIL   dark #1a1f28 -> 12.68:1 pass
+  --color-surface-quote: light #f7f4ee -> 1.19:1 FAIL   dark #15191f -> 13.53:1 pass
+  --color-surface: light #ffffff -> 1.30:1 FAIL   dark #161a21 -> 13.39:1 pass
+  --color-canvas: light #fdfcf9 -> 1.27:1 FAIL   dark #0e1116 -> 14.51:1 pass
+
+## GBS-QUIZ-NEXT-HIDDEN-GILL-V16
+  hidden-by-default: .quiz-next-btn { display:none }
+  '.is-visible' rules for .quiz-next*: 0 -> the runtime's reveal class has no styling counterpart in the shipped sheet
+  'is-visible' appears only in: {'floating-cluster.css': 1, 'tts-download-notice.css': 2} (other components, not the quiz)
+  built routes with [data-gill-v16]: 63; of those with a quiz payload: 9
+  js/site.js 'quiz-next' mentions: 4
+
+## GBS-QUIZ-LITERAL-MARKUP (window.SITE_CONFIG parsed from every built route)
+  SITE_CONFIG blobs parsed as strict JSON=7; further assignments are JS object literals with unquoted keys=79 (scanned as raw text)
+  routes with literal <em>/<span> inside quiz strings — JSON parse: 4, raw-text fallback: 5 (union 9)
+    articles/20-antisovetov-pastoru/index.html  strings_with_markup=14  e.g. 'Авторитет как таковой не зло — он дан Богом (Евр. 13:17). Но когда инс'
+    nagornaya/chast-2/index.html  strings_with_markup=6  e.g. 'Что означает термин <em>concursus</em> в классическом консервативном б'
+    nagornaya/chast-4/index.html  strings_with_markup=5  e.g. 'Что означает греческое слово <em>θεόπνευστος</em> (theopneustos) в кон'
+    nagornaya/chast-5/index.html  strings_with_markup=6  e.g. 'Какое из трёх кальвинистских <em>usus</em> Закона (Inst. 2.7) делает Н'
+    articles/dzhon-gill-chast-2-uchenyi/index.html  strings_with_markup=3  e.g. 'Уистон узнал, что Гилл написал толкование в folio на <span class=\\'
+    articles/dzhon-gill-chast-3-nasledie/index.html  strings_with_markup=1  e.g. 'Как, по оценке историка Майкла Хайкина, <span class=\\'
+    articles/dzhon-gill-chast-4-ekzeget/index.html  strings_with_markup=1  e.g. 'Как Гилл понимал «меру» или «правило веры» (<span class=\\'
+    articles/kod-da-vinchi/index.html  strings_with_markup=4  e.g. 'Какая находка содержит <span class=\\'
+    articles/krajne-li-isporcheno-serdce/index.html  strings_with_markup=5  e.g. 'Что означает еврейское слово <em>ʿāqōb</em> (עָקֹב) в Иер. 17:9?'
+  method note: the union is a LOWER BOUND — it does not contradict the row's '9+ routes' claim.
+  js/bookmark-engine.js: .textContent= assignments 2, .innerHTML= assignments 0
+
+## GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP (static derivation, no layout engine)
+  .mobile-controls .gb-nav-search-icon { margin-right:-12px!important }
+  .mobile-controls { gap:0!important }
+  44x44 rule: .bar-icon-btn,.btoc-close,.cp-close-btn,.gb-nav-search-icon,.h-cp-btn,.h-mobile-menu-btn,.mobile-controls .theme-toggle,.mobile-nav-close,.sd-close
+              { min-width:44px!important;min-height:44px!important;width:44px!important;height:44px!import }
+  Header.astro:31 -> <button id="hCpBtnNav" class="gb-nav-search-icon" type="button" aria-label="Поиск (Ctrl+K)" title="Поиск Ctrl+K">
+  => gap:0 + margin-right:-12px on the search icon + two 44x44 targets = a 12px shared strip
+
+## GBS-NAGORNAYA-SOURCE-LINKS-COLOR-ONLY
+  base link rule: a { color:#1f4ea3;text-decoration:none }
+  base link rule: a { color:var(--color-link);text-decoration:none }
+  base link rule: a { color:#000!important;text-decoration:none!important }
+  selectors carrying text-decoration:underline (7): .h-about-small a, article a, .article-figure figcaption a, .about-contacts .quiz-focus-link, .fn-marker, .fn-marker
+  none of them is a Nagornaya bibliography/source-link selector
+  /nagornaya/chast-1/: <a>=33 with inline text-decoration=2
+  /nagornaya/chast-3/: <a>=31 with inline text-decoration=2
+  /nagornaya/chast-5/: <a>=37 with inline text-decoration=2
+
+## GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED (+ compliant in-repo control)
+  .hm-spdbadge { position:absolute;right:-3px;bottom:-2px;z-index:2;min-width:18px;height:13px;padding:0 3px;border-radius:999px; border: }
+  .hm-spdbadge::before { content:'';position:absolute;inset:-4px -3px }
+  CONTROL [data-gill-v16] .mobile-spdbadge { position: absolute; right: -4px; bottom: -4px; z-index: 3; min-width: 24px; height: 24px; padding: 2px 4px 0;  }
+  /articles/kod-da-vinchi/: hmSpdBadge=1 mobile-spdbadge=0
+  /articles/lot-i-sodom/: hmSpdBadge=1 mobile-spdbadge=0
+  /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/: hmSpdBadge=1 mobile-spdbadge=0
+
+## GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING
+  .gb-nav-search-icon,.h-cp-btn,.theme-toggle { …outline:0!important… }
+  ve,.h-cp-btn:focus,.h-cp-btn:hover,.theme-toggle:active,.theme-toggle:focus,.theme-toggle:hover { …outline:0!important… }
+  '.theme-toggle…:focus-visible' rules in css/*.css: 0
+  home.css '.mobile-controls > button:focus-visible' rules: 1
+  src/components/home/HomePageHead.astro loads css/mobile-hotfix.css: True (line 158)
+  src/layouts/BaseLayout.astro also lists it: True
+
+## GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS
+  built #menuBtn: <button id="menuBtn" aria-label="Открыть меню" aria-controls="mobileMenu" aria-expanded="false" class="p-2 rounded-lg bg-stone-800 hover:bg-stone-700 transition-colors"><div class="w-5 space-y-1"><div class="bar h-0.5 bg-white transition-all"></div><
+  bars painted purely by utility background classes: 3; SVG/border fallback inside the button: 0
+  css/*.css: -webkit-text-fill-color:transparent=0 (the legacy anchor text is NOT the mechanism at this head), background-clip:text=6
+  forced-colors blocks in css/*.css: [('site.css', 1)]; none targets #menuBtn/.bar
+  built /nagornaya/** routes: 9
+
+## GBS-H-SCROLL-TOP-INVISIBLE-FOCUS
+  home.css .h-scroll-top { position:fixed;bottom:max(28px,calc(env(safe-area-inset-bottom,0px) + 12px));right:max(28px,env(safe-area-inse }
+  home.css .h-scroll-top.visible { opacity:1;transform:translateY(0) scale(1);pointer-events:auto }
+  js/site.js reveal test: (window.scrollY||window.pageYOffset)>500
+  focus-driven reveal in js/site.js ('focus' near h-scroll-top): 0
+
+## GBS-KOD-DA-VINCHI-TIMELINE-KEYBOARD-SCROLL
+  #canonTimeline .ctw-body { overflow-x:auto;-webkit-overflow-scrolling:touch }
+  #canonTimeline .ctw-body { overflow-x:hidden }
+  #canonTimeline .ctw-track { min-width:580px }
+  #canonTimeline .ctw-track { min-width:0;width:100% }
+  built tag: <div class="ctw-body">  tabindex=False role=False
+  built tag: <div class="ctw-track">  tabindex=False role=False
+
+## GBS-ANTISOVETOV-NESTED-MAP-TRIGGERS (true DOM nesting, html.parser)
+  built route: role=button+tabindex=0 triggers=39; triggers nested inside another trigger=1
+    nested: <span> '19'
+
+## Rows that are NOT artifact-provable with this method (stay browser/runtime rows)
+  GBS-AVRAAM-MAP-HEADING-LOST-ON-READY — heading removal happens in a ready-state observer (runtime).
+  GBS-MOBILE-CHROME-* (3 rows) — visibility/navbar-sync/touch-load race are runtime+touch behaviours.
+  GBS-PRINT-TERMINAL-REGION-HIDES-CONTENT — built routes carrying data-print-keep-next: 0 (the marker is applied at runtime by js/reader-preferences-head.js, so print output needs a browser).
+  GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS — built / contains «Закрыть поиск» 1 time(s); the second control is created at runtime by js/search.js.
+  GBS-GENESIS6-THEME-TOGGLE-LOW-CONTRAST — needs composited colors of a route-specific palette (browser measurement 1.06:1 stands).
+  GBS-NAGORNAYA-READER-FONT-SCALE-INCOMPLETE — needs preference application at runtime.

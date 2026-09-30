@@ -53,7 +53,7 @@ unchanged and stays current:
 
 - `GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING` — the focusable target is
   `body.home-page .mobile-controls > button:focus-visible`; `css/mobile-hotfix.css:12` carries
-  `outline:0 !important`; the sheet is loaded from `src/components/landing/HomePageHead.astro:158`.
+  `outline:0 !important`; the sheet is loaded from `src/components/home/HomePageHead.astro:158`.
 - `GBS-H-SCROLL-TOP-INVISIBLE-FOCUS` — the reveal test is
   `(window.scrollY || window.pageYOffset) > 500` in `js/site.js`.
 
@@ -65,7 +65,58 @@ demand through its inline `__gbSearchSrc` bootstrap. Built `/izbrannoe/`, `/hard
 and `/articles/` contain the inline bootstrap, no eager `<script src=…search.js>` and no inline
 keydown — the row stays current.
 
-Receipt: [`../../../reverify/evidence/2026-09-30-master-source-anchor-currency.txt`](../../../reverify/evidence/2026-09-30-master-source-anchor-currency.txt) (+`.json`).
+Receipt: [`../../../reverify/evidence/2026-09-30-master-source-anchor-currency.txt`](../../../reverify/evidence/2026-09-30-master-source-anchor-currency.txt) (+`.json`), whose coverage
+summary now records the refinements below.
+
+### 3b. Three of the sweep's own CONFIRMED verdicts were too loose — re-derived by hand
+
+The sweep used one regex per documented anchor; manual review found three verdicts that were
+technically hits but not proofs. In all three cases **the defect is confirmed and only the quoted
+anchor changed**:
+
+1. `GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP` — a legacy citation of `css/header-mobile.css:284` /
+   `.hCpBtnIcon` does not exist at this head (no such file in `css/`, no such class in the repo).
+   Real anchors: `css/mobile-hotfix.css:12` `.mobile-controls .gb-nav-search-icon{margin-right:-12px!important}`,
+   `.mobile-controls{gap:0!important}`, the 44×44 rule covering both controls, and
+   `#hCpBtnNav.gb-nav-search-icon` in `src/components/ui/Header.astro:31` — the 12px overlap is
+   derivable from shipped CSS without a layout engine.
+2. `GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED` — no `--herm-badge-*` token exists; the sweep's
+   `speed[^{]*badge` pattern matched a **CSS comment** at `css/floating-cluster.css:3869`. Real
+   anchors: `HermenevtikaMobileBar.astro:69/236/240` (`.hm-spdbadge{min-width:18px;height:13px}`,
+   `::before{inset:-4px -3px}`, button `#hmSpdBadge`). Bonus: a compliant in-repo control ships at
+   `css/floating-cluster.css` `[data-gill-v16] .mobile-spdbadge{min-width:24px;height:24px}` — a
+   repair precedent.
+3. `GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS` — `-webkit-text-fill-color:transparent` occurs
+   **0 times** in `css/*.css` at this head; the alternation confirmed only `background-clip:text`.
+   Real mechanism from the built artifact: `#menuBtn` contains three `div.bar.h-0.5.bg-white` bars
+   painted only by a utility background class with no SVG/text/border fallback, and the single
+   `@media (forced-colors:active)` block (`css/site.css`) does not cover `#menuBtn`/`.bar`.
+
+### 3c. Artifact witnesses at both SHAs — the substitute for the unavailable browser
+
+Every row that is decidable from built output was re-proven on production-like builds of **main
+`d586aa63` and the live release SHA `d0e04a9c`**; the two receipts differ only in `head_sha` and one
+page count, so each witness holds for the live release too. Highlights: skip-link absence on all four
+routes (`<main>` without `id`); `404.html` 3/3 relative reader-preference references; quiz contrast
+computed from shipped tokens (**1.16–1.30:1** dark ink over every light surface token vs 12.7–14.5:1
+over the dark ones); `.quiz-next-btn{display:none}` with **no `.is-visible` rule for it anywhere**;
+**9 built routes** whose parsed `window.SITE_CONFIG` quiz strings embed literal `<em>`/`<span>` while
+`js/bookmark-engine.js` uses `.textContent=` twice and `.innerHTML=` never (independent corroboration
+of the row's "9+ routes"); base `a{color:#1f4ea3;text-decoration:none}` with none of the 10 shipped
+underline declarations targeting a Nagornaya source selector; `#canonTimeline .ctw-body{overflow-x:auto}`
++ `.ctw-track{min-width:580px}` with the built tags carrying **no `tabindex`/`role`**; and a true DOM
+parse of the built antisovetov page finding 39 `role="button"[tabindex="0"]` triggers with exactly
+**1** nested inside another — tip **19**, matching the row. Receipts:
+[`../../../reverify/evidence/2026-09-30-artifact-witness-main.txt`](../../../reverify/evidence/2026-09-30-artifact-witness-main.txt),
+[`…-artifact-witness-live-sha.txt`](../../../reverify/evidence/2026-09-30-artifact-witness-live-sha.txt);
+table: `../../../reverify/2026-09-30-step-count-correction-and-dateline-projection.md` §5b.
+
+Rows that stay **browser/runtime-only** are listed explicitly rather than silently skipped:
+`GBS-AVRAAM-MAP-HEADING-LOST-ON-READY`, the three `GBS-MOBILE-CHROME-*` rows,
+`GBS-PRINT-TERMINAL-REGION-HIDES-CONTENT` (`data-print-keep-next` appears on **0** built routes —
+applied at runtime), `GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS` (built `/` contains «Закрыть поиск»
+once; the second control is created at runtime), `GBS-GENESIS6-THEME-TOGGLE-LOW-CONTRAST` and
+`GBS-NAGORNAYA-READER-FONT-SCALE-INCOMPLETE`. Their earlier browser receipts stand, undated-change.
 
 ## 4. Direction 1 (Baptist): status of owner action, no text invented
 
@@ -137,7 +188,9 @@ any Product PR. Branch census: **37 total / 36 non-main**
 
 1. **No browser ran.** `npx playwright install chromium` fails with `ECONNRESET` and no system
    Chrome exists here. Rows needing rendering (contrast, focus visibility, forced colors, touch)
-   keep their earlier browser receipts; none was promoted to browser-verified in this pass.
+   keep their earlier browser receipts; none was promoted to browser-verified in this pass. Where a
+   row is decidable from built output it was re-proven as an **artifact witness on two exact-SHA
+   builds** (§3c) — that is stronger than source-only but is still not a rendering run.
 2. **Live `<time>` labels are not witnessable with the retrieval tool used earlier.** Control-proven:
    live `/articles/kod-da-vinchi/` yields only the two hidden `data-pagefind-meta` instants and
    neither human label, although the built artifact of the live SHA contains
@@ -170,8 +223,10 @@ any Product PR. Branch census: **37 total / 36 non-main**
   9 on audit / 0 drafts) with its inventory baseline; Wave 8 census 37/36 and PR rollups; article
   corpus 64 at main vs 63 at the live SHA; dated third-pass note. Receipt:
   `../../../reverify/evidence/2026-09-30-program-currency-remeasure.txt`.
-- `reverify/2026-09-30-step-count-correction-and-dateline-projection.md` + ten receipts in
-  `reverify/evidence/`.
+- `reverify/2026-09-30-step-count-correction-and-dateline-projection.md` (incl. §5b artifact table)
+  + thirteen receipts in `reverify/evidence/` (release-block repro, enumerated command list, anchor
+  currency txt+json, dateline scan, two time-label scans, Baptist dates at both SHAs, live-fetch
+  boundary, PR gates, branch census, program currency, two artifact witnesses).
 - `reverify/2026-09-30-release-block-and-baptist-provenance.md` and
   `incoming/…/2026-09-30/RELEASE_GATE_AND_BAPTIST_TRACE.md`: step count corrected in place with a
   marker; the `/tmp` receipt references replaced by preserved in-repo receipts.
