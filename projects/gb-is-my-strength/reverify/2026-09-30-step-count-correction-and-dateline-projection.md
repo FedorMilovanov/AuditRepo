@@ -22,7 +22,8 @@ narrow residual that survived that rejection.
   [`evidence/2026-09-30-branch-census.txt`](./evidence/2026-09-30-branch-census.txt),
   [`evidence/2026-09-30-program-currency-remeasure.txt`](./evidence/2026-09-30-program-currency-remeasure.txt),
   [`evidence/2026-09-30-artifact-witness-main.txt`](./evidence/2026-09-30-artifact-witness-main.txt),
-  [`evidence/2026-09-30-artifact-witness-live-sha.txt`](./evidence/2026-09-30-artifact-witness-live-sha.txt)
+  [`evidence/2026-09-30-artifact-witness-live-sha.txt`](./evidence/2026-09-30-artifact-witness-live-sha.txt),
+  [`evidence/2026-09-30-quiz-route-census.txt`](./evidence/2026-09-30-quiz-route-census.txt)
 
 ## 1. Withdrawn figure: the release-gate step count
 
@@ -224,7 +225,14 @@ it is applied at runtime), `GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS` (built `/`
 (needs composited colors) and `GBS-NAGORNAYA-READER-FONT-SCALE-INCOMPLETE` (needs preference
 application). Their earlier browser receipts stand; none was promoted or re-dated here.
 
-Receipts: `evidence/2026-09-30-artifact-witness-main.txt`, `evidence/2026-09-30-artifact-witness-live-sha.txt`.
+Two rows also gained an exact denominator (receipt `evidence/2026-09-30-quiz-route-census.txt`,
+identical at both SHAs): of 105/104 built routes, 63 carry `[data-gill-v16]`, **23 are
+quiz-enabled**, and **15** of those are quiz-enabled *and* under `[data-gill-v16]` — so the affected
+count in `GBS-QUIZ-NEXT-HIDDEN-GILL-V16` ("15 of 24 audited") is confirmed unchanged while its
+denominator is re-measured as 23, and `GBS-QUIZ-LITERAL-MARKUP` is enumerated as **9 of 23** routes
+(a lower bound from two parse passes).
+
+Receipts: `evidence/2026-09-30-artifact-witness-main.txt`, `evidence/2026-09-30-artifact-witness-live-sha.txt`, `evidence/2026-09-30-quiz-route-census.txt`.
 
 ## 6. Open Product PR rollups, recomputed at each exact head
 

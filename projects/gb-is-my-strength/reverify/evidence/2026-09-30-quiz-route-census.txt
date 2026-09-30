@@ -1,0 +1,80 @@
+# Receipt — quiz-route census at two exact SHAs (denominator for two MASTER rows)
+product_repo=FedorMilovanov/gb-is-my-strength
+main_sha=d586aa63f02b569cfe050a63cc9078c044375d8d   live_release_sha=d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b
+builds=npm run strangler:build:production-like at both SHAs (both exit 0)
+boundary=built artifact only. NOT a browser run, NOT a live retrieval, NOT visual verification.
+
+## Method
+
+A route counts as quiz-enabled when its built HTML contains a quiz payload in either embedding form:
+strict JSON (`"quiz": { "questions":`) or the JS object-literal form with unquoted keys
+(`quiz: { questions:`) — both are emitted into `window.SITE_CONFIG`. Detection regex:
+  ["']?quiz["']?\s*:\s*\{\s*["']?questions["']?\s*:
+`[data-gill-v16]` presence is a literal string test on the same built file.
+
+## Census (identical at both SHAs)
+
+| measurement | main d586aa63 | live d0e04a9c |
+| --- | --- | --- |
+| built routes (`dist/**/index.html`) | 105 | 104 |
+| routes carrying `[data-gill-v16]` | 63 | 63 |
+| quiz-enabled routes | **23** | **23** |
+| quiz-enabled AND `[data-gill-v16]` | **15** | **15** |
+
+The single route difference between the two heads is
+`/articles/steven-lawson-samoobman-i-publichnyy-golos/` (main only; it is the blocked release route
+and carries no quiz).
+
+Consequence for MASTER: `GBS-QUIZ-NEXT-HIDDEN-GILL-V16` states "15 of 24 audited article-quiz
+routes under `[data-gill-v16]`" — the affected count **15 is confirmed unchanged** at both current
+heads, and the audited denominator of 24 is now re-measured as **23** quiz-enabled built routes.
+
+## The 23 quiz-enabled routes (both SHAs)
+
+Under `[data-gill-v16]` (15):
+  /articles/20-antisovetov-pastoru/
+  /articles/anatomiya-padeniya-pyat-stadiy/
+  /articles/cerkovnaya-disciplina-vlast-granicy-zashchita/
+  /articles/dzhon-gill-chast-1-chelovek/
+  /articles/dzhon-gill-chast-2-uchenyi/
+  /articles/dzhon-gill-chast-3-nasledie/
+  /articles/dzhon-gill-chast-4-ekzeget/
+  /articles/dzhon-gill-spravochnik/
+  /articles/kogda-uhodit-kogda-ostavatsya/
+  /articles/krajne-li-isporcheno-serdce/
+  /articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/
+  /articles/priznaki-zdorovoy-cerkvi/
+  /articles/sem-tipov-razlichenie-uchiteley/
+  /articles/teksty-pisaniya-kotorymi-manipuliruyut/
+  /articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/
+Not under `[data-gill-v16]` (8):
+  /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/
+  /articles/kod-da-vinchi/
+  /articles/lot-i-sodom/
+  /nagornaya/chast-1/ … /nagornaya/chast-5/
+
+## Literal markup inside quiz strings (GBS-QUIZ-LITERAL-MARKUP)
+
+Two parse passes over every built route at main:
+  pass 1 — strict-JSON `window.SITE_CONFIG` blobs: 7 parsed, 4 with literal `<em>`/`<span>` in quiz strings
+  pass 2 — raw-text fallback over the 80 further assignments (JS object literals with unquoted keys): 5 more routes
+  union: **9 routes** of the 23 quiz-enabled
+    /articles/20-antisovetov-pastoru/                       14 strings
+    /articles/dzhon-gill-chast-2-uchenyi/                    3 strings
+    /articles/dzhon-gill-chast-3-nasledie/                   1 string
+    /articles/dzhon-gill-chast-4-ekzeget/                    1 string
+    /articles/kod-da-vinchi/                                 4 strings
+    /articles/krajne-li-isporcheno-serdce/                   5 strings
+    /nagornaya/chast-2/                                      6 strings
+    /nagornaya/chast-4/                                      5 strings
+    /nagornaya/chast-5/                                      6 strings
+Rendering path: `js/bookmark-engine.js` assigns with `.textContent=` twice and `.innerHTML=` never,
+so the markup reaches readers as literal text. The union is a **lower bound** (two independent parse
+methods, one of them a raw-text scan), not an upper one; it corroborates the row's "9+ routes".
+
+## Companion receipts
+
+2026-09-30-artifact-witness-main.txt and 2026-09-30-artifact-witness-live-sha.txt carry the
+per-row artifact witnesses, including `.quiz-next-btn{display:none}` with no `.is-visible` rule for
+it anywhere in the shipped sheets (`is-visible` exists only in css/floating-cluster.css and
+css/tts-download-notice.css, for other components).
