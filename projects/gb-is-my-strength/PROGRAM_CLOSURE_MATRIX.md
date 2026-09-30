@@ -30,6 +30,9 @@ A follow-up on 2026-09-30 used authenticated GitHub API to re-measure Wave 8: **
 
 ## Wave 4 — evidence-first genealogy batches
 
+**2026-09-30 batch freshness guard:** Product main still measures **2,825** RU names to review and **42 reviewed / 139 pending** relation evidence. Unmerged Product #2143 at old head `acd4ace4...` proposes 11 direct-name reviews and reports **2,814** RU names to review *on its branch*, with **no change** to relation evidence 42/139. Its checks passed on that old head but GitHub reports it BEHIND the now-newer main; a plain branch-versus-current-main diff includes later Lawson/heart-book changes unrelated to the name batch. Integrate only after a current-base resulting-diff and exact-head gate check; do not portray 2,814 as the released backlog or turn the 11 name edits into 11 certified edges. Evidence: `incoming/arena-incompleteness-auditor/2026-09-30/GENEALOGY_BATCH_BOUNDARY.md`.
+
+
 The safe #2137 intentionally rejected bulk automatic name certification. Exact CI triage on its final head reports:
 
 | RU review tier | Pending |
