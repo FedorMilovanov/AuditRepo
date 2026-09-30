@@ -156,3 +156,7 @@ Do not reopen historical Strangler, Lot, Source Authority, Avraam, Home Search, 
 ## Queue hygiene
 
 The queue may be empty. Do not copy old audit rows here merely to retain history; history already lives in verification/Git. Promote only a current formulation backed by fresh evidence. If an item is disproved, solved, superseded or not worth doing, remove it.
+
+## 2026-09-30 optional catalog label clarification — heart book
+
+The `/articles/` heart-book series card shows `2 мин` for its landing page; member MDX reading-time fields sum to 719 minutes. Other series cards show aggregate values, but the current contract does not prove this book must use the aggregate. `GBS-SERIES-MANIFEST-HEART-READTIME-UNDERSTATED` was retired from MASTER as a non-established defect. If the owner selects a uniform catalog display rule, clarify whether the card indicates landing-page or full-book time before any data/SEO change. Evidence: `incoming/arena-incompleteness-auditor/2026-09-30/REPORT.md` and `reverify/2026-09-30-merge-readiness-total-triage.md`.
