@@ -1,0 +1,155 @@
+# Receipt — PROGRAM Wave 4 genealogy counts independently re-derived at the current anchor
+product_repo=FedorMilovanov/gb-is-my-strength
+head_sha=d586aa63f02b569cfe050a63cc9078c044375d8d (shallow local clone of the exact SHA, git rev-parse = d586aa63f02b569cfe050a63cc9078c044375d8d)
+live_release_sha=d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b (run 35927303479; live host unreachable from this sandbox, curl -> 000, so no live re-read)
+measured_utc=2026-10-01 (this session)
+method=(a) independent Python recomputation of every counter from the data files, deliberately NOT reading
+  meta.json's own counters for the primary numbers; (b) cross-check against meta.json / VALIDATION.md;
+  (c) Product's own sanctioned audit scripts re-run locally on Node v22.22.3 (CI pins 22.23.1 -> local receipts, not CI runs);
+  (d) sha256 integrity of the recorded source pins.
+boundary=source/byte access + local script execution. No build, no browser, no live retrieval, no historical-SHA claim.
+
+## Anchor identity (git blob SHAs of the files actually read)
+
+100644 fa5e697bfc98d5913f78235b0c552b8c62ca5e9f  data/genealogy/v2/VALIDATION.md
+100644 db0b1b14cbdbf21e112294c4c5e6a3f9aeb5d43a  data/genealogy/v2/edge-annotations.json
+100644 f60980848119bcf9fc7b606072ce3b54b9de90b8  data/genealogy/v2/edges.json
+100644 4c03c44e2ed98632874ef01190cfb542c91bbd93  data/genealogy/v2/groups.json
+100644 2fdbbe8bd4ea7cd30cd8ae3eed9e679f1b6a9be9  data/genealogy/v2/meta.json
+100644 294646cdcc2cb6901d4c40c1137556d3ef311a21  data/genealogy/v2/persons.json
+100644 6d6ff89fb4770f78134ab6ccbb2b5086a1bee91e  data/genealogy/v2/table-of-nations.json
+100644 cad8930b2fb7fe556e15ec188359fb56c5605a7a  data/genealogy/v2/publishable/meta.json
+100644 bd7410df2dd6c8ba1b0819cba9a5360eeaa56ae3  data/genealogy/v2/publishable/relations.json
+100644 42e44a9eb82e6f1fbf26b98a49390ee69351abc2  data/genealogy/v2/publishable/textual-assertions.json
+100644 6209f98dc8b9dfded8fc6724e2f1e01e6159badf  data/genealogy/v2/spine.json
+
+## RAW LAYER — recomputed from persons.json / edges.json (not from meta.json counters)
+
+persons .......................... 3056   unique ids 3056 (duplicates 0)
+meta.json counts/persons ......... 3056   -> MATCH
+ru.source distribution ........... candidate 2143 | translit 615 | seed 147 | pattern 67 | structural 52 | override 32
+ruNamed (non-empty ru.name) ...... 3056 (empty 0)  coverage 100.0%
+ru.review==true .................. 2825
+RU review queue (source NOT in override/seed/structural) ... 2825 = 3056 - (32+147+52)
+meta.json publicationEvidence/ruReviewQueue ... 2825 -> MATCH
+tier table ....................... A override 32 | B seed 147 | C structural 52 | D pattern 67 |
+                                 E candidate 2143 | F translit 615 | none 0  (queue = D+E+F+none = 2825)
+edges ............................ 2053  kinds {parent 1908, spouse 144, ancestor 1}
+meta.json counts edges/parent/ancestor/spouse (2053,1908,1,144) -> MATCH
+broken edge refs ................. 0
+isolated persons (no edge) ....... 982   meta.json 982 -> MATCH
+parent-graph cycles .............. 0
+skeleton-merged persons (v1Id) ... 154   meta.json 154 -> MATCH
+pipelineVersion .................. 0.3.0-phase1-explicit-gospels
+status ........................... phase1-draft — НЕ подключать в рантайм до exit-критериев Phase 1
+license .......................... Derived dataset: CC BY 4.0 (attribution: STEPBible.org / Tyndale House Cambridge)
+attribution entries .............. 3
+clusters (groups.json) ........... 14    meta.json 14 -> MATCH
+nations (groups.json) ............ 76    meta.json 76 -> MATCH
+table-of-nations branches ........ 3 (Japheth / Ham / Shem)
+nations with known progenitor person 25
+messianic spine nodes ............ 76
+edge annotations ................. 42    kinds {parent 42}
+
+## PUBLISHABLE LAYER — recomputed from publishable/*.json
+
+publishable persons .............. 154    meta.json 154 -> MATCH
+publishable ids absent from raw .. 0
+publishable persons with ru.review != false ... 0   (policy holds: only ru.review=false is published)
+publishable relations ............ 181    kinds {parent 171, spouse 9, legal-parent 1}
+meta.json relations/parent/spouse/legal (181,171,9,1) -> MATCH
+evidence provenanceClass ......... curated-source-derived 139 | direct-scripture-qualified 41 | editorial-qualified 1
+evidence refsStatus .............. editorially-reviewed 42 | relation-level-review-pending 139
+relation evidence reviewed ....... 42     meta.json 42 -> MATCH   <-- PROGRAM's 42
+relation evidence pending ........ 139    meta.json 139 -> MATCH  <-- PROGRAM's 139
+directScripture relations ........ 41     meta.json 41 -> MATCH
+textual assertions ............... 116    meta.json 116 -> MATCH (authority explicit-gospel-occurrence-adjacency)
+assertion crosswalk status ....... matched-publishable-relation 114 | no-publishable-relation 2
+assertions with reviewed crosswalk  55    meta.json 55
+diagnostics ...................... externalRefs 65, childIndexConflicts 1, asymmetricSpouses 2, orphanAnnotations 0
+
+## SOURCE-HASH INTEGRITY (recorded in publishable/meta.json vs recomputed sha256)
+
+../genealogy.json         recorded b66da575abe6a341  recomputed b66da575abe6a341  -> MATCH
+persons.json              recorded 533af21405fc9fcc  recomputed 533af21405fc9fcc  -> MATCH
+gospel-sequences.json     recorded b8b829223018e437  recomputed b8b829223018e437  -> MATCH
+edge-annotations.json     recorded f863fa3608a4f4c3  recomputed f863fa3608a4f4c3  -> MATCH
+meta.json                 recorded de48da03296d2942  recomputed de48da03296d2942  -> MATCH
+
+## PRODUCT'S OWN SANCTIONED SCRIPTS RE-RUN AT THIS ANCHOR (local Node 22.22.3)
+
+node scripts/genealogy-v2-publication-audit.mjs              exit 0
+  status draft-blocked | dataset {persons 3056, skeletonMappings 154, reviewQueue 2825,
+  unresolvedRefs 0, pipelineStatus phase1-draft, pipelineVersion 0.3.0-phase1-explicit-gospels,
+  prospectiveMappings 154, prospectiveSoftMappings 0, prospectiveUnexpectedUnmatched 0, prospectiveCollisions 0}
+  blockers: DATASET_STATUS_DRAFT, RU_REVIEW_QUEUE count 2825   <-- exactly two
+  every evidence array empty: genderMismatches, publicationEvidenceIssues, inputProvenanceIssues,
+  gospelProjectionIssues, prospective soft/unexpected-unmatched/collisions, heuristicMappings,
+  fuzzyMappings, genericCuratedViews, nationsViewIssues, spineProvenanceIssues, relationProvenanceIssues,
+  interpretationWordingIssues, matthewLukeLayoutIssues, committedMatthewLukeArtifactIssues, runtimeRawV2Refs
+  runtimeGuard ok — runtime references only the separately audited publishable v2 projection
+node scripts/genealogy-v2-publication-audit.mjs --strict-publish   exit 1 (same two blockers, fail-closed by design)
+node scripts/genealogy-v2-ru-review-report.mjs                 exit 0
+  counts.total 2825 | bySource {pattern 67, candidate 2143, translit 615}
+  byTier {A_PATTERN_STRONG 67, B_CANDIDATE_VERY_HIGH 507, C_CANDIDATE_HIGH 22, D_CANDIDATE_MEDIUM 811,
+          E_CANDIDATE_LOW 803, F_TRANSLIT_MANUAL 615}
+  byRisk {DUPLICATE_RU_LABEL 1426, LOW_CONFIDENCE 1418, EVIDENCE_REF_DIFFERS_FROM_FIRST_REF 161,
+          POSSIBLE_INFLECTED_CASE_FORM 52, NORMALIZED_FROM_VERSE_FORM 480, TRANSLIT_NO_TEXTUAL_EVIDENCE 615,
+          NO_VERSE_EVIDENCE 615} | withVerseEvidence 2210 | duplicateLabelEntries 1426
+  policy: changesPublicationState false, changesOverrides false, autoApproves false
+node scripts/genealogy-v2-relation-review-report.mjs          exit 0
+  counts.total 139 | withTextualContext 59 / without 80
+  byTier {A_GOSPEL_TEXTUAL_CONTEXT 59, B_CURATED_EXPLICIT_PARENT 59, C_CHILD_INDEX_EVIDENCE 12, D_RECIPROCAL_SPOUSE 9}
+  byAuthority {curated-v1-explicit-field 118, curated-v1-children-index 12, curated-v1-reciprocal-spouse 9}
+  byKind {parent 130, spouse 9}
+node scripts/genealogy-v2-publishable-audit.mjs               exit 0  status publishable-projection-ok
+  counts {persons 154, relations 181, parents 171, spouses 9, legalParents 1, relationEvidenceReviewed 42,
+          relationEvidencePending 139, directScriptureRelations 41, textualAssertions 116,
+          matchedRelations 114, withoutRelations 2, reviewedCrosswalks 55, externalRefsOmitted 65,
+          childIndexConflictsOmitted 1, asymmetricSpousesOmitted 2, orphanAnnotations 0}
+node scripts/genealogy-runtime-data-boundary.mjs              exit 0
+  status genealogy-runtime-data-boundary-ok | runtimeFiles 19 | mode publishable-v2 |
+  rawV2References 0 | legacyRuntimeReferences 0
+node scripts/genealogy-publishable-runtime-contract.mjs       exit 0
+  status genealogy-publishable-runtime-parity-ok | persons 154 | materializedParentRelations 159 |
+  evidenceOnlyParentRelations 12 | reciprocalSpouseRelations 9 | nonTopologicalLegalRelations 1 |
+  runtimeRelationEvidence 181
+
+## Phase-1 exit criteria (scripts/genealogy-build/README.md) — status at this anchor
+
+1. structural validate = PASS .................... MET  (0 duplicate ids, 0 broken edge refs, 0 parent cycles, recomputed here)
+2. 0 seed<->TIPNR gender mismatches .............. MET  (154 skeleton persons compared, 0 mismatches; audit evidence array empty)
+3. 0 unapproved fuzzy v1->TIPNR mappings ......... MET  (154 decisions: exact-name 81, source-verse 26, explicit-exception 29,
+                                                    source-chapter 4, source-book 14; soft/unmatched/collisions 0)
+4. 0 unresolved relations on published views ..... MET  (publicationEvidence.relations.unresolvedCount 0)
+5. canonical RU names not in review queue ........ MET for the published corpus only (154 publishable persons, ru.review=false;
+                                                    raw corpus still has 2825 in queue — this criterion is scoped to published views)
+6. Matthew 1 / Luke 3 / Table of Nations explicit . MET  (gospel-sequences 2; clusters matthew-1 42, luke-3 76 by explicitSequence;
+                                                    table-of-nations.json 3 branches, 76 nations, 25 with known progenitor)
+7. meta.status deliberately moved off phase1-draft NOT MET (status still phase1-draft; blocker DATASET_STATUS_DRAFT)
+8. runtime guard: no direct raw-v2 import ........ MET  (rawV2References 0; only src/pages/rodosloviye/index.astro imports publishable v2)
+=> remaining Wave 4 debt is exactly the editorial certification behind criteria 7: the 2825 RU names and the 139
+   pending relation-evidence reviews, plus the conscious status flip after that certification.
+
+## What this receipt settles
+
+- The carried-forward PROGRAM figures 2825 RU review names and 42 reviewed / 139 pending relation evidence are
+  CONFIRMED CURRENT at Product main d586aa63f02b569cfe050a63cc9078c044375d8d by an independent recomputation that
+  does not read the pipeline's own counters, by the pipeline's own audit scripts (exit 0), and by sha256 pin
+  verification of every recorded source hash. Nothing drifted since the earlier measurement.
+- The 2026-10-01 handoff statement that these counts "are still carried forward and have never been re-measured"
+  is WRONG: they were re-derived at this same anchor on 2026-09-30 (receipt
+  2026-09-30-program-currency-remeasure.txt) and again, independently, on 2026-10-01 (this receipt). The handoff
+  file is corrected in place with a dated marker; the numbers themselves do not change.
+- Tier breakdown of the 139 pending relation reviews (59 / 59 / 12 / 9) is machine-derived, not editorial prose:
+  it is the byTier block of scripts/genealogy-v2-relation-review-report.mjs.
+
+## What was NOT measured here
+
+- No editorial certification: this pass changes nothing about the 2825 / 139 debt and certifies no name or relation.
+- No browser, no build, no live retrieval: the live host is unreachable from this sandbox (curl -> 000), and
+  /rodosloviye/ was not re-rendered here. Runtime-facing claims about the publishable projection rest on the
+  local script witnesses above, not on a live or browser run.
+- The raw TIPNR/Synodal sources were not re-fetched (no network route to raw.githubusercontent.com); the pinned
+  sha256 values recorded in Product were recomputed against the committed files and matched, which pins the
+  committed inputs, not the upstream sources.

@@ -38,8 +38,21 @@ adjudicated (entries `2026-09-30-c`, `2026-10-01-a`, `2026-10-01-b` are the curr
   (research-only). Branch census **37 total / 36 non-main**.
 - Direction 4: `../../../PROGRAM_CLOSURE_MATRIX.md` refreshed (step count, Wave 5B, Wave 8, browser-tier
   paragraph, program-currency re-measure: article corpus **64** MDX at main vs **63** at the live SHA,
-  the +1 being the blocked Lawson route). **Wave 4 genealogy counts (2825 / 139) are still carried
-  forward and have never been re-measured** — the cheapest un-measured item in the program.
+  the +1 being the blocked Lawson route). ~~**Wave 4 genealogy counts (2825 / 139) are still carried
+  forward and have never been re-measured** — the cheapest un-measured item in the program.~~
+  **CORRECTED IN PLACE 2026-10-01 (fourth pass, same agent):** that sentence was **wrong** — the counts
+  *had* already been re-derived at this same anchor on 2026-09-30
+  (`../../../reverify/evidence/2026-09-30-program-currency-remeasure.txt`, Wave 4 section) and were
+  re-derived again, independently, on 2026-10-01
+  (`../../../reverify/evidence/2026-10-01-genealogy-wave4-remeasure.txt`): 3056 persons / 2053 edges
+  (parent 1908, spouse 144, ancestor 1) / 982 isolated / RU review queue **2825** (override 32, seed 147,
+  structural 52, pattern 67, candidate 2143, translit 615) / clusters 14 / nations 76 / publishable 154
+  persons, 181 relations, relation evidence **42 reviewed / 139 pending**, direct-scripture 41, textual
+  assertions 116 (114 matched) — every figure MATCHes the pipeline's own counters, all five recorded source
+  sha256 pins recompute MATCH, and Product's `genealogy-v2-publication-audit.mjs` exits 0 with exactly two
+  blockers (`DATASET_STATUS_DRAFT`, `RU_REVIEW_QUEUE 2825`). So Wave 4's *measurement* is closed; what
+  remains is the editorial certification behind criterion 7 of the eight Phase-1 exit criteria. Do not
+  repeat the "never re-measured" claim.
 
 ## Standing owner instructions (do not re-litigate)
 
@@ -132,9 +145,13 @@ adjudicated (entries `2026-09-30-c`, `2026-10-01-a`, `2026-10-01-b` are the curr
 4. **Baptist direction (owner-gated):** five remaining date pairs at main; the nine `????` bodies need
    owner-approved originals; the `spravochnik` byline choice («14 июня» authored in `b051fd76` vs
    `publishedAt` 2026-06-10) is still unanswered. Never guess text.
-5. **PROGRAM_CLOSURE_MATRIX Wave 4** — re-derive the genealogy counts (2825 / 139 carried forward since
-   2026-09-24) from `data/genealogy/v2/**`; then Wave 5B (10 content files vs live 4 главы / 9 статей),
-   Wave 6 showcase, Wave 8 branch census (37/36) if Product moves.
+5. ~~**PROGRAM_CLOSURE_MATRIX Wave 4** — re-derive the genealogy counts (2825 / 139 carried forward since
+   2026-09-24) from `data/genealogy/v2/**`~~ **DONE 2026-10-01** — see the correction above; the counts are
+   re-derived and confirmed current at `d586aa63`, so this item is closed as *measurement*. The remaining
+   Wave 4 work is editorial certification (2825 names / 139 relation-evidence reviews) plus the deliberate
+   `meta.status` flip, which no audit pass can do for the owner. Then Wave 5B (10 content files vs live
+   4 главы / 9 статей), Wave 6 showcase, Wave 8 branch census (now **38 / 37** at the 2026-10-01 snapshot)
+   if Product moves.
 6. **Direction 3 hygiene:** if Product `main` advances, re-anchor MASTER's source anchors **and** re-run
    the width sweep for row 99 (a single viewport is not a verdict); recompute each open PR's rollup at
    its own head; keep #2145 untouched.
