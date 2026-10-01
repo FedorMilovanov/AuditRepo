@@ -46,9 +46,15 @@ a handoff, not an authority: MASTER wins on every disposition.
 
 ## Method boundaries proven in this sandbox (save the next pass the retries)
 
-- **No browser is available**: `npx playwright install chromium` fails with `ECONNRESET`, no system
-  Chrome, no sudo. Rendering-dependent rows keep their earlier browser receipts; state
-  "source/local-build verified; fresh browser run not possible here".
+- ~~**No browser is available**~~ — **RETRACTED 2026-10-01.** `npx playwright install chromium` still fails
+  (`ECONNRESET`) and there is still no system Chrome and no sudo, **but** a browser can be assembled from
+  public sources: `@sparticuz/chromium` + `playwright-core` from npm, NSS/NSPR built from GitHub mirrors
+  (`mozilla/nspr`, `nss-dev/nss`) into `/tmp/nssroot` + `/tmp/browserlibs`, launched with
+  `LD_LIBRARY_PATH=/tmp/browserlibs` (~85 min cold, recipe in the receipt headers). Fresh browser evidence at
+  Product `d586aa63` therefore exists: `../../../reverify/evidence/2026-10-01-fresh-browser-pass-at-anchor.txt`
+  and `../../../reverify/evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt`. Note the width lesson: a
+  single-viewport sweep once produced a false “FALSIFIED” for a media-query-gated row — always sweep at least
+  two widths straddling the breakpoint.
 - **`fetch_page` drops `<time>` element text** and surfaces hidden Pagefind spans → live byline
   *labels* cannot be witnessed that way. Witness labels from an exact-SHA build instead; witness
   ordinary live text (e.g. the `????` cards) directly. Receipt:
@@ -70,10 +76,13 @@ a handoff, not an authority: MASTER wins on every disposition.
    («14 июня» authored vs `publishedAt` 2026-06-10).
 3. Class-level guard for the dateline contract (no gate asserts projected field ↔ dateline wording,
    nor published-slot label ↔ `publishedAt`).
-4. Rows that need a rendering browser remain blocked in this environment; if a browser becomes
-   available, the cheapest high-value re-verifications are the focus-visibility and forced-colors
-   rows (`GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING`, `GBS-H-SCROLL-TOP-INVISIBLE-FOCUS`,
-   `GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS`).
+4. ~~Rows that need a rendering browser remain blocked in this environment~~ — **DONE 2026-10-01**: the
+   browser was built in-sandbox and those three rows were re-measured
+   (`GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING` and `GBS-H-SCROLL-TOP-INVISIBLE-FOCUS` confirmed with fresh
+   anchors; `GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS` structurally confirmed but **not** colour-reproduced,
+   because Playwright `forcedColors:'active'` leaves the bars white — that harness does not emulate Windows HCM).
+   Receipts: `../../../reverify/evidence/2026-10-01-fresh-browser-pass-at-anchor.txt`,
+   `../../../reverify/evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt`.
 
 ## Filing discipline for the next pass
 

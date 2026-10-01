@@ -58,7 +58,7 @@ Not under `[data-gill-v16]` (8):
 Two parse passes over every built route at main:
   pass 1 — strict-JSON `window.SITE_CONFIG` blobs: 7 parsed, 4 with literal `<em>`/`<span>` in quiz strings
   pass 2 — raw-text fallback over the 80 further assignments (JS object literals with unquoted keys): 5 more routes
-  union: **9 routes** of the 23 quiz-enabled
+  union: **9 routes** of the 23 quiz-enabled   <<< enumeration superseded 2026-10-01, see below
     /articles/20-antisovetov-pastoru/                       14 strings
     /articles/dzhon-gill-chast-2-uchenyi/                    3 strings
     /articles/dzhon-gill-chast-3-nasledie/                   1 string
@@ -68,6 +68,26 @@ Two parse passes over every built route at main:
     /nagornaya/chast-2/                                      6 strings
     /nagornaya/chast-4/                                      5 strings
     /nagornaya/chast-5/                                      6 strings
+CORRECTION 2026-10-01 (fresh browser pass 2, receipt 2026-10-01-fresh-browser-pass-2-quiz-header.txt)
+  The two static passes above under-counted: they read only `question`/`options`/`explanation`-shaped keys and missed
+  `bonusQuestions`. A deep walk of every string inside the runtime payload `window.SITE_CONFIG.quiz`, executed in
+  Chromium 153 against the same production-like dist of d586aa63, gives **10 of 23** routes with literal markup:
+    /articles/20-antisovetov-pastoru/                       74 tags (incl. bonusQuestions; the "14 strings" above undercounted)
+    /articles/krajne-li-isporcheno-serdce/                  58 tags
+    /nagornaya/chast-2/                                     16 tags
+    /nagornaya/chast-5/                                     12 tags
+    /nagornaya/chast-4/                                     10 tags
+    /articles/kod-da-vinchi/                                 8 tags
+    /articles/dzhon-gill-chast-2-uchenyi/                    6 tags
+    /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/   6 tags (bonusQuestions; ABSENT from the 9 above)
+    /articles/dzhon-gill-chast-3-nasledie/                   2 tags
+    /articles/dzhon-gill-chast-4-ekzeget/                    2 tags
+  Render-level witness (click-through): literal <em>/<span> text visible in the quiz panel on /nagornaya/chast-2/,
+  /articles/dzhon-gill-chast-2-uchenyi/ and /articles/kod-da-vinchi/; on /articles/20-antisovetov-pastoru/ the
+  first-option path through all 10 questions and the result screen rendered 0 literal tags, so its markup sits in
+  fields that path does not paint — recorded as "not observed on that path", not refuted.
+  The gill-v16 denominators above (63 / 23 / 15) are unchanged and were re-confirmed in the same browser pass.
+
 Rendering path: `js/bookmark-engine.js` assigns with `.textContent=` twice and `.innerHTML=` never,
 so the markup reaches readers as literal text. The union is a **lower bound** (two independent parse
 methods, one of them a raw-text scan), not an upper one; it corroborates the row's "9+ routes".

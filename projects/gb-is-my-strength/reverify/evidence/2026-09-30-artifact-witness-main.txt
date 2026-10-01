@@ -27,8 +27,16 @@ boundary=built artifact only. NOT a browser run, NOT a live retrieval, NOT visua
   --color-canvas: light #fdfcf9 -> 1.27:1 FAIL   dark #0e1116 -> 14.51:1 pass
 
 ## GBS-QUIZ-NEXT-HIDDEN-GILL-V16
-  hidden-by-default: .quiz-next-btn { display:none }
+  hidden-by-default: .quiz-next-btn { display:none }   <<< WRONG, see correction below
   '.is-visible' rules for .quiz-next*: 0 -> the runtime's reveal class has no styling counterpart in the shipped sheet
+  >>> SELF-CORRECTION 2026-10-01 (browser pass 2, ../reverify/evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt): the hiding rule is
+  >>> css/floating-cluster.css:4063 `[data-gill-v16] .quiz-next { display:none; ... }` inside `@media (max-width: 63.99em)`
+  >>> (opened at line 3774) — NOT a .quiz-next-btn rule (the inline style="display:none" on .quiz-next-btn belongs to the
+  >>> legacy js/site.js template, present in 0 built routes); and `[data-gill-v16] .quiz-next.is-visible { display:block; }`
+  >>> DOES exist at css/floating-cluster.css:4072, so the reveal class has a styling counterpart and line 32's claim that
+  >>> is-visible appears only for other components is wrong for the quiz. The defect is that src/runtime/article-quiz.js
+  >>> never adds .is-visible; the dead end is width-conditional (display:none at <=1023px, block + full flow at >=1024px),
+  >>> measured in Chromium 153.
   'is-visible' appears only in: {'floating-cluster.css': 1, 'tts-download-notice.css': 2} (other components, not the quiz)
   built routes with [data-gill-v16]: 63; of those with a quiz payload: 9
   js/site.js 'quiz-next' mentions: 4
@@ -36,6 +44,10 @@ boundary=built artifact only. NOT a browser run, NOT a live retrieval, NOT visua
 ## GBS-QUIZ-LITERAL-MARKUP (window.SITE_CONFIG parsed from every built route)
   SITE_CONFIG blobs parsed as strict JSON=7; further assignments are JS object literals with unquoted keys=80 (scanned as raw text)
   routes with literal <em>/<span> inside quiz strings — JSON parse: 4, raw-text fallback: 5 (union 9)
+  >>> SUPERSEDED 2026-10-01: a deep walk of window.SITE_CONFIG.quiz in a real browser finds 10 of 23 routes with
+  >>> literal markup (adds /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/, 6 tags in bonusQuestions;
+  >>> per-route counts were undercounts, e.g. /articles/20-antisovetov-pastoru/ carries 74 tags). See the correction block in
+  >>> evidence/2026-09-30-quiz-route-census.txt and ../reverify/evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt.
     articles/20-antisovetov-pastoru/index.html  strings_with_markup=14  e.g. 'Авторитет как таковой не зло — он дан Богом (Евр. 13:17). Но когда инс'
     nagornaya/chast-2/index.html  strings_with_markup=6  e.g. 'Что означает термин <em>concursus</em> в классическом консервативном б'
     nagornaya/chast-4/index.html  strings_with_markup=5  e.g. 'Что означает греческое слово <em>θεόπνευστος</em> (theopneustos) в кон'

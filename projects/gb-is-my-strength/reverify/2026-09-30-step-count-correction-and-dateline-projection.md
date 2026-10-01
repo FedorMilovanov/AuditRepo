@@ -9,7 +9,7 @@ narrow residual that survived that rejection.
 - Product main anchor: `d586aa63f02b569cfe050a63cc9078c044375d8d`; `package.json` blob `812497795d8a3c5c7a2beb6224b2f9492354dfdf`
 - Live release: `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b` (run `35927303479`)
 - Evidence tier: source + exact-SHA local production-like builds (both SHAs, `BUILD_EXIT=0`) + GitHub
-  API + live HTTP retrieval for ordinary text only. **No browser** ran in this session (see §5).
+  API + live HTTP retrieval for ordinary text only. **No browser** ran in this session (see §5). *(Superseded for later passes — 2026-10-01: a browser **does** run in this sandbox (HeadlessChromium 153 + playwright-core, built from public npm/GitHub/PyPI sources only); see `evidence/2026-10-01-fresh-browser-pass-at-anchor.txt` and `evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt`. Every “no browser possible” statement in this document is a boundary of the 2026-09-30 session, not of the environment.)*
 - Receipts: [`evidence/2026-09-30-release-block-repro-receipt.txt`](./evidence/2026-09-30-release-block-repro-receipt.txt),
   [`evidence/2026-09-30-validate-static-publication-command-list.txt`](./evidence/2026-09-30-validate-static-publication-command-list.txt),
   [`evidence/2026-09-30-master-source-anchor-currency.txt`](./evidence/2026-09-30-master-source-anchor-currency.txt) (+`.json`),
@@ -196,7 +196,7 @@ an owner decision on `spravochnik` («14 июня» authored vs `publishedAt` 20
 
 ## 5b. Artifact witnesses at both SHAs (the substitute for the unavailable browser)
 
-Because no browser could run (§5), every current row that is decidable from built output was
+Because no browser could run in that session (§5; the boundary was lifted on 2026-10-01 — see `evidence/2026-10-01-fresh-browser-pass-at-anchor.txt` and `evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt`), every current row that is decidable from built output was
 re-proven on **two** production-like builds — Product main `d586aa63` and the live release SHA
 `d0e04a9c`. The two receipts differ only in `head_sha` and in one page count (main has the extra
 Lawson page), so **each witness below holds for the live release as well as for main**.
@@ -233,6 +233,20 @@ denominator is re-measured as 23, and `GBS-QUIZ-LITERAL-MARKUP` is enumerated as
 (a lower bound from two parse passes).
 
 Receipts: `evidence/2026-09-30-artifact-witness-main.txt`, `evidence/2026-09-30-artifact-witness-live-sha.txt`, `evidence/2026-09-30-quiz-route-census.txt`.
+
+**2026-10-01 self-correction of two rows of the table above.** (a) `GBS-QUIZ-NEXT-HIDDEN-GILL-V16`: the claim
+"shipped `.quiz-next-btn{display:none}` and no `.is-visible` rule for it anywhere" was wrong at `d586aa63` — the hiding
+rule is `[data-gill-v16] .quiz-next{display:none}` inside `@media (max-width: 63.99em)` (`css/floating-cluster.css:3774`,
+rule at `:4063`) and the reveal rule `[data-gill-v16] .quiz-next.is-visible{display:block}` exists at `:4072`; the defect
+is that `src/runtime/article-quiz.js` never adds `.is-visible`, and the dead end is width-conditional (`display:none` at
+360/768/1023px, `display:block` and a full run to results at 1024/1280px), measured in Chromium 153. (b)
+`GBS-QUIZ-LITERAL-MARKUP`: the "9 of 23" enumeration is superseded by a deep walk of the runtime payload: **10 of 23**
+(adds `/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/`, 6 tags in `bonusQuestions`; per-route counts
+were undercounts, e.g. 74 tags on `/articles/20-antisovetov-pastoru/`). Both corrections carry marked notes inside
+`evidence/2026-09-30-artifact-witness-main.txt`, `evidence/2026-09-30-artifact-witness-live-sha.txt` and
+`evidence/2026-09-30-quiz-route-census.txt`; the fresh measurements are in
+`evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt`. The 2026-09-29 detail doc
+`2026-09-29-current-quiz-defects.md` had the mechanism right from the start.
 
 ## 6. Open Product PR rollups, recomputed at each exact head
 
@@ -280,7 +294,8 @@ head were re-read (receipt: `evidence/2026-09-30-program-currency-remeasure.txt`
 
 Not re-measured: Wave 5A research families (needs the Research repo and Drive traversal), Wave 7
 external provider/legal items and the red scheduled `Source Link Audit` (job logs unreachable; local
-reproduction inadmissible in this sandbox), and any visual verification (no browser).
+reproduction inadmissible in this sandbox), and any visual verification (no browser in that session;
+visual verification has since been performed locally at the same SHA — see the two 2026-10-01 receipts).
 
 ## 8. Resulting AuditRepo changes
 

@@ -85,7 +85,10 @@ while ordinary live text (the `????` copy loss) is witnessed from the live site 
 (the npm tarball ships the headless binary) plus `playwright-core` launch once `libnspr4`/`libnss3`/
 `libnssutil3` are built from `mozilla/nspr` and `nss-dev/nss` (ninja/gyp from PyPI), because every apt
 mirror and every Playwright browser CDN is blocked here; the recipe and the eleven-section result are in
-`reverify/evidence/2026-10-01-fresh-browser-pass-at-anchor.txt`. The live host still has no network route
+`reverify/evidence/2026-10-01-fresh-browser-pass-at-anchor.txt`; a second pass over the quiz and header rows is in
+`reverify/evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt` and corrected two of my own 2026-09-30 claims
+(the `[data-gill-v16]` quiz dead end is width-conditional below 1024px, not universal; literal quiz markup covers **10**
+of the 23 quiz routes, not 9) without changing program state or MASTER arithmetic. The live host still has no network route
 from the sandbox (`curl https://gb-is-my-strength.ru` → `000`), so this browser tier is exact-SHA local
 build, not live-site: the public-page / byte-access / historical-SHA / visual-verification distinctions
 above are unchanged, and only the "no browser" half of the boundary is retired. Program currency was also re-derived rather than carried forward: the article corpus is **64** MDX files at main vs **63** at the live SHA (the +1 is the blocked Lawson route), Wave 4 genealogy counts and the 42/139 relation-evidence split were re-read from `data/genealogy/v2/**`, Wave 5B diagram rights and the 31/31 primary-source dossiers were re-checked, and the Wave 6 showcase was re-measured live on 2026-09-30. Receipt: `reverify/evidence/2026-09-30-program-currency-remeasure.txt`. Full analysis:
