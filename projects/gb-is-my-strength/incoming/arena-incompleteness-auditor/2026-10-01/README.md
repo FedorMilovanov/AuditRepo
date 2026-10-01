@@ -20,12 +20,20 @@
 
 ## Files in this folder
 
-- `REPORT.md` — observations, evidence, root-cause clusters and recommendations;
+- `REPORT.md` — observations, evidence, root-cause clusters and recommendations (browser pass 2: quiz + header cluster);
+- `WAVE4_GENEALOGY_AND_DIRECTION3_REMEASURE.md` — **pass 3 of 2026-10-01 (this session)**: PROGRAM Wave 4 genealogy counts independently re-derived at `d586aa63` and confirmed current, Direction 3 open-PR rollups at each PR's own head (7 PRs; #2154 new, #2153 and #2150 heads moved), Wave 8 branch census 38/37, and the row-114 harness-limited designation. After four owner decisions answered mid-pass it also admits one MASTER defect row (`GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT`, arithmetic 29 → 30) and records the quiz repair direction («максимально без костылей» → scope the legacy Gill-sheet rules to their owner). Source/API only for its own measurements — no build, no browser, no Product mutation;
 - `comments/` — comments on other findings;
 - `proposals/` — optional classification/priority/root-cause proposals;
 - `evidence/` — logs, screenshots and command output;
 - `artifacts/` — traces, patches and machine-readable output;
-- `commands.log` — commands used during the pass.
+- `commands.log` — commands used during the pass (all three passes of the day).
+
+## Pass 3 evidence anchor (2026-10-01, this session)
+
+- Product `main` `d586aa63f02b569cfe050a63cc9078c044375d8d` — re-verified unchanged at the start and end of pass 3 by `gh api repos/FedorMilovanov/gb-is-my-strength/commits/main`; the genealogy files actually read are pinned by their git blob SHAs in `../../../reverify/evidence/2026-10-01-genealogy-wave4-remeasure.txt`;
+- live release `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b` (run `35927303479`) — unreachable from this sandbox (`curl` → `000`), so no live claim is made in pass 3;
+- AuditRepo session branch `arena/01a0f8c8-auditrepo`;
+- pass-3 receipts: `../../../reverify/evidence/2026-10-01-genealogy-wave4-remeasure.txt`, `../../../reverify/evidence/2026-10-01-pr-rollups-and-branch-census.txt`.
 
 ## Evidence rule
 

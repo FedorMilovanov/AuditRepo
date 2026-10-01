@@ -57,3 +57,75 @@ git add -A && git commit -m "reverify(gb): fresh browser pass 2 ..." && git push
 gh pr checks 479 --watch                                       # validate + preflight pass at head 9c6aa14
 gh api -X PATCH repos/FedorMilovanov/AuditRepo/pulls/479 -f body=@/tmp/prbody-new.md   # `gh pr edit` fails on the Projects-classic GraphQL deprecation
 gh api -X POST repos/FedorMilovanov/AuditRepo/issues/479/comments -f body=@/tmp/prcomment.md
+
+# =========================================================================================
+# commands.log — pass 3 of 2026-10-01 (same session date): PROGRAM Wave 4 re-derivation +
+# Direction 3 / Wave 8 rollups at the unchanged anchor. No build, no browser, no Product mutation.
+# Anchor re-verified at the start: Product main d586aa63f02b569cfe050a63cc9078c044375d8d.
+# NOTE: the Product clone lives outside this repository (/home/user/work/product, shallow fetch of the
+#       exact SHA) and is deliberately NOT committed; every file read is pinned by its git blob SHA in
+#       ../../../reverify/evidence/2026-10-01-genealogy-wave4-remeasure.txt.
+# =========================================================================================
+
+## 1. Anchor, live reachability, open PRs, branch census (authenticated GitHub API)
+gh api repos/FedorMilovanov/gb-is-my-strength/commits/main -q '.sha+"  "+.commit.committer.date'   # -> d586aa63... 2026-09-30T20:26:21Z (unchanged)
+curl -s -o /dev/null -w '%{http_code}' --max-time 12 https://gb-is-my-strength.ru                 # -> 000 (still no route)
+gh api "repos/FedorMilovanov/gb-is-my-strength/pulls?state=open&per_page=100" -q '.[] | "\(.number) \(.head.sha[0:8]) \(.title)"'   # 7 open (was 6): #2154 new, #2153/#2150 heads moved
+gh api "repos/FedorMilovanov/gb-is-my-strength/branches?per_page=100" -q '.[] | "\(.name) \(.commit.sha[0:8])"' | sort            # 38 total / 37 non-main
+
+## 2. Per-PR rollups, each at ITS OWN head (never at main, never at a stale head)
+for pair in 2154:870beb89 2153:5517a8c5 2150:acb25c61 2145:994b8735 2144:892977fd 2143:acd4ace4 2142:71a4f529; do
+  gh api "repos/FedorMilovanov/gb-is-my-strength/commits/${pair#*:}/check-runs?per_page=100" \
+    -j '[.check_runs[]] | "total=\(length) success=\([.[]|select(.conclusion=="success")]|length) failure=\([.[]|select(.conclusion=="failure")]|length) skipped=\([.[]|select(.conclusion=="skipped")]|length) cancelled=\([.[]|select(.conclusion=="cancelled")]|length)"'
+  gh api "repos/FedorMilovanov/gb-is-my-strength/actions/runs?head_sha=${pair#*:}&per_page=100" -j '.total_count'
+done
+gh api "repos/FedorMilovanov/gb-is-my-strength/actions/workflows/274382057/runs?per_page=12"   # Deploy to GitHub Pages: last success 35927303479@d0e04a9c, latest 36772631762@d586aa63 = failure
+gh api "repos/FedorMilovanov/gb-is-my-strength/actions/workflows/321827526/runs?per_page=10"   # Deploy Candidate Contract: 36785965603/36789419998 success (#2153), 36797681172/36797175218 failure (#2150/#2154)
+
+## 3. Wave 4 — independent recomputation from the data files (counters NOT taken from meta.json)
+git init -q product && git remote add origin https://github.com/FedorMilovanov/gb-is-my-strength.git
+git fetch --depth 1 origin d586aa63f02b569cfe050a63cc9078c044375d8d && git checkout -q FETCH_HEAD && git rev-parse HEAD
+git ls-files -s data/genealogy/v2/{meta,persons,edges,groups,spine,table-of-nations,edge-annotations}.json data/genealogy/v2/publishable/{meta,relations,textual-assertions}.json
+python3 wave4.py    # /home/user/work/wave4.py (scratch, not committed): persons/edges/RU sources/review queue/clusters/nations/spine/annotations,
+                    # publishable persons/relations/evidence/assertions, sha256 pin verification, parent-cycle + broken-ref + mirror checks
+python3 -c "…"      # extra: 154 skeleton persons gender comparison (0 mismatches); skeleton decision methods 81/26/29/4/14; unresolvedRefs 0
+ls src/content/articles/*.mdx | wc -l   # -> 64 (54 with both draft+noindex, 10 Baptists without either) — corroborates the carried corpus figure
+
+## 4. Wave 4 — Product's own sanctioned witnesses, re-run locally (Node v22.22.3; CI pins 22.23.1 → local receipts)
+node scripts/genealogy-v2-publication-audit.mjs                    # exit 0 — draft-blocked, blockers exactly DATASET_STATUS_DRAFT + RU_REVIEW_QUEUE 2825
+node scripts/genealogy-v2-publication-audit.mjs --strict-publish  # exit 1 — same two blockers
+node scripts/genealogy-v2-ru-review-report.mjs                     # exit 0 — total 2825, byTier 67/507/22/811/803/615
+node scripts/genealogy-v2-relation-review-report.mjs               # exit 0 — total 139, byTier 59/59/12/9
+node scripts/genealogy-v2-publishable-audit.mjs                    # exit 0 — publishable-projection-ok
+node scripts/genealogy-runtime-data-boundary.mjs                   # exit 0 — 19 runtime files, rawV2References 0
+node scripts/genealogy-publishable-runtime-contract.mjs            # exit 0 — parity ok
+
+## 5. AuditRepo pre-filing checks (at this session's head)
+python3 ../../../../scripts/validate_audit_repo.py            # PASS
+python3 ../../../../scripts/check_auditrepo_structure.py      # PASS
+python3 ../../../../scripts/check_matrix_coverage.py          # PASS — 29 active ids / 0 closed / 29 open
+python3 ../../../../scripts/check_workflow_syntax.py          # PASS (5 workflows)
+for t in validate_audit_repo_regression_test.py scaffold_regression_test.py retire_reviewed_refs_regression_test.py matrix_coverage_regression_test.py check_workflow_syntax_regression_test.py; do python3 ../../../../scripts/$t; done   # all PASS
+node ../../../../scripts/repository_history_forensic_audit_regression_test.mjs   # PASS
+
+## 6. Owner decisions obtained mid-pass (ask_user), then applied to AuditRepo files only
+# Q1 mobile header overflow -> "file it"   Q2 row 114 colour half -> "accept harness-limited"
+# Q3 quiz repair direction -> "максимально без костылей"   Q4 spravochnik byline -> keep «14 июня»
+grep -n "quiz-next" /home/user/work/product/css/floating-cluster.css            # -> only :4063 hide + :4072 reveal (scoped [data-gill-v16], inside @media max-width:63.99em)
+grep -n "is-visible" /home/user/work/product/src/components/article-pilots/gill-series/GillLearningSheet.astro   # -> :403 remove / :494 add on #glsQuizNext (class="quiz-next" at :106)
+grep -n "quiz-next" /home/user/work/product/src/runtime/article-quiz.js         # -> :74 and :152 create the shared runtime's own .quiz-next buttons (no is-visible anywhere)
+grep -rln "GillSeriesChrome" /home/user/work/product/src/                       # -> GillSeriesRail/SeriesReaderChrome; GillSeriesChrome.astro:51 renders the sheet inside [data-gill-v16]
+# -> conclusion: the hide/reveal contract belongs to the Gill learning sheet; the article quiz inherits it by class collision.
+
+## 7. Post-decision AuditRepo edits (files only; no Product change)
+#   MASTER: new row GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT; heading 26 -> 27; state rows 29 -> 30 / 26 -> 27;
+#           row 99 closure boundary gains the owner-directed repair direction; row 115 boundary cross-references the new row
+#   PROGRAM: spravochnik owner decision recorded
+#   CLOSURE_LEDGER: entry 2026-10-01-c gains the owner-decision block; entry 2026-10-01-b's "not filed" bullet marked superseded
+#   NEXT_SESSION_PROMPT / REPORT.md: the "deliberately not filed" overflow statements corrected in place with dated markers
+python3 ../../../../scripts/validate_audit_repo.py            # PASS
+python3 ../../../../scripts/check_matrix_coverage.py          # PASS — 30 active ids / 0 closed / 30 open, 773 evidence files, 1 direct witness
+python3 ../../../../scripts/check_auditrepo_structure.py      # PASS
+python3 ../../../../scripts/check_workflow_syntax.py          # PASS (5 workflows)
+for t in validate_audit_repo_regression_test.py scaffold_regression_test.py retire_reviewed_refs_regression_test.py matrix_coverage_regression_test.py check_workflow_syntax_regression_test.py; do python3 ../../../../scripts/$t; done   # all PASS
+node ../../../../scripts/repository_history_forensic_audit_regression_test.mjs   # PASS

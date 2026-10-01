@@ -1,0 +1,108 @@
+# Receipt — Direction 3 open-PR rollups recomputed at each PR's own head + Wave 8 branch census
+product_repo=FedorMilovanov/gb-is-my-strength
+product_main_sha=d586aa63f02b569cfe050a63cc9078c044375d8d (unchanged for this whole cycle; gh api commits/main)
+live_release_sha=d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b (run 35927303479; live host unreachable here, curl -> 000)
+measured_utc=2026-10-01 (this session, authenticated GitHub API)
+method=gh api pulls (metadata, commits/files/additions/deletions, mergeable_state) + commits/<head>/check-runs
+  (grouped per check name) + actions/workflows + actions/runs + branches (paginated). Every PR is measured at
+  ITS OWN head SHA, never at main and never at a stale head recorded earlier.
+boundary=control-plane/API facts. No Product mutation, no Product PR taken/edited/closed/merged, no code read
+  beyond what the API returns, no live-host claim (no network route).
+
+## Release path on main (anchor truth)
+
+Deploy to GitHub Pages (workflow 274382057), push events on main:
+  run 35927303479 | d0e04a9c | success | 2026-09-23T22:15:24Z   <-- last successful release
+  run 36705885839 | 23bd8567 | failure | 2026-09-30T11:00:41Z   <-- first failure after PR #2148 merge
+  run 36706604401 | 5e76c6ec | failure | 2026-09-30T11:07:38Z
+  run 36770727260 | 78af031d | failure | 2026-09-30T20:10:14Z
+  run 36771339049 | 0adb8c36 | failure | 2026-09-30T20:15:30Z
+  run 36772631762 | d586aa63 | failure | 2026-09-30T20:26:24Z   <-- latest, at the current anchor
+=> production has NOT advanced: every main push since 23bd8567 fails, live releaseSha stays d0e04a9c.
+Deploy Candidate Contract (workflow 321827526), pull_request events:
+  run 36785965603 | e3d51f23 | arena/01a0f415-... | success | 2026-09-30T22:30:28Z   (PR #2153 earlier head)
+  run 36789419998 | 5517a8c5 | arena/01a0f415-... | success | 2026-09-30T23:07:34Z   (PR #2153 current head)
+  run 36797175218 | 870beb89 | content/lawson-editorial-cover-20261001 | failure | 2026-10-01T00:38:23Z (PR #2154)
+  run 36797681172 | acb25c61 | publication/lawson-release-hardening-20260930 | failure | 2026-10-01T00:44:37Z (PR #2150)
+
+## Open Product PRs at their own heads (7 open; previously recorded as 6)
+
+PR #2154  head 870beb89845dd0ebd032270d75a1d20e77112fa8  ref content/lawson-editorial-cover-20261001
+  draft=true | 7 commits | 5 files | +240/-255 | mergeable_state=unstable | updated 2026-10-01T00:41:20Z
+  title: content(lawson): harden article evidence and add owner cover
+  check-runs at head: total 32 | success 21 | failure 7 | skipped 4 | cancelled 0
+  RED (7): Native owners + Chromium WebKit; public-surface-browser-matrix; registry-contracts;
+            Pagefind scripture, noindex and RSS/sitemap contract; production-like-contract;
+            Search combobox, modal and touch contract; Build and audit production-like candidate
+  NEW PR since the 2026-09-30 third pass. Lawson editorial/media lane; body says PR #2150 owns search/index/
+  sitemap/feed/release hardening. Owner-directed stand-down applies to the Lawson lane: measured only.
+
+PR #2153  head 5517a8c5382449c20ebf836284585da26b63f8c6  ref arena/01a0f415-gb-is-my-strength
+  draft=false | 6 commits | 9 files | +372/-10 | mergeable_state=unstable | updated 2026-09-30T23:19:39Z
+  title: fix(system): разблокировка деплой-гейта (native-article carriers) + архивные теги 19 D-evidence refs
+  HEAD MOVED from c671491f (docs-only, +209/-9, "no red") — the PR now carries a deploy-gate repair.
+  check-runs at head: total 30 | success 23 | failure 2 | skipped 4 | cancelled 1
+  RED (2): validate-release; public-surface-browser-matrix
+  Body claims (not independently re-run here): validate:static-publication exit 0 at this head,
+  dist:jsonld:audit 0 errors, Deploy Candidate Contract SUCCESS (run 36785965603 at earlier head e3d51f23),
+  22 pass / 5 skipping / 2 fail, and that both remaining failures are browser-matrix checks that do not
+  enter the deploy pipeline. It also records 19 archive/stale-2026-09-30 tags, 19/19 on remote.
+  Standing rule unchanged: a green AuditRepo PR is never a reason to merge a Product PR, and this pass takes
+  no disposition on the Lawson/release lane (owner-directed stand-down).
+
+PR #2150  head acb25c61b222d7c8b4f632d97a5cb8cad2c939d4  ref publication/lawson-release-hardening-20260930
+  draft=false | 2 commits | 1 file | +34/-6 | mergeable_state=unstable | updated 2026-10-01T00:44:36Z
+  title: fix(articles): include strict-native MDX publications in catalog
+  HEAD MOVED from 89e76794 (417 files, +62800/-13511, 37 behind main, 11 red) — the huge catalog rewrite is
+  gone; the PR is now a small 1-file change.
+  check-runs at head: total 25 | success 10 | failure 8 | skipped 3 | cancelled 4
+  RED (8): Scripture occurrence index autofix; Canonical headline autofix; Placement and asset autofix;
+            Chromium + WebKit full-site menu contract; Build and audit production-like candidate;
+            Search combobox, modal and touch contract; production-like-contract; pixel-diff
+  Deploy Candidate Contract at this head: FAILURE (run 36797681172).
+  NOTE FOR THE OWNER (Product-side text, not edited here): the PR body still quotes the withdrawn step figure
+  "47/48 steps" for validate:static-publication. AuditRepo's corrected figure is 41 top-level commands,
+  40 exit 0, 1 fails at command #24 (node scripts/audit-pro.js). AuditRepo does not edit Product PR bodies.
+
+PR #2145  head 994b8735f79383c860ee6502ed36a9bcd9531886  ref content/apostasy-bible-study
+  draft=false | 1 commit | 1 file | +320/-0 | mergeable_state=behind | updated 2026-09-28T17:33:26Z
+  ANOTHER AGENT'S LANE — measured, not touched, not edited, not closed, not merged.
+  check-runs at head: total 21 | success 13 | failure 4 | skipped 4 | cancelled 0
+  RED (4): registry-contracts; Build and audit production-like candidate; production-like-contract;
+            native-source-contract
+
+PR #2144  head 892977fdc826aec2854bbfc9461f33d84f35d3cf  ref dependabot/npm_and_yarn/npm-non-major-92ac384687
+  draft=false | 1 commit | 2 behind | +220/-164 | mergeable_state=behind | updated 2026-09-28T02:36:10Z
+  check-runs at head: total 33 | success 11 | failure 20 | skipped 2 | cancelled 0
+  RED (20): npm-audit; Hermenevtika Chromium WebKit chrome contract; Home Chromium WebKit contract;
+             metadata-ssot-closure; native-source-contract; Build and audit production-like candidate;
+             public-surface-browser-matrix; built-index-contract; Chromium WebKit Atlas focus lifecycle;
+             production-like-contract; Chromium WebKit Intro focus lifecycle; Chromium WebKit cold bootstrap;
+             Public surfaces — chromium touch/scroll; Public surfaces — webkit touch/scroll;
+             Bible App — webkit deep clicks; Bible App — chromium deep clicks;
+             Chromium WebKit reduced-motion contract; Binary header + JSON-LD mutation contract;
+             Native owners + Chromium WebKit; Chromium WebKit reader semantic projection
+  (the earlier "20 red" figure is unchanged in count; the names above are this session's exact list)
+
+PR #2143  head acd4ace4207d78aa3a249c81a9c28ce19429d7ca  ref genealogy/editorial-direct-name-batch-20260924
+  draft=true | 3 commits | +163/-42 | mergeable_state=behind | updated 2026-09-23T23:27:24Z
+  check-runs at head: total 15 | success 14 | failure 0 | skipped 1 | cancelled 0 -> no red at this head
+
+PR #2142  head 71a4f5290c269e4130c310b62bae41c940662d62  ref reconcile/baptist-ch01-authority-salvage-20260924
+  draft=false | 1 commit | +161/-0 | mergeable_state=behind | updated 2026-09-23T21:52Z
+  check-runs at head: total 3 | success 2 | failure 0 | skipped 1 | cancelled 0 -> no red at this head
+  IMPORTANT NUANCE (new): only 2 workflow runs / 3 checks exist at this head at all (Metadata & IndexNow
+  Readiness, Shared Files Guard, Canonical headline autofix). The broad contract suites did not run, so
+  "no red" here is thin coverage, not a broad green. research-only lane.
+
+## Wave 8 — branch census at the anchor (paginated branches endpoint)
+
+38 total / 37 non-main  (previous dated snapshot: 37 total / 36 non-main on 2026-09-30)
+delta +1 = content/lawson-editorial-cover-20261001 (head 870beb89, PR #2154)
+Open-PR heads present: 7 (2154, 2153, 2150, 2145, 2144, 2143, 2142)
+Lawson-active branches: fix/lawson-premium-polish-20260930 (46eb698f),
+  publication/lawson-release-hardening-20260930 (acb25c61 = PR #2150 head),
+  publication/steven-lawson-final-20260930 (f7d617d0) and its -tmp twin (f7d617d0);
+  noop and noop2 also sit at f7d617d0.
+This is a count and identity snapshot only: no branch is classified, retired or deleted by this pass, and the
+Lawson branches are counted, not worked (owner-directed stand-down).

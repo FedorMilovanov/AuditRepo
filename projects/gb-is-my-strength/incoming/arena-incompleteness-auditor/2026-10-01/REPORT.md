@@ -204,6 +204,7 @@
 - Trade-offs: (a) keeps the legacy contract intact and is the smallest behavioural change; (b) removes dead CSS but risks other Gill-v16 assumptions; (c) leaves 15 routes unusable on small screens.
 - Default recommendation: (a), with proof at both sides of the breakpoint.
 - Decision needed (second): whether the §1 mobile header overflow is a defect to file or an accepted trait of that header variant. Default recommendation: owner triage; the audit side keeps it as a bounded observation.
+  **RESOLVED 2026-10-01 (fourth pass): the owner instructed filing it. Admitted as MASTER row `GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT`; MASTER arithmetic 29 → 30 (27 defects).**
 - Decision needed (third, standing): the Lawson release-block decision remains with the owner (“Лоусоном уже занимаются”) — this pass took no action on it.
 
 ---
