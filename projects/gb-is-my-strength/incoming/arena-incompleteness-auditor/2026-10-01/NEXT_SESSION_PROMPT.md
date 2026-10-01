@@ -11,7 +11,10 @@ adjudicated (entries `2026-09-30-c`, `2026-10-01-a`, `2026-10-01-b` are the curr
 
 - AuditRepo: the evidence PR of this cycle (#479, branch `arena/01a0f435-auditrepo`, base
   `054c9c1b1a74f20ead716b835a2f618270dfb78b`) was **merged** with green `validate` + `preflight` at head
-  `9c6aa14`. Start from AuditRepo `main` HEAD on a fresh session branch — never reuse an old one.
+  `9c6aa14`. **2026-10-01 fourth pass: a second evidence PR, #480 (branch `arena/01a0f8c8-auditrepo`), was also
+  merged** (merge commit `e4e8b3f0b99248f1660df697a58411891d3fd7ca`, heads `7f11e1d` + `7d4a0f5`, green
+  `validate` + `preflight`). AuditRepo `main` is now at that merge commit. Start from AuditRepo `main` HEAD on a
+  fresh session branch — never reuse an old one, and never reuse `arena/01a0f8c8-auditrepo` for new work.
 - Product `main` = `d586aa63f02b569cfe050a63cc9078c044375d8d`, unchanged for the whole cycle; live
   release/control-plane SHA = `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b` (run `35927303479`).
   Production still has **not** advanced: main pushes fail `Deploy to GitHub Pages` at
@@ -20,8 +23,10 @@ adjudicated (entries `2026-09-30-c`, `2026-10-01-a`, `2026-10-01-b` are the curr
   is **#24** `node scripts/audit-pro.js` (Lawson route missing from the sitemap contract). Receipt:
   `../../../reverify/evidence/2026-09-30-validate-static-publication-command-list.txt`. **Never repeat
   the withdrawn earlier step figure** — it is not quoted anywhere in-repo and must not be reintroduced.
-- MASTER arithmetic: 26 defects + 0 improvements + 0 narrowed + 2 system lanes + 1 owner decision =
-  **29 active work units** (enforced by `scripts/check_matrix_coverage.py`).
+- MASTER arithmetic: 27 defects + 0 improvements + 0 narrowed + 2 system lanes + 1 owner decision =
+  **30 active work units** (enforced by `scripts/check_matrix_coverage.py`). **Changed 2026-10-01 by the
+  owner's instruction:** the mobile header overflow observation was admitted as the new row
+  `GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT` (26 → 27 defects, 29 → 30 total).
 - Browser tier now exists in-sandbox and was run twice at the anchor:
   `../../../reverify/evidence/2026-10-01-fresh-browser-pass-at-anchor.txt` (pass 1, 11 sections) and
   `../../../reverify/evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt` (pass 2, 15 sections).
@@ -32,10 +37,13 @@ adjudicated (entries `2026-09-30-c`, `2026-10-01-a`, `2026-10-01-b` are the curr
   rule `:4072 [data-gill-v16] .quiz-next.is-visible{display:block}` **does exist**; the runtime just never
   adds the class. Dead end below 1024px, full flow at ≥1024px. And `GBS-QUIZ-LITERAL-MARKUP` covers
   **10 of 23** quiz routes (not 9), per-route tag counts 74/58/16/12/10/8/6/6/2/2.
-- Direction 3: six open Product PRs, each adjudicated at **its own head** — #2153 docs-only (not gate
-  evidence), #2150 Lawson catalog (11 red, 37 behind, **stand-down**), #2145 apostasy (**another
-  agent's lane**), #2144 Dependabot (20 red), #2143 genealogy draft, #2142 Baptist salvage
-  (research-only). Branch census **37 total / 36 non-main**.
+- Direction 3: **seven** open Product PRs, each adjudicated at **its own head** (re-measured 2026-10-01,
+  receipt `../../../reverify/evidence/2026-10-01-pr-rollups-and-branch-census.txt`) — #2154 new (draft,
+  Lawson editorial/media, 7 red), #2153 head moved `c671491f` → `5517a8c5` and now carries a deploy-gate
+  repair (2 red), #2150 head moved `89e76794` → `acb25c61` (1 file +34/−6, 8 red, Deploy Candidate
+  Contract failure run `36797681172`), #2145 apostasy (4 red, **another agent's lane**), #2144 Dependabot
+  (20 red), #2143 genealogy draft (0 red), #2142 Baptist salvage (0 red on only 3 checks — thin coverage).
+  Branch census **38 total / 37 non-main** at `d586aa63`.
 - Direction 4: `../../../PROGRAM_CLOSURE_MATRIX.md` refreshed (step count, Wave 5B, Wave 8, browser-tier
   paragraph, program-currency re-measure: article corpus **64** MDX at main vs **63** at the live SHA,
   the +1 being the blocked Lawson route). ~~**Wave 4 genealogy counts (2825 / 139) are still carried
@@ -89,6 +97,11 @@ adjudicated (entries `2026-09-30-c`, `2026-10-01-a`, `2026-10-01-b` are the curr
   sit past the viewport — while narrow desktop windows at the same CSS width fit. It becomes a row only
   on an owner signal or a second, independent witness angle. **Resolved 2026-10-01: the owner gave that signal
   and the observation is now the MASTER row above.**
+- **Do not re-file the quiz dead end as "`article-quiz.js` must add `.is-visible`"** — that reading is now
+  known to be wrong: the hide/reveal pair at `css/floating-cluster.css:4063/:4072` is the only `.quiz-next`
+  rule in the codebase and belongs to the Gill learning sheet's `#glsQuizNext`; the shared runtime's own
+  `.quiz-next` buttons (`article-quiz.js:74`, `:152`) inherit it by class collision. The owner-approved
+  direction is to scope the legacy rules to their owner.
 - Rows already retired/false-positive in `verified/CLOSURE_LEDGER.md` and `MATRIX_ID_ALIASES.json` —
   check the registry before proposing anything.
 
@@ -130,8 +143,11 @@ adjudicated (entries `2026-09-30-c`, `2026-10-01-a`, `2026-10-01-b` are the curr
 
 ## Highest-value next scopes (owner has not chosen one yet)
 
-1. **Quiz repair verification wave (rows 99/100).** When the owner lands a fix, prove it at **both**
-   sides of the breakpoint: advance past question 1 to results on all 15 `[data-gill-v16]` quiz routes at
+1. **Quiz repair verification wave (rows 99/100).** Owner direction is now recorded: «максимально без
+   костылей» = scope the legacy hide/reveal rules at `css/floating-cluster.css:4063/:4072` to their real
+   owner (`#glsQuizNext` in `GillLearningSheet.astro:106`, class maintained at `:403`/`:494`) instead of
+   teaching `src/runtime/article-quiz.js` a foreign `.is-visible` class or deleting the rule. When the
+   owner lands a fix, prove it at **both** sides of the breakpoint: advance past question 1 to results on all 15 `[data-gill-v16]` quiz routes at
    ≤1023px **and** ≥1024px, keep the 8 non-gill routes working, keep keyboard use and light/dark
    behaviour passing, and show zero literal `<em>`/`<span>` in the payload (10 routes) and in the painted
    panel (witnessed on `/nagornaya/chast-2/`, `/articles/dzhon-gill-chast-2-uchenyi/`,
