@@ -1,0 +1,59 @@
+# commands.log — arena-incompleteness-auditor, 2026-10-01 (fresh browser pass 2 + pre-merge self-audit)
+# Anchor: Product main d586aa63f02b569cfe050a63cc9078c044375d8d (unchanged through the pass); AuditRepo base 054c9c1b1a74f20ead716b835a2f618270dfb78b.
+# NOTE: the sandbox wipes /tmp between turns, so the per-pass Playwright scripts (/tmp/pw/verify4b.mjs, verify6.mjs, verify7.mjs)
+#       and the built browser (/tmp/chromium, /tmp/browserlibs, /tmp/nssroot) are not committed. The methods they used —
+#       launch flags, viewport profiles, per-row selectors, assertions and measured numbers — are recorded verbatim in
+#       ../../../reverify/evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt, and the environment/build recipe in
+#       ../../../reverify/evidence/2026-10-01-fresh-browser-pass-at-anchor.txt.
+
+## 1. Anchor and reachability
+gh api repos/FedorMilovanov/gb-is-my-strength/commits/main -q '.sha+"  "+.commit.committer.date'
+gh api repos/FedorMilovanov/AuditRepo/commits/main -q '.sha+"  "+.commit.committer.date'
+curl -s -o /dev/null -w '%{http_code}' https://gb-is-my-strength.ru            # -> 000 (no route from the sandbox)
+curl -s -o /dev/null -w '%{http_code}' https://registry.npmjs.org               # -> 200
+curl -s -o /dev/null -w '%{http_code}' https://github.com                       # -> 200
+
+## 2. Browser tier (cold ~85 min; recipe in the pass-1 receipt header)
+npm i --prefix /tmp/pw @sparticuz/chromium@153.0.0 playwright-core@1.63.0
+git clone --depth 1 https://github.com/mozilla/nspr /tmp/nspr && (cd /tmp/nspr && ./configure --prefix=/tmp/nssroot --enable-64bit && make -j && make install)
+git clone --depth 1 https://github.com/nss-dev/nss /tmp/nss && (cd /tmp/nss/nss && ./build.sh --disable-tests --with-nspr=/tmp/nssroot/include/nspr:/tmp/nssroot/lib)
+# copy libnspr4/libnss3/libnssutil3 (+deps) into /tmp/browserlibs, then always run with LD_LIBRARY_PATH=/tmp/browserlibs
+
+## 3. Product production-like dist at the anchor (same chain as the pass-1 receipt)
+git clone https://github.com/FedorMilovanov/gb-is-my-strength /tmp/gb-product && git -C /tmp/gb-product checkout d586aa63f02b569cfe050a63cc9078c044375d8d
+npm ci && npm run astro:build && node scripts/copy-legacy-to-dist.js --omit-build-only && npm run cache-bust && node scripts/heading-id-hygiene.js && node scripts/pastor-guards.js && npx pagefind --site dist
+python3 -m http.server 8899 --directory dist --bind 127.0.0.1                    # local static host for the browser pass
+
+## 4. Measurement passes (Playwright, headless Chromium 153.0.8010)
+LD_LIBRARY_PATH=/tmp/browserlibs node /tmp/pw/verify4b.mjs   # pass 4 re-run: header search wiring (click + Ctrl+K), 390px overlap geometry/hit-test
+LD_LIBRARY_PATH=/tmp/browserlibs node /tmp/pw/verify5.mjs    # pass 5: quiz route sweep, focus orders, forced colors, nested 404s (receipt survived that turn)
+LD_LIBRARY_PATH=/tmp/browserlibs node /tmp/pw/verify6.mjs    # pass 6: mobile re-test of .quiz-next, badge neighbour probe, /articles/ Tab order, header geometry + screenshots
+LD_LIBRARY_PATH=/tmp/browserlibs node /tmp/pw/verify7.mjs    # pass 7: width sweep pinning @media (max-width:63.99em), deep SITE_CONFIG.quiz census, header overflow by width
+
+## 5. Source-side confirmation of the media boundary (no browser needed)
+grep -n "quiz-next" /tmp/gb-product/css/floating-cluster.css | head -40
+# brace-counted walk from line 4063 upward -> enclosing at-rule `@media (max-width: 63.99em)` opened at line 3774; reveal rule at 4072
+grep -rn "is-visible" /tmp/gb-product/src/runtime/article-quiz.js                # no add-site for .quiz-next
+grep -rn "quiz-next-btn" /tmp/gb-product/js/site.js                              # inline style="display:none" in the legacy template only
+grep -rl "data-gill-v16" /tmp/gb-product/dist | wc -l
+
+## 6. Receipt assembly and repository hygiene
+python3 - <<'PY'   # merge passes 4-7 into one receipt: per-section slices, junk filter (/tmp paths, failed-screenshot lines), dispositions block
+PY
+cp /tmp/final-receipt2.txt ../../../reverify/evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt
+python3 - <<'PY'   # marked correction blocks in the two 2026-09-30 artifact witnesses + the quiz census receipt; notes in the step-count and release-block docs
+PY
+python3 - <<'PY'   # MASTER: rows 99/100 corrected in place, fresh anchors on rows 99/100/103/113/114/115/116/120/121, Current-state banner; CLOSURE_LEDGER entry 2026-10-01-b; PROGRAM browser-tier paragraph
+PY
+
+## 7. Validators, commit, CI, PR
+python3 ../../../../scripts/validate_audit_repo.py            # PASS
+python3 ../../../../scripts/check_auditrepo_structure.py      # PASS
+python3 ../../../../scripts/check_matrix_coverage.py          # PASS — 29 active ids / 0 closed / 29 open, 769 evidence files
+python3 ../../../../scripts/check_workflow_syntax.py          # PASS (5 workflows)
+for t in validate_audit_repo_regression_test.py scaffold_regression_test.py retire_reviewed_refs_regression_test.py matrix_coverage_regression_test.py check_workflow_syntax_regression_test.py; do python3 ../../../../scripts/$t; done   # all PASS
+node ../../../../scripts/repository_history_forensic_audit_regression_test.mjs   # PASS
+git add -A && git commit -m "reverify(gb): fresh browser pass 2 ..." && git push origin arena/01a0f435-auditrepo
+gh pr checks 479 --watch                                       # validate + preflight pass at head 9c6aa14
+gh api -X PATCH repos/FedorMilovanov/AuditRepo/pulls/479 -f body=@/tmp/prbody-new.md   # `gh pr edit` fails on the Projects-classic GraphQL deprecation
+gh api -X POST repos/FedorMilovanov/AuditRepo/issues/479/comments -f body=@/tmp/prcomment.md
