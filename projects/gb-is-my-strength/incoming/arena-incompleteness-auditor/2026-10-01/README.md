@@ -21,7 +21,7 @@
 ## Files in this folder
 
 - `REPORT.md` — observations, evidence, root-cause clusters and recommendations (browser pass 2: quiz + header cluster);
-- `WAVE4_GENEALOGY_AND_DIRECTION3_REMEASURE.md` — **pass 3 of 2026-10-01 (this session)**: PROGRAM Wave 4 genealogy counts independently re-derived at `d586aa63` and confirmed current, Direction 3 open-PR rollups at each PR's own head (7 PRs; #2154 new, #2153 and #2150 heads moved), Wave 8 branch census 38/37, and the row-114 harness-limited designation. Source/API only — no build, no browser, no Product mutation;
+- `WAVE4_GENEALOGY_AND_DIRECTION3_REMEASURE.md` — **pass 3 of 2026-10-01 (this session)**: PROGRAM Wave 4 genealogy counts independently re-derived at `d586aa63` and confirmed current, Direction 3 open-PR rollups at each PR's own head (7 PRs; #2154 new, #2153 and #2150 heads moved), Wave 8 branch census 38/37, and the row-114 harness-limited designation. After four owner decisions answered mid-pass it also admits one MASTER defect row (`GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT`, arithmetic 29 → 30) and records the quiz repair direction («максимально без костылей» → scope the legacy Gill-sheet rules to their owner). Source/API only for its own measurements — no build, no browser, no Product mutation;
 - `comments/` — comments on other findings;
 - `proposals/` — optional classification/priority/root-cause proposals;
 - `evidence/` — logs, screenshots and command output;

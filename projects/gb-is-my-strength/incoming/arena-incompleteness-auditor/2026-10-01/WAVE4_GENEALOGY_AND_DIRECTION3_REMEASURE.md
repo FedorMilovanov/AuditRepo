@@ -12,7 +12,7 @@
 - Build mode: none this pass — no build, no browser, no dist
 - Browser / device if used: **none**. No browser ran in this pass: Product `main` did not move, so no MASTER source anchor needed re-anchoring, and no Product repair exists to verify (the quiz/header repair wave is still waiting on the owner's fix). The 2026-10-01 passes 1–2 receipts remain the fresh-browser evidence for this anchor.
 - Scope: PROGRAM Wave 4 (genealogy editorial corpus), Direction 3 (open Product PR rollups at each PR's own head), Wave 8 (branch census), MASTER row `GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS` (evidence boundary)
-- Explicit exclusions: no Product mutation; no Product PR taken/edited/closed/merged; Lawson release-block lane under owner-directed stand-down (measured only, no disposition proposed); PR #2145 is another agent's lane and was only read through the API; no new MASTER row filed; no arithmetic change
+- Explicit exclusions: no Product mutation; no Product PR taken/edited/closed/merged; Lawson release-block lane under owner-directed stand-down (measured only, no disposition proposed); PR #2145 is another agent's lane and was only read through the API. (At the time of writing these lines no new MASTER row was filed; the owner's mid-pass decision then admitted one — see §4b.)
 - Signal class: Product (program measurement) + audit-harness (one stale handoff claim corrected)
 - Proof state: PASS — every re-derived figure matched the pipeline's own counters and Product's own audit scripts exited 0 with exactly the two expected blockers
 - Claim boundary: source/byte access + authenticated API facts + local script execution. **Not** a build, **not** a browser run, **not** live-site evidence, **not** a CI run (local Node 22.22.3 vs CI-pinned 22.23.1)
@@ -123,6 +123,40 @@ blanking is observable in this sandbox. That half keeps its 2026-09-29 forced-co
 Windows High Contrast Mode witness or screenshot. The structural half is freshly confirmed at `d586aa63`.
 The row stays OPEN with a stated evidence boundary — not upgraded, not closed, not withdrawn.
 
+## 4b. Owner decisions received during this pass and applied
+
+Four decisions were put to the owner mid-pass and answered:
+
+| Decision | Answer | What this pass did with it |
+|---|---|---|
+| Mobile header overflow — file as a MASTER row? | **Yes, file it** | Admitted `GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT` from the already-witnessed 2026-10-01 browser observation. **MASTER arithmetic 29 → 30 work units (26 → 27 defects)**, enforced by `scripts/check_matrix_coverage.py`. |
+| Row 114 colour half | **Accept harness-limited** | The 2026-09-29 forced-colors evidence stands; the row keeps the explicit harness-limited designation printed in §4 above. |
+| Quiz repair direction (rows 99/100) | **«Сделай максимально без костылей»** | Source inspection at `d586aa63` identifies the contract's real owner — see below. |
+| `spravochnik` byline | **Keep «14 июня»** | Recorded in PROGRAM and in the Baptist byline row; the remaining work is reconciling registry/JSON-LD `datePublished` 2026-06-10 *to* the visible label, not overwriting it. |
+
+**Quiz repair — why "least crutch" points at scoping, not at the runtime.** The two rules that create the dead end
+(`css/floating-cluster.css:4063 [data-gill-v16] .quiz-next{display:none}` and `:4072 … .is-visible{display:block}`,
+inside `@media (max-width: 63.99em)`) are the **only** rules in the codebase that target `.quiz-next`. The element
+that actually maintains the `.is-visible` class is a *different* component's button:
+`GillLearningSheet.astro:106` `<button type="button" class="quiz-next" id="glsQuizNext">Следующий вопрос</button>`,
+whose own script adds the class at `:494` and removes it at `:403`; `GillSeriesChrome.astro:51` renders that sheet
+inside the same `[data-gill-v16]` wrapper. The shared runtime `src/runtime/article-quiz.js` creates its own
+`.quiz-next` buttons at `:74` (`again`) and `:152` (`next`) and never adds `.is-visible`. So below 1024px both
+components' buttons are hidden by one rule, but only one component is wired to reveal itself. Teaching
+`article-quiz.js` to add a class owned by another component, or force-visible overrides, would be the crutch;
+deleting the rule outright would break the learning sheet's own hide-until-answered state. The recorded repair
+direction is therefore to **scope the two legacy rules to their owner** (e.g. `[data-gill-v16] #glsQuizNext`),
+leaving the shared quiz button to its own runtime — with the 8 non-gill quiz routes as the working control.
+
+**New MASTER row filed (owner-instructed).** `GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT`, admitted from
+the fresh browser witness at `d586aa63` (receipt §P4-4, §P4-4b, §P6-5, §C): under `isMobile` 390×844 the shared
+header cluster overflows the viewport on `/izbrannoe/` and `/hard-texts/genesis-6/` (theme-toggle centres x 392.8
+and 396 of a 390px viewport, clipped by `.mobile-controls{overflow:hidden}`; on `/izbrannoe/` the search control's
+centre is clipped past the container edge at `right=358`), and at 768px both controls sit beyond the viewport on
+`/` and `/izbrannoe/` while `/hard-texts/genesis-6/` fits. Plain desktop windows at the same CSS widths fit, which
+scopes the defect to the mobile header variant. The 12px overlap stays in its own row
+`GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP`.
+
 ## 5. What this pass deliberately did **not** do
 
 - **No browser run.** Product `main` did not move, so no source anchor needed re-anchoring, and no
@@ -132,8 +166,11 @@ The row stays OPEN with a stated evidence boundary — not upgraded, not closed,
   is measured, not reduced.
 - **No live claim.** The live host is unreachable (`curl` → `000`), so `/rodoslaviye/` and the live byline
   surfaces were not re-read; all Wave 4 statements are source-level at the exact SHA.
-- **No new MASTER row, no arithmetic change** (29 active work units: 26 defects + 2 system lanes + 1 owner
-  decision), no Product mutation, no Product PR action, no Lawson disposition, no #2145 contact.
+- ~~**No new MASTER row, no arithmetic change** (29 active work units: 26 defects + 2 system lanes + 1 owner
+  decision)~~ **Superseded later in the same pass:** after the owner's decisions, one MASTER row **was** admitted
+  (`GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT`) from the already-witnessed observation, so arithmetic
+  became **30 active work units (27 defects + 2 system lanes + 1 owner decision)**. Still no Product mutation, no
+  Product PR action, no Lawson disposition, no #2145 contact.
 - **No claim that #2153's deploy-gate repair works.** Its body's local results are recorded as claims at
   the named run IDs; the two red checks at its head are API facts.
 

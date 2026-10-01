@@ -107,3 +107,25 @@ python3 ../../../../scripts/check_matrix_coverage.py          # PASS — 29 acti
 python3 ../../../../scripts/check_workflow_syntax.py          # PASS (5 workflows)
 for t in validate_audit_repo_regression_test.py scaffold_regression_test.py retire_reviewed_refs_regression_test.py matrix_coverage_regression_test.py check_workflow_syntax_regression_test.py; do python3 ../../../../scripts/$t; done   # all PASS
 node ../../../../scripts/repository_history_forensic_audit_regression_test.mjs   # PASS
+
+## 6. Owner decisions obtained mid-pass (ask_user), then applied to AuditRepo files only
+# Q1 mobile header overflow -> "file it"   Q2 row 114 colour half -> "accept harness-limited"
+# Q3 quiz repair direction -> "максимально без костылей"   Q4 spravochnik byline -> keep «14 июня»
+grep -n "quiz-next" /home/user/work/product/css/floating-cluster.css            # -> only :4063 hide + :4072 reveal (scoped [data-gill-v16], inside @media max-width:63.99em)
+grep -n "is-visible" /home/user/work/product/src/components/article-pilots/gill-series/GillLearningSheet.astro   # -> :403 remove / :494 add on #glsQuizNext (class="quiz-next" at :106)
+grep -n "quiz-next" /home/user/work/product/src/runtime/article-quiz.js         # -> :74 and :152 create the shared runtime's own .quiz-next buttons (no is-visible anywhere)
+grep -rln "GillSeriesChrome" /home/user/work/product/src/                       # -> GillSeriesRail/SeriesReaderChrome; GillSeriesChrome.astro:51 renders the sheet inside [data-gill-v16]
+# -> conclusion: the hide/reveal contract belongs to the Gill learning sheet; the article quiz inherits it by class collision.
+
+## 7. Post-decision AuditRepo edits (files only; no Product change)
+#   MASTER: new row GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT; heading 26 -> 27; state rows 29 -> 30 / 26 -> 27;
+#           row 99 closure boundary gains the owner-directed repair direction; row 115 boundary cross-references the new row
+#   PROGRAM: spravochnik owner decision recorded
+#   CLOSURE_LEDGER: entry 2026-10-01-c gains the owner-decision block; entry 2026-10-01-b's "not filed" bullet marked superseded
+#   NEXT_SESSION_PROMPT / REPORT.md: the "deliberately not filed" overflow statements corrected in place with dated markers
+python3 ../../../../scripts/validate_audit_repo.py            # PASS
+python3 ../../../../scripts/check_matrix_coverage.py          # PASS — 30 active ids / 0 closed / 30 open, 773 evidence files, 1 direct witness
+python3 ../../../../scripts/check_auditrepo_structure.py      # PASS
+python3 ../../../../scripts/check_workflow_syntax.py          # PASS (5 workflows)
+for t in validate_audit_repo_regression_test.py scaffold_regression_test.py retire_reviewed_refs_regression_test.py matrix_coverage_regression_test.py check_workflow_syntax_regression_test.py; do python3 ../../../../scripts/$t; done   # all PASS
+node ../../../../scripts/repository_history_forensic_audit_regression_test.mjs   # PASS

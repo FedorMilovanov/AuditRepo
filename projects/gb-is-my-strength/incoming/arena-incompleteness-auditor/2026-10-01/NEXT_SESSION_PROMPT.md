@@ -83,10 +83,12 @@ adjudicated (entries `2026-09-30-c`, `2026-10-01-a`, `2026-10-01-b` are the curr
   contract, row retired as invalid).
 - **Mobile header overflow / 768px tablet overflow** — measured 2026-10-01, recorded as a bounded
   observation in the pass-2 receipt §P4-4/§C and in `REPORT.md` §1 of this folder, deliberately **not**
-  filed: under `isMobile` 390×844 `/izbrannoe/` and `/hard-texts/genesis-6/` push `#themeToggle` to
+  filed: under `isMobile` 390×844 **[FILED 2026-10-01 on the owner's instruction as MASTER row
+  `GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT`; do not re-file it a second time]** `/izbrannoe/` and `/hard-texts/genesis-6/` push `#themeToggle` to
   centre x 393/396 where `.mobile-controls{overflow:hidden}` clips it, and at 768px on `/` both controls
   sit past the viewport — while narrow desktop windows at the same CSS width fit. It becomes a row only
-  on an owner signal or a second, independent witness angle.
+  on an owner signal or a second, independent witness angle. **Resolved 2026-10-01: the owner gave that signal
+  and the observation is now the MASTER row above.**
 - Rows already retired/false-positive in `verified/CLOSURE_LEDGER.md` and `MATRIX_ID_ALIASES.json` —
   check the registry before proposing anything.
 
