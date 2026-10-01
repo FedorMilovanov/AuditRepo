@@ -1,0 +1,740 @@
+{
+ "head_sha": "d586aa63f02b569cfe050a63cc9078c044375d8d",
+ "results": [
+  {
+   "row": "GBS-QUIZ-NEXT-HIDDEN-GILL-V16",
+   "anchor": "legacy CSS hides .quiz-next by default",
+   "pattern": "\\.quiz-next[^{]*\\{[^}]*display:\\s*none",
+   "paths": [
+    "css"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "css/site.css:10"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-QUIZ-NEXT-HIDDEN-GILL-V16",
+   "anchor": "runtime builds .quiz-next / is-visible state",
+   "pattern": "quiz-next",
+   "paths": [
+    "js"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "js/site.js:1"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-QUIZ-NEXT-HIDDEN-GILL-V16",
+   "anchor": "[data-gill-v16] marker still emitted",
+   "pattern": "data-gill-v16",
+   "paths": [
+    "src",
+    "js",
+    "css"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 400,
+   "sample": [
+    "src/components/article-pilots/_shared/HeartLeatherRibbon.astro:5",
+    "src/components/article-pilots/_shared/SiteSectionsMenu.astro:85",
+    "src/components/article-pilots/_shared/series/seriesConfig.ts:10",
+    "src/components/article-pilots/gill-context/GillContextPageHead.astro:64"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-QUIZ-LITERAL-MARKUP",
+   "anchor": "quiz payload embeds inline markup (<em>/<span>)",
+   "pattern": "<em>|<span",
+   "paths": [
+    "src/components/article-pilots",
+    "src/components/nagornaya"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 400,
+   "sample": [
+    "src/components/article-pilots/_shared/HeartLeatherRibbon.astro:26",
+    "src/components/article-pilots/_shared/HeartLeatherRibbon.astro:58",
+    "src/components/article-pilots/_shared/HeartLeatherRibbon.astro:59",
+    "src/components/article-pilots/_shared/HeartLeatherRibbon.astro:62"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-QUIZ-LITERAL-MARKUP",
+   "anchor": "quiz runtime assigns via textContent",
+   "pattern": "textContent",
+   "paths": [
+    "js"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 81,
+   "sample": [
+    "js/bookmark-engine.js:208",
+    "js/bookmark-engine.js:209",
+    "js/enhancements.js:1",
+    "js/enhancements.js:2"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-QUIZ-DARK-SURFACE-LOW-CONTRAST",
+   "anchor": "dark quiz ink #e6e1d7 still in CSS",
+   "pattern": "#e6e1d7",
+   "paths": [
+    "css",
+    "src"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 8,
+   "sample": [
+    "css/command-palette.css:1",
+    "css/floating-cluster.css:3010",
+    "css/floating-cluster.css:3088",
+    "css/site.css:4"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-QUIZ-DARK-SURFACE-LOW-CONTRAST",
+   "anchor": ".quiz-wrapper fallback surface rule",
+   "pattern": "\\.quiz-wrapper",
+   "paths": [
+    "css"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 3,
+   "sample": [
+    "css/site.css:10",
+    "css/site.css:21",
+    "css/site.css:39"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-PRINT-TERMINAL-REGION-HIDES-CONTENT",
+   "anchor": "data-print-keep-next grouping logic",
+   "pattern": "data-print-keep-next",
+   "paths": [
+    "js/reader-preferences-head.js"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 4,
+   "sample": [
+    "js/reader-preferences-head.js:166",
+    "js/reader-preferences-head.js:255",
+    "js/reader-preferences-head.js:318",
+    "js/reader-preferences-head.js:445"
+   ],
+   "missing": []
+  },
+  {
+   "row": "SYS-READER-SPEED-KEYBOARD-MODEL",
+   "anchor": "speed panel state in shared floating-cluster controller",
+   "pattern": "speed",
+   "paths": [
+    "js/floating-cluster-controller.js"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 50,
+   "sample": [
+    "js/floating-cluster-controller.js:21",
+    "js/floating-cluster-controller.js:808",
+    "js/floating-cluster-controller.js:1046",
+    "js/floating-cluster-controller.js:1823"
+   ],
+   "missing": []
+  },
+  {
+   "row": "SYS-READER-SPEED-KEYBOARD-MODEL",
+   "anchor": "radiogroup semantics in the speed panel",
+   "pattern": "radiogroup",
+   "paths": [
+    "js",
+    "src",
+    "css"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 4,
+   "sample": [
+    "js/floating-cluster-controller.js:1865",
+    "js/site.js:1",
+    "src/components/article-pilots/gill-series/GillSeriesMobileBar.astro:62",
+    "src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro:59"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING",
+   "anchor": "mobile-hotfix outline:0!important covering .theme-toggle",
+   "pattern": "\\.theme-toggle[^}]*outline:0!important",
+   "paths": [
+    "css"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "css/mobile-hotfix.css:12"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING",
+   "anchor": "home.css .theme-toggle :focus-visible outline",
+   "pattern": "theme-toggle[^{]*:focus-visible",
+   "paths": [
+    "css"
+   ],
+   "expect": "present",
+   "verdict": "NOT-CONFIRMED",
+   "hits": 0,
+   "sample": [],
+   "missing": []
+  },
+  {
+   "row": "GBS-GENESIS6-THEME-TOGGLE-LOW-CONTRAST",
+   "anchor": "theme-toggle icon stroke colour #1a1a1a / rgb(26,26,26)",
+   "pattern": "#1a1a1a|rgb\\(26,\\s*26,\\s*26\\)",
+   "paths": [
+    "css",
+    "src"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 32,
+   "sample": [
+    "css/command-palette.css:1",
+    "css/floating-cluster.css:129",
+    "css/floating-cluster.css:257",
+    "css/floating-cluster.css:330"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP",
+   "anchor": "negative right margin creating the 12px overlap",
+   "pattern": "margin-right:-12px",
+   "paths": [
+    "css"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "css/mobile-hotfix.css:12"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED",
+   "anchor": "#hCpBtnNav rendered by the shared Header",
+   "pattern": "hCpBtnNav",
+   "paths": [
+    "src/components/ui/Header.astro"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "src/components/ui/Header.astro:31"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED",
+   "anchor": "#hCpBtnNav referenced by search bootstrap js",
+   "pattern": "hCpBtnNav",
+   "paths": [
+    "js"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 3,
+   "sample": [
+    "js/enhancements.js:8",
+    "js/floating-cluster-controller.js:154",
+    "js/search.js:1"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS",
+   "anchor": "«Закрыть поиск» close control in home chrome",
+   "pattern": "Закрыть поиск",
+   "paths": [
+    "src"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "src/components/home/HomePageChrome.astro:451"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-AVRAAM-MAP-HEADING-LOST-ON-READY",
+   "anchor": "avraam ready-state observer touching the page H1",
+   "pattern": "h1|ready",
+   "paths": [
+    "src/pages/karty/avraam"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 2,
+   "sample": [
+    "src/pages/karty/avraam/index.astro:18",
+    "src/pages/karty/avraam/index.astro:22"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-ANTISOVETOV-NESTED-MAP-TRIGGERS",
+   "anchor": "role=button tabindex=0 triggers in AntisovetovBody",
+   "pattern": "role=\"button\"[^>]*tabindex=\"0\"|tabindex=\"0\"[^>]*role=\"button\"",
+   "paths": [
+    "src/components/article-pilots/antisovetov/AntisovetovBody.astro"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 32,
+   "sample": [
+    "src/components/article-pilots/antisovetov/AntisovetovBody.astro:55",
+    "src/components/article-pilots/antisovetov/AntisovetovBody.astro:57",
+    "src/components/article-pilots/antisovetov/AntisovetovBody.astro:78",
+    "src/components/article-pilots/antisovetov/AntisovetovBody.astro:107"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-KOD-DA-VINCHI-TIMELINE-KEYBOARD-SCROLL",
+   "anchor": ".ctw-body non-focusable scroll region",
+   "pattern": "ctw-body",
+   "paths": [
+    "src/components/article-pilots/kod-da-vinchi"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "src/components/article-pilots/kod-da-vinchi/KodDaVinchiSectionCanon.astro:31"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-KOD-DA-VINCHI-TIMELINE-KEYBOARD-SCROLL",
+   "anchor": ".ctw-track min-width rule",
+   "pattern": "\\.ctw-track[^{]*\\{[^}]*min-width",
+   "paths": [
+    "css"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "css/site.css:39"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-NAGORNAYA-SOURCE-LINKS-COLOR-ONLY",
+   "anchor": "nagornaya inline source-link markup",
+   "pattern": "источник|source-link|sources",
+   "paths": [
+    "src/pages/nagornaya",
+    "src/components/nagornaya"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 76,
+   "sample": [
+    "src/components/nagornaya/_shared/NagornayaClaimComparison.astro:15",
+    "src/components/nagornaya/_shared/NagornayaClaimComparison.astro:47",
+    "src/components/nagornaya/_shared/NagornayaClaimComparison.astro:48",
+    "src/components/nagornaya/_shared/NagornayaClaimComparison.astro:52"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED",
+   "anchor": "speed badge sizing rules",
+   "pattern": "speed-badge|speed[^{]*badge",
+   "paths": [
+    "css",
+    "src",
+    "js"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 6,
+   "sample": [
+    "css/floating-cluster.css:3869",
+    "src/components/article-pilots/_shared/speedSlot.ts:21",
+    "src/components/article-pilots/_shared/speedSlot.ts:33",
+    "src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro:12"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-NAGORNAYA-READER-FONT-SCALE-INCOMPLETE",
+   "anchor": "gb:font-scale preference plumbing",
+   "pattern": "gb:font-scale",
+   "paths": [
+    "js",
+    "css",
+    "src"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 4,
+   "sample": [
+    "js/floating-cluster-controller.js:1120",
+    "js/reader-preferences-head.js:46",
+    "js/reader-preferences.js:128",
+    "js/reader-preferences.js:188"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-NAGORNAYA-READER-FONT-SCALE-INCOMPLETE",
+   "anchor": "text-stone-700 prose paragraphs on nagornaya chapters",
+   "pattern": "text-stone-700",
+   "paths": [
+    "src/pages/nagornaya",
+    "src/components/nagornaya"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 400,
+   "sample": [
+    "src/components/nagornaya/chast-1/NagornayaChast1MainShell.astro:19",
+    "src/components/nagornaya/chast-1/NagornayaChast1MainShell.astro:51",
+    "src/components/nagornaya/chast-1/NagornayaChast1MainShell.astro:52",
+    "src/components/nagornaya/chast-1/NagornayaChast1MainShell.astro:53"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS",
+   "anchor": "forced-colors handling in CSS/components",
+   "pattern": "forced-colors",
+   "paths": [
+    "css",
+    "src"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 3,
+   "sample": [
+    "css/site.css:39",
+    "src/components/home/HomeSections/Refutations.astro:609",
+    "src/runtime/article-tooltips.css:104"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-MOBILE-CHROME-HIDDEN-FOCUSABLE-BEFORE-SCROLL",
+   "anchor": "MobileChromePage translated offscreen",
+   "pattern": "translateY\\(-|translate3d\\(0,\\s*-",
+   "paths": [
+    "src/components/article-pilots/_shared/MobileChromePage.astro",
+    "css"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 43,
+   "sample": [
+    "src/components/article-pilots/_shared/MobileChromePage.astro:81",
+    "css/command-palette.css:1",
+    "css/floating-cluster.css:1169",
+    "css/floating-cluster.css:1300"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-MOBILE-CHROME-HIDDEN-FOCUSABLE-BEFORE-SCROLL",
+   "anchor": "MobileChrome controls are NOT inert/tabindex=-1 while hidden",
+   "pattern": "tabindex=\"-1\"|inert",
+   "paths": [
+    "src/components/article-pilots/_shared/MobileChromePage.astro"
+   ],
+   "expect": "absent",
+   "verdict": "CONFIRMED",
+   "hits": 0,
+   "sample": [],
+   "missing": []
+  },
+  {
+   "row": "GBS-MOBILE-CHROME-NAVBAR-SYNC-LAG",
+   "anchor": "nav-hidden class toggling in js",
+   "pattern": "nav-hidden",
+   "paths": [
+    "js"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "js/site.js:143"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-MOBILE-CHROME-SEARCH-TOUCH-LOAD-RACE",
+   "anchor": "HardTextsPageChrome touchstart preloader",
+   "pattern": "touchstart",
+   "paths": [
+    "src/components/hard-texts/HardTextsPageChrome.astro"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "src/components/hard-texts/HardTextsPageChrome.astro:139"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-MOBILE-CHROME-SEARCH-TOUCH-LOAD-RACE",
+   "anchor": ".mcp-search trigger markup",
+   "pattern": "mcp-search",
+   "paths": [
+    "src",
+    "js",
+    "css"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 7,
+   "sample": [
+    "src/components/article-pilots/_shared/MobileChromePage.astro:57",
+    "src/components/article-pilots/_shared/MobileChromePage.astro:96",
+    "src/components/article-pilots/_shared/MobileChromePage.astro:108",
+    "src/components/article-pilots/_shared/MobileChromePage.astro:109"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-H-SCROLL-TOP-INVISIBLE-FOCUS",
+   "anchor": ".h-scroll-top opacity:0 at rest",
+   "pattern": "\\.h-scroll-top[^{]*\\{[^}]*opacity:0",
+   "paths": [
+    "css",
+    "src"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "css/home.css:1"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-H-SCROLL-TOP-INVISIBLE-FOCUS",
+   "anchor": "reveal only past a scrollY threshold",
+   "pattern": "scrollY\\s*>\\s*500",
+   "paths": [
+    "js"
+   ],
+   "expect": "present",
+   "verdict": "NOT-CONFIRMED",
+   "hits": 0,
+   "sample": [],
+   "missing": []
+  },
+  {
+   "row": "GBS-BASELAYOUT-MISSING-SKIP-LINK",
+   "anchor": "BaseLayout <main> without an id target",
+   "pattern": "<main(?![^>]*id=)",
+   "paths": [
+    "src/layouts/BaseLayout.astro"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "src/layouts/BaseLayout.astro:180"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-BASELAYOUT-MISSING-SKIP-LINK",
+   "anchor": "BaseLayout has NO skip link",
+   "pattern": "skip-link|skipLink|Перейти к содержимому|К содержимому",
+   "paths": [
+    "src/layouts/BaseLayout.astro"
+   ],
+   "expect": "absent",
+   "verdict": "CONFIRMED",
+   "hits": 0,
+   "sample": [],
+   "missing": []
+  },
+  {
+   "row": "GBS-JOURNAL-MISSING-SKIP-LINK",
+   "anchor": "journal topbar shell markup",
+   "pattern": "journal-topbar",
+   "paths": [
+    "src"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 14,
+   "sample": [
+    "src/components/journal/G3Dossier.astro:32",
+    "src/components/journal/G3Dossier.astro:337",
+    "src/components/journal/G3Dossier.astro:339",
+    "src/components/journal/G3Dossier.astro:340"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-404-RELATIVE-READER-PREFERENCES-ASSETS",
+   "anchor": "root 404.html uses relative js/css asset URLs",
+   "pattern": "(?:src|href)=\"(?:js|css)/",
+   "paths": [
+    "404.html"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 3,
+   "sample": [
+    "404.html:7",
+    "404.html:8",
+    "404.html:9"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-404-RELATIVE-READER-PREFERENCES-ASSETS",
+   "anchor": "root 404.html has NO <base>",
+   "pattern": "<base",
+   "paths": [
+    "404.html"
+   ],
+   "expect": "absent",
+   "verdict": "CONFIRMED",
+   "hits": 0,
+   "sample": [],
+   "missing": []
+  },
+  {
+   "row": "GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS",
+   "anchor": "literal ???? runs in published Baptist bodies",
+   "pattern": "\\?\\?\\?\\?",
+   "paths": [
+    "src/components/baptisty-rossii"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 162,
+   "sample": [
+    "src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro:55",
+    "src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro:56",
+    "src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro:57",
+    "src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro:61"
+   ],
+   "missing": []
+  },
+  {
+   "row": "GBS-BAPTISTS-BYLINE-PUBLICATION-DATE-DIVERGENCE",
+   "anchor": "hardcoded <time datetime=\"2026-06-14\"> in Spravochnik body",
+   "pattern": "datetime=\"2026-06-14\"",
+   "paths": [
+    "src/components/baptisty-rossii"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "src/components/baptisty-rossii/BaptistyRossiiSpravochnikBody.astro:8"
+   ],
+   "missing": []
+  },
+  {
+   "row": "SYS-STRICT-NATIVE-PUBLICATION-COMPLETION",
+   "anchor": "Lawson route registered production-dist in page-ownership",
+   "pattern": "steven-lawson-samoobman-i-publichnyy-golos",
+   "paths": [
+    "migration/page-ownership.json"
+   ],
+   "expect": "present",
+   "verdict": "CONFIRMED",
+   "hits": 1,
+   "sample": [
+    "migration/page-ownership.json:54"
+   ],
+   "missing": []
+  },
+  {
+   "row": "SYS-STRICT-NATIVE-PUBLICATION-COMPLETION",
+   "anchor": "Lawson route ABSENT from route-search-policy",
+   "pattern": "steven-lawson-samoobman-i-publichnyy-golos",
+   "paths": [
+    "data/route-search-policy.json"
+   ],
+   "expect": "absent",
+   "verdict": "CONFIRMED",
+   "hits": 0,
+   "sample": [],
+   "missing": []
+  },
+  {
+   "row": "SYS-STRICT-NATIVE-PUBLICATION-COMPLETION",
+   "anchor": "Lawson route ABSENT from search-manifest",
+   "pattern": "steven-lawson-samoobman-i-publichnyy-golos",
+   "paths": [
+    "data/search-manifest.json"
+   ],
+   "expect": "absent",
+   "verdict": "CONFIRMED",
+   "hits": 0,
+   "sample": [],
+   "missing": []
+  },
+  {
+   "row": "SYS-STRICT-NATIVE-PUBLICATION-COMPLETION",
+   "anchor": "Lawson route ABSENT from sitemap.xml",
+   "pattern": "steven-lawson-samoobman-i-publichnyy-golos",
+   "paths": [
+    "sitemap.xml"
+   ],
+   "expect": "absent",
+   "verdict": "CONFIRMED",
+   "hits": 0,
+   "sample": [],
+   "missing": []
+  },
+  {
+   "row": "SYS-STRICT-NATIVE-PUBLICATION-COMPLETION",
+   "anchor": "Lawson route ABSENT from feed.xml",
+   "pattern": "steven-lawson-samoobman-i-publichnyy-golos",
+   "paths": [
+    "feed.xml"
+   ],
+   "expect": "absent",
+   "verdict": "CONFIRMED",
+   "hits": 0,
+   "sample": [],
+   "missing": []
+  }
+ ]
+}

@@ -1,0 +1,299 @@
+FRESH BROWSER VERIFICATION PASS — 2026-10-01
+Product anchor: main d586aa63f02b569cfe050a63cc9078c044375d8d (clone HEAD verified in-sandbox)
+Target: local production-like dist of that SHA, served at http://127.0.0.1:8899 (python3 -m http.server)
+Build: node scripts/astro-cli.mjs build (104 pages) + copy-legacy-to-dist --omit-build-only + astro-cache-bust-postbuild
+       + pastor-series-heading-id-hygiene + pastor-series-guards-dist + build-pagefind (dist/pagefind)
+Engine: HeadlessChromium 153.0.8010 driven by playwright-core 1.63.0 (CDP), contexts 1440x900 desktop and 390x844 mobile (hasTouch, isMobile, dsf 2)
+Boundary: the sandbox has NO network route to the live host (curl https://gb-is-my-strength.ru -> 000), so every
+measurement below is the local build at the same source SHA — browser tier, exact-SHA artifact tier; NOT a live-site witness.
+
+HOW THE BROWSER TIER WAS MADE AVAILABLE IN THIS SANDBOX (reproducible recipe)
+  1. apt/deb mirrors and all Playwright browser CDNs are blocked, and @playwright/browser-chromium is a 15KB stub;
+     registry.npmjs.org, github.com/codeload.github.com, pypi.org and files.pythonhosted.org ARE reachable.
+  2. npm i @sparticuz/chromium@153.0.0 playwright-core@1.63.0   (the chromium tarball ships the headless binary)
+  3. ldd on that binary reports exactly three missing shared objects: libnspr4.so, libnss3.so, libnssutil3.so.
+  4. pip install --break-system-packages ninja gyp-next; git clone --depth 1 https://github.com/mozilla/nspr.git;
+     ./configure --prefix=$R --enable-64bit && make -j && make install   -> libnspr4/libplc4/libplds4
+  5. git clone --depth 1 https://github.com/nss-dev/nss.git; GYP=gyp ./build.sh --disable-tests --with-nspr=$R/include/nspr:$R/lib
+     (the build stops in cmd/signtool for want of zlib.h, but dist/Debug/lib already holds libnss3, libnssutil3,
+      libssl3, libsmime3, libsoftokn3, libfreebl3, libfreeblpriv3, libsqlite3 — that is all Chromium needs)
+  6. LD_LIBRARY_PATH=<those two lib dirs> node <script>; fonts come from /usr/share/fonts/truetype/dejavu, so text
+     metrics and bounding boxes are real. Launch flags used: --no-sandbox --disable-dev-shm-usage --disable-gpu --force-color-profile=srgb
+
+PASS STRUCTURE: pass 1 ran all eleven sections; pass 2 corrected the harness for sections 1/2/5/6 (quiz panel must be
+rendered by clicking #quizLaunch; navbar hide needs scrollY>300 per js/site.js f(); surface read must include background-image);
+pass 3 confirmed the sync mechanism and reached the touch-race precondition. Superseded harness output is not repeated.
+
+## 1. GBS-QUIZ-DARK-SURFACE-LOW-CONTRAST — CONFIRMED, and the 1.08:1 vs 1.16:1 discrepancy is resolved
+## 1. GBS-QUIZ-DARK-SURFACE-LOW-CONTRAST — dark theme, quiz rendered via #quizLaunch
+route /articles/20-antisovetov-pastoru/ | html.class="dark" | .quiz-wrapper hidden=true bg=rgba(255, 253, 248, 0.92) | #quizLaunch="Начать проверку" visible=true
+  #quizLaunch clicked=true
+  panel hidden=false display=grid | wrapper background-color=rgba(255, 253, 248, 0.92) | effective composite=rgb(236,234,230)
+  bg layer chain: [{"sel":"section.quiz-wrapper","bg":"rgba(255, 253, 248, 0.92)","a":0.92},{"sel":"body.gbs-world.gb-cluster-series-active","bg":"rgb(14, 17, 22)","a":1}]
+  measured text nodes=6 | worst ratio=1.08:1 (rgb(230, 225, 215) on rgb(236,234,230), p.quiz-progress "Вопрос 1 из 10")
+   - 1.08:1  rgb(230, 225, 215) on rgb(236,234,230)  n=6  p.quiz-progress "Вопрос 1 из 10"
+route /articles/kod-da-vinchi/ | html.class="dark" | .quiz-wrapper hidden=true bg=rgba(255, 253, 248, 0.92) | #quizLaunch="Начать проверку" visible=true
+  #quizLaunch clicked=true
+  panel hidden=false display=grid | wrapper background-color=rgba(255, 253, 248, 0.92) | effective composite=rgb(236,234,230)
+  bg layer chain: [{"sel":"section.quiz-wrapper","bg":"rgba(255, 253, 248, 0.92)","a":0.92},{"sel":"body.gbs-paper.gb-cluster-single-active","bg":"rgb(14, 17, 22)","a":1}]
+  measured text nodes=5 | worst ratio=1.08:1 (rgb(230, 225, 215) on rgb(236,234,230), p.quiz-progress "Вопрос 1 из 10")
+   - 1.08:1  rgb(230, 225, 215) on rgb(236,234,230)  n=5  p.quiz-progress "Вопрос 1 из 10"
+route /baptisty-rossii/sovetskaya-noch/ | html.class="dark" | .quiz-wrapper hidden=none bg=- | #quizLaunch=none
+  #quizLaunch clicked=false
+  no .quiz-wrapper after click
+  control (light theme, quiz rendered): wrapper bg=rgba(255, 253, 248, 0.92) composite=rgb(255,253,248) | worst ratio=17.12:1 (rgb(26, 26, 26) on rgb(255,253,248), p.quiz-progress)
+  resolution: the dark-theme quiz surface is NOT the #f4f2ed token fallback used in the static token read (that gave 1.16:1).
+  The painted surface is .quiz-wrapper background-color rgba(255,253,248,0.92) composited over body rgb(14,17,22) = rgb(236,234,230),
+  and the dark quiz text is rgb(230,225,215) = #e6e1d7 -> 1.08:1. The browser figure recorded in MASTER is the correct one.
+
+## 2. GBS-GENESIS6-THEME-TOGGLE-LOW-CONTRAST — CONFIRMED (computed-composite 1.09:1; row records 1.06:1 pixel-sampled)
+## 2. GBS-GENESIS6-THEME-TOGGLE-LOW-CONTRAST — light reader theme, painted surface chain around #themeToggle
+  #themeToggle box 44x44 @y=7 | icon rgb=[26,26,26] | effective bg composite=rgb(14,17,22) | measured ratio=1.09:1
+  icon detail: {"svgStroke":"rgb(26, 26, 26)","svgColor":"rgb(26, 26, 26)","shapeStroke":"rgb(26, 26, 26)","shapeFill":"none","elColor":"rgb(0, 0, 0)","elBg":"rgba(0, 0, 0, 0)"}
+   surface chain: button#themeToggle.theme-toggle bg-color=rgba(0, 0, 0, 0) bg-image=none opacity=1
+   surface chain: div.astro-header__controls.mobile-controls bg-color=rgba(0, 0, 0, 0) bg-image=none opacity=1
+   surface chain: header.astro-header.h-navbar bg-color=rgba(0, 0, 0, 0) bg-image=none opacity=1
+   surface chain: div.astro-shell bg-color=rgba(0, 0, 0, 0) bg-image=none opacity=1
+   surface chain: body.genesis6-hub-page bg-color=rgb(14, 17, 22) bg-image=radial-gradient(circle at 50% 0%, rgba(212, 165, 116, 0.12), rgba(0, 0, 0, 0) 544px), none opacity=1
+   surface chain: html bg-color=rgb(14, 17, 22) bg-image=none opacity=1
+  pass 1 measured the same 1.09:1 through both .theme-toggle and #themeToggle selector paths.
+  variance note: body.genesis6-hub-page also paints a radial-gradient background-image (rgba(212,165,116,0.12) -> transparent at 544px),
+  so a pixel sample at the header can land slightly below the computed-style composite; both readings are ~1.06-1.09:1 against a 3:1 threshold.
+
+## 3. GBS-AVRAAM-MAP-HEADING-LOST-ON-READY — CONFIRMED in the browser at the anchor SHA
+## 3. GBS-AVRAAM-MAP-HEADING-LOST-ON-READY — /karty/avraam/ h1 census before/after ready
+  at domcontentloaded: h1=0 []
+  stage: section#stage.me-map.me-map--route data-map-state=ready | heading census 1:0 2:2 3:11 4:0
+  after map state=ready: h1=0 (visible=0) | heading census 1:0 2:2 3:11 4:0
+  first heading on page now: "Путь Авраама по Бытие 11–25: маршрут, этапы и историко-археологический"
+  artifact-vs-runtime contrast: dist/karty/avraam/index.html still ships <h1 class="sr-only" data-pagefind-body>Путь Авраама …</h1>;
+  in the browser the ready-state observer has already removed it by domcontentloaded, so the live DOM has zero h1 (h2:2, h3:11).
+
+## 4. GBS-MOBILE-CHROME-HIDDEN-FOCUSABLE-BEFORE-SCROLL — CONFIRMED (27 of 27 offscreen and focusable)
+## 4. GBS-MOBILE-CHROME-HIDDEN-FOCUSABLE-BEFORE-SCROLL — 390x844, scrollY=0, offscreen but focusable
+  /articles/ scrollY=0 | host: div#mobileChromePage.mobile-chrome rect.top=0
+     Back button#mcpBackBtn.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Home a.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Search button.mcp-search top=-51 h=38 tabIndex=0 display=flex visibility=visible
+     Tab stops 1-4: a.skip-link | aria= | top=-37 h=34 || a.h-nav-logo | aria=Господь Бог — Сила Моя — на главную | top=15 h=27 || button#gbSearchBtn.gb-nav-search-icon | aria=Поиск по всему сайту | top=7 h=44 || button#themeToggle.theme-toggle | aria=Переключить тему | top=7 h=44
+  /biografii/ scrollY=0 | host: div#mobileChromePage.mobile-chrome rect.top=0
+     Back button#mcpBackBtn.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Home a.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Search button.mcp-search top=-51 h=38 tabIndex=0 display=flex visibility=visible
+     Tab stops 1-4: a.skip-link | aria= | top=-37 h=34 || a.h-nav-logo | aria=Господь Бог — Сила Моя — на главную | top=15 h=27 || button#gbSearchBtn.gb-nav-search-icon | aria=Поиск по всему сайту | top=7 h=44 || button#themeToggle.theme-toggle | aria=Переключить тему | top=7 h=44
+  /hard-texts/ scrollY=0 | host: div#mobileChromePage.mobile-chrome rect.top=866
+     Back button#mcpBackBtn.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Home a.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Search button.mcp-search top=-51 h=38 tabIndex=0 display=flex visibility=visible
+     Tab stops 1-4: a.skip-link | aria= | top=-37 h=34 || a.h-nav-logo | aria=Господь Бог — Сила Моя — на главную | top=15 h=27 || button#themeToggle.theme-toggle | aria=Переключить тему | top=7 h=44 || button#hMobileMenuBtn.h-mobile-menu-btn | aria=Открыть меню | top=7 h=44
+  /hard-texts/genesis-6/ scrollY=0 | host: div#mobileChromePage.mobile-chrome rect.top=0
+     Back button#mcpBackBtn.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Home a.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Search button.mcp-search top=-51 h=38 tabIndex=0 display=flex visibility=visible
+     Tab stops 1-4: a.astro-header__brand.h-brand | aria= | top=16 h=25 || a.gb-nav-action-icon | aria=Открыть библейский тренажёр | top=7 h=44 || a.gb-nav-action-icon.gb-nav-fav-icon | aria=Избранное | top=7 h=44 || button#hCpBtnNav.gb-nav-search-icon | aria=Поиск (Ctrl+K) | top=7 h=44
+  /karty/ scrollY=0 | host: div#mobileChromePage.mobile-chrome rect.top=0
+     Back button#mcpBackBtn.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Home a.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Search button.mcp-search top=-51 h=38 tabIndex=0 display=flex visibility=visible
+     Tab stops 1-4: button#mcpBackBtn.mcp-icon | aria=Назад | top=-51 h=38 || a.mcp-icon | aria=На главную | top=-51 h=38 || button.mcp-search | aria=Открыть поиск по сайту | top=-51 h=38 || a.back-link | aria= | top=47 h=23
+  /konfessii/ scrollY=0 | host: div#mobileChromePage.mobile-chrome rect.top=0
+     Back button#mcpBackBtn.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Home a.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Search button.mcp-search top=-51 h=38 tabIndex=0 display=flex visibility=visible
+     Tab stops 1-4: button#mcpBackBtn.mcp-icon | aria=Назад | top=-51 h=38 || a.mcp-icon | aria=На главную | top=-51 h=38 || button.mcp-search | aria=Открыть поиск по сайту | top=-51 h=38 || a.back | aria= | top=26 h=30
+  /rodosloviye/ scrollY=0 | host: div#mobileChromePage.mobile-chrome rect.top=0
+     Back button#mcpBackBtn.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Home a.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Search button.mcp-search top=-51 h=38 tabIndex=0 display=flex visibility=visible
+     Tab stops 1-4: button#mcpBackBtn.mcp-icon | aria=Назад | top=-51 h=38 || a.mcp-icon | aria=На главную | top=-51 h=38 || button.mcp-search | aria=Открыть поиск по сайту | top=-51 h=38 || a.skip-link | aria= | top=-37 h=34
+  /journal/ scrollY=0 | host: div#mobileChromePage.mobile-chrome rect.top=0
+     Back button#mcpBackBtn.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Home a.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Search button.mcp-search top=-51 h=38 tabIndex=0 display=flex visibility=visible
+     Tab stops 1-4: button#mcpBackBtn.mcp-icon | aria=Назад | top=-51 h=38 || a.mcp-icon | aria=На главную | top=-51 h=38 || button.mcp-search | aria=Открыть поиск по сайту | top=-51 h=38 || a.journal-brand | aria= | top=18 h=18
+  /journal/dossiers/g3/ scrollY=0 | host: div#mobileChromePage.mobile-chrome rect.top=0
+     Back button#mcpBackBtn.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Home a.mcp-icon top=-51 h=38 tabIndex=0 display=grid visibility=visible
+     Search button.mcp-search top=-51 h=38 tabIndex=0 display=flex visibility=visible
+     Tab stops 1-4: button#mcpBackBtn.mcp-icon | aria=Назад | top=-51 h=38 || a.mcp-icon | aria=На главную | top=-51 h=38 || button.mcp-search | aria=Открыть поиск по сайту | top=-51 h=38 || a.journal-brand | aria= | top=20 h=18
+  TOTALS: controls seen=27 | translated above viewport (top<0)=27 | above viewport AND focusable=27
+
+## 5. GBS-MOBILE-CHROME-NAVBAR-SYNC-LAG — CONFIRMED, mechanism identified
+## 5. GBS-MOBILE-CHROME-NAVBAR-SYNC-LAG — 390x844, single wheel past the scrollY>300 threshold in js/site.js f()
+  /articles/
+     before          : scrollY=0 nav-hidden=false navbar.top=0 chromeRoot.is-shown=false header.mcp-top.top=-58 (fixed) backBtn.top=-51
+     +300ms 1 wheel  : scrollY=420 nav-hidden=true navbar.top=-53 chromeRoot.is-shown=false header.mcp-top.top=-58 (fixed) backBtn.top=-51
+     +1500ms settled : scrollY=420 nav-hidden=true navbar.top=-58 chromeRoot.is-shown=false header.mcp-top.top=-58 (fixed) backBtn.top=-51
+     desync(navbar hidden but chrome root not .is-shown)=true | chrome .is-shown yet controls still above viewport=false
+  /biografii/
+     before          : scrollY=0 nav-hidden=false navbar.top=0 chromeRoot.is-shown=false header.mcp-top.top=-58 (fixed) backBtn.top=-51
+     +300ms 1 wheel  : scrollY=420 nav-hidden=true navbar.top=-53 chromeRoot.is-shown=false header.mcp-top.top=-58 (fixed) backBtn.top=-51
+     +1500ms settled : scrollY=420 nav-hidden=true navbar.top=-58 chromeRoot.is-shown=false header.mcp-top.top=-58 (fixed) backBtn.top=-51
+     desync(navbar hidden but chrome root not .is-shown)=true | chrome .is-shown yet controls still above viewport=false
+  /hard-texts/
+     before          : scrollY=0 nav-hidden=false navbar.top=0 chromeRoot.is-shown=false header.mcp-top.top=-58 (fixed) backBtn.top=-51
+     +300ms 1 wheel  : scrollY=420 nav-hidden=true navbar.top=-53 chromeRoot.is-shown=false header.mcp-top.top=-58 (fixed) backBtn.top=-51
+     +1500ms settled : scrollY=420 nav-hidden=true navbar.top=-58 chromeRoot.is-shown=false header.mcp-top.top=-58 (fixed) backBtn.top=-51
+     desync(navbar hidden but chrome root not .is-shown)=true | chrome .is-shown yet controls still above viewport=false
+## 5b. GBS-MOBILE-CHROME-NAVBAR-SYNC-LAG — is the desync permanent until the next scroll event?
+  /articles/
+     at rest scrollY=0        : {"scrollY":0,"navHidden":false,"isShown":false,"mcpTop":-58,"btnTop":-51,"btnPt":null}
+     after wheel #1 (420px)   : {"scrollY":420,"navHidden":true,"isShown":false,"mcpTop":-58,"btnTop":-51,"btnPt":null}
+     after wheel #2 (20px)    : {"scrollY":440,"navHidden":true,"isShown":true,"mcpTop":0,"btnTop":7,"btnPt":{"x":239,"y":26}}
+     after scrollBy(-20)      : {"scrollY":420,"navHidden":false,"isShown":false,"mcpTop":-58,"btnTop":-51,"btnPt":null}
+  /biografii/
+     at rest scrollY=0        : {"scrollY":0,"navHidden":false,"isShown":false,"mcpTop":-58,"btnTop":-51,"btnPt":null}
+     after wheel #1 (420px)   : {"scrollY":420,"navHidden":true,"isShown":false,"mcpTop":-58,"btnTop":-51,"btnPt":null}
+     after wheel #2 (20px)    : {"scrollY":440,"navHidden":true,"isShown":true,"mcpTop":0,"btnTop":7,"btnPt":{"x":239,"y":26}}
+     after scrollBy(-20)      : {"scrollY":420,"navHidden":false,"isShown":false,"mcpTop":-58,"btnTop":-51,"btnPt":null}
+  /hard-texts/
+     at rest scrollY=0        : {"scrollY":0,"navHidden":false,"isShown":false,"mcpTop":-58,"btnTop":-51,"btnPt":null}
+     after wheel #1 (420px)   : {"scrollY":420,"navHidden":true,"isShown":false,"mcpTop":-58,"btnTop":-51,"btnPt":null}
+     after wheel #2 (20px)    : {"scrollY":440,"navHidden":true,"isShown":true,"mcpTop":0,"btnTop":7,"btnPt":{"x":239,"y":26}}
+     after scrollBy(-20)      : {"scrollY":420,"navHidden":false,"isShown":false,"mcpTop":-58,"btnTop":-51,"btnPt":null}
+  mechanism: MobileChromePage.astro sync() derives visibility from navbar.classList.contains('nav-hidden') but only runs on a
+  scroll event; js/site.js f() adds nav-hidden inside the same gesture. When the gesture ends at rest there is no further scroll
+  event, so the chrome never learns about it: navbar hidden, #mobileChromePage without .is-shown, header.mcp-top still at top=-58,
+  indefinitely. Any subsequent scroll (even 20px) re-runs sync() and the chrome appears; scrolling back up re-hides both.
+  Note this also gates the touch race in section 6: with a single wheel gesture the search button is untappable (top=-51).
+
+## 6. GBS-MOBILE-CHROME-SEARCH-TOUCH-LOAD-RACE — CONFIRMED (first trusted tap is consumed by the lazy loader)
+## 6. GBS-MOBILE-CHROME-SEARCH-TOUCH-LOAD-RACE — /hard-texts/ 390x844, trusted tap after chrome is shown
+  initial lazy-search boot state: {"requested":false,"state":null}
+  after scroll: chrome .is-shown=false header.mcp-top={"top":-58,"h":53} search button={"x":239,"y":-32,"top":-51,"w":282,"h":38}
+  chrome search button still above viewport (top=-51) — race precondition not met in this harness
+## 6b. GBS-MOBILE-CHROME-SEARCH-TOUCH-LOAD-RACE — /hard-texts/ with MobileChrome actually shown
+  boot state at load: {"requested":false,"state":null}
+  after wheel #1: {"scrollY":420,"navHidden":true,"isShown":false,"mcpTop":-58,"btnTop":-51,"btnPt":null}
+  after wheel #2: {"scrollY":444,"navHidden":true,"isShown":true,"mcpTop":0,"btnTop":7,"btnPt":{"x":239,"y":26}}
+  palette before any tap: {"matched":0,"first":null,"active":"body","isOpen":false} | boot={"requested":false,"state":null}
+  +500ms after trusted tap #1: {"matched":0,"first":null,"active":"button.mcp-search","isOpen":false} | boot={"requested":false,"state":"idle"}
+  +2500ms after trusted tap #1: {"matched":0,"first":null,"active":"button.mcp-search","isOpen":false} | boot={"requested":false,"state":"idle"}
+  after trusted tap #2: {"matched":3,"first":"div.cp-backdrop.is-open","active":"input.cp-input","isOpen":false} | boot={"requested":true,"state":"ready"}
+  reading: tap #1 focuses button.mcp-search and moves __gbSearchLoadState null -> idle, but no palette node exists even 2.5s later;
+  tap #2 opens the palette (div.cp-backdrop.is-open, input.cp-input focused, load state ready). The user's first tap is lost.
+
+## 7. GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS — CONFIRMED (two visible focusable 'Закрыть поиск' buttons)
+## 7. GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS — / desktop, palette open, accessible name 'Закрыть поиск'
+  trigger candidate: {"sel":".gb-nav-search-icon","desc":"button#gbSearchBtn.gb-nav-search-icon"}
+  palette open: true
+  .cp-close: [{"desc":"button.cp-close","label":"Закрыть поиск","visible":true,"tabIndex":0,"rect":{"x":756,"y":104,"w":44,"h":44},"parent":"div.cp-input-wrap"}]
+  .cp-home-close: [{"desc":"button.cp-home-close","label":"Закрыть поиск","visible":true,"tabIndex":0,"rect":{"x":813,"y":104,"w":44,"h":44},"parent":"div.cp-input-wrap"}]
+  controls whose accessible name matches 'Закрыть поиск': 2 (visible+focusable: 2)
+  detail: [{"desc":"button.cp-close","visible":true,"tabIndex":0,"rect":{"x":756,"y":104,"w":44,"h":44}},{"desc":"button.cp-home-close","visible":true,"tabIndex":0,"rect":{"x":813,"y":104,"w":44,"h":44}}]
+  Tab trace after open (10): button.cp-close -> button.cp-home-close -> button.cp-scope-chip.active -> button.cp-scope-chip -> button.cp-scope-chip -> button.cp-scope-chip -> a#cp-read-btn.cp-preview-btn.primary -> button#cp-copy-btn.cp-preview-btn.secondary -> input.cp-input -> button.cp-close
+
+## 8. GBS-NAGORNAYA-READER-FONT-SCALE-INCOMPLETE — direction CONFIRMED; numbers are harness-dependent
+## 8. GBS-NAGORNAYA-READER-FONT-SCALE-INCOMPLETE — /nagornaya/chast-1..5, fontScale 1 vs 1.25
+  chast-1 | main 16px -> 22.5px | --gb-reader-font-scale 1 -> 1.25
+     long prose paragraphs >=200 chars: 35 | with text-stone-700: 31 (visible 31) | with text-[16px]: 25 computing ["16px","16px","16px"]
+     stone paragraph font-size census @1: {"16px":3,"14px":22,"12px":6}  @1.25: {"22.5px":3,"14px":22,"12px":6}
+  chast-2 | main 16px -> 22.5px | --gb-reader-font-scale 1 -> 1.25
+     long prose paragraphs >=200 chars: 21 | with text-stone-700: 15 (visible 15) | with text-[16px]: 11 computing ["16px","16px","16px"]
+     stone paragraph font-size census @1: {"16px":9,"14px":6}  @1.25: {"22.5px":9,"14px":6}
+  chast-3 | main 16px -> 22.5px | --gb-reader-font-scale 1 -> 1.25
+     long prose paragraphs >=200 chars: 20 | with text-stone-700: 18 (visible 18) | with text-[16px]: 14 computing ["16px","16px","16px"]
+     stone paragraph font-size census @1: {"16px":14,"14px":4}  @1.25: {"22.5px":13,"14px":4,"16px":1}
+  chast-4 | main 16px -> 22.5px | --gb-reader-font-scale 1 -> 1.25
+     long prose paragraphs >=200 chars: 61 | with text-stone-700: 59 (visible 59) | with text-[16px]: 59 computing ["16px","16px","16px"]
+     stone paragraph font-size census @1: {"16px":56,"14px":3}  @1.25: {"22.5px":56,"14px":3}
+  chast-5 | main 16px -> 22.5px | --gb-reader-font-scale 1 -> 1.25
+     long prose paragraphs >=200 chars: 52 | with text-stone-700: 26 (visible 26) | with text-[16px]: 15 computing ["16px","16px","16px"]
+     stone paragraph font-size census @1: {"14px":5,"12px":6,"16px":15}  @1.25: {"14px":5,"12px":6,"22.5px":15}
+  AGGREGATE chapters 1-5: text-stone-700 long paragraphs=149 | chapters whose stone size census did not change at 1.25 contribute 0 paragraphs
+  variance note: this harness (desktop 1440x900, paragraphs >=200 chars carrying text-stone-700 inside main) measures main 16px ->
+  22.5px at fontScale 1.25 and 149 such paragraphs across chapters 1-5, of which 53 keep a fixed 14px/12px size at 1.25
+  (ch1 22+6, ch2 6, ch3 4+1, ch4 3, ch5 5+6). The row's recorded 16 -> 20px and 36 fixed paragraphs come from a different
+  viewport/criterion; the defect direction (prose paragraphs excluded from the reader font-scale preference) is identical, so the
+  recorded figures are left as measured by that pass and this pass is cited as an independent confirmation, not a renumbering.
+
+## 9. GBS-PRINT-TERMINAL-REGION-HIDES-CONTENT — CONFIRMED on /hard-texts/genesis-6/ (101 followers, 4245 chars)
+## 9. GBS-PRINT-TERMINAL-REGION-HIDES-CONTENT — screen vs print media, terminal followers
+  /articles/20-antisovetov-pastoru/ [screen] terminal root: none | followers=0 | keep-next=[]
+     [print] followers=0 hidden=0 hidden text chars=0
+  /hard-texts/genesis-6/ [screen] terminal root: none | followers=0 | keep-next=[]
+     [print] followers=101 hidden=101 hidden text chars=4245
+       hidden: span.genesis6-card__action display=none chars=24 "Без ссылки до готовности"
+       hidden: article.genesis6-card.genesis6-card--planned display=none chars=130 "IIПланируетсяНефилимы и сильные древност"
+       hidden: picture.genesis6-card__picture display=none chars=0 ""
+       hidden: source display=none chars=0 ""
+  /baptisty-rossii/sovetskaya-noch/ [screen] terminal root: none | followers=0 | keep-next=[]
+     [print] followers=0 hidden=0 hidden text chars=0
+  note: the terminal attributes are applied at print time by js/reader-preferences-head.js, which is why the screen-media read
+  shows 0 followers; under print emulation the same page marks 101 nodes and hides all of them, including real card content
+  (article.genesis6-card--planned 130 chars, span.genesis6-card__action). The other two routes sampled show no terminal followers,
+  so the loss is route-specific rather than site-wide.
+
+## 10. GBS-BASELAYOUT-MISSING-SKIP-LINK / GBS-JOURNAL-MISSING-SKIP-LINK — CONFIRMED
+## 10. GBS-BASELAYOUT-MISSING-SKIP-LINK / GBS-JOURNAL-MISSING-SKIP-LINK — desktop Tab trace
+  /izbrannoe/ | skip links=0 | <main> id=(no id) (main.izbrannoe-main)
+     first 8 Tab stops: a.astro-header__brand.h-brand -> a -> a -> a -> a -> a -> a -> a.gb-nav-action-icon
+     first stops with offsets: a.astro-header__brand.h-brand | aria= | top=15 h=28 || a | aria= | top=21 h=15 || a | aria= | top=21 h=15
+  /hard-texts/genesis-6/ | skip links=0 | <main> id=(no id) (main.genesis6-hub-main)
+     first 8 Tab stops: a.astro-header__brand.h-brand -> a -> a -> a -> a -> a -> a -> a.gb-nav-action-icon
+     first stops with offsets: a.astro-header__brand.h-brand | aria= | top=16 h=25 || a | aria= | top=21 h=15 || a | aria= | top=21 h=15
+  /journal/ | skip links=0 | <main> id=(no id) (main.journal-landing)
+     first 8 Tab stops: a.journal-brand -> a -> a.lead-card -> a -> a -> body -> a.journal-brand -> a
+     first stops with offsets: a.journal-brand | aria= | top=27 h=18 || a | aria= | top=24 h=25 || a.lead-card | aria= | top=911 h=474
+  /journal/dossiers/g3/ | skip links=0 | <main> id=(no id) (main.dossier)
+     first 8 Tab stops: a.journal-brand -> a -> a -> a -> a -> a -> a -> a
+     first stops with offsets: a.journal-brand | aria= | top=24 h=18 || a | aria= | top=22 h=23 || a | aria= | top=22 h=23
+  extra observation: on /journal/ the sequential Tab trace passes through body at stop 6 (focus returns to the document) before
+  cycling back to a.journal-brand — recorded as an observation, not filed.
+
+## 11. Byline label vs <time datetime> — browser witness plus a dist-wide re-derivation
+## 11. Byline label vs <time datetime> witness — visible label text vs machine datetime
+  /articles/20-antisovetov-pastoru/ | <time datetime> count=1 | label!=datetime-date in first six=1 | hidden bare-ISO nodes=2
+     datetime=2026-05-12T21:00:00.000Z label="13 мая 2026" visible=true opacity=1 parent=p#gill-search-p-001.article-byline
+     hidden ISO sample: span "2026-05-12T21:00:00.000Z" ; span "2026-08-04T23:29:43.000Z"
+  /hard-texts/genesis-6/ | <time datetime> count=0 | label!=datetime-date in first six=0 | hidden bare-ISO nodes=0
+  /baptisty-rossii/sovetskaya-noch/ | <time datetime> count=1 | label!=datetime-date in first six=1 | hidden bare-ISO nodes=2
+     datetime=2026-06-06T00:00:00+03:00 label="13 июня 2026" visible=true opacity=1 parent=p.article-byline.reveal
+     hidden ISO sample: span "2026-06-06T00:00:00+03:0" ; span "2026-08-25T02:05:05.000Z"
+  /nagornaya/chast-1/ | <time datetime> count=1 | label!=datetime-date in first six=1 | hidden bare-ISO nodes=2
+     datetime=2026-07-22T21:48:34.000Z label="1 мая 2026" visible=true opacity=1 parent=p.article-updated.text-stone-400
+     hidden ISO sample: span "2026-04-30T21:00:00.000Z" ; span "2026-07-22T21:48:34.000Z"
+  /journal/dossiers/g3/ | <time datetime> count=6 | label!=datetime-date in first six=6 | hidden bare-ISO nodes=0
+     datetime=2019-06-06 label="6 июня 2019" visible=true opacity=1 parent=li
+     datetime=2025-05-08 label="8–12 мая 2025" visible=true opacity=1 parent=li
+     datetime=2025-07-09 label="9 июля 2025" visible=true opacity=1 parent=li
+     datetime=2026-07-21 label="21 июля 2026" visible=true opacity=1 parent=li
+  /izbrannoe/ | <time datetime> count=0 | label!=datetime-date in first six=0 | hidden bare-ISO nodes=0
+  AGGREGATE: time[datetime] elements seen=9 | label-vs-datetime-date mismatches (first six per route)=9 | hidden bare-ISO nodes=6
+
+  dist-wide scan (108 built HTML files at d586aa63, labels parsed against datetime in UTC and Europe/Moscow, +/-1 day tolerance):
+  built html files scanned: 108
+  <time datetime> elements found: 61
+  labels not reconcilable to the datetime instant within +/-1 day (UTC or MSK): 17
+    /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/ datetime=2026-09-06T16:26:46.000Z       label="9 мая 2026"           gap=120d
+    /nagornaya/chast-1/                            datetime=2026-07-22T21:48:34.000Z       label="1 мая 2026"           gap=82d
+    /nagornaya/chast-2/                            datetime=2026-07-22T21:48:34.000Z       label="1 мая 2026"           gap=82d
+    /nagornaya/chast-4/                            datetime=2026-07-22T21:48:34.000Z       label="1 мая 2026"           gap=82d
+    /nagornaya/chast-5/                            datetime=2026-07-22T11:13:44.000Z       label="1 мая 2026"           gap=82d
+    /baptisty-rossii/dva-sezda-1884/               datetime=2026-08-22T12:01:29.000Z       label="13 июня 2026"         gap=70d
+    /baptisty-rossii/goneniya-i-sovest/            datetime=2026-08-22T13:32:07.000Z       label="13 июня 2026"         gap=70d
+    /baptisty-rossii/noch-na-kure/                 datetime=2026-08-22T10:21:51.000Z       label="13 июня 2026"         gap=70d
+    /baptisty-rossii/yuzhnaya-shtunda/             datetime=2026-08-22T11:01:22.000Z       label="13 июня 2026"         gap=70d
+    /nagornaya/chast-3/                            datetime=2026-07-05T18:09:08.000Z       label="1 мая 2026"           gap=65d
+    /articles/kod-da-vinchi/                       datetime=2026-07-05T09:14:15.000Z       label="9 мая 2026"           gap=57d
+    /articles/krajne-li-isporcheno-serdce/         datetime=2026-07-05T13:45:56.000Z       label="4 июня 2026"          gap=31d
+    /baptisty-rossii/sovetskaya-noch/              datetime=2026-06-06T00:00:00+03:00      label="13 июня 2026"         gap=7d
+    /baptisty-rossii/vsehib-1944/                  datetime=2026-06-07T00:00:00+03:00      label="13 июня 2026"         gap=6d
+    /baptisty-rossii/iniciativnaya-gruppa/         datetime=2026-06-08T00:00:00+03:00      label="13 июня 2026"         gap=5d
+    /baptisty-rossii/podpolnaya-pechat/            datetime=2026-06-09T00:00:00+03:00      label="13 июня 2026"         gap=4d
+    /baptisty-rossii/spravochnik/                  datetime=2026-06-10T00:00:00+03:00      label="14 июня 2026"         gap=4d
+  distinct routes affected: 17
+  disposition (unchanged): the 5 Nagornaya chapters in that list are the already-admitted narrow row
+  GBS-NAGORNAYA-PUBLISHED-DATELINE-CARRIES-MODIFIED-INSTANT; the remaining 12 are the owner-approved exact-instant reconciliation
+  rejected on 2026-09-30 and must not be re-filed. This scan re-derives both classes at the current anchor and adds nothing new.
+
+## 12. DISPOSITION DELTAS FROM THIS PASS
+  - browser tier is now reachable in this sandbox; the PROGRAM_CLOSURE_MATRIX boundary line saying no browser can run is superseded.
+  - rows that were left as browser/runtime-only are now browser-witnessed at d586aa63: AVRAAM-MAP-HEADING-LOST-ON-READY,
+    the three MOBILE-CHROME-* rows, PRINT-TERMINAL-REGION-HIDES-CONTENT, HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS,
+    GENESIS6-THEME-TOGGLE-LOW-CONTRAST, NAGORNAYA-READER-FONT-SCALE-INCOMPLETE, QUIZ-DARK-SURFACE-LOW-CONTRAST.
+  - QUIZ-DARK-SURFACE-LOW-CONTRAST: the recorded 1.08:1 is correct; the static 1.16:1 token read is withdrawn.
+  - GENESIS6-THEME-TOGGLE-LOW-CONTRAST: computed-composite 1.09:1 vs recorded pixel-sampled 1.06:1; both fail 3:1, row unchanged.
+  - MOBILE-CHROME-NAVBAR-SYNC-LAG: mechanism pinned (scroll-event-driven sync vs same-gesture nav-hidden).
+  - MOBILE-CHROME-SEARCH-TOUCH-LOAD-RACE: reproduced end to end (tap #1 lost, tap #2 opens div.cp-backdrop.is-open).
+  - no new defect is filed by this pass; nothing here changes Active work units.

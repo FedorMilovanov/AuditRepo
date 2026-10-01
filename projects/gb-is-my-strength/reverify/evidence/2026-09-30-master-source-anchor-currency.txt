@@ -1,0 +1,164 @@
+# MASTER source-anchor currency receipt
+product_repo=FedorMilovanov/gb-is-my-strength
+head_sha=d586aa63f02b569cfe050a63cc9078c044375d8d
+method=regex re-check of the source anchor named in each MASTER row, worktree at the SHA above
+boundary=source-level only; not a browser, build or live witness
+
+## GBS-QUIZ-NEXT-HIDDEN-GILL-V16 — CONFIRMED
+  [CONFIRMED] legacy CSS hides .quiz-next by default (expect present, hits=1) css/site.css:10
+  [CONFIRMED] runtime builds .quiz-next / is-visible state (expect present, hits=1) js/site.js:1
+  [CONFIRMED] [data-gill-v16] marker still emitted (expect present, hits=400) src/components/article-pilots/_shared/HeartLeatherRibbon.astro:5,src/components/article-pilots/_shared/SiteSectionsMenu.astro:85,src/components/article-pilots/_shared/series/seriesConfig.ts:10,src/components/article-pilots/gill-context/GillContextPageHead.astro:64
+
+## GBS-QUIZ-LITERAL-MARKUP — CONFIRMED
+  [CONFIRMED] quiz payload embeds inline markup (<em>/<span>) (expect present, hits=400) src/components/article-pilots/_shared/HeartLeatherRibbon.astro:26,src/components/article-pilots/_shared/HeartLeatherRibbon.astro:58,src/components/article-pilots/_shared/HeartLeatherRibbon.astro:59,src/components/article-pilots/_shared/HeartLeatherRibbon.astro:62
+  [CONFIRMED] quiz runtime assigns via textContent (expect present, hits=81) js/bookmark-engine.js:208,js/bookmark-engine.js:209,js/enhancements.js:1,js/enhancements.js:2
+
+## GBS-QUIZ-DARK-SURFACE-LOW-CONTRAST — CONFIRMED
+  [CONFIRMED] dark quiz ink #e6e1d7 still in CSS (expect present, hits=8) css/command-palette.css:1,css/floating-cluster.css:3010,css/floating-cluster.css:3088,css/site.css:4
+  [CONFIRMED] .quiz-wrapper fallback surface rule (expect present, hits=3) css/site.css:10,css/site.css:21,css/site.css:39
+
+## GBS-PRINT-TERMINAL-REGION-HIDES-CONTENT — CONFIRMED
+  [CONFIRMED] data-print-keep-next grouping logic (expect present, hits=4) js/reader-preferences-head.js:166,js/reader-preferences-head.js:255,js/reader-preferences-head.js:318,js/reader-preferences-head.js:445
+
+## SYS-READER-SPEED-KEYBOARD-MODEL — CONFIRMED
+  [CONFIRMED] speed panel state in shared floating-cluster controller (expect present, hits=50) js/floating-cluster-controller.js:21,js/floating-cluster-controller.js:808,js/floating-cluster-controller.js:1046,js/floating-cluster-controller.js:1823
+  [CONFIRMED] radiogroup semantics in the speed panel (expect present, hits=4) js/floating-cluster-controller.js:1865,js/site.js:1,src/components/article-pilots/gill-series/GillSeriesMobileBar.astro:62,src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro:59
+
+## GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING — NOT-CONFIRMED
+  [CONFIRMED] mobile-hotfix outline:0!important covering .theme-toggle (expect present, hits=1) css/mobile-hotfix.css:12
+  [NOT-CONFIRMED] home.css .theme-toggle :focus-visible outline (expect present, hits=0) 
+
+## GBS-GENESIS6-THEME-TOGGLE-LOW-CONTRAST — CONFIRMED
+  [CONFIRMED] theme-toggle icon stroke colour #1a1a1a / rgb(26,26,26) (expect present, hits=32) css/command-palette.css:1,css/floating-cluster.css:129,css/floating-cluster.css:257,css/floating-cluster.css:330
+
+## GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP — CONFIRMED
+  [CONFIRMED] negative right margin creating the 12px overlap (expect present, hits=1) css/mobile-hotfix.css:12
+
+## GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED — CONFIRMED
+  [CONFIRMED] #hCpBtnNav rendered by the shared Header (expect present, hits=1) src/components/ui/Header.astro:31
+  [CONFIRMED] #hCpBtnNav referenced by search bootstrap js (expect present, hits=3) js/enhancements.js:8,js/floating-cluster-controller.js:154,js/search.js:1
+
+## GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS — CONFIRMED
+  [CONFIRMED] «Закрыть поиск» close control in home chrome (expect present, hits=1) src/components/home/HomePageChrome.astro:451
+
+## GBS-AVRAAM-MAP-HEADING-LOST-ON-READY — CONFIRMED
+  [CONFIRMED] avraam ready-state observer touching the page H1 (expect present, hits=2) src/pages/karty/avraam/index.astro:18,src/pages/karty/avraam/index.astro:22
+
+## GBS-ANTISOVETOV-NESTED-MAP-TRIGGERS — CONFIRMED
+  [CONFIRMED] role=button tabindex=0 triggers in AntisovetovBody (expect present, hits=32) src/components/article-pilots/antisovetov/AntisovetovBody.astro:55,src/components/article-pilots/antisovetov/AntisovetovBody.astro:57,src/components/article-pilots/antisovetov/AntisovetovBody.astro:78,src/components/article-pilots/antisovetov/AntisovetovBody.astro:107
+
+## GBS-KOD-DA-VINCHI-TIMELINE-KEYBOARD-SCROLL — CONFIRMED
+  [CONFIRMED] .ctw-body non-focusable scroll region (expect present, hits=1) src/components/article-pilots/kod-da-vinchi/KodDaVinchiSectionCanon.astro:31
+  [CONFIRMED] .ctw-track min-width rule (expect present, hits=1) css/site.css:39
+
+## GBS-NAGORNAYA-SOURCE-LINKS-COLOR-ONLY — CONFIRMED
+  [CONFIRMED] nagornaya inline source-link markup (expect present, hits=76) src/components/nagornaya/_shared/NagornayaClaimComparison.astro:15,src/components/nagornaya/_shared/NagornayaClaimComparison.astro:47,src/components/nagornaya/_shared/NagornayaClaimComparison.astro:48,src/components/nagornaya/_shared/NagornayaClaimComparison.astro:52
+
+## GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED — CONFIRMED
+  [CONFIRMED] speed badge sizing rules (expect present, hits=6) css/floating-cluster.css:3869,src/components/article-pilots/_shared/speedSlot.ts:21,src/components/article-pilots/_shared/speedSlot.ts:33,src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro:12
+
+## GBS-NAGORNAYA-READER-FONT-SCALE-INCOMPLETE — CONFIRMED
+  [CONFIRMED] gb:font-scale preference plumbing (expect present, hits=4) js/floating-cluster-controller.js:1120,js/reader-preferences-head.js:46,js/reader-preferences.js:128,js/reader-preferences.js:188
+  [CONFIRMED] text-stone-700 prose paragraphs on nagornaya chapters (expect present, hits=400) src/components/nagornaya/chast-1/NagornayaChast1MainShell.astro:19,src/components/nagornaya/chast-1/NagornayaChast1MainShell.astro:51,src/components/nagornaya/chast-1/NagornayaChast1MainShell.astro:52,src/components/nagornaya/chast-1/NagornayaChast1MainShell.astro:53
+
+## GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS — CONFIRMED
+  [CONFIRMED] forced-colors handling in CSS/components (expect present, hits=3) css/site.css:39,src/components/home/HomeSections/Refutations.astro:609,src/runtime/article-tooltips.css:104
+
+## GBS-MOBILE-CHROME-HIDDEN-FOCUSABLE-BEFORE-SCROLL — CONFIRMED
+  [CONFIRMED] MobileChromePage translated offscreen (expect present, hits=43) src/components/article-pilots/_shared/MobileChromePage.astro:81,css/command-palette.css:1,css/floating-cluster.css:1169,css/floating-cluster.css:1300
+  [CONFIRMED] MobileChrome controls are NOT inert/tabindex=-1 while hidden (expect absent, hits=0) 
+
+## GBS-MOBILE-CHROME-NAVBAR-SYNC-LAG — CONFIRMED
+  [CONFIRMED] nav-hidden class toggling in js (expect present, hits=1) js/site.js:143
+
+## GBS-MOBILE-CHROME-SEARCH-TOUCH-LOAD-RACE — CONFIRMED
+  [CONFIRMED] HardTextsPageChrome touchstart preloader (expect present, hits=1) src/components/hard-texts/HardTextsPageChrome.astro:139
+  [CONFIRMED] .mcp-search trigger markup (expect present, hits=7) src/components/article-pilots/_shared/MobileChromePage.astro:57,src/components/article-pilots/_shared/MobileChromePage.astro:96,src/components/article-pilots/_shared/MobileChromePage.astro:108,src/components/article-pilots/_shared/MobileChromePage.astro:109
+
+## GBS-H-SCROLL-TOP-INVISIBLE-FOCUS — NOT-CONFIRMED
+  [CONFIRMED] .h-scroll-top opacity:0 at rest (expect present, hits=1) css/home.css:1
+  [NOT-CONFIRMED] reveal only past a scrollY threshold (expect present, hits=0) 
+
+## GBS-BASELAYOUT-MISSING-SKIP-LINK — CONFIRMED
+  [CONFIRMED] BaseLayout <main> without an id target (expect present, hits=1) src/layouts/BaseLayout.astro:180
+  [CONFIRMED] BaseLayout has NO skip link (expect absent, hits=0) 
+
+## GBS-JOURNAL-MISSING-SKIP-LINK — CONFIRMED
+  [CONFIRMED] journal topbar shell markup (expect present, hits=14) src/components/journal/G3Dossier.astro:32,src/components/journal/G3Dossier.astro:337,src/components/journal/G3Dossier.astro:339,src/components/journal/G3Dossier.astro:340
+
+## GBS-404-RELATIVE-READER-PREFERENCES-ASSETS — CONFIRMED
+  [CONFIRMED] root 404.html uses relative js/css asset URLs (expect present, hits=3) 404.html:7,404.html:8,404.html:9
+  [CONFIRMED] root 404.html has NO <base> (expect absent, hits=0) 
+
+## GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS — CONFIRMED
+  [CONFIRMED] literal ???? runs in published Baptist bodies (expect present, hits=162) src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro:55,src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro:56,src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro:57,src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884Body.astro:61
+
+## GBS-BAPTISTS-BYLINE-PUBLICATION-DATE-DIVERGENCE — CONFIRMED
+  [CONFIRMED] hardcoded <time datetime="2026-06-14"> in Spravochnik body (expect present, hits=1) src/components/baptisty-rossii/BaptistyRossiiSpravochnikBody.astro:8
+
+## SYS-STRICT-NATIVE-PUBLICATION-COMPLETION — CONFIRMED
+  [CONFIRMED] Lawson route registered production-dist in page-ownership (expect present, hits=1) migration/page-ownership.json:54
+  [CONFIRMED] Lawson route ABSENT from route-search-policy (expect absent, hits=0) 
+  [CONFIRMED] Lawson route ABSENT from search-manifest (expect absent, hits=0) 
+  [CONFIRMED] Lawson route ABSENT from sitemap.xml (expect absent, hits=0) 
+  [CONFIRMED] Lawson route ABSENT from feed.xml (expect absent, hits=0) 
+
+## Coverage summary (added by the third pass)
+
+units_walked=28 of 28 active MASTER units at head d586aa63
+  source-anchored units checked here: 27 (25 current defects + 2 system lanes)
+  anchor assertions: 45 -> CONFIRMED 43, NOT-CONFIRMED 2
+  lifecycle-only unit (no source anchor): GBS-OPEN-CONTENT-PR-DISPOSITION, re-measured from the
+    open-PR rollups -> 2026-09-30-pr-gates-by-head.txt
+NOT-CONFIRMED detail (defect behaviour unchanged, quoted expression superseded):
+  GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING: the documented home.css ':focus-visible' outline for
+    .theme-toggle is not present; the current focusable target is
+    'body.home-page .mobile-controls > button:focus-visible' and css/mobile-hotfix.css:12 carries
+    'outline:0 !important' (sheet loaded from src/components/home/HomePageHead.astro:158).
+  GBS-H-SCROLL-TOP-INVISIBLE-FOCUS: the reveal test is '(window.scrollY || window.pageYOffset) > 500'
+    in js/site.js, not a bare 'window.scrollY > 500'.
+outcome: 0 rows closed, 0 rows deleted, 0 rows archived, 0 rows found already fixed.
+
+## Post-sweep manual refinement (three CONFIRMED verdicts were too loose)
+
+The sweep ran one regex per documented anchor. Manual review of the three weakest verdicts:
+
+1. GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP — the assertion that matched was
+   'margin-right:-12px' at css/mobile-hotfix.css:12 (correct), but a legacy citation of
+   'css/header-mobile.css:284' / '.hCpBtnIcon' does NOT exist at d586aa63: no such file in css/
+   and no such class anywhere in the repository. Re-identified anchors:
+     css/mobile-hotfix.css:12  .mobile-controls .gb-nav-search-icon{margin-right:-12px!important}
+     css/mobile-hotfix.css     .mobile-controls{gap:0!important}
+     css/mobile-hotfix.css     .bar-icon-btn,.btoc-close,.cp-close-btn,.gb-nav-search-icon,.h-cp-btn,
+                               .h-mobile-menu-btn,.mobile-controls .theme-toggle,.mobile-nav-close,
+                               .sd-close{min-width:44px!important;min-height:44px!important;width:44px
+                               !important;height:44px!important;...}
+     src/components/ui/Header.astro:31  <button id="hCpBtnNav" class="gb-nav-search-icon" ...>
+   => the 12px overlap is derivable from shipped CSS without a layout engine.
+
+2. GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED — the pattern 'speed-badge|speed[^{]*badge'
+   matched a CSS COMMENT at css/floating-cluster.css:3869 ("Persistent speed badge on the Play
+   ember (inline-rail mode)"); no '--herm-badge-*' token exists at this head. Re-identified anchors:
+     src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro:69   <button class="hm-spdbadge" id="hmSpdBadge" aria-label="Выбрать скорость, сейчас 1×">1×</button>
+     src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro:236  .hm-spdbadge{position:absolute;right:-3px;bottom:-2px;z-index:2;min-width:18px;height:13px;padding:0 3px;border-radius:999px;...}
+     src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro:240  .hm-spdbadge::before{content:'';position:absolute;inset:-4px -3px}
+   Compliant in-repo control (repair precedent):
+     css/floating-cluster.css  [data-gill-v16] .mobile-spdbadge{min-width:24px;height:24px;padding:2px 4px 0;...}
+
+3. GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS — '-webkit-text-fill-color:transparent' occurs
+   0 times in css/*.css at this head (only '-webkit-text-fill-color: currentColor !important' in
+   src/components/article-pilots/gill-series/GillSeriesResponsiveStyles.astro:148,166), so the
+   alternation confirmed only 'background-clip:text' (6 declarations). Real mechanism, from the
+   built artifact:
+     <button id="menuBtn" aria-label="Открыть меню" aria-controls="mobileMenu" aria-expanded="false"
+             class="p-2 rounded-lg bg-stone-800 hover:bg-stone-700 transition-colors">
+       <div class="w-5 space-y-1"><div class="bar h-0.5 bg-white transition-all"></div> x3
+   => three bars painted only by the utility background class, no SVG/text/border fallback.
+   The only '@media (forced-colors:active)' block in css/*.css (css/site.css) covers .fn-marker,
+   .theme-toggle svg, .quiz-option.correct/.wrong, .btoc-link.active and
+   .article-reading-progress-fill — it does NOT cover #menuBtn or .bar.
+
+Verdict after refinement: all three defects remain CONFIRMED at d586aa63; only the quoted anchors
+changed. 0 rows closed, 0 deleted, 0 archived, 0 found already fixed.
+Artifact-level re-proof of these and nine further rows on builds of BOTH d586aa63 and the live
+release SHA d0e04a9c: 2026-09-30-artifact-witness-main.txt, 2026-09-30-artifact-witness-live-sha.txt.

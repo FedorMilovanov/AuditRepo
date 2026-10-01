@@ -1,0 +1,84 @@
+# Receipt — PROGRAM currency re-measure (Wave 4 / 5B / 6 / 7 + article corpus)
+product_repo=FedorMilovanov/gb-is-my-strength
+head_sha=d586aa63f02b569cfe050a63cc9078c044375d8d (full local clone, npm ci)
+live_release_sha=d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b (run 35927303479)
+measured_utc=2026-09-30T22:20Z (approx)
+method=direct read of the sanctioned data files at the head SHA + one live public-page retrieval
+boundary=source/byte access and public-page text. No browser, no visual verification, no historical-SHA claim.
+
+## Article corpus (books/series/articles axis)
+
+src/content/articles/*.mdx at main d586aa63 ......... 64 files
+  frontmatter draft:false + noindex:false ............ 54
+  both fields absent (the Baptists corpus) ........... 10
+same directory at the live SHA d0e04a9c .............. 63 files
+delta ................................................ +1 = /articles/steven-lawson-samoobman-i-publichnyy-golos/
+consequence: the corpus grew on main only; the new route cannot ship while the release gate is red
+  (SYS-STRICT-NATIVE-PUBLICATION-COMPLETION), and live still returns the site 404 for it.
+
+## Wave 4 — genealogy editorial corpus (re-derived, not carried forward)
+
+Raw layer, data/genealogy/v2/meta.json:
+  pipelineVersion 0.3.0-phase1-explicit-gospels
+  persons 3056 | edges 2053 (parent 1908, ancestor 1, spouse 144) | isolatedPersons 982
+  ruNamed 3056 (ruCoveragePct 100) | skeletonMerged 154 | clusters 14 | nations 76 | mirrorMisses 0
+  ruReviewQueue 2825 (also stated in data/genealogy/v2/VALIDATION.md:37)
+  status: "phase1-draft — НЕ подключать в рантайм до exit-критериев Phase 1"  (runtime connection forbidden)
+RU-name source table (VALIDATION.md): override 32, seed 147, structural 52, pattern 67,
+  candidate 2143, translit 615, none 0 -> review queue 2825.
+TIPNR parser (VALIDATION.md): top rows 6292, persons (M/F) 3056, broken top rows 12661,
+  resolved links 9215, unresolved 0. Messianic spine: 76 nodes, all control anchors present.
+
+Publishable layer, data/genealogy/v2/publishable/meta.json:
+  status curated-subset-release-candidate
+  scope: closed-curated-subset, curatedPersons 154, rawPersons 3056,
+         excludesRawOnlyIdentities true, excludesRawOnlyRelations true, completeness "partial-by-design"
+  counts: persons 154 | relations 181 (parent 171, spouse 9, legalParent 1)
+          relationEvidenceReviewed 42 | relationEvidencePending 139   <-- PROGRAM's 42/139 re-derived
+          directScriptureRelations 41 | gospelSequences 2 | gospelOccurrences 118
+          textualAssertions 116 (matched relations 114, without relations 2, reviewed crosswalks 55)
+  relations.json evidence provenanceClass: curated-* 139, direct-scripture 41, editorial 1 (= 181)
+  editorial annotations over TIPNR: data/genealogy/v2/edge-annotations.json -> 42 (all kind=parent)
+
+Rights / attribution (data/genealogy/v2/meta.json):
+  license "Derived dataset: CC BY 4.0 (attribution: STEPBible.org / Tyndale House Cambridge)"
+  attribution: person data STEPBible.org (CC BY 4.0); Russian text Synodal translation (public domain);
+  chronology (MT AM), disputed nodes and significance = project editorial (v1 skeleton)
+  => the CC BY 4.0 attribution obligation is a live publication requirement, not an open legal question.
+
+## Wave 5B — Baptist diagrams: image rights and primary-source access
+
+data/baptisty-rossii-visual-atlas.json at d586aa63:
+  diagrams 10, every one status=production
+  all 10 local SVG assets exist at their assetPath (images/baptisty-rossii/atlas/rb-01..rb-10*.svg)
+  all 10 carry sourceConfidence and sourceFiles (1-5 dossiers each)
+  policy: format inline-or-local-svg; remoteSvgAllowed false; externalRasterInsideSvgAllowed false;
+          aiHistoricalPhotoAllowed false; accessibilityRequired true; sourceConfidenceRequired true;
+          mapSyncRequired true; mobileFirstRequired true; maxInitialViewportWidth 760
+Primary-source access (byte access, not public pages):
+  distinct sourceFiles referenced by the 10 diagrams ....... 31
+  present under baptisty-rossii/research/ .................. 31 of 31 (0 absent)
+  research dossiers in that directory ...................... 161 .md files
+  note: baptisty-rossii/research/** is excluded from the Editorial Dateline Contract workflow paths
+        and these dossiers are not published routes — byte-accessible evidence, not a public surface.
+
+## Wave 6 — Biblical maps
+
+Live public page https://gospod-bog.ru/karty/ retrieved 2026-09-30 (release d0e04a9c):
+  "1 карта открыта" | "9 на аудите" | "0 черновиков на витрине"
+  only published card: /karty/avraam/ ("Путь Авраама")
+  => unchanged since 2026-09-24 and 2026-09-29; nine maps remain suspended in audit.
+Inventory baseline data/atlas-inventory-baseline.json at d586aa63:
+  maps 10 | places 132 | stages 47 | stories 52 | ctx 26 | layers 18 | timeline 91
+  verified_waypoints 23 | scientific_variants 84 (linked 59) | photos 153 | content_chars 223928
+  places_with_story 132 | places_with_bible 121 | places_with_bible_extra 132
+Distinction kept: the inventory baseline counts data readiness; the showcase counts are what the
+public page states. 10 maps in data vs 1 map on the public showcase is the audit gap, not a defect.
+
+## What was NOT re-measured here
+
+- Wave 5A stale research families (needs the Research repository and Drive traversal).
+- Wave 7 external provider/legal items #1753 / #1812 (external boundary) and the red scheduled
+  `Source Link Audit` (job logs/artifacts unreachable from this sandbox; local reproduction is
+  inadmissible here — 435 links produce transport/TLS artifacts of this environment).
+- Any visual verification of maps or diagrams: no browser could run in this sandbox.

@@ -39,15 +39,21 @@ Production therefore has not advanced past `d0e04a9c` and does not contain the L
 Local clone at `d586aa63` with `npm ci` (sandbox node v22.22.3, npm 10.9.8; workflow pins
 22.23.1). `npm run validate:static-publication` (the exact command behind the failing step
 `Static publication source gates` in `.github/workflows/deploy.yml:148` and
-`deploy-candidate-contract.yml:118`) was run step by step: **47 of 48 steps pass; the single
-failing step is `node scripts/audit-pro.js`**, whose only error is:
+`deploy-candidate-contract.yml:118`) was run step by step: **the script has 41 top-level `&&` commands; 40 exit 0 and the single failing
+command is #24, `node scripts/audit-pro.js`**, whose only error is:
 
 ```text
 ❌ sitemap contract: missing canonical indexable production route: /articles/steven-lawson-samoobman-i-publichnyy-golos/
 ❌ AUDIT FAILED — fix errors before deploy
 ```
 
-Machine receipts: `/tmp/chain2.txt` (full chain run), `/tmp/gb-product/audit/audit-pro-2026-09-30T20-50-03-182Z.md`.
+Machine receipts: the step count originally recorded in this section did not match the script and is
+withdrawn — it is recomputed and preserved in
+[`evidence/2026-09-30-validate-static-publication-command-list.txt`](./evidence/2026-09-30-validate-static-publication-command-list.txt)
+and [`evidence/2026-09-30-release-block-repro-receipt.txt`](./evidence/2026-09-30-release-block-repro-receipt.txt)
+(step-by-step run, all 41 commands, exit codes). The earlier `/tmp/chain2.txt` and
+`/tmp/gb-product/audit/audit-pro-2026-09-30T20-50-03-182Z.md` files did not survive the session.
+Superseding analysis: [`2026-09-30-step-count-correction-and-dateline-projection.md`](./2026-09-30-step-count-correction-and-dateline-projection.md).
 The same gate is red on PR #2150's own head `89e76794` (worktree `/tmp/gb2150`, log
 `/tmp/audit2150.txt`) — so #2150 as it stands does **not** unblock the release.
 
@@ -287,14 +293,26 @@ Anchors directly re-checked in source on `d586aa63` this pass: `reader-preferenc
 their 2026-09-29 browser evidence as the reproduction, and none is re-labelled here as a fresh
 browser run.
 
+> **2026-10-01 correction to this paragraph.** Two of the anchors named above were mis-read at the
+time. The quiz hiding rule is not a `.quiz-next-btn` declaration but
+`[data-gill-v16] .quiz-next{display:none}` inside `@media (max-width: 63.99em)`
+(`css/floating-cluster.css:3774` → rule `:4063`), and the reveal rule
+`[data-gill-v16] .quiz-next.is-visible{display:block}` **does** exist at `:4072`; `src/runtime/article-quiz.js`
+never adds `.is-visible`, so the defect is real but width-conditional. Marked corrections sit inside
+`evidence/2026-09-30-artifact-witness-main.txt`, `evidence/2026-09-30-artifact-witness-live-sha.txt`
+and `evidence/2026-09-30-quiz-route-census.txt`; fresh measurements are in
+`evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt`.
+
 The one row that changed disposition is the catalog row, absorbed into
 `SYS-STRICT-NATIVE-PUBLICATION-COMPLETION` in MASTER (its own owner PR #2150 stays open); no other
 row was removed, and no new defect row was added beyond the release-block system lane.
 
 ## 10. Boundaries of this pass
 
-- No browser (Playwright) rendering was performed; all UI-facing defect rows in MASTER keep their
+- No browser (Playwright) rendering was performed in that pass; all UI-facing defect rows in MASTER keep their
   previously recorded browser anchors and are **not** re-labelled as freshly browser-verified.
+  *(Superseded 2026-10-01: fresh Chromium 153 runs at the same SHA now exist for those rows —
+  `evidence/2026-10-01-fresh-browser-pass-at-anchor.txt`, `evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt`.)*
 - The local build (`npm ci`, `astro:build`, production-like dist) and Node/npm differ from CI only
   in the patch version of Node (22.22.3 vs 22.23.1).
 - Live facts come from `fetch_page` HTTP retrieval of server-rendered HTML, not from a rendering

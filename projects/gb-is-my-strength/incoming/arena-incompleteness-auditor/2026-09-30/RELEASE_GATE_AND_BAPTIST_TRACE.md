@@ -21,9 +21,12 @@
    (`d9cbcdb1`, 2026-09-22). Live production is still `d0e04a9c`, so the published Lawson route
    `https://gospod-bog.ru/articles/steven-lawson-samoobman-i-publichnyy-golos/` returns the 404
    page live.
-2. **Exact boundary reproduced locally:** of the 48 steps in
-   `npm run validate:static-publication`, 47 pass and only `node scripts/audit-pro.js` fails, with
-   the single error `sitemap contract: missing canonical indexable production route:
+2. **Exact boundary reproduced locally** — *step count corrected by the 2026-09-30 third pass: the
+   figure originally written here did not match the script and is withdrawn; recomputed from Product
+   `package.json` blob `812497795d8a3c5c7a2beb6224b2f9492354dfdf` at `d586aa63`, enumerated receipt
+   `../../../reverify/evidence/2026-09-30-validate-static-publication-command-list.txt`*:
+   `npm run validate:static-publication` has **41** top-level `&&` commands; run one by one **40 exit 0**
+   and only command **#24**, `node scripts/audit-pro.js`, fails, with the single error `sitemap contract: missing canonical indexable production route:
    /articles/steven-lawson-samoobman-i-publichnyy-golos/`. PR #2150's own head `89e76794` fails
    the same gate → it does not unblock the release.
 3. **Root cause — two owners of "canonical indexable production route":** the route is
@@ -74,4 +77,4 @@
 - No Product PR was merged, closed, or modified; #2145 remains with its owning agent.
 
 Full evidence, commands, run IDs and boundary notes:
-`../../reverify/2026-09-30-release-block-and-baptist-provenance.md`.
+`../../../reverify/2026-09-30-release-block-and-baptist-provenance.md`.

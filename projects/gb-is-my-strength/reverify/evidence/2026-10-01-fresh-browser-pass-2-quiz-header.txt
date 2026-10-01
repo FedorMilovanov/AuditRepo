@@ -1,0 +1,262 @@
+FRESH BROWSER VERIFICATION PASS 2 (passes 4-7) — 2026-10-01
+Product anchor: main d586aa63f02b569cfe050a63cc9078c044375d8d (clone HEAD verified); local production-like dist served at 127.0.0.1:8899
+Build: astro build (104 pages) + copy-legacy-to-dist --omit-build-only + cache-bust + heading-id hygiene + pastor guards + pagefind
+Engine: HeadlessChromium 153.0.8010 via playwright-core 1.63.0; desktop 1280/1440x900; mobile 390x844 (hasTouch, isMobile, dsf 2);
+width sweeps at 360/390/414/768/1023/1024/1280; forcedColors:'active' contexts. Runtime recipe in 2026-10-01-fresh-browser-pass-at-anchor.txt.
+Live host unreachable from the sandbox (curl -> 000): all measurements below are exact-SHA local-build browser evidence.
+
+## P4-3. GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED — #hCpBtnNav click and Ctrl+K at 1280x900
+route /hard-texts/genesis-6/ | trigger={"desc":"button#hCpBtnNav.gb-nav-search-icon","label":"Поиск (Ctrl+K)","box":"44x44"}
+  after click: palette node=false open=false activeElement=button#hCpBtnNav.gb-nav-search-icon | requests so far=["/css/command-palette.css?v=3b88813f"]
+  after Ctrl+K: palette node=false open=false | search.js/palette requests=["/css/command-palette.css?v=3b88813f"]
+route /izbrannoe/ | trigger={"desc":"button#hCpBtnNav.gb-nav-search-icon","label":"Поиск (Ctrl+K)","box":"44x44"}
+  after click: palette node=false open=false activeElement=button#hCpBtnNav.gb-nav-search-icon | requests so far=["/css/command-palette.css?v=3b88813f"]
+  after Ctrl+K: palette node=false open=false | search.js/palette requests=["/css/command-palette.css?v=3b88813f"]
+route /articles/ | trigger={"desc":"button#gbSearchBtn.gb-nav-search-icon","label":"Поиск по всему сайту","box":"44x44"}
+  after click: palette node=true open=true activeElement=input.cp-input | requests so far=["/css/command-palette.css?v=3b88813f","/js/search.js?v=106d65f6"]
+  after Ctrl+K: palette node=true open=true | search.js/palette requests=["/css/command-palette.css?v=3b88813f","/js/search.js?v=106d65f6"]
+
+## P4-4. GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP — 390x844 (isMobile) geometry and hit test in the shared strip
+route / | {"search":{"sel":"button#gbSearchBtn.gb-nav-search-icon","l":250,"r":294},"theme":{"sel":"button#themeToggle.theme-toggle","l":282,"r":326},"overlapPx":12,"hitAtMid":"button#themeToggle.theme-toggle","themeInVp":true,"themeCentreX":304,"iw":390}
+route /izbrannoe/ | {"search":{"sel":"button#hCpBtnNav.gb-nav-search-icon","l":339,"r":383},"theme":{"sel":"button#themeToggle.theme-toggle","l":371,"r":415},"overlapPx":12,"hitAtMid":"div.astro-shell","themeInVp":false,"themeCentreX":393,"iw":390}
+route /hard-texts/genesis-6/ | {"search":{"sel":"button#hCpBtnNav.gb-nav-search-icon","l":342,"r":386},"theme":{"sel":"button#themeToggle.theme-toggle","l":374,"r":418},"overlapPx":12,"hitAtMid":"main.genesis6-hub-main","themeInVp":false,"themeCentreX":396,"iw":390}
+  reading: on / the 12px shared strip hit-tests to the topmost control (#themeToggle, z-index 1), so a touch there cannot reach the
+  search trigger. Under real mobile emulation the same header variant on /izbrannoe/ and /hard-texts/genesis-6/ also overflows the 390px
+  viewport: #themeToggle right edge 415/418 (>390), centre x 393/396 outside, and .mobile-controls{overflow:hidden} clips it (on /izbrannoe/
+  even the search button centre is not hit-testable). A narrow desktop window at the same CSS width fits (other header variant), so this is
+  a mobile-variant overflow: recorded as a bounded observation in the dispositions, not filed as a row.
+
+## P5-1. GBS-QUIZ-NEXT-HIDDEN-GILL-V16 — all 23 quiz-enabled routes: is .quiz-next hidden, and does the flow advance?
+  /articles/20-antisovetov-pastoru/                                  [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=2 Q2=0 progress="Вопрос 2 из 10"
+  /articles/anatomiya-padeniya-pyat-stadiy/                          [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 8"
+  /articles/cerkovnaya-disciplina-vlast-granicy-zashchita/           [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 8"
+  /articles/dzhon-gill-chast-1-chelovek/                             [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 4"
+  /articles/dzhon-gill-chast-2-uchenyi/                              [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=2 afterAnswer=2 Q2=0 progress="Вопрос 2 из 4"
+  /articles/dzhon-gill-chast-3-nasledie/                             [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=2 afterAnswer=2 Q2=0 progress="Вопрос 2 из 4"
+  /articles/dzhon-gill-chast-4-ekzeget/                              [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=2 afterAnswer=2 Q2=0 progress="Вопрос 2 из 4"
+  /articles/dzhon-gill-spravochnik/                                  [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 4"
+  /articles/kogda-uhodit-kogda-ostavatsya/                           [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 8"
+  /articles/krajne-li-isporcheno-serdce/                             [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=2 afterAnswer=4 Q2=2 progress="Вопрос 2 из 12"
+  /articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/         [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 8"
+  /articles/priznaki-zdorovoy-cerkvi/                                [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 8"
+  /articles/sem-tipov-razlichenie-uchiteley/                         [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 8"
+  /articles/teksty-pisaniya-kotorymi-manipuliruyut/                  [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 8"
+  /articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/                [gill-v16] panelInsideGill=true gillNode=div.gbs2-world.gbs2-tbhidden | .quiz-next exists=true display=block box=699x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 8"
+  /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/ [non-gill] panelInsideGill=null gillNode=null | .quiz-next exists=true display=block box=747x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 10"
+  /articles/kod-da-vinchi/                                           [non-gill] panelInsideGill=null gillNode=null | .quiz-next exists=true display=block box=747x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=2 progress="Вопрос 2 из 10"
+  /articles/lot-i-sodom/                                             [non-gill] panelInsideGill=null gillNode=null | .quiz-next exists=true display=block box=747x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 8"
+  /nagornaya/chast-1/                                                [non-gill] panelInsideGill=null gillNode=null | .quiz-next exists=true display=block box=667x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 3"
+  /nagornaya/chast-2/                                                [non-gill] panelInsideGill=null gillNode=null | .quiz-next exists=true display=block box=667x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=2 afterAnswer=2 Q2=6 progress="Вопрос 2 из 4"
+  /nagornaya/chast-3/                                                [non-gill] panelInsideGill=null gillNode=null | .quiz-next exists=true display=block box=667x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=0 progress="Вопрос 2 из 3"
+  /nagornaya/chast-4/                                                [non-gill] panelInsideGill=null gillNode=null | .quiz-next exists=true display=block box=667x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=2 afterAnswer=6 Q2=0 progress="Вопрос 2 из 5"
+  /nagornaya/chast-5/                                                [non-gill] panelInsideGill=null gillNode=null | .quiz-next exists=true display=block box=667x46 class="quiz-next" | advancedToQ2=true | literalTags Q1=0 afterAnswer=0 Q2=8 progress="Вопрос 2 из 4"
+
+  SWEEP TOTALS (23 routes): .quiz-next present=23 | computed display:none=0 | visible=23
+  panel is a descendant of [data-gill-v16] on 15 routes: ["/articles/20-antisovetov-pastoru/","/articles/anatomiya-padeniya-pyat-stadiy/","/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/","/articles/dzhon-gill-chast-1-chelovek/","/articles/dzhon-gill-chast-2-uchenyi/","/articles/dzhon-gill-chast-3-nasledie/","/articles/dzhon-gill-chast-4-ekzeget/","/articles/dzhon-gill-spravochnik/","/articles/kogda-uhodit-kogda-ostavatsya/","/articles/krajne-li-isporcheno-serdce/","/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/","/articles/priznaki-zdorovoy-cerkvi/","/articles/sem-tipov-razlichenie-uchiteley/","/articles/teksty-pisaniya-kotorymi-manipuliruyut/","/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/"]
+  routes where clicking .quiz-next advanced the flow: 23 of 23 clickable
+
+## P5-2. GBS-QUIZ-LITERAL-MARKUP — full click-through, literal tags counted per question/explanation
+  /articles/20-antisovetov-pastoru/ | steps recorded=11 | reached results=true | literal tags summed over steps=0
+     progress sequence: ["Вопрос 1 из 10","Вопрос 2 из 10","Вопрос 3 из 10","Вопрос 4 из 10","Вопрос 5 из 10","Вопрос 6 из 10","Вопрос 7 из 10","Вопрос 8 из 10","Вопрос 9 из 10","Вопрос 10 из 10","Результат: 3 из 10"]
+     steps containing literal markup: 0 | first sample: null
+  /nagornaya/chast-2/ | steps recorded=5 | reached results=true | literal tags summed over steps=8
+     progress sequence: ["Вопрос 1 из 4","Вопрос 2 из 4","Вопрос 3 из 4","Вопрос 4 из 4","Результат: 0 из 4"]
+     steps containing literal markup: 2 | first sample: "рос 1 из 4Что означает термин <em>concursus</em> в классическом"
+  /articles/dzhon-gill-chast-2-uchenyi/ | steps recorded=5 | reached results=true | literal tags summed over steps=4
+     progress sequence: ["Вопрос 1 из 4","Вопрос 2 из 4","Вопрос 3 из 4","Вопрос 4 из 4","Результат: 0 из 4"]
+     steps containing literal markup: 2 | first sample: "написал толкование в folio на <span class=\"gterm\" data-term=\"song-of-songs\" data-term-title=\"Песнь Песней\">Песнь Песней</span>, и на этом"
+
+## P4-4b. GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP — why the shared strip is not hit-testable on two routes
+  / | document.scrollWidth=390 innerWidth=390
+     search: {"sel":"button#gbSearchBtn.gb-nav-search-icon","rect":{"l":250,"r":294,"t":9,"b":53},"pointerEvents":"auto","visibility":"visible","opacity":"1","display":"flex","position":"relative","zIndex":"auto","hitAtCentre":"svg"}
+     theme : {"sel":"button#themeToggle.theme-toggle","rect":{"l":282,"r":326,"t":9,"b":53},"pointerEvents":"auto","visibility":"visible","opacity":"1","display":"flex","position":"relative","zIndex":"1","hitAtCentre":"svg"}
+     clipping ancestors: ["div.mobile-controls overflow=hidden/hidden","div.h-navbar__inner overflow=hidden/hidden","body.home-page overflow=clip visible/clip","html overflow=clip visible/clip"]
+  /izbrannoe/ | document.scrollWidth=390 innerWidth=390
+     search: {"sel":"button#hCpBtnNav.gb-nav-search-icon","rect":{"l":339,"r":383,"t":7,"b":51},"pointerEvents":"auto","visibility":"visible","opacity":"1","display":"flex","position":"static","zIndex":"auto","hitAtCentre":"header.astro-header.h-navbar"}
+     theme : {"sel":"button#themeToggle.theme-toggle","rect":{"l":371,"r":415,"t":7,"b":51},"pointerEvents":"auto","visibility":"visible","opacity":"1","display":"flex","position":"relative","zIndex":"1","hitAtCentre":null}
+     clipping ancestors: ["div.astro-header__controls.mobile-controls overflow=hidden/hidden","body.page-izbrannoe overflow=hidden auto/hidden","html overflow=hidden auto/hidden"]
+  /hard-texts/genesis-6/ | document.scrollWidth=390 innerWidth=390
+     search: {"sel":"button#hCpBtnNav.gb-nav-search-icon","rect":{"l":342,"r":386,"t":7,"b":51},"pointerEvents":"auto","visibility":"visible","opacity":"1","display":"flex","position":"static","zIndex":"auto","hitAtCentre":"svg"}
+     theme : {"sel":"button#themeToggle.theme-toggle","rect":{"l":374,"r":418,"t":7,"b":51},"pointerEvents":"auto","visibility":"visible","opacity":"1","display":"flex","position":"relative","zIndex":"1","hitAtCentre":null}
+     clipping ancestors: ["div.astro-header__controls.mobile-controls overflow=hidden/hidden","body.genesis6-hub-page overflow=hidden auto/hidden","html overflow=hidden auto/hidden"]
+
+## P4-5. GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED — 390x844 badge box, ::before target, Play overlap, tap result
+  /articles/kod-da-vinchi/ | {"found":true,"badge":"button#hmSpdBadge.hm-spdbadge","box":"20.3x13","tabIndex":0,"aria":"Выбрать скорость, сейчас 1×","before":{"content":"\"\"","width":"24.2812px","height":"19px","top":"-4px","right":"-3px","bottom":"-4px","left":"-3px","position":"absolute"},"play":null,"overlap":null,"center":{"x":323,"y":46},"hitAtCenter":"button#hmSpdBadge.hm-spdbadge"}
+     open/expanded before tap=[] | after tap at badge centre=["button#hmSpdBadge.hm-spdbadge"]
+  /articles/lot-i-sodom/ | {"found":true,"badge":"button#hmSpdBadge.hm-spdbadge","box":"20.3x13","tabIndex":0,"aria":"Выбрать скорость, сейчас 1×","before":{"content":"\"\"","width":"24.2812px","height":"19px","top":"-4px","right":"-3px","bottom":"-4px","left":"-3px","position":"absolute"},"play":null,"overlap":null,"center":{"x":323,"y":46},"hitAtCenter":"button#hmSpdBadge.hm-spdbadge"}
+     open/expanded before tap=[] | after tap at badge centre=["button#hmSpdBadge.hm-spdbadge"]
+  /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/ | {"found":true,"badge":"button#hmSpdBadge.hm-spdbadge","box":"20.3x13","tabIndex":0,"aria":"Выбрать скорость, сейчас 1×","before":{"content":"\"\"","width":"24.2812px","height":"19px","top":"-4px","right":"-3px","bottom":"-4px","left":"-3px","position":"absolute"},"play":null,"overlap":null,"center":{"x":323,"y":46},"hitAtCenter":"button#hmSpdBadge.hm-spdbadge"}
+     open/expanded before tap=[] | after tap at badge centre=["button#hmSpdBadge.hm-spdbadge"]
+
+## P4-6. GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS — 390x844, forcedColors: active, nine /nagornaya/** pages
+  /nagornaya/              | box=36x30 bars=3 barBg=["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"] border=0px solid rgb(0, 0, 0) svg=false text="" forced-color-adjust=auto
+  /nagornaya/chast-1/      | box=36x30 bars=3 barBg=["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"] border=0px solid rgb(0, 0, 0) svg=false text="" forced-color-adjust=auto
+  /nagornaya/chast-2/      | box=36x30 bars=3 barBg=["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"] border=0px solid rgb(0, 0, 0) svg=false text="" forced-color-adjust=auto
+  /nagornaya/chast-3/      | box=36x30 bars=3 barBg=["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"] border=0px solid rgb(0, 0, 0) svg=false text="" forced-color-adjust=auto
+  /nagornaya/chast-4/      | box=36x30 bars=3 barBg=["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"] border=0px solid rgb(0, 0, 0) svg=false text="" forced-color-adjust=auto
+  /nagornaya/chast-5/      | box=36x30 bars=3 barBg=["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"] border=0px solid rgb(0, 0, 0) svg=false text="" forced-color-adjust=auto
+  /nagornaya/istochniki/   | box=36x30 bars=3 barBg=["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"] border=0px solid rgb(0, 0, 0) svg=false text="" forced-color-adjust=auto
+  /nagornaya/nakhodki/     | box=36x30 bars=3 barBg=["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"] border=0px solid rgb(0, 0, 0) svg=false text="" forced-color-adjust=auto
+  /nagornaya/seriya/       | #menuBtn not found
+  #menuBtn found on 8 of 9 pages; pages where at least one bar still paints a non-transparent background under forced colors: 8
+  control (forcedColors off): {"bars":["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"],"border":"0px solid"}
+
+## P4-7. GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING — sequential Tab onto the toggle
+  / mobile 390x844 | toggle reached at Tab stop 4 | button#themeToggle.theme-toggle :focus-visible=true outline=0px none oklab(0.517099 -0.0149147 -0.00934401 / 0.88) box-shadow=none color=oklab(0.517099 -0.0149147 -0.00934401 / 0.88) box=44x44
+     preceding stop: a.skip-link :focus-visible=true outline=2px solid rgb(122, 46, 46) box-shadow=none
+     preceding stop: a.h-nav-logo :focus-visible=true outline=2px solid rgb(122, 46, 46) box-shadow=none
+     preceding stop: button#gbSearchBtn.gb-nav-search-icon :focus-visible=true outline=0px none oklab(0.517099 -0.0149147 -0.00934401 / 0.88) box-shadow=none
+  / desktop 1440x900 | toggle reached at Tab stop 11 | button#themeToggle.theme-toggle :focus-visible=true outline=0px none oklab(0.517099 -0.0149147 -0.00934401 / 0.88) box-shadow=none color=oklab(0.517099 -0.0149147 -0.00934401 / 0.88) box=44x44
+     preceding stop: a.skip-link :focus-visible=true outline=2px solid rgb(122, 46, 46) box-shadow=none
+     preceding stop: a.h-nav-logo :focus-visible=true outline=2px solid rgb(122, 46, 46) box-shadow=none
+     preceding stop: a.h-scroll-target :focus-visible=true outline=2px solid rgb(8, 125, 145) box-shadow=none
+
+## P4-8. GBS-H-SCROLL-TOP-INVISIBLE-FOCUS — #hScrollTop at scrollY 0 on the six shared page-chrome routes
+  /                    | {"sel":"button#hScrollTop.h-scroll-top","opacity":"0","tabIndex":0,"disabled":false,"inert":false,"ariaHidden":null,"hidden":false,"pointerEvents":"none","cls":"h-scroll-top"} | Tab stop 49: opacity=0 :focus-visible=true outline=2px solid rgb(122, 46, 46)
+  /articles/           | {"sel":"button#hScrollTop.h-scroll-top","opacity":"0","tabIndex":0,"disabled":false,"inert":false,"ariaHidden":null,"hidden":false,"pointerEvents":"none","cls":"h-scroll-top"} | not reached within 60 Tab presses
+  /biografii/          | {"sel":"button#hScrollTop.h-scroll-top","opacity":"0","tabIndex":0,"disabled":false,"inert":false,"ariaHidden":null,"hidden":false,"pointerEvents":"none","cls":"h-scroll-top"} | Tab stop 44: opacity=0 :focus-visible=true outline=2px solid rgb(122, 46, 46)
+  /hard-texts/         | {"sel":"button#hScrollTop.h-scroll-top","opacity":"0","tabIndex":0,"disabled":false,"inert":false,"ariaHidden":null,"hidden":false,"pointerEvents":"none","cls":"h-scroll-top"} | Tab stop 26: opacity=0 :focus-visible=true outline=2px solid rgb(122, 46, 46)
+  /nagornaya/seriya/   | {"sel":"button#hScrollTop.h-scroll-top","opacity":"0","tabIndex":0,"disabled":false,"inert":false,"ariaHidden":null,"hidden":false,"pointerEvents":"none","cls":"h-scroll-top"} | Tab stop 22: opacity=0 :focus-visible=true outline=2px solid rgb(122, 46, 46)
+  /pastor-series/      | {"sel":"button#hScrollTop.h-scroll-top","opacity":"0","tabIndex":0,"disabled":false,"inert":false,"ariaHidden":null,"hidden":false,"pointerEvents":"none","cls":"h-scroll-top"} | Tab stop 28: opacity=0 :focus-visible=true outline=2px solid rgb(122, 46, 46)
+
+## P4-9. GBS-404-RELATIVE-READER-PREFERENCES-ASSETS — Pages-style nested 404 vs root 404, Sepia preset
+  prepared Pages-style copies inside the served dist (repository untouched): /deep/nested/missing/ and /a/b/
+  nested 3 levels (/deep/nested/missing/)
+     declared refs: scripts=["js/reader-preferences-head.js?v=78fb2ef8","js/reader-preferences.js?v=e26f05a8"] links=["css/reader-preferences.css?v=b740c21f","/css/site.css?v=233791bf"]
+     applied: html.class="" theme attrs=[] body background=rgb(253, 252, 249)
+     asset responses >=400: 404 /deep/nested/missing/js/reader-preferences-head.js?v=78fb2ef8 ; 404 /deep/nested/missing/css/reader-preferences.css?v=b740c21f ; 404 /deep/nested/missing/js/reader-preferences.js?v=e26f05a8
+  nested 2 levels (/a/b/)
+     declared refs: scripts=["js/reader-preferences-head.js?v=78fb2ef8","js/reader-preferences.js?v=e26f05a8"] links=["css/reader-preferences.css?v=b740c21f","/css/site.css?v=233791bf"]
+     applied: html.class="" theme attrs=[] body background=rgb(253, 252, 249)
+     asset responses >=400: 404 /a/b/js/reader-preferences-head.js?v=78fb2ef8 ; 404 /a/b/css/reader-preferences.css?v=b740c21f ; 404 /a/b/js/reader-preferences.js?v=e26f05a8
+  root control (/404.html)
+     declared refs: scripts=["js/reader-preferences-head.js?v=78fb2ef8","js/reader-preferences.js?v=e26f05a8"] links=["css/reader-preferences.css?v=b740c21f","/css/site.css?v=233791bf"]
+     applied: html.class="" theme attrs=["data-reader-theme=sepia","style=--gb-reader-font-scale: 1; --gb-reader-line-height: 1.6; --gb-reader-measure: 50rem; --gb-reader-theme-ready: 1; --cp-max-h: 868px; --article-font-size: 17px; --visual-viewport-h: 900px; --keyboard-height: 0px;"] body background=rgb(238, 227, 200)
+     asset responses >=400: none
+  temporary nested copies removed from dist
+
+## P6-1. GBS-QUIZ-NEXT-HIDDEN-GILL-V16 controls — which CSS rule sets display on .quiz-next, at desktop and mobile width
+  /articles/20-antisovetov-pastoru/ @ desktop 1440x900
+     .quiz-next: display=block visibility=visible opacity=1 box=699x46 top=1299 class="quiz-next" inline-style=none | panel inside [data-gill-v16]=true (div.gbs2-world.gbs2-tbhidden)
+     after clicking .quiz-next: progress="Вопрос 2 из 10"
+  /articles/20-antisovetov-pastoru/ @ mobile 390x844
+     .quiz-next: display=none visibility=visible opacity=1 box=0x0 top=0 class="quiz-next" inline-style=none | panel inside [data-gill-v16]=true (div.gbs2-world.gbs2-tbhidden)
+  /articles/dzhon-gill-chast-2-uchenyi/ @ desktop 1440x900
+     .quiz-next: display=block visibility=visible opacity=1 box=699x46 top=1209 class="quiz-next" inline-style=none | panel inside [data-gill-v16]=true (div.gbs2-world.gbs2-tbhidden)
+     after clicking .quiz-next: progress="Вопрос 2 из 4"
+  /articles/dzhon-gill-chast-2-uchenyi/ @ mobile 390x844
+     .quiz-next: display=none visibility=visible opacity=1 box=0x0 top=0 class="quiz-next" inline-style=none | panel inside [data-gill-v16]=true (div.gbs2-world.gbs2-tbhidden)
+  /articles/kod-da-vinchi/ @ desktop 1440x900
+     .quiz-next: display=block visibility=visible opacity=1 box=747x46 top=1095 class="quiz-next" inline-style=none | panel inside [data-gill-v16]=false (null)
+     after clicking .quiz-next: progress="Вопрос 2 из 10"
+  /articles/kod-da-vinchi/ @ mobile 390x844
+     .quiz-next: display=block visibility=visible opacity=1 box=277x48 top=1225 class="quiz-next" inline-style=none | panel inside [data-gill-v16]=false (null)
+     after clicking .quiz-next: progress="Вопрос 2 из 10"
+
+## P6-2 (shallow field census) — superseded by the deep census in section B below
+  The shallow pass read only question/options/explanation keys (8 routes); the deep walk of the whole runtime payload (section B) is
+  authoritative: 10 of 23 routes, per-route tag counts listed there.
+
+## P6-3. GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED — badge vs the 38x38 voice-over control (trimmed)
+  badge 20.3x13 rect={"l": 312.7, "r": 333, "t": 39, "b": 52} ::before={"w": 24.3, "h": 19, "l": 309.7, "r": 336, "t": 35, "b": 56}
+     neighbour button.gb-ember.hm-ember aria="Озвучка" box=38x38 overlapWithBadgeBox={"w": 17.3, "h": 13} overlapWithPseudo={"w": 20.3, "h": 17}
+     neighbour button.gb-save.hm-icon aria="Добавить в Избранное" box=44x44 overlapWithBadgeBox={"w": -3, "h": 10} overlapWithPseudo={"w": 0, "h": 14}
+  badge 20.3x13 rect={"l": 312.7, "r": 333, "t": 39, "b": 52} ::before={"w": 24.3, "h": 19, "l": 309.7, "r": 336, "t": 35, "b": 56}
+     neighbour button.gb-ember.hm-ember aria="Озвучка" box=38x38 overlapWithBadgeBox={"w": 17.3, "h": 13} overlapWithPseudo={"w": 20.3, "h": 17}
+     neighbour button.gb-save.hm-icon aria="Добавить в Избранное" box=44x44 overlapWithBadgeBox={"w": -3, "h": 10} overlapWithPseudo={"w": 0, "h": 14}
+  badge 20.3x13 rect={"l": 312.7, "r": 333, "t": 39, "b": 52} ::before={"w": 24.3, "h": 19, "l": 309.7, "r": 336, "t": 35, "b": 56}
+     neighbour button.gb-ember.hm-ember aria="Озвучка" box=38x38 overlapWithBadgeBox={"w": 17.3, "h": 13} overlapWithPseudo={"w": 20.3, "h": 17}
+     neighbour button.gb-save.hm-icon aria="Добавить в Избранное" box=44x44 overlapWithBadgeBox={"w": -3, "h": 10} overlapWithPseudo={"w": 0, "h": 14}
+
+## P6-4. GBS-H-SCROLL-TOP-INVISIBLE-FOCUS — is #hScrollTop in the sequential focus order on /articles/?
+  /articles/ | {"totalFocusable":98,"index":97,"opacity":"0","pointerEvents":"none","tabIndex":0,"prev":"a","next":null}
+  sequential Tab reached #hScrollTop at stop 95 | focused state: {"sel":"button#hScrollTop.h-scroll-top","opacity":"0","outline":"2px solid rgb(122, 46, 46)","fv":true}
+
+## P6-5. GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP — clipping container geometry at 390x844 and header screenshots
+  / | {"innerWidth":390,"container":{"sel":"div.mobile-controls","l":250,"r":370,"overflow":"hidden"},"search":{"sel":"button#gbSearchBtn.gb-nav-search-icon","l":250,"r":294,"centreX":272,"box":"44x44","insideViewport":true,"hitAtCentre":"svg"},"theme":{"sel":"button#themeToggle.theme-toggle","l":282,"r":326,"centreX":304,"box":"44x44","insideViewport":true,"hitAtCentre":"svg"},"overlapPx":12}
+  /izbrannoe/ | {"innerWidth":390,"container":{"sel":"div.astro-header__controls.mobile-controls","l":250.8,"r":358,"overflow":"hidden"},"search":{"sel":"button#hCpBtnNav.gb-nav-search-icon","l":338.8,"r":382.8,"centreX":360.8,"box":"44x44","insideViewport":true,"hitAtCentre":"header.astro-header.h-navbar"},"theme":{"sel":"button#themeToggle.theme-toggle","l":370.8,"r":414.8,"centreX":392.8,"box":"44x44","insideViewport":false,"hitAtCentre":null},"overlapPx":12}
+  /hard-texts/genesis-6/ | {"innerWidth":390,"container":{"sel":"div.astro-header__controls.mobile-controls","l":254,"r":374,"overflow":"hidden"},"search":{"sel":"button#hCpBtnNav.gb-nav-search-icon","l":342,"r":386,"centreX":364,"box":"44x44","insideViewport":true,"hitAtCentre":"svg"},"theme":{"sel":"button#themeToggle.theme-toggle","l":374,"r":418,"centreX":396,"box":"44x44","insideViewport":false,"hitAtCentre":null},"overlapPx":12}
+  harness note: the forced-colors screenshot attempt in this section failed on a clip-argument bug ({x,y,w,h} instead of {x,y,width,height});
+  no image was produced, so no visual claim rests on it. The three header screenshots taken at 390px were viewed and corroborate the
+  clipping numbers above; they are sandbox-local and not committed.
+
+## A. GBS-QUIZ-NEXT-HIDDEN-GILL-V16 — .quiz-next display vs viewport width (candidate breakpoint 63.99em = 1023.84px)
+  width 360px | @media(max-width:63.99em) matches=true | .quiz-next none 0x0
+  width 768px | @media(max-width:63.99em) matches=true | .quiz-next none 0x0
+  width 1023px | @media(max-width:63.99em) matches=true | .quiz-next none 0x0
+  width 1024px | @media(max-width:63.99em) matches=false | .quiz-next block 392x46
+  width 1280px | @media(max-width:63.99em) matches=false | .quiz-next block 602x46
+
+## B. GBS-QUIZ-LITERAL-MARKUP — deep census of every string inside window.SITE_CONFIG.quiz
+  /articles/20-antisovetov-pastoru/                                  strings=229 literalTags=74 topPaths={"questions[0]":2,"questions[1]":10,"questions[4]":6,"questions[5]":4,"questions[6]":4,"questions[7]":4,"questions[8]":10,"questions[9]":6,"bonusQuestions[0]":2,"bonusQuestions[1]":4,"bonusQuestions[2]":4,"bonusQuestions[3]":8,"bonusQuestions[4]":8,"bonusQuestions[5]":2} sample="рует «мягкость». Критерий — <em>цель</em>: наставлять ли сов"
+  /articles/anatomiya-padeniya-pyat-stadiy/                          strings=104 literalTags=0 topPaths={}
+  /articles/cerkovnaya-disciplina-vlast-granicy-zashchita/           strings=104 literalTags=0 topPaths={}
+  /articles/dzhon-gill-chast-1-chelovek/                             strings=65 literalTags=0 topPaths={}
+  /articles/dzhon-gill-chast-2-uchenyi/                              strings=65 literalTags=6 topPaths={"questions[0]":2,"questions[2]":4} sample="писал толкование в folio на <span class="gterm" data-term="song-of-songs" data-term-title="Песнь Песней">Песнь Песней</span>, и на эт"
+  /articles/dzhon-gill-chast-3-nasledie/                             strings=65 literalTags=2 topPaths={"questions[0]":2} sample="ке историка Майкла Хайкина, <span class="gterm" data-term="polemic" data-term-title="Полемика">полемика</span> Гилла сказал"
+  /articles/dzhon-gill-chast-4-ekzeget/                              strings=65 literalTags=2 topPaths={"questions[0]":2} sample="«меру» или «правило веры» (<span class="gterm" data-term="analogia-fidei" data-term-title="Analogia fidei">analogia fidei</span>) из Ри"
+  /articles/dzhon-gill-spravochnik/                                  strings=65 literalTags=0 topPaths={}
+  /articles/kogda-uhodit-kogda-ostavatsya/                           strings=104 literalTags=0 topPaths={}
+  /articles/krajne-li-isporcheno-serdce/                             strings=210 literalTags=58 topPaths={"questions[0]":4,"questions[1]":2,"questions[2]":4,"questions[3]":2,"questions[4]":2,"questions[5]":6,"questions[6]":2,"questions[7]":6,"questions[8]":2,"questions[9]":2,"questions[10]":12,"questions[11]":2,"bonusQuestions[0]":2,"bonusQuestions[1]":4,"bonusQuestions[2]":2,"bonusQuestions[3]":4} sample="то означает еврейское слово <em>ʿāqōb</em> (עָקֹב) в Иер. 17"
+  /articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/         strings=104 literalTags=0 topPaths={}
+  /articles/priznaki-zdorovoy-cerkvi/                                strings=104 literalTags=0 topPaths={}
+  /articles/sem-tipov-razlichenie-uchiteley/                         strings=104 literalTags=0 topPaths={}
+  /articles/teksty-pisaniya-kotorymi-manipuliruyut/                  strings=104 literalTags=0 topPaths={}
+  /articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/                strings=104 literalTags=0 topPaths={}
+  /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/ strings=219 literalTags=6 topPaths={"bonusQuestions[0]":4,"bonusQuestions[4]":2} sample="В чём разница между <span class="gterm" data-term="exegesis" data-term-title="Экзегеза">экзегезу</span> и <span clas"
+  /articles/kod-da-vinchi/                                           strings=145 literalTags=8 topPaths={"questions[1]":2,"questions[2]":2,"questions[3]":2,"questions[5]":2} sample="Какая находка содержит <span class="gterm" data-term="gnostic" data-term-title="Гностики">гностические</span> тексты?"
+  /articles/lot-i-sodom/                                             strings=124 literalTags=0 topPaths={}
+  /nagornaya/chast-1/                                                strings=36 literalTags=0 topPaths={}
+  /nagornaya/chast-2/                                                strings=48 literalTags=16 topPaths={"questions[0]":2,"questions[1]":14} sample="Что означает термин <em>concursus</em> в классическо"
+  /nagornaya/chast-3/                                                strings=36 literalTags=0 topPaths={}
+  /nagornaya/chast-4/                                                strings=60 literalTags=10 topPaths={"questions[0]":6,"questions[2]":2,"questions[4]":2} sample="то означает греческое слово <em>θεόπνευστος</em> (theopneust"
+  /nagornaya/chast-5/                                                strings=48 literalTags=12 topPaths={"questions[1]":12} sample="акое из трёх кальвинистских <em>usus</em> Закона (Inst. 2.7)"
+  DEEP CENSUS: routes with literal markup in the runtime payload = 10 of 23
+  affected: [{"route":"/articles/20-antisovetov-pastoru/","tags":74},{"route":"/articles/dzhon-gill-chast-2-uchenyi/","tags":6},{"route":"/articles/dzhon-gill-chast-3-nasledie/","tags":2},{"route":"/articles/dzhon-gill-chast-4-ekzeget/","tags":2},{"route":"/articles/krajne-li-isporcheno-serdce/","tags":58},{"route":"/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/","tags":6},{"route":"/articles/kod-da-vinchi/","tags":8},{"route":"/nagornaya/chast-2/","tags":16},{"route":"/nagornaya/chast-4/","tags":10},{"route":"/nagornaya/chast-5/","tags":12}]
+
+## C. GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP — header control overflow by width
+  /                        @ 360px | {"iw":360,"cont":{"sel":"div.mobile-controls","r":340,"ov":"hidden"},"search":{"sel":"button#gbSearchBtn","l":220,"r":264,"inVp":true,"hit":"svg"},"theme":{"sel":"button#themeToggle","l":252,"r":296,"inVp":true,"hit":"svg"},"overlap":12}
+  /                        @ 390px | {"iw":390,"cont":{"sel":"div.mobile-controls","r":370,"ov":"hidden"},"search":{"sel":"button#gbSearchBtn","l":250,"r":294,"inVp":true,"hit":"svg"},"theme":{"sel":"button#themeToggle","l":282,"r":326,"inVp":true,"hit":"svg"},"overlap":12}
+  /                        @ 414px | {"iw":414,"cont":{"sel":"div.mobile-controls","r":394,"ov":"hidden"},"search":{"sel":"button#gbSearchBtn","l":274,"r":318,"inVp":true,"hit":"svg"},"theme":{"sel":"button#themeToggle","l":306,"r":350,"inVp":true,"hit":"svg"},"overlap":12}
+  /                        @ 768px | {"iw":768,"cont":{"sel":"div.mobile-controls","r":957,"ov":"visible"},"search":{"sel":"button#gbSearchBtn","l":881,"r":925,"inVp":false,"hit":"a"},"theme":{"sel":"button#themeToggle","l":913,"r":957,"inVp":false,"hit":"a"},"overlap":12}
+  /izbrannoe/              @ 360px | {"iw":360,"cont":{"sel":"div.astro-header__controls.mobile-controls","r":313,"ov":"hidden"},"search":{"sel":"button#hCpBtnNav","l":279.8,"r":323.8,"inVp":true,"hit":"svg"},"theme":{"sel":"button#themeToggle","l":311.8,"r":355.8,"inVp":true,"hit":"body"},"overlap":12}
+  /izbrannoe/              @ 390px | {"iw":390,"cont":{"sel":"div.astro-header__controls.mobile-controls","r":343,"ov":"hidden"},"search":{"sel":"button#hCpBtnNav","l":279.8,"r":323.8,"inVp":true,"hit":"svg"},"theme":{"sel":"button#themeToggle","l":311.8,"r":355.8,"inVp":true,"hit":"svg"},"overlap":12}
+  /izbrannoe/              @ 414px | {"iw":414,"cont":{"sel":"div.astro-header__controls.mobile-controls","r":366.5,"ov":"hidden"},"search":{"sel":"button#hCpBtnNav","l":290.5,"r":334.5,"inVp":true,"hit":"svg"},"theme":{"sel":"button#themeToggle","l":322.5,"r":366.5,"inVp":true,"hit":"svg"},"overlap":12}
+  /izbrannoe/              @ 768px | {"iw":768,"cont":{"sel":"div.astro-header__controls.mobile-controls","r":880,"ov":"visible"},"search":{"sel":"button#hCpBtnNav","l":804,"r":848,"inVp":false,"hit":null},"theme":{"sel":"button#themeToggle","l":836,"r":880,"inVp":false,"hit":null},"overlap":12}
+  /hard-texts/genesis-6/   @ 360px | {"iw":360,"cont":{"sel":"div.astro-header__controls.mobile-controls","r":336.5,"ov":"hidden"},"search":{"sel":"button#hCpBtnNav","l":260.5,"r":304.5,"inVp":true,"hit":"svg"},"theme":{"sel":"button#themeToggle","l":292.5,"r":336.5,"inVp":true,"hit":"svg"},"overlap":12}
+  /hard-texts/genesis-6/   @ 390px | {"iw":390,"cont":{"sel":"div.astro-header__controls.mobile-controls","r":366.5,"ov":"hidden"},"search":{"sel":"button#hCpBtnNav","l":290.5,"r":334.5,"inVp":true,"hit":"svg"},"theme":{"sel":"button#themeToggle","l":322.5,"r":366.5,"inVp":true,"hit":"svg"},"overlap":12}
+  /hard-texts/genesis-6/   @ 414px | {"iw":414,"cont":{"sel":"div.astro-header__controls.mobile-controls","r":390.5,"ov":"hidden"},"search":{"sel":"button#hCpBtnNav","l":314.5,"r":358.5,"inVp":true,"hit":"svg"},"theme":{"sel":"button#themeToggle","l":346.5,"r":390.5,"inVp":true,"hit":"svg"},"overlap":12}
+  /hard-texts/genesis-6/   @ 768px | {"iw":768,"cont":{"sel":"div.astro-header__controls.mobile-controls","r":744.5,"ov":"visible"},"search":{"sel":"button#hCpBtnNav","l":668.5,"r":712.5,"inVp":true,"hit":"svg"},"theme":{"sel":"button#themeToggle","l":700.5,"r":744.5,"inVp":true,"hit":"svg"},"overlap":12}
+
+## DISPOSITIONS AND SELF-CORRECTIONS CARRIED BY THIS RECEIPT
+1. GBS-QUIZ-NEXT-HIDDEN-GILL-V16 — mechanism corrected, width boundary added. The hiding rule is css/floating-cluster.css:4063
+   `[data-gill-v16] .quiz-next { display: none; ... }` INSIDE `@media (max-width: 63.99em)` (opened at line 3774), and the reveal rule
+   css/floating-cluster.css:4072 `[data-gill-v16] .quiz-next.is-visible { display: block; }` DOES exist. The 2026-09-30 artifact witness was
+   wrong twice here: it reported that no .is-visible rule for .quiz-next* exists anywhere (it does), and it cited `.quiz-next-btn{display:none}`
+   as shipped CSS (the only display:none on .quiz-next-btn is an inline style inside the legacy js/site.js template, present in 0 built routes).
+   src/runtime/article-quiz.js never adds .is-visible (its only is-visible add sites are the TTS notice), so the dead end is real but
+   width-conditional: display:none at 360/768/1023px, display:block and a full run to results at 1024/1280px; non-gill routes fine at all widths.
+   Affected population unchanged: the 15 quiz routes whose panel is inside [data-gill-v16] (verified in-browser, panelInsideGill=true on exactly 15).
+2. GBS-QUIZ-LITERAL-MARKUP — enumeration corrected 9 -> 10 of 23 at payload level by a deep walk of window.SITE_CONFIG.quiz in a real browser
+   (the static parse missed bonusQuestions and mis-sized per-route counts: /articles/20-antisovetov-pastoru/ carries 74 literal tags, not 14;
+   /articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/ carries 6 (bonusQuestions) and was absent from the 9).
+   Render-level witness on 3 routes: /nagornaya/chast-2/, /articles/dzhon-gill-chast-2-uchenyi/, /articles/kod-da-vinchi/. On
+   /articles/20-antisovetov-pastoru/ the first-option path through all 10 questions rendered 0 literal tags (its markup sits in fields that path
+   does not paint): 'not observed on that path', not refuted.
+3. GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP — 12px overlap confirmed on all three routes at every width tested; on / the shared strip hit-tests
+   to #themeToggle. Bounded observation, NOT filed: under real mobile emulation /izbrannoe/ and /hard-texts/genesis-6/ clip the theme toggle
+   (centre x 393/396 of a 390 viewport, .mobile-controls{overflow:hidden}); at 768px on / both controls sit beyond the viewport with container
+   overflow visible. Left to owner triage together with the row.
+4. Confirmed with fresh browser evidence: GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED (click and Ctrl+K inert on /hard-texts/genesis-6/ and /izbrannoe/,
+   js/search.js never requested; control /articles/ opens the palette and requests it); GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED
+   (20.3x13 badge, ::before 24.3x19 inset -4/-3, overlapping button.gb-ember.hm-ember 38x38 by 20.3x17 through the pseudo target; tap at the
+   badge centre sets aria-expanded=true, i.e. opens the speed rail); GBS-H-SCROLL-TOP-INVISIBLE-FOCUS (opacity 0 + pointer-events none at
+   scrollY 0 on all six routes yet sequentially focusable — Tab stops 49/44/26/22/28 and 95 on /articles/, focused outline present but invisible);
+   GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING (#themeToggle matches :focus-visible with outline 0px none and box-shadow none at 390 and 1440 while
+   neighbour stops show 2px solid outlines); GBS-404-RELATIVE-READER-PREFERENCES-ASSETS (nested Pages-style 404s return 404 for all three relative
+   reader-preference assets and apply no Sepia; root /404.html applies data-reader-theme=sepia, body background rgb(238,227,200)).
+5. GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS — structural premise confirmed (#menuBtn = three background-painted .bar divs, no border, no SVG,
+   no text fallback, on 8 of 9 /nagornaya/** pages; /nagornaya/seriya/ has no #menuBtn, matching the row's eight). NOT reproduced in this harness:
+   under Playwright forcedColors:'active' the bars still compute rgb(255,255,255) on all 8 pages, so the Windows HCM repaint is not emulated here;
+   the colour-override half of the row keeps its 2026-09-29 forced-colors evidence.
+6. No new defect row is filed by these passes; MASTER arithmetic stays at 29 active work units.

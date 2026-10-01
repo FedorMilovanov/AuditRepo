@@ -1,0 +1,45 @@
+# Receipt — measurement boundary of live HTTP retrieval for <time> datelines
+measured_utc=2026-09-30T21:50Z (approx)
+tool=fetch_page (HTML -> Markdown text extraction); sandbox curl to external hosts is blocked
+live_release_sha=d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b (deployments/current.json, run 35927303479,
+  artifact digest sha256:6bc574877ae519edeccbb98bdbbfe4736400ff15a3786ab39cc137d738978579)
+
+## Why this receipt exists
+
+The 2026-09-30 pass recorded a "visible on live d0e04a9c" column for the Baptist byline dates.
+That column cannot be produced by this tool: fetch_page drops the text content of <time> elements
+and instead surfaces the hidden Pagefind meta spans. Any live claim about a human-readable byline
+label therefore needs a rendering browser or a raw-HTML retrieval, or an exact-SHA built artifact.
+
+## Control experiment (three live retrievals, same tool, same session)
+
+1. https://gospod-bog.ru/baptisty-rossii/spravochnik/
+   extracted dateline area: "2026-06-10T00:00:00+03:002026-08-20T11:04:03.000Z" then the cover image
+   human label "14 июня 2026": NOT present anywhere in the extraction
+   damaged copy IS present verbatim: "01 ???????? **?????? ?????????????**", "03 ????? **????????? ???????? ? SHA-256**",
+     with ASCII tokens surviving ("Public Domain, CC0", "Creative Commons-????????", "SHA-256", "provenance")
+
+2. https://gospod-bog.ru/baptisty-rossii/iniciativnaya-gruppa/
+   extracted dateline area: "2026-06-08T00:00:00+03:002026-07-11T15:21:36.000Z" then the cover image
+   human label "13 июня 2026": NOT present in the extraction
+
+3. https://gospod-bog.ru/articles/kod-da-vinchi/  (positive control with a known built label)
+   extracted dateline area: "2026-03-31T21:00:00.000Z2026-07-05T09:14:15.000Z" then the hero image
+   The built artifact of the live SHA contains, for this route:
+     <time datetime="2026-03-31T21:00:00.000Z">1 апреля 2026</time>
+     <time class="article-updated" datetime="2026-07-05T09:14:15.000Z">9 мая 2026</time>
+   Neither human label ("1 апреля 2026", "9 мая 2026") appears in the live extraction.
+
+## Conclusion
+
+- The two ISO strings per page are the hidden spans inserted by scripts/lib/editorial-metadata-v3.js
+  (projectPagefindDates): data-pagefind-meta="publishedTime" and "modifiedTime".
+  Proof: the values extracted from live equal, byte for byte, the hidden spans of the local
+  production-like build of the live SHA d0e04a9c (see 2026-09-30-baptist-dates-main-vs-live-sha.txt).
+- fetch_page therefore cannot witness visible byline labels; it CAN witness ordinary element text
+  (the "????" copy loss above is a valid live witness) and it CAN witness the projected machine dates.
+- Positive fact obtained here: the live release already carries the 2026-09-08 owner-approved
+  exact-instant editorial metadata (e.g. spravochnik modifiedTime 2026-08-20T11:04:03.000Z), i.e.
+  live and main agree on the editorial projection.
+- Not obtained here: any live confirmation of what the human-readable byline says. That is now
+  witnessed from the exact-SHA built artifact instead (both SHAs, builds exit 0).

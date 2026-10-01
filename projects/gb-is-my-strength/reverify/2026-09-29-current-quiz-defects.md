@@ -40,6 +40,15 @@
 
 **Boundary / limitations:** this turn rebuilt the exact current production-like dist and rechecked source. Chromium 153 became runnable later in the turn, but the fresh browser wave did not rerun the quiz interaction assertions; direct W4 runtime evidence remains from 2026-09-23 at the same Product/live SHA. Do not call the quiz runtime a fresh browser PASS.
 
+> **2026-10-01 addendum (fresh browser pass 2 at `d586aa63`).** The mechanism quoted above is confirmed
+> verbatim, with one scope refinement this pass measured: the hiding rule sits inside
+> `@media (max-width: 63.99em)` (opened at `css/floating-cluster.css:3774`, rule at `:4063`), so the dead end
+> reproduces at 360/768/1023px (`display:none`, 0×0) and **not** at 1024/1280px, where the same button is
+> `display:block` and the flow runs to results. Non-gill quiz routes advance at every width. The functional
+> denominator is the census's **23** quiz-enabled built routes (15 gill-v16 + 8 controls), not the 24-route
+> pass of 2026-09-23. Repair proof must therefore cover **both** sides of the breakpoint. Receipt:
+> [`evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt`](./evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt).
+
 **Owner / repair boundary:** the shared article quiz runtime and the legacy Gill-scoped CSS contract. Repair or retire the obsolete hidden-state rule at its semantic owner. Do not merely force visibility globally without checking other route families. Closure should include a resulting-main browser run that answers through the result and restart on all 15 affected routes, plus passing representative fixtures from the nine currently working routes, keyboard operation, and light/dark modes.
 
 ## Finding 2 — authored quiz markup appears literally in question text
@@ -52,6 +61,15 @@
 - Current quiz data contains markup in question fields, e.g. `KrajnePageHead.astro` (`<em>`), `HermenevtikaPageHead.astro` and `KodDaVinchiPageHead.astro` (`<span class="gterm" ...>`), as well as Gill parts 2–4. The current exact-main production-like build succeeds and retains these data/runtime contracts.
 
 **Runtime witness (W4, same source/release SHA):** the 2026-09-23 functional quiz pass recorded `literal-markup` on question 1 for multiple routes, and the saved flow includes literal tags in displayed question text. The audit's static dist census estimated at least nine affected routes; the counted field-level scope was a lower/upper bound, not a complete independent inventory in this reverify.
+
+> **2026-10-01 addendum (fresh browser pass 2 at `d586aa63`).** A deep walk of every string in the runtime
+> payload `window.SITE_CONFIG.quiz` enumerates **10 of the 23** quiz-enabled routes (the earlier static count of
+> 9 missed `/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/`, whose 6 tags live in
+> `bonusQuestions`, and undercounted per-route totals — `/articles/20-antisovetov-pastoru/` carries 74 tags, not
+> 14). Painted literal tags were witnessed on `/nagornaya/chast-2/`, `/articles/dzhon-gill-chast-2-uchenyi/` and
+> `/articles/kod-da-vinchi/`; on `/articles/20-antisovetov-pastoru/` the first-option path painted none, so the
+> render claim stays narrower than the payload claim. Receipt:
+> [`evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt`](./evidence/2026-10-01-fresh-browser-pass-2-quiz-header.txt) §B.
 
 **Boundary / limitations:** the defect is confirmed for the routes and fields exercised in that pass, not every quiz field across the whole site. No unsanitized `innerHTML` change is recommended. Choose a single safe content contract: normalize quiz strings to plain text, or support a narrowly allowlisted/sanitized rich-text representation with regression fixtures for glossary terms and emphasis. Closure requires a built/browser assertion that visible text has no raw tags and that semantic emphasis/glossary behavior is preserved where intended.
 
