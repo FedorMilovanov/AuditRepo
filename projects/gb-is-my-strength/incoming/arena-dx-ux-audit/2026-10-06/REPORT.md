@@ -346,3 +346,21 @@ Raw entries: `evidence/2026-10-06-cls-lcp-shift-sources.json`, `evidence/2026-10
   Pagefind facets, Lighthouse, the reading experience of individual hard-texts/biografii articles, and live-host bytes.
 - Everything browser-based here is **local exact-SHA** (production-like dist over HTTP), not live-host; the single pre-existing red
   (Search Modal Contract, WebKit half) is reported, not fixed. No Product file, PR, branch or issue was touched.
+
+## 10. NOT VERIFIED — explicit gaps of this pass
+
+- **WebKit**: no engine available in this sandbox (`@playwright/browser-webkit` is a download shim, the WebKit build is
+  fetched from a CDN the sandbox cannot reach, and its system libraries cannot be installed because apt is dead). Therefore
+  the WebKit half of the Product contracts and the actual cause of the red Search Modal Contract step are NOT VERIFIED.
+- **Live host**: `https://gospod-bog.ru/` answers `curl` exit 35 / code 000 from this sandbox. Every production statement here
+  is CI/deployment-API evidence, never live bytes.
+- **TTS** (voice quality, first-audible latency), **Pagefind facet behaviour**, and **Lighthouse** were not run in this pass.
+  LCP/CLS were measured directly from `PerformanceObserver` entries instead.
+- **Depth limits**: `/hard-texts/*` and `/biografii/*` were audited only at their landing pages, `/hard-texts/genesis-6/` was
+  not visited, and `src/components/article-pilots/**` was not read line-by-line outside the routes named in this report.
+- **Not re-run from earlier passes**: the `GBS-QUIZ-NEXT-HIDDEN-GILL-V16` and remaining `GBS-QUIZ-*` rows, the
+  `GBS-MOBILE-CHROME-*` family, `/map/` interaction depth, and the 15-of-23 quiz-route sweep. Their rows are untouched here.
+- **Statistics with a single witness**: the contrast values were recomputed independently for every distinct failing
+  selector/colour combination on the routes triaged in `2026-10-06-contrast-triage.json`, but the routes added later
+  (`/hard-texts/`, `/biografii/`, `/konfessii/`) were triaged with axe plus own DOM computation only — one method pair,
+  one viewport each (1440, plus 390 for `/konfessii/`).
