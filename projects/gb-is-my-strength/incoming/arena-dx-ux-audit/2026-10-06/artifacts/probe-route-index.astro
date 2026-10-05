@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import Content from '@/content/articles/probe-audit-test-article.mdx';
+import ArticleLayout from '@/layouts/ArticleLayout.astro';
+import { SITE } from '@/data/site';
+
+const slug = 'probe-audit-test-article';
+const entries = await getCollection('articles');
+const entry = entries.find(({ data }) => data.slug === slug);
+
+if (!entry) {
+  throw new Error(`Missing article content entry: ${slug}`);
+}
+
+const canonical = `${SITE.url}/articles/${slug}/`;
+---
+
+<ArticleLayout
+  entry={entry}
+  canonical={canonical}
+  mainClass="astro-main article-main--hrail"
+  mainAttrs={{ 'data-reader-rail-main': true }}
+>
+  <Content />
+</ArticleLayout>
