@@ -1,0 +1,209 @@
+MATRIX ROWS — THIRD RECHECK WAVE AT PRODUCT main 68750830 (2026-10-06)
+=====================================================================
+project:  gb-is-my-strength
+anchor:   68750830f4725213d80b833015520e5894699838  (main, 2026-10-05T22:06:01Z, merge of PR #2171)
+previous: d586aa63f02b569cfe050a63cc9078c044375d8d  (matrix's last exact-SHA fresh pass, 2026-10-01);
+          `git rev-list --count d586aa63..68750830` = 30 commits, so fix provenance is checkable in-range.
+raw data: evidence/2026-10-06-matrix-rows-third-wave-machine.json (this wave), probes wave3a–wave3i.
+
+ENVIRONMENT / METHOD
+--------------------
+- Sandbox-local Chromium 153.0.8010.0 (sparticuz build, patched NSS: `.gnu.version_r` NSS_3.30->3.22 +
+  PK11_HasAttributeSet stub), Playwright 1.62/1.63, axe-core.
+- Fresh clone of Product main 68750830, `npm ci`, `npm run strangler:build:production-like`,
+  `npm run pagefind:build:dist`; `dist` (98M) served statically over http://127.0.0.1:8080.
+- Mobile statements use real mobile emulation (`isMobile`, `deviceScaleFactor 2`, `hasTouch`) unless a line
+  says "plain window". Print statements use CDP print media emulation.
+- Evidence class: exact-SHA local-build browser evidence. NOT live-host testing. No WebKit available.
+- Limits: GitHub Actions artifacts for the red Search Modal Contract lane are still unreachable from this
+  sandbox (`gh run download` EOF); that lane's inner failure text stays NOT VERIFIED (unchanged).
+
+A. ROWS MEASURED NOT-REPRODUCIBLE AT 68750830 (candidates for closed-by-fix)
+----------------------------------------------------------------------------
+A1 `GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP` — NOT REPRODUCED.
+   Row claims a 12px shared search/theme strip at 360/390/414/768 on `/`, `/izbrannoe/`,
+   `/hard-texts/genesis-6/`, and that on `/` the former strip hit-tests to `#themeToggle`.
+   Measured (13 route x width cells, machine JSON `stripBoundary`): `theme.x - search.right` = 0.0px and
+   rectangle intersection = 0px at every cell; `getComputedStyle(search).marginRight` = `0px`; a pointer at
+   x = search.right-6 hits the SEARCH control itself (`button#gbSearchBtn` on `/`, `button#hCpBtnNav` on
+   `/izbrannoe/`), never the theme toggle. Desktop 1280/1440 intersection area is 0 as before.
+   Provenance in range: `2ee584d` (`fix(quiz,header): scoped Gill quiz ownership + header control and search
+   repair (#2167)`) added `.astro-header__controls.mobile-controls{gap:0!important; margin-left:auto;
+   min-width:max-content; overflow:visible!important}` and `.gb-nav-search-icon,.theme-toggle{margin:0
+   !important; width/min-width/height/min-height:44px!important; flex:0 0 44px}`. The legacy
+   `css/mobile-hotfix.css` rule `.mobile-controls .gb-nav-search-icon{margin-right:-12px!important}` is still
+   shipped and still present in the dist, but loses the cascade (computed value 0px).
+
+A2 `GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT` — NOT REPRODUCED.
+   Row claims at 390 mobile `/izbrannoe/` search 338.8-382.8 (past container clip) and theme 370.8-414.8
+   (outside viewport), genesis-6 theme 374-418 clipped, and at 768 on `/` + `/izbrannoe/` both controls
+   beyond the viewport.
+   Measured under real mobile emulation (machine JSON `mobileHeaderEmulated`, `genesis6HeaderState`):
+     - 390 `/izbrannoe/`: search [270..314], theme [314..358] — both fully inside 390, centre hit-tests self.
+     - 390 `/`: search [238..282], theme [282..326] — inside, hit self.
+     - 360 `/izbrannoe/`: [240..284]/[284..328]; 414: [293..337]/[337..381] — inside, hit self.
+     - 768 `/`: [605..649]/[649..693]; 768 `/izbrannoe/`: [633..677]/[677..721] — inside, hit self.
+     - 1280 genesis-6 (desktop): [1025..1069]/[1069..1113] — inside, hit self, gap 0, overlap 0.
+     - At 360/390/414/768 on genesis-6 the shared header is not rendered at all: `header.astro-header.h-navbar`
+       computes `display:none`, the cluster rect is 0x0, `#hNavbar` is absent, and the route is served by the
+       MobileChrome bar (`.mcp-search`, offscreen at barTop -51 until revealed) — so the row's mobile-header
+       variant scenario cannot apply there.
+   Provenance in range: same commit `2ee584d` (`overflow:visible!important`, `min-width:max-content`) plus its
+   new rule `@media (max-width:1199px){body:has(.hmtop) .astro-header, body:has(.mobile-top-bar) .astro-header,
+   body:has(.mcp-top) .astro-header{display:none!important}}`, which is what makes the shared header hidden on
+   mobile-chrome routes.
+
+A3 `GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING` — NOT REPRODUCED.
+   Measured visible ring on every probed Tab stop: `/` 1440 stop 11, `/` 390 stop 4,
+   `/hard-texts/genesis-6/` 1440 stop 12 — `:focus-visible` true, `outline: 2px solid` (rgb(8,125,145) on `/`,
+   rgb(122,46,46) on genesis-6), `outline-offset: 2px`, `box-shadow: none`, `visibleRing: true`.
+   Provenance in range: `2ee584d` added
+   `.astro-header__controls.mobile-controls .theme-toggle:focus-visible{outline:2px solid
+   var(--color-accent,#8a5a2b)!important; outline-offset:2px!important}` and replaced the legacy
+   `transition:all .3s` (which animated the ring itself) with `transition:opacity/transform/color`
+   — the legacy `css/mobile-hotfix.css` `outline:0!important` sheet is still loaded (`?v=a6a3187a`).
+
+A4 `GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED` — NOT REPRODUCED.
+   Row claims `#hCpBtnNav` does nothing on click or Ctrl+K at 1280 on `/hard-texts/genesis-6/` and
+   `/izbrannoe/`, with no palette and no `js/search.js` request.
+   Measured (1280, both routes): click -> palette `.cp-backdrop.is-open`, visible input rect [253,123,461,24],
+   `aria-expanded="true"`; Escape closes; `Control+k` opens the same state; exactly one request
+   `/js/search.js?v=106d65f6` per route.
+   Provenance in range: `2ee584d` added the inline bootstrap on `#hCpBtnNav` (first click dispatches
+   `gb:openSearch` into the canonical transport), `aria-keyshortcuts="Control+K Meta+K"` and
+   label/shortcut attributes. The 390px genesis-6 part of the row is moot: that route hides the shared header
+   at mobile widths (see A2) and is served by the MobileChrome bar.
+
+A5 `GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED` — NOT REPRODUCED.
+   Row claims a 20.3x13px badge whose 24.3x19px pseudo target overlaps the 38x38 Play target on three routes.
+   Measured on all three routes (`/articles/kod-da-vinchi/`, `/articles/lot-i-sodom/`,
+   `/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/`): badge `#hmSpdBadge` 36x28 at
+   [294,14], `::before{inset:-8px -4px}` -> effective target 44x44 at [290,6]; Play `button.gb-ember.hm-ember`
+   38x38 at [250,9]; overlap of the target with Play = [0, 38] (zero width, 2px clearance); axe
+   `target-size` violations = 0; a trusted tap on the badge centre sets `aria-expanded="true"` with the speed
+   rail visible. 36x28 already meets the 24x24 WCAG 2.2 minimum without the spacing exception.
+   Provenance in range: `b2611ca` (`fix(mobile): Lawson production — collapsed chrome <=96 ...`) changed
+   `.hm-spdbadge{min-width:36px; height:28px; padding:0 8px}` and `::before{inset:-8px -4px}`.
+
+B. ROWS RECONFIRMED AT 68750830 (row still real; fresh exact numbers)
+--------------------------------------------------------------------
+B1 `GBS-QUIZ-LITERAL-MARKUP` — RECONFIRMED, now with reader-visible literals.
+   Payload tag counts (deep walk of `window.SITE_CONFIG.quiz`) still match the matrix 1:1 on the 10 routes
+   (74/58/16/12/10/8/6/6/2/2). New render-level evidence after answering:
+     - `/articles/20-antisovetov-pastoru/`: feedback text renders literal `…Критерий — <em>цель</em>: …`;
+       question and options are clean.
+     - `/articles/krajne-li-isporcheno-serdce/`: the QUESTION itself renders `Что означает еврейское слово
+       <em>ʿāqōb</em> (עָקֹב) в Иер. 17:9?` (2 literal tags in the wrapper), and question + feedback +
+       explanation all carry literal `<em>`.
+     - `/articles/dzhon-gill-chast-2-uchenyi/`: one answer OPTION renders a literal
+       `<span class="gterm" data-term="song-of-songs" ...>`.
+     - `/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/`: payload has 6 tags
+       (the `bonusQuestions` path the matrix already recorded); the main path sampled clean.
+   Mechanism unchanged: `src/runtime/article-quiz.js` assigns every string with `.textContent`.
+
+B2 `GBS-QUIZ-DARK-SURFACE-LOW-CONTRAST` — RECONFIRMED at the matrix's exact numbers.
+   Dark theme on `/articles/20-antisovetov-pastoru/`: question/title/options `rgb(230,225,215)` over the
+   composited light surface `rgb(236,234,230)` (= `rgba(255,253,248,0.92)` over `body` `#0e1116`) =
+   1.08:1 (progress/title/option all 1.08). Light theme on the same route = 17.11:1.
+   Sub-number, dark only: the launch button `#quizLaunch` is white on `rgb(212,165,116)` = 2.23:1, versus
+   9.30:1 in light theme (white on `rgb(122,46,46)`) — recorded inside this row, not filed separately.
+   Method note: this probe composites alpha down the ancestor chain; an earlier same-day probe that skipped
+   compositing returned 1.28:1 and is superseded by this number.
+
+B3 `GBS-PRINT-TERMINAL-REGION-HIDES-CONTENT` — RECONFIRMED exactly.
+   Print emulation at 1280 on `/hard-texts/genesis-6/`: 101 nodes carry `[data-print-terminal-follower]`, all
+   101 compute `display:none` in print, 4,245 characters removed (samples: «Без ссылки до готовности»,
+   «IIПланируетсяНефилимы и сильные древности…»). Control `/articles/20-antisovetov-pastoru/`: 0 marked,
+   0 hidden. Mechanism read from the shipped bundle: `js/reader-preferences-head.js` builds one `<style>`
+   whose textContent is a single `@media print { … }` block (brace depth 1 at that rule) containing
+   `html body [data-print-terminal-follower] { display: none !important; }`.
+
+B4 `GBS-AVRAAM-MAP-HEADING-LOST-ON-READY` — RECONFIRMED.
+   `/karty/avraam/` at 1440: `[data-map-state]` is already `ready` at the first sample (400ms) and stays
+   `ready` at 1100/1500/2000/3000ms; `h1` count is 0 at every sample, while `document.title` carries the page
+   title. (A same-day probe that looked for `[data-map-ready]`/`.me-ready` was querying non-existent
+   attributes and is superseded by the `[data-map-state]` lifecycle reading.)
+
+B5 `GBS-ANTISOVETOV-NESTED-MAP-TRIGGERS` — RECONFIRMED at runtime.
+   `/articles/20-antisovetov-pastoru/` at 1440: axe `nested-interactive` = 1 node, target
+   `span[data-tip="43"]`; the page has 44 `[role=button][tabindex="0"]` triggers; the nested pair is
+   outer aria-label «Открыть пояснение 43» containing inner «Открыть пояснение 19».
+
+B6 `GBS-MOBILE-CHROME-NAVBAR-SYNC-LAG` — RECONFIRMED with the row's own 420px/20px protocol, all three
+   routes (`/articles/`, `/biografii/`, `/hard-texts/`) at 390 mobile:
+     init: navHidden=false, chrome.is-shown=false, barTop=-58;
+     wheel +420 and 700ms settle: `#hNavbar.nav-hidden`=true while `.is-shown` is still false, barTop=-58;
+     one further wheel +20: `.is-shown`=true, barTop=0 (state corrects only on the next scroll event);
+     wheel -420 and 700ms: navbar visible again while `.is-shown` is still true, barTop=0;
+     wheel -20: `.is-shown`=false, barTop=-58.
+
+B7 `GBS-MOBILE-CHROME-SEARCH-TOUCH-LOAD-RACE` — RECONFIRMED exactly, on `/hard-texts/` at 390 mobile with
+   the toolbar exposed by non-touch scrolling (wheel +420 then +20; bar barTop=0, `.mcp-search` target rect
+   [98,7,282,38], centre hit-tests self):
+     trusted tap #1 -> after 2.5s `window.__gbSearchLoadState` = `idle`, `loading` false, no
+     `.cp-backdrop.is-open`, no visible input;
+     trusted tap #2 -> `__gbSearchLoadState` = `ready`, `.cp-backdrop.is-open`, visible input focused.
+
+B8 `GBS-JOURNAL-MISSING-SKIP-LINK` — RECONFIRMED on `/journal/` at 1440: 0 bypass links («Перейти»),
+   `<main>` has no `id`, and the first Tab stop is the topbar brand `a[href="/"]`.
+
+B9 `GBS-NAGORNAYA-SOURCE-LINKS-COLOR-ONLY` — RECONFIRMED.
+   axe `link-in-text-block` node counts 5 (chast-1 light), 5 (chast-1 dark), 4 (chast-3 light), 5 (chast-5
+   light), 5 (chast-5 dark); sampled links compute `text-decoration-line: none`. Link-versus-adjacent-text
+   contrast measured from painted colours: light 1.64:1 (rgb(31,78,163) on rgb(120,113,108)), dark 1.81:1
+   (rgb(212,165,116) on rgba(238,231,220,0.78) UNCOMPOSITED). The matrix's dark figure (1.15:1) composites the
+   translucent neighbour over its card surface; this probe did not composite that alpha, so the two numbers
+   differ by method, not by state.
+
+B10 `GBS-NAGORNAYA-READER-FONT-SCALE-INCOMPLETE` — RECONFIRMED at preference 1.25.
+   chast-1: main 16px -> 22.5px, but the paragraph font-size histogram is unchanged: {16px:3, 14px:25,
+   12px:7} -> {22.5px:3, 14px:25, 12px:7} (25 long paragraphs stay 14px). chast-2: {16px:9, 18px:1, 14px:9,
+   13.76px:1, 12px:1} -> {22.5px:9, 18px:1, 14px:9, 13.76px:1, 12px:1}.
+
+B11 `GBS-H-SCROLL-TOP-INVISIBLE-FOCUS` — RECONFIRMED on `/` and `/articles/` at 1440, scrollY 0:
+   `#hScrollTop` present, `opacity: 0`, `pointer-events: none`, `tabIndex: 0`, rect [1366,842,43,43],
+   label «Наверх», and it takes focus with a visible 2px outline ring. The element is absent on
+   `/hard-texts/genesis-6/` and `/izbrannoe/`.
+
+B12 `GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS` — RECONFIRMED on `/` at 1440: `.cp-backdrop.is-open` contains
+   two simultaneously visible 44x44 closers with the same aria-label «Закрыть поиск» — `.cp-close`
+   at [756,104,44,44] and `.cp-home-close` at [813,104,44,44].
+
+B13 `GBS-KOD-DA-VINCHI-TIMELINE-KEYBOARD-SCROLL` — RECONFIRMED as a keyboard-access gap; one wording
+   correction. At 641px `.ctw-body` is 484/605 (client/scroll width, 308 tall), `overflow-x: auto`, has no
+   `tabindex`, no `role`, no `aria-label`, `tabIndex` property -1, 0 focusable descendants; a 160-press Tab
+   sweep did not land on it. Bounded incidental observation: that sweep ended by repeatedly focusing
+   `span.fn-marker#note-ref-articles-kod-da-vinchi-note-ef9732772bbb` at doc y~2,270 (flagged for triage,
+   not filed as a row). Correction to the row's absolute wording: the element IS programmatically focusable
+   (`el.focus()` returns it as activeElement) and with focus it pans (`ArrowRight` -> `scrollLeft` 0->80;
+   direct `scrollLeft += 40` also works). So "keyboard users cannot pan" holds only in the sense that no
+   SEQUENTIAL keyboard path reaches the region; it is not true that the region can never receive focus.
+
+C. NOT RECHECKED IN THIS WAVE
+------------------------------
+`GBS-QUIZ-NEXT-HIDDEN-GILL-V16` and `GBS-BASELAYOUT-MISSING-SKIP-LINK` (both already re-tested on 68750830 in
+the previous wave), Baptist/date-line rows, `GBS-GENESIS6-THEME-TOGGLE-LOW-CONTRAST` (previous wave), print
+behaviour outside genesis-6, and all WebKit-only paths (no WebKit in this sandbox).
+
+D. SELF-CORRECTIONS RECORDED
+----------------------------
+- The quiz-dark 1.28:1 from an earlier same-day probe (no alpha compositing) is superseded by the composited
+  1.08:1 in B2, which matches the matrix.
+- The Avraam `mapReady: false` readings from an earlier same-day probe are superseded by the
+  `[data-map-state]="ready"` lifecycle reading in B4.
+- The touch-race probe had to expose the MobileChrome bar with the 420+20 wheel sequence (the +300/+20
+  sequence does not trip the navbar's hidden state); the successful run is B7.
+
+RECEIPTS
+--------
+machine: evidence/2026-10-06-matrix-rows-third-wave-machine.json
+probes:  wave3a (quiz payload/render, theme focus, scroll-top, header geometry, duplicate close),
+         wave3b (search trigger at 1280, 768/390/360/414 header clip, axe link-in-text-block,
+         reader font scale, forced-colors menu button, speed badge, .ctw-body at 641),
+         wave3c (reader-visible literal tags, composited quiz contrast, nav sync lag, print,
+         journal tab trace, Nagornaya source links, axe target-size),
+         wave3d (mobile-emulated header at 390/360/414/768, badge x3 + axe, 420/20 lag protocol, Avraam),
+         wave3e (genesis-6 header state, 13-cell strip boundary + computed margin, touch race attempt),
+         wave3f (touch race, successful reveal sequence),
+         wave3g/wave3h (timeline tab-order and programmatic-focus control),
+         wave3i (header trigger click + Ctrl+K + Escape at 1280).

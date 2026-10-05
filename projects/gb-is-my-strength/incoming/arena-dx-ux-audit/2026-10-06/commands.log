@@ -86,3 +86,14 @@ npm run engine:guard                          # PASS incl. browser sweep (relati
 gh run list --repo FedorMilovanov/gb-is-my-strength --workflow search-modal-contract.yml --limit 6
 gh api repos/FedorMilovanov/gb-is-my-strength/commits/<first-merge>/check-runs   # 21 success / 5 skipped / 1 failure
 gh api repos/FedorMilovanov/gb-is-my-strength/check-runs/111905495568/annotations   # generic exit-code-1 only
+
+# --- Third matrix-recheck wave on a fresh local build of main 68750830 (2026-10-06)
+git clone --depth 30 https://github.com/FedorMilovanov/gb-is-my-strength /home/user/work/gbs && git -C /home/user/work/gbs rev-parse HEAD  # 68750830f4725213d80b833015520e5894699838
+PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci
+npm run strangler:build:production-like && npm run pagefind:build:dist          # dist 98M
+python3 -m http.server 8080 --bind 0.0.0.0                                      # from work/gbs/dist
+node wave3a.mjs ; node wave3b.mjs ; node wave3c.mjs ; node wave3d.mjs ; node wave3e.mjs   # shots4/wave3*.json
+node wave3f.mjs ; node wave3g.mjs ; node wave3h.mjs ; node wave3i.mjs
+git -C /home/user/work/gbs log --oneline d586aa63..68750830 -S"min-width: max-content" -- src/components/ui/Header.astro   # 2ee584d
+git -C /home/user/work/gbs log --oneline d586aa63..68750830 -S"min-width:36px" -- src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro  # b2611ca
+sha256sum /home/user/work/browser/wave3*.mjs                                    # probe hashes are in the machine receipt

@@ -285,6 +285,26 @@ Raw entries: `evidence/2026-10-06-cls-lcp-shift-sources.json`, `evidence/2026-10
     on `/rodosloviye/` they are Tab stops 1–3 *before* the skip link, exactly as the row states.
   - `GBS-GENESIS6-THEME-TOGGLE-LOW-CONTRAST` — **re-confirmed**: resting icon `rgb(26,26,26)` on `rgb(14,17,22)` = **1.09:1**
     at 1440 in the light reader theme (dark theme: 11.66:1); at 390 that desktop control is 0×0, so the failure is desktop-width.
+- **Third recheck wave on the same fresh build of `68750830`** (probes wave3a–wave3i; receipt
+  `evidence/2026-10-06-matrix-rows-third-wave-at-main.txt`, raw numbers in the `…-machine.json`):
+  - Five rows measured **not-reproducible**, each with fix provenance inside `d586aa63..68750830`:
+    `GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP` (gap 0.0px / overlap 0px at 360–1440; the former shared strip
+    now hit-tests to the search control; provenance `2ee584d`), `GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT`
+    (real mobile emulation at 390/360/414/768/1280: both 44×44 controls inside the viewport and hit-testable;
+    mobile-chrome routes hide the shared header by design), `GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING`
+    (visible 2px `:focus-visible` ring on three Tab stops across two routes), `GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED`
+    (click and Ctrl+K open `.cp-backdrop.is-open` with a visible input, Escape closes) and
+    `GBS-HERMENEUTIKA-MOBILE-SPEED-BADGE-UNDERSIZED` (36×28 badge, 44×44 effective target with 2px clearance
+    from Play, axe `target-size` 0 violations; provenance `b2611ca`).
+  - Reconfirmed with fresh exact numbers: quiz literal markup now **reader-visible** (literal `<em>` in the
+    question and feedback on `krajne-li-isporcheno-serdce`, a literal `<span class="gterm">` inside an answer
+    option on `dzhon-gill-chast-2-uchenyi`), quiz dark contrast 1.08:1 (launch button 2.23:1 in dark),
+    print terminal region 101 nodes / 4,245 chars on genesis-6, Avraam zero-`h1` lifecycle (`data-map-state`
+    ready at 400 ms), antisovetov nested triggers (axe `nested-interactive`, tip 43→19), MobileChrome
+    420px/20px sync lag both directions, `/hard-texts/` touch-search load race (tap 1 → `idle` only, tap 2 opens),
+    Journal skip link, Nagornaya source-link distinction (axe 5/5/4/5), Nagornaya reader scale (chast-1: 25 of 35
+    long paragraphs stay 14px at 1.25), invisible focusable «Наверх», duplicate Home palette closers, and the
+    Kod timeline keyboard gap (no sequential Tab path; the region is programmatically focusable and pans).
 - Positive confirmations: the release path is green again; `audit-pro` passes; skip links work on the three tested shells
   (`/`, `/articles/`, `/articles/kod-da-vinchi/`) plus `/hard-texts/`, `/biografii/` and `/404.html`;
   search, theme and the quiz engine all behave.
