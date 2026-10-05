@@ -26,6 +26,11 @@ live-host claim:    NONE. gospod-bog.ru is unreachable from this sandbox (`curl`
 Scope of the pass, as requested by the owner: how convenient the site is for a reader, how universal the engines are,
 how easily new articles can be written, professional appearance, quality, and "Apple-level" polish.
 
+Routes with browser evidence in this pass: `/`, `/articles/`, `/articles/kod-da-vinchi/`,
+`/articles/steven-lawson-samoobman-i-publichnyy-golos/`, `/articles/dzhon-gill-chast-2-uchenyi/`,
+`/articles/20-antisovetov-pastoru/`, `/nagornaya/chast-1/`, `/karty/`, `/karty/avraam/`, `/map/`, `/hard-texts/`,
+`/biografii/`, `/konfessii/`, `/journal/`, `/404.html` (plus a nested-404 emulation) and 10 `/baptisty-rossii/*` routes.
+
 ## 1. New observations
 
 Every item below was reproduced in this sandbox at the anchor above; the machine evidence paths are in `evidence/`.
@@ -170,6 +175,22 @@ per-node contrast triage with independent recomputation: `evidence/2026-10-06-co
   Non-contrast rules here: `aria-allowed-role` ×2, `label-content-name-mismatch` ×2, `landmark-unique` ×1,
   `link-in-text-block` ×5, `region` ×1.
 
+Library-landing family (new in this pass, full receipt `evidence/2026-10-06-extra-surfaces-pass.txt`):
+
+- `/hard-texts/` — **`color-contrast` 27 nodes** from two tokens: `#78716c` on `#f8f5f0` = **4.41:1** (19 nodes: hero
+  tagline/kicker, `#seriesLabel`, card meta/minutes/abstract) and the accent kicker `rgba(31,78,163,0.7)` → `#6080ba`
+  = **3.64:1** (6 nodes, 10 px bold).
+- `/biografii/` — **`color-contrast` 32 nodes**: the same `#78716c` family at 4.41:1/4.37:1 (22 nodes) plus the accent kicker
+  at 3.61:1/3.64:1 (10 nodes). So one muted token **plus one accent token** carry the whole catalog/landing family
+  (`/articles/`, `/hard-texts/`, `/biografii/`).
+- `/konfessii/` — renders a dark shell regardless of `colorScheme`; 3 contrast nodes: `.crumb` **4.14:1**,
+  `.he` (`rgba(232,200,121,0.55)`) **4.26:1**, `footer` **3.36:1**. Other rules: `label-content-name-mismatch` 1
+  (`a[href$="russkij-baptizm/"]`), `link-in-text-block` 3, `region` 4, and at 390 `landmark-no-duplicate-banner` +
+  `landmark-unique` on `.mcp-top`.
+- `/journal/` — **0 axe violations and 0 console errors** (the only sampled route with no blocked-beacon error), but also
+  **no skip link** and no `main` target: the first Tab stop is the topbar brand link.
+- `/404.html` — no violations in light, one in dark (`.skip-link` itself, low contrast).
+
 Other routes (axe, one viewport each): `/about/` `color-contrast` 1 + `label-content-name-mismatch` 4 + `region` 1;
 `/pastor-series/` `color-contrast` 2 + `aria-allowed-role` 2; `home` `label-content-name-mismatch` 1 (`#heroSearchBar`)
 + `region` 1 (`.sdg`), identical in light and dark and at 390; Lawson `link-in-text-block` 1;
@@ -226,6 +247,7 @@ Raw entries: `evidence/2026-10-06-cls-lcp-shift-sources.json`, `evidence/2026-10
 | LCP/CLS incl. Kod 0.134 light / 0.158 dark with shift sources | verified-browser | `evidence/2026-10-06-cls-lcp-shift-sources.json` |
 | retraction of my own "Спорой" reading (DOM at 3×, exact text) | verified-browser | `evidence/2026-10-06-non-defects-and-negative-findings.txt` |
 | Baptist residual narrows to 4 routes; `spravochnik` reconciled | verified-build | `evidence/2026-10-06-baptist-dateline-current-artifact-recheck.txt` |
+| extra surfaces: hard-texts/biografii accent token 3.6:1, konfessii dark 3.36–4.26:1 and no skip link, journal clean, 404 fixed | verified-browser + verified-build | `evidence/2026-10-06-extra-surfaces-pass.txt`, `.json` |
 | toolchain/NSS/browser setup and its limits (no WebKit, no live host) | verified-build | `evidence/2026-10-06-environment-and-toolchain.txt` |
 
 ## 2. Confirmations and extensions
@@ -239,7 +261,16 @@ Raw entries: `evidence/2026-10-06-cls-lcp-shift-sources.json`, `evidence/2026-10
   with an independent staged probe at the current anchor.
 - `GBS-BAPTISTS-BYLINE-PUBLICATION-DATE-DIVERGENCE` — artifact recheck at the anchor: the residual is now **four** routes, not five;
   `spravochnik` is reconciled (label and `datetime` both 2026-06-14). Detail receipt in `evidence/`.
-- Positive confirmations: the release path is green again; `audit-pro` passes; skip links work on the three tested shells;
+- `GBS-404-RELATIVE-READER-PREFERENCES-ASSETS` — **fixed-current at this anchor.** `dist/404.html` references all three
+  reader-preference assets with root-absolute URLs and the document contains zero non-root-absolute same-origin references;
+  in a Pages-style 404 emulation both a nested 404 (`/deep/nested/missing/`) and the root 404 page load all three with HTTP 200
+  and apply stored Sepia (`body rgb(238,227,200)`), while the control request for the *relative* path under the nested URL
+  still 404s. Repair commit `e86725321` is inside the deployed history. Comment filed with a `closed-by-fix` recommendation.
+- `GBS-JOURNAL-MISSING-SKIP-LINK` — re-confirmed at this anchor (0 skip links, first Tab stop is the topbar brand);
+  `/konfessii/` is added as an additional route with no skip link at all (first Tab stop desktop = «На главную»,
+  mobile = nothing focusable in the header), reported as an evidence-addition to the `GBS-BASELAYOUT-MISSING-SKIP-LINK` class.
+- Positive confirmations: the release path is green again; `audit-pro` passes; skip links work on the three tested shells
+  (`/`, `/articles/`, `/articles/kod-da-vinchi/`) plus `/hard-texts/`, `/biografii/` and `/404.html`;
   search, theme and the quiz engine all behave.
 
 ## 3. Challenges and negative findings
@@ -283,7 +314,7 @@ Raw entries: `evidence/2026-10-06-cls-lcp-shift-sources.json`, `evidence/2026-10
 
 1. Re-run the four contracts with a real WebKit (owner machine or CI artifact retrieval) to locate the red step-8 assertion.
 2. After any contrast repair: rebuild, re-run axe + independent recomputation on `/articles/`, `/articles/kod-da-vinchi/` (both
-   themes), `/nagornaya/chast-1/`, and confirm no new violations.
+   themes), `/nagornaya/chast-1/`, `/hard-texts/`, `/biografii/`, `/konfessii/`, and confirm no new violations.
 3. Re-run the staged article probe after a scaffolder/admission guard exists: one command must produce a publishable route with
    catalog/sitemap/feed/manifest/registry rows, and the probe must fail closed if any surface is missing.
 
@@ -309,5 +340,9 @@ Raw entries: `evidence/2026-10-06-cls-lcp-shift-sources.json`, `evidence/2026-10
   Nagornaya nav contrast (2.55–4.03:1), mobile-bar ARIA conflict, reversible-card name mismatch.
 - Strongest structural item: the article-publication path needs six hand-edited authorities, and the sanctioned writer is a no-op
   for new routes; the official authoring doc describes a toolchain that does not exist.
+- Strongest closure item: `GBS-404-RELATIVE-READER-PREFERENCES-ASSETS` is fixed at this anchor (root-absolute references in the
+  built 404 page + a nested-404 browser witness applying stored Sepia) — a verifier should retire the row rather than re-open it.
+- Coverage note: this pass covers 15 named routes plus the 19-viewport matrix; still NOT VERIFIED are WebKit, TTS,
+  Pagefind facets, Lighthouse, the reading experience of individual hard-texts/biografii articles, and live-host bytes.
 - Everything browser-based here is **local exact-SHA** (production-like dist over HTTP), not live-host; the single pre-existing red
   (Search Modal Contract, WebKit half) is reported, not fixed. No Product file, PR, branch or issue was touched.

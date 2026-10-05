@@ -23,16 +23,18 @@
 
 - Routes checked: `/`, `/articles/`, `/articles/kod-da-vinchi/`, `/articles/steven-lawson-samoobman-i-publichnyy-golos/`,
   `/articles/dzhon-gill-chast-2-uchenyi/`, `/articles/20-antisovetov-pastoru/`, `/nagornaya/chast-1/`, `/karty/`,
-  `/karty/avraam/`, `/map/`, `/hard-texts/`, `10 × /baptisty-rossii/*`, plus the 19-viewport matrix set.
+  `/karty/avraam/`, `/map/`, `/hard-texts/`, `/biografii/`, `/konfessii/`, `/journal/`, `/404.html` (including a
+  Pages-style nested-404 emulation), `10 × /baptisty-rossii/*`, plus the 19-viewport matrix set.
 - Owners/files checked: `src/pages/articles/**`, `src/components/article-pilots/**`, `src/components/HermenevtikaMobileBar.astro`,
   `data/route-profiles/**`, `data/route-search-policy.json`, `data/search-manifest.json`, `migration/page-ownership.json`,
   `scripts/*normalizer*`, `scripts/audit-pro.js`, the four browser contracts, `package.json`, `.github/workflows/**` (read-only),
   `docs/refactor-2026/CONTENT_MODEL_AND_AUTHORING_2026.md`, `docs/ARTICLE-STANDARD-CHARTER.md`.
 - Systems checked: content pipeline / article engine, discovery surfaces (route policy, search manifest, sitemap, RSS,
   Pagefind), reader chrome (rail, TOC, mobile bar, theme, skip links), search modal, quiz engine, maps, CI/CD release path.
-- Explicit exclusions: TTS voices, Pagefind facet behaviour, Lighthouse runs, `/hard-texts/*` reading experience,
-  `/biografii/*`, `/konfessii/*`, 404 page. WebKit: **no engine available in this sandbox** — see NOT VERIFIED in REPORT.md.
-  Everything in `src/components/article-pilots/**` except the two routes named above was not read line-by-line.
+- Explicit exclusions: TTS voices, Pagefind facet behaviour, Lighthouse runs, the reading experience of individual
+  `/hard-texts/*` and `/biografii/*` articles (only their landing pages were audited), `/hard-texts/genesis-6/`.
+  WebKit: **no engine available in this sandbox** — see NOT VERIFIED in REPORT.md.
+  Everything in `src/components/article-pilots/**` except the routes named above was not read line-by-line.
 - Product repo was never modified persistently: every probe edit was reverted (`git status --porcelain` → 0 lines).
 
 ## Files in this folder
