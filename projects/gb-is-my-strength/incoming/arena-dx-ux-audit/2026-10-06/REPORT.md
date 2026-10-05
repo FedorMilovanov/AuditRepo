@@ -6,7 +6,9 @@
 project:            gb-is-my-strength
 source repo:        FedorMilovanov/gb-is-my-strength
 audited anchor:     350848145ee252a4e6ad8b86c9c8e831e2b4cb12  (main at read time, 2026-10-05T21:18:50Z — merge of PR #2170)
-anchor note:        main moved to 68750830 (merge of PR #2171, 2026-10-05T22:06Z) while this pass was being written.
+anchor note:        main moved to 68750830 (merge of PR #2171, 2026-10-05T22:06Z) while this pass was being written; a second
+                    wave then rebuilt current main 68750830 locally and re-tested four matrix rows there (see §2 and
+                    evidence/2026-10-06-matrix-row-recheck-at-main.txt).
                     All browser/build evidence here is tied to 35084814 and was NOT re-taken on 68750830; only the CI state
                     was re-read at the newer head (the red Search Modal Contract lane is still red there).
 environment:        Debian-class sandbox, 2 cores / 3 GB; node v22.22.3; npm 10.9.8
@@ -248,6 +250,7 @@ Raw entries: `evidence/2026-10-06-cls-lcp-shift-sources.json`, `evidence/2026-10
 | retraction of my own "Спорой" reading (DOM at 3×, exact text) | verified-browser | `evidence/2026-10-06-non-defects-and-negative-findings.txt` |
 | Baptist residual narrows to 4 routes; `spravochnik` reconciled | verified-build | `evidence/2026-10-06-baptist-dateline-current-artifact-recheck.txt` |
 | extra surfaces: hard-texts/biografii accent token 3.6:1, konfessii dark 3.36–4.26:1 and no skip link, journal clean, 404 fixed | verified-browser + verified-build | `evidence/2026-10-06-extra-surfaces-pass.txt`, `.json` |
+| four rows re-tested on a fresh current-main build: quiz-next fixed, BaseLayout bypass fixed, mobile-chrome re-confirmed, genesis toggle re-confirmed | verified-browser + verified-source | `evidence/2026-10-06-matrix-row-recheck-at-main.txt`, `.json` |
 | toolchain/NSS/browser setup and its limits (no WebKit, no live host) | verified-build | `evidence/2026-10-06-environment-and-toolchain.txt` |
 
 ## 2. Confirmations and extensions
@@ -269,6 +272,19 @@ Raw entries: `evidence/2026-10-06-cls-lcp-shift-sources.json`, `evidence/2026-10
 - `GBS-JOURNAL-MISSING-SKIP-LINK` — re-confirmed at this anchor (0 skip links, first Tab stop is the topbar brand);
   `/konfessii/` is added as an additional route with no skip link at all (first Tab stop desktop = «На главную»,
   mobile = nothing focusable in the header), reported as an evidence-addition to the `GBS-BASELAYOUT-MISSING-SKIP-LINK` class.
+- **Independent recheck wave on a fresh build of current main `68750830`** (the sandbox was rebuilt between passes; four
+  rows were re-tested in a browser — receipt `evidence/2026-10-06-matrix-row-recheck-at-main.txt`):
+  - `GBS-QUIZ-NEXT-HIDDEN-GILL-V16` — **not reproducible**: `.quiz-next` computes `display:block; visibility:visible; opacity:1`
+    on a Gill v16 route at 390 and 1440 and on `/articles/20-antisovetov-pastoru/`, and a click advances the quiz
+    («Вопрос 2 из 4» / «Вопрос 2 из 10»). The rule the row describes was deleted by commit `2ee584d` (2026-10-04), whose message
+    names this finding. Comment filed with a `closed-by-fix` recommendation.
+  - `GBS-BASELAYOUT-MISSING-SKIP-LINK` — **not reproducible on either named route**: `/hard-texts/genesis-6/` and `/izbrannoe/`
+    now have `main#main-content`, a skip link as the first Tab stop whose Enter sets `#main-content`, and focus entering main
+    afterwards. Comment filed with a `closed-by-fix` recommendation (the class remains real on `/konfessii/`, `/karty/`, journal).
+  - `GBS-MOBILE-CHROME-HIDDEN-FOCUSABLE-BEFORE-SCROLL` — **re-confirmed**: 3 chrome stops at `top=-51` on each of six routes;
+    on `/rodosloviye/` they are Tab stops 1–3 *before* the skip link, exactly as the row states.
+  - `GBS-GENESIS6-THEME-TOGGLE-LOW-CONTRAST` — **re-confirmed**: resting icon `rgb(26,26,26)` on `rgb(14,17,22)` = **1.09:1**
+    at 1440 in the light reader theme (dark theme: 11.66:1); at 390 that desktop control is 0×0, so the failure is desktop-width.
 - Positive confirmations: the release path is green again; `audit-pro` passes; skip links work on the three tested shells
   (`/`, `/articles/`, `/articles/kod-da-vinchi/`) plus `/hard-texts/`, `/biografii/` and `/404.html`;
   search, theme and the quiz engine all behave.

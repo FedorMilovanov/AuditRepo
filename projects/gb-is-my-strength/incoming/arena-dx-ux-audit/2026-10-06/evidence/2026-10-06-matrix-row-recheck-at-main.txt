@@ -1,0 +1,93 @@
+# Recheck of five open matrix rows on a fresh local build of current main 68750830f4725213d80b833015520e5894699838
+
+Method: the sandbox was recreated between passes, so a fresh clone of Product `main` (depth 20, head `68750830`, merge of
+PR #2171) was built with `npm run strangler:build:production-like` + `npm run pagefind:build:dist` and served over
+http://127.0.0.1:8080. Chromium 153.0.8010.0 (patched NSS), Playwright, axe-core. Machine receipts: `wave2.json`,
+`wave2b.json`, `wave2c.json` (kept in the gitignored workspace); values quoted below come from those runs.
+Note on anchors: rows whose last recorded verification was at `d586aa63`/`d0e04a9c` are rechecked here at `68750830`;
+the search-modal red lane is still red at this head, and the deploy lane for `68750830` (run 37380263622) was in progress at
+read time, so this is a local-build witness, not a live-host one.
+
+## 1. `GBS-QUIZ-NEXT-HIDDEN-GILL-V16` — NOT REPRODUCIBLE at this anchor (fix commit identified)
+
+Claim under test: in `@media (max-width:63.99em)`, `[data-gill-v16] .quiz-next{display:none}` hides the "Следующий вопрос"
+control until an `.is-visible` class is added, so the control is unreachable on 15 of 23 quiz routes.
+
+Measured after answering question 1 of the quiz on a real page:
+
+```text
+/articles/dzhon-gill-chast-2-uchenyi/ 390x844   .quiz-next  display=block visibility=visible opacity=1  rect 277x48 (below fold)
+/articles/dzhon-gill-chast-2-uchenyi/ 1440x900  .quiz-next  display=block visibility=visible opacity=1  rect 699x46 (below fold)
+/articles/20-antisovetov-pastoru/     390x844   .quiz-next  display=block visibility=visible opacity=1  rect 277x48 (below fold)
+```
+
+Operability (scrolled into view, trusted click):
+
+```text
+/articles/dzhon-gill-chast-2-uchenyi/ 390: click -> progress «Вопрос 2 из 4»    (advanced)
+/articles/20-antisovetov-pastoru/     390: click -> progress «Вопрос 2 из 10»   (advanced)
+```
+
+Source/artifact state: `css/floating-cluster.css` contains **zero** `quiz-next` rules; the button is styled by
+`src/runtime/article-interactions.css` (`.quiz-launch, .quiz-next { … min-height:46px … }`, and 48px at mobile widths) which
+is emitted as `dist/_astro/ReaderActionsRuntime.BcTUkum_.css`. The legacy `.quiz-next-btn{…display:none}` in `css/site.css`
+is a **different class** and is not what the runtime creates (`src/runtime/article-quiz.js:74,152` sets
+`className = 'quiz-next'`). The removal is commit `2ee584d` (2026-10-04, PR #2167, "scoped Gill quiz ownership"):
+`git show 2ee584d -- css/floating-cluster.css` deletes exactly
+
+```diff
+-  [data-gill-v16] .quiz-next { … }
+-  [data-gill-v16] .quiz-next.is-visible { display: block; }
+```
+
+and its message names this finding: "Quiz lane — GBS-QUIZ-NEXT-HIDDEN-GILL-V16 (supersedes #2165): the Gill hide/reveal rules
+now target the owner button #glsQuizNext".
+Caveat: the "below fold" rects are just the article-flow geometry (the quiz sits far down the page), not a visibility problem.
+The row's mobile-CSS mechanism cannot occur at this anchor, so the row is a candidate for `closed-by-fix`.
+
+## 2. `GBS-MOBILE-CHROME-HIDDEN-FOCUSABLE-BEFORE-SCROLL` — RE-CONFIRMED at this anchor
+
+Sequential Tab trace at scrollY 0, 390x844, the shared Back/Home/Search bar:
+
+```text
+/articles/      stops 6,7,8   = Back/Home/Search, top = -51  (after the visible skip link and header controls)
+/biografii/     stops 6,7,8   = Back/Home/Search, top = -51
+/hard-texts/    stops 6,7,8   = Back/Home/Search, top = -51
+/rodosloviye/   stops 1,2,3   = Back/Home/Search, top = -51  (BEFORE the skip link at stop 4 — exactly the row's case)
+/konfessii/     stops 1,2,3   = Back/Home/Search, top = -51  (no skip link on this route)
+/karty/         stops 1,2,3   = Back/Home/Search, top = -51  (no skip link on this route)
+```
+
+So 3 invisible focusable chrome stops per route are still present, and on `/rodosloviye/` they precede the skip link.
+Unchanged from the row; no new claim.
+
+## 3. `GBS-BASELAYOUT-MISSING-SKIP-LINK` — NOT REPRODUCIBLE at this anchor (both named routes)
+
+The row says `/hard-texts/genesis-6/` and `/izbrannoe/` have no keyboard bypass and a `main` without an id. Measured now on
+both routes, at 1440 and 390:
+
+```text
+/hard-texts/genesis-6/   a.skip-link «Перейти к основному содержимому» href="#main-content";  main#main-content
+                         first Tab stop = that link (top 12); Enter -> location.hash = "#main-content";
+                         next Tab lands inside main (390: «Назад» button, inMain=true)
+                         focus enters main at Tab #13 at 1440 in a straight sequential trace (header has 12 stops)
+/izbrannoe/              identical: skip link -> #main-content, Enter sets the hash, next Tab is «Перейти к статьям»
+                         (inMain=true); focus enters main at Tab #13 at 1440
+```
+
+Both routes now have the exact repair the row asked for (effective bypass + valid main target). Candidate `closed-by-fix`.
+
+## 4. `GBS-GENESIS6-THEME-TOGGLE-LOW-CONTRAST` — RE-CONFIRMED at this anchor
+
+`/hard-texts/genesis-6/` in a light-scheme context: body `rgb(14,17,22)`, the 44x44 `.theme-toggle` sits at (1149,7) with an
+`svg` stroke of `rgb(26,26,26)`; recomputed contrast of the resting icon against its actual surface
+`rgb(14,17,22)` = **1.09:1**, below the 3:1 non-text threshold. Identical value to the row's last recorded measurement.
+In the dark scheme the same control strokes `rgb(245,197,66)` = 11.66:1, i.e. only the light-scheme resting state fails.
+Mobile note: at 390 the `.theme-toggle` box is 0x0 (the mobile header uses its own controls), so the measured failure is a
+desktop-width one.
+
+## 5. Legacy `quiz-next-btn` residue (observation only, not a row)
+
+`css/site.css` (and therefore `dist/css/site.css`) still ships `.quiz-next-btn{…display:none…}`, plus `.quiz-progress`,
+`.quiz-feedback` and `.quiz-focus` rules, while the current runtime never emits `quiz-next-btn`. Dead CSS only — no reader
+impact was demonstrated, so it is recorded as an observation, not filed as a defect.
