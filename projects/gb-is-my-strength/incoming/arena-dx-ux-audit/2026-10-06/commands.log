@@ -1,0 +1,88 @@
+# arena-dx-ux-audit / 2026-10-06 — the commands that produced this evidence (chronological, abridged)
+
+# --- AuditRepo baseline
+python3 scripts/check_auditrepo_structure.py
+python3 scripts/validate_audit_repo.py
+python3 scripts/check_workflow_syntax.py
+python3 scripts/check_workflow_syntax_regression_test.py
+python3 scripts/validate_audit_repo_regression_test.py
+python3 scripts/scaffold_regression_test.py
+python3 scripts/retire_reviewed_refs_regression_test.py
+python3 scripts/matrix_coverage_regression_test.py
+node scripts/repository_history_forensic_audit_regression_test.mjs
+python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+
+# --- product checkout and toolchain
+git clone https://github.com/FedorMilovanov/gb-is-my-strength.git /home/user/work/gbs
+cd /home/user/work/gbs && PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci
+npm i @sparticuz/chromium playwright-core @achingbrain/nss        # /home/user/work/browser
+node -e "import('@sparticuz/chromium').then(async m => console.log(await m.default.executablePath()))"   # -> /tmp/chromium
+python3 - <<'PY'  # rewrite .gnu.version_r of the chromium binary: NSS_3.30 -> NSS_3.22 (string + SysV hash)
+PY
+gcc -shared -fPIC -O1 -o libpk11stub.so pk11stub.c -Wl,--version-script=pk11stub.map   # PK11_HasAttributeSet
+/home/user/work/browser/chrome.sh --version                                            # Chromium 153.0.8010.0
+
+# --- baseline gates on clean HEAD
+/home/user/work/run_baseline.sh          # 26 gates, results in evidence/2026-10-06-baseline-gates-clean-head.txt
+
+# --- production-like build + local server
+npm run strangler:build:production-like
+npm run pagefind:build:dist
+cd dist && python3 -m http.server 8080 --bind 0.0.0.0
+
+# --- browser passes
+node /home/user/work/browser/audit.mjs        # 19 viewports, axe + metrics + screenshots
+node /home/user/work/browser/pass2.mjs        # LCP/CLS shift attribution + local contrast computations
+node /home/user/work/browser/contrast.mjs     # axe color-contrast + independent recomputation per node
+node /home/user/work/browser/interact.mjs     # CTRL+K palette, theme toggle, skip link, reader, mobile bar, quiz
+node /home/user/work/browser/interact2.mjs    # palette typing/results, skip link settle, quiz answer->next
+node /home/user/work/browser/quiz2.mjs        # quiz option geometry/hit-testing
+node /home/user/work/browser/quiz3.mjs        # full 10-question run at 1440 and 390
+node /home/user/work/browser/zoom.mjs         # byline badge at deviceScaleFactor 3 (retraction evidence)
+node /home/user/work/browser/map.mjs          # /karty/ and /karty/avraam/ structure + placeholder image
+
+# --- CI / release state
+gh run list --repo FedorMilovanov/gb-is-my-strength --limit 15
+gh api "repos/FedorMilovanov/gb-is-my-strength/commits/35084814.../check-runs?per_page=100"
+gh run view 37352186383 --repo FedorMilovanov/gb-is-my-strength --json jobs
+gh api repos/FedorMilovanov/gb-is-my-strength/actions/jobs/111905495568
+gh run list --workflow deploy.yml --limit 8
+gh api "repos/FedorMilovanov/gb-is-my-strength/deployments?per_page=5&environment=github-pages"
+gh api repos/FedorMilovanov/gb-is-my-strength/deployments/6866820381/statuses
+gh api repos/FedorMilovanov/gb-is-my-strength/pages
+
+# --- re-running the red contracts locally (environment patches only; reverted afterwards)
+mkdir -p ~/.cache/ms-playwright/chromium-1234/chrome-linux64
+mkdir -p ~/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64
+# both point at a wrapper that sets LD_LIBRARY_PATH/LD_PRELOAD and execs the patched binary
+CHROMIUM_EXEC_PATH=/home/user/work/browser/chrome.sh SANDBOX_EGRESS_FILTER=1 node scripts/search-modal-browser-contract.mjs --dist=dist
+# ... same for search-scope-semantics / app-search-surface / header-cluster contracts
+git checkout -- .    # every product-repo modification used for these runs was reverted; tree verified clean
+
+# --- article-add friction probe (staged; reverted at the end)
+# stage 1: src/content/articles/probe-audit-test-article.mdx -> npm run astro:build (104 pages, no route)
+# stage 2: src/pages/articles/probe-audit-test-article/index.astro -> npm run astro:build (105 pages) + npm run page-ownership:check (FAIL)
+# stage 3: migration/page-ownership.json + data/route-profiles/...json -> page-ownership PASS; rss/sitemap normalizers FAIL without profile
+# stage 4: data/route-search-policy.json + data/search-manifest.json (publishedTime/readTime) + two normalizer writes
+# stage 5: production-like rebuild + pagefind -> slug present in catalog/sitemap/feed/manifest/registry
+git checkout -- . && rm -rf src/pages/articles/probe-audit-test-article src/content/articles/probe-audit-test-article.mdx \
+    data/route-profiles/articles-probe-audit-test-article.json audit
+git status --porcelain   # 0 lines
+
+# --- current-state recheck of an existing matrix row
+grep -o '<time[^>]*>[^<]*</time>' dist/baptisty-rossii/<slug>/index.html    # 10 Baptist routes
+
+# --- engine universality + i18n hypothesis correction
+find src -iname '*i18n*' -o -iname '*locale*' -o -iname '*dictionary*'    # -> nothing; there is no i18n layer
+grep -rn "hmBottomBtn|hmSpdBadge|hmSectionBtn|hmSheet" src/               # -> DOM ids, all in HermenevtikaMobileBar.astro
+sed -n 1,62p src/components/article-pilots/_shared/mobileChromeRegistry.ts   # config-driven chrome engine registry
+grep -n mobileChrome scripts/lib/public-surface-registry.js               # profile.mobileChrome || registry
+python3 - <<'PY'   # 13 registry entries; engines series 7 / page 5 / article 1; 0 of 106 route profiles have mobileChrome
+PY
+grep -n "^## " docs/SERIES-ENGINE-GUIDE.md   # §2 six steps for a new series article, §3 four steps for a new series
+npm run engine:guard                          # PASS incl. browser sweep (relations 9/9), exit 0
+
+# --- CI state re-read at the newer head while this pass was being written
+gh run list --repo FedorMilovanov/gb-is-my-strength --workflow search-modal-contract.yml --limit 6
+gh api repos/FedorMilovanov/gb-is-my-strength/commits/<first-merge>/check-runs   # 21 success / 5 skipped / 1 failure
+gh api repos/FedorMilovanov/gb-is-my-strength/check-runs/111905495568/annotations   # generic exit-code-1 only

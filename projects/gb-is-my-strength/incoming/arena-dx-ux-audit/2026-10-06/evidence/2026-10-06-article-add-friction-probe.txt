@@ -1,0 +1,79 @@
+# Controlled probe: what does it actually take to publish one new article? (anchor 35084814)
+
+Method: a real article was added to a clean checkout in controlled stages and the repository's own gates/normalizers were run
+after each stage. Nothing was committed to Product; every probe file was removed with `git checkout -- .` + `rm`, and the
+tree was verified clean afterwards (`git status --porcelain` -> 0 lines).
+
+## Stage 0 - baseline
+- `npm run page-ownership:check` PASS (105 route files, 105 declared routes).
+- `node scripts/editorial-metadata-registry.js --check` -> "Eligible routes: 72; Registry records: 72; complete".
+- `npm run astro:build` builds 104 pages.
+
+## Stage 1 - add only the content file (src/content/articles/probe-audit-test-article.mdx)
+- `npm run astro:build` -> exit 0, still 104 pages; **no /articles/probe-audit-test-article/ output**.
+- Content collections are loaded and validated (frontmatter schema is real), but nothing publishes the entry.
+  => An MDX file alone produces zero reader-visible output. `npm run new:article` does not exist in package.json.
+
+## Stage 2 - add a generic route shell (src/pages/articles/<slug>/index.astro, 26 lines, ArticleLayout + <Content/>)
+- `npm run astro:build` -> exit 0, 105 pages, dist/articles/probe-audit-test-article/index.html exists.
+- The page renders the shared article treatment (reader rail, TOC, author card, byline, JSON-LD) - the generic path works.
+- `npm run page-ownership:check` -> **FAIL**: "src page is not declared in migration/page-ownership.json:
+  src/pages/articles/probe-audit-test-article/index.astro".
+
+## Stage 3 - declare ownership + route profile + flip draft/noindex
+- migration/page-ownership.json gains one row; new file data/route-profiles/articles-probe-audit-test-article.json.
+- `npm run page-ownership:check` PASS (105 route files / 106 declared routes).
+- `npm run migration:metadata:check:strict` PASS (106 public surfaces) - i.e. this gate does NOT require the route profile.
+- `node scripts/rss-feed-normalizer.js --check` and `node scripts/sitemap-policy-normalizer.js --check` -> both **FAIL** with
+  "production Astro route has no route profile" until the profile file exists, then both pass. The profile file is therefore
+  required by normalizers but not by the strict metadata gate.
+- `node scripts/editorial-metadata-registry.js --check` -> FAIL: "metadata record missing".
+- `node scripts/search-manifest-policy-normalizer.js --write` -> exit 0 and prints
+  "Search manifest migration candidates: 0 / existing-row drift: 0 / No search policy or manifest migration changes required",
+  producing an EMPTY diff. The sanctioned writer therefore cannot register a new route.
+
+## Stage 4 - hand-author the discovery rows (the step with no machine path)
+Required by hand, in two different vocabularies:
+- data/route-search-policy.json row: indexPolicy/pagefindPolicy/searchManifestPolicy/sitemapPolicy/rssPolicy + contentKind +
+  librarySection + topicCategory.
+- data/search-manifest.json row with **publishedTime / modifiedTime / readTime** - note these are NOT the frontmatter names
+  (frontmatter uses publishedAt / updatedAt / readingTime). Writing publishedAt/readingTime instead passed `--check` silently
+  and then failed far away in the RSS writer with "search-manifest item missing publishedTime".
+Then:
+- `node scripts/editorial-metadata-registry.js --write` -> 73 records; it also rewrote 5 unrelated supplement files
+  (diotrophes-wave12, lawson-publication-20260930, nagornaya-native-chapters, pastor-series-ii-ix-20260908, teen-series-20260910)
+  by filling `observations` drift, i.e. a single-article registration produces diff noise in other lanes' files.
+- `node scripts/sitemap-policy-normalizer.js --write` -> writes the sitemap entry (only after publishedTime exists).
+- `node scripts/rss-feed-normalizer.js --write` -> writes feed.xml.
+- `npm run content:guard` stayed exit 0 but reports "+1 current delta"; `npm run page-ownership:dist:production-like` PASS.
+
+## Stage 5 - final result with every row hand-registered
+- production-like build + pagefind: exit 0; the new article appears in the catalog (1), dist sitemap (2), dist feed (2),
+  search-manifest (3), editorial registry (4); Pagefind indexed 96 pages and the new slug has its own fragment file.
+- So the article IS publishable - after 6 file edits across 6 authorities plus 2 normalizer writes.
+
+## Friction inventory (measured, not opinion)
+1. No scaffolder: no `new:article`/`new:article.mjs` in package.json or scripts/.
+2. Two field vocabularies for the same facts (frontmatter `publishedAt/updatedAt/readingTime` vs manifest
+   `publishedTime/modifiedTime/readTime`) with no shared schema and a misleading failure message.
+3. `search-manifest-policy-normalizer.js --write` is a no-op for new routes (empty diff, exit 0).
+4. `editorial-metadata-registry.js --write` rewrites unrelated supplement files.
+5. Registry coverage measured at this SHA: of 107 route profiles, `contentSourceMode=mdx-native` is used by 23 routes and
+   `mdxStatus=canonical` by 23 (of which only 2 are `routeType=article`: steven-lawson-samoobman-i-publichnyy-golos and my probe);
+   the other 21 canonical MDX routes are `surface=series` (heart/teen/hard-texts families). The remaining 32 of 37
+   `routeType=article` profiles are `mdxStatus=reference-only` and are rendered from bespoke Astro component shells.
+6. Only 1 of the 51 route directories under src/pages/articles/ uses the generic `ArticleLayout` shell (Lawson, added 2026-09-30);
+   the other 50 are per-route shells over 40 pilot directories / 241 files in src/components/article-pilots/.
+7. Documentation drift: docs/refactor-2026/CONTENT_MODEL_AND_AUTHORING_2026.md (dated 2026-06-12) promises `npm run new:article`
+   and authoring components `<Verse>`, `<OriginalWord>`, `<SourceRef>`, `<Note>`, `<Warning>`, `<ArgumentMap>`, `<Timeline>`,
+   `<MapLink>`, a `cover`/`coverAlt` frontmatter pair and a collection-driven catalog/sitemap/RSS. Measured at this SHA:
+   `new:article` does not exist; greps for those component names in src/components return 0 files each (the only MDX component
+   usage anywhere in src/content/articles/*.mdx is <LawsonSourceRef> x292, <LawsonTerm> x5, <LawsonBibliography> x1 - all inside
+   the Lawson pilot);
+   src/content.config.ts has no `cover`/`coverAlt` (it has ogImage/ogImageAlt), and the catalog/sitemap/RSS are registry-driven,
+   not collection-driven. The real editorial standard is docs/ARTICLE-STANDARD-CHARTER.md (54 standards); the authoring doc is
+   the one that promises the missing ergonomics.
+8. CI cost of one public article: its path set (src/content/**, src/pages/**, migration/page-ownership.json,
+   data/route-profiles/**, data/search-manifest.json, data/route-search-policy.json, data/editorial-metadata.json) matches the
+   path filters of 22 of the 77 product workflows; individually migration/page-ownership.json and data/search-manifest.json are
+   referenced by 9 workflows each.
