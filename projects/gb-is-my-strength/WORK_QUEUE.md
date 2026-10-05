@@ -14,6 +14,13 @@ Before starting any lane, inspect current Product `main`, open PRs/branches and 
 - Evidence/dispositions: `incoming/arena-incompleteness-auditor/2026-09-30/REPORT.md`, Product main `d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b`.
 
 
+## 2026-10-06 authoring-DX candidates (not current defects)
+
+- **Article scaffolder + fail-closed admission guard:** at `350848145ee252a4e6ad8b86c9c8e831e2b4cb12` publishing one article still needs six hand-edited authorities (content file, route shell, `migration/page-ownership.json`, `data/route-profiles/**`, `data/route-search-policy.json`, `data/search-manifest.json`) plus two normalizer writes; `search-manifest-policy-normalizer.js --write` is a no-op for a new route (exit 0, empty diff), and `editorial-metadata-registry.js --write` rewrote five unrelated supplement files for one probe article. Candidate: one scaffolder command + a fail-closed check (effective route ⇒ every discovery surface has it), frontmatter↔manifest vocabulary mapped once. Owner decision: whether the six-authority model stays.
+- **Authoring documentation truth:** `docs/refactor-2026/CONTENT_MODEL_AND_AUTHORING_2026.md` promises `npm run new:article`, `<Verse>`/`<SourceRef>`/`<Timeline>`-style authoring components, `cover`/`coverAlt` and a collection-driven catalog/sitemap/RSS. Measured now: `new:article` does not exist, those component names match 0 files in `src/components`, `src/content.config.ts` has no `cover`/`coverAlt`, and catalog/sitemap/RSS are registry-driven. `docs/ARTICLE-STANDARD-CHARTER.md` is the real standard. Correct or retire the older document.
+- **Search-modal contract environment fragility:** the contract fails on any console error, so a blocked third-party beacon alone reddens it; consider narrowing the assertion to first-party/page errors before the WebKit red lane is triaged.
+- Evidence/dispositions: `incoming/arena-dx-ux-audit/2026-10-06/REPORT.md`, `evidence/2026-10-06-article-add-friction-probe.txt`, `artifacts/probe-registry-edits.txt`, Product main `350848145ee252a4e6ad8b86c9c8e831e2b4cb12`.
+
 ### Search continuation fixture fail-closed hardening — moved from Product #1242
 
 - Provenance: Product issue `#1242`, created from final audit of Search continuation lane `#1209`; historical exact candidate `882d90422e3e0f3703c9a339fbe7e21a54500e89`, Search Modal run `31246406392`.
