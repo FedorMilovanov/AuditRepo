@@ -1,0 +1,26 @@
+# Cheap current-state recheck of one existing matrix row (artifact witness, anchor 35084814)
+
+Row rechecked: `GBS-BAPTISTS-BYLINE-PUBLICATION-DATE-DIVERGENCE`.
+Method: production-like build of 35084814, grep of every `<time ...>...</time>` in each built Baptist article page.
+
+iniciativnaya-gruppa   <time datetime="2026-06-08T00:00:00+03:00">13 июня 2026</time>
+podpolnaya-pechat      <time datetime="2026-06-09T00:00:00+03:00">13 июня 2026</time>
+spravochnik            <time datetime="2026-06-14T00:00:00+03:00">14 июня 2026</time>
+vsehib-1944            <time datetime="2026-06-07T00:00:00+03:00">13 июня 2026</time>
+sovetskaya-noch        <time datetime="2026-06-06T00:00:00+03:00">13 июня 2026</time>
+dva-sezda-1884         <time datetime="2026-06-03T00:00:00+03:00">3 июня 2026</time> <time datetime="2026-08-22T12:01:29.000Z">13 июня 2026</time>
+peterburgskaya-liniya  <time datetime="2026-06-04T00:00:00+03:00">4 июня 2026</time> <time datetime="2026-08-20T00:00:00+03:00">20 августа 2026</time>
+goneniya-i-sovest      <time datetime="2026-06-05T00:00:00+03:00">5 июня 2026</time> <time datetime="2026-08-22T13:32:07.000Z">13 июня 2026</time>
+noch-na-kure           <time datetime="2026-06-01T00:00:00+03:00">1 июня 2026</time> <time datetime="2026-08-22T10:21:51.000Z">13 июня 2026</time>
+yuzhnaya-shtunda       <time datetime="2026-06-02T00:00:00+03:00">2 июня 2026</time> <time datetime="2026-08-22T11:01:22.000Z">13 июня 2026</time>
+
+Findings:
+- The four-route residual is unchanged: iniciativnaya-gruppa, podpolnaya-pechat, vsehib-1944, sovetskaya-noch still render a
+  single dateline whose label «13 июня 2026» does not name the instant in its own `datetime` (June 8/9/7/6).
+- The spravochnik part of the row is now resolved: label and `datetime` agree (2026-06-14 / «14 июня 2026»). The earlier
+  "JSON-LD/registry say June 10" wording no longer describes this SHA; Product commit 888af5d2 ("reconcile Spravochnik
+  publication to 14 June") is in the deployed history. The row narrows 5 -> 4 routes for the label/instant half.
+- The five repaired routes keep the two-slot shape. Note (observation only, not filed): in four of them the update slot's
+  visible label «13 июня 2026» carries the modification instant 2026-08-22T…Z, which the current matrix already treats as
+  inside the approved exact-instant contract; no new row is opened for it here.
+Boundary: artifact witness on a local exact-SHA build; no live-host bytes were retrievable from the sandbox.

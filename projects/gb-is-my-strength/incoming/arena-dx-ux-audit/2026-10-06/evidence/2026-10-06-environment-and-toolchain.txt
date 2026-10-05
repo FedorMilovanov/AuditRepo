@@ -1,0 +1,43 @@
+# Environment actually used in this pass (2026-10-06, sandbox)
+
+Measured, not assumed. Anything below was executed in this session.
+
+## Sandbox baseline
+- workspace: /home/user/AuditRepo (AuditRepo HEAD 3831d1c1a719f079e9e617598df55efa7678e6ab, branch arena/01a10d48-auditrepo)
+- product checkout: /home/user/work/gbs = FedorMilovanov/gb-is-my-strength, main = 350848145ee252a4e6ad8b86c9c8e831e2b4cb12 (2026-10-05T21:18:50Z), clone 328 MB
+- node v22.22.3, npm 10.9.8; `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci` -> added 488 packages, exit 0
+- CPU 2 cores, RAM 3 GB, 20 GB free
+
+## Network reachability (bash egress)
+- github.com -> HTTP 200; `gh` authenticated; `gh api` works
+- registry.npmjs.org -> works (npm ci, npm i)
+- gospod-bog.ru -> curl exit 35 / http_code 000 (TLS handshake killed), DNS resolves to 185.199.108-111.153 (GitHub Pages)
+  => live-host byte/status verification is NOT available from this sandbox; all browser evidence below is exact-SHA
+     local production-like dist served over HTTP, never a live-host claim.
+- mc.yandex.ru -> blocked (net::ERR_CONNECTION_CLOSED) => the single console error class on every page is a sandbox
+  egress artifact, recorded as such and explicitly not a defect.
+
+## Browser (required for this pass)
+- @sparticuz/chromium + @achingbrain/nss + playwright-core installed via npm; chromium.br unpacked to /tmp/chromium (199 MB binary),
+  copied to /home/user/work/browser/chromium, mode 0700.
+- ldd: only libnspr4/libnss3/libnssutil3 were missing; supplied from @achingbrain/nss/linux via LD_LIBRARY_PATH.
+- NSS_3.30 requirement patched to the available NSS_3.22: .gnu.version_r record for libnss3.so rewritten for BOTH the
+  string ("NSS_3.30" -> "NSS_3.22") and the SysV hash (0x8926450 -> 0x8926462). Without the hash change the loader still rejects it.
+- missing symbol PK11_HasAttributeSet: gcc stub + version script (NSS_3.22 { global: PK11_HasAttributeSet; local: *; })
+  supplied through LD_PRELOAD.
+- /home/user/work/browser/chrome.sh wraps: LD_LIBRARY_PATH + LD_PRELOAD + --no-sandbox --disable-dev-shm-usage --disable-gpu.
+- verified: `chrome.sh --version` -> "Chromium 153.0.8010.0"; screenshots, axe-core (npm axe-core) and Playwright pass 1/2 ran headless.
+- `npx lighthouse --version` -> 13.5.0 (installed); no Lighthouse run is claimed in this pass (Lab LCP/CLS were measured directly from
+  PerformanceObserver entries instead, which is why `lcp_ms` is present for every page).
+
+## Product-repo Playwright integration (used to re-run Product contracts, not only my own scripts)
+- Product repo pins playwright ^1.62.1 whose chromium revision dir is `chromium-1234` / `chromium_headless_shell-1234`.
+- Created those two directories pointing at the same patched binary, therefore Product contract scripts run unmodified.
+- WebKit: `npm view @playwright/browser-webkit dist.unpackedSize` = 15,566 bytes => it is a downloader shim, not a bundled engine;
+  the WebKit build itself is fetched from cdn.playwright.dev, which is not reachable, and WebKit's system library set cannot be
+  installed because apt is dead. Consequence: the WebKit half of Product contracts is NOT VERIFIED in this pass.
+
+## Local gate execution (product repo)
+- production-like build: `npm run strangler:build:production-like` exit 0, 104 page(s), copy-legacy 1018 files,
+  editorial metadata projection 72/72 routes, reader linear-text projection 62 files / 68 articles.
+- `npm run pagefind:build:dist` exit 0, "Indexed 96 pages" (95 pages in the clean-HEAD rerun), 27,848 words.

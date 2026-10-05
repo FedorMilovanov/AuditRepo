@@ -1,0 +1,49 @@
+# Baseline gates on CLEAN product HEAD 350848145ee252a4e6ad8b86c9c8e831e2b4cb12 (before any probe edit)
+
+Rule followed: pre-existing red is reported, never silently repaired. Working tree was clean (`git status --porcelain` empty)
+when this table was produced. Times are wall-clock seconds in the 2-core sandbox.
+
+gate                                                             exit  seconds
+npm run validate:all                                               0     3
+npm run owner:ui-guard                                             0     1
+npm run articles:visual-parity:audit                               0     0
+npm run home:visual-parity:audit                                   0     0
+npm run catalogs:visual-parity:audit                               0     0
+npm run tokens:check                                               0     1
+npm run css:layer:validate                                         0     0
+npm run article:qa                                                 0     0
+npm run readable-audit                                             0     2
+npm run editorial:lint                                             0     1
+npm run data:consistency                                           0     0
+npm run content:guard                                              0     0   (43 baseline pages, +3 current delta, non-blocking H1 notes)
+npm run mdx:structure:audit                                        0     0
+npm run astro:audit:article-mdx:strict                             0    170
+npm run migration:metadata:check:strict                            0     4   (106 public surfaces)
+npm run page-ownership:check                                       0     0   (105 route files / 105 declared)
+npm run content:parity                                             0     1
+npm run sources:hygiene                                            0     0
+node scripts/audit-pro.js                                          0     6   <-- the command that blocked the release on 2026-09-30/10-01
+npm run native:runtime:audit:strict                                0     1
+npm run gill:claims:surface:audit                                  0     0
+npm run schema:rich-results:audit                                  0     0
+npm run dist:jsonld:audit                                          0     2   (registry covers 105 production routes: 96 indexable / 9 noindex)
+npm run sw:dist:audit                                              0     0
+npm run engine:contracts                                           0     4   (incl. series facade + nagornaya bar asset contract)
+npm run visual:parity:production                                   0     0
+
+Result: 26/26 baseline gates green on clean HEAD. No pre-existing red gate was found locally in this set.
+Boundary: this is not the whole CI surface; the complete `validate:static-publication` chain and WebKit-dependent contracts
+were not all re-run (see the CI section and the NOT VERIFIED list in REPORT.md).
+
+Also verified in the same clean state:
+  python3 scripts/check_auditrepo_structure.py                 -> AUDITREPO STRUCTURE CHECK: PASS
+  python3 scripts/validate_audit_repo.py                       -> AUDITREPO VALIDATION: PASS
+  python3 scripts/check_workflow_syntax.py                     -> PASS (5 workflows; PyYAML 6.0.3 checksum verified)
+  python3 scripts/check_workflow_syntax_regression_test.py     -> PASS
+  python3 scripts/validate_audit_repo_regression_test.py       -> PASS
+  python3 scripts/scaffold_regression_test.py                   -> PASS
+  python3 scripts/retire_reviewed_refs_regression_test.py      -> PASS
+  python3 scripts/matrix_coverage_regression_test.py           -> PASS
+  node scripts/repository_history_forensic_audit_regression_test.mjs -> PASS
+  python3 scripts/check_matrix_coverage.py --project projects/gb-is-my-strength
+      -> matrix: 30 active ids, 0 closed rows, 30 open rows; evidence files: 773; OK

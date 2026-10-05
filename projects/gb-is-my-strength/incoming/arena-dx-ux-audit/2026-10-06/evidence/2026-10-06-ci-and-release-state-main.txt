@@ -1,0 +1,68 @@
+# CI / release state of product main 350848145ee252a4e6ad8b86c9c8e831e2b4cb12 (read 2026-10-06 via gh api)
+
+## Commit check-runs at this SHA (excluding the repeated `diagnostics` helper runs of notify-on-failure)
+total check runs: 75; of the 27 non-diagnostic runs at this SHA:
+  21 success, 5 skipped (path-filtered jobs), 1 failure.
+  failure: "Search combobox, modal and touch contract" (workflow Search Modal Contract, run 37352186383,
+           started 2026-10-05T17:56:24Z) -> job 111905495568.
+  skipped examples: Canonical headline autofix, Placement and asset autofix, Scripture occurrence index autofix,
+           Search manifest/RSS/sitemap autofix, Diotrophes live extension source contract.
+
+## The failing job, step by step (gh api repos/.../actions/jobs/111905495568)
+step 1 Set up job                                  success
+step 2 Checkout exact source                        success
+step 3 Set up Node 22.23.1                          success
+step 4 Install immutable dependencies               success
+step 5 Validate source contracts                    success
+step 6 Build production-like publication            success
+step 7 Install Chromium and WebKit                  success
+step 8 Validate Search modal runtime                FAILURE   <-- the only red step
+steps 9-10 skipped/success
+Step 8 runs four browser contracts:
+  scripts/search-modal-browser-contract.mjs --dist=dist
+  scripts/search-scope-semantics-browser-contract.mjs
+  scripts/app-search-surface-browser-contract.mjs --dist=dist
+  scripts/header-cluster-browser-contract.mjs --dist=dist
+
+## Is the red chronic? `gh run list --workflow search-modal-contract.yml` (abridged)
+  success  528771be  2026-10-05T17:27:34Z  run 37348573445
+  success  6ce0102e  2026-10-05T17:24:39Z  run 37348208729
+  success  fdaabf0c  2026-10-05T11:10:24Z  run 37301221736
+  failure  35084814  2026-10-05T17:56:24Z  run 37352186383   <-- first failure = current main HEAD
+  failure  e5c77d62  2026-10-05T20:18:54Z, ebf5121d 20:52, b2611caf 21:08, db498d59 21:11, fad890a6 21:13,
+           af90af3b 21:35  (later PR-branch runs at later heads)
+Interpretation: the workflow went red on the merge that produced the current main HEAD (35084814, "Merge pull request #2170 ...
+Lawson theme rhetoric final") and has stayed red on every later run sampled. Only this one check is red on main.
+
+## Local reproduction attempt of step 8 (Chromium only)
+Dist = production-like build of the same SHA; the four contracts were run with the sandbox Chromium 153 through
+`executablePath` and with two environment-only console filters (blocked marketing beacon + the CSP img-src message that
+arises solely because production-absolute icon URLs are served from 127.0.0.1):
+  search-modal-browser-contract.mjs        PASS 4/4   (chromium 1440x900 + 390x844 + both continuation contracts,
+                                                       Pagefind windows 12/24/27, fallback 12/24/25, stale-query invalidation true)
+  search-scope-semantics-browser-contract  PASS 4/4
+  app-search-surface-browser-contract      8/8 PASS  (all app surfaces: /map, /karty/ishod, /konfessii/russkij-baptizm ...)
+  header-cluster-browser-contract          PASS (18 geometry cases, 2 interaction contexts)
+Before the filters, the very first assertion failed with exactly one console error: 'Failed to load resource:
+net::ERR_CONNECTION_CLOSED', i.e. the sandbox-blocked mc.yandex.ru beacon. That is an egress artifact here, and it is also
+worth noting as a fragility of the contract itself (any blocked third-party beacon reddens it), but it does NOT explain the CI
+failure, where the beacon is reachable.
+Conclusion: the Chromium half of the failing step is green at this SHA; the remaining unreachable half is WebKit
+(see environment evidence: WebKit cannot be installed or run in this sandbox), so the failure locus is narrowed to the
+WebKit cases or to WebKit-only assertions. Not proven further in this pass.
+
+## Release path (the 2026-09-30/10-01 blocker is gone at this SHA)
+- Deploy to GitHub Pages, push run on main 35084814 = success (run 37352186501, started 2026-10-05T17:56:25Z);
+  its steps "Build and validate immutable release candidate" and "Promote exact readiness candidate" both = success.
+- deployment 6866820381 (sha 35084814, environment github-pages) -> status success at 2026-10-05T18:28:19Z.
+- repos/FedorMilovanov/gb-is-my-strength/pages -> {"status":"built","build_type":"workflow","html_url":"https://gospod-bog.ru/"}
+- Later successful deployments exist at a148c8aa / 05a45491 / e8672532 / 2ee584d3 / b601072b / 888af5d2 / 69d3aa13,
+  i.e. production advanced well past the SHA that the matrix still described as "live d0e04a9c".
+- Source of the unblock: commit 69d3aa13361063a6aaa6272553c4874866829fa0 "content(lawson): canonical hardened article +
+  unblocked deploy gate (supersedes #2153, #2154) (#2155)" (2026-10-02T17:52:28Z) added the missing discovery rows;
+  05a454914 ("content(lawson): finalize sourced article and publication audit (#2163)") followed.
+- Locally at this SHA: `node scripts/audit-pro.js` exit 0 (it was the failing command on 2026-09-30), and
+  /articles/steven-lawson-samoobman-i-publichnyy-golos/ is present in data/route-search-policy.json (1),
+  data/search-manifest.json (3), dist/sitemap.xml (2), dist/feed.xml (2), dist/articles/index.html (1).
+- Live-host bytes could not be fetched from the sandbox (curl 000), so "production serves the repaired content" is
+  CI/deployment-API evidence, not a live-byte witness. No live claim is made.
