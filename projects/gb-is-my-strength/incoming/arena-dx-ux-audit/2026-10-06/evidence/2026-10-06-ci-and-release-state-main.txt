@@ -66,3 +66,33 @@ WebKit cases or to WebKit-only assertions. Not proven further in this pass.
   data/search-manifest.json (3), dist/sitemap.xml (2), dist/feed.xml (2), dist/articles/index.html (1).
 - Live-host bytes could not be fetched from the sandbox (curl 000), so "production serves the repaired content" is
   CI/deployment-API evidence, not a live-byte witness. No live claim is made.
+
+## Follow-up in the second wave (fresh clone, main 68750830) — where the red lane stands and what changed at the red start
+
+- The lane is **still red at the newest head**: run `37380263542` (head `68750830`, 2026-10-05T22:06Z) completed `failure`,
+  and the check-run output carries no text (`output.title/summary/text` = null, `annotations_count` = 1 with only
+  "Process completed with exit code 1." at `.github`). The three runs before it (`d3afb9a6`, `af90af3b`, `3e176955`) are
+  failures too; the last green runs in this workflow were `528771be` and `6ce0102e` at 17:24–17:27Z on 2026-10-05.
+- **First red delta identified.** The green→red transition is `528771be` (green) → `35084814` (red), i.e. the merge of
+  PR #2170 from branch `audit/lawson-theme-rhetoric-final`. That merge brought exactly six files into main
+  (`git diff 3508481^1..3508481 --stat`):
+  `data/scripture-search-index.json` (a one-line change deep inside the occurrence data), `scripts/article-mdx-pilot-audit.js`,
+  the new `scripts/article-theme-coherence-audit.js`, `scripts/home-progressive-enhancement-browser-test.js`,
+  the Lawson article MDX, and `src/styles/lawson-article.css` (84 lines rewritten). `data/scripture-search-index.json` is
+  itself one of the workflow's path triggers, which is why this workflow ran on that merge at all.
+  This is a pointer, not a proven cause: the Chromium half of all four contracts passes at `35084814` in this sandbox, so the
+  failing assertion is in the half this sandbox cannot run.
+- **Where the assertion text actually lives (for whoever can read GitHub with a browser):** the first failing command in the
+  step aborts it, and each script writes its own report under `reports/search-modal-contract/**`, uploaded as the artifact
+  `search-modal-contract-<run_id>` (2.7 MB for run 37380263542, not expired). Reading that artifact in the UI gives the
+  per-case conclusion and the assertion message. From this sandbox both content routes are blocked:
+  `gh run view --log-failed` → 404/EOF, and `gh run download 37380263542` → `EOF` from
+  `productionresultssa1.blob.core.windows.net` (same class of egress restriction as the live host). So the root cause remains
+  NOT VERIFIED here.
+- **The WebKit-only assertion surface is small and named**, for whoever debugs the artifact:
+  `search-modal-browser-contract.mjs` runs `webkit` at 1440×900 and 390×844 (with one deliberate WebKit-only tolerance for a
+  local-certificate console diagnostic); `search-scope-semantics-browser-contract.mjs` runs `webkit` and `webkit-mobile` and has
+  exactly one WebKit-only branch (native Tab into the next scope chip is replaced by an explicit `.focus()`);
+  `app-search-surface-browser-contract.mjs` runs a `webkit` platform scenario (Mac-style `Alt+Meta+K` / `Shift+Meta+K`
+  invalid-shortcut expectations, `isMac: true`); `header-cluster-browser-contract.mjs` covers `/izbrannoe/`,
+  `/hard-texts/genesis-6/` and `/` at widths 360/390/414/768.
