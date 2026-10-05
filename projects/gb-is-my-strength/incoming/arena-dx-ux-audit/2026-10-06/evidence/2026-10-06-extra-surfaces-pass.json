@@ -1,0 +1,779 @@
+[
+  {
+    "id": "hard-texts",
+    "path": "/hard-texts/",
+    "w": 1440,
+    "scheme": "light",
+    "status": 200,
+    "title": "Тайны человеческого сердца — книга статей | Господь Бог — Сила Моя",
+    "perf": {
+      "cls": 0.0133,
+      "lcp": {
+        "time": 148,
+        "tag": "P"
+      }
+    },
+    "dom": {
+      "h1": [
+        "Тайны человеческого сердца"
+      ],
+      "h2": 2,
+      "main": 1,
+      "skip": [
+        "Перейти к содержимому"
+      ],
+      "fonts": "loaded",
+      "imgs": 6,
+      "brokenImgs": [],
+      "noAlt": 0,
+      "overflow": false,
+      "smallTargets": [
+        {
+          "t": "Публикации",
+          "w": 79,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "Разбор заблуждений",
+          "w": 138,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "Биографии",
+          "w": 70,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "Все статьи",
+          "w": 71,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "О проекте",
+          "w": 67,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "Главная",
+          "w": 51,
+          "h": 17,
+          "l": null
+        },
+        {
+          "t": "",
+          "w": 14,
+          "h": 14,
+          "l": "Скопировать ссылку на раздел"
+        },
+        {
+          "t": "Об авторе",
+          "w": 59,
+          "h": 23,
+          "l": null
+        }
+      ],
+      "readerPrefsLinks": [
+        "/js/reader-preferences-head.js?v=78fb2ef8",
+        "/css/reader-preferences.css?v=b740c21f",
+        "/js/reader-preferences.js?v=e26f05a8"
+      ]
+    },
+    "skipAfterTab": {
+      "text": "Перейти к содержимому",
+      "rect": [
+        621,
+        20,
+        198,
+        34
+      ],
+      "inViewport": true
+    },
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodes": 27,
+        "sample": ".h-hero-tagline"
+      }
+    ],
+    "consoleErrors": [
+      "Loading the image 'https://gospod-bog.ru/favicon.ico' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com https://*",
+      "Loading the image 'https://gospod-bog.ru/apple-touch-icon.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com ",
+      "Loading the image 'https://gospod-bog.ru/favicon-48.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com https:",
+      "Loading the image 'https://gospod-bog.ru/favicon-120.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com https",
+      "Loading the image 'https://gospod-bog.ru/icons/icon-192.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com ht",
+      "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      "https://mc.yandex.ru/metrika/tag.js?id=108353327 :: net::ERR_CONNECTION_CLOSED"
+    ]
+  },
+  {
+    "id": "hard-texts-m",
+    "path": "/hard-texts/",
+    "w": 390,
+    "scheme": "light",
+    "status": 200,
+    "title": "Тайны человеческого сердца — книга статей | Господь Бог — Сила Моя",
+    "perf": {
+      "cls": 0,
+      "lcp": {
+        "time": 132,
+        "tag": "P"
+      }
+    },
+    "dom": {
+      "h1": [
+        "Тайны человеческого сердца"
+      ],
+      "h2": 2,
+      "main": 1,
+      "skip": [
+        "Перейти к содержимому"
+      ],
+      "fonts": "loaded",
+      "imgs": 6,
+      "brokenImgs": [],
+      "noAlt": 0,
+      "overflow": false,
+      "smallTargets": [
+        {
+          "t": "Главная",
+          "w": 51,
+          "h": 17,
+          "l": null
+        },
+        {
+          "t": "Об авторе",
+          "w": 59,
+          "h": 23,
+          "l": null
+        }
+      ],
+      "readerPrefsLinks": [
+        "/js/reader-preferences-head.js?v=78fb2ef8",
+        "/css/reader-preferences.css?v=b740c21f",
+        "/js/reader-preferences.js?v=e26f05a8"
+      ]
+    },
+    "skipAfterTab": {
+      "text": "Перейти к содержимому",
+      "rect": [
+        96,
+        20,
+        198,
+        34
+      ],
+      "inViewport": true
+    },
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodes": 27,
+        "sample": ".h-hero-tagline"
+      }
+    ],
+    "consoleErrors": [
+      "Loading the image 'https://gospod-bog.ru/favicon.ico' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com https://*",
+      "Loading the image 'https://gospod-bog.ru/apple-touch-icon.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com ",
+      "Loading the image 'https://gospod-bog.ru/favicon-48.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com https:",
+      "Loading the image 'https://gospod-bog.ru/favicon-120.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com https",
+      "Loading the image 'https://gospod-bog.ru/icons/icon-192.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com ht",
+      "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      "https://mc.yandex.ru/metrika/tag.js?id=108353327 :: net::ERR_CONNECTION_CLOSED"
+    ]
+  },
+  {
+    "id": "biografii",
+    "path": "/biografii/",
+    "w": 1440,
+    "scheme": "light",
+    "status": 200,
+    "title": "Биографии служителей — христианское наследие | Господь Бог — Сила Моя",
+    "perf": {
+      "cls": 0.0128,
+      "lcp": {
+        "time": 296,
+        "tag": "IMG"
+      }
+    },
+    "dom": {
+      "h1": [
+        "Биографии служителей"
+      ],
+      "h2": 8,
+      "main": 1,
+      "skip": [
+        "Перейти к содержимому"
+      ],
+      "fonts": "loaded",
+      "imgs": 11,
+      "brokenImgs": [],
+      "noAlt": 0,
+      "overflow": false,
+      "smallTargets": [
+        {
+          "t": "Публикации",
+          "w": 79,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "Разбор заблуждений",
+          "w": 138,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "Биографии",
+          "w": 70,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "Все статьи",
+          "w": 71,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "О проекте",
+          "w": 67,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "Главная",
+          "w": 51,
+          "h": 17,
+          "l": null
+        },
+        {
+          "t": "",
+          "w": 14,
+          "h": 14,
+          "l": "Скопировать ссылку на раздел"
+        },
+        {
+          "t": "",
+          "w": 14,
+          "h": 14,
+          "l": "Скопировать ссылку на раздел"
+        },
+        {
+          "t": "",
+          "w": 14,
+          "h": 14,
+          "l": "Скопировать ссылку на раздел"
+        },
+        {
+          "t": "",
+          "w": 14,
+          "h": 14,
+          "l": "Скопировать ссылку на раздел"
+        },
+        {
+          "t": "",
+          "w": 14,
+          "h": 14,
+          "l": "Скопировать ссылку на раздел"
+        },
+        {
+          "t": "",
+          "w": 14,
+          "h": 14,
+          "l": "Скопировать ссылку на раздел"
+        }
+      ],
+      "readerPrefsLinks": [
+        "/js/reader-preferences-head.js?v=78fb2ef8",
+        "/css/reader-preferences.css?v=b740c21f",
+        "/js/reader-preferences.js?v=e26f05a8"
+      ]
+    },
+    "skipAfterTab": {
+      "text": "Перейти к содержимому",
+      "rect": [
+        621,
+        20,
+        198,
+        34
+      ],
+      "inViewport": true
+    },
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodes": 32,
+        "sample": ".h-hero-tagline"
+      }
+    ],
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      "https://mc.yandex.ru/metrika/tag.js?id=108353327 :: net::ERR_CONNECTION_CLOSED"
+    ]
+  },
+  {
+    "id": "konfessii",
+    "path": "/konfessii/",
+    "w": 1440,
+    "scheme": "light",
+    "status": 200,
+    "title": "Конфессии и Деноминации | Господь Бог — Сила Моя",
+    "perf": {
+      "cls": 0,
+      "lcp": {
+        "time": 108,
+        "tag": "P"
+      }
+    },
+    "dom": {
+      "h1": [
+        "Конфессии и Деноминации"
+      ],
+      "h2": 3,
+      "main": 1,
+      "skip": [],
+      "fonts": "loaded",
+      "imgs": 0,
+      "brokenImgs": [],
+      "noAlt": 0,
+      "overflow": false,
+      "smallTargets": [
+        {
+          "t": "На главную",
+          "w": 109,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "🚀 Приложение",
+          "w": 1080,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "gospod-bog.ru",
+          "w": 91,
+          "h": 13,
+          "l": null
+        },
+        {
+          "t": "Карты",
+          "w": 41,
+          "h": 13,
+          "l": null
+        },
+        {
+          "t": "Все статьи",
+          "w": 72,
+          "h": 13,
+          "l": null
+        }
+      ],
+      "readerPrefsLinks": [
+        "/js/reader-preferences-head.js?v=78fb2ef8",
+        "/css/reader-preferences.css?v=b740c21f",
+        "/js/reader-preferences.js?v=e26f05a8"
+      ]
+    },
+    "skipAfterTab": {
+      "text": "На главную",
+      "rect": [
+        180,
+        26,
+        109,
+        15
+      ],
+      "inViewport": true
+    },
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodes": 3,
+        "sample": ".crumb"
+      },
+      {
+        "id": "label-content-name-mismatch",
+        "impact": "serious",
+        "nodes": 1,
+        "sample": "a[href$=\"russkij-baptizm/\"]"
+      },
+      {
+        "id": "link-in-text-block",
+        "impact": "serious",
+        "nodes": 3,
+        "sample": "footer > a[href=\"/\"]"
+      },
+      {
+        "id": "region",
+        "impact": "moderate",
+        "nodes": 4,
+        "sample": ".sr-only"
+      }
+    ],
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      "https://mc.yandex.ru/metrika/tag.js?id=108353327 :: net::ERR_CONNECTION_CLOSED"
+    ]
+  },
+  {
+    "id": "konfessii-m",
+    "path": "/konfessii/",
+    "w": 390,
+    "scheme": "light",
+    "status": 200,
+    "title": "Конфессии и Деноминации | Господь Бог — Сила Моя",
+    "perf": {
+      "cls": 0,
+      "lcp": {
+        "time": 96,
+        "tag": "P"
+      }
+    },
+    "dom": {
+      "h1": [
+        "Конфессии и Деноминации"
+      ],
+      "h2": 3,
+      "main": 1,
+      "skip": [],
+      "fonts": "loaded",
+      "imgs": 0,
+      "brokenImgs": [],
+      "noAlt": 0,
+      "overflow": false,
+      "smallTargets": [
+        {
+          "t": "🚀 Приложение",
+          "w": 359,
+          "h": 15,
+          "l": null
+        },
+        {
+          "t": "gospod-bog.ru",
+          "w": 91,
+          "h": 13,
+          "l": null
+        },
+        {
+          "t": "Карты",
+          "w": 41,
+          "h": 13,
+          "l": null
+        },
+        {
+          "t": "Все статьи",
+          "w": 72,
+          "h": 13,
+          "l": null
+        }
+      ],
+      "readerPrefsLinks": [
+        "/js/reader-preferences-head.js?v=78fb2ef8",
+        "/css/reader-preferences.css?v=b740c21f",
+        "/js/reader-preferences.js?v=e26f05a8"
+      ]
+    },
+    "skipAfterTab": null,
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodes": 3,
+        "sample": ".crumb"
+      },
+      {
+        "id": "label-content-name-mismatch",
+        "impact": "serious",
+        "nodes": 1,
+        "sample": "a[href$=\"russkij-baptizm/\"]"
+      },
+      {
+        "id": "landmark-no-duplicate-banner",
+        "impact": "moderate",
+        "nodes": 1,
+        "sample": ".mcp-top"
+      },
+      {
+        "id": "landmark-unique",
+        "impact": "moderate",
+        "nodes": 1,
+        "sample": ".mcp-top"
+      },
+      {
+        "id": "link-in-text-block",
+        "impact": "serious",
+        "nodes": 3,
+        "sample": "footer > a[href=\"/\"]"
+      },
+      {
+        "id": "region",
+        "impact": "moderate",
+        "nodes": 4,
+        "sample": ".sr-only"
+      }
+    ],
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+    ],
+    "pageErrors": [],
+    "failedRequests": [
+      "https://mc.yandex.ru/metrika/tag.js?id=108353327 :: net::ERR_CONNECTION_CLOSED"
+    ]
+  },
+  {
+    "id": "journal",
+    "path": "/journal/",
+    "w": 1440,
+    "scheme": "light",
+    "status": 200,
+    "title": "Журнал — документы, новости и расследования | Господь Бог — Сила Моя",
+    "perf": {
+      "cls": 0,
+      "lcp": {
+        "time": 92,
+        "tag": "P"
+      }
+    },
+    "dom": {
+      "h1": [
+        "Журнал"
+      ],
+      "h2": 3,
+      "main": 1,
+      "skip": [],
+      "fonts": "loaded",
+      "imgs": 0,
+      "brokenImgs": [],
+      "noAlt": 0,
+      "overflow": false,
+      "smallTargets": [
+        {
+          "t": "Господь Бог — Сила Моя",
+          "w": 223,
+          "h": 18,
+          "l": null
+        },
+        {
+          "t": "На главную",
+          "w": 66,
+          "h": 23,
+          "l": null
+        },
+        {
+          "t": "Богословские статьи",
+          "w": 119,
+          "h": 23,
+          "l": null
+        }
+      ],
+      "readerPrefsLinks": [
+        "/js/reader-preferences-head.js?v=78fb2ef8",
+        "/css/reader-preferences.css?v=b740c21f",
+        "/js/reader-preferences.js?v=e26f05a8"
+      ]
+    },
+    "skipAfterTab": {
+      "text": "Господь Бог — Сила Моя",
+      "rect": [
+        151,
+        27,
+        223,
+        18
+      ],
+      "inViewport": true
+    },
+    "axe": [],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "id": "notfound",
+    "path": "/definitely-missing-page-xyz/",
+    "w": 1440,
+    "scheme": "light",
+    "status": 404,
+    "title": "Error response",
+    "perf": {
+      "cls": 0,
+      "lcp": {
+        "time": 24,
+        "tag": "H1"
+      }
+    },
+    "dom": {
+      "h1": [
+        "Error response"
+      ],
+      "h2": 0,
+      "main": 0,
+      "skip": [],
+      "fonts": "loaded",
+      "imgs": 0,
+      "brokenImgs": [],
+      "noAlt": 0,
+      "overflow": false,
+      "smallTargets": [],
+      "readerPrefsLinks": []
+    },
+    "skipAfterTab": null,
+    "axe": [
+      {
+        "id": "landmark-one-main",
+        "impact": "moderate",
+        "nodes": 1,
+        "sample": "html"
+      },
+      {
+        "id": "region",
+        "impact": "moderate",
+        "nodes": 4,
+        "sample": "h1"
+      }
+    ],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (File not found)"
+    ],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "id": "404-file",
+    "path": "/404.html",
+    "w": 390,
+    "scheme": "light",
+    "status": 200,
+    "title": "404 — Страница не найдена · Господь Бог — Сила Моя",
+    "perf": {
+      "cls": 0,
+      "lcp": {
+        "time": 80,
+        "tag": "P"
+      }
+    },
+    "dom": {
+      "h1": [
+        "Страница не найдена"
+      ],
+      "h2": 0,
+      "main": 1,
+      "skip": [
+        "Перейти к содержимому"
+      ],
+      "fonts": "loaded",
+      "imgs": 0,
+      "brokenImgs": [],
+      "noAlt": 0,
+      "overflow": false,
+      "smallTargets": [],
+      "readerPrefsLinks": [
+        "/js/reader-preferences-head.js?v=78fb2ef8",
+        "/css/reader-preferences.css?v=b740c21f",
+        "/js/reader-preferences.js?v=e26f05a8"
+      ]
+    },
+    "skipAfterTab": {
+      "text": "Перейти к содержимому",
+      "rect": [
+        96,
+        20,
+        198,
+        34
+      ],
+      "inViewport": true
+    },
+    "axe": [],
+    "consoleErrors": [
+      "Loading the image 'https://gospod-bog.ru/favicon.ico' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com https://*",
+      "Loading the image 'https://gospod-bog.ru/apple-touch-icon.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com ",
+      "Loading the image 'https://gospod-bog.ru/favicon-48.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com https:",
+      "Loading the image 'https://gospod-bog.ru/favicon-120.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com https",
+      "Loading the image 'https://gospod-bog.ru/icons/icon-192.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com ht"
+    ],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "id": "404-file-dark",
+    "path": "/404.html",
+    "w": 390,
+    "scheme": "dark",
+    "status": 200,
+    "title": "404 — Страница не найдена · Господь Бог — Сила Моя",
+    "perf": {
+      "cls": 0,
+      "lcp": {
+        "time": 88,
+        "tag": "P"
+      }
+    },
+    "dom": {
+      "h1": [
+        "Страница не найдена"
+      ],
+      "h2": 0,
+      "main": 1,
+      "skip": [
+        "Перейти к содержимому"
+      ],
+      "fonts": "loaded",
+      "imgs": 0,
+      "brokenImgs": [],
+      "noAlt": 0,
+      "overflow": false,
+      "smallTargets": [],
+      "readerPrefsLinks": [
+        "/js/reader-preferences-head.js?v=78fb2ef8",
+        "/css/reader-preferences.css?v=b740c21f",
+        "/js/reader-preferences.js?v=e26f05a8"
+      ]
+    },
+    "skipAfterTab": {
+      "text": "Перейти к содержимому",
+      "rect": [
+        96,
+        20,
+        198,
+        34
+      ],
+      "inViewport": true
+    },
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodes": 1,
+        "sample": ".skip-link"
+      }
+    ],
+    "consoleErrors": [
+      "Loading the image 'https://gospod-bog.ru/favicon.ico' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com https://*",
+      "Loading the image 'https://gospod-bog.ru/apple-touch-icon.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com ",
+      "Loading the image 'https://gospod-bog.ru/favicon-48.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com https:",
+      "Loading the image 'https://gospod-bog.ru/favicon-120.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com https",
+      "Loading the image 'https://gospod-bog.ru/icons/icon-192.png' violates the following Content Security Policy directive: \"img-src 'self' https://mc.yandex.ru https://*.yandex.ru https://mc.yandex.com ht"
+    ],
+    "pageErrors": [],
+    "failedRequests": []
+  }
+]
