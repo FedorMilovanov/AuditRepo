@@ -1,0 +1,63 @@
+# Engine universality map at 350848145ee252a4e6ad8b86c9c8e831e2b4cb12 (source + gate reads)
+
+Question asked by the owner: how universal/reusable are the engines, and how easily can a new article be written?
+Answer split by engine, because the answer is very different per engine.
+
+## A. Series engine — the mature one (positive)
+
+- Entry points: `src/components/article-pilots/_shared/series/SeriesReaderChrome.astro` + one config per series
+  (`baptistSeriesConfig.ts`, `baptistFlatSeriesConfig.ts`, `genesis6SeriesConfig.ts`, `hardTextsSeriesConfig.ts`,
+  `pastorSeriesConfig.ts`, `teenSeriesConfig.ts`), all declared through `defineSeriesConfig()` in `seriesConfig.ts`.
+- Theme layer is a separate file per series (`css/series-samizdat.css`, `css/series-manuscript.css`, ...) restricted to
+  `--gb-*` token overrides under `[data-series-theme="<theme>"]`, i.e. design geometry is engine-owned, colour/atmosphere
+  is series-owned. `check-engine-contracts.js` asserts isolation (a single article must not import gill-series) and that
+  every declared theme has its CSS.
+- There is a real, step-numbered authoring guide: `docs/SERIES-ENGINE-GUIDE.md`.
+  §2 "Добавить статью в СУЩЕСТВУЮЩУЮ серию" = 6 steps (series data item → config page → Body.astro wrapping
+  `<SeriesReaderChrome>` → route copy → registries incl. `data/series.json` + `editorial-metadata-registry.js --write` →
+  gates `engine:contracts` / `audit-pro.js` / `engine:guard`).
+  §3 "Новая СЕРИЯ" = 4 steps (data file + `defineSeriesConfig` + registration in `SERIES_CONFIGS` → a theme CSS file →
+  optional endpapers → `data/series.json` + cache-bust).
+- Measured gate state: `npm run engine:guard` = PASS end to end (static contracts + a real browser sweep:
+  relations panel 9/9, unified navigation sweep "completed", exit 0). So the documented series flow is backed by a green
+  contract chain, not by documentation alone.
+- Series route families already on this engine: Gill (6 parts incl. spravochnik), heart/teen/pastor/hard-texts/genesis-6,
+  Baptist book-series, antisovetov, rimlyanam7, krajne, serdce-iduh … (see the `seriesBodies` list in
+  `scripts/check-engine-contracts.js`, which also fails the build if a new Body.astro forgets `SeriesReaderChrome`).
+
+## B. Mobile chrome engine — config-driven registry (positive, with a record-keeping gap)
+
+- `src/components/article-pilots/_shared/mobileChromeRegistry.ts` (62 lines) is exactly what an "engine chosen by config,
+  not by `pathname.includes(...)`" rule asks for: `MOBILE_CHROME_ROUTES` maps a route to
+  `{enabled, engine, adapter, mount, backHref}` with four adapters (`gill`, `hermenevtika`, `default-page`,
+  `series-landing`) and three engines (`series` ×7, `page` ×5, `article` ×1). It also records the deliberate opt-outs
+  (`/izbrannoe/`, `/map/`) with reasons.
+- Coverage: 13 entries for 106 owned routes — the engine bar is opt-in, not universal.
+- Gap: the file's own header says that after freeze "профиль маршрута в data/route-profiles/*.json зеркалит поле
+  mobileChrome". Measured: **0 of 106 route profiles contain a `mobileChrome` field**; the contract in
+  `scripts/lib/public-surface-registry.js` reads `profile.mobileChrome || mobileEntries.get(route)`, so today the registry
+  is the only source. Not a live defect (the fallback is intentional), but the documented mirroring never happened, so
+  nothing in the route profile records which chrome engine a route uses.
+
+## C. Reader-bar strings — there is NO i18n layer at all (correcting an earlier hypothesis)
+
+- An earlier pass suspected an "i18n dictionary `hm*`". Traced: `hmBottomBtn`, `hmSpdBadge`, `hmSectionBtn`, `hmSheet*`
+  are **DOM ids**, not translation keys, all inside one 492-line component
+  `src/components/article-pilots/hermenevtika/HermenevtikaMobileBar.astro` (the `hermenevtika` adapter of the registry above).
+- There is no i18n infrastructure in the product at all: `find src -iname '*i18n*' -o -iname '*locale*' -o -iname '*dictionary*'`
+  returns nothing, and `src/i18n` does not exist. Reader-bar labels are Russian literals in the component
+  (8 distinct `aria-label`s: "Открыть оглавление статьи", "Выбрать скорость, сейчас 1×", "Настройки чтения", "Тема",
+  "Поделиться", "Скорость озвучки", "Назад", "Закрыть"; plus visible literals "Оглавление", "Ничего не найдено",
+  "Поделиться", "Сейчас читаете" and template strings such as "{toc.length} разделов", "Осталось: ~{n} мин").
+- Consequence for universality: the bar is *shared by import* (rendered by HermenevtikaBody.astro:22 for the Hermenevtika
+  article, KodDaVinchiPageChrome.astro:32 for Da Vinci, LawsonPageChrome.astro:21 for the Lawson article — the one route on
+  the generic article engine — and LotPageChrome.astro:18 for /articles/lot-i-sodom/) but its copy is *not* parameterized, and a second, separate
+  280-line `src/components/article-pilots/gill-series/GillSeriesMobileBar.astro` exists for the series adapter. A new
+  language or a new route family must either reuse an adapter as-is or edit the pilot component.
+
+## D. Article engine — generic shell exists, adoption is 1/51 (see the friction probe)
+
+- `ArticleLayout`-based generic route shell works (verified in the browser on the probe route), but only 1 of 51 route
+  directories under `src/pages/articles/` uses it; the other 50 are per-route shells over 40 pilot directories /
+  241 files. No scaffolder, no admission guard, two field vocabularies, a no-op normalizer writer for new routes
+  (`evidence/2026-10-06-article-add-friction-probe.txt`).

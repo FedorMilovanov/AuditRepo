@@ -1,0 +1,32 @@
+# Visual/behavioural observations with screenshots (screenshots deliberately NOT committed - see /home/user/work/shots)
+
+Screenshot files live outside the repository (gitignored workspace): /home/user/work/shots/*.png, /home/user/work/shots2/*.png.
+The list below is what was looked at, with the measured value that matters for each.
+
+home-light.png (/, 1440x900, light): premium editorial hero - Hebrew Habakkuk 3:19 with per-word translation and a sacred-name
+  treatment, restrained warm paper palette, centred search field, 9-item top navigation with a blue active marker, 44x44
+  search and theme controls. LCP 360 ms, CLS 0.038, fonts loaded, 17 images, 0 broken, 0 without alt, axe 2 violations
+  (label-content-name-mismatch on #heroSearchBar, one region warning on .sdg).
+zoom-byline-badge.png (deviceScaleFactor 3 crop): the byline badge reads exactly "С опорой на исторические источники"
+  (225x20 px box, Source Sans 3 12px) - the 1x capture's apparent "Спорой" was a downscaling artifact (retracted).
+article-kod-d-1440x900-light.png (/articles/kod-da-vinchi/): sticky left reader rail with 15-section TOC, breadcrumbs, H1,
+  "Автор-редактор: Фёдор Милованов · 1 апреля 2026 · Обн. 9 мая 2026 · 30 мин" plus the evidence badge, then the article hero
+  figure. Drop cap on the first paragraph. Described as genuinely professional; the defects found on this page are contrast and
+  ARIA metadata, not layout.
+mobile shots (390x844): reader bottom bar of 44x44 controls (TOC/theme/reading settings/share), all with labels and correct
+  centre hit-testing; the TOC button opens a sheet (hmSheet, aria-expanded true).
+search-open.png: command palette over the site with combobox role, aria-expanded=true, placeholder
+  "Поиск по статьям и ссылкам…", and 16 live results for "Гилл" linking to the Gill parts. Pagefind worker + manifest both fetched.
+quiz-final-1440.png / quizflow-390.png: the 10-question quiz runs to the result screen ("Результат: 3 из 10" + "Пройти ещё раз")
+  at both widths with feedback text after each answer.
+
+Performance numbers measured with PerformanceObserver (not Lighthouse):
+  /                 LCP 360 ms  CLS 0.038 (light) / 0.039 (dark), shift source: .h-hero-search-wrap 33 px down-shift at 181 ms
+  /articles/        LCP 312 ms  CLS 0.0085, shift source .h-section heading block 36 px
+  /articles/kod-da-vinchi/  LCP 388 ms  CLS 0.134 light / 0.158 dark, sources: figure.article-hero (79 px move),
+                    p.article-desc (-49 px), p.article-byline (-49 px) at ~240-400 ms; mobile CLS 0
+  /articles/steven-lawson-.../ LCP 340 ms  CLS 0.0041 (sources: .hrail-scroll 45 px, .hrail-meta__title 16 px)
+  /articles/dzhon-gill-chast-2-uchenyi/ LCP 348 ms  CLS 0.0002
+  /nagornaya/chast-1/  LCP 208 ms  CLS 0.0193
+  /karty/avraam/       LCP 204 ms  CLS 0
+No page had horizontal document overflow at any of the 19 sampled viewports, no page error, and no image without alt.

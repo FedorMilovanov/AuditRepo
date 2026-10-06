@@ -1,0 +1,921 @@
+[
+ {
+  "step": "search.ctrlK",
+  "dialogVisible": false,
+  "dlgId": "hMobileNav.h-mobile-nav",
+  "inputId": "",
+  "activeElement": "INPUT#"
+ },
+ {
+  "step": "search.escape",
+  "visible": false
+ },
+ {
+  "step": "skip-link.first-tab",
+  "tag": "A",
+  "text": "Перейти к содержимому",
+  "href": "#main-content",
+  "visible": true,
+  "x": 621,
+  "y": -37
+ },
+ {
+  "step": "theme-toggle",
+  "label": "Переключить тему",
+  "w": 44,
+  "h": 44,
+  "pressed": "false"
+ },
+ {
+  "step": "theme-toggle.after",
+  "before": "",
+  "after": {
+   "attr": null,
+   "cls": "dark",
+   "stored": "{\"gb:reader-preferences:v1\":\"{\\\"version\\\":1,\\\"theme\\\":\\\"dark\\\",\\\"fontScale\\\":1,\\\"lineHeight\\\":\\\"normal\\\",\\\"measure\\\":\\\"normal\\\",\\\"textMode\\\":\\\"rich\\\",\\\"motion\\\":\\\"system\\\"}\",\"theme\":\"dark\",\"gb:font-sc"
+  }
+ },
+ {
+  "step": "interaction.errors",
+  "errs": []
+ },
+ {
+  "0": {
+   "sel": "[data-note-trigger]",
+   "n": 0
+  },
+  "1": {
+   "sel": ".note-ref",
+   "n": 0
+  },
+  "2": {
+   "sel": "sup a",
+   "n": 0
+  },
+  "3": {
+   "sel": "[data-tooltip-trigger]",
+   "n": 0
+  },
+  "4": {
+   "sel": ".gb-reversible-card",
+   "n": 0
+  },
+  "5": {
+   "sel": "[data-gb-reversible-card-owner]",
+   "n": 11
+  },
+  "6": {
+   "sel": "button[aria-label*=\"главлени\"]",
+   "n": 2
+  },
+  "7": {
+   "sel": "button[aria-label*=\"звук\"]",
+   "n": 0
+  },
+  "8": {
+   "sel": "button[aria-label*=\"слушать\"]",
+   "n": 0
+  },
+  "9": {
+   "sel": "button[aria-label*=\"скорост\"]",
+   "n": 1
+  },
+  "10": {
+   "sel": "[data-reader-toc] button",
+   "n": 0
+  },
+  "11": {
+   "sel": ".hrail-toch button",
+   "n": 0
+  },
+  "12": {
+   "sel": "button[data-gb-tts]",
+   "n": 0
+  },
+  "step": "reader.controls"
+ },
+ {
+  "step": "reader.flip-card",
+  "before": "false",
+  "after": {
+   "pressed": "true",
+   "faceVisible": false,
+   "text": "В романеСвитки Мёртвого моря содержат ранние христианские ев"
+  }
+ },
+ {
+  "0": {
+   "text": "Введение",
+   "href": "#sec-intro"
+  },
+  "1": {
+   "text": "Как родился мировой феномен",
+   "href": "#sec-phenomenon"
+  },
+  "2": {
+   "text": "Ключевые даты",
+   "href": "#sec-dates"
+  },
+  "3": {
+   "text": "Ключевые исторические ошибки р",
+   "href": "#sec-errors"
+  },
+  "4": {
+   "text": "Ложь №1: Иисус был женат",
+   "href": "#sec-lie1"
+  },
+  "5": {
+   "text": "Миф о «подавленном женском нач",
+   "href": "#sec-feminine"
+  },
+  "step": "reader.toc"
+ },
+ {
+  "step": "reader.errors",
+  "errs": []
+ },
+ {
+  "0": {
+   "tag": "BUTTON",
+   "label": "Открыть оглавление статьи",
+   "w": 44,
+   "h": 44,
+   "x": 10,
+   "y": 792,
+   "hit": true
+  },
+  "1": {
+   "tag": "BUTTON",
+   "label": "Открыть оглавление статьи",
+   "w": 144,
+   "h": 45,
+   "x": 62,
+   "y": 791,
+   "hit": true
+  },
+  "2": {
+   "tag": "BUTTON",
+   "label": "Тема",
+   "w": 44,
+   "h": 44,
+   "x": 223,
+   "y": 792,
+   "hit": true
+  },
+  "3": {
+   "tag": "BUTTON",
+   "label": "Настройки чтения",
+   "w": 44,
+   "h": 44,
+   "x": 275,
+   "y": 792,
+   "hit": true
+  },
+  "4": {
+   "tag": "BUTTON",
+   "label": "Поделиться",
+   "w": 44,
+   "h": 44,
+   "x": 336,
+   "y": 792,
+   "hit": true
+  },
+  "5": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 142,
+   "y": 920,
+   "hit": false
+  },
+  "6": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 137,
+   "y": 2385,
+   "hit": false
+  },
+  "7": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 205,
+   "y": 3556,
+   "hit": false
+  },
+  "8": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 201,
+   "y": 4790,
+   "hit": false
+  },
+  "9": {
+   "tag": "A",
+   "label": "Wikimedia Commons",
+   "w": 260,
+   "h": 36,
+   "x": 42,
+   "y": 5844,
+   "hit": false
+  },
+  "10": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 268,
+   "y": 6918,
+   "hit": false
+  },
+  "11": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 220,
+   "y": 10186,
+   "hit": false
+  },
+  "12": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 192,
+   "y": 13572,
+   "hit": false
+  },
+  "13": {
+   "tag": "A",
+   "label": "Wikimedia Commons",
+   "w": 251,
+   "h": 36,
+   "x": 42,
+   "y": 16733,
+   "hit": false
+  },
+  "14": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 257,
+   "y": 16832,
+   "hit": false
+  },
+  "15": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 296,
+   "y": 19361,
+   "hit": false
+  },
+  "16": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 197,
+   "y": 21346,
+   "hit": false
+  },
+  "17": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 280,
+   "y": 23210,
+   "hit": false
+  },
+  "18": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 238,
+   "y": 24242,
+   "hit": false
+  },
+  "19": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 222,
+   "y": 26135,
+   "hit": false
+  },
+  "20": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 263,
+   "y": 27043,
+   "hit": false
+  },
+  "21": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 224,
+   "y": 28078,
+   "hit": false
+  },
+  "22": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 242,
+   "y": 30275,
+   "hit": false
+  },
+  "23": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 179,
+   "y": 31480,
+   "hit": false
+  },
+  "24": {
+   "tag": "BUTTON",
+   "label": "Начать проверку",
+   "w": 191,
+   "h": 48,
+   "x": 40,
+   "y": 31555,
+   "hit": false
+  },
+  "25": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 130,
+   "y": 31677,
+   "hit": false
+  },
+  "26": {
+   "tag": "BUTTON",
+   "label": "Правда ли, что Церковь подавля",
+   "w": 309,
+   "h": 93,
+   "x": 41,
+   "y": 31751,
+   "hit": false
+  },
+  "27": {
+   "tag": "BUTTON",
+   "label": "Ин. 20:17–18Иоанна 20:17–18 Сс",
+   "w": 92,
+   "h": 24,
+   "x": 145,
+   "y": 32111,
+   "hit": false
+  },
+  "28": {
+   "tag": "BUTTON",
+   "label": "Правда ли, что Иисус был женат",
+   "w": 309,
+   "h": 72,
+   "x": 41,
+   "y": 31845,
+   "hit": false
+  },
+  "29": {
+   "tag": "BUTTON",
+   "label": "Ин. 20:11–18Иоанна 20:11–18 Сс",
+   "w": 92,
+   "h": 24,
+   "x": 171,
+   "y": 32111,
+   "hit": false
+  },
+  "30": {
+   "tag": "BUTTON",
+   "label": "Обсуждал ли Никейский собор ка",
+   "w": 309,
+   "h": 72,
+   "x": 41,
+   "y": 31918,
+   "hit": false
+  },
+  "31": {
+   "tag": "BUTTON",
+   "label": "Лк. 1:1–4Луки 1:1–4 Ссылка на ",
+   "w": 64,
+   "h": 24,
+   "x": 161,
+   "y": 32281,
+   "hit": false
+  },
+  "32": {
+   "tag": "BUTTON",
+   "label": "2 Пет. 3:15–162 Петра 3:15–16 ",
+   "w": 103,
+   "h": 24,
+   "x": 59,
+   "y": 32307,
+   "hit": false
+  },
+  "33": {
+   "tag": "BUTTON",
+   "label": "Что нашли в Наг-Хаммади?",
+   "w": 309,
+   "h": 52,
+   "x": 41,
+   "y": 31991,
+   "hit": false
+  },
+  "34": {
+   "tag": "BUTTON",
+   "label": "1 Кор. 15:3–81 Коринфянам 15:3",
+   "w": 95,
+   "h": 24,
+   "x": 195,
+   "y": 32383,
+   "hit": false
+  },
+  "35": {
+   "tag": "BUTTON",
+   "label": "Есть ли упоминания Иисуса в Св",
+   "w": 309,
+   "h": 72,
+   "x": 41,
+   "y": 32044,
+   "hit": false
+  },
+  "36": {
+   "tag": "BUTTON",
+   "label": "Лк. 1:1–4Луки 1:1–4 Ссылка на ",
+   "w": 64,
+   "h": 24,
+   "x": 160,
+   "y": 32504,
+   "hit": false
+  },
+  "37": {
+   "tag": "BUTTON",
+   "label": "Был ли Приорат Сиона реальным ",
+   "w": 309,
+   "h": 72,
+   "x": 41,
+   "y": 32117,
+   "hit": false
+  },
+  "38": {
+   "tag": "BUTTON",
+   "label": "Деян. 26:26Деяния 26:26 Ссылка",
+   "w": 81,
+   "h": 24,
+   "x": 218,
+   "y": 32602,
+   "hit": false
+  },
+  "39": {
+   "tag": "BUTTON",
+   "label": "Почему гностические евангелия ",
+   "w": 309,
+   "h": 72,
+   "x": 41,
+   "y": 32190,
+   "hit": false
+  },
+  "40": {
+   "tag": "BUTTON",
+   "label": "Лк. 1:1–4Луки 1:1–4 Ссылка на ",
+   "w": 64,
+   "h": 24,
+   "x": 59,
+   "y": 32481,
+   "hit": false
+  },
+  "41": {
+   "tag": "BUTTON",
+   "label": "Правда ли, что на «Тайной вече",
+   "w": 309,
+   "h": 93,
+   "x": 41,
+   "y": 32263,
+   "hit": false
+  },
+  "42": {
+   "tag": "BUTTON",
+   "label": "Лк. 22:14–20Луки 22:14–20 Ссыл",
+   "w": 91,
+   "h": 24,
+   "x": 59,
+   "y": 32744,
+   "hit": false
+  },
+  "43": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 93,
+   "y": 32393,
+   "hit": false
+  },
+  "44": {
+   "tag": "A",
+   "label": "архивная расшифровка на DanBro",
+   "w": 244,
+   "h": 39,
+   "x": 82,
+   "y": 35087,
+   "hit": false
+  },
+  "45": {
+   "tag": "A",
+   "label": "Court of Appeal, 28 Mar 2007, ",
+   "w": 254,
+   "h": 39,
+   "x": 82,
+   "y": 35315,
+   "hit": false
+  },
+  "46": {
+   "tag": "A",
+   "label": "The Unbelievable Tale of Jesus",
+   "w": 242,
+   "h": 39,
+   "x": 82,
+   "y": 35595,
+   "hit": false
+  },
+  "47": {
+   "tag": "A",
+   "label": "Homiliae in Evangelia, Hom. 33",
+   "w": 255,
+   "h": 39,
+   "x": 82,
+   "y": 35781,
+   "hit": false
+  },
+  "48": {
+   "tag": "A",
+   "label": "Calendarium Romanum (1969)",
+   "w": 244,
+   "h": 39,
+   "x": 82,
+   "y": 35823,
+   "hit": false
+  },
+  "49": {
+   "tag": "A",
+   "label": "Mary Magdalene feast decree no",
+   "w": 238,
+   "h": 39,
+   "x": 82,
+   "y": 35844,
+   "hit": false
+  },
+  "50": {
+   "tag": "A",
+   "label": "Arthur Roche PDF, apostolorum ",
+   "w": 264,
+   "h": 39,
+   "x": 82,
+   "y": 35864,
+   "hit": false
+  },
+  "51": {
+   "tag": "A",
+   "label": "39-е Пасхальное послание",
+   "w": 259,
+   "h": 39,
+   "x": 82,
+   "y": 36382,
+   "hit": false
+  },
+  "52": {
+   "tag": "A",
+   "label": "Great Isaiah Scroll / Wikimedi",
+   "w": 239,
+   "h": 39,
+   "x": 82,
+   "y": 36454,
+   "hit": false
+  },
+  "53": {
+   "tag": "A",
+   "label": "Wikimedia Commons: Codex II p.",
+   "w": 261,
+   "h": 39,
+   "x": 82,
+   "y": 36568,
+   "hit": false
+  },
+  "54": {
+   "tag": "A",
+   "label": "Journal Officiel de la Républi",
+   "w": 248,
+   "h": 39,
+   "x": 82,
+   "y": 37201,
+   "hit": false
+  },
+  "55": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 69,
+   "y": 38222,
+   "hit": false
+  },
+  "56": {
+   "tag": "A",
+   "label": "Методологический контекстОценк",
+   "w": 309,
+   "h": 205,
+   "x": 41,
+   "y": 38394,
+   "hit": false
+  },
+  "57": {
+   "tag": "A",
+   "label": "Сопоставляет позициюМожно ли д",
+   "w": 309,
+   "h": 171,
+   "x": 41,
+   "y": 38599,
+   "hit": false
+  },
+  "58": {
+   "tag": "A",
+   "label": "Связанное исследованиеКрайне л",
+   "w": 309,
+   "h": 171,
+   "x": 41,
+   "y": 38771,
+   "hit": false
+  },
+  "59": {
+   "tag": "A",
+   "label": "✦Открыть окружение в АтласеПри",
+   "w": 309,
+   "h": 88,
+   "x": 41,
+   "y": 38942,
+   "hit": false
+  },
+  "60": {
+   "tag": "A",
+   "label": "Скопировать ссылку на раздел",
+   "w": 44,
+   "h": 44,
+   "x": 45,
+   "y": 39840,
+   "hit": false
+  },
+  "61": {
+   "tag": "A",
+   "label": "Написать на Email",
+   "w": 229,
+   "h": 44,
+   "x": 81,
+   "y": 39539,
+   "hit": false
+  },
+  "62": {
+   "tag": "A",
+   "label": "Написать в Telegram (откроется",
+   "w": 229,
+   "h": 44,
+   "x": 81,
+   "y": 39593,
+   "hit": false
+  },
+  "63": {
+   "tag": "A",
+   "label": "Крайне ли испорчено моё сердце",
+   "w": 177,
+   "h": 57,
+   "x": 157,
+   "y": 39846,
+   "hit": false
+  },
+  "64": {
+   "tag": "A",
+   "label": "Герменевтическая оценка христо",
+   "w": 177,
+   "h": 57,
+   "x": 157,
+   "y": 40038,
+   "hit": false
+  },
+  "65": {
+   "tag": "A",
+   "label": "← Господь Бог — Сила Моя",
+   "w": 152,
+   "h": 23,
+   "x": 40,
+   "y": 40376,
+   "hit": false
+  },
+  "step": "mobile.bottom-controls"
+ },
+ {
+  "0": "hmBottomBtn",
+  "1": "hmSectionBtn",
+  "2": "hmSheet",
+  "step": "mobile.toc.open"
+ },
+ {
+  "step": "mobile.errors",
+  "errs": []
+ },
+ {
+  "step": "quiz.presence",
+  "launch": 1,
+  "questions": 0,
+  "literalMarkup": 0
+ },
+ {
+  "step": "quiz.after-launch",
+  "boxVisible": true,
+  "nextVisible": false,
+  "options": 4,
+  "text": "Вопрос 1 из 10По какому критерию статья различает здоровое использование пастырского авторитета и ду"
+ },
+ {
+  "step": "search.open",
+  "inputs": [
+   {
+    "id": "",
+    "ph": "Поиск по статьям и ссылкам…",
+    "role": "combobox",
+    "aria": "Поиск",
+    "expanded": "true",
+    "cls": "cp-input",
+    "parent": ""
+   }
+  ],
+  "overlays": [
+   {
+    "tag": "DIV",
+    "id": "hMobileNav",
+    "visible": false,
+    "cls": "h-mobile-nav"
+   },
+   {
+    "tag": "DIV",
+    "id": "gbCommandPalette",
+    "visible": false,
+    "cls": "cp-backdrop is-open"
+   }
+  ],
+  "active": "INPUT#"
+ },
+ {
+  "step": "search.typed",
+  "hits": 16,
+  "sample": [
+   {
+    "t": "Серия · Часть IДжон Гилл (1697–1771). Часть I: Человек — детство, приз",
+    "href": null
+   },
+   {
+    "t": "Серия · Часть IДжон Гилл (1697–1771). Часть I: Человек — детство, приз",
+    "href": "articles/dzhon-gill-chast-1-chelovek/"
+   },
+   {
+    "t": "Серия · Часть IIДжон Гилл (1697–1771). Часть II: Учёный — экзегеза, си",
+    "href": null
+   },
+   {
+    "t": "Серия · Часть IIДжон Гилл (1697–1771). Часть II: Учёный — экзегеза, си",
+    "href": "articles/dzhon-gill-chast-2-uchenyi/"
+   },
+   {
+    "t": "Серия · Часть IIIДжон Гилл (1697–1771). Часть III: Экзегет — текст, ме",
+    "href": null
+   }
+  ],
+  "status": ""
+ },
+ {
+  "0": "http://127.0.0.1:8080/js/search.js?v=106d65f6",
+  "1": "http://127.0.0.1:8080/data/search-manifest.json",
+  "2": "http://127.0.0.1:8080/pagefind/pagefind.js",
+  "3": "http://127.0.0.1:8080/pagefind/pagefind-worker.js",
+  "4": "127.0.0.1:8080/pagefind/pagefind-entry.json?ts=1791237186498",
+  "5": "ttp://127.0.0.1:8080/pagefind/pagefind.ru_66a4616cfa.pf_meta",
+  "step": "search.requests"
+ },
+ {
+  "step": "skiplink/",
+  "tag": "A",
+  "text": "Перейти к содержимому",
+  "cls": "skip-link",
+  "rect": [
+   621,
+   20,
+   198,
+   34
+  ],
+  "opacity": "1",
+  "transform": "matrix(1, 0, 0, 1, -99, 20)",
+  "clip": "none",
+  "position": "absolute",
+  "inViewport": true
+ },
+ {
+  "step": "skiplink/articles/",
+  "tag": "A",
+  "text": "Перейти к содержимому",
+  "cls": "skip-link",
+  "rect": [
+   621,
+   20,
+   198,
+   34
+  ],
+  "opacity": "1",
+  "transform": "matrix(1, 0, 0, 1, -99, 20)",
+  "clip": "none",
+  "position": "absolute",
+  "inViewport": true
+ },
+ {
+  "step": "skiplink/articles/kod-da-vinchi/",
+  "tag": "A",
+  "text": "Перейти к содержанию",
+  "cls": "skip-link",
+  "rect": [
+   625,
+   20,
+   190,
+   34
+  ],
+  "opacity": "1",
+  "transform": "matrix(1, 0, 0, 1, -95, 20)",
+  "clip": "none",
+  "position": "absolute",
+  "inViewport": true
+ },
+ {
+  "step": "quiz.options",
+  "options": [
+   {
+    "t": "Здоровое использование авторитета наставляет совес",
+    "w": 699,
+    "h": 102,
+    "hit": true
+   },
+   {
+    "t": "Здоровый пастырь налагает обязательства и ожидает ",
+    "w": 699,
+    "h": 77,
+    "hit": true
+   },
+   {
+    "t": "Духовное насилие — любое жёсткое требование; здоро",
+    "w": 699,
+    "h": 77,
+    "hit": true
+   },
+   {
+    "t": "Смысл различения в том, чтобы выбрать более удобно",
+    "w": 699,
+    "h": 77,
+    "hit": false
+   }
+  ],
+  "progress": "Вопрос 1 из 10"
+ },
+ {
+  "step": "quiz.after-answer",
+  "next": [
+   {
+    "tag": "BUTTON",
+    "visible": true,
+    "text": "Следующий вопрос",
+    "w": 699,
+    "h": 46
+   }
+  ],
+  "feedback": "ВерноАвторитет как таковой не зло — он дан Богом (Евр. 13:17). Но когда инструме"
+ },
+ {
+  "step": "quiz.after-next",
+  "progress": "Вопрос 2 из 10",
+  "visibleOptions": 4
+ }
+]

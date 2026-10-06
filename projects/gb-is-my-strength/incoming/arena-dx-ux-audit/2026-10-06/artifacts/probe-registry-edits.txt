@@ -1,0 +1,27 @@
+# The registry edits the probe needed (verbatim, minus the meaningless slug)
+
+## migration/page-ownership.json (one row added)
+"/articles/probe-audit-test-article/": {"owner":"astro","source":"src/pages/articles/probe-audit-test-article/index.astro","risk":2,"status":"production-dist"}
+
+## data/route-search-policy.json (one row added)
+"/articles/probe-audit-test-article/": {
+  "indexPolicy":"index","pagefindPolicy":"include","searchManifestPolicy":"include",
+  "sitemapPolicy":"include","rssPolicy":"include","contentKind":"article",
+  "librarySection":"Исследования","topicCategory":"Апологетика и исследования"}
+
+## data/search-manifest.json (one row added; note the field names)
+{"id":"probe-audit-test-article","type":"article","url":"/articles/probe-audit-test-article/",
+ "title":"...","description":"...","section":"Исследования","editor":"Фёдор Милованов",
+ "image":"...","tags":["техническая проверка"],
+ "readTime":1,"publishedTime":"2026-10-06T00:00:00+03:00","modifiedTime":"2026-10-06T00:00:00+03:00"}
+
+## Field-vocabulary comparison for the same facts
+content frontmatter (src/content.config.ts)   search-manifest.json
+publishedAt                                   publishedTime
+updatedAt                                     modifiedTime
+readingTime                                   readTime
+ogImage / ogImageAlt                          image (+ separate sitemap image projection)
+
+## Measured consequences
+- frontmatter uses readingTime: 1/96 manifest rows carry `readingTime`; 95 carry `readTime`.
+- frontmatter uses publishedAt: 1/96 rows carry `publishedAt`; 90 carry `publishedTime`; 5 rows carry no date at all.

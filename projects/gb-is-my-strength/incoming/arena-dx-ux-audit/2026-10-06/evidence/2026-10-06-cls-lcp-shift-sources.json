@@ -1,0 +1,1387 @@
+[
+ {
+  "name": "home-1440-light",
+  "path": "/",
+  "perf": {
+   "lcp": {
+    "time": 360,
+    "size": 63245,
+    "tag": "P",
+    "id": "",
+    "cls": "h-hero-desc"
+   },
+   "cls": 0.03808342553074631,
+   "shifts": [
+    {
+     "value": 0.038,
+     "t": 181,
+     "src": [
+      {
+       "tag": "::after",
+       "cls": "",
+       "text": "",
+       "prev": [
+        288,
+        77
+       ],
+       "cur": [
+        288,
+        61
+       ]
+      },
+      {
+       "tag": "DIV",
+       "cls": "h-hero-search-wrap",
+       "text": "Что вы хотите изучить?НайтиCtrlK",
+       "prev": [
+        237,
+        675
+       ],
+       "cur": [
+        237,
+        642
+       ]
+      },
+      {
+       "cls": "",
+       "text": "Экзегеза, богословие, апологетика, перев",
+       "prev": [
+        358,
+        587
+       ],
+       "cur": [
+        358,
+        587
+       ]
+      },
+      {
+       "tag": "BUTTON",
+       "cls": "h-sacred-word",
+       "text": "יַדְרִכֵנִיдаст мне ступать",
+       "prev": [
+        353,
+        271
+       ],
+       "cur": [
+        449,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "יְהוִה",
+       "prev": [
+        809,
+        164
+       ],
+       "cur": [
+        764,
+        164
+       ]
+      }
+     ]
+    },
+    {
+     "value": 0,
+     "t": 1150,
+     "src": [
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "בָּמוֹתַי",
+       "prev": [
+        592,
+        271
+       ],
+       "cur": [
+        589,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "וַיָּשֶׂם",
+       "prev": [
+        909,
+        271
+       ],
+       "cur": [
+        906,
+        271
+       ]
+      },
+      {
+       "tag": "BUTTON",
+       "cls": "h-sacred-word",
+       "text": "רַגְלַיноги мои",
+       "prev": [
+        838,
+        271
+       ],
+       "cur": [
+        835,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "רַגְלַי",
+       "prev": [
+        841,
+        271
+       ],
+       "cur": [
+        838,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "וְעַל",
+       "prev": [
+        682,
+        271
+       ],
+       "cur": [
+        679,
+        271
+       ]
+      }
+     ]
+    },
+    {
+     "value": 0,
+     "t": 1167,
+     "src": [
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "כָּאַיָּלוֹת",
+       "prev": [
+        733,
+        271
+       ],
+       "cur": [
+        730,
+        271
+       ]
+      },
+      {
+       "tag": "BUTTON",
+       "cls": "h-sacred-word",
+       "text": "בָּמוֹתַיвысоты мои",
+       "prev": [
+        587,
+        271
+       ],
+       "cur": [
+        584,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "בָּמוֹתַי",
+       "prev": [
+        589,
+        271
+       ],
+       "cur": [
+        586,
+        271
+       ]
+      },
+      {
+       "tag": "BUTTON",
+       "cls": "h-sacred-word",
+       "text": "וַיָּשֶׂםи сделает",
+       "prev": [
+        905,
+        271
+       ],
+       "cur": [
+        902,
+        271
+       ]
+      }
+     ]
+    },
+    {
+     "value": 0,
+     "t": 1184,
+     "src": [
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "יַדְרִכֵנִי",
+       "prev": [
+        469,
+        271
+       ],
+       "cur": [
+        466,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "וַיָּשֶׂם",
+       "prev": [
+        904,
+        271
+       ],
+       "cur": [
+        901,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "רַגְלַי",
+       "prev": [
+        836,
+        271
+       ],
+       "cur": [
+        833,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "וְעַל",
+       "prev": [
+        677,
+        271
+       ],
+       "cur": [
+        674,
+        271
+       ]
+      }
+     ]
+    },
+    {
+     "value": 0,
+     "t": 1200,
+     "src": [
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "בָּמוֹתַי",
+       "prev": [
+        584,
+        271
+       ],
+       "cur": [
+        581,
+        271
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "errors": []
+ },
+ {
+  "name": "home-m-390-light",
+  "path": "/",
+  "perf": {
+   "lcp": {
+    "time": 180,
+    "size": 30452,
+    "tag": "P",
+    "id": "",
+    "cls": "h-hero-desc"
+   },
+   "cls": 0,
+   "shifts": []
+  },
+  "errors": []
+ },
+ {
+  "name": "catalog-1440-light",
+  "path": "/articles/",
+  "perf": {
+   "lcp": {
+    "time": 312,
+    "size": 122120,
+    "tag": "IMG",
+    "id": "",
+    "cls": ""
+   },
+   "cls": 0.00845759664150913,
+   "shifts": [
+    {
+     "value": 0.0085,
+     "t": 262,
+     "src": [
+      {
+       "tag": "SECTION",
+       "cls": "h-section",
+       "text": "Все статьи74 опубликованных материалов. ",
+       "prev": [
+        339,
+        477
+       ],
+       "cur": [
+        339,
+        441
+       ]
+      },
+      {
+       "cls": "",
+       "text": "Каталог богословских разборов, переводов",
+       "prev": [
+        355,
+        285
+       ],
+       "cur": [
+        355,
+        285
+       ]
+      },
+      {
+       "cls": "",
+       "text": "Библиотека",
+       "prev": [
+        355,
+        143
+       ],
+       "cur": [
+        355,
+        143
+       ]
+      },
+      {
+       "tag": "LI",
+       "cls": "",
+       "text": "Разбор заблуждений",
+       "prev": [
+        655,
+        13
+       ],
+       "cur": [
+        647,
+        13
+       ]
+      },
+      {
+       "tag": "DIV",
+       "cls": "mobile-controls",
+       "text": "",
+       "prev": [
+        1148,
+        7
+       ],
+       "cur": [
+        1116,
+        7
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "contrast": [
+   {
+    "text": "Библиотека",
+    "color": "rgb(120, 113, 108)",
+    "bg": "rgb(248,245,240)",
+    "bgFrom": "DIV.home-v20",
+    "fontSize": "10px",
+    "fontWeight": "600",
+    "ratio": 4.41
+   }
+  ],
+  "a11yNames": [
+   {
+    "sel": "#heroSearchBar",
+    "missing": true
+   }
+  ],
+  "errors": []
+ },
+ {
+  "name": "catalog-m-390-light",
+  "path": "/articles/",
+  "perf": {
+   "lcp": {
+    "time": 136,
+    "size": 65520,
+    "tag": "P",
+    "id": "",
+    "cls": "h-hero-desc"
+   },
+   "cls": 0,
+   "shifts": []
+  },
+  "contrast": [
+   {
+    "text": "Библиотека",
+    "color": "rgb(120, 113, 108)",
+    "bg": "rgb(248,245,240)",
+    "bgFrom": "DIV.home-v20",
+    "fontSize": "10px",
+    "fontWeight": "600",
+    "ratio": 4.41
+   }
+  ],
+  "errors": []
+ },
+ {
+  "name": "kod-1440-light",
+  "path": "/articles/kod-da-vinchi/",
+  "perf": {
+   "lcp": {
+    "time": 388,
+    "size": 295113,
+    "tag": "IMG",
+    "id": "",
+    "cls": ""
+   },
+   "cls": 0.13393062952614618,
+   "shifts": [
+    {
+     "value": 0.1339,
+     "t": 402,
+     "src": [
+      {
+       "tag": "FIGURE",
+       "cls": "article-hero",
+       "text": "Старинные рукописи и свитки: разбор исто",
+       "prev": [
+        324,
+        550
+       ],
+       "cur": [
+        324,
+        471
+       ]
+      },
+      {
+       "tag": "P",
+       "cls": "article-desc",
+       "text": "Полный разбор мифов романа Дэна Брауна: ",
+       "prev": [
+        324,
+        341
+       ],
+       "cur": [
+        324,
+        292
+       ]
+      },
+      {
+       "tag": "P",
+       "cls": "article-byline",
+       "text": "Автор-редактор: Фёдор Милованов·1 апреля",
+       "prev": [
+        324,
+        408
+       ],
+       "cur": [
+        324,
+        359
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "article-byline__strong",
+       "text": "Автор-редактор: Фёдор Милованов",
+       "prev": [
+        324,
+        408
+       ],
+       "cur": [
+        323,
+        359
+       ]
+      },
+      {
+       "tag": "LI",
+       "cls": "breadcrumb__item",
+       "text": "«Код да Винчи»: мифы о Марии Магдалине и",
+       "prev": [
+        547,
+        108
+       ],
+       "cur": [
+        511,
+        108
+       ]
+      }
+     ]
+    },
+    {
+     "value": 0,
+     "t": 534,
+     "src": [
+      {
+       "tag": "B",
+       "cls": "",
+       "text": "Введение",
+       "prev": [
+        221,
+        186
+       ],
+       "cur": [
+        200,
+        186
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "contrast": [
+   {
+    "text": "Обн. 9 мая 2026",
+    "color": "rgb(106, 106, 106)",
+    "bg": "rgb(253,252,249)",
+    "bgFrom": "BODY.gbs-paper gb-cluster-single-ac",
+    "fontSize": "10.4px",
+    "fontWeight": "400",
+    "ratio": 5.27
+   }
+  ],
+  "a11yNames": [
+   {
+    "sel": ".error-flip-card",
+    "ariaLabel": "Нажмите, чтобы перевернуть: Свитки Мёртвого моря",
+    "title": null,
+    "visible": "В романеСвитки Мёртвого моря содержат ранние христианские ев",
+    "tag": "DIV",
+    "role": "button",
+    "inside": false
+   },
+   {
+    "sel": "#hmBottomBtn",
+    "ariaLabel": "Открыть оглавление статьи",
+    "title": null,
+    "visible": "0%",
+    "tag": "BUTTON",
+    "role": null,
+    "inside": true
+   }
+  ],
+  "errors": []
+ },
+ {
+  "name": "kod-m-390-light",
+  "path": "/articles/kod-da-vinchi/",
+  "perf": {
+   "lcp": {
+    "time": 316,
+    "size": 49823,
+    "tag": "IMG",
+    "id": "",
+    "cls": ""
+   },
+   "cls": 0,
+   "shifts": []
+  },
+  "contrast": [
+   {
+    "text": "Обн. 9 мая 2026",
+    "color": "rgb(106, 106, 106)",
+    "bg": "rgb(253,252,249)",
+    "bgFrom": "BODY.gbs-paper gb-cluster-single-ac",
+    "fontSize": "10.4px",
+    "fontWeight": "400",
+    "ratio": 5.27
+   }
+  ],
+  "a11yNames": [
+   {
+    "sel": "#hmBottomBtn",
+    "ariaLabel": "Открыть оглавление статьи",
+    "title": null,
+    "visible": "0%",
+    "tag": "BUTTON",
+    "role": null,
+    "inside": true
+   }
+  ],
+  "errors": []
+ },
+ {
+  "name": "kod-dark-1440-dark",
+  "path": "/articles/kod-da-vinchi/",
+  "perf": {
+   "lcp": {
+    "time": 368,
+    "size": 361981,
+    "tag": "IMG",
+    "id": "",
+    "cls": ""
+   },
+   "cls": 0.15794061924812727,
+   "shifts": [
+    {
+     "value": 0.1579,
+     "t": 242,
+     "src": [
+      {
+       "tag": "FIGURE",
+       "cls": "article-hero",
+       "text": "Старинные рукописи и свитки: разбор исто",
+       "prev": [
+        324,
+        550
+       ],
+       "cur": [
+        324,
+        471
+       ]
+      },
+      {
+       "tag": "P",
+       "cls": "article-desc",
+       "text": "Полный разбор мифов романа Дэна Брауна: ",
+       "prev": [
+        324,
+        341
+       ],
+       "cur": [
+        324,
+        292
+       ]
+      },
+      {
+       "tag": "P",
+       "cls": "article-byline",
+       "text": "Автор-редактор: Фёдор Милованов·1 апреля",
+       "prev": [
+        324,
+        408
+       ],
+       "cur": [
+        324,
+        359
+       ]
+      },
+      {
+       "tag": "LI",
+       "cls": "",
+       "text": "Ложь №2: Константин создал Библию",
+       "prev": [
+        52,
+        467
+       ],
+       "cur": [
+        52,
+        451
+       ]
+      },
+      {
+       "tag": "LI",
+       "cls": "",
+       "text": "Ложь №5: Мария на «Тайной вечере»",
+       "prev": [
+        52,
+        662
+       ],
+       "cur": [
+        52,
+        646
+       ]
+      }
+     ]
+    },
+    {
+     "value": 0,
+     "t": 474,
+     "src": [
+      {
+       "tag": "B",
+       "cls": "",
+       "text": "Введение",
+       "prev": [
+        221,
+        186
+       ],
+       "cur": [
+        200,
+        186
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "contrast": [
+   {
+    "text": "Канон сложился до Никеи — независимо и п",
+    "color": "rgb(107, 114, 128)",
+    "bg": "rgb(19,23,30)",
+    "bgFrom": "DIV.ctw",
+    "fontSize": "12.8px",
+    "fontWeight": "400",
+    "ratio": 3.72
+   }
+  ],
+  "errors": []
+ },
+ {
+  "name": "gill2-1440-light",
+  "path": "/articles/dzhon-gill-chast-2-uchenyi/",
+  "perf": {
+   "lcp": {
+    "time": 348,
+    "size": 240210,
+    "tag": "IMG",
+    "id": "",
+    "cls": ""
+   },
+   "cls": 0.00017789634840642148,
+   "shifts": [
+    {
+     "value": 0.0002,
+     "t": 365,
+     "src": [
+      {
+       "tag": "LI",
+       "cls": "breadcrumb__item",
+       "text": "Биографии служителей",
+       "prev": [
+        483,
+        107
+       ],
+       "cur": [
+        471,
+        107
+       ]
+      },
+      {
+       "tag": "LI",
+       "cls": "breadcrumb__item",
+       "text": "Джон Гилл",
+       "prev": [
+        664,
+        108
+       ],
+       "cur": [
+        622,
+        108
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "gbs2-count",
+       "text": "1 / 6",
+       "prev": [
+        242,
+        463
+       ],
+       "cur": [
+        236,
+        463
+       ]
+      }
+     ]
+    },
+    {
+     "value": 0,
+     "t": 503,
+     "src": [
+      {
+       "tag": "SPAN",
+       "cls": "gbs2-track",
+       "text": "",
+       "prev": [
+        64,
+        508
+       ],
+       "cur": [
+        64,
+        516
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "contrast": [
+   {
+    "text": "От юности в Кеттеринге до формирования х",
+    "color": "rgb(85, 85, 85)",
+    "bg": "rgb(255,255,255)",
+    "bgFrom": "DIV.gill-card",
+    "fontSize": "12.8px",
+    "fontWeight": "400",
+    "ratio": 7.46
+   }
+  ],
+  "errors": []
+ },
+ {
+  "name": "nagornaya1-1440-light",
+  "path": "/nagornaya/chast-1/",
+  "perf": {
+   "lcp": {
+    "time": 208,
+    "size": 272002,
+    "tag": "IMG",
+    "id": "",
+    "cls": "w-full block nagornaya-hero-img"
+   },
+   "cls": 0.019312688865713946,
+   "shifts": [
+    {
+     "value": 0.0193,
+     "t": 252,
+     "src": [
+      {
+       "tag": "DIV",
+       "cls": "rounded-2xl overflow-hidden shadow-md mt-4",
+       "text": "",
+       "prev": [
+        401,
+        581
+       ],
+       "cur": [
+        401,
+        560
+       ]
+      },
+      {
+       "tag": "NAV",
+       "cls": "flex-1 px-2.5 py-3 space-y-0.5",
+       "text": "АрхивОбзор серииЧасть IСодержаниеЧасть I",
+       "prev": [
+        0,
+        170
+       ],
+       "cur": [
+        0,
+        165
+       ]
+      },
+      {
+       "tag": "P",
+       "cls": "text-stone-500 text-sm leading-relaxed mt-4",
+       "text": "Содержание Матфея 5–7 и Луки 6:17–49 — с",
+       "prev": [
+        490,
+        461
+       ],
+       "cur": [
+        490,
+        441
+       ]
+      },
+      {
+       "tag": "DIV",
+       "cls": "nag-sidebar-controls",
+       "text": "A−A+1×1.25×1.5×1.75×2×■",
+       "prev": [
+        0,
+        108
+       ],
+       "cur": [
+        0,
+        103
+       ]
+      },
+      {
+       "tag": "P",
+       "cls": "text-stone-400 text-xs mt-3 font-mono",
+       "text": "Серия «Нагорная проповедь» · Часть I из ",
+       "prev": [
+        490,
+        501
+       ],
+       "cur": [
+        490,
+        481
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "contrast": [
+   {
+    "text": "A−",
+    "color": "rgb(106, 106, 106)",
+    "bg": "rgb(240,235,225)",
+    "bgFrom": "ASIDE.hidden lg:flex flex-col w-64 m",
+    "fontSize": "13px",
+    "fontWeight": "700",
+    "ratio": 4.55
+   }
+  ],
+  "a11yNames": [
+   {
+    "sel": "#nagFontDec",
+    "ariaLabel": "Уменьшить шрифт",
+    "title": "Меньше",
+    "visible": "A−",
+    "tag": "BUTTON",
+    "role": null,
+    "inside": true
+   }
+  ],
+  "errors": []
+ },
+ {
+  "name": "lawson-1440-light",
+  "path": "/articles/steven-lawson-samoobman-i-publichnyy-golos/",
+  "perf": {
+   "lcp": {
+    "time": 340,
+    "size": 213435,
+    "tag": "H1",
+    "id": "",
+    "cls": ""
+   },
+   "cls": 0.004145468194069358,
+   "shifts": [
+    {
+     "value": 0.0041,
+     "t": 293,
+     "src": [
+      {
+       "tag": "DIV",
+       "cls": "hrail-scroll",
+       "text": "Что установлено — и где нужно остановить",
+       "prev": [
+        52,
+        275
+       ],
+       "cur": [
+        52,
+        230
+       ]
+      },
+      {
+       "tag": "P",
+       "cls": "hrail-meta__title",
+       "text": "Стивен Лоусон: самообман и публичный гол",
+       "prev": [
+        56,
+        132
+       ],
+       "cur": [
+        56,
+        116
+       ]
+      },
+      {
+       "tag": "DIV",
+       "cls": "hrail-toch",
+       "text": "Оглавление статьи1 / 26",
+       "prev": [
+        52,
+        230
+       ],
+       "cur": [
+        52,
+        186
+       ]
+      },
+      {
+       "tag": "BUTTON",
+       "cls": "gb-save",
+       "text": "",
+       "prev": [
+        423,
+        271
+       ],
+       "cur": [
+        413,
+        271
+       ]
+      }
+     ]
+    },
+    {
+     "value": 0,
+     "t": 702,
+     "src": [
+      {
+       "tag": "B",
+       "cls": "",
+       "text": "Введение",
+       "prev": [
+        221,
+        199
+       ],
+       "cur": [
+        200,
+        199
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "errors": []
+ },
+ {
+  "name": "home-hero-search-1440-light",
+  "path": "/",
+  "perf": {
+   "lcp": {
+    "time": 396,
+    "size": 63245,
+    "tag": "P",
+    "id": "",
+    "cls": "h-hero-desc"
+   },
+   "cls": 0.03808342553074631,
+   "shifts": [
+    {
+     "value": 0.038,
+     "t": 240,
+     "src": [
+      {
+       "tag": "::after",
+       "cls": "",
+       "text": "",
+       "prev": [
+        288,
+        77
+       ],
+       "cur": [
+        288,
+        61
+       ]
+      },
+      {
+       "tag": "DIV",
+       "cls": "h-hero-search-wrap",
+       "text": "Что вы хотите изучить?НайтиCtrlK",
+       "prev": [
+        237,
+        675
+       ],
+       "cur": [
+        237,
+        642
+       ]
+      },
+      {
+       "cls": "",
+       "text": "Экзегеза, богословие, апологетика, перев",
+       "prev": [
+        358,
+        587
+       ],
+       "cur": [
+        358,
+        587
+       ]
+      },
+      {
+       "tag": "BUTTON",
+       "cls": "h-sacred-word",
+       "text": "יַדְרִכֵנִיдаст мне ступать",
+       "prev": [
+        353,
+        271
+       ],
+       "cur": [
+        449,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "יְהוִה",
+       "prev": [
+        809,
+        164
+       ],
+       "cur": [
+        764,
+        164
+       ]
+      }
+     ]
+    },
+    {
+     "value": 0,
+     "t": 959,
+     "src": [
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "בָּמוֹתַי",
+       "prev": [
+        592,
+        271
+       ],
+       "cur": [
+        589,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "וַיָּשֶׂם",
+       "prev": [
+        909,
+        271
+       ],
+       "cur": [
+        906,
+        271
+       ]
+      },
+      {
+       "tag": "BUTTON",
+       "cls": "h-sacred-word",
+       "text": "רַגְלַיноги мои",
+       "prev": [
+        838,
+        271
+       ],
+       "cur": [
+        835,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "רַגְלַי",
+       "prev": [
+        841,
+        271
+       ],
+       "cur": [
+        838,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "וְעַל",
+       "prev": [
+        682,
+        271
+       ],
+       "cur": [
+        679,
+        271
+       ]
+      }
+     ]
+    },
+    {
+     "value": 0,
+     "t": 976,
+     "src": [
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "כָּאַיָּלוֹת",
+       "prev": [
+        733,
+        271
+       ],
+       "cur": [
+        730,
+        271
+       ]
+      },
+      {
+       "tag": "BUTTON",
+       "cls": "h-sacred-word",
+       "text": "בָּמוֹתַיвысоты мои",
+       "prev": [
+        587,
+        271
+       ],
+       "cur": [
+        584,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "בָּמוֹתַי",
+       "prev": [
+        589,
+        271
+       ],
+       "cur": [
+        586,
+        271
+       ]
+      },
+      {
+       "tag": "BUTTON",
+       "cls": "h-sacred-word",
+       "text": "וַיָּשֶׂםи сделает",
+       "prev": [
+        905,
+        271
+       ],
+       "cur": [
+        902,
+        271
+       ]
+      }
+     ]
+    },
+    {
+     "value": 0,
+     "t": 993,
+     "src": [
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "יַדְרִכֵנִי",
+       "prev": [
+        469,
+        271
+       ],
+       "cur": [
+        466,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "וַיָּשֶׂם",
+       "prev": [
+        904,
+        271
+       ],
+       "cur": [
+        901,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "רַגְלַי",
+       "prev": [
+        836,
+        271
+       ],
+       "cur": [
+        833,
+        271
+       ]
+      },
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "וְעַל",
+       "prev": [
+        677,
+        271
+       ],
+       "cur": [
+        674,
+        271
+       ]
+      }
+     ]
+    },
+    {
+     "value": 0,
+     "t": 1010,
+     "src": [
+      {
+       "tag": "SPAN",
+       "cls": "h-sacred-face h-sacred-face--front",
+       "text": "בָּמוֹתַי",
+       "prev": [
+        584,
+        271
+       ],
+       "cur": [
+        581,
+        271
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "a11yNames": [
+   {
+    "sel": "#heroSearchBar",
+    "ariaLabel": "Открыть поиск по материалам сайта",
+    "title": null,
+    "visible": "Что вы хотите изучить?НайтиCtrlK",
+    "tag": "A",
+    "role": null,
+    "inside": true
+   }
+  ],
+  "errors": []
+ },
+ {
+  "name": "map-avraam-1440-light",
+  "path": "/karty/avraam/",
+  "perf": {
+   "lcp": {
+    "time": 204,
+    "size": 14130,
+    "tag": "H2",
+    "id": "",
+    "cls": "me-intro__title"
+   },
+   "cls": 0,
+   "shifts": []
+  },
+  "map": {
+   "h1": [],
+   "svgCount": 3,
+   "broken": [
+    ""
+   ],
+   "canvas": 0,
+   "title": "Путь Авраама: интерактивная карта Бытия 11–25 | Господь Бог — Сила Моя",
+   "roleMain": true
+  },
+  "errors": []
+ },
+ {
+  "name": "map-avraam-m-390-light",
+  "path": "/karty/avraam/",
+  "perf": {
+   "lcp": {
+    "time": 164,
+    "size": 10108,
+    "tag": "H2",
+    "id": "",
+    "cls": "me-intro__title"
+   },
+   "cls": 0,
+   "shifts": []
+  },
+  "map": {
+   "h1": [],
+   "svgCount": 3,
+   "broken": [
+    ""
+   ],
+   "canvas": 0,
+   "title": "Путь Авраама: интерактивная карта Бытия 11–25 | Господь Бог — Сила Моя",
+   "roleMain": true
+  },
+  "errors": []
+ }
+]

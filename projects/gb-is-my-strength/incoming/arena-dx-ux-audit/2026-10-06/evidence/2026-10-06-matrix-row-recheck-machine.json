@@ -1,0 +1,1381 @@
+{
+ "anchor": "68750830f4725213d80b833015520e5894699838",
+ "note": "fresh clone of Product main, production-like local dist, Chromium 153; covers rows GBS-QUIZ-NEXT-HIDDEN-GILL-V16, GBS-MOBILE-CHROME-HIDDEN-FOCUSABLE-BEFORE-SCROLL, GBS-BASELAYOUT-MISSING-SKIP-LINK, GBS-GENESIS6-THEME-TOGGLE-LOW-CONTRAST",
+ "quizNextVisibilityAndOperability": [
+  {
+   "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+   "w": 390,
+   "h": 844,
+   "status": 200,
+   "gill16": true,
+   "launchCount": 1,
+   "options": 8,
+   "next": {
+    "exists": true,
+    "text": "Следующий вопрос",
+    "cls": "quiz-next",
+    "display": "block",
+    "visibility": "visible",
+    "opacity": "1",
+    "rect": [
+     57,
+     1566,
+     277,
+     48
+    ],
+    "inViewport": false,
+    "parentGill16": true,
+    "mobileBtocOverlap": "clear"
+   },
+   "feedback": "НеверноУистон отказался, узнав, что Гилл написал комментарий",
+   "pageErrors": []
+  },
+  {
+   "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+   "w": 1440,
+   "h": 900,
+   "status": 200,
+   "gill16": true,
+   "launchCount": 1,
+   "options": 8,
+   "next": {
+    "exists": true,
+    "text": "Следующий вопрос",
+    "cls": "quiz-next",
+    "display": "block",
+    "visibility": "visible",
+    "opacity": "1",
+    "rect": [
+     432,
+     1209,
+     699,
+     46
+    ],
+    "inViewport": false,
+    "parentGill16": true,
+    "mobileBtocOverlap": "clear"
+   },
+   "feedback": "НеверноУистон отказался, узнав, что Гилл написал комментарий",
+   "pageErrors": []
+  },
+  {
+   "route": "/articles/20-antisovetov-pastoru/",
+   "w": 390,
+   "h": 844,
+   "status": 200,
+   "gill16": true,
+   "launchCount": 1,
+   "options": 4,
+   "next": {
+    "exists": true,
+    "text": "Следующий вопрос",
+    "cls": "quiz-next",
+    "display": "block",
+    "visibility": "visible",
+    "opacity": "1",
+    "rect": [
+     57,
+     1756,
+     277,
+     48
+    ],
+    "inViewport": false,
+    "parentGill16": true,
+    "mobileBtocOverlap": "clear"
+   },
+   "feedback": "ВерноАвторитет как таковой не зло — он дан Богом (Евр. 13:17",
+   "pageErrors": []
+  },
+  {
+   "route": "/articles/nagornaya/chast-1/",
+   "w": 390,
+   "h": 844,
+   "status": 404,
+   "gill16": false,
+   "launchCount": 0,
+   "pageErrors": []
+  }
+ ],
+ "mobileChromeFocusTrace": [
+  {
+   "route": "/articles/",
+   "stops": [
+    {
+     "i": 1,
+     "tag": "A",
+     "cls": "skip-link",
+     "label": "Перейти к содержимому",
+     "top": 13,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 2,
+     "tag": "A",
+     "cls": "h-nav-logo",
+     "label": "Господь Бог — Сила Моя — на главную",
+     "top": 15,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 3,
+     "tag": "BUTTON",
+     "cls": "gb-nav-search-icon",
+     "label": "Поиск по всему сайту",
+     "top": 7,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 4,
+     "tag": "BUTTON",
+     "cls": "theme-toggle",
+     "label": "Переключить тему",
+     "top": 7,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 5,
+     "tag": "BUTTON",
+     "cls": "h-mobile-menu-btn",
+     "label": "Открыть меню",
+     "top": 7,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 6,
+     "tag": "BUTTON",
+     "cls": "mcp-icon",
+     "label": "Назад",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 7,
+     "tag": "A",
+     "cls": "mcp-icon",
+     "label": "На главную",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 8,
+     "tag": "BUTTON",
+     "cls": "mcp-search",
+     "label": "Открыть поиск по сайту",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-search",
+     "tabindex": null
+    },
+    {
+     "i": 9,
+     "tag": "A",
+     "cls": "h-article-card",
+     "label": "Нагорная проповедь: серия в 5 частях89 м",
+     "top": 487,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 10,
+     "tag": "A",
+     "cls": "h-article-card",
+     "label": "Джон Гилл (1697–1771) — биографическая с",
+     "top": 558,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 11,
+     "tag": "A",
+     "cls": "h-article-card",
+     "label": "Тёмная сторона кафедры — пастырская влас",
+     "top": 552,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 12,
+     "tag": "A",
+     "cls": "h-article-card",
+     "label": "Баптисты России — История Евангелия, сво",
+     "top": 439,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    }
+   ],
+   "hiddenStops": 3,
+   "hiddenChromeStops": 3,
+   "skipLink": {
+    "i": 1,
+    "tag": "A",
+    "cls": "skip-link",
+    "label": "Перейти к содержимому",
+    "top": 13,
+    "inViewport": true,
+    "offscreen": false,
+    "chromeBar": null,
+    "tabindex": null
+   }
+  },
+  {
+   "route": "/biografii/",
+   "stops": [
+    {
+     "i": 1,
+     "tag": "A",
+     "cls": "skip-link",
+     "label": "Перейти к содержимому",
+     "top": 16,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 2,
+     "tag": "A",
+     "cls": "h-nav-logo",
+     "label": "Господь Бог — Сила Моя — на главную",
+     "top": 15,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 3,
+     "tag": "BUTTON",
+     "cls": "gb-nav-search-icon",
+     "label": "Поиск по всему сайту",
+     "top": 7,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 4,
+     "tag": "BUTTON",
+     "cls": "theme-toggle",
+     "label": "Переключить тему",
+     "top": 7,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 5,
+     "tag": "BUTTON",
+     "cls": "h-mobile-menu-btn",
+     "label": "Открыть меню",
+     "top": 13,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 6,
+     "tag": "BUTTON",
+     "cls": "mcp-icon",
+     "label": "Назад",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 7,
+     "tag": "A",
+     "cls": "mcp-icon",
+     "label": "На главную",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 8,
+     "tag": "BUTTON",
+     "cls": "mcp-search",
+     "label": "Открыть поиск по сайту",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-search",
+     "tabindex": null
+    },
+    {
+     "i": 9,
+     "tag": "A",
+     "cls": "gb-text-link",
+     "label": "Главная",
+     "top": 88,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 10,
+     "tag": "A",
+     "cls": "heading-anchor",
+     "label": "Скопировать ссылку на раздел",
+     "top": 763,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 11,
+     "tag": "A",
+     "cls": "h-article-card",
+     "label": "Реформатское богословие · XVIII в. · Кон",
+     "top": 644,
+     "inViewport": false,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 12,
+     "tag": "A",
+     "cls": "h-article-card",
+     "label": "Реформатское богословие · XVIII в. · Сер",
+     "top": 638,
+     "inViewport": false,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    }
+   ],
+   "hiddenStops": 3,
+   "hiddenChromeStops": 3,
+   "skipLink": {
+    "i": 1,
+    "tag": "A",
+    "cls": "skip-link",
+    "label": "Перейти к содержимому",
+    "top": 16,
+    "inViewport": true,
+    "offscreen": false,
+    "chromeBar": null,
+    "tabindex": null
+   }
+  },
+  {
+   "route": "/hard-texts/",
+   "stops": [
+    {
+     "i": 1,
+     "tag": "A",
+     "cls": "skip-link",
+     "label": "Перейти к содержимому",
+     "top": 13,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 2,
+     "tag": "A",
+     "cls": "h-nav-logo",
+     "label": "Господь Бог — Сила Моя — на главную",
+     "top": 15,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 3,
+     "tag": "BUTTON",
+     "cls": "theme-toggle",
+     "label": "Переключить тему",
+     "top": 7,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 4,
+     "tag": "BUTTON",
+     "cls": "h-mobile-menu-btn",
+     "label": "Открыть меню",
+     "top": 7,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 5,
+     "tag": "A",
+     "cls": "gb-text-link",
+     "label": "Главная",
+     "top": 88,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 6,
+     "tag": "A",
+     "cls": "heading-anchor",
+     "label": "Скопировать ссылку на раздел",
+     "top": 333,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 7,
+     "tag": "BUTTON",
+     "cls": "mcp-icon",
+     "label": "Назад",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 8,
+     "tag": "A",
+     "cls": "mcp-icon",
+     "label": "На главную",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 9,
+     "tag": "BUTTON",
+     "cls": "mcp-search",
+     "label": "Открыть поиск по сайту",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-search",
+     "tabindex": null
+    },
+    {
+     "i": 10,
+     "tag": "A",
+     "cls": "h-article-card",
+     "label": "ПрологБиблейская кардиология: что Библия",
+     "top": 672,
+     "inViewport": false,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 11,
+     "tag": "A",
+     "cls": "h-article-card",
+     "label": "Глава I · Статья 1Крайне ли испорчено мо",
+     "top": 535,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 12,
+     "tag": "A",
+     "cls": "h-article-card",
+     "label": "Глава II · Статья 1Римлянам 7: верующий,",
+     "top": 583,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    }
+   ],
+   "hiddenStops": 3,
+   "hiddenChromeStops": 3,
+   "skipLink": {
+    "i": 1,
+    "tag": "A",
+    "cls": "skip-link",
+    "label": "Перейти к содержимому",
+    "top": 13,
+    "inViewport": true,
+    "offscreen": false,
+    "chromeBar": null,
+    "tabindex": null
+   }
+  },
+  {
+   "route": "/rodosloviye/",
+   "stops": [
+    {
+     "i": 1,
+     "tag": "BUTTON",
+     "cls": "mcp-icon",
+     "label": "Назад",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 2,
+     "tag": "A",
+     "cls": "mcp-icon",
+     "label": "На главную",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 3,
+     "tag": "BUTTON",
+     "cls": "mcp-search",
+     "label": "Открыть поиск по сайту",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-search",
+     "tabindex": null
+    },
+    {
+     "i": 4,
+     "tag": "A",
+     "cls": "skip-link",
+     "label": "Перейти к содержанию",
+     "top": 13,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 5,
+     "tag": "A",
+     "cls": "breadcrumb__link",
+     "label": "Главная",
+     "top": 27,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 6,
+     "tag": "A",
+     "cls": "btn btn-primary",
+     "label": "Исследовать атлас",
+     "top": 398,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 7,
+     "tag": "A",
+     "cls": "btn",
+     "label": "Как читать связи",
+     "top": 436,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 8,
+     "tag": "A",
+     "cls": "btn",
+     "label": "Открыть приложение",
+     "top": 474,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 9,
+     "tag": "A",
+     "cls": "heading-anchor",
+     "label": "Скопировать ссылку на раздел",
+     "top": 671,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 10,
+     "tag": "A",
+     "cls": "",
+     "label": "Открыть древо →",
+     "top": 579,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 11,
+     "tag": "A",
+     "cls": "",
+     "label": "К сравнению →",
+     "top": 569,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 12,
+     "tag": "A",
+     "cls": "",
+     "label": "Понять статусы →",
+     "top": 521,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    }
+   ],
+   "hiddenStops": 3,
+   "hiddenChromeStops": 3,
+   "skipLink": {
+    "i": 4,
+    "tag": "A",
+    "cls": "skip-link",
+    "label": "Перейти к содержанию",
+    "top": 13,
+    "inViewport": true,
+    "offscreen": false,
+    "chromeBar": null,
+    "tabindex": null
+   }
+  },
+  {
+   "route": "/konfessii/",
+   "stops": [
+    {
+     "i": 1,
+     "tag": "BUTTON",
+     "cls": "mcp-icon",
+     "label": "Назад",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 2,
+     "tag": "A",
+     "cls": "mcp-icon",
+     "label": "На главную",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 3,
+     "tag": "BUTTON",
+     "cls": "mcp-search",
+     "label": "Открыть поиск по сайту",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-search",
+     "tabindex": null
+    },
+    {
+     "i": 4,
+     "tag": "A",
+     "cls": "back",
+     "label": "На главную",
+     "top": 26,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 5,
+     "tag": "A",
+     "cls": "back",
+     "label": "🚀 Приложение",
+     "top": 739,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 6,
+     "tag": "A",
+     "cls": "card live",
+     "label": "Открыть 3D-карту Русского Баптизма",
+     "top": 348,
+     "inViewport": false,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 7,
+     "tag": "A",
+     "cls": "",
+     "label": "gospod-bog.ru",
+     "top": 788,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 8,
+     "tag": "A",
+     "cls": "",
+     "label": "Карты",
+     "top": 801,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 9,
+     "tag": "A",
+     "cls": "",
+     "label": "Все статьи",
+     "top": 801,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 11,
+     "tag": "BUTTON",
+     "cls": "mcp-icon",
+     "label": "Назад",
+     "top": 7,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 12,
+     "tag": "A",
+     "cls": "mcp-icon",
+     "label": "На главную",
+     "top": 7,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    }
+   ],
+   "hiddenStops": 3,
+   "hiddenChromeStops": 3,
+   "skipLink": null
+  },
+  {
+   "route": "/karty/",
+   "stops": [
+    {
+     "i": 1,
+     "tag": "BUTTON",
+     "cls": "mcp-icon",
+     "label": "Назад",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 2,
+     "tag": "A",
+     "cls": "mcp-icon",
+     "label": "На главную",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 3,
+     "tag": "BUTTON",
+     "cls": "mcp-search",
+     "label": "Открыть поиск по сайту",
+     "top": -51,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": "mcp-search",
+     "tabindex": null
+    },
+    {
+     "i": 4,
+     "tag": "A",
+     "cls": "back-link",
+     "label": "← Главная",
+     "top": 46,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 5,
+     "tag": "A",
+     "cls": "back-link",
+     "label": "Приложение",
+     "top": 46,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 6,
+     "tag": "A",
+     "cls": "karty-feature",
+     "label": "Проверенная картаПуть Авраама אַבְרָהָם ",
+     "top": 583,
+     "inViewport": false,
+     "offscreen": false,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 8,
+     "tag": "BUTTON",
+     "cls": "mcp-icon",
+     "label": "Назад",
+     "top": 7,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 9,
+     "tag": "A",
+     "cls": "mcp-icon",
+     "label": "На главную",
+     "top": 7,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": "mcp-icon",
+     "tabindex": null
+    },
+    {
+     "i": 10,
+     "tag": "BUTTON",
+     "cls": "mcp-search",
+     "label": "Открыть поиск по сайту",
+     "top": 7,
+     "inViewport": true,
+     "offscreen": false,
+     "chromeBar": "mcp-search",
+     "tabindex": null
+    },
+    {
+     "i": 11,
+     "tag": "A",
+     "cls": "back-link",
+     "label": "← Главная",
+     "top": -192,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": null,
+     "tabindex": null
+    },
+    {
+     "i": 12,
+     "tag": "A",
+     "cls": "back-link",
+     "label": "Приложение",
+     "top": -3,
+     "inViewport": false,
+     "offscreen": true,
+     "chromeBar": null,
+     "tabindex": null
+    }
+   ],
+   "hiddenStops": 5,
+   "hiddenChromeStops": 3,
+   "skipLink": null
+  }
+ ],
+ "genesis6Probe": [
+  {
+   "scheme": "light",
+   "w": 1440,
+   "probe": {
+    "bodyBg": "rgb(14, 17, 22)",
+    "bodyText": "rgb(26, 26, 26)",
+    "htmlCls": "",
+    "theme": "light",
+    "themeToggle": {
+     "rect": [
+      1149,
+      7,
+      44,
+      44
+     ],
+     "stroke": "rgb(26, 26, 26)",
+     "strokeWidth": "2px",
+     "surface": "rgb(14, 17, 22)",
+     "ratio": 1.09,
+     "tabindex": null
+    },
+    "h1": "Бытие 6, Енох, Иуда и Пётр",
+    "mainId": "main-content",
+    "skip": 1
+   },
+   "focusTrace": [
+    {
+     "tag": "A",
+     "label": "Перейти к основному содержимом",
+     "top": 12
+    },
+    {
+     "tag": "A",
+     "label": "Господь Бог — Сила Моя",
+     "top": 16
+    },
+    {
+     "tag": "A",
+     "label": "Все статьи",
+     "top": 21
+    },
+    {
+     "tag": "A",
+     "label": "Приложение",
+     "top": 21
+    },
+    {
+     "tag": "A",
+     "label": "Биографии",
+     "top": 21
+    },
+    {
+     "tag": "A",
+     "label": "Трудные тексты",
+     "top": 21
+    }
+   ]
+  },
+  {
+   "scheme": "light",
+   "w": 390,
+   "probe": {
+    "bodyBg": "rgb(14, 17, 22)",
+    "bodyText": "rgb(26, 26, 26)",
+    "htmlCls": "",
+    "theme": "light",
+    "themeToggle": {
+     "rect": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "stroke": "rgb(26, 26, 26)",
+     "strokeWidth": "2px",
+     "surface": "rgb(14, 17, 22)",
+     "ratio": 1.09,
+     "tabindex": null
+    },
+    "h1": "Бытие 6, Енох, Иуда и Пётр",
+    "mainId": "main-content",
+    "skip": 1
+   },
+   "focusTrace": [
+    {
+     "tag": "A",
+     "label": "Перейти к основному содержимом",
+     "top": 12
+    },
+    {
+     "tag": "BUTTON",
+     "label": "Назад",
+     "top": -51
+    },
+    {
+     "tag": "A",
+     "label": "На главную",
+     "top": -51
+    },
+    {
+     "tag": "BUTTON",
+     "label": "Открыть поиск по сайту",
+     "top": -51
+    },
+    {
+     "tag": "A",
+     "label": "Главная",
+     "top": 18
+    },
+    {
+     "tag": "A",
+     "label": "Трудные тексты",
+     "top": 18
+    }
+   ]
+  },
+  {
+   "scheme": "dark",
+   "w": 390,
+   "probe": {
+    "bodyBg": "rgb(14, 17, 22)",
+    "bodyText": "rgb(230, 225, 215)",
+    "htmlCls": "dark",
+    "theme": "dark",
+    "themeToggle": {
+     "rect": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "stroke": "rgb(245, 197, 66)",
+     "strokeWidth": "2px",
+     "surface": "rgb(14, 17, 22)",
+     "ratio": 11.66,
+     "tabindex": null
+    },
+    "h1": "Бытие 6, Енох, Иуда и Пётр",
+    "mainId": "main-content",
+    "skip": 1
+   },
+   "focusTrace": [
+    {
+     "tag": "A",
+     "label": "Перейти к основному содержимом",
+     "top": 12
+    },
+    {
+     "tag": "BUTTON",
+     "label": "Назад",
+     "top": -51
+    },
+    {
+     "tag": "A",
+     "label": "На главную",
+     "top": -51
+    },
+    {
+     "tag": "BUTTON",
+     "label": "Открыть поиск по сайту",
+     "top": -51
+    },
+    {
+     "tag": "A",
+     "label": "Главная",
+     "top": 18
+    },
+    {
+     "tag": "A",
+     "label": "Трудные тексты",
+     "top": 18
+    }
+   ]
+  }
+ ],
+ "quizOperabilityAfterScroll": [
+  {
+   "route": "/articles/dzhon-gill-chast-2-uchenyi/",
+   "w": 390,
+   "nextLabel": "Следующий вопрос",
+   "visibleAfterScroll": true,
+   "progressAfter": "Вопрос 2 из 4",
+   "advanced": true,
+   "before": ""
+  },
+  {
+   "route": "/articles/20-antisovetov-pastoru/",
+   "w": 390,
+   "nextLabel": "Следующий вопрос",
+   "visibleAfterScroll": true,
+   "progressAfter": "Вопрос 2 из 10",
+   "advanced": true,
+   "before": ""
+  }
+ ],
+ "bypassActivation": [
+  {
+   "route": "/hard-texts/genesis-6/",
+   "w": 1440,
+   "dom": {
+    "mainId": "main-content",
+    "skipLinks": [
+     {
+      "text": "Перейти к основному содержимому",
+      "href": "#main-content"
+     }
+    ]
+   },
+   "firstStop": {
+    "tag": "A",
+    "text": "Перейти к основному содержимому",
+    "href": "#main-content",
+    "top": 12
+   },
+   "hashAfterEnter": "#main-content",
+   "stopAfterSkip": {
+    "tag": "A",
+    "label": "Главная",
+    "inMain": true
+   },
+   "tabsUntilFocusInMain": null
+  },
+  {
+   "route": "/hard-texts/genesis-6/",
+   "w": 390,
+   "dom": {
+    "mainId": "main-content",
+    "skipLinks": [
+     {
+      "text": "Перейти к основному содержимому",
+      "href": "#main-content"
+     }
+    ]
+   },
+   "firstStop": {
+    "tag": "A",
+    "text": "Перейти к основному содержимому",
+    "href": "#main-content",
+    "top": 12
+   },
+   "hashAfterEnter": "#main-content",
+   "stopAfterSkip": {
+    "tag": "BUTTON",
+    "label": "Назад",
+    "inMain": true
+   },
+   "tabsUntilFocusInMain": 2
+  },
+  {
+   "route": "/izbrannoe/",
+   "w": 1440,
+   "dom": {
+    "mainId": "main-content",
+    "skipLinks": [
+     {
+      "text": "Перейти к основному содержимому",
+      "href": "#main-content"
+     },
+     {
+      "text": "Перейти к статьям",
+      "href": "/articles/"
+     }
+    ]
+   },
+   "firstStop": {
+    "tag": "A",
+    "text": "Перейти к основному содержимому",
+    "href": "#main-content",
+    "top": 12
+   },
+   "hashAfterEnter": "#main-content",
+   "stopAfterSkip": {
+    "tag": "A",
+    "label": "Перейти к статьям",
+    "inMain": true
+   },
+   "tabsUntilFocusInMain": null
+  },
+  {
+   "route": "/izbrannoe/",
+   "w": 390,
+   "dom": {
+    "mainId": "main-content",
+    "skipLinks": [
+     {
+      "text": "Перейти к основному содержимому",
+      "href": "#main-content"
+     },
+     {
+      "text": "Перейти к статьям",
+      "href": "/articles/"
+     }
+    ]
+   },
+   "firstStop": {
+    "tag": "A",
+    "text": "Перейти к основному содержимому",
+    "href": "#main-content",
+    "top": 12
+   },
+   "hashAfterEnter": "#main-content",
+   "stopAfterSkip": {
+    "tag": "A",
+    "label": "Перейти к статьям",
+    "inMain": true
+   },
+   "tabsUntilFocusInMain": 7
+  }
+ ],
+ "sequentialTrace1440": [
+  {
+   "route": "/hard-texts/genesis-6/",
+   "inMainAt": 13,
+   "trace": [
+    {
+     "i": 8,
+     "tag": "A",
+     "label": "О проекте",
+     "top": 21,
+     "inMain": false,
+     "offscreen": false
+    },
+    {
+     "i": 9,
+     "tag": "A",
+     "label": "Открыть библейский тренажёр",
+     "top": 10,
+     "inMain": false,
+     "offscreen": false
+    },
+    {
+     "i": 10,
+     "tag": "A",
+     "label": "Избранное",
+     "top": 10,
+     "inMain": false,
+     "offscreen": false
+    },
+    {
+     "i": 11,
+     "tag": "BUTTON",
+     "label": "Поиск (Ctrl+K)",
+     "top": 7,
+     "inMain": false,
+     "offscreen": false
+    },
+    {
+     "i": 12,
+     "tag": "BUTTON",
+     "label": "Переключить тему",
+     "top": 7,
+     "inMain": false,
+     "offscreen": false
+    },
+    {
+     "i": 13,
+     "tag": "A",
+     "label": "Главная",
+     "top": 32,
+     "inMain": true,
+     "offscreen": false
+    }
+   ],
+   "hiddenBeforeMain": 0
+  },
+  {
+   "route": "/izbrannoe/",
+   "inMainAt": 13,
+   "trace": [
+    {
+     "i": 8,
+     "tag": "A",
+     "label": "О проекте",
+     "top": 21,
+     "inMain": false,
+     "offscreen": false
+    },
+    {
+     "i": 9,
+     "tag": "A",
+     "label": "Открыть библейский тренажёр",
+     "top": 10,
+     "inMain": false,
+     "offscreen": false
+    },
+    {
+     "i": 10,
+     "tag": "A",
+     "label": "Избранное",
+     "top": 10,
+     "inMain": false,
+     "offscreen": false
+    },
+    {
+     "i": 11,
+     "tag": "BUTTON",
+     "label": "Поиск (Ctrl+K)",
+     "top": 7,
+     "inMain": false,
+     "offscreen": false
+    },
+    {
+     "i": 12,
+     "tag": "BUTTON",
+     "label": "Переключить тему",
+     "top": 7,
+     "inMain": false,
+     "offscreen": false
+    },
+    {
+     "i": 13,
+     "tag": "A",
+     "label": "Перейти к статьям",
+     "top": 427,
+     "inMain": true,
+     "offscreen": false
+    }
+   ],
+   "hiddenBeforeMain": 0
+  }
+ ]
+}

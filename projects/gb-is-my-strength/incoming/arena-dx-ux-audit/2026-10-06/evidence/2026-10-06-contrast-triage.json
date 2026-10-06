@@ -1,0 +1,1786 @@
+[
+ {
+  "id": "catalog",
+  "path": "/articles/",
+  "scheme": "light",
+  "width": 1440,
+  "axeNodes": 325,
+  "computedFail": 325,
+  "computedPass": 0,
+  "fails": [
+   {
+    "target": [
+     ".h-hero-tagline"
+    ],
+    "html": "<p class=\"h-hero-tagline\">Библиотека</p>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 7.5pt (10px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(248,245,240)",
+     "bgFrom": "DIV.home-v20",
+     "fontSize": 10,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 4.41,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".h-hero-desc"
+    ],
+    "html": "<p class=\"h-hero-desc\">Каталог богословских разборов, переводов и апологетических материалов, выстроенных вокруг текста ",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 14.6pt (19.52px), font weight: normal). Expected contrast ",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(248,245,240)",
+     "bgFrom": "DIV.home-v20",
+     "fontSize": 19.52,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.41,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "#hLibraryLabel"
+    ],
+    "html": "<p class=\"h-section-label\" id=\"hLibraryLabel\">Все статьи</p>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 8.6pt (11.5px), font weight: bold). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(248,245,240)",
+     "bgFrom": "DIV.home-v20",
+     "fontSize": 11.5,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 4.41,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "#hSeriesLabel"
+    ],
+    "html": "<p class=\"h-section-label\" id=\"hSeriesLabel\">Серии</p>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.41 (foreground color: #78716c, background color: #f8f5f0, font size: 8.6pt (11.5px), font weight: bold). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(248,245,240)",
+     "bgFrom": "DIV.home-v20",
+     "fontSize": 11.5,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 4.41,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"seriya/\"] > .h-article-body > .h-article-meta > .h-meta-time"
+    ],
+    "html": "<span class=\"h-meta-time\">89 мин</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"seriya/\"] > .h-article-body > .h-article-meta > .h-meta-tag--neutral.h-meta-tag"
+    ],
+    "html": "<span class=\"h-meta-tag h-meta-tag--neutral\">Нагорная проповедь</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.12 (foreground color: #78716c, background color: #f3ede5, font size: 7.5pt (10px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(243,237,229)",
+     "bgFrom": "SPAN.h-meta-tag h-meta-tag--neutral",
+     "fontSize": 10,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 4.13,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"seriya/\"] > .h-article-body > .h-article-abstract"
+    ],
+    "html": "<p class=\"h-article-abstract\">Серия из 5 частей: содержание Нагорной проповеди, методология записи Евангелий, адресат, б",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 10.5pt (14px), font weight: normal). Expected contrast rat",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 14,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href=\"/biografii/#dzhon-gill-series\"] > .h-article-body > .h-article-meta > .h-meta-time"
+    ],
+    "html": "<span class=\"h-meta-time\">239 мин</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href=\"/biografii/#dzhon-gill-series\"] > .h-article-body > .h-article-meta > .h-meta-tag--neutral.h-meta-tag"
+    ],
+    "html": "<span class=\"h-meta-tag h-meta-tag--neutral\">Биографии служителей</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.12 (foreground color: #78716c, background color: #f3ede5, font size: 7.5pt (10px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(243,237,229)",
+     "bgFrom": "SPAN.h-meta-tag h-meta-tag--neutral",
+     "fontSize": 10,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 4.13,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href=\"/biografii/#dzhon-gill-series\"] > .h-article-body > .h-article-abstract"
+    ],
+    "html": "<p class=\"h-article-abstract\">Серия из 6 материалов о Джоне Гилле: исторический контекст, биография в трёх частях, отдел",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 10.5pt (14px), font weight: normal). Expected contrast rat",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 14,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"pastor-series/\"] > .h-article-body > .h-article-meta > .h-meta-time"
+    ],
+    "html": "<span class=\"h-meta-time\">157 мин</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"pastor-series/\"] > .h-article-body > .h-article-meta > .h-meta-tag--neutral.h-meta-tag"
+    ],
+    "html": "<span class=\"h-meta-tag h-meta-tag--neutral\">Служение</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.12 (foreground color: #78716c, background color: #f3ede5, font size: 7.5pt (10px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(243,237,229)",
+     "bgFrom": "SPAN.h-meta-tag h-meta-tag--neutral",
+     "fontSize": 10,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 4.13,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"pastor-series/\"] > .h-article-body > .h-article-abstract"
+    ],
+    "html": "<p class=\"h-article-abstract\">Девять частей канонического ядра о пастырской власти и подотчётности плюс документальное Д",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 10.5pt (14px), font weight: normal). Expected contrast rat",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 14,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"baptisty-rossii/\"] > .h-article-body > .h-article-meta > .h-meta-time"
+    ],
+    "html": "<span class=\"h-meta-time\">229 мин</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"baptisty-rossii/\"] > .h-article-body > .h-article-meta > .h-meta-tag--neutral.h-meta-tag"
+    ],
+    "html": "<span class=\"h-meta-tag h-meta-tag--neutral\">Баптисты России</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.12 (foreground color: #78716c, background color: #f3ede5, font size: 7.5pt (10px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(243,237,229)",
+     "bgFrom": "SPAN.h-meta-tag h-meta-tag--neutral",
+     "fontSize": 10,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 4.13,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"baptisty-rossii/\"] > .h-article-body > .h-article-abstract"
+    ],
+    "html": "<p class=\"h-article-abstract\">Книга статей о русском баптизме и ЕХБ: Тифлис и Кура, южная штунда, съезды 1884 года, Пете",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 10.5pt (14px), font weight: normal). Expected contrast rat",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 14,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[data-catalog-series=\"/biografii/\"] > .h-article-body > .h-article-meta > .h-meta-time"
+    ],
+    "html": "<span class=\"h-meta-time\">5 мин</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[data-catalog-series=\"/biografii/\"] > .h-article-body > .h-article-meta > .h-meta-tag--neutral.h-meta-tag"
+    ],
+    "html": "<span class=\"h-meta-tag h-meta-tag--neutral\">Биографии служителей</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.12 (foreground color: #78716c, background color: #f3ede5, font size: 7.5pt (10px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(243,237,229)",
+     "bgFrom": "SPAN.h-meta-tag h-meta-tag--neutral",
+     "fontSize": 10,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 4.13,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[data-catalog-series=\"/biografii/\"] > .h-article-body > .h-article-abstract"
+    ],
+    "html": "<p class=\"h-article-abstract\">Биографии пасторов, богословов, реформаторов и миссионеров — от Ранней Церкви до XXI века.",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 10.5pt (14px), font weight: normal). Expected contrast rat",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 14,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"nagornaya/\"] > .h-article-body > .h-article-meta > .h-meta-time"
+    ],
+    "html": "<span class=\"h-meta-time\">89 мин</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"nagornaya/\"] > .h-article-body > .h-article-meta > .h-meta-tag--neutral.h-meta-tag"
+    ],
+    "html": "<span class=\"h-meta-tag h-meta-tag--neutral\">Нагорная проповедь</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.12 (foreground color: #78716c, background color: #f3ede5, font size: 7.5pt (10px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(243,237,229)",
+     "bgFrom": "SPAN.h-meta-tag h-meta-tag--neutral",
+     "fontSize": 10,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 4.13,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"nagornaya/\"] > .h-article-body > .h-article-abstract"
+    ],
+    "html": "<p class=\"h-article-abstract\">Исследование Матфея 5–7 и Луки 6: архитектура, синоптическая проблема, адресат, богодухнов",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 10.5pt (14px), font weight: normal). Expected contrast rat",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 14,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"podrostok-za-kadrom/\"] > .h-article-body > .h-article-meta > .h-meta-time"
+    ],
+    "html": "<span class=\"h-meta-time\">264 мин</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"podrostok-za-kadrom/\"] > .h-article-body > .h-article-meta > .h-meta-tag--neutral.h-meta-tag"
+    ],
+    "html": "<span class=\"h-meta-tag h-meta-tag--neutral\">Семья</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.12 (foreground color: #78716c, background color: #f3ede5, font size: 7.5pt (10px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(243,237,229)",
+     "bgFrom": "SPAN.h-meta-tag h-meta-tag--neutral",
+     "fontSize": 10,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 4.13,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "a[href$=\"podrostok-za-kadrom/\"] > .h-article-body > .h-article-abstract"
+    ],
+    "html": "<p class=\"h-article-abstract\">Семь больших материалов о скрытой жизни подростка, реакции родителей и церкви, взрослении,",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #78716c, background color: #f7f4ee, font size: 10.5pt (14px), font weight: normal). Expected contrast rat",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(247,244,238)",
+     "bgFrom": "A.h-article-card",
+     "fontSize": 14,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.37,
+     "required": 4.5,
+     "pass": false
+    }
+   }
+  ],
+  "passesSample": []
+ },
+ {
+  "id": "kod-light",
+  "path": "/articles/kod-da-vinchi/",
+  "scheme": "light",
+  "width": 1440,
+  "axeNodes": 17,
+  "computedFail": 15,
+  "computedPass": 2,
+  "fails": [
+   {
+    "target": [
+     ".error-flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"native-v1\"]:nth-child(1) > .error-flip-inner > .error-flip-back[aria-hidden=\"true\"] > .error-flip-label-fact"
+    ],
+    "html": "<div class=\"error-flip-label-fact\">По источникам</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.87 (foreground color: #3a8a5a, background color: #eef7f2, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(58, 138, 90)",
+     "bg": "rgb(238,247,242)",
+     "bgFrom": "DIV.error-flip-back",
+     "fontSize": 10,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3.87,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".error-flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"native-v1\"]:nth-child(2) > .error-flip-inner > .error-flip-back[aria-hidden=\"true\"] > .error-flip-label-fact"
+    ],
+    "html": "<div class=\"error-flip-label-fact\">По источникам</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.87 (foreground color: #3a8a5a, background color: #eef7f2, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(58, 138, 90)",
+     "bg": "rgb(238,247,242)",
+     "bgFrom": "DIV.error-flip-back",
+     "fontSize": 10,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3.87,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".error-flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"native-v1\"]:nth-child(3) > .error-flip-inner > .error-flip-back[aria-hidden=\"true\"] > .error-flip-label-fact"
+    ],
+    "html": "<div class=\"error-flip-label-fact\">По источникам</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.87 (foreground color: #3a8a5a, background color: #eef7f2, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(58, 138, 90)",
+     "bg": "rgb(238,247,242)",
+     "bgFrom": "DIV.error-flip-back",
+     "fontSize": 10,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3.87,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".error-flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"native-v1\"]:nth-child(4) > .error-flip-inner > .error-flip-back[aria-hidden=\"true\"] > .error-flip-label-fact"
+    ],
+    "html": "<div class=\"error-flip-label-fact\">По источникам</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.87 (foreground color: #3a8a5a, background color: #eef7f2, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(58, 138, 90)",
+     "bg": "rgb(238,247,242)",
+     "bgFrom": "DIV.error-flip-back",
+     "fontSize": 10,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3.87,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".error-flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"native-v1\"]:nth-child(5) > .error-flip-inner > .error-flip-back[aria-hidden=\"true\"] > .error-flip-label-fact"
+    ],
+    "html": "<div class=\"error-flip-label-fact\">По источникам</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.87 (foreground color: #3a8a5a, background color: #eef7f2, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(58, 138, 90)",
+     "bg": "rgb(238,247,242)",
+     "bgFrom": "DIV.error-flip-back",
+     "fontSize": 10,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3.87,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "h4[data-reader-section=\"reader-section-11\"]"
+    ],
+    "html": "<h4 data-reader-section=\"reader-section-11\" data-reader-section-label=\"История\">История</h4>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 1.49 (foreground color: #b8d0b0, background color: #eef5ec, font size: 8.3pt (11px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(184, 208, 176)",
+     "bg": "rgb(238,245,236)",
+     "bgFrom": "DIV.fact-box",
+     "fontSize": 11,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 1.49,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-sub"
+    ],
+    "html": "<p class=\"ctw-sub\">Канон сложился <em>до</em> Никеи — независимо и постепенно</p>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 9.6pt (12.8px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 12.8,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-sub > em"
+    ],
+    "html": "<em>до</em>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 9.6pt (12.8px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 12.8,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(1)"
+    ],
+    "html": "<span>30 г.</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 8.2pt (10.88px), font weight: normal). Expected contrast r",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 10.88,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(2)"
+    ],
+    "html": "<span>100</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 8.2pt (10.88px), font weight: normal). Expected contrast r",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 10.88,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(3)"
+    ],
+    "html": "<span>200</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 8.2pt (10.88px), font weight: normal). Expected contrast r",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 10.88,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(4)"
+    ],
+    "html": "<span>300</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 8.2pt (10.88px), font weight: normal). Expected contrast r",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 10.88,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(5)"
+    ],
+    "html": "<span>400 г.</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 8.2pt (10.88px), font weight: normal). Expected contrast r",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 10.88,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-pin-yr"
+    ],
+    "html": "<div class=\"ctw-pin-yr\">325</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.51 (foreground color: #bf6e2a, background color: #f5f5f3, font size: 8.4pt (11.2px), font weight: bold). Expected contrast rati",
+    "computed": {
+     "color": "rgb(191, 110, 42)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 11.2,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3.51,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-pin-lbl"
+    ],
+    "html": "<div class=\"ctw-pin-lbl\">Никея — НЕ обсуждала канон</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.51 (foreground color: #bf6e2a, background color: #f5f5f3, font size: 7.6pt (10.08px), font weight: normal). Expected contrast r",
+    "computed": {
+     "color": "rgb(191, 110, 42)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 10.08,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.51,
+     "required": 4.5,
+     "pass": false
+    }
+   }
+  ],
+  "passesSample": [
+   {
+    "target": [
+     ".article-byline__updated"
+    ],
+    "html": "<span class=\"article-byline__updated\">Обн. <time class=\"article-updated\" datetime=\"2026-07-05T09:14:15.000Z\">9 мая 2026<",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.15 (foreground color: #8f8f8e, background color: #fdfcf9, font size: 7.8pt (10.4px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(106, 106, 106)",
+     "bg": "rgb(253,252,249)",
+     "bgFrom": "BODY.gbs-paper gb-cluster-single-ac",
+     "fontSize": 10.4,
+     "weight": "400",
+     "opacity": "0.75",
+     "ratio": 5.27,
+     "required": 4.5,
+     "pass": true
+    }
+   },
+   {
+    "target": [
+     ".article-updated"
+    ],
+    "html": "<time class=\"article-updated\" datetime=\"2026-07-05T09:14:15.000Z\">9 мая 2026</time>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.15 (foreground color: #8f8f8e, background color: #fdfcf9, font size: 7.8pt (10.4px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(106, 106, 106)",
+     "bg": "rgb(253,252,249)",
+     "bgFrom": "BODY.gbs-paper gb-cluster-single-ac",
+     "fontSize": 10.4,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 5.27,
+     "required": 4.5,
+     "pass": true
+    }
+   }
+  ]
+ },
+ {
+  "id": "kod-dark",
+  "path": "/articles/kod-da-vinchi/",
+  "scheme": "dark",
+  "width": 1440,
+  "axeNodes": 9,
+  "computedFail": 9,
+  "computedPass": 0,
+  "fails": [
+   {
+    "target": [
+     ".ctw-sub"
+    ],
+    "html": "<p class=\"ctw-sub\">Канон сложился <em>до</em> Никеи — независимо и постепенно</p>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.71 (foreground color: #6b7280, background color: #13171e, font size: 9.6pt (12.8px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(107, 114, 128)",
+     "bg": "rgb(19,23,30)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 12.8,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.72,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-sub > em"
+    ],
+    "html": "<em>до</em>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.71 (foreground color: #6b7280, background color: #13171e, font size: 9.6pt (12.8px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(107, 114, 128)",
+     "bg": "rgb(19,23,30)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 12.8,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.72,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(1)"
+    ],
+    "html": "<span>30 г.</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.71 (foreground color: #6b7280, background color: #13171e, font size: 8.2pt (10.88px), font weight: normal). Expected contrast r",
+    "computed": {
+     "color": "rgb(107, 114, 128)",
+     "bg": "rgb(19,23,30)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 10.88,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.72,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(2)"
+    ],
+    "html": "<span>100</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.71 (foreground color: #6b7280, background color: #13171e, font size: 8.2pt (10.88px), font weight: normal). Expected contrast r",
+    "computed": {
+     "color": "rgb(107, 114, 128)",
+     "bg": "rgb(19,23,30)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 10.88,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.72,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(3)"
+    ],
+    "html": "<span>200</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.71 (foreground color: #6b7280, background color: #13171e, font size: 8.2pt (10.88px), font weight: normal). Expected contrast r",
+    "computed": {
+     "color": "rgb(107, 114, 128)",
+     "bg": "rgb(19,23,30)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 10.88,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.72,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(4)"
+    ],
+    "html": "<span>300</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.71 (foreground color: #6b7280, background color: #13171e, font size: 8.2pt (10.88px), font weight: normal). Expected contrast r",
+    "computed": {
+     "color": "rgb(107, 114, 128)",
+     "bg": "rgb(19,23,30)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 10.88,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.72,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(5)"
+    ],
+    "html": "<span>400 г.</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.71 (foreground color: #6b7280, background color: #13171e, font size: 8.2pt (10.88px), font weight: normal). Expected contrast r",
+    "computed": {
+     "color": "rgb(107, 114, 128)",
+     "bg": "rgb(19,23,30)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 10.88,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.72,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "#quizLaunch"
+    ],
+    "html": "<button type=\"button\" id=\"quizLaunch\" class=\"quiz-launch\">Начать проверку</button>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.22 (foreground color: #ffffff, background color: #d4a574, font size: 11.4pt (15.2px), font weight: bold). Expected contrast rat",
+    "computed": {
+     "color": "rgb(255, 255, 255)",
+     "bg": "rgb(212,165,116)",
+     "bgFrom": "BUTTON.quiz-launch",
+     "fontSize": 15.2,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 2.23,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".author-card-icon"
+    ],
+    "html": "<div aria-hidden=\"true\" class=\"author-card-icon\">ФМ</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.22 (foreground color: #ffffff, background color: #d4a574, font size: 13.5pt (18px), font weight: normal). Expected contrast rat",
+    "computed": {
+     "color": "rgb(255, 255, 255)",
+     "bg": "rgb(212,165,116)",
+     "bgFrom": "DIV.author-card-icon",
+     "fontSize": 18,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 2.23,
+     "required": 4.5,
+     "pass": false
+    }
+   }
+  ],
+  "passesSample": []
+ },
+ {
+  "id": "kod-mobile",
+  "path": "/articles/kod-da-vinchi/",
+  "scheme": "light",
+  "width": 390,
+  "axeNodes": 17,
+  "computedFail": 15,
+  "computedPass": 2,
+  "fails": [
+   {
+    "target": [
+     ".error-flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"native-v1\"]:nth-child(1) > .error-flip-inner > .error-flip-back[aria-hidden=\"true\"] > .error-flip-label-fact"
+    ],
+    "html": "<div class=\"error-flip-label-fact\">По источникам</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.87 (foreground color: #3a8a5a, background color: #eef7f2, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(58, 138, 90)",
+     "bg": "rgb(238,247,242)",
+     "bgFrom": "DIV.error-flip-back",
+     "fontSize": 10,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3.87,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".error-flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"native-v1\"]:nth-child(2) > .error-flip-inner > .error-flip-back[aria-hidden=\"true\"] > .error-flip-label-fact"
+    ],
+    "html": "<div class=\"error-flip-label-fact\">По источникам</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.87 (foreground color: #3a8a5a, background color: #eef7f2, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(58, 138, 90)",
+     "bg": "rgb(238,247,242)",
+     "bgFrom": "DIV.error-flip-back",
+     "fontSize": 10,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3.87,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".error-flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"native-v1\"]:nth-child(3) > .error-flip-inner > .error-flip-back[aria-hidden=\"true\"] > .error-flip-label-fact"
+    ],
+    "html": "<div class=\"error-flip-label-fact\">По источникам</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.87 (foreground color: #3a8a5a, background color: #eef7f2, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(58, 138, 90)",
+     "bg": "rgb(238,247,242)",
+     "bgFrom": "DIV.error-flip-back",
+     "fontSize": 10,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3.87,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".error-flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"native-v1\"]:nth-child(4) > .error-flip-inner > .error-flip-back[aria-hidden=\"true\"] > .error-flip-label-fact"
+    ],
+    "html": "<div class=\"error-flip-label-fact\">По источникам</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.87 (foreground color: #3a8a5a, background color: #eef7f2, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(58, 138, 90)",
+     "bg": "rgb(238,247,242)",
+     "bgFrom": "DIV.error-flip-back",
+     "fontSize": 10,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3.87,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".error-flip-card[data-gb-reversible-card-owner=\"native-v1\"][data-gb-reversible-card-bound=\"native-v1\"]:nth-child(5) > .error-flip-inner > .error-flip-back[aria-hidden=\"true\"] > .error-flip-label-fact"
+    ],
+    "html": "<div class=\"error-flip-label-fact\">По источникам</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.87 (foreground color: #3a8a5a, background color: #eef7f2, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(58, 138, 90)",
+     "bg": "rgb(238,247,242)",
+     "bgFrom": "DIV.error-flip-back",
+     "fontSize": 10,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3.87,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     "h4[data-reader-section=\"reader-section-11\"]"
+    ],
+    "html": "<h4 data-reader-section=\"reader-section-11\" data-reader-section-label=\"История\">История</h4>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 1.49 (foreground color: #b8d0b0, background color: #eef5ec, font size: 8.3pt (11px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(184, 208, 176)",
+     "bg": "rgb(238,245,236)",
+     "bgFrom": "DIV.fact-box",
+     "fontSize": 11,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 1.49,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-sub"
+    ],
+    "html": "<p class=\"ctw-sub\">Канон сложился <em>до</em> Никеи — независимо и постепенно</p>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 9.6pt (12.8px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 12.8,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-sub > em"
+    ],
+    "html": "<em>до</em>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 9.6pt (12.8px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 12.8,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(1)"
+    ],
+    "html": "<span>30 г.</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 7.0pt (9.28px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 9.28,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(2)"
+    ],
+    "html": "<span>100</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 7.0pt (9.28px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 9.28,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(3)"
+    ],
+    "html": "<span>200</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 7.0pt (9.28px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 9.28,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(4)"
+    ],
+    "html": "<span>300</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 7.0pt (9.28px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 9.28,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-axis > span:nth-child(5)"
+    ],
+    "html": "<span>400 г.</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #888888, background color: #f5f5f3, font size: 7.0pt (9.28px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(136, 136, 136)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 9.28,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.25,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-pin-yr"
+    ],
+    "html": "<div class=\"ctw-pin-yr\">325</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.51 (foreground color: #bf6e2a, background color: #f5f5f3, font size: 7.0pt (9.28px), font weight: bold). Expected contrast rati",
+    "computed": {
+     "color": "rgb(191, 110, 42)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 9.28,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3.51,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".ctw-pin-lbl"
+    ],
+    "html": "<div class=\"ctw-pin-lbl\">Никея — НЕ обсуждала канон</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.51 (foreground color: #bf6e2a, background color: #f5f5f3, font size: 7.0pt (9.28px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(191, 110, 42)",
+     "bg": "rgb(245,245,243)",
+     "bgFrom": "DIV.ctw",
+     "fontSize": 9.28,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 3.51,
+     "required": 4.5,
+     "pass": false
+    }
+   }
+  ],
+  "passesSample": [
+   {
+    "target": [
+     ".article-byline__updated"
+    ],
+    "html": "<span class=\"article-byline__updated\">Обн. <time class=\"article-updated\" datetime=\"2026-07-05T09:14:15.000Z\">9 мая 2026<",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.15 (foreground color: #8f8f8e, background color: #fdfcf9, font size: 7.8pt (10.4px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(106, 106, 106)",
+     "bg": "rgb(253,252,249)",
+     "bgFrom": "BODY.gbs-paper gb-cluster-single-ac",
+     "fontSize": 10.4,
+     "weight": "400",
+     "opacity": "0.75",
+     "ratio": 5.27,
+     "required": 4.5,
+     "pass": true
+    }
+   },
+   {
+    "target": [
+     ".article-updated"
+    ],
+    "html": "<time class=\"article-updated\" datetime=\"2026-07-05T09:14:15.000Z\">9 мая 2026</time>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.15 (foreground color: #8f8f8e, background color: #fdfcf9, font size: 7.8pt (10.4px), font weight: normal). Expected contrast ra",
+    "computed": {
+     "color": "rgb(106, 106, 106)",
+     "bg": "rgb(253,252,249)",
+     "bgFrom": "BODY.gbs-paper gb-cluster-single-ac",
+     "fontSize": 10.4,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 5.27,
+     "required": 4.5,
+     "pass": true
+    }
+   }
+  ]
+ },
+ {
+  "id": "nagornaya",
+  "path": "/nagornaya/chast-1/",
+  "scheme": "light",
+  "width": 1440,
+  "axeNodes": 36,
+  "computedFail": 34,
+  "computedPass": 2,
+  "fails": [
+   {
+    "target": [
+     ".px-3.py-2\\.5[href$=\"nagornaya/\"] > div > .leading-tight.text-stone-500.text-xs"
+    ],
+    "html": "<div class=\"text-xs leading-tight text-stone-500\">Обзор серии</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(240,235,225)",
+     "bgFrom": "ASIDE.hidden lg:flex flex-col w-64 m",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.04,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".bg-amber-600.shadow-md[href$=\"chast-1/\"] > div > .leading-tight.font-semibold.text-sm"
+    ],
+    "html": "<div class=\"font-semibold text-sm leading-tight\">Часть I</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #ffffff, background color: #d97706, font size: 10.5pt (14px), font weight: normal). Expected contrast rat",
+    "computed": {
+     "color": "rgb(255, 255, 255)",
+     "bg": "rgb(217,119,6)",
+     "bgFrom": "A.w-full flex items-center gap-3",
+     "fontSize": 14,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 3.19,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".text-amber-200"
+    ],
+    "html": "<div class=\"text-xs leading-tight text-amber-200\">Содержание</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.55 (foreground color: #fde68a, background color: #d97706, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(253, 230, 138)",
+     "bg": "rgb(217,119,6)",
+     "bgFrom": "A.w-full flex items-center gap-3",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 2.56,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".px-3.py-2\\.5[href$=\"chast-2/\"] > div > .leading-tight.text-stone-500.text-xs"
+    ],
+    "html": "<div class=\"text-xs leading-tight text-stone-500\">Методология</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(240,235,225)",
+     "bgFrom": "ASIDE.hidden lg:flex flex-col w-64 m",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.04,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".px-3.py-2\\.5[href$=\"chast-3/\"] > div > .leading-tight.text-stone-500.text-xs"
+    ],
+    "html": "<div class=\"text-xs leading-tight text-stone-500\">Адресат</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(240,235,225)",
+     "bgFrom": "ASIDE.hidden lg:flex flex-col w-64 m",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.04,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".px-3.py-2\\.5[href$=\"chast-4/\"] > div > .leading-tight.text-stone-500.text-xs"
+    ],
+    "html": "<div class=\"text-xs leading-tight text-stone-500\">Богодухновенность</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(240,235,225)",
+     "bgFrom": "ASIDE.hidden lg:flex flex-col w-64 m",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.04,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".px-3.py-2\\.5[href$=\"chast-5/\"] > div > .leading-tight.text-stone-500.text-xs"
+    ],
+    "html": "<div class=\"text-xs leading-tight text-stone-500\">Закон и Евангелие</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(240,235,225)",
+     "bgFrom": "ASIDE.hidden lg:flex flex-col w-64 m",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.04,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".px-3.py-2\\.5[href$=\"istochniki/\"] > div > .leading-tight.text-stone-500.text-xs"
+    ],
+    "html": "<div class=\"text-xs leading-tight text-stone-500\">120+ источников</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(240,235,225)",
+     "bgFrom": "ASIDE.hidden lg:flex flex-col w-64 m",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.04,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".hover\\:text-amber-400"
+    ],
+    "html": "<a href=\"https://gospod-bog.ru\" class=\"text-xs text-stone-500 hover:text-amber-400 transition-colors mt-2 block\">← Верну",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.03 (foreground color: #78716c, background color: #f0ebe1, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(240,235,225)",
+     "bgFrom": "ASIDE.hidden lg:flex flex-col w-64 m",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.04,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".text-amber-600"
+    ],
+    "html": "<div class=\"text-xs text-amber-600 mb-2 font-bold uppercase tracking-widest\">Статья I</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.08 (foreground color: #d97706, background color: #fcfbf9, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(217, 119, 6)",
+     "bg": "rgb(250,248,244)",
+     "bgFrom": "MAIN.lg:pl-64",
+     "fontSize": 12,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 3,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".text-emerald-600"
+    ],
+    "html": "<div class=\"mt-2 text-xs text-emerald-600 font-semibold\">Кульминация: «Будьте милосерды, как Отец ваш милосерд»</div>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.57 (foreground color: #059669, background color: #ecfdf5, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(5, 150, 105)",
+     "bg": "rgb(236,253,245)",
+     "bgFrom": "DIV.bg-emerald-50 border border-em",
+     "fontSize": 12,
+     "weight": "600",
+     "opacity": "1",
+     "ratio": 3.58,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(1) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">MacArthur, John. The MacArthur New Testament Commentary: Matthew 1–7 (Chicago: Moody Press, 1985). ",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(2) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">MacArthur, John. The Beatitudes: The Only Way to Happiness (Chicago: Moody Press, 1998). Парадокс «",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(3) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">MacArthur, John. Anxious for Nothing: God's Cure for the Cares of Your Soul (Wheaton: Crossway, 199",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(4) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">MacArthur, John. Jesus, Worry, and You (Matthew 6:31–34), GTY Sermon 80-193, Grace to You, 11 октяб",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(5) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">MacArthur, John. <a href=\"https://www.gty.org/library/sermons-library/2222/the-spiritual-credibilit",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(6) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">MacArthur, John. <a href=\"https://www.gty.org/library/sermons-library/2197/happiness-is\" target=\"_b",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(7) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">Spurgeon, Charles H. <a href=\"https://ccel.org/ccel/spurgeon/sermons55/sermons55.xxxi.html\" target=",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(8) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">Lloyd-Jones, D. Martyn. Studies in the Sermon on the Mount, 2 vols. (London: Inter-Varsity Press, 1",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(9) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">Carson, D. A. The Sermon on the Mount: An Evangelical Exposition of Matthew 5–7 (Grand Rapids: Bake",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(10) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">Davies, W. D. and Allison, D. C. A Critical and Exegetical Commentary on the Gospel According to Sa",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(11) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">Calvin, John. <a href=\"https://biblehub.com/commentaries/calvin/matthew/5.htm\" target=\"_blank\" rel=",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(12) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">Gundry, Robert H. Matthew: A Commentary on His Handbook for a Mixed Church under Persecution, 2nd e",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(13) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">Chou, Abner. The Hermeneutics of the Biblical Writers (Grand Rapids: Kregel Academic, 2018).</span>",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   },
+   {
+    "target": [
+     ".gap-1\\.5.items-start.flex:nth-child(14) > .flex-1"
+    ],
+    "html": "<span class=\"flex-1\">Sproul, R. C. <a href=\"https://learn.ligonier.org/sermons/build-rock\" target=\"_blank\" rel=\"noopener",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #78716c, background color: #f5f5f4, font size: 9.0pt (12px), font weight: normal). Expected contrast rati",
+    "computed": {
+     "color": "rgb(120, 113, 108)",
+     "bg": "rgb(245,245,244)",
+     "bgFrom": "DIV.bg-stone-100 border border-sto",
+     "fontSize": 12,
+     "weight": "400",
+     "opacity": "1",
+     "ratio": 4.4,
+     "required": 4.5,
+     "pass": false
+    }
+   }
+  ],
+  "passesSample": [
+   {
+    "target": [
+     "#nagFontDec"
+    ],
+    "html": "<button type=\"button\" class=\"nag-fontsize-btn nag-fontsize-down\" id=\"nagFontDec\" data-fontsize=\"down\" aria-label=\"Уменьш",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.28 (foreground color: #6a6a6a, background color: #cec9c1, font size: 9.8pt (13px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(106, 106, 106)",
+     "bg": "rgb(240,235,225)",
+     "bgFrom": "ASIDE.hidden lg:flex flex-col w-64 m",
+     "fontSize": 13,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 4.55,
+     "required": 4.5,
+     "pass": true
+    }
+   },
+   {
+    "target": [
+     "#nagFontInc"
+    ],
+    "html": "<button type=\"button\" class=\"nag-fontsize-btn nag-fontsize-up\" id=\"nagFontInc\" data-fontsize=\"up\" aria-label=\"Увеличить ",
+    "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.28 (foreground color: #6a6a6a, background color: #cec9c1, font size: 9.8pt (13px), font weight: bold). Expected contrast ratio ",
+    "computed": {
+     "color": "rgb(106, 106, 106)",
+     "bg": "rgb(240,235,225)",
+     "bgFrom": "ASIDE.hidden lg:flex flex-col w-64 m",
+     "fontSize": 13,
+     "weight": "700",
+     "opacity": "1",
+     "ratio": 4.55,
+     "required": 4.5,
+     "pass": true
+    }
+   }
+  ]
+ },
+ {
+  "id": "home",
+  "path": "/",
+  "scheme": "light",
+  "width": 1440,
+  "axeNodes": 0,
+  "computedFail": 0,
+  "computedPass": 0,
+  "fails": [],
+  "passesSample": []
+ }
+]

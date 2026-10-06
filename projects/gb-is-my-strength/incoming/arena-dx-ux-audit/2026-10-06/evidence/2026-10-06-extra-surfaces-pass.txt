@@ -1,0 +1,84 @@
+# Extra surfaces pass at 35084814: /hard-texts/, /biografii/, /konfessii/, /journal/, 404
+
+Served: production-like local dist of the audited SHA over http://127.0.0.1:8080 (root), plus a Pages-style 404 emulator on
+:8081 (unknown paths return the site's own 404.html with status 404, exactly as GitHub Pages does).
+Machine receipt for the route matrix: `2026-10-06-extra-surfaces-pass.json` (9 browser contexts, screenshots in the
+gitignored workspace only). Per-node contrast values below were read from axe + own DOM computation in the same session.
+
+## /hard-texts/ (series landing; desktop 1440 and mobile 390)
+
+- 200, one h1 «Тайны человеческого сердца», skip link present and revealed by the first Tab
+  (198×34 at 621,20 desktop / 96,20 mobile), `document.fonts.status = loaded`, 6 images, 0 broken, 0 without alt,
+  no horizontal overflow, CLS 0.0133 desktop / 0 mobile, LCP 148 ms / 132 ms.
+- axe: **`color-contrast` 27 nodes**, two distinct causes:
+  `rgb(120,113,108)` on `rgb(248,245,240)` = **4.41:1** (hero tagline/kicker, `#seriesLabel`, card meta «Редактор …», minutes,
+  card abstract — 19 nodes at 10–19.5 px), and the accent kicker `rgba(31,78,163,0.7)` → `#6080ba` on the same paper
+  = **3.64:1** (6 nodes, e.g. «Пролог», 10 px bold).
+
+## /biografii/ (desktop 1440)
+
+- 200, one h1 «Биографии служителей», skip link revealed by the first Tab (198×34 at 621,20), fonts loaded, 11 images,
+  0 broken, 0 without alt, no overflow, CLS 0.0128, LCP 296 ms (image).
+- axe: **`color-contrast` 32 nodes** — the same two families as `/hard-texts/`: `#78716c` on `#f8f5f0`/`#f7f4ee`
+  = **4.41:1 / 4.37:1** (22 nodes) and the accent kicker `#6080ba` = **3.61:1 / 3.64:1** (10 nodes).
+  So one muted token plus one accent token carry the whole library-landing family (`/articles/`, `/hard-texts/`, `/biografii/`).
+
+## /konfessii/ (desktop 1440 and mobile 390) — the outlier
+
+- 200, one h1 «Конфессии и Деноминации», 0 images, no overflow, CLS 0, LCP 108 ms / 96 ms.
+- **No skip link at all** (`grep -c skip-link dist/konfessii/index.html` = 0; the built HTML of `/hard-texts/`, `/biografii/`,
+  `/404.html` has one). Sequentially: desktop's first Tab stop is the «На главную» link at 180,26 (109×15);
+  at 390 the first Tab lands on nothing in the header area (the probe returns null for a focused link).
+  This is a concrete route witness for the general class already recorded as `GBS-BASELAYOUT-MISSING-SKIP-LINK`
+  (that row's current enumeration is `/hard-texts/genesis-6/` + `/izbrannoe/`) and for
+  `GBS-JOURNAL-MISSING-SKIP-LINK` on the journal shell; it is reported as an evidence-addition, not as a new row.
+- The page renders a **dark shell regardless of `colorScheme`** (body `rgb(7,10,16)` in a light-scheme context), which is why
+  its three contrast failures are dark-surface ones: `.crumb` `#6c737e` **4.14:1**, `.he` `rgba(232,200,121,0.55)` → `#83734a`
+  **4.26:1**, `footer` `#5e6570` **3.36:1**.
+- Other axe rules: `label-content-name-mismatch` 1 (`a[href$="russkij-baptizm/"]` — the accessible name does not contain the
+  visible text), `link-in-text-block` 3 (footer links distinguished by colour alone), `region` 4 (`.sr-only`), and at 390
+  `landmark-no-duplicate-banner` 1 + `landmark-unique` 1 on `.mcp-top`.
+- Small-target scan (24 px threshold) found only inline text links 13–23 px tall (`.mcp-top` links, footer), which are inline
+  text, not controls, so nothing is claimed from that scan.
+
+## /journal/ (desktop 1440)
+
+- 200, h1 «Журнал», 0 images, no overflow, CLS 0, LCP 92 ms, **0 axe violations**, **0 console errors** (this route does not
+  even emit the blocked-beacon error).
+- **No skip link**: the built HTML has none and the first Tab stop is the «Господь Бог — Сила Моя» topbar brand link
+  (223×18 at 151,27), then «На главную», then section links — i.e. an exact browser re-confirmation of
+  `GBS-JOURNAL-MISSING-SKIP-LINK` at this anchor (that row was verified at `d586aa63` and `d0e04a9c`).
+
+## 404 — the row `GBS-404-RELATIVE-READER-PREFERENCES-ASSETS` is fixed at this SHA
+
+Method (Pages-style emulation, exactly what the row's own verifier used): a local server returns the site's own `404.html`
+body with HTTP status 404 for unknown paths, including nested ones.
+
+```text
+/deep/nested/missing/  -> HTTP 404, body = the site's 404 page, h1 «Страница не найдена»
+/a/b/                  -> HTTP 404, body = the site's 404 page
+/404.html              -> HTTP 200, same page
+/deep/nested/missing/js/reader-preferences-head.js -> 404   (relative reference — control, must fail)
+```
+
+With stored reader preferences (`gb:reader-preferences:v1` theme = sepia), a Chromium session on **both** the nested 404 and the
+root 404 page loads all three reader-preference assets from the site root with HTTP 200 and applies the stored theme:
+
+```text
+http://127.0.0.1:8081/deep/nested/missing/ -> 404 | data-reader-theme="sepia" | body rgb(238,227,200)
+   200 /js/reader-preferences-head.js?v=78fb2ef8
+   200 /css/reader-preferences.css?v=b740c21f
+   200 /js/reader-preferences.js?v=e26f05a8
+http://127.0.0.1:8081/404.html             -> 200 | data-reader-theme="sepia" | body rgb(238,227,200)
+```
+
+Byte-level witness in the built artifact: `dist/404.html` references all three assets with **root-absolute** URLs
+(`src="/js/reader-preferences-head.js?v=78fb2ef8"`, `href="/css/reader-preferences.css?v=b740c21f"`,
+`src="/js/reader-preferences.js?v=e26f05a8"`), and a script over the whole document found **zero** non-root-absolute
+same-origin references. The repair is commit `e86725321` "fix(404): re-anchor nested reader preference asset roots (#2159)"
+and it is inside the deployed history (e8672532 is in the successful-deploy set).
+=> The row's stated mechanism (relative URLs resolved under the missing nested directory) can no longer occur at this anchor.
+
+Caveat about a probe artifact, recorded so nobody re-derives it as a finding: asking `python3 -m http.server` for a missing path
+returns *python's own* «Error response» page with status 404, not the site's 404 page. That observation is an artifact of the
+plain static server; GitHub Pages serves the repository's `404.html`, which is what the emulator above reproduces.

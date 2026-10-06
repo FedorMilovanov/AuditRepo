@@ -1,0 +1,30 @@
+# Re-running the red Product contracts locally (Chromium 153) - raw output excerpts
+
+Commands (from the product checkout, dist = production-like build of 35084814 + pagefind):
+  node scripts/search-modal-browser-contract.mjs   --dist=dist --report=/tmp/smc-chromium
+  node scripts/search-scope-semantics-browser-contract.mjs --dist=dist --report=/tmp/scope-report
+  node scripts/app-search-surface-browser-contract.mjs --dist=dist --report=/tmp/appsurface-report
+  node scripts/header-cluster-browser-contract.mjs --dist=dist --report=/tmp/hc-report
+
+Stdout:
+  SEARCH MODAL CONTRACT: PASS (4/4)
+  SEARCH SCOPE + OVERLAY CONTRACT: PASS (4/4)
+  APP SEARCH SURFACE BROWSER CONTRACT: 8/8 PASS
+  HEADER CLUSTER BROWSER CONTRACT: PASS (18 geometry cases, 2 interaction contexts)
+
+Continuation-contract numbers from /tmp/smc-chromium/report.json (chromium, both viewports):
+  Pagefind hydration windows: initial 12 -> 24 -> 27 results (total 27)
+  fallback path:              initial 12 -> 24 -> 25 (total 25)
+  scripture path:             initial 12 -> 24 -> 25 (total 25)
+  staleQuery invalidation: staleClear=true, staleShortQuery=true, staleKeyboard=true
+
+Local modifications used to make these runs possible (environment only, never committed; reverted with git checkout):
+  - browserType.launch({headless:true, executablePath: process.env.CHROMIUM_EXEC_PATH}) at the two launch sites of the
+    search-modal contract and at the single launch site of the header-cluster contract;
+  - the webkit rows of the two browser matrices were skipped because no WebKit engine exists in this sandbox;
+  - console-error filter for exactly two sandbox-only messages:
+      'Failed to load resource: net::ERR_CONNECTION_CLOSED' (blocked mc.yandex.ru beacon)
+      /violates the following Content Security Policy directive: "img-src/ (production-absolute icon URLs served from 127.0.0.1).
+    Without the filter the first case fails on that single beacon error - which is how the dependency showed up.
+
+What this does NOT show: the WebKit cases, and therefore the actual cause of the CI red step. Both remain NOT VERIFIED here.

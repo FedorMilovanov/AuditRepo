@@ -1,0 +1,47 @@
+# Checked and NOT a defect (negative findings, 2026-10-06)
+
+1. Sandbox egress, not a site bug.
+   - every page logs exactly one console error: mc.yandex.ru/metrika/tag.js -> net::ERR_CONNECTION_CLOSED. Blocked egress.
+   - console also shows CSP img-src violations for https://gospod-bog.ru/favicon.ico, /apple-touch-icon.png, /favicon-48.png,
+     /favicon-120.png, /icons/icon-192.png. These are production-absolute URLs and the CSP is correct for production 'self';
+     the violation appears only because the built HTML is served from 127.0.0.1:8080 in this sandbox. Not filed.
+   Per the sandbox/production rule these are reported as artifacts, not defects - and not as "normal" either: they are
+   environment-limited observations.
+
+2. "Broken image" on the map routes is a placeholder, not a broken asset.
+   /karty/avraam/ and its mobile view report one <img class="me-photo-modal__img"> with naturalWidth 0 and empty src.
+   It is the photo-modal image that is intentionally empty until a photo is opened; the pages have 3 inline SVGs, no canvas,
+   and axe reports 0 violations there.
+
+3. Missing <h1> on /karty/avraam/ is already covered by in-flight Product work.
+   The built page ships a fallback heading but the ready-state observer removes it, leaving h1:0 / h2:2.
+   This is the already-known `GBS-AVRAAM-MAP-HEADING-LOST-ON-READY` row, and Product PR #2161
+   ("fix(karty): preserve Avraam page h1 after map ready") is an open lane for it. Not re-filed.
+
+4. The sitemap normalizer's skipped-route diagnostics are not proof of missing sitemap entries.
+   It reports /hard-texts/, /hard-texts/genesis-6/, /karty/, /karty/avraam/ and /map/ as skipped
+   (VALID_DATE_MISSING / SEARCH_MANIFEST_ITEM_MISSING), but every one of those URLs IS present in both sitemap.xml and
+   data/search-manifest.json at this SHA (/hard-texts/genesis-6/ is in the sitemap and deliberately excluded from the search
+   manifest by its policy row: searchManifestPolicy=exclude). The diagnostic is an eligibility computation, not a defect.
+
+5. A "Спорой" misreading was retracted.
+   On a 1x screenshot the byline badge on /articles/kod-da-vinchi/ looked like "Спорой на исторические источники".
+   Re-measured in the DOM at deviceScaleFactor 3: the text is exactly "С опорой на исторические источники"
+   (12px, Source Sans 3, glyph run 7/2/7 px, box 225x20) - a downscaling artifact of the 1x capture, not a content defect.
+   The built HTML also contains "опорой на исторические источники". Recorded as retracted.
+
+6. Mobile bottom-bar overlap during the first quiz probe was a probe artifact.
+   In the first pass the 4th option was below the fold at 1440px and a 390px option centre hit-tested to
+   .mobile-btoc-section (a fixed bottom bar over scrollable content). After scrolling the option into view, the trusted click
+   worked - so this is expected fixed-bar geometry, not an overlap defect. The full 10-question quiz was then completed at
+   both widths (see the interactions evidence).
+
+7. The Gill 27-node axe contrast report was NOT reproduced by my own computation and is therefore not claimed.
+   axe-core's color-contrast rule flagged 27 nodes on /articles/dzhon-gill-chast-2-uchenyi/ (sampled selector #gill-search-p-002).
+   My independent recomputation of that node measured 7.46:1 (rgb(85,85,85) on white) - a pass. The remaining nodes were not
+   individually recomputed in this pass, so the route is left unclassified rather than reported as a defect
+   (the same recomputation method did reproduce every other page's violations).
+
+8. The "С опорой" badge gap and the mobile quiz CTA are page-specific; no claim is made about unmeasured routes.
+   Contrast findings below were measured on the routes named in the report only. The route families are named explicitly so a
+   verifier can extend or refute the boundary.
