@@ -7,6 +7,3 @@ __pycache__/
 *.py[cod]
 node_modules/
 .venv/
-
-# Sandbox audit tooling (Playwright/Chromium harness, generated evidence)
-.arena-audit/

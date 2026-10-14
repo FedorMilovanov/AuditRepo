@@ -60,7 +60,7 @@ Product `main` advanced materially (19 PRs merged after 2026-09-30), so the prev
 
 ## 3. New findings
 
-### F1 — `GBS-FOOTNOTE-MARKER-NESTED-INTERACTIVE` (new, systemic candidate)
+### F1 — `SYS-FOOTNOTE-MARKER-INTERACTIVITY` (new system lane, admitted 2026-10-14)
 
 `span.fn-marker[role=button][tabindex=0]` is a single interactive control that **contains** its own `.tooltip` payload. When the payload contains a link (normal for source citations), the control has a focusable descendant, and axe reports `nested-interactive` (serious, WCAG 4.1.2). Measured on `/articles/krajne-li-isporcheno-serdce/` (6 nodes: notes 1, 3, 8, 11, 12, 13) and `/articles/dzhon-gill-chast-1-chelovek/` (1 node).
 
@@ -120,9 +120,9 @@ Across all 64 loads, `document.documentElement.scrollWidth === clientWidth` — 
 
 | Proposed ID | Class | Suggested disposition |
 |---|---|---|
-| `GBS-FOOTNOTE-MARKER-NESTED-INTERACTIVE` | systemic candidate | admit to SYSTEM lanes after the owner confirms the shared `.fn-marker` tooltip runtime as the single owner; extend the existing `note-registry-browser-contract.mjs` assertion from one fixture route to the note-bearing route set as the class-level guard |
-| `GBS-CHROME-LABEL-IN-NAME-MISMATCH` | defect cluster | admit as one row; repair per-owner (`mobPartTocBtn` / `barSectionBtn` / header controls / `gbs2-ctl` / map-trigger), not per-route |
-| `GBS-TEXT-CONTRAST-RESIDUAL-BATCH` | P3 batch | admit only with the `.heart-flip-*` half removed (UNPROVEN) |
+| `SYS-FOOTNOTE-MARKER-INTERACTIVITY` | system lane | **admitted in this pass** (see `verified/MASTER_BUG_MATRIX.md`); the class-level guard is the extension of the existing `note-registry-browser-contract.mjs` assertion from one fixture route to the note-bearing route set |
+| `GBS-CHROME-LABEL-IN-NAME-MISMATCH` | defect row | **admitted in this pass**; repair per-owner (`mobPartTocBtn` / `barSectionBtn` / header controls / `gbs2-ctl` / map-trigger), not per-route |
+| `GBS-TEXT-CONTRAST-RESIDUAL-BATCH` | defect row | **admitted in this pass** with the `.heart-flip-*` half excluded (UNPROVEN) |
 | glossary index route | owner decision | ask the owner whether the 130-term dictionary should have a browsable surface |
 
 ## 6. Summary for verifier
