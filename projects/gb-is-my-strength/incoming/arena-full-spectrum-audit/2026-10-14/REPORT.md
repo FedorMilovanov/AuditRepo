@@ -130,3 +130,24 @@ Across all 64 loads, `document.documentElement.scrollWidth === clientWidth` — 
 - Strongest new material: F1 (systemic note-marker interactivity + the harness gap that hides it) and the current-anchor **closures** in §2.1, which let MASTER shrink.
 - Weakest material: §3 F3 `.heart-flip-*` contrast (visibility unproven) and the header-geometry half of F6.
 - Nothing in this pass authorises a Product mutation by itself: every row still needs the normal lane record before repair.
+
+## 7. Addendum — header control geometry (element placement, re-measured)
+
+A dedicated geometry probe at 320/360/390/430/768 px (mobile emulation) produced a **positive** finding on top of the negative
+witness in §3 F6:
+
+- `/articles/` (`body.articles-index-page`) at **768×900**: the header control cluster `div.mobile-controls` spans **747–823 in a
+  768 px viewport** — `#themeToggle` ends **55 px beyond the right edge**. `document.documentElement.scrollWidth` stays 768 because
+  `body { overflow-x: hidden }` clips the cluster, so the search and theme controls are **invisible and untappable** at iPad-portrait
+  width. Screenshot captured but **not committed** (PNG never enters Git per the source protocol); re-capture with the header probe
+  (`isMobile 768×900, full-page screenshot`) or read `evidence/2026-10-14-header-geometry.json` for the numeric witness.
+- `/articles/` at **320 px**: `#hMobileMenuBtn` spans 281–325 (**5 px past** the edge) and `#gbSearchBtn` (205–249) overlaps
+  `#themeToggle` (237–281) by **12 px**.
+- `/`, `/izbrannoe/` and `/hard-texts/genesis-6/` measured **clean** at every width in this sweep: all controls 44×44, inside the
+  viewport, no overlap.
+
+Consequence for the matrix: `GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT` is **confirmed and widened** (the current instance is
+the articles-index chrome, not every route) and `GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP` is **confirmed on `/articles/`** while the
+previous `/`, `/izbrannoe/`, `/hard-texts/genesis-6/` instances did not reproduce in this sweep.
+
+Receipts: `evidence/2026-10-14-header-geometry.txt`, `evidence/2026-10-14-header-geometry.json`.
