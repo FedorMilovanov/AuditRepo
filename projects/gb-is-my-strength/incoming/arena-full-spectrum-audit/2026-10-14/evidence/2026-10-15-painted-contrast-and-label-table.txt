@@ -112,3 +112,10 @@ Rule for this project: axe stays the screen-media census, but any contrast *conc
 | `nag-fontsize-btn` | 2 | 30x30 | `Увеличить шрифт` / `Уменьшить шрифт` | `A+` / `A−` | То же, что gbs2-ctl: один и тот же контрол под вторым владельцем |
 
 Reading: singular controls (`article-end-btn`, `gbs2-ctl`, `nag-fontsize-btn`, `hmbar-*`, `mobile-btoc-section`, `h-hero-search`) can be repaired by putting the visible text into the name; the `*-flip-card`, `heart-flip-card`, `map-trigger` and `fn-marker` families cannot, because their visible content *is* the payload — for those the correct repair is to stop treating the container as the labelled control, which is the same conclusion the nested-interactive row reaches.
+
+## Correction applied 2026-10-16 (self-correction SC-C1)
+
+The `fn-marker` line in §4 is withdrawn. Measurement of `scripts/lib/note-registry.mjs` and of the printed endnotes shows the
+ordinal is the canonical contract (aria-label, endnote numbering, `data-note-ordinal`), and the **visible** marker number is the
+drifting content. `fn-marker` is removed from the label-in-name owner set and admitted as its own defect,
+`GBS-NOTE-MARKER-NUMBER-DRIFT`; see `2026-10-16-note-marker-number-drift.txt` §1 and §3 (SC-C1).

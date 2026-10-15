@@ -343,3 +343,61 @@ split that matters: singular controls (`article-end-btn`, `gbs2-ctl`, `nag-fonts
 labelled control, the same conclusion the `SYS-FOOTNOTE-MARKER-INTERACTIVITY` row reaches.
 
 Receipts: `evidence/2026-10-15-painted-contrast-and-label-table.txt` plus `evidence/2026-10-15-{painted-contrast,print-contrast-full,print-vs-screen,label-name-nodes,label-name-owners}.json`.
+
+## 12. Footnote marker numbering — a new defect, plus the tooltip system verified working (2026-10-16, continuation 4)
+
+### 12.1 The number a marker shows is not the number of the note it opens
+
+The build's NoteRegistry makes the **document ordinal** canonical: it rewrites `aria-label` to `Показать сноску <ordinal>`
+(`scripts/lib/note-registry.mjs:172-175`), stamps `data-note-ordinal` (`:330`) and numbers the generated endnotes by the same
+ordinal (`:233-236`). The marker's **visible number is authored text** that the registry never rewrites and never validates.
+
+The registry's fail-closed list names `authored ordinal drift`, but that check runs only when a marker is authored with
+`data-note-ordinal` — and **0 of 184 markers** carry it (grep over `src/`, `scripts/`, `*.astro`/`*.html`/`*.md`: 0 hits). The
+contract test exercises the drift path only with a synthetic fixture (`scripts/note-registry-contract-test.mjs:117-118`), so the
+drift ships silently.
+
+Measured (static parse of every built `index.html` in `dist`, cross-checked in the live DOM on Krajne):
+
+| route | markers | visible ≠ ordinal | no visible number | first visible numbers |
+|---|---|---|---|---|
+| `/articles/kod-da-vinchi/` | 21 | **19** | 0 | 1,2,4,5,6,7,8,9,11,12 |
+| `/articles/krajne-li-isporcheno-serdce/` | 40 | **39** | 0 | 1,**27**,**36**,2,3,4,5,6,11,12 |
+| `/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/` | 116 | **114** | 2 | 1,2,3,4,5,6,7,8 |
+| `/articles/dzhon-gill-chast-1-chelovek/` | 1 | 0 | 1 | — |
+| `/articles/dzhon-gill-chast-2-uchenyi/` | 6 | 0 | 6 | — |
+| **total** | **184** | **172** | 9 | — |
+
+Live first five on Krajne: `Показать сноску 1`→`1`, `2`→`27`, `3`→`36`, `4`→`2`, `5`→`3`. The consequences: the marker showing
+«27» is the second footnote and opens endnote 2; a screen-reader user hears «Показать сноску 2» where a sighted reader sees 27;
+and in **print** the inline tooltips are `display:none` while the endnotes print numbered by ordinal, so the printed
+cross-reference is wrong on paper — on articles whose stated purpose is careful sourcing. No orphan notes exist: endnote count
+equals marker count on all five routes (1/1, 6/6, 116/116, 21/21, 40/40).
+
+The repair belongs at the registry, next to the `aria-label` rewrite: write the ordinal into the marker's visible text, or author
+`data-note-ordinal` everywhere so the existing fail-closed check fires. Admitted as `GBS-NOTE-MARKER-NUMBER-DRIFT` (P1).
+
+### 12.2 The tooltip interaction is healthy — measured, not assumed
+
+Because the markers are the elements the tooltip runtime owns, the whole interaction contract was measured on the live page:
+desktop **hover** opens the tip (moved to `document.body` as `.gb-floating-tip.is-open`, opacity 1, 544×54, `pointer-events:auto`)
+and leaving closes it; **pointer click** opens and a second click toggles closed; **focus alone** opens; **keyboard Enter** opens;
+**Escape** closes; on **mobile 390×844** (`isMobile`+`hasTouch`) a **tap** opens it as a 390×88 bottom sheet and Escape closes it.
+Note text is also reachable without any hover through `aria-describedby` → the endnote (AX tree: name `Показать сноску N`,
+description = note text + «Вернуться к отметке N»). The `⟦сноска: …⟧` boundary spans visible in `textContent` are `[hidden]` +
+`aria-hidden="true"` (`display:none`, 0×0) and never paint — the rendered tooltip reads exactly «NASSCAL e-Clavis — Gospel of Philip; Darrell Bock, The Missing Gospels (2006).» alone.
+
+### 12.3 Self-corrections in this continuation (visible, not silent)
+
+- **SC-C1** — the 2026-10-15 label/name table listed `fn-marker` as a case where the *name* should absorb the visible number.
+  That direction was backwards: the ordinal is the canonical contract and the visible number is what drifted. `fn-marker` leaves
+  the label-in-name row and becomes its own defect (§12.1); the earlier receipt carries a dated correction note.
+- **SC-C2** — «desktop hover does not open tooltips» was my measurement error: the first probe took coordinates from
+  `boundingBox()` without scrolling the marker into view, and read the tip inside the anchor after the runtime had moved it to
+  `document.body`. Re-measured correctly, every path works (§12.2). No defect.
+- **SC-C3** — «the tooltip shows `⟦сноска: …⟧` to users» is false: those spans are `display:none`; the painted tooltip is clean
+  (screenshot in the receipt).
+
+Receipts: `evidence/2026-10-16-note-marker-number-drift.txt`, `evidence/2026-10-16-marker-drift-sweep.json`,
+`evidence/2026-10-16-fn-number-structure.json`, `evidence/2026-10-16-fn-number-detail.json` (the painted-tooltip screenshot is binary and therefore kept in the harness at `arena-harness/out/tip-open-ctx.png`, not in git).
+

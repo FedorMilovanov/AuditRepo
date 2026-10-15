@@ -1,0 +1,58 @@
+# Receipt — footnote marker numbering drift, tooltip interaction verified working, and three self-corrections (2026-10-16, continuation 4)
+
+Product `d14da74c`, production-like local build in the sandbox, Chromium 153, served on 127.0.0.1:8099. Two independent methods: a static parse of every built `index.html` in `dist`, and browser measurement on the live page (marked as such).
+
+## 1. NEW DEFECT — the number a marker shows is not the number of the note it opens
+
+The build's NoteRegistry makes the **document ordinal** canonical in three places — it rewrites `aria-label` to `Показать сноску <ordinal>` (`scripts/lib/note-registry.mjs:172-175`), stamps `data-note-ordinal` (`:330`), and numbers the generated endnote list by the same ordinal (`:233-236`). The marker's **visible number is authored text** that the registry never rewrites and never validates.
+
+The registry's own fail-closed list names `authored ordinal drift`, but that check only runs when a marker is authored with `data-note-ordinal` — and **0 of 184 markers** in the content carry that attribute (grep over `src/`, `scripts/`, `*.astro`/`*.html`/`*.md`: 0 hits). The contract test exercises the drift path only with a synthetic fixture (`scripts/note-registry-contract-test.mjs:117-118`). Nothing in the build compares the visible number with the ordinal, so the drift ships silently.
+
+Measured (static parse of `dist`, cross-checked in the browser on Krajne):
+
+| route | markers | endnote ordinals | visible ≠ ordinal | no visible number | first visible numbers |
+|---|---|---|---|---|---|
+| `/articles/dzhon-gill-chast-1-chelovek/` | 1 | 1 | **0** | 1 | · |
+| `/articles/dzhon-gill-chast-2-uchenyi/` | 6 | 6 | **0** | 6 | ·, ·, ·, ·, ·, · |
+| `/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/` | 116 | 116 | **114** | 2 | ·, 1, 2, ·, 3, 4, 5, 6, 7, 8 |
+| `/articles/kod-da-vinchi/` | 21 | 21 | **19** | 0 | 1, 2, 4, 5, 6, 7, 8, 9, 11, 12 |
+| `/articles/krajne-li-isporcheno-serdce/` | 40 | 40 | **39** | 0 | 1, 27, 36, 2, 3, 4, 5, 6, 11, 12 |
+| **total** | **184** | 184 | **172** | 9 | — |
+
+Browser confirmation, `/articles/krajne-li-isporcheno-serdce/` live DOM, first five markers (aria label → visible text): `Показать сноску 1` → `1`; `Показать сноску 2` → **27**; `Показать сноску 3` → **36**; `Показать сноску 4` → `2`; `Показать сноску 5` → `3`.
+
+What the reader gets: the marker showing «27» is the *second* footnote and opens endnote 2; a screen-reader user hears «Показать сноску 2» for the marker a sighted companion calls 27. In **print** the inline tooltips are `display:none` (`src/runtime/note-registry.css`) and the endnotes print numbered by ordinal (print-media measurement: the endnote region is 1440×935 px with the ordinal «1.» painted), so the printed cross-reference is wrong on paper — on an article whose stated purpose is careful sourcing.
+
+No orphan notes in either direction: every route's endnote count equals its marker count (1/1, 6/6, 116/116, 21/21, 40/40).
+
+## 2. The inline tooltip system is NOT part of the defect — measured working
+
+Because the markers are the same elements the tooltip runtime owns, the interaction contract was measured on the live page rather than assumed (`/articles/kod-da-vinchi/`, third marker, real pointer path with `scrollIntoViewIfNeeded` first):
+
+| path | result |
+|---|---|
+| desktop hover (pointer moved in steps) | tip opens, moved to `document.body` as `.gb-floating-tip.is-open`, opacity 1, box 544×54, `pointer-events:auto` |
+| mouse leaves | tip closes (anchor loses `.is-open`) |
+| pointer click | opens; second click toggles closed |
+| keyboard Tab/focus (no click) | opens on focus alone |
+| keyboard Enter | opens |
+| Escape | closes |
+| mobile 390×844 `isMobile`+`hasTouch`, tap | opens as a bottom sheet, 390×88 at the viewport bottom |
+| mobile Escape | closes |
+
+Rendered text is clean: the `⟦сноска: …⟧` boundary markers seen in `textContent` are `[hidden]` + `aria-hidden="true"` spans (`display:none`, 0×0 box) used by the reader projection, and the painted tooltip shows the note text alone, reading exactly `NASSCAL e-Clavis — Gospel of Philip; Darrell Bock, The Missing Gospels (2006).` — the screenshot is kept out of git and lives in the harness at `arena-harness/out/tip-open-ctx.png`. Note text is also reachable without hovering, via `aria-describedby` → `note-end-*` (AX tree confirmed: name `Показать сноску N`, description = full note text + «Вернуться к отметке N»).
+
+## 3. Self-corrections made in this continuation (visible, not silent)
+
+**SC-C1 — the direction of the `fn-marker` label-in-name claim was wrong.** The 2026-10-15 label/name table listed `fn-marker` under «the visible content is the payload, so stop treating the container as the labelled control», i.e. it implied the aria label should absorb the visible number. Measurement of the registry source and of the printed endnotes shows the opposite: the **ordinal is the canonical contract** (aria label, endnote numbering, print numbering, `data-note-ordinal`), and the **visible number is the drifting content**. `fn-marker` therefore leaves the label-in-name row and becomes its own defect (§1), whose repair is to write the ordinal into the visible text — not the other way round. The earlier receipt's §4 line for `fn-marker` is corrected in place.
+
+**SC-C2 — «desktop hover does not open tooltips» was my measurement error.** The first probe moved the pointer to coordinates taken from `boundingBox()` without scrolling the marker into view, so the pointer landed outside the element; a second probe read `[id^="note-ref-"] .tooltip` while the runtime had already moved the tip to `document.body`. Re-measured with `scrollIntoViewIfNeeded` and the body-level selector, every path opens (§2). No defect here.
+
+**SC-C3 — «the tooltip shows ⟦сноска: …⟧ to users» is false.** Those boundary spans are `display:none` and `aria-hidden="true"`; the painted tooltip contains only the note text (screenshot in §2). The bracket form appears only in `textContent`/`innerText`, which is why the earlier text-layer work treated it as a text-extraction artifact — it is not a rendering defect.
+
+## 4. Not carried as defects
+
+- The 9 markers with no visible number (`/articles/dzhon-gill-chast-1-chelovek/` 1, `/articles/dzhon-gill-chast-2-uchenyi/` 6, hermenevticheskaya 2) are the translation-note style (`.fn-marker--dove`); the endnotes they open are still numbered, so a reader has no number to match, but nothing is mis-referenced. Recorded inside §1 as a sub-count, not as a separate row.
+- The favicon/apple-touch-icon CSP console errors on every page load remain sandbox-origin artifacts (the page requests `https://gospod-bog.ru/...` while the build is served from `127.0.0.1`), not defects.
+
+Artifacts (no binary in git, per the session protocol): `2026-10-16-marker-drift-sweep.json` (per-route counts, browser confirmation, print-media state), the painted-tooltip screenshot at `arena-harness/out/tip-open-ctx.png`, `2026-10-16-fn-number-structure.json` (AX tree, marker-to-note mapping), `2026-10-16-fn-number-detail.json` (per-marker ordinal/aria/visible triples on two routes).
