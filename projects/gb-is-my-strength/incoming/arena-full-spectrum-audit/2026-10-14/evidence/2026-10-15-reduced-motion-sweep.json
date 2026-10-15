@@ -1,0 +1,150 @@
+{
+ "/": {
+  "animated": 0,
+  "transitioning": 3,
+  "samples": [],
+  "scrollBehavior": "auto"
+ },
+ "/about/": {
+  "animated": 0,
+  "transitioning": 2,
+  "samples": [],
+  "scrollBehavior": "auto"
+ },
+ "/articles/": {
+  "animated": 0,
+  "transitioning": 3,
+  "samples": [],
+  "scrollBehavior": "auto"
+ },
+ "/articles/20-antisovetov-pastoru/": {
+  "animated": 6,
+  "transitioning": 63,
+  "samples": [
+   {
+    "cls": "warn-box",
+    "animation": "reveal-fallback"
+   },
+   {
+    "cls": "warn-box",
+    "animation": "reveal-fallback"
+   },
+   {
+    "cls": "warn-box",
+    "animation": "reveal-fallback"
+   }
+  ],
+  "scrollBehavior": "auto"
+ },
+ "/articles/dzhon-gill-chast-1-chelovek/": {
+  "animated": 0,
+  "transitioning": 51,
+  "samples": [],
+  "scrollBehavior": "auto"
+ },
+ "/articles/kod-da-vinchi/": {
+  "animated": 32,
+  "transitioning": 20,
+  "samples": [
+   {
+    "cls": "quote-box",
+    "animation": "reveal-fallback"
+   },
+   {
+    "cls": "info-box",
+    "animation": "reveal-fallback"
+   },
+   {
+    "cls": "",
+    "animation": "reveal-sda"
+   }
+  ],
+  "scrollBehavior": "auto"
+ },
+ "/articles/krajne-li-isporcheno-serdce/": {
+  "animated": 5,
+  "transitioning": 51,
+  "samples": [
+   {
+    "cls": "quote-box",
+    "animation": "reveal-fallback"
+   },
+   {
+    "cls": "info-box",
+    "animation": "reveal-fallback"
+   },
+   {
+    "cls": "quote-box",
+    "animation": "reveal-fallback"
+   }
+  ],
+  "scrollBehavior": "auto"
+ },
+ "/articles/steven-lawson-samoobman-i-publichnyy-golos/": {
+  "animated": 0,
+  "transitioning": 12,
+  "samples": [],
+  "scrollBehavior": "auto"
+ },
+ "/baptisty-rossii/": {
+  "animated": 0,
+  "transitioning": 9,
+  "samples": [],
+  "scrollBehavior": "auto"
+ },
+ "/biografii/": {
+  "animated": 0,
+  "transitioning": 94,
+  "samples": [],
+  "scrollBehavior": "auto"
+ },
+ "/hard-texts/": {
+  "animated": 0,
+  "transitioning": 2,
+  "samples": [],
+  "scrollBehavior": "auto"
+ },
+ "/hard-texts/genesis-6/": {
+  "animated": 0,
+  "transitioning": 6,
+  "samples": [],
+  "scrollBehavior": "auto"
+ },
+ "/karty/avraam/": {
+  "animated": 24,
+  "transitioning": 1094,
+  "samples": [
+   {
+    "cls": "circle",
+    "animation": "meSpringIn"
+   },
+   {
+    "cls": "circle",
+    "animation": "meSpringIn"
+   },
+   {
+    "cls": "circle",
+    "animation": "meSpringIn"
+   }
+  ],
+  "scrollBehavior": "auto"
+ },
+ "/konfessii/russkij-baptizm/": {
+  "animated": 0,
+  "transitioning": 3,
+  "samples": [],
+  "scrollBehavior": "auto"
+ },
+ "/nagornaya/chast-2/": {
+  "animated": 0,
+  "transitioning": 23,
+  "samples": [],
+  "scrollBehavior": "auto"
+ },
+ "/pastor-series/": {
+  "animated": 0,
+  "transitioning": 3,
+  "samples": [],
+  "scrollBehavior": "auto"
+ }
+}

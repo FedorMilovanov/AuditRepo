@@ -179,3 +179,66 @@ warning also hides a real removal, so this is filed as the first **verified nece
 The other five warnings (CSS/JS size budgets, `deploy.yml` not using `actions/deploy-pages@v4`, a missing `concurrency:` group in
 `genealogy-v2-publishable-contract.yml`, five magic `z-index` values) are recorded verbatim in the receipt and are **not** admitted
 as defects.
+
+## 9. Continuation run — 2026-10-15: the three open items measured (browser)
+
+The first follow-up closed the validator question. This one takes the three items the report had left open and measures them instead of
+carrying them.
+
+### 9.1 `.heart-flip-*` — the UNPROVEN pair is now a proven defect (light theme only)
+
+The reversible card on `/articles/krajne-li-isporcheno-serdce/` is `div.heart-flip-card[role=button][tabindex=0]`, 752×545, and it flips
+by **both** user paths (keyboard Enter on the focused card and a pointer click both set `.flipped`). Face styling is transform-based, so
+the decisive witness is the painted result:
+
+- **Light theme:** `.heart-flip-back` has **no background of its own** and paints `rgb(255,255,255)`, while `.heart-flip-back-body` is
+  `rgba(255,245,220,.82)`, `.heart-flip-back-closing` `rgba(255,245,220,.72)` and the `.highlight-divine` span `rgb(200,169,126)` —
+  axe `color-contrast` **1.05–1.22:1** against 4.5:1, and the after-flip screenshot reads as a white rectangle with barely perceptible
+  text. The card's whole payload disappears on a white page.
+- **Dark theme:** the same face paints `rgb(17,14,7)` and is fully legible — so this is a light-theme regression, not a "dark-first" quirk.
+- **Controls:** `.flip-card` (kod-da-vinchi) back `rgb(238,245,236)` with `rgb(26,26,26)` text and `.error-flip-card` back
+  `rgb(238,247,242)` with `rgb(26,26,26)` text — the sibling families **do** set a themed surface, so the missing surface belongs to this
+  one owner.
+
+Withdrawn from the axe list with controls (they are **not** defects): `.heart-flip-hint-text` — the reported 1.18:1 is sampled against an
+ancestor colour, but the text is painted over the dark front artwork where it reads fine; and `#gill-search-p-131/132` — those are
+Pagefind's own ids stamped on the very same back-face paragraphs, not separate elements.
+
+Admitted as `GBS-KRAJNE-HEART-FLIP-BACK-LIGHT-UNREADABLE` (defects 28 → 29, units 31 → 32).
+
+### 9.2 Print — no body loss, but the hidden region is a route-family rule, not a genesis-only quirk
+
+Real A4 print-to-PDF runs with pdf.js text extraction on five routes:
+
+| route | pages | DOM main chars | PDF text chars | hidden follower nodes | hidden follower chars |
+|---|---|---|---|---|---|
+| `/about/` | 4 | 4 322 | 4 527 | 0 | 0 |
+| `/baptisty-rossii/` | 6 | 5 444 | 5 085 | 16 | 702 |
+| `/articles/dzhon-gill-chast-1-chelovek/` | 26 | 36 082 | 36 295 | 9 | 607 |
+| `/hard-texts/genesis-6/` | 3 | 3 257 | 1 692 | 71 | 4 315 |
+| `/articles/krajne-li-isporcheno-serdce/` | 40 | 70 809 | 64 842 | 203 | 24 902 |
+
+Normalised containment of long body sentences shows **0 body sentences absent from the PDF text layer on every route** — the rule costs
+apparatus, navigation and planned-content cards, not prose. The matrix row is nevertheless **widened**: the affected `.genesis6-range`
+container measures **1 700 px tall on an article route**, so `/articles/krajne-li-isporcheno-serdce/` loses 203 marked nodes / 24 902
+chars (series navigation, quiz shell, related blocks) and kod-da-vinchi loses 34 / 1 292. On genesis-6 the planned-article cards keep
+their titles and «Планируется / В планах» markers on paper. At true A4 width the print layout measured **0 overflowing elements** on all
+five routes (the 1 440 px print-emulation viewport shows card overflow on `/about/` and `/baptisty-rossii/` and a 1 448 px hero image on
+gill-chast-1 at A4 width — recorded as a boundary, not claimed as a defect, because the A4 measurement contradicts it).
+
+### 9.3 `prefers-reduced-motion` — honoured where it matters
+
+- The `reveal-fallback` elements (`.quote-box`, `.warn-box`) resolve to `opacity: 1; transform: none` with a 0 s animation under `reduce`;
+  the 3 s delay belongs to the fallback path itself, not to motion — no defect.
+- `/karty/avraam/` switches `meSpringIn` (22 nodes) 0.5 s → 1e-06 s and `meProgressFlow` (2 nodes) 1.5 s infinite → 1e-06 s; 0 long
+  transitions remain, against 8 without the preference.
+- Nothing new admitted from this sweep.
+
+### 9.4 Dark-theme contrast pairs appended to the batch row
+
+On the same route in the dark theme, `.author-card-icon` ("ФМ", 52×52, 18 px/600) and `#quizLaunch` («Начать проверку», 191×46,
+15.2 px/700) both paint `rgb(255,255,255)` on `rgb(212,165,116)` = **2.22:1** — visible without interaction, no image behind. Appended to
+`GBS-TEXT-CONTRAST-RESIDUAL-BATCH`.
+
+Receipts: `evidence/2026-10-15-continuation-probes.txt` plus `evidence/2026-10-15-{heart-flip-face-probe,cards-probe,card-contrast-axe,`
+`print-a4-and-pdf,print-body-containment,print-sweep,reduced-motion-sweep,print-offenders-and-rm-durations}.json`.
