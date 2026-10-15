@@ -222,9 +222,12 @@ Normalised containment of long body sentences shows **0 body sentences absent fr
 apparatus, navigation and planned-content cards, not prose. The matrix row is nevertheless **widened**: the affected `.genesis6-range`
 container measures **1 700 px tall on an article route**, so `/articles/krajne-li-isporcheno-serdce/` loses 203 marked nodes / 24 902
 chars (series navigation, quiz shell, related blocks) and kod-da-vinchi loses 34 / 1 292. On genesis-6 the planned-article cards keep
-their titles and «Планируется / В планах» markers on paper. At true A4 width the print layout measured **0 overflowing elements** on all
-five routes (the 1 440 px print-emulation viewport shows card overflow on `/about/` and `/baptisty-rossii/` and a 1 448 px hero image on
-gill-chast-1 at A4 width — recorded as a boundary, not claimed as a defect, because the A4 measurement contradicts it).
+their titles and «Планируется / В планах» markers on paper. At true A4 width the print layout measured **0 overflowing elements** on all five routes — **CORRECTED 2026-10-15 (same day):
+this sentence is wrong and is withdrawn.** The committed receipt itself records **24** overflowing elements on `/baptisty-rossii/`
+(`document.scrollWidth` 810 vs clientWidth 794, widest `A.h-article-card` right=810/width 826). Re-measured across all 16 routes at
+794 px print width: `/` **34**, `/baptisty-rossii/` **24**, `/articles/` **1**, `/konfessii/russkij-baptizm/` **2**, every other route 0.
+Rendered PDF pages of `/` (pages 1–4) and `/baptisty-rossii/` (pages 1, 3) show no visibly clipped content, so this stays a geometry
+boundary with render control rather than an admitted defect. See §10.4 for the full correction list.
 
 ### 9.3 `prefers-reduced-motion` — honoured where it matters
 
@@ -242,3 +245,56 @@ On the same route in the dark theme, `.author-card-icon` ("ФМ", 52×52, 18 px/
 
 Receipts: `evidence/2026-10-15-continuation-probes.txt` plus `evidence/2026-10-15-{heart-flip-face-probe,cards-probe,card-contrast-axe,`
 `print-a4-and-pdf,print-body-containment,print-sweep,reduced-motion-sweep,print-offenders-and-rm-durations}.json`.
+
+## 10. Print-media contrast collapse — new defect class (2026-10-15, continuation 2)
+
+A systematic print pass — full-page pixel scan over all 16 routes plus pixel-truth contrast (the text's colour is read, the element is
+re-shot with its text transparent, and the pixels inside the text's own box are sampled) — found that the print reset in
+`css/site.css` **repaints text black regardless of what sits behind it**.
+
+### 10.1 Root cause
+
+`css/site.css:178` — `@media print { *, *::before, *::after { background: transparent; color: #000; box-shadow: none; text-shadow: none; … } }`
+— with a second block earlier in the same sheet (`body{background:#fff!important;color:#000!important}`, `a{color:#000!important}`). Two
+consequences: text over an **image** becomes black-on-dark, and components that keep their light colour through `!important` land on a
+surface the same reset just made transparent.
+
+### 10.2 Measured instances (screen → print)
+
+| owner | screen | print | evidence |
+|---|---|---|---|
+| home `.h-featured-title` ×4 | `rgb(255,255,255)` **17.8–18.2:1** | `rgb(0,0,0)` **1.09–1.15:1** | `featured-{screen,print}-{0..3}.png` |
+| home `.h-featured-abstract` / `.h-featured-author` | white | **1.11:1** / **1.09:1** | full-page scan |
+| `/biografii/` `.h-hero-tagline` | 4.41:1 | **1.23:1** | `case-0-{screen,print}.png` |
+| `/biografii/` section label | 16:1 | **1.64:1** | full-page scan |
+| `/nagornaya/chast-2/` `.nag-project-nav__link` | 11.4:1 | **1.46:1** | `case-3-{screen,print}.png` |
+| `/` `.h-article-kicker` / `.h-meta-tag` | 4.52:1 | **1.53:1** / **1.52:1** | `case-4-{screen,print}.png` |
+
+Admitted as `GBS-PRINT-MEDIA-CONTRAST-COLLAPSE` (defects 29 → 30, units 32 → 33). axe cannot detect any of this: with an image
+background it inherits an ancestor colour — which is exactly why the first pass could only mark this family UNPROVEN.
+
+### 10.3 Method limit now binding for print claims
+
+Chromium's PDF **text layer is not a reliable witness**: the black-on-dark cover captions *are* present in the extracted text (all five
+titles match after letters-only normalisation) although the rendered page shows them unreadable, while on Krajne page 2 the text layer
+*omits* the words «Нового Завета» that the render displays. Print evidence must therefore rest on page renders and pixel sampling.
+
+That also confirms the earlier §9.2 result in the only direction it can be trusted: absence of a match in the text layer is **not** proof
+of loss, so the "no body loss" finding stands on the render check (`out/krajne-pdf-p2.png`), not on the extraction.
+
+### 10.4 Corrections of my own claims (in place)
+
+1. «At true A4 width 0 elements overflowed on all five routes» (§9.2) — **withdrawn as wrong**; 24 overflow elements were already in the
+   committed receipt for `/baptisty-rossii/`. Corrected in place in §9.2; the honest figure across 16 routes is `/` 34,
+   `/baptisty-rossii/` 24, `/articles/` 1, `/konfessii/russkij-baptizm/` 2, others 0, with no visible clipping in the rendered pages.
+2. The first continuation's printed figure «no body loss anywhere, 0 long body sentences absent» **survives**, but only because it is a
+   *pass* (text found); it must not be re-run as a loss check — the extraction fails in both directions.
+
+### 10.5 Screen-side item found by the same scan
+
+`/konfessii/russkij-baptizm/` `.crumb` renders `rgb(94,90,84)` on a near-black map background = **2.93:1 in print and on screen**
+(pixel-sampled) — appended to `GBS-TEXT-CONTRAST-RESIDUAL-BATCH`, since unlike the rest it needs no print media to fail.
+
+Receipts: `evidence/2026-10-15-print-contrast-and-corrections.txt`, `evidence/2026-10-15-print-contrast-scan.json`,
+`evidence/2026-10-15-print-featured-cover-contrast.json`, `evidence/2026-10-15-print-cases-verified.json`,
+`evidence/2026-10-15-print-loss-16-routes.json`.

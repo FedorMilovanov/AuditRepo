@@ -1,0 +1,182 @@
+[
+ {
+  "route": "/biografii/",
+  "sel": ".h-hero-tagline",
+  "media": "screen",
+  "color": "rgb(120, 113, 108)",
+  "text": "⊹ Христианское наследие ⊹",
+  "box": [
+   723,
+   18
+  ],
+  "fs": "10px",
+  "bgMed": 0.916,
+  "bgP10": 0.916,
+  "bgP90": 0.916,
+  "ratioMedian": 4.41,
+  "ratioWorst": 4.41,
+  "ratioBest": 4.41
+ },
+ {
+  "route": "/biografii/",
+  "sel": ".h-hero-tagline",
+  "media": "print",
+  "color": "rgb(0, 0, 0)",
+  "text": "⊹ Христианское наследие ⊹",
+  "box": [
+   738,
+   16
+  ],
+  "fs": "10px",
+  "bgMed": 0.012,
+  "bgP10": 0.004,
+  "bgP90": 0.429,
+  "ratioMedian": 1.23,
+  "ratioWorst": 9.58,
+  "ratioBest": 1.07
+ },
+ {
+  "route": "/biografii/",
+  "sel": "span:has-text(\"Биографии служителей\")",
+  "media": "screen",
+  "color": "rgb(26, 26, 26)",
+  "text": "Биографии служителей",
+  "box": [
+   153,
+   15
+  ],
+  "fs": "13px",
+  "bgMed": 0.916,
+  "bgP10": 0.916,
+  "bgP90": 0.916,
+  "ratioMedian": 16,
+  "ratioWorst": 16,
+  "ratioBest": 16
+ },
+ {
+  "route": "/biografii/",
+  "sel": "span:has-text(\"Биографии служителей\")",
+  "media": "print",
+  "color": "rgb(0, 0, 0)",
+  "text": "Биографии служителей",
+  "box": [
+   153,
+   15
+  ],
+  "fs": "13px",
+  "bgMed": 0.032,
+  "bgP10": 0.005,
+  "bgP90": 0.814,
+  "ratioMedian": 1.64,
+  "ratioWorst": 17.29,
+  "ratioBest": 1.1
+ },
+ {
+  "route": "/konfessii/russkij-baptizm/",
+  "sel": ".crumb",
+  "media": "screen",
+  "color": "rgb(94, 90, 84)",
+  "text": "Главная · Конфессии · Серия · Карта Русского ",
+  "box": [
+   319,
+   56
+  ],
+  "fs": "10.5px",
+  "bgMed": 0.002,
+  "bgP10": 0.002,
+  "bgP90": 0.002,
+  "ratioMedian": 2.93,
+  "ratioWorst": 2.93,
+  "ratioBest": 2.93
+ },
+ {
+  "route": "/konfessii/russkij-baptizm/",
+  "sel": ".crumb",
+  "media": "print",
+  "color": "rgb(94, 90, 84)",
+  "text": "Главная · Конфессии · Серия · Карта Русского ",
+  "box": [
+   319,
+   56
+  ],
+  "fs": "10.5px",
+  "bgMed": 0.002,
+  "bgP10": 0.002,
+  "bgP90": 0.002,
+  "ratioMedian": 2.93,
+  "ratioWorst": 2.93,
+  "ratioBest": 2.93
+ },
+ {
+  "route": "/nagornaya/chast-2/",
+  "sel": ".nag-project-nav__link",
+  "media": "screen",
+  "color": "rgb(245, 230, 189)",
+  "text": "Библейский тренажёр",
+  "box": [
+   203,
+   44
+  ],
+  "fs": "13px",
+  "bgMed": 0.024,
+  "bgP10": 0.024,
+  "bgP90": 0.075,
+  "ratioMedian": 11.44,
+  "ratioWorst": 6.79,
+  "ratioBest": 11.44
+ },
+ {
+  "route": "/nagornaya/chast-2/",
+  "sel": ".nag-project-nav__link",
+  "media": "print",
+  "color": "rgb(0, 0, 0)",
+  "text": "Библейский тренажёр",
+  "box": [
+   203,
+   44
+  ],
+  "fs": "13px",
+  "bgMed": 0.023,
+  "bgP10": 0.009,
+  "bgP90": 0.024,
+  "ratioMedian": 1.46,
+  "ratioWorst": 1.48,
+  "ratioBest": 1.19
+ },
+ {
+  "route": "/",
+  "sel": ".h-article-kicker",
+  "media": "screen",
+  "color": "rgb(8, 125, 145)",
+  "text": "Серия · Часть I",
+  "box": [
+   314,
+   18
+  ],
+  "fs": "10px",
+  "bgMed": 0.933,
+  "bgP10": 0.931,
+  "bgP90": 0.933,
+  "ratioMedian": 4.52,
+  "ratioWorst": 4.52,
+  "ratioBest": 4.51
+ },
+ {
+  "route": "/",
+  "sel": ".h-article-kicker",
+  "media": "print",
+  "color": "rgb(120, 217, 228)",
+  "text": "Серия · Часть I",
+  "box": [
+   321,
+   16
+  ],
+  "fs": "10px",
+  "bgMed": 0.933,
+  "bgP10": 0.931,
+  "bgP90": 0.933,
+  "ratioMedian": 1.53,
+  "ratioWorst": 1.53,
+  "ratioBest": 1.53
+ }
+]
