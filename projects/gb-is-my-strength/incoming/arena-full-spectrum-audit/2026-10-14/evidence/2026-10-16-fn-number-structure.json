@@ -1,130 +1,24 @@
 {
-  "isAriaPermutation": true,
-  "isVisiblePermutation": false,
-  "ariaSeq": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21
-  ],
-  "visSeq": [
-    1,
-    2,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    23,
-    24
-  ],
-  "markers": 21,
-  "monotonicVisible": true,
-  "monotonicAria": true,
-  "axButtons": [
-    {
-      "name": "Показать сноску 1",
-      "desc": "CNN Sunday Morning, 25 May 2003: официальный transcript CNN подтверждает формулу «99 percent of it is true». NBC News Transcripts / Today Show, 9 June 2003 (архив старой страницы DanBrown.com через Wayback) содержит вопрос Matt Lauer: «How much of this is based on reality...?» и ответ Dan Brown: «Absolutely all of it... Robert Langdon is fictional, but all of the art, architecture, secret rituals, secret societies, all of that is historical fact.» Вернуться к отметке 1",
-      "childIds": 3
-    },
-    {
-      "name": "Показать сноску 2",
-      "desc": "Michael Baigent, Richard Leigh, Henry Lincoln, Holy Blood, Holy Grail (1982). В судебных решениях Baigent & Leigh v The Random House Group Ltd (High Court, 2006; Court of Appeal, 2007) книга самими истцами описывалась как «historical conjecture», а иск против Random House был отклонён. Поэтому корректнее говорить не о доказанном плагиате, а о беллетризации и переработке уже существовавшей псевдоисторической схемы. Вернуться к отметке 2",
-      "childIds": 3
-    },
-    {
-      "name": "Показать сноску 3",
-      "desc": "NASSCAL e-Clavis — Gospel of Philip; Darrell Bock, The Missing Gospels (2006). Вернуться к отметке 3",
-      "childIds": 3
-    },
-    {
-      "name": "Показать сноску 4",
-      "desc": "Ben Witherington III, The Gospel Code (2004); анализ слова koinonos и коптского контекста. Вернуться к отметке 4",
-      "childIds": 3
-    }
-  ],
-  "axTextWithTooltip": [],
-  "keyboard": {
-    "clicked": {
-      "id": "note-ref-articles-kod-da-vinchi-note-789d5aa65532",
-      "before": "0"
-    },
-    "afterEnter": {
-      "opacity": "0",
-      "vis": "visible",
-      "ariaHidden": null
-    },
-    "afterEsc": {
-      "opacity": "0"
-    },
-    "afterSpace": {
-      "opacity": "0"
-    }
-  },
-  "targets": [
-    {
-      "id": "note-ref-articles-kod-da-vinchi-note-789d5aa65532",
-      "ariaControls": "note-tip-articles-kod-da-vinchi-note-789d5aa65532",
-      "ariaDescribedby": "note-end-articles-kod-da-vinchi-note-789d5aa65532",
-      "dataNote": null,
-      "href": null
-    },
-    {
-      "id": "note-ref-articles-kod-da-vinchi-note-ef9732772bbb",
-      "ariaControls": "note-tip-articles-kod-da-vinchi-note-ef9732772bbb",
-      "ariaDescribedby": "note-end-articles-kod-da-vinchi-note-ef9732772bbb",
-      "dataNote": null,
-      "href": null
-    },
-    {
-      "id": "note-ref-articles-kod-da-vinchi-note-7d9bfb472b62",
-      "ariaControls": "note-tip-articles-kod-da-vinchi-note-7d9bfb472b62",
-      "ariaDescribedby": "note-end-articles-kod-da-vinchi-note-7d9bfb472b62",
-      "dataNote": null,
-      "href": null
-    },
-    {
-      "id": "note-ref-articles-kod-da-vinchi-note-262f4429059d",
-      "ariaControls": "note-tip-articles-kod-da-vinchi-note-262f4429059d",
-      "ariaDescribedby": "note-end-articles-kod-da-vinchi-note-262f4429059d",
-      "dataNote": null,
-      "href": null
-    },
-    {
-      "id": "note-ref-articles-kod-da-vinchi-note-1a07af54de9d",
-      "ariaControls": "note-tip-articles-kod-da-vinchi-note-1a07af54de9d",
-      "ariaDescribedby": "note-end-articles-kod-da-vinchi-note-1a07af54de9d",
-      "dataNote": null,
-      "href": null
-    }
-  ]
+ "isAriaPermutation":true,
+ "isVisiblePermutation":false,
+ "ariaSeq":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
+ "visSeq":[1,2,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19,20,21,23,24],
+ "markers":21,
+ "monotonicVisible":true,
+ "monotonicAria":true,
+ "axButtons":[
+  {"name":"Показать сноску 1","desc":"CNN Sunday Morning, 25 May 2003: официальный transcript CNN подтверждает формулу «99 percent of it is true». NBC News Transcripts / Today Show, 9 June 2003 (архив старой страницы DanBrown.com через Wayback) содержит вопрос Matt Lauer: «How much of this is based on reality...?» и ответ Dan Brown: «Absolutely all of it... Robert Langdon is fictional, but all of the art, architecture, secret rituals, secret societies, all of that is historical fact.» Вернуться к отметке 1","childIds":3},
+  {"name":"Показать сноску 2","desc":"Michael Baigent, Richard Leigh, Henry Lincoln, Holy Blood, Holy Grail (1982). В судебных решениях Baigent & Leigh v The Random House Group Ltd (High Court, 2006; Court of Appeal, 2007) книга самими истцами описывалась как «historical conjecture», а иск против Random House был отклонён. Поэтому корректнее говорить не о доказанном плагиате, а о беллетризации и переработке уже существовавшей псевдоисторической схемы. Вернуться к отметке 2","childIds":3},
+  {"name":"Показать сноску 3","desc":"NASSCAL e-Clavis — Gospel of Philip; Darrell Bock, The Missing Gospels (2006). Вернуться к отметке 3","childIds":3},
+  {"name":"Показать сноску 4","desc":"Ben Witherington III, The Gospel Code (2004); анализ слова koinonos и коптского контекста. Вернуться к отметке 4","childIds":3}
+ ],
+ "axTextWithTooltip":[],
+ "keyboard":{"clicked":{"id":"note-ref-articles-kod-da-vinchi-note-789d5aa65532","before":"0"},"afterEnter":{"opacity":"0","vis":"visible","ariaHidden":null},"afterEsc":{"opacity":"0"},"afterSpace":{"opacity":"0"}},
+ "targets":[
+  {"id":"note-ref-articles-kod-da-vinchi-note-789d5aa65532","ariaControls":"note-tip-articles-kod-da-vinchi-note-789d5aa65532","ariaDescribedby":"note-end-articles-kod-da-vinchi-note-789d5aa65532","dataNote":null,"href":null},
+  {"id":"note-ref-articles-kod-da-vinchi-note-ef9732772bbb","ariaControls":"note-tip-articles-kod-da-vinchi-note-ef9732772bbb","ariaDescribedby":"note-end-articles-kod-da-vinchi-note-ef9732772bbb","dataNote":null,"href":null},
+  {"id":"note-ref-articles-kod-da-vinchi-note-7d9bfb472b62","ariaControls":"note-tip-articles-kod-da-vinchi-note-7d9bfb472b62","ariaDescribedby":"note-end-articles-kod-da-vinchi-note-7d9bfb472b62","dataNote":null,"href":null},
+  {"id":"note-ref-articles-kod-da-vinchi-note-262f4429059d","ariaControls":"note-tip-articles-kod-da-vinchi-note-262f4429059d","ariaDescribedby":"note-end-articles-kod-da-vinchi-note-262f4429059d","dataNote":null,"href":null},
+  {"id":"note-ref-articles-kod-da-vinchi-note-1a07af54de9d","ariaControls":"note-tip-articles-kod-da-vinchi-note-1a07af54de9d","ariaDescribedby":"note-end-articles-kod-da-vinchi-note-1a07af54de9d","dataNote":null,"href":null}
+ ]
 }

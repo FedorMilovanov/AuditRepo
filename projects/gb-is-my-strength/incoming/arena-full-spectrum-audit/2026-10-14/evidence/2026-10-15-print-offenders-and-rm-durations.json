@@ -1,290 +1,42 @@
 {
- "printOffenders": {
-  "/about/": {
-   "limit": 1440,
-   "docScrollW": 1709,
-   "top": [
-    {
-     "tag": "DIV",
-     "cls": "page-wrap",
-     "id": null,
-     "right": 1440,
-     "width": 1440,
-     "scrollW": 1709,
-     "text": "ГлавнаяОб автореФёдор МиловановАвтор-редактор проекта «Госпо"
-    },
-    {
-     "tag": "MAIN",
-     "cls": "",
-     "id": "main-content",
-     "right": 1440,
-     "width": 1440,
-     "scrollW": 1709,
-     "text": "Фёдор МиловановАвтор-редактор проекта «Господь Бог — Сила Мо"
-    },
-    {
-     "tag": "ARTICLE",
-     "cls": "about-page",
-     "id": null,
-     "right": 1440,
-     "width": 1440,
-     "scrollW": 1709,
-     "text": "Фёдор МиловановАвтор-редактор проекта «Господь Бог — Сила Мо"
-    },
-    {
-     "tag": "SECTION",
-     "cls": "",
-     "id": null,
-     "right": 1440,
-     "width": 1440,
-     "scrollW": 1709,
-     "text": "Обратная связьЕсли вы нашли фактическую или богословскую оши"
-    },
-    {
-     "tag": "DIV",
-     "cls": "about-contact-card",
-     "id": null,
-     "right": 1440,
-     "width": 1440,
-     "scrollW": 1709,
-     "text": "Telegram@fedormilovanovВКонтактеvk.com/curtmfEmailviktorcoy2"
-    }
+ "printOffenders":{
+  "/about/":{
+   "limit":1440,
+   "docScrollW":1709,
+   "top":[
+    {"tag":"DIV","cls":"page-wrap","id":null,"right":1440,"width":1440,"scrollW":1709,"text":"ГлавнаяОб автореФёдор МиловановАвтор-редактор проекта «Госпо"},
+    {"tag":"MAIN","cls":"","id":"main-content","right":1440,"width":1440,"scrollW":1709,"text":"Фёдор МиловановАвтор-редактор проекта «Господь Бог — Сила Мо"},
+    {"tag":"ARTICLE","cls":"about-page","id":null,"right":1440,"width":1440,"scrollW":1709,"text":"Фёдор МиловановАвтор-редактор проекта «Господь Бог — Сила Мо"},
+    {"tag":"SECTION","cls":"","id":null,"right":1440,"width":1440,"scrollW":1709,"text":"Обратная связьЕсли вы нашли фактическую или богословскую оши"},
+    {"tag":"DIV","cls":"about-contact-card","id":null,"right":1440,"width":1440,"scrollW":1709,"text":"Telegram@fedormilovanovВКонтактеvk.com/curtmfEmailviktorcoy2"}
    ]
   },
-  "/baptisty-rossii/": {
-   "limit": 1440,
-   "docScrollW": 1456,
-   "top": [
-    {
-     "tag": "A",
-     "cls": "h-article-card",
-     "id": null,
-     "right": 1456,
-     "width": 1168,
-     "scrollW": 1168,
-     "text": "Статья 1 · 18 минВоронин и ночь на Куре1867 · Воронин, Кальв"
-    },
-    {
-     "tag": "A",
-     "cls": "h-article-card",
-     "id": null,
-     "right": 1456,
-     "width": 1168,
-     "scrollW": 1168,
-     "text": "Статья 2 · 20 минЮжная штунда и первые крещения1867–1870 · Р"
-    },
-    {
-     "tag": "A",
-     "cls": "h-article-card",
-     "id": null,
-     "right": 1456,
-     "width": 1168,
-     "scrollW": 1168,
-     "text": "Статья 3 · 17 минПетербург и Ново-Васильевка: две развилки 1"
-    },
-    {
-     "tag": "A",
-     "cls": "h-article-card",
-     "id": null,
-     "right": 1456,
-     "width": 1168,
-     "scrollW": 1168,
-     "text": "Статья 1 · 21 минПетербургское пробуждение: Редсток, Пашков "
-    },
-    {
-     "tag": "A",
-     "cls": "h-article-card",
-     "id": null,
-     "right": 1456,
-     "width": 1168,
-     "scrollW": 1168,
-     "text": "Статья 2 · 24 минСвобода совести и военный вопрос1919–1929 ·"
-    },
-    {
-     "tag": "A",
-     "cls": "h-article-card",
-     "id": null,
-     "right": 1456,
-     "width": 1168,
-     "scrollW": 1168,
-     "text": "Статья 1 · 28 минСоветская ночь: закон 1929 года и репрессии"
-    }
+  "/baptisty-rossii/":{
+   "limit":1440,
+   "docScrollW":1456,
+   "top":[
+    {"tag":"A","cls":"h-article-card","id":null,"right":1456,"width":1168,"scrollW":1168,"text":"Статья 1 · 18 минВоронин и ночь на Куре1867 · Воронин, Кальв"},
+    {"tag":"A","cls":"h-article-card","id":null,"right":1456,"width":1168,"scrollW":1168,"text":"Статья 2 · 20 минЮжная штунда и первые крещения1867–1870 · Р"},
+    {"tag":"A","cls":"h-article-card","id":null,"right":1456,"width":1168,"scrollW":1168,"text":"Статья 3 · 17 минПетербург и Ново-Васильевка: две развилки 1"},
+    {"tag":"A","cls":"h-article-card","id":null,"right":1456,"width":1168,"scrollW":1168,"text":"Статья 1 · 21 минПетербургское пробуждение: Редсток, Пашков "},
+    {"tag":"A","cls":"h-article-card","id":null,"right":1456,"width":1168,"scrollW":1168,"text":"Статья 2 · 24 минСвобода совести и военный вопрос1919–1929 ·"},
+    {"tag":"A","cls":"h-article-card","id":null,"right":1456,"width":1168,"scrollW":1168,"text":"Статья 1 · 28 минСоветская ночь: закон 1929 года и репрессии"}
    ]
   },
-  "/articles/dzhon-gill-chast-1-chelovek/": {
-   "limit": 1440,
-   "docScrollW": 1448,
-   "top": [
-    {
-     "tag": "DIV",
-     "cls": "gbs2-world",
-     "id": null,
-     "right": 1440,
-     "width": 1440,
-     "scrollW": 1448,
-     "text": "12%Прогресс серииЧасть 1 из 4Введение28 минИсторический конт"
-    },
-    {
-     "tag": "DIV",
-     "cls": "page-wrap",
-     "id": "content",
-     "right": 1440,
-     "width": 1440,
-     "scrollW": 1448,
-     "text": "⌂ ГлавнаяБиографии служителейДжон Гилл\n    2026-05-30T22:05:"
-    },
-    {
-     "tag": "MAIN",
-     "cls": "",
-     "id": "main-content",
-     "right": 1440,
-     "width": 1440,
-     "scrollW": 1448,
-     "text": "2026-05-30T22:05:00.000Z\n    2026-07-24T13:38:56.000ZСерия «"
-    },
-    {
-     "tag": "IMG",
-     "cls": "",
-     "id": null,
-     "right": 1448,
-     "width": 1455,
-     "scrollW": 1438,
-     "text": ""
-    },
-    {
-     "tag": "FIGURE",
-     "cls": "gbs2-hero",
-     "id": "gbs2Hero",
-     "right": 1440,
-     "width": 1440,
-     "scrollW": 1447,
-     "text": "Серия «Джон Гилл» · Часть I"
-    }
-   ]
+  "/articles/dzhon-gill-chast-1-chelovek/":{
+   "limit":1440,
+   "docScrollW":1448,
+   "top":[{"tag":"DIV","cls":"gbs2-world","id":null,"right":1440,"width":1440,"scrollW":1448,"text":"12%Прогресс серииЧасть 1 из 4Введение28 минИсторический конт"},{"tag":"DIV","cls":"page-wrap","id":"content","right":1440,"width":1440,"scrollW":1448,"text":"⌂ ГлавнаяБиографии служителейДжон Гилл\n    2026-05-30T22:05:"},{"tag":"MAIN","cls":"","id":"main-content","right":1440,"width":1440,"scrollW":1448,"text":"2026-05-30T22:05:00.000Z\n    2026-07-24T13:38:56.000ZСерия «"},{"tag":"IMG","cls":"","id":null,"right":1448,"width":1455,"scrollW":1438,"text":""},{"tag":"FIGURE","cls":"gbs2-hero","id":"gbs2Hero","right":1440,"width":1440,"scrollW":1447,"text":"Серия «Джон Гилл» · Часть I"}]
   }
  },
- "rmDurations": {
-  "/articles/20-antisovetov-pastoru/@reduce": {
-   ".warn-box": {
-    "name": "reveal-fallback",
-    "dur": "0s",
-    "iter": "1",
-    "delay": "3s",
-    "opacity": "1",
-    "transform": "none"
-   },
-   ".info-box": "absent",
-   ".quote-box": "absent",
-   ".ehrman-block": "absent"
-  },
-  "/articles/20-antisovetov-pastoru/@no-preference": {
-   ".warn-box": {
-    "name": "reveal-fallback",
-    "dur": "0s",
-    "iter": "1",
-    "delay": "3s",
-    "opacity": "0",
-    "transform": "matrix(1, 0, 0, 1, 0, 20)"
-   },
-   ".info-box": "absent",
-   ".quote-box": "absent",
-   ".ehrman-block": "absent"
-  },
-  "/articles/kod-da-vinchi/@reduce": {
-   ".quote-box": {
-    "name": "reveal-fallback",
-    "dur": "0s",
-    "iter": "1",
-    "delay": "3s",
-    "opacity": "1",
-    "transform": "none"
-   },
-   ".warn-box": {
-    "name": "reveal-fallback",
-    "dur": "0s",
-    "iter": "1",
-    "delay": "3s",
-    "opacity": "1",
-    "transform": "none"
-   },
-   ".flip-card": {
-    "name": "none",
-    "dur": "0s",
-    "iter": "1",
-    "delay": "0s",
-    "opacity": "1",
-    "transform": "none"
-   },
-   ".error-flip-card": {
-    "name": "none",
-    "dur": "0s",
-    "iter": "1",
-    "delay": "0s",
-    "opacity": "1",
-    "transform": "none"
-   }
-  },
-  "/articles/kod-da-vinchi/@no-preference": {
-   ".quote-box": {
-    "name": "reveal-fallback",
-    "dur": "0s",
-    "iter": "1",
-    "delay": "3s",
-    "opacity": "0",
-    "transform": "matrix(1, 0, 0, 1, 0, 20)"
-   },
-   ".warn-box": {
-    "name": "reveal-fallback",
-    "dur": "0s",
-    "iter": "1",
-    "delay": "3s",
-    "opacity": "0",
-    "transform": "matrix(1, 0, 0, 1, 0, 20)"
-   },
-   ".flip-card": {
-    "name": "card-react",
-    "dur": "3.5s",
-    "iter": "infinite",
-    "delay": "0s",
-    "opacity": "1",
-    "transform": "matrix(1, 0, 0, 1, 0, 0)"
-   },
-   ".error-flip-card": {
-    "name": "card-react",
-    "dur": "3.5s",
-    "iter": "infinite",
-    "delay": "0s",
-    "opacity": "1",
-    "transform": "matrix(1, 0, 0, 1, 0, 0)"
-   }
-  },
-  "/articles/krajne-li-isporcheno-serdce/@reduce": {
-   ".quote-box": {
-    "name": "reveal-fallback",
-    "dur": "0s",
-    "iter": "1",
-    "delay": "3s",
-    "opacity": "1",
-    "transform": "none"
-   },
-   ".warn-box": "absent"
-  },
-  "/articles/krajne-li-isporcheno-serdce/@no-preference": {
-   ".quote-box": {
-    "name": "reveal-fallback",
-    "dur": "0s",
-    "iter": "1",
-    "delay": "3s",
-    "opacity": "0",
-    "transform": "matrix(1, 0, 0, 1, 0, 20)"
-   },
-   ".warn-box": "absent"
-  },
-  "/karty/avraam/@reduce": {
-   ".circle": "absent"
-  },
-  "/karty/avraam/@no-preference": {
-   ".circle": "absent"
-  }
+ "rmDurations":{
+  "/articles/20-antisovetov-pastoru/@reduce":{".warn-box":{"name":"reveal-fallback","dur":"0s","iter":"1","delay":"3s","opacity":"1","transform":"none"},".info-box":"absent",".quote-box":"absent",".ehrman-block":"absent"},
+  "/articles/20-antisovetov-pastoru/@no-preference":{".warn-box":{"name":"reveal-fallback","dur":"0s","iter":"1","delay":"3s","opacity":"0","transform":"matrix(1, 0, 0, 1, 0, 20)"},".info-box":"absent",".quote-box":"absent",".ehrman-block":"absent"},
+  "/articles/kod-da-vinchi/@reduce":{".quote-box":{"name":"reveal-fallback","dur":"0s","iter":"1","delay":"3s","opacity":"1","transform":"none"},".warn-box":{"name":"reveal-fallback","dur":"0s","iter":"1","delay":"3s","opacity":"1","transform":"none"},".flip-card":{"name":"none","dur":"0s","iter":"1","delay":"0s","opacity":"1","transform":"none"},".error-flip-card":{"name":"none","dur":"0s","iter":"1","delay":"0s","opacity":"1","transform":"none"}},
+  "/articles/kod-da-vinchi/@no-preference":{".quote-box":{"name":"reveal-fallback","dur":"0s","iter":"1","delay":"3s","opacity":"0","transform":"matrix(1, 0, 0, 1, 0, 20)"},".warn-box":{"name":"reveal-fallback","dur":"0s","iter":"1","delay":"3s","opacity":"0","transform":"matrix(1, 0, 0, 1, 0, 20)"},".flip-card":{"name":"card-react","dur":"3.5s","iter":"infinite","delay":"0s","opacity":"1","transform":"matrix(1, 0, 0, 1, 0, 0)"},".error-flip-card":{"name":"card-react","dur":"3.5s","iter":"infinite","delay":"0s","opacity":"1","transform":"matrix(1, 0, 0, 1, 0, 0)"}},
+  "/articles/krajne-li-isporcheno-serdce/@reduce":{".quote-box":{"name":"reveal-fallback","dur":"0s","iter":"1","delay":"3s","opacity":"1","transform":"none"},".warn-box":"absent"},
+  "/articles/krajne-li-isporcheno-serdce/@no-preference":{".quote-box":{"name":"reveal-fallback","dur":"0s","iter":"1","delay":"3s","opacity":"0","transform":"matrix(1, 0, 0, 1, 0, 20)"},".warn-box":"absent"},
+  "/karty/avraam/@reduce":{".circle":"absent"},
+  "/karty/avraam/@no-preference":{".circle":"absent"}
  }
 }
