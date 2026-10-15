@@ -401,3 +401,15 @@ description = note text + «Вернуться к отметке N»). The `⟦�
 Receipts: `evidence/2026-10-16-note-marker-number-drift.txt`, `evidence/2026-10-16-marker-drift-sweep.json`,
 `evidence/2026-10-16-fn-number-structure.json`, `evidence/2026-10-16-fn-number-detail.json` (the painted-tooltip screenshot is binary and therefore kept in the harness at `arena-harness/out/tip-open-ctx.png`, not in git).
 
+### 12.4 Closed: the «missing» notes on `/articles/rimlyanam-7-veruyushchiy-ili-neverushchiy/`
+
+Continuation 4 left this route unchecked because `dist` showed no footnote markers while the tree contained «Показать сноску».
+Answer: that phrase lives in a **legacy hand-authored copy** in the repository root (12 exist); the shipped page is the Astro one,
+where the eight old footnotes were restructured into the article's own sources prose («Первоисточники …» with Calvin, Owen, Hodge,
+MacArthur, Piper, Schreiner, Moo, Lloyd-Jones, Bailie, Street, Kobelia). The legacy copy cannot reach production —
+`scripts/copy-legacy-to-dist.js` never overwrites an Astro-owned route, all six `fn-marker`-bearing dist files differ byte-wise
+from their legacy counterparts, and **zero** dist files carry the old unnumbered `aria-label="Показать сноску"`. Rendered check at
+1440×900 and 390×844: correct title/`h1`, 0 markers, 0 endnotes, sources prose present, no same-origin HTTP errors, and the only
+console error is the documented Yandex-Metrica sandbox-egress artifact. No defect; receipts
+`evidence/2026-10-16-note-marker-number-drift.txt` §6 and `evidence/2026-10-16-rimlyanam-render.json`.
+

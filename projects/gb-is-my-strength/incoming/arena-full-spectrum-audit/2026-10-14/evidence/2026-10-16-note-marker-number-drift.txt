@@ -70,3 +70,32 @@ its **1.38:1** print reading inside `GBS-PRINT-MEDIA-CONTRAST-COLLAPSE`. Nothing
 
 Artifact: `2026-10-16-px4-visibility.json` (28 nodes with box, computed display, colour and the nearest hidden ancestor).
 
+## 6. `/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/` — closed: the notes were restructured, the legacy copy is dead, and it never ships
+
+Open question from continuation 4: the route carried no footnote markers in `dist`, yet the phrase «Показать сноску» existed in
+the product tree. Answer, measured at `d14da74c`:
+
+- **The phrase lives in a legacy copy, not in the shipped page.** `articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/index.html`
+  in the repository root (12 such hand-authored legacy pages exist) holds 8 `.fn-marker` notes in the **old** scheme —
+  `aria-label="Показать сноску"` with no number, **no** `gb-note-endnotes` list and no note stylesheet. The shipped page is built
+  from `src/pages/articles/.../index.astro` → `Rimlyanam7Body.astro` + `src/content/articles/....mdx`.
+- **Nothing was lost.** The eight citations were restructured into the article's own sources prose: the rendered page contains
+  «Первоисточники (тезис; прямые цитаты не приводятся без сверки локатора)» followed by Calvin, Owen, Hodge, MacArthur, Piper,
+  Schreiner, Moo, Lloyd-Jones, Bailie, Street and Kobelia — a broader list than the legacy footnotes.
+- **The legacy copy cannot reach production.** `scripts/copy-legacy-to-dist.js` is the strangler step that copies root legacy
+  pages into `dist`, and it never overwrites an Astro-owned route from `migration/page-ownership.json`; this route is owned by
+  `astro`. Verified two ways: (a) **0 of 6** dist files that mention `fn-marker` are byte-identical to their legacy counterparts
+  (sha256 differs in all six cases); (b) **0 files in `dist` carry the unnumbered `aria-label="Показать сноску"`** — the legacy
+  labelling never ships anywhere.
+- **Rendered check, both viewports** (1440×900 and 390×844 `isMobile`+`hasTouch`, local production-like build): title and `h1`
+  correct, `fn-marker` 0, `.tooltip` 0, `.gb-note-endnotes` 0, sources prose present, **0 same-origin HTTP errors**; the single
+  console error is `net::ERR_CONNECTION_CLOSED https://mc.yandex.ru/metrika/tag.js` — the documented sandbox-egress artifact, not a
+  site defect. Artifact: `2026-10-16-rimlyanam-render.json`.
+- **Reconciliation note for anyone cross-checking counts:** a plain `grep -l fn-marker dist` returns **6** routes, while the
+  marker sweep in §1 reports **5**. The sixth, `/articles/20-antisovetov-pastoru/`, contains 36 `fn-marker fn-marker--dove
+  map-trigger` nodes — map triggers owned by the Karty/MapEngine, which the NoteRegistry excludes by design (declared exception in
+  `dist/data/note-registry-migration-inventory.json`), so they are not footnotes and carry none of §1's drift.
+
+No defect follows from this item. It is recorded so that the earlier «unchecked» line is closed with evidence rather than dropped,
+and so that a future reader does not mistake the legacy duplicates for shipped content.
+
