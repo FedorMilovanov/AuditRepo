@@ -1,0 +1,111 @@
+# Receipt — `npm run validate:static-publication` on Product `d14da74c` (run 2026-10-15T08:05:30Z, follow-up to the 2026-10-14 pass)
+
+Product: `FedorMilovanov/gb-is-my-strength` @ `d14da74cfe9f45e9b03e383e8e622695b01f8e16` (clone `/home/user/gbs-src`, `git log -1` = `d14da74cf`).
+Sandbox: Node v22.22.3, npm 10.9.8, Python 3.11.2, Chromium 153 (browser stack rebuilt for this run); product `npm ci` 488 packages.
+This command was listed as NOT RUN in the 2026-10-14 pass; it is executed here and its verdict is recorded, not paraphrased.
+
+## Verdict
+
+- `npm run strangler:build:production-like` → **exit 0** (astro 104 pages, copy-legacy, note projection, Editorial Metadata v3, CSP drift checks green; output tail in `2026-10-14-product-pr-and-release-state.txt` and this log).
+- `npm run validate:static-publication` → **exit 0**: all **41 top-level `&&` commands ran in order and exited 0** (chained with `&&`, so a single failure would have aborted the chain and changed the exit code).
+- Known red from the 2026-09-30 record, command #24 `node scripts/audit-pro.js`, is **green at this anchor**: report `audit/audit-pro-2026-10-15T08-05-40-658Z.md` says `Result: ✅ PASSED · 166 passed · 7 warnings · 0 errors`; the script's own exit logic (`process.exit(R.errors.length ? 1 : 0)`, `scripts/audit-pro.js` tail) confirms exit 0 means zero errors, not a hardcoded success.
+
+## Commands observed, in execution order (41 top-level, 59 nested npm script invocations)
+
+  1. `validate:all`
+  2. `owner:ui-guard`
+  3. `about:visual-parity:audit`
+  4. `biografii:visual-parity:audit`
+  5. `hard-texts:visual-parity:audit`
+  6. `pastor-series:visual-parity:audit`
+  7. `articles:visual-parity:audit`
+  8. `gill:context:visual-parity:audit`
+  9. `gill:spravochnik:visual-parity:audit`
+ 10. `konfessii:visual-parity:audit`
+ 11. `karty:visual-parity:audit`
+ 12. `baptisty-rossii:visual-parity:audit`
+ 13. `home:visual-parity:audit`
+ 14. `nagornaya:visual-parity:audit`
+ 15. `catalogs:visual-parity:audit`
+ 16. `baptisty:roadmap:audit`
+ 17. `baptisty:visual-atlas:audit`
+ 18. `baptisty:authentic-media:audit`
+ 19. `maps:validate`
+ 20. `page-ownership:check`
+ 21. `avraam:audit`
+ 22. `tokens:check`
+ 23. `css:layer:validate`
+ 24. `node scripts/audit-pro.js`
+ 25. `content:parity`
+ 26. `sources:hygiene`
+ 27. `article:qa`
+ 28. `readable-audit`
+ 29. `editorial:lint`
+ 30. `gill:reading-time:audit`
+ 31. `gill:pagefind:audit`
+ 32. `gill:series:data:consistency:audit`
+ 33. `gill:claims:surface:audit`
+ 34. `data:consistency`
+ 35. `content:guard`
+ 36. `astro:audit:article-mdx:strict`
+ 37. `astro:audit:baptisty-series`
+ 38. `mdx:structure:audit`
+ 39. `contract:compare`
+ 40. `migration:metadata:check:strict`
+ 41. `sw:dist:audit`
+
+## Nested `npm run` invocations detected in the log
+
+`validate:static-publication`, `validate:all`, `validate:strict`, `seo-audit`, `owner:ui-guard`, `about:visual-parity:audit`, `biografii:visual-parity:audit`, `hard-texts:visual-parity:audit`, `pastor-series:visual-parity:audit`, `articles:visual-parity:audit`, `gill:context:visual-parity:audit`, `gill:spravochnik:visual-parity:audit`, `konfessii:visual-parity:audit`, `karty:visual-parity:audit`, `baptisty-rossii:visual-parity:audit`, `home:visual-parity:audit`, `nagornaya:visual-parity:audit`, `catalogs:visual-parity:audit`, `baptisty:roadmap:audit`, `baptisty:visual-atlas:audit`, `baptisty:authentic-media:audit`, `maps:validate`, `maps:publication-status`, `page-ownership:check`, `avraam:audit`, `tokens:check`, `css:layer:validate`, `content:parity`, `sources:hygiene`, `article:qa`, `readable-audit`, `editorial:lint`, `gill:reading-time:audit`, `gill:pagefind:audit`, `gill:series:data:consistency:audit`, `gill:claims:surface:audit`, `data:consistency`, `content:guard`, `astro:audit:article-mdx:strict`, `strangler:build:production-like`, `astro:build`, `dist:clean`, `astro:check`, `astro:7:satteri:contract`, `astro:audit:baptisty-series`, `strangler:build:production-like`, `astro:build`, `dist:clean`, `astro:check`, `astro:7:satteri:contract`, `mdx:structure:audit`, `contract:compare`, `contract:extract`, `migration:metadata:check:strict`, `route:profiles:check`, `migration:matrix:check`, `content:sources:check`, `surface:registry:check`, `sw:dist:audit`
+
+## `audit-pro.js` report head
+
+    # gb-is-my-strength — Professional Audit Report
+    
+    **Date:** 2026-10-15T08:05:40.658Z
+    **Result:** ✅ PASSED
+    **Summary:** 166 passed · 7 warnings · 0 errors
+    **Duration:** 4.53s
+
+## `audit-pro.js` warnings (verbatim, 7)
+
+- Core CSS total 672599 bytes exceeds budget 425000
+- JS total 630204 bytes exceeds budget 365000
+- deploy.yml does not use actions/deploy-pages@v4
+- GitHub workflow hygiene:
+  - genealogy-v2-publishable-contract.yml: deploy workflow without `concurrency:` group
+- Magic z-index numbers (use design tokens):
+  - css/command-palette.css: z-index: 2147483000 (use --z-* token; see AGENTS-r33)
+  - css/mobile-hotfix.css: z-index: 2102 (use --z-* token; see AGENTS-r33)
+  - css/floating-cluster.css: z-index: 2102 (use --z-* token; see AGENTS-r33)
+  - css/floating-cluster.css: z-index: 9999 (use --z-* token; see AGENTS-r33)
+  - css/highlights-runtime.css: z-index: 2147483200 (use --z-* token; see AGENTS-r33)
+- llms.txt issues:
+  - llms.txt → /articles/anatomiya-padeniya-pyat-stadiy/ (file not on disk)
+  - llms.txt → /articles/teksty-pisaniya-kotorymi-manipuliruyut/ (file not on disk)
+  - llms.txt → /articles/sem-tipov-razlichenie-uchiteley/ (file not on disk)
+  - llms.txt → /articles/cerkovnaya-disciplina-vlast-granicy-zashchita/ (file not on disk)
+  - llms.txt → /articles/kogda-uhodit-kogda-ostavatsya/ (file not on disk)
+  - llms.txt → /articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/ (file not on disk)
+  - llms.txt → /articles/priznaki-zdorovoy-cerkvi/ (file not on disk)
+  - llms.txt → /articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi/ (file not on disk)
+- Protocol-relative URLs (//path) — prefer absolute https:// or /path:
+  - scripts/dist-css-parity-audit.js: 1 protocol-relative //... reference(s)
+
+### Independent check of the two `llms.txt` warning entries
+
+Both flagged URLs exist in the built output:
+
+- `dist/articles/anatomiya-padeniya-pyat-stadiy/index.html` → PRESENT (source `src/content/articles/anatomiya-padeniya-pyat-stadiy.mdx`), referenced 2× in `dist/sitemap.xml`, 1× in `dist/llms.txt`.
+- `dist/articles/teksty-pisaniya-kotorymi-manipuliruyut/index.html` → PRESENT (source `src/content/articles/teksty-pisaniya-kotorymi-manipuliruyut.mdx`), referenced 2× in `dist/sitemap.xml`, 1× in `dist/llms.txt`.
+- Exhaustive re-check: every `/articles/.../` URL in `dist/llms.txt` (19 distinct) resolves to an existing `dist` file — **0 missing**.
+
+Cause: `scripts/audit-pro.js` → `llmsTxtSanityGuard` (line 3671 onward) resolves each URL against the **repository root** (`path.join(ROOT, u.replace(/^\//,''), 'index.html')`) instead of the built `dist/`. Legacy shadow pages exist in the repo root, so only the Astro-native routes are falsely reported as missing. Filed as `SYS-AUDIT-PRO-LLMS-ROOT-RESOLUTION` in `../../verified/MASTER_BUG_MATRIX.md`.
+
+## Other `audit-pro.js` warnings (recorded, not admitted as defects)
+
+- Core CSS total 672 599 B over the 425 000 B budget; JS total 630 204 B over the 365 000 B budget — the auditor's own size budgets, no user-visible symptom measured in this pass.
+- `deploy.yml` does not use `actions/deploy-pages@v4`; `genealogy-v2-publishable-contract.yml` deploy workflow without a `concurrency:` group — workflow-hygiene notes; the deploy lane is 12/12 green, so no defect is claimed.
+- Magic `z-index` values in `css/command-palette.css` (2147483000), `css/mobile-hotfix.css` (2102), `css/floating-cluster.css` (2102, 9999), `css/highlights-runtime.css` (2147483200) — AGENTS-r33 token guidance; no stacking defect observed in the 64-load browser pass.
+
+Raw log retained in the sandbox at `/tmp/vsp.log` (4003 lines) during the run; this receipt is the durable extract.

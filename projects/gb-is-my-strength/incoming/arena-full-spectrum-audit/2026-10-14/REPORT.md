@@ -151,3 +151,31 @@ the articles-index chrome, not every route) and `GBS-HEADER-SEARCH-THEME-TARGET-
 previous `/`, `/izbrannoe/`, `/hard-texts/genesis-6/` instances did not reproduce in this sweep.
 
 Receipts: `evidence/2026-10-14-header-geometry.txt`, `evidence/2026-10-14-header-geometry.json`.
+
+## 8. Follow-up run — 2026-10-15: `validate:static-publication` executed (item previously NOT RUN)
+
+`npm run validate:static-publication` — the suite this report listed as **not run** — was executed on the same exact-SHA
+production-like build and is **green**:
+
+- `npm run strangler:build:production-like` → exit 0;
+- `npm run validate:static-publication` → **exit 0 with all 41 chained `&&` commands running in order** (a non-zero step would
+  abort the chain and change the exit code). The 41 commands in execution order, plus the 59 nested npm-script invocations, are
+  listed in `evidence/2026-10-15-validate-static-publication.txt`.
+- The command that the 2026-09-30 record called red, **#24 `node scripts/audit-pro.js`, is green at `d14da74c`**:
+  `✅ PASSED · 166 passed · 7 warnings · 0 errors`. The script's own tail (`process.exit(R.errors.length ? 1 : 0)`) shows exit 0
+  means zero errors rather than a hardcoded success, so this is a real state change, not a reporting artifact.
+
+### New improvement admitted from the warnings: `SYS-AUDIT-PRO-LLMS-ROOT-RESOLUTION`
+
+Two of the seven warnings — `llms.txt → /articles/anatomiya-padeniya-pyat-stadiy/ (file not on disk)` and the same for
+`/articles/teksty-pisaniya-kotorymi-manipuliruyut/` — are **false positives**, proven three ways: both files exist in the build
+(`dist/articles/<slug>/index.html`, sources `src/content/articles/<slug>.mdx`), both appear twice in `dist/sitemap.xml`, and an
+exhaustive re-check of `dist/llms.txt` shows **all 19 distinct `/articles/.../` URLs resolving on disk, 0 missing**.
+
+Cause: `scripts/audit-pro.js` → `llmsTxtSanityGuard` (from line 3671) checks `path.join(ROOT, url, 'index.html')` — the repository
+root — instead of the built `dist/`. Legacy shadow pages live in the repo root, so only Astro-native routes are falsely reported;
+the guard cannot tell «page deleted» from «page is native». Because the owner cares about LLM discoverability, a permanent false
+warning also hides a real removal, so this is filed as the first **verified necessary improvement** row (matrix 30 → 31 units).
+The other five warnings (CSS/JS size budgets, `deploy.yml` not using `actions/deploy-pages@v4`, a missing `concurrency:` group in
+`genealogy-v2-publishable-contract.yml`, five magic `z-index` values) are recorded verbatim in the receipt and are **not** admitted
+as defects.
