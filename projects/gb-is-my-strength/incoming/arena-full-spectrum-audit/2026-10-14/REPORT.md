@@ -82,7 +82,7 @@ axe measured concrete ratios on visible text in the light theme (4.5:1 required)
 | Element | Measured | Where |
 |---|---|---|
 | `.article-byline__updated` / `.article-updated` | **3.15:1** (`#8f8f8e` on `#fdfcf9`, 10.4 px) | krajne, kod-da-vinchi |
-| `#gbs2Pct` | **3.42:1** (`#eadac7` on `#9a6a2f`, 11 px bold) | antisovetov |
+| `#gbs2Pct` | ~~**3.42:1** (`#eadac7` on `#9a6a2f`, 11 px bold)~~ — **DISPROVEN 2026-10-15**: axe read the pill as background and the track as foreground; painted-glyph measurement is **11.58:1**, not a defect (see §11) | antisovetov |
 | `.h-hero-desc`, `.h-hero-tagline` | reported failing | `/articles/`, `/hard-texts/`, `/pastor-series/`, `/biografii/` |
 | `.gbx-backlinks__title`, `.gill-card__kicker`, `.mobile-btoc-section__label`, `#nagFontDec/#nagFontInc`, `.crumb`, `cite` | reported failing | per-route, see receipt |
 
@@ -298,3 +298,48 @@ of loss, so the "no body loss" finding stands on the render check (`out/krajne-p
 Receipts: `evidence/2026-10-15-print-contrast-and-corrections.txt`, `evidence/2026-10-15-print-contrast-scan.json`,
 `evidence/2026-10-15-print-featured-cover-contrast.json`, `evidence/2026-10-15-print-cases-verified.json`,
 `evidence/2026-10-15-print-loss-16-routes.json`.
+
+## 11. Painted-glyph arbitration — method correction, one disproven entry, two more defects confirmed (2026-10-15, continuation 3)
+
+### 11.1 The method was wrong for alpha text and image backgrounds
+
+The first print scan compared an element's **computed** colour with the sampled background. Measured now, that fails twice:
+`rgba(255,255,255,.35)` is not what reaches the eye (the painted blend is `rgb(94,99,100)` = 3.10:1, not the 1.9:1 the naive
+method claimed), and a sampling box that contains a picture or a faded overlay returns a luminance the text is not sitting on.
+
+The method used from here — shoot the element normally (A) and with its text transparent (B); the strongest |A−B| pixel is the
+painted glyph colour, the B pixels where A≈B are the true background — is applied to every case that matters below.
+
+### 11.2 One entry disproven (removed from the matrix)
+
+`#gbs2Pct` is **not** a defect: axe reported 3.42:1 by treating the pill as the background and the track as the foreground;
+the painted measurement is **11.58:1**. The entry is struck from `GBS-TEXT-CONTRAST-RESIDUAL-BATCH` and struck through in §3 F3 above.
+
+### 11.3 One entry sharpened, six added (both media, i.e. real screen defects)
+
+`.article-byline__updated` is **2.99:1** painted (axe said 3.15:1 — real, slightly worse). Added: `.h-article-abstract` **4.37:1**
+(marginal against 4.5:1), `.error-flip-label` **3.24:1**, `.ctw-pin-lbl` **3.34:1**, `.genesis6-card__state` («Планируется»)
+**1.54:1 on screen / 2.67:1 in print**, `.genesis6-hub__kicker` **3.03:1 / 3.83:1**, `.crumb` **2.93:1**.
+
+### 11.4 The print-reset defect gets harder numbers
+
+`GBS-PRINT-MEDIA-CONTRAST-COLLAPSE`: home featured title 18.47 → **1.13**, abstract 7.39 → **1.10**, time 3.10 → **1.10**,
+author 3.72 → **1.12**; Krajne series nav link 11.44 → **1.23**; `/biografii/` tagline 4.41 → **1.27**. The axe reading of the
+heart-flip hint (1.18:1) is confirmed false: painted, that text is **9.23:1**.
+
+### 11.5 axe boundary for this project
+
+axe remains the screen-media census (it found these owners), but any contrast *conclusion* on image-, gradient- or alpha-backed
+surfaces must use the painted-glyph method — it produced one false positive, one false negative and one mildly optimistic number
+on this very page set.
+
+### 11.6 `GBS-CHROME-LABEL-IN-NAME-MISMATCH` — per-owner repair table
+
+161 nodes over 16 routes × {390, 1440} px collapse into **14 owners**; the full table with each owner's current `aria-label`,
+visible text, control size and proposed direction is in `evidence/2026-10-15-painted-contrast-and-label-table.txt` §4. The
+split that matters: singular controls (`article-end-btn`, `gbs2-ctl`, `nag-fontsize-btn`, `hmbar-*`, `mobile-btoc-section`,
+`h-hero-search`) are repaired by putting the visible text into the name; the `flip-card`, `error-flip-card`, `heart-flip-card`,
+`map-trigger` and `fn-marker` families cannot be — their visible content *is* the payload, so the container must stop being the
+labelled control, the same conclusion the `SYS-FOOTNOTE-MARKER-INTERACTIVITY` row reaches.
+
+Receipts: `evidence/2026-10-15-painted-contrast-and-label-table.txt` plus `evidence/2026-10-15-{painted-contrast,print-contrast-full,print-vs-screen,label-name-nodes,label-name-owners}.json`.
