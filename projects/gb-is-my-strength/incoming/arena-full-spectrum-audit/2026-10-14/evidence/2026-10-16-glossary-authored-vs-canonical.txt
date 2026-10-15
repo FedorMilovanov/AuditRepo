@@ -1,0 +1,67 @@
+# Receipt — glossary: authored definitions vs the canonical dictionary, coverage numbers, and the AT association of `.gterm` (2026-10-16, continuation 5)
+
+Product `d14da74c`, production-like local build, Chromium 153 on 127.0.0.1:8099. Three independent methods: a parse of every built `index.html`, a measured browser sweep over the 13 routes that carry `.gterm`, and CDP accessibility-tree queries.
+
+## 0. How the glossary tooltip is assembled (read from the source, then confirmed in the browser)
+
+`js/glossary.js` resolves a marker's key from `data-term`/`data-term-title`/its own text through normalized aliases (`norm()` lowercases, maps `ё`→`е`, folds Unicode dashes, collapses whitespace). Two code paths then differ:
+
+- **marker without an authored tooltip** → `tip(d,k)` builds the tooltip from the dictionary, so the reader sees the canonical **brief**;
+- **marker with an authored `.gtip`** → `upgrade(t,x,k,s.dict)` runs `textContent=''` and then `render(h, plain(h) || z.brief, z.detail)`, i.e. the **authored text wins the brief slot** and only the expandable **detail** comes from the dictionary.
+
+So the same term can be summarised two different ways on one page, depending on how each occurrence was authored, while every occurrence expands to the same dictionary detail.
+
+## 1. Measured: the same term, the same page, two different definitions
+
+| route | key | occurrences | distinct briefs | which one is canonical |
+|---|---|---|---|---|
+| `/articles/krajne-li-isporcheno-serdce/` | `остаточный грех` | 4 | **2** | 3 show the authored wording, 1 the dictionary wording |
+| `/baptisty-rossii/yuzhnaya-shtunda/` | `штундизм` | 3 | **2** | 1 show the authored wording, 2 the dictionary wording |
+
+Full texts, from `2026-10-16-glossary-conflict-detail.json`:
+
+**`/articles/krajne-li-isporcheno-serdce/` — «остаточный грех», 4 occurrences, all four share one `detail`:**
+
+- authored brief (3 occurrences): «В реформатском богословии: греховная склонность, остающаяся в возрождённом верующем после обращения. Грех не господствует над ним (Рим. 6:14), но продолжает присутствовать и требует постоянного умерщвления (Рим. 8:13; Гал. 5:17). У Кальвина близкая мысль раскрыта в учении о крещении и остаточной порче …»
+- dictionary brief (1 occurrence): «Оставшееся присутствие греха в жизни возрождённого человека, которое уже не царствует, но всё ещё требует борьбы и умерщвления.»
+- shared detail (all four): «Учение об остаточном грехе удерживает христианина сразу от двух крайностей …»
+
+**`/baptisty-rossii/yuzhnaya-shtunda/` — «штундизм», 3 occurrences, 2 briefs:** the authored one explains the etymology («Штунда — от немецкого Stunde, „час“: первоначально домашние часы чтения Библии …»), the dictionary one defines the movement («Евангельское пробудительное движение среди крестьян юга Российской империи во второй половине XIX века …»), and both expand to the same etymology detail.
+
+Screenshots of both states of the same term side by side (harness only, binary not committed): `arena-harness/out/gloss-authored.png` and `arena-harness/out/gloss-dictionary.png`.
+
+## 2. Measured: the accessibility association of `.gterm`
+
+On focus the glossary tooltip opens correctly (`aria-expanded="true"`, tip portaled into `body`, text present), but the trigger carries **no `aria-describedby` and no relation to the tip**, so its accessibility node exposes a name and an expanded state with an empty description:
+
+```
+button  name='Братский листок'  description=<empty>  expanded=true   (CDP AXTree, focused)
+StaticText  ' — информационный орган Инициативной группы, Оргкомитета и Совета …'  (separate branch, parentId=1512)
+```
+
+The definition text is therefore **in** the accessibility tree (a non-ignored `StaticText` in the body subtree) — so this is not lost content — but it is not reachable from the trigger and is never announced with it. The same codebase does the opposite for footnotes: `.fn-marker` receives `aria-describedby` pointing at the endnote, and the AX tree shows the full note text as the button's description. The two nearest blocks of the page therefore teach a screen-reader user two different interaction models.
+
+## 3. Coverage numbers (populations, for the record — not defects)
+
+| measure | value |
+|---|---|
+| routes carrying `.gterm` | 13 |
+| markers authored in source | **51** |
+| markers after hydration | **175** (runtime added 124) |
+| markers carrying a dictionary key | 139 |
+| markers with **no** dictionary key (authored `.gtip` only, no «Подробнее») | **36** |
+| dictionary entries | 130 |
+| entries whose text never occurs on any built page | **29** |
+| pages that list the dictionary (index page or client-side fetch of `glossary.json`) | **0** |
+
+The 36 keyless markers are a deliberate use of the same affordance for non-glossary asides — «Братский листок», «Вестник спасения», «Лидия Винс», «Самиздат» on `/baptisty-rossii/podpolnaya-pechat/` are historical documents, not dictionary terms — so they are **not** a defect. They are recorded because they are the occurrences whose definitions never pass through the canonical source, and because a future dictionary pass needs to know they exist.
+
+The 29 dormant entries (`эйзегеза`, `перикопа`, `Heilsgeschichte`, `mortificatur`, `apostolicity`, `птохой то пневмати`, `полупелагианство`, `sensus plenior`, `хамартиология`, `строгие и партикулярные баптисты`, `савеллианство`, `маришальский колледж`, `монергизм`, `синергизм`, `гектическая лихорадка`, `солтерс-холльский синод`, `амилленаризм`, `всеобщее предложение благодати`, `высокий кальвинизм`, `кредобаптисты`, and 9 more) are authored, definition-bearing content that no reader can reach, because the only way the dictionary reaches a user is in-article hydration. Not a defect by the contract as written — a content/publication gap worth an owner decision.
+
+## 4. Not defects, checked and dismissed
+
+- `.gtip` being `display:none` with the tooltip portaled on demand is the designed mechanism, not a rendering fault — the painted tooltip reads correctly.
+- The `⟦определение: …⟧` boundary markers seen in `textContent` are the same `[hidden] aria-hidden` reader-projection spans as in the footnote system; the painted surface never shows them.
+- No page fetches `data/glossary.json` at runtime for a listing; hydration is purely in-article, so my static occurrence scan and the browser sweep agree on the populations.
+
+Artifacts: `2026-10-16-glossary-sweep.json` (per-route markers, keys, conflicts), `2026-10-16-glossary-conflict-detail.json` (both briefs and the shared detail per occurrence), `2026-10-16-glossary-coverage.json` (dormant vs present entries), `2026-10-16-glossary-authored.json` (static authored markers with matched keys).

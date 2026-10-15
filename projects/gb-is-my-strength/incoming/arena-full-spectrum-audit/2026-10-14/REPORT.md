@@ -413,3 +413,37 @@ from their legacy counterparts, and **zero** dist files carry the old unnumbered
 console error is the documented Yandex-Metrica sandbox-egress artifact. No defect; receipts
 `evidence/2026-10-16-note-marker-number-drift.txt` §6 and `evidence/2026-10-16-rimlyanam-render.json`.
 
+## 13. Glossary — definition provenance, AT association, and coverage (2026-10-16, continuation 5)
+
+### 13.1 One term, one page, two definitions
+
+`js/glossary.js` assembles a tooltip two different ways: a marker **without** an authored tooltip gets the canonical brief from
+`data/glossary.json` via `tip(d,k)`, while a marker **with** an authored `.gtip` goes through `upgrade()`, whose argument list is
+`render(h, plain(h) || z.brief, z.detail)` — **the authored text wins the brief slot** and only the expandable detail comes from
+the dictionary. The result is visible to a reader: on `/articles/krajne-li-isporcheno-serdce/` the term «остаточный грех» appears
+four times and is summarised **two different ways** (3 occurrences keep the author's «В реформатском богословии: греховная
+склонность, остающаяся в возрождённом верующем после обращения …», 1 shows the dictionary's «Оставшееся присутствие греха в
+жизни возрождённого человека …»), and all four expand to the **same** dictionary detail. `/baptisty-rossii/yuzhnaya-shtunda/`
+repeats the pattern for «штундизм» (3 occurrences, 2 briefs). Total: **2 keys, 7 occurrences** across the 13 `.gterm` routes.
+`docs/glossary-contract.md` calls the dictionary canonical, so a reader has no way to tell which wording is authoritative.
+
+### 13.2 The definition is not announced with its trigger
+
+On focus the tooltip opens correctly, but the trigger carries no `aria-describedby`: the accessibility tree returns
+`button name='Братский листок' description=<empty> expanded=true` while the definition sits in a separate, non-ignored
+`StaticText` branch. The text is therefore reachable by virtual cursor but never announced with the control — while `.fn-marker`
+on the same pages does attach the note text as the button's description. Two interaction models for the same affordance on one
+page.
+
+### 13.3 Coverage (populations, for the record)
+
+51 authored markers hydrate to **175** live terms on 13 routes; **139** carry a dictionary key and **36** authored `.gtip` markers
+deliberately do not (historical documents such as «Братский листок», «Лидия Винс», «Самиздат»). Of the dictionary's **130**
+entries, **29** never occur on any built page, and **no page lists the dictionary** — no index route, no client-side fetch of
+`glossary.json` — so those 29 definitions are unreachable for readers. That is a publication/content decision rather than a
+contract violation, but it belongs on the record.
+
+Both faults are admitted as one row, `GBS-GLOSSARY-DEFINITION-PROVENANCE`, because they share one owner component and one repair
+session; the closure boundary separates the two acceptance criteria. Receipts:
+`evidence/2026-10-16-glossary-authored-vs-canonical.txt`, `.../2026-10-16-glossary-{conflict-detail,sweep,coverage,authored}.json`.
+
