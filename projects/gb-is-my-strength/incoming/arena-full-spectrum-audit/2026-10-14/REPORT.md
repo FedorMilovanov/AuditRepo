@@ -536,6 +536,9 @@ pending status visibly and accessibly instead of the tautology. The author-side 
 records and the **24 zero-byte corpus files** of 66 books (Judges, Ruth, 1–2 Chronicles, Ezra, Job, Ecclesiastes, Song,
 Lamentations, Ezekiel, the twelve minor prophets, Kassian Philippians/1 Thessalonians).
 
+At 390×844 (isMobile, touch) the tip adapts instead of clipping — 390×72, left 0, right 390, `scrollWidth` equal to the viewport on all
+three routes checked — so narrow-viewport geometry is a dismissed concern, not a finding; the body text is the same placeholder.
+
 Receipts: `evidence/2026-10-16-scripture-tooltip-placeholder.txt`, `.../2026-10-16-bref-sitewide-sweep.json`,
-`.../2026-10-16-bref-tooltip-live.json`, `.../2026-10-16-bref-projection.json`.
+`.../2026-10-16-bref-tooltip-live.json`, `.../2026-10-16-bref-projection.json`, `.../2026-10-16-bref-mobile-390.json`.
 

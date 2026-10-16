@@ -52,3 +52,17 @@ Secondary, same owner, measured while opening the tips: after opening, the trigg
 - The runtime fallback sentence itself is intentional code (`configuredScripture(reference) || 'Ссылка на указанное место Священного Писания.'`), not a corrupted string.
 
 Artifacts: `2026-10-16-bref-sitewide-sweep.json` (per-route counts, projection size, opened tooltip text, ARIA state), `2026-10-16-bref-tooltip-live.json` (four references, corpus state noted per case), `2026-10-16-bref-projection.json` (per-page references missing from the projection). Painted proof of the placeholder: `arena-harness/out/bref-placeholder.png` (binary kept out of git per protocol).
+
+## 5. Narrow viewport (390x844, isMobile, touch)
+
+Checked on three routes (hermenevtika, kod-da-vinchi, krajne) with the tip open at the first reference:
+
+| route | tip box | clipped? | horizontal overflow? |
+|---|---|---|---|
+| hermenevtika | 390x72 (left 0, right 390) | no | no (scrollWidth 390 = viewport) |
+| kod-da-vinchi | 390x72 | no | no |
+| krajne | 390x72 | no | no |
+
+The tip adapts to the narrow viewport (460 px wide at 1440, full-bleed 390 px at 390) and the body text is the same placeholder — so no mobile geometry defect exists for this affordance, and this is recorded as a dismissed concern rather than a finding. Console errors on the three loads are the known CSP favicon/apple-touch-icon noise of the local preview (sandbox egress), not a product defect.
+
+Artifact: `2026-10-16-bref-mobile-390.json`; probe in the repo as `harness/bref-mobile.mjs`.
