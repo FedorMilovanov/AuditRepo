@@ -34,6 +34,14 @@ Result: `/tmp/gbchrome/chrome.sh` (Chromium 153 launcher) and `/home/user/gbs-sr
 | `doc-structure-scan.mjs` | 108 pages: alt/dimensions/ARIA references/duplicate ids/inline handlers/blank targets (continuation 8) |
 | `meta-scan.mjs` | canonical/description/robots/title/h1 per page, parsed **without** assuming attribute order (continuation 8) |
 | `seo-crosscheck.mjs` | sitemaps + feeds against the actual build: targets, lastmod, dead item links (continuation 8) |
+| `home-listings.mjs` | every section, link and image of `/` at 1440×900 and 390×844, with alt/dimensions/console errors (continuation 10) |
+| `articles-catalog.mjs` | `/articles/` cards vs article directories, and which articles the home page mentions (continuation 10) |
+| `article-dates.mjs` | `datePublished`/`dateModified` per article from JSON-LD `@graph`, sorted; compares against what the home page offers (continuation 10) |
+| `imgs-check.mjs` | images per route **after a full scroll** so lazy loading fires — the only way `naturalWidth=0` means "broken" (continuation 10) |
+| `genealogy-deep.mjs` | `/rodosloviye/`: node/card geometry, controls, minimap, AX-linked node counts at three profiles (continuation 10) |
+| `mobile-icons-sweep.mjs` | icon-button geometry at 390 and 768: off-viewport, sub-24 px tap targets, per route (continuation 10) |
+| `hero-crumb.mjs` | home hero accessible name (axe `label-content-name-mismatch`) and the `/hard-texts/genesis-6/` breadcrumb/brand collision (continuation 10) |
+| `final-sweep.mjs` | axe (WCAG A/AA + best practice) and LCP/CLS on six routes, mobile profile (continuation 10) |
 
 ## Node dependencies for the probes
 
