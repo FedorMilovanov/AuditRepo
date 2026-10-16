@@ -23,6 +23,28 @@ Result: `/tmp/gbchrome/chrome.sh` (Chromium 153 launcher) and `/home/user/gbs-sr
 | `setup-chrome.mjs` | extracts Chromium 153 → `/tmp/gbchrome`, NSS libs → `/tmp/nsslib`, writes `chrome.sh` |
 | `patch-nss.mjs` | byte-neutral `NSS_3.30` → `NSS_3.22` rewrite of the `.gnu.version_r` entry |
 | `glossary-mobile-at.mjs` | 390×844 touch/keyboard/AX probe for the glossary trigger (receipt §2b, continuation 5) |
+| `bref-tooltip-live.mjs` | Scripture-reference tooltip probe: programmatic click, painted text, ARIA state (continuation 7) |
+| `bref-sitewide-sweep.mjs` | every `.bref` button on the ten routes: count, projection size, opened tooltip body (continuation 7) |
+| `bref-mobile.mjs` | the same tooltip at 390×844 isMobile/touch — geometry, clipping, overflow (continuation 7) |
+| `heading-audit.mjs` | sitewide static outline: first heading, level jumps, distribution (continuation 8) |
+| `heading-live.mjs` | DOM order of headings + axe (heading-order, region) + first-headings-per-page (continuation 8) |
+| `heading-name-pollution.mjs` | how many section headings carry the copy-link control inside them, per route (continuation 8) |
+| `heading-axverify.mjs` | native Chrome AX tree (CDP) heading names, clipboard/behaviour of the control, keyboard reach (continuation 8) |
+| `axe-structure-sweep.mjs` | 23 routes × axe structure rules, with per-page violation targets (continuation 8) |
+| `doc-structure-scan.mjs` | 108 pages: alt/dimensions/ARIA references/duplicate ids/inline handlers/blank targets (continuation 8) |
+| `meta-scan.mjs` | canonical/description/robots/title/h1 per page, parsed **without** assuming attribute order (continuation 8) |
+| `seo-crosscheck.mjs` | sitemaps + feeds against the actual build: targets, lastmod, dead item links (continuation 8) |
+
+## Node dependencies for the probes
+
+```sh
+npm i --no-save node-html-parser playwright-core axe-core && cp node_modules/axe-core/axe.min.js .
+```
+
+Install them **in one command**: `npm i --no-save <one package>` prunes the packages an earlier `--no-save` run left behind, which
+cost this pass one debugging round (a probe that had worked minutes earlier suddenly could not resolve `node-html-parser`).
+The axe-using probes read `./axe.min.js` (override with `AXE=`), and every probe expects the build served at
+`http://127.0.0.1:8099` from `/home/user/gbs-src/dist` (`DIST=` overrides the static scanners).
 
 ## Why the two patches exist
 
