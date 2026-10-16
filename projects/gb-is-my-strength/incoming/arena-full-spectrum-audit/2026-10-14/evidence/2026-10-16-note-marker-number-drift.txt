@@ -99,3 +99,19 @@ the product tree. Answer, measured at `d14da74c`:
 No defect follows from this item. It is recorded so that the earlier «unchecked» line is closed with evidence rather than dropped,
 and so that a future reader does not mistake the legacy duplicates for shipped content.
 
+## 7. The whole legacy directory is unreachable, and the article catalog is complete (measured 2026-10-16)
+
+Two follow-ups from the rimlyanam item in §6, measured against the same `d14da74c` build.
+
+**(a) Every root legacy entry is owned by Astro, so none of them can ship.** `migration/page-ownership.json` holds 105 routes,
+**104 owned by `astro`** and one by `built-app`; the ownership manifest contains **no legacy-owned route at all**. Checked against
+the repository root: `articles/` holds 11 legacy `index.html` copies plus a legacy `articles/index.html` (the `/articles/` route),
+and **all 12** are present in the manifest as `astro` / `production-dist` with a `src/pages/...` source. `scripts/copy-legacy-to-dist.js`
+therefore skips every one of them. The legacy directory is dead weight kept for the strangler comparison — it cannot leak into a
+build, by construction and by measurement (see §6 for the byte-wise check on the six files that mention `fn-marker`).
+
+**(b) The article catalog has no gaps and no dead links.** `/articles/` builds its cards from `search-manifest + page-ownership`
+(`ArticlesLibrarySection.astro`, `data-catalog-source` attribute) rather than a hand-kept list, so a stale index was a plausible
+«unfinished work» risk. Measured on the built page: **51 links, 51 article routes in the ownership manifest, 51 built folders** —
+**0 articles built but not listed**, **0 links without a page**, **0 manifest routes without a build**. The three sets agree exactly.
+

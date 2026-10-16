@@ -433,7 +433,8 @@ On focus the tooltip opens correctly, but the trigger carries no `aria-described
 `button name='Братский листок' description=<empty> expanded=true` while the definition sits in a separate, non-ignored
 `StaticText` branch. The text is therefore reachable by virtual cursor but never announced with the control — while `.fn-marker`
 on the same pages does attach the note text as the button's description. Two interaction models for the same affordance on one
-page.
+page. **Confirmed at 390×844 as well** (touch tap opens a bottom sheet; `aria-describedby` still absent, trigger description still
+empty, for both a keyed and a keyless marker), so this is a contract fault rather than a responsive branch.
 
 ### 13.3 Coverage (populations, for the record)
 
@@ -446,4 +447,13 @@ contract violation, but it belongs on the record.
 Both faults are admitted as one row, `GBS-GLOSSARY-DEFINITION-PROVENANCE`, because they share one owner component and one repair
 session; the closure boundary separates the two acceptance criteria. Receipts:
 `evidence/2026-10-16-glossary-authored-vs-canonical.txt`, `.../2026-10-16-glossary-{conflict-detail,sweep,coverage,authored}.json`.
+
+### 13.4 Two «unfinished work» risks checked and closed (2026-10-16)
+
+- **The legacy copies cannot ship.** The ownership manifest holds 105 routes, **all** of them Astro- or app-owned; `/articles/`
+  itself is `astro` with `src/pages/articles/index.astro`. All 12 root legacy entries (11 article copies plus the legacy
+  `articles/index.html`) are therefore skipped by the strangler copy step. Dead weight for comparison, not a leak path.
+- **The article catalog is complete.** `/articles/` derives its cards from `search-manifest + page-ownership`; measured on the
+  built page the three sets agree exactly — 51 links, 51 manifest routes, 51 built folders, with **0** built-but-unlisted
+  articles, **0** links without a page and **0** manifest routes without a build.
 

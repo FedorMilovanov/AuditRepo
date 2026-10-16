@@ -65,3 +65,18 @@ The 29 dormant entries (`эйзегеза`, `перикопа`, `Heilsgeschichte
 - No page fetches `data/glossary.json` at runtime for a listing; hydration is purely in-article, so my static occurrence scan and the browser sweep agree on the populations.
 
 Artifacts: `2026-10-16-glossary-sweep.json` (per-route markers, keys, conflicts), `2026-10-16-glossary-conflict-detail.json` (both briefs and the shared detail per occurrence), `2026-10-16-glossary-coverage.json` (dormant vs present entries), `2026-10-16-glossary-authored.json` (static authored markers with matched keys).
+
+## 2b. The association fault is not viewport-specific (390x844 measured, closing the continuation-5 gap)
+
+Continuation 5 left «390 px not measured» on the record. Measured 2026-10-16 on a 390x844 `isMobile`+`hasTouch` context, both
+marker shapes, with touch tap, keyboard focus and CDP `Accessibility.getFullAXTree`:
+
+| marker | shape | opens on tap | opens on focus | `aria-describedby` | trigger's AX description |
+|---|---|---|---|---|---|
+| `Братский листок` on `/baptisty-rossii/podpolnaya-pechat/` | keyless authored | yes — bottom sheet 390x135 | yes, `aria-expanded="true"` | **absent** | **empty** |
+| `Кархемише` on `/articles/krajne-li-isporcheno-serdce/` | keyed | yes — bottom sheet 390x225 | yes, `aria-expanded="true"` | **absent** | **empty** |
+
+The definition text does appear in the tree as a separate `StaticText` node in both cases, so nothing is lost — but the trigger
+still announces only its name and state, exactly as at 1440 px. The fault is therefore in the contract, not in a responsive branch.
+Artifact: `2026-10-16-glossary-mobile-at.json`.
+
