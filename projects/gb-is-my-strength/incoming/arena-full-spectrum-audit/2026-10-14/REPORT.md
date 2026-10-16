@@ -585,3 +585,35 @@ noindex shell legitimately lack them), and crude selectors invented «54 images 
 Receipts: `evidence/2026-10-16-heading-structure-and-name-pollution.txt`, `.../2026-10-16-heading-outline.json`,
 `.../2026-10-16-axe-structure-sweep.json`, `.../2026-10-16-heading-name-pollution.json`.
 
+## 17. Dependency security: a gate that cannot notice the world changing (2026-10-17, continuation 9)
+
+### 17.1 The gate is red on a head that nobody re-runs
+
+`.github/workflows/dependency-security.yml` runs `npm audit --json` and hands the report to `scripts/npm-security-contract.mjs`, whose policy (lines 82-88) blocks on **any** moderate/high/critical count:
+
+```js
+const blocking = counts.moderate + counts.high + counts.critical;
+if (blocking > 0) { console.error(`NPM SECURITY CONTRACT: FAIL (${blocking} ...)`); process.exit(1); }
+```
+
+Replaying exactly that contract on today's unchanged `main`: **`NPM SECURITY CONTRACT: FAIL (7 moderate/high/critical vulnerabilities)`, exit 1**. The count is 7 (5 high / 2 moderate) from both directions — the lockfile alone (`npm audit --package-lock-only`) and an installed tree (`npm audit`) — and **0** with `--omit=dev`.
+
+The red is drift, not a change: the `package-lock.json` blob is **`0ad7fcd7eb641f11b5d728a75dab233caf96459e`** on `f8d70a9a` (the 2026-09-15 green run), on the 2026-10-12 merge `d14da74c` and on `main` today — an identical dependency set. What changed is the advisory feed: `GHSA-w293-vg96-wgc3` (undici, high — TLS certificate validation bypass) and `GHSA-hrr3-gc8f-f4qj` (fast-uri, moderate) were published **2026-09-29**, `GHSA-r4xh-jqrq-34v2` (smol-toml, moderate) on **2026-10-05**.
+
+The workflow cannot see that on its own: its triggers are `paths`-filtered (`package.json`, `package-lock.json`, the contract script, the workflow file) plus `workflow_dispatch` — **no `schedule`**, in a repository where 3 of 77 workflows do carry one. So the last time this gate ran against `main` is 2026-09-15 (success, and the most recent run on `main` at all), and every run since — 2026-09-21, 09-28, 10-05, 10-12 (×2), 10-16 — was a pull-request run that failed on `Enforce dependency security contract`. The practical reading of "main is green on dependency security" is therefore "nobody has asked it recently".
+
+All 7 items are dev-only, and `npm audit fix --dry-run` closes all of them with no semver-major bump ("To address all issues, run: npm audit fix"); the lockfile stays untouched (`git status` empty), so the fix is cheap — the visibility is what is missing.
+
+### 17.2 The updates exist and are stuck
+
+**10 of 14** devDependencies are behind the registry as of today: `@astrojs/mdx` 7.0.8→8.1.0, `@astrojs/react` 6.0.4→7.1.0, `typescript` 6.0.3→7.0.2, `pixelmatch` 7.2.0→8.0.0 (major); `astro` 7.2.9→7.4.0, `react`/`react-dom` 19.2.8→19.3.1, `playwright` 1.62.1→1.64.1, `@astrojs/sitemap` 3.7.3→3.7.4, `@xyflow/react` 12.11.5→12.12.0 (minor/patch). Four are current (`@astrojs/check`, `@astrojs/rss`, `@dagrejs/dagre`, `pngjs`). Production dependencies remain **0**, so none of this reaches `dist/` or the live site.
+
+Dependabot is configured and working — weekly (Monday 04:30 Europe/Paris, open-PR limit 3, prefix `deps`) — and it opened exactly the right things: **#2144** (2026-09-28) bumps `astro` 7.3.8, `react`/`react-dom` 19.3.0, `playwright` 1.64.0, `@astrojs/sitemap` 3.7.4, `@xyflow/react` 12.12.0; **#2179** (2026-10-12) bumps the github-actions group. Both are open, `MERGEABLE`, behind `main`, with every check failing — #2144 has now been sitting red for 19 days.
+
+The failing steps there are build/publication gates (`Build production-like dist`, `Static publication source gates`), not the security step. The log text itself could not be fetched from this sandbox (`results-receiver.actions.githubusercontent.com` is outside the available egress), so the cause of that failure is recorded as **unknown** — this report does not claim that the version bumps break the build.
+
+### 17.3 Checked and deliberately not filed
+
+CI Node `22.23.1` matches `engines: >=22.12.0`; all `actions/*` are pinned by full SHA at current versions (`checkout` v7.0.1, `setup-node` v7.0.0, `upload-artifact` v7.0.1); `npm ci` replays the lockfile in 56 of 77 workflows. The seven advisories are dev-only and the live site has no npm runtime surface.
+
+Receipts: `evidence/2026-10-17-dependency-security-gate-drift.txt`, `.../2026-10-17-dependency-security-drift.json`.
