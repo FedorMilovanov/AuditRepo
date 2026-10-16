@@ -617,3 +617,47 @@ The failing steps there are build/publication gates (`Build production-like dist
 CI Node `22.23.1` matches `engines: >=22.12.0`; all `actions/*` are pinned by full SHA at current versions (`checkout` v7.0.1, `setup-node` v7.0.0, `upload-artifact` v7.0.1); `npm ci` replays the lockfile in 56 of 77 workflows. The seven advisories are dev-only and the live site has no npm runtime surface.
 
 Receipts: `evidence/2026-10-17-dependency-security-gate-drift.txt`, `.../2026-10-17-dependency-security-drift.json`.
+## 18. The home page's offer, the genealogy atlas, and the series' text-glyph icons (2026-10-17, continuation 10)
+
+### 18.1 What the home page offers — and the swapped John Gill part numbers
+
+`/` links to **8 articles** (plus the `/articles/` index) — the same set at 1440×900 and 390×844. The library has **51**, every one with `datePublished`/`dateModified` in JSON-LD. The newest article the page offers was published **2026-07-09** and the newest update among them is 2026-09-06, while **40** articles published after that date and **43** updated after 2026-07-01 appear nowhere on the page — including the newest in the library (published 2026-09-29, updated 2026-10-04) and a 16-article batch from 2026-09-08/09. The shelf announces itself as «Редакторский выбор», so a curated set is expected; what is missing is any signal of what is new, and nothing else on the page surfaces the rest.
+
+Two John Gill slugs carry each other's number:
+
+| slug | h1 / `<title>` | label on `/` | label in the rail |
+|---|---|---|---|
+| `dzhon-gill-chast-3-nasledie` | «… Часть **IV**: Наследие» | «Серия · Часть IV» | «Читать Часть IV →» |
+| `dzhon-gill-chast-4-ekzeget` | «… Часть **III**: Экзегет» | «Серия · Часть III» | links to `chast-3-nasledie` under «V. Историческое влияние» |
+
+The slug semantics (`chast-3 = nasledie`, `chast-4 = ekzeget`) contradict the content (`nasledie` is IV, `ekzeget` is III), and the swap travels into `rel=canonical`, `og:url`, sitemap and feed, so a reader who remembers «Часть IV» opens a page titled «Часть III».
+
+axe adds **5** `label-content-name-mismatch` nodes on `/`: `#heroSearchBar` (already carried) plus four `.h-featured-series` cards (`/biografii/`, `nagornaya/seriya/`, `hard-texts/`, `pastor-series/`) whose `aria-label` replaces their visible text — new owners for the same row.
+
+Not defects, verified rather than assumed: after a full scroll **0 of 17** images fail to load (a first pass read `naturalWidth=0` on two lazy images and was my probe artifact), 13 images carry `alt=""` because they are decorative thumbnails inside already-labelled links, and the only axe `region` node is `.sdg` (carried).
+
+### 18.2 The «SVG scheme» on `/rodosloviye/` is a React Flow graph — and its semantics leak
+
+It is not a static SVG: one `@xyflow/react` instance holds **154** person cards in a 4014×1226 layout rendered into a 1425×595 canvas. The overview shows **5 of 154**, exactly as its own status line says. Mechanically the `.react-flow__node` box measures 6×4 px at viewport scale `0.0358784` while the card inside is counter-scaled to 144×44 px, which is why the five visible cards stay readable; the scale is identical in three cold loads, there is one graph instance, the console is clean, and LCP is 160 ms with CLS 0.
+
+What is wrong is what assistive technology receives. axe reports **`aria-prohibited-attr`, serious, on 149 nodes** — the collapsed cards put `aria-label` on generic-role elements, where the platform may ignore it (`div[data-id="eve"]` and siblings). Chrome's own AX tree carries **all 154 persons** as named controls («Адам: открыть сведения и семью», roles `group`/`generic`, none ignored) while 5 cards are painted and only 5 sit in the tab order. A screen-reader user browsing the page meets 149 people who are not on screen. axe also reports `label-content-name-mismatch` once (`button[title="Тур"]`) and `region` five times on the atlas toolbar (the latter already carried). Controls are otherwise healthy: the minimap is 144×96 on desktop and replaced by a 44×44 «Мини-карта» toggle on mobile, and every tap target is ≥ 44 px.
+
+Self-correction, recorded so it is not re-filed: my first pass read the 6×4 node boxes as «154 nodes, 0 readable — the atlas paints dust» and suspected two graph instances. Both were tooling artifacts — the outer node box is not what gets painted, and the count is one. Judge this atlas by the inner card rect, a screenshot and a hit test.
+
+### 18.3 The series is built from text glyphs, and the theme glyph never changes
+
+On `/baptisty-rossii/` and every part page the controls are **text characters**, not SVG: `<button class="gbs2-ctl" aria-label="Переключить тему">◐</button>`, `⌕` for search, `↗` for share, `A−`/`A+` for size — markup that exists in `BaptistyRossiiBody.astro`, `BaptistyRossiiBookLanding.astro` and `SeriesArticleLayout.astro:112,156`. Everywhere else the same actions are drawn as SVG (the Gill bar carries the canonical sun/moon swap and a gear for settings), so this series is the only surface in the product made of glyphs — and the glyph does not follow the state: four clicks on `◐` toggle the reader light (`rgb(239,231,215)`) ↔ dark (`rgb(14,17,22)`) while the character stays `◐` and no `aria-pressed` is exposed. The reader ships three themes (День / Сепия / Ночь, with pressed states in the Gill sheet); this control offers two, and sepia is unreachable from it.
+
+Same route family, axe on `/baptisty-rossii/`: `color-contrast` ×20, `label-content-name-mismatch` ×3 (all `#articleEndPrintBtn`), `region` ×3 (`.gbs2-mobile-title`).
+
+On `/hard-texts/genesis-6/` at 390×844 the page's own breadcrumb (`nav.genesis6-hub__breadcrumb`, 12,18, 366×25) is laid over the site brand (16,10, 186×25) — **186×17 px of text-on-text**. The brand keeps the click (z-order), so this is visual; no other sampled route renders that crumb.
+
+Related, recorded as a widening of the heading-anchor row rather than a new row: `.gb-anchor-copy-toast` is created **already filled** (`article-heading-anchors.js:24`) and sits in the DOM at `opacity: 0`, so the first copy does not change the live region and the announcement is not guaranteed.
+
+Re-confirmed, not re-filed: at 768 px on `/articles/` the header controls still sit outside the viewport (`#gbSearchBtn` 747,7 `offRight` 23; `#themeToggle` 779,7 `offRight` 55).
+
+### 18.4 Contrast measured on solid colours
+
+`/articles/` reports **330** axe `color-contrast` nodes, and the inspected families are opaque pairs: `#78716c` on `#f7f4ee` = **4.37:1** (`.h-meta-time` 139 nodes at 12 px normal, `.h-meta-author` 4) and `#78716c` on `#f8f5f0` = **4.41:1** (`.h-section-label` 5 at 11.5 px bold). Because these are solid colours the axe figure is trustworthy here — unlike the alpha/image cases re-measured by painted glyphs in continuation 3 — so this is a widening of `GBS-TEXT-CONTRAST-RESIDUAL-BATCH` (148 newly counted nodes) rather than a new class. Same family elsewhere: `/baptisty-rossii/` 20, gill-1 18, `/hard-texts/genesis-6/` 11. LCP on the six sampled routes is 156–392 ms and CLS is 0.
+
+Receipts: `evidence/2026-10-17-home-genealogy-and-mobile-icons.txt`, `.../2026-10-17-home-genealogy-mobile-icons.json`.
