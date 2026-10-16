@@ -457,3 +457,39 @@ session; the closure boundary separates the two acceptance criteria. Receipts:
   built page the three sets agree exactly — 51 links, 51 manifest routes, 51 built folders, with **0** built-but-unlisted
   articles, **0** links without a page and **0** manifest routes without a build.
 
+## 14. Internal links and the census of announced-but-unwritten work (2026-10-16, continuation 6)
+
+### 14.1 Internal link integrity: 14,846 links, 0 dead targets
+
+Every `href` on all 108 built pages was resolved against the filesystem of `dist` (directory targets through `index.html`):
+18,755 attributes total, 14,846 site-relative, and **not one target is missing** — navigation, series links, catalog cards,
+footnote back-links and generated endnote anchors all resolve. `http(s)`, `mailto:`, `tel:`, `data:` and fragment-only links were
+excluded as out of scope.
+
+### 14.2 What the site announces but has not written — the complete list
+
+The task scope asks specifically about «недописанные статьи, незавершённые работы», so the census is stated rather than judged:
+
+| surface | announced | wording on the page | link? |
+|---|---|---|---|
+| home, «В планах» block | «Гимны и их история», «Тематические исследования» | section header «В планах» | none — text only |
+| `/konfessii/` | «Пятидесятничество в России», «Древо протестантских течений» | «СКОРО В РАЗРАБОТКЕ» / «СКОРО» | none |
+| `/hard-texts/genesis-6/` | 5 of 11 topic cards («Сыны Божии и дочери человеческие», «Нефилимы и сильные древности», «Что такое Первая книга Еноха», «Книга Стражей», «Книга исполинов») | card state «Планируется»; the other 6 read «Опубликовано · N мин» / «Экскурс · N мин» | none |
+
+**No defect follows**: the absences are labelled as absences, they are text rather than dead links, and §14.1 proves the site has no
+dead internal target anywhere. The list is on the record so that a later pass can re-run the same three counts and see movement, and
+so that a reader of this report does not have to guess what is missing.
+
+Phrasing that looks like a marker but is not one, verified in context: «черновик» on `/karty/` (the map publication policy), `/about/`
+(the author on his process) and the Gill article (a historical fact); «в работе» on `/baptisty-rossii/peterburgskaya-liniya/`
+(volunteers); «Планируется» on `/pastor-series/` (a statement that a separate issue is deliberately not planned).
+
+### 14.3 Two apparent stubs, dismissed with reasons
+
+`/izbrannoe/` (253 chars) is a designed empty state with instructions, backed by the favourites store; `/konfessii/russkij-baptizm/_app/`
+(39 chars) is a `noindex` app shell; `/karty/*/` pages (≈500 chars) are interactive canvases whose content is drawn by script, so text
+length is not a completeness signal there.
+
+Receipts: `evidence/2026-10-16-internal-links-and-unfinished-work.txt`, `.../2026-10-16-internal-links.json`,
+`.../2026-10-16-unfinished-sweep.json`.
+
