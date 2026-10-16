@@ -493,3 +493,49 @@ length is not a completeness signal there.
 Receipts: `evidence/2026-10-16-internal-links-and-unfinished-work.txt`, `.../2026-10-16-internal-links.json`,
 `.../2026-10-16-unfinished-sweep.json`.
 
+## 15. Scripture references: 238 interactive controls with one possible answer (2026-10-16, continuation 7)
+
+### 15.1 What a reader gets
+
+The site renders **238 `<button class="bref" data-ref="…">` elements across 10 routes** — compact references such as «2 Тим. 4:1–2»
+and «Луки 15», focusable, carrying `aria-expanded`, clearly reading as «open this reference for the text». Measured on all ten
+routes, every one of them opens a tooltip whose body is the same sentence:
+
+> **2 ТИМОФЕЮ 4:1–2** ⟶ «Ссылка на указанное место Священного Писания.»
+
+Distribution: hermenevtika **208**, kod-da-vinchi 9, krajne 3, and six more routes with 2–3 each. The fallback is not a corpus
+accident: it appears identically for books whose corpus is populated (Иеремия 17:5–10, 1 Коринфянам 10:6, Луки 1:1–4) and for a
+book whose corpus file is empty (Иезекииль 36:26 — `data/bible/synodal/iizikil.json`, 0 bytes).
+
+### 15.2 Why the lookup is always empty — and why that part is correct
+
+1. The source index (`data/scripture-search-index.json`, 1 222 references) holds text for **148** of them — and **every one** is
+   marked `publicationState: "BLOCKED"` with `rightsState: "RIGHTS_UNKNOWN"`, `sourceUrl: null`, `rights: null`. Verified identical
+   in the product's `main` via `gh api`.
+2. The public serializer (`scripts/public-scripture-index.js`) emits only `id`, `label` and occurrence coordinates — it strips
+   `canonicalText` and `canonicalSource` by design. The built index therefore contains **0 non-empty texts**.
+3. The projection (`ScriptureDataProjection.astro`) additionally requires `isBibleRecordPublicationEligible()`, whose gate demands
+   `PUBLICATION_APPROVED` + `PUBLICATION_ELIGIBLE` rights + non-empty `translation`/`source`/`sourceUrl`/`rights`. Nothing qualifies,
+   so it emits `{}`: the inline projection is present on **73 pages and empty on all 73**.
+
+The rights boundary is **working as designed and is recorded as the cause, not the fault**. No corpus leak exists either —
+`dist/data/bible/` is absent from the build.
+
+### 15.3 What is actually wrong
+
+The shipped affordance. Ten routes publish 238 interactive controls that can only answer with a tautology, and nothing in the
+interface distinguishes «not cleared for publication yet» from «broken». On the hermenevtika page the verse text is **not**
+duplicated in prose — the buttons are the inline references inside parentheses — so 208 of the 238 instances promise content the
+site cannot deliver. Secondary, same owner: after opening, the trigger keeps `aria-expanded="true"` but has no `aria-describedby`
+and no `role` while the tip is portaled to `document.body`, so the body text is not announced with the control (the same
+association gap already admitted for `.gterm`, folded into this row because both come from `article-tooltips.js`).
+
+Admitted as `GBS-SCRIPTURE-AFFORDANCE-PLACEHOLDER-ONLY`. The repair is a decision, not a patch: either stop rendering an
+unapproved reference as an interactive control (plain text — truthful for all 238 instances), or keep the control and state the
+pending status visibly and accessibly instead of the tautology. The author-side work behind the boundary is the 148 `BLOCKED`
+records and the **24 zero-byte corpus files** of 66 books (Judges, Ruth, 1–2 Chronicles, Ezra, Job, Ecclesiastes, Song,
+Lamentations, Ezekiel, the twelve minor prophets, Kassian Philippians/1 Thessalonians).
+
+Receipts: `evidence/2026-10-16-scripture-tooltip-placeholder.txt`, `.../2026-10-16-bref-sitewide-sweep.json`,
+`.../2026-10-16-bref-tooltip-live.json`, `.../2026-10-16-bref-projection.json`.
+
