@@ -542,3 +542,46 @@ three routes checked — so narrow-viewport geometry is a dismissed concern, not
 Receipts: `evidence/2026-10-16-scripture-tooltip-placeholder.txt`, `.../2026-10-16-bref-sitewide-sweep.json`,
 `.../2026-10-16-bref-tooltip-live.json`, `.../2026-10-16-bref-projection.json`, `.../2026-10-16-bref-mobile-390.json`.
 
+## 16. What assistive technology receives: heading names, outline order, landmark containment (2026-10-16, continuation 8)
+
+### 16.1 Every section heading's accessible name ends with a control's label
+
+`src/runtime/article-heading-anchors.js:129-150` appends a focusable `<a class="heading-anchor" href="#id" aria-label="Скопировать ссылку на раздел">`
+**inside** every `h2[id], h3[id], h4[id]` (`heading.appendChild(anchor)`). Because a heading's accessible name is computed from its
+contents, the label becomes part of the heading's name. Two witnesses: Chrome's own AX tree via CDP on `/articles/kod-da-vinchi/` — **16
+of 37 headings** named «‹текст раздела› Скопировать ссылку на раздел» — and Playwright's `ariaSnapshot()`, which prints the same names.
+Live scan over 23 routes: **16 routes, 224 such controls**, 2–38 per route; each is also a separate tab stop inside a heading.
+
+The control itself **works** (clicking it put `…/kod-da-vinchi/#sec-intro` on the clipboard and showed the toast «Ссылка на раздел
+скопирована»), so the defect is the naming, not the feature: a screen-reader user hears the same trailing phrase after every section
+title, and the outline becomes harder to scan. Admitted as `GBS-SECTION-HEADING-NAME-POLLUTION`.
+
+### 16.2 Outline order and landmarks
+
+axe `heading-order` (moderate/best-practice) fires on **3 of 23** sampled routes, **8 nodes** — kod-da-vinchi 6 (h2→h4 «Миф романа» /
+«Исторический факт»), gill-1 and gill-2 one each (h1→h4 card titles). Sitewide, **5 of 108** pages contain level jumps. Beyond that,
+**64 of 108** pages open their outline with an `h2` placed **outside** `<main>` and before the page `h1` — the series rail's
+`h2.gbs2-current-title` (63 pages; `_shared/series/SeriesReaderChrome.astro`, `GillSeriesRail.astro:150`) and one `h2.gbs2-rtitle`
+(`BaptistyRossiiBody.astro:9`). On `/baptisty-rossii/` that rail heading duplicates the page `h1` word for word.
+
+axe `region` fires on **14 of 23** routes, **22 nodes**: the runtime-injected reader widget `#gb-ember-speed-*`, `#gbFloatingControls`,
+`#read-progress`, `.skip-link`, the «Soli Deo Gloria» line, `.sr-only`, and on `/rodosloviye/` five nodes of the genealogy tool
+(`.genealogy-toolbar/-navigation/-status`) — an interactive tool outside any landmark.
+
+Admitted as one row, `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, because both criteria are the same question — what a
+landmark/outline navigator receives — and share the layout/chrome owners.
+
+### 16.3 Checked and dismissed in this continuation
+
+The discovery layer is clean: `sitemap.xml` 95 entries = 95 indexable pages with `lastmod` on all, no sitemap→missing and no
+sitemap→noindex, both sitemaps declared in `robots.txt`, `feed.xml` 75 items and `feed-pastor-series.xml` 2 items with **0 dead links**,
+canonical and `og:url` consistent. Two of my own first-pass claims were retracted as artefacts of my tooling: a fixed-attribute-order
+regex invented «10 pages without canonical/description» (they have both; only the two search-engine verification files and the `_app`
+noindex shell legitimately lack them), and crude selectors invented «54 images without dimensions» (all Yandex.Metrica pixels) and
+«549 unnamed interactive SVGs» (icons inside labelled hosts — 0 nameless hosts). Duplicate meta descriptions exist only on the eight
+`/karty/*` pages, which are `noindex` by design. Sitewide: 0 duplicate ids, 0 dangling ARIA references, 0 `target=_blank` without
+`rel`, 0 inline handlers, 0 `tabindex>0`, 0 iframes without `title`, 0 images without `alt`.
+
+Receipts: `evidence/2026-10-16-heading-structure-and-name-pollution.txt`, `.../2026-10-16-heading-outline.json`,
+`.../2026-10-16-axe-structure-sweep.json`, `.../2026-10-16-heading-name-pollution.json`.
+

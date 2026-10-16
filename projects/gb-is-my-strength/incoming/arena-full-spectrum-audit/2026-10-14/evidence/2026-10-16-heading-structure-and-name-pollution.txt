@@ -1,0 +1,52 @@
+# Receipt — document outline and heading names: what assistive tech actually receives (2026-10-16, continuation 8)
+
+Product `d14da74c`, production-like local build (108 HTML pages), Chromium 153 on 127.0.0.1:8099, axe-core 4.x injected per page, plus Chrome's own accessibility tree through CDP.
+
+## 1. New defect: every section heading's accessible name carries a control's label
+
+`src/runtime/article-heading-anchors.js:129-150` (`installArticleHeadingAnchors()`) selects every `h2[id], h3[id], h4[id]` (excluding `.summary-card`, `.author-card`) and **appends** the anchor *inside* the heading:
+
+```js
+anchor = document.createElement('a');
+anchor.className = 'heading-anchor';
+anchor.href = `#${heading.id}`;
+heading.appendChild(anchor);            // <- inside the heading
+anchor.setAttribute('aria-label', 'Скопировать ссылку на раздел');
+```
+
+Accessible-name-from-contents walks a heading's descendants, so a descendant's `aria-label` becomes part of the heading's name. Two independent witnesses agree:
+
+| witness | result |
+|---|---|
+| Chrome's own AX tree (CDP `Accessibility.getFullAXTree`) on `/articles/kod-da-vinchi/` | 37 headings, **16 of them named** «‹текст раздела› Скопировать ссылку на раздел» |
+| Playwright `ariaSnapshot()` on the same page | identical names, e.g. `heading "Введение Скопировать ссылку на раздел" [level=2]` |
+
+Live DOM scan over 23 routes: **16 routes** place such controls inside headings — 224 controls in the sample, 2–38 per route (kod-da-vinchi 21, gill-1 27, gill-2 38, gill-spravochnik 16, krajne 29, sovetskaya-noch 21, hermenevtika 16, serdce-i-duh 15, nagornaya/chast-1 13, home 8, baptisty landing 8, about 5, nagornaya 2, genesis-6 2, rodosloviye 2, hard-texts 1). Each control is also its own tab stop inside a heading (`tabIndex=0`).
+
+**The control itself works** — this is not a broken feature: clicking it copied `http://127.0.0.1:8099/articles/kod-da-vinchi/#sec-intro` to the clipboard and raised the toast «Ссылка на раздел скопирована». The defect is exactly its contribution to the heading name (and one extra tab stop per section).
+
+## 2. New criteria: outline order and landmark containment (axe, moderate/best-practice)
+
+`heading-order`: fires on **3 of 23** sampled routes, **8 nodes** — `/articles/kod-da-vinchi/` 6 (h2→h4 «Миф романа» / «Исторический факт»), `/articles/dzhon-gill-chast-1-chelovek/` 1, `/articles/dzhon-gill-chast-2-uchenyi/` 1 (h1→h4 card titles). Sitewide static: **5 of 108** pages contain level jumps (four Gill articles h1→h4; kod-da-vinchi six instances).
+
+Separately, **64 of 108** pages open their outline with an `h2` that sits **outside** `<main>` and before the page `h1`: 63 × `h2.gbs2-current-title` in the series rail (`_shared/series/SeriesReaderChrome.astro`, `GillSeriesRail.astro:150`) and 1 × `h2.gbs2-rtitle` (`BaptistyRossiiBody.astro:9`). On `/baptisty-rossii/` the rail's h2 text is byte-identical to the page's h1 («Баптисты России»); the rail is visible (measured). Live, 7 of 23 sampled routes have at least one text-bearing heading before the h1.
+
+`region`: fires on **14 of 23** routes, **22 nodes** — `#gb-ember-speed-*` (reader widget, injected at runtime), `#gbFloatingControls`, `#read-progress`, `.skip-link`, `.sdg` (the «Soli Deo Gloria» line), `.sr-only`, `section`, `.intro`, and five nodes on `/rodosloviye/` (`.genealogy-toolbar`, `.genealogy-navigation`, `.genealogy-status` — an interactive tool outside any landmark).
+
+## 3. Checked and dismissed in this continuation (so nobody re-finds them)
+
+| claim I probed | verdict |
+|---|---|
+| «6 Gill articles + hermenevtika ship without `canonical`/`description`» | **my regex was wrong** — those pages carry both, with `content=` before `name=`. Re-measured with an attribute-order-agnostic parser: only 3 files lack them, and all 3 are correctly minimal — the two search-engine verification files and the `_app` noindex shell |
+| «8 pages share one internal note as their meta description» | true but **not a defect**: the eight `/karty/*` pages are `robots: noindex` by design («Карта временно снята с витрины до ручной визуальной доводки…») |
+| sitemap / feed / robots consistency | **clean**: `sitemap.xml` 95 entries = 95 indexable pages, 0 sitemap→missing, 0 sitemap→noindex, all 95 with `lastmod`, none in the future; `robots.txt` lists both sitemaps; `feed.xml` 75 items, `feed-pastor-series.xml` 2, **0 dead item links**; canonical present on 105/108, `canonical == og:url` everywhere it matters |
+| «54 real images without width/height» | **no**: every one is the Yandex.Metrica 1×1 pixel. Real content images: **0** without dimensions across the sample |
+| «549 interactive SVGs without a name» | **no**: icons inside labelled links/buttons were counted by mistake; scanning for a nameless interactive *host* gives **0** |
+| `<a class="quiz-source" id="glsQuizSource" href="#" hidden>` (×6) | **not a defect**: `hidden`, non-focusable, filled by the quiz runtime; flagged twice by my first pass |
+| duplicate ids, dangling `aria-labelledby/describedby/controls/for`, `target=_blank` without `rel`, inline `onclick`, `tabindex>0`, iframes without `title`, images without `alt` | **0 across 108 pages** |
+
+## 4. Reproduce
+
+`harness/heading-audit.mjs` (sitewide static outline) · `harness/heading-live.mjs` (DOM + axe + first headings) · `harness/heading-name-pollution.mjs` (per-route control-in-heading counts) · `harness/heading-axverify.mjs` (native Chrome AX tree, clipboard/behaviour, keyboard reach) · `harness/axe-structure-sweep.mjs` (23 routes × axe) · `harness/doc-structure-scan.mjs` (108 pages: alt/dims/ARIA/ids) · `harness/meta-scan.mjs` + `harness/seo-crosscheck.mjs` (discovery layer).
+
+Artifacts: `2026-10-16-heading-outline.json`, `2026-10-16-axe-structure-sweep.json`, `2026-10-16-heading-name-pollution.json`.
