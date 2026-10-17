@@ -1,0 +1,98 @@
+# Receipt — continuation probes at Product `d14da74c` (2026-10-15, sandbox Chromium 153, production-like local build)
+
+1. `2026-10-15-heart-flip-face-probe.json` — the reversible card on `/articles/krajne-li-isporcheno-serdce/` opened by both
+   user paths (keyboard Enter on `role=button[tabindex=0]`, then pointer click); face states + computed styles per theme.
+2. `2026-10-15-cards-probe.json` — same flip contract applied to the sibling card families (`.flip-card`, `.error-flip-card`).
+3. `2026-10-15-print-a4-and-pdf.json` — real A4 PDFs (Chromium print-to-PDF) with pdfjs text extraction, 5 routes.
+4. `2026-10-15-print-and-reduced-motion-sweep.json` — print/reduced-motion sweep over the pass's 16 routes.
+5. `2026-10-15-card-contrast-axe.json` — axe on the Krajne route before/after the flip, both themes.
+
+## A. `.heart-flip-*` — the previously UNPROVEN contrast question is now decided (real defect, light theme only)
+
+The card is reachable by users: `div.heart-flip-card[role=button][tabindex=0]`, 752×545 px, `aria-label="Нажмите, чтобы перевернуть карточку"`.
+Both user paths flip it (`class` gains `flipped`; keyboard Enter verified). Face styles are transforms, so the decisive witness is the painted result:
+
+| element | light theme | dark theme |
+|---|---|---|
+| `.heart-flip-back` own background | **`rgb(255,255,255)`** | `rgb(17,14,7)` |
+| `.heart-flip-back-body` text | `rgba(255,245,220,.82)` | `rgba(255,245,220,.82)` |
+| `.heart-flip-back-closing` text | `rgba(255,245,220,.72)` | `rgba(255,245,220,.72)` |
+| `.highlight-divine` inside back | `rgb(200,169,126)` | `rgb(200,169,126)` |
+| axe `color-contrast` on back text (light) | 1.05–1.22:1 (needs 4.5:1) | — |
+
+Screenshot witness (light, after flip): the whole back face reads as a white rectangle with faint cream text; the dark-theme back face is fully legible.
+Controls: the same page's `.flip-card` (Pagefind slug `kod-da-vinchi`) renders back `rgb(238,245,236)` with text `rgb(26,26,26)`, and `.error-flip-card` back `rgb(238,247,242)`
+with text `rgb(26,26,26)` — i.e. the sibling families set a themed surface, while `.heart-flip-back` alone has none.
+
+Withdrawn from the axe list: `.heart-flip-hint-text` (ratio reported against an ancestor `#d4d4d4`, but the text is painted over the dark front artwork where it is legible — control: front-face screenshot).
+Withdrawn: `#gill-search-p-131/132` are Pagefind's own ids stamped on the very same back-face paragraphs, not separate elements.
+
+## B. Dark-theme pair found while probing the same page (krajne, dark scheme)
+
+- `.author-card-icon` — "ФМ" badge, `rgb(255,255,255)` on `rgb(212,165,116)`, 52×52, 18 px/600 → **2.22:1**.
+- `#quizLaunch` — «Начать проверку», `rgb(255,255,255)` on `rgb(212,165,116)`, 191×46, 15.2 px/700 → **2.22:1**.
+
+Both are ordinary opaque elements (no image behind), visible without interaction, and fail 4.5:1 in the dark theme.
+
+## C. Print — the divergence is across route families, not only the genesis-6 terminal region
+
+### C1. Paper-level result (A4, Chromium print-to-PDF, pdfjs text extraction)
+
+| route | pages | DOM main chars | PDF text chars | follower nodes | follower chars |
+|---|---|---|---|---|---|
+| `/about/` | 4 | 4423 | 4530 | 14 | 419 |
+| `/baptisty-rossii/` | 6 | 5606 | 5078 | 6 | 707 |
+| `/articles/dzhon-gill-chast-1-chelovek/` | 26 | 36171 | 36320 | 9 | 607 |
+| `/hard-texts/genesis-6/` | 3 | 3386 | 1694 | 71 | 4315 |
+| `/articles/krajne-li-isporcheno-serdce/` | 40 | 70898 | 64881 | 203 | 24902 |
+
+### C2. Which body text does the terminal-region rule cost on paper?
+
+Whitespace/punctuation-normalised containment of long body sentences (every 7th sentence > 60 chars) in the extracted PDF text:
+
+| route | long sentences sampled | absent from PDF | note |
+|---|---|---|---|
+| `/about/` | 4 | 0 | body text intact |
+| `/baptisty-rossii/` | 5 | 0 | body text intact (the 2 raw-string "misses" are list/caption grouping) |
+| `/articles/dzhon-gill-chast-1-chelovek/` | 10 | 0 | body text intact; the **note apparatus** (`.fn-marker` payloads / «Примечания») is among the hidden followers |
+| `/hard-texts/genesis-6/` | 4 | 0 | region hides all 71 followers / 4 315 chars (planned-article cards and the research-boundary block) |
+| `/articles/krajne-li-isporcheno-serdce/` | 10 | 0 | region hides 203 followers / 24 902 chars (series navigation, quiz shell, related blocks), while the 1 700 px range container still wraps body sentences in the PDF text layer |
+
+Receipt note: this corrects the wording implied by the matrix row being genesis-only — the affected `.genesis6-range` container is **1 700 px tall on the article route**, so the same rule reaches across the route family.
+The planned-article cards are no longer blank on paper: on `/hard-texts/genesis-6/` the PDF keeps the titles with the «Планируется / В планах» markers.
+
+### C3. Print width
+
+- `/about/`: `document.scrollWidth` 1709 vs clientWidth 1440; widest: {"tag": "DIV", "cls": "page-wrap", "id": null, "right": 1440, "width": 1440, "scrollW": 1709, "text": "ГлавнаяОб автореФёдор МиловановАвтор-редактор проекта «Госпо"}
+- `/baptisty-rossii/`: `document.scrollWidth` 1456 vs clientWidth 1440; widest: {"tag": "A", "cls": "h-article-card", "id": null, "right": 1456, "width": 1168, "scrollW": 1168, "text": "Статья 1 · 18 минВоронин и ночь на Куре1867 · Воронин, Кальв"}
+- `/articles/dzhon-gill-chast-1-chelovek/`: `document.scrollWidth` 1448 vs clientWidth 1440; widest: {"tag": "DIV", "cls": "gbs2-world", "id": null, "right": 1440, "width": 1440, "scrollW": 1448, "text": "12%Прогресс серииЧасть 1 из 4Введение28 минИсторический конт"}
+
+At A4 width the print layout measured 0 overflowing elements on all five sampled routes; the overflow above appears at the 1440 px print-emulation viewport and is recorded as a boundary, not as a defect claim.
+
+## D. Reduced motion
+
+| route | animated elements (`reduce`) | long transitions >0.5 s | verdict |
+|---|---|---|---|
+| `/` | 0 | 0 | — |
+| `/about/` | 0 | 0 | — |
+| `/articles/` | 0 | 0 | — |
+| `/articles/20-antisovetov-pastoru/` | 6 | see note | reveal-fallback |
+| `/articles/dzhon-gill-chast-1-chelovek/` | 0 | 0 | — |
+| `/articles/kod-da-vinchi/` | 32 | see note | reveal-fallback |
+| `/articles/krajne-li-isporcheno-serdce/` | 5 | see note | reveal-fallback |
+| `/articles/steven-lawson-samoobman-i-publichnyy-golos/` | 0 | 0 | — |
+| `/baptisty-rossii/` | 0 | 0 | — |
+| `/biografii/` | 0 | 0 | — |
+| `/hard-texts/` | 0 | 0 | — |
+| `/hard-texts/genesis-6/` | 0 | 0 | — |
+| `/karty/avraam/` | 24 | see note | meSpringIn |
+| `/konfessii/russkij-baptizm/` | 0 | 0 | — |
+| `/nagornaya/chast-2/` | 0 | 0 | — |
+| `/pastor-series/` | 0 | 0 | — |
+
+Caveats that must not be read as defects:
+
+- `reveal-fallback` with `animation-duration: 0s` and `animation-delay: 3s` is the **fallback path itself**: under `reduce` the element is already at `opacity: 1; transform: none` (verified), i.e. content is visible without motion. Not a defect.
+- `/karty/avraam/`: `meSpringIn` 22 nodes and `meProgressFlow` 2 nodes run at `1e-06s` under `reduce` vs `0.5s` / `1.5s infinite` without it — the page honours the preference. Not a defect.
+- The 24 animated nodes / 8 long transitions seen with `reducedMotion: no-preference` are the intended motion, recorded as the control.
+

@@ -1,0 +1,87 @@
+==== /articles/20-antisovetov-pastoru/|desktop|light
+  ## color-contrast [serious] Elements must meet minimum color contrast ratio thresholds
+     target: #gbs2Pct
+       html: <b id="gbs2Pct">0%</b>
+       measured: fg=#eadac7 bg=#9a6a2f ratio=3.42 size=8.3pt (11px) expected=4.5:1
+  ## label-content-name-mismatch [serious] Elements must have their visible text as part of their accessible name
+     target: .map-trigger[data-tip="42"][aria-label="Открыть пояснение 42"]:nth-child(1)
+       html: <strong class="map-trigger" data-tip="42" role="button" tabindex="0" data-gb-strategic-map-owner="native-v1" aria-controls="gb-strategic-map-popover" aria-haspo
+       why: Fix any of the following: Text inside the element is not included in the accessible name
+     target: span[data-tip="43"]
+       html: <span class="map-trigger" data-tip="43" role="button" tabindex="0" data-gb-strategic-map-owner="native-v1" aria-controls="gb-strategic-map-popover" aria-haspopu
+       why: Fix any of the following: Text inside the element is not included in the accessible name
+     target: span[data-tip="19"]
+       html: <span class="map-trigger" data-tip="19" role="button" tabindex="0" data-gb-strategic-map-owner="native-v1" aria-controls="gb-strategic-map-popover" aria-haspopu
+       why: Fix any of the following: Text inside the element is not included in the accessible name
+  ## nested-interactive [serious] Interactive controls must not be nested
+     target: span[data-tip="43"]
+       html: <span class="map-trigger" data-tip="43" role="button" tabindex="0" data-gb-strategic-map-owner="native-v1" aria-controls="gb-strategic-map-popover" aria-haspopu
+       why: Fix any of the following: Element has focusable descendants. Move them outside of the element, or remove them.
+==== /articles/krajne-li-isporcheno-serdce/|desktop|light
+  ## color-contrast [serious] Elements must meet minimum color contrast ratio thresholds
+     target: .article-byline__updated
+       html: <span class="article-byline__updated">Обн. <time class="article-updated" datetime="2026-07-05T13:45:56.000Z">4 июня 2026</time></span>
+       measured: fg=#8f8f8e bg=#fdfcf9 ratio=3.15 size=7.8pt (10.4px) expected=4.5:1
+     target: .article-updated
+       html: <time class="article-updated" datetime="2026-07-05T13:45:56.000Z">4 июня 2026</time>
+       measured: fg=#8f8f8e bg=#fdfcf9 ratio=3.15 size=7.8pt (10.4px) expected=4.5:1
+     target: .heart-flip-hint-text
+       html: <span class="heart-flip-hint-text">Переверни</span>
+       measured: fg=#f4e5bc bg=#d4d4d4 ratio=1.18 size=8.3pt (11px) expected=4.5:1
+     target: #gill-search-p-131
+       html: <p class="heart-flip-back-body" id="gill-search-p-131">
+       measured: fg=#fff7e2 bg=#ffffff ratio=1.06 size=12.0pt (16px) expected=4.5:1
+     target: #gill-search-p-132
+       html: <p class="heart-flip-back-closing" id="gill-search-p-132">Это сердце в пути: уже искупленное, <span class="highlight-divine">уже исписанное почерком Самого Бога
+       measured: fg=#fff8e6 bg=#ffffff ratio=1.05 size=12.8pt (17px) expected=4.5:1
+     target: .highlight-divine
+       html: <span class="highlight-divine">уже исписанное почерком Самого Бога</span>
+       measured: fg=#c8a97e bg=#ffffff ratio=2.22 size=12.8pt (17px) expected=4.5:1
+  ## label-content-name-mismatch [serious] Elements must have their visible text as part of their accessible name
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-257c6e9b3331
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 2" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note-
+       why: Fix any of the following: Text inside the element is not included in the accessible name
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-7b2111707a9a
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 3" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note-
+       why: Fix any of the following: Text inside the element is not included in the accessible name
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-d511b4108277
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 4" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note-
+       why: Fix any of the following: Text inside the element is not included in the accessible name
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-96c2f4ad459d
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 5" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note-
+       why: Fix any of the following: Text inside the element is not included in the accessible name
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-60ade9067edd
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 6" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note-
+       why: Fix any of the following: Text inside the element is not included in the accessible name
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-b4b016f374ea
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 7" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note-
+       why: Fix any of the following: Text inside the element is not included in the accessible name
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-534c05590532
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 8" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note-
+       why: Fix any of the following: Text inside the element is not included in the accessible name
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-a9fd08a8b3cb
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 9" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note-
+       why: Fix any of the following: Text inside the element is not included in the accessible name
+  ## nested-interactive [serious] Interactive controls must not be nested
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-da893fdc4e1c
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 1" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note-
+       why: Fix any of the following: Element has focusable descendants. Move them outside of the element, or remove them.
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-7b2111707a9a
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 3" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note-
+       why: Fix any of the following: Element has focusable descendants. Move them outside of the element, or remove them.
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-534c05590532
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 8" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note-
+       why: Fix any of the following: Element has focusable descendants. Move them outside of the element, or remove them.
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-4d97015f09a6
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 11" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note
+       why: Fix any of the following: Element has focusable descendants. Move them outside of the element, or remove them.
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-7100169bd9eb
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 12" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note
+       why: Fix any of the following: Element has focusable descendants. Move them outside of the element, or remove them.
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-76a8e3677cd8
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 13" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note
+       why: Fix any of the following: Element has focusable descendants. Move them outside of the element, or remove them.
+     target: #note-ref-articles-krajne-li-isporcheno-serdce-note-a680ab973788
+       html: <span class="fn-marker" role="button" tabindex="0" aria-label="Показать сноску 20" id="note-ref-articles-kr..." data-note-id="articles-krajne-li-i..." data-note
+       why: Fix any of the following: Element has focusable descendants. Move them outside of the element, or remove them.
+==== /karty/avraam/|mobile|light

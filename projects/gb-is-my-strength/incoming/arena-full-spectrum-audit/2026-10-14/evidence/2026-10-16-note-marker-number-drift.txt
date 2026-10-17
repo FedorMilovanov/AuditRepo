@@ -1,0 +1,117 @@
+# Receipt — footnote marker numbering drift, tooltip interaction verified working, and three self-corrections (2026-10-16, continuation 4)
+
+Product `d14da74c`, production-like local build in the sandbox, Chromium 153, served on 127.0.0.1:8099. Two independent methods: a static parse of every built `index.html` in `dist`, and browser measurement on the live page (marked as such).
+
+## 1. NEW DEFECT — the number a marker shows is not the number of the note it opens
+
+The build's NoteRegistry makes the **document ordinal** canonical in three places — it rewrites `aria-label` to `Показать сноску <ordinal>` (`scripts/lib/note-registry.mjs:172-175`), stamps `data-note-ordinal` (`:330`), and numbers the generated endnote list by the same ordinal (`:233-236`). The marker's **visible number is authored text** that the registry never rewrites and never validates.
+
+The registry's own fail-closed list names `authored ordinal drift`, but that check only runs when a marker is authored with `data-note-ordinal` — and **0 of 184 markers** in the content carry that attribute (grep over `src/`, `scripts/`, `*.astro`/`*.html`/`*.md`: 0 hits). The contract test exercises the drift path only with a synthetic fixture (`scripts/note-registry-contract-test.mjs:117-118`). Nothing in the build compares the visible number with the ordinal, so the drift ships silently.
+
+Measured (static parse of `dist`, cross-checked in the browser on Krajne):
+
+| route | markers | endnote ordinals | visible ≠ ordinal | no visible number | first visible numbers |
+|---|---|---|---|---|---|
+| `/articles/dzhon-gill-chast-1-chelovek/` | 1 | 1 | **0** | 1 | · |
+| `/articles/dzhon-gill-chast-2-uchenyi/` | 6 | 6 | **0** | 6 | ·, ·, ·, ·, ·, · |
+| `/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/` | 116 | 116 | **114** | 2 | ·, 1, 2, ·, 3, 4, 5, 6, 7, 8 |
+| `/articles/kod-da-vinchi/` | 21 | 21 | **19** | 0 | 1, 2, 4, 5, 6, 7, 8, 9, 11, 12 |
+| `/articles/krajne-li-isporcheno-serdce/` | 40 | 40 | **39** | 0 | 1, 27, 36, 2, 3, 4, 5, 6, 11, 12 |
+| **total** | **184** | 184 | **172** | 9 | — |
+
+Browser confirmation, `/articles/krajne-li-isporcheno-serdce/` live DOM, first five markers (aria label → visible text): `Показать сноску 1` → `1`; `Показать сноску 2` → **27**; `Показать сноску 3` → **36**; `Показать сноску 4` → `2`; `Показать сноску 5` → `3`.
+
+What the reader gets: the marker showing «27» is the *second* footnote and opens endnote 2; a screen-reader user hears «Показать сноску 2» for the marker a sighted companion calls 27. In **print** the inline tooltips are `display:none` (`src/runtime/note-registry.css`) and the endnotes print numbered by ordinal (print-media measurement: the endnote region is 1440×935 px with the ordinal «1.» painted), so the printed cross-reference is wrong on paper — on an article whose stated purpose is careful sourcing.
+
+No orphan notes in either direction: every route's endnote count equals its marker count (1/1, 6/6, 116/116, 21/21, 40/40).
+
+## 2. The inline tooltip system is NOT part of the defect — measured working
+
+Because the markers are the same elements the tooltip runtime owns, the interaction contract was measured on the live page rather than assumed (`/articles/kod-da-vinchi/`, third marker, real pointer path with `scrollIntoViewIfNeeded` first):
+
+| path | result |
+|---|---|
+| desktop hover (pointer moved in steps) | tip opens, moved to `document.body` as `.gb-floating-tip.is-open`, opacity 1, box 544×54, `pointer-events:auto` |
+| mouse leaves | tip closes (anchor loses `.is-open`) |
+| pointer click | opens; second click toggles closed |
+| keyboard Tab/focus (no click) | opens on focus alone |
+| keyboard Enter | opens |
+| Escape | closes |
+| mobile 390×844 `isMobile`+`hasTouch`, tap | opens as a bottom sheet, 390×88 at the viewport bottom |
+| mobile Escape | closes |
+
+Rendered text is clean: the `⟦сноска: …⟧` boundary markers seen in `textContent` are `[hidden]` + `aria-hidden="true"` spans (`display:none`, 0×0 box) used by the reader projection, and the painted tooltip shows the note text alone, reading exactly `NASSCAL e-Clavis — Gospel of Philip; Darrell Bock, The Missing Gospels (2006).` — the screenshot is kept out of git and lives in the harness at `arena-harness/out/tip-open-ctx.png`. Note text is also reachable without hovering, via `aria-describedby` → `note-end-*` (AX tree confirmed: name `Показать сноску N`, description = full note text + «Вернуться к отметке N»).
+
+## 3. Self-corrections made in this continuation (visible, not silent)
+
+**SC-C1 — the direction of the `fn-marker` label-in-name claim was wrong.** The 2026-10-15 label/name table listed `fn-marker` under «the visible content is the payload, so stop treating the container as the labelled control», i.e. it implied the aria label should absorb the visible number. Measurement of the registry source and of the printed endnotes shows the opposite: the **ordinal is the canonical contract** (aria label, endnote numbering, print numbering, `data-note-ordinal`), and the **visible number is the drifting content**. `fn-marker` therefore leaves the label-in-name row and becomes its own defect (§1), whose repair is to write the ordinal into the visible text — not the other way round. The earlier receipt's §4 line for `fn-marker` is corrected in place.
+
+**SC-C2 — «desktop hover does not open tooltips» was my measurement error.** The first probe moved the pointer to coordinates taken from `boundingBox()` without scrolling the marker into view, so the pointer landed outside the element; a second probe read `[id^="note-ref-"] .tooltip` while the runtime had already moved the tip to `document.body`. Re-measured with `scrollIntoViewIfNeeded` and the body-level selector, every path opens (§2). No defect here.
+
+**SC-C3 — «the tooltip shows ⟦сноска: …⟧ to users» is false.** Those boundary spans are `display:none` and `aria-hidden="true"`; the painted tooltip contains only the note text (screenshot in §2). The bracket form appears only in `textContent`/`innerText`, which is why the earlier text-layer work treated it as a text-extraction artifact — it is not a rendering defect.
+
+## 4. Not carried as defects
+
+- The 9 markers with no visible number (`/articles/dzhon-gill-chast-1-chelovek/` 1, `/articles/dzhon-gill-chast-2-uchenyi/` 6, hermenevticheskaya 2) are the translation-note style (`.fn-marker--dove`); the endnotes they open are still numbered, so a reader has no number to match, but nothing is mis-referenced. Recorded inside §1 as a sub-count, not as a separate row.
+- The favicon/apple-touch-icon CSP console errors on every page load remain sandbox-origin artifacts (the page requests `https://gospod-bog.ru/...` while the build is served from `127.0.0.1`), not defects.
+
+Artifacts (no binary in git, per the session protocol): `2026-10-16-marker-drift-sweep.json` (per-route counts, browser confirmation, print-media state), the painted-tooltip screenshot at `arena-harness/out/tip-open-ctx.png`, `2026-10-16-fn-number-structure.json` (AX tree, marker-to-note mapping), `2026-10-16-fn-number-detail.json` (per-marker ordinal/aria/visible triples on two routes).
+
+## 5. Backlog item closed — the `.px-4` screenshot timeout on `/nagornaya/chast-2/`
+
+The painted-glyph probe could not screenshot the candidate `.px-4` and recorded it as `not-renderable`. Cause measured 2026-10-16 at
+1440 px: that route carries **28 `.px-4` nodes and 9 of them do not render at desktop width** because they sit inside `lg:hidden`
+mobile chrome (`<header class="lg:hidden fixed top-0 left-0 right-0 z-5">`, `<div class="lg:hidden hidden fixed inset-0 z-40">`) —
+`display:none`, box 0×0, so `locator.screenshot()` timing out was correct behaviour, not a defect.
+
+The element the print scan flagged on the same route is a **different node** and stays valid: `div.px-4.py-3`, box 287×40,
+text «Применение к Нагорной проповеди», `color: rgb(255,255,255)` — visible at desktop width, `hiddenAncestor: none`, and it keeps
+its **1.38:1** print reading inside `GBS-PRINT-MEDIA-CONTRAST-COLLAPSE`. Nothing in that row needs to be withdrawn.
+
+Artifact: `2026-10-16-px4-visibility.json` (28 nodes with box, computed display, colour and the nearest hidden ancestor).
+
+## 6. `/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/` — closed: the notes were restructured, the legacy copy is dead, and it never ships
+
+Open question from continuation 4: the route carried no footnote markers in `dist`, yet the phrase «Показать сноску» existed in
+the product tree. Answer, measured at `d14da74c`:
+
+- **The phrase lives in a legacy copy, not in the shipped page.** `articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/index.html`
+  in the repository root (12 such hand-authored legacy pages exist) holds 8 `.fn-marker` notes in the **old** scheme —
+  `aria-label="Показать сноску"` with no number, **no** `gb-note-endnotes` list and no note stylesheet. The shipped page is built
+  from `src/pages/articles/.../index.astro` → `Rimlyanam7Body.astro` + `src/content/articles/....mdx`.
+- **Nothing was lost.** The eight citations were restructured into the article's own sources prose: the rendered page contains
+  «Первоисточники (тезис; прямые цитаты не приводятся без сверки локатора)» followed by Calvin, Owen, Hodge, MacArthur, Piper,
+  Schreiner, Moo, Lloyd-Jones, Bailie, Street and Kobelia — a broader list than the legacy footnotes.
+- **The legacy copy cannot reach production.** `scripts/copy-legacy-to-dist.js` is the strangler step that copies root legacy
+  pages into `dist`, and it never overwrites an Astro-owned route from `migration/page-ownership.json`; this route is owned by
+  `astro`. Verified two ways: (a) **0 of 6** dist files that mention `fn-marker` are byte-identical to their legacy counterparts
+  (sha256 differs in all six cases); (b) **0 files in `dist` carry the unnumbered `aria-label="Показать сноску"`** — the legacy
+  labelling never ships anywhere.
+- **Rendered check, both viewports** (1440×900 and 390×844 `isMobile`+`hasTouch`, local production-like build): title and `h1`
+  correct, `fn-marker` 0, `.tooltip` 0, `.gb-note-endnotes` 0, sources prose present, **0 same-origin HTTP errors**; the single
+  console error is `net::ERR_CONNECTION_CLOSED https://mc.yandex.ru/metrika/tag.js` — the documented sandbox-egress artifact, not a
+  site defect. Artifact: `2026-10-16-rimlyanam-render.json`.
+- **Reconciliation note for anyone cross-checking counts:** a plain `grep -l fn-marker dist` returns **6** routes, while the
+  marker sweep in §1 reports **5**. The sixth, `/articles/20-antisovetov-pastoru/`, contains 36 `fn-marker fn-marker--dove
+  map-trigger` nodes — map triggers owned by the Karty/MapEngine, which the NoteRegistry excludes by design (declared exception in
+  `dist/data/note-registry-migration-inventory.json`), so they are not footnotes and carry none of §1's drift.
+
+No defect follows from this item. It is recorded so that the earlier «unchecked» line is closed with evidence rather than dropped,
+and so that a future reader does not mistake the legacy duplicates for shipped content.
+
+## 7. The whole legacy directory is unreachable, and the article catalog is complete (measured 2026-10-16)
+
+Two follow-ups from the rimlyanam item in §6, measured against the same `d14da74c` build.
+
+**(a) Every root legacy entry is owned by Astro, so none of them can ship.** `migration/page-ownership.json` holds 105 routes,
+**104 owned by `astro`** and one by `built-app`; the ownership manifest contains **no legacy-owned route at all**. Checked against
+the repository root: `articles/` holds 11 legacy `index.html` copies plus a legacy `articles/index.html` (the `/articles/` route),
+and **all 12** are present in the manifest as `astro` / `production-dist` with a `src/pages/...` source. `scripts/copy-legacy-to-dist.js`
+therefore skips every one of them. The legacy directory is dead weight kept for the strangler comparison — it cannot leak into a
+build, by construction and by measurement (see §6 for the byte-wise check on the six files that mention `fn-marker`).
+
+**(b) The article catalog has no gaps and no dead links.** `/articles/` builds its cards from `search-manifest + page-ownership`
+(`ArticlesLibrarySection.astro`, `data-catalog-source` attribute) rather than a hand-kept list, so a stale index was a plausible
+«unfinished work» risk. Measured on the built page: **51 links, 51 article routes in the ownership manifest, 51 built folders** —
+**0 articles built but not listed**, **0 links without a page**, **0 manifest routes without a build**. The three sets agree exactly.
+

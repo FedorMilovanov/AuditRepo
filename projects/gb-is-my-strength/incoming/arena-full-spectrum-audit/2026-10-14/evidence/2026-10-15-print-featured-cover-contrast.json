@@ -1,0 +1,14 @@
+{
+ "screen":[
+  {"text":"Биографии служителей:хроника верных","color":"rgb(255, 255, 255)","fs":"23.2px","fw":"700","inCard":[0,0,296,58],"cardCls":"h-featured-title","cardBg":"rgba(0, 0, 0, 0)","imgSize":[297,59],"bgMedian":0.008,"bgP10":0.007,"bgP90":0.009,"ratio_median":18.18,"ratio_worst_p90":17.7,"ratio_best_p10":18.5},
+  {"text":"Нагорная проповедь:исследование в 5 частях","color":"rgb(255, 255, 255)","fs":"23.2px","fw":"700","inCard":[0,0,296,58],"cardCls":"h-featured-title","cardBg":"rgba(0, 0, 0, 0)","imgSize":[297,59],"bgMedian":0.008,"bgP10":0.007,"bgP90":0.398,"ratio_median":18.01,"ratio_worst_p90":2.34,"ratio_best_p10":18.47},
+  {"text":"Тайны человеческого сердца","color":"rgb(255, 255, 255)","fs":"23.2px","fw":"700","inCard":[0,0,296,58],"cardCls":"h-featured-title","cardBg":"rgba(0, 0, 0, 0)","imgSize":[297,59],"bgMedian":0.008,"bgP10":0.006,"bgP90":0.009,"ratio_median":18.18,"ratio_worst_p90":17.7,"ratio_best_p10":18.63},
+  {"text":"Тёмная сторона кафедры","color":"rgb(255, 255, 255)","fs":"23.2px","fw":"700","inCard":[0,0,296,29],"cardCls":"h-featured-title","cardBg":"rgba(0, 0, 0, 0)","imgSize":[297,30],"bgMedian":0.009,"bgP10":0.007,"bgP90":0.595,"ratio_median":17.87,"ratio_worst_p90":1.63,"ratio_best_p10":18.47}
+ ],
+ "print":[
+  {"text":"Биографии служителей:хроника верных","color":"rgb(0, 0, 0)","fs":"22.2333px","fw":"700","inCard":[0,0,303,56],"cardCls":"h-featured-title","cardBg":"rgba(0, 0, 0, 0)","imgSize":[305,57],"bgMedian":0.007,"bgP10":0.006,"bgP90":0.008,"ratio_median":1.14,"ratio_worst_p90":1.17,"ratio_best_p10":1.12},
+  {"text":"Нагорная проповедь:исследование в 5 частях","color":"rgb(0, 0, 0)","fs":"22.2333px","fw":"700","inCard":[0,0,303,56],"cardCls":"h-featured-title","cardBg":"rgba(0, 0, 0, 0)","imgSize":[305,57],"bgMedian":0.007,"bgP10":0.006,"bgP90":0.008,"ratio_median":1.14,"ratio_worst_p90":1.17,"ratio_best_p10":1.12},
+  {"text":"Тайны человеческого сердца","color":"rgb(0, 0, 0)","fs":"22.2333px","fw":"700","inCard":[0,0,303,56],"cardCls":"h-featured-title","cardBg":"rgba(0, 0, 0, 0)","imgSize":[305,57],"bgMedian":0.007,"bgP10":0.006,"bgP90":0.008,"ratio_median":1.14,"ratio_worst_p90":1.16,"ratio_best_p10":1.12},
+  {"text":"Тёмная сторона кафедры","color":"rgb(0, 0, 0)","fs":"22.2333px","fw":"700","inCard":[0,0,303,28],"cardCls":"h-featured-title","cardBg":"rgba(0, 0, 0, 0)","imgSize":[305,29],"bgMedian":0.007,"bgP10":0.006,"bgP90":0.008,"ratio_median":1.15,"ratio_worst_p90":1.17,"ratio_best_p10":1.12}
+ ]
+}

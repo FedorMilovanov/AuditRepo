@@ -1,0 +1,40 @@
+# Receipt — internal link integrity, and the census of announced-but-unwritten work (2026-10-16, continuation 6)
+
+Product `d14da74c`, production-like local build (`strangler:build:production-like`, dist 95 MB), static parse of all 108 built HTML pages. The task scope names «недописанные статьи, незавершённые работы» explicitly, so the census below is the answer to that part rather than a defect hunt.
+
+## 1. Internal link integrity — measured clean
+
+Every `href` on every built page was resolved against the filesystem of `dist` (directory targets resolve through `index.html`):
+
+| measure | value |
+|---|---|
+| HTML pages in `dist` | 108 |
+| `href` attributes total | 18,755 |
+| internal (site-relative) | 14,846 |
+| **targets that do not exist** | **0** |
+
+This covers navigation, series links, catalog cards, footnotes' back-links and generated endnote anchors. `http(s)`, `mailto:`, `tel:`, `data:` and fragment-only links were excluded from the count as out of scope. Artifact: `2026-10-16-internal-links.json` (the file is empty as a mapping because nothing is broken).
+
+## 2. Census of announced-but-unwritten content
+
+Every page was stripped of `script`/`style`/`nav`/`footer` and searched for the phrasing the project uses for unshipped work. Contexts were read individually so that prose is not mistaken for a marker:
+
+| surface | what is announced | status wording on the page | reaches a page? |
+|---|---|---|---|
+| home, «В планах» block | «Гимны и их история», «Тематические исследования» | section header «В планах» | **no link** — descriptive text only |
+| `/konfessii/` | «Пятидесятничество в России», «Древо протестантских течений» | «СКОРО В РАЗРАБОТКЕ» / «СКОРО» | **no link** |
+| `/hard-texts/genesis-6/` | 5 of 11 topic cards: «Сыны Божии и дочери человеческие», «Нефилимы и сильные древности», «Что такое Первая книга Еноха», «Книга Стражей», «Книга исполинов» | card state «Планируется» (the other 6 read «Опубликовано · N мин» / «Экскурс · N мин») | **no link** |
+
+Counts behind the table: the home roadmap block holds exactly **2** items (`h-home-roadmap__item`), both without a link and without a route; `/konfessii/` shows exactly **2** «СКОРО» cards; `/hard-texts/genesis-6/` renders **12** `genesis6-card` elements with **11** state labels, of which **5** are «Планируется».
+
+Phrasing that looks like a marker but is **not** one (checked in context, so it is not counted): «черновик» on `/karty/` («не ставить на витрину то, что выглядит как черновик» — the map publication policy), on `/about/` (the author describing his process) and on `/articles/dzhon-gill-chast-3-nasledie/` (a historical fact about Gill's preaching notes); «в работе» on `/baptisty-rossii/peterburgskaya-liniya/` (prose about volunteers); «Планируется» on `/pastor-series/` (a sentence stating that a separate issue is deliberately **not** planned); «Скоро» / «В планах» elsewhere: none.
+
+**No defect follows.** Announced-but-absent work is labelled as such on the page, every one of those labels is text rather than a dead link, and §1 proves the site has no dead internal target anywhere. The value of the census is that the owner now has the complete list with counts instead of an impression, and that a future pass can re-run the same three counts to see movement.
+
+## 3. Two apparent stubs, checked and dismissed
+
+- `/izbrannoe/` renders 253 characters of text, which looks like a stub in a length-sorted list; the text is a designed empty state — «Здесь пока пусто. Нажимайте кнопку Сохранить (закладка) на любой статье — и она появится здесь» — backed by a client-side favourites store, so a short page is correct until the reader saves something.
+- `/konfessii/russkij-baptizm/_app/` renders 39 characters but carries `<meta name="robots" content="noindex">` and its own CSP: it is an app shell, not a reader-facing stub, and it is excluded from indexing by design.
+- `/karty/*/` pages sit at 500–550 characters because they are interactive map canvases whose content is drawn by script; the text length is not a completeness signal for them.
+
+Artifacts: `2026-10-16-internal-links.json`, `2026-10-16-unfinished-sweep.json`.

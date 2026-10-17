@@ -1,0 +1,71 @@
+AXE (wcag2a/2aa/21a/21aa) rule occurrences over 16 routes x 2 viewports x 2 schemes = 64 page loads
+    36  color-contrast                           serious
+    32  label-content-name-mismatch              serious
+    12  nested-interactive                       serious
+     2  scrollable-region-focusable              serious
+
+Overview rows: route | viewport | scheme | axe violations | broken images | h1 count | doc.scrollWidth/clientWidth | .gterm count
+  / | desktop | light | axe=1 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  / | desktop | dark | axe=1 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  / | mobile | light | axe=1 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  / | mobile | dark | axe=1 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /articles/ | desktop | light | axe=1 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  /articles/ | desktop | dark | axe=0 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  /articles/ | mobile | light | axe=1 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /articles/ | mobile | dark | axe=0 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /articles/krajne-li-isporcheno-serdce/ | desktop | light | axe=3 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=18
+  /articles/krajne-li-isporcheno-serdce/ | desktop | dark | axe=3 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=18
+  /articles/krajne-li-isporcheno-serdce/ | mobile | light | axe=3 | broken=0 | h1=1 | sw/cw=390/390 | gterm=18
+  /articles/krajne-li-isporcheno-serdce/ | mobile | dark | axe=2 | broken=0 | h1=1 | sw/cw=390/390 | gterm=18
+  /articles/20-antisovetov-pastoru/ | desktop | light | axe=3 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=5
+  /articles/20-antisovetov-pastoru/ | desktop | dark | axe=3 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=5
+  /articles/20-antisovetov-pastoru/ | mobile | light | axe=3 | broken=0 | h1=1 | sw/cw=390/390 | gterm=5
+  /articles/20-antisovetov-pastoru/ | mobile | dark | axe=3 | broken=0 | h1=1 | sw/cw=390/390 | gterm=5
+  /articles/dzhon-gill-chast-1-chelovek/ | desktop | light | axe=3 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=19
+  /articles/dzhon-gill-chast-1-chelovek/ | desktop | dark | axe=3 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=19
+  /articles/dzhon-gill-chast-1-chelovek/ | mobile | light | axe=4 | broken=0 | h1=1 | sw/cw=390/390 | gterm=19
+  /articles/dzhon-gill-chast-1-chelovek/ | mobile | dark | axe=3 | broken=0 | h1=1 | sw/cw=390/390 | gterm=19
+  /articles/kod-da-vinchi/ | desktop | light | axe=2 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=12
+  /articles/kod-da-vinchi/ | desktop | dark | axe=2 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=12
+  /articles/kod-da-vinchi/ | mobile | light | axe=2 | broken=0 | h1=1 | sw/cw=390/390 | gterm=12
+  /articles/kod-da-vinchi/ | mobile | dark | axe=1 | broken=0 | h1=1 | sw/cw=390/390 | gterm=12
+  /hard-texts/genesis-6/ | desktop | light | axe=1 | broken=0 | h1=1 | sw/cw=1425/1440 | gterm=0
+  /hard-texts/genesis-6/ | desktop | dark | axe=1 | broken=0 | h1=1 | sw/cw=1425/1440 | gterm=0
+  /hard-texts/genesis-6/ | mobile | light | axe=1 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /hard-texts/genesis-6/ | mobile | dark | axe=1 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /hard-texts/ | desktop | light | axe=1 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  /hard-texts/ | desktop | dark | axe=0 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  /hard-texts/ | mobile | light | axe=1 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /hard-texts/ | mobile | dark | axe=0 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /nagornaya/chast-2/ | desktop | light | axe=2 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  /nagornaya/chast-2/ | desktop | dark | axe=2 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  /nagornaya/chast-2/ | mobile | light | axe=2 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /nagornaya/chast-2/ | mobile | dark | axe=2 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /baptisty-rossii/ | desktop | light | axe=2 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=1
+  /baptisty-rossii/ | desktop | dark | axe=2 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=1
+  /baptisty-rossii/ | mobile | light | axe=1 | broken=0 | h1=1 | sw/cw=390/390 | gterm=1
+  /baptisty-rossii/ | mobile | dark | axe=2 | broken=0 | h1=1 | sw/cw=390/390 | gterm=1
+  /karty/avraam/ | desktop | light | axe=0 | broken=0 | h1=0 | sw/cw=1440/1440 | gterm=0
+  /karty/avraam/ | desktop | dark | axe=0 | broken=0 | h1=0 | sw/cw=1440/1440 | gterm=0
+  /karty/avraam/ | mobile | light | axe=0 | broken=0 | h1=0 | sw/cw=390/390 | gterm=0
+  /karty/avraam/ | mobile | dark | axe=0 | broken=0 | h1=0 | sw/cw=390/390 | gterm=0
+  /about/ | desktop | light | axe=2 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=2
+  /about/ | desktop | dark | axe=2 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=2
+  /about/ | mobile | light | axe=0 | broken=0 | h1=1 | sw/cw=390/390 | gterm=2
+  /about/ | mobile | dark | axe=0 | broken=0 | h1=1 | sw/cw=390/390 | gterm=2
+  /pastor-series/ | desktop | light | axe=1 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  /pastor-series/ | desktop | dark | axe=0 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  /pastor-series/ | mobile | light | axe=1 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /pastor-series/ | mobile | dark | axe=0 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /articles/steven-lawson-samoobman-i-publichnyy-golos/ | desktop | light | axe=0 | broken=0 | h1=1 | sw/cw=1425/1440 | gterm=0
+  /articles/steven-lawson-samoobman-i-publichnyy-golos/ | desktop | dark | axe=0 | broken=0 | h1=1 | sw/cw=1425/1440 | gterm=0
+  /articles/steven-lawson-samoobman-i-publichnyy-golos/ | mobile | light | axe=1 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /articles/steven-lawson-samoobman-i-publichnyy-golos/ | mobile | dark | axe=1 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /konfessii/russkij-baptizm/ | desktop | light | axe=1 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  /konfessii/russkij-baptizm/ | desktop | dark | axe=1 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  /konfessii/russkij-baptizm/ | mobile | light | axe=0 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /konfessii/russkij-baptizm/ | mobile | dark | axe=0 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /biografii/ | desktop | light | axe=1 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  /biografii/ | desktop | dark | axe=0 | broken=0 | h1=1 | sw/cw=1440/1440 | gterm=0
+  /biografii/ | mobile | light | axe=1 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0
+  /biografii/ | mobile | dark | axe=0 | broken=0 | h1=1 | sw/cw=390/390 | gterm=0

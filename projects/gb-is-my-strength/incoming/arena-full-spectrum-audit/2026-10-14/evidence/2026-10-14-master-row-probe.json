@@ -1,0 +1,80 @@
+{
+ "quiz":{
+  "/articles/20-antisovetov-pastoru/":{
+   "mobile":{"hasQuizConfig":true,"literalTags":74,"literalSample":["Авторитет как таковой не зло — он дан Богом (Евр. 13:17). Но когда инструмент наставления совести превращается в инструм","Статья проводит различие: здоровая практика служит <em>члену тела</em>, раскрывая его для исцеления. Манипулятивная — сл","Статья проводит различие: здоровая практика служит <em>члену тела</em>, раскрывая его для исцеления. Манипулятивная — сл"],"quizNextFound":false,"quizNextDisplay":null,"quizNextClass":null,"quizNextRect":null,"gillV16":true,"quizWrapperBg":"rgba(255, 253, 248, 0.92)","quizTextColor":"rgb(26, 26, 26)"},
+   "darkDesktop":{"quizWrapperBg":"rgba(255, 253, 248, 0.92)","questionColor":null,"htmlDark":true}
+  },
+  "/articles/kod-da-vinchi/":{
+   "mobile":{"hasQuizConfig":true,"literalTags":8,"literalSample":["Какая находка содержит <span class=\"gterm\" data-term=\"gnostic\" data-term-title=\"Гностики\">гностические</span> тексты?","Что главным образом обсуждалось на <span class=\"gterm\" data-term=\"nicea\" data-term-title=\"Никейский собор\">Первом Никейс","Кто стоял за мистификацией <span class=\"gterm\" data-term=\"priory-of-sion\" data-term-title=\"Приорат Сиона\">Приората Сиона"],"quizNextFound":false,"quizNextDisplay":null,"quizNextClass":null,"quizNextRect":null,"gillV16":false,"quizWrapperBg":"rgba(255, 253, 248, 0.92)","quizTextColor":"rgb(26, 26, 26)"},
+   "darkDesktop":{"quizWrapperBg":"rgba(255, 253, 248, 0.92)","questionColor":null,"htmlDark":true}
+  },
+  "/articles/dzhon-gill-chast-2-uchenyi/":{
+   "mobile":{"hasQuizConfig":true,"literalTags":6,"literalSample":["Уистон узнал, что Гилл написал толкование в folio на <span class=\"gterm\" data-term=\"song-of-songs\" data-term-title=\"Песн","Какой оригинальный богословский вклад внёс Джон Гилл в доктрину вечного совета спасения (<em>pactum salutis</em>), по на","Гилл включал Святого Духа в <em>pactum salutis</em> как активного участника вечного завета."],"quizNextFound":true,"quizNextDisplay":"none","quizNextClass":"quiz-next","quizNextRect":{"w":0,"h":0},"gillV16":true,"quizWrapperBg":"rgba(255, 253, 248, 0.92)","quizTextColor":"rgb(26, 26, 26)"},
+   "darkDesktop":{"quizWrapperBg":"rgba(255, 253, 248, 0.92)","questionColor":"rgb(230, 225, 215)","htmlDark":true}
+  },
+  "/articles/krajne-li-isporcheno-serdce/":{"mobile":{"hasQuizConfig":true,"literalTags":58,"literalSample":["Что означает еврейское слово <em>ʿāqōb</em> (עָקֹב) в Иер. 17:9?","<em>ʿāqōb</em> означает «коварный, обманчивый» — от корня «хватать за пятку» (как в имени Иаков).","Как Кальвин в <em>Inst.</em> 4.15.11 описывает положение верующего относительно остаточного греха?"],"quizNextFound":false,"quizNextDisplay":null,"quizNextClass":null,"quizNextRect":null,"gillV16":true,"quizWrapperBg":"rgba(255, 253, 248, 0.92)","quizTextColor":"rgb(26, 26, 26)"},"darkDesktop":{"quizWrapperBg":"rgba(255, 253, 248, 0.92)","questionColor":null,"htmlDark":true}}
+ },
+ "themeToggleFocus":[{"sel":"gbSearchBtn","focused":true,"outline":"2px solid rgb(8, 125, 145)","boxShadow":"none","matchesFocusVisible":true},{"sel":"themeToggle","focused":true,"outline":"2px solid rgb(8, 125, 145)","boxShadow":"none","matchesFocusVisible":true}],
+ "printGenesis6":{"followerCount":101,"hiddenCount":101,"chars":4245,"keepNextCount":1,"sampleHidden":["SPAN.genesis6-card__action","ARTICLE.genesis6-card","PICTURE.genesis6-card__picture","SOURCE.","IMG.","SPAN.genesis6-card__number","DIV.genesis6-card__copy","P.genesis6-card__state"]},
+ "nagornaya":{"coloredOnlyLinks":64,"totalLinks":65,"sizeControls":[{"sel":"nagFontDec","w":0,"h":0,"aria":"Уменьшить шрифт"},{"sel":"nagFontInc","w":0,"h":0,"aria":"Увеличить шрифт"}]},
+ "scrollTop":{"found":true,"opacity":"0","visibility":"visible","w":39,"h":39,"outlineBefore":"2px","outlineAfterFocus":"2px solid","focusVisible":true},
+ "header":{
+  "320":{
+   "vw":320,
+   "controls":[
+    {"sel":".gb-nav-search-icon#gbSearchBtn","left":168,"right":212,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".theme-toggle#themeToggle","left":212,"right":256,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".h-mobile-menu-btn#hMobileMenuBtn","left":256,"right":300,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *#gbSearchBtn","left":168,"right":212,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *#themeToggle","left":212,"right":256,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *#hMobileMenuBtn","left":256,"right":300,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *","left":0,"right":0,"top":0,"bottom":0,"w":0,"h":0,"visible":true}
+   ],
+   "outOfViewport":[],
+   "overlaps":[[".gb-nav-search-icon#gbSearchBtn[168,212]",".mobile-controls > *#gbSearchBtn[168,212]",44,44],[".theme-toggle#themeToggle[212,256]",".mobile-controls > *#themeToggle[212,256]",44,44],[".h-mobile-menu-btn#hMobileMenuBtn[256,300]",".mobile-controls > *#hMobileMenuBtn[256,300]",44,44]]
+  },
+  "360":{
+   "vw":360,
+   "controls":[
+    {"sel":".gb-nav-search-icon#gbSearchBtn","left":208,"right":252,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".theme-toggle#themeToggle","left":252,"right":296,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".h-mobile-menu-btn#hMobileMenuBtn","left":296,"right":340,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *#gbSearchBtn","left":208,"right":252,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *#themeToggle","left":252,"right":296,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *#hMobileMenuBtn","left":296,"right":340,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *","left":0,"right":0,"top":0,"bottom":0,"w":0,"h":0,"visible":true}
+   ],
+   "outOfViewport":[],
+   "overlaps":[[".gb-nav-search-icon#gbSearchBtn[208,252]",".mobile-controls > *#gbSearchBtn[208,252]",44,44],[".theme-toggle#themeToggle[252,296]",".mobile-controls > *#themeToggle[252,296]",44,44],[".h-mobile-menu-btn#hMobileMenuBtn[296,340]",".mobile-controls > *#hMobileMenuBtn[296,340]",44,44]]
+  },
+  "390":{
+   "vw":390,
+   "controls":[
+    {"sel":".gb-nav-search-icon#gbSearchBtn","left":238,"right":282,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".theme-toggle#themeToggle","left":282,"right":326,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".h-mobile-menu-btn#hMobileMenuBtn","left":326,"right":370,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *#gbSearchBtn","left":238,"right":282,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *#themeToggle","left":282,"right":326,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *#hMobileMenuBtn","left":326,"right":370,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *","left":0,"right":0,"top":0,"bottom":0,"w":0,"h":0,"visible":true}
+   ],
+   "outOfViewport":[],
+   "overlaps":[[".gb-nav-search-icon#gbSearchBtn[238,282]",".mobile-controls > *#gbSearchBtn[238,282]",44,44],[".theme-toggle#themeToggle[282,326]",".mobile-controls > *#themeToggle[282,326]",44,44],[".h-mobile-menu-btn#hMobileMenuBtn[326,370]",".mobile-controls > *#hMobileMenuBtn[326,370]",44,44]]
+  },
+  "430":{
+   "vw":430,
+   "controls":[
+    {"sel":".gb-nav-search-icon#gbSearchBtn","left":278,"right":322,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".theme-toggle#themeToggle","left":322,"right":366,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".h-mobile-menu-btn#hMobileMenuBtn","left":366,"right":410,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *#gbSearchBtn","left":278,"right":322,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *#themeToggle","left":322,"right":366,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *#hMobileMenuBtn","left":366,"right":410,"top":9,"bottom":53,"w":44,"h":44,"visible":true},
+    {"sel":".mobile-controls > *","left":0,"right":0,"top":0,"bottom":0,"w":0,"h":0,"visible":true}
+   ],
+   "outOfViewport":[],
+   "overlaps":[[".gb-nav-search-icon#gbSearchBtn[278,322]",".mobile-controls > *#gbSearchBtn[278,322]",44,44],[".theme-toggle#themeToggle[322,366]",".mobile-controls > *#themeToggle[322,366]",44,44],[".h-mobile-menu-btn#hMobileMenuBtn[366,410]",".mobile-controls > *#hMobileMenuBtn[366,410]",44,44]]
+  }
+ },
+ "homeSearch":{"hasHeroSearch":true,"closerCount":1,"closers":["h-mobile-nav__close|Закрыть меню"]}
+}

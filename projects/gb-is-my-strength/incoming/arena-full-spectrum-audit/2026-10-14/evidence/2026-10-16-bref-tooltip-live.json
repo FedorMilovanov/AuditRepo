@@ -1,0 +1,42 @@
+{
+ "Иезекииль 36:26":{
+  "route":"/articles/krajne-li-isporcheno-serdce/",
+  "note":"book corpus file empty (synodal/iizikil.json, 0 bytes)",
+  "info":{"found":true,"projectionKeys":0,"hasScriptureDataGlobal":true,"lookupValue":null,"rect":[73,24,32317],"topElementAtCentre":null},
+  "opened":true,
+  "tip":{"open":true,"cls":"btip gb-floating-tip is-open","generated":"1","box":[460,72],"display":"block","visibility":"visible","visibleText":"ИЕЗЕКИИЛЬ 36:26 Ссылка на указанное место Священного Писания."},
+  "ariaState":{"describedby":null,"expanded":"true","role":null},
+  "screenshot":"bref-Иезекииль_36_26.png",
+  "consoleErrors":["Loading the image 'https://gospod-bog.ru/favicon.ico' violates the following Content Security Policy directive: \"img-src","Loading the image 'https://gospod-bog.ru/apple-touch-icon.png' violates the following Content Security Policy directive:","Loading the image 'https://gospod-bog.ru/favicon-48.png' violates the following Content Security Policy directive: \"img-"]
+ },
+ "Иеремия 17:5–10":{
+  "route":"/articles/krajne-li-isporcheno-serdce/",
+  "note":"book corpus populated",
+  "info":{"found":true,"projectionKeys":0,"hasScriptureDataGlobal":true,"lookupValue":null,"rect":[90,24,32370],"topElementAtCentre":null},
+  "opened":true,
+  "tip":{"open":true,"cls":"btip gb-floating-tip is-open","generated":"1","box":[460,72],"display":"block","visibility":"visible","visibleText":"ИЕРЕМИЯ 17:5–10 Ссылка на указанное место Священного Писания."},
+  "ariaState":{"describedby":null,"expanded":"true","role":null},
+  "screenshot":"bref-Иеремия_17_5_10.png",
+  "consoleErrors":["Loading the image 'https://gospod-bog.ru/favicon.ico' violates the following Content Security Policy directive: \"img-src","Loading the image 'https://gospod-bog.ru/apple-touch-icon.png' violates the following Content Security Policy directive:","Loading the image 'https://gospod-bog.ru/favicon-48.png' violates the following Content Security Policy directive: \"img-"]
+ },
+ "1 Коринфянам 10:6":{
+  "route":"/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/",
+  "note":"book corpus populated",
+  "info":{"found":true,"projectionKeys":0,"hasScriptureDataGlobal":true,"lookupValue":null,"rect":[103,29,19020],"topElementAtCentre":null},
+  "opened":true,
+  "tip":{"open":true,"cls":"btip gb-floating-tip is-open","generated":"1","box":[460,72],"display":"block","visibility":"visible","visibleText":"1 КОРИНФЯНАМ 10:6 Ссылка на указанное место Священного Писания."},
+  "ariaState":{"describedby":null,"expanded":"true","role":null},
+  "screenshot":"bref-1_Коринфянам_10_6.png",
+  "consoleErrors":["Loading the image 'https://gospod-bog.ru/favicon.ico' violates the following Content Security Policy directive: \"img-src","Loading the image 'https://gospod-bog.ru/apple-touch-icon.png' violates the following Content Security Policy directive:","Loading the image 'https://gospod-bog.ru/favicon-48.png' violates the following Content Security Policy directive: \"img-"]
+ },
+ "Луки 1:1–4":{
+  "route":"/articles/kod-da-vinchi/",
+  "note":"book corpus populated",
+  "info":{"found":true,"projectionKeys":0,"hasScriptureDataGlobal":true,"lookupValue":null,"rect":[64,24,22285],"topElementAtCentre":null},
+  "opened":true,
+  "tip":{"open":true,"cls":"btip gb-floating-tip is-open","generated":"1","box":[460,72],"display":"block","visibility":"visible","visibleText":"ЛУКИ 1:1–4 Ссылка на указанное место Священного Писания."},
+  "ariaState":{"describedby":null,"expanded":"true","role":null},
+  "screenshot":"bref-Луки_1_1_4.png",
+  "consoleErrors":["Loading the image 'https://gospod-bog.ru/favicon.ico' violates the following Content Security Policy directive: \"img-src","Loading the image 'https://gospod-bog.ru/apple-touch-icon.png' violates the following Content Security Policy directive:","Loading the image 'https://gospod-bog.ru/favicon-48.png' violates the following Content Security Policy directive: \"img-"]
+ }
+}

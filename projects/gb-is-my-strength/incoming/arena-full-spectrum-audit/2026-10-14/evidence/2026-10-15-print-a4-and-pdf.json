@@ -1,0 +1,57 @@
+{
+ "about":{
+  "route":"/about/",
+  "pdfPages":4,
+  "pdfChars":4530,
+  "domChars":4423,
+  "followerCount":14,
+  "followerChars":419,
+  "followerMissingFromPdf":["Приложение · Библейский тренажёр","Приложение · Библейский тренажёр","Приложение · Библейский тренажёр","Приложение · Библейский тренажёр","Нашли неточность?Богословскую или техническую — напишите, исправим.Ema","Нашли неточность?Богословскую или техническую — напишите, исправим.Ema"],
+  "samplesPresentInPdf":[{"s":"Перейти к содержимому Главная Об авторе ","present":false},{"s":"рждение о вере, Писании, церковной истор","present":false},{"s":"вим. Email Telegram ← Господь Бог — Сила","present":false}],
+  "printGeometry":{"limit":794,"docScrollW":794,"count":0,"top":[]}
+ },
+ "baptisty":{
+  "route":"/baptisty-rossii/",
+  "pdfPages":6,
+  "pdfChars":5078,
+  "domChars":5606,
+  "followerCount":6,
+  "followerChars":707,
+  "followerMissingFromPdf":["Основание книги — не один пересказ, а несколько слоёв свидетельств: пи","Наличие ссылки ещё не означает, что файл проверен; найденный PDF ещё н","Поделиться статьёйРаспечатать / PDF","Поделиться статьёйРаспечатать / PDF"],
+  "samplesPresentInPdf":[{"s":"Перейти к содержимому КНИГА · ИСТОРИЯ ЕХ","present":false},{"s":"Подпольная печать: Вестники, «Христианин","present":false},{"s":" PDF 0% Как устроена опубликованная книг","present":false}],
+  "printGeometry":{"limit":794,"docScrollW":810,"count":24,"top":[{"tag":"A","cls":"h-article-card","right":810,"w":826,"scrollW":826,"text":"Статья 1 · 18 минВоронин и ночь на Куре1867 · Воро"},{"tag":"A","cls":"h-article-card","right":810,"w":826,"scrollW":826,"text":"Статья 2 · 20 минЮжная штунда и первые крещения186"},{"tag":"A","cls":"h-article-card","right":810,"w":826,"scrollW":826,"text":"Статья 3 · 17 минПетербург и Ново-Васильевка: две "}]}
+ },
+ "gill1":{
+  "route":"/articles/dzhon-gill-chast-1-chelovek/",
+  "pdfPages":26,
+  "pdfChars":36320,
+  "domChars":36171,
+  "followerCount":9,
+  "followerChars":607,
+  "followerMissingFromPdf":["Примечания 1. Риппон на титульных страницах мемуара указывает: «Nov. 2","1. Риппон на титульных страницах мемуара указывает: «Nov. 23, o. s. 16","1. Риппон на титульных страницах мемуара указывает: «Nov. 23, o. s. 16","Риппон на титульных страницах мемуара указывает: «Nov. 23, o. s. 1697»"],
+  "samplesPresentInPdf":[{"s":"Перейти к содержимому СЕРИЯ «ДЖОН ГИЛЛ» ","present":false},{"s":"ние нашей веры и практики». СТАТЬЯ СОДЕР","present":false},{"s":"ief Memoir. ↩ Справка 1× 0% СЕЙЧАС ЧИТАЕ","present":false}],
+  "printGeometry":{"limit":794,"docScrollW":794,"count":0,"top":[]}
+ },
+ "genesis6":{
+  "route":"/hard-texts/genesis-6/",
+  "pdfPages":3,
+  "pdfChars":1694,
+  "domChars":3386,
+  "followerCount":71,
+  "followerChars":4315,
+  "followerMissingFromPdf":["IIПланируетсяНефилимы и сильные древностиКем были нефилимы и что текст","ПланируетсяНефилимы и сильные древностиКем были нефилимы и что текст д","Нефилимы и сильные древности","Кем были нефилимы и что текст действительно говорит об исполинах.","IIIПланируетсяЧто такое Первая книга ЕнохаСостав, датировка, рукописи ","ПланируетсяЧто такое Первая книга ЕнохаСостав, датировка, рукописи и м"],
+  "samplesPresentInPdf":[{"s":"Перейти к основному содержимому Господь ","present":false},{"s":"ит об исполинах. Без ссылки до готовност","present":false},{"s":"анием. gospod-bog.ru · Бытие 6 · Енох · ","present":false}],
+  "printGeometry":{"limit":794,"docScrollW":790,"count":0,"top":[]}
+ },
+ "krajne":{
+  "route":"/articles/krajne-li-isporcheno-serdce/",
+  "pdfPages":40,
+  "pdfChars":64881,
+  "domChars":70898,
+  "followerCount":203,
+  "followerChars":24902,
+  "followerMissingFromPdf":["Дальше по серии · 2 из 4 · ~45 минРимлянам 7: верующий, неверующий или","Дальше по серии · 2 из 4 · ~45 минРимлянам 7: верующий, неверующий или","Дальше по серии · 2 из 4 · ~45 минРимлянам 7: верующий, неверующий или","Дальше по серии · 2 из 4 · ~45 мин","Римлянам 7: верующий, неверующий или человек под законом?","Три главные позиции, Ллойд-Джонс, TMSJ и пастырский вывод о войне внут"],
+  "samplesPresentInPdf":[{"s":"Перейти к содержимому СЕРИЯ «ТАЙНЫ ЧЕЛОВ","present":false},{"s":" он делал?» (Of the Mortification of Sin","present":false},{"s":"в · Март 2025 Справка 1× 0% СЕЙЧАС ЧИТАЕ","present":false}],
+  "printGeometry":{"limit":794,"docScrollW":794,"count":0,"top":[]}
+ }
+}

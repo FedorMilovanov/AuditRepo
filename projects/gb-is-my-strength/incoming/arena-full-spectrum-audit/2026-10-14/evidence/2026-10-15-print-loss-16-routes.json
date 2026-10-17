@@ -1,0 +1,82 @@
+{
+ "/":{
+  "screenChars":5217,
+  "printChars":5070,
+  "lostChars":147,
+  "hiddenRoots":[{"tag":"SPAN","cls":"h-sacred-name-label","id":null,"chars":18,"sample":"Священное Имя Бога"},{"tag":"SPAN","cls":"h-sacred-face h-sacred-face--back","id":null,"chars":16,"sample":"даст мне ступать"},{"tag":"SPAN","cls":"h-sacred-mirror-face h-sacred-mirror-face--back","id":null,"chars":16,"sample":"даст мне ступать"},{"tag":"SPAN","cls":"h-sacred-face h-sacred-face--back","id":null,"chars":11,"sample":"как у ланей"},{"tag":"SPAN","cls":"h-sacred-mirror-face h-sacred-mirror-face--back","id":null,"chars":11,"sample":"как у ланей"},{"tag":"SPAN","cls":"h-sacred-face h-sacred-face--back","id":null,"chars":10,"sample":"высоты мои"}],
+  "hiddenRootsTotal":18,
+  "hiddenChars":168,
+  "pages":4,
+  "pdfChars":3942,
+  "a4":{"limit":794,"docScrollW":794,"overCount":34,"overTop":[{"tag":"A","cls":"h-home-route h-reveal","right":1460,"scrollW":284},{"tag":"SPAN","cls":"h-home-route__surface","right":1460,"scrollW":284}]}
+ },
+ "/about/":{"screenChars":4322,"printChars":4192,"lostChars":130,"hiddenRoots":[{"tag":"CITE","cls":"","id":null,"chars":12,"sample":"Аввакум 3:19"}],"hiddenRootsTotal":1,"hiddenChars":12,"pages":4,"pdfChars":4530,"a4":{"limit":794,"docScrollW":794,"overCount":0,"overTop":[]}},
+ "/articles/":{"screenChars":22375,"printChars":22375,"lostChars":0,"hiddenRoots":[],"hiddenRootsTotal":0,"hiddenChars":0,"pages":15,"pdfChars":22504,"a4":{"limit":794,"docScrollW":794,"overCount":1,"overTop":[{"tag":"DIV","cls":"sr-only","right":-9999,"scrollW":1404}]}},
+ "/articles/20-antisovetov-pastoru/":{"screenChars":111389,"printChars":110329,"lostChars":1060,"hiddenRoots":[{"tag":"DIV","cls":"gb-anchor-copy-toast","id":"anchor-copy-toast","chars":28,"sample":"Ссылка на раздел скопирована"},{"tag":"BUTTON","cls":"quiz-launch","id":"quizLaunch","chars":15,"sample":"Начать проверку"}],"hiddenRootsTotal":2,"hiddenChars":43,"pages":68,"pdfChars":109477,"a4":{"limit":794,"docScrollW":794,"overCount":0,"overTop":[]}},
+ "/articles/dzhon-gill-chast-1-chelovek/":{
+  "screenChars":36082,
+  "printChars":34782,
+  "lostChars":1300,
+  "hiddenRoots":[{"tag":"DIV","cls":"flip-card-back","id":null,"chars":504,"sample":"Английский оригиналWas Christ baptiz'd to sanctifyThis ordinance he gave?And did"},{"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-dzhon-gill-chast-1-chelovek-note-26bf1dbddece","chars":141,"sample":"⟦сноска: Риппон на титульных страницах мемуара указывает: «Nov. 23, o. s. 1697»;"},{"tag":"DIV","cls":"gb-anchor-copy-toast","id":"anchor-copy-toast","chars":28,"sample":"Ссылка на раздел скопирована"},{"tag":"FIGCAPTION","cls":"gbs2-hero-cap","id":null,"chars":27,"sample":"Серия «Джон Гилл» · Часть I"},{"tag":"BUTTON","cls":"quiz-launch","id":"quizLaunch","chars":15,"sample":"Начать проверку"}],
+  "hiddenRootsTotal":5,
+  "hiddenChars":715,
+  "pages":26,
+  "pdfChars":36320,
+  "a4":{"limit":794,"docScrollW":794,"overCount":0,"overTop":[]}
+ },
+ "/articles/kod-da-vinchi/":{
+  "screenChars":53467,
+  "printChars":46126,
+  "lostChars":7341,
+  "hiddenRoots":[
+   {"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-kod-da-vinchi-note-72a77153579f","chars":619,"sample":"⟦сноска: Bruce M. Metzger, The Canon of the New Testament; Michael J. Kruger, Ca"},
+   {"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-kod-da-vinchi-note-f5bf6c09c1c8","chars":536,"sample":"⟦сноска: Тертуллиан, Против валентиниан. Однако его ранние антигностические труд"},
+   {"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-kod-da-vinchi-note-1a07af54de9d","chars":483,"sample":"⟦сноска: Ariel Sabar, «The Unbelievable Tale of Jesus's Wife», The Atlantic, вып"},
+   {"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-kod-da-vinchi-note-789d5aa65532","chars":461,"sample":"⟦сноска: CNN Sunday Morning, 25 May 2003: официальный transcript CNN подтверждае"},
+   {"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-kod-da-vinchi-note-ef9732772bbb","chars":427,"sample":"⟦сноска: Michael Baigent, Richard Leigh, Henry Lincoln, Holy Blood, Holy Grail ("},
+   {"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-kod-da-vinchi-note-f3cf40d38554","chars":364,"sample":"⟦сноска: Journal Officiel de la République Française, 20 juillet 1956, no. 167: "}
+  ],
+  "hiddenRootsTotal":23,
+  "hiddenChars":5112,
+  "pages":30,
+  "pdfChars":46260,
+  "a4":{"limit":794,"docScrollW":794,"overCount":0,"overTop":[]}
+ },
+ "/articles/krajne-li-isporcheno-serdce/":{
+  "screenChars":70809,
+  "printChars":63096,
+  "lostChars":7713,
+  "hiddenRoots":[
+   {"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-krajne-li-isporcheno-serdce-note-2aa5ab8d8f8d","chars":299,"sample":"⟦сноска: Berkhof L. Systematic Theology. Sanctification, §H.2.c.(2). Eerdmans, 1"},
+   {"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-krajne-li-isporcheno-serdce-note-177d98d37f26","chars":284,"sample":"⟦сноска: Rogers T. A Discourse Concerning Trouble of Mind and the Disease of Mel"},
+   {"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-krajne-li-isporcheno-serdce-note-47b7837585bd","chars":263,"sample":"⟦сноска: Murray J. Redemption Accomplished and Applied. Grand Rapids: Eerdmans, "},
+   {"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-krajne-li-isporcheno-serdce-note-a680ab973788","chars":234,"sample":"⟦сноска: Berkhof L. Systematic Theology. Sanctification, §H.2.c.(2): Беркхоф гов"},
+   {"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-krajne-li-isporcheno-serdce-note-993f1801549c","chars":223,"sample":"⟦сноска: Там же: «Do not attribute the effects of mere Disease, to the Devil… as"},
+   {"tag":"SPAN","cls":"tooltip","id":"note-tip-articles-krajne-li-isporcheno-serdce-note-7b2111707a9a","chars":201,"sample":"⟦сноска: Clarkson D. Soul Idolatry Excludes Men Out of Heaven («Идолопоклонство "}
+  ],
+  "hiddenRootsTotal":43,
+  "hiddenChars":5839,
+  "pages":40,
+  "pdfChars":64881,
+  "a4":{"limit":794,"docScrollW":794,"overCount":0,"overTop":[]}
+ },
+ "/articles/steven-lawson-samoobman-i-publichnyy-golos/":{"screenChars":159769,"printChars":159716,"lostChars":53,"hiddenRoots":[{"tag":"DIV","cls":"gb-anchor-copy-toast","id":"anchor-copy-toast","chars":28,"sample":"Ссылка на раздел скопирована"}],"hiddenRootsTotal":1,"hiddenChars":28,"pages":95,"pdfChars":173075,"a4":{"limit":794,"docScrollW":779,"overCount":0,"overTop":[]}},
+ "/baptisty-rossii/":{
+  "screenChars":5444,
+  "printChars":4763,
+  "lostChars":681,
+  "hiddenRoots":[{"tag":"P","cls":"","id":null,"chars":342,"sample":"Наличие ссылки ещё не означает, что файл проверен; найденный PDF ещё не означает"},{"tag":"P","cls":"","id":null,"chars":255,"sample":"Основание книги — не один пересказ, а несколько слоёв свидетельств: письма и про"},{"tag":"FIGCAPTION","cls":"gbs2-hero-cap","id":null,"chars":36,"sample":"Книга статей · русский баптизм и ЕХБ"},{"tag":"BUTTON","cls":"gb-ember-expand__btn","id":null,"chars":5,"sample":"1.25×"},{"tag":"BUTTON","cls":"gb-ember-expand__btn","id":null,"chars":5,"sample":"1.75×"},{"tag":"BUTTON","cls":"gb-ember-expand__btn","id":null,"chars":4,"sample":"1.5×"}],
+  "hiddenRootsTotal":13,
+  "hiddenChars":660,
+  "pages":6,
+  "pdfChars":5090,
+  "a4":{"limit":794,"docScrollW":810,"overCount":24,"overTop":[{"tag":"A","cls":"h-article-card","right":810,"scrollW":826},{"tag":"A","cls":"h-article-card","right":810,"scrollW":826}]}
+ },
+ "/biografii/":{"screenChars":5483,"printChars":4850,"lostChars":633,"hiddenRoots":[],"hiddenRootsTotal":0,"hiddenChars":0,"pages":8,"pdfChars":5538,"a4":{"limit":794,"docScrollW":794,"overCount":0,"overTop":[]}},
+ "/hard-texts/":{"screenChars":2243,"printChars":1744,"lostChars":499,"hiddenRoots":[],"hiddenRootsTotal":0,"hiddenChars":0,"pages":4,"pdfChars":2722,"a4":{"limit":794,"docScrollW":794,"overCount":0,"overTop":[]}},
+ "/hard-texts/genesis-6/":{"screenChars":3257,"printChars":1424,"lostChars":1833,"hiddenRoots":[{"tag":"SPAN","cls":"genesis6-card__action","id":null,"chars":24,"sample":"Без ссылки до готовности"}],"hiddenRootsTotal":1,"hiddenChars":24,"pages":3,"pdfChars":1694,"a4":{"limit":794,"docScrollW":790,"overCount":0,"overTop":[]}},
+ "/karty/avraam/":{"screenChars":12535,"printChars":11270,"lostChars":1265,"hiddenRoots":[],"hiddenRootsTotal":0,"hiddenChars":0,"pages":1,"pdfChars":2546,"a4":{"limit":794,"docScrollW":794,"overCount":0,"overTop":[]}},
+ "/konfessii/russkij-baptizm/":{"screenChars":390,"printChars":390,"lostChars":0,"hiddenRoots":[],"hiddenRootsTotal":0,"hiddenChars":0,"pages":1,"pdfChars":493,"a4":{"limit":794,"docScrollW":794,"overCount":2,"overTop":[{"tag":"H1","cls":"sr-only","right":0,"scrollW":1756},{"tag":"DIV","cls":"sr-only","right":-9999,"scrollW":1545}]}},
+ "/nagornaya/chast-2/":{"screenChars":21598,"printChars":20835,"lostChars":763,"hiddenRoots":[{"tag":"DIV","cls":"gb-anchor-copy-toast","id":"anchor-copy-toast","chars":28,"sample":"Ссылка на раздел скопирована"},{"tag":"BUTTON","cls":"quiz-launch","id":"quizLaunch","chars":15,"sample":"Начать проверку"}],"hiddenRootsTotal":2,"hiddenChars":43,"pages":15,"pdfChars":22439,"a4":{"limit":794,"docScrollW":794,"overCount":0,"overTop":[]}},
+ "/pastor-series/":{"screenChars":3934,"printChars":3741,"lostChars":193,"hiddenRoots":[],"hiddenRootsTotal":0,"hiddenChars":0,"pages":5,"pdfChars":4184,"a4":{"limit":794,"docScrollW":794,"overCount":0,"overTop":[]}}
+}

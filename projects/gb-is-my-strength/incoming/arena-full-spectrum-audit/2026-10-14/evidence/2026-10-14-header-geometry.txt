@@ -1,0 +1,105 @@
+# Header control geometry — Product d14da74c, production-like dist, Chromium 153 (2026-10-14)
+# viewport widths 320/360/390/430 (isMobile+hasTouch, dsf 1) and 768
+
+## /hard-texts/genesis-6/
+  @320px viewport=320 outOfViewport=[]
+     gb-nav-action-icon     left= 128 right= 172 size=44x44
+     gb-nav-action-icon     left= 172 right= 216 size=44x44
+     hCpBtnNav              left= 216 right= 260 size=44x44
+     themeToggle            left= 260 right= 304 size=44x44
+  @360px viewport=360 outOfViewport=[]
+     gb-nav-action-icon     left= 168 right= 212 size=44x44
+     gb-nav-action-icon     left= 212 right= 256 size=44x44
+     hCpBtnNav              left= 256 right= 300 size=44x44
+     themeToggle            left= 300 right= 344 size=44x44
+  @390px viewport=390 outOfViewport=[]
+     gb-nav-action-icon     left= 198 right= 242 size=44x44
+     gb-nav-action-icon     left= 242 right= 286 size=44x44
+     hCpBtnNav              left= 286 right= 330 size=44x44
+     themeToggle            left= 330 right= 374 size=44x44
+  @430px viewport=430 outOfViewport=[]
+     gb-nav-action-icon     left= 238 right= 282 size=44x44
+     gb-nav-action-icon     left= 282 right= 326 size=44x44
+     hCpBtnNav              left= 326 right= 370 size=44x44
+     themeToggle            left= 370 right= 414 size=44x44
+  @768px viewport=768 outOfViewport=[]
+     gb-nav-action-icon     left= 576 right= 620 size=44x44
+     gb-nav-action-icon     left= 620 right= 664 size=44x44
+     hCpBtnNav              left= 664 right= 708 size=44x44
+     themeToggle            left= 708 right= 752 size=44x44
+
+## /articles/
+  @320px viewport=320 outOfViewport=[{"id": "hMobileMenuBtn", "l": 281, "r": 325, "t": 7, "bt": 51, "w": 44, "h": 44}]
+     gbSearchBtn            left= 205 right= 249 size=44x44
+     themeToggle            left= 237 right= 281 size=44x44
+     hMobileMenuBtn         left= 281 right= 325 size=44x44
+  @360px viewport=360 outOfViewport=[]
+     gbSearchBtn            left= 224 right= 268 size=44x44
+     themeToggle            left= 256 right= 300 size=44x44
+     hMobileMenuBtn         left= 300 right= 344 size=44x44
+  @390px viewport=390 outOfViewport=[]
+     gbSearchBtn            left= 263 right= 307 size=44x44
+     themeToggle            left= 295 right= 339 size=44x44
+     hMobileMenuBtn         left= 339 right= 383 size=44x44
+  @430px viewport=430 outOfViewport=[]
+     gbSearchBtn            left= 294 right= 338 size=44x44
+     themeToggle            left= 326 right= 370 size=44x44
+     hMobileMenuBtn         left= 370 right= 414 size=44x44
+  @768px viewport=768 outOfViewport=[{"id": "gbSearchBtn", "l": 747, "r": 791, "t": 7, "bt": 51, "w": 44, "h": 44}, {"id": "themeToggle", "l": 779, "r": 823, "t": 7, "bt": 51, "w": 44, "h": 44}, {"id": "hMobileMenuBtn", "l": 823, "r": 867, "t": 7, "bt": 51, "w": 44, "h": 44}]
+     gbSearchBtn            left= 747 right= 791 size=44x44
+     themeToggle            left= 779 right= 823 size=44x44
+     hMobileMenuBtn         left= 823 right= 867 size=44x44
+
+## /izbrannoe/
+  @320px viewport=320 outOfViewport=[]
+     gb-nav-action-icon     left= 112 right= 156 size=44x44
+     gb-nav-action-icon     left= 156 right= 200 size=44x44
+     hCpBtnNav              left= 200 right= 244 size=44x44
+     themeToggle            left= 244 right= 288 size=44x44
+  @360px viewport=360 outOfViewport=[]
+     gb-nav-action-icon     left= 152 right= 196 size=44x44
+     gb-nav-action-icon     left= 196 right= 240 size=44x44
+     hCpBtnNav              left= 240 right= 284 size=44x44
+     themeToggle            left= 284 right= 328 size=44x44
+  @390px viewport=390 outOfViewport=[]
+     gb-nav-action-icon     left= 182 right= 226 size=44x44
+     gb-nav-action-icon     left= 226 right= 270 size=44x44
+     hCpBtnNav              left= 270 right= 314 size=44x44
+     themeToggle            left= 314 right= 358 size=44x44
+  @430px viewport=430 outOfViewport=[]
+     gb-nav-action-icon     left= 221 right= 265 size=44x44
+     gb-nav-action-icon     left= 265 right= 309 size=44x44
+     hCpBtnNav              left= 309 right= 353 size=44x44
+     themeToggle            left= 353 right= 397 size=44x44
+  @768px viewport=768 outOfViewport=[]
+     gb-nav-action-icon     left= 545 right= 589 size=44x44
+     gb-nav-action-icon     left= 589 right= 633 size=44x44
+     hCpBtnNav              left= 633 right= 677 size=44x44
+     themeToggle            left= 677 right= 721 size=44x44
+
+## /
+  @320px viewport=320 outOfViewport=[]
+     gbSearchBtn            left= 168 right= 212 size=44x44
+     themeToggle            left= 212 right= 256 size=44x44
+     hMobileMenuBtn         left= 256 right= 300 size=44x44
+                            left=   0 right=   0 size=0x0
+  @360px viewport=360 outOfViewport=[]
+     gbSearchBtn            left= 208 right= 252 size=44x44
+     themeToggle            left= 252 right= 296 size=44x44
+     hMobileMenuBtn         left= 296 right= 340 size=44x44
+                            left=   0 right=   0 size=0x0
+  @390px viewport=390 outOfViewport=[]
+     gbSearchBtn            left= 238 right= 282 size=44x44
+     themeToggle            left= 282 right= 326 size=44x44
+     hMobileMenuBtn         left= 326 right= 370 size=44x44
+                            left=   0 right=   0 size=0x0
+  @430px viewport=430 outOfViewport=[]
+     gbSearchBtn            left= 278 right= 322 size=44x44
+     themeToggle            left= 322 right= 366 size=44x44
+     hMobileMenuBtn         left= 366 right= 410 size=44x44
+                            left=   0 right=   0 size=0x0
+  @768px viewport=768 outOfViewport=[]
+     gbSearchBtn            left= 605 right= 649 size=44x44
+     themeToggle            left= 649 right= 693 size=44x44
+     hMobileMenuBtn         left= 693 right= 737 size=44x44
+                            left=   0 right=   0 size=0x0
