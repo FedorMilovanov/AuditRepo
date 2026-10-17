@@ -661,3 +661,33 @@ Re-confirmed, not re-filed: at 768 px on `/articles/` the header controls still 
 `/articles/` reports **330** axe `color-contrast` nodes, and the inspected families are opaque pairs: `#78716c` on `#f7f4ee` = **4.37:1** (`.h-meta-time` 139 nodes at 12 px normal, `.h-meta-author` 4) and `#78716c` on `#f8f5f0` = **4.41:1** (`.h-section-label` 5 at 11.5 px bold). Because these are solid colours the axe figure is trustworthy here — unlike the alpha/image cases re-measured by painted glyphs in continuation 3 — so this is a widening of `GBS-TEXT-CONTRAST-RESIDUAL-BATCH` (148 newly counted nodes) rather than a new class. Same family elsewhere: `/baptisty-rossii/` 20, gill-1 18, `/hard-texts/genesis-6/` 11. LCP on the six sampled routes is 156–392 ms and CLS is 0.
 
 Receipts: `evidence/2026-10-17-home-genealogy-and-mobile-icons.txt`, `.../2026-10-17-home-genealogy-mobile-icons.json`.
+
+## 19. The map surfaces and the 3-D app (2026-10-17, continuation 11)
+
+### 19.1 `/karty/avraam/` deletes its own `<h1>` when the map becomes ready
+
+The route ships exactly one `<h1>` — `h1.sr-only` in `AvraamMap.astro:44` — and `src/pages/karty/avraam/index.astro:18-31` removes it as soon as the stage reports `data-map-state="ready"`, on the assumption that the engine has rendered the document title. It has not: the engine's only heading is the intro's `<h2 class="me-intro__title">` (`karty/_engine/map-engine.js:3752`), and that node leaves the DOM with the intro. Measured after entering the map (Escape): **12 headings, 0 visible, 0 `<h1>`**, and Chrome's AX tree carries **0 level-1 headings**; the whole remaining outline is sr-only (`h2` «Путь Авраама по Бытие 11–25…» at 1×28 px plus 11 `h3`). `/karty/ishod/` keeps its sr-only `h1` (`IshodMap.astro:17`), so the two sibling maps disagree. Before entry the visible title is the intro's `h2` (354×46) — the page never has a level-1 heading at runtime.
+
+This is also why axe does not see it. axe 4.14's `page-has-heading-one` calls `passForModal`, which treats a `position: fixed` element covering ≥75% of the viewport — the 1440×900 map stage — as an open modal dialog. Calibration: on a control page with only an `h2` the rule reports `page-has-heading-one`; on `/karty/avraam/` it passes, and it still passes after removing the `aria-modal` panel, because the stage itself triggers the heuristic (and axe caches `isModalOpen` after the first run). Page-level axe rules are therefore unreliable on these full-screen routes; the finding above comes from the live DOM and the AX tree.
+
+### 19.2 Both route maps are unnamed graphics
+
+`/karty/avraam/` and `/karty/ishod/` paint a 1440×900 inline SVG with `role=null` and no `aria-label`; avraam has no `<title>`, and ishod's `<title>` («Географическая основа карты Исхода») names the basemap rather than the interactive route. These SVGs own **19** and **13** focusable `g[role=button]` and 139/129 text nodes, so assistive technology enters an unnamed graphic that contains dozens of controls labelled «Открыть досье: …». `/map/` is the in-product reference: a 1176×816 SVG with `role="application"`, a full `aria-label` and 56 focusable controls. axe reports **0** on all four routes — this is a semantic gap, not a rule violation. `/karty/` itself is a hub without a map (correct), with 3 keyboard stops.
+
+### 19.3 Head assets are pinned to the production origin
+
+**82 of 108** pages carry absolute `https://gospod-bog.ru/...` URLs for icons, apple-touch icons, the manifest or the feed: icons 40 absolute vs 58 relative, apple-touch 40 vs 57, manifest 38 vs 20, feed 89. In source, **69** component files pin that host against **27** that use relative hrefs (e.g. `DiotrophesPageHead.astro:28-31`, `AboutPageChrome.astro:150`, `AntisovetovPageHead.astro:53`). On production `'self'` covers the host, so nothing breaks live; on any other origin (preview, staging, custom domain) the browser resolves these to production, and when the page CSP omits the host they are blocked. Measured on the local build: **5 `img-src` refusals per page** (`/articles/dzhon-gill-chast-1-chelovek/` — `favicon.ico`, `apple-touch-icon.png`, `favicon-48.png`, `favicon-120.png`, `icons/icon-192.png`); **46 of 108** pages ship an `img-src` without `https://gospod-bog.ru`. The one remaining console event is Metrica's `ERR_CONNECTION_CLOSED` (sandbox egress, not a defect).
+
+### 19.4 The 3-D app has no failure path
+
+In `/konfessii/russkij-baptizm/_app/`, when `THREE.WebGLRenderer` cannot create a context the app throws (`THREE.WebGLRenderer: A WebGL context could not be created` ×2, `Error creating WebGL context`, `PAGEERROR`) and wipes itself: text **36 857 → 0**, DOM **3 074 → 1 node** (31 bytes of HTML), `canvas` 0, **no support message**, body `rgb(8, 8, 8)`. The result is identical at 1440×900 and 390×844. The scene opens only through «Войти в 3D-карту»; the nav's «3D Карта» and the «Начать путешествие» CTA are in-app anchors, which is not a defect.
+
+The outer document has **no `<main>`** (an sr-only `h1` in `Baptizm3DBody.astro:6`, a header and the iframe), while the indexable prose lives in `<noscript>` (1 444 chars, 1 link, no `<main>`). The app is a **2 245 873-byte** inline document; the iframe is ready in **6 818 ms** on localhost. The outer loader is honest and still visible in every sample from 0.5 s to 7.0 s, so the wait is not a blank screen — the weakness is weight and the missing failure path. WebGL absence itself is a sandbox condition (unavailable with `--use-gl=swiftshader`, `--use-angle=swiftshader`, `--ignore-gpu-blocklist` and `--enable-unsafe-swiftshader`), not a site defect; what is filed is what the app does when the context fails.
+
+### 19.5 Negative results, recorded so they are not re-filed
+
+The intro overlay is a correct modal in practice: while it is open the underlay is `inert` (14 nodes), Tab stays on its single button, and Escape, a backdrop click and the button all dismiss it and move focus to «Весь путь», after which Tab walks the map controls normally (Весь путь → Лех-леха → Линия Лота → Война царей → Акеда → поиск → тема → ↗ → +). It has no `role="dialog"`/`aria-modal`, but with an inert underlay and a single control this is cosmetic, not filed.
+
+Also not defects: the map routes lock document scroll (`html`/`body` overflow hidden, `body` fixed, `scrollHeight` 900 = viewport) — by design for a full-screen map; `div.me-panel[aria-modal="true"]` is correctly `aria-hidden="true"` + `inert`, and its four controls are not in the tab order; `img.me-photo-modal__img` with `src=""` is a closed 0×0 modal; and the loading state is visible for the whole wait.
+
+Receipts: `evidence/2026-10-17-map-surfaces-and-3d-fallback.json`.
