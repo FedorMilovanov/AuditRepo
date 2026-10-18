@@ -40,6 +40,7 @@ Result: `/tmp/gbchrome/chrome.sh` (Chromium 153 launcher) and `/home/user/gbs-sr
 | `imgs-check.mjs` | images per route **after a full scroll** so lazy loading fires — the only way `naturalWidth=0` means "broken" (continuation 10) |
 | `genealogy-deep.mjs` | `/rodosloviye/`: node/card geometry, controls, minimap, AX-linked node counts at three profiles (continuation 10) |
 | `genealogy-relations-and-fragments.mjs` | 12 health profiles + 10 person panels + native fragment Tab traces; captures facts, not a product PASS (continuation 14) |
+| `genealogy-reopen-and-journal.mjs` | 8 profiles: pointer/touch reopen vs keyboard, G3 source projection, disposable sticky scroll-owner A/B; capture, not product PASS (continuation 15) |
 | `mobile-icons-sweep.mjs` | icon-button geometry at 390 and 768: off-viewport, sub-24 px tap targets, per route (continuation 10) |
 | `hero-crumb.mjs` | home hero accessible name (axe `label-content-name-mismatch`) and the `/hard-texts/genesis-6/` breadcrumb/brand collision (continuation 10) |
 | `final-sweep.mjs` | axe (WCAG A/AA + best practice) and LCP/CLS on six routes, mobile profile (continuation 10) |
