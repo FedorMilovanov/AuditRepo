@@ -739,3 +739,41 @@ Contrast in that theme is not: axe `color-contrast` reports **18** nodes in `lig
 Also checked and not filed: the legacy `localStorage` key `theme` stays `"light"` after switching to sepia, but no shipped file reads it; the legacy on-site search cannot return `/hard-texts/genesis-6/` (query «Бытие 6» → 1 result), which matches `searchManifestPolicy: "exclude"` in `data/route-search-policy.json` and is therefore policy, not drift. No Pagefind bundle exists in this build (`pagefind:build:dist` is not part of `strangler:build:production-like`), so no claim is made about production full-text search.
 
 Receipts: `evidence/2026-10-18-series-feeds-sitemap-sepia.json`.
+
+---
+
+## 21. Series hubs, `isPartOf`, fragment focus, and `/app/` (2026-10-18, continuation 13)
+
+Same environment as §20 (Product `d14da74`, production-like `dist` 95 MB on `127.0.0.1:8099`, Chromium 153).
+
+### 21.1 Seven series, six hubs — `GBS-GILL-SERIES-NO-HUB-NO-ISPARTOF`
+
+`data/series.json` defines seven series. Six own a hub route that is in both `sitemap.xml` and `data/search-manifest.json`; one does not:
+
+| Series | Parts | Hub | sitemap | manifest |
+|---|---|---|---|---|
+| `nagornaya` | 5 | `/nagornaya/` | ✓ | ✓ |
+| **`dzhon-gill`** | **6** | **none** | **—** | **—** |
+| `pastor-series` | 9 (+1 dossier) | `/pastor-series/` | ✓ | ✓ |
+| `hard-texts` | 6 | `/hard-texts/` | ✓ | ✓ |
+| `russian-baptism` | 10 | `/baptisty-rossii/` | ✓ | ✓ |
+| `genesis-6` | 6 | `/hard-texts/genesis-6/` | ✓ | ✗ (policy) |
+| `teen-double-life` | 7 | `/podrostok-za-kadrom/` | ✓ | ✓ |
+
+The Gill series' entry point is the fragment **`/biografii/#dzhon-gill-series`** — a `<section>` inside the biographies catalogue (22 Gill links on that page). There is no route-policy entry for a Gill hub (the six parts have their own entries), so the series has no canonical URL, no sitemap or manifest surface, and no possible RSS shard.
+
+The same gap shows in structured data. On one published part per series, `Article.isPartOf` is: `pastor-series` → `CreativeWorkSeries «Тёмная сторона кафедры»` (also for the dossier), `nagornaya` → `@id /nagornaya/#collectionpage`, `hard-texts` and `genesis-6` → `CreativeWorkSeries «Бытие 6, Енох, Иуда…»`, `russian-baptism` → `Series «Баптисты России»`, `teen-double-life` → `CreativeWorkSeries «Под…» — and **`dzhon-gill` → `null`**. (`position` is absent on every series, which is consistent rather than drifted.)
+
+In-page navigation is not the problem: `/articles/dzhon-gill-chast-1-chelovek/` carries 78 sibling links — 5 `gbs-rail-card`, 3 `gill-card__cta`, 2 `gbs2-next-card` and 64 TOC items. The gap is discovery and machine-readable series membership, not a dead end for a reader who is already there.
+
+### 21.2 Fragment targets never receive focus — improvement `GBS-FRAGMENT-TARGET-FOCUS`
+
+Landing on `/biografii/#dzhon-gill-series` scrolls the viewport to `scrollY 1061` while `document.activeElement` stays `BODY`, and the first `Tab` moves to the page's first link (the skip link) rather than into the section the user was sent to. No fragment target in the product carries `tabindex="-1"`: 0 of 12 id-bearing elements on `/biografii/`, 0 of 6 on `/articles/`, 0 of 21 on `/`. Keyboard and assistive-tech users therefore restart navigation from the top of a long catalogue every time they follow an in-page link.
+
+### 21.3 `/app/` is clean (checked, not filed)
+
+`/app/` is the promo page for the external Telegram Mini App `@milovanovaibot`. At both 1440×900 and 390×844: axe **0** violations (41 passes), **9** visible interactive elements, **0** tap targets under 44 px, **5** `target="_blank"` links all carrying `rel="noopener noreferrer"`, 0 page errors, 0 console errors. The page advertises chapters 1 Петра 3 and 4 only; the app itself is external and out of sandbox reach, so no claim is made about it.
+
+Also checked and not filed: `/izbrannoe/` is `noindex` by policy (`indexPolicy: noindex`, `contentKind: personal`) and consistently absent from sitemap and manifest; `teen-double-life` parts **do** carry `Article.isPartOf` (an earlier probe hit the hub, which is a `CollectionPage`, and was corrected); `nagornaya` shows 6 cards for 5 parts because the sixth is the sources page `/nagornaya/istochniki/`; `hard-texts`, `genesis-6`, `baptisty-rossii` and `podrostok-za-kadrom` hubs match their `series.json` counts exactly.
+
+Receipts: `evidence/2026-10-18-series-hubs-and-fragment-focus.json`.
