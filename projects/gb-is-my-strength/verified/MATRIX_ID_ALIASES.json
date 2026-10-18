@@ -101,6 +101,10 @@
       "status": "retired",
       "reason": "Fixed by safeReady fallback in 8a816ce4 and verified in the runtime no-undef closure."
     },
+    "GBS-FRAGMENT-TARGET-FOCUS": {
+      "status": "false-positive",
+      "reason": "Перепроверка Chromium 153 на Product d14da74c (2026-10-18, REPORT §22.2): первый Tab после прямого URL и перехода из каталога попадает на #biografiiRecentTitle внутри секции, затем на её статьи, scrollY 1061/763 не сбрасывается. BODY как activeElement не доказывает сброс последовательного фокуса; прежнее A было неверно названо skip link. Evidence: incoming/arena-full-spectrum-audit/2026-10-14/evidence/2026-10-18-genealogy-relations-recheck.json."
+    },
     "NEW-67": {
       "status": "false-positive",
       "reason": "Reverify proved the supposed dead scripts are documented manual QA/migration tools, not deletion-ready dead code."
