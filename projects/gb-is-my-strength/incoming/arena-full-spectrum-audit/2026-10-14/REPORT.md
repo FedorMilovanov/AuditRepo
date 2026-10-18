@@ -691,3 +691,51 @@ The intro overlay is a correct modal in practice: while it is open the underlay 
 Also not defects: the map routes lock document scroll (`html`/`body` overflow hidden, `body` fixed, `scrollHeight` 900 = viewport) — by design for a full-screen map; `div.me-panel[aria-modal="true"]` is correctly `aria-hidden="true"` + `inert`, and its four controls are not in the tab order; `img.me-photo-modal__img` with `src=""` is a closed 0×0 modal; and the loading state is visible for the whole wait.
 
 Receipts: `evidence/2026-10-17-map-surfaces-and-3d-fallback.json`.
+
+---
+
+## 20. Series discovery surfaces, sitemap ownership, and the Gill sepia control (2026-10-18, continuation 12)
+
+Environment rebuilt after a sandbox reset with `harness/rebuild-env.sh` (Product clone `d14da74`, Chromium 153, `npm ci`, `strangler:build:production-like` → `dist` 95 MB / 108 HTML, served on `127.0.0.1:8099`).
+
+### 20.1 One series, five surfaces, five different answers — `GBS-PASTOR-SERIES-DISCOVERY-DRIFT`
+
+`/pastor-series/` is published from four independent hand-maintained projections, and they disagree:
+
+| Surface | Value | Last commit |
+|---|---|---|
+| Hub cards (`PastorSeriesCardsSection.astro`) | **10** | 2026-09-15 `9662af5` |
+| `data/series.json` → `pastor-series.parts` | **9** | 2026-09-15 `4c7b07c` |
+| JSON-LD `CreativeWorkSeries` `numberOfItems` / `hasPart` | **9** / 9 | 2026-10-11 `b58a814` |
+| `feed-pastor-series.xml` `<item>` | **2** | 2026-08-02 `9a84276` |
+| `sitemap-pastor-series.xml` `<loc>` | **3** (hub + 2) | 2026-08-02 `cfe4e55` |
+
+The card missing from the data file and from the structured data is `diotrefy-nashego-vremeni` («Досье A»), which is hard-coded at `PastorSeriesCardsSection.astro:42` (`data-wave12-series-card="true"`) while `data/series.json` was never given the part and `PastorSeriesPageHead.astro:89` still declares `numberOfItems: 9`. The series RSS shard and its sitemap shard were frozen on the 2026-08-02 Wave-12 release day and have not moved since, so a subscriber of «Тёмная сторона кафедры» receives 2 of 10 materials. The main `feed.xml` (51 items) and main `sitemap.xml` (95 URLs) do contain all ten, so the drift is confined to the series-specific surfaces.
+
+All six product guards pass on this state: `check-data-consistency.js`, `gill-series-data-consistency-audit.js`, `pastor-series-visual-parity-audit.js` (which explicitly certifies "I–IX + Dossier A"), `pastor-series-guards-dist.js` (G-1…G-8), `rss-feed-normalizer.js --check` (owns `feed.xml` only) and `sitemap-policy-normalizer.js --check` — all exit 0.
+
+### 20.2 The guard exists but is time-frozen — `GBS-WAVE12-CONTRACT-FROZEN-AT-BOUNDARY`
+
+`.github/workflows/diotrophes-wave12-release.yml` does not run the working-tree contract. It extracts the **historical** copy of `scripts/diotrophes-wave12-release-contract.mjs` from `aaf0ba7f` (`DIOTROPHES_WAVE12_HISTORICAL_VALIDATOR`), creates a detached worktree at the release boundary `fbd305a5` (`DIOTROPHES_WAVE12_RELEASE_BOUNDARY`) and runs the historical validator **inside that snapshot**. The assertions that matter for discovery — `series sitemap entry`, `series RSS entry`, `numberOfItems` — therefore only ever see the 2026-08-02 state.
+
+Running the working-tree copy on current `main` exits **1** with two content failures: `series landing Part II missing` (the contract wants «Часть II · 35 мин», the shipped landing says «Досье A · 15 мин») and `series structured data drift` (the contract pins `numberOfItems: 2`, the source declares 9). The workflow itself is green in Product CI (last runs 2026-10-16 on a PR branch: 3 × success). Caveat recorded honestly: the audit clone is `--depth 1`, so history-dependent assertions cannot be evaluated locally; the two failures above read only current files and are therefore independent of clone depth.
+
+### 20.3 Five sitemap entries nobody owns — `GBS-SITEMAP-LASTMOD-UNOWNED`
+
+`node scripts/sitemap-policy-normalizer.js --check` exits 0 and prints its own disclaimers: `/hard-texts/`, `/karty/`, `/karty/avraam/`, `/map/` are `VALID_DATE_MISSING` and `/hard-texts/genesis-6/` is `SEARCH_MANIFEST_ITEM_MISSING`. Eligibility is `POLICY_INCLUDE_AND_PRODUCTION_AND_MANIFEST_AND_VALID_DATE`, so these five routes are outside the normalizer's control — yet all five are present in `dist/sitemap.xml` (95 `<url>` blocks, 0 without `<lastmod>`), i.e. they are maintained by hand.
+
+Consequence, measured against Product history: `/karty/avraam/` carries `<lastmod>2026-07-03T15:22:38+03:00</lastmod>` while `AvraamMap.astro` last changed 2026-09-15 (`ec515b7`) — **74 days stale**; `/karty/` 73 days (`02e182e`); `/hard-texts/` 71 days (`46f9059`); `/map/` 25 days (`e44686f`); `/hard-texts/genesis-6/` 2 days. `sitemap.xml` itself was edited 2026-10-02 (`69d3aa1`), so the file is actively maintained while these entries are refreshed by nobody.
+
+### 20.4 Series RSS coverage (improvement, not a defect)
+
+`data/series.json` holds 7 series / 49 published parts; **all 49 are in the main `feed.xml`**, so no material is undiscoverable. Only **1 of 7** series (`pastor-series`) has a dedicated RSS shard. `nagornaya`, `dzhon-gill`, `hard-texts`, `russian-baptism`, `genesis-6`, `teen-double-life` have none. Filed as an improvement: `GBS-SERIES-RSS-SHARD-COVERAGE`.
+
+### 20.5 The Gill sepia control works; sepia contrast does not (extension)
+
+At 390×844 on `/articles/dzhon-gill-chast-1-chelovek/` the control is `button.reader-setting-btn[data-gill-theme-btn][data-theme="sepia"]` inside the mobile settings sheet. Behaviour is correct: `#mobSettingsBtn` opens `#gillSettingsOverlay` (`aria-hidden` false, `aria-expanded` true), clicking Сепия sets `html[data-reader-theme="sepia"]` (body `rgb(253,252,249)` → `rgb(238,227,200)`), flips `aria-pressed` on both theme buttons, writes `gb:reader-preferences:v1`, and survives a reload; the desktop rail (`#railSettingsBtn`) opens the same sheet; 0 page errors. **Not filed.**
+
+Contrast in that theme is not: axe `color-contrast` reports **18** nodes in `light` and **19** in `sepia` (1 incomplete each) — e.g. `.gill-card__kicker` 3.24:1 in light (`#8d8d8b` on `#fdfcfb`) and 3.00:1 in sepia (`#95856c` on `#f5ead3`), `.gill-card__time` 3.00:1. Recorded as an extension of `GBS-TEXT-CONTRAST-RESIDUAL-BATCH`, not as a new row.
+
+Also checked and not filed: the legacy `localStorage` key `theme` stays `"light"` after switching to sepia, but no shipped file reads it; the legacy on-site search cannot return `/hard-texts/genesis-6/` (query «Бытие 6» → 1 result), which matches `searchManifestPolicy: "exclude"` in `data/route-search-policy.json` and is therefore policy, not drift. No Pagefind bundle exists in this build (`pagefind:build:dist` is not part of `strangler:build:production-like`), so no claim is made about production full-text search.
+
+Receipts: `evidence/2026-10-18-series-feeds-sitemap-sepia.json`.
