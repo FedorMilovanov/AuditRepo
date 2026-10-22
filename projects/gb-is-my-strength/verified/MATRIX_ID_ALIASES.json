@@ -237,6 +237,10 @@
     "GBS-404-RELATIVE-READER-PREFERENCES-ASSETS": {
       "status": "retired",
       "reason": "FIXED-CURRENT 2026-10-22 at Product d14da74c: merged #2159 / e8672532 roots all three 404 preference assets. Fresh build + 18 positive / 2 negative Pages-style browser controls and recovery checks pass. See reverify/2026-10-22-postclosure-current-main.md; independent live bytes/SW not certified."
+    },
+    "GBS-QUIZ-NEXT-HIDDEN-GILL-V16": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-22 at Product d14da74c: #2167 / 2ee584d3 scopes hiding to #glsQuizNext. 23 routes x4 profiles have visible ordinary next and result/restart; 4 Krajne pointer failures remain explicitly as independent GBS-KRAJNE-REDUCED-MOTION-QUIZ-OCCLUSION, not pointer PASS. See postclosure reverify continuation 1."
     }
   },
   "ignoredTokens": []

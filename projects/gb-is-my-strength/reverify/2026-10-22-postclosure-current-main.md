@@ -1,5 +1,7 @@
 # 2026-10-22 — сверка закрытий после AuditRepo #483
 
+> Ниже сохранены point-in-time checkpoints. Последующие продолжения явно уточняют прежний итог; текущий счётчик принадлежит MASTER.
+
 Scope: AuditRepo dispositions, не Product repair. Чистая база AuditRepo `7ccefa7ce519512b2284ac080b549c8ab5858172`, гейты 4/4 PASS. Исходные REPORT и receipts не переписывались.
 
 ## Свежие anchors и итог по всем 56 исходным единицам
@@ -47,3 +49,16 @@ GitHub повторно показывает Product `main` **`d14da74cfe9f45e9b
 Прежняя ошибка `#gbs2Pct` в верхней сводке MASTER помечена опровергнутой согласно уже имевшемуся painted witness 11.58:1; это не новое измерение контраста. Текущий Product исходный код и зависимости не менялись. Не заявляются live bytes, WebKit/реальные AT, candidate UI PASS, повтор всех 55 UI scenarios либо PRODUCT ZERO.
 
 AuditRepo после правок: основные гейты **4/4**, regression-команды **5/5 PASS**; только 404 снят с active rows; из 55 оставшихся строк 54 побайтово прежние, одна (contrast owner) явно расширена. Старые 58 registry entries, REPORT и 61 evidence-файл сохранены. Новые stream receipts: 39/81 документов, максимум 644/629 символов в строке; round-trip проверен.
+
+## Продолжение 1 — исправленный CSS квиза и новый независимый pointer blocker
+
+`GBS-QUIZ-NEXT-HIDDEN-GILL-V16` **FIXED-CURRENT**: Product #2167 / `2ee584d3` уже слит 2026-10-04. В `css/floating-cluster.css:4064,4073` скрывается только `#glsQuizNext`, а не `.quiz-next` всех квизов. Прежняя blanket-строка была устаревшей; наблюдение скрытой кнопки learning sheet не доказывает скрытие обычного article quiz.
+
+- Свежий census: 23 quiz routes, 15 под Gill wrapper / 8 controls; **92** result/restart traversals (23 × 2 widths × Light/Dark), первый вопрос/next активированы также клавиатурой. Все 92 ordinary next buttons имеют ненулевой размер. **88** mixed native pointer/keyboard flows прошли, **4** на Krajne потребовали keyboard-only diagnostic recovery и **не считаются pointer PASS**. Два мобильных обратимых negative controls возвращают старое широкое правило: ordinary next скрывается и появляется после удаления тестового style.
+- Literal markup **остаётся**: на первом-option пути виден на 9 маршрутах; отсутствие его в одном пути Hermenevtika не опровергает bonus payload. Существующая строка literal markup не закрыта. В 8 sampled health profiles fonts loaded / overflow 0; axe violations сохранены, глобального a11y PASS нет. Local LCP 392–1660ms, CLS максимум 0.100401; это lab samples, не production performance claim. Screenshots actual next controls просмотрены.
+- Новая самостоятельная `GBS-KRAJNE-REDUCED-MOTION-QUIZ-OCCLUSION`: при OS reduced motion оборот heart card перекрывает `#quizLaunch` на desktop/mobile и Light/Dark. Native click/tap получает interception от `.heart-flip-back-body` / `.heart-flip-back-closing`. При обычном motion оба width controls открывают квиз нормально; клавиатура также работает.
+- Механизм: `css/site.css:686` делает обе faces static/visible, но `src/runtime/article-reversible-cards.js:32–67` резервирует max(face) и normal/aspect height. На desktop родитель 545px при stacked faces 501.328+545.047px; на mobile 726px при 207.188+726.219px. Обратимый CSS A/B **только в памяти** (`height:auto;aspect-ratio:auto` у card/inner с тестовым priority) резервирует 1046.375/933.406px, восстанавливает hit-test и настоящий native launch; после удаления style и reload исходная блокировка возвращается. Это proof механизма, **не рекомендованный/слитый Product patch**.
+
+Нет искусственного уменьшения счётчика: **55 − 1 старый CSS defect + 1 новый независимый pointer defect = 55**. Последний не дублирует light-only contrast: он воспроизводится и в Dark, а исправление цвета не чинит геометрию. До Product mutation требуется проверить adjacent draft #2183/#2184 по shared CSS/runtime, не заводить конкурирующий lane.
+
+Данные: [116 компактных документов](evidence/2026-10-22-quiz-motion-recheck.json), включая все 106 quiz capture objects и 6 motion/A-B records, exact round-trip. Harnesses: `quiz-postclosure-recheck.mjs` (`WIDTH=1440/390 SCHEME=light/dark`), `reduced-motion-card-occlusion.mjs`; копировать в browser workspace. Первый пробный progress-check ошибался из-за CSS uppercase `innerText`; исправлен именно probe на DOM `textContent`. Реальные pointer failures не удалены, `force` не применялся.

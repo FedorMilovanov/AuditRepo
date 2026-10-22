@@ -486,3 +486,9 @@ This entry records the governance change only. It does not claim that the reform
 - 80 новых state observations без потерь: реальная квота снова даёт 4 ложных success / 4 необратимых legacy cleanup; AX unnamed covers ×2 в 4 профилях; malformed history 16 blocked / 20 healthy controls на fallback/настоящем Pagefind. Нормальные store/migration/preferences API controls проходят. Source favorite gate всё ещё 65/65 PASS и runtime fault не ловит.
 - Верхняя сводка MASTER `#gbs2Pct` согласована с уже имевшимся disproof 11.58:1; raw REPORT и старые receipts не менялись. Остальные 48 owner surfaces не имеют нового closure witness при том же exact anchor, а не объявлены заново воспроизведёнными.
 - Scope/методика/CI и ограничения (включая изоляцию SW в Pages fixture, 1 ненаблюдавшийся LCP и отсутствие live/WebKit/candidate UI PASS): `../reverify/2026-10-22-postclosure-current-main.md`; два компактных stream receipts в `../reverify/evidence/2026-10-22-{main-404-closure,state-boundaries-recheck}.json`.
+
+## 2026-10-22 — quiz owner correction / independent motion-height residual
+
+- `GBS-QUIZ-NEXT-HIDDEN-GILL-V16` retired FIXED-CURRENT: merged Product #2167 already scopes CSS to learning-sheet #glsQuizNext. Fresh 23-route ×4-profile traversal reaches result/restart with ordinary next visible; 88 mixed-native flows / 4 explicitly marked keyboard-only recovery. No force-click or global quiz PASS.
+- New `GBS-KRAJNE-REDUCED-MOTION-QUIZ-OCCLUSION`: static stacked faces exceed fixed/max-face height and intercept native quiz launch. Four profiles, two normal-motion controls and two reversible layout A/Bs establish source/runtime mechanism. Product not patched; separate from light-only ink contrast. **55 → 55 = 51 + 2 + 2**, not a hidden/fake closure of the remaining pointer defect.
+- Raw history preserved. Full capture + limits: `../reverify/2026-10-22-postclosure-current-main.md` Продолжение 1; `../reverify/evidence/2026-10-22-quiz-motion-recheck.json`.
