@@ -15,6 +15,8 @@ Result: `/tmp/gbchrome/chrome.sh` (Chromium 153 launcher) and `/home/user/gbs-sr
 `python3 -m http.server 8099` from that directory). The script asserts nothing about state — it prints `CLONE_OK`, `CHROME_OK`,
 `NPMCI_OK`, `BUILD_OK`, `ENV_READY` so a failure is visible at the step that produced it.
 
+`GBS_PRODUCT_DIR` позволяет указать другой Product clone. Существующий негитовый каталог скрипт не удаляет и не перезаписывает: preflight завершается с exit 11.
+
 ## What is kept here in full
 
 | file | purpose |

@@ -212,6 +212,27 @@
     "RIGHT-P72-TEXT-LINK-ONLY": {
       "status": "informational",
       "reason": "Research rights-policy evidence label limiting P72 to a text link; it is not a product defect and does not belong in the active matrix."
+    },
+    "GBS-AVRAAM-RUNTIME-DROPS-H1": {
+      "status": "alias",
+      "canonical": "GBS-AVRAAM-MAP-HEADING-LOST-ON-READY",
+      "reason": "2026-10-22: тот же ready-observer и потерянный h1, что в старшей canonical row; DOM/AX и axe blind-spot evidence перенесены туда. См. reverify/2026-10-22-premerge-necessity-reconciliation.md."
+    },
+    "GBS-GILL-PART-NUMBERING-SWAP": {
+      "status": "retired",
+      "reason": "2026-10-22: повторно внесённый optional GILL-SLUG-NUMBERING-LEGACY из WORK_QUEUE.md. Текущий Product guard сохраняет legacy URLs и display order; менять заголовки/URL для закрытия не требуется. См. reverify/2026-10-22-premerge-necessity-reconciliation.md."
+    },
+    "GBS-SERIES-RSS-SHARD-COVERAGE": {
+      "status": "retired",
+      "reason": "2026-10-22: 49/49 опубликованных частей уже в основном feed; необходимость отдельного RSS каждой серии не доказана. Optional в WORK_QUEUE.md, не Product fix; существующий stale pastor feed остаётся отдельным активным дефектом. См. reverify/2026-10-22-premerge-necessity-reconciliation.md."
+    },
+    "GBS-GILL-SERIES-NO-HUB-NO-ISPARTOF": {
+      "status": "retired",
+      "reason": "2026-10-22: отсутствие optional isPartOf у 5 частей не нарушает найденный Gill contract; серия обнаруживается через manifest и /biografii/#dzhon-gill-series. Optional schema consistency в WORK_QUEUE.md, не обязательный новый хаб. См. reverify/2026-10-22-premerge-necessity-reconciliation.md."
+    },
+    "GBS-SERIES-TEXT-GLYPH-CONTROLS": {
+      "status": "retired",
+      "reason": "2026-10-22: обязательность SVG/трёх тем не установлена; именованная кнопка-команда не обязана быть pressed-toggle. Optional consistency в WORK_QUEUE.md; измеренные contrast/label failures остаются у прежних canonical owners. См. reverify/2026-10-22-premerge-necessity-reconciliation.md."
     }
   },
   "ignoredTokens": []

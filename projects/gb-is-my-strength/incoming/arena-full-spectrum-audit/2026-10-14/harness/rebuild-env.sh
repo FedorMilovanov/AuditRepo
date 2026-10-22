@@ -19,11 +19,16 @@ mkdir -p "$WORK/out"
 cd "$WORK" || exit 1
 
 # --- 1. product clone (exact SHA is printed; the audit anchor is d14da74c) ---
-if [ ! -d /home/user/gbs-src/.git ]; then
-  rm -rf /home/user/gbs-src
-  git clone -q --depth 1 https://github.com/FedorMilovanov/gb-is-my-strength /home/user/gbs-src || exit 11
+PRODUCT="${GBS_PRODUCT_DIR:-/home/user/gbs-src}"
+if [ ! -e "$PRODUCT/.git" ]; then
+  if [ -e "$PRODUCT" ]; then
+    echo "Refusing to overwrite existing non-Git product directory: $PRODUCT" >&2
+    exit 11
+  fi
+  git clone -q --depth 1 https://github.com/FedorMilovanov/gb-is-my-strength "$PRODUCT" || exit 11
 fi
-echo "CLONE_OK $(git -C /home/user/gbs-src rev-parse --short HEAD)"
+PRODUCT_SHA="$(git -C "$PRODUCT" rev-parse --short HEAD)" || exit 11
+echo "CLONE_OK $PRODUCT_SHA"
 
 # --- 2. browser (199 MB binary ships inside the npm tarball; see setup-chrome.mjs) ---
 [ -f package.json ] || npm init -y >/dev/null 2>&1
@@ -36,7 +41,7 @@ echo "CHROME_OK"
 
 # --- 3. production-like build ---
 if [ "$1" != "--no-build" ]; then
-  cd /home/user/gbs-src || exit 17
+  cd "$PRODUCT" || exit 17
   npm ci --no-audit --no-fund >/tmp/npmci.log 2>&1 || { tail -20 /tmp/npmci.log; exit 18; }
   echo "NPMCI_OK"
   npm run strangler:build:production-like >/tmp/build.log 2>&1 || { tail -30 /tmp/build.log; exit 19; }
