@@ -233,6 +233,10 @@
     "GBS-SERIES-TEXT-GLYPH-CONTROLS": {
       "status": "retired",
       "reason": "2026-10-22: обязательность SVG/трёх тем не установлена; именованная кнопка-команда не обязана быть pressed-toggle. Optional consistency в WORK_QUEUE.md; измеренные contrast/label failures остаются у прежних canonical owners. См. reverify/2026-10-22-premerge-necessity-reconciliation.md."
+    },
+    "GBS-404-RELATIVE-READER-PREFERENCES-ASSETS": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-22 at Product d14da74c: merged #2159 / e8672532 roots all three 404 preference assets. Fresh build + 18 positive / 2 negative Pages-style browser controls and recovery checks pass. See reverify/2026-10-22-postclosure-current-main.md; independent live bytes/SW not certified."
     }
   },
   "ignoredTokens": []

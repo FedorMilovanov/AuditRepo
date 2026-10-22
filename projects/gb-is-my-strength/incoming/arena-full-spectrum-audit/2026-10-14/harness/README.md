@@ -45,6 +45,7 @@ Result: `/tmp/gbchrome/chrome.sh` (Chromium 153 launcher) and `/home/user/gbs-sr
 | `genealogy-reopen-and-journal.mjs` | 8 profiles: pointer/touch reopen vs keyboard, G3 source projection, disposable sticky scroll-owner A/B; capture, not product PASS (continuation 15) |
 | `browser-state-boundaries.mjs` | Before Pagefind build: native favorite UI, real quota, migration, AX, preferences API and fallback history; WIDTH=1440/390 (continuation 16) |
 | `pagefind-history-boundary.mjs` | After canonical Pagefind build: same history boundary with actual index-derived target and module/WASM responses (continuation 16) |
+| `404-postclosure-recheck.mjs` | 2026-10-22 closure recheck: root + nested Pages-style 404, 3 themes × 2 widths, old-relative negative controls, recovery and axe; SW explicitly isolated, not live/SW PASS |
 | `mobile-icons-sweep.mjs` | icon-button geometry at 390 and 768: off-viewport, sub-24 px tap targets, per route (continuation 10) |
 | `hero-crumb.mjs` | home hero accessible name (axe `label-content-name-mismatch`) and the `/hard-texts/genesis-6/` breadcrumb/brand collision (continuation 10) |
 | `final-sweep.mjs` | axe (WCAG A/AA + best practice) and LCP/CLS on six routes, mobile profile (continuation 10) |
