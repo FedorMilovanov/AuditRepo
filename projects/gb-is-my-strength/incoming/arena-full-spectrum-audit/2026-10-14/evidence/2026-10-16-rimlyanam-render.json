@@ -1,46 +1,4 @@
 {
- "390": {
-  "title": "Римлянам 7: верующий, неверующий или человек под законом? | Господь Бог — Сила Моя",
-  "h1": "Римлянам 7: верующий, неверующий или человек под законом?",
-  "fnMarkers": 0,
-  "mapTriggers": 0,
-  "tooltips": 0,
-  "endnotes": 0,
-  "sourcesHeading": null,
-  "bodyChars": 28824,
-  "docHeight": 29538,
-  "hasDates": false,
-  "sourcesText": true,
-  "sourcesSnippet": "Первоисточники (тезис; прямые цитаты не приводятся без сверки локатора): Calvin J., Commentary on Romans",
-  "consoleErrors": [
-   "Failed to load resource: net::ERR_CONNECTION_CLOSED"
-  ],
-  "httpErrors": [],
-  "failedRequests": [
-   "net::ERR_CONNECTION_CLOSED https://mc.yandex.ru/metrika/tag.js?id=108353327"
-  ],
-  "loadMs": 1918
- },
- "1440": {
-  "title": "Римлянам 7: верующий, неверующий или человек под законом? | Господь Бог — Сила Моя",
-  "h1": "Римлянам 7: верующий, неверующий или человек под законом?",
-  "fnMarkers": 0,
-  "mapTriggers": 0,
-  "tooltips": 0,
-  "endnotes": 0,
-  "sourcesHeading": null,
-  "bodyChars": 29766,
-  "docHeight": 21992,
-  "hasDates": false,
-  "sourcesText": true,
-  "sourcesSnippet": "Первоисточники (тезис; прямые цитаты не приводятся без сверки локатора): Calvin J., Commentary on Romans",
-  "consoleErrors": [
-   "Failed to load resource: net::ERR_CONNECTION_CLOSED"
-  ],
-  "httpErrors": [],
-  "failedRequests": [
-   "net::ERR_CONNECTION_CLOSED https://mc.yandex.ru/metrika/tag.js?id=108353327"
-  ],
-  "loadMs": 1888
- }
+ "390":{"title":"Римлянам 7: верующий, неверующий или человек под законом? | Господь Бог — Сила Моя","h1":"Римлянам 7: верующий, неверующий или человек под законом?","fnMarkers":0,"mapTriggers":0,"tooltips":0,"endnotes":0,"sourcesHeading":null,"bodyChars":28824,"docHeight":29538,"hasDates":false,"sourcesText":true,"sourcesSnippet":"Первоисточники (тезис; прямые цитаты не приводятся без сверки локатора): Calvin J., Commentary on Romans","consoleErrors":["Failed to load resource: net::ERR_CONNECTION_CLOSED"],"httpErrors":[],"failedRequests":["net::ERR_CONNECTION_CLOSED https://mc.yandex.ru/metrika/tag.js?id=108353327"],"loadMs":1918},
+ "1440":{"title":"Римлянам 7: верующий, неверующий или человек под законом? | Господь Бог — Сила Моя","h1":"Римлянам 7: верующий, неверующий или человек под законом?","fnMarkers":0,"mapTriggers":0,"tooltips":0,"endnotes":0,"sourcesHeading":null,"bodyChars":29766,"docHeight":21992,"hasDates":false,"sourcesText":true,"sourcesSnippet":"Первоисточники (тезис; прямые цитаты не приводятся без сверки локатора): Calvin J., Commentary on Romans","consoleErrors":["Failed to load resource: net::ERR_CONNECTION_CLOSED"],"httpErrors":[],"failedRequests":["net::ERR_CONNECTION_CLOSED https://mc.yandex.ru/metrika/tag.js?id=108353327"],"loadMs":1888}
 }

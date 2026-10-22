@@ -11,25 +11,5 @@
  {"route":"/baptisty-rossii/dva-sezda-1884/","authoredStatic":1,"liveTotal":4,"autoAdded":3,"withKey":3,"withoutKey":1,"withoutExpandBtn":1,"conflicts":[]},
  {"route":"/baptisty-rossii/noch-na-kure/","authoredStatic":1,"liveTotal":4,"autoAdded":3,"withKey":3,"withoutKey":1,"withoutExpandBtn":1,"conflicts":[]},
  {"route":"/baptisty-rossii/peterburgskaya-liniya/","authoredStatic":1,"liveTotal":3,"autoAdded":2,"withKey":2,"withoutKey":1,"withoutExpandBtn":1,"conflicts":[]},
- {
-  "route": "/baptisty-rossii/yuzhnaya-shtunda/",
-  "authoredStatic": 1,
-  "liveTotal": 7,
-  "autoAdded": 6,
-  "withKey": 7,
-  "withoutKey": 0,
-  "withoutExpandBtn": 0,
-  "conflicts": [
-   {
-    "key": "штундизм",
-    "occurrences": 3,
-    "variants": [
-     "Штунда — от немецкого Stunde, «час»: первоначально домашние часы чтения Библии и молитвы, связанные с немецкими колонистами и пиетистской средой. Позд",
-     "Евангельское пробудительное движение среди крестьян юга Российской империи во второй половине XIX века, ставшее одним из корней русского баптизма."
-    ],
-    "dictBrief": "Евангельское пробудительное движение среди крестьян юга Российской империи во второй половине XIX века, ставшее одним из корней русского баптизма.",
-    "authoredVariantCount": 1
-   }
-  ]
- }
+ {"route":"/baptisty-rossii/yuzhnaya-shtunda/","authoredStatic":1,"liveTotal":7,"autoAdded":6,"withKey":7,"withoutKey":0,"withoutExpandBtn":0,"conflicts":[{"key":"штундизм","occurrences":3,"variants":["Штунда — от немецкого Stunde, «час»: первоначально домашние часы чтения Библии и молитвы, связанные с немецкими колонистами и пиетистской средой. Позд","Евангельское пробудительное движение среди крестьян юга Российской империи во второй половине XIX века, ставшее одним из корней русского баптизма."],"dictBrief":"Евангельское пробудительное движение среди крестьян юга Российской империи во второй половине XIX века, ставшее одним из корней русского баптизма.","authoredVariantCount":1}]}
 ]
