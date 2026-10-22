@@ -498,3 +498,9 @@ This entry records the governance change only. It does not claim that the reform
 - `GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED` retired FIXED-CURRENT by merged #2167: 12 native cold controls verify click/tap, Ctrl/Meta+K, query, unique dialog and close/focus; source owner contract passes unchanged assertions (18 geometry / 2 interaction), with explicit sandbox launcher adaptation.
 - Current overlap/clipping restricted to native `/articles/`; fixed shared Header routes are removed from those claims. Baptist byline restricted to four label/datetime mismatches, Spravochnik #2166 healthy; no mandatory universal two-date convention. Prior blocked-release/live split is historical, not current evidence.
 - **55 → 54 = 50 + 2 + 2.** Total vs original 56: three old repairs closed, one independent reduced-motion occlusion admitted. Full methods/limits and stream receipt: `../reverify/2026-10-22-postclosure-current-main.md` Продолжение 2, `../reverify/evidence/2026-10-22-header-byline-recheck.json`. No Product mutation or global ZERO.
+
+## 2026-10-23 — note contract / independent interaction criteria
+
+- Счётчик пока **54**, Product fixes/closures не заявляются. Подтверждены 175 numbered /172 mismatches /9 unnumbered explanations across184 notes; current preserve-number contract исключает безусловную перенумерацию автора. Stable content binding не потерян.
+- SYS narrowed к closed nested interactivity (7 Krajne +1 Gill-1), actual owner article-tooltips v20. Изоляция и inert A/B отделяют это от numbering/label mismatch; обязательное перемещение DOM не навязывается, existing draft #2183 acknowledged, numbering policy требует reconciliation/подтверждённого override.
+- Старые receipts сохранены; current evidence/границы: `../reverify/2026-10-23-semantic-contract-recheck.md` §1 и `../reverify/evidence/2026-10-23-note-contract-recheck.json`. Source core guard PASS не выдаётся за route-wide browser coverage.
