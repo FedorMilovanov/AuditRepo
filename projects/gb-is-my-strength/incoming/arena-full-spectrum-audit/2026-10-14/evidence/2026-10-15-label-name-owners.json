@@ -109,15 +109,8 @@
   },
   "hits":2
  },
- {
-  "key":"note-ref-articles-krajne-li-isporcheno-serdce-note-6fd5ae6918fc",
-  "routes":["/articles/krajne-li-isporcheno-serdce/"],
-  "viewports":[390,1440],
-  "ariaLabels":["Показать сноску 10"],
-  "visible":["12"],
-  "sample":{"route":"/articles/krajne-li-isporcheno-serdce/","viewport":1440,"target":"#note-ref-articles-krajne-li-isporcheno-serdce-note-6fd5ae6918fc","tag":"SPAN","id":"note-ref-articles-krajne-li-isporcheno-serdce-note-6fd5ae6918fc","cls":"fn-marker","ariaLabel":"Показать сноску 10","role":"button","title":null,"tagText":null,"ownText":"12","innerText":"12 Гейдельбергский катехизис. Вопрос 8.","width":21,"height":13,"fontSize":"12.6px","fontWeight":"700","visible":true,"parentCls":"","dataAttrs":["data-note-id=articles-krajne-li-isporcheno-","data-note-ordinal=10","data-reader-note-policy=exclude","data-reader-exclude=note","data-no-speech=","data-gb-tooltip-ready=1"]},
-  "hits":2
- },
+ {"key":"note-ref-articles-krajne-li-isporcheno-serdce-note-6fd5ae6918fc","routes":["/articles/krajne-li-isporcheno-serdce/"],"viewports":[390,1440],"ariaLabels":["Показать сноску 10"],"visible":["12"],"sample":{"route":"/articles/krajne-li-isporcheno-serdce/","viewport":1440,"target":"#note-ref-articles-krajne-li-isporcheno-serdce-note-6fd5ae6918fc","tag":"SPAN","id":"note-ref-articles-krajne-li-isporcheno-serdce-note-6fd5ae6918fc","cls":"fn-marker","ariaLabel":"Показать сноску 10","role":"button","title":null,"tagText":null,"ownText":"12","innerText":"12 Гейдельбергский катехизис. Вопрос 8.","width":21,"height":13,"fontSize":"12.6px","fontWeight":"700","visible":true,"parentCls":"",
+ "dataAttrs":["data-note-id=articles-krajne-li-isporcheno-","data-note-ordinal=10","data-reader-note-policy=exclude","data-reader-exclude=note","data-no-speech=","data-gb-tooltip-ready=1"]},"hits":2},
  {
   "key":"note-ref-articles-krajne-li-isporcheno-serdce-note-4d97015f09a6",
   "routes":["/articles/krajne-li-isporcheno-serdce/"],
