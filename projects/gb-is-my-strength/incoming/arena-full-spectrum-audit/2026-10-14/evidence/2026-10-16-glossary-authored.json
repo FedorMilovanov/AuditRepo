@@ -1,13 +1,6 @@
 [
 {"route":"/articles/dzhon-gill-chast-1-chelovek/","term":"D.D.","key":null,"authored":"D.D. — Doctor of Divinity, «доктор богословия»: почётная богословская степень Маришальского колледжа в Абердине, которую Гилл уже носил к 1748 году; точная институциональная дата и основание должны указываться по колледжному документу.","dict_brief":null,"detail_len":0},
-{
-"route": "/articles/dzhon-gill-chast-1-chelovek/",
-"term": "providential narrative",
-"key": null,
-"authored": "Провиденциальный биографический рассказ, сохраняющий общинное понимание Божьего водительства. Он важен для истории памяти, но не равен независимому документу 1697 года.",
-"dict_brief": null,
-"detail_len": 0
-},
+{"route":"/articles/dzhon-gill-chast-1-chelovek/","term":"providential narrative","key":null,"authored":"Провиденциальный биографический рассказ, сохраняющий общинное понимание Божьего водительства. Он важен для истории памяти, но не равен независимому документу 1697 года.","dict_brief":null,"detail_len":0},
 {
 "route": "/articles/dzhon-gill-chast-2-uchenyi/",
 "term": "вечный совет искупления",
