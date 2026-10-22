@@ -574,15 +574,8 @@
   },
   "hits":2
  },
- {
-  "key":"heart-flip-card",
-  "routes":["/articles/krajne-li-isporcheno-serdce/"],
-  "viewports":[390,1440],
-  "ariaLabels":["Нажмите, чтобы перевернуть карточку"],
-  "visible":["👆 ПЕРЕВЕРНИ Вот оно, возрождённое сердце. Израненное, но жи"],
-  "sample":{"route":"/articles/krajne-li-isporcheno-serdce/","viewport":1440,"target":".heart-flip-card","tag":"DIV","id":null,"cls":"heart-flip-card","ariaLabel":"Нажмите, чтобы перевернуть карточку","role":"button","title":null,"tagText":null,"ownText":"","innerText":"👆 ПЕРЕВЕРНИ Вот оно, возрождённое сердце. Израненное, но живое. Несущее на себе и старые ","width":752,"height":545,"fontSize":"18px","fontWeight":"400","visible":true,"parentCls":"heart-flip-wrap","dataAttrs":["data-gb-reversible-card-owner=native-v1","data-gb-reversible-card-bound=native-v1"]},
-  "hits":2
- },
+ {"key":"heart-flip-card","routes":["/articles/krajne-li-isporcheno-serdce/"],"viewports":[390,1440],"ariaLabels":["Нажмите, чтобы перевернуть карточку"],"visible":["👆 ПЕРЕВЕРНИ Вот оно, возрождённое сердце. Израненное, но жи"],"sample":{"route":"/articles/krajne-li-isporcheno-serdce/","viewport":1440,"target":".heart-flip-card","tag":"DIV","id":null,"cls":"heart-flip-card","ariaLabel":"Нажмите, чтобы перевернуть карточку","role":"button","title":null,"tagText":null,"ownText":"","innerText":"👆 ПЕРЕВЕРНИ Вот оно, возрождённое сердце. Израненное, но живое. Несущее на себе и старые ","width":752,"height":545,"fontSize":"18px","fontWeight":"400","visible":true,"parentCls":"heart-flip-wrap",
+ "dataAttrs":["data-gb-reversible-card-owner=native-v1","data-gb-reversible-card-bound=native-v1"]},"hits":2},
  {
   "key":"note-ref-articles-krajne-li-isporcheno-serdce-note-9598904ac9d3",
   "routes":["/articles/krajne-li-isporcheno-serdce/"],
