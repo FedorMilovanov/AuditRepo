@@ -245,6 +245,15 @@
     "GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED": {
       "status": "retired",
       "reason": "FIXED-CURRENT 2026-10-22 at d14da74c: merged #2167 / 2ee584d3 adds first-click Header bridge. 12 native cold bootstrap controls at 390/1280 Light/Dark verify query, click/tap, Ctrl+K, Meta+K, close/focus; unchanged owner contract also passes. Native articles overlap/clipping remain separate, narrowed owners. See postclosure reverify continuation 2."
+    },
+    "GBS-GLOSSARY-DEFINITION-PROVENANCE": {
+      "status": "alias",
+      "canonical": "GBS-INLINE-TOOLTIP-DEFINITION-ASSOCIATION",
+      "reason": "2026-10-23 PARTIAL/NARROWED: literal brief inequality is not a proven necessary bug; retain verified shared gterm/bref definition-association defect under precise canonical name. Same work unit, no duplicate count. See semantic-contract reverify."
+    },
+    "GBS-SCRIPTURE-AFFORDANCE-PLACEHOLDER-ONLY": {
+      "status": "retired",
+      "reason": "2026-10-23 necessity not established: 238 controls have no verified explicit verse-text promise and expand abbreviation to full reference; data/rights restriction is not mandatory corpus/publication work. Actual native-AX association issue consolidated under GBS-INLINE-TOOLTIP-DEFINITION-ASSOCIATION. Not a Product fix; reconsider on verified text promise/eligible-record failure."
     }
   },
   "ignoredTokens": []
