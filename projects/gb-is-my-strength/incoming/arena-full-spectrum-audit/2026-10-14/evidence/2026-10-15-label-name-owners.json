@@ -1,15 +1,8 @@
 [
  {"key":"heroSearchBar","routes":["/"],"viewports":[390,1440],"ariaLabels":["Открыть поиск по материалам сайта"],"visible":["Что вы хотите изучить?","Что вы хотите изучить? НАЙТИ Ctrl K"],"sample":{"route":"/","viewport":1440,"target":"#heroSearchBar","tag":"A","id":"heroSearchBar","cls":"h-hero-search","ariaLabel":"Открыть поиск по материалам сайта","role":null,"title":null,"tagText":null,"ownText":"","innerText":"Что вы хотите изучить? НАЙТИ Ctrl K","width":820,"height":68,"fontSize":"18px","fontWeight":"400","visible":true,"parentCls":"h-hero-search-wrap","dataAttrs":["data-action=open-search"]},"hits":2},
  {"key":"about-contact-item","routes":["/about/"],"viewports":[390,1440],"ariaLabels":["Telegram личный","ВКонтакте личный","Email","Max"],"visible":["Telegram @fedormilovanov","ВКонтакте vk.com/curtmf","Email viktorcoy2012@gmail.com","M Max профиль"],"sample":{"route":"/about/","viewport":390,"target":"a[aria-label=\"Telegram личный\"]","tag":"A","id":null,"cls":"about-contact-item","ariaLabel":"Telegram личный","role":null,"title":null,"tagText":null,"ownText":"","innerText":"Telegram @fedormilovanov","width":311,"height":54,"fontSize":"16px","fontWeight":"400","visible":true,"parentCls":"about-contact-card","dataAttrs":[]},"hits":8},
- {
-  "key":"map-trigger",
-  "routes":["/articles/20-antisovetov-pastoru/"],
-  "viewports":[390,1440],
-  "ariaLabels":["Открыть пояснение 42","Открыть пояснение 43","Открыть пояснение 19"],
-  "visible":["осторожная аналогия из семейно-системной и организационной т","законничество в Писании именуется","извращением правосудия. Процедура, созданная для справедливо"],
-  "sample":{"route":"/articles/20-antisovetov-pastoru/","viewport":1440,"target":"span[data-tip=\"43\"]","tag":"SPAN","id":null,"cls":"map-trigger","ariaLabel":"Открыть пояснение 43","role":"button","title":null,"tagText":null,"ownText":"законничество в Писании именуется","innerText":"законничество в Писании именуется извращением правосудия. Процедура, созданная для справед","width":752,"height":81,"fontSize":"18px","fontWeight":"400","visible":true,"parentCls":"mb-6","dataAttrs":["data-tip=43","data-gb-strategic-map-owner=native-v1","data-gb-strategic-map-bound=native-v1"]},
-  "hits":6
- },
+ {"key":"map-trigger","routes":["/articles/20-antisovetov-pastoru/"],"viewports":[390,1440],"ariaLabels":["Открыть пояснение 42","Открыть пояснение 43","Открыть пояснение 19"],"visible":["осторожная аналогия из семейно-системной и организационной т","законничество в Писании именуется","извращением правосудия. Процедура, созданная для справедливо"],"sample":{"route":"/articles/20-antisovetov-pastoru/","viewport":1440,"target":"span[data-tip=\"43\"]","tag":"SPAN","id":null,"cls":"map-trigger","ariaLabel":"Открыть пояснение 43","role":"button","title":null,"tagText":null,"ownText":"законничество в Писании именуется",
+ "innerText":"законничество в Писании именуется извращением правосудия. Процедура, созданная для справед","width":752,"height":81,"fontSize":"18px","fontWeight":"400","visible":true,"parentCls":"mb-6","dataAttrs":["data-tip=43","data-gb-strategic-map-owner=native-v1","data-gb-strategic-map-bound=native-v1"]},"hits":6},
  {
   "key":"mobPartTocBtn",
   "routes":["/articles/20-antisovetov-pastoru/","/articles/dzhon-gill-chast-1-chelovek/","/articles/krajne-li-isporcheno-serdce/"],
