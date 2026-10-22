@@ -1,0 +1,100 @@
+{"kind":"anchor","product_main":"d14da74cfe9f45e9b03e383e8e622695b01f8e16","attested_date":"2026-10-22","browser":"Chromium 153","header_fix_pr":2167,"header_fix_merge":"2ee584d3020b35f5ac7229415fd556affa18c7d3","spravochnik_fix_pr":2166,"spravochnik_fix_merge":"888af5d24d41a370130ce210d82140d86ac1c96b"}
+{
+"kind":"owned-header-contract",
+"script":"scripts/header-cluster-browser-contract.mjs",
+"launch_adapter":"only executablePath=/tmp/gbchrome/chrome.sh + --no-sandbox; original assertions unchanged; not vanilla CI/WebKit",
+"report":{
+"schemaVersion":1,
+"source":"actual Astro Header.astro in production-like dist",
+"assertions":{"widths":[360,390,414,768],"routes":["/izbrannoe/","/hard-texts/genesis-6/","/"],"plainAndMobileTouchContexts":true,"targets44px":true,"insideViewport":true,"centreHitTest":true,"zeroSearchThemeOverlap":true,"focusVisibleLightDark":true,"homeClusterFocusVisibleLightDark":true,"firstClickOpensExactlyOnce":true,"ctrlKOpensExactlyOnce":true},
+"geometry":[
+{"context":"plain","route":"/izbrannoe/","width":360,"searchBox":{"left":225,"right":269,"top":46,"bottom":90,"width":44,"height":44},"themeBox":{"left":269,"right":313,"top":46,"bottom":90,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":-15},
+{"context":"plain","route":"/izbrannoe/","width":390,"searchBox":{"left":255,"right":299,"top":46,"bottom":90,"width":44,"height":44},"themeBox":{"left":299,"right":343,"top":46,"bottom":90,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":-15},
+{"context":"plain","route":"/izbrannoe/","width":414,"searchBox":{"left":278.453125,"right":322.453125,"top":46,"bottom":90,"width":44,"height":44},"themeBox":{"left":322.453125,"right":366.453125,"top":46,"bottom":90,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":-15},
+{"context":"plain","route":"/izbrannoe/","width":768,"searchBox":{"left":618.28125,"right":662.28125,"top":6.5,"bottom":50.5,"width":44,"height":44},"themeBox":{"left":662.28125,"right":706.28125,"top":6.5,"bottom":50.5,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":-15},
+{"context":"plain","route":"/hard-texts/genesis-6/","width":360,"searchBox":{"left":248.5,"right":292.5,"top":42.09375,"bottom":86.09375,"width":44,"height":44},"themeBox":{"left":292.5,"right":336.5,"top":42.09375,"bottom":86.09375,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":-15},
+{"context":"plain","route":"/hard-texts/genesis-6/","width":390,"searchBox":{"left":278.5,"right":322.5,"top":42.09375,"bottom":86.09375,"width":44,"height":44},"themeBox":{"left":322.5,"right":366.5,"top":42.09375,"bottom":86.09375,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":-15},
+{"context":"plain","route":"/hard-texts/genesis-6/","width":414,"searchBox":{"left":302.5,"right":346.5,"top":9.59375,"bottom":53.59375,"width":44,"height":44},"themeBox":{"left":346.5,"right":390.5,"top":9.59375,"bottom":53.59375,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":-15},
+{"context":"plain","route":"/hard-texts/genesis-6/","width":768,"searchBox":{"left":656.5,"right":700.5,"top":9.59375,"bottom":53.59375,"width":44,"height":44},"themeBox":{"left":700.5,"right":744.5,"top":9.59375,"bottom":53.59375,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":-15},
+{"context":"plain","route":"/","width":768,"searchBox":{"left":649.28125,"right":693.28125,"top":0,"bottom":44,"width":44,"height":44},"themeBox":{"left":693.28125,"right":737.28125,"top":0,"bottom":44,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":0},
+{"context":"mobile-touch","route":"/izbrannoe/","width":360,"searchBox":{"left":240,"right":284,"top":46,"bottom":90,"width":44,"height":44},"themeBox":{"left":284,"right":328,"top":46,"bottom":90,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":0},
+{"context":"mobile-touch","route":"/izbrannoe/","width":390,"searchBox":{"left":270,"right":314,"top":46,"bottom":90,"width":44,"height":44},"themeBox":{"left":314,"right":358,"top":46,"bottom":90,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":0},
+{"context":"mobile-touch","route":"/izbrannoe/","width":414,"searchBox":{"left":293.453125,"right":337.453125,"top":46,"bottom":90,"width":44,"height":44},"themeBox":{"left":337.453125,"right":381.453125,"top":46,"bottom":90,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":0},
+{"context":"mobile-touch","route":"/izbrannoe/","width":768,"searchBox":{"left":633.28125,"right":677.28125,"top":6.5,"bottom":50.5,"width":44,"height":44},"themeBox":{"left":677.28125,"right":721.28125,"top":6.5,"bottom":50.5,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":0},
+{"context":"mobile-touch","route":"/hard-texts/genesis-6/","width":360,"searchBox":{"left":256,"right":300,"top":42.09375,"bottom":86.09375,"width":44,"height":44},"themeBox":{"left":300,"right":344,"top":42.09375,"bottom":86.09375,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":0},
+{"context":"mobile-touch","route":"/hard-texts/genesis-6/","width":390,"searchBox":{"left":286,"right":330,"top":42.09375,"bottom":86.09375,"width":44,"height":44},"themeBox":{"left":330,"right":374,"top":42.09375,"bottom":86.09375,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":0},
+{"context":"mobile-touch","route":"/hard-texts/genesis-6/","width":414,"searchBox":{"left":310,"right":354,"top":9.59375,"bottom":53.59375,"width":44,"height":44},"themeBox":{"left":354,"right":398,"top":9.59375,"bottom":53.59375,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":0},
+{"context":"mobile-touch","route":"/hard-texts/genesis-6/","width":768,"searchBox":{"left":664,"right":708,"top":9.59375,"bottom":53.59375,"width":44,"height":44},"themeBox":{"left":708,"right":752,"top":9.59375,"bottom":53.59375,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":0},
+{"context":"mobile-touch","route":"/","width":768,"searchBox":{"left":605.28125,"right":649.28125,"top":0,"bottom":44,"width":44,"height":44},"themeBox":{"left":649.28125,"right":693.28125,"top":0,"bottom":44,"width":44,"height":44},"searchHit":true,"themeHit":true,"overlap":0,"rootOverflow":0}
+],
+"interactions":[
+{
+"context":"plain",
+"clickOpenEvents":1,
+"shortcutOpenEvents":1,
+"focusEvidence":[
+{"label":"plain:/izbrannoe/","dark":false,"selector":"#hCpBtnNav","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"10px"}},
+{"label":"plain:/izbrannoe/","dark":false,"selector":"#themeToggle","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"10px"}},
+{"label":"plain:/izbrannoe/","dark":true,"selector":"#hCpBtnNav","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"10px"}},
+{"label":"plain:/izbrannoe/","dark":true,"selector":"#themeToggle","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"10px"}},
+{"label":"plain:/","dark":false,"selector":"#gbSearchBtn","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"0px"}},
+{"label":"plain:/","dark":false,"selector":"#themeToggle","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"0px"}},
+{"label":"plain:/","dark":true,"selector":"#gbSearchBtn","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"0px"}},
+{"label":"plain:/","dark":true,"selector":"#themeToggle","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"0px"}}
+]
+},
+{
+"context":"mobile-touch",
+"clickOpenEvents":1,
+"shortcutOpenEvents":1,
+"focusEvidence":[
+{"label":"mobile-touch:/izbrannoe/","dark":false,"selector":"#hCpBtnNav","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"10px"}},
+{"label":"mobile-touch:/izbrannoe/","dark":false,"selector":"#themeToggle","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"10px"}},
+{"label":"mobile-touch:/izbrannoe/","dark":true,"selector":"#hCpBtnNav","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"10px"}},
+{"label":"mobile-touch:/izbrannoe/","dark":true,"selector":"#themeToggle","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"10px"}},
+{"label":"mobile-touch:/","dark":false,"selector":"#gbSearchBtn","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"0px"}},
+{"label":"mobile-touch:/","dark":false,"selector":"#themeToggle","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"0px"}},
+{"label":"mobile-touch:/","dark":true,"selector":"#gbSearchBtn","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"0px"}},
+{"label":"mobile-touch:/","dark":true,"selector":"#themeToggle","style":{"outlineStyle":"solid","outlineWidth":"2px","outlineOffset":"2px","borderRadius":"0px"}}
+]
+}
+]
+}
+}
+{"kind":"method","header_geometry":"four routes at 390/768 mobile and 1280 desktop; computed rects + elementFromPoint centres; fonts.ready","bylines":"six current dist routes; browser time labels/datetime/display/size plus exact artifact JSON-LD/article:published_time; no live label claim","native_header":"three routes x2 widths xLight/Dark; search.js delayed 300ms, not replaced; click/tap + Ctrl+K + Meta+K + query + Escape/button close/focus restoration"}
+{"id":"header-390-light-/izbrannoe/","width":390,"theme":"light","route":"/izbrannoe/","coldDelayMs":300,"clickOpens":1,"shortcutOpens":1,"metaOpens":1,"results":12,"dialogs":1,"escapeFocus":true,"closeFocus":true,"metaFocus":true,"consoleKinds":{},"errors":[]}
+{"id":"header-390-light-/hard-texts/genesis-6/","width":390,"theme":"light","route":"/hard-texts/genesis-6/","coldDelayMs":300,"clickOpens":1,"shortcutOpens":1,"metaOpens":1,"results":12,"dialogs":1,"escapeFocus":true,"closeFocus":true,"metaFocus":true,"consoleKinds":{},"errors":[]}
+{"id":"header-390-light-/articles/","width":390,"theme":"light","route":"/articles/","coldDelayMs":300,"clickOpens":1,"shortcutOpens":1,"metaOpens":1,"results":12,"dialogs":1,"escapeFocus":true,"closeFocus":true,"metaFocus":true,"consoleKinds":{"sandbox-metrika":1},"errors":[]}
+{"id":"header-390-dark-/izbrannoe/","width":390,"theme":"dark","route":"/izbrannoe/","coldDelayMs":300,"clickOpens":1,"shortcutOpens":1,"metaOpens":1,"results":12,"dialogs":1,"escapeFocus":true,"closeFocus":true,"metaFocus":true,"consoleKinds":{},"errors":[]}
+{"id":"header-390-dark-/hard-texts/genesis-6/","width":390,"theme":"dark","route":"/hard-texts/genesis-6/","coldDelayMs":300,"clickOpens":1,"shortcutOpens":1,"metaOpens":1,"results":12,"dialogs":1,"escapeFocus":true,"closeFocus":true,"metaFocus":true,"consoleKinds":{},"errors":[]}
+{"id":"header-390-dark-/articles/","width":390,"theme":"dark","route":"/articles/","coldDelayMs":300,"clickOpens":1,"shortcutOpens":1,"metaOpens":1,"results":12,"dialogs":1,"escapeFocus":true,"closeFocus":true,"metaFocus":true,"consoleKinds":{"sandbox-metrika":1},"errors":[]}
+{"id":"header-1280-light-/izbrannoe/","width":1280,"theme":"light","route":"/izbrannoe/","coldDelayMs":300,"clickOpens":1,"shortcutOpens":1,"metaOpens":1,"results":12,"dialogs":1,"escapeFocus":true,"closeFocus":true,"metaFocus":true,"consoleKinds":{},"errors":[]}
+{"id":"header-1280-light-/hard-texts/genesis-6/","width":1280,"theme":"light","route":"/hard-texts/genesis-6/","coldDelayMs":300,"clickOpens":1,"shortcutOpens":1,"metaOpens":1,"results":12,"dialogs":1,"escapeFocus":true,"closeFocus":true,"metaFocus":true,"consoleKinds":{},"errors":[]}
+{"id":"header-1280-light-/articles/","width":1280,"theme":"light","route":"/articles/","coldDelayMs":300,"clickOpens":1,"shortcutOpens":1,"metaOpens":1,"results":12,"dialogs":1,"escapeFocus":true,"closeFocus":true,"metaFocus":true,"consoleKinds":{"sandbox-metrika":1},"errors":[]}
+{"id":"header-1280-dark-/izbrannoe/","width":1280,"theme":"dark","route":"/izbrannoe/","coldDelayMs":300,"clickOpens":1,"shortcutOpens":1,"metaOpens":1,"results":12,"dialogs":1,"escapeFocus":true,"closeFocus":true,"metaFocus":true,"consoleKinds":{},"errors":[]}
+{"id":"header-1280-dark-/hard-texts/genesis-6/","width":1280,"theme":"dark","route":"/hard-texts/genesis-6/","coldDelayMs":300,"clickOpens":1,"shortcutOpens":1,"metaOpens":1,"results":12,"dialogs":1,"escapeFocus":true,"closeFocus":true,"metaFocus":true,"consoleKinds":{},"errors":[]}
+{"id":"header-1280-dark-/articles/","width":1280,"theme":"dark","route":"/articles/","coldDelayMs":300,"clickOpens":1,"shortcutOpens":1,"metaOpens":1,"results":12,"dialogs":1,"escapeFocus":true,"closeFocus":true,"metaFocus":true,"consoleKinds":{"sandbox-metrika":1},"errors":[]}
+{"kind":"header","width":390,"route":"/","search":{"x":238,"right":282,"y":8.5,"width":44,"height":44},"theme":{"x":282,"right":326,"y":8.5,"width":44,"height":44},"searchHit":true,"themeHit":true,"horizontalOverlap":0}
+{"kind":"header","width":390,"route":"/izbrannoe/","search":{"x":270,"right":314,"y":46,"width":44,"height":44},"theme":{"x":314,"right":358,"y":46,"width":44,"height":44},"searchHit":true,"themeHit":true,"horizontalOverlap":0}
+{"kind":"header","width":390,"route":"/hard-texts/genesis-6/","search":{"x":286,"right":330,"y":42.09375,"width":44,"height":44},"theme":{"x":330,"right":374,"y":42.09375,"width":44,"height":44},"searchHit":true,"themeHit":true,"horizontalOverlap":0}
+{"kind":"header","width":390,"route":"/articles/","search":{"x":262.84375,"right":306.84375,"y":6.5,"width":44,"height":44},"theme":{"x":294.84375,"right":338.84375,"y":6.5,"width":44,"height":44},"searchHit":true,"themeHit":true,"horizontalOverlap":12}
+{"kind":"header","width":768,"route":"/","search":{"x":605.28125,"right":649.28125,"y":0,"width":44,"height":44},"theme":{"x":649.28125,"right":693.28125,"y":0,"width":44,"height":44},"searchHit":true,"themeHit":true,"horizontalOverlap":0}
+{"kind":"header","width":768,"route":"/izbrannoe/","search":{"x":633.28125,"right":677.28125,"y":6.5,"width":44,"height":44},"theme":{"x":677.28125,"right":721.28125,"y":6.5,"width":44,"height":44},"searchHit":true,"themeHit":true,"horizontalOverlap":0}
+{"kind":"header","width":768,"route":"/hard-texts/genesis-6/","search":{"x":664,"right":708,"y":9.59375,"width":44,"height":44},"theme":{"x":708,"right":752,"y":9.59375,"width":44,"height":44},"searchHit":true,"themeHit":true,"horizontalOverlap":0}
+{"kind":"header","width":768,"route":"/articles/","search":{"x":747.328125,"right":791.328125,"y":6.5,"width":44,"height":44},"theme":{"x":779.328125,"right":823.328125,"y":6.5,"width":44,"height":44},"searchHit":false,"themeHit":false,"horizontalOverlap":12}
+{"kind":"header","width":1280,"route":"/","search":{"x":1140.8125,"right":1184.8125,"y":12.5,"width":44,"height":44},"theme":{"x":1184.8125,"right":1228.8125,"y":12.5,"width":44,"height":44},"searchHit":true,"themeHit":true,"horizontalOverlap":0}
+{"kind":"header","width":1280,"route":"/izbrannoe/","search":{"x":985,"right":1029,"y":6.5,"width":44,"height":44},"theme":{"x":1029,"right":1073,"y":6.5,"width":44,"height":44},"searchHit":true,"themeHit":true,"horizontalOverlap":0}
+{"kind":"header","width":1280,"route":"/hard-texts/genesis-6/","search":{"x":1024.5,"right":1068.5,"y":6.5,"width":44,"height":44},"theme":{"x":1068.5,"right":1112.5,"y":6.5,"width":44,"height":44},"searchHit":true,"themeHit":true,"horizontalOverlap":0}
+{"kind":"header","width":1280,"route":"/articles/","search":{"x":1036,"right":1080,"y":6.5,"width":44,"height":44},"theme":{"x":1068,"right":1112,"y":6.5,"width":44,"height":44},"searchHit":true,"themeHit":true,"horizontalOverlap":12}
+{"kind":"byline","route":"/baptisty-rossii/iniciativnaya-gruppa/","slots":[{"datetime":"2026-06-08T00:00:00+03:00","label":"13 июня 2026","display":"block","width":73,"height":22.75}]}
+{"kind":"byline","route":"/baptisty-rossii/podpolnaya-pechat/","slots":[{"datetime":"2026-06-09T00:00:00+03:00","label":"13 июня 2026","display":"block","width":73,"height":22.75}]}
+{"kind":"byline","route":"/baptisty-rossii/spravochnik/","slots":[{"datetime":"2026-06-14T00:00:00+03:00","label":"14 июня 2026","display":"block","width":73,"height":22.75}]}
+{"kind":"byline","route":"/baptisty-rossii/vsehib-1944/","slots":[{"datetime":"2026-06-07T00:00:00+03:00","label":"13 июня 2026","display":"block","width":73,"height":22.75}]}
+{"kind":"byline","route":"/baptisty-rossii/sovetskaya-noch/","slots":[{"datetime":"2026-06-06T00:00:00+03:00","label":"13 июня 2026","display":"block","width":73,"height":22.75}]}
+{"kind":"byline","route":"/baptisty-rossii/peterburgskaya-liniya/","slots":[{"datetime":"2026-06-04T00:00:00+03:00","label":"4 июня 2026","display":"block","width":67,"height":22.75},{"datetime":"2026-08-20T00:00:00+03:00","label":"20 августа 2026","display":"inline","width":68,"height":15}]}
+{"kind":"byline-artifact","route":"/baptisty-rossii/iniciativnaya-gruppa/","publishedMeta":"2026-06-08T00:00:00+03:00","nodes":[{"type":"Article","published":"2026-06-08T00:00:00+03:00","modified":"2026-07-11T15:21:36.000Z"}]}
+{"kind":"byline-artifact","route":"/baptisty-rossii/podpolnaya-pechat/","publishedMeta":"2026-06-09T00:00:00+03:00","nodes":[{"type":"Article","published":"2026-06-09T00:00:00+03:00","modified":"2026-08-08T04:02:02.000Z"}]}
+{"kind":"byline-artifact","route":"/baptisty-rossii/spravochnik/","publishedMeta":"2026-06-14T00:00:00+03:00","nodes":[{"type":"Article","published":"2026-06-14T00:00:00+03:00","modified":"2026-08-20T11:04:03.000Z"}]}
+{"kind":"byline-artifact","route":"/baptisty-rossii/vsehib-1944/","publishedMeta":"2026-06-07T00:00:00+03:00","nodes":[{"type":"Article","published":"2026-06-07T00:00:00+03:00","modified":"2026-07-11T15:12:16.000Z"}]}
+{"kind":"byline-artifact","route":"/baptisty-rossii/sovetskaya-noch/","publishedMeta":"2026-06-06T00:00:00+03:00","nodes":[{"type":"Article","published":"2026-06-06T00:00:00+03:00","modified":"2026-08-25T02:05:05.000Z"}]}
+{"kind":"byline-artifact","route":"/baptisty-rossii/peterburgskaya-liniya/","publishedMeta":"2026-06-04T00:00:00+03:00","nodes":[{"type":"Article","published":"2026-06-04T00:00:00+03:00","modified":"2026-08-20T00:00:00+03:00"}]}
