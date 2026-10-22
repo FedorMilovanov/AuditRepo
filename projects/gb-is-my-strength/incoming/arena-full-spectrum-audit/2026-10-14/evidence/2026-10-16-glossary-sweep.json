@@ -20,16 +20,7 @@
    }
   ]
  },
- {
-  "route": "/baptisty-rossii/podpolnaya-pechat/",
-  "authoredStatic": 9,
-  "liveTotal": 9,
-  "autoAdded": 0,
-  "withKey": 0,
-  "withoutKey": 9,
-  "withoutExpandBtn": 9,
-  "conflicts": []
- },
+ {"route":"/baptisty-rossii/podpolnaya-pechat/","authoredStatic":9,"liveTotal":9,"autoAdded":0,"withKey":0,"withoutKey":9,"withoutExpandBtn":9,"conflicts":[]},
  {
   "route": "/baptisty-rossii/goneniya-i-sovest/",
   "authoredStatic": 7,
