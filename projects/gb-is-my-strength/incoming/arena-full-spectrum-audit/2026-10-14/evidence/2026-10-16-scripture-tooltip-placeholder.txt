@@ -1,0 +1,68 @@
+# Receipt — the Scripture-reference affordance: 238 interactive buttons whose only possible output is a placeholder (2026-10-16, continuation 7)
+
+Product `d14da74c`, production-like local build, Chromium 153 on 127.0.0.1:8099, plus the shipped source data read from the product repository and from its `main` branch through `gh api`.
+
+## 1. What the reader gets
+
+The site renders **238 `<button class="bref" data-ref="…">` elements across 10 routes** (translations rendered as compact references: «2 Тим. 4:1–2», «Луки 15»). Each is focusable, gets `aria-expanded`, and opens a tooltip. The tooltip body is, in every case measured, the same literal sentence:
+
+> **2 ТИМОФЕЮ 4:1–2**  ⟶  «Ссылка на указанное место Священного Писания.»
+
+Distribution and measurement:
+
+| route | buttons | projection keys on the page | tooltip body |
+|---|---|---|---|
+| `/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/` | 208 | **0** | «ТИМОФЕЮ 4:1–2 Ссылка на указанное место Священного Писания.…» |
+| `/articles/kod-da-vinchi/` | 9 | **0** | «20:17–18 Ссылка на указанное место Священного Писания.…» |
+| `/articles/krajne-li-isporcheno-serdce/` | 3 | **0** | «36:26 Ссылка на указанное место Священного Писания.…» |
+| `/articles/podrostok-za-kadrom-chto-delat-tserkvi/` | 3 | **0** | «6:1–4 Ссылка на указанное место Священного Писания.…» |
+| `/articles/podrostok-za-kadrom-dvoynaya-zhizn/` | 3 | **0** | «7:20–23 Ссылка на указанное место Священного Писания.…» |
+| `/articles/podrostok-za-kadrom-roditelyam-posle-razoblacheniya/` | 2 | **0** | «КОРИНФЯНАМ 7:10–11 Ссылка на указанное место Священного Писа…» |
+| `/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/` | 3 | **0** | «20:12 Ссылка на указанное место Священного Писания.…» |
+| `/articles/vzroslyy-rebenok-doma-dengi-pomoshch-posledstviya/` | 3 | **0** | «ТИМОФЕЮ 3:4–5 Ссылка на указанное место Священного Писания.…» |
+| `/articles/vzroslyy-rebenok-ushel-kontakt-pokayanie-vozvrashchenie/` | 2 | **0** | «15 Ссылка на указанное место Священного Писания.…» |
+| `/articles/sovershennoletie-roditelskaya-vlast-chto-menyaetsya/` | 2 | **0** | «20:12 Ссылка на указанное место Священного Писания.…» |
+| **total** | **238** | 0 | placeholder in 10/10 pages |
+
+Deep-checked against the corpus state, so the fallback is not a corpus accident: the placeholder appears for books whose corpus is **populated** (Иеремия 17:5–10, 1 Коринфянам 10:6, Луки 1:1–4) exactly as for a book whose corpus file is empty (Иезекииль 36:26 — `data/bible/synodal/iizikil.json`, 0 bytes). The tooltip is generated client-side by `createScriptureTip()` (`src/runtime/article-tooltips.js:136-150`), which falls back to that sentence whenever `configuredScripture()` finds nothing.
+
+There are **no baked `.btip` bodies in the HTML** and no `data/verses.json` legacy fallback in the tree, so the runtime's own lookup is the only source: with an empty lookup the placeholder is the only possible output.
+
+## 2. Why the lookup is always empty — the rights boundary, working as designed
+
+This is the part that must not be misread as a bug, because the mechanism is deliberate and fail-closed:
+
+1. **Source index** (`data/scripture-search-index.json`, 3 789 000 bytes, 1 222 references): **148 references carry text**, and **every one of them** is marked `publicationState: "BLOCKED"` with `rightsState: "RIGHTS_UNKNOWN"`, `sourceUrl: null`, `rights: null` (example: `id=bytie:1:26–28`, source note «выверено в статье …», no rights statement). Verified identical in the product's `main` branch via `gh api`.
+2. **Public serializer** (`scripts/public-scripture-index.js`) emits only `id`, `label` and occurrence coordinates — it strips `canonicalText` and `canonicalSource` entirely. That is the rights boundary: text cannot reach a reader unless the record carries an explicit approval. The built copy of the index is 2 903 976 bytes and contains **0 non-empty `canonicalText`**.
+3. **Projection** (`src/components/reader-platform/ScriptureDataProjection.astro:35-52`) additionally requires a non-empty text *and* `isBibleRecordPublicationEligible(canonicalSource)`, whose gate (`src/lib/bible-reference-core.mjs:49-59`) demands `PUBLICATION_APPROVED` **and** `PUBLICATION_ELIGIBLE` rights **and** non-empty `translation`/`source`/`sourceUrl`/`rights`. Nothing satisfies it, so it emits `{}`.
+4. **Measured result:** the inline projection is present on **73 pages and empty on all 73** (`const scriptureData = {}`). No page anywhere receives verse text.
+
+So the rights gate is doing exactly what it was built to do, and the corpus files (42 of 66 books populated; **24 files are 0 bytes** — Judges, Ruth, 1–2 Chronicles, Ezra, Job, Ecclesiastes, Song, Lamentations, Ezekiel, the twelve minor prophets, and Kassian Philippians/1 Thessalonians) are not what stands between the reader and the text either.
+
+## 3. What is actually wrong
+
+The defect is the **shipped affordance**, not the gate. Ten routes publish 238 interactive, focusable, `aria-expanded`-bearing controls that read as «open this reference for the text» and can only ever answer with a tautology. In the hermenevtika article the verse text is **not** duplicated in the prose — the buttons are inline references inside parentheses («Проповедь занимает центральное место в служении пастора. Она заповедана Богом (2 Тим. 4:1–2) …»), so on that page 208 of the 238 affordances each promise something the site cannot deliver. Nothing in the interface distinguishes «not cleared for publication yet» from «broken»: no tooltip note, no disabled state, no indication that the text is pending.
+
+Secondary, same owner, measured while opening the tips: after opening, the trigger keeps `aria-expanded="true"` but has **no `aria-describedby`** and no `role`, and the tip is portaled to `document.body` — so a screen-reader user hears the reference and an expanded state with an empty description, and the body text sits elsewhere in the tree. This is the same association gap already admitted for `.gterm` (`GBS-GLOSSARY-DEFINITION-PROVENANCE`) and is folded into this row rather than duplicated, because both are produced by `article-tooltips.js` opening logic.
+
+## 4. Not defects, checked and dismissed
+
+- The rights gate, the serializer, and the fail-closed eligibility check are **correct behaviour** and are recorded as the cause, not as the fault.
+- **No corpus leak:** `dist/data/bible/` does not exist in the build (0 files), so the unapproved full texts never ship. Checked directly.
+- The runtime fallback sentence itself is intentional code (`configuredScripture(reference) || 'Ссылка на указанное место Священного Писания.'`), not a corrupted string.
+
+Artifacts: `2026-10-16-bref-sitewide-sweep.json` (per-route counts, projection size, opened tooltip text, ARIA state), `2026-10-16-bref-tooltip-live.json` (four references, corpus state noted per case), `2026-10-16-bref-projection.json` (per-page references missing from the projection). Painted proof of the placeholder: `arena-harness/out/bref-placeholder.png` (binary kept out of git per protocol).
+
+## 5. Narrow viewport (390x844, isMobile, touch)
+
+Checked on three routes (hermenevtika, kod-da-vinchi, krajne) with the tip open at the first reference:
+
+| route | tip box | clipped? | horizontal overflow? |
+|---|---|---|---|
+| hermenevtika | 390x72 (left 0, right 390) | no | no (scrollWidth 390 = viewport) |
+| kod-da-vinchi | 390x72 | no | no |
+| krajne | 390x72 | no | no |
+
+The tip adapts to the narrow viewport (460 px wide at 1440, full-bleed 390 px at 390) and the body text is the same placeholder — so no mobile geometry defect exists for this affordance, and this is recorded as a dismissed concern rather than a finding. Console errors on the three loads are the known CSP favicon/apple-touch-icon noise of the local preview (sandbox egress), not a product defect.
+
+Artifact: `2026-10-16-bref-mobile-390.json`; probe in the repo as `harness/bref-mobile.mjs`.

@@ -1,0 +1,112 @@
+# Receipt — print-media contrast collapse, A4 overflow correction, and PDF text-layer limits (2026-10-15, continuation 2)
+
+Sandbox Chromium 153, production-like build of Product `d14da74c`, served at 127.0.0.1:8099. Methods:
+
+- **Pixel-truth contrast**: the element's text is made `color: transparent` (layout untouched), the element is screenshotted, and the pixels inside the text's own box are sampled; the ratio compares the sampled background luminance (median and 90th percentile) with the colour the text had before transparency. axe cannot do this — it inherits an ancestor colour when the real background is an image, which is exactly why the first pass could only call these pairs UNPROVEN.
+- **Full-page print scan**: every element carrying >=12 characters of its own text is recorded with its box, the page is screenshotted in print media, and each box is sampled from the screenshot.
+
+## 1. Home featured-cover cards: white on screen, black on paper (NEW DEFECT)
+
+`css/site.css` print reset — `@media print { *, *::before, *::after { background: transparent; color: #000; box-shadow: none; text-shadow: none; ... } }` at **line 178** (plus the earlier block `body{background:#fff!important;color:#000!important}` in the same sheet) — repaints cover-card text black while the artwork inside the card stays dark.
+
+| cover title | screen colour | screen ratio | print colour | print ratio median / worst decile |
+|---|---|---|---|---|
+| Биографии служителей:хроника верных | `rgb(255, 255, 255)` | 18.18:1 | `rgb(0, 0, 0)` | **1.14:1** / 1.17:1 |
+| Нагорная проповедь:исследование в 5 частях | `rgb(255, 255, 255)` | 18.01:1 | `rgb(0, 0, 0)` | **1.14:1** / 1.17:1 |
+| Тайны человеческого сердца | `rgb(255, 255, 255)` | 18.18:1 | `rgb(0, 0, 0)` | **1.14:1** / 1.16:1 |
+| Тёмная сторона кафедры | `rgb(255, 255, 255)` | 17.87:1 | `rgb(0, 0, 0)` | **1.15:1** / 1.17:1 |
+
+Background luminance under the text is ~0.007 in every sample, in both media. The same rule also repaints the card abstract and author line: the full-page scan measures `.h-featured-abstract` **1.11:1** and `.h-featured-author` **1.09:1**.
+
+## 2. Systematic scan: the same rule breaks four more families
+
+Text elements per route (own text >= 12 chars) and how many fell below 3:1 in print media:
+
+| route | text elements | below 3:1 | examples (ratio, colour, sampled bg luminance) |
+|---|---|---|---|
+| `/` | 92 | **19** | `h-featured-title` 1.13:1 (`rgb(0, 0, 0)`, bg L 0.006); `h-featured-abstract` 1.11:1 (`rgb(0, 0, 0)`, bg L 0.005); `h-featured-author` 1.09:1 (`rgb(0, 0, 0)`, bg L 0.005) |
+| `/about/` | 40 | 0 | — |
+| `/articles/` | 275 | 0 | — |
+| `/articles/20-antisovetov-pastoru/` | 673 | 0 | — |
+| `/articles/dzhon-gill-chast-1-chelovek/` | 267 | 0 | — |
+| `/articles/kod-da-vinchi/` | 430 | 0 | — |
+| `/articles/krajne-li-isporcheno-serdce/` | 453 | 0 | — |
+| `/articles/steven-lawson-samoobman-i-publichnyy-golos/` | 908 | 0 | — |
+| `/baptisty-rossii/` | 72 | 0 | — |
+| `/biografii/` | 78 | **2** | `SPAN` 1.64:1 (`rgb(0, 0, 0)`, bg L 0.032); `h-hero-tagline` 1.23:1 (`rgb(0, 0, 0)`, bg L 0.012) |
+| `/hard-texts/` | 40 | 0 | — |
+| `/hard-texts/genesis-6/` | 28 | 0 | — |
+| `/karty/avraam/` | 61 | 0 | — |
+| `/konfessii/russkij-baptizm/` | 4 | **1** | `crumb` 2.93:1 (`rgb(94, 90, 84)`, bg L 0.002) |
+| `/nagornaya/chast-2/` | 241 | **2** | `px-4` 1.38:1 (`rgb(0, 0, 0)`, bg L 0.019); `nag-project-nav__link` 1.48:1 (`rgb(0, 0, 0)`, bg L 0.024) |
+| `/pastor-series/` | 77 | 0 | — |
+
+Re-verified individually with the pixel method, screen vs print:
+
+| route | element | screen | print |
+|---|---|---|---|
+| `/biografii/` | `.h-hero-tagline` | `rgb(120, 113, 108)` 4.41:1 | `rgb(120, 113, 108)` **4.41:1** |
+| `/biografii/` | `.h-hero-tagline` | `rgb(0, 0, 0)` 1.23:1 | `rgb(0, 0, 0)` **1.23:1** |
+| `/biografii/` | `span:has-text("Биографии служителей")` | `rgb(26, 26, 26)` 16:1 | `rgb(26, 26, 26)` **16:1** |
+| `/biografii/` | `span:has-text("Биографии служителей")` | `rgb(0, 0, 0)` 1.64:1 | `rgb(0, 0, 0)` **1.64:1** |
+| `/konfessii/russkij-baptizm/` | `.crumb` | `rgb(94, 90, 84)` 2.93:1 | `rgb(94, 90, 84)` **2.93:1** |
+| `/konfessii/russkij-baptizm/` | `.crumb` | `rgb(94, 90, 84)` 2.93:1 | `rgb(94, 90, 84)` **2.93:1** |
+| `/nagornaya/chast-2/` | `.nag-project-nav__link` | `rgb(245, 230, 189)` 11.44:1 | `rgb(245, 230, 189)` **11.44:1** |
+| `/nagornaya/chast-2/` | `.nag-project-nav__link` | `rgb(0, 0, 0)` 1.46:1 | `rgb(0, 0, 0)` **1.46:1** |
+| `/` | `.h-article-kicker` | `rgb(8, 125, 145)` 4.52:1 | `rgb(8, 125, 145)` **4.52:1** |
+| `/` | `.h-article-kicker` | `rgb(120, 217, 228)` 1.53:1 | `rgb(120, 217, 228)` **1.53:1** |
+
+Two distinct failure directions, both from the same reset:
+
+- **black text over artwork** — the card surface is an image, so `color:#000` lands on a dark picture (`/` featured cards, `/biografii/` hero 1.23:1 and its section label 1.64:1, `/nagornaya/chast-2/` nav link 1.46:1 and label 1.38:1);
+- **light text on a stripped surface** — component rules carrying `!important` keep their light colour while `background: transparent` removes the dark card (`/` `.h-article-kicker` 1.53:1 and `.h-meta-tag` 1.52:1, which are 4.52:1 on screen).
+
+Separate pre-existing item found by the same scan: `/konfessii/russkij-baptizm/` `.crumb` is `rgb(94,90,84)` on a near-black map background — **2.93:1 in print *and* on screen**, so it is a screen defect of its own, not a print-reset artefact.
+
+## 3. Method limit that must accompany every PDF-text claim
+
+The cover captions above **are present** in the extracted PDF text layer (`биографиислужителей`, `хроникаверных`, `нагорнаяпроповедь…`, `тайнычеловеческогосердца`, `тёмнаясторонакафедры` all match after letters-only normalisation) although the rendered page shows them unreadable. Conversely, on `/articles/krajne-li-isporcheno-serdce/` page 2 the text layer omits the words «Нового Завета» that the rendered page displays.
+
+Consequence: **Chromium's PDF text layer is not a reliable witness** — it can both omit displayed words and report invisible ones. Print claims in this pass rest on page renders (pdf.js + @napi-rs/canvas) and pixel sampling, never on text extraction alone.
+
+## 4. Correction of my own earlier claim (in place, per protocol)
+
+The first 2026-10-15 continuation receipt and `REPORT.md` §9.2 say «At true A4 width 0 elements overflowed on all five routes». **That sentence is wrong**: the committed run itself recorded 24 overflowing elements on `/baptisty-rossii/` (`document.scrollWidth` 810 vs clientWidth 794; widest `A.h-article-card` right=810, width 826). Re-measured at print width 794 px across all 16 routes:
+
+| route | overflowing elements | doc scrollWidth / 794 |
+|---|---|---|
+| `/` | 34 | 794 |
+| `/articles/` | 1 | 794 |
+| `/baptisty-rossii/` | 24 | 810 |
+| `/konfessii/russkij-baptizm/` | 2 | 794 |
+
+Rendered pages from the Chromium PDF export of the same print media show no visibly clipped content (`/` pages 1-4, `/baptisty-rossii/` pages 1 and 3), so this remains a **geometry boundary with render control**, not an admitted defect — but the «0 overflow» claim is withdrawn here and in the report.
+
+## 5. Print-loss census (attribute-independent, 16 routes)
+
+Screen `innerText` vs print-media `innerText` of `main`, the topmost elements that stop rendering, and the PDF page/text-layer counts:
+
+| route | screen chars | print chars | lost | hidden roots | hidden chars | PDF pages | PDF text-layer chars |
+|---|---|---|---|---|---|---|---|
+| `/` | 5217 | 5070 | 147 | 18 | 168 | 4 | 3942 |
+| `/about/` | 4322 | 4192 | 130 | 1 | 12 | 4 | 4530 |
+| `/articles/` | 22375 | 22375 | 0 | 0 | 0 | 15 | 22504 |
+| `/articles/20-antisovetov-pastoru/` | 111389 | 110329 | 1060 | 2 | 43 | 68 | 109477 |
+| `/articles/dzhon-gill-chast-1-chelovek/` | 36082 | 34782 | 1300 | 5 | 715 | 26 | 36320 |
+| `/articles/kod-da-vinchi/` | 53467 | 46126 | 7341 | 23 | 5112 | 30 | 46260 |
+| `/articles/krajne-li-isporcheno-serdce/` | 70809 | 63096 | 7713 | 43 | 5839 | 40 | 64881 |
+| `/articles/steven-lawson-samoobman-i-publichnyy-golos/` | 159769 | 159716 | 53 | 1 | 28 | 95 | 173075 |
+| `/baptisty-rossii/` | 5444 | 4763 | 681 | 13 | 660 | 6 | 5090 |
+| `/biografii/` | 5483 | 4850 | 633 | 0 | 0 | 8 | 5538 |
+| `/hard-texts/` | 2243 | 1744 | 499 | 0 | 0 | 4 | 2722 |
+| `/hard-texts/genesis-6/` | 3257 | 1424 | 1833 | 1 | 24 | 3 | 1694 |
+| `/karty/avraam/` | 12535 | 11270 | 1265 | 0 | 0 | 1 | 2546 |
+| `/konfessii/russkij-baptizm/` | 390 | 390 | 0 | 0 | 0 | 1 | 493 |
+| `/nagornaya/chast-2/` | 21598 | 20835 | 763 | 2 | 43 | 15 | 22439 |
+| `/pastor-series/` | 3934 | 3741 | 193 | 0 | 0 | 5 | 4184 |
+
+Largest single loss stays `/articles/krajne-li-isporcheno-serdce/` (7 713 chars over 43 hidden roots, dominated by `SPAN.tooltip` note payloads) — the note apparatus is unavailable in the PDF on every note-bearing article, which belongs to the same owner as the matrix row `GBS-PRINT-TERMINAL-REGION-HIDES-CONTENT`.
+
+## 6. Reduced motion (re-run, 16 routes)
+
+Unchanged from `2026-10-15-continuation-probes.txt` §D: `reveal-fallback` resolves to `opacity:1; transform:none` under `reduce`; `/karty/avraam/` drops `meSpringIn`/`meProgressFlow` to 1e-06 s. No new defect.

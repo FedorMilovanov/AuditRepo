@@ -1,0 +1,79 @@
+# Receipt — dependency-security gate and dependency staleness at Product `d14da74c` (2026-10-17, continuation 9)
+
+Product main `d14da74cfe9f45e9b03e383e8e622695b01f8e16`, clean checkout (`git status` empty). Everything below is reproduced locally against that exact tree; no Product mutation was made.
+
+## 1. The gate is red on a head nobody re-runs
+
+`.github/workflows/dependency-security.yml` runs `npm audit --json` and then `node scripts/npm-security-contract.mjs <report>`. The contract itself (`scripts/npm-security-contract.mjs`, lines 82-88) is strict:
+
+```js
+const blocking = counts.moderate + counts.high + counts.critical;
+if (blocking > 0) { console.error(`NPM SECURITY CONTRACT: FAIL (${blocking} ...)`); process.exit(1); }
+```
+
+Replaying it on today's unchanged main:
+
+```
+$ npm audit --json > reports/npm-security/npm-audit.json
+$ node scripts/npm-security-contract.mjs reports/npm-security/npm-audit.json
+NPM SECURITY CONTRACT: FAIL (7 moderate/high/critical vulnerabilities)
+$ echo $?
+1
+```
+
+Two independent inputs agree on the same 7 (5 high / 2 moderate): the lockfile alone (`npm audit --package-lock-only`) and an installed tree (`npm audit`). `npm audit --omit=dev` → **0**.
+
+The evidence that this is drift, not a code change:
+
+- `package-lock.json` blob is **`0ad7fcd7eb641f11b5d728a75dab233caf96459e`** on all three of: `f8d70a9a` (2026-09-15, the run that was green on main), `d14da74c` (2026-10-12 merge) and `main` today. Nothing in the dependency set changed.
+- The advisories postdate that green run: `GHSA-w293-vg96-wgc3` (undici, high, TLS bypass) and `GHSA-hrr3-gc8f-f4qj` (fast-uri, moderate) were published **2026-09-29**; `GHSA-r4xh-jqrq-34v2` (smol-toml, moderate) **2026-10-05**.
+- The workflow triggers on `paths` changes only (`package.json`, `package-lock.json`, `scripts/npm-security-contract.mjs`, the workflow file) plus `workflow_dispatch`. There is **no `schedule`** — while 3 of the project's 77 workflows do have one (`interactive-audit.yml`, `source-links.yml`, `visual-parity.yml`).
+- Consequence in the run list: the last run of this gate on `main` is `2026-09-15` (success) and it is the most recent run on `main` at all. Every run since is a pull-request run and every one failed on the step `Enforce dependency security contract`: 2026-09-21, 09-28, 10-05, 10-12 (×2), 10-16.
+
+So `main` looks "protected by a green security gate" while the gate would fail if anyone ran it today. All 7 items are dev-only and `npm audit fix --dry-run` closes every one of them without a semver-major bump ("To address all issues, run: npm audit fix"); the lockfile was left untouched afterwards (`git status` empty).
+
+## 2. The updates that would fix this are generated — and stuck
+
+`10 of 14` devDependencies are behind the registry (verified today against `registry.npmjs.org`):
+
+| package | installed | latest | gap |
+|---|---|---|---|
+| @astrojs/mdx | 7.0.8 | 8.1.0 | major |
+| @astrojs/react | 6.0.4 | 7.1.0 | major |
+| typescript | 6.0.3 | 7.0.2 | major |
+| pixelmatch | 7.2.0 | 8.0.0 | major |
+| astro | 7.2.9 | 7.4.0 | minor |
+| react / react-dom | 19.2.8 | 19.3.1 | minor |
+| playwright | 1.62.1 | 1.64.1 | minor |
+| @astrojs/sitemap | 3.7.3 | 3.7.4 | patch |
+| @xyflow/react | 12.11.5 | 12.12.0 | minor |
+
+Current: `@astrojs/check@0.9.10`, `@astrojs/rss@4.0.19`, `@dagrejs/dagre@3.1.1`, `pngjs@7.0.0`. There are still **0 production dependencies** — the shipped site has no runtime npm dependency, and `dist/` is unaffected by any of this.
+
+Dependabot is configured (`.github/dependabot.yml`: weekly, Monday 04:30 Europe/Paris, limit 3, prefix `deps`) and it does produce the right pull requests:
+
+- **#2144** (opened 2026-09-28): "bump the npm-non-major group … with 6 updates" — exactly `astro 7.3.8`, `react`/`react-dom 19.3.0`, `playwright 1.64.0`, `@astrojs/sitemap 3.7.4`, `@xyflow/react 12.12.0`. `MERGEABLE`, branch `BEHIND` main, **every check failing**, 19 days open.
+- **#2179** (2026-10-12): github-actions group, also open and failing.
+
+The failing steps on #2144 are the build/publication gates (`Build production-like dist`, `Static publication source gates`) — **not** the security step. Log text could not be retrieved from the sandbox (`results-receiver.actions.githubusercontent.com` is outside the available egress), so the direction of that failure is recorded as **unknown**, not as "the bump breaks the build".
+
+## 3. Checked and explicitly *not* filed as defects
+
+- CI Node `22.23.1` against `engines: >=22.12.0` — current.
+- All `actions/*` are pinned by full SHA and current (`checkout` v7.0.1, `setup-node` v7.0.0, `upload-artifact` v7.0.1).
+- `npm ci` replays the lockfile in 56 of 77 workflows — the lockfile is authoritative in CI.
+- The advisories are dev-only: `--omit=dev` is 0 and the built site ships no npm dependency, so this is a control-plane/hygiene defect, not a live-site risk.
+
+## 4. Reproduce
+
+```
+cd <product checkout at d14da74c>
+npm audit --json > /tmp/audit.json && npm audit --package-lock-only --json > /tmp/lock.json
+node scripts/npm-security-contract.mjs /tmp/audit.json ; echo $?
+npm audit --omit=dev | tail -3
+npm audit fix --dry-run | tail -3 ; git status --porcelain package.json package-lock.json
+gh run list --workflow dependency-security.yml --limit 20
+gh pr view 2144 --json mergeable,mergeStateStatus ; gh pr checks 2144
+```
+
+Artifact: `2026-10-17-dependency-security-drift.json` (50 records: advisories with publication dates, gate replay, lag table, run list, stuck PRs).

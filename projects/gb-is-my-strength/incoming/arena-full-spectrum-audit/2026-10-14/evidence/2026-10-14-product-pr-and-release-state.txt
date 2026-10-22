@@ -1,0 +1,45 @@
+# Product state at 2026-10-14 (gh + local clone)
+
+local clone HEAD: d14da74cfe9f45e9b03e383e8e622695b01f8e16  (Merge pull request #2182 from FedorMilovanov/arena/a14f49e3-gb-is-my-strength)
+remote pushed_at: 2026-10-14T00:04:41Z
+
+## Deploy to GitHub Pages on main (last 12)
+2026-10-12T09:13:29Z d14da74c success
+2026-10-11T22:39:59Z c3f2f754 success
+2026-10-11T22:22:03Z 1fe3cf34 success
+2026-10-11T19:00:51Z 91417c38 success
+2026-10-11T07:48:57Z 726a5273 success
+2026-10-05T22:06:05Z 68750830 success
+2026-10-05T17:56:25Z 35084814 success
+2026-10-05T00:05:58Z a148c8aa success
+2026-10-04T23:21:12Z 05a45491 success
+2026-10-04T21:50:20Z e8672532 success
+2026-10-04T20:41:41Z 2ee584d3 success
+2026-10-04T20:04:16Z b601072b success
+
+## Open PRs
+#2183 draft=true arena/fbf6f1fd-gb-is-my-strength :: fix(baptisty): restore six dead Commons source URLs + unfinished-work 
+#2181 draft=false fix/karty-holding-mobile-overflow-2180 :: fix: prevent narrow-screen overflow in map holding titles
+#2179 draft=false dependabot/github_actions/github-actions :: ci(deps): bump the github-actions group with 3 updates
+#2168 draft=true arena/01a108e4-gb-is-my-strength :: fix(kod-da-vinchi): make canon timeline keyboard accessible
+#2164 draft=true content/apostasy-five-part-series-202610 :: content: replace single apostasy draft with five-part series
+#2162 draft=true arena/kod-da-vinchi-timeline-keyboard-20 :: fix(kod-da-vinchi): make canon timeline keyboard-scrollable
+#2161 draft=true arena/avraam-preserve-ready-h1-20261002 :: fix(karty): preserve Avraam page h1 after map ready
+#2144 draft=false dependabot/npm_and_yarn/npm-non-major-92 :: deps(deps-dev): bump the npm-non-major group across 1 directory with 6
+#2143 draft=true genealogy/editorial-direct-name-batch-20 :: data(genealogy): review first direct-name Synodal batch
+#2142 draft=false reconcile/baptist-ch01-authority-salvage :: research(baptists): salvage chapter 1 authority reconciliation
+
+## Merged since 2026-09-30: 19
+
+## Resolution of the 2026-09-30/10-01 PR set
+#2142 OPEN -
+#2143 OPEN -
+#2144 OPEN -
+#2145 CLOSED -
+#2146 MERGED 2026-09-30T20:15:25Z
+#2148 MERGED 2026-09-30T11:00:37Z
+#2150 CLOSED -
+#2151 MERGED 2026-09-30T20:10:11Z
+#2152 MERGED 2026-09-30T20:26:21Z
+#2153 CLOSED -
+#2154 CLOSED -

@@ -1,0 +1,121 @@
+# Receipt — painted-glyph contrast arbitration, full print scan with WCAG thresholds, and the per-owner label/name table (2026-10-15, continuation 3)
+
+Everything here is at Product `d14da74c` (production-like local build, sandbox Chromium 153, served on 127.0.0.1:8099).
+
+## 0. Method change that invalidates part of the earlier numbers
+
+The first print scan compared an element's **computed** colour with the sampled background. That is wrong for two reasons, both now measured:
+
+1. **alpha text** — a colour like `rgba(255,255,255,.35)` is not what reaches the eye; the painted result is a blend with the surface (`rgb(94,99,100)` in the home hero, i.e. 3.10:1, not the 1.9:1 the naive method reported);
+2. **backgrounds that are images or alpha layers** — sampling a box that includes a picture or a faded overlay yields a luminance the text is not actually sitting on.
+
+Method used from here: shoot the element **normally** (A) and with its text **transparent** (B); the pixel with the largest |A−B| difference is the glyph core (painted text colour), and the B pixels where A≈B give the true background.
+
+## 1. Painted-glyph arbitration, screen vs print
+
+| case | screen painted | ratio | print painted | ratio | verdict |
+|---|---|---|---|---|---|
+| `heart-hint` | `rgb(195,179,137)` | 9.23:1 | `rgb(195,179,137)` | 9.23:1 | — |
+| `heart-hint` | — | — | — | — | not renderable (not-renderable) |
+| `biografii-tagline` | `rgb(120,113,108)` | 4.41:1 | `rgb(120,113,108)` | 4.41:1 | PRINT RESET |
+| `biografii-tagline` | `rgb(20,12,12)` | 1.27:1 | `rgb(20,12,12)` | 1.27:1 | PRINT RESET |
+| `byline-updated` | `rgb(146,146,145)` | 2.99:1 | `rgb(146,146,145)` | 2.99:1 | — |
+| `byline-updated` | `rgb(63,63,63)` | 10.53:1 | `rgb(63,63,63)` | 10.53:1 | — |
+| `gbs2pct` | `rgb(234,218,199)` | 11.58:1 | `rgb(234,218,199)` | 11.58:1 | — |
+| `gbs2pct` | — | — | — | — | not renderable (not-renderable) |
+| `featured-title` | `rgb(255,255,255)` | 18.47:1 | `rgb(255,255,255)` | 18.47:1 | PRINT RESET |
+| `featured-title` | `rgb(0,0,0)` | 1.13:1 | `rgb(0,0,0)` | 1.13:1 | PRINT RESET |
+| `featured-abstract` | `rgb(160,163,163)` | 7.39:1 | `rgb(160,163,163)` | 7.39:1 | PRINT RESET |
+| `featured-abstract` | `rgb(0,1,1)` | 1.1:1 | `rgb(0,1,1)` | 1.1:1 | PRINT RESET |
+| `featured-time` | `rgb(94,99,100)` | 3.1:1 | `rgb(94,99,100)` | 3.1:1 | PRINT RESET |
+| `featured-time` | `rgb(0,0,0)` | 1.1:1 | `rgb(0,0,0)` | 1.1:1 | PRINT RESET |
+| `featured-author` | `rgb(108,112,114)` | 3.72:1 | `rgb(108,112,114)` | 3.72:1 | PRINT RESET |
+| `featured-author` | `rgb(0,0,0)` | 1.12:1 | `rgb(0,0,0)` | 1.12:1 | PRINT RESET |
+| `articles-abstract` | `rgb(120,113,108)` | 4.37:1 | `rgb(120,113,108)` | 4.37:1 | BOTH (marginal, 4.37 vs 4.5) |
+| `articles-abstract` | `rgb(120,113,108)` | 4.37:1 | `rgb(120,113,108)` | 4.37:1 | BOTH (marginal, 4.37 vs 4.5) |
+| `error-flip-label` | `rgb(193,114,92)` | 3.24:1 | `rgb(193,114,92)` | 3.24:1 | BOTH |
+| `error-flip-label` | `rgb(192,113,91)` | 3.28:1 | `rgb(192,113,91)` | 3.28:1 | BOTH |
+| `ctw-pin-lbl` | `rgb(193,115,50)` | 3.34:1 | `rgb(193,115,50)` | 3.34:1 | BOTH |
+| `ctw-pin-lbl` | `rgb(194,118,54)` | 3.24:1 | `rgb(194,118,54)` | 3.24:1 | BOTH |
+| `planned-state` | `rgb(113,80,39)` | 1.54:1 | `rgb(113,80,39)` | 1.54:1 | BOTH (screen 1.54 is the worst) |
+| `planned-state` | `rgb(182,148,105)` | 2.67:1 | `rgb(182,148,105)` | 2.67:1 | BOTH (screen 1.54 is the worst) |
+| `hub-kicker` | `rgb(154,106,47)` | 3.03:1 | `rgb(154,106,47)` | 3.03:1 | BOTH |
+| `hub-kicker` | `rgb(154,106,47)` | 3.83:1 | `rgb(154,106,47)` | 3.83:1 | BOTH |
+| `crumb` | `rgb(94,90,84)` | 2.93:1 | `rgb(94,90,84)` | 2.93:1 | BOTH |
+| `crumb` | `rgb(94,90,84)` | 2.93:1 | `rgb(94,90,84)` | 2.93:1 | BOTH |
+| `nag-nav-link` | `rgb(245,230,189)` | 11.44:1 | `rgb(245,230,189)` | 11.44:1 | PRINT RESET |
+| `nag-nav-link` | `rgb(28,25,23)` | 1.23:1 | `rgb(28,25,23)` | 1.23:1 | PRINT RESET |
+| `nag-app-label` | — | — | — | — | not renderable (not-renderable) |
+| `nag-app-label` | — | — | — | — | not renderable (not-renderable) |
+| `heart-hint` | `rgb(195,179,137)` | **9.23:1** | print-hidden | — | the axe 1.18:1 reading is confirmed false |
+| `byline-updated` | `rgb(146,146,145)` | **2.99:1** | `rgb(63,63,63)` | 10.53:1 | screen defect, worse than the axe figure (3.15:1) |
+| `gbs2pct` | `rgb(234,218,199)` | **11.58:1** | print-hidden | — | axe's 3.42:1 reading is false — see §3 |
+
+Consequences:
+
+- **`GBS-PRINT-MEDIA-CONTRAST-COLLAPSE`** grows and sharpens: home featured title 18.47 → **1.13**, abstract 7.39 → **1.10**, time 3.10 → **1.10**, author 3.72 → **1.12**; `/nagornaya/chast-2/` series nav link 11.44 → **1.23**; `/biografii/` tagline 4.41 → **1.27**.
+- **`GBS-TEXT-CONTRAST-RESIDUAL-BATCH`** loses one entry and gains six: `#gbs2Pct` is **not** a defect (11.58:1), `.article-byline__updated` is real at **2.99:1**, and the same rule affects both media for `.h-article-abstract` **4.37:1**, `.error-flip-label` **3.24:1**, `.ctw-pin-lbl` **3.34:1**, `.genesis6-card__state` **1.54:1 screen / 2.67:1 print**, `.genesis6-hub__kicker` **3.03:1 / 3.83:1**, `.crumb` **2.93:1**.
+
+## 2. Full print scan with real WCAG thresholds (16 routes)
+
+Every element with >=4 characters of its own text in print media, sampled from the rendered page; large text (>=24 px, or >=18.66 px at weight >=700) judged at 3:1, the rest at 4.5:1:
+
+| route | text elements | below threshold | worst examples |
+|---|---|---|---|
+| `/` | 147 | **43** | `h-featured-time` 1.09:1; `h-featured-time` 1.09:1; `h-featured-time` 1.09:1 |
+| `/about/` | 57 | 0 | — |
+| `/articles/` | 428 | **83** | `h-article-abstract` 4.37:1; `h-article-abstract` 4.37:1; `h-article-abstract` 4.37:1 |
+| `/articles/20-antisovetov-pastoru/` | 742 | 0 | — |
+| `/articles/dzhon-gill-chast-1-chelovek/` | 336 | 0 | — |
+| `/articles/kod-da-vinchi/` | 532 | **6** | `error-flip-label` 3.31:1; `error-flip-label` 3.31:1; `error-flip-label` 3.31:1 |
+| `/articles/krajne-li-isporcheno-serdce/` | 543 | 0 | — |
+| `/articles/steven-lawson-samoobman-i-publichnyy-golos/` | 1022 | 0 | — |
+| `/baptisty-rossii/` | 77 | 0 | — |
+| `/biografii/` | 125 | 0 | — |
+| `/hard-texts/` | 62 | 0 | — |
+| `/hard-texts/genesis-6/` | 32 | **2** | `genesis6-hub__kicker` 4:1; `genesis6-card__state` 4.42:1 |
+| `/karty/avraam/` | 69 | 0 | — |
+| `/konfessii/russkij-baptizm/` | 7 | **4** | `crumb` 2.95:1; `` 4.42:1; `` 4.42:1 |
+| `/nagornaya/chast-2/` | 277 | **10** | `px-4` 1.38:1; `nag-project-nav__link` 2.24:1; `nag-project-nav__link` 2.95:1 |
+| `/pastor-series/` | 82 | 0 | — |
+
+These are *print-media* counts, not *print-reset* counts: they include the both-media shortfalls of §1. The reset-caused share is the population with ratios near 1.1–1.3 and a healthy screen reading.
+
+## 3. axe reliability boundary (measured, not assumed)
+
+axe's `color-contrast` matched the painted result for opaque text on a flat surface, but failed in three ways here:
+
+- **1.18:1 for `.heart-flip-hint-text`** — alpha text over a painting; painted = **9.23:1**. False positive (withdrawn earlier).
+- **3.42:1 for `#gbs2Pct`** — the pill was taken as background and the track as foreground; painted = **11.58:1**. False positive.
+- **3.15:1 for `.article-byline__updated`** — directionally right, mildly optimistic; painted = **2.99:1**. True positive.
+
+Rule for this project: axe stays the screen-media census, but any contrast *conclusion* on image-, gradient- or alpha-backed surfaces must use the painted-glyph method.
+
+## 4. `GBS-CHROME-LABEL-IN-NAME-MISMATCH` — per-owner table
+
+161 nodes over 16 routes x {390, 1440} px, grouped by the owning class/id:
+
+| owner | nodes | size | current aria-label | visible text | proposed direction |
+|---|---|---|---|---|---|
+| `fn-marker` | 106 | 21x13 | `Показать сноску 10` / `Показать сноску 11` | `10` / `11` | Единый runtime сносок: включить видимую цифру, либо снять role=button с контейнера (см. строку nested-interactive) |
+| `flip-card` | 14 | 600x660 | `Нажмите, чтобы перевернуть карточку` / `Перевернуть карточку: Русский переводБыл` | `МИФ РОМАНА Гностические евангелия ` / `МИФ РОМАНА Иисус был женат на Мари` | Карточка-перевёртыш: имя должно содержать её видимый заголовок |
+| `error-flip-card` | 10 | 800x105 | `Нажмите, чтобы перевернуть: Иисуса сдела` / `Нажмите, чтобы перевернуть: Мария Магдал` | `В романе Иисуса сделали Богом голо` / `В романе Мария Магдалина была жено` | То же: «Нажмите, чтобы перевернуть: <видимый заголовок>» |
+| `about-contact-item` | 8 | 311x54 | `Email` / `Max` | `Email viktorcoy2012@gmail.com` / `M Max профиль` | Канал связи: имя должно содержать видимый текст ссылки (напр. «Telegram @fedormilovanov») |
+| `map-trigger` | 6 | 752x81 | `Открыть пояснение 19` / `Открыть пояснение 42` | `законничество в Писании именуется` / `извращением правосудия. Процедура,` | Видимый текст — фрагмент статьи; либо имя должно его цитировать, либо маркер не должен быть подписанным контролом |
+| `mobile-btoc-section` | 3 | 184x37 | `Открыть оглавление части: I. Исторически` / `Открыть оглавление части: Двустороннее з` | `СЕЙЧАС ЧИТАЕТЕ Введение` | Включить видимый текст «СЕЙЧАС ЧИТАЕТЕ …» |
+| `h-hero-search` | 2 | 820x68 | `Открыть поиск по материалам сайта` | `Что вы хотите изучить?` / `Что вы хотите изучить? НАЙТИ Ctrl ` | Включить текст плейсхолдера |
+| `hmbar-progress` | 2 | 44x44 | `Открыть оглавление статьи` | `0%` | Включить видимое «N% прочитано» |
+| `hmbar-section` | 2 | 144x36 | `Открыть оглавление статьи` | `СЕЙЧАС ЧИТАЕТЕ Введение` | Включить видимую метку раздела |
+| `heart-flip-card` | 2 | 752x545 | `Нажмите, чтобы перевернуть карточку` | `👆 ПЕРЕВЕРНИ Вот оно, возрождённое ` | Включить видимую подсказку «ПЕРЕВЕРНИ» |
+| `article-end-btn` | 2 | 194x38 | `Распечатать статью или сохранить как PDF` | `Распечатать / PDF` | Согласовать формулировку имени с видимым «Распечатать / PDF» |
+| `gbs2-ctl` | 2 | 35x35 | `Увеличить шрифт` / `Уменьшить шрифт` | `A+` / `A−` | Решить, являются ли «A−»/«A+» частью имени; сделать имя однозначным для каждой кнопки |
+| `nag-fontsize-btn` | 2 | 30x30 | `Увеличить шрифт` / `Уменьшить шрифт` | `A+` / `A−` | То же, что gbs2-ctl: один и тот же контрол под вторым владельцем |
+
+Reading: singular controls (`article-end-btn`, `gbs2-ctl`, `nag-fontsize-btn`, `hmbar-*`, `mobile-btoc-section`, `h-hero-search`) can be repaired by putting the visible text into the name; the `*-flip-card`, `heart-flip-card`, `map-trigger` and `fn-marker` families cannot, because their visible content *is* the payload — for those the correct repair is to stop treating the container as the labelled control, which is the same conclusion the nested-interactive row reaches.
+
+## Correction applied 2026-10-16 (self-correction SC-C1)
+
+The `fn-marker` line in §4 is withdrawn. Measurement of `scripts/lib/note-registry.mjs` and of the printed endnotes shows the
+ordinal is the canonical contract (aria-label, endnote numbering, `data-note-ordinal`), and the **visible** marker number is the
+drifting content. `fn-marker` is removed from the label-in-name owner set and admitted as its own defect,
+`GBS-NOTE-MARKER-NUMBER-DRIFT`; see `2026-10-16-note-marker-number-drift.txt` §1 and §3 (SC-C1).
