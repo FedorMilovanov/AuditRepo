@@ -1,8 +1,9 @@
 # Strategic-map dialog focus entry — current receipt
 
-Date: 2026-10-23  
-Product anchor: `caeb92c839ff4b4f2838a0ad44a582034c41c8d4` (`main`)  
-Disposition: **admit one system verification lane** — `SYS-STRATEGIC-MAP-DIALOG-FOCUS-ENTRY`.  
+Date: 2026-10-23\
+Browser/build anchor: `caeb92c839ff4b4f2838a0ad44a582034c41c8d4` (`main` at execution)\
+Current-source recheck: `8d93fe4206e579e766727dbe865e0d07cf30d3c5` — strategic runtime, Antisovetov component and browser guard are byte-unchanged; Astro remains 7.2.9.\
+Disposition: **admit one system verification lane** — `SYS-STRATEGIC-MAP-DIALOG-FOCUS-ENTRY`.\
 Product mutation: none.
 
 ## Question

@@ -1,0 +1,7 @@
+{"kind":"anchor","product_main":"8d93fe4206e579e766727dbe865e0d07cf30d3c5","date":"2026-10-24","product_mutation":false}
+{"kind":"owner-disposition","pr":2185,"state":"MERGED","merged_at":"2026-10-23T19:38:34Z","head":"16d87310bd95476c2da1fdce4d61e3f1df8d6aa1","merge":"4c7ea615fbeea5acd806326b16227b7712482d09"}
+{"kind":"audit","command":"npm ci --ignore-scripts && npm audit --json","total":1,"moderate":1,"high":0,"critical":0,"package":"astro","version":"7.2.9","advisory":"GHSA-98hj-9722-w3j8","fix_available":"7.4.1"}
+{"kind":"production-audit","command":"npm audit --omit=dev --json","total":0,"moderate":0,"high":0,"critical":0}
+{"kind":"detection-gap","workflow":".github/workflows/dependency-security.yml","events":["pull_request:path-filtered","push-main:path-filtered","workflow_dispatch"],"schedule":false}
+{"kind":"terminal-gap","fact":"remaining moderate Astro advisory has neither a merged fix nor a dated owner acceptance with reason and expiry"}
+{"kind":"owners","open_product_prs":[2187,2179,2168,2164,2162,2143],"lockfile_owner":null,"workflow_overlap":2179}

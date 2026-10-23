@@ -1,4 +1,5 @@
 {"kind":"anchor","product_sha":"caeb92c839ff4b4f2838a0ad44a582034c41c8d4","build":"production-like","browser":"Chromium 153.0.8010.0","product_mutation":false}
+{"kind":"current-source-identity","product_main":"8d93fe4206e579e766727dbe865e0d07cf30d3c5","unchanged_paths":["src/runtime/article-strategic-map.js","src/components/article-pilots/antisovetov/AntisovetovBody.astro","scripts/article-capability-browser-contract.mjs"],"astro":"7.2.9"}
 {"kind":"summary","profiles":4,"triggersPerProfile":39,"opened":156,"initialFocusDialog":0,"tabIntoDialog":0,"escapeRestored":152,"pageErrorProfiles":0}
 {"profile":"desktop-light","triggers":39,"opened":39,"initialFocusDialog":0,"initialFocusTrigger":39,"tabIntoDialog":0,"escapeRestored":39,"pageErrors":0}
 {"profile":"desktop-dark","triggers":39,"opened":39,"initialFocusDialog":0,"initialFocusTrigger":39,"tabIntoDialog":0,"escapeRestored":39,"pageErrors":0}

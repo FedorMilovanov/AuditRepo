@@ -141,12 +141,31 @@ Closure не требует одномоментного latest для кажд�
 
 Закрытие #2144 было выполнено ранее другим owner-authorized действием; текущая проверка только читает его terminal state и не присваивает себе это решение.
 
+## Resulting-main refresh — 2026-10-24
+
+Product #2185 reached terminal repository disposition after the original receipt:
+
+- merged 2026-10-23T19:38:34Z;
+- exact head `16d87310bd95476c2da1fdce4d61e3f1df8d6aa1`;
+- merge `4c7ea615fbeea5acd806326b16227b7712482d09`;
+- current Product main after subsequent research-only #2186: `8d93fe4206e579e766727dbe865e0d07cf30d3c5`.
+
+Fresh immutable install and audit on that main now report **1 moderate / 0 high / 0 critical** package-level finding, production audit **0**. The remaining direct package is Astro 7.2.9, advisory `GHSA-98hj-9722-w3j8`; npm offers 7.4.1. Thus the lockfile remediation is landed and the former 9-finding current state is historical.
+
+The system lane remains open, but its current boundary narrows:
+
+1. `.github/workflows/dependency-security.yml` still has only path-filtered PR/push events and manual dispatch, no schedule, so unchanged-main advisory drift remains undetected;
+2. the remaining moderate Astro advisory has neither a merged fix nor a dated acceptance with reason and expiry;
+3. #2179 still overlaps workflow ownership; there is no longer an open lockfile owner.
+
+This refresh removes #2185 collision language and does not treat its merged red optional checks as proof that the dependency lifecycle is closed. Compact evidence: `evidence/2026-10-24-dependency-lifecycle-resulting-main.jsonl`.
+
 ## Что не доказано
 
 - Dev advisories не объявляются production runtime exposure: `--omit=dev` = 0.
 - Failed checks #2179 не диагностированы как package incompatibility; broad stale base и exact logs требуют отдельного разбора.
 - Browser-install failures первого #2185 head не считаются runtime regression, а исправленные следующим commit пять hygiene failures не считаются dependency incompatibility.
-- Exact #2185 lockfile ещё не является resulting `main`; 1 moderate — candidate state, а current Product anchor сохраняет 9.
+- Merge #2185 доказывает landed lockfile state, но не является владельческим принятием оставшегося Astro advisory и не добавляет scheduled detection.
 - Registry latest не пересчитан в этой проверке для всех 14 direct devDependencies; прежняя lag table не переносится как exact current count.
 - Автоматический merge не предлагается.
 - Product dependency/workflow files не изменялись.
@@ -160,5 +179,6 @@ Closure не требует одномоментного latest для кажд�
 - GitHub PR #2144 terminal state/comments;
 - GitHub PR #2179 current state/check summary;
 - GitHub PR #2185 exact head/files/check-step summary and `/tmp/pr2185-audit.json` (вне Git);
+- resulting-main compact refresh `evidence/2026-10-24-dependency-lifecycle-resulting-main.jsonl`;
 - local `git apply --check --whitespace=error-all` over exact #2185 patch;
 - исторические receipts `../incoming/arena-full-spectrum-audit/2026-10-14/evidence/2026-10-17-dependency-security-*`.
