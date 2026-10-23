@@ -90,6 +90,13 @@
 - Current boundary: separate production from dev/build exposure and security fixes from optional major upgrades; do not use blanket latest or automatic merge as a surrogate for risk ownership.
 - Recheck trigger: advisory-feed change, dependency PR terminal disposition, audit workflow change or dated exception expiry.
 
+## ST-CSS-CASCADE — layered ownership and priority debt
+
+- Status: `evidence-rich / active-work` through `SYS-CSS-CASCADE-GOVERNANCE-NONENFORCING`.
+- Theme: syntax validity and a non-increasing `!important` count do not prove that cascade ownership is converging. Published targets need executable ratchets and honest pass/target semantics.
+- Current boundary: enforce per-owner progress without mass specificity rewrites; justified print/no-JS/accessibility priority exceptions remain possible and explicit.
+- Recheck trigger: governed stylesheet/validator change, ratchet movement or a new shared cascade collision.
+
 ## Adding or changing a theme
 
 1. Record signal class, exact anchor/event and proof state.

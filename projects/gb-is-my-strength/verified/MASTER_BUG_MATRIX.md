@@ -8,15 +8,15 @@
 
 | State | Value |
 |---|---|
-| Active work units | **39** |
+| Active work units | **40** |
 | Direct current defects | **28** |
 | Verified necessary improvements | **4** |
 | Narrowed residuals | **0** |
-| System verification lanes | **7** |
+| System verification lanes | **8** |
 | Owner decisions | **0** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-> Current arithmetic after the 2026-10-23 systemic ownership consolidation: **28** + **4** + 0 + 7 + 0 = **39 active work units**. Merged main `caeb92c` independently closes 11 rows (quiz/theme/source-link/mobile-focus/Journal/scroll-top/heading/favorites/Genesis/map owners); Home duplicate-close work narrows to an unfixed focus-restoration residual without changing that unit. Product terminal CI is not green (62 success /3 failure /14 skipped), no production claim. Full evidence/limits: `../reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md`.
+> Current arithmetic after the 2026-10-23 systemic ownership consolidation and fresh CSS guard admission: **28** + **4** + 0 + 8 + 0 = **40 active work units**. Merged main `caeb92c` independently closes 11 rows (quiz/theme/source-link/mobile-focus/Journal/scroll-top/heading/favorites/Genesis/map owners); Home duplicate-close work narrows to an unfixed focus-restoration residual without changing that unit. Product terminal CI is not green (62 success /3 failure /14 skipped), no production claim. Full evidence/limits: `../reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md`.
 
 > **Systemic ownership pass — 2026-10-23.** Direct row `GBS-HEAD-ASSETS-PINNED-TO-PRODUCTION` is absorbed into `SYS-HEAD-ASSET-PROJECTION-PROLIFERATION`: current Astro source has 81 hardcoded revision carriers / 496 literals despite the central `assetUrl()` helper, and exact PR #2184 normalized-diff analysis proves 71 of 90 files were revision-only fan-out. One direct defect becomes one system lane; total stays 45. Product was not mutated. Evidence and boundaries: `../reverify/2026-10-23-systemic-head-asset-projection.md`.
 >
@@ -29,6 +29,8 @@
 > **Dependency lifecycle consolidation — 2026-10-23.** `GBS-DEPENDENCY-GATE-BLIND-ON-UNCHANGED-HEAD` and `GBS-DEPENDENCY-LAG-AND-STUCK-UPDATE-PRS` are detect/remediate halves of one unclosed lifecycle and are absorbed into `SYS-DEPENDENCY-ADVISORY-LIFECYCLE`. Fresh current audit supersedes old counts: 9 dev/build advisories (6 high / 3 moderate), production 0; #2144 is now CLOSED unmerged, while #2179 remains OPEN/BEHIND/red. Two direct rows become one system lane. Evidence: `../reverify/2026-10-23-systemic-dependency-advisory-lifecycle.md`.
 >
 > **Injected header host consolidation — 2026-10-23.** `/articles/` search/theme overlap and viewport clipping are two metrics of the same implicit mutation contract: `ReaderPreferencesHead` inserts search into the first generic `.mobile-controls`, while the native host owns incompatible capacity/overflow CSS and lacks the scoped shared-Header contract. `GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP` and `GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT` are absorbed into `SYS-INJECTED-HEADER-CONTROL-HOST`; two direct rows become one system lane. Evidence: `../reverify/2026-10-23-systemic-injected-header-control-host.md`.
+>
+> **Fresh CSS protection finding — 2026-10-23.** `SYS-CSS-CASCADE-GOVERNANCE-NONENFORCING` is admitted without absorbing a direct row: the mandatory validator publishes an 80% layered target but exits 0 and prints PASS at 36.1% (`home.css`), 10.0% (`floating-cluster.css`) and 19.0% (`site.css`). Current priority debt includes 524/200/52 `!important`; ceilings prevent some growth but do not enforce layered progress, and `home.css` has no ceiling. Evidence: `../reverify/2026-10-23-systemic-css-cascade-governance-nonenforcing.md`.
 
 > **Fresh full-spectrum pass — 2026-10-14 (Product `main` `d14da74cfe9f45e9b03e383e8e622695b01f8e16`; sandbox Chromium 153 on a production-like local build; no Product mutation).** The 2026-09-30/10-01 admission snapshot is superseded: Product `main` advanced by 19 merged PRs and the release path is no longer red. Closures, confirmations, one new systemic candidate and one harness-gap claim are recorded in `../incoming/arena-full-spectrum-audit/2026-10-14/REPORT.md`, receipts `../incoming/arena-full-spectrum-audit/2026-10-14/evidence/2026-10-14-*`.
 >
@@ -105,7 +107,7 @@
 | ID | Current residual | Closure boundary |
 |---|---|---|
 
-## SYSTEM VERIFICATION LANES — 7
+## SYSTEM VERIFICATION LANES — 8
 
 | ID | Current causal problem | Absorbs / closure boundary |
 |---|---|---|
@@ -116,6 +118,7 @@
 | `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY` | Pastor-series published membership is copied across hub (10), `data/series.json`/JSON-LD (9), series feed (2) and series sitemap (hub + 2). The one contract that names feed/sitemap/`numberOfItems` runs a validator extracted from `aaf0ba7f` inside boundary `fbd305a5`, so green historical CI cannot inspect current drift. The dossier already has a distinct companion role, but no typed membership owner projects that role consistently. | Absorbs `GBS-PASTOR-SERIES-DISCOVERY-DRIFT` and `GBS-WAVE12-CONTRACT-FROZEN-AT-BOUNDARY`. Close with one typed current membership owner plus declared core/companion projection policy for hub/runtime/JSON-LD/feed/sitemap, and a current-head negative fixture that fails one-surface drift. Preserve the historical Wave 12 witness separately and keep primary feed/sitemap controls. No blanket card scraper or forced numbering of companion materials. Details: `../reverify/2026-10-23-systemic-series-discovery-current-authority.md`. |
 | `SYS-DEPENDENCY-ADVISORY-LIFECYCLE` | Dependency detection and remediation do not form a closed lifecycle. Security CI has no schedule, so an unchanged lockfile is not reevaluated as advisories evolve; fresh `caeb92c` audit is now 9 dev/build vulnerabilities (6 high / 3 moderate, production 0) and the strict contract fails. The grouped npm PR #2144 was closed stale/unmerged; Actions PR #2179 remains OPEN/BEHIND with broad failures. Bot creation therefore does not guarantee fixed or explicitly accepted terminal state. | Absorbs `GBS-DEPENDENCY-GATE-BLIND-ON-UNCHANGED-HEAD` and `GBS-DEPENDENCY-LAG-AND-STUCK-UPDATE-PRS`. Close the detect→classify→repair/accept→verify loop: scheduled unchanged-main audit, explicit production/dev reporting, current advisory terminal dispositions, bounded grouping, and dated exceptions with expiry. Preserve strict exact-candidate checks; do not require blanket latest or diagnose #2179 failures without logs. Current workflow mutation must coordinate with #2179’s 77-file overlap. Details: `../reverify/2026-10-23-systemic-dependency-advisory-lifecycle.md`. |
 | `SYS-INJECTED-HEADER-CONTROL-HOST` | `ReaderPreferencesHead` route-gates a runtime search button, finds the first generic `.mobile-controls` and inserts before `#themeToggle` without a host capacity/interface contract. Native `/articles/` combines this with `max-width:120px; overflow:hidden`; current 44×44 search/theme targets overlap 12px, and at 768px extend 55.328px beyond viewport with unreachable centres. Shared Astro Header is healthy because scoped overrides own its geometry, proving the missing boundary. | Absorbs `GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP` and `GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT`. Close with an authored control component or explicit named host/API owning capacity, order, focus and viewport containment—not first-selector mutation. Prove `/articles/` 320/390/768/desktop plus `/biografii/` and `/pastor-series/` allowlist consumers, and preserve healthy shared Header, shortcuts and single-opener behavior. Details: `../reverify/2026-10-23-systemic-injected-header-control-host.md`. |
+| `SYS-CSS-CASCADE-GOVERNANCE-NONENFORCING` | Mandatory `css:layer:validate` publishes `LAYERED_TARGET_PCT=80`, auto-discovers three governed roots, then records below-target coverage only as warnings and exits 0 with `VALIDATION PASSED`: `home.css` 36.1%, `floating-cluster.css` 10.0%, `site.css` 19.0%. Current priority debt is respectively 52/524/200 `!important`; ceilings equal current debt for two files and `home.css` has no ceiling. The guard protects syntax and some anti-growth ratchets, but cannot enforce its own cascade-ownership target. | Close with per-root layered/unlayered baselines that fail regression and ratchet toward 80%, an explicit ceiling for every governed root, negative fixtures for coverage/priority/root discovery, and output that distinguishes baseline protection from target completion. Do not mass-delete justified priority rules; migrate bounded owner slices with browser/theme/mobile/print controls. No performance claim and no direct UI rows absorbed. Details: `../reverify/2026-10-23-systemic-css-cascade-governance-nonenforcing.md`. |
 
 ## OWNER DECISIONS — 0
 
