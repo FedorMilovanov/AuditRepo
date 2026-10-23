@@ -49,3 +49,17 @@ The affected controls share the `floating-cluster-controller.js` implementation 
 3. Resulting-main browser verification demonstrates exit in both directions on Nagornaya, no hidden speed tab stops across the 72 desktop routes previously counted (and checks the six mobile routes), correct radio announcements/selection, and no regression to pointer/touch playback.
 
 Checked the currently open Product PRs #2142–#2145 and searched open issues for `keyboard trap speed reader` and `invisible focus speed`; no matching in-flight repair or issue was found. This is a system-level necessary-work admission, not a claim that a repair or new runtime test has occurred.
+
+## Resulting-main refresh — 2026-10-24
+
+The lane remains current on Product main `8d93fe4206e579e766727dbe865e0d07cf30d3c5`. Chromium 153 exercised `/nagornaya/chast-1/` and `/nagornaya/chast-3/` at 1440×900 in Light and Dark on a rebuilt production-like artifact:
+
+- every closed generic `.gb-ember-expand[role="radiogroup"]` had six native buttons at `tabIndex=0`, all opacity zero, with no `aria-hidden` or inert state;
+- trusted Shift+Tab from the first speed radio wrapped to the Stop action inside the panel in 4/4 profiles;
+- trusted Tab from Stop wrapped to the first speed radio in 4/4;
+- Escape closed the panel but restored focus to Play in 0/4; focus remained on the now-hidden `1×` radio;
+- zero page-error profiles.
+
+The newer `reader-controls-a11y.js` correctly repairs the separate `.hm-speedrail` and `.mobile-speedrail` custom-slot families with inert/ARIA/roving state. Its permanent browser contract asserts those selectors only; it never selects the generic `.gb-ember-expand` owner. This is a positive non-regression boundary, not closure of the admitted lane. No currently open Product PR owns `floating-cluster-controller.js` or `floating-cluster.css`.
+
+Compact refresh: `evidence/2026-10-24-reader-speed-keyboard-resulting-main.jsonl`.
