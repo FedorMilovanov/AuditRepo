@@ -1,0 +1,10 @@
+{"kind":"anchor","product_sha":"caeb92c839ff4b4f2838a0ad44a582034c41c8d4","build":"production-like","browser":"Chromium 153.0.8010.0","product_mutation":false}
+{"kind":"summary","profiles":4,"triggersPerProfile":39,"opened":156,"initialFocusDialog":0,"tabIntoDialog":0,"escapeRestored":152,"pageErrorProfiles":0}
+{"profile":"desktop-light","triggers":39,"opened":39,"initialFocusDialog":0,"initialFocusTrigger":39,"tabIntoDialog":0,"escapeRestored":39,"pageErrors":0}
+{"profile":"desktop-dark","triggers":39,"opened":39,"initialFocusDialog":0,"initialFocusTrigger":39,"tabIntoDialog":0,"escapeRestored":39,"pageErrors":0}
+{"profile":"mobile-light","triggers":39,"opened":39,"initialFocusDialog":0,"initialFocusTrigger":39,"tabIntoDialog":0,"escapeRestored":37,"pageErrors":0}
+{"profile":"mobile-dark","triggers":39,"opened":39,"initialFocusDialog":0,"initialFocusTrigger":39,"tabIntoDialog":0,"escapeRestored":37,"pageErrors":0}
+{"kind":"ax-positive","route":"/articles/20-antisovetov-pastoru/","trigger":"tip 1","dialog":"Пояснение к стратегической карте","content":"close button plus two titled explanatory paragraphs","geometry":"fixed popover fully in viewport after opener scroll"}
+{"kind":"source","owner":"src/runtime/article-strategic-map.js","fact":"open renders/unhides/positions role=dialog and sets opener aria-expanded but never focuses dialog, close button, or content"}
+{"kind":"guard-gap","owner":"scripts/article-capability-browser-contract.mjs::exerciseStrategicMap","fact":"focuses first trigger, opens, then immediately presses Escape; asserts expanded/collapse/return but never focus entry or Tab reach"}
+{"kind":"owner-collision","checked":"2026-10-23","open_product_prs":[2186,2179,2168,2164,2162,2161,2143],"strategic_map_owner":null}

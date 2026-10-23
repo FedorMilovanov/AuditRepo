@@ -77,6 +77,13 @@
 - Theme: `UNPROVEN != PASS`; locators and structural surrogates are not semantics; same-tree contradictory outcomes require event/environment investigation; temporary writers are not terminal proof.
 - Recheck trigger: a reproducible false green/false red, evidence-integrity defect or current control-plane admission.
 
+## ST-POPUP-FOCUS-MODEL — advertised popup type must own entry, traversal and return
+
+- Status: `evidence-rich / active-work` through `SYS-STRATEGIC-MAP-DIALOG-FOCUS-ENTRY` and the separate rich-footnote direct row.
+- Theme: moving a popup to a body-level singleton breaks ordinary sequential adjacency. If a trigger advertises a dialog, its owner must define focus entry, traversal, dismissal and exact return; otherwise it must expose a truthful non-dialog association instead.
+- Current boundary: strategic-map dialog lifecycle and rich-footnote content have separate semantic owners and closure matrices; do not combine their implementations merely because both reparent content.
+- Recheck trigger: popup-role/focus lifecycle change, overlay coordination work, or a current first-Tab/Shift+Tab guard.
+
 ## ST-COLLAPSED-SURFACE-SEMANTICS — visual, keyboard and AX state must agree
 
 - Status: `evidence-rich / active-work` through `SYS-FAQ-COLLAPSED-FOCUS-EXPOSURE` and the separate reader-speed owner.
