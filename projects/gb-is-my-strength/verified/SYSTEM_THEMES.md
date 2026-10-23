@@ -77,6 +77,13 @@
 - Theme: `UNPROVEN != PASS`; locators and structural surrogates are not semantics; same-tree contradictory outcomes require event/environment investigation; temporary writers are not terminal proof.
 - Recheck trigger: a reproducible false green/false red, evidence-integrity defect or current control-plane admission.
 
+## ST-OPERATION-OUTCOME-TRUTH — UI feedback must follow the owning operation
+
+- Status: `evidence-rich / active-work` through `SYS-READER-SHARE-COPY-OUTCOME-CONTRACT`.
+- Theme: a dispatched action or attempted fallback is not success; status attributes, live-region text and visual confirmation must be derived from the selected mechanism's terminal outcome. Shared capture owners multiply one false-positive branch across every rendered control.
+- Current boundary: the current proven case is ReaderActions copy fallback returning `false`; do not generalize this to modern Clipboard success or treat API obsolescence alone as a defect.
+- Recheck trigger: action/status owner change, fallback removal, or a new operation whose negative result is announced as success.
+
 ## ST-SOURCE-GUARD-CLOSURE — validator strength and trigger applicability
 
 - Status: `evidence-rich / reverify-on-change`.
