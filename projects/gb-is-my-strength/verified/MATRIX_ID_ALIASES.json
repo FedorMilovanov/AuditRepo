@@ -254,6 +254,18 @@
     "GBS-SCRIPTURE-AFFORDANCE-PLACEHOLDER-ONLY": {
       "status": "retired",
       "reason": "2026-10-23 necessity not established: 238 controls have no verified explicit verse-text promise and expand abbreviation to full reference; data/rights restriction is not mandatory corpus/publication work. Actual native-AX association issue consolidated under GBS-INLINE-TOOLTIP-DEFINITION-ASSOCIATION. Not a Product fix; reconsider on verified text promise/eligible-record failure."
+    },
+    "GBS-NOTE-MARKER-NUMBER-DRIFT": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-23 on Product c18cd962 / merged #2183: 5 note routes x4 profiles report numericMismatch=0 and closed label mismatch=0. Executable canonicalisation conflicts with unchanged preserve-number policy; that independent authority debt remains active as SYS-NOTE-NUMBER-AUTHORITY-CONTRADICTION."
+    },
+    "GBS-TOOLTIP-MOBILE-ESCAPE-REOPEN": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-23 on Product c18cd962 / merged #2183: previous rich/plain mobile and desktop profiles all close after Escape; reopened states=0. Definition association remains independent."
+    },
+    "SYS-FOOTNOTE-MARKER-INTERACTIVITY": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-23 on Product c18cd962 / merged #2183: closed nested-interactive=0 across 5 note routes x4 profiles, open descriptions and Escape retained. Actual fix is inert lifecycle; no mandatory permanent DOM migration."
     }
   },
   "ignoredTokens": []

@@ -54,6 +54,7 @@ Result: `/tmp/gbchrome/chrome.sh` (Chromium 153 launcher) and `/home/user/gbs-sr
 | `tts-worker-retry-recheck.mjs` | Actual Shared/Dedicated import failure → restored pinned delivery → Retry vs failed-Promise reset; MIRROR8101, not inference PASS |
 | `tts-play-icon-contrast.mjs` | Paired actual ink/underlay PNG test of mobile Nagornaya PLAY in Dark/Light; not hypothetical background or44px requirement |
 | `tts-cancel-reenable-recheck.mjs` | Native cancel/opt-out/Enable/reload before/during/after notice fade; real pending HTTP/no weights, source worker transport adapter, lost controls remain recorded failures |
+| resulting-main c18 invocation | Re-run semantic/card/PLAY-pixel/notice harnesses with `BASE=http://127.0.0.1:8104` and `DIST=/home/user/gbs-current/dist`; exact output/owner hashes live in `reverify/evidence/2026-10-23-resulting-main-c18.json` |
 | `mobile-icons-sweep.mjs` | icon-button geometry at 390 and 768: off-viewport, sub-24 px tap targets, per route (continuation 10) |
 | `hero-crumb.mjs` | home hero accessible name (axe `label-content-name-mismatch`) and the `/hard-texts/genesis-6/` breadcrumb/brand collision (continuation 10) |
 | `final-sweep.mjs` | axe (WCAG A/AA + best practice) and LCP/CLS on six routes, mobile profile (continuation 10) |

@@ -522,3 +522,9 @@ This entry records the governance change only. It does not claim that the reform
 - **57 →58 =53 +3 +2.** Новый `GBS-TTS-NOTICE-STALE-REMOVAL-TIMER`: 8 failing native fade-window states /8 healthy before-after controls. Старый DOM cleanup удаляет новый Disabled/Enable либо Loading/Cancel; причина независима от текста fallback/worker dependency retry.
 - Cancel/refusal controls проверены на настоящем pending HTTP:28 native button aborts +4 explicitly marked programmatic cleanup, persistent opt-out и Enable/reload semantics сохранены, unrelated sentinel не очищен. Не 32 healthy native cancels, не модель/аудио PASS; ZIP body не подавался, ready/neural audio0.
 - Source/старые raw receipts/aliases сохранены; Product source/lockfiles чистые. Методика, adapted transport boundary и24 full compact records: `../reverify/2026-10-23-play-tts-download-audit.md` Продолжение, `../reverify/evidence/2026-10-23-tts-cancel-notice-race.json`. No merge/global readiness.
+
+## 2026-10-23 — Product #2183 resulting-main c18 reconciliation
+
+- **58 →56 =51 defects +4 necessary improvements +1 system lane.** FIXED-CURRENT: note number drift, closed footnote nested-interactivity, mobile tooltip Escape reopen; fresh c18 production-like Chromium sweep20 note profiles/120 semantic records, source/build clean. Deploy and Product CI not terminal, no production/AT claim.
+- New `SYS-NOTE-NUMBER-AUTHORITY-CONTRADICTION`: executable/test canonicalise manuscript digits, normative doc still says preserve visible numbers. Behavioral fix stays closed; policy resolution remains active, no fabricated owner approval.
+- Association/Nagornaya/card occlusion/PLAY contrast remain current. Six TTS/package owners exact-equal d14→c18; notice race repeated on c18. Evidence: `../reverify/2026-10-23-resulting-main-c18-reconciliation.md`, `../reverify/evidence/2026-10-23-resulting-main-c18.json`; old anchor receipts retained.
