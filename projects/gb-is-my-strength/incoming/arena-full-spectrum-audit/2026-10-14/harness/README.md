@@ -93,3 +93,7 @@ resets. They are not reconstructed here because each receipt records the method 
 in `../REPORT.md` §7–§13. What matters for re-verification is the measured data, which lives in `../evidence/*.json`.
 
 Continuation 16 order: rebuild production-like dist **without** Pagefind → copy/run `browser-state-boundaries.mjs` in the harness workspace → `npm run pagefind:build:dist` in Product → run `pagefind-history-boundary.mjs`. The baseline capture rejects an already-indexed artifact; neither capture is product PASS.
+
+## Resulting-main #2184 closure sweep
+
+`resulting-main-2184-recheck.mjs` scans the exact local production-like build on port 8099 for the merged #2184 owners: quiz contrast, keyboard focus visibility, hidden mobile chrome, Journal bypass, scroll-top lifecycle, Home search close/focus, heading names, Genesis crumb geometry, map SVG names and persistent source-link cues. It writes JSONL to `/tmp/caeb-resulting-main.jsonl` and visual controls to `/tmp/caeb-visual`; dependencies and PNG remain outside Git.
