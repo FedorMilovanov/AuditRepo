@@ -1,75 +1,90 @@
-# Gill collapsed submenu focus/exposure — current receipt
+# Gill navigation collapsed-focus exposure — current receipt
 
-Date: 2026-10-24  
-Product anchor: `8d93fe4206e579e766727dbe865e0d07cf30d3c5` (`main`)  
-Disposition: **admit one system verification lane** — `SYS-GILL-RAIL-COLLAPSED-SUBMENU-EXPOSURE`.  
+Date: 2026-10-24
+Product anchor: `8d93fe4206e579e766727dbe865e0d07cf30d3c5` (`main`)
+Disposition: **admit one system verification lane** — `SYS-GILL-NAV-COLLAPSED-FOCUS-EXPOSURE`.
 Product mutation: none.
 
 ## Question
 
-Does the Gill rail's shared collapsible-subgroup owner make folded links unavailable to keyboard and assistive-technology users, or does it only remove their paint and pointer hit testing?
+Do Gill navigation disclosures make folded links unavailable to keyboard and assistive-technology users, or do the three current state machines only remove paint and pointer hit testing?
 
-## Shared owner and current reach
+## Shared root and three manifestations
 
-`GillSeriesRail.astro` initially adds `gbs2-collapsed` to level-three rows outside the current group. `floating-cluster-controller.js` then moves that class as scrollspy changes group and drives `maxHeight` for animation and metro-line geometry. `floating-cluster.css` defines the closed state with `max-height:0`, `opacity:0`, a transform and `pointer-events:none`.
+The Gill navigation family repeats one incomplete collapsed-state contract:
 
-None of those owners synchronizes `hidden`, `inert`, `aria-hidden`, descendant tab order, or focus evacuation/restoration. The current data makes the defect initially visible on `/articles/dzhon-gill-chast-1-chelovek/`: eight links in the second H2 group start folded while four links in the current group remain open. The five other Gill surfaces sampled have no initially folded level-three rows; this is one shared state-contract defect, not eight route rows.
+1. `GillSeriesRail.astro` initially marks inactive level-three rows `gbs2-collapsed`; scrollspy in `floating-cluster-controller.js` moves that class between groups. CSS uses `max-height:0`, `opacity:0`, transform and `pointer-events:none`.
+2. The desktop `#gbsTocToggle` adds `toc-collapsed` to the whole current-part panel and synchronizes only the toggle's `aria-expanded`/label. CSS makes `.gbs2-tocscroll` zero-height, opacity-zero and pointer-inert.
+3. `GillPartTocOverlay.astro` independently toggles `open` on mobile part/article accordions and synchronizes only each header/chevron's `aria-expanded`. CSS folds regions with `grid-template-rows:0fr` and makes their links opacity-zero.
+
+None of these state owners synchronizes `hidden`, `inert`, `aria-hidden`, descendant tab order, or focus evacuation/restoration. The repeated mechanism should be repaired through one Gill disclosure-state contract rather than three more CSS exceptions.
 
 ## Browser proof
 
 Chromium `153.0.8010.0`, production-like build, zero page errors.
 
-A six-route desktop/mobile inventory found eight initially collapsed anchors, all on Gill part 1. At 1440×844 they retain `tabIndex=0` and nonzero anchor boxes while their `li` ancestors compute to `opacity:0`. At 390×844 the desktop rail itself is not rendered, so no mobile sequential-focus claim is made.
+### Inactive desktop subgroup
 
-Trusted keyboard traversal at desktop width was repeated in Light and Dark:
+A six-route desktop/mobile inventory found eight links initially marked `gbs2-collapsed`, all on Gill part 1. At 1440×844 they retain `tabIndex=0` and nonzero anchor boxes while their `li` ancestors compute to `opacity:0`. At 390×844 the desktop rail itself is not rendered, so no mobile claim is made for this specific surface.
 
-1. focus starts on the visible parent link `#part-pastor`;
-2. the next eight real Tab presses visit, in order, all eight opacity-zero collapsed links;
-3. the ninth Tab reaches the next visible row `#sec-quiz`;
-4. from `#sec-quiz`, a real Shift+Tab returns to the last invisible collapsed link.
+Trusted traversal in desktop Light and Dark:
 
-Thus this is not inferred from `tabIndex` and not established by programmatic focus. Natural forward and reverse traversal both enter the folded group.
+- focus starts on visible parent `#part-pastor`;
+- eight real Tab presses visit all eight opacity-zero collapsed links;
+- the ninth reaches visible `#sec-quiz`;
+- Shift+Tab from `#sec-quiz` returns to the last invisible link.
 
-Chromium ARIA snapshots in both themes also retain the collapsed link names, including «Хорслидаун…», «Евангельская активность…» and «Кеттеринг, Саутварк…». The visual collapse therefore diverges from both keyboard and AX state.
+Chromium ARIA snapshots retain collapsed names including «Хорслидаун…», «Евангельская активность…» and «Кеттеринг, Саутварк…».
 
-## Existing guard false green
+### Whole desktop TOC disclosure
 
-`scripts/gill-pre-v16-submenu-regression-audit.js` is a strong geometry/content/scrollspy guard, but its collapsed-state signature is only a string of `gbs2-collapsed` classes used to stabilize metro-line measurements. It does not inspect:
+On each of six Gill routes, activating the real `#gbsTocToggle` produces `aria-expanded=false` and an opacity-zero `.gbs2-tocscroll`, but every link remains `tabIndex=0`: **70 repeated instances** across the six built pages (6–16 per route).
 
-- sequential focus while rows are folded;
-- accessibility-tree exposure;
-- focus evacuation if scroll-driven collapse contains the active element;
-- restoration of authored focusability after reopening.
+On Gill part 1 Light and Dark, a trusted Tab from the collapsed toggle immediately enters hidden `#part-calling`; all 15 links in that closed panel remain sequentially active. The collapsed panel's ARIA snapshot still includes current-part navigation names.
 
-The present defect can therefore satisfy the permanent Gill submenu workflow.
+### Mobile part/article accordions
+
+After opening the real `#mobPartTocBtn`, each route has five closed part regions. Across the six Gill pages, **380 repeated folded link instances** remain `tabIndex=0` and opacity-zero (59–69 per built page, including closed nested article regions).
+
+On Gill part 1 mobile Light and Dark, focus was placed on the first closed part header and the next trusted Tab entered its opacity-zero «Перейти к части» link despite `aria-expanded=false`. The open dialog's ARIA snapshot retains that closed-region link.
+
+These are natural forward/reverse keyboard results, not success inferred from `tabIndex` or established through direct focus.
+
+## Existing guards are false green for this property
+
+- `gill-pre-v16-submenu-regression-audit.js` reads `gbs2-collapsed` signatures only to stabilize metro-line geometry; it never checks focus or AX exclusion.
+- `reader-controls-residual-browser-contract.mjs` verifies that mobile headers/chevrons have valid `aria-controls` targets and that `aria-expanded` changes after click. It does not inspect folded descendants, AX exposure, or focus evacuation.
+- the overlay a11y contract protects the top-level closed dialog and speed rails; it does not establish nested accordion semantics once the dialog is open.
+
+All three current manifestations can therefore pass permanent CI while folded links remain keyboard/AX active.
 
 ## Bounded repair and closure
 
-The shared rail owner must project one state to paint, pointer, keyboard and accessibility surfaces:
+Create one reusable Gill disclosure-state primitive (or equivalent single contract) and use it for subgroup, whole-TOC and mobile part/article transitions:
 
-- folded rows leave sequential focus and the accessibility tree;
-- unfolded rows regain their authored semantics and focusability;
-- if scroll-driven group collapse contains focus, focus moves deliberately to the corresponding visible H2 link (or another documented stable owner) before hiding;
-- no-JS content remains available under the existing progressive-enhancement contract;
-- metro-line geometry, scrollspy, active-row following and animation remain intact.
-
-A synchronized `inert`/visibility contract is preferable to globally rewriting descendant `tabindex`. If `hidden` is used, transition timing cannot become the semantic owner and reduced-motion behavior must remain deterministic.
+- folded regions leave sequential focus and the accessibility tree;
+- unfolded regions regain authored semantics and focusability;
+- collapse containing focus first moves focus to its exact visible controller or a documented stable parent;
+- transition geometry is presentational and never owns semantic state;
+- no-JS content remains available under existing progressive enhancement;
+- do not globally rewrite descendant `tabindex` without reversible ownership.
 
 Required resulting-main proof:
 
-1. Gill part 1 initial Light/Dark forward Tab and reverse Shift+Tab skip all eight folded links;
-2. closed link names are absent from the AX snapshot and return after opening;
-3. focus inside a group that is then folded is evacuated to a visible stable owner;
-4. pointer and keyboard navigation work after reopening;
-5. all Gill routes retain scrollspy, one active row, counter, metro-line geometry and active-row visibility at desktop widths;
-6. mobile/no-JS/reduced-motion controls remain readable and operable.
+1. initial inactive subgroup forward/reverse traversal and AX exclusion in Light/Dark;
+2. desktop whole-TOC close/open across all Gill routes, including focus inside at collapse;
+3. mobile part and nested article accordion close/open across flat and book shapes, including focus inside at collapse;
+4. folded descendants absent from Tab/AX and restored when open;
+5. pointer and keyboard navigation remain valid after reopen;
+6. scrollspy, one active row, counter, active-row following and metro-line geometry remain intact;
+7. mobile/no-JS/reduced-motion controls remain readable and operable.
 
 ## Boundaries
 
-- This does not duplicate `SYS-FAQ-COLLAPSED-FOCUS-EXPOSURE` or `SYS-READER-SPEED-KEYBOARD-MODEL`: the visual anti-pattern is similar, but component, lifecycle, focus restoration and regression owner are distinct.
-- The Gill links and targets themselves are valid when the group is open.
-- No claim is made that all Gill routes start with folded rows; current data localizes initial exposure to part 1 while the mechanism is shared and scroll-driven.
-- Open Product PRs #2188, #2179, #2164 and #2143 do not own the Gill rail or its submenu guard.
+- This does not duplicate FAQ or reader-speed lanes: the anti-pattern is similar, but the Gill components, lifecycle, restoration owners and permanent guards are distinct.
+- Link destinations are valid while their regions are open.
+- Counts are repeated built-page instances, not claims of 450 unique content defects.
+- Open Product PRs #2188, #2179, #2164 and #2143 do not own Gill navigation or its guards.
 - Product source was not changed.
 
 ## Evidence
