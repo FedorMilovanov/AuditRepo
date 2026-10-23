@@ -83,6 +83,13 @@
 - Theme: a guard must prove both its semantic invariant and its applicability on the event/final head that matters. A check that is absent, skipped or unable to start is not a pass.
 - Recheck trigger: a source/guard workflow change, a lifecycle mismatch or a newly admitted enforcement decision.
 
+## ST-DEPENDENCY-LIFECYCLE — advisory visibility and update completion
+
+- Status: `evidence-rich / active-work` through `SYS-DEPENDENCY-ADVISORY-LIFECYCLE`.
+- Theme: external advisory drift, scheduled detection, bot update grouping, exact-candidate CI and terminal repair/acceptance are one lifecycle. A generated PR or an old green audit is not completion.
+- Current boundary: separate production from dev/build exposure and security fixes from optional major upgrades; do not use blanket latest or automatic merge as a surrogate for risk ownership.
+- Recheck trigger: advisory-feed change, dependency PR terminal disposition, audit workflow change or dated exception expiry.
+
 ## Adding or changing a theme
 
 1. Record signal class, exact anchor/event and proof state.
