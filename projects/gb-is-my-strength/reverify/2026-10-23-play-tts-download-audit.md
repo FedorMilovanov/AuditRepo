@@ -1,5 +1,7 @@
 # 2026-10-23 — PLAY, загрузка Vosk TTS и фактический звук
 
+> Последовательные checkpoints: предыдущие числа/границы сохраняются; последний итог — в последнем продолжении, текущая очередь — MASTER.
+
 Scope: пользовательский PLAY, реальные загрузчики/сигналы и визуал; не Product repair. Чистая база AuditRepo `267daacbc2af72c1ab9c5609bf22a941d4c398a5`, 4/4 baseline PASS. Product main повторно прочитан: `d14da74cfe9f45e9b03e383e8e622695b01f8e16`, source/lockfiles clean. Candidate #2184 продвинулся до `117df06a…`, но main не изменился; последнее продвижение касается heading hygiene, не TTS. Новые Product ветки/PR не создавались.
 
 ## 1. Что произошло после настоящего PLAY
@@ -37,3 +39,22 @@ Real-model fixtures действительно проверяют WAV/модел
 **Итог: 54 →57 =52 defects +3 necessary improvements +2 system lanes**: sticky worker retry, ложный fallback status, false-red ORT fixture. Contrast — расширение существующего owner. Ни одного Product fix этим AuditRepo diff не выполнено.
 
 **НЕ ПРОВЕРЕНО:** локальные bytes/распаковка всего ZIP, настоящие cold/warm model sessions, нейросинтез/звучащий WAV, physical speakers, first-audible, фактические audio pause/resume/seek, пользовательский cache/OS voices, Safari/WebKit/реальные AT и независимые production bytes. Warm/playing visual state не выдаётся за работающую речь. LCP/CLS — lab/interaction samples, не field CWV. Для этих claims нужен доступный реальный model delivery, не снятие SHA guard и не fake media.
+
+## Продолжение — отмена, opt-out и устаревший таймер карточки
+
+Повторный clean baseline `9da3a6a` 4/4 PASS. Sandbox восстановил файлы на старом Git pointer: до изменения проверены все 2523 tree entries против опубликованного head, index tree совпал; восстановлен только pointer без file discard. Это ограничение среды, не дефект Product.
+
+Source component test (неизменённые engine/CSS, valid local origin, public cancel/ensureLoaded APIs) изолировал три окна: before fade / during fade / after removal. Только в середине новое Disabled состояние переиспользует старый DOM, который старый callback удаляет через360ms. Before/after controls сохраняют новую карточку.
+
+Затем **16 native Gill cases** = 4 сценария ×1440×900 desktop/390×844 touch ×Light/Dark; reduced motion, SW blocked. Показаны перед/во время/после fade и быстрый Enable в том же fade window. На таймингах источника (auto-hide1900ms + untracked removal360ms) не ставился fake clock. Все Play/Cancel/Enable действия — настоящие click/tap, кроме явно отмеченного cleanup.
+
+- Рабочие части: native «Не загружать» реально прерывает pending HTTP; opt-out сохраняется после reload, повторный PLAY без разрешения не создаёт новой model request, Enable снимает opt-out и делает новый запрос; unrelated sentinel сохранён. Итого32 закрытых pending requests: **28 native cancel-button aborts +4 programmatic cleanup**, последние не считаются healthy native Cancel.
+- **8 здоровых notice controls** до/после fade. **4 раза during fade** удаляется только что показанная карточка Disabled вместе с Enable; extra PLAY создаёт новую и позволяет вернуться в загрузку.
+- **4 раза quick Enable during fade** успевает реально запустить новый запрос, но старая уборка удаляет уже Loading карточку и Cancel, пока HTTP остаётся open. Для безопасного завершения этих четырёх cases использован **только диагностический API cleanup**, не выданный за доступную пользователю кнопку.
+- Причина: `hideNotice()` хранит только outer timer; вложенный `setTimeout360` захватывает `doomed` и не проверяет новое владение/state. `showStatus()` отменяет уже отработавший outer timer и `getNotice()` переиспользует fading element. Нужна lifecycle/generation-safe уборка, не произвольное увеличение timeout или принудительное постоянное уведомление. Новый отдельный `GBS-TTS-NOTICE-STALE-REMOVAL-TIMER`; исправление текста fallback не устраняет удаление DOM.
+
+Транспортная граница: тест отдал **реальные pinned npm JS** и изменил у реального worker лишь3 transport URLs. Model endpoint — **настоящий открытый HTTP response без body**, проверяющий native fetch/AbortSignal, а не настоящий ZIP. Нет fake ready/PCM/media.play/speech events; original SHA guard сохранён, ready и neural audio оставались0. Это изоляция notice/cancel subsystem от известной CDN/retry ошибки, не доказательство скачанной модели, inference, аудио stop/pause/resume или production delivery. Не очищали model/favorites cache, Product source/lockfiles чистые.
+
+[24 компактных документа](evidence/2026-10-23-tts-cancel-notice-race.json): anchors/provenance +3 component controls +16 native cases. Все записи сохранены exact round-trip, строки≤699chars; representative desktop/mobile Light/Dark screenshots просмотрены, PNG вне Git. Harness `tts-cancel-reenable-recheck.mjs`, pinned JS input directory `TTS_DEPS`; isolated HTTP fixture внутри запуска закрывается после browser. Source contracts по-прежнему4PASS/1pre-existing ORT false-red; зелёный source scope не покрывает fade/re-enable boundary.
+
+**Последний итог: 57 →58 =53 defects +3 necessary improvements +2 system lanes.** Один новый notice lifecycle defect; здоровые cancellation/refusal controls не превращены в баги, прежние TTS findings не продублированы. Ни одного Product fix/merge, настоящая речь по-прежнему не аттестуется.
