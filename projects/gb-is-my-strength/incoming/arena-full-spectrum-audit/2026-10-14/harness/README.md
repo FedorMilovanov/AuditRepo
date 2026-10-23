@@ -45,6 +45,16 @@ Result: `/tmp/gbchrome/chrome.sh` (Chromium 153 launcher) and `/home/user/gbs-sr
 | `genealogy-reopen-and-journal.mjs` | 8 profiles: pointer/touch reopen vs keyboard, G3 source projection, disposable sticky scroll-owner A/B; capture, not product PASS (continuation 15) |
 | `browser-state-boundaries.mjs` | Before Pagefind build: native favorite UI, real quota, migration, AX, preferences API and fallback history; WIDTH=1440/390 (continuation 16) |
 | `pagefind-history-boundary.mjs` | After canonical Pagefind build: same history boundary with actual index-derived target and module/WASM responses (continuation 16) |
+| `404-postclosure-recheck.mjs` | 2026-10-22 closure recheck: root + nested Pages-style 404, 3 themes × 2 widths, old-relative negative controls, recovery and axe; SW explicitly isolated, not live/SW PASS |
+| `quiz-postclosure-recheck.mjs` | 23 quiz routes: result/restart, actual next controls, explicit native-pointer failure vs keyboard recovery; WIDTH/SCHEME split |
+| `reduced-motion-card-occlusion.mjs` | Native Krajne launch at reduced/normal motion, reversible in-memory height A/B and restoration; not a Product fix |
+| `header-postclosure-recheck.mjs` | 12 native cold Header bootstrap controls, real delayed search.js, Ctrl/Meta+K, query/close/focus, desktop/mobile Light/Dark; not whole-layout PASS |
+| `semantic-surface-recheck.mjs` | 2026-10-23 note/tooltip/dateline capture: class census, native AX, inert/association boundaries, Escape result and approved-instant control; WIDTH/SCHEME split, not Product PASS |
+| `tts-native-play-recheck.mjs` | Actual PLAY/native speech/media events and PCM ownership; no fake onstart/audio.play/autoplay bypass, WIDTH/SCHEME split |
+| `tts-worker-retry-recheck.mjs` | Actual Shared/Dedicated import failure → restored pinned delivery → Retry vs failed-Promise reset; MIRROR8101, not inference PASS |
+| `tts-play-icon-contrast.mjs` | Paired actual ink/underlay PNG test of mobile Nagornaya PLAY in Dark/Light; not hypothetical background or44px requirement |
+| `tts-cancel-reenable-recheck.mjs` | Native cancel/opt-out/Enable/reload before/during/after notice fade; real pending HTTP/no weights, source worker transport adapter, lost controls remain recorded failures |
+| resulting-main c18 invocation | Re-run semantic/card/PLAY-pixel/notice harnesses with `BASE=http://127.0.0.1:8104` and `DIST=/home/user/gbs-current/dist`; exact output/owner hashes live in `reverify/evidence/2026-10-23-resulting-main-c18.json` |
 | `mobile-icons-sweep.mjs` | icon-button geometry at 390 and 768: off-viewport, sub-24 px tap targets, per route (continuation 10) |
 | `hero-crumb.mjs` | home hero accessible name (axe `label-content-name-mismatch`) and the `/hard-texts/genesis-6/` breadcrumb/brand collision (continuation 10) |
 | `final-sweep.mjs` | axe (WCAG A/AA + best practice) and LCP/CLS on six routes, mobile profile (continuation 10) |
@@ -83,3 +93,7 @@ resets. They are not reconstructed here because each receipt records the method 
 in `../REPORT.md` §7–§13. What matters for re-verification is the measured data, which lives in `../evidence/*.json`.
 
 Continuation 16 order: rebuild production-like dist **without** Pagefind → copy/run `browser-state-boundaries.mjs` in the harness workspace → `npm run pagefind:build:dist` in Product → run `pagefind-history-boundary.mjs`. The baseline capture rejects an already-indexed artifact; neither capture is product PASS.
+
+## Resulting-main #2184 closure sweep
+
+`resulting-main-2184-recheck.mjs` scans the exact local production-like build on port 8099 for the merged #2184 owners: quiz contrast, keyboard focus visibility, hidden mobile chrome, Journal bypass, scroll-top lifecycle, Home search close/focus, heading names, Genesis crumb geometry, map SVG names and persistent source-link cues. It writes JSONL to `/tmp/caeb-resulting-main.jsonl` and visual controls to `/tmp/caeb-visual`; dependencies and PNG remain outside Git.

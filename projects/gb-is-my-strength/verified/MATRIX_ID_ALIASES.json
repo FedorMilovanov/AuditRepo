@@ -233,6 +233,88 @@
     "GBS-SERIES-TEXT-GLYPH-CONTROLS": {
       "status": "retired",
       "reason": "2026-10-22: обязательность SVG/трёх тем не установлена; именованная кнопка-команда не обязана быть pressed-toggle. Optional consistency в WORK_QUEUE.md; измеренные contrast/label failures остаются у прежних canonical owners. См. reverify/2026-10-22-premerge-necessity-reconciliation.md."
+    },
+    "GBS-404-RELATIVE-READER-PREFERENCES-ASSETS": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-22 at Product d14da74c: merged #2159 / e8672532 roots all three 404 preference assets. Fresh build + 18 positive / 2 negative Pages-style browser controls and recovery checks pass. See reverify/2026-10-22-postclosure-current-main.md; independent live bytes/SW not certified."
+    },
+    "GBS-QUIZ-NEXT-HIDDEN-GILL-V16": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-22 at Product d14da74c: #2167 / 2ee584d3 scopes hiding to #glsQuizNext. 23 routes x4 profiles have visible ordinary next and result/restart; 4 Krajne pointer failures remain explicitly as independent GBS-KRAJNE-REDUCED-MOTION-QUIZ-OCCLUSION, not pointer PASS. See postclosure reverify continuation 1."
+    },
+    "GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-22 at d14da74c: merged #2167 / 2ee584d3 adds first-click Header bridge. 12 native cold bootstrap controls at 390/1280 Light/Dark verify query, click/tap, Ctrl+K, Meta+K, close/focus; unchanged owner contract also passes. Native articles overlap/clipping remain separate, narrowed owners. See postclosure reverify continuation 2."
+    },
+    "GBS-GLOSSARY-DEFINITION-PROVENANCE": {
+      "status": "alias",
+      "canonical": "GBS-INLINE-TOOLTIP-DEFINITION-ASSOCIATION",
+      "reason": "2026-10-23 PARTIAL/NARROWED: literal brief inequality is not a proven necessary bug; retain verified shared gterm/bref definition-association defect under precise canonical name. Same work unit, no duplicate count. See semantic-contract reverify."
+    },
+    "GBS-SCRIPTURE-AFFORDANCE-PLACEHOLDER-ONLY": {
+      "status": "retired",
+      "reason": "2026-10-23 necessity not established: 238 controls have no verified explicit verse-text promise and expand abbreviation to full reference; data/rights restriction is not mandatory corpus/publication work. Actual native-AX association issue consolidated under GBS-INLINE-TOOLTIP-DEFINITION-ASSOCIATION. Not a Product fix; reconsider on verified text promise/eligible-record failure."
+    },
+    "GBS-NOTE-MARKER-NUMBER-DRIFT": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-23 on Product c18cd962 / merged #2183: 5 note routes x4 profiles report numericMismatch=0 and closed label mismatch=0. Executable canonicalisation conflicts with unchanged preserve-number policy; that independent authority debt remains active as SYS-NOTE-NUMBER-AUTHORITY-CONTRADICTION."
+    },
+    "GBS-TOOLTIP-MOBILE-ESCAPE-REOPEN": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-23 on Product c18cd962 / merged #2183: previous rich/plain mobile and desktop profiles all close after Escape; reopened states=0. Definition association remains independent."
+    },
+    "SYS-FOOTNOTE-MARKER-INTERACTIVITY": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-23 on Product c18cd962 / merged #2183: closed nested-interactive=0 across 5 note routes x4 profiles, open descriptions and Escape retained. Actual fix is inert lifecycle; no mandatory permanent DOM migration."
+    },
+    "GBS-QUIZ-DARK-SURFACE-LOW-CONTRAST": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on Product caeb92c / merged #2184: 24 quiz routes x4 profiles, quiz-scoped axe color-contrast=0. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: native Tab gives a 2px focus-visible ring on Articles and Favorites across desktop/mobile Light/Dark; forced-colors control retained. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-NAGORNAYA-SOURCE-LINKS-COLOR-ONLY": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: three Nagornaya routes plus G3 use persistent underlines in both themes; link-in-text-block=0. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-MOBILE-CHROME-HIDDEN-FOCUSABLE-BEFORE-SCROLL": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: all nine hidden bars compute visibility:hidden and reject focus at rest; controls work after reveal. Separate navbar sync lag remains active. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-JOURNAL-MISSING-SKIP-LINK": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: both Journal routes at desktop/mobile have first-stop bypass, valid focused #main-content target and next content focus. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-H-SCROLL-TOP-INVISIBLE-FOCUS": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: all six transparent scroll-top controls are visibility:hidden and unfocusable, then visible/operable after scroll. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-SECTION-HEADING-NAME-POLLUTION": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: 105 built HTML routes, 2754 headings and 1795 heading-anchor controls yield 0 heading names containing the control label. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-FAVORITES-WRITE-FAILURE-IGNORED": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: four real quota profiles report truthful failure and four migration failures preserve the legacy flag; healthy controls pass. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-FAVORITES-COVER-LINK-UNNAMED": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: two saved covers x4 profiles have meaningful native AX link names; Product browser contract 138/138. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-GENESIS6-MOBILE-CRUMB-COLLISION": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: mobile Light/Dark brand-breadcrumb overlap is 0 and breadcrumb semantics remain. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-KARTY-SVG-UNNAMED": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: Avraam and Ishod root SVGs have application role, route-specific names/descriptions and retain current keyboard controls. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS": {
+      "status": "alias",
+      "canonical": "GBS-HOME-SEARCH-FOCUS-RESTORE",
+      "reason": "PARTIAL/NARROWED on caeb92c: duplicate close control is fixed (one visible), but Escape/button close do not return focus to clicked #heroSearchBar. Same work unit; no count change. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
     }
   },
   "ignoredTokens": []

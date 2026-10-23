@@ -478,3 +478,66 @@ This entry records the governance change only. It does not claim that the reform
 - `GBS-HOME-OFFER-FROZEN` оставлен только про устаревший блок **«Новые публикации»**: подпись есть, прежнее отрицание неверно. Catalog SEO/date conventions и обязательный первый экран из closure исключены. Исторические REPORT §§18–22 не переписаны; это явное superseding решение.
 - Product `d14da74c` read-only/clean; baseline и post-edit гейты 4/4 PASS, 5 regression-команд PASS. Другие 54 active rows, исторические closure tables, REPORT и 61 evidence-файл сохранены; 46 JSON по значениям равны `215b7ca`. В собственном bootstrap убрано опасное удаление существующего негитового каталога; negative/positive preflight проверены, полный browser rebuild не запускался.
 - Обоснования, source owners и границы: `../reverify/2026-10-22-premerge-necessity-reconciliation.md`. Нового browser/release/production PASS и изменений Product этим решением не заявляется.
+
+## 2026-10-22 — current-main recheck после AuditRepo #483
+
+- **56 → 55 = 51 дефект + 2 необходимых улучшения + 2 системные линии.** Закрыт только `GBS-404-RELATIVE-READER-PREFERENCES-ASSETS`: Product #2159 / `e8672532` уже слит 2026-10-04 и входит в неизменившийся `d14da74c`; свежие source/build, 18 positive + 2 negative controls, recovery keyboard/pointer, 3 темы × 2 ширины подтверждают исправление путей. Не заявляется полностью здоровая 404: Sepia contrast 4.40:1 остаётся у существующего contrast owner.
+- Семь Purpose claims #2184 не закрываются: stack **#2184 → draft #2183 → main**, оба OPEN. Product main и последний успешный Pages deploy всё ещё `d14da74c`. Три candidate CI failures — browser installation exit 124 до функциональных assertions; это не три новых Product bugs. Main scheduled Source Link Audit FAIL; root cause не подтверждена.
+- 80 новых state observations без потерь: реальная квота снова даёт 4 ложных success / 4 необратимых legacy cleanup; AX unnamed covers ×2 в 4 профилях; malformed history 16 blocked / 20 healthy controls на fallback/настоящем Pagefind. Нормальные store/migration/preferences API controls проходят. Source favorite gate всё ещё 65/65 PASS и runtime fault не ловит.
+- Верхняя сводка MASTER `#gbs2Pct` согласована с уже имевшимся disproof 11.58:1; raw REPORT и старые receipts не менялись. Остальные 48 owner surfaces не имеют нового closure witness при том же exact anchor, а не объявлены заново воспроизведёнными.
+- Scope/методика/CI и ограничения (включая изоляцию SW в Pages fixture, 1 ненаблюдавшийся LCP и отсутствие live/WebKit/candidate UI PASS): `../reverify/2026-10-22-postclosure-current-main.md`; два компактных stream receipts в `../reverify/evidence/2026-10-22-{main-404-closure,state-boundaries-recheck}.json`.
+
+## 2026-10-22 — quiz owner correction / independent motion-height residual
+
+- `GBS-QUIZ-NEXT-HIDDEN-GILL-V16` retired FIXED-CURRENT: merged Product #2167 already scopes CSS to learning-sheet #glsQuizNext. Fresh 23-route ×4-profile traversal reaches result/restart with ordinary next visible; 88 mixed-native flows / 4 explicitly marked keyboard-only recovery. No force-click or global quiz PASS.
+- New `GBS-KRAJNE-REDUCED-MOTION-QUIZ-OCCLUSION`: static stacked faces exceed fixed/max-face height and intercept native quiz launch. Four profiles, two normal-motion controls and two reversible layout A/Bs establish source/runtime mechanism. Product not patched; separate from light-only ink contrast. **55 → 55 = 51 + 2 + 2**, not a hidden/fake closure of the remaining pointer defect.
+- Raw history preserved. Full capture + limits: `../reverify/2026-10-22-postclosure-current-main.md` Продолжение 1; `../reverify/evidence/2026-10-22-quiz-motion-recheck.json`.
+
+## 2026-10-22 — shared Header closure / native-header and byline narrowing
+
+- `GBS-HEADER-SEARCH-TRIGGER-NOT-WIRED` retired FIXED-CURRENT by merged #2167: 12 native cold controls verify click/tap, Ctrl/Meta+K, query, unique dialog and close/focus; source owner contract passes unchanged assertions (18 geometry / 2 interaction), with explicit sandbox launcher adaptation.
+- Current overlap/clipping restricted to native `/articles/`; fixed shared Header routes are removed from those claims. Baptist byline restricted to four label/datetime mismatches, Spravochnik #2166 healthy; no mandatory universal two-date convention. Prior blocked-release/live split is historical, not current evidence.
+- **55 → 54 = 50 + 2 + 2.** Total vs original 56: three old repairs closed, one independent reduced-motion occlusion admitted. Full methods/limits and stream receipt: `../reverify/2026-10-22-postclosure-current-main.md` Продолжение 2, `../reverify/evidence/2026-10-22-header-byline-recheck.json`. No Product mutation or global ZERO.
+
+## 2026-10-23 — note contract / independent interaction criteria
+
+- Счётчик пока **54**, Product fixes/closures не заявляются. Подтверждены 175 numbered /172 mismatches /9 unnumbered explanations across184 notes; current preserve-number contract исключает безусловную перенумерацию автора. Stable content binding не потерян.
+- SYS narrowed к closed nested interactivity (7 Krajne +1 Gill-1), actual owner article-tooltips v20. Изоляция и inert A/B отделяют это от numbering/label mismatch; обязательное перемещение DOM не навязывается, existing draft #2183 acknowledged, numbering policy требует reconciliation/подтверждённого override.
+- Старые receipts сохранены; current evidence/границы: `../reverify/2026-10-23-semantic-contract-recheck.md` §1 и `../reverify/evidence/2026-10-23-note-contract-recheck.json`. Source core guard PASS не выдаётся за route-wide browser coverage.
+
+## 2026-10-23 — definition association / mobile Escape / dateline event scope
+
+- **54 → 54 = 50 +2 +2**: новый `GBS-TOOLTIP-MOBILE-ESCAPE-REOPEN` подтверждён 8 mobile rich-tip states и обратимым focus-return A/B; existing #2183 acknowledged, main не исправлен. Glossary work unit переименован alias в `GBS-INLINE-TOOLTIP-DEFINITION-ASSOCIATION`, общий root gterm/bref без двойного учёта.
+- `GBS-SCRIPTURE-AFFORDANCE-PLACEHOLDER-ONLY` retired как неустановленная обязательность полного verse reader, не Product fix: reference expansion есть, явного text promise не найдено, rights/corpus нельзя автоматически выдавать за обязательный ремонт; реальная association-проблема сохранена. Неподтверждённое требование одинаковых briefs снято, editorial data не переписаны.
+- Нагорная 5×4 confirmed wrong event slot; approved Kod shape не тронут. Полная evidence/method/ограничения: `../reverify/2026-10-23-semantic-contract-recheck.md` §§2–3 и `../reverify/evidence/2026-10-23-definition-dateline-recheck.json`; 120 основных capture objects сохранены exact, не 120 passing cases. No Product mutation/global ZERO.
+
+## 2026-10-23 — native PLAY / dependency recovery / guard baseline
+
+- **54 →57 =52 defects +3 necessary improvements +2 system lanes**. Новые GBS-TTS worker-dependency retry и false fallback-status defects подтверждены source/native UI/real Shared+Dedicated controls; SYS-TTS-ORT-PATH-CONTRACT-FALSE-RED — pre-existing invalid negative fixture, не wrong runtime wasm path. Product не изменён.
+- 16 настоящих route clicks: API speak called, onstart0/voices0/synthesis-failed в этой среде, neural audio0. Двухсекундный8bit silent MediaSession anchor не выдан за речь. Восстановление exact npm JS доставки не размораживает rejected worker Promise; dependency-state-only A/B проходит к исходному HF request. Model archive metadata matches expected SHA, bytes/inference/first-audible не проверены, повреждение модели не заявляется.
+- Нагорная mobile Dark PLAY glyph1.869:1 non-text (Light16.091) расширяет существующий contrast batch. Full methods/limits: `../reverify/2026-10-23-play-tts-download-audit.md`, два tts receipts; source guards4PASS/1baselineFAIL сохранены, не поправлены для зелени. No merge/parallel Product lane/global ZERO.
+
+## 2026-10-23 — TTS cancel/re-enable notice lifecycle
+
+- **57 →58 =53 +3 +2.** Новый `GBS-TTS-NOTICE-STALE-REMOVAL-TIMER`: 8 failing native fade-window states /8 healthy before-after controls. Старый DOM cleanup удаляет новый Disabled/Enable либо Loading/Cancel; причина независима от текста fallback/worker dependency retry.
+- Cancel/refusal controls проверены на настоящем pending HTTP:28 native button aborts +4 explicitly marked programmatic cleanup, persistent opt-out и Enable/reload semantics сохранены, unrelated sentinel не очищен. Не 32 healthy native cancels, не модель/аудио PASS; ZIP body не подавался, ready/neural audio0.
+- Source/старые raw receipts/aliases сохранены; Product source/lockfiles чистые. Методика, adapted transport boundary и24 full compact records: `../reverify/2026-10-23-play-tts-download-audit.md` Продолжение, `../reverify/evidence/2026-10-23-tts-cancel-notice-race.json`. No merge/global readiness.
+
+## 2026-10-23 — Product #2183 resulting-main c18 reconciliation
+
+- **58 →56 =51 defects +4 necessary improvements +1 system lane.** FIXED-CURRENT: note number drift, closed footnote nested-interactivity, mobile tooltip Escape reopen; fresh c18 production-like Chromium sweep20 note profiles/120 semantic records, source/build clean. Deploy and Product CI not terminal, no production/AT claim.
+- New `SYS-NOTE-NUMBER-AUTHORITY-CONTRADICTION`: executable/test canonicalise manuscript digits, normative doc still says preserve visible numbers. Behavioral fix stays closed; policy resolution remains active, no fabricated owner approval.
+- Association/Nagornaya/card occlusion/PLAY contrast remain current. Six TTS/package owners exact-equal d14→c18; notice race repeated on c18. Evidence: `../reverify/2026-10-23-resulting-main-c18-reconciliation.md`, `../reverify/evidence/2026-10-23-resulting-main-c18.json`; old anchor receipts retained.
+
+## 2026-10-23 — terminal CI and TTS guard signal correction
+
+- Product c18 terminal checks: 89 =55 success +4 failure +2 cancelled +28 skipped; deploy `39939178355` cancelled before candidate/promotion. No production/all-green claim. AuditRepo `4f999e26…` Validate `39942698938` and Preflight `39942698995` both succeeded.
+- `SYS-TTS-ORT-PATH-CONTRACT-FALSE-RED` remains one improvement, but its CI effect is corrected: direct guard exit1 is masked by `| tee` without pipefail, so exact #2184 run `39953769027` reports the architecture step success. c18/#2184 worker, guard and workflow bytes are equal. Closure now requires both a valid negative mutation and native exit propagation for both piped source contracts; no arithmetic change.
+
+## 2026-10-23 — Product #2184 resulting-main reconciliation
+
+- Product #2184 merged to `caeb92c839ff4b4f2838a0ad44a582034c41c8d4`. Exact npm install, production-like build and Pagefind build pass; clean Product tree. Chromium153 closure sweep:83 durable records plus inspected mobile Home/Genesis controls; no Product mutation.
+- **56 →45 =40 defects +4 necessary improvements +1 system lane.** FIXED-CURRENT (11): quiz dark surface, theme-toggle focus indicator, Nagornaya/G3 source-link cue, initial hidden mobile-chrome focus stops, Journal skip link, invisible scroll-top focus, section-heading name pollution, Favorites quota honesty, Favorites cover names, Genesis6 crumb collision, Karty root SVG names.
+- `GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS` is not falsely closed: duplicate count is 1, but Escape/button close focus lands on body/mobile menu rather than clicked `#heroSearchBar`. Same unit narrows via alias to active `GBS-HOME-SEARCH-FOCUS-RESTORE`.
+- Separate `GBS-MOBILE-CHROME-NAVBAR-SYNC-LAG` remains: first wheel hides navbar while mobile chrome stays hidden; second event synchronizes and proves repaired controls are operable after actual reveal.
+- Resulting-main checks terminal 79 =62 success +3 failure +14 skipped; failures named npm-audit, Chromium WebKit cold bootstrap and Home Chromium WebKit contract, causes not established. No all-green/live/production claim. Evidence: `../reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md` and `../reverify/evidence/2026-10-23-resulting-main-caeb92c.json`.
