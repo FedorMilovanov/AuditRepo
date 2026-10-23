@@ -70,6 +70,28 @@ PR #2179 (GitHub Actions group) остаётся:
 
 #2179 не исправляет npm advisories, но подтверждает общий queue behavior: bot создаёт broad grouped update, который остаётся неготовым к landing.
 
+## Current owner delta: Product #2185
+
+После исходной фиксации открылся Product PR #2185, head `d0bb0b7052e25dd6fd7cee8af3bea1becacf6ffd`. Он содержит bounded lockfile-only remediation вместе с двумя unrelated salvage-коммитами; `package.json` не меняется.
+
+Независимая проверка exact lockfile из этого head (`npm audit --package-lock-only --json`) подтверждает:
+
+- total 1;
+- moderate 1;
+- high/critical 0;
+- единственный package key — direct `astro` `<=7.3.2`;
+- предлагаемое npm исправление — Astro 7.4.1, тогда как Product отдельно фиксирует Astro 7.2.9 и Satteri 0.3.8 compatibility contract.
+
+То есть #2185 действительно убирает 8 из 9 package-level findings на своей exact candidate, но пока не является Product state: PR OPEN/MERGEABLE/UNSTABLE и не merged. `npm-audit` честно остаётся красным на одном moderate advisory; required `guard` и metadata-source check зелёные.
+
+Остальная краснота не должна ошибочно приписываться lockfile compatibility:
+
+- Atlas и reader projection остановились на browser install до своих product assertions;
+- metadata/source-authority jobs остановились на `git diff --check`;
+- exact PR patch содержит пять добавленных Markdown lines с trailing whitespace в bundled research receipt, что локально воспроизводит те же hygiene failures.
+
+Этот bundled hygiene дефект делает candidate незелёным, но не опровергает exact lockfile reduction. Главное системное ограничение также не закрыто: #2185 не добавляет scheduled reevaluation unchanged `main`, не задаёт dated exception/expiry для остатка Astro и ещё не достиг terminal landed/accepted state. Он является текущим remediation owner для npm lockfile, поэтому параллельная Product dependency mutation collision-unsafe.
+
 ## Общий механизм
 
 Lifecycle сейчас разорван между четырьмя независимыми стадиями:
@@ -108,6 +130,8 @@ Closure не требует одномоментного latest для кажд�
 
 ## Collision boundary
 
+Открытый Product #2185 владеет `package-lock.json` и exact npm remediation candidate. Не открывать параллельный dependency repair до его terminal disposition или явной координации.
+
 Открытый Product #2179 меняет 77 workflows. В частности он пересекает:
 
 - `dependency-security.yml`;
@@ -123,6 +147,8 @@ Closure не требует одномоментного latest для кажд�
 
 - Dev advisories не объявляются production runtime exposure: `--omit=dev` = 0.
 - Failed checks #2179 не диагностированы как package incompatibility; broad stale base и exact logs требуют отдельного разбора.
+- Browser-install failures #2185 не считаются runtime regression, а пять hygiene failures не считаются dependency incompatibility.
+- Exact #2185 lockfile ещё не является resulting `main`; 1 moderate — candidate state, а current Product anchor сохраняет 9.
 - Registry latest не пересчитан в этой проверке для всех 14 direct devDependencies; прежняя lag table не переносится как exact current count.
 - Автоматический merge не предлагается.
 - Product dependency/workflow files не изменялись.
@@ -135,4 +161,6 @@ Closure не требует одномоментного latest для кажд�
 - fresh `/tmp/current-audit.json` и `/tmp/current-audit-prod.json` (вне Git);
 - GitHub PR #2144 terminal state/comments;
 - GitHub PR #2179 current state/check summary;
+- GitHub PR #2185 exact head/files/check-step summary and `/tmp/pr2185-audit.json` (вне Git);
+- local `git apply --check --whitespace=error-all` over exact #2185 patch;
 - исторические receipts `../incoming/arena-full-spectrum-audit/2026-10-14/evidence/2026-10-17-dependency-security-*`.

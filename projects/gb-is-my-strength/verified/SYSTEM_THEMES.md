@@ -87,8 +87,8 @@
 
 - Status: `evidence-rich / active-work` through `SYS-DEPENDENCY-ADVISORY-LIFECYCLE`.
 - Theme: external advisory drift, scheduled detection, bot update grouping, exact-candidate CI and terminal repair/acceptance are one lifecycle. A generated PR or an old green audit is not completion.
-- Current boundary: separate production from dev/build exposure and security fixes from optional major upgrades; do not use blanket latest or automatic merge as a surrogate for risk ownership.
-- Recheck trigger: advisory-feed change, dependency PR terminal disposition, audit workflow change or dated exception expiry.
+- Current boundary: separate production from dev/build exposure and security fixes from optional major upgrades; do not use blanket latest or automatic merge as a surrogate for risk ownership. Product #2185 is the active lockfile owner: its exact candidate reduces 9 findings to 1 moderate Astro advisory, but remains unlanded/unstable and does not close scheduled detection or exception ownership.
+- Recheck trigger: advisory-feed change, #2185/#2179 terminal disposition, audit workflow change or dated exception expiry.
 
 ## ST-CSS-CASCADE — layered ownership and priority debt
 
