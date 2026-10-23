@@ -31,8 +31,12 @@ Fresh production-like build, Chromium153, desktop1440/mobile390 ×Light/Dark, re
 
 ## CI и ограничения
 
-На snapshot у c18 **72 checks:35 success /3 failure /4 in-progress /17 queued /13 skipped**. Названия failure: Chromium WebKit Intro focus lifecycle, source-links, Hermenevtika Chromium WebKit chrome contract; первопричины этой wave не установлены. Deploy queued. Не заявляются all-CI-green, production bytes, WebKit/реальные AT, TTS model/audio/inference или завершённая публикация.
+Первичный snapshot у c18 был **72 checks:35 success /3 failure /4 in-progress /17 queued /13 skipped**. Terminal read-back теперь содержит **89 checks:55 success /4 failure /2 cancelled /28 skipped /0 pending**. Failure: aggregate `interactive-audit`, Chromium WebKit Intro focus lifecycle, source-links, Hermenevtika Chromium WebKit chrome contract; первопричины этой wave не установлены. Deploy run `39939178355` отменён во время Gill pre-v16 submenu regression audit: production-like build и предыдущие source/publication stages прошли, но candidate preparation/promotion не исполнялись. Следовательно, нет ни all-CI-green, ни production claim.
 
-[146 компактных документов](evidence/2026-10-23-resulting-main-c18.json): metadata + owner hashes + все 120 semantic capture objects +6 card motion records +2 PLAY pixels +8 c18 notice records +6 owner hashes. Round-trip exact, строки≤698chars. PNG/build/node_modules/logs вне Git. Предыдущие anchor-bound receipts сохранены.
+AuditRepo exact current head `4f999e26…` получил terminal success: Validate `39942698938`, Preflight `39942698995`. Это подтверждает evidence package, но не меняет Product disposition.
+
+Отдельно уточнён TTS guard. На c18 и active #2184 head `58175a06…` worker, `tts-ort-worker-path-contract.js` и workflow равны побайтово. Direct ORT guard exit1 остаётся ложным из-за mutation3, а workflow строки113–114 маскируют native exit через `tee` без pipefail: exact run `39953769027` пометил шаг success. Existing `SYS-TTS-ORT-PATH-CONTRACT-FALSE-RED` расширен до direct-false-red / CI-false-green границы без нового счётчика; real-model success не является physical playback, потому что fixture подменяет `HTMLMediaElement.play()`.
+
+[150 компактных документов](evidence/2026-10-23-resulting-main-c18.json): прежние146 metadata/semantic/card/PLAY/notice/hash records +4 terminal CI/guard records. Round-trip exact, строки≤698chars. PNG/build/node_modules/logs вне Git. Предыдущие anchor-bound receipts сохранены.
 
 **Arithmetic: 58 →56 =51 defects +4 necessary improvements +1 system lane.** Три Product fixes закрыты, одна current authority inconsistency добавлена. Это не 56 свежих repro и не PRODUCT ZERO.

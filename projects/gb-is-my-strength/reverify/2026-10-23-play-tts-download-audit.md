@@ -40,6 +40,12 @@ Real-model fixtures действительно проверяют WAV/модел
 
 **НЕ ПРОВЕРЕНО:** локальные bytes/распаковка всего ZIP, настоящие cold/warm model sessions, нейросинтез/звучащий WAV, physical speakers, first-audible, фактические audio pause/resume/seek, пользовательский cache/OS voices, Safari/WebKit/реальные AT и независимые production bytes. Warm/playing visual state не выдаётся за работающую речь. LCP/CLS — lab/interaction samples, не field CWV. Для этих claims нужен доступный реальный model delivery, не снятие SHA guard и не fake media.
 
+## Продолжение — точный CI-сигнал ORT guard
+
+На resulting main `c18cd962…` и active Product #2184 head `58175a06…` worker, ORT guard и `tts-reader-polish.yml` побайтово одинаковы. Direct `node scripts/tts-ort-worker-path-contract.js` по-прежнему exit1 на ложной mutation3. Однако required workflow **не красный от этого guard**: строки113–114 запускают два source contracts через `| tee` до появления `set -o pipefail` на строке118. В точном shell-контроле ORT `node=1`, `tee=0`, pipeline без pipefail=0; с pipefail=1. Exact-head run `39953769027` поэтому отметил шаг «Check syntax and architecture» success, хотя owners не исправлены.
+
+Это сужает прежнюю формулировку: guard является false-red при прямом запуске, но CI маскирует его в false-green, а не блокирует последующие browser/model jobs. Одна existing improvement расширена до полной причинной границы, новый work unit не добавлен. Closure обязана одновременно сделать negative fixture валидной и обеспечить передачу native exit обоих piped source contracts; зелёный `tee` не является доказательством их успеха. Real-model job этого workflow остаётся отдельным полезным свидетельством: он валидирует ненулевой WAV/inference/cache, но подменяет `HTMLMediaElement.play()` и всё ещё не доказывает физически воспроизведённый звук.
+
 ## Продолжение — отмена, opt-out и устаревший таймер карточки
 
 Повторный clean baseline `9da3a6a` 4/4 PASS. Sandbox восстановил файлы на старом Git pointer: до изменения проверены все 2523 tree entries против опубликованного head, index tree совпал; восстановлен только pointer без file discard. Это ограничение среды, не дефект Product.

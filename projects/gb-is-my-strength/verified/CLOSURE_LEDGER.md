@@ -528,3 +528,8 @@ This entry records the governance change only. It does not claim that the reform
 - **58 →56 =51 defects +4 necessary improvements +1 system lane.** FIXED-CURRENT: note number drift, closed footnote nested-interactivity, mobile tooltip Escape reopen; fresh c18 production-like Chromium sweep20 note profiles/120 semantic records, source/build clean. Deploy and Product CI not terminal, no production/AT claim.
 - New `SYS-NOTE-NUMBER-AUTHORITY-CONTRADICTION`: executable/test canonicalise manuscript digits, normative doc still says preserve visible numbers. Behavioral fix stays closed; policy resolution remains active, no fabricated owner approval.
 - Association/Nagornaya/card occlusion/PLAY contrast remain current. Six TTS/package owners exact-equal d14→c18; notice race repeated on c18. Evidence: `../reverify/2026-10-23-resulting-main-c18-reconciliation.md`, `../reverify/evidence/2026-10-23-resulting-main-c18.json`; old anchor receipts retained.
+
+## 2026-10-23 — terminal CI and TTS guard signal correction
+
+- Product c18 terminal checks: 89 =55 success +4 failure +2 cancelled +28 skipped; deploy `39939178355` cancelled before candidate/promotion. No production/all-green claim. AuditRepo `4f999e26…` Validate `39942698938` and Preflight `39942698995` both succeeded.
+- `SYS-TTS-ORT-PATH-CONTRACT-FALSE-RED` remains one improvement, but its CI effect is corrected: direct guard exit1 is masked by `| tee` without pipefail, so exact #2184 run `39953769027` reports the architecture step success. c18/#2184 worker, guard and workflow bytes are equal. Closure now requires both a valid negative mutation and native exit propagation for both piped source contracts; no arithmetic change.
