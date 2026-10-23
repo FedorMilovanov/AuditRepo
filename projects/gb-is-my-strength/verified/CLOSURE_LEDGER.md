@@ -533,3 +533,11 @@ This entry records the governance change only. It does not claim that the reform
 
 - Product c18 terminal checks: 89 =55 success +4 failure +2 cancelled +28 skipped; deploy `39939178355` cancelled before candidate/promotion. No production/all-green claim. AuditRepo `4f999e26…` Validate `39942698938` and Preflight `39942698995` both succeeded.
 - `SYS-TTS-ORT-PATH-CONTRACT-FALSE-RED` remains one improvement, but its CI effect is corrected: direct guard exit1 is masked by `| tee` without pipefail, so exact #2184 run `39953769027` reports the architecture step success. c18/#2184 worker, guard and workflow bytes are equal. Closure now requires both a valid negative mutation and native exit propagation for both piped source contracts; no arithmetic change.
+
+## 2026-10-23 — Product #2184 resulting-main reconciliation
+
+- Product #2184 merged to `caeb92c839ff4b4f2838a0ad44a582034c41c8d4`. Exact npm install, production-like build and Pagefind build pass; clean Product tree. Chromium153 closure sweep:83 durable records plus inspected mobile Home/Genesis controls; no Product mutation.
+- **56 →45 =40 defects +4 necessary improvements +1 system lane.** FIXED-CURRENT (11): quiz dark surface, theme-toggle focus indicator, Nagornaya/G3 source-link cue, initial hidden mobile-chrome focus stops, Journal skip link, invisible scroll-top focus, section-heading name pollution, Favorites quota honesty, Favorites cover names, Genesis6 crumb collision, Karty root SVG names.
+- `GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS` is not falsely closed: duplicate count is 1, but Escape/button close focus lands on body/mobile menu rather than clicked `#heroSearchBar`. Same unit narrows via alias to active `GBS-HOME-SEARCH-FOCUS-RESTORE`.
+- Separate `GBS-MOBILE-CHROME-NAVBAR-SYNC-LAG` remains: first wheel hides navbar while mobile chrome stays hidden; second event synchronizes and proves repaired controls are operable after actual reveal.
+- Resulting-main checks terminal 79 =62 success +3 failure +14 skipped; failures named npm-audit, Chromium WebKit cold bootstrap and Home Chromium WebKit contract, causes not established. No all-green/live/production claim. Evidence: `../reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md` and `../reverify/evidence/2026-10-23-resulting-main-caeb92c.json`.

@@ -266,6 +266,55 @@
     "SYS-FOOTNOTE-MARKER-INTERACTIVITY": {
       "status": "retired",
       "reason": "FIXED-CURRENT 2026-10-23 on Product c18cd962 / merged #2183: closed nested-interactive=0 across 5 note routes x4 profiles, open descriptions and Escape retained. Actual fix is inert lifecycle; no mandatory permanent DOM migration."
+    },
+    "GBS-QUIZ-DARK-SURFACE-LOW-CONTRAST": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on Product caeb92c / merged #2184: 24 quiz routes x4 profiles, quiz-scoped axe color-contrast=0. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-THEME-TOGGLE-FOCUS-INDICATOR-MISSING": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: native Tab gives a 2px focus-visible ring on Articles and Favorites across desktop/mobile Light/Dark; forced-colors control retained. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-NAGORNAYA-SOURCE-LINKS-COLOR-ONLY": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: three Nagornaya routes plus G3 use persistent underlines in both themes; link-in-text-block=0. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-MOBILE-CHROME-HIDDEN-FOCUSABLE-BEFORE-SCROLL": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: all nine hidden bars compute visibility:hidden and reject focus at rest; controls work after reveal. Separate navbar sync lag remains active. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-JOURNAL-MISSING-SKIP-LINK": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: both Journal routes at desktop/mobile have first-stop bypass, valid focused #main-content target and next content focus. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-H-SCROLL-TOP-INVISIBLE-FOCUS": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: all six transparent scroll-top controls are visibility:hidden and unfocusable, then visible/operable after scroll. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-SECTION-HEADING-NAME-POLLUTION": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: 105 built HTML routes, 2754 headings and 1795 heading-anchor controls yield 0 heading names containing the control label. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-FAVORITES-WRITE-FAILURE-IGNORED": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: four real quota profiles report truthful failure and four migration failures preserve the legacy flag; healthy controls pass. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-FAVORITES-COVER-LINK-UNNAMED": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: two saved covers x4 profiles have meaningful native AX link names; Product browser contract 138/138. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-GENESIS6-MOBILE-CRUMB-COLLISION": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: mobile Light/Dark brand-breadcrumb overlap is 0 and breadcrumb semantics remain. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-KARTY-SVG-UNNAMED": {
+      "status": "retired",
+      "reason": "FIXED-CURRENT on caeb92c: Avraam and Ishod root SVGs have application role, route-specific names/descriptions and retain current keyboard controls. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS": {
+      "status": "alias",
+      "canonical": "GBS-HOME-SEARCH-FOCUS-RESTORE",
+      "reason": "PARTIAL/NARROWED on caeb92c: duplicate close control is fixed (one visible), but Escape/button close do not return focus to clicked #heroSearchBar. Same work unit; no count change. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
     }
   },
   "ignoredTokens": []
