@@ -21,9 +21,10 @@
 
 ## ST-EDITORIAL — editorial dates and generated metadata ownership
 
-- Status: `evidence-rich`.
-- Theme: editorial authority, generated metadata and release-time freeze must have one declared ownership chain.
-- Recheck trigger: a current mismatch or an admitted change to the producer/freeze contract.
+- Status: `evidence-rich / active-work` through `SYS-EDITORIAL-DATELINE-SLOT-SEMANTICS`.
+- Theme: editorial authority, generated metadata and release-time freeze must have one declared ownership chain. Exact-instant SSOT is closed, but current visible datelines still infer event identity from CSS class/position and leave approved label authority outside projection.
+- Current boundary: govern publication/modified slot semantics without imposing generic label-equals-timestamp formatting or reopening approved historical decisions.
+- Recheck trigger: a current slot mismatch or an admitted change to the producer/freeze contract.
 
 ## ST-CACHE — service worker, asset revisions and offline truth
 

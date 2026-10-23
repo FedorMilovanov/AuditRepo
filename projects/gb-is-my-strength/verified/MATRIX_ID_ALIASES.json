@@ -335,6 +335,16 @@
       "status": "alias",
       "canonical": "SYS-TTS-RECOVERY-STATUS-OWNERSHIP",
       "reason": "2026-10-23: current worker retry, fallback truth and notice timer failures share the enhanced/system voice attempt-status-generation lifecycle owner. See reverify/2026-10-23-systemic-tts-recovery-status-ownership.md."
+    },
+    "GBS-BAPTISTS-BYLINE-PUBLICATION-DATE-DIVERGENCE": {
+      "status": "alias",
+      "canonical": "SYS-EDITORIAL-DATELINE-SLOT-SEMANTICS",
+      "reason": "2026-10-23: Baptists publication-label drift and Nagornaya published-slot/modified-instant drift are opposite manifestations of class/position-based visible dateline projection without explicit event/label authority. See reverify/2026-10-23-systemic-editorial-dateline-slot-semantics.md."
+    },
+    "GBS-NAGORNAYA-PUBLISHED-DATELINE-CARRIES-MODIFIED-INSTANT": {
+      "status": "alias",
+      "canonical": "SYS-EDITORIAL-DATELINE-SLOT-SEMANTICS",
+      "reason": "2026-10-23: Baptists publication-label drift and Nagornaya published-slot/modified-instant drift are opposite manifestations of class/position-based visible dateline projection without explicit event/label authority. See reverify/2026-10-23-systemic-editorial-dateline-slot-semantics.md."
     }
   },
   "ignoredTokens": []
