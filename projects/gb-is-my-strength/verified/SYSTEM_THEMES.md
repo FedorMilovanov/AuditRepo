@@ -36,9 +36,9 @@
 ## ST-RUNTIME-OWNERSHIP — shared runtime ownership
 
 - Status: `evidence-rich / active-work` through current MASTER system lanes.
-- Theme: file isolation does not prevent collisions in shared overlay, focus, reader, navigation or lifecycle owners. `SYS-TTS-RECOVERY-STATUS-OWNERSHIP` demonstrates the cross-process form; `SYS-INJECTED-HEADER-CONTROL-HOST` demonstrates the DOM-host form; `SYS-ARTICLE-IMAGE-VIEWER-OPENER-SEMANTICS` demonstrates an activation/focus-return interface whose declared opener is not a control.
-- Current boundary: consolidate only when multiple manifestations share a demonstrated owner and bounded transition/interface invariant; route similarity alone is insufficient.
-- Recheck trigger: several manifestations share one live owner, or an exact current browser/runtime witness proves a collision.
+- Theme: file isolation does not prevent collisions in shared overlay, focus, reader, navigation or lifecycle owners. `SYS-TTS-RECOVERY-STATUS-OWNERSHIP` demonstrates the cross-process form; `SYS-INJECTED-HEADER-CONTROL-HOST` the DOM-host form; `SYS-ARTICLE-IMAGE-VIEWER-OPENER-SEMANTICS` an activation/focus-return interface whose declared opener is not a control; `SYS-READER-PROJECTION-CONSUMER-BYPASS` a declared semantic owner bypassed by a duplicated consumer state machine.
+- Current boundary: consolidate only when multiple manifestations share a demonstrated owner and bounded transition/interface invariant; route similarity alone is insufficient. A published projection API is not ownership while primary consumers independently repeat root/policy selection.
+- Recheck trigger: several manifestations share one live owner, an exact current browser/runtime witness proves a collision, or a consumer diverges from its declared canonical projection.
 
 ## ST-STRANGLER — legacy/native duplication and retirement
 

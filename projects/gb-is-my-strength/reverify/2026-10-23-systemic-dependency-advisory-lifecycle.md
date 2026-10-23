@@ -84,13 +84,11 @@ PR #2179 (GitHub Actions group) остаётся:
 
 То есть #2185 действительно убирает 8 из 9 package-level findings на своей exact candidate, но пока не является Product state: PR OPEN/MERGEABLE/UNSTABLE и не merged. `npm-audit` честно остаётся красным на одном moderate advisory; required `guard` и metadata-source check зелёные.
 
-Остальная краснота не должна ошибочно приписываться lockfile compatibility:
+Первый inspected head `d0bb0b705…` имел пять добавленных Markdown lines с trailing whitespace в bundled research receipt; metadata/source-authority jobs останавливались на `git diff --check`, а Atlas/reader projection — на browser install до product assertions. Это были разные причины, не lockfile incompatibility.
 
-- Atlas и reader projection остановились на browser install до своих product assertions;
-- metadata/source-authority jobs остановились на `git diff --check`;
-- exact PR patch содержит пять добавленных Markdown lines с trailing whitespace в bundled research receipt, что локально воспроизводит те же hygiene failures.
+Owner затем добавил commit `16d87310b…`, который заменил пять trailing-whitespace lines и перезапустил CI. Поэтому прежний hygiene blocker теперь исторический exact-head факт, а не current #2185 defect. На новом head `npm-audit` всё ещё честно красный на одном moderate Astro advisory; остальная матрица на момент recheck выполнялась.
 
-Этот bundled hygiene дефект делает candidate незелёным, но не опровергает exact lockfile reduction. Главное системное ограничение также не закрыто: #2185 не добавляет scheduled reevaluation unchanged `main`, не задаёт dated exception/expiry для остатка Astro и ещё не достиг terminal landed/accepted state. Он является текущим remediation owner для npm lockfile, поэтому параллельная Product dependency mutation collision-unsafe.
+Главное системное ограничение не закрыто: #2185 не добавляет scheduled reevaluation unchanged `main`, не задаёт dated exception/expiry для остатка Astro и ещё не достиг terminal landed/accepted state. Он является текущим remediation owner для npm lockfile, поэтому параллельная Product dependency mutation collision-unsafe.
 
 ## Общий механизм
 
@@ -147,7 +145,7 @@ Closure не требует одномоментного latest для кажд�
 
 - Dev advisories не объявляются production runtime exposure: `--omit=dev` = 0.
 - Failed checks #2179 не диагностированы как package incompatibility; broad stale base и exact logs требуют отдельного разбора.
-- Browser-install failures #2185 не считаются runtime regression, а пять hygiene failures не считаются dependency incompatibility.
+- Browser-install failures первого #2185 head не считаются runtime regression, а исправленные следующим commit пять hygiene failures не считаются dependency incompatibility.
 - Exact #2185 lockfile ещё не является resulting `main`; 1 moderate — candidate state, а current Product anchor сохраняет 9.
 - Registry latest не пересчитан в этой проверке для всех 14 direct devDependencies; прежняя lag table не переносится как exact current count.
 - Автоматический merge не предлагается.
