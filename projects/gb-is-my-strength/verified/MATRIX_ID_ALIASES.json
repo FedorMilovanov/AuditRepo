@@ -315,6 +315,11 @@
       "status": "alias",
       "canonical": "GBS-HOME-SEARCH-FOCUS-RESTORE",
       "reason": "PARTIAL/NARROWED on caeb92c: duplicate close control is fixed (one visible), but Escape/button close do not return focus to clicked #heroSearchBar. Same work unit; no count change. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-HEAD-ASSETS-PINNED-TO-PRODUCTION": {
+      "status": "alias",
+      "canonical": "SYS-HEAD-ASSET-PROJECTION-PROLIFERATION",
+      "reason": "2026-10-23: the production-pinned icon/manifest/feed defect and repeated hardcoded revision fan-out share the copied Astro head-resource projection owner. Exact #2184 normalized diff found 71/90 revision-only files. See reverify/2026-10-23-systemic-head-asset-projection.md."
     }
   },
   "ignoredTokens": []

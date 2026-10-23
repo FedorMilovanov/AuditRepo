@@ -27,9 +27,10 @@
 
 ## ST-CACHE — service worker, asset revisions and offline truth
 
-- Status: `evidence-rich / candidate`.
-- Theme: asset revision ownership, runtime cache identity and offline behavior must be verified together when a relevant signal is selected.
-- Recheck trigger: reproducible stale asset/offline failure or a current verified necessary improvement.
+- Status: `evidence-rich / active-work` through `SYS-HEAD-ASSET-PROJECTION-PROLIFERATION`.
+- Theme: asset revision ownership, runtime cache identity and offline behavior must be verified together when a relevant signal is selected. Current Astro projection remains fragmented despite the central `assetUrl()` helper: exact Product #2184 analysis found 71/90 changed files were revision-only, while copied common-head owners also pin deploy-origin resources.
+- Current boundary: consolidate governed Astro head-resource projection without rewriting declared reference-only snapshots or independent built apps; this is not a performance claim or a blanket legacy migration.
+- Recheck trigger: repair/revision-owner change, reproducible stale asset/offline failure, or a new projection mismatch.
 
 ## ST-RUNTIME-OWNERSHIP — shared runtime ownership
 
