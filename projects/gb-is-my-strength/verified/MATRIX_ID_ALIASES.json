@@ -345,6 +345,16 @@
       "status": "alias",
       "canonical": "SYS-EDITORIAL-DATELINE-SLOT-SEMANTICS",
       "reason": "2026-10-23: Baptists publication-label drift and Nagornaya published-slot/modified-instant drift are opposite manifestations of class/position-based visible dateline projection without explicit event/label authority. See reverify/2026-10-23-systemic-editorial-dateline-slot-semantics.md."
+    },
+    "GBS-PASTOR-SERIES-DISCOVERY-DRIFT": {
+      "status": "alias",
+      "canonical": "SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY",
+      "reason": "2026-10-23: current Pastor-series projection drift and the historical-only Wave 12 guard are data/verification manifestations of missing typed current membership authority. See reverify/2026-10-23-systemic-series-discovery-current-authority.md."
+    },
+    "GBS-WAVE12-CONTRACT-FROZEN-AT-BOUNDARY": {
+      "status": "alias",
+      "canonical": "SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY",
+      "reason": "2026-10-23: current Pastor-series projection drift and the historical-only Wave 12 guard are data/verification manifestations of missing typed current membership authority. See reverify/2026-10-23-systemic-series-discovery-current-authority.md."
     }
   },
   "ignoredTokens": []

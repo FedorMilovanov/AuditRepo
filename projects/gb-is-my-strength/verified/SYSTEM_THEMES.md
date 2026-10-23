@@ -60,8 +60,9 @@
 
 ## ST-DISCOVERY-AUTHORITY — Search/catalog membership projection
 
-- Status: `evidence-rich`.
-- Theme: public membership, search role, catalog, sitemap/RSS and generated indexes must be derived from canonical owners rather than hand-maintained per-route copies.
+- Status: `evidence-rich / active-work` through `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY`.
+- Theme: public membership, search role, catalog, sitemap/RSS and generated indexes must be derived from canonical owners rather than hand-maintained per-route copies. A historical release contract may remain valid while being unable to certify current membership.
+- Current boundary: represent core/companion roles explicitly and project declared surface policy; do not replace typed authority with markup scraping.
 - Recheck trigger: a current projection mismatch or an admitted publication transaction.
 
 ## ST-VISUAL-TRUTH — migration parity versus product regression
