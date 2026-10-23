@@ -36,8 +36,8 @@
 ## ST-RUNTIME-OWNERSHIP — shared runtime ownership
 
 - Status: `evidence-rich / active-work` through current MASTER system lanes.
-- Theme: file isolation does not prevent collisions in shared overlay, focus, reader, navigation or lifecycle owners. Current `SYS-TTS-RECOVERY-STATUS-OWNERSHIP` demonstrates the cross-process form: worker Promise, client phase/fallback projection and DOM cleanup timers all survive newer attempts without one generation contract.
-- Current boundary: consolidate only when multiple manifestations share a demonstrated owner and bounded transition invariant; route similarity alone is insufficient.
+- Theme: file isolation does not prevent collisions in shared overlay, focus, reader, navigation or lifecycle owners. `SYS-TTS-RECOVERY-STATUS-OWNERSHIP` demonstrates the cross-process form; `SYS-INJECTED-HEADER-CONTROL-HOST` demonstrates the DOM form, where first-selector mutation bypasses the authored host's capacity and focus contract.
+- Current boundary: consolidate only when multiple manifestations share a demonstrated owner and bounded transition/interface invariant; route similarity alone is insufficient.
 - Recheck trigger: several manifestations share one live owner, or an exact current browser/runtime witness proves a collision.
 
 ## ST-STRANGLER — legacy/native duplication and retirement

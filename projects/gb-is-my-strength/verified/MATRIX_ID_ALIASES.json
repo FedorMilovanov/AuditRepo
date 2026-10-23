@@ -365,6 +365,16 @@
       "status": "alias",
       "canonical": "SYS-DEPENDENCY-ADVISORY-LIFECYCLE",
       "reason": "2026-10-23: advisory visibility and stuck update PRs are detection/remediation manifestations of one unclosed dependency lifecycle; fresh state is 9 dev/build advisories, #2144 closed unmerged, #2179 open/behind. See reverify/2026-10-23-systemic-dependency-advisory-lifecycle.md."
+    },
+    "GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP": {
+      "status": "alias",
+      "canonical": "SYS-INJECTED-HEADER-CONTROL-HOST",
+      "reason": "2026-10-23: native Articles overlap and viewport clipping are two geometry metrics of the same implicit ReaderPreferencesHead search injection into a generic mobile-controls host. See reverify/2026-10-23-systemic-injected-header-control-host.md."
+    },
+    "GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT": {
+      "status": "alias",
+      "canonical": "SYS-INJECTED-HEADER-CONTROL-HOST",
+      "reason": "2026-10-23: native Articles overlap and viewport clipping are two geometry metrics of the same implicit ReaderPreferencesHead search injection into a generic mobile-controls host. See reverify/2026-10-23-systemic-injected-header-control-host.md."
     }
   },
   "ignoredTokens": []
