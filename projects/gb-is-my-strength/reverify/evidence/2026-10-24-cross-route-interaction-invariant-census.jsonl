@@ -1,0 +1,9 @@
+{"kind":"anchor","product_sha":"8d93fe4206e579e766727dbe865e0d07cf30d3c5","build":"production-like","browser":"Chromium 153.0.8010.0","product_mutation":false}
+{"kind":"duplicate-id","routes":105,"affected_routes":0,"duplicate_groups":0,"errors":0,"viewport":"1280x800"}
+{"kind":"nested-interactive","routes":105,"groups":4,"affected_routes":2,"known_families":{"gill_reversible_heading_anchor":3,"antisovetov_nested_map_trigger":1},"new_admission":false,"errors":0}
+{"kind":"false-positive-rejection","family":"Lawson heading anchors under main[tabindex=-1]","reason":"tabindex=-1 is a programmatic focus target, not a sequential nested-interactive ancestor"}
+{"kind":"visible-focus-under-aria-hidden","desktop":{"routes":105,"affected":0,"items":0,"errors":0},"mobile":{"routes":105,"affected":0,"items":0,"errors":0}}
+{"kind":"collapsed-control-trusted-tab","desktop":{"routes":105,"collisions":83,"errors":0},"mobile":{"routes":105,"collisions":19,"errors":0},"families":["generic gb-ember speed panel","FAQ answer"],"new_family_from_generic_scan":false}
+{"kind":"targeted-extension","family":"Gill navigation disclosure","manifestations":["inactive desktop subgroup","whole desktop TOC","mobile part/article accordions"],"disposition":"SYS-GILL-NAV-COLLAPSED-FOCUS-EXPOSURE"}
+{"kind":"reader-dialog-lifecycle","profiles":12,"routes":["/articles/dzhon-gill-chast-1-chelovek/","/articles/chto-bibliya-nazyvaet-serdcem/","/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/"],"open_focus_entry_tab_containment_escape_exact_return":12,"failures":0}
+{"kind":"hidden-focus-inventory","routes":105,"affected_routes":86,"nodes":659,"disposition":"family triage only; raw count not admitted","distinct_confirmed_family":"Gill navigation disclosure"}
