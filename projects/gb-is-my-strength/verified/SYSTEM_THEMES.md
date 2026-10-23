@@ -77,6 +77,13 @@
 - Theme: `UNPROVEN != PASS`; locators and structural surrogates are not semantics; same-tree contradictory outcomes require event/environment investigation; temporary writers are not terminal proof.
 - Recheck trigger: a reproducible false green/false red, evidence-integrity defect or current control-plane admission.
 
+## ST-COLLAPSED-SURFACE-SEMANTICS — visual, keyboard and AX state must agree
+
+- Status: `evidence-rich / active-work` through `SYS-FAQ-COLLAPSED-FOCUS-EXPOSURE` and the separate reader-speed owner.
+- Theme: clipping, opacity and pointer suppression are presentation; they do not remove descendants from sequential focus or the accessibility tree. A shared component state owner must project open/closed state coherently and restore focus when it hides the active descendant.
+- Current boundary: FAQ and speed controls have separate repair owners and must not be collapsed into one implementation row merely because they share the anti-pattern.
+- Recheck trigger: accordion/panel lifecycle change, a new hidden-focusable witness, or an executable closed-state focus/AX guard.
+
 ## ST-OPERATION-OUTCOME-TRUTH — UI feedback must follow the owning operation
 
 - Status: `evidence-rich / active-work` through `SYS-READER-SHARE-COPY-OUTCOME-CONTRACT`.

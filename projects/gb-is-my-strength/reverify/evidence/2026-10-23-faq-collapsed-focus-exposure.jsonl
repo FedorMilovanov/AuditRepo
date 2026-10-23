@@ -1,0 +1,23 @@
+{"kind":"anchor","product_sha":"caeb92c839ff4b4f2838a0ad44a582034c41c8d4","build":"production-like","browser":"Chromium 153.0.8010.0","product_mutation":false}
+{"kind":"summary","profiles":16,"allQuestions":84,"allCollapsedFocusable":68,"allTabIntoCollapsed":58,"pageErrorProfiles":0}
+{"route":"/articles/20-antisovetov-pastoru/","profile":"desktop-light","questions":7,"closed":7,"collapsedFocusable":2,"tabIntoCollapsed":1,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/20-antisovetov-pastoru/","profile":"desktop-dark","questions":7,"closed":7,"collapsedFocusable":2,"tabIntoCollapsed":1,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/20-antisovetov-pastoru/","profile":"mobile-light","questions":7,"closed":7,"collapsedFocusable":2,"tabIntoCollapsed":0,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/20-antisovetov-pastoru/","profile":"mobile-dark","questions":7,"closed":7,"collapsedFocusable":2,"tabIntoCollapsed":0,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/","profile":"desktop-light","questions":3,"closed":3,"collapsedFocusable":3,"tabIntoCollapsed":3,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/","profile":"desktop-dark","questions":3,"closed":3,"collapsedFocusable":3,"tabIntoCollapsed":3,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/","profile":"mobile-light","questions":3,"closed":3,"collapsedFocusable":3,"tabIntoCollapsed":3,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/","profile":"mobile-dark","questions":3,"closed":3,"collapsedFocusable":3,"tabIntoCollapsed":3,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/kod-da-vinchi/","profile":"desktop-light","questions":8,"closed":8,"collapsedFocusable":9,"tabIntoCollapsed":8,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/kod-da-vinchi/","profile":"desktop-dark","questions":8,"closed":8,"collapsedFocusable":9,"tabIntoCollapsed":8,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/kod-da-vinchi/","profile":"mobile-light","questions":8,"closed":8,"collapsedFocusable":9,"tabIntoCollapsed":8,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/kod-da-vinchi/","profile":"mobile-dark","questions":8,"closed":8,"collapsedFocusable":9,"tabIntoCollapsed":8,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/krajne-li-isporcheno-serdce/","profile":"desktop-light","questions":3,"closed":3,"collapsedFocusable":3,"tabIntoCollapsed":3,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/krajne-li-isporcheno-serdce/","profile":"desktop-dark","questions":3,"closed":3,"collapsedFocusable":3,"tabIntoCollapsed":3,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/krajne-li-isporcheno-serdce/","profile":"mobile-light","questions":3,"closed":3,"collapsedFocusable":3,"tabIntoCollapsed":3,"collapsedNonzeroClient":0,"pageErrors":0}
+{"route":"/articles/krajne-li-isporcheno-serdce/","profile":"mobile-dark","questions":3,"closed":3,"collapsedFocusable":3,"tabIntoCollapsed":3,"collapsedNonzeroClient":0,"pageErrors":0}
+{"kind":"unique-desktop-light","routes":4,"questions":21,"closed":21,"focusables_inside_closed":17,"questions_tab_into_closed":15}
+{"kind":"ax-snapshot","route":"/articles/krajne-li-isporcheno-serdce/","state":"aria-expanded=false; body max-height=0px; clientHeight=0","exposed":"named region, full answer text and button Иез. 36:26"}
+{"kind":"source","owner":"src/runtime/article-faq-accordion.js","fact":"setOpen synchronizes aria-expanded and max-height/classes only; closed body never receives hidden, inert, aria-hidden, or descendant tab suppression"}
+{"kind":"guard-gap","owner":"scripts/article-capability-browser-contract.mjs","fact":"first FAQ is clicked twice and only aria-expanded/is-open parity is asserted; no closed-state Tab or accessibility-tree assertion"}
+{"kind":"owner-collision","checked":"2026-10-23","open_product_prs":[2186,2179,2168,2164,2162,2161,2143],"faq_owner":null}
