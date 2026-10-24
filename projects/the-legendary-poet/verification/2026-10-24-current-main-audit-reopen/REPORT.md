@@ -174,7 +174,13 @@ Closure needs one idempotent fragment owner that works when the hash is unchange
 
 Desktop portrait images use the shared `ArticleRenderer` float-right wrapper. The float correctly makes prose lines wrap to its left, so screenshots look intact. The following prose element still owns a full-width transparent block box behind the float and is later in hit-test order. At the visual centre of the image, `document.elementFromPoint` therefore returns the prose `<p>`, not the image button or its stable outer `TiltCard` hit wrapper. Playwright's real pointer action remains intercepted after animation settling; keyboard focus plus Enter still opens the same lightbox.
 
-A desktop census covers all eight currently rendered portrait lightbox buttons: six are pointer-blocked across `yesenin-kutezhi`, `mayakovsky-before-revolution` and `brik-case`; only two are reachable at their centre. The same eight controls are 8/8 reachable at 390×844 where the desktop float is inactive. The desktop failure reproduces with normal and reduced motion, so it is breakpoint-specific float/stacking ownership rather than animation timing. Closure must preserve text wrapping and tilt stability while making the complete portrait figure, metadata/source actions and lightbox trigger pointer/touch reachable.
+A complete desktop float census covers all 17 currently rendered floated image buttons: 12 are pointer-blocked across `yesenin-kutezhi`, `mayakovsky-before-revolution`, `mayakovsky-gromovoy` and `brik-case`; only five are reachable at their centre. The broader interaction pass also catches 11 adjacent «Источник» links blocked by the same prose hit surface. The right-float mobile control sample is 8/8 reachable at 390×844 where the desktop float is inactive. The desktop failure reproduces with normal and reduced motion, so it is breakpoint-specific float/stacking ownership rather than animation timing. Closure must preserve text wrapping and tilt stability while making the complete figure, metadata/source actions and lightbox trigger pointer/touch reachable.
+
+## P2 — `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`
+
+A 34-route desktop hit-test census evaluated 3,337 visible interactive instances. Besides the floated-image root, it exposed one shared sticky-geometry class. Oversized sticky sidebars on all ten poet pages and seven long essays leave 90 links below the 800 px viewport after `scrollIntoView`; focusing those links does not repair visibility. On Pushkin, the focused last poem link remains at y=1676 after the browser scrolls to y=2108. On the Benislavskaya essay, the focused last TOC link remains at y=1056. The corresponding Pushkin control lands visibly at y=376 in the 390×844 non-sticky layout.
+
+Ratings has the inverse failure: `<thead class="sticky top-20">` is shifted into the body. With the table at y=312, its first body row spans y=360–441 while the header occupies y=392–440. The opaque header visibly splits the first row and `elementFromPoint` at the poet-link centre returns `<th>`, not the link. These are one viewport-constraint root: sticky owners must not be taller than or overlap the interactive region they govern.
 
 ## Compact-screen and link negative evidence
 
@@ -204,4 +210,4 @@ No additional root was admitted in these passes:
 
 ## Result
 
-MASTER now contains **10 active units = 1 P1 + 8 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, fragment and portrait-hit-test passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
+MASTER now contains **11 active units = 1 P1 + 9 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, fragment and portrait-hit-test and sticky-geometry passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
