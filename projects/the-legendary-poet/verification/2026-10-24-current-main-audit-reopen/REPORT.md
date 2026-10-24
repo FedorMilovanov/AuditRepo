@@ -223,6 +223,12 @@ No additional root was admitted in these passes:
 - the Hall/global-audio boundary remains usable after real playback starts on Music and SPA navigation preserves the mini-player: at 390×844 Hall controls end at y=632, before the mini-player begins at y=670 and both centre hits reach their buttons; at 320×568 the stage intentionally exceeds the short viewport, but native `scrollIntoView` places both controls at y=261–307, clear of the y=394 mini-player, and both centre hits succeed;
 - canonical registries contain 10 poets, 10 essays and three tracks; all 23 dynamic public paths are present in the 31-URL sitemap, with no missing or orphan dynamic entry.
 
+## Forced-colors and target-size negative evidence
+
+A separate Chromium 143 pass exercised all 34 routes in desktop and mobile forced-colors mode with reduced motion. All 68 loads completed without page errors. Existing gradient text computes with transparent WebKit fill after forced-color remapping, so computed-style transparency was not promoted: actual screenshots prove Chromium paints the Home kinetic title, essay section numbers/headings and poet title in system colors. The existing browser guard opens only the Home command surface, so this pass broadens route/render evidence without claiming native Windows High Contrast or assistive-technology coverage.
+
+The same 34×2 route matrix evaluated 6,452 rendered target instances against the WCAG 2.5.8 24 CSS-pixel size-or-spacing rule. There were 2,043 instances with at least one dimension below 24 px, predominantly compact links and citations, but **zero** had another target centre within 24 px. They therefore satisfy the spacing alternative in the sampled geometry; no target-size row is admitted. This is a geometry result, not a claim about physical-device motor testing.
+
 ## Boundaries and negative evidence
 
 - The community P1 is unchanged; automation must not bypass Turnstile.

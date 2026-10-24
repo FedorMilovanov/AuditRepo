@@ -718,3 +718,12 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Collision refresh: Product #522 exact head `19dd48c…` is now all-green and merge-clean, including Hall offline and merge certification; it remains draft/unmerged. Product #514 remains overlapping/behind. No Product mutation or merge.
 - Matrix disposition: P1 stays 1; P2 `10 -> 11`; P3 stays 1; total active `12 -> 13`.
 - Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 6
+
+- Scope: forced-colors render control and WCAG 2.5.8 target size-or-spacing census on unchanged Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`.
+- Forced colors: 34 routes × desktop/mobile completed with zero page errors; screenshots confirm system-color paint for representative Home gradient title, essay section headings/numbers and poet title. Computed transparent WebKit fill was rejected as a false-positive signal after paint inspection.
+- Target geometry: 6,452 target instances; 2,043 have one dimension below 24 CSS px, but zero have another target centre within 24 px, satisfying the spacing alternative in sampled geometry.
+- Boundaries: no native Windows High Contrast, assistive-technology or physical motor-use claim; no new row admitted.
+- Matrix disposition unchanged: 1 P1 + 11 P2 + 1 P3 = 13.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
