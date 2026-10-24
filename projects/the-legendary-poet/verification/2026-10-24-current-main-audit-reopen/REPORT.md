@@ -93,7 +93,7 @@ Representative measured pairs:
 
 ### Root and guard gap
 
-The source already has semantic theme tokens, but poet-detail, Ratings, Music and static pages still write fixed Tailwind palette/alpha classes and inline colors. The global adapter cannot infer every intended foreground/surface pair. Existing `validate-theme-contract.ts` checks a selected component list by literal presence/exclusion; `qa/theme-contrast.spec.mjs` samples selected owners. Both pass while these current route families fail.
+The source already has semantic theme tokens, but poet-detail, Ratings, Music and static pages still write fixed Tailwind palette/alpha classes and inline colors. The global adapter cannot infer every intended foreground/surface pair. Existing `validate-theme-contract.ts` checks a selected component list by literal presence/exclusion; `qa/theme-contrast.spec.mjs` samples selected owners. Both pass while these current route families fail. A source census finds 964 fixed palette utility occurrences across 70 TS/TSX/CSS files. Concentration confirms owner migration is tractable rather than a global override problem: RatingsPage 76, FeaturedTrackPlayer 64, MyArchivePage 57, essay blocks 56, TrackDetailPage 53, MusicArchiveBrowser 50 and ImmersivePlayer 48.
 
 This is one incomplete semantic-theme migration, not 746 independent bugs. Closure requires owner-by-owner semantic token adoption and a route-family browser matrix, not a global contrast override or threshold reduction.
 
@@ -144,7 +144,8 @@ The exit boundary is nevertheless split across two clocks. `useDialogSurface` re
 
 - ImmersivePlayer: a 1,296,000 px² `role="dialog"` remains connected with `pointer-events:auto`; opacity samples include 0.32 and 0.04 after runtime depth is already zero, and removal occurs around 0.7 s.
 - essay lightbox: the same full-viewport dialog remains pointer-active after opacity reaches 0; removal occurs around 1.0 s.
-- during both windows, body position is already restored, `#root.inert` is false and focus is restored to the opener behind the exiting dialog.
+- during both windows, body position is already restored, `#root.inert` is false and focus is restored to the opener behind the exiting dialog;
+- `prefers-reduced-motion: reduce` shortens neither ownership mismatch to zero: a pointer-active immersive dialog remains after runtime depth reaches zero; rapid reopen reacquires depth/body/inert state but does not remove the preceding mismatch.
 
 This is a shared modal lifecycle defect, not two component bugs: keyboard/accessibility ownership and visual/pointer ownership disagree during the exit animation. Current `validate-interaction-runtime.ts` and `validate-essay-lightbox-runtime.ts` assert acquisition and ordinary cleanup through source strings/unit fakes, but do not execute the animated close interval. Closure must bind release/focus restoration to exit completion (including reduced motion), preserve stacked semantics and guard rapid close/reopen.
 
