@@ -11,7 +11,7 @@ AuditRepo base: `67b1cbcb684b39fcee9f06036747559c3dc4b37c`
 
 The owner explicitly selected a new broad audit. Product `main` has also materially changed since the last full-row AuditRepo authority. During this audit Product #521 merged; every admitted root and negative result was rerun on resulting `main@93e8731…`. This satisfies the closeout reopen rules. The audit agent did not mutate Product.
 
-The current pass admits ten P2 engineering roots and one P3 structural root. Together with the retained human-backed community P1, MASTER changes from **1** to **12** active units.
+The current pass admits eleven P2 engineering roots and one P3 structural root. Together with the retained human-backed community P1, MASTER changes from **1** to **13** active units.
 
 ## Authority and collision check
 
@@ -124,7 +124,7 @@ Immutable `npm audit` on current lock state exits 1:
 - full tree: the same moderate plus two high package entries, `source-map-js` and direct Vite 7.3.6;
 - Vite has a non-major fix at 7.3.7.
 
-Draft Product #522 opened after the audit checkpoint and is now the exact bounded owner: only `package.json` and `package-lock.json`, updating Vite 7.3.6→7.3.7, source-map-js 1.2.1→1.2.2, fflate 0.8.2→0.8.3 and nested 0.6.10→0.6.11. Its head `19dd48c…` reports zero advisories; core, route, browser and project checks observed so far are green, while Hall/offline certification remains in progress. Older #514 overlaps only the two fflate updates and #522 explicitly proposes to supersede it. Neither PR is merged, so current-main evidence and the active row remain unchanged; the two overlapping lanes must not both merge.
+Draft Product #522 opened after the audit checkpoint and is now the exact bounded owner: only `package.json` and `package-lock.json`, updating Vite 7.3.6→7.3.7, source-map-js 1.2.1→1.2.2, fflate 0.8.2→0.8.3 and nested 0.6.10→0.6.11. Its head `19dd48c…` reports zero advisories; all exact-head checks are now terminal green, including `offline-exhibit`, the Hall offline waiter and merge certification, and GitHub reports the draft merge-clean. Older #514 overlaps only the two fflate updates and #522 explicitly proposes to supersede it. Neither PR is merged, so current-main evidence and the active row remain unchanged; the two overlapping lanes must not both merge.
 
 ## P3 — `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP`
 
@@ -190,6 +190,22 @@ The 390×844 interaction census tests 2,856 visible controls. Its only stable cl
 
 On a real touch-capable Chromium context the chip reaches opacity 1 at y≈10, but its ancestor remains inert and it is absent from `elementsFromPoint`; underlying essay prose wins the hit. Real centre taps at 150, 300, 400 and 600 ms never open `#essay-toc-popover`. Removing only `inert`/`aria-hidden` in the probe makes the next native tap open the popover with all ten rows, isolating the owner. This is not a transition-only race: the failure persists after the 550 ms animation completes. Closure must distinguish hidden chrome from visible replacement controls and verify native popover interaction plus accessibility state over repeated hide/show cycles.
 
+## P2 — `SYS-TLP-TEXT-SPACING-ROBUSTNESS`
+
+A dedicated WCAG text-spacing pass applied line height 1.5, paragraph spacing 2em, letter spacing .12em and word spacing .16em after each route settled. Chromium 143 covered the same 34 routes at 1280×800 and 390×844: 68/68 loads produced no page error, no document-width overflow and no increase in centre-hit-blocked controls across 6,446 focusable instances.
+
+The no-overflow result hides owner-level content loss. Comparing stable DOM instances before and after the override found 15 newly clipped visible text nodes on ten routes:
+
+- one desktop Ratings tag line constrained by `truncate`;
+- six Article card summaries constrained by `line-clamp-*` (one desktop, five mobile);
+- three desktop Music description instances constrained by `line-clamp-3`;
+- four desktop current-page breadcrumbs constrained by `truncate`;
+- one mobile Kindred Spirits name constrained by `truncate`.
+
+Three additional raw overflow observations came from inactive absolutely positioned citation tooltips inside decorative `overflow-hidden` myth cards. They were not counted: when a citation becomes active, its existing layout effect repositions the tooltip against the viewport; the remaining eight-pixel ancestor-edge intersection consumes border/padding rather than demonstrated text. This control prevents tooltip geometry from inflating the admitted count.
+
+The visible failures share a systemic assumption: twenty source occurrences of `truncate`/`line-clamp-*` preserve fixed width or line budgets after user spacing increases, and current validators contain no executed text-spacing outcome. Closure should make affected summaries, labels and current-location text grow, wrap or expose an equivalent visible disclosure under all four overrides. The guard must compare rendered content and geometry in desktop/mobile route families; removing all compact presentation globally or merely suppressing overflow detection is not sufficient.
+
 ## Compact-screen and link negative evidence
 
 A separate 320×568 Chromium census loaded all 34 routes with zero document-width overflow, zero page errors and exactly one `h1` per route. Sixty-three controls on 13 routes extend beyond the initial viewport only inside deliberate horizontal filter/tab rows (Poets, Ratings, Music and essay source filters); the document itself does not overflow. No compact-layout root was admitted from these rows. The link census found no unsafe URL scheme and no unexplained internal application route. A forced Archive route-chunk failure also reaches the bounded recovery path: one automatic reload, two aborted module requests, then a single `role="alert"` with one `h1`, `robots=noindex,follow`, no stale canonical and a session recovery marker preventing a reload loop.
@@ -221,8 +237,8 @@ No additional root was admitted in these passes:
 
 Draft AuditRepo PR #488 publishes this checkpoint from `arena/f93eb2cc-auditrepo`. At exact pushed head `80e2165f39fa926262e8c8f75894d915c303c829`, AuditRepo Validate run `40097280431` and Workflow Preflight run `40097280419` both completed successfully. The PR is open, draft and merge-clean. This certifies the audit artifact shape; it does not close any Product row.
 
-Product `main` remains `93e8731cc04d12a8fe985604cbea210767a3851c`. Draft Product #522 remains at `19dd48c…`, blocked only while `offline-exhibit` and its exact-head certification waiter are in progress; all observed core/browser/route checks are green. Product #514 remains behind and overlaps the `fflate` portion. No Product merge is authorized, and both overlapping lanes must not merge.
+Product `main` remains `93e8731cc04d12a8fe985604cbea210767a3851c`. Draft Product #522 remains at `19dd48c…`; every exact-head check is terminal green and GitHub reports it merge-clean. Product #514 remains behind and overlaps the `fflate` portion. No Product merge is authorized, and both overlapping lanes must not merge.
 
 ## Result
 
-MASTER now contains **12 active units = 1 P1 + 10 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, fragment, portrait-hit-test, sticky-geometry and mobile-section-chip passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
+MASTER now contains **13 active units = 1 P1 + 11 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, text-spacing, fragment, portrait-hit-test, sticky-geometry and mobile-section-chip passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.

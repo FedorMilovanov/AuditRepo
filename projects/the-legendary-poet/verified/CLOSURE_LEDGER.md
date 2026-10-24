@@ -707,3 +707,14 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Matrix disposition: P1 stays 1; P2 `6 -> 10`; P3 stays 1; total active `8 -> 12`.
 - AuditRepo publication: draft #488 exact head `80e2165f39fa926262e8c8f75894d915c303c829`; Validate `40097280431` and Workflow Preflight `40097280419` completed success.
 - Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 5
+
+- Scope: WCAG text-spacing outcome across all 34 current routes at 1280×800 and 390×844 on unchanged Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`.
+- Admission: `SYS-TLP-TEXT-SPACING-ROBUSTNESS`.
+- Evidence: 68/68 loads, 6,446 focusable instances, zero page errors, zero document-width overflow and no additional blocked-control class; nevertheless 15 visible text instances become newly clipped across ten routes after line 1.5 / paragraph 2em / letter .12em / word .16em overrides.
+- Owners: Ratings tags 1, Article summaries 6, Music descriptions 3, essay breadcrumbs 4 and Kindred Spirits name 1; twenty source `truncate`/`line-clamp-*` occurrences expose the shared fixed-budget assumption.
+- Exclusion control: three raw myth-card overflow observations came from inactive absolutely positioned citation tooltips; active positioning reduced the intersection to ancestor border/padding without demonstrated text loss, so they were not counted.
+- Collision refresh: Product #522 exact head `19dd48c…` is now all-green and merge-clean, including Hall offline and merge certification; it remains draft/unmerged. Product #514 remains overlapping/behind. No Product mutation or merge.
+- Matrix disposition: P1 stays 1; P2 `10 -> 11`; P3 stays 1; total active `12 -> 13`.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
