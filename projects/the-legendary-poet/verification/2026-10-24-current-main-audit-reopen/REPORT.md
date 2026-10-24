@@ -124,7 +124,7 @@ Immutable `npm audit` on current lock state exits 1:
 - full tree: the same moderate plus two high package entries, `source-map-js` and direct Vite 7.3.6;
 - Vite has a non-major fix at 7.3.7.
 
-Open Product #514 updates only `fflate` 0.8.2→0.8.3 and nested 0.6.10→0.6.11. It is an adjacent owner, not evidence that the Vite/source-map residual is assigned or closed. Repair must be coordinated, exact-lockfile, and followed by full source/build/browser checks; no `npm audit fix --force` is authorized.
+Draft Product #522 opened after the audit checkpoint and is now the exact bounded owner: only `package.json` and `package-lock.json`, updating Vite 7.3.6→7.3.7, source-map-js 1.2.1→1.2.2, fflate 0.8.2→0.8.3 and nested 0.6.10→0.6.11. Its head `19dd48c…` reports zero advisories; core, route, browser and project checks observed so far are green, while Hall/offline certification remains in progress. Older #514 overlaps only the two fflate updates and #522 explicitly proposes to supersede it. Neither PR is merged, so current-main evidence and the active row remain unchanged; the two overlapping lanes must not both merge.
 
 ## P3 — `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP`
 
@@ -174,7 +174,7 @@ Closure needs one idempotent fragment owner that works when the hash is unchange
 
 Desktop portrait images use the shared `ArticleRenderer` float-right wrapper. The float correctly makes prose lines wrap to its left, so screenshots look intact. The following prose element still owns a full-width transparent block box behind the float and is later in hit-test order. At the visual centre of the image, `document.elementFromPoint` therefore returns the prose `<p>`, not the image button or its stable outer `TiltCard` hit wrapper. Playwright's real pointer action remains intercepted after animation settling; keyboard focus plus Enter still opens the same lightbox.
 
-A desktop census covers all eight currently rendered portrait lightbox buttons: six are pointer-blocked across `yesenin-kutezhi`, `mayakovsky-before-revolution` and `brik-case`; only two are reachable at their centre. The failure reproduces with normal and reduced motion, so it is float/stacking ownership rather than animation timing. Closure must preserve text wrapping and tilt stability while making the complete portrait figure, metadata/source actions and lightbox trigger pointer/touch reachable.
+A desktop census covers all eight currently rendered portrait lightbox buttons: six are pointer-blocked across `yesenin-kutezhi`, `mayakovsky-before-revolution` and `brik-case`; only two are reachable at their centre. The same eight controls are 8/8 reachable at 390×844 where the desktop float is inactive. The desktop failure reproduces with normal and reduced motion, so it is breakpoint-specific float/stacking ownership rather than animation timing. Closure must preserve text wrapping and tilt stability while making the complete portrait figure, metadata/source actions and lightbox trigger pointer/touch reachable.
 
 ## Compact-screen and link negative evidence
 
