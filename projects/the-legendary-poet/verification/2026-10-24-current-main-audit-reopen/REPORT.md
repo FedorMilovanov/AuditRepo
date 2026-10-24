@@ -170,9 +170,15 @@ The owner is the shared fragment/reveal contract, not individual essay data. A c
 
 Closure needs one idempotent fragment owner that works when the hash is unchanged and revalidates settled target geometry without globally disabling intentional motion. Browser guards must cover fresh and SPA section/citation links, repeated activation, history, keyboard and normal/reduced motion.
 
+## P2 — `TLP-ESSAY-PORTRAIT-POINTER-HITTEST`
+
+Desktop portrait images use the shared `ArticleRenderer` float-right wrapper. The float correctly makes prose lines wrap to its left, so screenshots look intact. The following prose element still owns a full-width transparent block box behind the float and is later in hit-test order. At the visual centre of the image, `document.elementFromPoint` therefore returns the prose `<p>`, not the image button or its stable outer `TiltCard` hit wrapper. Playwright's real pointer action remains intercepted after animation settling; keyboard focus plus Enter still opens the same lightbox.
+
+A desktop census covers all eight currently rendered portrait lightbox buttons: six are pointer-blocked across `yesenin-kutezhi`, `mayakovsky-before-revolution` and `brik-case`; only two are reachable at their centre. The failure reproduces with normal and reduced motion, so it is float/stacking ownership rather than animation timing. Closure must preserve text wrapping and tilt stability while making the complete portrait figure, metadata/source actions and lightbox trigger pointer/touch reachable.
+
 ## Compact-screen and link negative evidence
 
-A separate 320×568 Chromium census loaded all 34 routes with zero document-width overflow, zero page errors and exactly one `h1` per route. Sixty-three controls on 13 routes extend beyond the initial viewport only inside deliberate horizontal filter/tab rows (Poets, Ratings, Music and essay source filters); the document itself does not overflow. No compact-layout root was admitted from these rows. The link census found no unsafe URL scheme and no unexplained internal application route.
+A separate 320×568 Chromium census loaded all 34 routes with zero document-width overflow, zero page errors and exactly one `h1` per route. Sixty-three controls on 13 routes extend beyond the initial viewport only inside deliberate horizontal filter/tab rows (Poets, Ratings, Music and essay source filters); the document itself does not overflow. No compact-layout root was admitted from these rows. The link census found no unsafe URL scheme and no unexplained internal application route. A forced Archive route-chunk failure also reaches the bounded recovery path: one automatic reload, two aborted module requests, then a single `role="alert"` with one `h1`, `robots=noindex,follow`, no stale canonical and a session recovery marker preventing a reload loop.
 
 ## Audio, community and route/data negative evidence
 
@@ -198,4 +204,4 @@ No additional root was admitted in these passes:
 
 ## Result
 
-MASTER now contains **9 active units = 1 P1 + 7 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen and citation-fragment passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
+MASTER now contains **10 active units = 1 P1 + 8 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, fragment and portrait-hit-test passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
