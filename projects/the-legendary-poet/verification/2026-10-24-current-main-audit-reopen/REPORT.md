@@ -271,7 +271,7 @@ The same 34×2 route matrix evaluated 6,452 rendered target instances against th
 
 ## AuditRepo publication proof
 
-Draft AuditRepo PR #488 publishes this audit from `arena/f93eb2cc-auditrepo`. Earlier exact head `80e2165f…` passed Validate `40097280431` and Preflight `40097280419`. The substantive focused-navigation checkpoint is exact head `3a56c025d6e9664574a380e847a61ca76d5f7f9a`; Validate `40127331158` and Preflight `40127331177` both completed successfully, and GitHub reports the draft PR merge-clean. This certifies the audit artifact shape; it does not close any Product row.
+Draft AuditRepo PR #488 publishes this audit from `arena/f93eb2cc-auditrepo`. The substantive expanded-navigation/dependency-retirement checkpoint is exact head `a28147fd21b3e259ba032acfec1157ef8fc61125`; Validate `40131517946` and Preflight `40131517945` both completed successfully, and GitHub reports the draft PR merge-clean. This certifies the audit artifact shape; it does not close any remaining Product row.
 
 Product `main` is `76da7d6372931f34d269581f374e87bd15406cfb`, the dependency-only #522 merge. Local resulting-main audit and all source/build/output gates pass; every required resulting-main workflow, including Manual Browser QA and Hall offline exhibit, is terminal green. Product #514 remains behind and now overlaps merged `fflate` work; it must not merge. No Product mutation or merge was performed by the audit agent.
 
@@ -306,7 +306,7 @@ MASTER now contains **12 active units = 1 P1 + 10 P2 + 1 P3** after terminal dep
 
 ### СРЕДА
 
-Product `main@76da7d6372931f34d269581f374e87bd15406cfb`; Chromium `153.0.8010.0`; production build; desktop 1280×800, 1440×900, 1920×1080; touch/mobile 390×844; normal/reduced motion. AuditRepo: `arena/f93eb2cc-auditrepo`, substantive checkpoint `3a56c025d6e9664574a380e847a61ca76d5f7f9a`, draft PR #488, Validate `40127331158` и Preflight `40127331177` — success/merge-clean.
+Product `main@76da7d6372931f34d269581f374e87bd15406cfb`; Chromium `153.0.8010.0`; production build; desktop 1280×800, 1440×900, 1920×1080; touch/mobile 390×844; normal/reduced motion. AuditRepo: `arena/f93eb2cc-auditrepo`, substantive checkpoint `a28147fd21b3e259ba032acfec1157ef8fc61125`, draft PR #488, Validate `40131517946` и Preflight `40131517945` — success/merge-clean.
 
 ### РЕШЕНИЯ САМ
 
