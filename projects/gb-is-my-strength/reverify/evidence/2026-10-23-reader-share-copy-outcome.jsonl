@@ -1,0 +1,8 @@
+{"kind":"anchor","product_sha":"caeb92c839ff4b4f2838a0ad44a582034c41c8d4","build":"npm run strangler:build:production-like","browser":"Chromium 153.0.8010.0","product_mutation":false}
+{"kind":"dist-census","html_files":105,"reader_actions_routes":73,"share_routes":67,"share_triggers":138,"share_without_runtime":0}
+{"kind":"browser","case":"gill-desktop-exec-false","route":"/articles/dzhon-gill-chast-1-chelovek/","viewport":"1280x800","navigator_share":"absent","navigator_clipboard":"absent","exec_command_copy":false,"exec_calls":["copy"],"data_share_status":"copied","toast":"Ссылка скопирована"}
+{"kind":"browser","case":"gill-mobile-exec-false","route":"/articles/dzhon-gill-chast-1-chelovek/","viewport":"390x844","navigator_share":"absent","navigator_clipboard":"absent","exec_command_copy":false,"exec_calls":["copy"],"data_share_status":"copied","toast":"Ссылка скопирована"}
+{"kind":"browser-control","case":"gill-desktop-clipboard-reject","route":"/articles/dzhon-gill-chast-1-chelovek/","viewport":"1280x800","navigator_share":"absent","clipboard_writeText":"NotAllowedError rejection","exec_calls":[],"data_share_status":"failed","toast":"Не удалось поделиться"}
+{"kind":"source","owner":"src/runtime/reader-actions.js","fact":"fallback invokes document.execCommand('copy') but ignores its boolean result; copyText therefore resolves normally when the command returns false"}
+{"kind":"guard-gap","fact":"check-engine-contracts.js checks singleton ownership, capture delegation, print behavior and runtime hashing, but no copy outcome or false-success branch; repository search found no share-status failure contract"}
+{"kind":"owner-collision","checked":"2026-10-23","open_product_prs":[2179,2168,2164,2162,2161,2143],"reader_actions_owner":null}

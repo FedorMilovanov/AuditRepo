@@ -214,9 +214,8 @@
       "reason": "Research rights-policy evidence label limiting P72 to a text link; it is not a product defect and does not belong in the active matrix."
     },
     "GBS-AVRAAM-RUNTIME-DROPS-H1": {
-      "status": "alias",
-      "canonical": "GBS-AVRAAM-MAP-HEADING-LOST-ON-READY",
-      "reason": "2026-10-22: тот же ready-observer и потерянный h1, что в старшей canonical row; DOM/AX и axe blind-spot evidence перенесены туда. См. reverify/2026-10-22-premerge-necessity-reconciliation.md."
+      "status": "retired",
+      "reason": "Historical duplicate of GBS-AVRAAM-MAP-HEADING-LOST-ON-READY; both names are retired after Product #2187 and current-main browser closure at c23da28a. See reverify/2026-10-24-current-main-avraam-timeline-closure.md."
     },
     "GBS-GILL-PART-NUMBERING-SWAP": {
       "status": "retired",
@@ -315,6 +314,66 @@
       "status": "alias",
       "canonical": "GBS-HOME-SEARCH-FOCUS-RESTORE",
       "reason": "PARTIAL/NARROWED on caeb92c: duplicate close control is fixed (one visible), but Escape/button close do not return focus to clicked #heroSearchBar. Same work unit; no count change. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+    },
+    "GBS-HEAD-ASSETS-PINNED-TO-PRODUCTION": {
+      "status": "alias",
+      "canonical": "SYS-HEAD-ASSET-PROJECTION-PROLIFERATION",
+      "reason": "2026-10-23: the production-pinned icon/manifest/feed defect and repeated hardcoded revision fan-out share the copied Astro head-resource projection owner. Exact #2184 normalized diff found 71/90 revision-only files. See reverify/2026-10-23-systemic-head-asset-projection.md."
+    },
+    "GBS-TTS-WORKER-DEPENDENCY-RETRY-STICKY-FAILURE": {
+      "status": "alias",
+      "canonical": "SYS-TTS-RECOVERY-STATUS-OWNERSHIP",
+      "reason": "2026-10-23: current worker retry, fallback truth and notice timer failures share the enhanced/system voice attempt-status-generation lifecycle owner. See reverify/2026-10-23-systemic-tts-recovery-status-ownership.md."
+    },
+    "GBS-TTS-FALLBACK-STATUS-FALSE-SUCCESS": {
+      "status": "alias",
+      "canonical": "SYS-TTS-RECOVERY-STATUS-OWNERSHIP",
+      "reason": "2026-10-23: current worker retry, fallback truth and notice timer failures share the enhanced/system voice attempt-status-generation lifecycle owner. See reverify/2026-10-23-systemic-tts-recovery-status-ownership.md."
+    },
+    "GBS-TTS-NOTICE-STALE-REMOVAL-TIMER": {
+      "status": "alias",
+      "canonical": "SYS-TTS-RECOVERY-STATUS-OWNERSHIP",
+      "reason": "2026-10-23: current worker retry, fallback truth and notice timer failures share the enhanced/system voice attempt-status-generation lifecycle owner. See reverify/2026-10-23-systemic-tts-recovery-status-ownership.md."
+    },
+    "GBS-BAPTISTS-BYLINE-PUBLICATION-DATE-DIVERGENCE": {
+      "status": "alias",
+      "canonical": "SYS-EDITORIAL-DATELINE-SLOT-SEMANTICS",
+      "reason": "2026-10-23: Baptists publication-label drift and Nagornaya published-slot/modified-instant drift are opposite manifestations of class/position-based visible dateline projection without explicit event/label authority. See reverify/2026-10-23-systemic-editorial-dateline-slot-semantics.md."
+    },
+    "GBS-NAGORNAYA-PUBLISHED-DATELINE-CARRIES-MODIFIED-INSTANT": {
+      "status": "alias",
+      "canonical": "SYS-EDITORIAL-DATELINE-SLOT-SEMANTICS",
+      "reason": "2026-10-23: Baptists publication-label drift and Nagornaya published-slot/modified-instant drift are opposite manifestations of class/position-based visible dateline projection without explicit event/label authority. See reverify/2026-10-23-systemic-editorial-dateline-slot-semantics.md."
+    },
+    "GBS-PASTOR-SERIES-DISCOVERY-DRIFT": {
+      "status": "alias",
+      "canonical": "SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY",
+      "reason": "2026-10-23: current Pastor-series projection drift and the historical-only Wave 12 guard are data/verification manifestations of missing typed current membership authority. See reverify/2026-10-23-systemic-series-discovery-current-authority.md."
+    },
+    "GBS-WAVE12-CONTRACT-FROZEN-AT-BOUNDARY": {
+      "status": "alias",
+      "canonical": "SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY",
+      "reason": "2026-10-23: current Pastor-series projection drift and the historical-only Wave 12 guard are data/verification manifestations of missing typed current membership authority. See reverify/2026-10-23-systemic-series-discovery-current-authority.md."
+    },
+    "GBS-DEPENDENCY-GATE-BLIND-ON-UNCHANGED-HEAD": {
+      "status": "alias",
+      "canonical": "SYS-DEPENDENCY-ADVISORY-LIFECYCLE",
+      "reason": "2026-10-23: advisory visibility and stuck update PRs are detection/remediation manifestations of one unclosed dependency lifecycle; fresh state is 9 dev/build advisories, #2144 closed unmerged, #2179 open/behind. See reverify/2026-10-23-systemic-dependency-advisory-lifecycle.md."
+    },
+    "GBS-DEPENDENCY-LAG-AND-STUCK-UPDATE-PRS": {
+      "status": "alias",
+      "canonical": "SYS-DEPENDENCY-ADVISORY-LIFECYCLE",
+      "reason": "2026-10-23: advisory visibility and stuck update PRs are detection/remediation manifestations of one unclosed dependency lifecycle; fresh state is 9 dev/build advisories, #2144 closed unmerged, #2179 open/behind. See reverify/2026-10-23-systemic-dependency-advisory-lifecycle.md."
+    },
+    "GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP": {
+      "status": "alias",
+      "canonical": "SYS-INJECTED-HEADER-CONTROL-HOST",
+      "reason": "2026-10-23: native Articles overlap and viewport clipping are two geometry metrics of the same implicit ReaderPreferencesHead search injection into a generic mobile-controls host. See reverify/2026-10-23-systemic-injected-header-control-host.md."
+    },
+    "GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT": {
+      "status": "alias",
+      "canonical": "SYS-INJECTED-HEADER-CONTROL-HOST",
+      "reason": "2026-10-23: native Articles overlap and viewport clipping are two geometry metrics of the same implicit ReaderPreferencesHead search injection into a generic mobile-controls host. See reverify/2026-10-23-systemic-injected-header-control-host.md."
     }
   },
   "ignoredTokens": []
