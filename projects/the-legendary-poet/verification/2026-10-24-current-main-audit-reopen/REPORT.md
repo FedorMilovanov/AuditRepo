@@ -155,7 +155,7 @@ The command palette is absent from a route-only census, so it was opened and aud
 
 The repair should use one coherent pattern rather than patching Axe: either a real listbox with stable option IDs and active-descendant ownership, or a semantically ordinary result/button list with the incompatible composite roles removed. Current `validate-command-search.ts` and `validate-interaction-runtime.ts` protect keyboard implementation strings but do not open the surface or validate its ARIA graph.
 
-## P2 — `SYS-TLP-CITATION-FRAGMENT-REVEAL`
+## P2 — `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`
 
 A rendered-link census covered 34 pages and 2,640 link instances. Public internal route ownership was coherent; the only inventory additions outside sitemap routes were the expected feed and tested 404. Long essays intentionally render only the first source-library slice: 478 citation instances addressing 163 unique sources on eight routes therefore point to targets absent from the initial DOM. This is not itself a defect because `SourceLibrary` listens for `hashchange`, switches to «Все», expands and scrolls the requested source.
 
@@ -166,7 +166,9 @@ The reveal is not idempotent when the fragment value does not change. Chromium o
 3. selecting «Архивы» hides that target while the URL retains the same fragment;
 4. activating the same citation again emits no `hashchange`; after animation settles the target count remains 0 and the source is not revealed.
 
-The owner is the shared fragment/reveal contract, not individual essay data. Closure needs an idempotent activation path that works even when the URL hash already equals the requested source, plus deep-link, repeated-click, history, keyboard and reduced-motion browser guards.
+The owner is the shared fragment/reveal contract, not individual essay data. A complete fresh-load census then widened the same root from reveal to geometry ownership: all 398 unique internal fragment URLs produced their target and no page error, but after 700 ms 28 targets were outside the viewport. Twelve were more than the 96 px fixed-header offset above the viewport across four long essays. Three representative section targets remained between −390 and −764 px after eight seconds; their `scrollY` stopped changing after the initial target lookup. With `prefers-reduced-motion: reduce`, all three landed and remained at approximately 96 px. This isolates a normal-motion layout-settling race: `SmoothScroll` stops observing as soon as the target first exists and does not revalidate geometry after the animated longform layout settles.
+
+Closure needs one idempotent fragment owner that works when the hash is unchanged and revalidates settled target geometry without globally disabling intentional motion. Browser guards must cover fresh and SPA section/citation links, repeated activation, history, keyboard and normal/reduced motion.
 
 ## Compact-screen and link negative evidence
 
