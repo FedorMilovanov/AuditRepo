@@ -155,6 +155,23 @@ The command palette is absent from a route-only census, so it was opened and aud
 
 The repair should use one coherent pattern rather than patching Axe: either a real listbox with stable option IDs and active-descendant ownership, or a semantically ordinary result/button list with the incompatible composite roles removed. Current `validate-command-search.ts` and `validate-interaction-runtime.ts` protect keyboard implementation strings but do not open the surface or validate its ARIA graph.
 
+## P2 — `SYS-TLP-CITATION-FRAGMENT-REVEAL`
+
+A rendered-link census covered 34 pages and 2,640 link instances. Public internal route ownership was coherent; the only inventory additions outside sitemap routes were the expected feed and tested 404. Long essays intentionally render only the first source-library slice: 478 citation instances addressing 163 unique sources on eight routes therefore point to targets absent from the initial DOM. This is not itself a defect because `SourceLibrary` listens for `hashchange`, switches to «Все», expands and scrolls the requested source.
+
+The reveal is not idempotent when the fragment value does not change. Chromium on the Simonov essay proved this sequence with `#source-gramota-courage`:
+
+1. initial target count is 0;
+2. the first citation activation changes the hash, expands the library and produces target count 1;
+3. selecting «Архивы» hides that target while the URL retains the same fragment;
+4. activating the same citation again emits no `hashchange`; after animation settles the target count remains 0 and the source is not revealed.
+
+The owner is the shared fragment/reveal contract, not individual essay data. Closure needs an idempotent activation path that works even when the URL hash already equals the requested source, plus deep-link, repeated-click, history, keyboard and reduced-motion browser guards.
+
+## Compact-screen and link negative evidence
+
+A separate 320×568 Chromium census loaded all 34 routes with zero document-width overflow, zero page errors and exactly one `h1` per route. Sixty-three controls on 13 routes extend beyond the initial viewport only inside deliberate horizontal filter/tab rows (Poets, Ratings, Music and essay source filters); the document itself does not overflow. No compact-layout root was admitted from these rows. The link census found no unsafe URL scheme and no unexplained internal application route.
+
 ## Audio, community and route/data negative evidence
 
 No additional root was admitted in these passes:
@@ -177,4 +194,4 @@ No additional root was admitted in these passes:
 
 ## Result
 
-MASTER now contains **8 active units = 1 P1 + 6 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community and route/data passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
+MASTER now contains **9 active units = 1 P1 + 7 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen and citation-fragment passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
