@@ -791,3 +791,12 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Offline defect: «На главную» changes URL to `/` but leaves the stale page ErrorBoundary fallback rendered. Desktop/mobile pointer/keyboard failed 4/4 through three seconds; reconnect + reload recovered 4/4. Admit `TLP-OFFLINE-ERROR-BOUNDARY-HOME-RECOVERY` as a new P2 root; the induced network failure itself is not a Product defect.
 - Matrix disposition: 1 P1 + 11 P2 + 1 P3 = 13.
 - Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-25 — owner-reopened current-main audit, checkpoint 13
+
+- Scope: rendered audio recovery controls after deliberately aborted MP3 delivery on unchanged Product `main@76da7d6372931f34d269581f374e87bd15406cfb`.
+- Three track routes × three recovery controls × four desktop/mobile pointer/touch/keyboard motion profiles = 36 cases. Desktop and keyboard passed 27/27 immediately; nine invalid viewport-external touch taps were corrected with native scroll and centre-hit ownership, then passed 9/9. Authoritative staged result: 36/36 alerts cleared, playback unpaused and media time advanced beyond 0.2 s.
+- ImmersivePlayer recovery independently passed 6/6 over all three tracks by desktop pointer and mobile keyboard.
+- Boundary: this proves browser media recovery state, not physical speaker output; induced delivery failure is not a Product defect. No new audio root admitted.
+- Matrix disposition unchanged: 1 P1 + 11 P2 + 1 P3 = 13.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
