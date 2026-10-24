@@ -689,9 +689,9 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 
 ## 2026-10-24 — owner-reopened current-main audit, checkpoint 1–3
 
-- Scope: Product `main@26deca76d656025c04ae46d01c793971bd659103`; source/build baseline plus 34 routes × desktop Light/mobile Dark in Chromium 153.
+- Scope: Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`; source/build baseline plus 34 routes × desktop Light/mobile Dark in Chromium 153.
 - Baseline: contracts, full `npm run check`, build, prerender, build-output and SEO validators pass; 68/68 browser loads complete with no page errors, same-origin request failures, duplicate IDs or horizontal overflow.
 - Admissions: `SYS-TLP-THEME-SEMANTIC-COVERAGE-RESIDUAL`, `SYS-TLP-LABEL-IN-NAME-GUARD-COVERAGE`, `TLP-STATIC-PAGE-NESTED-MAIN-LANDMARKS`, `TLP-DEPENDENCY-ADVISORY-RESIDUAL`, `SYS-TLP-MODAL-EXIT-LIFECYCLE`, `TLP-COMMAND-COMBOBOX-SEMANTICS`, `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP`.
-- Collision boundaries: Product #521 remains the sole damaged-media recovery owner; #514 owns only `fflate`; issue #497 retains the human Turnstile proof. No Product mutation or merge.
+- Collision boundaries: Product #521 merged during the audit and its resulting-main media/integrity outcome passes; #514 owns only `fflate`; issue #497 retains the human Turnstile proof. No Audit agent Product mutation or merge.
 - Matrix disposition: P1 stays 1; P2 `0 -> 6`; P3 `0 -> 1`; total active `1 -> 8`.
 - Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.

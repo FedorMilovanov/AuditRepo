@@ -2,14 +2,14 @@
 
 Date: 2026-10-24  
 Product repository: `FedorMilovanov/TheLegendaryPoet`  
-Exact Product anchor: `26deca76d656025c04ae46d01c793971bd659103`  
+Exact Product anchor: `93e8731cc04d12a8fe985604cbea210767a3851c`
 AuditRepo base: `67b1cbcb684b39fcee9f06036747559c3dc4b37c`
 
 ## Disposition
 
 **AUDIT-REOPENED-BY-OWNER / CURRENT-SOURCE-AND-BROWSER-PASS-3**
 
-The owner explicitly selected a new broad audit. Product `main` has also materially changed since the last full-row AuditRepo authority: 39 commits and 119 files since `c7e3e3b…`. This satisfies the closeout reopen rules. Product was not mutated.
+The owner explicitly selected a new broad audit. Product `main` has also materially changed since the last full-row AuditRepo authority. During this audit Product #521 merged; every admitted root and negative result was rerun on resulting `main@93e8731…`. This satisfies the closeout reopen rules. The audit agent did not mutate Product.
 
 The current pass admits six P2 engineering roots and one P3 structural root. Together with the retained human-backed community P1, MASTER changes from **1** to **8** active units.
 
@@ -23,7 +23,7 @@ Read before testing:
 
 Current Product owners:
 
-- #521 owns recovery of four damaged essay images plus an integrity guard. It is open, non-draft and mergeable; this audit does not create a competing media row or modify its scope.
+- #521 merged as `93e8731…`, recovering the selected essay media and adding fail-closed container/full-decode integrity checks. Resulting-main image validation covers 52 raster files and passes; no media row is admitted.
 - #514 owns only the two vulnerable `fflate` lockfile resolutions. It does not update current Vite or `source-map-js` advisories.
 - issue #497 still owns the human Turnstile adversarial proof required by `TLP-COMM-ABUSE-001`.
 
@@ -35,13 +35,14 @@ At exact detached Product head:
 
 - `npm ci`: PASS; 169 packages installed;
 - `node scripts/validate-project-contracts.mjs`: PASS, 0 open architecture lanes;
+- image integrity: PASS, eight mutation tests plus 52 raster files through RIFF/chunk and full decoder checks;
 - `npm run check`: PASS;
-- `npm run build`: PASS, 2,798 modules transformed;
+- `npm run build`: PASS, 3,006 modules transformed;
 - `npm run prerender`: PASS, 32 canonical documents plus dedicated 404;
 - build-output and SEO-output validators: PASS;
-- production entry: 620.4 KiB / 649.4 KiB;
-- total JavaScript: 1,692.4 KiB / 1,757.8 KiB;
-- total CSS: 256.6 KiB / 293.0 KiB.
+- production entry: 625.2 KiB / 649.4 KiB;
+- total JavaScript: 1,700.2 KiB / 1,757.8 KiB;
+- total CSS: 256.8 KiB / 293.0 KiB.
 
 The green source gates are retained as a control, not treated as proof of full route accessibility.
 
@@ -62,8 +63,8 @@ The route set contains all 31 sitemap URLs, `/hall/`, `/archive/` and a dedicate
 - exactly one `h1` per route;
 - no focusable descendant under `aria-hidden`, `hidden` or `inert`;
 - four transparent seek inputs remain intentionally focusable and have a separate focus-visible indicator;
-- seven failed remote Wikimedia image observations are sandbox delivery evidence, not Product defects;
-- no local broken-image claim is made; #521 already owns known damaged local files.
+- six failed remote Wikimedia image observations are sandbox delivery evidence, not Product defects;
+- no local broken-image claim is made; merged #521 now adds fail-closed integrity validation for local raster assets.
 
 Axe WCAG A/AA found violations on 38/68 loads: 746 `color-contrast` nodes, 10 `label-content-name-mismatch` nodes and four `link-in-text-block` nodes. Incomplete results were retained separately and are not counted as passes or defects.
 
@@ -166,7 +167,7 @@ No additional root was admitted in these passes:
 ## Boundaries and negative evidence
 
 - The community P1 is unchanged; automation must not bypass Turnstile.
-- #521 media recovery remains the sole current media owner.
+- Merged #521 media recovery is revalidated on resulting main; no residual local-integrity row is justified.
 - Four `link-in-text-block` axe findings on policy-page links are distinguishability best-practice signals; current source has color-only inline links and they remain inside the theme residual until direct interaction/paint evidence justifies a separate row.
 - Sub-24px citation links are inline citations inside prose and qualify for the inline-target exception; raw rectangle counts were not promoted.
 - Transparent audio seek inputs are not hidden-controls defects: they overlay the painted track and source provides a separate focus indicator.
