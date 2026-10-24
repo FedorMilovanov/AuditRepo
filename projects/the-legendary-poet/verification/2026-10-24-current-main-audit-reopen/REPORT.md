@@ -182,6 +182,12 @@ A 34-route desktop hit-test census evaluated 3,337 visible interactive instances
 
 Ratings has the inverse failure: `<thead class="sticky top-20">` is shifted into the body. With the table at y=312, its first body row spans y=360–441 while the header occupies y=392–440. The opaque header visibly splits the first row and `elementFromPoint` at the poet-link centre returns `<th>`, not the link. These are one viewport-constraint root: sticky owners must not be taller than or overlap the interactive region they govern.
 
+## P2 — `TLP-MOBILE-SECTION-CHIP-INERT`
+
+The 390×844 interaction census tests 2,856 visible controls. Its only stable class of failure is the mobile essay section chip on all ten essays. CSS intentionally makes `.section-chip` opacity 1 and `pointer-events:auto` only while `html.chrome-hidden` is active. In the same state, `useAutoHideChrome.syncChromeAccessibility(true)` queries `.site-header, .mobile-dock, .palette-fab, .section-chip` and assigns every match `inert` plus `aria-hidden=true`. The replacement control is therefore disabled with the chrome it is supposed to replace.
+
+On a real touch-capable Chromium context the chip reaches opacity 1 at y≈10, but its ancestor remains inert and it is absent from `elementsFromPoint`; underlying essay prose wins the hit. Real centre taps at 150, 300, 400 and 600 ms never open `#essay-toc-popover`. This is not a transition-only race: the failure persists after the 550 ms animation completes. Closure must distinguish hidden chrome from visible replacement controls and verify native popover interaction plus accessibility state over repeated hide/show cycles.
+
 ## Compact-screen and link negative evidence
 
 A separate 320×568 Chromium census loaded all 34 routes with zero document-width overflow, zero page errors and exactly one `h1` per route. Sixty-three controls on 13 routes extend beyond the initial viewport only inside deliberate horizontal filter/tab rows (Poets, Ratings, Music and essay source filters); the document itself does not overflow. No compact-layout root was admitted from these rows. The link census found no unsafe URL scheme and no unexplained internal application route. A forced Archive route-chunk failure also reaches the bounded recovery path: one automatic reload, two aborted module requests, then a single `role="alert"` with one `h1`, `robots=noindex,follow`, no stale canonical and a session recovery marker preventing a reload loop.
@@ -210,4 +216,4 @@ No additional root was admitted in these passes:
 
 ## Result
 
-MASTER now contains **11 active units = 1 P1 + 9 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, fragment and portrait-hit-test and sticky-geometry passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
+MASTER now contains **12 active units = 1 P1 + 10 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, fragment and portrait-hit-test and sticky-geometry and mobile-section-chip passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
