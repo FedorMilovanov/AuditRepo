@@ -2,14 +2,15 @@
 
 Date: 2026-10-24  
 Product repository: `FedorMilovanov/TheLegendaryPoet`  
-Exact Product anchor: `93e8731cc04d12a8fe985604cbea210767a3851c`
+Original Product audit anchor: `93e8731cc04d12a8fe985604cbea210767a3851c`
+Current resulting-main anchor: `76da7d6372931f34d269581f374e87bd15406cfb`
 AuditRepo base: `67b1cbcb684b39fcee9f06036747559c3dc4b37c`
 
 ## Disposition
 
 **AUDIT-REOPENED-BY-OWNER / CURRENT-SOURCE-AND-BROWSER-PASS-3**
 
-The owner explicitly selected a new broad audit. Product `main` has also materially changed since the last full-row AuditRepo authority. During this audit Product #521 merged; every admitted root and negative result was rerun on resulting `main@93e8731…`. This satisfies the closeout reopen rules. The audit agent did not mutate Product.
+The owner explicitly selected a new broad audit. Product `main` has also materially changed since the last full-row AuditRepo authority. During this audit Product #521 merged; every admitted root and negative result was rerun on resulting `main@93e8731…`. Product #522 later merged the bounded dependency-only repair as `76da7d6…`; the user-reported essay navigation surfaces and clean source gates were rerun there. This satisfies the closeout reopen rules. The audit agent did not mutate or merge Product.
 
 The current pass admits eleven P2 engineering roots and one P3 structural root. Together with the retained human-backed community P1, MASTER changes from **1** to **13** active units.
 
@@ -24,10 +25,10 @@ Read before testing:
 Current Product owners:
 
 - #521 merged as `93e8731…`, recovering the selected essay media and adding fail-closed container/full-decode integrity checks. Resulting-main image validation covers 52 raster files and passes; no media row is admitted.
-- #514 owns only the two vulnerable `fflate` lockfile resolutions. It does not update current Vite or `source-map-js` advisories.
+- #522 merged as `76da7d6…`, changing only package/lock dependency resolutions; local resulting-main audit is now zero-vulnerability. #514 remains an obsolete overlapping `fflate` lane and must not also merge.
 - issue #497 still owns the human Turnstile adversarial proof required by `TLP-COMM-ABUSE-001`.
 
-No Product PR was merged, closed or edited.
+The audit agent merged, closed and edited no Product PR.
 
 ## Clean baseline
 
@@ -45,6 +46,8 @@ At exact detached Product head:
 - total CSS: 256.8 KiB / 293.0 KiB.
 
 The green source gates are retained as a control, not treated as proof of full route accessibility.
+
+At current `main@76da7d6…`, `npm ci` installed 169 packages with zero advisories; project contracts, full `npm run check`, build, prerender, build-output and SEO-output validation all pass. The only source-validator warning is the pre-existing Mayakovsky/Pasternak testimony without `sourceUrl`; citation/media warnings remain explicitly classified by their validators. Product #522 changed no reader component, route or content file.
 
 ## Browser census
 
@@ -124,7 +127,7 @@ Immutable `npm audit` on current lock state exits 1:
 - full tree: the same moderate plus two high package entries, `source-map-js` and direct Vite 7.3.6;
 - Vite has a non-major fix at 7.3.7.
 
-Draft Product #522 opened after the audit checkpoint and is now the exact bounded owner: only `package.json` and `package-lock.json`, updating Vite 7.3.6→7.3.7, source-map-js 1.2.1→1.2.2, fflate 0.8.2→0.8.3 and nested 0.6.10→0.6.11. Its head `19dd48c…` reports zero advisories; all exact-head checks are now terminal green, including `offline-exhibit`, the Hall offline waiter and merge certification, and GitHub reports the draft merge-clean. Older #514 overlaps only the two fflate updates and #522 explicitly proposes to supersede it. Neither PR is merged, so current-main evidence and the active row remain unchanged; the two overlapping lanes must not both merge.
+Product #522 was the exact bounded owner: only `package.json` and `package-lock.json`, updating Vite 7.3.6→7.3.7, source-map-js 1.2.1→1.2.2, fflate 0.8.2→0.8.3 and nested 0.6.10→0.6.11. Its exact head `19dd48c…` completed every check successfully and merged as `76da7d6…`. On resulting main, immutable full-tree audit reports 0 advisories and the complete local source/build/prerender/output baseline passes. Core resulting-main CI, Pages, route, contracts and article checks are green; Manual Browser QA and Hall offline exhibit were still in progress at the latest refresh. The row therefore remains temporarily active only for terminal resulting-main certification. Older #514 now overlaps merged work and must not merge.
 
 ## P3 — `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP`
 
@@ -171,6 +174,23 @@ The owner is the shared fragment/reveal contract, not individual essay data. A c
 A third edge is URL ownership. `PoemQuickNav` renders real `href="#poem-…"` links but prevents their native default and calls the scroll-only `scrollToId`; a real Pushkin click moves the first poem to y≈72 while `location.hash` remains empty. Mobile `SectionChip` uses the same helper: after isolating its inertness and choosing section 02, the article scrolls to y=4776 but the hash is still empty. These controls therefore lose copyable identity and browser fragment history even when geometry movement succeeds.
 
 Closure needs one idempotent fragment owner that works when the hash is unchanged, preserves URL/history identity and revalidates settled target geometry without globally disabling intentional motion. Browser guards must cover fresh and SPA section/citation/poem links, repeated activation, copy/back/forward, keyboard and normal/reduced motion.
+
+### Owner-reported essay menu and series-navigation reproduction
+
+The owner reported that selecting numbered items such as 02/03 in the left essay menu appears to leave the reader in the previous part. On current `main@76da7d6…`, Chromium 153 executed a native pointer activation for **all 106 desktop TOC links across all ten essays**, each from a fresh route load. Only 65 landed with the requested heading visible. The 41 failures split cleanly between existing systemic owners:
+
+- **23 links changed the hash and scrolled, but the target settled above the viewport** (−61 to −782 px). This is `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`, not a dead link.
+- **18 later links could not be pointer-activated at all** because the oversized sticky menu could not scroll its own item into the viewport. This is `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`.
+
+The reported Yesenin Part II case is direct. In twelve independent 1440×900 normal-motion trials, section 03 failed **12/12**, settling mostly at y=−85 (once −243), so the viewport continued to show the final paragraph of section 02. Section 02 failed 1/12 at y=−79. At 1280×800, 1440×900 and 1920×1080 the section-03 target remained y≈−85 after eight seconds. The reduced-motion control placed sections 01/02/03 at y≈96 and remained stable. This proves a layout-settling race rather than slow scrolling, a missing target or a user-input problem.
+
+Current QA explains the false green: `theme-contrast.spec.mjs` fixes `reducedMotion: 'reduce'`, clicks only the **first** TOC link, and checks only one series link's focus, `href` and contrast—not route activation. It cannot detect normal-motion 02/03 drift, late sticky items or a broken series transition.
+
+The explicit bottom series transition itself is present after the narrative and before the source library. All four current series pages (Yesenin I↔II and Mayakovsky I↔II) navigated successfully by pointer and keyboard: 8/8 desktop normal-motion activations plus 16/16 mobile normal/reduced activations. Screenshots confirm the rendered «Следующая часть» card. It is not at the literal document bottom because sources and community follow it.
+
+There is **no timed auto-advance contract** in current Product: the series block contains one ordinary link, zero buttons, zero circles and zero progress elements; source contains no series countdown or timer-driven navigation. The cyan circular effect seen while hovering is the decorative `CustomCursor` ring, which only spring-scales on interactive hover and never fills or activates a link. Therefore “the ring completed but did not advance” is an affordance misunderstanding, not a failed timer. If timed auto-advance is desired, that is a new product/UX decision and must include pause/cancel/reduced-motion/accessibility semantics rather than being smuggled in as a bug fix.
+
+Fresh desktop/mobile quality controls on all four series routes found zero Axe WCAG A/AA violations, zero local broken images and zero page errors; LCP was 212–332 ms and CLS 0–0.0011 in the local production-like environment. Three Wikimedia request failures were sandbox egress and are not Product defects.
 
 ## P2 — `TLP-ESSAY-PORTRAIT-POINTER-HITTEST`
 
@@ -245,8 +265,46 @@ The same 34×2 route matrix evaluated 6,452 rendered target instances against th
 
 Draft AuditRepo PR #488 publishes this checkpoint from `arena/f93eb2cc-auditrepo`. At exact pushed head `80e2165f39fa926262e8c8f75894d915c303c829`, AuditRepo Validate run `40097280431` and Workflow Preflight run `40097280419` both completed successfully. The PR is open, draft and merge-clean. This certifies the audit artifact shape; it does not close any Product row.
 
-Product `main` remains `93e8731cc04d12a8fe985604cbea210767a3851c`. Draft Product #522 remains at `19dd48c…`; every exact-head check is terminal green and GitHub reports it merge-clean. Product #514 remains behind and overlaps the `fflate` portion. No Product merge is authorized, and both overlapping lanes must not merge.
+Product `main` is now `76da7d6372931f34d269581f374e87bd15406cfb`, the dependency-only #522 merge. Local resulting-main audit and all source/build/output gates pass; core resulting-main workflows are green, while Manual Browser QA and Hall offline exhibit are still running. Product #514 remains behind and now overlaps merged `fflate` work; it must not merge. No Product mutation or merge was performed by the audit agent.
 
 ## Result
 
 MASTER now contains **13 active units = 1 P1 + 11 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, text-spacing, fragment, portrait-hit-test, sticky-geometry and mobile-section-chip passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
+
+## Русский итог фокусной проверки
+
+### СДЕЛАНО
+
+- Нативно активированы все 106 пунктов левого оглавления десяти эссе и все текущие переходы между частями серии.
+- Жалоба «нажал 02/03, остался текст предыдущего раздела» воспроизведена и сведена к уже открытому системному владельцу fragment runtime; отдельный дубликат не создан.
+- Проверены исходники нижней навигации и визуального кольца, выявлен false-green в browser QA.
+
+### ПРОВЕРЕНО
+
+- Оглавление: 65 корректных переходов, 23 неверные конечные геометрии, 18 недоступных из-за sticky rail.
+- Есенин II: раздел 03 — 12/12 сбоев normal motion, раздел 02 — 1/12; reduced motion — корректная y≈96.
+- Нижние переходы I↔II: 24/24 успешных pointer/keyboard активаций на desktop/mobile, normal/reduced motion, с проверкой URL, страницы, заголовка и history.
+- Локальные изображения, Axe A/AA, page errors, LCP/CLS на четырёх страницах серии: новых дефектов нет.
+
+### НЕ ПРОВЕРЕНО
+
+- Нативные Safari/Firefox, screen reader и физическое устройство не заявляются.
+- Таймер перехода не тестировался как функция, потому что такой функции в текущем Product нет. Кольцо — декоративный custom cursor; новый auto-advance требует отдельного продуктового решения.
+- Dependency-строка не закрыта до терминального результата двух ещё выполняющихся resulting-main workflows.
+
+### СРЕДА
+
+Product `main@76da7d6372931f34d269581f374e87bd15406cfb`; Chromium `153.0.8010.0`; production build; desktop 1280×800, 1440×900, 1920×1080; touch/mobile 390×844; normal/reduced motion. AuditRepo: `arena/f93eb2cc-auditrepo`, draft PR #488.
+
+### РЕШЕНИЯ САМ
+
+- Не плодить новые строки: неверный settled scroll относится к `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`, недоступные поздние пункты — к `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`.
+- Не выдавать custom cursor за сломанный progress control и не добавлять скрытый таймер как «исправление».
+- Не закрывать dependency owner раньше полного resulting-main CI и не трогать перекрывающий Product #514.
+
+### Что требуется от владельца
+
+1. Сначала исправить два общих владельца навигации и добавить browser guards, которые активируют каждый пункт и проверяют URL, identity/H1, history и конечную геометрию в normal/reduced motion.
+2. Решить отдельно, нужен ли вообще автоматический таймер перехода; текущий контракт его не обещает.
+3. Не сливать Product #514; дождаться терминального resulting-main CI для уже слитого #522.
+4. AuditRepo PR #488 не закрывать и не сливать до завершения текущей публикационной проверки.
