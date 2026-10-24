@@ -686,3 +686,12 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Product issue #498 closed as completed.
 - Matrix disposition after terminal merge: P1 stays 1, P2 `1 -> 0`, P3 stays 0, total active `2 -> 1`.
 - Detailed evidence: `../reverify/REVERIFY_c7e3e3b_2026-09-13_ga4-property-closure.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 1
+
+- Scope: Product `main@26deca76d656025c04ae46d01c793971bd659103`; source/build baseline plus 34 routes × desktop Light/mobile Dark in Chromium 153.
+- Baseline: contracts, full `npm run check`, build, prerender, build-output and SEO validators pass; 68/68 browser loads complete with no page errors, same-origin request failures, duplicate IDs or horizontal overflow.
+- Admissions: `SYS-TLP-THEME-SEMANTIC-COVERAGE-RESIDUAL`, `SYS-TLP-LABEL-IN-NAME-GUARD-COVERAGE`, `TLP-STATIC-PAGE-NESTED-MAIN-LANDMARKS`, `TLP-DEPENDENCY-ADVISORY-RESIDUAL`, `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP`.
+- Collision boundaries: Product #521 remains the sole damaged-media recovery owner; #514 owns only `fflate`; issue #497 retains the human Turnstile proof. No Product mutation or merge.
+- Matrix disposition: P1 stays 1; P2 `0 -> 4`; P3 `0 -> 1`; total active `1 -> 6`.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
