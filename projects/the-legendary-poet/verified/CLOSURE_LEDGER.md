@@ -800,3 +800,10 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Boundary: this proves browser media recovery state, not physical speaker output; induced delivery failure is not a Product defect. No new audio root admitted.
 - Matrix disposition unchanged: 1 P1 + 11 P2 + 1 P3 = 13.
 - Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-25 — owner-reopened current-main audit, checkpoint 14
+
+- Scope: every SourceLibrary category filter and expand/collapse control on all ten essays, unchanged Product `main@76da7d6372931f34d269581f374e87bd15406cfb`.
+- Matrix: desktop-pointer normal motion plus mobile-keyboard reduced motion; 20 route/profile cases, 100 filter activations and 36 expand/collapse activations.
+- Outcome: all filters selected exactly one pressed state and settled to expected counts. Nineteen cases passed immediately; one Simonov desktop collapse retained exit nodes at 800 ms, then passed 3/3 fresh controls by 800 ms and remained correct through five seconds. Staged result 20/20 and 136/136 controls.
+- Disposition: no filter/toggle root admitted; repeated same-hash citation reveal remains owned by `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`. Matrix unchanged at 1 P1 + 11 P2 + 1 P3 = 13.

@@ -297,6 +297,10 @@ All three published track routes were forced into a genuine media error by abort
 
 The ImmersivePlayer error surface was then opened after the same induced failure. Its «Повторить загрузку» control recovered all three tracks by desktop pointer and mobile keyboard, 6/6, again with actual current-time progression. These probes validate the rendered recovery callbacks and media state transition; they do not claim physical speaker output and do not convert the deliberately blocked request into a Product defect. No new audio row is admitted.
 
+## SourceLibrary control completion
+
+A corrected low-concurrency matrix exercised every SourceLibrary control on all ten essays in desktop-pointer normal motion and mobile-keyboard reduced motion. All 100 category-filter activations selected exactly one `aria-pressed` button and settled to the expected filtered/collapsed row count. Eighteen libraries exposed expand/collapse, producing 36 additional activations. Nineteen of twenty route/profile cases passed immediately; one Simonov desktop collapse retained exiting nodes at the 800 ms sample, then passed 3/3 fresh controls by 800 ms and remained at 12 rows through five seconds. The authoritative staged outcome is 20/20 cases and 136/136 control activations. No SourceLibrary filter/toggle root is admitted; repeated same-hash citation reveal remains the separate fragment-runtime defect.
+
 ## AuditRepo publication proof
 
 Draft AuditRepo PR #488 publishes this audit from `arena/f93eb2cc-auditrepo`. The substantive poem/Hall-navigation checkpoint is exact head `f1b20686513aa03d2dbd76dfb8607488884879d4`; Validate `40136144623` and Preflight `40136144717` both completed successfully, and GitHub reports the draft PR merge-clean. This certifies the audit artifact shape; it does not close any remaining Product row.
