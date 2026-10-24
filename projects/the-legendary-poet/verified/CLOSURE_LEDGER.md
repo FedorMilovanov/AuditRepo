@@ -686,3 +686,53 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Product issue #498 closed as completed.
 - Matrix disposition after terminal merge: P1 stays 1, P2 `1 -> 0`, P3 stays 0, total active `2 -> 1`.
 - Detailed evidence: `../reverify/REVERIFY_c7e3e3b_2026-09-13_ga4-property-closure.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 1–3
+
+- Scope: Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`; source/build baseline plus 34 routes × desktop Light/mobile Dark in Chromium 153.
+- Baseline: contracts, full `npm run check`, build, prerender, build-output and SEO validators pass; 68/68 browser loads complete with no page errors, same-origin request failures, duplicate IDs or horizontal overflow.
+- Admissions: `SYS-TLP-THEME-SEMANTIC-COVERAGE-RESIDUAL`, `SYS-TLP-LABEL-IN-NAME-GUARD-COVERAGE`, `TLP-STATIC-PAGE-NESTED-MAIN-LANDMARKS`, `TLP-DEPENDENCY-ADVISORY-RESIDUAL`, `SYS-TLP-MODAL-EXIT-LIFECYCLE`, `TLP-COMMAND-COMBOBOX-SEMANTICS`, `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP`.
+- Collision boundaries: Product #521 merged during the audit and its resulting-main media/integrity outcome passes; #514 owns only `fflate`; issue #497 retains the human Turnstile proof. No Audit agent Product mutation or merge.
+- Matrix disposition: P1 stays 1; P2 `0 -> 6`; P3 `0 -> 1`; total active `1 -> 8`.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 4
+
+- Scope: continuation on unchanged Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`; exhaustive interaction/focus and fragment-identity passes.
+- Admissions: `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`, `TLP-ESSAY-PORTRAIT-POINTER-HITTEST`, `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`, `TLP-MOBILE-SECTION-CHIP-INERT`.
+- Consolidation: 114 raw desktop hit-test failures reduce to shared sticky, float/source and Ratings geometry owners; ten mobile failures reduce to one SectionChip inert-state conflict. They are not counted per instance.
+- Controls: desktop focus reproduced exactly 90 oversized-sticky failures across 3,383 instances; mobile focus produced 0 across 2,905. Removing only SectionChip `inert`/`aria-hidden` opened all ten popover rows. Hall with active global audio remains reachable at 390×844 and after native scrolling at 320×568.
+- Fragment widening: poem and mobile section controls scroll but do not update `location.hash`; URL/history identity now belongs to the existing fragment runtime root rather than a new row.
+- Collision boundaries: draft Product #522 remains the dependency owner at `19dd48c…`, with Hall offline jobs pending; #514 remains overlapping/behind. No Product mutation or merge.
+- Matrix disposition: P1 stays 1; P2 `6 -> 10`; P3 stays 1; total active `8 -> 12`.
+- AuditRepo publication: draft #488 exact head `80e2165f39fa926262e8c8f75894d915c303c829`; Validate `40097280431` and Workflow Preflight `40097280419` completed success.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 5
+
+- Scope: WCAG text-spacing outcome across all 34 current routes at 1280×800 and 390×844 on unchanged Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`.
+- Admission: `SYS-TLP-TEXT-SPACING-ROBUSTNESS`.
+- Evidence: 68/68 loads, 6,446 focusable instances, zero page errors, zero document-width overflow and no additional blocked-control class; nevertheless 15 visible text instances become newly clipped across ten routes after line 1.5 / paragraph 2em / letter .12em / word .16em overrides.
+- Owners: Ratings tags 1, Article summaries 6, Music descriptions 3, essay breadcrumbs 4 and Kindred Spirits name 1; twenty source `truncate`/`line-clamp-*` occurrences expose the shared fixed-budget assumption.
+- Exclusion control: three raw myth-card overflow observations came from inactive absolutely positioned citation tooltips; active positioning reduced the intersection to ancestor border/padding without demonstrated text loss, so they were not counted.
+- Collision refresh: Product #522 exact head `19dd48c…` is now all-green and merge-clean, including Hall offline and merge certification; it remains draft/unmerged. Product #514 remains overlapping/behind. No Product mutation or merge.
+- Matrix disposition: P1 stays 1; P2 `10 -> 11`; P3 stays 1; total active `12 -> 13`.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 6
+
+- Scope: forced-colors render control and WCAG 2.5.8 target size-or-spacing census on unchanged Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`.
+- Forced colors: 34 routes × desktop/mobile completed with zero page errors; screenshots confirm system-color paint for representative Home gradient title, essay section headings/numbers and poet title. Computed transparent WebKit fill was rejected as a false-positive signal after paint inspection.
+- Target geometry: 6,452 target instances; 2,043 have one dimension below 24 CSS px, but zero have another target centre within 24 px, satisfying the spacing alternative in sampled geometry.
+- Boundaries: no native Windows High Contrast, assistive-technology or physical motor-use claim; no new row admitted.
+- Matrix disposition unchanged: 1 P1 + 11 P2 + 1 P3 = 13.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 7
+
+- Scope: 844×390 touch/landscape interaction and focus census on unchanged Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`.
+- Result: all 34 routes loaded with zero page errors and zero document-width overflow; 3,171 target instances produced zero focused-off-viewport failures.
+- Consolidation: the only centre-hit class was ten essay SectionChip controls. After Simonov scroll y=1400 the chip is visibly pointer-enabled at y≈10, but its ancestor remains `inert`/`aria-hidden=true`, prose owns the hit stack and a native tap opens no popover.
+- Disposition: evidence broadens `TLP-MOBILE-SECTION-CHIP-INERT` to short landscape/tablet geometry; no duplicate root admitted.
+- Matrix disposition unchanged: 1 P1 + 11 P2 + 1 P3 = 13.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
