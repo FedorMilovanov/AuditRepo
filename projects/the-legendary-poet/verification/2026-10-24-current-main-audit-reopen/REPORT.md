@@ -11,7 +11,7 @@ AuditRepo base: `67b1cbcb684b39fcee9f06036747559c3dc4b37c`
 
 The owner explicitly selected a new broad audit. Product `main` has also materially changed since the last full-row AuditRepo authority. During this audit Product #521 merged; every admitted root and negative result was rerun on resulting `main@93e8731…`. This satisfies the closeout reopen rules. The audit agent did not mutate Product.
 
-The current pass admits six P2 engineering roots and one P3 structural root. Together with the retained human-backed community P1, MASTER changes from **1** to **8** active units.
+The current pass admits ten P2 engineering roots and one P3 structural root. Together with the retained human-backed community P1, MASTER changes from **1** to **12** active units.
 
 ## Authority and collision check
 
@@ -204,6 +204,7 @@ No additional root was admitted in these passes:
 - community store, target-store, delivery-policy and hardening validators pass, including typed retry/reject reconciliation and durable queue semantics; human live mutation remains issue #497;
 - real two-tab archive behavior converges in both directions: adding «Пророк» in the Pushkin page produces one Archive item and `aria-pressed=true`; removing it in Archive restores `aria-pressed=false` in the original tab and persists the generation-2 tombstone;
 - Hall v3 renders its production canvas and two route controls when WebGL works; a synthetic context-loss event disposes the canvas and controls and exposes the textual `webgl-context-lost` route, while pre-script removal of `WebGLRenderingContext` directly selects the `webgl-unavailable` fallback with one `h1` and no dead controls;
+- the Hall/global-audio boundary remains usable after real playback starts on Music and SPA navigation preserves the mini-player: at 390×844 Hall controls end at y=632, before the mini-player begins at y=670 and both centre hits reach their buttons; at 320×568 the stage intentionally exceeds the short viewport, but native `scrollIntoView` places both controls at y=261–307, clear of the y=394 mini-player, and both centre hits succeed;
 - canonical registries contain 10 poets, 10 essays and three tracks; all 23 dynamic public paths are present in the 31-URL sitemap, with no missing or orphan dynamic entry.
 
 ## Boundaries and negative evidence
@@ -216,6 +217,12 @@ No additional root was admitted in these passes:
 - No live production, native Safari, assistive-technology or field-performance claim is made in this pass.
 - Product source, dependencies and workflows were not modified.
 
+## AuditRepo publication proof
+
+Draft AuditRepo PR #488 publishes this checkpoint from `arena/f93eb2cc-auditrepo`. At exact pushed head `80e2165f39fa926262e8c8f75894d915c303c829`, AuditRepo Validate run `40097280431` and Workflow Preflight run `40097280419` both completed successfully. The PR is open, draft and merge-clean. This certifies the audit artifact shape; it does not close any Product row.
+
+Product `main` remains `93e8731cc04d12a8fe985604cbea210767a3851c`. Draft Product #522 remains at `19dd48c…`, blocked only while `offline-exhibit` and its exact-head certification waiter are in progress; all observed core/browser/route checks are green. Product #514 remains behind and overlaps the `fflate` portion. No Product merge is authorized, and both overlapping lanes must not merge.
+
 ## Result
 
-MASTER now contains **12 active units = 1 P1 + 10 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, fragment and portrait-hit-test and sticky-geometry and mobile-section-chip passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
+MASTER now contains **12 active units = 1 P1 + 10 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, fragment, portrait-hit-test, sticky-geometry and mobile-section-chip passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.

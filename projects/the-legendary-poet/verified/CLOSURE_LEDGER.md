@@ -695,3 +695,15 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Collision boundaries: Product #521 merged during the audit and its resulting-main media/integrity outcome passes; #514 owns only `fflate`; issue #497 retains the human Turnstile proof. No Audit agent Product mutation or merge.
 - Matrix disposition: P1 stays 1; P2 `0 -> 6`; P3 `0 -> 1`; total active `1 -> 8`.
 - Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 4
+
+- Scope: continuation on unchanged Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`; exhaustive interaction/focus and fragment-identity passes.
+- Admissions: `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`, `TLP-ESSAY-PORTRAIT-POINTER-HITTEST`, `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`, `TLP-MOBILE-SECTION-CHIP-INERT`.
+- Consolidation: 114 raw desktop hit-test failures reduce to shared sticky, float/source and Ratings geometry owners; ten mobile failures reduce to one SectionChip inert-state conflict. They are not counted per instance.
+- Controls: desktop focus reproduced exactly 90 oversized-sticky failures across 3,383 instances; mobile focus produced 0 across 2,905. Removing only SectionChip `inert`/`aria-hidden` opened all ten popover rows. Hall with active global audio remains reachable at 390×844 and after native scrolling at 320×568.
+- Fragment widening: poem and mobile section controls scroll but do not update `location.hash`; URL/history identity now belongs to the existing fragment runtime root rather than a new row.
+- Collision boundaries: draft Product #522 remains the dependency owner at `19dd48c…`, with Hall offline jobs pending; #514 remains overlapping/behind. No Product mutation or merge.
+- Matrix disposition: P1 stays 1; P2 `6 -> 10`; P3 stays 1; total active `8 -> 12`.
+- AuditRepo publication: draft #488 exact head `80e2165f39fa926262e8c8f75894d915c303c829`; Validate `40097280431` and Workflow Preflight `40097280419` completed success.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
