@@ -772,3 +772,13 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Collision refresh: obsolete Product #514 was closed unmerged on 2026-10-24; #522 remains the sole merged dependency transaction.
 - Matrix disposition unchanged: 1 P1 + 10 P2 + 1 P3 = 12.
 - Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-25 — owner-reopened current-main audit, checkpoint 11
+
+- Scope: exhaustive inline-citation activation and repeated same-hash SourceLibrary behavior on unchanged Product `main@76da7d6372931f34d269581f374e87bd15406cfb`, Chromium 153.
+- Inventory: ten essays contain 950 rendered citation instances and 248 unique source targets. Reduced-motion keyboard activation passed 248/248 for action, expected hash identity, unique reveal and viewport geometry.
+- Pointer delivery: the corrected global-index pass delivered 881/950 initially. Focused native retries delivered 96/138 one-second action attempts and all residual 42/42 after eight seconds; all 15 initial geometry misses passed fresh two- and eight-second controls. Staged result is 950/950, so transient long-page motion broadens existing owners without a new citation-action root.
+- Idempotence: after first reveal and an alternate filter hid the row, native reactivation of the same citation left that row hidden for 248/248 unique targets. The unchanged hash emits no `hashchange`, exhaustively broadening `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`.
+- SourceLibrary control: the Yesenin-II primary filter reached its expected 16 rows by 500 ms in normal and reduced motion and remained stable through 25 s. High-concurrency raw-node counts were rejected because Framer exit nodes remain attached while opacity-zero; they are not Product findings.
+- Matrix disposition unchanged: 1 P1 + 10 P2 + 1 P3 = 12.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.

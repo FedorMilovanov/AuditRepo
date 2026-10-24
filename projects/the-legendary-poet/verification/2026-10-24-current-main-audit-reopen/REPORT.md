@@ -277,6 +277,14 @@ The same 34×2 route matrix evaluated 6,452 rendered target instances against th
 - No live production, native Safari, assistive-technology or field-performance claim is made in this pass.
 - Product source, dependencies and workflows were not modified.
 
+## Citation and SourceLibrary continuation
+
+The ten essay routes render 950 inline citation instances pointing to 248 unique `#source-*` targets. A reduced-motion keyboard pass activated every unique target: 248/248 preserved the expected hash, revealed exactly one source row, and placed it in the viewport. The corrected global-index pointer pass initially delivered 881/950; its 69 action timeouts and 15 geometry misses were transient long-page layout motion rather than durable failures. Focused retries delivered 96/138 action attempts after a one-second settle, and all remaining 42/42 passed after an eight-second settle. All 15 geometry misses passed fresh focused controls at both two and eight seconds. Thus staged pointer delivery is 950/950, with no new citation-action root; the transient class remains evidence for the existing layout/fragment owners.
+
+The idempotence edge is systemic and deterministic. For every 248 unique targets, the harness first activated the citation, selected a different SourceLibrary category until that source row was absent, and activated the same citation again by native keyboard input. First reveal passed 248/248. The second activation retained the same hash and history delta +1 from only the first activation, and the source remained hidden 248/248: the component listens to `hashchange`, which cannot fire when the hash value does not change. This exhaustively broadens `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`; no duplicate row was admitted.
+
+Source filter controls were also exercised during this matrix. A focused Yesenin-II primary-filter control settled from 12 initial rows to the expected 16 filtered rows within 500 ms in both normal and reduced motion and remained stable through 25 seconds. Broader high-concurrency count runs were rejected as aggregate evidence because attached Framer exit nodes and opacity-zero nodes made raw locator counts non-authoritative; their results are not used as Product findings.
+
 ## AuditRepo publication proof
 
 Draft AuditRepo PR #488 publishes this audit from `arena/f93eb2cc-auditrepo`. The substantive poem/Hall-navigation checkpoint is exact head `f1b20686513aa03d2dbd76dfb8607488884879d4`; Validate `40136144623` and Preflight `40136144717` both completed successfully, and GitHub reports the draft PR merge-clean. This certifies the audit artifact shape; it does not close any remaining Product row.
