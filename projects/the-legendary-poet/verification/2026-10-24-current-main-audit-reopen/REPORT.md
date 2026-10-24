@@ -180,6 +180,8 @@ No additional root was admitted in these passes:
 - a real UI click advances the first audio element to 2.37 s with `paused=false`, `readyState=4`, no `MediaError`, and visible state «Сейчас звучит»; this proves local current-head bytes/decode/playback progression, not physical speaker output;
 - audio asset, music runtime, session and coordination validators all pass; no corrupt-download or silent-master claim is justified;
 - community store, target-store, delivery-policy and hardening validators pass, including typed retry/reject reconciliation and durable queue semantics; human live mutation remains issue #497;
+- real two-tab archive behavior converges in both directions: adding «Пророк» in the Pushkin page produces one Archive item and `aria-pressed=true`; removing it in Archive restores `aria-pressed=false` in the original tab and persists the generation-2 tombstone;
+- Hall v3 renders its production canvas and two route controls when WebGL works; a synthetic context-loss event disposes the canvas and controls and exposes the textual `webgl-context-lost` route, while pre-script removal of `WebGLRenderingContext` directly selects the `webgl-unavailable` fallback with one `h1` and no dead controls;
 - canonical registries contain 10 poets, 10 essays and three tracks; all 23 dynamic public paths are present in the 31-URL sitemap, with no missing or orphan dynamic entry.
 
 ## Boundaries and negative evidence
