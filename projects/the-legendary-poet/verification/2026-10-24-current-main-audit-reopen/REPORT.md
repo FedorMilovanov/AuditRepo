@@ -7,11 +7,11 @@ AuditRepo base: `67b1cbcb684b39fcee9f06036747559c3dc4b37c`
 
 ## Disposition
 
-**AUDIT-REOPENED-BY-OWNER / CURRENT-SOURCE-AND-BROWSER-PASS-1**
+**AUDIT-REOPENED-BY-OWNER / CURRENT-SOURCE-AND-BROWSER-PASS-2**
 
 The owner explicitly selected a new broad audit. Product `main` has also materially changed since the last full-row AuditRepo authority: 39 commits and 119 files since `c7e3e3b…`. This satisfies the closeout reopen rules. Product was not mutated.
 
-The current pass admits four P2 engineering roots and one P3 structural root. Together with the retained human-backed community P1, MASTER changes from **1** to **6** active units.
+The current pass admits five P2 engineering roots and one P3 structural root. Together with the retained human-backed community P1, MASTER changes from **1** to **7** active units.
 
 ## Authority and collision check
 
@@ -135,6 +135,18 @@ Full axe best-practice analysis finds `heading-order` on 19 of 34 desktop routes
 
 This is not filed as a WCAG conformance failure. It is a necessary structural improvement because shared reusable components currently derive heading level from visual styling rather than document context. Closure requires a monotonic route outline without changing appearance or inventing hidden headings.
 
+## P2 — `SYS-TLP-MODAL-EXIT-LIFECYCLE`
+
+Shared overlay acquisition, topmost Escape dispatch, stacked isolation and initial focus work in both desktop and mobile Chromium. The tested command-over-immersive stack correctly closes one surface per Escape and preserves the body lock until only the immersive surface remains.
+
+The exit boundary is nevertheless split across two clocks. `useDialogSurface` releases the overlay handle when React `open` becomes false, but `AnimatePresence` deliberately keeps the exiting portal mounted. At that instant the runtime restores body scroll, removes background `inert`/`aria-hidden`, removes focus containment and schedules focus restoration even though the full-viewport dialog remains connected and pointer-active. Timed Chromium evidence after Escape:
+
+- ImmersivePlayer: a 1,296,000 px² `role="dialog"` remains connected with `pointer-events:auto`; opacity samples include 0.32 and 0.04 after runtime depth is already zero, and removal occurs around 0.7 s.
+- essay lightbox: the same full-viewport dialog remains pointer-active after opacity reaches 0; removal occurs around 1.0 s.
+- during both windows, body position is already restored, `#root.inert` is false and focus is restored to the opener behind the exiting dialog.
+
+This is a shared modal lifecycle defect, not two component bugs: keyboard/accessibility ownership and visual/pointer ownership disagree during the exit animation. Current `validate-interaction-runtime.ts` and `validate-essay-lightbox-runtime.ts` assert acquisition and ordinary cleanup through source strings/unit fakes, but do not execute the animated close interval. Closure must bind release/focus restoration to exit completion (including reduced motion), preserve stacked semantics and guard rapid close/reopen.
+
 ## Boundaries and negative evidence
 
 - The community P1 is unchanged; automation must not bypass Turnstile.
@@ -147,4 +159,4 @@ This is not filed as a WCAG conformance failure. It is a necessary structural im
 
 ## Result
 
-MASTER now contains **6 active units = 1 P1 + 4 P2 + 1 P3**. This is the first current-main checkpoint, not audit completion. Subsequent passes should test modal/focus lifecycles, audio state, community degradation, route/data parity, CSS ownership and false-green mutation controls before selecting Product repair.
+MASTER now contains **7 active units = 1 P1 + 5 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus lifecycle is now browser-proven; subsequent passes continue audio state, community degradation, route/data parity, CSS ownership and false-green mutation controls before selecting Product repair.
