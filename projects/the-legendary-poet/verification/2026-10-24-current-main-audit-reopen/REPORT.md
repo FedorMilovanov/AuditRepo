@@ -7,11 +7,11 @@ AuditRepo base: `67b1cbcb684b39fcee9f06036747559c3dc4b37c`
 
 ## Disposition
 
-**AUDIT-REOPENED-BY-OWNER / CURRENT-SOURCE-AND-BROWSER-PASS-2**
+**AUDIT-REOPENED-BY-OWNER / CURRENT-SOURCE-AND-BROWSER-PASS-3**
 
 The owner explicitly selected a new broad audit. Product `main` has also materially changed since the last full-row AuditRepo authority: 39 commits and 119 files since `c7e3e3b…`. This satisfies the closeout reopen rules. Product was not mutated.
 
-The current pass admits five P2 engineering roots and one P3 structural root. Together with the retained human-backed community P1, MASTER changes from **1** to **7** active units.
+The current pass admits six P2 engineering roots and one P3 structural root. Together with the retained human-backed community P1, MASTER changes from **1** to **8** active units.
 
 ## Authority and collision check
 
@@ -147,6 +147,22 @@ The exit boundary is nevertheless split across two clocks. `useDialogSurface` re
 
 This is a shared modal lifecycle defect, not two component bugs: keyboard/accessibility ownership and visual/pointer ownership disagree during the exit animation. Current `validate-interaction-runtime.ts` and `validate-essay-lightbox-runtime.ts` assert acquisition and ordinary cleanup through source strings/unit fakes, but do not execute the animated close interval. Closure must bind release/focus restoration to exit completion (including reduced motion), preserve stacked semantics and guard rapid close/reopen.
 
+## P2 — `TLP-COMMAND-COMBOBOX-SEMANTICS`
+
+The command palette is absent from a route-only census, so it was opened and audited separately in desktop Light and mobile Dark. Axe reports critical `aria-required-children` in both profiles: `#command-palette-results` declares `role="listbox"`, while every direct result is an ordinary `<button>`, not an `option`. The input declares `role="combobox"`, `aria-controls` and `aria-expanded`, but does not expose the visually selected result through `aria-activedescendant`. Arrow keys therefore move only application state; assistive technology has no valid active-option relationship to announce.
+
+The repair should use one coherent pattern rather than patching Axe: either a real listbox with stable option IDs and active-descendant ownership, or a semantically ordinary result/button list with the incompatible composite roles removed. Current `validate-command-search.ts` and `validate-interaction-runtime.ts` protect keyboard implementation strings but do not open the surface or validate its ARIA graph.
+
+## Audio, community and route/data negative evidence
+
+No additional root was admitted in these passes:
+
+- all three MP3 masters return HTTP 200, match manifest byte counts and SHA-256 exactly, decode through Chromium Web Audio as 44.1 kHz stereo and contain non-silent PCM (RMS 0.185–0.197; sampled nonzero fraction above 99.79%);
+- a real UI click advances the first audio element to 2.37 s with `paused=false`, `readyState=4`, no `MediaError`, and visible state «Сейчас звучит»; this proves local current-head bytes/decode/playback progression, not physical speaker output;
+- audio asset, music runtime, session and coordination validators all pass; no corrupt-download or silent-master claim is justified;
+- community store, target-store, delivery-policy and hardening validators pass, including typed retry/reject reconciliation and durable queue semantics; human live mutation remains issue #497;
+- canonical registries contain 10 poets, 10 essays and three tracks; all 23 dynamic public paths are present in the 31-URL sitemap, with no missing or orphan dynamic entry.
+
 ## Boundaries and negative evidence
 
 - The community P1 is unchanged; automation must not bypass Turnstile.
@@ -159,4 +175,4 @@ This is a shared modal lifecycle defect, not two component bugs: keyboard/access
 
 ## Result
 
-MASTER now contains **7 active units = 1 P1 + 5 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus lifecycle is now browser-proven; subsequent passes continue audio state, community degradation, route/data parity, CSS ownership and false-green mutation controls before selecting Product repair.
+MASTER now contains **8 active units = 1 P1 + 6 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community and route/data passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
