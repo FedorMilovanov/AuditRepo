@@ -782,3 +782,12 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - SourceLibrary control: the Yesenin-II primary filter reached its expected 16 rows by 500 ms in normal and reduced motion and remained stable through 25 s. High-concurrency raw-node counts were rejected because Framer exit nodes remain attached while opacity-zero; they are not Product findings.
 - Matrix disposition unchanged: 1 P1 + 10 P2 + 1 P3 = 12.
 - Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-25 — owner-reopened current-main audit, checkpoint 12
+
+- Scope: mobile command-menu lifecycle and deliberately induced lazy-route recovery on unchanged Product `main@76da7d6372931f34d269581f374e87bd15406cfb`, Chromium 153.
+- Command surface: 31 sitemap routes × normal/reduced mobile profiles = 62 cases covering pointer/keyboard opening, focus/scroll ownership, close/Escape restoration, empty results, focus containment, shortcut toggle, backdrop close and selection navigation. Corrected staged outcome is 62/62; one transient initial-focus observation passed 3/3 focused repeats.
+- Online recovery controls: desktop/mobile blocked-chunk cases correctly contained failure, recovered through Home, contained a repeated blocked reload and loaded after delivery restoration.
+- Offline defect: «На главную» changes URL to `/` but leaves the stale page ErrorBoundary fallback rendered. Desktop/mobile pointer/keyboard failed 4/4 through three seconds; reconnect + reload recovered 4/4. Admit `TLP-OFFLINE-ERROR-BOUNDARY-HOME-RECOVERY` as a new P2 root; the induced network failure itself is not a Product defect.
+- Matrix disposition: 1 P1 + 11 P2 + 1 P3 = 13.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.

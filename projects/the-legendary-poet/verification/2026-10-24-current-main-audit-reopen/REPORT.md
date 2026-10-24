@@ -285,6 +285,12 @@ The idempotence edge is systemic and deterministic. For every 248 unique targets
 
 Source filter controls were also exercised during this matrix. A focused Yesenin-II primary-filter control settled from 12 initial rows to the expected 16 filtered rows within 500 ms in both normal and reduced motion and remained stable through 25 seconds. Broader high-concurrency count runs were rejected as aggregate evidence because attached Framer exit nodes and opacity-zero nodes made raw locator counts non-authoritative; their results are not used as Product findings.
 
+## Mobile command surface and recovery continuation
+
+The mobile command surface was exercised on all 31 sitemap routes in 390×844 Dark mode under normal and reduced motion. Each of 62 route/profile cases covered dock-pointer opening, initial input focus and scroll lock, close-button focus restoration, keyboard open plus Escape restoration, empty-result state, focus containment, Ctrl+K toggle, backdrop close, and Enter navigation to Hall with main-landmark focus. The corrected matrix passed 61/62 immediately; the only initial-focus observation then passed 3/3 focused repeats, yielding a staged 62/62. This adds behavioral confidence but does not close the existing combobox semantics row.
+
+Lazy-route recovery was induced by blocking the built Privacy chunk rather than mutating Product. Online desktop-normal and mobile-reduced controls passed the bounded automatic retry/reload, safe ErrorBoundary presentation, Home recovery, repeated blocked manual reload, and successful manual reload after restoring delivery. The offline branch exposes a separate current defect: the fallback correctly says «Нет соединения», but activating «На главную» changes the URL to `/` while leaving the stale error UI rendered. It persisted through three seconds in 4/4 desktop/mobile pointer/keyboard trials. Reconnecting and activating reload recovered 4/4. This admits `TLP-OFFLINE-ERROR-BOUNDARY-HOME-RECOVERY`; transport failure itself is not classified as a Product defect.
+
 ## AuditRepo publication proof
 
 Draft AuditRepo PR #488 publishes this audit from `arena/f93eb2cc-auditrepo`. The substantive poem/Hall-navigation checkpoint is exact head `f1b20686513aa03d2dbd76dfb8607488884879d4`; Validate `40136144623` and Preflight `40136144717` both completed successfully, and GitHub reports the draft PR merge-clean. This certifies the audit artifact shape; it does not close any remaining Product row.
@@ -293,7 +299,7 @@ Product `main` is `76da7d6372931f34d269581f374e87bd15406cfb`, the dependency-onl
 
 ## Result
 
-MASTER now contains **12 active units = 1 P1 + 10 P2 + 1 P3** after terminal dependency retirement. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, text-spacing, fragment, portrait-hit-test, sticky-geometry and mobile-section-chip passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
+MASTER now contains **13 active units = 1 P1 + 11 P2 + 1 P3** after terminal dependency retirement. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, text-spacing, fragment, portrait-hit-test, sticky-geometry and mobile-section-chip passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
 
 ## Русский итог фокусной проверки
 
