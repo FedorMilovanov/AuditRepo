@@ -263,7 +263,7 @@ The same 34×2 route matrix evaluated 6,452 rendered target instances against th
 
 ## AuditRepo publication proof
 
-Draft AuditRepo PR #488 publishes this checkpoint from `arena/f93eb2cc-auditrepo`. At exact pushed head `80e2165f39fa926262e8c8f75894d915c303c829`, AuditRepo Validate run `40097280431` and Workflow Preflight run `40097280419` both completed successfully. The PR is open, draft and merge-clean. This certifies the audit artifact shape; it does not close any Product row.
+Draft AuditRepo PR #488 publishes this audit from `arena/f93eb2cc-auditrepo`. Earlier exact head `80e2165f…` passed Validate `40097280431` and Preflight `40097280419`. The substantive focused-navigation checkpoint is exact head `3a56c025d6e9664574a380e847a61ca76d5f7f9a`; Validate `40127331158` and Preflight `40127331177` both completed successfully, and GitHub reports the draft PR merge-clean. This certifies the audit artifact shape; it does not close any Product row.
 
 Product `main` is now `76da7d6372931f34d269581f374e87bd15406cfb`, the dependency-only #522 merge. Local resulting-main audit and all source/build/output gates pass; core resulting-main workflows are green, while Manual Browser QA and Hall offline exhibit are still running. Product #514 remains behind and now overlaps merged `fflate` work; it must not merge. No Product mutation or merge was performed by the audit agent.
 
@@ -294,7 +294,7 @@ MASTER now contains **13 active units = 1 P1 + 11 P2 + 1 P3**. This is a current
 
 ### СРЕДА
 
-Product `main@76da7d6372931f34d269581f374e87bd15406cfb`; Chromium `153.0.8010.0`; production build; desktop 1280×800, 1440×900, 1920×1080; touch/mobile 390×844; normal/reduced motion. AuditRepo: `arena/f93eb2cc-auditrepo`, draft PR #488.
+Product `main@76da7d6372931f34d269581f374e87bd15406cfb`; Chromium `153.0.8010.0`; production build; desktop 1280×800, 1440×900, 1920×1080; touch/mobile 390×844; normal/reduced motion. AuditRepo: `arena/f93eb2cc-auditrepo`, substantive checkpoint `3a56c025d6e9664574a380e847a61ca76d5f7f9a`, draft PR #488, Validate `40127331158` и Preflight `40127331177` — success/merge-clean.
 
 ### РЕШЕНИЯ САМ
 
