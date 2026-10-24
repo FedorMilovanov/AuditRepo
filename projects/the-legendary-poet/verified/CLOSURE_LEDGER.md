@@ -727,3 +727,12 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Boundaries: no native Windows High Contrast, assistive-technology or physical motor-use claim; no new row admitted.
 - Matrix disposition unchanged: 1 P1 + 11 P2 + 1 P3 = 13.
 - Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 7
+
+- Scope: 844×390 touch/landscape interaction and focus census on unchanged Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`.
+- Result: all 34 routes loaded with zero page errors and zero document-width overflow; 3,171 target instances produced zero focused-off-viewport failures.
+- Consolidation: the only centre-hit class was ten essay SectionChip controls. After Simonov scroll y=1400 the chip is visibly pointer-enabled at y≈10, but its ancestor remains `inert`/`aria-hidden=true`, prose owns the hit stack and a native tap opens no popover.
+- Disposition: evidence broadens `TLP-MOBILE-SECTION-CHIP-INERT` to short landscape/tablet geometry; no duplicate root admitted.
+- Matrix disposition unchanged: 1 P1 + 11 P2 + 1 P3 = 13.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
