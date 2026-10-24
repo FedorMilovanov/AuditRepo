@@ -750,3 +750,14 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Dependency row: #522 merged and local resulting-main proof is green, but `TLP-DEPENDENCY-ADVISORY-RESIDUAL` remains active until Manual Browser QA and Hall offline exhibit are terminal green on resulting main; overlapping #514 must not merge.
 - Matrix disposition unchanged: 1 P1 + 11 P2 + 1 P3 = 13.
 - Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 9
+
+- Scope: continued native route-navigation activation on Product `main@76da7d6372931f34d269581f374e87bd15406cfb`, plus terminal resulting-main dependency certification.
+- In-content route controls: 218 distinct controls × pointer/keyboard = 436 activations with URL, destination identity, history and Back checks. Keyboard passed 218/218; pointer passed 209/218. The nine failures were three essay author cards, five late Kindred Spirits cards and the first Ratings poet link.
+- Repeat proof: all nine failed 3/3 focused pointer trials (27/27) because sticky geometry left the target below the viewport or another sticky item owned its centre. Evidence broadens `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`; no router/root duplicate is admitted.
+- Global controls: header, footer and mobile dock passed 132/132 pointer/keyboard transitions across desktop/mobile and normal/reduced motion.
+- Command palette: all 106 essay-section result buttons reached the expected route/hash by pointer under normal motion and keyboard under reduced motion (212/212 after explicit disambiguation of the legitimate three-result «Москва Кабацкая» query). Thirty targets were not visible at 1.8 s despite correct identity. Focused eight-second controls reconverged except Yesenin II section 03, which remained above the viewport 3/3; this independently broadens `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`.
+- Dependency closure: merged Product #522 has zero resulting-main advisories and a passing full local baseline. Resulting-main CI `40125800247`, Pages `40125800254`, Manual Browser `40125800258`, Hall offline `40125800415`, route `40125800264`, contracts `40125800268`, content `40125800301`, article `40125800307`, Hall runtime `40125800292`, publication `40125800294` and brand workflows `40125800232`/`40125800404` are terminal success.
+- Disposition: retire `TLP-DEPENDENCY-ADVISORY-RESIDUAL`; Product #514 is overlapping and must not merge. Matrix changes from 1 P1 + 11 P2 + 1 P3 = 13 to 1 P1 + 10 P2 + 1 P3 = 12.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.

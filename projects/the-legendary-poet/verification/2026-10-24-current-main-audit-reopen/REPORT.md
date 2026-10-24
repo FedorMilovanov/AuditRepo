@@ -127,7 +127,7 @@ Immutable `npm audit` on current lock state exits 1:
 - full tree: the same moderate plus two high package entries, `source-map-js` and direct Vite 7.3.6;
 - Vite has a non-major fix at 7.3.7.
 
-Product #522 was the exact bounded owner: only `package.json` and `package-lock.json`, updating Vite 7.3.6→7.3.7, source-map-js 1.2.1→1.2.2, fflate 0.8.2→0.8.3 and nested 0.6.10→0.6.11. Its exact head `19dd48c…` completed every check successfully and merged as `76da7d6…`. On resulting main, immutable full-tree audit reports 0 advisories and the complete local source/build/prerender/output baseline passes. Core resulting-main CI, Pages, route, contracts and article checks are green; Manual Browser QA and Hall offline exhibit were still in progress at the latest refresh. The row therefore remains temporarily active only for terminal resulting-main certification. Older #514 now overlaps merged work and must not merge.
+Product #522 was the exact bounded owner: only `package.json` and `package-lock.json`, updating Vite 7.3.6→7.3.7, source-map-js 1.2.1→1.2.2, fflate 0.8.2→0.8.3 and nested 0.6.10→0.6.11. Its exact head `19dd48c…` completed every check successfully and merged as `76da7d6…`. On resulting main, immutable full-tree audit reports 0 advisories and the complete local source/build/prerender/output baseline passes. CI, Pages, Manual Browser QA, Hall offline, route, contracts, article, content, brand and publication workflows are now all terminal green. `TLP-DEPENDENCY-ADVISORY-RESIDUAL` is therefore retired. Older #514 overlaps merged work and must not merge.
 
 ## P3 — `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP`
 
@@ -191,6 +191,14 @@ The explicit bottom series transition itself is present after the narrative and 
 There is **no timed auto-advance contract** in current Product: the series block contains one ordinary link, zero buttons, zero circles and zero progress elements; source contains no series countdown or timer-driven navigation. The cyan circular effect seen while hovering is the decorative `CustomCursor` ring, which only spring-scales on interactive hover and never fills or activates a link. Therefore “the ring completed but did not advance” is an affordance misunderstanding, not a failed timer. If timed auto-advance is desired, that is a new product/UX decision and must include pause/cancel/reduced-motion/accessibility semantics rather than being smuggled in as a bug fix.
 
 Fresh desktop/mobile quality controls on all four series routes found zero Axe WCAG A/AA violations, zero local broken images and zero page errors; LCP was 212–332 ms and CLS 0–0.0011 in the local production-like environment. Three Wikimedia request failures were sandbox egress and are not Product defects.
+
+### Continued route-navigation activation
+
+The follow-up expanded from essay numerals to every distinct rendered in-content route control in the 34-route inventory. A native pointer/keyboard matrix executed **436 activations over 218 controls** with URL, destination identity, history and Back checks. All 218 keyboard activations passed. Pointer passed 209/218; the remaining nine controls failed 27/27 repeated trials because their centres stayed outside or under existing sticky owners: three essay author cards, five late Kindred Spirits cards and the first Ratings poet link beneath the sticky table header. This broadens `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`; it does not create a navigation-router root.
+
+Persistent global navigation is healthy. Header, footer and mobile-dock route links passed **132/132** native pointer/keyboard activations across desktop/mobile and normal/reduced motion, including history and Back restoration.
+
+The command palette was then used as a second navigation origin for all 106 essay sections: pointer under normal motion plus keyboard under reduced motion, **212/212 intended result-button activations**, reached the expected route and hash after disambiguating one legitimate multi-result «Москва Кабацкая» query. At 1.8 s, 30 normal-motion destinations were still outside the viewport although route/hash were correct. An 18-run focused eight-second control showed reduced-motion and most delayed targets reconverging, but Yesenin II section 03 remained above the viewport in 3/3 normal-motion trials. This independently confirms the existing fragment-layout owner while proving that command buttons themselves dispatch navigation.
 
 ## P2 — `TLP-ESSAY-PORTRAIT-POINTER-HITTEST`
 
@@ -265,11 +273,11 @@ The same 34×2 route matrix evaluated 6,452 rendered target instances against th
 
 Draft AuditRepo PR #488 publishes this audit from `arena/f93eb2cc-auditrepo`. Earlier exact head `80e2165f…` passed Validate `40097280431` and Preflight `40097280419`. The substantive focused-navigation checkpoint is exact head `3a56c025d6e9664574a380e847a61ca76d5f7f9a`; Validate `40127331158` and Preflight `40127331177` both completed successfully, and GitHub reports the draft PR merge-clean. This certifies the audit artifact shape; it does not close any Product row.
 
-Product `main` is now `76da7d6372931f34d269581f374e87bd15406cfb`, the dependency-only #522 merge. Local resulting-main audit and all source/build/output gates pass; core resulting-main workflows are green, while Manual Browser QA and Hall offline exhibit are still running. Product #514 remains behind and now overlaps merged `fflate` work; it must not merge. No Product mutation or merge was performed by the audit agent.
+Product `main` is `76da7d6372931f34d269581f374e87bd15406cfb`, the dependency-only #522 merge. Local resulting-main audit and all source/build/output gates pass; every required resulting-main workflow, including Manual Browser QA and Hall offline exhibit, is terminal green. Product #514 remains behind and now overlaps merged `fflate` work; it must not merge. No Product mutation or merge was performed by the audit agent.
 
 ## Result
 
-MASTER now contains **13 active units = 1 P1 + 11 P2 + 1 P3**. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, text-spacing, fragment, portrait-hit-test, sticky-geometry and mobile-section-chip passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
+MASTER now contains **12 active units = 1 P1 + 10 P2 + 1 P3** after terminal dependency retirement. This is a current-main audit checkpoint, not audit completion. Modal/focus, audio, community, route/data, compact-screen, text-spacing, fragment, portrait-hit-test, sticky-geometry and mobile-section-chip passes are now recorded; CSS ownership and false-green mutation analysis continue before selecting Product repair.
 
 ## Русский итог фокусной проверки
 
@@ -278,6 +286,7 @@ MASTER now contains **13 active units = 1 P1 + 11 P2 + 1 P3**. This is a current
 - Нативно активированы все 106 пунктов левого оглавления десяти эссе и все текущие переходы между частями серии.
 - Жалоба «нажал 02/03, остался текст предыдущего раздела» воспроизведена и сведена к уже открытому системному владельцу fragment runtime; отдельный дубликат не создан.
 - Проверены исходники нижней навигации и визуального кольца, выявлен false-green в browser QA.
+- Дополнительно выполнены 436 активаций 218 внутренних route-контролов, 132 активации глобальной навигации и 212 переходов из command palette.
 
 ### ПРОВЕРЕНО
 
@@ -285,12 +294,15 @@ MASTER now contains **13 active units = 1 P1 + 11 P2 + 1 P3**. This is a current
 - Есенин II: раздел 03 — 12/12 сбоев normal motion, раздел 02 — 1/12; reduced motion — корректная y≈96.
 - Нижние переходы I↔II: 24/24 успешных pointer/keyboard активаций на desktop/mobile, normal/reduced motion, с проверкой URL, страницы, заголовка и history.
 - Локальные изображения, Axe A/AA, page errors, LCP/CLS на четырёх страницах серии: новых дефектов нет.
+- Все 218 keyboard-переходов по внутренним route-контролам успешны; pointer — 209/218. Девять повторяемых отказов относятся к уже открытому sticky-geometry owner.
+- Header/footer/mobile dock: 132/132. Command palette → 106 разделов: 212/212 переходов по ожидаемому route/hash.
+- Resulting-main CI Product полностью зелёный; dependency residual закрыт.
 
 ### НЕ ПРОВЕРЕНО
 
 - Нативные Safari/Firefox, screen reader и физическое устройство не заявляются.
 - Таймер перехода не тестировался как функция, потому что такой функции в текущем Product нет. Кольцо — декоративный custom cursor; новый auto-advance требует отдельного продуктового решения.
-- Dependency-строка не закрыта до терминального результата двух ещё выполняющихся resulting-main workflows.
+- Новых непроверенных границ в этой волне не добавлено; dependency-строка закрыта после терминального resulting-main CI.
 
 ### СРЕДА
 
@@ -300,11 +312,11 @@ Product `main@76da7d6372931f34d269581f374e87bd15406cfb`; Chromium `153.0.8010.0`
 
 - Не плодить новые строки: неверный settled scroll относится к `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`, недоступные поздние пункты — к `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`.
 - Не выдавать custom cursor за сломанный progress control и не добавлять скрытый таймер как «исправление».
-- Не закрывать dependency owner раньше полного resulting-main CI и не трогать перекрывающий Product #514.
+- Закрыть dependency owner после полученного полного resulting-main CI; перекрывающий Product #514 не трогать и не сливать.
 
 ### Что требуется от владельца
 
 1. Сначала исправить два общих владельца навигации и добавить browser guards, которые активируют каждый пункт и проверяют URL, identity/H1, history и конечную геометрию в normal/reduced motion.
 2. Решить отдельно, нужен ли вообще автоматический таймер перехода; текущий контракт его не обещает.
-3. Не сливать Product #514; дождаться терминального resulting-main CI для уже слитого #522.
-4. AuditRepo PR #488 не закрывать и не сливать до завершения текущей публикационной проверки.
+3. Не сливать Product #514: resulting-main CI уже терминально зелёный, а его работа перекрыта #522.
+4. AuditRepo PR #488 не закрывать и не сливать без отдельного решения.
