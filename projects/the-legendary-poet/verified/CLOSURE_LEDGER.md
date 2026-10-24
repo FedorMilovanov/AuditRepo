@@ -761,3 +761,14 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Dependency closure: merged Product #522 has zero resulting-main advisories and a passing full local baseline. Resulting-main CI `40125800247`, Pages `40125800254`, Manual Browser `40125800258`, Hall offline `40125800415`, route `40125800264`, contracts `40125800268`, content `40125800301`, article `40125800307`, Hall runtime `40125800292`, publication `40125800294` and brand workflows `40125800232`/`40125800404` are terminal success.
 - Disposition: retire `TLP-DEPENDENCY-ADVISORY-RESIDUAL`; Product #514 is overlapping and must not merge. Matrix changes from 1 P1 + 11 P2 + 1 P3 = 13 to 1 P1 + 10 P2 + 1 P3 = 12.
 - Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 10
+
+- Scope: complete PoemQuickNav activation and Hall six-stop route controls on unchanged Product `main@76da7d6372931f34d269581f374e87bd15406cfb` with Chromium 153.
+- Poem quick navigation: 34 anchors × desktop/mobile × normal/reduced motion × pointer/keyboard = 272 attempts. All mobile and keyboard attempts activated; 62 desktop pointer attempts failed because oversized sticky panels left rows outside the viewport. This broadens `SYS-TLP-STICKY-VIEWPORT-GEOMETRY` without a new root.
+- Fragment identity: every one of 210 delivered quick-nav activations left `location.hash` empty and history delta zero because `PoemQuickNav` prevents native anchor default and invokes scroll-only `scrollToId`. This exhaustively broadens `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`.
+- Settling control: reduced-motion delivered activations landed correctly. A 102-run normal-motion eight-second pass reconverged 28/29 initially displaced targets; the remaining Yesenin observation then passed 3/3 fresh trials by 1.8 s and stayed at y≈96 through 25 s. No separate permanent poem-geometry root is admitted.
+- Hall route: all six stops were traversed forward and backward, including cyclic boundaries, in eight desktop/mobile pointer/keyboard normal/reduced profiles. All 96 activations updated visible/live stop identity, preserved `/hall/` and history, and produced zero page exceptions. No Hall navigation root is admitted.
+- Collision refresh: obsolete Product #514 was closed unmerged on 2026-10-24; #522 remains the sole merged dependency transaction.
+- Matrix disposition unchanged: 1 P1 + 10 P2 + 1 P3 = 12.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
