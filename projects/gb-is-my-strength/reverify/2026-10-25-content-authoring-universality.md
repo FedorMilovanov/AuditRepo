@@ -128,10 +128,10 @@ Teen family случайно ловит такую ошибку через media
 ## 7. Дедупликация и границы
 
 - Это не повтор `SYS-HEAD-ASSET-PROJECTION-PROLIFERATION`: та строка владеет common head asset revisions. Здесь root — отсутствие атомарного content→route→series→registry publication contract.
-- Это не повтор `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY`: тот root про membership projections конкретной Pastor series. Здесь доказано, что общий authoring admission пропускает orphan/dangling states до публикации.
+- Это не повтор `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY`: тот root про approved membership projections конкретной Pastor series. Здесь доказано, что общий config authoring admission допускает новый navigable item вне page/route/data authority; publishable orphan MDX, напротив, корректно ловится strict provenance gate.
 - Explicit routes и route-specific visuals сами по себе не объявляются дефектом. Они могут оставаться, если scaffold/manifest и validators делают их полными и проверяемыми.
 - Не требуется немедленно переводить все 104 routes на один layout или стирать редакционные различия.
-- Probe draft не выдавался за reader-facing production regression; дефект — именно зелёное admission состояние без явной non-public регистрации.
+- Route-less `draft:true`/`noindex:true` признан нормальным prepublication shape. Reader-facing fail-open доказан отдельно Pastor config mutation: 30 ссылок на отсутствующий route при зелёных build и полном static gate.
 - Open Product #2164 меняет только пять MDX entries и является живым примером content-only authoring, но он draft; его intent не предполагался. #2193 владеет speed/tooltip и широким head fan-out, #2179 workflows, #2143 genealogy data. Ни один не заявляет общий scaffold/admission owner.
 
 ## 8. Условия закрытия
@@ -139,14 +139,16 @@ Teen family случайно ловит такую ошибку через media
 Нужен один проверяемый authoring contract, а не ещё один prose checklist:
 
 1. canonical manifest/scaffold или эквивалентный typed API для standalone, existing-series item, new flat series и book series;
-2. каждый MDX entry либо разрешается в public route + route profile + ownership, либо явно зарегистрирован как draft/non-public с причиной;
+2. route-less `draft:true`/`noindex:true` остаётся разрешён; publishable MDX по-прежнему обязан пройти существующий provenance→route/profile/ownership contract;
 3. каждый navigable non-chapter series item разрешается в `pages[id]`, существующий route и article identity; chapters остаются разрешённым non-page типом;
 4. TS config и `data/series.json` имеют одного producer либо строгую двустороннюю equality projection;
-5. generated registries генерируются одним command и `--check` падает на stale output;
-6. schema validation не обходится direct-import wrappers: route получает validated collection entry либо эквивалентный единый validator;
-7. guide описывает current shapes/owners и один минимальный happy path без copy-by-memory;
-8. отрицательные fixtures обязаны убивать: orphan MDX, config-only item, missing route, missing profile/ownership, stale series projection и broken `partToc` target;
-9. resulting-main dry runs создают по одному standalone, existing-series item и новой flat/book series, проходят адресные ошибки и после удаления не оставляют artifacts.
+5. все config modules импортируются через discoverable manifest; accidental duplicate `seriesId` запрещён, а approved base→public override объявляется отдельным typed operation;
+6. generated registries имеют один документированный transaction/dry-run command; editorial metadata review остаётся fail-closed и scaffold не выдаёт automatic approval;
+7. существующие schema errors и строгий content provenance сохраняются; family wrappers не создают конкурирующий типовой contract;
+8. strict rendered fragment audit входит в documented gate, а cross-document series href проверяется на существующий route;
+9. guide описывает current shapes/owners, пять Nagornaya exceptions и минимальные happy paths без copy-by-memory;
+10. отрицательные fixtures обязаны убивать Pastor-style config-only item, missing route/profile/ownership, accidental duplicate ID, stale series projection и broken `partToc` target, одновременно пропуская explicit draft и typed Baptist composition;
+11. resulting-main dry runs создают standalone, existing-series item, новую flat series и book series, получают адресные ошибки и после удаления не оставляют artifacts.
 
 Product в этом проходе не изменялся.
 

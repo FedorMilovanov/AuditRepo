@@ -656,3 +656,8 @@ This entry records the governance change only. It does not claim that the reform
 - Two valid temporary configs with the same ID both passed build/engine contracts; import order A→B silently made `seriesConfig(id)` return B. No collision diagnostic exists.
 - Current `russian-baptism` intentionally performs flat-base→book-public replacement, so closure needs a typed explicit override/composition rather than a blanket duplicate ban. `seriesConfig()` has no production consumers; wrappers import constants directly.
 - No current reader defect/new unit. This strengthens the manifest/discovery boundary of `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; arithmetic unchanged.
+
+### Authoring-contract closure synthesis
+
+- Canonical closure boundary is reconciled to all probes: explicit route-less drafts remain valid; strict provenance for publishable MDX is preserved; decisive fail-open is Pastor item→page/route/data; new config discovery, typed duplicate semantics, same-/cross-document target checks and documented transaction orchestration are required.
+- Editorial metadata projection must remain approval-gated, and approved Baptist flat→book composition must not be rejected as an accidental duplicate. No new arithmetic change.
