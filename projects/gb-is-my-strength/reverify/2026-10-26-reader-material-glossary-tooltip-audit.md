@@ -388,9 +388,10 @@ Rendered corpus и source-level numeral scan нашли на `/articles/diotrefy
 - `Playfair Display` имеет только Cyrillic 400/600/700 и 400 italic; Latin/digits/punctuation face отсутствует;
 - `Inter` имеет только Cyrillic 300/400/500/600; Latin отсутствует, а route labels требуют `font-weight:700`;
 - `Source Sans 3` имеет Cyrillic 400/500/600, но Latin только 400; series labels требуют 600;
+- `Noto Serif Hebrew` объявляет 400 и 500, но оба файла byte-for-byte одинаковы (`b5535c…`), оба имеют `OS/2.usWeightClass=400`; homepage реально запрашивает 500 для `.h-sacred-line` и CDP использует custom Noto glyphs, то есть заявленный 500 не существует;
 - Lora — положительный контроль: для реально используемых 400/600 есть Cyrillic и Latin faces.
 
-Это не теоретическая возможность fallback. В sampled high-signal text уже есть минимум три опубликованные группы:
+Это не теоретическая возможность fallback или только странное internal family name. В sampled high-signal text уже есть минимум три опубликованные группы:
 
 1. **9 Playfair h1 routes** с цифрами/Latin: три Baptist date headings и шесть Hard Texts headings;
 2. **14 Inter labels** `font-weight:700` с Roman numerals/digits: восемь «Тёмная сторона кафедры» и шесть «Трудные тексты»;
