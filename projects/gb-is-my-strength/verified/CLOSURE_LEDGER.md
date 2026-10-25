@@ -637,3 +637,10 @@ This entry records the governance change only. It does not claim that the reform
 - Publishable orphan MDX is caught late but correctly by `migration:metadata:check:strict`, which belongs to full static publication validation. It is no longer claimed as full-gate fail-open; draft staging and content provenance remain healthy controls.
 - Teen config-only mutation also fails full build through its family media lookup. Superseding Pastor mutation has no such incidental guard: production-like build and full `validate:static-publication` pass, while 10 pages render 30 links to a missing route; metadata strict, audit-pro, dist publication, ownership and strict fragments all pass.
 - Root is retained and narrowed to missing universal series item→page/route/data admission plus fragmented first-time workflow. Arithmetic remains **50 = 27 + 4 + 19**.
+
+### New book-shaped series positive dry run
+
+- A from-scratch one-chapter/one-article `shape:'book'` config rendered through `SeriesReaderChrome` with no new engine component: build 0, page count 105, facade consumers 46, strict fragments 65 pages/1,097 targets/0 broken. Book is confirmed as shared-engine shape.
+- The probe intentionally lacked ownership/profile/full head and makes no production-admission claim. Rendering reuse does not supply the authoring transaction.
+- Head census: 64 components /12,198 lines; all share `ReaderPreferencesHead`, while all own `<title>`, 62 own JSON-LD and none uses central `Seo.astro`. This is authoring context, not a duplicate of the active head-asset projection lane.
+- No arithmetic change; `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT` remains **50 = 27 + 4 + 19**.

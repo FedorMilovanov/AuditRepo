@@ -333,3 +333,37 @@ Publishable orphan проходит Astro build и `content:coverage:audit`, н�
 Это superseding decisive witness для system row. Teen mutation отдельно сужена: её full build останавливает family-specific media lookup, поэтому она показывает неодинаковую безопасность families, а не release fail-open сама по себе.
 
 Итоговая admission остаётся одна и точнее: content provenance имеет хороший fail-closed owner, а **универсальный series item → page/route/data contract отсутствует**. Arithmetic не меняется.
+
+## 16. Продолжение — positive book-shaped creation dry run
+
+Чтобы не оценивать book universality только по существующим Heart/Baptist implementations, создана временная новая `shape:'book'` series с нуля:
+
+- одна Roman chapter (`tier:'chapter'`);
+- одна Arabic article с `parent`;
+- полноценный `pages[id]`;
+- curated `partToc` с существующим H2 target;
+- новый route, импортирующий только `SeriesReaderChrome` и новый config.
+
+Ни одного нового engine/chrome component не потребовалось. Результат:
+
+- Astro build exit 0;
+- 105 pages вместо baseline 104;
+- probe route создан;
+- facade consumer count 45→46;
+- strict fragment audit exit 0: 65 series pages, 1 097 unique targets;
+- built HTML содержит series root, chapter/article identities и точный TOC target.
+
+Это прямой positive proof: **book действительно является shape общей series engine**, а не скрытым четвёртым renderer. Runtime score 4/5 подтверждён realistic creation, не только чтением типов.
+
+Probe намеренно не объявлялся production publication: у него нет profile/ownership/полного SEO head, и canonical admission должен остановить его. То есть rendering universality не решает authoring transaction автоматически.
+
+### PageHead boundary
+
+Отдельный census 64 `*PageHead.astro` показывает 12 198 строк route/family-owned head source:
+
+- 64/64 подключают общий `ReaderPreferencesHead` — хороший уже завершённый shared primitive;
+- 64/64 самостоятельно печатают `<title>`;
+- 62/64 самостоятельно несут JSON-LD;
+- 0/64 используют central `Seo.astro` abstraction.
+
+Это не новая строка и не требование слить все metadata в один шаблон: route-specific JSON-LD может быть оправдан. Для нового агента это означает, что universal reader facade не даёт universal document/head authoring API. Hardcoded asset projection уже принадлежит отдельному `SYS-HEAD-ASSET-PROJECTION-PROLIFERATION` и здесь повторно не считается.
