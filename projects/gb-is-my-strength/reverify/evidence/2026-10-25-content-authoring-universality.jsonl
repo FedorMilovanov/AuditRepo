@@ -48,3 +48,5 @@
 {"type":"boundary","currentReaderDefect":false,"futureContract":"unique registration plus explicit typed override/composition; reject accidental duplicate","newWorkUnit":false,"absorbedBy":"SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT"}
 {"type":"positiveProbe","id":"new-flat-series","shape":"flat","parts":1,"newEngineComponents":0,"astroBuildExit":0,"pagesBuilt":105,"routeBuilt":true,"facadeConsumers":46,"strictFragmentExit":0,"strictSeriesPages":65,"strictUniqueTargets":1097,"renderedRoot":true,"renderedPart":true,"tocTargetPresent":true}
 {"type":"runtimeMatrix","flatCreation":"PASS","bookCreation":"PASS","separateBookEngine":false,"productionAdmissionClaimed":false,"arithmeticChanged":false}
+{"type":"positiveGuard","id":"series-json-data-only-published-part","series":"pastor-series","part":99,"routeExists":false,"auditProExit":1,"diagnostic":"pastor-series part 99 arena-data-only-probe: no index.html on disk","dataConsistencyExit":0}
+{"type":"asymmetry","dataJsonToRoute":"FAIL_CLOSED","tsConfigToPageRouteData":"FAIL_OPEN","requiredRepair":"add reverse config-item resolution without weakening existing data-first guard","arithmeticChanged":false}

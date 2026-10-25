@@ -446,3 +446,22 @@ Current source уже имеет один намеренный collision: `russi
 Результат совпадает с book probe: Astro build exit 0, 105 pages, facade consumers 46, strict fragment audit exit 0 на 65 series pages /1 097 unique targets; built root, part identity и target присутствуют. Новых engine components не потребовалось.
 
 Тем самым positive runtime matrix закрыта для обеих заявленных shapes: flat и book действительно универсальны на уровне reader rendering. Различие остаётся только в topology config, как и обещано архитектурой. Production admission для probe не заявляется; ownership/profile/data/editorial transaction по-прежнему отдельный слой.
+
+## 20. Продолжение — asymmetric TS config ↔ `data/series.json` guard
+
+Проверено обратное направление Pastor drift. В `data/series.json` временно добавлена published part, отсутствующая в TS config и на диске.
+
+- `audit-pro` вышел 1;
+- ошибка адресная: `pastor-series part 99 "arena-data-only-probe": no index.html on disk`;
+- `data:consistency` отдельно вышел 0, но обязательный audit-pro не позволил data-only published route пройти.
+
+Вместе с предыдущим Pastor witness получена точная асимметрия:
+
+| Направление drift | Результат полного relevant gate |
+|---|---|
+| `data/series.json` → отсутствующий route | FAIL (`audit-pro`) |
+| TS `SeriesConfig.items` → отсутствующие page/route/data | PASS, 30 dangling links |
+
+Следовательно, проблема не в полном отсутствии series protection. Data-first projection защищена; config-first projection — нет. Closure должна добавить обратную проверку, не ослабляя существующий `audit-pro` guard и не назначая `data/series.json` вторым ручным SSOT.
+
+Fixture удалён, Product source чист; новой строки и изменения arithmetic нет.

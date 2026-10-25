@@ -666,3 +666,8 @@ This entry records the governance change only. It does not claim that the reform
 
 - From-scratch one-part flat config rendered through unchanged `SeriesReaderChrome`: build 0, 105 pages, facade consumers 46, strict fragments 65 pages/1,097 targets/0 broken; no new engine component.
 - Together with the book probe this closes the positive runtime-shape matrix. Production admission remains a separate transaction; no new work unit/arithmetic change.
+
+### Series data/config asymmetry continuation
+
+- Data-only published Pastor part correctly fails audit-pro with an exact missing-HTML diagnostic; data→route protection exists.
+- Opposite TS-config→page/route/data direction remains fail-open and renders dangling links. Closure adds the reverse relation without weakening the healthy data-first guard. No new unit/arithmetic change.
