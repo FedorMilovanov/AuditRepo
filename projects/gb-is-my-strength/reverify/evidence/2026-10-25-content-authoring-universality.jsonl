@@ -63,3 +63,6 @@
 {"type":"negativeProbe","id":"duplicate-series-item-href","defineSeriesConfigAccepted":true,"items":11,"pages":11,"duplicateHref":"/articles/20-antisovetov-pastoru/","itemIds":["antisovetov","arena-duplicate-href-item"],"routeExists":true}
 {"type":"productionInvariant","id":"href-target-reader-identity","navigableItems":63,"builtTargets":63,"matchingDataGillV16":63,"mismatches":0,"multipleDistinctIdentities":0}
 {"type":"closureRefinement","crossDocumentAssertions":["href exists","href unique","target reader identity equals item.id"],"neutralFutureMarker":"data-series-page-id","newWorkUnit":false}
+{"type":"identityScope","navigableRows":63,"distinctItemIds":61,"crossSeriesCollision":{"itemId":"spravochnik","series":["dzhon-gill","hard-texts","russian-baptism"]},"globalItemIdUniquenessRequired":false}
+{"type":"productionInvariant","id":"composite-rendered-series-identity","targets":63,"pairMatches":63,"mismatches":0,"seriesMarker":"data-gbs2-series","pageMarker":"data-gill-v16","semanticKey":["seriesId","item.id"]}
+{"type":"correction","supersedes":"page-id-only identity wording in immediately preceding continuation","closureIdentity":"(seriesId,item.id)","arithmeticChanged":false}

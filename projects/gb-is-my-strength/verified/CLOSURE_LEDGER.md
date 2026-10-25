@@ -698,3 +698,8 @@ This entry records the governance change only. It does not claim that the reform
 - `defineSeriesConfig` accepts two IDs/pages sharing one real href, so existence alone cannot establish article identity.
 - Production baseline is clean: all 63 built href targets expose exactly one `data-gill-v16` matching expected `item.id`; 0 mismatches/multiple identities.
 - Closure checks href existence + uniqueness + rendered identity (marker may later be neutrally renamed). Folded; no arithmetic change.
+
+### Composite rendered identity correction
+
+- The 63 navigable rows contain 61 distinct local IDs: `spravochnik` validly occurs in Gill, Hard Texts and Baptists. Global item-ID uniqueness is therefore rejected.
+- All 63 targets match the composite rendered pair `data-gbs2-series=seriesId` + `data-gill-v16=item.id`; closure wording is corrected to `(seriesId,item.id)`. No arithmetic change.

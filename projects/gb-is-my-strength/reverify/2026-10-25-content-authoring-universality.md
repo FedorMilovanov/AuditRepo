@@ -554,8 +554,20 @@ Pastor config-only witness ломает оба отношения, но одно
 
 1. href существует;
 2. href уникален среди navigable items manifest;
-3. target document объявляет ожидаемый reader page identity (сейчас `data-gill-v16=item.id`).
+3. target document объявляет ожидаемый composite reader identity: `data-gbs2-series=seriesId` и `data-gill-v16=item.id`.
 
-Историческое имя marker не обязательно сохранять навсегда: его можно заменить нейтральным `data-series-page-id`, но semantic identity assertion должен остаться. Именно третья ступень ловит «два item ведут в одну чужую статью», даже когда route и fragments технически исправны.
+Исторические имена markers не обязательно сохранять навсегда: их можно заменить нейтральными `data-series-id`/`data-series-page-id`, но composite semantic identity assertion должен остаться. Именно третья ступень ловит «два item ведут в одну чужую статью», даже когда route и fragments технически исправны.
 
 Probe использовал временный bundle и Product не изменял.
+
+## 26. Уточнение — identity обязана быть composite
+
+Дополнительная collision-проверка показала, что 63 navigable rows имеют только 61 distinct `item.id`: `spravochnik` законно повторяется в `dzhon-gill`, `hard-texts` и `russian-baptism`. Поэтому одного page marker недостаточно для глобальной идентичности и blanket unique-item-id запрещён.
+
+Production уже рендерит подходящую пару markers. Для всех 63 targets проверено:
+
+- ровно один distinct `data-gbs2-series`, равный ожидаемому `seriesId`;
+- ровно один distinct `data-gill-v16`, равный ожидаемому `item.id`;
+- composite matches 63/63, mismatches 0.
+
+Closure формулировка исправлена на `(seriesId, item.id)`, а не только `item.id`. Это сохраняет законные одинаковые локальные ID между сериями и одновременно исключает переход в одноимённую страницу чужой серии.
