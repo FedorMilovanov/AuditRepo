@@ -2,7 +2,7 @@
 
 Дата: 2026-10-26  
 Product anchor: `80440f9ce4bdfca92769330ea79109625c868725`  
-Disposition: **3 новых direct defects + 1 improvement + 1 system lane; 2 действующих ряда расширены**  
+Disposition: **3 новых direct defects + 1 improvement + 2 system lanes; 2 действующих ряда расширены**
 Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 
 ## 1. Итог
@@ -17,9 +17,9 @@ Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 4. `/articles/sem-tipov-razlichenie-uchiteley/` показывает читателю literal `**` из-за незакрытой Markdown-разметки — новый `GBS-SEM-TIPOV-LITERAL-MARKDOWN-PREFIX`;
 5. `typograf:dry` на зелёном exit 0 сообщает шесть требующих перезаписи retained HTML, поэтому принимается `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`;
 6. словарь структурно исправен и в целом полезен, но шесть пар одного понятия заведены как разные canonical identities; это дробит английское/русское употребление и definitions — improvement `GBS-GLOSSARY-CONCEPT-IDENTITY-CONSOLIDATION`;
-7. открытый glossary tooltip работает мышью, touch и клавиатурой, не вылезает за viewport и имеет чистые performance/image/console controls; но reparent в `body` даёт Axe `region` на самом popup. Это расширяет существующий `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, а не создаёт дубль.
+7. targeted control `/baptisty-rossii/goneniya-i-sovest/` подтверждает штатную mouse/touch/keyboard geometry, но продолжение 95-route sweep нашло важное исключение: на desktop `/baptisty-rossii/` legacy `SiteUtils.makeTooltipController` и `article-tooltips.js` v20 одновременно владеют одним `.gterm`; hover оставляет popup с `top:auto!important` вне viewport. Принимается `SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY`. Независимый Axe `region` на body-reparented popup по-прежнему расширяет `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`.
 
-Арифметика после аудита: **55 = 30 direct defects + 5 improvements + 20 system lanes**.
+Арифметика после аудита и продолжения: **56 = 30 direct defects + 5 improvements + 21 system lanes**.
 
 ## 2. Объём и чистая база
 
@@ -206,6 +206,10 @@ Runtime использует `textContent` для brief, безопасный о
 
 Отдельный краткий glossary внутри Baptist Spravochnik не заменяет global dictionary. Его reader-facing определения в основном ясны, но сейчас соседствуют с внутренним research backlog и повреждёнными evidence cards.
 
+### 8.4 Продолжение coverage triage
+
+Naive normalized alias-vs-rendered-trigger comparison дал **166 unmarked route-term pairs на 58 routes / 55 canonical terms**, но это только candidate set. Ручная проверка наиболее рискованных specialist cases не превратила число 166 в дефект: в Gill III `free or well-meant offer` непосредственно предварён русским определением «всеобщее благожелательное предложение спасения»; в Gill II `pactum salutis` следует в том же абзаце за размеченным «вечным советом искупления» с полным tooltip; Gill Spravochnik сам содержит последующий читательский словарь с отдельной карточкой `Free or Well-Meant Offer`. Остальные broad hits включают исключённые runtime-контексты (таблицы, headings, references), формы склонения и широкие слова вроде «свидетельство». Поэтому массовое auto-mark требование отклонено; нужен контекстный route-by-route admission, а не арифметика regex.
+
 ## 9. Tooltip browser verification
 
 Проверен `/baptisty-rossii/goneniya-i-sovest/` в Chromium 143:
@@ -220,7 +224,9 @@ Runtime использует `textContent` для brief, безопасный о
 - console/request failures;
 - broken images.
 
-### 9.1 Положительные результаты
+### 9.1 Положительные результаты targeted control
+
+Следующая таблица относится именно к `/baptisty-rossii/goneniya-i-sovest/`; продолжение §14 запрещает экстраполировать её desktop mouse-результат на hub `/baptisty-rossii/`.
 
 | Проверка | Desktop | Mobile |
 |---|---:|---:|
@@ -253,7 +259,7 @@ Disposition: расширить `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, г
 - glossary contract гарантирует shape/alias uniqueness, но не concept identity;
 - `typograf:dry` печатает drift и возвращает success;
 - текущие Baptist visual/content guards не запрещают long `???` runs;
-- tooltip behavior tests проверяют interaction, но не landmark containment открытого reparented popup.
+- tooltip behavior tests проверяют isolated native owner, но не запрещают одновременную регистрацию legacy `SiteUtils.makeTooltipController` и `article-tooltips.js`; поэтому они пропускают hub-specific desktop hover conflict и landmark containment открытого reparented popup.
 
 ## 11. Матрица и приоритет
 
@@ -265,6 +271,7 @@ Disposition: расширить `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, г
 
 - `GBS-BAPTISTS-RESEARCH-SCAFFOLD-READER-LEAK`;
 - `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`;
+- `SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY`;
 - расширение `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT` на открытый glossary popup.
 
 ### P2
@@ -283,6 +290,7 @@ Disposition: расширить `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, г
 - literal `**` в browser text;
 - шесть exact typograf deltas;
 - шесть semantic duplicate pairs;
+- dual-owner desktop hover geometry failure на `/baptisty-rossii/`;
 - Axe landmark failure на открытом popup.
 
 Отклонено как defect без дополнительного контекста:
@@ -305,8 +313,24 @@ Disposition: расширить `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, г
 5. compiled prose has no accidental literal Markdown delimiters;
 6. strict typograf check exits non-zero on a negative fixture and cleanly on repaired corpus;
 7. glossary concept IDs/synonym redirects preserve all old aliases with one definition owner per declared concept;
-8. tooltip click/touch/Enter/Escape geometry at desktop/mobile Light/Dark/reduced motion;
-9. Axe `region` = 0 for opened glossary popup and existing injected-surface matrix;
-10. screenshots, console 0, broken images 0, LCP/CLS controls.
+8. tooltip click/touch/Enter/Escape geometry at desktop/mobile Light/Dark/reduced motion, включая hub `/baptisty-rossii/` и mouse hover;
+9. ровно один interaction owner на каждый `.gterm/.fn-marker/.bref`, negative fixture на попытку dual registration и отсутствие legacy переписывания inline priority/geometry;
+10. Axe `region` = 0 for opened glossary popup and existing injected-surface matrix;
+11. screenshots, console 0, broken images 0, LCP/CLS controls.
+
+## 14. Продолжение: desktop glossary popup уходит за viewport на Baptist hub
+
+После targeted positive control выполнен production-like Chromium census первого видимого glossary trigger на всех маршрутах, где такой trigger существует: **72 routes × desktop/mobile = 144 профиля**. Использованы trusted Playwright hover на desktop и tap на mobile; force/programmatic activation не применялись. В 143 профилях popup остался внутри viewport. Единственное отклонение воспроизводится на `/baptisty-rossii/` для термина `штундизм`.
+
+На desktop 1280×900 native hover устанавливает trigger `aria-expanded=true`, но сам `.gtip.gb-floating-tip.is-open` имеет viewport rect **[304, 6152.77, 380, 180.83]** и полностью невидим. У trigger rect [644.09, 437.98, 67, 26], то есть это не offscreen anchor. Inline runtime сначала записывает разумные `left/top`, однако legacy owner затем снимает priority: итоговый inline `top` имеет пустой priority, а общий `.gb-floating-tip { inset:auto!important }` побеждает его. CSS auto-position возвращает popup к его статическому месту на длинной странице.
+
+Причина подтверждена source/runtime composition:
+
+- `BaptistyRossiiBookLanding.astro` загружает legacy `js/site.js`;
+- `site.js` без owner arbitration регистрирует `SiteUtils.makeTooltipController('.gterm', '.gtip', …)` и пишет `style.left/style.top` обычными assignments;
+- общий `ReaderActionsRuntime` независимо регистрирует `article-tooltips.js` v20 на том же `.gterm`, переносит тот же popup в `body` и требует authoritative inline `!important` geometry;
+- mouse `pointerenter/pointerover` проходят через оба owners; legacy позиционер последним снимает priority. Keyboard focus control остаётся видимым: rect [488, 620, 380, 263.53], `top/left` priority `important`. Mobile tap control также остаётся внутри 390×844 как bottom sheet. Следовательно, это modality/owner collision, а не плохое определение или общий viewport failure.
+
+Это уточняет, а не отменяет §9: `/baptisty-rossii/goneniya-i-sovest/` остаётся корректным positive control, но прежняя формулировка о глобально здоровой mouse geometry была слишком широкой. Принимается одна system lane `SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY`, а не отдельный route defect: устранить нужно параллельное владение shared trigger family. Closure требует single-owner census, native hover/click/focus/tap на hub и representative generated/manual/keyless glossary, footnote/reference controls, desktop/mobile Light/Dark/reduced motion, viewport containment и отсутствие regression в focus/Escape/overlay contracts.
 
 Product mutation and merge remain outside this audit.
