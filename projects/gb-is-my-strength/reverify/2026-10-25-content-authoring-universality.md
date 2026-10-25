@@ -140,12 +140,12 @@ Teen family случайно ловит такую ошибку через media
 
 1. canonical manifest/scaffold или эквивалентный typed API для standalone, existing-series item, new flat series и book series;
 2. route-less `draft:true`/`noindex:true` остаётся разрешён; publishable MDX по-прежнему обязан пройти существующий provenance→route/profile/ownership contract;
-3. каждый navigable non-chapter series item разрешается в `pages[id]`, существующий route и article identity; chapters остаются разрешённым non-page типом;
-4. TS config и `data/series.json` имеют одного producer либо строгую двустороннюю equality projection;
+3. каждый navigable non-chapter series item разрешается в `pages[id]`, имеет unique href и достигает route с rendered identity `(seriesId,item.id)`; chapters остаются разрешённым non-page типом;
+4. TS config→`data/series.json` membership выводится из typed inclusion policy: identity/order/normalized time проверяются строго, title/ordinal имеют объявленного field owner, каждое исключение reviewable;
 5. все config modules импортируются через discoverable manifest; accidental duplicate `seriesId` запрещён, а approved base→public override объявляется отдельным typed operation;
-6. generated registries имеют один документированный transaction/dry-run command; editorial metadata review остаётся fail-closed и scaffold не выдаёт automatic approval;
+6. generated registries имеют один документированный transaction/dry-run command; editorial metadata review остаётся fail-closed, scaffold не выдаёт automatic approval, а финальный browser admission строит fresh dist либо отвергает stale provenance;
 7. существующие schema errors и строгий content provenance сохраняются; family wrappers не создают конкурирующий типовой contract;
-8. strict rendered fragment audit входит в documented gate, а cross-document series href проверяется на существующий route;
+8. strict rendered fragment audit входит в documented gate, а cross-document series href проверяется на route, uniqueness и composite rendered identity;
 9. guide описывает current shapes/owners, пять Nagornaya exceptions и минимальные happy paths без copy-by-memory;
 10. отрицательные fixtures обязаны убивать Pastor-style config-only item, missing route/profile/ownership, accidental duplicate ID, stale series projection и broken `partToc` target, одновременно пропуская explicit draft и typed Baptist composition;
 11. resulting-main dry runs создают standalone, existing-series item, новую flat series и book series, получают адресные ошибки и после удаления не оставляют artifacts.
