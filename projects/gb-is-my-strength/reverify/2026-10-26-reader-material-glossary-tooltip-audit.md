@@ -474,4 +474,23 @@ Chromium sweep 95 routes на 1023/1024/1100/1280/1440px показывает:
 
 Принимается `GBS-SERIES-READER-COMPACT-DESKTOP-CAPACITY-CONFLICT`. Это один shared layout defect с двумя route-policy manifestations, не 62 отдельных route rows. Intentional route art direction и разумный line-length ceiling сохраняются; исправляется именно capacity discontinuity и параллельное резервирование пространства.
 
+### 19.5 Отдельный контракт выбора ширины: `normal` и `wide` становятся алиасами
+
+Фокусный browser sweep добавил 1024/1280/1440/1599/1600/1920 × `narrow/normal/wide` на shared Hard Texts и Teen routes. На `/articles/chto-bibliya-nazyvaet-serdcem/` фактическая ширина длинного абзаца такова:
+
+| viewport | narrow | normal | wide |
+|---:|---:|---:|---:|
+| 1024 | 444.7px | 444.7px | 444.7px |
+| 1280 | 624px | 654.88px | 654.88px |
+| 1440 | 624px | 752px | 806.23px |
+| 1599 | 624px | 752px | 880px |
+| 1600 | 624px | 712px | 712px |
+| 1920 | 624px | 712px | 712px |
+
+Значения preferences сами по себе различны (`42rem/50rem/58rem`), но базовый desktop owner задаёт `--gb-measure:min(var(--gb-reader-measure),760px,calc(100vw - 48px))`. Поэтому при 1600px позднее снятие compact rule не расширяет layout: наоборот, `normal` сужается **752→712px**, `wide` — **880→712px**, а два разных подписанных выбора становятся визуально идентичными. На Teen route local shell 820px даёт тот же alias раньше: при 1280–1920 `normal=wide=772px`; при 1024 все три выбора дают 648.7px.
+
+Это не только computed-token observation. На 1600px trusted native clicks по «Узкая» → «Обычная» → «Шире» последовательно меняют `data-reader-measure` и persisted `gb:reader-preferences:v1`; shell получается 672→760→760px. Отдельно каждая persisted value была установлена до navigation и измерена после загрузки. UI принимает и сохраняет `wide`, но не даёт обещанного отличимого результата.
+
+Принимается отдельный `GBS-READER-MEASURE-DESKTOP-ALIAS-AND-BREAKPOINT-REGRESSION`: capacity conflict объясняет ограничение в тесном desktop, но не оправдывает no-op между двумя доступными пользовательскими командами на широком viewport и отрицательный скачок ровно на 1600px. Closure должна определить один документированный maximum comfortable measure и согласовать с ним подписи/число состояний: либо каждое состояние реально различимо во всём заявленном desktop range, либо недоступный вариант disabled/не предлагается с ясной причиной. Нельзя просто убрать `760px`: нужны типографически утверждённые пределы и monotonic adjacent-width contract, плюс native persistence/reload proof на обеих route policies.
+
 Product mutation and merge remain outside this audit.
