@@ -138,7 +138,7 @@ Teen family случайно ловит такую ошибку через media
 
 Нужен один проверяемый authoring contract, а не ещё один prose checklist:
 
-1. canonical manifest/scaffold или эквивалентный typed API для standalone, existing-series item, new flat series и book series;
+1. canonical manifest/scaffold или эквивалентный typed API для standalone, generic page, existing-series item, new flat series и book series; special/application остаётся declared adapter с отдельным owner contract;
 2. route-less `draft:true`/`noindex:true` остаётся разрешён; publishable MDX по-прежнему обязан пройти существующий provenance→route/profile/ownership contract;
 3. каждый navigable non-chapter series item разрешается в `pages[id]`, имеет unique href и достигает route с rendered identity `(seriesId,item.id)`; chapters остаются разрешённым non-page типом;
 4. TS config→`data/series.json` membership выводится из typed inclusion policy: identity/order/normalized time проверяются строго, title/ordinal имеют объявленного field owner, каждое исключение reviewable;
@@ -148,7 +148,7 @@ Teen family случайно ловит такую ошибку через media
 8. strict rendered fragment audit входит в documented gate, а cross-document series href проверяется на route, uniqueness и composite rendered identity;
 9. guide описывает current shapes/owners, пять Nagornaya exceptions и минимальные happy paths без copy-by-memory;
 10. отрицательные fixtures обязаны убивать Pastor-style config-only item, missing route/profile/ownership, accidental duplicate ID, stale series projection и broken `partToc` target, одновременно пропуская explicit draft и typed Baptist composition;
-11. resulting-main dry runs создают standalone, existing-series item, новую flat series и book series, получают адресные ошибки и после удаления не оставляют artifacts.
+11. resulting-main dry runs создают standalone, generic page, existing-series item, новую flat series и book series, получают адресные ошибки и после удаления не оставляют artifacts.
 
 Product в этом проходе не изменялся.
 
@@ -650,7 +650,7 @@ Effective output должен воспроизводить текущие шес
 
 Минимальная запись должна владеть либо ссылаться на:
 
-- publication kind: standalone / existing-series-item / new flat series / new book series;
+- publication kind: standalone / generic page / existing-series-item / new flat series / new book series / declared special adapter;
 - source content или explicit component-body owner;
 - canonical route, ownership record и route profile;
 - для series item — `(seriesId,item.id)`, href, page record и rendered identity;
@@ -708,3 +708,29 @@ Acceptance fixtures: dry-run zero diff; first write с ожидаемым file s
 Saturation result: все заявленные publication shapes имеют positive path (standalone, existing shared family baseline, new flat, new book), а safety boundary имеет decisive negatives для orphan content, config-only links, duplicate registry/href identity, undeclared projection и stale dist. Дальнейшие найденные проявления либо входят в тот же control plane, либо уже принадлежат отдельным существующим lanes (Pastor discovery, document navigation, Teen progress). Независимый новый root не найден.
 
 Оставшиеся неопределённости являются implementation/owner decisions, не пробелами аудита: конкретный API manifest/scaffold и review 19 текущих config-only projection rows. Product repair в этом проходе не начинался.
+
+## 33. Продолжение — generic page и special/application boundary
+
+Чтобы «other publication shapes» не оставались только census, выполнен positive dry run обычной indexable page через существующий `BaseLayout`.
+
+Транзакция раскрылась адресно по четырём authored owners:
+
+1. route `src/pages/arena-page-probe/index.astro` с `BaseLayout`, canonical и WebPage JSON-LD;
+2. `migration/page-ownership.json`;
+3. `data/route-profiles/arena-page-probe.json` с `surface:'page'`;
+4. canonical sitemap entry.
+
+Результаты по стадиям:
+
+- route-only `astro:build`: exit 0, 105 Astro pages, target built; `page-ownership:check` точно упал на undeclared source;
+- route + ownership: ownership PASS, `migration:metadata:check:strict` и `audit-pro` точно упали на missing route profile;
+- + profile: metadata strict/surface registry PASS, `audit-pro` точно упал на missing canonical indexable sitemap route;
+- + sitemap: production-like build exit 0, итоговый artifact 109 HTML pages; полный `validate:static-publication` exit 0.
+
+Таким образом, обычная page shape имеет рабочий и в основном fail-closed путь лучше standalone article: четыре owners, без отдельного PageHead и editorial article registry. Но актуального page scaffold/decision guide всё ещё нет; агент должен угадать `BaseLayout` precedent и порядок owners.
+
+Первый запуск full static поверх plain Astro dist дал нерелевантный Gill parity red; после обязательного `strangler:build:production-like` тот же gate прошёл. Это ещё один пример важности единого production-like command, а не Product defect.
+
+`special` census трактуется отдельно: 15 routes — application/map/confession/genealogy owners, включая built-app boundary, а не взаимозаменяемые editorial pages. Универсальный page scaffold не должен притворяться генератором applications. Manifest обязан позволить declared `special/application` adapter с отдельным owner contract и отказать при попытке создать его как generic page без family-specific plan.
+
+Fixture удалён; Product tracked source чист. Результат расширяет тот же authoring root и arithmetic не меняет.

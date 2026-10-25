@@ -735,3 +735,9 @@ This entry records the governance change only. It does not claim that the reform
 
 - Product main remains exact anchor `015573af…`; open #2193/#2179/#2164/#2143 do not own the publication control plane. AuditRepo exact-head `76d9551` checks passed.
 - Positive shape matrix and decisive safety negatives are complete. Remaining choices are implementation API plus owner classification of 19 config-only projection rows; no new independent root or Product repair. Arithmetic unchanged.
+
+### Generic page / special-application continuation
+
+- A new indexable `BaseLayout` page passes production-like build and full static validation after four explicit owners: route, page ownership, route profile and sitemap. Staged checks fail precisely on each missing owner; no separate PageHead/editorial article record is required.
+- Plain-Astro-dist full-static Gill parity red disappears after the required production-like build and is not a defect. The 15 special/application routes remain declared family adapters, not candidates for a generic page scaffold.
+- Folded into the authoring contract; no new row/arithmetic change.
