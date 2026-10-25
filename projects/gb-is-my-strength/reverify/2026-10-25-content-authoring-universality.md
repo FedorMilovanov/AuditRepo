@@ -188,3 +188,33 @@ Product в этом проходе не изменялся.
 Следовательно, название `route:profiles:check --strict` само по себе не означает completeness всех owned routes. Полная metadata chain ловит разрыв через другой validator, но first-time agent вынужден открывать владельцев по одному, реагируя на последовательные ошибки, вместо получения scaffold или единого transaction diagnostic.
 
 Все fixture-файлы и временная ownership entry удалены; Product source вновь чист. Эта проверка **не меняет арифметику** и усиливает уже принятую строку `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`, а не создаёт новую.
+
+## 10. Продолжение — new-series executable-validation boundary
+
+Проверен обещанный guide контракт: «`defineSeriesConfig` валидирует каждый конфиг на каждой сборке». Он верен только для **достижимого import graph**.
+
+Создан временный type-correct `arenaOrphanSeriesConfig.ts`, который:
+
+- вызывает `defineSeriesConfig`;
+- регистрируется в `SERIES_CONFIGS` тем же side-effect pattern, что текущие families;
+- намеренно содержит runtime-invalid `items: []`;
+- не импортируется ни одним route/consumer.
+
+Результат orphan состояния:
+
+- `npx astro check` — exit 0, 0 errors;
+- `engine:contracts` — exit 0, включая «Series configs: all declared through defineSeriesConfig()»;
+- `audit-pro` — exit 0, 168 passed / 0 errors.
+
+Затем тот же конфиг был импортирован временным route. `astro:build` корректно вышел 1 с хорошей адресной русской ошибкой:
+
+`[series-engine] Конфиг серии «arena-orphan-series» невалиден: items пуст — серия без частей`
+
+Это отделяет две вещи:
+
+1. качество самого runtime validator — **хорошее**;
+2. полнота discovery/admission новых config modules — **fail-open**.
+
+Статический engine guard проверяет наличие текста `defineSeriesConfig(`, но не исполняет и не импортирует найденный модуль. `SERIES_CONFIGS` не является центральным статическим manifest: current family modules сами мутируют его при import, а `seriesConfig(seriesId)` не имеет production consumers. Для Baptist book даже предусмотрена намеренная замена сначала flat, затем book entry, то есть registry result зависит от import order по design.
+
+Следовательно, безопасный scaffold должен не только написать config, но и сделать его достижимым через явный manifest/consumer и выполнить validation. Flat/book topology остаётся общей и сильной после import; отдельный book-engine defect не принимается. Эта проверка не меняет арифметику и входит в тот же `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`.

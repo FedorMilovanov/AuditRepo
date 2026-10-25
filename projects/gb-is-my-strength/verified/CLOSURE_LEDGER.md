@@ -601,3 +601,9 @@ This entry records the governance change only. It does not claim that the reform
 - Generic `getCollection + ArticleLayout` fixture built and passed MDX strict, profile strict, source strict and audit-pro while unregistered; source-only `page-ownership:check` correctly failed with exactly one undeclared-route diagnostic.
 - After adding ownership without a profile, `route:profiles:check --strict` still passed and `surface:registry:check` supplied the missing-surface errors. Thus the complete chain has protection, but the workflow is staged rather than atomic and the series guide omits the decisive ownership/surface admission path.
 - No new work unit: evidence strengthens `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; arithmetic remains **50 = 27 + 4 + 19**. Fixtures were removed and Product source is clean.
+
+### New-series executable-validation continuation
+
+- A deliberately invalid but type-correct orphan `*SeriesConfig.ts` (`items:[]`, `defineSeriesConfig`, side-effect registry write) passed Astro check, engine contracts and audit-pro because no consumer imported it.
+- Importing the same module from a temporary route made Astro build fail with the correct addressable Russian `items пуст` diagnostic. Runtime topology validation is strong; config discovery/admission is the missing layer.
+- No separate book-engine defect and no arithmetic change: the result strengthens `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`. All fixtures were removed; Product source is clean.
