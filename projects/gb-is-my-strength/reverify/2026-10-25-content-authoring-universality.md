@@ -66,7 +66,7 @@ Evidence: `evidence/2026-10-25-content-authoring-universality.jsonl`
 - `ArticleLayout.astro` фактически используется одним Lawson route;
 - `SeriesArticleLayout.astro` не используется страницами, хотя guards продолжают защищать его как abstraction;
 - `SERIES_CONFIGS` наполняется imports с побочным эффектом, поэтому это не самодостаточный discoverable registry всех серий;
-- `data/series.json` вручную дублирует title/order/minutes из TS configs; guide одновременно требует обновлять обе поверхности и называет config «одним источником».
+- `data/series.json` вручную повторяет часть route/order/minutes из TS configs, но inclusion и title policy различаются по family; guide требует обновлять обе поверхности и одновременно называет config «одним источником».
 
 Оценка универсальности authoring API: **2/5**. Оценка удобства первого безопасного изменения: **2/5**. Это оценка по воспроизводимому числу owners и fail-open probes, а не по вкусу к file count.
 
@@ -680,3 +680,19 @@ Positive baseline: explicit drafts; standalone four-owner transaction; new flat/
 Negative baseline: publishable orphan MDX; Pastor config-only item; duplicate series ID без compose; duplicate item href; missing route/profile/ownership; stale/необъявленная data projection; broken same- и cross-document target; stale dist; scaffold/editorial write, пытающийся auto-approve.
 
 Такой control plane закрывает root без engine fork, массового route rewrite или визуальной унификации landings.
+
+## 31. Transaction safety — idempotence и failure semantics
+
+Standalone probe показал, что успешный editorial `--write --build` обновляет не один файл, а центральный registry и пять supplement projections. Такой fan-out допустим как generated output, но единый authoring command должен отличать его от authored owners и не оставлять полутранзакцию.
+
+Минимальные executable guarantees для scaffold/admission:
+
+- `plan` не меняет filesystem и печатает полный authored/generated write set;
+- write отказывается перезаписывать существующий authored owner без explicit adopt/migrate operation;
+- generated fan-out вычисляется до записи и применяется только после успешного preflight;
+- ошибка любой последующей фазы возвращает адресный failure и не выдаёт publication success;
+- повторный запуск после success даёт zero semantic diff;
+- editorial pending/approved state не сбрасывается и не повышается побочным write;
+- interrupted/failed run оставляет либо прежний committed state, либо явно перечисленный recoverable generated diff — никогда скрытый partial approval.
+
+Acceptance fixtures: dry-run zero diff; first write с ожидаемым file set; second write idempotent; collision/refusal без overwrite; injected failure между projection phases; сохранение существующего approved decision и pending новой записи. Это уточнение существующего authoring root, а не отдельная workflow lane.

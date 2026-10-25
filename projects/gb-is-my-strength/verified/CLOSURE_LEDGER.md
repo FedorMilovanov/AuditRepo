@@ -725,3 +725,8 @@ This entry records the governance change only. It does not claim that the reform
 - Use a pure typed publication manifest: unique register plus explicit reviewed compose for Baptist; records connect source/body, route, ownership/profile, series composite identity, declared data projection and discovery strategy while preserving existing routes/layouts/visuals.
 - One plan→scaffold→clean build/copy→project/check→editorial-pending→fresh-dist browser transaction owns admission. Positive and negative fixtures are enumerated in report §30.
 - This is the implementation boundary of the existing authoring root, not a new unit; arithmetic unchanged.
+
+### Authoring transaction failure semantics
+
+- Existing editorial write legitimately fans out to one central registry plus five supplements. Unified admission must preflight the complete write set, refuse authored overwrite, preserve review state and be idempotent.
+- Closure fixtures now include dry-run zero diff, second-run zero semantic diff, owner collision and injected mid-projection failure without false publication success. Folded; arithmetic unchanged.
