@@ -682,3 +682,8 @@ This entry records the governance change only. It does not claim that the reform
 
 - Directly importing the public registry exposes only `dzhon-gill`; five other valid lookup IDs throw `Unknown series config` until their family modules are imported for side effects.
 - Explicitly importing all families yields six IDs and the intended Baptist book override. Closure therefore requires a typed manifest that owns membership and approved replacement order. Folded into authoring contract; no arithmetic change.
+
+### Reverse item→page invariant feasibility
+
+- Across six effective configs: 71 items = 63 navigable + 8 book chapter headers; all 63 navigable items have exactly corresponding page records, with zero exceptions.
+- Therefore `non-chapter item ⇒ pages[item.id]` can be enforced without migration/allowlist and blocks the Pastor witness. Route/article identity remains a separate check. Folded; no arithmetic change.

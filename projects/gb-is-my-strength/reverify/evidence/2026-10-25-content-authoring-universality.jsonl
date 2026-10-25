@@ -56,3 +56,5 @@
 {"type":"registryImportProbe","mode":"registry-module-only","keys":["dzhon-gill"],"successfulLookups":["dzhon-gill"],"failedLookups":["pastor-series","genesis-6","hard-texts","teen-double-life","russian-baptism"],"error":"Unknown series config"}
 {"type":"registryImportProbe","mode":"explicit-all-family-imports","keys":["dzhon-gill","pastor-series","genesis-6","hard-texts","teen-double-life","russian-baptism"],"uniqueIds":6,"russianBaptismShape":"book"}
 {"type":"registryConclusion","autonomousManifest":false,"membershipDependsOnImportGraph":true,"approvedOverrideOrderEncoded":false,"productionConsumers":0,"newWorkUnit":false}
+{"type":"productionInvariant","id":"navigable-item-has-page","series":6,"items":71,"chapterHeaders":8,"navigableItems":63,"pageRecords":63,"missingPages":0,"rule":"item.tier !== chapter implies pages[item.id]"}
+{"type":"closureFeasibility","reverseItemPageValidatorNeedsMigration":false,"allowlistNeeded":false,"blocksPastorConfigOnlyWitness":true,"routeIdentityStillSeparate":true,"newWorkUnit":false}

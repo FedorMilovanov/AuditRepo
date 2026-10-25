@@ -506,3 +506,20 @@ Fixture удалён, Product source чист; новой строки и изм
 - typed manifest должен явно импортировать configs и кодировать approved override order, после чего contracts должны проверять expected membership.
 
 Probe был собран во временный `/tmp` bundle через уже установленный esbuild; Product не изменён.
+
+## 23. Продолжение — feasibility обратного item→page invariant
+
+Чтобы closure не требовала несовместимый с production invariant, все шесть effective configs загружены через explicit-import probe и пересчитаны по одинаковому правилу: navigable = каждый item, кроме `tier:'chapter'`; для него обязан существовать `pages[item.id]`.
+
+| Series | Shape | Items | Navigable | Pages | Missing page |
+|---|---:|---:|---:|---:|---:|
+| `dzhon-gill` | flat | 6 | 6 | 6 | 0 |
+| `pastor-series` | flat | 10 | 10 | 10 | 0 |
+| `genesis-6` | flat | 6 | 6 | 6 | 0 |
+| `hard-texts` | book | 28 | 24 | 24 | 0 |
+| `teen-double-life` | flat | 7 | 7 | 7 | 0 |
+| `russian-baptism` | book | 14 | 10 | 10 | 0 |
+
+Итого: 71 items, 63 navigable items, 63 page records, ноль production exceptions. В book configs разница ровно соответствует восьми chapter headers, для которых отсутствие page уже является заявленным контрактом.
+
+Значит, узкий reverse validator не требует миграции данных или allowlist: `item.tier !== 'chapter' ⇒ cfg.pages[item.id]` уже соблюдается всеми текущими сериями и непосредственно блокирует Pastor config-only witness. Проверка route/article identity остаётся отдельной, потому что наличие object в `pages` само по себе ещё не доказывает существование route.
