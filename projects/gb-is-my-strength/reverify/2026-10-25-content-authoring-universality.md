@@ -539,3 +539,23 @@ Probe был собран во временный `/tmp` bundle через уж�
 2. `item.href → route/build target` проверяет навигационную достижимость.
 
 Pastor config-only witness ломает оба отношения, но одного item→page check недостаточно как общего route contract: object можно добавить без Astro route. Closure поэтому сохраняет оба независимых assertions и positive production fixtures 63/63.
+
+## 25. Продолжение — route existence недостаточно: item→rendered identity
+
+Проверен следующий ложноположительный сценарий. Через `defineSeriesConfig` создан валидный Pastor-derived config, где новый unique item и новый `pages[id]` повторяют href первой статьи. Валидатор принял config: 11 items, 11 pages; один href принадлежит сразу двум IDs (`antisovetov`, `arena-duplicate-href-item`). Простая href-existence проверка тоже сочла бы обе записи валидными, потому что target реально существует.
+
+Для определения проверяемого identity contract все 63 production href сопоставлены с фактически собранным root marker `data-gill-v16`:
+
+- 63/63 documents содержат marker, равный своему `item.id`;
+- mismatches = 0;
+- documents с несколькими distinct reader identities = 0.
+
+Следовательно, безопасный cross-document assertion имеет три ступени:
+
+1. href существует;
+2. href уникален среди navigable items manifest;
+3. target document объявляет ожидаемый reader page identity (сейчас `data-gill-v16=item.id`).
+
+Историческое имя marker не обязательно сохранять навсегда: его можно заменить нейтральным `data-series-page-id`, но semantic identity assertion должен остаться. Именно третья ступень ловит «два item ведут в одну чужую статью», даже когда route и fragments технически исправны.
+
+Probe использовал временный bundle и Product не изменял.

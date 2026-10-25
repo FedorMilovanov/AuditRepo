@@ -692,3 +692,9 @@ This entry records the governance change only. It does not claim that the reform
 
 - All 63 effective non-chapter items have unique hrefs resolving to 63 source `index.astro` routes and 63 built `index.html` documents; missing=0.
 - Item→page and href→route remain independent assertions. Both can be enforced with positive 63/63 production fixtures and no allowlist. Folded; no arithmetic change.
+
+### Item→rendered route identity continuation
+
+- `defineSeriesConfig` accepts two IDs/pages sharing one real href, so existence alone cannot establish article identity.
+- Production baseline is clean: all 63 built href targets expose exactly one `data-gill-v16` matching expected `item.id`; 0 mismatches/multiple identities.
+- Closure checks href existence + uniqueness + rendered identity (marker may later be neutrally renamed). Folded; no arithmetic change.

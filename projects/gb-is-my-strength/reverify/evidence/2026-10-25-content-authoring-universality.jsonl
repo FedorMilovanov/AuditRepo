@@ -60,3 +60,6 @@
 {"type":"closureFeasibility","reverseItemPageValidatorNeedsMigration":false,"allowlistNeeded":false,"blocksPastorConfigOnlyWitness":true,"routeIdentityStillSeparate":true,"newWorkUnit":false}
 {"type":"productionInvariant","id":"series-item-href-resolves","navigableItems":63,"uniqueHrefs":63,"sourceRoutesPresent":63,"builtDocumentsPresent":63,"missing":0,"allowlistNeeded":false}
 {"type":"closureFeasibility","itemPageAssertion":"63/63 pass","hrefRouteAssertion":"63/63 pass","independentAssertionsRequired":true,"reason":"page metadata object does not prove Astro route","newWorkUnit":false}
+{"type":"negativeProbe","id":"duplicate-series-item-href","defineSeriesConfigAccepted":true,"items":11,"pages":11,"duplicateHref":"/articles/20-antisovetov-pastoru/","itemIds":["antisovetov","arena-duplicate-href-item"],"routeExists":true}
+{"type":"productionInvariant","id":"href-target-reader-identity","navigableItems":63,"builtTargets":63,"matchingDataGillV16":63,"mismatches":0,"multipleDistinctIdentities":0}
+{"type":"closureRefinement","crossDocumentAssertions":["href exists","href unique","target reader identity equals item.id"],"neutralFutureMarker":"data-series-page-id","newWorkUnit":false}
