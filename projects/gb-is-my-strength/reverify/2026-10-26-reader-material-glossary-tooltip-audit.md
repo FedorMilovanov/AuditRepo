@@ -22,7 +22,7 @@ Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 9. `/articles/diotrefy-nashego-vremeni/` публикует грамматически невозможное «Все двадцать один материала различаются» — новый `GBS-DIOTROPHES-NUMERAL-AGREEMENT`. На том же маршруте 21/21 evidence cards показывают только unlinked `Записи Research: DRI-01…`; это расширяет существующий reader-source-locators row, а не создаёт второй technical-leak count;
 10. локальная font matrix не покрывает реально набираемые scripts/weights: у Playfair Display нет Latin faces, у Inter нет Latin и weight 700, у Source Sans 3 Latin есть только в weight 400. CDP показывает один заголовок/label, составленный из custom Cyrillic и platform fallback для цифр, Latin/Roman и punctuation; новый `GBS-CUSTOM-FONT-MATRIX-MIXED-FAMILY-RENDERING`;
 11. `КОРОТКО` как настоящий `h2` системно набрано 9px/9.9px на 24 routes и 10px/13px ещё на 15 routes, одинаково на desktop/mobile. Это не WCAG-failure по одному размеру, но доказуемо слабая и несогласованная читательская иерархия; improvement `GBS-SUMMARY-MICROHEADING-READABILITY`;
-12. shared series reader на точном desktop breakpoint 1024px включает фиксированный rail и одновременно вычитает ещё 204px под отдельный control corridor: reader shell падает 800→492.7px, prose 752→444.7px. Переход затрагивает 55 routes пяти series families; новый `GBS-SERIES-READER-COMPACT-DESKTOP-MEASURE-COLLAPSE`.
+12. shared series reader на точном desktop breakpoint 1024px включает fixed rail и независимый floating-control lane. На 55 routes вычитаются ещё 204px и reader shell падает 800→492.7px; семь Teen routes обходят вычитание локальным override, но тогда все пять fixed controls перекрывают прокручиваемый prose. Один capacity conflict охватывает 62 routes шести families; новый `GBS-SERIES-READER-COMPACT-DESKTOP-CAPACITY-CONFLICT`.
 
 Арифметика после desktop-measure продолжения: **61 = 34 direct defects + 6 improvements + 21 system lanes**.
 
@@ -451,6 +451,8 @@ Chromium sweep 95 routes на 1023/1024/1100/1280/1440px показывает:
 
 Эти дополнительные **204px** — статический corridor под отдельный floating speed/control owner. При 1024px rail занимает x=24.56…296.56, reader shell x=327.28…819.98, а control strip x=824.39…891.97. Получается визуальная «полоска» не потому, что редактор выбрал узкую книжную колонку, а потому, что три независимых владельца — rail, prose и controls — делят недостаточную ширину после жёсткого breakpoint.
 
+Семь Teen routes подтверждают противоположную сторону того же конфликта. `TeenSeriesArticlePage.astro` содержит route-local 64rem override `width:min(820px,calc(100% - var(--gb-rail-reserve)))`, который обходит общий `-204px`: paragraph при 1024 остаётся 648.7px. Но reader заканчивается на x=999.98, а пять fixed controls стоят на x=896.97…936.97. После обычной прокрутки все пять физически пересекают painted paragraphs: theme area 1315px², search 1325px², TTS 463px², favourite и up по 1600px². Screenshot SHA-256 `10172d919cd3786a555aa48a60e19c72a6bed9e0c586825e35ef8b47943692f2` показывает иконки прямо поверх букв. Значит, local override не является healthy control: 55 routes выбирают чрезмерно узкий текст, семь — широкий текст под controls. Это один missing capacity owner, а не две вкусовые претензии.
+
 ### 19.3 Browser и A/B proof
 
 Проверены 1023/1024 × Light/Dark, reduced motion. Current 1024: shell 492.7px, representative paragraph 417.7px, horizontal overflow 0; Axe 0, broken images 0. Скриншот light SHA-256: `deded1757f95046ff10760a6e4b72fcd96d8ba95f75ebf39dd083607b306c61c8`.
@@ -468,8 +470,8 @@ Chromium sweep 95 routes на 1023/1024/1100/1280/1440px показывает:
 3. качественный простой вариант — оставить tablet/mobile chrome до capacity breakpoint около 1360px, если внешний 204px control lane сохраняется;
 4. более цельный вариант — встроить Play/search/settings/speed в rail, убрать отдельный control corridor и включать rail примерно от 1200px; при 1024–1199 использовать существующий drawer/bottom chrome;
 5. preference `narrow/normal/wide` должна задавать реальную reader measure, а не молча проигрывать техническому corridor;
-6. permanent sweep: 900/1023/1024/1100/1200/1280/1366/1440/1600, все пять series families, Light/Dark, normal/narrow/wide, rail/controls open and closed; assertions — отсутствие отрицательного width jump, overlap/overflow, clipped headings/cards и сохранение native control actions.
+6. permanent sweep: 900/1023/1024/1100/1200/1280/1366/1440/1600, все шесть series families, Light/Dark, normal/narrow/wide, rail/controls open and closed; assertions — отсутствие отрицательного width jump, overlap/overflow, clipped headings/cards и сохранение native control actions.
 
-Принимается `GBS-SERIES-READER-COMPACT-DESKTOP-MEASURE-COLLAPSE`. Это один shared layout defect, не 55 отдельных route rows. Intentional route art direction и разумный line-length ceiling сохраняются; исправляется именно capacity discontinuity и параллельное резервирование пространства.
+Принимается `GBS-SERIES-READER-COMPACT-DESKTOP-CAPACITY-CONFLICT`. Это один shared layout defect с двумя route-policy manifestations, не 62 отдельных route rows. Intentional route art direction и разумный line-length ceiling сохраняются; исправляется именно capacity discontinuity и параллельное резервирование пространства.
 
 Product mutation and merge remain outside this audit.
