@@ -739,12 +739,12 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 
 ## 2026-10-24 — owner-reopened current-main audit, checkpoint 8
 
-- Scope: focused owner-reported essay navigation on dependency-only resulting Product `main@76da7d6372931f34d269581f374e87bd15406cfb`, Chromium 153.
+- Scope correction 2026-10-25: this checkpoint is an independent TLP essay-navigation verification on Product `main@76da7d6372931f34d269581f374e87bd15406cfb`, Chromium 153. The owner's concrete Roman/Arabic menu, stale-document and bottom next-part report belongs to GBS / «ГОСПОДЬ БОГ СИЛА МОЯ», not TLP.
 - Current-main baseline: `npm ci`, zero-advisory immutable audit, contracts, full check, build, prerender, output/SEO and image-integrity gates pass. Product #522 changed only package/lock state; the audit agent did not mutate or merge Product.
 - Exhaustive TOC activation: 106/106 desktop links were attempted with native input; 65 landed correctly, 23 changed hash but settled above the viewport, and 18 late sticky-rail links were not pointer-actionable. These broaden `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME` and `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`; no duplicate root was admitted.
-- Reported Yesenin II reproduction: section 03 failed 12/12 fresh normal-motion trials at y≈−85 while section-02 prose remained visible; section 02 failed 1/12 at y≈−79. Three desktop viewport sizes fail; reduced-motion sections 01–03 settle near y=96.
+- Independent TLP Yesenin II reproduction: section 03 failed 12/12 fresh normal-motion trials at y≈−85 while section-02 prose remained visible; section 02 failed 1/12 at y≈−79. Three desktop viewport sizes fail; reduced-motion sections 01–03 settle near y=96.
 - Series control: explicit bottom previous/next anchors passed 24/24 desktop/mobile pointer/keyboard activations under normal/reduced motion. They sit after narrative content but before sources/community, not at the literal page bottom.
-- Circle classification: current Product contains no timed series auto-advance. The apparent ring is `CustomCursor` hover decoration with no timer, progress completion or navigation callback; adding countdown navigation is a separate product decision.
+- TLP-only circle classification: TLP contains no timed series auto-advance and its apparent ring is `CustomCursor` hover decoration. This does not classify GBS, whose separate read/series progress UI and cross-document defect are recorded in the GBS project.
 - Quality control: eight series-page loads produced zero Axe A/AA violations, zero page exceptions, zero local broken images, LCP 212–332 ms and CLS 0–0.0011. Three Wikimedia request failures are external sandbox delivery evidence.
 - False-green boundary: existing QA activates only the first TOC item under reduced motion and checks series visibility/focus/`href` without native destination identity, so it misses the normal-motion drift and transition outcomes.
 - Dependency row: #522 merged and local resulting-main proof is green, but `TLP-DEPENDENCY-ADVISORY-RESIDUAL` remains active until Manual Browser QA and Hall offline exhibit are terminal green on resulting main; overlapping #514 must not merge.

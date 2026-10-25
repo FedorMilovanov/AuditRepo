@@ -35,6 +35,21 @@ Do not copy every workflow run, later blob SHA or unrelated current HEAD into th
 
 ---
 
+## 2026-10-25 — current-main series navigation document-identity admission
+
+- Scope: owner-corrected Roman/Arabic series navigation, mobile part/book overlay, bottom previous/next controls and nearby circular progress UI on Product `main@948ecff03189613180cce73731ce072ccc2ae3ed`.
+- Result:
+  - admitted: `SYS-READER-DOCUMENT-NAVIGATION-INTERCEPTION` as one shared lifecycle root; MASTER arithmetic becomes 26 defects + 4 improvements + 18 system lanes = **48**;
+  - native matrix: all 63 published SeriesReader routes, **772 activations**, pointer/touch/Enter across desktop rail, mobile overlay and bottom neighbours; **0/772 passed**, every activation changed URL/history but retained source H1/body and sent zero target document requests;
+  - root: `reader-tts-lifecycle.js` intercepts cross-document Navigation API events only to retire TTS, thereby commits same-document URL state without destination rendering;
+  - false-green: dedicated TTS lifecycle browser contract passes because source/destination fixture HTML is identical and it checks navigation/retirement but not destination identity; series guards validate markup/data/fragments, not native document replacement;
+  - classification: desktop/mobile circles are scroll/series progress indicators, stable without scroll, not timed auto-advance owners; bottom neighbour anchors do exist and share the lifecycle failure;
+  - boundary: TLP remains a separate audit; its valid fragment/sticky findings do not own this GBS report.
+- Product evidence: no Product mutation. Open #2192 overlaps Gill markup but not lifecycle root; #2179 owns broad Actions changes; #2164/#2143 are content/data.
+- Regression witness: not yet repaired; closure requires distinct destination H1/body, target request/commit, history and native rail/overlay/bottom input evidence while retaining TTS retirement/reconnect.
+- Live evidence: production target identified; runtime proof is exact-SHA production-like local Chromium because sandbox production delivery is not used as defect evidence.
+- Detailed evidence: `../reverify/2026-10-25-series-navigation-document-identity.md` and compact JSONL beside it.
+
 ## 2026-08-06 — AuditRepo operating-model reform initiated
 
 - Scope: AuditRepo governance and documentation.

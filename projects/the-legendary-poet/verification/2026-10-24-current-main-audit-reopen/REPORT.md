@@ -175,20 +175,22 @@ A third edge is URL ownership. `PoemQuickNav` renders real `href="#poem-…"` li
 
 Closure needs one idempotent fragment owner that works when the hash is unchanged, preserves URL/history identity and revalidates settled target geometry without globally disabling intentional motion. Browser guards must cover fresh and SPA section/citation/poem links, repeated activation, copy/back/forward, keyboard and normal/reduced motion.
 
-### Owner-reported essay menu and series-navigation reproduction
+### Independent TLP essay-menu and series-navigation verification
 
-The owner reported that selecting numbered items such as 02/03 in the left essay menu appears to leave the reader in the previous part. On current `main@76da7d6…`, Chromium 153 executed a native pointer activation for **all 106 desktop TOC links across all ten essays**, each from a fresh route load. Only 65 landed with the requested heading visible. The 41 failures split cleanly between existing systemic owners:
+> **Scope correction (2026-10-25):** the owner's concrete Roman/Arabic-numbered menu, stale previous document and bottom next-part report belongs to `FedorMilovanov/gb-is-my-strength` / «ГОСПОДЬ БОГ СИЛА МОЯ», not TheLegendaryPoet. This TLP section is retained only as independently valid evidence about TLP's own 02/03 fragment geometry, sticky menus and two-part cards; it does not reproduce, classify or resolve the owner's GBS report.
+
+As an independent TLP audit, Chromium 153 executed a native pointer activation for **all 106 desktop TOC links across all ten essays** on current `main@76da7d6…`, each from a fresh route load. Only 65 landed with the requested heading visible. The 41 TLP-local failures split cleanly between existing systemic owners:
 
 - **23 links changed the hash and scrolled, but the target settled above the viewport** (−61 to −782 px). This is `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`, not a dead link.
 - **18 later links could not be pointer-activated at all** because the oversized sticky menu could not scroll its own item into the viewport. This is `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`.
 
-The reported Yesenin Part II case is direct. In twelve independent 1440×900 normal-motion trials, section 03 failed **12/12**, settling mostly at y=−85 (once −243), so the viewport continued to show the final paragraph of section 02. Section 02 failed 1/12 at y=−79. At 1280×800, 1440×900 and 1920×1080 the section-03 target remained y≈−85 after eight seconds. The reduced-motion control placed sections 01/02/03 at y≈96 and remained stable. This proves a layout-settling race rather than slow scrolling, a missing target or a user-input problem.
+The independently selected TLP Yesenin Part II case is direct. In twelve independent 1440×900 normal-motion trials, section 03 failed **12/12**, settling mostly at y=−85 (once −243), so the viewport continued to show the final paragraph of section 02. Section 02 failed 1/12 at y=−79. At 1280×800, 1440×900 and 1920×1080 the section-03 target remained y≈−85 after eight seconds. The reduced-motion control placed sections 01/02/03 at y≈96 and remained stable. This proves a layout-settling race rather than slow scrolling, a missing target or a user-input problem.
 
 Current QA explains the false green: `theme-contrast.spec.mjs` fixes `reducedMotion: 'reduce'`, clicks only the **first** TOC link, and checks only one series link's focus, `href` and contrast—not route activation. It cannot detect normal-motion 02/03 drift, late sticky items or a broken series transition.
 
 The explicit bottom series transition itself is present after the narrative and before the source library. All four current series pages (Yesenin I↔II and Mayakovsky I↔II) navigated successfully by pointer and keyboard: 8/8 desktop normal-motion activations plus 16/16 mobile normal/reduced activations. Screenshots confirm the rendered «Следующая часть» card. It is not at the literal document bottom because sources and community follow it.
 
-There is **no timed auto-advance contract** in current Product: the series block contains one ordinary link, zero buttons, zero circles and zero progress elements; source contains no series countdown or timer-driven navigation. The cyan circular effect seen while hovering is the decorative `CustomCursor` ring, which only spring-scales on interactive hover and never fills or activates a link. Therefore “the ring completed but did not advance” is an affordance misunderstanding, not a failed timer. If timed auto-advance is desired, that is a new product/UX decision and must include pause/cancel/reduced-motion/accessibility semantics rather than being smuggled in as a bug fix.
+Within **TLP only**, there is no timed auto-advance contract: its series block contains one ordinary link, zero buttons, zero circles and zero progress elements; its source contains no series countdown or timer-driven navigation. TLP's cyan hover ring is the decorative `CustomCursor`. This TLP-local negative finding must not be used to classify the owner's GBS circular progress report: GBS has separate read/series progress indicators and a newly reproduced cross-document navigation defect.
 
 Fresh desktop/mobile quality controls on all four series routes found zero Axe WCAG A/AA violations, zero local broken images and zero page errors; LCP was 212–332 ms and CLS 0–0.0011 in the local production-like environment. Three Wikimedia request failures were sandbox egress and are not Product defects.
 
@@ -319,9 +321,9 @@ MASTER now contains **13 active units = 1 P1 + 11 P2 + 1 P3** after terminal dep
 
 ### СДЕЛАНО
 
-- Нативно активированы все 106 пунктов левого оглавления десяти эссе и все текущие переходы между частями серии.
-- Жалоба «нажал 02/03, остался текст предыдущего раздела» воспроизведена и сведена к уже открытому системному владельцу fragment runtime; отдельный дубликат не создан.
-- Проверены исходники нижней навигации и визуального кольца, выявлен false-green в browser QA.
+- Независимо от жалобы владельца нативно активированы все 106 пунктов левого оглавления десяти TLP-эссе и все текущие TLP-переходы между частями серии.
+- Исправлена атрибуция: конкретная жалоба про Roman/Arabic menu, прежний документ и нижний переход относится к GBS, а не TLP. Здесь сохранены только самостоятельные TLP-находки fragment runtime/sticky geometry.
+- Для TLP проверены нижняя навигация, декоративный CustomCursor и TLP-local false-green; эти результаты не классифицируют GBS progress/navigation owner.
 - Дополнительно выполнены 436 активаций 218 внутренних route-контролов, 132 активации глобальной навигации и 212 переходов из command palette.
 
 ### ПРОВЕРЕНО
@@ -339,7 +341,7 @@ MASTER now contains **13 active units = 1 P1 + 11 P2 + 1 P3** after terminal dep
 ### НЕ ПРОВЕРЕНО
 
 - Нативные Safari/Firefox, screen reader и физическое устройство не заявляются.
-- Таймер перехода не тестировался как функция, потому что такой функции в текущем Product нет. Кольцо — декоративный custom cursor; новый auto-advance требует отдельного продуктового решения.
+- В TLP таймера перехода нет, а кольцо является декоративным custom cursor. Это ограниченное TLP-наблюдение; GBS проверен отдельно и содержит read/series progress, но не timed auto-advance.
 - Новых непроверенных границ в этой волне не добавлено; dependency-строка закрыта после терминального resulting-main CI.
 
 ### СРЕДА
@@ -349,7 +351,7 @@ Product `main@76da7d6372931f34d269581f374e87bd15406cfb`; Chromium `153.0.8010.0`
 ### РЕШЕНИЯ САМ
 
 - Не плодить новые строки: неверный settled scroll относится к `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`, недоступные поздние пункты — к `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`.
-- Не выдавать custom cursor за сломанный progress control и не добавлять скрытый таймер как «исправление».
+- Не переносить TLP custom cursor/absence-of-timer conclusion на GBS: это разные Products и разные owners.
 - Закрыть dependency owner после полученного полного resulting-main CI; перекрывающий Product #514 уже закрыт без merge.
 
 ### Что требуется от владельца
