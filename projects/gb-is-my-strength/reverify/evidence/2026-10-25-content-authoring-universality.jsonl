@@ -80,3 +80,6 @@
 {"type":"closureBlueprint","transactionPhases":["plan","scaffold","clean build/copy","project/check","editorial pending","fresh-dist browser admission"],"explicitRoutesPreserved":true,"familyVisualsPreserved":true,"engineForkRequired":false}
 {"type":"transactionSafety","observedEditorialFanout":{"centralRegistry":1,"supplementFiles":5},"generatedFanoutAllowed":true,"partialPublicationSuccessAllowed":false,"editorialStateMutation":"never auto-promote or reset"}
 {"type":"closureBlueprint","transactionGuarantees":["dry-run zero diff","refuse authored overwrite","preflight before generated fanout","second-run idempotence","addressed failure","recoverable failure state"],"negativeFixtures":["owner collision","mid-projection injected failure","approved-state preservation"],"newWorkUnit":false}
+{"type":"headRefresh","productMain":"015573af602dd7b8d49feb296638b3447364a529","anchorStillCurrent":true,"date":"2026-10-25"}
+{"type":"ownerRefresh","openProductPRs":[2193,2179,2164,2143],"publicationContractOwner":null,"overlapCreated":false}
+{"type":"saturation","positiveShapes":["standalone","existing-series baseline","new-flat","new-book"],"independentNewRootFound":false,"remainingOwnerDecisions":["manifest/scaffold API","classification of 19 config-only projection rows"],"productRepairStarted":false}

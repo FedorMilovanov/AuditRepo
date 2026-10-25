@@ -696,3 +696,15 @@ Standalone probe показал, что успешный editorial `--write --bu
 - interrupted/failed run оставляет либо прежний committed state, либо явно перечисленный recoverable generated diff — никогда скрытый partial approval.
 
 Acceptance fixtures: dry-run zero diff; first write с ожидаемым file set; second write idempotent; collision/refusal без overwrite; injected failure между projection phases; сохранение существующего approved decision и pending новой записи. Это уточнение существующего authoring root, а не отдельная workflow lane.
+
+## 32. Финальная owner/head refresh и saturation boundary
+
+Перед завершением systemic pass повторно проверены repository identity и открытые Product owners.
+
+- Product `main` остаётся точно `015573af602dd7b8d49feb296638b3447364a529`; все probes относятся к текущему main, а не устаревшему anchor.
+- Открыты #2193 (speed-panel/tooltip UI), #2179 (Actions dependencies), #2164 (draft content-only five-part series), #2143 (genealogy data). Ни один PR не объявляет publication manifest/scaffold, config registry, route/profile/ownership transaction или series data projection owner.
+- AuditRepo PR #488 остаётся draft/open/mergeable; exact-head `76d9551` Preflight и Validate прошли.
+
+Saturation result: все заявленные publication shapes имеют positive path (standalone, existing shared family baseline, new flat, new book), а safety boundary имеет decisive negatives для orphan content, config-only links, duplicate registry/href identity, undeclared projection и stale dist. Дальнейшие найденные проявления либо входят в тот же control plane, либо уже принадлежат отдельным существующим lanes (Pastor discovery, document navigation, Teen progress). Независимый новый root не найден.
+
+Оставшиеся неопределённости являются implementation/owner decisions, не пробелами аудита: конкретный API manifest/scaffold и review 19 текущих config-only projection rows. Product repair в этом проходе не начинался.

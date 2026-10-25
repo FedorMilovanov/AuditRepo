@@ -730,3 +730,8 @@ This entry records the governance change only. It does not claim that the reform
 
 - Existing editorial write legitimately fans out to one central registry plus five supplements. Unified admission must preflight the complete write set, refuse authored overwrite, preserve review state and be idempotent.
 - Closure fixtures now include dry-run zero diff, second-run zero semantic diff, owner collision and injected mid-projection failure without false publication success. Folded; arithmetic unchanged.
+
+### Authoring audit saturation refresh
+
+- Product main remains exact anchor `015573af…`; open #2193/#2179/#2164/#2143 do not own the publication control plane. AuditRepo exact-head `76d9551` checks passed.
+- Positive shape matrix and decisive safety negatives are complete. Remaining choices are implementation API plus owner classification of 19 config-only projection rows; no new independent root or Product repair. Arithmetic unchanged.
