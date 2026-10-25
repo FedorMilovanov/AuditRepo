@@ -493,4 +493,20 @@ Chromium sweep 95 routes на 1023/1024/1100/1280/1440px показывает:
 
 Принимается отдельный `GBS-READER-MEASURE-DESKTOP-ALIAS-AND-BREAKPOINT-REGRESSION`: capacity conflict объясняет ограничение в тесном desktop, но не оправдывает no-op между двумя доступными пользовательскими командами на широком viewport и отрицательный скачок ровно на 1600px. Closure должна определить один документированный maximum comfortable measure и согласовать с ним подписи/число состояний: либо каждое состояние реально различимо во всём заявленном desktop range, либо недоступный вариант disabled/не предлагается с ясной причиной. Нельзя просто убрать `760px`: нужны типографически утверждённые пределы и monotonic adjacent-width contract, плюс native persistence/reload proof на обеих route policies.
 
+## 20. Продолжение: mixed-script gate проверяет не publication surfaces, а три каталога
+
+Полный final-HTML pass по **108 страницам** извлёк reader/AT/print text вне `script/style/template/svg/noscript` и отдельно рассмотрел все 32 уникальных токена, где в одном слове встречаются Latin и Cyrillic. Осмысленные гибриды (`PDF-архив`, `GPS-карта`, `3D-сцена`, `email-адресами`) не объявлялись ошибками. Один новый near-certain homoglyph defect находится на `/karty/ishod/`: **`Суккот = Чекy (Телль эль-Маскута)`** и следующий текст повторяют `Чекy`, где последняя буква — Latin `y` (U+0079), хотя русская транслитерация в соседнем описании уже дана как Latin `Tjeku`; смешанная форма не является ни одним из этих вариантов.
+
+Source owner — `karty/ishod/route.json:589-590`; та же ошибка вручную продублирована в research projection. Финальный static map projection публикует её дважды. На обычном экране projection является `sr-only`, поэтому не следует выдавать DOM-loaded state за painted body. Но это реальный reader surface: Chromium print media показывает строку с visible geometry x=22, y=4435.55, width=308.77px, height=17px; PDF SHA-256 `4b7e700ce20ce86147850526bafa4ff219df452c5529af8ae079c75c040bf9a1`. Она также остаётся в доступной текстовой версии карты.
+
+Все три обязательных текущих gate проходят:
+
+- `article:qa`: 174 files, 0 errors/0 warnings;
+- `readable-audit`: pass;
+- `maps:validate`: 11 route files + publication status, pass.
+
+Причина воспроизводима в самих contracts. `article-qa.js` обещает считать mixed Cyrillic+Latin «corruption that ships broken», но `SCAN` ограничен `src/content/articles`, `src/components/baptisty-rossii` и `src/components/article-pilots`; он не читает `karty/**/*.json`, PageHead quiz payloads или финальные projections. `readable-audit` видит final HTML, но его generic pattern требует не менее трёх подряд Latin symbols рядом с Cyrillic, поэтому пропускает и single-homoglyph `Чекy`, и уже принятую `academическую`. Map schema validator проверяет структуру, не reader copy. Получается один системный verification gap, проявившийся минимум в двух независимых payload families, а не два несвязанных typo-only rows.
+
+Принимается `SYS-PUBLICATION-MIXED-SCRIPT-SURFACE-COVERAGE`. Он поглощает именно mixed-script проявление `Чекy`; Hermenevtika direct row остаётся из-за самостоятельного большого пласта плохого русского перевода. Closure: один source+final-publication corpus owner, который включает authored prose, JSON map projections, quiz/metadata payloads, static/print/AT surfaces и dynamic reader copy; Unicode-aware mixed-script tokenization; явный reviewable allowlist для настоящих `PDF-архив`/`3D-карта`, а не ослабление до трёх букв; negative fixtures для single Latin homoglyph, single Cyrillic homoglyph и payload outside article directories. Исправить обе source copies `Чекy` через объявленный data authority, убрать ручной drift и доказать source→build parity. URL, code, bibliographic Latin и санкционированные гибриды должны остаться допустимыми.
+
 Product mutation and merge remain outside this audit.
