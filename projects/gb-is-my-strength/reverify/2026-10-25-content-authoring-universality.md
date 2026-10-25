@@ -614,3 +614,20 @@ Typed projection contract должен объявлять authority на уро�
 - `n`/mark mapping — family policy (numeric, Roman/letter либо curated chapter entry), не универсальный cast.
 
 Текущий положительный baseline времени 44/44 должен стать regression fixture вместе с membership policy; literal title equality таким fixture быть не должна.
+
+## 29. Продолжение — `engine:sweep` допускает stale-dist false green
+
+Проверена безопасность рекомендованного first-time workflow. Guide честно пишет, что перед `engine:sweep` нужен ручной build/copy, но сам browser guard не строит dist и не проверяет его provenance/freshness.
+
+Executable negative probe:
+
+1. в source route Pastor временно добавлено global CSS, скрывающее `.gbs2-world` через `display:none!important`;
+2. dist намеренно не пересобирался;
+3. прямой series browser guard `node scripts/engine-sweep.mjs` запущен Chromium 153 на существующем dist;
+4. exit 0, 221/221 PASS, включая representative Pastor route.
+
+При rebuild эта source mutation обязана сделать Pastor reader невидимым, но guard проверил прежний artifact. Значит, сообщение «все движки соответствуют канону» удостоверяет только неизвестный текущий dist, не рабочий source tree.
+
+Это не новый UI defect и не претензия к самим 221 assertions. Проблема — неатомарный authoring admission workflow: критический precondition существует только в prose. Closure должна дать один command, который либо сам выполняет clean production-like build/copy перед browser checks, либо криптографически/детерминированно проверяет source↔dist provenance и отказывает на stale artifact.
+
+Fixture восстановлен; Product source чист. Не связанный с сериями последующий browser subprocess в composite npm chain потребовал отдельный sandbox browser path; это delivery result и в Product findings не включён.

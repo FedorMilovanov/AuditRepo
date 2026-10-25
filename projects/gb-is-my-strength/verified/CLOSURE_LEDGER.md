@@ -714,3 +714,8 @@ This entry records the governance change only. It does not claim that the reform
 
 - Across 44 projected shared-series rows: slug/order/normalized minutes are 44/44 equal; literal titles are only 15/44 equal because rail and discovery copy have contextual roles.
 - Closure equality is field-aware: strict identity/order/time, declared title authority/adapters and family ordinal policy—not whole-record string equality. Folded; no arithmetic change.
+
+### Stale-dist browser-guard continuation
+
+- With Pastor source mutated to hide the reader and dist deliberately not rebuilt, direct Chromium 153 `engine-sweep.mjs` still exits 0 at 221/221: it validates whatever dist exists and has no freshness/provenance check.
+- Guide mentions the manual build precondition, but closure needs one atomic build+copy+browser command or deterministic stale-artifact rejection. Browser assertions themselves are not disproved. Folded; no arithmetic change.
