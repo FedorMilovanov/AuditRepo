@@ -33,7 +33,8 @@ Product #2192 слит именно в проверяемый anchor. Помим
 На чистом Product exact head выполнены:
 
 - `npm ci` — exit 0; сохранено исходное предупреждение npm об одной moderate dependency vulnerability;
-- `npm run strangler:build` — exit 0;
+- `npm run strangler:build:production-like` — exit 0;
+- `npm run pagefind:build:dist` — exit 0, проиндексировано 95 страниц;
 - Astro check: 0 errors, 6 hints;
 - 104 страницы собраны, legacy/projection/cache-bust/heading guards прошли.
 
@@ -59,7 +60,7 @@ Product #2192 слит именно в проверяемый anchor. Помим
 - close: `inert=true`, `aria-expanded=false`, focus=`#gbsTocToggle`;
 - reopen: `inert=false`, `aria-expanded=true`.
 
-Light-профиль: Axe 0, LCP 476 ms, CLS 0.000147. Dark + reduced-motion контроль: LCP 392 ms, CLS 0.000539, overflow/broken images 0. Найденный там `nested-interactive` относится к уже отдельному владельцу составных карточек/подсказок, а не к folded navigation; он не скрыт как глобальный Axe PASS.
+Light-профиль: Axe 0, LCP 348 ms, CLS 0.000147. Dark + reduced-motion контроль: LCP 616 ms, CLS 0.000539, overflow/broken images 0. Найденный там `nested-interactive` относится к уже отдельному владельцу составных карточек/подсказок, а не к folded navigation; он не скрыт как глобальный Axe PASS.
 
 ### 4.3 Mobile flat/book
 
