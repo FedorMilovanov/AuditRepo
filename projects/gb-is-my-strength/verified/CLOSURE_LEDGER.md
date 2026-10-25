@@ -614,3 +614,9 @@ This entry records the governance change only. It does not claim that the reform
 - Of 68 reading-series routes, 63 use the shared facade and five Nagornaya chapters are explicit native exceptions. Six landings and two references intentionally use non-reader adapters. Thus shared series runtime is broad but the guide's literal «all series» wording needs this boundary.
 - Standalone `article` has only four routes and three adapter patterns; Lawson is the sole generic `ArticleLayout` consumer. `page` is capability-registry + route-native composition; `special` correctly remains adapter-based.
 - No new defect/arithmetic change. This taxonomy refines `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; **50 = 27 + 4 + 19**.
+
+### Series fragment-guard wiring continuation
+
+- The implemented rendered `partToc` fragment validator is source-only in default `series:facade:guard`; neither `engine:contracts` nor `engine:guard` invokes its `--require-dist` mode, and no package/workflow entry does so.
+- A missing-target fixture passed default facade guard and failed strict mode with the exact route/fragment. Fresh exact-main production-like strict baseline passes: 64 pages, 1,999 links, 1,141 unique targets, 0 broken.
+- No current content defect/new unit. This executable negative strengthens the broken-TOC acceptance criterion of `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; arithmetic remains **50 = 27 + 4 + 19**.

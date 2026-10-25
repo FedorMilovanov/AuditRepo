@@ -256,3 +256,30 @@ Registry знает только четыре standalone `surface=article` route
 `special` намеренно не должен становиться article/series engine: 10 map routes, app, confession shell+built app, map landing и genealogy сохраняют собственные interaction models. Это правильная граница архитектуры, не fragmentation defect.
 
 Итоговая оценка не меняется: series runtime **4/5**, cross-shape authoring **2/5**. Current registry хорошо запрещает неявный новый engine после регистрации route, но не заменяет scaffold/discovery до регистрации. Arithmetic остаётся прежней.
+
+## 12. Продолжение — targeted `partToc` guard wiring
+
+Guide прямо называет битые `partToc` anchors частой ошибкой нового автора. В repository уже есть качественный rendered validator `series-reader-fragment-audit.js`, но executable wiring неполно:
+
+- `series:facade:guard` по умолчанию вызывает только source assertions и печатает `fragment audit registered (source-only mode)`;
+- строгий путь запускается лишь с ручным `--require-dist`;
+- `engine:contracts` вызывает default source-only guard;
+- `engine:guard` вызывает `engine:contracts`, Gill guard и browser sweep, но не передаёт `--require-dist`;
+- отдельного package script или workflow invocation strict fragment audit нет.
+
+Controlled fixture с `.gbs2-toc a[href="#missing-target"]` и отсутствующим ID дал:
+
+- default facade guard — exit 0;
+- тот же guard с `--require-dist` — exit 1 и точную ошибку `/articles/probe/#missing-target (1 link)`.
+
+Это не отсутствие реализации проверки, а отсутствие её admission wiring. Сообщение `fragment audit registered` не является проверкой current rendered content.
+
+После свежего production-like build exact main строгий validator запущен вручную как положительный baseline:
+
+- 64 series-reader pages;
+- 1 999 fragment links;
+- 1 141 unique targets;
+- 0 broken unique fragments;
+- exit 0.
+
+То есть текущий контент здоров и новый reader-facing defect не принимается. Риск относится к authoring safety: typo в следующем curated TOC пройдёт документированный `engine:guard`, хотя готовый fail-closed validator уже существует. Closure boundary принятого root уже требует broken-TOC negative fixture; теперь он подтверждён executable mutation. Arithmetic не меняется.
