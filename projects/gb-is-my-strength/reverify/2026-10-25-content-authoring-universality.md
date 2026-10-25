@@ -860,3 +860,33 @@ Effective all-family import probe проверил поле extension policy н�
 - explicit approval-preservation mutation proving existing approved decisions remain byte/semantic stable while the new record stays pending.
 
 Эти future fixtures являются условиями закрытия Product repair, а не незавершёнными обещаниями текущего AuditRepo PR. Единственный consciously NOT DONE current positive — extension существующей production family: ни одна серия не объявлена open, Pastor доказан locked, owner decision не подменялся.
+
+## 40. Safe implementation order — без big-bang rewrite
+
+Closure нельзя внедрять одним генератором, который одновременно меняет registry, routes, sitemap и editorial data. Безопасная последовательность следует из здоровых текущих guards и доказанных fail-open edges.
+
+### Phase 0 — pin current behavior
+
+Зафиксировать current effective manifest как read-only snapshot: 6 shared IDs, 71 items, 63 navigable identities/routes, 44 declared data rows, 7 native/data families включая Nagornaya, current page/article/special census. Перенести verified positive/negative fixtures без изменения output.
+
+### Phase 1 — pure typed registry
+
+Ввести side-effect-free `register`/`compose`, воспроизвести шесть effective configs и Baptist book override byte/semantic-equivalently. Добавить extension policy migration: Pastor locked, остальные owner-review. Старые wrapper imports пока остаются adapters; никакой массовой route миграции.
+
+### Phase 2 — read-only admission validator
+
+Проверять существующий source без генерации: content status, ownership/profile, item→page, href uniqueness/route/composite identity, declared data projection, indexability/sitemap и discovery decision. Сначала warning/report mode только для legacy-unclassified rows; fail только на новые изменения и уже чистые invariants. После owner classification убрать transitional warnings.
+
+### Phase 3 — plan/scaffold
+
+Добавить один `plan` с zero writes, затем узкие writers по shape. Writer создаёт authored owners, но generated projections применяет отдельной preflighted фазой; existing owners не перезаписывает. Editorial record всегда pending.
+
+### Phase 4 — atomic admission
+
+Объединить clean production-like build/copy, projection checks, strict fragments/cross-document identity и fresh-dist browser admission. Добавить idempotence/rollback/injected-failure fixtures. Только после этого guide может обещать «одна команда = готово к review».
+
+### Phase 5 — retire ambiguity
+
+Удалить family registration side effects и устаревшие copy-by-memory инструкции лишь после parity. Сохранить explicit routes, PageHead/layout differences, Nagornaya/special adapters и healthy family canon guards.
+
+Stop conditions каждой фазы: effective membership/output изменился без declared migration; Baptist compose перестал быть book; Pastor lock ослаб; approved editorial state изменился; existing route/profile исчез; browser проверяет stale dist. При любом таком результате rollout останавливается, а не «чинит baseline» обновлением snapshot.

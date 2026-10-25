@@ -772,3 +772,8 @@ This entry records the governance change only. It does not claim that the reform
 
 - Report §39 separates current-main verified positives/healthy guards/fail-open witnesses from regression fixtures that can exist only after Product repair.
 - Existing-family positive extension remains explicitly NOT DONE because zero configs declare open and Pastor is locked; no owner decision was inferred. This is a visible boundary, not a hidden completion claim. Arithmetic unchanged.
+
+### Safe implementation order
+
+- Report §40 sequences closure from pinned read-only census through pure registry, admission validator, shape scaffold and atomic fresh-dist admission before retiring side effects/docs.
+- Explicit routes/family visuals/native adapters remain; rollout stops on undeclared drift, Baptist/Pastor/editorial regressions or stale-dist proof. This is implementation guidance for the existing root; arithmetic unchanged.
