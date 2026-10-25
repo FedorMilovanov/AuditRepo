@@ -35,6 +35,21 @@ Do not copy every workflow run, later blob SHA or unrelated current HEAD into th
 
 ---
 
+## 2026-10-25 — teen-series letter taxonomy and core-progress admission
+
+- Scope: source/history/contracts plus all seven «Подросток за кадром» routes at Product `main@015573af602dd7b8d49feb296638b3447364a529`.
+- Result:
+  - editorial/engineering decision: sequence I→II→III→A→B→C→D is intentional since `a6eeda417f`; A–D separate the adult-child continuation from the teen trilogy and remain first-class core steps;
+  - negative boundary: `mark.kind='letter'` means satellite in the shared engine and must not replace the current A–D `label` encoding; IV–VII renumbering needs owner/editorial authority;
+  - admitted: `GBS-TEEN-SERIES-CORE-STEP-PROGRESS` — shared rail counts only three Roman items under «Прогресс серии» and gives A–D no 4–7/7 position, despite the public seven-step contract; MASTER becomes 27 defects + 4 improvements + 18 system lanes = **49**;
+  - rendered closure boundaries: Chromium 153 desktop/mobile, dark/reduced-motion, 14/14 correct route identity, images, accessible dialog names, no overflow/errors; local LCP 364–740 ms, mobile CLS 0 and stable desktop controls ≤0.02169;
+  - duplicate prevention: 12/12 native teen rail/overlay transitions repeat `SYS-READER-DOCUMENT-NAVIGATION-INTERCEPTION` (URL changes, H1 remains, target requests 0), so no teen-specific navigation row is created;
+  - no separate bottom-neighbor defect: this wrapper does not render a bottom neighbor block and no current teen contract promises one; existing surfaces are rail/overlay.
+- Product evidence: no Product mutation. `npm ci`, full `strangler:build` and teen release contract PASS; foundation contract is a phase-specific prepublication gate and is intentionally inapplicable after release.
+- Regression witness: closure needs an explicit core-sequence progress model with marks retained, seven exact positions across desktop/mobile, and independent repair proof for cross-document navigation.
+- Live evidence: not claimed; exact-SHA production-like Chromium evidence retained.
+- Detailed evidence: `../reverify/2026-10-25-teen-series-letter-taxonomy.md` and `../reverify/evidence/2026-10-25-teen-series-letter-taxonomy.jsonl`.
+
 ## 2026-10-25 — current-main series navigation document-identity admission
 
 - Scope: owner-corrected Roman/Arabic series navigation, mobile part/book overlay, bottom previous/next controls and nearby circular progress UI on Product `main@948ecff03189613180cce73731ce072ccc2ae3ed`.
