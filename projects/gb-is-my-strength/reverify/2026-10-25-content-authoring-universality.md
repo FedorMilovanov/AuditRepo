@@ -142,7 +142,7 @@ Teen family случайно ловит такую ошибку через media
 2. route-less `draft:true`/`noindex:true` остаётся разрешён; publishable MDX по-прежнему обязан пройти существующий provenance→route/profile/ownership contract;
 3. каждый navigable non-chapter series item разрешается в `pages[id]`, имеет unique href и достигает route с rendered identity `(seriesId,item.id)`; chapters остаются разрешённым non-page типом;
 4. TS config→`data/series.json` membership выводится из typed inclusion policy: identity/order/normalized time проверяются строго, title/ordinal имеют объявленного field owner, каждое исключение reviewable;
-5. все config modules импортируются через discoverable manifest; accidental duplicate `seriesId` запрещён, а approved base→public override объявляется отдельным typed operation;
+5. все config modules импортируются через discoverable manifest; accidental duplicate `seriesId` запрещён, approved base→public override объявляется отдельным typed operation, а extension policy (`open`/`locked`/`owner-review`) проверяется до записи;
 6. generated registries имеют один документированный transaction/dry-run command; editorial metadata review остаётся fail-closed, scaffold не выдаёт automatic approval, а финальный browser admission строит fresh dist либо отвергает stale provenance;
 7. существующие schema errors и строгий content provenance сохраняются; family wrappers не создают конкурирующий типовой contract;
 8. strict rendered fragment audit входит в documented gate, а cross-document series href проверяется на route, uniqueness и composite rendered identity;
@@ -653,7 +653,7 @@ Effective output должен воспроизводить текущие шес
 - publication kind: standalone / generic page / existing-series-item / new flat series / new book series / declared special adapter;
 - source content или explicit component-body owner;
 - canonical route, ownership record и route profile;
-- для series item — `(seriesId,item.id)`, href, page record и rendered identity;
+- для series item — `extensionPolicy` серии, `(seriesId,item.id)`, href, page record и rendered identity;
 - data projection decision: include либо exclude с reviewable reason, плюс field authority;
 - discovery strategy: own hub / catalog shelf / parent section / explicit none для draft;
 - editorial state как внешний approval result, который scaffold не повышает автоматически.
@@ -780,7 +780,7 @@ Closure должна требовать typed discovery decision для indexabl
 | Standalone indexable article | `ArticleLayout` | content, route, page ownership, route profile, discovery decision | editorial registry создаёт pending record; approval только review |
 | Generic indexable page | `BaseLayout` | route/content, ownership, profile, sitemap, discovery decision | отдельный PageHead/article editorial record не нужен |
 | Generic noindex page | `BaseLayout` | route/content, ownership, profile `indexable:false` + reason, discovery `none` | sitemap запрещён |
-| Existing shared-series item | `SeriesReaderChrome` | manifest item+page, body/content, route, ownership/profile, data inclusion decision, composite identity, discovery decision | editorial/search/sitemap projections по declared policy; optional family media owner |
+| Existing shared-series item | `SeriesReaderChrome` | сначала `extensionPolicy`; для open/approved — manifest item+page, body/content, route, ownership/profile, data inclusion, composite identity, discovery | locked Pastor I–IX отклоняется до записи; editorial/search/sitemap по declared policy; optional family/canon owners |
 | New flat series | тот же `SeriesReaderChrome` | unique registered config, items/pages/routes, ownership/profiles, hub/catalog/parent strategy | declared data projection + fresh browser admission; новая engine component не нужна |
 | New book series | `shape:'book'` того же engine | chapters/articles topology, pages только для navigable articles, остальные owners как flat | те же projections; chapter headers остаются non-page |
 | Special/application | family adapter | explicit application owner/plan и route/profile/ownership; generic page scaffold запрещён | family-specific contracts, browser/recovery/security gates |
@@ -788,3 +788,25 @@ Closure должна требовать typed discovery decision для indexabl
 Scaffold должен сначала спросить intent/indexability/discovery и только затем предлагать write set. Он не должен выводить форму по расположению файла или автоматически превращать draft/noindex в public indexable route.
 
 Подтверждённая usability оценка остаётся **2/5** не из-за отсутствия рабочих precedents, а потому что этот decision tree сейчас не является executable/discoverable API. Реализация таблицы в typed plan/scaffold закрывает orchestration gap без визуального или route rewrite.
+
+## 37. Продолжение — existing-series item упирается в скрытую extension policy
+
+Выполнен реалистичный dry run добавления корректной десятой Roman part в существующую Pastor series. Fixture включал все найденные owners: MDX, route через `PastorSeriesArticlePage`, config item + `pages[id]`, `data/series.json`, page ownership, series route profile и sitemap.
+
+Результат по слоям:
+
+- production-like build exit 0, target route построен;
+- `audit-pro` exit 0 после sitemap;
+- profile strict сначала адресно отверг скопированный stale `renderSource`, после исправления вышел 0;
+- полный static gate вышел 1 не из-за engine topology/route, а из-за family editorial contract:
+  - `registry published-core count: 10 != 9`;
+  - canonical published slug set содержит новый slug и не равен pinned I–IX;
+  - `registry canonical-core minute total: 159 != 157`.
+
+Это здоровый fail-closed Pastor owner: текущая серия канонически зафиксирована как I–IX, а landing head/cards/stats/structured data также пинят девять частей и 157 минут. Добавлять X без owner-approved изменения канона нельзя.
+
+Но authoring ergonomics обнаруживает важную асимметрию. Ранее неполный config-only item **проходил** full static, потому что family guard читает неизменённый девятичастный `data/series.json`; полный честный transaction **падает** только после добавления data projection. Новый агент не получает раннего ответа «серия locked» из config API/manifest.
+
+Следовательно, `existing-series-item` нельзя считать универсально разрешённой операцией. Typed manifest обязан объявлять `extensionPolicy` серии (`open`, `locked`, `owner-review`) и ссылку на canonical plan/owner. Scaffold должен отказать до записи для locked Pastor, а positive fixture выполнять на явно extensible test/production family. Автоматически ослаблять Pastor guard или менять I–IX в рамках этого аудита запрещено.
+
+Positive resulting-main existing-item publication поэтому честно отмечена **NOT DONE: owner approval/extensible target отсутствует**. Доказаны renderer capability, точные late-stage guards и требуемый ранний policy contract. Fixture удалён, Product tracked source чист; новый work unit не создаётся.

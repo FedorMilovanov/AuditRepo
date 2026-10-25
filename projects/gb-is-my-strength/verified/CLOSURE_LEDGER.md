@@ -756,3 +756,9 @@ This entry records the governance change only. It does not claim that the reform
 
 - Report §36 consolidates eight intents from route-less draft through standalone/page/shared flat/book and declared special adapter, separating authored owners from generated/review steps.
 - Scaffold must ask intent/indexability/discovery before writes and cannot infer publication or auto-promote draft/noindex. This is closure guidance for the existing authoring root; arithmetic unchanged.
+
+### Existing-series extension-policy continuation
+
+- A complete Pastor Roman-X transaction builds and passes audit-pro/profile strict, then correctly fails the family canon guard at 10≠9 parts, changed slug set and 159≠157 minutes. Pastor I–IX must not be weakened without owner approval.
+- Incomplete config-only mutation paradoxically passes because data stays at nine parts; manifest/config has no early extension policy. Closure adds typed open/locked/owner-review policy and pre-write refusal.
+- Positive current-family extension is explicitly NOT DONE for lack of an authorized extensible target; require an extensible fixture. Folded; arithmetic unchanged.
