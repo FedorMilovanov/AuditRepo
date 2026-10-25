@@ -631,3 +631,52 @@ Executable negative probe:
 Это не новый UI defect и не претензия к самим 221 assertions. Проблема — неатомарный authoring admission workflow: критический precondition существует только в prose. Closure должна дать один command, который либо сам выполняет clean production-like build/copy перед browser checks, либо криптографически/детерминированно проверяет source↔dist provenance и отказывает на stale artifact.
 
 Fixture восстановлен; Product source чист. Не связанный с сериями последующий browser subprocess в composite npm chain потребовал отдельный sandbox browser path; это delivery result и в Product findings не включён.
+
+## 30. Минимальный systemic closure blueprint
+
+После positive/negative probes closure можно сформулировать как один migration-safe control plane, не переписывая 104 explicit routes и family visuals.
+
+### 30.1. Pure manifest, не side effects
+
+Manifest должен детерминированно перечислять series configs и standalone publications. Для series registration нужны разные typed operations:
+
+- `register(config)` — новый unique `seriesId`, duplicate = error;
+- `compose(base, publicConfig, reason/owner)` — явная проверяемая замена, необходимая Baptist flat→book;
+- никакого `SERIES_CONFIGS[id] = ...` в случайно импортированных family modules.
+
+Effective output должен воспроизводить текущие шесть IDs, 71 items и public Baptist book; native Nagornaya остаётся explicit adapter, а не притворяется shared config.
+
+### 30.2. Publication record
+
+Минимальная запись должна владеть либо ссылаться на:
+
+- publication kind: standalone / existing-series-item / new flat series / new book series;
+- source content или explicit component-body owner;
+- canonical route, ownership record и route profile;
+- для series item — `(seriesId,item.id)`, href, page record и rendered identity;
+- data projection decision: include либо exclude с reviewable reason, плюс field authority;
+- discovery strategy: own hub / catalog shelf / parent section / explicit none для draft;
+- editorial state как внешний approval result, который scaffold не повышает автоматически.
+
+Это не требует одного layout/PageHead: manifest соединяет существующих владельцев, а adapters сохраняют family-specific rendering.
+
+### 30.3. Один transaction command
+
+Безопасный workflow должен иметь один discoverable entry point с фазами и адресной диагностикой:
+
+1. plan/dry run — показать создаваемые authored/generated owners и незакрытые decisions;
+2. scaffold/write — создать только выбранную shape, не перезаписывая существующие owners;
+3. clean production-like build/copy;
+4. projection checks и generated registry update;
+5. editorial registry остаётся pending до review;
+6. source→fresh-dist browser admission.
+
+Финальный success запрещён, пока отсутствуют route/profile/ownership, manifest membership, projection decision, `(seriesId,item.id)` target identity или fresh-build provenance.
+
+### 30.4. Обязательные fixtures
+
+Positive baseline: explicit drafts; standalone four-owner transaction; new flat/book configs; current Baptist composition; current 63/63 item/page/route/identity; 44/44 declared slug/order/time projection.
+
+Negative baseline: publishable orphan MDX; Pastor config-only item; duplicate series ID без compose; duplicate item href; missing route/profile/ownership; stale/необъявленная data projection; broken same- и cross-document target; stale dist; scaffold/editorial write, пытающийся auto-approve.
+
+Такой control plane закрывает root без engine fork, массового route rewrite или визуальной унификации landings.

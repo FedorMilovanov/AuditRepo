@@ -719,3 +719,9 @@ This entry records the governance change only. It does not claim that the reform
 
 - With Pastor source mutated to hide the reader and dist deliberately not rebuilt, direct Chromium 153 `engine-sweep.mjs` still exits 0 at 221/221: it validates whatever dist exists and has no freshness/provenance check.
 - Guide mentions the manual build precondition, but closure needs one atomic build+copy+browser command or deterministic stale-artifact rejection. Browser assertions themselves are not disproved. Folded; no arithmetic change.
+
+### Consolidated minimal closure blueprint
+
+- Use a pure typed publication manifest: unique register plus explicit reviewed compose for Baptist; records connect source/body, route, ownership/profile, series composite identity, declared data projection and discovery strategy while preserving existing routes/layouts/visuals.
+- One plan→scaffold→clean build/copy→project/check→editorial-pending→fresh-dist browser transaction owns admission. Positive and negative fixtures are enumerated in report §30.
+- This is the implementation boundary of the existing authoring root, not a new unit; arithmetic unchanged.
