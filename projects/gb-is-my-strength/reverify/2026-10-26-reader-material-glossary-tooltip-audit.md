@@ -12,7 +12,7 @@ Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 Главные результаты:
 
 1. действующий `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS` подтверждён на текущем anchor: **9 опубликованных маршрутов**, 1 385 серий `???` и 10 507 вопросительных знаков в их финальном HTML; defect не новый и не считается повторно;
-2. в пяти материалах «Баптистов России» читателю показываются внутренние Research/engineering данные: commit SHA, `main`, `authority`, `claim-level`, A1/A2/A3/B1/C/D, state axes, внутренние `.md`-имена и backlog — новый `GBS-BAPTISTS-RESEARCH-SCAFFOLD-READER-LEAK`;
+2. в пяти материалах «Баптистов России» читателю показываются внутренние Research/engineering данные: commit SHA, `main`, `authority`, `claim-level`, A1/A2/A3/B1/C/D, state axes, внутренние `.md`-имена и backlog — новый `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`;
 3. опубликованная статья о христоцентричной герменевтике содержит системный пласт машинных кальк и одну смешанную кирилло-латинскую опечатку `academическую` в quiz payload — новый `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`;
 4. `/articles/sem-tipov-razlichenie-uchiteley/` показывает читателю literal `**` из-за незакрытой Markdown-разметки — новый `GBS-SEM-TIPOV-LITERAL-MARKDOWN-PREFIX`;
 5. `typograf:dry` на зелёном exit 0 сообщает шесть требующих перезаписи retained HTML, поэтому принимается `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`;
@@ -276,7 +276,7 @@ Disposition: расширить `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, г
 
 ### P1
 
-- `GBS-BAPTISTS-RESEARCH-SCAFFOLD-READER-LEAK`;
+- `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`;
 - `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`;
 - `GBS-GLOSSARY-1689-CONFESSION-LINEAGE-MISSTATEMENT`;
 - `GBS-DIOTROPHES-NUMERAL-AGREEMENT`;
@@ -508,5 +508,20 @@ Source owner — `karty/ishod/route.json:589-590`; та же ошибка вру
 Причина воспроизводима в самих contracts. `article-qa.js` обещает считать mixed Cyrillic+Latin «corruption that ships broken», но `SCAN` ограничен `src/content/articles`, `src/components/baptisty-rossii` и `src/components/article-pilots`; он не читает `karty/**/*.json`, PageHead quiz payloads или финальные projections. `readable-audit` видит final HTML, но его generic pattern требует не менее трёх подряд Latin symbols рядом с Cyrillic, поэтому пропускает и single-homoglyph `Чекy`, и уже принятую `academическую`. Map schema validator проверяет структуру, не reader copy. Получается один системный verification gap, проявившийся минимум в двух независимых payload families, а не два несвязанных typo-only rows.
 
 Принимается `SYS-PUBLICATION-MIXED-SCRIPT-SURFACE-COVERAGE`. Он поглощает именно mixed-script проявление `Чекy`; Hermenevtika direct row остаётся из-за самостоятельного большого пласта плохого русского перевода. Closure: один source+final-publication corpus owner, который включает authored prose, JSON map projections, quiz/metadata payloads, static/print/AT surfaces и dynamic reader copy; Unicode-aware mixed-script tokenization; явный reviewable allowlist для настоящих `PDF-архив`/`3D-карта`, а не ослабление до трёх букв; negative fixtures для single Latin homoglyph, single Cyrillic homoglyph и payload outside article directories. Исправить обе source copies `Чекy` через объявленный data authority, убрать ручной drift и доказать source→build parity. URL, code, bibliographic Latin и санкционированные гибриды должны остаться допустимыми.
+
+## 21. Продолжение: map archaeology panel публикует внутренний registry
+
+`GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK` расширен с пяти Baptist routes до **семи routes / двух surface families**, без нового work unit. Shared `MapArchaeologyProjectionBootstrap` подключён на `/karty/avraam/` и `/karty/ishod/`. Его reader panel не переводит governed research registry в готовую русскую библиографию, а напрямую печатает:
+
+- все claim `statement` и `limitations` на английском;
+- status taxonomy (`сильная опора`, `YEC-интерпретация`, `действующий источник`, повторное `проверено`);
+- внутренние identifiers вида `source: arj-abraham-chronology`, `source: penn-ur-overview`, `source: bm-papyrus-anastasi-v`;
+- в authored map copy — буквальный backstage-фрагмент «Для **scaffold** карты это пограничный узел…».
+
+Projection census: Avraam содержит **17 cards / 40 source records**, Ishod — **1 card / 4 source records**; все 18 statements и все 18 limitations преимущественно английские. Это не претензия к английским названиям публикаций и не требование скрыть источники: titles/organizations/links полезны, но raw registry IDs, untranslated editorial claims и lifecycle/status axes не являются готовым читательским аппаратом.
+
+Trusted native browser path был выполнен без force: «Начать изучение» → SVG marker с authored accessible name → tab «Археология». На Avraam/Ur открытая панель показывает 24 строки `source: …`; на Ishod/Гора Ор — четыре. Проверены desktop Light 1280×900 и mobile Dark 390×844 с `isMobile:true`, touch и reduced motion: panel width 386/358px, horizontal overflow 0, console/page errors 0, broken images 0, Axe violations 0. Ishod screenshot SHA-256 `d73d9a3aa40a396a3d5f353d06eefc6def360e86935155a87461a0c20ecf183b` непосредственно показывает `scaffold`, английский claim/limitation и raw source IDs в painted panel.
+
+Это тот же дефект, что Baptist `Research main`/SHA/authority/class/backlog leakage: publication surface проецирует внутреннюю исследовательскую модель вместо reader copy. Canonical ID поэтому обобщён с `GBS-BAPTISTS-RESEARCH-SCAFFOLD-READER-LEAK` до `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`; арифметика не меняется. Closure распространяется на обе семьи: reader-facing localized claim/ограничение, обычные bibliographic links и понятная датировка проверки; internal IDs/status/lifecycle остаются в metadata. Нужен final-surface guard с allowlist для legitimate English titles, а не запрет латиницы.
 
 Product mutation and merge remain outside this audit.
