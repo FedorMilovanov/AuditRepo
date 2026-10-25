@@ -1,0 +1,11 @@
+{"type":"anchor","date":"2026-10-25","product":"015573af602dd7b8d49feb296638b3447364a529","result":"ADMIT","id":"SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT"}
+{"type":"census","explicitIndexRoutes":104,"contentEntries":64,"pageHeadComponents":64,"routeProfiles":106,"seriesFacadeConsumers":45,"seriesSweepFamilies":6,"scaffoldCommands":0}
+{"type":"runtime","seriesFacade":"SeriesReaderChrome.astro","shapes":["flat","book"],"marks":["roman","label","letter","arabic"],"assessment":"shared reader chrome is genuinely reusable; publication ownership is not unified"}
+{"type":"probe","id":"orphan-mdx","mutation":"one schema-valid draft MDX; no route/ownership/profile","command":"npm run astro:build","exit":0,"astroErrors":0,"pagesBuilt":104,"probeRouteBuilt":false,"orphanDiagnostic":false}
+{"type":"probe","id":"orphan-mdx-coverage","command":"npm run content:coverage:audit","exit":0,"expected":0,"explicitSkips":104,"passed":"1/1","probeDetected":false}
+{"type":"probe","id":"config-only-core-item","mutation":"one valid teen core label item; no pages[id], route or data/series.json","astroCheckExit":0,"astroErrors":0,"engineContractsExit":0,"auditProExit":0,"auditProResult":"PASS"}
+{"type":"cause","owner":"defineSeriesConfig","gap":"pages→items is checked; item→pages is required only for arabic book articles; flat roman/label core items may lack page and route"}
+{"type":"duplication","surfaces":["MDX/frontmatter","series items/pages","family wrapper or Body","explicit route","PageHead for some families","data/series.json","editorial/search projections","route profile","page ownership"],"seriesJsonDerived":false}
+{"type":"documentation","guide":"docs/SERIES-ENGINE-GUIDE.md","findings":["copy-neighbour workflow","manual duplicate series data","audit-pro divergence promise contradicted by probe","no standalone path","no scaffold command","route profile/ownership omitted"]}
+{"type":"owners","openProductPrs":[2193,2179,2164,2143],"publicationContractOwner":null,"note":"#2164 is draft and touches only five MDX files; intent not inferred"}
+{"type":"cleanup","probeFilesRemoved":true,"productSourceClean":true,"productMutatedPersistently":false}

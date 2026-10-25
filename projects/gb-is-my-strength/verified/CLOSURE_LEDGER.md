@@ -587,3 +587,11 @@ This entry records the governance change only. It does not claim that the reform
 - Native 1200-Tab controls cannot reach Gill-I/II/context or generic Nagornaya regions while real horizontal wheel pans them. Chromium 153 auto-focuses some `tabIndex=-1` tables inconsistently; that UA heuristic neither supplies authored semantics nor proves WebKit parity.
 - Admit one `SYS-READING-TABLE-KEYBOARD-SCROLL`; do not reopen the repaired Da Vinci timeline and do not count per table. **48 → 49 = 27 direct defects + 4 necessary improvements + 18 system lanes.**
 - Report/receipt: `../reverify/2026-10-25-reading-table-keyboard-scroll.md`, `../reverify/evidence/2026-10-25-reading-table-keyboard-scroll.jsonl`.
+
+## 2026-10-25 — content-authoring / publication-contract universality
+
+- Shared series chrome is genuinely reusable: flat/book shapes, Roman/label/letter/Arabic tiers, 45 facade consumers and six active browser-sweep families. This audit does not relabel route-specific editorial visuals as forks.
+- Publication authoring remains fragmented across MDX, series items/pages, family wrappers or Body/PageHead, explicit route, `data/series.json`, generated projections, route profile and page ownership; current census is 104 explicit routes, 64 content entries, 64 PageHeads and 106 profiles, with no first-class scaffold command.
+- Two disposable exact-main probes establish fail-open admission: schema-valid orphan MDX passes Astro build and content coverage while producing no route; config-only flat core item without page/route/series JSON passes Astro check, engine contracts and audit-pro. Probe files were removed and Product source is clean.
+- Admit one `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; do not duplicate `SYS-HEAD-ASSET-PROJECTION-PROLIFERATION` or `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY`. **49 → 50 = 27 direct defects + 4 necessary improvements + 19 system lanes.**
+- Report/receipt: `../reverify/2026-10-25-content-authoring-universality.md`, `../reverify/evidence/2026-10-25-content-authoring-universality.jsonl`.
