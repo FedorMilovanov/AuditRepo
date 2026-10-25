@@ -2,7 +2,7 @@
 
 Дата: 2026-10-26  
 Product anchor: `80440f9ce4bdfca92769330ea79109625c868725`  
-Disposition: **3 новых direct defects + 1 improvement + 2 system lanes; 2 действующих ряда расширены**
+Disposition: **4 новых direct defects + 1 improvement + 2 system lanes; 3 действующих ряда расширены**
 Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 
 ## 1. Итог
@@ -17,9 +17,10 @@ Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 4. `/articles/sem-tipov-razlichenie-uchiteley/` показывает читателю literal `**` из-за незакрытой Markdown-разметки — новый `GBS-SEM-TIPOV-LITERAL-MARKDOWN-PREFIX`;
 5. `typograf:dry` на зелёном exit 0 сообщает шесть требующих перезаписи retained HTML, поэтому принимается `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`;
 6. словарь структурно исправен и в целом полезен, но шесть пар одного понятия заведены как разные canonical identities; это дробит английское/русское употребление и definitions — improvement `GBS-GLOSSARY-CONCEPT-IDENTITY-CONSOLIDATION`;
-7. targeted control `/baptisty-rossii/goneniya-i-sovest/` подтверждает штатную mouse/touch/keyboard geometry, но продолжение 95-route sweep нашло важное исключение: на desktop `/baptisty-rossii/` legacy `SiteUtils.makeTooltipController` и `article-tooltips.js` v20 одновременно владеют одним `.gterm`; hover оставляет popup с `top:auto!important` вне viewport. Принимается `SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY`. Независимый Axe `region` на body-reparented popup по-прежнему расширяет `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`.
+7. targeted control `/baptisty-rossii/goneniya-i-sovest/` подтверждает штатную mouse/touch/keyboard geometry, но продолжение 95-route sweep нашло важное исключение: на desktop `/baptisty-rossii/` legacy `SiteUtils.makeTooltipController` и `article-tooltips.js` v20 одновременно владеют одним `.gterm`; hover оставляет popup с `top:auto!important` вне viewport. Принимается `SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY`. Независимый Axe `region` на body-reparented popup по-прежнему расширяет `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`;
+8. определение Второго Лондонского исповедания 1677/1689 ошибочно называет его «переработкой Лондонского исповедания 1644 года». Этот brief реально открывается на 11 routes; принимается `GBS-GLOSSARY-1689-CONFESSION-LINEAGE-MISSTATEMENT`. Отдельно Learning Sheet показывает raw canonical forms `Кархемише` и `козьего двора` как названия карточек; это расширяет уже принятую glossary identity/display improvement.
 
-Арифметика после аудита и продолжения: **56 = 30 direct defects + 5 improvements + 21 system lanes**.
+Арифметика после аудита и продолжения: **57 = 31 direct defects + 5 improvements + 21 system lanes**.
 
 ## 2. Объём и чистая база
 
@@ -200,6 +201,8 @@ Runtime использует `textContent` для brief, безопасный о
 
 Это не collision по текущему контракту — именно потому, что контракт проверяет уникальность строки alias, а не тождество понятия. Improvement не требует механически объединить все синонимы: нужно ввести concept ID / declared synonym relation, выбрать canonical display name и сохранить redirects/provenance для старых keys.
 
+Продолжение обнаружило второй аспект того же display-owner пробела. `GillLearningSheet` строит заголовок term card из raw `data-term`, а не из отдельной нормальной lemma/display label. Поэтому на `/articles/krajne-li-isporcheno-serdce/` мобильный reader sheet показывает карточку **«Кархемише»**, а на Gill Context — **«козьего двора»**; в словаре уже есть нормальные aliases `Кархемиш` и `козий двор`. Это не новый direct count: closure identity improvement уже требует одного display owner. Теперь она должна также запрещать падежную форму как canonical card heading и отделять match aliases от reader-facing lemma.
+
 ### 8.3 Specialist coverage boundary
 
 Ручная проверка отклонила broad regex-выводы по словам «контекст», «паттерн», «нарратив», «маркер» и английским названиям книг: в богословском/историческом контексте они часто законны. Не каждое специальное слово требует tooltip; пояснение должно появляться при первом действительно непрозрачном употреблении, а не превращать текст в сплошную разметку.
@@ -271,6 +274,7 @@ Disposition: расширить `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, г
 
 - `GBS-BAPTISTS-RESEARCH-SCAFFOLD-READER-LEAK`;
 - `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`;
+- `GBS-GLOSSARY-1689-CONFESSION-LINEAGE-MISSTATEMENT`;
 - `SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY`;
 - расширение `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT` на открытый glossary popup.
 
@@ -289,7 +293,8 @@ Disposition: расширить `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, г
 - конкретные русские кальки и mixed-script typo;
 - literal `**` в browser text;
 - шесть exact typograf deltas;
-- шесть semantic duplicate pairs;
+- шесть semantic duplicate pairs и две падежные raw canonical headings в Learning Sheet;
+- неверная генеалогия Второго Лондонского исповедания в glossary brief на 11 routes;
 - dual-owner desktop hover geometry failure на `/baptisty-rossii/`;
 - Axe landmark failure на открытом popup.
 
@@ -312,7 +317,7 @@ Disposition: расширить `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, г
 4. full Hermenevtika prose review and quiz render, mixed-script guard;
 5. compiled prose has no accidental literal Markdown delimiters;
 6. strict typograf check exits non-zero on a negative fixture and cleanly on repaired corpus;
-7. glossary concept IDs/synonym redirects preserve all old aliases with one definition owner per declared concept;
+7. glossary concept IDs/synonym redirects preserve all old aliases with one definition owner and nominative reader-facing display lemma per declared concept; the 1689 brief states the owner-verified 1677/1689 lineage rather than deriving it from the 1644 confession;
 8. tooltip click/touch/Enter/Escape geometry at desktop/mobile Light/Dark/reduced motion, включая hub `/baptisty-rossii/` и mouse hover;
 9. ровно один interaction owner на каждый `.gterm/.fn-marker/.bref`, negative fixture на попытку dual registration и отсутствие legacy переписывания inline priority/geometry;
 10. Axe `region` = 0 for opened glossary popup and existing injected-surface matrix;
@@ -332,5 +337,27 @@ Disposition: расширить `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, г
 - mouse `pointerenter/pointerover` проходят через оба owners; legacy позиционер последним снимает priority. Keyboard focus control остаётся видимым: rect [488, 620, 380, 263.53], `top/left` priority `important`. Mobile tap control также остаётся внутри 390×844 как bottom sheet. Следовательно, это modality/owner collision, а не плохое определение или общий viewport failure.
 
 Это уточняет, а не отменяет §9: `/baptisty-rossii/goneniya-i-sovest/` остаётся корректным positive control, но прежняя формулировка о глобально здоровой mouse geometry была слишком широкой. Принимается одна system lane `SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY`, а не отдельный route defect: устранить нужно параллельное владение shared trigger family. Closure требует single-owner census, native hover/click/focus/tap на hub и representative generated/manual/keyless glossary, footnote/reference controls, desktop/mobile Light/Dark/reduced motion, viewport containment и отсутствие regression в focus/Escape/overlay contracts.
+
+## 15. Продолжение: factual accuracy и reader-facing lemma всего словаря
+
+Проведён отдельный review всех 130 records: definition, detail, aliases, canonical key, category и фактическая browser-проекция. В payload нет raw URL, backticks, internal filenames или неразрешённых HTML-тегов; единственный используемый detail tag — allowlisted `<em>` (110 открывающих/закрывающих tags). Иностранные термины получают русское объяснение. Формула «не просто …» повторяется в 24 details и создаёт заметно шаблонный голос, но сама по себе не делает определения непонятными или ложными, поэтому отдельный defect по стилю не принят.
+
+### 15.1 Новый direct defect: неверная генеалогия исповедания
+
+Canonical record `лондонское баптистское исповедание 1689 года` сообщает:
+
+> «…переработка Лондонского исповедания 1644 года, наследовавшая структуру Уэстминстерского исповедания 1647 года».
+
+Это смешивает конфессиональную преемственность с текстовой генеалогией. Второе Лондонское исповедание впервые опубликовано в 1677 году и принято в 1689-м; его текст близко основан на Вестминстерском исповедании 1646 года с баптистскими изменениями. Это подтверждает и собственный соседний glossary record `Вестминстерское исповедание`, и публичный preservation source `BaptistSymbolics/1689Confession` at `6d1e08ab75e5980e32559653c3bed7d3588c9611` (`README.md`, Background: first published 1677, adopted 1689, closely based on Westminster 1646). Первое Лондонское исповедание 1644/1646 — более ранний исповедный ориентир той же традиции, но называть текст 1677 года его «переработкой» неточно.
+
+Ошибка не лежит только в JSON. Chromium на `/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/` native focus открывает этот exact brief (`aria-expanded=true`), а rendered corpus содержит canonical trigger на **11 routes**. Принимается `GBS-GLOSSARY-1689-CONFESSION-LINEAGE-MISSTATEMENT`. Closure: owner-reviewed формулировка должна различать историческую преемственность 1644/1646 и непосредственную Westminster/Savoy textual basis 1677; browser check всех 11 current trigger routes подтверждает новый brief, а source fixture не позволяет снова назвать 1677 простой переработкой 1644.
+
+### 15.2 Reader-facing raw lemma
+
+На mobile 390×844 trusted tap по learning opener на Krajne создаёт 17 term cards, среди которых заголовок **«Кархемише»**. Это canonical key, выбранный по падежной поверхности «при Кархемише», хотя aliases уже содержат `Кархемиш`; definition говорит о битве, detail — о городе. Аналогично Gill Context использует canonical `козьего двора`, хотя alias `козий двор` уже существует. Tooltip в предложении может законно сохранять склонённую поверхность; дефект display model в том, что reader sheet повторяет raw match key как самостоятельный заголовок. Этот результат расширяет `GBS-GLOSSARY-CONCEPT-IDENTITY-CONSOLIDATION`, не создавая второй work unit.
+
+### 15.3 Соседняя technical leakage не считается повторно
+
+Browser corpus также подтверждает на `/journal/dossiers/g3/` reader-visible `Research snapshot`, `tier A2`, `REFERENCE`, `Raw archived payload SHA …` и `decoded HTML SHA …`. Это текущий контекст уже принятого `GBS-JOURNAL-READER-SOURCE-LOCATORS-MISSING`: внутренние IDs/authority/provenance показываются вместо разрешаемой читательской библиографии. Ряд расширен точным current-anchor свидетельством; новый defect не добавлен. На `/rodosloviye/` слова `relation-level` и `runtime` находятся в явно обозначенном интерфейсе исследовательского атласа и без отдельного доказательства читательского вреда не классифицированы как leakage.
 
 Product mutation and merge remain outside this audit.
