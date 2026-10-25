@@ -810,3 +810,28 @@ Scaffold должен сначала спросить intent/indexability/discov
 Следовательно, `existing-series-item` нельзя считать универсально разрешённой операцией. Typed manifest обязан объявлять `extensionPolicy` серии (`open`, `locked`, `owner-review`) и ссылку на canonical plan/owner. Scaffold должен отказать до записи для locked Pastor, а positive fixture выполнять на явно extensible test/production family. Автоматически ослаблять Pastor guard или менять I–IX в рамках этого аудита запрещено.
 
 Positive resulting-main existing-item publication поэтому честно отмечена **NOT DONE: owner approval/extensible target отсутствует**. Доказаны renderer capability, точные late-stage guards и требуемый ранний policy contract. Fixture удалён, Product tracked source чист; новый work unit не создаётся.
+
+## 38. Продолжение — migration default для extension policy
+
+Effective all-family import probe проверил поле extension policy на всех шести configs:
+
+| Series | Shape | `extensionPolicy` |
+|---|---|---|
+| `dzhon-gill` | flat | отсутствует |
+| `pastor-series` | flat | отсутствует |
+| `genesis-6` | flat | отсутствует |
+| `hard-texts` | book | отсутствует |
+| `teen-double-life` | flat | отсутствует |
+| `russian-baptism` | book | отсутствует |
+
+Поле отсутствует и в `SeriesConfig` interface, поэтому нынешнее отсутствие нельзя трактовать как implicit `open`. Поведенчески доказан только Pastor lock; назначать остальным пяти `open` или `locked` без owner review было бы новым недокументированным решением.
+
+Безопасная migration semantics:
+
+- Pastor → `locked` с canonical I–IX/157 и ссылкой на family guard/plan;
+- остальные существующие configs → `owner-review` до явной классификации;
+- новая серия обязана выбрать policy при регистрации;
+- отсутствие policy после migration является schema error, не fallback `open`;
+- scaffold может выполнить read-only plan для `owner-review`, но write требует owner decision.
+
+Так closure не превращает выявленный contract gap в разрешение самовольно расширять исторические/редакционные серии.

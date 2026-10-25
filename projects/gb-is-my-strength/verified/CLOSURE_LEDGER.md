@@ -762,3 +762,8 @@ This entry records the governance change only. It does not claim that the reform
 - A complete Pastor Roman-X transaction builds and passes audit-pro/profile strict, then correctly fails the family canon guard at 10≠9 parts, changed slug set and 159≠157 minutes. Pastor I–IX must not be weakened without owner approval.
 - Incomplete config-only mutation paradoxically passes because data stays at nine parts; manifest/config has no early extension policy. Closure adds typed open/locked/owner-review policy and pre-write refusal.
 - Positive current-family extension is explicitly NOT DONE for lack of an authorized extensible target; require an extensible fixture. Folded; arithmetic unchanged.
+
+### Extension-policy migration default
+
+- None of six effective configs nor `SeriesConfig` declares extension policy. Absence cannot mean open.
+- Migrate proven Pastor to locked; default the other five existing families to owner-review until classified; require explicit policy for new series and fail schema on omission. Folded; arithmetic unchanged.
