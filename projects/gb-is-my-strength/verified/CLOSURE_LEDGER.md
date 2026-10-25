@@ -703,3 +703,9 @@ This entry records the governance change only. It does not claim that the reform
 
 - The 63 navigable rows contain 61 distinct local IDs: `spravochnik` validly occurs in Gill, Hard Texts and Baptists. Global item-ID uniqueness is therefore rejected.
 - All 63 targets match the composite rendered pair `data-gbs2-series=seriesId` + `data-gill-v16=item.id`; closure wording is corrected to `(seriesId,item.id)`. No arithmetic change.
+
+### Config→`data/series.json` projection correction
+
+- Shared configs expose 63 navigable rows; data projects 44, with 19 config-only (Pastor 1, Hard Texts 18), no reverse extras, and matching relative order for projected rows. Nagornaya is a five-part native data-only family.
+- No universal kind/tier exclusion explains membership: Genesis includes satellites while the guide forbids them; labels are included/excluded by family; Pastor disproves the promised config-only audit failure.
+- Blanket equality is rejected. Closure requires typed inclusion policy and equality against that declared projection; current omissions need owner classification. Folded; no arithmetic change.

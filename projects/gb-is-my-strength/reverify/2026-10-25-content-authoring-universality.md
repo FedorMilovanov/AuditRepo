@@ -571,3 +571,27 @@ Production уже рендерит подходящую пару markers. Для
 - composite matches 63/63, mismatches 0.
 
 Closure формулировка исправлена на `(seriesId, item.id)`, а не только `item.id`. Это сохраняет законные одинаковые локальные ID между сериями и одновременно исключает переход в одноимённую страницу чужой серии.
+
+## 27. Уточнение — config↔`data/series.json` не является blanket equality
+
+Effective manifest сопоставлен с `data/series.json` по route slug. Из 63 navigable shared-config items в data projection присутствуют 44; data-only rows внутри этих шести series нет. Разрез:
+
+| Series | Config navigable | Data parts | Config-only |
+|---|---:|---:|---:|
+| Gill | 6 | 6 | 0 |
+| Pastor | 10 | 9 | 1 (`diotrophes`, label) |
+| Genesis 6 | 6 | 6 | 0 |
+| Hard Texts book | 24 | 6 | 18 |
+| Teen | 7 | 7 | 0 |
+| Baptists book | 10 | 10 | 0 |
+
+Отдельно `nagornaya` имеет пять data parts и native family без shared config. Для 44 пересекающихся записей порядок projection совпадает с config order.
+
+Пропуски нельзя вывести из универсального `mark`/`tier` правила:
+
+- Pastor исключает один `label`, но Gill, Teen и Baptists включают labels;
+- Hard Texts выбирает 6 из 24 navigable rows: оба labels и по отдельным Arabic entries;
+- Genesis включает оба `tier:'satellite'`, хотя guide §2 буквально говорит «спутники в series.json НЕ вносятся»;
+- guide §0 требует «тот же порядок/минуты, что в конфиге», а §5 обещает, что config-only part сделает `audit-pro` красным; Pastor negative witness уже доказал обратное.
+
+Поэтому прежняя краткая формулировка «derive/equality-check весь config» слишком груба и могла бы сломать текущие intentional либо legacy discovery projections. Closure исправлена: typed manifest обязан объявить inclusion policy каждой серии/строки; projected membership/order/slug/time проверяются на равенство объявленной projection, а каждое исключение должно быть явным и обоснованным. Текущие 19 config-only rows требуют owner classification, а не автоматического принятия или удаления.

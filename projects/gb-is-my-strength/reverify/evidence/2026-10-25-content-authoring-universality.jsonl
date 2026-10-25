@@ -66,3 +66,7 @@
 {"type":"identityScope","navigableRows":63,"distinctItemIds":61,"crossSeriesCollision":{"itemId":"spravochnik","series":["dzhon-gill","hard-texts","russian-baptism"]},"globalItemIdUniquenessRequired":false}
 {"type":"productionInvariant","id":"composite-rendered-series-identity","targets":63,"pairMatches":63,"mismatches":0,"seriesMarker":"data-gbs2-series","pageMarker":"data-gill-v16","semanticKey":["seriesId","item.id"]}
 {"type":"correction","supersedes":"page-id-only identity wording in immediately preceding continuation","closureIdentity":"(seriesId,item.id)","arithmeticChanged":false}
+{"type":"seriesDataProjectionCensus","sharedConfigNavigable":63,"projectedToData":44,"configOnly":19,"dataOnlyWithinSharedSeries":0,"projectionOrderMatches":44,"nativeDataOnlyFamily":{"seriesId":"nagornaya","parts":5}}
+{"type":"seriesDataProjectionByFamily","counts":{"dzhon-gill":"6/6","pastor-series":"9/10","genesis-6":"6/6","hard-texts":"6/24","teen-double-life":"7/7","russian-baptism":"10/10"},"universalKindTierRule":false}
+{"type":"documentationContradiction","guideClaims":["same order/minutes as config","satellites excluded","config-only part makes audit-pro red"],"counterexamples":["Hard Texts curated 6/24","Genesis includes 2 satellites","Pastor config-only witness passes audit-pro"],"newWorkUnit":false}
+{"type":"closureCorrection","blanketConfigDataEquality":false,"required":"typed inclusion policy plus equality to declared projection","unclassifiedConfigOnlyRows":19,"ownerDecisionRequired":true,"arithmeticChanged":false}
