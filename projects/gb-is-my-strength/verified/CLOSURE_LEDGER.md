@@ -35,6 +35,36 @@ Do not copy every workflow run, later blob SHA or unrelated current HEAD into th
 
 ---
 
+## 2026-10-25 — teen-series letter taxonomy and core-progress admission
+
+- Scope: source/history/contracts plus all seven «Подросток за кадром» routes at Product `main@015573af602dd7b8d49feb296638b3447364a529`.
+- Result:
+  - editorial/engineering decision: sequence I→II→III→A→B→C→D is intentional since `a6eeda417f`; A–D separate the adult-child continuation from the teen trilogy and remain first-class core steps;
+  - negative boundary: `mark.kind='letter'` means satellite in the shared engine and must not replace the current A–D `label` encoding; IV–VII renumbering needs owner/editorial authority;
+  - admitted: `GBS-TEEN-SERIES-CORE-STEP-PROGRESS` — shared rail counts only three Roman items under «Прогресс серии» and gives A–D no 4–7/7 position, despite the public seven-step contract; MASTER becomes 27 defects + 4 improvements + 18 system lanes = **49**;
+  - rendered closure boundaries: Chromium 153 desktop/mobile, dark/reduced-motion, 14/14 correct route identity, images, accessible dialog names, no overflow/errors; local LCP 364–740 ms, mobile CLS 0 and stable desktop controls ≤0.02169;
+  - duplicate prevention: 12/12 native teen rail/overlay transitions repeat `SYS-READER-DOCUMENT-NAVIGATION-INTERCEPTION` (URL changes, H1 remains, target requests 0), so no teen-specific navigation row is created;
+  - no separate bottom-neighbor defect: this wrapper does not render a bottom neighbor block and no current teen contract promises one; existing surfaces are rail/overlay.
+- Product evidence: no Product mutation. `npm ci`, full `strangler:build` and teen release contract PASS; foundation contract is a phase-specific prepublication gate and is intentionally inapplicable after release.
+- Regression witness: closure needs an explicit core-sequence progress model with marks retained, seven exact positions across desktop/mobile, and independent repair proof for cross-document navigation.
+- Live evidence: not claimed; exact-SHA production-like Chromium evidence retained.
+- Detailed evidence: `../reverify/2026-10-25-teen-series-letter-taxonomy.md` and `../reverify/evidence/2026-10-25-teen-series-letter-taxonomy.jsonl`.
+
+## 2026-10-25 — current-main series navigation document-identity admission
+
+- Scope: owner-corrected Roman/Arabic series navigation, mobile part/book overlay, bottom previous/next controls and nearby circular progress UI on Product `main@948ecff03189613180cce73731ce072ccc2ae3ed`.
+- Result:
+  - admitted: `SYS-READER-DOCUMENT-NAVIGATION-INTERCEPTION` as one shared lifecycle root; MASTER arithmetic becomes 26 defects + 4 improvements + 18 system lanes = **48**;
+  - native matrix: all 63 published SeriesReader routes, **772 activations**, pointer/touch/Enter across desktop rail, mobile overlay and bottom neighbours; **0/772 passed**, every activation changed URL/history but retained source H1/body and sent zero target document requests;
+  - root: `reader-tts-lifecycle.js` intercepts cross-document Navigation API events only to retire TTS, thereby commits same-document URL state without destination rendering;
+  - false-green: dedicated TTS lifecycle browser contract passes because source/destination fixture HTML is identical and it checks navigation/retirement but not destination identity; series guards validate markup/data/fragments, not native document replacement;
+  - classification: desktop/mobile circles are scroll/series progress indicators, stable without scroll, not timed auto-advance owners; bottom neighbour anchors do exist and share the lifecycle failure;
+  - boundary: TLP remains a separate audit; its valid fragment/sticky findings do not own this GBS report.
+- Product evidence: no Product mutation. Open #2192 overlaps Gill markup but not lifecycle root; #2179 owns broad Actions changes; #2164/#2143 are content/data.
+- Regression witness: not yet repaired; closure requires distinct destination H1/body, target request/commit, history and native rail/overlay/bottom input evidence while retaining TTS retirement/reconnect.
+- Live evidence: production target identified; runtime proof is exact-SHA production-like local Chromium because sandbox production delivery is not used as defect evidence.
+- Detailed evidence: `../reverify/2026-10-25-series-navigation-document-identity.md` and compact JSONL beside it.
+
 ## 2026-08-06 — AuditRepo operating-model reform initiated
 
 - Scope: AuditRepo governance and documentation.
@@ -541,3 +571,209 @@ This entry records the governance change only. It does not claim that the reform
 - `GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS` is not falsely closed: duplicate count is 1, but Escape/button close focus lands on body/mobile menu rather than clicked `#heroSearchBar`. Same unit narrows via alias to active `GBS-HOME-SEARCH-FOCUS-RESTORE`.
 - Separate `GBS-MOBILE-CHROME-NAVBAR-SYNC-LAG` remains: first wheel hides navbar while mobile chrome stays hidden; second event synchronizes and proves repaired controls are operable after actual reveal.
 - Resulting-main checks terminal 79 =62 success +3 failure +14 skipped; failures named npm-audit, Chromium WebKit cold bootstrap and Home Chromium WebKit contract, causes not established. No all-green/live/production claim. Evidence: `../reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md` and `../reverify/evidence/2026-10-23-resulting-main-caeb92c.json`.
+
+## 2026-10-25 — Gill folded-navigation resulting-main closure
+
+- Product #2192 is merged in exact current main `015573af602dd7b8d49feb296638b3447364a529`; Product source was not mutated during reverify.
+- `SYS-GILL-NAV-COLLAPSED-FOCUS-EXPOSURE` is `FIXED-CURRENT`: one reversible `gbSetFolded` contract now covers initial/dynamic desktop subgroups, whole desktop TOC and mobile part/article accordions.
+- Chromium 153: six Gill routes × desktop/mobile initial census has 0 closed regions without inert; detailed flat/book witnesses have 320 forward/reverse Tab inputs with 0 folded-focus entries, CDP AX exclusion/restoration, focus evacuation on native scrollspy folding, reversible controls and retained counter/active/metro geometry.
+- **49 → 48 = 27 direct defects + 4 necessary improvements + 17 system lanes.** Independent mobile Axe residues were disclosed rather than converted into a global Axe PASS; book mark/time contrast extends the existing contrast batch, while the manuscript-table signal remains pending bounded reconciliation.
+- Report/receipt: `../reverify/2026-10-25-gill-folded-navigation-closure.md`, `../reverify/evidence/2026-10-25-gill-folded-navigation-closure.jsonl`.
+
+## 2026-10-25 — reading-table keyboard-scroll root reconciliation
+
+- July incoming evidence had separate Gill/Nagornaya table findings and explicitly proposed one `READING-TABLE-KEYBOARD-SCROLL` root, but no canonical MASTER row or later closure witness existed.
+- Exact Product main `015573af…`, production-like dist + Pagefind: all 15 table routes checked in Chromium 153 at 320/390/641 px (45 profiles). Actual local X-scroll regions = 19/22/9; Axe serious `scrollable-region-focusable` = 18/20/1; global page overflow, broken images and page errors = 0.
+- Native 1200-Tab controls cannot reach Gill-I/II/context or generic Nagornaya regions while real horizontal wheel pans them. Chromium 153 auto-focuses some `tabIndex=-1` tables inconsistently; that UA heuristic neither supplies authored semantics nor proves WebKit parity.
+- Admit one `SYS-READING-TABLE-KEYBOARD-SCROLL`; do not reopen the repaired Da Vinci timeline and do not count per table. **48 → 49 = 27 direct defects + 4 necessary improvements + 18 system lanes.**
+- Report/receipt: `../reverify/2026-10-25-reading-table-keyboard-scroll.md`, `../reverify/evidence/2026-10-25-reading-table-keyboard-scroll.jsonl`.
+
+## 2026-10-25 — content-authoring / publication-contract universality
+
+- Shared series chrome is genuinely reusable: flat/book shapes, Roman/label/letter/Arabic tiers, 45 facade consumers and six active browser-sweep families. This audit does not relabel route-specific editorial visuals as forks.
+- Publication authoring remains fragmented across MDX, series items/pages, family wrappers or Body/PageHead, explicit route, `data/series.json`, generated projections, route profile and page ownership; current census is 104 explicit routes, 64 content entries, 64 PageHeads and 106 profiles, with no first-class scaffold command.
+- Two disposable exact-main probes establish fail-open admission: schema-valid publishable MDX (`draft:false`, `noindex:false`) passes Astro build and content coverage while producing no route; config-only Pastor flat core item without page/route/series JSON passes production-like build and full static publication validation while rendering 30 dangling links across 10 pages. Probe files were removed and Product source is clean.
+- Admit one `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; do not duplicate `SYS-HEAD-ASSET-PROJECTION-PROLIFERATION` or `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY`. **49 → 50 = 27 direct defects + 4 necessary improvements + 19 system lanes.**
+- Report/receipt: `../reverify/2026-10-25-content-authoring-universality.md`, `../reverify/evidence/2026-10-25-content-authoring-universality.jsonl`.
+
+### Standalone-route staged admission continuation
+
+- Generic `getCollection + ArticleLayout` fixture built and passed MDX strict, profile strict, source strict and audit-pro while unregistered; source-only `page-ownership:check` correctly failed with exactly one undeclared-route diagnostic.
+- After adding ownership without a profile, `route:profiles:check --strict` still passed and `surface:registry:check` supplied the missing-surface errors. Thus the complete chain has protection, but the workflow is staged rather than atomic and the series guide omits the decisive ownership/surface admission path.
+- No new work unit: evidence strengthens `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; arithmetic remains **50 = 27 + 4 + 19**. Fixtures were removed and Product source is clean.
+
+### New-series executable-validation continuation
+
+- A deliberately invalid but type-correct orphan `*SeriesConfig.ts` (`items:[]`, `defineSeriesConfig`, side-effect registry write) passed Astro check, engine contracts and audit-pro because no consumer imported it.
+- Importing the same module from a temporary route made Astro build fail with the correct addressable Russian `items пуст` diagnostic. Runtime topology validation is strong; config discovery/admission is the missing layer.
+- No separate book-engine defect and no arithmetic change: the result strengthens `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`. All fixtures were removed; Product source is clean.
+
+### Exact surface-taxonomy continuation
+
+- Executable registry at the same Product anchor reports 105 surfaces: 76 series (40 flat/36 book), 4 article, 10 page and 15 special; registry/capability mutation contracts pass.
+- Of 68 reading-series routes, 63 use the shared facade and five Nagornaya chapters are explicit native exceptions. Six landings and two references intentionally use non-reader adapters. Thus shared series runtime is broad but the guide's literal «all series» wording needs this boundary.
+- Standalone `article` has only four routes and three adapter patterns; Lawson is the sole generic `ArticleLayout` consumer. `page` is capability-registry + route-native composition; `special` correctly remains adapter-based.
+- No new defect/arithmetic change. This taxonomy refines `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; **50 = 27 + 4 + 19**.
+
+### Series fragment-guard wiring continuation
+
+- The implemented rendered `partToc` fragment validator is source-only in default `series:facade:guard`; neither `engine:contracts` nor `engine:guard` invokes its `--require-dist` mode, and no package/workflow entry does so.
+- A missing-target fixture passed default facade guard and failed strict mode with the exact route/fragment. Fresh exact-main production-like strict baseline passes: 64 pages, 1,999 links, 1,141 unique targets, 0 broken.
+- No current content defect/new unit. This executable negative strengthens the broken-TOC acceptance criterion of `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; arithmetic remains **50 = 27 + 4 + 19**.
+
+### Content-schema positive control
+
+- Route-less MDX with undersized title/description fails Astro check with `InvalidContentEntryDataError` and both exact field minima. Collection schema therefore covers orphan entry shape; no direct-import schema-bypass defect is admitted.
+- The active root remains publication resolution of otherwise valid content, not frontmatter validation. Arithmetic unchanged.
+
+### Draft-staging self-correction
+
+- The first orphan MDX probe used `draft:true`/`noindex:true`; it is not defect proof. Teen history (`870b28dd` → later `a6eeda4`) confirms content-only route-less drafts are intentional. That witness is reclassified as a healthy staged-authoring control.
+- Superseding probe omits both flags (schema defaults `false`): publishable valid MDX still passes Astro build/content coverage, leaves page count 104 and produces no route. The admitted root therefore remains, narrowed to publishable orphan admission.
+- Closure must allow explicit drafts and fail publishable orphans. Arithmetic remains **50 = 27 + 4 + 19**.
+
+### Strict-gate correction and decisive Pastor witness
+
+- Publishable orphan MDX is caught late but correctly by `migration:metadata:check:strict`, which belongs to full static publication validation. It is no longer claimed as full-gate fail-open; draft staging and content provenance remain healthy controls.
+- Teen config-only mutation also fails full build through its family media lookup. Superseding Pastor mutation has no such incidental guard: production-like build and full `validate:static-publication` pass, while 10 pages render 30 links to a missing route; metadata strict, audit-pro, dist publication, ownership and strict fragments all pass.
+- Root is retained and narrowed to missing universal series item→page/route/data admission plus fragmented first-time workflow. Arithmetic remains **50 = 27 + 4 + 19**.
+
+### New book-shaped series positive dry run
+
+- A from-scratch one-chapter/one-article `shape:'book'` config rendered through `SeriesReaderChrome` with no new engine component: build 0, page count 105, facade consumers 46, strict fragments 65 pages/1,097 targets/0 broken. Book is confirmed as shared-engine shape.
+- The probe intentionally lacked ownership/profile/full head and makes no production-admission claim. Rendering reuse does not supply the authoring transaction.
+- Head census: 64 components /12,198 lines; all share `ReaderPreferencesHead`, while all own `<title>`, 62 own JSON-LD and none uses central `Seo.astro`. This is authoring context, not a duplicate of the active head-asset projection lane.
+- No arithmetic change; `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT` remains **50 = 27 + 4 + 19**.
+
+### Standalone publication transaction continuation
+
+- Minimal generic standalone path is viable with four authored owners: MDX, `ArticleLayout` route, ownership and route profile. Ownership/profile/surface/provenance checks then pass; editorial registry check fails precisely on the missing record.
+- `editorial-metadata-registry --write --build` creates record 73 and 109 pages while retaining only 72 approved projections; review remains fail-closed. It touches the central registry plus five supplement files, which a first-time agent must recognize as generated fan-out.
+- This is a positive safety boundary but an undocumented/distributed transaction. No new unit or arithmetic change; fixtures/generated changes were removed and Product source is clean.
+
+### Series registry collision continuation
+
+- Two valid temporary configs with the same ID both passed build/engine contracts; import order A→B silently made `seriesConfig(id)` return B. No collision diagnostic exists.
+- Current `russian-baptism` intentionally performs flat-base→book-public replacement, so closure needs a typed explicit override/composition rather than a blanket duplicate ban. `seriesConfig()` has no production consumers; wrappers import constants directly.
+- No current reader defect/new unit. This strengthens the manifest/discovery boundary of `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; arithmetic unchanged.
+
+### Authoring-contract closure synthesis
+
+- Canonical closure boundary is reconciled to all probes: explicit route-less drafts remain valid; strict provenance for publishable MDX is preserved; decisive fail-open is Pastor item→page/route/data; new config discovery, typed duplicate semantics, same-/cross-document target checks and documented transaction orchestration are required.
+- Editorial metadata projection must remain approval-gated, and approved Baptist flat→book composition must not be rejected as an accidental duplicate. No new arithmetic change.
+
+### New flat-series positive dry run
+
+- From-scratch one-part flat config rendered through unchanged `SeriesReaderChrome`: build 0, 105 pages, facade consumers 46, strict fragments 65 pages/1,097 targets/0 broken; no new engine component.
+- Together with the book probe this closes the positive runtime-shape matrix. Production admission remains a separate transaction; no new work unit/arithmetic change.
+
+### Series data/config asymmetry continuation
+
+- Data-only published Pastor part correctly fails audit-pro with an exact missing-HTML diagnostic; data→route protection exists.
+- Opposite TS-config→page/route/data direction remains fail-open and renders dangling links. Closure adds the reverse relation without weakening the healthy data-first guard. No new unit/arithmetic change.
+
+### Series landing/hub continuation
+
+- Registry has six series landings (2 book/4 flat), but no generic landing renderer: three resolve shared configs and three are explicit native compositions. Shared article chrome does not create hubs.
+- `/pastor-series/` remains a page/pastor-index; its membership drift stays owned by `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY`, not double-counted here.
+- Authoring closure requires a declared hub/catalog/parent strategy, not visual homogenization. No new unit/arithmetic change.
+
+### Registry import-graph continuation
+
+- Directly importing the public registry exposes only `dzhon-gill`; five other valid lookup IDs throw `Unknown series config` until their family modules are imported for side effects.
+- Explicitly importing all families yields six IDs and the intended Baptist book override. Closure therefore requires a typed manifest that owns membership and approved replacement order. Folded into authoring contract; no arithmetic change.
+
+### Reverse item→page invariant feasibility
+
+- Across six effective configs: 71 items = 63 navigable + 8 book chapter headers; all 63 navigable items have exactly corresponding page records, with zero exceptions.
+- Therefore `non-chapter item ⇒ pages[item.id]` can be enforced without migration/allowlist and blocks the Pastor witness. Route/article identity remains a separate check. Folded; no arithmetic change.
+
+### Navigable href→route invariant feasibility
+
+- All 63 effective non-chapter items have unique hrefs resolving to 63 source `index.astro` routes and 63 built `index.html` documents; missing=0.
+- Item→page and href→route remain independent assertions. Both can be enforced with positive 63/63 production fixtures and no allowlist. Folded; no arithmetic change.
+
+### Item→rendered route identity continuation
+
+- `defineSeriesConfig` accepts two IDs/pages sharing one real href, so existence alone cannot establish article identity.
+- Production baseline is clean: all 63 built href targets expose exactly one `data-gill-v16` matching expected `item.id`; 0 mismatches/multiple identities.
+- Closure checks href existence + uniqueness + rendered identity (marker may later be neutrally renamed). Folded; no arithmetic change.
+
+### Composite rendered identity correction
+
+- The 63 navigable rows contain 61 distinct local IDs: `spravochnik` validly occurs in Gill, Hard Texts and Baptists. Global item-ID uniqueness is therefore rejected.
+- All 63 targets match the composite rendered pair `data-gbs2-series=seriesId` + `data-gill-v16=item.id`; closure wording is corrected to `(seriesId,item.id)`. No arithmetic change.
+
+### Config→`data/series.json` projection correction
+
+- Shared configs expose 63 navigable rows; data projects 44, with 19 config-only (Pastor 1, Hard Texts 18), no reverse extras, and matching relative order for projected rows. Nagornaya is a five-part native data-only family.
+- No universal kind/tier exclusion explains membership: Genesis includes satellites while the guide forbids them; labels are included/excluded by family; Pastor disproves the promised config-only audit failure.
+- Blanket equality is rejected. Closure requires typed inclusion policy and equality against that declared projection; current omissions need owner classification. Folded; no arithmetic change.
+
+### Config/data field-level parity
+
+- Across 44 projected shared-series rows: slug/order/normalized minutes are 44/44 equal; literal titles are only 15/44 equal because rail and discovery copy have contextual roles.
+- Closure equality is field-aware: strict identity/order/time, declared title authority/adapters and family ordinal policy—not whole-record string equality. Folded; no arithmetic change.
+
+### Stale-dist browser-guard continuation
+
+- With Pastor source mutated to hide the reader and dist deliberately not rebuilt, direct Chromium 153 `engine-sweep.mjs` still exits 0 at 221/221: it validates whatever dist exists and has no freshness/provenance check.
+- Guide mentions the manual build precondition, but closure needs one atomic build+copy+browser command or deterministic stale-artifact rejection. Browser assertions themselves are not disproved. Folded; no arithmetic change.
+
+### Consolidated minimal closure blueprint
+
+- Use a pure typed publication manifest: unique register plus explicit reviewed compose for Baptist; records connect source/body, route, ownership/profile, series composite identity, declared data projection and discovery strategy while preserving existing routes/layouts/visuals.
+- One plan→scaffold→clean build/copy→project/check→editorial-pending→fresh-dist browser transaction owns admission. Positive and negative fixtures are enumerated in report §30.
+- This is the implementation boundary of the existing authoring root, not a new unit; arithmetic unchanged.
+
+### Authoring transaction failure semantics
+
+- Existing editorial write legitimately fans out to one central registry plus five supplements. Unified admission must preflight the complete write set, refuse authored overwrite, preserve review state and be idempotent.
+- Closure fixtures now include dry-run zero diff, second-run zero semantic diff, owner collision and injected mid-projection failure without false publication success. Folded; arithmetic unchanged.
+
+### Authoring audit saturation refresh
+
+- Product main remains exact anchor `015573af…`; open #2193/#2179/#2164/#2143 do not own the publication control plane. AuditRepo exact-head `76d9551` checks passed.
+- Positive shape matrix and decisive safety negatives are complete. Remaining choices are implementation API plus owner classification of 19 config-only projection rows; no new independent root or Product repair. Arithmetic unchanged.
+
+### Generic page / special-application continuation
+
+- A new indexable `BaseLayout` page passes production-like build and full static validation after four explicit owners: route, page ownership, route profile and sitemap. Staged checks fail precisely on each missing owner; no separate PageHead/editorial article record is required.
+- Plain-Astro-dist full-static Gill parity red disappears after the required production-like build and is not a defect. The 15 special/application routes remain declared family adapters, not candidates for a generic page scaffold.
+- Folded into the authoring contract; no new row/arithmetic change.
+
+### Explicit noindex generic-page control
+
+- A `BaseLayout` route with ownership + `seo.indexable:false` profile, explicit reason and no sitemap entry passes production-like build and full static validation.
+- Closure distinguishes four-owner indexable page from valid three-owner noindex page and route-less content draft; sitemap is required only for indexable publication and forbidden for explicit noindex. Folded; arithmetic unchanged.
+
+### Declared discovery-strategy continuation
+
+- All 106 route profiles lack a discovery/inbound/catalog strategy field; audit-pro validates outgoing targets, not inbound reachability. The indexable generic-page probe passes with sitemap but no catalog/hub/internal link.
+- Sitemap-only may be valid, so closure requires a typed discovery decision/reason rather than a blanket menu-link rule. Folded into publication transaction; arithmetic unchanged.
+
+### Shape→owner scaffold decision matrix
+
+- Report §36 consolidates eight intents from route-less draft through standalone/page/shared flat/book and declared special adapter, separating authored owners from generated/review steps.
+- Scaffold must ask intent/indexability/discovery before writes and cannot infer publication or auto-promote draft/noindex. This is closure guidance for the existing authoring root; arithmetic unchanged.
+
+### Existing-series extension-policy continuation
+
+- A complete Pastor Roman-X transaction builds and passes audit-pro/profile strict, then correctly fails the family canon guard at 10≠9 parts, changed slug set and 159≠157 minutes. Pastor I–IX must not be weakened without owner approval.
+- Incomplete config-only mutation paradoxically passes because data stays at nine parts; manifest/config has no early extension policy. Closure adds typed open/locked/owner-review policy and pre-write refusal.
+- Positive current-family extension is explicitly NOT DONE for lack of an authorized extensible target; require an extensible fixture. Folded; arithmetic unchanged.
+
+### Extension-policy migration default
+
+- None of six effective configs nor `SeriesConfig` declares extension policy. Absence cannot mean open.
+- Migrate proven Pastor to locked; default the other five existing families to owner-review until classified; require explicit policy for new series and fail schema on omission. Folded; arithmetic unchanged.
+
+### Closure verification inventory
+
+- Report §39 separates current-main verified positives/healthy guards/fail-open witnesses from regression fixtures that can exist only after Product repair.
+- Existing-family positive extension remains explicitly NOT DONE because zero configs declare open and Pastor is locked; no owner decision was inferred. This is a visible boundary, not a hidden completion claim. Arithmetic unchanged.
+
+### Safe implementation order
+
+- Report §40 sequences closure from pinned read-only census through pure registry, admission validator, shape scaffold and atomic fresh-dist admission before retiring side effects/docs.
+- Explicit routes/family visuals/native adapters remain; rollout stops on undeclared drift, Baptist/Pastor/editorial regressions or stale-dist proof. This is implementation guidance for the existing root; arithmetic unchanged.

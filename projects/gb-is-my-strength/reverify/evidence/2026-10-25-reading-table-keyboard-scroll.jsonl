@@ -1,0 +1,23 @@
+{"type":"anchor","product":"015573af602dd7b8d49feb296638b3447364a529","date":"2026-10-25","result":"ADMIT","id":"SYS-READING-TABLE-KEYBOARD-SCROLL"}
+{"type":"history","gillCandidate":"GILL-MOBILE-TABLE-KEYBOARD-SCROLL","nagCandidate":"NAGORNAYA-MOBILE-TABLE-KEYBOARD-SCROLL","date":"2026-07-17","priorDisposition":"shared READING-TABLE root proposed but never canonicalized"}
+{"type":"ownerCheck","openProductPrs":[2193,2179,2164,2143],"tableOwner":null,"overlap":"#2193 touches shared cache-bust/head/CSS surfaces but owns speed-panel and tooltip semantics"}
+{"type":"build","commands":["npm ci","npm run strangler:build:production-like","npm run pagefind:build:dist"],"exit":0,"pages":104,"pagefindPages":95,"astroErrors":0,"astroHints":6}
+{"type":"source","owner":"global-article-table","selector":"article table","behavior":"display:block;overflow-x:auto","explicitFocusContract":false}
+{"type":"source","owner":"gill-series","selector":"[data-gill-v16] table.manuscript-table","behavior":"overflow-x:auto","explicitFocusContract":false}
+{"type":"source","owner":"gill-context","selector":".table-scroll","authoredRegions":7,"explicitFocusContract":false}
+{"type":"source","owner":"nagornaya","selector":".overflow-x-auto","authoredRegions":6,"explicitFocusContract":false,"narrowReflow":"<=359px"}
+{"type":"census","profiles":45,"routes":15,"width":320,"actualScrollRegions":19,"axeSerious":18,"pageOverflowRoutes":0,"brokenImages":0,"pageErrors":0}
+{"type":"census","profiles":45,"routes":15,"width":390,"actualScrollRegions":22,"axeSerious":20,"pageOverflowRoutes":0,"brokenImages":0,"pageErrors":0}
+{"type":"census","profiles":45,"routes":15,"width":641,"actualScrollRegions":9,"axeSerious":1,"pageOverflowRoutes":0,"brokenImages":0,"pageErrors":0}
+{"type":"route","width":390,"route":"/articles/dzhon-gill-chast-1-chelovek/","regions":1,"axe":1,"nativeTabHitsAfter1200":0}
+{"type":"route","width":390,"route":"/articles/dzhon-gill-chast-2-uchenyi/","regions":2,"axe":2,"nativeTabHitsAfter1200":0,"pointerPan":[0,157]}
+{"type":"route","width":390,"route":"/articles/dzhon-gill-chast-3-nasledie/","regions":1,"axe":1,"nativeTabHitsAfter1200":1,"keyboardPan":[0,0]}
+{"type":"route","width":390,"route":"/articles/dzhon-gill-istoricheskiy-kontekst/","regions":7,"axe":7,"nativeTabHitsAfter1200":0}
+{"type":"route","width":390,"route":"/articles/dzhon-gill-spravochnik/","regions":5,"axe":5,"nativeTabHits":5,"arrowPanPass":5,"note":"Chromium 153 UA auto-focuses these tabIndex=-1 scrollers; authored semantics remain absent"}
+{"type":"route","width":390,"route":"/nagornaya/chast-1/","unownedRegions":3,"axeUnowned":2,"nativeTabHitsAfter1200":0,"pointerPan":[0,26],"positiveControl":"named tabindex=0 observation matrix is separate"}
+{"type":"route","width":390,"route":"/nagornaya/chast-3/","unownedRegions":1,"axe":1,"nativeTabHitsAfter1200":0}
+{"type":"route","width":390,"route":"/nagornaya/chast-4/","unownedRegions":1,"axe":1,"nativeTabHitsAfter1200":0}
+{"type":"health","gill":{"lcpMs":324,"cls":0.097922,"overflow":0,"broken":0,"errors":0},"nagornaya":{"lcpMs":224,"cls":0,"overflow":0,"broken":0,"errors":0},"screenshots":"local only"}
+{"type":"boundary","notReopened":"GBS-KOD-DA-VINCHI-TIMELINE-KEYBOARD-SCROLL","reason":"its named focus-visible 641px owner remains fixed; <=640 reflows"}
+{"type":"acceptance","requirements":["one shared conditional overflow primitive","focus only actual scroll owners","accessible name and focus-visible","native Tab and Arrow/Home/End pan","resize reversibility","Gill/Nagornaya/other article producers","Chromium plus WebKit contract"]}
+{"type":"matrix","from":{"active":48,"direct":27,"improvements":4,"system":17},"to":{"active":49,"direct":27,"improvements":4,"system":18}}

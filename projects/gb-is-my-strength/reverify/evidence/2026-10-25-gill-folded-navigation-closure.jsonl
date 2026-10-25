@@ -1,0 +1,19 @@
+{"type":"anchor","product":"015573af602dd7b8d49feb296638b3447364a529","auditDate":"2026-10-25","result":"FIXED-CURRENT","owner":"SYS-GILL-NAV-COLLAPSED-FOCUS-EXPOSURE"}
+{"type":"owner","mergedPr":2192,"merge":"015573af602dd7b8d49feb296638b3447364a529","primitive":"window.gbSetFolded","surfaces":["desktop-subgroup","desktop-whole-toc","mobile-part","mobile-article"]}
+{"type":"open-owner-check","openPr":2193,"scope":"speed panel keyboard model and tooltip association","overlap":"floating-cluster-controller cache-bust/shared file only","ownsGillFold":false}
+{"type":"build","command":"npm ci && npm run strangler:build:production-like && npm run pagefind:build:dist","exit":0,"astroErrors":0,"astroHints":6,"pages":104,"pagefindPages":95}
+{"type":"route-census","profiles":12,"routes":6,"desktop":6,"mobileDarkReduced":6,"collapsedWithoutInert":0,"closedPartsWithoutInert":0,"overflow":0,"brokenImages":0}
+{"type":"desktop-initial","route":"/articles/dzhon-gill-chast-1-chelovek/","collapsedSubgroups":8,"allInert":true,"forwardTabs":80,"reverseTabs":80,"focusInsideInert":0}
+{"type":"desktop-whole-toc","route":"/articles/dzhon-gill-chast-1-chelovek/","fold":{"inert":true,"expanded":false,"focus":"gbsTocToggle"},"unfold":{"inert":false,"expanded":true}}
+{"type":"desktop-scrollspy","route":"/articles/dzhon-gill-chast-1-chelovek/","input":"native mouse wheel","focusedBefore":"Самообразование вне университетской траектории","focusAfter":"I. Становление и призвание","focusInsideInert":false,"collapsedWithoutInert":0,"active":"Личные высказывания: только с прослеживаемой передачей","count":"13 / 15","trackHeight":"414.234375px"}
+{"type":"desktop-health","scheme":"light","viewport":"1440x1000","axeViolations":0,"overflow":0,"brokenImages":0,"lcpMs":348,"cls":0.000147}
+{"type":"desktop-health","scheme":"dark","reducedMotion":true,"viewport":"1366x900","overflow":0,"brokenImages":0,"lcpMs":616,"cls":0.000539,"axeResidual":"nested-interactive","disposition":"existing reversible-card/footnote owner; not folded navigation"}
+{"type":"mobile-flat","route":"/articles/dzhon-gill-chast-2-uchenyi/","scheme":"dark","reducedMotion":true,"closedParts":5,"closedWithoutInert":0,"forwardTabs":80,"reverseTabs":80,"focusInsideInert":0}
+{"type":"mobile-flat-toggle","fold":{"inert":true,"expanded":false,"focus":"gbat-hd"},"unfold":{"inert":false,"expanded":true},"otherPartUnfolded":true}
+{"type":"mobile-book","route":"/baptisty-rossii/yuzhnaya-shtunda/","closedParts":4,"closedWithoutInert":0,"nestedRegions":9,"nestedFolded":8,"forwardTabs":80,"reverseTabs":80,"focusInsideInert":0}
+{"type":"mobile-book-toggle","partFold":{"inert":true,"expanded":false,"focus":"gbat-hd"},"partUnfold":{"inert":false,"expanded":true},"otherChapterUnfolded":true,"nestedSwitch":{"open":1,"folded":2}}
+{"type":"ax-cdp","route":"/baptisty-rossii/yuzhnaya-shtunda/","query":"Петербургское пробуждение","closedRegionMatchesInFullAXTree":0,"openedCurrentSectionMatches":5,"result":"closed descendants excluded; opened descendants restored"}
+{"type":"mobile-health","flat":{"overflow":0,"brokenImages":0,"lcpMs":252,"cls":0,"axeResidual":"two manuscript tables need keyboard-scroll treatment"},"book":{"overflow":0,"brokenImages":0,"lcpMs":224,"cls":0,"axeResidual":"closed chapter mark/time color contrast"},"disposition":"reported separately from fold closure; no inert/AX regression"}
+{"type":"no-js","route":"/articles/dzhon-gill-chast-1-chelovek/","viewport":"390x844","articleVisible":true,"articleTextChars":36062,"overflow":0,"note":"authored SSR folded navigation remains folded; main article remains available"}
+{"type":"console","productErrors":0,"sandboxDeliveryNoise":["Yandex metrics net::ERR_CONNECTION_CLOSED"],"badHttpResponses":0}
+{"type":"closure","from":{"active":49,"defects":27,"improvements":4,"system":18},"to":{"active":48,"defects":27,"improvements":4,"system":17},"removed":"SYS-GILL-NAV-COLLAPSED-FOCUS-EXPOSURE"}

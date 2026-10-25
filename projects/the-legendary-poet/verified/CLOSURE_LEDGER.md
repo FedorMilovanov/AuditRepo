@@ -686,3 +686,131 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Product issue #498 closed as completed.
 - Matrix disposition after terminal merge: P1 stays 1, P2 `1 -> 0`, P3 stays 0, total active `2 -> 1`.
 - Detailed evidence: `../reverify/REVERIFY_c7e3e3b_2026-09-13_ga4-property-closure.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 1–3
+
+- Scope: Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`; source/build baseline plus 34 routes × desktop Light/mobile Dark in Chromium 153.
+- Baseline: contracts, full `npm run check`, build, prerender, build-output and SEO validators pass; 68/68 browser loads complete with no page errors, same-origin request failures, duplicate IDs or horizontal overflow.
+- Admissions: `SYS-TLP-THEME-SEMANTIC-COVERAGE-RESIDUAL`, `SYS-TLP-LABEL-IN-NAME-GUARD-COVERAGE`, `TLP-STATIC-PAGE-NESTED-MAIN-LANDMARKS`, `TLP-DEPENDENCY-ADVISORY-RESIDUAL`, `SYS-TLP-MODAL-EXIT-LIFECYCLE`, `TLP-COMMAND-COMBOBOX-SEMANTICS`, `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP`.
+- Collision boundaries: Product #521 merged during the audit and its resulting-main media/integrity outcome passes; #514 owns only `fflate`; issue #497 retains the human Turnstile proof. No Audit agent Product mutation or merge.
+- Matrix disposition: P1 stays 1; P2 `0 -> 6`; P3 `0 -> 1`; total active `1 -> 8`.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 4
+
+- Scope: continuation on unchanged Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`; exhaustive interaction/focus and fragment-identity passes.
+- Admissions: `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`, `TLP-ESSAY-PORTRAIT-POINTER-HITTEST`, `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`, `TLP-MOBILE-SECTION-CHIP-INERT`.
+- Consolidation: 114 raw desktop hit-test failures reduce to shared sticky, float/source and Ratings geometry owners; ten mobile failures reduce to one SectionChip inert-state conflict. They are not counted per instance.
+- Controls: desktop focus reproduced exactly 90 oversized-sticky failures across 3,383 instances; mobile focus produced 0 across 2,905. Removing only SectionChip `inert`/`aria-hidden` opened all ten popover rows. Hall with active global audio remains reachable at 390×844 and after native scrolling at 320×568.
+- Fragment widening: poem and mobile section controls scroll but do not update `location.hash`; URL/history identity now belongs to the existing fragment runtime root rather than a new row.
+- Collision boundaries: draft Product #522 remains the dependency owner at `19dd48c…`, with Hall offline jobs pending; #514 remains overlapping/behind. No Product mutation or merge.
+- Matrix disposition: P1 stays 1; P2 `6 -> 10`; P3 stays 1; total active `8 -> 12`.
+- AuditRepo publication: draft #488 exact head `80e2165f39fa926262e8c8f75894d915c303c829`; Validate `40097280431` and Workflow Preflight `40097280419` completed success.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 5
+
+- Scope: WCAG text-spacing outcome across all 34 current routes at 1280×800 and 390×844 on unchanged Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`.
+- Admission: `SYS-TLP-TEXT-SPACING-ROBUSTNESS`.
+- Evidence: 68/68 loads, 6,446 focusable instances, zero page errors, zero document-width overflow and no additional blocked-control class; nevertheless 15 visible text instances become newly clipped across ten routes after line 1.5 / paragraph 2em / letter .12em / word .16em overrides.
+- Owners: Ratings tags 1, Article summaries 6, Music descriptions 3, essay breadcrumbs 4 and Kindred Spirits name 1; twenty source `truncate`/`line-clamp-*` occurrences expose the shared fixed-budget assumption.
+- Exclusion control: three raw myth-card overflow observations came from inactive absolutely positioned citation tooltips; active positioning reduced the intersection to ancestor border/padding without demonstrated text loss, so they were not counted.
+- Collision refresh: Product #522 exact head `19dd48c…` is now all-green and merge-clean, including Hall offline and merge certification; it remains draft/unmerged. Product #514 remains overlapping/behind. No Product mutation or merge.
+- Matrix disposition: P1 stays 1; P2 `10 -> 11`; P3 stays 1; total active `12 -> 13`.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 6
+
+- Scope: forced-colors render control and WCAG 2.5.8 target size-or-spacing census on unchanged Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`.
+- Forced colors: 34 routes × desktop/mobile completed with zero page errors; screenshots confirm system-color paint for representative Home gradient title, essay section headings/numbers and poet title. Computed transparent WebKit fill was rejected as a false-positive signal after paint inspection.
+- Target geometry: 6,452 target instances; 2,043 have one dimension below 24 CSS px, but zero have another target centre within 24 px, satisfying the spacing alternative in sampled geometry.
+- Boundaries: no native Windows High Contrast, assistive-technology or physical motor-use claim; no new row admitted.
+- Matrix disposition unchanged: 1 P1 + 11 P2 + 1 P3 = 13.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 7
+
+- Scope: 844×390 touch/landscape interaction and focus census on unchanged Product `main@93e8731cc04d12a8fe985604cbea210767a3851c`.
+- Result: all 34 routes loaded with zero page errors and zero document-width overflow; 3,171 target instances produced zero focused-off-viewport failures.
+- Consolidation: the only centre-hit class was ten essay SectionChip controls. After Simonov scroll y=1400 the chip is visibly pointer-enabled at y≈10, but its ancestor remains `inert`/`aria-hidden=true`, prose owns the hit stack and a native tap opens no popover.
+- Disposition: evidence broadens `TLP-MOBILE-SECTION-CHIP-INERT` to short landscape/tablet geometry; no duplicate root admitted.
+- Matrix disposition unchanged: 1 P1 + 11 P2 + 1 P3 = 13.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 8
+
+- Scope correction 2026-10-25: this checkpoint is an independent TLP essay-navigation verification on Product `main@76da7d6372931f34d269581f374e87bd15406cfb`, Chromium 153. The owner's concrete Roman/Arabic menu, stale-document and bottom next-part report belongs to GBS / «ГОСПОДЬ БОГ СИЛА МОЯ», not TLP.
+- Current-main baseline: `npm ci`, zero-advisory immutable audit, contracts, full check, build, prerender, output/SEO and image-integrity gates pass. Product #522 changed only package/lock state; the audit agent did not mutate or merge Product.
+- Exhaustive TOC activation: 106/106 desktop links were attempted with native input; 65 landed correctly, 23 changed hash but settled above the viewport, and 18 late sticky-rail links were not pointer-actionable. These broaden `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME` and `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`; no duplicate root was admitted.
+- Independent TLP Yesenin II reproduction: section 03 failed 12/12 fresh normal-motion trials at y≈−85 while section-02 prose remained visible; section 02 failed 1/12 at y≈−79. Three desktop viewport sizes fail; reduced-motion sections 01–03 settle near y=96.
+- Series control: explicit bottom previous/next anchors passed 24/24 desktop/mobile pointer/keyboard activations under normal/reduced motion. They sit after narrative content but before sources/community, not at the literal page bottom.
+- TLP-only circle classification: TLP contains no timed series auto-advance and its apparent ring is `CustomCursor` hover decoration. This does not classify GBS, whose separate read/series progress UI and cross-document defect are recorded in the GBS project.
+- Quality control: eight series-page loads produced zero Axe A/AA violations, zero page exceptions, zero local broken images, LCP 212–332 ms and CLS 0–0.0011. Three Wikimedia request failures are external sandbox delivery evidence.
+- False-green boundary: existing QA activates only the first TOC item under reduced motion and checks series visibility/focus/`href` without native destination identity, so it misses the normal-motion drift and transition outcomes.
+- Dependency row: #522 merged and local resulting-main proof is green, but `TLP-DEPENDENCY-ADVISORY-RESIDUAL` remains active until Manual Browser QA and Hall offline exhibit are terminal green on resulting main; overlapping #514 must not merge.
+- Matrix disposition unchanged: 1 P1 + 11 P2 + 1 P3 = 13.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 9
+
+- Scope: continued native route-navigation activation on Product `main@76da7d6372931f34d269581f374e87bd15406cfb`, plus terminal resulting-main dependency certification.
+- In-content route controls: 218 distinct controls × pointer/keyboard = 436 activations with URL, destination identity, history and Back checks. Keyboard passed 218/218; pointer passed 209/218. The nine failures were three essay author cards, five late Kindred Spirits cards and the first Ratings poet link.
+- Repeat proof: all nine failed 3/3 focused pointer trials (27/27) because sticky geometry left the target below the viewport or another sticky item owned its centre. Evidence broadens `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`; no router/root duplicate is admitted.
+- Global controls: header, footer and mobile dock passed 132/132 pointer/keyboard transitions across desktop/mobile and normal/reduced motion.
+- Command palette: all 106 essay-section result buttons reached the expected route/hash by pointer under normal motion and keyboard under reduced motion (212/212 after explicit disambiguation of the legitimate three-result «Москва Кабацкая» query). Thirty targets were not visible at 1.8 s despite correct identity. Focused eight-second controls reconverged except Yesenin II section 03, which remained above the viewport 3/3; this independently broadens `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`.
+- Dependency closure: merged Product #522 has zero resulting-main advisories and a passing full local baseline. Resulting-main CI `40125800247`, Pages `40125800254`, Manual Browser `40125800258`, Hall offline `40125800415`, route `40125800264`, contracts `40125800268`, content `40125800301`, article `40125800307`, Hall runtime `40125800292`, publication `40125800294` and brand workflows `40125800232`/`40125800404` are terminal success.
+- Disposition: retire `TLP-DEPENDENCY-ADVISORY-RESIDUAL`; Product #514 is overlapping and must not merge. Matrix changes from 1 P1 + 11 P2 + 1 P3 = 13 to 1 P1 + 10 P2 + 1 P3 = 12.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-24 — owner-reopened current-main audit, checkpoint 10
+
+- Scope: complete PoemQuickNav activation and Hall six-stop route controls on unchanged Product `main@76da7d6372931f34d269581f374e87bd15406cfb` with Chromium 153.
+- Poem quick navigation: 34 anchors × desktop/mobile × normal/reduced motion × pointer/keyboard = 272 attempts. All mobile and keyboard attempts activated; 62 desktop pointer attempts failed because oversized sticky panels left rows outside the viewport. This broadens `SYS-TLP-STICKY-VIEWPORT-GEOMETRY` without a new root.
+- Fragment identity: every one of 210 delivered quick-nav activations left `location.hash` empty and history delta zero because `PoemQuickNav` prevents native anchor default and invokes scroll-only `scrollToId`. This exhaustively broadens `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`.
+- Settling control: reduced-motion delivered activations landed correctly. A 102-run normal-motion eight-second pass reconverged 28/29 initially displaced targets; the remaining Yesenin observation then passed 3/3 fresh trials by 1.8 s and stayed at y≈96 through 25 s. No separate permanent poem-geometry root is admitted.
+- Hall route: all six stops were traversed forward and backward, including cyclic boundaries, in eight desktop/mobile pointer/keyboard normal/reduced profiles. All 96 activations updated visible/live stop identity, preserved `/hall/` and history, and produced zero page exceptions. No Hall navigation root is admitted.
+- Collision refresh: obsolete Product #514 was closed unmerged on 2026-10-24; #522 remains the sole merged dependency transaction.
+- Matrix disposition unchanged: 1 P1 + 10 P2 + 1 P3 = 12.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-25 — owner-reopened current-main audit, checkpoint 11
+
+- Scope: exhaustive inline-citation activation and repeated same-hash SourceLibrary behavior on unchanged Product `main@76da7d6372931f34d269581f374e87bd15406cfb`, Chromium 153.
+- Inventory: ten essays contain 950 rendered citation instances and 248 unique source targets. Reduced-motion keyboard activation passed 248/248 for action, expected hash identity, unique reveal and viewport geometry.
+- Pointer delivery: the corrected global-index pass delivered 881/950 initially. Focused native retries delivered 96/138 one-second action attempts and all residual 42/42 after eight seconds; all 15 initial geometry misses passed fresh two- and eight-second controls. Staged result is 950/950, so transient long-page motion broadens existing owners without a new citation-action root.
+- Idempotence: after first reveal and an alternate filter hid the row, native reactivation of the same citation left that row hidden for 248/248 unique targets. The unchanged hash emits no `hashchange`, exhaustively broadening `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`.
+- SourceLibrary control: the Yesenin-II primary filter reached its expected 16 rows by 500 ms in normal and reduced motion and remained stable through 25 s. High-concurrency raw-node counts were rejected because Framer exit nodes remain attached while opacity-zero; they are not Product findings.
+- Matrix disposition unchanged: 1 P1 + 10 P2 + 1 P3 = 12.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-25 — owner-reopened current-main audit, checkpoint 12
+
+- Scope: mobile command-menu lifecycle and deliberately induced lazy-route recovery on unchanged Product `main@76da7d6372931f34d269581f374e87bd15406cfb`, Chromium 153.
+- Command surface: 31 sitemap routes × normal/reduced mobile profiles = 62 cases covering pointer/keyboard opening, focus/scroll ownership, close/Escape restoration, empty results, focus containment, shortcut toggle, backdrop close and selection navigation. Corrected staged outcome is 62/62; one transient initial-focus observation passed 3/3 focused repeats.
+- Online recovery controls: desktop/mobile blocked-chunk cases correctly contained failure, recovered through Home, contained a repeated blocked reload and loaded after delivery restoration.
+- Offline defect: «На главную» changes URL to `/` but leaves the stale page ErrorBoundary fallback rendered. Desktop/mobile pointer/keyboard failed 4/4 through three seconds; reconnect + reload recovered 4/4. Admit `TLP-OFFLINE-ERROR-BOUNDARY-HOME-RECOVERY` as a new P2 root; the induced network failure itself is not a Product defect.
+- Matrix disposition: 1 P1 + 11 P2 + 1 P3 = 13.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-25 — owner-reopened current-main audit, checkpoint 13
+
+- Scope: rendered audio recovery controls after deliberately aborted MP3 delivery on unchanged Product `main@76da7d6372931f34d269581f374e87bd15406cfb`.
+- Three track routes × three recovery controls × four desktop/mobile pointer/touch/keyboard motion profiles = 36 cases. Desktop and keyboard passed 27/27 immediately; nine invalid viewport-external touch taps were corrected with native scroll and centre-hit ownership, then passed 9/9. Authoritative staged result: 36/36 alerts cleared, playback unpaused and media time advanced beyond 0.2 s.
+- ImmersivePlayer recovery independently passed 6/6 over all three tracks by desktop pointer and mobile keyboard.
+- Boundary: this proves browser media recovery state, not physical speaker output; induced delivery failure is not a Product defect. No new audio root admitted.
+- Matrix disposition unchanged: 1 P1 + 11 P2 + 1 P3 = 13.
+- Detailed evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`.
+
+## 2026-10-25 — owner-reopened current-main audit, checkpoint 14
+
+- Scope: every SourceLibrary category filter and expand/collapse control on all ten essays, unchanged Product `main@76da7d6372931f34d269581f374e87bd15406cfb`.
+- Matrix: desktop-pointer normal motion plus mobile-keyboard reduced motion; 20 route/profile cases, 100 filter activations and 36 expand/collapse activations.
+- Outcome: all filters selected exactly one pressed state and settled to expected counts. Nineteen cases passed immediately; one Simonov desktop collapse retained exit nodes at 800 ms, then passed 3/3 fresh controls by 800 ms and remained correct through five seconds. Staged result 20/20 and 136/136 controls.
+- Disposition: no filter/toggle root admitted; repeated same-hash citation reveal remains owned by `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`. Matrix unchanged at 1 P1 + 11 P2 + 1 P3 = 13.
+
+## 2026-10-25 — owner-reopened current-main audit, checkpoint 15
+
+- Scope: rendered community remote-read retry on all 23 published dynamic targets, unchanged Product `main@76da7d6372931f34d269581f374e87bd15406cfb`.
+- Safe induction: a loopback-only test authority aborted initial summary/comments reads, then returned contract-valid empty responses after native «Повторить» activation. No production request, mutation, Turnstile bypass or human-session simulation occurred.
+- Matrix: ten poets + ten essays + three tracks by desktop pointer and mobile keyboard = 46/46 settled recoveries; warning appeared, both reads retried, summary reached `ready`, and warning/control cleared.
+- A first immediate-detachment probe was rejected because loading temporarily removes error UI before promise settlement. No community-retry root admitted; matrix remains 1 P1 + 11 P2 + 1 P3 = 13.
