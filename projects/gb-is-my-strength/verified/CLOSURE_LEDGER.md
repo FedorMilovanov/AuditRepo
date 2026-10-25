@@ -592,7 +592,7 @@ This entry records the governance change only. It does not claim that the reform
 
 - Shared series chrome is genuinely reusable: flat/book shapes, Roman/label/letter/Arabic tiers, 45 facade consumers and six active browser-sweep families. This audit does not relabel route-specific editorial visuals as forks.
 - Publication authoring remains fragmented across MDX, series items/pages, family wrappers or Body/PageHead, explicit route, `data/series.json`, generated projections, route profile and page ownership; current census is 104 explicit routes, 64 content entries, 64 PageHeads and 106 profiles, with no first-class scaffold command.
-- Two disposable exact-main probes establish fail-open admission: schema-valid publishable MDX (`draft:false`, `noindex:false`) passes Astro build and content coverage while producing no route; config-only flat core item without page/route/series JSON passes Astro check, engine contracts and audit-pro. Probe files were removed and Product source is clean.
+- Two disposable exact-main probes establish fail-open admission: schema-valid publishable MDX (`draft:false`, `noindex:false`) passes Astro build and content coverage while producing no route; config-only Pastor flat core item without page/route/series JSON passes production-like build and full static publication validation while rendering 30 dangling links across 10 pages. Probe files were removed and Product source is clean.
 - Admit one `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; do not duplicate `SYS-HEAD-ASSET-PROJECTION-PROLIFERATION` or `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY`. **49 → 50 = 27 direct defects + 4 necessary improvements + 19 system lanes.**
 - Report/receipt: `../reverify/2026-10-25-content-authoring-universality.md`, `../reverify/evidence/2026-10-25-content-authoring-universality.jsonl`.
 
@@ -631,3 +631,9 @@ This entry records the governance change only. It does not claim that the reform
 - The first orphan MDX probe used `draft:true`/`noindex:true`; it is not defect proof. Teen history (`870b28dd` → later `a6eeda4`) confirms content-only route-less drafts are intentional. That witness is reclassified as a healthy staged-authoring control.
 - Superseding probe omits both flags (schema defaults `false`): publishable valid MDX still passes Astro build/content coverage, leaves page count 104 and produces no route. The admitted root therefore remains, narrowed to publishable orphan admission.
 - Closure must allow explicit drafts and fail publishable orphans. Arithmetic remains **50 = 27 + 4 + 19**.
+
+### Strict-gate correction and decisive Pastor witness
+
+- Publishable orphan MDX is caught late but correctly by `migration:metadata:check:strict`, which belongs to full static publication validation. It is no longer claimed as full-gate fail-open; draft staging and content provenance remain healthy controls.
+- Teen config-only mutation also fails full build through its family media lookup. Superseding Pastor mutation has no such incidental guard: production-like build and full `validate:static-publication` pass, while 10 pages render 30 links to a missing route; metadata strict, audit-pro, dist publication, ownership and strict fragments all pass.
+- Root is retained and narrowed to missing universal series item→page/route/data admission plus fragmented first-time workflow. Arithmetic remains **50 = 27 + 4 + 19**.

@@ -15,7 +15,7 @@ Evidence: `evidence/2026-10-25-content-authoring-universality.jsonl`
 
 1. валидный publishable MDX (`draft:false`, `noindex:false`) без route проходит `npm run astro:build`; сборка остаётся зелёной, строит прежние 104 страницы и не создаёт probe URL;
 2. `npm run content:coverage:audit` с этим orphan MDX также выходит 0;
-3. новый flat-series core item только в `teenSeriesConfig.ts`, без `pages[id]`, route и `data/series.json`, проходит `astro check`, `engine:contracts` и `audit-pro`.
+3. новый flat-series core item только в `pastorSeriesConfig.ts`, без `pages[id]`, route и `data/series.json`, проходит production-like build и полный `validate:static-publication`, проецируя 30 dangling links на 10 страниц.
 
 Поэтому агент может получить зелёные рекомендованные проверки и при этом не опубликовать статью либо добавить в навигацию ссылку на отсутствующую страницу. Принимается один system root: **`SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`**. Матрица: **49 → 50 = 27 direct + 4 improvements + 19 system lanes**.
 
@@ -90,25 +90,26 @@ Evidence: `evidence/2026-10-25-content-authoring-universality.jsonl`
 
 ## 5. Dry run B — config-only серия
 
-Во временный `TEEN_DOUBLE_LIFE_SERIES.items` добавлен корректно сформированный core `label` item:
+Первичный fixture был добавлен в `TEEN_DOUBLE_LIFE_SERIES.items`: корректный core `label`, но без `pages[id]`, route и `data/series.json`. Astro check, `engine:contracts` и `audit-pro` прошли. Однако последующий production-like build упал на отдельном family media owner: `Unknown teen-series media page: arena-config-only-probe`. Поэтому Teen witness сам по себе доказывал разрозненность diagnostics, но **не** full-release fail-open.
 
-- unique id;
-- valid mark/title/href/readingTime;
-- без `pages[id]`;
-- без route;
-- без `data/series.json`.
+Решающая проверка повторила тот же type-correct item в `PASTOR_SERIES`, где media registry не подменяет общий contract.
 
-Результат:
+Результат Pastor fixture:
 
-- `npx astro check` exit 0, 0 errors;
-- `npm run engine:contracts` exit 0;
-- facade guard exit 0;
-- `node scripts/audit-pro.js` exit 0, `AUDIT PASSED`.
+- `defineSeriesConfig` принял item без `pages[id]`;
+- production-like build — exit 0;
+- probe route отсутствует;
+- 10 построенных Pastor pages содержат item;
+- итоговый HTML содержит 30 `href` на отсутствующий `/articles/arena-config-only-probe/`;
+- `migration:metadata:check:strict` — exit 0;
+- `audit-pro` — exit 0;
+- strict rendered fragment audit — exit 0 (он проверяет только `#fragment`, не cross-document targets);
+- `dist-publication-audit` и production-like page ownership — exit 0;
+- полный `npm run validate:static-publication` — exit 0.
 
-Причина видна в validator: обязательность `pages[id]` проверяется только для `mark.kind='arabic'`; для flat Roman/label core item обратного требования нет. Цикл `Object.entries(cfg.pages)` доказывает только `page → item`, но не `published item → page/route`. Согласованность TS config ↔ `data/series.json` в этом probe также не была проверена, несмотря на обещание guide «иначе audit-pro красный».
+Это и есть fail-open publication witness: canonical source gate сообщает `ALL CHECKS PASSED`, хотя built series navigation ведёт на отсутствующую страницу. Причина в `defineSeriesConfig`: обратная обязательность `item → pages[id]` есть только для Arabic book articles. Flat Roman/label core items не обязаны иметь page/route; TS config ↔ `data/series.json` тоже не сверяется общим контрактом.
 
-Это позволяет зелёно добавить dangling navigation item. Probe был удалён; Product source после проверки чист.
-
+Teen family случайно ловит такую ошибку через media map, Pastor — нет. Следовательно, безопасность зависит от wrapper family, что прямо противоречит цели универсального authoring engine. Оба fixture удалены; Product source чист.
 ## 6. Документация и first-time-agent path
 
 `AGENTS-REFERENCE.md` правильно отправляет агента к route ownership/profile и текущему source, но не содержит канонического authoring workflow. Единственный актуально выглядящий подробный документ — `SERIES-ENGINE-GUIDE.md` — полезен для topology, однако:
@@ -312,3 +313,23 @@ Controlled fixture с `.gbs2-toc a[href="#missing-target"]` и отсутств�
 Admission root повторно проверен publishable fixture без `draft`/`noindex` полей (schema defaults `false`). Он дал тот же зелёный результат: Astro build 0, 104 pages, probe route отсутствует; content coverage 0 и не обнаруживает entry. Именно этот superseding witness поддерживает строку.
 
 Closure должна разрешать route-less `draft:true`/`noindex:true` материалы и падать только когда entry заявлен publishable, но не разрешается в route/owner. Арифметика не меняется; correction сужает формулировку без снятия root.
+
+## 15. Self-correction — strict MDX gate and decisive Pastor witness
+
+Дальнейшая проверка нашла ещё одну важную границу первичного отчёта.
+
+### 15.1 Publishable orphan MDX всё же ловится полным source gate
+
+Publishable orphan проходит Astro build и `content:coverage:audit`, но `migration:metadata:check:strict` корректно выходит 1:
+
+`unowned non-draft MDX; add profile mdxPath/mdxStatus or mark it draft explicitly`
+
+Этот validator входит в `validate:static-publication`. Поэтому publishable MDX не является доказательством, что **полный** canonical source admission пропустит публикацию. Он остаётся доказательством поздней staged диагностики и того, что рекомендованные локальные checks неполны. Формулировка root не должна отрицать существующий строгий provenance guard.
+
+### 15.2 Pastor config-only item проходит полный gate
+
+В отличие от MDX, Pastor config mutation прошла именно полный static publication gate после успешной production-like сборки и оставила 30 реальных cross-document links на отсутствующий route. Ни profile/ownership registry, ни audit-pro, ни dist publication, ни strict fragment checker не сопоставляют navigable series items с route existence.
+
+Это superseding decisive witness для system row. Teen mutation отдельно сужена: её full build останавливает family-specific media lookup, поэтому она показывает неодинаковую безопасность families, а не release fail-open сама по себе.
+
+Итоговая admission остаётся одна и точнее: content provenance имеет хороший fail-closed owner, а **универсальный series item → page/route/data contract отсутствует**. Arithmetic не меняется.
