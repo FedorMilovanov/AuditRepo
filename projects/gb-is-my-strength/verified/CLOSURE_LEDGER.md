@@ -767,3 +767,8 @@ This entry records the governance change only. It does not claim that the reform
 
 - None of six effective configs nor `SeriesConfig` declares extension policy. Absence cannot mean open.
 - Migrate proven Pastor to locked; default the other five existing families to owner-review until classified; require explicit policy for new series and fail schema on omission. Folded; arithmetic unchanged.
+
+### Closure verification inventory
+
+- Report §39 separates current-main verified positives/healthy guards/fail-open witnesses from regression fixtures that can exist only after Product repair.
+- Existing-family positive extension remains explicitly NOT DONE because zero configs declare open and Pastor is locked; no owner decision was inferred. This is a visible boundary, not a hidden completion claim. Arithmetic unchanged.

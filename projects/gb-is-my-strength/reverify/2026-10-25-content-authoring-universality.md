@@ -835,3 +835,28 @@ Effective all-family import probe проверил поле extension policy н�
 - scaffold может выполнить read-only plan для `owner-review`, но write требует owner decision.
 
 Так closure не превращает выявленный contract gap в разрешение самовольно расширять исторические/редакционные серии.
+
+## 39. Closure verification inventory — доказано сейчас vs regression после repair
+
+Чтобы blueprint не выглядел как уже существующая защита, acceptance fixtures разделены по статусу.
+
+### VERIFIED на current main
+
+- positive runtime: новая flat и новая book series через общий facade;
+- positive publication: standalone article, indexable generic page, explicit noindex page;
+- production baselines: 63/63 item→page/route/composite identity, 44/44 declared slug/order/time projection;
+- healthy controls: explicit draft staging, strict publishable-MDX provenance, data-only missing-route rejection, sitemap required/indexable и forbidden/noindex, Pastor canonical I–IX lock;
+- fail-open witnesses: publishable orphan до strict provenance, Pastor config-only dangling links, duplicate series ID/import-order overwrite, duplicate item href, context-dependent registry membership, undeclared discovery decision, stale-dist 221/221 false green;
+- transaction behavior: standalone editorial write создаёт pending/unapproved record и generated fan-out, а не auto-approval.
+
+### REQUIRED FUTURE REGRESSION — не существует до repair
+
+- typed manifest `register`/`compose` membership and duplicate mutation suite;
+- explicit `extensionPolicy` schema plus open-family positive extension and locked/owner-review pre-write refusal;
+- scaffold dry-run/write idempotence, authored-owner collision и injected mid-fan-out rollback;
+- machine-validated discovery-policy enum/reason;
+- atomic source→fresh-dist provenance assertion;
+- one command creating each supported shape without copy-by-memory;
+- explicit approval-preservation mutation proving existing approved decisions remain byte/semantic stable while the new record stays pending.
+
+Эти future fixtures являются условиями закрытия Product repair, а не незавершёнными обещаниями текущего AuditRepo PR. Единственный consciously NOT DONE current positive — extension существующей production family: ни одна серия не объявлена open, Pastor доказан locked, owner decision не подменялся.
