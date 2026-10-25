@@ -741,3 +741,8 @@ This entry records the governance change only. It does not claim that the reform
 - A new indexable `BaseLayout` page passes production-like build and full static validation after four explicit owners: route, page ownership, route profile and sitemap. Staged checks fail precisely on each missing owner; no separate PageHead/editorial article record is required.
 - Plain-Astro-dist full-static Gill parity red disappears after the required production-like build and is not a defect. The 15 special/application routes remain declared family adapters, not candidates for a generic page scaffold.
 - Folded into the authoring contract; no new row/arithmetic change.
+
+### Explicit noindex generic-page control
+
+- A `BaseLayout` route with ownership + `seo.indexable:false` profile, explicit reason and no sitemap entry passes production-like build and full static validation.
+- Closure distinguishes four-owner indexable page from valid three-owner noindex page and route-less content draft; sitemap is required only for indexable publication and forbidden for explicit noindex. Folded; arithmetic unchanged.

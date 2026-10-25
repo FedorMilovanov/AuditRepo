@@ -88,3 +88,5 @@
 {"type":"shapeDisposition","shape":"page","genericRuntime":"BaseLayout","authoringScore":"better fail-closed but undiscoverable","pageHeadRequired":false,"editorialArticleRegistryRequired":false,"owners":4}
 {"type":"shapeDisposition","shape":"special/application","routes":15,"genericScaffoldAppropriate":false,"required":"declared adapter plus family-specific owner contract","newWorkUnit":false}
 {"type":"deliveryBoundary","plainAstroDistFullStatic":"unrelated Gill parity red","productionLikeDistFullStatic":0,"productDefect":false}
+{"type":"positiveProbe","id":"generic-noindex-page","owners":["BaseLayout route","page ownership","route profile"],"robots":"noindex, follow","profileIndexable":false,"sitemapEntries":0,"productionLikeBuildExit":0,"fullStaticExit":0}
+{"type":"shapeDisposition","shape":"generic-page","variants":{"indexable":{"owners":4,"sitemap":"required"},"explicitNoindex":{"owners":3,"sitemap":"forbidden","reason":"required"},"routeLessDraft":{"route":false,"staging":true}},"blanketSitemapRequirement":false}

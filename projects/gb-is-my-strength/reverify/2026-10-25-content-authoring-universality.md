@@ -734,3 +734,24 @@ Saturation result: все заявленные publication shapes имеют pos
 `special` census трактуется отдельно: 15 routes — application/map/confession/genealogy owners, включая built-app boundary, а не взаимозаменяемые editorial pages. Универсальный page scaffold не должен притворяться генератором applications. Manifest обязан позволить declared `special/application` adapter с отдельным owner contract и отказать при попытке создать его как generic page без family-specific plan.
 
 Fixture удалён; Product tracked source чист. Результат расширяет тот же authoring root и arithmetic не меняет.
+
+## 34. Продолжение — explicit noindex page не требует sitemap
+
+После indexable page проверен симметричный valid control, чтобы closure не превратилась в blanket «каждая page обязана быть в sitemap».
+
+Временная `BaseLayout` page получила:
+
+- route с `robots="noindex, follow"`;
+- page ownership;
+- route profile с `seo.indexable:false` и explicit reason;
+- **без** sitemap entry.
+
+`strangler:build:production-like` вышел 0, полный `validate:static-publication` вышел 0, sitemap probe count остался 0. Значит, noindex page — легитимная трёх-owner publication shape; отсутствие sitemap здесь является правильной политикой, а не omission.
+
+Closure уточняется:
+
+- indexable generic page: route + ownership + profile + sitemap;
+- explicit noindex generic page: route + ownership + profile + documented reason, sitemap запрещён;
+- route-less draft остаётся отдельным content staging shape и не смешивается с опубликованной noindex utility page.
+
+Fixture удалён, Product tracked source чист. Это positive control того же root; arithmetic не меняется.
