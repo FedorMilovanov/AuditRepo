@@ -434,3 +434,15 @@ Current source уже имеет один намеренный collision: `russi
 Сейчас assignment не кодирует эту разницу, а итог зависит от import order. При этом `seriesConfig(seriesId)` не имеет production consumers: реальные wrappers импортируют config constants напрямую. Registry поэтому одновременно предписан guide и не является фактическим runtime SSOT.
 
 Это не отдельный reader-facing defect на текущих маршрутах: approved Baptist override работает, а synthetic collision существовал только в probe. Результат усиливает discovery/manifest часть `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; arithmetic не меняется.
+
+## 19. Продолжение — positive flat-series creation dry run
+
+Последний недостающий happy path — новая flat series с нуля — также проверен executable fixture:
+
+- новый `defineSeriesConfig` с одной Roman part и полноценным `pages[id]`;
+- новый route через неизменённый `SeriesReaderChrome`;
+- существующий H2 для curated `partToc`.
+
+Результат совпадает с book probe: Astro build exit 0, 105 pages, facade consumers 46, strict fragment audit exit 0 на 65 series pages /1 097 unique targets; built root, part identity и target присутствуют. Новых engine components не потребовалось.
+
+Тем самым positive runtime matrix закрыта для обеих заявленных shapes: flat и book действительно универсальны на уровне reader rendering. Различие остаётся только в topology config, как и обещано архитектурой. Production admission для probe не заявляется; ownership/profile/data/editorial transaction по-прежнему отдельный слой.

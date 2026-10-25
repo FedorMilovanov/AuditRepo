@@ -661,3 +661,8 @@ This entry records the governance change only. It does not claim that the reform
 
 - Canonical closure boundary is reconciled to all probes: explicit route-less drafts remain valid; strict provenance for publishable MDX is preserved; decisive fail-open is Pastor item→page/route/data; new config discovery, typed duplicate semantics, same-/cross-document target checks and documented transaction orchestration are required.
 - Editorial metadata projection must remain approval-gated, and approved Baptist flat→book composition must not be rejected as an accidental duplicate. No new arithmetic change.
+
+### New flat-series positive dry run
+
+- From-scratch one-part flat config rendered through unchanged `SeriesReaderChrome`: build 0, 105 pages, facade consumers 46, strict fragments 65 pages/1,097 targets/0 broken; no new engine component.
+- Together with the book probe this closes the positive runtime-shape matrix. Production admission remains a separate transaction; no new work unit/arithmetic change.
