@@ -677,3 +677,8 @@ This entry records the governance change only. It does not claim that the reform
 - Registry has six series landings (2 book/4 flat), but no generic landing renderer: three resolve shared configs and three are explicit native compositions. Shared article chrome does not create hubs.
 - `/pastor-series/` remains a page/pastor-index; its membership drift stays owned by `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY`, not double-counted here.
 - Authoring closure requires a declared hub/catalog/parent strategy, not visual homogenization. No new unit/arithmetic change.
+
+### Registry import-graph continuation
+
+- Directly importing the public registry exposes only `dzhon-gill`; five other valid lookup IDs throw `Unknown series config` until their family modules are imported for side effects.
+- Explicitly importing all families yields six IDs and the intended Baptist book override. Closure therefore requires a typed manifest that owns membership and approved replacement order. Folded into authoring contract; no arithmetic change.

@@ -485,3 +485,24 @@ Fixture удалён, Product source чист; новой строки и изм
 - копировать любой существующий hub как «универсальный» template нельзя.
 
 Это не требование унифицировать все landings визуально. Нужен decision/scaffold contract, который заставляет выбрать declared landing strategy и подключает membership projection. Результат уточняет authoring root и сохраняет дедупликацию с существующей Pastor discovery lane.
+
+## 22. Продолжение — registry lookup зависит от import graph
+
+Термин «общий реестр» проверен как executable module, а не по имени переменной. Временный bundled probe импортировал только публичные `SERIES_CONFIGS`/`seriesConfig` из `seriesConfig.ts`.
+
+Фактический результат:
+
+- `Object.keys(SERIES_CONFIGS)` = только `dzhon-gill`;
+- lookup `dzhon-gill` успешен;
+- lookup `pastor-series`, `genesis-6`, `hard-texts`, `teen-double-life`, `russian-baptism` бросает `Unknown series config`.
+
+Причина: остальные config modules регистрируются собственным top-level side effect и попадают в map только если кто-то уже импортировал каждый модуль. Второй probe с явными импортами всех пяти family configs получил ожидаемые шесть unique IDs и public Baptist `shape:'book'` — то есть данные валидны, но полнота lookup контекстна.
+
+Это усиливает уже установленный вывод без новой строки:
+
+- `seriesConfig()` не является автономным SSOT или надёжным discovery API;
+- registry completeness и Baptist replacement order определяет не manifest, а случайный module graph;
+- отсутствие production consumers скрывает дефект контракта, но не делает API безопасным для нового агента;
+- typed manifest должен явно импортировать configs и кодировать approved override order, после чего contracts должны проверять expected membership.
+
+Probe был собран во временный `/tmp` bundle через уже установленный esbuild; Product не изменён.

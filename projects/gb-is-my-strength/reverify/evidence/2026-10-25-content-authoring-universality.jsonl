@@ -53,3 +53,6 @@
 {"type":"seriesLandingCensus","count":6,"book":["/baptisty-rossii/","/hard-texts/"],"flat":["/hard-texts/genesis-6/","/nagornaya/","/nagornaya/seriya/","/podrostok-za-kadrom/"],"genericSeriesLandingRenderer":false,"resolvedSharedConfigLandings":3,"nativeCompositionLandings":3}
 {"type":"deduplication","route":"/pastor-series/","surface":"page","routeType":"pastor-index","currentMembershipOwner":"SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY","countedAgain":false}
 {"type":"authoringBoundary","readerChromeAutomatic":true,"landingAutomatic":false,"requiredDecision":"declared hub/catalog/parent-section strategy plus membership projection","newWorkUnit":false}
+{"type":"registryImportProbe","mode":"registry-module-only","keys":["dzhon-gill"],"successfulLookups":["dzhon-gill"],"failedLookups":["pastor-series","genesis-6","hard-texts","teen-double-life","russian-baptism"],"error":"Unknown series config"}
+{"type":"registryImportProbe","mode":"explicit-all-family-imports","keys":["dzhon-gill","pastor-series","genesis-6","hard-texts","teen-double-life","russian-baptism"],"uniqueIds":6,"russianBaptismShape":"book"}
+{"type":"registryConclusion","autonomousManifest":false,"membershipDependsOnImportGraph":true,"approvedOverrideOrderEncoded":false,"productionConsumers":0,"newWorkUnit":false}
