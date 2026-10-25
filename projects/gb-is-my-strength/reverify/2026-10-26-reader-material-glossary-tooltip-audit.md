@@ -2,7 +2,7 @@
 
 Дата: 2026-10-26  
 Product anchor: `80440f9ce4bdfca92769330ea79109625c868725`  
-Disposition: **4 новых direct defects + 1 improvement + 2 system lanes; 3 действующих ряда расширены**
+Disposition: **5 новых direct defects + 1 improvement + 2 system lanes; 3 действующих ряда расширены**
 Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 
 ## 1. Итог
@@ -18,9 +18,10 @@ Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 5. `typograf:dry` на зелёном exit 0 сообщает шесть требующих перезаписи retained HTML, поэтому принимается `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`;
 6. словарь структурно исправен и в целом полезен, но шесть пар одного понятия заведены как разные canonical identities; это дробит английское/русское употребление и definitions — improvement `GBS-GLOSSARY-CONCEPT-IDENTITY-CONSOLIDATION`;
 7. targeted control `/baptisty-rossii/goneniya-i-sovest/` подтверждает штатную mouse/touch/keyboard geometry, но продолжение 95-route sweep нашло важное исключение: на desktop `/baptisty-rossii/` legacy `SiteUtils.makeTooltipController` и `article-tooltips.js` v20 одновременно владеют одним `.gterm`; hover оставляет popup с `top:auto!important` вне viewport. Принимается `SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY`. Независимый Axe `region` на body-reparented popup по-прежнему расширяет `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`;
-8. определение Второго Лондонского исповедания 1677/1689 ошибочно называет его «переработкой Лондонского исповедания 1644 года». Этот brief реально открывается на 11 routes; принимается `GBS-GLOSSARY-1689-CONFESSION-LINEAGE-MISSTATEMENT`. Отдельно Learning Sheet показывает raw canonical forms `Кархемише` и `козьего двора` как названия карточек; это расширяет уже принятую glossary identity/display improvement.
+8. определение Второго Лондонского исповедания 1677/1689 ошибочно называет его «переработкой Лондонского исповедания 1644 года». Этот brief реально открывается на 11 routes; принимается `GBS-GLOSSARY-1689-CONFESSION-LINEAGE-MISSTATEMENT`. Отдельно Learning Sheet показывает raw canonical forms `Кархемише` и `козьего двора` как названия карточек; это расширяет уже принятую glossary identity/display improvement;
+9. `/articles/diotrefy-nashego-vremeni/` публикует грамматически невозможное «Все двадцать один материала различаются» — новый `GBS-DIOTROPHES-NUMERAL-AGREEMENT`. На том же маршруте 21/21 evidence cards показывают только unlinked `Записи Research: DRI-01…`; это расширяет существующий reader-source-locators row, а не создаёт второй technical-leak count.
 
-Арифметика после аудита и продолжения: **57 = 31 direct defects + 5 improvements + 21 system lanes**.
+Арифметика после аудита и продолжения: **58 = 32 direct defects + 5 improvements + 21 system lanes**.
 
 ## 2. Объём и чистая база
 
@@ -275,6 +276,7 @@ Disposition: расширить `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, г
 - `GBS-BAPTISTS-RESEARCH-SCAFFOLD-READER-LEAK`;
 - `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`;
 - `GBS-GLOSSARY-1689-CONFESSION-LINEAGE-MISSTATEMENT`;
+- `GBS-DIOTROPHES-NUMERAL-AGREEMENT`;
 - `SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY`;
 - расширение `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT` на открытый glossary popup.
 
@@ -295,6 +297,7 @@ Disposition: расширить `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`, г
 - шесть exact typograf deltas;
 - шесть semantic duplicate pairs и две падежные raw canonical headings в Learning Sheet;
 - неверная генеалогия Второго Лондонского исповедания в glossary brief на 11 routes;
+- exact rendered «Все двадцать один материала» на Diotrophes;
 - dual-owner desktop hover geometry failure на `/baptisty-rossii/`;
 - Axe landmark failure на открытом popup.
 
@@ -363,5 +366,15 @@ Browser corpus также подтверждает на `/journal/dossiers/g3/` 
 ### 15.4 Полный tooltip payload census
 
 Отдельно извлечены все payload surfaces на 95 content routes: **884 total = 462 glossary + 184 footnote + 238 Bible reference**. Пустых payloads — 0; reader-visible `TODO/TBD/FIXME`, `undefined/null`, `payload/runtime/metadata/snapshot/backlog/frontmatter/claim-level`, SHA/file markers, backticks или literal Markdown — 0. Среди glossary и Bible payloads нет ни одного текста с Latin ratio >35%; 148 predominantly-Latin footnotes являются библиографическими citations, а не untranslated definitions. Все 184 footnotes содержат технические linear-reader boundary strings `⟦сноска: … ⟧`, но они лежат в `[hidden][aria-hidden=true][data-pagefind-ignore]` и не входят в painted/AT tooltip copy. Поэтому raw boundary leakage не заявляется.
+
+## 16. Продолжение: Diotrophes copy и source projection
+
+Rendered corpus и source-level numeral scan нашли на `/articles/diotrefy-nashego-vremeni/` точную reader-visible строку:
+
+> «Все двадцать один материала различаются».
+
+При составном числительном, оканчивающемся на «один», требуется singular nominative: «двадцать один материал». Chromium подтверждает строку в обычном article paragraph. Это не скрытый payload и не layout concatenation. Принимается `GBS-DIOTROPHES-NUMERAL-AGREEMENT`; closure — исправленный source и final browser text плюс узкая editorial regression fixture на согласование составного `… один` с существительным в этом owner family.
+
+Тот же trusted browser pass проверил source projection 21 case cards: **21 `.source-ref`, 0 links**, каждый показывает только форму `Записи Research: DRI-01, DRI-04` и подобные internal IDs. Reader не может разрешить их без отдельного data registry. Это тот же уже принятый недостаток, что G3 service IDs вместо читательской библиографии, поэтому расширяется `GBS-JOURNAL-READER-SOURCE-LOCATORS-MISSING` (исторический ID ряда), а отдельный Diotrophes leakage defect не считается. Closure существующего ряда теперь обязана покрыть оба consumers: 33 G3 claims/6 source-class cards и 21 Diotrophes case cards, сохраняя границы доказательности и не публикуя restricted material.
 
 Product mutation and merge remain outside this audit.
