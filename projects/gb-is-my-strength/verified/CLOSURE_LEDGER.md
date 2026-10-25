@@ -592,7 +592,7 @@ This entry records the governance change only. It does not claim that the reform
 
 - Shared series chrome is genuinely reusable: flat/book shapes, Roman/label/letter/Arabic tiers, 45 facade consumers and six active browser-sweep families. This audit does not relabel route-specific editorial visuals as forks.
 - Publication authoring remains fragmented across MDX, series items/pages, family wrappers or Body/PageHead, explicit route, `data/series.json`, generated projections, route profile and page ownership; current census is 104 explicit routes, 64 content entries, 64 PageHeads and 106 profiles, with no first-class scaffold command.
-- Two disposable exact-main probes establish fail-open admission: schema-valid orphan MDX passes Astro build and content coverage while producing no route; config-only flat core item without page/route/series JSON passes Astro check, engine contracts and audit-pro. Probe files were removed and Product source is clean.
+- Two disposable exact-main probes establish fail-open admission: schema-valid publishable MDX (`draft:false`, `noindex:false`) passes Astro build and content coverage while producing no route; config-only flat core item without page/route/series JSON passes Astro check, engine contracts and audit-pro. Probe files were removed and Product source is clean.
 - Admit one `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; do not duplicate `SYS-HEAD-ASSET-PROJECTION-PROLIFERATION` or `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY`. **49 → 50 = 27 direct defects + 4 necessary improvements + 19 system lanes.**
 - Report/receipt: `../reverify/2026-10-25-content-authoring-universality.md`, `../reverify/evidence/2026-10-25-content-authoring-universality.jsonl`.
 
@@ -625,3 +625,9 @@ This entry records the governance change only. It does not claim that the reform
 
 - Route-less MDX with undersized title/description fails Astro check with `InvalidContentEntryDataError` and both exact field minima. Collection schema therefore covers orphan entry shape; no direct-import schema-bypass defect is admitted.
 - The active root remains publication resolution of otherwise valid content, not frontmatter validation. Arithmetic unchanged.
+
+### Draft-staging self-correction
+
+- The first orphan MDX probe used `draft:true`/`noindex:true`; it is not defect proof. Teen history (`870b28dd` → later `a6eeda4`) confirms content-only route-less drafts are intentional. That witness is reclassified as a healthy staged-authoring control.
+- Superseding probe omits both flags (schema defaults `false`): publishable valid MDX still passes Astro build/content coverage, leaves page count 104 and produces no route. The admitted root therefore remains, narrowed to publishable orphan admission.
+- Closure must allow explicit drafts and fail publishable orphans. Arithmetic remains **50 = 27 + 4 + 19**.

@@ -13,7 +13,7 @@ Evidence: `evidence/2026-10-25-content-authoring-universality.jsonl`
 
 Главное — это уже не только неудобство. Два контролируемых отрицательных dry run доказали fail-open:
 
-1. валидный новый MDX без route проходит `npm run astro:build`; сборка остаётся зелёной, строит прежние 104 страницы и не создаёт probe URL;
+1. валидный publishable MDX (`draft:false`, `noindex:false`) без route проходит `npm run astro:build`; сборка остаётся зелёной, строит прежние 104 страницы и не создаёт probe URL;
 2. `npm run content:coverage:audit` с этим orphan MDX также выходит 0;
 3. новый flat-series core item только в `teenSeriesConfig.ts`, без `pages[id]`, route и `data/series.json`, проходит `astro check`, `engine:contracts` и `audit-pro`.
 
@@ -72,19 +72,21 @@ Evidence: `evidence/2026-10-25-content-authoring-universality.jsonl`
 
 ## 4. Dry run A — валидный материал без публикации
 
-Во временный clean Product checkout добавлен schema-valid draft `src/content/articles/arena-authoring-probe.mdx`. Route, ownership и registry не добавлялись.
+Первичный fixture был schema-valid, но имел `draft:true`/`noindex:true`. Сам по себе он **не доказывал дефект**: route-less draft — легитимный prepublication shape. Этот witness сохранён как исторический контроль и superseded новым probe.
 
-Результат:
+В clean Product checkout добавлен schema-valid publishable MDX без route: поля `draft`/`noindex` не заданы и schema defaults делают их `false`. Ownership и registry также не добавлялись.
+
+Результат publishable probe:
 
 - `npm run astro:build` exit 0;
 - Astro check: 0 errors;
 - final message: 104 pages built — то же число, что у baseline;
-- `dist/articles/arena-authoring-probe/index.html` отсутствует;
-- build не выдаёт ошибки про orphan content;
+- `dist/articles/arena-publishable-orphan-probe/index.html` отсутствует;
+- build не выдаёт ошибки про publishable orphan content;
 - отдельный `npm run content:coverage:audit` exit 0;
 - его итог: `expected=0`, `explicit-skips=104`, `passed=1/1`.
 
-То есть schema проверяет форму entry, но publication completeness не проверяет, что entry имеет public owner/route либо явно зарегистрирован как non-public draft. Это fail-open gap между content model и route ownership.
+То есть schema проверяет форму entry и честно допускает drafts, но publication completeness не требует route для entry, который сам объявлен indexable/published. Это узкий fail-open gap между content model и route ownership.
 
 ## 5. Dry run B — config-only серия
 
@@ -296,3 +298,17 @@ Controlled fixture с `.gbs2-toc a[href="#missing-target"]` и отсутств�
 Следовательно, collection loader видит даже orphan entries и проверяет их форму. Direct MDX imports и семейные wrapper assertions не создали доказанного обхода общей schema на текущем anchor. Root нужно формулировать узко: **валидный content object не обязан разрешаться в publication owner**, а не «MDX вообще не валидируется».
 
 Это положительный контроль и основание не заводить отдельный frontmatter/schema defect. Для closure предпочтительно сохранить текущую адресность schema errors, убрав только дублирующие family assertions там, где они расходятся с canonical type.
+
+## 14. Self-correction — draft staging versus publishable orphan
+
+Первичный orphan fixture содержал `draft:true`/`noindex:true`; использовать его как самостоятельное доказательство missing-publication defect было слишком широко. Git history подтверждает, что route-less drafts — намеренный workflow:
+
+- `870b28dd` добавил семь Teen MDX отдельным content-only commit;
+- frontmatter прямо говорил «отдельный публичный маршрут/серия ещё не собраны», `contentStatus:draft`, `draft:true`, `noindex:true`;
+- prepublication series config появился позже в `a6eeda4`, затем publication metadata/route surfaces — в следующих шагах.
+
+Поэтому draft fixture теперь считается положительным staged-authoring control, а не failure.
+
+Admission root повторно проверен publishable fixture без `draft`/`noindex` полей (schema defaults `false`). Он дал тот же зелёный результат: Astro build 0, 104 pages, probe route отсутствует; content coverage 0 и не обнаруживает entry. Именно этот superseding witness поддерживает строку.
+
+Closure должна разрешать route-less `draft:true`/`noindex:true` материалы и падать только когда entry заявлен publishable, но не разрешается в route/owner. Арифметика не меняется; correction сужает формулировку без снятия root.

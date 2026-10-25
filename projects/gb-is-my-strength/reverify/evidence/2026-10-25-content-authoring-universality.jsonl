@@ -27,3 +27,7 @@
 {"type":"disposition","readerFacingDefect":false,"newWorkUnit":false,"finding":"implemented rendered fragment validator is not part of documented engine guard","absorbedBy":"SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT"}
 {"type":"positiveGuard","id":"orphan-invalid-frontmatter","fixture":"route-less MDX with title<8 and description<40","astroCheckExit":1,"error":"InvalidContentEntryDataError","fieldErrors":["title minimum 8","description minimum 40"],"schemaBypassProven":false}
 {"type":"disposition","frontmatterSchemaDefect":false,"finding":"content shape fails closed even without route; admitted root is publication resolution completeness"}
+{"type":"selfCorrection","id":"initial-orphan-draft-insufficient","priorFixture":"arena-authoring-probe","draft":true,"noindex":true,"disposition":"legitimate staged-authoring control; not defect proof","supersededBy":"publishable-orphan-mdx"}
+{"type":"probe","id":"publishable-orphan-mdx","fixture":"valid MDX with draft/noindex omitted; schema defaults false","astroBuildExit":0,"pagesBuilt":104,"routeBuilt":false,"contentCoverageExit":0,"contentCoverageDetected":false}
+{"type":"history","id":"intentional-draft-staging","contentCommit":"870b28dd9818e95fefed5aa8162f3b977c0e868c","entries":7,"frontmatter":{"contentStatus":"draft","draft":true,"noindex":true},"laterConfigCommit":"a6eeda417f4a1213d3b360217abbece6af9064c5"}
+{"type":"boundary","routeLessExplicitDraftAllowed":true,"publishableOrphanMustFail":true,"arithmeticChanged":false,"rootRetained":"SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT"}
