@@ -769,3 +769,22 @@ Generic indexable page probe изменял только route, ownership, profi
 Sitemap является реальным discovery channel, поэтому сам probe не доказывает «невидимую для поисковика» страницу. Он доказывает другое: система не заставляет автора **объявить**, достаточно ли sitemap-only, нужен ли catalog/hub/parent link, либо route намеренно external/campaign-only. Full green не отличает эти намерения.
 
 Closure должна требовать typed discovery decision для indexable publication: например `catalog`, `hub`, `parent-link`, `sitemap-only` с reason/owner либо approved external entry. Для explicit noindex page допустима `none` с причиной. Это не blanket-требование добавлять каждую страницу в меню и не новый discovery defect; это недостающая часть того же publication transaction.
+
+## 36. Итоговая shape→owner decision matrix для scaffold
+
+Проверенные dry runs позволяют заменить «копируй соседнюю страницу» на минимальный decision tree. Таблица разделяет подтверждённые authored owners и generated/review steps; optional family media/theme не притворяются универсальными обязательными файлами.
+
+| Intent | Runtime precedent | Минимальные authored owners / decisions | Generated / review boundary |
+|---|---|---|---|
+| Route-less draft article | content schema | MDX + explicit `draft:true`/`noindex:true` | route/sitemap не нужны; strict provenance сохраняется |
+| Standalone indexable article | `ArticleLayout` | content, route, page ownership, route profile, discovery decision | editorial registry создаёт pending record; approval только review |
+| Generic indexable page | `BaseLayout` | route/content, ownership, profile, sitemap, discovery decision | отдельный PageHead/article editorial record не нужен |
+| Generic noindex page | `BaseLayout` | route/content, ownership, profile `indexable:false` + reason, discovery `none` | sitemap запрещён |
+| Existing shared-series item | `SeriesReaderChrome` | manifest item+page, body/content, route, ownership/profile, data inclusion decision, composite identity, discovery decision | editorial/search/sitemap projections по declared policy; optional family media owner |
+| New flat series | тот же `SeriesReaderChrome` | unique registered config, items/pages/routes, ownership/profiles, hub/catalog/parent strategy | declared data projection + fresh browser admission; новая engine component не нужна |
+| New book series | `shape:'book'` того же engine | chapters/articles topology, pages только для navigable articles, остальные owners как flat | те же projections; chapter headers остаются non-page |
+| Special/application | family adapter | explicit application owner/plan и route/profile/ownership; generic page scaffold запрещён | family-specific contracts, browser/recovery/security gates |
+
+Scaffold должен сначала спросить intent/indexability/discovery и только затем предлагать write set. Он не должен выводить форму по расположению файла или автоматически превращать draft/noindex в public indexable route.
+
+Подтверждённая usability оценка остаётся **2/5** не из-за отсутствия рабочих precedents, а потому что этот decision tree сейчас не является executable/discoverable API. Реализация таблицы в typed plan/scaffold закрывает orchestration gap без визуального или route rewrite.

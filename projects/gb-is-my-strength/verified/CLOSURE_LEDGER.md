@@ -751,3 +751,8 @@ This entry records the governance change only. It does not claim that the reform
 
 - All 106 route profiles lack a discovery/inbound/catalog strategy field; audit-pro validates outgoing targets, not inbound reachability. The indexable generic-page probe passes with sitemap but no catalog/hub/internal link.
 - Sitemap-only may be valid, so closure requires a typed discovery decision/reason rather than a blanket menu-link rule. Folded into publication transaction; arithmetic unchanged.
+
+### Shape→owner scaffold decision matrix
+
+- Report §36 consolidates eight intents from route-less draft through standalone/page/shared flat/book and declared special adapter, separating authored owners from generated/review steps.
+- Scaffold must ask intent/indexability/discovery before writes and cannot infer publication or auto-promote draft/noindex. This is closure guidance for the existing authoring root; arithmetic unchanged.

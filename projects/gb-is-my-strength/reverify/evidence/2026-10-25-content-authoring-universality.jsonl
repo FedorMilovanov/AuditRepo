@@ -93,3 +93,5 @@
 {"type":"discoveryGovernance","routeProfiles":106,"profilesWithTopLevelDiscoveryInboundOrCatalogField":0,"auditProLinkDirection":"outgoing target existence only","requiresInbound":false}
 {"type":"negativeProbe","id":"indexable-page-without-declared-internal-discovery","owners":["route","ownership","profile","sitemap"],"hubCatalogInboundAdded":false,"productionLikeBuildExit":0,"fullStaticExit":0,"searchCrawlerDiscovery":"sitemap exists"}
 {"type":"closureRefinement","indexableDiscoveryPolicies":["catalog","hub","parent-link","sitemap-only with reason","approved external entry"],"explicitNoindexPolicy":"none with reason allowed","blanketMenuLinkRequired":false,"newWorkUnit":false}
+{"type":"shapeDecisionMatrix","intents":["route-less-draft","standalone-indexable-article","generic-indexable-page","generic-noindex-page","existing-series-item","new-flat-series","new-book-series","special-application"],"runtimeForkRequired":false}
+{"type":"scaffoldOrder","questions":["intent","indexability","discovery strategy","series shape/identity","family adapter needs"],"deriveIntentFromFileLocation":false,"autoPromoteDraftOrNoindex":false,"authoringScore":"2/5"}
