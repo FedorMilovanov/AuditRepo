@@ -671,3 +671,9 @@ This entry records the governance change only. It does not claim that the reform
 
 - Data-only published Pastor part correctly fails audit-pro with an exact missing-HTML diagnostic; data→route protection exists.
 - Opposite TS-config→page/route/data direction remains fail-open and renders dangling links. Closure adds the reverse relation without weakening the healthy data-first guard. No new unit/arithmetic change.
+
+### Series landing/hub continuation
+
+- Registry has six series landings (2 book/4 flat), but no generic landing renderer: three resolve shared configs and three are explicit native compositions. Shared article chrome does not create hubs.
+- `/pastor-series/` remains a page/pastor-index; its membership drift stays owned by `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY`, not double-counted here.
+- Authoring closure requires a declared hub/catalog/parent strategy, not visual homogenization. No new unit/arithmetic change.

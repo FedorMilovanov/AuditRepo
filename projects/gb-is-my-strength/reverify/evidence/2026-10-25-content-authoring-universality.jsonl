@@ -50,3 +50,6 @@
 {"type":"runtimeMatrix","flatCreation":"PASS","bookCreation":"PASS","separateBookEngine":false,"productionAdmissionClaimed":false,"arithmeticChanged":false}
 {"type":"positiveGuard","id":"series-json-data-only-published-part","series":"pastor-series","part":99,"routeExists":false,"auditProExit":1,"diagnostic":"pastor-series part 99 arena-data-only-probe: no index.html on disk","dataConsistencyExit":0}
 {"type":"asymmetry","dataJsonToRoute":"FAIL_CLOSED","tsConfigToPageRouteData":"FAIL_OPEN","requiredRepair":"add reverse config-item resolution without weakening existing data-first guard","arithmeticChanged":false}
+{"type":"seriesLandingCensus","count":6,"book":["/baptisty-rossii/","/hard-texts/"],"flat":["/hard-texts/genesis-6/","/nagornaya/","/nagornaya/seriya/","/podrostok-za-kadrom/"],"genericSeriesLandingRenderer":false,"resolvedSharedConfigLandings":3,"nativeCompositionLandings":3}
+{"type":"deduplication","route":"/pastor-series/","surface":"page","routeType":"pastor-index","currentMembershipOwner":"SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY","countedAgain":false}
+{"type":"authoringBoundary","readerChromeAutomatic":true,"landingAutomatic":false,"requiredDecision":"declared hub/catalog/parent-section strategy plus membership projection","newWorkUnit":false}

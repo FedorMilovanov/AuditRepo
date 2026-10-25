@@ -465,3 +465,23 @@ Current source уже имеет один намеренный collision: `russi
 Следовательно, проблема не в полном отсутствии series protection. Data-first projection защищена; config-first projection — нет. Closure должна добавить обратную проверку, не ослабляя существующий `audit-pro` guard и не назначая `data/series.json` вторым ручным SSOT.
 
 Fixture удалён, Product source чист; новой строки и изменения arithmetic нет.
+
+## 21. Продолжение — series landing/hub boundary
+
+Связанные landing routes проверены отдельно от reading chrome. Registry содержит шесть `surface=series`, `routeRole=landing`:
+
+- book: `/baptisty-rossii/`, `/hard-texts/`;
+- flat: `/hard-texts/genesis-6/`, `/nagornaya/`, `/nagornaya/seriya/`, `/podrostok-za-kadrom/`.
+
+Все используют adapter label `series-landing`, но общего `SeriesLanding` renderer нет. Только Baptists имеет явно названный `BaptistyRossiiBookLanding`; Hard Texts, Genesis 6, Nagornaya и Teen сохраняют family/route implementations. Лишь Baptists, Hard Texts и Teen landings имеют resolved shared-series config imports; три остальных являются explicit native compositions.
+
+`/pastor-series/` вообще классифицирован как `surface=page`, `routeType=pastor-index`, а не series landing. Его текущая membership/projection drift уже принадлежит отдельному `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY` и здесь не считается повторно.
+
+Вывод для нового автора:
+
+- shared engine автоматически решает article reading chrome;
+- он **не создаёт hub/landing** и не определяет, нужен ли отдельный hub, catalog shelf или parent section;
+- новая серия требует явного landing/discovery решения и profile classification;
+- копировать любой существующий hub как «универсальный» template нельзя.
+
+Это не требование унифицировать все landings визуально. Нужен decision/scaffold contract, который заставляет выбрать declared landing strategy и подключает membership projection. Результат уточняет authoring root и сохраняет дедупликацию с существующей Pastor discovery lane.
