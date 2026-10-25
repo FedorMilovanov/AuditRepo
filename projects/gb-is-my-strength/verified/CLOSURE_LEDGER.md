@@ -607,3 +607,10 @@ This entry records the governance change only. It does not claim that the reform
 - A deliberately invalid but type-correct orphan `*SeriesConfig.ts` (`items:[]`, `defineSeriesConfig`, side-effect registry write) passed Astro check, engine contracts and audit-pro because no consumer imported it.
 - Importing the same module from a temporary route made Astro build fail with the correct addressable Russian `items пуст` diagnostic. Runtime topology validation is strong; config discovery/admission is the missing layer.
 - No separate book-engine defect and no arithmetic change: the result strengthens `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`. All fixtures were removed; Product source is clean.
+
+### Exact surface-taxonomy continuation
+
+- Executable registry at the same Product anchor reports 105 surfaces: 76 series (40 flat/36 book), 4 article, 10 page and 15 special; registry/capability mutation contracts pass.
+- Of 68 reading-series routes, 63 use the shared facade and five Nagornaya chapters are explicit native exceptions. Six landings and two references intentionally use non-reader adapters. Thus shared series runtime is broad but the guide's literal «all series» wording needs this boundary.
+- Standalone `article` has only four routes and three adapter patterns; Lawson is the sole generic `ArticleLayout` consumer. `page` is capability-registry + route-native composition; `special` correctly remains adapter-based.
+- No new defect/arithmetic change. This taxonomy refines `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; **50 = 27 + 4 + 19**.

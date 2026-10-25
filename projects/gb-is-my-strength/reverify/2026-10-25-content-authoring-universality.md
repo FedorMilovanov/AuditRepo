@@ -218,3 +218,41 @@ Product в этом проходе не изменялся.
 Статический engine guard проверяет наличие текста `defineSeriesConfig(`, но не исполняет и не импортирует найденный модуль. `SERIES_CONFIGS` не является центральным статическим manifest: current family modules сами мутируют его при import, а `seriesConfig(seriesId)` не имеет production consumers. Для Baptist book даже предусмотрена намеренная замена сначала flat, затем book entry, то есть registry result зависит от import order по design.
 
 Следовательно, безопасный scaffold должен не только написать config, но и сделать его достижимым через явный manifest/consumer и выполнить validation. Flat/book topology остаётся общей и сильной после import; отдельный book-engine defect не принимается. Эта проверка не меняет арифметику и входит в тот же `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`.
+
+## 11. Продолжение — exact current surface taxonomy
+
+После sandbox reset Product был заново восстановлен на тот же immutable anchor `015573af…`; AuditRepo snapshot byte-сверен с remote head перед продолжением. Текущий executable `public-surface-registry` даёт не prose inventory, а следующую фактическую модель 105 governed surfaces:
+
+| Surface | Число | Реальная универсальность |
+|---|---:|---|
+| `series` | 76 | 40 flat + 36 book; 68 reading routes, из них 63 используют facade, 5 — explicit native exceptions |
+| `article` | 4 | один semantic type, но не один document/chrome adapter |
+| `page` | 10 | часть через mobile registry, часть route-native/page-landing |
+| `special` | 15 | намеренно отдельные map/app/confession/genealogy adapters |
+
+Registry contract проходит: 0 errors, 68 governed reading-series routes и 5 explicit native exceptions.
+
+### 11.1 Series
+
+Точное утверждение теперь такое: **shared reader engine покрывает 63 из 68 reading-series routes**, а не буквально все series-shaped routes. Пять исключений — `/nagornaya/chast-1/` … `/chast-5/` с `routeType=series-chapter`, flat shape и route-native chrome. Ещё шесть series landings и две references закономерно не обязаны рендериться article reader chrome.
+
+Это не новый дефект: exceptions явно зарегистрированы и executable contract их принимает. Но guide фраза «движок один на все серии» без оговорки слишком широка для first-time agent. Новый author должен сначала выбрать: shared reader family или declared native exception; копирование Nagornaya как обычного template было бы неверным.
+
+### 11.2 Standalone article
+
+Registry знает только четыре standalone `surface=article` routes:
+
+- Hermenevtika — registry adapter `hermenevtika`;
+- Kod Da Vinci — route-native;
+- Lot — route-native;
+- Lawson — route-native и единственный consumer generic `ArticleLayout`.
+
+То есть semantic class единый, а универсального `StandaloneArticlePage`/document engine нет. Route profile правильно классифицирует страницы, но не создаёт их и не выбирает реализацию автоматически.
+
+### 11.3 Page и special
+
+`page` — смешанная модель: каталоги `/articles/`, `/biografii/`, `/karty/`, `/konfessii/` используют default-page mobile registry, Home/Pastor — page-landing, About/Journal/Favorites — route-native. Это registry унификации capabilities, не один renderer.
+
+`special` намеренно не должен становиться article/series engine: 10 map routes, app, confession shell+built app, map landing и genealogy сохраняют собственные interaction models. Это правильная граница архитектуры, не fragmentation defect.
+
+Итоговая оценка не меняется: series runtime **4/5**, cross-shape authoring **2/5**. Current registry хорошо запрещает неявный новый engine после регистрации route, но не заменяет scaffold/discovery до регистрации. Arithmetic остаётся прежней.
