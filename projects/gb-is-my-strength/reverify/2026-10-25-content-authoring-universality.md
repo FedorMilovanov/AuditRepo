@@ -283,3 +283,16 @@ Controlled fixture с `.gbs2-toc a[href="#missing-target"]` и отсутств�
 - exit 0.
 
 То есть текущий контент здоров и новый reader-facing defect не принимается. Риск относится к authoring safety: typo в следующем curated TOC пройдёт документированный `engine:guard`, хотя готовый fail-closed validator уже существует. Closure boundary принятого root уже требует broken-TOC negative fixture; теперь он подтверждён executable mutation. Arithmetic не меняется.
+
+## 13. Продолжение — content-schema positive control
+
+Чтобы не смешивать publication completeness с качеством frontmatter validation, выполнен отрицательный orphan-MDX control: route отсутствовал, но `title` и `description` были короче schema minimum.
+
+`npx astro check` корректно вышел 1 до публикации и указал оба поля и точные ограничения:
+
+- `title: Too small: expected string to have >=8 characters`;
+- `description: Too small: expected string to have >=40 characters`.
+
+Следовательно, collection loader видит даже orphan entries и проверяет их форму. Direct MDX imports и семейные wrapper assertions не создали доказанного обхода общей schema на текущем anchor. Root нужно формулировать узко: **валидный content object не обязан разрешаться в publication owner**, а не «MDX вообще не валидируется».
+
+Это положительный контроль и основание не заводить отдельный frontmatter/schema defect. Для closure предпочтительно сохранить текущую адресность schema errors, убрав только дублирующие family assertions там, где они расходятся с canonical type.

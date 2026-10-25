@@ -620,3 +620,8 @@ This entry records the governance change only. It does not claim that the reform
 - The implemented rendered `partToc` fragment validator is source-only in default `series:facade:guard`; neither `engine:contracts` nor `engine:guard` invokes its `--require-dist` mode, and no package/workflow entry does so.
 - A missing-target fixture passed default facade guard and failed strict mode with the exact route/fragment. Fresh exact-main production-like strict baseline passes: 64 pages, 1,999 links, 1,141 unique targets, 0 broken.
 - No current content defect/new unit. This executable negative strengthens the broken-TOC acceptance criterion of `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; arithmetic remains **50 = 27 + 4 + 19**.
+
+### Content-schema positive control
+
+- Route-less MDX with undersized title/description fails Astro check with `InvalidContentEntryDataError` and both exact field minima. Collection schema therefore covers orphan entry shape; no direct-import schema-bypass defect is admitted.
+- The active root remains publication resolution of otherwise valid content, not frontmatter validation. Arithmetic unchanged.

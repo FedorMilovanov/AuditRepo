@@ -25,3 +25,5 @@
 {"type":"mutation","id":"missing-series-fragment","fixture":"gbs2-toc link #missing-target with no matching id","defaultFacadeExit":0,"strictFacadeExit":1,"strictError":"/articles/probe/#missing-target (1 link)"}
 {"type":"baseline","id":"current-series-fragments","product":"015573af602dd7b8d49feb296638b3447364a529","build":"production-like","strictExit":0,"pages":64,"fragmentLinks":1999,"uniqueFragments":1141,"brokenUniqueFragments":0}
 {"type":"disposition","readerFacingDefect":false,"newWorkUnit":false,"finding":"implemented rendered fragment validator is not part of documented engine guard","absorbedBy":"SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT"}
+{"type":"positiveGuard","id":"orphan-invalid-frontmatter","fixture":"route-less MDX with title<8 and description<40","astroCheckExit":1,"error":"InvalidContentEntryDataError","fieldErrors":["title minimum 8","description minimum 40"],"schemaBypassProven":false}
+{"type":"disposition","frontmatterSchemaDefect":false,"finding":"content shape fails closed even without route; admitted root is publication resolution completeness"}
