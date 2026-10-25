@@ -9,3 +9,7 @@
 {"type":"documentation","guide":"docs/SERIES-ENGINE-GUIDE.md","findings":["copy-neighbour workflow","manual duplicate series data","audit-pro divergence promise contradicted by probe","no standalone path","no scaffold command","route profile/ownership omitted"]}
 {"type":"owners","openProductPrs":[2193,2179,2164,2143],"publicationContractOwner":null,"note":"#2164 is draft and touches only five MDX files; intent not inferred"}
 {"type":"cleanup","probeFilesRemoved":true,"productSourceClean":true,"productMutatedPersistently":false}
+{"type":"probe","id":"standalone-mdx-plus-route","pattern":"getCollection + ArticleLayout","astroBuildExit":0,"routeBuilt":true,"mdxStrictExit":0,"mdxStrictRoutes":36,"profilesStrictExit":0,"surfaceRegistryExit":0,"contentSourcesStrictExit":0,"auditProExit":0}
+{"type":"positiveGuard","id":"undeclared-explicit-route","command":"npm run page-ownership:check","exit":1,"issues":1,"diagnostic":"src page is not declared in migration/page-ownership.json: src/pages/articles/arena-authoring-probe/index.astro"}
+{"type":"probe","id":"ownership-without-profile","routeProfilesStrictExit":0,"surfaceRegistryExit":1,"surfaceErrors":["surfaceContractVersion must be 1","invalid or missing surface"]}
+{"type":"disposition","arithmeticChanged":false,"absorbedBy":"SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT","boundary":"full static-publication chain catches explicit unowned route; orphan content and guide-recommended series gates remain fail-open"}

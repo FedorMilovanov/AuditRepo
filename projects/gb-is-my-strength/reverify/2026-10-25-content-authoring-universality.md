@@ -146,3 +146,45 @@ Evidence: `evidence/2026-10-25-content-authoring-universality.jsonl`
 9. resulting-main dry runs создают по одному standalone, existing-series item и новой flat/book series, проходят адресные ошибки и после удаления не оставляют artifacts.
 
 Product в этом проходе не изменялся.
+
+## 9. Продолжение — staged standalone-route dry run
+
+После первичной admission выполнен второй контролируемый dry run: валидный MDX был подключён к explicit route через единственный реальный generic consumer pattern (`getCollection` + `ArticleLayout`). Это уточняет вывод: защита отсутствует не полностью, а **разбросана по несогласованным стадиям**.
+
+### 9.1 Что прошло
+
+При наличии MDX + route, но без ownership/profile:
+
+- `npm run astro:build` — exit 0;
+- probe route физически создан в `dist`;
+- `astro:audit:article-mdx:strict` — exit 0 и включил probe в 36 проверенных routes;
+- `route:profiles:check --strict` — exit 0;
+- `surface:registry:check` — exit 0, пока route отсутствует в ownership registry;
+- `content:sources:check --strict` — exit 0;
+- `audit-pro` — exit 0 / `AUDIT PASSED`.
+
+То есть эти validators не обнаруживают unregistered source route сами: effective registries рассматривают только уже admitted owners.
+
+### 9.2 Положительный guard
+
+`npm run page-ownership:check` является точным fail-closed контролем. На том же fixture он завершился exit 1 ровно с одной причиной:
+
+`src page is not declared in migration/page-ownership.json: src/pages/articles/arena-authoring-probe/index.astro`
+
+Это важная граница: полный `validate:static-publication` в итоге остановит новую undeclared route. Поэтому root не утверждает, что любой полный release run пропустит её. Проблема в другом:
+
+- series authoring guide рекомендует `engine:contracts → audit-pro → engine:guard`, но не этот ownership gate;
+- orphan MDX без route остаётся невидим даже для ownership gate;
+- адресная ошибка появляется только после того, как агент уже вручную создал route;
+- генератора следующего обязательного owner-файла нет.
+
+### 9.3 Следующая стадия тоже раздельна
+
+После временного добавления корректной ownership entry без route profile:
+
+- `route:profiles:check --strict` всё ещё вышел 0;
+- только последующий `surface:registry:check` вышел 1 и сообщил две причины: missing `surfaceContractVersion` и missing `surface`.
+
+Следовательно, название `route:profiles:check --strict` само по себе не означает completeness всех owned routes. Полная metadata chain ловит разрыв через другой validator, но first-time agent вынужден открывать владельцев по одному, реагируя на последовательные ошибки, вместо получения scaffold или единого transaction diagnostic.
+
+Все fixture-файлы и временная ownership entry удалены; Product source вновь чист. Эта проверка **не меняет арифметику** и усиливает уже принятую строку `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`, а не создаёт новую.

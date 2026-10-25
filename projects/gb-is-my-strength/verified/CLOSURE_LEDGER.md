@@ -595,3 +595,9 @@ This entry records the governance change only. It does not claim that the reform
 - Two disposable exact-main probes establish fail-open admission: schema-valid orphan MDX passes Astro build and content coverage while producing no route; config-only flat core item without page/route/series JSON passes Astro check, engine contracts and audit-pro. Probe files were removed and Product source is clean.
 - Admit one `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; do not duplicate `SYS-HEAD-ASSET-PROJECTION-PROLIFERATION` or `SYS-SERIES-DISCOVERY-CURRENT-AUTHORITY`. **49 → 50 = 27 direct defects + 4 necessary improvements + 19 system lanes.**
 - Report/receipt: `../reverify/2026-10-25-content-authoring-universality.md`, `../reverify/evidence/2026-10-25-content-authoring-universality.jsonl`.
+
+### Standalone-route staged admission continuation
+
+- Generic `getCollection + ArticleLayout` fixture built and passed MDX strict, profile strict, source strict and audit-pro while unregistered; source-only `page-ownership:check` correctly failed with exactly one undeclared-route diagnostic.
+- After adding ownership without a profile, `route:profiles:check --strict` still passed and `surface:registry:check` supplied the missing-surface errors. Thus the complete chain has protection, but the workflow is staged rather than atomic and the series guide omits the decisive ownership/surface admission path.
+- No new work unit: evidence strengthens `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; arithmetic remains **50 = 27 + 4 + 19**. Fixtures were removed and Product source is clean.
