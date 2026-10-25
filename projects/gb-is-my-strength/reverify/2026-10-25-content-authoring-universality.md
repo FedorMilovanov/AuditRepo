@@ -595,3 +595,22 @@ Effective manifest сопоставлен с `data/series.json` по route slug.
 - guide §0 требует «тот же порядок/минуты, что в конфиге», а §5 обещает, что config-only part сделает `audit-pro` красным; Pastor negative witness уже доказал обратное.
 
 Поэтому прежняя краткая формулировка «derive/equality-check весь config» слишком груба и могла бы сломать текущие intentional либо legacy discovery projections. Closure исправлена: typed manifest обязан объявить inclusion policy каждой серии/строки; projected membership/order/slug/time проверяются на равенство объявленной projection, а каждое исключение должно быть явным и обоснованным. Текущие 19 config-only rows требуют owner classification, а не автоматического принятия или удаления.
+
+## 28. Уточнение — field-level projection parity
+
+Для 44 объявленных фактом пересекающихся config/data rows отдельно проверены поля, чтобы «equality» не означала опасное побайтовое сравнение разных UI projections.
+
+- route slug: 44/44 совпадает;
+- relative order после declared inclusion: 44/44 совпадает;
+- reading time: после нормализации config `"N мин"` ↔ data numeric `N`, 44/44 совпадает;
+- title literal: совпадает только 15/44, различается 29/44.
+
+Title divergence в основном семантична контексту: rail title включает `Часть I…`, короткую форму или книжную формулировку, а discovery data хранит card/catalog title. Поэтому closure не должна механически уравнивать title strings и разрушать утверждённую UI-копию.
+
+Typed projection contract должен объявлять authority на уровне поля:
+
+- identity/order/time — нормализуемая проверяемая projection;
+- display title — либо общий canonical owner с явными adapters, либо разрешённая context-specific copy с собственным владельцем;
+- `n`/mark mapping — family policy (numeric, Roman/letter либо curated chapter entry), не универсальный cast.
+
+Текущий положительный baseline времени 44/44 должен стать regression fixture вместе с membership policy; literal title equality таким fixture быть не должна.

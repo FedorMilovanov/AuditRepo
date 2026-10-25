@@ -709,3 +709,8 @@ This entry records the governance change only. It does not claim that the reform
 - Shared configs expose 63 navigable rows; data projects 44, with 19 config-only (Pastor 1, Hard Texts 18), no reverse extras, and matching relative order for projected rows. Nagornaya is a five-part native data-only family.
 - No universal kind/tier exclusion explains membership: Genesis includes satellites while the guide forbids them; labels are included/excluded by family; Pastor disproves the promised config-only audit failure.
 - Blanket equality is rejected. Closure requires typed inclusion policy and equality against that declared projection; current omissions need owner classification. Folded; no arithmetic change.
+
+### Config/data field-level parity
+
+- Across 44 projected shared-series rows: slug/order/normalized minutes are 44/44 equal; literal titles are only 15/44 equal because rail and discovery copy have contextual roles.
+- Closure equality is field-aware: strict identity/order/time, declared title authority/adapters and family ordinal policy—not whole-record string equality. Folded; no arithmetic change.
