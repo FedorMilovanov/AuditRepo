@@ -807,3 +807,10 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Matrix: desktop-pointer normal motion plus mobile-keyboard reduced motion; 20 route/profile cases, 100 filter activations and 36 expand/collapse activations.
 - Outcome: all filters selected exactly one pressed state and settled to expected counts. Nineteen cases passed immediately; one Simonov desktop collapse retained exit nodes at 800 ms, then passed 3/3 fresh controls by 800 ms and remained correct through five seconds. Staged result 20/20 and 136/136 controls.
 - Disposition: no filter/toggle root admitted; repeated same-hash citation reveal remains owned by `SYS-TLP-FRAGMENT-NAVIGATION-RUNTIME`. Matrix unchanged at 1 P1 + 11 P2 + 1 P3 = 13.
+
+## 2026-10-25 — owner-reopened current-main audit, checkpoint 15
+
+- Scope: rendered community remote-read retry on all 23 published dynamic targets, unchanged Product `main@76da7d6372931f34d269581f374e87bd15406cfb`.
+- Safe induction: a loopback-only test authority aborted initial summary/comments reads, then returned contract-valid empty responses after native «Повторить» activation. No production request, mutation, Turnstile bypass or human-session simulation occurred.
+- Matrix: ten poets + ten essays + three tracks by desktop pointer and mobile keyboard = 46/46 settled recoveries; warning appeared, both reads retried, summary reached `ready`, and warning/control cleared.
+- A first immediate-detachment probe was rejected because loading temporarily removes error UI before promise settlement. No community-retry root admitted; matrix remains 1 P1 + 11 P2 + 1 P3 = 13.
