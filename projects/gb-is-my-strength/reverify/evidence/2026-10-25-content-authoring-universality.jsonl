@@ -58,3 +58,5 @@
 {"type":"registryConclusion","autonomousManifest":false,"membershipDependsOnImportGraph":true,"approvedOverrideOrderEncoded":false,"productionConsumers":0,"newWorkUnit":false}
 {"type":"productionInvariant","id":"navigable-item-has-page","series":6,"items":71,"chapterHeaders":8,"navigableItems":63,"pageRecords":63,"missingPages":0,"rule":"item.tier !== chapter implies pages[item.id]"}
 {"type":"closureFeasibility","reverseItemPageValidatorNeedsMigration":false,"allowlistNeeded":false,"blocksPastorConfigOnlyWitness":true,"routeIdentityStillSeparate":true,"newWorkUnit":false}
+{"type":"productionInvariant","id":"series-item-href-resolves","navigableItems":63,"uniqueHrefs":63,"sourceRoutesPresent":63,"builtDocumentsPresent":63,"missing":0,"allowlistNeeded":false}
+{"type":"closureFeasibility","itemPageAssertion":"63/63 pass","hrefRouteAssertion":"63/63 pass","independentAssertionsRequired":true,"reason":"page metadata object does not prove Astro route","newWorkUnit":false}

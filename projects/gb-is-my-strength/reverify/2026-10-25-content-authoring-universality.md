@@ -523,3 +523,19 @@ Probe был собран во временный `/tmp` bundle через уж�
 Итого: 71 items, 63 navigable items, 63 page records, ноль production exceptions. В book configs разница ровно соответствует восьми chapter headers, для которых отсутствие page уже является заявленным контрактом.
 
 Значит, узкий reverse validator не требует миграции данных или allowlist: `item.tier !== 'chapter' ⇒ cfg.pages[item.id]` уже соблюдается всеми текущими сериями и непосредственно блокирует Pastor config-only witness. Проверка route/article identity остаётся отдельной, потому что наличие object в `pages` само по себе ещё не доказывает существование route.
+
+## 24. Продолжение — production href→route baseline
+
+После доказательства item→page отдельно проверена feasibility cross-document route relation на effective manifest. Для каждого из 63 non-chapter items абсолютный `item.href` преобразован в ожидаемые:
+
+- `src/pages/<href>/index.astro`;
+- `dist/<href>/index.html` последней успешной сборки.
+
+Результат: 63 rows, 63 unique href, 63 source routes, 63 built documents, missing = 0. То есть требуемый cross-document validator также может быть включён без baseline allowlist или миграции.
+
+Важно не смешивать два разных guards:
+
+1. `item.id → pages[item.id]` проверяет наличие chrome/page metadata;
+2. `item.href → route/build target` проверяет навигационную достижимость.
+
+Pastor config-only witness ломает оба отношения, но одного item→page check недостаточно как общего route contract: object можно добавить без Astro route. Closure поэтому сохраняет оба независимых assertions и positive production fixtures 63/63.

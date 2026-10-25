@@ -687,3 +687,8 @@ This entry records the governance change only. It does not claim that the reform
 
 - Across six effective configs: 71 items = 63 navigable + 8 book chapter headers; all 63 navigable items have exactly corresponding page records, with zero exceptions.
 - Therefore `non-chapter item ⇒ pages[item.id]` can be enforced without migration/allowlist and blocks the Pastor witness. Route/article identity remains a separate check. Folded; no arithmetic change.
+
+### Navigable href→route invariant feasibility
+
+- All 63 effective non-chapter items have unique hrefs resolving to 63 source `index.astro` routes and 63 built `index.html` documents; missing=0.
+- Item→page and href→route remain independent assertions. Both can be enforced with positive 63/63 production fixtures and no allowlist. Folded; no arithmetic change.
