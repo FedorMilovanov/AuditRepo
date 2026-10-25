@@ -2,7 +2,7 @@
 
 Дата: 2026-10-26  
 Product anchor: `80440f9ce4bdfca92769330ea79109625c868725`  
-Disposition: **6 новых direct defects + 2 improvements + 2 system lanes; 3 действующих ряда расширены**
+Disposition: **7 новых direct defects + 2 improvements + 2 system lanes; 3 действующих ряда расширены**
 Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 
 ## 1. Итог
@@ -21,9 +21,10 @@ Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 8. определение Второго Лондонского исповедания 1677/1689 ошибочно называет его «переработкой Лондонского исповедания 1644 года». Этот brief реально открывается на 11 routes; принимается `GBS-GLOSSARY-1689-CONFESSION-LINEAGE-MISSTATEMENT`. Отдельно Learning Sheet показывает raw canonical forms `Кархемише` и `козьего двора` как названия карточек; это расширяет уже принятую glossary identity/display improvement;
 9. `/articles/diotrefy-nashego-vremeni/` публикует грамматически невозможное «Все двадцать один материала различаются» — новый `GBS-DIOTROPHES-NUMERAL-AGREEMENT`. На том же маршруте 21/21 evidence cards показывают только unlinked `Записи Research: DRI-01…`; это расширяет существующий reader-source-locators row, а не создаёт второй technical-leak count;
 10. локальная font matrix не покрывает реально набираемые scripts/weights: у Playfair Display нет Latin faces, у Inter нет Latin и weight 700, у Source Sans 3 Latin есть только в weight 400. CDP показывает один заголовок/label, составленный из custom Cyrillic и platform fallback для цифр, Latin/Roman и punctuation; новый `GBS-CUSTOM-FONT-MATRIX-MIXED-FAMILY-RENDERING`;
-11. `КОРОТКО` как настоящий `h2` системно набрано 9px/9.9px на 24 routes и 10px/13px ещё на 15 routes, одинаково на desktop/mobile. Это не WCAG-failure по одному размеру, но доказуемо слабая и несогласованная читательская иерархия; improvement `GBS-SUMMARY-MICROHEADING-READABILITY`.
+11. `КОРОТКО` как настоящий `h2` системно набрано 9px/9.9px на 24 routes и 10px/13px ещё на 15 routes, одинаково на desktop/mobile. Это не WCAG-failure по одному размеру, но доказуемо слабая и несогласованная читательская иерархия; improvement `GBS-SUMMARY-MICROHEADING-READABILITY`;
+12. shared series reader на точном desktop breakpoint 1024px включает фиксированный rail и одновременно вычитает ещё 204px под отдельный control corridor: reader shell падает 800→492.7px, prose 752→444.7px. Переход затрагивает 55 routes пяти series families; новый `GBS-SERIES-READER-COMPACT-DESKTOP-MEASURE-COLLAPSE`.
 
-Арифметика после визуально-типографического продолжения: **60 = 33 direct defects + 6 improvements + 21 system lanes**.
+Арифметика после desktop-measure продолжения: **61 = 34 direct defects + 6 improvements + 21 system lanes**.
 
 ## 2. Объём и чистая база
 
@@ -416,5 +417,59 @@ Representative `/articles/chto-bibliya-nazyvaet-serdcem/` прошёл desktop/m
 Размер текста сам по себе не объявляется WCAG-нарушением, и 11px series kickers с line-height 17.6px не считаются автоматически плохими. Но здесь ключевой разделитель summary фактически имеет 7–8px cap-height, line box меньше 10px и различается между series owners без semantic причины. Это измеримый пробел читательской иерархии и визуальной цельности, поэтому принимается не direct defect, а improvement `GBS-SUMMARY-MICROHEADING-READABILITY`.
 
 Closure: один shared summary-heading token с owner-approved minimum size/line-height/tracking и допустимыми route-theme overrides; browser comparison всех 39 routes на 390/1280 в Light/Dark, без clipping/wrap/contrast regressions. Не надо универсализировать display fonts или цветовую art direction разных серий: универсален semantic readability floor, оформление остаётся локальным.
+
+## 19. Продолжение: desktop reader превращается в узкую полосу
+
+Жалоба на слишком узкую читательскую строку подтверждена, но не на всех desktop widths. При 1440px обычный series paragraph имеет 752px и около 60 non-space glyphs на строку — это нормальный положительный контроль. Поломка находится на compact-desktop breakpoint.
+
+### 19.1 Точный скачок
+
+Chromium sweep 95 routes на 1023/1024/1100/1280/1440px показывает:
+
+| Viewport | Median sampled paragraph | Paragraphs <500px | Paragraphs <600px |
+|---:|---:|---:|---:|
+| 1023 | 752px | 6 | 14 |
+| **1024** | **444.7px** | **61** | **69** |
+| 1100 | 516.59px | 10 | 67 |
+| 1280 | 654.88px | 6 | 10 |
+| 1440 | 752px | 6 | 10 |
+
+Точный общий owner затрагивает **55 routes**: Hard Texts 24, Pastor 10, Russian Baptism 10, Gill 5 и Genesis-6 6. На representative `/articles/chto-bibliya-nazyvaet-serdcem/` переход 1023→1024 меняет `.page-wrap` **800→492.7px**, основной reader **752→444.7px**. Для длинных абзацев группы 400–500px median — 35 non-space glyphs на строку; representative long paragraph становится 36 строк вместо широкого desktop потока. Высота всей `.page-wrap` на той же странице вырастает **14 152.64→20 994.63px**, то есть примерно на 48%, хотя viewport стал на один пиксель шире.
+
+### 19.2 Причина — не «правило хорошей длины строки», а конкурирующие владельцы пространства
+
+`floating-cluster.css` включает desktop rail ровно с `@media (min-width:64em)`. Базовая модель уже резервирует:
+
+- левый отступ;
+- rail 272–304px;
+- gap 24–48px;
+- выбранную reader measure (`--gb-reader-measure`, normal = 50rem).
+
+Но поздний блок `READER UI FOLLOW-UP 2026-07-24` для 64–99.99em повторно переопределяет общий `--gb-measure`:
+
+`calc(100vw - var(--gb-rail-reserve) - 204px)`.
+
+Эти дополнительные **204px** — статический corridor под отдельный floating speed/control owner. При 1024px rail занимает x=24.56…296.56, reader shell x=327.28…819.98, а control strip x=824.39…891.97. Получается визуальная «полоска» не потому, что редактор выбрал узкую книжную колонку, а потому, что три независимых владельца — rail, prose и controls — делят недостаточную ширину после жёсткого breakpoint.
+
+### 19.3 Browser и A/B proof
+
+Проверены 1023/1024 × Light/Dark, reduced motion. Current 1024: shell 492.7px, representative paragraph 417.7px, horizontal overflow 0; Axe 0, broken images 0. Скриншот light SHA-256: `deded1757f95046ff10760a6e4b72fcd96d8ba95f75ebf39dd083607b306c61c8`.
+
+Одноразовая reversible A/B замена `-204px` на `-48px` расширяет shell **492.7→648.7px**, paragraph **417.7→573.7px** и сокращает page height **20 994.63→16 572.52px**, без horizontal overflow и новых Axe failures. Но это **не готовый fix**: reader доходит до x=975.98, а floating speed strip остаётся x=824.39…891.97 и на верхней части страницы перекрывает hero/content lane. Простое удаление `204px`, z-index или overflow hiding было бы новым костылём.
+
+1023 dark даёт два уже известные contrast nodes, принадлежащие действующему contrast row; sandbox `ERR_CONNECTION_CLOSED` во всех profiles не классифицирован как Product defect. LCP 312–520ms; current 1024 CLS около 0.0135. Mobile negative control 390×844 с `isMobile:true/hasTouch:true` скрывает rail и оставляет native theme action рабочим; desktop 1024 показывает rail и все settings/theme/search/TTS/speed controls, native theme click также меняет state. Значит, defect — распределение ёмкости, а не неработающий chrome. Скриншоты подтверждают painted layout, а не только computed width.
+
+### 19.4 Как сделать качественно
+
+Нужен один capacity contract, а не ещё один локальный `max-width`:
+
+1. rail, reader measure, inter-column gap, right gutter и controls должны иметь одного layout owner;
+2. compact mode включается, пока viewport не вмещает сумму этих частей с утверждённым minimum reader measure; нельзя активировать desktop rail только потому, что достигнуты 64rem;
+3. качественный простой вариант — оставить tablet/mobile chrome до capacity breakpoint около 1360px, если внешний 204px control lane сохраняется;
+4. более цельный вариант — встроить Play/search/settings/speed в rail, убрать отдельный control corridor и включать rail примерно от 1200px; при 1024–1199 использовать существующий drawer/bottom chrome;
+5. preference `narrow/normal/wide` должна задавать реальную reader measure, а не молча проигрывать техническому corridor;
+6. permanent sweep: 900/1023/1024/1100/1200/1280/1366/1440/1600, все пять series families, Light/Dark, normal/narrow/wide, rail/controls open and closed; assertions — отсутствие отрицательного width jump, overlap/overflow, clipped headings/cards и сохранение native control actions.
+
+Принимается `GBS-SERIES-READER-COMPACT-DESKTOP-MEASURE-COLLAPSE`. Это один shared layout defect, не 55 отдельных route rows. Intentional route art direction и разумный line-length ceiling сохраняются; исправляется именно capacity discontinuity и параллельное резервирование пространства.
 
 Product mutation and merge remain outside this audit.
