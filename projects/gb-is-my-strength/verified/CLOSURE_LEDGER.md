@@ -579,3 +579,11 @@ This entry records the governance change only. It does not claim that the reform
 - Chromium 153: six Gill routes × desktop/mobile initial census has 0 closed regions without inert; detailed flat/book witnesses have 320 forward/reverse Tab inputs with 0 folded-focus entries, CDP AX exclusion/restoration, focus evacuation on native scrollspy folding, reversible controls and retained counter/active/metro geometry.
 - **49 → 48 = 27 direct defects + 4 necessary improvements + 17 system lanes.** Independent mobile Axe residues were disclosed rather than converted into a global Axe PASS; book mark/time contrast extends the existing contrast batch, while the manuscript-table signal remains pending bounded reconciliation.
 - Report/receipt: `../reverify/2026-10-25-gill-folded-navigation-closure.md`, `../reverify/evidence/2026-10-25-gill-folded-navigation-closure.jsonl`.
+
+## 2026-10-25 — reading-table keyboard-scroll root reconciliation
+
+- July incoming evidence had separate Gill/Nagornaya table findings and explicitly proposed one `READING-TABLE-KEYBOARD-SCROLL` root, but no canonical MASTER row or later closure witness existed.
+- Exact Product main `015573af…`, production-like dist + Pagefind: all 15 table routes checked in Chromium 153 at 320/390/641 px (45 profiles). Actual local X-scroll regions = 19/22/9; Axe serious `scrollable-region-focusable` = 18/20/1; global page overflow, broken images and page errors = 0.
+- Native 1200-Tab controls cannot reach Gill-I/II/context or generic Nagornaya regions while real horizontal wheel pans them. Chromium 153 auto-focuses some `tabIndex=-1` tables inconsistently; that UA heuristic neither supplies authored semantics nor proves WebKit parity.
+- Admit one `SYS-READING-TABLE-KEYBOARD-SCROLL`; do not reopen the repaired Da Vinci timeline and do not count per table. **48 → 49 = 27 direct defects + 4 necessary improvements + 18 system lanes.**
+- Report/receipt: `../reverify/2026-10-25-reading-table-keyboard-scroll.md`, `../reverify/evidence/2026-10-25-reading-table-keyboard-scroll.jsonl`.
