@@ -360,4 +360,8 @@ Canonical record `лондонское баптистское исповедан
 
 Browser corpus также подтверждает на `/journal/dossiers/g3/` reader-visible `Research snapshot`, `tier A2`, `REFERENCE`, `Raw archived payload SHA …` и `decoded HTML SHA …`. Это текущий контекст уже принятого `GBS-JOURNAL-READER-SOURCE-LOCATORS-MISSING`: внутренние IDs/authority/provenance показываются вместо разрешаемой читательской библиографии. Ряд расширен точным current-anchor свидетельством; новый defect не добавлен. На `/rodosloviye/` слова `relation-level` и `runtime` находятся в явно обозначенном интерфейсе исследовательского атласа и без отдельного доказательства читательского вреда не классифицированы как leakage.
 
+### 15.4 Полный tooltip payload census
+
+Отдельно извлечены все payload surfaces на 95 content routes: **884 total = 462 glossary + 184 footnote + 238 Bible reference**. Пустых payloads — 0; reader-visible `TODO/TBD/FIXME`, `undefined/null`, `payload/runtime/metadata/snapshot/backlog/frontmatter/claim-level`, SHA/file markers, backticks или literal Markdown — 0. Среди glossary и Bible payloads нет ни одного текста с Latin ratio >35%; 148 predominantly-Latin footnotes являются библиографическими citations, а не untranslated definitions. Все 184 footnotes содержат технические linear-reader boundary strings `⟦сноска: … ⟧`, но они лежат в `[hidden][aria-hidden=true][data-pagefind-ignore]` и не входят в painted/AT tooltip copy. Поэтому raw boundary leakage не заявляется.
+
 Product mutation and merge remain outside this audit.
