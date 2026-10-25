@@ -746,3 +746,8 @@ This entry records the governance change only. It does not claim that the reform
 
 - A `BaseLayout` route with ownership + `seo.indexable:false` profile, explicit reason and no sitemap entry passes production-like build and full static validation.
 - Closure distinguishes four-owner indexable page from valid three-owner noindex page and route-less content draft; sitemap is required only for indexable publication and forbidden for explicit noindex. Folded; arithmetic unchanged.
+
+### Declared discovery-strategy continuation
+
+- All 106 route profiles lack a discovery/inbound/catalog strategy field; audit-pro validates outgoing targets, not inbound reachability. The indexable generic-page probe passes with sitemap but no catalog/hub/internal link.
+- Sitemap-only may be valid, so closure requires a typed discovery decision/reason rather than a blanket menu-link rule. Folded into publication transaction; arithmetic unchanged.

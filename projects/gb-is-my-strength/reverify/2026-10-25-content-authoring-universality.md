@@ -755,3 +755,17 @@ Closure уточняется:
 - route-less draft остаётся отдельным content staging shape и не смешивается с опубликованной noindex utility page.
 
 Fixture удалён, Product tracked source чист. Это positive control того же root; arithmetic не меняется.
+
+## 35. Продолжение — indexable page может пройти без declared internal discovery
+
+Generic indexable page probe изменял только route, ownership, profile и sitemap; ни hub/catalog/internal inbound link, ни route search policy не добавлялись. Несмотря на это, production-like build и полный static gate прошли.
+
+Проверка current metadata подтвердила границу:
+
+- 106 route profiles;
+- ни в одном top-level profile нет поля discovery/inbound/catalog strategy;
+- `audit-pro` resource/link integrity проверяет исходящие `href/src` на существование, но не требует входящей внутренней ссылки на новый indexable route.
+
+Sitemap является реальным discovery channel, поэтому сам probe не доказывает «невидимую для поисковика» страницу. Он доказывает другое: система не заставляет автора **объявить**, достаточно ли sitemap-only, нужен ли catalog/hub/parent link, либо route намеренно external/campaign-only. Full green не отличает эти намерения.
+
+Closure должна требовать typed discovery decision для indexable publication: например `catalog`, `hub`, `parent-link`, `sitemap-only` с reason/owner либо approved external entry. Для explicit noindex page допустима `none` с причиной. Это не blanket-требование добавлять каждую страницу в меню и не новый discovery defect; это недостающая часть того же publication transaction.

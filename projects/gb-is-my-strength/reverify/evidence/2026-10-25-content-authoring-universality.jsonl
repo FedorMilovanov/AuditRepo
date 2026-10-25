@@ -90,3 +90,6 @@
 {"type":"deliveryBoundary","plainAstroDistFullStatic":"unrelated Gill parity red","productionLikeDistFullStatic":0,"productDefect":false}
 {"type":"positiveProbe","id":"generic-noindex-page","owners":["BaseLayout route","page ownership","route profile"],"robots":"noindex, follow","profileIndexable":false,"sitemapEntries":0,"productionLikeBuildExit":0,"fullStaticExit":0}
 {"type":"shapeDisposition","shape":"generic-page","variants":{"indexable":{"owners":4,"sitemap":"required"},"explicitNoindex":{"owners":3,"sitemap":"forbidden","reason":"required"},"routeLessDraft":{"route":false,"staging":true}},"blanketSitemapRequirement":false}
+{"type":"discoveryGovernance","routeProfiles":106,"profilesWithTopLevelDiscoveryInboundOrCatalogField":0,"auditProLinkDirection":"outgoing target existence only","requiresInbound":false}
+{"type":"negativeProbe","id":"indexable-page-without-declared-internal-discovery","owners":["route","ownership","profile","sitemap"],"hubCatalogInboundAdded":false,"productionLikeBuildExit":0,"fullStaticExit":0,"searchCrawlerDiscovery":"sitemap exists"}
+{"type":"closureRefinement","indexableDiscoveryPolicies":["catalog","hub","parent-link","sitemap-only with reason","approved external entry"],"explicitNoindexPolicy":"none with reason allowed","blanketMenuLinkRequired":false,"newWorkUnit":false}
