@@ -367,3 +367,40 @@ Probe намеренно не объявлялся production publication: у н
 - 0/64 используют central `Seo.astro` abstraction.
 
 Это не новая строка и не требование слить все metadata в один шаблон: route-specific JSON-LD может быть оправдан. Для нового агента это означает, что universal reader facade не даёт universal document/head authoring API. Hardcoded asset projection уже принадлежит отдельному `SYS-HEAD-ASSET-PROJECTION-PROLIFERATION` и здесь повторно не считается.
+
+## 17. Продолжение — realistic standalone publication transaction
+
+Проверен не только orphan, но и минимальный правильный standalone path через generic `ArticleLayout`. Временная publishable статья получила четыре authored owners:
+
+1. MDX content;
+2. explicit Astro route (`getCollection` + `ArticleLayout`);
+3. `migration/page-ownership.json` entry;
+4. `data/route-profiles/*.json` profile, основанный на Lawson article contract.
+
+После этих четырёх согласованных изменений адресные structural gates прошли:
+
+- page ownership;
+- route profiles strict;
+- public surface registry;
+- full migration metadata/provenance chain.
+
+Следующая стадия остановилась правильно: `editorial-metadata-registry.js --check` сообщил единственную понятную причину — `metadata record missing` для нового route.
+
+`editorial-metadata-registry.js --write --build` затем успешно:
+
+- построил 109 final pages;
+- создал 73-й registry record;
+- оставил approved/projected corpus на 72 routes, то есть новая публикация не получила молчаливое approval;
+- после записи `--check` прошёл.
+
+Это хороший fail-closed editorial review boundary. Он не должен быть заменён scaffold-ом, который автоматически одобряет дату/публикацию.
+
+Но для first-time agent transaction остаётся неочевидным:
+
+- generic path существует фактически только как Lawson precedent;
+- current agent router не называет четыре обязательных authored owners;
+- standalone guide отсутствует;
+- metadata write затронул центральный registry и пять существующих supplement files, поэтому агенту нужно отличить детерминированный projection fan-out от ручной editorial правки;
+- нет dry-run command, который заранее перечисляет весь transaction plan.
+
+Следовательно, standalone runtime/layout path лучше, чем первоначально казалось: после выбора правильного precedent ошибки точные и review fail-closed. Низкая оценка authoring относится к discoverability/transaction orchestration, а не к отсутствию всех защит. Product fixtures и generated changes полностью удалены.

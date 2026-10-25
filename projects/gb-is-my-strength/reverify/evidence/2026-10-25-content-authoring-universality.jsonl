@@ -39,3 +39,7 @@
 {"type":"renderedBookProbe","seriesRoot":true,"chapterIdentity":true,"articleIdentity":true,"tocTargetPresent":true,"profileAdded":false,"ownershipAdded":false,"productionAdmissionClaimed":false}
 {"type":"pageHeadCensus","components":64,"sourceLines":12198,"readerPreferencesHead":64,"rawTitle":64,"jsonLd":62,"centralSeoComponent":0}
 {"type":"disposition","bookIsSeparateEngine":false,"runtimeUniversalityScore":4,"newWorkUnit":false,"authoringTransactionStillFragmented":true}
+{"type":"standaloneTransaction","authoredOwners":["MDX","Astro route","page ownership","route profile"],"pageOwnershipExit":0,"routeProfilesStrictExit":0,"surfaceRegistryExit":0,"migrationMetadataStrictExit":0,"editorialRegistryCheckExit":1,"editorialError":"metadata record missing"}
+{"type":"standaloneProjection","command":"editorial-metadata-registry.js --write --build","exit":0,"finalPages":109,"registryRecords":73,"approvedProjectedRoutes":72,"postWriteCheckExit":0,"automaticApproval":false}
+{"type":"generatedFanout","centralRegistryFiles":1,"existingSupplementFilesTouched":5,"fixtureChangesRemoved":true,"productSourceClean":true}
+{"type":"disposition","standaloneSafety":"fail-closed after correct four-owner setup","standaloneDiscoverability":"poor","newWorkUnit":false,"absorbedBy":"SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT"}
