@@ -2,7 +2,7 @@
 
 Дата: 2026-10-26  
 Product anchor: `80440f9ce4bdfca92769330ea79109625c868725`  
-Disposition: **5 новых direct defects + 1 improvement + 2 system lanes; 3 действующих ряда расширены**
+Disposition: **6 новых direct defects + 2 improvements + 2 system lanes; 3 действующих ряда расширены**
 Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 
 ## 1. Итог
@@ -19,9 +19,11 @@ Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 6. словарь структурно исправен и в целом полезен, но шесть пар одного понятия заведены как разные canonical identities; это дробит английское/русское употребление и definitions — improvement `GBS-GLOSSARY-CONCEPT-IDENTITY-CONSOLIDATION`;
 7. targeted control `/baptisty-rossii/goneniya-i-sovest/` подтверждает штатную mouse/touch/keyboard geometry, но продолжение 95-route sweep нашло важное исключение: на desktop `/baptisty-rossii/` legacy `SiteUtils.makeTooltipController` и `article-tooltips.js` v20 одновременно владеют одним `.gterm`; hover оставляет popup с `top:auto!important` вне viewport. Принимается `SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY`. Независимый Axe `region` на body-reparented popup по-прежнему расширяет `GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT`;
 8. определение Второго Лондонского исповедания 1677/1689 ошибочно называет его «переработкой Лондонского исповедания 1644 года». Этот brief реально открывается на 11 routes; принимается `GBS-GLOSSARY-1689-CONFESSION-LINEAGE-MISSTATEMENT`. Отдельно Learning Sheet показывает raw canonical forms `Кархемише` и `козьего двора` как названия карточек; это расширяет уже принятую glossary identity/display improvement;
-9. `/articles/diotrefy-nashego-vremeni/` публикует грамматически невозможное «Все двадцать один материала различаются» — новый `GBS-DIOTROPHES-NUMERAL-AGREEMENT`. На том же маршруте 21/21 evidence cards показывают только unlinked `Записи Research: DRI-01…`; это расширяет существующий reader-source-locators row, а не создаёт второй technical-leak count.
+9. `/articles/diotrefy-nashego-vremeni/` публикует грамматически невозможное «Все двадцать один материала различаются» — новый `GBS-DIOTROPHES-NUMERAL-AGREEMENT`. На том же маршруте 21/21 evidence cards показывают только unlinked `Записи Research: DRI-01…`; это расширяет существующий reader-source-locators row, а не создаёт второй technical-leak count;
+10. локальная font matrix не покрывает реально набираемые scripts/weights: у Playfair Display нет Latin faces, у Inter нет Latin и weight 700, у Source Sans 3 Latin есть только в weight 400. CDP показывает один заголовок/label, составленный из custom Cyrillic и platform fallback для цифр, Latin/Roman и punctuation; новый `GBS-CUSTOM-FONT-MATRIX-MIXED-FAMILY-RENDERING`;
+11. `КОРОТКО` как настоящий `h2` системно набрано 9px/9.9px на 24 routes и 10px/13px ещё на 15 routes, одинаково на desktop/mobile. Это не WCAG-failure по одному размеру, но доказуемо слабая и несогласованная читательская иерархия; improvement `GBS-SUMMARY-MICROHEADING-READABILITY`.
 
-Арифметика после аудита и продолжения: **58 = 32 direct defects + 5 improvements + 21 system lanes**.
+Арифметика после визуально-типографического продолжения: **60 = 33 direct defects + 6 improvements + 21 system lanes**.
 
 ## 2. Объём и чистая база
 
@@ -376,5 +378,42 @@ Rendered corpus и source-level numeral scan нашли на `/articles/diotrefy
 При составном числительном, оканчивающемся на «один», требуется singular nominative: «двадцать один материал». Chromium подтверждает строку в обычном article paragraph. Это не скрытый payload и не layout concatenation. Принимается `GBS-DIOTROPHES-NUMERAL-AGREEMENT`; closure — исправленный source и final browser text плюс узкая editorial regression fixture на согласование составного `… один` с существительным в этом owner family.
 
 Тот же trusted browser pass проверил source projection 21 case cards: **21 `.source-ref`, 0 links**, каждый показывает только форму `Записи Research: DRI-01, DRI-04` и подобные internal IDs. Reader не может разрешить их без отдельного data registry. Это тот же уже принятый недостаток, что G3 service IDs вместо читательской библиографии, поэтому расширяется `GBS-JOURNAL-READER-SOURCE-LOCATORS-MISSING` (исторический ID ряда), а отдельный Diotrophes leakage defect не считается. Closure существующего ряда теперь обязана покрыть оба consumers: 33 G3 claims/6 source-class cards и 21 Diotrophes case cards, сохраняя границы доказательности и не публикуя restricted material.
+
+## 17. Продолжение: неполная font matrix и смешанный рендеринг
+
+Проведён CDP census фактически использованных platform fonts, а не только `getComputedStyle().fontFamily`: 95 content routes × desktop/mobile, 670 sampled visible/structural nodes (`h1`, первый article paragraph, `h2`, button). Отдельно разобраны `fonts/fonts.css`, manifest и cmap/name/OS/2 tables всех локальных WOFF2.
+
+Локальный registry расходится с фактическими reader strings:
+
+- `Playfair Display` имеет только Cyrillic 400/600/700 и 400 italic; Latin/digits/punctuation face отсутствует;
+- `Inter` имеет только Cyrillic 300/400/500/600; Latin отсутствует, а route labels требуют `font-weight:700`;
+- `Source Sans 3` имеет Cyrillic 400/500/600, но Latin только 400; series labels требуют 600;
+- Lora — положительный контроль: для реально используемых 400/600 есть Cyrillic и Latin faces.
+
+Это не теоретическая возможность fallback. В sampled high-signal text уже есть минимум три опубликованные группы:
+
+1. **9 Playfair h1 routes** с цифрами/Latin: три Baptist date headings и шесть Hard Texts headings;
+2. **14 Inter labels** `font-weight:700` с Roman numerals/digits: восемь «Тёмная сторона кафедры» и шесть «Трудные тексты»;
+3. **8 Source Sans 3 labels** `font-weight:600` с Roman/Latin/digits: семь Teen labels и series landing.
+
+На `/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/` exact `h1` «Енох пророчествовал: Иуд. 14–15, 1 Енох 1:9 и 4Q204» в четырёх desktop/mobile Light/Dark profiles разбивается на **26 custom Playfair glyphs + 23–24 platform DejaVu Serif glyphs**. Посимвольный CDP probe относит кириллицу к `Playfair Display SemiBold`, а пробелы, punctuation, `14–15`, `1:9`, `4Q204` — к fallback serif. В общем production-like census тот же пробел виделся как Open Sans: конкретный fallback зависит от platform/font environment, что и есть отсутствие детерминированного art direction. Screenshot SHA-256 для representative light desktop: `528d0941903d779959f2701fc47434ffdf09f2791b78d8c8a62b4940e55ce1e`; mobile: `82252a347f9d177be5cc7fae3b8ab34e7bfb05545664e6f6bd6d43d3d4f420fd`.
+
+Контроли четырёх representative profiles: Axe violations 0, broken images 0, page errors 0; LCP 192–412 ms, CLS 0.00074 desktop / 0.0150 mobile. Значит, finding не подменяет layout/accessibility failure: дефект — один visual token физически собирается из разных гарнитур/доступных weights. `document.fonts.check` или проверка наличия файла недостаточны: нужны glyph/script/weight coverage и CDP actual-font proof.
+
+Принимается `GBS-CUSTOM-FONT-MATRIX-MIXED-FAMILY-RENDERING`. Closure должна либо дополнить каждый заявленный family полными реально используемыми subsets/weights, либо осознанно выбрать одну совместимую fallback family для всего token. Нужен executable matrix contract: извлечь custom `font-family`/weight/style и reader strings, проверить coverage по cmap + `unicode-range`, запретить неподдержанный requested weight, затем browser-prove actual fonts на mixed Cyrillic/Latin/numeral fixtures. Массовый переход всех серий на одну гарнитуру не требуется: локальная art direction сохраняется, но внутри одного token она должна быть полной и детерминированной.
+
+## 18. Продолжение: микрозаголовки и граница «premium»
+
+Census нашёл **130 sampled visible records ниже 12px** в двух профилях. Большая часть — намеренные uppercase kickers, поэтому сам порог не превращался в defect. Отдельно классифицирована повторяемая semantic-heading группа:
+
+- 24 routes: `h2.summary-card__head` «КОРОТКО» — **9px**, `line-height:9.9px`, `letter-spacing:1.8px`;
+- 15 routes: тот же semantic owner/role — **10px**, `line-height:13px`, `letter-spacing:2.8px`;
+- значения не увеличиваются на mobile 390×844.
+
+Representative `/articles/chto-bibliya-nazyvaet-serdcem/` прошёл desktop/mobile Light/Dark: exact box сохраняет 9px/9.9px, Axe violations 0, broken images 0; screenshot SHA-256 mobile light `47527f626a38c5519dfa897bb8bab18dc9c953c9601ad143662cd72b19b43327`. Два console сообщения на этой route — уже известные preview-origin manifest/CSP и sandbox network delivery, не доказательство данного finding. Скриншот показывает реальный painted `h2`, а не hidden metadata.
+
+Размер текста сам по себе не объявляется WCAG-нарушением, и 11px series kickers с line-height 17.6px не считаются автоматически плохими. Но здесь ключевой разделитель summary фактически имеет 7–8px cap-height, line box меньше 10px и различается между series owners без semantic причины. Это измеримый пробел читательской иерархии и визуальной цельности, поэтому принимается не direct defect, а improvement `GBS-SUMMARY-MICROHEADING-READABILITY`.
+
+Closure: один shared summary-heading token с owner-approved minimum size/line-height/tracking и допустимыми route-theme overrides; browser comparison всех 39 routes на 390/1280 в Light/Dark, без clipping/wrap/contrast regressions. Не надо универсализировать display fonts или цветовую art direction разных серий: универсален semantic readability floor, оформление остаётся локальным.
 
 Product mutation and merge remain outside this audit.
