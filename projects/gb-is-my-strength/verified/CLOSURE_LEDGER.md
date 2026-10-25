@@ -571,3 +571,11 @@ This entry records the governance change only. It does not claim that the reform
 - `GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS` is not falsely closed: duplicate count is 1, but Escape/button close focus lands on body/mobile menu rather than clicked `#heroSearchBar`. Same unit narrows via alias to active `GBS-HOME-SEARCH-FOCUS-RESTORE`.
 - Separate `GBS-MOBILE-CHROME-NAVBAR-SYNC-LAG` remains: first wheel hides navbar while mobile chrome stays hidden; second event synchronizes and proves repaired controls are operable after actual reveal.
 - Resulting-main checks terminal 79 =62 success +3 failure +14 skipped; failures named npm-audit, Chromium WebKit cold bootstrap and Home Chromium WebKit contract, causes not established. No all-green/live/production claim. Evidence: `../reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md` and `../reverify/evidence/2026-10-23-resulting-main-caeb92c.json`.
+
+## 2026-10-25 — Gill folded-navigation resulting-main closure
+
+- Product #2192 is merged in exact current main `015573af602dd7b8d49feb296638b3447364a529`; Product source was not mutated during reverify.
+- `SYS-GILL-NAV-COLLAPSED-FOCUS-EXPOSURE` is `FIXED-CURRENT`: one reversible `gbSetFolded` contract now covers initial/dynamic desktop subgroups, whole desktop TOC and mobile part/article accordions.
+- Chromium 153: six Gill routes × desktop/mobile initial census has 0 closed regions without inert; detailed flat/book witnesses have 320 forward/reverse Tab inputs with 0 folded-focus entries, CDP AX exclusion/restoration, focus evacuation on native scrollspy folding, reversible controls and retained counter/active/metro geometry.
+- **49 → 48 = 27 direct defects + 4 necessary improvements + 17 system lanes.** Independent mobile Axe residues were disclosed rather than converted into a global Axe PASS; book mark/time contrast extends the existing contrast batch, while the manuscript-table signal remains pending bounded reconciliation.
+- Report/receipt: `../reverify/2026-10-25-gill-folded-navigation-closure.md`, `../reverify/evidence/2026-10-25-gill-folded-navigation-closure.jsonl`.
