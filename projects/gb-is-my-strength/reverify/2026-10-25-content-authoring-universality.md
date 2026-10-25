@@ -404,3 +404,31 @@ Probe намеренно не объявлялся production publication: у н
 - нет dry-run command, который заранее перечисляет весь transaction plan.
 
 Следовательно, standalone runtime/layout path лучше, чем первоначально казалось: после выбора правильного precedent ошибки точные и review fail-closed. Низкая оценка authoring относится к discoverability/transaction orchestration, а не к отсутствию всех защит. Product fixtures и generated changes полностью удалены.
+
+## 18. Продолжение — series registry collision semantics
+
+Проверен ещё один риск для нового автора: уникальность `seriesId` на уровне mutable `SERIES_CONFIGS`.
+
+Два временных, полностью валидных `*SeriesConfig.ts` объявили один `seriesId:'arena-collision'`, каждый прошёл `defineSeriesConfig` и записал себя через текущий family pattern:
+
+`SERIES_CONFIGS[config.seriesId] = config`
+
+Оба модуля были импортированы одним route в порядке A→B. Результат:
+
+- Astro build exit 0;
+- `engine:contracts` exit 0 и сообщил «all declared through defineSeriesConfig»;
+- collision diagnostic отсутствует;
+- `seriesConfig('arena-collision')` молча вернул B;
+- built H1 = «Вторая серия», первая конфигурация полностью перезаписана.
+
+Current source уже имеет один намеренный collision: `russian-baptism` сначала регистрируется flat config, затем public book composition явно заменяет его. Это допустимая композиция, но она означает, что простой глобальный запрет duplicate ID сломает approved design.
+
+Правильный будущий contract должен различать:
+
+- уникальную первичную регистрацию;
+- явно объявленную base→public composition/override;
+- случайный duplicate нового автора.
+
+Сейчас assignment не кодирует эту разницу, а итог зависит от import order. При этом `seriesConfig(seriesId)` не имеет production consumers: реальные wrappers импортируют config constants напрямую. Registry поэтому одновременно предписан guide и не является фактическим runtime SSOT.
+
+Это не отдельный reader-facing defect на текущих маршрутах: approved Baptist override работает, а synthetic collision существовал только в probe. Результат усиливает discovery/manifest часть `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; arithmetic не меняется.

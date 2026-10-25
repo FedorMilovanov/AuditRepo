@@ -43,3 +43,6 @@
 {"type":"standaloneProjection","command":"editorial-metadata-registry.js --write --build","exit":0,"finalPages":109,"registryRecords":73,"approvedProjectedRoutes":72,"postWriteCheckExit":0,"automaticApproval":false}
 {"type":"generatedFanout","centralRegistryFiles":1,"existingSupplementFilesTouched":5,"fixtureChangesRemoved":true,"productSourceClean":true}
 {"type":"disposition","standaloneSafety":"fail-closed after correct four-owner setup","standaloneDiscoverability":"poor","newWorkUnit":false,"absorbedBy":"SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT"}
+{"type":"mutation","id":"duplicate-series-id","configs":2,"seriesId":"arena-collision","importOrder":["A","B"],"astroBuildExit":0,"engineContractsExit":0,"collisionDiagnostic":false,"resolved":"B","overwriteSilent":true}
+{"type":"currentRegistry","declaredConfigIds":7,"uniqueIds":6,"intentionalDuplicate":{"seriesId":"russian-baptism","base":"baptistFlatSeriesConfig.ts","public":"baptistSeriesConfig.ts","semantics":"flat witness then explicit book replacement"},"seriesConfigProductionConsumers":0}
+{"type":"boundary","currentReaderDefect":false,"futureContract":"unique registration plus explicit typed override/composition; reject accidental duplicate","newWorkUnit":false,"absorbedBy":"SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT"}

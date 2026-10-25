@@ -650,3 +650,9 @@ This entry records the governance change only. It does not claim that the reform
 - Minimal generic standalone path is viable with four authored owners: MDX, `ArticleLayout` route, ownership and route profile. Ownership/profile/surface/provenance checks then pass; editorial registry check fails precisely on the missing record.
 - `editorial-metadata-registry --write --build` creates record 73 and 109 pages while retaining only 72 approved projections; review remains fail-closed. It touches the central registry plus five supplement files, which a first-time agent must recognize as generated fan-out.
 - This is a positive safety boundary but an undocumented/distributed transaction. No new unit or arithmetic change; fixtures/generated changes were removed and Product source is clean.
+
+### Series registry collision continuation
+
+- Two valid temporary configs with the same ID both passed build/engine contracts; import order A→B silently made `seriesConfig(id)` return B. No collision diagnostic exists.
+- Current `russian-baptism` intentionally performs flat-base→book-public replacement, so closure needs a typed explicit override/composition rather than a blanket duplicate ban. `seriesConfig()` has no production consumers; wrappers import constants directly.
+- No current reader defect/new unit. This strengthens the manifest/discovery boundary of `SYS-CONTENT-AUTHORING-PUBLICATION-CONTRACT`; arithmetic unchanged.
