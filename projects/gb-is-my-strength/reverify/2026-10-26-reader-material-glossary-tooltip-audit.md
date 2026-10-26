@@ -2,7 +2,7 @@
 
 Дата: 2026-10-26  
 Product anchor: `80440f9ce4bdfca92769330ea79109625c868725`  
-Disposition: **12 новых direct defects + 3 improvements + 3 system lanes; 3 действующих ряда расширены**
+Disposition: **13 новых direct defects + 3 improvements + 3 system lanes; 3 действующих ряда расширены**
 Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 
 ## 1. Итог
@@ -586,3 +586,17 @@ Product mutation and merge remain outside this audit.
 Closure: заменить summary на owner-reviewed естественную формулировку, сохраняющую различие между верностью Богу и молчаливым подчинением лидеру; проверить source→final text и нативно открыть «Конспект» на desktop/mobile. Если автор действительно намерен ввести специальный термин, он должен быть явно определён и мотивирован в читательском тексте, а не впервые появляться в навигационной подписи. Автоматическая защита уместна только как review-list для необъяснённых англицизмов, не как безусловный spellcheck редких богословских имён.
 
 Итоговая арифметика: **68 = 39 direct defects + 7 improvements + 22 system lanes**.
+
+## 27. Продолжение: mobile justification разрывает строки «Нагорной проповеди»
+
+Проверка premium/readability presentation нашла отдельный route-family defect, который не виден из общей ширины reader. Все пять частей «Нагорной проповеди» сохраняют authored utility `text-justify` на узком mobile. В исходниках это **312 литералов в 51 Astro-файле**: одинаковая политика размножена между `MainShell` и section-компонентами. В финальном mobile DOM реально вычисляются `text-align:justify` у **144 prose blocks**: часть I — 25, II — 11, III — 18, IV — 61, V — 29.
+
+Пословный Chromium Range census измерил не субъективные «реки», а фактические промежутки между соседними словами на одной строке. При 320px пять частей дают соответственно **174 / 162 / 182 / 967 / 324**, всего **1 809 межсловных промежутков ≥20px**. При 390px остаётся **1 354**. Representative paragraph в части I имеет content width 238px, но первая строка растягивает «Такой» и «порядок» промежутком **127px**; внутри одного абзаца шесть промежутков ≥20px. Другие валидные word-to-word maxima достигают 136px. Это не одна случайная строка и не вкус к книжной верстке: пробел занимает больше половины доступной строки и системно разрушает визуальную связность фраз.
+
+Browser proof выполнен на 320×844 mobile Dark с `isMobile:true`, touch и reduced motion. Screenshot current SHA-256 `48c37e337705cfa4ded77d434ab295c80fd7359d0ea742b7402e10f29716d65e` показывает разорванные строки. Одноразовый A/B только на representative paragraph (`text-align:left`) сохраняет его width **238px** и height **390px**, но снижает max gap **127→4px**, число gaps ≥20px **6→0**; screenshot SHA-256 `0f2e38a6d44462fedb6ecc51fb383d2c7a2002bc1907837f17ede97967b3e454`. Это диагностическая замена, не Product fix.
+
+Контроли: Axe 0, broken images 0, page errors 0; LCP 224ms, CLS 0.00093. Единственный console error — уже отделённый sandbox `ERR_CONNECTION_CLOSED`. Green accessibility/performance checks ожидаемо не измеряют межсловный ритм.
+
+Принимается `GBS-NAGORNAYA-MOBILE-JUSTIFICATION-RIVERS`. Closure должна принадлежать всей серии, а не 312 локальным правкам: один semantic prose policy/token для «Нагорной проповеди», который на compact widths использует start/left alignment либо доказуемо качественную hyphenation/justification policy с ограничением экстремальных gaps. Desktop book-like art direction можно сохранить после browser review. Permanent sweep: все пять частей на 320/390/768/1024/1280, Light/Dark, normal/narrow/wide; считать реальные same-line word gaps и проверять отсутствие horizontal overflow, float collisions и изменения смысла/порядка. Generic глобальный запрет `text-align:justify` не нужен: правило здесь route-family-specific, но должно иметь одного shared owner.
+
+Итоговая арифметика: **69 = 40 direct defects + 7 improvements + 22 system lanes**.
