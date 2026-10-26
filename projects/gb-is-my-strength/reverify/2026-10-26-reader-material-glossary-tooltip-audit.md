@@ -600,3 +600,15 @@ Browser proof выполнен на 320×844 mobile Dark с `isMobile:true`, tou
 Принимается `GBS-NAGORNAYA-MOBILE-JUSTIFICATION-RIVERS`. Closure должна принадлежать всей серии, а не 312 локальным правкам: один semantic prose policy/token для «Нагорной проповеди», который на compact widths использует start/left alignment либо доказуемо качественную hyphenation/justification policy с ограничением экстремальных gaps. Desktop book-like art direction можно сохранить после browser review. Permanent sweep: все пять частей на 320/390/768/1024/1280, Light/Dark, normal/narrow/wide; считать реальные same-line word gaps и проверять отсутствие horizontal overflow, float collisions и изменения смысла/порядка. Generic глобальный запрет `text-align:justify` не нужен: правило здесь route-family-specific, но должно иметь одного shared owner.
 
 Итоговая арифметика: **69 = 40 direct defects + 7 improvements + 22 system lanes**.
+
+## 28. Продолжение font matrix: Lora `700–900` физически остаётся SemiBold 600
+
+Расширенный weight audit обнаружил ещё одну массовую ветвь уже принятого `GBS-CUSTOM-FONT-MATRIX-MIXED-FAMILY-RENDERING`; новый work unit не создаётся. В `fonts/fonts.css` для Lora объявлены normal **400/500/600**, но нет 700, 800 или 900. Таблицы обоих 600-файлов подтверждают не variable/bold asset, а `OS/2.usWeightClass=600`, family `Lora SemiBold`, PostScript `Lora-SemiBold`.
+
+Browser census 105 final routes нашёл видимые элементы с direct text, computed family Lora и requested weight ≥700 на **95 routes, 3 558 elements**. Число не интерпретируется как 3 558 разных визуальных дефекта: это масштаб одного registry/token mismatch.
+
+CDP доказывает реальный выбор face. На `/articles/chto-bibliya-nazyvaet-serdcem/` строка `<strong>Сердце — это не «эмоции».</strong>` вычисляется как Lora 700, но все 25 glyphs рисует custom `Lora SemiBold`/`Lora-SemiBold`. На Lawson label «БИБЛИОТЕКА ПРОЕКТА · РАЗБОР» computed weight 900, но все 27 glyphs снова рисует тот же SemiBold 600. Значит, интерфейс обещает три различимых уровня 600/700/800–900, а локальный registry физически сводит их к одному максимальному face. Это не platform fallback, но такое же недетерминированное/ложное weight contract, уже охваченное §17.
+
+Closure существующего ряда расширяется: executable font matrix обязана проверять не только script coverage и отсутствующие exact weights Inter/Source Sans, но все requested Lora weights. Нужно либо добавить настоящие owner-approved 700/800/900 faces/variable range, либо привести tokens к реально существующим уровням и заново утвердить hierarchy. Browser proof должен сопоставлять computed request с CDP face и OS/2 weight; наличие custom family само по себе больше не считается успехом. Массово синтезировать/подменять веса CSS-ом нельзя.
+
+Арифметика не меняется: **69 = 40 direct defects + 7 improvements + 22 system lanes**.
