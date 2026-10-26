@@ -12,7 +12,7 @@ Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 Главные результаты:
 
 1. действующий `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS` подтверждён на текущем anchor: **9 опубликованных маршрутов**, 1 385 серий `???` и 10 507 вопросительных знаков в их финальном HTML; defect не новый и не считается повторно;
-2. publication research-scaffold leak охватывает двенадцать routes пяти families: пять материалов «Баптистов России» показывают commit SHA, `main`, `authority`, claim classes и backlog; две карты — raw source IDs, lifecycle и английские editorial claims; Lawson печатает шесть внутренних `LAW-*` keys; три Hard Texts routes — research authority IDs/workflow tokens; связанный Russian Baptism 3D app — `RB-V6-ARENA-…-VERIFY-003` — `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`;
+2. publication research-scaffold leak охватывает тринадцать routes пяти families: пять материалов «Баптистов России» показывают commit SHA, `main`, `authority`, claim classes и backlog; две карты — raw source IDs, lifecycle и английские editorial claims; Lawson печатает шесть внутренних `LAW-*` keys; четыре Hard Texts routes — research authority IDs/workflow tokens и незавершённый `witness apparatus`; связанный Russian Baptism 3D app — `RB-V6-ARENA-…-VERIFY-003` — `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`;
 3. опубликованная статья о христоцентричной герменевтике содержит системный пласт машинных кальк и одну смешанную кирилло-латинскую опечатку `academическую` в quiz payload — новый `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`;
 4. `/articles/sem-tipov-razlichenie-uchiteley/` показывает читателю literal `**` из-за незакрытой Markdown-разметки — новый `GBS-SEM-TIPOV-LITERAL-MARKDOWN-PREFIX`;
 5. `typograf:dry` на зелёном exit 0 сообщает шесть требующих перезаписи retained HTML, поэтому принимается `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`;
@@ -736,7 +736,7 @@ Native Chromium рисует все три exact tokens в desktop/mobile Dark D
 
 Native Chromium рисует exact token одним узлом: 260.09×21px desktop и 231.19×19px mobile. Dark DPR2 reduced-motion controls: Axe 0, broken images 0, console/page errors 0. Screenshot SHA-256: desktop `d6972d8b8fd59af48e47880434eeb201b2b059e6a467d8322133a13dec168543`, mobile `b97d4de132bca3bf80a79f7b4b8a18ce9925a11155123cb82f9a642260eb4fe4`.
 
-`GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK` расширяется до **12 routes / 5 families**, из них три Hard Texts routes. Closure должна заменить key на русскую формулировку статуса, оставив governed code в metadata; нельзя усиливать или снимать квалификацию возражения.
+`GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK` расширяется до **13 routes / 5 families**, из них четыре Hard Texts routes. Closure должна заменить key на русскую формулировку статуса, оставив governed code в metadata; нельзя усиливать или снимать квалификацию возражения.
 
 Арифметика остаётся: **75 = 44 + 8 + 23**.
 
@@ -752,3 +752,16 @@ Native Chromium рисует exact token одним узлом: 260.09×21px des
 Native Chromium подтверждает painted phrase в desktop 1280×900 и mobile 390×844, Dark, DPR2, reduced-motion. В обоих profiles: Axe 0, broken images 0, console/page errors 0. LCP: 588/344 ms; CLS: 0.000790/0. Screenshot SHA-256: desktop `bbed23c7d9febab82e4f9b959b6c2a03cd2a61535672d10398750a0aefa412eb`, mobile `161d3c76f97bd4c3a68dad1cd2f78713b14acf9fa996e382b6f73e87e0c42fe0`.
 
 Это четвёртая manifestation уже принятого `GBS-READER-MALFORMED-RUSSIAN-WORDS-BATCH`, теперь **4 формы / 3 routes**; новый work unit не создаётся. Текущие Product PR #2202/#2198/#2197/#2196/#2179/#2164/#2143 этот текст не владеют. Арифметика остаётся **75 = 44 + 8 + 23**.
+
+
+## 40. Hard Texts: незавершённый `witness apparatus` опубликован в сноске
+
+На `/hard-texts/blagovestie-mertvym-1-petra-4-5-6/` третья сноска заканчивается фразой:
+
+> Полный отрицательный **witness apparatus** ещё не транскрибирован.
+
+Это не английское название источника и не необходимый научный термин. Фраза сообщает читателю о незавершённой внутренней операции над negative textual witness apparatus, смешивает русский и backstage English и не объясняет содержательную границу уверенности. Reader copy должна прямо сказать, какие рукописные свидетельства или варианты пока не проверены и как это ограничивает вывод; рабочий статус транскрибирования должен оставаться в research metadata.
+
+Exact phrase встречается один раз в source и один раз в final HTML. Нативный клик по marker 3 переводит URL на `#user-content-fn-3` и приводит к реальному painted target: desktop target top 144.05px, mobile −30.33px при видимой фразе ниже него. Phrase занимает два painted rects на desktop и три на mobile. Профили 1280×900 / 390×844, Dark DPR2 reduced-motion: Axe 0, broken images 0, console/page errors 0; LCP 744/496 ms, CLS 0.001079/0. Screenshot SHA-256: `e4cb9766c165ac77327f88a3ff78ea556f21953e1d9de950fb3543f1fd44f34c` / `6c0c36a16292cc6dec4720993cb0b12617ce51a9195745e2ba205f0ae88467d1`.
+
+Это четвёртый Hard Texts route и тринадцатый route уже принятого `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`; family остаётся той же, новый work unit не создаётся. Closure должна сохранить честную содержательную оговорку о неполноте проверки, но заменить internal process wording на ясное русское ограничение. Арифметика остаётся **75 = 44 + 8 + 23**.
