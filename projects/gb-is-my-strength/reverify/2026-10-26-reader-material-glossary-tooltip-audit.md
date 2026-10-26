@@ -12,7 +12,7 @@ Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 Главные результаты:
 
 1. действующий `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS` подтверждён на текущем anchor: **9 опубликованных маршрутов**, 1 385 серий `???` и 10 507 вопросительных знаков в их финальном HTML; defect не новый и не считается повторно;
-2. publication research-scaffold leak охватывает десять routes четырёх families: пять материалов «Баптистов России» показывают commit SHA, `main`, `authority`, claim classes и backlog; две карты — raw source IDs, lifecycle и английские editorial claims; Lawson печатает шесть внутренних `LAW-*` keys; два Hard Texts routes — `Research authority`, `GEN6-ENOCH-*-DECISION-*`, workflow `HOLD` и machine slugs — `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`;
+2. publication research-scaffold leak охватывает одиннадцать routes пяти families: пять материалов «Баптистов России» показывают commit SHA, `main`, `authority`, claim classes и backlog; две карты — raw source IDs, lifecycle и английские editorial claims; Lawson печатает шесть внутренних `LAW-*` keys; два Hard Texts routes — research authority IDs/workflow tokens; связанный Russian Baptism 3D app — `RB-V6-ARENA-…-VERIFY-003` — `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`;
 3. опубликованная статья о христоцентричной герменевтике содержит системный пласт машинных кальк и одну смешанную кирилло-латинскую опечатку `academическую` в quiz payload — новый `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`;
 4. `/articles/sem-tipov-razlichenie-uchiteley/` показывает читателю literal `**` из-за незакрытой Markdown-разметки — новый `GBS-SEM-TIPOV-LITERAL-MARKDOWN-PREFIX`;
 5. `typograf:dry` на зелёном exit 0 сообщает шесть требующих перезаписи retained HTML, поэтому принимается `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`;
@@ -699,3 +699,13 @@ Native Chromium подтвердил одинаковые counts в desktop/mobi
 Принимается system lane `SYS-FAQ-STRUCTURED-DATA-ANSWER-PARITY`. Closure: один typed FAQ content owner должен статически проецировать и accordion, и `FAQPage`, либо admission gate обязан сравнивать каждый нормализованный answer после безопасного исключения tooltip payloads и сохранения inline punctuation. Нужны negative fixtures на удалённое предложение, `<strong>слово</strong>.`, scripture button внутри скобок и две ссылки через `;`. Нельзя чинить только final HTML, ослаблять проверку до counts/questions или полагаться на позднюю browser-инъекцию для crawler surface.
 
 Итоговая арифметика: **74 = 43 direct defects + 8 improvements + 23 system lanes**.
+
+## 36. Russian Baptism 3D: verification key виден на явно связанной пользовательской поверхности
+
+`/konfessii/russkij-baptizm/` предлагает обычной ссылкой «попробовать открыть 3D-версию в новой вкладке» маршрут `/_app/`. Сам app имеет `robots=noindex`, но это не backstage-only artifact: пользовательский переход явный, а страница полноценно оформлена как «Карта Русского Баптизма — 3D-приложение». На её первом экране напечатан internal key `RB-V6-ARENA-2026-04-30-REGIONAL-MAP-3D-VERIFY-003`, включающий Arena, дату, implementation label и verification ordinal.
+
+Native Chromium подтверждает один painted node: desktop rect 383.22×15px, mobile 358×30px. Controls 1280×900 / 390×844, Dark DPR2 reduced-motion: Axe 0, broken images 0, console/page errors 0. Screenshot SHA-256: `5856e43a20a26c412a3a7454fb747f40412086bb251c123923e55e299aff98d6` / `8f7fd6014bf13014d76fd7c6a6860c46bfdbd4f79316db4f6a3f4200eb03aa0e`.
+
+Это пятая family уже принятого `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`, не новый defect: теперь **11 routes / 5 families**. `noindex` ограничивает поисковую индексацию, но не превращает явно linked reader UI в безопасное место для production verification IDs. Closure должна заменить key на полезную читательскую подпись/дату версии, сохранив exact identifier только в build provenance или диагностических metadata. В retained 2.25 MB inline app source owner отсутствует в Product tree, поэтому repair обязан сначала восстановить воспроизводимый source/build authority; ручное редактирование minified artifact не считается закрытием.
+
+Арифметика остаётся: **74 = 43 direct + 8 improvements + 23 system lanes**.
