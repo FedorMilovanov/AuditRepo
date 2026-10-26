@@ -2,7 +2,7 @@
 
 Дата: 2026-10-26  
 Product anchor: `80440f9ce4bdfca92769330ea79109625c868725`  
-Disposition: **15 новых direct defects + 4 improvements + 3 system lanes; 3 действующих ряда расширены**
+Disposition: **16 новых direct defects + 4 improvements + 3 system lanes; 3 действующих ряда расширены**
 Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 
 ## 1. Итог
@@ -648,3 +648,15 @@ Desktop/mobile Dark DPR2 reduced-motion controls: Axe 0, broken images 0, page e
 Принимается direct defect `GBS-KRAJNE-FIGURE-PARAGRAPH-ORPHAN-TEXT`. Closure: сделать figure и последующий текст валидными sibling blocks, сохранив намеренную float-композицию через существующий class owner, а не оборачивать orphan runtime-костылём. Добавить source/render guard: block-level figure не вложен в `<p>`, canonical reader roots не имеют substantive direct text nodes, а exact sentence входит в visual DOM, AX и все три projection APIs в правильном порядке. Повторно проверить desktop/mobile, print, search и фактически поданные TTS segments.
 
 Итоговая арифметика: **72 = 42 direct defects + 8 improvements + 22 system lanes**.
+
+## 32. Lawson: буквальная калька ломает русскую грамматику внутри атрибутированной цитаты
+
+В статье `/articles/steven-lawson-samoobman-i-publichnyy-golos/` опубликована фраза: **«Неизвестно для меня эта площадка лепила из меня жёсткого проповедника»**. Конструкция не является естественным русским предложением: безличное «неизвестно для меня» не связывается так с последующей самостоятельной nominative clause «эта площадка лепила». По смыслу английского оборота здесь ожидается обстоятельство вроде «незаметно для меня» / «сам того не замечая», но конкретную редакцию нельзя выбирать без повторной сверки source.
+
+Это не случайный DOM join: exact строка находится в одном authored `<p>` MDX и дословно повторена в research ledger `LAWSON_VIDEO_EVIDENCE_2026-10-03.md`; native Chromium рисует её целиком в desktop/mobile. Одновременно статья сама честно ограничивает authority: `LAW-48` — вторичный видеорасбор, цитаты книги не сверены с оригиналом. Поэтому closure не должна молча «улучшать» якобы прямую цитату и усиливать её статус: нужно либо повторно сверить доступную речь/текст и дать корректный русский перевод с прежней атрибуцией, либо перевести предложение в явно косвенный пересказ secondary source.
+
+Browser controls 1280×900 / 390×844, Dark DPR2, reduced motion: Axe 0, broken images 0, console/page errors 0; LCP 1436/1308ms, CLS 0.00022/0.01145. Screenshot SHA-256: desktop `d0851f860478c2d757df393967d595c7ccea3d207326b420e071d586ed93fc7f`, mobile `6f84d112f040a1d1707e82ffea76ef9bec986d5f19db0b8f0f6e5664a7f4af90`.
+
+Принимается direct defect `GBS-LAWSON-QUOTE-RUSSIAN-CALQUE`. Closure: исправить reader MDX и canonical research/evidence owner согласованно после source check, сохранить distinction между словами книги и передачей критика и добавить editorial check не на запрещённое слово, а на exact known malformed phrase. Массовая замена всех конструкций «неизвестно для меня» или свободная редактура других цитат не требуется.
+
+Итоговая арифметика: **73 = 43 direct defects + 8 improvements + 22 system lanes**.
