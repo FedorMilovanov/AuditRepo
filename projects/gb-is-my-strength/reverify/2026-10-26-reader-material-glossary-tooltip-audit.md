@@ -534,4 +534,21 @@ Axe 0 и отсутствие clipping/overflow не превращают 8–10
 
 Принимается improvement `GBS-MAP-ARCHAEOLOGY-MICROTEXT-DENSITY`. Closure: отдельные semantic tokens для evidence badges, source title и secondary bibliography metadata с owner-approved minimum font/line-height/contrast; internal IDs после §21 не участвуют в reader layout. Нужна progressive disclosure или более компактная группировка повторяющихся sources для длинного Avraam panel, но не скрытие limitations/links. Browser comparison Avraam/Ishod на 390/1280 в Light/Dark должен сохранить evidence distinctions, keyboard/touch scrolling, links и containment без превращения панели в крупнотипографский бесконечный список.
 
+## 23. Продолжение: Ishod print/AT projection стирает структуру rich copy
+
+`IshodStaticProjection.astro` обещает дать печати и no-JS «ровно тот» авторский текст, который показывает интерактивная карта, но его общий `toText()` заменяет каждый HTML tag одним пробелом, после чего весь `place.dispute` помещается в один `<p>`. Для inline markup это допустимо; для rich blocks (`dispute-title`, несколько `dispute-pos`, confidence labels и note) уничтожаются заголовки, границы вариантов и роль подписи надёжности.
+
+Source census нашёл четыре реально публикуемых multi-block dispute payloads: Rameses, Sinai, Kadesh-Barnea и historical Pihahiroth; последний заменяется authority copy до projection, поэтому current final defect проявляется в **трёх** местах. Наиболее явные финальные строки:
+
+- «…Фараон: Тутмос III / Аменхотеп II. **Средняя Поздняя** (~1260 до н.э.)… Фараон: Рамсес II. **Средняя Позиция**: YEC — ранняя дата»;
+- «Кадеш: оазис без бронзового слоя Эйн эль-Кудейрат : … **Средняя Кочевая стоянка** : … **Средняя Кочевники** не оставляют построек…».
+
+Это не новые authored утверждения: слова `Средняя`, `Поздняя`, `Позиция` принадлежат разным sibling blocks/classes, но projector превращает их в одну грамматически ложную фразу. Sinai аналогично теряет разделение competing positions и заключительной project position, хотя остаётся угадываемым.
+
+Browser proof различает surfaces. В обычном screen mode static projection остаётся `sr-only`, но CDP full accessibility tree содержит обе malformed строки как non-ignored `StaticText`; следовательно, это реальный AT output, а не просто hidden DOM. В Chromium print media Rameses и Kadesh paragraphs painted: соответственно y=880.11, 1280×65.11px и y=3346.05, 1280×43.41px. PDF SHA-256 `e6d85915222b0955de750e5c1ab8a63ec8ebbb030b0233bd92cb1e2095cd7e5a`; console/page errors 0, broken images 0, Axe violations 0. Отсутствие Axe finding ожидаемо: проблема — потеря editorial structure, не формальная роль или contrast.
+
+Текущие gates это принимают: production-like `astro:audit:ishod` проверяет наличие projection, title, authority note и fallback wiring, но не parity структуры rich blocks; `maps:validate` и publication status проходят все 11 route JSON; `readable-audit` также pass. Принимается `GBS-ISHOD-STATIC-PROJECTION-RICH-BLOCK-FLATTENING`.
+
+Closure: не рендерить route HTML небезопасно через raw injection, а распарсить разрешённый authored subset в typed blocks либо хранить dispute как structured data и проецировать title/position/confidence/note отдельными семантическими элементами. Source→screen-panel→print→AX contract должен сравнить порядок и границы Rameses/Sinai/Kadesh, запретить adjacent artifacts `Средняя Поздняя`/`Средняя Позиция`/`Средняя Кочевая`, сохранить authority override Pihahiroth и доказать отсутствие unsafe HTML. Простая пунктуационная замена трёх текущих строк не закрывает projector root.
+
 Product mutation and merge remain outside this audit.
