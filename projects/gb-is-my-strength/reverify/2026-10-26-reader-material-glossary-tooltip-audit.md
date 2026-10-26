@@ -2,7 +2,7 @@
 
 Дата: 2026-10-26  
 Product anchor: `80440f9ce4bdfca92769330ea79109625c868725`  
-Disposition: **16 новых direct defects + 4 improvements + 4 system lanes; 3 действующих ряда расширены**
+Disposition: **17 новых direct defects + 4 improvements + 4 system lanes; 3 действующих ряда расширены**
 Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 
 ## 1. Итог
@@ -709,3 +709,19 @@ Native Chromium подтверждает один painted node: desktop rect 383
 Это пятая family уже принятого `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`, не новый defect: теперь **11 routes / 5 families**. `noindex` ограничивает поисковую индексацию, но не превращает явно linked reader UI в безопасное место для production verification IDs. Closure должна заменить key на полезную читательскую подпись/дату версии, сохранив exact identifier только в build provenance или диагностических metadata. В retained 2.25 MB inline app source owner отсутствует в Product tree, поэтому repair обязан сначала восстановить воспроизводимый source/build authority; ручное редактирование minified artifact не считается закрытием.
 
 Арифметика остаётся: **74 = 43 direct + 8 improvements + 23 system lanes**.
+
+## 37. Три malformed слова в двух обычных читательских статьях
+
+Morphological low-frequency pass использован только как очередь ручного review, не как словарный verdict: 1 207 неизвестных dictionary forms включают множество корректных имён, греческих транслитераций и богословских терминов. Контекстная проверка выделила три действительно непригодные формы в обычной русской прозе:
+
+- `/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/`: «полезны **обеспечредительные** меры»;
+- там же: «как **обеспредительная** процедура»;
+- `/articles/vzroslaya-doch-otets-brak-soglasie-granitsy-vlasti/`: «готовность слушать вместо **самосуверенности**».
+
+Первые две формы — разные несуществующие blend-варианты в одном owner; контекст требует редакторски выбрать точное понятие (например, safeguarding/обеспечительные или предупредительные меры), а не механически заменить общий фрагмент. Третья форма содержит лишнее `с`; нормативная оппозиция в этом предложении — «готовность слушать вместо самоуверенности». Source search на anchor находит каждую ровно один раз.
+
+Native Chromium рисует все три exact tokens в desktop/mobile Dark DPR2 reduced-motion. Во всех четырёх profiles: Axe 0, broken images 0, console/page errors 0. Screenshot SHA-256 discipline: `9db9e02e2863a7dcf21ec218283a19ee8fd439e60def17608d3b6c80be1d4b71` / `1f3fe5ad4af3059c58cb883e3a70447612a2e56d6e7f42d6c2dd5afd3a4078c3`; daughter: `70691df85ca68538ea3af974fb578d4d7e5a0cc0c62b9cf0775c27429da0b4a5` / `c407058317f2cc0d42dab86993c2945f0bb2007c217eed802886dea5b027f054`.
+
+Принимается один direct defect `GBS-READER-MALFORMED-RUSSIAN-WORDS-BATCH`, а не три счётчика. Closure: редакторски исправить обе blend-формы с сохранением различия между governance safeguard и procedural response, исправить `самосуверенности`, проверить source→final parity. Regression должен содержать exact отрицательные fixtures этих трёх форм; generic spellchecker не может блокировать specialist corpus без reviewable allowlist. Open Product PRs #2202/#2198/#2197/#2196/#2179/#2164/#2143 не владеют этими текстами.
+
+Итоговая арифметика: **75 = 44 direct defects + 8 improvements + 23 system lanes**.
