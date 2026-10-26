@@ -710,9 +710,9 @@ Native Chromium подтверждает один painted node: desktop rect 383
 
 Арифметика остаётся: **74 = 43 direct + 8 improvements + 23 system lanes**.
 
-## 37. Три malformed слова в двух обычных читательских статьях
+## 37. Четыре malformed формы в трёх обычных читательских статьях
 
-Morphological low-frequency pass использован только как очередь ручного review, не как словарный verdict: 1 207 неизвестных dictionary forms включают множество корректных имён, греческих транслитераций и богословских терминов. Контекстная проверка выделила три действительно непригодные формы в обычной русской прозе:
+Morphological low-frequency pass использован только как очередь ручного review, не как словарный verdict: 1 207 неизвестных dictionary forms включают множество корректных имён, греческих транслитераций и богословских терминов. Контекстная проверка сначала выделила три действительно непригодные формы в обычной русской прозе:
 
 - `/articles/cerkovnaya-disciplina-vlast-granicy-zashchita/`: «полезны **обеспечредительные** меры»;
 - там же: «как **обеспредительная** процедура»;
@@ -722,7 +722,7 @@ Morphological low-frequency pass использован только как оч
 
 Native Chromium рисует все три exact tokens в desktop/mobile Dark DPR2 reduced-motion. Во всех четырёх profiles: Axe 0, broken images 0, console/page errors 0. Screenshot SHA-256 discipline: `9db9e02e2863a7dcf21ec218283a19ee8fd439e60def17608d3b6c80be1d4b71` / `1f3fe5ad4af3059c58cb883e3a70447612a2e56d6e7f42d6c2dd5afd3a4078c3`; daughter: `70691df85ca68538ea3af974fb578d4d7e5a0cc0c62b9cf0775c27429da0b4a5` / `c407058317f2cc0d42dab86993c2945f0bb2007c217eed802886dea5b027f054`.
 
-Принимается один direct defect `GBS-READER-MALFORMED-RUSSIAN-WORDS-BATCH`, а не три счётчика. Closure: редакторски исправить обе blend-формы с сохранением различия между governance safeguard и procedural response, исправить `самосуверенности`, проверить source→final parity. Regression должен содержать exact отрицательные fixtures этих трёх форм; generic spellchecker не может блокировать specialist corpus без reviewable allowlist. Open Product PRs #2202/#2198/#2197/#2196/#2179/#2164/#2143 не владеют этими текстами.
+Принимается один direct defect `GBS-READER-MALFORMED-RUSSIAN-WORDS-BATCH`, а не отдельные счётчики для каждой формы. Closure: редакторски исправить обе blend-формы с сохранением различия между governance safeguard и procedural response, исправить `самосуверенности`, проверить source→final parity. Regression должен содержать exact отрицательные fixtures всех известных форм; generic spellchecker не может блокировать specialist corpus без reviewable allowlist. Open Product PRs #2202/#2198/#2197/#2196/#2179/#2164/#2143 не владеют этими текстами.
 
 Итоговая арифметика: **75 = 44 direct defects + 8 improvements + 23 system lanes**.
 
@@ -739,3 +739,16 @@ Native Chromium рисует exact token одним узлом: 260.09×21px des
 `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK` расширяется до **12 routes / 5 families**, из них три Hard Texts routes. Closure должна заменить key на русскую формулировку статуса, оставив governed code в metadata; нельзя усиливать или снимать квалификацию возражения.
 
 Арифметика остаётся: **75 = 44 + 8 + 23**.
+
+
+## 39. Продолжение malformed-word review: `установленно виновным`
+
+Продолжение той же morphology-assisted очереди нашло ещё одну объективно ненормативную форму на `/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo/`:
+
+> Старейшина защищён от легкомысленного обвинения, но не от возможности **быть установленно виновным** и обличённым.
+
+`Установленно` с двумя `н` здесь невозможно ни как краткое причастие (`установлено`), ни как наречие; вся конструкция требует редакторского выбора — например, «быть признанным виновным» либо «если его вина установлена». Исправление не должно менять тезис абзаца о проверяемости обвинения. Exact word встречается один раз в source и один раз в final HTML. `article:qa` и `readable-audit` проходят, потому что не владеют орфографической/синтаксической нормой обычной русской прозы.
+
+Native Chromium подтверждает painted phrase в desktop 1280×900 и mobile 390×844, Dark, DPR2, reduced-motion. В обоих profiles: Axe 0, broken images 0, console/page errors 0. LCP: 588/344 ms; CLS: 0.000790/0. Screenshot SHA-256: desktop `bbed23c7d9febab82e4f9b959b6c2a03cd2a61535672d10398750a0aefa412eb`, mobile `161d3c76f97bd4c3a68dad1cd2f78713b14acf9fa996e382b6f73e87e0c42fe0`.
+
+Это четвёртая manifestation уже принятого `GBS-READER-MALFORMED-RUSSIAN-WORDS-BATCH`, теперь **4 формы / 3 routes**; новый work unit не создаётся. Текущие Product PR #2202/#2198/#2197/#2196/#2179/#2164/#2143 этот текст не владеют. Арифметика остаётся **75 = 44 + 8 + 23**.
