@@ -12,7 +12,7 @@ Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 Главные результаты:
 
 1. действующий `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS` подтверждён на текущем anchor: **9 опубликованных маршрутов**, 1 385 серий `???` и 10 507 вопросительных знаков в их финальном HTML; defect не новый и не считается повторно;
-2. publication research-scaffold leak охватывает одиннадцать routes пяти families: пять материалов «Баптистов России» показывают commit SHA, `main`, `authority`, claim classes и backlog; две карты — raw source IDs, lifecycle и английские editorial claims; Lawson печатает шесть внутренних `LAW-*` keys; два Hard Texts routes — research authority IDs/workflow tokens; связанный Russian Baptism 3D app — `RB-V6-ARENA-…-VERIFY-003` — `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`;
+2. publication research-scaffold leak охватывает двенадцать routes пяти families: пять материалов «Баптистов России» показывают commit SHA, `main`, `authority`, claim classes и backlog; две карты — raw source IDs, lifecycle и английские editorial claims; Lawson печатает шесть внутренних `LAW-*` keys; три Hard Texts routes — research authority IDs/workflow tokens; связанный Russian Baptism 3D app — `RB-V6-ARENA-…-VERIFY-003` — `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`;
 3. опубликованная статья о христоцентричной герменевтике содержит системный пласт машинных кальк и одну смешанную кирилло-латинскую опечатку `academическую` в quiz payload — новый `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`;
 4. `/articles/sem-tipov-razlichenie-uchiteley/` показывает читателю literal `**` из-за незакрытой Markdown-разметки — новый `GBS-SEM-TIPOV-LITERAL-MARKDOWN-PREFIX`;
 5. `typograf:dry` на зелёном exit 0 сообщает шесть требующих перезаписи retained HTML, поэтому принимается `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`;
@@ -725,3 +725,17 @@ Native Chromium рисует все три exact tokens в desktop/mobile Dark D
 Принимается один direct defect `GBS-READER-MALFORMED-RUSSIAN-WORDS-BATCH`, а не три счётчика. Closure: редакторски исправить обе blend-формы с сохранением различия между governance safeguard и procedural response, исправить `самосуверенности`, проверить source→final parity. Regression должен содержать exact отрицательные fixtures этих трёх форм; generic spellchecker не может блокировать specialist corpus без reviewable allowlist. Open Product PRs #2202/#2198/#2197/#2196/#2179/#2164/#2143 не владеют этими текстами.
 
 Итоговая арифметика: **75 = 44 direct defects + 8 improvements + 23 system lanes**.
+
+## 38. Hard Texts: третий route печатает workflow status вместо читательского вывода
+
+Продолжение targeted technical-token review нашло на `/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/` отдельный блок:
+
+`Статус возражения: SERIOUS-BUT-NOT-DECISIVE.`
+
+Содержательный вывод понятен из соседних абзацев и должен сохраниться: Мф. 22:30 создаёт серьёзное, но не решающее возражение. Дефект — не квалификация аргумента, а публикация all-caps English workflow key без reader label/translation. Это тот же Hard Texts research-status projection, что `HOLD` и `*-DECISION-*`, поэтому новый work unit не создаётся.
+
+Native Chromium рисует exact token одним узлом: 260.09×21px desktop и 231.19×19px mobile. Dark DPR2 reduced-motion controls: Axe 0, broken images 0, console/page errors 0. Screenshot SHA-256: desktop `d6972d8b8fd59af48e47880434eeb201b2b059e6a467d8322133a13dec168543`, mobile `b97d4de132bca3bf80a79f7b4b8a18ce9925a11155123cb82f9a642260eb4fe4`.
+
+`GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK` расширяется до **12 routes / 5 families**, из них три Hard Texts routes. Closure должна заменить key на русскую формулировку статуса, оставив governed code в metadata; нельзя усиливать или снимать квалификацию возражения.
+
+Арифметика остаётся: **75 = 44 + 8 + 23**.
