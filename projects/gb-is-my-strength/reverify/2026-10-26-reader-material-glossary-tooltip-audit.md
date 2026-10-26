@@ -2,7 +2,7 @@
 
 Дата: 2026-10-26  
 Product anchor: `80440f9ce4bdfca92769330ea79109625c868725`  
-Disposition: **13 новых direct defects + 4 improvements + 3 system lanes; 3 действующих ряда расширены**
+Disposition: **14 новых direct defects + 4 improvements + 3 system lanes; 3 действующих ряда расширены**
 Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 
 ## 1. Итог
@@ -626,3 +626,13 @@ Representative desktop Dark DPR2 controls: Axe 0, broken images 0, page errors 0
 Принимается improvement `GBS-HERO-IMAGE-HIDPI-SOURCE-CAPACITY`. Это measurable premium-quality gap, не WCAG failure и не 13 direct defects. Closure: один responsive-image owner для article hero role с корректными aspect-specific 1x/2x candidates, реальными intrinsic dimensions и `srcset`/`sizes`; social OG asset нельзя автоматически считать подходящим reader crop. Browser должен на 1280 DPR1/DPR2 выбрать source не меньше painted device target (либо явно утверждённый quality floor), сохранить crop/focal point, LCP/CLS, alt, print и отсутствие лишней загрузки большого файла на mobile. Thumbnail usages 600w не надо массово повышать: contract относится к крупному hero slot.
 
 Итоговая арифметика: **70 = 40 direct defects + 8 improvements + 22 system lanes**.
+
+## 30. Пунктуация библиографии: пробелы перед `;` и `.` в четырёх статьях
+
+Source-wide MDX search нашёл один повторённый copy pattern в четырёх статьях: после Markdown-ссылки на главы London Baptist Confession оставлен пробел перед точкой с запятой, а в трёх из четырёх строк — ещё и перед точкой. Это не артефакт strip/join: native Chromium `innerText` в desktop и mobile сохраняет точные фрагменты `Conscience ;` и `The Church .`. Затронуты `cerkovnaya-disciplina-vlast-granicy-zashchita`, `nesovershennyy-chelovek-v-nesovershennoy-cerkvi`, `teksty-pisaniya-kotorymi-manipuliruyut` (только ` ;`) и `vernye-i-neizvestnye-zdorovoe-pastyrstvo`.
+
+Representative screenshots: desktop SHA-256 `62a230c7d110eefd6b5dfe825beedd684e6f83aedc6221683649374325a59b59`, mobile `8ec4e9907fc4b63ff08e7e4df41a863a0ffe2193eb7446cdc7748cddb1bb6045`. В восьми 1280/390 Dark DPR2 profiles: Axe 0, broken images 0, page/console errors 0, LCP 156–960ms. Один первый mobile load дал CLS 0.171, но три изолированных повтора того же route дали 0/0/0, поэтому этот нестабильный сигнал не приписывается пунктуационному дефекту и не принимается отдельно.
+
+Принимается один direct defect `GBS-LBCF-REFERENCE-PUNCTUATION-SPACING`, а не семь дефектов по количеству знаков. Closure: удалить пробелы у четырёх source owners и добавить source-level content check для whitespace перед русскими `,.;:!?` после Markdown link/inline boundary; проверить source→built text parity. Нельзя чинить generated HTML или глобально удалять whitespace вокруг ссылок: межсловные пробелы после ссылок нужны.
+
+Итоговая арифметика: **71 = 41 direct defects + 8 improvements + 22 system lanes**.
