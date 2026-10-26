@@ -12,7 +12,7 @@ Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 Главные результаты:
 
 1. действующий `GBS-BAPTISTS-VISIBLE-COPY-QUESTION-MARK-LOSS` подтверждён на текущем anchor: **9 опубликованных маршрутов**, 1 385 серий `???` и 10 507 вопросительных знаков в их финальном HTML; defect не новый и не считается повторно;
-2. в пяти материалах «Баптистов России» читателю показываются внутренние Research/engineering данные: commit SHA, `main`, `authority`, `claim-level`, A1/A2/A3/B1/C/D, state axes, внутренние `.md`-имена и backlog — новый `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`;
+2. publication research-scaffold leak охватывает десять routes четырёх families: пять материалов «Баптистов России» показывают commit SHA, `main`, `authority`, claim classes и backlog; две карты — raw source IDs, lifecycle и английские editorial claims; Lawson печатает шесть внутренних `LAW-*` keys; два Hard Texts routes — `Research authority`, `GEN6-ENOCH-*-DECISION-*`, workflow `HOLD` и machine slugs — `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`;
 3. опубликованная статья о христоцентричной герменевтике содержит системный пласт машинных кальк и одну смешанную кирилло-латинскую опечатку `academическую` в quiz payload — новый `GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY`;
 4. `/articles/sem-tipov-razlichenie-uchiteley/` показывает читателю literal `**` из-за незакрытой Markdown-разметки — новый `GBS-SEM-TIPOV-LITERAL-MARKDOWN-PREFIX`;
 5. `typograf:dry` на зелёном exit 0 сообщает шесть требующих перезаписи retained HTML, поэтому принимается `SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN`;
@@ -629,11 +629,13 @@ Representative desktop Dark DPR2 controls: Axe 0, broken images 0, page errors 0
 
 ## 30. Пунктуация библиографии: пробелы перед `;` и `.` в четырёх статьях
 
-Source-wide MDX search нашёл один повторённый copy pattern в четырёх статьях: после Markdown-ссылки на главы London Baptist Confession оставлен пробел перед точкой с запятой, а в трёх из четырёх строк — ещё и перед точкой. Это не артефакт strip/join: native Chromium `innerText` в desktop и mobile сохраняет точные фрагменты `Conscience ;` и `The Church .`. Затронуты `cerkovnaya-disciplina-vlast-granicy-zashchita`, `nesovershennyy-chelovek-v-nesovershennoy-cerkvi`, `teksty-pisaniya-kotorymi-manipuliruyut` (только ` ;`) и `vernye-i-neizvestnye-zdorovoe-pastyrstvo`.
+Source-wide MDX search нашёл один повторённый copy pattern в четырёх статьях: после Markdown-ссылки на главы London Baptist Confession оставлен пробел перед точкой с запятой, а в трёх из четырёх строк — ещё и перед точкой. Это не артефакт strip/join: native Chromium `innerText` в desktop и mobile сохраняет точные фрагменты `Conscience ;` и `The Church .`. Затронуты `cerkovnaya-disciplina-vlast-granicy-zashchita`, `nesovershennyy-chelovek-v-nesovershennoy-cerkvi`, `teksty-pisaniya-kotorymi-manipuliruyut` и `vernye-i-neizvestnye-zdorovoe-pastyrstvo`.
+
+105-route final-text census нашёл на `teksty-pisaniya-kotorymi-manipuliruyut` ещё один witness того же owner: bare Baker URL заканчивается `redeeming-power ; публичный фрагмент`. Значит, routes по-прежнему четыре, но source occurrences теперь восемь: пять ` ;` и три ` .`; на этом route находятся два разных pre-semicolon пробела, а не один.
 
 Representative screenshots: desktop SHA-256 `62a230c7d110eefd6b5dfe825beedd684e6f83aedc6221683649374325a59b59`, mobile `8ec4e9907fc4b63ff08e7e4df41a863a0ffe2193eb7446cdc7748cddb1bb6045`. В восьми 1280/390 Dark DPR2 profiles: Axe 0, broken images 0, page/console errors 0, LCP 156–960ms. Один первый mobile load дал CLS 0.171, но три изолированных повтора того же route дали 0/0/0, поэтому этот нестабильный сигнал не приписывается пунктуационному дефекту и не принимается отдельно.
 
-Принимается один direct defect `GBS-LBCF-REFERENCE-PUNCTUATION-SPACING`, а не семь дефектов по количеству знаков. Closure: удалить пробелы у четырёх source owners и добавить source-level content check для whitespace перед русскими `,.;:!?` после Markdown link/inline boundary; проверить source→built text parity. Нельзя чинить generated HTML или глобально удалять whitespace вокруг ссылок: межсловные пробелы после ссылок нужны.
+Принимается один direct defect `GBS-LBCF-REFERENCE-PUNCTUATION-SPACING`, а не восемь дефектов по количеству знаков. Closure: удалить пробелы у четырёх source owners и добавить source-level content check для whitespace перед русскими `,.;:!?` после Markdown link/inline boundary; проверить source→built text parity. Нельзя чинить generated HTML или глобально удалять whitespace вокруг ссылок: межсловные пробелы после ссылок нужны.
 
 Итоговая арифметика: **71 = 41 direct defects + 8 improvements + 22 system lanes**.
 
@@ -660,3 +662,28 @@ Browser controls 1280×900 / 390×844, Dark DPR2, reduced motion: Axe 0, broken 
 Принимается direct defect `GBS-LAWSON-QUOTE-RUSSIAN-CALQUE`. Closure: исправить reader MDX и canonical research/evidence owner согласованно после source check, сохранить distinction между словами книги и передачей критика и добавить editorial check не на запрещённое слово, а на exact known malformed phrase. Массовая замена всех конструкций «неизвестно для меня» или свободная редактура других цитат не требуется.
 
 Итоговая арифметика: **73 = 43 direct defects + 8 improvements + 22 system lanes**.
+
+## 33. Lawson: raw `LAW-48` расширяет действующий publication research-scaffold leak
+
+Продолжение проверки технической лексики нашло на `/articles/steven-lawson-samoobman-i-publichnyy-golos/` **шесть painted вхождений** внутренних source-registry IDs. Два `LAW-48` стоят прямо в основных абзацах — перед материалом о стиле проповеди и о браке. При этом каждый из тех же абзацев уже содержит по три экземпляра reader-facing сноски **45**, которую рендерит `<LawsonSourceRef id="LAW-48" />`: raw ID одновременно раскрывает backstage key и дублирует существующий человеческий locator. Ещё четыре cross-reference (`LAW-07`, `LAW-38`, `LAW-41`, `LAW-52`) напечатаны внутри библиографических boundary-описаний вместо человеческой ссылки на источник.
+
+Source census подтверждает ровно два literal `LAW-\d+` вне component tags в основном MDX prose, оба `LAW-48`; остальные четыре приходят из bibliography/registry projection. Targeted Range census не смешивает их с многочисленными hidden source-boundary clones: все шесть перечисленных text nodes имеют ненулевые painted rect и не находятся под `hidden`/`aria-hidden`. Native Chromium показывает оба основных абзаца на desktop/mobile. Controls 1280×900 / 390×844, Dark DPR2, reduced motion: Axe 0, broken images 0, console/page errors 0; LCP 1492/1356ms, CLS 0.00022/0.01145. Screenshot второго абзаца SHA-256: desktop `0e370aa5aaa31be512670391d53dcaa2251ef2f6d601c78d05cdc210b23cb51a`, mobile `2b54b56265be42e3fce0006129fdfb000f837046a9253d88c422f61d0f9ac977`.
+
+Это не новый work unit. Действующий `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK` расширяется с семи routes / двух families до **восьми routes / трёх families**: Baptist publication, shared map archaeology и Lawson source registry. Closure должна оставлять `LAW-48` во внутреннем registry/component API, а в prose использовать обычную формулировку «в передаче критика» плюс существующую сноску 45. Нельзя удалять саму reader citation или её authority boundary.
+
+Итоговая арифметика остаётся: **73 = 43 direct defects + 8 improvements + 22 system lanes**.
+
+## 34. Hard Texts: research authority и lifecycle keys опубликованы как читательский текст
+
+Targeted technical-token census добавляет к тому же owner ещё два routes серии Hard Texts:
+
+- `/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/`: 3× `Research authority`, 3× raw `GEN6-ENOCH-…-DECISION-…`, 3 `HOLD`, 4 machine slugs; в основном prose буквально опубликовано «закрывает blocking version-plurality HOLD» и `astronomical-book-reconstruction-direction-and-joins`;
+- `/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/`: 6× `Research authority`, 7× raw `GEN6-ENOCH-…`, 10 lifecycle `*HOLD*`, 4 machine slugs.
+
+Сам по себе прозрачный статус аргумента полезен и удаляться не должен. Дефект — projection внутренних authority IDs, machine slugs и workflow lifecycle vocabulary вместо читательского русского описания статуса. Это тот же тип leakage, что `authority`/raw source keys в уже принятом row, а не основание считать английские названия книг или научные сиглы ошибкой.
+
+Native Chromium подтвердил одинаковые counts в desktop/mobile Dark DPR2 reduced-motion на обоих routes; Axe 0, broken images 0, console/page errors 0 во всех четырёх loads. Screenshot SHA-256 corpus: `82bd403a1b0f3bb79a3f45dd7bb0e00244318cdbcc69568277654491a2d2b1a4` / `1c80367d962f0ea7b1a48dd7f9ab1493fc66a8a4dd63d40a0ddc8780e5f69f03`; audit: `d11a8fc00f36e09f1702398eae3a68c289e70baddebf9dda98565108d3fef86b` / `35f9de79597718c6ec5d8766a74f54d1fd2d03507f8afa671eca9da0fbe085ab`.
+
+`GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK` теперь охватывает **10 routes / 4 families**. Closure: сохранить квалификации и uncertainty по существу, но локализовать reader status; raw IDs/slugs/lifecycle оставить в research metadata. Source+final guard должен ловить `Research authority`, governed `*-DECISION-*` IDs, machine slugs и workflow `HOLD` вне узкого allowlist для действительно читательских кодов.
+
+Арифметика не меняется: **73 = 43 + 8 + 22**.
