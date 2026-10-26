@@ -710,7 +710,7 @@ Native Chromium подтверждает один painted node: desktop rect 383
 
 Арифметика остаётся: **74 = 43 direct + 8 improvements + 23 system lanes**.
 
-## 37. Четыре malformed формы в трёх обычных читательских статьях
+## 37. Пять malformed форм в четырёх обычных читательских статьях
 
 Morphological low-frequency pass использован только как очередь ручного review, не как словарный verdict: 1 207 неизвестных dictionary forms включают множество корректных имён, греческих транслитераций и богословских терминов. Контекстная проверка сначала выделила три действительно непригодные формы в обычной русской прозе:
 
@@ -765,3 +765,16 @@ Native Chromium подтверждает painted phrase в desktop 1280×900 и 
 Exact phrase встречается один раз в source и один раз в final HTML. Нативный клик по marker 3 переводит URL на `#user-content-fn-3` и приводит к реальному painted target: desktop target top 144.05px, mobile −30.33px при видимой фразе ниже него. Phrase занимает два painted rects на desktop и три на mobile. Профили 1280×900 / 390×844, Dark DPR2 reduced-motion: Axe 0, broken images 0, console/page errors 0; LCP 744/496 ms, CLS 0.001079/0. Screenshot SHA-256: `e4cb9766c165ac77327f88a3ff78ea556f21953e1d9de950fb3543f1fd44f34c` / `6c0c36a16292cc6dec4720993cb0b12617ce51a9195745e2ba205f0ae88467d1`.
 
 Это четвёртый Hard Texts route и тринадцатый route уже принятого `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK`; family остаётся той же, новый work unit не создаётся. Closure должна сохранить честную содержательную оговорку о неполноте проверки, но заменить internal process wording на ясное русское ограничение. Арифметика остаётся **75 = 44 + 8 + 23**.
+
+
+## 41. Продолжение malformed-word review: `телологии` вместо `телеологии`
+
+На `/baptisty-rossii/peterburgskaya-liniya/` опубликовано:
+
+> Эти короткие формулы важнее поздней красивой **телологии**.
+
+По контексту речь о ретроспективном представлении истории как заранее направленной к ВСЕХБ 1944 года, то есть о **телеологии**. Форма `телологии` пропускает вторую `е`; exact token встречается один раз в source и один раз в final HTML. Остальной Product corpus не содержит ни `телология`, ни `телеология`, поэтому автоматическая внутрипроектная частотность эту ошибку не ловит.
+
+Native Chromium подтверждает painted sentence: один rect 561.13×23px на desktop и два rects 242.89×20px + 231.02×20px на mobile. Профили 1280×900 / 390×844, Dark DPR2 reduced-motion: Axe 0, после принудительной загрузки lazy assets broken images 0, console/page errors 0. LCP 1688/1012 ms; CLS 0.014052/0.120853. Mobile CLS записан как контроль и не приписывается орфографической находке без causal trace. Screenshot SHA-256: `09157607d40b908352ab3ac8fc8165f77258b2f42f0af70649a497a1f4283882` / `6c8a6538fce3088746ec2157d3b61b14c64a21a039682e7f15a9544c1da74acf`.
+
+Это пятая manifestation `GBS-READER-MALFORMED-RUSSIAN-WORDS-BATCH`, теперь **5 форм / 4 routes**; отдельный defect не создаётся. Product PR #2203 владеет search bootstrap, остальные открытые #2202/#2198/#2197/#2196/#2179/#2164/#2143 также не владеют этим Baptist copy. Closure должна исправить слово через Astro source owner и проверить финальную проекцию; regression fixture добавляется в общий exact-negative набор. Арифметика остаётся **75 = 44 + 8 + 23**.
