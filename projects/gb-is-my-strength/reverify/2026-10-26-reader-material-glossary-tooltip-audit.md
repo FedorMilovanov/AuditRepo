@@ -2,7 +2,7 @@
 
 Дата: 2026-10-26  
 Product anchor: `80440f9ce4bdfca92769330ea79109625c868725`  
-Disposition: **16 новых direct defects + 4 improvements + 3 system lanes; 3 действующих ряда расширены**
+Disposition: **16 новых direct defects + 4 improvements + 4 system lanes; 3 действующих ряда расширены**
 Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 
 ## 1. Итог
@@ -687,3 +687,15 @@ Native Chromium подтвердил одинаковые counts в desktop/mobi
 `GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK` теперь охватывает **10 routes / 4 families**. Closure: сохранить квалификации и uncertainty по существу, но локализовать reader status; raw IDs/slugs/lifecycle оставить в research metadata. Source+final guard должен ловить `Research authority`, governed `*-DECISION-*` IDs, machine slugs и workflow `HOLD` вне узкого allowlist для действительно читательских кодов.
 
 Арифметика не меняется: **73 = 43 + 8 + 22**.
+
+## 35. FAQ JSON-LD: 12 из 21 ответов расходятся с читательским аккордеоном
+
+Это отдельная machine-readable publication surface, а не painted reader defect. Полный census всех 105 final routes нашёл четыре `FAQPage` / 21 `Question`. Browser parity сравнивал `acceptedAnswer.text` с фактическим `.faq-accordion__body-inner`, удаляя только tooltip/footnote payloads и нормализуя whitespace; вопрос связывался по видимому имени. Результат: Hermenevtika **3/3 exact**, Antisovetov **5/7**, Kod da Vinci **0/8**, Krajne **1/3** — итого **9/21 exact, 12/21 drifted на трёх из четырёх routes**.
+
+Один drift содержательный. Первый Antisovetov answer в JSON-LD меняет «Практический тест такой» на «Практический тест» и полностью теряет заключительное 226-символьное предложение «Чтобы не обмануться, проверь внешние признаки…». Остальные 11 — типографическая порча при ручном переносе inline markup: Antisovetov публикует `паттерн .`; все восемь Kod answers ставят пробелы сразу после `(` и перед `)`, один также даёт `1:1–4 ; 2 Пет.`; Krajne повторяет такие скобочные пробелы в двух answers. Отдельный recursive JSON-LD census подтверждает только два pre-punctuation случая (`паттерн .`, `1:1–4 ;`), а boundary census — 20 лишних пробелов у десяти пар скобок.
+
+Это реальная owner/gate проблема. Четыре PageHead вручную дублируют ответы видимого FAQ. `validate:strict` проходит; `schema:rich-results:audit:dist` видит 4 FAQPages и проверяет лишь наличие непустого `acceptedAnswer.text`; `html-surface-contract::auditFaqParity()` сравнивает counts/questions, но не answers. Зелёный `faq-jsonld-text-contract-test` проверяет text-only serializer legacy enhancement, а не parity уже встроенных PageHead payloads. Поэтому валидный JSON и совпадающие вопросы скрывают stale/испорченные ответы.
+
+Принимается system lane `SYS-FAQ-STRUCTURED-DATA-ANSWER-PARITY`. Closure: один typed FAQ content owner должен статически проецировать и accordion, и `FAQPage`, либо admission gate обязан сравнивать каждый нормализованный answer после безопасного исключения tooltip payloads и сохранения inline punctuation. Нужны negative fixtures на удалённое предложение, `<strong>слово</strong>.`, scripture button внутри скобок и две ссылки через `;`. Нельзя чинить только final HTML, ослаблять проверку до counts/questions или полагаться на позднюю browser-инъекцию для crawler surface.
+
+Итоговая арифметика: **74 = 43 direct defects + 8 improvements + 23 system lanes**.
