@@ -2,7 +2,7 @@
 
 Дата: 2026-10-26  
 Product anchor: `80440f9ce4bdfca92769330ea79109625c868725`  
-Disposition: **13 новых direct defects + 3 improvements + 3 system lanes; 3 действующих ряда расширены**
+Disposition: **13 новых direct defects + 4 improvements + 3 system lanes; 3 действующих ряда расширены**
 Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 
 ## 1. Итог
@@ -612,3 +612,17 @@ CDP доказывает реальный выбор face. На `/articles/chto-
 Closure существующего ряда расширяется: executable font matrix обязана проверять не только script coverage и отсутствующие exact weights Inter/Source Sans, но все requested Lora weights. Нужно либо добавить настоящие owner-approved 700/800/900 faces/variable range, либо привести tokens к реально существующим уровням и заново утвердить hierarchy. Browser proof должен сопоставлять computed request с CDP face и OS/2 weight; наличие custom family само по себе больше не считается успехом. Массово синтезировать/подменять веса CSS-ом нельзя.
 
 Арифметика не меняется: **69 = 40 direct defects + 7 improvements + 22 system lanes**.
+
+## 29. Продолжение premium imagery: desktop hero получает 600px без HiDPI candidate
+
+Полный browser image pass по 105 final routes на 390/1280 не нашёл ни одного видимого `<img>` с неумышленно искажённым aspect ratio (`object-fit:fill`, отклонение >5%) — это положительный контроль. Но отдельный quality pass обнаружил **13 desktop article heroes**, где выбранный raster уже меньше CSS slot: natural width 600px при painted width 652–661px у двенадцати routes и natural 760px при 800px у Lot. У всех соответствующих `<img>` отсутствуют `srcset` и `sizes`.
+
+На обычном DPR 1 это уже upscale 1.05–1.10×. На DPR 2 браузер по-прежнему загружает тот же 600px source: для representative Krajne hero CSS 652.88×278.66px требует 1305.75×557.31 device pixels, но получает 600×315, то есть лишь **0.459 source pixel на целевой device pixel по ширине**. Те же 600px без responsive candidates подтверждены у восьми Pastor heroes и четырёх Heart/Hard-Texts heroes; Lot выбирает файл `1200w`, который физически имеет только 760×427 и даёт около 0.475 на DPR 2.
+
+Это не отсутствие исходников во всех случаях. Для Krajne рядом лежит 1200×630 WebP с тем же artwork, но reader hero жёстко ссылается на `-600w`. Одноразовая A/B подмена сохраняет CSS geometry 652.88×278.66px и меняет natural source 600×315 → 1200×630; current screenshot SHA-256 `88fa291033cec7d15a2cb27372ab689038bd9bd86d29e50719c755f7f7291d9c`, diagnostic SHA-256 `c5dea92dfa5674be0fa40a1c60d95ec28a56e9ad8cd9172b06b54fee39285786`. Даже 1200px ещё немного меньше 1306-device-pixel target, поэтому A/B локализует owner, но не объявляется готовым fix.
+
+Representative desktop Dark DPR2 controls: Axe 0, broken images 0, page errors 0, LCP 556ms, CLS 0.00978; единственный console error — sandbox `ERR_CONNECTION_CLOSED`. Broken-image и LCP checks закономерно зелёные: изображение доставлено быстро, но недостаточно детально для painted density.
+
+Принимается improvement `GBS-HERO-IMAGE-HIDPI-SOURCE-CAPACITY`. Это measurable premium-quality gap, не WCAG failure и не 13 direct defects. Closure: один responsive-image owner для article hero role с корректными aspect-specific 1x/2x candidates, реальными intrinsic dimensions и `srcset`/`sizes`; social OG asset нельзя автоматически считать подходящим reader crop. Browser должен на 1280 DPR1/DPR2 выбрать source не меньше painted device target (либо явно утверждённый quality floor), сохранить crop/focal point, LCP/CLS, alt, print и отсутствие лишней загрузки большого файла на mobile. Thumbnail usages 600w не надо массово повышать: contract относится к крупному hero slot.
+
+Итоговая арифметика: **70 = 40 direct defects + 8 improvements + 22 system lanes**.
