@@ -2,7 +2,7 @@
 
 Дата: 2026-10-26  
 Product anchor: `80440f9ce4bdfca92769330ea79109625c868725`  
-Disposition: **14 новых direct defects + 4 improvements + 3 system lanes; 3 действующих ряда расширены**
+Disposition: **15 новых direct defects + 4 improvements + 3 system lanes; 3 действующих ряда расширены**
 Evidence: `evidence/2026-10-26-reader-material-glossary-tooltip-audit.jsonl`
 
 ## 1. Итог
@@ -636,3 +636,15 @@ Representative screenshots: desktop SHA-256 `62a230c7d110eefd6b5dfe825beedd684e6
 Принимается один direct defect `GBS-LBCF-REFERENCE-PUNCTUATION-SPACING`, а не семь дефектов по количеству знаков. Closure: удалить пробелы у четырёх source owners и добавить source-level content check для whitespace перед русскими `,.;:!?` после Markdown link/inline boundary; проверить source→built text parity. Нельзя чинить generated HTML или глобально удалять whitespace вокруг ссылок: межсловные пробелы после ссылок нужны.
 
 Итоговая арифметика: **71 = 41 direct defects + 8 improvements + 22 system lanes**.
+
+## 31. Krajne: `<figure>` разрывает `<p>` и оставляет богословский абзац вне projection blocks
+
+Полный browser census 105 final routes проверил non-whitespace direct text nodes у canonical reader root. Результат узкий: **1 route / 1 node**, только `/articles/krajne-li-isporcheno-serdce/`. В `KrajneBody.astro` абзац открывается перед предложением о новом рождении, затем внутрь `<p>` вставлен block-level `<figure>`, а после него до `</p>` стоит ещё 221-символьный богословский текст «При этом важно богословское различение…». HTML parser по спецификации закрывает `<p>` перед `<figure>`; хвост становится непосредственным `Text`-ребёнком `<article>` между `FIGURE` и следующим `P`, а поздний `</p>` уже не возвращает ему семантику абзаца.
+
+Текст реально нарисован и присутствует в полном accessibility tree: desktop Range 382×195.78px, mobile 307×199.16px. Но canonical `GBReaderProjection` перечисляет только `h1–h4,p,li,blockquote,figcaption,dt,dd`; exact sentence отсутствует одновременно в `getTtsSegments()`, `getSearchText()` и `getPrintNodes()`. Это не общий ложный сигнал по text nodes: остальные 104 final routes имеют 0 non-whitespace direct text children у выбранного reader root.
+
+Desktop/mobile Dark DPR2 reduced-motion controls: Axe 0, broken images 0, page errors 0; единственная console запись — известный sandbox `ERR_CONNECTION_CLOSED`. Desktop LCP 508ms, CLS 0.00978. Mobile first-load CLS 0.171 повторяет уже записанный нестабильный cold-load сигнал §30 и не приписывается этой DOM-ошибке. Screenshot SHA-256: desktop `ffc3d4fb7a4c9499a2e89795a29c8ba71f8668df3de068c7f43ba48bca42eb53`, mobile `88aefabb18b83bf57d91693eb7a0bbcef19de803e73042fca8a49dc846c16df3`.
+
+Принимается direct defect `GBS-KRAJNE-FIGURE-PARAGRAPH-ORPHAN-TEXT`. Closure: сделать figure и последующий текст валидными sibling blocks, сохранив намеренную float-композицию через существующий class owner, а не оборачивать orphan runtime-костылём. Добавить source/render guard: block-level figure не вложен в `<p>`, canonical reader roots не имеют substantive direct text nodes, а exact sentence входит в visual DOM, AX и все три projection APIs в правильном порядке. Повторно проверить desktop/mobile, print, search и фактически поданные TTS segments.
+
+Итоговая арифметика: **72 = 42 direct defects + 8 improvements + 22 system lanes**.
