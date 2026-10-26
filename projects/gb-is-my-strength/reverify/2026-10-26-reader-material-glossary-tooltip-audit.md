@@ -551,4 +551,16 @@ Browser proof различает surfaces. В обычном screen mode static 
 
 Closure: не рендерить route HTML небезопасно через raw injection, а распарсить разрешённый authored subset в typed blocks либо хранить dispute как structured data и проецировать title/position/confidence/note отдельными семантическими элементами. Source→screen-panel→print→AX contract должен сравнить порядок и границы Rameses/Sinai/Kadesh, запретить adjacent artifacts `Средняя Поздняя`/`Средняя Позиция`/`Средняя Кочевая`, сохранить authority override Pihahiroth и доказать отсутствие unsafe HTML. Простая пунктуационная замена трёх текущих строк не закрывает projector root.
 
+## 24. Продолжение: no-JS uncertainty card закрывает полную текстовую карту
+
+Отдельный `javaScriptEnabled:false` browser profile опроверг предположение, что наличие static projection означает её доступность sighted no-JS reader. Без JS `MapRuntimeFallback` действительно снимает `.sr-only` с `[data-map-static-projection]`: desktop projection получает 760×8126.38px, mobile — 358×15373.47px; stage скрыт. Но второй route-local `<noscript>` (`.pihahiroth-noscript`) одновременно становится fixed overlay с `z-index:2147483647`, `inset:32px` и `overflow:auto`.
+
+В результате concise Pihahiroth card размером 1216×836px на desktop и 326×780px на mobile постоянно лежит над основной текстовой картой. Hit-testing в центре viewport возвращает overlay, не projection; overlay не имеет close/full-text action и не переполняется сам (`scrollHeight=clientHeight` 834/778). Прокрутка двигает длинный document за fixed layer, поэтому любой фрагмент projection, проходящий через viewport, остаётся под overlay. Отдельная generic no-JS card «Карта Исхода доступна в текстовом режиме» находится после 8–15 тысяч пикселей projection и также перекрывается тем же fixed owner.
+
+Проверены desktop Light 1280×900 и mobile Dark 390×844 с `isMobile:true`, touch и reduced motion. Console/page errors и broken images — 0. Screenshots SHA-256: desktop `5988e4dbaa1486fc23a0e3ee9556a5f27f8c0ff1d728431bff3dd2019dc88fb8`, mobile `af30aa0fb680ea8f03422dcb02113ba1e331d66121d1c7b36437469869019bc2`. Это именно painted stacking failure, не loaded-state inference.
+
+Source contracts противоречат друг другу. `IshodStaticProjection` декларирует, что no-JS обязан получать полный авторский маршрут; `IshodPageHead.astro` глобально фиксирует отдельный Pihahiroth fallback поверх страницы. `astro:audit:ishod` при этом зелёный и отдельно утверждает и static «print/no-JS» projection, и наличие `data-pihahiroth-noscript`, но не компонует их в одном disabled-JS viewport. Принимается `GBS-ISHOD-NOJS-FALLBACK-OWNER-OCCLUSION`.
+
+Closure: один no-JS owner. Pihahiroth uncertainty должна стать частью полной текстовой projection в естественном потоке либо concise fallback должен ссылаться/прокручивать к видимой полной версии без fixed occlusion. Нельзя просто понизить z-index, оставив две конкурирующие fallback narratives и скрытый generic card. Permanent disabled-JS test обязан проверить desktop/mobile Light/Dark: hit-testing и painted geometry полного начала/середины/конца маршрута, достижимую back-navigation, отсутствие duplicate fixed layer, authority uncertainty copy и отсутствие interactive-stage residue.
+
 Product mutation and merge remain outside this audit.
