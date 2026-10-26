@@ -563,4 +563,14 @@ Source contracts противоречат друг другу. `IshodStaticProje
 
 Closure: один no-JS owner. Pihahiroth uncertainty должна стать частью полной текстовой projection в естественном потоке либо concise fallback должен ссылаться/прокручивать к видимой полной версии без fixed occlusion. Нельзя просто понизить z-index, оставив две конкурирующие fallback narratives и скрытый generic card. Permanent disabled-JS test обязан проверить desktop/mobile Light/Dark: hit-testing и painted geometry полного начала/середины/конца маршрута, достижимую back-navigation, отсутствие duplicate fixed layer, authority uncertainty copy и отсутствие interactive-stage residue.
 
+## 25. Продолжение: `Аварон` вместо `Аарон`
+
+Полный source search обнаружил в Ishod story description строку **«Кадеш · Аварон · Финеес»** (`karty/ishod/route.json:76`) и её вручную продублированную research copy. В остальном Product использует нормальную форму **«Аарон» 91 раз в 21 файле**, включая восемь употреблений в том же `route.json`; `Аварон` встречается только в этих двух синхронных копиях. В контексте сюжета 40-летних странствий между Кадешем и Финеесом речь именно об Аароне, а не о другом имени или допустимой transliteration variant.
+
+Browser proof подтверждает publication, а не только source typo. Final static story list содержит «40 лет странствий — Кадеш · Аварон · Финеес»; CDP full AX tree показывает окончание как non-ignored `StaticText`. В print media это painted `<li>` x=22, y=533.5, 1258×21.7px; PDF SHA-256 `17e5be047689bcd85487b37c2f13bf61f9e82ea67330bbd99c222b70bb737b55`. Та же description входит в route story data интерактивной карты.
+
+`article:qa` остаётся зелёным (174 files, 0/0), потому что не сканирует map JSON; `readable-audit` не является словарём имён; `maps:validate` и publication status проверяют shape 11 routes, а не орфографию. Принимается `GBS-ISHOD-AARON-NAME-MISSPELLING`.
+
+Closure: исправить canonical route data и устранить/синхронизировать ручную research copy через объявленного data owner; пересобрать и проверить interactive story, print и AX output. Добавить узкий protected-name fixture для ключевых библейских имён map corpus (`Аарон`, не `Аварон`) с reviewable lexicon, не превращая автоматический spellcheck в безусловный источник истины для редких транслитераций.
+
 Product mutation and merge remain outside this audit.
