@@ -1,0 +1,12 @@
+{"kind":"anchor","product":"gb-is-my-strength","sha":"21dcfdd9f9018607a708c5118383e287ec1a3fed","browser":"Chromium 153","build":{"html":108,"astroPages":104,"checkedFiles":625,"errors":0,"warnings":0,"hints":6}}
+{"kind":"corpus","routes":105,"widths":[390,960,1023,1024,1280,1600],"states":["default","narrow","normal","wide"],"records":2520,"navigationErrors":0,"evaluationErrors":0,"explicitStateMismatches":0,"pageErrors":0,"consoleErrors":0,"brokenImageRecords":0}
+{"kind":"applicable","routes":63,"surfaces":{"articles":47,"baptisty-rossii":10,"hard-texts":6},"shared":56,"teen":7,"criterion":"1023 settled wrap narrow/normal/wide = 672/800/928"}
+{"kind":"geometry","width":390,"shared":{"narrow":312,"normal":358.8,"wide":390},"teen":{"narrow":312,"normal":358.8,"wide":390},"alias":"none"}
+{"kind":"geometry","width":960,"shared":{"narrow":768,"normal":820,"wide":820},"teen":{"narrow":768,"normal":820,"wide":820},"alias":"normal=wide"}
+{"kind":"geometry","width":1023,"shared":{"narrow":672,"normal":800,"wide":928},"teen":{"narrow":672,"normal":800,"wide":928},"alias":"none"}
+{"kind":"geometry","width":1024,"shared":{"routes":56,"narrow":492.7,"normal":492.7,"wide":492.7},"teen":{"routes":7,"narrow":696.7,"normal":696.7,"wide":696.7},"alias":"all states"}
+{"kind":"geometry","width":1280,"shared":{"narrow":672,"normal":702.9,"wide":702.9},"teen":{"narrow":820,"normal":820,"wide":820},"alias":"shared normal=wide; teen all"}
+{"kind":"geometry","width":1600,"shared":{"narrow":672,"normal":760,"wide":760},"teen":{"narrow":820,"normal":820,"wide":820},"alias":"shared normal=wide; teen all"}
+{"kind":"native","routes":["/articles/dzhon-gill-chast-1-chelovek/","/articles/podrostok-za-kadrom-chto-delat-tserkvi/"],"widths":[1023,1024,1280,1600],"clickReloadTransitions":24,"persisted":24,"axeProfiles":8,"axeViolations":0,"brokenImages":0,"pageErrors":0,"consoleErrors":0,"lcpMs":[324,508],"finalReloadCls":[0.000146,0.056773]}
+{"kind":"cls","scope":"63 applicable routes at 1023","narrow":{"median":0.193057,"ge01":62},"normal":{"median":0.123469,"ge01":63},"wide":{"median":0.059413,"ge01":13}}
+{"kind":"ownership","extend":["GBS-READER-MEASURE-DESKTOP-ALIAS-AND-BREAKPOINT-REGRESSION","GBS-SERIES-READER-COMPACT-DESKTOP-CAPACITY-CONFLICT"],"newRows":0,"active":{"direct":46,"improvements":8,"system":22,"total":76}}
