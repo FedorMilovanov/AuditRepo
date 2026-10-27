@@ -20,7 +20,7 @@ This is a triage sequence, not authorization to change Product. All listed branc
 
 ## Class B residuals
 
-Review `class-B-residual-lines.txt` alongside `BRANCH-DISPOSITION.csv`. Line presence is not semantic equivalence. The Baptist-chapter reconciliation file has a small amount of residual narrative/evidence metadata; header cluster and keyboard-scroll branches have actual selector/style/test deltas. None is to be deleted on the basis of the 94.92% aggregate text-presence figure. Map each residual to a current replacement or selectively recover it first.
+Review `class-B-residual-lines.txt` alongside `BRANCH-DISPOSITION.csv`. Line presence is not semantic equivalence. Complete branch-version Markdown blobs for the Baptist-chapter reconciliation and Baptist evidence-language handoff have been preserved under `source-artifacts/`, with exact source hashes. Header-cluster and keyboard-scroll branches have historical selector/style/test changes, but their useful product deltas appear superseded in current main; neither branch should be merged wholesale. Do not delete any class-B ref on the basis of the aggregate text-presence figure. Map each residual to a current replacement or selectively recover it first.
 
 ## Class E: explicit non-merge decisions
 

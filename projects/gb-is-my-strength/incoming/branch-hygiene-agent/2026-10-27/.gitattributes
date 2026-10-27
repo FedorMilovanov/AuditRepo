@@ -1,1 +1,2 @@
 source-artifacts/** -whitespace
+SOURCE-ARTIFACT-MANIFEST.csv text eol=lf

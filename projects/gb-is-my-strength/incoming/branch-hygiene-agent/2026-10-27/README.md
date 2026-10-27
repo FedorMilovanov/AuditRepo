@@ -4,14 +4,14 @@
 
 ## Purpose and scope
 
-This package preserves GitHub compare metadata for 28 non-deleted Product branches in classes B–E, unmatched added lines identified during class-B review, and 22 unique Markdown/JSON evidence blobs copied from seven class-C/D source branches. Every extracted evidence blob was checked with `git hash-object` against its exact Product branch blob SHA. The manifest records source branch/head/path/blob, destination and byte length.
+This package preserves GitHub compare metadata for 28 non-deleted Product branches in classes B–E, unmatched added lines identified during class-B review, and 24 Markdown/JSON evidence blobs copied from seven class-C/D source branches plus two class-B handoff versions that contain residual narrative/provenance not fully present in main. Every extracted evidence blob was checked with `git hash-object` against its exact Product branch blob SHA. The manifest records source branch/head/path/blob, destination and byte length.
 
 ## Files
 
 - `branch-forensic-B-to-E.json`: per-branch head/PR metadata, ancestry distances, file blob classifications, line-presence heuristic and archive-tag checks.
 - `class-B-residual-lines.txt`: added lines not found verbatim in current-main files. Triage aid only; not semantic equivalence proof.
 - `SOURCE-ARTIFACT-MANIFEST.csv`: provenance and exact blob verification for all extracted unique evidence files.
-- `source-artifacts/`: 17 class-C evidence reports/data files and five class-D evidence files. Files are flattened to avoid Windows path limits; original source paths are preserved in the manifest.
+- `source-artifacts/`: 17 class-C evidence reports/data files, five class-D evidence files, and two class-B handoff versions. Files are flattened to avoid Windows path limits; original source paths are preserved in the manifest.
 
 ## Branch classes — not deletion authority
 
@@ -19,6 +19,10 @@ This package preserves GitHub compare metadata for 28 non-deleted Product branch
 - **C — 6 branches / 243 files:** 81 paths absent from main. Audit evidence includes the pastor-series review and reader UI audit with scripts/screenshots. Only 12 Markdown and five JSON unique evidence artifacts are copied here; remaining files stay in Product Git/bundle.
 - **D — 7 branches / 15 files:** nine unique paths. Five branch heads have matching archive tags; two do not. Five Markdown/JSON evidence artifacts are copied here. Product content/code and a temporary workflow are not adopted into AuditRepo.
 - **E — 8 branches / 16 files:** no files are unique-new by path/blob classification, but blobs differ. No Product change is approved from that fact alone.
+
+## Class-B historical handoff variants
+
+Two complete Markdown source blobs have also been preserved as `source-artifacts/B-ch01-authority-reconciliation.md` and `source-artifacts/B-baptist-evidence-language-handoff.md`. The manifest gives each original source path, branch head and exact blob SHA. This retains the full document version, not just unmatched lines; neither Product branch is approved for whole-branch merge.
 
 ## Decisions that must not be accidentally reversed
 
