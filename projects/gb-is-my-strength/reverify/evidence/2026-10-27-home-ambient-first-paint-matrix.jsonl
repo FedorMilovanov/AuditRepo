@@ -1,0 +1,12 @@
+{"kind":"anchor","product":"gb-is-my-strength","sha":"21dcfdd9f9018607a708c5118383e287ec1a3fed","browser":"Chromium 153","build":{"html":108,"astroPages":104,"checkedFiles":625,"errors":0,"warnings":0,"hints":6}}
+{"kind":"matrix","route":"/","widths":[1480,1600,1920],"schemes":["light","dark"],"motions":["normal","reduce"],"fontModes":["cold","warm","failed"],"repeats":3,"runs":108,"pageErrors":0,"brokenImageRuns":0,"schemeMismatches":0,"motionMismatches":0}
+{"kind":"cls","fontMode":"cold","runs":36,"median":0.715086,"min":0,"max":1.207319,"ge01":33,"ge025":32}
+{"kind":"cls","fontMode":"warm","runs":36,"median":0.765374,"min":0.228919,"max":1.101068,"ge01":36,"ge025":35}
+{"kind":"cls","fontMode":"failed","runs":36,"median":0.259143,"min":0.162735,"max":0.425009,"ge01":36,"ge025":21}
+{"kind":"widthMedians","cold":{"1480":0.741999,"1600":0.772358,"1920":0.654051},"warm":{"1480":0.790379,"1600":0.765724,"1920":0.705618},"failed":{"1480":0.236969,"1600":0.250572,"1920":0.314473}}
+{"kind":"parser","profile":"1600 dark reduce cold","timeline":[{"t":201,"ready":"loading","children":4,"height":1005.1},{"t":318,"ready":"loading","children":18,"height":6844.7},{"t":582,"ready":"interactive","children":20,"height":7532.7},{"t":595,"ready":"complete","children":20,"height":7532.7}],"dcl":527.4,"load":586.6}
+{"kind":"parser","profile":"1600 dark reduce failed","timeline":[{"t":194,"ready":"loading","children":4,"height":1089.1},{"t":340,"ready":"loading","children":18,"height":7237.7},{"t":517,"ready":"interactive","children":20,"height":7925.8},{"t":625,"ready":"complete","children":20,"height":7925.8}]}
+{"kind":"geometry","profile":"1600 dark reduce cold","contentHeight":[1005.1,5834.1,7532.7],"phrase1Y":[41.7,242.1,312.6],"phrase2Y":[80.4,466.7,602.6],"phrase3Y":[140.7,816.8,1054.6]}
+{"kind":"native","profileCombinations":36,"firstPhraseTab":36,"firstPhraseEnterOpen":36,"firstPhraseEscapeClose":36,"allPhraseSweep":{"phrases":32,"tab":32,"paintedTooltip":32,"enterOpen":32,"escapeClose":32,"viewportSafe":32}}
+{"kind":"a11y","owner":"GBS-CHROME-LABEL-IN-NAME-MISMATCH","trigger":"native focus-visible","rule":"label-content-name-mismatch","impact":"serious","phrases":32,"violations":32,"reason":"aria-label inserts translation/source prefixes between painted descendant strings"}
+{"kind":"ownership","extend":["GBS-HOME-AMBIENT-FIRST-PAINT-CLS","GBS-CUSTOM-FONT-MATRIX-MIXED-FAMILY-RENDERING","GBS-CHROME-LABEL-IN-NAME-MISMATCH"],"newRows":0,"active":{"direct":46,"improvements":8,"system":22,"total":76}}
