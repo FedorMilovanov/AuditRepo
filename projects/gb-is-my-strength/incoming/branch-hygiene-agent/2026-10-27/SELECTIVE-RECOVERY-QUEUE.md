@@ -22,7 +22,7 @@ The incoming evidence tree contains 24 byte-for-byte Git blobs with SHA-1 proven
 
 ## Remaining work before branch retirement
 
-- Class B: review the 103 residual nonblank added lines in `class-B-residual-lines.txt` individually. The 94.92% textual overlap is a heuristic, not proof of equivalence. The two complete Baptist handoff versions are preserved; the two Bible App contract branches still need their two residual selector lines checked against current #2167 ownership.
+- Class B: review the 103 residual nonblank added lines in `class-B-residual-lines.txt` individually. The 94.92% textual overlap is a heuristic, not proof of equivalence. The two complete Baptist handoff versions are preserved. The two Bible App contract branches are not merely selector differences: both remove assertions that require exactly two chapter CTAs, compact-after-header placement, full-after-prose placement, and a compact first variant. Current main keeps those checks; the old test branch is a regression and must not be merged.
 - Class C: synthesize the pastor-series audit findings into a small number of current, evidence-backed conclusions; re-test reader-audit findings against current Product. Do not bring historical reports directly into active MASTER.
 - Class D: keep metadata decisions raw until registry checks and owner approvals; retain the predecessor apostasy source until #2164's disposition is settled; inspect `agent/app-integration-zero-debt` only as history because #1797 already rejected its old chrome design.
 - Class E: keep the no-merge decisions above; all other differing blobs require file-level replacement proof, not just a branch-age or content-overlap score.

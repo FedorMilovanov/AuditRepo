@@ -19,6 +19,11 @@
 | `lane/metadata-reconcile-tma-pr518-20260908` | Changes owner-sensitive editorial status from `inconsistent-needs-review` to `approved`. | Do not merge; separate explicit editorial decision required. |
 | `fix/genealogy-relation-confidence-localization` | Its small user-facing label mapping has been selectively reimplemented on exact current main in Product PR #2204 (`55e44954ea80d9640016376332fe8ee4f1f9871a`). | Historical branch itself is not the patch; wait for PR #2204 checks. |
 
+
+## Class-B Bible App browser-contract regression
+
+Both `agent/bible-app-deep-playwright-audit-20260819` and `agent/bible-app-deep-playwright-r2-20260819` point to the same weakened `scripts/bible-app-browser-contract.mjs` blob. Relative to current main they remove checks for two chapter CTAs, compact CTA placement immediately after the article header, full CTA placement after the prose, and the first CTA variant being `compact`. The current main contract still asserts all four conditions. This is a test-coverage regression, not missing application code; do not merge either branch. Their exact archive tags match their heads, and the refs remain preserved until owner-approved cleanup.
+
 ## Evidence inventory
 
 `BRANCH-DISPOSITION.csv` now records a specific decision for each of 28 branches, while `branch-forensic-B-to-E.json` stays the raw compare snapshot. `SOURCE-ARTIFACT-MANIFEST.csv` records 24 source blobs checked byte-for-byte against Git object SHA-1. The class B line file is a review aid only; textual presence does not prove semantic equivalence.
