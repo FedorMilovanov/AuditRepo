@@ -1,0 +1,3582 @@
+[
+    {
+        "class":  "B",
+        "branch":  "reconcile/baptist-ch01-authority-salvage-20260924",
+        "listed_pr":  "#2142",
+        "head_sha":  "71a4f5290c269e4130c310b62bae41c940662d62",
+        "api_ahead_by":  1,
+        "api_behind_by":  331,
+        "api_merge_base":  "335ff0c3cea2127b8a3ed9509cc98ed87b47a867",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  1,
+        "tip_identical_count":  0,
+        "unique_new_count":  0,
+        "differs_count":  1,
+        "files":  [
+                      {
+                          "path":  "baptisty-rossii/research/146-ch01-pre-baptist-origins-authority-reconciliation-2026-09-11.md",
+                          "status":  "added",
+                          "branch_blob":  "d3272f65e70795f5e0a6c811f2cd9a6c3bf025a3",
+                          "main_blob":  "096b5b033ed5a3a56578fb8b7fee66c91a6d5073",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  161,
+                          "added_lines_present_main":  156,
+                          "presence_pct":  96.89
+                      }
+                  ]
+    },
+    {
+        "class":  "B",
+        "branch":  "agent/bible-app-deep-playwright-audit-20260819",
+        "listed_pr":  "#1729",
+        "head_sha":  "3899f3d0decdc764b4b0eec99a765de298c389fb",
+        "api_ahead_by":  6,
+        "api_behind_by":  1395,
+        "api_merge_base":  "71ff491c7808dc7089be80e8399f6f2879055629",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "3899f3d0decdc764b4b0eec99a765de298c389fb",
+        "archive_tag_matches_head":  true,
+        "file_count":  3,
+        "tip_identical_count":  2,
+        "unique_new_count":  0,
+        "differs_count":  1,
+        "files":  [
+                      {
+                          "path":  ".github/workflows/bible-app-browser-contract.yml",
+                          "status":  "added",
+                          "branch_blob":  "a5c7e6f3770b0805a4193d5fa493f8cf6a6f6d9c",
+                          "main_blob":  "a5c7e6f3770b0805a4193d5fa493f8cf6a6f6d9c",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  97,
+                          "added_lines_present_main":  97,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "scripts/bible-app-browser-adjudicate.mjs",
+                          "status":  "added",
+                          "branch_blob":  "61bb4c4643a0036be0183b33d05a01e973f705da",
+                          "main_blob":  "61bb4c4643a0036be0183b33d05a01e973f705da",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  74,
+                          "added_lines_present_main":  74,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "scripts/bible-app-browser-contract.mjs",
+                          "status":  "added",
+                          "branch_blob":  "0b2173921ad9c22a5bc40aaa85078cc7f8da3591",
+                          "main_blob":  "ab6d7324b1cebf22d128668b882ac18c24b9fb5e",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  323,
+                          "added_lines_present_main":  321,
+                          "presence_pct":  99.38
+                      }
+                  ]
+    },
+    {
+        "class":  "B",
+        "branch":  "agent/bible-app-deep-playwright-r2-20260819",
+        "listed_pr":  "#1742",
+        "head_sha":  "2ed8512e59e0abe88c977eac51ed6c070885e9ec",
+        "api_ahead_by":  2,
+        "api_behind_by":  1394,
+        "api_merge_base":  "6fde79ba3bea75572e3710138d6560b38805fe3c",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "2ed8512e59e0abe88c977eac51ed6c070885e9ec",
+        "archive_tag_matches_head":  true,
+        "file_count":  4,
+        "tip_identical_count":  2,
+        "unique_new_count":  0,
+        "differs_count":  2,
+        "files":  [
+                      {
+                          "path":  ".github/workflows/bible-app-browser-contract.yml",
+                          "status":  "added",
+                          "branch_blob":  "a5c7e6f3770b0805a4193d5fa493f8cf6a6f6d9c",
+                          "main_blob":  "a5c7e6f3770b0805a4193d5fa493f8cf6a6f6d9c",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  97,
+                          "added_lines_present_main":  97,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "scripts/bible-app-browser-adjudicate.mjs",
+                          "status":  "added",
+                          "branch_blob":  "61bb4c4643a0036be0183b33d05a01e973f705da",
+                          "main_blob":  "61bb4c4643a0036be0183b33d05a01e973f705da",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  74,
+                          "added_lines_present_main":  74,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "scripts/bible-app-browser-contract.mjs",
+                          "status":  "added",
+                          "branch_blob":  "0b2173921ad9c22a5bc40aaa85078cc7f8da3591",
+                          "main_blob":  "ab6d7324b1cebf22d128668b882ac18c24b9fb5e",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  323,
+                          "added_lines_present_main":  321,
+                          "presence_pct":  99.38
+                      },
+                      {
+                          "path":  "src/pages/index.astro",
+                          "status":  "modified",
+                          "branch_blob":  "a81cfd29f66b20e084c05f403d706cc369b1940a",
+                          "main_blob":  "dba91b0d51d84d00d3541d493cd6687386177bdb",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  4,
+                          "added_lines_present_main":  4,
+                          "presence_pct":  100
+                      }
+                  ]
+    },
+    {
+        "class":  "B",
+        "branch":  "codex/baptisty-spravochnik-evidence-language",
+        "listed_pr":  "#1766",
+        "head_sha":  "528d9e5d5de4689cd558f948659d278c4fc23b13",
+        "api_ahead_by":  5,
+        "api_behind_by":  1370,
+        "api_merge_base":  "79d08053ca6c9f95ad6ab797c3ab045656f4e31c",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "528d9e5d5de4689cd558f948659d278c4fc23b13",
+        "archive_tag_matches_head":  true,
+        "file_count":  5,
+        "tip_identical_count":  0,
+        "unique_new_count":  0,
+        "differs_count":  5,
+        "files":  [
+                      {
+                          "path":  "audit/BAPTISTY-ROSSII-EVIDENCE-LANGUAGE-HANDOFF-2026-08-20.md",
+                          "status":  "added",
+                          "branch_blob":  "cfd5b201849f007a0f2cda3ee47a03a2c713e062",
+                          "main_blob":  "736ea2c820365a8cc0cb821ae8d2a89049c9ace5",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  188,
+                          "added_lines_present_main":  172,
+                          "presence_pct":  91.49
+                      },
+                      {
+                          "path":  "data/search-manifest.json",
+                          "status":  "modified",
+                          "branch_blob":  "ba76872063edd251653638ecfb6cf608044eea31",
+                          "main_blob":  "048f5464e055adced41ea6ea01aa31424b281d0c",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "feed.xml",
+                          "status":  "modified",
+                          "branch_blob":  "136aca3b2cf4332d4daefd3ae79c41117344898e",
+                          "main_blob":  "2a4c95914ca0f00f5b7125c9474d4407d9927340",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiSpravochnikBody.astro",
+                          "status":  "modified",
+                          "branch_blob":  "be0e1623a5f21c3c498005e8aefb70e6aacf064b",
+                          "main_blob":  "99af07506f7ec48c4091f387dd25ac639e43552f",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  7,
+                          "added_lines_present_main":  7,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiSpravochnikPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "6a3fa6aa0b43defa6065fcb53fc1426e02523afc",
+                          "main_blob":  "5459cdd9f69773e8a267d0dea84211ea46a3c2d5",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  5,
+                          "added_lines_present_main":  5,
+                          "presence_pct":  100
+                      }
+                  ]
+    },
+    {
+        "class":  "B",
+        "branch":  "arena/header-cluster-audit-20261002",
+        "listed_pr":  "#2158",
+        "head_sha":  "339bf2e2b646c2db2315423e379d2af5043cc65b",
+        "api_ahead_by":  1,
+        "api_behind_by":  291,
+        "api_merge_base":  "888af5d24d41a370130ce210d82140d86ac1c96b",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  5,
+        "tip_identical_count":  1,
+        "unique_new_count":  0,
+        "differs_count":  4,
+        "files":  [
+                      {
+                          "path":  ".github/workflows/search-modal-contract.yml",
+                          "status":  "modified",
+                          "branch_blob":  "069a945c6014776270be4ca8dc53f286ef1f6388",
+                          "main_blob":  "069a945c6014776270be4ca8dc53f286ef1f6388",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  4,
+                          "added_lines_present_main":  4,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "scripts/header-cluster-browser-contract.mjs",
+                          "status":  "added",
+                          "branch_blob":  "7996755302eaa3a5f1a46206e55fa1419c5f9108",
+                          "main_blob":  "3d417e3c3c45c772083e6a777f399825a9926d31",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  213,
+                          "added_lines_present_main":  195,
+                          "presence_pct":  91.55
+                      },
+                      {
+                          "path":  "src/components/home/HomePageChrome.astro",
+                          "status":  "modified",
+                          "branch_blob":  "982ec31c614e03b76334f4bd9c5dc2d925e4f9fa",
+                          "main_blob":  "a70f930b49a737d75c62da90f3d482a00a9faa21",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/home/HomePageChromeStyles.astro",
+                          "status":  "modified",
+                          "branch_blob":  "cca5d3b0413a0b0623becb9d905e46a2c8b1dccd",
+                          "main_blob":  "da2c16cfe1ae6e5fd1977e00180f1dbdc997b00e",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  38,
+                          "added_lines_present_main":  12,
+                          "presence_pct":  31.58
+                      },
+                      {
+                          "path":  "src/components/ui/Header.astro",
+                          "status":  "modified",
+                          "branch_blob":  "fc21960e22a9ac25c477e4a3d3962b2f37bac31d",
+                          "main_blob":  "afe38fe781165d715b41a325628cdf1f3ba1b2c3",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  73,
+                          "added_lines_present_main":  67,
+                          "presence_pct":  91.78
+                      }
+                  ]
+    },
+    {
+        "class":  "B",
+        "branch":  "arena/kod-da-vinchi-timeline-keyboard-20261002",
+        "listed_pr":  "#2162",
+        "head_sha":  "45a3ee760c31a118fce378acd4dd4a3d6652b4ba",
+        "api_ahead_by":  1,
+        "api_behind_by":  292,
+        "api_merge_base":  "69d3aa13361063a6aaa6272553c4874866829fa0",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  1,
+        "tip_identical_count":  0,
+        "unique_new_count":  0,
+        "differs_count":  1,
+        "files":  [
+                      {
+                          "path":  "src/components/article-pilots/kod-da-vinchi/KodDaVinchiSectionCanon.astro",
+                          "status":  "modified",
+                          "branch_blob":  "9d791161cfae8d23437564627ad3b23c46468469",
+                          "main_blob":  "bc0e3ecbfa1a566ae217b894ad2bc0bcfcd091a4",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  9,
+                          "added_lines_present_main":  8,
+                          "presence_pct":  88.89
+                      }
+                  ]
+    },
+    {
+        "class":  "B",
+        "branch":  "arena/01a0f415-gb-is-my-strength",
+        "listed_pr":  "#2153",
+        "head_sha":  "5517a8c5382449c20ebf836284585da26b63f8c6",
+        "api_ahead_by":  6,
+        "api_behind_by":  293,
+        "api_merge_base":  "d586aa63f02b569cfe050a63cc9078c044375d8d",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  9,
+        "tip_identical_count":  3,
+        "unique_new_count":  0,
+        "differs_count":  6,
+        "files":  [
+                      {
+                          "path":  "audit/BRANCH-CLEANUP-DISPOSITION-2026-09-29.md",
+                          "status":  "modified",
+                          "branch_blob":  "ff5a7ea732da3931454e407b3c9af5a03b79e1d8",
+                          "main_blob":  "ff5a7ea732da3931454e407b3c9af5a03b79e1d8",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  171,
+                          "added_lines_present_main":  171,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "data/route-search-policy.json",
+                          "status":  "modified",
+                          "branch_blob":  "8929a4b7eeaeebea4b7afd283723c0778c21061a",
+                          "main_blob":  "fb62ad48804b24589b5b2e4b153cede8a9b44c97",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  11,
+                          "added_lines_present_main":  11,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "data/scripture-search-index.json",
+                          "status":  "modified",
+                          "branch_blob":  "506e3da8020eaf566d72bd5f5b9bb3a3a43f28e3",
+                          "main_blob":  "0e0cce95aa3ea00da9096b5c8dd72c7fcc6cd5db",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  114,
+                          "added_lines_present_main":  94,
+                          "presence_pct":  82.46
+                      },
+                      {
+                          "path":  "data/search-manifest.json",
+                          "status":  "modified",
+                          "branch_blob":  "bfa6e11080ee7eef18ad310a7c3fe0710b46e9e3",
+                          "main_blob":  "048f5464e055adced41ea6ea01aa31424b281d0c",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  18,
+                          "added_lines_present_main":  14,
+                          "presence_pct":  77.78
+                      },
+                      {
+                          "path":  "feed.xml",
+                          "status":  "modified",
+                          "branch_blob":  "a5c0816554136ce9d324e5f2359602be5ff5f82c",
+                          "main_blob":  "2a4c95914ca0f00f5b7125c9474d4407d9927340",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  11,
+                          "added_lines_present_main":  8,
+                          "presence_pct":  72.73
+                      },
+                      {
+                          "path":  "scripts/build-scripture-occurrence-index.mjs",
+                          "status":  "modified",
+                          "branch_blob":  "4482700f701ebd8a1c442e890d5db174bafb6a6e",
+                          "main_blob":  "4482700f701ebd8a1c442e890d5db174bafb6a6e",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  5,
+                          "added_lines_present_main":  5,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "scripts/search-manifest-policy-normalizer-core.js",
+                          "status":  "modified",
+                          "branch_blob":  "fb9cec13bb966fd09fd8eac234059a11e599de3c",
+                          "main_blob":  "fb9cec13bb966fd09fd8eac234059a11e599de3c",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  7,
+                          "added_lines_present_main":  7,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "sitemap.xml",
+                          "status":  "modified",
+                          "branch_blob":  "f63f10f0e650b586493666fcd57523593fd27624",
+                          "main_blob":  "bfc5c9cd47ab334ee29114fc940c36bd85a58afd",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  12,
+                          "added_lines_present_main":  11,
+                          "presence_pct":  91.67
+                      },
+                      {
+                          "path":  "src/layouts/ArticleLayout.astro",
+                          "status":  "modified",
+                          "branch_blob":  "f9555aacd2971efb458da0f3a38c54059783c71e",
+                          "main_blob":  "23f96e1f077dad2507459b80840007d72852bec8",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  23,
+                          "added_lines_present_main":  23,
+                          "presence_pct":  100
+                      }
+                  ]
+    },
+    {
+        "class":  "C",
+        "branch":  "deps/npm-non-major-20260906-r2",
+        "listed_pr":  "#1827",
+        "head_sha":  "7131246133919e68ecb6ca72622219e2d5df17a4",
+        "api_ahead_by":  4,
+        "api_behind_by":  1332,
+        "api_merge_base":  "69c0520bcac095576399cbb9e926f9f1280c7665",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  3,
+        "tip_identical_count":  1,
+        "unique_new_count":  0,
+        "differs_count":  2,
+        "files":  [
+                      {
+                          "path":  "package-lock.json",
+                          "status":  "modified",
+                          "branch_blob":  "e5a689734c9378a6ad79ba9bf7587e64f09fd616",
+                          "main_blob":  "4c1059a2a9991c44b7281e053a0f1cfb83ee27db",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  392,
+                          "added_lines_present_main":  187,
+                          "presence_pct":  47.7
+                      },
+                      {
+                          "path":  "package.json",
+                          "status":  "modified",
+                          "branch_blob":  "be6cf7c10e888a3c6689996f47cd68154c6727c5",
+                          "main_blob":  "b46deee5d50ca7ef8107fa7b386c4951899ed38d",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  4,
+                          "added_lines_present_main":  4,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "scripts/astro7-satteri-contract.mjs",
+                          "status":  "modified",
+                          "branch_blob":  "56f0e0d61af229e1c4b958827569eabe5d7c0433",
+                          "main_blob":  "56f0e0d61af229e1c4b958827569eabe5d7c0433",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  8,
+                          "added_lines_present_main":  8,
+                          "presence_pct":  100
+                      }
+                  ]
+    },
+    {
+        "class":  "C",
+        "branch":  "repair/source-surface-audit-completeness-20260906",
+        "listed_pr":  "#1828",
+        "head_sha":  "38ded860973285c5a7379c8e3a0ed137e09d4d35",
+        "api_ahead_by":  1,
+        "api_behind_by":  1332,
+        "api_merge_base":  "69c0520bcac095576399cbb9e926f9f1280c7665",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "38ded860973285c5a7379c8e3a0ed137e09d4d35",
+        "archive_tag_matches_head":  true,
+        "file_count":  3,
+        "tip_identical_count":  1,
+        "unique_new_count":  0,
+        "differs_count":  2,
+        "files":  [
+                      {
+                          "path":  "scripts/cache-bust-assets.js",
+                          "status":  "modified",
+                          "branch_blob":  "c076a6766a522e58863b51512615e003de1482bc",
+                          "main_blob":  "7b737d67c5e61439d3f38510281ef500b0956eb1",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  56,
+                          "added_lines_present_main":  6,
+                          "presence_pct":  10.71
+                      },
+                      {
+                          "path":  "scripts/lib/audit-pro-source-corpus.js",
+                          "status":  "modified",
+                          "branch_blob":  "d95d7827df49c568ae02a9c824eabeb9992265db",
+                          "main_blob":  "d95d7827df49c568ae02a9c824eabeb9992265db",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  24,
+                          "added_lines_present_main":  24,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "scripts/lib/product-source-surfaces.js",
+                          "status":  "added",
+                          "branch_blob":  "024132f85c126a2aa58eea4dc5de0b2473044b3d",
+                          "main_blob":  "dbfa70de1324024b10b25b873daa62fed0dbbf0f",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  263,
+                          "added_lines_present_main":  217,
+                          "presence_pct":  82.51
+                      }
+                  ]
+    },
+    {
+        "class":  "C",
+        "branch":  "arena/01a0a1b4-gb-is-my-strength",
+        "listed_pr":  "#2058",
+        "head_sha":  "b8c7f2c07bb5c88a3936cd5b03635d807727a7ed",
+        "api_ahead_by":  4,
+        "api_behind_by":  490,
+        "api_merge_base":  "02e182ecea5591880418b4c8fd494ccdfa1849f3",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "b8c7f2c07bb5c88a3936cd5b03635d807727a7ed",
+        "archive_tag_matches_head":  true,
+        "file_count":  9,
+        "tip_identical_count":  1,
+        "unique_new_count":  1,
+        "differs_count":  7,
+        "files":  [
+                      {
+                          "path":  "audit/PASTOR-SERIES-PRODUCT-AUDIT-2026-09-15.md",
+                          "status":  "added",
+                          "branch_blob":  "20c29d05d153745dc8399ea216f27240ab794738",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  702,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "research/pastor-series/CONTENT-CLEARANCE-II-IX.md",
+                          "status":  "modified",
+                          "branch_blob":  "c0bfc505279bb12effff1e313459b9254c528ba4",
+                          "main_blob":  "f230181c8b6e1f7165bb84c4db145761e62c7b66",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  7,
+                          "added_lines_present_main":  7,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "research/pastor-series/MASTER-PLAN.md",
+                          "status":  "modified",
+                          "branch_blob":  "7f4ce53cd180a1c1acc2744273bc4fd512d33522",
+                          "main_blob":  "f8ab3664ff915e2baaaa57b9b411ec436a90e8ba",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  17,
+                          "added_lines_present_main":  3,
+                          "presence_pct":  17.65
+                      },
+                      {
+                          "path":  "research/pastor-series/PROMOTION-RECEIPT-II-IX.md",
+                          "status":  "added",
+                          "branch_blob":  "90d40555b58504f81cb3add2410328065e20964c",
+                          "main_blob":  "90173c3f459f591c7fb8f2d4645b07ffd279d57d",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  284,
+                          "added_lines_present_main":  284,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "research/pastor-series/SOURCE-RECONCILIATION-II-IX.md",
+                          "status":  "modified",
+                          "branch_blob":  "996cabc2b799785e0a8c5c9652d5ff1d3939b053",
+                          "main_blob":  "996cabc2b799785e0a8c5c9652d5ff1d3939b053",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  7,
+                          "added_lines_present_main":  7,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/article-pilots/_shared/series/pastorSeriesConfig.ts",
+                          "status":  "modified",
+                          "branch_blob":  "75863f18bb5cb24c69f218a1141a596e03b932f4",
+                          "main_blob":  "98cefe6bd7e9b37848c064d84cdd1d6444f20f82",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  141,
+                          "added_lines_present_main":  77,
+                          "presence_pct":  54.61
+                      },
+                      {
+                          "path":  "src/components/article-pilots/pastor-series/PastorSeriesArticlePage.astro",
+                          "status":  "modified",
+                          "branch_blob":  "d34c356f80bdccb23180fe47bda094050a9c4610",
+                          "main_blob":  "2a8ffe81ffb7a375510a27d74c6c28428a836b14",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  5,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  20
+                      },
+                      {
+                          "path":  "src/content/articles/sem-tipov-razlichenie-uchiteley.mdx",
+                          "status":  "modified",
+                          "branch_blob":  "78bf36dac13581d80ad259daac54cbc7330e223e",
+                          "main_blob":  "f9dc36e2cc057fcd9bb0319aa2b78a98f1de31f9",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/content/articles/teksty-pisaniya-kotorymi-manipuliruyut.mdx",
+                          "status":  "modified",
+                          "branch_blob":  "4d50c537bc361283933f7f7c2b4b0b322d57ab20",
+                          "main_blob":  "8bb2d84ebd7c1c46f856e36c8deb5a2ea9be299d",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      }
+                  ]
+    },
+    {
+        "class":  "C",
+        "branch":  "fix/npm-non-major-security-20260907",
+        "listed_pr":  "no PR",
+        "head_sha":  "77fa9fc1e747594eebfb944a8be5746f17a98aca",
+        "api_ahead_by":  5,
+        "api_behind_by":  1332,
+        "api_merge_base":  "69c0520bcac095576399cbb9e926f9f1280c7665",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  3,
+        "tip_identical_count":  1,
+        "unique_new_count":  0,
+        "differs_count":  2,
+        "files":  [
+                      {
+                          "path":  "package-lock.json",
+                          "status":  "modified",
+                          "branch_blob":  "0d5a4e0b90e522898c916e67199184ada7fdd65c",
+                          "main_blob":  "4c1059a2a9991c44b7281e053a0f1cfb83ee27db",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  418,
+                          "added_lines_present_main":  210,
+                          "presence_pct":  50.24
+                      },
+                      {
+                          "path":  "package.json",
+                          "status":  "modified",
+                          "branch_blob":  "be6cf7c10e888a3c6689996f47cd68154c6727c5",
+                          "main_blob":  "b46deee5d50ca7ef8107fa7b386c4951899ed38d",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  4,
+                          "added_lines_present_main":  4,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "scripts/astro7-satteri-contract.mjs",
+                          "status":  "modified",
+                          "branch_blob":  "56f0e0d61af229e1c4b958827569eabe5d7c0433",
+                          "main_blob":  "56f0e0d61af229e1c4b958827569eabe5d7c0433",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  8,
+                          "added_lines_present_main":  8,
+                          "presence_pct":  100
+                      }
+                  ]
+    },
+    {
+        "class":  "C",
+        "branch":  "arena/01a0a1b2-gb-is-my-strength",
+        "listed_pr":  "no PR",
+        "head_sha":  "b51452e7e6f5dcfe2225623750a926499c7e83b1",
+        "api_ahead_by":  18,
+        "api_behind_by":  492,
+        "api_merge_base":  "3b40889e34033b9b8e1f326fc81746b15c71e302",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "b51452e7e6f5dcfe2225623750a926499c7e83b1",
+        "archive_tag_matches_head":  true,
+        "file_count":  73,
+        "tip_identical_count":  36,
+        "unique_new_count":  10,
+        "differs_count":  27,
+        "files":  [
+                      {
+                          "path":  "articles/20-antisovetov-pastoru/index.html",
+                          "status":  "modified",
+                          "branch_blob":  "988c99aa541f817dc7338dde2b13b65b2161d80a",
+                          "main_blob":  "2660723ed320243067af8ceb165e1dc93586cf54",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  28,
+                          "added_lines_present_main":  3,
+                          "presence_pct":  10.71
+                      },
+                      {
+                          "path":  "audit/PASTOR-SERIES-AUDIT-2026-09-14.md",
+                          "status":  "added",
+                          "branch_blob":  "fac8597d4697ad5800f20f45d8aed74554fff431",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  313,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "audit/PASTOR-SERIES-AUDIT-INDEX-2026-09-15.md",
+                          "status":  "added",
+                          "branch_blob":  "9a1b8d53bd38bf0e07ebdf8421e9619baa943669",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  98,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "audit/PASTOR-SERIES-BACKLOG-2026-09-15.md",
+                          "status":  "added",
+                          "branch_blob":  "7ff67714c0a8a0f0951b1ddc7fffb4fecfa2c806",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  758,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "audit/PASTOR-SERIES-DEEP-AUDIT-2026-09-14.md",
+                          "status":  "added",
+                          "branch_blob":  "ff520c1766274f66c70a048f0e05d34070c89a68",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  281,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "audit/PASTOR-SERIES-DEEP-AUDIT-2026-09-15-DEEPENING.md",
+                          "status":  "added",
+                          "branch_blob":  "f6722af6c550ce29dab47b1ddbd0483dec4d743d",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  167,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "audit/PASTOR-SERIES-DEEP-AUDIT-2026-09-15-PASS3.md",
+                          "status":  "added",
+                          "branch_blob":  "543e59f39880d93bf85877703e0019dd402c8fcc",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  86,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "audit/PASTOR-SERIES-PASS4-COAGENT-VERIFICATION-2026-09-15.md",
+                          "status":  "added",
+                          "branch_blob":  "46d2ac56eb7dd7ffb582ce329811d3f6566a7282",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  118,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "audit/PASTOR-SERIES-PASS5-BUILD-AND-DIST-VERIFICATION-2026-09-15.md",
+                          "status":  "added",
+                          "branch_blob":  "eb5bdb9c884c03e6f8ff6580b4c707c5d8304232",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  71,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "audit/PASTOR-SERIES-PASS6-CONTRACTS-AND-SEMANTICS-2026-09-15.md",
+                          "status":  "added",
+                          "branch_blob":  "87f9d70c0ac51eca62d363e919b9981ecfdb24fb",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  69,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "audit/PASTOR-SERIES-WAVE1-TRANSACTION-PLAN-2026-09-15.md",
+                          "status":  "added",
+                          "branch_blob":  "3e9c1ffb42c80dfe45805fa4ad26b1eaf569ce2f",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  217,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "css/series-manuscript.css",
+                          "status":  "modified",
+                          "branch_blob":  "7dda2bc35bf9d53ed4672bb70a14e38e6c173371",
+                          "main_blob":  "d76788799c9cae575e27c3c0b2154a8b4882bc01",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  28,
+                          "added_lines_present_main":  27,
+                          "presence_pct":  96.43
+                      },
+                      {
+                          "path":  "css/site.css",
+                          "status":  "modified",
+                          "branch_blob":  "714b8a7f7a5cbfab4d7e4013be39ce98efc2f60f",
+                          "main_blob":  "e8a364bf80c42bb06ea59e898edc92d571dd4dea",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  8,
+                          "added_lines_present_main":  8,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "data/diotrophes-wave11-faithful-witness-manifest.json",
+                          "status":  "modified",
+                          "branch_blob":  "58174d5262ae225f937b809b4af2fde1fb238bd9",
+                          "main_blob":  "58174d5262ae225f937b809b4af2fde1fb238bd9",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  36,
+                          "added_lines_present_main":  36,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "data/editorial-metadata-supplements/diotrophes-wave12.json",
+                          "status":  "modified",
+                          "branch_blob":  "e6450af3c4524391a920b0bcf783ad770e7c36a4",
+                          "main_blob":  "11356df197ecb72bdf61b57b00c67a9d031a3e1b",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "data/editorial-metadata-supplements/nagornaya-native-chapters.json",
+                          "status":  "modified",
+                          "branch_blob":  "f8fa0530ebdb9db2ec324a1352e16745d22fb597",
+                          "main_blob":  "3dae6f5a4e4a4e68395264d5797254392e00eb77",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  10,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "data/editorial-metadata-supplements/pastor-series-ii-ix-20260908.json",
+                          "status":  "modified",
+                          "branch_blob":  "48baff7d929fbd3b9dd59e51ca5dc5d631c89ece",
+                          "main_blob":  "48baff7d929fbd3b9dd59e51ca5dc5d631c89ece",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  96,
+                          "added_lines_present_main":  96,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "data/editorial-metadata-supplements/teen-series-20260910.json",
+                          "status":  "modified",
+                          "branch_blob":  "83a9455080150db21263c1ad5c11465f01797f10",
+                          "main_blob":  "d13493ecc90ad70c8a5066ae33d3e2db91deb41d",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  84,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "data/editorial-metadata.json",
+                          "status":  "modified",
+                          "branch_blob":  "97b13c82177815b76116ac06e693568da3ea866a",
+                          "main_blob":  "b70026ca01350b3ba20cd9d82996d0236efcce69",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  76,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  1.32
+                      },
+                      {
+                          "path":  "data/glossary.json",
+                          "status":  "modified",
+                          "branch_blob":  "6d87423fadf276aeef1bb1110abe7753f7c1fbe5",
+                          "main_blob":  "6d87423fadf276aeef1bb1110abe7753f7c1fbe5",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  71,
+                          "added_lines_present_main":  71,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "data/links-graph.json",
+                          "status":  "modified",
+                          "branch_blob":  "71a308ff9bc6a4950518221d217234fe4a529f1b",
+                          "main_blob":  "0d3855e76513c348238682ac27361d7c0c003119",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  191,
+                          "added_lines_present_main":  112,
+                          "presence_pct":  58.64
+                      },
+                      {
+                          "path":  "data/route-profiles/articles-20-antisovetov-pastoru.json",
+                          "status":  "modified",
+                          "branch_blob":  "3bfb0a5e7283ac10f900c997ff5d89cfb920f574",
+                          "main_blob":  "3bfb0a5e7283ac10f900c997ff5d89cfb920f574",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  11,
+                          "added_lines_present_main":  11,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "data/search-manifest.json",
+                          "status":  "modified",
+                          "branch_blob":  "5d3a7a4631972fd8dd8345135bc458cae69563a4",
+                          "main_blob":  "048f5464e055adced41ea6ea01aa31424b281d0c",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  27,
+                          "added_lines_present_main":  18,
+                          "presence_pct":  66.67
+                      },
+                      {
+                          "path":  "data/series.json",
+                          "status":  "modified",
+                          "branch_blob":  "234bf006127c31e74cddd943765cf963e678b3ee",
+                          "main_blob":  "234bf006127c31e74cddd943765cf963e678b3ee",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  8,
+                          "added_lines_present_main":  8,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "data/strategic-map-antisovetov.json",
+                          "status":  "removed",
+                          "branch_blob":  null,
+                          "main_blob":  "4510e4432535bb198b2eaaeb2cf66bf3398891ee",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "feed-pastor-series.xml",
+                          "status":  "modified",
+                          "branch_blob":  "41d740dd0553f97f38dec70450b40baba274a661",
+                          "main_blob":  "58f2a96f5cfa01b4fe0fd0836d0d377cc7064d56",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  74,
+                          "added_lines_present_main":  31,
+                          "presence_pct":  41.89
+                      },
+                      {
+                          "path":  "feed.xml",
+                          "status":  "modified",
+                          "branch_blob":  "978c6fc30964064ddf4d0ec8487c9ed645e0e90e",
+                          "main_blob":  "2a4c95914ca0f00f5b7125c9474d4407d9927340",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  9,
+                          "added_lines_present_main":  8,
+                          "presence_pct":  88.89
+                      },
+                      {
+                          "path":  "images/pastor-series/anatomiya-600w.webp",
+                          "status":  "added",
+                          "branch_blob":  "e9231065704afc17df842dcc5cc0181554fc7c22",
+                          "main_blob":  "e9231065704afc17df842dcc5cc0181554fc7c22",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/disciplina-600w.webp",
+                          "status":  "added",
+                          "branch_blob":  "6920def79c2a77febe5e445cac8ef11775ec39c8",
+                          "main_blob":  "6920def79c2a77febe5e445cac8ef11775ec39c8",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/kogda-uhodit-600w.webp",
+                          "status":  "added",
+                          "branch_blob":  "5a55892aac6cadb56e199859b7542d01df916028",
+                          "main_blob":  "5a55892aac6cadb56e199859b7542d01df916028",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/nesovershennyy-600w.webp",
+                          "status":  "added",
+                          "branch_blob":  "e33761c8635d1ef6da4ba1430ee4a63b77c655ca",
+                          "main_blob":  "e33761c8635d1ef6da4ba1430ee4a63b77c655ca",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/og-anatomiya-padeniya-pyat-stadiy.webp",
+                          "status":  "added",
+                          "branch_blob":  "d72e782434db2015720fc8d5d047c7e1f2468af2",
+                          "main_blob":  "d72e782434db2015720fc8d5d047c7e1f2468af2",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/og-cerkovnaya-disciplina-vlast-granicy-zashchita.webp",
+                          "status":  "added",
+                          "branch_blob":  "d4f77edcfc8ec86c4120a7a6682926b91b80423a",
+                          "main_blob":  "d4f77edcfc8ec86c4120a7a6682926b91b80423a",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/og-kogda-uhodit-kogda-ostavatsya.webp",
+                          "status":  "added",
+                          "branch_blob":  "920b91c2803c7d8f82b2ed456e3230018bde3c74",
+                          "main_blob":  "920b91c2803c7d8f82b2ed456e3230018bde3c74",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/og-nesovershennyy-chelovek-v-nesovershennoy-cerkvi.webp",
+                          "status":  "added",
+                          "branch_blob":  "b6092a7fd46e869cb9c7d7906a169c7e129647cc",
+                          "main_blob":  "b6092a7fd46e869cb9c7d7906a169c7e129647cc",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/og-priznaki-zdorovoy-cerkvi.webp",
+                          "status":  "added",
+                          "branch_blob":  "4bd43025a2135faab7b851b4b7df67172944b9af",
+                          "main_blob":  "4bd43025a2135faab7b851b4b7df67172944b9af",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/og-sem-tipov-razlichenie-uchiteley.webp",
+                          "status":  "added",
+                          "branch_blob":  "7d4a1f730205cc52dac9b368c9c08d39c1b32f3b",
+                          "main_blob":  "7d4a1f730205cc52dac9b368c9c08d39c1b32f3b",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/og-teksty-pisaniya-kotorymi-manipuliruyut.webp",
+                          "status":  "added",
+                          "branch_blob":  "18c61b392c20ea0de2f591dbbcd68c3fb3e9bc71",
+                          "main_blob":  "18c61b392c20ea0de2f591dbbcd68c3fb3e9bc71",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/og-vernye-i-neizvestnye-zdorovoe-pastyrstvo.webp",
+                          "status":  "added",
+                          "branch_blob":  "eef0a0ffa1a3a78430b9d58b6050ed0e0479e643",
+                          "main_blob":  "eef0a0ffa1a3a78430b9d58b6050ed0e0479e643",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/priznaki-600w.webp",
+                          "status":  "added",
+                          "branch_blob":  "4a6f24bc96f6cc7ac50296bf7ae5a9ce2e4e942d",
+                          "main_blob":  "4a6f24bc96f6cc7ac50296bf7ae5a9ce2e4e942d",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/sem-tipov-600w.webp",
+                          "status":  "added",
+                          "branch_blob":  "6d81ac958374531e2e1ce6fb00a6add742ec2916",
+                          "main_blob":  "6d81ac958374531e2e1ce6fb00a6add742ec2916",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/teksty-600w.webp",
+                          "status":  "added",
+                          "branch_blob":  "03fc453e51e03cd7cee75a144f0e7629e66396e9",
+                          "main_blob":  "03fc453e51e03cd7cee75a144f0e7629e66396e9",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "images/pastor-series/vernye-600w.webp",
+                          "status":  "added",
+                          "branch_blob":  "7bf1715d0bcd67176ebd93b14309c453594c9e7e",
+                          "main_blob":  "7bf1715d0bcd67176ebd93b14309c453594c9e7e",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "llms.txt",
+                          "status":  "modified",
+                          "branch_blob":  "26f5951a8e28b217ec451e1c7a2ade614d94f6ae",
+                          "main_blob":  "0fb6283cab38dd805d08c2dd75293c818c727eac",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  11,
+                          "added_lines_present_main":  10,
+                          "presence_pct":  90.91
+                      },
+                      {
+                          "path":  "package.json",
+                          "status":  "modified",
+                          "branch_blob":  "812497795d8a3c5c7a2beb6224b2f9492354dfdf",
+                          "main_blob":  "b46deee5d50ca7ef8107fa7b386c4951899ed38d",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  3,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  33.33
+                      },
+                      {
+                          "path":  "research/pastor-series/CONTENT-CLEARANCE-II-IX.md",
+                          "status":  "modified",
+                          "branch_blob":  "c19273ec9e3a57b643855ff376e50c440ddb0d99",
+                          "main_blob":  "f230181c8b6e1f7165bb84c4db145761e62c7b66",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  18,
+                          "added_lines_present_main":  5,
+                          "presence_pct":  27.78
+                      },
+                      {
+                          "path":  "research/pastor-series/MASTER-PLAN.md",
+                          "status":  "modified",
+                          "branch_blob":  "a75f820d7f35d9c9b157cd524b6b5bf9a6e3478d",
+                          "main_blob":  "f8ab3664ff915e2baaaa57b9b411ec436a90e8ba",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  31,
+                          "added_lines_present_main":  27,
+                          "presence_pct":  87.1
+                      },
+                      {
+                          "path":  "scripts/pastor-series-guards-dist.js",
+                          "status":  "added",
+                          "branch_blob":  "b47a1e7b98cd25d3ed2c0c7a8ba808f4460d304a",
+                          "main_blob":  "35322a2c2bc37c6aa87001e4dce4362cb6224682",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  201,
+                          "added_lines_present_main":  186,
+                          "presence_pct":  92.54
+                      },
+                      {
+                          "path":  "scripts/pastor-series-heading-id-hygiene.js",
+                          "status":  "added",
+                          "branch_blob":  "b4f450e2906f776ebdf4271599c78f656ab64776",
+                          "main_blob":  "0ffc61207dd678964a0581e997021a3af3ac7509",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  54,
+                          "added_lines_present_main":  43,
+                          "presence_pct":  79.63
+                      },
+                      {
+                          "path":  "scripts/pastor-series-visual-parity-audit.js",
+                          "status":  "modified",
+                          "branch_blob":  "f132e3ef2b6f4ff71cbfb81b8fde411b357baf40",
+                          "main_blob":  "f132e3ef2b6f4ff71cbfb81b8fde411b357baf40",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  26,
+                          "added_lines_present_main":  26,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "sitemap-pastor-series.xml",
+                          "status":  "modified",
+                          "branch_blob":  "dc8f1d08dd3209065b6ca6e5ea250a5a3603c76e",
+                          "main_blob":  "07214ccedf6022841b326f94973037234f53e255",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  59,
+                          "added_lines_present_main":  32,
+                          "presence_pct":  54.24
+                      },
+                      {
+                          "path":  "sitemap.xml",
+                          "status":  "modified",
+                          "branch_blob":  "a6870ffcf6e0d7c94973783853f84ff51926fb18",
+                          "main_blob":  "bfc5c9cd47ab334ee29114fc940c36bd85a58afd",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  11,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/_shared/series/pastorSeriesConfig.ts",
+                          "status":  "modified",
+                          "branch_blob":  "98cefe6bd7e9b37848c064d84cdd1d6444f20f82",
+                          "main_blob":  "98cefe6bd7e9b37848c064d84cdd1d6444f20f82",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  198,
+                          "added_lines_present_main":  198,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/article-pilots/antisovetov/AntisovetovBody.astro",
+                          "status":  "modified",
+                          "branch_blob":  "e157ef4a300af58d726ec9844cf64ec5b0e19cb3",
+                          "main_blob":  "de94d90d58c5cb71b45c7b5e31e04a4bf7fd5e92",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  176,
+                          "added_lines_present_main":  176,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/article-pilots/antisovetov/AntisovetovPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "1ef4d507d035eaee150958221eccd6c1429f0d81",
+                          "main_blob":  "57dc0d98a67013f66e8a477f9af682709dba92c0",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  31,
+                          "added_lines_present_main":  30,
+                          "presence_pct":  96.77
+                      },
+                      {
+                          "path":  "src/components/article-pilots/diotrophes/DiotrophesDraft.astro",
+                          "status":  "modified",
+                          "branch_blob":  "e63912f0bc6522afa1fec1f9a2b63829bca3cbb4",
+                          "main_blob":  "a0e1c8a27da7009134a94ca2a756ddd886c7b88f",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  2,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/article-pilots/diotrophes/DiotrophesPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "b3fe2d8c26c8481a6dd931e075965c05452d08c8",
+                          "main_blob":  "4f9447f9afebd6b8ad5f530ad3f4f10edd5474ab",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/article-pilots/pastor-series/PastorSeriesArticlePage.astro",
+                          "status":  "modified",
+                          "branch_blob":  "9dd06ec8d74099ad46b799879fc3d9cae91d428d",
+                          "main_blob":  "2a8ffe81ffb7a375510a27d74c6c28428a836b14",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  30,
+                          "added_lines_present_main":  30,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/pastor-series/PastorSeriesCardsSection.astro",
+                          "status":  "modified",
+                          "branch_blob":  "301ded12b5fb74bcca8e71e29a375b594491be60",
+                          "main_blob":  "301ded12b5fb74bcca8e71e29a375b594491be60",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  77,
+                          "added_lines_present_main":  77,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/pastor-series/PastorSeriesPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "e79202644fd49e859d297e4f08c9f4104e0c025b",
+                          "main_blob":  "d7e8080b8780e0e3ccc7793619c44d581c25e3e0",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/pastor-series/PastorSeriesStatsSection.astro",
+                          "status":  "modified",
+                          "branch_blob":  "640f084b36b346ebd4457b3fff66cd57215c02d5",
+                          "main_blob":  "640f084b36b346ebd4457b3fff66cd57215c02d5",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/content/articles/20-antisovetov-pastoru.mdx",
+                          "status":  "removed",
+                          "branch_blob":  null,
+                          "main_blob":  null,
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "src/content/articles/anatomiya-padeniya-pyat-stadiy.mdx",
+                          "status":  "modified",
+                          "branch_blob":  "49ecc5d34b92eb11600dc22c230212f189b3382b",
+                          "main_blob":  "49ecc5d34b92eb11600dc22c230212f189b3382b",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  40,
+                          "added_lines_present_main":  40,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/content/articles/cerkovnaya-disciplina-vlast-granicy-zashchita.mdx",
+                          "status":  "modified",
+                          "branch_blob":  "f04daa0ff05b235ae4c55df3a360748ae3317c90",
+                          "main_blob":  "f04daa0ff05b235ae4c55df3a360748ae3317c90",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  45,
+                          "added_lines_present_main":  45,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/content/articles/kogda-uhodit-kogda-ostavatsya.mdx",
+                          "status":  "modified",
+                          "branch_blob":  "73893c5505802ed79917efc39e54c156353d1469",
+                          "main_blob":  "73893c5505802ed79917efc39e54c156353d1469",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  24,
+                          "added_lines_present_main":  24,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/content/articles/nesovershennyy-chelovek-v-nesovershennoy-cerkvi.mdx",
+                          "status":  "modified",
+                          "branch_blob":  "eb428aae84c5f6a7ed5ff12ae964ea17f70c6084",
+                          "main_blob":  "eb428aae84c5f6a7ed5ff12ae964ea17f70c6084",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  24,
+                          "added_lines_present_main":  24,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/content/articles/priznaki-zdorovoy-cerkvi.mdx",
+                          "status":  "modified",
+                          "branch_blob":  "037695be17e315427bdd730377c9c7dcea395e60",
+                          "main_blob":  "037695be17e315427bdd730377c9c7dcea395e60",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  26,
+                          "added_lines_present_main":  26,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/content/articles/sem-tipov-razlichenie-uchiteley.mdx",
+                          "status":  "modified",
+                          "branch_blob":  "f9dc36e2cc057fcd9bb0319aa2b78a98f1de31f9",
+                          "main_blob":  "f9dc36e2cc057fcd9bb0319aa2b78a98f1de31f9",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  27,
+                          "added_lines_present_main":  27,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/content/articles/teksty-pisaniya-kotorymi-manipuliruyut.mdx",
+                          "status":  "modified",
+                          "branch_blob":  "8bb2d84ebd7c1c46f856e36c8deb5a2ea9be299d",
+                          "main_blob":  "8bb2d84ebd7c1c46f856e36c8deb5a2ea9be299d",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  25,
+                          "added_lines_present_main":  25,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/content/articles/vernye-i-neizvestnye-zdorovoe-pastyrstvo.mdx",
+                          "status":  "modified",
+                          "branch_blob":  "764c0e975e229a008b9dee6ad946c3b1ef4fefa5",
+                          "main_blob":  "764c0e975e229a008b9dee6ad946c3b1ef4fefa5",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  25,
+                          "added_lines_present_main":  25,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/data/pastor-series-quizzes.ts",
+                          "status":  "added",
+                          "branch_blob":  "6c7437cafa8741497b17d634466d2f73324b264b",
+                          "main_blob":  "6c7437cafa8741497b17d634466d2f73324b264b",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  1339,
+                          "added_lines_present_main":  1339,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/pages/articles/20-antisovetov-pastoru/index.astro",
+                          "status":  "modified",
+                          "branch_blob":  "a356688f1f997b779b1c8409d912ac7660cc425b",
+                          "main_blob":  "a356688f1f997b779b1c8409d912ac7660cc425b",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/pages/articles/diotrefy-nashego-vremeni/index.astro",
+                          "status":  "modified",
+                          "branch_blob":  "b223ce2ff59089da2567dababc353ad309a9c300",
+                          "main_blob":  "b223ce2ff59089da2567dababc353ad309a9c300",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  2,
+                          "presence_pct":  100
+                      }
+                  ]
+    },
+    {
+        "class":  "C",
+        "branch":  "arena/01a0a1ce-gb-is-my-strength",
+        "listed_pr":  "no PR",
+        "head_sha":  "0a1748d2717ee6f8a7fd45c64917216aab742350",
+        "api_ahead_by":  7,
+        "api_behind_by":  491,
+        "api_merge_base":  "52b5449a33ded73829435cc12e929f265a98cb48",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "0a1748d2717ee6f8a7fd45c64917216aab742350",
+        "archive_tag_matches_head":  true,
+        "file_count":  152,
+        "tip_identical_count":  1,
+        "unique_new_count":  70,
+        "differs_count":  81,
+        "files":  [
+                      {
+                          "path":  "404.html",
+                          "status":  "modified",
+                          "branch_blob":  "f948fea6334d702c782d8c8f1297509f6ba226c9",
+                          "main_blob":  "4bd3bb2d8ea1fb0340cbacdaf32cba05b17c6dbe",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "css/floating-cluster.css",
+                          "status":  "modified",
+                          "branch_blob":  "201ced832c60d382e56b09aadfdd4e3b7b5ced1c",
+                          "main_blob":  "0a1755d8b7cbc142cdaa930c49c9bc140d373809",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  46,
+                          "added_lines_present_main":  40,
+                          "presence_pct":  86.96
+                      },
+                      {
+                          "path":  "css/reader-preferences.css",
+                          "status":  "modified",
+                          "branch_blob":  "a270c2138a5e2970737a5881eff7ad263bb3ca75",
+                          "main_blob":  "a270c2138a5e2970737a5881eff7ad263bb3ca75",
+                          "tip_result":  "TIP_IDENTICAL",
+                          "added_lines_mergebase":  27,
+                          "added_lines_present_main":  27,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "css/site.css",
+                          "status":  "modified",
+                          "branch_blob":  "7f8b80cafdfafc94ae1393bbbfcd065e730c56c8",
+                          "main_blob":  "e8a364bf80c42bb06ea59e898edc92d571dd4dea",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "js/floating-cluster-controller.js",
+                          "status":  "modified",
+                          "branch_blob":  "6f50e863d2e385bbcf81d857ce79a590b45f19b9",
+                          "main_blob":  "a56f724bccd10badc598e881ce78f877b8e6259b",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  19,
+                          "added_lines_present_main":  19,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "konfessii/russkij-baptizm/_app/index.html",
+                          "status":  "modified",
+                          "branch_blob":  "bfb69de65a797d33e883a2fa1d27c87b4cb6995f",
+                          "main_blob":  "3346f01cf157a0c9e68712c9dd07594f47455a02",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/FINDINGS.md",
+                          "status":  "added",
+                          "branch_blob":  "5503a2a7f2bb2867882ed8d6c054253b67c936dc",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  392,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/a-assets.mjs",
+                          "status":  "added",
+                          "branch_blob":  "fdbd098849d9bbd4d19aeb76ce17f8978ff257f6",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  43,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/b-dom.mjs",
+                          "status":  "added",
+                          "branch_blob":  "5b154298959748d0ecf6a25127517d3052a565ca",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  70,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/br-cdp.mjs",
+                          "status":  "added",
+                          "branch_blob":  "984863f33d78773cd5f1ea66bf46d615fdeaae2f",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  14,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/br-test.mjs",
+                          "status":  "added",
+                          "branch_blob":  "351c170cbee8fecb4a543cf5e388ca8660b3fa0c",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  17,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/c-controls.mjs",
+                          "status":  "added",
+                          "branch_blob":  "6b2dc91594be1b57602a8b95e7928fe3944264fa",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  77,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/d-media.cjs",
+                          "status":  "added",
+                          "branch_blob":  "b4f495736d0eb9f316e99987e20e16fc98e009e1",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  43,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/e-sel.cjs",
+                          "status":  "added",
+                          "branch_blob":  "cf39d32fcb84436bf147a2338b1c61d2f41c0f8c",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  21,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/f-matrix.json",
+                          "status":  "added",
+                          "branch_blob":  "cf9f2e0bf4dce48941e675d68b49171d61c4c8b1",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  15910,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/f-matrix.mjs",
+                          "status":  "added",
+                          "branch_blob":  "04562125b96186f8fca9021e36b256257a833b6c",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  67,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/g-nochrome.mjs",
+                          "status":  "added",
+                          "branch_blob":  "4ccf3ed205bf24275695db0960597e1b0b393970",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  21,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/h-print.cjs",
+                          "status":  "added",
+                          "branch_blob":  "5d7142af82a60ef386c11b28ecde34763cb0283a",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  21,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/i-perf.mjs",
+                          "status":  "added",
+                          "branch_blob":  "0f2b4428464729c128c316ff2e1fb7ee015fb2b1",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  42,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/j-width.mjs",
+                          "status":  "added",
+                          "branch_blob":  "ee96c170d1677690c80b9deb53a974d7c29b5259",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  17,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/k-main.mjs",
+                          "status":  "added",
+                          "branch_blob":  "f7833d1dadfea79e22b77c86ef1396e081031893",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  18,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/l-ctx.cjs",
+                          "status":  "added",
+                          "branch_blob":  "13ff4fce47235e0f7e24640b8eeefdb31a61acf4",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  13,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/m-dom45.cjs",
+                          "status":  "added",
+                          "branch_blob":  "be6d998b5d7802b5a3963fa87a4300560607169c",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  28,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/m-dom45.json",
+                          "status":  "added",
+                          "branch_blob":  "dc755539dfa1749da5982ab0eaeb81417c383049",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  992,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/n-geom.cjs",
+                          "status":  "added",
+                          "branch_blob":  "ff97f46a09f85146b8af39bd8e6e1a8fe8874530",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  16,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/o-body.cjs",
+                          "status":  "added",
+                          "branch_blob":  "6db32b5328fe989dcfed89b4eebd6f5cb2fe6315",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  10,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/p-geom.cjs",
+                          "status":  "added",
+                          "branch_blob":  "5f919a7be068935ae4e5609213d454ea6b1706bc",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  44,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/q-tap.cjs",
+                          "status":  "added",
+                          "branch_blob":  "1a41423d534b4a5f53799d2e48349f726ac06e2c",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  14,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-controls.mjs",
+                          "status":  "added",
+                          "branch_blob":  "8a63380f05a3789c02ec8d2cc786da2c90bf27a4",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  84,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-controls.txt",
+                          "status":  "added",
+                          "branch_blob":  "d821414d79758db8942231ba6be4301ecd011c7b",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  5,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-fix1.mjs",
+                          "status":  "added",
+                          "branch_blob":  "6fb0b7f584c327d0886004934c377cdce8448d67",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  70,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-fix2.mjs",
+                          "status":  "added",
+                          "branch_blob":  "8c7684ec98cfcda5c387280b39dd202554569d40",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  23,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-fix3.mjs",
+                          "status":  "added",
+                          "branch_blob":  "28806fd2d4d805650f855788a2e63061bc31f202",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  29,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-fix4.mjs",
+                          "status":  "added",
+                          "branch_blob":  "7c2798273a7af2274fcbf83291af66f6caab6f3e",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  18,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-fix5.mjs",
+                          "status":  "added",
+                          "branch_blob":  "0e3ee6ea5e9ddb1d5518e7b235594a2c201a6fc4",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  43,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-geom.mjs",
+                          "status":  "added",
+                          "branch_blob":  "49ef9bad6dab0c2b533886eba8cb31c736c54697",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  58,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-geom2.json",
+                          "status":  "added",
+                          "branch_blob":  "ce2cbae700b2a7f008a730064220374a37e27988",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  946,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-geom2.mjs",
+                          "status":  "added",
+                          "branch_blob":  "9dab97a8a9d3ad90adc29a6e9ee91610029fe423",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  72,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-jsweight.mjs",
+                          "status":  "added",
+                          "branch_blob":  "28f9a7400fe6a7ec12a8d591b1ebb6b5ec2d23d1",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  21,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-line.mjs",
+                          "status":  "added",
+                          "branch_blob":  "22b98ff17100ce6d59e87556ffb13728e1ee958c",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  19,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-matrix.json",
+                          "status":  "added",
+                          "branch_blob":  "2e994920a7faa379210762fa1487d6fbb80b5086",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  259,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-matrix.mjs",
+                          "status":  "added",
+                          "branch_blob":  "3ccc7e773de1f41371189466b61a09b7ac7d1489",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  55,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-matrix2.mjs",
+                          "status":  "added",
+                          "branch_blob":  "fb99fb2f3d67483b2ee771782986b678beff37cc",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  26,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-matrix3.mjs",
+                          "status":  "added",
+                          "branch_blob":  "1083ef5cd3dc301690f6658ca54f4f7af2073982",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  57,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-mobile.mjs",
+                          "status":  "added",
+                          "branch_blob":  "77d7fae38a13c421973c4438e798df966c754564",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  76,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-mobile2.mjs",
+                          "status":  "added",
+                          "branch_blob":  "cbd463c8865dc39c400c8700b72dbc640e56f66b",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  44,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-rest1.mjs",
+                          "status":  "added",
+                          "branch_blob":  "583d8bc0c601b7120ed810d973e4348e28040c13",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  22,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-rest2.mjs",
+                          "status":  "added",
+                          "branch_blob":  "6c1c6fb993664fe650e6c86dc7ff6908c63f23aa",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  10,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-rest3.mjs",
+                          "status":  "added",
+                          "branch_blob":  "105eabb7ba67e3574e743d89cee4272bf2aea0f8",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  9,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-rest4.mjs",
+                          "status":  "added",
+                          "branch_blob":  "38630e99736b50361746596cb03750e3683f5a20",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  43,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-rest5.mjs",
+                          "status":  "added",
+                          "branch_blob":  "c553f814de386c6619ece54fdc00ca53cfd17495",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  10,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-rest6.mjs",
+                          "status":  "added",
+                          "branch_blob":  "91a5c11d58d613ff12d2fa1e51d55052947601be",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  10,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-scan.json",
+                          "status":  "added",
+                          "branch_blob":  "3effb8a5f86b6a16a50842963ba6fedec5219910",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  2645,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-scan.mjs",
+                          "status":  "added",
+                          "branch_blob":  "438716fb7469d57ae14e98977ffff1f1c87dca59",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  67,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-verify.mjs",
+                          "status":  "added",
+                          "branch_blob":  "046825e99bf28701058973af89cf72216bf341b9",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  41,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/r-weight1.mjs",
+                          "status":  "added",
+                          "branch_blob":  "63ae17111975f8b7ff57d2618203f6dcd7c73f3e",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  26,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/A-dzhon-gill-chast-1-chelovek-1280.png",
+                          "status":  "added",
+                          "branch_blob":  "d0b928876a551d386549da50d4649330f13d2e94",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/A-dzhon-gill-chast-1-chelovek-1920.png",
+                          "status":  "added",
+                          "branch_blob":  "44630e9b310c1df07fa60645e1095a42c57a0ecc",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/B-duhi-v-temnice-noi-kreshchenie-pobeda-1024.png",
+                          "status":  "added",
+                          "branch_blob":  "b0771fd7da9b7413703f87b01f6cf8cce5b3feea",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/B-serdce-i-duh-1024.png",
+                          "status":  "added",
+                          "branch_blob":  "1a44b4ff2d0352ded9cb1cd082db8778d79bf4c4",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/B-serdce-i-duh-1280.png",
+                          "status":  "added",
+                          "branch_blob":  "58b5d25658d8d15704f463943eb0230760fae508",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/ctl-B-sheet-open.png",
+                          "status":  "added",
+                          "branch_blob":  "736071091129895589c2e26b1fa79d67c85fbece",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/fix-a-1920.png",
+                          "status":  "added",
+                          "branch_blob":  "5575d542e8c3a46157645a7d4a35cad4ea799678",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/fix-b-1024.png",
+                          "status":  "added",
+                          "branch_blob":  "ff490c81b68ca1acc587d3d63eaa640e782053c2",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/fix-b-1280.png",
+                          "status":  "added",
+                          "branch_blob":  "025101b3f66e64352c4e2530c74f4be2fc50d5b1",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/fix-b-mobile-narrow.png",
+                          "status":  "added",
+                          "branch_blob":  "a5bc801c00331619aa3217adeacaf9c6000b3e3a",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/fix-hrail-sepia.png",
+                          "status":  "added",
+                          "branch_blob":  "239d311c0b5aadb03642d4355374dd584b854fcd",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/fix2-diotrefy-1024.png",
+                          "status":  "added",
+                          "branch_blob":  "0a637763d73e3028adeecf0fe77a19b476eb1ab2",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/fix2-gill-sepia-mobile.png",
+                          "status":  "added",
+                          "branch_blob":  "34caae26dab1d7327c794ce453283c20764b7c3c",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/fix2-teen-1024.png",
+                          "status":  "added",
+                          "branch_blob":  "3f768d10ba6b8cc46d2ecbe133cfeb8ec3786dfa",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/hrail-desktop-settings.png",
+                          "status":  "added",
+                          "branch_blob":  "eb84e0eff2bf96ddf07507135a600272359d0b1c",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/mob-A-toc+search.png",
+                          "status":  "added",
+                          "branch_blob":  "ba99b75c00ad9c8349bad8380304c1b90d7a6a14",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/mob-B-settings.png",
+                          "status":  "added",
+                          "branch_blob":  "14c29b9a895b4d57d12077319581a985d76cb477",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/mob-B-top.png",
+                          "status":  "added",
+                          "branch_blob":  "c993b52029c78e1824e77ec70d57372182bf12bb",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/weight-A-1280.png",
+                          "status":  "added",
+                          "branch_blob":  "dbb77383d401f0e2d58c9c94a7294b0abeb59cc3",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "reports/arena-reader-audit/shots/weight-B-1280.png",
+                          "status":  "added",
+                          "branch_blob":  "302759099f816408845edf20ff392380888b56c4",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "src/components/about/AboutPageChrome.astro",
+                          "status":  "modified",
+                          "branch_blob":  "68aca202042f0b78fa1e4f42da79dd645965cb57",
+                          "main_blob":  "e3c87fabde26430c592f88919e91e242c6ecec60",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/_shared/ReaderSettings.astro",
+                          "status":  "modified",
+                          "branch_blob":  "ebf2cb3cf11ae7ef8f3ecfa02b46212f043fd40c",
+                          "main_blob":  "0fb59aef32f321e444b88069bfd4458d84b85740",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  5,
+                          "added_lines_present_main":  3,
+                          "presence_pct":  60
+                      },
+                      {
+                          "path":  "src/components/article-pilots/_shared/StandaloneArticleFooter.astro",
+                          "status":  "modified",
+                          "branch_blob":  "06e1b50f28ef413aebde95d41236dcddc4dee0d5",
+                          "main_blob":  "e5b73d51af5d58015ce01a4fdbbefe03a662dc34",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/antisovetov/AntisovetovPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "7d2a3ba3383f8ee47e05934b7b9e98b78db1ac05",
+                          "main_blob":  "57dc0d98a67013f66e8a477f9af682709dba92c0",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/chto-bibliya-nazyvaet-serdcem/ChtoBibliyaPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "6989574f16d3752ea1f8528ea23a09ce3e1a611c",
+                          "main_blob":  "f3ae631eedecb90b3b469f4ec8d148981353e735",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/diotrophes/DiotrophesPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "3f67e07350e9df8199de05349060b9e0119a5616",
+                          "main_blob":  "4f9447f9afebd6b8ad5f530ad3f4f10edd5474ab",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/genesis6/Genesis6ArticlePage.astro",
+                          "status":  "modified",
+                          "branch_blob":  "5696c3c8e212710dc4ea23268a50f17ec8b8f0f1",
+                          "main_blob":  "8000ff899adc740824891adf413d0b5d24838735",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "src/components/article-pilots/gill-context/GillContextPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "e3df0e753d57a317f63b9040f320c83c6632b8b9",
+                          "main_blob":  "8f10173a0900f3ede6480d127af786e2dd80f6b8",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/gill-part1/GillPart1PageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "b58f20b32da6e8a05667fe19c31827573a379f68",
+                          "main_blob":  "62fe022d3841f198a464b070f40d448958796ae7",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/gill-part2/GillPart2PageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "db87648abece3fb72831e909db794b2c52db78b7",
+                          "main_blob":  "11eda1c3813baba7fa878df1145a068d8acf214e",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/gill-part3/GillPart3PageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "bf9cd0609b03fc940c57a7f605b8e1db5fc3f0da",
+                          "main_blob":  "6a6d1486fd18e70c56a48db61b79065a8f58f417",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/gill-part4/GillPart4PageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "8dba74752860978e8928b8263bd5c3b0d9444b84",
+                          "main_blob":  "8e4025caf24bd79730139e6c884babc4b857fb24",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/gill-series/GillReaderSettingsSheet.astro",
+                          "status":  "modified",
+                          "branch_blob":  "958c192171376da934216ea5f94a6df163740dd0",
+                          "main_blob":  "a29e46d521853e4a4c6a27ba1c5ab9a1aa8c8941",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/article-pilots/gill-series/GillSeriesChrome.astro",
+                          "status":  "modified",
+                          "branch_blob":  "098459b51209164a766eac121363e428d213669e",
+                          "main_blob":  "870bee3fe622312b1d93cb30029453d25f8b8855",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/gill-spravochnik/GillSpravochnikPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "3579871f2c77d0103df2b8e516064201eab6aa03",
+                          "main_blob":  "2d8652a280acd13fd6c57440dc8b33ce9783dc89",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/hermenevtika/HermenevtikaBody.astro",
+                          "status":  "modified",
+                          "branch_blob":  "2bfe0f75566ffdc130d31ec9bf3e960114a4b9cc",
+                          "main_blob":  "6d8f598558be669fc577539cdd098d5aa82b4966",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/hermenevtika/HermenevtikaPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "96adccb6e8089272beb87e6b78489fa3e8f67336",
+                          "main_blob":  "af67b8060190b90b99c692f1a3fa3afda38b3793",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/kak-hranit/KakHranitPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "c8f9135800f5ae021bcf4f8fa5758a5f255a3338",
+                          "main_blob":  "7fc79372e5bfde78ef7716f963384d71a11e53f6",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/kak-menyaetsya/KakMenyaetsyaPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "5d504a26b40bb5361743ca14cc4531d5039eba61",
+                          "main_blob":  "71ec58c5d708283172475b7cc563f45238331c88",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/kod-da-vinchi/KodDaVinchiPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "5bd0ce0be4721ccadc77b6234a1e849cdb4f550f",
+                          "main_blob":  "9522700915df74810ae2a99aa7c9bfb35ac6e593",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/krajne/KrajnePageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "acbcd9b9e76abfb4f8e5332c8e5759f3d0cbe7b1",
+                          "main_blob":  "cd4cd89621bd6b5d8a6c198dcac7698dd6386170",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/lot/LotPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "8e79be8feb07acf080136d89e413c2fbde3b19f2",
+                          "main_blob":  "d88b41738014dd0383b254f08b0c4b4ba7892e9f",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/myslennaya/MyslennayaPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "053138481ce4b10806ec2a3ce6ef5a4890f6aa65",
+                          "main_blob":  "d81d43a9bbe9117fe730f3d5c7b39b9217f27908",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/ne-v-odinochku/NeVOdinochkuPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "455bb7fbf05148b93a460cb60adde64fd7fc11a6",
+                          "main_blob":  "a9c48885030dd4e02bdbdf8e3ed6304d7aad9a0f",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/novoe-serdce/NovoeSerdcePageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "81c2a9414cd9921e56387017bcdeea7fca68bf83",
+                          "main_blob":  "4673088b3ddcce30085a19c782e3a5ef92f832aa",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/osvobozhdennoe/OsvobozhdennoePageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "8b1bccba21d99d0f5447fe929f6d6c690291a832",
+                          "main_blob":  "a71a1e56fbdb89a461265fbd33c68e1cb80ca2bc",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/pastor-series/PastorSeriesArticlePage.astro",
+                          "status":  "modified",
+                          "branch_blob":  "d630b7c9c9db22a2272d302e03c00218db11a48c",
+                          "main_blob":  "2a8ffe81ffb7a375510a27d74c6c28428a836b14",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  0,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  null
+                      },
+                      {
+                          "path":  "src/components/article-pilots/religioznoe/ReligioznoePageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "036d1d250b66a40fbf4ad3ef8818281a911beb2c",
+                          "main_blob":  "d6a797bc1d2e332af8a55ed9ffa1cf6589c03170",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/rimlyanam7/Rimlyanam7PageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "6d1681233b7e38e74f07d027e62319dcada8233e",
+                          "main_blob":  "7f1c52c1cac82b9551821894a80852bdeff79f4f",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/serdce-hrista/SerdceHristaPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "88c60697213cf8d935bcc026e39d89033f1c86c4",
+                          "main_blob":  "df107b2ed4acef297f0dc6e27b52b72a10b1801a",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/serdce-iduh/SerdceIDuhPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "58f2d36f7121544b8ad8bdde3f63521de2571c2f",
+                          "main_blob":  "c5de7bcdd3b02012e7775e21f8c98a7cd37e5608",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/serdce-iskushenie/SerdceIskusheniePageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "ee46225b8950907a5928fbd3ba23038210917df4",
+                          "main_blob":  "e10a81b506dd13a550baf35f45e201435003b36f",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/serdce-skorb/SerdceSkorbPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "4f9f642d408c045c3a87094b6a5179434740c24f",
+                          "main_blob":  "2ee932575ac9de8d778d568cf7cad9f7264d4088",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/serdce-sokrovishche/SerdceSokrovishchePageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "5a1faa939631e6e8f0b5d3cee2aa0cfaa39d6cf6",
+                          "main_blob":  "2b089eaec6f6993b9333415b091d7ee6021c844c",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/serdce-spravochnik/SerdceSpravochnikPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "faea7abf47a031678e2bd4a8490aed43eee1dea7",
+                          "main_blob":  "ac8a9eff5c5a97024afe38d97b7a6782d8a3648c",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/serdce-telo/SerdceTeloPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "e3c848761309b438efb5d59d0e787fd7191b535a",
+                          "main_blob":  "e724a99d8cfda3ca0b09b394d7c8ee2492328b40",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/serdce-yazyk/SerdceYazykPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "6ec4c655e40f333ff1249f9d13520e7f7128576c",
+                          "main_blob":  "5b9199126c708b8cec4c6c4d907981d446c69e22",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/skrytye-idoly/SkrytyeIdolyPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "094a6e1901fe5ae8315b0ac4d2176555cf3b7ac9",
+                          "main_blob":  "79e4013d23d69ccbddfc4aba76b0f2e91ede1e85",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/sovest/SovestPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "6422f4a4b8ea8e12ff19c7798f9cd84e16c6e365",
+                          "main_blob":  "c9549dba520f6c3328763b39349abef07541e647",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/starye-dorozhki/StaryeDorozhkiPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "442584c9c58ba64c2af956a3a58929fbe8d7443c",
+                          "main_blob":  "4db0814f90fc6a2600220946a9924b3ba0593978",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/strah-bozhij/StrahBozhijPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "014d3ac1166d8111dd11f2c1c5e4e72997006238",
+                          "main_blob":  "b9ab20c571124fe48eea8e6ef20baf0f3115e783",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/svoboda-vo-hriste/SvobodaVoHristePageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "b606284d7fd63ddeb1af503c782958f68bd04347",
+                          "main_blob":  "10031ac4bd9228aa2da864d2ef24f9a870b8aeaa",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/teen-series/TeenSeriesArticlePage.astro",
+                          "status":  "modified",
+                          "branch_blob":  "0531baa3d16672d801d70bd632104f2bcaa185a1",
+                          "main_blob":  "e8a532266ceb7b88c5b45b0ecea59027256ebaf4",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  4,
+                          "added_lines_present_main":  4,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/article-pilots/tma-na-serdce/TmaNaSerdcePageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "425d13a242550b2ea833b0fdd31a410286df339c",
+                          "main_blob":  "c84dfbce6b92c6d40aeaaf0e1b7b583091b6c4fc",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/articles/ArticlesPageChrome.astro",
+                          "status":  "modified",
+                          "branch_blob":  "96fc6987ef15c937d8fd1a34251dbfdbacdcbad6",
+                          "main_blob":  "fc3ecc1ce78ec80407387c97f4b7f7724552325d",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiBody.astro",
+                          "status":  "modified",
+                          "branch_blob":  "162230f2028ea707b643d55c6e1e241e4724f045",
+                          "main_blob":  "88c7b7a7423dffa4a3222d3700cef92a3e45bca1",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiBookLanding.astro",
+                          "status":  "modified",
+                          "branch_blob":  "1dd9ff785eb01d86c14605a1d6f560dcc8059205",
+                          "main_blob":  "585b8b501f9731b69df4f70beebc2333e179b3e0",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiDvaSezda1884PageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "b768125a5bf94c4b8a009afb4550a5d2bcae938a",
+                          "main_blob":  "5bc24b3794e087c752ffbdf48aca15e4b9fde8e2",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiGoneniyaISovestPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "ea2420c4a65e4648f11fec7b3882c0760cc1b1b6",
+                          "main_blob":  "9895a83f91cc0280981fa5ffcf4eeef7f1e30239",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiIniciativnayaGruppaPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "bec7981b428db476204c415884b5d008e536a45e",
+                          "main_blob":  "a87a606ef9f024a2a581d50bf1c63b4879b61001",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiNochNaKurePageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "798ae938b463e49f7162a998d5e95208e766b698",
+                          "main_blob":  "8b3b39068be0ffe1d71d0e12c6346dcc9236d22c",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "6069863738041a18b0d441cc98ab2d174e696bac",
+                          "main_blob":  "6a46cb4b8770bde67a002dc53da2f33194461b29",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiPeterburgskayaLiniyaPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "a6840e878ce1222b4d98cbec4bf793e51dc2ca9a",
+                          "main_blob":  "60f696675cfd23b25f8ee60dcbdb4e6f6186809a",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiPodpolnayaPechatPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "464cbb6aec2a25da3ba6c3f05298b98e5276b4f9",
+                          "main_blob":  "49a65286cae18acb0c42035c0e31df4eacaeb2d4",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiSovetskayaNochPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "e8e159edbc1324dd00157e32f59bed535bb532c4",
+                          "main_blob":  "7ecc55ad00168417de5222dff9708c8507492d7a",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiSpravochnikBody.astro",
+                          "status":  "modified",
+                          "branch_blob":  "757d3c84b57a4ab5fb26542f5c142a14bf45b0fd",
+                          "main_blob":  "99af07506f7ec48c4091f387dd25ac639e43552f",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiSpravochnikPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "18945dca667e7efdb1943dfaceb381097996b067",
+                          "main_blob":  "5459cdd9f69773e8a267d0dea84211ea46a3c2d5",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiVsehib1944PageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "17630449cbf838fbc0e83c67c7371c2ef173a553",
+                          "main_blob":  "440c7e7bd23984c14af2adc813729b29668069ad",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/baptisty-rossii/BaptistyRossiiYuzhnayaShtundaPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "9c71bef30b66a0fa9e543e9bb6dbbf6473a2f787",
+                          "main_blob":  "0d72237e54d23970af8e6b5b3351fc71b40546eb",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/biografii/BiografiiPageChrome.astro",
+                          "status":  "modified",
+                          "branch_blob":  "f3883ca8063ee7f5b8b1150749da93913051a73e",
+                          "main_blob":  "e238ad554d279d484226c732b8b0da362863ab48",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/home/HomePageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "36ae33e312e8446812a77e639ceba4dd38e69528",
+                          "main_blob":  "536d7e38674909d4aa2678c944195ea6b9caea2a",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/journal/JournalDocumentHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "49f5c40ff092973b3c156c836250687fc5ef3bb8",
+                          "main_blob":  "996d75d3439f23affb11af89877a2678c60cdf3b",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/karty/KartyPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "7e462b98ae3f8d478a6d5770bcf803a72a6db272",
+                          "main_blob":  "34ae66a936f757af73451b76a9759d01daf13dea",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/nagornaya/_shared/NagornayaPageFooterRuntime.astro",
+                          "status":  "modified",
+                          "branch_blob":  "714e2266c8a9fdcd082d4f1e331f50b4f0147e40",
+                          "main_blob":  "c90e1df2f14dacfa866d7d3272c3a0981605f7b0",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/nagornaya/chast-1/NagornayaChast1PageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "a6b05afeeb9dd18e74434e3e9cb56e5b1a907249",
+                          "main_blob":  "facf22e9ccb1ef4609ab9495f3c2b0b335375405",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/nagornaya/chast-2/NagornayaChast2PageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "32fab51c65fe4484aa0266b92b4853d6a4e3fea5",
+                          "main_blob":  "751bb20a8e45aa5cf9d688debb574f4237ea0cb2",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/nagornaya/chast-3/NagornayaChast3PageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "f22b3c993287f2503c8369a205279f046a95101d",
+                          "main_blob":  "ebb9e4333b1b6b854d4e1dcfac18f6ecf5d1d9be",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/nagornaya/chast-4/NagornayaChast4PageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "bf99b9014ace66fa3b584761246d207f7f15f793",
+                          "main_blob":  "02dcc2d02f362ac3033a5297f66bdbc41bd5bdb4",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/nagornaya/chast-5/NagornayaChast5PageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "5b9da465b2f917c9f277f40cf886453a16dc5c93",
+                          "main_blob":  "8b8282f09d3fc279c02a505c0f23623e7d367ad9",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/nagornaya/index/NagornayaIndexPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "ee7427c3d2c3e772b6e236487a86d56412d465b8",
+                          "main_blob":  "ddf3f019505c6f8ad081fcba7f8d3b4f484a0ec9",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/nagornaya/istochniki/NagornayaIstochnikiPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "73128ab79b934fbacb2da5286aea60eb05d72a6e",
+                          "main_blob":  "993a92deb5e975eea5b72c0116d1fa1ddcb374b3",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/nagornaya/nakhodki/NagornayaNakhodkiPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "a3415749102c3144822b8653e7e92599ae50fafa",
+                          "main_blob":  "d7d3b400bbec3407f9ab5cff8be6d4edd4f48679",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/nagornaya/seriya/NagornayaSeriyaPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "265e2e2272bdf39f1408c0aedc13ebf0bc7666ef",
+                          "main_blob":  "95ea0bb9084327971b756acaefd57c2992f6831c",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/pastor-series/PastorSeriesPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "c9f797bbe6bb2a97bc3e337be9ced87d40321902",
+                          "main_blob":  "d7e8080b8780e0e3ccc7793619c44d581c25e3e0",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/lib/asset-version.js",
+                          "status":  "modified",
+                          "branch_blob":  "20921f6a44b632d5c9eea937c4e6cbbbdeb46995",
+                          "main_blob":  "d201f2082f675590b22e59cb628419b3672c7e4f",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  4,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  25
+                      },
+                      {
+                          "path":  "sw.js",
+                          "status":  "modified",
+                          "branch_blob":  "d0ce79d44e68dfda013d3eaf9911897ebf8cbaf0",
+                          "main_blob":  "66bcac84965935ae1e53744787a632ec1a886326",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  4,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  25
+                      }
+                  ]
+    },
+    {
+        "class":  "D",
+        "branch":  "lane/metadata-review-decision-rimlyanam7-20260908",
+        "listed_pr":  "#1908",
+        "head_sha":  "24cf91ec9e25631630f6460a1184114e90da5c0e",
+        "api_ahead_by":  1,
+        "api_behind_by":  1077,
+        "api_merge_base":  "12e5442e7dffe931b693c5f904ba8732613fa547",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "24cf91ec9e25631630f6460a1184114e90da5c0e",
+        "archive_tag_matches_head":  true,
+        "file_count":  1,
+        "tip_identical_count":  0,
+        "unique_new_count":  1,
+        "differs_count":  0,
+        "files":  [
+                      {
+                          "path":  "data/editorial-metadata-review-decisions/rimlyanam7-reconciliation-20260908.json",
+                          "status":  "added",
+                          "branch_blob":  "ed64d278fe99ab97a44bbde351b9e9f0bcd5f85b",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  20,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      }
+                  ]
+    },
+    {
+        "class":  "D",
+        "branch":  "lane/metadata-standalone-three-reconciliation-20260908",
+        "listed_pr":  "#1912",
+        "head_sha":  "08ae4a42ee0762ece15e84f345da1f7eb094320f",
+        "api_ahead_by":  1,
+        "api_behind_by":  1062,
+        "api_merge_base":  "3d959fbb3e669d56068ccf5840e59f8790fbc4a7",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "08ae4a42ee0762ece15e84f345da1f7eb094320f",
+        "archive_tag_matches_head":  true,
+        "file_count":  1,
+        "tip_identical_count":  0,
+        "unique_new_count":  1,
+        "differs_count":  0,
+        "files":  [
+                      {
+                          "path":  "data/editorial-metadata-review-decisions/standalone-three-reconciliation-20260908.json",
+                          "status":  "added",
+                          "branch_blob":  "9b36c7203b7a16c9231488874c3c53859f9d7928",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  48,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      }
+                  ]
+    },
+    {
+        "class":  "D",
+        "branch":  "lane/teen-core-content-clearance-20260908",
+        "listed_pr":  "#1925",
+        "head_sha":  "bedb511019f118df9fa16e054080c7e337381ee8",
+        "api_ahead_by":  1,
+        "api_behind_by":  1045,
+        "api_merge_base":  "f17376bd807cf77ae8c5e62c1d2519c040dae711",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "bedb511019f118df9fa16e054080c7e337381ee8",
+        "archive_tag_matches_head":  true,
+        "file_count":  1,
+        "tip_identical_count":  0,
+        "unique_new_count":  1,
+        "differs_count":  0,
+        "files":  [
+                      {
+                          "path":  "research/teen-double-life/CORE-TRILOGY-CONTENT-CLEARANCE-2026-09-08.md",
+                          "status":  "added",
+                          "branch_blob":  "c868f3422560b183e0030c350c74dab5ff62b018",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  168,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      }
+                  ]
+    },
+    {
+        "class":  "D",
+        "branch":  "content/apostasy-bible-study",
+        "listed_pr":  "#2145",
+        "head_sha":  "994b8735f79383c860ee6502ed36a9bcd9531886",
+        "api_ahead_by":  1,
+        "api_behind_by":  326,
+        "api_merge_base":  "d0e04a9c7ac78082f44ad70c4b1e3bbf50b5065b",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  1,
+        "tip_identical_count":  0,
+        "unique_new_count":  1,
+        "differs_count":  0,
+        "files":  [
+                      {
+                          "path":  "src/content/articles/otstuplenie-ot-very-iuda-evreyam-6.mdx",
+                          "status":  "added",
+                          "branch_blob":  "18e72aedb410a5f22651d54ff14d9957d12347da",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  320,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      }
+                  ]
+    },
+    {
+        "class":  "D",
+        "branch":  "book/ch07-mazaev-prokhanov-research-v2",
+        "listed_pr":  "no PR",
+        "head_sha":  "2a5687bd647027af4a5f5549f2e394d285b9916e",
+        "api_ahead_by":  2,
+        "api_behind_by":  1347,
+        "api_merge_base":  "f135a5739d2a557f866bb92740cd417fe1d185c2",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "2a5687bd647027af4a5f5549f2e394d285b9916e",
+        "archive_tag_matches_head":  true,
+        "file_count":  2,
+        "tip_identical_count":  0,
+        "unique_new_count":  2,
+        "differs_count":  0,
+        "files":  [
+                      {
+                          "path":  "baptisty-rossii/research/ch07-mazaev-prokhanov-source-to-claim-2026-09-06.md",
+                          "status":  "added",
+                          "branch_blob":  "9436cbd341ca6462a9d94caeb9399833ff46b2ff",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  292,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "baptisty-rossii/research/ch07-mazaev-prokhanov-visual-dossier-2026-09-06.md",
+                          "status":  "added",
+                          "branch_blob":  "e6dd6fb07201cf7ac32de51fb50f6bd10376211b",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  403,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      }
+                  ]
+    },
+    {
+        "class":  "D",
+        "branch":  "fix/quiz-plain-text-payload-20261003",
+        "listed_pr":  "no PR",
+        "head_sha":  "39aecaf722c0275631aa8e43bd917a78dc9fc3d0",
+        "api_ahead_by":  3,
+        "api_behind_by":  292,
+        "api_merge_base":  "69d3aa13361063a6aaa6272553c4874866829fa0",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  1,
+        "tip_identical_count":  0,
+        "unique_new_count":  1,
+        "differs_count":  0,
+        "files":  [
+                      {
+                          "path":  ".github/workflows/quiz-plain-text-self-clean-v2.yml",
+                          "status":  "added",
+                          "branch_blob":  "4e0e2a562c3c8311ab982acd53d521f743a1e7af",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  360,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      }
+                  ]
+    },
+    {
+        "class":  "D",
+        "branch":  "agent/app-integration-zero-debt-20260820",
+        "listed_pr":  "no PR",
+        "head_sha":  "723e82cc10491c2fc7e4a139628c1841899577d0",
+        "api_ahead_by":  2,
+        "api_behind_by":  1382,
+        "api_merge_base":  "bc7f0d3815e7e41551b3180e3cd22fb55a95dd04",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "723e82cc10491c2fc7e4a139628c1841899577d0",
+        "archive_tag_matches_head":  true,
+        "file_count":  8,
+        "tip_identical_count":  0,
+        "unique_new_count":  2,
+        "differs_count":  6,
+        "files":  [
+                      {
+                          "path":  ".github/workflows/bible-app-browser-contract.yml",
+                          "status":  "modified",
+                          "branch_blob":  "8c9085ead34f440420b4af22a4929103d5f2f1cf",
+                          "main_blob":  "a5c7e6f3770b0805a4193d5fa493f8cf6a6f6d9c",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "scripts/bible-app-browser-contract.mjs",
+                          "status":  "modified",
+                          "branch_blob":  "275bd719659f90c65ef354d2e0d84c13d67149f3",
+                          "main_blob":  "ab6d7324b1cebf22d128668b882ac18c24b9fb5e",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  25,
+                          "added_lines_present_main":  13,
+                          "presence_pct":  52
+                      },
+                      {
+                          "path":  "src/components/app/AppSiteChrome.astro",
+                          "status":  "added",
+                          "branch_blob":  "5b62c2ff936cb03d076a9dae8960a78aed514e0c",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  143,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/_shared/SiteSectionsMenu.astro",
+                          "status":  "modified",
+                          "branch_blob":  "716d0f53ed628d1279d997197bfc65ae94c8d749",
+                          "main_blob":  "037ca697c4eefbf972c89987f797fd2ae931c83e",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  3,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/genesis6/Genesis6ArticlePage.astro",
+                          "status":  "modified",
+                          "branch_blob":  "4b204eb730d2f3e9d7fc83525076b4c25d308405",
+                          "main_blob":  "8000ff899adc740824891adf413d0b5d24838735",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  2,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/article-pilots/genesis6/Genesis6BibleAppChapterCta.astro",
+                          "status":  "modified",
+                          "branch_blob":  "fc1f8023e394375375abcddb1057716efc464b1f",
+                          "main_blob":  "596deed7ef33fa98a5d4161d219d9fa53f2e4d8f",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  42,
+                          "added_lines_present_main":  42,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/data/site-sections.ts",
+                          "status":  "added",
+                          "branch_blob":  "4d89b1c184e4ef50e68ae2b4125566574f4152ee",
+                          "main_blob":  null,
+                          "tip_result":  "UNIQUE_NEW",
+                          "added_lines_mergebase":  10,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/pages/app/index.astro",
+                          "status":  "modified",
+                          "branch_blob":  "4ab9c33538766793fa456106a88af86fc690d785",
+                          "main_blob":  "b1803910fb4240b664cc34aa33dc94e767df3d78",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  5,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      }
+                  ]
+    },
+    {
+        "class":  "E",
+        "branch":  "agent/antisovetov-title-suffix-20260818",
+        "listed_pr":  "#1705",
+        "head_sha":  "60ed2034028f36a030d0ba2732b15d74619a01ef",
+        "api_ahead_by":  1,
+        "api_behind_by":  1425,
+        "api_merge_base":  "0694019141b0f9bddb47c44139454a0099feb861",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "60ed2034028f36a030d0ba2732b15d74619a01ef",
+        "archive_tag_matches_head":  true,
+        "file_count":  1,
+        "tip_identical_count":  0,
+        "unique_new_count":  0,
+        "differs_count":  1,
+        "files":  [
+                      {
+                          "path":  "src/components/article-pilots/antisovetov/AntisovetovPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "1c03e5c118d6a93055f89ebb3a42572b6cc9d46f",
+                          "main_blob":  "57dc0d98a67013f66e8a477f9af682709dba92c0",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      }
+                  ]
+    },
+    {
+        "class":  "E",
+        "branch":  "repair/antisovetov-title-suffix-20260906",
+        "listed_pr":  "#1813",
+        "head_sha":  "f85e0022891782435095178f33ca612eee58366c",
+        "api_ahead_by":  1,
+        "api_behind_by":  1345,
+        "api_merge_base":  "29204573b78f15f4e49455ccc4a63722f033d6bd",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "f85e0022891782435095178f33ca612eee58366c",
+        "archive_tag_matches_head":  true,
+        "file_count":  1,
+        "tip_identical_count":  0,
+        "unique_new_count":  0,
+        "differs_count":  1,
+        "files":  [
+                      {
+                          "path":  "src/components/article-pilots/antisovetov/AntisovetovPageHead.astro",
+                          "status":  "modified",
+                          "branch_blob":  "1c03e5c118d6a93055f89ebb3a42572b6cc9d46f",
+                          "main_blob":  "57dc0d98a67013f66e8a477f9af682709dba92c0",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      }
+                  ]
+    },
+    {
+        "class":  "E",
+        "branch":  "system/fix-article-quiz-next-ownership",
+        "listed_pr":  "#2157",
+        "head_sha":  "3120d0f0ae9ec0121c607ba7c153b186276d2ef3",
+        "api_ahead_by":  2,
+        "api_behind_by":  293,
+        "api_merge_base":  "d586aa63f02b569cfe050a63cc9078c044375d8d",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  2,
+        "tip_identical_count":  0,
+        "unique_new_count":  0,
+        "differs_count":  2,
+        "files":  [
+                      {
+                          "path":  "src/runtime/article-interactions.css",
+                          "status":  "modified",
+                          "branch_blob":  "937ecdfc1cb69759852beb692098d57a4172b777",
+                          "main_blob":  "c7b6a5ce23a2246210e9a9801b8f19e709ff4f51",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/runtime/article-quiz.js",
+                          "status":  "modified",
+                          "branch_blob":  "2415b3fba9280edcde7b2851cbb69cdd5756b9b5",
+                          "main_blob":  "73f21da90395470c754850e18aa128eaa731bdc0",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      }
+                  ]
+    },
+    {
+        "class":  "E",
+        "branch":  "fix/quiz-runtime-namespace-20261003",
+        "listed_pr":  "#2165",
+        "head_sha":  "f0eceafea6d7561116a3ba83771c2981b6c81dd7",
+        "api_ahead_by":  1,
+        "api_behind_by":  291,
+        "api_merge_base":  "888af5d24d41a370130ce210d82140d86ac1c96b",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  2,
+        "tip_identical_count":  0,
+        "unique_new_count":  0,
+        "differs_count":  2,
+        "files":  [
+                      {
+                          "path":  "css/floating-cluster.css",
+                          "status":  "modified",
+                          "branch_blob":  "3b8c3add4dc28d866ec011a9b2e7e970d7776586",
+                          "main_blob":  "0a1755d8b7cbc142cdaa930c49c9bc140d373809",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  2,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "sw.js",
+                          "status":  "modified",
+                          "branch_blob":  "27e4fe962603aca2e5197960e3a2631dc79850e9",
+                          "main_blob":  "66bcac84965935ae1e53744787a632ec1a886326",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  1,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      }
+                  ]
+    },
+    {
+        "class":  "E",
+        "branch":  "lane/metadata-reconcile-tma-pr518-20260908",
+        "listed_pr":  "#1881",
+        "head_sha":  "e486b50449e3d381c2ba95826bd43f3d8b633ea4",
+        "api_ahead_by":  6,
+        "api_behind_by":  1094,
+        "api_merge_base":  "49bc5260546b0fcca7cb860c13bb8edfefa6da7a",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  true,
+        "archive_tag_sha":  "e486b50449e3d381c2ba95826bd43f3d8b633ea4",
+        "archive_tag_matches_head":  true,
+        "file_count":  1,
+        "tip_identical_count":  0,
+        "unique_new_count":  0,
+        "differs_count":  1,
+        "files":  [
+                      {
+                          "path":  "data/editorial-metadata.json",
+                          "status":  "modified",
+                          "branch_blob":  "cd5bf23654305dd98c5392e8d7cf2648a0b3fa0b",
+                          "main_blob":  "b70026ca01350b3ba20cd9d82996d0236efcce69",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  11,
+                          "added_lines_present_main":  5,
+                          "presence_pct":  45.45
+                      }
+                  ]
+    },
+    {
+        "class":  "E",
+        "branch":  "arena/header-cluster-repair-20261002",
+        "listed_pr":  "#2160",
+        "head_sha":  "7ad067a0ec120244493dcfdd1aab530744952181",
+        "api_ahead_by":  2,
+        "api_behind_by":  293,
+        "api_merge_base":  "d586aa63f02b569cfe050a63cc9078c044375d8d",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  1,
+        "tip_identical_count":  0,
+        "unique_new_count":  0,
+        "differs_count":  1,
+        "files":  [
+                      {
+                          "path":  "src/components/ui/Header.astro",
+                          "status":  "modified",
+                          "branch_blob":  "ed23333cdda45d84035a8b277df32be047746b87",
+                          "main_blob":  "afe38fe781165d715b41a325628cdf1f3ba1b2c3",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  66,
+                          "added_lines_present_main":  33,
+                          "presence_pct":  50
+                      }
+                  ]
+    },
+    {
+        "class":  "E",
+        "branch":  "fix/series-taxonomy-projection-20260911",
+        "listed_pr":  "no PR",
+        "head_sha":  "6163135fd4cb0f72d0df4b47588fa6599abae051",
+        "api_ahead_by":  1,
+        "api_behind_by":  854,
+        "api_merge_base":  "f152093a8b57b262e4f7636050b4d3963472607c",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  7,
+        "tip_identical_count":  0,
+        "unique_new_count":  0,
+        "differs_count":  7,
+        "files":  [
+                      {
+                          "path":  "data/search-manifest.json",
+                          "status":  "modified",
+                          "branch_blob":  "5aa3a46f5f22258e44c7c1d10a7fca8435e1e146",
+                          "main_blob":  "048f5464e055adced41ea6ea01aa31424b281d0c",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  155,
+                          "added_lines_present_main":  103,
+                          "presence_pct":  66.45
+                      },
+                      {
+                          "path":  "scripts/search-manifest-policy-normalizer-core.js",
+                          "status":  "modified",
+                          "branch_blob":  "f8ba2acb72986a4d2e45230ab32d0a1fb2ceebc0",
+                          "main_blob":  "fb9cec13bb966fd09fd8eac234059a11e599de3c",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  50
+                      },
+                      {
+                          "path":  "scripts/search-manifest-policy-normalizer-test.js",
+                          "status":  "modified",
+                          "branch_blob":  "46a068d2567b08893f97e4b24a8811c75cf2358d",
+                          "main_blob":  "985a6458f6279d030902bd2be99351dbdb2590d6",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  25,
+                          "added_lines_present_main":  6,
+                          "presence_pct":  24
+                      },
+                      {
+                          "path":  "src/components/article-pilots/genesis6/Genesis6ArticlePage.astro",
+                          "status":  "modified",
+                          "branch_blob":  "64a266573ac09519f460e781a7c38fcb6968f388",
+                          "main_blob":  "8000ff899adc740824891adf413d0b5d24838735",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/pastor-series/PastorSeriesArticlePage.astro",
+                          "status":  "modified",
+                          "branch_blob":  "5936204e10a5c9f4ea66f3c6d9b61d8678db3599",
+                          "main_blob":  "2a8ffe81ffb7a375510a27d74c6c28428a836b14",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  0,
+                          "presence_pct":  0
+                      },
+                      {
+                          "path":  "src/components/article-pilots/teen-series/TeenSeriesArticlePage.astro",
+                          "status":  "modified",
+                          "branch_blob":  "9ab43befc24ff2f8f0ca3bbecd2ea2c612c39bb9",
+                          "main_blob":  "e8a532266ceb7b88c5b45b0ecea59027256ebaf4",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  2,
+                          "added_lines_present_main":  2,
+                          "presence_pct":  100
+                      },
+                      {
+                          "path":  "src/components/seo/Seo.astro",
+                          "status":  "modified",
+                          "branch_blob":  "4f3bd19853a38e065d6891a6472543e55e479d0f",
+                          "main_blob":  "64efbf937ac15a8be4edb1408151e1f2394eb6a6",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  4,
+                          "added_lines_present_main":  1,
+                          "presence_pct":  25
+                      }
+                  ]
+    },
+    {
+        "class":  "E",
+        "branch":  "fix/genealogy-relation-confidence-localization",
+        "listed_pr":  "no PR",
+        "head_sha":  "24b9ff5c2a0f13294c4d48df4928d414106fa113",
+        "api_ahead_by":  1,
+        "api_behind_by":  393,
+        "api_merge_base":  "106cede22950032ec1f0e643839c222d7ee2295e",
+        "api_status":  "diverged",
+        "open_pr_check":  "none",
+        "archive_tag_exists":  false,
+        "archive_tag_sha":  null,
+        "archive_tag_matches_head":  false,
+        "file_count":  1,
+        "tip_identical_count":  0,
+        "unique_new_count":  0,
+        "differs_count":  1,
+        "files":  [
+                      {
+                          "path":  "src/components/genealogy/RelationshipInspector.tsx",
+                          "status":  "modified",
+                          "branch_blob":  "f4aff2d05224842090c4106192fe82e3be078dcd",
+                          "main_blob":  "7b472987dd4f4076a5c8efb6f77a065372a5d9f4",
+                          "tip_result":  "DIFFERS",
+                          "added_lines_mergebase":  10,
+                          "added_lines_present_main":  3,
+                          "presence_pct":  30
+                      }
+                  ]
+    }
+]
