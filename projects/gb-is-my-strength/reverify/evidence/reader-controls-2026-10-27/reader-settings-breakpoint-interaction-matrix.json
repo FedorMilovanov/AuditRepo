@@ -1,0 +1,1586 @@
+{
+  "anchor": "Product main 21dcfdd9f9018607a708c5118383e287ec1a3fed plus #2204 one-file patch",
+  "results": [
+    {
+      "route": "/articles/20-antisovetov-pastoru/",
+      "width": 1025,
+      "kind": "gill",
+      "before": {
+        "hm": false,
+        "gill": true,
+        "gillRoot": true,
+        "triggers": [
+          {
+            "id": "railSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 112.921875,
+              "y": 837,
+              "width": 32,
+              "height": 32,
+              "top": 837,
+              "right": 144.921875,
+              "bottom": 869,
+              "left": 112.921875
+            }
+          },
+          {
+            "id": "mobSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "sel": "#hmSettings",
+          "exists": false
+        },
+        {
+          "sel": "#gillSettingsOverlay",
+          "exists": true,
+          "cls": "toc-overlay gill-settings-overlay is-open",
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "ariaHidden": "false"
+        }
+      ],
+      "beforeState": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.6",
+        "measureVar": "50rem",
+        "textLineHeight": "28.8px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "afterLine": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedLine": "true",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNarrow": "true",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNormal": "true",
+      "afterWide": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedWide": "true",
+      "consoleErrors": []
+    },
+    {
+      "route": "/articles/20-antisovetov-pastoru/",
+      "width": 1280,
+      "kind": "gill",
+      "before": {
+        "hm": false,
+        "gill": true,
+        "gillRoot": true,
+        "triggers": [
+          {
+            "id": "railSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 129.71875,
+              "y": 837,
+              "width": 32,
+              "height": 32,
+              "top": 837,
+              "right": 161.71875,
+              "bottom": 869,
+              "left": 129.71875
+            }
+          },
+          {
+            "id": "mobSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "sel": "#hmSettings",
+          "exists": false
+        },
+        {
+          "sel": "#gillSettingsOverlay",
+          "exists": true,
+          "cls": "toc-overlay gill-settings-overlay is-open",
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "ariaHidden": "false"
+        }
+      ],
+      "beforeState": {
+        "root": true,
+        "pageWidth": 703,
+        "pageMaxWidth": "none",
+        "lineVar": "1.6",
+        "measureVar": "50rem",
+        "textLineHeight": "28.8px",
+        "textFontSize": "18px",
+        "textWidth": 655,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "afterLine": {
+        "root": true,
+        "pageWidth": 703,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 655,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedLine": "true",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 672,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 624,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNarrow": "true",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 703,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 655,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNormal": "true",
+      "afterWide": {
+        "root": true,
+        "pageWidth": 703,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 655,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedWide": "true",
+      "consoleErrors": []
+    },
+    {
+      "route": "/articles/20-antisovetov-pastoru/",
+      "width": 1440,
+      "kind": "gill",
+      "before": {
+        "hm": false,
+        "gill": true,
+        "gillRoot": true,
+        "triggers": [
+          {
+            "id": "railSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 133.546875,
+              "y": 837,
+              "width": 32,
+              "height": 32,
+              "top": 837,
+              "right": 165.546875,
+              "bottom": 869,
+              "left": 133.546875
+            }
+          },
+          {
+            "id": "mobSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "sel": "#hmSettings",
+          "exists": false
+        },
+        {
+          "sel": "#gillSettingsOverlay",
+          "exists": true,
+          "cls": "toc-overlay gill-settings-overlay is-open",
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "ariaHidden": "false"
+        }
+      ],
+      "beforeState": {
+        "root": true,
+        "pageWidth": 800,
+        "pageMaxWidth": "none",
+        "lineVar": "1.6",
+        "measureVar": "50rem",
+        "textLineHeight": "28.8px",
+        "textFontSize": "18px",
+        "textWidth": 752,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "afterLine": {
+        "root": true,
+        "pageWidth": 800,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 752,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedLine": "true",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 672,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 624,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNarrow": "true",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 800,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 752,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNormal": "true",
+      "afterWide": {
+        "root": true,
+        "pageWidth": 854,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 806,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedWide": "true",
+      "consoleErrors": []
+    },
+    {
+      "route": "/articles/20-antisovetov-pastoru/",
+      "width": 1599,
+      "kind": "gill",
+      "before": {
+        "hm": false,
+        "gill": true,
+        "gillRoot": true,
+        "triggers": [
+          {
+            "id": "railSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 137.375,
+              "y": 837,
+              "width": 32,
+              "height": 32,
+              "top": 837,
+              "right": 169.375,
+              "bottom": 869,
+              "left": 137.375
+            }
+          },
+          {
+            "id": "mobSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "sel": "#hmSettings",
+          "exists": false
+        },
+        {
+          "sel": "#gillSettingsOverlay",
+          "exists": true,
+          "cls": "toc-overlay gill-settings-overlay is-open",
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "ariaHidden": "false"
+        }
+      ],
+      "beforeState": {
+        "root": true,
+        "pageWidth": 800,
+        "pageMaxWidth": "none",
+        "lineVar": "1.6",
+        "measureVar": "50rem",
+        "textLineHeight": "28.8px",
+        "textFontSize": "18px",
+        "textWidth": 752,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "afterLine": {
+        "root": true,
+        "pageWidth": 800,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 752,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedLine": "true",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 672,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 624,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNarrow": "true",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 800,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 752,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNormal": "true",
+      "afterWide": {
+        "root": true,
+        "pageWidth": 928,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 880,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedWide": "true",
+      "consoleErrors": []
+    },
+    {
+      "route": "/articles/20-antisovetov-pastoru/",
+      "width": 1600,
+      "kind": "gill",
+      "before": {
+        "hm": false,
+        "gill": true,
+        "gillRoot": true,
+        "triggers": [
+          {
+            "id": "railSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 137.390625,
+              "y": 837,
+              "width": 32,
+              "height": 32,
+              "top": 837,
+              "right": 169.390625,
+              "bottom": 869,
+              "left": 137.390625
+            }
+          },
+          {
+            "id": "mobSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "sel": "#hmSettings",
+          "exists": false
+        },
+        {
+          "sel": "#gillSettingsOverlay",
+          "exists": true,
+          "cls": "toc-overlay gill-settings-overlay is-open",
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "ariaHidden": "false"
+        }
+      ],
+      "beforeState": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.6",
+        "measureVar": "50rem",
+        "textLineHeight": "28.8px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "afterLine": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedLine": "true",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 672,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 624,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNarrow": "true",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNormal": "true",
+      "afterWide": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedWide": "true",
+      "consoleErrors": []
+    },
+    {
+      "route": "/articles/20-antisovetov-pastoru/",
+      "width": 1920,
+      "kind": "gill",
+      "before": {
+        "hm": false,
+        "gill": true,
+        "gillRoot": true,
+        "triggers": [
+          {
+            "id": "railSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 139,
+              "y": 837,
+              "width": 32,
+              "height": 32,
+              "top": 837,
+              "right": 171,
+              "bottom": 869,
+              "left": 139
+            }
+          },
+          {
+            "id": "mobSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "sel": "#hmSettings",
+          "exists": false
+        },
+        {
+          "sel": "#gillSettingsOverlay",
+          "exists": true,
+          "cls": "toc-overlay gill-settings-overlay is-open",
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "ariaHidden": "false"
+        }
+      ],
+      "beforeState": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.6",
+        "measureVar": "50rem",
+        "textLineHeight": "28.8px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "afterLine": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedLine": "true",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 672,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 624,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNarrow": "true",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNormal": "true",
+      "afterWide": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedWide": "true",
+      "consoleErrors": []
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "width": 1025,
+      "kind": "gill",
+      "before": {
+        "hm": false,
+        "gill": true,
+        "gillRoot": true,
+        "triggers": [
+          {
+            "id": "railSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 112.921875,
+              "y": 837,
+              "width": 32,
+              "height": 32,
+              "top": 837,
+              "right": 144.921875,
+              "bottom": 869,
+              "left": 112.921875
+            }
+          },
+          {
+            "id": "mobSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "sel": "#hmSettings",
+          "exists": false
+        },
+        {
+          "sel": "#gillSettingsOverlay",
+          "exists": true,
+          "cls": "toc-overlay gill-settings-overlay is-open",
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "ariaHidden": "false"
+        }
+      ],
+      "beforeState": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.6",
+        "measureVar": "50rem",
+        "textLineHeight": "28.8px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "afterLine": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedLine": "true",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNarrow": "true",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNormal": "true",
+      "afterWide": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedWide": "true",
+      "consoleErrors": []
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "width": 1280,
+      "kind": "gill",
+      "before": {
+        "hm": false,
+        "gill": true,
+        "gillRoot": true,
+        "triggers": [
+          {
+            "id": "railSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 129.71875,
+              "y": 837,
+              "width": 32,
+              "height": 32,
+              "top": 837,
+              "right": 161.71875,
+              "bottom": 869,
+              "left": 129.71875
+            }
+          },
+          {
+            "id": "mobSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "sel": "#hmSettings",
+          "exists": false
+        },
+        {
+          "sel": "#gillSettingsOverlay",
+          "exists": true,
+          "cls": "toc-overlay gill-settings-overlay is-open",
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "ariaHidden": "false"
+        }
+      ],
+      "beforeState": {
+        "root": true,
+        "pageWidth": 703,
+        "pageMaxWidth": "none",
+        "lineVar": "1.6",
+        "measureVar": "50rem",
+        "textLineHeight": "28.8px",
+        "textFontSize": "18px",
+        "textWidth": 655,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "afterLine": {
+        "root": true,
+        "pageWidth": 703,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 655,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedLine": "true",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 672,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 624,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNarrow": "true",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 703,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 655,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNormal": "true",
+      "afterWide": {
+        "root": true,
+        "pageWidth": 703,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 655,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedWide": "true",
+      "consoleErrors": []
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "width": 1440,
+      "kind": "gill",
+      "before": {
+        "hm": false,
+        "gill": true,
+        "gillRoot": true,
+        "triggers": [
+          {
+            "id": "railSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 133.546875,
+              "y": 837,
+              "width": 32,
+              "height": 32,
+              "top": 837,
+              "right": 165.546875,
+              "bottom": 869,
+              "left": 133.546875
+            }
+          },
+          {
+            "id": "mobSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "sel": "#hmSettings",
+          "exists": false
+        },
+        {
+          "sel": "#gillSettingsOverlay",
+          "exists": true,
+          "cls": "toc-overlay gill-settings-overlay is-open",
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "ariaHidden": "false"
+        }
+      ],
+      "beforeState": {
+        "root": true,
+        "pageWidth": 800,
+        "pageMaxWidth": "none",
+        "lineVar": "1.6",
+        "measureVar": "50rem",
+        "textLineHeight": "28.8px",
+        "textFontSize": "18px",
+        "textWidth": 752,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "afterLine": {
+        "root": true,
+        "pageWidth": 800,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 752,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedLine": "true",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 672,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 624,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNarrow": "true",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 800,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 752,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNormal": "true",
+      "afterWide": {
+        "root": true,
+        "pageWidth": 854,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 806,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedWide": "true",
+      "consoleErrors": []
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "width": 1599,
+      "kind": "gill",
+      "before": {
+        "hm": false,
+        "gill": true,
+        "gillRoot": true,
+        "triggers": [
+          {
+            "id": "railSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 137.375,
+              "y": 837,
+              "width": 32,
+              "height": 32,
+              "top": 837,
+              "right": 169.375,
+              "bottom": 869,
+              "left": 137.375
+            }
+          },
+          {
+            "id": "mobSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "sel": "#hmSettings",
+          "exists": false
+        },
+        {
+          "sel": "#gillSettingsOverlay",
+          "exists": true,
+          "cls": "toc-overlay gill-settings-overlay is-open",
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "ariaHidden": "false"
+        }
+      ],
+      "beforeState": {
+        "root": true,
+        "pageWidth": 800,
+        "pageMaxWidth": "none",
+        "lineVar": "1.6",
+        "measureVar": "50rem",
+        "textLineHeight": "28.8px",
+        "textFontSize": "18px",
+        "textWidth": 752,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "afterLine": {
+        "root": true,
+        "pageWidth": 800,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 752,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedLine": "true",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 672,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 624,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNarrow": "true",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 800,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 752,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNormal": "true",
+      "afterWide": {
+        "root": true,
+        "pageWidth": 928,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 880,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedWide": "true",
+      "consoleErrors": []
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "width": 1600,
+      "kind": "gill",
+      "before": {
+        "hm": false,
+        "gill": true,
+        "gillRoot": true,
+        "triggers": [
+          {
+            "id": "railSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 137.390625,
+              "y": 837,
+              "width": 32,
+              "height": 32,
+              "top": 837,
+              "right": 169.390625,
+              "bottom": 869,
+              "left": 137.390625
+            }
+          },
+          {
+            "id": "mobSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "sel": "#hmSettings",
+          "exists": false
+        },
+        {
+          "sel": "#gillSettingsOverlay",
+          "exists": true,
+          "cls": "toc-overlay gill-settings-overlay is-open",
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "ariaHidden": "false"
+        }
+      ],
+      "beforeState": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.6",
+        "measureVar": "50rem",
+        "textLineHeight": "28.8px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "afterLine": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedLine": "true",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 672,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 624,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNarrow": "true",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNormal": "true",
+      "afterWide": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedWide": "true",
+      "consoleErrors": []
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "width": 1920,
+      "kind": "gill",
+      "before": {
+        "hm": false,
+        "gill": true,
+        "gillRoot": true,
+        "triggers": [
+          {
+            "id": "railSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 139,
+              "y": 837,
+              "width": 32,
+              "height": 32,
+              "top": 837,
+              "right": 171,
+              "bottom": 869,
+              "left": 139
+            }
+          },
+          {
+            "id": "mobSettingsBtn",
+            "display": "grid",
+            "visibility": "visible",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "sel": "#hmSettings",
+          "exists": false
+        },
+        {
+          "sel": "#gillSettingsOverlay",
+          "exists": true,
+          "cls": "toc-overlay gill-settings-overlay is-open",
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "ariaHidden": "false"
+        }
+      ],
+      "beforeState": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.6",
+        "measureVar": "50rem",
+        "textLineHeight": "28.8px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "afterLine": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedLine": "true",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 672,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 624,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNarrow": "true",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNormal": "true",
+      "afterWide": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedWide": "true",
+      "consoleErrors": []
+    }
+  ],
+  "failures": [
+    {
+      "route": "/articles/20-antisovetov-pastoru/",
+      "width": 1025,
+      "issue": "narrow and wide measure did not change actual page width",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "afterWide": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNarrow": "true",
+      "pressedWide": "true"
+    },
+    {
+      "route": "/articles/20-antisovetov-pastoru/",
+      "width": 1600,
+      "issue": "normal and wide measure alias on wide desktop; existing GBS-READER-MEASURE-DESKTOP-ALIAS-AND-BREAKPOINT-REGRESSION candidate",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "afterWide": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNormal": "true",
+      "pressedWide": "true"
+    },
+    {
+      "route": "/articles/20-antisovetov-pastoru/",
+      "width": 1920,
+      "issue": "normal and wide measure alias on wide desktop; existing GBS-READER-MEASURE-DESKTOP-ALIAS-AND-BREAKPOINT-REGRESSION candidate",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "afterWide": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Пасторское служение почти никогда не разрушается в один"
+      },
+      "pressedNormal": "true",
+      "pressedWide": "true"
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "width": 1025,
+      "issue": "narrow and wide measure did not change actual page width",
+      "afterNarrow": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "42rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "afterWide": {
+        "root": true,
+        "pageWidth": 494,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 446,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNarrow": "true",
+      "pressedWide": "true"
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "width": 1600,
+      "issue": "normal and wide measure alias on wide desktop; existing GBS-READER-MEASURE-DESKTOP-ALIAS-AND-BREAKPOINT-REGRESSION candidate",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "afterWide": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNormal": "true",
+      "pressedWide": "true"
+    },
+    {
+      "route": "/articles/dzhon-gill-chast-1-chelovek/",
+      "width": 1920,
+      "issue": "normal and wide measure alias on wide desktop; existing GBS-READER-MEASURE-DESKTOP-ALIAS-AND-BREAKPOINT-REGRESSION candidate",
+      "afterNormal": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "50rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "afterWide": {
+        "root": true,
+        "pageWidth": 760,
+        "pageMaxWidth": "none",
+        "lineVar": "1.85",
+        "measureVar": "58rem",
+        "textLineHeight": "33.3px",
+        "textFontSize": "18px",
+        "textWidth": 712,
+        "textSample": "Джон Гилл родился 23 ноября 1697 года по старому стилю "
+      },
+      "pressedNormal": "true",
+      "pressedWide": "true"
+    }
+  ],
+  "pass": false
+}

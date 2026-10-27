@@ -1,0 +1,62 @@
+{
+  "checked_at": "2026-10-27",
+  "product_repository": "FedorMilovanov/gb-is-my-strength",
+  "product_base_sha": "21dcfdd9f9018607a708c5118383e287ec1a3fed",
+  "isolated_candidate_sha": "92b7d38a9175fd0dd5ef1d4654d071e939f7a096",
+  "product_candidate_changed_paths": [
+    "src/components/genealogy/RelationshipInspector.tsx"
+  ],
+  "product_test_source_sha1": {
+    "scripts/reader-controls-residual-browser-contract.mjs": "022d2a4fe21d81119f2b9a5266539b753ccbeb41",
+    "scripts/reader-preferences-regression-test.js": "2b12d191634e5d56a094fdafe33e92416ba0e858",
+    "css/floating-cluster.css": "0a1755d8b7cbc142cdaa930c49c9bc140d373809",
+    "css/reader-preferences.css": "a270c2138a5e2970737a5881eff7ad263bb3ca75",
+    "src/components/article-pilots/_shared/ReaderSettings.astro": "0fb59aef32f321e444b88069bfd4458d84b85740",
+    "src/components/article-pilots/gill-series/GillReaderSettingsSheet.astro": "a29e46d521853e4a4c6a27ba1c5ab9a1aa8c8941",
+    "js/floating-cluster-controller.js": "a56f724bccd10badc598e881ce78f877b8e6259b"
+  },
+  "browser_contract": {
+    "checks": 1458,
+    "passed": 1458,
+    "failed": 0
+  },
+  "settings_matrix": {
+    "routes": [
+      "/articles/20-antisovetov-pastoru/",
+      "/articles/dzhon-gill-chast-1-chelovek/"
+    ],
+    "viewports_px": [
+      1025,
+      1280,
+      1440,
+      1599,
+      1600,
+      1920
+    ],
+    "cases": 12,
+    "script_assertion_failures": 6,
+    "javascript_errors": 0
+  },
+  "evidence_files": [
+    {
+      "path": "reader-controls-residual-browser-contract.json",
+      "bytes": 865672,
+      "sha256": "230e9a81b78d034758e0eb06881541dbe88b346b29620e26306dae2a575cf371"
+    },
+    {
+      "path": "reader-controls-residual-browser-contract.md",
+      "bytes": 446,
+      "sha256": "af6e1df1261d98ba06470b45c5077a889fffc2bfb52dbb661dfce2174c3919ad"
+    },
+    {
+      "path": "reader-settings-breakpoint-interaction-matrix.json",
+      "bytes": 47816,
+      "sha256": "7ff2016183f89f00115fcc63f4e0c4a7207a9e71ac19a580eba18bc46ac206d8"
+    },
+    {
+      "path": "reader-settings-live-interaction-check.mjs",
+      "bytes": 7064,
+      "sha256": "d775427c60f4f42fac9c3d5a98042df32abf2872936f42b86ba62c90ba06a203"
+    }
+  ]
+}
