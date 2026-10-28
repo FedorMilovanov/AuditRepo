@@ -1,0 +1,12 @@
+{"kind":"anchor","product":"d056a19cfabe84dc2dbc59fc37ff4b03288917f1","open_owner":{"pr":2211,"scope":"genealogy-v2-data","overlap":false},"merged_during_run":{"pr":2210,"scope":"draft-noindex-mdx","runtime_overlap":false}}
+{"kind":"baseline","validate":"pass","production_build":"pass","html":108,"metadata":{"approved":72,"blocked":0},"product_mutation":false}
+{"kind":"speed","route":"/nagornaya/chast-1/","profile":"1280x800 dark reduce","closed":{"inert":true,"buttons":6},"tab_forward":"first-radio->save","shift_tab":"play->font-control","escape_return":"exact-play","result":"FIXED-CURRENT"}
+{"kind":"header","route":"/articles/","widths":[320,390,768,1280],"named_host":"4/4","single_opener":"4/4","target":"44x44","overlap_px":[0,0,0,0],"viewport_contained":"8/8"}
+{"kind":"header_routes","consumers":{"/biografii/":"named-single","/pastor-series/":"named-single"},"negative_control":{"/":"native-single-no-injection"},"result":"FIXED-CURRENT"}
+{"kind":"image","routes":["/nagornaya/chast-1/","/articles/20-antisovetov-pastoru/","/articles/krajne-li-isporcheno-serdce/"],"profiles":"desktop+mobile light+dark reduce","semantics":"tabindex=0 role=button named","activation":"pointer+Enter+Space","escape_exact_return":"5/5","result":"FIXED-CURRENT"}
+{"kind":"share","route":"/articles/dzhon-gill-chast-1-chelovek/","profiles":["1280x800","390x844"],"fallback_true":"copied+cleanup 2/2","fallback_false":"failed+cleanup 2/2","fallback_throw":"failed+textarea-leak 2/2","result":"NARROWED-ACTIVE"}
+{"kind":"tts_retry","contract":"scripts/vosk-loader-retry-contract-test.js","result":"pass","sticky_terminal_dependency":"fixed-current"}
+{"kind":"tts_notice","sequence":"selected autoHide=20 -> error at 40ms -> sample +400ms","expected":"new error retained","actual":"notice absent","root":"inner 360ms removal has no generation token","result":"ACTIVE"}
+{"kind":"quality","route":"/articles/dzhon-gill-chast-1-chelovek/","chromium":"153.0.8010.0","broken_images":0,"cls":0.0002240075,"lcp_entry_ms":180,"axe":{"color-contrast":2},"console":"external sandbox ERR_CONNECTION_CLOSED only"}
+{"kind":"nojs","routes":{"/articles/":{"injected_search":0,"text_chars":22900},"/nagornaya/chast-1/":{"viewer":0,"image_role":null,"text_chars":25778}},"boundary":"progressive enhancement preserved"}
+{"kind":"arithmetic","before":{"active":73,"direct":43,"improvements":8,"residual":1,"systems":21},"after":{"active":70,"direct":43,"improvements":8,"residual":1,"systems":18},"closed_systems":3,"narrowed_systems":2}

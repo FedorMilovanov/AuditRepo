@@ -366,14 +366,12 @@
       "reason": "2026-10-23: advisory visibility and stuck update PRs are detection/remediation manifestations of one unclosed dependency lifecycle; fresh state is 9 dev/build advisories, #2144 closed unmerged, #2179 open/behind. See reverify/2026-10-23-systemic-dependency-advisory-lifecycle.md."
     },
     "GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP": {
-      "status": "alias",
-      "canonical": "SYS-INJECTED-HEADER-CONTROL-HOST",
-      "reason": "2026-10-23: native Articles overlap and viewport clipping are two geometry metrics of the same implicit ReaderPreferencesHead search injection into a generic mobile-controls host. See reverify/2026-10-23-systemic-injected-header-control-host.md."
+      "status": "retired",
+      "reason": "2026-10-28: fixed-current with the named injected-header host; native 320/390/768/1280 geometry has zero overlap and full viewport containment. See reverify/2026-10-28-reader-control-outcome-cluster-resulting-main.md."
     },
     "GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT": {
-      "status": "alias",
-      "canonical": "SYS-INJECTED-HEADER-CONTROL-HOST",
-      "reason": "2026-10-23: native Articles overlap and viewport clipping are two geometry metrics of the same implicit ReaderPreferencesHead search injection into a generic mobile-controls host. See reverify/2026-10-23-systemic-injected-header-control-host.md."
+      "status": "retired",
+      "reason": "2026-10-28: fixed-current with the named injected-header host; native 320/390/768/1280 geometry has zero overlap and full viewport containment. See reverify/2026-10-28-reader-control-outcome-cluster-resulting-main.md."
     }
   },
   "ignoredTokens": []
