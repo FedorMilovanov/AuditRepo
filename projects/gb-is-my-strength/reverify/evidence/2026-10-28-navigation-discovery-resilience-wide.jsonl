@@ -1,0 +1,16 @@
+{"kind":"meta","wave":15,"date":"2026-10-28","product_sha":"1a67c65cf2a30b06200480b7245abab873447a47","origin_main":"1a67c65cf2a30b06200480b7245abab873447a47","product_clean":true,"open_product_pr":[2215],"owner_overlap":false}
+{"kind":"teen_progress","profiles":28,"routes":7,"widths":[390,1280],"schemes":["light","dark"],"exact_step_count":28,"expected":"Шаг N из 7","marks":["I","II","III","A","B","C","D"]}
+{"kind":"teen_native_sequence","transitions":6,"passed":6,"flow":["I→II","II→III","III→A","A→B","B→C","C→D"],"native_click":true,"url_and_identity":true,"forced":false}
+{"kind":"teen_health","profiles":28,"axe_clean":21,"known_aggregate_contrast":7,"broken_images":0,"page_errors":0,"console_errors":0,"overflow":0,"lcp_ms":[188,328],"cls_max":0.0242}
+{"kind":"mobile_chrome","profiles":6,"routes":["/articles/","/biografii/","/hard-texts/"],"schemes":["light","dark"],"one_down_sync":6,"one_up_sync":6,"header_rect":"390x53@0","targets":["38x38","38x38","282x38"]}
+{"kind":"mobile_chrome_actions","search_open_input_focus":"6/6","home_to_root":"3/3","back_to_root":"3/3","native":true,"axe":0,"broken_images":0,"page_errors":0,"console_errors":0,"overflow":0,"lcp_ms":[120,144],"cls_max":0}
+{"kind":"home_publications","profiles":4,"manifest_top5_exact":"4/4","native_card_destinations":"5/5","axe":0,"broken_images":0,"page_errors":0,"console_errors":0,"overflow":0,"lcp_ms":[156,344],"cls_max":0.008}
+{"kind":"home_search_focus","desktop_exact_opener":"30/30","mobile_exact_opener":"0/30","mobile_actual":"#hMobileMenuBtn","clicked":"#heroSearchBar","decision":"retain"}
+{"kind":"journal_g3","source_blocks":33,"linked_blocks":33,"bibliography_targets":21,"broken_local_targets":0,"external_resolvers_ok":21,"decision":"remove_from_row_scope"}
+{"kind":"journal_diotrophes","profiles":4,"source_refs":56,"reader_links":0,"decision":"retain_narrowed"}
+{"kind":"nowebgl","profiles":4,"widths":[390,1440],"schemes":["light","dark"],"fallback":"4/4","canvas":0,"iframe":"about:blank","axe":0,"broken_images":0,"page_errors":0,"console_errors":0,"overflow":0,"lcp_ms":[68,80],"cls_max":0}
+{"kind":"nowebgl_network","request":"/_app/index.html","content_length":2245873,"response_status":200,"terminal":"net::ERR_ABORTED","requestfinished":false,"application_activated":false}
+{"kind":"sitemap","normalizer_check":"PASS","eligibility":"POLICY_INCLUDE_AND_PRODUCTION_AND_MANIFEST_AND_VALID_DATE","skipped":"none","route_contract":"PASS","indexable_routes":95}
+{"kind":"forced_colors","profiles":16,"routes":8,"actual_owner":"#mobileMenu","opened":"16/16","menu_rect":"390x844","escape_exact_focus_return":"16/16","system_colors":true,"physical_windows_hcm":false,"decision":"retain_fixed_candidate"}
+{"kind":"contracts","pass":["teen-series-release","sitemap-route","sitemap-normalizer-check","home-visual-parity","astro-home-pilot","home-component-lab"],"red":{"konfessii-map-audit":25},"red_reason":"temporary audit server: desktop root-relative asset 404; mobile wrapper 404","harness_changed":false}
+{"kind":"matrix","before":{"active":59,"direct":33,"improvements":7,"residual":1,"systems":18},"after":{"active":54,"direct":28,"improvements":7,"residual":1,"systems":18},"closed":5,"retained":3}
