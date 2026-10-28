@@ -8,10 +8,10 @@
 |---|---:|
 | Active work units | **3** |
 | Direct current defects | **0** |
-| Verified necessary improvements | **1** |
+| Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
 | System verification lanes | **1** |
-| Owner decisions | **1** |
+| Owner decisions | **2** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
 ## CURRENT DEFECTS — 0
@@ -19,11 +19,10 @@
 | ID | Current problem | Boundary | Evidence |
 |---|---|---|---|
 
-## VERIFIED NECESSARY IMPROVEMENTS — 1
+## VERIFIED NECESSARY IMPROVEMENTS — 0
 
 | ID | Needed implementation | Why | Evidence |
 |---|---|---|---|
-| `AR-ISSUE-LIFECYCLE-001` | Установить назначение, labels и terminal disposition для AuditRepo issues; evidence-only receipts не должны бессрочно выглядеть активной работой. | Из 22 issues 21 без labels; из четырёх открытых #489 — пустой `probe`, #484 помечен как pending и явно superseded #485, а #485 сам говорит, что работа завершена. Это делает open-state ложным backlog-сигналом. | [`wave 1`](../verification/2026-10-29-wave-1-baseline/REPORT.md) |
 
 ## NARROWED RESIDUALS — 0
 
@@ -36,10 +35,11 @@
 |---|---|---|---|
 | `AR-PROJECT-CURRENCY-001` | Проверить semantic currency активных/нулевых project matrices после релевантных Product-транзакций, не превращая любое движение HEAD в reopen. | Сначала классифицировать изменения после записанных anchors для Milovi Cake, Milovi School и The Legendary Poet; обновлять только затронутые claims/owners и сохранять event-driven правило. | [`wave 1`](../verification/2026-10-29-wave-1-baseline/REPORT.md) |
 
-## OWNER DECISIONS — 1
+## OWNER DECISIONS — 2
 
 | ID | Missing decision | Closure boundary | Evidence |
 |---|---|---|---|
+| `AR-ISSUE-LIFECYCLE-001` | Четыре lifecycle labels созданы и policy формализована, но integration получает HTTP 403 при применении labels/изменении issues. Текущая классификация: #489 diagnostic; #485 evidence; #484 superseded by #485; #437 superseded/contradicted более поздним current TLP matrix. | Owner применяет соответствующие `state:*` labels и решает, закрывать ли четыре административные записи. До этого open-state не является доказательством четырёх активных work items. | [`wave 5`](../verification/2026-10-29-wave-5-issue-lifecycle/REPORT.md) |
 | `AR-PR482-DISPOSITION-001` | Единственный открытый AuditRepo PR #482 прямо говорит «PR не мержить», отстаёт от `main` на 168 коммитов и содержит 12 уникальных commits / 33 файла / 9,330 добавленных строк intake evidence без archive-ref или landed copy. | После content-level reconciliation выбрать одно: импортировать полезное уникальное evidence узким пакетом либо сохранить exact head в reviewed archive; затем закрыть PR только с явной owner authorization. | [`wave 1`](../verification/2026-10-29-wave-1-baseline/REPORT.md) |
 
 ## Terminal rule

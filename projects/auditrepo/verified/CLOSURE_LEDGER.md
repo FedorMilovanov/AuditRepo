@@ -34,3 +34,11 @@
 - Regression witness: duplicate, missing manifest and whitespace fixtures fail; exact identity sidecar passes.
 - Preservation boundary: existing Git history and semantically meaningful raw/package topology remain intact.
 - Detailed evidence: `../verification/2026-10-29-wave-4-artifact-retention/REPORT.md`.
+
+## 2026-10-29 — issue lifecycle semantics
+
+- Scope: `AR-ISSUE-LIFECYCLE-001`, all 22 AuditRepo issues and live branch metadata.
+- Result: lifecycle contract/labels created; four open records classified; application remains owner action because issue-write APIs return integration 403.
+- Correction: public branch metadata proves `main` protected with required `validate` and `preflight` contexts; admin-detail readback remains inaccessible.
+- Boundary: no issue was edited or closed.
+- Detailed evidence: `../verification/2026-10-29-wave-5-issue-lifecycle/REPORT.md`.
