@@ -39,7 +39,7 @@
 | ID | Missing decision | Closure boundary | Evidence |
 |---|---|---|---|
 | `AR-ISSUE-LIFECYCLE-001` | Четыре lifecycle labels созданы и policy формализована, но integration получает HTTP 403 при применении labels/изменении issues. Текущая классификация: #489 diagnostic; #485 evidence; #484 superseded by #485; #437 superseded/contradicted более поздним current TLP matrix. | Owner применяет соответствующие `state:*` labels и решает, закрывать ли четыре административные записи. До этого open-state не является доказательством четырёх активных work items. | [`wave 5`](../verification/2026-10-29-wave-5-issue-lifecycle/REPORT.md) |
-| `AR-PR482-DISPOSITION-001` | Единственный открытый AuditRepo PR #482 прямо говорит «PR не мержить», отстаёт от `main` на 168 коммитов и содержит 12 уникальных commits / 33 файла / 9,330 добавленных строк intake evidence без archive-ref или landed copy. | После content-level reconciliation выбрать одно: импортировать полезное уникальное evidence узким пакетом либо сохранить exact head в reviewed archive; затем закрыть PR только с явной owner authorization. | [`wave 1`](../verification/2026-10-29-wave-1-baseline/REPORT.md) |
+| `AR-PR482-DISPOSITION-001` | Content-level reconciliation завершён: все явные IDs и три queue-кандидата поглощены более новыми current owners; stale branch также удаляет поздние queue updates. Whole-merge/import отклонён, exact head `539d7b81…` доступен. | Рекомендация: с явной owner authorization закрыть PR #482 как superseded, не удаляя branch. Ref retirement — только отдельным reviewed exact-SHA протоколом. | [`wave 7`](../verification/2026-10-29-wave-7-pr482-disposition/REPORT.md) |
 
 ## Terminal rule
 

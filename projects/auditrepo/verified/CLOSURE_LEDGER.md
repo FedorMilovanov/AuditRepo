@@ -49,3 +49,11 @@
 - Result: closed; Milovi Cake admitted two current residuals, Milovi School closed stale GSC ownership, TLP retained one current human-proof boundary.
 - Negative result: bible-bot/code-audit terminal states remain current; HEAD movement alone did not create rows.
 - Detailed evidence: `../verification/2026-10-29-wave-6-project-currency/REPORT.md`.
+
+## 2026-10-29 — PR #482 content disposition
+
+- Scope: `AR-PR482-DISPOSITION-001`, 12 commits / 33 files / 9,330 added lines at exact head `539d7b81…`.
+- Result: no unique current material requires import; merge/wholesale copy rejected as stale and duplicative.
+- Preservation boundary: PR head remains accessible and source branch is not deleted; future retirement is a separate reviewed action.
+- Remaining action: owner-authorized PR close only.
+- Detailed evidence: `../verification/2026-10-29-wave-7-pr482-disposition/REPORT.md`.
