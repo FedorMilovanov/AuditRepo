@@ -1,0 +1,10 @@
+{"type":"anchor","product_sha":"cdf994b104d7b5eaeef407bf60e341e436efe1df","build":"strangler:build:production-like","documents":108,"astro_errors":0,"product_modified":false,"open_pr_2208":"docs-only; no overlap"}
+{"type":"scope","rows":["GBS-ISHOD-AARON-NAME-MISSPELLING","GBS-ISHOD-NOJS-FALLBACK-OWNER-OCCLUSION","GBS-ISHOD-STATIC-PROJECTION-RICH-BLOCK-FLATTENING"],"profiles":"desktop/mobile x Light/Dark x JS/no-JS","screenshots":8}
+{"type":"name_source","token":"Аварон","source_files":["karty/ishod/route.json","research/PIHAHIROTH_HISTORICAL_ROUTE_2026-08-02.json"],"final_static_story":1,"status":"OPEN-CURRENT"}
+{"type":"name_surfaces","screen_ax":true,"print_desktop":{"count":1,"rect":"1258x21.7@y533.5"},"print_mobile":{"count":1,"rect":"368x43.4@y937.6"},"themes":["light","dark"]}
+{"type":"nojs_geometry","desktop":{"projection":"760x8126.4","overlay":"1216x836"},"mobile":{"projection":"358x15373.5","overlay":"326x780"},"stage_display":"none","overlay_position":"fixed","overflow":0,"broken":0}
+{"type":"nojs_hit_test","profiles":4,"scroll_positions":["start","middle","end"],"samples":12,"overlay_hits":12,"projection_hits":0,"console_errors":0,"page_errors":0,"status":"OPEN-CURRENT"}
+{"type":"flattening","artifacts":{"Средняя Поздняя":1,"Средняя Кочевая":1},"screen_ax":true,"print_desktop":{"rameses":"1280x65.1","kadesh":"1280x43.4"},"print_mobile":{"rameses":"390x173.6","kadesh":"390x151.9"},"status":"OPEN-CURRENT"}
+{"type":"js_health","profiles":4,"axe_violations":0,"broken_images":0,"horizontal_overflow":0,"console_errors":0,"page_errors":0}
+{"type":"gates","astro_audit_ishod":"pass","maps_validate":"pass","publication_status":"pass","readable_audit":"pass","article_qa":"pass","gap":"no composed no-JS viewport, protected-name or rich-block semantic parity contract"}
+{"type":"disposition","confirmed_current":3,"new_rows":0,"new_work_units":0,"matrix":{"direct":45,"improvements":8,"residual":1,"systems":22,"total":76}}
