@@ -42,3 +42,10 @@
 - Correction: public branch metadata proves `main` protected with required `validate` and `preflight` contexts; admin-detail readback remains inaccessible.
 - Boundary: no issue was edited or closed.
 - Detailed evidence: `../verification/2026-10-29-wave-5-issue-lifecycle/REPORT.md`.
+
+## 2026-10-29 — project semantic currency
+
+- Scope: `AR-PROJECT-CURRENCY-001`, current external source heads/open owners and zero/single-row matrices.
+- Result: closed; Milovi Cake admitted two current residuals, Milovi School closed stale GSC ownership, TLP retained one current human-proof boundary.
+- Negative result: bible-bot/code-audit terminal states remain current; HEAD movement alone did not create rows.
+- Detailed evidence: `../verification/2026-10-29-wave-6-project-currency/REPORT.md`.

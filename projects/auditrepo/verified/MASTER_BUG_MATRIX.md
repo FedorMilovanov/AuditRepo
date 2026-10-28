@@ -6,11 +6,11 @@
 
 | Field | Value |
 |---|---:|
-| Active work units | **3** |
+| Active work units | **2** |
 | Direct current defects | **0** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
-| System verification lanes | **1** |
+| System verification lanes | **0** |
 | Owner decisions | **2** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
@@ -29,11 +29,10 @@
 | ID | Current residual |
 |---|---|
 
-## SYSTEM VERIFICATION LANES — 1
+## SYSTEM VERIFICATION LANES — 0
 
 | ID | Verified work package | Next boundary | Evidence |
 |---|---|---|---|
-| `AR-PROJECT-CURRENCY-001` | Проверить semantic currency активных/нулевых project matrices после релевантных Product-транзакций, не превращая любое движение HEAD в reopen. | Сначала классифицировать изменения после записанных anchors для Milovi Cake, Milovi School и The Legendary Poet; обновлять только затронутые claims/owners и сохранять event-driven правило. | [`wave 1`](../verification/2026-10-29-wave-1-baseline/REPORT.md) |
 
 ## OWNER DECISIONS — 2
 

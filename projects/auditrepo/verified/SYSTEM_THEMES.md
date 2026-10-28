@@ -21,4 +21,4 @@
 - Проявления: terminal/active matrices остаются привязаны к старым anchors, тогда как релевантные source transactions происходят вне AuditRepo.
 - Механизм: правило «HEAD movement не reopen» корректно, но нет компактного владельца semantic-impact classification.
 - Класс результата: bounded source-event reconciliation только для затронутых authority surfaces.
-- Current row: `AR-PROJECT-CURRENCY-001`.
+- Current rows: none; event-driven reconciliation completed in wave 6 and project-local owners now carry the surviving work.
