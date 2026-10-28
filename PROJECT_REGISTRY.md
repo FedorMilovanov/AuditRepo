@@ -14,7 +14,7 @@ Registry хранит только стабильную ориентацию. Т
 | `projects/milovi-cake/` | `FedorMilovanov/Milovi_Cake` | **active** | [`DOC_MAP.md`](projects/milovi-cake/DOC_MAP.md) |
 | `projects/milovi-school/` | `FedorMilovanov/Milovi_School` | **active** | [`DOC_MAP.md`](projects/milovi-school/DOC_MAP.md) |
 | `projects/bible-bot/` | `FedorMilovanov/bible-bot` | **active** | [`DOC_MAP.md`](projects/bible-bot/DOC_MAP.md) |
-| `projects/code-audit/` | `3stoneBrother/code-audit` | `intake-only` | [`README.md`](projects/code-audit/README.md) |
+| `projects/code-audit/` | `3stoneBrother/code-audit` | `paused` | [`DOC_MAP.md`](projects/code-audit/DOC_MAP.md) |
 
 ## Status glossary
 

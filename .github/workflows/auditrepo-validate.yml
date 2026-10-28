@@ -55,6 +55,8 @@ jobs:
       - name: Compile core Python tools
         run: |
           python3 -m py_compile \
+            scripts/check_auditrepo_structure.py \
+            scripts/check_auditrepo_structure_regression_test.py \
             scripts/check_workflow_syntax.py \
             scripts/check_workflow_syntax_regression_test.py \
             scripts/validate_audit_repo.py \
@@ -68,7 +70,9 @@ jobs:
             scripts/retire_reviewed_refs_regression_test.py
 
       - name: Check structure
-        run: python3 scripts/check_auditrepo_structure.py
+        run: |
+          python3 scripts/check_auditrepo_structure_regression_test.py
+          python3 scripts/check_auditrepo_structure.py
 
       - name: Validate workflow syntax and immutable action pins
         run: |
@@ -106,6 +110,7 @@ jobs:
           summary = report['summary']
           required_zero = (
               'inaccessibleClosedHeads',
+              'unledgeredClosedUnmergedPrs',
               'manualReviewCandidates',
               'unexplainedRemoteBranches',
           )

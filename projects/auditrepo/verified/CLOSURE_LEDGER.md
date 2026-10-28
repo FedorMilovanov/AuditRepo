@@ -18,3 +18,11 @@
 - Regression witness: heuristic `superseded` without ledger remains a manual candidate; strict summary requires zero unledgered PRs.
 - History witness: 0 inaccessible heads, 0 manual candidates, 0 unexplained refs; archive refs for #330/#335 equal exact heads.
 - Detailed evidence: `../verification/2026-10-29-wave-2-history-forensic/REPORT.md`.
+
+## 2026-10-29 — canonical project/workflow contract
+
+- Scope: `AR-PROJECT-CONTRACT-001`, seven project folders and five workflows.
+- Result: closed; authority files are structurally required and `code-audit` is consistently `paused` with terminal-zero synthesis.
+- Regression witness: structure + repository validator and workflow preflight suites pass; all project matrices pass coverage.
+- Boundary: branch protection remains UNPROVEN due integration 403; no absence claim is made.
+- Detailed evidence: `../verification/2026-10-29-wave-3-project-workflow-contract/REPORT.md`.

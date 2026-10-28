@@ -3,27 +3,44 @@ from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parent.parent
-PROJECTS = ROOT / 'projects'
-errors = []
+PROJECT_REQUIRED = (
+    'README.md', 'PROJECT_META.yml', 'DOC_MAP.md', 'WORK_QUEUE.md',
+    'incoming', 'working', 'verification', 'verified', 'repairs', 'reverify', 'archive',
+    'verified/MASTER_BUG_MATRIX.md', 'verified/SYSTEM_THEMES.md',
+    'verified/CLOSURE_LEDGER.md',
+)
 
-if not (ROOT / 'README.md').exists():
-    errors.append('Missing root README.md')
-if not (ROOT / 'PROJECT_REGISTRY.md').exists():
-    errors.append('Missing PROJECT_REGISTRY.md')
-if not PROJECTS.exists():
-    errors.append('Missing projects/ directory')
 
-for p in PROJECTS.iterdir() if PROJECTS.exists() else []:
-    if not p.is_dir() or p.name.startswith('_'):
-        continue
-    for rel in ['README.md', 'PROJECT_META.yml', 'incoming', 'working', 'verification', 'verified', 'repairs', 'reverify', 'archive']:
-        if not (p / rel).exists():
-            errors.append(f'{p}: missing {rel}')
+def structure_errors(root: Path) -> list[str]:
+    errors: list[str] = []
+    projects = root / 'projects'
+    if not (root / 'README.md').exists():
+        errors.append('Missing root README.md')
+    if not (root / 'PROJECT_REGISTRY.md').exists():
+        errors.append('Missing PROJECT_REGISTRY.md')
+    if not projects.exists():
+        errors.append('Missing projects/ directory')
+        return errors
 
-if errors:
-    print('AUDITREPO STRUCTURE CHECK: FAIL')
-    for e in errors:
-        print('-', e)
-    sys.exit(1)
+    for project in projects.iterdir():
+        if not project.is_dir() or project.name.startswith('_'):
+            continue
+        for rel in PROJECT_REQUIRED:
+            if not (project / rel).exists():
+                errors.append(f'{project}: missing {rel}')
+    return errors
 
-print('AUDITREPO STRUCTURE CHECK: PASS')
+
+def main() -> int:
+    errors = structure_errors(ROOT)
+    if errors:
+        print('AUDITREPO STRUCTURE CHECK: FAIL')
+        for error in errors:
+            print('-', error)
+        return 1
+    print('AUDITREPO STRUCTURE CHECK: PASS')
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

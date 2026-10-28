@@ -6,19 +6,18 @@
 
 | Field | Value |
 |---|---:|
-| Active work units | **5** |
-| Direct current defects | **1** |
+| Active work units | **4** |
+| Direct current defects | **0** |
 | Verified necessary improvements | **2** |
 | Narrowed residuals | **0** |
 | System verification lanes | **1** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-## CURRENT DEFECTS — 1
+## CURRENT DEFECTS — 0
 
 | ID | Current problem | Boundary | Evidence |
 |---|---|---|---|
-| `AR-PROJECT-CONTRACT-001` | Structural validator пропускает неодинаковый project contract: `code-audit` имеет MASTER, но не имеет `DOC_MAP.md` и `WORK_QUEUE.md`, а registry одновременно называет его `intake-only` без устойчивого synthesis. | Явно формализовать legacy/intake-only профиль либо привести проект к каноническому контракту; regression должен отвергать неоговорённое промежуточное состояние. | [`wave 1`](../verification/2026-10-29-wave-1-baseline/REPORT.md) |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 2
 
