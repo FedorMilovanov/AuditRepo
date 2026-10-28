@@ -57,3 +57,11 @@
 - Preservation boundary: PR head remains accessible and source branch is not deleted; future retirement is a separate reviewed action.
 - Remaining action: owner-authorized PR close only.
 - Detailed evidence: `../verification/2026-10-29-wave-7-pr482-disposition/REPORT.md`.
+
+## 2026-10-29 — complete self-audit synthesis
+
+- Scope: broad waves 1–8 across governance, structure, artifacts, history, workflows, GitHub hygiene and project currency.
+- Result: engineering audit complete; no direct self-repository defect remains in MASTER.
+- Remaining: two classified owner/admin actions only (issue labels/disposition and PR #482 close authorization).
+- Safety: no Product mutation, remote-ref deletion, issue closure or stale intake merge.
+- Detailed evidence: `../verification/2026-10-29-wave-8-final-synthesis/REPORT.md`.
