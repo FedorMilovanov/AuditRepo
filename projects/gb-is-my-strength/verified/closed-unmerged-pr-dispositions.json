@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "sourceReport": "projects/gb-is-my-strength/verified/CLOSED_UNMERGED_PR_FORENSIC_2026-07-24.md",
-  "recordedAt": "2026-09-06",
+  "recordedAt": "2026-10-29",
   "pullRequests": {
     "3": {
       "category": "superseded",
@@ -233,6 +233,47 @@
       ],
       "note": "W7 evidence tree was rebuilt byte-identically from a fresh base and merged as PR #200."
     },
+    "213": {
+      "category": "superseded",
+      "replacementPrs": [
+        214
+      ],
+      "note": "Execution-wrapper vehicle was rebuilt and merged through #214; the missing wrapper is transaction scaffolding, not unique evidence."
+    },
+    "239": {
+      "category": "superseded",
+      "replacementPrs": [
+        243,
+        244,
+        246
+      ],
+      "note": "Older full-matrix vehicle was superseded by the merged preservation waves named in its terminal closure comment; do not restore its stale authority snapshot."
+    },
+    "242": {
+      "category": "superseded",
+      "replacementPrs": [
+        247
+      ],
+      "note": "Wave 2A evidence was replayed on current main and merged through #247."
+    },
+    "254": {
+      "category": "superseded",
+      "replacementPrs": [
+        253
+      ],
+      "note": "Search AR-IDX-09 closure landed through merged PR #253."
+    },
+    "280": {
+      "category": "superseded",
+      "replacementPrs": [
+        281
+      ],
+      "note": "The unchanged Hall material-decision package was replayed after main moved and merged through #281."
+    },
+    "285": {
+      "category": "superseded",
+      "note": "Checkpoint report was explicitly terminalized as historical after Product owners and source moved; current authority was reconciled in later merged waves."
+    },
     "316": {
       "category": "superseded",
       "replacementPrs": [
@@ -304,6 +345,53 @@
       "category": "superseded",
       "note": "Product PR #1759 repaired and wired the aggregate engine contracts; merge commit 94b8eaad0951c6b43cf1e55fc6c54b9114329f61 remains an ancestor of current Product main. The complete six-file AuditRepo PR head 99b28c3311fcc0e717390cee282c768350beccb5 is preserved losslessly at archive/forensic-engine-contracts-pr323-2026-09-06."
     },
+    "324": {
+      "category": "superseded",
+      "note": "Old Product-anchor MASTER synthesis was explicitly rejected after the later consolidated MASTER became authority."
+    },
+    "325": {
+      "category": "superseded",
+      "note": "Five-row reverify was explicitly terminalized as stale after later Product and MASTER consolidation."
+    },
+    "326": {
+      "category": "diagnostic",
+      "note": "The intake diagnosed the homepage resume ownership gap; later Product #1805 repaired it and the closure comment terminalized this branch without merging it."
+    },
+    "327": {
+      "category": "superseded",
+      "note": "The PR disproved its own duplicate-main/control-ID candidate and was closed as a terminal negative forensic record."
+    },
+    "328": {
+      "category": "superseded",
+      "replacementPrs": [
+        367
+      ],
+      "note": "Unique pass-2 report was preserved byte-for-byte through merged PR #367; the mutable README was intentionally not replayed."
+    },
+    "329": {
+      "category": "superseded",
+      "replacementPrs": [
+        344
+      ],
+      "note": "Older Product-anchor current check was superseded by the broader merged verifier synthesis #344."
+    },
+    "330": {
+      "category": "superseded",
+      "replacementPrs": [
+        348,
+        406,
+        415,
+        416,
+        417,
+        427
+      ],
+      "archiveRef": "archive/forensic-tlp-arena-master-reverify-20260818-2026-09-06",
+      "note": "Historical evidence-only reverify is exact-SHA preserved at the named archive ref; later merged closure waves own current authority."
+    },
+    "331": {
+      "category": "superseded",
+      "note": "Old full-MASTER rewrite was explicitly rejected after later consolidated current authority and Product movement."
+    },
     "332": {
       "category": "superseded",
       "replacementPrs": [
@@ -312,6 +400,85 @@
         349
       ],
       "note": "AuditRepo PR #349 preserved all three unique raw comments at their canonical incoming paths. Merged forensic synthesis #344 and causal MASTER consolidation #345 own current GB disposition; the closed comment-only PR is not current authority."
+    },
+    "333": {
+      "category": "superseded",
+      "note": "Five-row readmission was based on the already-retired #331 matrix tree and was explicitly terminalized as stale."
+    },
+    "335": {
+      "category": "superseded",
+      "replacementPrs": [
+        334,
+        344,
+        345
+      ],
+      "archiveRef": "archive/forensic-gb-arena-master-reverify-20260717-2026-09-06",
+      "note": "Raw reverify package is exact-SHA preserved at the named archive ref; later merged forensic packages own current disposition."
+    },
+    "358": {
+      "category": "superseded",
+      "replacementPrs": [
+        354,
+        357,
+        359
+      ],
+      "note": "Duplicate executable retirement request was superseded by merged #359 after the same reviewed transaction landed."
+    },
+    "394": {
+      "category": "superseded",
+      "replacementPrs": [
+        395
+      ],
+      "note": "Retained Article capability closure landed through merged PR #395."
+    },
+    "400": {
+      "category": "superseded",
+      "replacementPrs": [
+        397
+      ],
+      "note": "Hall web runtime closure landed through merged PR #397."
+    },
+    "401": {
+      "category": "superseded",
+      "replacementPrs": [
+        398
+      ],
+      "note": "Metadata SYSTEM closure landed through merged PR #398."
+    },
+    "450": {
+      "category": "superseded",
+      "replacementPrs": [
+        457
+      ],
+      "note": "Old-head security accepted-risk vehicle shared its exact head with #456; consolidated terminal-zero state landed through #457."
+    },
+    "453": {
+      "category": "superseded",
+      "replacementPrs": [
+        458
+      ],
+      "note": "TLP audit/discovery closure was replayed after unrelated main movement and landed through #458."
+    },
+    "455": {
+      "category": "superseded",
+      "replacementPrs": [
+        458
+      ],
+      "note": "TLP audit/discovery closure vehicle was superseded by the final merged replay #458."
+    },
+    "456": {
+      "category": "superseded",
+      "replacementPrs": [
+        457
+      ],
+      "note": "Refreshed security accepted-risk vehicle was absorbed by the consolidated terminal-zero PR #457."
+    },
+    "462": {
+      "category": "superseded",
+      "replacementPrs": [
+        461
+      ],
+      "note": "Duplicate GA4 closure was rejected because merged #461 carried the same root with fuller control-plane and collector evidence."
     }
   }
 }

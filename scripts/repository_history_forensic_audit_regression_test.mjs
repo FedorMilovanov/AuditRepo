@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import {
   STRICT_ZERO_SUMMARY_KEYS,
+  closedPrReviewPriority,
   reconcileBranch,
   strictSummaryProblems,
 } from './repository_history_forensic_audit.mjs';
@@ -23,6 +24,21 @@ for (const invalid of [undefined, -1, 0.5, '0']) {
   assert.equal(failures.length, 1, `invalid summary value ${String(invalid)} must fail`);
   assert.match(failures[0], /must be a non-negative integer/);
 }
+
+assert.equal(closedPrReviewPriority({
+  headAccessible: true,
+  disposition: null,
+  category: 'superseded',
+  missingCount: 2,
+  referenceCount: 1,
+}), 14, 'heuristic superseded classification must still require durable review');
+assert.equal(closedPrReviewPriority({
+  headAccessible: true,
+  disposition: { category: 'superseded' },
+  category: 'superseded',
+  missingCount: 2,
+  referenceCount: 1,
+}), 0, 'reviewed ledger disposition closes the manual-review queue');
 
 const preservedSha = '1'.repeat(40);
 const archiveRef = 'origin/archive/forensic-example-2026-08-13';

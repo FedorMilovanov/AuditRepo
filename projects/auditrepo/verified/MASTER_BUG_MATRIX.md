@@ -6,19 +6,18 @@
 
 | Field | Value |
 |---|---:|
-| Active work units | **6** |
-| Direct current defects | **2** |
+| Active work units | **5** |
+| Direct current defects | **1** |
 | Verified necessary improvements | **2** |
 | Narrowed residuals | **0** |
 | System verification lanes | **1** |
 | Owner decisions | **1** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-## CURRENT DEFECTS — 2
+## CURRENT DEFECTS — 1
 
 | ID | Current problem | Boundary | Evidence |
 |---|---|---|---|
-| `AR-HISTORY-STRICT-001` | `repository_history_forensic_audit.mjs --strict` завершает проверку зелёным, хотя 25 из 69 закрытых без merge PR не имеют постоянной записи в disposition-ledger; эвристические слова из title/body/comments автоматически снимают ручную проверку даже при 66 отсутствующих в `main` добавленных путях. | Fail-closed проверка должна отличать эвристическую предварительную классификацию от проверенного durable disposition и требовать ledger/эквивалентный неизменяемый результат для закрытия риска потери. | [`wave 1`](../verification/2026-10-29-wave-1-baseline/REPORT.md) |
 | `AR-PROJECT-CONTRACT-001` | Structural validator пропускает неодинаковый project contract: `code-audit` имеет MASTER, но не имеет `DOC_MAP.md` и `WORK_QUEUE.md`, а registry одновременно называет его `intake-only` без устойчивого synthesis. | Явно формализовать legacy/intake-only профиль либо привести проект к каноническому контракту; regression должен отвергать неоговорённое промежуточное состояние. | [`wave 1`](../verification/2026-10-29-wave-1-baseline/REPORT.md) |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 2

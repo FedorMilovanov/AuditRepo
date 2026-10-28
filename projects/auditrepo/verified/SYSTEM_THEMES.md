@@ -7,7 +7,7 @@
 - Проявления: strict history audit принимает regex-classification как terminal disposition; structure gate принимает неоговорённый промежуточный project shape; open issues смешивают evidence и backlog semantics.
 - Механизм: validators проверяют синтаксис/распознаваемость состояния, но не всегда требуют durable semantic owner и terminal proof.
 - Класс результата: fail-closed admission для рискованных terminal claims, без превращения всех исторических файлов в blocking surface.
-- Current rows: `AR-HISTORY-STRICT-001`, `AR-PROJECT-CONTRACT-001`, `AR-ISSUE-LIFECYCLE-001`.
+- Current rows: `AR-PROJECT-CONTRACT-001`, `AR-ISSUE-LIFECYCLE-001`; history manifestation closed in wave 2.
 
 ## AR-THEME-EVIDENCE-GROWTH — сохранность без admission budget (`active-work`)
 
