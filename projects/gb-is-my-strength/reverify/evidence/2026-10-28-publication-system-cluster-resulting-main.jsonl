@@ -1,0 +1,20 @@
+{"type":"anchor","product_sha":"cdf994b104d7b5eaeef407bf60e341e436efe1df","documents":108,"product_modified":false,"open_pr_2208":"docs-only; no overlap","wave":"3/16-20"}
+{"type":"scope","rows":["GBS-PUBLICATION-RESEARCH-SCAFFOLD-READER-LEAK","GBS-JOURNAL-READER-SOURCE-LOCATORS-MISSING","SYS-PUBLICATION-LANGUAGE-OF-PARTS-CONTRACT","SYS-PUBLICATION-MIXED-SCRIPT-SURFACE-COVERAGE","SYS-MATERIAL-TYPOGRAPHY-GATE-FAILOPEN"]}
+{"type":"profiles","routes":10,"profiles":["desktop-light","desktop-dark","mobile-light","mobile-dark"],"cases":40,"screenshots":40,"dpr":2,"reduced_motion":true}
+{"type":"health","broken_loaded_images":0,"positive_horizontal_overflow":0,"page_errors":0,"filtered_console":"ERR_CONNECTION_CLOSED sandbox egress on Diotrophes/Krajne","lcp":"not measured: browser shell returned no entry"}
+{"type":"layout_shift","desktop":{"g3":0,"diotrophes":0.02052738,"ishod":0},"mobile":{"g3":0,"diotrophes":0.02052738,"ishod":0}}
+{"type":"baptist_leak","routes":4,"paths":["dva-sezda-1884","goneniya-i-sovest","noch-na-kure","yuzhnaya-shtunda"],"tokens_each":["Research `main`","claim-level","pinned SHA"],"historical_five_reconciled":true}
+{"type":"lawson_leak","painted":{"LAW-48":2,"LAW-07":1,"LAW-38":1,"LAW-41":1,"LAW-52":1},"profiles":"4/4"}
+{"type":"hard_texts_leak","research_authority":9,"enoch_routes":2,"raw_decisions":"GEN6-ENOCH-*","lifecycle":"HOLD","status":"SERIOUS-BUT-NOT-DECISIVE","unfinished":"witness apparatus","painted_desktop_mobile":true}
+{"type":"other_leak","baptist_app_key":"RB-V6-ARENA-2026-04-30-REGIONAL-MAP-3D-VERIFY-003","archaeology_raw_examples":["arj-abraham-chronology","penn-ur-overview","bm-papyrus-anastasi-v"]}
+{"type":"genealogy","annotations":42,"confidence":{"certain":1,"certain-textual-genealogy":40,"disputed":1},"notes_with_english_or_mixed_operational_content":41,"status":"OPEN-CURRENT"}
+{"type":"g3_sources","claim_refs":33,"self_anchor_to_generic_handoff":21,"wrapper_with_child_anchors":12,"groups_with_local_source_locators":6,"operational_copy":["REFERENCE","Raw archived payload SHA","decoded HTML SHA"],"status":"OPEN-CURRENT"}
+{"type":"diotrophes_sources","evidence_cards":36,"source_refs":36,"source_ref_anchors":0,"target_case_cards_with_research_record_label":21,"status":"OPEN-CURRENT"}
+{"type":"language_parts","missing_total":289,"unique_routes":39,"greek":{"missing":253,"routes":34},"hebrew":{"missing":36,"routes":10},"fresh_hidden_filtered_controls":{"greek":254,"hebrew":86},"control_method_not_compared_as_regression":true,"status":"OPEN-CURRENT"}
+{"type":"language_browser","witness":"τούτοις","inherited_lang":"ru","painted_desktop_mobile":true,"axe_inference_gap":true}
+{"type":"mixed_script_ishod","token":"Чекy","latin_codepoint":"U+0079","source_authorities":2,"final_print_occurrences":2,"painted_desktop_mobile":true,"status":"OPEN-CURRENT"}
+{"type":"mixed_script_avraam","token":"hе","codepoints":["U+0068","U+0435"],"source_authorities":2,"native_flow":"Начать изучение -> Харран marker -> Иврит tab","url":"?place=harran","painted_rect":"13.6x13","status":"OPEN-CURRENT"}
+{"type":"nojs","route":"/karty/avraam/","static_projection_chars":11295,"text_mode_notice":true}
+{"type":"typograf","command":"npm run typograf:dry","would_change":6,"files":["Antisovetov","Gill II","Gill III","Hermenevtika","Kod da Vinchi","Krajne"],"exit_code":0,"status":"OPEN-CURRENT"}
+{"type":"axe","light_desktop":0,"light_mobile":0,"dark_findings":"existing contrast owner only","new_rows":0}
+{"type":"disposition","confirmed_current":5,"new_rows":0,"new_work_units":0,"matrix":{"direct":45,"improvements":8,"residual":1,"systems":22,"total":76}}
