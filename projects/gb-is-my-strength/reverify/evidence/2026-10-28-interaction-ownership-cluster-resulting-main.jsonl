@@ -1,0 +1,15 @@
+{"kind":"anchor","product":"cdf994b104d7b5eaeef407bf60e341e436efe1df","auditDate":"2026-10-28","productClean":true,"openProductPRs":[{"number":2208,"scope":"docs-only"}]}
+{"kind":"selection","wave":6,"units":["SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY","GBS-FOOTNOTE-RICH-TOOLTIP-FOCUS-MODEL","SYS-FAQ-COLLAPSED-FOCUS-EXPOSURE","SYS-STRATEGIC-MAP-DIALOG-FOCUS-ENTRY","SYS-REVERSIBLE-CARD-DESCENDANT-ACTIVATION-COLLISION"]}
+{"kind":"tooltip-census","routes":23,"profiles":46,"ownerV20":46,"legacyOwnedControllers":0,"pointerOpened":46,"viewportContained":46,"importantGeometry":46,"pageErrors":0}
+{"kind":"tooltip-desktop-keyboard","routes":23,"reached":23,"opened":23,"escapeReturned":23}
+{"kind":"tooltip-focus-residual","route":"/articles/krajne-li-isporcheno-serdce/","nativeSequence":["skip-link","first .gterm",".gtip-expand-btn","body","skip-link"],"tabPresses":300,"laterArticleReached":false,"mechanism":"body-portal sequential order"}
+{"kind":"rich-footnote-reconcile","linkedMarkers":8,"gill":1,"krajne":7,"localBridge":"Tab enters; Shift+Tab returns","untouchedKrajne":"blocked before markers by first glossary portal","action":"absorb direct into shared tooltip system"}
+{"kind":"faq-runtime","routes":4,"profiles":32,"answerInstances":168,"initialCollapsed":168,"initialInert":168,"closedTabLeaks":0,"pointerOpen":32,"keyboardOpen":32,"exactQuestionReturn":32,"pageErrors":0}
+{"kind":"faq-ax","route":"/articles/krajne-li-isporcheno-serdce/","closedUniqueTextHitsInFullAxTree":0,"authority":"CDP Accessibility.getFullAXTree"}
+{"kind":"faq-nojs","routes":4,"profiles":8,"readable":0,"firstAnswerHeight":0,"firstAnswerScrollHeight":0,"textPresent":true,"residual":"CSS remains collapsed without enhancement"}
+{"kind":"strategic-map-desktop","triggers":39,"profiles":2,"cases":78,"pointerFocusEntry":78,"keyboardFocusEntry":78,"escapeReturn":78,"switching":"2/2","contained":78}
+{"kind":"strategic-map-mobile","triggers":39,"profiles":2,"cases":78,"zeroHeight":72,"nativeReachedOpenedReturned":72,"missingCases":6,"missingUniqueTips":["1","5","6"],"forceClickUsed":false}
+{"kind":"cards-corpus","routes":4,"cards":17,"gill3Cards":4,"nestedHeadingAnchors":3}
+{"kind":"cards-descendant","desktopProfiles":4,"cases":12,"pointerActivationWithoutFlip":12,"keyboardActivationWithoutFlip":12,"axeNestedInteractive":12,"pageErrors":0,"residual":"three focusable anchors remain inside role=button card containers"}
+{"kind":"gates","productValidate":"pass","tooltipTriggerNormalizer":"pass","tooltipStyleNormalizer":"pass","faqJsonldTextContract":"pass"}
+{"kind":"matrix","absorbed":["GBS-FOOTNOTE-RICH-TOOLTIP-FOCUS-MODEL"],"into":"SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY","retainedSystems":["SYS-TOOLTIP-INTERACTION-OWNER-EXCLUSIVITY","SYS-FAQ-COLLAPSED-FOCUS-EXPOSURE","SYS-STRATEGIC-MAP-DIALOG-FOCUS-ENTRY","SYS-REVERSIBLE-CARD-DESCENDANT-ACTIVATION-COLLISION"],"direct":43,"improvements":8,"residuals":1,"systems":21,"total":73}

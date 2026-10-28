@@ -1,0 +1,17 @@
+{"type":"anchor","product_sha":"cdf994b104d7b5eaeef407bf60e341e436efe1df","documents":108,"product_modified":false,"open_pr_2208":"docs-only; no overlap","wave":"4/16-20"}
+{"type":"scope","rows":["GBS-KRAJNE-REDUCED-MOTION-QUIZ-OCCLUSION","GBS-PRINT-TERMINAL-REGION-HIDES-CONTENT","GBS-NAGORNAYA-MENU-ICON-MISSING-FORCED-COLORS","GBS-PRINT-MEDIA-CONTRAST-COLLAPSE"]}
+{"type":"reduced_profiles","widths":[1440,390],"schemes":["light","dark"],"motion":["reduce","no-preference"],"profiles":8,"center_hit":"quiz-launch 8/8","native_pointer_launch":"8/8","page_errors":0}
+{"type":"reduced_geometry","desktop":{"card":1034.09,"front":458.66,"back":575.44,"sum_matches":true},"mobile":{"card":933.41,"front":207.19,"back":726.22,"sum_matches":true}}
+{"type":"reduced_quiz_flow","profiles":8,"questions_each":12,"keyboard_answer_next":true,"result":"4 из 12","restart_visible":"8/8","restart_to_question":"8/8","disposition":"FIXED-CURRENT"}
+{"type":"reduced_health","profiles":8,"broken_loaded_images":0,"positive_overflow":0,"axe_violations":0,"page_errors":0,"filtered_console":"ERR_CONNECTION_CLOSED sandbox egress","mobile_lcp_ms":[792,1028],"desktop_lcp":"null: browser shell returned no entry"}
+{"type":"layout_shift","mobile":0,"desktop_light":0.00503751,"desktop_dark":[0.21868641,0.21904308],"source":".gbs2-world x 304->0, width 1136->1440","existing_owner":"GBS-SERIES-READER-COMPACT-DESKTOP-CAPACITY-CONFLICT","new_row":false}
+{"type":"print_terminal_census","routes":16,"routes_without_followers":15,"former":{"krajne":[203,24902],"genesis6":[71,4315],"kod_da_vinchi":[34,1292]},"current_each":0}
+{"type":"print_terminal_residual","route":"/about/","followers":20,"root_blocks":3,"root_chars":124,"visible_followers":0,"samples":["gb-accuracy-block","breadcrumb","Аввакум 3:19"],"disposition":"OPEN-CURRENT"}
+{"type":"forced_colors_source","rule":"#menuBtn .bar background CanvasText; #menuBtn border 1px CanvasText","routes":8,"schemes":["light","dark"],"profiles":16}
+{"type":"forced_colors_browser","bars_system_color":"16/16","system_border":"16/16","focus_outline":"16/16","native_open":"16/16","escape_close":"16/16","focus_return":"16/16","page_errors":0}
+{"type":"forced_colors_disposition","status":"FIXED-CANDIDATE / PENDING WINDOWS HCM WITNESS","reason":"Chromium emulation proves contract and behavior but does not replace the row's physical Windows repaint boundary"}
+{"type":"print_contrast_home","featured_titles":4,"screen_ratios":[18.50,18.65,18.65,18.50],"print_ratios":[21,21,21,21],"kicker_print":21,"meta_print":21}
+{"type":"print_contrast_nagornaya","selector":".nag-project-nav__link","screen":5.72,"print":11.30}
+{"type":"print_contrast_biografii","selector":".h-hero-tagline","screen":5.35,"print_computed_color":"rgb(0,0,0)","text_range":"249.9x11","center_hit":"IMG","paired_screenshot_max_delta":1,"glyph_painted":false,"disposition":"OPEN-CURRENT"}
+{"type":"gates","nagornaya_visual_parity":"pass","css_layer_validate":"pass with existing warnings","article_qa":"pass","readable_audit":"pass","browser_print_stability_contract":"pass","note_registry_contract":"pass"}
+{"type":"disposition","fixed_current":1,"open_current":2,"fixed_candidate_external_witness":1,"new_rows":0,"matrix":{"direct":44,"improvements":8,"residual":1,"systems":22,"total":75}}

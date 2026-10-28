@@ -246,9 +246,8 @@
       "reason": "FIXED-CURRENT 2026-10-22 at d14da74c: merged #2167 / 2ee584d3 adds first-click Header bridge. 12 native cold bootstrap controls at 390/1280 Light/Dark verify query, click/tap, Ctrl+K, Meta+K, close/focus; unchanged owner contract also passes. Native articles overlap/clipping remain separate, narrowed owners. See postclosure reverify continuation 2."
     },
     "GBS-GLOSSARY-DEFINITION-PROVENANCE": {
-      "status": "alias",
-      "canonical": "GBS-INLINE-TOOLTIP-DEFINITION-ASSOCIATION",
-      "reason": "2026-10-23 PARTIAL/NARROWED: literal brief inequality is not a proven necessary bug; retain verified shared gterm/bref definition-association defect under precise canonical name. Same work unit, no duplicate count. See semantic-contract reverify."
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-28 on Product 1a67c65c: the canonical association defect is closed after keyed/keyless glossary, Bible-reference and footnote controls expose non-empty computed AX descriptions in 16/16 exact-main samples. Literal brief inequality remains outside proven necessity. See interaction-semantic-wide-refresh."
     },
     "GBS-SCRIPTURE-AFFORDANCE-PLACEHOLDER-ONLY": {
       "status": "retired",
@@ -366,14 +365,12 @@
       "reason": "2026-10-23: advisory visibility and stuck update PRs are detection/remediation manifestations of one unclosed dependency lifecycle; fresh state is 9 dev/build advisories, #2144 closed unmerged, #2179 open/behind. See reverify/2026-10-23-systemic-dependency-advisory-lifecycle.md."
     },
     "GBS-HEADER-SEARCH-THEME-TARGET-OVERLAP": {
-      "status": "alias",
-      "canonical": "SYS-INJECTED-HEADER-CONTROL-HOST",
-      "reason": "2026-10-23: native Articles overlap and viewport clipping are two geometry metrics of the same implicit ReaderPreferencesHead search injection into a generic mobile-controls host. See reverify/2026-10-23-systemic-injected-header-control-host.md."
+      "status": "retired",
+      "reason": "2026-10-28: fixed-current with the named injected-header host; native 320/390/768/1280 geometry has zero overlap and full viewport containment. See reverify/2026-10-28-reader-control-outcome-cluster-resulting-main.md."
     },
     "GBS-HEADER-MOBILE-CONTROLS-CLIPPED-OUTSIDE-VIEWPORT": {
-      "status": "alias",
-      "canonical": "SYS-INJECTED-HEADER-CONTROL-HOST",
-      "reason": "2026-10-23: native Articles overlap and viewport clipping are two geometry metrics of the same implicit ReaderPreferencesHead search injection into a generic mobile-controls host. See reverify/2026-10-23-systemic-injected-header-control-host.md."
+      "status": "retired",
+      "reason": "2026-10-28: fixed-current with the named injected-header host; native 320/390/768/1280 geometry has zero overlap and full viewport containment. See reverify/2026-10-28-reader-control-outcome-cluster-resulting-main.md."
     }
   },
   "ignoredTokens": []

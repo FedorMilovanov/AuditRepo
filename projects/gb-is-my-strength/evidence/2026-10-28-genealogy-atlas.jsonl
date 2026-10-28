@@ -1,0 +1,13 @@
+{"schema":"gbs.audit.wave.v1","wave":10,"date":"2026-10-28","product_head":"f72dc54b1a860658fbd0c4c52bb45e1256c9c9b8","runtime_build":"4b0cc8a0eae848afcbdb6ae4d63a67f9fb9d8e53","runtime_equivalence":"head delta is audit docs only","browser":"Chromium 153"}
+{"check":"owner-state","open_product_prs":[2213],"overlap":false,"product_clean":true,"main_remote_exact":true}
+{"check":"genealogy-browser-contract","motion":"normal","viewports":["390x844","1440x1000"],"profiles":2,"status":"PASS","negative_witness":"legal-relation-touch-target rejected"}
+{"check":"genealogy-browser-contract","motion":"reduce","viewports":["390x844","1440x1000"],"profiles":2,"status":"PASS","negative_witness":"legal-relation-touch-target rejected"}
+{"row":"GBS-GENEALOGY-OVERVIEW-SEMANTICS","status":"FIXED-CURRENT","profiles":4,"mounted":154,"visible":5,"role":5,"named":5,"focusable":5,"ax_person_controls":5,"axe_target_nodes":0}
+{"row":"GBS-GENEALOGY-POINTER-PANEL-STATE-DESYNC","status":"FIXED-CURRENT","profiles":4,"native_reopen_cases":8,"passed":8,"close_modes":["button","Escape"],"exact_focus_return":8,"forced":false}
+{"row":"GBS-GENEALOGY-RELATION-LABEL-DIRECTION","status":"FIXED-CURRENT","profiles":4,"direction_checks":24,"passed":24,"families":["father","mother","spouse","legal-parent"],"canonical_from_to":true,"endpoint_roles":true}
+{"check":"publishable-projection","persons":154,"relations":181,"parents":171,"spouses":9,"legal_parents":1,"reviewed":42,"pending":139,"status":"PASS"}
+{"check":"raw-v2-boundary","raw_persons":3056,"ru_review_queue":2814,"unresolved_refs":0,"raw_runtime_refs":0,"publication":"draft-blocked","runtime_guard":"PASS"}
+{"check":"browser-health","profiles":4,"page_errors":0,"console_errors":0,"broken_images":0,"request_failures":0,"lcp_ms_range":[104,152],"cls_mobile":0,"cls_desktop":0.0005244033926504629}
+{"check":"no-js","http":200,"main":1,"native_fallback":1,"links":1,"body_chars":1938,"status":"PASS"}
+{"check":"webkit","status":"SKIPPED","reason":"sandbox egress / webkit-2336 executable unavailable","product_failure":false}
+{"check":"reconciliation","removed_direct":3,"active_before":66,"active_after":63,"direct_after":37,"improvements":7,"residual":1,"systems":18}

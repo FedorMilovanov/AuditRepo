@@ -1,0 +1,12 @@
+{"schema":"gbs.audit.wave.v1","wave":9,"date":"2026-10-28","product_head":"d056a19cfabe84dc2dbc59fc37ff4b03288917f1","browser":"Chromium 153","mode":"read-only exact-current"}
+{"check":"owner-state","open_product_prs":[2211],"overlap":false,"product_clean":true,"main_remote_exact":true}
+{"row":"GBS-QUIZ-LITERAL-MARKUP","status":"FIXED-CURRENT","routes":23,"questions_traversed":153,"rich_routes":10,"rich_strings":71,"literal_leaks":0,"page_errors":0,"native_flow":"launch-click, answer-click, next-click","parity_contract":"pass"}
+{"row":"GBS-ANTISOVETOV-NESTED-MAP-TRIGGERS","status":"FIXED-CURRENT","nested_interactive":0,"tips":[19,43],"unique_each":true,"pointer_19_open":true,"enter_43_open":true,"escape_close":true}
+{"row":"GBS-KRAJNE-HEART-FLIP-BACK-LIGHT-UNREADABLE","status":"FIXED-CURRENT","profiles":4,"native_flips":4,"light_back":"rgb(21,16,10)","dark_back":"rgb(17,14,7)","target_contrast_nodes":0,"screenshots":"outside-git"}
+{"row":"GBS-CHROME-LABEL-IN-NAME-MISMATCH","status":"ACTIVE-NARROWED","owners":["wide-home-ambient+sacred-name","russian-baptism-home","tts-speed","mobile-highlights-fab"],"wide_home_native_focus_events":33,"settled_only_is_insufficient":true}
+{"row":"SYS-READING-TABLE-KEYBOARD-SCROLL","status":"ACTIVE-NARROWED","candidate_routes":17,"mobile_overflow_routes":8,"mobile_overflow_regions":21,"axe_fail_regions":20,"native_reached_regions":6,"native_reached_routes":2,"gill1_axe_clean":true,"gill1_desktop_unnecessary_stop":true}
+{"row":"GBS-OUTLINE-ORDER-AND-LANDMARK-CONTAINMENT","status":"ACTIVE-NARROWED","html":108,"heading_skips":22,"heading_routes":8,"landmark_anomalies":5,"landmark_routes":5,"h1_not_one":0}
+{"check":"canonical-interactive-audit","pages":56,"series":10,"quiz":6,"substantive_findings":0,"filtered_egress_events":42,"filtered_error":"net::ERR_CONNECTION_CLOSED"}
+{"check":"no-js-boundary","routes":2,"main_text_preserved":true,"quiz_host_empty":true,"classification":"progressive-enhancement boundary; not literal-markup finding"}
+{"check":"print-contract","status":"NOT-DONE-INFRA","browser_fallback_started":true,"blocked_by":"pdftotext executable absent","classification":"sandbox dependency, not Product defect"}
+{"check":"reconciliation","removed_direct":3,"active_before":69,"active_after":66,"direct_after":40,"improvements":7,"residual":1,"systems":18}

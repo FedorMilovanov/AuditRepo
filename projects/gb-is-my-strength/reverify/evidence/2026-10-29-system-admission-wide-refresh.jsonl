@@ -1,0 +1,7 @@
+{"type":"meta","wave":20,"product":"1aff67560d56d8521aaeab81bdc361f33dbd6af6","date":"2026-10-29","systemRowsChecked":18,"productModified":false}
+{"type":"admission","command":"npm run validate:static-publication:light","exit":0,"families":"all chained static publication owners","interpretation":"green control; not semantic/runtime closure"}
+{"type":"admission-coverage","passed":["validate:strict","seo","owner-ui","visual-parity families","maps","ownership","tokens-css","audit-pro","content-source-article-readable-editorial","Gill contracts","MDX","URL contract","migration metadata","Astro audits","SW readiness"]}
+{"type":"dependency-audit","command":"npm audit --json","exit":1,"packages":{"critical":0,"high":0,"moderate":1,"low":0},"direct":"astro","severity":"moderate","advisories":2,"titles":["JSX/MDX script-style XSS","View Transitions CSS injection"],"disposition":"SYS-DEPENDENCY-ADVISORY-LIFECYCLE remains active"}
+{"type":"faq-nojs","routes":4,"profiles":8,"matrix":"1280/390 x JS disabled","answerCounts":[3,8,3,7],"firstAnswerChars":[638,672,647,1097],"display":"grid","rectHeightZero":8,"scrollHeightZero":8,"forcedClicks":0,"disposition":"SYS-FAQ-COLLAPSED-FOCUS-EXPOSURE remains active"}
+{"type":"systems-reconciliation","checked":18,"closed":0,"added":0,"absorbed":0,"reason":"generic green admission does not satisfy language, projection, governance, no-JS or native interaction closure boundaries"}
+{"type":"sequence","completedWaves":[16,17,18,19,20],"matrix":{"direct":27,"improvements":7,"residual":1,"systems":18,"total":53}}
