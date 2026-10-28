@@ -1,0 +1,12 @@
+{"kind":"anchor","product":"d056a19cfabe84dc2dbc59fc37ff4b03288917f1","openOwner":{"pr":2211,"scope":"genealogy-v2","overlap":false},"closedCollision":{"pr":2179,"state":"CLOSED","merged":false}}
+{"kind":"baseline","validate":"pass","productionBuild":"pass","finalHtml":108,"metadata":{"approved":72,"blocked":0},"productClean":true}
+{"kind":"auditProPositive","exit":0,"llms":"55/55 exist+indexable","legacyWarnings":0,"logSha256":"a75e9f32661d5482bbc058c9688e552bb68dd697536a0e4eca4e4bcfdee08493"}
+{"kind":"auditProNegative","mutation":"temporarily remove native dist article","warning":"file not on disk in dist or root","restored":true,"result":"SYS-AUDIT-PRO-LLMS-ROOT-RESOLUTION FIXED-CURRENT"}
+{"kind":"ttsOrt","direct":"PASS","mutationsRejected":3,"structuralScan":true,"workflowLines":"113-114 before pipefail@118","shellControl":{"withoutPipefail":0,"withPipefail":1},"result":"NARROWED-ACTIVE"}
+{"kind":"typograf","command":"npm run typograf:dry","wouldChange":6,"exit":0,"files":["antisovetov","gill2","gill3","hermenevtika","kod","krajne"],"result":"ACTIVE"}
+{"kind":"headSource","astroFiles":576,"hashFiles":81,"hashLiterals":493,"productionCommonFiles":70,"productionCommonRefs":171}
+{"kind":"headFinal","html":108,"hashRoutes":106,"hashRefs":1802,"productionCommonRoutes":104,"productionCommonRefs":227,"browser":"icons local; manifest/feed production-pinned","result":"ACTIVE"}
+{"kind":"browserHealth","chromium":"153.0.8010.0","profiles":["about 1280 light reduce","krajne 390 dark reduce mobile"],"axe":"0/0","brokenImages":"0/0","pageErrors":"0/0","cls":[0.006295213,0],"lcpMs":[144,532],"noise":"Yandex sandbox egress only"}
+{"kind":"dependency","npmAuditExit":1,"package":"astro@7.2.9","packageSeverity":"moderate","advisories":["GHSA-98hj-9722-w3j8:moderate","GHSA-mpr7-6m5w-76rw:low"],"contractExit":1,"schedule":false,"terminalDisposition":false}
+{"kind":"cssLayer","exit":0,"targetPct":80,"roots":{"home":{"pct":35.4,"important":52,"ceiling":null},"floating":{"pct":9.9,"important":524,"ceiling":524},"site":{"pct":18.8,"important":200,"ceiling":200}},"result":"ACTIVE"}
+{"kind":"arithmetic","before":{"active":70,"direct":43,"improvements":8,"residual":1,"systems":18},"after":{"active":69,"direct":43,"improvements":7,"residual":1,"systems":18},"narrowedSystems":1,"closedImprovements":1}
