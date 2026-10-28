@@ -24,6 +24,10 @@
 
 Прежний механизм — max(face), который оставлял вторую face поверх `#quizLaunch`, — больше не воспроизводится. Normal-motion controls сохраняют overlay contract и тоже проходят полный flow. Row `GBS-KRAJNE-REDUCED-MOTION-QUIZ-OCCLUSION` закрыт как `FIXED-CURRENT`.
 
+Health для тех же восьми профилей: broken loaded images 0, positive overflow 0, Axe violations 0, page errors 0. `ERR_CONNECTION_CLOSED` — отфильтрованный sandbox egress noise. Mobile LCP 792–1028ms; desktop Chromium shell не выдал LCP entry, что записано как `null`, а не ноль. Mobile CLS 0, desktop Light 0.00504.
+
+Desktop Dark дал CLS 0.21869–0.21904. Отдельный source probe показывает один shift: `.gbs2-world` меняет rect с `x=304,width=1136` на `x=0,width=1440`. Это уже causal scope `GBS-SERIES-READER-COMPACT-DESKTOP-CAPACITY-CONFLICT`, поэтому новая строка не создана; прежний Dark-control statement этого row уточнён текущим Krajne witness.
+
 ## 3. Print terminal region — резко сужен, но не закрыт
 
 Повторён browser print census на прежних 16 routes при A4-width 794px. На **15/16 routes** теперь нет ни одного `[data-print-terminal-follower]`, включая прежние крупные manifestations:

@@ -3,6 +3,8 @@
 {"type":"reduced_profiles","widths":[1440,390],"schemes":["light","dark"],"motion":["reduce","no-preference"],"profiles":8,"center_hit":"quiz-launch 8/8","native_pointer_launch":"8/8","page_errors":0}
 {"type":"reduced_geometry","desktop":{"card":1034.09,"front":458.66,"back":575.44,"sum_matches":true},"mobile":{"card":933.41,"front":207.19,"back":726.22,"sum_matches":true}}
 {"type":"reduced_quiz_flow","profiles":8,"questions_each":12,"keyboard_answer_next":true,"result":"4 из 12","restart_visible":"8/8","restart_to_question":"8/8","disposition":"FIXED-CURRENT"}
+{"type":"reduced_health","profiles":8,"broken_loaded_images":0,"positive_overflow":0,"axe_violations":0,"page_errors":0,"filtered_console":"ERR_CONNECTION_CLOSED sandbox egress","mobile_lcp_ms":[792,1028],"desktop_lcp":"null: browser shell returned no entry"}
+{"type":"layout_shift","mobile":0,"desktop_light":0.00503751,"desktop_dark":[0.21868641,0.21904308],"source":".gbs2-world x 304->0, width 1136->1440","existing_owner":"GBS-SERIES-READER-COMPACT-DESKTOP-CAPACITY-CONFLICT","new_row":false}
 {"type":"print_terminal_census","routes":16,"routes_without_followers":15,"former":{"krajne":[203,24902],"genesis6":[71,4315],"kod_da_vinchi":[34,1292]},"current_each":0}
 {"type":"print_terminal_residual","route":"/about/","followers":20,"root_blocks":3,"root_chars":124,"visible_followers":0,"samples":["gb-accuracy-block","breadcrumb","Аввакум 3:19"],"disposition":"OPEN-CURRENT"}
 {"type":"forced_colors_source","rule":"#menuBtn .bar background CanvasText; #menuBtn border 1px CanvasText","routes":8,"schemes":["light","dark"],"profiles":16}
