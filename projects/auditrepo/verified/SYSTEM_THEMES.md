@@ -14,7 +14,7 @@
 - Проявления: ZIP/PATCH, сотни screenshots, exact duplicates и один доминирующий project corpus.
 - Механизм: политика правильно запрещает терять raw evidence, но не задаёт durable summary, manifest, size exception и dedup boundary на входе.
 - Класс результата: ограничить будущий рост и безопасно дедуплицировать только доказанные копии; не устраивать массовую чистку исторического evidence.
-- Current row: `AR-ARTIFACT-RETENTION-001`.
+- Current rows: none; admission root closed in wave 4, historical duplicate topology explicitly retained.
 
 ## AR-THEME-CURRENCY — event-driven freshness без semantic trigger (`active-work`)
 

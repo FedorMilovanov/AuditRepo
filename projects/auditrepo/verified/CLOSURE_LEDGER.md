@@ -26,3 +26,11 @@
 - Regression witness: structure + repository validator and workflow preflight suites pass; all project matrices pass coverage.
 - Boundary: branch protection remains UNPROVEN due integration 403; no absence claim is made.
 - Detailed evidence: `../verification/2026-10-29-wave-3-project-workflow-contract/REPORT.md`.
+
+## 2026-10-29 — artifact retention and duplicate admission
+
+- Scope: `AR-ARTIFACT-RETENTION-001`, tracked binary/archive census and future admission.
+- Result: closed; byte-redundant 7.69 MB nested ZIP removed and prospective duplicate/archive/large-artifact gate added.
+- Regression witness: duplicate, missing manifest and whitespace fixtures fail; exact identity sidecar passes.
+- Preservation boundary: existing Git history and semantically meaningful raw/package topology remain intact.
+- Detailed evidence: `../verification/2026-10-29-wave-4-artifact-retention/REPORT.md`.

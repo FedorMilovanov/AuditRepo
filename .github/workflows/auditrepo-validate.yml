@@ -55,6 +55,8 @@ jobs:
       - name: Compile core Python tools
         run: |
           python3 -m py_compile \
+            scripts/check_artifact_admission.py \
+            scripts/check_artifact_admission_regression_test.py \
             scripts/check_auditrepo_structure.py \
             scripts/check_auditrepo_structure_regression_test.py \
             scripts/check_workflow_syntax.py \
@@ -73,6 +75,12 @@ jobs:
         run: |
           python3 scripts/check_auditrepo_structure_regression_test.py
           python3 scripts/check_auditrepo_structure.py
+
+      - name: Check changed artifact admission
+        run: |
+          python3 scripts/check_artifact_admission_regression_test.py
+          python3 scripts/check_artifact_admission.py \
+            --changed-paths "${AUDITREPO_CHANGED_PATHS_FILE}"
 
       - name: Validate workflow syntax and immutable action pins
         run: |

@@ -6,9 +6,9 @@
 
 | Field | Value |
 |---|---:|
-| Active work units | **4** |
+| Active work units | **3** |
 | Direct current defects | **0** |
-| Verified necessary improvements | **2** |
+| Verified necessary improvements | **1** |
 | Narrowed residuals | **0** |
 | System verification lanes | **1** |
 | Owner decisions | **1** |
@@ -19,11 +19,10 @@
 | ID | Current problem | Boundary | Evidence |
 |---|---|---|---|
 
-## VERIFIED NECESSARY IMPROVEMENTS — 2
+## VERIFIED NECESSARY IMPROVEMENTS — 1
 
 | ID | Needed implementation | Why | Evidence |
 |---|---|---|---|
-| `AR-ARTIFACT-RETENTION-001` | Ввести узкую admission/retention политику для тяжёлых и дублированных evidence-артефактов: manifest/provenance, предпочтение компактного текстового результата, порог/исключение для архивов и проверку точных дублей. | В tracked tree уже 238 файлов типов PNG/WebP/ZIP/PATCH, 28 групп точных дублей ≥1 KiB и ZIP 7.4 MiB с пробелом в имени; текущая политика требует сохранять evidence, но не задаёт технических границ роста/дедупликации. | [`wave 1`](../verification/2026-10-29-wave-1-baseline/REPORT.md) |
 | `AR-ISSUE-LIFECYCLE-001` | Установить назначение, labels и terminal disposition для AuditRepo issues; evidence-only receipts не должны бессрочно выглядеть активной работой. | Из 22 issues 21 без labels; из четырёх открытых #489 — пустой `probe`, #484 помечен как pending и явно superseded #485, а #485 сам говорит, что работа завершена. Это делает open-state ложным backlog-сигналом. | [`wave 1`](../verification/2026-10-29-wave-1-baseline/REPORT.md) |
 
 ## NARROWED RESIDUALS — 0

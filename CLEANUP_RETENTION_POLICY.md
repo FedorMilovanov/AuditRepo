@@ -78,6 +78,18 @@ Raw evidence is retained even when the conclusion is later rejected. High-value 
 
 Do not delete old legacy merely to make the repository visually smaller. The size target applies to the **active working surface**, not to the ability to investigate history.
 
+### Artifact admission
+
+Historical binary evidence is not retroactively rejected merely because a newer storage rule exists. New or modified artifacts must satisfy the changed-path admission gate:
+
+- do not add a byte-identical copy of an already tracked binary/archive artifact; link the existing owner instead;
+- artifact paths must not contain whitespace;
+- every archive (`zip`, `tar`, `tgz`, `gz`, `7z`) and every artifact larger than 2 MiB needs an adjacent `<filename>.artifact.json` sidecar;
+- the sidecar binds schema version, repository-relative path, SHA-256, byte size, purpose, provenance and retention reason;
+- generated build output, dependencies, transient logs and browser downloads remain outside Git unless they are deliberately selected evidence and pass this contract.
+
+The gate is prospective. Historical deduplication requires proof that every removed container/file is byte-identically represented by a retained owner; never replace evidence with a vague summary.
+
 ## Event-driven re-verification
 
 Recheck when there is a material reason:
