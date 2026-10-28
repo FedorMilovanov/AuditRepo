@@ -246,9 +246,8 @@
       "reason": "FIXED-CURRENT 2026-10-22 at d14da74c: merged #2167 / 2ee584d3 adds first-click Header bridge. 12 native cold bootstrap controls at 390/1280 Light/Dark verify query, click/tap, Ctrl+K, Meta+K, close/focus; unchanged owner contract also passes. Native articles overlap/clipping remain separate, narrowed owners. See postclosure reverify continuation 2."
     },
     "GBS-GLOSSARY-DEFINITION-PROVENANCE": {
-      "status": "alias",
-      "canonical": "GBS-INLINE-TOOLTIP-DEFINITION-ASSOCIATION",
-      "reason": "2026-10-23 PARTIAL/NARROWED: literal brief inequality is not a proven necessary bug; retain verified shared gterm/bref definition-association defect under precise canonical name. Same work unit, no duplicate count. See semantic-contract reverify."
+      "status": "retired",
+      "reason": "FIXED-CURRENT 2026-10-28 on Product 1a67c65c: the canonical association defect is closed after keyed/keyless glossary, Bible-reference and footnote controls expose non-empty computed AX descriptions in 16/16 exact-main samples. Literal brief inequality remains outside proven necessity. See interaction-semantic-wide-refresh."
     },
     "GBS-SCRIPTURE-AFFORDANCE-PLACEHOLDER-ONLY": {
       "status": "retired",
