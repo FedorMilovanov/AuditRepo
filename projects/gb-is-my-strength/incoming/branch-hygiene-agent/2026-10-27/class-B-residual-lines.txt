@@ -1,0 +1,134 @@
+# Class B residual added lines not found verbatim in current main
+
+Generated from exact branch/merge-base diffs and UTF-8 Git blobs. Trailing spaces on displayed lines are trimmed for report hygiene; source blobs are preserved separately.
+This list is a triage aid, not semantic equivalence proof.
+
+## reconcile/baptist-ch01-authority-salvage-20260924 | head 71a4f5290c269e4130c310b62bae41c940662d62 | archive-tag-matches-head=False
+### baptisty-rossii/research/146-ch01-pre-baptist-origins-authority-reconciliation-2026-09-11.md | unmatched added lines=3
+  + **Дата:** 2026-09-11
+  + **Статус:** `NARRATIVE / EVIDENCE DRAFT-READY`; `NOT BOOK-READY`; `NO PUBLIC ROUTE`.
+  + **Chapter 1 больше нельзя считать “research missing”.**
+
+## agent/bible-app-deep-playwright-audit-20260819 | head 3899f3d0decdc764b4b0eec99a765de298c389fb | archive-tag-matches-head=True
+### scripts/bible-app-browser-contract.mjs | unmatched added lines=2
+  +   const aside = page.locator(`.genesis6-app-cta[data-bible-app-chapter="${chapter}"]`).first();
+  +   const visible = (await aside.count()) > 0 && await aside.isVisible().catch(() => false);
+
+## agent/bible-app-deep-playwright-r2-20260819 | head 2ed8512e59e0abe88c977eac51ed6c070885e9ec | archive-tag-matches-head=True
+### scripts/bible-app-browser-contract.mjs | unmatched added lines=2
+  +   const aside = page.locator(`.genesis6-app-cta[data-bible-app-chapter="${chapter}"]`).first();
+  +   const visible = (await aside.count()) > 0 && await aside.isVisible().catch(() => false);
+
+## codex/baptisty-spravochnik-evidence-language | head 528d9e5d5de4689cd558f948659d278c4fc23b13 | archive-tag-matches-head=True
+### audit/BAPTISTY-ROSSII-EVIDENCE-LANGUAGE-HANDOFF-2026-08-20.md | unmatched added lines=16
+  + **Branch:** `codex/baptisty-spravochnik-evidence-language`
+  + **PR:** #1766 — `content(baptisty): align spravochnik evidence language`
+  + Commit `1ec73b040ad9a6af182e83ffe986b2cfea227834` добавил этот handoff и стал первым human exact-head checkpoint до canonical generated-projection reconciliation.
+  + Вместо отключения проверки или ручного push в PR body добавлен активный Writer Lease v1:
+  + Canonical writer продвинул branch до `eba51e09fc031862589698053d60fa473b944e8c`.
+  + `autofix` label после convergence снят. Следующий commit этого lane — только финализация handoff; machine mutation больше не разрешается без нового явного lease/handoff процесса.
+  + Эти результаты **не считаются доказательством Baptist regression и не считаются закрытыми как external flake**. Они принадлежат старому head и должны быть переоценены только по final-head rerun.
+  + - если final-head contracts зелёные — старые 500 остаются obsolete-head infrastructure/browser incidents;
+  + - если HTTP 500 повторится на final head — разбирать новый exact run до root cause;
+  + ## 7. Verification contract
+  + До merge требуется exact-head CI на финальном PR head. Минимум:
+  + ## 8. Definition of Done для этого lane
+  + - [ ] final exact-head CI зелёный;
+  + - [ ] writer lease retired после final admission;
+  + - [ ] PR merged.
+  + ## 9. Следующий lane
+
+## arena/header-cluster-audit-20261002 | head 339bf2e2b646c2db2315423e379d2af5043cc65b | archive-tag-matches-head=False
+### scripts/header-cluster-browser-contract.mjs | unmatched added lines=18
+  +     for (const dark of [false, true]) {
+  +       await page.evaluate((enabled) => document.documentElement.classList.toggle('dark', enabled), dark);
+  +       for (const selector of ['#hCpBtnNav', '#themeToggle']) {
+  +         const control = page.locator(selector);
+  +         await control.focus();
+  +         const style = await control.evaluate((node) => {
+  +           const computed = getComputedStyle(node);
+  +           return {
+  +             outlineStyle: computed.outlineStyle,
+  +             outlineWidth: computed.outlineWidth,
+  +             outlineOffset: computed.outlineOffset,
+  +             borderRadius: computed.borderRadius,
+  +           };
+  +         });
+  +         assert.notEqual(style.outlineStyle, 'none', `${contextSpec.id}:${selector}:${dark ? 'dark' : 'light'} focus outline missing`);
+  +         assert.ok(Number.parseFloat(style.outlineWidth) >= 2, `${contextSpec.id}:${selector} focus outline too thin`);
+  +         focusEvidence.push({ dark, selector, style });
+  +     await page.evaluate(() => document.documentElement.classList.remove('dark'));
+### src/components/home/HomePageChrome.astro | unmatched added lines=1
+  +     const desktopMedia = window.matchMedia('(min-width: 901px)');
+### src/components/home/HomePageChromeStyles.astro | unmatched added lines=26
+  +   @media (min-width: 901px) {
+  +   body.home-page .h-navbar #hMobileMenuBtn {
+  + }
+  + /* Home carries seven desktop destinations. At tablet widths the full
+  +    row cannot coexist with the fixed 44px search/theme controls, so
+  +    hand navigation to the already-canonical mobile menu before the
+  +    controls can leave the viewport. */
+  + @media (min-width: 761px) and (max-width: 900px) {
+  +   body.home-page .h-navbar .h-nav-links {
+  +   body.home-page .h-navbar #hMobileMenuBtn {
+  +     display: flex;
+  +   body.home-page .h-mobile-backdrop {
+  +     display: block;
+  +     opacity: 0;
+  +     visibility: hidden;
+  +     pointer-events: none;
+  +     transition: opacity .25s ease, visibility 0s .25s;
+  +   body.home-page .h-mobile-backdrop.open {
+  +     opacity: 1;
+  +     visibility: visible;
+  +     pointer-events: auto;
+  +     transition: opacity .25s ease, visibility 0s 0s;
+  +   body.home-page .h-mobile-nav {
+  +     top: 70px;
+  +     max-height: calc(100dvh - 70px);
+  + }
+### src/components/ui/Header.astro | unmatched added lines=6
+  +       position: static !important;
+  +         order: 3;
+  +         width: 100%;
+  +         min-width: 0;
+  +         overflow-x: auto;
+  +         overscroll-behavior-inline: contain;
+
+## arena/kod-da-vinchi-timeline-keyboard-20261002 | head 45a3ee760c31a118fce378acd4dd4a3d6652b4ba | archive-tag-matches-head=False
+### src/components/article-pilots/kod-da-vinchi/KodDaVinchiSectionCanon.astro | unmatched added lines=1
+  + <div class="ctw-body" role="region" aria-label="Хронология формирования канона — горизонтальная прокрутка" tabindex="0">
+
+## arena/01a0f415-gb-is-my-strength | head 5517a8c5382449c20ebf836284585da26b63f8c6 | archive-tag-matches-head=False
+### data/scripture-search-index.json | unmatched added lines=20
+  +     "manifestItems": 95,
+  +     "indexedRoutes": 94,
+  +     "scannedSourceFiles": 507,
+  +     "references": 1218,
+  +     "occurrences": 3057,
+  +     "referencesWithoutCanonicalText": 1070,
+  +           "title": "Стивен Лоусон: самообман, падение и публичный голос",
+  +           "context": "ее удачные аргументы; исследовательский pass сознательно не переносит их в статью как факты. Например, запрет Давиду строить храм нельзя связывать именно с его сексуальным грехом: 1 Пар. 28:3 называет кровь и войны. Такой пример полезен как напоминание: критиковать Лоусона нужно не слабее Писания и не сильнее источников . Прощение, должность и публичная п…",
+  +           "title": "Стивен Лоусон: самообман, падение и публичный голос",
+  +           "context": "ёт прямо к доскандальному Лоусону. Он сам учил о самообмане За семь лет до разоблачения, на Shepherds' Conference 2017, Лоусон завершал проповедь из Иоанна 10 обращением к пасторам. Смысл его предупреждения был предельно неудобным: можно говорить о Христе, указывать другим на Христа, стоять очень близко к христианской истине — и всё же вопрос о собственно…",
+  +           "title": "Стивен Лоусон: самообман, падение и публичный голос",
+  +           "context": "2. Игнорирование предупреждающих знаков очень сильный внутренний контраст Доскандальный разбор Римлянам 2 описывал совесть как систему тревоги и тормозов, которую можно притупить повторяющимся непослушанием. Поздняя самодиагностика книги помещает игнорирование Писания и совести в корень падения.",
+  +           "title": "Стивен Лоусон: самообман, падение и публичный голос",
+  +           "context": "аждой фразы, но и вопрос собственного продолжающегося представительства автора. Однако из нравственного падения не следует, что истинная экзегеза автоматически становится ложной. Римлянам 2 не меняет смысла потому, что проповедник нарушил собственное учение о совести. Напротив, иногда старый текст после падения звучит ещё страшнее — не как оправдание авто…",
+  +           "title": "Стивен Лоусон: самообман, падение и публичный голос",
+  +           "context": "жно вывести другое: он публично знал категорию, в которой правильная религиозная речь не удостоверяет внутреннюю реальность говорящего. То же происходит с совестью. В разборе Римлянам 2, опубликованном OnePassion в 2017 году, Лоусон использовал целую систему образов: совесть как сигнал тревоги, Божьи нравственные «стоп-знаки», тормоза, которые можно посте…",
+  +           "title": "Стивен Лоусон: самообман, падение и публичный голос",
+  +           "context": "убличный грешник должен сначала многолетней тишиной заработать возможность быть прощённым Богом. Но пасторская должность — не право всякого прощённого христианина Требования 1 Тимофею 3 и Титу 1 описывают не просто способность произнести ортодоксальную проповедь. Они включают репутацию, самообладание, верность, проверяемую жизнь и отношение к дому. Поэтом…",
+  +           "title": "Стивен Лоусон: самообман, падение и публичный голос",
+  +           "context": "ик должен сначала многолетней тишиной заработать возможность быть прощённым Богом. Но пасторская должность — не право всякого прощённого христианина Требования 1 Тимофею 3 и Титу 1 описывают не просто способность произнести ортодоксальную проповедь. Они включают репутацию, самообладание, верность, проверяемую жизнь и отношение к дому. Поэтому тезис «прощё…",
+### data/search-manifest.json | unmatched added lines=4
+  +   "generatedAt": "2026-09-29T21:00:00Z",
+  +       "title": "Стивен Лоусон: самообман, падение и публичный голос",
+  +       "description": "Документированное исследование падения Стивена Лоусона, его прежних предупреждений о совести и самообмане, книги Mercy in the Wilderness и вопроса о том, чем должна подтверждаться новая публичная духовная достоверность.",
+  +       "modifiedTime": "2026-09-29T21:00:00.000Z",
+### feed.xml | unmatched added lines=3
+  +     <lastBuildDate>Tue, 29 Sep 2026 21:00:00 GMT</lastBuildDate>
+  +       <title>Стивен Лоусон: самообман, падение и публичный голос</title>
+  +       <description><![CDATA[Документированное исследование падения Стивена Лоусона, его прежних предупреждений о совести и самообмане, книги Mercy in the Wilderness и вопроса о том, чем должна подтверждаться новая публичная духовная достоверность.]]></description>
+### sitemap.xml | unmatched added lines=1
+  +     <lastmod>2026-09-29T21:00:00.000Z</lastmod>
