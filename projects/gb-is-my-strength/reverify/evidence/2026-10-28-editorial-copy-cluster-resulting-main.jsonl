@@ -1,0 +1,14 @@
+{"type":"anchor","product_sha":"cdf994b104d7b5eaeef407bf60e341e436efe1df","build":"strangler:build:production-like","documents":108,"product_modified":false,"open_pr_2208":"docs-only; no overlap","wave":"2/16-20"}
+{"type":"scope","rows":["GBS-GILL-PART1-RUSSIAN-COPY-QUALITY","GBS-DIOTROPHES-NUMERAL-AGREEMENT","GBS-DIOTROPHES-UNEXPLAINED-FIDEL-JARGON","GBS-HERMENEUTIKA-TRANSLATION-AND-COPY-QUALITY","GBS-LAWSON-QUOTE-RUSSIAN-CALQUE","GBS-SEM-TIPOV-LITERAL-MARKDOWN-PREFIX"]}
+{"type":"profiles","routes":5,"profiles":["desktop-light","desktop-dark","mobile-light","mobile-dark"],"cases":20,"always_visible_patterns":11,"painted_pattern_profiles":"44/44","screenshots":20}
+{"type":"gill","phrases":["около двенадцати лет Гилл услышал","Продолжительность между","в виду многих зрителей"],"source_each":1,"final_each":1,"painted":"12/12","status":"OPEN-CURRENT"}
+{"type":"diotrophes_agreement","phrase":"Все двадцать один материала различаются","source":1,"final":1,"painted":"4/4","status":"OPEN-CURRENT"}
+{"type":"diotrophes_learning","native_flow":"learning opener click -> Outline tab click","profiles":4,"aria_selected":"4/4 true","phrase":"Фидельные свидетельства","visible":"4/4","desktop_rect":"407x34.8","mobile_rect":"319x34.8","status":"OPEN-CURRENT"}
+{"type":"hermenevtika_prose","phrases":5,"source_final_each":1,"painted":"20/20","examples":["не плотно соответствуют","двойное авторство оперирует","оговорки на формулу","рекапитулируются в конечном Давиде","кульминационный герой небом и землей"]}
+{"type":"hermenevtika_dynamic","tooltip_flow":"native click marker 107","tooltip_phrase":"произвести истощенную Христологию","expanded":true,"opacity":1,"rect":"544x98.3","quiz_flow":"native launch -> answer q1 -> next","quiz_q2":"academическую","visible_button":true,"rect":"634.8x76.9","status":"OPEN-CURRENT"}
+{"type":"lawson","phrase":"Неизвестно для меня эта площадка лепила из меня жёсткого проповедника","reader_source":1,"research_source":1,"painted":"4/4","authority":"secondary review remains explicit","status":"OPEN-CURRENT"}
+{"type":"sem_tipov","source":"***Серия…*","final_html":"<p>**<em>Серия…</em></p>","inner_text":"**Серия","count":1,"painted":"4/4","other_source_prefixes_not_expanded_without_final_artifact":true,"status":"OPEN-CURRENT"}
+{"type":"health","broken_loaded_images":0,"positive_horizontal_overflow":0,"page_errors":0,"filtered_console":"ERR_CONNECTION_CLOSED sandbox delivery on some article routes"}
+{"type":"axe","light_desktop":0,"light_mobile":0,"dark_mobile":0,"dark_desktop_existing":{"routes":["gill","diotrophes","sem-tipov"],"nodes_each":2,"owner":"GBS-TEXT-CONTRAST-RESIDUAL-BATCH"},"new_rows":0}
+{"type":"gates","article_qa":"pass","readable_audit":"pass","editorial_lint":"pass","exact_negative_fixtures":0,"disposition":"all six rows OPEN-CURRENT"}
+{"type":"disposition","confirmed_current":6,"new_rows":0,"new_work_units":0,"matrix":{"direct":45,"improvements":8,"residual":1,"systems":22,"total":76}}
