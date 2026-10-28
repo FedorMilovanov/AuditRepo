@@ -1,8 +1,8 @@
 # Широкая волна 12 — editorial copy, strange words, glossary identity и projection loss
 
-**Дата:** 2026-10-28  
-**Product exact main:** `1a67c65cf2a30b06200480b7245abab873447a47`  
-**Режим:** read-only current-main reverify; Product не изменялся  
+**Дата:** 2026-10-28
+**Product exact main:** `1a67c65cf2a30b06200480b7245abab873447a47`
+**Режим:** read-only current-main reverify; Product не изменялся
 **Scope:** 13 существующих rows одного editorial/publication-кластера; без создания дубликатов.
 
 ## 1. База и метод

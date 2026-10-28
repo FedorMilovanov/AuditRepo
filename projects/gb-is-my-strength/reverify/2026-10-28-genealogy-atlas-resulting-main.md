@@ -1,9 +1,9 @@
 # Широкая волна 10 — родословный атлас: семантика, направления связей и повторное открытие
 
-**Дата:** 2026-10-28  
-**Product exact current main:** `f72dc54b1a860658fbd0c4c52bb45e1256c9c9b8`  
-**Runtime build anchor:** `4b0cc8a0eae848afcbdb6ae4d63a67f9fb9d8e53`  
-**Режим:** read-only SYSTEM reverify; Product не изменялся  
+**Дата:** 2026-10-28
+**Product exact current main:** `f72dc54b1a860658fbd0c4c52bb45e1256c9c9b8`
+**Runtime build anchor:** `4b0cc8a0eae848afcbdb6ae4d63a67f9fb9d8e53`
+**Режим:** read-only SYSTEM reverify; Product не изменялся
 **Строки:** `GBS-GENEALOGY-OVERVIEW-SEMANTICS`, `GBS-GENEALOGY-RELATION-LABEL-DIRECTION`, `GBS-GENEALOGY-POINTER-PANEL-STATE-DESYNC`.
 
 ## 1. Точная база и владелец

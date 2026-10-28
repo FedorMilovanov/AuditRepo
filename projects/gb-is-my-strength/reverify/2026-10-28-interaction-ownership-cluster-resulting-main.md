@@ -1,8 +1,8 @@
 # Большая волна 6/16–20 — ownership интерактивных поверхностей
 
-**Дата:** 2026-10-28  
-**Product anchor:** `cdf994b104d7b5eaeef407bf60e341e436efe1df`  
-**Кластер:** inline tooltips, rich footnotes, FAQ disclosure, strategic-map dialog, reversible cards  
+**Дата:** 2026-10-28
+**Product anchor:** `cdf994b104d7b5eaeef407bf60e341e436efe1df`
+**Кластер:** inline tooltips, rich footnotes, FAQ disclosure, strategic-map dialog, reversible cards
 **Вердикт:** четыре system lanes сохранены с новым resulting-main scope; один direct manifestation поглощён общим tooltip owner
 
 ## 1. Якорь и ownership

@@ -1,8 +1,8 @@
 # Широкая волна 7 — reader controls, opener semantics и outcome ownership
 
-**Дата:** 2026-10-28  
-**Product resulting main:** `d056a19cfabe84dc2dbc59fc37ff4b03288917f1`  
-**Режим:** read-only SYSTEM reverify; Product не изменялся  
+**Дата:** 2026-10-28
+**Product resulting main:** `d056a19cfabe84dc2dbc59fc37ff4b03288917f1`
+**Режим:** read-only SYSTEM reverify; Product не изменялся
 **Охват:** `SYS-READER-SPEED-KEYBOARD-MODEL`, `SYS-TTS-RECOVERY-STATUS-OWNERSHIP`, `SYS-INJECTED-HEADER-CONTROL-HOST`, `SYS-ARTICLE-IMAGE-VIEWER-OPENER-SEMANTICS`, `SYS-READER-SHARE-COPY-OUTCOME-CONTRACT`.
 
 ## 1. Точная база и коллизии

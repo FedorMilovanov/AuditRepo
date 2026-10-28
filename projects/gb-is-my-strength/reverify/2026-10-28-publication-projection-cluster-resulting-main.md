@@ -1,8 +1,8 @@
 # Большая волна 5/16–20 — публикационные проекции на resulting main
 
-**Дата:** 2026-10-28  
-**Product anchor:** `cdf994b104d7b5eaeef407bf60e341e436efe1df`  
-**Объём:** TTS consumer, SpeakableSpecification, общие `<head>`-ресурсы, редакционная датировка, FAQ JSON-LD  
+**Дата:** 2026-10-28
+**Product anchor:** `cdf994b104d7b5eaeef407bf60e341e436efe1df`
+**Объём:** TTS consumer, SpeakableSpecification, общие `<head>`-ресурсы, редакционная датировка, FAQ JSON-LD
 **Вердикт:** один system lane закрыт, четыре сохранены и сужены по свежему evidence
 
 ## 1. Чистота якоря и ownership

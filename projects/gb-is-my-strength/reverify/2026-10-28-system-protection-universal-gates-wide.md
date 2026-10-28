@@ -1,8 +1,8 @@
 # Широкая волна 16: системная защита и универсальные publication gates
 
-Дата: **2026-10-28**  
-Product: exact `1a67c65cf2a30b06200480b7245abab873447a47` = `origin/main`; дерево чистое.  
-Open owner: Product PR #2215 добавляет отдельный Hard Texts материал; shared gate/workflow owners этой волны не меняет.  
+Дата: **2026-10-28**
+Product: exact `1a67c65cf2a30b06200480b7245abab873447a47` = `origin/main`; дерево чистое.
+Open owner: Product PR #2215 добавляет отдельный Hard Texts материал; shared gate/workflow owners этой волны не меняет.
 Машинный receipt: `evidence/2026-10-28-system-protection-universal-gates-wide.jsonl`.
 
 ## Итог

@@ -1,7 +1,7 @@
 # Широкая перепроверка системного admission/control plane — волна 20
 
-**Product:** `1aff67560d56d8521aaeab81bdc361f33dbd6af6`  
-**Дата:** 2026-10-29  
+**Product:** `1aff67560d56d8521aaeab81bdc361f33dbd6af6`
+**Дата:** 2026-10-29
 **Охват:** все 18 system verification lanes, общий статический admission, dependency lifecycle и нативный no-JS FAQ residual.
 
 ## 1. Полный лёгкий admission chain

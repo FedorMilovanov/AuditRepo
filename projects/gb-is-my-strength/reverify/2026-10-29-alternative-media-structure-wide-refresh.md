@@ -1,8 +1,8 @@
 # Широкая перепроверка альтернативных представлений и структуры — волна 18
 
-**Дата:** 2026-10-29  
-**Product:** `1aff67560d56d8521aaeab81bdc361f33dbd6af6` (`main`)  
-**AuditRepo:** ветка `arena/1c8dd3ee-auditrepo`, PR #496  
+**Дата:** 2026-10-29
+**Product:** `1aff67560d56d8521aaeab81bdc361f33dbd6af6` (`main`)
+**AuditRepo:** ветка `arena/1c8dd3ee-auditrepo`, PR #496
 **Охват:** Krajne reduced-motion quiz, Ishod no-JS/print/AX, общий print-terminal owner, Biografii print, outline/landmark corpus.
 
 ## 1. Границы и воспроизводимость

@@ -1,8 +1,8 @@
 # Широкая волна 11 — publication typography, language-of-parts и Unicode gate coverage
 
-**Дата:** 2026-10-28  
-**Product exact main:** `1a67c65cf2a30b06200480b7245abab873447a47`  
-**Режим:** read-only SYSTEM reverify; Product не изменялся  
+**Дата:** 2026-10-28
+**Product exact main:** `1a67c65cf2a30b06200480b7245abab873447a47`
+**Режим:** read-only SYSTEM reverify; Product не изменялся
 **Строки:** font matrix, Nagornaya justification, summary microheadings, map archaeology microtext, language-of-parts, mixed-script coverage, typograf fail-open.
 
 ## 1. База и объём

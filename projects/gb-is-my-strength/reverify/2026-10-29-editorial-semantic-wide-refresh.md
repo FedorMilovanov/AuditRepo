@@ -1,7 +1,7 @@
 # Широкая редакционно-семантическая перепроверка — волна 19
 
-**Product:** `1aff67560d56d8521aaeab81bdc361f33dbd6af6`  
-**Дата:** 2026-10-29  
+**Product:** `1aff67560d56d8521aaeab81bdc361f33dbd6af6`
+**Дата:** 2026-10-29
 **Охват:** 14 active direct rows: русская редактура, пунктуация, glossary fact, research leakage, повреждённый Baptist copy, malformed Krajne/Pastor output.
 
 ## 1. Метод и owner boundary

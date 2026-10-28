@@ -1,8 +1,8 @@
 # Широкая волна 14: визуальная типографика, масштаб и premium-подача
 
-Дата: **2026-10-28**  
-Product: exact `1a67c65cf2a30b06200480b7245abab873447a47` = `origin/main`; дерево чистое.  
-Open owner: Product PR #2215 добавляет новый Hard Texts материал; shared typography, Nagornaya, Genesis, Hermenevtika chrome, hero и map owners не затрагивает.  
+Дата: **2026-10-28**
+Product: exact `1a67c65cf2a30b06200480b7245abab873447a47` = `origin/main`; дерево чистое.
+Open owner: Product PR #2215 добавляет новый Hard Texts материал; shared typography, Nagornaya, Genesis, Hermenevtika chrome, hero и map owners не затрагивает.
 Машинный receipt: `evidence/2026-10-28-visual-typography-wide-refresh.jsonl`.
 
 ## Итог

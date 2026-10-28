@@ -1,8 +1,8 @@
 # Широкая волна 17: tooltip/focus topology, glossary identity и note authority
 
-Дата: **2026-10-28**  
-Product: resulting exact `1aff67560d56d8521aaeab81bdc361f33dbd6af6` = `origin/main`; production-like build чистый.  
-Owner reconciliation: Product PR #2215 влился во время волны; его 15-file diff добавляет один Hard Texts route/registries, не меняет shared tooltip/glossary/note owners; открытых Product PR после merge нет.  
+Дата: **2026-10-28**
+Product: resulting exact `1aff67560d56d8521aaeab81bdc361f33dbd6af6` = `origin/main`; production-like build чистый.
+Owner reconciliation: Product PR #2215 влился во время волны; его 15-file diff добавляет один Hard Texts route/registries, не меняет shared tooltip/glossary/note owners; открытых Product PR после merge нет.
 Машинный receipt: `evidence/2026-10-28-tooltip-glossary-wide-refresh.jsonl`.
 
 ## Итог

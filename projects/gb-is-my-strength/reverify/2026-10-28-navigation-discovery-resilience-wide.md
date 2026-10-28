@@ -1,8 +1,8 @@
 # Широкая волна 15: навигация, discovery, журнальные ссылки и graceful fallback
 
-Дата: **2026-10-28**  
-Product: exact `1a67c65cf2a30b06200480b7245abab873447a47` = `origin/main`; дерево чистое.  
-Open owner: Product PR #2215 публикует отдельный Hard Texts материал и не владеет проверенными teen/home/journal/mobile-chrome/Nagornaya/sitemap/3D owners.  
+Дата: **2026-10-28**
+Product: exact `1a67c65cf2a30b06200480b7245abab873447a47` = `origin/main`; дерево чистое.
+Open owner: Product PR #2215 публикует отдельный Hard Texts материал и не владеет проверенными teen/home/journal/mobile-chrome/Nagornaya/sitemap/3D owners.
 Машинный receipt: `evidence/2026-10-28-navigation-discovery-resilience-wide.jsonl`.
 
 ## Итог

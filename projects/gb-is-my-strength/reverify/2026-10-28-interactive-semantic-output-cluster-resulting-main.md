@@ -1,8 +1,8 @@
 # Широкая волна 9 — interactive semantic output и keyboard-scroll regions
 
-**Дата:** 2026-10-28  
-**Product resulting main:** `d056a19cfabe84dc2dbc59fc37ff4b03288917f1`  
-**Режим:** read-only LANE/SYSTEM reverify; Product не изменялся  
+**Дата:** 2026-10-28
+**Product resulting main:** `d056a19cfabe84dc2dbc59fc37ff4b03288917f1`
+**Режим:** read-only LANE/SYSTEM reverify; Product не изменялся
 **Строки:** quiz rich markup, chrome label-in-name, Antisovetov nested map triggers, Krajne heart back contrast, shared reading-table keyboard contract, outline/landmark containment.
 
 ## 1. Точная база и владельцы
