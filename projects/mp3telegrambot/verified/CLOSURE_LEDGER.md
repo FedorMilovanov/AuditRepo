@@ -87,3 +87,14 @@
 - Regression witness: 419 focused semantic tests PASS.
 - Live evidence: provider output unavailable; runtime quality remains owned by the existing canary residual.
 - Detailed evidence: [`wave 8`](../verification/2026-10-29-wave-8-content-quality/REPORT.md).
+
+## 2026-10-29 — history and rollback disposition
+
+- Scope: full-history root attribution, refactor boundary and owner/collision census.
+- Signal class: Product / history / ownership.
+- Exact anchor: `FedorMilovanov/mp3telegrambot@df1d6c675106c50147ed0045dddfbc25c8f546da`.
+- Result: roots span May–October mechanisms; no single final-refactor regression supports wholesale rollback.
+- Source-repo evidence: line attribution for migration, publication, health, release and Telegram-boundary mechanisms.
+- Regression witness: exact-head deterministic strengths and focused wave evidence retained.
+- Live evidence: current owner/PR census repeated; no Product mutation performed.
+- Detailed evidence: [`wave 9`](../verification/2026-10-29-wave-9-history-disposition/REPORT.md).
