@@ -65,3 +65,14 @@
 - Regression witness: 60 focused tests PASS; pure healthy-state probe with one old update returns `503 ['updates_stale']`.
 - Live evidence: no production monitor or bot process mutated.
 - Detailed evidence: [`wave 6`](../verification/2026-10-29-wave-6-operability-health/REPORT.md).
+
+## 2026-10-29 — Telegram HTML and length safety
+
+- Scope: escaping, entity/tag-safe trimming, Telegram UTF-16 limits and archive-derived output.
+- Signal class: Product / runtime / presentation.
+- Exact anchor: `FedorMilovanov/mp3telegrambot@df1d6c675106c50147ed0045dddfbc25c8f546da`.
+- Result: escaping is strong; shared message trimming uses the wrong width model.
+- Source-repo evidence: `_html_message_limit` budgets with Python `len()` while caption code already uses UTF-16-aware `visible_length`.
+- Regression witness: 29 focused tests PASS; emoji archive probe returns Python length 3560 but UTF-16 width 6791.
+- Live evidence: deterministic Telegram boundary proof; no message was sent.
+- Detailed evidence: [`wave 7`](../verification/2026-10-29-wave-7-telegram-html/REPORT.md).

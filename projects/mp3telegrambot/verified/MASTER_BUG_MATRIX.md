@@ -6,15 +6,15 @@
 
 | Field | Value |
 |---|---:|
-| Active work units | **9** |
-| Direct current defects | **4** |
+| Active work units | **10** |
+| Direct current defects | **5** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **1** |
 | System verification lanes | **4** |
 | Owner decisions | **0** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-## CURRENT DEFECTS — 4
+## CURRENT DEFECTS — 5
 
 | ID | Current problem | Closure boundary | Evidence |
 |---|---|---|---|
@@ -22,6 +22,7 @@
 | `MP3-DB-MIGRATION-FAILOPEN-001` | Required SQLite column migrations suppress every `OperationalError` as “already exists,” so lock/read-only/I/O/schema failures can be hidden until a later user path assumes the missing column. | Introspect/version schema, migrate missing columns transactionally, propagate unexpected failures and assert the post-migration schema before healthy startup. | [`wave 3`](../verification/2026-10-29-wave-3-process-persistence/REPORT.md) |
 | `MP3-LIVEDUB-ROLLBACK-ORPHAN-001` | A sent companion message with a missing `audio.file_id` raises before ownership enters the rollback list; the transaction reports `rolled back=0/0` while the message remains visible. | Own the returned message before metadata validation, delete it on invalid identity, report deletion failure explicitly and add a no-file-ID regression test. | [`wave 5`](../verification/2026-10-29-wave-5-publication-transactions/REPORT.md) |
 | `MP3-HEALTH-QUIET-TRAFFIC-001` | `/healthz` treats five minutes without an inbound user update as failed processing, so a healthy polling bot becomes 503 after ordinary traffic silence. | Use polling/transport or loop heartbeat for readiness; keep inbound-update age informational and test quiet, stalled and never-used states separately. | [`wave 6`](../verification/2026-10-29-wave-6-operability-health/REPORT.md) |
+| `MP3-HTML-UTF16-LIMIT-001` | Shared HTML message trimming uses Python code-point length, so emoji-heavy archive output can remain below 3900 locally while exceeding Telegram's 4096 UTF-16-unit boundary. | Unify message/caption trimming on one UTF-16-aware, entity/tag-preserving primitive and add astral-emoji boundary tests. | [`wave 7`](../verification/2026-10-29-wave-7-telegram-html/REPORT.md) |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 

@@ -43,3 +43,10 @@ System themes group recurring symptoms by shared mechanism. Use `active-work` on
 - Mechanism: user traffic age is used as a polling-liveness proxy even though traffic can legitimately be absent.
 - Current row: `MP3-HEALTH-QUIET-TRAFFIC-001`.
 - Class outcome: transport/loop heartbeat controls readiness; traffic age remains informational.
+
+## MP3-THEME-TELEGRAM-BOUNDARIES — one length model after escaping (`active-work`)
+
+- Manifestation: emoji-heavy HTML archive output passes a Python-length guard while exceeding Telegram's UTF-16 boundary.
+- Mechanism: message and caption builders implement different visible-length counters.
+- Current row: `MP3-HTML-UTF16-LIMIT-001`.
+- Class outcome: one UTF-16-aware, entity/tag-preserving primitive for all Telegram text boundaries.
