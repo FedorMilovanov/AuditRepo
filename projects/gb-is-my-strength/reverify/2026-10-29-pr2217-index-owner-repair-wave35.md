@@ -61,7 +61,7 @@ git diff --exit-code
 
 1. Owner-repair технически точен и минимален.
 2. Шесть новых Home occurrences полностью совпадают с независимым witness волны 34.
-3. Два ранее красных check теперь должны оцениваться только на `ff860d39…`; в момент первичной проверки новой волны они были заново queued, поэтому удалённый exact-head CI ещё не объявлялся зелёным.
+3. Два ранее красных check оценены только на `ff860d39…`: финальный re-query показал `SUCCESS` для `Deterministic source index and dist witness` и `Exact Scripture occurrences before Pagefind`. Весь PR ещё не объявляется merge-ready: 23 checks успешны, 4 пропущены, 15 остаются pending, merge state `UNSTABLE`.
 4. Классификация остаётся смешанной: конкретный omission — избегаемая ошибка агента; поздняя discoverability — уже учтённая системная граница atomic authoring.
 5. Арифметика matrix не меняется: **56 = 28 direct + 7 improvements + 1 residual + 20 system lanes**.
 6. Product lane не мутировался и owner repair не был перехвачен аудитом.
