@@ -479,6 +479,10 @@
         461
       ],
       "note": "Duplicate GA4 closure was rejected because merged #461 carried the same root with fuller control-plane and collector evidence."
+    },
+    "482": {
+      "category": "superseded",
+      "note": "Owner-authorized close after AuditRepo broad wave 7 content-level reconciliation: all explicit IDs and queue candidates are absorbed by newer current owners; wholesale import would restore stale shared-queue state. Source branch remains retained; see projects/auditrepo/verification/2026-10-29-wave-7-pr482-disposition/REPORT.md."
     }
   }
 }

@@ -65,3 +65,10 @@
 - Remaining: two classified owner/admin actions only (issue labels/disposition and PR #482 close authorization).
 - Safety: no Product mutation, remote-ref deletion, issue closure or stale intake merge.
 - Detailed evidence: `../verification/2026-10-29-wave-8-final-synthesis/REPORT.md`.
+
+## 2026-10-29 — owner-authorized PR #482 closure
+
+- Scope: `AR-PR482-DISPOSITION-001` and live closed-unmerged forensic state.
+- Result: closed; PR #482 marked superseded, source branch retained, permanent ledger coverage extended to 70/70.
+- Preservation boundary: no merge, branch deletion or ref-retirement action.
+- Detailed evidence: `../verification/2026-10-29-wave-9-owner-pr-disposition/REPORT.md`.
