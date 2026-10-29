@@ -36,3 +36,10 @@ System themes group recurring symptoms by shared mechanism. Use `active-work` on
 - Mechanism: ownership transfer occurs after metadata validation instead of immediately after the irreversible external send.
 - Current row: `MP3-LIVEDUB-ROLLBACK-ORPHAN-001`.
 - Class outcome: every visible Telegram message is owned before validation, with explicit rollback/deletion outcomes.
+
+## MP3-THEME-OPERABILITY-SIGNAL — readiness must measure service activity, not demand (`active-work`)
+
+- Manifestation: `/healthz` becomes 503 after five quiet minutes following any inbound update.
+- Mechanism: user traffic age is used as a polling-liveness proxy even though traffic can legitimately be absent.
+- Current row: `MP3-HEALTH-QUIET-TRAFFIC-001`.
+- Class outcome: transport/loop heartbeat controls readiness; traffic age remains informational.

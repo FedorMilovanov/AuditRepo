@@ -6,21 +6,22 @@
 
 | Field | Value |
 |---|---:|
-| Active work units | **8** |
-| Direct current defects | **3** |
+| Active work units | **9** |
+| Direct current defects | **4** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **1** |
 | System verification lanes | **4** |
 | Owner decisions | **0** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
-## CURRENT DEFECTS — 3
+## CURRENT DEFECTS — 4
 
 | ID | Current problem | Closure boundary | Evidence |
 |---|---|---|---|
 | `MP3-DEV-ENV-CONTRACT-001` | The documented `requirements-dev.txt` install does not reproduce the verifier environment: `colorama` is absent on Linux and the lock-metadata test false-reds; installing the exact lock makes the complete verifier pass. | Provide one documented clean install that passes `tools/verify_repo.py`, or make the metadata proof platform-aware without weakening CI lock closure. | [`wave 1`](../verification/2026-10-29-wave-1-baseline/REPORT.md) |
 | `MP3-DB-MIGRATION-FAILOPEN-001` | Required SQLite column migrations suppress every `OperationalError` as “already exists,” so lock/read-only/I/O/schema failures can be hidden until a later user path assumes the missing column. | Introspect/version schema, migrate missing columns transactionally, propagate unexpected failures and assert the post-migration schema before healthy startup. | [`wave 3`](../verification/2026-10-29-wave-3-process-persistence/REPORT.md) |
 | `MP3-LIVEDUB-ROLLBACK-ORPHAN-001` | A sent companion message with a missing `audio.file_id` raises before ownership enters the rollback list; the transaction reports `rolled back=0/0` while the message remains visible. | Own the returned message before metadata validation, delete it on invalid identity, report deletion failure explicitly and add a no-file-ID regression test. | [`wave 5`](../verification/2026-10-29-wave-5-publication-transactions/REPORT.md) |
+| `MP3-HEALTH-QUIET-TRAFFIC-001` | `/healthz` treats five minutes without an inbound user update as failed processing, so a healthy polling bot becomes 503 after ordinary traffic silence. | Use polling/transport or loop heartbeat for readiness; keep inbound-update age informational and test quiet, stalled and never-used states separately. | [`wave 6`](../verification/2026-10-29-wave-6-operability-health/REPORT.md) |
 
 ## VERIFIED NECESSARY IMPROVEMENTS — 0
 

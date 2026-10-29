@@ -54,3 +54,14 @@
 - Regression witness: 68 focused delivery/transaction tests PASS; executable empty-file-ID probe yields `sent 1`, `deleted []`, `rolled back=0/0`.
 - Live evidence: no Telegram credentials or messages used; network ambiguity remains separately bounded.
 - Detailed evidence: [`wave 5`](../verification/2026-10-29-wave-5-publication-transactions/REPORT.md).
+
+## 2026-10-29 — operability and health semantics
+
+- Scope: health/readiness, polling heartbeat, maintenance, owner alerting and restart policy.
+- Signal class: Product / runtime / operability.
+- Exact anchor: `FedorMilovanov/mp3telegrambot@df1d6c675106c50147ed0045dddfbc25c8f546da`.
+- Result: structured health retained; inbound demand is incorrectly used as service-liveness evidence.
+- Source-repo evidence: `record_update()` runs only on received updates while `collect_problems()` makes age above 300 seconds fatal.
+- Regression witness: 60 focused tests PASS; pure healthy-state probe with one old update returns `503 ['updates_stale']`.
+- Live evidence: no production monitor or bot process mutated.
+- Detailed evidence: [`wave 6`](../verification/2026-10-29-wave-6-operability-health/REPORT.md).
