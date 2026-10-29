@@ -1,6 +1,7 @@
 # Wave 10 — GitHub Actions runtime maintenance
 
-**Trigger:** post-merge `main@3f6ac5cf2aa60989fef091a0c54bf46463c9f584` validation annotations  
+**Trigger:** post-merge `main@3f6ac5cf2aa60989fef091a0c54bf46463c9f584` validation annotations
+
 **Class:** technically accessible AuditRepo control-plane maintenance
 
 ## Signal

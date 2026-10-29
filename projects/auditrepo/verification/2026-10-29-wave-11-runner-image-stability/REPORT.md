@@ -1,6 +1,7 @@
 # Wave 11 — runner image stability
 
-**Trigger:** exact-head PR #503 checks after the Node 24 action upgrade  
+**Trigger:** exact-head PR #503 checks after the Node 24 action upgrade
+
 **Class:** technically accessible workflow reproducibility maintenance
 
 All three workflows succeeded and the Node.js 20 deprecation annotations disappeared. GitHub then emitted the repository-wide notice that `ubuntu-latest` is migrating to Ubuntu 26 beginning 2026-10-19.
