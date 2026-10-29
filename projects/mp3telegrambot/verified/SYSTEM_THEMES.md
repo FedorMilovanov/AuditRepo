@@ -6,8 +6,8 @@ System themes group recurring symptoms by shared mechanism. Use `active-work` on
 
 - Manifestations: strict typing and coverage omit root entrypoints; deterministic tests cannot authenticate real Telegram/provider delivery.
 - Mechanism: package-level gates are strong but stop before bootstrap and credentialed external boundaries.
-- Current rows: `MP3-BOOTSTRAP-ASSURANCE-001`, `MP3-REFACTOR-CANARY-001`.
-- Class outcome: executable orchestration contracts plus sanitized current-SHA canary evidence, without fake readiness or secret retention.
+- Current rows: `MP3-BOOTSTRAP-ASSURANCE-001`, `MP3-REFACTOR-CANARY-001`, `MP3-MEDIA-INTEGRATION-OPTIONAL-001`.
+- Class outcome: executable orchestration contracts, mandatory real-media encode/probe evidence and sanitized current-SHA canary evidence, without fake readiness or secret retention.
 
 ## MP3-THEME-CONTROL-PLANE-CURRENCY — green CI can run on migrating infrastructure (`active-work`)
 

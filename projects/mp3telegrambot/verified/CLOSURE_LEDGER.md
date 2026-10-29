@@ -32,3 +32,14 @@
 - Regression witness: 86 focused process/tree/cancellation/cleanup/migration tests PASS; full Ruff ASYNC scan has no blocking-call finding.
 - Live evidence: not applicable; no Product process or database was mutated.
 - Detailed evidence: [`wave 3`](../verification/2026-10-29-wave-3-process-persistence/REPORT.md).
+
+## 2026-10-29 — media runtime correctness
+
+- Scope: encode/probe postconditions, duration authority, process ownership, transactional outputs and real-media CI execution.
+- Signal class: Product / runtime / assurance.
+- Exact anchor: `FedorMilovanov/mp3telegrambot@df1d6c675106c50147ed0045dddfbc25c8f546da`.
+- Result: deterministic media contracts are strong; the only real encode/probe integration witness may silently skip.
+- Source-repo evidence: explicit stream/duration/silence/tail guards and module-level FFmpeg/FFprobe skip without CI fail-fast provisioning.
+- Regression witness: 129 focused tests PASS; real LiveDub media integration SKIP due absent tools in the clean audit environment.
+- Live evidence: exact-main CI jobs are green, but success metadata cannot distinguish this explicit skip; no audible/provider claim made.
+- Detailed evidence: [`wave 4`](../verification/2026-10-29-wave-4-media-runtime/REPORT.md).
