@@ -29,3 +29,10 @@ System themes group recurring symptoms by shared mechanism. Use `active-work` on
 - Mechanism: exception type alone cannot distinguish an existing column from lock, read-only, I/O or malformed-schema failures.
 - Current row: `MP3-DB-MIGRATION-FAILOPEN-001`.
 - Class outcome: transactional versioned/introspected migrations and post-migration schema proof before healthy startup.
+
+## MP3-THEME-PUBLICATION-OWNERSHIP — visible messages require immediate transaction ownership (`active-work`)
+
+- Manifestation: a successfully returned companion message can fail identity validation before entering the rollback list.
+- Mechanism: ownership transfer occurs after metadata validation instead of immediately after the irreversible external send.
+- Current row: `MP3-LIVEDUB-ROLLBACK-ORPHAN-001`.
+- Class outcome: every visible Telegram message is owned before validation, with explicit rollback/deletion outcomes.

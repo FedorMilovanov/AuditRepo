@@ -43,3 +43,14 @@
 - Regression witness: 129 focused tests PASS; real LiveDub media integration SKIP due absent tools in the clean audit environment.
 - Live evidence: exact-main CI jobs are green, but success metadata cannot distinguish this explicit skip; no audible/provider claim made.
 - Detailed evidence: [`wave 4`](../verification/2026-10-29-wave-4-media-runtime/REPORT.md).
+
+## 2026-10-29 — publication transactions
+
+- Scope: Telegram publication ordering, companion cache commit, rollback, single-flight and source-audio deferral.
+- Signal class: Product / runtime / publication.
+- Exact anchor: `FedorMilovanov/mp3telegrambot@df1d6c675106c50147ed0045dddfbc25c8f546da`.
+- Result: explicit commit-after-complete design retained; one pre-ownership rollback hole proven.
+- Source-repo evidence: helper validates returned `audio.file_id` before caller appends the visible message to its rollback list.
+- Regression witness: 68 focused delivery/transaction tests PASS; executable empty-file-ID probe yields `sent 1`, `deleted []`, `rolled back=0/0`.
+- Live evidence: no Telegram credentials or messages used; network ambiguity remains separately bounded.
+- Detailed evidence: [`wave 5`](../verification/2026-10-29-wave-5-publication-transactions/REPORT.md).
