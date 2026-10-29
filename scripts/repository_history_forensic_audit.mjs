@@ -27,6 +27,7 @@ const problems = [];
 
 export const STRICT_ZERO_SUMMARY_KEYS = Object.freeze([
   'inaccessibleClosedHeads',
+  'unledgeredClosedUnmergedPrs',
   'manualReviewCandidates',
   'unexplainedRemoteBranches',
 ]);
@@ -136,6 +137,18 @@ function missingPathKind(filename) {
   return 'other';
 }
 
+export function closedPrReviewPriority({ headAccessible, disposition, category, missingCount, referenceCount }) {
+  let priority = headAccessible ? 0 : 100;
+  if (!disposition) {
+    priority += 10;
+    if (category === 'unclassified') priority += 10;
+    else if (category === 'parked') priority += 8;
+    priority += missingCount * 2;
+    if (referenceCount === 0) priority += 3;
+  }
+  return priority;
+}
+
 function associatedPrSnapshot(pr, closedByNumber) {
   const closed = closedByNumber.get(pr.number);
   return {
@@ -143,7 +156,9 @@ function associatedPrSnapshot(pr, closedByNumber) {
     title: pr.title,
     state: pr.state,
     mergedAt: pr.merged_at || null,
-    category: closed?.category || null,
+    // Regex classification is triage only. A branch is terminally explained only
+    // after a reviewed disposition has been written to the durable ledger.
+    category: closed?.ledgerDisposition ? closed.category : null,
     ledgerResolved: Boolean(closed?.ledgerDisposition),
     url: pr.html_url,
   };
@@ -291,13 +306,15 @@ async function closedUnmergedInventory(prs, prsByNumber, ledger) {
       problems.push(`PR #${pr.number}: head commit ${headSha || '(missing sha)'} is not accessible through GitHub`);
     }
 
-    let reviewPriority = 0;
-    if (!headAccessible) reviewPriority += 100;
-    if (!disposition && ['unclassified', 'parked'].includes(category)) {
-      reviewPriority += category === 'unclassified' ? 10 : 8;
-      reviewPriority += missingIntroduced.length * 2;
-      if (!references.length) reviewPriority += 3;
-    }
+    // Title/body/comment regexes are useful triage but are not durable review.
+    // Every new closed-unmerged PR must receive a ledger disposition.
+    const reviewPriority = closedPrReviewPriority({
+      headAccessible,
+      disposition,
+      category,
+      missingCount: missingIntroduced.length,
+      referenceCount: references.length,
+    });
 
     results.push({
       number: pr.number,
@@ -347,8 +364,14 @@ function validateLedger(ledger, prsByNumber, closedUnmerged) {
       }
     }
     if (disposition.archiveRef) {
-      if (git(['show-ref', '--verify', '--quiet', `refs/remotes/origin/${disposition.archiveRef}`], { allowFailure: true }).status !== 0) {
+      const archiveRef = `refs/remotes/origin/${disposition.archiveRef}`;
+      if (git(['show-ref', '--verify', '--quiet', archiveRef], { allowFailure: true }).status !== 0) {
         problems.push(`PR #${number}: configured archive ref ${disposition.archiveRef} is missing`);
+      } else {
+        const archivedSha = git(['rev-parse', archiveRef]).stdout;
+        if (!pr?.head?.sha || archivedSha !== pr.head.sha) {
+          problems.push(`PR #${number}: configured archive ref ${disposition.archiveRef} is ${archivedSha}, expected exact head ${pr?.head?.sha || '(missing)'}`);
+        }
       }
     }
   }
@@ -385,6 +408,7 @@ function markdown(report) {
     `- Orphan or unclassified refs: ${report.summary.unexplainedRemoteBranches}`,
     `- Pull requests: ${report.summary.pullRequests}`,
     `- Closed without merge: ${report.summary.closedUnmergedPrs}`,
+    `- Closed without durable ledger disposition: ${report.summary.unledgeredClosedUnmergedPrs}`,
     `- Inaccessible closed heads: ${report.summary.inaccessibleClosedHeads}`,
     `- Manual review candidates: ${report.summary.manualReviewCandidates}`,
     '',
@@ -413,6 +437,7 @@ function markdown(report) {
     '## Interpretation boundary',
     '',
     '- Reachable head SHA proves pushed work is recoverable; it does not prove the work should be merged.',
+    '- Regex classification from PR prose is triage only and cannot replace a durable reviewed ledger disposition.',
     '- An archived source ref is reconciled only while a distinct `origin/archive/*` ref resolves to the same exact commit SHA.',
     '- The reviewed disposition ledger is traceable to the immutable closed-unmerged report and is validated against current PR/commit/ref state.',
     '- Commits that were never pushed cannot be found by a remote forensic audit.',
@@ -452,6 +477,7 @@ async function main() {
     mergedPrs: prs.filter((pr) => Boolean(pr.merged_at)).length,
     closedUnmergedPrs: closedUnmerged.length,
     openPrs: prs.filter((pr) => pr.state === 'open').length,
+    unledgeredClosedUnmergedPrs: closedUnmerged.filter((pr) => !pr.ledgerDisposition).length,
     inaccessibleClosedHeads: closedUnmerged.filter((pr) => !pr.headAccessible).length,
     missingIntroducedPaths: closedUnmerged.reduce((sum, pr) => sum + pr.missingIntroducedPaths.length, 0),
     manualReviewCandidates: closedUnmerged.filter((pr) => pr.reviewPriority > 0).length,

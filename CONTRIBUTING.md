@@ -93,6 +93,17 @@ Historical evidence is never automatic permission to edit current Product.
 
 Periodically inspect AuditRepo refs and closed/unmerged PRs. Integrate unique useful evidence, delete proven-obsolete working refs, and retain intentional archive refs only when they preserve real forensic value.
 
+## GitHub issue lifecycle
+
+An issue is coordination metadata, not an alternative bug matrix or permanent evidence store. Every new open issue should carry exactly one lifecycle label:
+
+- `state:active` — actionable work with a current owner and closure boundary;
+- `state:evidence` — receipt/archive only; excluded from active backlog counts;
+- `state:superseded` — stale, contradicted or replaced record awaiting/retaining terminal administration;
+- `state:diagnostic` — probe or control-plane transaction, not Product work.
+
+When work becomes current, authority still lives in the project MASTER. Link it rather than copying a second volatile finding. Close superseded/diagnostic/evidence-only issues when repository permissions and owner intent allow; until then their lifecycle label must prevent open-state from being counted as active work. Do not create a placeholder issue merely to test transport when a non-persistent API probe is sufficient.
+
 ## Do not
 
 - keep closed rows in MASTER for history;

@@ -6,12 +6,12 @@
 
 | Field | Value |
 |---|---:|
-| Active work units | **1** |
+| Active work units | **0** |
 | Direct current defects | **0** |
 | Verified necessary improvements | **0** |
 | Narrowed residuals | **0** |
 | System verification lanes | **0** |
-| Owner decisions | **1** |
+| Owner decisions | **0** |
 | Closed/stale/duplicate/absorbed rows in MASTER | **0** |
 
 ## CURRENT DEFECTS — 0
@@ -34,12 +34,11 @@
 | ID | Verified work package | Next boundary |
 |---|---|---|
 
-## OWNER DECISIONS — 1
+## OWNER DECISIONS — 0
 
 | ID | Missing decision / action | Closure boundary |
 |---|---|---|
-| `MS-GSC-OWNERSHIP-001` | `https://french.milovicake.ru/` is live, self-canonical and indexable; robots advertises the Astro sitemap index and the Google HTML verification file is live. The property can be added through Search Console API, but the currently connected primary Google authorization still gets `403 insufficient permission`. Apex `milovicake.ru` has no Google ownership TXT. Product issue: `Milovi_School#32`. | Complete ownership verification for the currently authorized account: first attempt verification of the already-added URL-prefix property with the existing live HTML token; if Google rejects that token, publish a token generated for the primary account or use deliberate DNS domain-property verification. Then prove Search Console reads succeed, submit/confirm `sitemap-index.xml`, and establish URL Inspection baseline. Do not delete/re-register the GSC Wizard site merely to clear the 403. |
 
 ## Terminal disposition
 
-The only active unit is external control-plane ownership. No repository mutation is authorized by this row unless Google requires a new verification file generated for the intended owner.
+No current verified work remains. `MS-GSC-OWNERSHIP-001` closed on 2026-10-28 after Search Console reads and full 166-URL inspection succeeded; robots-based sitemap discovery is live. See [`REVERIFY_877c8f4_2026-10-29_gsc-ownership-closure.md`](../reverify/REVERIFY_877c8f4_2026-10-29_gsc-ownership-closure.md).

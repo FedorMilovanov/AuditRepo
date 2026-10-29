@@ -3,7 +3,8 @@
 - Source repo: `3stoneBrother/code-audit`
 - Production URL: (not set)
 - Main branch: `main`
-- Current status: `intake-only`
+- Current status: `paused` — current matrix is terminal-zero; new evidence is still preserved.
+- Start here: [`DOC_MAP.md`](DOC_MAP.md)
 
 ## Folder meaning
 

@@ -4,7 +4,7 @@
 **Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.  
 **Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.  
 **Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.  
-**Latest current verification:** `../reverify/REVERIFY_c7e3e3b_2026-09-13_ga4-property-closure.md`.  
+**Latest current verification:** `../reverify/REVERIFY_1a9f1b3_2026-10-29_comm-owner-currency.md` — the sole human-backed community proof boundary remains current at Product `main@1a9f1b3…`.
 **Closure history:** `CLOSURE_LEDGER.md`.  
 **Latest integrity audit:** `../verification/2026-09-06-ssot-matrix-integrity-audit/REPORT.md`.  
 **Latest broad current-main audit:** `../verification/2026-10-24-current-main-audit-reopen/REPORT.md` — owner-reopened audit, now rebound through dependency-only Product `main@76da7d6…`; route, interaction, text-spacing and exhaustive navigation passes retain eleven active P2 roots and one P3 structural root after terminal dependency retirement, without Product mutation.
