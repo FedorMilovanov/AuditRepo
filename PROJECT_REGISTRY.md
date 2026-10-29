@@ -9,6 +9,7 @@ Registry хранит только стабильную ориентацию. Т
 | Project folder | Source repo | Status | Start here |
 |---|---|---|---|
 | `projects/auditrepo/` | `FedorMilovanov/AuditRepo` | **active** | [`DOC_MAP.md`](projects/auditrepo/DOC_MAP.md) |
+| `projects/mp3telegrambot/` | `FedorMilovanov/mp3telegrambot` | **active** | [`DOC_MAP.md`](projects/mp3telegrambot/DOC_MAP.md) |
 | `projects/gb-is-my-strength/` | `FedorMilovanov/gb-is-my-strength` | **active** | [`DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md) |
 | `projects/the-legendary-poet/` | `FedorMilovanov/TheLegendaryPoet` | **active** | [`DOC_MAP.md`](projects/the-legendary-poet/DOC_MAP.md) |
 | `projects/milovi-cake/` | `FedorMilovanov/Milovi_Cake` | **active** | [`DOC_MAP.md`](projects/milovi-cake/DOC_MAP.md) |
