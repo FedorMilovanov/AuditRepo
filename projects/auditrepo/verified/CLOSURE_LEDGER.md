@@ -72,3 +72,17 @@
 - Result: closed; PR #482 marked superseded, source branch retained, permanent ledger coverage extended to 70/70.
 - Preservation boundary: no merge, branch deletion or ref-retirement action.
 - Detailed evidence: `../verification/2026-10-29-wave-9-owner-pr-disposition/REPORT.md`.
+
+## 2026-10-29 — Actions Node runtime maintenance
+
+- Scope: post-merge Node.js 20 deprecation warnings across all five workflows.
+- Result: closed in branch; checkout/setup-python/upload-artifact moved to immutable current v7 release commits.
+- Preservation boundary: workflow behavior, permissions, checks and artifact retention remain unchanged.
+- Detailed evidence: `../verification/2026-10-29-wave-10-actions-runtime-maintenance/REPORT.md`.
+
+## 2026-10-29 — runner image stability
+
+- Scope: `ubuntu-latest` → Ubuntu 26 migration annotation on all exact-head PR #503 jobs.
+- Result: closed in branch; all six jobs pin the currently proven `ubuntu-24.04` image.
+- Boundary: future OS upgrade remains an explicit exact-head CI transaction.
+- Detailed evidence: `../verification/2026-10-29-wave-11-runner-image-stability/REPORT.md`.
