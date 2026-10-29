@@ -22,3 +22,10 @@ System themes group recurring symptoms by shared mechanism. Use `active-work` on
 - Mechanism: local instructions install abstract requirements while CI/tests assert exact lock installation.
 - Current row: `MP3-DEV-ENV-CONTRACT-001`.
 - Class outcome: one reproducible, platform-aware install/verify contract.
+
+## MP3-THEME-PERSISTENCE-FAIL-CLOSED — schema readiness must be proven (`active-work`)
+
+- Manifestation: required `ALTER TABLE` failures are broadly suppressed as duplicate-column idempotence.
+- Mechanism: exception type alone cannot distinguish an existing column from lock, read-only, I/O or malformed-schema failures.
+- Current row: `MP3-DB-MIGRATION-FAILOPEN-001`.
+- Class outcome: transactional versioned/introspected migrations and post-migration schema proof before healthy startup.

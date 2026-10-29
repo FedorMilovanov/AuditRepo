@@ -21,3 +21,14 @@
 - Regression witness: full verifier PASS; Bandit candidates manually source-reviewed; no production `shell=True`, unsafe extraction or unbounded dynamic SQL identifier found.
 - Live evidence: existing GitHub release/run metadata obtained; no destructive release action performed.
 - Detailed evidence: [`wave 2`](../verification/2026-10-29-wave-2-security-release/REPORT.md).
+
+## 2026-10-29 — process ownership and persistence
+
+- Scope: cancellation, timeout, process-tree ownership, cleanup, SQLite connection policy and schema evolution.
+- Signal class: Product / runtime / persistence.
+- Exact anchor: `FedorMilovanov/mp3telegrambot@df1d6c675106c50147ed0045dddfbc25c8f546da`.
+- Result: process ownership retained as a verified strength; required SQLite migrations remain fail-open.
+- Source-repo evidence: centralized argv-only cancellable process runner and owned executor boundaries; broad `OperationalError` suppression around required column additions.
+- Regression witness: 86 focused process/tree/cancellation/cleanup/migration tests PASS; full Ruff ASYNC scan has no blocking-call finding.
+- Live evidence: not applicable; no Product process or database was mutated.
+- Detailed evidence: [`wave 3`](../verification/2026-10-29-wave-3-process-persistence/REPORT.md).
