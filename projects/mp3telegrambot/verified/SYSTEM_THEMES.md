@@ -1,0 +1,52 @@
+# System Themes — mp3telegrambot
+
+System themes group recurring symptoms by shared mechanism. Use `active-work` only while an exact row exists in `MASTER_BUG_MATRIX.md`.
+
+## MP3-THEME-ASSURANCE-BOUNDARY — package-green is not full runtime proof (`active-work`)
+
+- Manifestations: strict typing and coverage omit root entrypoints; deterministic tests cannot authenticate real Telegram/provider delivery.
+- Mechanism: package-level gates are strong but stop before bootstrap and credentialed external boundaries.
+- Current rows: `MP3-BOOTSTRAP-ASSURANCE-001`, `MP3-REFACTOR-CANARY-001`, `MP3-MEDIA-INTEGRATION-OPTIONAL-001`.
+- Class outcome: executable orchestration contracts, mandatory real-media encode/probe evidence and sanitized current-SHA canary evidence, without fake readiness or secret retention.
+
+## MP3-THEME-CONTROL-PLANE-CURRENCY — green CI can run on migrating infrastructure (`active-work`)
+
+- Manifestations: deprecated Node 20 action generations, CodeQL v3 deprecation, mutable action tags and moving runner aliases.
+- Mechanism: checks prove source behavior at one run but do not freeze the action or OS identity that produced it.
+- Current rows: `MP3-CI-RUNTIME-MAINT-001`, `MP3-RELEASE-PROVENANCE-001`.
+- Class outcome: current immutable action releases, explicit proven runner generations and artifact publication bound to one exact tag commit.
+
+## MP3-THEME-REPRODUCIBLE-ENVIRONMENT — documented developer path differs from CI closure (`active-work`)
+
+- Manifestation: documented dev install lacks a lock package required by the verifier's metadata census.
+- Mechanism: local instructions install abstract requirements while CI/tests assert exact lock installation.
+- Current row: `MP3-DEV-ENV-CONTRACT-001`.
+- Class outcome: one reproducible, platform-aware install/verify contract.
+
+## MP3-THEME-PERSISTENCE-FAIL-CLOSED — schema readiness must be proven (`active-work`)
+
+- Manifestation: required `ALTER TABLE` failures are broadly suppressed as duplicate-column idempotence.
+- Mechanism: exception type alone cannot distinguish an existing column from lock, read-only, I/O or malformed-schema failures.
+- Current row: `MP3-DB-MIGRATION-FAILOPEN-001`.
+- Class outcome: transactional versioned/introspected migrations and post-migration schema proof before healthy startup.
+
+## MP3-THEME-PUBLICATION-OWNERSHIP — visible messages require immediate transaction ownership (`active-work`)
+
+- Manifestation: a successfully returned companion message can fail identity validation before entering the rollback list.
+- Mechanism: ownership transfer occurs after metadata validation instead of immediately after the irreversible external send.
+- Current row: `MP3-LIVEDUB-ROLLBACK-ORPHAN-001`.
+- Class outcome: every visible Telegram message is owned before validation, with explicit rollback/deletion outcomes.
+
+## MP3-THEME-OPERABILITY-SIGNAL — readiness must measure service activity, not demand (`active-work`)
+
+- Manifestation: `/healthz` becomes 503 after five quiet minutes following any inbound update.
+- Mechanism: user traffic age is used as a polling-liveness proxy even though traffic can legitimately be absent.
+- Current row: `MP3-HEALTH-QUIET-TRAFFIC-001`.
+- Class outcome: transport/loop heartbeat controls readiness; traffic age remains informational.
+
+## MP3-THEME-TELEGRAM-BOUNDARIES — one length model after escaping (`active-work`)
+
+- Manifestation: emoji-heavy HTML archive output passes a Python-length guard while exceeding Telegram's UTF-16 boundary.
+- Mechanism: message and caption builders implement different visible-length counters.
+- Current row: `MP3-HTML-UTF16-LIMIT-001`.
+- Class outcome: one UTF-16-aware, entity/tag-preserving primitive for all Telegram text boundaries.
