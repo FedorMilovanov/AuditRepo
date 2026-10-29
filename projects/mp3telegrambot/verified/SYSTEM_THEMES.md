@@ -13,8 +13,8 @@ System themes group recurring symptoms by shared mechanism. Use `active-work` on
 
 - Manifestations: deprecated Node 20 action generations, CodeQL v3 deprecation, mutable action tags and moving runner aliases.
 - Mechanism: checks prove source behavior at one run but do not freeze the action or OS identity that produced it.
-- Current row: `MP3-CI-RUNTIME-MAINT-001`.
-- Class outcome: current immutable action releases and explicit proven runner generations.
+- Current rows: `MP3-CI-RUNTIME-MAINT-001`, `MP3-RELEASE-PROVENANCE-001`.
+- Class outcome: current immutable action releases, explicit proven runner generations and artifact publication bound to one exact tag commit.
 
 ## MP3-THEME-REPRODUCIBLE-ENVIRONMENT — documented developer path differs from CI closure (`active-work`)
 

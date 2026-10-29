@@ -10,3 +10,14 @@
 - Regression witness: exact lock full verifier PASS; 4,487 tests; strict 241/241 module slice; import contract PASS; exact-head and post-merge GitHub checks green.
 - Live evidence: deterministic/local/CI obtained; real-credential provider canary not claimed.
 - Detailed evidence: [`wave 1`](../verification/2026-10-29-wave-1-baseline/REPORT.md).
+
+## 2026-10-29 — security and release provenance
+
+- Scope: dependency/secret controls, subprocess and static security candidates, health exposure, workflow permissions and release artifact identity.
+- Signal class: Product / control-plane / release.
+- Exact anchor: `FedorMilovanov/mp3telegrambot@df1d6c675106c50147ed0045dddfbc25c8f546da`.
+- Result: static security candidates reconciled without a direct exploit root; one manual-release provenance gap remains.
+- Source-repo evidence: dependency audit, CodeQL and full-history gitleaks green; v4.0.0 tag-push release anchored correctly; workflow-dispatch path does not bind input tag to checkout SHA.
+- Regression witness: full verifier PASS; Bandit candidates manually source-reviewed; no production `shell=True`, unsafe extraction or unbounded dynamic SQL identifier found.
+- Live evidence: existing GitHub release/run metadata obtained; no destructive release action performed.
+- Detailed evidence: [`wave 2`](../verification/2026-10-29-wave-2-security-release/REPORT.md).
