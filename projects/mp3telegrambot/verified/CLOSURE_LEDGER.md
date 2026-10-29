@@ -76,3 +76,14 @@
 - Regression witness: 29 focused tests PASS; emoji archive probe returns Python length 3560 but UTF-16 width 6791.
 - Live evidence: deterministic Telegram boundary proof; no message was sent.
 - Detailed evidence: [`wave 7`](../verification/2026-10-29-wave-7-telegram-html/REPORT.md).
+
+## 2026-10-29 — generated-content quality
+
+- Scope: prompt leakage, канцелярит, theological terms, title policy, Synopsis/Study/Reflection, glossary, Telegraph repair and publication completeness.
+- Signal class: Product / content / deterministic assurance.
+- Exact anchor: `FedorMilovanov/mp3telegrambot@df1d6c675106c50147ed0045dddfbc25c8f546da`.
+- Result: no new deterministic root; existing content architecture has broad behavior-level guards.
+- Source-repo evidence: anti-leakage, source-specific synthesis, transcript fidelity, multipart navigation, title fallback and repair-history contracts.
+- Regression witness: 419 focused semantic tests PASS.
+- Live evidence: provider output unavailable; runtime quality remains owned by the existing canary residual.
+- Detailed evidence: [`wave 8`](../verification/2026-10-29-wave-8-content-quality/REPORT.md).
