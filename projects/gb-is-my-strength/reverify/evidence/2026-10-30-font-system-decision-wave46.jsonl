@@ -1,0 +1,13 @@
+{"kind":"decision","self_host":true,"download_every_face":false,"owner":"GBS-CUSTOM-FONT-MATRIX-MIXED-FAMILY-RENDERING","new_owner":false,"master_units":57}
+{"kind":"p0","actions":["repair registry/preload integration on five routes","normalize arbitrary weights","make Greek/Hebrew style and Hebrew weight policy truthful","add route-aware requested-to-physical contract"]}
+{"kind":"candidate_face","family":"Lora","weight":700,"style":"normal","scripts":["cyrillic","latin-punctuation"],"requested_nodes":2776,"routes":102,"priority":"high"}
+{"kind":"candidate_face","family":"Source Sans 3","weight":700,"style":"normal","scripts":["cyrillic","latin"],"requested_nodes":1206,"routes":87,"priority":"high"}
+{"kind":"candidate_face","family":"Inter","weight":700,"style":"normal","scripts":["cyrillic","latin"],"requested_nodes":731,"routes":25,"priority":"high"}
+{"kind":"candidate_face","family":"Playfair Display","weight":"600/700","style":"normal","scripts":["latin-punctuation"],"uncovered_nodes":267,"routes":34,"priority":"high-visual"}
+{"kind":"saving_candidate","asset":"duplicate Noto Serif Hebrew 500","repository_bytes":18412,"cold_bytes_when_both_requested":18412,"ready_for_owner_review":true}
+{"kind":"saving_candidate","asset":"Greek TTF fallback","artifact_bytes":444064,"normal_cold_bytes":0,"requires_compatibility_review":true}
+{"kind":"saving_candidate","asset":"Karty dead preloads","cold_bytes":21964,"requires":"remove preloads or register and paint intended faces"}
+{"kind":"usage_review","asset":"Noto Serif Greek WOFF2+TTF","artifact_bytes":591528,"visible_direct_text_demand_in_current_1280_corpus":0,"removal_approved":false}
+{"kind":"cache","required_order":["version/content-address font URL","long immutable binary cache","release/live header witness"],"current_immutable_safe":false}
+{"kind":"closure_contract","layers":["inventory/manifest/aliases","OS2-name-cmap/duplicates","route registry/preloads","requested tokens/scripts","CDP painted fonts","cold/warm/delayed-failed","license/source/cache custody"]}
+{"kind":"scope","product_repair_lane_opened":false,"product_mutated":false,"font_audit_waves_complete":[43,44,45,46]}
