@@ -1,0 +1,17 @@
+{"kind":"static_routes","html_documents":115,"registry_routes":107,"preload_routes":72,"preload_links":89,"preload_without_registry_routes":5,"preload_without_registry_bytes":[21964,9604,9604,11480,9604]}
+{"kind":"preload_without_registry","routes":["/karty/","/karty/avraam/","/karty/ishod/","/konfessii/","/konfessii/russkij-baptizm/"],"font_face_inline":0}
+{"kind":"corpus","routes":115,"visible_direct_text_custom_stack_nodes":28410,"no_exact_physical_match_nodes":7663,"share_percent":26.97,"method":"computed family+weight+style+actual scripts vs registry unicode-range and physical OS/2+cmap"}
+{"kind":"uncovered","family":"Lora","nodes":3586,"routes":102}
+{"kind":"uncovered","family":"Source Sans 3","nodes":2041,"routes":94}
+{"kind":"uncovered","family":"Inter","nodes":1300,"routes":26}
+{"kind":"uncovered","family":"Playfair Display","nodes":267,"routes":34}
+{"kind":"uncovered","family":"Noto Sans Greek","nodes":265,"routes":26}
+{"kind":"uncovered","family":"Cormorant Garamond","nodes":128,"routes":18}
+{"kind":"uncovered","family":"Noto Serif Hebrew","nodes":76,"routes":15}
+{"kind":"paint","route":"/","sample":"h1","declared":"Playfair Display 700","custom_glyphs":17,"platform_family":"DejaVu Serif","platform_glyphs":"4-5"}
+{"kind":"paint","route":"/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/","sample":"h1","declared":"Playfair Display 600","custom_family":"Playfair Display SemiBold","custom_glyphs":26,"platform_family":"DejaVu Serif","platform_glyphs":"23-24"}
+{"kind":"paint","route":"/articles/chto-bibliya-nazyvaet-serdcem/","sample":"article strong","requested":"Lora 700","actual":"Lora SemiBold","glyphs":25}
+{"kind":"paint","route":"/karty/","sample":"h1/hebrew/description/stat","font_responses":2,"document_font_faces":0,"actual":["DejaVu Serif","DejaVu Sans"],"custom_glyphs":0}
+{"kind":"script_paint","route":"/articles/chto-bibliya-nazyvaet-serdcem/","greek":{"text":"καρδία","computed":"Noto Sans Greek 400 italic","actual":"custom Noto Sans","glyphs":6},"hebrew":{"text":"לֵב","computed":"Noto Serif Hebrew 500 italic","actual":"custom Noto Serif Hebrew","glyphs":3}}
+{"kind":"health","runs":10,"http_200":10,"external_font_responses":0,"attributable_console_errors":0,"page_errors":0,"broken_images":0,"axe_a_aa_nodes":0,"positive_overflow":0,"lcp_ms_range":[100,556],"cls_max":0.01499}
+{"kind":"owner","action":"extend","id":"GBS-CUSTOM-FONT-MATRIX-MIXED-FAMILY-RENDERING","new_master_row":false}
