@@ -1,0 +1,15 @@
+{"kind":"cold","route":"/","desktop":{"responses":19,"encoded_bytes":259592,"preloads":3,"cls":0.01499},"mobile":{"responses":18,"encoded_bytes":236836,"preloads":3}}
+{"kind":"cold","route":"/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/","desktop":{"responses":14,"encoded_bytes":185724,"preloads":1},"mobile":{"responses":13,"encoded_bytes":176164,"preloads":1}}
+{"kind":"cold","route":"/articles/steven-lawson-samoobman-i-publichnyy-golos/","desktop":{"responses":11,"encoded_bytes":155212,"preloads":6},"mobile":{"responses":12,"encoded_bytes":164856,"preloads":6},"preload_bytes":86932}
+{"kind":"cold","route":"/karty/","desktop":{"responses":2,"encoded_bytes":21964,"preloads":2},"mobile":{"responses":2,"encoded_bytes":21964,"preloads":2},"registered_faces":0,"custom_paint_glyphs":0}
+{"kind":"cold","route":"/articles/chto-bibliya-nazyvaet-serdcem/","desktop":{"responses":14,"encoded_bytes":198796,"preloads":2},"mobile":{"responses":13,"encoded_bytes":189236,"preloads":2}}
+{"kind":"preload_census","html_documents":115,"routes_with_font_preload":72,"preload_links":89,"lora_cyrillic_400_routes":68,"preload_without_registry_routes":5}
+{"kind":"warm","route":"/","font_resources":17,"encoded_bytes":229736,"transfer_bytes":0,"cls":0,"paint":"same Playfair+DejaVu split"}
+{"kind":"warm","route":"/karty/","font_resources":2,"encoded_bytes":21964,"transfer_bytes":0,"cls":0,"paint":"same DejaVu fallback"}
+{"kind":"warm","route":"/articles/chto-bibliya-nazyvaet-serdcem/","font_resources":13,"encoded_bytes":180384,"transfer_bytes":0,"cls":0,"paint":"same custom Lora/Greek/Hebrew"}
+{"kind":"failed","route":"/","aborted_fonts":18,"font_errors":18,"cls":0,"lcp_ms":288,"paint":"DejaVu Serif"}
+{"kind":"failed","route":"/karty/","aborted_fonts":2,"registered_faces":0,"cls":0,"lcp_ms":100,"paint":"DejaVu Sans Hebrew"}
+{"kind":"failed","route":"/articles/chto-bibliya-nazyvaet-serdcem/","aborted_fonts":14,"font_errors":13,"cls":0.0000017,"lcp_ms":364,"paint":"DejaVu fallback for heading/Greek/Hebrew"}
+{"kind":"registry_policy","font_display_swap":28,"size_adjust":0,"ascent_override":0,"descent_override":0,"line_gap_override":0,"font_synthesis_policy":0}
+{"kind":"cache_boundary","repo_cache_control_owner":false,"font_css_versioned":true,"font_binary_urls_versioned":false,"live_headers_measured":false,"immutable_safe_now":false}
+{"kind":"owner","action":"extend","id":"GBS-CUSTOM-FONT-MATRIX-MIXED-FAMILY-RENDERING","new_master_row":false}
