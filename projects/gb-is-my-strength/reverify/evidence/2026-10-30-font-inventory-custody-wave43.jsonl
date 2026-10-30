@@ -1,0 +1,7 @@
+{"kind":"anchor","product":"89bab745790a6a5c1cddf86fd65cb0c692b049d9","date":"2026-10-30","product_mutated":false,"open_product_prs":0}
+{"kind":"clean_head","font_asset_checks":28,"alias_fixtures":3,"verified_woff2":28,"recorded_upstream_drifts":3,"build_pages":111,"build_errors":0,"build_warnings":0,"post_build_worktree":"clean"}
+{"kind":"inventory","woff2_files":28,"woff2_bytes":488980,"support_ttf_files":1,"support_ttf_bytes":444064,"binary_total_files":29,"binary_total_bytes":933044,"registry_bytes":6574,"font_faces":28}
+{"kind":"physical","lora_max_weight":600,"inter_max_weight":600,"source_sans_cyrillic_max_weight":600,"source_sans_latin_weights":[400],"playfair_cyrillic_weights":[400,600,700],"cormorant_cyrillic_weights":[400,500],"hebrew_400_500_same_sha":true,"hebrew_physical_weight":400}
+{"kind":"support_ttf","bytes":444064,"share_binary_percent":47.59,"normal_chromium_requested":false,"source_url_recorded":false,"license_recorded":false}
+{"kind":"license_custody","product_font_license_files":0,"upstream_repo":"google/fonts","upstream_commit":"6157dfaa640ca5738b4d1a7070fe389c3036d7fc","ofl_family_directories":7,"manifest_license_fields":0}
+{"kind":"owner","action":"extend","id":"GBS-CUSTOM-FONT-MATRIX-MIXED-FAMILY-RENDERING","new_master_row":false}
