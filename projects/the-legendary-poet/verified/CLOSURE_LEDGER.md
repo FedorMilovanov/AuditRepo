@@ -814,3 +814,18 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Safe induction: a loopback-only test authority aborted initial summary/comments reads, then returned contract-valid empty responses after native «Повторить» activation. No production request, mutation, Turnstile bypass or human-session simulation occurred.
 - Matrix: ten poets + ten essays + three tracks by desktop pointer and mobile keyboard = 46/46 settled recoveries; warning appeared, both reads retried, summary reached `ready`, and warning/control cleared.
 - A first immediate-detachment probe was rejected because loading temporarily removes error UI before promise settlement. No community-retry root admitted; matrix remains 1 P1 + 11 P2 + 1 P3 = 13.
+
+## 2026-11-02 — The Legendary Poet security baseline integrated
+
+- Scope: repository security baseline, full-history secret scanning and bounded dependency-update automation.
+- Product evidence:
+  - PR #540 was tested at exact HEAD `3bc7734d961a288569e585424d90349ba18e9923` and squash-merged as `27c23c1d0a9d4c18332fff59233b58b437249c2c`.
+  - The merge commit tree `07022bf2fbadaee3da4b40b2050dac317842629f` is identical to the tested PR-head tree; no untested source-tree delta was introduced.
+  - Required `verify` and `merge-certification`, full-history `gitleaks`, workflow contracts, route/brand audits, Chromium/Android Chrome, iPhone Safari, WebKit home reveal, premium-home, analytics-route and critical-iPhone QA all completed successfully on the exact PR head.
+  - The active `main-protection` ruleset remained in force with required `verify` and `merge-certification`; review-thread inventory was empty. No repository protection settings were changed.
+- Result:
+  - Full-history Gitleaks now runs on pull requests, pushes to `main`, weekly schedule and manual dispatch.
+  - Dependabot covers npm and GitHub Actions with bounded PR volume and grouped non-major updates; no automatic dependency merging was introduced.
+  - Added `SECURITY.md` with private vulnerability reporting and response guidance.
+  - Workflow-consolidation contract now accounts for 24 workflows and asserts the security controls.
+- Boundary: no runtime, editorial, article, content, package or lockfile changes; no claim of new product-feature behavior. The active bug matrix and its counts are unchanged.
