@@ -829,3 +829,15 @@ Closed history does not remain in the active engineering matrix. Detailed histor
   - Added `SECURITY.md` with private vulnerability reporting and response guidance.
   - Workflow-consolidation contract now accounts for 24 workflows and asserts the security controls.
 - Boundary: no runtime, editorial, article, content, package or lockfile changes; no claim of new product-feature behavior. The active bug matrix and its counts are unchanged.
+
+## 2026-11-03 — The Legendary Poet historical secret-scan baseline closure (PR #546)
+
+- Scope: classify and silence only verified historical Gitleaks false positives after enabling full-reachable-history scanning. No runtime, editorial, publication, content, dependency, or provider configuration changed in this closure.
+- Product evidence:
+  - PR #546 was tested at exact head `fb6c0328308609d23e51de170d034406b95827ad`, based on `main@2a98cb07ac0f7cac622caebc3e05a6b0719a3c4d`; comparison was ahead 1 / behind 0 and the review-thread inventory was empty.
+  - The only changed file was `.gitleaksignore`: 82 exact commit/path/rule/line fingerprints. Each finding was reviewed against the owning source line and schema; the values were stable media/source identifiers, SHA-256 evidence digests, or a source/provenance ID, not credentials. No path-wide, rule-wide, regex, or detector-wide ignore was introduced.
+  - Required `verify` and `merge-certification` passed on the exact PR head; all 12 active pre-merge checks were successful, with four scope-inapplicable checks skipped. The active `main-protection` ruleset remained enabled; no protection settings were changed.
+  - PR #546 was squash-merged as `74535a25cb6777c444726e19bbeb55b04c007cb9`; source `main` was verified at that exact SHA and remained protected.
+  - Pre-merge full-history Gitleaks found no remaining leaks across 1,109 commits. The subsequent push scan on exact `main@74535a2` also completed successfully: the Gitleaks action and the additional full-reachable-history pass both reported no leaks; the latter scanned 1,108 commits.
+  - Post-merge `verify`, `contracts`, `brand-deep-audit`, and the Legendary Poet community Workers build completed successfully on the merge SHA. Other browser/deploy/route jobs were still queued at the time of this ledger update and are not represented as completed evidence here.
+- Boundary: this entry records the security-baseline closure only. It does not change the active Product bug matrix, its counts, editorial dispositions, or authorize provider mutations.
