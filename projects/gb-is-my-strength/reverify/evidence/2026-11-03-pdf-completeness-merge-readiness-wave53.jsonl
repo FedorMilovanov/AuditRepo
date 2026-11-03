@@ -1,0 +1,12 @@
+{"kind":"authority","currentHead":"4577af55416ef76827184c6b117471355ea3b3d2","corpusHead":"c734ad540b526d8e76d524370c71da6a45048e06","commitsBetween":1,"changedPaths":["yandex_d8876d66da1b4592.html"],"printInputsChanged":0}
+{"kind":"currentContracts","npmCi":"PASS","printGeometry":"10/10 PASS","engineContracts":"PASS","projectionSource":"70/70 PASS","browserPrintStability":"PASS"}
+{"kind":"currentBuild","mode":"production-like","astroPages":111,"errors":0,"warnings":0,"existingHints":7,"sourceClean":true}
+{"kind":"nativeAction","routes":73,"trusted":73,"printOnce":73,"urlStable":73,"downloads":0,"owner":"SYS-READER-PRINT-ACTION-LABEL-SEMANTICS"}
+{"kind":"paintedCorpus","pdfs":73,"pages":1425,"a4":1425,"sequentialSheets":8,"sparseSeamsReviewed":88,"duplicates":0,"edgeSpans":0,"replacementGlyphs":0}
+{"kind":"boundaries","headingCandidates":3,"headingOrphans":0,"declaredAtomicSplits":0,"linkedCardFamiliesSplit":2,"images":140,"imageClips":0,"multiPageTables":7,"continuationSheets":10,"repeatedHeaders":10,"splitRows":0}
+{"kind":"links","total":2020,"uri":1666,"goto":354,"badPathsOrFragments":0,"badGotoPagesOrPoints":0,"outsideRects":0,"zeroRects":0,"differentTargetOverlaps":3,"overlapsWithOwner":3}
+{"kind":"terminal","newMissingTerminalSections":0,"knownBlankTail":1,"knownBlankOwner":"GBS-GILL-HISTORY-PRINT-TRAILING-BLANK-PAGE"}
+{"kind":"metadataLimitation","titles":73,"authors":0,"catalogLanguage":0,"tagged":0,"outlines":0,"disposition":"browser-export limitation; no Product owner"}
+{"kind":"ownerReconciliation","pdfOutcomes":7,"owned":7,"unownedConfirmed":0,"owners":["GBS-GILL-HISTORY-PRINT-TRAILING-BLANK-PAGE","GBS-BASELAYOUT-PRINT-SKIP-LINK-REPEATS","SYS-READER-MOBILE-PRINT-LOCK-CLIPS-DOCUMENT","SYS-READER-PRINT-ACTION-LABEL-SEMANTICS","SYS-READER-PRINT-EXCLUSION-POLICY-PARITY","SYS-PRINT-LINKED-CARD-ATOMICITY","GBS-LOT-PRINT-DIAGRAM-MICROTEXT"]}
+{"kind":"matrix","active":63,"direct":30,"improvements":8,"residual":1,"systems":24,"newRows":0}
+{"kind":"closure","wave":53,"pdfScope":"complete","productModified":false,"productPr":false,"auditPr":512,"requiredNext":"exact-head AuditRepo Validate + Workflow Preflight"}
