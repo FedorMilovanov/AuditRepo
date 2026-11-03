@@ -1,0 +1,43 @@
+{"kind":"summary","head":"c734ad540b526d8e76d524370c71da6a45048e06","routes":73,"desktopPdfs":73,"pages":1425,"a4":1425,"blank":1,"duplicates":0,"edgeSpans":0,"replacementChars":0,"atomicSplits":0,"images":140,"fontsEmbedded":true}
+{"kind":"nativeDesktop","trusted":73,"printOnce":73,"urlStable":73,"reset":73,"brokenImages":0,"pageErrors":0,"lcpMaxMs":2420,"consoleEgress":44,"egressHosts":["mc.yandex.ru","commons.wikimedia.org","upload.wikimedia.org"]}
+{"kind":"visual","pages":1425,"globalSequentialSheets":8,"reviewed":"all pages in order plus targeted readable-scale candidates","newOrderOrClipOrBlankDefects":0,"knownBlank":{"route":"/articles/dzhon-gill-istoricheskiy-kontekst/","page":30}}
+{"kind":"boundaries","headingCandidates":3,"headingOrphansAfterVisualReview":0,"atomicSplits":0,"splitTables":7,"continuationSheets":10,"repeatedHeaders":10,"visuallySplitRows":0}
+{"kind":"links","internalUri":432,"externalUri":1234,"goto":354,"total":2020,"badPaths":0,"badFragments":0,"badGotoPages":0}
+{"kind":"metadata","titles":73,"authors":0,"outlines":0,"catalogLang":0,"markInfoTagged":0,"disposition":"browser-export limitation; no Product owner without a stronger download/accessibility contract"}
+{"kind":"projectionParity","canonicalNodesWithoutPrintGeometry":116,"routes":33,"classes":{"diotrophesQuiz":52,"antisovetovFaqAnswers":27,"heroCaptions":30,"lawsonLeadAndTags":7},"owner":"SYS-READER-PRINT-EXCLUSION-POLICY-PARITY","direction":"canonical-included / physically-hidden"}
+{"kind":"hiddenProjectionRoute","route":"/articles/20-antisovetov-pastoru/","count":27}
+{"kind":"hiddenProjectionRoute","route":"/articles/chto-bibliya-nazyvaet-serdcem/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/diotrefy-nashego-vremeni/","count":52}
+{"kind":"hiddenProjectionRoute","route":"/articles/kak-hranit-serdce/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/kak-menyaetsya-serdce/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/krajne-li-isporcheno-serdce/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/myslennaya-zhizn-serdca/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/novoe-serdce/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/osvobozhdennoe-serdce/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/religioznoe-serdce/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/rimlyanam-7-veruyushchiy-ili-neveruyushchiy/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/serdce-hrista-k-nemoshchnym/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/serdce-i-duh/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/serdce-i-iskushenie/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/serdce-i-sokrovishche/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/serdce-i-telo/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/serdce-i-yazyk/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/serdce-ne-v-odinochku/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/serdce-pod-skorbyu/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/serdce-spravochnik/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/skrytye-idoly-serdca/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/sovest-vnutrenniy-sud/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/starye-dorozhki-serdca/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/steven-lawson-samoobman-i-publichnyy-golos/","count":7}
+{"kind":"hiddenProjectionRoute","route":"/articles/strah-bozhij-rabskij-ili-synovnij/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/svoboda-vo-hriste/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/articles/tma-na-serdce/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/hard-texts/angely-pod-mrakom-iuda-6-7-2-petra-2/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/hard-texts/blagovestie-mertvym-1-petra-4-5-6/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/hard-texts/duhi-v-temnice-noi-kreshchenie-pobeda/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/hard-texts/enoh-prorochestvoval-iuda-14-15-4q204/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/hard-texts/kniga-enoha-kotoroy-ne-bylo-kak-raznye-proizvedeniya-stali-korpusom/","count":1}
+{"kind":"hiddenProjectionRoute","route":"/hard-texts/mozhno-li-doveryat-1-enohu-kanonicheskiy-audit/","count":1}
+{"kind":"tinyText","owner":"GBS-LOT-PRINT-DIAGRAM-MICROTEXT","route":"/articles/lot-i-sodom/","page":8,"count":7,"sizePt":5.93,"role":"scripture reference labels in journey SVG","status":"verified necessary improvement; not claimed as WCAG font-size failure"}
+{"kind":"mobileCurrent","profile":{"viewport":"390x844","isMobile":true,"scheme":"dark","reducedMotion":true},"routes":73,"printOnce":73,"locked":73,"overlayOpen":73,"onePage":73,"owner":"SYS-READER-MOBILE-PRINT-LOCK-CLIPS-DOCUMENT"}
+{"kind":"existingOwners","blankTail":"current 30 pages / blank 30","skipLink":"current 94/95 Lawson + 21/22 Hebrews","labels":"current 68 Скачать страницу + 5 Скачать PDF","newRows":1,"newRowClass":"improvement","activeBefore":61,"activeAfter":62}
