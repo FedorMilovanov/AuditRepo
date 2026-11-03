@@ -159,6 +159,24 @@ def main() -> int:
         require(valid.returncode == 0, 'real observation failed validator', valid)
         require('AUDITREPO VALIDATION: PASS' in valid.stdout, 'PASS marker missing', valid)
 
+        # Explicit security/attribution docs are admissible, without making
+        # all new root Markdown files admissible.
+        for public_doc in ('SECURITY.md', 'OWNER.md', 'CASE_STUDY.md'):
+            write(root / public_doc, '# Permanent public documentation\\n')
+        admitted_docs = run_validator(root)
+        require(admitted_docs.returncode == 0, 'approved root docs rejected', admitted_docs)
+
+        forbidden_doc = root / 'UNREVIEWED_ROOT.md'
+        write(forbidden_doc, '# Unreviewed root document\\n')
+        forbidden_docs = run_validator(root)
+        require(forbidden_docs.returncode == 1, 'unknown root Markdown unexpectedly passed', forbidden_docs)
+        require(
+            'unexpected root markdown file: UNREVIEWED_ROOT.md' in forbidden_docs.stdout,
+            'unknown root Markdown failed without explicit allowlist explanation',
+            forbidden_docs,
+        )
+        forbidden_doc.unlink()
+
         # Fully labelled metadata tables are an accepted identity format, but
         # only when they carry the complete project/source/agent/date/anchor
         # field set. This matches compact audit-intake reports without relaxing
