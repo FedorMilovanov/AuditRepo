@@ -1,0 +1,10 @@
+{"kind":"anchors","productMain":"4577af55416ef76827184c6b117471355ea3b3d2","auditBase":"5b203c2d14f67c39971846e35e6912f6b698a3a7","auditHeadBeforeWave":"6c1caf05","mergeBase":"94e9bf8a03b2c9b7289af83105fcd324ec0c1b17"}
+{"kind":"history","wasShallow":true,"unshallowFetch":"PASS","mergeBaseResolved":true}
+{"kind":"baseDelta","paths":6,"pathsList":["CASE_STUDY.md","OWNER.md","README.md","SECURITY.md","scripts/validate_audit_repo.py","scripts/validate_audit_repo_regression_test.py"],"intersectionWithPdfPackage":0}
+{"kind":"baseSync","method":"merge","conflicts":0,"rebase":false,"reset":false,"force":false,"otherPrTouched":false}
+{"kind":"package","reports":4,"jsonlStreams":4,"masterFiles":1,"totalPaths":9,"binaryOrBuildArtifacts":0}
+{"kind":"evidenceIntegrity","jsonlRecords":97,"roundTrip":true,"maxLineAtMost700":true,"missingMasterEvidenceLinks":0}
+{"kind":"matrix","active":63,"direct":30,"improvements":8,"residual":1,"systems":24,"arithmeticValid":true}
+{"kind":"scope","newProductFindings":0,"newMasterRows":0,"productModified":false,"productPr":false}
+{"kind":"adjacentWork","auditPr514Touched":false,"productOpenPrsObserved":[2259,2260,2262,2244,2245,2246],"landedCurrentMainChanged":false}
+{"kind":"closure","wave":54,"remainingBehavioralPdfBoundaries":0,"remainingBarrier":"exact-head AuditRepo Validate + Workflow Preflight"}
