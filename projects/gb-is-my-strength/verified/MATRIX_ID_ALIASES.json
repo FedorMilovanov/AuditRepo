@@ -310,9 +310,8 @@
       "reason": "FIXED-CURRENT on caeb92c: Avraam and Ishod root SVGs have application role, route-specific names/descriptions and retain current keyboard controls. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
     },
     "GBS-HOME-SEARCH-DUPLICATE-CLOSE-CONTROLS": {
-      "status": "alias",
-      "canonical": "GBS-HOME-SEARCH-FOCUS-RESTORE",
-      "reason": "PARTIAL/NARROWED on caeb92c: duplicate close control is fixed (one visible), but Escape/button close do not return focus to clicked #heroSearchBar. Same work unit; no count change. See reverify/2026-10-23-resulting-main-caeb92c-reconciliation.md."
+      "status": "retired",
+      "reason": "Historical alias of the duplicate-close issue, formerly GBS-HOME-SEARCH-FOCUS-RESTORE. Duplicate control repaired in Product #2184; truthful mobile focus repaired in Product #2248 (bedc3c119) with 6/6 independent live close-path witness at wave56. Canonical ID retired with proof in verified/CLOSURE_LEDGER.md wave56; no new active owner."
     },
     "GBS-HEAD-ASSETS-PINNED-TO-PRODUCTION": {
       "status": "alias",
