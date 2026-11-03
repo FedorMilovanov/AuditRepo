@@ -50,11 +50,11 @@ Most recently retired from here: `TLP-COMMAND-COMBOBOX-SEMANTICS` and `TLP-MOBIL
 | Закрыто (fixed) | 0 |
 | **P0 открыто** | **0** |
 | P1 открыто | 1 |
-| P2 открыто | 10 |
+| P2 открыто | 7 |
 | P3 открыто | 1 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **12** |
+| **Всего открыто (матрица)** | **9** |
 
 Current architecture selection: **none**. Historical Hall #369 remains terminally closed. Product #465/#466 is now a separately completed bounded production-web transaction; documentary rights, human offline approval and full-museum scale-out remain outside the active engineering matrix unless a new verified software root is established.
 
