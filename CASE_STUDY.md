@@ -30,10 +30,9 @@ The maintained validation code is inspectable:
 ```sh
 python3 scripts/validate_audit_repo.py
 python3 scripts/check_auditrepo_structure.py
-python3 scripts/check_artifact_admission.py
 ```
 
-Workflow gates are tracked under [.github/workflows/](.github/workflows/). They establish **repository/document structure and admission conditions**, not that a particular Product defect is still present. To approve a Product repair, separately inspect its current owner, HEAD/PRs and an applicable witness, then validate the exact repair and close the current matrix work unit.
+For changed binary/archive evidence, the CI supplies an explicit changed-paths file to `python3 scripts/check_artifact_admission.py --changed-paths PATH`; this validator intentionally has no argument-free mode. Workflow gates are tracked under [.github/workflows/](.github/workflows/). They establish **repository/document structure and admission conditions**, not that a particular Product defect is still present. To approve a Product repair, separately inspect its current owner, HEAD/PRs and an applicable witness, then validate the exact repair and close the current matrix work unit.
 
 ## Result and honest limits
 
