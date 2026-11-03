@@ -1,0 +1,5 @@
+{"kind":"anchor","head":"9a68fe214ef592b6bfb99a041d00153fd438f22a","routes":73,"controls":146,"buildPages":111,"cleanContracts":"print-geometry+engine green"}
+{"kind":"architecture","action":"canonical capture ReaderActions v1 -> semantic preparation -> window.print once; PrintEngine v2.1; physical geometry only beforeprint/print media; afterprint reset"}
+{"kind":"inventory","desktopCommon":68,"desktopStandalone":5,"mobileCommon":68,"mobileStandalone":5,"desktopLabels":{"Скачать страницу":68,"Скачать PDF":5},"truthfulMobileCommon":"Распечатать страницу и сохранить в PDF"}
+{"kind":"nativeDesktop","routes":73,"trustedClicks":73,"printOnce":73,"urlStable":73,"reset":73,"http200":73,"brokenImages":0,"pageErrors":0,"attributableConsole":0,"filteredYandexEgress":44}
+{"kind":"ownerCheck","openProduct":[2256,2246,2245,2244],"collision":"none; #2256 TTS stress, no print/PDF repair"}
