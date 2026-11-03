@@ -4,6 +4,8 @@ Central repository for **multi-agent audits, evidence, verification, root-cause 
 
 Canonical rules: [`AUDITREPO_OPERATING_MODEL.md`](AUDITREPO_OPERATING_MODEL.md).
 
+**External overview:** [reproducible engineering case](CASE_STUDY.md) · [maintainer/contributor attribution](OWNER.md) · [security and sensitive-evidence reporting](SECURITY.md). These pages explain the project; they do **not** supersede the operating model or turn historical reports into current Product facts.
+
 ```text
 many audit passes
 → evidence

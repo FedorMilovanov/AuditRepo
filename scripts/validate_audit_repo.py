@@ -18,6 +18,10 @@ ALLOWED_ROOT_MD = {
     'MULTI_WITNESS_VERIFICATION_PROTOCOL.md',
     'SANDBOX-ENV-2026-06-21.md',
     'CONCURRENT_EDIT_PROTOCOL.md',
+    # Permanent external-facing portfolio/security documents; no blanket root-MD admission.
+    'SECURITY.md',
+    'OWNER.md',
+    'CASE_STUDY.md',
 }
 
 ANCHOR_LABEL_RE = re.compile(
