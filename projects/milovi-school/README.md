@@ -17,6 +17,7 @@ Historical evidence remains accessible, but is not a current Product bug. A new 
 
 - [`DOC_MAP.md`](DOC_MAP.md) — division of authority.
 - [`verified/MASTER_BUG_MATRIX.md`](verified/MASTER_BUG_MATRIX.md) — current verified necessary work.
+- [`reverify/REVERIFY_ae354dd_2026-11-03_media-and-repo-closeout.md`](reverify/REVERIFY_ae354dd_2026-11-03_media-and-repo-closeout.md) — exact Product release, image and branch-hygiene witnesses.
 - [`reverify/REVERIFY_877c8f4_2026-10-29_gsc-ownership-closure.md`](reverify/REVERIFY_877c8f4_2026-10-29_gsc-ownership-closure.md) — successful GSC closure evidence.
 - [`verification/2026-09-12-gsc-ownership/REPORT.md`](verification/2026-09-12-gsc-ownership/REPORT.md) — historical *blocked* state, not current.
 - [`WORK_QUEUE.md`](WORK_QUEUE.md) — no admitted optional work.
