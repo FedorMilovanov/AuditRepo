@@ -1,6 +1,6 @@
 # Глубокая сверка PDF-границ, parity и terminal output — broad wave 51
 
-**Якорь Product:** `c734ad540b526d8e76d524370c71da6a45048e06`.  
+**Якорь Product:** `c734ad540b526d8e76d524370c71da6a45048e06`.
 **Доказательство:** `evidence/2026-11-03-pdf-deep-boundary-parity-wave51.jsonl`.
 
 ## Метод и охват

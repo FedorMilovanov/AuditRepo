@@ -1,7 +1,7 @@
 # PDF PR final merge candidate — broad wave 54
 
-**Product current main:** `4577af55416ef76827184c6b117471355ea3b3d2`.  
-**AuditRepo base:** `5b203c2d14f67c39971846e35e6912f6b698a3a7`.  
+**Product current main:** `4577af55416ef76827184c6b117471355ea3b3d2`.
+**AuditRepo base:** `5b203c2d14f67c39971846e35e6912f6b698a3a7`.
 **Доказательство:** `evidence/2026-11-03-pdf-pr-merge-candidate-wave54.jsonl`.
 
 ## Что ещё требовало проверки

@@ -1,6 +1,6 @@
 # PDF-ссылки, card fragmentation и визуальные переходы листов — broad wave 52
 
-**Якорь Product:** `c734ad540b526d8e76d524370c71da6a45048e06`.  
+**Якорь Product:** `c734ad540b526d8e76d524370c71da6a45048e06`.
 **Доказательство:** `evidence/2026-11-03-pdf-link-fragmentation-visual-wave52.jsonl`.
 
 ## Чистый baseline и реальное действие

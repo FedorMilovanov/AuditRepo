@@ -1,7 +1,7 @@
 # PDF completeness и merge-readiness — broad wave 53
 
-**Текущий Product main:** `4577af55416ef76827184c6b117471355ea3b3d2`.  
-**Полный browser/PDF corpus:** `c734ad540b526d8e76d524370c71da6a45048e06`.  
+**Текущий Product main:** `4577af55416ef76827184c6b117471355ea3b3d2`.
+**Полный browser/PDF corpus:** `c734ad540b526d8e76d524370c71da6a45048e06`.
 **Доказательство:** `evidence/2026-11-03-pdf-completeness-merge-readiness-wave53.jsonl`.
 
 ## Почему корпус остаётся точным для print-поверхности
