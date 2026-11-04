@@ -876,3 +876,11 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Scope: one root only, no new Product code or provider change; no claims of closure for other P2/P3 or human Turnstile P1.
 - Disposition: retire this one fixed row. Active matrix 1 P1 + 7 P2 + 1 P3 = 9 becomes **1 P1 + 6 P2 + 1 P3 = 8**.
 - Detailed current-source review and release evidence: `../reverify/REVERIFY_4ad5cf4_2026-11-04_label-in-name-closure.md`.
+
+## 2026-11-04 — TLP floated portrait hit-test P2 retired after Product #548
+
+- Original October owner finding: `TLP-ESSAY-PORTRAIT-POINTER-HITTEST`, 12/17 floated image buttons plus 11 adjacent source links intercepted at the old Product anchor.
+- Existing Product repair: #548, merged as `010d23f28eb2aaf3695a5b73b2f59882538077d9`, made shared left/right floated image wrappers `relative z-10` rather than disabling document prose pointers.
+- Current-main verification: untouched Product `main@4ad5cf4bd6cff3f4679dbf0beb21bbd2234b6848`; production build PASS; all 10 canonical essays inventoried (17 floated image buttons). Chromium desktop normal and reduced motion **34/34** real pointer clicks opened/closed lightboxes and **34/34** source-link trials were actionable. One off-viewport pre-action coordinate was not a blocked click; Playwright native pointer action succeeded. Result-main CI, Browser QA and Pages deploy completed successfully.
+- Disposition: **CLOSE only this already-repaired P2**. Active matrix narrows from 1 P1 + 6 P2 + 1 P3 = 8 to **1 P1 + 5 P2 + 1 P3 = 7**. No Product mutation, no reclassification of the remaining owners.
+- Detailed reverify: `../reverify/REVERIFY_4ad5cf4_2026-11-04_floated-portrait-hittest-closure.md`.
