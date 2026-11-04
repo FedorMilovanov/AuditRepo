@@ -892,3 +892,11 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - **Resulting-main release proof: SUCCESS:** Product main Manual Browser QA [41751602520](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41751602520) completed SUCCESS across all five jobs (Chromium/Android, iPhone Safari, premium Home, WebKit reveal, analytics routes). CI and Pages deploy also succeeded at exact `main@01d40f7`.
 - Verified scoped matrix retirement: 1 P1 + 5 P2 + 1 P3 = 7 to **1 P1 + 5 P2 + 0 P3 = 6**; no other statuses altered.
 - Source-led details: `../reverify/REVERIFY_01d40f7_2026-11-04_document-outline-closure.md`.
+
+## 2026-11-04 — TLP modal exit P2 retirement prepared, release-gated
+
+- Root: `SYS-TLP-MODAL-EXIT-LIFECYCLE`. Prior bug restored focus and released scroll/inert stack while ImmersivePlayer and essay lightbox remained painted during exit.
+- Product #551 exact-head `484d8491cf9c8c8de6d48278a2b75789adb2948f` merged into `main@b850ef6795b8c5079c2cf9c740179abf0ff7b3a4`, with identical Git tree `e4938515411a47a50d8a101b7d5bf79024c18f3f`. Shared exit-lifetime ownership preserves modal isolation and body/focus lock through actual animation completion; no arbitrary delay or forced opacity.
+- All **13 required PR checks** successful, including exact-head full Browser QA and merge certification; independent local 12/12 Chromium/Android/iPhone modal exit regressions PASS. Resulting main CI already successful.
+- **Resulting-main release proof: SUCCESS:** Product `main@b850ef6` [Browser QA 41759439065](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41759439065) completed successfully with all five browser/analytics jobs SUCCESS; [Pages 41759439111](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41759439111) completed SUCCESS (build/deploy SUCCESS, optional report skipped). Deployment 7536105424 reports success on the same SHA. AuditRepo exact-head CI must pass after this documentation amendment.
+- Verified matrix delta **6 -> 5** (1 P1, 5 P2, 0 P3 -> 1 P1, 4 P2, 0 P3). Detailed source/release note: `../reverify/REVERIFY_b850ef6_2026-11-04_modal-exit-lifecycle-closure.md`.
