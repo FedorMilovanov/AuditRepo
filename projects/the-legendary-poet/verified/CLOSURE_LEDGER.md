@@ -900,3 +900,12 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - All **13 required PR checks** successful, including exact-head full Browser QA and merge certification; independent local 12/12 Chromium/Android/iPhone modal exit regressions PASS. Resulting main CI already successful.
 - **Resulting-main release proof: SUCCESS:** Product `main@b850ef6` [Browser QA 41759439065](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41759439065) completed successfully with all five browser/analytics jobs SUCCESS; [Pages 41759439111](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41759439111) completed SUCCESS (build/deploy SUCCESS, optional report skipped). Deployment 7536105424 reports success on the same SHA. AuditRepo exact-head CI must pass after this documentation amendment.
 - Verified matrix delta **6 -> 5** (1 P1, 5 P2, 0 P3 -> 1 P1, 4 P2, 0 P3). Detailed source/release note: `../reverify/REVERIFY_b850ef6_2026-11-04_modal-exit-lifecycle-closure.md`.
+
+## 2026-11-04 — TLP sticky geometry P2 prepared, awaiting resulting-main QA
+
+- Root: `SYS-TLP-STICKY-VIEWPORT-GEOMETRY`: desktop sticky TOC/poet sidebars and Ratings header blocked some real pointer targets when content exceeded the viewport.
+- Product [PR #552](https://github.com/FedorMilovanov/TheLegendaryPoet/pull/552) head `228db3daa53fbc4ee53e65244419286971602d7a` squash-merged to `main@63492c2d0baefe6a952a93cdf0045ee182463540`, identical source trees. All 14/14 exact PR-head checks, including Browser QA and merge certification, passed.
+- Independent local integration with #555 rebased on #552 main: **56/56** Chrome desktop and Android tests PASS for sticky, pointer actionability, nested scroll, mobile/keyboard and fragment interactions. Product main CI and Pages SUCCESS.
+- **Must complete before this AuditRepo PR is merged:** Product exact resulting-main [Manual Browser QA 41768798264](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41768798264) five jobs must be SUCCESS; then amend this evidence note, check Product SHA and require AuditRepo preflight+validate on updated exact head. It was still IN PROGRESS at first documentation.
+- Conditional scoped delta **5 -> 4** (1 P1 + 4 P2 + 0 P3 to 1 P1 + 3 P2 + 0 P3); leave independent fragment, contrast, text spacing and human Turnstile roots active.
+- Detailed proof: `../reverify/REVERIFY_63492c2_2026-11-04_sticky-viewport-closure.md`.
