@@ -884,3 +884,11 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Current-main verification: untouched Product `main@4ad5cf4bd6cff3f4679dbf0beb21bbd2234b6848`; production build PASS; all 10 canonical essays inventoried (17 floated image buttons). Chromium desktop normal and reduced motion **34/34** real pointer clicks opened/closed lightboxes and **34/34** source-link trials were actionable. One off-viewport pre-action coordinate was not a blocked click; Playwright native pointer action succeeded. Result-main CI, Browser QA and Pages deploy completed successfully.
 - Disposition: **CLOSE only this already-repaired P2**. Active matrix narrows from 1 P1 + 6 P2 + 1 P3 = 8 to **1 P1 + 5 P2 + 1 P3 = 7**. No Product mutation, no reclassification of the remaining owners.
 - Detailed reverify: `../reverify/REVERIFY_4ad5cf4_2026-11-04_floated-portrait-hittest-closure.md`.
+
+## 2026-11-04 — TLP outline P3 proposed retirement after Product #554
+
+- Root: `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP`; previously verified heading-order violations. Product #554 fixed catalog heading levels, KindredSpirits and mobile rankings H2 semantics, with actual DOM-based tests (33/33 desktop, 33/33 iPhone Safari).
+- Product PR exact head `a926ac3` squash merged to resulting `main@01d40f7e0ac238956ff6cc998be9c6792035a79c`, source-tree identical. PR 14/14 including full browser QA passed; main CI and Pages passed.
+- **Pre-merge gate for this AuditRepo PR:** resulting Product main Manual Browser QA [41751602520](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41751602520) must complete SUCCESS; the preliminary note records this as pending. Do not merge if that gate is not evidenced and updated.
+- Conditional scoped matrix retirement: 1 P1 + 5 P2 + 1 P3 = 7 to **1 P1 + 5 P2 + 0 P3 = 6**; no other statuses altered.
+- Source-led details: `../reverify/REVERIFY_01d40f7_2026-11-04_document-outline-closure.md`.
