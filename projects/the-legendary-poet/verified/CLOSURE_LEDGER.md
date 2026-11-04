@@ -865,3 +865,14 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Section chip browser witness: Chromium touch 20/20 tests (all ten essays × portrait/landscape × both motion modes, 40 engagements) plus iPhone Safari/WebKit 2/2 real-tap cases, verifying `inert=false`, visible named control, native popover, Escape and chapter hash.
 - Disposition: **CLOSED BY ALREADY-MERGED PRODUCT FIX**; these two P2 rows leave the active matrix, from 1 P1 + 9 P2 + 1 P3 = 11 after the companion landmark retirement to **1 P1 + 7 P2 + 1 P3 = 9**. Fragment navigation and portrait pointer ownership are not absorbed; incomplete normal-motion figure hit-testing was independently observed and must remain open.
 - Evidence: `../reverify/REVERIFY_ab57d75_2026-11-03_command-chip-owners.md`. This is current-main source and production-like browser evidence, not an independently asserted new custom-domain production release.
+
+
+## 2026-11-04 — TLP label-in-name root closed after Product #549
+
+- Finding: `SYS-TLP-LABEL-IN-NAME-GUARD-COVERAGE`, prior P2 WCAG 2.5.3 owner gap in six Home portrait links and four music volume controls.
+- Product fix: #549 reviewed exact head `8fcbfc709d1714d4827f02f817c30f470abaadc8`; squash merge `c1beee3b7bcaa3a0d47fbc8e5bbf79f4da6efed4`.
+- Fresh local exact-main validation: production Vite build PASS; Chromium visible-label suite 2/2 and Android/iPhone Safari portrait-name suite 2/2 PASS.
+- Result-main evidence: current Product `main@4ad5cf4bd6cff3f4679dbf0beb21bbd2234b6848`; full Manual Browser QA [41728806631](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41728806631), CI [41728806405](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41728806405) and Pages deployment [41728806845](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41728806845) all SUCCESS. Permanent per-owner accessible-name behavioral guards remain.
+- Scope: one root only, no new Product code or provider change; no claims of closure for other P2/P3 or human Turnstile P1.
+- Disposition: retire this one fixed row. Active matrix 1 P1 + 7 P2 + 1 P3 = 9 becomes **1 P1 + 6 P2 + 1 P3 = 8**.
+- Detailed current-source review and release evidence: `../reverify/REVERIFY_4ad5cf4_2026-11-04_label-in-name-closure.md`.
