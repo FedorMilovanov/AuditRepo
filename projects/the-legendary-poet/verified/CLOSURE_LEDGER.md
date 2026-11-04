@@ -917,3 +917,11 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - PR-head 17 applicable checks SUCCESS (three conditional SKIPPED), including full browser QA; local native TOC census 126/126 and permanent fragment suite 9/9 Chromium/Android/iPhone. Resulting-main CI [41859279351](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41859279351), Pages [41859279533](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41859279533), and full Manual Browser QA [41859279503](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41859279503) all SUCCESS on the same exact source, five browser/analytics jobs SUCCESS.
 - Scoped retirement **4 → 3** active engineering roots: 1 P1 + 3 P2 → **1 P1 + 2 P2**. Contrast, text spacing and human Turnstile remain open; no false technical zero. AuditRepo PR exact-head validation/preflight and subsequent merge required.
 - Evidence: `../reverify/REVERIFY_185c900_2026-11-04_fragment-navigation-closure.md`.
+
+## 2026-11-05 — TLP text-spacing WCAG 1.4.12 P2 release-certified and retired
+
+- Root: `SYS-TLP-TEXT-SPACING-ROBUSTNESS`, original October 34-route/68-load witness of 15 newly clipped texts under WCAG 1.4.12 overrides.
+- Product #556 exact PR HEAD `50aabc1` merged into `b862ec3` with identical Git tree `36877da8`. Permanent owner-and-route text-spacing suite **2/2** passed; PR exact-head Manual Browser QA 41906646752 and all five browser jobs SUCCESS.
+- Initial resulting-main CI 41914395233 and Pages 41914395216 succeeded; the contemporaneous Browser QA 41914395236 was **cancelled** and is not claimed as a success. Subsequent editor-only Product #564 main `d090892f62949d2fa7cfb9db4fa7984c60bd2745` retained the fixed owners and passed exact-main CI 41915846698, Pages 41915846745, and five-job Browser QA 41915846749, **all SUCCESS**, including the permanent spacing suite and isolated Safari contours.
+- Scoped retirement only: **1 P1 + 2 P2 → 1 P1 + 1 P2**. Semantic contrast P2 and two-human-session Turnstile P1 remain open. No Product mutation or fake approval.
+- Detailed proof: `../reverify/REVERIFY_d090892_2026-11-05_text-spacing-closure.md`. AuditRepo exact-head validation/preflight and merge are required.
