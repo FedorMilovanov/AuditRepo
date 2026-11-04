@@ -25,10 +25,10 @@ The old broad audit reported `heading-order` violations on 19 of 34 routes, incl
 - Source and contract validations at PR head: TypeScript, production Vite build, image integrity 52/52 and the permanent Chromium heading regression 33/33 PASS.
 - GitHub PR #554: all 14 checks passed, including entire Manual Browser QA [run 41745487210](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41745487210), `verify`, and `merge-certification`. No unresolved review threads, exact head and clean behind=0 before expected-head squash.
 - Resulting Product main `01d40f7`: main CI [run 41751601740](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41751601740) SUCCESS; Pages [run 41751601686](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41751601686) SUCCESS; content/contracts/route audits, brand audits and secret scanning SUCCESS.
-- **Mandatory last release gate:** the resulting-main Manual Browser QA [run 41751602520](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41751602520) was still IN PROGRESS when this preliminary note was authored. **Do not merge this AuditRepo disposition while it is incomplete or failing.** Obtain the final result and update this note before merging AuditRepo.
+- **Mandatory final release gate — SUCCESS:** the resulting-main Manual Browser QA [run 41751602520](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41751602520) completed SUCCESS on exact Product main `01d40f7e0ac238956ff6cc998be9c6792035a79c`: Chromium/Android browser-qa, premium Home QA, iPhone Safari critical QA, WebKit home reveal and analytics-route-qa all passed. This completes the required resulting-main browser witness alongside successful Pages deploy and CI.
 
-## Proposed bounded disposition — conditional on resulting-main QA
+## Verified bounded disposition — resulting-main QA passed
 
-Once the above exact-main QA succeeds: retire ONLY `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP` as verified on the resulting deployed Product main. AuditRepo active matrix changes from **1 P1 + 5 P2 + 1 P3 = 7** to **1 P1 + 5 P2 + 0 P3 = 6**.
+With the above exact-main QA SUCCESS: retire ONLY `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP` as verified on the resulting deployed Product main. AuditRepo active matrix changes from **1 P1 + 5 P2 + 1 P3 = 7** to **1 P1 + 5 P2 + 0 P3 = 6**.
 
 Do not reclassify the separate themes, modal-exit, fragment/hash navigation, sticky geometry, text spacing, or human-backed Turnstile P1 on the strength of #554.

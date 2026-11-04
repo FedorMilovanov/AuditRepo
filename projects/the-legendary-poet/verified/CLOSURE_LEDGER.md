@@ -889,6 +889,6 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 
 - Root: `SYS-TLP-DOCUMENT-OUTLINE-OWNERSHIP`; previously verified heading-order violations. Product #554 fixed catalog heading levels, KindredSpirits and mobile rankings H2 semantics, with actual DOM-based tests (33/33 desktop, 33/33 iPhone Safari).
 - Product PR exact head `a926ac3` squash merged to resulting `main@01d40f7e0ac238956ff6cc998be9c6792035a79c`, source-tree identical. PR 14/14 including full browser QA passed; main CI and Pages passed.
-- **Pre-merge gate for this AuditRepo PR:** resulting Product main Manual Browser QA [41751602520](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41751602520) must complete SUCCESS; the preliminary note records this as pending. Do not merge if that gate is not evidenced and updated.
-- Conditional scoped matrix retirement: 1 P1 + 5 P2 + 1 P3 = 7 to **1 P1 + 5 P2 + 0 P3 = 6**; no other statuses altered.
+- **Resulting-main release proof: SUCCESS:** Product main Manual Browser QA [41751602520](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41751602520) completed SUCCESS across all five jobs (Chromium/Android, iPhone Safari, premium Home, WebKit reveal, analytics routes). CI and Pages deploy also succeeded at exact `main@01d40f7`.
+- Verified scoped matrix retirement: 1 P1 + 5 P2 + 1 P3 = 7 to **1 P1 + 5 P2 + 0 P3 = 6**; no other statuses altered.
 - Source-led details: `../reverify/REVERIFY_01d40f7_2026-11-04_document-outline-closure.md`.
