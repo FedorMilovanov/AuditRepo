@@ -4,7 +4,7 @@
 **Owner of current source truth:** `FedorMilovanov/TheLegendaryPoet`.  
 **Historical matrix:** `../archive/superseded/MASTER_BUG_MATRIX_2026-08-05.md`.  
 **Consolidation evidence:** `../verification/2026-08-07-matrix-consolidation/REPORT.md`.  
-**Latest current verification:** `../reverify/REVERIFY_1a9f1b3_2026-10-29_comm-owner-currency.md` — the sole human-backed community proof boundary remains current at Product `main@1a9f1b3…`.
+**Latest current verification:** [2026-11-05 authentic production community adversarial PASS](../reverify/REVERIFY_39227d2_2026-11-05_community-live-human-proof-closure.md) — two distinct human-backed signed actor sessions, exact-row D1 cleanup and terminal P1 retirement; historical pre-proof currency is retained at `../reverify/REVERIFY_1a9f1b3_2026-10-29_comm-owner-currency.md`.
 **Closure history:** `CLOSURE_LEDGER.md`.  
 **Latest integrity audit:** `../verification/2026-09-06-ssot-matrix-integrity-audit/REPORT.md`.
 **Latest targeted offline disposition:** `../reverify/REVERIFY_010d23f_2026-11-03_offline-navigation-cold-warm.md` — cache-availability controlled Chromium/Android/iPhone Safari proofs; invalid old P2 ErrorBoundary-reset diagnosis; no Product mutation.
@@ -13,6 +13,7 @@
 **2026-11-04 document outline closure:** [Product #554 and cross-browser heading census](../reverify/REVERIFY_01d40f7_2026-11-04_document-outline-closure.md); structural P3 removed only after full resulting-main release certification.
 **2026-11-05 WCAG 1.4.12 text-spacing P2 release-certified closure:** [Product #556, exact-head browser and succeeding-main QA](../reverify/REVERIFY_d090892_2026-11-05_text-spacing-closure.md); only `SYS-TLP-TEXT-SPACING-ROBUSTNESS` is retired.
 **2026-11-05 semantic-theme contrast P2 release-certified closure:** [Product #557 and exact resulting-main Browser QA/Brand Deep Audit/Pages](../reverify/REVERIFY_32d7114_2026-11-05_semantic-contrast-closure.md); only `SYS-TLP-THEME-SEMANTIC-COVERAGE-RESIDUAL` is retired, leaving the separate human-backed Turnstile P1.
+**2026-11-05 human-backed community security P1 terminal closure:** [production signed-session adversarial PASS](../reverify/REVERIFY_39227d2_2026-11-05_community-live-human-proof-closure.md); Product #497 and AuditRepo #437 closure evidence, two distinct normal-browser sessions, concurrency/idempotency/conflict/unknown-target checks and exact-row cleanup. Last active P1 retired.
 **2026-11-04 fragment-navigation P2 release-certified closure:** [Product #555 and resulting-main exact-tree/browser/Pages witness](../reverify/REVERIFY_185c900_2026-11-04_fragment-navigation-closure.md); this single fixed root is retired.
 **2026-11-04 modal-exit lifecycle closure (conditional):** [Product #551 full PR proof; resulting-main release gate](../reverify/REVERIFY_b850ef6_2026-11-04_modal-exit-lifecycle-closure.md).
 **Latest broad current-main audit:** `../verification/2026-10-24-current-main-audit-reopen/REPORT.md` — owner-reopened audit, now rebound through dependency-only Product `main@76da7d6…`; route, interaction, text-spacing and exhaustive navigation passes retain eleven active P2 roots and one P3 structural root after terminal dependency retirement, without Product mutation.
@@ -26,11 +27,10 @@ No closed row is retained in this matrix. Solved roots leave the active surface 
 
 Most recently retired from here: `TLP-COMMAND-COMBOBOX-SEMANTICS` and `TLP-MOBILE-SECTION-CHIP-INERT` (both fixed by Product #548; current-main Chromium, axe and iPhone WebKit [reverified](../reverify/REVERIFY_ab57d75_2026-11-03_command-chip-owners.md)), `TLP-STATIC-PAGE-NESTED-MAIN-LANDMARKS` (fixed in Product #548, current-main Chromium/axe reverified 2026-11-03 [report](../reverify/REVERIFY_ab57d75_2026-11-03_nested-main-landmarks.md)), `TLP-OFFLINE-ERROR-BOUNDARY-HOME-RECOVERY` (invalid root-cause attribution: cold offline Home route assets unavailable, warm SPA route recovers; Product main `010d23f`, 2026-11-03 [reverify](../reverify/REVERIFY_010d23f_2026-11-03_offline-navigation-cold-warm.md)), `TLP-DEPENDENCY-ADVISORY-RESIDUAL` (Product #522, resulting-main verification 2026-10-24), `TLP-ANALYTICS-PROPERTY-001` (Product #510, verification 2026-09-13), `TLP-DISCOVERY-001` (Product #507, verification 2026-09-13), `TLP-A11Y-FOCUS-CONTRAST-001` (Product #507 carrying superseded #508 fix, verification 2026-09-13), `TLP-AUDIT-004` (Product #506, verification 2026-09-13), `TLP-ANALYTICS-CONSENT-001` (Product #504, verification 2026-09-12), `TLP-A11Y-RUNTIME-001` (Product #502, verification 2026-09-12), `TLP-ANALYTICS-ROUTE-001` (Product #501, verification 2026-09-12), `TLP-ROUTE-REDIRECT-001` (Product #491, verification 2026-09-11), `TLP-RATING-METHOD-001` (Product #489, verification 2026-09-10), `TLP-SEARCH-001` (Product #485 + residual #487, verification 2026-09-10), `TLP-AUDIO-SESSION-001` (Product #483, verification 2026-09-10), `TLP-AUTHORING-ID-001` (Product #481, verification 2026-09-10), `TLP-RATING-SOURCE-001` (Product #479, verification 2026-09-10), `TLP-SECONDARY-DATA-001` (Product #476, verification 2026-09-09), `TLP-HOME-MEDIA-PERF-001` (Product #472, verification 2026-09-09), `TLP-READING-PROGRESS-001` (Product #470, verification 2026-09-09), `TLP-A11Y-MOTION-001` (Product #468, verification 2026-09-08), `TLP-RATING-URLSTATE-001` (Product #438, verification 2026-09-08), `TLP-AUDIO-COMPLETION-001` (Product #439, verification 2026-09-08), `TLP-A11Y-STATUS-001` (Product #437, verification 2026-09-06), `TLP-SHELL-NOISE-001` (Product #435, verification 2026-09-06), `TLP-AUDIO-RELEASE-001` (Product #433, verification 2026-09-06), `TLP-THEME-001` and `TLP-A11Y-CONTRAST-001` (Product #426, ledger entry 2026-08-20), and `TLP-READER-TEXT-001` (Product #427, ledger entry 2026-08-24).
 
-## 🟠 P1 — ОТКРЫТО (1)
+## 🟠 P1 — ОТКРЫТО (0)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
-| `TLP-COMM-ABUSE-001` | `LIVE-BACKEND / HUMAN-ADVERSARIAL-PROOF-PENDING / PUBLIC-INTEGRITY / P1` | The trusted Cloudflare Worker/D1 authority is now live in production. Current production evidence: `/ratings` reports the shared database synchronized; Worker `/health` is HTTP 200 with `ok=true`, `database=d1`, `databaseReady=true`, `targetAuthorityReady=true`, `writesReady=true`; live negative checks reject unknown targets (`404 unknown_target`), forged sessions (`401 invalid_session`) and disallowed origins (`403 origin_denied`). Product #505 merged the reviewed human-backed certifier at exact head `a781083d74c2b6eb8f16c7961f36ebcf9d4bed7f`, CAS/resulting main `e5d34db4106533cad17f80ce6c52782330803dff`, identical tree `d4d52ffdfb98d131e57054d2d11fdd6339b2f13a`. Product #506 later changed the community comment contract and Worker; the current-source boundary is recorded in `../reverify/REVERIFY_090ea18_2026-09-28_community-live-proof-boundary.md`, so #505 is implementation provenance rather than a current live-closure witness. The certifier accepts bearer sessions only through hidden local TTY, pins production endpoints, server-authenticates both sessions before cleanup authority, proves concurrency/idempotency/conflict/target rejection and removes only exact certification rows. Product issue #497 remains open only for the two real human Turnstile sessions; automated bypass is deliberately forbidden. | In two fresh normal browser profiles, complete production Turnstile legitimately on the same canonical target and run `npm run operator:community-live -- --target-type poet --target-id alexander-pushkin`. Closure requires the sanitized PASS evidence for two distinct signed sessions, concurrent identical comment convergence, explicit idempotent replay, changed-payload conflict, rotated-identity conflict, unknown-target rejection and successful exact-row cleanup. |
 
 ## 🟡 P2 — ОТКРЫТО (0)
 
@@ -48,18 +48,18 @@ Most recently retired from here: `TLP-COMMAND-COMBOBOX-SEMANTICS` and `TLP-MOBIL
 |---|---:|
 | Закрыто (fixed) | 0 |
 | **P0 открыто** | **0** |
-| P1 открыто | 1 |
+| P1 открыто | 0 |
 | P2 открыто | 0 |
 | P3 открыто | 0 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **1** |
+| **Всего открыто (матрица)** | **0** |
 
 Current architecture selection: **none**. Historical Hall #369 remains terminally closed. Product #465/#466 is now a separately completed bounded production-web transaction; documentary rights, human offline approval and full-museum scale-out remain outside the active engineering matrix unless a new verified software root is established.
 
 ## Explicitly outside this matrix
 
-- Production Cloudflare Worker/D1 activation and `/health` readiness are now directly proved. `TLP-COMM-ABUSE-001` remains active only because the final adversarial sequence requires two legitimate human-backed Turnstile sessions; do not replace that boundary with automation or a challenge bypass.
+- Production Cloudflare Worker/D1 readiness and the legitimate two-persona Turnstile-backed adversarial proof are now directly documented in the [terminal human proof](../reverify/REVERIFY_39227d2_2026-11-05_community-live-human-proof-closure.md); no simulated tokens or challenge bypass were used. This is not a general claim that all future community abuse is prevented; reopen only on new reproducible production contrary evidence.
 - Current canonical poet portrait origin is not inferred; future portrait provenance is owned by the authoring release contract while Product #270 owns longform visual provenance.
 - Current sampled published essay image blocks explicitly classify `kind`; missing-kind→archive remains fail-closed authoring/audit hardening, not a current mislabel claim.
 - Community form labels/help, RatingStars keyboard radiogroup semantics, shared external-link hygiene, Breadcrumb current semantics, ArticleImage dialog ownership and TrackReleaseCard interactive nesting were rechecked as correct; do not reopen them.
