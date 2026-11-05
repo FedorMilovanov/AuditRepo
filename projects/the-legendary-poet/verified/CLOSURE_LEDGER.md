@@ -925,3 +925,11 @@ Closed history does not remain in the active engineering matrix. Detailed histor
 - Initial resulting-main CI 41914395233 and Pages 41914395216 succeeded; the contemporaneous Browser QA 41914395236 was **cancelled** and is not claimed as a success. Subsequent editor-only Product #564 main `d090892f62949d2fa7cfb9db4fa7984c60bd2745` retained the fixed owners and passed exact-main CI 41915846698, Pages 41915846745, and five-job Browser QA 41915846749, **all SUCCESS**, including the permanent spacing suite and isolated Safari contours.
 - Scoped retirement only: **1 P1 + 2 P2 → 1 P1 + 1 P2**. Semantic contrast P2 and two-human-session Turnstile P1 remain open. No Product mutation or fake approval.
 - Detailed proof: `../reverify/REVERIFY_d090892_2026-11-05_text-spacing-closure.md`. AuditRepo exact-head validation/preflight and merge are required.
+
+## 2026-11-05 — TLP semantic-theme contrast P2 certified and retired
+
+- Root: `SYS-TLP-THEME-SEMANTIC-COVERAGE-RESIDUAL`, established in the October 2026 34-route desktop/light + mobile/dark audit (746 axe contrast nodes). This closure does **not** misclassify incomplete image-background checks as evaluated contrast passes.
+- [Product PR #557](https://github.com/FedorMilovanov/TheLegendaryPoet/pull/557) exact head `d6a37c3` passed full five-job Manual Browser QA, Brand Deep Audit, release checks and merge certification; merged to `main@32d7114db5166ad27f5e3ea1be86fef3939b4ecf`. Production publication [Pages 41934467432](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41934467432) build/deploy SUCCESS.
+- **Exact resulting-main** [Browser QA 41934467489](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41934467489) finished **5/5 SUCCESS**; [Brand Deep Audit 41934467389](https://github.com/FedorMilovanov/TheLegendaryPoet/actions/runs/41934467389) SUCCESS. Later three Product commits through `2d77001` modify only `qa/mobile-platforms.spec.mjs`, not shipped contrast owners; release QA is claimed only for `32d7114`.
+- Scoped matrix retirement **1 P1 + 1 P2 → 1 P1 + 0 P2**. The sole remaining `TLP-COMM-ABUSE-001` requires two legitimate human Turnstile sessions and the production certifier; no fake all-zero.
+- Full release witness: `../reverify/REVERIFY_32d7114_2026-11-05_semantic-contrast-closure.md`. AuditRepo exact-head validation/preflight and merge required.
