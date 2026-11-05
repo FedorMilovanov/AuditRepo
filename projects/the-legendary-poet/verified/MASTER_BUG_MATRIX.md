@@ -12,6 +12,7 @@
 **2026-11-04 portrait hit-test retirement:** [Product #548 and exact-main browser census](../reverify/REVERIFY_4ad5cf4_2026-11-04_floated-portrait-hittest-closure.md); legacy P2 root removed after current-main pointer verification.
 **2026-11-04 document outline closure:** [Product #554 and cross-browser heading census](../reverify/REVERIFY_01d40f7_2026-11-04_document-outline-closure.md); structural P3 removed only after full resulting-main release certification.
 **2026-11-05 WCAG 1.4.12 text-spacing P2 release-certified closure:** [Product #556, exact-head browser and succeeding-main QA](../reverify/REVERIFY_d090892_2026-11-05_text-spacing-closure.md); only `SYS-TLP-TEXT-SPACING-ROBUSTNESS` is retired.
+**2026-11-05 semantic-theme contrast P2 release-certified closure:** [Product #557 and exact resulting-main Browser QA/Brand Deep Audit/Pages](../reverify/REVERIFY_32d7114_2026-11-05_semantic-contrast-closure.md); only `SYS-TLP-THEME-SEMANTIC-COVERAGE-RESIDUAL` is retired, leaving the separate human-backed Turnstile P1.
 **2026-11-04 fragment-navigation P2 release-certified closure:** [Product #555 and resulting-main exact-tree/browser/Pages witness](../reverify/REVERIFY_185c900_2026-11-04_fragment-navigation-closure.md); this single fixed root is retired.
 **2026-11-04 modal-exit lifecycle closure (conditional):** [Product #551 full PR proof; resulting-main release gate](../reverify/REVERIFY_b850ef6_2026-11-04_modal-exit-lifecycle-closure.md).
 **Latest broad current-main audit:** `../verification/2026-10-24-current-main-audit-reopen/REPORT.md` — owner-reopened audit, now rebound through dependency-only Product `main@76da7d6…`; route, interaction, text-spacing and exhaustive navigation passes retain eleven active P2 roots and one P3 structural root after terminal dependency retirement, without Product mutation.
@@ -31,11 +32,10 @@ Most recently retired from here: `TLP-COMMAND-COMBOBOX-SEMANTICS` and `TLP-MOBIL
 |---|---|---|---|
 | `TLP-COMM-ABUSE-001` | `LIVE-BACKEND / HUMAN-ADVERSARIAL-PROOF-PENDING / PUBLIC-INTEGRITY / P1` | The trusted Cloudflare Worker/D1 authority is now live in production. Current production evidence: `/ratings` reports the shared database synchronized; Worker `/health` is HTTP 200 with `ok=true`, `database=d1`, `databaseReady=true`, `targetAuthorityReady=true`, `writesReady=true`; live negative checks reject unknown targets (`404 unknown_target`), forged sessions (`401 invalid_session`) and disallowed origins (`403 origin_denied`). Product #505 merged the reviewed human-backed certifier at exact head `a781083d74c2b6eb8f16c7961f36ebcf9d4bed7f`, CAS/resulting main `e5d34db4106533cad17f80ce6c52782330803dff`, identical tree `d4d52ffdfb98d131e57054d2d11fdd6339b2f13a`. Product #506 later changed the community comment contract and Worker; the current-source boundary is recorded in `../reverify/REVERIFY_090ea18_2026-09-28_community-live-proof-boundary.md`, so #505 is implementation provenance rather than a current live-closure witness. The certifier accepts bearer sessions only through hidden local TTY, pins production endpoints, server-authenticates both sessions before cleanup authority, proves concurrency/idempotency/conflict/target rejection and removes only exact certification rows. Product issue #497 remains open only for the two real human Turnstile sessions; automated bypass is deliberately forbidden. | In two fresh normal browser profiles, complete production Turnstile legitimately on the same canonical target and run `npm run operator:community-live -- --target-type poet --target-id alexander-pushkin`. Closure requires the sanitized PASS evidence for two distinct signed sessions, concurrent identical comment convergence, explicit idempotent replay, changed-payload conflict, rotated-identity conflict, unknown-target rejection and successful exact-row cleanup. |
 
-## 🟡 P2 — ОТКРЫТО (1)
+## 🟡 P2 — ОТКРЫТО (0)
 
 | ID | Status | Current evidence | Required terminal outcome |
 |---|---|---|---|
-| `SYS-TLP-THEME-SEMANTIC-COVERAGE-RESIDUAL` | `CONFIRMED-CURRENT / SYSTEM / P2` | Chromium 153 on Product `93e8731…`, 34 routes × desktop Light/mobile Dark: 746 axe `color-contrast` nodes on 38 loads. The ten poet-detail routes contribute 416 Light + 171 Dark nodes; Ratings 56 + 63; Music 11; other catalog/static owners 29. Measured examples include poet testimony source links 1.41:1 Light/3.83:1 Dark, kindred badges 1.04–1.34:1 Light, headings 2.02:1 and Ratings labels 2.43–2.94:1. Existing semantic tokens and selected-owner guards pass because fixed Tailwind palette/alpha and inline colors remain outside their effective route coverage. | Complete the semantic-theme migration by owner, without global overrides or threshold reductions. Exact resulting-main browser matrix must cover every current route family in Light/Dark and desktop/mobile, report zero fully evaluated contrast failures in the repaired owner set, preserve deliberate dark islands and retain incomplete/image-background cases as explicit boundaries. Evidence: `../verification/2026-10-24-current-main-audit-reopen/REPORT.md`. |
 
 ## 🟢 P3 — ОТКРЫТО (0)
 
@@ -49,11 +49,11 @@ Most recently retired from here: `TLP-COMMAND-COMBOBOX-SEMANTICS` and `TLP-MOBIL
 | Закрыто (fixed) | 0 |
 | **P0 открыто** | **0** |
 | P1 открыто | 1 |
-| P2 открыто | 1 |
+| P2 открыто | 0 |
 | P3 открыто | 0 |
 | Рефакторинг | 0 |
 | AuditRepo | 0 |
-| **Всего открыто (матрица)** | **2** |
+| **Всего открыто (матрица)** | **1** |
 
 Current architecture selection: **none**. Historical Hall #369 remains terminally closed. Product #465/#466 is now a separately completed bounded production-web transaction; documentary rights, human offline approval and full-museum scale-out remain outside the active engineering matrix unless a new verified software root is established.
 
