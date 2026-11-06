@@ -1,4 +1,6 @@
-> **READ FIRST:** [V24 next agent](v24/NEXT-AGENT-V24.md), [latest HTML](v24/REFERENCE-V24.html) and [current adoption gates](v24/PRODUCT-ROLLOUT-V24.md). V23 below is historical only; #2283 was already merged on 2026-11-06.
+> **READ FIRST: [V25 next-agent instruction](v25/NEXT-AGENT-V25.md), [V25 reference HTML](v25/REFERENCE-V25.html), [V25 rollout gates](v25/PRODUCT-ROLLOUT-V25.md).** Do NOT start from V23/V24 or assume Library PR #2283 is pending: it has merged. Real Product current-head and production identity must be rechecked before coding.
+
+> V23 copyable instructions below are preserved for historical reconstruction only.
 
 # Copyable continuation instruction for a new agent
 
