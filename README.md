@@ -92,3 +92,7 @@ AuditRepo also should not create a control-plane transaction larger than the pro
 ## Projects
 
 See [`PROJECT_REGISTRY.md`](PROJECT_REGISTRY.md). For `gb-is-my-strength`, start at [`projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md`](projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md) and [`projects/gb-is-my-strength/DOC_MAP.md`](projects/gb-is-my-strength/DOC_MAP.md).
+
+## Prototype Lab
+
+Для сохраняемых экспериментальных макетов, сравнений Arena, независимых UI-эталонов и передачи проверенных решений в Product существует [Prototype Lab](PROTOTYPE_LAB.md). Прототипы не заменяют Product source/CI/deploy и не ведут вторую активную матрицу.
