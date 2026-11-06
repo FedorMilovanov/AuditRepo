@@ -1,3 +1,5 @@
+> **CURRENT DESKTOP PROTOTYPE: [V24](v24/README.md) / [interactive HTML](v24/REFERENCE-V24.html).** V23 remains a historical comparison. Product library #2283 is merged, not pending merge. V24 is not deployed; follow [V24 rollout](v24/PRODUCT-ROLLOUT-V24.md) and fresh Product CI/live evidence.
+
 # Grok Desktop Reader V23 — handoff and definitive reference
 
 **Date:** 2026-11-06. **Product:** FedorMilovanov/gb-is-my-strength (gospod-bog.ru). **Status:** standalone design/QA witness; not merged into Product, not a production release.

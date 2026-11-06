@@ -1,3 +1,5 @@
+> **Owner-selected Grok desktop reader continuation (2026-11-06):** [current V24 handoff](prototype/grok-desktop-reader/v24/README.md) and [interactive reference](prototype/grok-desktop-reader/v24/REFERENCE-V24.html). Prototype/evidence only, not Product release authority. This does not add a second active MASTER backlog.
+
 # gb-is-my-strength / gospod-bog.ru
 
 AuditRepo project for `FedorMilovanov/gb-is-my-strength`.

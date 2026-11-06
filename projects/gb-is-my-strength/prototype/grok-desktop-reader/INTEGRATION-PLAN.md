@@ -1,3 +1,5 @@
+> **V24 SUPERSESSION — 2026-11-06:** See [current V24 integration plan](v24/PRODUCT-ROLLOUT-V24.md) before using the historical V23 plan below. Product PR #2283 merged into main@717efc54772edf4224f44254651c102e2af24129. Recheck CI and live. Any "wait for #2283 merge" below is historical and no longer actionable. V24 adds focus-in-inert, keyboard, empty-search and motion fixes.
+
 # Safe Product rollout: V23 design into existing components, not a rewrite
 
 ## 0. Collision/lane preflight (stop-ship if unresolved)

@@ -1,3 +1,5 @@
+> **READ FIRST:** [V24 next agent](v24/NEXT-AGENT-V24.md), [latest HTML](v24/REFERENCE-V24.html) and [current adoption gates](v24/PRODUCT-ROLLOUT-V24.md). V23 below is historical only; #2283 was already merged on 2026-11-06.
+
 # Copyable continuation instruction for a new agent
 
 Owner request: continue Grok desktop reader modernization in gospod-bog.ru WITHOUT replacing or damaging existing components. No need to ask for a description of V1–V23: full latest reference lives in this folder.
