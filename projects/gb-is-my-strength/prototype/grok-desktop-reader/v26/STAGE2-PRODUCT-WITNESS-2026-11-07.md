@@ -52,3 +52,7 @@
 5. Лишь после завершения пилота отдельно внедрять Gill/Baptists, сохраняя темы и уникальные ленты. Не клонировать старые прототипные движки.
 
 Состояние локальной изолированной ветки на ПК: `C:\Users\Fedor\AppData\Local\Temp\gb-grok-pr2284-stage2-20261106`. Сохранять/удалять только по политике `BRANCH_LIFECYCLE_V4`; исходный рабочий репозиторий Product и грязный AuditRepo worktree не трогать.
+
+## 2026-11-07 CI cancellation addendum
+
+GitHub run [42291188144](https://github.com/FedorMilovanov/gb-is-my-strength/actions/runs/42291188144), Route Registry Validators on exact Stage 1 SHA ae93e229, was **CANCELLED at its 45-minute timeout** on 2026-11-06 21:32 UTC. Only WebKit touch/scroll was cancelled; Chromium, registry contracts and the other workflows had succeeded. The WebKit job never reached the browser assertion step: slow Ubuntu resolute apt-mirror package downloads during \`npx playwright install --with-deps webkit\` consumed the entire job time budget. The absence of a browser failure is **not** a green required gate. A single \`gh run rerun 42291188144 --failed\` was issued for the SAME SHA at 2026-11-06 21:36 UTC, initially queued. Check the exact run attempt and outcome before Stage 1 merge.

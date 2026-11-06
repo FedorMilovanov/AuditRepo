@@ -1,3 +1,5 @@
+**CI correction, 2026-11-07:** Product PR #2284 Route Registry WebKit was cancelled after 45 minutes while Playwright installed Ubuntu packages, before executing tests. A rerun of exact-head workflow 42291188144 was requested. AuditRepo [Stage 2 witness](STAGE2-PRODUCT-WITNESS-2026-11-07.md) has the detailed addendum; do not merge without fresh green CI.
+
 ## 2026-11-07 Product Stage 2 — READ FIRST
 
 The current verified Product integration is [STAGE2-PRODUCT-WITNESS-2026-11-07.md](STAGE2-PRODUCT-WITNESS-2026-11-07.md): PR #2284 stage1 exact ae93e229 (open, one WebKit CI unfinished at last check), and draft PR #2285 stage2 exact c18039d38 (flag-off by default), 401/401 local browser checks. See real screenshots in stage2-product-2026-11-07/. Do not merge stage2, turn on the flag or alter Gill/Baptists before remaining CI, visual, library and history gates are proven.
