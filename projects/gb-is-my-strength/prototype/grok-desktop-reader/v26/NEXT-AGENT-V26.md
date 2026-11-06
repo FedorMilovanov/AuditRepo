@@ -1,3 +1,9 @@
+## 2026-11-07 Product Stage 2 — READ FIRST
+
+The current verified Product integration is [STAGE2-PRODUCT-WITNESS-2026-11-07.md](STAGE2-PRODUCT-WITNESS-2026-11-07.md): PR #2284 stage1 exact ae93e229 (open, one WebKit CI unfinished at last check), and draft PR #2285 stage2 exact c18039d38 (flag-off by default), 401/401 local browser checks. See real screenshots in stage2-product-2026-11-07/. Do not merge stage2, turn on the flag or alter Gill/Baptists before remaining CI, visual, library and history gates are proven.
+
+---
+
 # Next agent — continue from durable V26, without re-opening old regressions
 
 1. Read V26 README, reference HTML, DECISIONS, BUGS-AND-QA and PRODUCT-ROLLOUT. V25 and earlier are historical only, not latest visual truth.
