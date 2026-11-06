@@ -23,5 +23,11 @@
       "bytes": 548184
     }
   },
-  "duplicate_note": "-3 (1).zip has the same extracted content as -3.zip; owner keeps original"
+  "duplicate_note": "-3 (1).zip has the same extracted content as -3.zip; owner keeps original",
+  "duplicate_original": {
+    "filename": "-3 (1).zip",
+    "sha256": "fdc2b05a7b481690ded1e1cca91a208f28b36970e891c767a578ece453e6477d",
+    "bytes": 484118,
+    "content_equivalent_to": "arena-B-early.zip"
+  }
 }
