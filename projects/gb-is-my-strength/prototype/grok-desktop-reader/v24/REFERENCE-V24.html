@@ -1,0 +1,1146 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<title>Господь Бог — Grok Focus V24 · уточнённые состояния и премиальная плавность</title>
+<style>
+:root{--bg:#f5f3ef;--paper:#fdfbf8;--side:#fbfaf8;--ink:#322c28;--muted:#716a64;--light:#8b837c;--line:#e8e2db;--ghost:#f1ece6;--selected:#eee8e1;--accent:#805548;--highlight:#865b4b;--marker:#aaa19a;--header:68px;--sidew:335px;--measure:746px;--readsize:18px;--lead:1.85;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:95px}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 system-ui,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}button,select,input{font:inherit;color:inherit}a{color:inherit;text-decoration:none}a:visited{color:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--highlight);outline-offset:3px}[hidden]{display:none!important}svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}.sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%)}.skip{position:fixed;left:15px;top:-90px;padding:10px 15px;background:var(--ink);color:var(--paper);z-index:500}.skip:focus{top:8px}
+.top{height:var(--header);position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 96%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 clamp(14px,2.3vw,38px)}.logo{display:flex;align-items:center;gap:11px;min-width:0}.logo strong{display:block;font:700 15px/1.1 Georgia,serif;white-space:nowrap}.logo small{display:block;font-size:10px;color:var(--muted);margin-top:4px}.top-tools{display:flex;align-items:center;gap:5px}.top-button{height:36px;min-width:36px;display:grid;place-items:center;background:transparent;border:1px solid transparent;border-radius:9px}.top-button:hover{background:var(--ghost);border-color:var(--line)}.mode-switch{height:36px;border:1px solid var(--line);border-radius:9px;display:flex;gap:2px;align-items:center;padding:3px;background:var(--ghost);margin-right:8px}.mode-switch button{height:28px;font-size:11px;font-weight:680;border:0;border-radius:7px;background:transparent;padding:0 11px;white-space:nowrap;color:var(--muted)}.mode-switch button[aria-pressed=true]{background:var(--paper);box-shadow:0 1px 3px #00000012;color:var(--ink)}.mode-switch button:hover:not([aria-pressed=true]){color:var(--ink)}
+.shell{display:grid;grid-template-columns:var(--sidew) minmax(0,1fr);min-height:calc(100dvh - var(--header));transition:grid-template-columns .2s ease}.shell.rail-mode{--sidew:68px}.sidebar{min-width:0;height:calc(100dvh - var(--header));position:sticky;top:var(--header);border-right:1px solid var(--line);background:var(--side);display:flex;flex-direction:column;overflow:hidden}.side-main{display:flex;flex-direction:column;height:100%;min-height:0}.side-head{padding:19px 19px 11px;flex:none}.side-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}.overline{color:var(--accent);font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.icon-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--paper);display:grid;place-items:center}.icon-btn:hover{background:var(--ghost)}.side-title{font:700 21px/1.19 Georgia,"Times New Roman",serif;letter-spacing:-.025em;margin:0 0 4px}.side-subtitle{color:var(--muted);font-size:11px;line-height:1.45;min-height:16px}.side-tabs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);background:var(--ghost);padding:3px;border-radius:10px;gap:3px;margin:15px 0 0}.side-tabs button{font-size:11px;font-weight:700;min-height:33px;border:0;border-radius:7px;color:var(--muted);background:transparent}.side-tabs.single{grid-template-columns:1fr}.side-tabs button[aria-pressed=true]{background:var(--paper);color:var(--ink);box-shadow:0 1px 3px #00000012}.side-search{padding:0 16px 8px;flex:none}.search-area{position:relative}.search-area input{height:38px;border:1px solid var(--line);border-radius:9px;background:var(--paper);font-size:12px;width:100%;padding:0 33px 0 36px}.search-area>svg{position:absolute;left:11px;top:10px;color:var(--muted);height:16px;width:16px}.clear{position:absolute;top:4px;right:4px;border:0;background:transparent;width:29px;height:29px;font-size:19px;color:var(--muted);border-radius:7px}.clear:hover{background:var(--ghost)}.meta-hint{display:flex;justify-content:space-between;font-size:9px;color:var(--light);margin:6px 2px 0}.nav-scroller{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-color:var(--line) transparent;scrollbar-width:thin;padding:7px 14px 18px}.series-group{margin:0 0 10px}.chapter-head{display:flex;align-items:center;gap:6px;border-radius:9px}.chapter-head.is-family{color:var(--accent)}.chapter-head button{flex:1;display:flex;align-items:center;text-align:left;gap:9px;min-width:0;min-height:43px;border:0;background:transparent;border-radius:9px;padding:7px 9px 7px 10px}.chapter-head:hover{background:var(--ghost)}.chapter-number{font:700 13px Georgia,serif;color:var(--accent);min-width:22px;text-align:center}.chapter-copy{flex:1;min-width:0}.chapter-copy strong{display:block;font-size:12.2px;line-height:1.34;font-weight:660}.chapter-copy small{display:block;color:var(--muted);font-size:9.5px;margin-top:3px;line-height:1.4}.chapter-head svg{height:13px;width:13px;color:var(--light);transition:transform .18s}.chapter-head button[aria-expanded=true] svg{transform:rotate(90deg)}.part-wrap{margin:3px 0 4px 33px}.part-row{position:relative;margin:2px 0;border-radius:9px}.part-row>a{position:relative;display:flex;align-items:baseline;gap:10px;border-radius:9px;padding:10px 10px 10px 13px;min-height:42px;color:var(--muted);line-height:1.4;font-size:12.25px;font-weight:510}.part-row a:hover{background:var(--ghost);color:var(--ink)}.part-row.selected a{background:var(--selected);color:var(--ink);font-weight:660}.part-row.selected::before{content:"";position:absolute;z-index:2;left:2px;top:6px;bottom:6px;width:2px;border-radius:999px;background:var(--accent);pointer-events:none}.part-num{color:var(--light);font:660 10px/1.5 Georgia,serif;min-width:18px;flex:none}.part-label{flex:1;min-width:0;overflow-wrap:break-word;hyphens:auto;text-wrap:pretty}.part-row.selected .part-num{color:var(--accent)}.part-row a:focus-visible{outline-offset:-2px}.plain-parts{margin:0;padding:0}.plain-parts .part-row{margin-bottom:4px}.plain-parts .part-row>a{min-height:49px;align-items:center;padding-left:13px}.endpaper-row{margin:16px 4px 4px;padding-top:13px;border-top:1px solid var(--line)}.endpaper-row a{display:flex;align-items:center;gap:11px;min-height:44px;padding:9px 12px;border-radius:9px;color:var(--muted);font-size:12px}.endpaper-row a:hover{background:var(--ghost);color:var(--ink)}.endpaper-row .endpaper-icon{display:grid;place-items:center;flex:none;width:26px;height:29px;border:1px solid var(--line);border-radius:6px;font:700 12px Georgia,serif;color:var(--accent)}.endpaper-row small{display:block;font-size:10px;color:var(--light);margin-top:2px}.part-row .part-meta{display:block;font:400 10px/1.38 system-ui,sans-serif;margin-top:4px;color:var(--muted)}
+.empty{color:var(--muted);font-style:italic;padding:20px 8px}.nav-scroller mark{border-radius:3px;background:#eed8ba;color:#5b342a;padding:0 1px}
+.side-footer{padding:11px 16px 15px;border-top:1px solid var(--line);flex:none;background:var(--side)}.mini-tools{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:10px}.mini-tools button{height:32px;border:0;background:transparent;color:var(--muted);border-radius:8px;display:grid;place-items:center}.mini-tools button:hover{background:var(--ghost);color:var(--ink)}.progress-caption{display:flex;justify-content:space-between;gap:8px;font-size:10px;color:var(--muted)}.progress-caption b{color:var(--accent)}.progressbar{height:3px;background:var(--line);border-radius:99px;margin:9px 0 0;overflow:hidden}.progressbar span{height:100%;display:block;background:var(--accent);width:0;transition:width .22s}.side-bottom{display:flex;gap:8px;align-items:center;margin-top:11px}.side-bottom button{flex:1;min-height:33px;background:var(--paper);border:1px solid var(--line);border-radius:8px;font-size:10.5px;font-weight:640}.side-bottom button:hover{background:var(--ghost)}
+.rail{display:none;flex-direction:column;align-items:center;gap:10px;padding:13px 7px;height:100%}.rail .rail-mark{font:700 15px Georgia,serif;background:var(--ghost);color:var(--accent);border-radius:11px;display:grid;place-items:center;width:39px;height:40px}.rail button{background:transparent;border:1px solid transparent;width:40px;height:40px;border-radius:10px;display:grid;place-items:center}.rail button:hover{background:var(--ghost)}.rail .current-mark{font:700 11px Georgia,serif;background:var(--selected);border:1px solid var(--line);border-radius:8px;color:var(--accent);padding:3px 4px;min-width:31px;text-align:center}.rail .rail-stem{margin-top:auto;height:70px;width:3px;background:var(--line);border-radius:99px;overflow:hidden;display:flex;align-items:flex-end}.rail .rail-stem span{width:100%;height:0;background:var(--accent)}.rail-mode .rail{display:flex}.rail-mode .side-main{display:none}
+.content{min-width:0;padding:0 clamp(22px,5.5vw,88px) 85px}.reading{max-width:var(--measure);margin:0 auto}.paper-breadcrumb{display:flex;gap:8px;align-items:center;padding-top:33px;color:var(--muted);font-size:11px}.paper-breadcrumb a:hover{text-decoration:underline;text-underline-offset:3px}.paper-tag{margin-top:42px;color:var(--accent);font-size:10px;letter-spacing:.17em;font-weight:820}.paper-title{font:700 clamp(34px,3.3vw,53px)/1.13 Georgia,"Times New Roman",serif;letter-spacing:-.048em;margin:15px 0 17px}.paper-deck{font:italic 19px/1.5 Georgia,serif;color:var(--muted);margin:0 0 25px}.paper-meta{display:flex;gap:11px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:11px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0}.paper-meta strong{color:var(--ink)}.paper-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:18px 0 10px}.small-btn{height:34px;background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:0 11px;font-size:11px;font-weight:650;display:flex;align-items:center;gap:7px}.small-btn svg{width:14px;height:14px}.small-btn:hover{background:var(--ghost)}.small-btn.primary{background:var(--accent);color:var(--paper);border-color:var(--accent)}.series-context{background:color-mix(in srgb,var(--accent) 5%,var(--paper));border:1px solid var(--line);border-radius:13px;padding:15px 17px;display:flex;align-items:center;justify-content:space-between;gap:17px;margin:22px 0 30px}.series-context span{font-size:9px;text-transform:uppercase;color:var(--accent);font-weight:850;letter-spacing:.13em}.series-context strong{display:block;font:700 15px Georgia,serif;margin:4px 0}.series-context p{margin:0;font-size:11px;color:var(--muted)}.series-context button{width:34px;height:34px;flex:none;border:1px solid var(--line);border-radius:8px;background:var(--paper);display:grid;place-items:center}.reader-section{scroll-margin-top:90px;padding-top:21px;margin:0 0 34px}.reader-section .folio{font:750 10px/1.4 system-ui,sans-serif;color:var(--accent);letter-spacing:.13em}.reader-section h2{font:700 clamp(24px,2.7vw,33px)/1.25 Georgia,serif;letter-spacing:-.03em;margin:10px 0 22px}.reader-section p{font:400 var(--readsize)/var(--lead) Georgia,"Times New Roman",serif;color:var(--ink);margin:0 0 23px}.reader-section p+p{color:var(--muted)}.reading-note{padding:18px 20px;margin:37px 0 32px;border-left:2px solid var(--accent);background:var(--paper);color:var(--muted);font:italic 15px/1.65 Georgia,serif}.bottom-navigation{border-top:1px solid var(--line);padding-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:12px}.bottom-navigation button{display:flex;flex-direction:column;gap:5px;text-align:left;background:var(--paper);border:1px solid var(--line);padding:15px;border-radius:12px;min-width:0}.bottom-navigation button:nth-child(2){text-align:right;align-items:flex-end}.bottom-navigation button:hover{background:var(--ghost)}.bottom-navigation small{color:var(--muted);font-size:10px}.bottom-navigation strong{font:700 15px/1.4 Georgia,serif}.bottom-navigation button:disabled{visibility:hidden}.preview-note{font-size:11px;color:var(--muted);line-height:1.55;margin-top:26px}
+.drawer{position:fixed;z-index:100;right:auto;left:var(--popover-left,12px);top:var(--popover-top,12px);width:min(390px,calc(100vw - 35px));max-height:calc(100dvh - var(--header) - 25px);overflow-y:auto;border:1px solid var(--line);background:var(--paper);border-radius:15px;box-shadow:0 22px 70px #00000021;padding:19px}.drawer-header{display:flex;justify-content:space-between;align-items:start;gap:20px}.drawer-header small{font-weight:850;color:var(--accent);letter-spacing:.14em;font-size:9px}.drawer-header h2{font:700 23px Georgia,serif;margin:5px 0 4px}.drawer-header p{font-size:11px;color:var(--muted);margin:0}.drawer-body{margin-top:22px}.setting-group{margin:0 0 18px}.setting-group>label{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:11.5px;margin-bottom:8px}.setting-group>label span{font-weight:400;color:var(--muted)}.setting-choices{display:flex;gap:5px;align-items:center}.setting-choices button{flex:1;min-width:0;min-height:37px;border-radius:8px;border:1px solid var(--line);background:var(--ghost);font-size:11px;font-weight:650;padding:5px}.setting-choices button[aria-pressed=true]{background:var(--selected);border-color:var(--accent);color:var(--ink)}.font-control{display:flex;align-items:center;justify-content:space-between;gap:10px}.font-control button{border:1px solid var(--line);background:var(--ghost);border-radius:8px;width:46px;height:39px;font-size:17px}.font-control output{font:700 14px Georgia,serif}.drawer-actions{display:flex;gap:8px;padding-top:12px;border-top:1px solid var(--line)}.drawer-actions button{flex:1;min-height:39px;border:1px solid var(--line);background:var(--paper);border-radius:8px;font-size:11px;font-weight:660}.drawer-actions .done{background:var(--accent);border-color:var(--accent);color:var(--paper)}.drawer .close-btn{width:34px;height:34px;display:grid;place-items:center;background:var(--ghost);border:0;border-radius:8px}.library-card{border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:13px;display:flex;align-items:center;gap:12px}.library-card .spine{font:700 22px Georgia,serif;background:var(--accent);color:var(--paper);width:43px;height:54px;border-radius:5px 8px 8px 5px;display:grid;place-items:center;flex:none}.library-card strong{font:700 15px Georgia,serif}.library-card p{font-size:11px;color:var(--muted);margin:5px 0 0}.library-save{width:100%;margin-top:11px;padding:12px;border:1px solid var(--line);border-radius:9px;background:var(--paper);font-weight:660;font-size:12px}.library-save:hover{background:var(--ghost)}.saved-entries{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}.saved-entries h3{font:800 10px/1.4 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px;color:var(--muted)}.saved-entries .empty-saves{font-size:11px;color:var(--muted);margin:8px 0}.saved-entries button{display:flex;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:9px;width:100%;padding:9px 11px;margin:6px 0;font-size:11px;line-height:1.35}.saved-entries button:hover{background:var(--ghost)}.saved-entries button span{font:700 12px Georgia,serif;color:var(--accent);min-width:16px}.saved-entries button strong{font-weight:650}.saved-entries button small{display:block;margin-top:3px;color:var(--muted)}.toast{z-index:90;position:fixed;bottom:18px;right:18px;pointer-events:none;padding:11px 15px;border-radius:9px;background:var(--ink);color:var(--paper);box-shadow:0 12px 35px #0003;font-size:12px;max-width:min(350px,90vw)}
+body.sepia{--bg:#efe4d2;--paper:#f8eddb;--side:#f5ead8;--ink:#493727;--muted:#74604c;--light:#967b61;--line:#d8c5a9;--ghost:#ebdcc5;--selected:#e9d6b7;--accent:#81513b;--highlight:#81513b;--marker:#a58c6f;color-scheme:light}body.night{--bg:#22211f;--paper:#2b2926;--side:#262522;--ink:#f2eadf;--muted:#bcb0a3;--light:#a59a90;--line:#4c453e;--ghost:#34312c;--selected:#454039;--accent:#dfad8d;--highlight:#e3b392;--marker:#a79a88;color-scheme:dark}body.night .small-btn.primary,body.night .drawer-actions .done{color:#2b2926}body.night .nav-scroller mark{background:#775338;color:#fff5e7}body.night .toast{background:#f0d8b9;color:#2d2923}
+@media (max-width:1200px){.top{padding:0 15px}.logo small{display:none}.shell{--sidew:302px}}
+@media (min-width:781px) and (max-height:730px){.side-head{padding:10px 14px 7px}.side-topline{margin-bottom:5px}.side-title{font-size:17px}.side-tabs{margin-top:8px}.side-subtitle{display:none}.side-search{padding:0 12px 5px}.nav-scroller{padding-bottom:7px}.side-footer{padding:6px 12px 7px}.mini-tools{margin-bottom:3px}.side-bottom{margin-top:6px}.side-bottom button{min-height:27px}.progressbar{margin-top:4px}}
+@media (min-width:781px) and (max-height:520px){.side-head{padding:6px 12px 4px}.side-topline{margin-bottom:2px}.side-title{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.side-tabs{margin-top:4px}.side-tabs button{min-height:28px}.side-search{padding:0 10px 3px}.search-area input{height:31px}.search-area>svg{top:7px}.meta-hint{display:none}.side-footer{padding:3px 10px}.side-bottom,.progress-caption,.progressbar{display:none}.mini-tools{margin-bottom:0}.mini-tools button{height:28px}}
+@media (max-width:780px){.shell,.shell.rail-mode{display:flex;flex-direction:column}.sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}.side-main{height:auto}.side-head{padding:13px 16px 10px}.side-title{font-size:18px}.side-subtitle{display:none}.side-tabs{margin-top:9px}.side-search{padding:0 14px 8px}.nav-scroller{max-height:305px;overflow:auto}.side-footer{display:none}.rail-mode .side-main{display:flex}.rail-mode .rail{display:none}.content{padding:0 19px 65px}.paper-breadcrumb{padding-top:20px}.paper-tag{margin-top:25px}.paper-title{font-size:37px}.paper-deck{font-size:17px}.top{padding:0 9px}.logo strong{font-size:12px}.logo-mark{height:29px;width:29px}.mode-switch{margin-right:0}.mode-switch button{padding:0 6px;font-size:10px}.top-tools{gap:1px}.top-button{width:32px;min-width:32px}.side-topline .icon-btn{display:none}.series-context{margin-top:10px}.drawer{right:auto;left:var(--popover-left,8px);top:var(--popover-top,8px);width:calc(100vw - 16px)}.reader-section p{font-size:calc(var(--readsize) - 1px)}}
+@media (max-width:435px){.logo small,.logo strong{display:none}.mode-switch button{padding:0 6px}.top-tools .optional{display:none}.top{gap:3px}}
+@media print{.top,.top-tools,.sidebar,.drawer,.toast,.anchor-pointer,.paper-actions,.preview-note{display:none!important}.shell,.shell.rail-mode{display:block!important}.content{padding:0!important}.reading{max-width:100%}.paper-title{font-size:30px}.reader-section{break-inside:avoid-page}body{background:#fff!important;color:#111!important}}@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:0s!important;animation-duration:0s!important}}
+/* V10: unified information architecture; single nav tree, no duplicate tab controls */
+.side-tabs,#goOutline,#goParts,#contextParts{display:none!important}
+.side-search{padding-top:3px;padding-bottom:11px}
+.search-launch{width:100%;height:43px;display:flex;align-items:center;gap:10px;text-align:left;padding:0 12px;border:1px solid var(--line);border-radius:11px;background:var(--paper);color:var(--muted);font-size:12.2px;transition:border-color .16s,background .16s}
+.search-launch svg{width:16px;height:16px}
+.search-launch span{flex:1}
+.search-launch:hover{color:var(--ink);background:var(--ghost);border-color:color-mix(in srgb,var(--accent) 34%,var(--line))}
+.search-launch kbd{font:650 10px system-ui,sans-serif;color:var(--light);padding:3px 6px;border:1px solid var(--line);border-radius:5px}
+.context-search-line{align-items:center;gap:8px;min-height:29px;margin-top:5px}
+.context-search-line button{flex:none;max-width:61%;border:0;background:transparent;color:var(--accent);font-size:10.5px;font-weight:650;cursor:pointer;border-radius:5px;padding:5px 2px;text-align:right}
+.context-search-line button:hover{color:var(--ink);text-decoration:none}
+.side-bottom{margin-top:8px}
+/* Three levels of one tree: group / publication / headings. Markers never render as empty rings. */
+.nav-scroller .series-group{margin-bottom:8px}
+.part-with-sections{min-width:0}
+.part-titlebar{display:flex;align-items:center;position:relative;border-radius:9px}
+.part-titlebar .part-row{flex:1;min-width:0}
+.part-titlebar .part-row>a{padding-right:2px}
+.part-titlebar .part-row.selected::before{top:6px;bottom:6px;width:2px}
+.part-expander{width:32px;height:33px;margin:0 1px 0 0;padding:0;display:grid;place-items:center;flex:none;border:0;border-radius:7px;background:transparent;color:var(--light)}
+.part-expander:hover{background:var(--ghost);color:var(--ink)}
+.part-expander svg{width:13px;height:13px;transition:transform .18s}
+.part-expander[aria-expanded="true"] svg{transform:rotate(90deg)}
+
+
+
+
+
+
+
+.plain-parts .part-sections{margin-left:22px}
+.article-only-sections{padding-left:6px}
+
+.nav-scroller a{text-decoration:none!important}
+/* The search dialog is a prototype of scoped UX. In production the site scope delegates to GBSearch. */
+.search-dialog{position:fixed;inset:0;margin:auto;width:min(620px,calc(100vw - 28px));max-height:min(82dvh,800px);padding:0;border:1px solid var(--line);border-radius:17px;box-shadow:0 28px 90px #0003;background:var(--paper);color:var(--ink);overflow:hidden}
+.search-dialog::backdrop{background:#17120e88;backdrop-filter:blur(3px)}
+.search-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:19px 21px 13px;border-bottom:1px solid var(--line)}
+.search-dialog-head small{font-size:9px;letter-spacing:.13em;color:var(--accent);font-weight:800}
+.search-dialog-head h2{font:700 23px/1.2 Georgia,serif;margin:3px 0 0}
+.search-dismiss{display:grid;place-items:center;width:35px;height:35px;border:1px solid var(--line);background:var(--ghost);border-radius:9px;font-size:20px}
+.search-dialog-body{padding:15px 20px 20px;overflow:auto;max-height:calc(min(82dvh,800px) - 91px)}
+.scope-switch{display:flex;gap:5px;margin:0 0 12px;flex-wrap:wrap}
+.scope-switch button{min-height:36px;border:1px solid var(--line);border-radius:9px;padding:8px 13px;background:transparent;color:var(--muted);font-size:11.5px;font-weight:650}
+.scope-switch button[aria-pressed="true"]{background:var(--selected);color:var(--ink);border-color:color-mix(in srgb,var(--accent) 27%,var(--line))}
+.search-dialog-input{width:100%;height:45px;border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:0 14px;font-size:13px}
+.search-dialog-input:focus{border-color:var(--accent);outline:2px solid color-mix(in srgb,var(--accent) 23%,transparent);outline-offset:1px}
+.search-status{margin:12px 0 8px;font-size:10.5px;color:var(--muted);min-height:16px}
+.search-results{display:flex;flex-direction:column;gap:6px;max-height:min(43dvh,420px);overflow:auto;overscroll-behavior:contain}
+.search-result{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;width:100%;border:1px solid transparent;background:transparent;border-radius:10px;padding:11px 12px;min-height:56px}
+.search-result:hover,.search-result:focus-visible{border-color:var(--line);background:var(--ghost)}
+.search-result strong{font-size:12.7px;line-height:1.4;color:var(--ink)}
+.search-result span{font-size:10.5px;line-height:1.4;color:var(--muted)}
+.search-empty{padding:20px 12px;color:var(--muted);font-size:12px}
+body.night .search-dismiss{background:var(--ghost)}
+@media (min-width:781px) and (max-height:520px){.search-launch{height:32px}.context-search-line{display:flex;min-height:22px;margin-top:1px}.context-search-line>span{display:none}.context-search-line button{max-width:none;width:100%;text-align:left;font-size:10.5px;padding:2px 4px}.search-dialog{max-height:92dvh}.search-dialog-body{max-height:calc(92dvh - 72px)}}
+@media (max-width:780px){.search-launch{height:44px}.search-dialog{max-height:90dvh}.search-dialog-body{max-height:calc(90dvh - 85px)}}
+@media (prefers-reduced-motion:reduce){.search-launch,.part-expander svg{transition:none}}
+
+/* V11 — book chapter > article > section; cycle part > H2 > H3. All links clear, un-underlined. */
+.side-search{padding-top:3px;padding-bottom:10px}
+.search-launch{border-color:color-mix(in srgb,var(--accent) 22%,var(--line));background:var(--paper);font-weight:640;color:var(--ink)}
+.search-launch:hover{background:var(--ghost)}
+.context-search-line{font-size:10px;min-height:28px}
+.context-search-line button{font-size:10.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+.context-search-line button:hover{color:var(--accent)}
+
+
+
+
+
+
+
+
+
+
+
+
+.heading-expander{height:32px;width:30px;flex:none;display:grid;place-items:center;border:0;background:transparent;color:var(--muted);border-radius:7px}
+.heading-expander svg{width:13px;height:13px;transition:transform .16s}
+.heading-expander[aria-expanded=true] svg{transform:rotate(90deg)}
+.heading-expander:hover{background:var(--ghost);color:var(--ink)}
+
+
+
+
+
+
+/* User selection is a fine vertical rule proportional to the full card, not a 16px glyph. */
+.part-row.selected::before,.part-titlebar .part-row.selected::before{width:2px;top:6px;bottom:6px}
+.chapter-head.is-family{background:color-mix(in srgb,var(--accent) 3%,transparent)}
+.chapter-head.is-family .chapter-number{font-weight:750}
+/* In short desktop viewports the context/global scope choice must remain visible. */
+@media (min-width:781px) and (max-height:520px){.side-search{padding:0 10px 3px}.context-search-line{display:flex;min-height:20px;margin:1px 0 0}.context-search-line>span{display:none}.context-search-line button{width:100%;padding:2px 4px;text-align:left;max-width:none}}
+@media (min-width:781px) and (max-width:980px){.side-title{font-size:18px}.chapter-copy strong{font-size:11.8px}}
+@media (prefers-reduced-motion:reduce){.heading-expander svg{transition:none}}
+
+/* ══════════════════════════════════════════════════════════════════
+   V12 / SHARED READER DESIGN TOKENS — preview-only, not production CSS.
+   Skin is orthogonal to reader theme (day/sepia/night).
+   Production ownership: SeriesConfig.theme + data-series-theme; standalone adapter.
+   Geometry and interaction CSS are defined once for all publications.
+   ══════════════════════════════════════════════════════════════════ */
+body[data-series-theme="samizdat"]{
+ --bg:#efe7d7; --paper:#f8f2e6; --ink:#2e2631; --muted:#665d60;
+ --line:#dcd0c1; --ghost:#eee5d8; --selected:#e9dfed;
+ --accent:#5b3a86; --highlight:#5b3a86; --marker:#9886ab;
+ --gf-side-bg:#1b1725; --gf-side-text:#ece5f3; --gf-side-muted:#baabc9;
+ --gf-side-rule:#3a3149; --gf-side-hover:#2b2438; --gf-side-selected:#3a2b48;
+ --gf-side-accent:#d5bfed; --gf-side-marker:#917fa8; --gf-side-field:#231d30;
+}
+body[data-series-theme="gill"]{
+ --bg:#f5f1e9; --paper:#fbf7ef; --ink:#302820; --muted:#706357;
+ --line:#dfd5c6; --ghost:#eee6d9; --selected:#eae0cf;
+ --accent:#755130; --highlight:#79532f; --marker:#ad987c;
+ --gf-side-bg:#211c18; --gf-side-text:#f4e9d8; --gf-side-muted:#c1b2a1;
+ --gf-side-rule:#4b4136; --gf-side-hover:#332a24; --gf-side-selected:#423428;
+ --gf-side-accent:#e2bb82; --gf-side-marker:#a78f6c; --gf-side-field:#282119;
+}
+body[data-series-theme="hermeneutics"]{
+ --gf-side-bg:#fbfaf8; --gf-side-text:#322c28; --gf-side-muted:#716a64;
+ --gf-side-rule:#e8e2db; --gf-side-hover:#f1ece6; --gf-side-selected:#eee8e1;
+ --gf-side-accent:#805548; --gf-side-marker:#aaa19a; --gf-side-field:#fdfbf8;
+}
+/* The series theme never replaces the reader's day/sepia/night preference. */
+body.sepia[data-series-theme="samizdat"]{
+ --bg:#eee2ce; --paper:#f8ecd9; --ink:#392f37; --line:#d6c5ae;
+ --accent:#624580; --selected:#e8dced;
+}
+body.sepia[data-series-theme="gill"]{
+ --bg:#ede0ca; --paper:#f8ecda; --ink:#413325; --line:#d6c3a5;
+ --accent:#79502c; --selected:#ebd9be;
+}
+body.night[data-series-theme="samizdat"]{
+ --bg:#17131e; --paper:#211b28; --ink:#f0e9f4; --muted:#c1b4c9;
+ --line:#40334a; --ghost:#2d2436; --selected:#403050;
+ --accent:#cbb0eb; --highlight:#cfb5f1; --marker:#9c89b3;
+ --gf-side-bg:#100e16; --gf-side-text:#f1eafa; --gf-side-muted:#bcacce;
+ --gf-side-rule:#40344e; --gf-side-hover:#201929; --gf-side-selected:#3b2b4e;
+ --gf-side-accent:#d9c4f1; --gf-side-marker:#a595bf; --gf-side-field:#191420;
+}
+body.night[data-series-theme="gill"]{
+ --bg:#1e1b18; --paper:#27211d; --ink:#f2e7d7; --muted:#c5b7a7;
+ --line:#483c31; --ghost:#312923; --selected:#43362a;
+ --accent:#ddba83; --highlight:#e2c28f; --marker:#aa977b;
+ --gf-side-bg:#15120f; --gf-side-text:#f3eadc; --gf-side-muted:#c4b5a3;
+ --gf-side-rule:#43392e; --gf-side-hover:#2b231c; --gf-side-selected:#403226;
+ --gf-side-accent:#e4c18a; --gf-side-marker:#aa906e; --gf-side-field:#1d1813;
+}
+/* One real rail, not a second sidebar. Remap the same semantic tokens at its boundary. */
+body[data-series-theme="samizdat"] .sidebar,
+body[data-series-theme="gill"] .sidebar{
+ --side:var(--gf-side-bg); --paper:var(--gf-side-field);
+ --ink:var(--gf-side-text); --muted:var(--gf-side-muted); --light:var(--gf-side-muted);
+ --line:var(--gf-side-rule); --ghost:var(--gf-side-hover);
+ --selected:var(--gf-side-selected); --accent:var(--gf-side-accent);
+ --highlight:var(--gf-side-accent); --marker:var(--gf-side-marker);
+ color:var(--ink); background:var(--side); border-color:var(--line);
+}
+body[data-series-theme="samizdat"] .sidebar .search-launch,
+body[data-series-theme="gill"] .sidebar .search-launch{background:var(--paper);color:var(--ink);border-color:var(--line)}
+body[data-series-theme="samizdat"] .sidebar .search-launch kbd,
+body[data-series-theme="gill"] .sidebar .search-launch kbd{color:var(--muted)}
+body[data-series-theme="samizdat"] .sidebar .side-footer,
+body[data-series-theme="gill"] .sidebar .side-footer{background:var(--side);border-color:var(--line)}
+body[data-series-theme="samizdat"] .sidebar .chapter-head.is-family,
+body[data-series-theme="gill"] .sidebar .chapter-head.is-family{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+body[data-series-theme="samizdat"] .sidebar .mini-tools svg,
+body[data-series-theme="gill"] .sidebar .mini-tools svg{stroke-width:1.65}
+body[data-series-theme="samizdat"] .sidebar .search-launch:hover,
+body[data-series-theme="gill"] .sidebar .search-launch:hover{background:var(--ghost)}
+body[data-series-theme="samizdat"] .sidebar .side-bottom button,
+body[data-series-theme="gill"] .sidebar .side-bottom button{background:var(--paper);color:var(--ink);border-color:var(--line)}
+body[data-series-theme="samizdat"] .sidebar .side-bottom button:hover,
+body[data-series-theme="gill"] .sidebar .side-bottom button:hover{background:var(--ghost)}
+
+body[data-series-theme="samizdat"] .sidebar .rail .current-mark,
+body[data-series-theme="gill"] .sidebar .rail .current-mark{color:var(--accent);border-color:var(--line)}
+/* A subtle paper texture only for samizdat; lightweight and pointer transparent. */
+body[data-series-theme="samizdat"] .content{
+ background-image:radial-gradient(rgba(51,35,64,.035) .55px,transparent .6px);
+ background-size:6px 6px;
+}
+body.night[data-series-theme="samizdat"] .content{background-image:none}
+
+
+/* Editorial calibration. Avoid tiny navigation targets and uneven hierarchy. */
+.nav-scroller{scrollbar-gutter:stable;scrollbar-width:thin;overscroll-behavior:contain}
+.part-titlebar .part-row>a{line-height:1.46}
+
+
+.chapter-head button,.part-titlebar,.outline-titlebar{transition:background-color .14s ease,color .14s ease}
+
+
+
+/* Make child connectors visually consistent with markers, no halo or heavy stroke. */
+
+
+/* Correct heading hierarchy inside the article: H3 was unstyled in V11. */
+.reader-section h3{font:700 clamp(21px,2.15vw,27px)/1.3 Georgia,"Times New Roman",serif;
+ letter-spacing:-.025em;margin:10px 0 19px;color:var(--ink)}
+.reader-section:has(h3){padding-top:13px;margin-bottom:26px}
+/* The prominent duplicate series card becomes a quiet chapter locator. */
+.series-context{border-radius:0;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+ background:transparent;box-shadow:none;padding:12px 1px;margin:18px 0 25px}
+.series-context strong{font-size:14px}
+.series-context p{font-size:10.8px}
+/* Long Cyrillic headings must break rather than expanding the viewport.
+   The article title was proven to overflow 320px with 130% type. */
+.paper-title,.reader-section h2,.reader-section h3,
+.side-title,.part-label,.chapter-copy strong,.search-result strong{
+ overflow-wrap:anywhere;hyphens:auto;
+}
+/* Fine progress, carefully constrained control surfaces. */
+.progressbar{height:2px}.rail .rail-stem{width:2px}
+.nav-scroller a:focus-visible,.nav-scroller button:focus-visible{outline:2px solid var(--highlight);outline-offset:1px}
+.sidebar .icon-btn,.sidebar .rail button{transition:background-color .15s ease, border-color .15s ease}
+.sidebar .mini-tools button:focus-visible{outline-offset:0}
+
+@media (max-width:780px){
+ /* Mobile behavior here remains the V11 experiment; production must reuse existing mobile UI. */
+ .content{background-image:none!important}
+}
+@media (prefers-reduced-motion:reduce){
+ .shell,.chapter-head button,.part-titlebar,.outline-titlebar,.sidebar .icon-btn,.sidebar .rail button{transition:none!important}
+ html{scroll-behavior:auto}
+}
+
+
+/* V13 editorial refinement: dimensions and interactive feedback are shared;
+   series identity still comes exclusively from the existing theme tokens. */
+:root{--toc-selection-inset:6px;--toc-rule-width:2px;--toc-motion:160ms}
+.sidebar .part-row.selected::before{width:var(--toc-rule-width);top:var(--toc-selection-inset);bottom:var(--toc-selection-inset);border-radius:2px}
+.sidebar .chapter-head,.sidebar .part-row,.sidebar .outline-titlebar{scroll-margin-block:9px}
+.sidebar .part-row a,.sidebar .outline-titlebar>a,.sidebar .chapter-head button{min-width:0;overflow-wrap:anywhere}
+.sidebar .chapter-head button{line-height:1.45}
+.sidebar .part-row.selected{background:color-mix(in srgb,var(--selected) 84%,transparent)}
+.sidebar .part-row.selected:hover{background:var(--selected)}
+
+
+/* Nesting should clarify reading structure, never grow the gutter indefinitely. */
+
+
+
+
+
+
+.sidebar .heading-expander{transition:background-color var(--toc-motion) ease,color var(--toc-motion) ease}
+.sidebar .heading-expander:hover{background:color-mix(in srgb,var(--ghost) 85%,transparent)}
+.sidebar .nav-scroller{scrollbar-color:color-mix(in srgb,var(--marker) 55%,transparent) transparent}
+.sidebar .nav-scroller a:focus-visible,.sidebar .nav-scroller button:focus-visible{outline:2px solid var(--highlight);outline-offset:2px;border-radius:5px}
+/* Long labels and mixed Cyrillic/Latin text shouldn't shift the reading axis. */
+.paper-title,.reader-section h2,.reader-section h3,.reader-section h4,.reader-section h5,.reader-section h6{overflow-wrap:anywhere;hyphens:auto}
+.reader-section h4{font:700 clamp(18px,1.7vw,22px)/1.38 Georgia,"Times New Roman",serif;letter-spacing:-.012em;margin:10px 0 17px}
+.reader-section h5,.reader-section h6{font:700 18px/1.44 Georgia,"Times New Roman",serif;margin:9px 0 14px}
+.reader-section:has(h4){padding-top:8px;margin-bottom:23px}
+/* Consistent motion; no translate animations that can shift text/scroll position. */
+@media (prefers-reduced-motion:no-preference){
+ .sidebar .part-row,.sidebar .outline-titlebar,.sidebar .chapter-head{transition:background-color var(--toc-motion) ease,color var(--toc-motion) ease}
+}
+@media (prefers-reduced-motion:reduce){.sidebar .part-row,.sidebar .outline-titlebar,.sidebar .chapter-head,.sidebar .heading-expander{transition:none!important}}
+
+
+/* V14: predictable minimal nested navigation; no overlapping rails between subtrees. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Real footer command sequence differs by page family: retain both contracts. */
+.mini-tools{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-bottom:9px}
+.mini-tools button{min-height:37px;transition:background-color .14s,color .14s}
+.mini-tools svg{height:17px;width:17px}
+body[data-series-theme="hermeneutics"] #sideShare{order:3}
+body[data-series-theme="hermeneutics"] #sidePrint{order:4}
+/* No mass expand / collapse actions: natural disclosure at each group. */
+.side-footer{padding-top:9px;padding-bottom:13px}
+/* Mock menu is a semantic reference to existing site menu, not a new production service. */
+.menu-preview-links{display:flex;flex-direction:column;gap:4px;padding:15px 18px}
+.menu-preview-links a{padding:11px 12px;border-radius:8px;line-height:1.4;font-size:13px}
+.menu-preview-links a:hover{background:var(--ghost);color:var(--accent)}
+.menu-preview-links a:focus-visible{outline-offset:-1px}
+@media (prefers-reduced-motion:reduce){.mini-tools button,.heading-expander svg,.part-expander svg{transition:none!important}}
+body[data-grok-text-mode="plain"] .reader-body :is(p,li){font-style:normal}body[data-grok-text-mode="plain"] .reader-body em{font-style:normal}
+/* GROK FOCUS V15 — one owner for outline geometry. All previous outline connector
+   rules were removed above rather than layered via specificity or !important. */
+.outline-list{position:relative;padding-left:8px;min-width:0}
+.outline-item,.outline-branch{position:relative;min-width:0}
+.outline-item::after,.outline-branch::after{content:none;display:none}
+.outline-item{--dot-y:19px}
+.outline-item::before{content:'';position:absolute;left:3px;top:var(--dot-y);width:4px;height:4px;transform:translate(-50%,-50%);border-radius:50%;background:var(--marker);pointer-events:none}
+.outline-item.selected::before{height:6px;width:6px;background:var(--accent);box-shadow:none;border:0}
+.outline-item a{display:block;min-width:0;padding:8px 9px 8px 15px;min-height:36px;color:var(--muted);font-size:12px;line-height:1.46;border-radius:7px;overflow-wrap:anywhere;text-wrap:pretty}
+.outline-item.selected a{background:var(--selected);color:var(--ink);font-weight:650}
+.outline-item a:hover{background:var(--ghost);color:var(--ink)}
+.outline-item.selected a:hover{background:var(--selected)}
+.outline-titlebar{position:relative;display:flex;align-items:center;min-width:0;min-height:36px;margin:1px 0;border-radius:7px;isolation:isolate;transition:background-color var(--toc-motion,.14s) ease,color var(--toc-motion,.14s) ease}
+.outline-titlebar>a{flex:1;display:block;min-width:0;padding:8px 8px 8px 16px;font-size:12px;line-height:1.45;color:var(--muted);border-radius:7px;overflow-wrap:anywhere;text-wrap:pretty;letter-spacing:.002em}
+.outline-titlebar>a:hover,.outline-titlebar:hover:not(.selected){background:var(--ghost);color:var(--ink)}
+.outline-titlebar.selected{background:var(--selected)}
+.outline-titlebar.selected>a{background:transparent;color:var(--ink);font-weight:680}
+.outline-titlebar.has-active-child>a{color:var(--ink);font-weight:610}
+.outline-titlebar::before{content:'';position:absolute;left:4px;top:50%;transform:translate(-50%,-50%);width:4px;height:4px;border-radius:50%;background:var(--marker);pointer-events:none}
+.outline-titlebar.selected::before{width:6px;height:6px;background:var(--accent)}
+.outline-titlebar.has-active-child::before{width:5px;height:5px;background:var(--accent)}
+/* V22: One precisely measured hairline only between consecutive root H2 leaves.
+   No trunks, indents or connecting lines on H3+; DOM measurement guarantees exact
+   dot-to-dot endpoints for wrapped titles. */
+.outline-connector{position:absolute;z-index:0;display:block;width:1px;background:color-mix(in srgb,var(--marker) 65%,transparent);pointer-events:none;transform:translateX(-.5px)}
+.outline-list>.outline-branch>.outline-titlebar::before{z-index:1}
+/* The third and deeper levels: no circles, trunks, guides, brackets or borders. */
+.heading-children{position:relative;border:0;margin:0 0 4px 13px;padding:0;min-width:0}
+.heading-children .outline-titlebar{min-height:32px;margin:0;border-radius:6px}
+.heading-children .outline-titlebar::before{content:none;display:none}
+.heading-children .outline-titlebar>a{font-size:11.75px;line-height:1.44;padding:7px 7px 7px 10px;min-width:0}
+.heading-children .heading-children{margin:0 0 2px 11px;padding:0;border:0}
+.heading-children .heading-children .outline-titlebar>a{font-size:11.6px;padding-left:10px;color:var(--muted)}
+.heading-children .outline-titlebar.selected>a,
+.heading-children .heading-children .outline-titlebar.selected>a{color:var(--ink);font-weight:670}
+.heading-children .outline-titlebar.has-active-child>a{color:var(--ink);font-weight:620}
+.part-sections{position:relative;margin:0 0 7px 19px;padding:3px 0 3px 5px;min-width:0}
+.part-sections .outline-list{padding-left:5px}
+.plain-parts .part-sections{margin-left:22px}
+.article-only-sections .outline-list{padding-left:11px}
+.heading-expander{width:30px;height:32px;flex:none;display:grid;place-items:center;padding:0;background:transparent;border:0;border-radius:7px;color:var(--muted)}
+.heading-expander:hover{background:var(--ghost);color:var(--ink)}
+.heading-expander svg{width:13px;height:13px;transition:transform .16s ease}
+.heading-expander[aria-expanded=true] svg{transform:rotate(90deg)}
+/* Explicit focus-visible preserves keyboard navigation in place of hover-only affordance. */
+.nav-scroller .outline-titlebar>a:focus-visible,
+.nav-scroller .outline-item a:focus-visible,
+.nav-scroller .heading-expander:focus-visible{outline:2px solid var(--highlight);outline-offset:1px}
+@media(prefers-reduced-motion:reduce){.outline-titlebar,.heading-expander svg{transition:none}}
+/* =============================================
+   GROK FOCUS V16 — Premium elastic desktop contract.
+   A single timeline owns the rail + reading width. On production, integrate
+   the concept into current desktop chrome; do NOT replace body/engine.
+   ============================================= */
+:root{--elastic-duration:650ms;--elastic-ease:cubic-bezier(.18,.82,.25,1)}
+@media (min-width:781px){
+ .shell{--open-w:335px;transition:grid-template-columns var(--elastic-duration) var(--elastic-ease)}
+ .shell .side-main{width:var(--open-w);max-width:none;min-width:var(--open-w);opacity:1;transform:translateX(0);transition:opacity 190ms ease 125ms,transform 420ms cubic-bezier(.18,.82,.27,1)}
+ .shell .rail{display:flex;position:absolute;inset:0;opacity:0;pointer-events:none;transform:translateX(-11px) scale(.96);transition:opacity 105ms ease,transform 500ms var(--elastic-ease)}
+ .shell.rail-mode .side-main{display:flex;opacity:0;pointer-events:none;transform:translateX(-13px);transition:opacity 95ms ease,transform 420ms cubic-bezier(.18,.82,.27,1)}
+ .shell.rail-mode .rail{display:flex;opacity:1;pointer-events:auto;transform:translateX(0) scale(1);transition:opacity 175ms ease 115ms,transform 500ms var(--elastic-ease)}
+ .reading{transition:max-width var(--elastic-duration) var(--elastic-ease)}
+ .shell.rail-mode .reading{max-width:calc(var(--measure) + 34px)}
+ body[data-grok-measure="wide"] .shell.rail-mode .reading{max-width:calc(var(--measure) + 34px)}
+ /* 'Wobble' without text transforms: only the available layout width moves. */
+ .content{transition:padding-inline 650ms var(--elastic-ease)}
+ .shell.rail-mode .content{padding-inline:clamp(22px,5vw,78px)}
+}
+@media (min-width:781px) and (max-width:1200px){.shell{--open-w:302px}}
+@media (min-width:781px) and (max-height:520px){:root{--elastic-duration:480ms}}
+/* Exact vertical centring for H3/H4 selection — text baseline no longer
+   has an apparently larger bottom inset than its top inset. */
+.nav-scroller .heading-children .outline-titlebar{display:flex;align-items:stretch;min-height:38px;}
+.nav-scroller .heading-children .outline-titlebar>a{display:flex;align-items:center;min-height:38px;flex:1;padding:8px 10px;line-height:1.44;box-sizing:border-box;}
+.nav-scroller .heading-children .heading-children .outline-titlebar>a{padding:8px 10px;min-height:36px;}
+.nav-scroller .outline-titlebar.selected>a{background:transparent;}
+.nav-scroller .heading-children .outline-titlebar .heading-expander{align-self:center;}
+/* Original Gill's introduction / endpaper uses a special leather ribbon.
+   This is a light demonstrative silhouette ONLY: actual site retains
+   GillLeatherRibbon.astro and GillLeatherDefs.astro unchanged. */
+.plain-parts .part-row.is-endpaper{margin-block:6px 8px;}
+.plain-parts .part-row.is-endpaper>a{min-height:100px;align-items:center;padding:5px 10px 5px 8px;gap:13px;}
+.grok-ribbon{position:relative;display:flex;align-items:center;justify-content:center;flex:none;flex-direction:column;gap:4px;width:30px;height:92px;clip-path:polygon(0 0,100% 0,100% 100%,50% 86%,0 100%);background:linear-gradient(93deg,#2e170c 0%,#754621 12%,#5c3218 59%,#382012 100%);box-shadow:inset 1px 2px 3px #d7a66e55;color:#e2c18a;isolation:isolate;}
+.grok-ribbon:before{content:'';position:absolute;inset:3px 4px 10px;border:1px dashed #d1a97688;clip-path:polygon(0 0,100% 0,100% 100%,50% 87%,0 100%);pointer-events:none;}
+.grok-ribbon--reference{background:linear-gradient(93deg,#21120e,#5a3a2a 38%,#2f1912 100%)}
+.grok-ribbon__orn{font:12px/1 Georgia,serif;color:#efd3a2;}
+.grok-ribbon__word{writing-mode:vertical-rl;transform:rotate(180deg);font:700 7.6px/1 Georgia,serif;letter-spacing:.115em;color:#e6caa0;white-space:nowrap;}
+.plain-parts .part-row.is-endpaper .part-label{font-weight:620;line-height:1.42;}
+.plain-parts .part-row.is-endpaper.selected::before{top:8px;bottom:10px;}
+@media (max-width:780px){.plain-parts .part-row.is-endpaper>a{min-height:54px}.grok-ribbon{height:64px;width:26px}.grok-ribbon__word{font-size:6.7px}}
+@media (prefers-reduced-motion:reduce){.shell,.reading,.content,.side-main,.rail{transition:none!important;animation:none!important}}
+body.motion-reduced .shell,body.motion-reduced .reading,body.motion-reduced .content,body.motion-reduced .side-main,body.motion-reduced .rail{transition:none!important;animation:none!important}
+
+
+/* V17: anchored editorial popovers. Single overlay owner, positioned from its trigger. */
+.drawer{--popover-left:18px;--popover-top:16px;--popover-pointer:38px;position:fixed;top:var(--popover-top);left:var(--popover-left);right:auto;z-index:160;width:min(365px,calc(100vw - 24px));max-height:min(690px,calc(100dvh - 24px));padding:0;overflow-x:hidden;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain;border:1px solid color-mix(in srgb,var(--accent) 20%,var(--line));border-radius:17px;background:color-mix(in srgb,var(--paper) 96%,var(--bg));color:var(--ink);box-shadow:0 19px 55px -20px rgba(20,12,9,.36),0 6px 22px -14px rgba(20,12,9,.22),inset 0 1px 0 rgba(255,255,255,.34);isolation:isolate;animation:popGrow .2s cubic-bezier(.18,.84,.32,1) both;transform-origin:var(--pop-origin,48px) var(--pop-origin-y,bottom)}
+.drawer:focus{outline:none}
+.drawer[hidden]{display:none!important}
+.drawer-accent{height:3px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--accent) 80%,var(--paper)) 22%,var(--accent) 55%,transparent)}
+.drawer-header{padding:17px 18px 13px;gap:12px;align-items:start}
+.drawer-header small{font-size:9px;letter-spacing:.16em;font-weight:750;color:var(--accent)}
+.drawer-header h2{margin:5px 0 3px;font:700 22px/1.2 Georgia,"Times New Roman",serif;letter-spacing:-.02em}
+.drawer-header p{font-size:11.2px;line-height:1.45;color:var(--muted);margin:0}
+.drawer .close-btn{border:1px solid var(--line);border-radius:9px;width:30px;height:30px;flex:none;background:color-mix(in srgb,var(--ghost) 70%,transparent);transition:background .14s,border-color .14s}
+.drawer .close-btn:hover{background:var(--ghost);border-color:var(--accent)}
+.drawer .close-btn svg{width:14px;height:14px}
+.drawer-body{margin-top:0}
+.drawer.pop-below{animation-name:popDrop}
+@keyframes popGrow{from{opacity:0;transform:translateY(7px) scale(.975)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes popDrop{from{opacity:0;transform:translateY(-7px) scale(.975)}to{opacity:1;transform:translateY(0) scale(1)}}
+/* Publishing-menu rhythm: restrained numbering, one quiet directional affordance. */
+.menu-preview-links{display:flex;flex-direction:column;gap:9px;padding:2px 12px 9px}
+.menu-link-group{padding:0 0 6px}
+.menu-group-label{margin:5px 11px 9px;color:var(--muted);font:750 9px/1.3 system-ui,sans-serif;letter-spacing:.13em}
+.menu-entry{display:flex;gap:12px;align-items:center;min-height:49px;padding:9px 12px;border:1px solid transparent;border-radius:10px;transition:background-color .16s,border-color .16s}
+.menu-entry:visited{color:var(--ink)}
+.menu-entry:hover,.menu-entry:focus-visible{background:color-mix(in srgb,var(--accent) 8%,var(--paper));border-color:color-mix(in srgb,var(--accent) 12%,transparent)}
+.menu-entry .menu-index{width:27px;min-width:27px;display:grid;place-items:center;font:700 12px/1.2 Georgia,serif;color:var(--accent);font-variant-numeric:tabular-nums}
+.menu-entry .menu-index svg{width:15px;height:15px}
+.menu-entry-copy{display:flex;min-width:0;flex:1;flex-direction:column;gap:2px}
+.menu-entry-copy strong{font:700 14px/1.28 Georgia,serif;letter-spacing:-.012em}
+.menu-entry-copy small{font-size:10.5px;line-height:1.38;color:var(--muted)}
+.menu-entry>svg{width:14px;height:14px;color:var(--accent);opacity:.42;transform:translateX(-3px);transition:opacity .14s,transform .18s}
+.menu-entry:hover>svg,.menu-entry:focus-visible>svg{opacity:.9;transform:translateX(0)}
+.menu-secondary{border-top:1px solid var(--line);margin-top:3px;padding-top:9px;padding-bottom:0}
+.menu-secondary .menu-entry{min-height:41px;padding-top:6px;padding-bottom:6px}
+.menu-panel-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding:8px 18px 11px;background:color-mix(in srgb,var(--accent) 4%,var(--paper))}
+.menu-panel-foot>a{display:flex;align-items:center;gap:8px;font-size:11.2px;font-weight:700;border-radius:6px;padding:4px 0}
+.menu-panel-foot>a svg{width:14px;height:14px;color:var(--accent)}
+.menu-panel-foot>a svg:last-child{width:11px;opacity:.7}
+.menu-foot-mark{font:700 18px Georgia,serif;color:color-mix(in srgb,var(--accent) 50%,transparent)}
+/* Settings sheet: segmented choices, tactile swatches, stable footer inside popover. */
+.settings-preview{width:min(366px,calc(100vw - 24px));}
+.settings-preview .drawer-body{padding:2px 16px 13px}
+.settings-preview .setting-group{margin:0;padding:11px 0 12px;border-top:1px solid color-mix(in srgb,var(--line) 75%,transparent)}
+.settings-preview .setting-group>label{font-size:11px;margin-bottom:9px;font-weight:720}
+.settings-preview .setting-group>label span{font-size:10px}
+.settings-preview .setting-choices{gap:4px;padding:3px;background:color-mix(in srgb,var(--ghost) 76%,var(--paper));border:1px solid var(--line);border-radius:11px}
+.settings-preview .setting-choices button{min-height:32px;background:transparent;border:1px solid transparent;border-radius:8px;padding:5px 3px;font-size:10.5px;font-weight:670;transition:background .14s,border-color .14s,box-shadow .14s}
+.settings-preview .setting-choices button[aria-pressed=true]{background:var(--paper);border-color:color-mix(in srgb,var(--accent) 26%,var(--line));box-shadow:0 1px 4px rgba(20,13,7,.10);color:var(--ink)}
+.settings-preview .setting-choices button:hover:not([aria-pressed=true]){background:color-mix(in srgb,var(--paper) 55%,transparent)}
+.settings-preview .setting-group--theme .setting-choices button{display:flex;align-items:center;justify-content:center;gap:6px;min-height:39px}
+.theme-sample{display:block;flex:none;width:16px;height:16px;border-radius:50%;border:1px solid rgba(65,50,35,.20);box-shadow:inset 0 0 0 2px rgba(255,255,255,.14)}
+.sample-day{background:#faf6ef}.sample-sepia{background:#d7b990}.sample-night{background:#2b2931}
+.settings-preview .font-control{gap:6px;justify-content:space-between}
+.settings-preview .font-control button{width:43px;height:34px;border-radius:8px;border-color:var(--line)}
+.settings-preview .font-control output{font-size:13px;color:var(--muted)}
+.settings-preview .drawer-actions{margin-top:5px;padding-top:12px;gap:8px}
+.settings-preview .drawer-actions button{min-height:36px;border-radius:9px;font-size:11px}
+.settings-preview .drawer-actions .done{display:flex;align-items:center;justify-content:center;gap:9px;color:var(--paper)}
+.settings-preview .drawer-actions .done span{font-size:12px}
+body.night .settings-preview .drawer-actions .done{color:#211b19}
+/* Popovers don't inherit the 780px full-width mobile drawer treatment. These
+   mobile styles are prototype-only; production mobile remains untouched. */
+@media (max-width:780px){.drawer{width:min(365px,calc(100vw - 16px));max-height:calc(100dvh - 16px)}.settings-preview{width:min(366px,calc(100vw - 16px))}}
+@media (max-height:620px){.drawer-header{padding-top:12px;padding-bottom:9px}.settings-preview .setting-group{padding:8px 0 9px}.settings-preview .drawer-actions{padding-top:9px}}
+@media (prefers-reduced-motion:reduce){.drawer{animation:none!important}.menu-entry,.menu-entry>svg,.settings-preview .setting-choices button{transition:none!important}}
+
+
+/* Footer of reading settings always visible; scroll the settings, not the action. */
+.settings-preview{display:flex;flex-direction:column;overflow:hidden}
+.settings-preview>.drawer-accent,.settings-preview>.drawer-header,.settings-preview>.drawer-actions{flex:none}
+.settings-preview>.drawer-body{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain;padding-bottom:0}
+.settings-preview>.drawer-actions{margin:0;padding:11px 16px 13px;box-shadow:0 -8px 20px -22px rgba(0,0,0,.55);background:var(--paper)}
+
+
+/* V18: strict trigger-anchored popovers, not right-side drawers. */
+.version-label{font:750 9px/1.1 system-ui,sans-serif;letter-spacing:.08em;color:var(--accent)}
+.drawer:is(#siteMenuPanel,#prefsPanel){right:auto!important;max-width:calc(100vw - 16px);box-sizing:border-box}
+.drawer:is(#siteMenuPanel,#prefsPanel)::before{content:none}
+.site-menu-preview{display:flex;flex-direction:column;overflow:hidden}
+.site-menu-preview>.drawer-accent,.site-menu-preview>.drawer-header,.site-menu-preview>.menu-panel-foot{flex:none}
+.site-menu-preview>.drawer-body{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain}
+.anchor-pointer{position:fixed;z-index:161;width:12px;height:12px;background:color-mix(in srgb,var(--paper) 96%,var(--bg));border:1px solid color-mix(in srgb,var(--accent) 20%,var(--line));pointer-events:none;transform:rotate(45deg);border-radius:2px;box-shadow:3px 3px 8px rgba(0,0,0,.03)}
+.anchor-pointer[hidden]{display:none!important}
+.anchor-pointer[data-placement=above]{border-top:0;border-left:0}
+.anchor-pointer[data-placement=below]{border-bottom:0;border-right:0}
+@media (prefers-reduced-motion:reduce){.anchor-pointer{transition:none}}
+
+
+/* V19 — one popover positioning contract for MENU, SETTINGS and LIBRARY. */
+#libraryPanel.library-preview{display:flex;flex-direction:column;overflow:hidden;padding:0;max-width:calc(100vw - 16px)}
+#libraryPanel.library-preview[hidden]{display:none!important}
+#libraryPanel.library-preview>.drawer-header{flex:none;padding:17px 17px 12px;margin:0}
+#libraryPanel.library-preview>.drawer-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;margin:0;padding:0 17px 17px}
+#libraryPanel.library-preview .library-card{margin-top:0}
+@media (max-height:520px){#libraryPanel.library-preview>.drawer-header{padding:11px 15px 9px}}
+
+
+
+/* === V22: typographic GB monogram, no ornamental strokes or frame. === */
+.logo-mark{display:inline-flex;align-items:center;justify-content:flex-start;width:auto;min-width:39px;height:38px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;overflow:visible;font-family:Georgia,"Times New Roman",serif;font-size:30px;font-weight:800;line-height:1;letter-spacing:-.115em;color:var(--brand-ink,#56392f);text-shadow:none;user-select:none}
+body[data-series-theme="samizdat"] .logo-mark{--brand-ink:#54356f}
+body[data-series-theme="gill"] .logo-mark{--brand-ink:#6b4529}
+body.night .logo-mark{--brand-ink:#f0d7b7}
+body.night[data-series-theme="samizdat"] .logo-mark{--brand-ink:#d6b7f1}
+body.night[data-series-theme="gill"] .logo-mark{--brand-ink:#efd1a0}
+/* The demo header contains branding and publication switch only. */
+.top{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(10px,2vw,24px)}
+.logo strong{letter-spacing:-.012em}.logo small{margin-top:3px}
+.preview-mode{display:flex;align-items:center;gap:8px;white-space:nowrap;justify-self:end}
+.preview-mode>span{font-size:9px;color:var(--muted);letter-spacing:.12em;font-weight:750}
+.preview-mode .mode-switch{margin:0}
+/* Exact production direction: vertical corner stack (theme, search, Play, save). */
+.top-tools{position:fixed;z-index:70;top:calc(var(--header) + 22px);right:clamp(12px,2.3vw,38px);display:flex;flex-direction:column;align-items:center;gap:6px;padding:3px 0;background:transparent;border:0;justify-self:auto}
+.top-tools .top-button{position:relative;width:40px;min-width:40px;height:40px;border:0;border-radius:50%;background:transparent;display:grid;place-items:center;color:var(--ink);transition:color .22s ease,transform .25s cubic-bezier(.2,.8,.3,1),background-color .2s ease}
+.top-tools .top-button::before{content:'';position:absolute;inset:5px;border:1px solid var(--accent);border-radius:50%;opacity:0;transform:scale(.73);pointer-events:none;transition:opacity .24s ease,transform .26s cubic-bezier(.2,.8,.3,1)}
+.top-tools .top-button:hover{color:var(--accent);transform:scale(1.08);background:transparent}
+.top-tools .top-button:hover::before{opacity:.28;transform:scale(1)}
+.top-tools .top-button:active{transform:scale(.92)}
+.top-tools .top-button[aria-pressed="true"]{color:var(--accent);background:transparent}
+.top-tools svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.top-tools .top-button:focus-visible{outline:2px solid var(--highlight);outline-offset:3px}
+.quick-save[aria-pressed=true] svg{fill:color-mix(in srgb,var(--accent) 26%,transparent)}
+.voice-tool{position:relative;display:flex;align-items:center}
+.voice-badge{pointer-events:none;position:absolute;right:-3px;bottom:-4px;line-height:1;min-width:19px;font:750 8px/1.3 system-ui,sans-serif;text-align:center;padding:1px 3px;border-radius:4px;background:var(--paper);border:1px solid var(--line);color:var(--accent)}
+.side-footer .mini-tools{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:7px}
+.side-footer .mini-tools button{height:35px;transition:background .17s ease,color .17s ease,transform .17s ease}
+.side-footer .mini-tools button:hover{transform:translateY(-1px)}
+.footer-extra{display:flex;align-items:center;justify-content:flex-start;margin:0 0 8px}
+.library-entry{display:inline-flex;align-items:center;gap:6px;background:transparent;border:0;border-radius:7px;padding:3px 5px;color:var(--muted);font-size:10px;font-weight:650}
+.library-entry svg{height:13px;width:13px}
+.library-entry:hover,.library-entry[aria-expanded=true]{background:var(--ghost);color:var(--ink)}
+/* Identical vertical baseline for expanding and collapsing triggers. */
+.rail{padding:19px 7px 13px;gap:10px}
+.rail #railExpand{flex:0 0 32px;width:32px;height:32px;border:1px solid var(--line);background:var(--paper);border-radius:8px;margin:0 0 8px}
+.rail #railExpand:hover{background:var(--ghost)}
+.rail .rail-mark{height:37px;width:37px;flex-shrink:0;border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);font:700 15px/1 Georgia,serif;letter-spacing:-.055em}
+.rail .current-mark{margin-top:2px}
+/* Tiny but readable speed settings; true transport is owned by PlayEmber on the site. */
+.audio-preview .drawer-header{padding-bottom:12px}
+.audio-body{padding:0 17px 17px}
+.audio-hint{font-size:12px;line-height:1.5;margin:0 0 12px;color:var(--muted)}
+.speed-picks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+.speed-picks button{border:1px solid var(--line);background:var(--paper);border-radius:8px;font-weight:680;min-height:36px;padding:4px 2px;font-size:11px}
+.speed-picks button[aria-pressed=true]{background:var(--selected);border-color:var(--accent);color:var(--ink)}
+.audio-footnote{font-size:10px;line-height:1.55;color:var(--muted);margin:12px 0 0}
+@media(min-width:781px) and (max-height:730px){.rail{padding-top:10px}}
+@media(min-width:781px) and (max-height:520px){.rail{padding-top:6px}}
+@media(min-width:781px) and (max-width:1000px){.top-tools{right:7px;top:calc(var(--header) + 16px)}.top-tools .top-button{width:36px;min-width:36px;height:36px}.top-tools svg{width:17px;height:17px}}
+@media(max-width:780px){/* Only desktop corner cluster is prototyped; existing live mobile remains unchanged. */.top-tools{display:none}.top{display:flex;justify-content:space-between;gap:8px}.preview-mode{margin-left:auto}.logo strong{font-size:12px}.logo-mark{font-size:28px;height:34px;min-width:36px}.preview-mode>span{display:none}}
+@media(max-width:435px){.top{gap:3px;padding:0 9px}.logo strong,.logo small{display:none}.preview-mode .mode-switch button{padding:0 6px;font-size:10px}}
+@media(prefers-reduced-motion:reduce){.top-tools .top-button,.top-tools .top-button::before,.side-footer .mini-tools button{transition:none;transform:none}}
+body.motion-reduced .top-tools .top-button,body.motion-reduced .top-tools .top-button::before{transition:none;transform:none}
+@media (min-width:781px) and (max-width:1200px){
+ .shell .content{padding-right:calc(clamp(22px,5.5vw,88px) + 20px)}
+ .shell.rail-mode .content{padding-right:calc(clamp(22px,5vw,78px) + 20px)}
+}
+.rail .rail-mark{width:40px;height:40px;border:0;border-radius:0;background:transparent;box-shadow:none;color:var(--accent);font:800 20px/1 Georgia,serif;letter-spacing:-.10em}
+
+/* V24: continuous interrupted crossfade, accessible ownership on each side,
+   Both modes use the same responsive geometry; text is never transformed. */
+@media (min-width:781px){
+  .shell .side-main{transition:opacity 205ms cubic-bezier(.2,.65,.28,1) 80ms,transform 490ms cubic-bezier(.18,.82,.27,1)}
+  .shell .rail{transition:opacity 155ms cubic-bezier(.17,.65,.28,1),transform 510ms var(--elastic-ease)}
+  .shell.rail-mode .side-main{transition:opacity 140ms cubic-bezier(.2,.65,.28,1),transform 490ms cubic-bezier(.18,.82,.27,1)}
+  .shell.rail-mode .rail{transition:opacity 185ms cubic-bezier(.17,.65,.28,1) 35ms,transform 510ms var(--elastic-ease)}
+  /* Consistent emphasis without an unexpected one-pixel movement at hover. */
+  .nav-scroller .outline-titlebar,
+  .nav-scroller .part-row>a,
+  .nav-scroller .chapter-head{transition:background-color 180ms ease,color 180ms ease}
+}
+/* The number and label share a true vertical center, including wrapped titles. */
+.part-row>a{align-items:center}
+/* Small controls remain crisp at fractional scaling; no extra rings around dots. */
+.outline-titlebar::before,.outline-item::before{box-shadow:none;outline:none}
+@media (max-width:780px){.part-row>a{align-items:center}}
+@media (prefers-reduced-motion:reduce){.shell .side-main,.shell .rail,.nav-scroller .outline-titlebar,.nav-scroller .part-row>a{transition:none!important}}
+body.motion-reduced .shell .side-main,body.motion-reduced .shell .rail{transition:none!important}
+</style>
+</head>
+<body data-series-theme="samizdat">
+<a class="skip" href="#paperTitle">Перейти к статье</a>
+<header class="top">
+ <div class="logo"><span class="logo-mark" aria-hidden="true">GB</span><div><strong>Господь Бог — Сила Моя</strong><small>Богословская библиотека · <b class="version-label">V24</b></small></div></div>
+ <div class="preview-mode" role="group" aria-label="Выбор публикации для демонстрации"><span>РЕЖИМЫ МАКЕТА</span><div class="mode-switch"><button type="button" data-mode="book" aria-pressed="true">Книга</button><button type="button" data-mode="cycle" aria-pressed="false">Цикл</button><button type="button" data-mode="article" aria-pressed="false">Статья</button></div></div>
+ </header>
+<div class="top-tools" role="group" aria-label="Быстрые действия читателя" data-prototype-desktop-cluster="true">
+  <button class="top-button quick-theme" id="topTheme" type="button" title="Быстро переключить День / Ночь" aria-label="Переключить ночную тему" aria-pressed="false" data-implementation="reuse-GBReaderPreferences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.6 8.6 0 0 1 8.8 3.8 8.8 8.8 0 1 0 20.2 15.2Z"/><path d="M17.5 3.8v4.6m-2.3-2.3h4.6"/></svg></button>
+  <button class="top-button" id="headerSiteSearch" type="button" aria-label="Поиск по всему сайту" title="Поиск по всему сайту" data-implementation="reuse-GBSearch"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg></button>
+  <div class="voice-tool"><button class="top-button" id="topVoice" type="button" title="Озвучка · скорость чтения" aria-label="Озвучка и скорость" aria-haspopup="dialog" aria-controls="audioPanel" aria-expanded="false" data-popover-trigger="audioPanel" data-implementation="reuse-PlayEmber"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 9h4l5-4.4v14.8L8.5 15h-4z"/><path d="M17 8.5a5.2 5.2 0 0 1 0 7M19.6 5.9a9 9 0 0 1 0 12.2"/></svg></button><span class="voice-badge" id="topSpeedBadge" aria-hidden="true">1×</span></div>
+  <button class="top-button quick-save" id="topSave" type="button" title="Сохранить статью" aria-label="Добавить статью в библиотеку" aria-pressed="false" data-implementation="reuse-BookmarkEngine"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.4h12v16l-6-4.4-6 4.4Z"/></svg></button>
+ </div>
+<aside id="audioPanel" class="drawer audio-preview" role="dialog" aria-modal="false" aria-labelledby="audioTitle" tabindex="-1" hidden>
+ <div class="drawer-header"><div><small>ОЗВУЧИВАНИЕ · МАКЕТ УПРАВЛЕНИЯ</small><h2 id="audioTitle">Скорость чтения</h2><p>В готовом сайте используется существующий PlayEmber.</p></div><button type="button" class="close-btn" data-close="audioPanel" aria-label="Закрыть настройки озвучки"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+ <div class="audio-body"><p class="audio-hint">Выбор скорости для демонстрации (без запуска звука).</p><div class="speed-picks" role="group" aria-label="Скорость озвучки"><button type="button" data-voice-speed="0.8">0,8×</button><button type="button" data-voice-speed="1">1×</button><button type="button" data-voice-speed="1.25">1,25×</button><button type="button" data-voice-speed="1.5">1,5×</button></div><p class="audio-footnote">Аудио и положение воспроизведения не имитируются. При интеграции скорость и состояние получаются от штатного TTS-контроллера.</p></div>
+</aside>
+<aside id="siteMenuPanel" class="drawer site-menu-preview" role="dialog" aria-modal="false" aria-labelledby="siteMenuTitle" tabindex="-1" hidden>
+ <div class="drawer-accent" aria-hidden="true"></div>
+ <div class="drawer-header menu-head"><div><small>БИБЛИОТЕКА · ПУТЕВОДИТЕЛЬ</small><h2 id="siteMenuTitle">Разделы сайта</h2><p>Исследования, тексты и материалы</p></div><button class="close-btn" type="button" data-close="siteMenuPanel" aria-label="Закрыть меню"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+ <nav class="drawer-body menu-preview-links" aria-label="Разделы Господь Бог">
+   <div class="menu-link-group"><p class="menu-group-label">ЧИТАТЬ И ИССЛЕДОВАТЬ</p>
+    <a class="menu-entry" href="https://gospod-bog.ru/#publikacii"><span class="menu-index">01</span><span class="menu-entry-copy"><strong>Публикации</strong><small>Книги, циклы и исследования</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a>
+    <a class="menu-entry" href="https://gospod-bog.ru/articles/"><span class="menu-index">02</span><span class="menu-entry-copy"><strong>Все статьи</strong><small>Каталог отдельных материалов</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a>
+    <a class="menu-entry" href="https://gospod-bog.ru/biografii/"><span class="menu-index">03</span><span class="menu-entry-copy"><strong>Биографии</strong><small>Люди, жизнь и наследие</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a>
+    <a class="menu-entry" href="https://gospod-bog.ru/#razbor"><span class="menu-index">04</span><span class="menu-entry-copy"><strong>Разбор заблуждений</strong><small>Богословские разборы</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a>
+   </div>
+   <div class="menu-link-group menu-secondary"><p class="menu-group-label">ПРОЕКТ</p>
+    <a class="menu-entry" href="https://gospod-bog.ru/app/"><span class="menu-index"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="16" rx="3"/><path d="M9 17h6"/></svg></span><span class="menu-entry-copy"><strong>Приложение</strong></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a>
+    <a class="menu-entry" href="https://gospod-bog.ru/about/"><span class="menu-index"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 11v5M12 8h.01"/></svg></span><span class="menu-entry-copy"><strong>О проекте</strong></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a>
+   </div>
+ </nav>
+ <div class="menu-panel-foot"><a href="https://gospod-bog.ru/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7M6 9v11h12V9M10 20v-6h4v6"/></svg><span>На главную</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a><span class="menu-foot-mark" aria-hidden="true">✝</span></div>
+</aside>
+<aside class="drawer settings-preview" id="prefsPanel" aria-labelledby="prefsTitle" role="dialog" aria-modal="false" tabindex="-1" hidden>
+ <div class="drawer-accent" aria-hidden="true"></div><div class="drawer-header"><div><small>ПРОСТРАНСТВО ЧТЕНИЯ</small><h2 id="prefsTitle">Настройки чтения</h2><p>Подстройте страницу под себя</p></div><button class="close-btn" type="button" data-close="prefsPanel" aria-label="Закрыть настройки"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+ <div class="drawer-body">
+  <div class="setting-group setting-group--theme"><label>Тема <span>Бумага и контраст</span></label><div class="setting-choices" data-pref="theme"><button type="button" data-value="light" aria-pressed="true"><i class="theme-sample sample-day" aria-hidden="true"></i>День</button><button type="button" data-value="sepia" aria-pressed="false"><i class="theme-sample sample-sepia" aria-hidden="true"></i>Сепия</button><button type="button" data-value="night" aria-pressed="false"><i class="theme-sample sample-night" aria-hidden="true"></i>Ночь</button></div></div>
+  <div class="setting-group"><label>Размер текста <span id="fontValue">100%</span></label><div class="font-control"><button type="button" id="fontMinus" aria-label="Уменьшить размер текста">А−</button><output id="fontPreview">Aa · чтение</output><button type="button" id="fontPlus" aria-label="Увеличить размер текста">А+</button></div></div>
+  <div class="setting-group"><label>Ширина страницы</label><div class="setting-choices" data-pref="measure"><button type="button" data-value="narrow" aria-pressed="false">Узкая</button><button type="button" data-value="normal" aria-pressed="true">Обычная</button><button type="button" data-value="wide" aria-pressed="false">Широкая</button></div></div>
+  <div class="setting-group"><label>Межстрочный интервал</label><div class="setting-choices" data-pref="leading"><button type="button" data-value="compact" aria-pressed="false">Плотный</button><button type="button" data-value="normal" aria-pressed="true">Обычный</button><button type="button" data-value="relaxed" aria-pressed="false">Свободный</button></div></div>
+  <div class="setting-group"><label>Оформление текста</label><div class="setting-choices" data-pref="textMode"><button type="button" data-value="rich" aria-pressed="true">Полное</button><button type="button" data-value="plain" aria-pressed="false">Простое</button></div></div>
+<div class="setting-group"><label>Анимация</label><div class="setting-choices" data-pref="motionMode"><button type="button" data-value="system" aria-pressed="true">Обычная</button><button type="button" data-value="reduced" aria-pressed="false">Спокойная</button></div></div>
+</div>
+ <div class="drawer-actions"><button type="button" id="prefsReset">Сбросить</button><button class="done" type="button" data-close="prefsPanel">Готово <span aria-hidden="true">✓</span></button></div>
+</aside>
+<div id="anchorPointer" class="anchor-pointer" aria-hidden="true" hidden></div>
+<aside class="drawer library-preview" id="libraryPanel" aria-label="Моя библиотека" role="dialog" aria-modal="false" hidden>
+ <div class="drawer-header"><div><small>ЛОКАЛЬНЫЙ ПРОТОТИП</small><h2>Моя библиотека</h2><p>Сохранение в браузере, не в аккаунте</p></div><button class="close-btn" data-close="libraryPanel" aria-label="Закрыть библиотеку">×</button></div>
+ <div class="drawer-body"><div class="library-card"><span class="spine">✝</span><div><strong id="libraryTitle">Баптисты России</strong><p id="librarySubtitle">Текущий материал ещё не сохранён</p></div></div><button class="library-save" type="button" id="librarySave">Сохранить текущую статью</button><button class="library-save" type="button" id="libraryContinue">Продолжить чтение</button><div id="savedEntries" class="saved-entries" aria-label="Сохранённые материалы"></div><p class="preview-note">Здесь показано поведение будущей интеграции. Реальная библиотека сайта и её данные не изменены.</p></div>
+</aside>
+<div class="shell" id="shell">
+ <aside class="sidebar" aria-label="Навигация по публикации" id="sidebar">
+  <div class="side-main" id="tocFull">
+   <div class="side-head"><div class="side-topline"><span class="overline" id="sideType">КНИГА · ИСТОРИЯ ЕХБ</span><button class="icon-btn" id="collapse" aria-controls="tocFull" aria-expanded="true" type="button" aria-label="Свернуть панель в узкую полосу" title="Свернуть как у Grok"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM10 4v16M7 12l-2-2m2 2-2 2"/></svg></button></div><h2 class="side-title" id="sideTitle">Баптисты России</h2><div class="side-subtitle" id="sideSubtitle">История Евангелия, свободы и совести</div><div class="side-tabs" id="sideTabs" role="group" aria-label="Исторические переключатели прототипа, скрыты" hidden><button type="button" id="tabParts" aria-pressed="true" aria-controls="nav">Части серии</button><button type="button" id="tabOutline" aria-pressed="false" aria-controls="nav">В этой статье</button></div></div>
+   <div class="side-search">
+      <button type="button" class="search-launch" id="openScopedSearch" aria-label="Поиск в этой книге, клавиша /">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg>
+        <span id="localSearchLabel">Поиск в этой книге</span><kbd>/</kbd>
+      </button>
+      <div class="meta-hint context-search-line"><span id="matchCount">4 главы · 9 статей</span><button id="openSiteSearch" type="button" aria-label="Поиск по всему сайту">По всему сайту <span aria-hidden="true">↗</span></button></div>
+      <input id="navSearch" type="hidden" tabindex="-1" aria-hidden="true" value=""><button id="clearSearch" type="button" hidden tabindex="-1" aria-hidden="true">×</button>
+    </div>
+   <nav class="nav-scroller" id="nav" aria-label="Главы, статьи и разделы"><div id="navTree"></div></nav>
+   <div class="side-footer"><div class="mini-tools" role="group" aria-label="Штатные инструменты чтения">
+<button id="sideMenu" type="button" data-popover-trigger="siteMenuPanel" aria-controls="siteMenuPanel" aria-expanded="false" title="Меню сайта" aria-label="Меню сайта" aria-haspopup="dialog" data-implementation="reuse-site-sections-menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+<button id="sidePrefs" type="button" data-popover-trigger="prefsPanel" aria-controls="prefsPanel" aria-expanded="false" title="Настройки чтения" aria-label="Настройки чтения" aria-haspopup="dialog" data-implementation="reuse-reader-settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></button>
+<button id="sidePrint" type="button" title="Скачать через печать в PDF" aria-label="Скачать PDF" data-implementation="reuse-print-engine"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/></svg></button>
+<button id="sideShare" type="button" title="Поделиться" aria-label="Поделиться" data-implementation="reuse-share-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.7l7.4-4.2M8.3 13.3l7.4 4.2"/></svg></button>
+</div><div class="footer-extra"><button id="sideLibrary" type="button" class="library-entry" data-popover-trigger="libraryPanel" aria-controls="libraryPanel" aria-expanded="false" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5h4v14h-4zM10.4 5h4v14h-4zM16.4 6l2.8-1 3.1 12.9-3.1 1z"/></svg><span>Моя библиотека</span></button></div><div class="progress-caption"><span id="progressLabel">Позиция в книге</span><b id="progressText">6 / 9</b></div><div class="progressbar"><span id="progressFill"></span></div></div>
+  </div>
+  <div class="rail"><button type="button" id="railExpand" aria-controls="tocFull" aria-expanded="false" title="Развернуть оглавление" aria-label="Развернуть оглавление"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM10 4v16M13 9l3 3-3 3"/></svg></button><div class="rail-mark" aria-hidden="true">GB</div><div class="current-mark" id="railCurrent">III</div><button type="button" id="railSearch" title="Поиск в этой книге или цикле" aria-label="Поиск в текущей публикации"><svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg></button><button type="button" id="railPrefs" aria-haspopup="dialog" data-popover-trigger="prefsPanel" aria-controls="prefsPanel" aria-expanded="false" title="Сепия и шрифт" aria-label="Настройки чтения"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></button><button type="button" id="railLibrary" title="Моя библиотека" aria-label="Моя библиотека" aria-haspopup="dialog" aria-controls="libraryPanel" aria-expanded="false" data-popover-trigger="libraryPanel"><svg viewBox="0 0 24 24"><path d="M4.5 4h4v16h-4zM10.5 5h4v15h-4zM17 4l2.5 1 2 13-3.5 1z"/></svg></button><div class="rail-stem" aria-hidden="true"><span id="railFill"></span></div></div>
+ </aside>
+ <main class="content" id="content"><div class="reading">
+  <div class="paper-breadcrumb"><a id="breadcrumbParent" href="#">Библиотека</a><span>/</span><span id="breadcrumbTitle">Баптисты России</span></div>
+  <p class="paper-tag" id="paperTag">КНИГА · ЧАСТЬ 6 ИЗ 9</p>
+  <h1 class="paper-title" id="paperTitle" tabindex="-1">Советская ночь</h1>
+  <p class="paper-deck" id="paperDeck">1929–1937 · Закон и репрессии</p>
+  <div class="paper-meta"><span id="paperMeta">Баптисты России</span></div>
+  <div class="paper-actions"><button type="button" class="small-btn" id="goOutline"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.1M4 12h.1M4 18h.1"/></svg>Оглавление статьи</button><button type="button" class="small-btn" id="goParts"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM9 5v14M13 9h4M13 13h4"/></svg>Все части</button><button type="button" class="small-btn" id="openLive"><svg viewBox="0 0 24 24"><path d="M13 4h7v7M20 4l-9 9M18 14v6H4V6h6"/></svg>Оригинал</button></div>
+  <div class="series-context" id="seriesContext"><div><span id="contextTag">ГЛАВА III · КНИГА</span><strong id="contextTitle">Советская ночь и единый центр</strong><p id="contextSub">Часть книги, не отдельное окно чтения</p></div><button type="button" id="contextParts" title="Переключить к частям серии" aria-label="Показать главы и статьи"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button></div>
+  <div id="sections"></div>
+  <aside class="reading-note">Названия материалов и структура книги основаны на репозитории. Часть внутренних заголовков сокращена для демонстрации, а все абзацы — макетный текст, не подмена опубликованных статей.</aside>
+  <div class="bottom-navigation" id="bottomNavigation"><button type="button" id="prevPart"><small>← Предыдущая статья</small><strong id="prevName">Предыдущая</strong></button><button type="button" id="nextPart"><small>Следующая статья →</small><strong id="nextName">Следующая</strong></button></div>
+  <p class="preview-note">Grok Focus V23: три уровня навигации · контекстный поиск первым · десктопный прототип. Мобильная версия действующего сайта и данные личной библиотеки не затронуты.</p>
+ </div></main>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+<dialog id="searchDialog" class="search-dialog" aria-labelledby="searchTitle">
+  <div class="search-dialog-head"><div><small>ПОИСК · БИБЛИОТЕКА</small><h2 id="searchTitle">Поиск</h2></div><button id="searchDismiss" class="search-dismiss" type="button" aria-label="Закрыть поиск">×</button></div>
+  <div class="search-dialog-body">
+    <div class="scope-switch" role="group" aria-label="Область поиска">
+      <button type="button" data-search-scope="series" aria-pressed="true">Эта книга</button>
+      <button type="button" data-search-scope="site" aria-pressed="false">Весь сайт</button>
+      <button type="button" data-search-scope="article" aria-pressed="false">Эта статья</button>
+    </div>
+    <label class="sr-only" for="siteQuery">Поисковый запрос</label>
+    <input class="search-dialog-input" id="siteQuery" type="search" placeholder="Название, автор, тема, фрагмент…" autocomplete="off" />
+    <div class="search-status" id="searchStatus" aria-live="polite"></div>
+    <div class="search-results" id="searchResults" role="list" aria-label="Результаты поиска"></div>
+  </div>
+</dialog>
+<script>
+'use strict';
+const PUBLICATIONS = {"book":{"title":"Баптисты России","subtitle":"История Евангелия, свободы и совести","type":"Книга · история ЕХБ","groups":[{"id":"origins","mark":"I","title":"Рождение братства","subtitle":"1867–1884 · Тифлис, юг и первые союзы","parts":[{"id":"noch-na-kure","mark":"01","title":"Воронин и ночь на Куре","subtitle":"1867 · Тифлис","href":"https://gospod-bog.ru/baptisty-rossii/noch-na-kure/","sections":["До баптистского имени: молоканский библейский поиск","Три человека у одной реки","Что произошло на Куре","Тифлис два года спустя: что на самом деле пишет Кальвейт","Как рождается историческая память"],"levels":[2,2,2,2,2]},{"id":"yuzhnaya-shtunda","mark":"02","title":"Южная штунда и первые крещения","subtitle":"1867–1870 · Юг России","href":"https://gospod-bog.ru/baptisty-rossii/yuzhnaya-shtunda/","sections":["Штунда не как карикатура","Цепочка крещений","Что показывают письма 1870 года","Что добавляют официальные рапорты","Почему юг важен для всей серии"],"levels":[2,2,2,2,2]},{"id":"dva-sezda-1884","mark":"03","title":"Две развилки 1884 года","subtitle":"Петербург и Ново-Васильевка","href":"https://gospod-bog.ru/baptisty-rossii/dva-sezda-1884/","sections":["Совещание 1–6 апреля 1884 года","Крещение как граница","Арест и высылка: ответ государства","Ново-Васильевка: 30 апреля — 1 мая 1884 года","Две модели, которые останутся надолго"],"levels":[2,2,2,2,2]}]},{"id":"awakening","mark":"II","title":"Пробуждение, союзы и свобода совести","subtitle":"1874–1929 · Петербург и Проханов","parts":[{"id":"peterburgskaya-liniya","mark":"04","title":"Петербургское пробуждение","subtitle":"Редсток, Пашков и Проханов","href":"https://gospod-bog.ru/baptisty-rossii/peterburgskaya-liniya/","sections":["Редсток: вопрос о личном спасении","Пашков: салон становится кафедрой","Евангелие выходит из гостиной","1884: Петербургский удар","Проханов: наследник Петербурга"],"levels":[2,2,2,2,2]},{"id":"goneniya-i-sovest","mark":"05","title":"Свобода совести и военный вопрос","subtitle":"1919–1929 · Совесть и государство","href":"https://gospod-bog.ru/baptisty-rossii/goneniya-i-sovest/","sections":["Что значит «военный вопрос»","1919: окно для совести","1923: совесть становится делом ОГПУ","Московская община отвечает","Пять моделей ответа на гонения"],"levels":[2,2,2,2,2]}]},{"id":"soviet","mark":"III","title":"Советская ночь и единый центр","subtitle":"1929–1945 · Закон, война и ВСЕХиБ","parts":[{"id":"sovetskaya-noch","mark":"06","title":"Советская ночь: закон 1929 года и репрессии","subtitle":"1929–1937 · Закрытие церковной жизни","href":"https://gospod-bog.ru/baptisty-rossii/sovetskaya-noch/","sections":["Послереволюционное окно","Перед законом пришёл образ врага","Закон 1929: культ вместо братства","Инструкция НКВД №328: машина сжатия","Закрытие печати и курсов","Разрушение Союза баптистов","Союз евангельских христиан","Молитвенные дома и подполье","Большой террор","Война как поворот","Почему 1944 стал возможен","Что осталось после ночи"],"levels":[2,2,2,2,2,2,2,2,2,2,2,2]},{"id":"vsehib-1944","mark":"07","title":"ВСЕХБ 1944: один союз под надзором","subtitle":"1944–1945 · ВСЕХиБ под надзором","href":"https://gospod-bog.ru/baptisty-rossii/vsehib-1944/","sections":["К началу 1944 года","Московское совещание","Новый союз и его границы","Государственный надзор","Наследие объединения"],"levels":[2,2,2,2,2]}]},{"id":"underground","mark":"IV","title":"Разлом совести и подпольная память","subtitle":"1960–1991 · Совет Церквей и самиздат","parts":[{"id":"iniciativnaya-gruppa","mark":"08","title":"Инициативная группа","subtitle":"1960–1966 · Путь к Совету Церквей","href":"https://gospod-bog.ru/baptisty-rossii/iniciativnaya-gruppa/","sections":["Разлом начала 1960-х","Инициативная группа","Совет Церквей","Узники и семьи","Совесть и церковная память"],"levels":[2,2,2,2,2]},{"id":"podpolnaya-pechat","mark":"09","title":"Подпольная печать","subtitle":"1966–1971 · Вестники и типографии","href":"https://gospod-bog.ru/baptisty-rossii/podpolnaya-pechat/","sections":["Почему потребовался самиздат","Издательство «Христианин»","Сеть подпольных типографий","Книги и журналы","Люди за страницами"],"levels":[2,2,2,2,2]}]}],"selected":"sovetskaya-noch","link":"https://gospod-bog.ru/baptisty-rossii/"},"cycle":{"title":"Джон Гилл (1697–1771)","subtitle":"Жизнь, труды и наследие","type":"Биографический цикл","items":[{"id":"context","mark":"—","title":"Исторический контекст","subtitle":"Форзац серии","href":"https://gospod-bog.ru/articles/dzhon-gill-istoricheskiy-kontekst/","sections":["От пуританского спора к миру диссента","Партикулярные и генеральные баптисты","1662 год и нонконформизм","Диссентерские академии","Саутварк и служение Гилла"],"levels":[2,2,2,2,2]},{"id":"part1","mark":"I","title":"Человек","subtitle":"Жизнь и пасторство","href":"https://gospod-bog.ru/articles/dzhon-gill-chast-1-chelovek/","sections":["Становление и призвание","Самообразование вне университета","Пасторское служение в Хорслидауне","Семья и личное исповедание","Проверь себя"],"levels":[2,3,2,3,2]},{"id":"part2","mark":"II","title":"Учёный","subtitle":"Языки и богословские труды","href":"https://gospod-bog.ru/articles/dzhon-gill-chast-2-uchenyi/","sections":["Раввинист — христианин с Мишной в руках","Песнь Песней: самый личный труд Гилла","Церковные установления","«Полный свод богословия»","Проверь себя"],"levels":[2,3,3,3,2]},{"id":"part4","mark":"III","title":"Экзегет","subtitle":"Толкование Священного Писания","href":"https://gospod-bog.ru/articles/dzhon-gill-chast-4-ekzeget/","sections":["Джон Гилл: экзегет за работой","Как Гилл читает трудные места","Библия и авторский замысел","Толкование и богословские связи"],"levels":[2,3,3,3]},{"id":"part3","mark":"IV","title":"Наследие","subtitle":"История влияния","href":"https://gospod-bog.ru/articles/dzhon-gill-chast-3-nasledie/","sections":["Историческое влияние и память","Сперджен — наследник и независимый критик","Ученики и духовные наследники","Как современники видели Гилла","Современный этап исследований"],"levels":[2,3,3,3,3]},{"id":"spravochnik","mark":"∎","title":"Справочник по Гиллу","subtitle":"Люди, термины, документы","href":"https://gospod-bog.ru/articles/dzhon-gill-spravochnik/","sections":["Люди и события","Хронология","Термины и понятия","Источники"],"levels":[2,2,2,2]}],"selected":"part2","link":"https://gospod-bog.ru/biografii/"},"article":{"title":"Оценка христоцентричной герменевтики","subtitle":"Абнер Чау · академическая статья","type":"Отдельная статья","items":[{"id":"herm","mark":"—","title":"Оценка христоцентричной герменевтики","subtitle":"Абнер Чау · герменевтика","href":"https://gospod-bog.ru/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/","sections":["Введение","Герменевтические определения","Объяснение христоцентричной герменевтики","Что такое христоцентричная герменевтика?","Как она достигает своих целей","Почему она стремится к такому толкованию","Оценка христоцентричной герменевтики","Последствия христоцентричной герменевтики","Заключение"],"levels":[2,2,2,3,3,3,2,2,2]}],"selected":"herm","link":"https://gospod-bog.ru/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/"}};
+const $ = id => document.getElementById(id);
+const escapeHTML = s => String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const reducedMotion=()=>matchMedia('(prefers-reduced-motion: reduce)').matches || prefs.motion || prefs.motionMode==='reduced';
+const allParts=(mode=state.mode)=> mode==='book' ? PUBLICATIONS.book.groups.flatMap(g=>g.parts):PUBLICATIONS[mode].items;
+const selected=()=>allParts().find(p=>p.id===state.part)||allParts()[0];
+const seriesGroup=id=>PUBLICATIONS.book.groups.find(g=>g.parts.some(p=>p.id===id));
+const selectionStore='gb:grok-focus-v16-demo';
+function safeRoute(mode,part,section=undefined,method='replaceState'){const token=[mode,part,...(section===undefined?[]:[String(section)])].join(':');try{history[method]({mode,part,section},'', '#'+encodeURIComponent(token));}catch{/* sandbox preview may disallow history mutations */}}
+const prefsStore='gb:grok-focus-v16-preferences';
+function readStore(key){try{return JSON.parse(localStorage.getItem(key)||'null')}catch{return null}}
+function writeStore(key, value){try{localStorage.setItem(key,JSON.stringify(value))}catch{}}
+const state={mode:'book',part:'sovetskaya-noch',tab:'parts',section:0,query:'',rail:false,openGroups:new Set(['soviet']),lastByMode:{book:'sovetskaya-noch',cycle:'part2',article:'herm'},lastSections:{},lastRead:null,expandedParts:new Set(['sovetskaya-noch','part2','herm']),closedSectionGroups:new Set(),saved:[],modeSwitching:false,navLockUntil:0};
+const prefs={theme:'light',measure:'normal',leading:'normal',font:100,motion:false,textMode:'rich',motionMode:'system'};
+let currentDrawer='',focusBeforeDrawer=null,noticeTimeout;
+function notify(message){const el=$('toast');clearTimeout(noticeTimeout);el.textContent=message;el.hidden=false;noticeTimeout=setTimeout(()=>el.hidden=true,2200)}
+function persist(){writeStore(selectionStore,{mode:state.mode,lastByMode:state.lastByMode,lastSections:state.lastSections,lastRead:state.lastRead,saved:state.saved,rail:state.rail});}
+function rememberRead(){state.lastRead={mode:state.mode,part:state.part,section:state.section};persist()}
+function setTheme(theme){prefs.theme=['light','sepia','night'].includes(theme)?theme:'light';if(prefs.theme!=='night')prefs.lastLightTheme=prefs.theme;document.body.classList.toggle('sepia',prefs.theme==='sepia');document.body.classList.toggle('night',prefs.theme==='night');document.documentElement.style.colorScheme=prefs.theme==='night'?'dark':'light';syncPrefs();}
+function syncVoiceSpeed(){const val=Number(prefs.voiceSpeed)||1;$('topSpeedBadge').textContent=String(val).replace('.',',')+'×';document.querySelectorAll('[data-voice-speed]').forEach(btn=>btn.setAttribute('aria-pressed',String(Number(btn.dataset.voiceSpeed)===val)));}
+function quickTheme(){setTheme(prefs.theme==='night'?(prefs.lastLightTheme==='sepia'?'sepia':'light'):'night')}
+function syncQuickTheme(){const button=$('topTheme');if(!button)return;const isNight=prefs.theme==='night';button.setAttribute('aria-pressed',String(isNight));button.setAttribute('aria-label',isNight?'Вернуться к дневной теме':'Включить ночную тему');button.title=isNight?'Вернуться к предыдущей светлой теме':'Быстро включить ночь';}
+
+function syncPrefs(){document.body.setAttribute('data-grok-text-mode',prefs.textMode||'rich');document.body.setAttribute('data-grok-measure',prefs.measure||'normal');document.body.classList.toggle('motion-reduced',prefs.motionMode==='reduced');document.documentElement.style.setProperty('--measure',({narrow:'580px',normal:'746px',wide:'850px'})[prefs.measure]||'746px');document.documentElement.style.setProperty('--readsize',(18*prefs.font/100)+'px');document.documentElement.style.setProperty('--lead',({compact:'1.56',normal:'1.85',relaxed:'2.12'})[prefs.leading]||'1.85');document.querySelectorAll('[data-pref]').forEach(g=>g.querySelectorAll('[data-value]').forEach(b=>b.setAttribute('aria-pressed',String(prefs[g.dataset.pref]===b.dataset.value))));$('fontValue').textContent=prefs.font+'%';syncQuickTheme();$('fontMinus').disabled=prefs.font<=80;$('fontPlus').disabled=prefs.font>=130;writeStore(prefsStore,prefs)}
+function positionAnchoredPanel(id,origin){
+ const panel=$(id), arrow=$('anchorPointer');
+ if(!panel||panel.hidden)return;
+ const fallback=id==='siteMenuPanel'?'sideMenu':id==='prefsPanel'?'sidePrefs':id==='audioPanel'?'topVoice':'sideLibrary';
+ const trigger=origin?.isConnected?origin:$(fallback);
+ if(!trigger||!trigger.getClientRects().length){closeDrawer(false);return;}
+ const t=trigger.getBoundingClientRect();
+ const vw=document.documentElement.clientWidth||innerWidth,vh=innerHeight;
+ const inset=vw<781?8:12,gap=11;
+ const preferredWidth=id==='prefsPanel'?338:id==='siteMenuPanel'?334:id==='audioPanel'?312:344;
+ const width=Math.max(0,Math.min(preferredWidth,vw-2*inset));
+ // Read intrinsic content height every time; a shorter viewport must never
+ // leave behind a stale scroll cap on reopening or resizing.
+ panel.style.maxHeight='none';
+ panel.style.width=Math.round(width)+'px';
+ const preferredHeight=id==='prefsPanel'?540:id==='siteMenuPanel'?520:id==='audioPanel'?285:500;
+ const natural=Math.min(preferredHeight,panel.scrollHeight,vh-2*inset);
+ const upSpace=Math.max(0,t.top-gap-inset),downSpace=Math.max(0,vh-t.bottom-gap-inset);
+ const above=upSpace>=Math.min(natural,220)||upSpace>downSpace;
+ const available=Math.max(0,above?upSpace:downSpace);
+ const canAnchor=available>=Math.min(natural,90);
+ const height=canAnchor?Math.max(1,Math.min(natural,available)):Math.max(1,vh-2*inset);
+ const left=Math.max(inset,Math.min(t.left-22,vw-width-inset));
+ const rawTop=canAnchor?(above?t.top-gap-height:t.bottom+gap):inset;
+ const top=Math.max(inset,Math.min(rawTop,vh-height-inset));
+ panel.style.left=Math.round(left)+'px';panel.style.top=Math.round(top)+'px';
+ panel.style.right='auto';panel.style.maxHeight=Math.floor(height)+'px';
+ panel.style.setProperty('--popover-left',Math.round(left)+'px');
+ panel.style.setProperty('--popover-top',Math.round(top)+'px');
+ const pointerX=Math.max(left+20,Math.min(t.left+t.width/2,left+width-20));
+ panel.style.setProperty('--pop-origin',Math.round(pointerX-left)+'px');
+ panel.style.setProperty('--pop-origin-y',above?'bottom':'top');
+ panel.classList.toggle('pop-below',!above);
+ panel.dataset.placement=canAnchor?(above?'above':'below'):'constrained';
+ panel.dataset.triggerId=trigger.id;
+ if(!canAnchor){arrow.hidden=true;arrow.style.display='none';return;}
+ arrow.hidden=false;arrow.dataset.placement=above?'above':'below';
+ arrow.style.left=Math.round(pointerX-6)+'px';
+ arrow.style.top=Math.round(above?top+height-6:top-6)+'px';
+ arrow.style.display='block';
+}
+
+function syncDrawerTriggers(){
+ // Only the button that opened the popover is expanded; the same component
+ // might have other triggers in the header, main rail or compact rail.
+ document.querySelectorAll('[data-popover-trigger]').forEach(b=>{
+   b.setAttribute('aria-expanded',String(currentDrawer===b.dataset.popoverTrigger&&focusBeforeDrawer===b));
+ });
+}
+
+function openDrawer(id,origin){
+ state.navLockUntil=Date.now()+500;
+ if(currentDrawer===id){
+  if(focusBeforeDrawer===origin){closeDrawer();return;}
+  focusBeforeDrawer=origin||focusBeforeDrawer;
+  positionAnchoredPanel(id,focusBeforeDrawer);syncDrawerTriggers();
+  return;
+ }
+ closeDrawer(false);currentDrawer=id;focusBeforeDrawer=origin||null;
+ $(id).hidden=false;
+ if(id==='libraryPanel')syncLibrary();
+ positionAnchoredPanel(id,origin);
+ syncDrawerTriggers();
+ const first=$(id).querySelector('.close-btn');first?.focus({preventScroll:true});
+}
+function closeDrawer(focus=true){
+ if(!currentDrawer)return;state.navLockUntil=Date.now()+500;
+ $(currentDrawer).hidden=true;$(currentDrawer).classList.remove('pop-below');$('anchorPointer').hidden=true;$('anchorPointer').style.display='none';currentDrawer='';syncDrawerTriggers();
+ if(focus&&focusBeforeDrawer?.isConnected&&focusBeforeDrawer.getClientRects().length)focusBeforeDrawer.focus({preventScroll:true});
+ focusBeforeDrawer=null;
+}
+
+function allIds(){return allParts().map(p=>p.id)}
+function partIndex(){return Math.max(0,allIds().indexOf(state.part))}
+function highlight(label,search){if(!search)return escapeHTML(label);const pos=label.toLocaleLowerCase('ru').indexOf(search.toLocaleLowerCase('ru'));return pos===-1?escapeHTML(label):escapeHTML(label.slice(0,pos))+'<mark>'+escapeHTML(label.slice(pos,pos+search.length))+'</mark>'+escapeHTML(label.slice(pos+search.length))}
+function updateTop(){document.body.setAttribute('data-series-theme',state.mode==='book'?'samizdat':state.mode==='cycle'?'gill':'hermeneutics');document.querySelectorAll('[data-mode]').forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.mode===state.mode)));$('sideType').textContent=PUBLICATIONS[state.mode].type+' · V24';$('sideTitle').textContent=PUBLICATIONS[state.mode].title;$('sideSubtitle').textContent=PUBLICATIONS[state.mode].subtitle;$('tabParts').textContent=state.mode==='book'?'Главы и статьи':state.mode==='cycle'?'Части серии':'Статья';$('tabParts').hidden=state.mode==='article';$('sideTabs').classList.toggle('single',state.mode==='article');$('goParts').hidden=state.mode==='article';$('bottomNavigation').hidden=state.mode==='article';$('tabParts').setAttribute('aria-pressed',String(state.tab==='parts'));$('tabOutline').setAttribute('aria-pressed',String(state.tab==='outline'));$('progressLabel').textContent=state.mode==='book'?'Позиция в книге':state.mode==='cycle'?'Позиция в цикле':'Позиция в статье';}
+function updateReading(){const part=selected();const idx=partIndex();const count=allParts().length;const config=PUBLICATIONS[state.mode];const group=state.mode==='book'?seriesGroup(part.id):null;
+ $('breadcrumbParent').textContent=state.mode==='article'?'Все статьи':config.title;$('breadcrumbParent').setAttribute('href',state.mode==='article'?'https://gospod-bog.ru/articles/':config.link);$('breadcrumbTitle').textContent=part.title;$('paperTag').textContent=state.mode==='book'?`КНИГА · СТАТЬЯ ${idx+1} ИЗ ${count}`:state.mode==='cycle'?`ЦИКЛ · МАТЕРИАЛ ${idx+1} ИЗ ${count}`:'ГЕРМЕНЕВТИКА · СТАТЬЯ';$('paperTitle').textContent=part.title;$('paperDeck').textContent=part.subtitle;$('paperMeta').textContent=state.mode==='article'?'Абнер Чау · академическая статья':config.title;
+ $('seriesContext').hidden=state.mode==='article';$('contextTag').textContent=group?`ГЛАВА ${group.mark} ИЗ IV`:state.mode==='cycle'?'ПОСЛЕДОВАТЕЛЬНЫЙ ЦИКЛ':'';$('contextTitle').textContent=group?group.title:config.title;$('contextSub').textContent=group?group.subtitle:config.subtitle;
+ $('progressText').textContent=state.mode==='article'?(state.section+1)+' / '+part.sections.length:(idx+1)+' / '+count;const pct=state.mode==='article'?(state.section+1)/part.sections.length:(idx+1)/count;$('progressFill').style.width=(pct*100)+'%';$('railFill').style.height=(pct*100)+'%';$('railCurrent').textContent=group?group.mark:part.mark;
+ const prev=allParts()[idx-1],next=allParts()[idx+1];$('prevPart').disabled=!prev;$('nextPart').disabled=!next;$('prevName').textContent=prev?.title||'';$('nextName').textContent=next?.title||'';
+ const content=part.sections.map((title,i)=>`<section id="chapter-${i}" class="reader-section" tabindex="-1"><span class="folio">${state.mode==='book'?'ГЛАВА '+(group?.mark||'')+' · РАЗДЕЛ '+String(i+1).padStart(2,'0'):'РАЗДЕЛ '+String(i+1).padStart(2,'0')}</span><h${Math.max(2,Math.min(6,Number(part.levels?.[i])||2))}>${escapeHTML(title)}</h${Math.max(2,Math.min(6,Number(part.levels?.[i])||2))}><p>${escapeHTML(textParagraph(i,part))}</p><p>${escapeHTML(textParagraph(i+1,part,true))}</p></section>`).join('');$('sections').innerHTML=content;syncLibrary();}
+function textParagraph(i,part,secondary=false){const data=state.mode==='article'?["Герменевтическое исследование требует различать значение, которое передаёт сам текст, и его богословское применение. Язык, литературный жанр и исторический контекст помогают проверить сделанное толкование.", "Читатель видит структуру аргументации и может перейти к нужному подразделу непосредственно. Боковая навигация остаётся рядом с текстом, но не перекрывает его отдельным экраном.", "Вопрос о связи Писания со Христом требует точности терминов, проверки аргументов и внимания к авторскому замыслу. Прототип показывает удобство перехода между этапами рассуждения.", "Типографика и расстояния между разделами работают на последовательность чтения. Подчёркивание внутри оглавления не нужно, если активность обозначена точной геометрией и контрастом."]:state.mode==='cycle'?["Биографический цикл помогает сопоставить жизнь, богословие и исследовательские труды Джона Гилла. Разделение на части позволяет сохранить характер каждой публикации, не теряя целого.", "Исторические документы, свидетели и богословские источники требуют тщательной сверки. Навигация по циклу показывает, где находится текущая часть и куда читатель может перейти далее.", "Длинный цикл нуждается в спокойной системе ориентиров: номер части, заголовок, видимая позиция, список подразделов и последовательный переход к следующему материалу.", "В этом макете все абзацы приведены только для проверки дизайнерского решения. Фактический текст соответствующей публикации находится на исходном сайте."]:[
+ 'Перед нами исторический материал, в котором важно различать свидетельство источника, позднейшую интерпретацию и проверяемые факты. Название раздела и место в серии помогают читателю увидеть логику исследования.',
+ 'Навигация по серии должна показывать одновременно место текущей статьи в книге и структуру внутри самой статьи. При переходе между частями текст меняется без перекрывающих диалогов.',
+ 'В ридере первичен сам текст: спокойная типографика, предсказуемые поля, умеренный контраст и понятное положение в большой работе. Активные отметки в боковой панели помогают не терять контекст.',
+ 'Сворачивание дерева не должно изменять текущую позицию или сбрасывать настройки чтения. Для длинных названий высота активной полосы рассчитывается по высоте всей строки.',
+ 'Переход к разделу приводит точно к заголовку. Вложенные элементы можно просматривать отдельно от глав книги, чтобы навигация не превращалась в перегруженный многоуровневый список.' ];
+ return data[(i+(secondary?2:0))%data.length] + (secondary?' Здесь приведён демонстрационный абзац, а не подменённый текст оригинала.':'');}
+function sectionNodes(p){
+ // H2..H6 form one ordered hierarchy. Do not invent or renumber headings.
+ const roots=[],stack=[];
+ p.sections.forEach((title,index)=>{
+   const level=Math.max(2,Math.min(6,Number(p.levels?.[index])||2));
+   const node={title,index,level,children:[]};
+   while(stack.length&&stack[stack.length-1].level>=level)stack.pop();
+   const parent=stack[stack.length-1];
+   if(parent)parent.children.push(node);else roots.push(node);
+   stack.push(node);
+ });
+ return roots;
+}
+function findPathToSection(nodes,index,ancestors=[]){
+ for(const node of nodes){
+   const path=[...ancestors,node];
+   if(node.index===index)return path;
+   const nested=findPathToSection(node.children,index,path);
+   if(nested)return nested;
+ }
+ return null;
+}
+function sectionBranch(p,node){
+ const id=`${state.mode}:${p.id}:${node.index}`;
+ const hasKids=node.children.length>0;
+ const folded=state.closedSectionGroups.has(id);
+ const active=state.section===node.index;
+ const within=!!findPathToSection(node.children,state.section);
+ const depth=Math.max(2,Math.min(6,node.level));
+ const cls=`outline-item is-h${depth} ${active?'selected':''} ${within?'has-active-child':''} ${hasKids?'has-kids':''}`;
+ const toggle=hasKids?`<button type="button" class="heading-expander" data-heading-toggle="${escapeHTML(id)}" aria-label="${folded?'Раскрыть':'Свернуть'} подразделы: ${escapeHTML(node.title)}" aria-expanded="${!folded}" aria-controls="headings-${escapeHTML(id)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>`:'';
+ return `<div class="outline-branch"><div class="outline-titlebar ${cls}"><a href="#chapter-${node.index}" data-section="${node.index}" ${active?'aria-current="location"':''}>${escapeHTML(node.title)}</a>${toggle}</div>${hasKids?`<div class="heading-children" id="headings-${escapeHTML(id)}" ${folded?'hidden':''}>${node.children.map(child=>sectionBranch(p,child)).join('')}</div>`:''}</div>`;
+}
+function renderSectionTree(p,open=true){
+ if(p.id!==state.part)return '';
+ return `<div class="part-sections" id="section-list-${escapeHTML(p.id)}" ${open?'':'hidden'}><div class="outline-list">${sectionNodes(p).map(node=>sectionBranch(p,node)).join('')}</div></div>`;
+}
+function renderPartTree(p){
+  const active=p.id===state.part,expanded=active&&state.expandedParts.has(p.id);
+  // Only a visual witness. Production MUST reuse GillLeatherRibbon and GillLeatherDefs.
+  const leather=state.mode==='cycle'&&(p.id==='context'||p.id==='spravochnik');
+  const mark=leather?`<span class="grok-ribbon ${p.id==='spravochnik'?'grok-ribbon--reference':''}" aria-hidden="true"><span class="grok-ribbon__orn">${p.id==='context'?'✣':'▤'}</span><span class="grok-ribbon__word">${p.id==='context'?'ВВЕДЕНИЕ':'СПРАВОЧНИК'}</span></span>`:`<span class="part-num">${escapeHTML(p.mark)}</span>`;
+  return `<div class="part-with-sections"><div class="part-titlebar"><div class="part-row ${leather?'is-endpaper':''} ${active?'selected':''}"><a href="#${escapeHTML(p.id)}" data-part="${escapeHTML(p.id)}" ${active?'aria-current="page"':''}>${mark}<span class="part-label">${escapeHTML(p.title)}${state.mode==='cycle'?`<span class="part-meta">${escapeHTML(p.subtitle)}</span>`:''}</span></a></div>${active?`<button type="button" class="part-expander" data-subtree-toggle="${escapeHTML(p.id)}" aria-label="${expanded?'Свернуть':'Развернуть'} разделы статьи" aria-expanded="${expanded}" aria-controls="section-list-${escapeHTML(p.id)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>`:''}</div>${renderSectionTree(p,expanded)}</div>`;
+}
+function animateBranch(panel,open){
+ if(!panel)return;
+ // V23: reverse from the currently rendered height without stale finish callbacks.
+ // A closing branch is removed from AT and keyboard navigation immediately,
+ // even though its visual collapse still has remaining animation frames.
+ const start=panel.hidden?0:panel.getBoundingClientRect().height;
+ for(const animation of panel.getAnimations()){
+   animation.onfinish=null;
+   animation.oncancel=null;
+   animation.cancel();
+ }
+ panel.hidden=false;
+ // On closing, return focus from an about-to-be inert descendant to the
+ // exact disclosure control. This must precede the inert/aria-hidden flip.
+ if(!open&&panel.contains(document.activeElement)){
+   const opener=[...document.querySelectorAll('[aria-controls]')]
+     .find(control=>control.getAttribute('aria-controls')===panel.id);
+   opener?.focus({preventScroll:true});
+ }
+ panel.inert=!open;
+ panel.setAttribute('aria-hidden',String(!open));
+ const natural=panel.scrollHeight;
+ const end=open?natural:0;
+ const finish=()=>{
+   panel.style.overflow='';
+   panel.hidden=!open;
+   panel.inert=!open;
+   panel.setAttribute('aria-hidden',String(!open));
+   scheduleFineGuides();
+ };
+ if(reducedMotion()||typeof panel.animate!=='function'||natural<2||Math.abs(start-end)<.5){
+   finish();
+   return;
+ }
+ panel.style.overflow='hidden';
+ const duration=open?315:225;
+ const frames=[{height:Math.min(start,natural)+'px',opacity:open?.76:1},{height:end+'px',opacity:open?1:.76}];
+ const animation=panel.animate(frames,{duration,easing:'cubic-bezier(.22,.8,.2,1)',fill:'both'});
+ animation.onfinish=()=>{animation.oncancel=null;finish();animation.cancel();};
+ animation.oncancel=()=>{panel.style.overflow='';};
+}
+let guideFrame=0;
+function scheduleFineGuides(){
+ if(guideFrame)cancelAnimationFrame(guideFrame);
+ guideFrame=requestAnimationFrame(()=>{guideFrame=0;layoutFineGuides();});
+}
+function layoutFineGuides(){
+ const nav=$('navTree');if(!nav)return;
+ nav.querySelectorAll('.outline-connector').forEach(line=>line.remove());
+ for(const list of nav.querySelectorAll('.outline-list')){
+  if(list.closest('.heading-children'))continue; // Deep nested levels remain clean.
+  const branches=[...list.children].filter(e=>e.classList.contains('outline-branch'));
+  for(let i=0;i<branches.length-1;i++){
+   const current=branches[i],next=branches[i+1];
+   // A row with a subtree or a subtree after it must NOT grow a long spine.
+   if(current.querySelector(':scope > .heading-children')||next.querySelector(':scope > .heading-children'))continue;
+   const a=current.querySelector(':scope > .outline-titlebar.is-h2');
+   const b=next.querySelector(':scope > .outline-titlebar.is-h2');
+   if(!a||!b)continue;
+   const ar=a.getBoundingClientRect(),br=b.getBoundingClientRect(),cr=current.getBoundingClientRect();
+   if(!ar.width||!br.width)continue;
+   const start=ar.top+ar.height/2+4.5,end=br.top+br.height/2-4.5;
+   if(end-start<6)continue;
+   const line=document.createElement('span');line.className='outline-connector';
+   line.setAttribute('aria-hidden','true');
+   line.style.left=(ar.left+4-cr.left)+'px';
+   line.style.top=(start-cr.top)+'px';
+   line.style.height=(end-start)+'px';
+   current.appendChild(line);
+  }
+ }
+}
+function updateNav(){
+  const nav=$('nav'),savedTop=nav.scrollTop;
+  let html='';
+  if(state.mode==='book'){
+    PUBLICATIONS.book.groups.forEach(g=>{
+      const opened=state.openGroups.has(g.id), family=g.parts.some(p=>p.id===state.part);
+      html+=`<div class="series-group"><div class="chapter-head ${family?'is-family':''}"><button type="button" data-group="${g.id}" aria-expanded="${opened}" aria-controls="group-${g.id}"><span class="chapter-number">${g.mark}</span><span class="chapter-copy"><strong>${escapeHTML(g.title)}</strong><small>${escapeHTML(g.subtitle)}</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button></div><div class="part-wrap" id="group-${g.id}" ${opened?'':'hidden'}>${g.parts.map(renderPartTree).join('')}</div></div>`;
+    });
+    html+=`<div class="endpaper-row"><a href="https://gospod-bog.ru/baptisty-rossii/spravochnik/" target="_blank" rel="noopener noreferrer"><span class="endpaper-icon">§</span><span><strong>Справочник книги</strong><small>Люди, даты и документы ↗</small></span></a></div>`;
+  }else if(state.mode==='cycle'){
+    html='<div class="plain-parts">'+allParts().map(renderPartTree).join('')+'</div>';
+  }else{
+    html='<div class="article-only-sections"><div class="outline-list">'+sectionNodes(selected()).map(node=>sectionBranch(selected(),node)).join('')+'</div></div>';
+  }
+  $('navTree').innerHTML=html;
+  nav.scrollTop=savedTop;
+  scheduleFineGuides();
+  $('matchCount').textContent=state.mode==='book'?'4 главы · 9 статей':state.mode==='cycle'?`${allParts().length} материалов`:`${selected().sections.length} разделов`;
+  $('localSearchLabel').textContent=state.mode==='book'?'Искать в этой книге':state.mode==='cycle'?'Искать в этом цикле':'Искать в этой статье';$('openScopedSearch').setAttribute('aria-label',$('localSearchLabel').textContent+', клавиша /');$('openSiteSearch').setAttribute('aria-label','Поиск по всему сайту, Ctrl+K');
+  $('clearSearch').hidden=true;
+
+}
+function updateOutlineCurrent(){
+ const tree=$('navTree');
+ const p=selected();const path=findPathToSection(sectionNodes(p),state.section)||[];
+ const ancestors=new Set(path.slice(0,-1).map(n=>n.index));
+ tree.querySelectorAll('.outline-titlebar').forEach(row=>{
+   const a=row.querySelector(':scope > a[data-section]');
+   if(!a)return;
+   const i=Number(a.dataset.section),current=i===state.section;
+   row.classList.toggle('selected',current);
+   row.classList.toggle('has-active-child',ancestors.has(i));
+   if(current)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');
+ });
+}
+function chooseTab(tab){state.tab=tab;state.query='';$('navSearch').value='';updateTop();$('nav').scrollTop=0;updateNav();syncProgress();}
+function switchMode(mode){if(!PUBLICATIONS[mode])return;if($('searchDialog').open)$('searchDialog').close();state.mode=mode;state.part=allParts(mode).some(p=>p.id===state.lastByMode[mode])?state.lastByMode[mode]:PUBLICATIONS[mode].selected;state.expandedParts.add(state.part);state.section=Math.max(0,Math.min(state.lastSections[mode+':'+state.part]||0,selected().sections.length-1));state.tab='parts';state.query='';$('navSearch').value='';closeDrawer(false);if(mode==='book')state.openGroups.add(seriesGroup(state.part)?.id||'soviet');render();try{history.replaceState(null,'',location.pathname+location.search)}catch{}window.scrollTo({top:0,behavior:'instant'});persist()}
+function choosePart(id,push=true,markRead=true){if(!allIds().includes(id))return;if($('searchDialog').open)$('searchDialog').close();state.part=id;state.lastByMode[state.mode]=id;state.expandedParts.add(id);state.section=0;state.query='';$('navSearch').value='';if(state.mode==='book')state.openGroups.add(seriesGroup(id)?.id||'soviet');updateReading();updateNav();syncProgress();window.scrollTo({top:0,behavior:'instant'});if(push)safeRoute(state.mode,id,undefined,'pushState');if(markRead)rememberRead();else persist()}
+function chooseSection(idx){if(idx<0||idx>=selected().sections.length)return;state.query='';$('navSearch').value='';state.navLockUntil=Date.now()+(reducedMotion()?80:1000);state.section=idx;state.lastSections[state.mode+':'+state.part]=idx;rememberRead();const path=findPathToSection(sectionNodes(selected()),idx)||[];let reopened=false;for(const ancestor of path.slice(0,-1)){const id=`${state.mode}:${state.part}:${ancestor.index}`;if(state.closedSectionGroups.delete(id))reopened=true}if(reopened)updateNav();else updateOutlineCurrent();syncProgress();const el=$('chapter-'+idx);el?.scrollIntoView({behavior:reducedMotion()?'auto':'smooth',block:'start'});safeRoute(state.mode,state.part,idx,'pushState');}
+function syncProgress(){const count=allParts().length,idx=partIndex(),number=state.section+1,sections=selected().sections.length;const progress=state.mode==='article'?number/Math.max(1,sections):(idx+number/Math.max(1,sections))/Math.max(1,count);$('progressLabel').textContent=state.mode==='book'?'Книга · текущая позиция':state.mode==='cycle'?'Цикл · текущая позиция':'Статья · текущая позиция';$('progressText').textContent=state.mode==='article'?`${number} / ${sections}`:`${idx+1}/${count} · § ${number}/${sections}`;$('progressFill').style.width=(progress*100).toFixed(1)+'%';$('railFill').style.height=(progress*100).toFixed(1)+'%';}
+function scrollSpy(){if(currentDrawer||Date.now()<state.navLockUntil)return;const els=[...document.querySelectorAll('.reader-section')];if(!els.length)return;let index=0;const threshold=Math.min(210,innerHeight*.35);for(let i=0;i<els.length;i++){if(els[i].getBoundingClientRect().top<=threshold)index=i;else break;}if(index!==state.section){state.section=index;state.lastSections[state.mode+':'+state.part]=index;rememberRead();updateOutlineCurrent();syncProgress();}}
+window.addEventListener('resize',scheduleFineGuides,{passive:true});
+if(typeof ResizeObserver!=='undefined'){const fineGuideResize=new ResizeObserver(()=>scheduleFineGuides());const target=document.getElementById('nav');if(target)fineGuideResize.observe(target);}
+function syncLibrary(){const part=selected();$('libraryTitle').textContent=part.title;const included=state.saved.includes(state.mode+':'+part.id);const quick=$('topSave');if(quick){quick.setAttribute('aria-pressed',String(included));quick.setAttribute('aria-label',included?'Убрать статью из библиотеки':'Добавить статью в библиотеку');quick.title=included?'Сохранено · убрать из библиотеки':'Сохранить статью';}$('librarySubtitle').textContent=included?'Сохранено локально':'Материал не сохранён';$('librarySave').textContent=included?'Убрать из библиотеки':'Сохранить текущую статью';$('librarySave').setAttribute('aria-pressed',String(included));const lr=state.lastRead;const canResume=lr&&PUBLICATIONS[lr.mode]&&allParts(lr.mode).some(p=>p.id===lr.part);$('libraryContinue').disabled=!canResume;$('libraryContinue').textContent=canResume?'Продолжить с последнего места':'Нет сохранённой позиции';const list=state.saved.map(key=>{const sep=key.indexOf(':');const mode=key.slice(0,sep),id=key.slice(sep+1);const p=PUBLICATIONS[mode]&&allParts(mode).find(x=>x.id===id);if(!p)return '';return `<button type="button" data-open-save="${escapeHTML(key)}"><span aria-hidden="true">▣</span><span><strong>${escapeHTML(p.title)}</strong><small>${escapeHTML(PUBLICATIONS[mode].title)}</small></span></button>`}).filter(Boolean);$('savedEntries').innerHTML='<h3>Сохранённые материалы · '+list.length+'</h3>'+(list.length?list.join(''):'<p class="empty-saves">Пока нет сохранённых материалов</p>');}
+function toggleSaved(){const key=state.mode+':'+state.part;const isSaved=state.saved.includes(key);state.saved=isSaved?state.saved.filter(x=>x!==key):[...state.saved,key];persist();syncLibrary();if(currentDrawer==='libraryPanel')positionAnchoredPanel('libraryPanel',focusBeforeDrawer);notify(isSaved?'Убрано из библиотеки прототипа':'Сохранено в библиотеке прототипа')}
+function syncRailA11y(){
+ const compact=state.rail&&matchMedia('(min-width:781px)').matches;
+ const full=document.querySelector('.side-main'),thin=document.querySelector('.rail');
+ if(full){full.inert=compact;full.setAttribute('aria-hidden',String(compact));}
+ if(thin){thin.inert=!compact;thin.setAttribute('aria-hidden',String(!compact));}
+ $('collapse').setAttribute('aria-expanded',String(!compact));
+ $('railExpand').setAttribute('aria-expanded',String(!compact));
+}
+let railAnchorEpoch=0;
+let railAnchorCleanup=()=>{};
+function pinReaderDuringRailTransition(){
+  // Prototype-only bounded compensation. In the real project this belongs to
+  // the existing reader scroll owner; never install another scrollspy.
+  railAnchorCleanup();
+  const epoch=++railAnchorEpoch;
+  if(scrollY<65)return;
+  const visible=[...document.querySelectorAll('.reader-section h2,.reader-section h3,.reader-section h4')]
+    .filter(h=>{const y=h.getBoundingClientRect().top;return y>=86&&y<innerHeight-90});
+  // Nearest visual reading anchor, not the first visible heading: the
+  // latter can change when a preceding heading crosses the 86px threshold.
+  const referenceY=Math.min(420,Math.max(240,innerHeight*.42));
+  const anchor=visible.sort((a,b)=>Math.abs(a.getBoundingClientRect().top-referenceY)-Math.abs(b.getBoundingClientRect().top-referenceY))[0];
+  if(!anchor)return;
+  const originalTop=anchor.getBoundingClientRect().top;
+  const duration=reducedMotion()?340:760;
+  const started=performance.now();
+  state.navLockUntil=Date.now()+duration+80;
+  let stopped=false,frame=0;
+  const stop=()=>{
+    if(stopped)return;
+    stopped=true;
+    if(frame)cancelAnimationFrame(frame);    window.removeEventListener('wheel',stop);
+    window.removeEventListener('touchstart',stop);
+    if(railAnchorCleanup===stop)railAnchorCleanup=()=>{};
+  };
+  railAnchorCleanup=stop;
+  window.addEventListener('wheel',stop,{passive:true,once:true});
+  window.addEventListener('touchstart',stop,{passive:true,once:true});
+  const compensate=(now)=>{
+    if(stopped||railAnchorEpoch!==epoch)return;
+    const delta=anchor.getBoundingClientRect().top-originalTop;
+    if(Math.abs(delta)>.5)window.scrollBy({top:delta,behavior:'instant'});
+    if(now-started<duration)frame=requestAnimationFrame(compensate);
+    else stop();
+  };
+  frame=requestAnimationFrame(compensate);
+}
+function toggleRail(force){
+  if(matchMedia('(max-width:780px)').matches)return;
+  if(currentDrawer)closeDrawer(false);
+  pinReaderDuringRailTransition();
+  state.rail=typeof force==='boolean'?force:!state.rail;
+  $('shell').classList.toggle('rail-mode',state.rail);
+  syncRailA11y();persist();
+  if(state.rail)$('railExpand').focus({preventScroll:true});
+  else $('collapse').focus({preventScroll:true});
+}
+function render(){updateTop();updateReading();updateNav();syncProgress();syncLibrary();}
+function copyLink(){const part=selected();const link=part.href;const fallback=()=>{const ta=document.createElement('textarea');ta.value=link;ta.style.cssText='position:fixed;left:-99999px';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch{}ta.remove();return ok};if(navigator.clipboard?.writeText){navigator.clipboard.writeText(link).then(()=>notify('Ссылка на оригинал скопирована')).catch(()=>notify(fallback()?'Ссылка скопирована':'Ссылка на оригинал: '+link));}else notify(fallback()?'Ссылка скопирована':'Ссылка на оригинал: '+link)}
+function init(){const savedPrefs=readStore(prefsStore);if(savedPrefs&&typeof savedPrefs==='object'){Object.assign(prefs,savedPrefs)}setTheme(prefs.theme);const retained=readStore(selectionStore);if(retained){state.lastByMode={...state.lastByMode,...retained.lastByMode};state.saved=Array.isArray(retained.saved)?retained.saved:[];state.rail=Boolean(retained.rail);state.lastSections=retained.lastSections&&typeof retained.lastSections==='object'?retained.lastSections:{};state.lastRead=retained.lastRead&&PUBLICATIONS[retained.lastRead.mode]&&allParts(retained.lastRead.mode).some(p=>p.id===retained.lastRead.part)?retained.lastRead:null}
+ const hash=decodeURIComponent(location.hash.slice(1));const match=hash.match(/^(book|cycle|article):([a-z0-9-]+)(?::(\d+))?$/);if(match&&allParts(match[1]).some(p=>p.id===match[2])){state.mode=match[1];state.part=match[2];state.section=Math.max(0,Math.min(Number(match[3])||0,allParts(match[1]).find(p=>p.id===match[2]).sections.length-1))}else{state.mode=retained?.mode in PUBLICATIONS?retained.mode:'book';state.part=state.lastByMode[state.mode]||PUBLICATIONS[state.mode].selected; if(!allParts().some(p=>p.id===state.part))state.part=PUBLICATIONS[state.mode].selected;state.section=Math.max(0,Math.min(state.lastSections[state.mode+':'+state.part]||0, selected().sections.length-1))}
+ state.tab='parts';syncVoiceSpeed();if(state.mode==='book')state.openGroups=new Set([seriesGroup(state.part)?.id||'soviet']);state.expandedParts.add(state.part);state.navLockUntil=Date.now()+1300;render();if(state.rail&&!matchMedia('(max-width:780px)').matches)$('shell').classList.add('rail-mode');syncRailA11y();window.addEventListener('resize',syncRailA11y,{passive:true});const firstSection=state.section;if(firstSection>0){requestAnimationFrame(()=>requestAnimationFrame(()=>{const anchor=$('chapter-'+firstSection);anchor?.scrollIntoView({behavior:'instant',block:'start'});state.navLockUntil=Date.now()+350}))}else state.navLockUntil=Date.now()+100;
+ document.querySelectorAll('[data-mode]').forEach(btn=>btn.addEventListener('click',()=>switchMode(btn.dataset.mode)));
+ $('tabParts').addEventListener('click',()=>chooseTab('parts'));$('tabOutline').addEventListener('click',()=>chooseTab('outline'));
+ $('navTree').addEventListener('click',e=>{
+   const group=e.target.closest('[data-group]');if(group){const id=group.dataset.group;const open=!state.openGroups.has(id);open?state.openGroups.add(id):state.openGroups.delete(id);group.setAttribute('aria-expanded',String(open));animateBranch($('group-'+id),open);persist();return}
+   const sub=e.target.closest('[data-subtree-toggle]');if(sub){const id=sub.dataset.subtreeToggle;const open=!state.expandedParts.has(id);open?state.expandedParts.add(id):state.expandedParts.delete(id);sub.setAttribute('aria-expanded',String(open));sub.setAttribute('aria-label',(open?'Свернуть':'Развернуть')+' разделы статьи');animateBranch($('section-list-'+id),open);persist();return}
+   const head=e.target.closest('[data-heading-toggle]');if(head){const id=head.dataset.headingToggle;const open=state.closedSectionGroups.has(id);open?state.closedSectionGroups.delete(id):state.closedSectionGroups.add(id);head.setAttribute('aria-expanded',String(open));head.setAttribute('aria-label',(open?'Свернуть':'Раскрыть')+' подразделы');animateBranch($('headings-'+id),open);persist();return}
+   const part=e.target.closest('[data-part]');if(part){e.preventDefault();state.expandedParts.add(part.dataset.part);choosePart(part.dataset.part);return}
+   const section=e.target.closest('[data-section]');if(section){e.preventDefault();chooseSection(Number(section.dataset.section));return}
+ });
+ $('navTree').addEventListener('keydown',e=>{if(!['ArrowUp','ArrowDown','Home','End'].includes(e.key))return;const focusables=[...$('navTree').querySelectorAll('a,[data-group],[data-subtree-toggle],[data-heading-toggle]')].filter(n=>n.getClientRects().length&&!n.closest('[inert],[hidden],[aria-hidden=\"true\"]'));const at=focusables.indexOf(e.target);if(at===-1)return;const to=e.key==='Home'?0:e.key==='End'?focusables.length-1:Math.min(focusables.length-1,Math.max(0,at+(e.key==='ArrowUp'?-1:1)));e.preventDefault();focusables[to].focus({preventScroll:true});const r=focusables[to].getBoundingClientRect(),c=$('nav').getBoundingClientRect();if(r.bottom>c.bottom)$('nav').scrollTop+=r.bottom-c.bottom+6;else if(r.top<c.top)$('nav').scrollTop+=r.top-c.top-6;});
+ $('navSearch').addEventListener('input',e=>{state.query=e.target.value;updateNav()});$('navSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){const term=state.query.trim().toLocaleLowerCase('ru');const matches=[...$('navTree').querySelectorAll('[data-part],[data-section]')];const first=term?matches.find(node=>node.textContent.toLocaleLowerCase('ru').includes(term)):null;if(first){e.preventDefault();first.click()}}});$('clearSearch').addEventListener('click',()=>{state.query='';$('navSearch').value='';updateNav();$('navSearch').focus()});
+ $('collapse').addEventListener('click',()=>toggleRail(true));$('railExpand').addEventListener('click',()=>toggleRail(false));$('railSearch').addEventListener('click',()=>{openUnifiedSearch(state.mode==='article'?'article':'series',$('railSearch'))});
+ $('goOutline').addEventListener('click',()=>{if(state.rail)toggleRail(false);chooseTab('outline');$('nav').scrollTop=0});$('goParts').addEventListener('click',()=>{if(state.rail)toggleRail(false);chooseTab('parts');$('nav').scrollTop=0});$('contextParts').addEventListener('click',()=>{if(state.rail)toggleRail(false);chooseTab('parts')});
+ $('prevPart').addEventListener('click',()=>{const id=allIds()[partIndex()-1];if(id)choosePart(id)});$('nextPart').addEventListener('click',()=>{const id=allIds()[partIndex()+1];if(id)choosePart(id)});
+ $('openLive').addEventListener('click',()=>window.open(selected().href,'_blank','noopener,noreferrer'));
+ ['sideLibrary','railLibrary'].forEach(id=>$(id).addEventListener('click',()=>openDrawer('libraryPanel',$(id))));['sidePrefs','railPrefs'].forEach(id=>$(id).addEventListener('click',()=>openDrawer('prefsPanel',$(id))));['sideShare'].forEach(id=>$(id).addEventListener('click',copyLink));$('sidePrint').addEventListener('click',()=>window.print());$('sideMenu').addEventListener('click',()=>openDrawer('siteMenuPanel',$('sideMenu')));$('topSave').addEventListener('click',toggleSaved);$('topTheme').addEventListener('click',quickTheme);$('topVoice').addEventListener('click',()=>openDrawer('audioPanel',$('topVoice')));document.querySelectorAll('[data-voice-speed]').forEach(b=>b.addEventListener('click',()=>{prefs.voiceSpeed=Number(b.dataset.voiceSpeed);syncVoiceSpeed();syncPrefs()}));['librarySave'].forEach(id=>$(id).addEventListener('click',toggleSaved));
+ $('libraryContinue').addEventListener('click',()=>{const last=state.lastRead;if(!last||!PUBLICATIONS[last.mode]||!allParts(last.mode).some(p=>p.id===last.part))return;closeDrawer(false);if(state.mode!==last.mode)switchMode(last.mode);if(state.part!==last.part)choosePart(last.part);state.expandedParts.add(state.part);updateNav();chooseSection(Math.max(0,Math.min(Number(last.section)||0,selected().sections.length-1)))});$('savedEntries').addEventListener('click',e=>{const target=e.target.closest('[data-open-save]');if(!target)return;const key=target.dataset.openSave,sep=key.indexOf(':'),mode=key.slice(0,sep),id=key.slice(sep+1);if(!PUBLICATIONS[mode]||!allParts(mode).some(p=>p.id===id))return;closeDrawer(false);if(state.mode!==mode)switchMode(mode);choosePart(id,true,false)});
+ document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeDrawer()));document.addEventListener('pointerdown',e=>{if(currentDrawer&&!e.target.closest('.drawer,[data-popover-trigger],.top-tools'))closeDrawer(false)});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&currentDrawer){e.preventDefault();closeDrawer();return}const form=e.target.closest('input,textarea,select,[contenteditable]');if(!form&&!currentDrawer&&!$('searchDialog').open&&e.key==='/'&&!e.ctrlKey&&!e.metaKey&&!e.altKey){e.preventDefault();openUnifiedSearch(state.mode==='article'?'article':'series',$('openScopedSearch'))};if(!form&&!currentDrawer&&!$('searchDialog').open&&(e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openUnifiedSearch('site',$('headerSiteSearch'))}if(!currentDrawer&&!$('searchDialog').open&&(e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='b'){e.preventDefault();toggleRail()}});
+ let positionFrame=0;
+ const refreshAnchored=()=>{if(!['prefsPanel','siteMenuPanel','libraryPanel','audioPanel'].includes(currentDrawer)||positionFrame)return;positionFrame=requestAnimationFrame(()=>{positionFrame=0;positionAnchoredPanel(currentDrawer,focusBeforeDrawer)})};
+ window.addEventListener('resize',refreshAnchored,{passive:true});
+ window.addEventListener('scroll',refreshAnchored,{passive:true,capture:true});
+ window.visualViewport?.addEventListener('resize',refreshAnchored,{passive:true});
+ document.querySelectorAll('[data-pref] button').forEach(btn=>btn.addEventListener('click',()=>{const key=btn.closest('[data-pref]').dataset.pref;const value=btn.dataset.value;if(key==='theme')setTheme(value);else{prefs[key]=value;syncPrefs()}}));$('fontMinus').addEventListener('click',()=>{prefs.font=Math.max(80,prefs.font-5);syncPrefs()});$('fontPlus').addEventListener('click',()=>{prefs.font=Math.min(130,prefs.font+5);syncPrefs()});$('prefsReset').addEventListener('click',()=>{Object.assign(prefs,{theme:'light',measure:'normal',leading:'normal',font:100,motion:false,textMode:'rich',motionMode:'system',lastLightTheme:'light',voiceSpeed:1});setTheme('light');syncVoiceSpeed();syncPrefs()});
+ let ticking=false;window.addEventListener('scroll',()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{ticking=false;scrollSpy()})},{passive:true});window.addEventListener('popstate',()=>{const m=decodeURIComponent(location.hash.slice(1)).match(/^(book|cycle|article):([a-z0-9-]+)(?::(\d+))?$/);if(m&&allParts(m[1]).some(p=>p.id===m[2])){state.mode=m[1];state.part=m[2];state.section=Math.min(Math.max(0,Number(m[3])||0),selected().sections.length-1);state.tab='parts';state.expandedParts.add(state.part);if(state.mode==='book'){const g=seriesGroup(state.part);if(g)state.openGroups.add(g.id)}const path=findPathToSection(sectionNodes(selected()),state.section)||[];for(const node of path.slice(0,-1))state.closedSectionGroups.delete(state.mode+':'+state.part+':'+node.index);render();$('chapter-'+state.section)?.scrollIntoView({behavior:'instant',block:'start'})}});
+}
+
+let searchScope='site',searchOpener=null,siteManifest=null,manifestAttempted=false;
+function normSearch(s){return String(s||'').toLocaleLowerCase('ru').replace(/ё/g,'е').normalize('NFKC').trim()}
+function searchDataset(scope){
+ const modes=scope==='series'?[state.mode]:Object.keys(PUBLICATIONS),results=[];
+ if(scope==='article')return selected().sections.map((title,i)=>({title,subtitle:`Раздел ${i+1} · ${selected().title}`,mode:state.mode,part:state.part,section:i}));
+ for(const mode of modes){for(const p of allParts(mode)){
+   results.push({title:p.title,subtitle:PUBLICATIONS[mode].title+' · '+p.subtitle,mode,part:p.id});
+   if(scope==='series')p.sections.forEach((title,i)=>results.push({title,subtitle:'Раздел · '+p.title,mode,part:p.id,section:i}));
+ }}
+ return results;
+}
+async function maybeLoadSiteManifest(){
+ if(manifestAttempted||location.protocol==='file:')return;
+ manifestAttempted=true;
+ try{
+   const res=await fetch('/data/search-manifest.json',{cache:'no-cache',credentials:'same-origin'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   const payload=await res.json();
+   if(Array.isArray(payload?.items))siteManifest=payload.items.filter(x=>typeof x?.title==='string'&&typeof x?.url==='string').map(x=>({title:x.title,subtitle:x.excerpt||x.category||'Библиотека сайта',href:x.url}));
+ }catch{/* The offline demo is explicit about limited results. */}
+ if($('searchDialog').open&&searchScope==='site')updateSearchResults();
+}
+function safeSiteResultUrl(value){
+ try{const u=new URL(String(value),"https://gospod-bog.ru/");
+   if(u.protocol!=="https:"||u.hostname!=="gospod-bog.ru"||u.username||u.password)return '';
+   return u.href;
+ }catch{return ''}
+}
+function updateSearchResults(){
+ const q=normSearch($('siteQuery').value);
+ const source=searchScope==='site'&&siteManifest?siteManifest:searchDataset(searchScope);
+ const hits=source.filter(x=>(!x.href||safeSiteResultUrl(x.href))&&(!q||normSearch(x.title+' '+x.subtitle).includes(q))).slice(0,35);
+ const qualifier=searchScope==='site'?(siteManifest?'Индекс сайта':'Демонстрационная выборка — не полный индекс сайта'):searchScope==='series'?'Заголовки материалов и разделов текущей книги / цикла':'Названия разделов текущей статьи (не полный текст)';
+ $('searchStatus').textContent=`${qualifier} · ${hits.length} показано`;
+ $('searchResults').innerHTML=hits.length?hits.map(x=>{
+   const action=x.href?`data-search-href="${escapeHTML(safeSiteResultUrl(x.href))}"`:`data-search-mode="${escapeHTML(x.mode)}" data-search-part="${escapeHTML(x.part)}" ${Number.isInteger(x.section)?`data-search-section="${x.section}"`:''}`;
+   return `<button type="button" class="search-result" role="listitem" ${action}><strong>${escapeHTML(x.title)}</strong><span>${escapeHTML(x.subtitle)}</span></button>`;
+ }).join(''):'<p class="search-empty" role="status">Ничего не найдено. Попробуйте другой запрос или расширьте область поиска.</p>';
+}
+function setUnifiedScope(scope){
+ if(!['site','series','article'].includes(scope))scope='site';
+ // On the actual site global searches must use the existing command palette: never ship a parallel global search engine.
+ if(scope==='site'&&location.hostname.endsWith('gospod-bog.ru')&&typeof window.GBSearch?.open==='function'){
+   if($('searchDialog').open)$('searchDialog').close();window.GBSearch.open();return;
+ }
+ searchScope=scope;
+ $('searchTitle').textContent=scope==='site'?'Поиск по всему сайту':scope==='article'?'Поиск в статье':state.mode==='book'?'Поиск в книге': 'Поиск в цикле';
+ document.querySelectorAll('[data-search-scope]').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.searchScope===scope));if(b.dataset.searchScope==='series'){b.textContent=state.mode==='book'?'Эта книга':state.mode==='cycle'?'Этот цикл':'Эта статья';b.hidden=state.mode==='article';}if(b.dataset.searchScope==='article')b.hidden=false});
+ updateSearchResults();
+}
+function openUnifiedSearch(scope='site',opener=null){
+ if(currentDrawer)closeDrawer(false);
+ if(scope==='site'&&location.hostname.endsWith('gospod-bog.ru')&&typeof window.GBSearch?.open==='function'){
+   window.GBSearch.open();return;
+ }
+ searchOpener=opener||document.activeElement;
+ const dialog=$('searchDialog');if(!dialog.open)dialog.showModal();
+ $('siteQuery').value='';setUnifiedScope(scope);
+ if(scope==='site')void maybeLoadSiteManifest();
+ $('siteQuery').focus();
+}
+function initUnifiedSearch(){
+ // The modal must always close from Escape, even where native <dialog> cancel is suppressed.
+ $('searchDialog').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();$('searchDialog').close() }},true);
+ ['openSiteSearch','headerSiteSearch'].forEach(id=>$(id).addEventListener('click',()=>openUnifiedSearch('site',$(id))));
+ $('openScopedSearch').addEventListener('click',()=>openUnifiedSearch(state.mode==='article'?'article':'series',$('openScopedSearch')));
+ document.querySelectorAll('[data-search-scope]').forEach(b=>b.addEventListener('click',()=>{setUnifiedScope(b.dataset.searchScope);if(b.dataset.searchScope==='site')void maybeLoadSiteManifest();$('siteQuery').focus()}));
+ $('siteQuery').addEventListener('input',updateSearchResults);
+ $('siteQuery').addEventListener('keydown',e=>{if(e.key==='Enter'){const first=$('searchResults').querySelector('.search-result');if(first){e.preventDefault();first.click()}}});
+ $('searchDismiss').addEventListener('click',()=>$('searchDialog').close());
+ $('searchDialog').addEventListener('close',()=>{if(searchOpener?.isConnected&&searchOpener.offsetParent!==null)searchOpener.focus({preventScroll:true});searchOpener=null});
+ $('searchResults').addEventListener('click',e=>{
+   const el=e.target.closest('.search-result');if(!el)return;
+   if(el.dataset.searchHref){window.open(el.dataset.searchHref,'_blank','noopener,noreferrer');$('searchDialog').close();return}
+   const {searchMode:mode,searchPart:part}=el.dataset;
+   const sec=el.hasAttribute('data-search-section')?Number(el.dataset.searchSection):null;
+   $('searchDialog').close();
+   if(mode!==state.mode)switchMode(mode);
+   if(part!==state.part)choosePart(part);
+   if(state.mode==='book')state.openGroups.add(seriesGroup(part)?.id||'soviet');
+   state.expandedParts.add(part);updateNav();
+   if(sec!==null)chooseSection(sec);
+ });
+}
+
+init();initUnifiedSearch();
+</script>
+</body>
+</html>
