@@ -1,25 +1,40 @@
-# Grok Desktop Reader V24 — canonical handoff (2026-11-06)
+# Grok Desktop Reader — reference V24 (2026-11-06)
 
-**Status: desktop prototype / integration candidate, NOT deployed in Product.** V24 supersedes V23 as the current visual reference; leave V23 and `legacy/v22-final-reference.html` untouched as forensic assets.
+**Status:** accepted *prototype / desktop visual reference*, **NOT implemented in Product**. Source owner: `FedorMilovanov/gb-is-my-strength`; audit/evidence owner: `FedorMilovanov/AuditRepo`. This package supersedes V23 **for the selected desktop prototype only**; retain V23 and V22 for historical comparison. Do **not** copy the demo HTML wholesale into Astro.
 
-## Reading order for a new agent
+## Where a new agent must start
 
-1. [REFERENCE-V24.html](REFERENCE-V24.html) — exact interactive book / cycle / standalone prototype; demo text/logic, not Product source.
-2. [DECISIONS-V24.md](DECISIONS-V24.md) — visual and semantic contract, protected Product owners.
-3. [QA-V24.md](QA-V24.md) — reproduced repairs, browser evidence and limitations.
-4. [PRODUCT-ROLLOUT-V24.md](PRODUCT-ROLLOUT-V24.md) — additive rollout, risk gates, rollback.
-5. [NEXT-AGENT-V24.md](NEXT-AGENT-V24.md) — direct handoff prompt.
+1. `REFERENCE-V24.html` — **the exact self-contained interactive V24 prototype** (book, cycle, standalone; demo content; no backend authority).
+2. `DECISIONS-V24.md` — locked UX, palette and ownership boundaries, what remains and what gets added.
+3. `QA-V24.md` — reproduced defects, precise repairs and limits of testing.
+4. `PRODUCT-ROLLOUT-V24.md` — staged, *additive* implementation contract and stop-ship list.
+5. `NEXT-AGENT-V24.md` — a ready-to-use handoff; refresh Product HEAD/PR/CI before working.
+6. `legacy/v22-final-reference.html` and `REFERENCE-V23.html` — retained historical states; these are not current visual authority.
 
-AuditRepo source rules: [operating model](../../../../AUDITREPO_OPERATING_MODEL.md) (use actual repository root path when browsing), `projects/gb-is-my-strength/DOC_MAP.md`, `verified/MASTER_BUG_MATRIX.md`, `CONCURRENT_EDIT_PROTOCOL.md`. The reference pack is not another active problem matrix.
+Other canonical sources: `projects/gb-is-my-strength/verified/MASTER_BUG_MATRIX.md` (single ACTIVE verified work matrix); `DOC_MAP.md`; repository-level `AUDITREPO_OPERATING_MODEL.md` and `CONCURRENT_EDIT_PROTOCOL.md`. This prototype record is NOT another bug matrix or a replacement for Product truth.
 
-## Verified V24 delta vs V23
+## V24 change log relative to V23
 
-- Corrected stale dynamic left label `V22` → `V24`.
-- Relaxed full/compact rail opacity crossfade while keeping interruptible 335→68 px elastic width (design reference only).
-- When closing an accordion that contains keyboard focus, focus returns to the exact disclosure trigger **before** applying `inert`.
-- Arrow-key navigation excludes links whose ancestors are inert, hidden or aria-hidden even while their collapsing CSS box still has a nonzero rect.
-- Zero-match Enter no longer navigates to an unrelated first item.
+- Corrected stale `V22` in the dynamically generated left overline to `V24`, along with the page title/version indicator.
+- Smoothed **both** phases of the wide/compact crossfade (not only its final state). Keeps the existing elastic grid geometry and 335→68 px prototype measurements.
+- On closing a subtree, if keyboard focus is inside, return it to the **exact controlling toggle before setting `inert`**.
+- Arrow-key traversal ignores links in `[inert]`, `[hidden]`, and `[aria-hidden="true"]` ancestors while the visual close animation runs.
+- Enter on a zero-match hidden/scope outline search no longer opens an unrelated first section. (Product search remains `GBSearch`.)
 
-## Product truth is not inherited from a demo
+## Locked visual characteristics
 
-Product [#2283](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2283) **merged** at `main@717efc54772edf4224f44254651c102e2af24129` (2026-11-06), adding local Library V3 and reading status. Recorded CI snapshot had 25 successful, five in progress, five skipped diagnostic and one cancelled push workflows; this is **not terminal green or live proof**. Refresh exact current CI/live state before touching Product. Print [#2269](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2269) is an independent open lane. No Product changes made in this AuditRepo pass.
+- On desktop: one integrated page, left collapsible TOC + article text, **not a separate TOC modal**.
+- Thin precise active strip (2 px, 6 px top/bottom inset), filled small dots, at most one carefully terminated 1 px connector between root peer headings; **no deep H3/H4 connector forest**.
+- Header monogram is simply **GB** in typography, no heraldic lines/square borders.
+- The four canonical real actions stay **VERTICAL at upper right**: theme, search, playback/speed, bookmark. Do not add a horizontal replacement toolbar.
+- Series palettes remain independent of Reader Day/Sepia/Night; Gill historical leather INTRO/REFERENCE ornaments use official `GillLeatherRibbon/GillLeatherDefs` when integrated.
+- Popovers open near the actual trigger. Do not introduce another overlay, search, save or audio owner.
+- Mobile Product remains unchanged; narrow viewport in this HTML is only a visual stress fixture, not a mobile replacement.
+
+## Implementation status at recorded snapshot
+
+Product `main@717efc54772edf4224f44254651c102e2af24129` includes merged library V3 PR #2283. As observed during this pass, 29 push workflows successful, 1 still in progress (Deploy to GitHub Pages), 7 skipped and 1 cancelled. These counts are **one timestamped observation**, not a standing CI/deploy certificate. Recheck before Product edits; never say library V3 is unmerged or published solely based on this note. Independent print PR #2269 remains open. Product code and production were not modified by this AuditRepo package.
+
+## Explicit next gate
+
+A human-readable V24 screenshot or zero-error standalone Chromium run is *not* a greenlight for rollout. Product pilot requires source/head/CI/live identity, old-vs-new real-route screenshots, WebKit/Firefox, reader-axis/anchor and library V3 regression checks, and a feature-flag rollback. See `PRODUCT-ROLLOUT-V24.md`.
