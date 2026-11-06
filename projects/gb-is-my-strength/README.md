@@ -62,3 +62,7 @@ Closed/stale/duplicate/absorbed/invalid rows do not accumulate in MASTER. If man
 ## Collision boundary
 
 Before Product work, always inspect current open Product PRs/branches and shared owners. Never create a parallel SYSTEM fix merely because historical AuditRepo evidence exists.
+
+## Owner-selected design reference: Grok desktop reader (2026-11-06)
+
+**[V23 current interactive HTML and complete next-agent handoff](./prototype/grok-desktop-reader/README.md).** This is a **desktop-only preintegration design reference**, not a Product deploy or a new MASTER entry. Includes exact V23/V22 HTML, preservation decisions, historical regressions, QA and a non-destructive Product pilot plan. Read it before attempting any Grok-style TOC migration; current Product/PR owners must be rechecked.
