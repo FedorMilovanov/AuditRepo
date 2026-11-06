@@ -1,3 +1,5 @@
+> **Product integration update (2026-11-07):** [real Stage 2 browser evidence and handoff](STAGE2-PRODUCT-WITNESS-2026-11-07.md). Stage 1 PR #2284 is still open pending a CI job; Stage 2 is [draft PR #2285](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2285), flag OFF; 401/401 local browser checks green. The standalone V26 HTML below remains a separate design reference, not a deployed implementation.
+
 # Grok Desktop Reader V26 — current handoff
 
 **State: standalone interactive reference, not a Product release.** 2026-11-06.
