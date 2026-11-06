@@ -1,4 +1,6 @@
-> **CURRENT DESKTOP PROTOTYPE: [V24](v24/README.md) / [interactive HTML](v24/REFERENCE-V24.html).** V23 remains a historical comparison. Product library #2283 is merged, not pending merge. V24 is not deployed; follow [V24 rollout](v24/PRODUCT-ROLLOUT-V24.md) and fresh Product CI/live evidence.
+> **CURRENT DESIGN / HANDOFF: [V25](v25/README.md) · [interactive V25 HTML](v25/REFERENCE-V25.html) · [V25 safe rollout](v25/PRODUCT-ROLLOUT-V25.md).** Original V24/V23 below are historical comparisons. Product Library V3 #2283 is merged. Product deployment workflow on exact head 717efc5 succeeded; real public release SHA remains to be independently confirmed.
+
+> V23 content below is retained as historical provenance, NOT the current instructions.
 
 # Grok Desktop Reader V23 — handoff and definitive reference
 
