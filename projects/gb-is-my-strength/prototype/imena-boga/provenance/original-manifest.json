@@ -1,0 +1,27 @@
+{
+  "source": "Arena Coding Battle, owner exports 2026-11-07",
+  "status": "unverified research originals, no Product changes",
+  "archives": {
+    "arena-A-early.zip": {
+      "original": "-1.zip",
+      "sha256": "96c3ac08ef3fee1b10e44ef2df13a1188b3b2c79f5080a19fd8698a3e073ac52",
+      "bytes": 489901
+    },
+    "arena-A-late.zip": {
+      "original": "-1 (1).zip",
+      "sha256": "ce1f309e4abcdd49dc78edf838be4f51857fa2a22299436bd85fa6cd209c0adf",
+      "bytes": 502505
+    },
+    "arena-B-early.zip": {
+      "original": "-3.zip",
+      "sha256": "b8214e6931861e0c2346c953597f93876241314b1cf397975e306abed57f50bb",
+      "bytes": 484118
+    },
+    "arena-B-late.zip": {
+      "original": "-3 (2).zip",
+      "sha256": "bd76a57d0d5154c5567ffd3acba1d8060ae2833d6c538ebf677ba7d491bff710",
+      "bytes": 548184
+    }
+  },
+  "duplicate_note": "-3 (1).zip has the same extracted content as -3.zip; owner keeps original"
+}
