@@ -43,3 +43,32 @@ Acceptance requires exact-HEAD Vite production builds, TypeScript, local-font/so
 ## Editorial caveat
 
 Variant A uses confident references to critical editions and theological interpretations, but source appearance alone is **not** a completed textual collation. A disclaimer UI component is helpful, yet its wording must not convert unsourced linguistic claims into facts. Keep all research-stage entries behind the existing editorial gate.
+
+## Independent acceptance of selective transplant
+
+**Code witness:** commit `cd117df1fac5ec7707798c7f953c3c9b765d227a`, [GitHub Actions run 42400344040](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42400344040). All three workflows on the code commit passed: AuditRepo Validate, Workflow Preflight, and Names of God prototype browser QA.
+
+- Both Vite production builds and TypeScript: **PASS**.
+- Existing 45 CSS font imports and 11 local font licenses: **PASS**.
+- Source, delivery, network failure, image, font contracts, and unique two-font preload contracts for both flagship builds: **PASS**.
+- Responsive Chromium/WebKit browser QA: **8+8 scenarios PASS**, including the new reader settings panel, theme-color metadata, font scale, Escape/focus restoration, mobile geometry, and methodology disclosure.
+- Full independent Constellation reader QA: **78/78 PASS**.
+- Independent lab CLS medians after the transplant (Chromium CPU×4; n=3 each width): Atlas 320px **0.01911**, 390px **0.00230**, 768px **0.00921**, 1440px **0.00518**. Constellation 320px **0.00218**, 359px **0.00097**, 360px **0.00064**, 375px **0.00051**, 390px **0.00049**, 768px **0.00111**, 1440px **0.00035**. These are synthetic data, not field Core Web Vitals.
+
+Two issues were found by CI and repaired rather than suppressed: an unused badge-icon import rejected by TypeScript; and a browser-dependent computed-font-size assumption in the new WebKit test (replaced by waiting for the React inline-size contract). Both Chromium and WebKit subsequently completed successfully.
+
+### Color contrast follow-up from source comparison
+
+Calculated WCAG contrast ratios from A/B source CSS (text on surface backgrounds):
+
+| Color | Variant B | Variant A | Assessment |
+|---|---:|---:|---|
+| Gold text on light paper | `#b8936a` / `#ffffff`: **2.83:1** | `#855a2c` / `#ffffff`: **6.01:1** | A is substantially more readable for small text |
+| Gold text on sepia paper | `#9e733b` / `#f9f3e7`: **3.82:1** | `#78501f` / `#f9f3e7`: **6.41:1** | A is better |
+| Gold text on dark surface | `#d4a574` / `#171b23`: **7.75:1** | Same | No adjustment needed |
+
+The source proof establishes a design-system opportunity but **not** a license to recolor every decorative gold ornament. The next visual-review candidate should introduce a distinct accessible `--gb-gold-ink` token for small foreground text while preserving original gold borders, lighting and effects. This was deliberately **not** silently applied across the flagships.
+
+### Remaining gates
+
+No real Android/iOS Safari and screen-reader witness, no screenshot-based owner comparison to approve any more visual palette changes, no permission to publish the original Sinai photo, no Research #379 critical-edition/source approval, and no Product Astro route integration. PR #538 stays Draft. No changes were made to the public website or Research repository.
