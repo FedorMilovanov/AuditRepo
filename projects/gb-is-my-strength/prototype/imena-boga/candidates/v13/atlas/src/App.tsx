@@ -651,7 +651,7 @@ export function App() {
             >
               Коротко
             </span>
-            <span className="font-ui text-[11px] font-medium uppercase tracking-wider" style={{ color: 'var(--gb-gold)' }}>
+            <span className="font-ui text-[11px] font-medium uppercase tracking-wider" style={{ color: 'var(--gb-gold-ink)' }}>
               Четыре тезиса исследования
             </span>
           </div>
@@ -736,7 +736,7 @@ export function App() {
         >
           <div
             className="font-ui mb-3 flex flex-col items-start gap-1 text-xs font-bold tracking-wider uppercase sm:flex-row sm:items-center sm:justify-between"
-            style={{ color: 'var(--gb-gold)' }}
+            style={{ color: 'var(--gb-gold-ink)' }}
           >
             <span className="flex min-w-0 items-start gap-2">
               <BookOpen className="h-4 w-4 shrink-0" />
@@ -773,7 +773,7 @@ export function App() {
                 className="group flex items-baseline justify-between gap-3 rounded-lg px-2.5 py-1.5 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
               >
                 <span className="font-body-editorial text-[15px] font-medium" style={{ color: 'var(--gb-ink)' }}>
-                  <strong className="font-serif-display mr-2" style={{ color: 'var(--gb-gold)' }}>
+                  <strong className="font-serif-display mr-2" style={{ color: 'var(--gb-gold-ink)' }}>
                     VI.
                   </strong>
                   Карта жертвенников и мест явления Имён Божьих
@@ -789,7 +789,7 @@ export function App() {
                 className="group flex items-baseline justify-between gap-3 rounded-lg px-2.5 py-1.5 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
               >
                 <span className="font-body-editorial text-[15px] font-medium" style={{ color: 'var(--gb-ink)' }}>
-                  <strong className="font-serif-display mr-2" style={{ color: 'var(--gb-gold)' }}>
+                  <strong className="font-serif-display mr-2" style={{ color: 'var(--gb-gold-ink)' }}>
                     VII.
                   </strong>
                   Сводная скрижаль и поиск по всем 36 именам
@@ -869,7 +869,7 @@ export function App() {
                   {tip.icon}
                 </span>
                 <div>
-                  <div className="font-ui text-[11px] font-bold uppercase tracking-wider" style={{ color: 'var(--gb-gold)' }}>
+                  <div className="font-ui text-[11px] font-bold uppercase tracking-wider" style={{ color: 'var(--gb-gold-ink)' }}>
                     {tip.title}
                   </div>
                   <p className="font-ui mt-0.5 text-[11.5px] leading-snug" style={{ color: 'var(--gb-muted)' }}>
@@ -942,7 +942,7 @@ export function App() {
             >
               <div
                 className="font-ui mb-1.5 text-xs font-bold tracking-wider uppercase"
-                style={{ color: 'var(--gb-gold)' }}
+                style={{ color: 'var(--gb-gold-ink)' }}
               >
                 Как читать имена Бога в Синодальном переводе
               </div>
@@ -1020,7 +1020,7 @@ export function App() {
               <header className="mb-8" data-reveal>
                 <div
                   className="font-ui text-xs font-semibold tracking-wider uppercase"
-                  style={{ color: 'var(--gb-gold)' }}
+                  style={{ color: 'var(--gb-gold-ink)' }}
                 >
                   Часть {section.roman} · {sectionNames.length} изучаемых имён и титулов
                 </div>
@@ -1278,7 +1278,7 @@ export function App() {
                 <div>
                   <span
                     className="font-ui text-[10px] font-semibold tracking-wider uppercase"
-                    style={{ color: 'var(--gb-gold)' }}
+                    style={{ color: 'var(--gb-gold-ink)' }}
                   >
                     {art.tag}
                   </span>
@@ -1319,7 +1319,7 @@ export function App() {
             «Господь Бог — сила моя: Он сделает ноги мои как у оленя и на высоты мои возведёт меня». — Аввакум 3:19
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
-            <span className="font-ui text-[11px] tracking-widest uppercase" style={{ color: 'var(--gb-gold)' }}>
+            <span className="font-ui text-[11px] tracking-widest uppercase" style={{ color: 'var(--gb-gold-ink)' }}>
               Soli Deo Gloria · Материалы для вдумчивого изучения Писания
             </span>
             <a
