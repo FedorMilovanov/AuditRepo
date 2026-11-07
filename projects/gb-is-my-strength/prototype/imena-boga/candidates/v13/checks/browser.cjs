@@ -79,6 +79,10 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       });
       if(rail.columns!==2||rail.cards!==36||rail.faded!==0||rail.placeholders!==0||rail.lineOverlaps!==0||rail.clippedButtons!==0)
         throw Error('Atlas lateral-name rails illegible/clipped '+JSON.stringify({engine,width,rail}));
+      const siteBrand=await page.locator('nav[aria-label="Основная навигация сайта"] a[aria-label*="в начало статьи"] > span').first().evaluate(el=>
+        ({visible:getComputedStyle(el).display!=='none',width:el.clientWidth,scrollWidth:el.scrollWidth}));
+      if(!siteBrand.visible||siteBrand.scrollWidth>siteBrand.width+1)
+        throw Error('Atlas desktop site name truncated '+JSON.stringify({engine,width,siteBrand}));
     }
     if(width<=390&&stats.medallion&&(stats.medallion.left<0||stats.medallion.right>width))
       throw Error('Medallion clipped '+width);
