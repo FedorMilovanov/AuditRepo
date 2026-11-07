@@ -29,3 +29,17 @@ Reader main JS: **515,51 → 513,60 KB**, gzip **161,62 → 161,77 KB** (то е
 2. Решение, стоит ли сохранять `MobileIndex` split — не по эстетике PR, а по реальной экономии и латентности открытия.
 3. Переход к Astro islands в отдельной Product-owned ветке только после согласования нынешних route owners и дизайна. Не импортировать целый Vite shell в Product.
 4. Самостоятельная работа Research #379, юридические разрешения для текстов/изображения и шрифтов, визуальное утверждение владельца.
+
+## Clean GitHub checkout witness — exact source SHA `9beb3ae189c9f5c8ff28766d8fe4ce478826b754`
+
+После push создан отдельный **свежий sparse checkout** непосредственно из GitHub (не прежняя рабочая QA-папка). Повторная сверка `source-manifest.json`: **63/63 файлов SHA-256 совпали** с GitHub. Для текстов хеш сравнивался после CRLF→LF; бинарные файлы сравнивались без нормализации.
+
+- `atlas npm ci && npm run build && npx tsc --noEmit`: **PASS**.
+- `sozvezdie npm ci && npm run build && npx tsc --noEmit`: **PASS**.
+- `checks npm ci`, `npm run qa:lazy`: **5/5 PASS**.
+- `checks npm run qa:failure`: **3/3 PASS**; отказ динамических JS-чанков не удаляет основной интерфейс.
+- `checks npm test`, WebKit `FONTS_MODE=offline`: **8/8 PASS** (две версии × 320/390/768/1440).
+- `checks npm test`, Chromium `FONTS_MODE=offline`: **8/8 PASS**.
+- `sozvezdie npm run qa` в Chromium на том же clean checkout: **78/78 PASS**.
+
+Ещё открыто: внешний CSS Google Fonts в самостоятельных исходниках; реальные iOS Safari/низкопроизводительные телефоны; сетевое сравнение v1.0/v1.1 по FCP/LCP/CLS/INP; проверка выигрыша MobileIndex (его основной gzip не уменьшился), сведения о правах и Product Astro integration. Ни один из этих пунктов не следует считать закрытым указанными тестами.
