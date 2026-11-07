@@ -160,8 +160,8 @@
       "bytes_normalized": 3620
     },
     "checks/image_delivery.cjs": {
-      "sha256": "021e5da31db1cac16c7849bf1b92793f24c3cf4d1043d922cd4f5e46cb5b5470",
-      "bytes_normalized": 2719
+      "sha256": "e1d051ab787ffb2c1b31b18d7a746d5a0237a955ea418a46c4a1a498e06c6a58",
+      "bytes_normalized": 2717
     },
     "checks/package-lock.json": {
       "sha256": "0d59ded844672fe83dedb6b266a6658884c397f8cc748ba88ebb1a01185b9b25",
