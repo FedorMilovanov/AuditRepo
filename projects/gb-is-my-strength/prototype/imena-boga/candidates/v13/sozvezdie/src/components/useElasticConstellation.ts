@@ -28,7 +28,7 @@ const TUNE = {
   free: { k: 19, c: 5.7 },
   collective: { k: 15, c: 6.5 },
   center: { k: 11, c: 6.2 },
-  centerHeld: { k: 15, c: 8.5 },
+  centerHeld: { k: 25, c: 9.2 },
 } as const;
 
 export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: boolean) {
@@ -36,6 +36,7 @@ export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: 
   const rootRef = useRef<HTMLButtonElement>(null);
   const nodeRefs = useRef(new Map<string, HTMLButtonElement>());
   const pathRefs = useRef(new Map<string, SVGPathElement>());
+  const innerThreadRef = useRef<SVGPathElement>(null);
   const offsets = useRef(new Map<string, Spring>(nodes.map(n => [n.id, zero()])));
   const collective = useRef<Spring>(zero());
   const center = useRef<Spring>(zero());
@@ -49,17 +50,24 @@ export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: 
 
   enabledRef.current = enabled;
 
+  // The SVG viewBox is 100x100, but the discs are sized in CSS pixels and
+  // Framer may scale buttons during reveal. Geometry therefore comes from
+  // actual DOM circles, not magic radii or untransformed mockup positions.
   const paint = useCallback(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const area = stage.getBoundingClientRect();
+    if (area.width < 1 || area.height < 1) return;
+
     const drift = collective.current;
-    const cx = 50 + drift.x * 0.55 + center.current.x;
-    const cy = 50 + drift.y * 0.55 + center.current.y;
+    const rootX = 50 + drift.x * 0.55 + center.current.x;
+    const rootY = 50 + drift.y * 0.55 + center.current.y;
     if (rootRef.current) {
-      rootRef.current.style.left = cx + "%";
-      rootRef.current.style.top = cy + "%";
+      rootRef.current.style.left = rootX + "%";
+      rootRef.current.style.top = rootY + "%";
     }
     for (const n of nodes) {
       const own = offsets.current.get(n.id) ?? zero();
-      // The 112px captions cannot leave the 660px stage even when pulled.
       const x = clamp(n.x + drift.x + own.x, 9, 91);
       const y = clamp(n.y + drift.y + own.y, 9, 91);
       const button = nodeRefs.current.get(n.id);
@@ -67,22 +75,90 @@ export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: 
         button.style.left = x + "%";
         button.style.top = y + "%";
       }
-      const dx = x - cx, dy = y - cy;
+    }
+
+    type Circle = { x: number; y: number; r: number };
+    const measure = (element: Element | null): Circle | null => {
+      if (!element) return null;
+      const rect = element.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      return {
+        x: (rect.left + rect.width / 2 - area.left) * 100 / area.width,
+        y: (rect.top + rect.height / 2 - area.top) * 100 / area.height,
+        r: Math.min(rect.width / area.width, rect.height / area.height) * 50,
+      };
+    };
+    const origin = measure(rootRef.current);
+    if (!origin) return;
+    const disks = new Map<string, Circle>();
+    for (const n of nodes) {
+      const disc = nodeRefs.current.get(n.id)?.querySelector("[data-scene-disc]") ?? null;
+      const circle = measure(disc);
+      if (circle) disks.set(n.id, circle);
+    }
+
+    const unit = (dx: number, dy: number) => {
       const d = Math.hypot(dx, dy) || 1;
-      const ux = dx / d, uy = dy / d;
-      const startX = cx + ux * 10.4, startY = cy + uy * 10.4;
-      const edge = n.ring === "inner" ? 3.9 : 3.5;
-      const endX = x - ux * edge, endY = y - uy * edge;
-      const start = "M" + startX.toFixed(2) + " " + startY.toFixed(2);
-      let strand = start + " L" + endX.toFixed(2) + " " + endY.toFixed(2);
-      if (n.ring === "outer") {
-        const rad = (n.angle - 14) * Math.PI / 180;
-        const controlX = cx + 20.3 * Math.cos(rad);
-        const controlY = cy + 20.3 * Math.sin(rad);
-        strand = start + " Q" + controlX.toFixed(2) + " " + controlY.toFixed(2)
-          + " " + endX.toFixed(2) + " " + endY.toFixed(2);
+      return { x: dx / d, y: dy / d };
+    };
+    const pt = (x: number, y: number) => x.toFixed(3) + " " + y.toFixed(3);
+    // Let the centerline overlap the painted border by a fraction of a
+    // viewBox unit, avoiding antialiasing gaps without penetrating the discs.
+    const contact = (circle: Circle, toward: { x: number; y: number }) => {
+      const dir = unit(toward.x - circle.x, toward.y - circle.y);
+      const radius = Math.max(0, circle.r - 0.13);
+      return { x: circle.x + dir.x * radius, y: circle.y + dir.y * radius };
+    };
+
+    for (const n of nodes) {
+      const disc = disks.get(n.id);
+      if (!disc) continue;
+      const dx = disc.x - origin.x, dy = disc.y - origin.y;
+      let strand: string;
+      if (n.ring === "inner") {
+        const start = contact(origin, disc);
+        const end = contact(disc, origin);
+        strand = "M" + pt(start.x, start.y) + " L" + pt(end.x, end.y);
+      } else {
+        // A gentle editorial curve with *radial tangencies* at both discs.
+        // Contact directions derive from its moving control point; the
+        // curve never ends at a stale/nominal node position.
+        const d = Math.hypot(dx, dy) || 1;
+        const bend = Math.min(3.7, d * 0.085);
+        const control = {
+          x: origin.x + dx * 0.53 - dy / d * bend,
+          y: origin.y + dy * 0.53 + dx / d * bend,
+        };
+        const start = contact(origin, control);
+        const end = contact(disc, control);
+        strand = "M" + pt(start.x, start.y) + " Q" + pt(control.x, control.y)
+          + " " + pt(end.x, end.y);
       }
       pathRefs.current.get(n.id)?.setAttribute("d", strand);
+    }
+
+    // The luminous inner arc must *also* follow its moving circles. Its
+    // original fixed SVG arc remained behind when dragged and clipped discs.
+    const inner = nodes.filter(n => n.ring === "inner").map(n => disks.get(n.id)).filter(
+      (c): c is Circle => !!c,
+    );
+    if (inner.length === 3 && innerThreadRef.current) {
+      let thread = "";
+      for (let i = 0; i < inner.length - 1; i++) {
+        const a = inner[i], b = inner[i + 1];
+        const ra = unit(a.x - origin.x, a.y - origin.y);
+        const rb = unit(b.x - origin.x, b.y - origin.y);
+        const ta = { x: -ra.y, y: ra.x };
+        const tb = { x: -rb.y, y: rb.x };
+        const p0 = { x: a.x + ta.x * (a.r - 0.13), y: a.y + ta.y * (a.r - 0.13) };
+        const p3 = { x: b.x - tb.x * (b.r - 0.13), y: b.y - tb.y * (b.r - 0.13) };
+        const handle = Math.min(24, Math.hypot(b.x - a.x, b.y - a.y) * 0.47);
+        const p1 = { x: p0.x + ta.x * handle, y: p0.y + ta.y * handle };
+        const p2 = { x: p3.x - tb.x * handle, y: p3.y - tb.y * handle };
+        thread += "M" + pt(p0.x, p0.y) + " C" + pt(p1.x, p1.y)
+          + " " + pt(p2.x, p2.y) + " " + pt(p3.x, p3.y) + " ";
+      }
+      innerThreadRef.current.setAttribute("d", thread.trim());
     }
   }, [nodes]);
 
@@ -112,8 +188,8 @@ export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: 
     run(collective.current, bg ? p.x : 0, bg ? p.y : 0, TUNE.collective.k, TUNE.collective.c);
     const rootHeld = drag?.id === "yhwh" && drag.moved;
     run(center.current,
-      rootHeld ? p.x : drag?.id && drag.moved ? p.x * 0.08 : 0,
-      rootHeld ? p.y : drag?.id && drag.moved ? p.y * 0.08 : 0,
+      rootHeld ? p.x : drag?.id && drag.moved ? p.x * 0.15 : 0,
+      rootHeld ? p.y : drag?.id && drag.moved ? p.y * 0.15 : 0,
       rootHeld ? TUNE.centerHeld.k : TUNE.center.k,
       rootHeld ? TUNE.centerHeld.c : TUNE.center.c);
     for (const node of nodes) {
@@ -121,7 +197,7 @@ export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: 
       if (drag?.id === node.id && drag.moved) {
         run(spring, p.x, p.y, TUNE.held.k, TUNE.held.c);
       } else if (rootHeld) {
-        const f = node.ring === "inner" ? 0.50 : 0.32;
+        const f = node.ring === "inner" ? 0.76 : 0.52;
         run(spring, p.x * f, p.y * f, TUNE.free.k, TUNE.free.c);
       } else if (drag?.id && drag.moved) {
         const held = nodes.find(n => n.id === drag.id);
@@ -160,7 +236,20 @@ export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: 
 
   useEffect(() => {
     paint();
-    return () => cancelAnimationFrame(raf.current);
+    const stage = stageRef.current;
+    const resized = new ResizeObserver(paint);
+    if (stage) resized.observe(stage);
+    // Initial Framer reveal / hover transitions can alter the actual disc
+    // radius after mount; reconcile geometry once those have settled.
+    const onTransitionEnd = () => paint();
+    stage?.addEventListener("transitionend", onTransitionEnd, { passive: true });
+    const fonts = document.fonts;
+    void fonts.ready.then(paint);
+    return () => {
+      cancelAnimationFrame(raf.current);
+      resized.disconnect();
+      stage?.removeEventListener("transitionend", onTransitionEnd);
+    };
   }, [paint]);
   useEffect(() => {
     if (!enabled) restore(true);
@@ -206,8 +295,8 @@ export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: 
     if (!g.moved) return;
     event.preventDefault();
     const isRoot = g.id === "yhwh";
-    const limit = isRoot ? 4.2 : g.id === null ? 5.0 : 9.0;
-    const resistance = isRoot ? 0.38 : 1;
+    const limit = isRoot ? 4.7 : g.id === null ? 5.0 : 9.0;
+    const resistance = isRoot ? 0.72 : 1;
     target.current = { x: clamp(g.originX + dx * resistance, -limit, limit),
       y: clamp(g.originY + dy * resistance, -limit, limit) };
     start();
@@ -227,7 +316,7 @@ export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: 
   const onPointerCancel = () => restore();
 
   return {
-    stageRef, rootRef, attachNode, attachPath, dragging, suppressClick,
+    stageRef, rootRef, innerThreadRef, attachNode, attachPath, dragging, suppressClick,
     onPointerDown, onPointerMove, onPointerUp, onPointerCancel,
   };
 }
