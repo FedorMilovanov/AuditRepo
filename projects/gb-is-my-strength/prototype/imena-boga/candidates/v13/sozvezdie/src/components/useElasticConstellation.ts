@@ -222,6 +222,7 @@ export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: 
 
   const restore = useCallback((force = false) => {
     gesture.current = null;
+    stageRef.current?.removeAttribute("data-drag-target");
     target.current = { x: 0, y: 0 };
     setDragging(false);
     if (force || !enabledRef.current) {
@@ -281,6 +282,7 @@ export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: 
     const spring = stateOf(id);
     gesture.current = { pointerId: event.pointerId, id, x: pos.x, y: pos.y,
       originX: spring.x, originY: spring.y, moved: false };
+    stageRef.current?.setAttribute("data-drag-target", id ?? "background");
   };
   const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     const g = gesture.current;
@@ -299,6 +301,17 @@ export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: 
     const resistance = isRoot ? 0.72 : 1;
     target.current = { x: clamp(g.originX + dx * resistance, -limit, limit),
       y: clamp(g.originY + dy * resistance, -limit, limit) };
+    if (isRoot) {
+      // The large central disc must follow the gesture *now*, not merely
+      // influence the satellites through an asynchronously integrated
+      // spring. Spring damping still handles the remaining lag and release.
+      const centerMass = center.current;
+      centerMass.x += (target.current.x - centerMass.x) * 0.38;
+      centerMass.y += (target.current.y - centerMass.y) * 0.38;
+      centerMass.vx = 0;
+      centerMass.vy = 0;
+      paint();
+    }
     start();
   };
   const onPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
