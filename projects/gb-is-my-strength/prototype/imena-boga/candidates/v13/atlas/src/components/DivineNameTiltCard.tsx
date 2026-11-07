@@ -218,7 +218,7 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
             </div>
             <div
               className="font-ui mt-1 text-[10px] tracking-widest uppercase"
-              style={{ color: 'var(--gb-gold)' }}
+              style={{ color: 'var(--gb-gold-ink)' }}
             >
               {entry.language === 'hebrew'
                 ? 'Древнееврейский'
@@ -277,7 +277,7 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
                 </span>{' '}
                 <span
                   className="font-ui text-xs font-semibold whitespace-nowrap"
-                  style={{ color: 'var(--gb-gold)' }}
+                  style={{ color: 'var(--gb-gold-ink)' }}
                 >
                   — {entry.keyVerses[1].ref}
                 </span>
@@ -341,7 +341,7 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
           >
             <div
               className="font-ui mb-1.5 flex items-center gap-2 text-xs font-bold tracking-wider uppercase"
-              style={{ color: 'var(--gb-gold)' }}
+              style={{ color: 'var(--gb-gold-ink)' }}
             >
               <HeartHandshake className="h-3.5 w-3.5" />
               <span>Пастырское применение для веры и молитвы</span>
