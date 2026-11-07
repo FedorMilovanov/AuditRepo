@@ -441,7 +441,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
                 </span>
                 <span
                   className="font-ui mt-2 text-[11px] font-medium tracking-widest uppercase transition-colors"
-                  style={{ color: 'var(--gb-gold)' }}
+                  style={{ color: 'var(--gb-gold-ink)' }}
                 >
                   {activeGlyph.label}
                 </span>
