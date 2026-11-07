@@ -148,8 +148,8 @@
       "bytes_normalized": 4916
     },
     "checks/cls_witness.cjs": {
-      "sha256": "71db71c211568214b4f3af3ad1d13e16d4f5b4049036b8fd3dda5b2157d37b1c",
-      "bytes_normalized": 8059
+      "sha256": "ef4928ec0ef1ae63e5eae77ef0a8bf98246c24f228d240e00075b36753bbffb8",
+      "bytes_normalized": 8202
     },
     "checks/delivery_contracts.cjs": {
       "sha256": "a7c1b138cc9bc9c26260d382833cef3a67399f6d264142baf6905e82688f3274",
