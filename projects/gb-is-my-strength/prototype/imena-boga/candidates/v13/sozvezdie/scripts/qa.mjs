@@ -238,6 +238,10 @@ const boxesOverlap = (a, b) =>
     await page.mouse.down();
     await page.mouse.move(x+100,y+50,{steps:14});
     await page.waitForTimeout(550);
+    const heldTarget = await page.locator('[data-elastic-scene]').getAttribute('data-drag-target');
+    heldTarget === 'yhwh'
+      ? ok("central drag captures the ЯХВЕ sphere rather than background or neighboring node")
+      : bad("wrong central drag target: " + JSON.stringify(heldTarget));
     const moved = await rootDrag.boundingBox();
     const dragged = await page.locator('#tsentr [data-elastic-node]:not([data-elastic-node="yhwh"])')
       .evaluateAll(els => els.map(el => { const r=el.getBoundingClientRect(); return {
