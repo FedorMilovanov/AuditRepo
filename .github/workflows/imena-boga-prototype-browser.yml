@@ -10,6 +10,12 @@ on:
 permissions:
   contents: read
 
+# The browser witness is expensive. Only the latest SHA of the SAME PR needs
+# to run; do not cancel unrelated PRs or other project workflows.
+concurrency:
+  group: imena-boga-prototype-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   candidate-browser:
     name: Vite builds, browser contracts and CLS witness
