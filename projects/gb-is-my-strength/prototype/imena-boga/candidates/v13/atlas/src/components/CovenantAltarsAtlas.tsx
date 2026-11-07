@@ -57,7 +57,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
     >
       <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-4" style={{ borderColor: 'var(--gb-border)' }}>
         <div>
-          <div className="font-ui flex items-center gap-2 text-xs font-bold tracking-wider uppercase" style={{ color: 'var(--gb-gold)' }}>
+          <div className="font-ui flex items-center gap-2 text-xs font-bold tracking-wider uppercase" style={{ color: 'var(--gb-gold-ink)' }}>
             <Compass className="h-4 w-4" />
             <span>Библейская география откровения · В духе раздела «Карты»</span>
           </div>
@@ -81,7 +81,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
             <ChevronLeft className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">Назад</span>
           </button>
-          <span className="font-ui px-1.5 text-xs tabular-nums font-semibold" style={{ color: 'var(--gb-gold)' }}>
+          <span className="font-ui px-1.5 text-xs tabular-nums font-semibold" style={{ color: 'var(--gb-gold-ink)' }}>
             {safeIdx + 1} / {COVENANT_ALTARS.length}
           </span>
           <button
@@ -264,7 +264,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
           }}
         >
           <div>
-            <div className="font-ui text-[11px] font-bold tracking-wider uppercase" style={{ color: 'var(--gb-gold)' }}>
+            <div className="font-ui text-[11px] font-bold tracking-wider uppercase" style={{ color: 'var(--gb-gold-ink)' }}>
               {activeAltar.era}
             </div>
             <h3 className="font-serif-display mt-1 text-xl sm:text-2xl font-bold" style={{ color: 'var(--gb-ink)' }}>
@@ -286,7 +286,7 @@ export const CovenantAltarsAtlas: React.FC<CovenantAltarsAtlasProps> = ({
                 borderColor: 'var(--gb-gold)',
               }}
             >
-              <div className="font-ui text-[10px] font-semibold uppercase" style={{ color: 'var(--gb-gold)' }}>
+              <div className="font-ui text-[10px] font-semibold uppercase" style={{ color: 'var(--gb-gold-ink)' }}>
                 Открытое здесь Имя Бога (№ {linkedName.number})
               </div>
               <div className="mt-1.5 flex items-baseline justify-between gap-2">
