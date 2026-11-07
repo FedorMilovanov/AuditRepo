@@ -316,7 +316,7 @@ export function useElasticConstellation(nodes: readonly ElasticNode[], enabled: 
   const onPointerCancel = () => restore();
 
   return {
-    stageRef, rootRef, innerThreadRef, attachNode, attachPath, dragging, suppressClick,
+    stageRef, rootRef, innerThreadRef, attachNode, attachPath, syncGeometry: paint, dragging, suppressClick,
     onPointerDown, onPointerMove, onPointerUp, onPointerCancel,
   };
 }
