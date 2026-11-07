@@ -55,13 +55,16 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
     const node = itemRefs.current[activeNameId];
     const container = scrollContainerRef.current;
     if (node && container) {
-      const nodeTop = node.offsetTop;
-      const nodeHeight = node.offsetHeight;
-      const containerHeight = container.clientHeight;
-      const targetScroll = nodeTop - containerHeight / 2 + nodeHeight / 2;
+      // offsetTop can use a different offsetParent from this scrollbox.
+      // Rectangles keep the active plaque properly centered across fonts.
+      const card = node.getBoundingClientRect();
+      const viewport = container.getBoundingClientRect();
+      const targetScroll = container.scrollTop
+        + card.top - viewport.top
+        - (viewport.height - card.height) / 2;
       container.scrollTo({
-        top: Math.max(0, targetScroll),
-        behavior: 'smooth',
+        top: Math.max(0, Math.min(container.scrollHeight - container.clientHeight, targetScroll)),
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
       });
     }
   }, [activeNameId]);
@@ -88,9 +91,9 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
           color: 'var(--gb-muted)',
         }}
       >
-        <div className="flex items-center gap-1.5 truncate">
+        <div className="flex min-w-0 items-center gap-1.5">
           <span
-            className="font-ui font-semibold tracking-wider uppercase truncate"
+            className="font-ui min-w-0 truncate font-semibold tracking-wider uppercase"
             style={{ color: 'var(--gb-gold-ink)' }}
           >
             {isLeft ? 'Скрижаль I · Основа' : 'Скрижаль II · Завет'}
@@ -121,7 +124,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
       </div>
 
       {/* Vertical Glowing Spine Filament + Live Scroll Light Beam */}
-      <div className="relative flex-1 overflow-hidden">
+      <div className="relative min-h-0 flex-1 overflow-hidden">
         <div
           aria-hidden="true"
           className={`sacred-filament pointer-events-none absolute top-2 bottom-2 w-[2px] opacity-35 ${
@@ -150,7 +153,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
           onMouseLeave={() => {
             isHoveredRef.current = false;
           }}
-          className="thin-sacred-scroll pointer-events-auto h-full space-y-2.5 overflow-y-auto px-1 py-2"
+          className="thin-sacred-scroll pointer-events-auto h-full space-y-2.5 overflow-y-auto overscroll-contain px-1.5 py-2"
         >
           {items.map((item) => {
             const isRevealed = illuminateAll || revealedIds.has(item.id);
@@ -173,17 +176,10 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
                       : 'hover:scale-[1.015]'
                 }`}
                 style={{
-                  opacity: isRevealed ? 1 : 0.36,
-                  transform: isRevealed
-                    ? 'translateX(0px)'
-                    : isLeft
-                      ? 'translateX(-14px)'
-                      : 'translateX(14px)',
-                  backgroundColor: isActive
-                    ? 'var(--gb-surface)'
-                    : isRevealed
-                      ? 'var(--gb-glass)'
-                      : 'transparent',
+                  // Unread names stay legible: progress changes accents,
+                  // never the visibility of the name or its description.
+                  opacity: 1,
+                  backgroundColor: isActive ? 'var(--gb-surface)' : 'var(--gb-glass)',
                   borderColor: isActive
                     ? 'var(--gb-gold)'
                     : isRevealed
@@ -230,19 +226,10 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
                     <span
                       className={`${
                         item.language === 'greek' ? 'font-greek' : 'font-hebrew'
-                      } text-base xl:text-lg font-bold leading-none transition-all duration-500`}
+                      } min-w-0 max-w-[60%] break-words text-right text-base xl:text-lg font-bold leading-snug transition-colors duration-300`}
                       style={{
-                        color: isActive
-                          ? 'var(--gb-gold-bright)'
-                          : isRevealed
-                            ? 'var(--gb-ink)'
-                            : 'var(--gb-muted)',
-                        textShadow: isActive
-                          ? '0 0 18px var(--gb-gold-glow)'
-                          : isRevealed
-                            ? '0 0 8px rgba(184, 147, 106, 0.22)'
-                            : 'none',
-                        filter: isRevealed ? 'none' : 'blur(0.6px)',
+                        color: isActive ? 'var(--gb-accent)' : 'var(--gb-ink)',
+                        textShadow: isActive ? '0 0 12px var(--gb-gold-glow)' : 'none',
                       }}
                     >
                       {item.original}
@@ -251,7 +238,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
 
                   <div className="mt-1">
                     <div
-                      className="font-serif-display text-xs xl:text-[13px] font-bold leading-snug transition-colors"
+                      className="font-serif-display break-words text-xs xl:text-[13px] font-bold leading-snug transition-colors"
                       style={{
                         color: isActive ? 'var(--gb-accent)' : 'var(--gb-ink)',
                       }}
@@ -259,17 +246,17 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
                       {item.transliteration}
                     </div>
                     <div
-                      className="font-ui mt-0.5 line-clamp-1 text-[10.5px]"
+                      className="font-ui mt-0.5 line-clamp-2 text-[10.5px] leading-snug"
                       style={{ color: 'var(--gb-muted)' }}
                     >
-                      {isRevealed ? item.russianName : 'Явится при чтении…'}
+                      {item.russianName}
                     </div>
                   </div>
                 </button>
 
                 {/* Secondary Action Strip (Valid Sibling Buttons) */}
                 <div
-                  className="relative z-10 mx-3.5 mb-2 flex items-center justify-between border-t pt-1 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100"
+                  className="relative z-10 mx-3.5 mb-2 flex items-center justify-between gap-2 border-t pt-1 opacity-80 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100"
                   style={{ borderColor: 'var(--gb-border)' }}
                 >
                   <button
