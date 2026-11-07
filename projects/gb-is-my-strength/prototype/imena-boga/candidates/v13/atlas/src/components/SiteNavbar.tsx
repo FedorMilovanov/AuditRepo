@@ -194,7 +194,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
                 id="gb-reader-settings"
                 role="region"
                 aria-label="Настройки чтения"
-                className="absolute right-0 top-full z-50 mt-2 rounded-xl border p-3 shadow-xl"
+                className="fixed left-3 top-16 z-50 rounded-xl border p-3 shadow-xl sm:absolute sm:right-0 sm:left-auto sm:top-full sm:mt-2"
                 style={{
                   width: 'min(18rem, calc(100vw - 1.5rem))',
                   backgroundColor: 'var(--gb-surface)',
