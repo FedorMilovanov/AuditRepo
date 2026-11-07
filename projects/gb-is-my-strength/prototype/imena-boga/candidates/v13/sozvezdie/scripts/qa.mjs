@@ -146,6 +146,48 @@ const boxesOverlap = (a, b) =>
   masks.length === 24 && masks.every(x => x.alpha >= 0.99)
     ? ok("24 captions have opaque strand masks")
     : bad("missing/transparent captions: " + JSON.stringify(masks.filter(x => x.alpha < 0.99).slice(0, 3)));
+  // Arena's elastic motion is a real interaction, not a static orbit graphic.
+  // Preserve click/keyboard semantics and ensure the dragged network rebounds.
+  const dragNode = page.locator('#tsentr [data-elastic-node="rapha"]');
+  const neighborNode = page.locator('#tsentr [data-elastic-node="nissi"]');
+  await dragNode.scrollIntoViewIfNeeded();
+  const dragStart = await dragNode.boundingBox();
+  const neighborStart = await neighborNode.boundingBox();
+  const strand = page.locator('#tsentr [data-scene-strand="rapha"]');
+  const pathStart = await strand.getAttribute('d');
+  if (!dragStart || !neighborStart) {
+    bad("elastic test nodes not visible");
+  } else {
+    const x = dragStart.x + dragStart.width / 2;
+    const y = dragStart.y + 22;
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x - 85, y + 45, { steps: 12 });
+    await page.waitForTimeout(400);
+    const moving = await dragNode.boundingBox();
+    const neighborMoving = await neighborNode.boundingBox();
+    const pathMoving = await strand.getAttribute('d');
+    const isDragging = await page.locator('[data-elastic-scene]').getAttribute('data-dragging');
+    isDragging === 'true' && moving && moving.x < dragStart.x - 8
+      ? ok("elastic node follows a real mouse drag")
+      : bad("elastic drag did not displace node: " + JSON.stringify({ isDragging, dragStart, moving }));
+    neighborMoving && Math.hypot(neighborMoving.x - neighborStart.x, neighborMoving.y - neighborStart.y) > 1
+      ? ok("nearby strand nodes respond elastically")
+      : bad("nearby node did not follow: " + JSON.stringify({ neighborStart, neighborMoving }));
+    pathMoving !== pathStart
+      ? ok("SVG strand follows the moved node")
+      : bad("SVG strand remains static during drag");
+    await page.mouse.up();
+    await page.waitForFunction(({ x0, y0 }) => {
+      const node = document.querySelector('[data-elastic-node="rapha"]');
+      if (!node) return false;
+      const r = node.getBoundingClientRect();
+      return Math.hypot(r.x - x0, r.y - y0) < 5;
+    }, { x0: dragStart.x, y0: dragStart.y }, { timeout: 5000 });
+    (await page.locator('[data-elastic-scene]').getAttribute('data-dragging')) === 'false'
+      ? ok("elastic links return home without a reset control")
+      : bad("drag state stuck after pointerup");
+  }
   await page.screenshot({ path: join(tmpdir(), "shot-tree-desktop.png") });
 
   // grid: 29 cards
