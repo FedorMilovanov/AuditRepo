@@ -16,6 +16,7 @@
   --gb-accent-dim: #9b3c3c;
   --gb-accent-soft: #f6ece8;
   --gb-gold: #b8936a;
+  --gb-gold-ink: #855a2c; /* WCAG AA small text on light paper */
   --gb-gold-bright: #cfa36e;
   --gb-gold-glow: rgba(184, 147, 106, 0.34);
   --gb-crimson-glow: rgba(124, 45, 45, 0.24);
@@ -41,6 +42,7 @@
   --gb-accent-dim: #993b3b;
   --gb-accent-soft: #ead9cf;
   --gb-gold: #9e733b;
+  --gb-gold-ink: #78501f; /* contrast-safe sepia text; decorative gold unchanged */
   --gb-gold-bright: #b88848;
   --gb-gold-glow: rgba(158, 115, 59, 0.36);
   --gb-crimson-glow: rgba(122, 46, 46, 0.24);
@@ -66,6 +68,7 @@
   --gb-accent-dim: #b85c4f;
   --gb-accent-soft: #261b19;
   --gb-gold: #d4a574;
+  --gb-gold-ink: #d4a574; /* already passes on the dark reader surface */
   --gb-gold-bright: #e8be8c;
   --gb-gold-glow: rgba(212, 165, 116, 0.34);
   --gb-crimson-glow: rgba(217, 122, 108, 0.25);
@@ -265,6 +268,7 @@ input:focus-visible,
     --gb-ink-secondary: #333333;
     --gb-muted: #555555;
     --gb-gold: #7a5b33;
+    --gb-gold-ink: #6f4f28;
     --gb-accent: #6d2a2a;
     --gb-border: #d8d2c8;
     --gb-border-strong: #b8b0a3;
