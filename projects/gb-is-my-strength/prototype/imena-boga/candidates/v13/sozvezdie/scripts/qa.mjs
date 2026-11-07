@@ -106,7 +106,7 @@ const boxesOverlap = (a, b) =>
 
   // tree present, nodes clickable
   await page.locator("#tsentr").scrollIntoViewIfNeeded();
-  await page.waitForTimeout(2200);
+  await page.waitForTimeout(2900);
   const treeNodes = await page.locator('#tsentr [data-orbit-name], #tsentr button[aria-label^="ЯХВЕ — центральное имя"]').evaluateAll((els) =>
     els.map((e) => { const r = e.getBoundingClientRect(); return { x: r.x, w: r.width, txt: e.innerText.replace(/\n/g, " ").trim() }; }),
   );
@@ -124,19 +124,53 @@ const boxesOverlap = (a, b) =>
     ? ok("illustration rings are fixed; no endless rotation")
     : bad("unexpected orbit animation: " + JSON.stringify(ringAnimations));
 
-  const strands = await page.locator('#tsentr [data-scene-strand]').evaluateAll(els => els.map(el => {
-    const id = el.getAttribute('data-scene-strand');
-    const node = [...document.querySelectorAll('#tsentr [data-orbit-name]')].find(btn => btn.getAttribute('data-orbit-name') === id);
-    const coords = (el.getAttribute('d') || '').match(/-?[0-9]+(?:[.][0-9]+)?/g)?.map(Number) || [];
-    if (!node || coords.length < 4) return { id, bad: true };
-    const x = parseFloat(node.style.left), y = parseFloat(node.style.top);
-    const ex = coords[coords.length - 2], ey = coords[coords.length - 1];
-    return { id, startDistance: Math.hypot(coords[0] - 50, coords[1] - 50),
-      endDistance: Math.hypot(ex - x, ey - y) };
-  }));
-  strands.length === 12 && strands.every(v => v.startDistance >= 10.0 && v.endDistance >= 3.3)
-    ? ok("all 12 strands stop outside root and name-disc edges")
-    : bad("scene strands intersect nodes: " + JSON.stringify(strands.filter(v => v.bad || v.startDistance < 10 || v.endDistance < 3.3)));
+  // Actual painted circle borders (not design-time 50/50 and static
+  // radii) are the geometry contract. Check every strand plus the two
+  // arcs before, during and after dragging the *central* sphere.
+  const circleContacts = async () => page.locator('[data-elastic-scene]').evaluate(stage => {
+    const area = stage.getBoundingClientRect();
+    const digits = /-?[0-9]+(?:[.][0-9]+)?/g;
+    const geometry = el => {
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      return { x: (r.x + r.width / 2 - area.x) * 100 / area.width,
+        y: (r.y + r.height / 2 - area.y) * 100 / area.height,
+        radius: Math.min(r.width / area.width, r.height / area.height) * 50 };
+    };
+    const root = geometry(stage.querySelector('[data-elastic-node="yhwh"]'));
+    const circles = new Map([...stage.querySelectorAll('[data-elastic-node]')]
+      .filter(el => el.getAttribute('data-elastic-node') !== 'yhwh')
+      .map(el => [el.getAttribute('data-elastic-node'), geometry(el.querySelector('[data-scene-disc]'))]));
+    const edgeError = (x,y,circle) => circle ? Math.abs(Math.hypot(x-circle.x,y-circle.y)-circle.radius) : Infinity;
+    const strands = [...stage.querySelectorAll('[data-scene-strand]')].map(el => {
+      const n = (el.getAttribute('d') || '').match(digits)?.map(Number) || [];
+      return { id: el.getAttribute('data-scene-strand'),
+        root: n.length >= 4 ? edgeError(n[0], n[1], root) : Infinity,
+        disc: n.length >= 4 ? edgeError(n[n.length-2], n[n.length-1],
+          circles.get(el.getAttribute('data-scene-strand'))) : Infinity };
+    });
+    const pieces = (stage.querySelector('[data-scene-inner-thread]')?.getAttribute('d') || '')
+      .match(/M[^M]+/g) || [];
+    const innerIds = ['ehyeh','ego-eimi','immanuel'];
+    const arcs = pieces.map((segment,i) => {
+      const n = (segment.match(digits) || []).map(Number);
+      return { i, from: n.length === 8 ? edgeError(n[0],n[1],circles.get(innerIds[i])) : Infinity,
+        to: n.length === 8 ? edgeError(n[6],n[7],circles.get(innerIds[i+1])) : Infinity };
+    });
+    return { strands, arcs, cx: root?.x, cy: root?.y };
+  });
+  const assertContacts = (geometry, label) => {
+    const badEdges = geometry.strands.filter(v => v.root > 0.45 || v.disc > 0.45);
+    geometry.strands.length === 12 && badEdges.length === 0
+      ? ok("12 strands exactly meet circle perimeters " + label)
+      : bad("misaligned strand edges " + label + ": " + JSON.stringify(badEdges));
+    const badArcs = geometry.arcs.filter(v => v.from > 0.45 || v.to > 0.45);
+    geometry.arcs.length === 2 && badArcs.length === 0
+      ? ok("luminous inner arcs meet moving disc edges " + label)
+      : bad("inner arc misses moving discs " + label + ": " + JSON.stringify(badArcs));
+  };
+  const restingContacts = await circleContacts();
+  assertContacts(restingContacts, "at rest");
 
   const masks = await page.locator('#tsentr [data-scene-caption]').evaluateAll(els => els.map(el => {
     const color = getComputedStyle(el).backgroundColor;
@@ -187,6 +221,51 @@ const boxesOverlap = (a, b) =>
     (await page.locator('[data-elastic-scene]').getAttribute('data-dragging')) === 'false'
       ? ok("elastic links return home without a reset control")
       : bad("drag state stuck after pointerup");
+  }
+
+  const rootDrag = page.locator('#tsentr [data-elastic-node="yhwh"]');
+  const rootStart = await rootDrag.boundingBox();
+  const allSatellites = await page.locator('#tsentr [data-elastic-node]:not([data-elastic-node="yhwh"])')
+    .evaluateAll(els => els.map(el => { const r=el.getBoundingClientRect(); return {
+      id: el.getAttribute('data-elastic-node'), x:r.x, y:r.y }; }));
+  const threadBefore = await page.locator('[data-scene-inner-thread]').getAttribute('d');
+  if (!rootStart || allSatellites.length !== 12) {
+    bad("central sphere / its 12 satellites missing");
+  } else {
+    const x = rootStart.x + rootStart.width / 2;
+    const y = rootStart.y + rootStart.height / 2;
+    await page.mouse.move(x,y);
+    await page.mouse.down();
+    await page.mouse.move(x+100,y+50,{steps:14});
+    await page.waitForTimeout(550);
+    const moved = await rootDrag.boundingBox();
+    const dragged = await page.locator('#tsentr [data-elastic-node]:not([data-elastic-node="yhwh"])')
+      .evaluateAll(els => els.map(el => { const r=el.getBoundingClientRect(); return {
+        id: el.getAttribute('data-elastic-node'), x:r.x, y:r.y }; }));
+    const distances = allSatellites.map(before => {
+      const after = dragged.find(el => el.id === before.id);
+      return { id: before.id, distance: after ? Math.hypot(after.x-before.x,after.y-before.y) : 0 };
+    });
+    moved && Math.hypot(moved.x-rootStart.x,moved.y-rootStart.y) > 10
+      ? ok("central ЯХВЕ sphere moves visibly when dragged")
+      : bad("central sphere did not move: "+JSON.stringify({rootStart,moved}));
+    distances.length === 12 && distances.every(d => d.distance > 2)
+      ? ok("central sphere pulls all 12 satellite nodes")
+      : bad("center drag did not affect entire network: "+JSON.stringify(distances));
+    const threadNow = await page.locator('[data-scene-inner-thread]').getAttribute('d');
+    threadBefore !== threadNow
+      ? ok("luminous internal arc follows center/inner-node movement")
+      : bad("inner arc remained fixed after center drag");
+    assertContacts(await circleContacts(), "during center drag");
+    await page.mouse.up();
+    await page.waitForFunction(({cx,cy}) => {
+      const root=document.querySelector('[data-elastic-node="yhwh"]');
+      if (!root) return false;
+      const r=root.getBoundingClientRect();
+      return Math.hypot(r.x-cx,r.y-cy)<3;
+    }, {cx:rootStart.x,cy:rootStart.y}, {timeout:6000});
+    await page.waitForTimeout(120);
+    assertContacts(await circleContacts(), "after spring return");
   }
   await page.screenshot({ path: join(tmpdir(), "shot-tree-desktop.png") });
 
