@@ -4,6 +4,7 @@ import { Check } from "lucide-react";
 import { NAMES, type NameEntry } from "../data/names";
 import { scriptAttrs } from "../utils/script";
 import Reveal from "./Reveal";
+import { useElasticConstellation } from "./useElasticConstellation";
 
 interface NameTreeProps {
   active: string;
@@ -65,6 +66,9 @@ const OUTER_NODES: Node[] = OUTER_IDS.map((id, i) => {
 }).filter((n) => !!n.name);
 
 const NODES = [...INNER_NODES, ...OUTER_NODES];
+// Same source of truth for static layout, keyboard order and elastic dynamics.
+const ELASTIC_NODES = NODES.map(({ name, x, y, angle, ring }) =>
+  ({ id: name.id, x, y, angle, ring }));
 // The central name participates in the same keyboard traversal as all
 // satellites. Previously Arrow/Home/End worked only after tabbing past it.
 const ORBIT_ORDER = ["yhwh", ...NODES.map((node) => node.name.id)];
@@ -101,6 +105,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
   // Keep the last examined orbit node pinned while focus moves to its context action.
   const [focusedId, setFocusedId] = useState<string | null>(null);
   const reduced = useReducedMotionConfig() || !motionOn;
+  const scene = useElasticConstellation(ELASTIC_NODES, !reduced);
   const yhwhActive = active === "yhwh";
   const root = byId("yhwh");
   const selected = NODES.find((node) => node.name.id === focusedId)?.name
@@ -155,9 +160,16 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
 
       {/* ─────────── radial diagram · tablet & desktop ─────────── */}
       <div
-        className="relative mx-auto mt-12 hidden aspect-square w-full max-w-[660px] md:block"
+        ref={scene.stageRef}
+        data-elastic-scene
+        data-dragging={scene.dragging ? "true" : "false"}
+        className={`relative mx-auto mt-12 hidden aspect-square w-full max-w-[660px] select-none md:block ${scene.dragging ? "cursor-grabbing" : "cursor-grab"}`}
         role="group"
-        aria-label="Иллюстрация взаимосвязей имён Бога: Tab — перейти между именами, стрелки — к соседнему имени, Home и End — начало и конец"
+        aria-label="Упругая иллюстрация взаимосвязей имён Бога: имена можно потянуть мышью; Tab — перейти между именами, стрелки — к соседнему имени, Home и End — начало и конец"
+        onPointerDown={scene.onPointerDown}
+        onPointerMove={scene.onPointerMove}
+        onPointerUp={scene.onPointerUp}
+        onPointerCancel={scene.onPointerCancel}
       >
         <div data-scene-ring aria-hidden className="pointer-events-none absolute inset-[2%] rounded-full border border-dashed border-gold-500/10" />
         <div data-scene-ring aria-hidden className="pointer-events-none absolute inset-[24%] rounded-full border border-gold-500/10" />
@@ -177,6 +189,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
             return (
               <motion.path
                 key={node.name.id}
+                ref={(el) => scene.attachPath(node.name.id, el)}
                 d={branchPath(node)}
                 data-scene-strand={node.name.id}
                 fill="none"
@@ -210,9 +223,11 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
         </svg>
 
         <motion.button
+          ref={scene.rootRef}
           type="button"
-          onClick={() => onSelect("yhwh")}
+          onClick={(event) => { if (scene.suppressClick.current) event.preventDefault(); else onSelect("yhwh"); }}
           data-orbit-name="yhwh"
+          data-elastic-node="yhwh"
           onKeyDown={(event) => onOrbitKeyDown(event, "yhwh")}
           onPointerEnter={() => setFocusedId("yhwh")}
           onFocus={() => setFocusedId("yhwh")}
@@ -241,13 +256,15 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
           return (
             <motion.button
               key={node.name.id}
+              ref={(el) => scene.attachNode(node.name.id, el)}
               type="button"
-              onClick={() => onSelect(node.name.id)}
+              onClick={(event) => { if (scene.suppressClick.current) event.preventDefault(); else onSelect(node.name.id); }}
               data-orbit-name={node.name.id}
+              data-elastic-node={node.name.id}
               onKeyDown={(event) => onOrbitKeyDown(event, node.name.id)}
               onPointerEnter={() => setFocusedId(node.name.id)}
               onFocus={() => setFocusedId(node.name.id)}
-                  initial={reduced ? false : { scale: 0.4, opacity: 0 }}
+              initial={reduced ? false : { scale: 0.4, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.7, delay: 0.9 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
@@ -290,6 +307,10 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
           );
         })}
       </div>
+
+      <p className="mx-auto mt-2 hidden max-w-[660px] text-center font-ui text-[10px] tracking-[0.1em] text-cream-500 md:block">
+        Иллюстрация имён · потяните узел мышью — связи мягко последуют за ним
+      </p>
 
       {/* Orbital focus — readable feedback from keyboard focus, hovered state and active article. */}
       <div className="relative mx-auto mt-5 hidden w-full max-w-[660px] px-2 md:block">
