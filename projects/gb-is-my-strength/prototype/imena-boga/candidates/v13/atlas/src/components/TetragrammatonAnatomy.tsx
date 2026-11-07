@@ -79,7 +79,7 @@ export const TetragrammatonAnatomy: React.FC = () => {
           <div>
             <div
               className="font-ui flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase"
-              style={{ color: 'var(--gb-gold)' }}
+              style={{ color: 'var(--gb-gold-ink)' }}
             >
               <Sparkles className="h-3.5 w-3.5" />
               <span>Четыре буквы тетраграмматона · письмо и контекст</span>
@@ -154,7 +154,7 @@ export const TetragrammatonAnatomy: React.FC = () => {
               >
                 <span
                   className="font-ui text-[10px] font-bold tracking-wider uppercase"
-                  style={{ color: isSelected ? 'var(--gb-accent)' : 'var(--gb-gold)' }}
+                  style={{ color: isSelected ? 'var(--gb-accent)' : 'var(--gb-gold-ink)' }}
                 >
                   {letter.position}
                 </span>
