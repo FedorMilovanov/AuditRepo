@@ -95,4 +95,4 @@ See [`PROJECT_REGISTRY.md`](PROJECT_REGISTRY.md). For `gb-is-my-strength`, start
 
 ## Prototype Lab
 
-Для сохраняемых экспериментальных макетов, сравнений Arena, независимых UI-эталонов и передачи проверенных решений в Product существует [Prototype Lab](PROTOTYPE_LAB.md). Прототипы не заменяют Product source/CI/deploy и не ведут вторую активную матрицу.
+Для сохраняемых экспериментальных макетов, сравнений Arena, независимых UI-эталонов и передачи проверенных решений в Product существует [Prototype Lab](references/PROTOTYPE_LAB.md). Прототипы не заменяют Product source/CI/deploy и не ведут вторую активную матрицу.

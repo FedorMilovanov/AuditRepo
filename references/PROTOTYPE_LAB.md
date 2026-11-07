@@ -8,8 +8,8 @@
 
 | Проект | Эталон / назначение | Текущий статус |
 |---|---|---|
-| `gb-is-my-strength` | [Grok desktop reader](projects/gb-is-my-strength/prototype/grok-desktop-reader/README.md) — отбор UX из версий V16–V26 | Reference; пример [PR #537](https://github.com/FedorMilovanov/AuditRepo/pull/537) |
-| `gb-is-my-strength` | [Book engine v7](projects/gb-is-my-strength/prototype/book-engine/v7/README.md) — книжный движок | Исторический prototype/evidence; проверить актуальность перед использованием |
+| `gb-is-my-strength` | [Grok desktop reader](../projects/gb-is-my-strength/prototype/grok-desktop-reader/README.md) — отбор UX из версий V16–V26 | Reference; пример [PR #537](https://github.com/FedorMilovanov/AuditRepo/pull/537) |
+| `gb-is-my-strength` | [Book engine v7](../projects/gb-is-my-strength/prototype/book-engine/v7/README.md) — книжный движок | Исторический prototype/evidence; проверить актуальность перед использованием |
 | `gb-is-my-strength` | [Имена Бога — Atlas / Созвездие](https://github.com/FedorMilovanov/AuditRepo/pull/538) — два Arena React-флагмана и четыре версии исходников | Draft PR #538, не Product и не live |
 
 Остальные прежние каталоги `prototype/` не нужно массово перемещать или переименовывать ради новой схемы. Новая лаборатория — **общий метод и индекс, а не новая копия всех файлов**.
@@ -45,7 +45,7 @@ projects/<product>/prototype/<experiment>/
 - Подтверждённая необходимая работа: только через реальную повторную проверку в `verified/MASTER_BUG_MATRIX.md`.
 - Исторические версии и доказательства остаются доступными через Git, SHA и локальный reference. Не дублируйте изменчивое состояние Product в документации AuditRepo.
 
-Общие правила: [AuditRepo Operating Model](AUDITREPO_OPERATING_MODEL.md), [Concurrent Edit Protocol](CONCURRENT_EDIT_PROTOCOL.md). Перед Product transfer действуют **его собственные** `AGENTS.md`, `docs/WORK_MODES.md`, `docs/REFERENCE_TRANSFER_POLICY.md` и route registry.
+Общие правила: [AuditRepo Operating Model](../AUDITREPO_OPERATING_MODEL.md), [Concurrent Edit Protocol](../CONCURRENT_EDIT_PROTOCOL.md). Перед Product transfer действуют **его собственные** `AGENTS.md`, `docs/WORK_MODES.md`, `docs/REFERENCE_TRANSFER_POLICY.md` и route registry.
 
 ## Негативные правила
 
