@@ -1,3 +1,5 @@
+> **OWNER VISUAL SIGNOFF IS OPEN (2026-11-07):** Mandatory [OWNER-VISUAL-ACCEPTANCE-2026-11-07.md](../OWNER-VISUAL-ACCEPTANCE-2026-11-07.md). V26 standalone HTML below is the baseline: integrated collapsible rail, NOT a floating rounded TOC card; library is NOT a stray bottom-right bubble. Product V27 deployed but is NOT owner-accepted visually. Compare real screenshots and obtain explicit premium-visual signoff before any closure claim. The old Stage2 status below is a historical snapshot.
+
 > **Product integration update (2026-11-07):** [real Stage 2 browser evidence and handoff](STAGE2-PRODUCT-WITNESS-2026-11-07.md). Stage 1 PR #2284 is still open pending a CI job; Stage 2 is [draft PR #2285](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2285), flag OFF; 401/401 local browser checks green. The standalone V26 HTML below remains a separate design reference, not a deployed implementation.
 
 # Grok Desktop Reader V26 — current handoff
