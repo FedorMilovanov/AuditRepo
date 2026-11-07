@@ -85,7 +85,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
           style={{
             borderColor: 'var(--gb-border-strong)',
             backgroundColor: 'var(--gb-bg)',
-            color: 'var(--gb-gold)',
+            color: 'var(--gb-gold-ink)',
           }}
         >
           <Sparkles className="h-3.5 w-3.5" />
@@ -278,7 +278,7 @@ export const DivineConstellationExplorer: React.FC<DivineConstellationExplorerPr
                     <div className="flex items-center gap-2">
                       <span
                         className="font-ui text-[10px] font-bold tracking-wider uppercase"
-                        style={{ color: 'var(--gb-gold)' }}
+                        style={{ color: 'var(--gb-gold-ink)' }}
                       >
                         № {item.number}
                       </span>
