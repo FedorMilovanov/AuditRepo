@@ -5,7 +5,7 @@
   "baseline": "candidates/v12 08e8a0c4fd66ec09a1501ed1faa3f5e29f95d242",
   "font_ownership": "npm @fontsource and @fontsource-variable pinned 5.3.0 with original SIL OFL texts; no font binaries in git",
   "sha256_policy": "text CRLF->LF, binaries raw",
-  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB)",
+  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota)",
   "files": {
     ".gitignore": {
       "sha256": "28e11cac17af150d7ecff01ce8af56be3eeacc404ae17c2f304ce6b09079bd50",
@@ -146,6 +146,10 @@
     "checks/browser.cjs": {
       "sha256": "c52c807eea81ccd5e04fb584af117bcec301f954254754716b5950b68350566d",
       "bytes_normalized": 4916
+    },
+    "checks/cls_witness.cjs": {
+      "sha256": "71db71c211568214b4f3af3ad1d13e16d4f5b4049036b8fd3dda5b2157d37b1c",
+      "bytes_normalized": 8059
     },
     "checks/delivery_contracts.cjs": {
       "sha256": "a7c1b138cc9bc9c26260d382833cef3a67399f6d264142baf6905e82688f3274",
