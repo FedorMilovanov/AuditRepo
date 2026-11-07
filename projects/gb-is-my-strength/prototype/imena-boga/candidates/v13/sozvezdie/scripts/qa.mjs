@@ -115,6 +115,37 @@ const boxesOverlap = (a, b) =>
   unlabelled.length === 0 ? ok("every radial node is labelled") : bad("unlabelled nodes: " + unlabelled.length);
   const off = treeNodes.filter((n) => n.x < 0 || n.x + n.w > 1440);
   off.length === 0 ? ok("radial nodes inside viewport") : bad("radial nodes offscreen: " + off.length);
+
+  // The scene illustrates names; there is no orbit simulator or rotating rings.
+  const ringAnimations = await page.locator('#tsentr [data-scene-ring]').evaluateAll(
+    els => els.map(el => getComputedStyle(el).animationName),
+  );
+  ringAnimations.length === 2 && ringAnimations.every(n => n === 'none')
+    ? ok("illustration rings are fixed; no endless rotation")
+    : bad("unexpected orbit animation: " + JSON.stringify(ringAnimations));
+
+  const strands = await page.locator('#tsentr [data-scene-strand]').evaluateAll(els => els.map(el => {
+    const id = el.getAttribute('data-scene-strand');
+    const node = [...document.querySelectorAll('#tsentr [data-orbit-name]')].find(btn => btn.getAttribute('data-orbit-name') === id);
+    const coords = (el.getAttribute('d') || '').match(/-?[0-9]+(?:[.][0-9]+)?/g)?.map(Number) || [];
+    if (!node || coords.length < 4) return { id, bad: true };
+    const x = parseFloat(node.style.left), y = parseFloat(node.style.top);
+    const ex = coords[coords.length - 2], ey = coords[coords.length - 1];
+    return { id, startDistance: Math.hypot(coords[0] - 50, coords[1] - 50),
+      endDistance: Math.hypot(ex - x, ey - y) };
+  }));
+  strands.length === 12 && strands.every(v => v.startDistance >= 10.0 && v.endDistance >= 3.3)
+    ? ok("all 12 strands stop outside root and name-disc edges")
+    : bad("scene strands intersect nodes: " + JSON.stringify(strands.filter(v => v.bad || v.startDistance < 10 || v.endDistance < 3.3)));
+
+  const masks = await page.locator('#tsentr [data-scene-caption]').evaluateAll(els => els.map(el => {
+    const color = getComputedStyle(el).backgroundColor;
+    const parts = (color.match(/[0-9.]+/g) || []).map(Number);
+    return { color, alpha: parts.length >= 4 ? parts[3] : parts.length === 3 ? 1 : 0 };
+  }));
+  masks.length === 24 && masks.every(x => x.alpha >= 0.99)
+    ? ok("24 captions have opaque strand masks")
+    : bad("missing/transparent captions: " + JSON.stringify(masks.filter(x => x.alpha < 0.99).slice(0, 3)));
   await page.screenshot({ path: join(tmpdir(), "shot-tree-desktop.png") });
 
   // grid: 29 cards
@@ -360,9 +391,22 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
   const ov = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   ov <= 1 ? ok(`no h-overflow at ${w} (hero)`) : bad(`h-overflow ${ov}px at ${w} hero`);
 
-  // tree labels must not collide
+  // Quiet mobile illustration; the accessible branch list remains the only
+  // interactive navigation instead of exposing an orbit-control editor.
   await page.locator("#tsentr").scrollIntoViewIfNeeded();
   await page.waitForTimeout(1400);
+  const preview = page.locator('#tsentr [data-scene-mobile-preview]');
+  const previewBounds = await preview.boundingBox();
+  previewBounds && previewBounds.x >= -1 && previewBounds.x + previewBounds.width <= w + 1
+    ? ok(`mobile name illustration fits @${w}`)
+    : bad(`mobile illustration clipped @${w}: ` + JSON.stringify(previewBounds));
+  (await preview.locator('button,input,[role="slider"]').count()) === 0
+    ? ok(`no orbit settings exposed @${w}`)
+    : bad(`unwanted orbit editor @${w}`);
+  const libraryTarget = await page.locator('header a[aria-label="Библиотека статей"]').boundingBox();
+  libraryTarget && libraryTarget.height >= 44 && libraryTarget.width >= 44 && libraryTarget.x + libraryTarget.width <= w + 1
+    ? ok(`library navigation tap target >=44px @${w}`)
+    : bad(`library tap target clipped/small @${w}: ` + JSON.stringify(libraryTarget));
   const rows = await page.locator("#tsentr button:visible").evaluateAll((els) =>
     els.map((e) => {
       const r = e.getBoundingClientRect();
