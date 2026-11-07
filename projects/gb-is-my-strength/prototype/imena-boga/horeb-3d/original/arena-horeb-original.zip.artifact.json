@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "path": "projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/original/arena-horeb-original.zip",
+  "sha256": "c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9",
+  "sizeBytes": 378979,
+  "purpose": "Immutable original Arena Agent HOREB 3D source export for reproducible prototype continuation, provenance verification, and forensic recovery.",
+  "provenance": "User-supplied archive named ---.zip, received in the 2026-11-08 ChatGPT conversation; verified byte-identical and unpacked only into the isolated HOREB 3D Prototype Lab working source. No external download.",
+  "retention": "Keep the original immutable archive and its sidecar together as the baseline of Draft PR #543 for as long as the HOREB prototype is actively developed and for long-term source provenance after any approved Product handoff. Reassess on explicit retirement, not automated cleanup."
+}
