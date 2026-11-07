@@ -43,3 +43,48 @@
 5. После подтверждения визуальной цели: одна ограниченная Product-ветка, точные browser/CI guards, скриншотная приёмка, merge, настоящий live SHA + повторные снимки и финальная передача. Не останавливать работу на «тесты зелёные», если вид не принят.
 
 **Последнее слово владельца:** «Совсем не то, что я хотел, зачем мы столько улучшали макет? … без в отдельном окне оглавление, а уже по формату нашего макета, со сворачиваемостью ещё … только через скриншоты приёмка премиально вылизанные качественные! Доводим до идеала». Передать эту претензию следующим агентам как **актуальный открытый визуальный дефект**, а не как завершённый V27.
+
+## 5. Новый эталон Grok Focus V17 и реальная реализация — 7 ноября 2026
+
+**Источник владельца:** приложенный `grok-focus-web-layout (1).zip`, SHA-256 `b47b5ae562ce92a64291651af8a2f6b142decb80236b68dcb343ae880b01f5cb`. Содержит React/Vite-прототип (`src/index.css`, `Sidebar.tsx`, `Reader.tsx`, `qa16.mjs`, `qa17.mjs`). Это **дизайнерский эталон, а не замена Product/Astro runtime**. Не переписывать ReaderState, Search, PlayEmber, GBReaderLibrary V3, Theme, source rights и OverlayRuntime заново.
+
+**Утверждённое направление, ожидающее визуальной приёмки:**
+
+- Левое оглавление — непрерывная часть макета **без отдельной закруглённой карточки**; тонкая минималистичная кнопка сворачивания без тяжёлой квадратной рамки.
+- Реальный focus mode: 68px левая рейка; редакционный текст расширяется **46rem → 51rem**; переход мягкий, без скачка scroll, URL и горизонтального переполнения.
+- Правая группа тема/поиск/PlayEmber/закладка исчезает с правой стороны и появляется в левой компактной рейке как **те же реальные DOM-узлы с единственным действующим обработчиком**, не новые клоны. Не возвращать двойное делегирование кликов (`data-fc-root` внутри другого `data-fc-root`).
+- Линия прогресса и точки разделов H2 должны иметь **одну измеренную оптическую ось**, без кривого смещения при вложенности; аккуратный active/hover/focus, полноценные светлая/сепия/ночная темы.
+- До первого H2 отображать «Введение», не «0/10». Сохранить прежнюю типографику статьи, права TMSJ, ссылки на источник, поведение мобильного оглавления и доступность.
+- **Не принимать по зелёному CI**: показывать реальные браузерные скриншоты нового Product и *настоящего* live production, а также V26/V17 референсы. Валидация Play/Save/Search/Library, WebKit, short viewport, reduced-motion и WCAG обязательна.
+
+**Рабочая реализация:** [Product PR #2292](https://github.com/FedorMilovanov/gb-is-my-strength/pull/2292), точный HEAD `3a8e8a677afcfcb8d3c202efb2142d8c299f9b14`; **Draft, НЕ опубликован и НЕ принят владельцем**. Технический перенос V17 и разграничение ответственности описаны в [Product docs/GROK_V17_FOCUS_OWNER_REFERENCE_2026-11-07.md](https://github.com/FedorMilovanov/gb-is-my-strength/blob/lane/grok-premium-integrated-rail-20261107/docs/GROK_V17_FOCUS_OWNER_REFERENCE_2026-11-07.md). Проверка локальной сборки: Astro 111 страниц, Grok **306/306** Chromium/Firefox/WebKit, keyboard **252/252**, theme/print **72/72**, реальная Library **27/27**, Library V3 **8/8**, компактные действия **15/15**. CI на GitHub перепроверять для актуального HEAD; эти числа не равны согласию владельца.
+
+**Настоящие скриншоты на ПК владельца:** `E:\GROK_READER_V17_PREMIUM_VISUAL_ACCEPTANCE_2026-11-07.zip`, 27 JPEG с provenance, SHA-256 `bb0f5aadbe90ae7bab304126561ddfcd0bb9076dafe94e0a0fb0ff4cc90ff309`. Раздельно: текущий публичный сайт (проверенный releaseSha/controlPlaneSha `5e2db6f0fdd0257818f1a215fca16d4cc884e2d8`), новый локальный Product кандидат, исторический V27 и V26 reference. Локальная версия для просмотра **только на устройстве владельца:** `http://127.0.0.1:8766/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/`.
+
+**STOP-SHIP:** пока владелец не сказал «принимаю» после скриншотов, **не мержить Product PR #2292**, не утверждать, что V17 вышел на прод. После приёмки — полный CI на точный HEAD, merge, GitHub Pages, публичный SHA и свежие live screenshots. Не плодить новые ветки с дизайном; продолжать в PR #2292.
+
+## 6. PlayEmber — премиальное раскрытие скоростей (7 ноября 2026)
+
+Владелец предоставил два снимка фактического Reader: в компактной рейке нажатие Play не предлагало скорости, а раскрытая справа панель показывала наложенные окружности и обводки. Не менять принцип горизонтального выдвижения, но выполнить качественную геометрию.
+
+- Единственный штатный PlayEmber, существующее меню из пяти скоростей 1× / 1.25× / 1.5× / 1.75× / 2×. Не создавать второе меню, новые TTS-обработчики или клоны кнопок.
+- Справа в обычном режиме полоса выдвигается влево от Play. В свёрнутой рейке 68px — вправо от Play. Отступы и высота оптически центрированы, нет двойных рамок, тонких пересекающихся колец и плавающего чёрного бейджа 1×.
+- Первый клик Play из idle в компактной рейке открывает выбор скорости БЕЗ запуска чтения. Нажатие нужной скорости сохраняет gb:audio:rate и запускает canonical GBReaderTTS. При воспроизведении кнопка по-прежнему означает паузу/продолжение.
+- Источники истины: src/runtime/reader-tts.js (capture/playback), js/floating-cluster-controller.js (PlayEmber/radiogroup), ReaderRail.astro (Grok-only геометрия). Одно кольцо прогресса только при playback, один тонкий контур в покое.
+- В компактной рейке поповер ~195px, не заходит на буквы заголовка при ширине 1440px. Принятие по настоящим Chromium/WebKit, 1440×900 и 1440×300, light/dark, click/rate/playback, клавиатуре, overflow и JS console.
+
+Исправления внедрены в единственный Product PR #2292: https://github.com/FedorMilovanov/gb-is-my-strength/pull/2292. Код: 094b2273134d95cde02e65a498cb64446ca342a2. QA: Grok 318/318 PASS в трёх движках, speed 46/46 Chromium/WebKit, Speedrail SSR 68 маршрутов × 2 браузера, TTS runtime PASS, Keyboard 252/252. Владельческий архив E:\GROK_READER_PLAYEMBER_PREMIUM_2026-11-07.zip; SHA-256 3c80e2c4bcaae6bba720fe6ab54de9575595fcc813adaf1389c0a00933a02db8. Снимки: код 7764809cf, последний 094b изменил только хеши ссылок на ресурсы; никакого нового production.
+
+STOP-SHIP: PR остаётся Draft до явной визуальной приёмки владельцем и полного CI на точном HEAD. Не объявлять работу опубликованной.
+
+## 7. Reader overlay dismissal and selected icon — 2026-11-07
+
+Owner supplied screenshot of overlapping «Настройки чтения» and «Разделы сайта»: site menu stayed open after clicking empty space, settings could open over it. Owner also selected the FIRST GPT-generated collapse icon, asking to enlarge the simple arrow.
+
+- REAL Product fix in existing draft PR #2292, commit 7554774ead4932686a2c175f787cb8ac6ef5ab09. Keep the first icon's minimalist left-fold rail/chevron, but render it at 23px with a larger 5.25-unit arrow. Do not restore the coarse box or invent more versions.
+- Desktop site menu is an anchored popover: dismiss on pointerdown outside both panel and trigger. Native mobile backdrop, Escape, focus restoration and canonical OverlayRuntime are preserved.
+- Opening ReaderSettings requests close of canonical site-sections-menu; opening SiteSectionsMenu requests close of reader-settings. NEVER leave both owned overlays on screen or add CSS z-index hacks to hide the duplicate. Settings closes on its backdrop/close button/Done/Escape; second native hm:open-settings event toggles closed.
+- Genuine browser acceptance on Product local Astro build: 120/120 PASS Chromium/Firefox/WebKit (1200,1440,1920, expanded and compact rail). Persistent Product CI script scripts/grok-reader-overlay-lifecycle-browser-test.mjs: 96/96 PASS Chromium/Firefox/WebKit (1200/1440), and 144 site-menu filter assertions PASS across three actual routes. Built 111 Astro pages.
+- Owner screenshot archive on authorized PC: E:\GROK_READER_OVERLAY_ARROW_V17_ACCEPTANCE_2026-11-07.zip, SHA-256 852a04a824e31a936cbd761e42c161ebfe1f5c1ee52af5b022505dd7d29aadf0. Contains 14 actual Chrome/WebKit local Product screenshots, 4 enlarged crops of same captures, source provenance and test logs. Candidate preview: http://127.0.0.1:8766/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/ (local machine only).
+
+STOP SHIP remains active: Product PR #2292 is Draft until owner visually approves and exact-HEAD GitHub CI succeeds. Production Ledger previously remained 5e2db6f0fdd0257818f1a215fca16d4cc884e2d8; new overlay/icon changes are NOT live.
