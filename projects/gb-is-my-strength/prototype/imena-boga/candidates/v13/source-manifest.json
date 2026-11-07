@@ -5,7 +5,7 @@
   "baseline": "candidates/v12 08e8a0c4fd66ec09a1501ed1faa3f5e29f95d242",
   "font_ownership": "npm @fontsource and @fontsource-variable pinned 5.3.0 with original SIL OFL texts; no font binaries in git",
   "sha256_policy": "text CRLF->LF, binaries raw",
-  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing); High-contrast gold ink token, 33 text elements, 4 viewports x 3 themes, Chromium/WebKit: PENDING exact-head CI; 2026-11-07 one-candidate Constellation scene, mobile static art, masked 24 captions, fixed orbit guides, tested geometry, responsive header, palette integrity guard: exact-head QA PENDING; 2026-11-08 Atlas legible independent scroll rail and Arena-derived spring-linked Constellation (no orbit controls), responsive browser QA: exact-head CI PENDING; atlas pillar filament no text overlap and full two-line rail headings: exact-head CI PENDING; Atlas desktop navigation brand no truncation after wider header: exact-head browser CI pending; 2026-11-08 precise live DOM circle-edge strands+thread, spring-linked center, geometry during/after drag: exact-head CI PENDING",
+  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing); High-contrast gold ink token, 33 text elements, 4 viewports x 3 themes, Chromium/WebKit: PENDING exact-head CI; 2026-11-07 one-candidate Constellation scene, mobile static art, masked 24 captions, fixed orbit guides, tested geometry, responsive header, palette integrity guard: exact-head QA PENDING; 2026-11-08 Atlas legible independent scroll rail and Arena-derived spring-linked Constellation (no orbit controls), responsive browser QA: exact-head CI PENDING; atlas pillar filament no text overlap and full two-line rail headings: exact-head CI PENDING; Atlas desktop navigation brand no truncation after wider header: exact-head browser CI pending; 2026-11-08 precise live DOM circle-edge strands+thread, spring-linked center, geometry during/after drag: exact-head CI PENDING; central sphere immediate drag follow and explicit pointer capture QA exact-head pending",
   "files": {
     ".gitignore": {
       "sha256": "28e11cac17af150d7ecff01ce8af56be3eeacc404ae17c2f304ce6b09079bd50",
@@ -228,8 +228,8 @@
       "bytes_normalized": 1371
     },
     "sozvezdie/scripts/qa.mjs": {
-      "sha256": "3386c25dfd1452bcf42957f288a51b13809f6a1add5d2762cb19b7663e1fd626",
-      "bytes_normalized": 36281
+      "sha256": "e7318f1745a45a21b59336baa9d492e9c61b2f08499607fc523734d59963eae8",
+      "bytes_normalized": 36579
     },
     "sozvezdie/src/App.tsx": {
       "sha256": "71402e4c603598ed45611db88a6dcd1d194600910b1de4786c8b11982c7d8364",
@@ -300,8 +300,8 @@
       "bytes_normalized": 3630
     },
     "sozvezdie/src/components/useElasticConstellation.ts": {
-      "sha256": "a590bcd97d5ceb0aea59ff4972c872ab6ab5007205568a4112294a7f78dce49f",
-      "bytes_normalized": 13313
+      "sha256": "27cd660b50a469ca14c77121fe7e002cfc1fc224daa4e5366a9b7cb4815f9bf5",
+      "bytes_normalized": 13928
     },
     "sozvezdie/src/data/names.ts": {
       "sha256": "10944786fdb844939549831edb18f38e972e820480fe1ebb0f0e2daa744e285f",
