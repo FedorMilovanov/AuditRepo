@@ -10,16 +10,23 @@ const widths = (process.env.VIEWPORTS || '390').split(',').map(Number);
 const repeats = Number(process.env.CLS_RUNS || 3);
 const maxCls = process.env.MAX_CLS === undefined ? null : Number(process.env.MAX_CLS);
 const variants = (process.env.CLS_VARIANTS || 'baseline').split(',').map(v => v.trim());
-const allowed = new Set(['baseline', 'hero-preload']);
+const allowed = new Set(['baseline', 'hero-preload', 'core-only']);
+const apps = (process.env.CLS_APPS || 'atlas,sozvezdie').split(',').map(v => v.trim());
+if (!apps.length || apps.length !== new Set(apps).size || apps.some(v => !['atlas', 'sozvezdie'].includes(v))) throw Error('Invalid CLS_APPS');
 if (variants.length !== new Set(variants).size || variants.some(v => !allowed.has(v))) throw Error('CLS_VARIANTS must use baseline,hero-preload');
 const criticalFontPrefixes = {
   atlas: ['playfair-display-cyrillic-700-normal-', 'lora-cyrillic-wght-normal-'],
   sozvezdie: ['cormorant-garamond-cyrillic-600-normal-', 'eb-garamond-cyrillic-400-italic-', 'frank-ruhl-libre-hebrew-400-normal-']
 };
+const coreFontPrefixes = {
+  atlas: ['playfair-display-cyrillic-700-normal-', 'playfair-display-cyrillic-400-italic-'],
+  sozvezdie: ['cormorant-garamond-cyrillic-600-normal-', 'eb-garamond-cyrillic-400-italic-']
+};
 const fontAssets = {};
-function findCriticalFonts(app) {
+const coreAssets = {};
+function findCriticalFonts(app, prefixes = criticalFontPrefixes[app]) {
   const files = fs.readdirSync(path.join(root, app, 'dist', 'assets'));
-  return criticalFontPrefixes[app].map(prefix => {
+  return prefixes.map(prefix => {
     const found = files.filter(name => name.startsWith(prefix) && name.endsWith('.woff2'));
     if (found.length !== 1) throw Error('Expected exactly one critical font ' + app + '/' + prefix + ', got ' + found.length);
     return found[0];
@@ -41,10 +48,11 @@ const server = createServer((req, res) => {
     if (!fs.existsSync(file) || !fs.statSync(file).isFile()) { res.writeHead(404).end(); return; }
     const variant = requestUrl.searchParams.get('fontVariant') || 'baseline';
     if (!allowed.has(variant)) { res.writeHead(400).end('Unknown font variant'); return; }
-    if (file === path.join(dir, 'index.html') && variant === 'hero-preload') {
+    if (file === path.join(dir, 'index.html') && variant !== 'baseline') {
       const html = fs.readFileSync(file, 'utf8');
       if (!html.includes('</head>')) throw Error('Missing HTML head');
-      const links = fontAssets[match[1]].map(name => '<link rel="preload" href="/' + match[1] + '/assets/' + name + '" as="font" type="font/woff2" crossorigin="anonymous">').join('\n');
+      const selectedAssets = variant === 'core-only' ? coreAssets[match[1]] : fontAssets[match[1]];
+      const links = selectedAssets.map(name => '<link rel="preload" href="/' + match[1] + '/assets/' + name + '" as="font" type="font/woff2" crossorigin="anonymous">').join('\n');
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
       res.end(html.replace('</head>', links + '\n</head>'));
       return;
@@ -72,6 +80,7 @@ function median(values) {
   for (const app of ['atlas', 'sozvezdie']) {
     if (!fs.existsSync(path.join(root, app, 'dist', 'index.html'))) throw Error('Build both apps first: missing ' + app + '/dist/index.html');
     fontAssets[app] = findCriticalFonts(app);
+    coreAssets[app] = findCriticalFonts(app, coreFontPrefixes[app]);
   }
   await new Promise((resolve, reject) => server.listen(0, '127.0.0.1', resolve).on('error', reject));
   const origin = 'http://127.0.0.1:' + server.address().port;
@@ -81,7 +90,7 @@ function median(values) {
   const runs = [];
   try {
     browser = await chromium.launch(launch);
-    for (const app of ['atlas', 'sozvezdie']) for (const width of widths) for (let trial = 1; trial <= repeats; trial++) for (const variant of variants) {
+    for (const app of apps) for (const width of widths) for (let trial = 1; trial <= repeats; trial++) for (const variant of variants.slice((trial - 1) % variants.length).concat(variants.slice(0, (trial - 1) % variants.length))) {
       // A fresh context means no font/image cache sharing between trials.
       const context = await browser.newContext({ viewport: { width, height: 844 }, locale: 'ru-RU', reducedMotion: 'reduce' });
       try {
@@ -140,13 +149,13 @@ function median(values) {
     await new Promise(resolve => server.close(resolve));
   }
   const groups = [];
-  for (const app of ['atlas', 'sozvezdie']) for (const width of widths) for (const variant of variants) {
+  for (const app of apps) for (const width of widths) for (const variant of variants) {
     const subset = runs.filter(r => r.app === app && r.width === width && r.variant === variant);
     groups.push({ app, width, variant, medianCLS: median(subset.map(r => r.cls)), minCLS: Math.min(...subset.map(r => r.cls)), maxCLS: Math.max(...subset.map(r => r.cls)),
       medianFontSettledMs: median(subset.map(r => r.fontSettledMs)), medianResourceBytes: median(subset.map(r => r.resourceTransferBytes)), preloadedFonts: subset[0].preloadCount });
   }
   const compactRuns = runs.map(({ shifts, loadedFamilies, ...r }) => ({ ...r, shiftCount: shifts.length, largestShift: shifts.slice().sort((a, b) => b.value - a.value)[0] || null }));
-  const report = { kind: 'synthetic-lab-diagnostic-not-field-web-vitals', settings: { widths, repeats, variants, latencyMs: 150, downloadBytesPerSec: 200000, cpuThrottling: 4, reducedMotion: true, criticalFontPrefixes }, groups, runs: variants.length > 1 ? compactRuns : runs };
+  const report = { kind: 'synthetic-lab-diagnostic-not-field-web-vitals', settings: { apps, widths, repeats, variants, variantOrder: 'rotated-each-trial', latencyMs: 150, downloadBytesPerSec: 200000, cpuThrottling: 4, reducedMotion: true, criticalFontPrefixes, coreFontPrefixes }, groups, runs: variants.length > 1 ? compactRuns : runs };
   console.log(JSON.stringify(report, null, 2));
   if (maxCls !== null && groups.some(g => g.maxCLS > maxCls)) { console.error('CLS threshold exceeded: MAX_CLS=' + maxCls); process.exitCode = 1; }
 })().catch(e => { console.error(e.stack); server.close(); process.exitCode = 1; });
