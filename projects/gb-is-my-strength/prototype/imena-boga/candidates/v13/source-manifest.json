@@ -220,8 +220,8 @@
       "bytes_normalized": 1260
     },
     "sozvezdie/scripts/qa.mjs": {
-      "sha256": "e43cb5849f5c69c298d7da23037028bdcc99e57175763eff4269dea178074766",
-      "bytes_normalized": 25707
+      "sha256": "57590c03f47ae5bda562694c8e2bbbbf528497e62f5e51aa498254e164bb718f",
+      "bytes_normalized": 25968
     },
     "sozvezdie/src/App.tsx": {
       "sha256": "d2fe34bb1ff1013e757e6005e7c32f1543c0e0579c67d6f485e33a7bc7055319",
