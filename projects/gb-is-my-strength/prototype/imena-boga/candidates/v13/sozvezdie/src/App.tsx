@@ -13,6 +13,7 @@ import NameGrid from "./components/NameGrid";
 import ReaderDock from "./components/ReaderDock";
 import { NAMES, PARTS } from "./data/names";
 import { scriptAttrs } from "./utils/script";
+import { BookOpen } from "lucide-react";
 
 export type FontSize = "sm" | "md" | "lg";
 export type Measure = "narrow" | "wide";
@@ -307,10 +308,10 @@ export default function App() {
           scrolled ? "border-b border-gold-500/10 bg-ink-950/85 backdrop-blur-md" : "bg-transparent"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-1.5 sm:gap-4 sm:px-6">
           <a
             href="https://gospod-bog.ru"
-            className="shrink-0 font-ui text-[10px] font-medium uppercase tracking-[0.35em] text-cream-300 transition-colors hover:text-gold-300"
+            className="flex min-h-11 min-w-0 shrink items-center whitespace-nowrap font-ui text-[10px] font-medium uppercase tracking-[0.1em] text-cream-300 transition-colors hover:text-gold-300 min-[400px]:tracking-[0.25em] lg:tracking-[0.35em]"
           >
             Господь Бог — Сила Моя
           </a>
@@ -343,10 +344,12 @@ export default function App() {
 
           <a
             href="https://gospod-bog.ru/articles/"
-            className="group flex shrink-0 items-center gap-2 font-ui text-[10px] font-medium uppercase tracking-[0.35em] text-cream-500 transition-colors hover:text-gold-300"
+            aria-label="Библиотека статей"
+            className="group flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 whitespace-nowrap font-ui text-[10px] font-medium uppercase tracking-[0.25em] text-cream-500 transition-colors hover:text-gold-300 lg:tracking-[0.35em]"
           >
-            Библиотека
-            <span className="h-1 w-1 rotate-45 bg-gold-500 transition-transform duration-300 group-hover:rotate-[135deg]" />
+            <BookOpen className="h-4 w-4 text-gold-400 min-[400px]:hidden" strokeWidth={1.5} aria-hidden="true" />
+            <span className="hidden min-[400px]:inline">Библиотека</span>
+            <span aria-hidden="true" className="hidden h-1 w-1 rotate-45 bg-gold-500 transition-transform duration-300 group-hover:rotate-[135deg] min-[400px]:inline-block" />
           </a>
         </div>
       </motion.header>
