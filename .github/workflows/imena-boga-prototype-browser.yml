@@ -56,16 +56,13 @@ jobs:
           ENGINE=chromium npm test
           ENGINE=webkit npm test
 
-      - name: Measure paired cold-load CLS A/B (no promotion without evidence)
+      - name: Control preload choice with balanced baseline/full/core-only trials
         shell: bash
-        env:
-          VIEWPORTS: "320,390,768,1440"
-          CLS_VARIANTS: "baseline,hero-preload"
-          CLS_RUNS: "3"
         run: |
           set -euo pipefail
           cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/checks
-          node cls_witness.cjs
+          CLS_APPS=atlas VIEWPORTS=768 CLS_RUNS=3 CLS_VARIANTS=baseline,hero-preload,core-only node cls_witness.cjs
+          CLS_APPS=sozvezdie VIEWPORTS=320,390 CLS_RUNS=3 CLS_VARIANTS=baseline,hero-preload,core-only node cls_witness.cjs
 
       - name: Reproduce Constellation's full browser QA with its pinned Playwright
         shell: bash
