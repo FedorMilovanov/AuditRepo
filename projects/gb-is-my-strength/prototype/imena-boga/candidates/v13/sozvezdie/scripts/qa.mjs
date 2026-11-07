@@ -3,8 +3,21 @@ import { createServer } from "node:http";
 import { readFileSync, existsSync } from "node:fs";
 import { join, extname, resolve, sep } from "node:path";
 import { tmpdir } from "node:os";
+import { statfsSync } from "node:fs";
 
 const ROOT = resolve("dist");
+const MIN_QA_FREE_GIB = 1;
+// Guard the owner's computer before any screenshot-heavy headless QA.
+// Read-only: never clean user files or other agents' work automatically.
+for (const location of new Set([ROOT, tmpdir()])) {
+  const fsStats = statfsSync(location, { bigint: true });
+  const freeGiB = Number(fsStats.bavail * fsStats.bsize) / 1073741824;
+  if (freeGiB < MIN_QA_FREE_GIB) {
+    throw new Error("QA_DISK_BUDGET: " + freeGiB.toFixed(2) +
+      " GiB free at " + location + "; need >= " + MIN_QA_FREE_GIB +
+      " GiB before Playwright screenshots. Clean only proven disposable QA caches.");
+  }
+}
 const MIME = { ".html": "text/html; charset=utf-8", ".jpg": "image/jpeg", ".png": "image/png", ".svg": "image/svg+xml", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".woff2": "font/woff2" };
 
 const server = createServer((req, res) => {
