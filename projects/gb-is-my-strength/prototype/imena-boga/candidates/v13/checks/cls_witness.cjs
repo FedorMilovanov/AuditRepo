@@ -10,10 +10,10 @@ const widths = (process.env.VIEWPORTS || '390').split(',').map(Number);
 const repeats = Number(process.env.CLS_RUNS || 3);
 const maxCls = process.env.MAX_CLS === undefined ? null : Number(process.env.MAX_CLS);
 const variants = (process.env.CLS_VARIANTS || 'baseline').split(',').map(v => v.trim());
-const allowed = new Set(['baseline', 'hero-preload', 'core-only']);
+const allowed = new Set(['baseline', 'hero-preload', 'core-only', 'responsive-core']);
 const apps = (process.env.CLS_APPS || 'atlas,sozvezdie').split(',').map(v => v.trim());
 if (!apps.length || apps.length !== new Set(apps).size || apps.some(v => !['atlas', 'sozvezdie'].includes(v))) throw Error('Invalid CLS_APPS');
-if (variants.length !== new Set(variants).size || variants.some(v => !allowed.has(v))) throw Error('CLS_VARIANTS must use baseline,hero-preload');
+if (variants.length !== new Set(variants).size || variants.some(v => !allowed.has(v))) throw Error('CLS_VARIANTS must use known unique variants');
 const criticalFontPrefixes = {
   atlas: ['playfair-display-cyrillic-700-normal-', 'lora-cyrillic-wght-normal-'],
   sozvezdie: ['cormorant-garamond-cyrillic-600-normal-', 'eb-garamond-cyrillic-400-italic-', 'frank-ruhl-libre-hebrew-400-normal-']
@@ -51,8 +51,9 @@ const server = createServer((req, res) => {
     if (file === path.join(dir, 'index.html') && variant !== 'baseline') {
       const html = fs.readFileSync(file, 'utf8');
       if (!html.includes('</head>')) throw Error('Missing HTML head');
-      const selectedAssets = variant === 'core-only' ? coreAssets[match[1]] : fontAssets[match[1]];
-      const links = selectedAssets.map(name => '<link rel="preload" href="/' + match[1] + '/assets/' + name + '" as="font" type="font/woff2" crossorigin="anonymous">').join('\n');
+      const selectedAssets = variant === 'core-only' || variant === 'responsive-core' ? coreAssets[match[1]] : fontAssets[match[1]];
+      const media = variant === 'responsive-core' ? ' media="(min-width: 360px)"' : '';
+      const links = selectedAssets.map(name => '<link rel="preload" href="/' + match[1] + '/assets/' + name + '" as="font" type="font/woff2" crossorigin="anonymous"' + media + '>').join('\n');
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
       res.end(html.replace('</head>', links + '\n</head>'));
       return;
@@ -133,13 +134,14 @@ function median(values) {
           fontRequests: performance.getEntriesByType('resource').filter(r => /\.woff2?(?:\?|$)/.test(r.name)).length,
           resourceTransferBytes: performance.getEntriesByType('resource').reduce((n, r) => n + (r.transferSize || 0), 0),
           preloadCount: document.querySelectorAll('link[rel="preload"][as="font"]').length,
+          activePreloads: [...document.querySelectorAll('link[rel="preload"][as="font"]')].filter(e => !e.media || matchMedia(e.media).matches).length,
           viewport: document.documentElement.clientWidth,
           scrollWidth: document.documentElement.scrollWidth
         }));
         if (!witness.supported || witness.fontStatus !== 'loaded' || witness.scrollWidth > witness.viewport + 1 || errors.length || failed.length || externalFonts.length)
           throw Error(JSON.stringify({ app, width, trial, variant, witness, errors, failed, externalFonts }));
         const entries = witness.entries.sort((a, b) => a.startTime - b.startTime);
-        runs.push({ app, width, trial, variant, cls: maxSessionWindow(entries), fontSettledMs: Math.round(fontSettled), fontRequests: witness.fontRequests, resourceTransferBytes: witness.resourceTransferBytes, preloadCount: witness.preloadCount,
+        runs.push({ app, width, trial, variant, cls: maxSessionWindow(entries), fontSettledMs: Math.round(fontSettled), fontRequests: witness.fontRequests, resourceTransferBytes: witness.resourceTransferBytes, preloadCount: witness.preloadCount, activePreloads: witness.activePreloads,
           loadedFamilies: [...new Set(witness.fonts)].sort(), shifts: entries });
         console.log(app + ' ' + width + 'px ' + variant + ' run ' + trial + '/' + repeats + ': CLS ' + runs[runs.length - 1].cls);
       } finally { await context.close(); }
@@ -152,7 +154,7 @@ function median(values) {
   for (const app of apps) for (const width of widths) for (const variant of variants) {
     const subset = runs.filter(r => r.app === app && r.width === width && r.variant === variant);
     groups.push({ app, width, variant, medianCLS: median(subset.map(r => r.cls)), minCLS: Math.min(...subset.map(r => r.cls)), maxCLS: Math.max(...subset.map(r => r.cls)),
-      medianFontSettledMs: median(subset.map(r => r.fontSettledMs)), medianResourceBytes: median(subset.map(r => r.resourceTransferBytes)), preloadedFonts: subset[0].preloadCount });
+      medianFontSettledMs: median(subset.map(r => r.fontSettledMs)), medianResourceBytes: median(subset.map(r => r.resourceTransferBytes)), preloadedFonts: subset[0].preloadCount, activePreloadedFonts: subset[0].activePreloads });
   }
   const compactRuns = runs.map(({ shifts, loadedFamilies, ...r }) => ({ ...r, shiftCount: shifts.length, largestShift: shifts.slice().sort((a, b) => b.value - a.value)[0] || null }));
   const report = { kind: 'synthetic-lab-diagnostic-not-field-web-vitals', settings: { apps, widths, repeats, variants, variantOrder: 'rotated-each-trial', latencyMs: 150, downloadBytesPerSec: 200000, cpuThrottling: 4, reducedMotion: true, criticalFontPrefixes, coreFontPrefixes }, groups, runs: variants.length > 1 ? compactRuns : runs };
