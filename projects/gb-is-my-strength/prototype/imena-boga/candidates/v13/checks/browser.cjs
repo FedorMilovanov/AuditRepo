@@ -66,6 +66,34 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     const started=Date.now();
     while(!(painted>0)&&Date.now()-started<4000){await page.waitForTimeout(120);painted=await countPixels(page,'header canvas')}
     if(!(painted>0))throw Error('Atlas Canvas blank '+width);
+    // Verify *rendered* small-label contrast against its actual card surface
+    // in every reader theme, not just the declared CSS tokens.
+    const assertGoldInkContrast = async (expectedTheme) => {
+      await page.waitForFunction(mode => document.documentElement.getAttribute('data-reader-theme') === mode, expectedTheme);
+      const witness = await page.evaluate(() => {
+        const title = [...document.querySelectorAll('span')].find(el =>
+          el.textContent?.trim() === 'Четыре тезиса исследования'
+        );
+        const card = title?.closest('section');
+        if (!title || !card) throw Error('Gold label/card missing');
+        const fg = getComputedStyle(title).color;
+        const bg = getComputedStyle(card).backgroundColor;
+        const luminance = (color) => {
+          const channels = (color.match(/[\\d.]+/g) || []).slice(0, 3).map(Number);
+          if (channels.length !== 3 || channels.some(n => !Number.isFinite(n))) throw Error('Invalid computed color '+color);
+          const linear = channels.map(n => {
+            const x = n / 255;
+            return x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
+          });
+          return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
+        };
+        const a = luminance(fg), b = luminance(bg);
+        return { fg, bg, ratio: (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05) };
+      });
+      if (witness.ratio < 4.5) throw Error('Gold text below WCAG AA: '+JSON.stringify({engine,width,expectedTheme,witness}));
+      return witness.ratio;
+    };
+    const lightContrast = await assertGoldInkContrast('light');
     // Arena-derived reader settings must stay usable at every viewport size.
     const settings=page.getByRole('button',{name:'Настройки чтения и шрифта'});
     if(!(await settings.isVisible()))throw Error('Reader settings trigger hidden '+width);
@@ -83,6 +111,11 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     }));
     if(theme.mode!=='sepia'||theme.chrome!=='#f4ede0')
       throw Error('Theme did not update browser chrome '+JSON.stringify({width,theme}));
+    const sepiaContrast = await assertGoldInkContrast('sepia');
+    await panel.getByRole('button',{name:'Ночная'}).click();
+    const darkContrast = await assertGoldInkContrast('dark');
+    await panel.getByRole('button',{name:'Сепия'}).click();
+    await page.waitForFunction(() => document.documentElement.getAttribute('data-reader-theme') === 'sepia');
     const previousSize=await page.locator('main').first().evaluate(el=>el.style.fontSize);
     await panel.getByRole('button',{name:'Увеличить размер текста в настройках'}).click();
     // Wait for the React commit; browser-specific text autosizing can change
@@ -110,7 +143,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     }));
     if(finalLayout.scroll>finalLayout.viewport+1||errors.length||requests.length)
       throw Error('Reader preferences regression '+JSON.stringify({width,finalLayout,errors,requests}));
-    results.push({name,width,painted,cssLoaded:true,readerPrefs:true,methodDisclosure:true});
+    results.push({name,width,painted,cssLoaded:true,readerPrefs:true,methodDisclosure:true,contrastRatios:{light:lightContrast,sepia:sepiaContrast,dark:darkContrast}});
    }else{
     await page.locator('canvas').first().scrollIntoViewIfNeeded();
     await page.waitForTimeout(250);
