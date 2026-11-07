@@ -170,12 +170,12 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
         </div>
 
         {/* Main Name Display Row: Russian Title + Vocalized Original */}
-        <div className="relative z-10 mt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
+        <div className="relative z-10 mt-5 flex min-w-0 flex-wrap items-center justify-between gap-4">
+          <div className="min-w-0 flex-1">
             <button
               type="button"
               onClick={() => onSelect(entry)}
-              className="font-serif-display cursor-pointer text-left text-2xl sm:text-3xl font-bold tracking-tight transition-colors hover:underline"
+              className="font-serif-display max-w-full cursor-pointer break-words text-left text-2xl sm:text-3xl font-bold tracking-tight transition-colors hover:underline"
               style={{ color: 'var(--gb-ink)' }}
             >
               {entry.transliteration}
@@ -196,7 +196,7 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
             type="button"
             onClick={() => onSelect(entry)}
             title="Нажмите, чтобы открыть полное досье"
-            className="self-start sm:self-center shrink-0 cursor-pointer rounded-xl border px-5 py-3 text-right shadow-sm transition-transform duration-300"
+            className="max-w-full min-w-0 self-start cursor-pointer rounded-xl border px-4 py-3 text-right shadow-sm transition-transform duration-300 sm:self-center sm:px-5"
             style={{
               backgroundColor: 'var(--gb-bg)',
               borderColor: 'var(--gb-gold)',
@@ -204,9 +204,11 @@ export const DivineNameTiltCard: React.FC<DivineNameTiltCardProps> = ({
             }}
           >
             <div
+              lang={entry.language === 'greek' ? 'el' : entry.language === 'aramaic' ? 'arc' : 'he'}
+              dir={entry.language === 'greek' ? 'ltr' : 'rtl'}
               className={`${
                 entry.language === 'greek' ? 'font-greek' : 'font-hebrew'
-              } text-2xl sm:text-3xl md:text-4xl font-bold leading-tight`}
+              } break-words text-xl sm:text-3xl md:text-4xl font-bold leading-tight`}
               style={{
                 color: 'var(--gb-ink)',
                 textShadow: isActive ? '0 0 18px var(--gb-gold-glow)' : 'none',
