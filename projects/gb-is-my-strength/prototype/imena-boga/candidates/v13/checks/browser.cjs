@@ -60,6 +60,18 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
    if(stats.bodyText<1000||stats.scroll>stats.viewport+1||errors.length||requests.length||!stats.cssLoaded)
     throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests}));
    if(name==='atlas'){
+    if(width>=1024){
+      const rail=await page.evaluate(()=>{
+        const columns=[...document.querySelectorAll('aside[aria-label*="скрижаль имён Бога"]')];
+        const cards=columns.flatMap(col=>[...col.querySelectorAll('.thin-sacred-scroll > div')]);
+        return {columns:columns.length,cards:cards.length,
+          faded:cards.filter(el=>Number(getComputedStyle(el).opacity)<0.95).length,
+          placeholders:columns.filter(el=>el.textContent?.includes('Явится при чтении')).length,
+          headerTruncated:columns.filter(el=>el.scrollWidth>el.clientWidth+2).length};
+      });
+      if(rail.columns!==2||rail.cards!==36||rail.faded!==0||rail.placeholders!==0||rail.headerTruncated!==0)
+        throw Error('Atlas lateral-name rails illegible/clipped '+JSON.stringify({engine,width,rail}));
+    }
     if(width<=390&&stats.medallion&&(stats.medallion.left<0||stats.medallion.right>width))
       throw Error('Medallion clipped '+width);
     let painted=await countPixels(page,'header canvas');
