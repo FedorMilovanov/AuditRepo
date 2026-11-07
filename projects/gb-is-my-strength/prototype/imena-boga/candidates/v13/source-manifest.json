@@ -5,7 +5,7 @@
   "baseline": "candidates/v12 08e8a0c4fd66ec09a1501ed1faa3f5e29f95d242",
   "font_ownership": "npm @fontsource and @fontsource-variable pinned 5.3.0 with original SIL OFL texts; no font binaries in git",
   "sha256_policy": "text CRLF->LF, binaries raw",
-  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI",
+  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (initial TS unused-import failure repaired)",
   "files": {
     ".gitignore": {
       "sha256": "28e11cac17af150d7ecff01ce8af56be3eeacc404ae17c2f304ce6b09079bd50",
@@ -68,8 +68,8 @@
       "bytes_normalized": 27865
     },
     "atlas/src/components/DivineNameTiltCard.tsx": {
-      "sha256": "b1fdcf2b75ebc6da7626297a692469850bbb905320ea2f939652ef4e6eaae3c5",
-      "bytes_normalized": 16165
+      "sha256": "32cc17309ab16003403e7fa700581e1ebfd15853e9a85cb6cf5d28146cb52221",
+      "bytes_normalized": 16399
     },
     "atlas/src/components/FeatureLoadBoundary.tsx": {
       "sha256": "f4412302841d195fc9c1c7e7f0965923ed2b957218a13b505016bc0a2b39670d",
@@ -104,8 +104,8 @@
       "bytes_normalized": 13359
     },
     "atlas/src/components/SiteNavbar.tsx": {
-      "sha256": "26ad48d1cf1bffabae53572a12df7893125c1ce907f49abbaaca26175b990b0f",
-      "bytes_normalized": 20816
+      "sha256": "8cb99ca0ac689f3ec91f17729c11790406682c91b3689d546a0818a038200a07",
+      "bytes_normalized": 20800
     },
     "atlas/src/components/TetragrammatonAnatomy.tsx": {
       "sha256": "81e052013fd3997cb7797f0cdb808a66a19b9c24c77dce8f03cd37982d605fb0",
