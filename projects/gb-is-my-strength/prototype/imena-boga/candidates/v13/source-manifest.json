@@ -5,7 +5,7 @@
   "baseline": "candidates/v12 08e8a0c4fd66ec09a1501ed1faa3f5e29f95d242",
   "font_ownership": "npm @fontsource and @fontsource-variable pinned 5.3.0 with original SIL OFL texts; no font binaries in git",
   "sha256_policy": "text CRLF->LF, binaries raw",
-  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI",
+  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI",
   "files": {
     ".gitignore": {
       "sha256": "28e11cac17af150d7ecff01ce8af56be3eeacc404ae17c2f304ce6b09079bd50",
@@ -52,8 +52,8 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "bb6c3accbc6e4c3643cbfcfc023de723d5de1d5fd07581fcff62b74f978490e8",
-      "bytes_normalized": 59462
+      "sha256": "293e47fad817771858498b13a30368b890c6891521e2bc88036becad0e953058",
+      "bytes_normalized": 63659
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
       "sha256": "ee02262ad7f9980d91c64a0d619737531ee6d6e8a6da57b9b5c2aabb16355374",
@@ -104,8 +104,8 @@
       "bytes_normalized": 13359
     },
     "atlas/src/components/SiteNavbar.tsx": {
-      "sha256": "c20627feec036b7bae4a00c5e96e952fab2e1d0d9d0e3f8bfd5b25763fc5ff1a",
-      "bytes_normalized": 13768
+      "sha256": "26ad48d1cf1bffabae53572a12df7893125c1ce907f49abbaaca26175b990b0f",
+      "bytes_normalized": 20816
     },
     "atlas/src/components/TetragrammatonAnatomy.tsx": {
       "sha256": "81e052013fd3997cb7797f0cdb808a66a19b9c24c77dce8f03cd37982d605fb0",
@@ -144,8 +144,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "c52c807eea81ccd5e04fb584af117bcec301f954254754716b5950b68350566d",
-      "bytes_normalized": 4916
+      "sha256": "b2a9aa6ee1a6c9e313a9b6f06bc6b5efb7efbb2df3a8d9c5c68f0c1ac54a1ae2",
+      "bytes_normalized": 7582
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
