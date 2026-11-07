@@ -93,15 +93,15 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
         }}
       />
 
-      <div className="mx-auto flex h-full max-w-6xl min-w-0 items-center justify-between gap-2 px-3 sm:gap-3 sm:px-6">
+      <div className="mx-auto flex h-full max-w-[1680px] min-w-0 items-center justify-between gap-2 px-3 sm:gap-3 sm:px-6">
         {/* Authentic gospod-bog.ru Brand Logo */}
         <a
           href="#top"
-          className="group flex min-w-0 shrink items-center gap-1.5 overflow-hidden text-decoration-none select-none"
+          className="group flex min-w-0 shrink items-center gap-1.5 overflow-hidden text-decoration-none select-none xl:shrink-0"
           aria-label="Господь Бог — Сила Моя — в начало статьи"
         >
           <span
-            className="font-serif-display min-w-0 truncate text-base sm:text-[17px] font-bold tracking-wide transition-all"
+            className="font-serif-display min-w-0 truncate whitespace-nowrap text-base sm:text-[17px] font-bold tracking-wide transition-all"
             style={{ color: 'var(--gb-ink)' }}
           >
             Господь Бог
