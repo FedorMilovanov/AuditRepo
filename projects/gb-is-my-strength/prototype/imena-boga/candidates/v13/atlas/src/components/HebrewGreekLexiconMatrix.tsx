@@ -116,7 +116,7 @@ export const HebrewGreekLexiconMatrix: React.FC<HebrewGreekLexiconMatrixProps> =
     >
       <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-4" style={{ borderColor: 'var(--gb-border)' }}>
         <div>
-          <div className="font-ui flex items-center gap-2 text-xs font-bold tracking-wider uppercase" style={{ color: 'var(--gb-gold)' }}>
+          <div className="font-ui flex items-center gap-2 text-xs font-bold tracking-wider uppercase" style={{ color: 'var(--gb-gold-ink)' }}>
             <Languages className="h-4 w-4" />
             <span>Лексикографический мост Заветов</span>
           </div>
