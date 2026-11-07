@@ -37,7 +37,7 @@ export const NamesIndexTable: React.FC<NamesIndexTableProps> = ({
         <div>
           <div
             className="font-ui flex items-center gap-2 text-xs font-bold tracking-wider uppercase"
-            style={{ color: 'var(--gb-gold)' }}
+            style={{ color: 'var(--gb-gold-ink)' }}
           >
             <TableProperties className="h-4 w-4" />
             <span>Справочная таблица · для печати и быстрого поиска</span>
@@ -115,7 +115,7 @@ export const NamesIndexTable: React.FC<NamesIndexTableProps> = ({
                         >
                           <td
                             className="font-ui py-2.5 pr-3 align-middle text-xs font-bold tabular-nums"
-                            style={{ color: 'var(--gb-gold)' }}
+                            style={{ color: 'var(--gb-gold-ink)' }}
                           >
                             {item.number}
                           </td>
