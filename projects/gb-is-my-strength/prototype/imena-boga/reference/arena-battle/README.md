@@ -6,7 +6,7 @@
 
 | Сайт / вариант | Единственный рабочий путь | Статус |
 | --- | --- | --- |
-| Астролябия, светлая | `../..//candidates/v13/atlas` (абсолютно: `projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/atlas`) | AuditRepo PR #538, Draft, без релиза |
+| Астролябия, светлая | `projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/atlas` | AuditRepo PR #538, Draft, без релиза |
 | Созвездие, тёмное | `projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/sozvezdie` | AuditRepo PR #538, Draft, без релиза |
 
 Все изменения вносятся в **эти два каталога**, а не во временные `v14`, `v15` или копии `Gallery`, `GalaxyStage` из старых выгрузок.
