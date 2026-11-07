@@ -5,7 +5,7 @@
   "baseline": "candidates/v12 08e8a0c4fd66ec09a1501ed1faa3f5e29f95d242",
   "font_ownership": "npm @fontsource and @fontsource-variable pinned 5.3.0 with original SIL OFL texts; no font binaries in git",
   "sha256_policy": "text CRLF->LF, binaries raw",
-  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing); High-contrast gold ink token, 33 text elements, 4 viewports x 3 themes, Chromium/WebKit: PENDING exact-head CI; 2026-11-07 one-candidate Constellation scene, mobile static art, masked 24 captions, fixed orbit guides, tested geometry, responsive header, palette integrity guard: exact-head QA PENDING; 2026-11-08 Atlas legible independent scroll rail and Arena-derived spring-linked Constellation (no orbit controls), responsive browser QA: exact-head CI PENDING",
+  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing); High-contrast gold ink token, 33 text elements, 4 viewports x 3 themes, Chromium/WebKit: PENDING exact-head CI; 2026-11-07 one-candidate Constellation scene, mobile static art, masked 24 captions, fixed orbit guides, tested geometry, responsive header, palette integrity guard: exact-head QA PENDING; 2026-11-08 Atlas legible independent scroll rail and Arena-derived spring-linked Constellation (no orbit controls), responsive browser QA: exact-head CI PENDING; atlas pillar filament no text overlap and full two-line rail headings: exact-head CI PENDING",
   "files": {
     ".gitignore": {
       "sha256": "28e11cac17af150d7ecff01ce8af56be3eeacc404ae17c2f304ce6b09079bd50",
@@ -80,8 +80,8 @@
       "bytes_normalized": 10418
     },
     "atlas/src/components/LateralNamePillars.tsx": {
-      "sha256": "4495576d1ed1dfb72f92c7f9a6e11d5df2098b5be090490817befcba458d1f7e",
-      "bytes_normalized": 25366
+      "sha256": "5c6fcbd588adc91c9ca58d448b9ce273f49bacd03b56ad3d4d4153eec9e329d7",
+      "bytes_normalized": 25571
     },
     "atlas/src/components/NamesIndexTable.tsx": {
       "sha256": "ffb84d5a6d8d54ac472d8843adcaa56e8f97467dcf436c342a33adb71b580772",
@@ -144,8 +144,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "427503fef8a8efb72178a061110d5c9f6a7f38854d6b1cac229e3c3de231756a",
-      "bytes_normalized": 10905
+      "sha256": "e0fee3135f182463f977ba236932d38851d0072ee1c260d7c7d19c4360a84487",
+      "bytes_normalized": 11438
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
