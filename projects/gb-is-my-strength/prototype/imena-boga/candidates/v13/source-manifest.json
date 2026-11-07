@@ -5,7 +5,7 @@
   "baseline": "candidates/v12 08e8a0c4fd66ec09a1501ed1faa3f5e29f95d242",
   "font_ownership": "npm @fontsource and @fontsource-variable pinned 5.3.0 with original SIL OFL texts; no font binaries in git",
   "sha256_policy": "text CRLF->LF, binaries raw",
-  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota)",
+  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI",
   "files": {
     ".gitignore": {
       "sha256": "28e11cac17af150d7ecff01ce8af56be3eeacc404ae17c2f304ce6b09079bd50",
@@ -140,8 +140,8 @@
       "bytes_normalized": 681
     },
     "atlas/vite.config.ts": {
-      "sha256": "70d823ae4039653439cf6fd3e548478f88f8e6d6a166fd247588e0c218def923",
-      "bytes_normalized": 562
+      "sha256": "55878f9c301019fab5bb908df0ea7d580f7a304b623585655582af1fdd7e4ddf",
+      "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
       "sha256": "c52c807eea81ccd5e04fb584af117bcec301f954254754716b5950b68350566d",
@@ -170,6 +170,10 @@
     "checks/package.json": {
       "sha256": "202070277c15bd00771673e3497cf4bd05dbf4c8ae257ef5d8e5fa7cb1105540",
       "bytes_normalized": 424
+    },
+    "checks/preload_contract.cjs": {
+      "sha256": "3406acdc7bcf9825fcfccca44a1c3fab202e156e4cc5d3b15fc79981c25afb3b",
+      "bytes_normalized": 1588
     },
     "checks/quiz_failure.cjs": {
       "sha256": "98e9eb019847b74875e3e80dbe46c9f4da61a18e4488a5d2c2eaa5c8cb7b185b",
@@ -220,8 +224,8 @@
       "bytes_normalized": 1260
     },
     "sozvezdie/scripts/qa.mjs": {
-      "sha256": "57590c03f47ae5bda562694c8e2bbbbf528497e62f5e51aa498254e164bb718f",
-      "bytes_normalized": 25968
+      "sha256": "f1e9975c40341c64ee805c150e102cdd5e5697af4954e94dc6783382f8bff243",
+      "bytes_normalized": 26212
     },
     "sozvezdie/src/App.tsx": {
       "sha256": "d2fe34bb1ff1013e757e6005e7c32f1543c0e0579c67d6f485e33a7bc7055319",
