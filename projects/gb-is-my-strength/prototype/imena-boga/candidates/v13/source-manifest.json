@@ -5,7 +5,7 @@
   "baseline": "candidates/v12 08e8a0c4fd66ec09a1501ed1faa3f5e29f95d242",
   "font_ownership": "npm @fontsource and @fontsource-variable pinned 5.3.0 with original SIL OFL texts; no font binaries in git",
   "sha256_policy": "text CRLF->LF, binaries raw",
-  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing); High-contrast gold ink token, 33 text elements, 4 viewports x 3 themes, Chromium/WebKit: PENDING exact-head CI",
+  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing); High-contrast gold ink token, 33 text elements, 4 viewports x 3 themes, Chromium/WebKit: PENDING exact-head CI; 2026-11-07 one-candidate Constellation scene, mobile static art, masked 24 captions, fixed orbit guides, tested geometry, responsive header, palette integrity guard: exact-head QA PENDING",
   "files": {
     ".gitignore": {
       "sha256": "28e11cac17af150d7ecff01ce8af56be3eeacc404ae17c2f304ce6b09079bd50",
@@ -223,13 +223,17 @@
       "sha256": "7a86688fbe0b831536a2fb13015c1ec8546bd94b88c7f3c00456a44c4ecdf47c",
       "bytes_normalized": 1260
     },
+    "sozvezdie/scripts/qa-colors.mjs": {
+      "sha256": "0ab191ef461ff3e718230e6853e055c6745ed2e965d5c1d3d205e73a7ac2fc28",
+      "bytes_normalized": 1371
+    },
     "sozvezdie/scripts/qa.mjs": {
-      "sha256": "f1e9975c40341c64ee805c150e102cdd5e5697af4954e94dc6783382f8bff243",
-      "bytes_normalized": 26212
+      "sha256": "dab88ae0475055e1ced829ace058d31de198c9ea08b18b8a3a8d5d17f56e57a6",
+      "bytes_normalized": 29228
     },
     "sozvezdie/src/App.tsx": {
-      "sha256": "d2fe34bb1ff1013e757e6005e7c32f1543c0e0579c67d6f485e33a7bc7055319",
-      "bytes_normalized": 17032
+      "sha256": "71402e4c603598ed45611db88a6dcd1d194600910b1de4786c8b11982c7d8364",
+      "bytes_normalized": 17541
     },
     "sozvezdie/src/assets/sinai-dawn.webp": {
       "sha256": "738437c0e6a36c406144660d5ff60eff6a01965fc4fd8b7f1bf00ce73025958b",
@@ -260,8 +264,8 @@
       "bytes_normalized": 17778
     },
     "sozvezdie/src/components/NameTree.tsx": {
-      "sha256": "e4a83540c97c4bf92c75693513b1412773f7a60dda4d0daa5b41356c88da35e6",
-      "bytes_normalized": 20563
+      "sha256": "85a34a7298536dbdd6b8b1de4d07bdaeedc4ca763020493b3b261fd196ae5cc3",
+      "bytes_normalized": 23357
     },
     "sozvezdie/src/components/PartDivider.tsx": {
       "sha256": "8680812fc00da44ea4e6a6e1ea4b42621105510fd16b26e49de87db2f2ef1782",
