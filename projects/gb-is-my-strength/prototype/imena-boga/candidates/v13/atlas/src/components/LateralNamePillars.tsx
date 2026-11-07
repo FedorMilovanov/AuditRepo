@@ -91,15 +91,16 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
           color: 'var(--gb-muted)',
         }}
       >
-        <div className="flex min-w-0 items-center gap-1.5">
+        <div className="flex min-w-0 flex-col justify-center leading-tight">
           <span
-            className="font-ui min-w-0 truncate font-semibold tracking-wider uppercase"
+            className="font-ui whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.08em]"
             style={{ color: 'var(--gb-gold-ink)' }}
           >
-            {isLeft ? 'Скрижаль I · Основа' : 'Скрижаль II · Завет'}
+            {isLeft ? 'Скрижаль I' : 'Скрижаль II'}
           </span>
-          <span className="font-ui tabular-nums opacity-80">
-            ({revealedCount}/{items.length})
+          <span className="mt-0.5 flex items-center gap-1.5 whitespace-nowrap font-ui text-[10px]">
+            <span>{isLeft ? 'Основа' : 'Завет'}</span>
+            <span className="tabular-nums opacity-80">({revealedCount}/{items.length})</span>
           </span>
         </div>
 
@@ -128,13 +129,13 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
         <div
           aria-hidden="true"
           className={`sacred-filament pointer-events-none absolute top-2 bottom-2 w-[2px] opacity-35 ${
-            isLeft ? 'left-2.5' : 'right-2.5'
+            isLeft ? 'left-0' : 'right-0'
           }`}
         />
         <div
           aria-hidden="true"
           className={`pointer-events-none absolute top-2 w-[2.5px] rounded-full transition-all duration-150 ${
-            isLeft ? 'left-2.5' : 'right-2.5'
+            isLeft ? 'left-0' : 'right-0'
           }`}
           style={{
             height: `${Math.max(4, Math.min(98, scrollProgress * 100))}%`,
@@ -153,7 +154,9 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
           onMouseLeave={() => {
             isHoveredRef.current = false;
           }}
-          className="thin-sacred-scroll pointer-events-auto h-full space-y-2.5 overflow-y-auto overscroll-contain px-1.5 py-2"
+          className={`thin-sacred-scroll pointer-events-auto h-full space-y-2.5 overflow-y-auto overscroll-contain py-2 ${
+            isLeft ? 'pl-4 pr-1' : 'pr-4 pl-1'
+          }`}
         >
           {items.map((item) => {
             const isRevealed = illuminateAll || revealedIds.has(item.id);
