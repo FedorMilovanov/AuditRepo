@@ -64,12 +64,20 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       const rail=await page.evaluate(()=>{
         const columns=[...document.querySelectorAll('aside[aria-label*="скрижаль имён Бога"]')];
         const cards=columns.flatMap(col=>[...col.querySelectorAll('.thin-sacred-scroll > div')]);
+        const lineOverlaps=columns.filter((col,index)=>{
+          const line=col.querySelector('.sacred-filament')?.getBoundingClientRect();
+          const card=col.querySelector('.thin-sacred-scroll > div')?.getBoundingClientRect();
+          if(!line||!card)return true;
+          return index===0 ? line.right > card.left-2 : line.left < card.right+2;
+        }).length;
+        const clippedButtons=columns.flatMap(col=>[...col.querySelectorAll('.thin-sacred-scroll button')])
+          .filter(button=>button.scrollWidth>button.clientWidth+2).length;
         return {columns:columns.length,cards:cards.length,
           faded:cards.filter(el=>Number(getComputedStyle(el).opacity)<0.95).length,
           placeholders:columns.filter(el=>el.textContent?.includes('Явится при чтении')).length,
-          headerTruncated:columns.filter(el=>el.scrollWidth>el.clientWidth+2).length};
+          lineOverlaps,clippedButtons};
       });
-      if(rail.columns!==2||rail.cards!==36||rail.faded!==0||rail.placeholders!==0||rail.headerTruncated!==0)
+      if(rail.columns!==2||rail.cards!==36||rail.faded!==0||rail.placeholders!==0||rail.lineOverlaps!==0||rail.clippedButtons!==0)
         throw Error('Atlas lateral-name rails illegible/clipped '+JSON.stringify({engine,width,rail}));
     }
     if(width<=390&&stats.medallion&&(stats.medallion.left<0||stats.medallion.right>width))
