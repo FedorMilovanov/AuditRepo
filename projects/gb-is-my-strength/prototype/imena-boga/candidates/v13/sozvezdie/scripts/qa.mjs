@@ -70,7 +70,7 @@ async function newPage(width, height, { touch = false } = {}) {
   page.on("pageerror", (e) => errors.push(String(e)));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
   page.on("requestfailed", (r) => {
-    if (!r.url().includes("fonts.g")) errors.push("REQFAIL " + r.url());
+    if (!r.url().includes("fonts.g")) errors.push("REQFAIL " + (r.failure()?.errorText || "unknown") + " " + r.url());
   });
   page.errors = errors;
   return { ctx, page };
@@ -364,16 +364,21 @@ const boxesOverlap = (a, b) =>
     localStorage.setItem("gb-imena-last-v1", "shalom");
     localStorage.setItem("gb-imena-progress-v1", JSON.stringify(["yhwh", "ehyeh"]));
   });
-  // Finish initial font transfers before reload, so navigation does not abort WOFF2.
-  // This is event-driven; it does not ignore genuine font/network failures.
+  // document.fonts.ready covers fonts already needed by this document, but
+  // later CSS/layout can enqueue more WOFF2. Finish network requests BEFORE
+  // deliberately replacing the document. Genuine request errors stay reported.
   await page.evaluate(async () => { await document.fonts.ready; return document.fonts.status; });
-  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.waitForLoadState("networkidle");
+  await page.reload({ waitUntil: "load" });
+  await page.waitForLoadState("networkidle");
   await page.waitForTimeout(2600);
   const resume = page.locator('[aria-label="Продолжить чтение"]');
   (await resume.isVisible()) ? ok("resume banner appears on return") : bad("resume banner missing");
   if (await resume.isVisible()) {
     await resume.getByRole("button").first().click();
     await page.waitForTimeout(1500);
+    await page.evaluate(async () => { await document.fonts.ready; return document.fonts.status; });
+    await page.waitForLoadState("networkidle");
     (await page.evaluate(() => location.hash)) === "#shalom"
       ? ok("resume jumps to saved name")
       : bad("resume jump wrong");
