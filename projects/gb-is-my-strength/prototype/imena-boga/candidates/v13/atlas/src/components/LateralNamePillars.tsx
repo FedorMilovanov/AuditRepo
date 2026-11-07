@@ -91,7 +91,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
         <div className="flex items-center gap-1.5 truncate">
           <span
             className="font-ui font-semibold tracking-wider uppercase truncate"
-            style={{ color: 'var(--gb-gold)' }}
+            style={{ color: 'var(--gb-gold-ink)' }}
           >
             {isLeft ? 'Скрижаль I · Основа' : 'Скрижаль II · Завет'}
           </span>
@@ -215,7 +215,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
                     <span
                       className="font-ui inline-flex items-center gap-1 text-[10px] font-semibold tracking-wider uppercase"
                       style={{
-                        color: isActive ? 'var(--gb-accent)' : 'var(--gb-gold)',
+                        color: isActive ? 'var(--gb-accent)' : 'var(--gb-gold-ink)',
                       }}
                     >
                       <span>№ {item.number}</span>
@@ -490,7 +490,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
             <div className="truncate text-left">
               <div
                 className="font-ui text-[10px] font-semibold tracking-wider uppercase"
-                style={{ color: 'var(--gb-gold)' }}
+                style={{ color: 'var(--gb-gold-ink)' }}
               >
                 Явлено {displayRevealedCount} из {names.length} имён
               </div>
@@ -537,7 +537,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
               <div>
                 <div
                   className="font-ui text-[11px] font-semibold tracking-wider uppercase"
-                  style={{ color: 'var(--gb-gold)' }}
+                  style={{ color: 'var(--gb-gold-ink)' }}
                 >
                   Скрижали Имён Божьих · {displayRevealedCount} / {names.length} открыто
                 </div>
@@ -595,7 +595,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                     <div className="min-w-0">
                       <div
                         className="font-ui text-[10px] font-semibold uppercase"
-                        style={{ color: 'var(--gb-gold)' }}
+                        style={{ color: 'var(--gb-gold-ink)' }}
                       >
                         № {item.number} · {isRevealed ? 'Явлено' : 'Далее в тексте'}
                       </div>
