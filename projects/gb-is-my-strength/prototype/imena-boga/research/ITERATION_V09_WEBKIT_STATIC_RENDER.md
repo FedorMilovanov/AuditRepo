@@ -45,3 +45,15 @@ Canvas 2D полностью очищается присваиванием `canv
 **Не заявляется:** все тесты в Safari iOS, права на фото/шрифты, Lighthouse или стабильная производительность мобильного GPU, эталонные скриншоты, Production маршруты, релиз. Оригиналы и v07/v08 остаются неизменными.
 
 При передаче в Product действуют текущие `AGENTS.md`, `docs/REFERENCE_TRANSFER_POLICY.md`, маршрутные профили, SEO, Reader и Research публикационные gates.
+
+## Fresh checkout 5362734 — повторная независимая верификация
+
+После push создан **новый** sparse checkout непосредственно из `5362734e63dace0942bd35a52704dfaee8d6b361`, а не использована рабочая папка предыдущей проверки. SHA-256 манифест: **58/58 совпадений** (текст после CRLF→LF, бинарные исходники без преобразований).
+
+- `atlas`: свежий `npm ci`, `npm run build`, `npx tsc --noEmit` — **PASS**.
+- `sozvezdie`: свежий `npm ci`, `npm run build`, `npx tsc --noEmit` — **PASS**.
+- `checks/`: свежий `npm ci` с закреплённым `playwright-core@1.62.1` — **PASS**.
+- `ENGINE=webkit FONTS_MODE=offline npm test` на 320/390/768/1440px, два сайта — **8/8 PASS**.
+- `ENGINE=chromium FONTS_MODE=offline CHROMIUM_PATH=<installed Chrome> npm test` — **8/8 PASS**.
+
+Это проверки **fallback-шрифтов**; они не заменяют визуальное утверждение оригинальных Google Fonts. Онлайн-шрифты ранее отдельно проверены для 320/390px, тогда как повторный online WebKit desktop QA мог блокироваться внешним CSS. Поэтому внешний шрифтовой сервис остаётся открытым риском, а Product/live не считаются сертифицированными.
