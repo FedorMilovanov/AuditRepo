@@ -56,13 +56,16 @@ jobs:
           ENGINE=chromium npm test
           ENGINE=webkit npm test
 
-      - name: Control preload choice with balanced baseline/full/core-only trials
+      - name: Certify final Atlas title preloads and independent CLS measurements
         shell: bash
+        env:
+          VIEWPORTS: "320,390,768,1440"
+          CLS_RUNS: "3"
         run: |
           set -euo pipefail
           cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/checks
-          CLS_APPS=atlas VIEWPORTS=768 CLS_RUNS=3 CLS_VARIANTS=baseline,hero-preload,core-only node cls_witness.cjs
-          CLS_APPS=sozvezdie VIEWPORTS=320,390 CLS_RUNS=3 CLS_VARIANTS=baseline,hero-preload,core-only node cls_witness.cjs
+          node preload_contract.cjs
+          node cls_witness.cjs
 
       - name: Reproduce Constellation's full browser QA with its pinned Playwright
         shell: bash
