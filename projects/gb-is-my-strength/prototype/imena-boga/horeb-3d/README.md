@@ -1,24 +1,50 @@
-# HOREB 3D — living names of God (Arena prototype)
+# HOREB 3D — Имена Бога: перед Святым
 
-**Lab status:** INTAKE — original source pending import from the user-supplied Arena ZIP. **Not Product, not production, not editorially approved.**
+**Раздел:** AuditRepo → [Отдел разработок / Prototype Lab](../../../../../references/PROTOTYPE_LAB.md) · `gb-is-my-strength` → `prototype/imena-boga/horeb-3d/`.
 
-This is a **new third prototype** alongside Atlas and Sozvezdie, not a replacement for either. Purpose: maintain and incrementally improve an existing Three.js / React / TypeScript first-person 3D pilgrimage toward the burning bush, with a separate scene/exhibit for each biblical context.
+**Статус:** `IMPORTED / LAB DEVELOPMENT`; настоящий исходный Arena-проект находится в [Draft PR #543](https://github.com/FedorMilovanov/AuditRepo/pull/543) на ветке `lane/horeb-3d-lab-20261108`. **Не Product, не деплой и не редакционно опубликованный материал.**
 
-## Immutable intake identity
-- Source supplied to ChatGPT 2026-11-08: `---.zip`
-- SHA-256 of original ZIP: `c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9`
-- Inspected: 54 entries; archive contains source, tests, docs, generated .test-build, generated HTML reader; no traversal, symlink, or encrypted entries.
-- Existing 25 content cards, eight zones, Three.js scene and engine. Not yet 42 distinct canonical scenes.
-- Imported precompiled unit checks run locally at intake: **24/24 PASS**. Not proof of a fresh production build.
-- Fresh npm install/build/browser runs **not repeated in ChatGPT sandbox**, where network/npm dependencies were unavailable.
-- `public/fonts/*.woff2` were **absent** in ZIP; generator `tests/generate-reader.mjs` expects `@fontsource` npm dependencies and generates these files.
-- The archive will be stored at `original/arena-horeb-original.zip` when imported, with source unpacked directly in this folder. Preserve the original ZIP and its SHA permanently.
+## Начать здесь
 
-## Working contract
-1. Check `SOURCE_PROVENANCE.md` and `AGENT_HANDOFF.md`. **Do not create an unrelated rebuild** when the source has not yet been imported.
-2. AuditRepo is the prototype lab. Research [#379](https://github.com/FedorMilovanov/Research/pull/379) is scholarly evidence; still publication HOLD. Atlas/Sozvezdie are independent working siblings under [AuditRepo #538](https://github.com/FedorMilovanov/AuditRepo/pull/538).
-3. No changes to `gb-is-my-strength`, the live `gospod-bog.ru` site, or Research without separate owner-approved Product handoff.
-4. One canonical HOREB branch and one draft PR; do not create version-folder forks, overwrite other agents' work or silently merge/deploy.
-5. Continue existing source, run actual tests and browser screenshot checks, and keep each item's scriptural reference, historical speaker/referent, and editorial HOLD precise.
+1. **[AGENT_HANDOFF.md](AGENT_HANDOFF.md)** — фактическое состояние, иммутабельный источник, SHA, тесты, допуски, ближайшая работа.
+2. **[AGENT_NEXT_PROMPT.md](AGENT_NEXT_PROMPT.md)** — рабочий запрос для Arena Agent, который продолжает *этот* код.
+3. **[ARENA_ORIGINAL_README.md](ARENA_ORIGINAL_README.md)** — неизменённая оригинальная инструкция Arena, переименованная при импорте для сохранения лабораторной навигации.
+4. **[SOURCE_PROVENANCE.md](SOURCE_PROVENANCE.md)** · [IMPORT_MANIFEST.json](IMPORT_MANIFEST.json) · [original/arena-horeb-original.zip](original/arena-horeb-original.zip) — происхождение и побайтовый оригинал.
+5. **[docs/SCENE_MAP.md](docs/SCENE_MAP.md)**, **[docs/SOURCE_AUDIT.md](docs/SOURCE_AUDIT.md)**, **[audit/acceptance-matrix.md](audit/acceptance-matrix.md)**, **[audit/iteration-log.md](audit/iteration-log.md)** — имеющийся маршрут и подтверждённые/незакрытые проверки.
+6. **[briefs/SCENE_SPEC_42.md](briefs/SCENE_SPEC_42.md)** — режиссура 42 различных исследовательских экспозиций (исторический художественный бриф, только после сохранения имеющегося проекта).
 
-**Current handoff blocker:** ZIP source must be pushed into this branch with SHA match. This README and the draft PR alone do **not** mean that source was imported.
+## Что действительно импортировано
+
+Исходное приложение React 19 / TypeScript / Vite / Three.js, 8 пространственных зон, 25 исторически зафиксированных исследовательских карточек, управление от первого лица и на мобильных устройствах, аппарат снятия обуви и ограничения у горящего куста, доступный режим чтения с/без JS, детальные unit- и браузерные тесты. Ключевые файлы:
+
+- `package.json` и `package-lock.json`;
+- `src/imena-boga-horeb-3d/HorebApp.tsx`;
+- `src/imena-boga-horeb-3d/engine/World.ts`, `SceneZones.ts`, `BurningBush.ts`, `nav.ts`;
+- `src/imena-boga-horeb-3d/data/exhibits.ts` и `validate.ts`;
+- `tests/run.mjs`, `tests/test.sh`, `tests/e2e.mjs`, `tests/regression.mjs`, `tests/generate-reader.mjs`;
+- `public/reader.html` — исторически сгенерированный HTML без JavaScript.
+
+Подтверждённый первоначальный импорт: коммит `4d9ec9f7899ff6f6af349f404460e9137b4766b8`. SHA-256 исходного ZIP: `c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9`. SHA каждого исходного файла проверен против Git-дерева при импорте. Архив `.test-build` сохранён **в оригинальном ZIP**, а не включён в активное дерево.
+
+## Локальная разработка
+
+```bash
+cd projects/gb-is-my-strength/prototype/imena-boga/horeb-3d
+npm ci
+node tests/generate-reader.mjs
+npm run build
+npx tsc --noEmit
+sh tests/test.sh
+npm run dev
+```
+
+Браузерные тесты: `tests/e2e.mjs` и `tests/regression.mjs`; см. оригинальный README для переменной `PW_PATH`. Версии и браузерный результат нужно засвидетельствовать в текущей рабочей ветке. **Наличие исходников и 24/24 повторённых unit-тестов из архивного предварительно скомпилированного набора не означает проверку чистой сборки после `npm ci`.** Реальные GPU/WebKit/Firefox и редакционная сверка — отдельные незакрытые ворота.
+
+## Границы
+
+- Основное исследование [Research #379](https://github.com/FedorMilovanov/Research/pull/379): 29 + 13 = **42 исследуемых обозначения**, не «42 личных имени Бога», **0 публикационных допусков**.
+- Прототипы [Atlas/Созвездие #538](https://github.com/FedorMilovanov/AuditRepo/pull/538) — **отдельные** концепции; не переписывать.
+- Сайт [gospod-bog.ru](https://gospod-bog.ru/) / [Product](https://github.com/FedorMilovanov/gb-is-my-strength) — отдельный владелец. Никакой автоматической замены страниц, публикации или Product-переноса.
+- Все карточки `HOLD` до независимого source/editorial/rights review. Благоговейная сценография, без визуального изображения Бога; куст должен быть **вне** художественной пещеры на Хориве. Даже после снятия обуви внутренний запрет подхода к кусту действует.
+
+**Один прототип — одна каноническая ветка/PR.** Следующий агент должен читать и менять **реальные исходники** здесь, а не создавать новоявленное приложение с таким же названием.
