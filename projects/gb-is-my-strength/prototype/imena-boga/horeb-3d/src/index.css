@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import "@fontsource/cormorant-garamond/cyrillic-400.css";
+@import "@fontsource/cormorant-garamond/cyrillic-500.css";
+@import "@fontsource/cormorant-garamond/cyrillic-600.css";
+@import "@fontsource/cormorant-garamond/cyrillic-400-italic.css";
+@import "@fontsource/cormorant-garamond/latin-400.css";
+@import "@fontsource/cormorant-garamond/latin-500.css";
+@import "@fontsource/cormorant-garamond/latin-400-italic.css";
+@import "@fontsource/noto-serif-hebrew/hebrew-400.css";
+@import "@fontsource/noto-serif/greek-400.css";
+@import "@fontsource/noto-serif/greek-ext-400.css";
+
+@theme {
+  --color-ink: #0b0907;
+  --color-parch: #efe2c6;
+  --color-bronze: #c9a46a;
+  --color-muted: #8f8270;
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-hebrew: "Noto Serif Hebrew", "SBL Hebrew", "Times New Roman", serif;
+  --font-greek: "Noto Serif", "GFS Didot", Georgia, serif;
+}
+html, body, #root { background: #0b0907; color: #efe2c6; }
+body { font-family: "Cormorant Garamond", Georgia, serif; font-size: 18px; font-variant-numeric: oldstyle-nums proportional-nums; -webkit-font-smoothing: antialiased; }
+.eyebrow { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-bronze); }
+.btn { border: 1px solid rgba(201,164,106,0.45); padding: 0.7rem 1.4rem; border-radius: 2px; color: var(--color-parch); letter-spacing: 0.06em; transition: background .3s, border-color .3s; min-height: 44px; }
+.btn:hover, .btn:focus-visible { background: rgba(201,164,106,0.12); border-color: var(--color-bronze); }
+.btn:disabled { opacity: .35; cursor: not-allowed; }
+.btn-primary { background: linear-gradient(180deg, rgba(150,100,50,0.45), rgba(90,55,25,0.45)); border-color: rgba(222,180,120,0.7); }
+.btn-ghost { font-size: 0.85rem; padding: 0.45rem 0.8rem; border: 1px solid rgba(239,226,198,0.18); border-radius: 2px; background: rgba(10,8,6,0.45); color: rgba(239,226,198,0.85); min-height: 36px; }
+.btn-ghost:hover, .btn-ghost:focus-visible { border-color: rgba(201,164,106,0.6); }
+.link { color: var(--color-bronze); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(201,164,106,0.4); }
+.chip { border: 1px solid rgba(201,164,106,0.3); padding: 0.3rem 0.75rem; border-radius: 999px; color: rgba(239,226,198,0.85); }
+.chip-on { background: rgba(201,164,106,0.2); border-color: var(--color-bronze); }
+:focus-visible { outline: 2px solid #e2b877; outline-offset: 2px; }
+.drawer { background: linear-gradient(180deg, #1a1511, #110e0b); border: 1px solid rgba(201,164,106,0.25); box-shadow: 0 30px 80px rgba(0,0,0,0.7); }
+.gate { background: linear-gradient(180deg, rgba(20,14,10,0.82), rgba(10,8,6,0.88)); border: 1px solid rgba(230,170,100,0.3); border-radius: 3px; }
+.prompt { display: flex; align-items: center; gap: .6rem; background: rgba(10,8,6,0.7); border: 1px solid rgba(201,164,106,0.35); padding: .6rem 1rem; border-radius: 2px; font-size: .95rem; color: rgba(239,226,198,0.8); max-width: 92vw; min-height: 44px; }
+.kbd { display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; border: 1px solid rgba(239,226,198,0.5); border-radius: 3px; font-size: .8rem; }
+.exhibit-card { overflow-wrap: anywhere; }
+.prose-block ul { margin-top: 1rem; list-style: none; padding: 0; }
+.prose-block li { overflow-wrap: anywhere; margin: .7rem 0; padding-left: 1.1rem; position: relative; line-height: 1.6; color: rgba(239,226,198,0.88); }
+.prose-block li::before { content: ""; position: absolute; left: 0; top: .7em; width: .4rem; height: 1px; background: var(--color-bronze); }
+[lang="he"], [lang="arc"] { unicode-bidi: isolate; }
+.reveal { opacity: 0; animation: reveal 2.4s ease forwards; }
+.d1 { animation-delay: .6s; } .d2 { animation-delay: 1.2s; } .d3 { animation-delay: 1.9s; }
+@keyframes reveal { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.sinai { opacity: 0; animation: reveal 5s ease .2s forwards; }
+.ember { animation: ember 2.6s ease-in-out infinite; }
+@keyframes ember { 50% { opacity: .45; } }
+.fade-in-black { animation: fadeout 3s ease forwards; }
+@keyframes fadeout { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .sinai { animation: none; opacity: 1; }
+  .ember { animation: none; }
+  * { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
