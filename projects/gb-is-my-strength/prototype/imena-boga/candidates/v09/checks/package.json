@@ -1,0 +1,11 @@
+{
+  "name": "imena-prototype-cross-browser-qa",
+  "private": true,
+  "version": "0.9.0",
+  "scripts": {
+    "test": "node browser.cjs"
+  },
+  "devDependencies": {
+    "playwright-core": "1.62.1"
+  }
+}
