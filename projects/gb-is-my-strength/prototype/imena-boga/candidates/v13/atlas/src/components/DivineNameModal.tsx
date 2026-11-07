@@ -427,7 +427,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
                 <span>·</span>
                 <span>
                   Язык:{' '}
-                  <strong style={{ color: 'var(--gb-gold)' }}>
+                  <strong style={{ color: 'var(--gb-gold-ink)' }}>
                     {entry.language === 'hebrew'
                       ? 'иврит'
                       : entry.language === 'aramaic'
@@ -450,7 +450,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
           <section className="mt-7">
             <h3
               className="font-ui mb-3 flex items-center gap-2 text-xs font-bold tracking-wider uppercase"
-              style={{ color: 'var(--gb-gold)' }}
+              style={{ color: 'var(--gb-gold-ink)' }}
             >
               <BookOpen className="h-4 w-4" />
               <span>Ключевые тексты Священного Писания</span>
@@ -562,7 +562,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
           >
             <h3
               className="font-ui mb-2 flex items-center gap-2 text-xs font-bold tracking-wider uppercase"
-              style={{ color: 'var(--gb-gold)' }}
+              style={{ color: 'var(--gb-gold-ink)' }}
             >
               <HeartHandshake className="h-4 w-4" />
               <span>Пастырское применение для веры и молитвы</span>
