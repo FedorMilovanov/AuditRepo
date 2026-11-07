@@ -225,6 +225,14 @@ export function App() {
   // Persist reader preferences (theme + fontScale)
   useEffect(() => {
     document.documentElement.setAttribute('data-reader-theme', theme);
+    // Reflect reading mode in mobile browser chrome, not only the React tree.
+    const themeColors: Record<ReaderTheme, string> = {
+      light: '#fdfcf9',
+      sepia: '#f4ede0',
+      dark: '#0e1116',
+    };
+    document.querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', themeColors[theme]);
     try {
       const existingRaw = window.localStorage.getItem('gb:imena:atlas:reader-preferences:v1');
       const existing = existingRaw ? JSON.parse(existingRaw) : { version: 1 };
@@ -262,6 +270,8 @@ export function App() {
   // Progressive Scroll Revelation + Active Name Spy + Reading Progress
   const lastSavedRef = useRef<number>(0);
   const rafPendingRef = useRef<number>(0);
+  // Browser scroll restoration is not a reader's intent to dismiss a bookmark.
+  const userScrollIntentRef = useRef(false);
   useEffect(() => {
     const updateScrollState = () => {
       const scrollTop = window.scrollY;
@@ -307,8 +317,8 @@ export function App() {
         setActiveNameId(closestId);
       }
 
-      // Auto-dismiss resume prompt once the user manually scrolls down into the article
-      if (scrollTop > 900) {
+      // Do not treat browser restoration or a layout-triggered scroll as intent.
+      if (userScrollIntentRef.current && scrollTop > 900) {
         setResumePosition((prev) => (prev !== null ? null : prev));
       }
 
@@ -334,12 +344,29 @@ export function App() {
       });
     };
 
+    const markScrollIntent = (event: Event) => {
+      if (event.type !== 'keydown') {
+        userScrollIntentRef.current = true;
+        return;
+      }
+      const key = (event as KeyboardEvent).key;
+      if (!['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(key)) return;
+      const target = event.target;
+      if (target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))) return;
+      userScrollIntentRef.current = true;
+    };
     updateScrollState();
     window.addEventListener('scroll', scheduleUpdate, { passive: true });
     window.addEventListener('resize', scheduleUpdate);
+    window.addEventListener('wheel', markScrollIntent, { passive: true });
+    window.addEventListener('touchstart', markScrollIntent, { passive: true });
+    window.addEventListener('keydown', markScrollIntent);
     return () => {
       window.removeEventListener('scroll', scheduleUpdate);
       window.removeEventListener('resize', scheduleUpdate);
+      window.removeEventListener('wheel', markScrollIntent);
+      window.removeEventListener('touchstart', markScrollIntent);
+      window.removeEventListener('keydown', markScrollIntent);
       if (rafPendingRef.current) window.cancelAnimationFrame(rafPendingRef.current);
     };
   }, [markNewlyRevealed]);
@@ -651,6 +678,49 @@ export function App() {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* Arena Battle's useful idea, rewritten as a clear research-stage contract.
+            Never treat draft linguistic claims as approved publication evidence. */}
+        <section
+          aria-labelledby="gb-methodology-title"
+          className="mb-10 rounded-2xl border p-5 sm:p-6"
+          style={{ backgroundColor: 'var(--gb-surface)', borderColor: 'var(--gb-border)' }}
+        >
+          <h2
+            id="gb-methodology-title"
+            className="font-serif-display text-lg font-semibold sm:text-xl"
+            style={{ color: 'var(--gb-ink)' }}
+          >
+            Как устроено исследование
+          </h2>
+          <p className="font-body-editorial mt-3 text-[15px] leading-relaxed" style={{ color: 'var(--gb-ink-secondary)' }}>
+            Здесь собрано {DIVINE_NAMES.length} рабочих записей: имена и титулы,
+            описания, образы и именования, связанные с библейскими повествованиями.
+            Число записей справочника не означает, что в Писании существует
+            именно столько самостоятельных имён Бога.
+          </p>
+          <details className="mt-4 rounded-lg border px-3 py-2" style={{ borderColor: 'var(--gb-border)' }}>
+            <summary
+              className="font-ui cursor-pointer text-xs font-semibold"
+              style={{ color: 'var(--gb-accent)' }}
+            >
+              Метод и границы достоверности
+            </summary>
+            <div className="mt-3 space-y-2 text-[14px] leading-relaxed" style={{ color: 'var(--gb-ink-secondary)' }}>
+              <p>
+                Имя, титул, метафора, географическое название и богословское
+                истолкование — разные категории. Их нельзя отождествлять
+                без проверки контекста и грамматики исходного текста.
+              </p>
+              <p>
+                Значения, транслитерации, отсылки к древним рукописям и
+                христологические выводы требуют самостоятельной сверки.
+                Пока исследовательский корпус не получил редакционного допуска,
+                этот интерфейс остаётся рабочим прототипом, а не окончательной публикацией.
+              </p>
+            </div>
+          </details>
         </section>
 
         {/* Table of Contents / Quick Study Map */}
