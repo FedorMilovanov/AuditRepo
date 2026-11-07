@@ -7,6 +7,10 @@
   "sha256_policy": "text CRLF->LF, binaries raw",
   "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate",
   "files": {
+    ".gitignore": {
+      "sha256": "28e11cac17af150d7ecff01ce8af56be3eeacc404ae17c2f304ce6b09079bd50",
+      "bytes_normalized": 47
+    },
     "atlas/index.html": {
       "sha256": "0ed460ece4bb2e6477f09600ee67ef8651a638e0b4441d3e7c1e3820e5a6fd84",
       "bytes_normalized": 4108
@@ -152,8 +156,8 @@
       "bytes_normalized": 3620
     },
     "checks/image_delivery.cjs": {
-      "sha256": "94902fc1b329e7492d198830bfa2d1d04a9a5b3b159be72e0d0eee903a39cb2f",
-      "bytes_normalized": 2660
+      "sha256": "021e5da31db1cac16c7849bf1b92793f24c3cf4d1043d922cd4f5e46cb5b5470",
+      "bytes_normalized": 2719
     },
     "checks/package-lock.json": {
       "sha256": "0d59ded844672fe83dedb6b266a6658884c397f8cc748ba88ebb1a01185b9b25",
@@ -172,8 +176,8 @@
       "bytes_normalized": 1950
     },
     "README.md": {
-      "sha256": "6076b5a2d7851daf35f5fcd1e785434afbb488d316fe8d82fcf219bfd568d1ec",
-      "bytes_normalized": 3524
+      "sha256": "b1ac00621d769815caf6b279040cb81790304ea962e2e177bc0163ae1e817195",
+      "bytes_normalized": 4590
     },
     "sozvezdie/index.html": {
       "sha256": "45f404c040d2232ff00e3387070b201e7b1966eb4c5cf3996b981c4c0f939a56",
@@ -211,14 +215,6 @@
       "sha256": "7a86688fbe0b831536a2fb13015c1ec8546bd94b88c7f3c00456a44c4ecdf47c",
       "bytes_normalized": 1260
     },
-    "sozvezdie/public/images/sinai-dawn.jpg": {
-      "sha256": "e3fc3113302f78d89ae9d1998bca0474ec2f300e4cfa140c75e6240aa56e9fec",
-      "bytes_normalized": 216480
-    },
-    "sozvezdie/public/images/sinai-dawn.webp": {
-      "sha256": "738437c0e6a36c406144660d5ff60eff6a01965fc4fd8b7f1bf00ce73025958b",
-      "bytes_normalized": 140842
-    },
     "sozvezdie/scripts/qa.mjs": {
       "sha256": "a10dd189cca28c0f3e3a172db8cf99ba5cbf5b17e358fb4e97f66f3df2685cac",
       "bytes_normalized": 25059
@@ -227,13 +223,17 @@
       "sha256": "d2fe34bb1ff1013e757e6005e7c32f1543c0e0579c67d6f485e33a7bc7055319",
       "bytes_normalized": 17032
     },
+    "sozvezdie/src/assets/sinai-dawn.webp": {
+      "sha256": "738437c0e6a36c406144660d5ff60eff6a01965fc4fd8b7f1bf00ce73025958b",
+      "bytes_normalized": 140842
+    },
     "sozvezdie/src/components/Epilogue.tsx": {
       "sha256": "ccb060a92667e36b78494e26e37b2b2da8752c0b838e0d5596e682c891ec4717",
       "bytes_normalized": 9461
     },
     "sozvezdie/src/components/Hero.tsx": {
-      "sha256": "ec123c1670294e1841a08ef2516807565ec203eeae96812c60839d895e8009ef",
-      "bytes_normalized": 9361
+      "sha256": "07a91b8370915a73020bfc3286687d40683a141a813624f50263bb0b0ebea559",
+      "bytes_normalized": 9500
     },
     "sozvezdie/src/components/Intro.tsx": {
       "sha256": "3cf7cdc0ce29c49eddd2529fb51c3f3ce1606eb796f5e956af6f2fdc050aa762",
@@ -323,5 +323,7 @@
       "sha256": "dd93ad737e20ecff7a07b89f00d53a9426232f16fb8c9e82717b05834ab2b815",
       "bytes_normalized": 629
     }
-  }
+  },
+  "canonical_jpeg": "reference/sozvezdie/public/images/sinai-dawn.jpg (single immutable source imported by Vite)",
+  "admission": "All original ZIPs have path/hash/size sidecars; duplicated JPEG/WebP artifacts removed."
 }

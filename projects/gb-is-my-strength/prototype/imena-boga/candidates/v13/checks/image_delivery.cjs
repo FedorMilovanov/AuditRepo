@@ -23,7 +23,7 @@ const server=createServer((req,res)=>{
     for(const width of [390,1440]){
      const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});
      const responseCodes={};
-     page.on('response',r=>{if(r.url().includes('/images/'))responseCodes[new URL(r.url()).pathname]=r.status()});
+     page.on('response',r=>{if(/\/assets\/sinai-dawn-/.test(r.url()))responseCodes[new URL(r.url()).pathname]=r.status()});
      await page.route(/^https:\/\/fonts\.(googleapis|gstatic)\.com\//,r=>r.abort());
      await page.goto(uri,{waitUntil:'domcontentloaded'});
      const img=page.locator('img[data-sinai-backdrop]');
@@ -31,7 +31,8 @@ const server=createServer((req,res)=>{
      await img.evaluate(async el=>el.decode());
      const info=await img.evaluate(el=>({src:el.src,currentSrc:el.currentSrc,naturalWidth:el.naturalWidth,naturalHeight:el.naturalHeight,complete:el.complete,
       bounds:{w:el.getBoundingClientRect().width,h:el.getBoundingClientRect().height}}));
-     if(!info.currentSrc.endsWith('/images/sinai-dawn.webp')||info.naturalWidth!==1672||info.naturalHeight!==941||responseCodes['/images/sinai-dawn.webp']!==200)throw Error(JSON.stringify({name,width,info,responseCodes}));
+     const imagePath=new URL(info.currentSrc).pathname;
+     if(!/^\/assets\/sinai-dawn-[A-Za-z0-9_-]+\.webp$/.test(imagePath)||info.naturalWidth!==1672||info.naturalHeight!==941||responseCodes[imagePath]!==200)throw Error(JSON.stringify({name,width,info,responseCodes}));
      results.push({engine:name,width,naturalWidth:info.naturalWidth,decodedWebp:true,HTTP200:true});
      await page.close();
     }

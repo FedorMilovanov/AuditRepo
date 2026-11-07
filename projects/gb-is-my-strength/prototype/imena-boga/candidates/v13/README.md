@@ -16,6 +16,14 @@ Two independent visual prototypes intended as selective references for the Astro
 - The QA navigation witness now waits for DOMContentLoaded rather than for every font asset. Font loading is independently checked by checks/font_contract.cjs.
 - A separate checks/source_contract.cjs detects missing CSS imports, wrong packages/licenses and the previously found literal backslash-n after a JS comment. This prevents an import silently becoming part of a comment.
 
+## Canonical Sinai media and artifact admission
+
+The original JPEG is stored ONCE at \`reference/sozvezdie/public/images/sinai-dawn.jpg\`, unchanged from the Arena source. Constellation \`src/components/Hero.tsx\` statically imports it via Vite from the immutable reference directory; Vite emits a content-hashed JPEG only at build time. The optimized 140842-byte WebP is stored ONCE in \`candidates/v13/sozvezdie/src/assets/sinai-dawn.webp\` and also emitted content-hashed by Vite.
+
+Therefore building Constellation requires the **sibling \`reference/sozvezdie\` directory** in an AuditRepo checkout. Do not test only \`candidates/v13\` with a sparse checkout lacking the immutable reference. This intentionally enforces one canonical binary source, not symlink/copy duplication in Git.
+
+All four original immutable ZIPs have precise sidecars (schemaVersion/path/sha256/sizeBytes/provenance/purpose/retention). The earlier v12 full source copy is preserved in historical commit 08e8a0c, not HEAD, because the current artifact gate prohibits duplicated JPEG/WebP.
+
 ## Reproduce in a clean checkout
 
 In atlas/ and sozvezdie/: npm ci, npm run build, npx tsc --noEmit.

@@ -31,3 +31,11 @@ Initial script accidentally wrote a JS comment containing literal backslash+n be
 Do not merge this lab code into the Product itself. The Product uses Astro + React islands and owns typography, Reader, SEO and routes. Reuse Product font ownership, apply measured weights/subsets, verify rights and editorial evidence, test real mobile devices and use relevant page-specific Core Web Vitals. One currently large Constellation JS chunk still triggers the Vite warning; do not hide it by raising the warning limit.
 
 Comparison evidence JSON, generated on the authorized desktop from real Chromium sessions, is archived alongside this research; samples are tiny and method-dependent. No claim of P75 field performance is made.
+
+
+## Artifact-admission and secret scanner dispositions
+
+- Four owner-provided original ZIP archives are accompanied by exact \`.zip.artifact.json\` manifests.
+- The Sinai JPG now has ONE canonical immutable reference and the optimized WebP ONE authored source; Vite generates content-addressed build resources.
+- AuditRepo's full-history Gitleaks scan flagged exactly seven occurrences of a constant \`PREFS_KEY\` used only as a browser localStorage preference identifier, not an authentication credential. Their precise commit/path/line/rule fingerprints are documented in the root \`.gitleaksignore\` rather than disabling the scanner. Root validation explicitly admits only this file.
+- Previous intermediate full-source candidates v07-v12 were pruned from active HEAD. They remain source-history pointers; a future squash may affect their long-term availability.

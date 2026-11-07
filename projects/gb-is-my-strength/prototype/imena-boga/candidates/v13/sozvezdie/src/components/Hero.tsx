@@ -3,6 +3,9 @@ import type { PointerEvent as ReactPointerEvent } from "react";
 import { ChevronDown } from "lucide-react";
 import Starfield from "./Starfield";
 import { NAMES } from "../data/names";
+// Canonical JPEG remains immutable in reference; Vite emits it as a URL.
+import sinaiJpeg from "../../../../../reference/sozvezdie/public/images/sinai-dawn.jpg?url";
+import sinaiWebp from "../assets/sinai-dawn.webp?url";
 
 const RING_A = ["י", "ה", "ו", "ה", "א", "ל", "ש", "ד", "י", "מ", "נ", "ו"];
 const RING_B = ["א", "ה", "י", "ה", "צ", "ו", "ר", "ע", "ם", "נ", "ו", "א", "ל", "ש"];
@@ -78,9 +81,9 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
       {/* A real image request gets native decoding and LCP priority, unlike a
           CSS background with a root-absolute URL that fails in nested previews. */}
       <picture className="pointer-events-none absolute inset-0 h-full w-full">
-        <source type="image/webp" srcSet={`${import.meta.env.BASE_URL}images/sinai-dawn.webp`} />
+        <source type="image/webp" srcSet={sinaiWebp} />
         <img
-          src={`${import.meta.env.BASE_URL}images/sinai-dawn.jpg`}
+          src={sinaiJpeg}
           alt=""
           aria-hidden="true"
           data-sinai-backdrop
