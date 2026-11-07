@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Sun,
   Moon,
@@ -9,6 +9,7 @@ import {
   Share2,
   Printer,
   CheckCircle2,
+  SlidersHorizontal,
 } from 'lucide-react';
 import { ARTICLE_SECTIONS } from '../data/divineNames';
 
@@ -43,6 +44,33 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
   onShare,
   onPrint,
 }) => {
+  const [readerPanelOpen, setReaderPanelOpen] = useState(false);
+  const readerPanelRef = useRef<HTMLDivElement>(null);
+  const readerTriggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!readerPanelOpen) return;
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (!readerPanelRef.current?.contains(target) && !readerTriggerRef.current?.contains(target)) {
+        setReaderPanelOpen(false);
+      }
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setReaderPanelOpen(false);
+        readerTriggerRef.current?.focus({ preventScroll: true });
+      }
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [readerPanelOpen]);
+
   const studiedRatio = totalCount > 0 ? Math.min(1, studiedCount / totalCount) : 0;
   const ringRadius = 9;
   const ringCircumference = 2 * Math.PI * ringRadius;
@@ -66,15 +94,15 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
         }}
       />
 
-      <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+      <div className="mx-auto flex h-full max-w-6xl min-w-0 items-center justify-between gap-2 px-3 sm:gap-3 sm:px-6">
         {/* Authentic gospod-bog.ru Brand Logo */}
         <a
           href="#top"
-          className="group flex shrink-0 items-center gap-1.5 text-decoration-none select-none"
+          className="group flex min-w-0 shrink items-center gap-1.5 overflow-hidden text-decoration-none select-none"
           aria-label="Господь Бог — Сила Моя — в начало статьи"
         >
           <span
-            className="font-serif-display text-base sm:text-[17px] font-bold tracking-wide transition-all"
+            className="font-serif-display min-w-0 truncate text-base sm:text-[17px] font-bold tracking-wide transition-all"
             style={{ color: 'var(--gb-ink)' }}
           >
             Господь Бог
@@ -91,7 +119,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
         </a>
 
         {/* Section Quick-Jump Links (Desktop) */}
-        <div className="hidden md:flex items-center gap-3.5">
+        <div className="hidden xl:flex items-center gap-3.5">
           {ARTICLE_SECTIONS.map((sec) => {
             const isCurrent = activeSectionId === sec.id;
             return (
@@ -112,7 +140,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
         </div>
 
         {/* Right Reader Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           {/* Reading Progress Percentage (wide screens) */}
           <span
             className="font-ui hidden xl:inline-flex items-center gap-1 text-[11px] font-semibold tabular-nums"
@@ -127,23 +155,136 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
           <button
             type="button"
             onClick={onFocusSearch}
-            className="font-ui hidden sm:inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-medium transition-colors hover:opacity-90"
+            className="font-ui inline-flex min-h-9 min-w-9 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-2 py-1 text-xs font-medium transition-colors hover:opacity-90"
             style={{
               backgroundColor: 'var(--gb-surface)',
               borderColor: 'var(--gb-border)',
               color: 'var(--gb-muted)',
             }}
             title="Быстрый поиск по именам и стихам (клавиша /)"
+            aria-label="Открыть поиск по именам"
           >
             <Search className="h-3.5 w-3.5" style={{ color: 'var(--gb-gold)' }} />
-            <kbd className="font-mono text-[10px] opacity-80">/</kbd>
+            <kbd className="hidden font-mono text-[10px] opacity-80 sm:inline">/</kbd>
           </button>
+
+
+          {/* Arena Battle refinement: one responsive entry point for reader preferences.
+              Keeps current v1.3 theme/font persistence, progress and print handlers. */}
+          <div className="relative">
+            <button
+              ref={readerTriggerRef}
+              type="button"
+              aria-label="Настройки чтения и шрифта"
+              aria-controls="gb-reader-settings"
+              aria-expanded={readerPanelOpen}
+              onClick={() => setReaderPanelOpen((open) => !open)}
+              className="inline-flex min-h-9 min-w-9 cursor-pointer items-center justify-center rounded-lg border p-2 transition-colors hover:opacity-90"
+              style={{
+                color: 'var(--gb-ink)',
+                borderColor: readerPanelOpen ? 'var(--gb-gold)' : 'var(--gb-border-strong)',
+                backgroundColor: readerPanelOpen ? 'var(--gb-accent-soft)' : 'var(--gb-surface)',
+              }}
+            >
+              <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+            </button>
+            {readerPanelOpen && (
+              <div
+                ref={readerPanelRef}
+                id="gb-reader-settings"
+                role="region"
+                aria-label="Настройки чтения"
+                className="absolute right-0 top-full z-50 mt-2 rounded-xl border p-3 shadow-xl"
+                style={{
+                  width: 'min(18rem, calc(100vw - 1.5rem))',
+                  backgroundColor: 'var(--gb-surface)',
+                  borderColor: 'var(--gb-border-strong)',
+                  boxShadow: 'var(--gb-shadow-xl)',
+                }}
+              >
+                <p className="font-ui mb-2 text-[11px] font-semibold" style={{ color: 'var(--gb-ink)' }}>
+                  Настройки чтения
+                </p>
+                <div role="group" aria-label="Тема оформления" className="grid grid-cols-3 gap-1">
+                  {([
+                    { value: 'light' as const, label: 'Светлая', Icon: Sun },
+                    { value: 'sepia' as const, label: 'Сепия', Icon: BookMarked },
+                    { value: 'dark' as const, label: 'Ночная', Icon: Moon },
+                  ]).map(({ value, label, Icon }) => (
+                    <button
+                      key={value}
+                      type="button"
+                      aria-pressed={theme === value}
+                      onClick={() => onChangeTheme(value)}
+                      className="font-ui flex min-h-9 items-center justify-center gap-1 rounded-md px-1 text-[11px] font-medium transition-colors"
+                      style={{
+                        color: theme === value ? 'var(--gb-accent)' : 'var(--gb-ink)',
+                        backgroundColor: theme === value ? 'var(--gb-accent-soft)' : 'transparent',
+                      }}
+                    >
+                      <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                <div className="mt-3 flex items-center justify-between gap-2">
+                  <span className="font-ui text-xs" style={{ color: 'var(--gb-ink)' }}>Размер текста</span>
+                  <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      aria-label="Уменьшить размер текста в настройках"
+                      onClick={() => onChangeFontScale(Math.max(0.9, Number((fontScale - 0.05).toFixed(2))))}
+                      className="font-ui min-h-9 min-w-9 cursor-pointer rounded-md border text-xs font-semibold"
+                      style={{ borderColor: 'var(--gb-border)', color: 'var(--gb-ink)' }}
+                    >А−</button>
+                    <button
+                      type="button"
+                      aria-label="Сбросить масштаб текста"
+                      onClick={() => onChangeFontScale(1)}
+                      className="font-ui min-h-9 min-w-11 cursor-pointer text-center text-xs tabular-nums"
+                      style={{ color: 'var(--gb-muted)' }}
+                    >{Math.round(fontScale * 100)}%</button>
+                    <button
+                      type="button"
+                      aria-label="Увеличить размер текста в настройках"
+                      onClick={() => onChangeFontScale(Math.min(1.2, Number((fontScale + 0.05).toFixed(2))))}
+                      className="font-ui min-h-9 min-w-9 cursor-pointer rounded-md border text-xs font-semibold"
+                      style={{ borderColor: 'var(--gb-border)', color: 'var(--gb-ink)' }}
+                    >А+</button>
+                  </div>
+                </div>
+                <div className="mt-2 border-t pt-2" style={{ borderColor: 'var(--gb-border)' }}>
+                  <span className="font-ui text-[11px] tabular-nums" style={{ color: 'var(--gb-muted)' }}>
+                    Изучено: {studiedCount} из {totalCount} · Открыто: {revealedCount}
+                  </span>
+                </div>
+                <div className="mt-2 grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => { setReaderPanelOpen(false); onShare(); }}
+                    className="font-ui inline-flex min-h-9 cursor-pointer items-center justify-center gap-1 rounded-md border px-2 text-[11px]"
+                    style={{ borderColor: 'var(--gb-border)', color: 'var(--gb-ink)' }}
+                  >
+                    <Share2 className="h-3.5 w-3.5" aria-hidden="true" /> Поделиться
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setReaderPanelOpen(false); onPrint(); }}
+                    className="font-ui inline-flex min-h-9 cursor-pointer items-center justify-center gap-1 rounded-md border px-2 text-[11px]"
+                    style={{ borderColor: 'var(--gb-border)', color: 'var(--gb-ink)' }}
+                  >
+                    <Printer className="h-3.5 w-3.5" aria-hidden="true" /> Печать / PDF
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Study Progress Ring */}
           <button
             type="button"
             onClick={onOpenAtlas}
-            className="font-ui hidden sm:inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-2 py-1 text-xs font-medium transition-colors hover:opacity-90"
+            className="font-ui hidden lg:inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-2 py-1 text-xs font-medium transition-colors hover:opacity-90"
             style={{
               backgroundColor: 'var(--gb-surface)',
               borderColor: 'var(--gb-border-strong)',
@@ -199,7 +340,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
           </button>
 
           {/* Share & Print Tools */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden 2xl:flex items-center gap-1">
             <button
               type="button"
               onClick={onShare}
@@ -230,25 +371,9 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
             </button>
           </div>
 
-          {/* Mobile studied badge */}
-          <button
-            type="button"
-            onClick={onOpenAtlas}
-            className="font-ui sm:hidden inline-flex cursor-pointer items-center gap-1 rounded-full border px-2 py-1 text-[10px] font-semibold"
-            style={{
-              backgroundColor: 'var(--gb-surface)',
-              borderColor: 'var(--gb-border-strong)',
-              color: 'var(--gb-accent)',
-            }}
-            aria-label={`Изучено ${studiedCount} из ${totalCount} имён`}
-          >
-            <CheckCircle2 className="h-3 w-3" style={{ color: 'var(--gb-gold)' }} />
-            <span className="tabular-nums">{studiedCount}</span>
-          </button>
-
           {/* Font Scale Controls */}
           <div
-            className="hidden sm:flex items-center rounded-lg border p-0.5"
+            className="hidden 2xl:flex items-center rounded-lg border p-0.5"
             style={{ borderColor: 'var(--gb-border)', backgroundColor: 'var(--gb-surface)' }}
           >
             <button
@@ -282,7 +407,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
 
           {/* 3-Mode Reader Theme Switcher (Light / Sepia / Dark) */}
           <div
-            className="flex items-center rounded-xl border p-0.5"
+            className="hidden 2xl:flex items-center rounded-xl border p-0.5"
             style={{ borderColor: 'var(--gb-border-strong)', backgroundColor: 'var(--gb-surface)' }}
             role="group"
             aria-label="Тема оформления"
@@ -333,7 +458,7 @@ export const SiteNavbar: React.FC<SiteNavbarProps> = ({
           <button
             type="button"
             onClick={onOpenAtlas}
-            className="sm:hidden cursor-pointer rounded-lg border p-1.5"
+            className="lg:hidden inline-flex min-h-9 min-w-9 cursor-pointer items-center justify-center rounded-lg border p-1.5"
             style={{
               borderColor: 'var(--gb-border-strong)',
               backgroundColor: 'var(--gb-surface)',
