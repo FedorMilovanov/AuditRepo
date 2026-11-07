@@ -1,0 +1,75 @@
+name: Names of God prototype browser QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/**"
+      - ".github/workflows/imena-boga-prototype-browser.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  candidate-browser:
+    name: Vite builds, browser contracts and CLS witness
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout bounded prototype and immutable Sinai reference
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            projects/gb-is-my-strength/prototype/imena-boga/candidates/v13
+            projects/gb-is-my-strength/prototype/imena-boga/reference/sozvezdie
+
+      - name: Confirm runtime and build the two independent prototypes
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --version
+          ROOT="projects/gb-is-my-strength/prototype/imena-boga/candidates/v13"
+          for app in atlas sozvezdie; do
+            (
+              cd "$ROOT/$app"
+              npm ci --no-audit --no-fund
+              npm run build
+              npx tsc --noEmit
+            )
+          done
+
+      - name: Install isolated browsers and run source/delivery contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/checks
+          npm ci --no-audit --no-fund
+          npx playwright-core install --with-deps chromium webkit
+          export CHROMIUM_PATH
+          CHROMIUM_PATH="$(node -p "require('playwright-core').chromium.executablePath()")"
+          npm run qa:source
+          npm run qa:delivery
+          npm run qa:failure
+          npm run qa:image
+          npm run qa:fonts
+          ENGINE=chromium npm test
+          ENGINE=webkit npm test
+
+      - name: Measure cold-load CLS as diagnostic, not as passing performance gate
+        shell: bash
+        env:
+          VIEWPORTS: "320,390,768,1440"
+          CLS_RUNS: "3"
+        run: |
+          set -euo pipefail
+          cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/checks
+          node cls_witness.cjs
+
+      - name: Reproduce Constellation's full browser QA with its pinned Playwright
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd projects/gb-is-my-strength/prototype/imena-boga/candidates/v13/sozvezdie
+          npx playwright-core install chromium
+          npm run qa
