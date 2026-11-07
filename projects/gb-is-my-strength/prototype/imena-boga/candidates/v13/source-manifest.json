@@ -5,7 +5,7 @@
   "baseline": "candidates/v12 08e8a0c4fd66ec09a1501ed1faa3f5e29f95d242",
   "font_ownership": "npm @fontsource and @fontsource-variable pinned 5.3.0 with original SIL OFL texts; no font binaries in git",
   "sha256_policy": "text CRLF->LF, binaries raw",
-  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing)",
+  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing); High-contrast gold ink token AA at 4 viewports x 3 themes, Chromium/WebKit: PENDING exact-head CI",
   "files": {
     ".gitignore": {
       "sha256": "28e11cac17af150d7ecff01ce8af56be3eeacc404ae17c2f304ce6b09079bd50",
@@ -52,8 +52,8 @@
       "bytes_normalized": 1399
     },
     "atlas/src/App.tsx": {
-      "sha256": "293e47fad817771858498b13a30368b890c6891521e2bc88036becad0e953058",
-      "bytes_normalized": 63659
+      "sha256": "4a3bd51ef9f9eaef68fb926fbafa255658f7802982431a20ef8e7352cf6a45c4",
+      "bytes_normalized": 63695
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
       "sha256": "ee02262ad7f9980d91c64a0d619737531ee6d6e8a6da57b9b5c2aabb16355374",
@@ -68,8 +68,8 @@
       "bytes_normalized": 27865
     },
     "atlas/src/components/DivineNameTiltCard.tsx": {
-      "sha256": "32cc17309ab16003403e7fa700581e1ebfd15853e9a85cb6cf5d28146cb52221",
-      "bytes_normalized": 16399
+      "sha256": "59e975ddadf6144293accd5f649e3bd37d5ba497eaf4b2ecb2ff853419d339cc",
+      "bytes_normalized": 16411
     },
     "atlas/src/components/FeatureLoadBoundary.tsx": {
       "sha256": "f4412302841d195fc9c1c7e7f0965923ed2b957218a13b505016bc0a2b39670d",
@@ -80,8 +80,8 @@
       "bytes_normalized": 10414
     },
     "atlas/src/components/LateralNamePillars.tsx": {
-      "sha256": "afb35658a7411eb63dca500c569d260fb9e9719edbd8db5039058c4557a05294",
-      "bytes_normalized": 25534
+      "sha256": "c4d42d138c0936718b6000140804b4ea2a07bd34c1d2334211393e39b64b44b9",
+      "bytes_normalized": 25554
     },
     "atlas/src/components/NamesIndexTable.tsx": {
       "sha256": "0e39136ef9c38d7141fb115939efe77ae1e09b031b7510515eeeaaa42a9a8b96",
@@ -124,8 +124,8 @@
       "bytes_normalized": 1238
     },
     "atlas/src/index.css": {
-      "sha256": "5d2cca9bbc42c61e4d7a4013a1b37c0ea7bbe995f97b061453f89a111654f7be",
-      "bytes_normalized": 7857
+      "sha256": "2d7e9fcc5f0941157b86ac00227a04c10566d0ec3b9aac48037fd4d688d60d08",
+      "bytes_normalized": 8109
     },
     "atlas/src/main.tsx": {
       "sha256": "577d8a6ab658c40f91c62c2f6f083eefbdc6b653bd2d65d5ec766c3d6bdb5c30",
@@ -144,8 +144,8 @@
       "bytes_normalized": 1637
     },
     "checks/browser.cjs": {
-      "sha256": "d475d4b506f64fb0576195a62fdf76c8828e69b8e7c0d9958c789cc6713d7363",
-      "bytes_normalized": 7961
+      "sha256": "4662468222efdd92f49d292f556289fcb8e1ad4481fd0133f1894e6d42f4bf04",
+      "bytes_normalized": 10059
     },
     "checks/cls_witness.cjs": {
       "sha256": "489940b378750851c43263137262de733aaf5ac843637477bfcc093fe3b7a615",
