@@ -76,3 +76,15 @@
 Исправления внедрены в единственный Product PR #2292: https://github.com/FedorMilovanov/gb-is-my-strength/pull/2292. Код: 094b2273134d95cde02e65a498cb64446ca342a2. QA: Grok 318/318 PASS в трёх движках, speed 46/46 Chromium/WebKit, Speedrail SSR 68 маршрутов × 2 браузера, TTS runtime PASS, Keyboard 252/252. Владельческий архив E:\GROK_READER_PLAYEMBER_PREMIUM_2026-11-07.zip; SHA-256 3c80e2c4bcaae6bba720fe6ab54de9575595fcc813adaf1389c0a00933a02db8. Снимки: код 7764809cf, последний 094b изменил только хеши ссылок на ресурсы; никакого нового production.
 
 STOP-SHIP: PR остаётся Draft до явной визуальной приёмки владельцем и полного CI на точном HEAD. Не объявлять работу опубликованной.
+
+## 7. Reader overlay dismissal and selected icon — 2026-11-07
+
+Owner supplied screenshot of overlapping «Настройки чтения» and «Разделы сайта»: site menu stayed open after clicking empty space, settings could open over it. Owner also selected the FIRST GPT-generated collapse icon, asking to enlarge the simple arrow.
+
+- REAL Product fix in existing draft PR #2292, commit 7554774ead4932686a2c175f787cb8ac6ef5ab09. Keep the first icon's minimalist left-fold rail/chevron, but render it at 23px with a larger 5.25-unit arrow. Do not restore the coarse box or invent more versions.
+- Desktop site menu is an anchored popover: dismiss on pointerdown outside both panel and trigger. Native mobile backdrop, Escape, focus restoration and canonical OverlayRuntime are preserved.
+- Opening ReaderSettings requests close of canonical site-sections-menu; opening SiteSectionsMenu requests close of reader-settings. NEVER leave both owned overlays on screen or add CSS z-index hacks to hide the duplicate. Settings closes on its backdrop/close button/Done/Escape; second native hm:open-settings event toggles closed.
+- Genuine browser acceptance on Product local Astro build: 120/120 PASS Chromium/Firefox/WebKit (1200,1440,1920, expanded and compact rail). Persistent Product CI script scripts/grok-reader-overlay-lifecycle-browser-test.mjs: 96/96 PASS Chromium/Firefox/WebKit (1200/1440), and 144 site-menu filter assertions PASS across three actual routes. Built 111 Astro pages.
+- Owner screenshot archive on authorized PC: E:\GROK_READER_OVERLAY_ARROW_V17_ACCEPTANCE_2026-11-07.zip, SHA-256 852a04a824e31a936cbd761e42c161ebfe1f5c1ee52af5b022505dd7d29aadf0. Contains 14 actual Chrome/WebKit local Product screenshots, 4 enlarged crops of same captures, source provenance and test logs. Candidate preview: http://127.0.0.1:8766/articles/hermenevticheskaya-otsenka-hristotsentrichnoy-germenevtiki/ (local machine only).
+
+STOP SHIP remains active: Product PR #2292 is Draft until owner visually approves and exact-HEAD GitHub CI succeeds. Production Ledger previously remained 5e2db6f0fdd0257818f1a215fca16d4cc884e2d8; new overlay/icon changes are NOT live.
