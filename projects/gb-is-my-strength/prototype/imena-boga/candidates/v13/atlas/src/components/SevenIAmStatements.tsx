@@ -127,7 +127,7 @@ export const SevenIAmStatements: React.FC = () => {
         <div>
           <div
             className="font-ui flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase"
-            style={{ color: 'var(--gb-gold)' }}
+            style={{ color: 'var(--gb-gold-ink)' }}
           >
             <Sparkles className="h-3.5 w-3.5" />
             <span>Христологическая симфония · От Исхода 3:14 к Евангелию от Иоанна</span>
