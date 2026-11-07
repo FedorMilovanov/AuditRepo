@@ -172,8 +172,8 @@
       "bytes_normalized": 424
     },
     "checks/preload_contract.cjs": {
-      "sha256": "3406acdc7bcf9825fcfccca44a1c3fab202e156e4cc5d3b15fc79981c25afb3b",
-      "bytes_normalized": 1588
+      "sha256": "9c361cd6690f8c3fa7a3ccb7a12569cbcbcb8ea1fb29eaaa7399e75346623c36",
+      "bytes_normalized": 1788
     },
     "checks/quiz_failure.cjs": {
       "sha256": "98e9eb019847b74875e3e80dbe46c9f4da61a18e4488a5d2c2eaa5c8cb7b185b",
@@ -328,8 +328,8 @@
       "bytes_normalized": 681
     },
     "sozvezdie/vite.config.ts": {
-      "sha256": "dd93ad737e20ecff7a07b89f00d53a9426232f16fb8c9e82717b05834ab2b815",
-      "bytes_normalized": 629
+      "sha256": "f27755576cdcb85c5b3143d1a05bd4c5c609104c9bce5eed17f2063cb168ee9e",
+      "bytes_normalized": 1784
     }
   },
   "canonical_jpeg": "reference/sozvezdie/public/images/sinai-dawn.jpg (single immutable source imported by Vite)",
