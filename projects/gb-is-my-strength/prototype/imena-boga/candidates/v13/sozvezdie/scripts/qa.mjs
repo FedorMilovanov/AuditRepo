@@ -333,6 +333,9 @@ const boxesOverlap = (a, b) =>
     localStorage.setItem("gb-imena-last-v1", "shalom");
     localStorage.setItem("gb-imena-progress-v1", JSON.stringify(["yhwh", "ehyeh"]));
   });
+  // Finish initial font transfers before reload, so navigation does not abort WOFF2.
+  // This is event-driven; it does not ignore genuine font/network failures.
+  await page.evaluate(async () => { await document.fonts.ready; return document.fonts.status; });
   await page.reload({ waitUntil: "domcontentloaded" });
   await page.waitForTimeout(2600);
   const resume = page.locator('[aria-label="Продолжить чтение"]');
