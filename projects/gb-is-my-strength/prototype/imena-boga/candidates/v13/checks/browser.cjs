@@ -79,7 +79,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         const fg = getComputedStyle(title).color;
         const bg = getComputedStyle(card).backgroundColor;
         const luminance = (color) => {
-          const channels = (color.match(/[\\d.]+/g) || []).slice(0, 3).map(Number);
+          const channels = (color.match(/[0-9.]+/g) || []).slice(0, 3).map(Number);
           if (channels.length !== 3 || channels.some(n => !Number.isFinite(n))) throw Error('Invalid computed color '+color);
           const linear = channels.map(n => {
             const x = n / 255;
