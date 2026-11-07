@@ -447,6 +447,9 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
     localStorage.setItem("gb-imena-progress-v1", JSON.stringify(all.slice(0, -1)));
     localStorage.setItem("gb-imena-last-v1", all[all.length - 1]);
   }, ids);
+  // Complete first-document font requests before the intentional reload.
+  // Preserve reporting of all genuine network and JavaScript failures.
+  await page.evaluate(async () => { await document.fonts.ready; return document.fonts.status; });
   await page.reload({ waitUntil: "domcontentloaded" });
   await page.waitForTimeout(1200);
   // Avoid a stale active chapter while smooth scroll is still in progress.
