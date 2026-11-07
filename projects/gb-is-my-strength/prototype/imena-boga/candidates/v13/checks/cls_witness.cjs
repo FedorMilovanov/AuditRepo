@@ -60,7 +60,7 @@ function median(values) {
         const page = await context.newPage();
         const externalFonts = [], failed = [], errors = [];
         page.on('request', req => { if (/fonts\.(googleapis|gstatic)\.com/.test(req.url())) externalFonts.push(req.url()); });
-        page.on('pageerror', e => errors.push(e.message));
+        page.on('pageerror', e => errors.push(e.stack || e.message));
         page.on('requestfailed', req => failed.push(req.url() + ': ' + (req.failure()?.errorText || 'requestfailed')));
         page.on('response', resp => {
           if (resp.url().startsWith(origin) && resp.status() >= 400 && !resp.url().endsWith('/favicon.ico')) failed.push(resp.url() + ': HTTP ' + resp.status());
@@ -72,7 +72,7 @@ function median(values) {
               for (const e of list.getEntries()) {
                 if (e.hadRecentInput) continue;
                 const sources = (e.sources || []).slice(0, 8).map(s => ({
-                  node: s.node ? s.node.tagName.toLowerCase() + (s.node.id ? '#' + s.node.id : '') + (s.node.classList ? '.' + [...s.node.classList].slice(0, 2).join('.') : '') : '(detached)',
+                  node: s.node && s.node.nodeType === Node.ELEMENT_NODE && typeof s.node.tagName === 'string' ? s.node.tagName.toLowerCase() + (s.node.id ? '#' + s.node.id : '') + (s.node.classList ? '.' + [...s.node.classList].slice(0, 2).join('.') : '') : (s.node ? '(non-element:' + s.node.nodeName + ')' : '(detached)'),
                   previous: s.previousRect ? { x: s.previousRect.x, y: s.previousRect.y, width: s.previousRect.width, height: s.previousRect.height } : null,
                   current: s.currentRect ? { x: s.currentRect.x, y: s.currentRect.y, width: s.currentRect.width, height: s.currentRect.height } : null
                 }));
