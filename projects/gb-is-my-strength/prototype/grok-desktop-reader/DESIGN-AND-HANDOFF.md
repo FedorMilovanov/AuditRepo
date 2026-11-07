@@ -1,3 +1,5 @@
+> **OWNER VISUAL CLARIFICATION — 2026-11-07:** The left rail described below is part of the continuous site grid, not an autonomous rounded card. Product V27's boxed rail and detached bottom-right Library bubble are **not accepted**. Read [mandatory visual/screenshot acceptance](OWNER-VISUAL-ACCEPTANCE-2026-11-07.md) before reusing any V23/V26 notes.
+
 # Accepted UX design contract — V23
 
 ## User-selected architecture
