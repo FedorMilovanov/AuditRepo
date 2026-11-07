@@ -17,7 +17,7 @@ const server=createServer((req,res)=>{
  const uri='http://127.0.0.1:'+server.address().port+'/';
  const results=[];
  try{
-  for(const [name,type,opts] of [['chromium',chromium,{executablePath:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'}],['webkit',webkit,{}]]){
+  for(const [name,type,opts] of [['chromium',chromium,process.env.CHROMIUM_PATH ? {executablePath:process.env.CHROMIUM_PATH} : {}],['webkit',webkit,{}]]){
    const browser=await type.launch({headless:true,...opts});
    try{
     for(const width of [390,1440]){
