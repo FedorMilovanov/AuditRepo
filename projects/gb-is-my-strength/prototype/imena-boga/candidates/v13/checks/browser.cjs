@@ -66,7 +66,44 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     const started=Date.now();
     while(!(painted>0)&&Date.now()-started<4000){await page.waitForTimeout(120);painted=await countPixels(page,'header canvas')}
     if(!(painted>0))throw Error('Atlas Canvas blank '+width);
-    results.push({name,width,painted,cssLoaded:true});
+    // Arena-derived reader settings must stay usable at every viewport size.
+    const settings=page.getByRole('button',{name:'Настройки чтения и шрифта'});
+    if(!(await settings.isVisible()))throw Error('Reader settings trigger hidden '+width);
+    await settings.click();
+    const panel=page.getByRole('region',{name:'Настройки чтения'});
+    if(!(await panel.isVisible())||(await settings.getAttribute('aria-expanded'))!=='true')
+      throw Error('Reader preferences panel not opened '+width);
+    const bounds=await panel.boundingBox();
+    if(!bounds||bounds.x<0||bounds.x+bounds.width>width+1)
+      throw Error('Reader preferences clipped '+JSON.stringify({width,bounds}));
+    await panel.getByRole('button',{name:'Сепия'}).click();
+    const theme=await page.evaluate(()=>({
+      mode:document.documentElement.getAttribute('data-reader-theme'),
+      chrome:document.querySelector('meta[name="theme-color"]')?.getAttribute('content')
+    }));
+    if(theme.mode!=='sepia'||theme.chrome!=='#f4ede0')
+      throw Error('Theme did not update browser chrome '+JSON.stringify({width,theme}));
+    const previousSize=await page.locator('main').first().evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+    await panel.getByRole('button',{name:'Увеличить размер текста в настройках'}).click();
+    const nextSize=await page.locator('main').first().evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+    if(!(nextSize>previousSize))throw Error('Reader font scale did not change '+width);
+    await page.keyboard.press('Escape');
+    if(await panel.count()||(await settings.getAttribute('aria-expanded'))!=='false')
+      throw Error('Escape did not close settings '+width);
+    const focusReturned=await settings.evaluate(el=>document.activeElement===el);
+    if(!focusReturned)throw Error('Escape did not return focus '+width);
+    const method=page.locator('section[aria-labelledby="gb-methodology-title"]');
+    if(await method.count()!==1)throw Error('Research methodology is missing '+width);
+    await method.locator('summary').click();
+    if(!(await method.locator('details').evaluate(el=>el.hasAttribute('open'))))
+      throw Error('Method disclosure not expandable '+width);
+    const finalLayout=await page.evaluate(()=>({
+      viewport:document.documentElement.clientWidth,
+      scroll:document.documentElement.scrollWidth
+    }));
+    if(finalLayout.scroll>finalLayout.viewport+1||errors.length||requests.length)
+      throw Error('Reader preferences regression '+JSON.stringify({width,finalLayout,errors,requests}));
+    results.push({name,width,painted,cssLoaded:true,readerPrefs:true,methodDisclosure:true});
    }else{
     await page.locator('canvas').first().scrollIntoViewIfNeeded();
     await page.waitForTimeout(250);
