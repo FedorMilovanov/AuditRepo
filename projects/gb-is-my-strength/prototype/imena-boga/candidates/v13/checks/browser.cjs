@@ -83,10 +83,17 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     }));
     if(theme.mode!=='sepia'||theme.chrome!=='#f4ede0')
       throw Error('Theme did not update browser chrome '+JSON.stringify({width,theme}));
-    const previousSize=await page.locator('main').first().evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+    const previousSize=await page.locator('main').first().evaluate(el=>el.style.fontSize);
     await panel.getByRole('button',{name:'Увеличить размер текста в настройках'}).click();
-    const nextSize=await page.locator('main').first().evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
-    if(!(nextSize>previousSize))throw Error('Reader font scale did not change '+width);
+    // Wait for the React commit; browser-specific text autosizing can change
+    // computed px values independently of the app's inline rem contract.
+    await page.waitForFunction(previous=>{
+      const next=document.querySelector('main')?.style.fontSize;
+      return !!next&&parseFloat(next)>parseFloat(previous);
+    },previousSize,{timeout:5000});
+    const nextSize=await page.locator('main').first().evaluate(el=>el.style.fontSize);
+    if(!(parseFloat(nextSize)>parseFloat(previousSize)))
+      throw Error('Reader font scale did not change '+JSON.stringify({width,previousSize,nextSize}));
     await page.keyboard.press('Escape');
     if(await panel.count()||(await settings.getAttribute('aria-expanded'))!=='false')
       throw Error('Escape did not close settings '+width);
