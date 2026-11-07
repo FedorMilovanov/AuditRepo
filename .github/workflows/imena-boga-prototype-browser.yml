@@ -56,10 +56,11 @@ jobs:
           ENGINE=chromium npm test
           ENGINE=webkit npm test
 
-      - name: Measure cold-load CLS as diagnostic, not as passing performance gate
+      - name: Measure paired cold-load CLS A/B (no promotion without evidence)
         shell: bash
         env:
           VIEWPORTS: "320,390,768,1440"
+          CLS_VARIANTS: "baseline,hero-preload"
           CLS_RUNS: "3"
         run: |
           set -euo pipefail
