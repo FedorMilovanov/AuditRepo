@@ -8,7 +8,6 @@ import {
   Search,
   Share2,
   Printer,
-  CheckCircle2,
   SlidersHorizontal,
 } from 'lucide-react';
 import { ARTICLE_SECTIONS } from '../data/divineNames';
