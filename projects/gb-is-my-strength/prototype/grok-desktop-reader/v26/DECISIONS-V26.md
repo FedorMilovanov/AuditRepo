@@ -1,3 +1,5 @@
+> **OWNER OVERRIDE / VISUAL TARGET 2026-11-07:** [Owner visual acceptance contract](../OWNER-VISUAL-ACCEPTANCE-2026-11-07.md) is the latest direction. The current Product V27 floating rounded TOC **fails visual parity** with this reference. Final composition must be **integrated into the page layout**, expandable/collapsible to an actual narrow rail, and library must not float in a detached bottom-right corner. Do not claim signoff without before/after live screenshots. Original V26 design details below remain the reference.
+
 # V26 visual and function ownership contract
 
 ## Desired presentation, explicitly additive
