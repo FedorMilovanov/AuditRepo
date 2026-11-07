@@ -69,10 +69,24 @@ const NODES = [...INNER_NODES, ...OUTER_NODES];
 // satellites. Previously Arrow/Home/End worked only after tabbing past it.
 const ORBIT_ORDER = ["yhwh", ...NODES.map((node) => node.name.id)];
 
+/** Decorative strands touch neither the central name nor a satellite.
+ * A single fixed editorial layout replaces the Arena orbit-settings playground.
+ */
 const branchPath = (node: Node) => {
-  if (node.ring === "inner") return `M50 50 L${node.x.toFixed(2)} ${node.y.toFixed(2)}`;
+  const dx = node.x - 50;
+  const dy = node.y - 50;
+  const d = Math.hypot(dx, dy) || 1;
+  const ux = dx / d;
+  const uy = dy / d;
+  const startX = 50 + ux * 10.4;
+  const startY = 50 + uy * 10.4;
+  const endRadius = node.ring === "inner" ? 3.9 : 3.5;
+  const endX = node.x - ux * endRadius;
+  const endY = node.y - uy * endRadius;
+  const start = `M${startX.toFixed(2)} ${startY.toFixed(2)}`;
+  if (node.ring === "inner") return `${start} L${endX.toFixed(2)} ${endY.toFixed(2)}`;
   const c = polar(R_OUTER * 0.52, node.angle - 14);
-  return `M50 50 Q${c.x.toFixed(2)} ${c.y.toFixed(2)} ${node.x.toFixed(2)} ${node.y.toFixed(2)}`;
+  return `${start} Q${c.x.toFixed(2)} ${c.y.toFixed(2)} ${endX.toFixed(2)} ${endY.toFixed(2)}`;
 };
 
 const thread = (() => {
@@ -143,11 +157,11 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
       <div
         className="relative mx-auto mt-12 hidden aspect-square w-full max-w-[660px] md:block"
         role="group"
-        aria-label="Орбиты имён Бога: Tab — переход по узлам, стрелки — соседний узел, Home и End — границы списка"
+        aria-label="Иллюстрация взаимосвязей имён Бога: Tab — перейти между именами, стрелки — к соседнему имени, Home и End — начало и конец"
       >
-        <div aria-hidden className={`pointer-events-none absolute inset-[2%] rounded-full border border-dashed border-gold-500/10 ${motionOn ? "animate-rotate-slow" : ""}`} />
-        <div aria-hidden className={`pointer-events-none absolute inset-[24%] rounded-full border border-gold-500/10 ${motionOn ? "animate-rotate-rev" : ""}`} />
-        <div aria-hidden className={`pointer-events-none absolute left-1/2 top-1/2 h-[46%] w-[46%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold-500/[0.07] blur-3xl ${motionOn ? "animate-glow-pulse" : ""}`} />
+        <div data-scene-ring aria-hidden className="pointer-events-none absolute inset-[2%] rounded-full border border-dashed border-gold-500/10" />
+        <div data-scene-ring aria-hidden className="pointer-events-none absolute inset-[24%] rounded-full border border-gold-500/10" />
+        <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 h-[46%] w-[46%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold-500/[0.07] blur-3xl" />
 
         <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full overflow-visible" aria-hidden>
           <defs>
@@ -164,6 +178,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
               <motion.path
                 key={node.name.id}
                 d={branchPath(node)}
+                data-scene-strand={node.name.id}
                 fill="none"
                 stroke={lit ? "#ecd39a" : "url(#branch)"}
                 strokeWidth={lit ? 0.45 : 0.22}
@@ -256,14 +271,16 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
               </span>
               <span
                 {...scriptAttrs(node.name)}
-                className={`mt-1.5 font-hebrew text-[15px] leading-tight transition-colors ${
+                data-scene-caption
+                className={`relative z-10 mt-1.5 max-w-[112px] break-words rounded-sm bg-ink-950 px-2 py-0.5 font-hebrew text-[15px] leading-tight shadow-[0_0_9px_4px_rgba(10,9,7,0.78)] transition-colors ${
                   lit ? "text-gold-200" : "text-gold-400"
                 }`}
               >
                 {node.ring === "outer" ? suffix(node.name) : node.name.id === "ehyeh" ? "אֶהְיֶה" : node.name.hebrew}
               </span>
               <span
-                className={`mt-0.5 font-ui text-[9px] uppercase leading-tight tracking-[0.1em] transition-colors ${
+                data-scene-caption
+                className={`relative z-10 mt-0.5 max-w-[112px] break-words rounded-sm bg-ink-950 px-2 py-0.5 font-ui text-[9px] uppercase leading-tight tracking-[0.1em] shadow-[0_0_9px_4px_rgba(10,9,7,0.78)] transition-colors ${
                   lit ? "text-cream-50" : "text-cream-300"
                 }`}
               >
@@ -299,8 +316,36 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
         </div>
       </div>
 
+      {/* Mobile receives one quiet, noninteractive illustration above the
+          accessible branch list, rather than an orbit editor or second diagram. */}
+      <div className="mx-auto mt-8 max-w-[17rem] md:hidden" data-scene-mobile-preview
+           role="img" aria-label="Иллюстрация: ЯХВЕ в центре, вокруг двенадцать связанных именований">
+        <div className="relative aspect-square w-full">
+          <div aria-hidden className="absolute inset-[8%] rounded-full border border-dashed border-gold-500/15" />
+          <div aria-hidden className="absolute inset-[24%] rounded-full border border-gold-500/15" />
+          <svg viewBox="0 0 100 100" aria-hidden="true"
+               className="pointer-events-none absolute inset-0 h-full w-full">
+            {NODES.map((node) => (
+              <path key={node.name.id} d={branchPath(node)}
+                    fill="none" stroke="#d4af37" strokeOpacity="0.40"
+                    strokeWidth="0.26" strokeLinecap="round" />
+            ))}
+            {NODES.map((node) => (
+              <circle key={node.name.id} cx={node.x} cy={node.y}
+                      r={node.ring === "inner" ? "2.1" : "1.7"}
+                      fill={active === node.name.id ? "#ecd39a" : "#9d833f"}
+                      stroke="#0a0907" strokeWidth="0.65" />
+            ))}
+          </svg>
+          <div className="absolute left-1/2 top-1/2 flex h-[20%] w-[20%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-gold-400/70 bg-ink-950 shadow-[0_0_30px_rgba(212,175,55,0.15)]">
+            <span lang="he" dir="rtl" className="font-hebrew text-[21px] text-gold-200">יהוה</span>
+          </div>
+        </div>
+        <p className="mt-1 text-center font-ui text-[9px] uppercase tracking-[0.19em] text-cream-500">Имена в библейском повествовании</p>
+      </div>
+
       {/* ─────────── branch list · phones ─────────── */}
-      <div className="mx-auto mt-10 max-w-md md:hidden">
+      <div className="mx-auto mt-8 max-w-md md:hidden">
         {/* root */}
         <button
           type="button"
