@@ -5,7 +5,7 @@
   "baseline": "candidates/v12 08e8a0c4fd66ec09a1501ed1faa3f5e29f95d242",
   "font_ownership": "npm @fontsource and @fontsource-variable pinned 5.3.0 with original SIL OFL texts; no font binaries in git",
   "sha256_policy": "text CRLF->LF, binaries raw",
-  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing); High-contrast gold ink token AA at 4 viewports x 3 themes, Chromium/WebKit: PENDING exact-head CI",
+  "tests": "Vite/TypeScript both PASS; WebKit 8/8; Chromium 8/8; font families 11/11; source imports 45/45; delivery 5/5; failure 1/1; WebP 4/4; Constellation QA 78/78 in working candidate; screenshot QA preflight checks available disk via statfsSync (min 1 GiB); cls_witness.cjs added and Node syntax checked; browser measurement PENDING (remote device quota); Atlas 2-title-font preload contract + final multi-viewport CLS measurement PENDING exact-head CI; Arena 2026-11-07 selective UI transplant with Chromium/WebKit responsive reader preferences and method disclosure QA: PENDING exact-head CI (Chromium passed; WebKit font-scale assertion adjusted for UA autosizing); High-contrast gold ink token, 33 text elements, 4 viewports x 3 themes, Chromium/WebKit: PENDING exact-head CI",
   "files": {
     ".gitignore": {
       "sha256": "28e11cac17af150d7ecff01ce8af56be3eeacc404ae17c2f304ce6b09079bd50",
@@ -56,16 +56,16 @@
       "bytes_normalized": 63695
     },
     "atlas/src/components/CovenantAltarsAtlas.tsx": {
-      "sha256": "ee02262ad7f9980d91c64a0d619737531ee6d6e8a6da57b9b5c2aabb16355374",
-      "bytes_normalized": 15298
+      "sha256": "d79346486f7b1a0d68423be88d8fa266ad28184ecfa95280641af6d382de4343",
+      "bytes_normalized": 15314
     },
     "atlas/src/components/DivineConstellationExplorer.tsx": {
-      "sha256": "b817bb4752c7d23eed5b4a6f5e1d252e0003825d076610271a1cccc01e46947f",
-      "bytes_normalized": 15889
+      "sha256": "f9b3c84a8b8aec1c32b5bf91245bb2bb63d9158f4bad3a60449b1779f8623b47",
+      "bytes_normalized": 15897
     },
     "atlas/src/components/DivineNameModal.tsx": {
-      "sha256": "9a3c49d14f86b417c1c6bc90a9972ec83c51324e9e336e7f6de689ccdf153efc",
-      "bytes_normalized": 27865
+      "sha256": "5847d4cd20b71de9106eb8f6a7674038050ea4e13f06f89f6c53f05d345eb4e7",
+      "bytes_normalized": 27877
     },
     "atlas/src/components/DivineNameTiltCard.tsx": {
       "sha256": "59e975ddadf6144293accd5f649e3bd37d5ba497eaf4b2ecb2ff853419d339cc",
@@ -76,40 +76,40 @@
       "bytes_normalized": 1410
     },
     "atlas/src/components/HebrewGreekLexiconMatrix.tsx": {
-      "sha256": "0472f2f03ae395dea56b8ceeb95f75b565f22fe1d92b3f450402578dd8a2509c",
-      "bytes_normalized": 10414
+      "sha256": "71524ad0f56c56458315ff2c558d9f96491450245f5e9cc17836dd903a339f2a",
+      "bytes_normalized": 10418
     },
     "atlas/src/components/LateralNamePillars.tsx": {
       "sha256": "c4d42d138c0936718b6000140804b4ea2a07bd34c1d2334211393e39b64b44b9",
       "bytes_normalized": 25554
     },
     "atlas/src/components/NamesIndexTable.tsx": {
-      "sha256": "0e39136ef9c38d7141fb115939efe77ae1e09b031b7510515eeeaaa42a9a8b96",
-      "bytes_normalized": 8890
+      "sha256": "ffb84d5a6d8d54ac472d8843adcaa56e8f97467dcf436c342a33adb71b580772",
+      "bytes_normalized": 8898
     },
     "atlas/src/components/NearViewport.tsx": {
       "sha256": "d407272d44a0dae124adfa90d94915b10f3d0abf1f945805a65f3e5c21ed2e66",
       "bytes_normalized": 1260
     },
     "atlas/src/components/SacredAstrolabeHero.tsx": {
-      "sha256": "a7a0f449064a733eebff2f6591ed88755476c268e79ae6392f31c703ba4cf576",
-      "bytes_normalized": 25499
+      "sha256": "4b7b0099dc6629f9f8341a67b4d300713d99afd40b16fa2c02b6e0648864827e",
+      "bytes_normalized": 25503
     },
     "atlas/src/components/ScriptureRefPill.tsx": {
       "sha256": "16a45f398de1406ce6a0aefeac9c51838d3941cf558d0fd7251e0f87d05496ed",
       "bytes_normalized": 5455
     },
     "atlas/src/components/SevenIAmStatements.tsx": {
-      "sha256": "41ffc4a16f0d4cb4cb0564f0d3315eb6b450f4203d1ecf36d060ddd04c66d7d8",
-      "bytes_normalized": 13359
+      "sha256": "c0e82ac9f562998c0e9030411aba4b5a55e063529a4ba9b3a018314f9d5a22be",
+      "bytes_normalized": 13363
     },
     "atlas/src/components/SiteNavbar.tsx": {
       "sha256": "8cb99ca0ac689f3ec91f17729c11790406682c91b3689d546a0818a038200a07",
       "bytes_normalized": 20800
     },
     "atlas/src/components/TetragrammatonAnatomy.tsx": {
-      "sha256": "81e052013fd3997cb7797f0cdb808a66a19b9c24c77dce8f03cd37982d605fb0",
-      "bytes_normalized": 9964
+      "sha256": "7e25ed014a5c442b0672fb026ff92c843cf723c567c103203a68f55da3bf6d99",
+      "bytes_normalized": 9972
     },
     "atlas/src/components/TheologicalQuiz.tsx": {
       "sha256": "04316febcaf086a4f6f507ed86c1ec354a04194dc8ec18e00d2d8993073c3258",
