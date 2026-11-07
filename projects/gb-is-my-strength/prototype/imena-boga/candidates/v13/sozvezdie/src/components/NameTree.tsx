@@ -210,6 +210,8 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
           })}
 
           <motion.path
+            ref={scene.innerThreadRef}
+            data-scene-inner-thread
             d={thread}
             fill="none"
             stroke="#d4af37"
@@ -234,8 +236,9 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
           initial={reduced ? false : { scale: 0.6, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
           viewport={{ once: true }}
+          onAnimationComplete={scene.syncGeometry}
           transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          className={`group absolute left-1/2 top-1/2 z-10 flex h-[20%] w-[20%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border bg-ink-950/90 backdrop-blur-sm transition-all duration-500 hover:border-gold-300/80 hover:shadow-[0_0_70px_-6px_rgba(212,175,55,0.65)] ${
+          className={`group absolute left-1/2 top-1/2 z-10 flex h-[20%] w-[20%] touch-none -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border bg-ink-950/90 backdrop-blur-sm transition-all duration-500 hover:border-gold-300/80 hover:shadow-[0_0_70px_-6px_rgba(212,175,55,0.65)] ${
             yhwhActive
               ? "border-gold-300/80 shadow-[0_0_70px_-6px_rgba(212,175,55,0.65)]"
               : "border-gold-500/45 shadow-[0_0_50px_-10px_rgba(212,175,55,0.45)]"
@@ -267,12 +270,14 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
               initial={reduced ? false : { scale: 0.4, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true, margin: "-60px" }}
+              onAnimationComplete={scene.syncGeometry}
               transition={{ duration: 0.7, delay: 0.9 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
               style={{ left: `${node.x}%`, top: `${node.y}%` }}
-              className="absolute z-10 flex w-[112px] -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center focus-visible:rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-300"
+              className="absolute z-10 flex w-[112px] touch-none -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center focus-visible:rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-300"
               aria-label={`${node.name.translit} — ${node.name.russian}${done ? ", изучено" : ""}`}
             >
               <span
+                data-scene-disc
                 className={`relative flex h-11 w-11 items-center justify-center rounded-full border bg-ink-950/90 transition-all duration-300 ${
                   lit
                     ? "scale-110 border-gold-300/80 shadow-[0_0_28px_-2px_rgba(212,175,55,0.7)]"
