@@ -1,26 +1,39 @@
 // Unit tests: node tests/run.mjs (compiles data+nav via tsc first, see npm script in README)
 import { EXHIBITS } from '../.test-build/data/exhibits.js';
-import { validateExhibits } from '../.test-build/data/validate.js';
+import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
 const errs = validateExhibits(EXHIBITS);
 if (errs.length) console.log(errs.join('\n'));
 t('registry passes editorial invariants', errs.length === 0);
-// Deliberately injected defects — validator MUST catch each
+// E1 COVERAGE — exactly the 42 Research IDs, no misses, no extras.
+const ids = new Set(EXHIBITS.map((e) => e.id));
+t('E1 exactly 42 exhibits', EXHIBITS.length === 42);
+t('E1 all 42 Research IDs present', RESEARCH_IDS_42.every((id) => ids.has(id)));
+t('E1 no extra IDs', [...ids].every((id) => RESEARCH_IDS_42.includes(id)));
+// E2 STORY-SPECIFIC — every scene has >=2 anchor props + unique signature.
+t('E2 every exhibit has >=2 anchor props', EXHIBITS.every((e) => e.anchorProps.length >= 2));
+const sig = new Set(EXHIBITS.map((e) => `${e.environmentKey}::${e.meaningfulAction}`));
+t('E2 all 42 scene signatures unique', sig.size === 42);
+// E3 SEMANTIC TRUTH — deliberately injected defects MUST be caught.
 const clone = () => JSON.parse(JSON.stringify(EXHIBITS));
 const inj = (name, mut) => { const c = clone(); mut(c); t('detects: ' + name, validateExhibits(c).length > 0); };
-inj('altar -> personal name', c => { c.find(e => e.id === 'yhwh-nissi-ex-17-15').category = 'personal_divine_name'; });
-inj('place -> divine title', c => { c.find(e => e.id === 'yhwh-yireh-gen-22-14').category = 'divine_title'; });
-inj('city -> personal name', c => { c.find(e => e.id === 'yhwh-shammah-ezek-48-35').category = 'personal_divine_name'; });
-inj('El Roi root swapped to רעה', c => { c.find(e => e.id === 'el-roi-gen-16-13').originalUnicode = 'אֵל רֹעִי'; });
-inj('Daniel marked Hebrew', c => { c.find(e => e.id === 'attiq-yomin-dan-7-9').sourceLanguage = 'he'; });
+inj('altar -> personal name', c => { c.find(e => e.id === 'nissi').category = 'personal_divine_name'; });
+inj('place -> divine title', c => { c.find(e => e.id === 'yireh').category = 'divine_title'; });
+inj('city -> personal name', c => { c.find(e => e.id === 'shammah').category = 'personal_divine_name'; });
+inj('El Roi root swapped to רעה', c => { c.find(e => e.id === 'el-roi').originalUnicode = 'אֵל רֹעִי'; });
+inj('Daniel marked Hebrew', c => { c.find(e => e.id === 'atiq-yomin').sourceLanguage = 'he'; });
+inj('El Hay preposition stripped', c => { c.find(e => e.id === 'el-hay').originalUnicode = 'אֵל חָי'; });
 inj('XSS in field', c => { c[0].interpretiveNotes = '<img src=x onerror=alert(1)>'; });
-inj('bidi control', c => { c[0].originalUnicode = '\u202Eאֱלֹהִים'; });
+inj('bidi control', c => { c[0].originalUnicode = 'אֱלֹהִים\u202E'; });
 inj('NFD Hebrew', c => { c[0].originalUnicode = 'ש\u05C1\u05BC'; });
-inj('LXX = Jn 8:58', c => { c.find(e => e.id === 'lxx-ego-eimi-ho-on-ex-3-14').originalUnicode = 'ἐγὼ εἰμί'; });
+inj('LXX = Jn 8:58 conflated', c => { c.find(e => e.id === 'ehyeh').originalUnicode = 'ἐγὼ εἰμί'; });
 inj('published state', c => { c[0].publicationState = 'PUBLISHED'; });
-inj('Sabaoth=sabbath', c => { c.find(e => e.id === 'yhwh-tsevaot-1sam-1-3').literalGloss = 'от субботы'; });
+inj('Sabaoth=sabbath', c => { c.find(e => e.id === 'sabaoth').literalGloss = 'от субботы'; });
+inj('missing Research id', c => { c.splice(0, 1); });
+inj('duplicate scene signature', c => { c[1].environmentKey = c[0].environmentKey; c[1].meaningfulAction = c[0].meaningfulAction; });
+inj('empty anchor props', c => { c[2].anchorProps = ['stele']; });
 // Navigation / sandals gate
 let p = { x: 0, z: -330 }, blocked = false;
 for (let i = 0; i < 400; i++) { const r = N.constrain(p.x, p.z - 0.1, true); p = r; if (r.block === 'outer') blocked = true; }

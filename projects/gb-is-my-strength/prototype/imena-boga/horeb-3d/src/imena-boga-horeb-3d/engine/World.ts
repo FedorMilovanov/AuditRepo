@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { EXHIBITS, type Exhibit } from '../data/exhibits';
 import { rockTextures, labelTexture, fbm } from './procedural';
 import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
+import { buildExhibitProps } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
 import { validateExhibits } from '../data/validate';
@@ -122,6 +123,12 @@ export class World {
       g.rotation.y = Math.atan2(nx, nz);
       g.userData.exhibitId = e.id;
       this.scene.add(g);
+      // Уникальные props сцены: перед стелом (к центру прохода), видны при подходе;
+      // снаружи стелы (к стене) они бы попадали в свод прохода — поэтому впереди.
+      const d = Math.hypot(nx, nz) || 1;
+      const bx = x + (nx / d) * 1.2, bz = z + (nz / d) * 1.2;
+      const props = buildExhibitProps(e, low, bx, bz);
+      this.scene.add(props);
       this.obstacles.push({ x, z, r: 0.85 });
       this.exhibitPos.push({ e, x, z, nx, nz });
     }

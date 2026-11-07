@@ -42,7 +42,7 @@ s = await S(); t('wall at angle: player stays inside', Math.abs(s.x) < 7, `x=${s
 // exhibit zone 1
 await W(() => { const w = window.__horeb.world; w.teleportTo(-2.6, -16.4); w.yaw = Math.atan2(-(-5.0 - -2.6), -(-18 - -16.4)); w.pitch = 0; });
 await page.waitForTimeout(800);
-s = await S(); t('prompt for Gen 1:1 exhibit', s.prompt && s.prompt.id === 'elohim-gen-1-1', JSON.stringify(s.prompt));
+s = await S(); t('prompt for Gen 1:1 exhibit', s.prompt && s.prompt.id === 'elohim', JSON.stringify(s.prompt));
 await bright('03-zone1-exhibit.png');
 await page.keyboard.press('KeyE'); await page.waitForTimeout(500);
 const dlg = page.getByRole('dialog');

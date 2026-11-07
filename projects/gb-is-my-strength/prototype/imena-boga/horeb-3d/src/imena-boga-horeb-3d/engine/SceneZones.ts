@@ -12,15 +12,26 @@ export interface Built {
 }
 
 // Размещение экспонатов: [x, z]; поворот считается к центру прохода и навстречу идущему.
+// 42 исследовательских обозначения Research #379, распределённые по 8 зонам.
 export const PLACEMENTS: Record<string, [number, number]> = {
-  'elohim-gen-1-1': [-5.0, -18], 'el-elyon-gen-14': [5.0, -34], 'el-olam-gen-21-33': [-5.0, -50],
-  'el-shaddai-gen-17-1': [-9, -78], 'el-roi-gen-16-13': [9, -90], 'beer-lahai-roi-gen-16-14': [11.5, -101],
-  'yhwh-yireh-gen-22-14': [-3.5, -128], 'yhwh-nissi-ex-17-15': [3.5, -144], 'yhwh-shalom-judg-6-24': [-3.5, -160],
-  'yhwh-tsevaot-1sam-1-3': [-8.5, -184], 'el-qanna-ex-34-14': [3.2, -194], 'qedosh-israel-is-1-4': [-8.5, -206], 'tsur-deut-32-4': [3.2, -216],
-  'yhwh-roi-ps-23-1': [-4.6, -238], 'adonai-gen-15-2': [4.6, -243.5], 'yhwh-tsidqenu-jer-23-6': [-4.6, -249], 'yhwh-shammah-ezek-48-35': [4.6, -254.5],
-  'immanuel-is-7-14': [-4.6, -260], 'attiq-yomin-dan-7-9': [4.6, -265.5], 'alpha-omega-rev-1-8': [-4.6, -271], 'abba-mk-14-36': [4.6, -276.5],
-  'ego-eimi-jn-8-58': [-4.6, -282],
-  'ehyeh-ex-3-14': [-10, -347], 'yhwh-ex-3-15': [10, -347], 'lxx-ego-eimi-ho-on-ex-3-14': [-14, -342],
+  // Зона 1 — Творение (6)
+  'elohim': [-5.0, -14], 'el': [5.0, -24], 'el-elyon': [-5.0, -34],
+  'tsur': [5.0, -43], 'el-emunah': [-5.0, -51], 'eloah': [5.0, -58],
+  // Зона 2 — Патриархи (4)
+  'el-shaddai': [-8.0, -72], 'el-olam': [8.0, -84], 'el-roi': [-8.0, -96], 'el-bethel': [8.0, -108],
+  // Зона 3 — Память о действии (7)
+  'yireh': [-3.5, -122], 'nissi': [3.5, -130], 'shalom': [-3.5, -138], 'rapha': [3.5, -146],
+  'mekoddishkem': [-3.5, -154], 'yah': [3.5, -161], 'ro-i': [-3.5, -167],
+  // Зона 4 — Святость и Воинства (11). Справа провал (часм): правые стелы на уступе x≈3.2, левые на широком полу x≈-8.5.
+  'sabaoth': [-8.5, -176], 'el-gibbor': [3.2, -181], 'tsidkenu': [-8.5, -186], 'shammah': [3.2, -191],
+  'el-qanna': [-8.5, -196], 'adonai': [3.2, -201], 'qedosh-yisrael': [-8.5, -206], 'el-hay': [3.2, -211],
+  'avinu': [-8.5, -216], 'yhwh-ori': [3.2, -221], 'el-rahum-hannun': [-8.5, -225],
+  // Зона 5 — Позднейшие свидетельства (12)
+  'atiq-yomin': [-4.6, -234], 'elah-shmaya': [4.6, -238], 'abba': [-4.6, -243], 'pantokrator': [4.6, -248],
+  'alpha-omega': [-4.6, -253], 'ego-eimi': [4.6, -258], 'immanuel': [-4.6, -263], 'kyrios-ho-theos': [4.6, -268],
+  'poimen-ho-kalos': [-4.6, -273], 'anastasis-zoe': [4.6, -278], 'ho-on-erchomenos': [-4.6, -282], 'arche-telos': [4.6, -286],
+  // Зона 7 — Хорив (2)
+  'ehyeh': [-10.0, -347], 'yhwh': [10.0, -347],
 };
 
 const ss = (a: number, b: number, x: number) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };

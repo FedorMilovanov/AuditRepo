@@ -16,4 +16,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  server: {
+    // Allow the Arena live-preview host (https://{port}-{sandboxId}.e2b.app).
+    allowedHosts: true,
+  },
 });

@@ -10,6 +10,28 @@
 - **Baseline import commit:** `4d9ec9f7899ff6f6af349f404460e9137b4766b8`.
 - **Original status:** `IMPORTED`. Не считать `promotion-ready`, не объявлять «42 сцены готовы», не публиковать.
 
+## Текущий checkpoint (2026-11-08, W1–W7)
+
+**Статус: 42-exhibit expansion — REGISTRY + CONTRACT + SCENE-PROPS engine GREEN; props wired into World; placement geometry verified; browser visual QA BLOCKED.**
+
+Проверено в этой ветке (`lane/horeb-3d-lab-20261108`, локально, без push):
+
+- **W0 baseline:** `npm ci` → generate-reader → `tsc --noEmit` → `vite build` → **BUILD_EXIT=0**. Свежий билд чист.
+- **42-exhibit registry/contract:** `sh tests/test.sh` → **33 passed, 0 failed, TEST_EXIT=0** (E1 точно 42 ID, E2 ≥2 anchor props + уникальные signatures, E3 semantic-negative injections, nav/sandal-gate fail-closed). Hebrew surface validated (el-elyon ≅ final nun U+05DF, el-bethel hyphen допустим).
+- **Scene-props engine:** `engine/exhibitProps.ts` — 40+ builders + `buildExhibitProps(e, low, px, pz)` dispatch on `environmentKey` + zone-tinted `PointLight`. Запись props-группы в `World.build()` перед каждой стелой (offset 1.2 к центру прохода). **Construction smoke:** `tests/construct.ts` (esbuild-bundle, Node) → **42 passed, 0 failed, 296 meshes high + 296 low**.
+- **Placement geometry:** `tests/placement.ts` → **4 passed, 0 failed**. Все 42 стелы на твёрдой почве (стены + зона-4 уступ). Исправлен баг: правые стелы зоны-4 (chasm) теперь на уступе `x≈3.2` (оригинальный дизайн), не над провалом. Zone-7 (Хорив, outdoor) стелы на плато `x=±10`.
+- **Dev server / preview:** `npx vite --host 0.0.0.0` на `0.0.0.0:5173`; `server.allowedHosts: true` (preview-host 403 исправлен). HTTP 200 и по localhost и по preview-host. Live-preview доступен.
+- **Браузерная visual QA:** **NOT RUN / BLOCKED** — в sandbox нет chromium/playwright (egress блокирует `release-assets.githubusercontent.com` + Playwright CDN). `/tmp/launch-helper.js` отсутствует. Tag e2e/regression BLOCKED.
+
+Изменённые файлы (локально): `engine/exhibitProps.ts` (new), `engine/World.ts` (wiring props + front placement), `engine/procedural.ts` (glowTexture Node-safe fallback), `engine/SceneZones.ts` (PLACEMENTS all 42 + zone-4 chasm fix), `data/exhibits.ts` (el-elyon Hebrew fix), `data/validate.ts` (HEBREW regex + hyphen), `HorebApp.tsx` + `tests/e2e.mjs` (ID refs), `ui/AccessibleReader.tsx` (meaningfulAction/caution rows + SourcesAndLimits disclosure), `tests/{construct,placement}.ts` (new), `tests/test.sh` (+esbuild construction/placement stages), `vite.config.ts` (allowedHosts).
+
+**Known limitations / unverified (без браузера):**
+- Props не в `obstacles` (decorative) — игрок проходит сквозь них; collision для props не реализован.
+- Visual clipping props vs стела/свод — не проверено визуально (geometry-check проверяет только до壁/уступ; props впереди стелы, не за сводом).
+- `rockTextures`/`labelTexture` (canvas) не протестированы в Node (DOM), но не менялись с working baseline.
+
+**Следующий инженерный шаг:** визуальный audit в браузере (если появится chromium) — проверить readability props vs stele, no clipping, bush quality, performance (проfiler), props collision по желанию. Без browser — продлить geometry/construction проверки. Не push, не merge PR #543 без разрешения пользователя.
+
 ## Что проверено, а что нет
 
 - Исходный ZIP совпадает с SHA-256. GitHub blob SHA-1 оригинала `b20de9b1985fae87595e53d9bcb1fb9ccb822203` совпал с локальным `git hash-object`.

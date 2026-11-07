@@ -57,16 +57,21 @@ export function rockTextures(size = 512) {
   return { tex, bump };
 }
 
-export function glowTexture(inner = 'rgba(255,220,160,1)', outer = 'rgba(255,120,30,0)') {
-  const c = document.createElement('canvas');
-  c.width = c.height = 128;
-  const g = c.getContext('2d')!;
-  const gr = g.createRadialGradient(64, 64, 0, 64, 64, 64);
-  gr.addColorStop(0, inner); gr.addColorStop(1, outer);
-  g.fillStyle = gr; g.fillRect(0, 0, 128, 128);
-  const t = new THREE.CanvasTexture(c);
-  t.colorSpace = THREE.SRGBColorSpace;
-  return t;
+export function glowTexture(inner = 'rgba(255,220,160,1)', outer = 'rgba(255,120,30,0)'): THREE.Texture | null {
+  try {
+    const c = document.createElement('canvas');
+    c.width = c.height = 128;
+    const g = c.getContext('2d')!;
+    const gr = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gr.addColorStop(0, inner); gr.addColorStop(1, outer);
+    g.fillStyle = gr; g.fillRect(0, 0, 128, 128);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  } catch {
+    // Node / no-DOM (headless construction test): no canvas → plain material.
+    return null;
+  }
 }
 
 // ── Надпись экспоната — визуализация, а не реконструкция древней надписи

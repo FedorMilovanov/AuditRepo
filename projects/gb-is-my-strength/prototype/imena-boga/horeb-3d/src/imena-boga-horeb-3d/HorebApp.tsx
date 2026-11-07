@@ -248,7 +248,7 @@ export default function HorebApp() {
       {finale === 'show' && !dialog && (
         <section className="absolute right-4 bottom-28 sm:right-8 sm:bottom-10 w-[min(90vw,24rem)] gate p-5" aria-label="Место наблюдения">
           <p className="font-display text-lg italic">Здесь можно остановиться и молчать.</p>
-          <p className="text-sm text-parch/75 mt-2">Рядом — Исх. 3:12–15: обещание «Я буду с тобою», самоназвание <Original e={EXHIBITS.find((e) => e.id === 'ehyeh-ex-3-14')!} /> и имя <Original e={EXHIBITS.find((e) => e.id === 'yhwh-ex-3-15')!} /> — разные формы в разных стихах.</p>
+          <p className="text-sm text-parch/75 mt-2">Рядом — Исх. 3:12–15: обещание «Я буду с тобою», самоназвание <Original e={EXHIBITS.find((e) => e.id === 'ehyeh')!} /> и имя <Original e={EXHIBITS.find((e) => e.id === 'yhwh')!} /> — разные формы в разных стихах.</p>
           <div className="flex flex-wrap gap-2 mt-4">
             <button className="btn" onClick={() => setScreen('reader')}>Открыть Атлас (чтение)</button>
             <button className="btn" onClick={() => { setFinale('seen'); worldRef.current?.teleportZone(1); }}>Вернуться в галереи</button>
