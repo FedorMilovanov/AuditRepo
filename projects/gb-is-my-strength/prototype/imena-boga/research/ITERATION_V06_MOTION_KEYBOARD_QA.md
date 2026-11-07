@@ -22,6 +22,6 @@ These changes are visual/interaction/performance only. `src/data/divineNames.ts`
 
 ## Preservation / next steps
 
-Candidate delivered in current ChatGPT artifact `imena_boga_two_flagships_v06_bundle.zip` (SHA256 `51b2ea70b1ba57083d09640ba2a1163851b9ac594b14bee2057b09bf95b73b91`). User must retain/export that artifact: **this PR currently records the evidence, not the v0.6 source**.
+Candidate delivered in current ChatGPT artifact `imena_boga_two_flagships_v06_bundle.zip` (SHA256 `9b025686e46a63ee7f6fb5da35d895bb4e29b657144e858827bcd7b7cee3544e`). User must retain/export that artifact: **this PR currently records the evidence, not the v0.6 source**.
 
 For next technical wave: rehydrate exact candidate under `projects/gb-is-my-strength/prototype/imena-boga/candidates/v06/`, after checking current owners. Run standalone build + browser QA, compare in owner-reviewed screenshots at 320/390/768/1440/1920 and reduced motion. Carry only approved interactions as Astro React islands into Product in a separate bounded lane. Do not make Research's blocked data public or replace Product's canonical Reader/Search/SEO.
