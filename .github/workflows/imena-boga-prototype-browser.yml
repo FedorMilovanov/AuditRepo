@@ -42,6 +42,9 @@ jobs:
               npm ci --no-audit --no-fund
               npm run build
               npx tsc --noEmit
+              if [ "$app" = "sozvezdie" ]; then
+                node scripts/qa-colors.mjs
+              fi
             )
           done
 
