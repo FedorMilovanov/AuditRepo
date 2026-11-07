@@ -58,7 +58,7 @@ Independent evidence: [browser CI run #42385374329](https://github.com/FedorMilo
 
 GitHub-hosted builds, TS checks, source/font/delivery/failure/image contracts and 16 Chromium/WebKit smoke scenarios passed. The diagnostic itself originally failed because its own observer called `tagName.toLowerCase()` on a non-element layout-shift source; corrected in `8a2785b` and confirmed by the successful 24-run witness on `7ea82fd`. These were test instrumentation exceptions, not application errors.
 
-The 78-case Constellation suite produced 77 PASS and 1 test-specific failure under Linux: `requestfailed` counted two pending WOFF2 loads aborted by the test's explicit `page.reload()` during the resume scenario. The fix in `c8bc3a5` awaits the first document's `document.fonts.ready` before reload and preserves true error reporting. **The corrected 78-case suite must pass on the new exact HEAD before counting this as resolved.** No UI code was changed to hide the failure.
+The 78-case Constellation suite produced 77 PASS and 1 test-specific failure under Linux: `requestfailed` counted two pending WOFF2 loads aborted by the test's explicit `page.reload()` during the resume scenario. The fix in `c8bc3a5` awaits the first document's `document.fonts.ready` before reload and preserves true error reporting. **Resolved:** [GitHub browser CI #42386172703](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42386172703) completed successfully on tested candidate commit `165431c`: **ALL 78 CHECKS PASSED**. The later research-only commit did not change the candidate sources. This restores a green functional QA witness without suppressing genuine request errors. No UI code was changed to hide the failure.
 
 ### Bounded next experiment
 
