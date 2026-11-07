@@ -9,7 +9,7 @@
 | Grok Desktop Reader | [папка в main](../../projects/gb-is-my-strength/prototype/grok-desktop-reader/README.md) | HTML reference V22–V26, QA, передачи агентам и Product-заметки | Реальные reference-файлы в main; актуальные визуальные решения проверить в project README; **не** считать live Product |
 | Book Engine v7 | [папка в main](../../projects/gb-is-my-strength/prototype/book-engine/v7/README.md) | HTML-прототип и исторические аудит/QA | Исторический образец; перед продолжением выяснить, актуален ли этот design owner |
 | Имена Бога — Atlas / Sozvezdie | [AuditRepo draft PR #538](https://github.com/FedorMilovanov/AuditRepo/pull/538) | Два независимых React-прототипа и проверенные кандидаты; код **пока в ветке PR**, не в main | `lab-active` на ветке PR; Research [#379](https://github.com/FedorMilovanov/Research/pull/379) не разрешает публикацию; проверять head, webkit/права/owner review |
-| HOREB 3D — пещера и горящий куст | [AuditRepo draft PR #543](https://github.com/FedorMilovanov/AuditRepo/pull/543) · `projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/` | Project README + AGENT_HANDOFF на ветке PR. Исходный Arena ZIP отдельно передан владельцем через import kit | **SOURCE-IMPORT-PENDING**: проверить присутствие `package.json`, `src/`, `tests/`, immutable `original/` в PR. Только потом продолжать Three.js код |
+| HOREB 3D — пещера и горящий куст | [AuditRepo draft PR #543](https://github.com/FedorMilovanov/AuditRepo/pull/543) · `projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/` | Импортированный Vite/React/Three.js проект: 8 зон, 25 исходных карточек, `package.json`, `src/`, `tests/`, `original/`, Arena agent prompt и 42-сценный бриф | **IMPORTED / LAB DEVELOPMENT**: исходники и ZIP побайтово проверены, CI AuditRepo зелёный; свежие npm build/browser/WebKit/редакция — отдельные gates, не Product |
 
 **Важно:** два отдельных UI-образца и HOREB 3D — **три различных эксперимента** на тему имён Бога, не три Product-маршрута. Их связь через научный Research, но никакой автоматической публикации.
 
@@ -25,4 +25,4 @@
 4. Назвать: `source-present`, `build-pass`, `browser-pass`, `owner-approved`, `editorially-cleared`, `integrated` — это независимые факты.
 5. Работать там же, не создавать конкурирующую реализацию.
 
-Для HOREB отсутствие исходного кода в ветке **блокирует** дальнейшую реализацию; открытый PR с документацией сам по себе не доказывает импорт.
+Для HOREB [PR #543](https://github.com/FedorMilovanov/AuditRepo/pull/543) уже содержит исходники, SHA-256 оригинального ZIP, manifest и инструкции Arena; проверено 2026-11-08. Следующий агент обязан **получить эту ветку** — в `main` файлы могут отсутствовать до merge. Наличие исходников не означает успешного clean build и editorial approval.

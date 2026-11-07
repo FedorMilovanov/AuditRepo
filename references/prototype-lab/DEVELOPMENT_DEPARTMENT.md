@@ -33,7 +33,7 @@ projects/<product>/prototype/<stable-slug>/    # единственная пап
 
 **Не создавайте пустые каталоги**, не перекладывайте исторические прототипы ради эстетики и не заводите дубликаты в `references/`. Общие документы — метод и указатель; **код живёт в `projects/<product>/prototype/`**. Старые каталоги могут иметь собственную структуру, это не ошибка.
 
-Пример: HOREB 3D — `projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/` в [отдельном draft PR #543](https://github.com/FedorMilovanov/AuditRepo/pull/543). Пока исходники там не подтверждены, статус **source-import-pending**, а не «разработано / готово».
+Пример: HOREB 3D — `projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/` в [отдельном draft PR #543](https://github.com/FedorMilovanov/AuditRepo/pull/543). По состоянию на 2026-11-08 исходники уже импортированы и проверены в PR #543, статус **IMPORTED / LAB DEVELOPMENT**, но clean build и browser gates ещё не закрыты. Агенту на `arena/*` нужно сначала получить ветку PR #543, а не делать вывод по `main`.
 
 ## 3. Что должен знать следующий агент
 

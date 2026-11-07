@@ -13,7 +13,7 @@
 | `gb-is-my-strength` | [Grok desktop reader](../projects/gb-is-my-strength/prototype/grok-desktop-reader/README.md) — отбор UX из версий V16–V26 | Reference; пример [PR #537](https://github.com/FedorMilovanov/AuditRepo/pull/537) |
 | `gb-is-my-strength` | [Book engine v7](../projects/gb-is-my-strength/prototype/book-engine/v7/README.md) — книжный движок | Исторический prototype/evidence; проверить актуальность перед использованием |
 | `gb-is-my-strength` | [Имена Бога — Atlas / Созвездие](https://github.com/FedorMilovanov/AuditRepo/pull/538) — два Arena React-флагмана и четыре версии исходников | Draft PR #538, не Product и не live |
-| `gb-is-my-strength` | [HOREB 3D](https://github.com/FedorMilovanov/AuditRepo/pull/543) — отдельный Arena Three.js прототип пещеры | Draft PR #543; **source-import-pending**, пока исходники не подтверждены в PR |
+| `gb-is-my-strength` | [HOREB 3D](https://github.com/FedorMilovanov/AuditRepo/pull/543) — отдельный Arena Three.js прототип пещеры | Draft PR #543; **IMPORTED** — код, тесты, immutable ZIP и hash manifest подтверждены; clean build/browser/публикация не заявлены |
 
 Остальные прежние каталоги `prototype/` не нужно массово перемещать или переименовывать ради новой схемы. Новая лаборатория — **общий метод и индекс, а не новая копия всех файлов**.
 
