@@ -224,6 +224,10 @@ const boxesOverlap = (a, b) =>
   }
 
   const rootDrag = page.locator('#tsentr [data-elastic-node="yhwh"]');
+  const rootTransition = await rootDrag.evaluate(el => getComputedStyle(el).transitionProperty);
+  !rootTransition.split(',').map(x => x.trim()).some(x => ['all','left','top'].includes(x))
+    ? ok("central spring position is not delayed by CSS transition-all")
+    : bad("CSS transitions interfere with center drag: " + rootTransition);
   const rootStart = await rootDrag.boundingBox();
   const allSatellites = await page.locator('#tsentr [data-elastic-node]:not([data-elastic-node="yhwh"])')
     .evaluateAll(els => els.map(el => { const r=el.getBoundingClientRect(); return {
