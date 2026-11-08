@@ -1,12 +1,8 @@
 name: HOREB 3D Lab QA
 
 on:
-  push:
-    branches:
-      - lane/horeb-3d-lab-20261108
-    paths:
-      - 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/**'
-      - '.github/workflows/horeb-3d.yml'
+  # The one canonical HOREB Draft PR is the sole write lane; a second push run
+  # would redundantly recheck the exact same SHA.
   pull_request:
     paths:
       - 'projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/**'
