@@ -448,14 +448,15 @@ export function App() {
   }, [showToast]);
 
   const handleFocusSearch = useCallback(() => {
-    const atlas = document.getElementById('constellation-atlas');
-    if (atlas) {
-      atlas.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    window.setTimeout(() => {
-      const input = document.getElementById('constellation-search-input') as HTMLInputElement | null;
-      if (input) input.focus();
-    }, 450);
+    // Focus belongs to the explicit search action, not to an arbitrary
+    // 450ms timer that may steal it after the reader takes another action.
+    const input = document.getElementById('constellation-search-input') as HTMLInputElement | null;
+    if (!input) return;
+    input.focus({ preventScroll: true });
+    document.getElementById('constellation-atlas')?.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      block: 'start',
+    });
   }, []);
 
   // Search keyboard ownership belongs to DivineConstellationExplorer.
