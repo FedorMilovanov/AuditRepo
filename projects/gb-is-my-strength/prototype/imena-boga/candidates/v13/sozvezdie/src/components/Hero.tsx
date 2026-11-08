@@ -145,9 +145,9 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
         </motion.div>
 
         <motion.h1
-          initial={shouldAnimate ? { opacity: 0, y: 34, letterSpacing: "0.3em" } : false}
+          initial={false}
           animate={{ opacity: 1, y: 0, letterSpacing: "0.06em" }}
-          transition={{ duration: 1.5, delay: 0.75, ease }}
+          transition={{ duration: 0 }}
           className="gold-text mt-6 font-display text-[12.5vw] font-semibold leading-[0.95] sm:text-7xl md:text-8xl lg:text-[7.5rem]"
         >
           ИМЕНА БОГА
@@ -156,7 +156,7 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
         <motion.p
           initial={shouldAnimate ? { opacity: 0, y: 24 } : false}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.15, ease }}
+          transition={{ duration: 0.65, delay: 0.15, ease }}
           className="mt-7 max-w-xl font-body text-lg italic leading-relaxed text-cream-300 md:text-xl"
         >
           От «Я есмь Сущий» у горящего куста до «с нами Бог» — вся история

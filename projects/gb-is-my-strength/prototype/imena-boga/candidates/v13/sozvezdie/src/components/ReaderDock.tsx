@@ -174,8 +174,8 @@ export default function ReaderDock({
   if (!visible) return null;
 
   const btn =
-    "flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full text-cream-400 transition-all duration-300 hover:bg-gold-500/15 hover:text-gold-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 disabled:pointer-events-none disabled:opacity-30";
-  const divider = <span className="h-6 w-px shrink-0 bg-cream-800/60 sm:h-px sm:w-6" />;
+    "flex h-9 w-9 xl:h-10 xl:w-10 items-center justify-center rounded-full text-cream-400 transition-all duration-300 hover:bg-gold-500/15 hover:text-gold-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 disabled:pointer-events-none disabled:opacity-30";
+  const divider = <span aria-hidden="true" className="hidden h-px w-7 shrink-0 bg-cream-800/60 xl:block" />;
 
   return (
     <>
@@ -185,7 +185,7 @@ export default function ReaderDock({
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         data-reader-dock
         data-idle={scrolling && !expanded ? "false" : "true"}
-        className={`fixed bottom-[4.6rem] right-2 z-40 flex flex-row items-center gap-0.5 rounded-full border border-gold-500/20 bg-ink-950/85 px-1.5 py-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.75)] backdrop-blur-md transition-all duration-500 sm:bottom-5 sm:right-5 sm:flex-col sm:gap-1 sm:py-2 ${
+        className={`fixed bottom-[5.2rem] right-3 z-40 flex flex-row items-center gap-0.5 rounded-full border border-gold-500/20 bg-ink-950/85 px-1.5 py-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.75)] backdrop-blur-md transition-all duration-500 xl:bottom-5 xl:right-5 xl:flex-col xl:gap-1 xl:py-2 ${
           scrolling && !expanded ? "scale-90 opacity-25" : "scale-100 opacity-100"
         }`}
         role="toolbar"
@@ -199,7 +199,7 @@ export default function ReaderDock({
           aria-expanded={expanded}
           aria-label={`Прочитано ${pct}%. ${expanded ? "Свернуть" : "Развернуть"} панель чтения`}
           title={`Прочитано ${pct}% · изучено ${completedCount} из ${totalCount}`}
-          className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full sm:hidden"
+          className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full xl:hidden"
         >
           <ProgressRing progress={progress} pct={pct} completedCount={completedCount} expanded={expanded} />
         </button>
@@ -208,12 +208,12 @@ export default function ReaderDock({
           role="img"
           aria-label={`Прочитано ${pct}%. Изучено ${completedCount} из ${totalCount}`}
           title={`Прочитано ${pct}% · изучено ${completedCount} из ${totalCount}`}
-          className="relative hidden h-9 w-9 shrink-0 items-center justify-center rounded-full sm:flex sm:mb-1"
+          className="relative hidden h-10 w-10 shrink-0 items-center justify-center rounded-full xl:mb-1 xl:flex"
         >
           <ProgressRing progress={progress} pct={pct} completedCount={completedCount} />
         </div>
 
-        <div id="reader-dock-options" className={`${expanded ? "flex" : "hidden"} items-center gap-0.5 sm:flex sm:flex-col sm:gap-1`}>
+        <div id="reader-dock-options" className={`${expanded ? "grid" : "hidden"} absolute bottom-full right-0 mb-2 grid-cols-3 items-center gap-1 rounded-2xl border border-gold-500/25 bg-ink-950 p-2 shadow-xl xl:static xl:mb-0 xl:flex xl:flex-col xl:gap-1 xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none`}>
           {divider}
           <button type="button" className={btn} onClick={() => stepFont(1)} disabled={font === "lg"} title="Крупнее шрифт" aria-label="Увеличить шрифт">
             <Plus className="h-4 w-4" strokeWidth={1.5} />
@@ -256,7 +256,7 @@ export default function ReaderDock({
           </button>
           <button
             type="button"
-            className={`${btn} hidden lg:flex ${showKeys ? "bg-gold-500/15 text-gold-200" : ""}`}
+            className={`${btn} hidden xl:flex ${showKeys ? "bg-gold-500/15 text-gold-200" : ""}`}
             onClick={() => setShowKeys((v) => !v)}
             title="Горячие клавиши"
             aria-label="Горячие клавиши"
@@ -279,7 +279,7 @@ export default function ReaderDock({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 8 }}
             transition={{ duration: 0.25 }}
-            className="fixed bottom-5 right-[4.75rem] z-40 hidden w-72 rounded-2xl border border-gold-500/25 bg-ink-950/95 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.85)] backdrop-blur-md lg:block"
+            className="fixed bottom-5 right-[4.75rem] z-40 hidden w-72 rounded-2xl border border-gold-500/25 bg-ink-950/95 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.85)] backdrop-blur-md xl:block"
             id="reader-shortcut-reference"
             role="region"
             aria-label="Горячие клавиши"

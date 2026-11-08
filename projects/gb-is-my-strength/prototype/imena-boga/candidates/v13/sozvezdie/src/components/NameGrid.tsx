@@ -307,7 +307,7 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                     onClick={() => onSelect(name.id)}
                     aria-label={`Перейти к разделу: ${name.translit}${isCompleted ? ", изучено" : ""}`}
                     aria-current={isActive ? "true" : undefined}
-                    className={`group relative flex min-h-[122px] flex-col items-center justify-center overflow-hidden rounded-xl border px-2 py-4 transition-all duration-500 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 ${
+                    className={`group relative flex min-h-[136px] flex-col items-center justify-center overflow-hidden rounded-xl border px-2 py-4 transition-colors duration-300 motion-safe:hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400 ${
                       isActive
                         ? "border-gold-500/60 bg-gradient-to-b from-ink-800 to-ink-900 shadow-[0_0_35px_-8px_rgba(212,175,55,0.35)]"
                         : isCompleted
@@ -316,8 +316,8 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                     }`}
                   >
                     <span
-                      className={`absolute left-2.5 top-2 font-ui text-[8px] tracking-[0.3em] transition-colors duration-500 ${
-                        isActive || isCompleted ? "text-gold-400" : "text-cream-700 group-hover:text-gold-600"
+                      className={`absolute left-2.5 top-2 font-ui text-[11px] tracking-[0.12em] transition-colors duration-300 ${
+                        isActive || isCompleted ? "text-gold-400" : "text-cream-400 group-hover:text-gold-300"
                       }`}
                     >
                       {String(n).padStart(2, "0")}
@@ -326,29 +326,23 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
                       <span className="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-gold-500/20 text-gold-300 ring-1 ring-gold-500/40">
                         <Check className="h-2.5 w-2.5" strokeWidth={2.5} />
                       </span>
-                    ) : (
-                      <span
-                        className={`absolute right-2.5 top-2.5 h-1.5 w-1.5 rotate-45 transition-all duration-500 ${
-                          isActive ? "bg-gold-400 shadow-[0_0_8px_rgba(212,175,55,0.9)]" : "bg-cream-800/70 group-hover:bg-gold-600"
-                        }`}
-                      />
-                    )}
+                    ) : null}
                     <span
                       {...attrs}
                       className={`select-none text-center font-hebrew text-xl font-medium leading-tight transition-all duration-500 md:text-2xl ${
-                        isActive ? "glow-gold text-gold-300" : "text-gold-400/60 group-hover:text-gold-300"
+                        isActive ? "glow-gold text-gold-200" : "text-gold-300/90 group-hover:text-gold-200"
                       }`}
                     >
                       {name.hebrew}
                     </span>
                     <span
-                      className={`mt-2 text-center font-ui text-[8px] uppercase tracking-[0.08em] transition-colors duration-500 sm:text-[9px] ${
-                        isActive ? "text-cream-100" : "text-cream-400 group-hover:text-cream-200"
+                      data-name-translit className={`mt-2 min-w-0 max-w-full break-words px-1 text-center font-ui text-[12px] font-medium leading-snug tracking-[0.02em] transition-colors duration-300 [overflow-wrap:anywhere] ${
+                        isActive ? "text-cream-100" : "text-cream-300 group-hover:text-cream-100"
                       }`}
                     >
                       <Highlight text={name.translit} query={query} />
                     </span>
-                    <span className="mt-1 line-clamp-2 text-center font-display text-sm italic leading-tight text-cream-500 transition-colors group-hover:text-cream-300">
+                    <span className="mt-1 line-clamp-3 max-w-full break-words text-center font-display text-sm italic leading-snug text-cream-300 transition-colors group-hover:text-cream-100">
                       <Highlight text={name.russian} query={query} />
                     </span>
                   </button>
