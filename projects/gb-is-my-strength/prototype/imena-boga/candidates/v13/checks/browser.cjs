@@ -275,7 +275,24 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     // Mobile/tablet scripture pillars are a true keyboard modal.
     if(width<1024){
       const trigger=page.getByRole('button',{name:'Открыть скрижали имён Бога'});
+      // Document-bubble observer runs after the React root's click handler.
+      // A requestAnimationFrame-based focus transition must fail this witness,
+      // even if later Playwright assertions happen to run after the frame.
+      await page.evaluate(()=>{
+        window.__atlasImmediateDrawerFocus=null;
+        document.addEventListener('click',event=>{
+          if(!(event.target instanceof Element) ||
+             !event.target.closest('button[aria-label="Открыть скрижали имён Бога"]')) return;
+          const dialog=document.querySelector('[role="dialog"][aria-label="Скрижали имён Бога"]');
+          window.__atlasImmediateDrawerFocus=Boolean(dialog &&
+            dialog.contains(document.activeElement) &&
+            document.activeElement?.getAttribute('aria-label')==='Закрыть скрижаль');
+        },{once:true});
+      });
       await trigger.click();
+      const synchronousFocus=await page.evaluate(()=>window.__atlasImmediateDrawerFocus);
+      if(synchronousFocus!==true)
+        throw Error('Atlas mobile drawer did not receive focus in opening click '+JSON.stringify({width,synchronousFocus}));
       const drawer=page.getByRole('dialog',{name:'Скрижали имён Бога'});
       await drawer.waitFor({state:'visible'});
       const mobileNames=await drawer.locator('button').evaluateAll(buttons=>

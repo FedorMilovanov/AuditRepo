@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Sparkles, BookOpen, X, ChevronRight, Sun } from 'lucide-react';
 import { DivineNameEntry } from '../data/divineNames';
 
@@ -306,15 +306,13 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
   const drawerCloseRef = useRef<HTMLButtonElement | null>(null);
   const restoreDrawerFocusRef = useRef(false);
 
-  // A mobile drawer is a modal: lock the page, contain Tab, and return
-  // focus to its visible trigger on dismissal (not when opening the dossier).
-  useEffect(() => {
+  // A mobile drawer is a modal: commit its focus before the first paint,
+  // contain Tab, and restore focus to its trigger when dismissed.
+  useLayoutEffect(() => {
     if (!mobileDrawerOpen) return;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    const focusFrame = window.requestAnimationFrame(() =>
-      drawerCloseRef.current?.focus({ preventScroll: true })
-    );
+    drawerCloseRef.current?.focus({ preventScroll: true });
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault();
@@ -345,12 +343,11 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
     window.addEventListener('keydown', handleKey);
     window.addEventListener('resize', onResize);
     return () => {
-      window.cancelAnimationFrame(focusFrame);
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', handleKey);
       window.removeEventListener('resize', onResize);
       if (restoreDrawerFocusRef.current && mobileTriggerRef.current?.getClientRects().length) {
-        window.requestAnimationFrame(() => mobileTriggerRef.current?.focus({ preventScroll: true }));
+        mobileTriggerRef.current.focus({ preventScroll: true });
       }
       restoreDrawerFocusRef.current = false;
     };
