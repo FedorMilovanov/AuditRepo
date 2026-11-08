@@ -46,9 +46,9 @@ function RailItem({
     >
       {/* diamond marker */}
       <span
-        className={`h-1.5 w-1.5 shrink-0 rotate-45 transition-all duration-500 ${
+        className={`h-1.5 w-1.5 shrink-0 rounded-full transition-colors duration-300 ${
           active
-            ? "animate-diamond bg-gold-300 shadow-[0_0_12px_rgba(212,175,55,0.9)]"
+            ? "bg-gold-300 shadow-[0_0_12px_rgba(212,175,55,0.9)]"
             : passed
               ? "bg-gold-600/70"
               : "bg-cream-700/40 group-hover:bg-gold-500/60"
@@ -56,19 +56,19 @@ function RailItem({
       />
       <span className={`flex min-w-0 flex-col ${side === "left" ? "items-end" : "items-start"}`}>
         <span
-          className={`font-hebrew text-[10px] leading-none transition-all duration-500 ${
-            active ? "text-gold-300/80" : passed ? "text-cream-700/60" : "text-cream-800/50 group-hover:text-cream-500"
+          className={`font-hebrew text-[11px] leading-none transition-all duration-500 ${
+            active ? "text-gold-300/80" : passed ? "text-cream-400/80" : "text-cream-400/80 group-hover:text-cream-200"
           }`}
         >
           {String(index + 1).padStart(2, "0")}
         </span>
         <span
-          className={`flex max-w-full items-center gap-1.5 font-ui text-[10px] uppercase tracking-[0.22em] transition-all duration-500 ${
+          className={`flex max-w-full items-center gap-1.5 font-ui text-[11px] uppercase tracking-[0.12em] transition-all duration-500 ${
             active
               ? "glow-gold text-gold-200"
               : passed
-                ? "text-cream-500/75"
-                : "text-cream-600/60 group-hover:text-cream-300"
+                ? "text-cream-300/80"
+                : "text-cream-300/80 group-hover:text-cream-100"
           } ${side === "left" ? "flex-row-reverse" : ""}`}
         >
           <span className="truncate">{translit}</span>
@@ -129,13 +129,13 @@ export default function Rails({ active, completedIds, wide, onSelect }: RailsPro
     return (
       <aside
         data-rails
-        className={`fixed top-1/2 z-40 hidden w-40 -translate-y-1/2 ${
-          wide ? "min-[1480px]:block" : "xl:block"
+        className={`fixed top-1/2 z-40 hidden w-44 -translate-y-1/2 ${
+          wide ? "min-[1560px]:block" : "min-[1440px]:block"
         } ${side === "left" ? "left-4 2xl:left-8" : "right-24 2xl:right-28"}`}
         aria-label={`Указатель имён: ${title}`}
       >
         <p
-          className={`mb-4 flex items-center gap-3 font-ui text-[9px] uppercase tracking-[0.4em] text-cream-700 ${
+          className={`mb-4 flex items-center gap-3 font-ui text-[11px] uppercase tracking-[0.18em] text-cream-400 ${
             side === "left" ? "justify-end" : ""
           }`}
         >

@@ -661,6 +661,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                     </div>
                     <div className="flex min-w-0 w-full flex-col items-end">
                       <span
+                        data-atlas-mobile-original
                         className={`${
                           item.language === 'greek' ? 'font-greek' : 'font-hebrew'
                         } w-full min-w-0 break-words text-right text-lg font-bold leading-snug [overflow-wrap:anywhere]`}
