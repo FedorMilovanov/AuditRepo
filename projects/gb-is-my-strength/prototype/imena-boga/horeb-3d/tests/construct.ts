@@ -131,6 +131,9 @@ for (const low of [true, false]) {
     bush.fire instanceof THREE.Points && bush.sparks instanceof THREE.Points);
   t('Horeb ' + mode + ': flame and shrub remain inside the same scene',
     bush.group.children.includes(bush.fire) && bush.group.children.includes(bush.foliage));
+  const soil = bush.group.getObjectByName('bush-soil-base');
+  t('Horeb ' + mode + ': small natural soil base, no stage-like pedestal',
+    !!soil && soil.scale.x <= 0.8 && soil.scale.y <= 0.1 && soil.scale.z <= 0.8);
 }
 
 
