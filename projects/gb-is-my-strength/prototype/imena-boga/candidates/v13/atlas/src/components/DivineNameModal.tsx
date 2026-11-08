@@ -597,11 +597,11 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
                       borderColor: 'var(--gb-border-strong)',
                     }}
                   >
-                    <div className="min-w-0">
-                      <div className="font-serif-display truncate text-sm font-bold" style={{ color: 'var(--gb-ink)' }}>
+                    <div className="min-w-0 flex-1">
+                      <div data-related-name-text="title" className="font-serif-display min-w-0 break-words text-sm font-bold" style={{ color: 'var(--gb-ink)' }}>
                         {rel.transliteration}
                       </div>
-                      <div className="font-ui truncate text-[11px]" style={{ color: 'var(--gb-muted)' }}>
+                      <div data-related-name-text="russian" className="font-ui min-w-0 break-words text-[11px]" style={{ color: 'var(--gb-muted)' }}>
                         {rel.russianName}
                       </div>
                     </div>

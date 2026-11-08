@@ -358,6 +358,25 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
           JSON.stringify({width,initialDossierFocus}));
       const dossier=page.getByRole('dialog');
       await dossier.waitFor({state:'visible'});
+      // Related names contain canonical Russian titles; never silently
+      // ellipsize them inside modal cards even when page scrollWidth is zero.
+      const relatedGeometry=await dossier.locator('[data-related-name-text]').evaluateAll(labels=>{
+        const invalid=[];
+        for(const label of labels){
+          const card=label.closest('button');
+          if(!card){ invalid.push({reason:'missing button'}); continue; }
+          const box=card.getBoundingClientRect(),style=getComputedStyle(label);
+          const range=document.createRange();range.selectNodeContents(label);
+          const fragments=[...range.getClientRects()];
+          if(style.textOverflow==='ellipsis'||style.whiteSpace==='nowrap'||
+             !fragments.length||fragments.some(r=>r.left<box.left+3||r.right>box.right-3))
+            invalid.push({text:label.textContent?.trim().slice(0,80),type:label.getAttribute('data-related-name-text')});
+        }
+        return {count:labels.length,invalid};
+      });
+      if(!relatedGeometry.count||relatedGeometry.invalid.length)
+        throw Error('Atlas related names clipped/truncated in dossier '+
+          JSON.stringify({width,relatedGeometry}));
       await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label')==='Закрыть окно');
       await dossier.getByRole('button',{name:'Закрыть окно'}).click();
       await dossier.waitFor({state:'detached'});
