@@ -5,6 +5,7 @@ import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
 import { buildExhibitProps, mergePropsGroup } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
+import { choosePixelRatio, resetsAutoLowered } from './quality';
 import { validateExhibits } from '../data/validate';
 import { constrain, zoneAt, distToBush, sanitizeSpawn, ZONE_SPAWN, R_OUTER, TUNNEL_END, steleVariation, separateObstacle, type Block } from './nav';
 
@@ -54,6 +55,7 @@ export class World {
   private moon = new THREE.DirectionalLight(0x9fb0e0, 0.8);
   private fogColor = new THREE.Color();
   private t = 0; private frames = 0; private fpsT = 0; private fps = 0; private lowFpsT = 0;
+  private autoLoweredResolution = false;
   private emitT = 0;
   private stepAcc = 0;
   private dragging: { id: number; x: number; y: number } | null = null;
@@ -250,9 +252,15 @@ export class World {
   }
 
   applySettings(s: WorldSettings) {
+    // Do not undo an FPS-driven downgrade when changing sound, exposure or
+    // particles. Explicitly changing the quality mode still resets it.
+    if (resetsAutoLowered(this.settings, s)) {
+      this.autoLoweredResolution = false;
+      this.lowFpsT = 0;
+    }
     this.settings = s;
-    const dpr = window.devicePixelRatio || 1;
-    this.renderer.setPixelRatio(s.quality === 'high' ? Math.min(dpr, 2) : Math.min(dpr, 1));
+    this.renderer.setPixelRatio(choosePixelRatio(s.quality, window.devicePixelRatio || 1,
+      s.autoQuality && this.autoLoweredResolution));
     this.renderer.toneMappingExposure = s.exposure;
     this.zones.particles.forEach((p) => (p.visible = s.particles));
     this.bush.sparks.visible = s.particles;
@@ -426,7 +434,11 @@ export class World {
       this.fps = Math.round(this.frames / this.fpsT); this.frames = 0; this.fpsT = 0;
       if (this.settings.autoQuality && this.fps < 38 && this.renderer.getPixelRatio() > 1) {
         this.lowFpsT++;
-        if (this.lowFpsT >= 3) { this.renderer.setPixelRatio(1); this.resize(); this.onEvent('auto-lowered'); this.lowFpsT = 0; }
+        if (this.lowFpsT >= 3) {
+          this.autoLoweredResolution = true;
+          this.renderer.setPixelRatio(choosePixelRatio(this.settings.quality, window.devicePixelRatio || 1, true));
+          this.resize(); this.onEvent('auto-lowered'); this.lowFpsT = 0;
+        }
       } else this.lowFpsT = 0;
     }
     this.emitT += dt;
