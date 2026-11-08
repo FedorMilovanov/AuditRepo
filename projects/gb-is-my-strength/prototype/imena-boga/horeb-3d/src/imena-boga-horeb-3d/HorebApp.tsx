@@ -25,7 +25,7 @@ function readSettings(): UiSettings {
     sound: typeof s.sound === 'boolean' ? s.sound : true,
     particles: typeof s.particles === 'boolean' ? s.particles : true,
     reducedMotion: typeof s.reducedMotion === 'boolean' ? s.reducedMotion : prefersReduced(),
-    exposure: typeof s.exposure === 'number' && Number.isFinite(s.exposure) ? Math.min(2, Math.max(0.6, s.exposure)) : 1.15,
+    exposure: typeof s.exposure === 'number' && Number.isFinite(s.exposure) ? Math.min(2, Math.max(0.6, s.exposure)) : 1.5,
     showStats: s.showStats === true,
   };
 }

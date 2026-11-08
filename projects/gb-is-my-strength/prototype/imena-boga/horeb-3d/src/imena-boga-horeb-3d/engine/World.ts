@@ -40,9 +40,9 @@ export class World {
   private exhibitPos: { e: Exhibit; x: number; z: number; nx: number; nz: number }[] = [];
   private zones!: ReturnType<typeof buildZones>;
   private bush!: ReturnType<typeof buildBurningBush>;
-  private ambient = new THREE.AmbientLight(0xffeedd, 1.6);
-  private hemi = new THREE.HemisphereLight(0x6a7cb0, 0x3a2a20, 0);
-  private moon = new THREE.DirectionalLight(0x9fb0e0, 0);
+  private ambient = new THREE.AmbientLight(0xffeedd, 4.0);
+  private hemi = new THREE.HemisphereLight(0x6a7cb0, 0x3a2a20, 1.0);
+  private moon = new THREE.DirectionalLight(0x9fb0e0, 0.8);
   private fogColor = new THREE.Color();
   private t = 0; private frames = 0; private fpsT = 0; private fps = 0; private lowFpsT = 0;
   private emitT = 0;

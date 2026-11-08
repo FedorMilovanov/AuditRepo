@@ -10,6 +10,7 @@ import { join } from 'path';
 
 const CHROME = '/tmp/chromium';
 const BASE = 'http://127.0.0.1:5173';
+const CACHE_BUST = '?v=' + Date.now();
 const SHOTS = join(process.cwd(), '.test-build/screenshots');
 
 if (!existsSync(SHOTS)) mkdirSync(SHOTS, { recursive: true });
@@ -24,6 +25,8 @@ const args = [
   '--disable-web-security',
   '--ignore-gpu-blocklist',
   '--font-render-hinting=none',
+  '--disable-application-cache',
+  '--disable-features=CacheStorage',
 ];
 
 let pass = 0, fail = 0;
@@ -46,7 +49,7 @@ page.on('console', msg => { if (msg.type() === 'error') consoleErrors.push(msg.t
 page.on('pageerror', err => consoleErrors.push('PAGEERROR: ' + err.message));
 
 // ── 1. Load intro page
-await page.goto(BASE, { waitUntil: 'networkidle0', timeout: 30000 });
+await page.goto(BASE + CACHE_BUST, { waitUntil: 'networkidle0', timeout: 30000 });
 await new Promise(r => setTimeout(r, 2000));
 await page.screenshot({ path: join(SHOTS, '01-intro.png') });
 t('intro page loads', true);
@@ -119,7 +122,7 @@ t('reader.html loads with content', readerOk);
 await page.screenshot({ path: join(SHOTS, '06-reader.png') });
 
 // ── 12. Mobile viewport
-await page.goto(BASE, { waitUntil: 'networkidle0', timeout: 30000 });
+await page.goto(BASE + CACHE_BUST, { waitUntil: 'networkidle0', timeout: 30000 });
 await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2 });
 await new Promise(r => setTimeout(r, 2000));
 await page.screenshot({ path: join(SHOTS, '07-mobile.png') });
