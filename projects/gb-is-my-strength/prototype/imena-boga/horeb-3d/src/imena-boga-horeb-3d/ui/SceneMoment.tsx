@@ -54,8 +54,8 @@ export const HERO_MOMENTS: Record<string, { object: string; observation: string;
   },
 };
 
-export function SceneMoment({ e, examined, onInspect }: {
-  e: Exhibit; examined: boolean; onInspect: () => void;
+export function SceneMoment({ e, examined, canInspect, onInspect }: {
+  e: Exhibit; examined: boolean; canInspect: boolean; onInspect: () => void;
 }) {
   const [showMeaning, setShowMeaning] = useState(false);
   const moment = HERO_MOMENTS[e.id];
@@ -66,12 +66,17 @@ export function SceneMoment({ e, examined, onInspect }: {
       <p className="font-display text-xl sm:text-2xl text-parch mt-2">{moment.object}</p>
       <p className="text-sm text-parch/75 mt-3">Действие: {e.meaningfulAction}</p>
       <div className="flex flex-wrap gap-2 mt-4">
-        <button className="btn" onClick={onInspect}>{examined ? 'Осмотреть ещё раз в 3D' : 'Осмотреть место в 3D'}</button>
+        <button className="btn" disabled={!canInspect} onClick={onInspect}>
+          {examined ? 'Осмотреть ещё раз в 3D' : 'Осмотреть место в 3D'}
+        </button>
         <button className="btn" onClick={() => setShowMeaning((open) => !open)}
           aria-expanded={showMeaning}>
           {showMeaning ? 'Скрыть сопоставление' : 'Сопоставить с Писанием'}
         </button>
       </div>
+      {!canInspect && <p className="text-sm text-parch/70 mt-3">
+        Физический осмотр доступен только рядом со стелой. Сохранённое свидетельство можно читать и сравнивать из любой зоны.
+      </p>}
       {examined && <p className="text-sm text-bronze mt-3" role="status">Место осмотрено. Вы можете исследовать свидетельство и сравнить контексты.</p>}
       {showMeaning && <div className="mt-4 border-l-2 border-bronze/50 pl-3 text-sm text-parch/85 space-y-2">
         <p>{moment.observation}</p>
