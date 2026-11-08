@@ -74,8 +74,10 @@ export function buildBurningBush(low: boolean) {
     mp.setXYZ(i, x * variation, mp.getY(i), z * variation);
   }
   moundGeo.computeVertexNormals();
-  const mound = new THREE.Mesh(moundGeo, new THREE.MeshStandardMaterial({ color: 0x4a3b30, roughness: 1 }));
-  mound.scale.set(1.2, 0.18, 1.2); group.add(mound);
+  // Keep the base close to the stems: it must read as natural soil,
+  // not as a wide illuminated ceremonial pedestal around the bush.
+  const mound = new THREE.Mesh(moundGeo, new THREE.MeshStandardMaterial({ color: 0x3e332a, roughness: 1 }));
+  mound.scale.set(0.72, 0.09, 0.78); group.add(mound);
 
   // Пламя
   const N = low ? 380 : 1100;
