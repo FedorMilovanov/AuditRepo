@@ -57,6 +57,14 @@ t('narrator cannot play unreviewed, remote or traversal audio',
   !isApprovedAudioPath('https://unknown.example/speech.mp3') &&
   !isApprovedAudioPath('/audio/narration/../../other.mp3'));
 
+// Zone 1's original-script label was hidden by a large foreground rock.
+// The reconstructed boulder now sits behind the witness for a clear approach.
+const creation = EXHIBITS.find((e) => e.environmentKey === 'creation-horizon');
+const creationGroup = creation && buildExhibitProps(creation, false, 0, 0);
+const creationRock = creationGroup?.getObjectByName('scenic-boulder');
+t('creation landmark rock stays behind the Elōhîm label sightline',
+  !!creationRock && creationRock.position.z <= -2.5);
+
 // No repetitive stone: 42 steles must not be identical — varied scale/tilt/zone-tint.
 const scales = new Set(EXHIBITS.map((e) => steleVariation(e.id, e.zone).scale.toFixed(3)));
 const tilts = new Set(EXHIBITS.map((e) => steleVariation(e.id, e.zone).tilt.toFixed(3)));
