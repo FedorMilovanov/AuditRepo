@@ -540,6 +540,8 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
             setMobileDrawerOpen(true);
           }}
           aria-label="Открыть скрижали имён Бога"
+          title={`${activeEntry.transliteration} (${activeEntry.original})`}
+          data-atlas-mobile-ribbon
           aria-haspopup="dialog"
           aria-expanded={mobileDrawerOpen}
           aria-controls="gb-mobile-pillars-dialog"
@@ -550,25 +552,17 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
             color: 'var(--gb-ink)',
           }}
         >
+          {/* Keep the persistent control compact even for very long names.
+              The full transliteration and original remain available inside
+              the drawer and in the native tooltip of this trigger. */}
           <div className="flex min-w-0 flex-1 items-center gap-2">
-            <Sparkles className="h-4 w-4 shrink-0" style={{ color: 'var(--gb-gold)' }} />
-            <div className="min-w-0 flex-1 text-left">
-              <div
-                className="font-ui text-[10px] font-semibold tracking-wider uppercase"
-                style={{ color: 'var(--gb-gold-ink)' }}
-              >
-                Открыто {displayRevealedCount}/{names.length}
-              </div>
-              <div className="font-serif-display break-words text-xs font-bold leading-snug sm:text-sm">
-                {activeEntry.transliteration}{' '}
-                <span
-                  className={activeEntry.language === 'greek' ? 'font-greek' : 'font-hebrew'}
-                  style={{ color: 'var(--gb-accent)' }}
-                >
-                  ({activeEntry.original})
-                </span>
-              </div>
-            </div>
+            <Sparkles aria-hidden="true" className="h-4 w-4 shrink-0" style={{ color: 'var(--gb-gold)' }} />
+            <span
+              className="font-ui min-w-0 whitespace-nowrap text-left text-[11px] font-semibold tracking-normal sm:text-xs"
+              style={{ color: 'var(--gb-gold-ink)' }}
+            >
+              Открыто {displayRevealedCount}/{names.length} · №{names.indexOf(activeEntry) + 1}
+            </span>
           </div>
 
           <span
