@@ -227,6 +227,43 @@ try {
     }, { timeout: 7000, polling: 100 });
     check('turning towards Elōhîm reveals a complete glowing inscription', (await beaconAlpha()) > 0.5);
     await page.screenshot({ path: join(shots, 'smoke-02c-zone1-faced.png') });
+    // WebGL loss must not be recovered by a fragile 50ms screen toggle.
+    // Simulate the actual canvas event and verify a new renderer on a NEW
+    // canvas, with a live frame and safe shod travel checkpoint.
+    await page.evaluate(() => {
+      const w = window.__horeb.world;
+      window.__lostWorld = w;
+      window.__lostCanvas = w.renderer.domElement;
+      w.renderer.domElement.dispatchEvent(new Event('webglcontextlost', { cancelable: true }));
+    });
+    await page.waitForFunction(() => window.__horeb?.state()?.contextLost === true,
+      { timeout: 7000 });
+    const restartClicked = await page.evaluate(() => {
+      const button = [...document.querySelectorAll('button')]
+        .find((b) => b.textContent?.trim() === 'Перезапустить сцену');
+      button?.click(); return !!button;
+    });
+    check('WebGL context loss exposes a deliberate restart action', restartClicked);
+    await page.waitForFunction(() => {
+      const w = window.__horeb?.world;
+      const state = window.__horeb?.state?.();
+      return !!w && !!state && w !== window.__lostWorld &&
+        w.renderer.domElement !== window.__lostCanvas &&
+        !state.contextLost && w.renderer.info.render.calls > 0;
+    }, { timeout: 90000, polling: 100 });
+    const restoredWorld = await page.evaluate(() => {
+      const w = window.__horeb.world;
+      return { freshCanvas: w.renderer.domElement !== window.__lostCanvas,
+        freshWorld: w !== window.__lostWorld,
+        shoes: w.shoes, z: w.position.z, contextLost: window.__horeb.state().contextLost };
+    });
+    check('WebGL restart replaces canvas and renderer without a timer or bypassing shoes',
+      restoredWorld.freshCanvas && restoredWorld.freshWorld &&
+      !restoredWorld.contextLost && restoredWorld.shoes === 'shod',
+      JSON.stringify(restoredWorld));
+    await page.screenshot({ path: join(shots, 'smoke-02d-webgl-restarted.png') });
+    delete window.__lostWorld; delete window.__lostCanvas;
+
 
   }
 
