@@ -75,4 +75,27 @@ for (const direction of [-1, 1]) {
 }
 t('continuous axial route reaches every zone and returns safely', journeySafe && seen.size === 8 && Math.abs(journey.z - N.START.z) < 0.03, `zones=${[...seen]}`);
 t('non-finite coordinates fail closed', N.constrain(Infinity, -366, false).z === N.START.z && N.constrain(NaN, NaN, true).z === N.START.z);
+
+// Regression: exact-centre collider contacts must not skip displacement.
+// This happens when a spawn/teleport or a rare frame lands on a prop anchor.
+const propCollider = { x: 5, z: -100, r: 0.85 };
+const pushedCentre = N.separateObstacle(5, -100, 0, -100, propCollider);
+t('exact obstacle centre is pushed outside physical player radius',
+  Math.hypot(pushedCentre.x - propCollider.x, pushedCentre.z - propCollider.z) >= 1.2 - 1e-6 && pushedCentre.x < 5);
+const centredWithoutHistory = N.separateObstacle(-5, -100, -5, -100, { x: -5, z: -100, r: 0.85 });
+t('zero normal uses a deterministic corridor-facing escape',
+  centredWithoutHistory.x > -5 && Math.hypot(centredWithoutHistory.x + 5, centredWithoutHistory.z + 100) >= 1.2 - 1e-6);
+let propContactSafe = true;
+for (let a = 0; a < 720; a++) {
+  const angle = a * Math.PI * 2 / 720;
+  for (const radius of [0, 0.05, 0.7, 1.0, 1.2, 1.5]) {
+    const x = 5 + Math.cos(angle) * radius, z = -100 + Math.sin(angle) * radius;
+    const out = N.separateObstacle(x, z, 0, -100, propCollider);
+    if (Math.hypot(out.x - 5, out.z + 100) < 1.2 - 1e-6) propContactSafe = false;
+  }
+}
+t('single-obstacle collision displaces every interior contact', propContactSafe);
+const outside = N.separateObstacle(6.8, -100, 0, -100, propCollider);
+t('separation does not alter a safe position', outside.x === 6.8 && outside.z === -100);
+
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);
