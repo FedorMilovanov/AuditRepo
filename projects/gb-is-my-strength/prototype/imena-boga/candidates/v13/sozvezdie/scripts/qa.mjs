@@ -706,6 +706,25 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
     : bad(`mobile index delayed initial focus @${w}: ${immediateFocus}`);
   const dlg = page.locator('[aria-label="Указатель имен Бога"]');
   (await dlg.isVisible()) ? ok(`mobile index opens @${w}`) : bad("mobile index did not open");
+  const targets = await page.evaluate(() => {
+    const trigger = document.querySelector('button[aria-label="Открыть список имён"]');
+    const dialog = document.querySelector('[role="dialog"][aria-label="Указатель имен Бога"]');
+    const close = dialog?.querySelector('button[aria-label="Закрыть"]');
+    const heading = dialog?.querySelector('div.flex.items-center p.font-ui');
+    if (!trigger || !dialog || !close || !heading) return { error: "missing mobile controls" };
+    const t = trigger.getBoundingClientRect(), c = close.getBoundingClientRect();
+    return { pillHeight: t.height, closeHeight: c.height, closeWidth: c.width,
+      headingFont: parseFloat(getComputedStyle(heading).fontSize),
+      pillWithinViewport: t.left >= -1 && t.right <= innerWidth + 1,
+      closeWithinViewport: c.left >= -1 && c.right <= innerWidth + 1,
+      activeRows: dialog.querySelectorAll('[data-mobile-index-entry][aria-current="location"]').length };
+  });
+  (!targets.error && targets.pillHeight >= 44 && targets.closeHeight >= 44 &&
+    targets.closeWidth >= 44 && targets.headingFont >= 11 &&
+    targets.pillWithinViewport && targets.closeWithinViewport &&
+    targets.activeRows === 1)
+    ? ok(`mobile index controls >=44px and readable @${w}`)
+    : bad(`mobile index touch layout failure @${w}: ` + JSON.stringify(targets));
   await page.waitForTimeout(700);
 
   // Main document scrollWidth can remain zero while labels are clipped

@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotionConfig } from "framer-motion";
 import { Check, List, X } from "lucide-react";
 import { NAMES, PARTS } from "../data/names";
 import { scriptAttrs } from "../utils/script";
@@ -13,6 +13,7 @@ interface MobileIndexProps {
 
 export default function MobileIndex({ active, completedIds, onSelect, visible }: MobileIndexProps) {
   const [open, setOpen] = useState(false);
+  const reducedMotion = useReducedMotionConfig();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -90,14 +91,15 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
         }}
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="fixed bottom-5 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3 rounded-full border border-gold-500/30 bg-ink-900/90 py-2.5 pl-4 pr-5 shadow-[0_10px_40px_rgba(0,0,0,0.7)] backdrop-blur-md transition-colors hover:border-gold-400/60 xl:hidden"
+        className="fixed left-1/2 z-40 flex min-h-11 max-w-[calc(100vw-2rem)] min-w-0 -translate-x-1/2 items-center gap-3 rounded-full border border-gold-500/40 bg-ink-900/95 px-4 py-2 shadow-[0_10px_40px_rgba(0,0,0,0.7)] backdrop-blur-md transition-colors hover:border-gold-300/65 motion-safe:active:scale-[0.98] motion-reduce:transition-none xl:hidden"
+        style={{ bottom: "max(1.25rem, env(safe-area-inset-bottom, 0px))" }}
         aria-label="Открыть список имён"
       >
-        <List className="h-4 w-4 text-gold-400" strokeWidth={1.5} />
-        <span className="font-ui text-[10px] uppercase tracking-[0.25em] text-cream-300">
+        <List className="h-4 w-4 shrink-0 text-gold-300" strokeWidth={1.5} />
+        <span className="font-ui min-w-0 break-words text-center text-[11px] font-medium uppercase leading-snug tracking-[0.15em] text-cream-200">
           {current ? current.translit : "Все имена"}
         </span>
-        <span className="font-hebrew text-[10px] text-cream-700">
+        <span className="shrink-0 font-hebrew text-[11px] text-cream-500">
           {idx >= 0 ? `${String(idx + 1).padStart(2, "0")}/${NAMES.length}` : ""}
         </span>
       </button>}
@@ -121,23 +123,24 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: reducedMotion ? 0 : 0.24 }}
             role="dialog"
             aria-modal="true"
             aria-label="Указатель имен Бога"
             className="fixed inset-0 z-50 flex flex-col bg-ink-950/96 backdrop-blur-xl xl:hidden"
           >
-            <div className="flex items-center justify-between px-6 pt-6">
-              <p className="font-ui text-[10px] uppercase tracking-[0.4em] text-gold-400">
+            <div className="flex min-w-0 items-center justify-between gap-3 px-5 pt-6 sm:px-6"
+              style={{ paddingTop: "max(1.5rem, env(safe-area-inset-top, 0px))" }}>
+              <p className="font-ui min-w-0 text-[11px] font-medium uppercase leading-relaxed tracking-[0.2em] text-gold-300">
                 Указатель имён и титулов
               </p>
               <button
                 ref={closeRef}
                 onClick={close}
-                className="rounded-full border border-cream-800/60 p-2 text-cream-300 transition-colors hover:border-gold-500/50 hover:text-gold-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-cream-800/60 text-cream-200 transition-colors hover:border-gold-500/60 hover:text-gold-200 motion-safe:active:scale-95 motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
                 aria-label="Закрыть"
               >
-                <X className="h-4 w-4" strokeWidth={1.5} />
+                <X className="h-5 w-5" strokeWidth={1.5} />
               </button>
             </div>
             <div className="mt-2 h-px w-full bg-cream-800/40">
@@ -146,10 +149,10 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <div className="flex-1 overflow-y-auto px-6 pb-24 pt-6">
+            <div className="flex-1 overscroll-contain overflow-y-auto px-5 pb-24 pt-5 sm:px-6 sm:pt-6">
               {PARTS.map((part, pi) => (
                 <div key={part.id} className="mb-8">
-                  <p className="flex items-center gap-3 font-ui text-[9px] uppercase tracking-[0.35em] text-cream-700">
+                  <p className="flex items-center gap-3 font-ui text-[10px] font-medium uppercase tracking-[0.2em] text-cream-400">
                     <span className="font-display text-base italic text-gold-500/80">
                       {part.numeral}
                     </span>
@@ -163,8 +166,9 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
                         <button
                           key={n.id}
                           data-mobile-index-entry
+                          aria-current={n.id === active ? "location" : undefined}
                           onClick={() => go(n.id)}
-                          className={`grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-x-3 gap-y-1.5 rounded-xl border px-4 py-3 text-left transition-all duration-300 sm:grid-cols-[auto_minmax(0,1fr)_minmax(0,1fr)] ${
+                          className={`grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-x-3 gap-y-1.5 rounded-xl border px-4 py-3 text-left transition-colors duration-200 motion-safe:active:scale-[0.99] motion-reduce:transition-none sm:grid-cols-[auto_minmax(0,1fr)_minmax(0,1fr)] ${
                             n.id === active
                               ? "border-gold-500/50 bg-ink-800"
                               : "border-cream-800/40 bg-ink-900/50 hover:border-gold-500/30"
@@ -177,7 +181,7 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
                             <span data-mobile-name-text="original" className="min-w-0 break-words font-hebrew text-lg text-gold-300" {...scriptAttrs(n)}>
                               {n.hebrew}
                             </span>
-                            <span data-mobile-name-text="translit" className="min-w-0 break-words font-ui text-[11px] uppercase tracking-[0.2em] text-cream-300">
+                            <span data-mobile-name-text="translit" className="min-w-0 break-words font-ui text-xs font-medium uppercase tracking-[0.14em] text-cream-200">
                               {n.translit}
                             </span>
                             {completedIds.has(n.id) && (
@@ -186,7 +190,7 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
                               </span>
                             )}
                           </span>
-                          <span data-mobile-name-text="russian" className="col-start-2 min-w-0 max-w-full justify-self-end break-words text-right font-body text-sm italic text-cream-500 sm:col-start-3 sm:row-start-1">
+                          <span data-mobile-name-text="russian" className="col-start-2 min-w-0 max-w-full justify-self-end break-words text-right font-body text-sm italic text-cream-400 sm:col-start-3 sm:row-start-1">
                             {n.russian}
                           </span>
                         </button>
