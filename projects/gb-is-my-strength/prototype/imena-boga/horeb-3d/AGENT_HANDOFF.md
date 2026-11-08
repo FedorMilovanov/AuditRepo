@@ -32,6 +32,18 @@
 
 **Следующий инженерный шаг:** визуальный audit в браузере (если появится chromium). Без browser — продлить geometry/construction проверки. Не push, не merge PR #543 без разрешения пользователя.
 
+## Checkpoint W10 (2026-11-08): geometry cache — 71% reduction
+
+Commit `9f0dbe1` на `arena/13fed2e7-auditrepo` (fast-forward merge с `lane/horeb-3d-lab-20261108`).
+
+- **Geometry profiling:** `tests/geom_profile.ts` (new) — bundled с esbuild, headless. Просчитано: 592 mesh instances (296 high + 296 low), 584 unique geometries, 170 unique params. **71% дубликатов** — одинаковые параметры, но отдельные BufferGeometry.
+- **Geometry cache:** `exhibitProps.ts` — добавлен `geoCached(type, params)` + `_geoCache Map`. `G.box/cyl/sph/cone/tor/plane/dodec` теперь возвращают shared instance по parameter-key. Unique geometries: 584→170.
+- **addWell fix:** torus ring переведён с `new THREE.TorusGeometry()` на cached `G.tor()`.
+- **Проверки:** tsc clean, build green (dist 1393 kB), **86 tests green** (33+47+6).
+- Dev-сервер: 0.0.0.0:5173, HTTP 200, HMR.
+- Изменённые файлы: `engine/exhibitProps.ts`, `tests/geom_profile.ts` (new).
+- Следующий шаг: InstancedMesh для повторяющихся prop-типов (rocks, bushes) — дальнейшее сокращение draw calls. Bush quality (уже хорош). Browser visual audit BLOCKED (без chromium). Не push без разрешения.
+
 ## Checkpoint W9 (2026-11-08): props collision fail-closed
 
 Commit `b98ca65` на `lane/horeb-3d-lab-20261108` (локально, без push).
