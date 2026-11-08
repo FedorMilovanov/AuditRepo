@@ -28,7 +28,15 @@ try {
   const page = await browser.newPage();
   page.setDefaultTimeout(75000);
   page.on('pageerror', (e) => errors.push(String(e)));
-  page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+  page.on('response', (response) => {
+    if (response.status() >= 400) errors.push('HTTP ' + response.status() + ' ' + response.url());
+  });
+  page.on('console', (m) => {
+    if (m.type() === 'error') {
+      const location = m.location();
+      errors.push(m.text() + (location.url ? ' @ ' + location.url : ''));
+    }
+  });
   const response = await page.goto(base + '/?e2e', { waitUntil: 'domcontentloaded', timeout: 45000 });
   check('intro HTTP 200', response?.status() === 200, String(response?.status()));
   check('intro title visible', await page.$eval('h1', (h) => h.textContent.includes('ИМЕНА БОГА')).catch(() => false));
