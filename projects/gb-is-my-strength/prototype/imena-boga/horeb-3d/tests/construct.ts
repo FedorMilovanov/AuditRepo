@@ -137,6 +137,18 @@ for (const low of [true, false]) {
 }
 
 
+// Zone 5 used to display four identical green-ball olive trees. Ensure
+// Gethsemane now has multiple, individually positioned crown lobes per tree.
+const gardenRecord = EXHIBITS.find((e) => e.environmentKey === 'gethsemane-garden');
+if (gardenRecord) {
+  const garden = buildExhibitProps(gardenRecord, false, 0, 0);
+  let oliveLobes = 0;
+  garden.traverse((o) => { if (o.name === 'olive-crown-lobe') oliveLobes++; });
+  t('Gethsemane grove uses irregular multi-lobed olive crowns, not four spheres', oliveLobes >= 28);
+} else {
+  t('Gethsemane visual scene exists', false);
+}
+
 if (errors.length) console.log('errors:\n' + errors.join('\n'));
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
