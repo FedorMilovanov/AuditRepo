@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { useApp } from "../store";
 import { floorTexture } from "../textures";
@@ -35,6 +35,9 @@ function rockGeometry() {
 export function Platform() {
   const q = useApp((s) => s.quality);
   const floorTex = useMemo(() => floorTexture(q === "high" ? 2048 : 1024), [q]);
+  // CanvasTexture is created manually; R3F does not own its lifetime. Each
+  // quality switch must release the previous 4–16 MiB RGBA texture.
+  useEffect(() => () => floorTex.dispose(), [floorTex]);
   const rock = useMemo(() => rockGeometry(), []);
   const N = 20;
   const R = 14.5;
