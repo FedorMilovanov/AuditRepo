@@ -120,6 +120,20 @@ try {
       ambientIntensity: world.ambient.intensity,
       hemisphereIntensity: world.hemi.intensity,
       moonIntensity: world.moon.intensity,
+      thresholdScree: ['outer-threshold-scree', 'inner-threshold-scree'].map((name) => {
+        const obj = world.zones.group.getObjectByName(name);
+        if (!obj?.isInstancedMesh) return { name, count: 0, maxAngleGap: 0 };
+        const data = obj.instanceMatrix.array;
+        const angles = Array.from({ length: obj.count }, (_, i) =>
+          Math.atan2(data[i * 16 + 14] + 366, data[i * 16 + 12]))
+          .sort((a, b) => a - b);
+        let maxAngleGap = 0;
+        for (let i = 0; i < angles.length; i++) {
+          const next = i + 1 < angles.length ? angles[i + 1] : angles[0] + Math.PI * 2;
+          maxAngleGap = Math.max(maxAngleGap, next - angles[i]);
+        }
+        return { name, count: obj.count, maxAngleGap };
+      }),
     };
   });
   // Owner-approved art direction: the bush is visually dominant. Navigation
@@ -132,7 +146,13 @@ try {
       Math.abs(witness.closeBush.hemisphereIntensity - 0.55) > 0.02 ||
       Math.abs(witness.closeBush.moonIntensity - 0.55) > 0.02)
     throw new Error('BUSH ART: dark predawn lighting was unexpectedly brightened');
-  console.log('PASS outer bush boundary: subdued HUD, visible sandal action, dark sky');
+  if (witness.closeBush.thresholdScree?.length !== 2 ||
+      witness.closeBush.thresholdScree[0].count !== 36 ||
+      witness.closeBush.thresholdScree[1].count !== 25 ||
+      witness.closeBush.thresholdScree[0].maxAngleGap < 0.5 ||
+      witness.closeBush.thresholdScree[1].maxAngleGap < 0.65)
+    throw new Error('BUSH ART: threshold stones regressed to artificial uniform circles');
+  console.log('PASS outer bush boundary: subdued HUD, natural scree, visible sandal action');
   // Additional close-up from the *permitted* unshod zone. This is essential
   // for judging whether the bush reads as a living shrub, not only as sparks.
   const initiated = await desktop.evaluate(() => window.__horeb.world.removeShoes());
