@@ -105,8 +105,47 @@ try {
     const context = await page.$eval('[role="dialog"]', (n) =>
       n.textContent.includes('Быт. 1:1') && n.textContent.includes('единственном числе'));
     if (!revisited || !compare || !context) throw new Error('Hero compare state not accessible');
+    // Saving the biblical reference must be persistent, not an RPG unlock.
+    const save = await page.evaluate(() => {
+      const button = [...document.querySelectorAll('[role="dialog"] button')]
+        .find((b) => b.textContent?.includes('Сохранить свидетельство'));
+      button?.click(); return !!button;
+    });
+    if (!save) throw new Error('Study bookmark button missing');
+    await page.waitForFunction(() => {
+      const raw = localStorage.getItem('imena-horeb.study-bookmarks.v1');
+      try { return JSON.parse(raw || '[]').includes('elohim'); } catch { return false; }
+    }, { timeout: 6000 });
     await page.keyboard.press('Escape');
-    console.log('PASS elohim: inspect → actual 3D response → revisit → contextual comparison');
+    // The saved dossier may be read remotely; its 3D-only inspect control
+    // must not remain active when the actual exhibit is hundreds of metres away.
+    await page.evaluate(() => window.__horeb.world.teleportZone(2));
+    await page.evaluate(() => {
+      const btn = [...document.querySelectorAll('nav button')]
+        .find((b) => b.textContent?.includes('Закладки'));
+      btn?.click();
+    });
+    await page.waitForSelector('[role="dialog"]');
+    const entry = await page.evaluate((label) => {
+      const button = [...document.querySelectorAll('[role="dialog"] button')]
+        .find((b) => b.textContent?.includes(label));
+      button?.click(); return !!button;
+    }, hero.label);
+    if (!entry) throw new Error('Saved biblical dossier not listed');
+    await page.waitForFunction((label) => {
+      const dialog = document.querySelector('[role="dialog"]');
+      return !!dialog?.textContent?.includes(label) &&
+        !!dialog?.querySelector('button[disabled]');
+    }, { timeout: 6000 }, hero.label);
+    const remote = await page.evaluate(() => ({
+      text: document.querySelector('[role="dialog"]')?.textContent || '',
+      disabled: [...document.querySelectorAll('[role="dialog"] button[disabled]')]
+        .some((b) => b.textContent?.includes('Осмотреть')),
+    }));
+    if (!remote.disabled || !remote.text.includes('Физический осмотр доступен только рядом'))
+      throw new Error('Remote bookmark incorrectly enables physical interaction');
+    await page.keyboard.press('Escape');
+    console.log('PASS elohim: inspect → 3D response → comparison → persistent bookmark → remote dossier guard');
   } catch (error) {
     failures.push('HERO ACTION: ' + (error?.message || error));
   }
