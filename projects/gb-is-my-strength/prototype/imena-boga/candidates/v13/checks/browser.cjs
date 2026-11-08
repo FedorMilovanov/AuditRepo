@@ -660,10 +660,24 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
             [...document.querySelectorAll('#yhwh [data-reader-tilt]')]
               .every(el=>el.style.transform===neutral),
             neutral,{timeout:5000});
-          const reducedTransition=await verseTilt.evaluate(el=>getComputedStyle(el).transitionDuration);
-          if(reducedTransition.split(',').some(v=>Number(v.replace(/ms$|s$/,''))>0.001))
-            throw Error('Constellation reduced-motion did not disable verse card transitions '+
-              JSON.stringify({engine,width,reducedTransition}));
+          const reducedTransitions=await Promise.all([verseTilt,letterTilt].map(tilt=>tilt.evaluate(el=>{
+            const css=getComputedStyle(el);
+            return {property:css.transitionProperty,duration:css.transitionDuration};
+          })));
+          const seconds=token=>{
+            const value=token.trim();
+            return value.endsWith('ms')?Number(value.slice(0,-2))/1000:
+              value.endsWith('s')?Number(value.slice(0,-1)):NaN;
+          };
+          for(const reducedTransition of reducedTransitions){
+            const durations=reducedTransition.duration.split(',').map(seconds);
+            // Property 'none' has no active transition regardless of the
+            // serialized duration; browsers may also emit 1e-06s for zero.
+            if(reducedTransition.property!=='none'&&
+               durations.some(t=>!Number.isFinite(t)||t>0.001))
+              throw Error('Constellation reduced-motion left a perceivable card transition '+
+                JSON.stringify({engine,width,reducedTransition,durations}));
+          }
         }finally{
           await motionCtx.close();
         }
