@@ -104,6 +104,23 @@ jobs:
           const root = dirname(fileURLToPath(import.meta.url));
           const port = Number(process.env.PREVIEW_PORT || 4173);
           if (!Number.isInteger(port) || port < 1024 || port > 65535) throw new Error('Invalid PREVIEW_PORT');
+          // Canonical cross-candidate links belong to Product. Paired local
+          // previews can optionally redirect them to a separately running peer,
+          // without compiling machine-specific ports into either application.
+          const peerPath = process.env.PREVIEW_PEER_PATH || '';
+          let peerHref = null;
+          if (peerPath || process.env.PREVIEW_PEER_URL) {
+            if (!new Set(['/imena-boga/', '/imena-boga/atlas/']).has(peerPath)) {
+              throw new Error('Invalid PREVIEW_PEER_PATH');
+            }
+            const peer = new URL(process.env.PREVIEW_PEER_URL || '');
+            if (peer.protocol !== 'http:' || peer.hostname !== '127.0.0.1' ||
+                !peer.port || peer.pathname !== '/' || peer.search || peer.hash ||
+                peer.username || peer.password || Number(peer.port) === port) {
+              throw new Error('Invalid PREVIEW_PEER_URL: expected another loopback preview');
+            }
+            peerHref = peer.href;
+          }
           const mime = {
             '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
             '.css': 'text/css; charset=utf-8', '.json': 'application/json',
@@ -117,6 +134,12 @@ jobs:
               pathname = decodeURIComponent(new URL(req.url || '/', 'http://127.0.0.1').pathname);
             } catch {
               res.writeHead(400).end('Bad URL');
+              return;
+            }
+            if (peerHref && (pathname === peerPath || pathname === peerPath.slice(0, -1))) {
+              // Browser preserves the original #name-id fragment across a
+              // redirect with no Location fragment, keeping deep links intact.
+              res.writeHead(302, { location: peerHref, 'cache-control': 'no-store' }).end();
               return;
             }
             const filename = resolve(root, '.' + (pathname.endsWith('/') ? pathname + 'index.html' : pathname));
@@ -173,6 +196,14 @@ jobs:
           $env:PREVIEW_PORT=4174; node .\preview-server.mjs
           после чего откройте http://127.0.0.1:4174/
           
+          Для работающих ссылок между двумя предпросмотрами можно установить
+          переменные PREVIEW_PEER_PATH и PREVIEW_PEER_URL перед запуском:
+          - из Астролябии: PREVIEW_PEER_PATH=/imena-boga/
+          - из Созвездия: PREVIEW_PEER_PATH=/imena-boga/atlas/
+          - PREVIEW_PEER_URL — полный адрес другой локальной сборки
+            вида http://127.0.0.1:PORT/ (порт выбирается при запуске).
+          Без обеих переменных публикационные ссылки остаются неактивными.
+          
           Содержимое работает только на 127.0.0.1; в интернет не публикуется.
           Исследовательские названия/цитаты требуют редакционной проверки.
           Изображение Синая нельзя использовать для публичной публикации без проверки прав.
@@ -182,6 +213,20 @@ jobs:
             sed -i "s/SHA_PLACEHOLDER/$GITHUB_SHA/g; s/APP_PLACEHOLDER/$app/g" "$OUTPUT/$app/README-RU.txt"
             node --check "$OUTPUT/$app/preview-server.mjs"
             test -s "$OUTPUT/$app/Start-Preview.cmd"
+            # Smoke-test the actual packaged local server. A configured peer
+            # route must redirect to a loopback origin, not return 404.
+            if [ "$app" = "atlas" ]; then peer_route="/imena-boga/"; else peer_route="/imena-boga/atlas/"; fi
+            PREVIEW_PORT=4191 PREVIEW_PEER_PATH="$peer_route" PREVIEW_PEER_URL="http://127.0.0.1:4183/" node "$OUTPUT/$app/preview-server.mjs" > "$RUNNER_TEMP/preview-$app.log" 2>&1 &
+            preview_pid=$!
+            for attempt in $(seq 1 25); do
+              if curl --silent --fail "http://127.0.0.1:4191/" --output /dev/null; then break; fi
+              sleep 0.2
+            done
+            status=$(curl --silent --output /dev/null --dump-header "$RUNNER_TEMP/peer-$app.headers" --write-out "%{http_code}" "http://127.0.0.1:4191$peer_route")
+            kill "$preview_pid" 2>/dev/null || true
+            wait "$preview_pid" 2>/dev/null || true
+            test "$status" = "302"
+            grep -qi '^location: http://127\.0\.0\.1:4183/' "$RUNNER_TEMP/peer-$app.headers"
           done
 
       - name: Upload verified Atlas Windows local preview

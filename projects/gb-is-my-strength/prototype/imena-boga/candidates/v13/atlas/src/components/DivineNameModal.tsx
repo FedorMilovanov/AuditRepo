@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   X,
   ChevronLeft,
@@ -66,9 +66,10 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
       .slice(0, 4);
   }, [entry, allNames]);
 
-  // Capture trigger element when dialog opens and restore focus when closed
+  // Capture the opener before the dialog takes keyboard focus. Both layout
+  // effects run in declaration order, before the newly opened dialog is painted.
   const isOpen = Boolean(entry);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isOpen) {
       previousFocusRef.current = document.activeElement as HTMLElement | null;
       shouldRestoreFocusRef.current = true;
@@ -80,7 +81,7 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
     }
   }, [isOpen]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!entry) return;
     if (scrollBodyRef.current) {
       scrollBodyRef.current.scrollTop = 0;
@@ -92,11 +93,9 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
     setCopied(false);
     setLinkCopied(false);
     setCopiedVerseIdx(null);
-    // Move keyboard focus into the dialog on open/entry change
-    const focusTimer = window.setTimeout(() => {
-      closeButtonRef.current?.focus({ preventScroll: true });
-    }, 40);
-    return () => window.clearTimeout(focusTimer);
+    // The close control is present in the committed DOM; a timer here leaves
+    // keyboard focus outside aria-modal for one or more frames.
+    closeButtonRef.current?.focus({ preventScroll: true });
   }, [entry?.id]);
 
   useEffect(() => {

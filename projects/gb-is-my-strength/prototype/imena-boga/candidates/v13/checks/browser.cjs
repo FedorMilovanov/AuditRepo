@@ -345,6 +345,17 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       // The dossier captures the persistent ribbon as its restore target.
       await trigger.click();
       await drawer.locator('button').nth(2).click();
+      // The dossier must own focus as soon as the click commits. Waiting for
+      // a timer here previously concealed an actual keyboard accessibility bug.
+      const initialDossierFocus=await page.evaluate(()=>{
+        const modal=document.querySelector('[role="dialog"][aria-modal="true"]');
+        return {exists:Boolean(modal), inside:Boolean(modal?.contains(document.activeElement)),
+          focus:document.activeElement?.getAttribute('aria-label')};
+      });
+      if(!initialDossierFocus.exists||!initialDossierFocus.inside||
+         initialDossierFocus.focus!=='Закрыть окно')
+        throw Error('Atlas name dossier initially leaves focus outside modal '+
+          JSON.stringify({width,initialDossierFocus}));
       const dossier=page.getByRole('dialog');
       await dossier.waitFor({state:'visible'});
       await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label')==='Закрыть окно');
