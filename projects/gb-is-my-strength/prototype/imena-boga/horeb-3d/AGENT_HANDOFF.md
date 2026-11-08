@@ -32,6 +32,19 @@
 
 **Следующий инженерный шаг:** визуальный audit в браузере (если появится chromium). Без browser — продлить geometry/construction проверки. Не push, не merge PR #543 без разрешения пользователя.
 
+## Checkpoint W11 (2026-11-08): merge prop geometries — 63% draw call reduction
+
+Commit `c051323` на `arena/13fed2e7-auditrepo`.
+
+- **mergePropsGroup():** `exhibitProps.ts` — новый export. Merge meshes по material в prop groups: applies local matrix к geometry, normalize to non-indexed (attribute compatibility), mergeGeometries per material. Fallback: keep individual meshes если attributes несовместимы. Non-mesh children (sprites, glow) preserved.
+- **Wiring:** `World.build()` — `mergePropsGroup(props)` после `buildExhibitProps`, перед `scene.add(props)`.
+- **Результат:** 296 prop meshes → 111 (63% reduction in draw calls).
+- **Merge test:** `tests/construct.ts` — total reduction check (296→111, 63%).
+- **Проверки:** tsc clean, build green (dist 1394 kB), **87 tests green** (33+48+6).
+- Dev-сервер: 0.0.0.0:5173, HTTP 200, HMR.
+- Изменённые файлы: `engine/exhibitProps.ts`, `engine/World.ts`, `tests/construct.ts`.
+- Следующий шаг: bush quality (уже хорош), more scene variety, mobile/a11y, или browser visual audit (BLOCKED — без chromium). Не push без разрешения.
+
 ## Checkpoint W10 (2026-11-08): geometry cache — 71% reduction
 
 Commit `9f0dbe1` на `arena/13fed2e7-auditrepo` (fast-forward merge с `lane/horeb-3d-lab-20261108`).
