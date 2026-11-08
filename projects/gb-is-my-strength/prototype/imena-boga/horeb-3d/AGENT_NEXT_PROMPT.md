@@ -20,14 +20,14 @@ Draft PR: https://github.com/FedorMilovanov/AuditRepo/pull/543
 - **42 уникальных Research ID** (29 baseline + 13 extension), 42/42 `PLACEMENTS`, 42 тематические группы объектов; это **не** 42 собственных имени Бога и **не** редакционное разрешение.
 - 8 пространственных зон, Хорив, несгорающий куст, правила снятия обуви, внешнее и внутреннее ограничения, без визуализации Бога; HTML fallback.
 - `engine/exhibitProps.ts` строит сюжетные предметы: колодцы, шатры, жертвенники, овец, пещеры, дороги, городские модели и др. `mergePropsGroup` сохраняет world transforms и fail-closed на несовместимых геометриях.
-- В PR #543 выполнена независимая Windows-проверка: `npm ci`, `npm run build` (генерация HTML с 42 статьями), `npx tsc --noEmit`, `sh tests/test.sh` **88/88 PASS** (33 contract + 49 construction + 6 placement). Браузерные стадии test.sh **SKIPPED** без `/tmp/chromium`; нельзя объявлять их PASS.
-- AuditRepo `preflight` и `validate` были зелёными на интеграционном коммите; **сверяй CI на текущем HEAD**.
+- Проверка текущей базы: `npm ci`, `npm run build` (42 HTML-досье), `npx tsc --noEmit`, `sh tests/test.sh` **89/89 PASS** (33 contract + 50 construction + 6 placement), **Chrome 18/18 PASS** плюс **реальные E-взаимодействия 42/42 PASS**. GitHub [HOREB 3D Lab QA](https://github.com/FedorMilovanov/AuditRepo/actions/runs/42457953509) прошёл на Linux (build+test и Chromium). Browser-стадии `tests/test.sh` могут SKIP; обязательные отдельные скрипты — `npm run test:browser:smoke` и `npm run test:browser:exhibits`.
+- AuditRepo `preflight` и `validate` и новый HOREB source/Chrome workflow зелёные; **всегда сверяй CI на точном текущем HEAD**.
 - В старом Chromium SwiftShader агент сообщил около **1 FPS**, это не performance approval на GPU.
 - Дополнительные ветки Arena — исторические кандидаты, **не** новые канонические проекты. Их содержание уже оценено, выбор базы сделан.
 
 ## 3. Следующий практический этап: визуальные и функциональные gates
 
-**Не делай новый круг документации вместо кода и фактических испытаний.**
+**Не делай новый круг документации вместо кода и фактических испытаний.** 42 досье теперь действительно открываются в Chrome (42/42), мобильный low atlas проверен, HTML reader синхронизирован. Не повторяй эти задачи без обнаруженной регрессии. Следующий фронт — GPU/реальные телефоны, полная визуальная режиссура всех 8 зон и редакционная сверка.
 
 A. Точный clean checkout, `npm ci`, `npm run build`, `npx tsc --noEmit`, `sh tests/test.sh`, прямая проверка 42 `<article>` в `public/reader.html`. На Windows используй `npm.cmd`/Git Bash или PowerShell с корректной политикой, не отключая защиту ОС глобально.
 
