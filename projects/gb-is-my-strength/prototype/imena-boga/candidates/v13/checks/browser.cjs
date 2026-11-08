@@ -235,6 +235,27 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         await page.setViewportSize({width,height:844});
       }
     }
+    // A link copied from the divine-name dossier must reopen that dossier
+    // in a clean browser session (not merely scroll behind a closed overlay).
+    if(width===390){
+      const direct=await ctx.newPage();
+      await direct.goto(base+'/atlas/#name-elohim',{waitUntil:'domcontentloaded'});
+      const dossier=direct.getByRole('dialog');
+      await dossier.waitFor({state:'visible',timeout:20000});
+      const heading=await dossier.locator('#modal-divine-name-title').innerText();
+      if(!heading.toLowerCase().includes('элохим'))
+        throw Error('Shared Atlas name hash opened the wrong dossier: '+heading);
+      await direct.waitForFunction(()=>
+        document.activeElement?.getAttribute('aria-label')==='Закрыть окно'
+      );
+      if(new URL(direct.url()).hash!=='#name-elohim')
+        throw Error('Atlas direct dossier link hash changed unexpectedly');
+      await dossier.getByRole('button',{name:'Закрыть окно'}).click();
+      await dossier.waitFor({state:'detached'});
+      if(new URL(direct.url()).hash)
+        throw Error('Closing direct-link dossier left a stale hash '+direct.url());
+      await direct.close();
+    }
     const finalLayout=await page.evaluate(()=>({
       viewport:document.documentElement.clientWidth,
       scroll:document.documentElement.scrollWidth
