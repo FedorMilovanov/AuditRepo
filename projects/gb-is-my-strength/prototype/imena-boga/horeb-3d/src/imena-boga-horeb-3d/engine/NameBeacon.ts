@@ -31,12 +31,13 @@ export function createNameBeacon(e: Exhibit, low: boolean) {
   const k = W / 1024;
   ctx.scale(k, k);
   const w = 1024, h = 410;
-  // Almost-black stone plaque keeps contrast without lifting cavern ambience.
-  const bg = ctx.createLinearGradient(0, 0, 0, h);
-  bg.addColorStop(0, 'rgba(11,13,17,0.05)');
-  bg.addColorStop(0.2, 'rgba(11,13,17,0.77)');
-  bg.addColorStop(0.8, 'rgba(11,13,17,0.82)');
-  bg.addColorStop(1, 'rgba(11,13,17,0.03)');
+  // The centre is dark for legible glyphs, but the edges dissolve into
+  // the stone. No rectangular translucent billboard behind divine writing.
+  const bg = ctx.createRadialGradient(w / 2, h / 2, 55, w / 2, h / 2, w * 0.57);
+  bg.addColorStop(0, 'rgba(11,13,17,0.78)');
+  bg.addColorStop(0.5, 'rgba(11,13,17,0.61)');
+  bg.addColorStop(0.82, 'rgba(11,13,17,0.2)');
+  bg.addColorStop(1, 'rgba(11,13,17,0)');
   ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h);
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -51,8 +52,8 @@ export function createNameBeacon(e: Exhibit, low: boolean) {
     if (ctx.measureText(e.originalUnicode).width <= w - 140) break;
     size -= 4;
   } while (size > 60);
-  ctx.shadowColor = 'rgba(245,169,81,0.57)';
-  ctx.shadowBlur = 23;
+  ctx.shadowColor = 'rgba(245,169,81,0.62)';
+  ctx.shadowBlur = 27;
   ctx.fillStyle = '#fbe3b5';
   ctx.fillText(e.originalUnicode, w / 2, 168);
   ctx.shadowBlur = 0;
