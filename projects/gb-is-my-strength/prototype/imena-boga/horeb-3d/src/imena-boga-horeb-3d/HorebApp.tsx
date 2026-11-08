@@ -5,11 +5,12 @@ import { Modal } from './ui/ResearchDrawer';
 import { AccessibleReader, ExhibitCard, SourcesAndLimits, AboutExhibition, Original } from './ui/AccessibleReader';
 import { SettingsPanel, MiniMap, Joystick, type UiSettings } from './ui/Controls';
 import { SceneMoment, HERO_MOMENTS } from './ui/SceneMoment';
+import { STUDY_BOOKMARKS_KEY, normalizeStudyBookmarks, toggleStudyBookmark } from './data/studyBookmarks';
 import type { World, WorldState } from './engine/World';
 import { R_INNER } from './engine/nav';
 
 type Screen = 'intro' | 'world' | 'reader';
-type Dialog = null | { kind: 'exhibit'; id: string } | { kind: 'settings' } | { kind: 'map' } | { kind: 'sources' } | { kind: 'about' } | { kind: 'menu' };
+type Dialog = null | { kind: 'exhibit'; id: string } | { kind: 'settings' } | { kind: 'map' } | { kind: 'sources' } | { kind: 'about' } | { kind: 'menu' } | { kind: 'bookmarks' };
 const LS_SETTINGS = 'imena-horeb.settings.v1';
 const LS_PROGRESS = 'imena-horeb.progress.v1';
 
@@ -46,6 +47,25 @@ function hasWebGL() { try { const c = document.createElement('canvas'); return !
 const coarse = () => typeof matchMedia !== 'undefined' && matchMedia('(pointer: coarse)').matches;
 const prefersReduced = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+function StudyBookmarkList({ ids, onOpen }: { ids: readonly string[]; onOpen: (id: string) => void }) {
+  const selected = new Set(ids);
+  const entries = EXHIBITS.filter((e) => selected.has(e.id));
+  if (!entries.length) return <p className="text-parch/75 leading-relaxed">
+    Пока ничего не сохранено. В 3D-прогулке откройте досье клавишей E и нажмите «Сохранить свидетельство».
+  </p>;
+  return <div className="space-y-2">
+    <p className="text-sm text-muted mb-3">{entries.length} из {EXHIBITS.length} свидетельств · хранятся только в этом браузере</p>
+    <ul className="space-y-2">
+      {entries.map((e) => <li key={e.id}>
+        <button className="btn block w-full text-left" onClick={() => onOpen(e.id)}>
+          <span className="block font-display text-lg">{e.displayLabelRu}</span>
+          <span className="block text-xs text-muted mt-1">{CATEGORY_RU[e.category]} · {e.verseReference}</span>
+        </button>
+      </li>)}
+    </ul>
+  </div>;
+}
+
 export default function HorebApp() {
   const [screen, setScreen] = useState<Screen>(() => (location.hash === '#read' ? 'reader' : 'intro'));
   const [settings, setSettings] = useState<UiSettings>(readSettings);
@@ -57,6 +77,7 @@ export default function HorebApp() {
   const [toast, setToast] = useState<string | null>(null);
   const [finale, setFinale] = useState<'none' | 'show' | 'seen'>('none');
   const [examined, setExamined] = useState<Set<string>>(() => new Set());
+  const [bookmarks, setBookmarks] = useState<string[]>(() => normalizeStudyBookmarks(readStored(STUDY_BOOKMARKS_KEY)));
   const [guideCaption, setGuideCaption] = useState<string | null>(null);
   const [webgl] = useState(hasWebGL);
   const [isTouch] = useState(coarse);
@@ -67,6 +88,7 @@ export default function HorebApp() {
 
   useEffect(() => { try { localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); } catch { /* приватный режим */ } }, [settings]);
   useEffect(() => { try { localStorage.setItem(LS_PROGRESS, JSON.stringify(progress)); } catch { /* */ } }, [progress]);
+  useEffect(() => { try { localStorage.setItem(STUDY_BOOKMARKS_KEY, JSON.stringify(bookmarks)); } catch { /* private mode */ } }, [bookmarks]);
 
   const resolved = useMemo(() => {
     const low = settings.quality === 'low' || (settings.quality === 'auto' && (isTouch || (navigator.hardwareConcurrency || 8) <= 4 || innerWidth < 700));
@@ -186,6 +208,7 @@ export default function HorebApp() {
           {webgl ? <button className="btn btn-primary" onClick={start}>Начать путешествие</button>
             : <p role="alert" className="text-amber-300/90 text-sm max-w-sm">WebGL недоступен в этом браузере — 3D-прогулка не запустится. Вся экспозиция доступна в режиме чтения.</p>}
           <button className="btn" onClick={() => setScreen('reader')}>Режим чтения</button>
+          <button className="btn" onClick={() => setIntroDialog({ kind: 'bookmarks' })}>Мои закладки ({bookmarks.length})</button>
           <button className="btn" onClick={() => setIntroDialog({ kind: 'settings' })}>Настройки доступности</button>
         </div>
         {err && <p role="alert" className="mt-6 text-amber-300">{err} <button className="link" onClick={() => setScreen('reader')}>Открыть режим чтения</button></p>}
@@ -199,6 +222,15 @@ export default function HorebApp() {
       {introDialog?.kind === 'settings' && <Modal title="Настройки доступности" onClose={() => setIntroDialog(null)}><SettingsPanel s={settings} set={(p) => setSettings((s) => ({ ...s, ...p }))} /></Modal>}
       {introDialog?.kind === 'sources' && <Modal wide title="Источники и ограничения" onClose={() => setIntroDialog(null)}><SourcesAndLimits /></Modal>}
       {introDialog?.kind === 'about' && <Modal wide title="Об экспозиции" onClose={() => setIntroDialog(null)}><AboutExhibition /></Modal>}
+      {introDialog?.kind === 'bookmarks' && <Modal wide title="Мои закладки Писания" onClose={() => setIntroDialog(null)}>
+        <StudyBookmarkList ids={bookmarks} onOpen={(id) => setIntroDialog({ kind: 'exhibit', id })} />
+      </Modal>}
+      {introDialog?.kind === 'exhibit' && <Modal wide title="Сохранённое свидетельство" onClose={() => setIntroDialog({ kind: 'bookmarks' })}>
+        <button className="btn mb-5" aria-pressed={bookmarks.includes(introDialog.id)} onClick={() => setBookmarks((prev) => toggleStudyBookmark(prev, introDialog.id))}>
+          {bookmarks.includes(introDialog.id) ? 'Убрать из закладок' : 'Добавить в закладки'}
+        </button>
+        <ExhibitCard e={EXHIBITS.find((e) => e.id === introDialog.id)!} headingLevel={2} />
+      </Modal>}
     </main>
   );
 
@@ -221,6 +253,7 @@ export default function HorebApp() {
           {isTouch ? <button className="btn-ghost" onClick={() => setDialog({ kind: 'menu' })}>Меню</button> : <>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'map' })}>Схема</button>
           <button className="btn-ghost" onClick={() => setScreen('reader')}>Читать</button>
+          <button className="btn-ghost" onClick={() => setDialog({ kind: 'bookmarks' })}>Закладки ({bookmarks.length})</button>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'sources' })}>Источники</button>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'settings' })}>Настройки</button>
           <button className="btn-ghost" onClick={exitWorld}>Выйти</button>
@@ -288,7 +321,10 @@ export default function HorebApp() {
       )}
 
       {exhibit && <Modal wide title={`${CATEGORY_RU[exhibit.category]} · ${exhibit.verseReference}`} onClose={() => setDialog(null)}>
-        <SceneMoment key={exhibit.id} e={exhibit} examined={examined.has(exhibit.id)} onInspect={() => {
+        <button className="btn mb-5" aria-pressed={bookmarks.includes(exhibit.id)} onClick={() => setBookmarks((prev) => toggleStudyBookmark(prev, exhibit.id))}>
+          {bookmarks.includes(exhibit.id) ? 'Убрать из закладок' : 'Сохранить свидетельство'}
+        </button>
+        <SceneMoment key={exhibit.id} e={exhibit} examined={examined.has(exhibit.id)} canInspect={worldRef.current?.canInspectExhibit(exhibit.id) ?? false} onInspect={() => {
           if (!worldRef.current?.inspectExhibit(exhibit.id)) return;
           setExamined((old) => new Set(old).add(exhibit.id));
           setGuideCaption(HERO_MOMENTS[exhibit.id]?.cue ?? null);
@@ -300,11 +336,15 @@ export default function HorebApp() {
       {dialog?.kind === 'menu' && <Modal title="Управление экспозицией" onClose={() => setDialog(null)}>
         <div className="grid gap-3">
           <button className="btn" onClick={() => setDialog({ kind: 'map' })}>Схема маршрута</button>
+          <button className="btn" onClick={() => setDialog({ kind: 'bookmarks' })}>Закладки Писания ({bookmarks.length})</button>
           <button className="btn" onClick={() => { setDialog(null); setScreen('reader'); }}>Читать экспозицию</button>
           <button className="btn" onClick={() => setDialog({ kind: 'sources' })}>Источники и ограничения</button>
           <button className="btn" onClick={() => setDialog({ kind: 'settings' })}>Настройки доступности</button>
           <button className="btn" onClick={exitWorld}>Выйти из прогулки</button>
         </div>
+      </Modal>}
+      {dialog?.kind === 'bookmarks' && <Modal wide title="Мои закладки Писания" onClose={() => setDialog(null)}>
+        <StudyBookmarkList ids={bookmarks} onOpen={(id) => setDialog({ kind: 'exhibit', id })} />
       </Modal>}
       {dialog?.kind === 'settings' && (
         <Modal title="Настройки" onClose={() => setDialog(null)}>
