@@ -73,10 +73,14 @@ export function createNameBeacon(e: Exhibit, low: boolean) {
   mesh.visible = false;
   return {
     mesh,
-    update(distance: number) {
+    update(distance: number, inspected = false) {
       const opacity = beaconOpacity(distance, e.zone === 7);
       mesh.visible = opacity > 0.01;
       material.opacity = opacity;
+      // A deliberate inspection brings the lettering forward without new GPU
+      // lights or turning Horeb into a bright fantasy stage.
+      const scale = inspected ? 1.08 : 1;
+      mesh.scale.set(scale, scale, 1);
     },
   };
 }
