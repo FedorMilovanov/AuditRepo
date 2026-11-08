@@ -6,7 +6,7 @@ import { buildExhibitProps, mergePropsGroup } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
 import { validateExhibits } from '../data/validate';
-import { constrain, zoneAt, distToBush, sanitizeSpawn, ZONE_SPAWN, R_OUTER, TUNNEL_END, steleVariation, type Block } from './nav';
+import { constrain, zoneAt, distToBush, sanitizeSpawn, ZONE_SPAWN, R_OUTER, TUNNEL_END, steleVariation, separateObstacle, type Block } from './nav';
 
 export type Shoes = 'shod' | 'removing' | 'unshod';
 export type Prompt = null | { kind: 'exhibit'; id: string } | { kind: 'shoes' };
@@ -376,7 +376,10 @@ export class World {
     let nx = this.pos.x + this.vel.x * dt, nz = this.pos.y + this.vel.y * dt;
     for (const o of this.obstacles) {
       const dx = nx - o.x, dz = nz - o.z, d = Math.hypot(dx, dz), r = o.r + 0.35;
-      if (d < r && d > 1e-6) { nx = o.x + (dx / d) * r; nz = o.z + (dz / d) * r; }
+      if (d < r) {
+        const pushed = separateObstacle(nx, nz, this.pos.x, this.pos.y, o);
+        nx = pushed.x; nz = pushed.z;
+      }
     }
     const c = constrain(nx, nz, shod);
     const moving = il > 0.05;
