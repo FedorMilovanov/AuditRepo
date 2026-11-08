@@ -5,6 +5,7 @@ import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
 import { buildExhibitProps, mergePropsGroup } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
 import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
+import { BEACON_IDS, beaconOpacity } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -27,6 +28,18 @@ for (const e of EXHIBITS) {
   }
 }
 console.log(`\ntotal prop meshes: high=${totalHigh} low=${totalLow}`);
+
+// The new light-based name hierarchy is a small pilot, not forty-two
+// giant supernatural billboards. All original script comes from the registry.
+t('8 pilot name beacons have unique canonical exhibit IDs',
+  BEACON_IDS.length === 8 && new Set(BEACON_IDS).size === 8 &&
+  BEACON_IDS.every((id) => EXHIBITS.some((e) => e.id === id)));
+t('name beacon is legible at 24m but not drawn past 35m',
+  beaconOpacity(24) > 0.3 && beaconOpacity(35) === 0 &&
+  beaconOpacity(Infinity) === 0);
+t('dark Horeb beacons stay below 55% brightness',
+  beaconOpacity(9, true) <= 0.54 && beaconOpacity(9, true) > 0.5 &&
+  beaconOpacity(9, false) > beaconOpacity(9, true));
 
 // No repetitive stone: 42 steles must not be identical — varied scale/tilt/zone-tint.
 const scales = new Set(EXHIBITS.map((e) => steleVariation(e.id, e.zone).scale.toFixed(3)));
