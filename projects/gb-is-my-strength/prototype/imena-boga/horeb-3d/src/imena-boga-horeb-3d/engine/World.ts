@@ -192,6 +192,9 @@ export class World {
       if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
       if (['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
         if (this.inputLocked) return;
+        // Browsers may suspend Web Audio when the scene was loaded through an
+        // async dynamic import. Resume only inside a real keyboard gesture.
+        if (e.isTrusted) this.audio.unlockFromGesture();
         this.keys.add(e.code);
         if (e.code.startsWith('Arrow') && (tag === 'BODY' || tag === 'CANVAS')) e.preventDefault();
       }
@@ -203,6 +206,7 @@ export class World {
     }) as unknown as EventListener);
     this.on(c, 'pointerdown', ((e: PointerEvent) => {
       if (this.inputLocked) return;
+      if (e.isTrusted) this.audio.unlockFromGesture();
       if (e.pointerType === 'mouse') {
         if (document.pointerLockElement !== c) {
           // осознанное начало: клик — запрос pointer lock; при отказе — обзор перетаскиванием
@@ -303,6 +307,9 @@ export class World {
     const scale = len > 1 ? 1 / len : 1;
     this.move.x = x * scale;
     this.move.y = y * scale;
+    // Joystick callbacks execute synchronously within a trusted pointer
+    // gesture on real touchscreens; no automatic voice playback is triggered.
+    if (len > 0.05) this.audio.unlockFromGesture();
   }
   requestLock() { const r = this.canvas.requestPointerLock?.() as unknown as Promise<void> | undefined; if (r?.catch) r.catch(() => this.onEvent('pointerlock-denied')); }
 
@@ -310,6 +317,7 @@ export class World {
   removeShoes(): boolean {
     if (this.shoes !== 'shod') return false;
     if (distToBush(this.pos.x, this.pos.y) > R_OUTER + 3) return false;
+    this.audio.unlockFromGesture();
     this.shoes = 'removing';
     this.keys.clear(); this.vel.set(0, 0);
     const reduced = this.settings.reducedMotion;
