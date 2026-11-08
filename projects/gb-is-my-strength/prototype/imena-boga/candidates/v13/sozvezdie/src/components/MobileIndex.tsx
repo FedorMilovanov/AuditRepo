@@ -162,28 +162,31 @@ export default function MobileIndex({ active, completedIds, onSelect, visible }:
                       return (
                         <button
                           key={n.id}
+                          data-mobile-index-entry
                           onClick={() => go(n.id)}
-                          className={`flex items-center gap-4 rounded-xl border px-4 py-3 text-left transition-all duration-300 ${
+                          className={`grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-x-3 gap-y-1.5 rounded-xl border px-4 py-3 text-left transition-all duration-300 sm:grid-cols-[auto_minmax(0,1fr)_minmax(0,1fr)] ${
                             n.id === active
                               ? "border-gold-500/50 bg-ink-800"
                               : "border-cream-800/40 bg-ink-900/50 hover:border-gold-500/30"
                           }`}
                         >
-                          <span className="font-hebrew text-sm text-cream-700">
+                          <span className="row-span-2 font-hebrew text-sm text-cream-700 sm:row-span-1">
                             {String(nIdx + 1).padStart(2, "0")}
                           </span>
-                          <span className="font-hebrew text-lg text-gold-300" {...scriptAttrs(n)}>
-                            {n.hebrew}
-                          </span>
-                          <span className="font-ui text-[11px] uppercase tracking-[0.2em] text-cream-300">
-                            {n.translit}
-                          </span>
-                          {completedIds.has(n.id) && (
-                            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold-500/15 text-gold-300 ring-1 ring-gold-500/35" aria-label="Изучено">
-                              <Check className="h-3 w-3" strokeWidth={2.5} />
+                          <span className="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-1">
+                            <span data-mobile-name-text="original" className="min-w-0 break-words font-hebrew text-lg text-gold-300" {...scriptAttrs(n)}>
+                              {n.hebrew}
                             </span>
-                          )}
-                          <span className="ml-auto text-right font-body text-sm italic text-cream-500">
+                            <span data-mobile-name-text="translit" className="min-w-0 break-words font-ui text-[11px] uppercase tracking-[0.2em] text-cream-300">
+                              {n.translit}
+                            </span>
+                            {completedIds.has(n.id) && (
+                              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold-500/15 text-gold-300 ring-1 ring-gold-500/35" aria-label="Изучено">
+                                <Check className="h-3 w-3" strokeWidth={2.5} />
+                              </span>
+                            )}
+                          </span>
+                          <span data-mobile-name-text="russian" className="col-start-2 min-w-0 max-w-full justify-self-end break-words text-right font-body text-sm italic text-cream-500 sm:col-start-3 sm:row-start-1">
                             {n.russian}
                           </span>
                         </button>
