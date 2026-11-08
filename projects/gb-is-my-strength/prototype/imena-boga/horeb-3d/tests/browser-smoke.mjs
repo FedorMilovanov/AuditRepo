@@ -99,12 +99,16 @@ try {
       const objects = [];
       window.__horeb.world.scene.traverse((obj) => {
         if (obj.name !== 'original-script-beacon') return;
+        const canvas = obj.material?.map?.image;
+        const ctx = canvas?.getContext?.('2d');
         objects.push({
           id: obj.userData.exhibitId,
-          w: obj.material?.map?.image?.width,
-          h: obj.material?.map?.image?.height,
+          w: canvas?.width,
+          h: canvas?.height,
           opacity: obj.material?.opacity,
           depthTest: obj.material?.depthTest,
+          cornerAlpha: ctx?.getImageData(0, 0, 1, 1).data[3] ?? -1,
+          centerAlpha: ctx?.getImageData(Math.floor(canvas.width/2), Math.floor(canvas.height/2), 1, 1).data[3] ?? -1,
         });
       });
       return objects;
@@ -115,6 +119,9 @@ try {
       beacons.length === 8 && pilotIds.every((id) => beacons.some((b) =>
         b.id === id && b.w === expectedWidth && b.depthTest === true)),
       JSON.stringify(beacons));
+    check('8 script glows dissolve into stone instead of opaque rectangular signs',
+      beacons.length === 8 && beacons.every((b) => b.cornerAlpha === 0 && b.centerAlpha > 120),
+      JSON.stringify(beacons.map(({id,cornerAlpha,centerAlpha})=>({id,cornerAlpha,centerAlpha}))));
 
     await page.screenshot({ path: join(shots, 'smoke-02-world.png') });
 
