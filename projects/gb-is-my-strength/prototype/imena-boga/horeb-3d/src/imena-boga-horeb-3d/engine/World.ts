@@ -19,6 +19,15 @@ export interface WorldSettings { quality: 'low' | 'high'; reducedMotion: boolean
 const FOG: [number, number, number][] = [ // zone → color, density
   [0x1a1410, 0.03, 0], [0x1c1610, 0.028, 0], [0x221810, 0.024, 0], [0x281610, 0.045, 0], [0x121620, 0.018, 0], [0x181412, 0.04, 0], [0x141820, 0.045, 0], [0x121830, 0.005, 0],
 ];
+// Subtle zone-specific lighting; keep the brighter neutral base rather than applying fog colors unmodified.
+const _baseWarm = new THREE.Color(0xffeedd);
+const ZONE_LIGHT: { amb: THREE.Color; hemi: THREE.Color }[] = FOG.map((f) => {
+  const tint = new THREE.Color(f[0]);
+  return {
+    amb: _baseWarm.clone().lerp(tint, 0.25),
+    hemi: new THREE.Color(0x6a7cb0).clone().lerp(tint, 0.3),
+  };
+});
 const EYE = 1.62;
 const SPEED = 2.3;
 
@@ -350,6 +359,9 @@ export class World {
     const out = Math.min(1, Math.max(0, (TUNNEL_END + 2 - this.pos.y) / 10));
     this.ambient.intensity = 3.0 * (1 - out) + 0.35 * out;
     this.hemi.intensity = 0.3 * (1 - out) + 0.55 * out;
+    const zl = ZONE_LIGHT[zone];
+    this.ambient.color.lerp(zl.amb, k);
+    this.hemi.color.lerp(zl.hemi, k);
     this.moon.intensity = 0.2 * (1 - out) + 0.55 * out;
 
     this.zones.update(this.t, dt, this.pos.x, this.pos.y, motion);
