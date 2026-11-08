@@ -122,7 +122,10 @@ export function App() {
       if (raw) {
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed)) {
-          return new Set(parsed);
+          const knownIds = new Set(DIVINE_NAMES.map((name) => name.id));
+          return new Set<string>(parsed.filter(
+            (id): id is string => typeof id === 'string' && knownIds.has(id)
+          ));
         }
       }
     } catch {
