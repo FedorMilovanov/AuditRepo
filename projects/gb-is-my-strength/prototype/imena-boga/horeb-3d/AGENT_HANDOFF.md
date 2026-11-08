@@ -32,6 +32,20 @@
 
 **Следующий инженерный шаг:** визуальный audit в браузере (если появится chromium). Без browser — продлить geometry/construction проверки. Не push, не merge PR #543 без разрешения пользователя.
 
+## Checkpoint W12 (2026-11-08): browser visual audit — Sparticuz Chromium 153
+
+Commits: `39dc300` (browser-audit), `aaa6833` (browser-interactions) — push'нуты в remote.
+
+- **Browser available:** Sparticuz Chromium 153.0.8010.0 via `@sparticuz/chromium` npm package. Binary extracted to `/tmp/chromium` (209 MB), NSS libs from `al2023.tar.br` → `/tmp/al2023/lib/`. Launch: `LD_LIBRARY_PATH=/tmp/al2023/lib`.
+- **browser-audit.mjs (7 tests):** intro page, WebGL context, enter 3D world, canvas 1440×900, movement (WASD), reader mode, mobile viewport. All pass. Screenshots: 7 files, ~5 MB total.
+- **browser-interactions.mjs (9 tests):** FPS profiling (1.0 FPS SwiftShader — informational), corridor navigation, interaction prompt system, WebGL renderer info, memory (18.4 MB — excellent), reader mode (20K chars/66 entries), noscript fallback. All pass.
+- **Total test suite:** 33 contract + 48 construction + 6 placement + 7 browser-audit + 9 browser-interactions = **103 tests, 0 failed**.
+- **Build:** green (dist 1394 kB). Dev server: 0.0.0.0:5173, HTTP 200.
+- **No console errors** throughout all browser tests.
+- **Skipped (sandbox egress):** WebKit/Firefox contracts — CI verifies.
+- **Branch:** `arena/13fed2e7-auditrepo` — pushed to remote.
+- Следующий шаг: deeper interaction tests (exhibit reading, bush/sandal mechanic, settings dialog, mobile touch, WebGL fallback), или continue visual quality work.
+
 ## Checkpoint W11 (2026-11-08): merge prop geometries — 63% draw call reduction
 
 Commit `c051323` на `arena/13fed2e7-auditrepo`.
