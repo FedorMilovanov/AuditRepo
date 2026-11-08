@@ -131,6 +131,12 @@ const boxesOverlap = (a, b) =>
     els.map((e) => { const r = e.getBoundingClientRect(); return { x: r.x, w: r.width, txt: e.innerText.replace(/\n/g, " ").trim() }; }),
   );
   treeNodes.length === 13 ? ok("radial tree has 13 nodes") : bad("radial nodes: " + treeNodes.length);
+  // The central orbit disc must display only the succinct Russian name.
+  // Explanatory "centre" prose belongs in the surrounding article, not on the orb.
+  const centerCaption = await page.locator('#tsentr [data-elastic-node="yhwh"] [data-orbit-center-caption]').textContent();
+  centerCaption?.trim() === "ЯХВЕ"
+    ? ok("center orbit caption is exactly ЯХВЕ, without ЦЕНТР")
+    : bad("center orbit includes redundant decoration: " + centerCaption);
   const unlabelled = treeNodes.filter((n) => n.txt.length < 3);
   unlabelled.length === 0 ? ok("every radial node is labelled") : bad("unlabelled nodes: " + unlabelled.length);
   const off = treeNodes.filter((n) => n.x < 0 || n.x + n.w > 1440);

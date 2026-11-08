@@ -249,7 +249,7 @@ export default function NameTree({ active, completedIds, onSelect, motionOn = tr
           <span dir="rtl" lang="he" className="glow-gold font-hebrew text-4xl font-medium leading-none text-gold-200 lg:text-5xl">
             יהוה
           </span>
-          <span className="mt-1.5 font-ui text-[9px] uppercase tracking-[0.3em] text-cream-300">ЯХВЕ · центр</span>
+          <span data-orbit-center-caption className="mt-1.5 font-ui text-[11px] uppercase tracking-[0.18em] text-cream-300">ЯХВЕ</span>
         </motion.button>
 
         {NODES.map((node, i) => {
