@@ -117,6 +117,12 @@ export function validateExhibits(list: Exhibit[]): string[] {
   const e314 = get('ehyeh'), e315 = get('yhwh');
   if (!e314 || !e315) errs.push('Ex 3:14/3:15 missing');
   else if (e314.originalUnicode.includes(e315.originalUnicode)) errs.push('Ex 3:14 and 3:15 forms conflated');
+  // Research #379 baseline ledger verifiedForm (Gen 14:20), checked against
+  // the original Hebrew digital text: final nun ן, NOT final mem ם.
+  // Exact graphemes matter because this string is rasterized as a giant label.
+  const elyon = get('el-elyon');
+  if (elyon && elyon.originalUnicode !== 'אֵל עֶלְיוֹן')
+    errs.push('El Elyon must match Research verified form אֵל עֶלְיוֹן (final nun)');
   const roi = get('el-roi'), roei = get('ro-i');
   if (roi && !roi.originalUnicode.includes('ר\u05B3א')) errs.push('El Roi must use root ראה');
   if (roei && !roei.originalUnicode.includes('ע')) errs.push('Ps 23:1 must use root רעה');
