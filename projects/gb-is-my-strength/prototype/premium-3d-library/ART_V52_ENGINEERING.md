@@ -35,3 +35,19 @@
 ## Git index normalization
 
 The scoped `V52_ART_MANIFEST.json` hashes **canonical staged Git blob bytes**, not platform-specific CRLF working-tree checkouts. The original V5 source manifest remains unchanged as baseline evidence.
+## V5.5 — lossless normal maps and scoped retest (2026-11-09)
+
+This is a transport-only follow-up to the V5.2 art candidate, not a visual redesign or Product promotion. The original committed normal PNG snapshots remain available in Git at `66301f61b042e4c58c322bb42da7950fa39a0b0b`; the current candidate replaces them with **lossless WebP**. No files were fetched from external image collections.
+
+| 768×768 tangent normal | V5.2 PNG | V5.5 lossless WebP | Saving |
+| --- | ---: | ---: | ---: |
+| Limestone | 448,030 B | 337,436 B | 110,594 B |
+| Oak | 424,125 B | 381,692 B | 42,433 B |
+| **Total** | **872,155 B** | **719,128 B** | **153,027 B (17.55%)** |
+
+- Both decoded RGB normal maps match the prior PNG **exactly pixel by pixel** (zero changed pixels); albedo maps, material tuning, mesh coordinates and scene composition are unchanged.
+- The checked-in generator now writes lossless WebP. Regenerating **all four** colour/normal assets on the authorized Windows tooling produced pixel-**and byte-identical** results.
+- Chrome startup transfer on the isolated local HTTP build went from **3,035,131 B to 2,882,106 B** (−153,025 B, about −5.04%); the 2 B delta relative to source asset savings is small build/transport variation. This is not a real-world network-speed or GPU-memory benchmark.
+- Standalone Vite production build, strict TypeScript, five lab checks: **PASS**. Source-level browser art witness: **4/4 PASS** in Chromium and WebKit at 1440×900 and touch-emulated 390×844, including required local PBR assets, WebGL2, no JS/HTTP errors or horizontal overflow.
+- `GB_LIBRARY_ART_EVIDENCE_DIR` lets a new QA run save screenshots **outside** the historical V5.2 evidence directory; that directory remains a frozen record.
+- This is a smaller **network payload**, not evidence of faster material decode, lower decompressed GPU VRAM, improved WebKit frame time, or owner acceptance. **LAB / ART HOLD continues**.

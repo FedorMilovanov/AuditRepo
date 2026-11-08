@@ -11,7 +11,8 @@ from pathlib import Path
 from playwright.async_api import async_playwright
 
 URL = os.environ.get('GB_LIBRARY_TEST_URL', 'http://127.0.0.1:8771/')
-OUT = Path(__file__).resolve().parents[1] / 'evidence' / 'art-v52'
+# An external evidence directory preserves the original V5.2 screenshot witnesses.
+OUT = Path(os.environ.get('GB_LIBRARY_ART_EVIDENCE_DIR', str(Path(__file__).resolve().parents[1] / 'evidence' / 'art-v52')))
 
 async def one(browser, engine, width, height, mobile):
     context = await browser.new_context(viewport={'width': width, 'height': height},

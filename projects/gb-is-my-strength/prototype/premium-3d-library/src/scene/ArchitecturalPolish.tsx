@@ -22,9 +22,9 @@ function texture(path: string, color = false): THREE.Texture {
 }
 
 const stoneMap = texture(new URL('../assets/pbr/limestone-color.webp', import.meta.url).href, true);
-const stoneNormal = texture(new URL('../assets/pbr/limestone-normal.png', import.meta.url).href);
+const stoneNormal = texture(new URL('../assets/pbr/limestone-normal.webp', import.meta.url).href);
 const oakMap = texture(new URL('../assets/pbr/oak-color.webp', import.meta.url).href, true);
-const oakNormal = texture(new URL('../assets/pbr/oak-normal.png', import.meta.url).href);
+const oakNormal = texture(new URL('../assets/pbr/oak-normal.webp', import.meta.url).href);
 
 // Platform/Architecture/Vault share these base materials. One material
 // upgrade improves the entire envelope without making per-mesh clones.

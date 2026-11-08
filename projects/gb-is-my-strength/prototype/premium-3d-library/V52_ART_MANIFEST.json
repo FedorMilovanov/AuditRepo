@@ -6,8 +6,8 @@
   "files": [
     {
       "path": "ART_V52_ENGINEERING.md",
-      "bytes": 4248,
-      "sha256": "6414c5b3da7d694814281ab4125ac401374fb427d2660c388614f53ed96fb414"
+      "bytes": 6187,
+      "sha256": "b63d60f0d4e8d257fd55c69017dc77705c81bc649b0c4794d3bcb7786db3aa08"
     },
     {
       "path": "evidence/art-v52/chromium-1440x900.png",
@@ -31,8 +31,8 @@
     },
     {
       "path": "scripts/generate-architecture-materials.py",
-      "bytes": 2041,
-      "sha256": "f1f629f4e64176b455f7f9f81c65caf000f503e1c3ca65790592d2031e97e969"
+      "bytes": 2051,
+      "sha256": "90fc72d00a7e76a1babf4f1f8befc22c4d7a0574dec8cc322f303d904350656b"
     },
     {
       "path": "scripts/requirements-art-v52.txt",
@@ -45,9 +45,9 @@
       "sha256": "a0c2da13a9d5b5c42676bfdceedc93c375293361754d002e93ceee8ae86459be"
     },
     {
-      "path": "src/assets/pbr/limestone-normal.png",
-      "bytes": 448030,
-      "sha256": "186275184c5ef746ecbceb86f08a0ad3a85e7639cc19113fb1d27c425a823066"
+      "path": "src/assets/pbr/limestone-normal.webp",
+      "bytes": 337436,
+      "sha256": "c1fdf9d1be34eeef3e81787231a08dd4212cad16e19e7cedbd6712c2db1fcaa5"
     },
     {
       "path": "src/assets/pbr/oak-color.webp",
@@ -55,14 +55,14 @@
       "sha256": "a9d06ab0b40905b05b548948aa1014bb7c03c60abd04f030ea47c7df21fe5963"
     },
     {
-      "path": "src/assets/pbr/oak-normal.png",
-      "bytes": 424125,
-      "sha256": "afdf87c4bc639e109df3de90f6531eb89840b65c2ff5852aee4df906b9ebf1ad"
+      "path": "src/assets/pbr/oak-normal.webp",
+      "bytes": 381692,
+      "sha256": "e2cd4e6b34fa8a2516548e19796a03fb5ab915224ef32d61f62d0f5e0f3cc4f0"
     },
     {
       "path": "src/scene/ArchitecturalPolish.tsx",
-      "bytes": 6335,
-      "sha256": "d5ab38735c856dcf402d64beab0a50782132618202ade2406f6e413429189994"
+      "bytes": 6337,
+      "sha256": "800541cb4f693726fa216fc5c8e131d7916032df6ee79d5ed6fbf6d5b5c2d8d3"
     },
     {
       "path": "src/scene/Vault.tsx",
@@ -76,8 +76,8 @@
     },
     {
       "path": "tests/architectural-art-browser.py",
-      "bytes": 3100,
-      "sha256": "1f3059bf084ab1b4b8c6225ffbbdf6001632a5824fb15b96df2ddd4c20a6e439"
+      "bytes": 3241,
+      "sha256": "9ed25521b12eb3eac3e57b2cd9b7820af688d245e4e5b84af7fe3699f169a7fe"
     }
   ]
 }

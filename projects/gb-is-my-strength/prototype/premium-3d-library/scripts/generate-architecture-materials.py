@@ -30,7 +30,7 @@ def normal_map(height,strength):
 
 def save(name, rgb, height,strength):
     Image.fromarray(np.uint8(np.clip(rgb,0,255)),'RGB').save(ROOT/f'{name}-color.webp',quality=88,method=6)
-    Image.fromarray(normal_map(height,strength),'RGB').save(ROOT/f'{name}-normal.png',optimize=True)
+    Image.fromarray(normal_map(height,strength),'RGB').save(ROOT/f'{name}-normal.webp',lossless=True,method=6)
 
 cloud=periodic_noise([(2,.85),(5,.42),(13,.20),(45,.075)])
 veins=periodic_noise([(3,.32),(9,.07)])
