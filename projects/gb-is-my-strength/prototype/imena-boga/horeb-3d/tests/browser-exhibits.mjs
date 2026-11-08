@@ -202,6 +202,54 @@ try {
     if (guard.distance < 13.99 || guard.shoes !== 'shod')
       throw new Error('Restored progress bypassed holy threshold: ' + JSON.stringify(guard));
     console.log('PASS forged inner-bush checkpoint cannot bypass shoes/outer safety gate');
+    // Reset from INSIDE a live 3D session, not merely on the intro screen.
+    // It must close that World without teardown resurrecting its old position.
+    const settingsOpened = await page.evaluate(() => {
+      const button = [...document.querySelectorAll('nav button')]
+        .find((b) => b.textContent?.trim() === 'Настройки');
+      button?.click(); return !!button;
+    });
+    if (!settingsOpened) throw new Error('World settings unavailable for route reset');
+    await page.waitForSelector('[role="dialog"]', { timeout: 6000 });
+    const worldReset = await page.evaluate(() => {
+      const button = [...document.querySelectorAll('[role="dialog"] button')]
+        .find((b) => b.textContent?.trim() === 'Сбросить маршрут и выйти');
+      button?.click(); return !!button;
+    });
+    if (!worldReset) throw new Error('In-world reset action unavailable');
+    await page.waitForFunction(() => {
+      const isIntro = document.querySelector('h1')?.textContent?.includes('ИМЕНА БОГА');
+      const hasBegin = [...document.querySelectorAll('button')]
+        .some((b) => b.textContent?.trim() === 'Начать путешествие');
+      try {
+        const p = JSON.parse(localStorage.getItem('imena-horeb.progress.v1') || '{}');
+        return isIntro && hasBegin && p.last === null && JSON.stringify(p.visited) === '[0]' &&
+          !window.__horeb?.world;
+      } catch { return false; }
+    }, { timeout: 8000 });
+    await page.reload({ waitUntil: 'domcontentloaded', timeout: 45000 });
+    await page.waitForFunction(() => [...document.querySelectorAll('button')]
+      .some((b) => b.textContent?.trim() === 'Начать путешествие'), { timeout: 6000 });
+    await page.evaluate(() => [...document.querySelectorAll('button')]
+      .find((b) => b.textContent?.trim() === 'Начать путешествие')?.click());
+    await page.waitForFunction(() => !!window.__horeb?.world, { timeout: 90000 });
+    const afterReset = await page.evaluate(() => ({
+      ...window.__horeb.world.position, shoes: window.__horeb.world.shoes,
+    }));
+    if (Math.abs(afterReset.z + 2) > 1 || Math.abs(afterReset.x) > 1 || afterReset.shoes !== 'shod')
+      throw new Error('Reset failed to return explorer to original safe start: ' + JSON.stringify(afterReset));
+    console.log('PASS in-world reset survives teardown, reload and starts at original safe position');
+    // Recreate a legitimate checkpoint to keep intro reset coverage separate.
+    await page.evaluate(() => window.__horeb.world.teleportZone(2));
+    await page.evaluate(() => [...document.querySelectorAll('nav button')]
+      .find((button) => button.textContent?.trim() === 'Выйти')?.click());
+    await page.waitForFunction(() => {
+      try {
+        const pos = JSON.parse(localStorage.getItem('imena-horeb.progress.v1') || '{}').last;
+        return document.querySelector('h1')?.textContent?.includes('ИМЕНА БОГА') &&
+          pos && Math.abs(pos.z + 68) < 1;
+      } catch { return false; }
+    }, { timeout: 7500 });
     // An explorer can discard the saved checkpoint even if only one zone was
     // visited; the primary action must return to a genuine fresh start.
     await page.evaluate(() => [...document.querySelectorAll('nav button')]
