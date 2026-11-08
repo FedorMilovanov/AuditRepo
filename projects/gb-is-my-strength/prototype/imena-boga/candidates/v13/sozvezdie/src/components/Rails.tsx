@@ -103,7 +103,24 @@ export default function Rails({ active, completedIds, wide, onSelect }: RailsPro
   useEffect(() => {
     if (!active) return;
     const el = itemRefs.current.get(active);
-    el?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    const scrollBox = el?.closest<HTMLElement>("[data-rail-scroll]");
+    if (!el || !scrollBox) return;
+    // Keep the active item visible in this rail only. scrollIntoView
+    // scrolls ancestor containers too, potentially moving the article.
+    const viewport = scrollBox.getBoundingClientRect();
+    const card = el.getBoundingClientRect();
+    if (!viewport.height || !card.height) return;
+    const delta = card.top < viewport.top
+      ? card.top - viewport.top
+      : card.bottom > viewport.bottom ? card.bottom - viewport.bottom : 0;
+    if (Math.abs(delta) <= 1) return;
+    scrollBox.scrollTo({
+      top: Math.max(0, Math.min(
+        scrollBox.scrollHeight - scrollBox.clientHeight,
+        scrollBox.scrollTop + delta,
+      )),
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+    });
   }, [active]);
 
   const rail = (items: typeof NAMES, offset: number, side: "left" | "right", title: string) => {
@@ -129,6 +146,7 @@ export default function Rails({ active, completedIds, wide, onSelect }: RailsPro
         <div className="relative flex flex-col items-stretch">
           <Beam progress={progress} />
           <div
+            data-rail-scroll
             className={`rail-scroll relative flex max-h-[72vh] flex-col gap-0.5 overflow-y-auto py-1 ${
               side === "left" ? "items-stretch pr-4" : "items-stretch pl-4"
             }`}
