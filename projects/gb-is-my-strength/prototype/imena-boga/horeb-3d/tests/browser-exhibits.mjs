@@ -58,6 +58,54 @@ try {
       await page.keyboard.press('Escape').catch(()=>{});
     }
   }
+  // A hero moment is not just E→static card. First inspect the actual 3D
+  // object, then return to compare the historical context.
+  try {
+    const hero = exhibits.find((e) => e.id === 'elohim');
+    if (!hero) throw new Error('elohim hero missing');
+    await page.evaluate((e) => {
+      const w = window.__horeb.world;
+      const length = Math.hypot(e.nx, e.nz) || 1;
+      w.teleportTo(e.x + e.nx / length * 2, e.z + e.nz / length * 2);
+      w.yaw = Math.atan2(e.nx, e.nz);
+    }, hero);
+    await page.waitForFunction(() => window.__horeb?.state()?.prompt?.id === 'elohim',
+      { timeout: 6000, polling: 100 });
+    await page.keyboard.press('KeyE');
+    await page.waitForSelector('[role="dialog"]');
+    const clicked = await page.evaluate(() => {
+      const btn = [...document.querySelectorAll('[role="dialog"] button')]
+        .find((b) => b.textContent.includes('Осмотреть место в 3D'));
+      btn?.click();
+      return !!btn;
+    });
+    if (!clicked) throw new Error('Missing hero inspection control');
+    await page.waitForFunction(() => !document.querySelector('[role="dialog"]'), {timeout:6000});
+    await page.waitForFunction(() => {
+      const w = window.__horeb?.world;
+      let inspected = false;
+      w?.scene.traverse((o) => {
+        if (o.name === 'original-script-beacon' && o.userData.exhibitId === 'elohim' &&
+            o.scale.x > 1.05) inspected = true;
+      });
+      return inspected;
+    }, { timeout: 7000, polling: 100 });
+    await page.keyboard.press('KeyE');
+    await page.waitForSelector('[role="dialog"]');
+    const revisited = await page.$eval('[role="dialog"]',(n) => n.textContent.includes('Место осмотрено'));
+    const compare = await page.evaluate(() => {
+      const btn = [...document.querySelectorAll('[role="dialog"] button')]
+        .find((b) => b.textContent.includes('Сопоставить с Писанием'));
+      btn?.click(); return !!btn;
+    });
+    const context = await page.$eval('[role="dialog"]', (n) =>
+      n.textContent.includes('Быт. 1:1') && n.textContent.includes('единственном числе'));
+    if (!revisited || !compare || !context) throw new Error('Hero compare state not accessible');
+    await page.keyboard.press('Escape');
+    console.log('PASS elohim: inspect → actual 3D response → revisit → contextual comparison');
+  } catch (error) {
+    failures.push('HERO ACTION: ' + (error?.message || error));
+  }
 } catch(error) {
   failures.push('UNCAUGHT '+(error?.stack||error));
 } finally {
