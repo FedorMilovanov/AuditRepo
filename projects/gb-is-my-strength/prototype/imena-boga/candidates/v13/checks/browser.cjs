@@ -110,9 +110,18 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
           property:getComputedStyle(el).transitionProperty,
           duration:getComputedStyle(el).transitionDuration,
         }));
-        if(transition.property!=='none' || transition.duration.split(',').some(time=>parseFloat(time)>0))
-          throw Error('Atlas OS reduced-motion still animates medallion transform '+
-            JSON.stringify({engine,width,transition}));
+        // Chromium can serialize motion-reduce's effectively zero duration as
+        // "1e-06s"; parseFloat misreads scientific notation as 1 second.
+        // Check actual numeric time, not whether transitionProperty is "none".
+        const durationSeconds=transition.duration.split(',').map(time=>{
+          const token=time.trim();
+          if(token.endsWith('ms'))return Number(token.slice(0,-2))/1000;
+          if(token.endsWith('s'))return Number(token.slice(0,-1));
+          return NaN;
+        });
+        if(durationSeconds.length===0||durationSeconds.some(t=>!Number.isFinite(t)||t>0.001))
+          throw Error('Atlas OS reduced-motion has a perceptible medallion transition '+
+            JSON.stringify({engine,width,transition,durationSeconds}));
       }finally{
         await liveCtx.close();
       }
