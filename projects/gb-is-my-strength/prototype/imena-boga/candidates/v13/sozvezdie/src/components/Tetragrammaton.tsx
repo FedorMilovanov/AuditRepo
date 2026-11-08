@@ -54,7 +54,7 @@ const CHAIN = [
   { label: "Синодальный", value: "Господь", sub: "обычно «Господь»", he: false },
 ];
 
-export default function Tetragrammaton() {
+export default function Tetragrammaton({ motionOn }: { motionOn: boolean }) {
   const [selected, setSelected] = useState("yod");
   const letterTabs = useRef<Array<HTMLButtonElement | null>>([]);
   const onTabKeyDown = (event: ReactKeyboardEvent<HTMLButtonElement>, index: number) => {
@@ -94,7 +94,7 @@ export default function Tetragrammaton() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.85, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
             >
-              <Tilt max={12} className="rounded-2xl">
+              <Tilt max={12} className="rounded-2xl" enabled={motionOn}>
                 <button
                   ref={(element) => { letterTabs.current[i] = element; }}
                   type="button"

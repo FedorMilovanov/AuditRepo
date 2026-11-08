@@ -285,7 +285,7 @@ function NameSection({
               })}
             </div>
 
-            {name.id === "yhwh" && <Tetragrammaton />}
+            {name.id === "yhwh" && <Tetragrammaton motionOn={motionOn} />}
 
             {/* related names — the name in its scriptural context */}
             {related.length > 0 && (

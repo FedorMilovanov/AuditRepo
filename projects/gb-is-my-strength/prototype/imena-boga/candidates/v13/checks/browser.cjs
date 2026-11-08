@@ -642,9 +642,23 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
               throw Error('Constellation in-app motion-off left active 3D card tilt '+
                 JSON.stringify({engine,width,disabledTilt}));
           }
+          const letterTilt=motionPage.locator('#tetragrammaton [data-reader-tilt]').first();
+          await letterTilt.scrollIntoViewIfNeeded();
+          await letterTilt.hover({position:{x:22,y:24}});
+          if(enabled){
+            await motionPage.waitForFunction(neutral=>
+              document.querySelector('#tetragrammaton [data-reader-tilt]')?.style.transform!==neutral,
+              neutral,{timeout:5000});
+          }else{
+            const disabledLetter=await letterTilt.evaluate(el=>el.style.transform);
+            if(disabledLetter!==neutral)
+              throw Error('Constellation in-app motion-off left letter-card tilt active '+
+                JSON.stringify({engine,width,disabledLetter}));
+          }
           await motionPage.emulateMedia({reducedMotion:'reduce'});
           await motionPage.waitForFunction(neutral=>
-            document.querySelector('#yhwh [data-reader-tilt]')?.style.transform===neutral,
+            [...document.querySelectorAll('#yhwh [data-reader-tilt]')]
+              .every(el=>el.style.transform===neutral),
             neutral,{timeout:5000});
           const reducedTransition=await verseTilt.evaluate(el=>getComputedStyle(el).transitionDuration);
           if(reducedTransition.split(',').some(v=>Number(v.replace(/ms$|s$/,''))>0.001))
