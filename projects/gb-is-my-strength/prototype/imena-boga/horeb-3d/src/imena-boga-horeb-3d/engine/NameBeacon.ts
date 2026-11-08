@@ -15,6 +15,13 @@ export function beaconOpacity(distance: number, horeb = false): number {
   return Math.min(horeb ? 0.54 : 0.92, envelope * (horeb ? 0.54 : 0.92));
 }
 
+// Readable from afar, but does not overwhelm the camera when inspected at 2m.
+export function beaconVisualScale(distance: number): number {
+  if (!Number.isFinite(distance)) return 0.78;
+  const t = Math.min(1, Math.max(0, (distance - 7) / 16));
+  return 0.78 + t * 0.36;
+}
+
 export function createNameBeacon(e: Exhibit, low: boolean) {
   const canvas = document.createElement('canvas');
   const W = low ? 640 : 1024, H = low ? 256 : 410;
@@ -79,7 +86,7 @@ export function createNameBeacon(e: Exhibit, low: boolean) {
       material.opacity = opacity;
       // A deliberate inspection brings the lettering forward without new GPU
       // lights or turning Horeb into a bright fantasy stage.
-      const scale = inspected ? 1.08 : 1;
+      const scale = beaconVisualScale(distance) * (inspected ? 1.08 : 1);
       mesh.scale.set(scale, scale, 1);
     },
   };
