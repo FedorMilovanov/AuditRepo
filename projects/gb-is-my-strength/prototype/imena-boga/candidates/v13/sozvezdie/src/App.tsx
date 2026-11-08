@@ -266,6 +266,7 @@ export default function App() {
         isActive={active === name.id}
         onToggleComplete={toggleCompleteWithToast}
         onNotify={notify}
+        motionOn={prefs.motion}
       />,
     );
   });

@@ -26,6 +26,7 @@ interface NameSectionProps {
   onJump: (id: string) => void;
   onToggleComplete: (id: string) => void;
   onNotify: (text: string, sub?: string) => void;
+  motionOn: boolean;
 }
 
 function NameSection({
@@ -36,6 +37,7 @@ function NameSection({
   onJump,
   onToggleComplete,
   onNotify,
+  motionOn,
 }: NameSectionProps) {
   const ref = useRef<HTMLElement>(null);
   const [copied, setCopied] = useState(false);
@@ -236,7 +238,7 @@ function NameSection({
 
             {/* verse card */}
             <Reveal delay={0.15}>
-              <Tilt className="mt-9" max={7}>
+              <Tilt className="mt-9" max={7} enabled={motionOn}>
                 <div className="card-parchment sheen relative overflow-hidden rounded-2xl border border-gold-500/25 p-8 shadow-[0_30px_60px_-24px_rgba(0,0,0,0.85)] md:p-9">
                   <span className="absolute -right-6 -top-6 select-none font-hebrew text-8xl text-gold-500/10">
                     ”

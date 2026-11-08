@@ -626,6 +626,30 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
           if(marks.length!==2||marks.some(value=>value!=='Эхье́'))
             throw Error('Constellation accent highlights captured whitespace or lost marks '+
               JSON.stringify({engine,width,enabled,marks}));
+          // The verse-card tilt must obey the in-app toggle independently of
+          // OS preferences and reset immediately when OS reduce activates.
+          const verseTilt=motionPage.locator('#yhwh [data-reader-tilt]');
+          await verseTilt.scrollIntoViewIfNeeded();
+          await verseTilt.hover({position:{x:22,y:24}});
+          const neutral='perspective(900px) rotateX(0deg) rotateY(0deg)';
+          if(enabled){
+            await motionPage.waitForFunction(neutral=>
+              document.querySelector('#yhwh [data-reader-tilt]')?.style.transform!==neutral,
+              neutral,{timeout:5000});
+          }else{
+            const disabledTilt=await verseTilt.evaluate(el=>el.style.transform);
+            if(disabledTilt!==neutral)
+              throw Error('Constellation in-app motion-off left active 3D card tilt '+
+                JSON.stringify({engine,width,disabledTilt}));
+          }
+          await motionPage.emulateMedia({reducedMotion:'reduce'});
+          await motionPage.waitForFunction(neutral=>
+            document.querySelector('#yhwh [data-reader-tilt]')?.style.transform===neutral,
+            neutral,{timeout:5000});
+          const reducedTransition=await verseTilt.evaluate(el=>getComputedStyle(el).transitionDuration);
+          if(reducedTransition.split(',').some(v=>Number(v.replace(/ms$|s$/,''))>0.001))
+            throw Error('Constellation reduced-motion did not disable verse card transitions '+
+              JSON.stringify({engine,width,reducedTransition}));
         }finally{
           await motionCtx.close();
         }
