@@ -10,6 +10,8 @@ export function buildBurningBush(low: boolean) {
   const r = rng(1931);
   const parts: THREE.BufferGeometry[] = [];
   const spawn: THREE.Vector3[] = [];
+  // Live branch tips remain part of the shrub, not fuel consumed by fire.
+  const tips: THREE.Vector3[] = [];
   const up = new THREE.Vector3(0, 1, 0);
   const branch = (start: THREE.Vector3, dir: THREE.Vector3, len: number, rad: number, depth: number) => {
     const end = start.clone().addScaledVector(dir, len);
@@ -19,7 +21,7 @@ export function buildBurningBush(low: boolean) {
     g.translate(start.x, start.y, start.z);
     parts.push(g);
     for (let i = 1; i <= 3; i++) spawn.push(start.clone().lerp(end, i / 3));
-    if (depth <= 0) { spawn.push(end.clone(), end.clone()); return; }
+    if (depth <= 0) { spawn.push(end.clone(), end.clone()); tips.push(end.clone()); return; }
     const kids = depth > 2 ? 3 : 2 + (r() < 0.5 ? 1 : 0);
     for (let k = 0; k < kids; k++) {
       const d = dir.clone().add(new THREE.Vector3((r() - 0.5) * 1.3, 0.35 + r() * 0.3, (r() - 0.5) * 1.3)).normalize();
@@ -33,8 +35,46 @@ export function buildBurningBush(low: boolean) {
   const wood = new THREE.MeshStandardMaterial({ color: 0x2b211a, roughness: 0.9, emissive: new THREE.Color(0x3a1404), emissiveIntensity: 0.4 });
   const branches = new THREE.Mesh(mergeGeometries(parts), wood);
   group.add(branches);
+
+  // A non-species-specific, leaf-bearing shrub silhouette. Static dark olive
+  // foliage stays intact while only the flame shader animates (Exodus 3:2).
+  // Instancing adds ONE draw call instead of one mesh per small leaf.
+  const leavesPerTip = low ? 1 : 2;
+  const leafGeometry = new THREE.SphereGeometry(1, 5, 3);
+  const leafMaterial = new THREE.MeshStandardMaterial({
+    color: 0x686044, roughness: 1, side: THREE.DoubleSide,
+    emissive: 0x251708, emissiveIntensity: 0.12,
+  });
+  const foliage = new THREE.InstancedMesh(leafGeometry, leafMaterial, tips.length * leavesPerTip);
+  foliage.name = 'bush-foliage';
+  const leafTransform = new THREE.Object3D();
+  const leafColor = new THREE.Color();
+  for (let i = 0; i < foliage.count; i++) {
+    const tip = tips[Math.floor(i / leavesPerTip)];
+    leafTransform.position.set(tip.x + (r() - 0.5) * 0.09,
+      tip.y + (r() - 0.5) * 0.07, tip.z + (r() - 0.5) * 0.09);
+    leafTransform.rotation.set(r() * Math.PI, r() * Math.PI * 2, r() * Math.PI);
+    leafTransform.scale.set(0.032 + r() * 0.025, 0.072 + r() * 0.052, 0.012 + r() * 0.008);
+    leafTransform.updateMatrix();
+    foliage.setMatrixAt(i, leafTransform.matrix);
+    leafColor.setHex(i % 3 === 0 ? 0x6b6644 : 0x4c5238);
+    foliage.setColorAt(i, leafColor);
+  }
+  foliage.instanceMatrix.needsUpdate = true;
+  foliage.instanceColor!.needsUpdate = true;
+  group.add(foliage);
+
   // каменистый бугорок
-  const mound = new THREE.Mesh(new THREE.SphereGeometry(1.1, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0x4a3b30, roughness: 1 }));
+  const moundGeo = new THREE.SphereGeometry(1.1, 24, 9, 0, Math.PI * 2, 0, Math.PI / 2);
+  const mp = moundGeo.attributes.position;
+  for (let i = 0; i < mp.count; i++) {
+    const x = mp.getX(i), z = mp.getZ(i);
+    const angle = Math.atan2(z, x);
+    const variation = 1 + 0.09 * Math.sin(angle * 3 + 0.6) + 0.05 * Math.sin(angle * 7 - 0.7);
+    mp.setXYZ(i, x * variation, mp.getY(i), z * variation);
+  }
+  moundGeo.computeVertexNormals();
+  const mound = new THREE.Mesh(moundGeo, new THREE.MeshStandardMaterial({ color: 0x4a3b30, roughness: 1 }));
   mound.scale.set(1.2, 0.18, 1.2); group.add(mound);
 
   // Пламя
@@ -87,13 +127,13 @@ export function buildBurningBush(low: boolean) {
   // Свет пламени и отсвет на земле
   const light = new THREE.PointLight(0xff8a3a, 30, 70, 1.4);
   light.position.set(0, 0.9, 0); group.add(light);
-  const glow = new THREE.Mesh(new THREE.PlaneGeometry(9, 9), new THREE.MeshBasicMaterial({ map: glowTexture('rgba(255,140,60,0.5)', 'rgba(255,80,20,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+  const glow = new THREE.Mesh(new THREE.PlaneGeometry(9, 9), new THREE.MeshBasicMaterial({ map: glowTexture('rgba(255,140,60,0.32)', 'rgba(255,80,20,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
   glow.rotation.x = -Math.PI / 2; glow.position.y = 0.03; group.add(glow);
   const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture('rgba(255,170,90,0.35)', 'rgba(255,90,20,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
   halo.position.y = 0.8; halo.scale.set(3.4, 3.4, 1); group.add(halo);
 
   return {
-    group, fire, sparks,
+    group, fire, sparks, foliage,
     update(t: number, motion: boolean, pixelH: number) {
       const sp = motion ? 1 : 0.35;
       fireMat.uniforms.uT.value = t; fireMat.uniforms.uSpeed.value = sp; fireMat.uniforms.uScale.value = pixelH * 0.5;
