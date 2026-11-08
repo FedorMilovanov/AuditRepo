@@ -191,7 +191,7 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
         onClick={() => {
           window.history.pushState(null, "", "#intro");
           document.getElementById("intro")?.scrollIntoView({
-            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+            behavior: !motionOn || window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
             block: "start",
           });
         }}
