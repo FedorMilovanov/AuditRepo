@@ -30,7 +30,18 @@
 - Visual clipping props vs стела/свод — не проверено визуально (geometry-check проверяет только до壁/уступ; props впереди стелы, не за сводом).
 - `rockTextures`/`labelTexture` (canvas) не протестированы в Node (DOM), но не менялись с working baseline.
 
-**Следующий инженерный шаг:** визуальный audit в браузере (если появится chromium) — проверить readability props vs stele, no clipping, bush quality, performance (проfiler), props collision по желанию. Без browser — продлить geometry/construction проверки. Не push, не merge PR #543 без разрешения пользователя.
+**Следующий инженерный шаг:** визуальный audit в браузере (если появится chromium). Без browser — продлить geometry/construction проверки. Не push, не merge PR #543 без разрешения пользователя.
+
+## Checkpoint W8 (2026-11-08): no-repetitive-stone + centre-path guardrail
+
+Commit `387df66` на `lane/horeb-3d-lab-20261108` (локально, без push).
+
+- **no repetitive stone:** `nav.ts: steleVariation(id, zone)` — детерминировано по id: scale 0.86–1.16, tilt ±0.06 rad, labelScale 0.90–1.12, zone tint (8 цветов, warm→cool). `World.ts`: 8 zone-tinted material clones + per-exhibit stele mesh scale/tilt, label scale. 42 стелы больше не идентичны.
+- **centre-path guardrail:** zone-4 правые стелы (chasm) перемещены x=3.2→3.8 — props не закрывают центр прохода (≥0.3m). `tests/placement.ts`: +center-clearance check.
+- **Проверки:** tsc clean, build green, **85 tests green** (33 contract + 47 construction [42 props + 5 variation] + 5 placement [solid ground + wall/ledge + centre path]).
+- Dev-сервер жив (0.0.0.0:5173, HTTP 200, HMR). Browser visual QA BLOCKED (без chromium).
+- Изменённые файлы: `engine/{World,nav,SceneZones}.ts`, `tests/{construct,placement}.ts`.
+- Следующий шаг: props collision (fail-closed, не в приоритетах но важно для immersion), bush quality (уже хорош), performance profiling (296 prop meshes total — manageable), или browser visual audit при доступе к chromium. (проfiler), props collision по желанию. Без browser — продлить geometry/construction проверки. Не push, не merge PR #543 без разрешения пользователя.
 
 ## Что проверено, а что нет
 
