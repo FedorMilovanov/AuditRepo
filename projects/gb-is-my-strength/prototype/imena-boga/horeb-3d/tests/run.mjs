@@ -23,6 +23,7 @@ const inj = (name, mut) => { const c = clone(); mut(c); t('detects: ' + name, va
 inj('altar -> personal name', c => { c.find(e => e.id === 'nissi').category = 'personal_divine_name'; });
 inj('place -> divine title', c => { c.find(e => e.id === 'yireh').category = 'divine_title'; });
 inj('city -> personal name', c => { c.find(e => e.id === 'shammah').category = 'personal_divine_name'; });
+inj('El Elyon final nun replaced with final mem', c => { c.find(e => e.id === 'el-elyon').originalUnicode = 'אֵל עֶלְיוֹם'; });
 inj('El Roi root swapped to רעה', c => { c.find(e => e.id === 'el-roi').originalUnicode = 'אֵל רֹעִי'; });
 inj('Daniel marked Hebrew', c => { c.find(e => e.id === 'atiq-yomin').sourceLanguage = 'he'; });
 inj('El Hay preposition stripped', c => { c.find(e => e.id === 'el-hay').originalUnicode = 'אֵל חָי'; });
