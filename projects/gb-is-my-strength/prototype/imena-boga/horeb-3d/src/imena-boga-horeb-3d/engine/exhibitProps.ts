@@ -11,7 +11,7 @@ import type { Exhibit } from '../data/exhibits';
 interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; }
 
 let CACHE: { low: boolean; s: Shared } | null = null;
-export interface StoneSurface { map: THREE.Texture | null; bump: THREE.Texture | null }
+export interface StoneSurface { map: THREE.Texture | null; bump: THREE.Texture | null; glow?: THREE.Texture | null }
 function shared(low: boolean, surface?: StoneSurface): Shared {
   // Reuse the tunnel's procedural texture instead of drawing a separate stone atlas.
   // Node construction tests may omit a texture: geometry remains fully testable.
@@ -488,6 +488,8 @@ export function buildExhibitProps(e: Exhibit, low: boolean, px: number, pz: numb
   // а лёгкий аддитивный огонёк zone-tint цвета. Sprite автоматически смотрит в камеру.
   const tint = e.zone === 5 ? 0x6677aa : e.zone === 4 ? 0x8899bb : e.zone === 1 ? 0xffcc88 : 0xffe0b0;
   const glowMat = new THREE.SpriteMaterial({
+    // Shared radial alpha prevents square translucent panels beside exhibits.
+    map: surface?.glow ?? null,
     color: tint, transparent: true, opacity: e.qualityProfile === 'hero' ? 0.22 : 0.12,
     blending: THREE.AdditiveBlending, depthWrite: false,
   });

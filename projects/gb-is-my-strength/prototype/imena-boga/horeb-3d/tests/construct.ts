@@ -99,6 +99,18 @@ texturedProps.traverse((o) => {
       o.material.map === testAtlas && o.material.bumpMap === testAtlas) texturedStones++;
 });
 t('3D stone props reuse the shared world rock atlas', texturedStones > 0);
+// Without a shared alpha map, SpriteMaterial draws a solid translucent square
+// in front of each exhibit rather than a soft radial glow.
+const testGlow = new THREE.DataTexture(new Uint8Array([255, 255, 255, 0]), 1, 1);
+let maskedGlows = 0;
+for (const e of EXHIBITS) {
+  const group = buildExhibitProps(e, false, 0, 0, { map: testAtlas, bump: testAtlas, glow: testGlow });
+  group.traverse((o) => {
+    if (o instanceof THREE.Sprite && o.material instanceof THREE.SpriteMaterial && o.material.map === testGlow) maskedGlows++;
+  });
+}
+t('all 42 exhibit glow sprites share a non-square alpha mask', maskedGlows === 42);
+testGlow.dispose();
 testAtlas.dispose();
 
 if (errors.length) console.log('errors:\n' + errors.join('\n'));

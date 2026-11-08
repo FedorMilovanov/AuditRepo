@@ -80,6 +80,21 @@ try {
       ? labelsByQuality.high === 42 && labelsByQuality.low === 0
       : labelsByQuality.quality === 'low' && labelsByQuality.low === 42 && labelsByQuality.high === 0;
     check('all 42 labels match selected high/low render quality', labelsMatch, JSON.stringify(labelsByQuality));
+    // Regression for solid rectangular SpriteMaterial glow panels in all 42 scenes.
+    const glowMask = await page.evaluate(() => {
+      const uses = new Map();
+      window.__horeb.world.scene.traverse((obj) => {
+        const tex = obj.isSprite && obj.material?.map;
+        if (tex?.image?.width === 128 && tex?.image?.height === 128) uses.set(tex, (uses.get(tex) || 0) + 1);
+      });
+      const [texture, count] = [...uses.entries()].sort((a, b) => b[1] - a[1])[0] || [];
+      const ctx = texture?.image?.getContext?.('2d');
+      return { count: count ?? 0, centerAlpha: ctx?.getImageData(64, 64, 1, 1).data[3] ?? -1,
+        cornerAlpha: ctx?.getImageData(0, 0, 1, 1).data[3] ?? -1 };
+    });
+    check('42 scenic glows share a radial alpha mask, not solid square sprites',
+      glowMask.count === 42 && glowMask.centerAlpha > 200 && glowMask.cornerAlpha === 0,
+      JSON.stringify(glowMask));
     await page.screenshot({ path: join(shots, 'smoke-02-world.png') });
 
     await page.keyboard.down('KeyW');

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { EXHIBITS, type Exhibit } from '../data/exhibits';
-import { rockTextures, labelTexture, fbm } from './procedural';
+import { rockTextures, labelTexture, fbm, glowTexture } from './procedural';
 import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
 import { buildExhibitProps, mergePropsGroup } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
@@ -131,6 +131,9 @@ export class World {
       return steleMats.get(zone)!;
     };
     const plane = new THREE.PlaneGeometry(1.16, 1.63);
+    // One radial alpha mask per World, reused by all 42 scenic glows.
+    // A SpriteMaterial without a map renders a visible square billboard.
+    const propGlow = glowTexture('rgba(255,255,255,1)', 'rgba(255,255,255,0)');
     const editorialOk = validateExhibits(EXHIBITS).length === 0; // fail-closed
     for (const e of editorialOk ? EXHIBITS : []) {
       const pl = PLACEMENTS[e.id];
@@ -157,7 +160,7 @@ export class World {
       // снаружи стелы (к стене) они бы попадали в свод прохода — поэтому впереди.
       const d = Math.hypot(nx, nz) || 1;
       const bx = x + (nx / d) * 1.2, bz = z + (nz / d) * 1.2;
-      const props = buildExhibitProps(e, low, bx, bz, { map: tex, bump });
+      const props = buildExhibitProps(e, low, bx, bz, { map: tex, bump, glow: propGlow });
       mergePropsGroup(props); // merge meshes by material — reduce draw calls
       this.scene.add(props);
       this.obstacles.push({ x, z, r: 0.85 }); // стелы
