@@ -1,7 +1,10 @@
 // Процедурный звук (собственный синтез Web Audio, без внешних записей и музыки).
+import { NarratorBus, type AcousticSpace } from './NarratorBus';
 export class AmbientAudio {
   ctx: AudioContext | null = null;
   private master!: GainNode;
+  private ambienceBus!: GainNode;
+  private narrator: NarratorBus | null = null;
   private windGain!: GainNode;
   private windFilter!: BiquadFilterNode;
   private fireGain!: GainNode;
@@ -15,6 +18,8 @@ export class AmbientAudio {
     if (!AC) return;
     const ctx = (this.ctx = new AC());
     this.master = ctx.createGain(); this.master.gain.value = this.enabled ? 0.9 : 0; this.master.connect(ctx.destination);
+    this.ambienceBus = ctx.createGain(); this.ambienceBus.gain.value = 1; this.ambienceBus.connect(this.master);
+    this.narrator = new NarratorBus(ctx, this.master, this.ambienceBus);
     const len = ctx.sampleRate * 3;
     this.noise = ctx.createBuffer(1, len, ctx.sampleRate);
     const d = this.noise.getChannelData(0);
@@ -23,17 +28,26 @@ export class AmbientAudio {
     const src = ctx.createBufferSource(); src.buffer = this.noise; src.loop = true;
     this.windFilter = ctx.createBiquadFilter(); this.windFilter.type = 'lowpass'; this.windFilter.frequency.value = 300;
     this.windGain = ctx.createGain(); this.windGain.gain.value = 0.05;
-    src.connect(this.windFilter).connect(this.windGain).connect(this.master); src.start();
+    src.connect(this.windFilter).connect(this.windGain).connect(this.ambienceBus); src.start();
     const fsrc = ctx.createBufferSource(); fsrc.buffer = this.noise; fsrc.loop = true; fsrc.playbackRate.value = 4;
     const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 900; bp.Q.value = 0.7;
     this.fireGain = ctx.createGain(); this.fireGain.gain.value = 0;
-    fsrc.connect(bp).connect(this.fireGain).connect(this.master); fsrc.start();
+    fsrc.connect(bp).connect(this.fireGain).connect(this.ambienceBus); fsrc.start();
   }
   setEnabled(on: boolean) {
     this.enabled = on;
+    if (!on) this.narrator?.stop();
     if (this.ctx) this.master.gain.setTargetAtTime(on ? 0.9 : 0, this.ctx.currentTime, 0.2);
   }
-  suspend() { this.ctx?.suspend(); }
+  // Only explicitly approved human-owned voice assets are passed here.
+  // All current scripts remain text-only until a real licensed recording exists.
+  async playNarration(approvedAsset: string, space: AcousticSpace) {
+    if (!this.enabled) return false;
+    this.start();
+    return this.narrator?.play(approvedAsset, space) ?? false;
+  }
+  stopNarration() { this.narrator?.stop(); }
+  suspend() { this.narrator?.stop(); this.ctx?.suspend(); }
   resume() { if (this.ctx && this.enabled) this.ctx.resume(); }
 
   update(t: number, zone: number, distBush: number, nearPool: number) {
@@ -50,7 +64,7 @@ export class AmbientAudio {
     const c = this.ctx!; const o = c.createOscillator(); const g = c.createGain();
     o.frequency.setValueAtTime(1500, c.currentTime); o.frequency.exponentialRampToValueAtTime(500, c.currentTime + 0.12);
     g.gain.setValueAtTime(vol, c.currentTime); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 0.35);
-    o.connect(g).connect(this.master); o.start(); o.stop(c.currentTime + 0.4);
+    o.connect(g).connect(this.ambienceBus); o.start(); o.stop(c.currentTime + 0.4);
   }
   step(soft: boolean) {
     const c = this.ctx; if (!c || !this.enabled) return;
@@ -58,7 +72,7 @@ export class AmbientAudio {
     const f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = soft ? 260 : 1100;
     const g = c.createGain(); const v = soft ? 0.05 : 0.16;
     g.gain.setValueAtTime(v, c.currentTime); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + (soft ? 0.18 : 0.12));
-    s.connect(f).connect(g).connect(this.master); s.start(0, Math.random() * 2, 0.25);
+    s.connect(f).connect(g).connect(this.ambienceBus); s.start(0, Math.random() * 2, 0.25);
   }
-  dispose() { this.ctx?.close(); this.ctx = null; }
+  dispose() { this.narrator?.dispose(); this.narrator = null; this.ctx?.close(); this.ctx = null; }
 }
