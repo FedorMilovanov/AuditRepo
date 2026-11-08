@@ -5,7 +5,7 @@ import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
 import { buildExhibitProps, mergePropsGroup } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
 import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
-import { BEACON_IDS, beaconOpacity, beaconVisualScale } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
+import { BEACON_IDS, beaconOpacity, beaconVisualScale, beaconViewFactor } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
 import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
 
 let pass = 0, fail = 0;
@@ -44,6 +44,16 @@ t('dark Horeb beacons stay below 55% brightness',
 t('name beacons stay compact close up and grow for distant recognition',
   beaconVisualScale(2) < 0.8 && beaconVisualScale(24) > 1.1 &&
   beaconVisualScale(NaN) < 0.8);
+t('head-on original script remains visible at 8m on desktop',
+  beaconViewFactor(8, 0, 0.81) > 0.9);
+t('side inscription fades before desktop frame cuts through its letters',
+  beaconViewFactor(8, 0.70, 0.81) === 0 &&
+  beaconViewFactor(15, 0.3, 0.81) > 0.9);
+t('portrait mobile culls side inscriptions but preserves centered farther names',
+  beaconViewFactor(12, 0.5, 0.30) === 0 &&
+  beaconViewFactor(15, 0, 0.30) > 0.5);
+t('invalid camera angles fail closed', beaconViewFactor(NaN, 0, 0.81) === 0 &&
+  beaconViewFactor(8, Infinity, 0.81) === 0);
 
 // A professional narrator requires human-owned, reviewed source recordings.
 // The DSP chain may exist in the lab without ever automatically inventing a
