@@ -60,29 +60,61 @@ function BookInstances() {
   return <instancedMesh ref={ref} args={[geometry, material, count]} castShadow={false} receiveShadow={false} />;
 }
 
-function ShelfBay({ bay }: { bay: number }) {
-  const a = (bay / BAYS) * Math.PI * 2;
+/**
+ * All permanent shelving uses two GPU draws instead of a draw per plank.
+ * These are exactly the former ShelfBay transforms: no scene redesign,
+ * route changes, hidden culling tricks or altered editorial items.
+ */
+type ShelfPart = {
+  bay: number; x: number; y: number; z: number; w: number; h: number; d: number;
+};
+function shelfPart(bay: number, x: number, y: number, z: number, w: number, h: number, d: number): ShelfPart {
+  return { bay, x, y, z, w, h, d };
+}
+function shelfParts() {
+  const stoneParts: ShelfPart[] = [];
+  const woodParts: ShelfPart[] = [];
+  for (const bay of SHELVED_BAYS) {
+    stoneParts.push(shelfPart(bay, 0, 4.1, 0.12, 4.50, 8.2, 0.25));
+    woodParts.push(shelfPart(bay, 0, 3.85, -0.04, 4.27, 7.45, 0.22));
+    for (let level = 0; level <= SHELVES; level++) {
+      woodParts.push(shelfPart(bay, 0, 0.56 + level * 1.06, -0.51, 4.27, 0.11, 0.71));
+    }
+    for (const x of [-2.13, 2.13]) {
+      woodParts.push(shelfPart(bay, x, 3.88, -0.44, 0.11, 7.55, 0.68));
+    }
+    woodParts.push(shelfPart(bay, 0, 7.7, -0.39, 4.52, 0.22, 0.66));
+  }
+  return { stoneParts, woodParts };
+}
+function InstancedShelfBays() {
+  const { stoneParts, woodParts } = useMemo(shelfParts, []);
+  const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
+  const stoneRef = useRef<THREE.InstancedMesh>(null!);
+  const woodRef = useRef<THREE.InstancedMesh>(null!);
+  useEffect(() => () => geometry.dispose(), [geometry]);
+  useLayoutEffect(() => {
+    const pivot = new THREE.Object3D();
+    const place = (mesh: THREE.InstancedMesh, parts: ShelfPart[]) => {
+      parts.forEach(({ bay, x, y, z, w, h, d }, i) => {
+        const a = (bay / BAYS) * Math.PI * 2;
+        const sin = Math.sin(a), cos = Math.cos(a);
+        pivot.position.set(sin * RADIUS + x * cos + z * sin, y, cos * RADIUS - x * sin + z * cos);
+        pivot.rotation.set(0, a, 0);
+        pivot.scale.set(w, h, d);
+        pivot.updateMatrix();
+        mesh.setMatrixAt(i, pivot.matrix);
+      });
+      mesh.instanceMatrix.needsUpdate = true;
+      mesh.computeBoundingSphere();
+    };
+    place(stoneRef.current, stoneParts);
+    place(woodRef.current, woodParts);
+  }, [stoneParts, woodParts]);
   return (
-    <group position={[Math.sin(a) * RADIUS, 0, Math.cos(a) * RADIUS]} rotation-y={a}>
-      <mesh position={[0, 4.1, 0.12]} material={stone} receiveShadow>
-        <boxGeometry args={[4.50, 8.2, 0.25]} />
-      </mesh>
-      <mesh position={[0, 3.85, -0.04]} material={wood} receiveShadow>
-        <boxGeometry args={[4.27, 7.45, 0.22]} />
-      </mesh>
-      {Array.from({ length: SHELVES + 1 }, (_, i) => (
-        <mesh key={i} position={[0, 0.56 + i * 1.06, -0.51]} material={wood} receiveShadow>
-          <boxGeometry args={[4.27, 0.11, 0.71]} />
-        </mesh>
-      ))}
-      {[-2.13, 2.13].map((x) => (
-        <mesh key={x} position={[x, 3.88, -0.44]} material={wood} receiveShadow>
-          <boxGeometry args={[0.11, 7.55, 0.68]} />
-        </mesh>
-      ))}
-      <mesh position={[0, 7.7, -0.39]} material={wood}>
-        <boxGeometry args={[4.52, 0.22, 0.66]} />
-      </mesh>
+    <group>
+      <instancedMesh ref={stoneRef} args={[geometry, stone, stoneParts.length]} receiveShadow dispose={null} />
+      <instancedMesh ref={woodRef} args={[geometry, wood, woodParts.length]} receiveShadow dispose={null} />
     </group>
   );
 }
@@ -126,7 +158,7 @@ function WindowBay({ bay }: { bay: number }) {
 export function Architecture() {
   return (
     <group>
-      {SHELVED_BAYS.map((bay) => <ShelfBay key={bay} bay={bay} />)}
+      <InstancedShelfBays />
       {Array.from(WINDOW_BAYS).map((bay) => <WindowBay key={bay} bay={bay} />)}
       {/* Original entrance remains open: this is an exploration prototype, not a sealed maze. */}
       <group position={[0, 0, RADIUS]}>
