@@ -6,7 +6,7 @@ import { buildExhibitProps } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
 import { validateExhibits } from '../data/validate';
-import { constrain, zoneAt, distToBush, sanitizeSpawn, ZONE_SPAWN, R_OUTER, TUNNEL_END, type Block } from './nav';
+import { constrain, zoneAt, distToBush, sanitizeSpawn, ZONE_SPAWN, R_OUTER, TUNNEL_END, steleVariation, type Block } from './nav';
 
 export type Shoes = 'shod' | 'removing' | 'unshod';
 export type Prompt = null | { kind: 'exhibit'; id: string } | { kind: 'shoes' };
@@ -104,7 +104,16 @@ export class World {
       p.setXYZ(i, x + (n - 0.5) * 0.12 * edge, y + 1.3 + (y > 1.2 ? (n - 0.5) * 0.25 : 0), z + (z < 0 ? (n - 0.5) * 0.1 : 0));
     }
     steleGeo.computeVertexNormals();
-    const steleMat = new THREE.MeshStandardMaterial({ color: 0x6d5d4f, roughness: 0.95, map: tex, bumpMap: bump, bumpScale: 2 });
+    // Zone-tinted materials: 8 clones (not 42) — ранние зоны теплые, поздние холодные.
+    // Плюс per-exhibit scale/tilt/labelScale через steleVariation — 42 стелы не идентичны.
+    const steleMats = new Map<number, THREE.MeshStandardMaterial>();
+    const steleMatFor = (zone: number) => {
+      if (!steleMats.has(zone)) {
+        const tint = steleVariation('__zone_' + zone, zone).tint;
+        steleMats.set(zone, new THREE.MeshStandardMaterial({ color: tint, roughness: 0.95, map: tex, bumpMap: bump, bumpScale: 2 }));
+      }
+      return steleMats.get(zone)!;
+    };
     const plane = new THREE.PlaneGeometry(1.16, 1.63);
     const editorialOk = validateExhibits(EXHIBITS).length === 0; // fail-closed
     for (const e of editorialOk ? EXHIBITS : []) {
@@ -112,10 +121,15 @@ export class World {
       if (!pl) continue; // fail-closed: экспонат без размещения не попадает в 3D (но есть в HTML)
       const [x, z] = pl;
       const g = new THREE.Group();
-      g.add(new THREE.Mesh(steleGeo, steleMat));
+      const v = steleVariation(e.id, e.zone);
+      const steleMesh = new THREE.Mesh(steleGeo, steleMatFor(e.zone));
+      steleMesh.scale.setScalar(v.scale);
+      steleMesh.rotation.z = v.tilt;
+      g.add(steleMesh);
       const tx = labelTexture(e, e.zone === 5);
       const lab = new THREE.Mesh(plane, new THREE.MeshStandardMaterial({ map: tx, emissiveMap: tx, emissive: 0xffffff, emissiveIntensity: 0.42, roughness: 0.85 }));
       lab.position.set(0, 1.42, 0.225);
+      lab.scale.setScalar(v.labelScale);
       g.add(lab);
       let nx = -Math.sign(x) * 0.85, nz = 0.53;
       if (e.zone === 7) { nx = -Math.sign(x) * 0.6; nz = 0.8; }

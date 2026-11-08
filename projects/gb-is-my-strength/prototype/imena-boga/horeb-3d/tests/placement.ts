@@ -60,5 +60,23 @@ for (const [id, [x, z]] of Object.entries(PLACEMENTS)) {
 }
 if (!propBad) t('all 42 prop groups clear wall/ledge even with widest builders (±1.8)', true);
 
+// Props are placed 1.2m in front of the stele (toward centre); widest builders spread ±1.8.
+// Verify the props do NOT block the entire corridor — there must remain a walkable path
+// at the centre (|x| < centre-clearance) for every exhibit. This is a visual guardrail:
+// ground props are non-colliding, but they should not visually fill the whole corridor.
+const FRONT_SHIFT = 1.2, WIDE = 1.8, CENTRE_MIN = 0.3;
+let centreBad = 0;
+for (const [id, [x, z]] of Object.entries(PLACEMENTS)) {
+  const hw = effHw(z);
+  // props anchor moves 1.2 toward centre; widest builder extends 1.8 further toward centre.
+  const centreExtreme = Math.abs(x) - FRONT_SHIFT - WIDE; // nearest |x| reached by props
+  const ok = centreExtreme > CENTRE_MIN;
+  if (!ok) {
+    centreBad++;
+    t(`props ${id} leave centre path (extreme=${centreExtreme.toFixed(2)})`, false, `needs > ${CENTRE_MIN}`);
+  }
+}
+if (!centreBad) t(`all 42 prop groups leave a walkable centre path (≥${CENTRE_MIN}m)`, true);
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
