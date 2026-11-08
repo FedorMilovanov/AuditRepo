@@ -207,6 +207,22 @@ async function visit(browser,engine,app,width,base){
   }
 
   if(app==='atlas' && [320,390,768,1440].includes(width)){
+   // Historical bug V-02 was captured on a percentage-of-page screenshot
+   // and the after image landed on a different name. Pin a reproducible,
+   // exact record (ordinal 32) in both engines for visual before/after review.
+   await safeAction(page,engine+'-atlas-'+width+'-exact-name32',async()=>{
+    const card=page.locator('article[data-name-id]').nth(31);
+    await card.scrollIntoViewIfNeeded();
+    await page.evaluate(async()=>{await document.fonts.ready});
+    const title=await card.locator('[data-name-primary-title]').evaluate(el=>({
+      value:el.textContent?.trim(),width:el.getBoundingClientRect().width,
+      scroll:el.scrollWidth,client:el.clientWidth
+    }));
+    record('atlas-exact-name32',{engine,width,...title});
+    if(title.width<150||title.scroll>title.client+2)
+      problem('BLOCKER','atlas-exact-name32-title-collapse',{engine,width,details:title});
+    await shot(page,engine+'-atlas-'+width+'-exact-name32');
+   });
    await safeAction(page,engine+'-atlas-'+width+'-long-name',async()=>{
     const name=page.locator('article[data-name-id]').last();
     await name.locator('button[title="Нажмите, чтобы открыть полное досье"]').click();
