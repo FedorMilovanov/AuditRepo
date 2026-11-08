@@ -71,3 +71,13 @@
 **Выполненный local QA пакета:** 14/14 исходных и производных файлов проверены по SHA-256/пиксельным размерам; Chromium на 320/390/768/1440 px для обоих вариантов и двух тем: декодирование, динамическая подмена изображения, `aria-pressed`, `alt`, отсутствие горизонтального переполнения и ошибок JS — PASS. Исходный демонстрационный HTML проверялся с идентичными байтами картинок, встроенными как data: URL из-за политики sandbox на file: URL. Никаких WebKit, физических мобильных устройств или CI Product этим результатом не подтверждено.
 
 **Порядок передачи:** только после Research #379 и прав на изображения назначить canonical Product URL, скопировать именно hash-verified WebP под `public/images/names-of-god/`, дополнить `search-manifest.json` и `migration/page-ownership.json` штатным способом, обновить `og:image` и прогнать Product CI/реальные устройства. В этом PR не создавать обходных публикационных путей. PR #538 остаётся Draft.
+
+## Мягкое приглашение — отдельный непубличный кодовый прототип
+
+В проверяемый комплект диалога `Imena_Boga_Design_Handoff_Final_Draft_20261108.zip` добавлен `NamesSoftInvite.astro` и `NamesSoftInvite_Preview.html` (обложка fire-white, картинка 640×432 без обрезки). **В AuditRepo/выход Product эти исходники не импортированы** — это добровольная приёмка UX перед каким-либо выпуском.
+
+**Строгий fail-closed:** компонент не рендерит приглашение, пока не выполнены одновременно `publicationState='APPROVED'`, `routePublished=true`, `rightsCleared=true`, а путь не прошёл allowlist `/articles/<slug>/`. Встроенный `NamesRelatedStudy.astro` также требует `publicationState='APPROVED'` и `routePublished=true`; прежнего единственного переключателя `verified` больше нет в передаваемом комплекте. На момент записи Research #379 имеет 0 разрешений — значит, Product ничего показывать не должен.
+
+**Поведение:** только desktop ≥960px с мышью; появление после существенной прокрутки, никогда сразу; Tilt не более ±3°, отключается `prefers-reduced-motion`; не захватывает фокус; крестик или Escape закрывают, но Escape не перехватывается у открытых модальных диалогов; отказ хранится 14 дней с fallback при отказе доступа к storage. Телефон получает обычное inline-приглашение только после релиза.
+
+**Исходно проверено:** отдельный Chromium behavioral QA 1440px delayed show/dismiss/Escape/dialog coexistence, 390px touch suppression, 1440px reduced-motion tilt disabled — PASS; in-memory localStorage имитирует хранилище в изолированном about:blank, не обещает поведения каждого браузера. Нет CI Astro/Product или реальных устройств. Скриншот макета `screenshots/soft-invite-desktop.png` в комплекте. **Прямая публикация и новый Product PR по-прежнему запрещены до Research и прав.**
