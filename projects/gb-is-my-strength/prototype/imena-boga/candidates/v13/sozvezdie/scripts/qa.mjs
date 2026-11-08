@@ -346,6 +346,11 @@ const boxesOverlap = (a, b) =>
   for (const rb of railBoxes) if (boxesOverlap(rb, col)) bad("RAIL OVERLAPS TEXT COLUMN");
   if (!railBoxes.some((rb) => boxesOverlap(rb, col))) ok("rails clear of text column");
 
+  // anchor lands below fixed header
+  const head = await page.locator("header").boundingBox();
+  const secTop = (await page.locator("#el-shaddai").boundingBox()).y;
+  secTop >= head.height - 2 ? ok("anchor lands below header") : bad(`anchor under header: ${secTop} vs ${head.height}`);
+
   // At short desktop heights, the current name should be visible inside
   // the fixed rail without moving the article's anchor underneath the header.
   await page.setViewportSize({ width: 1440, height: 620 });
@@ -369,11 +374,6 @@ const boxesOverlap = (a, b) =>
     : bad("rail moved article or clipped active item: " + JSON.stringify(railWitness));
   await page.setViewportSize({ width: 1440, height: 900 });
 
-
-  // anchor lands below fixed header
-  const head = await page.locator("header").boundingBox();
-  const secTop = (await page.locator("#el-shaddai").boundingBox()).y;
-  secTop >= head.height - 2 ? ok("anchor lands below header") : bad(`anchor under header: ${secTop} vs ${head.height}`);
 
   // ── YHWH anatomy block ──
   await page.evaluate(() => document.getElementById("yhwh").scrollIntoView({ behavior: "instant", block: "start" }));
