@@ -516,6 +516,14 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       throw Error('Reader preferences regression '+JSON.stringify({width,finalLayout,errors,requests}));
     results.push({name,width,painted,cssLoaded:true,readerPrefs:true,methodDisclosure:true,contrastRatios:{light:lightContrast,sepia:sepiaContrast,dark:darkContrast}});
    }else{
+    // The prominent divine name is Hebrew, not a Russian/Latin token.
+    // Keep correct reading direction and language metadata for assistive tech.
+    const heroName=await page.locator('[data-hero-divine-name]').evaluate(el=>({
+      text:el.textContent?.trim(),lang:el.getAttribute('lang'),dir:el.getAttribute('dir')
+    }));
+    if(heroName.text!=='יהוה'||heroName.lang!=='he'||heroName.dir!=='rtl')
+      throw Error('Constellation YHWH language/direction contract failed '+
+        JSON.stringify({engine,width,heroName}));
     await page.locator('canvas').first().scrollIntoViewIfNeeded();
     await page.waitForTimeout(250);
     const painted=await countPixels(page,'canvas');
