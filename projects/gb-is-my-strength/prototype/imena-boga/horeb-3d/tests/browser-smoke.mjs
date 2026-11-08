@@ -136,13 +136,29 @@ try {
 
     await page.screenshot({ path: join(shots, 'smoke-02-world.png') });
 
+    // Never time a held movement key against a fixed wall-clock sleep.
+    // SwiftShader can render fewer than two RAF frames per second on a busy
+    // runner; an otherwise healthy controller then looks frozen.
     await page.keyboard.down('KeyW');
-    await new Promise((r) => setTimeout(r, 950));
+    let observedMovement = false;
+    try {
+      await page.waitForFunction((initialZ) => {
+        const s = window.__horeb?.state?.();
+        return !!s && s.z < initialZ - 0.025;
+      }, { timeout: 15000, polling: 100 }, before.z);
+      observedMovement = true;
+    } catch { /* collect diagnostics and fail below */ }
+    const movementDiag = await page.evaluate(() => {
+      const w = window.__horeb.world;
+      return { z: window.__horeb?.state()?.z,
+        simTime: w.t, keys: [...w.keys], inputLocked: w.inputLocked,
+        documentHidden: document.hidden, contextLost: w.contextLost,
+        animationFps: w.fps };
+    });
     await page.keyboard.up('KeyW');
-    const after = await page.evaluate(() => window.__horeb.state().z);
-    // This proves directional movement, not FPS. Software-rendered GitHub Chrome
-    // can execute only one animation frame during the test's 950 ms key hold.
-    check('W actually moves player forward', after < before.z - 0.025, before.z.toFixed(2) + ' -> ' + after.toFixed(2));
+    check('W actually moves player forward in an active simulation frame',
+      observedMovement && movementDiag.z < before.z - 0.025,
+      JSON.stringify({ initialZ: before.z, ...movementDiag }));
     // An async WebGL import can complete after the 'Start' click's transient
     // activation has expired. A real W key event must recover Web Audio.
     const resumedAudio = await page.waitForFunction(() =>
