@@ -83,7 +83,11 @@ export default function HorebApp() {
   const [isTouch] = useState(coarse);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const worldRef = useRef<World | null>(null);
-  const resumePos = useRef<{ x: number; z: number } | null>(null);
+  // A persisted checkpoint always re-enters through World.create's
+  // existing shod/outer-gate sanitization; it never bypasses the holy boundary.
+  const resumePos = useRef<{ x: number; z: number } | null>(progress.last);
+  const checkpointRef = useRef<{ x: number; z: number } | null>(progress.last);
+  const checkpointAt = useRef(0);
   const stateRef = useRef<WorldState | null>(null);
 
   useEffect(() => { try { localStorage.setItem(LS_SETTINGS, JSON.stringify(settings)); } catch { /* приватный режим */ } }, [settings]);
@@ -95,6 +99,17 @@ export default function HorebApp() {
     return { quality: (low ? 'low' : 'high') as 'low' | 'high', reducedMotion: settings.reducedMotion, particles: settings.particles, sound: settings.sound, exposure: settings.exposure, autoQuality: settings.quality === 'auto' };
   }, [settings, isTouch]);
 
+  const saveCheckpoint = useCallback((pos: { x: number; z: number }) => {
+    if (!Number.isFinite(pos.x) || !Number.isFinite(pos.z)) return;
+    const point = { x: pos.x, z: pos.z };
+    checkpointRef.current = point;
+    resumePos.current = point;
+    checkpointAt.current = performance.now();
+    setProgress((old) => old.last &&
+      Math.hypot(old.last.x - point.x, old.last.z - point.z) < 0.01
+      ? old : { ...old, last: point });
+  }, []);
+
   // ── Жизненный цикл 3D-мира (создаётся только по кнопке; уничтожается при выходе)
   useEffect(() => {
     if (screen !== 'world' || !canvasRef.current) return;
@@ -104,7 +119,15 @@ export default function HorebApp() {
     let w: World | null = null;
     import('./engine/World').then(({ World }) => {
       if (cancelled) return null;
-      return World.create(canvas, resolved, resumePos.current, (s) => { stateRef.current = s; setWs(s); }, (e) => {
+      return World.create(canvas, resolved, resumePos.current, (s) => {
+        stateRef.current = s;
+        setWs(s);
+        const prev = checkpointRef.current;
+        const moved = Math.hypot(s.x - (prev?.x ?? 0), s.z - (prev?.z ?? -2)) > 2;
+        if (!s.contextLost && s.shoes !== 'removing' && moved &&
+            performance.now() - checkpointAt.current > 4000)
+          saveCheckpoint({ x: s.x, z: s.z });
+      }, (e) => {
         if (e === 'pointerlock-denied') setToast('Захват мыши недоступен — обзор перетаскиванием.');
         if (e === 'shoes-removed') setToast('Обувь снята. Тропа к месту наблюдения открыта; к ветвям — нельзя.');
         if (e === 'auto-lowered') setToast('Разрешение снижено для плавности.');
@@ -155,9 +178,9 @@ export default function HorebApp() {
     const prompt = stateRef.current?.prompt;
     if (!w || !prompt) return;
     if (prompt.kind === 'shoes') { w.removeShoes(); return; }
-    setProgress((p) => ({ ...p, last: w.position }));
+    saveCheckpoint(w.position);
     setDialog({ kind: 'exhibit', id: prompt.id });
-  }, []);
+  }, [saveCheckpoint]);
 
   useEffect(() => {
     if (screen !== 'world') return;
@@ -174,7 +197,20 @@ export default function HorebApp() {
   }, [screen, dialog, interact]);
 
   const start = () => { setErr(null); setFinale('none'); setScreen('world'); };
-  const exitWorld = () => { setDialog(null); setScreen('intro'); setWs(null); };
+  const leaveWorld = (next: 'intro' | 'reader') => {
+    const pos = worldRef.current?.position;
+    if (pos) saveCheckpoint(pos);
+    setDialog(null);
+    setScreen(next);
+    if (next === 'intro') setWs(null);
+  };
+  const exitWorld = () => leaveWorld('intro');
+  const resetProgress = () => {
+    resumePos.current = null;
+    checkpointRef.current = null;
+    checkpointAt.current = performance.now();
+    setProgress({ visited: [0], last: null });
+  };
   const exhibit = dialog?.kind === 'exhibit' ? EXHIBITS.find((e) => e.id === dialog.id) : undefined;
   const promptEx = ws?.prompt?.kind === 'exhibit' ? EXHIBITS.find((e) => e.id === (ws.prompt as { id: string }).id) : undefined;
   const zoneInfo = ZONES[zone];
@@ -217,7 +253,7 @@ export default function HorebApp() {
           <button className="link" onClick={() => setIntroDialog({ kind: 'sources' })}>Источники и ограничения исследования</button>
         </div>
         <p className="mt-10 text-xs text-muted reveal d3">Без регистрации, cookies и трекеров. Настройки и посещённые зоны хранятся только в этом браузере.
-          {progress.visited.length > 1 && <> <button className="link" onClick={() => setProgress({ visited: [0], last: null })}>Сбросить прогресс</button></>}</p>
+          {progress.visited.length > 1 && <> <button className="link" onClick={resetProgress}>Сбросить прогресс</button></>}</p>
       </div>
       {introDialog?.kind === 'settings' && <Modal title="Настройки доступности" onClose={() => setIntroDialog(null)}><SettingsPanel s={settings} set={(p) => setSettings((s) => ({ ...s, ...p }))} /></Modal>}
       {introDialog?.kind === 'sources' && <Modal wide title="Источники и ограничения" onClose={() => setIntroDialog(null)}><SourcesAndLimits /></Modal>}
@@ -252,7 +288,7 @@ export default function HorebApp() {
         <nav className="absolute top-3 right-3 sm:top-5 sm:right-6 flex flex-wrap justify-end gap-1.5 max-w-[60vw]" aria-label="Управление экспозицией">
           {isTouch ? <button className="btn-ghost" onClick={() => setDialog({ kind: 'menu' })}>Меню</button> : <>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'map' })}>Схема</button>
-          <button className="btn-ghost" onClick={() => setScreen('reader')}>Читать</button>
+          <button className="btn-ghost" onClick={() => leaveWorld('reader')}>Читать</button>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'bookmarks' })}>Закладки ({bookmarks.length})</button>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'sources' })}>Источники</button>
           <button className="btn-ghost" onClick={() => setDialog({ kind: 'settings' })}>Настройки</button>
@@ -298,10 +334,10 @@ export default function HorebApp() {
       {ws?.contextLost && (
         <div role="alert" className="absolute inset-0 grid place-items-center bg-black/80 text-center p-6">
           <div><p className="font-display text-2xl">Графический контекст потерян</p><p className="text-muted mt-2">Ожидаем восстановления…</p>
-            <div className="mt-4 flex gap-2 justify-center"><button className="btn" onClick={() => { exitWorld(); setTimeout(start, 50); }}>Перезапустить сцену</button><button className="btn" onClick={() => setScreen('reader')}>Режим чтения</button></div></div>
+            <div className="mt-4 flex gap-2 justify-center"><button className="btn" onClick={() => { exitWorld(); setTimeout(start, 50); }}>Перезапустить сцену</button><button className="btn" onClick={() => leaveWorld('reader')}>Режим чтения</button></div></div>
         </div>
       )}
-      {err && <div role="alert" className="absolute inset-0 grid place-items-center bg-black text-center p-6"><div><p>{err}</p><button className="btn mt-4" onClick={() => setScreen('reader')}>Режим чтения</button></div></div>}
+      {err && <div role="alert" className="absolute inset-0 grid place-items-center bg-black text-center p-6"><div><p>{err}</p><button className="btn mt-4" onClick={() => leaveWorld('reader')}>Режим чтения</button></div></div>}
       {toast && <p role="status" className="absolute top-20 left-1/2 -translate-x-1/2 bg-black/70 px-4 py-2 rounded text-sm max-w-[90vw] text-center">{toast}</p>}
       {guideCaption && !dialog && <section role="status" aria-label="Текст рассказчика" className="pointer-events-none absolute top-36 left-1/2 -translate-x-1/2 w-[min(90vw,38rem)] rounded-sm border border-bronze/20 bg-black/75 px-5 py-4 text-center shadow-xl">
         <p className="eyebrow text-bronze/85">Текст будущего рассказчика · без аудиозаписи</p>
@@ -313,7 +349,7 @@ export default function HorebApp() {
           <p className="font-display text-lg italic">Здесь можно остановиться и молчать.</p>
           <p className="text-sm text-parch/75 mt-2">Рядом — Исх. 3:12–15: обещание «Я буду с тобою», самоназвание <Original e={EXHIBITS.find((e) => e.id === 'ehyeh')!} /> и имя <Original e={EXHIBITS.find((e) => e.id === 'yhwh')!} /> — разные формы в разных стихах.</p>
           <div className="flex flex-wrap gap-2 mt-4">
-            <button className="btn" onClick={() => setScreen('reader')}>Открыть Атлас (чтение)</button>
+            <button className="btn" onClick={() => leaveWorld('reader')}>Открыть Атлас (чтение)</button>
             <button className="btn" onClick={() => { setFinale('seen'); worldRef.current?.teleportZone(1); }}>Вернуться в галереи</button>
             <button className="btn-ghost" onClick={() => setFinale('seen')}>Скрыть</button>
           </div>
@@ -337,7 +373,7 @@ export default function HorebApp() {
         <div className="grid gap-3">
           <button className="btn" onClick={() => setDialog({ kind: 'map' })}>Схема маршрута</button>
           <button className="btn" onClick={() => setDialog({ kind: 'bookmarks' })}>Закладки Писания ({bookmarks.length})</button>
-          <button className="btn" onClick={() => { setDialog(null); setScreen('reader'); }}>Читать экспозицию</button>
+          <button className="btn" onClick={() => leaveWorld('reader')}>Читать экспозицию</button>
           <button className="btn" onClick={() => setDialog({ kind: 'sources' })}>Источники и ограничения</button>
           <button className="btn" onClick={() => setDialog({ kind: 'settings' })}>Настройки доступности</button>
           <button className="btn" onClick={exitWorld}>Выйти из прогулки</button>
@@ -351,7 +387,7 @@ export default function HorebApp() {
           <SettingsPanel s={settings} set={(p) => setSettings((s) => ({ ...s, ...p }))} stats={ws ? `Измерено сейчас: ${ws.fps} fps, ${ws.calls} draw calls, ${ws.tris} треугольников, pixelRatio ${ws.pixelRatio}, геометрия: ${resolved.quality}` : undefined} />
           <div className="flex flex-wrap gap-2 mt-5">
             <button className="btn" onClick={() => { worldRef.current?.resetCamera(); setDialog(null); }}>Сбросить камеру</button>
-            <button className="btn" onClick={() => { setProgress({ visited: [0], last: null }); }}>Сбросить прогресс</button>
+            <button className="btn" onClick={resetProgress}>Сбросить прогресс</button>
           </div>
         </Modal>
       )}
