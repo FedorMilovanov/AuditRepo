@@ -68,6 +68,15 @@ async function layoutContract(page,app,engine,width){
   const faults=[];
   const fault=(kind,info)=>faults.push({kind,info});
   if(name==='atlas'){
+   const sectionLinks=[...document.querySelectorAll('[data-atlas-section-link]')];
+   const visibleLinks=sectionLinks.filter(el=>getComputedStyle(el).display!=='none');
+   if(width>=1280&&visibleLinks.length!==5)
+    fault('atlas-section-links-missing',{count:visibleLinks.length});
+   visibleLinks.forEach((el,i)=>{
+    const rect=el.getBoundingClientRect();
+    if(rect.height<36||rect.width<36)
+     fault('atlas-section-link-small-hitbox',{index:i+1,width:rect.width,height:rect.height});
+   });
    const sidebars=[...document.querySelectorAll('aside[aria-label*="скрижаль"]')];
    const visible=sidebars.filter(node=>getComputedStyle(node).display!=='none');
    if(sidebars.length!==2)fault('atlas-rail-count',{count:sidebars.length});
