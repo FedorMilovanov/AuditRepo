@@ -47,7 +47,7 @@ const startWorld = async (page) => {
   if (response?.status() !== 200) throw new Error('Unexpected intro HTTP status ' + response?.status());
   const clicked = await page.evaluate(() => {
     const button = [...document.querySelectorAll('button')]
-      .find((element) => element.textContent.includes('Начать путешествие'));
+      .find((element) => /^(Начать|Продолжить) путешествие$/.test((element.textContent || '').trim()));
     button?.click();
     return !!button;
   });
