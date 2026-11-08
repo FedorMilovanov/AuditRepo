@@ -32,6 +32,18 @@
 
 **Следующий инженерный шаг:** визуальный audit в браузере (если появится chromium). Без browser — продлить geometry/construction проверки. Не push, не merge PR #543 без разрешения пользователя.
 
+## Checkpoint W9 (2026-11-08): props collision fail-closed
+
+Commit `b98ca65` на `lane/horeb-3d-lab-20261108` (локально, без push).
+
+- **props collision (fail-closed):** `World.ts` — добавлен obstacle `{x: bx, z: bz, r: 0.6}` на props-якорь (1.2m к центру от стелы). Игрок обходит сцены экспонатов вместо прохождения сквозь них. Effective radius = 0.6 + 0.35 (player) = 0.95m. Interaction trigger (d≤3.6m) — props anchor на 1.2m от стелы, player может подойти на 0.25m от стелы с центр-стороны (в пределах trigger). Safe.
+- **centre-path guardrail (collision):** `tests/placement.ts` — +проверка что collision-окружения props не перекрывают центр прохода (≥0.3m). All 42 pass.
+- **Research extract:** `briefs/research_42_extract.json` (32KB, 855 lines) — commit睏ан вместе с feat (оригинально untracked).
+- **Проверки:** tsc clean, build green (dist 1392 kB), **86 tests green** (33 contract + 47 construction + 6 placement [solid ground + wall/ledge + centre path + collision centre path]).
+- Dev-сервер жив (0.0.0.0:5173, HTTP 200, HMR). Browser visual QA BLOCKED (без chromium).
+- Изменённые файлы: `engine/World.ts`, `tests/placement.ts`, `briefs/research_42_extract.json` (new).
+- Следующий шаг: performance profiling (296 prop meshes high + 296 low = 592 total, manageable), bush quality (уже хорош), или browser visual audit при доступе к chromium. Не push, не merge PR #543 без разрешения пользователя.
+
 ## Checkpoint W8 (2026-11-08): no-repetitive-stone + centre-path guardrail
 
 Commit `387df66` на `lane/horeb-3d-lab-20261108` (локально, без push).
