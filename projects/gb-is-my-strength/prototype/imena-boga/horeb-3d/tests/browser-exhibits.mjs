@@ -90,6 +90,10 @@ try {
       });
       return inspected;
     }, { timeout: 7000, polling: 100 });
+    // React lock/unlock and World.emit update at different frame cadences;
+    // wait for a fresh E target, not only the restored 3D render.
+    await page.waitForFunction(() => window.__horeb?.state()?.prompt?.id === 'elohim',
+      { timeout: 6000, polling: 100 });
     await page.keyboard.press('KeyE');
     await page.waitForSelector('[role="dialog"]');
     const revisited = await page.$eval('[role="dialog"]',(n) => n.textContent.includes('Место осмотрено'));
