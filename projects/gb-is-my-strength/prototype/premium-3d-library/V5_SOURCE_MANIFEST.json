@@ -413,6 +413,11 @@
       "sha256": "d80543d1edf4163dc0ea06b1b9e24833f8e24ee978d2ce4d208b1c2a4c8f7c07"
     },
     {
+      "path": "tests/render-performance-browser.py",
+      "bytes": 4234,
+      "sha256": "aa247ca89dfe57c32d58674359d9831e0a221d70af8671fbcd2f256f4c8f1d43"
+    },
+    {
       "path": "tests/progression.cjs",
       "bytes": 5495,
       "sha256": "02060f962e970ecb209fae5ca3facf2b8129870a367011d439834c4e88b013b8"
