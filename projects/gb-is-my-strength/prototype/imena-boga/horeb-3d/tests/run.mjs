@@ -2,6 +2,7 @@
 import { EXHIBITS } from '../.test-build/data/exhibits.js';
 import { validateExhibits, RESEARCH_IDS_42 } from '../.test-build/data/validate.js';
 import * as N from '../.test-build/engine/nav.js';
+import { choosePixelRatio, resetsAutoLowered } from '../.test-build/engine/quality.js';
 let pass = 0, fail = 0;
 const t = (name, ok) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
 const errs = validateExhibits(EXHIBITS);
@@ -97,5 +98,19 @@ for (let a = 0; a < 720; a++) {
 t('single-obstacle collision displaces every interior contact', propContactSafe);
 const outside = N.separateObstacle(6.8, -100, 0, -100, propCollider);
 t('separation does not alter a safe position', outside.x === 6.8 && outside.z === -100);
+
+// Auto-FPS downgrade is sticky during unrelated settings edits, but reversible
+// when the user explicitly switches between graphics quality modes.
+t('high-DPR graphics use a capped ratio', choosePixelRatio('high', 3, false) === 2);
+t('low quality and FPS downgrade use at most native 1x',
+  choosePixelRatio('low', 3, false) === 1 && choosePixelRatio('high', 3, true) === 1);
+t('fractional DPR and non-finite DPR remain safe',
+  choosePixelRatio('high', 0.8, true) === 0.8 && choosePixelRatio('high', NaN, false) === 1);
+const autoState = { quality: 'high', autoQuality: true };
+t('changing volume/brightness does not reset FPS resolution downgrade',
+  !resetsAutoLowered(autoState, { ...autoState }));
+t('changing manual/automatic quality resets FPS downgrade',
+  resetsAutoLowered(autoState, { quality: 'high', autoQuality: false }) &&
+  resetsAutoLowered(autoState, { quality: 'low', autoQuality: true }));
 
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);
