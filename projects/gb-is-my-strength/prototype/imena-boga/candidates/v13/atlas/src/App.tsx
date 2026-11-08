@@ -645,7 +645,7 @@ export function App() {
 
       {/* Central Editorial Reading Column (carefully padded so lateral pillars never collide) */}
       <main
-        className="relative z-10 mx-auto max-w-[740px] px-5 pt-12 pb-28 sm:px-8 lg:max-w-[560px] xl:max-w-[710px] 2xl:max-w-[750px]"
+        className="relative z-10 mx-auto max-w-[740px] px-5 pt-12 pb-36 sm:px-8 min-[1440px]:max-w-[710px] 2xl:max-w-[750px]"
         style={{ fontSize: `${fontScale}rem` }}
       >
         {/* Authentic gospod-bog.ru "Коротко" (Summary Card) */}

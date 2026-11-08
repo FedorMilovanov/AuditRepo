@@ -77,7 +77,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
   return (
     <aside
       aria-label={isLeft ? 'Левая скрижаль имён Бога' : 'Правая скрижаль имён Бога'}
-      className={`pointer-events-none fixed top-16 bottom-4 z-20 hidden lg:flex flex-col ${
+      className={`pointer-events-none fixed top-16 bottom-4 z-20 hidden min-[1440px]:flex flex-col ${
         isLeft ? 'left-3 xl:left-4 2xl:left-6' : 'right-3 xl:right-4 2xl:right-6'
       } w-[196px] xl:w-[232px] 2xl:w-[264px]`}
     >
@@ -112,7 +112,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
               ? 'Показывать имена постепенно по мере чтения'
               : 'Подсветить сразу все 36 рассмотренных имён и титулов на скрижалях'
           }
-          className="font-ui inline-flex shrink-0 cursor-pointer items-center gap-1 rounded-md border px-1.5 py-0.5 text-[10px] font-medium transition-colors hover:opacity-90"
+          className="font-ui inline-flex min-h-8 shrink-0 cursor-pointer items-center gap-1 rounded-md border px-2 py-1 text-[11px] font-medium transition-colors hover:opacity-90"
           style={{
             backgroundColor: illuminateAll ? 'var(--gb-accent-soft)' : 'var(--gb-surface)',
             borderColor: illuminateAll ? 'var(--gb-gold)' : 'var(--gb-border-strong)',
@@ -265,7 +265,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
                   <button
                     type="button"
                     onClick={() => onSelectName(item)}
-                    className="font-ui cursor-pointer text-[10px] font-medium hover:underline"
+                    className="font-ui inline-flex min-h-8 items-center rounded-md px-1.5 text-[11px] font-medium hover:underline"
                     style={{ color: 'var(--gb-accent)' }}
                   >
                     Разбор →
@@ -273,7 +273,7 @@ const PillarColumn: React.FC<PillarColumnProps> = ({
                   <button
                     type="button"
                     onClick={() => onJumpToName(item)}
-                    className="font-ui cursor-pointer text-[10px] underline decoration-dotted hover:opacity-80"
+                    className="font-ui inline-flex min-h-8 items-center rounded-md px-1.5 text-[11px] underline decoration-dotted hover:opacity-80"
                     style={{ color: 'var(--gb-muted)' }}
                   >
                     К тексту
@@ -453,7 +453,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
       {beamCoords.visible && (
         <svg
           aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-15 hidden h-full w-full lg:block"
+          className="pointer-events-none fixed inset-0 z-15 hidden h-full w-full min-[1440px]:block"
         >
           <defs>
             <linearGradient id="sacredRayGrad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -512,7 +512,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
       />
 
       {/* Mobile & Tablet Floating Sacred Ribbon Trigger (< lg) */}
-      <div className="no-print fixed right-4 bottom-4 left-4 z-30 flex justify-center lg:hidden">
+      <div className="no-print fixed right-4 bottom-4 left-4 z-30 flex justify-center min-[1440px]:hidden">
         <button
           ref={mobileTriggerRef}
           type="button"
@@ -524,23 +524,23 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
           aria-haspopup="dialog"
           aria-expanded={mobileDrawerOpen}
           aria-controls="gb-mobile-pillars-dialog"
-          className="sacred-active-glow flex w-full max-w-md cursor-pointer items-center justify-between gap-3 rounded-2xl border px-4 py-3 shadow-xl transition-transform active:scale-[0.99]"
+          className="sacred-active-glow flex min-h-14 w-full max-w-md cursor-pointer items-center justify-between gap-2 rounded-2xl border px-3 py-2 shadow-xl motion-safe:transition-transform motion-safe:active:scale-[0.99] sm:gap-3 sm:px-4 sm:py-3"
           style={{
             backgroundColor: 'var(--gb-surface)',
             borderColor: 'var(--gb-gold)',
             color: 'var(--gb-ink)',
           }}
         >
-          <div className="flex items-center gap-2.5 min-w-0">
+          <div className="flex min-w-0 flex-1 items-center gap-2">
             <Sparkles className="h-4 w-4 shrink-0" style={{ color: 'var(--gb-gold)' }} />
-            <div className="truncate text-left">
+            <div className="min-w-0 flex-1 text-left">
               <div
                 className="font-ui text-[10px] font-semibold tracking-wider uppercase"
                 style={{ color: 'var(--gb-gold-ink)' }}
               >
-                Явлено {displayRevealedCount} из {names.length} имён
+                Открыто {displayRevealedCount}/{names.length}
               </div>
-              <div className="font-serif-display truncate text-sm font-bold">
+              <div className="font-serif-display break-words text-xs font-bold leading-snug sm:text-sm">
                 {activeEntry.transliteration}{' '}
                 <span
                   className={activeEntry.language === 'greek' ? 'font-greek' : 'font-hebrew'}
@@ -553,7 +553,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
           </div>
 
           <span
-            className="font-ui inline-flex shrink-0 items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white"
+            className="font-ui inline-flex min-h-9 shrink-0 items-center gap-1 rounded-lg px-2 py-1.5 text-[11px] font-semibold text-white sm:px-2.5 sm:text-xs"
             style={{ backgroundColor: 'var(--gb-accent)' }}
           >
             <span>Скрижали</span>
@@ -570,7 +570,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
           role="dialog"
           aria-modal="true"
           aria-label="Скрижали имён Бога"
-          className="fixed inset-0 z-50 flex flex-col justify-end bg-black/60 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-50 flex flex-col justify-end bg-black/60 backdrop-blur-sm min-[1440px]:hidden"
           onClick={dismissDrawer}
         >
           <div
@@ -632,7 +632,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                     key={item.id}
                     type="button"
                     onClick={() => selectFromDrawer(item)}
-                    className={`flex items-center justify-between gap-3 rounded-xl border p-3 text-left transition-all ${
+                    className={`flex min-w-0 flex-col items-stretch gap-2 rounded-xl border p-3 text-left transition-colors ${
                       isActive ? 'sacred-active-glow' : ''
                     }`}
                     style={{
@@ -645,7 +645,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                         : isRevealed ? 'var(--gb-border-strong)' : 'var(--gb-border)',
                     }}
                   >
-                    <div className="min-w-0">
+                    <div className="min-w-0 w-full">
                       <div
                         className="font-ui text-[10px] font-semibold uppercase"
                         style={{ color: 'var(--gb-gold-ink)' }}
@@ -659,11 +659,11 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                         {item.russianName}
                       </div>
                     </div>
-                    <div className="flex flex-col items-end shrink-0">
+                    <div className="flex min-w-0 w-full flex-col items-end">
                       <span
                         className={`${
                           item.language === 'greek' ? 'font-greek' : 'font-hebrew'
-                        } text-lg font-bold`}
+                        } w-full min-w-0 break-words text-right text-lg font-bold leading-snug [overflow-wrap:anywhere]`}
                         style={{ color: 'var(--gb-accent)' }}
                       >
                         {item.original}

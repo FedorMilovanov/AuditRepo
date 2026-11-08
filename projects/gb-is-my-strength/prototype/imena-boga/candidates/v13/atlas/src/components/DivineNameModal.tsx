@@ -388,10 +388,12 @@ export const DivineNameModal: React.FC<DivineNameModalProps> = ({
                 }}
               />
 
-              <div
+              <div data-modal-original
+                lang={entry.language === 'greek' ? 'el' : entry.language === 'aramaic' ? 'arc' : 'he'}
+                dir={entry.language === 'greek' ? 'ltr' : 'rtl'}
                 className={`${
                   entry.language === 'greek' ? 'font-greek' : 'font-hebrew'
-                } relative z-10 text-4xl sm:text-5xl md:text-6xl font-bold leading-snug`}
+                } relative z-10 block w-full min-w-0 break-words text-[clamp(1.5rem,6vw,3.75rem)] font-bold leading-snug [overflow-wrap:anywhere]`}
                 style={{
                   color: 'var(--gb-ink)',
                   textShadow: '0 0 28px var(--gb-gold-glow)',
