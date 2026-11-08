@@ -125,7 +125,7 @@ export const EXHIBITS: Exhibit[] = [
   {
     id: 'el-elyon', zone: 1, chapter: 1, displayLabelRu: 'Эль Элион — Бог Всевышний', category: 'divine_title',
     era: 'Пятикнижие', sourceLanguage: 'he',
-    originalUnicode: 'אֵל עֶלְיוֹם', transliteration: 'ʾēl ʿelyôn', traditionalRu: 'Эль Элион', verseReference: 'Быт. 14:18–22',
+    originalUnicode: 'אֵל עֶלְיוֹן', transliteration: 'ʾēl ʿelyôn', traditionalRu: 'Эль Элион', verseReference: 'Быт. 14:18–22',
     edition: MM, verseUrl: 'https://mechon-mamre.org/p/pt/pt0114.htm',
     speaker: 'Нарратив (14:18), Мелхиседек (14:19–20), Аврам (14:22)', referent: 'Бог, «Владыка неба и земли»', namedObject: '—',
     literalGloss: '«Бог Высочайший»',
