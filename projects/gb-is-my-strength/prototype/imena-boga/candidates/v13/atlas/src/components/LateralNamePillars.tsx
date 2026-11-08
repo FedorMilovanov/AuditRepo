@@ -639,9 +639,13 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                       isActive ? 'sacred-active-glow' : ''
                     }`}
                     style={{
-                      opacity: isRevealed ? 1 : 0.58,
+                      // Progress is communicated by the label and border, never
+                      // by making unread names hard to read on mobile.
+                      opacity: 1,
                       backgroundColor: isActive ? 'var(--gb-surface)' : 'var(--gb-bg)',
-                      borderColor: isActive ? 'var(--gb-gold)' : 'var(--gb-border)',
+                      borderColor: isActive
+                        ? 'var(--gb-gold)'
+                        : isRevealed ? 'var(--gb-border-strong)' : 'var(--gb-border)',
                     }}
                   >
                     <div className="min-w-0">
