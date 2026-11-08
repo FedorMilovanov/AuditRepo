@@ -98,6 +98,12 @@ try {
       state.distBush >= 14 && state.distBush < 17 &&
       w.renderer.info.render.frame > frame;
   }, { polling: 200, timeout: 60000 }, beforeClose);
+  // Give the intentional 700 ms CSS transition time to finish. A screenshot
+  // taken on the first WebGL frame would falsely show a fully opaque HUD.
+  await desktop.waitForFunction(() => {
+    const hud = document.querySelector('.hud');
+    return !!hud && Math.abs(Number(getComputedStyle(hud).opacity) - 0.4) < 0.025;
+  }, { polling: 100, timeout: 6000 });
   await desktop.screenshot({ path: join(shots, 'visual-desktop-bush-boundary.png') });
   witness.closeBush = await desktop.evaluate(() => {
     const world = window.__horeb.world;
@@ -107,18 +113,26 @@ try {
       shoes: window.__horeb.state().shoes,
       zone: window.__horeb.state().zone,
       hudOpacity: hud ? Number(getComputedStyle(hud).opacity) : 0,
+      promptOpacity: (() => {
+        const prompt = [...document.querySelectorAll('button.prompt')].find((b) => b.textContent?.includes('Снять обувь'));
+        return prompt ? Number(getComputedStyle(prompt).opacity) : 0;
+      })(),
       ambientIntensity: world.ambient.intensity,
       hemisphereIntensity: world.hemi.intensity,
       moonIntensity: world.moon.intensity,
     };
   });
-  if (witness.closeBush.hudOpacity < 0.99)
-    throw new Error('BUSH UX: navigation becomes translucent at the sacred boundary');
-  if (witness.closeBush.ambientIntensity < 0.70 ||
-      witness.closeBush.hemisphereIntensity < 0.90 ||
-      witness.closeBush.moonIntensity < 1.00)
-    throw new Error('BUSH VISUAL: outdoor terrain fill is below audited visibility baseline');
-  console.log('PASS outer bush boundary screenshot, legible navigation and predawn fill');
+  // Owner-approved art direction: the bush is visually dominant. Navigation
+  // recedes softly to 40%, while the sandal-action prompt remains fully visible.
+  if (Math.abs(witness.closeBush.hudOpacity - 0.4) > 0.025)
+    throw new Error('BUSH UX: restored cinematic HUD fade is not present');
+  if (witness.closeBush.promptOpacity < 0.99)
+    throw new Error('BUSH SAFETY: sandal action must stay fully visible outside dimmed HUD');
+  if (Math.abs(witness.closeBush.ambientIntensity - 0.35) > 0.02 ||
+      Math.abs(witness.closeBush.hemisphereIntensity - 0.55) > 0.02 ||
+      Math.abs(witness.closeBush.moonIntensity - 0.55) > 0.02)
+    throw new Error('BUSH ART: dark predawn lighting was unexpectedly brightened');
+  console.log('PASS outer bush boundary: subdued HUD, visible sandal action, dark sky');
   await desktop.close();
 
   const mobile = await browser.newPage();
