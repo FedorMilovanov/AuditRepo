@@ -87,20 +87,31 @@ export function Joystick({ onMove }: { onMove: (x: number, y: number) => void })
   const idRef = useRef<number | null>(null);
   const onMoveRef = useRef(onMove);
   onMoveRef.current = onMove;
+  // Only the pointer that started a drag owns this joystick. Other fingers
+  // may press an action or rotate the camera without cancelling movement.
+  const release = (pointerId?: number) => {
+    const active = idRef.current;
+    if (active === null || (pointerId !== undefined && active !== pointerId)) return;
+    idRef.current = null;
+    const element = base.current;
+    if (element?.hasPointerCapture?.(active)) element.releasePointerCapture(active);
+    setK({ x: 0, y: 0, active: false });
+    onMoveRef.current(0, 0);
+  };
   useEffect(() => {
-    // Pointercancel is not guaranteed when a phone locks or swaps apps.
-    // Match World.stopMovement and reset the visible stick as well.
-    const release = () => {
-      idRef.current = null;
-      setK({ x: 0, y: 0, active: false });
-      onMoveRef.current(0, 0);
-    };
-    const hidden = () => { if (document.hidden) release(); };
-    window.addEventListener('blur', release);
-    document.addEventListener('visibilitychange', hidden);
+    // Mobile app switching can lose focus without a pointercancel. The
+    // listener keeps the first render's ref-backed release callback.
+    const releaseOnBlur = () => release();
+    const releaseOnHide = () => { if (document.hidden) release(); };
+    window.addEventListener('blur', releaseOnBlur);
+    document.addEventListener('visibilitychange', releaseOnHide);
     return () => {
-      window.removeEventListener('blur', release);
-      document.removeEventListener('visibilitychange', hidden);
+      window.removeEventListener('blur', releaseOnBlur);
+      document.removeEventListener('visibilitychange', releaseOnHide);
+      const active = idRef.current;
+      idRef.current = null;
+      if (active !== null && base.current?.hasPointerCapture?.(active))
+        base.current.releasePointerCapture(active);
       onMoveRef.current(0, 0);
     };
   }, []);
@@ -111,12 +122,20 @@ export function Joystick({ onMove }: { onMove: (x: number, y: number) => void })
     setK({ x: dx, y: dy, active: true }); onMove(dx, -dy);
   };
   return (
-    <div ref={base} aria-hidden="true"
+    <div ref={base} aria-hidden="true" data-testid="movement-joystick"
       className="fixed left-5 bottom-6 z-20 w-32 h-32 rounded-full border border-parch/25 bg-black/25 touch-none select-none"
-      onPointerDown={(e) => { idRef.current = e.pointerId; (e.target as HTMLElement).setPointerCapture(e.pointerId); upd(e.clientX, e.clientY); }}
+      onPointerDown={(e) => {
+        if (idRef.current !== null || (e.pointerType === 'mouse' && e.button !== 0)) return;
+        idRef.current = e.pointerId;
+        // Capture belongs to the container, never a nested child target.
+        // Synthetic browser-test events have no browser-owned pointer to capture.
+        if (e.nativeEvent.isTrusted) e.currentTarget.setPointerCapture(e.pointerId);
+        upd(e.clientX, e.clientY);
+      }}
       onPointerMove={(e) => { if (idRef.current === e.pointerId) upd(e.clientX, e.clientY); }}
-      onPointerUp={() => { idRef.current = null; setK({ x: 0, y: 0, active: false }); onMove(0, 0); }}
-      onPointerCancel={() => { idRef.current = null; setK({ x: 0, y: 0, active: false }); onMove(0, 0); }}>
+      onPointerUp={(e) => release(e.pointerId)}
+      onPointerCancel={(e) => release(e.pointerId)}
+      onLostPointerCapture={(e) => release(e.pointerId)}>
       <div className="absolute w-12 h-12 rounded-full bg-parch/30 border border-parch/50 pointer-events-none"
         style={{ left: `calc(50% - 1.5rem + ${k.x * 40}px)`, top: `calc(50% - 1.5rem + ${k.y * 40}px)` }} />
     </div>
