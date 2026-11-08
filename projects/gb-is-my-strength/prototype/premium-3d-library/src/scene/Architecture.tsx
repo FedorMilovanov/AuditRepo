@@ -71,36 +71,33 @@ type ShelfPart = {
 function shelfPart(bay: number, x: number, y: number, z: number, w: number, h: number, d: number): ShelfPart {
   return { bay, x, y, z, w, h, d };
 }
-function shelfParts() {
-  const stoneParts: ShelfPart[] = [];
-  const woodParts: ShelfPart[] = [];
-  for (const bay of SHELVED_BAYS) {
-    stoneParts.push(shelfPart(bay, 0, 4.1, 0.12, 4.50, 8.2, 0.25));
-    woodParts.push(shelfPart(bay, 0, 3.85, -0.04, 4.27, 7.45, 0.22));
-    for (let level = 0; level <= SHELVES; level++) {
-      woodParts.push(shelfPart(bay, 0, 0.56 + level * 1.06, -0.51, 4.27, 0.11, 0.71));
-    }
-    for (const x of [-2.13, 2.13]) {
-      woodParts.push(shelfPart(bay, x, 3.88, -0.44, 0.11, 7.55, 0.68));
-    }
-    woodParts.push(shelfPart(bay, 0, 7.7, -0.39, 4.52, 0.22, 0.66));
+function shelfParts(bay: number) {
+  const stoneParts = [shelfPart(bay, 0, 4.1, 0.12, 4.50, 8.2, 0.25)];
+  const woodParts: ShelfPart[] = [
+    shelfPart(bay, 0, 3.85, -0.04, 4.27, 7.45, 0.22),
+  ];
+  for (let level = 0; level <= SHELVES; level++) {
+    woodParts.push(shelfPart(bay, 0, 0.56 + level * 1.06, -0.51, 4.27, 0.11, 0.71));
   }
+  for (const x of [-2.13, 2.13]) {
+    woodParts.push(shelfPart(bay, x, 3.88, -0.44, 0.11, 7.55, 0.68));
+  }
+  woodParts.push(shelfPart(bay, 0, 7.7, -0.39, 4.52, 0.22, 0.66));
   return { stoneParts, woodParts };
 }
-function InstancedShelfBays() {
-  const { stoneParts, woodParts } = useMemo(shelfParts, []);
-  const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
+
+/** Per-bay instancing retains frustum culling for rooms outside the camera. */
+function InstancedShelfBay({ bay, geometry }: { bay: number; geometry: THREE.BoxGeometry }) {
+  const { stoneParts, woodParts } = useMemo(() => shelfParts(bay), [bay]);
   const stoneRef = useRef<THREE.InstancedMesh>(null!);
   const woodRef = useRef<THREE.InstancedMesh>(null!);
-  useEffect(() => () => geometry.dispose(), [geometry]);
+  const angle = (bay / BAYS) * Math.PI * 2;
   useLayoutEffect(() => {
     const pivot = new THREE.Object3D();
     const place = (mesh: THREE.InstancedMesh, parts: ShelfPart[]) => {
-      parts.forEach(({ bay, x, y, z, w, h, d }, i) => {
-        const a = (bay / BAYS) * Math.PI * 2;
-        const sin = Math.sin(a), cos = Math.cos(a);
-        pivot.position.set(sin * RADIUS + x * cos + z * sin, y, cos * RADIUS - x * sin + z * cos);
-        pivot.rotation.set(0, a, 0);
+      parts.forEach(({ x, y, z, w, h, d }, i) => {
+        pivot.position.set(x, y, z);
+        pivot.rotation.set(0, 0, 0);
         pivot.scale.set(w, h, d);
         pivot.updateMatrix();
         mesh.setMatrixAt(i, pivot.matrix);
@@ -112,9 +109,18 @@ function InstancedShelfBays() {
     place(woodRef.current, woodParts);
   }, [stoneParts, woodParts]);
   return (
-    <group>
+    <group position={[Math.sin(angle) * RADIUS, 0, Math.cos(angle) * RADIUS]} rotation-y={angle}>
       <instancedMesh ref={stoneRef} args={[geometry, stone, stoneParts.length]} receiveShadow dispose={null} />
       <instancedMesh ref={woodRef} args={[geometry, wood, woodParts.length]} receiveShadow dispose={null} />
+    </group>
+  );
+}
+function InstancedShelfBays() {
+  const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
+  useEffect(() => () => geometry.dispose(), [geometry]);
+  return (
+    <group>
+      {SHELVED_BAYS.map((bay) => <InstancedShelfBay key={bay} bay={bay} geometry={geometry} />)}
     </group>
   );
 }
