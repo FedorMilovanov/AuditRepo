@@ -157,7 +157,7 @@ export class World {
       // снаружи стелы (к стене) они бы попадали в свод прохода — поэтому впереди.
       const d = Math.hypot(nx, nz) || 1;
       const bx = x + (nx / d) * 1.2, bz = z + (nz / d) * 1.2;
-      const props = buildExhibitProps(e, low, bx, bz, { map: rockMat.map, bump: rockMat.bumpMap });
+      const props = buildExhibitProps(e, low, bx, bz, { map: tex, bump });
       mergePropsGroup(props); // merge meshes by material — reduce draw calls
       this.scene.add(props);
       this.obstacles.push({ x, z, r: 0.85 }); // стелы
