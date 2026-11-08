@@ -347,9 +347,19 @@ function Joystick() {
   const tour = useApp((s) => s.tour);
   const knob = useRef<HTMLDivElement>(null);
   const id = useRef(-1);
-  // A modal or tour can unmount the control during pointer capture: never leave movement latched.
+  const active = coarse && phase === "play" && !xr && mode === "desktop"
+    && !opened && !sitemap && !paused && tour === null;
+  // Hiding the control does not unmount the React component. Clear movement on
+  // every transition to an inactive state, not only when the pointer is released.
+  useEffect(() => {
+    if (!active) {
+      id.current = -1;
+      input.joy.x = input.joy.y = 0;
+      if (knob.current) knob.current.style.transform = "translate(0,0)";
+    }
+  }, [active]);
   useEffect(() => () => { input.joy.x = input.joy.y = 0; }, []);
-  if (!coarse || phase !== "play" || xr || mode !== "desktop" || opened || sitemap || paused || tour !== null) return null;
+  if (!active) return null;
   const upd = (e: React.PointerEvent) => {
     const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
     let dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
@@ -371,6 +381,7 @@ function Joystick() {
   return (
     <div
       data-gb-joystick
+      role="group"
       aria-label="Виртуальный джойстик движения"
       className="glass pointer-events-auto fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] left-4 z-10 grid h-32 w-32 touch-none place-items-center rounded-full"
       onPointerDown={(e) => {
