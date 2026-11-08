@@ -52,7 +52,7 @@ export function validateExhibits(list: Exhibit[]): string[] {
   const dan = get('attiq-yomin-dan-7-9');
   if (dan && dan.sourceLanguage !== 'arc') errs.push('Dan 7:9 must be Aramaic');
   const lxx = get('lxx-ego-eimi-ho-on-ex-3-14'), jn = get('ego-eimi-jn-8-58');
-  if (lxx && jn && lxx.originalUnicode === jn.originalUnicode) errs.push('LXX Ex 3:14 conflated with Jn 8:58');
+  if (lxx && jn && lxx.originalUnicode.toLowerCase().includes('ἐγὼ εἰμί') && jn.originalUnicode.toLowerCase().includes('ἐγώ εἰμι')) errs.push('LXX Ex 3:14 conflated with Jn 8:58');
   const sab = get('yhwh-tsevaot-1sam-1-3');
   if (sab && /суббот/i.test(sab.literalGloss)) errs.push('Sabaoth glossed as sabbath');
   return errs;

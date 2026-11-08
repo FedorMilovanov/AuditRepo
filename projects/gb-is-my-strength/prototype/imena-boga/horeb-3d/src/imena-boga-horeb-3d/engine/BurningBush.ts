@@ -4,7 +4,7 @@ import { rng, glowTexture } from './procedural';
 import { BUSH } from './nav';
 
 // Небольшой настоящий куст (≈1.4 м), объятый пламенем, ветви которого НЕ меняются — не сгорают.
-export function buildBurningBush(low: boolean) {
+export function buildBurningBush(low: boolean, highDetail = false) {
   const group = new THREE.Group();
   group.position.set(BUSH.x, 0, BUSH.z);
   const r = rng(1931);
@@ -38,7 +38,7 @@ export function buildBurningBush(low: boolean) {
   mound.scale.set(1.2, 0.18, 1.2); group.add(mound);
 
   // Пламя
-  const N = low ? 380 : 1100;
+  const N = low ? 380 : (highDetail ? 1500 : 1100);
   const geo = new THREE.BufferGeometry();
   const base = new Float32Array(N * 3), seed = new Float32Array(N);
   for (let i = 0; i < N; i++) {

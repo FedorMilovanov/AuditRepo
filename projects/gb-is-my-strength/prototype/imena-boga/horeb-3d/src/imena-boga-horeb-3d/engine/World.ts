@@ -6,6 +6,9 @@ import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
 import { validateExhibits } from '../data/validate';
 import { constrain, zoneAt, distToBush, sanitizeSpawn, ZONE_SPAWN, R_OUTER, TUNNEL_END, type Block } from './nav';
+import { ENV_GENESIS_16_13_PRESET } from '../../world/exhibitPresets/ENV_GENESIS_16_13_preset';
+import { ENV_GENESIS_21_33_PRESET } from '../../world/exhibitPresets/ENV_GENESIS_21_33_preset';
+import { ENV_EXODUS_3_14_PRESET } from '../../world/exhibitPresets/ENV_EXODUS_3_14_preset';
 
 export type Shoes = 'shod' | 'removing' | 'unshod';
 export type Prompt = null | { kind: 'exhibit'; id: string } | { kind: 'shoes' };
@@ -90,8 +93,34 @@ export class World {
     this.zones = buildZones(low, rock);
     this.scene.add(this.zones.group);
     this.obstacles.push(...this.zones.obstacles);
-    this.bush = buildBurningBush(low);
+    this.bush = buildBurningBush(low, !low && ENV_EXODUS_3_14_PRESET.bushQuality === 'high');
     this.scene.add(this.bush.group);
+
+    // --- W1: уникальные физические якоря для el-roi (Быт 16:13) и el-olam (Быт 21:33) ---
+    const roiPos = PLACEMENTS['el-roi-gen-16-13'];
+    if (roiPos && ENV_GENESIS_16_13_PRESET) {
+      const [wx, wz] = roiPos;
+      const well = new THREE.Group();
+      const ring = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 1.05, 0.55, 14, 1, true), new THREE.MeshStandardMaterial({ color: 0x5a5042, roughness: 0.92, map: tex, bumpMap: bump, bumpScale: 1.4, side: THREE.DoubleSide }));
+      ring.position.y = 0.275; well.add(ring);
+      const water = new THREE.Mesh(new THREE.CircleGeometry(0.85, 16), new THREE.MeshStandardMaterial({ color: 0x1a2630, roughness: 0.25, metalness: 0.1 }));
+      water.rotation.x = -Math.PI / 2; water.position.y = 0.3; well.add(water);
+      well.position.set(wx - 1.8, 0, wz - 1.1);
+      this.scene.add(well);
+      this.obstacles.push({ x: wx - 1.8, z: wz - 1.1, r: 1.1 });
+    }
+    const olamPos = PLACEMENTS['el-olam-gen-21-33'];
+    if (olamPos && ENV_GENESIS_21_33_PRESET) {
+      const [tx0, tz0] = olamPos;
+      const tamarisk = new THREE.Group();
+      const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.26, 3.2, 7), new THREE.MeshStandardMaterial({ color: 0x3f3228, roughness: 0.95 }));
+      trunk.position.y = 1.6; tamarisk.add(trunk);
+      const canopy = new THREE.Mesh(new THREE.SphereGeometry(1.5, 10, 8), new THREE.MeshStandardMaterial({ color: 0x4f5a3a, roughness: 1 }));
+      canopy.position.y = 3.3; canopy.scale.set(1.3, 0.75, 1.3); tamarisk.add(canopy);
+      tamarisk.position.set(tx0 + 1.9, 0, tz0 - 1.2);
+      this.scene.add(tamarisk);
+      this.obstacles.push({ x: tx0 + 1.9, z: tz0 - 1.2, r: 0.6 });
+    }
 
     // Стелы экспонатов
     const steleGeo = new THREE.BoxGeometry(1.5, 2.6, 0.42, 6, 10, 2);
