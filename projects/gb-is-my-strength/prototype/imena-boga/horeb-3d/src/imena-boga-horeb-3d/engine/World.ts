@@ -206,6 +206,9 @@ export class World {
     }) as unknown as EventListener);
     this.on(c, 'pointerdown', ((e: PointerEvent) => {
       if (this.inputLocked) return;
+      // Keep the first look gesture as owner. A second finger can control
+      // the joystick or action button without stealing the camera drag.
+      if (this.dragging && this.dragging.id !== e.pointerId) return;
       if (e.isTrusted) this.audio.unlockFromGesture();
       if (e.pointerType === 'mouse') {
         if (document.pointerLockElement !== c) {
