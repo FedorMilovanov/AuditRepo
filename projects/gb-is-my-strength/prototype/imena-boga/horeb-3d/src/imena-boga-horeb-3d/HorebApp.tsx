@@ -120,12 +120,17 @@ export default function HorebApp() {
     if (ws && ws.shoes === 'unshod' && ws.distBush < R_INNER + 1.6 && finale === 'none') setFinale('show');
   }, [ws, finale]);
 
+  // Keyboard/touch events must use the freshest World state, not React's last
+  // committed render. Rapid teleport/zone changes otherwise open a stale dossier
+  // or ignore E even though the visible world already offers a new target.
   const interact = useCallback(() => {
-    const w = worldRef.current; if (!w || !ws?.prompt) return;
-    if (ws.prompt.kind === 'shoes') { w.removeShoes(); return; }
+    const w = worldRef.current;
+    const prompt = stateRef.current?.prompt;
+    if (!w || !prompt) return;
+    if (prompt.kind === 'shoes') { w.removeShoes(); return; }
     setProgress((p) => ({ ...p, last: w.position }));
-    setDialog({ kind: 'exhibit', id: ws.prompt.id });
-  }, [ws]);
+    setDialog({ kind: 'exhibit', id: prompt.id });
+  }, []);
 
   useEffect(() => {
     if (screen !== 'world') return;
