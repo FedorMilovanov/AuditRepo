@@ -392,7 +392,7 @@ function addStrataWall(g: THREE.Group, x: number, z: number, s: Shared) {
   }
 }
 function addMassiveRock(g: THREE.Group, x: number, z: number, s: Shared) {
-  const r = new THREE.Mesh(G.dodec(1.4, 1), s.stone); r.position.set(x, 0.7, z + 1.2); r.scale.set(1.2, 1.6, 1.2);
+  const r = new THREE.Mesh(G.dodec(1.4, 1), s.stone); r.name = 'scenic-boulder'; r.position.set(x, 0.7, z + 1.2); r.scale.set(1.2, 1.6, 1.2);
   r.rotation.set(0.2, 0.4, 0.1); g.add(r);
 }
 function addCrumblingSlope(g: THREE.Group, x: number, z: number, s: Shared) {
@@ -467,7 +467,7 @@ export function buildExhibitProps(e: Exhibit, low: boolean, px: number, pz: numb
   const s = shared(low, surface);
   const key = e.environmentKey;
   switch (key) {
-    case 'creation-horizon': addLightShaft(g, px, pz); addMassiveRock(g, px - 0.5, pz, s); break;
+    case 'creation-horizon': addLightShaft(g, px, pz); addMassiveRock(g, px - 1.4, pz - 4.2, s); break;
     case 'stone-corridor': addStrataWall(g, px, pz, s); addFalseGuide(g, px - 1.2, pz, s); break;
     case 'high-ledge-camp': addCampTable(g, px, pz, s); addVessel(g, px + 0.8, pz, s); break;
     case 'great-rock': addMassiveRock(g, px, pz, s); addCrumblingSlope(g, px - 1, pz, s); break;
