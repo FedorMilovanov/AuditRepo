@@ -117,6 +117,39 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       if (witness.ratio < 4.5) throw Error('Gold text below WCAG AA: '+JSON.stringify({engine,width,expectedTheme,witness}));
       return witness.ratio;
     };
+    // The short introductory abstract starts collapsed: it should not take
+    // over the reading viewport, but must remain a reversible keyboard action.
+    const summary=page.locator('section[aria-label="Коротко о главном"]');
+    const summaryToggle=summary.locator('button[aria-controls="atlas-summary-theses"]');
+    const summaryContent=summary.locator('#atlas-summary-theses');
+    if((await summaryToggle.getAttribute('aria-expanded'))!=='false' ||
+       (await summaryContent.getAttribute('aria-hidden'))!=='true')
+      throw Error('Atlas summary not collapsed by default '+width);
+    await summaryContent.evaluate(el=>{
+      if(!el.inert)throw Error('Collapsed summary is not inert');
+    });
+    await page.waitForFunction(()=>{
+      const el=document.getElementById('atlas-summary-theses');
+      return !!el&&el.getBoundingClientRect().height<2;
+    });
+    await summaryToggle.click();
+    if((await summaryToggle.getAttribute('aria-expanded'))!=='true'||
+       (await summaryContent.getAttribute('aria-hidden'))!=='false'||
+       (await summaryContent.locator('p').count())!==4)
+      throw Error('Atlas summary did not expose four theses '+width);
+    await page.waitForFunction(()=>{
+      const el=document.getElementById('atlas-summary-theses');
+      return !!el&&el.getBoundingClientRect().height>50;
+    });
+    await summaryToggle.focus();
+    await page.keyboard.press('Enter');
+    if((await summaryToggle.getAttribute('aria-expanded'))!=='false'||
+       (await summaryContent.getAttribute('aria-hidden'))!=='true')
+      throw Error('Atlas summary keyboard collapse failed '+width);
+    await page.waitForFunction(()=>{
+      const el=document.getElementById('atlas-summary-theses');
+      return !!el&&el.getBoundingClientRect().height<2;
+    });
     const lightContrast = await assertGoldInkContrast('light');
     // Arena-derived reader settings must stay usable at every viewport size.
     const settings=page.getByRole('button',{name:'Настройки чтения и шрифта'});
