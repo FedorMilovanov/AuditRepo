@@ -150,6 +150,18 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       const el=document.getElementById('atlas-summary-theses');
       return !!el&&el.getBoundingClientRect().height<2;
     });
+    // Search command owns focus synchronously, and cannot steal it
+    // again after the reader has moved to another control.
+    const navSearch=page.getByRole('button',{name:'Открыть поиск по именам'});
+    await navSearch.click();
+    const input=page.locator('#constellation-search-input');
+    if(!(await input.evaluate(el=>document.activeElement===el)))
+      throw Error('Atlas navbar search did not focus immediately '+width);
+    await navSearch.focus();
+    await page.waitForTimeout(550);
+    if(!(await navSearch.evaluate(el=>document.activeElement===el)))
+      throw Error('Atlas navbar search stole focus after an unrelated action '+width);
+
     const lightContrast = await assertGoldInkContrast('light');
     // Arena-derived reader settings must stay usable at every viewport size.
     const settings=page.getByRole('button',{name:'Настройки чтения и шрифта'});
