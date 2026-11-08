@@ -51,14 +51,34 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
    await page.waitForFunction(()=>document.readyState==='complete'&&[...document.styleSheets].some(s=>s.href&&s.href.includes('/assets/')),{timeout:30000});
    // Wait for React, not a fixed guessed network delay.
    await page.locator('h1').first().waitFor({state:'visible'});
+   // Font swapping can temporarily widen the 320px layout while the browser
+   // is still shaping Hebrew/Cyrillic text. Certify the first *settled*
+   // typographic layout, not a pre-font transient. No arbitrary delay.
+   await page.evaluate(async()=>{
+     await document.fonts.ready;
+     await new Promise(resolve=>requestAnimationFrame(resolve));
+   });
    const stats=await page.evaluate(()=>{
     const med=document.querySelector('button[title*="Нажмите"]')?.getBoundingClientRect();
     return {viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,
       bodyText:document.body.innerText.length,medallion:med?{left:med.left,right:med.right}:null,
       cssLoaded:[...document.styleSheets].some(s=>s.href?.includes('/assets/'))};
    });
-   if(stats.bodyText<1000||stats.scroll>stats.viewport+1||errors.length||requests.length||!stats.cssLoaded)
-    throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests}));
+   if(stats.bodyText<1000||stats.scroll>stats.viewport+1||errors.length||requests.length||!stats.cssLoaded){
+     const overflowDetails=stats.scroll>stats.viewport+1
+       ? await page.evaluate(()=>{
+           const width=document.documentElement.clientWidth;
+           return [...document.body.querySelectorAll('*')].map(element=>{
+             const rect=element.getBoundingClientRect(),style=getComputedStyle(element);
+             return {tag:element.tagName,cls:String(element.className).slice(0,80),
+               left:Math.round(rect.left),right:Math.round(rect.right),
+               width:Math.round(rect.width),overflow:style.overflowX};
+           }).filter(item=>item.width>0&&(item.right>width+1||item.left< -1))
+             .sort((left,right)=>right.right-left.right).slice(0,16);
+         })
+       : [];
+     throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests,overflowDetails}));
+   }
    if(name==='atlas'){
     if(width===1440){
       // Dynamic OS preference change: a medallion already tilted under a
