@@ -352,6 +352,7 @@ export class World {
     const item = this.exhibitPos.find((p) => p.e.id === id);
     if (!item || this.disposed || Math.hypot(this.pos.x - item.x, this.pos.y - item.z) > 5.5) return false;
     this.activeInspection = { id, until: this.t + 8 };
+    this.audio.inspectCue(id, this.t);
     return true;
   }
   resetCamera() { this.pitch = 0; this.yaw = this.pos.y < TUNNEL_END ? this.yawToBush() : 0; }
