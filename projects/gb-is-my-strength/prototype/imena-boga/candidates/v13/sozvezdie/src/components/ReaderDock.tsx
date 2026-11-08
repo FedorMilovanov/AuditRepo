@@ -43,6 +43,41 @@ function cancelSpeech() {
   if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
 }
 
+// The ring itself is informative. Only the compact mobile presentation
+// has a disclosure control; desktop must not expose an inert button in Tab order.
+function ProgressRing({
+  progress, pct, completedCount, expanded = false,
+}: {
+  progress: MotionValue<number>;
+  pct: number;
+  completedCount: number;
+  expanded?: boolean;
+}) {
+  return (
+    <>
+      <svg viewBox="0 0 36 36" className="h-8 w-8 -rotate-90 sm:h-9 sm:w-9" aria-hidden="true">
+        <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(74,66,50,0.5)" strokeWidth="2" />
+        <motion.circle
+          cx="18" cy="18" r="15" fill="none" stroke="#d4af37"
+          strokeWidth="2" strokeLinecap="round" style={{ pathLength: progress }}
+        />
+      </svg>
+      <span className="absolute font-ui text-[8px] tabular-nums text-gold-300" aria-hidden="true">
+        {expanded ? <X className="h-3 w-3 sm:hidden" /> : null}
+        <span className={expanded ? "hidden sm:inline" : ""}>{pct}</span>
+      </span>
+      {completedCount > 0 && (
+        <span
+          aria-hidden="true"
+          className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold-500 px-1 font-ui text-[7px] font-semibold tabular-nums text-ink-950 shadow-[0_0_10px_rgba(212,175,55,0.55)]"
+        >
+          {completedCount}
+        </span>
+      )}
+    </>
+  );
+}
+
 export default function ReaderDock({
   visible,
   progress,
@@ -156,40 +191,29 @@ export default function ReaderDock({
         role="toolbar"
         aria-label="Настройки чтения"
       >
-        {/* progress ring — on phones it also expands/collapses the dock */}
+        {/* Mobile: a real disclosure button controlling the compact tools. */}
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
+          aria-controls="reader-dock-options"
           aria-expanded={expanded}
           aria-label={`Прочитано ${pct}%. ${expanded ? "Свернуть" : "Развернуть"} панель чтения`}
           title={`Прочитано ${pct}% · изучено ${completedCount} из ${totalCount}`}
-          className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full sm:pointer-events-none sm:mb-1 sm:h-9 sm:w-9"
+          className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full sm:hidden"
         >
-          <svg viewBox="0 0 36 36" className="h-8 w-8 -rotate-90 sm:h-9 sm:w-9" aria-hidden>
-            <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(74,66,50,0.5)" strokeWidth="2" />
-            <motion.circle
-              cx="18"
-              cy="18"
-              r="15"
-              fill="none"
-              stroke="#d4af37"
-              strokeWidth="2"
-              strokeLinecap="round"
-              style={{ pathLength: progress }}
-            />
-          </svg>
-          <span className="absolute font-ui text-[8px] tabular-nums text-gold-300">
-            {expanded ? <X className="h-3 w-3 sm:hidden" /> : null}
-            <span className={expanded ? "hidden sm:inline" : ""}>{pct}</span>
-          </span>
-          {completedCount > 0 && (
-            <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold-500 px-1 font-ui text-[7px] font-semibold tabular-nums text-ink-950 shadow-[0_0_10px_rgba(212,175,55,0.55)]">
-              {completedCount}
-            </span>
-          )}
+          <ProgressRing progress={progress} pct={pct} completedCount={completedCount} expanded={expanded} />
         </button>
+        {/* Desktop: progress is read-only; keyboard focus skips this indicator. */}
+        <div
+          role="img"
+          aria-label={`Прочитано ${pct}%. Изучено ${completedCount} из ${totalCount}`}
+          title={`Прочитано ${pct}% · изучено ${completedCount} из ${totalCount}`}
+          className="relative hidden h-9 w-9 shrink-0 items-center justify-center rounded-full sm:flex sm:mb-1"
+        >
+          <ProgressRing progress={progress} pct={pct} completedCount={completedCount} />
+        </div>
 
-        <div className={`${expanded ? "flex" : "hidden"} items-center gap-0.5 sm:flex sm:flex-col sm:gap-1`}>
+        <div id="reader-dock-options" className={`${expanded ? "flex" : "hidden"} items-center gap-0.5 sm:flex sm:flex-col sm:gap-1`}>
           {divider}
           <button type="button" className={btn} onClick={() => stepFont(1)} disabled={font === "lg"} title="Крупнее шрифт" aria-label="Увеличить шрифт">
             <Plus className="h-4 w-4" strokeWidth={1.5} />
@@ -237,6 +261,7 @@ export default function ReaderDock({
             title="Горячие клавиши"
             aria-label="Горячие клавиши"
             aria-expanded={showKeys}
+            aria-controls={showKeys ? "reader-shortcut-reference" : undefined}
           >
             <Keyboard className="h-4 w-4" strokeWidth={1.5} />
           </button>
@@ -255,7 +280,8 @@ export default function ReaderDock({
             exit={{ opacity: 0, x: 8 }}
             transition={{ duration: 0.25 }}
             className="fixed bottom-5 right-[4.75rem] z-40 hidden w-72 rounded-2xl border border-gold-500/25 bg-ink-950/95 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.85)] backdrop-blur-md lg:block"
-            role="dialog"
+            id="reader-shortcut-reference"
+            role="region"
             aria-label="Горячие клавиши"
           >
             <p className="font-ui text-[9px] uppercase tracking-[0.35em] text-gold-400">Горячие клавиши</p>
