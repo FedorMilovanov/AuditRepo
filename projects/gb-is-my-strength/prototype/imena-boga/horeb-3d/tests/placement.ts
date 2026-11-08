@@ -78,5 +78,23 @@ for (const [id, [x, z]] of Object.entries(PLACEMENTS)) {
 }
 if (!centreBad) t(`all 42 prop groups leave a walkable centre path (≥${CENTRE_MIN}m)`, true);
 
+// Props collision (r=0.6 + player 0.35 = 0.95 effective): the collision circle at the
+// props anchor must NOT swallow the centre walkway. Nearest blocked |x| =
+// |x| - frontShift - effRadius. Verify it stays above CENTRE_MIN for every exhibit.
+const PROPS_COLL_R = 0.6, PLAYER_R = 0.35;
+const effCollR = PROPS_COLL_R + PLAYER_R;
+let collBad = 0;
+for (const [id, [x, z]] of Object.entries(PLACEMENTS)) {
+  const hw = effHw(z);
+  // props anchor moves 1.2 toward centre; collision circle extends 0.95 further toward centre.
+  const collExtreme = Math.abs(x) - FRONT_SHIFT - effCollR; // nearest |x| blocked by props collision
+  const ok = collExtreme > CENTRE_MIN;
+  if (!ok) {
+    collBad++;
+    t(`props collision ${id} leaves centre path (extreme=${collExtreme.toFixed(2)})`, false, `needs > ${CENTRE_MIN}`);
+  }
+}
+if (!collBad) t(`all 42 prop-collision circles leave centre path (≥${CENTRE_MIN}m)`, true);
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

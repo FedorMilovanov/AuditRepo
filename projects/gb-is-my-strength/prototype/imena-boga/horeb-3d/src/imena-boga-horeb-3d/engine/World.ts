@@ -143,7 +143,8 @@ export class World {
       const bx = x + (nx / d) * 1.2, bz = z + (nz / d) * 1.2;
       const props = buildExhibitProps(e, low, bx, bz);
       this.scene.add(props);
-      this.obstacles.push({ x, z, r: 0.85 });
+      this.obstacles.push({ x, z, r: 0.85 }); // стелы
+      this.obstacles.push({ x: bx, z: bz, r: 0.6 }); // props-якорь — игрок обходит сцены экспонатов (fail-closed)
       this.exhibitPos.push({ e, x, z, nx, nz });
     }
   }
