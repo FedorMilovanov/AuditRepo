@@ -93,6 +93,24 @@ jobs:
           HOREB_NO_SANDBOX: '1'
           HOREB_BASE_URL: http://127.0.0.1:5173
         run: npm run test:browser:exhibits
+      - name: Capture rendered screenshots for eight zones and mobile emulation
+        env:
+          HOREB_BROWSER_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HOREB_SWIFTSHADER: '1'
+          HOREB_NO_SANDBOX: '1'
+          HOREB_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:browser:visual
+      - name: Preserve successful screenshot evidence for human art review
+        if: success()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: horeb-visual-${{ github.run_id }}
+          path: |
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/visual-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/smoke-*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/visual-witness.json
+          retention-days: 7
+          if-no-files-found: error
       - name: Preserve browser evidence if any test fails
         if: failure()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -100,6 +118,7 @@ jobs:
           name: horeb-chromium-debug-${{ github.run_id }}
           path: |
             projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/screenshots/*.png
+            projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/.test-build/visual-witness.json
             ${{ runner.temp }}/horeb-vite.log
           retention-days: 7
           if-no-files-found: warn
