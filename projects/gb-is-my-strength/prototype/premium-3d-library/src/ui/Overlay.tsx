@@ -235,7 +235,7 @@ function AimTooltip() {
   if (!aimed || phase !== "play" || paused || opened || sitemap || xr || mode === "cardboard" || tour !== null) return null;
   const it = byId(aimed);
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-24 z-10 flex justify-center px-4 sm:bottom-10">
+    <div data-gb-aim className={`pointer-events-none fixed inset-x-0 z-10 flex justify-center px-4 ${coarse ? "bottom-[calc(11rem+env(safe-area-inset-bottom,0px))]" : "bottom-24 sm:bottom-10"}`}>
       <div key={aimed} className="glass fade-up pointer-events-auto flex max-w-lg items-center gap-4 rounded-3xl p-4 pr-5" style={{ animationDuration: "0.35s", borderColor: it.color + "99" }}>
         <div className="h-12 w-1 shrink-0 rounded-full" style={{ background: it.color, boxShadow: `0 0 16px ${it.color}` }} />
         <div className="min-w-0">
@@ -343,9 +343,13 @@ function Joystick() {
   const mode = useApp((s) => s.mode);
   const opened = useApp((s) => s.opened);
   const sitemap = useApp((s) => s.sitemap);
+  const paused = useApp((s) => s.paused);
+  const tour = useApp((s) => s.tour);
   const knob = useRef<HTMLDivElement>(null);
   const id = useRef(-1);
-  if (!coarse || phase !== "play" || xr || mode !== "desktop" || opened || sitemap) return null;
+  // A modal or tour can unmount the control during pointer capture: never leave movement latched.
+  useEffect(() => () => { input.joy.x = input.joy.y = 0; }, []);
+  if (!coarse || phase !== "play" || xr || mode !== "desktop" || opened || sitemap || paused || tour !== null) return null;
   const upd = (e: React.PointerEvent) => {
     const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
     let dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
@@ -366,8 +370,11 @@ function Joystick() {
   };
   return (
     <div
-      className="glass pointer-events-auto fixed bottom-8 left-6 z-10 grid h-32 w-32 touch-none place-items-center rounded-full"
+      data-gb-joystick
+      aria-label="Виртуальный джойстик движения"
+      className="glass pointer-events-auto fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] left-4 z-10 grid h-32 w-32 touch-none place-items-center rounded-full"
       onPointerDown={(e) => {
+        if (id.current !== -1) return;
         id.current = e.pointerId;
         (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
         upd(e);
@@ -375,6 +382,7 @@ function Joystick() {
       onPointerMove={(e) => id.current === e.pointerId && upd(e)}
       onPointerUp={end}
       onPointerCancel={end}
+      onLostPointerCapture={end}
     >
       <div ref={knob} className="h-14 w-14 rounded-full bg-gradient-to-b from-[#e8cfaa] to-[#c29b6d] shadow-[0_0_24px_rgba(240,194,122,0.6)]" />
     </div>
@@ -390,46 +398,86 @@ function TopBar({ onProgress, onCabinet }: { onProgress: () => void; onCabinet: 
   const sitemap = useApp((s) => s.sitemap);
   const tourOn = useApp((s) => s.tour !== null);
   const sitting = useApp((s) => s.sitting);
+  const [moreOpen, setMoreOpen] = useState(false);
+
+  useEffect(() => {
+    if (sitemap || phase !== "play" || xr) setMoreOpen(false);
+  }, [sitemap, phase, xr]);
+
+  useEffect(() => {
+    if (!moreOpen) return;
+    const dismiss = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMoreOpen(false);
+    };
+    document.addEventListener("keydown", dismiss);
+    return () => document.removeEventListener("keydown", dismiss);
+  }, [moreOpen]);
+
+  const action = (run: () => void) => () => {
+    setMoreOpen(false);
+    run();
+  };
+
   if (phase !== "play" || xr) return null;
   if (mode === "cardboard")
     return (
-      <div className="pointer-events-none fixed inset-x-0 top-3 z-10 flex justify-center">
+      <div className="pointer-events-none fixed inset-x-0 top-3 z-20 flex justify-center">
         <button onClick={exitToCover} className="glass pointer-events-auto rounded-full px-4 py-2 text-xs">✕ Выйти из режима очков</button>
       </div>
     );
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 z-10 flex items-start justify-between gap-2 p-3 sm:p-5">
-      <div className="pointer-events-auto">
-        <Btn onClick={exitToCover} title="Вернуться на обложку">
-          <Ico d={I.home} /> <span className="hidden sm:inline">Обложка</span>
-        </Btn>
-      </div>
-      <div className="flex flex-wrap justify-end gap-2">
-        <Btn onClick={() => (tourOn ? endTour() : startTour())} active={tourOn} title="Экскурсия (T)">
-          <Ico d={I.tour} /> <span className="hidden md:inline">Экскурсия</span> {!coarse && <Kbd>T</Kbd>}
-        </Btn>
-        <Btn onClick={onProgress} title="Уровни и достижения">Уровни</Btn>
-        <Btn onClick={onCabinet} title="Личные закладки и цитаты">Моя библиотека</Btn>
-        <Btn onClick={() => toggleSitemap()} active={sitemap} title="Карта сайта (M)">
-          <Ico d={I.map} /> <span className="hidden sm:inline">Карта сайта</span> {!coarse && <Kbd>M</Kbd>}
-        </Btn>
-        <Btn onClick={toggleSit} active={sitting} title="Присесть (C)">
-          <span className="text-[13px]">{sitting ? "Встать" : "Сесть"}</span>
-        </Btn>
-        <Btn onClick={toggleSound} title="Звук">
-          <Ico d={sound ? I.soundOn : I.soundOff} />
-        </Btn>
-        <Btn onClick={toggleQuality} title="Качество графики">
-          <Ico d={I.gauge} /> <span className="hidden sm:inline">{quality === "high" ? "Ультра" : "Лёгкая"}</span>
-        </Btn>
-        <Btn onClick={toggleFullscreen} title="Полный экран">
-          <Ico d={I.full} />
-        </Btn>
-        <Btn onClick={() => togglePhoto(true)} title="Фото-режим (H) — скрыть интерфейс">
-          <Ico d={I.cam} /> <span className="hidden lg:inline">Фото</span>
-        </Btn>
-      </div>
-    </div>
+    <>
+      {moreOpen && <div className="pointer-events-auto fixed inset-0 z-10" onClick={() => setMoreOpen(false)} aria-hidden="true" />}
+      <header data-gb-toolbar className="pointer-events-none fixed inset-x-0 top-0 z-20 flex items-start justify-between gap-2 px-3 pt-[calc(0.75rem+env(safe-area-inset-top,0px))] sm:px-5 sm:pt-5">
+        <div className="pointer-events-auto shrink-0">
+          <Btn onClick={exitToCover} title="Вернуться на обложку">
+            <Ico d={I.home} /> <span className="hidden xl:inline">Обложка</span>
+          </Btn>
+        </div>
+        <div className="hidden items-center gap-2 xl:flex">
+          <Btn onClick={() => (tourOn ? endTour() : startTour())} active={tourOn} title="Экскурсия (T)">
+            <Ico d={I.tour} /> Экскурсия {!coarse && <Kbd>T</Kbd>}
+          </Btn>
+          <Btn onClick={onProgress} title="Уровни и достижения">Уровни</Btn>
+          <Btn onClick={onCabinet} title="Личные закладки и цитаты">Моя библиотека</Btn>
+          <Btn onClick={() => toggleSitemap()} active={sitemap} title="Карта сайта (M)">
+            <Ico d={I.map} /> Карта {!coarse && <Kbd>M</Kbd>}
+          </Btn>
+          <Btn onClick={toggleSit} active={sitting} title="Присесть (C)">{sitting ? "Встать" : "Сесть"}</Btn>
+          <Btn onClick={toggleSound} title="Звук"><Ico d={sound ? I.soundOn : I.soundOff} /></Btn>
+          <Btn onClick={toggleQuality} title="Качество графики"><Ico d={I.gauge} />{quality === "high" ? "Ультра" : "Лёгкая"}</Btn>
+          <Btn onClick={toggleFullscreen} title="Полный экран"><Ico d={I.full} /></Btn>
+          <Btn onClick={() => togglePhoto(true)} title="Фото-режим (H)"><Ico d={I.cam} /></Btn>
+        </div>
+        <div className="pointer-events-auto flex min-w-0 items-center justify-end gap-1.5 xl:hidden">
+          <Btn onClick={onCabinet} title="Личные закладки и цитаты">Кабинет</Btn>
+          <Btn onClick={() => toggleSitemap()} active={sitemap} title="Карта сайта"><Ico d={I.map} /></Btn>
+          <button
+            type="button"
+            onClick={() => setMoreOpen((open) => !open)}
+            aria-label="Дополнительные действия"
+            aria-controls="gb-library-more"
+            aria-expanded={moreOpen}
+            className="glass pointer-events-auto flex h-10 shrink-0 items-center rounded-full px-3 text-[13px] font-medium text-[#f5f1e7] hover:border-[#d8b88d]"
+          >Ещё</button>
+        </div>
+      </header>
+      {moreOpen && (
+        <nav
+          id="gb-library-more"
+          aria-label="Дополнительные действия"
+          className="glass pointer-events-auto fixed right-3 top-[calc(4rem+env(safe-area-inset-top,0px))] z-20 grid max-h-[min(65dvh,420px)] w-[min(19rem,calc(100vw-1.5rem))] grid-cols-2 gap-2 overflow-y-auto rounded-2xl p-3 sm:right-5"
+        >
+          <button onClick={action(() => (tourOn ? endTour() : startTour()))} className="min-h-11 rounded-xl border border-white/20 px-2 text-sm">{tourOn ? "Завершить экскурсию" : "Экскурсия"}</button>
+          <button onClick={action(onProgress)} className="min-h-11 rounded-xl border border-white/20 px-2 text-sm">Уровни</button>
+          <button onClick={action(toggleSit)} className="min-h-11 rounded-xl border border-white/20 px-2 text-sm">{sitting ? "Встать" : "Сесть"}</button>
+          <button onClick={action(toggleSound)} className="min-h-11 rounded-xl border border-white/20 px-2 text-sm">{sound ? "Выключить звук" : "Включить звук"}</button>
+          <button onClick={action(toggleQuality)} className="min-h-11 rounded-xl border border-white/20 px-2 text-sm">Графика: {quality === "high" ? "ультра" : "лёгкая"}</button>
+          <button onClick={action(toggleFullscreen)} className="min-h-11 rounded-xl border border-white/20 px-2 text-sm">Полный экран</button>
+          <button onClick={action(() => togglePhoto(true))} className="col-span-2 min-h-11 rounded-xl border border-white/20 px-2 text-sm">Фото-режим</button>
+        </nav>
+      )}
+    </>
   );
 }
 
@@ -449,7 +497,7 @@ function HelpHint() {
   const aimed = useApp((s) => s.aimed);
   if (phase !== "play" || xr || !on || tour !== null || aimed) return null;
   return (
-    <div className="pointer-events-none fixed bottom-28 left-1/2 z-10 -translate-x-1/2 px-4 text-center sm:bottom-24">
+    <div data-gb-help className={`pointer-events-none fixed left-1/2 z-10 w-full max-w-md -translate-x-1/2 px-4 text-center ${coarse && mode !== "cardboard" ? "bottom-[calc(11rem+env(safe-area-inset-bottom,0px))]" : "bottom-28 sm:bottom-24"}`}>
       <div className="glass fade-up rounded-full px-5 py-2 text-xs text-[#e0dcd1]">
         {mode === "cardboard"
           ? "Поверните телефон и вставьте в очки · удерживайте экран, чтобы идти · задержите взгляд — откроется"
@@ -790,7 +838,7 @@ function SitNote() {
   const opened = useApp((s) => s.opened);
   if (!sitting || tour !== null || opened) return null;
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-6 z-10 flex justify-center px-4">
+    <div className={`pointer-events-none fixed inset-x-0 z-10 flex justify-center px-4 ${coarse ? "bottom-[calc(11rem+env(safe-area-inset-bottom,0px))]" : "bottom-6"}`}>
       <button onClick={toggleSit} className="glass pointer-events-auto rounded-full px-5 py-2 text-sm text-[#f5f1e7]">
         Вы сидите · встать
       </button>
