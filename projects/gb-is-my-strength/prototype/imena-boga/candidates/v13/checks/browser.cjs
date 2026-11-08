@@ -60,6 +60,51 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
    if(stats.bodyText<1000||stats.scroll>stats.viewport+1||errors.length||requests.length||!stats.cssLoaded)
     throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests}));
    if(name==='atlas'){
+    // Reflow contract: no Hebrew/Greek original or Russian caption may be
+    // clipped when large-text zoom narrows the medallion's inline space.
+    if(width===320){
+      const dots=page.getByRole('group',{name:'Выбор имени на медальоне'}).locator('button');
+      if(await dots.count()!==5)throw Error('Atlas glyph selector lost one of its five controls');
+      for(const narrow of [200,240,280,320,430]){
+        await page.setViewportSize({width:narrow,height:844});
+        for(let i=0;i<5;i++){
+          await dots.nth(i).click();
+          const geo=await page.evaluate(()=>{
+            const row=document.querySelector('.gb-hero-medallion-controls');
+            const card=document.querySelector('.gb-hero-medallion-button');
+            const script=document.querySelector('.gb-hero-medallion-script');
+            const caption=document.querySelector('.gb-hero-medallion-caption');
+            const prev=document.querySelector('.gb-hero-medallion-prev');
+            const next=document.querySelector('.gb-hero-medallion-next');
+            const eyebrow=document.querySelector('.gb-hero-eyebrow');
+            const actions=[...document.querySelectorAll('header .gb-hero-action')];
+            if(!row||!card||!script||!caption||!prev||!next||!eyebrow||actions.length!==2)
+              return {error:'missing medallion elements'};
+            const bounds=card.getBoundingClientRect(),viewport=document.documentElement.clientWidth;
+            const textFits=element=>{
+              const range=document.createRange();range.selectNodeContents(element);
+              const fragments=[...range.getClientRects()];
+              return fragments.length>0&&fragments.every(r=>r.left>=bounds.left+2&&r.right<=bounds.right-2);
+            };
+            const onscreen=element=>{
+              const r=element.getBoundingClientRect();
+              return r.width>=1&&r.left>=-1&&r.right<=viewport+1;
+            };
+            return {display:getComputedStyle(row).display,cardWidth:Math.round(bounds.width),
+              glyphText:script.textContent?.trim(),scriptFits:textFits(script),
+              captionFits:textFits(caption),arrowsFit:onscreen(prev)&&onscreen(next),
+              badgeFits:onscreen(eyebrow),actionsFit:actions.every(onscreen),
+              controlsTallEnough:[prev,next].every(el=>el.getBoundingClientRect().height>=44)};
+          });
+          if(geo.error||geo.display!==(narrow<=280?'grid':'flex')||geo.cardWidth<125||
+             !geo.scriptFits||!geo.captionFits||!geo.arrowsFit||!geo.badgeFits||
+             !geo.actionsFit||!geo.controlsTallEnough)
+            throw Error('Atlas mobile glyph/CTA reflow '+JSON.stringify({engine,narrow,i,geo}));
+        }
+      }
+      await page.setViewportSize({width,height:844});
+      await dots.first().click();
+    }
     if(width===390){
       // In the reduced-motion browser context, hero navigation must not
       // animate the document even if the desktop/mobile designs differ.

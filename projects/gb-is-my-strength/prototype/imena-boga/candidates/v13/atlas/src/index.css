@@ -243,6 +243,62 @@ input:focus-visible,
   }
 }
 
+/* Medallion adapts to the actual space available, including text zoom.
+   At extreme narrow widths its navigation moves below the legible plaque. */
+.gb-hero-medallion-frame { container-type: inline-size; }
+.gb-hero-medallion-script {
+  display: block;
+  max-width: 100%;
+  font-size: clamp(1.2rem, 12cqi, 2.25rem);
+  line-height: 1.16;
+  overflow-wrap: anywhere;
+}
+.gb-hero-medallion-caption {
+  display: block;
+  max-width: 100%;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.gb-hero-eyebrow {
+  max-width: 100%;
+  min-width: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  line-height: 1.5;
+  text-wrap: balance;
+}
+.gb-hero-action {
+  max-width: 100%;
+  min-width: 0;
+  white-space: normal;
+  text-wrap: balance;
+}
+.gb-hero-action > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+@container (max-width: 255px) {
+  .gb-hero-medallion-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    justify-items: center;
+    row-gap: 0.55rem;
+  }
+  .gb-hero-medallion-center {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: 100%;
+    max-width: 270px;
+  }
+  .gb-hero-medallion-prev { grid-column: 1; grid-row: 2; }
+  .gb-hero-medallion-next { grid-column: 2; grid-row: 2; }
+  .gb-hero-medallion-button { padding: 0.875rem 0.625rem; }
+}
+@media (min-width: 640px) {
+  .gb-hero-medallion-script { font-size: 3rem; }
+}
+
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
   html {

@@ -362,7 +362,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
       <div className="relative z-10 mx-auto max-w-4xl px-5 sm:px-8 text-center">
         {/* Eyebrow */}
         <div
-          className="font-ui mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium tracking-wider uppercase"
+          className="gb-hero-eyebrow font-ui mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium tracking-wider uppercase"
           style={{
             borderColor: 'var(--gb-border-strong)',
             backgroundColor: 'var(--gb-glass)',
@@ -375,14 +375,15 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
         </div>
 
         {/* Interactive 3D Tilting Sacred Medallion with Manual Glyph Switcher */}
-        <div className="mb-8 flex w-full items-center justify-center gap-1.5 sm:gap-3" style={{ perspective: '900px' }}>
+        <div className="gb-hero-medallion-frame mb-8" style={{ perspective: '900px' }}>
+          <div className="gb-hero-medallion-controls flex w-full items-center justify-center gap-1.5 sm:gap-3">
           <button
             type="button"
             onClick={() =>
               setGlyphIndex((prev) => (prev - 1 + SACRED_GLYPHS.length) % SACRED_GLYPHS.length)
             }
             aria-label="Предыдущее священное имя"
-            className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-all hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gb-accent)]"
+            className="gb-hero-medallion-prev flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-all motion-safe:hover:scale-105 motion-safe:active:scale-95 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gb-accent)]"
             style={{
               backgroundColor: 'var(--gb-glass)',
               borderColor: 'var(--gb-border-strong)',
@@ -405,13 +406,13 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
               // React focus/blur bubbles from child buttons: only the last focus exit resumes cycling.
               if (!event.currentTarget.contains(event.relatedTarget)) setMedallionHovered(false);
             }}
-            className="flex min-w-0 max-w-[270px] flex-1 flex-col items-center"
+            className="gb-hero-medallion-center flex min-w-0 max-w-[270px] flex-1 flex-col items-center"
           >
             <button
               type="button"
               onClick={() => onSelectGlyphName(activeGlyph.id)}
               title="Нажмите, чтобы открыть глубокий разбор этого Имени"
-              className="group relative w-full min-w-0 cursor-pointer rounded-2xl border px-4 py-5 transition-shadow duration-500 sm:px-8"
+              className="gb-hero-medallion-button group relative w-full min-w-0 cursor-pointer rounded-2xl border px-4 py-5 transition-shadow duration-500 motion-safe:active:scale-[0.985] motion-reduce:transition-none sm:px-8"
               style={{
                 transform: `rotateX(${medallionTilt.rx}deg) rotateY(${medallionTilt.ry}deg)`,
                 transformStyle: 'preserve-3d',
@@ -431,7 +432,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
                 <span
                   lang={activeGlyph.lang}
                   dir={activeGlyph.lang === 'he' ? 'rtl' : 'ltr'}
-                  className={`${activeGlyph.lang === 'el' ? 'font-greek' : 'font-hebrew'} text-4xl sm:text-5xl font-bold tracking-wide transition-all duration-700`}
+                  className={`gb-hero-medallion-script ${activeGlyph.lang === 'el' ? 'font-greek' : 'font-hebrew'} font-bold tracking-wide transition-all duration-700`}
                   style={{
                     color: 'var(--gb-ink)',
                     textShadow: '0 0 24px var(--gb-gold-glow)',
@@ -440,7 +441,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
                   {activeGlyph.script}
                 </span>
                 <span
-                  className="font-ui mt-2 text-[11px] font-medium tracking-widest uppercase transition-colors"
+                  className="gb-hero-medallion-caption font-ui mt-2 text-[11px] font-medium tracking-widest uppercase transition-colors"
                   style={{ color: 'var(--gb-gold-ink)' }}
                 >
                   {activeGlyph.label}
@@ -459,7 +460,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
                     aria-pressed={active}
                     aria-label={g.label}
                     onClick={() => setGlyphIndex(idx)}
-                    className="group flex h-9 min-w-9 cursor-pointer items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gb-accent)]"
+                    className="group flex h-11 min-w-9 cursor-pointer items-center justify-center rounded-full motion-safe:active:scale-95 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gb-accent)]"
                   >
                     <span
                       aria-hidden="true"
@@ -479,7 +480,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
             type="button"
             onClick={() => setGlyphIndex((prev) => (prev + 1) % SACRED_GLYPHS.length)}
             aria-label="Следующее священное имя"
-            className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-all hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gb-accent)]"
+            className="gb-hero-medallion-next flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-all motion-safe:hover:scale-105 motion-safe:active:scale-95 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gb-accent)]"
             style={{
               backgroundColor: 'var(--gb-glass)',
               borderColor: 'var(--gb-border-strong)',
@@ -489,6 +490,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
           >
             <ChevronRight className="h-4 w-4" />
           </button>
+          </div>
         </div>
 
         {/* Main Editorial Title */}
@@ -535,7 +537,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
           <button
             type="button"
             onClick={onStartReading}
-            className="font-ui inline-flex cursor-pointer items-center gap-2.5 rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-md transition-all hover:opacity-95 active:scale-[0.99]"
+            className="gb-hero-action font-ui inline-flex cursor-pointer items-center justify-center gap-2.5 rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-md transition-all hover:opacity-95 motion-safe:active:scale-[0.99] motion-reduce:transition-none"
             style={{
               backgroundColor: 'var(--gb-accent)',
               boxShadow: '0 8px 24px var(--gb-crimson-glow)',
@@ -549,7 +551,7 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
           <button
             type="button"
             onClick={onOpenAtlas}
-            className="font-ui inline-flex cursor-pointer items-center gap-2 rounded-xl border px-5 py-3 text-sm font-medium transition-all hover:border-amber-600/50"
+            className="gb-hero-action font-ui inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border px-5 py-3 text-sm font-medium transition-all hover:border-amber-600/50 motion-reduce:transition-none"
             style={{
               backgroundColor: 'var(--gb-glass)',
               borderColor: 'var(--gb-border-strong)',
