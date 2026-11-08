@@ -139,10 +139,10 @@ function NameSection({
           </div>
         </Reveal>
 
-        <div className="mt-10 grid items-start gap-10 md:mt-14 lg:grid-cols-12 md:gap-8">
+        <div data-reading-grid className="mt-10 grid items-start gap-10 md:mt-14 lg:grid-cols-12 md:gap-8">
           {/* left / name block */}
           <Reveal className={`min-w-0 lg:col-span-5 lg:sticky lg:top-24 ${flip ? "lg:order-2" : ""}`}>
-            <div className={flip ? "lg:text-right" : ""}>
+            <div data-reading-titles className={flip ? "lg:text-right" : ""}>
               <motion.p
                 initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
                 whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}

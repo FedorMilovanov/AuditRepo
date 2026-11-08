@@ -821,13 +821,19 @@ for (const width of [320, 390, 768, 1440]) {
     const headings = [...document.querySelectorAll("h3[data-name-heading]")];
     const outside = [];
     for (const heading of headings) {
-      const item = heading.closest('[class~="md:col-span-5"]');
-      const grid = item?.parentElement;
-      if (!grid) {
-        outside.push({ id: heading.closest("section[id]")?.id, reason: "missing reading grid" });
+      // Test the actual rendered title column, not a Tailwind breakpoint
+      // token. The old md:col-span-5 selector became stale when the shared
+      // reading grid switched to lg:col-span-5.
+      const item = heading.closest('[data-reading-titles]');
+      const grid = heading.closest('[data-reading-grid]');
+      if (!item || !grid || !grid.contains(item)) {
+        outside.push({ id: heading.closest("section[id]")?.id, reason: "missing reading column" });
         continue;
       }
-      const bounds = grid.getBoundingClientRect();
+      const bounds = item.getBoundingClientRect();
+      if (bounds.width < 150) {
+        outside.push({ id: heading.closest("section[id]")?.id, reason: "collapsed title column", width: bounds.width });
+      }
       for (const text of [heading.previousElementSibling, heading]) {
         if (!text) continue;
         const range = document.createRange();
