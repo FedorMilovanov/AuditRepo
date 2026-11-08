@@ -61,8 +61,8 @@ function BookInstances() {
 }
 
 /**
- * All permanent shelving uses two GPU draws instead of a draw per plank.
- * These are exactly the former ShelfBay transforms: no scene redesign,
+ * Each shelving bay uses two instanced GPU draws instead of separate planks.
+ * Individual bays remain frustum-cullable. These are the original ShelfBay transforms: no scene redesign,
  * route changes, hidden culling tricks or altered editorial items.
  */
 type ShelfPart = {
