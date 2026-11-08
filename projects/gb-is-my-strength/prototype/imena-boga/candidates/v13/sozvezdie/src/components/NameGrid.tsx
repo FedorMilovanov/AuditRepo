@@ -65,15 +65,27 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      const target = event.target as HTMLElement | null;
-      const typing =
-        target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
-      if (typing) return;
-      if (event.key === "/" || ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k")) {
-        event.preventDefault();
-        document.getElementById("sozvezdie")?.scrollIntoView({ behavior: "smooth", block: "start" });
-        window.setTimeout(() => searchRef.current?.focus({ preventScroll: true }), 420);
-      }
+      if (event.defaultPrevented || event.isComposing || event.repeat ||
+          event.altKey || event.shiftKey) return;
+      const slash = event.key === "/" && !event.ctrlKey && !event.metaKey;
+      const searchCommand = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k";
+      if (!slash && !searchCommand) return;
+
+      const target = event.target instanceof Element ? event.target : null;
+      // Search must never steal keys from native controls, links or an open
+      // modal. In particular, focus must remain trapped in the mobile index.
+      if (document.querySelector('[aria-modal="true"]') ||
+          target?.closest('input, textarea, select, button, a, [role="dialog"], [role="menu"], [contenteditable="true"]'))
+        return;
+
+      const search = searchRef.current;
+      if (!search) return;
+      event.preventDefault();
+      search.focus({ preventScroll: true });
+      document.getElementById("sozvezdie")?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+        block: "start",
+      });
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
