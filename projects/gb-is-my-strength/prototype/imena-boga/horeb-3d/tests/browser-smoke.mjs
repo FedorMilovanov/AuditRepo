@@ -149,7 +149,7 @@ try {
       window.__horeb.world.audio.ctx?.state === 'running',
       { timeout: 6500, polling: 100 }).then(() => true, () => false);
     check('trusted movement key unlocks browser Web Audio after async world load',
-      resumedAudio && window !== undefined, String(await page.evaluate(() =>
+      resumedAudio, String(await page.evaluate(() =>
         window.__horeb.world.audio.ctx?.state ?? 'unavailable')));
 
 
