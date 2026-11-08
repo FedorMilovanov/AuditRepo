@@ -443,9 +443,10 @@ export function App() {
   }, [showToast]);
 
   const handlePrint = useCallback(() => {
-    showToast('Подготовка к печати / сохранению в PDF…');
-    window.setTimeout(() => window.print(), 220);
-  }, [showToast]);
+    // Browser print dialogs may require direct user activation. Deferring
+    // window.print through a timer can silently block a requested PDF/print.
+    window.print();
+  }, []);
 
   const handleFocusSearch = useCallback(() => {
     // Focus belongs to the explicit search action, not to an arbitrary
