@@ -58,3 +58,5 @@ HOREB_BASE_URL=http://127.0.0.1:5173 HOREB_BROWSER_PATH=/path/to/chrome npm run 
 
 На Windows в PowerShell: `$env:HOREB_BROWSER_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'; npm.cmd run test:browser:smoke`.
 Проверка использует реальный Chromium, не отключает web security и **падает**, если браузер или работающий сервер недоступны; не объявлять её PASS при SKIPPED. Проверяются загрузка, фокус модального окна, старт WebGL, 42 размещения, WASD, пауза анимации на время диалога, HTML reader с 42 статьями, no-WebGL fallback и мобильный viewport. Скриншоты: `.test-build/screenshots/smoke-*.png` — локальные QA-артефакты, не источник исторических фактов и не GPU-бенчмарк.
+
+Для полного прохода всех 42 экспонатов в Chromium с настоящими проверками панели и источников: `npm run test:browser:exhibits` при работающем Vite-сервере и `HOREB_BROWSER_PATH`. Каждая метка проверяется через ограниченный `teleportTo` (защита от стен/границ), появление точного prompt ID, клавишу E, правильное досье и Esc. **PASS только при 42/42**, ошибки перечисляются с ID; физическую историческую точность тест не доказывает.
