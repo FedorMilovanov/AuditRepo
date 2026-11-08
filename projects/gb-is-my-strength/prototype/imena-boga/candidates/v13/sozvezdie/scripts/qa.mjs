@@ -469,6 +469,29 @@ const boxesOverlap = (a, b) =>
   const sizeAfter = await page.locator("#el-elyon .reader-body").first().evaluate((e) => getComputedStyle(e).fontSize);
   parseFloat(sizeAfter) > parseFloat(sizeBefore) ? ok(`font grows ${sizeBefore}→${sizeAfter}`) : bad("font control inert");
 
+  // Desktop progress is informative, not a dead disclosure button in Tab order.
+  const dockProgress=page.locator('[data-reader-dock] [role="img"][aria-label^="Прочитано"]');
+  (await dockProgress.count())===1 && (await dockProgress.isVisible())
+    ? ok("desktop reading progress is an accessible, noninteractive indicator")
+    : bad("desktop progress incorrectly exposed as interactive");
+  const deadRing=page.locator('[data-reader-dock] button[aria-label^="Прочитано"]');
+  (await deadRing.count())===1 && !(await deadRing.isVisible())
+    ? ok("no inert desktop progress button in keyboard order")
+    : bad("desktop progress button remains focusable");
+  const shortcutButton=page.locator('[data-reader-dock] button[aria-label="Горячие клавиши"]');
+  await shortcutButton.click();
+  const shortcutRegion=page.getByRole("region",{name:"Горячие клавиши"});
+  await shortcutRegion.waitFor({state:"visible"});
+  const helpConnected=(await shortcutButton.getAttribute("aria-expanded"))==="true" &&
+    (await shortcutButton.getAttribute("aria-controls"))==="reader-shortcut-reference";
+  helpConnected ? ok("keyboard help is a labelled disclosure region, not a modal dialog")
+    : bad("keyboard help semantics/expanded state incorrect");
+  await page.keyboard.press("Escape");
+  await shortcutRegion.waitFor({state:"detached"});
+  (await shortcutButton.getAttribute("aria-expanded"))==="false"
+    ? ok("keyboard help dismisses on Escape")
+    : bad("keyboard help stayed expanded after Escape");
+
   // wide measure must not push text under the rails
   await page.locator('[data-reader-dock] button[aria-label="Ширина колонки"]').click();
   await page.waitForTimeout(900);
@@ -627,6 +650,11 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
   await page.waitForTimeout(1100);
   const idle = await page.locator("[data-reader-dock]").getAttribute("data-idle");
   idle === "true" ? ok(`dock returns when idle @${w}`) : bad(`dock stayed hidden @${w}: ${idle}`);
+
+  const mobileProgress=page.locator('[data-reader-dock] button[aria-controls="reader-dock-options"]');
+  (await mobileProgress.isVisible()) && (await mobileProgress.getAttribute("aria-expanded"))==="false"
+    ? ok(`mobile progress ring is a collapsed disclosure @${w}`)
+    : bad(`mobile progress disclosure missing/expanded unexpectedly @${w}`);
 
   // expand dock on phone
   await page.locator('[data-reader-dock] button[aria-expanded]').first().click();
