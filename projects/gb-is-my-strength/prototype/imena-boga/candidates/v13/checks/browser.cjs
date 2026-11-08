@@ -565,6 +565,43 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     const painted=await countPixels(page,'canvas');
     if(!(painted>0))throw Error('Constellation static starfield blank '+width);
     if(width===1440){
+      // In-app motion=off must also control hero scroll navigation when
+      // the operating system itself has NO reduced-motion preference.
+      // Exercise both settings, not only the existing OS-reduce context.
+      for(const enabled of [false,true]){
+        const motionCtx=await browser.newContext({viewport:{width:1440,height:844},
+          locale:'ru-RU',reducedMotion:'no-preference'});
+        try{
+          await motionCtx.addInitScript(({enabled})=>{
+            localStorage.setItem('gb-imena-prefs-v1',
+              JSON.stringify({font:'md',measure:'narrow',motion:enabled}));
+          },{enabled});
+          const motionPage=await motionCtx.newPage();
+          if(process.env.FONTS_MODE==='offline')
+            await motionPage.route(/^https:\/\/fonts\.(googleapis|gstatic)\.com\//,route=>route.abort());
+          await motionPage.goto(base+'/sozvezdie/',{waitUntil:'domcontentloaded'});
+          await motionPage.locator('[data-motion]').waitFor({state:'visible'});
+          await motionPage.waitForFunction(enabled=>
+            document.querySelector('[data-motion]')?.getAttribute('data-motion')===(enabled?'on':'off'),
+            enabled,{timeout:5000});
+          await motionPage.evaluate(()=>{
+            window.__heroScrollWitness=[];
+            const original=Element.prototype.scrollIntoView;
+            Element.prototype.scrollIntoView=function(options){
+              if(this.id==='intro')window.__heroScrollWitness.push(options?.behavior);
+              return original.call(this,options);
+            };
+          });
+          await motionPage.getByRole('button',{name:'Перейти к введению'}).click();
+          const behavior=await motionPage.evaluate(()=>window.__heroScrollWitness);
+          const expected=enabled?'smooth':'instant';
+          if(behavior.length!==1||behavior[0]!==expected)
+            throw Error('Constellation hero ignores in-app motion setting '+
+              JSON.stringify({engine,width,enabled,behavior,expected}));
+        }finally{
+          await motionCtx.close();
+        }
+      }
       // OS reduced-motion must disable *all* decorative hero motion, even if
       // the in-page motion preference is enabled. React pointer events used
       // to keep the 3D tilt/glow alive despite this browser preference.
