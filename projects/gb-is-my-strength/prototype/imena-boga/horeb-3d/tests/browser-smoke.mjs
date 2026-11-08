@@ -262,7 +262,7 @@ try {
       !restoredWorld.contextLost && restoredWorld.shoes === 'shod',
       JSON.stringify(restoredWorld));
     await page.screenshot({ path: join(shots, 'smoke-02d-webgl-restarted.png') });
-    delete window.__lostWorld; delete window.__lostCanvas;
+    await page.evaluate(() => { delete window.__lostWorld; delete window.__lostCanvas; });
 
 
   }
