@@ -1,11 +1,16 @@
 {
   "schema": "gb-premium-library-lab-source-manifest-v1",
-  "status": "lab-active; no production admission",
+  "status": "lab-active; original source and V5.2 admission reconciled; Product release prohibited",
   "files": [
     {
       "path": ".gitignore",
       "bytes": 65,
       "sha256": "6a6789c7fd5f95aeb6cad33d320625e2929ecc2a1bf7932d4440602c0a32d257"
+    },
+    {
+      "path": "ADMISSION_RECONCILIATION_V52.md",
+      "bytes": 1224,
+      "sha256": "3ad2675bf991d980b01f9abab7e904e7b192b3103df229a6ea6553f485c56d31"
     },
     {
       "path": "ART_DIRECTION.md",
@@ -16,6 +21,41 @@
       "path": "CABINET_LAB_IMPLEMENTATION.md",
       "bytes": 8203,
       "sha256": "f687c2c186eb9d20fd609dd8acb31f7d799d158921f71010172d57ac61877b5d"
+    },
+    {
+      "path": "EXPERIENCE_BLUEPRINT_V5.md",
+      "bytes": 8173,
+      "sha256": "8c511ff53c00fd906586169936eed2b263f7a1d42442a58643dffe0f201d6889"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 2109,
+      "sha256": "3ec4b2676874080d4d3eba59f183ba64a1f745c37b9035da747aa1b7307e2c93"
+    },
+    {
+      "path": "PERSONAL_LIBRARY_RFC.md",
+      "bytes": 13870,
+      "sha256": "a5cfadd9e9927b60b417f29e9ae9d2dad3e99c56950e43bbc10fc608af14fdd9"
+    },
+    {
+      "path": "PROGRESSION_MANIFEST.json",
+      "bytes": 10319,
+      "sha256": "3aacea68caade2141add47af5a32c622aab8a8834d122c6d2009cb48fcbae374"
+    },
+    {
+      "path": "PROGRESSION_SYSTEM_RFC.md",
+      "bytes": 15428,
+      "sha256": "eb67308d5fce36b90c6c9fb48e76650b0408c5277aed698f83395abedb2b3d2f"
+    },
+    {
+      "path": "QA_V5_REAL_BROWSER.md",
+      "bytes": 3131,
+      "sha256": "f5a16e10121516e4afffa6894fc0e931b75f5c1d9f51f7ce4d1370d64397ac66"
+    },
+    {
+      "path": "README-LAB.md",
+      "bytes": 8330,
+      "sha256": "156bc96acc6c1a2c8075080a8d674522f6f25a3b64bee8310c554fff55a9b3b7"
     },
     {
       "path": "covers-contact-sheet.png",
@@ -43,16 +83,6 @@
       "sha256": "cc31bba0e18fdf084d8d703e725157c93ecaf5d9b18887b8d65e59ab34541dc0"
     },
     {
-      "path": "EXPERIENCE_BLUEPRINT_V5.md",
-      "bytes": 8173,
-      "sha256": "8c511ff53c00fd906586169936eed2b263f7a1d42442a58643dffe0f201d6889"
-    },
-    {
-      "path": "HANDOFF.md",
-      "bytes": 2146,
-      "sha256": "459a00adf55802de0de56a795ab15cc29132c1f5b16c9e5c0b0764011491f502"
-    },
-    {
       "path": "index.html",
       "bytes": 772,
       "sha256": "36fd52d5948472697dcf35d757f212a20af7dd7d89849461efa42da473f00b6e"
@@ -63,9 +93,19 @@
       "sha256": "cbe9fb6309a0f37ac43393e0ed511a609e2a814f0c1e3886bab23349a764a0f2"
     },
     {
+      "path": "originals/interactive-3d-card-cover(1).zip.artifact.json",
+      "bytes": 675,
+      "sha256": "f998a7c5ab80c4c8ed263085291da646e995d643fcf1de33b8df1073dacbec31"
+    },
+    {
       "path": "originals/interactive-3d-card-cover.zip",
       "bytes": 345214,
       "sha256": "4a9980b89ad280fd09bc936466e26f377696dc45455aa8a5196b4296b4e22828"
+    },
+    {
+      "path": "originals/interactive-3d-card-cover.zip.artifact.json",
+      "bytes": 672,
+      "sha256": "3312b3c5cfd5ee80642332b201c539cecdd42b3721b6657301f3cc9923f1f618"
     },
     {
       "path": "package-lock.json",
@@ -76,11 +116,6 @@
       "path": "package.json",
       "bytes": 1323,
       "sha256": "427c137dd63b1781561a8d27712f1cf21b807a6c5a62883f091a19465672135c"
-    },
-    {
-      "path": "PERSONAL_LIBRARY_RFC.md",
-      "bytes": 13870,
-      "sha256": "a5cfadd9e9927b60b417f29e9ae9d2dad3e99c56950e43bbc10fc608af14fdd9"
     },
     {
       "path": "preview/cabinet-1440.png",
@@ -138,11 +173,6 @@
       "sha256": "419d8a195f1d0753d9d0128549027c4647b59fa163922925f6fa0c0f68a91b52"
     },
     {
-      "path": "preview/progression-screenshot.png",
-      "bytes": 220214,
-      "sha256": "2077b358fcb556f1bc2a96c35b08fc6f091c9776460e05a2240083b0bc3216db"
-    },
-    {
       "path": "preview/progression.html",
       "bytes": 105835,
       "sha256": "7771f3552e74aef31b33fe75ded54386d695946344b1294a9054884a2d8da781"
@@ -151,16 +181,6 @@
       "path": "preview/template.html",
       "bytes": 14394,
       "sha256": "7f38286304fc3d7e01712f91f4db91e02ab577138e10ff8c9ef6ad2fc26867fd"
-    },
-    {
-      "path": "PROGRESSION_MANIFEST.json",
-      "bytes": 10197,
-      "sha256": "a7670c6aae301a84facbcbe03ae0850c6927cb34b527503c5c49f100f84c955c"
-    },
-    {
-      "path": "PROGRESSION_SYSTEM_RFC.md",
-      "bytes": 15428,
-      "sha256": "eb67308d5fce36b90c6c9fb48e76650b0408c5277aed698f83395abedb2b3d2f"
     },
     {
       "path": "provenance.json",
@@ -188,19 +208,14 @@
       "sha256": "063360c0f6d8f3510c768212121b20875cc5c3a5caebdc2b7e3afd01b6385614"
     },
     {
-      "path": "QA_V5_REAL_BROWSER.md",
-      "bytes": 3131,
-      "sha256": "f5a16e10121516e4afffa6894fc0e931b75f5c1d9f51f7ce4d1370d64397ac66"
-    },
-    {
-      "path": "README-LAB.md",
-      "bytes": 8087,
-      "sha256": "5d14452cd0e26f1c5c38be0b5c5de9fedc981e34a2dfb5b86db02045fbc22dad"
-    },
-    {
       "path": "reference/library-design-target.png",
       "bytes": 2876940,
       "sha256": "3391f518c93e2d476071d97ecea4b41c4260c7ed4477b0829f615a1b745147ef"
+    },
+    {
+      "path": "reference/library-design-target.png.artifact.json",
+      "bytes": 685,
+      "sha256": "07a17c43958d91ff20118d01a398b7ee6a1209449fab57655dd4ab5b1dcaba5d"
     },
     {
       "path": "scripts/build-cabinet-preview.cjs",
@@ -278,14 +293,14 @@
       "sha256": "f268dc44f71240012de0cfb1569d8ac906265cccd45eb3a99059c1a663d2f830"
     },
     {
-      "path": "src/progression/engine.ts",
-      "bytes": 15466,
-      "sha256": "b2ba958fbafea5c94481e44900f9a971eb848dbf09c523d9093bce9c677ee96c"
-    },
-    {
       "path": "src/progression/ProgressPanel.tsx",
       "bytes": 16145,
       "sha256": "62d2af6f0bc3ca16ceccf8fb09826c12f7c06f28d6e4ae04431f43e3f7431882"
+    },
+    {
+      "path": "src/progression/engine.ts",
+      "bytes": 15466,
+      "sha256": "b2ba958fbafea5c94481e44900f9a971eb848dbf09c523d9093bce9c677ee96c"
     },
     {
       "path": "src/scene/Architecture.tsx",
@@ -339,13 +354,13 @@
     },
     {
       "path": "src/scene/Vault.tsx",
-      "bytes": 2933,
-      "sha256": "9560946254bd830f4b19061d95761b0a32a1f1de08098a6264b429e501624709"
+      "bytes": 2897,
+      "sha256": "bef28a46d9761f1bb023dddfaa662ab5f3416972e6cce128bba4d11c70a69a5f"
     },
     {
       "path": "src/scene/World.tsx",
-      "bytes": 6484,
-      "sha256": "4f294838d535e1ab89d014d95aeb498d31313662c0bb4ca8a4661887408f1ee6"
+      "bytes": 6577,
+      "sha256": "994390a91152fc6a729f2460ed1a6fba1b3237e8806ee7318b60c5d4eeb53603"
     },
     {
       "path": "src/store.ts",

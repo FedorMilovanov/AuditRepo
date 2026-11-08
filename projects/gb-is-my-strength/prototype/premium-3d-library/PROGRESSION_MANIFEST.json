@@ -90,10 +90,6 @@
       "sha256": "419d8a195f1d0753d9d0128549027c4647b59fa163922925f6fa0c0f68a91b52",
       "bytes": 130361
     },
-    "preview/progression-screenshot.png": {
-      "sha256": "2077b358fcb556f1bc2a96c35b08fc6f091c9776460e05a2240083b0bc3216db",
-      "bytes": 220214
-    },
     "preview/progression.html": {
       "sha256": "7771f3552e74aef31b33fe75ded54386d695946344b1294a9054884a2d8da781",
       "bytes": 105835
@@ -282,5 +278,10 @@
       "sha256": "18dd184b9091357fe23797ee047138e6af7663b59697ac45d6c3c219522db9fa",
       "bytes": 538
     }
+  },
+  "artifactAdmissionReconciliation20261108": {
+    "canonicalScreenshot": "preview/progression-1440.png",
+    "removedExactDuplicate": "preview/progression-screenshot.png",
+    "rationale": "Same SHA-256 and byte length; README already links canonical progression-1440.png"
   }
 }
