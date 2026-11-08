@@ -201,6 +201,27 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       throw Error('Escape did not close settings '+width);
     const focusReturned=await settings.evaluate(el=>document.activeElement===el);
     if(!focusReturned)throw Error('Escape did not return focus '+width);
+    // A print/PDF request must invoke the browser synchronously inside the
+    // click dispatch. A setTimeout can lose browser user-activation privileges.
+    await settings.click();
+    await page.evaluate(()=>{
+      window.__printCalls=0;
+      window.__printWasImmediate=false;
+      window.print=()=>{window.__printCalls++};
+      document.addEventListener('click',event=>{
+        const target=event.target;
+        if(target instanceof Element && target.closest('button')?.textContent?.includes('Печать / PDF')){
+          queueMicrotask(()=>{window.__printWasImmediate=window.__printCalls===1});
+        }
+      },{capture:true,once:true});
+    });
+    await panel.getByRole('button',{name:'Печать / PDF'}).click();
+    const printWitness=await page.evaluate(()=>({
+      calls:window.__printCalls,
+      synchronous:window.__printWasImmediate
+    }));
+    if(printWitness.calls!==1||!printWitness.synchronous)
+      throw Error('Print/PDF did not run inside click activation '+JSON.stringify({width,printWitness}));
     const method=page.locator('section[aria-labelledby="gb-methodology-title"]');
     if(await method.count()!==1)throw Error('Research methodology is missing '+width);
     await method.locator('summary').click();
