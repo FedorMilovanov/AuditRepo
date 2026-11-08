@@ -262,6 +262,14 @@ try {
   await mobile.evaluate(() => [...document.querySelectorAll('button')]
     .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()))?.click());
   await mobile.waitForFunction(() => !!window.__horeb?.world, {timeout:75000});
+  const touchControls = await mobile.evaluate(() => ({
+    hasJoystick: !!document.querySelector('[data-testid="movement-joystick"]'),
+    maxTouchPoints: navigator.maxTouchPoints,
+    coarsePointer: matchMedia('(pointer: coarse)').matches,
+    width: innerWidth,
+  }));
+  check('narrow touch-capable mobile viewport shows on-screen joystick',
+    touchControls.hasJoystick, JSON.stringify(touchControls));
   // Real browser pointer event sequences (mobile viewport): second finger
   // must not take over or cancel the first finger's movement vector.
   const multiTouch = await mobile.evaluate(() => {
