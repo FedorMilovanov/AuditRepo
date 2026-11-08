@@ -190,9 +190,10 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared) {
     const crown = new THREE.Mesh(G.sph(0.5, 9, 6), s.leaf);
     crown.name = 'olive-crown-lobe';
     crown.position.set(x + Math.cos(a) * radius + lean * 0.3,
-      1.53 + (random() - 0.5) * 0.31, z + Math.sin(a) * radius);
-    crown.rotation.set(random() * 0.22, random() * 1.2, random() * 0.25);
-    crown.scale.set(0.7 + random() * 0.4, 0.32 + random() * 0.22, 0.75 + random() * 0.3);
+      1.49 + (random() - 0.5) * 0.58, z + Math.sin(a) * radius);
+    crown.rotation.set(random() * 0.32, random() * 1.2, (random() - 0.5) * 0.42);
+    // Taller, offset lobes avoid the flat 'umbrella' silhouette.
+    crown.scale.set(0.65 + random() * 0.4, 0.56 + random() * 0.42, 0.72 + random() * 0.38);
     g.add(crown);
   }
 }
