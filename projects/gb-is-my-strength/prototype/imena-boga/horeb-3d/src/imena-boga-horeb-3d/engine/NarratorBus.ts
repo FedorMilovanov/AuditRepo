@@ -9,13 +9,19 @@ export const ACOUSTIC: Record<AcousticSpace, { dry: number; wet: number; tail: n
   OPEN_HOREB: { dry: 0.95, wet: 0.05, tail: 0.45, delay: 0.03 },
 };
 
+// Explicit empty allow-list until a real human recording, licence and
+// editorial transcript are reviewed. Never play an arbitrary similarly
+// named file just because it happens to exist on a server.
+export const APPROVED_NARRATION_ASSETS: Readonly<Record<string, string>> = Object.freeze({});
+
 export function isApprovedAudioPath(path: string): boolean {
   return /^\/audio\/narration\/[a-z0-9-]+\.(mp3|ogg|wav)$/.test(path) &&
-    !path.includes('..');
+    Object.values(APPROVED_NARRATION_ASSETS).includes(path);
 }
 
 export class NarratorBus {
   private current: AudioBufferSourceNode | null = null;
+  private activeNodes: { dry: GainNode; wet: GainNode; reverb: ConvolverNode } | null = null;
   private activeFetch: AbortController | null = null;
   private impulses = new Map<AcousticSpace, AudioBuffer>();
   private disposed = false;
@@ -78,12 +84,14 @@ export class NarratorBus {
       source.connect(dry).connect(this.voiceOutput);
       source.connect(reverb).connect(wet).connect(this.voiceOutput);
       this.current = source;
+      this.activeNodes = { dry, wet, reverb };
       this.ambience.gain.setTargetAtTime(0.45, this.ctx.currentTime, 0.25);
       source.onended = () => {
         if (this.current !== source) return;
         this.current = null;
         this.ambience.gain.setTargetAtTime(1, this.ctx.currentTime, 0.65);
         source.disconnect(); dry.disconnect(); wet.disconnect(); reverb.disconnect();
+        this.activeNodes = null;
       };
       source.start();
       return true;
@@ -107,6 +115,12 @@ export class NarratorBus {
       source.onended = null;
       try { source.stop(); } catch { /* already ended */ }
       source.disconnect();
+    }
+    if (this.activeNodes) {
+      this.activeNodes.dry.disconnect();
+      this.activeNodes.wet.disconnect();
+      this.activeNodes.reverb.disconnect();
+      this.activeNodes = null;
     }
     if (this.ctx.state !== 'closed') this.ambience.gain.setTargetAtTime(1, this.ctx.currentTime, 0.3);
   }
