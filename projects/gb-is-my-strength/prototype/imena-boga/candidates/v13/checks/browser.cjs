@@ -284,6 +284,30 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
             opacity:Number(getComputedStyle(button).opacity)})));
       if(mobileNames.length!==36||mobileNames.some(item=>item.opacity<0.98))
         throw Error('Atlas unread mobile names are illegibly faded '+JSON.stringify({width,mobileNames}));
+      // The mobile name index must expose complete names, not ellipses.
+      // Inspect each rendered text fragment; global page scrollWidth misses it.
+      const atlasText=await drawer.evaluate(dialog=>{
+        const entries=[...dialog.querySelectorAll('button')]
+          .filter(button=>button.querySelector('[data-atlas-mobile-text="russian"]'));
+        const invalid=[];
+        for(const entry of entries){
+          const card=entry.getBoundingClientRect();
+          for(const label of entry.querySelectorAll('[data-atlas-mobile-text]')){
+            const computed=getComputedStyle(label);
+            const range=document.createRange();
+            range.selectNodeContents(label);
+            const fragments=[...range.getClientRects()];
+            if(computed.whiteSpace==='nowrap'||computed.textOverflow==='ellipsis'||
+               !fragments.length||fragments.some(rect=>
+                  rect.left<card.left+3||rect.right>card.right-3))
+              invalid.push({kind:label.getAttribute('data-atlas-mobile-text'),
+                value:label.textContent?.trim().slice(0,60)});
+          }
+        }
+        return {count:entries.length,invalid};
+      });
+      if(atlasText.count!==36||atlasText.invalid.length)
+        throw Error('Atlas mobile labels truncated or clipped '+JSON.stringify({width,...atlasText}));
       await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label')==='Закрыть скрижаль');
       if((await trigger.getAttribute('aria-expanded'))!=='true')
         throw Error('Pillars trigger not expanded '+width);

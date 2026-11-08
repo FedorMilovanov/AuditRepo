@@ -655,10 +655,10 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                       >
                         № {item.number} · {isRevealed ? 'Явлено' : 'Далее в тексте'}
                       </div>
-                      <div className="font-serif-display truncate text-sm font-bold">
+                      <div data-atlas-mobile-text="title" className="font-serif-display min-w-0 break-words text-sm font-bold">
                         {item.transliteration}
                       </div>
-                      <div className="font-ui truncate text-xs" style={{ color: 'var(--gb-muted)' }}>
+                      <div data-atlas-mobile-text="russian" className="font-ui min-w-0 break-words text-xs" style={{ color: 'var(--gb-muted)' }}>
                         {item.russianName}
                       </div>
                     </div>
