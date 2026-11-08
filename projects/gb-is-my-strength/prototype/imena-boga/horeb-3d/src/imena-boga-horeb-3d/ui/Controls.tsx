@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ZONES } from '../data/exhibits';
 import { BUSH, R_OUTER, R_INNER, halfWidth, TUNNEL_END } from '../engine/nav';
 
@@ -85,6 +85,25 @@ export function Joystick({ onMove }: { onMove: (x: number, y: number) => void })
   const base = useRef<HTMLDivElement>(null);
   const [k, setK] = useState({ x: 0, y: 0, active: false });
   const idRef = useRef<number | null>(null);
+  const onMoveRef = useRef(onMove);
+  onMoveRef.current = onMove;
+  useEffect(() => {
+    // Pointercancel is not guaranteed when a phone locks or swaps apps.
+    // Match World.stopMovement and reset the visible stick as well.
+    const release = () => {
+      idRef.current = null;
+      setK({ x: 0, y: 0, active: false });
+      onMoveRef.current(0, 0);
+    };
+    const hidden = () => { if (document.hidden) release(); };
+    window.addEventListener('blur', release);
+    document.addEventListener('visibilitychange', hidden);
+    return () => {
+      window.removeEventListener('blur', release);
+      document.removeEventListener('visibilitychange', hidden);
+      onMoveRef.current(0, 0);
+    };
+  }, []);
   const upd = (cx: number, cy: number) => {
     const r = base.current!.getBoundingClientRect();
     let dx = (cx - (r.left + r.width / 2)) / (r.width / 2), dy = (cy - (r.top + r.height / 2)) / (r.height / 2);
