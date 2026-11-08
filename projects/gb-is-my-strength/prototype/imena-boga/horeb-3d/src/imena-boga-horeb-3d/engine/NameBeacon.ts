@@ -37,6 +37,9 @@ export function createNameBeacon(e: Exhibit, low: boolean) {
   bg.addColorStop(0, 'rgba(11,13,17,0.78)');
   bg.addColorStop(0.5, 'rgba(11,13,17,0.61)');
   bg.addColorStop(0.82, 'rgba(11,13,17,0.2)');
+  // The original radial fade still left alpha=18 at the extreme corners.
+  // Reach fully transparent before the rectangular canvas edge.
+  bg.addColorStop(0.9, 'rgba(11,13,17,0)');
   bg.addColorStop(1, 'rgba(11,13,17,0)');
   ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h);
   ctx.textAlign = 'center';
