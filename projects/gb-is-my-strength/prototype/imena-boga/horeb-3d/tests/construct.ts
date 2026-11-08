@@ -5,7 +5,7 @@ import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
 import { buildExhibitProps, mergePropsGroup } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
 import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
-import { BEACON_IDS, beaconOpacity } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
+import { BEACON_IDS, beaconOpacity, beaconVisualScale } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
 import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
 
 let pass = 0, fail = 0;
@@ -41,6 +41,9 @@ t('name beacon is legible at 24m but not drawn past 35m',
 t('dark Horeb beacons stay below 55% brightness',
   beaconOpacity(9, true) <= 0.54 && beaconOpacity(9, true) > 0.5 &&
   beaconOpacity(9, false) > beaconOpacity(9, true));
+t('name beacons stay compact close up and grow for distant recognition',
+  beaconVisualScale(2) < 0.8 && beaconVisualScale(24) > 1.1 &&
+  beaconVisualScale(NaN) < 0.8);
 
 // A professional narrator requires human-owned, reviewed source recordings.
 // The DSP chain may exist in the lab without ever automatically inventing a
