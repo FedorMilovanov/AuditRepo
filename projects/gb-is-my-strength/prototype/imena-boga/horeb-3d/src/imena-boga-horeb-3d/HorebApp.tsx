@@ -152,6 +152,9 @@ export default function HorebApp() {
   const exhibit = dialog?.kind === 'exhibit' ? EXHIBITS.find((e) => e.id === dialog.id) : undefined;
   const promptEx = ws?.prompt?.kind === 'exhibit' ? EXHIBITS.find((e) => e.id === (ws.prompt as { id: string }).id) : undefined;
   const zoneInfo = ZONES[zone];
+  // User-approved subdued HUD: let the bush take visual focus at close range.
+  // Critical prompts and the sandal gate live outside .hud and remain opaque.
+  const hudOpacity = ws && ws.zone === 7 ? Math.max(0.4, Math.min(1, (ws.distBush - 8) / 28)) : 1;
 
   if (screen === 'reader') return <AccessibleReader onClose={() => { history.replaceState(null, '', location.pathname); setScreen('intro'); }} />;
 
@@ -204,9 +207,7 @@ export default function HorebApp() {
       <div className="fade-in-black pointer-events-none absolute inset-0 bg-black" style={{ animationDuration: settings.reducedMotion ? '0.01s' : '3s' }} />
       {!ws && !err && <p className="absolute inset-0 grid place-items-center text-muted" role="status">Камень раскрывается…</p>}
 
-      {/* Keep navigation, zone name and the sacred-boundary state fully legible.
-          The nearby bush is solemn enough without fading the entire HUD to 40%. */}
-      <div className="hud">
+      <div className="hud transition-opacity duration-700" style={{ opacity: hudOpacity }}>
         <div className="absolute top-3 left-3 sm:top-5 sm:left-6 max-w-[60vw] rounded-sm border border-parch/10 bg-black/65 px-3 py-2 shadow-lg backdrop-blur-sm" aria-live="polite">
           <p className="eyebrow">Зона {zone}{zone === 5 ? ' · позднейшие свидетельства' : ''}</p>
           <p className="font-display text-xl sm:text-2xl leading-tight">{zoneInfo.title}</p>
