@@ -8,6 +8,7 @@ interface NameGridProps {
   completedIds: Set<string>;
   onSelect: (id: string) => void;
   onClearProgress: () => void;
+  motionOn: boolean;
 }
 
 const GLOBAL_INDEX = new Map(NAMES.map((name, index) => [name.id, index]));
@@ -20,22 +21,34 @@ function Highlight({ text, query }: { text: string; query: string }) {
   if (!tokens.length) return <>{text}</>;
 
   let folded = "";
-  const startOffsets: number[] = [];
+  // Keep the original source offsets for every folded letter. Codepoints
+  // dropped by normalization (accents/niqqud) must remain attached to their
+  // base letter, while whitespace must never disappear inside the text.
+  const starts: number[] = [];
+  const ends: number[] = [];
+  const combining = /[\u0300-\u036f\u0591-\u05c7]/u;
   for (let pos = 0; pos < text.length;) {
     const codepoint = String.fromCodePoint(text.codePointAt(pos)!);
-    const normalized = normalizeSearch(codepoint);
-    for (let j = 0; j < normalized.length; j++) startOffsets.push(pos);
-    folded += normalized;
-    pos += codepoint.length;
+    const end = pos + codepoint.length;
+    const normalized = /\s/u.test(codepoint) ? " " : normalizeSearch(codepoint);
+    if (normalized) {
+      for (let j = 0; j < normalized.length; j++) {
+        starts.push(pos);
+        ends.push(end);
+      }
+      folded += normalized;
+    } else if (combining.test(codepoint) && ends.length) {
+      ends[ends.length - 1] = end;
+    }
+    pos = end;
   }
-  startOffsets.push(text.length);
   const spans: Array<[number, number]> = [];
   for (const token of tokens) {
     let from = 0;
     while (from < folded.length) {
       const idx = folded.indexOf(token, from);
       if (idx === -1) break;
-      spans.push([startOffsets[idx], startOffsets[idx + token.length]]);
+      spans.push([starts[idx], ends[idx + token.length - 1]]);
       from = idx + token.length;
     }
   }
@@ -58,7 +71,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
   return <>{parts}</>;
 }
 
-export default function NameGrid({ active, completedIds, onSelect, onClearProgress }: NameGridProps) {
+export default function NameGrid({ active, completedIds, onSelect, onClearProgress, motionOn }: NameGridProps) {
   const [query, setQuery] = useState("");
   const [partFilter, setPartFilter] = useState(0);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -83,13 +96,13 @@ export default function NameGrid({ active, completedIds, onSelect, onClearProgre
       event.preventDefault();
       search.focus({ preventScroll: true });
       document.getElementById("sozvezdie")?.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+        behavior: !motionOn || window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
         block: "start",
       });
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
+  }, [motionOn]);
 
   const filtered = useMemo(() => {
     const q = normalizeSearch(query);

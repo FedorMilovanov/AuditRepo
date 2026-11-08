@@ -598,6 +598,34 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
           if(behavior.length!==1||behavior[0]!==expected)
             throw Error('Constellation hero ignores in-app motion setting '+
               JSON.stringify({engine,width,enabled,behavior,expected}));
+          // The global search shortcut must use the same in-app motion state,
+          // even with OS reduced-motion disabled. Search highlights must also
+          // preserve Cyrillic accent marks without capturing adjacent spaces.
+          await motionPage.evaluate(()=>{
+            window.__gridScrollWitness=[];
+            const native=Element.prototype.scrollIntoView;
+            Element.prototype.scrollIntoView=function(options){
+              if(this.id==='sozvezdie')window.__gridScrollWitness.push(options?.behavior);
+              return native.call(this,options);
+            };
+            if(document.activeElement instanceof HTMLElement)document.activeElement.blur();
+          });
+          await motionPage.keyboard.press('/');
+          const search=motionPage.locator('#sozvezdie input[type="search"]');
+          const searchWitness=await motionPage.evaluate(()=>({
+            scroll:window.__gridScrollWitness,
+            focused:document.activeElement?.matches('#sozvezdie input[type="search"]')
+          }));
+          if(searchWitness.scroll.length!==1||searchWitness.scroll[0]!==expected||
+             !searchWitness.focused)
+            throw Error('Constellation search shortcut ignores in-app motion '+
+              JSON.stringify({engine,width,enabled,expected,searchWitness}));
+          await search.fill('эхье');
+          const marks=await motionPage.getByRole('button',{name:/Перейти к разделу: Эхье/})
+            .locator('mark').allTextContents();
+          if(marks.length!==2||marks.some(value=>value!=='Эхье́'))
+            throw Error('Constellation accent highlights captured whitespace or lost marks '+
+              JSON.stringify({engine,width,enabled,marks}));
         }finally{
           await motionCtx.close();
         }

@@ -362,6 +362,7 @@ export default function App() {
         completedIds={completedIds}
         onSelect={scrollTo}
         onClearProgress={clearProgress}
+        motionOn={prefs.motion}
       />
 
       {inArticle && <Rails active={active} completedIds={completedIds} wide={prefs.measure === "wide"} onSelect={scrollTo} />}
