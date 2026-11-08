@@ -490,6 +490,45 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     await page.waitForTimeout(250);
     const painted=await countPixels(page,'canvas');
     if(!(painted>0))throw Error('Constellation static starfield blank '+width);
+    if(width===1440){
+      // OS reduced-motion must disable *all* decorative hero motion, even if
+      // the in-page motion preference is enabled. React pointer events used
+      // to keep the 3D tilt/glow alive despite this browser preference.
+      const reducedHero=await page.evaluate(()=>{
+        const tilt=document.querySelector('[data-hero-tilt]');
+        const glow=document.querySelector('[data-hero-glow]');
+        const section=tilt?.closest('section');
+        if(!tilt||!glow||!section)return {error:'missing reduced-motion hero witnesses'};
+        const read=()=>({
+          tilt:getComputedStyle(tilt).transform,
+          glow:getComputedStyle(glow).transform,
+          pulse:section.querySelectorAll('.animate-glow-pulse').length,
+          rings:section.querySelectorAll('.animate-rotate-slow,.animate-rotate-rev').length,
+        });
+        const before=read(),bounds=section.getBoundingClientRect();
+        section.dispatchEvent(new PointerEvent('pointermove',{
+          bubbles:true,pointerType:'mouse',
+          clientX:bounds.left+bounds.width*.85,
+          clientY:bounds.top+bounds.height*.2
+        }));
+        return {before,prefersReduce:matchMedia('(prefers-reduced-motion: reduce)').matches};
+      });
+      await page.waitForTimeout(240);
+      const reducedAfter=await page.evaluate(()=>{
+        const tilt=document.querySelector('[data-hero-tilt]');
+        const glow=document.querySelector('[data-hero-glow]');
+        const section=tilt?.closest('section');
+        return {tilt:getComputedStyle(tilt).transform,
+          glow:getComputedStyle(glow).transform,
+          pulse:section.querySelectorAll('.animate-glow-pulse').length,
+          rings:section.querySelectorAll('.animate-rotate-slow,.animate-rotate-rev').length};
+      });
+      if(reducedHero.error||!reducedHero.prefersReduce||
+         JSON.stringify(reducedHero.before)!==JSON.stringify(reducedAfter)||
+         reducedAfter.pulse!==0||reducedAfter.rings!==0)
+        throw Error('Constellation disregards reduced-motion for tilt/glow/rings '+
+          JSON.stringify({engine,width,reducedHero,reducedAfter}));
+    }
     results.push({name,width,painted,cssLoaded:true});
    }
    await ctx.close();
