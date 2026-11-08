@@ -60,6 +60,25 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
    if(stats.bodyText<1000||stats.scroll>stats.viewport+1||errors.length||requests.length||!stats.cssLoaded)
     throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests}));
    if(name==='atlas'){
+    if(width===390){
+      // In the reduced-motion browser context, hero navigation must not
+      // animate the document even if the desktop/mobile designs differ.
+      await page.evaluate(()=>{
+        window.__readerScrollWitness=[];
+        const native=Element.prototype.scrollIntoView;
+        Element.prototype.scrollIntoView=function(options){
+          if(this.id==='article-introduction'||this.id==='constellation-atlas')
+            window.__readerScrollWitness.push({id:this.id,behavior:options?.behavior});
+          return native.call(this,options);
+        };
+      });
+      await page.getByRole('button',{name:'Начать последовательное чтение'}).click();
+      await page.getByRole('button',{name:'Созвездие 36 рассмотренных имён'}).click();
+      const witness=await page.evaluate(()=>window.__readerScrollWitness);
+      if(witness.length!==2||witness[0].id!=='article-introduction'||
+         witness[1].id!=='constellation-atlas'||witness.some(x=>x.behavior!=='instant'))
+        throw Error('Atlas deliberate reader navigation ignored reduced-motion setting '+JSON.stringify(witness));
+    }
     if(width===320){
       // A stale stored ID (or a corrupted non-string value) must never
       // count as an additional studied name after the corpus changes.
