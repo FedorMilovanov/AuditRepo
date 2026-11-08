@@ -66,16 +66,20 @@ try {
       z: window.__horeb.state().z, count: window.__horeb.world.exhibitPos.length,
     }));
     check('42 actual 3D exhibit placements', before.count === 42, String(before.count));
-    const highResolution = await page.evaluate(() => {
-      let n = 0;
+    const labelsByQuality = await page.evaluate(() => {
+      let high = 0, low = 0;
       window.__horeb.world.scene.traverse((obj) => {
         if (!obj.isMesh) return;
-        const m = obj.material;
-        if (m?.map?.image?.width === 640 && m.map.image.height === 900) n++;
+        const image = obj.material?.map?.image;
+        if (image?.width === 640 && image?.height === 900) high++;
+        if (image?.width === 384 && image?.height === 540) low++;
       });
-      return n;
+      return { high, low, quality: window.__horeb.world.settings.quality };
     });
-    check('high-quality original 640x900 label textures remain intact', highResolution === 42, String(highResolution));
+    const labelsMatch = labelsByQuality.quality === 'high'
+      ? labelsByQuality.high === 42 && labelsByQuality.low === 0
+      : labelsByQuality.quality === 'low' && labelsByQuality.low === 42 && labelsByQuality.high === 0;
+    check('all 42 labels match selected high/low render quality', labelsMatch, JSON.stringify(labelsByQuality));
     await page.screenshot({ path: join(shots, 'smoke-02-world.png') });
 
     await page.keyboard.down('KeyW');
