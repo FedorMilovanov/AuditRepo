@@ -35,6 +35,14 @@ export const SacredAstrolabeHero: React.FC<SacredAstrolabeHeroProps> = ({
     const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     let interval: number | undefined;
     const syncAutoplay = () => {
+      // If the OS preference changes while the pointer is still over the
+      // medallion, clear an already-applied 3D tilt immediately. Prevent a
+      // frozen tilted card that stays rotated until the next mouseleave.
+      if (motionPreference.matches) {
+        setMedallionTilt((current) =>
+          current.rx !== 0 || current.ry !== 0 ? { rx: 0, ry: 0 } : current,
+        );
+      }
       if (interval !== undefined) {
         window.clearInterval(interval);
         interval = undefined;
