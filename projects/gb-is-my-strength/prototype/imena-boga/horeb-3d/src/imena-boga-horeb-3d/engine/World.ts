@@ -157,7 +157,7 @@ export class World {
       // снаружи стелы (к стене) они бы попадали в свод прохода — поэтому впереди.
       const d = Math.hypot(nx, nz) || 1;
       const bx = x + (nx / d) * 1.2, bz = z + (nz / d) * 1.2;
-      const props = buildExhibitProps(e, low, bx, bz);
+      const props = buildExhibitProps(e, low, bx, bz, { map: rockMat.map, bump: rockMat.bumpMap });
       mergePropsGroup(props); // merge meshes by material — reduce draw calls
       this.scene.add(props);
       this.obstacles.push({ x, z, r: 0.85 }); // стелы
@@ -444,16 +444,29 @@ export class World {
     this.renderer.setAnimationLoop(null);
     for (const [t, ty, fn, o] of this.listeners) t.removeEventListener(ty, fn, o);
     if (document.pointerLockElement === this.canvas) document.exitPointerLock();
+    // A single procedural atlas/material is shared by dozens of scene props.
+    // Dispose each GPU resource exactly once instead of re-disposing shared assets.
+    const geometries = new Set<THREE.BufferGeometry>();
+    const materials = new Set<THREE.Material>();
+    const textures = new Set<THREE.Texture>();
     this.scene.traverse((o) => {
       const m = o as THREE.Mesh;
-      m.geometry?.dispose();
+      if (m.geometry instanceof THREE.BufferGeometry) geometries.add(m.geometry);
       const mats = Array.isArray(m.material) ? m.material : m.material ? [m.material] : [];
-      for (const mat of mats) {
-        for (const v of Object.values(mat)) if (v instanceof THREE.Texture) v.dispose();
-        if ((mat as THREE.ShaderMaterial).uniforms) for (const u of Object.values((mat as THREE.ShaderMaterial).uniforms)) if (u.value instanceof THREE.Texture) u.value.dispose();
-        mat.dispose();
-      }
+      for (const material of mats) materials.add(material);
     });
+    for (const material of materials) {
+      for (const value of Object.values(material)) {
+        if (value instanceof THREE.Texture) textures.add(value);
+      }
+      const uniforms = (material as THREE.ShaderMaterial).uniforms;
+      if (uniforms) for (const u of Object.values(uniforms)) {
+        if (u.value instanceof THREE.Texture) textures.add(u.value);
+      }
+      material.dispose();
+    }
+    for (const geometry of geometries) geometry.dispose();
+    for (const texture of textures) texture.dispose();
     this.audio.dispose();
     this.renderer.dispose();
     this.renderer.forceContextLoss();

@@ -90,6 +90,17 @@ for (const e of EXHIBITS) {
 t('geometry merge preserves bounding boxes of all 42 scenes', displaced.length === 0);
 if (displaced.length) console.log('Displaced scene props: ' + displaced.join(', '));
 
+// Runtime can reuse the exact tunnel stone atlas with no additional GPU textures.
+const testAtlas = new THREE.DataTexture(new Uint8Array([180, 155, 130, 255]), 1, 1);
+const texturedProps = buildExhibitProps(EXHIBITS[0], false, 0, 0, { map: testAtlas, bump: testAtlas });
+let texturedStones = 0;
+texturedProps.traverse((o) => {
+  if (o instanceof THREE.Mesh && o.material instanceof THREE.MeshStandardMaterial &&
+      o.material.map === testAtlas && o.material.bumpMap === testAtlas) texturedStones++;
+});
+t('3D stone props reuse the shared world rock atlas', texturedStones > 0);
+testAtlas.dispose();
+
 if (errors.length) console.log('errors:\n' + errors.join('\n'));
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

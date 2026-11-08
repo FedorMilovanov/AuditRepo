@@ -11,9 +11,23 @@ import type { Exhibit } from '../data/exhibits';
 interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; }
 
 let CACHE: { low: boolean; s: Shared } | null = null;
-function shared(low: boolean): Shared {
-  if (CACHE && CACHE.low === low) return CACHE.s;
-  const stone = new THREE.MeshStandardMaterial({ color: 0x8a7560, roughness: 0.95, metalness: 0 });
+export interface StoneSurface { map: THREE.Texture | null; bump: THREE.Texture | null }
+function shared(low: boolean, surface?: StoneSurface): Shared {
+  // Reuse the tunnel's procedural texture instead of drawing a separate stone atlas.
+  // Node construction tests may omit a texture: geometry remains fully testable.
+  if (CACHE && CACHE.low === low) {
+    if (surface && (CACHE.s.stone.map !== surface.map || CACHE.s.stone.bumpMap !== surface.bump)) {
+      CACHE.s.stone.map = surface.map;
+      CACHE.s.stone.bumpMap = surface.bump;
+      CACHE.s.stone.needsUpdate = true;
+    }
+    return CACHE.s;
+  }
+  const stone = new THREE.MeshStandardMaterial({
+    color: 0xa18b74, roughness: 0.95, metalness: 0,
+    map: surface?.map ?? null, bumpMap: surface?.bump ?? null,
+    bumpScale: 0.75,
+  });
   const dark = new THREE.MeshStandardMaterial({ color: 0x4a3b30, roughness: 1 });
   const wood = new THREE.MeshStandardMaterial({ color: 0x5a3a24, roughness: 0.9 });
   const water = new THREE.MeshStandardMaterial({ color: 0x0a1420, roughness: 0.1, metalness: 0.5 });
@@ -422,9 +436,9 @@ function addOliveTrees(g: THREE.Group, x: number, z: number, s: Shared, n = 3) {
 
 // ── Диспетчер: environmentKey → конкретные props.
 // (px, pz) — положение props-якоря (позади стелы, к стене прохода).
-export function buildExhibitProps(e: Exhibit, low: boolean, px: number, pz: number): THREE.Group {
+export function buildExhibitProps(e: Exhibit, low: boolean, px: number, pz: number, surface?: StoneSurface): THREE.Group {
   const g = new THREE.Group();
-  const s = shared(low);
+  const s = shared(low, surface);
   const key = e.environmentKey;
   switch (key) {
     case 'creation-horizon': addLightShaft(g, px, pz); addMassiveRock(g, px - 0.5, pz, s); break;
