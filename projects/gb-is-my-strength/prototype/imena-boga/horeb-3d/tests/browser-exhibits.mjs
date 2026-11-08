@@ -26,7 +26,7 @@ try {
   const button = await page.$('button');
   if (!button) throw new Error('Intro has no buttons');
   await page.evaluate(() => [...document.querySelectorAll('button')]
-    .find((b) => b.textContent.includes('Начать путешествие'))?.click());
+    .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()))?.click());
   await page.waitForFunction(() => window.__horeb?.world && window.__horeb?.state(), {timeout:90000});
   const exhibits = await page.evaluate(() => window.__horeb.world.exhibitPos.map((p) => ({
     id:p.e.id,label:p.e.displayLabelRu,x:p.x,z:p.z,nx:p.nx,nz:p.nz,
@@ -174,8 +174,11 @@ try {
       } catch { return false; }
     }, { timeout: 6000 });
     await page.reload({ waitUntil: 'domcontentloaded', timeout: 45000 });
+    const resumeLabel = await page.evaluate(() => [...document.querySelectorAll('button')]
+      .some((b) => b.textContent?.trim() === 'Продолжить путешествие'));
+    if (!resumeLabel) throw new Error('Saved checkpoint is not advertised as Resume on the intro screen');
     await page.evaluate(() => [...document.querySelectorAll('button')]
-      .find((b) => b.textContent?.includes('Начать путешествие'))?.click());
+      .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()))?.click());
     await page.waitForFunction(() => !!window.__horeb?.world, { timeout: 90000 });
     const resumedAt = await page.evaluate(() => ({
       ...window.__horeb.world.position, shoes: window.__horeb.world.shoes,
@@ -190,7 +193,7 @@ try {
       JSON.stringify({ visited: [0, 7], last: { x: 0, z: -366 } })));
     await page.reload({ waitUntil: 'domcontentloaded', timeout: 45000 });
     await page.evaluate(() => [...document.querySelectorAll('button')]
-      .find((b) => b.textContent?.includes('Начать путешествие'))?.click());
+      .find((b) => /^(Начать|Продолжить) путешествие$/.test((b.textContent || '').trim()))?.click());
     await page.waitForFunction(() => !!window.__horeb?.world, { timeout: 90000 });
     const guard = await page.evaluate(() => ({
       distance: window.__horeb.world.position.z + 366,
