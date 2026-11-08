@@ -241,7 +241,7 @@ export default function HorebApp() {
           каждое письменное свидетельство указано книгой и стихом.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center reveal d3">
-          {webgl ? <button className="btn btn-primary" onClick={start}>Начать путешествие</button>
+          {webgl ? <button className="btn btn-primary" onClick={start}>{progress.last ? 'Продолжить путешествие' : 'Начать путешествие'}</button>
             : <p role="alert" className="text-amber-300/90 text-sm max-w-sm">WebGL недоступен в этом браузере — 3D-прогулка не запустится. Вся экспозиция доступна в режиме чтения.</p>}
           <button className="btn" onClick={() => setScreen('reader')}>Режим чтения</button>
           <button className="btn" onClick={() => setIntroDialog({ kind: 'bookmarks' })}>Мои закладки ({bookmarks.length})</button>
@@ -252,8 +252,11 @@ export default function HorebApp() {
           <button className="link" onClick={() => setIntroDialog({ kind: 'about' })}>Об экспозиции</button>
           <button className="link" onClick={() => setIntroDialog({ kind: 'sources' })}>Источники и ограничения исследования</button>
         </div>
+        {progress.last && <p className="mt-3 text-sm text-parch/75 reveal d3">
+          Последняя точка сохранена. При продолжении границы у куста остаются обязательными.
+        </p>}
         <p className="mt-10 text-xs text-muted reveal d3">Без регистрации, cookies и трекеров. Настройки и посещённые зоны хранятся только в этом браузере.
-          {progress.visited.length > 1 && <> <button className="link" onClick={resetProgress}>Сбросить прогресс</button></>}</p>
+          {(progress.visited.length > 1 || progress.last !== null) && <> <button className="link" onClick={resetProgress}>Сбросить прогресс</button></>}</p>
       </div>
       {introDialog?.kind === 'settings' && <Modal title="Настройки доступности" onClose={() => setIntroDialog(null)}><SettingsPanel s={settings} set={(p) => setSettings((s) => ({ ...s, ...p }))} /></Modal>}
       {introDialog?.kind === 'sources' && <Modal wide title="Источники и ограничения" onClose={() => setIntroDialog(null)}><SourcesAndLimits /></Modal>}
