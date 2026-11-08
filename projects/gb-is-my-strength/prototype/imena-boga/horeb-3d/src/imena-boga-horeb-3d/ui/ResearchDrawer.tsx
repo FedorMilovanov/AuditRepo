@@ -12,11 +12,17 @@ export function Modal({ title, onClose, children, wide = false }: { title: strin
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeRef.current(); return; }
       if (e.key === 'Tab' && el) {
-        const f = Array.from(el.querySelectorAll<HTMLElement>('a[href],button,select,input,[tabindex]:not([tabindex="-1"])')).filter((x) => !x.hasAttribute('disabled'));
-        if (!f.length) return;
-        const first = f[0], last = f[f.length - 1];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        const focusable = Array.from(el.querySelectorAll<HTMLElement>(
+          'a[href],button,select,input,textarea,[tabindex]:not([tabindex="-1"])'
+        )).filter((x) => !x.hasAttribute('disabled') && x.getClientRects().length > 0);
+        if (!focusable.length) { e.preventDefault(); el.focus(); return; }
+        const first = focusable[0], last = focusable[focusable.length - 1];
+        // Focus can move outside a dialog via scripts/browser UI; bring it back.
+        if (!el.contains(document.activeElement) || (e.shiftKey && document.activeElement === first)) {
+          e.preventDefault(); (e.shiftKey ? last : first).focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first.focus();
+        }
       }
     };
     window.addEventListener('keydown', onKey, true);
@@ -24,7 +30,7 @@ export function Modal({ title, onClose, children, wide = false }: { title: strin
   }, []);
   return (
     <div className="fixed inset-0 z-40 flex items-end sm:items-center justify-center bg-black/60" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div ref={ref} role="dialog" aria-modal="true" aria-label={title}
+      <div ref={ref} role="dialog" aria-modal="true" aria-label={title} tabIndex={-1}
         className={`drawer relative w-full ${wide ? 'sm:max-w-3xl' : 'sm:max-w-xl'} max-h-[88vh] overflow-y-auto rounded-t-xl sm:rounded-xl p-5 sm:p-8`}>
         <div className="flex items-start justify-between gap-4 mb-2">
           <p className="eyebrow">{title}</p>

@@ -10,7 +10,7 @@ export function SettingsPanel({ s, set, stats }: { s: UiSettings; set: (p: Parti
     <form className="space-y-5 text-parch" onSubmit={(e) => e.preventDefault()}>
       <fieldset>
         <legend className="text-bronze text-xs uppercase tracking-[0.14em] mb-2">Качество графики</legend>
-        <div className="flex gap-2" role="radiogroup">
+        <div className="flex gap-2" role="radiogroup" aria-label="Качество графики">
           {(['auto', 'low', 'high'] as QualityMode[]).map((q) => (
             <label key={q} className={`chip cursor-pointer ${s.quality === q ? 'chip-on' : ''}`}>
               <input type="radio" className="sr-only" name="q" checked={s.quality === q} onChange={() => set({ quality: q })} />
@@ -18,6 +18,7 @@ export function SettingsPanel({ s, set, stats }: { s: UiSettings; set: (p: Parti
             </label>
           ))}
         </div>
+        <p className="text-xs text-muted mt-2">Яркость и разрешение изменяются сразу; качество геометрии и антиалиасинг применятся при следующем входе в 3D-прогулку.</p>
         <p className="text-xs text-muted mt-2">Плотность геометрии фиксируется при входе в мир; разрешение меняется сразу.</p>
       </fieldset>
       {([

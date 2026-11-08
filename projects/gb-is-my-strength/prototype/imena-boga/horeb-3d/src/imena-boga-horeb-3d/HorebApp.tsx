@@ -92,7 +92,15 @@ export default function HorebApp() {
     return () => {
       cancelled = true;
       controller.abort();
-      if (w) { resumePos.current = w.position; w.dispose(); }
+      if (w) {
+        resumePos.current = w.position;
+        w.dispose();
+      }
+      if (new URLSearchParams(location.search).has('e2e')) {
+        const debug = window as unknown as { __horeb?: { world: World } };
+        if (debug.__horeb?.world === w) delete debug.__horeb;
+      }
+      stateRef.current = null;
       worldRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

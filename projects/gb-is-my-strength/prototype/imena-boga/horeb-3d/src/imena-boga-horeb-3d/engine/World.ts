@@ -82,14 +82,21 @@ export class World {
     try { await (document as Document & { fonts?: FontFaceSet }).fonts?.ready; } catch { /* шрифты необязательны */ }
     if (signal?.aborted || !canvas.isConnected) throw new DOMException('Scene creation cancelled', 'AbortError');
     const w = new World(canvas, settings, onState, onEvent);
-    w.build();
-    const s = sanitizeSpawn(spawn);
-    w.pos.set(s.x, s.z);
-    w.bind();
-    w.applySettings(settings);
-    w.resize();
-    w.renderer.setAnimationLoop(w.loop);
-    return w;
+    try {
+      w.build();
+      if (signal?.aborted || !canvas.isConnected) throw new DOMException('Scene creation cancelled', 'AbortError');
+      const s = sanitizeSpawn(spawn);
+      w.pos.set(s.x, s.z);
+      w.bind();
+      w.applySettings(settings);
+      w.resize();
+      w.updateActiveState();
+      return w;
+    } catch (error) {
+      // A build may fail after renderer/context and some scene resources were allocated.
+      w.dispose();
+      throw error;
+    }
   }
 
   private build() {
@@ -202,11 +209,15 @@ export class World {
     this.on(document, 'pointerlockerror', () => this.onEvent('pointerlock-denied'));
     this.on(window, 'resize', () => this.resize());
     this.on(document, 'visibilitychange', () => {
-      if (document.hidden) { this.renderer.setAnimationLoop(null); this.audio.suspend(); this.keys.clear(); }
-      else if (!this.contextLost && !this.disposed) { this.clock.getDelta(); this.renderer.setAnimationLoop(this.loop); this.audio.resume(); }
+      if (document.hidden) { this.keys.clear(); this.vel.set(0, 0); }
+      this.updateActiveState();
     });
-    this.on(c, 'webglcontextlost', ((e: Event) => { e.preventDefault(); this.contextLost = true; this.renderer.setAnimationLoop(null); this.emit(true); }) as unknown as EventListener);
-    this.on(c, 'webglcontextrestored', () => { this.contextLost = false; this.clock.getDelta(); this.renderer.setAnimationLoop(this.loop); this.emit(true); });
+    this.on(c, 'webglcontextlost', ((e: Event) => {
+      e.preventDefault(); this.contextLost = true; this.updateActiveState(); this.emit(true);
+    }) as unknown as EventListener);
+    this.on(c, 'webglcontextrestored', () => {
+      this.contextLost = false; this.updateActiveState(); this.emit(true);
+    });
   }
 
   private look(dx: number, dy: number) {
@@ -221,6 +232,20 @@ export class World {
     this.camera.updateProjectionMatrix();
   }
 
+  // One source of truth for GPU/audio activity: dialogs, hidden tabs and lost
+  // WebGL contexts should not continue rendering or playing procedural audio.
+  private updateActiveState() {
+    const active = !this.disposed && !this.contextLost && !this.inputLocked && !document.hidden;
+    if (active) {
+      this.clock.getDelta(); // discard wall time after a pause
+      this.renderer.setAnimationLoop(this.loop);
+      if (this.settings.sound) this.audio.start();
+    } else {
+      this.renderer.setAnimationLoop(null);
+      this.audio.suspend();
+    }
+  }
+
   applySettings(s: WorldSettings) {
     this.settings = s;
     const dpr = window.devicePixelRatio || 1;
@@ -229,15 +254,33 @@ export class World {
     this.zones.particles.forEach((p) => (p.visible = s.particles));
     this.bush.sparks.visible = s.particles;
     this.audio.setEnabled(s.sound);
-    if (s.sound) this.audio.start();
+    this.updateActiveState();
     this.resize();
   }
 
   setInputLocked(v: boolean) {
+    if (this.inputLocked === v) return;
     this.inputLocked = v;
-    if (v) { this.keys.clear(); this.move.x = this.move.y = 0; this.dragging = null; if (document.pointerLockElement) document.exitPointerLock(); }
+    if (v) {
+      this.keys.clear();
+      this.move.x = this.move.y = 0;
+      this.vel.set(0, 0); // never drift through scenery behind a modal
+      this.dragging = null;
+      if (document.pointerLockElement === this.canvas) document.exitPointerLock();
+    }
+    this.updateActiveState();
   }
-  setMoveInput(x: number, y: number) { this.move.x = x; this.move.y = y; }
+  setMoveInput(x: number, y: number) {
+    if (this.inputLocked || !Number.isFinite(x) || !Number.isFinite(y)) {
+      this.move.x = this.move.y = 0;
+      return;
+    }
+    // Do not let external touch input exceed keyboard speed or poison coordinates.
+    const len = Math.hypot(x, y);
+    const scale = len > 1 ? 1 / len : 1;
+    this.move.x = x * scale;
+    this.move.y = y * scale;
+  }
   requestLock() { const r = this.canvas.requestPointerLock?.() as unknown as Promise<void> | undefined; if (r?.catch) r.catch(() => this.onEvent('pointerlock-denied')); }
 
   /** Снять обувь — только у внешнего порога, только из состояния 'shod'. Повторные вызовы игнорируются. */
@@ -396,6 +439,7 @@ export class World {
   }
 
   dispose() {
+    if (this.disposed) return;
     this.disposed = true;
     this.renderer.setAnimationLoop(null);
     for (const [t, ty, fn, o] of this.listeners) t.removeEventListener(ty, fn, o);
