@@ -8,7 +8,7 @@ import type { Exhibit } from '../data/exhibits';
 // стелы-маркера, а не 42 независимых уровня. Примитивы переиспользуются,
 // но каждая сцена имеет свой environmentKey + meaningfulAction + освещение.
 
-interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; }
+interface Shared { stone: THREE.MeshStandardMaterial; dark: THREE.MeshStandardMaterial; wood: THREE.MeshStandardMaterial; water: THREE.MeshStandardMaterial; metal: THREE.MeshStandardMaterial; leaf: THREE.MeshStandardMaterial; leafSilver: THREE.MeshStandardMaterial; }
 
 let CACHE: { low: boolean; s: Shared } | null = null;
 export interface StoneSurface { map: THREE.Texture | null; bump: THREE.Texture | null; glow?: THREE.Texture | null }
@@ -33,7 +33,8 @@ function shared(low: boolean, surface?: StoneSurface): Shared {
   const water = new THREE.MeshStandardMaterial({ color: 0x0a1420, roughness: 0.1, metalness: 0.5 });
   const metal = new THREE.MeshStandardMaterial({ color: 0xb09060, roughness: 0.4, metalness: 0.7 });
   const leaf = new THREE.MeshStandardMaterial({ color: 0x535b40, roughness: 0.96 });
-  const s: Shared = { stone, dark, wood, water, metal, leaf };
+  const leafSilver = new THREE.MeshStandardMaterial({ color: 0x737960, roughness: 1 });
+  const s: Shared = { stone, dark, wood, water, metal, leaf, leafSilver };
   CACHE = { low, s };
   return s;
 }
@@ -165,7 +166,7 @@ function addCityModel(g: THREE.Group, x: number, z: number, s: Shared) {
     gate.position.set(x + sgn * 1.1, 0.4, z); g.add(gate);
   }
 }
-function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared) {
+function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared, low: boolean) {
   // Stylised olive grove rather than identical low-poly green spheres.
   // Irregular small silver-olive crown lobes and forked trunks read as a
   // *living* grove from the visitor path without asserting a specific tree.
@@ -193,8 +194,24 @@ function addOliveTree(g: THREE.Group, x: number, z: number, s: Shared) {
       1.49 + (random() - 0.5) * 0.58, z + Math.sin(a) * radius);
     crown.rotation.set(random() * 0.32, random() * 1.2, (random() - 0.5) * 0.42);
     // Taller, offset lobes avoid the flat 'umbrella' silhouette.
-    crown.scale.set(0.65 + random() * 0.4, 0.56 + random() * 0.42, 0.72 + random() * 0.38);
+    // Smaller dark core leaves space for hundreds of uneven twig-level
+    // silver-green leaves, replacing the old flat, balloon-like silhouette.
+    crown.scale.set(0.36 + random() * 0.20, 0.32 + random() * 0.22, 0.40 + random() * 0.18);
     g.add(crown);
+    const leaflets = low ? 6 : 12;
+    for (let j = 0; j < leaflets; j++) {
+      const r = 0.13 + Math.pow(random(), 0.65) * 0.44;
+      const theta = random() * Math.PI * 2;
+      const vertical = (random() - 0.5) * 0.48;
+      const sprig = new THREE.Mesh(G.sph(0.16, 5, 4), j % 3 === 0 ? s.leafSilver : s.leaf);
+      sprig.name = 'olive-leaf-sprig';
+      sprig.position.set(crown.position.x + Math.cos(theta) * r,
+        crown.position.y + vertical,
+        crown.position.z + Math.sin(theta) * r);
+      sprig.rotation.set((random() - 0.5) * 1.8, random() * Math.PI, (random() - 0.5) * 1.6);
+      sprig.scale.set(0.28 + random() * 0.36, 0.46 + random() * 0.44, 0.90 + random() * 0.60);
+      g.add(sprig);
+    }
   }
 }
 function addTomb(g: THREE.Group, x: number, z: number, s: Shared) {
@@ -456,8 +473,8 @@ function addScrolls(g: THREE.Group, x: number, z: number, s: Shared) {
   addScroll(g, x - 0.4, z, s, 0.7);
   addScroll(g, x + 0.4, z + 0.3, s, 0.6);
 }
-function addOliveTrees(g: THREE.Group, x: number, z: number, s: Shared, n = 3) {
-  for (let i = 0; i < n; i++) { addOliveTree(g, x - 1.2 + i * 1.2, z + (i % 2) * 0.8, s); }
+function addOliveTrees(g: THREE.Group, x: number, z: number, s: Shared, low: boolean, n = 3) {
+  for (let i = 0; i < n; i++) { addOliveTree(g, x - 1.2 + i * 1.2, z + (i % 2) * 0.8, s, low); }
 }
 
 // ── Диспетчер: environmentKey → конкретные props.
@@ -497,7 +514,7 @@ export function buildExhibitProps(e: Exhibit, low: boolean, px: number, pz: numb
     case 'tablets-scene': addTablets(g, px, pz, s); addQuietStone(g, px, pz - 1, s); break;
     case 'vision-abstract': addDistantGlow(g, px, pz); addUnfoldingBorders(g, px, pz, s); break;
     case 'night-shelter': addScrolls(g, px, pz, s); addStarWindow(g, px, pz, s); break;
-    case 'gethsemane-garden': addOliveTrees(g, px, pz, s, 4); addPrayerSpot(g, px, pz - 0.8, s); break;
+    case 'gethsemane-garden': addOliveTrees(g, px, pz, s, low, 4); addPrayerSpot(g, px, pz - 0.8, s); break;
     case 'apocalyptic-architecture': addLightStoneSpace(g, px, pz, s); break;
     case 'scroll-alpha-omega': addEditorialScroll(g, px, pz, s); break;
     case 'two-windows': addPublicPlace(g, px, pz, s); addArch(g, px + 1.5, pz, s, 1.8); break;
