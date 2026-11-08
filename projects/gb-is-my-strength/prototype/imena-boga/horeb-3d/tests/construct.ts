@@ -7,6 +7,7 @@ import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
 import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
 import { BEACON_IDS, beaconOpacity, beaconVisualScale, beaconViewFactor } from '../src/imena-boga-horeb-3d/engine/NameBeacon';
 import { ACOUSTIC, isApprovedAudioPath, APPROVED_NARRATION_ASSETS } from '../src/imena-boga-horeb-3d/engine/NarratorBus';
+import { normalizeStudyBookmarks, toggleStudyBookmark } from '../src/imena-boga-horeb-3d/data/studyBookmarks';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -76,6 +77,21 @@ t('creation landmark rock stays behind the Elōhîm label sightline',
   !!creationRock && creationRock.position.z <= -2.5);
 t('creation rock is a low background shelf, not an oversized spherical prop',
   !!creationRock && creationRock.scale.y < 0.8 && creationRock.scale.x > creationRock.scale.y);
+
+// Bookmarks are source references, not invented RPG progress or remote data.
+const firstId = EXHIBITS[0].id, secondId = EXHIBITS[1].id;
+t('study bookmark loader discards poisoned and unknown IDs without duplicates',
+  normalizeStudyBookmarks(['bad-id', firstId, firstId, {}, '__proto__']).length === 1);
+t('study bookmarks keep canonical ledger order even when added backwards',
+  normalizeStudyBookmarks([secondId, firstId]).join('|') === [firstId, secondId].join('|'));
+t('study bookmarks toggle exactly one canonical dossier and reject unknown IDs',
+  toggleStudyBookmark([firstId], firstId).length === 0 &&
+  toggleStudyBookmark([firstId], secondId).length === 2 &&
+  toggleStudyBookmark([firstId], 'fake-id').join('|') === firstId);
+t('bookmarks loader handles invalid storage values and excessive arrays',
+  normalizeStudyBookmarks(null).length === 0 &&
+  normalizeStudyBookmarks({ length: 42 }).length === 0 &&
+  normalizeStudyBookmarks(Array(10000).fill('bad-id')).length === 0);
 
 // No repetitive stone: 42 steles must not be identical — varied scale/tilt/zone-tint.
 const scales = new Set(EXHIBITS.map((e) => steleVariation(e.id, e.zone).scale.toFixed(3)));
