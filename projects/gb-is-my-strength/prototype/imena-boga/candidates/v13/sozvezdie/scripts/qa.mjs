@@ -346,6 +346,30 @@ const boxesOverlap = (a, b) =>
   for (const rb of railBoxes) if (boxesOverlap(rb, col)) bad("RAIL OVERLAPS TEXT COLUMN");
   if (!railBoxes.some((rb) => boxesOverlap(rb, col))) ok("rails clear of text column");
 
+  // At short desktop heights, the current name should be visible inside
+  // the fixed rail without moving the article's anchor underneath the header.
+  await page.setViewportSize({ width: 1440, height: 620 });
+  const lastSectionId = await page.locator("main > section[id]").last().getAttribute("id");
+  await page.evaluate((id) => document.getElementById(id)?.scrollIntoView({
+    behavior: "instant", block: "start",
+  }), lastSectionId);
+  await page.waitForTimeout(900);
+  const railWitness = await page.evaluate((id) => {
+    const sectionTop = document.getElementById(id)?.getBoundingClientRect().top ?? -1;
+    const selected = document.querySelector('[data-rails] button[aria-current="true"]');
+    const scrollBox = selected?.closest("[data-rail-scroll]");
+    if (!selected || !scrollBox) return { sectionTop, visible: false };
+    const item = selected.getBoundingClientRect();
+    const bounds = scrollBox.getBoundingClientRect();
+    return { sectionTop, visible: item.top >= bounds.top - 2 &&
+      item.bottom <= bounds.bottom + 2, railScrollTop: scrollBox.scrollTop };
+  }, lastSectionId);
+  railWitness.visible && railWitness.sectionTop >= 70 && railWitness.sectionTop <= 180
+    ? ok("fixed rail scroll keeps active item visible and article anchor stable")
+    : bad("rail moved article or clipped active item: " + JSON.stringify(railWitness));
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+
   // anchor lands below fixed header
   const head = await page.locator("header").boundingBox();
   const secTop = (await page.locator("#el-shaddai").boundingBox()).y;
@@ -619,12 +643,42 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
   await page.waitForTimeout(700);
   const dlg = page.locator('[aria-label="Указатель имен Бога"]');
   (await dlg.isVisible()) ? ok(`mobile index opens @${w}`) : bad("mobile index did not open");
+  const mobileClose = dlg.locator('button[aria-label="Закрыть"]');
+  (await mobileClose.evaluate(el => document.activeElement === el))
+    ? ok("mobile dialog initially focuses its close control")
+    : bad("mobile dialog did not receive keyboard focus");
+  await page.keyboard.press("Shift+Tab");
+  const wrappedBack = await dlg.evaluate(dialog =>
+    dialog.contains(document.activeElement) &&
+    document.activeElement?.getAttribute("aria-label") !== "Закрыть");
+  wrappedBack ? ok("mobile dialog traps reverse Tab") : bad("mobile dialog reverse Tab escaped");
+  await page.keyboard.press("Tab");
+  (await mobileClose.evaluate(el => document.activeElement === el))
+    ? ok("mobile dialog wraps forward Tab") : bad("mobile dialog forward Tab escaped");
+
   const locked = await page.evaluate(() => document.body.style.overflow);
   locked === "hidden" ? ok("body scroll locked in modal") : bad("body not locked: " + locked);
   await page.keyboard.press("Escape");
   await page.waitForTimeout(600);
   const unlocked = await page.evaluate(() => document.body.style.overflow);
   unlocked !== "hidden" ? ok("body scroll restored after Esc") : bad("body still locked after Esc");
+  const mobileTrigger = page.locator('button[aria-label="Открыть список имён"]');
+  (await mobileTrigger.evaluate(el => document.activeElement === el))
+    ? ok("mobile dialog returns focus after Escape")
+    : bad("mobile dialog failed to restore trigger focus");
+  await mobileTrigger.click();
+  await page.waitForTimeout(500);
+  await page.locator('[aria-label="Указатель имен Бога"] button').nth(1).click();
+  await page.waitForTimeout(700);
+  const destination = await page.evaluate(() => ({
+    hash: location.hash,
+    focused: document.activeElement === document.querySelector('#yhwh [data-name-heading]'),
+    dialogExists: Boolean(document.querySelector('[aria-label="Указатель имен Бога"]')),
+  }));
+  destination.hash === "#yhwh" && destination.focused && !destination.dialogExists
+    ? ok("mobile name selection transfers focus to its heading")
+    : bad("mobile name selection focus/navigation " + JSON.stringify(destination));
+
 
   const ov3 = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   ov3 <= 1 ? ok(`no h-overflow at ${w} (article)`) : bad(`h-overflow ${ov3}px at ${w} article`);
