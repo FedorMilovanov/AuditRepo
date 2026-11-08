@@ -15,7 +15,7 @@
 
 ## Что действительно импортировано
 
-Исходное приложение React 19 / TypeScript / Vite / Three.js, 8 пространственных зон, 25 исторически зафиксированных исследовательских карточек, управление от первого лица и на мобильных устройствах, аппарат снятия обуви и ограничения у горящего куста, доступный режим чтения с/без JS, детальные unit- и браузерные тесты. Ключевые файлы:
+Исходное приложение React 19 / TypeScript / Vite / Three.js, 8 пространственных зон, 42 исследовательские записи Research (29+13), управление от первого лица и на мобильных устройствах, аппарат снятия обуви и ограничения у горящего куста, доступный режим чтения с/без JS, детальные unit- и браузерные тесты. Ключевые файлы:
 
 - `package.json` и `package-lock.json`;
 - `src/imena-boga-horeb-3d/HorebApp.tsx`;
@@ -31,11 +31,10 @@
 ```bash
 cd projects/gb-is-my-strength/prototype/imena-boga/horeb-3d
 npm ci
-node tests/generate-reader.mjs
-npm run build
+npm run build  # prebuild regenerates reader.html and fonts from the 42-entry registry
 npx tsc --noEmit
 sh tests/test.sh
-npm run dev
+npm run dev  # predev regenerates reader.html and fonts
 ```
 
 Браузерные тесты: `tests/e2e.mjs` и `tests/regression.mjs`; см. оригинальный README для переменной `PW_PATH`. Версии и браузерный результат нужно засвидетельствовать в текущей рабочей ветке. **Наличие исходников и 24/24 повторённых unit-тестов из архивного предварительно скомпилированного набора не означает проверку чистой сборки после `npm ci`.** Реальные GPU/WebKit/Firefox и редакционная сверка — отдельные незакрытые ворота.

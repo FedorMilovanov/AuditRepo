@@ -97,3 +97,18 @@ export function sanitizeSpawn(p: { x: number; z: number } | null | undefined): {
 }
 
 export const distToBush = (x: number, z: number) => Math.hypot(x - BUSH.x, z - BUSH.z);
+
+// Вариация стелы экспоната: чтобы 42 стелы не выглядели идентичными (no repetitive stone).
+// Детерминировано по id — тот же экспонат всегда даёт ту же форму/масштаб.
+export function steleVariation(id: string, zone: number): { scale: number; tilt: number; labelScale: number; tint: number } {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < id.length; i++) h = ((h ^ id.charCodeAt(i)) * 16777619) >>> 0;
+  const r = () => { h = (h * 1664525 + 1013904223) >>> 0; return h / 4294967296; };
+  const scale = 0.86 + r() * 0.3;       // 0.86–1.16
+  const tilt = (r() - 0.5) * 0.12;      // ±0.06 rad
+  const labelScale = 0.9 + r() * 0.22;  // 0.90–1.12
+  // Зонная окраска камня: ранние зоны теплые, поздние — холодные.
+  const tints = [0x8a7560, 0x7d6a52, 0x6d5d4f, 0x5c4a3e, 0x4a3b30, 0x665848, 0x584838, 0x483a2e];
+  const tint = tints[zone % tints.length];
+  return { scale, tilt, labelScale, tint };
+}

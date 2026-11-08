@@ -16,4 +16,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  server: {
+    // Localhost is allowed by Vite. Preview requires one explicit host, never a blanket allow-all.
+    allowedHosts: process.env.HOREB_PREVIEW_HOST ? [process.env.HOREB_PREVIEW_HOST] : [],
+  },
 });

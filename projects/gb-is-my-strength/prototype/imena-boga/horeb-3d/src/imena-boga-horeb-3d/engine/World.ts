@@ -2,10 +2,11 @@ import * as THREE from 'three';
 import { EXHIBITS, type Exhibit } from '../data/exhibits';
 import { rockTextures, labelTexture, fbm } from './procedural';
 import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
+import { buildExhibitProps, mergePropsGroup } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
 import { validateExhibits } from '../data/validate';
-import { constrain, zoneAt, distToBush, sanitizeSpawn, ZONE_SPAWN, R_OUTER, TUNNEL_END, type Block } from './nav';
+import { constrain, zoneAt, distToBush, sanitizeSpawn, ZONE_SPAWN, R_OUTER, TUNNEL_END, steleVariation, type Block } from './nav';
 
 export type Shoes = 'shod' | 'removing' | 'unshod';
 export type Prompt = null | { kind: 'exhibit'; id: string } | { kind: 'shoes' };
@@ -16,7 +17,7 @@ export interface WorldState {
 export interface WorldSettings { quality: 'low' | 'high'; reducedMotion: boolean; particles: boolean; sound: boolean; exposure: number; autoQuality: boolean }
 
 const FOG: [number, number, number][] = [ // zone → color, density
-  [0x0d0a08, 0.035, 0], [0x0f0b08, 0.03, 0], [0x120c08, 0.026, 0], [0x140a05, 0.05, 0], [0x070a10, 0.02, 0], [0x0c0a09, 0.045, 0], [0x0a0d14, 0.05, 0], [0x0b1020, 0.0055, 0],
+  [0x1a1410, 0.03, 0], [0x1c1610, 0.028, 0], [0x221810, 0.024, 0], [0x281610, 0.045, 0], [0x121620, 0.018, 0], [0x181412, 0.04, 0], [0x141820, 0.045, 0], [0x121830, 0.005, 0],
 ];
 const EYE = 1.62;
 const SPEED = 2.3;
@@ -39,9 +40,9 @@ export class World {
   private exhibitPos: { e: Exhibit; x: number; z: number; nx: number; nz: number }[] = [];
   private zones!: ReturnType<typeof buildZones>;
   private bush!: ReturnType<typeof buildBurningBush>;
-  private ambient = new THREE.AmbientLight(0xffeedd, 1.6);
-  private hemi = new THREE.HemisphereLight(0x6a7cb0, 0x3a2a20, 0);
-  private moon = new THREE.DirectionalLight(0x9fb0e0, 0);
+  private ambient = new THREE.AmbientLight(0xffeedd, 4.0);
+  private hemi = new THREE.HemisphereLight(0x6a7cb0, 0x3a2a20, 1.0);
+  private moon = new THREE.DirectionalLight(0x9fb0e0, 0.8);
   private fogColor = new THREE.Color();
   private t = 0; private frames = 0; private fpsT = 0; private fps = 0; private lowFpsT = 0;
   private emitT = 0;
@@ -62,8 +63,8 @@ export class World {
     this.renderer.toneMappingExposure = settings.exposure;
     this.camera = new THREE.PerspectiveCamera(66, 1, 0.05, 3200);
     this.camera.rotation.order = 'YXZ';
-    this.scene.background = new THREE.Color(0x050403);
-    this.scene.fog = new THREE.FogExp2(0x0d0a08, 0.035);
+    this.scene.background = new THREE.Color(0x100c08);
+    this.scene.fog = new THREE.FogExp2(0x1a1410, 0.03);
     this.moon.position.set(120, 200, -200);
     this.scene.add(this.ambient, this.hemi, this.moon);
   }
@@ -103,7 +104,16 @@ export class World {
       p.setXYZ(i, x + (n - 0.5) * 0.12 * edge, y + 1.3 + (y > 1.2 ? (n - 0.5) * 0.25 : 0), z + (z < 0 ? (n - 0.5) * 0.1 : 0));
     }
     steleGeo.computeVertexNormals();
-    const steleMat = new THREE.MeshStandardMaterial({ color: 0x6d5d4f, roughness: 0.95, map: tex, bumpMap: bump, bumpScale: 2 });
+    // Zone-tinted materials: 8 clones (not 42) — ранние зоны теплые, поздние холодные.
+    // Плюс per-exhibit scale/tilt/labelScale через steleVariation — 42 стелы не идентичны.
+    const steleMats = new Map<number, THREE.MeshStandardMaterial>();
+    const steleMatFor = (zone: number) => {
+      if (!steleMats.has(zone)) {
+        const tint = steleVariation('__zone_' + zone, zone).tint;
+        steleMats.set(zone, new THREE.MeshStandardMaterial({ color: tint, roughness: 0.95, map: tex, bumpMap: bump, bumpScale: 2 }));
+      }
+      return steleMats.get(zone)!;
+    };
     const plane = new THREE.PlaneGeometry(1.16, 1.63);
     const editorialOk = validateExhibits(EXHIBITS).length === 0; // fail-closed
     for (const e of editorialOk ? EXHIBITS : []) {
@@ -111,10 +121,15 @@ export class World {
       if (!pl) continue; // fail-closed: экспонат без размещения не попадает в 3D (но есть в HTML)
       const [x, z] = pl;
       const g = new THREE.Group();
-      g.add(new THREE.Mesh(steleGeo, steleMat));
+      const v = steleVariation(e.id, e.zone);
+      const steleMesh = new THREE.Mesh(steleGeo, steleMatFor(e.zone));
+      steleMesh.scale.setScalar(v.scale);
+      steleMesh.rotation.z = v.tilt;
+      g.add(steleMesh);
       const tx = labelTexture(e, e.zone === 5);
       const lab = new THREE.Mesh(plane, new THREE.MeshStandardMaterial({ map: tx, emissiveMap: tx, emissive: 0xffffff, emissiveIntensity: 0.42, roughness: 0.85 }));
       lab.position.set(0, 1.42, 0.225);
+      lab.scale.setScalar(v.labelScale);
       g.add(lab);
       let nx = -Math.sign(x) * 0.85, nz = 0.53;
       if (e.zone === 7) { nx = -Math.sign(x) * 0.6; nz = 0.8; }
@@ -122,7 +137,15 @@ export class World {
       g.rotation.y = Math.atan2(nx, nz);
       g.userData.exhibitId = e.id;
       this.scene.add(g);
-      this.obstacles.push({ x, z, r: 0.85 });
+      // Уникальные props сцены: перед стелом (к центру прохода), видны при подходе;
+      // снаружи стелы (к стене) они бы попадали в свод прохода — поэтому впереди.
+      const d = Math.hypot(nx, nz) || 1;
+      const bx = x + (nx / d) * 1.2, bz = z + (nz / d) * 1.2;
+      const props = buildExhibitProps(e, low, bx, bz);
+      mergePropsGroup(props); // merge meshes by material — reduce draw calls
+      this.scene.add(props);
+      this.obstacles.push({ x, z, r: 0.85 }); // стелы
+      this.obstacles.push({ x: bx, z: bz, r: 0.6 }); // props-якорь — игрок обходит сцены экспонатов (fail-closed)
       this.exhibitPos.push({ e, x, z, nx, nz });
     }
   }
@@ -325,9 +348,9 @@ export class World {
     fog.density += (f[1] - fog.density) * k;
     (this.scene.background as THREE.Color).copy(fog.color);
     const out = Math.min(1, Math.max(0, (TUNNEL_END + 2 - this.pos.y) / 10));
-    this.ambient.intensity = 1.6 * (1 - out) + 0.35 * out;
-    this.hemi.intensity = 0.55 * out;
-    this.moon.intensity = 0.55 * out;
+    this.ambient.intensity = 3.0 * (1 - out) + 0.35 * out;
+    this.hemi.intensity = 0.3 * (1 - out) + 0.55 * out;
+    this.moon.intensity = 0.2 * (1 - out) + 0.55 * out;
 
     this.zones.update(this.t, dt, this.pos.x, this.pos.y, motion);
     if (this.pos.y < -280) this.bush.update(this.t, motion, this.renderer.domElement.height);

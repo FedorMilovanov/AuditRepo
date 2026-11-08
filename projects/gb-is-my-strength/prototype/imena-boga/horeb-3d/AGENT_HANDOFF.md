@@ -1,45 +1,28 @@
-# HOREB 3D — актуальная передача Arena / следующему разработчику
+# HOREB 3D — актуальная передача разработчикам
 
-**Проверено 2026-11-08 при импорте.** Не цитировать этот снимок как вечную актуальность; перед работой проверить свежий head PR.
+**Единственная каноническая ветка:** `lane/horeb-3d-lab-20261108`
+**Единственный Draft PR:** https://github.com/FedorMilovanov/AuditRepo/pull/543
+**Путь:** `projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/`
+**Статус:** LAB DEVELOPMENT / EDITORIAL HOLD — НЕ Product и НЕ опубликовано.
+**Неизменённый ZIP:** `original/arena-horeb-original.zip`, SHA-256 `c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9`.
 
-- **Source repo:** `FedorMilovanov/AuditRepo`.
-- **Рабочая ветка:** `lane/horeb-3d-lab-20261108`.
-- **Единственный Draft PR:** https://github.com/FedorMilovanov/AuditRepo/pull/543.
-- **Папка кода:** `projects/gb-is-my-strength/prototype/imena-boga/horeb-3d/`.
-- **Оригинал:** `original/arena-horeb-original.zip` (неизменённый SHA-256 `c2267894e1369f96244f0df9b78b51acfc5ccfeb4838f25037b2ec1551b14fa9`).
-- **Baseline import commit:** `4d9ec9f7899ff6f6af349f404460e9137b4766b8`.
-- **Original status:** `IMPORTED`. Не считать `promotion-ready`, не объявлять «42 сцены готовы», не публиковать.
+## Канонизация
 
-## Что проверено, а что нет
+Выбрана более функциональная ветка Arena `arena/13fed2e7-auditrepo` (источник `7b200b39d9cfc77523db15295952607d43b9d619`): 42 уникальных ID из Research #379, 42/42 PLACEMENTS, физические тематические props, геометрические проверки и Chromium-сценарии. Перенесено в существующий PR #543 с сохранением неизменённого оригинального ZIP. Другая ветка `arena/7f74c768-auditrepo` имеет 40 записей, искусственные base/ext дубли, 15 неразмещённых в 3D; её содержимое не копировать целиком. Колодец и тамариск уже присутствуют в новой системе.
 
-- Исходный ZIP совпадает с SHA-256. GitHub blob SHA-1 оригинала `b20de9b1985fae87595e53d9bcb1fb9ccb822203` совпал с локальным `git hash-object`.
-- **36 исходных текстовых файлов** (включая `ARENA_ORIGINAL_README.md`) свёрнуты по Git blob SHA-1; дополнительно созданы `SOURCE_PROVENANCE.md`, `IMPORT_MANIFEST.json`; источник в архиве не переписан.
-- Весь проект существует на GitHub-ветке, проверены исходники `package.json`, `src/`, `tests/`, `World.ts`, `BurningBush.ts`, и ZIP.
-- В изолированной среде проверки архива исполнен `node tests/run.mjs` из **архивной** `.test-build/`: **24 PASS / 0 FAIL**. Это **не** свежая компиляция TypeScript.
-- `npm ci`, самостоятельный `npm run build`, `npx tsc --noEmit`, Playwright browser, WebKit, реальный мобильный GPU: **NOT RUN для GitHub exact imported head**. В sandbox нет доступа к npm registry. Первым делом повторить в агенте.
-- Локальные `public/fonts/*.woff2` отсутствовали в экспортированном ZIP. Воспроизвести генерацию через `node tests/generate-reader.mjs` и проверить шрифты в финальной сборке.
-- `tests/e2e.mjs`, `tests/regression.mjs`, `audit/acceptance-matrix.md` содержат исторические claims Arena, не автоматическую текущую сертификацию.
+В интеграционном коммите устранены проверенные риски:
+- `mergePropsGroup()` сначала пересчитывает матрицы и сохраняет все transforms, а при несовместимости геометрий оставляет originals. Добавлен bounding-box regression на все 42 сцены.
+- `npm run build` и `npm run dev` запускают генерацию reader.html и шрифтов из единого typed registry. Нельзя снова оставить 25 старых карточек в HTML.
+- `vite.config.ts`: вместо blanket `allowedHosts: true` допускается только явно названный `HOREB_PREVIEW_HOST`; localhost доступен по умолчанию.
 
-## Точный порядок чтения
+## Тесты / статус приёмки
 
-1. README этой папки и этот файл.
-2. Текущий HEAD PR #543 и реальные файлы (особенно если Arena создал рабочую ветку `arena/*` от `main`).
-3. `ARENA_ORIGINAL_README.md`, `docs/SCENE_MAP.md`, `docs/SOURCE_AUDIT.md`, `audit/acceptance-matrix.md`, `audit/iteration-log.md`.
-4. `src/imena-boga-horeb-3d/HorebApp.tsx`, `engine/{World,SceneZones,BurningBush,nav}.ts`, `data/{exhibits,validate}.ts`, `tests/`.
-5. `briefs/SCENE_SPEC_42.md` и `briefs/ORIGINAL_MASTER_BRIEF_V2.md` — **исторические художественные требования**. Их старое «создай новый проект» **отменено**, действителен только `AGENT_NEXT_PROMPT.md`.
-6. Research PR #379 в точном актуальном HEAD; сверить источники и `HOLD`.
+- 42 Research IDs (29+13) и 42 placements подтверждены по GitHub source; **не** 42 доказанных собственных имени Бога.
+- Agent reported: 33 contract, 48 construction, 6 placement, Chromium browser tests; **не смешивать с независимым CI**. Browser стадии `tests/test.sh` могут `SKIP`, когда нет `/tmp/chromium` или запущенного dev-сервера.
+- Reported Chromium SwiftShader `~1 FPS`: это НЕ performance PASS и не показатель мобильного GPU. Нужны реальный GPU, Android/iOS, браузеры Chromium/Firefox/WebKit и доказательные screenshots.
+- Сначала на **точном HEAD PR #543**: `npm ci`, `npm run build`, `npx tsc --noEmit`, `sh tests/test.sh`. Проверить actual bounding-box test, props placement, collision, шрифты, 42 HTML-article, куст/обувь/RTL.
+- Библейские/исторические данные и права остаются `HOLD` до внешней редакционной сверки Research #379. Каждая экспозиция — отдельный контекст, не автоматически разрешённая публикация.
 
-## Что делать следующим
+## Конфликт агентов
 
-**Этап А (обязательный, до визуального редизайна).** Работай в этой ветке, не на `main`. Переустанови зависимости и получи clean build/typecheck/test (не переписывая проект), воспроизведи браузерное поведение и реальный screenshot. Почини причину отсутствующих fonts и любые реальные ошибки.
-
-**Этап B.** Проведи технический и художественный инвентарный аудит 8 зон и 25 карточек. Создай матрицу соответствия 42 research records, *не* переименовывая все в «собственные имена Бога». Для каждой будущей сцены — контекст, источник, уникальный объект, взаимодействие, компоновка, производительность, статус редакционной проверки. Не создавай 42 тяжёлых независимых мира.
-
-**Этап C.** Продолжай существующие сцены и геометрию, внедряй уникальные исторические окружения в пределах разумного frame budget. Особые различия: источник Агари vs псалом о Пастыре, имя места у Авраама vs жертвенники Гедеона/Моисея vs имя города Иезекииля; наружный Хорив и два ограничения у куста.
-
-## Правила изменения
-
-- Один рабочий source в рамках PR #543. Не создавать `horeb-new`, `horeb-v2` и параллельные сайты.
-- Если Arena checkout остался на `arena/*` от `main`: явно **получить ветку PR #543**, проверить `git ls-tree`, потом продолжить на её файлах. Не «обнаружив отсутствие», генерировать с нуля. Не делать `git reset --hard`, force-push, merge PR/production или неоговорённые изменения в общем корне AuditRepo.
-- На выходе каждого раунда — exact SHA, список изменённых файлов, реально запущенные проверки, браузерные скриншоты/preview, текущие blockers и следующий checkpoint (обновлять этот файл, не создавать версионные duplicates).
-- Product, Research, Grok Reader, Atlas/Sozvezdie, другие PR **не трогать**.
+Приступать только после `git fetch origin refs/pull/543/head`, `git rev-parse FETCH_HEAD` и сверки SHA с настоящим HEAD PR. Работать с реальным источником. Не создавать дублей, новых веток HOREB, не переносить весь код из `arena/7f74c768`, не использовать force-push/reset hard. Не изменять Product, Research, Grok, Atlas. Не merge и не deploy без владельца. Один checkpoint = этот файл; исторический экспорт и брифы сохраняются как evidence.
