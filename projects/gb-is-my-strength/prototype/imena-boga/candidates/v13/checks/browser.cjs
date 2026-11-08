@@ -75,7 +75,7 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
         await seededPage.waitForFunction(()=>{
           const ids=JSON.parse(localStorage.getItem('gb:imena:atlas:names-studied:v1')||'[]');
           return Array.isArray(ids)&&ids.length===2&&ids[0]==='elohim'&&ids[1]==='el';
-        },{timeout:5000});
+        },null,{timeout:5000});
         const studiedLabel=await seededPage.locator('button[title^="Изучено "]').getAttribute('title');
         if(!studiedLabel?.includes('Изучено 2 из 36'))
           throw Error('Atlas progress includes obsolete/corrupted IDs '+studiedLabel);
