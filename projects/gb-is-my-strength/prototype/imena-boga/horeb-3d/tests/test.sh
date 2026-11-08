@@ -18,6 +18,8 @@ node .test-build/placement.mjs
 if [ -x /tmp/chromium ] && curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:5173/ 2>/dev/null | grep -q 200; then
   echo "--- Browser visual audit (Sparticuz Chromium 153) ---"
   LD_LIBRARY_PATH=/tmp/al2023/lib node tests/browser-audit.mjs
+  echo "--- Browser interaction test ---"
+  LD_LIBRARY_PATH=/tmp/al2023/lib node tests/browser-interactions.mjs
 else
-  echo "--- Browser visual audit: SKIPPED (chromium binary or dev server unavailable) ---"
+  echo "--- Browser tests: SKIPPED (chromium binary or dev server unavailable) ---"
 fi
