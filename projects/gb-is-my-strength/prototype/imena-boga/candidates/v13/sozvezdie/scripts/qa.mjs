@@ -682,6 +682,32 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
   await page.waitForTimeout(700);
   const dlg = page.locator('[aria-label="Указатель имен Бога"]');
   (await dlg.isVisible()) ? ok(`mobile index opens @${w}`) : bad("mobile index did not open");
+
+  // Main document scrollWidth can remain zero while labels are clipped
+  // *inside* individual cards. Measure the actual glyph fragments for
+  // all 29 entries, including long Hebrew and Russian strings.
+  const mobileIndexGeometry = await dlg.evaluate((dialog) => {
+    const entries = [...dialog.querySelectorAll("[data-mobile-index-entry]")];
+    const clipped = [];
+    for (const entry of entries) {
+      const card = entry.getBoundingClientRect();
+      for (const label of entry.querySelectorAll("[data-mobile-name-text]")) {
+        const range = document.createRange();
+        range.selectNodeContents(label);
+        const fragments = [...range.getClientRects()];
+        if (!fragments.length || fragments.some((frag) =>
+          frag.left < card.left + 6 || frag.right > card.right - 6
+        )) clipped.push({
+          name: label.getAttribute("data-mobile-name-text"),
+          text: label.textContent?.trim().slice(0, 60),
+        });
+      }
+    }
+    return { count: entries.length, clipped };
+  });
+  mobileIndexGeometry.count === 29 && mobileIndexGeometry.clipped.length === 0
+    ? ok(`all 29 mobile index labels fit inside their cards @${w}`)
+    : bad(`mobile index text clips @${w}: ` + JSON.stringify(mobileIndexGeometry));
   const mobileClose = dlg.locator('button[aria-label="Закрыть"]');
   (await mobileClose.evaluate(el => document.activeElement === el))
     ? ok("mobile dialog initially focuses its close control")
