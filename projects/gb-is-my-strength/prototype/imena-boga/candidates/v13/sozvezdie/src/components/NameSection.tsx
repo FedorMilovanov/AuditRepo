@@ -139,14 +139,16 @@ function NameSection({
 
         <div className="mt-10 grid items-start gap-10 md:mt-14 md:grid-cols-12 md:gap-8">
           {/* left / name block */}
-          <Reveal className={`md:col-span-5 md:sticky md:top-24 ${flip ? "md:order-2" : ""}`}>
+          <Reveal className={`min-w-0 md:col-span-5 md:sticky md:top-24 ${flip ? "md:order-2" : ""}`}>
             <div className={flip ? "md:text-right" : ""}>
               <motion.p
                 initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
                 whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                className={`select-none font-hebrew text-6xl font-medium leading-tight transition-[color,text-shadow] duration-1000 md:text-7xl ${
+                className={`min-w-0 select-none break-words font-hebrew font-medium leading-tight transition-[color,text-shadow] duration-1000 ${
+                  attrs.lang === "el" ? "text-[clamp(2rem,7vw,3rem)]" : "text-6xl md:text-7xl"
+                } ${
                   isActive ? "glow-gold-strong text-gold-200" : "glow-gold text-gold-300"
                 }`}
                 {...attrs}
@@ -156,7 +158,7 @@ function NameSection({
               <h3
                 data-name-heading
                 tabIndex={-1}
-                className="mt-6 font-display text-4xl font-semibold italic text-cream-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400 md:text-5xl"
+                className="mt-6 min-w-0 break-words font-display text-4xl font-semibold italic text-cream-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400 md:text-5xl"
               >
                 {name.translit}
               </h3>

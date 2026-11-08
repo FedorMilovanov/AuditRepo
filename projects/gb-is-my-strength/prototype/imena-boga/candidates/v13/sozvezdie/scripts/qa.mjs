@@ -781,6 +781,49 @@ for (const [w, h] of [[390, 844], [320, 700]]) {
   await ctx.close();
 }
 
+// ───────────────────────── original-script text bounds ─────────────────────────
+// The root section is overflow-clip; document.scrollWidth can be zero while
+// a long Greek word is visibly amputated inside its reading column.
+for (const width of [320, 390, 768, 1440]) {
+  const { ctx, page } = await newPage(width, width <= 390 ? 844 : 900, { touch: width < 1024 });
+  await page.goto(BASE_URL + "/", { waitUntil: "domcontentloaded" });
+  await page.locator("h1").first().waitFor({ state: "visible" });
+  await page.evaluate(async () => {
+    document.getElementById("pantokrator")?.scrollIntoView({ behavior: "instant", block: "center" });
+    await document.fonts.ready;
+  });
+  const headingBounds = await page.evaluate(() => {
+    const headings = [...document.querySelectorAll("h3[data-name-heading]")];
+    const outside = [];
+    for (const heading of headings) {
+      const item = heading.closest('[class~="md:col-span-5"]');
+      const grid = item?.parentElement;
+      if (!grid) {
+        outside.push({ id: heading.closest("section[id]")?.id, reason: "missing reading grid" });
+        continue;
+      }
+      const bounds = grid.getBoundingClientRect();
+      for (const text of [heading.previousElementSibling, heading]) {
+        if (!text) continue;
+        const range = document.createRange();
+        range.selectNodeContents(text);
+        const fragments = [...range.getClientRects()];
+        if (!fragments.length || fragments.some(rect =>
+          rect.left < bounds.left - 1 || rect.right > bounds.right + 1
+        )) outside.push({
+          id: heading.closest("section[id]")?.id,
+          text: text.textContent?.trim().slice(0, 50),
+        });
+      }
+    }
+    return { count: headings.length, outside };
+  });
+  headingBounds.count === 29 && headingBounds.outside.length === 0
+    ? ok(`all 29 original-script and transliterated headings fit @${width}`)
+    : bad(`original-script heading clipped @${width}: ` + JSON.stringify(headingBounds));
+  await ctx.close();
+}
+
 // ───────────────────────── all-studied celebration ─────────────────────────
 {
   const { ctx, page } = await newPage(1440, 900);
