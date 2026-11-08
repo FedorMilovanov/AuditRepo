@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { rng, fbm, glowTexture } from './procedural';
 import type { Exhibit } from '../data/exhibits';
 
@@ -481,4 +482,61 @@ export function buildExhibitProps(e: Exhibit, low: boolean, px: number, pz: numb
   glow.position.set(px, 1.4, pz);
   g.add(glow);
   return g;
+}
+
+// Merge all meshes in a group by material: applies each mesh's local matrix
+// to its geometry, then merges into one BufferGeometry per material.
+// Reduces draw calls from N (meshes) to M (unique materials, typically 2-4).
+// Non-mesh children (sprites, lights) are preserved. Falls back gracefully
+// if geometries have incompatible attributes.
+export function mergePropsGroup(group: THREE.Group): void {
+  const meshes: THREE.Mesh[] = [];
+  const others: THREE.Object3D[] = [];
+  group.traverse((o: THREE.Object3D) => {
+    if (o instanceof THREE.Mesh && o.geometry instanceof THREE.BufferGeometry) {
+      meshes.push(o);
+    } else if (o !== group) {
+      others.push(o);
+    }
+  });
+  if (meshes.length < 2) return; // nothing to merge
+
+  // Group meshes by material (skip multi-material meshes)
+  const byMaterial = new Map<THREE.Material, { geos: THREE.BufferGeometry[]; count: number }>();
+  for (const m of meshes) {
+    const mats = Array.isArray(m.material) ? m.material : [m.material];
+    if (mats.length !== 1) continue; // skip multi-material
+    const mat = mats[0];
+    let geo = m.geometry.clone();
+    // Normalize to non-indexed so mergeGeometries accepts mixed geometries
+    if (geo.index) geo = geo.toNonIndexed();
+    geo.applyMatrix4(m.matrix);
+    if (!byMaterial.has(mat)) byMaterial.set(mat, { geos: [], count: 0 });
+    const entry = byMaterial.get(mat)!;
+    entry.geos.push(geo);
+    entry.count++;
+  }
+
+  // Replace meshes with merged equivalents
+  group.clear();
+  let mergedCount = 0;
+  for (const [mat, entry] of byMaterial) {
+    const merged = mergeGeometries(entry.geos, false);
+    if (merged) {
+      const mesh = new THREE.Mesh(merged, mat);
+      mesh.castShadow = meshes.some((m) => m.castShadow);
+      mesh.receiveShadow = meshes.some((m) => m.receiveShadow);
+      group.add(mesh);
+      mergedCount++;
+      for (const g of entry.geos) g.dispose();
+    } else {
+      // Fallback: keep individual meshes
+      for (const geo of entry.geos) {
+        const mesh = new THREE.Mesh(geo, mat);
+        group.add(mesh);
+      }
+    }
+  }
+  // Re-add non-mesh children (sprites, glow)
+  for (const o of others) group.add(o);
 }

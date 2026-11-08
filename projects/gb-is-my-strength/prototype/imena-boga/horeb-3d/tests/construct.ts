@@ -1,7 +1,7 @@
 // Source for the headless construction smoke test. Bundled with esbuild
 // (which resolves extensionless TS imports) and run in Node.
 import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
-import { buildExhibitProps } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
+import { buildExhibitProps, mergePropsGroup } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
 import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
 
 let pass = 0, fail = 0;
@@ -39,6 +39,22 @@ t(`zone tints vary (${tints.size} unique)`, tints.size >= 3);
 const v1 = steleVariation('elohim', 1);
 const v2 = steleVariation('elohim', 1);
 t('steleVariation is deterministic', v1.scale === v2.scale && v1.tilt === v2.tilt && v1.tint === v2.tint);
+
+// Merge test: mergePropsGroup should reduce mesh count overall.
+// Some exhibits may not merge (incompatible attributes or single mesh) — that's fine.
+let mergeTotalBefore = 0, mergeTotalAfter = 0;
+for (const e of EXHIBITS) {
+  const g = buildExhibitProps(e, false, 0, 0);
+  let before = 0;
+  g.traverse((o: { isMesh?: boolean }) => { if (o.isMesh) before++; });
+  mergePropsGroup(g);
+  let after = 0;
+  g.traverse((o: { isMesh?: boolean }) => { if (o.isMesh) after++; });
+  mergeTotalBefore += before;
+  mergeTotalAfter += after;
+}
+const mergeReduction = Math.round((1 - mergeTotalAfter / mergeTotalBefore) * 100);
+t(`mergePropsGroup reduces meshes overall (${mergeTotalBefore}→${mergeTotalAfter}, ${mergeReduction}% reduction)`, mergeReduction > 30);
 
 if (errors.length) console.log('errors:\n' + errors.join('\n'));
 console.log(`\n${pass} passed, ${fail} failed`);

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { EXHIBITS, type Exhibit } from '../data/exhibits';
 import { rockTextures, labelTexture, fbm } from './procedural';
 import { buildZones, PLACEMENTS, type Obstacle } from './SceneZones';
-import { buildExhibitProps } from './exhibitProps';
+import { buildExhibitProps, mergePropsGroup } from './exhibitProps';
 import { buildBurningBush } from './BurningBush';
 import { AmbientAudio } from './audio';
 import { validateExhibits } from '../data/validate';
@@ -142,6 +142,7 @@ export class World {
       const d = Math.hypot(nx, nz) || 1;
       const bx = x + (nx / d) * 1.2, bz = z + (nz / d) * 1.2;
       const props = buildExhibitProps(e, low, bx, bz);
+      mergePropsGroup(props); // merge meshes by material — reduce draw calls
       this.scene.add(props);
       this.obstacles.push({ x, z, r: 0.85 }); // стелы
       this.obstacles.push({ x: bx, z: bz, r: 0.6 }); // props-якорь — игрок обходит сцены экспонатов (fail-closed)
