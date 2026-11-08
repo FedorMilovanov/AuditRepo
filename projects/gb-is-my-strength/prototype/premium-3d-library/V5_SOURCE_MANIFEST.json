@@ -23,6 +23,41 @@
       "sha256": "f687c2c186eb9d20fd609dd8acb31f7d799d158921f71010172d57ac61877b5d"
     },
     {
+      "path": "EXPERIENCE_BLUEPRINT_V5.md",
+      "bytes": 8173,
+      "sha256": "8c511ff53c00fd906586169936eed2b263f7a1d42442a58643dffe0f201d6889"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 2109,
+      "sha256": "3ec4b2676874080d4d3eba59f183ba64a1f745c37b9035da747aa1b7307e2c93"
+    },
+    {
+      "path": "PERSONAL_LIBRARY_RFC.md",
+      "bytes": 13870,
+      "sha256": "a5cfadd9e9927b60b417f29e9ae9d2dad3e99c56950e43bbc10fc608af14fdd9"
+    },
+    {
+      "path": "PROGRESSION_MANIFEST.json",
+      "bytes": 10319,
+      "sha256": "3aacea68caade2141add47af5a32c622aab8a8834d122c6d2009cb48fcbae374"
+    },
+    {
+      "path": "PROGRESSION_SYSTEM_RFC.md",
+      "bytes": 15428,
+      "sha256": "eb67308d5fce36b90c6c9fb48e76650b0408c5277aed698f83395abedb2b3d2f"
+    },
+    {
+      "path": "QA_V5_REAL_BROWSER.md",
+      "bytes": 3131,
+      "sha256": "f5a16e10121516e4afffa6894fc0e931b75f5c1d9f51f7ce4d1370d64397ac66"
+    },
+    {
+      "path": "README-LAB.md",
+      "bytes": 8330,
+      "sha256": "156bc96acc6c1a2c8075080a8d674522f6f25a3b64bee8310c554fff55a9b3b7"
+    },
+    {
       "path": "covers-contact-sheet.png",
       "bytes": 337665,
       "sha256": "eafa578af7405e1dd040af8ec5e96b7e1e07372679561e2567937a40d9ec32c4"
@@ -48,29 +83,9 @@
       "sha256": "cc31bba0e18fdf084d8d703e725157c93ecaf5d9b18887b8d65e59ab34541dc0"
     },
     {
-      "path": "EXPERIENCE_BLUEPRINT_V5.md",
-      "bytes": 8173,
-      "sha256": "8c511ff53c00fd906586169936eed2b263f7a1d42442a58643dffe0f201d6889"
-    },
-    {
-      "path": "HANDOFF.md",
-      "bytes": 2109,
-      "sha256": "3ec4b2676874080d4d3eba59f183ba64a1f745c37b9035da747aa1b7307e2c93"
-    },
-    {
       "path": "index.html",
       "bytes": 772,
       "sha256": "36fd52d5948472697dcf35d757f212a20af7dd7d89849461efa42da473f00b6e"
-    },
-    {
-      "path": "originals/interactive-3d-card-cover.zip",
-      "bytes": 345214,
-      "sha256": "4a9980b89ad280fd09bc936466e26f377696dc45455aa8a5196b4296b4e22828"
-    },
-    {
-      "path": "originals/interactive-3d-card-cover.zip.artifact.json",
-      "bytes": 672,
-      "sha256": "3312b3c5cfd5ee80642332b201c539cecdd42b3721b6657301f3cc9923f1f618"
     },
     {
       "path": "originals/interactive-3d-card-cover(1).zip",
@@ -83,6 +98,16 @@
       "sha256": "f998a7c5ab80c4c8ed263085291da646e995d643fcf1de33b8df1073dacbec31"
     },
     {
+      "path": "originals/interactive-3d-card-cover.zip",
+      "bytes": 345214,
+      "sha256": "4a9980b89ad280fd09bc936466e26f377696dc45455aa8a5196b4296b4e22828"
+    },
+    {
+      "path": "originals/interactive-3d-card-cover.zip.artifact.json",
+      "bytes": 672,
+      "sha256": "3312b3c5cfd5ee80642332b201c539cecdd42b3721b6657301f3cc9923f1f618"
+    },
+    {
       "path": "package-lock.json",
       "bytes": 131764,
       "sha256": "e6e7464f172f57d3b2585feed83f1df2037d37f62c7d605d9b0a7d8cbd29cee7"
@@ -91,11 +116,6 @@
       "path": "package.json",
       "bytes": 1323,
       "sha256": "427c137dd63b1781561a8d27712f1cf21b807a6c5a62883f091a19465672135c"
-    },
-    {
-      "path": "PERSONAL_LIBRARY_RFC.md",
-      "bytes": 13870,
-      "sha256": "a5cfadd9e9927b60b417f29e9ae9d2dad3e99c56950e43bbc10fc608af14fdd9"
     },
     {
       "path": "preview/cabinet-1440.png",
@@ -163,16 +183,6 @@
       "sha256": "7f38286304fc3d7e01712f91f4db91e02ab577138e10ff8c9ef6ad2fc26867fd"
     },
     {
-      "path": "PROGRESSION_MANIFEST.json",
-      "bytes": 10319,
-      "sha256": "3aacea68caade2141add47af5a32c622aab8a8834d122c6d2009cb48fcbae374"
-    },
-    {
-      "path": "PROGRESSION_SYSTEM_RFC.md",
-      "bytes": 15428,
-      "sha256": "eb67308d5fce36b90c6c9fb48e76650b0408c5277aed698f83395abedb2b3d2f"
-    },
-    {
       "path": "provenance.json",
       "bytes": 942,
       "sha256": "b1e620addd034819926cbec78fb41c93701d5e98b32654da777bb631fd5d88cd"
@@ -196,16 +206,6 @@
       "path": "public/favicon.svg",
       "bytes": 349,
       "sha256": "063360c0f6d8f3510c768212121b20875cc5c3a5caebdc2b7e3afd01b6385614"
-    },
-    {
-      "path": "QA_V5_REAL_BROWSER.md",
-      "bytes": 3131,
-      "sha256": "f5a16e10121516e4afffa6894fc0e931b75f5c1d9f51f7ce4d1370d64397ac66"
-    },
-    {
-      "path": "README-LAB.md",
-      "bytes": 8330,
-      "sha256": "156bc96acc6c1a2c8075080a8d674522f6f25a3b64bee8310c554fff55a9b3b7"
     },
     {
       "path": "reference/library-design-target.png",
@@ -293,14 +293,14 @@
       "sha256": "f268dc44f71240012de0cfb1569d8ac906265cccd45eb3a99059c1a663d2f830"
     },
     {
-      "path": "src/progression/engine.ts",
-      "bytes": 15466,
-      "sha256": "b2ba958fbafea5c94481e44900f9a971eb848dbf09c523d9093bce9c677ee96c"
-    },
-    {
       "path": "src/progression/ProgressPanel.tsx",
       "bytes": 16145,
       "sha256": "62d2af6f0bc3ca16ceccf8fb09826c12f7c06f28d6e4ae04431f43e3f7431882"
+    },
+    {
+      "path": "src/progression/engine.ts",
+      "bytes": 15466,
+      "sha256": "b2ba958fbafea5c94481e44900f9a971eb848dbf09c523d9093bce9c677ee96c"
     },
     {
       "path": "src/scene/Architecture.tsx",
