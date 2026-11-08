@@ -139,7 +139,7 @@ export default function Hero({ motionOn }: { motionOn: boolean }) {
           transition={{ duration: 1.4, delay: 0.45, ease }}
           className="mt-6 select-none md:mt-10"
         >
-          <span className="glow-gold block font-hebrew text-6xl font-medium text-gold-300 md:text-7xl">
+          <span lang="he" dir="rtl" data-hero-divine-name className="glow-gold block font-hebrew text-6xl font-medium text-gold-300 md:text-7xl">
             יהוה
           </span>
         </motion.div>
