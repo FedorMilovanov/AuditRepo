@@ -301,19 +301,58 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
   onJumpToName,
 }) => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const mobileTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+  const drawerCloseRef = useRef<HTMLButtonElement | null>(null);
+  const restoreDrawerFocusRef = useRef(false);
 
-  // Drawer accessibility: Escape to close + scroll lock
+  // A mobile drawer is a modal: lock the page, contain Tab, and return
+  // focus to its visible trigger on dismissal (not when opening the dossier).
   useEffect(() => {
     if (!mobileDrawerOpen) return;
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMobileDrawerOpen(false);
-    };
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    const focusFrame = window.requestAnimationFrame(() =>
+      drawerCloseRef.current?.focus({ preventScroll: true })
+    );
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        restoreDrawerFocusRef.current = true;
+        setMobileDrawerOpen(false);
+      }
+      if (event.key !== 'Tab' || !drawerRef.current) return;
+      const buttons = Array.from(
+        drawerRef.current.querySelectorAll<HTMLButtonElement>('button:not([disabled])')
+      );
+      if (!buttons.length) return;
+      const first = buttons[0], last = buttons[buttons.length - 1];
+      const inside = drawerRef.current.contains(document.activeElement);
+      if (event.shiftKey && (!inside || document.activeElement === first)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (!inside || document.activeElement === last)) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    const onResize = () => {
+      if (window.innerWidth >= 1024) {
+        restoreDrawerFocusRef.current = false;
+        setMobileDrawerOpen(false);
+      }
+    };
     window.addEventListener('keydown', handleKey);
+    window.addEventListener('resize', onResize);
     return () => {
+      window.cancelAnimationFrame(focusFrame);
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', handleKey);
+      window.removeEventListener('resize', onResize);
+      if (restoreDrawerFocusRef.current && mobileTriggerRef.current?.getClientRects().length) {
+        window.requestAnimationFrame(() => mobileTriggerRef.current?.focus({ preventScroll: true }));
+      }
+      restoreDrawerFocusRef.current = false;
     };
   }, [mobileDrawerOpen]);
   const pillarCardRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -395,6 +434,18 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
   const rightItems = names.filter((n) => n.side === 'right');
   const activeEntry = names.find((n) => n.id === activeNameId) || names[0];
   const displayRevealedCount = illuminateAll ? names.length : revealedIds.size;
+  const dismissDrawer = () => {
+    restoreDrawerFocusRef.current = true;
+    setMobileDrawerOpen(false);
+  };
+  const selectFromDrawer = (entry: DivineNameEntry) => {
+    restoreDrawerFocusRef.current = false;
+    setMobileDrawerOpen(false);
+    // The dossier captures the current focus for its own close/restore flow.
+    // Hand it a persistent trigger, not a name button being unmounted.
+    mobileTriggerRef.current?.focus({ preventScroll: true });
+    onSelectName(entry);
+  };
 
   const midX = (beamCoords.x1 + beamCoords.x2) / 2;
   const pathData = `M ${beamCoords.x1} ${beamCoords.y1} C ${midX} ${beamCoords.y1}, ${midX} ${beamCoords.y2}, ${beamCoords.x2} ${beamCoords.y2}`;
@@ -466,8 +517,16 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
       {/* Mobile & Tablet Floating Sacred Ribbon Trigger (< lg) */}
       <div className="no-print fixed right-4 bottom-4 left-4 z-30 flex justify-center lg:hidden">
         <button
+          ref={mobileTriggerRef}
           type="button"
-          onClick={() => setMobileDrawerOpen(true)}
+          onClick={() => {
+            restoreDrawerFocusRef.current = true;
+            setMobileDrawerOpen(true);
+          }}
+          aria-label="Открыть скрижали имён Бога"
+          aria-haspopup="dialog"
+          aria-expanded={mobileDrawerOpen}
+          aria-controls="gb-mobile-pillars-dialog"
           className="sacred-active-glow flex w-full max-w-md cursor-pointer items-center justify-between gap-3 rounded-2xl border px-4 py-3 shadow-xl transition-transform active:scale-[0.99]"
           style={{
             backgroundColor: 'var(--gb-surface)',
@@ -509,8 +568,13 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
       {/* Mobile / Tablet Drawer Modal */}
       {mobileDrawerOpen && (
         <div
+          id="gb-mobile-pillars-dialog"
+          ref={drawerRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Скрижали имён Бога"
           className="fixed inset-0 z-50 flex flex-col justify-end bg-black/60 backdrop-blur-sm lg:hidden"
-          onClick={() => setMobileDrawerOpen(false)}
+          onClick={dismissDrawer}
         >
           <div
             className="max-h-[84vh] w-full rounded-t-3xl border-t p-5 shadow-2xl flex flex-col"
@@ -551,7 +615,8 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setMobileDrawerOpen(false)}
+                  ref={drawerCloseRef}
+                  onClick={dismissDrawer}
                   className="rounded-full border p-2"
                   style={{ borderColor: 'var(--gb-border)', color: 'var(--gb-ink)' }}
                   aria-label="Закрыть скрижаль"
@@ -569,10 +634,7 @@ export const LateralNamePillars: React.FC<LateralNamePillarsProps> = ({
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => {
-                      setMobileDrawerOpen(false);
-                      onSelectName(item);
-                    }}
+                    onClick={() => selectFromDrawer(item)}
                     className={`flex items-center justify-between gap-3 rounded-xl border p-3 text-left transition-all ${
                       isActive ? 'sacred-active-glow' : ''
                     }`}
