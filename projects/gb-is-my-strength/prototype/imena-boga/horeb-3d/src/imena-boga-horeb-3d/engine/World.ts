@@ -17,7 +17,7 @@ export interface WorldState {
 export interface WorldSettings { quality: 'low' | 'high'; reducedMotion: boolean; particles: boolean; sound: boolean; exposure: number; autoQuality: boolean }
 
 const FOG: [number, number, number][] = [ // zone → color, density
-  [0x0d0a08, 0.035, 0], [0x0f0b08, 0.03, 0], [0x120c08, 0.026, 0], [0x140a05, 0.05, 0], [0x070a10, 0.02, 0], [0x0c0a09, 0.045, 0], [0x0a0d14, 0.05, 0], [0x0b1020, 0.0055, 0],
+  [0x1a1410, 0.03, 0], [0x1c1610, 0.028, 0], [0x221810, 0.024, 0], [0x281610, 0.045, 0], [0x121620, 0.018, 0], [0x181412, 0.04, 0], [0x141820, 0.045, 0], [0x121830, 0.005, 0],
 ];
 const EYE = 1.62;
 const SPEED = 2.3;
@@ -63,8 +63,8 @@ export class World {
     this.renderer.toneMappingExposure = settings.exposure;
     this.camera = new THREE.PerspectiveCamera(66, 1, 0.05, 3200);
     this.camera.rotation.order = 'YXZ';
-    this.scene.background = new THREE.Color(0x050403);
-    this.scene.fog = new THREE.FogExp2(0x0d0a08, 0.035);
+    this.scene.background = new THREE.Color(0x100c08);
+    this.scene.fog = new THREE.FogExp2(0x1a1410, 0.03);
     this.moon.position.set(120, 200, -200);
     this.scene.add(this.ambient, this.hemi, this.moon);
   }
