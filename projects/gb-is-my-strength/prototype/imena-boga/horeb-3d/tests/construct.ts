@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { EXHIBITS } from '../src/imena-boga-horeb-3d/data/exhibits';
 import { buildExhibitProps, mergePropsGroup } from '../src/imena-boga-horeb-3d/engine/exhibitProps';
 import { steleVariation } from '../src/imena-boga-horeb-3d/engine/nav';
+import { buildBurningBush } from '../src/imena-boga-horeb-3d/engine/BurningBush';
 
 let pass = 0, fail = 0;
 const t = (name: string, ok: boolean) => { ok ? pass++ : fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name); };
@@ -112,6 +113,26 @@ for (const e of EXHIBITS) {
 t('all 42 exhibit glow sprites share a non-square alpha mask', maskedGlows === 42);
 testGlow.dispose();
 testAtlas.dispose();
+
+// The Horeb shrub must be alive and not consumed by animation. Keep the
+// foliage static and inexpensive, while the flame has its own GPU points.
+for (const low of [true, false]) {
+  const bush = buildBurningBush(low);
+  const mode = low ? 'low' : 'high';
+  t('Horeb ' + mode + ': living foliage uses one instanced draw call',
+    bush.foliage instanceof THREE.InstancedMesh &&
+    bush.group.children.filter((o) => o === bush.foliage).length === 1 &&
+    bush.foliage.count >= 32 && !!bush.foliage.instanceColor);
+  const leafMatrixBefore = bush.foliage.instanceMatrix.array.slice();
+  bush.update(12.5, true, 900);
+  bush.update(21, false, 900);
+  t('Horeb ' + mode + ': flame does not consume, move or regenerate leaves',
+    leafMatrixBefore.every((v, i) => v === bush.foliage.instanceMatrix.array[i]) &&
+    bush.fire instanceof THREE.Points && bush.sparks instanceof THREE.Points);
+  t('Horeb ' + mode + ': flame and shrub remain inside the same scene',
+    bush.group.children.includes(bush.fire) && bush.group.children.includes(bush.foliage));
+}
+
 
 if (errors.length) console.log('errors:\n' + errors.join('\n'));
 console.log(`\n${pass} passed, ${fail} failed`);
