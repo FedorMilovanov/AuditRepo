@@ -174,7 +174,11 @@ export class World {
       mergePropsGroup(props); // merge meshes by material — reduce draw calls
       this.scene.add(props);
       this.obstacles.push({ x, z, r: 0.85 }); // стелы
-      this.obstacles.push({ x: bx, z: bz, r: 0.6 }); // props-якорь — игрок обходит сцены экспонатов (fail-closed)
+      // The creation rock was moved behind its stele to clear Hebrew script.
+      // Keep its physical collider aligned with actual geometry, not the old
+      // abstract props anchor (the light shaft itself needs no collider).
+      if (e.id === 'elohim') this.obstacles.push({ x: bx - 1.4, z: bz - 3.0, r: 1.75 });
+      else this.obstacles.push({ x: bx, z: bz, r: 0.6 }); // other props anchors
       this.exhibitPos.push({ e, x, z, nx, nz });
     }
   }
