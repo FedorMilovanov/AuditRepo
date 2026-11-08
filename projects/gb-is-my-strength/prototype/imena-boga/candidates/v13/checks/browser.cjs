@@ -408,6 +408,15 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
     // Mobile/tablet scripture pillars are a true keyboard modal.
     if(width<1024){
       const trigger=page.getByRole('button',{name:'Открыть скрижали имён Бога'});
+      // The compact ribbon is intentionally absent from the cover and appears
+      // only once reading begins. Verify BOTH states before opening the drawer.
+      await page.evaluate(()=>window.scrollTo(0,0));
+      await page.waitForFunction(()=>
+        document.getElementById('atlas-hero')?.getBoundingClientRect().bottom>0);
+      if(await trigger.isVisible())
+        throw Error('Atlas scripture ribbon obscures the opening hero '+width);
+      await page.locator('article[data-name-id]').first().scrollIntoViewIfNeeded();
+      await trigger.waitFor({state:'visible',timeout:10000});
       // Document-bubble observer runs after the React root's click handler.
       // A requestAnimationFrame-based focus transition must fail this witness,
       // even if later Playwright assertions happen to run after the frame.
@@ -517,7 +526,12 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
       if(width===768){
         await trigger.click();
         await drawer.waitFor({state:'visible'});
+        // Tablet mode now extends through 1439px. Only the actual desktop
+        // breakpoint at 1440px should dismiss the mobile drawer.
         await page.setViewportSize({width:1024,height:844});
+        if(!(await drawer.isVisible()))
+          throw Error('Atlas tablet drawer was prematurely dismissed at 1024px');
+        await page.setViewportSize({width:1440,height:844});
         await drawer.waitFor({state:'detached'});
         await page.waitForFunction(() => document.body.style.overflow!=='hidden');
         await page.setViewportSize({width,height:844});
