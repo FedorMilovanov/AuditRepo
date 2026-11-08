@@ -60,6 +60,36 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
    if(stats.bodyText<1000||stats.scroll>stats.viewport+1||errors.length||requests.length||!stats.cssLoaded)
     throw Error('Layout/runtime failure '+JSON.stringify({engine,name,width,stats,errors,requests}));
    if(name==='atlas'){
+    if(width===1440){
+      // Dynamic OS preference change: a medallion already tilted under a
+      // normal-motion setting must immediately return to neutral, without
+      // requiring mouseleave or another hover event.
+      const liveCtx=await browser.newContext({viewport:{width,height:844},
+        locale:'ru-RU',reducedMotion:'no-preference'});
+      try{
+        const motionPage=await liveCtx.newPage();
+        if(process.env.FONTS_MODE==='offline')
+          await motionPage.route(/^https:\/\/fonts\.(googleapis|gstatic)\.com\//,route=>route.abort());
+        await motionPage.goto(base+'/atlas/',{waitUntil:'domcontentloaded'});
+        const medallion=motionPage.locator('.gb-hero-medallion-button');
+        await medallion.waitFor({state:'visible'});
+        await medallion.hover({position:{x:20,y:20}});
+        const bounds=await medallion.boundingBox();
+        if(!bounds)throw Error('Atlas medallion has no pointer geometry');
+        await motionPage.mouse.move(bounds.x+bounds.width*.85,bounds.y+bounds.height*.35);
+        await motionPage.waitForFunction(()=>{
+          const value=document.querySelector('.gb-hero-medallion-button')?.style.transform;
+          return value && value!=='rotateX(0deg) rotateY(0deg)';
+        },null,{timeout:5000});
+        await motionPage.emulateMedia({reducedMotion:'reduce'});
+        await motionPage.waitForFunction(()=>
+          document.querySelector('.gb-hero-medallion-button')?.style.transform===
+          'rotateX(0deg) rotateY(0deg)',
+          null,{timeout:5000});
+      }finally{
+        await liveCtx.close();
+      }
+    }
     // Reflow contract: no Hebrew/Greek original or Russian caption may be
     // clipped when large-text zoom narrows the medallion's inline space.
     if(width===320){
