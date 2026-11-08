@@ -219,9 +219,18 @@ async function visit(browser,engine,app,width,base){
    // exact record (ordinal 32) in both engines for visual before/after review.
    await safeAction(page,engine+'-atlas-'+width+'-exact-name32',async()=>{
     const card=page.locator('article[data-name-id]').nth(31);
-    await card.scrollIntoViewIfNeeded();
+    const titleNode=card.locator('[data-name-primary-title]');
+    await titleNode.scrollIntoViewIfNeeded();
     await page.evaluate(async()=>{await document.fonts.ready});
-    const title=await card.locator('[data-name-primary-title]').evaluate(el=>({
+    // A tall mobile article can be larger than the viewport: scrolling the
+    // whole card centers its body, leaving the heading outside the JPG.
+    // Anchor the evidence on the heading itself, below the fixed navbar.
+    await titleNode.evaluate(el=>{
+      const headingTop=window.scrollY+el.getBoundingClientRect().top;
+      window.scrollTo({top:Math.max(0,headingTop-110),behavior:'instant'});
+    });
+    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(resolve)));
+    const title=await titleNode.evaluate(el=>({
       value:el.textContent?.trim(),width:el.getBoundingClientRect().width,
       scroll:el.scrollWidth,client:el.clientWidth
     }));
