@@ -64,7 +64,7 @@ async function diag(page,app,engine,width,stage){
  * the overlapping-rail breakpoint and readable Constellation catalog text.
  */
 async function layoutContract(page,app,engine,width){
- const data=await page.evaluate(name=>{
+ const data=await page.evaluate(({name,width})=>{
   const faults=[];
   const fault=(kind,info)=>faults.push({kind,info});
   if(name==='atlas'){
@@ -106,7 +106,7 @@ async function layoutContract(page,app,engine,width){
    });
   }
   return {faults};
- },app);
+ },{name:app,width});
  record('layout-contract',{app,engine,width,faultCount:data.faults.length});
  data.faults.forEach(f=>problem('BLOCKER',f.kind,{app,engine,width,info:f.info}));
 }
