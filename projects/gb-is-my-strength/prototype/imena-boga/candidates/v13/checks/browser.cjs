@@ -106,6 +106,13 @@ const countPixels=async(page,selector)=>page.evaluate((selector)=>{
           document.querySelector('.gb-hero-medallion-button')?.style.transform===
           'rotateX(0deg) rotateY(0deg)',
           null,{timeout:5000});
+        const transition=await medallion.evaluate(el=>({
+          property:getComputedStyle(el).transitionProperty,
+          duration:getComputedStyle(el).transitionDuration,
+        }));
+        if(transition.property!=='none' || transition.duration.split(',').some(time=>parseFloat(time)>0))
+          throw Error('Atlas OS reduced-motion still animates medallion transform '+
+            JSON.stringify({engine,width,transition}));
       }finally{
         await liveCtx.close();
       }
