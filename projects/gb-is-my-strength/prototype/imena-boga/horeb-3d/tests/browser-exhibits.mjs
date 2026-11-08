@@ -86,7 +86,7 @@ try {
       let inspected = false;
       w?.scene.traverse((o) => {
         if (o.name === 'original-script-beacon' && o.userData.exhibitId === 'elohim' &&
-            o.scale.x > 1.05) inspected = true;
+            o.scale.x > 0.83 && o.scale.x < 0.9) inspected = true;
       });
       return inspected;
     }, { timeout: 7000, polling: 100 });
